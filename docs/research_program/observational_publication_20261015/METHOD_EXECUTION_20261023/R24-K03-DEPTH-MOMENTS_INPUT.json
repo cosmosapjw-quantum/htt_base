@@ -1,0 +1,100 @@
+{
+  "contract": {
+    "advisor": "/root/method_contract",
+    "requested": "gpt-6-astra/xhigh",
+    "observed": "UNKNOWN",
+    "issue_identity": "R23-Q preserved; no new ultra",
+    "question": "Within-old-bin continuous reported-z E1/B1 response after all102oldnuisances; observational coefficients notphysicalhistory",
+    "rows": 755850,
+    "bins": [
+      0,
+      1,
+      2,
+      10
+    ],
+    "new_cuts": false,
+    "g": "z/(1+z)",
+    "new_H": "g(z)*model.dipole(ra,dec);physical B1sign omega cross n",
+    "old_X": "all102 model.design columns:18binE1B1,24ell2-3,42template,18ell4stress",
+    "working_law": "independentrowN2(0,reportedC_i) inuas/yr;notempirical spatial/selectionqualification",
+    "only_new_moments": [
+      "A=HWH:6x6",
+      "K=HWX:6x102",
+      "q=HWy:6"
+    ],
+    "reuse": "cachedG=XWX,b=XWy;nevercalloldmain/accumulate",
+    "limits": {
+      "one_new_full_pass": 1,
+      "chunk_rows_max": 4096,
+      "OPENBLAS_NUM_THREADS": 1,
+      "peak_RSS_MiB_max": 768,
+      "wall_seconds_max": 1800,
+      "download": false,
+      "on_started_failure": "preserveraw andHOLD;noautomaticretry"
+    },
+    "fit": [
+      "F=A-K solve(G,K.T)",
+      "s=q-K solve(G,b)",
+      "theta=solve(F,s)",
+      "Ctheta=invF",
+      "oldnewcov=-solve(G,K.T) Ctheta"
+    ],
+    "discriminators": [
+      "all6coefficientsandfullcov/eigenvectors",
+      "informationpre/postprofilingloss",
+      "sT invF s conditionalchi2_6scenario,notempiricalp",
+      "Waldpower_on_sphere_radii_.1_1_10_100uas/yr_usingchi2_6level.05;strongweaklambda=a\u00b2eigmax/minF",
+      "required80percentpoweramplitudesstrongweak"
+    ],
+    "fullstate": "retain18oldbinE1B1+6slope=24coordinatesandfullaugmentedcovariance,E1polarB1axialtyped",
+    "depth": {
+      "c": [
+        0.25,
+        0.5833333333333334,
+        0.7878787878787878
+      ],
+      "Yb": "gammabin+c_b*theta",
+      "representation": "Y or(Y0,Y1-Y0,Y2-Y1),fullcrosscov;gcentersnottruedistance"
+    },
+    "numerics": {
+      "scaled_eigen_threshold": 1e-10,
+      "sensitivity": [
+        1e-08,
+        1e-12
+      ],
+      "scaled_condition_max": 10000000000.0,
+      "scaled_residual_max": 1e-10,
+      "no_jitter_or_pseudoinverse": true
+    },
+    "controls": "boundedfixture directwhitenedregression;constantgabsorbedoldbinE1B1;scorelevelcontrols frommoments only",
+    "original_admission": "HOLD;centroidmatter/truedepth/spatialcov/selection/historyunknown;noR9alpha reuse"
+  },
+  "base_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "sources": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_gaia_full_join.npz",
+      "sha256": "4cd83b1e8bb9f71f89aacfc2db5daba87f9a79f2af8ccd2e7e94b0be57252dae",
+      "bytes": 104598751
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/full_stats.npz",
+      "sha256": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+      "bytes": 63690
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/stats_receipt.json",
+      "sha256": "c0fb5225d65e21c2e0da752fa343017afb26c650a395cdca4ca3edf1db97d162",
+      "bytes": 2080
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/model.py",
+      "sha256": "c132f01d9d35e267aa67e8465987bb8cfbab94f46e4f8adc32e9c793f5b74659",
+      "bytes": 18031
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/CONFIG.json",
+      "sha256": "196774e641c0ee85b356762fcb6397c1592f0d701ccc99b587f5ce417c175fc2",
+      "bytes": 1013
+    }
+  ]
+}

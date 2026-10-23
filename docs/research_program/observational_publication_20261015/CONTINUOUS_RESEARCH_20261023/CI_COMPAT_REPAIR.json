@@ -1,0 +1,36 @@
+{
+  "schema": "htt.r23_CI_compatibility_repair/1",
+  "parent_commit": "925602103ba018ebbc44ea4a45b0012993b05795",
+  "actual_failed_run": 39866584402,
+  "failed_tests": 3,
+  "passed_tests_before_failure": 144,
+  "skipped_tests": 3,
+  "causes": [
+    "Appending a test path changed an exact workflow command protected by existing contract tests.",
+    "Authoritative AGENTS whole-goal instructions had not been synchronized into the merge-only compatibility fragment."
+  ],
+  "repairs": [
+    "Preserve the original three-file pytest command verbatim; run context isolation in a separate command in the same existing step.",
+    "Copy the exact current authoritative AGENTS compatibility suffix into AGENTS.md.fragment; preserve AGENTS authority and bytes."
+  ],
+  "changed_implementation_sha256": {
+    ".github/workflows/repository-integrity.yml": "3dba0f90937531bdab579cf5af3c9fee211a1f8b9de0314fb19e6316d531914f",
+    "AGENTS.md.fragment": "4d6464b55319dc93bc1297777477429d67d59bd3f616e1f605cb55da5ee66bdc"
+  },
+  "validation": {
+    "original_workflow_contract_errors": [],
+    "direct_existing_mutation_function_checks": 37,
+    "direct_checks_are_not_pytest_passes": true,
+    "applicable_AGENTS_suffix_assertions": "PASS",
+    "independent_review": "PASS_SCOPED",
+    "remote_CI": "Must be observed after this push; no green claim in this prepublication record"
+  },
+  "review_receipt": "receipts/CI_COMPAT_FINAL_REVIEW.json",
+  "repair_receipt": "receipts/CI_COMPAT_REPAIR_RECEIPT.json",
+  "actual_failure_log": "receipts/CI_COMPAT_FAILURE.json",
+  "claim_limit": "Both CI defects are integration/synchronization failures in the new harness edits. No scientific/controller algorithm changed; no thresholds, validators, approval/trust settings, action pins or permissions were weakened. Earlier scoped review did not cover full integration.",
+  "lineage": "This two-file delta follows CI_CONTEXT_REPAIR.json. Earlier review manifests remain snapshots at their publication revisions; PACKAGE_MANIFEST describes the combined current package.",
+  "scientific_completed_scoped": 18,
+  "scientific_total": 42,
+  "owner_local_activation": false
+}

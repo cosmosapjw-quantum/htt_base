@@ -1,0 +1,139 @@
+{
+  "contract": "CONDITIONAL_GLS_V1",
+  "owner": "htt",
+  "claim_tier": "C0_AUTHORED_CONDITIONAL_DIAGNOSTIC",
+  "transfer_source": "none",
+  "selected_count": 628,
+  "released_count": 274,
+  "undefined_distance_count": 354,
+  "undefined_distance_fraction": 0.5636942675159236,
+  "outcome_by_missing_present": [
+    [
+      116,
+      269
+    ],
+    [
+      21,
+      1
+    ],
+    [
+      26,
+      3
+    ],
+    [
+      191,
+      1
+    ]
+  ],
+  "mark_only_descriptive_log_score": -834.3958584571346,
+  "conditional_distance_log_likelihood_at_ml": -182.86875413130616,
+  "conditioned_on": "actual selected 628, all realized marks, released measured widths/errors and Vcmb, declared full selected group partition",
+  "group_structure": {
+    "observed_groups": 269,
+    "observed_singletons": 264,
+    "observed_pairs": 5,
+    "full_selected_groups": 622
+  },
+  "covariance": {
+    "a_common_mag": 0.055,
+    "b_group_mag": 0.29,
+    "V_diagonal_min_mag2": 0.0962,
+    "min_cholesky_pivot": 0.29058342778528184,
+    "logdet_V": -481.5005103178006,
+    "allocation": "diag(s_i^2-a^2)+a^2 11T+b^2 GGT; one total covariance; authored working allocation, not source empirical PV/calibration"
+  },
+  "fit": {
+    "coefficient_names": [
+      "intercept_mag",
+      "log_vcmb_mag_per_dex",
+      "measured_width_mag_per_dex",
+      "width_error_mag_per_dex",
+      "other_quality_mag",
+      "confused_mag",
+      "nondetection_mag"
+    ],
+    "coefficients": [
+      34.69302640295745,
+      4.14657038994884,
+      0.8286587624571297,
+      1.5778429440630204,
+      0.1990252628572651,
+      -0.43834863781674793,
+      0.5302185485432837
+    ],
+    "delta_width_0p1_dex_mag": 0.08286587624571297,
+    "delta_se_mag": 0.031020439322049377,
+    "delta_t95_interval_mag": [
+      0.021790086201151256,
+      0.1439416662902747
+    ],
+    "rss_whitened": 353.31520723420454,
+    "nu": 267,
+    "residual_scale_unbiased_s2": 1.323277929716122,
+    "sigma_ml2": 1.2894715592489217
+  },
+  "mock": {
+    "seed": 2026102302,
+    "B": 4096,
+    "beta0": [
+      34.0,
+      5.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "sigma0": 1,
+    "covered": 3890,
+    "nominal": 0.95,
+    "acceptance_count_range": [
+      3854,
+      3926
+    ],
+    "conditional_coverage_check": "PASS",
+    "binomial_exact_95_interval": [
+      0.9425643383185035,
+      0.9561991915878647
+    ],
+    "draw": "one common scalar, one scalar per full selected group, independent residuals; fixed marks and covariates; no distances drawn for 354 missing"
+  },
+  "diagnostic": {
+    "T_actual": 4.555321823822732,
+    "mock_exceedance_count": 3,
+    "p_plus_one": 0.000976324139614352,
+    "conditional_law_criticized": true,
+    "T_mock_quantiles": [
+      3.032445153127928,
+      3.536632185439891,
+      3.7120301089370917,
+      4.059759844160903
+    ],
+    "zero_residual_leverage_PGCs": [
+      "53938"
+    ],
+    "zero_residual_leverage_count": 1
+  },
+  "math_checks": {
+    "normal_equation_norm": 1.820375404034016e-12,
+    "normal_equation_limit": 1.1326418629039104e-06,
+    "one_dimensional_integral_pm8": 0.9999999999999988,
+    "one_dimensional_quad_error": 4.846188559701355e-12,
+    "excluded_tail_bound": 1.244192114854348e-15,
+    "two_row_logpdf_difference": 3.3306690738754696e-16,
+    "intercept_shift_mag": 1.0000000000000213,
+    "dense_three_row_reference": "PASS",
+    "cholesky_normalization": "274 standard normals after z=L^-1(y-Xbeta)/sigma; Jacobian sigma^274 det(L) cancels"
+  },
+  "physical_admission": "HOLD",
+  "H02_S02": "HOLD",
+  "physical_selection_and_joint_calibration_PV": "NOT_EVALUABLE",
+  "unrestricted_common_zero_point": "width contrast invariant for every real additive common delta; no physical bound",
+  "limitations": [
+    "authored conditional covariance allocation",
+    "actual cross-row calibration/PV covariance unavailable",
+    "354 undefined distances not imputed",
+    "parent inclusion law unknown",
+    "mock coverage is only under generated law"
+  ]
+}

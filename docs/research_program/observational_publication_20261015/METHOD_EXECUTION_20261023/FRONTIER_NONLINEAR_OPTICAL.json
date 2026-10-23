@@ -1,0 +1,122 @@
+{
+  "frontier_id": "R24-NEW-FINITEQ-OPTICAL-DISCRIMINATOR",
+  "tasks": [
+    {
+      "id": "R24-OPTICAL-NONLINEAR-QUOTIENT",
+      "kind": "numeric",
+      "goal": "Actualsame274rownonlinearleadinglowzlogresponseafterbaseline+calibrationdipole+opticalSTFnuisance;noise/remainderthresholds",
+      "acceptance": "Actualfixed274rowquotient,cubiccontrol,power/noiseandboundedremainderoverlapthresholds;fullscope/numericalreferencespassed or exactHOLD;no originalpromotion",
+      "input_identity": "sha256:2267073c3678dc98ae63508efd80473ace82d150f7aa1c36246783110786ffa0",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-OPTICAL-NONLINEAR-QUOTIENT_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/nonlinear_optical"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-DISTANCE-MODELS",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "validation_counterexample",
+        "before": {
+          "response": "firstordercalibration/opticalaccelerationdipoledegeneracy"
+        },
+        "after": {
+          "response": "finiteqlogresponsegeneratescubicshapeafterdipoleandquadraticnuisance"
+        },
+        "discriminator": "fixedlogtemplates,projectedcubicnorm,oraclepowerandmean-setoverlaprho*",
+        "scope": "conditionalleadinglowzexperimentwithunmeasuredphysicalremainder"
+      },
+      "theory_contract": {
+        "advisor": "/root/nonlinear_optical_contract",
+        "requested_runtime": "gpt-6-astra/xhigh",
+        "observed_runtime": "UNKNOWN",
+        "issue_identity": "existing optical firstorder scope issue;newfiniteqcounterexample/no ultra",
+        "question": "Actualsame274rownonlinearleadinglowzlogresponseafterbaseline+calibrationdipole+opticalSTFnuisance;noise/remainderthresholds",
+        "source_read": "ReadcachedRELEASED_ROWS andDIRECTION_JOIN directly,uniquePGCorder;DONOTcalldistance.load orconsumeobservedDMbest/outcomesforfit/scenarioselection",
+        "rows": 274,
+        "marks": 628,
+        "undefined": 354,
+        "PGC9031_Vcmb_km_s": 317,
+        "frame": "J2000equatorialsourcepointing",
+        "directions": [
+          "+ex",
+          "-ex",
+          "+ey",
+          "-ey",
+          "+ez",
+          "-ez",
+          "+(1,1,1)/sqrt3",
+          "-(1,1,1)/sqrt3"
+        ],
+        "amplitudes": [
+          0,
+          0.01,
+          0.03,
+          0.1,
+          0.2,
+          0.3
+        ],
+        "response": "q_i=a*d.n_i;f_i=-(5/ln10)*log1p(-q_i)mag;1-q>=.7;exactinqonlywithinleadinglowzzeroshearlaw,notfinitezmodel",
+        "nuisance": "12columns baseline[1,log10Vcmb,logWmxi,e_logW]+n3+fiveFrobeniusorthonormalSTF fromsealedcontract;noflowordepthcolumns;centering/scalingpreservesspan",
+        "covariance": "V=diag(s\u00b2-ac\u00b2)+ac\u00b211T+bc\u00b2GGt;four(ac,bc)=(0,0),(0,.29),(.055,0),(.055,.29)mag",
+        "law": "Y=Xbeta+f+epsilon,epsilonN(0,tau\u00b2V),KNOWNHYPOTHETICALtau=.5,1,2,4;notestimatedfromoutcomes",
+        "compute": "V=LLT,W=Linv,Q=orth(WX);s_f=(I-QQT)Wf;d0=norm(s_f);e_f=L s_f;reportd0\u00b2,residualfraction(zero=0),RMS/maxresidualmag",
+        "cubic": "projectx=projectx\u00b2=0;projectx\u00b3=(2/5)projectP3(x);s_f=(2*k*a\u00b3/15)projectW P3(x)+O(a4);selectedskyprojectionnotpureharmonicmeasurement",
+        "oracle_power": "Phi(Phiinv(.05)+d0/tau),simplefixedalternativenotempiricalp/selected-directionpower; tau80=d0/(Phiinv(.8)-Phiinv(.05))",
+        "remainder": "sameprojectedwhitenedballBrho undereachhypothesis;rho=0,1e-4,1e-3,1e-2,.1,1;overlaprho*=d0/2;robustmaximinPhi(Phiinv(.05)+max(0,d0-2rho)/tau);overlapbenchmark .05 with explicitsharedmidpointwitness",
+        "physical_remainder": "unrestrictedbycurrentinputs=>physicalattributionvacuous;scenarioradiiNOTmeasuredbounds",
+        "numerics": {
+          "unitdirections_STF_atol": 1e-12,
+          "nuisance_rank": 12,
+          "scaled_rank_primary": 1e-10,
+          "rank_sensitivity": [
+            1e-08,
+            1e-12
+          ],
+          "projected_linear_quadratic_scaled_tolerance": 1e-10,
+          "independent_eigenwhitening_reference": {
+            "rtol": 1e-09,
+            "atol": 1e-10
+          },
+          "small_amplitudes": [
+            0.001,
+            0.002
+          ],
+          "cubic_remainder_bound": "||W||2 sqrt274 k a4/[4(1-a)] + scaled1e-12",
+          "q01_antipodal_sum_mag": 0.021824027012250224,
+          "antipodal_atol": 1e-12,
+          "no_jitter_or_tolerance_relax": true
+        },
+        "controls": [
+          "identityandPGCgroupvelocityjoin",
+          "SPDcovariancediagonalaccounting",
+          "rank3thresholds",
+          "linear/quadraticnuisanceexactabsorption",
+          "cubicrelation/bound",
+          "independentsymmetriceigenwhiteningSVDd0\u00b2",
+          "zerosignalpower,sizeandnoise/remaindermonotonicity",
+          "meanintersectionmidpoint"
+        ],
+        "limits": {
+          "production_seconds": 180,
+          "test_seconds": 180,
+          "BLAS_threads": 1,
+          "production_factorizations": 4,
+          "fixed_templates": 48,
+          "no_MonteCarlo_or_optimization_over_scenarios": true,
+          "no_download_or_sourcepass": true
+        },
+        "scope": "newconditionalobservable,nophysicalacceleration/coverage/originalacceptancepromotion"
+      }
+    }
+  ]
+}

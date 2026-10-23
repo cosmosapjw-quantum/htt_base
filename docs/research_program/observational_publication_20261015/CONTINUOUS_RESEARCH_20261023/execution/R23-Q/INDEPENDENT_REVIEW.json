@@ -1,0 +1,127 @@
+{
+  "packet_id": "52e7cac408455341e3d7e6932615e28f0ba9e145c22178d36821a85a892416e0",
+  "task_id": "R23-Q",
+  "input_identity": "sha256:e8001c465950ce499d9c13e966ae9af5fea4f15a6ac179d3f541878864736b3c",
+  "candidate_identity": "sha256:16580ce01d8a2c7c448793f7a3b58e1dc649b418ec151c8f6913787f2117ce8d",
+  "agent_id": "/root/rc_52e7cac408455341",
+  "phase": "review",
+  "outcome": "success",
+  "acceptance_met": true,
+  "decision": "PASS_SCOPED_CONDITIONAL_ACCEPTANCE",
+  "acceptance_scope": "Unchanged authored acceptance for the fixed selected-row finite nuisance quotient and its conditional Gaussian score controls.",
+  "scientific_admission": "HOLD",
+  "original_K03_K05_acceptances_met": false,
+  "findings": [],
+  "repair_plan": null,
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "independence": {
+    "reviewer_authored_or_advised_candidate": false,
+    "recorded_authors": [
+      "/root/rc_ac501de4afffb28a"
+    ],
+    "recorded_contributors": [
+      "/root/rc_ac501de4afffb28a",
+      "/root/r23_escalation"
+    ],
+    "prior_review_verdict_read": false,
+    "candidate_files_written": false,
+    "children_spawned": false
+  },
+  "raw_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runtime/r23-continuous/Q_REVIEW_RAW.json",
+  "raw_receipt_status": "PARENT_PERSISTENCE_REQUIRED",
+  "raw_receipt_note": "Parent requested read-only review and will persist this complete return at the designated path. The reviewer has not created that file.",
+  "review_head": "39cdfb01969bcf9b5897cfd6c3d8256d5e6fcac0",
+  "validation_evidence": [
+    "Candidate manifest SHA256 matches 16580ce01d8a2c7c448793f7a3b58e1dc649b418ec151c8f6913787f2117ce8d; all 14 listed file sizes and hashes match.",
+    "Actual full and margin cache SHA256 values match the frozen input identities; selected-source counts are 755850 and 558407.",
+    "The quotient implementation, its focused tests, and historical A22 model/test sources have no diff between recorded execution HEAD 855107f23fd4f25587ba242d8a5dfc1a8fc81876 and review HEAD.",
+    "Independent compressed-row reference constructed X=L^T from G=LL^T, residualized nuisance columns using QR, and solved the remaining signal using SVD. It confirms signal rank 18 and nuisance rank 84 for both cohorts.",
+    "Independent reference reproduces all 18 estimates, complete 18x18 conditional covariance, six contrast estimates, and complete 6x6 contrast covariance at absolute-plus-relative tolerance 1e-10.",
+    "Direct signal-identity, nuisance-annihilation, and covariance-pushforward checks agree with the stated estimator.",
+    "In-memory replay of score_controls.run_one reproduces stored controls for both cohorts within tolerance, including full 973/1024 and margin 965/1024 coverage for each paired injection.",
+    "Recursive comparison of preserved system-Python outputs against final virtualenv outputs confirms numerical equivalence at absolute-plus-relative tolerance 1e-10.",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B -m pytest -p no:cacheprovider -q scripts/test_htt_astrometry_quotient.py docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/test_model.py: exit 0; 23 passed, 6 subtests passed in 8.95s.",
+    "Read report, raw receipt, controls, implementation and plotting source; visually inspected CONTROLS.png. Historical failed controls and present scientific HOLD remain explicit."
+  ],
+  "numerical_review": {
+    "interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "numpy": "2.5.4",
+    "thread_limits": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1"
+    },
+    "absolute_tolerance": 1e-10,
+    "relative_tolerance": 1e-10,
+    "full": {
+      "signal_rank": 18,
+      "nuisance_rank": 84,
+      "all_six_contrasts_estimable": true,
+      "six_estimability_residuals": [
+        1.1070446234647853e-15,
+        1.3570292949449531e-15,
+        1.5489817772842628e-15,
+        6.315438244495915e-16,
+        1.9122026485437846e-15,
+        1.645668977601964e-15
+      ],
+      "independent_estimate_max_abs_delta": 2.823691280795515e-11,
+      "independent_covariance18_max_abs_delta": 4.1806558215284895e-11,
+      "independent_covariance6_max_abs_delta": 1.9984014443252818e-15,
+      "independent_signal_identity_max_residual": 5.5658814664475935e-14,
+      "independent_nuisance_annihilation_max_residual": 2.882194841781828e-13,
+      "independent_covariance_pushforward_max_residual": 3.200550935389401e-11,
+      "paired_control_coverage": 0.9501953125
+    },
+    "margin": {
+      "signal_rank": 18,
+      "nuisance_rank": 84,
+      "all_six_contrasts_estimable": true,
+      "six_estimability_residuals": [
+        5.359182782504663e-16,
+        1.0523723151707678e-15,
+        5.825258872824725e-16,
+        8.217698533977962e-16,
+        9.92315943166958e-16,
+        7.451275319185682e-16
+      ],
+      "independent_estimate_max_abs_delta": 1.8695267556267936e-11,
+      "independent_covariance18_max_abs_delta": 2.3933921511343215e-10,
+      "independent_covariance6_max_abs_delta": 2.19824158875781e-14,
+      "independent_signal_identity_max_residual": 4.094012321690927e-13,
+      "independent_nuisance_annihilation_max_residual": 6.510949574172556e-13,
+      "independent_covariance_pushforward_max_residual": 4.977493972546654e-10,
+      "paired_control_coverage": 0.9423828125
+    },
+    "tolerance_interpretation": "Reported maximum absolute differences satisfy the combined absolute-plus-relative criterion; they are not compared against absolute tolerance alone."
+  },
+  "reviewer_probe_failures": [
+    {
+      "probe": "Attempt to resolve the quotient script at source intake commit a8e66da28461a415f5da3b3d609c482554d2dcd1",
+      "exit_code": 128,
+      "classification": "REVIEWER_PROVENANCE_PROBE",
+      "detail": "The adapter did not exist at that historical intake commit. The packet binds retained cache identities; subsequent comparison against recorded execution HEAD confirms unchanged adapter and test sources."
+    },
+    {
+      "probe": "First independent in-memory QR/SVD review command",
+      "exit_code": 1,
+      "classification": "REVIEWER_SCRIPT_SYNTAX_ERROR",
+      "detail": "An unmatched closing parenthesis prevented execution. Corrected once; the subsequent command exited 0 with ALL_INDEPENDENT_CHECKS_PASS."
+    }
+  ],
+  "claim_limits": [
+    "Exact nuisance annihilation is an algebraic identity for the included 84-column span and nonsingular blocks; measured floating-point residuals are reported separately.",
+    "The l4 and template injections share Gaussian noise and baseline nuisance realizations. Their equal coverage counts are paired robustness checks and do not constitute independent coverage experiments.",
+    "Conditional covariance assumes the supplied Gaussian score covariance G and fixed selected sources.",
+    "Sourcewise proper-motion/classifier selection and empirical residual spatial covariance remain UNKNOWN.",
+    "Historical l4 coverage 291/1024 and template-mean coverage 0/1024 remain failures of the historical estimator.",
+    "The old radial-cut Q remains inapplicable under unrestricted fixed nuisance means.",
+    "No cosmic acceleration, physical-response, native solver, Bianchi-family, or MIO-posterior admission follows."
+  ],
+  "next_input": "Sourcewise selection likelihood or a justified fixed mean bound, plus empirical residual spatial covariance calibration on the selected catalogue; same-congruence PM/NNR/clock physical response remains a separate input.",
+  "next_action": "Persist this review receipt, record the scoped R23-Q conditional decision, preserve original K03/K05 HOLD, and request the next dependency-safe campaign packet within existing cumulative limits.",
+  "no_dispatch_claim": true
+}

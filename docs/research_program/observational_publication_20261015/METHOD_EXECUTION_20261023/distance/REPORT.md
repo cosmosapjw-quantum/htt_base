@@ -1,0 +1,32 @@
+# R24 distance models: selected-cohort conditional comparison
+
+Owner: HTT numerical research. Claim tier: C0 authored conditional diagnostic. Input identity: `sha256:94ba6ebeeaa029c868663cd873e0626f892976e77a56c9d60ccc54c9cf1e1812`. The 274 released DMbest rows are compared on the same 628-target selection, realized outcome marks, CMB-frame velocity window (317–10459 km/s), and complete-group five-fold partition. The other 354 selected distances remain undefined. This is an executed, exploratory comparison; original H02/S02 physical acceptance and scientific admission remain **HOLD**.
+
+## Data and meaning
+
+The fixed R23 released CSV gives modulus in mag, released modulus error in mag, CMB-frame velocity in km/s, measured log linewidth and its error. `log10(Vcmb/[km/s])` is a covariate; it is neither an independent true distance nor a validated redshift expansion. Source directions are unit J2000 equatorial vectors joined by unique PGC: 269 from the cached CF4 J/ApJ/944/94 galaxy table2, and the five CF4-unassigned PGCs 9031, 68715, 84490, 90725, 91648 from unique public CDS [HyperLEDA VII/237/pgc](https://cdsarc.cds.unistra.fr/viz-bin/cat/VII/237) lookups. The raw five responses are retained outside Git at `/mnt/extdrive/workdir/htt_open_data/cf4/r24_distance_models_20261023/`; their exact URLs/hashes are in `source_queries/FETCH_RECEIPT.json`. None is replaced by a group center. HyperLEDA's older angular precision is a source limitation for those five rows.
+
+The common baseline has intercept, centered log CMB velocity, measured log linewidth, and linewidth error. The new models omit the R23 outcome dummies because rare singletons make those coefficients poorly determined by group-held-out prediction, but all models condition on the realized marks. A has a shared angular dipole in mag plus a response-weighted vector `K n`, with `K=-5/[ln(10) Vcmb]` mag/(km/s). B has that angular dipole and five Frobenius-orthonormal STF quadrupole columns. C has their union, with the angular dipole shared once. The three vector and five STF coefficients, their full covariance and cross-blocks are saved in `RESULT.json`. These are finite-window optical/response scenario coefficients, not G-congruence shear, true peculiar velocities, or HTT physical tensor coordinates. The low-speed PGC9031 makes the frozen `K` approximation physically fragile there.
+
+Four authored total covariance shapes are `V(a,b)=diag(s²−a²)+a²11ᵀ+b²GGᵀ` for `a∈{0,.055}` and `b∈{0,.29}` mag, with the full selected-cohort group partition restricted to observed rows. Reallocating `a²` preserves the released diagonal before the one authored group term; no second width/TFR uncertainty or PV covariance is added. These scales are scenarios, not source-measured physical calibration/PV components. All folds hold out complete groups. Each joint held-out score uses the Gaussian conditional mean and Schur covariance across train/test blocks with training ML scale; its normalized density omits coefficient and scale uncertainty. The listed row contributions are a Cholesky-order decomposition of each joint block score, not independent row likelihoods. No predictive coverage or calibrated model-selection p-value is asserted.
+
+## Actual discriminator
+
+Five-fold joint held-out log scores, summed over the same 274 rows (larger is better within each covariance scenario):
+
+| a mag | b mag | A: angular calibration + flow | B: angular calibration + STF | C: union |
+|---:|---:|---:|---:|---:|
+| 0 | 0 | −220.320 | −196.843 | −518.194 |
+| 0 | .29 | −194.273 | −195.138 | −209.534 |
+| .055 | 0 | −231.855 | −198.340 | −651.993 |
+| .055 | .29 | −193.723 | −194.545 | −209.465 |
+
+All 12 full fits and 60 training folds have full rank at relative singular cutoffs `1e−8`, `1e−10`, and `1e−12`, and all four covariance shapes and predictive Schur blocks are positive definite. B leads A when `b=0`; A leads narrowly when `b=.29`. Thus the direction of comparison changes under the declared group-dependence scenario. C predicts poorly, especially at `b=0`: the fold holding out PGC9031 at 317 km/s assigns that row a large negative contribution (−317.04 or −448.51 in Cholesky row order for `a=0` or `.055`, respectively). That is a source-bound domain warning for the `K` response and flexible union; dropping it after seeing the score would change the frozen cohort.
+
+The stored OOF signed residual summaries retain direction, depth terciles, and all four outcome marks for each model/scenario. Under `a=.055,b=.29`, signed means in shallow/middle/deep velocity bins are A `(−.019,−.061,+.013)` mag, B `(−.030,−.055,+.019)` mag, C `(−.011,−.052,+.008)` mag. Those small aggregate means do not establish residual adequacy or a physical null. The prior R23 actual-row criticism **T=4.555321823822732, p=(1+3)/(4097)=0.000976324139614352** remains the recorded failure for its old seven-column authored law; it is not reinterpreted as a test of these new candidates. No new calibrated residual p-value was computed.
+
+## Checks and limits
+
+The exact frozen input SHA matched. All 274 PGCs have one direction; the five source lookups and 269 cached CF4 joins are unique. Cached ledger folds keep every observed group in one fold. A first code-construction failure (malformed xz STF matrix row) is retained in `FIRST_FAILURE.txt`; it was corrected before any fit ran. The subsequent analysis completed with 12 full and 60 fold fits. Three focused tests passed, including independent dense normal-equation and SciPy multivariate-Gaussian references for two actual held-out blocks at `rtol=1e−9, atol=1e−10`, the 628/274/354 join, tensor covariance symmetry, and exact joint-score accounting. Internal unit-vector/STF controls use `1e−12`; Cholesky, Schur and GLS checks use scaled `1e−10`. The figure is generated from stored results without refitting.
+
+The original source does not release a verified cross-row physical calibration/PV covariance, selected-parent inclusion law, finite-redshift remainder, or same-congruence map. Consequently no score here identifies physical optical shear, validates a flow law, completes the missing distances, or promotes H02/S02/K04. The actionable next discriminator is source-qualified calibration/group/PV covariance or a physically justified domain for the low-velocity response, followed by a separately frozen selected-sample validation. All full vector/STF and cross-covariance information is retained for a future typed `(x,F,Pi,Q,G_F)` bundle; no scalar reduction or physical completion is made here.

@@ -1,0 +1,62 @@
+{
+  "packet_id": "5524cb188c7bd413247643275d25030ecdbdc258f99a4b3ee73d1fdda5e16557",
+  "task_id": "R23-DISTANCE",
+  "attempt": 3,
+  "phase": "repair",
+  "input_identity": "sha256:68741d7ff4948cdf721c372dfaf5a0ded004ebe0eaf4d3f657ece4c0781b31d2",
+  "source_head": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+  "execution_head": "9ef8976dbf488ae1d5429f7c24f45d5ef1899224",
+  "agent_id": "/root/rc_5524cb188c7bd413",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "utc_recorded": "2026-10-23T01:20:25Z",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "matplotlib": "3.11.2",
+  "contract_sha256": "e0fc0047e27a7bdc71b8af121820d0948941c673c48cc5cfb8a8add227640cdd",
+  "source_identity": "PASS_FOUR_SOURCE_SHA_AND_RELEASED_ROWS_AND_INITIAL_MANIFEST_REPORT",
+  "first_failure": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/FIRST_FAILURE.txt",
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/test_fit.py",
+    "exit_code": 1,
+    "result": "1 failed, 2 passed; singleton outcome coordinate had zero residual leverage and initial candidate raised ValueError. Repaired to flag and exclude only from diagnostic denominator."
+  },
+  "validation": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/test_fit.py",
+      "exit_code": 0,
+      "result": "3 passed in 0.59s"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/fit.py --seed 2026102302 --mocks 4096",
+      "exit_code": 0,
+      "result": "actual 274 fit; 4096 selected-group mocks; outputs RESULT.json and ROWS.csv"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/plot.py",
+      "exit_code": 0,
+      "result": "PNG/PDF from stored results"
+    }
+  ],
+  "actual_distance_fit": "EXECUTED_AUTHORED_CONDITIONAL",
+  "conditional_coverage_check": "PASS",
+  "covered_count": 3890,
+  "acceptance_count_range": [
+    3854,
+    3926
+  ],
+  "actual_residual_diagnostic_p": 0.000976324139614352,
+  "actual_conditional_law_criticized": true,
+  "zero_residual_leverage_PGCs": [
+    "53938"
+  ],
+  "original_H02_S02": "HOLD",
+  "physical_calibration_PV_parent_selection": "HOLD",
+  "independent_review": "PENDING_FRESH_NONAUTHOR",
+  "scientific_admission": "HOLD",
+  "no_dispatch_claim": true,
+  "protected_initial_receipt_sha256": "eed84047930dd5ba2dd2da08f50a875b6eaecaaf3cb6e3deddbbcd22774e43e6",
+  "protected_initial_released_csv_sha256": "c7912bd7dd983cdcdf47408a89da9f2b76887a0cc37fd9b5a9a8e83e03d3fe20"
+}

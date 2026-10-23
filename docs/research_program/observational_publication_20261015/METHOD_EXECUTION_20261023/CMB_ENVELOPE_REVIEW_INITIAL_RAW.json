@@ -1,0 +1,37 @@
+{
+  "reviewer": "/root/cmb_envelope_review",
+  "verdict": "HOLD_BOUNDED_REPAIR",
+  "candidate_identity": "sha256:48a7651b6684ed17f72448d5bf73381df44b24555275a619aea069fe56cf41fe",
+  "findings": [
+    {
+      "severity": "P2",
+      "path": "cmb_envelope/envelope.py:172",
+      "defect": "plot interpolates over exact clipping kink",
+      "counterexample": {
+        "pair": "OE1",
+        "rho": 0.2,
+        "plotted_lower": 0.0012287652136084353,
+        "actual_lower": 0,
+        "zero_threshold": 0.14112031263722233
+      }
+    },
+    {
+      "severity": "P2",
+      "path": "cmb_envelope/envelope.py:154",
+      "defect": "fixed noise vectors have covariance zero; replace with centered equiprobable common sign law"
+    }
+  ],
+  "checks": {
+    "focused_tests": 4,
+    "carriers": 60,
+    "pair_envelopes": 57,
+    "support_sets": 12,
+    "max_independent_error": 1.39e-17,
+    "source_and_manifest_hashes": "PASS"
+  },
+  "repair_plan": "Insert exact clipping threshold in plot and add regression; specify centered common S=+-1 noise law with covariance vvT and trace5; regenerate only affected package; preserve first candidate/receipts.",
+  "evidence_source": "Structured extraction of actual native independent reviewer final; full message retained in native conversation",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "original_acceptance_promoted": false
+}

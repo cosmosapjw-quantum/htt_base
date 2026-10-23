@@ -1,0 +1,288 @@
+{
+  "schema": "htt.adversarial_recovery/1",
+  "intake_head": "76595070beb97e52dce9f2d7a0ff1dbf3c289e98",
+  "canonical_dag": "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+  "canonical_plan": "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/CONTINUATION_TASKS.json",
+  "actions": [
+    {
+      "id": "A22-01",
+      "goal": "Finite two-redshift operator falsifier and V03 adjudication",
+      "status": "completed_scoped",
+      "nodes": [
+        "V03",
+        "V04"
+      ],
+      "depends_on": [],
+      "required_inputs": [
+        "frozen compensated history"
+      ],
+      "acceptance": "Explicit experiment separation; finite identity and correction tube; independent review",
+      "output": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/theory/THEORY_AUDIT.md",
+      "next_action": "Reuse finite identity; not a new general no-go.",
+      "requested_runtime": "gpt-6-astra/xhigh",
+      "observed_runtime": "UNKNOWN",
+      "no_native_solver_or_ode": true,
+      "original_node_completion": false,
+      "execution_location": "owner existing checkout; reuse external data cache before anonymous acquisition",
+      "task_packet_command": "python scripts/htt_open_input_packet.py --task A22-01",
+      "stop_replay_rule": "After one implementation, meaningful validation and independent review, checkpoint scientific delta and move on. Repeat only on a concrete new counterexample/input."
+    },
+    {
+      "id": "A22-02",
+      "goal": "Source-bound observer-acceleration channel and cosmic confounding falsifier",
+      "status": "completed_scoped",
+      "nodes": [
+        "K03",
+        "K05"
+      ],
+      "depends_on": [],
+      "required_inputs": [
+        "Gaia2021 Table2 ICRS summary"
+      ],
+      "acceptance": "Physical E1 observer law; chosen covariance caveat; cosmic/local confounding explicit",
+      "output": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/k03/REPORT.md",
+      "next_action": "Reuse compressed observer result; original K03 pending, no cosmic A substitution.",
+      "requested_runtime": "gpt-6.1-sol/high",
+      "observed_runtime": "UNKNOWN",
+      "no_native_solver_or_ode": true,
+      "original_node_completion": false,
+      "execution_location": "owner existing checkout; reuse external data cache before anonymous acquisition",
+      "task_packet_command": "python scripts/htt_open_input_packet.py --task A22-02",
+      "stop_replay_rule": "After one implementation, meaningful validation and independent review, checkpoint scientific delta and move on. Repeat only on a concrete new counterexample/input."
+    },
+    {
+      "id": "A22-03",
+      "goal": "Acquire Quaia and join cached Gaia PM by source_id for depth/cohort analysis",
+      "status": "completed_scoped",
+      "nodes": [
+        "K03",
+        "K04"
+      ],
+      "depends_on": [],
+      "required_inputs": [
+        "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/ACQUISITION_MANIFEST.json",
+        "existing Gaia1614173 cache; if no match use anonymous Gaia source_id subset query"
+      ],
+      "acceptance": "Verified3payloads; unique-source join/loss table; proper motions plus pmra_pmdec_corr/errors; finite redshift and selection fields; no count-based acceleration inference",
+      "output": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/quaia_join",
+      "next_action": "Reuse reviewed full755850-row Quaia/Gaia exact-ID PM-covariance cache;692154 retained sources plus63696 anonymous subset records. A22-05 may consume it; originalK03/K04 remain open. See continuation/quaia_join/REPORT.md.",
+      "requested_runtime": "gpt-6.1-sol/high",
+      "observed_runtime": "UNKNOWN",
+      "no_native_solver_or_ode": true,
+      "original_node_completion": false,
+      "execution_location": "owner existing checkout; reuse external data cache before anonymous acquisition",
+      "task_packet_command": "python scripts/htt_open_input_packet.py --task A22-03",
+      "stop_replay_rule": "After one implementation, meaningful validation and independent review, checkpoint scientific delta and move on. Repeat only on a concrete new counterexample/input."
+    },
+    {
+      "id": "A22-04",
+      "goal": "Reboost two-redshift source pipeline and bound actual standardization/PV defect",
+      "status": "completed_scoped",
+      "nodes": [
+        "V04",
+        "H04"
+      ],
+      "depends_on": [],
+      "required_inputs": [
+        "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/theory/THEORY_AUDIT.md",
+        "existing Pantheon release/code and retained row IDs"
+      ],
+      "acceptance": "Implement paired same-source finite transform before fit; fixed-data trial-frame derivative separately; calibrate or explicitly bound kappa,eta from source-processing evidence; SALT2 is not assumed bolometric",
+      "output": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/two_redshift_pipeline",
+      "next_action": "Reuse finite spectral/radial component plus public SN010010 conditional23-row fit/pairedMW response in continuation/sn010010. Working baseline fails predeclaredadequacy3.2323>3 and publishedparity; preserve HOLD. Actual publiclightcurves/filters acquired, but PS1.nml/private nominal binding/observed FITRES, globalBBC bias/selection and coherent PV/group response still missing; no V04/H04 promotion.",
+      "requested_runtime": "gpt-6-astra/xhigh",
+      "observed_runtime": "UNKNOWN",
+      "no_native_solver_or_ode": true,
+      "original_node_completion": false,
+      "execution_location": "owner existing checkout; reuse external data cache before anonymous acquisition",
+      "task_packet_command": "python scripts/htt_open_input_packet.py --task A22-04",
+      "stop_replay_rule": "After one implementation, meaningful validation and independent review, checkpoint scientific delta and move on. Repeat only on a concrete new counterexample/input."
+    },
+    {
+      "id": "A22-05",
+      "goal": "Depth-resolved proper-motion E/B model with higher angular nuisance modes",
+      "status": "completed_scoped",
+      "nodes": [
+        "K03",
+        "K04",
+        "K05"
+      ],
+      "depends_on": [
+        "A22-03"
+      ],
+      "required_inputs": [
+        "qualified Quaia-Gaia join",
+        "relative selection templates",
+        "Gaia angular systematic covariance model or source-supported bounds"
+      ],
+      "acceptance": "Joint E1/B1+higher VSH design; analytic Gaussian nuisance marginalization checked against small dense reference; whole-sky/mock field coverage and redshift splits; no iid-source bootstrap claim",
+      "output": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry",
+      "next_action": "Reuse reviewed755850-source conditional32-model E/B experiment and558407-source known-cut-margin control, full sufficientstats and whole-field mock results. Empirical spatial/classifier laws and same-congruence PM/NNR/clock physical transfer remain missing; K03/K04/K05 not promoted. See continuation/astrometry/REPORT.md.",
+      "requested_runtime": "gpt-6.1-sol/high",
+      "observed_runtime": "UNKNOWN",
+      "no_native_solver_or_ode": true,
+      "original_node_completion": false,
+      "execution_location": "owner existing checkout; reuse external data cache before anonymous acquisition",
+      "task_packet_command": "python scripts/htt_open_input_packet.py --task A22-05",
+      "stop_replay_rule": "After one implementation, meaningful validation and independent review, checkpoint scientific delta and move on. Repeat only on a concrete new counterexample/input."
+    },
+    {
+      "id": "A22-06",
+      "goal": "Construct a selected-cohort distance likelihood and source-supported sensitivity bounds",
+      "status": "completed_scoped",
+      "nodes": [
+        "H02",
+        "S02",
+        "S04",
+        "K04"
+      ],
+      "depends_on": [],
+      "required_inputs": [
+        "existing628HI targets and627scored join",
+        "existing CF4/Pantheon source genealogy and normalized selection LP"
+      ],
+      "acceptance": "Derive cohort-conditional generative law with denominator; detection/confusion/non-detection retained; missing parent law explicit; calibrator and PV counted once; source-justified Gamma or report unknown mass",
+      "output": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/selection_model",
+      "next_action": "Scoped mark likelihood,628-target released-distance completion sets and separate6dF membership/normalizer audit complete, reviewed after targeted tail repair. Full distance factors/parent selection/shared calibration-PV/genealogy remain missing; no original node promoted. Reuse continuation/selection_model.",
+      "requested_runtime": "gpt-6-astra/xhigh",
+      "observed_runtime": "UNKNOWN",
+      "no_native_solver_or_ode": true,
+      "original_node_completion": false,
+      "execution_location": "owner existing checkout; reuse external data cache before anonymous acquisition",
+      "task_packet_command": "python scripts/htt_open_input_packet.py --task A22-06",
+      "stop_replay_rule": "After one implementation, meaningful validation and independent review, checkpoint scientific delta and move on. Repeat only on a concrete new counterexample/input."
+    },
+    {
+      "id": "A22-07",
+      "goal": "Import selected legacy response/counterpair functions and specify new CMB statistic experiment",
+      "status": "completed_scoped",
+      "nodes": [
+        "L03",
+        "B02"
+      ],
+      "depends_on": [],
+      "required_inputs": [
+        "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/legacy/LEGACY_REUSE_MAPPING.json",
+        "pinned donor source blobs; existing Planck caches"
+      ],
+      "acceptance": "Function-level donor equivalence check; full-sky ID linkage across products; predeclare morphology/phase/parity statistic and nuisance variations before new score; no oldp=.039 promotion",
+      "output": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/cmb_counterpairs",
+      "next_action": "Reuse reviewed function-level donor counterpairs, orderedJ234/top-axis features and one-sky linkage. A22-08 conditional added-window operator executed separately; original L03/B02 physical null/atlas still missing.",
+      "requested_runtime": "gpt-6.1-sol/high",
+      "observed_runtime": "UNKNOWN",
+      "no_native_solver_or_ode": true,
+      "original_node_completion": false,
+      "execution_location": "owner existing checkout; reuse external data cache before anonymous acquisition",
+      "task_packet_command": "python scripts/htt_open_input_packet.py --task A22-07",
+      "stop_replay_rule": "After one implementation, meaningful validation and independent review, checkpoint scientific delta and move on. Repeat only on a concrete new counterexample/input."
+    },
+    {
+      "id": "A22-08",
+      "goal": "Qualify exact processed total/null CMB products and run new common-sky morphology pilot",
+      "status": "blocked_input",
+      "nodes": [
+        "L03",
+        "L04",
+        "B02"
+      ],
+      "depends_on": [
+        "A22-07"
+      ],
+      "required_inputs": [
+        "matched observed/processed CMB+foreground+noise/null law and mask/beam/weights",
+        "whole-sky realization IDs and enough independent simulations for target precision"
+      ],
+      "acceptance": "Same release/conventions/operator applied to observation and each realization; whole-sky exchangeability; joint trials and binomial MC interval; descriptive ratio not calibratedp",
+      "output": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/cmb_pilot",
+      "next_action": "Reviewed conditional processing sensitivity complete:30primary/15comparator E-morphology cells from two secondary QU windows and3band limits. Preserves initial strict-boundary failure/repair and label closeout. Calibrated physical-null acceptance remains blocked_input; acquire exact matched PR3 joint processed-total/foreground/noise law before p or originalL03 promotion. See continuation/cmb_pilot/REPORT.md.",
+      "requested_runtime": "gpt-6.1-sol/high",
+      "observed_runtime": "UNKNOWN",
+      "no_native_solver_or_ode": true,
+      "original_node_completion": false,
+      "execution_location": "owner existing checkout; reuse external data cache before anonymous acquisition",
+      "task_packet_command": "python scripts/htt_open_input_packet.py --task A22-08",
+      "stop_replay_rule": "After one implementation, meaningful validation and independent review, checkpoint scientific delta and move on. Repeat only on a concrete new counterexample/input."
+    },
+    {
+      "id": "A22-09",
+      "goal": "Intake existing external polarized family atlas or declare exact residual input",
+      "status": "blocked_input",
+      "nodes": [
+        "B02"
+      ],
+      "depends_on": [],
+      "required_inputs": [
+        "existing physically normalized polarized T/E/B all-m family/history atlas with IC/frame and same-source calibration"
+      ],
+      "acceptance": "Family equivalence and physical units validated; no images or T-only harmonic toy accepted",
+      "output": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/REMAINING_INPUTS_KO.md",
+      "next_action": "Three new primary routes documented in continuation/REMAINING_INPUTS_KO.md; Planck2015 polarizedVIIh templates were private communication, component-separation documentation/observed maps not physical all-family/history atlas. Obtain exact existing polarizedT/E/B all-m/IC/frame/units/calibration payload; do not repeat exhausted searches or build solver.",
+      "requested_runtime": "gpt-6.1-sol/high",
+      "observed_runtime": "UNKNOWN",
+      "no_native_solver_or_ode": true,
+      "original_node_completion": false,
+      "execution_location": "owner existing checkout; reuse external data cache before anonymous acquisition",
+      "task_packet_command": "python scripts/htt_open_input_packet.py --task A22-09",
+      "stop_replay_rule": "After one implementation, meaningful validation and independent review, checkpoint scientific delta and move on. Repeat only on a concrete new counterexample/input."
+    }
+  ],
+  "runtime": {
+    "parent": "gpt-6.1-sol/high",
+    "theory_and_independent_review": "gpt-6-astra/xhigh",
+    "bounded_metadata": "gpt-6-luna/medium",
+    "max_active_including_parent": 4,
+    "nested": false,
+    "observed_runtime": "UNKNOWN"
+  },
+  "proposed_pr_cards": [
+    {
+      "id": "PR-HTT-A22-ASTROMETRY",
+      "status": "PROPOSED_NOT_OPENED",
+      "tasks": [
+        "A22-03",
+        "A22-05"
+      ],
+      "purpose": "Depth and higher-mode aware observer response"
+    },
+    {
+      "id": "PR-HTT-A22-OPTICS",
+      "status": "PROPOSED_NOT_OPENED",
+      "tasks": [
+        "A22-04"
+      ],
+      "purpose": "Matched source-processing boost test"
+    },
+    {
+      "id": "PR-HTT-A22-SELECTION",
+      "status": "PROPOSED_NOT_OPENED",
+      "tasks": [
+        "A22-06"
+      ],
+      "purpose": "Cohort likelihood and identifiable bounds"
+    },
+    {
+      "id": "PR-HTT-A22-MORPHOLOGY",
+      "status": "PROPOSED_NOT_OPENED",
+      "tasks": [
+        "A22-07",
+        "A22-08"
+      ],
+      "purpose": "Calibrated common-sky morphology"
+    }
+  ],
+  "rules": {
+    "one_production_writer": true,
+    "max_active_including_parent": 4,
+    "nested_agents": false,
+    "model_identity_observed": "UNKNOWN",
+    "no_native_solver_or_ode": true,
+    "no_main_merge_or_submission": true,
+    "next_scientific_delta_required": [
+      "new source input",
+      "changed qualified operator",
+      "new bound or counterexample",
+      "calibrated result"
+    ],
+    "node_completion_requires": "actual stated acceptance plus explicit scope; policy change must be logged, not hidden"
+  }
+}

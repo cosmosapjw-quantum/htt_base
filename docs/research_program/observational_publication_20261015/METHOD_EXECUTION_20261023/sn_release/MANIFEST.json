@@ -1,0 +1,80 @@
+{
+  "task_id": "R24-SN-RELEASE",
+  "owner": "htt",
+  "claim_tier": "C0",
+  "status": "CONDITIONAL_NON_CLAIM_BEARING",
+  "candidate_identity": "sha256:0e294e28a55b4ac85a2236fbe58100850d13734cb166359adf3226648507569e",
+  "identity_rule": "SHA-256 of canonical JSON of ordered path, bytes, sha256 entries",
+  "base_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "input_identity": "sha256:b428afbcd61eb919bdc25100eb44dc748de87148d022d2ad3b182ba7ffec776d",
+  "source_release_commit": "c447f0fea703fcd0fff57de5000947b5ca81286b",
+  "generation": "compute.py freeze once, compute.py run; unittest test_compute.py; OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2; interpreter .venv/bin/python",
+  "files": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/compute.py",
+      "bytes": 15630,
+      "sha256": "c9adf02c2bb2afe2d93f65e2060258bc1210ec47a9504e027c20531b57698539"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/test_compute.py",
+      "bytes": 2822,
+      "sha256": "de30325370be1d56fab3df03bd8bc8eb29c336888ff3fef8260eacbbd3594d7c"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/FROZEN_SELECTION.json",
+      "bytes": 3561,
+      "sha256": "2c48abf8e8750c43130a3477a67d601d90718f323e2fadd5917a454a4d53d423"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/RELEASE_ROWS.csv",
+      "bytes": 103501,
+      "sha256": "2dce71fcca318c907bdb181cdd6db75ba4ae5396a75197d358752eda882bed6b"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/RESULT.json",
+      "bytes": 31993,
+      "sha256": "9982d5c84cd35ef63d9996458ec5bd522cb48812ea2ecca4a293934861309b4f"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/RELEASE_CONTRAST.png",
+      "bytes": 89906,
+      "sha256": "2206fb1a2ef128c44e4bde0bde8b11e8775784cb4c9534aa6d6d64f6bbf2645b"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/RELEASE_CONTRAST.pdf",
+      "bytes": 20916,
+      "sha256": "e8d42fc9ca4085f4cc6a0e782e7fb5ec8dc70b954edd4c0a980475b5818574b3"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/REPORT.md",
+      "bytes": 6730,
+      "sha256": "cb44e1bb02ab6ef5a53a24dc5e361bfd095ddf7aaf332b74be62fbac8d0c9708"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/run.stdout",
+      "bytes": 250,
+      "sha256": "2f76089478c79eaf3478f07fbfda34993147aaf4fda6c28433987a35d6e6fe5d"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/test.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/test.stderr",
+      "bytes": 531,
+      "sha256": "41b6ac000f9f6072c195fdfcfc233636598e5d0cb0013566f71a375c5b401ad3"
+    }
+  ],
+  "caveats": [
+    "public fixed total covariance once",
+    "R23 nominal fit parity HOLD",
+    "no CF4 cross covariance or matched directional null",
+    "no original scientific admission"
+  ]
+}

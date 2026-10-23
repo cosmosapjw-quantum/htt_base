@@ -1,0 +1,32 @@
+{
+  "schema": "htt.D05.focused_validation/1",
+  "checks": {
+    "code_identity": true,
+    "source_member_count": true,
+    "source_member_set": true,
+    "no_overflow": true,
+    "retained_cell_count": true,
+    "full_normal_rank": true,
+    "identified_quotient_rank": true,
+    "normal_positive_definite": true,
+    "normal_relative_symmetry": 3.6669102397945824e-15,
+    "recomputation_coefficient_max_abs_uasyr": 3.1086244689504383e-15,
+    "frame_quotient_joint_max_abs_uasyr": 9.325873406851315e-15
+  },
+  "narrow_tests": {
+    "command": "OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 MKL_NUM_THREADS=2 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D05_GAIA_RADIO/test_observable_vsh.py",
+    "passed": 7,
+    "failed": 0,
+    "exit_code": 0,
+    "observed_seconds": 1.74
+  },
+  "first_failures_preserved": {
+    "type": "ARI rejected unsupported VOTable format before creating jobs",
+    "detail": "/mnt/extdrive/workdir/htt_open_data/gaia/d05_full_20261018/http_failure_105240080555.txt",
+    "resolution": "Use provider-listed votable/b2 alias; no replacement of any successful job"
+  },
+  "independent_review": "PENDING_FRESH_ASTRA",
+  "scientific_admission": "HOLD",
+  "result_sha256": "386bfa19ff1f0c24ec836f2e3e471717edf38c3c10da6d119d70548cf062baa0",
+  "sufficient_statistics_sha256": "6d899d4bad30c7f30f6b04ba8381ec623d9d5f6263d464d99d580d38437e2c83"
+}

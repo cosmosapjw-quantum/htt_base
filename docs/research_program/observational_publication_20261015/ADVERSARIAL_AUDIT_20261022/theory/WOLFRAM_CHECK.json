@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-22",
+  "tool": "mcp__codex_apps__wolfram_wolframlanguageevaluator",
+  "scope": "symbolic finite algebra only; not four-axis CAS or physical validation",
+  "code": "Clear[dl,delta,zh,chi,m,g,kappa,eta,z,alpha]; Assuming[delta>0 && chi>0 && zh>-1 && dl>0, {FullSimplify[(dl/delta)/(((1+zh)/delta)chi)-dl/((1+zh)chi)], FullSimplify[(-g Log[delta]+kappa)-g Log[(1+zh)/delta]+g Log[1+zh]-kappa], FullSimplify[-(5/(2 Log[10]))(1+alpha)Log[delta]+(5/Log[10])Log[delta]-(5/(2 Log[10]))(1-alpha)Log[delta]]}]",
+  "actual_output": "Out[1]= {0, 0, 0}",
+  "receipt": "Tool completed successfully in this audit session; no kernel warnings returned."
+}

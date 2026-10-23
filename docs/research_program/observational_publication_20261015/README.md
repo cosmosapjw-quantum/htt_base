@@ -52,3 +52,7 @@ Native subagent 실행 NOT_RUN (host dispatch 없음), 외부 local Codex 사용
 ## 2026-10-18 continuation
 
 See [solver-free results, all-node goals and Codex handoff](CONTINUATION_20261018/README.md). P1/P2/P3 analyses, inherited CI registration repair, explicit-ref native checkout guard and terminal decision semantics are documented there. Canonical scientific completion remains 14/42; no submission or native solver claim.
+
+## Open-input and theory continuation — 2026-10-18
+
+See [OPEN_INPUTS_20261018/README.md](OPEN_INPUTS_20261018/README.md) for the latest PR560 six-commit review, public data acquisition manifest, actual HI target outcomes, common-calibration anchor theory, publication candidates and autonomous Codex handoff. This package preserves the live 17/42 scientific state and does not promote unavailable physical inputs.

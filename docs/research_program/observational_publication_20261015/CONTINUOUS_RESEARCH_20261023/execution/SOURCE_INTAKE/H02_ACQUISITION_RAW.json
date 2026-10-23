@@ -1,0 +1,112 @@
+{
+  "packet_id": "baf792efad535efc977504c06967457603d2bc5fe405ac4c5b958bcc0a45d7ed",
+  "task_id": "H02",
+  "attempt": 1,
+  "phase": "acquisition",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "input_identity": "sha256:63c94aa82bdef875a7412f2c9f7248f0614ce1614b725cbe60e874744c0ee284",
+  "candidate_identity": null,
+  "agent_id": "/root/rc_baf792efad535efc",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "outcome": "blocker",
+  "status": "HOLD_MISSING_SOURCE_QUALIFIED_H02_LAW_AND_NULLS",
+  "acceptance_met": false,
+  "scientific_admission": "HOLD",
+  "original_H02": "HOLD",
+  "review_status": "NOT_APPLICABLE_READ_ONLY_INPUT_INTAKE",
+  "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+  "owner": "htt",
+  "transfer_source": "none",
+  "raw_receipt": "/tmp/r23_h02_baf792ef/RETURN.json",
+  "no_dispatch_claim": true,
+  "no_repository_writes": true,
+  "no_publication": true,
+  "workspace": {
+    "branch": "research/htt-open-input-theory-20261018",
+    "head": "9ef8976dbf488ae1d5429f7c24f45d5ef1899224",
+    "preexisting_dirty_state_preserved": true
+  },
+  "retained_evidence": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018/REPORT_KO.md",
+      "scope": "20 actual fit blocks, method/group overlap and calibration LP; true selection and shared covariance absent"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D02_HI_CF4/REPORT_KO.md",
+      "scope": "628 targets including 192 nondetection and 29 confusion; 627 scored and 1 UNKNOWN; only target-conditioned selection"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D03_PANTHEON_CF4/REPORT.md",
+      "scope": "1701 rows and 654 host associations; cross-survey joint calibration and exact contributor ancestry absent"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/INDEPENDENT_REVIEW.json",
+      "scope": "Independent PASS for authored conditional GLS and mocks only; original H02 HOLD; actual T=4.555321823822732, 3/4096 exceedances, p=0.000976324139614352 criticizes law"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/REMAINING_INPUTS_KO.md",
+      "scope": "Original H02 still requires parent history and joint source law"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/FRONTIER_20261020/distance/source_registry.json",
+      "scope": "Prior bounded searches for CF4 contributor and joint-model routes reused, not rerun"
+    }
+  ],
+  "new_primary_source_intake": [
+    {
+      "url": "https://arxiv.org/html/2109.14808v1",
+      "source": "Qin et al., CF4TF mock sampling algorithm, arXiv 2109.14808v1",
+      "observed": "Section I says underlying CF4TF mock catalogues will be shared on reasonable request to corresponding author; paper describes 2000 CF4TF mocks based on 250 L-PICOLA boxes, survey geometry and luminosity selection; not full CF4 group/method/calibration genealogy",
+      "qualifies_for_H02": false
+    },
+    {
+      "url": "https://academic.oup.com/mnras/article/526/2/3051/7296158",
+      "source": "Watkins et al., Evaluating bulk flow estimators for CosmicFlows-4 measurements, MNRAS 526 (2023)",
+      "observed": "Data Availability says simulated CF4 and 6dFGSv/CF4TF subsets may be shared upon request; SDSS mocks separately public at Zenodo 6640513. Section 2.4 says combined mocks stack SDSS, 6dFGSv, CF4TF; other distance methods and overlap are present in the actual CF4 catalog. Reported relative zero-point +/-0.017 is a sensitivity intervention, not source posterior or full covariance.",
+      "qualifies_for_H02": false
+    },
+    {
+      "url": "https://github.com/abbew25/Measuring_bulkflows",
+      "source": "Watkins et al. linked author repository",
+      "observed": "Public tree contains bulk-flow estimator code, create_mock_data.py, results and example_surveymock.dat; README describes the .dat as an example input rather than the source CF4 ensemble, and paper puts realistic CF4 mocks on request.",
+      "qualifies_for_H02": false
+    }
+  ],
+  "source_map": {
+    "released_table": "source membership and marginal distances/uncertainties are available",
+    "method_overlap": "released group overlap already measured",
+    "parent_targeting": "full upstream inclusion/rejection/inspection and distance-dependent normalizer unavailable",
+    "shared_calibration": "source joint zero-point/relative/angular posterior or covariance and contributor genealogy unavailable",
+    "velocity_covariance": "source-qualified common/group/PV covariance unavailable",
+    "nulls": "CF4TF and combined CF4 source mocks are request-only and still need proof of H02 statistic, group overlap, selection and calibration matching"
+  },
+  "source_conflicts_and_limits": [
+    "CF4TF mock algorithm is for a constituent TF sample; it does not establish the complete 35,970 selected-group H02 joint law.",
+    "Combined bulk-flow mocks are designed for bulk-flow estimator tests, not automatically for H02 window/shape statistic or released-group distance likelihood.",
+    "A reported +/-0.017 log-distance-ratio zero-point injection does not estimate the joint shared calibration covariance.",
+    "The reviewed R23-DISTANCE conditional coverage of 3890/4096 is generated under an authored law; observed residual T criticizes that law."
+  ],
+  "issue": {
+    "class": "input",
+    "question": "Can CF4/CF4TF source authors provide a versioned, no-auth release or direct authorized snapshot of the actual parent inclusion/rejection history, method/group and calibration ancestry with joint calibration/PV law, and H02-compatible source null catalogues or generator/seed/normalization contract?",
+    "exact_missing_or_defect": "Published released group/TF tables and scoped target-conditioned joins do not identify the parent targeting/detection/rejected-source probabilities or full shared calibration/group/PV covariance. The newly checked primary CF4TF and combined-CF4 papers explicitly put their realistic mock catalogues on author request; the public estimator repository only offers example mock input and code. Existing authored conditional law fails its actual-data residual diagnostic.",
+    "input_identity": "sha256:63c94aa82bdef875a7412f2c9f7248f0614ce1614b725cbe60e874744c0ee284",
+    "substantive": true,
+    "true_external": true,
+    "risk": "Treating selected-release fractions or synthetic conditional coverage as the source law would create unsupported physical precision and a false H02 PASS.",
+    "external_payload": {
+      "required": [
+        "Versioned full CF4 parent targeting/observing/rejection and distance/quality selection history with source IDs and PGC-to-group/method ancestry, or an author-qualified inclusion/selection likelihood and normalization for the H02 selected cohort",
+        "Source-qualified joint relative/common/angular calibration covariance or posterior and group/peculiar-velocity covariance with explicit shared components and no-double-counting rule",
+        "Actual CF4 or constituent survey source null mock catalogues or reproducible generator/seed and calibration/selection contract sufficient to reproduce the source nulls for the fixed H02 statistic and method-group overlap"
+      ],
+      "source_or_owner": "CF4/CF4TF/6dFGSv/SDSS survey and mock authors; CF4 group release and EDD upstream contributors",
+      "exhaustion_receipt": "/tmp/r23_h02_baf792ef/RETURN.json"
+    }
+  },
+  "next_executable_checkpoint": "Owner/controller may seek the specified source-author payload or a verifiable public release and, only after identity and method-group/selection/covariance qualification, execute H02 source null reproduction against the retained selected cohort. Continue independent READY campaign work meanwhile.",
+  "not_universal_absence_claim": true,
+  "tests": "NOT_RUN_READ_ONLY_SOURCE_INTAKE",
+  "utc_recorded": "2026-10-23T01:44:22.786948+00:00"
+}

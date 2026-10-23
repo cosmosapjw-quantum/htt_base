@@ -1,0 +1,73 @@
+{
+  "owner": "HTT method research",
+  "scope": "fixed K03 Gaussian working experiment; illustrative parameter domains",
+  "source_commit": "cd2bf729f12a4229f0bb423850372a511dcff78b",
+  "original_acceptance_promoted": false,
+  "assumptions": [
+    "same frozen covariance",
+    "Gaussian mean experiment",
+    "local parameters profiled",
+    "R*norm(b)<=epsilon is an illustrative domain, not a remainder certificate"
+  ],
+  "input_sha256": "f7c584074d95d94d4aca6981c55a3380915a130ef57c985c55054e445903f438",
+  "covariance_eigenvalues": [
+    0.6631896090691883,
+    0.6967907812958589,
+    0.8788988664685646
+  ],
+  "information_eigenvalues": [
+    1.1377873361220983,
+    1.4351510192776185,
+    1.5078643970365249
+  ],
+  "rows": [
+    {
+      "epsilon": 0.01,
+      "amplitude_max_uasyr": 1.9690591538992444e-05,
+      "mahalanobis_max": 2.417908749302638e-05,
+      "noncentrality_max": 5.846282719954248e-10,
+      "gaussian_level_005_power_upper": 0.05000249377526175
+    },
+    {
+      "epsilon": 0.1,
+      "amplitude_max_uasyr": 0.00019690591538992446,
+      "mahalanobis_max": 0.00024179087493026385,
+      "noncentrality_max": 5.846282719954249e-08,
+      "gaussian_level_005_power_upper": 0.05002494221604289
+    },
+    {
+      "epsilon": 0.3,
+      "amplitude_max_uasyr": 0.0005907177461697734,
+      "mahalanobis_max": 0.0007253726247907915,
+      "noncentrality_max": 5.261654447958825e-07,
+      "gaussian_level_005_power_upper": 0.050074856411508
+    }
+  ],
+  "checks": {
+    "schur_absolute_residual": 1.3322676295501878e-15,
+    "angular_norm_absolute_residual": 2.42861286636753e-17,
+    "kinetic_bound_max_violation": 0.0,
+    "rotation_norm_residual": 0.0,
+    "orbit_scaled_example_lower": 0.07843468620451027,
+    "orbit_scaled_example_upper": 0.07843468620451025,
+    "G_F_ratio_of_bin_means": 1.0,
+    "mean_of_draw_ratios": 1.4444444444444444,
+    "gauge_rotation_error": 1.1102230246251565e-16,
+    "gauge_perturbation_interval": [
+      0.5069294402710882,
+      0.7858763108546163
+    ],
+    "gauge_perturbed_value": 0.5810304397207483,
+    "support_hausdorff_error": 1.1102230246251565e-16,
+    "fixed_fibre_witness_error": 3.774758283725532e-15,
+    "depth_likelihood_error": 5.551115123125783e-17,
+    "depth_fisher_error": 4.440892098500626e-16
+  },
+  "environment": {
+    "python": "3.12.14",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8"
+  }
+}

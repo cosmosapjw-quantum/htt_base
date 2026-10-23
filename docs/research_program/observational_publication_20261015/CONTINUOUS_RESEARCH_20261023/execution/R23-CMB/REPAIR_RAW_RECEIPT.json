@@ -1,0 +1,63 @@
+{
+  "packet_id": "bc1063a3e4fed734bb884d5cc405987283a99f393f467299f461e85ac656a442",
+  "task_id": "R23-CMB",
+  "attempt": 3,
+  "phase": "repair",
+  "input_identity": "sha256:6186378e8671b67dde9a54c55a8a40c2dafb8b24eb18a6934abf9d24276f14de",
+  "previous_candidate_identity": "sha256:f8a5ca598bb77a4341a17877599e8132856d25c5047049d24b53c8b2beeabad5",
+  "candidate_identity": "sha256:022d91f327ddadb05159f748dbd56a64d47c678cf1c8f234ac3115a87967acae",
+  "agent_id": "/root/rc_bc1063a3e4fed734",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "outcome": "REPORT_WORDING_REPAIR_APPLIED",
+  "scope": "Exact approved REPORT.md wording replacement and REPORT.md seal update in ARTIFACT_MANIFEST.json",
+  "archive": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/PRE_WORDING_REPAIR",
+    "old_manifest_sha256": "f8a5ca598bb77a4341a17877599e8132856d25c5047049d24b53c8b2beeabad5",
+    "old_report_sha256": "9625c480fd15f6eebd6ccb9c00ad7505e7947e966ce6663b9894a3581d59f400",
+    "old_return_sha256": "2025112e3e4ffa20fc9b777997ef23b3a96ca2aa8ae30d368629b9b4db230aed",
+    "old_review_initial_sha256": "9af666cc82579e6f64a0bf54a2ba5b1593ab34f3ce259b68cdf1f65c4d3a4c41",
+    "manifested_payload_count": 9,
+    "archived_manifest_and_all_payloads_verified": true
+  },
+  "current": {
+    "manifest_sha256": "022d91f327ddadb05159f748dbd56a64d47c678cf1c8f234ac3115a87967acae",
+    "report_sha256": "5e76f221f91023343ac32d339f52b1e8ac6c4c389bdf129d153f595e6d67fa2e",
+    "report_bytes": 8498,
+    "unchanged_manifested_payloads": [
+      "projection.py",
+      "plot.py",
+      "validate.py",
+      "RESULT.json",
+      "VALIDATION.json",
+      "RAW_RECEIPT.json",
+      "SPLIT_PROJECTION.png",
+      "SPLIT_PROJECTION.pdf"
+    ],
+    "all_current_manifest_hashes_and_sizes_verified": true,
+    "report_diff": "--- PRE_WORDING_REPAIR/REPORT.md\n+++ REPORT.md\n@@ -54,8 +54,9 @@\n E[z1ᵀz2] = a1ᵀa2 + tr(N12).\n ```\n \n-A matched common response cancels in D only when a_-=0. Different weights,\n-beams, foreground responses and systematics remain in a_-. Even for matched\n+The entire deterministic contribution cancels in D if and only if a_-=0.\n+Any component with the same processed response cancels, while differential\n+responses from weights, beams, foregrounds and systematics remain in a_-. Even for matched\n a=g+f_common+b_common the cross-power contains ||g||²,\n 2gᵀ(f_common+b_common), ||f_common+b_common||² and tr(N12).\n Difference-power subtraction therefore does not isolate the CMB. Cross HM/OE\n"
+  },
+  "original_independent_review": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runtime/r23-continuous/CMB_REVIEW_INITIAL_RAW.json",
+    "sha256": "9af666cc82579e6f64a0bf54a2ba5b1593ab34f3ce259b68cdf1f65c4d3a4c41",
+    "preserved": true
+  },
+  "validation": [
+    "Archived original candidate manifest and all nine payloads match their frozen SHA256 and size values.",
+    "Current manifest and all nine payloads match their SHA256 and size values.",
+    "Exactly the approved report phrase was replaced once; all other report bytes are unchanged.",
+    "Only the REPORT.md SHA256 and bytes fields differ in ARTIFACT_MANIFEST.json.",
+    "Eight other manifested payloads are byte-identical to archived originals.",
+    "Original review receipt is preserved with its stated SHA256."
+  ],
+  "scientific_status": "DIAGNOSTIC_ONLY",
+  "claim_tier": "C0",
+  "owner": "obsstat",
+  "transfer_source": "none",
+  "original_L03_complete": false,
+  "physical_joint_null_status": "HOLD",
+  "p_value": null,
+  "numerical_replay_performed": false,
+  "independent_review": "PENDING_ORIGINAL_REVIEWER_TARGETED_CLOSEOUT_AND_FRESH_FINAL_CANDIDATE_REVIEW",
+  "commit_or_push_performed": false
+}

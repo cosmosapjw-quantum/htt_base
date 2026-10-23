@@ -1,0 +1,136 @@
+{
+  "contract": {
+    "advisor": "/root/nonlinear_optical_contract",
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "issue_identity": "existing optical firstorder scope issue;newfiniteqcounterexample/no ultra",
+    "question": "Actualsame274rownonlinearleadinglowzlogresponseafterbaseline+calibrationdipole+opticalSTFnuisance;noise/remainderthresholds",
+    "source_read": "ReadcachedRELEASED_ROWS andDIRECTION_JOIN directly,uniquePGCorder;DONOTcalldistance.load orconsumeobservedDMbest/outcomesforfit/scenarioselection",
+    "rows": 274,
+    "marks": 628,
+    "undefined": 354,
+    "PGC9031_Vcmb_km_s": 317,
+    "frame": "J2000equatorialsourcepointing",
+    "directions": [
+      "+ex",
+      "-ex",
+      "+ey",
+      "-ey",
+      "+ez",
+      "-ez",
+      "+(1,1,1)/sqrt3",
+      "-(1,1,1)/sqrt3"
+    ],
+    "amplitudes": [
+      0,
+      0.01,
+      0.03,
+      0.1,
+      0.2,
+      0.3
+    ],
+    "response": "q_i=a*d.n_i;f_i=-(5/ln10)*log1p(-q_i)mag;1-q>=.7;exactinqonlywithinleadinglowzzeroshearlaw,notfinitezmodel",
+    "nuisance": "12columns baseline[1,log10Vcmb,logWmxi,e_logW]+n3+fiveFrobeniusorthonormalSTF fromsealedcontract;noflowordepthcolumns;centering/scalingpreservesspan",
+    "covariance": "V=diag(s\u00b2-ac\u00b2)+ac\u00b211T+bc\u00b2GGt;four(ac,bc)=(0,0),(0,.29),(.055,0),(.055,.29)mag",
+    "law": "Y=Xbeta+f+epsilon,epsilonN(0,tau\u00b2V),KNOWNHYPOTHETICALtau=.5,1,2,4;notestimatedfromoutcomes",
+    "compute": "V=LLT,W=Linv,Q=orth(WX);s_f=(I-QQT)Wf;d0=norm(s_f);e_f=L s_f;reportd0\u00b2,residualfraction(zero=0),RMS/maxresidualmag",
+    "cubic": "projectx=projectx\u00b2=0;projectx\u00b3=(2/5)projectP3(x);s_f=(2*k*a\u00b3/15)projectW P3(x)+O(a4);selectedskyprojectionnotpureharmonicmeasurement",
+    "oracle_power": "Phi(Phiinv(.05)+d0/tau),simplefixedalternativenotempiricalp/selected-directionpower; tau80=d0/(Phiinv(.8)-Phiinv(.05))",
+    "remainder": "sameprojectedwhitenedballBrho undereachhypothesis;rho=0,1e-4,1e-3,1e-2,.1,1;overlaprho*=d0/2;robustmaximinPhi(Phiinv(.05)+max(0,d0-2rho)/tau);overlapbenchmark .05 with explicitsharedmidpointwitness",
+    "physical_remainder": "unrestrictedbycurrentinputs=>physicalattributionvacuous;scenarioradiiNOTmeasuredbounds",
+    "numerics": {
+      "unitdirections_STF_atol": 1e-12,
+      "nuisance_rank": 12,
+      "scaled_rank_primary": 1e-10,
+      "rank_sensitivity": [
+        1e-08,
+        1e-12
+      ],
+      "projected_linear_quadratic_scaled_tolerance": 1e-10,
+      "independent_eigenwhitening_reference": {
+        "rtol": 1e-09,
+        "atol": 1e-10
+      },
+      "small_amplitudes": [
+        0.001,
+        0.002
+      ],
+      "cubic_remainder_bound": "||W||2 sqrt274 k a4/[4(1-a)] + scaled1e-12",
+      "q01_antipodal_sum_mag": 0.021824027012250224,
+      "antipodal_atol": 1e-12,
+      "no_jitter_or_tolerance_relax": true
+    },
+    "controls": [
+      "identityandPGCgroupvelocityjoin",
+      "SPDcovariancediagonalaccounting",
+      "rank3thresholds",
+      "linear/quadraticnuisanceexactabsorption",
+      "cubicrelation/bound",
+      "independentsymmetriceigenwhiteningSVDd0\u00b2",
+      "zerosignalpower,sizeandnoise/remaindermonotonicity",
+      "meanintersectionmidpoint"
+    ],
+    "limits": {
+      "production_seconds": 180,
+      "test_seconds": 180,
+      "BLAS_threads": 1,
+      "production_factorizations": 4,
+      "fixed_templates": 48,
+      "no_MonteCarlo_or_optimization_over_scenarios": true,
+      "no_download_or_sourcepass": true
+    },
+    "scope": "newconditionalobservable,nophysicalacceleration/coverage/originalacceptancepromotion"
+  },
+  "sources": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_REBOOT_20261023/THEOREMS.md",
+      "sha256": "a2c7611fccbec990d466be255dea2ac87d246a2c155cb508a89e8e244abcac0d",
+      "bytes": 25159
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/BOOST_REVIEW_INITIAL_RAW.json",
+      "sha256": "5e742f4afe4836918c203311121695e5a00743089ebbb2fdcbe3dc327b9bbfa2",
+      "bytes": 1900
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/FRONTIER_DISTANCE_CONSUMERS.json",
+      "sha256": "03ebf831f438da59d97010c8b28acf603ac732fe09b1e0ead662216eb87e8ab5",
+      "bytes": 7047
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/REPAIR_MANIFEST.json",
+      "sha256": "6284edcecfc0cf1f40dee8ec050af1026065196e718fa919593c32bbf5677519",
+      "bytes": 4440
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/RESULT.json",
+      "sha256": "7566c46526e76d04b60193848f431b32b56ed6e7c06a19b8de0733411b5c85c6",
+      "bytes": 139402
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/REPORT.md",
+      "sha256": "1dd36e021a8d094ff787d2f24ff5a233ed3005fab5c25cac31f3953b3f0c739e",
+      "bytes": 7366
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/ARTIFACT_MANIFEST.json",
+      "sha256": "1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b",
+      "bytes": 3058
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/CONTRACT.json",
+      "sha256": "150ce8734027c228af6daa042349f287d8de99dd71f60ffb79c26a7483f756fd",
+      "bytes": 3112
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/DIRECTION_JOIN.csv",
+      "sha256": "4e6e9c991ecdf2fda2a403f68a4ea5d744e244c73478eef1c70efbf007852b9a",
+      "bytes": 21002
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/RELEASED_ROWS.csv",
+      "sha256": "c7912bd7dd983cdcdf47408a89da9f2b76887a0cc37fd9b5a9a8e83e03d3fe20",
+      "bytes": 13821
+    }
+  ]
+}

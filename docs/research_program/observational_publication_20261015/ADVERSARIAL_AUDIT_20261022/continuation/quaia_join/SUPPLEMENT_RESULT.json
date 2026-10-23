@@ -1,0 +1,36 @@
+{
+  "owner": "obsstat",
+  "scope": "full Quaia G20 exact Gaia ID covariance supplementation",
+  "claim_tier": "C0_SOURCE_JOIN",
+  "quaia_rows": 755850,
+  "cached_matches": 692154,
+  "subset_rows": 63696,
+  "final_join_rows": 755850,
+  "missing_rows": 0,
+  "subset_job": {
+    "job_url": "https://gaia.ari.uni-heidelberg.de/tap/async/1792690491385",
+    "query": "SELECT g.source_id,g.pmra_pmdec_corr,g.ruwe,g.astrometric_params_solved FROM gaiadr3.gaia_source AS g JOIN TAP_UPLOAD.ids AS u ON g.source_id=u.source_id",
+    "missing_ids_sha256": "e00a92756a6ed0babaa6fb8942d30a002b8a55bd14e39483736e11f60be98886",
+    "requested_rows": 63696,
+    "created_utc": "2026-10-22T17:34:54.715387+00:00",
+    "phase": "COMPLETED",
+    "result_url": "https://gaia.ari.uni-heidelberg.de/tap/async/1792690491385/results/result",
+    "bytes": 1640346,
+    "sha256": "8ae88a4c24019481029ed8520c45a97af5b4e377ed6566bb3be338c73b30f63a",
+    "result_path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/supplement.vot"
+  },
+  "query_status": [
+    "OK"
+  ],
+  "covariance": "reported per-source 2x2 PM blocks only",
+  "artifact": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_gaia_full_join.npz",
+    "bytes": 104598751,
+    "sha256": "4cd83b1e8bb9f71f89aacfc2db5daba87f9a79f2af8ccd2e7e94b0be57252dae"
+  },
+  "caveats": [
+    "Relative selection values/templates are covariates, not absolute inclusion probabilities or inverse weights.",
+    "Measured PM cut and upstream Gaia classifiers make intrinsic untruncated Gaussian inference unqualified.",
+    "No cross-source covariance, acceleration, congruence transfer or original K03 admission is supplied."
+  ]
+}

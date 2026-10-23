@@ -1,0 +1,270 @@
+{
+  "schema": "htt.open_input_acquisition/1",
+  "created_utc": "2026-10-18",
+  "authorization": "Owner authorized autonomous public unauthenticated data downloads for solver-free research. No login/purchase/external code execution.",
+  "allowed_hosts": [
+    "raw.githubusercontent.com",
+    "pla.esac.esa.int",
+    "cdsarc.cds.unistra.fr",
+    "irsa.ipac.caltech.edu",
+    "projets.ip2i.in2p3.fr",
+    "www.cosmos.esa.int",
+    "gaia.ari.uni-heidelberg.de"
+  ],
+  "resources": [
+    {
+      "id": "PANTHEON_DISTANCE",
+      "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES.dat",
+      "path": "pantheonplus/c447f0f/Pantheon_SH0ES.dat",
+      "format": "text",
+      "max_bytes": 1000000,
+      "expected_bytes": 579283,
+      "required_prefix_tokens": [
+        "CID",
+        "zHD",
+        "m_b_corr"
+      ],
+      "auto_fetch": true,
+      "node_ids": [
+        "H02",
+        "H04",
+        "K04"
+      ],
+      "purpose": "Cross-survey distance/calibrator metadata; cross-match repeated objects before inference",
+      "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8"
+    },
+    {
+      "id": "PANTHEON_STAT_SYS",
+      "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES_STAT%2BSYS.cov",
+      "path": "pantheonplus/c447f0f/Pantheon_SH0ES_STAT_SYS.cov",
+      "format": "text",
+      "max_bytes": 40000000,
+      "expected_bytes": 33284960,
+      "required_prefix_tokens": [
+        "1701"
+      ],
+      "auto_fetch": true,
+      "node_ids": [
+        "H02",
+        "H04",
+        "K04"
+      ],
+      "purpose": "Full released covariance in exact distance-row order; not independent CF4 calibration",
+      "sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc"
+    },
+    {
+      "id": "SMICA_WEIGHTS_PR3",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SOFTWARE.FILE_ID=COM_Code_SMICA-weights-propagation_R3.00.tar.gz",
+      "path": "planck/PR3/weights/COM_Code_SMICA-weights-propagation_R3.00.tar.gz",
+      "format": "tar.gz",
+      "max_bytes": 80000000,
+      "max_expanded_bytes": 500000000,
+      "expected_bytes": 74625775,
+      "sha256": "044ec9bed746ae745ad35a8b6ccf6e603f546083fec328e9c64d866ac9221f93",
+      "auto_fetch": true,
+      "node_ids": [
+        "L03"
+      ],
+      "purpose": "Inspect weights/beam propagation; do not execute downloaded code"
+    },
+    {
+      "id": "CF4_HI_TABLE2",
+      "url": "https://cdsarc.cds.unistra.fr/ftp/J/A+A/646/A113/table2.dat",
+      "path": "cf4/HI_646_A113/table2.dat",
+      "format": "text",
+      "max_bytes": 1000000,
+      "expected_bytes": 40192,
+      "sha256": "2e7e9f979aeb862ae59ac40b377953de7602c2574515b2c880c0b55cb838249c",
+      "auto_fetch": true,
+      "node_ids": [
+        "H02",
+        "S02",
+        "K04"
+      ],
+      "purpose": "Target outcomes/contributor join for a fixed published cohort"
+    },
+    {
+      "id": "CF4_HI_TABLE4",
+      "url": "https://cdsarc.cds.unistra.fr/ftp/J/A+A/646/A113/table4.dat",
+      "path": "cf4/HI_646_A113/table4.dat",
+      "format": "text",
+      "max_bytes": 1000000,
+      "expected_bytes": 42042,
+      "sha256": "88e453c7c559f663fa61782707e4b47fdc2b752dcfda84d5dccd0d9103c4b8a3",
+      "auto_fetch": true,
+      "node_ids": [
+        "H02",
+        "S02",
+        "K04"
+      ],
+      "purpose": "Target outcomes/contributor join for a fixed published cohort"
+    },
+    {
+      "id": "CF4_HI_README",
+      "url": "https://cdsarc.cds.unistra.fr/ftp/J/A+A/646/A113/ReadMe",
+      "path": "cf4/HI_646_A113/ReadMe",
+      "format": "text",
+      "max_bytes": 1000000,
+      "required_prefix_tokens": [
+        "J/A+A/646/A113"
+      ],
+      "auto_fetch": true,
+      "node_ids": [
+        "H02"
+      ],
+      "purpose": "Fixed-width column definitions; reconcile summary typo against rows and paper",
+      "expected_bytes": 6668,
+      "sha256": "bb5e9748e2b35d0dbc3271eb739913c1998a024fd00c2457bdf45d03ab83b7a7"
+    },
+    {
+      "id": "SMICA_NOISE_HM1_00000",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_smica_noise_hm1_mc_00000_raw.fits",
+      "path": "planck/PR3/split_noise/dx12_v3_smica_noise_hm1_mc_00000_raw.fits",
+      "format": "fits",
+      "min_bytes": 603979776,
+      "max_bytes": 1000000000,
+      "auto_fetch": false,
+      "node_ids": [
+        "L03"
+      ],
+      "purpose": "Matched nominal-ID split noise pilot; header access verified, full payload NOT downloaded in this run. No sharedseed/independence admission."
+    },
+    {
+      "id": "SMICA_NOISE_HM2_00000",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_smica_noise_hm2_mc_00000_raw.fits",
+      "path": "planck/PR3/split_noise/dx12_v3_smica_noise_hm2_mc_00000_raw.fits",
+      "format": "fits",
+      "min_bytes": 603979776,
+      "max_bytes": 1000000000,
+      "auto_fetch": false,
+      "node_ids": [
+        "L03"
+      ],
+      "purpose": "Matched nominal-ID split noise pilot; header access verified, full payload NOT downloaded in this run. No sharedseed/independence admission."
+    },
+    {
+      "id": "SMICA_NOISE_OE1_00000",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_smica_noise_oe1_mc_00000_raw.fits",
+      "path": "planck/PR3/split_noise/dx12_v3_smica_noise_oe1_mc_00000_raw.fits",
+      "format": "fits",
+      "min_bytes": 603979776,
+      "max_bytes": 1000000000,
+      "auto_fetch": false,
+      "node_ids": [
+        "L03"
+      ],
+      "purpose": "Matched nominal-ID split noise pilot; header access verified, full payload NOT downloaded in this run. No sharedseed/independence admission."
+    },
+    {
+      "id": "SMICA_NOISE_OE2_00000",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_smica_noise_oe2_mc_00000_raw.fits",
+      "path": "planck/PR3/split_noise/dx12_v3_smica_noise_oe2_mc_00000_raw.fits",
+      "format": "fits",
+      "min_bytes": 603979776,
+      "max_bytes": 1000000000,
+      "auto_fetch": false,
+      "node_ids": [
+        "L03"
+      ],
+      "purpose": "Matched nominal-ID split noise pilot; header access verified, full payload NOT downloaded in this run. No sharedseed/independence admission."
+    },
+    {
+      "id": "HFI_RIMO_BEAMS_PR3",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/HFI_RIMO_BEAMS_R3.01.tar.gz",
+      "path": "planck/PR3/beams/HFI_RIMO_BEAMS_R3.01.tar.gz",
+      "format": "tar.gz",
+      "expected_bytes": 86556876,
+      "max_bytes": 90000000,
+      "max_expanded_bytes": 1000000000,
+      "auto_fetch": false,
+      "node_ids": [
+        "L03"
+      ],
+      "purpose": "Read beam conventions; no full anisotropic split-response admission"
+    },
+    {
+      "id": "GAIA_CRF3_MEMBERSHIP",
+      "url": "https://www.cosmos.esa.int/documents/29201/1658422/gaiadr3.gaia_crf3_xm.ecsv.gz/644f3657-27bf-0cff-da37-eb6e2478678d?t=1635868539239",
+      "path": "gaia/DR3/gaiadr3.gaia_crf3_xm.ecsv.gz",
+      "format": "gzip",
+      "expected_bytes": 56064899,
+      "max_bytes": 60000000,
+      "max_expanded_bytes": 800000000,
+      "auto_fetch": false,
+      "node_ids": [
+        "K03"
+      ],
+      "purpose": "Full CRF3 source membership for complete public TAP join; this is not proper-motion data itself"
+    },
+    {
+      "id": "VLBA_713_PM",
+      "url": "https://cdsarc.cds.unistra.fr/ftp/J/ApJS/233/3/table6.dat",
+      "path": "vlba/233_3/table6.dat",
+      "format": "text",
+      "expected_bytes": 99085,
+      "sha256": "5358da3b6233194cad556010259400b729b7472c5037e39facf1f413e2aa3bff",
+      "max_bytes": 1000000,
+      "auto_fetch": true,
+      "node_ids": [
+        "K03"
+      ],
+      "purpose": "Radio proper motion control713; missing crosscomponentcovariance andNNRframe effects remain"
+    },
+    {
+      "id": "VLBA_713_README",
+      "url": "https://cdsarc.cds.unistra.fr/ftp/J/ApJS/233/3/ReadMe",
+      "path": "vlba/233_3/ReadMe",
+      "format": "text",
+      "expected_bytes": 13460,
+      "sha256": "cb6d18077090e27b803924068c2c9a8b52e2991d61882ff6cc502cefe0274b98",
+      "max_bytes": 1000000,
+      "auto_fetch": true,
+      "node_ids": [
+        "K03"
+      ],
+      "purpose": "Read original proper-motion column/units definitions"
+    },
+    {
+      "id": "PANTHEON_SIM_PILOT",
+      "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/6_SIMULATIONS/LCFITS/SIM_0001.FITRES.gz",
+      "path": "pantheonplus/c447f0f/SIM_0001.FITRES.gz",
+      "format": "gzip",
+      "expected_bytes": 514308,
+      "sha256": "2a26a338dfe2549b969ef57c98e0f429cc4d0c798d045d4b72a44f7146e3ca2b",
+      "max_bytes": 1000000,
+      "max_expanded_bytes": 10000000,
+      "auto_fetch": true,
+      "node_ids": [
+        "H02",
+        "H04"
+      ],
+      "purpose": "Selection/bias simulation source inspection; FITRES has no RA/DEC, not directionalnull"
+    },
+    {
+      "id": "CF4_GROUPED_VELOCITY",
+      "url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4gp_new_64-z008_velocity.fits",
+      "path": "cf4/flow/CF4gp_new_64-z008_velocity.fits",
+      "format": "fits",
+      "max_bytes": 10000000,
+      "auto_fetch": false,
+      "node_ids": [
+        "H04",
+        "K04"
+      ],
+      "purpose": "Dependent reconstructed-flow control; author52factor for velocity/errors; inspectaxes"
+    },
+    {
+      "id": "CF4_GROUPED_VELOCITY_CUBE_ERROR",
+      "url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4gp_new_64-z008_velocity_cube_error.fits",
+      "path": "cf4/flow/CF4gp_new_64-z008_velocity_cube_error.fits",
+      "format": "fits",
+      "max_bytes": 10000000,
+      "auto_fetch": false,
+      "node_ids": [
+        "H04",
+        "K04"
+      ],
+      "purpose": "Dependent reconstructed-flow control; author52factor for velocity/errors; inspectaxes"
+    }
+  ]
+}

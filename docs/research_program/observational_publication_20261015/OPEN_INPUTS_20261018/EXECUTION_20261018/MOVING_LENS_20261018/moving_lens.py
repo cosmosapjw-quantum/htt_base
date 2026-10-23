@@ -1,0 +1,298 @@
+"""Source-conditioned scalar-compression falsifier and bias sensitivity.
+
+No common-filter bandpowers, foreground calibration, or physical velocity are
+inferred from the independently fitted published scalar amplitudes.
+"""
+import argparse
+import hashlib
+from html.parser import HTMLParser
+import json
+import math
+from pathlib import Path
+import re
+import subprocess
+from statistics import NormalDist
+
+HERE = Path(__file__).resolve().parent
+RAW = Path('/mnt/extdrive/workdir/htt_open_data/moving_lens_20261018')
+SOURCE_URL = 'https://arxiv.org/html/2605.18938v1'
+FROZEN_HEAD = 'ad27f4cb5f84dfaccc322e53f2810ad29dc72276'
+
+
+class Node:
+    def __init__(self, tag, attrs):
+        self.tag, self.attrs, self.children = tag, dict(attrs), []
+
+    def text(self):
+        if self.tag == 'math':
+            return self.attrs['alttext']
+        return ''.join(c if isinstance(c, str) else c.text() for c in self.children)
+
+    def walk(self):
+        yield self
+        for child in self.children:
+            if isinstance(child, Node):
+                yield from child.walk()
+
+
+class SourceHTML(HTMLParser):
+    VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
+
+    def __init__(self, payload):
+        super().__init__(convert_charrefs=True)
+        self.root = Node('root', [])
+        self.stack = [self.root]
+        self.feed(payload)
+        self.by_id = {n.attrs['id']: n for n in self.root.walk() if 'id' in n.attrs}
+
+    def handle_starttag(self, tag, attrs):
+        node = Node(tag, attrs)
+        self.stack[-1].children.append(node)
+        if tag not in self.VOID:
+            self.stack.append(node)
+
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        if tag not in self.VOID:
+            self.handle_endtag(tag)
+
+    def handle_endtag(self, tag):
+        for index in range(len(self.stack) - 1, 0, -1):
+            if self.stack[index].tag == tag:
+                del self.stack[index:]
+                return
+
+    def handle_data(self, data):
+        self.stack[-1].children.append(data)
+
+
+def normalized(text):
+    return ' '.join(text.split())
+
+
+def amplitude(text):
+    match = re.fullmatch(r'([+\-]?\d+\.\d+)\s*\\pm\s*(\d+\.\d+)', normalized(text))
+    if not match:
+        raise ValueError(f'Expected one printed amplitude and uncertainty: {text!r}')
+    center, sd = map(float, match.groups())
+    if sd <= 0:
+        raise ValueError('Nonpositive published uncertainty')
+    return dict(center=center, sd=sd, printed=normalized(text))
+
+
+def table_rows(document, table_id):
+    rows = []
+    for n in document.by_id[table_id].walk():
+        if n.tag == 'tr':
+            cells = [c for c in n.children if isinstance(c, Node) and c.tag in {'td', 'th'}]
+            rows.append(dict(source_id=n.attrs.get('id'),
+                             cells=[normalized(c.text()) for c in cells]))
+    return rows
+
+
+def extract_source(html_path=RAW / '2605.18938v1.html'):
+    document = SourceHTML(html_path.read_text())
+    tables = {name: table_rows(document, name) for name in ['S5.T1', 'S5.T2']}
+    individuals, differences = {}, {}
+    for table_id, target, column in [('S5.T1', individuals, 6), ('S5.T2', differences, 7)]:
+        section = None
+        for row in tables[table_id]:
+            cells = row['cells']
+            if len(cells) == 1:
+                section = cells[0]
+            elif len(cells) > column and cells[1] == 'NGC+SGC':
+                try:
+                    value = amplitude(cells[column])
+                except ValueError:
+                    continue
+                target[section] = dict(**value, source_row_id=row['source_id'],
+                                       source_column_1based=column + 1,
+                                       sample='extended', footprint='NGC+SGC')
+    # Extraction is from math alttext, keeping exact source IDs for audit.
+    vi_amplitudes = []
+    for source_id in ['S6.SS1.p6.m1', 'S6.SS1.p6.m3', 'S6.SS1.p6.m5']:
+        node = document.by_id[source_id]
+        match = re.search(r'([+\-]?\d+\.\d+)\s*\\pm\s*(\d+\.\d+)', node.attrs['alttext'])
+        vi_amplitudes.append(dict(**amplitude(match.group()), source_id=source_id))
+    if [(x['center'], x['sd']) for x in vi_amplitudes] != [(1.06, .27), (-.07, .14), (-.01, .10)]:
+        raise ValueError('VI.1 amplitudes differ from the frozen source contract')
+    conclusion = document.by_id['S7.I1.i1.p1.m3']
+    text = conclusion.attrs['alttext']
+    match = re.search(r'([+\-]?\d+\.\d+)\s*\\pm\s*(\d+\.\d+)', text)
+    alternate = dict(**amplitude(match.group()), source_id=conclusion.attrs['id'])
+    selected_ids = ['S3.E24', 'S3.E25', 'S6.SS1.p2', 'S6.SS1.p3', 'S6.SS1.p4',
+                    'S6.SS1.p6', 'S6.SS1.p7', 'S7.I1.i1.p1']
+    extracts = {key: normalized(document.by_id[key].text()) for key in selected_ids if key in document.by_id}
+    return dict(source_url=SOURCE_URL, source_release='arXiv:2605.18938v1',
+                extraction_method='HTML table cells and MathML alttext via stdlib HTMLParser',
+                individual_extended_combined=individuals,
+                difference_extended_combined=differences,
+                vi1=dict(act150=vi_amplitudes[0], cib353_to150=vi_amplitudes[1],
+                         cib545_to150=vi_amplitudes[2], conclusion_cib545_to150=alternate),
+                selected_source_extracts=extracts,
+                table_headers_and_rows=tables)
+
+
+def contrast_interval(a, b, alpha=.05, rounding_step=0., dependence='arbitrary'):
+    """Union-bound interval for a fixed contrast of two Gaussian marginals.
+
+    Each marginal failure probability is alpha/2; each tail alpha/4.
+    Printed centers and SDs are outward-enveloped for nearest rounding.
+    """
+    if dependence != 'arbitrary':
+        raise ValueError('Independence is unsupported; use arbitrary dependence')
+    if not 0 < alpha < 1 or not math.isfinite(rounding_step) or rounding_step < 0:
+        raise ValueError('Invalid alpha or rounding step')
+    if any(not math.isfinite(x[k]) for x in [a, b] for k in ['center', 'sd']):
+        raise ValueError('Finite centers and uncertainties required')
+    if min(a['sd'], b['sd']) <= 0:
+        raise ValueError('Positive SDs required')
+    q = NormalDist().inv_cdf(1 - alpha / 4)
+    center = a['center'] - b['center']
+    radius = rounding_step + q * (a['sd'] + b['sd'] + rounding_step)
+    return dict(center=center, interval=[center-radius, center+radius], q=q,
+                alpha=alpha, marginal_coverage=1-alpha/2,
+                simultaneous_coverage_lower_bound=1-alpha,
+                dependence='arbitrary', rounding_step=rounding_step,
+                working_model='Two source-conditioned Gaussian marginals; no new empirical coverage validation')
+
+
+def physical_interval(interval, delta=None):
+    if delta is None:
+        return dict(status='UNBOUNDED', interval=None, endpoints=['-infinity', '+infinity'],
+                    reason='No justified observed bound on total filter/SED/other error')
+    if not math.isfinite(delta) or delta < 0:
+        raise ValueError('Delta must be finite and nonnegative')
+    return dict(status='HYPOTHETICAL_BOUND_CONDITIONAL',
+                interval=[interval[0]-delta, interval[1]+delta], delta=delta,
+                delta_status='HYPOTHETICAL_NOT_MEASURED_NOT_PRIOR')
+
+
+def compression_falsifier(source):
+    individual = source['individual_extended_combined']
+    difference = source['difference_extended_combined']
+    results = []
+    for high, low in [('150', '90'), ('220', '90'), ('220', '150')]:
+        key = f'{high}{{-}}{low}'
+        hi = individual[f'{high} GHz']['center']
+        lo = individual[f'{low} GHz']['center']
+        reported = difference[key]['center']
+        residual = reported - (hi-lo)
+        results.append(dict(contrast=f'{high}-{low}', scalar_difference=hi-lo,
+                            published_difference_map_fit=reported, residual=residual,
+                            maximum_nearest_hundredth_rounding_residual=3*.005,
+                            shared_scalar_filter_falsified=abs(residual) > 3*.005,
+                            source_difference_row=difference[key]['source_row_id']))
+    return results
+
+
+def build_result(source):
+    vi = source['vi1']
+    printed = contrast_interval(vi['act150'], vi['cib545_to150'])
+    rounded = contrast_interval(vi['act150'], vi['cib545_to150'], rounding_step=.01)
+    alternate = contrast_interval(vi['act150'], vi['conclusion_cib545_to150'], rounding_step=.01)
+    union = [min(rounded['interval'][0], alternate['interval'][0]),
+             max(rounded['interval'][1], alternate['interval'][1])]
+    # Historical campaign identity is independent of unrelated later commits.
+    # Current execution HEAD belongs in the execution receipt, not this result.
+    return dict(
+        owner='htt', scope='Source-conditioned amplitude contrast and hypothetical foreground/filter sensitivity',
+        claim_tier='C0', artifact_mode='DIAGNOSTIC_ONLY', status='CONDITIONAL',
+        allowed_use='Source compression falsifier and requirements for future common-filter calibration',
+        forbidden_uses=['K03/V03 acceptance', 'native solver admission', 'Bianchi family identification',
+                        'physical beta, omega, or A estimation'],
+        transfer_source='empirical_proxy', source_release='arXiv:2605.18938v1',
+        source_url=SOURCE_URL, git_base_head=FROZEN_HEAD,
+        runtime=dict(requested_model='gpt-6.1-sol', requested_effort='high', observed_model='UNKNOWN',
+                     observed_effort='UNKNOWN', identity_status='NOT_INDEPENDENTLY_OBSERVED'),
+        source_unit='Dimensionless b_ML relative to source fiducial halo-model/template normalization; not km/s or beta',
+        sky_support_status='Source VI.1 shared GAL060, 2-degree apodization; six bins of width 500 over ell=2000–5000',
+        covariance_status='UNKNOWN cross-channel covariance and independently fitted compression weights',
+        null_mock_status='No new nulls or empirical marginal-coverage calibration',
+        study_selection_dependence='One published study; fixed 545-to-150 contrast; conditional on upstream selection, SED and Gaussian working model',
+        likelihood_equations='Source Eqs.24–25 Gaussian six-bandpower fit; weights t^T C^-1/(t^T C^-1 t) can differ by fitted map',
+        compression_falsifier=compression_falsifier(source),
+        compression_conclusion='Shared scalar-filter representation falsified beyond nearest-hundredth rounding; not an upstream defect',
+        printed_gaussian_contrast=printed, outward_rounding_envelope=rounded,
+        conclusion_variant_envelope=alternate, source_variant_union=union,
+        physical_relation='d = M + e_filter + e_SED + e_other',
+        observed_total_error_bound=None, physical_M_identified_set=physical_interval(union),
+        hypothetical_sensitivity=[physical_interval(union, delta) for delta in [0., .1, .2, .25, .5, 1.]],
+        positivity_calibration_requirement=dict(strict_delta_upper_bound=union[0],
+                                                status='REQUIREMENT_NOT_INFERRED_BOUND'),
+        minimal_missing_payload=['six ACT 150 VI.1 bandpowers', 'six CIB545-to150 VI.1 bandpowers',
+                                 'bin windows', 'common numerical template',
+                                 'ACT compression weights or 6x6 covariance',
+                                 'CIB covariance evaluated under ACT weights',
+                                 'surrogate velocity/potential normalization and uncertainty for physical beta'],
+        caveats=['No independence assumed; no covariance fabricated',
+                 'Scalar subtraction is not a common-filter physical moving-lens estimator',
+                 'Rounded Gaussian intervals are conditional on interpreting published errors as marginal SDs',
+                 'Delta grid is hypothetical; Delta=0 is not observed or preferred',
+                 'No physical amplitude, nonradial speed, global tilt or vorticity calibration'],
+    )
+
+
+def plot_result(result):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.4))
+    rows = result['compression_falsifier']
+    ax = axes[0]
+    ax.axhspan(-.015, .015, color='gray', alpha=.25, label='Nearest .01 rounding envelope')
+    ax.axhline(0, color='black', linewidth=.8)
+    ax.scatter(range(3), [r['residual'] for r in rows], color='#27598c', zorder=3)
+    ax.set_xticks(range(3), [r['contrast'] for r in rows])
+    ax.set_ylabel('Published difference-map fit − scalar difference')
+    ax.set_title('Shared scalar compression falsifier')
+    ax.legend(fontsize=8, loc='upper left')
+    ax = axes[1]
+    grid = result['hypothetical_sensitivity']
+    delta = [r['delta'] for r in grid]
+    lower = [r['interval'][0] for r in grid]
+    upper = [r['interval'][1] for r in grid]
+    ax.fill_between(delta, lower, upper, color='#6a9e82', alpha=.3)
+    ax.plot(delta, lower, color='#33694c', label='Conditional envelope')
+    ax.plot(delta, upper, color='#33694c')
+    ax.axhline(0, color='black', linewidth=.8)
+    ax.axvline(result['positivity_calibration_requirement']['strict_delta_upper_bound'],
+               color='#9b541e', linestyle=':', label='Positivity requirement')
+    ax.set_xlabel('Hypothetical total error bound Δ (not measured)')
+    ax.set_ylabel('Conditional physical M envelope (source units)')
+    ax.set_title('No observed Δ: M identified set is unbounded')
+    ax.legend(fontsize=8)
+    fig.suptitle('arXiv:2605.18938v1 • HTT C0 source-conditioned diagnostic', fontsize=11)
+    fig.text(.5, .01, 'Unknown cross-channel covariance • Gaussian marginals conditional upstream • No native/physical velocity admission',
+             ha='center', fontsize=8)
+    fig.tight_layout(rect=(0, .045, 1, .94))
+    for extension in ['png', 'pdf']:
+        fig.savefig(HERE / f'MOVING_LENS_DIAGNOSTIC.{extension}', dpi=170,
+                    metadata={'Title': 'HTT C0 source-conditioned moving-lens diagnostic'})
+    plt.close(fig)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--source', type=Path, default=RAW / '2605.18938v1.html')
+    args = parser.parse_args()
+    receipt = json.loads((RAW / 'ACQUISITION.json').read_text())
+    for item in receipt['sources']:
+        data = Path(item['path']).read_bytes()
+        if hashlib.sha256(data).hexdigest() != item['sha256'] or len(data) != item['bytes']:
+            raise ValueError('Acquired immutable source bytes mismatch')
+    if args.source.resolve() != Path(receipt['sources'][0]['path']).resolve():
+        raise ValueError('Source must match acquired source identity')
+    source = extract_source(args.source)
+    result = build_result(source)
+    for name, data in [('SOURCE_EXTRACTION.json', source), ('ACQUISITION.json', receipt), ('RESULT.json', result)]:
+        (HERE / name).write_text(json.dumps(data, indent=2, ensure_ascii=False, allow_nan=False) + '\n')
+    plot_result(result)
+    print(json.dumps(dict(compression=result['compression_falsifier'],
+                          printed_interval=result['printed_gaussian_contrast']['interval'],
+                          source_variant_union=result['source_variant_union'],
+                          physical_M_identified_set=result['physical_M_identified_set']), indent=2))
+
+
+if __name__ == '__main__':
+    main()

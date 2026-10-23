@@ -1,0 +1,6 @@
+First bounded numerical defect, observed after initial successful analyze.py execution:
+At Gamma=1 and t=0.5, one fixed-surface row had cohort_width=-5.551115123125783e-17, although the exact mean-one feasible set contains only w_i=1 and its width is zero. The original formula evaluated its two algebraically equal endpoints in different floating-point orders. This was a display/serialization defect, not an LP infeasibility or scientific negative interval.
+
+Bounded correction: sharp_bounds now returns (e,e) exactly when Gamma==1.0. The final analysis and targeted tests were rerun after the correction. The final RESULT.json reports max_gamma1_parity_error=0 and all Gamma-1 cohort widths=0. No upstream distance fit was rerun.
+
+No other failing computation occurred. Matplotlib's optional Axes3D import warning was nonfatal and remains in RUN_STDERR.txt and TEST_STDOUT.txt.

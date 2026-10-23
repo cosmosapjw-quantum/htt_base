@@ -1,0 +1,39 @@
+{
+  "task_id": "R24-BOOST-ACCELERATION",
+  "base_packet_id": "047ec280a16abca82ba9e122a7b16664db1f8c905dae0ec55f3611c78427997f",
+  "repair_packet_id": "PENDING_ACTUAL_CONTROLLER_PACKET",
+  "input_identity": "sha256:feafebb499efb65f229cf015f8cf6478120cf86d2964d15d52206a3741670a2d",
+  "base_candidate_identity": "sha256:1c2aa2d75979e9d534ee2dcc4ea790bb62146320f75b2f27143d0a354a947d08",
+  "candidate_identity": "sha256:6284edcecfc0cf1f40dee8ec050af1026065196e718fa919593c32bbf5677519",
+  "agent_id": "/root/rc_047ec280a16abca8",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration",
+  "commands": [
+    {
+      "command": "python compute.py > REPAIR_RUN_STDOUT.txt 2> REPAIR_RUN_STDERR.txt",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m unittest -v test_compute.py > REPAIR_TEST_STDOUT.txt 2> REPAIR_TEST_STDERR.txt",
+      "exit_code": 0
+    },
+    {
+      "command": "python finalize.py",
+      "exit_code": 0
+    }
+  ],
+  "validation_evidence": [
+    "five focused tests pass including finite q=0.1 non-dipole counterexample and q->0 limit",
+    "all original scenario matrices, angles, ranks, coefficient/covariance arrays, cohort, T1 witness and response basis exactly equal archived first result",
+    "first candidate manifest, controller RAW_RECEIPT and RETURN bytes preserved",
+    "317 km/s physical-domain failure retained; scientific admission HOLD"
+  ],
+  "first_repair_failure": "REPAIR_FIRST_FAILURE.txt retains initial too-strict finite-q zero-limit assertion; adjusted analytic-order test, no numerical fit changed",
+  "original_raw_receipt_sha256": "cb456da1545f3bebdb56285a9b75e25643a99a06117438c303ba5b92f001e34c",
+  "scientific_admission": "HOLD",
+  "original_acceptance_met": false,
+  "independent_repair_review": "PENDING",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/REPAIR_MANIFEST.json",
+  "candidate_manifest_sha256": "6284edcecfc0cf1f40dee8ec050af1026065196e718fa919593c32bbf5677519"
+}

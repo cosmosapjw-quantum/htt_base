@@ -1,0 +1,34 @@
+{
+  "task_id": "R24-OPTICAL-SHEAR",
+  "reviewer": "/root/optical_review",
+  "verdict": "SCOPED_PASS_CONDITIONAL_TENSOR_SCENARIO",
+  "candidate_identity": "sha256:f2b59d7590f55235f9421371328d7fb38db9ee309e26d7cf17ec1037ba3e8796",
+  "input_identity": "sha256:af216d8bd92fcc4814294e785abdcb72b4576f685ca5ca18808841b5779d09e0",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "validation_evidence": {
+    "manifest_artifacts": 14,
+    "source_hashes": 6,
+    "defined_full_STF_images": 8,
+    "undefined_A_strata": 4,
+    "full_ellipsoid_dimensions": [
+      12,
+      15
+    ],
+    "independent_starts_per_image": 10,
+    "max_optimum_error": 7.84e-14,
+    "min_zero_lift_interior_margin": 12.28,
+    "tests": 3,
+    "symmetrization_max_abs_change_mixed_units": 2.91e-11,
+    "symmetrization_relative_norm_change": 6.08e-17,
+    "figure_inspected": true
+  },
+  "reviewer_first_control_failure": "rawcovliteralequalityfailedonexplicitdocumentedsymmetrization;numericalequivalenceverified,notcandidatedefect",
+  "caveats": [
+    "no generichardcase/nonzero-lower optimizer guarantee outside8 reviewedinputs",
+    "pluginGaussianregionisdeclaredscenario,notsurveycoverage",
+    "physicalH/Gmap/finitezremaindermissing"
+  ],
+  "scientific_admission": "HOLD_ORIGINAL_UNCHANGED",
+  "source": "Actualnativefinal /root/optical_review;validationextracted,fullresponseinnativeconversation"
+}

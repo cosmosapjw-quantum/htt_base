@@ -1,0 +1,29 @@
+test_429_metadata_headers_preserved_without_retry (test_resume_acquisition.DirectHTTPBoundaries.test_429_metadata_headers_preserved_without_retry) ... ok
+test_429_range_metadata_preserved_without_retry (test_resume_acquisition.DirectHTTPBoundaries.test_429_range_metadata_preserved_without_retry) ... ok
+test_direct_200_metadata_validates (test_resume_acquisition.DirectHTTPBoundaries.test_direct_200_metadata_validates) ... ok
+test_direct_206_validates (test_resume_acquisition.DirectHTTPBoundaries.test_direct_206_validates) ... {"status": "VALIDATED", "url": "https://zenodo.org/api/records/6824749/files/mocks.tar.gz/content", "source_version": "v1.1.0", "start": 0, "end": 65548, "archive_total": 10643218721, "retained_bytes": 65546, "retained_prefix_sha256": "60a6f1743f9405aa728afbe26ac3b294914341e6aa867f4542c5c116cb816a4f", "request_start": 10, "request_length": 65539, "overlap_bytes": 65536, "original_response": "fixture", "original_response_sha256": "fixture", "whole_archive_md5": "PENDING", "pid": 930927, "http_status": 206, "headers": {"Content-Length": "65539", "Content-Range": "bytes 10-65548/10643218721"}, "final_url": "https://zenodo.org/api/records/6824749/files/mocks.tar.gz/content", "etag": "UNAVAILABLE", "bytes": 65549, "resumed_new_bytes": 3, "sha256": "d25d5147c769b8a46f8291e0c6b24d5333c88836bf862f55ec8e11b4b379387d", "retained_prefix_sha256_after": "60a6f1743f9405aa728afbe26ac3b294914341e6aa867f4542c5c116cb816a4f", "elapsed_s": 0.06146871100645512, "provenance": "original retained prefix plus overlap-verified resumed suffix"}
+ok
+test_redirect_metadata_one_request_no_body (test_resume_acquisition.DirectHTTPBoundaries.test_redirect_metadata_one_request_no_body) ... ok
+test_redirect_range_one_request_no_body_no_append (test_resume_acquisition.DirectHTTPBoundaries.test_redirect_range_one_request_no_body_no_append) ... ok
+test_changed_prefix_or_size_rejected (test_resume_acquisition.RecoveryBoundaries.test_changed_prefix_or_size_rejected) ... ok
+test_completed_receipt_reused_without_network (test_resume_acquisition.RecoveryBoundaries.test_completed_receipt_reused_without_network) ... REUSE validated range 0-16
+ok
+test_failure_preserves_appended_prefix (test_resume_acquisition.RecoveryBoundaries.test_failure_preserves_appended_prefix) ... ok
+test_frozen_resume_bounds (test_resume_acquisition.RecoveryBoundaries.test_frozen_resume_bounds) ... ok
+test_full_overlap_required_before_append (test_resume_acquisition.RecoveryBoundaries.test_full_overlap_required_before_append) ... ok
+test_ignored_range_before_body_and_no_append (test_resume_acquisition.RecoveryBoundaries.test_ignored_range_before_body_and_no_append) ... ok
+test_official_metadata_identity (test_resume_acquisition.RecoveryBoundaries.test_official_metadata_identity) ... ok
+test_preserved_prefix_and_exact_suffix (test_resume_acquisition.RecoveryBoundaries.test_preserved_prefix_and_exact_suffix) ... ok
+test_second_writer_rejected (test_resume_acquisition.RecoveryBoundaries.test_second_writer_rejected) ... ok
+test_wrong_overlap_never_appends (test_resume_acquisition.RecoveryBoundaries.test_wrong_overlap_never_appends) ... ok
+test_encoded_response_rejected (test_acquire_sdss.AcquisitionBoundaries.test_encoded_response_rejected) ... ok
+test_exact_range (test_acquire_sdss.AcquisitionBoundaries.test_exact_range) ... ok
+test_extraction_guards (test_acquire_sdss.AcquisitionBoundaries.test_extraction_guards) ... ok
+test_ignored_range_rejected_before_body (test_acquire_sdss.AcquisitionBoundaries.test_ignored_range_rejected_before_body) ... ok
+test_selection_numeric_boxes_y0_not_archive_order (test_acquire_sdss.AcquisitionBoundaries.test_selection_numeric_boxes_y0_not_archive_order) ... ok
+test_wrong_range_and_length_rejected (test_acquire_sdss.AcquisitionBoundaries.test_wrong_range_and_length_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 1.190s
+
+OK

@@ -1,0 +1,106 @@
+{
+  "task_id": "R24-DEPTH-IMAGES",
+  "packet_id": "53a06aaf58c68d7600b780abf5066e9ddb219ce90f96ced590451f6e67927634",
+  "base_packet_id": "5f33227c369ae1b0be8b3042a73f5bb148c2453b58161253992cdf8e8d7020ce",
+  "agent_id": "/root/depth_images",
+  "base_candidate_identity": "sha256:03222b7d264734313ae0836584515d9f032317653da47aaf5263dc6ee36b342a",
+  "input_identity": "sha256:4337e37b166e7bdc824e856202f8ed212b715ed72ae38f8c65da7e874963c9da",
+  "base_head_from_frozen_input": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "source_checks": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/MANIFEST.json",
+      "expected_sha256": "39f15bd86ecd76907beef05fcfa09fe57c48d5536218b3e4840311783e9bfc7a",
+      "observed_sha256": "39f15bd86ecd76907beef05fcfa09fe57c48d5536218b3e4840311783e9bfc7a"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/RESULT.json",
+      "expected_sha256": "7d90415eede2b08fc51067bcff5b3276e3d554f20e90d3d7033692b885a4e7e9",
+      "observed_sha256": "7d90415eede2b08fc51067bcff5b3276e3d554f20e90d3d7033692b885a4e7e9"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/SAMPLES.npz",
+      "expected_sha256": "0814ea73c36e404b88b2f1c1e09b66e96a601d1097eaa370865920a4b7b4ce3c",
+      "observed_sha256": "0814ea73c36e404b88b2f1c1e09b66e96a601d1097eaa370865920a4b7b4ce3c"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/adapter.py",
+      "expected_sha256": "a0243bc65b174fded87731557786068ffff21e7c387ff9d0c76f0956ba9ec213",
+      "observed_sha256": "a0243bc65b174fded87731557786068ffff21e7c387ff9d0c76f0956ba9ec213"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/TENSOR_REVIEW_RAW.json",
+      "expected_sha256": "a8c775e791f267d24d23d3c5747bdbb1390f6ff4bef83e890c0795f3fd6ce13f",
+      "observed_sha256": "a8c775e791f267d24d23d3c5747bdbb1390f6ff4bef83e890c0795f3fd6ce13f"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/ADVISED_CONTRACTS.json",
+      "expected_sha256": "9bd712d298f572e797731b359e8810ab89f902d9c5bd2879810b49895951b4bf",
+      "observed_sha256": "9bd712d298f572e797731b359e8810ab89f902d9c5bd2879810b49895951b4bf"
+    }
+  ],
+  "production": {
+    "command": [
+      "/usr/bin/python",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/compute.py"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "returncode": 0,
+    "seconds": 0.3516782680526376,
+    "limit_seconds": 180,
+    "BLAS_threads": 1,
+    "stdout": "RUN_STDOUT.txt",
+    "stderr": "RUN_STDERR.txt"
+  },
+  "plot": {
+    "command": [
+      "/usr/bin/python",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/plot.py"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "returncode": 0,
+    "seconds": 1.301832027034834,
+    "limit_seconds": 179.64832173194736,
+    "BLAS_threads": 1,
+    "stdout": "PLOT_STDOUT.txt",
+    "stderr": "PLOT_STDERR.txt"
+  },
+  "tests": {
+    "command": [
+      "/usr/bin/python",
+      "-m",
+      "pytest",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/test_compute.py",
+      "-q"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "returncode": 0,
+    "seconds": 4.017373732989654,
+    "limit_seconds": 180,
+    "BLAS_threads": 1,
+    "stdout": "TEST_STDOUT.txt",
+    "stderr": "TEST_STDERR.txt"
+  },
+  "first_failure": null,
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "review": "PENDING_INDEPENDENT_REVIEW",
+  "scientific_admission": "HOLD",
+  "new_candidate_identity": "sha256:1b2ca2385430924f6ad01d14be2895ff2aa727a94a0dfd47ce0b000b279263fb",
+  "repair_comparison": {
+    "base_candidate_identity": "sha256:03222b7d264734313ae0836584515d9f032317653da47aaf5263dc6ee36b342a",
+    "max_mean_change_uasyr": 8.024518041454549,
+    "max_cov_change_uasyr2": 10.2636107794006,
+    "changed_norm_Pi_cells": 35,
+    "changed_dot_Pi_cells": 18
+  },
+  "manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/REPAIR_MANIFEST.json",
+  "candidate_identity": "sha256:1b2ca2385430924f6ad01d14be2895ff2aa727a94a0dfd47ce0b000b279263fb",
+  "host_normalization": {
+    "reason": "Actual native author uses new_candidate_identity alias; canonical candidate_identity added without changing original raw receipt/candidate or executing again",
+    "original_raw_receipt": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/REPAIR_RAW_RECEIPT.json",
+    "original_sha256": "8d858a694f6e2fafaee0d86a54781bf98a07cacd7d67156bd38361274521dcca",
+    "evidence_source": "Actual /root/depth_images final JSON and unchanged original repair raw receipt",
+    "executor": "/root/depth_images",
+    "normalizer": "/root"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "task_id": "R24-CMB-ORBIT",
+  "packet_id": "503086ca39900549c146176289ea3aff406bc9869397f20ae844f2a3dc86c437",
+  "input_identity": "sha256:0ae60cc8f899f3480b3c186f4f5c534989aa125744cde917f1e52f6ce4301e7a",
+  "executor_agent_id": "/root/rc_503086ca39900549",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "git_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "runtime_observed": "UNKNOWN",
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "healpy": "1.19.0",
+  "matplotlib": "3.11.2",
+  "first_failure": {
+    "command": ".venv/bin/python docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/orbit.py",
+    "exit_code": 1,
+    "exception": "ValueError: primary/secondary cache mismatch",
+    "classification": "distinct cached zero-window processing realization; max absolute real harmonic residual 9.408008444155963e-11 K_CMB",
+    "action": "retained as separate primary and pilot source rows"
+  },
+  "final_run": {
+    "command": ".venv/bin/python docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/orbit.py",
+    "exit_code": 0,
+    "stdout": "{\"bundles\": 60, \"comparisons\": 57, \"cache_residual\": 9.408008444155963e-11}"
+  },
+  "tests": {
+    "command": ".venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/test_orbit.py",
+    "exit_code": 0,
+    "summary": "18 passed in 7.06s"
+  },
+  "result_sha256": "107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb",
+  "source_sha256": "c86f09d6229aeb57a35d4976dd1a277e47ae12fc14652e10a4712f43a182183b",
+  "review_status": "PENDING_FRESH_INDEPENDENT_REVIEW",
+  "claim_status": "DIAGNOSTIC_ONLY",
+  "original_acceptance": "UNCHANGED",
+  "repair_attempt": {
+    "executor_agent_id": "/root/cmb_projection_repair",
+    "requested_runtime": "gpt-6-sol/high",
+    "observed_runtime": "UNKNOWN",
+    "source_sha256": "c86f09d6229aeb57a35d4976dd1a277e47ae12fc14652e10a4712f43a182183b",
+    "test_sha256": "e9c04c41f19859b143491a1496acbd7ebf5ee771fc5dc0724f700263ae6e24e2",
+    "preserved_first_candidate_identity": "sha256:4ff9778be2177bf4c485ea0807adf2d2b5bc7e9a89367f848a86ae4be628c494",
+    "preservation_manifest_sha256": "3b12fdc62bd567812a596b53125ef30d96d2c7d4ee21a1c22a7524a60c9f9494",
+    "command": ".venv/bin/python docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/orbit.py",
+    "exit_code": 0,
+    "stdout": "{\"bundles\": 60, \"comparisons\": 57, \"cache_residual\": 9.408008444155963e-11}",
+    "tests_command": ".venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/test_orbit.py",
+    "tests_exit_code": 0,
+    "tests_summary": "18 passed in 7.06s",
+    "harmonic12_all_exact": true,
+    "processing_support_all_exact": true,
+    "scope": "one bounded STF projection coordinate repair; original acceptance unchanged"
+  },
+  "first_candidate_final_run": {
+    "command": ".venv/bin/python docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/orbit.py",
+    "exit_code": 0,
+    "stdout": "{\"bundles\": 60, \"comparisons\": 57, \"cache_residual\": 9.408008444155963e-11}"
+  },
+  "first_candidate_tests": {
+    "command": ".venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/test_orbit.py",
+    "exit_code": 0,
+    "summary": "2 passed in 4.85s"
+  }
+}

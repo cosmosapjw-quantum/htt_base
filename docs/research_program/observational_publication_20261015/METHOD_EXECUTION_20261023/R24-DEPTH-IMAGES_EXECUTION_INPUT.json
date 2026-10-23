@@ -1,0 +1,59 @@
+{
+  "task_id": "R24-DEPTH-IMAGES",
+  "base_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "contract": {
+    "authority": "Existing Astra T7 full tuple and reported-z depth contract, lowered to reviewed tensor_scenario only",
+    "source_candidate": "sha256:39f15bd86ecd76907beef05fcfa09fe57c48d5536218b3e4840311783e9bfc7a",
+    "carrier": "Preserve full24 mean/cov and all4096 joint sample24; Y18=M24, Z18=(Y0,Y1-Y0,Y2-Y1) plus full crosscov; no new source pass or draws",
+    "region": "Same C_rho and ID from tensor_bundle, rho0,1,2,4,8; geometric scenario not confidence",
+    "linear_functionals": "For each of 3 bins E1 polar/B1 axial 3-vector, adjacent and deep-shallow E/B contrasts: full joint linear image of common24 region and law. Exact ±coordinate support Amean +/-rho sqrt(diag(A C A^T)); keep vector and full covariance not just norms. Retain shared cross-depth nuisance/slope covariance.",
+    "nonlinear_functionals": "For each bin/contrast vector norm, conservative certified outer interval [max(0,||m||-rho sqrt(lambda_max(S))),||m||+rho sqrt(lambda_max(S)))]; explicitly outer not sharp; signed E dot B pseudoscalar by joint sample law, zero/undefined strata no denominator flooring",
+    "Pi": "Actual retained uniform4096 sample joint law only, strict > thresholds0,1,2,5,10,20 uas/yr for vector norms; retain all sample-by-functional vector/tensor and raw/depth contrast images. For E dot B thresholds -25,0,25 (uas/yr)^2. No continuous Gaussian probability, posterior, physical Pi, calibrated coverage, independent bin draws or MC confidence.",
+    "Q": "Inherited computational direct-sum ball10 uas/year plus typed per-image reference norms; physical MES anchor unavailable, unknown mass1 -> physical Pi[0,1]",
+    "F": "Separate exact finite directional support and certified conservative nonlinear outer bounds from empirical-law images and occupancy. Common region radius shared across bins; no product of independent regions.",
+    "G_F": "Full Y18 and anchored Z18, cov crossblocks; true depth unavailable, reported bin centers only. Invertible Y->Z preserves information, delta-only rank12 removes commonmode; M24->Y18 rank18 loses6 and full24 kept alongside.",
+    "discriminator": "Actual numerical comparison of full vs counterfactual zero-cross-depth covariance for contrasts: fullS=Cii+Cjj-Cij-Cji vs diagblockapprox Cii+Cjj; report signed change and component/rank eigen/scales, no assumption qualified by this diagnostic. Actual nonvacuity vs rho and empirical Pi surfaces, parity E dot B flips under spatial inversion, SO3 invariance.",
+    "tests": "Source identity; full tensor/sample shapes and common-law consistency; exact support attainments; triangle/spectral outer interval containment for points in C_rho; cov contrast formula; invertible/raw-vs-delta information and nullspace control; missing crosscov None notzero; strict ties; polar/axial pseudoscalar parity; agreement rtol1e-10 atol1e-10 for scaleappropriate linear algebra, report cancellation errors, no tolerance relax",
+    "plots": "Scenario point markers or exact known support bands; no straight chord across clipping/nonlinear kinks; true-depth/calibrated-law missing labelled; sample axes/depth/functional labels, computational reference only",
+    "limits": {
+      "production_seconds": 180,
+      "test_seconds": 180,
+      "BLAS_threads": 1,
+      "no_source_streaming": true,
+      "no_new_samples": true
+    },
+    "scope": "conditional functional depth image; no physical tilt/source/true-depth/R9/original acceptance promotion"
+  },
+  "sources": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/MANIFEST.json",
+      "sha256": "39f15bd86ecd76907beef05fcfa09fe57c48d5536218b3e4840311783e9bfc7a",
+      "bytes": 2449
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/RESULT.json",
+      "sha256": "7d90415eede2b08fc51067bcff5b3276e3d554f20e90d3d7033692b885a4e7e9",
+      "bytes": 71726
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/SAMPLES.npz",
+      "sha256": "0814ea73c36e404b88b2f1c1e09b66e96a601d1097eaa370865920a4b7b4ce3c",
+      "bytes": 1550637
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/adapter.py",
+      "sha256": "a0243bc65b174fded87731557786068ffff21e7c387ff9d0c76f0956ba9ec213",
+      "bytes": 12615
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/TENSOR_REVIEW_RAW.json",
+      "sha256": "a8c775e791f267d24d23d3c5747bdbb1390f6ff4bef83e890c0795f3fd6ce13f",
+      "bytes": 1126
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/ADVISED_CONTRACTS.json",
+      "sha256": "9bd712d298f572e797731b359e8810ab89f902d9c5bd2879810b49895951b4bf",
+      "bytes": 4463
+    }
+  ]
+}

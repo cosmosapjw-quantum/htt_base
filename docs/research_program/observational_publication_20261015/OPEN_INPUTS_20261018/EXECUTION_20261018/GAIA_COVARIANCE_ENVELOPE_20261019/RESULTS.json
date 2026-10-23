@@ -1,0 +1,222 @@
+{
+  "schema": "htt.gaia_working_covariance_envelope/1",
+  "owner": "obsstat",
+  "scope": "13 fixed frame-quotient coordinates, arbitrary PSD cross-source completions with fixed working 2x2 marginals",
+  "status": "CONDITIONAL_DIAGNOSTIC_COMPUTED_PENDING_INDEPENDENT_REVIEW",
+  "claim_tier": "C0",
+  "claim_status": "DIAGNOSTIC_ONLY",
+  "artifact_mode": "CONDITIONAL_RELAXED_COORDINATEWISE_ENVELOPE",
+  "allowed_use": "Floating-point evaluation of analytic coordinatewise working-marginal envelope only",
+  "transfer_source": "none",
+  "sky_support_status": "Released CRF3 membership and ICRS/J2016.0 directions fixed",
+  "null_mock_status": "NOT_AVAILABLE",
+  "covariance_status": "Fixed published working marginals; arbitrary relaxed PSD cross-source completion",
+  "forbidden_uses": [
+    "Joint covariance/Loewner bound",
+    "Coverage or confidence interval",
+    "Physical error/cosmic curl/vorticity",
+    "Bianchi family identification",
+    "K03 or original-node admission"
+  ],
+  "caveats": [
+    "Maxima need not be jointly attainable",
+    "Actual source/frame constraint compatibility UNKNOWN",
+    "Selected-source marginal correctness and completeness of systematics unestablished",
+    "Bias unbounded/unmeasured",
+    "No directed-rounding numerical certificate"
+  ],
+  "source_commit": "61fb65008c3a7f269690219e25cde6f8883976e3",
+  "contract_sha256": "d0ceb037506d7ac94e4275194544b3572f927f9a865faeeecd00db05453e44ea",
+  "code_sha256": "4e7465a0525baf36ce969f7add57232d5e46102a5ef3310c7510fc6b16bfba3b",
+  "test_sha256": "17d1691ea569b6ae6a2ed20cffa8f5d7ae9772b740956ce730ef78051a25bd97",
+  "inputs": {
+    "observable_vsh.py": "318acb829f163eedda76a136a0edc4d247c17a6893f2faf24681e34fd79822b5",
+    "sufficient_statistics.npz": "6d899d4bad30c7f30f6b04ba8381ec623d9d5f6263d464d99d580d38437e2c83",
+    "RESULTS.json": "386bfa19ff1f0c24ec836f2e3e471717edf38c3c10da6d119d70548cf062baa0"
+  },
+  "source": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/gaia/d05_full_20261018/full.vot",
+    "sha256": "e8454190bb3be7d10203ecfe6fe90b34d245fb13b9bb72a155242f85e4271810",
+    "before": {
+      "dev": 2050,
+      "ino": 308972,
+      "size": 192359368,
+      "mtime_ns": 1792321468945682000,
+      "ctime_ns": 1792321469230675200
+    },
+    "after": {
+      "dev": 2050,
+      "ino": 308972,
+      "size": 192359368,
+      "mtime_ns": 1792321468945682000,
+      "ctime_ns": 1792321469230675200
+    },
+    "bytes": 192359368,
+    "rows": 1614173,
+    "query_status": [
+      "OK"
+    ],
+    "required_rejected_rows": 0,
+    "optional_null_counts": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "optional_unmasked_nonfinite_counts": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "member_set_and_uniqueness": "Reused identical-byte D05 evidence; not rerun"
+  },
+  "runtime": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "numerical_threads_cap": 2,
+    "batch_rows_cap": 25000
+  },
+  "controls": {
+    "MN_equals_R_E": 2.220446049250313e-16,
+    "Schur_map_E": 8.413072942148384e-17,
+    "saved_quotient_covariance_E": 1.6957600149017836e-16,
+    "stream_reference_relative_error": [
+      3.82688575385619e-15,
+      1.7071593672166059e-15,
+      3.0333433866734417e-15,
+      1.1109431318978284e-15,
+      6.450174889604441e-16,
+      5.408011625179988e-16,
+      1.1227175573638334e-16,
+      5.072208303822562e-15,
+      0.0,
+      1.8978149428188964e-16,
+      3.004881139041373e-15,
+      2.9523483742942143e-15,
+      1.4161683760426546e-15
+    ],
+    "frame_annihilation_maxabs": 6.16755859708315e-15
+  },
+  "units": "microas^2/yr^2",
+  "B1_physical": "UNKNOWN",
+  "results": [
+    {
+      "coordinate": "E1_x",
+      "v_ref": 0.10153897545210298,
+      "v_max": 78861.66408072712,
+      "sigma_ref": 0.3186518091147499,
+      "sigma_envelope": 280.8231900693515,
+      "variance_ratio": 776663.9729187243
+    },
+    {
+      "coordinate": "E1_y",
+      "v_ref": 0.08942086416621564,
+      "v_max": 70485.05753033962,
+      "sigma_ref": 0.2990332158242887,
+      "sigma_envelope": 265.4902211576532,
+      "variance_ratio": 788239.5030238344
+    },
+    {
+      "coordinate": "E1_z",
+      "v_ref": 0.08235143493417929,
+      "v_max": 68451.57199024319,
+      "sigma_ref": 0.2869693972084468,
+      "sigma_envelope": 261.63251325139845,
+      "variance_ratio": 831212.8628354103
+    },
+    {
+      "coordinate": "E2_xx-yy",
+      "v_ref": 0.2998055416379125,
+      "v_max": 253446.62972307962,
+      "sigma_ref": 0.5475450133440286,
+      "sigma_envelope": 503.4348316545843,
+      "variance_ratio": 845370.0633365128
+    },
+    {
+      "coordinate": "E2_zz",
+      "v_ref": 0.25818440049148234,
+      "v_max": 193416.64017486345,
+      "sigma_ref": 0.5081184906018303,
+      "sigma_envelope": 439.7915872033746,
+      "variance_ratio": 749141.4655830238
+    },
+    {
+      "coordinate": "E2_xy",
+      "v_ref": 0.30793841662319077,
+      "v_max": 247252.2252331497,
+      "sigma_ref": 0.5549219914755503,
+      "sigma_envelope": 497.2446331868748,
+      "variance_ratio": 802927.5072090151
+    },
+    {
+      "coordinate": "E2_xz",
+      "v_ref": 0.24721779252120757,
+      "v_max": 195662.06615712243,
+      "sigma_ref": 0.49721000846846153,
+      "sigma_envelope": 442.33705040062205,
+      "variance_ratio": 791456.2465819995
+    },
+    {
+      "coordinate": "E2_yz",
+      "v_ref": 0.28454863159405175,
+      "v_max": 225068.65916268592,
+      "sigma_ref": 0.5334309998435147,
+      "sigma_envelope": 474.4140166170113,
+      "variance_ratio": 790967.2870392774
+    },
+    {
+      "coordinate": "B2_xx-yy",
+      "v_ref": 0.2623616480033479,
+      "v_max": 213697.95277071136,
+      "sigma_ref": 0.5122125027792155,
+      "sigma_envelope": 462.27475895911874,
+      "variance_ratio": 814516.7344275275
+    },
+    {
+      "coordinate": "B2_zz",
+      "v_ref": 0.29250033804036246,
+      "v_max": 217304.016005635,
+      "sigma_ref": 0.5408330038379338,
+      "sigma_envelope": 466.15878840330254,
+      "variance_ratio": 742918.854253252
+    },
+    {
+      "coordinate": "B2_xy",
+      "v_ref": 0.27710489365130436,
+      "v_max": 222359.83034747484,
+      "sigma_ref": 0.5264075357090782,
+      "sigma_envelope": 471.5504536605546,
+      "variance_ratio": 802439.2042216399
+    },
+    {
+      "coordinate": "B2_xz",
+      "v_ref": 0.3196403172294929,
+      "v_max": 273101.2070570543,
+      "sigma_ref": 0.5653674179058189,
+      "sigma_envelope": 522.5908600971263,
+      "variance_ratio": 854401.6268791748
+    },
+    {
+      "coordinate": "B2_yz",
+      "v_ref": 0.3135850350584918,
+      "v_max": 256269.42658483173,
+      "sigma_ref": 0.5599866382856753,
+      "sigma_envelope": 506.2306061320589,
+      "variance_ratio": 817224.6693373962
+    }
+  ],
+  "original_status": "17/42; all six NOT_READY_TO_SUBMIT; K03 HOLD unchanged"
+}

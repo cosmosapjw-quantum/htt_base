@@ -1,0 +1,2669 @@
+{
+  "owner": "obsstat",
+  "scope": "SAME_ID_SPLIT_PROCESSING_DIAGNOSTIC",
+  "claim_tier": "DIAGNOSTIC_ONLY",
+  "transfer_source": "Planck PR3 FFP10 external simulations",
+  "null_mock_status": "ONE_NOMINAL_ID_NOT_ENSEMBLE",
+  "simulation_id": 0,
+  "sky_support_status": {
+    "T_selected_pixels": 26846,
+    "P_selected_pixels": 30021,
+    "T_ring64_mask_sha256": "98c90cbd186aceed02f6692ef83685b44d0f7f22569f218ea2936dcfafcedfbf",
+    "P_ring64_mask_sha256": "2889b2a141552da0b48d553080939c630cbd77e42715ba9d5044924bb924d2fa",
+    "T_native_window_sha256": "536d3af02a7a9af4b94781f21238eb53462004b0588103c45a7477a033b9377a",
+    "P_native_window_sha256": "bfae5917211f8ecce2a99ee8b996e168dcc8df18e1a6e6d4bdee638063ae05d3",
+    "T_mask_sources": [
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/masks/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+        "bytes": 201335040,
+        "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4"
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/masks/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits",
+        "bytes": 201335040,
+        "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0"
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/masks/COM_Mask_CMB-OE-Misspix-Mask-Int_2048_R3.00.fits",
+        "bytes": 201335040,
+        "sha256": "ecb39152ad5b93ea309baf396aad404a062edd6745a30c0b941b3556ca28aff9"
+      }
+    ],
+    "L01_bridge": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/ORIGINAL_SELECTED_SUPPORT_RESPONSE.json",
+      "bytes": 71658,
+      "sha256": "bbb250b0288df040cc9273ef8483b91ae8253d5b720f3f22ee817cd846a36205"
+    },
+    "K1_cache_reused_unchanged": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/workdir/compact_products/planck_pr3_pr150/k1_ffp10_reduced_smica.npz",
+      "bytes": 512054072,
+      "sha256": "86b792c821b3e641c76c83d96523148c65e9d30a439d7c850acc808c1bc5fadb"
+    }
+  },
+  "source_files": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/split_noise/dx12_v3_smica_noise_hm1_mc_00000_raw.fits",
+      "bytes": 603987840,
+      "sha256": "8f1808013188e0c1019328213c6e4bff97f3c0f9ebef13332e11a41a5a821536",
+      "split": "HM1",
+      "minimum_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "GALACTIC_RELEASE_CONVENTION_IF_HEADER_ABSENT"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/split_noise/dx12_v3_smica_noise_hm2_mc_00000_raw.fits",
+      "bytes": 603987840,
+      "sha256": "d0076e57a4502608c6b7e36b4fa8ada7a5a0732fc8f862e8c8c63fe2be158043",
+      "split": "HM2",
+      "minimum_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "GALACTIC_RELEASE_CONVENTION_IF_HEADER_ABSENT"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/split_noise/dx12_v3_smica_noise_oe1_mc_00000_raw.fits",
+      "bytes": 603987840,
+      "sha256": "8be192a89e6ab5371f2c8e0dea741eda74dd574147f144fbbfb1584f005fbdf4",
+      "split": "OE1",
+      "minimum_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "GALACTIC_RELEASE_CONVENTION_IF_HEADER_ABSENT"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/split_noise/dx12_v3_smica_noise_oe2_mc_00000_raw.fits",
+      "bytes": 603987840,
+      "sha256": "da5a2f6651c0e921a9686e878ed89945a0196b7e159354ff1cd13c187ad0e3a1",
+      "split": "OE2",
+      "minimum_coverage": [
+        0.9951171875,
+        0.9951171875,
+        0.9951171875
+      ],
+      "coordsys": "GALACTIC_RELEASE_CONVENTION_IF_HEADER_ABSENT"
+    }
+  ],
+  "full_noise_reused": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L03_EXECUTION_20261018/results/PILOT_COEFFICIENTS.npz",
+    "bytes": 28901,
+    "sha256": "75a9a46c3cb2f576c994fefec248805cc604532345f7843bcd487ca848953123"
+  },
+  "fixed_weights_intake": {
+    "source": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/weights/COM_Code_SMICA-weights-propagation_R3.00.tar.gz",
+      "bytes": 74625775,
+      "sha256": "044ec9bed746ae745ad35a8b6ccf6e603f546083fec328e9c64d866ac9221f93"
+    },
+    "members": {
+      "weights_T_smica_R3.00_Xfull.txt": {
+        "shape": [
+          9,
+          4001
+        ],
+        "sha256": "7db1f168f8b6973da6e981076cb48bc78f15dd050f6f3451105fb9de52f072b9"
+      },
+      "weights_T_smica_R3.00_Xhigh.txt": {
+        "shape": [
+          6,
+          4001
+        ],
+        "sha256": "6ead5fa68d504d37fba924774338eca1ce17ee596723c2cec261f2012d9fdb0a"
+      },
+      "weights_EB_smica_R3.00.txt": {
+        "shape": [
+          14,
+          4001
+        ],
+        "sha256": "541378f6c9ab37574aae909519b0f1fe020714a6cea2b8dd1c7fcedb5ffd87df"
+      },
+      "polarization_reshape": [
+        2,
+        7,
+        4001
+      ]
+    },
+    "upstream_code_executed": false,
+    "beam_correction_already_in_weights": true,
+    "LFI_renormalization_already_in_weights": true,
+    "additional_beam_applied": false,
+    "split_specific_response": "UNKNOWN"
+  },
+  "operator": {
+    "T": {
+      "design_condition": 3.6013785311890625,
+      "identity_max_absolute": 3.9968028886505635e-15
+    },
+    "P": {
+      "design_condition": 3.1309622770574417,
+      "identity_max_absolute": 2.6645352591003757e-15
+    },
+    "source": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L03_EXECUTION_20261018/source_matched_pilot.py",
+      "bytes": 21249,
+      "sha256": "1ad395cdbf7fcf664254ab9af55cadc7579ced00c697e06cc7c2bbbb08f3a73b"
+    },
+    "description": "native masked child means then finite original OLS; no new beam or SHT"
+  },
+  "contrast_order": [
+    "(HM1-HM2)/2",
+    "(OE1-OE2)/2",
+    "FULL-(HM1+HM2)/2",
+    "FULL-(OE1+OE2)/2"
+  ],
+  "blocks": {
+    "T": {
+      "five_row_norm_microK": [
+        1.0441062868225826,
+        1.1307157533846197,
+        1.3361428642124817,
+        0.9992085198883643,
+        1.2322991476435001
+      ],
+      "contrast_norm_microK": [
+        0.5455082354722418,
+        0.4791593235290299,
+        0.21499872933054207,
+        0.15057973430820076
+      ]
+    },
+    "E": {
+      "five_row_norm_microK": [
+        0.683810925285434,
+        0.7035104676050784,
+        0.8012427473941155,
+        0.8930264362221956,
+        0.8044404052077514
+      ],
+      "contrast_norm_microK": [
+        0.32409370866008075,
+        0.43088142160352494,
+        0.05558469658743717,
+        0.14235916178913754
+      ]
+    },
+    "B": {
+      "five_row_norm_microK": [
+        0.4279202349079325,
+        0.5264548511318738,
+        0.567756611359518,
+        0.4350229365895694,
+        0.554031252015847
+      ],
+      "contrast_norm_microK": [
+        0.32088708952938316,
+        0.25910328438148444,
+        0.05750056928560811,
+        0.07491349961661693
+      ]
+    }
+  },
+  "coefficients": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D04_SPLIT_NOISE/COEFFICIENTS.npz",
+    "bytes": 7339,
+    "sha256": "624536d49828da366217fa513fb0f511f4bf5ae4002a519df66ec358bea9816b"
+  },
+  "external_coarse_cache": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/provenance/D04_SPLIT_NOISE_SELECTED_IQU_00000_20261018.npz",
+    "bytes": 2417087,
+    "sha256": "4ebd4bf73b68bac17fedc5d8129b5250882f1a67edc3b0d40efaa6e878590b3f"
+  },
+  "fixed_L02_morphology": [
+    {
+      "label": "FULL",
+      "fields": {
+        "T": {
+          "C2_microK2": 0.04986116996209492,
+          "C3_microK2": 0.056229881938991325,
+          "SO3_signed": {
+            "quadrupole_shape": -0.2126951566965703,
+            "octupole_concentration": 0.5080929345364661,
+            "QO_contraction": 0.3264044236396737,
+            "chirality": 0.14313593377311915
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.2126951566965703,
+            "octupole_concentration": 0.5080929345364661,
+            "QO_contraction": 0.3264044236396737,
+            "chirality": 0.14313593377311915
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.13671482432632925,
+                0.09354462656662106,
+                -0.33056509794027183
+              ],
+              [
+                0.09354462656662106,
+                0.0640062056372284,
+                -0.2261831428680409
+              ],
+              [
+                -0.33056509794027183,
+                -0.2261831428680409,
+                0.7992789700364417
+              ]
+            ],
+            "O3_projector": [
+              [
+                3.1712060807137635e-07,
+                -0.000141404335966818,
+                0.0005450920300973768
+              ],
+              [
+                -0.000141404335966818,
+                0.06305230792732429,
+                -0.2430569776763793
+              ],
+              [
+                0.0005450920300973768,
+                -0.2430569776763793,
+                0.9369473749520677
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.3483498069321291
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.10802048562596228
+            },
+            "joint_axis_overlap_squared": 0.8624820653536872,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.13671482432632925,
+              0.0640062056372284,
+              0.7992789700364417
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              3.1712060807137635e-07,
+              0.06305230792732429,
+              0.9369473749520677
+            ]
+          }
+        },
+        "E": {
+          "C2_microK2": 0.06531612663616577,
+          "C3_microK2": 0.004176890478494716,
+          "SO3_signed": {
+            "quadrupole_shape": 0.06510275362936119,
+            "octupole_concentration": 0.5553030625483596,
+            "QO_contraction": 0.28792469635204,
+            "chirality": -0.04125354903376786
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.06510275362936119,
+            "octupole_concentration": 0.5553030625483596,
+            "QO_contraction": 0.28792469635204,
+            "chirality": 0.04125354903376786
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.25558855212470705,
+                0.023263007283141852,
+                0.4355707481450601
+              ],
+              [
+                0.023263007283141852,
+                0.0021173386028317254,
+                0.039644520078028087
+              ],
+              [
+                0.4355707481450601,
+                0.039644520078028087,
+                0.7422941092724609
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.5448296790174928,
+                -0.22238696941985764,
+                -0.44557191979683825
+              ],
+              [
+                -0.22238696941985764,
+                0.09077325643664289,
+                0.18187223038381006
+              ],
+              [
+                -0.44557191979683825,
+                0.18187223038381006,
+                0.36439706454586474
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.11612682526235664
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.3203003041255503
+            },
+            "joint_axis_overlap_squared": 0.025851727266094346,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.25558855212470705,
+              0.0021173386028317254,
+              0.7422941092724609
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.5448296790174928,
+              0.09077325643664289,
+              0.36439706454586474
+            ]
+          }
+        },
+        "B": {
+          "C2_microK2": 0.008587133134310455,
+          "C3_microK2": 0.010092006278455587,
+          "SO3_signed": {
+            "quadrupole_shape": -0.20422757690226256,
+            "octupole_concentration": 0.51452888464754,
+            "QO_contraction": 0.2392723974376313,
+            "chirality": 0.00397357676113872
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.20422757690226256,
+            "octupole_concentration": 0.51452888464754,
+            "QO_contraction": 0.2392723974376313,
+            "chirality": 0.00397357676113872
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.17865833562062614,
+                -0.27935026500617305,
+                0.26211250289689497
+              ],
+              [
+                -0.27935026500617305,
+                0.43679221732327483,
+                -0.4098392436676518
+              ],
+              [
+                0.26211250289689497,
+                -0.4098392436676518,
+                0.3845494470560992
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.11372658278308281,
+                0.1584040059552887,
+                0.27513817991853157
+              ],
+              [
+                0.1584040059552887,
+                0.2206329293349314,
+                0.38322605694985745
+              ],
+              [
+                0.27513817991853157,
+                0.38322605694985745,
+                0.6656404878819855
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.3355927125237149
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.11368835072892407
+            },
+            "joint_axis_overlap_squared": 0.11427238717820501,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.17865833562062614,
+              0.43679221732327483,
+              0.3845494470560992
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.11372658278308281,
+              0.2206329293349314,
+              0.6656404878819855
+            ]
+          }
+        }
+      },
+      "same_row_cross_fields": {
+        "TE": {
+          "physical_O3_contraction_parity": 1,
+          "Q_normalized_overlap": -0.22192364102643916,
+          "Q_normalized_overlap_absolute": 0.22192364102643916,
+          "O_normalized_overlap": -0.023367049173322954,
+          "O_normalized_overlap_absolute": 0.023367049173322954,
+          "Q_axis_overlap_squared": 0.32682777825674764,
+          "O_axis_overlap_squared": 0.2583110174377574
+        },
+        "TB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.1400866179001446,
+          "Q_normalized_overlap_absolute": 0.1400866179001446,
+          "O_normalized_overlap": -0.5782736851130136,
+          "O_normalized_overlap_absolute": 0.5782736851130136,
+          "Q_axis_overlap_squared": 0.31958847500390364,
+          "O_axis_overlap_squared": 0.451545178140625
+        },
+        "EB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.3434669987407317,
+          "Q_normalized_overlap_absolute": 0.3434669987407317,
+          "O_normalized_overlap": 0.4132957454979474,
+          "O_normalized_overlap_absolute": 0.4132957454979474,
+          "Q_axis_overlap_squared": 0.5148809148456504,
+          "O_axis_overlap_squared": 0.14830131460261126
+        }
+      }
+    },
+    {
+      "label": "HM1",
+      "fields": {
+        "T": {
+          "C2_microK2": 0.05081167339321161,
+          "C3_microK2": 0.054110793475386165,
+          "SO3_signed": {
+            "quadrupole_shape": -0.2772284285910902,
+            "octupole_concentration": 0.5360647016172765,
+            "QO_contraction": 0.3332559459141203,
+            "chirality": 0.08093944116972242
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.2772284285910902,
+            "octupole_concentration": 0.5360647016172765,
+            "QO_contraction": 0.3332559459141203,
+            "chirality": 0.08093944116972242
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.012099152393768452,
+                0.01722589172846426,
+                -0.10796310276793664
+              ],
+              [
+                0.01722589172846426,
+                0.02452496969900156,
+                -0.15371000037220692
+              ],
+              [
+                -0.10796310276793664,
+                -0.15371000037220692,
+                0.9633758779072302
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.5410615005410536,
+                0.14762272274096216,
+                -0.4759427327986659
+              ],
+              [
+                0.14762272274096216,
+                0.040277248053433544,
+                -0.1298557779739537
+              ],
+              [
+                -0.4759427327986659,
+                -0.1298557779739537,
+                0.4186612514055132
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.44626919118774655
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.23166836512297215
+            },
+            "joint_axis_overlap_squared": 0.5586369722402458,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.012099152393768452,
+              0.02452496969900156,
+              0.9633758779072302
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.5410615005410536,
+              0.040277248053433544,
+              0.4186612514055132
+            ]
+          }
+        },
+        "E": {
+          "C2_microK2": 0.04851613558240532,
+          "C3_microK2": 0.009072589530275661,
+          "SO3_signed": {
+            "quadrupole_shape": 0.0017685014949378741,
+            "octupole_concentration": 0.5469585669565018,
+            "QO_contraction": 0.3307199912020037,
+            "chirality": 0.006906188724480574
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.0017685014949378741,
+            "octupole_concentration": 0.5469585669565018,
+            "QO_contraction": 0.3307199912020037,
+            "chirality": 0.006906188724480574
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.25490721707189007,
+                0.08084054015570537,
+                0.4282456477582558
+              ],
+              [
+                0.08084054015570537,
+                0.025637535914972264,
+                0.13581259048598754
+              ],
+              [
+                0.4282456477582558,
+                0.13581259048598754,
+                0.7194552470131373
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.6386502842468691,
+                -0.44858346903565144,
+                -0.17189813840238027
+              ],
+              [
+                -0.44858346903565144,
+                0.31508187447118596,
+                0.1207400437255631
+              ],
+              [
+                -0.17189813840238027,
+                0.1207400437255631,
+                0.04626784128194607
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.003329177875982038
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.3882082185114383
+            },
+            "joint_axis_overlap_squared": 0.017201447777584495,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.25490721707189007,
+              0.025637535914972264,
+              0.7194552470131373
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.6386502842468691,
+              0.31508187447118596,
+              0.04626784128194607
+            ]
+          }
+        },
+        "B": {
+          "C2_microK2": 0.007079494610206655,
+          "C3_microK2": 0.017184463441110704,
+          "SO3_signed": {
+            "quadrupole_shape": -0.002301330462268523,
+            "octupole_concentration": 0.5273098050493155,
+            "QO_contraction": 0.2771878206208562,
+            "chirality": 0.09679209361298485
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.002301330462268523,
+            "octupole_concentration": 0.5273098050493155,
+            "QO_contraction": 0.2771878206208562,
+            "chirality": 0.09679209361298485
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.04891765683706311,
+                -0.15513790662884785,
+                0.14985643000369844
+              ],
+              [
+                -0.15513790662884785,
+                0.49200578337893425,
+                -0.4752560598534592
+              ],
+              [
+                0.14985643000369844,
+                -0.4752560598534592,
+                0.4590765597840035
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.6807250454798424,
+                0.4128337542303514,
+                -0.2165796604124745
+              ],
+              [
+                0.4128337542303514,
+                0.25036791251273716,
+                -0.1313472963742512
+              ],
+              [
+                -0.2165796604124745,
+                -0.1313472963742512,
+                0.06890704200742058
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.00433005827459361
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.13926192733504525
+            },
+            "joint_axis_overlap_squared": 0.11995870171237213,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.04891765683706311,
+              0.49200578337893425,
+              0.4590765597840035
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.6807250454798424,
+              0.25036791251273716,
+              0.06890704200742058
+            ]
+          }
+        }
+      },
+      "same_row_cross_fields": {
+        "TE": {
+          "physical_O3_contraction_parity": 1,
+          "Q_normalized_overlap": -0.49029964555733346,
+          "Q_normalized_overlap_absolute": 0.49029964555733346,
+          "O_normalized_overlap": -0.18873837895850454,
+          "O_normalized_overlap_absolute": 0.18873837895850454,
+          "Q_axis_overlap_squared": 0.5653828876213304,
+          "O_axis_overlap_squared": 0.3774377929977515
+        },
+        "TB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": 0.23380527222848452,
+          "Q_normalized_overlap_absolute": 0.23380527222848452,
+          "O_normalized_overlap": -0.698029701661934,
+          "O_normalized_overlap_absolute": 0.698029701661934,
+          "Q_axis_overlap_squared": 0.5633220833254136,
+          "O_axis_overlap_squared": 0.7694056807968387
+        },
+        "EB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": 0.0064503464151299175,
+          "Q_normalized_overlap_absolute": 0.0064503464151299175,
+          "O_normalized_overlap": 0.1629079878188607,
+          "O_normalized_overlap_absolute": 0.1629079878188607,
+          "Q_axis_overlap_squared": 0.32954466969772706,
+          "O_axis_overlap_squared": 0.18918054410562285
+        }
+      }
+    },
+    {
+      "label": "HM2",
+      "fields": {
+        "T": {
+          "C2_microK2": 0.058385307301372515,
+          "C3_microK2": 0.1071867173790837,
+          "SO3_signed": {
+            "quadrupole_shape": -0.08136615727961224,
+            "octupole_concentration": 0.5122656955591725,
+            "QO_contraction": 0.2785584685947676,
+            "chirality": -0.025342442277283037
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.08136615727961224,
+            "octupole_concentration": 0.5122656955591725,
+            "QO_contraction": 0.2785584685947676,
+            "chirality": 0.025342442277283037
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.6094176860672367,
+                0.17100838974791535,
+                -0.45692876973497343
+              ],
+              [
+                0.17100838974791535,
+                0.04798657806092693,
+                -0.12821855178855576
+              ],
+              [
+                -0.45692876973497343,
+                -0.12821855178855576,
+                0.34259573587183584
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.6001609783381403,
+                -0.12221522963371069,
+                0.4743745525045854
+              ],
+              [
+                -0.12221522963371069,
+                0.02488759331834656,
+                -0.09660040715621494
+              ],
+              [
+                0.4743745525045854,
+                -0.09660040715621494,
+                0.3749514283435126
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.14338590394955214
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.12754939220868836
+            },
+            "joint_axis_overlap_squared": 0.044861253667586254,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.6094176860672367,
+              0.04798657806092693,
+              0.34259573587183584
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.6001609783381403,
+              0.02488759331834656,
+              0.3749514283435126
+            ]
+          }
+        },
+        "E": {
+          "C2_microK2": 0.08407313321939978,
+          "C3_microK2": 0.01122659774686711,
+          "SO3_signed": {
+            "quadrupole_shape": 0.11971023912553713,
+            "octupole_concentration": 0.43537603361922744,
+            "QO_contraction": 0.343517717422274,
+            "chirality": -0.11405609924882852
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.11971023912553713,
+            "octupole_concentration": 0.43537603361922744,
+            "QO_contraction": 0.343517717422274,
+            "chirality": 0.11405609924882852
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.24018347143441363,
+                -0.025718575752045735,
+                0.4264198944062228
+              ],
+              [
+                -0.025718575752045735,
+                0.0027539161407046874,
+                -0.045660562281699284
+              ],
+              [
+                0.4264198944062228,
+                -0.045660562281699284,
+                0.7570626124248819
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.42354074239103245,
+                -0.15471005723918016,
+                -0.46927473841549894
+              ],
+              [
+                -0.15471005723918016,
+                0.056512159080205585,
+                0.1714156735696847
+              ],
+              [
+                -0.46927473841549894,
+                0.1714156735696847,
+                0.5199470985287615
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.2055478380383783
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.26717819922231995
+            },
+            "joint_axis_overlap_squared": 0.0876034280532982,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.24018347143441363,
+              0.0027539161407046874,
+              0.7570626124248819
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.42354074239103245,
+              0.056512159080205585,
+              0.5199470985287615
+            ]
+          }
+        },
+        "B": {
+          "C2_microK2": 0.024555496866567113,
+          "C3_microK2": 0.012201677709194765,
+          "SO3_signed": {
+            "quadrupole_shape": 0.26756321954971807,
+            "octupole_concentration": 0.5361377618804719,
+            "QO_contraction": 0.3480310851719819,
+            "chirality": -0.009730628952614262
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.26756321954971807,
+            "octupole_concentration": 0.5361377618804719,
+            "QO_contraction": 0.3480310851719819,
+            "chirality": -0.009730628952614262
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.7455151476173735,
+                0.21011655282821048,
+                -0.381540753416996
+              ],
+              [
+                0.21011655282821048,
+                0.05921940810124101,
+                -0.10753373439516314
+              ],
+              [
+                -0.381540753416996,
+                -0.10753373439516314,
+                0.1952654442813853
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.01805385170805232,
+                -0.02969453395959306,
+                -0.12979269933042673
+              ],
+              [
+                -0.02969453395959306,
+                0.04884084356825327,
+                0.2134798590516615
+              ],
+              [
+                -0.12979269933042673,
+                0.2134798590516615,
+                0.9331053047236946
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.43138301945464486
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.2705430280030918
+            },
+            "joint_axis_overlap_squared": 0.23920617708695466,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.7455151476173735,
+              0.05921940810124101,
+              0.1952654442813853
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.01805385170805232,
+              0.04884084356825327,
+              0.9331053047236946
+            ]
+          }
+        }
+      },
+      "same_row_cross_fields": {
+        "TE": {
+          "physical_O3_contraction_parity": 1,
+          "Q_normalized_overlap": 0.21678014255964242,
+          "Q_normalized_overlap_absolute": 0.21678014255964242,
+          "O_normalized_overlap": 0.08062165746356222,
+          "O_normalized_overlap_absolute": 0.08062165746356222,
+          "Q_axis_overlap_squared": 0.019096471613954315,
+          "O_axis_overlap_squared": 0.010028199758186085
+        },
+        "TB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.7045684877891912,
+          "Q_normalized_overlap_absolute": 0.7045684877891912,
+          "O_normalized_overlap": -0.14675951789544942,
+          "O_normalized_overlap_absolute": 0.14675951789544942,
+          "Q_axis_overlap_squared": 0.9721818817399102,
+          "O_axis_overlap_squared": 0.20479297379591074
+        },
+        "EB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.5181669325504032,
+          "Q_normalized_overlap_absolute": 0.5181669325504032,
+          "O_normalized_overlap": 0.7394908686472395,
+          "O_normalized_overlap_absolute": 0.7394908686472395,
+          "Q_axis_overlap_squared": 0.0006708378340975936,
+          "O_axis_overlap_squared": 0.6997645829056851
+        }
+      }
+    },
+    {
+      "label": "OE1",
+      "fields": {
+        "T": {
+          "C2_microK2": 0.04324698614364183,
+          "C3_microK2": 0.025464736849509787,
+          "SO3_signed": {
+            "quadrupole_shape": 0.0587893507772021,
+            "octupole_concentration": 0.5042778096591041,
+            "QO_contraction": 0.3124748074276069,
+            "chirality": -0.03472827974625133
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.0587893507772021,
+            "octupole_concentration": 0.5042778096591041,
+            "QO_contraction": 0.3124748074276069,
+            "chirality": 0.03472827974625133
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.017920907409802907,
+                0.12906723705572057,
+                0.03068219037511182
+              ],
+              [
+                0.12906723705572057,
+                0.9295484486508364,
+                0.22097461071458427
+              ],
+              [
+                0.03068219037511182,
+                0.22097461071458427,
+                0.05253064393936055
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.1581090134670259,
+                0.06469492454988833,
+                -0.3590614433004385
+              ],
+              [
+                0.06469492454988833,
+                0.02647181947908762,
+                -0.14692048526341886
+              ],
+              [
+                -0.3590614433004385,
+                -0.14692048526341886,
+                0.8154191670538865
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.10537969354324979
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.163895245232389
+            },
+            "joint_axis_overlap_squared": 9.802779374655035e-06,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.017920907409802907,
+              0.9295484486508364,
+              0.05253064393936055
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.1581090134670259,
+              0.02647181947908762,
+              0.8154191670538865
+            ]
+          }
+        },
+        "E": {
+          "C2_microK2": 0.126048848972743,
+          "C3_microK2": 0.003965315073906183,
+          "SO3_signed": {
+            "quadrupole_shape": -0.07585300375262885,
+            "octupole_concentration": 0.5640594080759493,
+            "QO_contraction": 0.3105980679775388,
+            "chirality": -0.260385617101225
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.07585300375262885,
+            "octupole_concentration": 0.5640594080759493,
+            "QO_contraction": 0.3105980679775388,
+            "chirality": 0.260385617101225
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.24846466857903426,
+                -0.3745825735416249,
+                -0.2154480741289602
+              ],
+              [
+                -0.3745825735416249,
+                0.5647165257076978,
+                0.3248071226116473
+              ],
+              [
+                -0.2154480741289602,
+                0.3248071226116473,
+                0.1868188057132672
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.8277719946922275,
+                -0.17854910857443235,
+                -0.3326946577911252
+              ],
+              [
+                -0.17854910857443235,
+                0.03851276000775745,
+                0.07176171090224853
+              ],
+              [
+                -0.3326946577911252,
+                0.07176171090224853,
+                0.13371524530001502
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.1342114013495686
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.3625825872824359
+            },
+            "joint_axis_overlap_squared": 0.5761384542184379,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.24846466857903426,
+              0.5647165257076978,
+              0.1868188057132672
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.8277719946922275,
+              0.03851276000775745,
+              0.13371524530001502
+            ]
+          }
+        },
+        "B": {
+          "C2_microK2": 0.008787271272150598,
+          "C3_microK2": 0.012581477999587495,
+          "SO3_signed": {
+            "quadrupole_shape": 0.19945282973073067,
+            "octupole_concentration": 0.5370761183191297,
+            "QO_contraction": 0.3089385783247429,
+            "chirality": -0.04836645601686941
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.19945282973073067,
+            "octupole_concentration": 0.5370761183191297,
+            "QO_contraction": 0.3089385783247429,
+            "chirality": -0.04836645601686941
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.6701577553057277,
+                0.23284644647729696,
+                -0.4084469006764662
+              ],
+              [
+                0.23284644647729696,
+                0.08090254452456581,
+                -0.14191495755173836
+              ],
+              [
+                -0.4084469006764662,
+                -0.14191495755173836,
+                0.248939700169706
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.050090681550840115,
+                -0.01752803881137496,
+                -0.21742670725566204
+              ],
+              [
+                -0.01752803881137496,
+                0.006133518951249208,
+                0.07608328825669147
+              ],
+              [
+                -0.21742670725566204,
+                0.07608328825669147,
+                0.9437757994979104
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.3283910042422592
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.27849987003145765
+            },
+            "joint_axis_overlap_squared": 0.4168652736114744,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.6701577553057277,
+              0.08090254452456581,
+              0.248939700169706
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.050090681550840115,
+              0.006133518951249208,
+              0.9437757994979104
+            ]
+          }
+        }
+      },
+      "same_row_cross_fields": {
+        "TE": {
+          "physical_O3_contraction_parity": 1,
+          "Q_normalized_overlap": -0.2026462068515383,
+          "Q_normalized_overlap_absolute": 0.2026462068515383,
+          "O_normalized_overlap": -0.03883582183573517,
+          "O_normalized_overlap_absolute": 0.03883582183573517,
+          "Q_axis_overlap_squared": 0.5728325365510296,
+          "O_axis_overlap_squared": 0.43565836524805673
+        },
+        "TB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.5564733184862743,
+          "Q_normalized_overlap_absolute": 0.5564733184862743,
+          "O_normalized_overlap": -0.8583593873632698,
+          "O_normalized_overlap_absolute": 0.8583593873632698,
+          "Q_axis_overlap_squared": 0.07261203147112782,
+          "O_axis_overlap_squared": 0.9091697870420667
+        },
+        "EB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": 0.24184576727114004,
+          "Q_normalized_overlap_absolute": 0.24184576727114004,
+          "O_normalized_overlap": -0.03595417429159335,
+          "O_normalized_overlap_absolute": 0.03595417429159335,
+          "Q_axis_overlap_squared": 0.16807192182338565,
+          "O_axis_overlap_squared": 0.3297494678768291
+        }
+      }
+    },
+    {
+      "label": "OE2",
+      "fields": {
+        "T": {
+          "C2_microK2": 0.05258053854762621,
+          "C3_microK2": 0.1137700667408448,
+          "SO3_signed": {
+            "quadrupole_shape": -0.37884163376505026,
+            "octupole_concentration": 0.5174442208020598,
+            "QO_contraction": 0.381454624956321,
+            "chirality": -0.043920262921731415
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.37884163376505026,
+            "octupole_concentration": 0.5174442208020598,
+            "QO_contraction": 0.381454624956321,
+            "chirality": 0.043920262921731415
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.2562596467876406,
+                0.1732103018175345,
+                -0.4007353635008933
+              ],
+              [
+                0.1732103018175345,
+                0.11707582146393708,
+                -0.27086392309933066
+              ],
+              [
+                -0.4007353635008933,
+                -0.27086392309933066,
+                0.6266645317484231
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.037009412956472316,
+                -0.05613010282018874,
+                0.1802474073779833
+              ],
+              [
+                -0.05613010282018874,
+                0.08512938171460446,
+                -0.2733711426630263
+              ],
+              [
+                0.1802474073779833,
+                -0.2733711426630263,
+                0.8778612053289235
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.6268791585025365
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.11428788514075051
+            },
+            "joint_axis_overlap_squared": 0.5537602081597746,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.2562596467876406,
+              0.11707582146393708,
+              0.6266645317484231
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.037009412956472316,
+              0.08512938171460446,
+              0.8778612053289235
+            ]
+          }
+        },
+        "E": {
+          "C2_microK2": 0.07227996218483967,
+          "C3_microK2": 0.010379671043066153,
+          "SO3_signed": {
+            "quadrupole_shape": 0.3098398291847534,
+            "octupole_concentration": 0.5450267599943931,
+            "QO_contraction": 0.2690064984980239,
+            "chirality": -0.16551475205810684
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.3098398291847534,
+            "octupole_concentration": 0.5450267599943931,
+            "QO_contraction": 0.2690064984980239,
+            "chirality": 0.16551475205810684
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.08259841663051264,
+                -0.027345592551076478,
+                0.2739126444118186
+              ],
+              [
+                -0.027345592551076478,
+                0.009053217512807042,
+                -0.09068337958801136
+              ],
+              [
+                0.2739126444118186,
+                -0.09068337958801136,
+                0.9083483658566801
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.38999933742999376,
+                -0.24218637150990258,
+                -0.4233740848103804
+              ],
+              [
+                -0.24218637150990258,
+                0.1503957389559955,
+                0.2629118143308571
+              ],
+              [
+                -0.4233740848103804,
+                0.2629118143308571,
+                0.45960492361401106
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.4978885319990564
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.2875850287110835
+            },
+            "joint_axis_overlap_squared": 0.18468324006840706,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.08259841663051264,
+              0.009053217512807042,
+              0.9083483658566801
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.38999933742999376,
+              0.1503957389559955,
+              0.45960492361401106
+            ]
+          }
+        },
+        "B": {
+          "C2_microK2": 0.015296757900215393,
+          "C3_microK2": 0.015073231784292356,
+          "SO3_signed": {
+            "quadrupole_shape": -0.36359075957521464,
+            "octupole_concentration": 0.5794331137826865,
+            "QO_contraction": 0.26245050568369166,
+            "chirality": -0.14879439051008322
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.36359075957521464,
+            "octupole_concentration": 0.5794331137826865,
+            "QO_contraction": 0.26245050568369166,
+            "chirality": -0.14879439051008322
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.1520563261585425,
+                -0.253573724787577,
+                0.25423525705744177
+              ],
+              [
+                -0.253573724787577,
+                0.4228672066928898,
+                -0.4239703978982453
+              ],
+              [
+                0.25423525705744177,
+                -0.4239703978982453,
+                0.425076467148567
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.3830470774525807,
+                0.30220131139395623,
+                0.3807839036768629
+              ],
+              [
+                0.30220131139395623,
+                0.23841882103782022,
+                0.3004158021884487
+              ],
+              [
+                0.3807839036768629,
+                0.3004158021884487,
+                0.378534101509599
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.5936931884972879
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.40907587608385687
+            },
+            "joint_axis_overlap_squared": 0.10559211934345912,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.1520563261585425,
+              0.4228672066928898,
+              0.425076467148567
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.3830470774525807,
+              0.23841882103782022,
+              0.378534101509599
+            ]
+          }
+        }
+      },
+      "same_row_cross_fields": {
+        "TE": {
+          "physical_O3_contraction_parity": 1,
+          "Q_normalized_overlap": -0.2237647425994847,
+          "Q_normalized_overlap_absolute": 0.2237647425994847,
+          "O_normalized_overlap": -0.12041351786449016,
+          "O_normalized_overlap_absolute": 0.12041351786449016,
+          "Q_axis_overlap_squared": 0.41157592628238326,
+          "O_axis_overlap_squared": 0.16152479840676767
+        },
+        "TB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.031894764984315455,
+          "Q_normalized_overlap_absolute": 0.031894764984315455,
+          "O_normalized_overlap": -0.45437166154121145,
+          "O_normalized_overlap_absolute": 0.45437166154121145,
+          "Q_axis_overlap_squared": 0.29292506266506224,
+          "O_axis_overlap_squared": 0.3058686161242001
+        },
+        "EB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.40400723505452885,
+          "Q_normalized_overlap_absolute": 0.40400723505452885,
+          "O_normalized_overlap": 0.6564617409414271,
+          "O_normalized_overlap_absolute": 0.6564617409414271,
+          "Q_axis_overlap_squared": 0.6325443225785219,
+          "O_axis_overlap_squared": 0.04838099360216495
+        }
+      }
+    },
+    {
+      "label": "HM_HALF_DIFF",
+      "fields": {
+        "T": {
+          "C2_microK2": 0.01481512950417356,
+          "C3_microK2": 0.009029103299984438,
+          "SO3_signed": {
+            "quadrupole_shape": -0.11589537107411696,
+            "octupole_concentration": 0.5410676458818972,
+            "QO_contraction": 0.3147798692216362,
+            "chirality": 0.13243428038548757
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.11589537107411696,
+            "octupole_concentration": 0.5410676458818972,
+            "QO_contraction": 0.3147798692216362,
+            "chirality": 0.13243428038548757
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.04740148298634031,
+                0.044405143585843805,
+                0.2078046332980971
+              ],
+              [
+                0.044405143585843805,
+                0.04159820859291731,
+                0.19466890059251388
+              ],
+              [
+                0.2078046332980971,
+                0.19466890059251388,
+                0.9110003084207424
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.9884966258571106,
+                0.0672865740555954,
+                0.08272583319664387
+              ],
+              [
+                0.0672865740555954,
+                0.004580170462608723,
+                0.005631114721176029
+              ],
+              [
+                0.08272583319664387,
+                0.005631114721176029,
+                0.00692320368028064
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.19947955432773395
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.3738492927440363
+            },
+            "joint_axis_overlap_squared": 0.09590354221876665,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.04740148298634031,
+              0.04159820859291731,
+              0.9110003084207424
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.9884966258571106,
+              0.004580170462608723,
+              0.00692320368028064
+            ]
+          }
+        },
+        "E": {
+          "C2_microK2": 0.0032717253076802134,
+          "C3_microK2": 0.006378277988755908,
+          "SO3_signed": {
+            "quadrupole_shape": -0.33329577439322206,
+            "octupole_concentration": 0.4642613231593301,
+            "QO_contraction": 0.36318909543143785,
+            "chirality": 0.04854978564955541
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.33329577439322206,
+            "octupole_concentration": 0.4642613231593301,
+            "QO_contraction": 0.36318909543143785,
+            "chirality": 0.04854978564955541
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.24028265477018695,
+                -0.22711940252215615,
+                0.3618890404319491
+              ],
+              [
+                -0.22711940252215615,
+                0.21467726437164938,
+                -0.342063902701722
+              ],
+              [
+                0.3618890404319491,
+                -0.342063902701722,
+                0.5450400808581635
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.661240716420889,
+                -0.4721507598178195,
+                -0.03278858599473216
+              ],
+              [
+                -0.4721507598178195,
+                0.33713341368810773,
+                0.023412284522586372
+              ],
+              [
+                -0.03278858599473216,
+                0.023412284522586372,
+                0.0016258698910029535
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.537250185287241
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.35087507225889897
+            },
+            "joint_axis_overlap_squared": 0.40686626028443146,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.24028265477018695,
+              0.21467726437164938,
+              0.5450400808581635
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.661240716420889,
+              0.33713341368810773,
+              0.0016258698910029535
+            ]
+          }
+        },
+        "B": {
+          "C2_microK2": 0.006561417186214726,
+          "C3_microK2": 0.003690677337838957,
+          "SO3_signed": {
+            "quadrupole_shape": -0.3079262378353719,
+            "octupole_concentration": 0.575267876902741,
+            "QO_contraction": 0.432621688037214,
+            "chirality": -0.008626058440288725
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.3079262378353719,
+            "octupole_concentration": 0.575267876902741,
+            "QO_contraction": 0.432621688037214,
+            "chirality": -0.008626058440288725
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.6653709807497654,
+                0.267204990757836,
+                -0.38891378432753676
+              ],
+              [
+                0.267204990757836,
+                0.1073063135477304,
+                -0.1561831025899774
+              ],
+              [
+                -0.38891378432753676,
+                -0.1561831025899774,
+                0.2273227057025046
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.328955121472881,
+                0.13632130331657252,
+                -0.4496222323147666
+              ],
+              [
+                0.13632130331657252,
+                0.05649250163585306,
+                -0.18632659809283056
+              ],
+              [
+                -0.4496222323147666,
+                -0.18632659809283056,
+                0.6145523768912655
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.49477902687267467
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.4764620889182022
+            },
+            "joint_axis_overlap_squared": 0.8454230683321409,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.6653709807497654,
+              0.1073063135477304,
+              0.2273227057025046
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.328955121472881,
+              0.05649250163585306,
+              0.6145523768912655
+            ]
+          }
+        }
+      },
+      "same_row_cross_fields": {
+        "TE": {
+          "physical_O3_contraction_parity": 1,
+          "Q_normalized_overlap": 0.4464767564776174,
+          "Q_normalized_overlap_absolute": 0.4464767564776174,
+          "O_normalized_overlap": 0.019448549797826252,
+          "O_normalized_overlap_absolute": 0.019448549797826252,
+          "Q_axis_overlap_squared": 0.513907117139154,
+          "O_axis_overlap_squared": 0.5864895359899133
+        },
+        "TB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.7625135516123192,
+          "Q_normalized_overlap_absolute": 0.7625135516123192,
+          "O_normalized_overlap": 0.23943518024255908,
+          "O_normalized_overlap_absolute": 0.23943518024255908,
+          "Q_axis_overlap_squared": 0.044380770188685546,
+          "O_axis_overlap_squared": 0.27154043065817823
+        },
+        "EB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.4411332913955996,
+          "Q_normalized_overlap_absolute": 0.4411332913955996,
+          "O_normalized_overlap": 0.5932542985239618,
+          "O_normalized_overlap_absolute": 0.5932542985239618,
+          "Q_axis_overlap_squared": 0.010800372470985135,
+          "O_axis_overlap_squared": 0.12959509024424848
+        }
+      }
+    },
+    {
+      "label": "OE_HALF_DIFF",
+      "fields": {
+        "T": {
+          "C2_microK2": 0.005608154308939675,
+          "C3_microK2": 0.013726024684207822,
+          "SO3_signed": {
+            "quadrupole_shape": 0.1510015663686991,
+            "octupole_concentration": 0.5587385587035933,
+            "QO_contraction": 0.40315030626233495,
+            "chirality": 0.05503016452485097
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.1510015663686991,
+            "octupole_concentration": 0.5587385587035933,
+            "QO_contraction": 0.40315030626233495,
+            "chirality": 0.05503016452485097
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.272300777701933,
+                0.41371883470677734,
+                -0.16428569619331354
+              ],
+              [
+                0.41371883470677734,
+                0.6285816575173105,
+                -0.24960665688031497
+              ],
+              [
+                -0.16428569619331354,
+                -0.24960665688031497,
+                0.09911756478075646
+              ]
+            ],
+            "O3_projector": [
+              [
+                2.4887157464783065e-05,
+                0.002068445236392202,
+                -0.0045396114809775085
+              ],
+              [
+                0.002068445236392202,
+                0.1719145990058486,
+                -0.37730053165720695
+              ],
+              [
+                -0.0045396114809775085,
+                -0.37730053165720695,
+                0.8280605138366871
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.2545346973524777
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.3207847933363276
+            },
+            "joint_axis_overlap_squared": 0.38170102667259764,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.272300777701933,
+              0.6285816575173105,
+              0.09911756478075646
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              2.4887157464783065e-05,
+              0.1719145990058486,
+              0.8280605138366871
+            ]
+          }
+        },
+        "E": {
+          "C2_microK2": 0.02092341624470852,
+          "C3_microK2": 0.0027383889852096504,
+          "SO3_signed": {
+            "quadrupole_shape": 0.26702460422127927,
+            "octupole_concentration": 0.526396112684245,
+            "QO_contraction": 0.4813239440825328,
+            "chirality": 0.013808613806140178
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.26702460422127927,
+            "octupole_concentration": 0.526396112684245,
+            "QO_contraction": 0.4813239440825328,
+            "chirality": 0.013808613806140178
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.8656728965609667,
+                0.3097366566766672,
+                0.1426412851578142
+              ],
+              [
+                0.3097366566766672,
+                0.1108233801362673,
+                0.05103686963558867
+              ],
+              [
+                0.1426412851578142,
+                0.05103686963558867,
+                0.02350372330276593
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.9087547285625898,
+                0.11995218509689308,
+                -0.26178434859289224
+              ],
+              [
+                0.11995218509689308,
+                0.01583323448811997,
+                -0.0345545433227657
+              ],
+              [
+                -0.26178434859289224,
+                -0.0345545433227657,
+                0.075412036949291
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.4305572650249883
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.11472712076566603
+            },
+            "joint_axis_overlap_squared": 0.7863090486180693,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.8656728965609667,
+              0.1108233801362673,
+              0.02350372330276593
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.9087547285625898,
+              0.01583323448811997,
+              0.075412036949291
+            ]
+          }
+        },
+        "B": {
+          "C2_microK2": 0.0029961986275077643,
+          "C3_microK2": 0.0035029345891568822,
+          "SO3_signed": {
+            "quadrupole_shape": -0.11923445334903195,
+            "octupole_concentration": 0.5376961645933762,
+            "QO_contraction": 0.4038908062130424,
+            "chirality": -0.07017827487003596
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.11923445334903195,
+            "octupole_concentration": 0.5376961645933762,
+            "QO_contraction": 0.4038908062130424,
+            "chirality": -0.07017827487003596
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.021373351061045442,
+                0.12179612854517635,
+                0.07798867864551648
+              ],
+              [
+                0.12179612854517635,
+                0.6940557372694709,
+                0.44441880462488226
+              ],
+              [
+                0.07798867864551648,
+                0.44441880462488226,
+                0.2845709116694842
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.10281705516296809,
+                0.15100726726886282,
+                0.2635194747311353
+              ],
+              [
+                0.15100726726886282,
+                0.22178416539810467,
+                0.3870306894921396
+              ],
+              [
+                0.2635194747311353,
+                0.3870306894921396,
+                0.6753987794389269
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.2047922675345644
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.42598573333541606
+            },
+            "joint_axis_overlap_squared": 0.7702216689393624,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.021373351061045442,
+              0.6940557372694709,
+              0.2845709116694842
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.10281705516296809,
+              0.22178416539810467,
+              0.6753987794389269
+            ]
+          }
+        }
+      },
+      "same_row_cross_fields": {
+        "TE": {
+          "physical_O3_contraction_parity": 1,
+          "Q_normalized_overlap": 0.08213390840749817,
+          "Q_normalized_overlap_absolute": 0.08213390840749817,
+          "O_normalized_overlap": -0.27810511793065446,
+          "O_normalized_overlap_absolute": 0.27810511793065446,
+          "Q_axis_overlap_squared": 0.49165622560542843,
+          "O_axis_overlap_squared": 0.09413823319996346
+        },
+        "TB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.09001962391777786,
+          "Q_normalized_overlap_absolute": 0.09001962391777786,
+          "O_normalized_overlap": -0.220092865227797,
+          "O_normalized_overlap_absolute": 0.220092865227797,
+          "Q_axis_overlap_squared": 0.3235907334901197,
+          "O_axis_overlap_squared": 0.30357993366467817
+        },
+        "EB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.004656019726051841,
+          "Q_normalized_overlap_absolute": 0.004656019726051841,
+          "O_normalized_overlap": 0.43327242299622887,
+          "O_normalized_overlap_absolute": 0.43327242299622887,
+          "Q_axis_overlap_squared": 0.2451701606907869,
+          "O_axis_overlap_squared": 0.019389661289448926
+        }
+      }
+    },
+    {
+      "label": "FULL_MINUS_HM_MEAN",
+      "fields": {
+        "T": {
+          "C2_microK2": 0.002437793033393291,
+          "C3_microK2": 0.0016175076332475425,
+          "SO3_signed": {
+            "quadrupole_shape": 0.00361734986350698,
+            "octupole_concentration": 0.5368760802811099,
+            "QO_contraction": 0.439778231758468,
+            "chirality": 0.003792499674222982
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.00361734986350698,
+            "octupole_concentration": 0.5368760802811099,
+            "QO_contraction": 0.439778231758468,
+            "chirality": 0.003792499674222982
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.9828860213195789,
+                -0.03957923626632406,
+                0.12350941045411147
+              ],
+              [
+                -0.03957923626632406,
+                0.0015937920668790944,
+                -0.004973524937219795
+              ],
+              [
+                0.12350941045411147,
+                -0.004973524937219795,
+                0.015520186613542505
+              ]
+            ],
+            "O3_projector": [
+              [
+                8.203915838758257e-05,
+                -0.005310465966069018,
+                0.007336987064680999
+              ],
+              [
+                -0.005310465966069018,
+                0.343751073646385,
+                -0.47492954421110284
+              ],
+              [
+                0.007336987064680999,
+                -0.47492954421110284,
+                0.6561668871952275
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.006797845420053308
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.21086643335591085
+            },
+            "joint_axis_overlap_squared": 0.017769225546195706,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.9828860213195789,
+              0.0015937920668790944,
+              0.015520186613542505
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              8.203915838758257e-05,
+              0.343751073646385,
+              0.6561668871952275
+            ]
+          }
+        },
+        "E": {
+          "C2_microK2": 0.00018855984792085423,
+          "C3_microK2": 7.992629492110341e-05,
+          "SO3_signed": {
+            "quadrupole_shape": -0.1455121202001684,
+            "octupole_concentration": 0.5065057048441581,
+            "QO_contraction": 0.3209999506128469,
+            "chirality": -0.11333153359478845
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.1455121202001684,
+            "octupole_concentration": 0.5065057048441581,
+            "QO_contraction": 0.3209999506128469,
+            "chirality": 0.11333153359478845
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.04200893953155911,
+                -0.20000898181802076,
+                -0.01551114834922122
+              ],
+              [
+                -0.20000898181802076,
+                0.9522638098928624,
+                0.07385020956849822
+              ],
+              [
+                -0.01551114834922122,
+                0.07385020956849822,
+                0.005727250575578116
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.07006218598794298,
+                0.22296921663891497,
+                -0.124250571483444
+              ],
+              [
+                0.22296921663891497,
+                0.7095877878707199,
+                -0.39542089930463514
+              ],
+              [
+                -0.124250571483444,
+                -0.39542089930463514,
+                0.2203500261413367
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.24603262541680412
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.1867376370674203
+            },
+            "joint_axis_overlap_squared": 0.5361790218171485,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.04200893953155911,
+              0.9522638098928624,
+              0.005727250575578116
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.07006218598794298,
+              0.7095877878707199,
+              0.2203500261413367
+            ]
+          }
+        },
+        "B": {
+          "C2_microK2": 4.5122403184973065e-05,
+          "C3_microK2": 0.00010864916416064803,
+          "SO3_signed": {
+            "quadrupole_shape": 0.03623484237928007,
+            "octupole_concentration": 0.5647202662095416,
+            "QO_contraction": 0.23756984795892355,
+            "chirality": 0.3322467423864458
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.03623484237928007,
+            "octupole_concentration": 0.5647202662095416,
+            "QO_contraction": 0.23756984795892355,
+            "chirality": 0.3322467423864458
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.1936518290851387,
+                -0.06569048729952172,
+                0.38966082437867716
+              ],
+              [
+                -0.06569048729952172,
+                0.022283497873657757,
+                -0.13218057147146786
+              ],
+              [
+                0.38966082437867716,
+                -0.13218057147146786,
+                0.7840646730412034
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.8650263818268572,
+                -0.1677125109734685,
+                -0.2977049785162612
+              ],
+              [
+                -0.1677125109734685,
+                0.0325163335222483,
+                0.05771945286896275
+              ],
+              [
+                -0.2977049785162612,
+                0.05771945286896275,
+                0.10245728465089436
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.06615219285717124
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.40400245417411795
+            },
+            "joint_axis_overlap_squared": 0.023339174000167343,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.1936518290851387,
+              0.022283497873657757,
+              0.7840646730412034
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.8650263818268572,
+              0.0325163335222483,
+              0.10245728465089436
+            ]
+          }
+        }
+      },
+      "same_row_cross_fields": {
+        "TE": {
+          "physical_O3_contraction_parity": 1,
+          "Q_normalized_overlap": 0.3169629333938807,
+          "Q_normalized_overlap_absolute": 0.3169629333938807,
+          "O_normalized_overlap": -0.19617172679596193,
+          "O_normalized_overlap_absolute": 0.19617172679596193,
+          "Q_axis_overlap_squared": 0.0541628661390796,
+          "O_axis_overlap_squared": 0.7599164469284434
+        },
+        "TB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.24715908420171984,
+          "Q_normalized_overlap_absolute": 0.24715908420171984,
+          "O_normalized_overlap": -0.06989859455434094,
+          "O_normalized_overlap_absolute": 0.06989859455434094,
+          "Q_axis_overlap_squared": 0.30531034387913114,
+          "O_axis_overlap_squared": 0.021064969259463495
+        },
+        "EB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": 0.10661146170159838,
+          "Q_normalized_overlap_absolute": 0.10661146170159838,
+          "O_normalized_overlap": -0.18310598784110704,
+          "O_normalized_overlap_absolute": 0.18310598784110704,
+          "Q_axis_overlap_squared": 0.02851148685716336,
+          "O_axis_overlap_squared": 0.05979891489493513
+        }
+      }
+    },
+    {
+      "label": "FULL_MINUS_OE_MEAN",
+      "fields": {
+        "T": {
+          "C2_microK2": 0.0008806225784503314,
+          "C3_microK2": 0.0002556267320289039,
+          "SO3_signed": {
+            "quadrupole_shape": -0.15700731524452205,
+            "octupole_concentration": 0.5643992142352524,
+            "QO_contraction": 0.3504031821132428,
+            "chirality": 0.2125721378116304
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.15700731524452205,
+            "octupole_concentration": 0.5643992142352524,
+            "QO_contraction": 0.3504031821132428,
+            "chirality": 0.2125721378116304
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.030556312920899505,
+                -0.05389440902405996,
+                0.1634564692434255
+              ],
+              [
+                -0.05389440902405996,
+                0.0950575199164825,
+                -0.2883001569540977
+              ],
+              [
+                0.1634564692434255,
+                -0.2883001569540977,
+                0.8743861671626182
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.0027317998541072737,
+                0.03752315624709843,
+                0.03628153619846065
+              ],
+              [
+                0.03752315624709843,
+                0.5154064462765259,
+                0.49835193805019373
+              ],
+              [
+                0.03628153619846065,
+                0.49835193805019373,
+                0.48186175386936636
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.26379784584418664
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.46635471708368637
+            },
+            "joint_axis_overlap_squared": 0.1908764273649327,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.030556312920899505,
+              0.0950575199164825,
+              0.8743861671626182
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.0027317998541072737,
+              0.5154064462765259,
+              0.48186175386936636
+            ]
+          }
+        },
+        "E": {
+          "C2_microK2": 0.0028481565993972247,
+          "C3_microK2": 7.353554755562596e-05,
+          "SO3_signed": {
+            "quadrupole_shape": 0.31461245734628807,
+            "octupole_concentration": 0.538376322530584,
+            "QO_contraction": 0.34116768574470135,
+            "chirality": -0.07268705813919803
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.31461245734628807,
+            "octupole_concentration": 0.538376322530584,
+            "QO_contraction": 0.34116768574470135,
+            "chirality": 0.07268705813919803
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.011781663359759975,
+                -0.09431144814267176,
+                -0.052423339434543845
+              ],
+              [
+                -0.09431144814267176,
+                0.754957002179111,
+                0.41964541912080117
+              ],
+              [
+                -0.052423339434543845,
+                0.41964541912080117,
+                0.23326133446112896
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.3994266346577372,
+                -0.3819032544422469,
+                -0.3066511086400181
+              ],
+              [
+                -0.3819032544422469,
+                0.3651486483332699,
+                0.29319791472668477
+              ],
+              [
+                -0.3066511086400181,
+                0.29319791472668477,
+                0.23542471700899292
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.5057012075621214
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.20972820199840672
+            },
+            "joint_axis_overlap_squared": 0.6855582945843244,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.011781663359759975,
+              0.754957002179111,
+              0.23326133446112896
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.3994266346577372,
+              0.3651486483332699,
+              0.23542471700899292
+            ]
+          }
+        },
+        "B": {
+          "C2_microK2": 0.000563063897865151,
+          "C3_microK2": 0.00012666424058270146,
+          "SO3_signed": {
+            "quadrupole_shape": 0.3217298964430264,
+            "octupole_concentration": 0.5317840039079917,
+            "QO_contraction": 0.3367897415592024,
+            "chirality": -0.014226934590043608
+          },
+          "shape_status": {
+            "quadrupole_shape": "RESOLVED",
+            "octupole_concentration": "RESOLVED",
+            "QO_contraction": "RESOLVED",
+            "chirality": "RESOLVED"
+          },
+          "O3_summaries": {
+            "quadrupole_shape": 0.3217298964430264,
+            "octupole_concentration": 0.5317840039079917,
+            "QO_contraction": 0.3367897415592024,
+            "chirality": -0.014226934590043608
+          },
+          "orientation": {
+            "Q2_projector": [
+              [
+                0.3623605465651676,
+                -0.42378042059008586,
+                -0.22686016834748748
+              ],
+              [
+                -0.42378042059008586,
+                0.4956109228166547,
+                0.265312817492801
+              ],
+              [
+                -0.22686016834748748,
+                0.265312817492801,
+                0.14202853061817727
+              ]
+            ],
+            "O3_projector": [
+              [
+                0.7302860426307981,
+                -0.43676639310646925,
+                0.0787620239849842
+              ],
+              [
+                -0.43676639310646925,
+                0.2612194003599183,
+                -0.04710565877140592
+              ],
+              [
+                0.0787620239849842,
+                -0.04710565877140592,
+                0.008494557009283326
+              ]
+            ],
+            "Q2_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.5175215231244231
+            },
+            "O3_axis_status": {
+              "status": "RESOLVED",
+              "relative_gap": 0.20625214260525024
+            },
+            "joint_axis_overlap_squared": 0.7047511964791939,
+            "fixed_external_axes": "GALACTIC_CARTESIAN_X_Y_Z",
+            "Q2_fixed_axis_squared_cosines": [
+              0.3623605465651676,
+              0.4956109228166547,
+              0.14202853061817727
+            ],
+            "O3_fixed_axis_squared_cosines": [
+              0.7302860426307981,
+              0.2612194003599183,
+              0.008494557009283326
+            ]
+          }
+        }
+      },
+      "same_row_cross_fields": {
+        "TE": {
+          "physical_O3_contraction_parity": 1,
+          "Q_normalized_overlap": 0.23266360719562657,
+          "Q_normalized_overlap_absolute": 0.23266360719562657,
+          "O_normalized_overlap": -0.3263929605774971,
+          "O_normalized_overlap_absolute": 0.3263929605774971,
+          "Q_axis_overlap_squared": 0.027144999838456987,
+          "O_axis_overlap_squared": 0.5440528083649367
+        },
+        "TB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": -0.0382631603840457,
+          "Q_normalized_overlap_absolute": 0.0382631603840457,
+          "O_normalized_overlap": 0.10457808761870774,
+          "O_normalized_overlap_absolute": 0.10457808761870774,
+          "Q_axis_overlap_squared": 0.0009075424694952785,
+          "O_axis_overlap_squared": 0.06670947482233916
+        },
+        "EB": {
+          "physical_O3_contraction_parity": -1,
+          "Q_normalized_overlap": 0.5205761170331801,
+          "Q_normalized_overlap_absolute": 0.5205761170331801,
+          "O_normalized_overlap": 0.5583499036615377,
+          "O_normalized_overlap_absolute": 0.5583499036615377,
+          "Q_axis_overlap_squared": 0.7379587536243366,
+          "O_axis_overlap_squared": 0.6467569641074797
+        }
+      }
+    }
+  ],
+  "original_chart": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/htt_mes_eps_loop9_20261015/inputs/retained_common_support_coefficients.npz",
+    "bytes": 9182,
+    "sha256": "900e6c6fa04a6313f63753747d89e7059486bdeb88d51c91d895fcc8b4e09459"
+  },
+  "L02_kernel": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L02_EXECUTION_20261018/statistic_family.py",
+    "bytes": 16018,
+    "sha256": "2e396f76c210be5630f822ab211dbc544d95065443fde811c1bb9d66201d77ad"
+  },
+  "morphology_metamorphic_checks": {
+    "status": "FINITE_METAMORPHIC_CHECKS_PASS",
+    "field_row_transform_checks": 486,
+    "cross_pair_transform_checks": 486,
+    "seed": 20261018,
+    "absolute_tolerance": 2e-11,
+    "maximum_absolute_errors": {
+      "signed_shape": 1.1102230246251565e-15,
+      "O3_summaries": 1.1102230246251565e-15,
+      "projector_covariance": 4.835021272242557e-14,
+      "joint_axis": 1.5192708202604877e-14,
+      "cross_fields": 4.418687638008123e-14
+    },
+    "formal_all_input_proof": false
+  },
+  "inference": null,
+  "physical_covariance": "UNKNOWN",
+  "L03_original_acceptance": "HOLD",
+  "caveats": [
+    "Nominal ID equality does not prove complete cross-split latent coupling.",
+    "No independent skies, covariance inversion, PTE or physical null calibration.",
+    "2018 HM signal/foreground and split response/selection law still missing.",
+    "Q/U average without parallel transport exactly as the original operator."
+  ],
+  "elapsed_seconds": 138.1525695050368,
+  "requested_runtime": "gpt-6.1-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "git_intake": "1528ebd3c4ace48a561b9dcaa6d5f891121a22a5"
+}

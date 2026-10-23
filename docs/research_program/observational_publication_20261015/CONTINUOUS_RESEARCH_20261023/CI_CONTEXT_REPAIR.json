@@ -1,0 +1,42 @@
+{
+  "schema": "htt.r23_context_CI_repair/1",
+  "parent_publication_commit": "01f087e3e3028f880d6c60ec3d9b2303b87cafac",
+  "initial_candidate_record": "REVIEW_AND_EXECUTION.json",
+  "initial_remote_CI_run": 39865243482,
+  "initial_CI_results": {
+    "Rust compile": "success",
+    "Python package smoke": "success",
+    "Repository contracts": "failure at Validate clean-clone harness state"
+  },
+  "confirmed_cause": "Current and sealed historical context indices shared SYMBOLS.md. The current-content edit invalidated historical source hashes even though current context checks passed.",
+  "meta_audit": "The earlier selected-file tests and independent candidate reviews did not exercise the historical source binding. This was a real validation-scope gap; PASS_SCOPED never meant complete remote integration success. The remote CI failure was preserved and repaired without weakening the validator.",
+  "repair": "Restore legacy SYMBOLS.md byte-for-byte; preserve current content in CURRENT_SYMBOLS.md; rebuild only current index/view; add actual-source isolation regressions and select them in the existing CI contract command.",
+  "historical_source_restored_sha256": "5c51f848f93430c8b49d46bd66219162409f06b35fdf778ea9f44c0bf5d214cb",
+  "reviewed_changed_files": {
+    ".agent-harness/context/SYMBOLS.md": "5c51f848f93430c8b49d46bd66219162409f06b35fdf778ea9f44c0bf5d214cb",
+    ".agent-harness/context/CURRENT_SYMBOLS.md": "1bdf76cbab4d200b9d621c8ab8b7ee31d5ae4558bf4b4e7b561cb897cc4a4871",
+    ".agent-harness/context/CURRENT_CONTEXT_INDEX.json": "276b7dc57fa702216f4aceb6f24360cdc90d51405b95c5c00c703a69e905600d",
+    ".agent-harness/generated/CURRENT_CONTEXT_PACK.md": "4468749e58ef1f0d800f22d8146b14c4f4fb47286bbe2a788f8e5820c818b40c",
+    "scripts/codex_harness/test_context_isolation.py": "7c3d9862f343e18bd8ba3f0cbc00e1e1b3df7335cd66c9404aeb9cc6151726fd",
+    ".github/workflows/repository-integrity.yml": "9d6741f125101cb6329ce9d56d52f325ec87a232f34cfb9ac1f3f0a3b02a7af4"
+  },
+  "checks": {
+    "focused_context_tests": 2,
+    "result": "PASS",
+    "both_index_hash_render_bindings": "PASS",
+    "negative_control": "Original alias reproduces both test failures and unchanged historical-loader failure",
+    "current_builder_idempotence": "PASS",
+    "other_science_controller_code": "unchanged from first reviewed commit",
+    "remote_followup_CI": "to be observed after push; not claimed passed in this prepublication record"
+  },
+  "independent_review": "receipts/CONTEXT_FINAL_REVIEW.json",
+  "repair_receipt": "receipts/CONTEXT_REPAIR_RECEIPT.json",
+  "actual_failure_log": "receipts/CI_FAILURE.json",
+  "lineage": "Earlier CORE_CANDIDATE, PUBLICATION_REVIEW and REVIEW_AND_EXECUTION remain evidence for the first publication snapshot. This separately reviewed six-file delta supersedes its three existing context paths and adds current symbols, context tests and workflow selection. PACKAGE_MANIFEST now describes the combined current package.",
+  "scientific_status": {
+    "completed_scoped": 18,
+    "original_total": 42,
+    "new_scientific_admission": 0,
+    "owner_local_activation": false
+  }
+}

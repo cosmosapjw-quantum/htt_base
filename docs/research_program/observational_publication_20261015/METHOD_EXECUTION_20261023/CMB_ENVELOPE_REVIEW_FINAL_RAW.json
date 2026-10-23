@@ -1,0 +1,43 @@
+{
+  "verdict": "PASS",
+  "reviewer": "/root/cmb_envelope_final_review",
+  "candidate_identity": "sha256:8e8fed320009b9658cdc4f932445c96a521a123bba4b280cde96443405b4ca85",
+  "input_identity": "sha256:191e516e95b044eee02c2c8c7dd51e74aa9d8863d39763930d8043f59e37a8bf",
+  "repair_manifest_identity": "sha256:b41d0389cf4760b348772dda39b1c52ccc0d5bce1bf4501ed50094c915999e9d",
+  "validation": {
+    "focused_tests": 5,
+    "seconds": 2.39,
+    "carrier_norms": 60,
+    "intervals": 57,
+    "finite_supports": 12,
+    "max_numerical_discrepancy": 1.39e-17,
+    "clipped_curve_grid": 1001,
+    "max_plot_discrepancy": 3.47e-18,
+    "centered_noise_covariance": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        4
+      ]
+    ],
+    "expected_crosspower": 5,
+    "in_memory_recompute": "byte-identical",
+    "repair_manifest_entries": 9,
+    "preservation_entries": 9,
+    "source_hashes": "PASS"
+  },
+  "scope": "conditional C0 processed-carrier envelope only; conservative pair bounds, no joint endpoint sharpness or crossoperator coupling",
+  "residual_holds": [
+    "matched total-field law and justified commonforeground constraints absent",
+    "crossoperator physicalcomparison requires source-to-operator response bindings",
+    "no calibratedp,physicalPi,physicalattribution,familyidentification"
+  ],
+  "scientific_admission": "HOLD",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "evidence_source": "Structured extraction of actual fresh native independent reviewer final; prior verdict contents unread",
+  "original_acceptance_promoted": false
+}

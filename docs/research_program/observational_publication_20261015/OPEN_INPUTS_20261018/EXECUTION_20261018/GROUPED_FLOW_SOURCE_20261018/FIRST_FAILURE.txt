@@ -1,0 +1,88 @@
+F........FF                                                              [100%]
+=================================== FAILURES ===================================
+_________________ test_literal_table_selection_units_and_frame _________________
+
+    def test_literal_table_selection_units_and_frame():
+        html = (EXTERNAL / "courtois_2211.16390v4.html").read_text()
+>       table = parse_table(html)
+                ^^^^^^^^^^^^^^^^^
+
+docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/test_compare_source.py:12: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+html = '<!DOCTYPE html><html lang="en">\n<head>\n<meta http-equiv="content-type" content="text/html; charset=UTF-8">\n<title>... 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" />\n    </svg>\n  </a>\n</div></body>\n</html>\n'
+
+    def parse_table(html):
+        parser = TableParser()
+        parser.feed(html)
+        rows = parser.rows
+        if not rows or rows[0][2:] != ["Vx", "Vy", "Vz"]:
+            raise ValueError("Table 1 component header missing")
+        if rows[1] != ["h{}_{100}^{-1} Mpc"] + ["km s^{-1}"] * 4:
+            raise ValueError("Table 1 radius/velocity units changed")
+        if "at rest in the cosmic microwave background" not in " ".join(parser.text):
+>           raise ValueError("Table 1 CMB frame absent")
+E           ValueError: Table 1 CMB frame absent
+
+docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/compare_source.py:104: ValueError
+_______________ test_component_reorder_not_spatial_qualification _______________
+
+    def test_component_reorder_not_spatial_qualification():
+>       result = build_result()
+                 ^^^^^^^^^^^^^^
+
+docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/test_compare_source.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/compare_source.py:213: in build_result
+    table = parse_table((EXTERNAL / "courtois_2211.16390v4.html").read_text())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+html = '<!DOCTYPE html><html lang="en">\n<head>\n<meta http-equiv="content-type" content="text/html; charset=UTF-8">\n<title>... 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" />\n    </svg>\n  </a>\n</div></body>\n</html>\n'
+
+    def parse_table(html):
+        parser = TableParser()
+        parser.feed(html)
+        rows = parser.rows
+        if not rows or rows[0][2:] != ["Vx", "Vy", "Vz"]:
+            raise ValueError("Table 1 component header missing")
+        if rows[1] != ["h{}_{100}^{-1} Mpc"] + ["km s^{-1}"] * 4:
+            raise ValueError("Table 1 radius/velocity units changed")
+        if "at rest in the cosmic microwave background" not in " ".join(parser.text):
+>           raise ValueError("Table 1 CMB frame absent")
+E           ValueError: Table 1 CMB frame absent
+
+docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/compare_source.py:104: ValueError
+_____________ test_invalid_large_spheres_retained_and_no_promotion _____________
+
+    def test_invalid_large_spheres_retained_and_no_promotion():
+>       result = build_result()
+                 ^^^^^^^^^^^^^^
+
+docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/test_compare_source.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/compare_source.py:213: in build_result
+    table = parse_table((EXTERNAL / "courtois_2211.16390v4.html").read_text())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+html = '<!DOCTYPE html><html lang="en">\n<head>\n<meta http-equiv="content-type" content="text/html; charset=UTF-8">\n<title>... 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" />\n    </svg>\n  </a>\n</div></body>\n</html>\n'
+
+    def parse_table(html):
+        parser = TableParser()
+        parser.feed(html)
+        rows = parser.rows
+        if not rows or rows[0][2:] != ["Vx", "Vy", "Vz"]:
+            raise ValueError("Table 1 component header missing")
+        if rows[1] != ["h{}_{100}^{-1} Mpc"] + ["km s^{-1}"] * 4:
+            raise ValueError("Table 1 radius/velocity units changed")
+        if "at rest in the cosmic microwave background" not in " ".join(parser.text):
+>           raise ValueError("Table 1 CMB frame absent")
+E           ValueError: Table 1 CMB frame absent
+
+docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/compare_source.py:104: ValueError
+=========================== short test summary info ============================
+FAILED docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/test_compare_source.py::test_literal_table_selection_units_and_frame
+FAILED docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/test_compare_source.py::test_component_reorder_not_spatial_qualification
+FAILED docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/GROUPED_FLOW_SOURCE_20261018/test_compare_source.py::test_invalid_large_spheres_retained_and_no_promotion
+3 failed, 8 passed in 0.26s

@@ -1,0 +1,47 @@
+{
+  "packet_id": "dcfa68e071c1c555f67920f4e7981196e3c8b437f498aafeb891bdbe75e1a84e",
+  "task_id": "R24-SN-RELEASE",
+  "input_identity": "sha256:b428afbcd61eb919bdc25100eb44dc748de87148d022d2ad3b182ba7ffec776d",
+  "candidate_identity": "sha256:0e294e28a55b4ac85a2236fbe58100850d13734cb166359adf3226648507569e",
+  "actual_agent_id": "/root/rc_dcfa68e071c1c555",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 .venv/bin/python docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/compute.py freeze",
+      "exit_code": 0,
+      "selected_rows": 277,
+      "excluded_rows_registered": 1424
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 .venv/bin/python docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/compute.py run",
+      "exit_code": 0,
+      "stdout": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/run.stdout",
+      "stderr": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/run.stderr"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=2 OMP_NUM_THREADS=2 .venv/bin/python -m unittest discover -s docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release -p test_*.py -v",
+      "exit_code": 0,
+      "stdout": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/test.stdout",
+      "stderr": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/test.stderr",
+      "tests_passed": 3
+    },
+    {
+      "command": "git diff --check; py_compile targeted scripts; forbidden phrase rg",
+      "exit_code": 0
+    }
+  ],
+  "first_failure": null,
+  "initial_nonfatal_warning": "Initial plot string had SyntaxWarning for invalid escape sequence; corrected before final run; numerical result unchanged.",
+  "source_checks": "pinned table and full covariance SHA-256 matched R24 input; 1701x1701 covariance, symmetric part; selected subblock positive definite",
+  "reference_checks": {
+    "inverse_vs_SVD_relative_coefficient_max": 1.2335607495167927e-12,
+    "direct_whitened_vs_SVD_relative_chi2": 6.16722054127235e-16,
+    "permutation_relative_max": "<1e-10",
+    "finite_difference_K_sign": "passed"
+  },
+  "manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/MANIFEST.json",
+  "scientific_admission": "HOLD_ORIGINAL_ACCEPTANCE",
+  "independent_review": "PENDING"
+}

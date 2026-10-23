@@ -1,0 +1,49 @@
+{
+  "task": "A22-08 finite conditional operator",
+  "owner": "obsstat",
+  "claim_tier": "C0_PROCESSED_OPERATOR_SENSITIVITY",
+  "specification_utc": "2026-10-22T18:27:56.336130+00:00",
+  "design_status": "Specified before A22-08 execution AFTER A22-07 observed results; not blind",
+  "source_experiment_sha256": "da1bc65e24c67c9ad05e098bd859a5be7159f8540bb6e1ff7709ccabc9e5379e",
+  "products": [
+    "full",
+    "hm1",
+    "hm2",
+    "oe1",
+    "oe2"
+  ],
+  "lmax": [
+    32,
+    64,
+    128
+  ],
+  "input": "both processed E and B cached alms, full harmonic m support; Galactic/COSMO K_CMB",
+  "operator": "E_ell2:4 of map2alm_spin4(W_w * alm2map_spin64,L(E,B)), strict pixel-center W=1(|b|>w)",
+  "secondary_windows_degrees": [
+    20,
+    30
+  ],
+  "comparator": "W=1, excluded from primary maximum",
+  "ordering": "RING NSIDE64 throughout discrete new operator; no NESTED/RING arithmetic",
+  "corrections": "No additional beam/pixelwindow/originalmask multiplication",
+  "statistic": "Reuse A22-07 J234/top-axis alignment; max_products,L,windows max(absJ,A); separate maxima/winner; propagate abstention",
+  "numeric_tolerance": {
+    "coefficient_algebra_normalized": 1e-10,
+    "feature_algebra": 1e-12,
+    "eigengap": 1e-10
+  },
+  "controls": [
+    "W30 subset W20; binary strict antipodal masks",
+    "both-array schema/m0 reality",
+    "no-window roundtrip defect not treated exact",
+    "linearity and E/B decomposition",
+    "repacked high-band difference and (Tw-T1)added response",
+    "pure E/B high-to-low probes",
+    "physical E/B parity under antipodal windows"
+  ],
+  "physical_null_status": "HOLD; no total CMB+foreground+noise joint realization law",
+  "p_value": null,
+  "independent_observed_skies": 1,
+  "next_consumer": "L03/L04 processed operator qualification, not original-node completion",
+  "original_node_completion": false
+}

@@ -1,0 +1,11 @@
+# Independent review of F04/F05 and restricted K03 result
+
+2026-10-20. Reviewer `/root/independent_review`, fresh read-only context, requested `gpt-6-astra/xhigh`; observed runtime identity `UNKNOWN`. The reviewer did not author candidate files or publish. Base branch HEAD before this increment: `7703dbf5b5aee38f50c348fde6a05f3ed77fbd7e`.
+
+Initial verdict: **HOLD for one P2 numerical defect**. The rank helper tested a projected block only against its own residual largest singular value. A nuisance exactly equal to the optical-local block left floating-point residuals around $2.2$–$3.3\times10^{-13}$, but the helper normalized them and falsely reported six optical response directions instead of three. The reviewer independently reproduced this on the seeded 60-row fixture.
+
+Targeted repair: compare the projected smallest singular value to the **unprojected whitened block** scale before any normalization; add the exact-annihilation regression. The reviewer ran the falsifier and observed `ValueError: optical_local single-block rank below three`. Narrow tests passed 3/3; the D03 result JSON and PNG are byte-identical to the independently reproduced pre-repair result. The PDF changed packaging bytes on regeneration. Final verdict: **PASS_SCOPED** for the C0 conditional projection and restricted K03 derivation, with no remaining blocking finding in this scope.
+
+Independent checks included retained D03 hash/row binding, one public-covariance use without fitting `y_mag`, optical rank 6/6, joint rank 12/15, principal angles agreeing within $7.5\times10^{-13}$ degrees, residual singular values, plot legibility, Hall's kinematic source and a finite retarded-worldline/aberration falsifier for K03. The reviewer did not inspect PR4 data files or rerun completed historical campaigns.
+
+Final reviewed file SHA-256: `compute.py` `491ddf05b747a9b5d51662ae5adf1ab584628be34c1d0be65840210d3db7cba8`; `test_compute.py` `444ea38a1ef80001e962e46c6c076ab30a59f799c33050aa3d3f0bfd869cab14`; `RESULT.json` `92bdd24510ba1dbdd4a89128558f2242cdf18b0f59fbf34004c79f08f15ec236`; `K03_PROPER_MOTION_SUBCASE.md` `0ff0f6cd16ba09ffe89545d4617f07a20cb4af32a273cfb4eea1c0f4c097bbc9`. Source frame matching, selection, actual proper-motion joint errors and physical remainder bounds remain HOLD. No original node status changed.

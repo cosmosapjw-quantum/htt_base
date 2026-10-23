@@ -1,0 +1,35 @@
+{
+  "packet_id": "9c55c8089e86b9eddf9a0c0a87fc8442f921294aa2e8252e3beb9d46e98f594f",
+  "task_id": "R23-RESULT",
+  "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+  "agent_id": "/root/rc_9c55c8089e86b9ed",
+  "outcome": "success",
+  "observed_runtime": "UNKNOWN",
+  "raw_receipt": "/workspace/scratch/ef61c9590364/R23-NUMERIC-escalation-receipt.json",
+  "receipt_note": "Parent condensation of actual read-only Astra/ultra return; native original retained in conversation.",
+  "repair_plan": {
+    "owned_paths": [
+      "scripts/htt_astrometry_quotient.py",
+      "scripts/test_htt_astrometry_quotient.py",
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md"
+    ],
+    "algorithm": [
+      "Validate shapes,finite0<rtol<1,finite G/b, nonnegative diagonals. Exactlyzero Gramdiag requires exactlyzero row/col andscore; scale1. Otherwise s=sqrt(diagG). Sequential normalize Gbar=G/s[:,None]/s[None,:],bbar=b/s. Normalized symmetry/PSD,notrawGramrange.",
+      "Partition A,J,C. EigC: epsC=32eps max(1,nH) max(1,normC2),rankC=max(epsC,rtol max(1,maxeigC)). Reject c<-epsC. abs(c)<=epsC numericalnull; reject epsC<c<=rankC as ambiguous nuisance rank;retain allc>rankC nosecondcutoff. Null cross J V0 andscoreV0'bH mustzero withinnormalizedroundoff,scoretolerancerelativetobwithoutmax1floor. Exactnullassumptionconditional,notrigorousfloatproof.",
+      "Retained T=(J V)/sqrt(c),z=(V' bH)/sqrt(c),Fbar=sym(A-T T'),qbar=bD-T z. eigFbar epsF=32eps max(1,totalcolumns) max(1,normGbar2)*(1+norm(J Cplus)2)^2. tauF=max(rtol max(1,normA2),epsF). Rejectnegative belowepsF;retainlambda>tauF. Discardedscore residualcheckedvs cancellationawareeps*(normbD+normT*normz),noabsolute1floor;rejectincompatible.",
+      "Fullrank: P=I,beta=S_D^-1 Ur Lambda^-1 Ur' qbar,V=S_D^-1 Ur Lambda^-1 Ur' S_D^-1. Rankzero:P=0,beta=0,V=0 afterscorecheck.",
+      "Partialrank: B=S_D Ur=Q R thinQR. guard eta=(max(sD)/min(sD))*epsF/(minretainedlambda-maxdiscardedlambda);rejectnonpositivegap/nonfiniteeta/eta>1e-7. Conservativeguardnotrigorouscertificate. L=Q solve(R.T,diag(1/sqrtlambda));V=L L.T;beta=L*(Ur'qbar/sqrtlambda);P=Q Q.T physicalEuclidean.",
+      "Kbar=K/S_D. Per nonzero rownormalizebymaxabs then relative norm(Kbar(I-UrUr'))/norm(Kbar)<=1e-7,zero row separately. Nevermax(1,normK). Nonestimablecontrastestimate=null. Estimablecontrasts directly (Kbar Ur) Lambda^-1 Ur'qbar, covariance(Kbar Ur)Lambda^-1(Kbar Ur)'. Labelunestimable covarianceprojectedonly.",
+      "Underanisotropicsignalunit changes partialrank Euclideanminimum-normestimates/projectorsareNOTnaivelytensor-equivariant. Comparephysicalreferenceincurrentunits and invariantestimablecontrasts. Ambiguousnuisancerankandunreliablepartialprojectionfailclosed."
+    ],
+    "regressions": [
+      "D=[[1,0],[0,1],[0,0],[0,0]],H=[[1,0],[0,0],[1,0],[0,1]],y=D@[1,2]+H@[10,20]. Hdiag(1e-6,1) andmixed1e6 return[1,2],not[11,2].",
+      "X=[[1,0,1],[0,1,0]],y=[3,4],nD2: K[1,0],[1e-8,0]null;K[0,1],scaled estimable;zero exactzero.",
+      "Partialrankresidualsignalv=[1,2,3],analyticP=vv'/v'v,beta=v*t/v'v,V=vv'/(v'v)^2; moderateunitscale sameunitphysicalreference and transformedcontrasts.",
+      "D=[[1,1],[1,0],[0,1]],H=D[:,0],y=D@[3,4]+10H,signaldiag(1e6,1e-6): guardrejectinsteadbadbeta[-592,4e6].",
+      "NormalizedHsmallpositiveeigen1e-11 atthreshold2e-10rejectambiguous. Redundant/zeroH/zeroD/allzeroGram/b/fullyconfoundedcorrect;score/crossnonzeroatzeroGramdiagreject.",
+      "Independentrowreferencesfullrank1e±6nuisance/signalunits; symmetry/idempotencecovmeaning; original7tests andactual64summary unchanged."
+    ],
+    "report_fix": "Correct sixcontrastlow-high/mid-high eigenvalues full(3,10,10):2.2573001869759178e-5..0.0033602163628226414. Document normalizedrank/exactnullassumption/relativecontrast andtransportguard. Actual102columnstatsnotexecuted."
+  }
+}

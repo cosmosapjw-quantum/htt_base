@@ -1,0 +1,83 @@
+{
+  "schema": "htt.open_input_acquisition/1",
+  "created_utc": "2026-10-22",
+  "scope": "Public pinned source files for F04 released likelihood convention and CF4 contributor compilation; read only",
+  "allowed_hosts": ["raw.githubusercontent.com", "irsa.ipac.caltech.edu", "portal.nersc.gov"],
+  "resources": [
+    {
+      "id": "PANTHEON_DISTANCES_README",
+      "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/README",
+      "path": "pantheon/Pantheon_distances_README.txt",
+      "format": "text",
+      "expected_bytes": 4056,
+      "required_prefix_tokens": ["Pantheon"],
+      "node_ids": ["F04"],
+      "purpose": "Author release column meanings and covariance instructions"
+    },
+    {
+      "id": "PANTHEON_ONLY_COSMOSIS_LIKELIHOOD",
+      "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/5_COSMOLOGY/cosmosis_likelihoods/Pantheon%2B_only_cosmosis_likelihood.py",
+      "path": "pantheon/Pantheon_only_cosmosis_likelihood.py.txt",
+      "format": "text",
+      "expected_bytes": 4000,
+      "required_prefix_tokens": ["PantheonLikelihood"],
+      "node_ids": ["F04"],
+      "purpose": "Author SN-only selected-row and zHD/zHEL mean convention; never execute"
+    },
+    {
+      "id": "PANTHEON_SHOES_COSMOSIS_LIKELIHOOD",
+      "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/5_COSMOLOGY/cosmosis_likelihoods/Pantheon%2BSH0ES_cosmosis_likelihood.py",
+      "path": "pantheon/Pantheon_SH0ES_cosmosis_likelihood.py.txt",
+      "format": "text",
+      "expected_bytes": 4573,
+      "required_prefix_tokens": ["PantheonLikelihood"],
+      "node_ids": ["F04", "H02"],
+      "purpose": "Author calibrator selection and zHD/zHEL mean convention; never execute"
+    },
+    {
+      "id": "CF4_SN_EDD_ALL_COMPILATION_NOTEBOOK",
+      "url": "https://raw.githubusercontent.com/ekourkchi/CF4catalog/2f4c23c8810c35b494bf4d7c86b38e114109a022/SNIa_groups-catal-EDD_all.ipynb",
+      "path": "cf4/SNIa_groups-catal-EDD_all.ipynb",
+      "format": "json",
+      "expected_bytes": 141648,
+      "node_ids": ["H02", "S02", "K04"],
+      "purpose": "Author per-catalogue assembly and calibration-shift procedure; parse notebook JSON, never execute"
+    },
+    {
+      "id": "PR4_LFI30_OBS_YEAR13",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/LFI_SkyMap_030_1024_R4.00_year-1-3.fits",
+      "path": "pr4/LFI_SkyMap_030_1024_R4.00_year-1-3.fits",
+      "format": "fits",
+      "expected_bytes": 503326080,
+      "node_ids": ["L03"],
+      "purpose": "Official IRSA-linked observed LFI 30 GHz PR4 year 1+3 split; payload qualification only"
+    },
+    {
+      "id": "PR4_LFI30_OBS_YEAR24",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/LFI_SkyMap_030_1024_R4.00_year-2-4.fits",
+      "path": "pr4/LFI_SkyMap_030_1024_R4.00_year-2-4.fits",
+      "format": "fits",
+      "expected_bytes": 503326080,
+      "node_ids": ["L03"],
+      "purpose": "Official IRSA-linked observed LFI 30 GHz PR4 year 2+4 split; payload qualification only"
+    },
+    {
+      "id": "PR4_LOLLIPOP_NS16_MASK",
+      "url": "https://portal.nersc.gov/cfs/cmb/planck2020/misc/mask_PR4_Lollipop_ns16.fits",
+      "path": "pr4/mask_PR4_Lollipop_ns16.fits",
+      "format": "fits",
+      "expected_bytes": 20160,
+      "node_ids": ["L03"],
+      "purpose": "Released low-ell Lollipop mask candidate; no statistic-specific or split-specific adoption"
+    },
+    {
+      "id": "PR4_RIMO_TF_ARCHIVE",
+      "url": "https://portal.nersc.gov/cfs/cmb/planck2020/misc/PLANCK_RIMO_TF_R4.00.tar.gz",
+      "path": "pr4/PLANCK_RIMO_TF_R4.00.tar.gz",
+      "format": "tar.gz",
+      "expected_bytes": 235039576,
+      "node_ids": ["L03"],
+      "purpose": "Official NERSC PR4 response archive; list members read only without extraction or upstream execution"
+    }
+  ]
+}

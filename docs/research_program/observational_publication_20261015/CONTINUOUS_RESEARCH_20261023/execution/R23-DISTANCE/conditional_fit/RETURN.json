@@ -1,0 +1,45 @@
+{
+  "packet_id": "5524cb188c7bd413247643275d25030ecdbdc258f99a4b3ee73d1fdda5e16557",
+  "task_id": "R23-DISTANCE",
+  "attempt": 3,
+  "phase": "repair",
+  "input_identity": "sha256:68741d7ff4948cdf721c372dfaf5a0ded004ebe0eaf4d3f657ece4c0781b31d2",
+  "candidate_identity": "sha256:dddb9635d8d761aa0ac194f93546f86da61f03a5ac6598f1e9df71843bd8c0ff",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/ARTIFACT_MANIFEST.json",
+  "raw_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/RAW_RECEIPT.json",
+  "outcome": "success",
+  "scoped_conditional_experiment": "COMPLETE",
+  "actual_274_distance_fit": "EXECUTED_UNDER_AUTHORED_LAW",
+  "conditional_mock_coverage": {
+    "count": 3890,
+    "B": 4096,
+    "range": [
+      3854,
+      3926
+    ],
+    "check": "PASS"
+  },
+  "actual_residual_diagnostic": {
+    "T": 4.555321823822732,
+    "p": 0.000976324139614352,
+    "authored_law_criticized": true
+  },
+  "original_physical_acceptance_met": false,
+  "H02_S02": "HOLD",
+  "independent_review": "REQUESTED_PENDING",
+  "scientific_admission": "HOLD",
+  "next_executable_checkpoint": "fresh independent nonauthor review of sealed candidate, including actual diagnostic failure; then controller decision on residual physical HOLD",
+  "no_dispatch_claim": true,
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "agent_id": "/root/rc_5524cb188c7bd413",
+  "validation_evidence": [
+    "Exact four source hashes, released CSV, initial manifest/report and research contract matched; 628 unique selected PGCs, 274 released and 354 undefined rows retained.",
+    "Narrow tests: first failure retained; final 3 passed. Fixed seven-column design rank 7, nu 267, 269 observed groups, positive Cholesky pivots and diagonal common-calibration reallocation verified.",
+    "Actual 274-row GLS fit executed once: normalized Gaussian log likelihood -182.86875413130616 at ML scale; width contrast 0.0828658762457 mag with conditional t95 interval [0.0217900862012,0.1439416662903].",
+    "4096 full selected-group mocks at seed 2026102302: 3890 intervals covered, inside predeclared 3854..3926; this checks the authored conditional law only.",
+    "Actual whitened residual T=4.555321823822732, mock exceedance 3/4096, p=0.000976324139614352: adopted law criticized; original H02/S02 physical acceptance remains HOLD.",
+    "PNG and PDF figure rendered from stored RESULT.json and ROWS.csv; 11 manifest files sealed; fresh independent nonauthor review requested and pending."
+  ],
+  "outcome_scope": "bounded implementation and conditional numerical experiment only; no independent review or scientific admission"
+}

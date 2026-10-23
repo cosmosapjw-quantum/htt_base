@@ -1,0 +1,64 @@
+{
+  "packet_id": "11e06015531f7b3c9dac6b05817597cc2267b3114aca7fb4c90896a89f125cc4",
+  "task_id": "R23-CMB",
+  "agent_id": "/root/rc_11e06015531f7b3c",
+  "input_identity": "sha256:6186378e8671b67dde9a54c55a8a40c2dafb8b24eb18a6934abf9d24276f14de",
+  "phase": "same_reviewer_targeted_finding_closeout",
+  "outcome": "success",
+  "verdict": "PASS_TARGETED_WORDING_REPAIR",
+  "finding_id": "R23-CMB-R6-01",
+  "finding_status": "CLOSED",
+  "initial_candidate_identity": "sha256:f8a5ca598bb77a4341a17877599e8132856d25c5047049d24b53c8b2beeabad5",
+  "candidate_identity": "sha256:022d91f327ddadb05159f748dbd56a64d47c678cf1c8f234ac3115a87967acae",
+  "initial_review": {
+    "path": "/tmp/r23_cmb_review_11e06015/RETURN.json",
+    "sha256": "9af666cc82579e6f64a0bf54a2ba5b1593ab34f3ce259b68cdf1f65c4d3a4c41",
+    "unchanged": true,
+    "archived_copy_identical": true
+  },
+  "raw_receipt": "/tmp/r23_cmb_review_11e06015/CLOSEOUT.json",
+  "created_at_utc": "2026-10-23T01:26:08.329023+00:00",
+  "validation_evidence": [
+    "Exact approved replacement is the sole REPORT.md change; report SHA256 5e76f221f91023343ac32d339f52b1e8ac6c4c389bdf129d153f595e6d67fa2e, size 8498 bytes.",
+    "New manifest differs from the original only in REPORT.md SHA256 and byte count.",
+    "All nine original manifested payloads and the original manifest are preserved under PRE_WORDING_REPAIR with exact hashes and sizes.",
+    "All nine final manifested payloads match the new manifest.",
+    "All eight non-report payloads remain byte-identical: three scripts, numerical RESULT, VALIDATION, original RAW_RECEIPT and both figures.",
+    "Initial review bytes remain unchanged and match PRE_WORDING_REPAIR/REVIEW_INITIAL.json. Archived author RETURN retains the original execution packet and candidate binding.",
+    "The replacement correctly distinguishes cancellation of any matched component from cancellation of the entire deterministic split contribution; the initial counterexample is resolved."
+  ],
+  "approved_text_replacement": {
+    "old": "A matched common response cancels in D only when a_-=0. Different weights,\nbeams, foreground responses and systematics remain in a_-.",
+    "new": "The entire deterministic contribution cancels in D if and only if a_-=0.\nAny component with the same processed response cancels, while differential\nresponses from weights, beams, foregrounds and systematics remain in a_-."
+  },
+  "raw_inspection": {
+    "chunk_id": "817c24",
+    "wall_time_seconds": 0.486534638,
+    "exit_code": 0,
+    "original_token_count": 703,
+    "output": "initial_review 9af666cc82579e6f64a0bf54a2ba5b1593ab34f3ce259b68cdf1f65c4d3a4c41 13618\narchive_files ['REPORT.md', 'validate.py', 'REVIEW_INITIAL.json', 'RAW_RECEIPT.json', 'projection.py', 'plot.py', 'VALIDATION.json', 'ARTIFACT_MANIFEST.json', 'SPLIT_PROJECTION.png', 'RESULT.json', 'RETURN.json', 'SPLIT_PROJECTION.pdf']\nnew_manifest 022d91f327ddadb05159f748dbd56a64d47c678cf1c8f234ac3115a87967acae\nold_manifest f8a5ca598bb77a4341a17877599e8132856d25c5047049d24b53c8b2beeabad5\nold_manifest_checks {'projection.py': {'hash': True, 'size': True}, 'plot.py': {'hash': True, 'size': True}, 'validate.py': {'hash': True, 'size': True}, 'RESULT.json': {'hash': True, 'size': True}, 'VALIDATION.json': {'hash': True, 'size': True}, 'REPORT.md': {'hash': True, 'size': True}, 'RAW_RECEIPT.json': {'hash': True, 'size': True}, 'SPLIT_PROJECTION.png': {'hash': True, 'size': True}, 'SPLIT_PROJECTION.pdf': {'hash': True, 'size': True}}\nnew_manifest_checks {'projection.py': {'hash': True, 'size': True, 'equals_old_bytes': True}, 'plot.py': {'hash': True, 'size': True, 'equals_old_bytes': True}, 'validate.py': {'hash': True, 'size': True, 'equals_old_bytes': True}, 'RESULT.json': {'hash': True, 'size': True, 'equals_old_bytes': True}, 'VALIDATION.json': {'hash': True, 'size': True, 'equals_old_bytes': True}, 'REPORT.md': {'hash': True, 'size': True, 'equals_old_bytes': False}, 'RAW_RECEIPT.json': {'hash': True, 'size': True, 'equals_old_bytes': True}, 'SPLIT_PROJECTION.png': {'hash': True, 'size': True, 'equals_old_bytes': True}, 'SPLIT_PROJECTION.pdf': {'hash': True, 'size': True, 'equals_old_bytes': True}}\nreport_diff --- PRE_WORDING_REPAIR/REPORT.md\n+++ REPORT.md\n@@ -54,8 +54,9 @@\n E[z1ᵀz2] = a1ᵀa2 + tr(N12).\n ```\n \n-A matched common response cancels in D only when a_-=0. Different weights,\n-beams, foreground responses and systematics remain in a_-. Even for matched\n+The entire deterministic contribution cancels in D if and only if a_-=0.\n+Any component with the same processed response cancels, while differential\n+responses from weights, beams, foregrounds and systematics remain in a_-. Even for matched\n a=g+f_common+b_common the cross-power contains ||g||²,\n 2gᵀ(f_common+b_common), ||f_common+b_common||² and tr(N12).\n Difference-power subtraction therefore does not isolate the CMB. Cross HM/OE\n\nmanifest_diff --- PRE_WORDING_REPAIR/ARTIFACT_MANIFEST.json\n+++ ARTIFACT_MANIFEST.json\n@@ -26,8 +26,8 @@\n       \"bytes\": 409\n     },\n     \"REPORT.md\": {\n-      \"sha256\": \"9625c480fd15f6eebd6ccb9c00ad7505e7947e966ce6663b9894a3581d59f400\",\n-      \"bytes\": 8410\n+      \"sha256\": \"5e76f221f91023343ac32d339f52b1e8ac6c4c389bdf129d153f595e6d67fa2e\",\n+      \"bytes\": 8498\n     },\n     \"RAW_RECEIPT.json\": {\n       \"sha256\": \"308b5727b98877a59c5f1ffd623d9c64f1aa0c59c8ad89fa7e63d140ad3c5172\",\n\n"
+  },
+  "final_assertions": {
+    "status": "PASS",
+    "archive_payloads": 9,
+    "final_payloads": 9,
+    "unchanged_nonreport_payloads": 8,
+    "exact_approved_text_only": true,
+    "only_report_manifest_entry_changed": true,
+    "initial_review_preserved": true
+  },
+  "executor_observed_runtime": "UNKNOWN",
+  "independence": "Same original independent reviewer; no implementation role and no candidate writes. This closes one finding; controller fresh final review remains separate.",
+  "candidate_writes": 0,
+  "children_spawned": 0,
+  "numerical_replays": 0,
+  "old_45_cells_reexecuted": false,
+  "original_L03_complete": false,
+  "original_L03_status": "HOLD",
+  "physical_joint_null_status": "HOLD",
+  "claim_tier": "C0",
+  "scientific_status": "DIAGNOSTIC_ONLY",
+  "p_value": null,
+  "acceptance_promotion": false,
+  "next_action": "Preserve this same-reviewer closure, then run the controller-required fresh final-candidate review using the unchanged initial numerical evidence without rerunning the 15 points."
+}

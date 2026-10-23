@@ -1,0 +1,71 @@
+{
+  "packet_id": "aa82a391a1ae5e3a8895f3c556e4814323e576ab5b25b2d9b6b9695b438d470a",
+  "task_id": "R23-RESULT",
+  "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+  "status": "EXECUTION_PASS_REVIEW_PENDING",
+  "owned_paths": [
+    "scripts/htt_plot_astrometry_quotient.py",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg"
+  ],
+  "candidate_file_sha256": {
+    "scripts/htt_plot_astrometry_quotient.py": "5f42225eeed5ee8e903186fecd24c9b7d00017e6816517145bca0eec3654bb3e",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg": "0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66",
+    "scripts/htt_astrometry_quotient.py": "f9dcaf6659be751cd3f91a6e700703206ac6c0cc55db4d1339e222435bca1e03",
+    "scripts/test_htt_astrometry_quotient.py": "b357192b9aa810c275f3e50c748e4ccccd0e92bb46e16444311c2e312b88f071",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json": "fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64"
+  },
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "/workspace/scratch/ef61c9590364/HTT_CONTINUE_20261023/patch/scripts",
+        "-p",
+        "test_htt_astrometry_quotient.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_adaptive_mixture_against_direct_gaussian_refit (test_htt_astrometry_quotient.QuotientTests.test_adaptive_mixture_against_direct_gaussian_refit) ... ok\ntest_bad_statistics_fail (test_htt_astrometry_quotient.QuotientTests.test_bad_statistics_fail) ... ok\ntest_common_offset_contrast (test_htt_astrometry_quotient.QuotientTests.test_common_offset_contrast) ... ok\ntest_conditional_covariance_monte_carlo (test_htt_astrometry_quotient.QuotientTests.test_conditional_covariance_monte_carlo) ... ok\ntest_rank_loss_cannot_be_zero_filled (test_htt_astrometry_quotient.QuotientTests.test_rank_loss_cannot_be_zero_filled) ... ok\ntest_singular_redundant_nuisance (test_htt_astrometry_quotient.QuotientTests.test_singular_redundant_nuisance) ... ok\ntest_unrestricted_mean_removed_using_joint_statistics (test_htt_astrometry_quotient.QuotientTests.test_unrestricted_mean_removed_using_joint_statistics) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.126s\n\nOK\n"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python HTT_CONTINUE_20261023/patch/scripts/htt_astrometry_quotient.py summary --input HTT_CONTINUE_20261023/inputs/docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/RESULT.json --output /workspace/scratch/ef61c9590364/R23-RESULT-regenerated.json",
+      "exit_code": 0,
+      "result": "Regenerated summary is JSON-equal and byte-hash equal to parent ASTROMETRY_RESULT.json"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python HTT_CONTINUE_20261023/patch/scripts/htt_plot_astrometry_quotient.py --input /workspace/scratch/ef61c9590364/R23-RESULT-regenerated.json --output HTT_CONTINUE_20261023/patch/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg",
+      "exit_code": 0,
+      "models": 64,
+      "output_sha256": "0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66"
+    },
+    {
+      "command": "inkscape HTT_CONTINUE_20261023/patch/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg --export-type=png --export-filename=/workspace/scratch/ef61c9590364/R23-contrast-final.png --export-width=1280",
+      "exit_code": 0,
+      "result": "Final SVG rasterized and visually inspected: six panels, model labels, means, joint ellipsoid projections and scope footer legible."
+    }
+  ],
+  "scientific_checks": {
+    "unit_tests_passed": 7,
+    "fixed_models": 64,
+    "summary_equal_existing": true,
+    "summary_sha256": "fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+    "joint_projection_formula": "mean_j +/- sqrt(7.814727903251179 * covariance_jj)",
+    "fixed_selected_design_scope": true,
+    "empirical_coverage_claim": false,
+    "cosmic_claim": false,
+    "raw_row_download": false,
+    "native_solver_or_ode": false,
+    "owner": "htt",
+    "transfer_source": "none",
+    "original_node_promotion": false
+  },
+  "independent_review": "Not performed by plot author; separate nonauthor review required.",
+  "limitations": [
+    "Adapter verified on the seven scientific unit tests; actual retained 102-column score statistics are not supplied in this fixture, so no actual-data unrestricted-nuisance quotient fit is claimed.",
+    "This plot is a summary-algebra diagnostic conditional on each fixed declared covariance model and the same selected design."
+  ]
+}

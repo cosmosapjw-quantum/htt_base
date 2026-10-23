@@ -1,0 +1,151 @@
+"""Parent-owned, finite three-request recovery; stop before actual science."""
+from __future__ import annotations
+
+import argparse
+from contextlib import redirect_stderr, redirect_stdout
+import fcntl
+import json
+import os
+from pathlib import Path
+import shutil
+import signal
+import subprocess
+import sys
+import time
+
+from acquire_sdss import RANGES, RESERVE, TOTAL, acquire, digest
+from resume_acquisition import HERE, INITIAL_SIZES, durable_json, verify_metadata
+
+
+def launch(root, preseal, approval, approval_sha256):
+    if digest(approval) != approval_sha256:
+        raise ValueError("Approval artifact SHA mismatch")
+    snapshot = json.loads(preseal.read_text())
+    if snapshot["status"] != "PRESEALED" or len(snapshot["ranges"]) != 3:
+        raise ValueError("Missing frozen preseal")
+    for filename, sha in snapshot["source_sha256"].items():
+        if digest(HERE / filename) != sha:
+            raise ValueError(f"Source drift after preseal: {filename}")
+    if digest(HERE / "CONTRACT.md") != snapshot["contract_sha256"]:
+        raise ValueError("Original contract drift")
+    if digest(HERE / "SCIENTIFIC_BUDGET.jsonl") != snapshot["scientific_budget_sha256"]:
+        raise ValueError("Scientific accounting drift")
+    for expected, (start, end), retained in zip(snapshot["ranges"], RANGES, INITIAL_SIZES):
+        part = root / f"mocks.{start}-{end}.part"
+        if ((expected["start"], expected["end"], expected["bytes"]) != (start, end, retained)
+                or part.stat().st_size != retained or digest(part) != expected["sha256"]):
+            raise ValueError("Retained prefix drift; return to controller")
+        if digest(Path(expected["original_response"])) != expected["original_response_sha256"]:
+            raise ValueError("Original response evidence drift")
+    remaining = TOTAL - sum(INITIAL_SIZES)
+    if remaining != 7690428705 or shutil.disk_usage(root).free < remaining + RESERVE:
+        raise ValueError("Aggregate remaining bytes plus 2 GiB reserve unavailable")
+    attempt = str(time.time_ns())
+    marker = root / "recovery.single_attempt.started.json"
+    record = {"status": "STARTED", "attempt": attempt, "pid": os.getpid(),
+              "controller_command": [sys.executable, *sys.argv], "cwd": os.getcwd(),
+              "observed_git_head": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+              "preseal": str(preseal), "preseal_sha256": digest(preseal),
+              "approval": str(approval), "approval_sha256": approval_sha256,
+              "executor_role": "parent controller launching a Python source-only data job",
+              "controller_requested_model_effort": "NOT_SPECIFIED",
+              "controller_observed_model_effort": "UNKNOWN",
+              "python_job_model_effort": "NOT_APPLICABLE",
+              "actual_source_sha256": snapshot["source_sha256"],
+              "remaining_new_bytes": remaining, "maximum_requests": 3,
+              "scientific_execution": "NOT_STARTED", "children": [], "utc_epoch": time.time()}
+    # Exclusive create consumes this approved attempt before any network call.
+    durable_json(marker, record)
+    children = []
+    started = time.monotonic()
+    try:
+        metadata = verify_metadata(root, attempt)
+        record["official_metadata"] = str(metadata)
+        for index in range(3):
+            command = [sys.executable, "-u", str(HERE / "resume_acquisition.py"), str(root),
+                       "--preseal", str(preseal), "--range-index", str(index), "--attempt", attempt]
+            log_path = root / f"recovery.{attempt}.range{index}.log"
+            with log_path.open("x") as log:
+                process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT)
+            children.append(process)
+            binding = {"index": index, "pid": process.pid, "command": command, "log": str(log_path)}
+            record["children"].append(binding)
+            durable_json(root / f"recovery.{attempt}.range{index}.launch.json", binding)
+        while any(process.poll() is None for process in children):
+            if any(process.poll() not in (None, 0) for process in children):
+                raise RuntimeError("A range worker failed; stopping this attempt without retry")
+            print(json.dumps({"status": "RECOVERY_MONITOR", "attempt": attempt,
+                              "children": [{"pid": p.pid, "exit_code": p.poll()} for p in children],
+                              "part_bytes": [(root / f"mocks.{a}-{b}.part").stat().st_size for a, b in RANGES]}), flush=True)
+            time.sleep(30)
+        if any(process.returncode != 0 for process in children):
+            raise RuntimeError("Range failure; no assembly")
+        # Existing acquisition code can only reuse all three now-validated ranges.
+        for start, end in RANGES:
+            if not (root / f"range.{start}-{end}.json").exists():
+                raise ValueError("Completion receipt missing; no assembly")
+        if shutil.disk_usage(root).free < TOTAL + RESERVE:
+            raise RuntimeError("Insufficient assembly capacity plus 2 GiB reserve")
+        acquire(root)
+        command = [sys.executable, "-u", str(HERE / "inspect_archive.py"), str(root), str(HERE)]
+        header_log = root / f"recovery.{attempt}.index_header.log"
+        record.update(header_command=command, header_log=str(header_log))
+        with header_log.open("x") as log:
+            try:
+                result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, check=True)
+            finally:
+                log.flush()
+                os.fsync(log.fileno())
+        record.update(status="STAGE1_RETURN_TO_ASTRA", header_exit_code=result.returncode)
+    except BaseException as error:
+        for process in children:
+            if process.poll() is None:
+                process.terminate()
+        for process in children:
+            process.wait()
+        record.update(status="FAILED_PRESERVED", error=repr(error))
+        raise
+    finally:
+        for binding in record["children"]:
+            with Path(binding["log"]).open("rb") as log:
+                os.fsync(log.fileno())
+        record.update(elapsed_s=time.monotonic()-started,
+                      child_exit_codes=[{"pid": p.pid, "exit_code": p.poll()} for p in children])
+        durable_json(root / f"recovery.{attempt}.execution.json", record)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("root", type=Path)
+    parser.add_argument("--preseal", required=True, type=Path)
+    parser.add_argument("--approval", required=True, type=Path)
+    parser.add_argument("--approval-sha256", required=True)
+    args = parser.parse_args()
+    def interrupted(signum, frame):
+        raise InterruptedError(f"Controller signal {signum}")
+    signal.signal(signal.SIGTERM, interrupted)
+    signal.signal(signal.SIGINT, interrupted)
+    class Tee:
+        def __init__(self, original, log):
+            self.original, self.log = original, log
+        def write(self, text):
+            self.original.write(text)
+            return self.log.write(text)
+        def flush(self):
+            self.original.flush()
+            self.log.flush()
+            os.fsync(self.log.fileno())
+    # One controller; workers take independent exclusive locks on their parts.
+    log_path = args.root / f"recovery.controller.{time.time_ns()}.log"
+    with (args.root / "recovery.controller.lock").open("a") as lock, log_path.open("x") as log:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        with redirect_stdout(Tee(sys.stdout, log)), redirect_stderr(Tee(sys.stderr, log)):
+            try:
+                launch(args.root, args.preseal, args.approval, args.approval_sha256)
+            except BaseException:
+                import traceback
+                traceback.print_exc()
+                sys.stderr.flush()
+                raise SystemExit(1)
+            finally:
+                sys.stdout.flush()

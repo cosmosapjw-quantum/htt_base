@@ -1,0 +1,54 @@
+{
+  "id": "V03-ANALYTIC-SUBCASE-20261022",
+  "owner_authorization": "Current user requests revisiting methods and theory blockers without native solver or ODE; physmath policy permits explicit minimal method/output correction.",
+  "baseline_head": "76595070beb97e52dce9f2d7a0ff1dbf3c289e98",
+  "original_node": {
+    "id": "V03",
+    "paper": "P4",
+    "depends_on": [
+      "V01"
+    ],
+    "state": "pending",
+    "objective": "Obtain physically distinct global tilt source-history response (not endpoint copy)",
+    "output": "external Einstein-Boltzmann history response and validation",
+    "acceptance": "Same-frame, different radial/temporal transfer and exact source units",
+    "inputs": [],
+    "planned_code": [],
+    "test_cases": [],
+    "external_missing": [
+      "Calibrated global-tilt history/source transport unavailable"
+    ],
+    "resource": "heavy_external",
+    "task_kind": "research",
+    "claim_tier": "NO_AUTOMATIC_PHYSICAL_PROMOTION",
+    "existing_evidence": [],
+    "next_action": "Produce source-bound result and run indicated tests; stop this node at its own acceptance",
+    "submission_terminal": false
+  },
+  "change": "Permit a derived physical analytic history subcase as alternate V03 output; preserve all acceptance text and graph dependencies.",
+  "alternate_output": "DERIVED_PHYSICAL_HISTORY_SUBCASE: compensated dust+radiation linear post-decoupling IC, specified normal frame, finite interval and bolometric optics",
+  "evidence": [
+    "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/THEORY.md",
+    "docs/research_program/observational_publication_20261015/FRONTIER_20261020/INDEPENDENT_REVIEW.md",
+    "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/theory/THEORY_AUDIT.md"
+  ],
+  "original_external_output_satisfied": false,
+  "original_rule_completed": 17,
+  "revised_scoped_completed": 18,
+  "total": 42,
+  "independent_adjudication": "Fresh reviewer independently checked frozen history derivation and prior review; supports alternate-output scope, not external payload delivery.",
+  "downstream_obligations": [
+    "No automatic match to V02 Planck operator: V03 here is bolometric optical response",
+    "V04 requires one common data/operator/units/frame and metric",
+    "V05 requires coverage and finite physical/source-processing remainders",
+    "B02 polarized atlas missing; K03 congruence/source transfer missing; K05 same-congruence law missing"
+  ],
+  "not_claimed": [
+    "Native solver/ODE solved",
+    "General global-history transfer",
+    "Primordial generation mechanism",
+    "Observed tilt detection",
+    "CAS_4AXIS_PASS",
+    "Paper readiness"
+  ]
+}

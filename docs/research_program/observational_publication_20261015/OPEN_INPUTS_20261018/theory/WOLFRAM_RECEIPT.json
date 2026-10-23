@@ -1,0 +1,19 @@
+{
+  "context_called": true,
+  "context_use": "No physics or solver advice from context was used; finite linear algebra only.",
+  "initial_failure": "Set::wrsym: Symbol N is Protected; Set::wrsym: Symbol C is Protected. First STF expansion returned0 but matrix cancellation invalid.",
+  "repair": "Renamed N,C to dip,witness and reran exact symbolic finite matrix identity once.",
+  "code": "quad={x^2-z^2,y^2-z^2,2 x y,2 x z,2 y z}; ten={{a,c,d},{c,b,e},{d,e,-a-b}}; dirs={{1,0,0},{0,1,0},{0,0,1},{1/Sqrt[2],1/Sqrt[2],0},{1/Sqrt[2],0,1/Sqrt[2]},{0,1/Sqrt[2],1/Sqrt[2]}}; dip=dirs; quadRows=(quad/.Thread[{x,y,z}->#])&/@dirs; nuis=Map[Prepend[#,1]&,quadRows]; witness=-Inverse[nuis].dip; {Expand[{x,y,z}.ten.{x,y,z}-quad.{a,b,c,d,e}],MatrixRank[nuis],Simplify[nuis.witness+dip],MatrixRank[Join[nuis,dip,2]],Factor[Det[nuis]]}",
+  "actual_tool_result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Out[1]= {0, 6, {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, 6, 3}"
+      }
+    ],
+    "structuredContent": null,
+    "isError": false
+  },
+  "scope": "Exact algebraic representative6directions only; actual published positions checked numerically.",
+  "source_retrieval_error": "Initial parent packet concatenated PR560 with SHA. GitHub returned404 twice. Corrected exact ref4a68995507bf8e672b2551d9030f3ad9f0d2152e succeeded; no scientific failure hidden."
+}

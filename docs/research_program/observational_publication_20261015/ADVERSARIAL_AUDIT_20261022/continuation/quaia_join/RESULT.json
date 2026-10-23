@@ -1,0 +1,197 @@
+{
+  "owner": "obsstat",
+  "scope": "exact Quaia G20 / Gaia CRF3 intersection cohort",
+  "claim_tier": "C0_DIAGNOSTIC_ONLY",
+  "transfer_source": "none",
+  "input_identities": {
+    "quaia_G20.0.fits": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/adversarial20261022/quaia/quaia_G20.0.fits",
+      "bytes": 99786240,
+      "sha256": "efeda9ae727bf2cd75569f52460a0492827c8a3fcd8ce29dc692b559fca2acb0"
+    },
+    "selection_function_NSIDE64_G20.0.fits": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/adversarial20261022/quaia/selection_function_NSIDE64_G20.0.fits",
+      "bytes": 400320,
+      "sha256": "f66684999b0fdab1cdc3f8fc3ac8ef16956cb037785dbac2dc395dae3ffedd7d"
+    },
+    "selection_function_template_maps.zip": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/adversarial20261022/quaia/selection_function_template_maps.zip",
+      "bytes": 879199,
+      "sha256": "7e5987925120b40d59ce1b89a49866d471be8d1f025b5b9636ea1c47d867dc5e"
+    }
+  },
+  "quaia_schema": [
+    {
+      "name": "source_id",
+      "format": "K",
+      "unit": null
+    },
+    {
+      "name": "unwise_objid",
+      "format": "16A",
+      "unit": null
+    },
+    {
+      "name": "redshift_quaia",
+      "format": "D",
+      "unit": null
+    },
+    {
+      "name": "redshift_quaia_err",
+      "format": "D",
+      "unit": null
+    },
+    {
+      "name": "ra",
+      "format": "D",
+      "unit": "deg"
+    },
+    {
+      "name": "dec",
+      "format": "D",
+      "unit": "deg"
+    },
+    {
+      "name": "l",
+      "format": "D",
+      "unit": "deg"
+    },
+    {
+      "name": "b",
+      "format": "D",
+      "unit": "deg"
+    },
+    {
+      "name": "phot_g_mean_mag",
+      "format": "E",
+      "unit": "mag"
+    },
+    {
+      "name": "phot_bp_mean_mag",
+      "format": "E",
+      "unit": "mag"
+    },
+    {
+      "name": "phot_rp_mean_mag",
+      "format": "E",
+      "unit": "mag"
+    },
+    {
+      "name": "mag_w1_vg",
+      "format": "D",
+      "unit": "mag"
+    },
+    {
+      "name": "mag_w2_vg",
+      "format": "D",
+      "unit": "mag"
+    },
+    {
+      "name": "pm",
+      "format": "D",
+      "unit": "mas yr-1"
+    },
+    {
+      "name": "pmra",
+      "format": "D",
+      "unit": "mas yr-1"
+    },
+    {
+      "name": "pmdec",
+      "format": "D",
+      "unit": "mas yr-1"
+    },
+    {
+      "name": "pmra_error",
+      "format": "E",
+      "unit": "mas yr-1"
+    },
+    {
+      "name": "pmdec_error",
+      "format": "E",
+      "unit": "mas yr-1"
+    }
+  ],
+  "gaia_input": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/gaia/d05_full_20261018/full.vot",
+    "sha256": "e8454190bb3be7d10203ecfe6fe90b34d245fb13b9bb72a155242f85e4271810",
+    "bytes": 192359368,
+    "rows": 1614173,
+    "reused_reader_sha256": "4e7465a0525baf36ce969f7add57232d5e46102a5ef3310c7510fc6b16bfba3b"
+  },
+  "quaia_rows": 755850,
+  "matched_rows": 692154,
+  "unmatched_rows": 63696,
+  "exact_integer_source_id": true,
+  "unique_source_ids": true,
+  "loss_by_redshift": [
+    {
+      "z_interval": [
+        0.0,
+        1.0
+      ],
+      "quaia": 200785,
+      "crf3_match": 185864,
+      "unmatched": 14921
+    },
+    {
+      "z_interval": [
+        1.0,
+        2.0
+      ],
+      "quaia": 369335,
+      "crf3_match": 346834,
+      "unmatched": 22501
+    },
+    {
+      "z_interval": [
+        2.0,
+        10.0
+      ],
+      "quaia": 185730,
+      "crf3_match": 159456,
+      "unmatched": 26274
+    }
+  ],
+  "same_id_astrometry_max_abs_difference": {
+    "ra": 0.0,
+    "dec": 0.0,
+    "pmra": 0.0,
+    "pmdec": 0.0,
+    "pmra_error": 0.0,
+    "pmdec_error": 0.0
+  },
+  "selection_frame": "ICRS equatorial, author v1.0.0 notebook; FITS lacks COORDSYS",
+  "selection_relative_zero_rows": 0,
+  "pm_cut": {
+    "formula": "pm < 10**(0.4*(G-18.25)) mas/yr",
+    "nonpassing_rows": 0,
+    "total_pm_vector_max_abs_difference": 4.440892098500626e-16
+  },
+  "redshift_minmax": [
+    0.08634503930807114,
+    4.627459688728043
+  ],
+  "rho_minmax": [
+    -0.9156232476234436,
+    0.8940843343734741
+  ],
+  "artifact": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_crf3_join.npz",
+    "sha256": "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4",
+    "bytes": 95846569
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "requested_parent": "gpt-6.1-sol/high",
+    "observed": "UNKNOWN"
+  },
+  "seconds": 27.979640149045736,
+  "caveats": [
+    "Intersection is additionally conditioned on CRF3 membership; unmatched objects are not imputed.",
+    "Relative selection values/templates are covariates, not absolute inclusion probabilities or inverse weights.",
+    "Measured PM cut and upstream Gaia classifiers make intrinsic untruncated Gaussian inference unqualified.",
+    "No cross-source covariance, acceleration, congruence transfer or original K03 admission is supplied."
+  ]
+}

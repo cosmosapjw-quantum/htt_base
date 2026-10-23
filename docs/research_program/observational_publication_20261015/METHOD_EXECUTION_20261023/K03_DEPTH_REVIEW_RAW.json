@@ -1,0 +1,52 @@
+{
+  "task_id": "R24-K03-DEPTH-MOMENTS",
+  "reviewer": "/root/k03_depth_review",
+  "verdict": "SCOPED_PASS",
+  "candidate_identity": "sha256:68aa65ba81bce4bfa61a2d7c9c302a7c77068325b80ef69d55fcc89f9272a2de",
+  "input_identity": "sha256:b835863bfe99b25db95e7e73a62e2eaf27b78bc850b44c0579457397e6f58998",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "validation_evidence": {
+    "all_hashes_match": true,
+    "rows": 755850,
+    "bins": [
+      200785,
+      369335,
+      185730
+    ],
+    "process_wall_seconds": 20.72,
+    "max_RSS_MiB": 281.1,
+    "new_moments_only": [
+      "A",
+      "K",
+      "q"
+    ],
+    "old_columns": 102,
+    "augmented_dimension": 108,
+    "full24_depth_cov_relative_error_max": 1.8e-12,
+    "true_scaled_residual_max": 9e-16,
+    "ranks": [
+      102,
+      6
+    ],
+    "thresholds": [
+      1e-08,
+      1e-10,
+      1e-12
+    ],
+    "no_jitter_or_pseudoinverse": true,
+    "bounded_physical_sign_STF_polar_axial_constant_g_controls": "PASS",
+    "directQR_fixture_cov_error_max": 1.1e-13,
+    "real_fixture_rows": 256,
+    "reviewer_full_passes": 0,
+    "Poisson_mixture_power_error_max": 3.5e-14,
+    "score": 12.140205689,
+    "critical": 12.591587244,
+    "power80_strong_uasyr": 13.616697,
+    "power80_weak_uasyr": 18.573815
+  },
+  "presentation_note": "POWERfiguresegmentsareguidestotheeye;tabulatedcalculationsfortarget/intermediatepower",
+  "reviewer_tool_failure": "privateNumPyheaderreaderunavailable;publicreaderresolved,notcandidatefailure",
+  "scientific_admission": "HOLD;selection/spatialcov/centroidmatter/truedepth/historyunqualified",
+  "source": "Actualnativefinal /root/k03_depth_review,validationextracted;fullresponseinnativeconversation"
+}

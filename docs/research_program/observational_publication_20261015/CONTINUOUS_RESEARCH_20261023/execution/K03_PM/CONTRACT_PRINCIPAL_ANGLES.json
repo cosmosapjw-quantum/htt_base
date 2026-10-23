@@ -1,0 +1,61 @@
+{
+  "packet_id": "cadd7ac79230d94e7a6da29d51f60ebd95b16316fef75bc8eb3ec583b3efe9d0",
+  "task_id": "K03",
+  "phase": "research_continuation",
+  "agent_id": "/root/rc_cadd7ac79230d94e",
+  "input_identity": "sha256:cab18c33b87e10d5903a5babc763ff0bb59568d5290eb4bd7b6baabc6c2927d2",
+  "parent_contract_path": "/tmp/r23_k03_research_cadd7ac7/RETURN.json",
+  "parent_contract_sha256": "9a2aeb8741d7db91c3820da5acb97de721d9a1e13fbc35692d309ebd6d502591",
+  "status": "METHOD_SUPPLEMENT_READY_NOT_EXECUTED",
+  "scope": "Owner-requested principal angles between the residualized history b and local observer ell response spaces. Use the existing fixed covariance, fixed rows, six response columns and 96 nuisance columns. No model, source, selection, budget, or original acceptance changes.",
+  "notation": {
+    "whitening": "Let W*C*W^T=I for the already declared working covariance, Z=W*U, and P=I-Z*Z^+. No full row-sized P need be formed.",
+    "residual_columns": "B=P*W*H_b and L=P*W*H_ell. Here b and ell label the three history and three local velocity profile amplitudes. The common observer-acceleration/glide columns are already included in U.",
+    "gram": "Use the existing Schur information F6=[[Fbb,Fbell],[Fellb,Fellell]]=[[B^T*B,B^T*L],[L^T*B,L^T*L]]. Thus all new statistics below require only the already computed 6x6 matrix."
+  },
+  "method": [
+    "Reuse the parent-contract finite/symmetry checks. For positive diagonal entries set D=diag(sqrt(diag(F6))) and Fbar=D^-1*F6*D^-1. Record the full and both 3x3 block eigenvalue spectra, normalized conditions, and numerical ranks under the rule below. These diagonal scalings change neither response subspace.",
+    "If each marginal block Fbar_bb and Fbar_ellell is positive definite and within the inherited condition limit, compute lower Cholesky factors Rb and Rell: Fbar_bb=Rb*Rb^T and Fbar_ellell=Rell*Rell^T. Form S=Rb^-1*Fbar_bell*Rell^-T using triangular solves. Do not explicitly invert the blocks.",
+    "Compute the singular values s1>=s2>=s3>=0 of S. They are the canonical correlations, equal to cos(theta1),cos(theta2),cos(theta3) for the principal angles 0<=theta1<=theta2<=theta3<=pi/2 between col(B) and col(L). Save raw singular values and the display values separately if a roundoff clamp is needed.",
+    "For display, theta_i=atan2(sqrt(max(0,(1-s_i)*(1+s_i))),s_i), using only the roundoff handling below. Report radians and degrees. A principal angle near zero means a nearly shared residualized response direction; an angle near pi/2 means nearly orthogonal directions in this declared metric.",
+    "Report the parent-contract column-normalized condition of F6 and the additional canonical-pair condition kappa_pair=(1+s1)/(1-s1), when its denominator is numerically resolved. These are different descriptive conditions. The canonical-pair condition is the spectral condition of [[I,S],[S^T,I]], whose eigenvalues are 1+s_i and 1-s_i. It measures overlap after separate within-block whitening and does not measure absolute signal strength.",
+    "Also report the information-retention factors 1-s_i^2. After profiling ell, Rb^-1*(Fbar_bb-Fbar_bell*Fbar_ellell^-1*Fbar_ellb)*Rb^-T=I-S*S^T, whose eigenvalues are 1-s_i^2. This provides an independent finite-matrix identity check and connects the angle diagnostic to the already required profiled history information."
+  ],
+  "proof": "With normalized residual column blocks Bbar and Lbar, define Qb=Bbar*Rb^-T and Qell=Lbar*Rell^-T. Their column Gram matrices are identity, so Qb and Qell are orthonormal bases for the same two response spaces. Their cross Gram is Qb^T*Qell=Rb^-1*Fbar_bell*Rell^-T=S. The singular values of the cross Gram define the principal-angle cosines. Applying the same block congruence to Fbar gives [[I,S],[S^T,I]]; an SVD of S reduces it to three independent 2x2 blocks with eigenvalues 1 plus or minus s_i. Taking the Schur complement instead gives I-S*S^T, establishing the information-retention identity.",
+  "rank_and_nonestimability": [
+    "For a symmetric positive-semidefinite normalized Gram M, report numerical_rank_tau(M)=count(lambda_j > tau*lambda_max), with tau=1e-10 inherited from the parent 1e10 condition ceiling. Report tau and the eigenvalues explicitly. This is a declared numerical rank at finite precision, not an exact or physical rank theorem. Eigenvalues near the cutoff are threshold-sensitive and must be labeled unresolved; do not truncate the design or alter the parameter fit based on this reporting rule.",
+    "In exact arithmetic, ranks are r_b=rank(B), r_ell=rank(L), and r_joint=rank([B,L])=rank(F6), and dim(col(B) intersect col(L))=r_b+r_ell-r_joint. If both marginal ranks are three, the number of exactly zero principal angles equals 6-r_joint. Floating-point zero angles do not by themselves prove exact intersections.",
+    "If both marginal blocks are well conditioned but F6 is singular or numerically unresolved, principal angles may still be reported as a descriptive overlap diagnostic. The parent six-parameter fit remains HOLD/NOT_ESTIMABLE or NUMERICALLY_UNRESOLVED. An angle calculation does not override that gate.",
+    "If a marginal block is non-positive, rank-deficient, or fails the inherited condition limit, do not silently use a pseudoinverse or discard directions to manufacture three angles. Report marginal spectra/ranks and PRINCIPAL_ANGLES_NOT_EVALUABLE_FOR_FULL_THREE_DIMENSIONAL_BLOCKS. A separate thin-subspace treatment would require an explicitly justified rank choice; it is not part of this supplement.",
+    "Finite nonzero angles establish only geometric separation within this fixed metric and declared nuisance span. Absolute information, parameter uncertainty, and the small-velocity physical-domain diagnostics remain separate required outputs."
+  ],
+  "roundoff_and_controls": [
+    "The exact positive-semidefinite Gram implies 0<=s_i<=1. Preserve raw s_i. A value above 1 by more than 1e-10 is NUMERICALLY_UNRESOLVED; do not clamp it into a successful result. An overshoot at most 1e-10 may be clamped to 1 for display only, with ROUND_OFF_LIMITED status. Such a clamp cannot establish exact degeneracy or rescue a failed fit.",
+    "Use 1e-10 as the normalized residual ceiling for the orthonormality and Schur/angle identities, matching the parent algebra controls. If residuals fail, preserve them and classify the diagnostic as unresolved. Do not widen the threshold to obtain PASS.",
+    "When 1-s1<=1e-10, label the smallest angle and canonical-pair condition ROUND_OFF_LIMITED; do not report a finite large condition as resolved. Report the raw denominator and singular value. An angle returned as zero in this regime is a display boundary, not an exact null-space proof.",
+    "The lower-tier worker may add three tiny matrix controls to its existing focused tests: orthogonal spaces S=0 give three 90-degree angles; identical full-rank spaces S=I give three zero angles and a singular joint design; a diagonal canonical cross Gram diag(0.8,0.5,0) gives cosines [0.8,0.5,0], joint canonical condition 9, and retention factors [0.36,0.75,1]. These are matrix checks only, with no source-row replay or additional catalogue pass."
+  ],
+  "requested_output_fields": [
+    "metric_and_nuisance_reference",
+    "normalized_F6_and_marginal_eigenvalues",
+    "numerical_rank_threshold_and_status",
+    "history_marginal_rank",
+    "local_marginal_rank",
+    "joint_rank",
+    "principal_cosines_raw",
+    "principal_angles_radians_and_degrees",
+    "information_retention_factors",
+    "condition_column_normalized_F6",
+    "condition_canonical_pair_or_roundoff_status",
+    "orthonormality_and_Schur_identity_residuals",
+    "scope_and_physical_HOLD"
+  ],
+  "execution": "No new source/row computation or matrix execution was performed by this researcher. The supplement is an analytic method for the upcoming lower-tier execution.",
+  "consumer": "K03_PM implementation consumes this supplement alongside the unchanged parent contract. The independent reviewer checks both and the resulting numbers.",
+  "original_acceptance_met": false,
+  "scientific_admission": "HOLD",
+  "observed_runtime": "UNKNOWN",
+  "budget_reset": false,
+  "no_dispatch_claim": true,
+  "raw_receipt": "/tmp/r23_k03_research_cadd7ac7/PRINCIPAL_ANGLES_SUPPLEMENT.json"
+}

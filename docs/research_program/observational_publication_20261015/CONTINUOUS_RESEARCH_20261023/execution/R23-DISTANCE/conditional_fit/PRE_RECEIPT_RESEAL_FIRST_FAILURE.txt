@@ -1,0 +1,14 @@
+$ OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/test_fit.py
+exit_code=1
+.F.                                                                      [100%]
+____________________ test_covariance_single_budget_and_rank ____________________
+    _, rows, groups, _ = fitmod.load_inputs()
+>   m = fitmod.make_model(rows,groups)
+    fit.py:124: ValueError: zero residual leverage coordinate; preserve and flag
+FAILED test_fit.py::test_covariance_single_budget_and_rank
+1 failed, 2 passed in 3.14s
+
+The first candidate rejected a zero residual leverage coordinate instead of
+flagging it. The contract requires retaining the row in the fit and excluding
+only its zero denominator from the diagnostic. fit.py was repaired accordingly;
+this failure is retained, and the covariance/design/seed/tolerances were not changed.

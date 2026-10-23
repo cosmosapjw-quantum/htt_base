@@ -1,0 +1,42 @@
+{
+  "frontier_id": "R24-PUBLIC-SN-RELEASE-FUNCTIONALS",
+  "tasks": [
+    {
+      "id": "R24-SN-RELEASE",
+      "kind": "numeric",
+      "goal": "Retained public release moduli/calibration/dipole/lowz-response contrast independent of unavailable private training",
+      "acceptance": "row/order/units,solve1e-10;crosscatalog covariance unavailable separateCF4;historical nominal fit parityHOLD",
+      "input_identity": "sha256:b428afbcd61eb919bdc25100eb44dc748de87148d022d2ad3b182ba7ffec776d",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-SN-RELEASE_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": []
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "Fixed public total covariance ONCE;deterministic offsets/flow extensions;no added stochasticPV;one frozen released selection,alloriginalrows retained"
+        },
+        "discriminator": "Public release covariance used once, shared nuisances explicit, historical nominal replay separately HOLD",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Retained public release moduli/calibration/dipole/lowz-response contrast independent of unavailable private training",
+        "calculation": "Fixed public total covariance ONCE;deterministic offsets/flow extensions;no added stochasticPV;one frozen released selection,alloriginalrows retained",
+        "acceptance": "row/order/units,solve1e-10;crosscatalog covariance unavailable separateCF4;historical nominal fit parityHOLD"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    }
+  ]
+}

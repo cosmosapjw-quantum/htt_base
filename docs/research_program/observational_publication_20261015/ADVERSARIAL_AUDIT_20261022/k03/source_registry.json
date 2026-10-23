@@ -1,0 +1,200 @@
+{
+  "owner": "obsstat / htt",
+  "scope": "Published Gaia EDR3 observer-acceleration compressed subchannel",
+  "access_date": "2026-10-22",
+  "repository_baseline": "76595070beb97e52dce9f2d7a0ff1dbf3c289e98",
+  "requested_author_model": "gpt-6-sol/high",
+  "observed_author_model": "UNKNOWN",
+  "primary": {
+    "title": "Gaia Early Data Release 3: Acceleration of the Solar System from Gaia astrometry",
+    "author": "Gaia Collaboration, Klioner et al.",
+    "release": "Astronomy & Astrophysics 649, A9 (2021)",
+    "doi": "10.1051/0004-6361/202039734",
+    "arxiv": "2012.02036",
+    "url": "https://www.aanda.org/articles/aa/full_html/2021/05/aa39734-20/aa39734-20.html",
+    "table_url": "https://www.aanda.org/articles/aa/full_html/2021/05/aa39734-20/T2.html",
+    "pdf_url": "https://www.aanda.org/articles/aa/pdf/2021/05/aa39734-20.pdf",
+    "retrieval": "Exa web_fetch_exa fetched article, Table2 HTML and PDF text; direct HTTP and web open returned403. PDF text supplies correlation labels absent from HTML extraction.",
+    "exact_upstream_bytes": "A&A bytes unavailable; arXiv PDF retrieved separately and bound below; scientific source identity is published A&A table",
+    "response_equations": [
+      1,
+      2,
+      3,
+      4,
+      6
+    ],
+    "qualification_sections": [
+      "2",
+      "3.4",
+      "4.1",
+      "5",
+      "6",
+      "7",
+      "Appendix A"
+    ],
+    "source_selection": "1,215,942 five-parameter Gaia-CRF3 QSO-like sources; external QSO/AGN cross-match and astrometric filtering; six-parameter sources excluded",
+    "fit": "Simultaneous spheroidal and toroidal VSH through lmax=3; robust source-level clipping kappa=3, about3800 rejected",
+    "coordinate_frame": "Equatorial ICRS; catalogue astrometry referenced to solar-system barycentre",
+    "order": [
+      "g_x",
+      "g_y",
+      "g_z"
+    ],
+    "unit": "microarcsecond / Julian year",
+    "table2_mean": [
+      -0.07,
+      -4.3,
+      -2.64
+    ],
+    "table2_sigma": [
+      0.41,
+      0.35,
+      0.36
+    ],
+    "table2_rho_xy_xz_yz": [
+      0.001,
+      -0.094,
+      -0.025
+    ],
+    "table2_galactic_mean": [
+      5.04,
+      -0.1,
+      -0.29
+    ],
+    "table2_galactic_sigma": [
+      0.35,
+      0.36,
+      0.41
+    ],
+    "table2_galactic_rho_XY_XZ_YZ": [
+      0.036,
+      -0.014,
+      -0.079
+    ],
+    "uncertainty_method": "Bootstrap uncertainties; 1.05-1.08 times fit uncertainties already scaled by unit-weight error~1.048. These are not uninflated inverse-normal uncertainties.",
+    "inter_source_covariance": "Explicitly unmodeled in arXivv1 Sect5; not measured zero",
+    "systematics_tests": [
+      "lmax stability including high-l tests",
+      "clipping sensitivity",
+      "within-source correlation sensitivity",
+      "magnitude and colour subsets",
+      "CTI simulation",
+      "stellar contamination",
+      "barycentric ephemeris comparison"
+    ],
+    "systematics_status": "Published tests support observer-acceleration interpretation; not a released joint spatial/calibration/selection covariance or guaranteed bound",
+    "first_order_fractional_accuracy": "arXivv1 Sect2 estimates about1e-4 for the source astrometric setting; no new cosmic optical remainder bound inferred",
+    "arxiv_pdf_readback": {
+      "url": "https://arxiv.org/pdf/2012.02036",
+      "observed_version": "2012.02036v1, 2020-12-03, from PDF header",
+      "bytes": 2249752,
+      "sha256": "fe837894aeae91e89f59c0509b9ad4227a523f43a43674c023e5415d7ba5f700",
+      "table_page_1based": 14,
+      "visual_check": "Rendered and inspected Table2: labels and numbers agree with published A&A extraction",
+      "publication_excluded": [
+        "raw/source_paper.pdf",
+        "raw/source_paper.txt",
+        "raw/source_table2_page.png"
+      ]
+    },
+    "section_numbering": "Section pointers follow locally retained arXiv2012.02036v1 PDF; published A&A HTML has different section numbering."
+  },
+  "legacy": {
+    "repository": "cosmosapjw-quantum/htt_base",
+    "ref": "76595070beb97e52dce9f2d7a0ff1dbf3c289e98",
+    "path": "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D05_GAIA_RADIO/REPORT_KO.md",
+    "blob_sha": "9c8893652382bf29fe18401b8aed184e6c1f9561",
+    "reuse_decision": "Read legacy full-Gaia +713radio result; no catalogue redownload or refit. New work imports published bootstrap acceleration vector/correlations and evaluates its physical observer response, prediction covariance and confounding.",
+    "legacy_mean": [
+      -0.63924,
+      -4.31228,
+      -2.6128
+    ],
+    "legacy_formal_sigma": [
+      0.31865,
+      0.29903,
+      0.28697
+    ],
+    "comparability": "Same Gaia astrometry and overlapping sample: dependent analyses, not independent measurements; sample, clipping and lmax differ. No combined chi-square or difference significance."
+  },
+  "freshness": [
+    {
+      "title": "The Gaia Astrometric Catalogue and Secular Aberration Drift in Proper Motions",
+      "authors": "Brown, Bastian, Klioner",
+      "arxiv": "2503.03389v1",
+      "url": "https://arxiv.org/html/2503.03389v1",
+      "read_sections": [
+        "Abstract",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "finding": "Gaia catalogue defined in BCRS with spatial axes aligned with ICRS; acceleration contribution in PM does not require correcting catalogue or redefining frame. Transforming to Galactic/distant rest observer is scientific modeling."
+    },
+    {
+      "title": "Observing the peculiar acceleration of our Solar System with quasar proper motions",
+      "authors": "Nguyen, Murray",
+      "arxiv": "2605.30367v3",
+      "version_date": "2026-10-09",
+      "doi": "10.1051/0004-6361/202660989",
+      "url": "https://arxiv.org/html/2605.30367v3",
+      "retrieval": "Web open v3; Exa abs URL incorrectly returned v1 content and must not be used for current numeric values",
+      "read_sections": [
+        "Abstract",
+        "3",
+        "6",
+        "7",
+        "8",
+        "Table1",
+        "AppendixC"
+      ],
+      "method": "Model2: deterministic VSH l<=3 plus isotropic stochastic high-multipole power l=4..10, pixel covariance and mask matched SBI; marginal coverage checked on500 simulations restricted to inner90% of prior",
+      "quaia_unmasked_model2_median": [
+        1.01,
+        -4.94,
+        -2.13
+      ],
+      "quaia_lower_errors": [
+        0.72,
+        0.55,
+        0.58
+      ],
+      "quaia_upper_errors": [
+        0.72,
+        0.54,
+        0.58
+      ],
+      "magnitude_median_lower_upper": [
+        5.55,
+        0.53,
+        0.54
+      ],
+      "gaia_unmasked_model2_median": [
+        0.34,
+        -4.52,
+        -2.59
+      ],
+      "gaia_lower_errors": [
+        0.59,
+        0.46,
+        0.44
+      ],
+      "gaia_upper_errors": [
+        0.62,
+        0.46,
+        0.43
+      ],
+      "units": "uas/yr",
+      "finding": "Spatial/high-multipole nuisance uncertainty materially wider than source bootstrap, especially masked4-5times. Marginal intervals and corner plots do not supply joint3x3 covariance or reusable likelihood; no numerical covariance invented. Same Gaia astrometry, not independent measurement.",
+      "availability": "No posterior-sample download or analysis-code URL identified in inspected paper; this is not an exhaustive external repository search."
+    }
+  ],
+  "scientific_qualification": {
+    "response": "QUALIFIED_FIRST_ORDER_OBSERVER_ACCELERATION",
+    "compressed_covariance": "DECLARED_ICRS_WORKING_SUMMARY_ONLY",
+    "published_frame_covariance_parity": "FAILED_UNDER_PRINTED_ROUNDING_MODEL; source/estimator clarification unresolved",
+    "original_K03": "PARTIAL; no promotion",
+    "independent_review": "PENDING_PARENT_REVIEW"
+  }
+}

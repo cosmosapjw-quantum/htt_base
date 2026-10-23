@@ -1,0 +1,78 @@
+{
+  "owner": "obsstat",
+  "scope": "PRECOMPUTED_EXTERNAL_LEGACY_T_FIXTURE_INTAKE",
+  "claim_tier": "DIAGNOSTIC_ONLY",
+  "transfer_source": "astro-informatics/bianchi v1.1 precomputed test files",
+  "source_commit": "1c90b9867b96eedf93983e33de72b3394f39d58e",
+  "source_url": "https://astro-informatics.github.io/bianchi/",
+  "sources": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/external_transfer/bianchi_v1_1_1c90b98/test/sky_bianchi_test.fits",
+      "bytes": 204480,
+      "sha256": "7c4e44abd61f1367571143a0d002b85b6db8bf9067e43d0a69c60a0da80d5c6d",
+      "git_blob": "2f2ef5aa37de1bb7438808c53819b786915ebda0",
+      "unit_header": null,
+      "coordsys_header": null,
+      "nside": 64,
+      "ordering": "RING"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/external_transfer/bianchi_v1_1_1c90b98/test/sky_bianchi_test_mK.fits",
+      "bytes": 204480,
+      "sha256": "0f7fea380c064e27e9b1faea4a12b2a6a3617226a1eb15ba9f4fd9bed59e5213",
+      "git_blob": "9c99cd6c0a44a45987bf09e2d75fedf60dd7ba59",
+      "unit_header": null,
+      "coordsys_header": null,
+      "nside": 64,
+      "ordering": "RING"
+    }
+  ],
+  "unit_comparison": {
+    "least_squares_scale": 2724.999989152853,
+    "relative_residual_best_scale": 5.5959406945477607e-08,
+    "relative_residual_declared_2725": 5.610080600227011e-08
+  },
+  "unit_interpretation": "default DeltaT/T; mK variant consistent with Tcmb=2.725 K",
+  "frame": "UNKNOWN_ABSOLUTE_SKY_FRAME_FILE_ANGULAR_CHART_ONLY",
+  "parameter_binding": "UPSTREAM_DECLARED_PARAM_PAR_TEST_MAP_BINDING",
+  "parameter_binding_source": "https://raw.githubusercontent.com/astro-informatics/bianchi/1c90b9867b96eedf93983e33de72b3394f39d58e/doc/index.html#testing",
+  "parameter_binding_execution_verification": "NOT_RUN_OWNER_FORBIDS_SOLVER_EXECUTION",
+  "sky_support_status": "FULLSKY_FILE_PIXELS_NO_OBSERVATIONAL_MASK",
+  "null_mock_status": "NONE_NO_INFERENCE",
+  "fit": {
+    "lmax": 12,
+    "rank": 169,
+    "condition": 1.0006571686134687,
+    "rms_default_units": 1.932333709963323e-06,
+    "residual_rms_default_units": 2.5958703333167353e-07,
+    "residual_fraction": 0.13433861449148995,
+    "power_by_ell_default_units_squared": [
+      1.28082309924324e-31,
+      3.73915107517893e-12,
+      1.1395134305765882e-11,
+      1.2873097162744575e-11,
+      8.179411691609866e-12,
+      3.710805723452077e-12,
+      1.5692497868224196e-12,
+      9.690150369375921e-13,
+      9.03779211937279e-13,
+      8.801490320570608e-13,
+      7.776611798968866e-13,
+      6.209310137669377e-13,
+      4.569242875069846e-13
+    ]
+  },
+  "polarization": "NOT_SUPPLIED_NOT_ZERO",
+  "native_solver": false,
+  "physical_atlas_eligibility": false,
+  "B02_original_acceptance": "HOLD",
+  "caveats": [
+    "Legacy source describes temperature-only VIIh without dark energy.",
+    "No source code executed, solver built, or ODE integrated.",
+    "Finite l<=12 pixel projection is not exact harmonic continuum transfer.",
+    "Parameter binding is upstream-declared, not independently executed; absolute frame, beam and global-history mapping are not certified.",
+    "No morphology match to observed sky or native family identification."
+  ],
+  "requested_runtime": "gpt-6.1-sol/high",
+  "observed_runtime": "UNKNOWN"
+}

@@ -1,0 +1,45 @@
+{
+  "task_id": "R24-SELECTION-ENVELOPE",
+  "base_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "contract": {
+    "estimand": "Indicator abs heldout residual exceeds fixed diagnostic threshold; empirical density-ratio sensitivity not measured propensity",
+    "calculation": "min/max sum p_i*w_i*f_i; p=1/274,sum p*w=1,w in[1/Gamma,Gamma],Gamma=1,1.25,1.5,2,4; missing628-frame extension274/628\u00d7[L,U]+354/628\u00d7[0,1]",
+    "acceptance": "LP primal/dual1e-9,Gamma1 parity1e-12,nesting1e-10; unbounded physical functional witness; no5460 parent inference"
+  },
+  "sources": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/ADVISED_CONTRACTS.json",
+      "sha256": "9bd712d298f572e797731b359e8810ab89f902d9c5bd2879810b49895951b4bf"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/ARTIFACT_MANIFEST.json",
+      "sha256": "1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b",
+      "bytes": 3058
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/RESULT.json",
+      "sha256": "330066f4a8605caa9874f192a938d4ef1d84cf8933bdd3e6059a40b011c28bd0",
+      "bytes": 773836
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/OOF_ROWS.csv",
+      "sha256": "6fd8356e041e1ece186b79bf1506b04af5411e17e6c31a489a1f66da977a3c40",
+      "bytes": 339291
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/DIRECTION_JOIN.csv",
+      "sha256": "4e6e9c991ecdf2fda2a403f68a4ea5d744e244c73478eef1c70efbf007852b9a",
+      "bytes": 21002
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DISTANCE_REVIEW_RAW.json",
+      "sha256": "4305359f1f25203ecd8bc4a184a18703e4ac63785837686e3f8ce61d8e4e8a1d",
+      "bytes": 1947
+    }
+  ],
+  "consumed_review": {
+    "task_id": "R24-DISTANCE-MODELS",
+    "candidate_identity": "sha256:1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b",
+    "scope": "Exploratoryconditionaldiscriminator;notqualifiedconfidencebundle"
+  }
+}

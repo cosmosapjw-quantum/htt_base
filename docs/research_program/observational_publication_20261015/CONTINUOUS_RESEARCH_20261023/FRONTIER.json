@@ -1,0 +1,230 @@
+{
+  "schema": "htt.research_frontier/1",
+  "campaign_id": "R23-whole-42-solver-free",
+  "source_head": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+  "authorization": "Owner2026-10-23 authorizes autonomous whole-DAG research and scientific blocker escalation; no native solver/ODE, no main merge/submission.",
+  "approved_scientific_repairs": [
+    "R23-ATLAS",
+    "R23-CMB",
+    "R23-CONGRUENCE",
+    "R23-DISTANCE",
+    "R23-ORIGINAL-B03",
+    "R23-ORIGINAL-B04",
+    "R23-ORIGINAL-B05",
+    "R23-ORIGINAL-H05",
+    "R23-ORIGINAL-H06",
+    "R23-ORIGINAL-K06",
+    "R23-ORIGINAL-L04",
+    "R23-ORIGINAL-L05",
+    "R23-ORIGINAL-L06",
+    "R23-ORIGINAL-S03",
+    "R23-ORIGINAL-S05",
+    "R23-ORIGINAL-S06",
+    "R23-ORIGINAL-V05",
+    "R23-ORIGINAL-V06",
+    "R23-Q",
+    "R23-SN"
+  ],
+  "actions": [
+    {
+      "id": "R23-Q",
+      "kind": "numeric",
+      "depends_on": [],
+      "enables_nodes": [
+        "K03",
+        "K05"
+      ],
+      "goal": "Compute a fixed finite-field nuisance quotient using retained102x102 A22 statistics, then validate omitted-l4 and nonzero-template-mean controls.",
+      "acceptance": "Use scripts/htt_astrometry_quotient.py stats on both hash-matched full/margin caches. Report augmented signal rank, all six estimability residuals, exact annihilation and conditional covariance; recompute the two previously failed whole-field controls for the new estimator with sourcewise selection caveat. Never reuse old cut-Q under unrestricted means or promote cosmic A. If residual calibration remains unknown, retain exact residual issue and continue other tasks.",
+      "input_identity": "sha256:e8001c465950ce499d9c13e966ae9af5fea4f15a6ac179d3f541878864736b3c",
+      "input_manifest": {
+        "source_head": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+        "inputs": [
+          "Existing /mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/full_stats.npz SHA256 4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+          "margin_stats.npz SHA256 e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5",
+          "CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md"
+        ],
+        "hypothesis": "Model class changes from zero-mean Gaussian priors to finite deterministic nuisance span; reuse scores, not755850-row replay."
+      },
+      "approved_repair_id": "R23-Q",
+      "implementation_route": "subagent_specialist",
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q"
+      ],
+      "new_information_goal": "Model class changes from zero-mean Gaussian priors to finite deterministic nuisance span; reuse scores, not755850-row replay."
+    },
+    {
+      "id": "R23-DISTANCE",
+      "kind": "numeric",
+      "depends_on": [],
+      "enables_nodes": [
+        "H02",
+        "S02"
+      ],
+      "goal": "Implement the missing physical distance factor in the628-target selected-cohort experiment, preserving partial identification.",
+      "acceptance": "Start from continuation/selection_model/REPORT.md and existing628 rows. Build F_or from actual released distance/width/error fields under a stated conditional cohort law; include nondetection/confusion and shared-calibration/PV once. Check normalization and interval coverage on whole-group selected mocks; fit/report actual274 observed distances, retain354 missing distance rows as undefined mass. Do not call the old mark-only likelihood a distance likelihood or learn unmeasured parent selection from this cohort. Compare an explicit bounded sensitivity law only if its source assumptions are available.",
+      "input_identity": "sha256:68741d7ff4948cdf721c372dfaf5a0ded004ebe0eaf4d3f657ece4c0781b31d2",
+      "input_manifest": {
+        "source_head": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+        "inputs": [
+          "A22 selection_model retained628-row table with274 released DM /354 missing",
+          "Existing source-specific distance errors, grouping and calibration labels"
+        ],
+        "hypothesis": "Move from mark probabilities to the previously absent distance factor. This is a new scientific consumer, not a repeated join."
+      },
+      "approved_repair_id": "R23-DISTANCE",
+      "implementation_route": "subagent_specialist",
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE"
+      ],
+      "new_information_goal": "Move from mark probabilities to the previously absent distance factor. This is a new scientific consumer, not a repeated join."
+    },
+    {
+      "id": "R23-SN",
+      "kind": "numeric",
+      "depends_on": [],
+      "enables_nodes": [
+        "V04",
+        "H04"
+      ],
+      "goal": "Repair the actual SN010010 baseline before interpreting paired reboost responses.",
+      "acceptance": "Reuse23 photometric rows and34 public source files. Audit filter/SED conventions and implement producer-supported SALT2 model-error/covariance propagation if publicly supplied. Test source-independent reference and published FITRES parity; preserve original chi2/19=3.2323283 failure and fixed adequacy threshold3. Do not inflate variance to pass. If required nominal configuration/model-error inputs are private, record exact missing payload and continue independent branches; public fit remains conditional.",
+      "input_identity": "sha256:a7b8d5bc3c59b1ae86fc8b2078b39fcaa4598fad33c31c1dbc9fa5d5519f24a3",
+      "input_manifest": {
+        "source_head": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+        "inputs": [
+          "continuation/sn010010/REPORT.md and code/config",
+          "Retained public lightcurves/filters/SED/model-error grids if actually present",
+          "Producer nominal configuration and observed FITRES identity"
+        ],
+        "hypothesis": "The failed baseline is a model adequacy/source-binding issue, not evidence for a reboost anomaly."
+      },
+      "approved_repair_id": "R23-SN",
+      "implementation_route": "subagent_specialist",
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN"
+      ],
+      "new_information_goal": "The failed baseline is a model adequacy/source-binding issue, not evidence for a reboost anomaly."
+    },
+    {
+      "id": "R23-CMB",
+      "kind": "theory",
+      "depends_on": [],
+      "enables_nodes": [
+        "L03"
+      ],
+      "goal": "Derive and execute a joint split-map nuisance experiment for the new morphology statistic from retained processed products.",
+      "acceptance": "Define paired signal/foreground/noise/weight model and the exact operator for existing PR3/qualifiedPR4 split products. Derive which nuisance responses the sum/difference contrast identifies, with explicit cross-noise/common-foreground remainder. Execute one genuinely new nuisance projection or source-qualified sensitivity computation on retained sky products; same full-sky realization IDs across all products. Existing45 operator-window cells and p=.039 are reuse-only; no null p without matched law, joint trials and MC interval. Source search must target the exact remaining covariance/product law, not redownload completed maps.",
+      "input_identity": "sha256:6186378e8671b67dde9a54c55a8a40c2dafb8b24eb18a6934abf9d24276f14de",
+      "input_manifest": {
+        "source_head": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+        "inputs": [
+          "A22 cmb_pilot/cmb_counterpairs reports and retained common-sky operators",
+          "Exact same-release processed-total/foreground/noise/weight definitions; cross-split noise dependence"
+        ],
+        "hypothesis": "Separate common-field nonidentification from identifiable paired-map directions; preserve a conditional useful result while qualifying full null."
+      },
+      "approved_repair_id": "R23-CMB",
+      "implementation_route": "subagent_specialist",
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB"
+      ],
+      "new_information_goal": "Separate common-field nonidentification from identifiable paired-map directions; preserve a conditional useful result while qualifying full null."
+    },
+    {
+      "id": "R23-CONGRUENCE",
+      "kind": "theory",
+      "depends_on": [],
+      "enables_nodes": [
+        "K04",
+        "S04"
+      ],
+      "goal": "Compose the reviewed compensated history with observable and nuisance quotients in one observer/source convention.",
+      "acceptance": "Reuse FRONTIER_20261020/theory and A22 finite two-redshift identity. Explicitly distinguish fixed-data trial-frame derivative from physical source/observer transport. Derive source/observer endpoint plus spectral-response/calibration/PV nuisance image for the same-congruence candidate without ODE. Evaluate only new response columns/quotient rank on retained design after inputs qualify; measured-redshift, proper-motion and clock rows may not be interchanged. Report surviving observable combinations and exact missing physical remainder, not global tilt identification.",
+      "input_identity": "sha256:a9cf00213dbeb740d3bd74e9954db4f00580675e902e692a87a578f5787bd367",
+      "input_manifest": {
+        "source_head": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+        "inputs": [
+          "Reviewed compensated history and CLAIMS_AND_TRANSFER.json",
+          "Actual source standardization/NNR/clock response and retained design arrays"
+        ],
+        "hypothesis": "Connect the original local/global intuition to identifiable combinations; never reject the whole idea because one compressed channel is confounded."
+      },
+      "approved_repair_id": "R23-CONGRUENCE",
+      "implementation_route": "subagent_specialist",
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CONGRUENCE"
+      ],
+      "new_information_goal": "Connect the original local/global intuition to identifiable combinations; never reject the whole idea because one compressed channel is confounded."
+    },
+    {
+      "id": "R23-ATLAS",
+      "kind": "input",
+      "depends_on": [],
+      "enables_nodes": [
+        "B02"
+      ],
+      "goal": "Resolve only genuinely new existing numeric external polarized atlas payloads; keep original atlas obligation explicit.",
+      "acceptance": "Read A22 remaining-input search receipts first. Search a new release/archive/product hypothesis only if not previously exhausted. Qualify actual all-m T/E/B numbers with IC/frame/units/history/family-equivalence metadata. If no new source hypothesis exists, bind exact missing payload to existing source receipts, hold this branch and continue. No solver build, ODE, image extraction as physics or universal no-go claim.",
+      "input_identity": "sha256:6f9b60ac018463bba021bf9774c9f3b958a7fa4f1b052eb74028b2dba0f7abee",
+      "input_manifest": {
+        "source_head": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+        "inputs": [
+          "continuation/REMAINING_INPUTS_KO.md",
+          "Existing numeric external polarized all-m history atlas; no auth bypass"
+        ],
+        "hypothesis": "Explicit source-intake branch prevents unavailable family atlas from blocking every independent paper lane."
+      },
+      "approved_repair_id": "R23-ATLAS",
+      "implementation_route": "general_code",
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-ATLAS"
+      ],
+      "new_information_goal": "Explicit source-intake branch prevents unavailable family atlas from blocking every independent paper lane."
+    }
+  ],
+  "goal": "All42 original unchanged acceptances, not one-node progress. Useful scoped results counted separately. Keep executing independent branches through real blocker research, implementation and independent review.",
+  "download_policy": {
+    "anonymous_public_authorized": true,
+    "max_product_bytes": null,
+    "max_total_bytes": null,
+    "max_expanded_bytes": null,
+    "verify_mount_and_free_space": true,
+    "disk_reserve_gib": 2,
+    "cache_first": true,
+    "raw_data_git": false
+  },
+  "consumed_work_reuse": [
+    "Five commits d256ed4,e638029,9f0beb6,120c8a7,a8e66da",
+    "All64-model ASTROMETRY_RESULT and source-bound7-test quotient capability; no raw-data replay",
+    "Original42 accepted18 / original external-V03 policy17; no new scientific promotion"
+  ],
+  "current_session_limit": "DesktopCommander monthly quota prevents accessing owner cache; do not reconnect/retry. Local Codex can run these commands directly without that transport.",
+  "original_node_repairs": {
+    "K03": "R23-Q",
+    "K05": "R23-Q",
+    "H02": "R23-DISTANCE",
+    "S02": "R23-DISTANCE",
+    "V04": "R23-SN",
+    "H04": "R23-SN",
+    "L03": "R23-CMB",
+    "K04": "R23-CONGRUENCE",
+    "S04": "R23-CONGRUENCE",
+    "B02": "R23-ATLAS",
+    "S03": "R23-ORIGINAL-S03",
+    "S05": "R23-ORIGINAL-S05",
+    "S06": "R23-ORIGINAL-S06",
+    "L04": "R23-ORIGINAL-L04",
+    "L05": "R23-ORIGINAL-L05",
+    "L06": "R23-ORIGINAL-L06",
+    "H05": "R23-ORIGINAL-H05",
+    "H06": "R23-ORIGINAL-H06",
+    "V05": "R23-ORIGINAL-V05",
+    "V06": "R23-ORIGINAL-V06",
+    "B03": "R23-ORIGINAL-B03",
+    "B04": "R23-ORIGINAL-B04",
+    "B05": "R23-ORIGINAL-B05",
+    "K06": "R23-ORIGINAL-K06"
+  },
+  "repair_identity_rule": "Shared underlying scientific issue uses shared approved_repair_id across frontier and original nodes. A downstream distinct acceptance is not permission to rename an exhausted same issue; use new evidence and a new bounded question before new repair."
+}

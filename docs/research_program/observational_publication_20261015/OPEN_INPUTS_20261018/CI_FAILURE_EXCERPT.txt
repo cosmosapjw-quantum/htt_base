@@ -1,0 +1,11 @@
+2026-10-18T09:51:10.0016818Z =================================== FAILURES ===================================
+2026-10-18T09:51:10.0017164Z ______________ test_shared_context_packet_is_merged_and_versioned ______________
+2026-10-18T09:51:10.0017622Z     def test_shared_context_packet_is_merged_and_versioned() -> None:
+2026-10-18T09:51:10.0018724Z         assert fragment
+2026-10-18T09:51:10.0018922Z >       assert agents_text.endswith(fragment)
+2026-10-18T09:51:10.0020210Z E        +  where False = <built-in method endswith of str object at 0x55bf50858d20>('<!-- Distribution note: AGENTS.md.fragment is a merge-only compatibility suffix. This merged AGENTS.md copy is author...wers are read-only. Use targeted evidence,\nnot duplicate repository-wide discovery or copied full parent transcripts.')
+2026-10-18T09:51:10.0022568Z E        +    where <built-in method endswith of str object at 0x55bf50858d20> = '# AGENTS.md — `htt_base` Codex operating contract\n\n## Mission\n\nUpgrade `htt_base` before the external native low-...wers are read-only. Use targeted evidence,\nnot duplicate repository-wide discovery or copied full parent transcripts.'.endswith
+2026-10-18T09:51:10.0025238Z FAILED scripts/codex_harness/test_codex_assets.py::test_shared_context_packet_is_merged_and_versioned - AssertionError: assert False
+2026-10-18T09:51:10.0026908Z  +  where False = <built-in method endswith of str object at 0x55bf50858d20>('<!-- Distribution note: AGENTS.md.fragment is a merge-only compatibility suffix. This merged AGENTS.md copy is author...wers are read-only. Use targeted evidence,\nnot duplicate repository-wide discovery or copied full parent transcripts.')
+2026-10-18T09:51:10.0029708Z  +    where <built-in method endswith of str object at 0x55bf50858d20> = '# AGENTS.md — `htt_base` Codex operating contract\n\n## Mission\n\nUpgrade `htt_base` before the external native low-...wers are read-only. Use targeted evidence,\nnot duplicate repository-wide discovery or copied full parent transcripts.'.endswith
+2026-10-18T09:51:10.0030755Z 1 failed, 144 passed, 3 skipped in 26.71s

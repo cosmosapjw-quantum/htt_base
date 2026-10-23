@@ -1,0 +1,64 @@
+{
+  "task_id": "R23-SN",
+  "review_verdict": "PASS_SCOPED_CONDITIONAL_IMPLEMENTATION",
+  "findings": [],
+  "candidate_binding": {
+    "checkout_head": "855107f23fd4f25587ba242d8a5dfc1a8fc81876",
+    "manifest": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/ARTIFACT_MANIFEST.json",
+    "sha256": "ff6a6f80dbc5c0b0818e070d68f9ef5f5d5f0b6a5179bed140b4a1f6d891e08a",
+    "verified": "All five candidate files, three retained source bindings, retained refit.py identity, 34 public source files and decompressed model grids match. Manifest unchanged after review."
+  },
+  "validation": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B -m pytest -q -p no:cacheprovider docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/test_model_error.py",
+      "exit_code": 0,
+      "result": "2 passed, 5 known Astropy column-name warnings in 12.34 seconds."
+    },
+    {
+      "invocation": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B -",
+      "operation": "Read-only stdin probes verified hashes, release inventory, covariance and objectives at stored parameters, and finite-difference objective gradients. No optimizer rerun.",
+      "exit_code": 0,
+      "results": {
+        "selected_rows": 23,
+        "original_chi2": 61.414238130153144,
+        "conditional_chi2": 17.07017409591109,
+        "conditional_reduced_chi2": 0.8984302155742678,
+        "stored_objective_difference": 0.0,
+        "direct_linear_solve_difference": -3.552713678800501e-15,
+        "model_covariance_min_eigenvalue": 5.0574840910151595,
+        "total_covariance_min_eigenvalue": 222.4866472143837,
+        "cross_band_relative_covariance_max": 0.0
+      }
+    }
+  ],
+  "scientific_assessment": {
+    "covariance": "Consistent with the inspected sncosmo 2.13.1 SALT2 prescription: rest-frame bands include the retained observer-frame MW attenuation; relative covariance converts to FLUXCAL squared through the flux outer product; measurement variance is added once. No residual-dependent inflation or threshold change found.",
+    "reference": "The raw-grid test independently checks interpolation/formula evaluation for one original-parameter r-band diagonal and same-band color block. This is meaningful component evidence, not an independent producer likelihood or complete fit replication.",
+    "objective_and_convergence": "The reported algorithm is accurately described as iterated fixed-covariance least squares. At the final parameters, the largest absolute fixed-covariance chi-square gradient was approximately 1.71e-5. The fully parameter-dependent chi-square gradient is materially nonzero; this result must retain its IRLS fixed-point interpretation and must not become a claim of normalized Gaussian maximum-likelihood optimization.",
+    "first_failure": "RAW_RECEIPT.json preserves the initial failure values and erroneous universal-floor diagnosis. The corrected negative-only safeguard agrees with inspected library source. Full original stdout/traceback is not included in this candidate; historical execution timing and tolerance preregistration were not independently observed.",
+    "figure": "Inspected retained REFIT.png: its title preserves BASELINE_ADEQUACY_HOLD and PARITY_NOT_REPRODUCED, and its response panel is explicitly conditional. R23-SN introduces no new covariance figure.",
+    "documentation": "Official SALT2Source documentation confirms the supplied model-covariance inputs and rest-frame band API: [sncosmo SALT2Source](https://sncosmo.readthedocs.io/en/latest/api/sncosmo.SALT2Source.html). Local library source supplied the detailed formula and fitting semantics."
+  },
+  "original_acceptance_met": false,
+  "external_hold_adjudication": {
+    "status": "HOLD_MISSING_NOMINAL_SN_FIT_BINDING",
+    "true_external": true,
+    "evidence": "The pinned c447f0fea703fcd0fff57de5000947b5ca81286b release inventory has 3223 entries, truncated=false, zero PS1.nml paths, zero out_train_v7_1_bd17fix paths, and ten FITRES files exclusively under simulation LCFITS. PPLUS.yml explicitly selects the missing private PS1.nml and nominal trained-model directory.",
+    "exact_next_input": "Supply or independently recover the nominal PFITdatawithsys PS1.nml, its out_train_v7_1_bd17fix/SALT2.MODEL000 including INFO and error grids, and observed PS1 FITRES for CID 010010/IDSURVEY 15 with generation identity.",
+    "scope": "Absence is established for this pinned release and retained inputs; universal unavailability elsewhere is not established.",
+    "remaining_failures": "All four frozen summary-parity tolerances still fail. Original reduced chi-square 3.2323283226396393 exceeds unchanged threshold 3. V04/H04 qualification, producer parity and empirical total reboost remain unestablished."
+  },
+  "campaign_effect": {
+    "scientific_admission": "HOLD",
+    "all_six_papers": "NOT_READY",
+    "revised_scientific_completion": "18/42 unchanged",
+    "original_external_completion": "17/42 unchanged",
+    "publication_authorized_by_review": false
+  },
+  "reviewer_runtime": {
+    "requested": "gpt-6-astra/xhigh",
+    "observed": "UNKNOWN"
+  },
+  "skill_context_used": "PhysMath Research Loop 1.3.0 R6/C9, STAGE_SELECTION, POLICY_INTEGRATION and SUBAGENT_MODE; repository physics/math audit, scientific-code-validation, claim-firewall, claim-provenance-ledger and adversarial-review-loop; current native runtime.",
+  "review_actions": "Read-only; no writes, nested delegation, publication, full-suite testing, solver execution or unchanged old-fit optimization."
+}

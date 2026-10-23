@@ -1,0 +1,348 @@
+{
+  "schema_version": 1,
+  "owner": "obsstat / R2-R4-R5 external-input research",
+  "scope": "EXPLORATORY_NON_CLAIM_BEARING",
+  "access_date": "2026-10-18",
+  "base_repository": "cosmosapjw-quantum/htt_base",
+  "base_head": "4a68995507bf8e672b2551d9030f3ad9f0d2152e",
+  "requested_runtime": "gpt-6.1-sol/high; observed transport assignment, actualruntimeUNKNOWN",
+  "observed_runtime": "UNKNOWN",
+  "skill_context_used": [
+    "PhysMath Research Loop1.3.0 SKILL.md",
+    "references/POLICY_INTEGRATION.md",
+    "references/THEORY_LOOP.md R2/R4/R5",
+    "references/SUBAGENT_MODE.md; no recursive delegation"
+  ],
+  "boundaries": [
+    "No solver build",
+    "No ODE/integration",
+    "No source-map processing replay",
+    "No clone/worktree",
+    "No publishing"
+  ],
+  "records": [
+    {
+      "id": "SMICA_WEIGHTS_PR3",
+      "nodeids": [
+        "L03"
+      ],
+      "official_urls": [
+        "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php?title=SMICA_propagation_code"
+      ],
+      "direct_urls": [
+        "https://pla.esac.esa.int/pla/aio/product-action?SOFTWARE.FILE_ID=COM_Code_SMICA-weights-propagation_R3.00.tar.gz"
+      ],
+      "authstatus": "OPEN_NO_LOGIN_COMPLETE_BYTES",
+      "evidence": {
+        "method": "curl HTTPS GET without cookies/credentials; exit0; Python tar member inspection",
+        "http": 200,
+        "receipt": "source_summaries/weights_http_headers.txt",
+        "sha256": "044ec9bed746ae745ad35a8b6ccf6e603f546083fec328e9c64d866ac9221f93",
+        "local_file": "COM_Code_SMICA-weights-propagation_R3.00.tar.gz",
+        "members": "source_summaries/weights_archive_members.json"
+      },
+      "format": "gzip tar; Python2 propagation source, ASCII weights, gzipped FITS transition mask",
+      "size_bytes": 74625775,
+      "existingreuse": "Fresh acquisition; do not repeat GET. Read README/source only; no propagation executed.",
+      "what_closes": "Public availability/byte acquisition of official fixed SMICA harmonic weights and transition mask; explicit beam/LFI renormalization semantics.",
+      "what_doesnt": "Split-specific response calibration, foreground estimation/reselection distribution, same-realization joint law or statistic coverage.",
+      "priority": "P1; acquired",
+      "publish_raw": false
+    },
+    {
+      "id": "SMICA_PR3_SPLIT_NOISE",
+      "nodeids": [
+        "L03"
+      ],
+      "official_urls": [
+        "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php/CMB_maps",
+        "https://www.aanda.org/articles/aa/full_html/2020/09/aa33881-18/aa33881-18.html"
+      ],
+      "direct_urls": [
+        "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_smica_noise_hm1_mc_00000_raw.fits",
+        "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_smica_noise_hm2_mc_00000_raw.fits",
+        "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_smica_noise_oe1_mc_00000_raw.fits",
+        "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=dx12_v3_smica_noise_oe2_mc_00000_raw.fits"
+      ],
+      "authstatus": "OPEN_NO_LOGIN_HEADER_BYTES_4_SPLITS",
+      "evidence": {
+        "method": "GET with Range request; PLA returns200; read5760bytes then close; all4 FITS SIMPLE=T; no full body download",
+        "receipts": [
+          "source_summaries/access_probe.json",
+          "source_summaries/split_access_probe.json"
+        ],
+        "observed_headers": {
+          "NSIDE": 2048,
+          "ORDERING": "RING",
+          "TFIELDS": 3,
+          "fields": [
+            "INTENSITY",
+            "Q-POLARISATION",
+            "U-POLARISATION"
+          ],
+          "units": "K_CMB",
+          "NAXIS1": 12288,
+          "NAXIS2": 49152
+        }
+      },
+      "format": "HEALPix FITS vector-column binary table",
+      "size_bytes": null,
+      "estimated_table_data_bytes": 603979776,
+      "existingreuse": "Full-mission8pair processing retained; these are newly identified external split-noise paths, no stream processed.",
+      "what_closes": "Missing split-noise access path; actual unauthenticated FITS-header transport for same nominal ID00000 in HM1/HM2/OE1/OE2.",
+      "what_doesnt": "Joint seed mapping, physical independence, complete payload checksum, matched split CMB beams, foreground/selection/coverage.",
+      "priority": "P1; bounded matched split-noise acquisition candidate",
+      "official_filename_grammar": "dx12_v3_{method}_{cmb,noise,noise_hm1,noise_hm2,noise_oe1,noise_oe2}_mc_?????_raw.fits"
+    },
+    {
+      "id": "HFI_PR3_FFP10_NOISE",
+      "nodeids": [
+        "L03"
+      ],
+      "official_urls": [
+        "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php?title=Simulation_data#HFI_E2E_maps"
+      ],
+      "direct_urls": [
+        "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=ffp10_noise_100_full_map_mc_00000.fits",
+        "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=ffp10_noise_100_hm1_map_mc_00000.fits"
+      ],
+      "authstatus": "OPEN_NO_LOGIN_HEADER_BYTES_2_PRODUCTS",
+      "evidence": {
+        "receipt": "source_summaries/access_probe.json",
+        "observed": "HTTP200 and5760bytes FITS header; NSIDE2048/RING/I_STOKES,Q_STOKES,U_STOKES/K_CMB."
+      },
+      "format": "HEALPix FITS",
+      "size_bytes": null,
+      "existingreuse": "Frequency-level fallback if needed; component-separated noise direct route is cheaper.",
+      "what_closes": "Frequency-level official split-noise transport route.",
+      "what_doesnt": "No reason to rerun full component separation; unavailable split CMB remains distinct.",
+      "priority": "P2",
+      "official_direct_url_template": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=ffp10_noise_{frequency}_{ring_cut}_map_mc_{realization}.fits",
+      "template_source": "Official wiki explicitly supplies frequency100/143/217/353/353_psb/545/857;ring_cut full/hm1/hm2/oe1/oe2;IDs00000..00299."
+    },
+    {
+      "id": "HFI_RIMO_BEAMS_PR3",
+      "nodeids": [
+        "L03"
+      ],
+      "official_urls": [
+        "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/"
+      ],
+      "direct_urls": [
+        "https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/HFI_RIMO_BEAMS_R3.01.tar.gz"
+      ],
+      "authstatus": "OPEN_NO_LOGIN_RANGE_BYTES",
+      "evidence": {
+        "receipt": "source_summaries/access_probe.json",
+        "http": 206,
+        "content_range": "bytes0-5759/86556876",
+        "gzip_magic": true
+      },
+      "format": "gzip tar",
+      "size_bytes": 86556876,
+      "existingreuse": "Header probe only, not downloaded/extracted.",
+      "what_closes": "Public beam window-function archive route, usable for response provenance inspection.",
+      "what_doesnt": "Does not establish complete anisotropic/pixel-dependent split response or CMB same-seed tuples.",
+      "priority": "P1; source qualification"
+    },
+    {
+      "id": "FULL_MISSION_EFFECTIVE_BEAM_EXTENSION",
+      "nodeids": [
+        "L03"
+      ],
+      "official_urls": [
+        "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php/CMB_maps"
+      ],
+      "direct_urls": [],
+      "authstatus": "PUBLIC_DOCUMENTATION; existingfullmapreuse",
+      "evidence": {
+        "source_html": "source_summaries/CMB_maps.html",
+        "schema": "OptionalEXT2/3 BEAM_TF withINT_BEAM/POL_BEAM, explicitly ONLY FULL-MISSION DATA FILES"
+      },
+      "format": "FITS binary table extension",
+      "size_bytes": null,
+      "existingreuse": "Inspect existing full-mission observed FITS metadata rather than download again.",
+      "what_closes": "Clarifies nominal5arcminFWHM is not complete response provenance and split files may not carry samebeam extension.",
+      "what_doesnt": "No actual split transfer supplied by this schema.",
+      "priority": "P1; metadata reuse"
+    },
+    {
+      "id": "FFP10_HM_CMB_RELEASE_BOUNDARY",
+      "nodeids": [
+        "L03"
+      ],
+      "official_urls": [
+        "https://www.aanda.org/articles/aa/full_html/2020/09/aa33886-18/aa33886-18.html"
+      ],
+      "direct_urls": [],
+      "authstatus": "PRIMARY_PAPER_INDEX_READ; directA&A403",
+      "evidence": {
+        "location": "Planck2018VIII Gravitational lensing §4.4, Fig22 context",
+        "statement": "2018 release has no HM FFP10 CMB simulations, onlynoise. Authors use FFP9 HM CMB with2018SMICA weights; FFP9/10 shareseeds but differ effectivebeams."
+      },
+      "format": "Article/physicalsourcecontract",
+      "size_bytes": null,
+      "existingreuse": "Confirms retained resume evidence; not a new no-go.",
+      "what_closes": "Explains why more noise download cannot manufacture missing matched HM CMB response.",
+      "what_doesnt": "Does not prove no later public/private release; FFP9transport must be calibrated for chosen statistic.",
+      "priority": "P1; qualification"
+    },
+    {
+      "id": "NERSC_CMB_S4_PORTAL",
+      "nodeids": [
+        "L03"
+      ],
+      "official_urls": [
+        "https://crd.lbl.gov/divisions/scidata/c3/c3-research/cosmic-microwave-background/cmb-data-at-nersc/",
+        "https://data.cmb-s4.org/index.html",
+        "https://data.cmb-s4.org/planck_pr4.html"
+      ],
+      "direct_urls": [],
+      "authstatus": "PUBLIC_METADATA_WITH_DOCUMENTED_GLOBUS_AUTH_FOR_FILE_DOWNLOAD",
+      "evidence": {
+        "NERSC": "Official current page edited2025-03-21 redirects users toCMB-S4 portal.",
+        "portal": "Homepage explicitly distinguishes public metadata and redirect toGlobus authentication for browser filedownload. PR4 markedpublic.",
+        "transport": "Old NERSC URL403/redirect failure observed; not interpreted as proving account restriction for all routes."
+      },
+      "format": "HTML catalog; Globus download",
+      "size_bytes": null,
+      "existingreuse": "Alternative release catalog only; no sign-in attempted.",
+      "what_closes": "Separates publicrelease status from no-login byteaccess.",
+      "what_doesnt": "No observed no-login PR3 FFP10 file mirror or joint split law found here.",
+      "priority": "P2; notno-loginroute"
+    },
+    {
+      "id": "LAMBDA_PLANCK_INDEX",
+      "nodeids": [
+        "L03"
+      ],
+      "official_urls": [
+        "https://lambda.gsfc.nasa.gov/product/planck/",
+        "https://lambda.gsfc.nasa.gov/product/planck/curr/planck_prod_third_party.html"
+      ],
+      "direct_urls": [],
+      "authstatus": "OPEN_PUBLIC_LANDING",
+      "evidence": {
+        "observed": "NASA index routes official products toESA/IRSA; thirdparty catalog listsBeyondPlanck/Cosmoglobe/SRoll andNPIPE-related products."
+      },
+      "format": "HTML",
+      "size_bytes": null,
+      "existingreuse": "Source discovery only.",
+      "what_closes": "Official discoverability; no LAMBDA-hosted matched PR3split simulation bytes established.",
+      "what_doesnt": "Landingpage access does not qualify or download replacement product.",
+      "priority": "P3"
+    },
+    {
+      "id": "BIANCHI_ZENODO_48653",
+      "nodeids": [
+        "V03",
+        "B02"
+      ],
+      "official_urls": [
+        "https://zenodo.org/records/48653",
+        "https://doi.org/10.5281/zenodo.48653"
+      ],
+      "direct_urls": [],
+      "authstatus": "OPEN_METADATA; PAYLOAD_NOT_DOWNLOADED",
+      "evidence": {
+        "observed_files": [
+          "all_coupled_chains.zip",
+          "all_coupled_plots.zip",
+          "all_decoupled_chains.zip",
+          "all_decoupled_plots.zip"
+        ],
+        "source": "Exa fetched fullZenodo record",
+        "release": "v1;2016-03-29"
+      },
+      "format": "MCchain/plotZIP",
+      "size_bytes": null,
+      "size_human": "86.8MB total as listed",
+      "existingreuse": "Literature/priors context; no atlas acquisition.",
+      "what_closes": "Identifies actual released numericalposterior data rather than templateatlas.",
+      "what_doesnt": "No serialized polarized all-m physicaltransfer documented in thisrecord.",
+      "priority": "P3"
+    },
+    {
+      "id": "BIANCHI_ZENODO_48654",
+      "nodeids": [
+        "V03",
+        "B02"
+      ],
+      "official_urls": [
+        "https://zenodo.org/records/48654",
+        "https://doi.org/10.5281/zenodo.48654"
+      ],
+      "direct_urls": [
+        "https://zenodo.org/records/48654/files/scalars_movie.mp4?download=1"
+      ],
+      "authstatus": "OPEN_METADATA; DIRECTMOVIE_TOOL_TIMEOUT; NO_BYTES_VERIFIED",
+      "evidence": {
+        "observed_files": [
+          "scalars_movie.mp4",
+          "vectors_movie.mp4",
+          "tensors_movie.mp4",
+          "SVTT_movie.mp4"
+        ],
+        "release": "v1;2016-03-26",
+        "license": "CC-BY4.0"
+      },
+      "format": "MP4visualizations",
+      "size_bytes": null,
+      "size_human": "15.3MB total as listed",
+      "existingreuse": "Illustrative morphology only.",
+      "what_closes": "Explicitly classifies a tempting DOI as animations.",
+      "what_doesnt": "No accurate numericIQU/alm reconstruction, units/IC/frame/equivalence atlas.",
+      "priority": "P3"
+    },
+    {
+      "id": "ANICOSMO_AUTHOR_RELEASE_PAGE",
+      "nodeids": [
+        "V03",
+        "B02"
+      ],
+      "official_urls": [
+        "http://www.jasonmcewen.org/project/anicosmo/",
+        "http://www.jasonmcewen.org/codes/"
+      ],
+      "direct_urls": [],
+      "authstatus": "PUBLIC_AUTHOR_PAGE_EXA_READ",
+      "evidence": {
+        "observed": "Author's AniCosmo page currently sayscode not yet publicly available; contactifinterested. Authorcodes listing BIANCHI/BIANCHI2 concerns temperaturefluctuation generators."
+      },
+      "format": "Authorpage; codeavailabilitystatement",
+      "size_bytes": null,
+      "existingreuse": "AniCLASS9312177b priorinspection retained without repeat.",
+      "what_closes": "Checks alternative authorrelease path and distinguishes temperaturegenerator from polarized numericalatlas.",
+      "what_doesnt": "Not evidence of universal nonexistence or no-go. No contact message sent.",
+      "priority": "P2"
+    },
+    {
+      "id": "ABSOLVE_POLARIZED_LITERATURE",
+      "nodeids": [
+        "V03",
+        "B02"
+      ],
+      "official_urls": [
+        "https://doi.org/10.1093/mnras/stw1731",
+        "https://arxiv.org/abs/1604.01024",
+        "https://doi.org/10.1103/PhysRevLett.117.131302",
+        "https://arxiv.org/abs/1605.07178",
+        "https://arxiv.org/abs/0706.2075"
+      ],
+      "direct_urls": [],
+      "authstatus": "PUBLIC_PRIMARY_PAPER_READ",
+      "evidence": {
+        "observed": "Saadehetal2016 calculate polarizedT/E/B forI,V,VII0,VIIh andscalar/vector/regular+irregulartensor; Planckbeam andpixelmask included inlikelihood; PontzenChallinor2007 polarization precedent.",
+        "discovery": "Exa+SciSpace, thenprimaryarticle read"
+      },
+      "format": "Researchpaper; noatlasfilesobserved",
+      "size_bytes": null,
+      "existingreuse": "Defines transferidentity/IC/order required forfuture atlas import; no solverexecution.",
+      "what_closes": "Literature noveltycomparison and qualified externaltransfer target.",
+      "what_doesnt": "Cannot claim firstpolarized BianchiCMBtest or firstall-shear test; no observed publiclyprecomputed all-mpayload obtained.",
+      "priority": "P1; scope/novelty"
+    }
+  ],
+  "decision": "No originalDAGnode markedcomplete. New executableexternalcapability: officialSMICAweights acquired +4splitnoise no-login paths demonstrated. V03/B02 atlasinput remainsunresolved withinboundedsearch; no strongno-go asserted.",
+  "publication_evidence_note": "source_summaries/CMB_maps.html and Simulation_data.html are retained working-source copies, not distributed here. Corresponding official_urls identify the published sources. Published JSON/HTTP receipts provide observed access evidence."
+}

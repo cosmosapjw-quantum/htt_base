@@ -1,0 +1,39 @@
+{
+  "verdict": "HOLD",
+  "reviewer": "/root/depth_images_review",
+  "candidate_identity": "sha256:03222b7d264734313ae0836584515d9f032317653da47aaf5263dc6ee36b342a",
+  "input_identity": "sha256:4337e37b166e7bdc824e856202f8ed212b715ed72ae38f8c65da7e874963c9da",
+  "findings": [
+    {
+      "severity": "P1",
+      "path": "depth_images/compute.py:63",
+      "defect": "All12 bin/contrast maps omit slope columns, computing intercept gamma images rather than frozen Y_b=gamma_b+c_b theta; discriminator at117 also uses intercept covariance",
+      "max_mean_error_uasyr": 8.024518,
+      "max_covariance_error_uasyr2": 10.263611,
+      "changed_norm_Pi_cells": "35/72",
+      "changed_dot_Pi_cells": "18/18",
+      "correct_depth_spectral_ratios": [
+        0.195986,
+        0.22805,
+        0.21611,
+        0.253114,
+        0.280563,
+        0.326478
+      ]
+    }
+  ],
+  "repair_plan": "Compose12-vector functionalmap with frozenM24_to_Y18 and use Y18 covariance for discriminator; retain rawintercepts alongsidecorrectdepth; regenerateaffectedoutputs only. RegressionfirstsixfunctionalvectorsequalY18 andadjacentcontrasts equal Z18 differenceblocks, nonzero slopefixture; preservefirstcandidate and originalrawreceipt.",
+  "validation": {
+    "focused_tests": 6,
+    "seconds": 1.84,
+    "manifest_outputs": 17,
+    "source_hashes": 6,
+    "support_attainment_error": 1.42e-14,
+    "retained_full24_Y18_Z18_samples_and_covariance": "PASS; correct separately but not consumed by newimages",
+    "missing_None_parity_rotations": "PASS"
+  },
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "evidence_source": "Structured extraction actual native independent reviewer final",
+  "original_acceptance_promoted": false
+}

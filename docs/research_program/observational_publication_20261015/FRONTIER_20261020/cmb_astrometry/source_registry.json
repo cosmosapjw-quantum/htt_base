@@ -1,0 +1,118 @@
+{
+  "metadata": {
+    "date": "2026-10-20",
+    "owner": "obsstat",
+    "claim_tier": "C0",
+    "status": "DIAGNOSTIC_ONLY",
+    "transfer_source": "none (source survey; no transfer computation)",
+    "base_commit": "69870ee249cd98a869f35e442105d17c927d28fc",
+    "requested_runtime": "gpt-6.1-sol/high",
+    "observed_runtime": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "id": "NPIPE_SIM_DOC",
+      "lanes": [
+        "L03"
+      ],
+      "url": "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php/Simulation_data",
+      "release": "2020 NPIPE/PR4",
+      "anonymous_access": "HTTP200 documentation and actual products probed",
+      "data_license": "NOT_ESTABLISHED",
+      "payload": "100 PLA realizations; 600 generated; fixed foreground realization; full reprocessing and approximate preprocessing",
+      "admission": "ALTERNATIVE_RELEASE_SEMANTIC_INTAKE_ONLY"
+    },
+    {
+      "id": "NPIPE_FREQ_UNITS",
+      "lanes": [
+        "L03"
+      ],
+      "url": "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php/Frequency_maps",
+      "release": "NPIPE section",
+      "anonymous_access": "Exa retrieval",
+      "data_license": "NOT_ESTABLISHED",
+      "payload": "All NPIPE maps K_CMB; cannot confuse PR3 545/857 MJy/sr convention",
+      "admission": "UNIT_DOCUMENTATION_NOT_COMPLETE_SIMULATION_FRAME_BINDING"
+    },
+    {
+      "id": "NPIPE_RELEASE_PAPER",
+      "lanes": [
+        "L03"
+      ],
+      "url": "https://arxiv.org/abs/2007.04997",
+      "doi": "10.1051/0004-6361/202038073",
+      "release": "Planck2020 A&A643 A42",
+      "anonymous_access": "Exa primary article retrieval",
+      "data_license": "NOT_ESTABLISHED",
+      "admission": "DOCUMENTATION"
+    },
+    {
+      "id": "LOLLIPOP",
+      "lanes": [
+        "L03"
+      ],
+      "url": "https://portal.nersc.gov/cfs/cmb/planck2020/likelihoods/planck_2020_lollipop.tar.gz",
+      "release": "2020 archive last-modified2020-11-20",
+      "anonymous_access": "HTTP200 complete GET",
+      "downloaded_bytes": 6217890,
+      "sha256": "115564f7acc239f1d47ecac264c93baa702f15f814497211bd24f7ebf9f19a3c",
+      "data_license": "NOT_ESTABLISHED; code GPLv3 badge not data licence",
+      "admission": "SPECTRAL_ONLY_NOT_ALL_M_OR_ENSEMBLE",
+      "actual_inspection": "lollipop_payload_diagnostic.json"
+    },
+    {
+      "id": "SUNG_COLES_NEW_SOURCE",
+      "lanes": [
+        "B02",
+        "V03"
+      ],
+      "url": "https://arxiv.org/src/1004.0957",
+      "source_version": "1004.0957v2 per content-disposition and article",
+      "anonymous_access": "HTTP200 prefix +HTTP206 suffix",
+      "downloaded_source_bytes": 5714113,
+      "local_reassembled_sha256": "069fcd61acd4fa9dcdfbbdfc72e4795c6f35ba0a4922dc8b62c31b929a332460",
+      "upstream_exact_byte_match": "NOT_CERTIFIED; differing range ETags; gzipCRC PASS",
+      "members": 71,
+      "PostScript_figures": 64,
+      "numeric_map_alm_history_files_found": 0,
+      "data_license": "NOT_ESTABLISHED",
+      "admission": "NO_NUMERIC_PAYLOAD_IN_THIS_BUNDLE"
+    },
+    {
+      "id": "KARBON_NOTHNAGEL",
+      "lanes": [
+        "K03"
+      ],
+      "url": "https://cdsarc.cds.unistra.fr/ftp/J/A+A/630/A101/ReadMe",
+      "paper_doi": "10.1051/0004-6361/201936083",
+      "release": "CDS J/A+A/630/A101 2019",
+      "anonymous_access": "HTTP200 ReadMe and directory",
+      "data_license": "NOT_ESTABLISHED",
+      "payload": "4617-source full cross-source positional covariance in mas^2; not proper-motion covariance",
+      "matrix_downloaded_bytes": 0,
+      "directory_compressed_sizes": "kx-qxx.dat.gz388M; kxka-qxx.dat.gz397M (rounded listing)",
+      "admission": "POSITION_ONLY_NOT_K03_JOINT_LAW"
+    },
+    {
+      "id": "CMBS4_PR4_LOWRES",
+      "lanes": [
+        "L03"
+      ],
+      "url": "https://data.cmb-s4.org/planck_pr4-lowres.html",
+      "anonymous_access": "Portal HTTP200; exact linked manifest and143GHzns16 map HTTP404",
+      "data_license": "NOT_ESTABLISHED",
+      "admission": "BROKEN_LINKS_AT_CHECK_TIME_NOT_ACQUIRED"
+    }
+  ],
+  "new_original_physical_node_qualified": false,
+  "states_unchanged": [
+    "L03",
+    "V03",
+    "B02",
+    "K03"
+  ],
+  "network_incremental_known_success_body_bytes": 12695326,
+  "network_cached_science_payload_reacquired_bytes": 0,
+  "connector_internal_and_error_body_bytes": "UNKNOWN",
+  "bounded_negative_scope": "Only listed sources/endpoints; not a universal absence claim"
+}

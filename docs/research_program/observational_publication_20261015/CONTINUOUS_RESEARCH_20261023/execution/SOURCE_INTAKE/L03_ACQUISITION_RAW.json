@@ -1,0 +1,110 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "packet_id": "3ea648d69d77295185c4e78284d1cbf4592ceb8b92656e11c4c8fe56e5920a18",
+  "task_id": "L03",
+  "attempt": 1,
+  "phase": "acquisition",
+  "input_identity": "sha256:83d0ae4f6e742d58368ecc78d2b66a5e15cc40f6260a07841e28687e638bb7df",
+  "candidate_identity": null,
+  "agent_id": "/root/rc_3ea648d69d772951",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "original_L03_status": "HOLD",
+  "physical_joint_null_status": "HOLD",
+  "claim_tier": "C0_DIAGNOSTIC_ONLY_FOR_REUSED_COMPONENTS",
+  "raw_receipt": "/tmp/r23_l03_3ea648d6/RETURN.json",
+  "scope": "Read-only source and retained-evidence acquisition decision for original PR3 L03; no new simulation, inference, publication, native solver, ODE, repository write, or dispatch claim.",
+  "source_finding": "The checked Planck PR3/FFP10 release evidence does not supply a source-qualified joint FULL/HM1/HM2/OE1/OE2 processed CMB, noise, foreground, weight-estimation and selection law for the retained low-ell morphology statistic. This is a scoped source gap, not a claim that no future or restricted product can exist.",
+  "source_map": [
+    {
+      "source": "Planck 2018 IV, section 3.5 and noise-bias discussion",
+      "url": "https://www.aanda.org/articles/aa/full_html/2020/09/aa33881-18/aa33881-18.html",
+      "establishes": "FFP10 has 999 CMB-only and 300 noise-plus-systematics simulations; fixed observed-data component-separation weights make conditional CMB/noise propagation linear; statistic-dependent noise mismatch and +/-5% sensitivity need assessment.",
+      "does_not_establish": "Joint foreground and weight-reselection uncertainty or coverage of this selected low-ell statistic."
+    },
+    {
+      "source": "Planck 2018 VII, simulation description and footnote 7",
+      "url": "https://sfera.unife.it/retrieve/e309ade4-8e0d-3969-e053-3a05fe0a2c94/aa35201-19.pdf",
+      "establishes": "Full-mission signal/noise realizations are propagated with full-mission weights and permuted into 999 comparison simulations; CMB realization 970 was excluded as corrupted.",
+      "does_not_establish": "999 independent joint signal-noise-foreground draws or an HM/OE lineage and statistic-specific null."
+    },
+    {
+      "source": "Planck 2018 VIII, sections 2.1 and 4.4",
+      "url": "https://cris.unibo.it/bitstream/11585/876784/1/aa33886-18.pdf",
+      "establishes": "2018 FFP10 released split noise but no half-mission CMB simulations; that paper used 2015 FFP9 half-mission CMB with 2018 SMICA weights and noted effective-beam differences. Its FFP10 noise construction used one fiducial CMB/foreground and retained a weak shared processing residual.",
+      "does_not_establish": "A PR3 matched split CMB/foreground joint law for L03; negligible high-L lensing-band impact cannot be transported to this low-ell morphology statistic."
+    },
+    {
+      "source": "Planck PR3 CMB product matrix",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/matrix_cmb.html",
+      "establishes": "Observed FULL/HM/OE SMICA maps and split-specific cautions, including correlated half-ring noise and missing split pixels.",
+      "does_not_establish": "Matched null simulation components or split independence."
+    },
+    {
+      "source": "Planck NPIPE/PR4 product portal",
+      "url": "https://portal.nersc.gov/project/cmb/planck2020/",
+      "establishes": "A separate PR4/NPIPE release and product route exist.",
+      "does_not_establish": "PR4-to-PR3 calibration transport or a PR3 L03 joint null."
+    }
+  ],
+  "retained_evidence": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L03_EXECUTION_20261018/QUALIFICATION_KO.md",
+      "sha256": "a3a6696a90f2c9a742af8e6a6f996073959893a5186c433970459ea31c4fd575",
+      "use": "Eight retained source-bound full-mission FFP10 I/Q/U pairs, original selected-support operator, noise-amplitude sensitivity, and explicit original L03 HOLD."
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D04_SPLIT_NOISE/INDEPENDENT_REVIEW.md",
+      "sha256": "e4517e26483ab0bd4ab0bc70ecb91fbfabbb8019822e9d710e525b1c12ef33b3",
+      "use": "Four actual ID00000 HM/OE noise products through the original operator; independent scoped PASS does not qualify the physical null."
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/ARTIFACT_MANIFEST.json",
+      "sha256": "022d91f327ddadb05159f748dbd56a64d47c678cf1c8f234ac3115a87967acae",
+      "use": "Final reviewed conditional one-sky split-direction projection candidate."
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/INDEPENDENT_REVIEW.json",
+      "sha256": "c6025a467f3984ae9933693382ee60bbd9e9e59a951ad1b10e83d37ef1ddc983",
+      "use": "Separate final-candidate scoped C0 PASS; expressly retains original L03 and physical joint null HOLD."
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/FRONTIER_20261020/cmb_astrometry/PR4_INDEPENDENT_REVIEW.md",
+      "sha256": "7d70b79d2f706f08f452170d37d0a14f0c586432028e160cd7b413da7e6c819a",
+      "use": "F06/PR4 four-product one-realization diagnostic is a separate release; NESTED CMB and RING residual require index reconciliation and even then lack processed-total/foreground subtraction law."
+    }
+  ],
+  "checked_routes": [
+    "D04 completed ID00000 split-noise processing is reused; additional nominal IDs alone cannot supply split signal, common residual foreground, or weight-selection law.",
+    "Planck VIII's FFP9 half-mission CMB substitution is an explicit different-release, different-effective-beam route requiring response qualification, not a filename-equivalent PR3 component.",
+    "F06 PR4/NPIPE MC00200 quartet is already acquired and scoped-reviewed; its processed total, foreground/subtraction law and exact observed split operator remain unresolved and it cannot be renamed into PR3 L03.",
+    "R23-CMB final reviewed joint split-direction geometry is deterministic on one observed sky; it supplies no independent null ensemble."
+  ],
+  "exact_missing_external_payload": {
+    "source_owner": "Planck Collaboration FFP10/component-separation product custodians or ESA Planck Legacy Archive/NERSC custodian with producer-level provenance",
+    "required": [
+      "For PR3 SMICA FULL/HM1/HM2/OE1/OE2, same-realization CMB signal, noise-plus-systematics and processed-total/foreground contributions, or an equivalent validated joint generator, with split membership and seed/realization genealogy.",
+      "Per-split effective beam, fixed weights and any weight fitting/reselection rule, preprocessing, masks and pixel/QU conventions, tied to the observed products and the retained T26846/P30021 selected-support operator.",
+      "Cross-split and cross-ID noise/shared-residual dependence and justified residual-foreground uncertainty or finite response bounds; a common fiducial foreground alone is insufficient for observed-versus-null foreground-law adequacy.",
+      "A preregistered statistic-family and selection protocol, held-out injections and autocorrelation/noise-reuse checks, with whole-sky simulation-unit accounting and an MC interval or valid analytic coverage bound."
+    ],
+    "source_search_limit": "Targeted published PR3/PR4 papers, official observed-product listing, and retained completed local receipts were checked. No producer correspondence, restricted archive inventory, or new product download was performed; absence beyond the checked sources is UNKNOWN."
+  },
+  "analytic_assessment": {
+    "current_identifiability": "For delivered split vectors y_s=g+f_common+f_s+n_s under fixed processing, all split differences cancel g and f_common. The transformation g->g+h, f_common->f_common-h leaves every y_s and difference unchanged. Thus the retained split contrasts alone do not bound common foreground contamination. This is conditional algebra, not a universal no-go theorem.",
+    "potential_bounded_repair": "A source-qualified bound or law for the common and differential residual foreground after the exact processing operator could feed a sensitivity/partial-coverage calculation for the frozen statistic. Its norm, angular response, selection behavior and validity must be supplied before a numerical bound or scientific PASS can be claimed."
+  },
+  "validation": {
+    "method": "Read-only local receipt/manifest identity checks and targeted live primary-source search; no scientific code executed or data files downloaded.",
+    "aanda_direct_open": "HTTP_403; indexed primary text and accessible institutional Planck VIII/VII PDFs supplied the stated claims.",
+    "independent_review_of_this_acquisition": "NOT_RUN",
+    "tests_run": 0,
+    "repository_writes": 0,
+    "children_spawned": 0,
+    "native_solver_or_ode_executed": false,
+    "dispatch_claimed": false
+  },
+  "next_executable_checkpoint": "Seek a producer-qualified PR3 joint split-component/processing and genealogy payload from the Planck FFP10/SMICA release custodians, or a source-justified finite foreground/response law for the frozen statistic. First validate its release, beam, weights, split pairing, residual dependence and observed-mask/selection semantics against retained sources; only then select minimal new products and run a bounded statistic-specific held-out coverage experiment. Continue unrelated READY campaign branches while L03 and descendants remain typed HOLD."
+}

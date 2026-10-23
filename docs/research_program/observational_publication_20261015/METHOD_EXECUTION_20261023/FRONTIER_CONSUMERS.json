@@ -1,0 +1,336 @@
+{
+  "frontier_id": "R24-CONDITIONAL-CONSUMERS",
+  "tasks": [
+    {
+      "id": "R24-TENSOR-BUNDLE",
+      "kind": "numeric",
+      "goal": "Fulltyped(x,F,Pi,Q,G_F) conditional bundle from availableproduct;scalarprojection optional legacy only",
+      "acceptance": "reconstruction/covariance/Gaussianquadratic/Fisher1e-10;missingcrosscovunavailable;undefined/unbounded/signed strata;computationalanchor notMES;physicalunknownPi=[0,1];noR9alpha reuse",
+      "input_identity": "sha256:d7441ea71a3889ca18c0d34eecb1169b60d09e40b5fb3581599027aa21b9cc36",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-TENSOR-BUNDLE_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "any": [
+          {
+            "task_id": "R24-DISTANCE-MODELS",
+            "evidence": "completed"
+          },
+          {
+            "task_id": "R24-CMB-ORBIT",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "Reuse common tensor_functionals,anchor_geometry,depth_path;originalY orinvertible(Y0,DeltaY),full transformed covariance;same state/nuisance/anchor event before projection"
+        },
+        "discriminator": "Same confidence-event ID and full transformed covariance; singular/undefined strata retained; scalar legacy replay only in eligible subcase",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Fulltyped(x,F,Pi,Q,G_F) conditional bundle from availableproduct;scalarprojection optional legacy only",
+        "calculation": "Reuse common tensor_functionals,anchor_geometry,depth_path;originalY orinvertible(Y0,DeltaY),full transformed covariance;same state/nuisance/anchor event before projection",
+        "acceptance": "reconstruction/covariance/Gaussianquadratic/Fisher1e-10;missingcrosscovunavailable;undefined/unbounded/signed strata;computationalanchor notMES;physicalunknownPi=[0,1];noR9alpha reuse"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    },
+    {
+      "id": "R24-SELECTION-ENVELOPE",
+      "kind": "numeric",
+      "goal": "Indicator abs heldout residual exceeds fixed diagnostic threshold; empirical density-ratio sensitivity not measured propensity",
+      "acceptance": "LP primal/dual1e-9,Gamma1 parity1e-12,nesting1e-10; unbounded physical functional witness; no5460 parent inference",
+      "input_identity": "sha256:a47c21b69fa2c573d6029bf543ac6f6154887183102e0cd46cd2e2bd34095982",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-SELECTION-ENVELOPE_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-DISTANCE-MODELS",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "min/max sum p_i*w_i*f_i; p=1/274,sum p*w=1,w in[1/Gamma,Gamma],Gamma=1,1.25,1.5,2,4; missing628-frame extension274/628\u00d7[L,U]+354/628\u00d7[0,1]"
+        },
+        "discriminator": "Interval width and vacuity boundary versus justified Gamma/overlap; 274/628 is not a propensity; LP oracle",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Indicator abs heldout residual exceeds fixed diagnostic threshold; empirical density-ratio sensitivity not measured propensity",
+        "calculation": "min/max sum p_i*w_i*f_i; p=1/274,sum p*w=1,w in[1/Gamma,Gamma],Gamma=1,1.25,1.5,2,4; missing628-frame extension274/628\u00d7[L,U]+354/628\u00d7[0,1]",
+        "acceptance": "LP primal/dual1e-9,Gamma1 parity1e-12,nesting1e-10; unbounded physical functional witness; no5460 parent inference"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    },
+    {
+      "id": "R24-OPTICAL-SHEAR",
+      "kind": "numeric",
+      "goal": "Full5coord magnitude residual STF, complete nuisance covariance; finitez effective shear scenario",
+      "acceptance": "STF/frame checks1e-12,fullcov propagation; Hminus<=0 unbounded; registeredG map and measured remainder remainHOLD",
+      "input_identity": "sha256:15938a2e873f290a59fbf6438391d2f8953404173b9ebddc0df9a367d82b82ad",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-OPTICAL-SHEAR_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/optical_shear"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-DISTANCE-MODELS",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "sigma_eff/H=-(ln10/5)*B; T2 interval vs declared remainder; retain jointH coefficient uncertainty"
+        },
+        "discriminator": "Joint H/shear/remainder bounds finite and nonvacuous or constructive failure; mask-mode mixing and alternative calibration included",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Full5coord magnitude residual STF, complete nuisance covariance; finitez effective shear scenario",
+        "calculation": "sigma_eff/H=-(ln10/5)*B; T2 interval vs declared remainder; retain jointH coefficient uncertainty",
+        "acceptance": "STF/frame checks1e-12,fullcov propagation; Hminus<=0 unbounded; registeredG map and measured remainder remainHOLD"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    },
+    {
+      "id": "R24-CMB-ENVELOPE",
+      "kind": "numeric",
+      "goal": "Invariant norm common contaminant scenario and fullcarrier morphology support",
+      "acceptance": "monotone/zero radius1e-12; splitdifferences give no common radius;trN12 retained;no p absent matchedlaw",
+      "input_identity": "sha256:e443480574bb5662425b4f8cf66f938b0f1bfbcbea1e887fe94c509a495bd201",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-CMB-ENVELOPE_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_envelope"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-CMB-ORBIT",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "r/||vfull||=0,.05,.1,.25,.5,1;orbit[L,U] expands[max(0,L-r1-r2),U+r1+r2]; commonmode(g+h,f-h)witness"
+        },
+        "discriminator": "Split kernel and common-mode uncertainty both retained; certified worst-case bound or unbounded witness; calibrated p only with valid fixed-nuisance law",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Invariant norm common contaminant scenario and fullcarrier morphology support",
+        "calculation": "r/||vfull||=0,.05,.1,.25,.5,1;orbit[L,U] expands[max(0,L-r1-r2),U+r1+r2]; commonmode(g+h,f-h)witness",
+        "acceptance": "monotone/zero radius1e-12; splitdifferences give no common radius;trN12 retained;no p absent matchedlaw"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    },
+    {
+      "id": "R24-K03-DESIGN",
+      "kind": "numeric",
+      "goal": "Retained profiledCbb Gaussian experiment valid-domain power sensitivity; no catalogue replay",
+      "acceptance": "PSD monotonic information,Schur/inverse1e-10;actual depth/VSH moments absent explicit acquisition need;centroidmatter/remainderHOLD",
+      "input_identity": "sha256:46dfba636f42d18eef70804060d210b775319402139d602a29889943c4f53108",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-K03-DESIGN_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_design"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": []
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "Cprime=Cbb+tau\u00b2u*uT along each originaleigenvector,tau=0,.1,.3,1uas/yr;T6 eps=.01,.1,.3;information multiplier targets.5,.8,.9"
+        },
+        "discriminator": "Quantify attainable power and required information change within validity domain; no full catalogue replay unless needed for missing moments",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Retained profiledCbb Gaussian experiment valid-domain power sensitivity; no catalogue replay",
+        "calculation": "Cprime=Cbb+tau\u00b2u*uT along each originaleigenvector,tau=0,.1,.3,1uas/yr;T6 eps=.01,.1,.3;information multiplier targets.5,.8,.9",
+        "acceptance": "PSD monotonic information,Schur/inverse1e-10;actual depth/VSH moments absent explicit acquisition need;centroidmatter/remainderHOLD"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    },
+    {
+      "id": "R24-BOOST-ACCELERATION",
+      "kind": "numeric",
+      "goal": "Same-cohort response quotient degeneracy, no physical globalhistory",
+      "acceptance": "unit/frame/exactrelations,SVD1e-10 plus1e-8/1e-12;epsilon/P/g/tracermap missing explicit;changingVcmb alone not observerboost",
+      "input_identity": "sha256:eb413805f08b16813363ef4fc26d294bd51921746bae2c6342b00319fca2a2c4",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-BOOST-ACCELERATION_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-DISTANCE-MODELS",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "constantn vs1/Vcmb*n after same nuisance;optical acceleration(5/ln10)A.n/(cH) exact degeneracy with angular calibration;T1 algebraic synthetic reference"
+        },
+        "discriminator": "Frame/unit-correct columns, rank and valid-domain power; intrinsic acceleration requires positive kinetic stress and qualified gradient/tracer information",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Same-cohort response quotient degeneracy, no physical globalhistory",
+        "calculation": "constantn vs1/Vcmb*n after same nuisance;optical acceleration(5/ln10)A.n/(cH) exact degeneracy with angular calibration;T1 algebraic synthetic reference",
+        "acceptance": "unit/frame/exactrelations,SVD1e-10 plus1e-8/1e-12;epsilon/P/g/tracermap missing explicit;changingVcmb alone not observerboost"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    },
+    {
+      "id": "R24-SN-RELEASE",
+      "kind": "numeric",
+      "goal": "Retained public release moduli/calibration/dipole/lowz-response contrast independent of unavailable private training",
+      "acceptance": "row/order/units,solve1e-10;crosscatalog covariance unavailable separateCF4;historical nominal fit parityHOLD",
+      "input_identity": "sha256:7e146abe36a0d1bc215c3fcb653720b2a44f53cd3b1d17267f5027ae39ba77c0",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-SN-RELEASE_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": []
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "Fixed public total covariance ONCE;deterministic offsets/flow extensions;no added stochasticPV;one frozen released selection,alloriginalrows retained"
+        },
+        "discriminator": "Public release covariance used once, shared nuisances explicit, historical nominal replay separately HOLD",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Retained public release moduli/calibration/dipole/lowz-response contrast independent of unavailable private training",
+        "calculation": "Fixed public total covariance ONCE;deterministic offsets/flow extensions;no added stochasticPV;one frozen released selection,alloriginalrows retained",
+        "acceptance": "row/order/units,solve1e-10;crosscatalog covariance unavailable separateCF4;historical nominal fit parityHOLD"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    },
+    {
+      "id": "R24-DEPTH-IMAGES",
+      "kind": "numeric",
+      "goal": "Peravailable qualifiedproduct joint functional depthimage;scenario product never declared physicalconfidence",
+      "acceptance": "atleastone availableproduct complete functionalobject; exact missing law ifonlyscenario;nozero-fill;Pi explicitlaw,physicalunknown unchanged",
+      "input_identity": "sha256:10d89532f513ef1f23707eb794b33dc9f413ed0f0b6771be5fe04786c0224f0e",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-DEPTH-IMAGES_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-TENSOR-BUNDLE",
+            "evidence": "qualified",
+            "product": "tensor_scenario"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "Consume observed tensor bundle or explicit conditional law;stored rawlevels+adjacent differences and crosscov,common nuisance retained;do not equate processingwindows withphysicaldepth"
+        },
+        "discriminator": "Use Y or (Y0,DeltaY) and full covariance; common-state/anchor coverage identity; missing products leave their coordinates unavailable",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Peravailable qualifiedproduct joint functional depthimage;scenario product never declared physicalconfidence",
+        "calculation": "Consume observed tensor bundle or explicit conditional law;stored rawlevels+adjacent differences and crosscov,common nuisance retained;do not equate processingwindows withphysicaldepth",
+        "acceptance": "atleastone availableproduct complete functionalobject; exact missing law ifonlyscenario;nozero-fill;Pi explicitlaw,physicalunknown unchanged"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    }
+  ]
+}

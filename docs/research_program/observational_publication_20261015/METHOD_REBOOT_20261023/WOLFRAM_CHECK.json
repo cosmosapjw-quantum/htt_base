@@ -1,0 +1,12 @@
+{
+  "tool": "wolfram",
+  "scope": "symbolic angular identity only; no numerical history evolution",
+  "input_description": "Diagonal STF shear diag(q1,q2,-q1-q2), full-sphere normalized integrals of directional Hubble polynomial and squared quadrupole",
+  "output": [
+    {
+      "type": "text",
+      "text": "Out[1]= <|\"monopole\" -> h, \"quadrupoleNorm\" -> (4*(q1^2 + q1*q2 + q2^2))/15, \"shearNorm\" -> q1^2 + (-q1 - q2)^2 + q2^2, \"identityResidual\" -> 0|>"
+    }
+  ],
+  "independent_check": "analysis.py angular quadrature and REVIEW_MATH.md independent cubature"
+}

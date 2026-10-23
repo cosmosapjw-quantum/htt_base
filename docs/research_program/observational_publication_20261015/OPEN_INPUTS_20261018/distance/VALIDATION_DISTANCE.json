@@ -1,0 +1,54 @@
+{
+  "owner": "htt",
+  "status": "DIAGNOSTIC_ONLY",
+  "commands": [
+    {
+      "command": "python analyze_hi_cohort.py",
+      "exit_code": 0,
+      "checks": "sourceSHA,counts,widths,PGCuniqueness,outcomepartition,acceptedGBTsetequality; matplotlib180dpiplots"
+    },
+    {
+      "command": "python -m py_compile analyze_hi_cohort.py build_distance_manifest.py",
+      "exit_code": 0
+    }
+  ],
+  "visual_qa": "HI_GBT_OUTCOMES.png inspected; labels/counts/note legible",
+  "independent_review": "PARENT_OWNED_NOT_RUN_HERE",
+  "artifacts": [
+    {
+      "name": "analyze_hi_cohort.py",
+      "bytes": 5730,
+      "sha256": "4561cbfcfd586e03a0c01ee89543324f79cb4a8efe9767f19cbb6d035ab32187"
+    },
+    {
+      "name": "HI_COHORT_RESULT.json",
+      "bytes": 29232,
+      "sha256": "f5544a41f77bde3ec63cbe62f79cae731e533e9a72aef9fb24a68062d2f4edac"
+    },
+    {
+      "name": "HI_GBT_OUTCOMES.png",
+      "bytes": 84196,
+      "sha256": "e480d1fb992fe12efb19a4c88332ab9b542812026811ced4bf7bfa6b1714fe7c"
+    },
+    {
+      "name": "HI_GBT_OUTCOMES.pdf",
+      "bytes": 18895,
+      "sha256": "737fdd2963b0dfc27cae28456a4c9797084992c56553462695c92407a3660511"
+    },
+    {
+      "name": "HI_GBT_OUTCOMES.svg",
+      "bytes": 53392,
+      "sha256": "67cd29c4bd08a5f2e61d42fafdfc0f0e3f8560918588b0440c13b11b052b7f4e"
+    },
+    {
+      "name": "DATA_DISTANCE.json",
+      "bytes": 28520,
+      "sha256": "03ad406c2776515c09b25a4fe03b5b869f826dd40c108dc93770bb1a2ba6b5a5"
+    },
+    {
+      "name": "DISTANCE_RESEARCH_KO.md",
+      "bytes": 10054,
+      "sha256": "a5c0881f69c74b19e01607717237b43d3de4e2342cbfccd82ebc38db7d86ecb5"
+    }
+  ]
+}

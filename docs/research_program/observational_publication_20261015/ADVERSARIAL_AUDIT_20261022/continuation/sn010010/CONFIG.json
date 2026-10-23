@@ -1,0 +1,23 @@
+{
+  "task": "A22-04 public one-SN conditional follow-on",
+  "owner": "htt",
+  "claim_tier": "C0_PUBLIC_MODEL_CONDITIONAL_RESPONSE",
+  "CID": "010010", "IDSURVEY": 15, "SNID": "010010",
+  "source_commit": "c447f0fea703fcd0fff57de5000947b5ca81286b",
+  "T_ref_MJD": 55238.9, "zHEL": 0.0984,
+  "filter_centers_rest_A": [3000,7000],
+  "fixed_anchor_rest_phase_days": [-15,45],
+  "bands": ["g","r","i"],
+  "MW": {"law":"F99","Rv":3.1,"raw_EBV":0.0204,"scale":0.86},
+  "SALT_MAG_OFFSET": 0.27,
+  "calibration": "compiled original PS1 columns/AB primary SED and Primary Mag; SALT MAG_OFFSET once; no shifted star columns",
+  "fit": "diagonal FLUXCALERR working chi-square; no model covariance or INFO error floor",
+  "bounds": {"dt0_days":[-5,5],"ln_x0":[-30,0],"x1":[-3,3],"c":[-0.3,0.3]},
+  "working_fit_quality_max_reduced_chi2":3,
+  "published_parity_tolerances": {"x0_relative":0.001,"x1":0.001,"c":0.001,"t0_day":0.01},
+  "deltas":[1,0.99,0.999,1.001,1.01],
+  "paired_covariant_tolerances": {"amplitude_mag":0.000001,"x1":0.00001,"c":0.00001,"epoch_day":0.0001},
+  "quadrature": {"step_A":0.5,"refinement_step_A":0.25,"relative_limit":0.000001},
+  "global_standardization": "alpha,beta,host,BBC/PV response absent: symbolic/fixed, no empirical total kappa",
+  "review_contract": "read-only Astra framing a22_optics_review, input-only; final review separate; observed UNKNOWN"
+}

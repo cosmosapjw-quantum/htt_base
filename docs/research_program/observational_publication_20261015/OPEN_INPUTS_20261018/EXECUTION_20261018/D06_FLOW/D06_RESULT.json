@@ -1,0 +1,623 @@
+{
+  "schema": "htt.d06_flow_control/1",
+  "owner": "htt",
+  "claim_tier": "DIAGNOSTIC_ONLY",
+  "artifact_mode": "NON_CLAIM_BEARING_EXPLORATORY",
+  "transfer_source": "empirical_proxy",
+  "scope": "dependent CF4 reconstruction source validation and actual D03 matched-host queries",
+  "allowed_use": "source-dependent redshift-space query and algebraic H100 proxy sensitivity",
+  "null_status": "not a null test",
+  "covariance_status": "RMS fields only; no HMC draws or joint covariance",
+  "forbidden_uses": [
+    "independent CF4 validation",
+    "physical luminosity-distance correction",
+    "confidence coverage",
+    "original node admission"
+  ],
+  "sources": {
+    "cosmicflows.html": {
+      "url": "https://projets.ip2i.in2p3.fr/cosmicflows/",
+      "final_url": "https://projets.ip2i.in2p3.fr/cosmicflows/",
+      "status": 200,
+      "bytes": 12653,
+      "sha256": "5148316db95af5f718d020933d92c3d36c2afd712439584243566794861899bd",
+      "content_length": "12653",
+      "etag": "\"6acdf00e-316d\"",
+      "last_modified": "Tue, 13 Oct 2026 08:47:10 GMT",
+      "received_utc": "2026-10-18T11:06:10.324119+00:00"
+    },
+    "CF4gp_new_64-z008_velocity.fits": {
+      "url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4gp_new_64-z008_velocity.fits",
+      "final_url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4gp_new_64-z008_velocity.fits",
+      "status": 200,
+      "bytes": 3150720,
+      "sha256": "f51e2687fb4cb25ef3dbbacb9209f105daca7e516faf0f76c7ffb63804c88c5f",
+      "content_length": "3150720",
+      "etag": "\"63ce9f6e-301380\"",
+      "last_modified": "Mon, 23 Jan 2023 14:53:34 GMT",
+      "received_utc": "2026-10-18T11:06:21.227480+00:00"
+    },
+    "CF4gp_new_64-z008_velocity_cube_error.fits": {
+      "url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4gp_new_64-z008_velocity_cube_error.fits",
+      "final_url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4gp_new_64-z008_velocity_cube_error.fits",
+      "status": 200,
+      "bytes": 2102400,
+      "sha256": "7a5594d6abf3ae6bde16dd45df41fcff039202480fbe34d772b382fc20869239",
+      "content_length": "2102400",
+      "etag": "\"63ce9f5c-201480\"",
+      "last_modified": "Mon, 23 Jan 2023 14:53:16 GMT",
+      "received_utc": "2026-10-18T11:06:25.054984+00:00"
+    },
+    "retrieve_CF4pp_grid_values.py": {
+      "url": "https://projets.ip2i.in2p3.fr//cosmicflows/retrieve_CF4pp_grid_values.py",
+      "final_url": "https://projets.ip2i.in2p3.fr//cosmicflows/retrieve_CF4pp_grid_values.py",
+      "status": 200,
+      "bytes": 5519,
+      "sha256": "d7adc4c9c80242df5b270ffa91f2c29af063f90131cf6a7f6231c0a9b9f481a3",
+      "content_length": "5519",
+      "etag": "\"6acdef9f-158f\"",
+      "last_modified": "Tue, 13 Oct 2026 08:45:19 GMT",
+      "received_utc": "2026-10-18T11:06:25.940523+00:00"
+    },
+    "CF4pp_mean_std_grids.npz": {
+      "url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4pp_mean_std_grids.npz",
+      "final_url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4pp_mean_std_grids.npz",
+      "status": 200,
+      "bytes": 167773716,
+      "sha256": "78c0515c8330066a034f5e8afb3663e6c81ddf033db302a921c662344639bc91",
+      "content_length": "167773716",
+      "etag": "\"68189ce2-a000614\"",
+      "last_modified": "Mon, 05 May 2025 11:11:30 GMT",
+      "received_utc": "2026-10-18T11:11:05.284044+00:00"
+    },
+    "new_CF4pp_mean_std_grids.npz": {
+      "url": "https://projets.ip2i.in2p3.fr//cosmicflows/new_CF4pp_mean_std_grids.npz",
+      "final_url": "https://projets.ip2i.in2p3.fr//cosmicflows/new_CF4pp_mean_std_grids.npz",
+      "status": 200,
+      "bytes": 167773886,
+      "sha256": "b2c8c695c522c286d330a81774334829a2f8b92544990c6978cd8b0d4d43bf3f",
+      "content_length": "167773886",
+      "etag": "\"6acdee14-a0006be\"",
+      "last_modified": "Tue, 13 Oct 2026 08:38:44 GMT",
+      "received_utc": "2026-10-18T11:16:27.807049+00:00"
+    }
+  },
+  "D03_candidate_digest": "c326fc79b4cfd255d4655cb47b27a4b399403179c3342ac30ae7113c80dcc388",
+  "D03_consumed_source_sha": {
+    "d03.py": "efafc801d31329441804094b00d63f688c6060ce0a6e3a425ac0f7074af41e54",
+    "results/OBJECT_GRAPH.csv": "e0cbb0e5cf8df60a0f381ff2955038fdcfd3719bb171ff244691e91df6d2482b",
+    "results/host_SN.npz": "dbe691cbaaf99f18c1515df1c7955e0e3520edac738ad64d83b4e867941a4a97"
+  },
+  "CF4_sources": {
+    "ReadMe": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+    "table2.dat": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f"
+  },
+  "grouped_validation": {
+    "velocity_raw": {
+      "shape": [
+        3,
+        64,
+        64,
+        64
+      ],
+      "total": 786432,
+      "finite": 786432,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        -31.63742446899414,
+        -2.664512023925781,
+        -0.09681200981140137,
+        2.658268909454344,
+        39.43877410888672
+      ]
+    },
+    "velocity_times52_kms": {
+      "shape": [
+        3,
+        64,
+        64,
+        64
+      ],
+      "total": 786432,
+      "finite": 786432,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        -1645.1460723876953,
+        -138.55462524414062,
+        -5.034224510192871,
+        138.22998329162587,
+        2050.8162536621094
+      ]
+    },
+    "scalar_error_raw": {
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "total": 262144,
+      "finite": 262144,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        0.2872591806147401,
+        2.2224532860342694,
+        2.6485686107353708,
+        3.208024619869627,
+        7.851187264086808
+      ]
+    },
+    "scalar_error_times52_kms": {
+      "shape": [
+        64,
+        64,
+        64
+      ],
+      "total": 262144,
+      "finite": 262144,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        14.937477391966485,
+        115.56757087378202,
+        137.72556775823927,
+        166.81728023322063,
+        408.261737732514
+      ]
+    },
+    "header_keys": [
+      "SIMPLE",
+      "BITPIX",
+      "NAXIS",
+      "NAXIS1",
+      "NAXIS2",
+      "NAXIS3",
+      "NAXIS4",
+      "EXTEND"
+    ],
+    "spatial_order_source": "(SGZ,SGY,SGX)",
+    "query_status": "HOLD: no WCS, grid origin/spacing or component-order contract in FITS/page; scalar RMS not a radial/component covariance",
+    "not_applied": "Do not copy the distinct CF4++ 128-grid geometry into this64-grid product."
+  },
+  "CF4pp_field_inventory": {
+    "d_mean": {
+      "shape": [
+        128,
+        128,
+        128
+      ],
+      "total": 2097152,
+      "finite": 2097152,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        -3.8355737416231848,
+        -0.10587073370545798,
+        -8.031038176015934e-05,
+        0.10137921514182534,
+        3.519365456366468
+      ]
+    },
+    "d_std": {
+      "shape": [
+        128,
+        128,
+        128
+      ],
+      "total": 2097152,
+      "finite": 2097152,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        0.065998687218951,
+        0.3421764170719268,
+        0.36866816831727883,
+        0.3974285164236117,
+        0.8547869368858855
+      ]
+    },
+    "vr_mean": {
+      "shape": [
+        128,
+        128,
+        128
+      ],
+      "total": 2097152,
+      "finite": 2097152,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        -2411.939234277934,
+        -199.31679273702855,
+        67.9858210027991,
+        351.15429869365266,
+        2670.806284517576
+      ]
+    },
+    "vr_std": {
+      "shape": [
+        128,
+        128,
+        128
+      ],
+      "total": 2097152,
+      "finite": 2097152,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        20.133189154493873,
+        186.15736775823456,
+        212.39618587593438,
+        253.30305039742345,
+        992.623071797523
+      ]
+    },
+    "v_mean": {
+      "shape": [
+        3,
+        128,
+        128,
+        128
+      ],
+      "total": 6291456,
+      "finite": 6291456,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        -1963.3166470314666,
+        -196.49549592370948,
+        -16.50956721486517,
+        188.19133927737897,
+        2571.086011589496
+      ]
+    },
+    "v_std": {
+      "shape": [
+        3,
+        128,
+        128,
+        128
+      ],
+      "total": 6291456,
+      "finite": 6291456,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        18.011073167118333,
+        183.81918955175075,
+        209.01259361963372,
+        243.55778890881658,
+        823.0194637987647
+      ]
+    },
+    "N": {
+      "shape": [],
+      "total": 1,
+      "finite": 1,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        9739.0,
+        9739.0,
+        9739.0,
+        9739.0,
+        9739.0
+      ]
+    }
+  },
+  "CF4pp_radial_minus_center_vector_projection_kms": {
+    "shape": [
+      128,
+      128,
+      128
+    ],
+    "total": 2097152,
+    "finite": 2097152,
+    "nonfinite": 0,
+    "quantiles_0_16_50_84_100": [
+      -7.275957614183426e-12,
+      -1.7053025658242404e-13,
+      0.0,
+      1.7053025658242404e-13,
+      5.4569682106375694e-12
+    ]
+  },
+  "CF4pp_scalar_N": {
+    "value": 9739,
+    "semantics": "NOT_PROVIDED_BY_QUERY_SCRIPT; not used as spatial resolution"
+  },
+  "CF4pp_old_vs_corrected_arrays": {
+    "d_mean": {
+      "old_key": "d_mean_CF4pp",
+      "exact_array_equal": false,
+      "new_minus_old": {
+        "shape": [
+          128,
+          128,
+          128
+        ],
+        "total": 2097152,
+        "finite": 2097152,
+        "nonfinite": 0,
+        "quantiles_0_16_50_84_100": [
+          -3.2314657616439035e-09,
+          -2.6345556292106664e-10,
+          0.0,
+          2.6355127802357714e-10,
+          3.0356201996539767e-09
+        ]
+      }
+    },
+    "d_std": {
+      "old_key": "d_std_CF4pp",
+      "exact_array_equal": false,
+      "new_minus_old": {
+        "shape": [
+          128,
+          128,
+          128
+        ],
+        "total": 2097152,
+        "finite": 2097152,
+        "nonfinite": 0,
+        "quantiles_0_16_50_84_100": [
+          -3.060923625675116e-09,
+          -3.296375394867823e-10,
+          -1.3242185126216555e-13,
+          3.29136189414214e-10,
+          3.1010666257103026e-09
+        ]
+      }
+    },
+    "vr_mean": {
+      "old_key": "vr_mean_CF4pp",
+      "exact_array_equal": false,
+      "new_minus_old": {
+        "shape": [
+          128,
+          128,
+          128
+        ],
+        "total": 2097152,
+        "finite": 2097152,
+        "nonfinite": 0,
+        "quantiles_0_16_50_84_100": [
+          -3367.285986481119,
+          -170.88263073060926,
+          8.751299367844357,
+          263.05435867070076,
+          4696.262171239523
+        ]
+      }
+    },
+    "vr_std": {
+      "old_key": "vr_std_CF4pp",
+      "exact_array_equal": false,
+      "new_minus_old": {
+        "shape": [
+          128,
+          128,
+          128
+        ],
+        "total": 2097152,
+        "finite": 2097152,
+        "nonfinite": 0,
+        "quantiles_0_16_50_84_100": [
+          -170.7805464403586,
+          -18.7685603834478,
+          1.946474174933556,
+          35.57992158918686,
+          632.427944404034
+        ]
+      }
+    },
+    "v_mean": {
+      "old_key": "v_mean_CF4pp",
+      "exact_array_equal": false,
+      "new_minus_old": {
+        "shape": [
+          3,
+          128,
+          128,
+          128
+        ],
+        "total": 6291456,
+        "finite": 6291456,
+        "nonfinite": 0,
+        "quantiles_0_16_50_84_100": [
+          -2.2436170183937065e-06,
+          -1.6272389302685042e-07,
+          9.799094868867542e-11,
+          1.6289533277813462e-07,
+          2.0430702534213196e-06
+        ]
+      }
+    },
+    "v_std": {
+      "old_key": "v_std_CF4pp",
+      "exact_array_equal": false,
+      "new_minus_old": {
+        "shape": [
+          3,
+          128,
+          128,
+          128
+        ],
+        "total": 6291456,
+        "finite": 6291456,
+        "nonfinite": 0,
+        "quantiles_0_16_50_84_100": [
+          -12.103170588600591,
+          -2.5947993050640035,
+          -0.9565514329319029,
+          0.5912383775942885,
+          7.4406847800349
+        ]
+      }
+    }
+  },
+  "source_resolution": {
+    "page_href": "CF4pp_mean_std_grids.npz (stale May2025 file)",
+    "author_script_filename": "new_CF4pp_mean_std_grids.npz",
+    "corrected_source": "official script-named file, Last-Modified Oct13 2026, distinct167773886bytes",
+    "schema_change": "corrected keys d_mean,d_std,vr_mean,vr_std,v_mean,v_std,N; official script still expects old _CF4pp suffixes; explicit six-field mapping used only for revision comparison",
+    "old_linked_file_status": "NOT_QUALIFIED_AS_CORRECTED_RADIAL_INPUT; first numeric outputs retained in STALE_LINKED_NPZ_DIAGNOSTIC.json",
+    "first_linked_generator_sha256": "4c77422f567055e8684fe8d002cb20301325ff32ca070384966cac0e1035274e",
+    "first_linked_host_ledger_sha256": "37206ad79d0ebb62903cb8946a1a62b1803664b6e374db9cc54e238d534cbb0a"
+  },
+  "coordinate_policy": {
+    "grid": "1000h^-1Mpc;128 cells;[-500,500);delta7.8125; spatialXYZ per current author script",
+    "position": "CF4 host FK5/J2000 direction at radius Vcmb/100 h^-1Mpc; redshift-space lookup only",
+    "lookup": "exact-edge half-open voxel query; strict bounds, no clipping, no periodic wrap",
+    "velocity": "CF4++ released km/s; no grouped52factor applied to CF4++",
+    "independent_manual_SG_basis_max_abs_error": 8.643259719054441e-16
+  },
+  "matched_support": {
+    "D03_rows": 654,
+    "unique_host_PGCs": 494,
+    "unique_groups": 482,
+    "valid_host_positions": 494,
+    "outside_host_positions": 0,
+    "nonpositive_host_radius": 0,
+    "host_query_status": {
+      "VALID_SOURCE_CELL": 494
+    },
+    "unique_source_cells": 460
+  },
+  "host_flow": {
+    "radial_mean_kms": {
+      "shape": [
+        494
+      ],
+      "total": 494,
+      "finite": 494,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        -1435.301904853372,
+        -500.43809312876937,
+        -15.089071598813998,
+        316.80584323476734,
+        1513.2720974412725
+      ]
+    },
+    "radial_rms_kms": {
+      "shape": [
+        494
+      ],
+      "total": 494,
+      "finite": 494,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        20.133189154493873,
+        42.166507587013065,
+        86.30265294962037,
+        236.96443170670997,
+        788.8642584818937
+      ]
+    },
+    "radial_mean_over_CMB_velocity": {
+      "shape": [
+        494
+      ],
+      "total": 494,
+      "finite": 494,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        -0.3099582597090515,
+        -0.05724481986370259,
+        -0.002207269074275529,
+        0.051111950074725875,
+        0.732483330857486
+      ]
+    },
+    "exact_algebraic_H100_proxy_shift_mag": {
+      "shape": [
+        494
+      ],
+      "total": 494,
+      "finite": 494,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        -2.86324575810042,
+        -0.11392526090329247,
+        0.004787739928329765,
+        0.12087782964173849,
+        0.5862872879473865
+      ]
+    },
+    "mean_plus_RMS_proxy_shift_mag": {
+      "shape": [
+        494
+      ],
+      "total": 494,
+      "finite": 494,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        -3.294826267834038,
+        -0.13521718878522948,
+        -0.020776439885536138,
+        0.08408169493319685,
+        0.5315099103621899
+      ]
+    },
+    "mean_minus_RMS_proxy_shift_mag": {
+      "shape": [
+        494
+      ],
+      "total": 494,
+      "finite": 494,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        -2.5033842998126667,
+        -0.08961798686434809,
+        0.0308136832438812,
+        0.16383277944021998,
+        0.6987494015075542
+      ]
+    },
+    "all_mean_plus_minus_RMS_proxy_defined": 494
+  },
+  "alternate_Pantheon_SN_query_input_sensitivity": {
+    "rows": 654,
+    "valid_positions": 654,
+    "different_cells_from_host_query": 53,
+    "radial_mean_difference_kms": {
+      "shape": [
+        654
+      ],
+      "total": 654,
+      "finite": 654,
+      "nonfinite": 0,
+      "quantiles_0_16_50_84_100": [
+        -462.87066383953163,
+        0.0,
+        0.0,
+        0.0,
+        413.7904811460827
+      ]
+    }
+  },
+  "proxy_definition": "5log10((cz-u)/cz); exact algebraic sensitivity of chosen H100 redshift proxy; neither physical dL correction nor finite-z/flow remainder bound",
+  "RMS_envelope": "mean\u00b1released radial RMS is a chosen pointwise sensitivity, not a confidence interval or joint realization envelope",
+  "host_ledger": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/cf4/d06_flow_20261018/D03_HOST_FLOW_QUERIES.csv",
+    "rows": 494,
+    "sha256": "3447eaa5078244ec46b53fe72504baab36e86c28387706bac9557e570b15f9d3"
+  },
+  "scientific_status": "Original H02/H04/S02/S04/K04 HOLD unchanged; source reconstruction depends on CF4 data",
+  "runtime": {
+    "requested": "Sol/high",
+    "requested_exact_model": "UNVERIFIED: original accepted spawn settings unavailable in worker context",
+    "observed": "UNKNOWN",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "threads": 2
+  },
+  "generator_sha256": "470929fc61b89af3dfead88e40d37d737b18c06ad0f1fe0c2daeb04ce4d458d0",
+  "boundary_repair": {
+    "authorization": "fresh Astra consolidated P2; one targeted lookup-boundary repair",
+    "initial_candidate_digest_sha256": "f52a622f6e8df9774bef25bf6a3b203edb3c613aae3aa8a71ff090c9d3cb231f",
+    "initial_result_sha256": "3a0a7e9d2e5ed1443825f654405bd52df32e7ec9a24fd189985cef1c3be2608f",
+    "numerical_producer_generator_sha256": "003e6b2eabde6ad64df2790e037cbc298baf275dbe572cf3c9f66d7862b4a4d9",
+    "method": "exact binary-representable edges and right searchsorted; strict original domain mask retained",
+    "numerical_outputs": "preserved from initial result; no full grid analysis rerun",
+    "targeted_verification": "all-axis edge/nextafter and query endpoint tests; exact parity with all494cached host coordinates"
+  },
+  "caveats": [
+    "No grouped-grid position query: its missing geometry cannot be borrowed from CF4++.",
+    "Means/RMS are not HMC samples or interobject covariance; repeated host/group/cells are dependent.",
+    "Redshift-space positions are the author lookup convention, not inferred true comoving locations.",
+    "D03 same-host CF4 SN aggregates and reconstruction share CF4 calibration/data; no independent validation.",
+    "Mean\u00b1RMS pointwise scenarios have no simultaneous coverage qualification."
+  ]
+}

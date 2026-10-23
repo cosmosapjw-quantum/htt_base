@@ -1,0 +1,108 @@
+test_redirect_range_one_request_no_body_no_append (test_resume_acquisition.DirectHTTPBoundaries.test_redirect_range_one_request_no_body_no_append) ... {"status": "VALIDATED", "url": "https://zenodo.org/api/records/6824749/files/mocks.tar.gz/content", "source_version": "v1.1.0", "start": 0, "end": 65548, "archive_total": 10643218721, "retained_bytes": 65546, "retained_prefix_sha256": "60a6f1743f9405aa728afbe26ac3b294914341e6aa867f4542c5c116cb816a4f", "request_start": 10, "request_length": 65539, "overlap_bytes": 65536, "original_response": "fixture", "original_response_sha256": "fixture", "whole_archive_md5": "PENDING", "pid": 928095, "http_status": 206, "headers": {"Content-Length": "65539", "Content-Range": "bytes 10-65548/10643218721"}, "final_url": "https://zenodo.org/fixture-final", "etag": "UNAVAILABLE", "bytes": 65549, "resumed_new_bytes": 3, "sha256": "d25d5147c769b8a46f8291e0c6b24d5333c88836bf862f55ec8e11b4b379387d", "retained_prefix_sha256_after": "60a6f1743f9405aa728afbe26ac3b294914341e6aa867f4542c5c116cb816a4f", "elapsed_s": 0.06214653595816344, "provenance": "original retained prefix plus overlap-verified resumed suffix"}
+FAIL
+test_429_range_metadata_preserved_without_retry (test_resume_acquisition.DirectHTTPBoundaries.test_429_range_metadata_preserved_without_retry) ... ERROR
+test_redirect_metadata_one_request_no_body (test_resume_acquisition.DirectHTTPBoundaries.test_redirect_metadata_one_request_no_body) ... FAIL
+test_429_metadata_headers_preserved_without_retry (test_resume_acquisition.DirectHTTPBoundaries.test_429_metadata_headers_preserved_without_retry) ... ERROR
+
+======================================================================
+ERROR: test_429_range_metadata_preserved_without_retry (test_resume_acquisition.DirectHTTPBoundaries.test_429_range_metadata_preserved_without_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 202, in test_429_range_metadata_preserved_without_retry
+    self.assert_range_rejection([429])
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 185, in assert_range_rejection
+    resume_one(root, expected, "rejected")
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/resume_acquisition.py", line 213, in resume_one
+    with urllib.request.urlopen(request, timeout=120) as response:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1199, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 165, in <lambda>
+    side_effect=lambda request, timeout: build(urllib.request.ProxyHandler({}), fixture).open(request, timeout=timeout)), \
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 429: fixture
+
+======================================================================
+ERROR: test_429_metadata_headers_preserved_without_retry (test_resume_acquisition.DirectHTTPBoundaries.test_429_metadata_headers_preserved_without_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 224, in test_429_metadata_headers_preserved_without_retry
+    self.assert_metadata_rejection([429])
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 209, in assert_metadata_rejection
+    verify_metadata(root, "rejected")
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/resume_acquisition.py", line 77, in verify_metadata
+    with urllib.request.urlopen(request, timeout=120) as response:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1199, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 165, in <lambda>
+    side_effect=lambda request, timeout: build(urllib.request.ProxyHandler({}), fixture).open(request, timeout=timeout)), \
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 429: fixture
+
+======================================================================
+FAIL: test_redirect_range_one_request_no_body_no_append (test_resume_acquisition.DirectHTTPBoundaries.test_redirect_range_one_request_no_body_no_append)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 199, in test_redirect_range_one_request_no_body_no_append
+    self.assert_range_rejection([302, 302, 206])
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 184, in assert_range_rejection
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_redirect_metadata_one_request_no_body (test_resume_acquisition.DirectHTTPBoundaries.test_redirect_metadata_one_request_no_body)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 221, in test_redirect_metadata_one_request_no_body
+    self.assert_metadata_rejection([302, 302, 200])
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 210, in assert_metadata_rejection
+    self.assertEqual(len(fixture.calls), 1)
+AssertionError: 3 != 1
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.177s
+
+FAILED (failures=2, errors=2)

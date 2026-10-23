@@ -1,0 +1,27 @@
+D03 raw first failures, 2026-10-18. Historical source bytes were preserved.
+
+1. Ordinary verified HTTPS GET to EDD /describe_columns.php?table=kcf4snia
+   curl exit 60: SSL certificate problem: unable to get local issuer certificate.
+   openssl certificate: *.ifa.hawaii.edu; issuer InCommon RSA Server CA 2;
+   notAfter=Jul 2 23:59:59 2026 GMT. No credentials were used.
+
+2. acquire_sources.py first run acquired actual SH0ES C through media Git LFS
+   with size/hash matching its pointer; raw GitHub L/y already contained FITS,
+   not pointers. Their attempted media endpoints returned HTTP 404. The final
+   pointer loop failed on binary L: UnicodeDecodeError at position 2881.
+   Classification: acquisition implementation assumed all SH0ES FITS used LFS.
+   Repair: inspect actual bytes first; non-LFS SIMPLE FITS are read as actual
+   data and retain their original acquisition filenames. No data changed.
+
+3. Ordinary public EDD form query (tblbool=kcf4snia, cols=All, rows 1..2000)
+   returned HTML: Please verify that you are not a robot! with Google reCAPTCHA.
+   No attempt to bypass the challenge. Saved exploratory schema is not SN data.
+   Use pinned Pantheon SNID/IAUC/host coordinates and fixed CF4 galaxy/group
+   release for conditional source-coordinate associations; unresolved exact
+   EDD SNIa contributor names remain UNKNOWN.
+
+4. The first validation runner completed d03.py (exit0) and 10 focused tests
+   (exit0), then attempted plot_d03.py before that file was created (exit2).
+   Raw stdout/stderr is retained in RUN_RECEIPT.json. Added the plot generator
+   and a --plot-only mode so successful numerical analysis is not repeated
+   just to close a figure-generation failure.

@@ -1,0 +1,45 @@
+{
+  "packet_id": "84e9ee39716aef199277e104bcc2195e1e45002fd76e9b6945b0b613ca99f3e2",
+  "task_id": "R23-RESULT",
+  "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+  "candidate_identity": "sha256:0dbb627aa91a6a5a0e3c3e0547275a1774f546f2ae47b6aaac65158cb20a7226",
+  "agent_id": "/root/rc_84e9ee39716aef19",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "observed_runtime": "UNKNOWN",
+  "raw_receipt": "/workspace/scratch/ef61c9590364/R23-CLOSEOUT-blocker-receipt.json",
+  "receipt_note": "Parent condensation of actual independent closeout; exact reproduction retained; native original in conversation.",
+  "issue": {
+    "class": "numeric",
+    "question": "Can normalizing a finite nonzero contrast under extreme signal units silently make it an exactly zero, estimable contrast?",
+    "exact_missing_or_defect": "K/s can underflow to zero before nonzero-row detection. The adapter reports true/0 for wholly nonestimable nonzero contrast.",
+    "input_identity": "sha256:fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+    "substantive": true,
+    "risk": "Nonestimability guarantee false for accepted finite input; extremeunits notfailclosed."
+  },
+  "findings": [
+    {
+      "id": "R23-REV-02-UNDERFLOW",
+      "priority": "P2",
+      "reproduction": "X=np.array([[1e150,0.,1.],[0.,1e150,0.]]);y=np.array([3.,4.]);K=np.array([[1.,0.],[1e-200,0.]]);r=finite_nuisance_quotient(X.T@X,X.T@y,signal_dim=2,contrasts=K)",
+      "observed": "contrast_estimable=[false,true],contrast_estimate=[null,0.0],guardeta1.7053025658242404e-13",
+      "expected": "both nonzero contrasts nonestimable or explicit unrepresentable normalization ValueError"
+    }
+  ],
+  "repair_plan": "Minimal conservative correction: reject np.any((k != 0) & (kb == 0)) with explicit contrast-normalization-underflow ValueError before zero detection. Add exacttwo-row reproduction; preserve all existing meaningful tests. Keep exactzero input allowed. For same floating-range defect failclosed on nonzero estimable contrast covariance underflow/overflow rather than zero uncertainty. Update numerical-limit wording. No broad repeated audit; fresh targetedcloseout onlythis correction plus finalcontroller precedence regression.",
+  "finding_resolutions": {
+    "R23-REV-01": "closed",
+    "R23-REV-02": "ordinaryunitsclosed,underflowopen",
+    "R23-REV-03": "closed"
+  },
+  "validation_evidence": [
+    "15science+40controller tests PASS, but independentunderflowprobeFAIL",
+    "23candidatehashesmatch;64summaryandfigurebyte-identical",
+    "whole48=42unchanged+6new,18source reuse;contextpack6581/12000",
+    "README/HANDOFF/PR_DELTA/FRONTIER/FIGURES/AGENTS/runtime reviewedscopedvalid;noactualcacheoractivationclaim"
+  ],
+  "scope_limits": [
+    "Actual102scorestats notexecuted;notpublished;noowneractivation",
+    "Only remaining independent finding is normalizationunderflow; covfloatrangeguard parent-proposed related prevention"
+  ]
+}

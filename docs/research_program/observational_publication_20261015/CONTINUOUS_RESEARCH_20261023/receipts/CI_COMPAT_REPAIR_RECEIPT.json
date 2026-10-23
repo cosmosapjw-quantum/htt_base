@@ -1,0 +1,373 @@
+{
+  "scope": "CI compatibility repair after pushed 9256021; direct local validation only",
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "fallback": "allowed"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN"
+  },
+  "owned_files": [
+    "patch/.github/workflows/repository-integrity.yml",
+    "patch/AGENTS.md.fragment"
+  ],
+  "hashes": {
+    "workflow_before_sha256": "9d6741f125101cb6329ce9d56d52f325ec87a232f34cfb9ac1f3f0a3b02a7af4",
+    "workflow_after_sha256": "3dba0f90937531bdab579cf5af3c9fee211a1f8b9de0314fb19e6316d531914f",
+    "authoritative_AGENTS_before_and_after_sha256": "83f25506c2a2f3a17a1e6d1eeb229f9e9ec006252985bbe40595c1acf5affd54",
+    "fragment_original_ci_input_sha256": "07111db187e509b8a212661b17eb4261af7005d589488152b26b06609d63e1e3",
+    "fragment_after_sha256": "4d6464b55319dc93bc1297777477429d67d59bd3f616e1f605cb55da5ee66bdc",
+    "unchanged_workflow_validator_source_sha256": "a28ee2cec821f20596db7bf0b838104a0db976f3b235fdce8de5e25cd9d3d174",
+    "unchanged_codex_assets_source_sha256": "03572fade0c280482d8195243023cd83abdb634bfe5854644fe5864c3d2c28b9"
+  },
+  "exact_diffs": {
+    "workflow": "--- before/patch/.github/workflows/repository-integrity.yml\n+++ after/patch/.github/workflows/repository-integrity.yml\n@@ -53,8 +53,8 @@\n           python -m pytest -q \\\n             scripts/codex_harness/test_repository_integrity_workflow.py \\\n             scripts/codex_harness/test_harness_enforcement.py \\\n-            scripts/codex_harness/test_codex_assets.py \\\n-            scripts/codex_harness/test_context_isolation.py\n+            scripts/codex_harness/test_codex_assets.py\n+          python -m pytest -q scripts/codex_harness/test_context_isolation.py\n       - name: Run architecture boundary contract\n         run: python -m pytest -q scripts/architecture/test_import_boundaries.py\n       - name: Validate current project runtime\n",
+    "fragment_vs_original_remote_input": "--- ci_inputs/AGENTS.md.fragment\n+++ patch/AGENTS.md.fragment\n@@ -18,6 +18,34 @@\n Actual system/developer or managed restrictions take precedence; identify their\n source and preserve a runnable handoff if a fresh session must reload guidance.\n See `docs/harness/CURRENT_CODEX_RUNTIME.md` for the current entrypoint.\n+\n+\n+## Continuous solver-free campaign — owner direction, 2026-10-23\n+\n+The owner asks for autonomous completion of the entire 42-node publication DAG,\n+including research on blockers and real higher-model escalation through the\n+existing router. A worker's one-step stage boundary is not the campaign boundary.\n+Use `docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md` and the full campaign built\n+from `CONTINUOUS_RESEARCH_20261023/FRONTIER.json`. The host must actually dispatch,\n+acknowledge, record, independently review, and request the next packet. Model\n+selection alone is not dispatch. Do not stop on a completed node or an empty\n+scientific-ready inventory while acquisition/model-repair actions remain.\n+\n+The current instruction authorizes scientific repairs within this solver-free\n+campaign; do not ask again merely to label them approved. Existing route budgets,\n+real capability limits and scientific acceptances still apply. Distinct new issues\n+require new evidence and bounded repair definitions, never renamed exhausted\n+attempts. Continue independent branches after a hold. End with all original\n+acceptances met or exact residual holds and the next executable checkpoint;\n+never report scoped controller completion as 42/42 scientific success.\n+\n+The controller is a native-host protocol, not a background daemon. Source push,\n+local installation, and live activation are separate. The 2026-10-23 remote\n+Desktop Commander quota refusal prevents observing/activating the owner's local\n+checkout in this session; do not reconnect or retry that exhausted transport.\n+New local Codex execution does not need Desktop Commander. No approval/trust\n+settings, historical frozen validators, native solver/ODE boundaries, or paper\n+submission authority change.\n \n ## Historical Codex runtime — 2026-09-29 (CUH-G reference)\n \n@@ -87,3 +115,4 @@\n installation are separate evidence stages. No automatic scientific admission.\n Parallel writers own disjoint files; reviewers are read-only. Use targeted evidence,\n not duplicate repository-wide discovery or copied full parent transcripts.\n+\n"
+  },
+  "checks": {
+    "contract_errors_direct_invocation": [],
+    "workflow_direct_test_function_calls": [
+      {
+        "function": "test_rejects_trigger_reachability_mutations",
+        "arguments": [
+          "remove_push"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_trigger_reachability_mutations",
+        "arguments": [
+          "remove_pull_request"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_trigger_reachability_mutations",
+        "arguments": [
+          "add_paths"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_trigger_reachability_mutations",
+        "arguments": [
+          "add_paths_ignore"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_trigger_reachability_mutations",
+        "arguments": [
+          "add_target"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_trigger_reachability_mutations",
+        "arguments": [
+          "add_push_filter"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "rename_job"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "elevate_permissions"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "condition_job"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "continue_job"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "continue_step"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "unpin_checkout"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "add_matrix"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "add_privileged_job"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "condition_step"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "custom_step_shell"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "job_shell_default"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_identity_and_security_mutations",
+        "arguments": [
+          "workflow_shell_default"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "test ! -e .agent-harness/ACTIVE_RUN"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "test ! -e .agent-harness/runtime/ACTIVE_RUN"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "python3 .agent-harness/scripts/validate_harness.py"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "python -m pip install 'pytest>=8,<9' 'PyYAML>=6,<7'"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "python scripts/codex_harness/sync_pr_dag_mirrors.py --check"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml --strict-rescue-slice"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "repository-contracts",
+          "python -m pytest -q scripts/codex_harness/test_repository_integrity_workflow.py scripts/codex_harness/test_harness_enforcement.py scripts/codex_harness/test_codex_assets.py"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "python-package-smoke",
+          "python -m pip install 'setuptools>=68' wheel packaging"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "python-package-smoke",
+          "python -m pip install -e './htt[dev]'"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "python-package-smoke",
+          "python -m compileall -q .agent-harness/scripts scripts/codex_harness htt"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "python-package-smoke",
+          "python -c \"import bass, common, htt, mio, obsstat, tsc, tsc_legacy; print('IMPORT_OK')\""
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "python-package-smoke",
+          "python scripts/codex_harness/run_subset.py package --python python"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "rust-compile",
+          "rustup toolchain install 1.94.1 --profile minimal"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_missing_required_capability",
+        "arguments": [
+          "rust-compile",
+          "cargo +1.94.1 check --locked --lib"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_order_and_false_pass_mutations",
+        "arguments": [
+          "late_clean_clone"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_order_and_false_pass_mutations",
+        "arguments": [
+          "metadata_only_rust"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_order_and_false_pass_mutations",
+        "arguments": [
+          "echo_rust"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_order_and_false_pass_mutations",
+        "arguments": [
+          "disable_errexit"
+        ],
+        "result": "PASS"
+      },
+      {
+        "function": "test_rejects_order_and_false_pass_mutations",
+        "arguments": [
+          "mask_failure"
+        ],
+        "result": "PASS"
+      }
+    ],
+    "baseline_workflow_contract_function_direct_call": "PASS",
+    "same_existing_run_block_exact_two_commands": [
+      "python -m pytest -q scripts/codex_harness/test_repository_integrity_workflow.py scripts/codex_harness/test_harness_enforcement.py scripts/codex_harness/test_codex_assets.py",
+      "python -m pytest -q scripts/codex_harness/test_context_isolation.py"
+    ],
+    "workflow_other_parsed_fields_unchanged": true,
+    "agents_terse_boundaries_direct_original_test_function": "PASS",
+    "applicable_exact_suffix_source_invariants_direct_original_statements": "PASS",
+    "fragment_nonempty_exact_suffix_occurs_once": true,
+    "fragment_distribution_note_no_independent_authority": true,
+    "authoritative_AGENTS_unchanged": true,
+    "protected_existing_files_unchanged": {
+      "AGENTS.md": true,
+      "scripts/htt_astrometry_quotient.py": true,
+      "scripts/htt_plot_astrometry_quotient.py": true,
+      "scripts/test_htt_astrometry_quotient.py": true,
+      "docs/harness/CURRENT_CODEX_RUNTIME.md": true,
+      "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md": true,
+      "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/CONTINUATION_TASKS.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/PUBLICATION_REVIEW.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/PR_DELTA.md": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/README_KO.md": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/HANDOFF_PROMPT_KO.md": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/FRONTIER.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/FIGURES.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/CI_CONTEXT_REPAIR.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/PACKAGE_MANIFEST.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/REVIEW_AND_EXECUTION.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/01_result_worker.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/PRE_FLOAT_CANDIDATE.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/CONTEXT_FINAL_REVIEW.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/03_numeric_ultra_research.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/INDEX.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/CORE_CANDIDATE.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/02_adversarial_review.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/04_numeric_repair.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/CI_FAILURE.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/07_final_targeted_review.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/05_underflow_counterexample.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/CONTEXT_REPAIR_RECEIPT.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/LIVE_DEMONSTRATION_STATE.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/desktop_transport_quota.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/06_float_repair.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/FIRST_SCIENCE_CANDIDATE.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/final_tests.json": true,
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/receipts/08_next_cache_intake.json": true,
+      ".agent-harness/generated/CURRENT_CONTEXT_PACK.md": true,
+      ".agent-harness/context/CURRENT_SYMBOLS.md": true,
+      ".agent-harness/context/SYMBOLS.md": true,
+      ".agent-harness/context/CURRENT_CONTEXT_INDEX.json": true,
+      ".agent-harness/context/CURRENT_FROZEN_DECISIONS.md": true,
+      "scripts/codex_harness/test_research_controller.py": true,
+      "scripts/codex_harness/research_controller.py": true,
+      "scripts/codex_harness/test_build_research_campaign.py": true,
+      "scripts/codex_harness/test_context_isolation.py": true,
+      "scripts/codex_harness/build_research_campaign.py": true
+    }
+  },
+  "limitations": {
+    "pytest_available": false,
+    "full_pytest_run": "NOT RUN; pytest is unavailable. These are direct AST-loaded original helper/test-body invocations, not a full pytest pass.",
+    "codex_assets_full_suite": "NOT RUN; only AGENTS applicable exact suffix/source checks supplied for this bounded repair. CLAUDE.md compatibility checks not executed.",
+    "ci_status": "Actual CI rerun required; no CI pass claimed."
+  }
+}

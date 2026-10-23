@@ -1,0 +1,478 @@
+{
+  "owner": "htt",
+  "scope": "R2R4R5publicdistance/astrometry acquisition+boundedGBToutcomes; solverfree",
+  "date_utc": "2026-10-18",
+  "research_head": "4a68995507bf8e672b2551d9030f3ad9f0d2152e",
+  "claim_tier": "DIAGNOSTIC_ONLY",
+  "catalogue_identity_correction": "ExistingTFupstreamJ/ApJ/902/145 not904/114",
+  "pantheon_commit": {
+    "url": "https://api.github.com/repos/PantheonPlusSH0ES/DataRelease/commits/main",
+    "commit": "c447f0fea703fcd0fff57de5000947b5ca81286b",
+    "tree": "44f78586e1a3b4c3a0a9c57c414a3e60a4dc226e",
+    "date": "2022-12-21T19:29:49Z"
+  },
+  "datasets": [
+    {
+      "id": "cf4_hi_bounded_target_outcomes",
+      "node_ids": [
+        "H02",
+        "S02",
+        "K04"
+      ],
+      "official_urls": [
+        "https://www.aanda.org/articles/aa/full_html/2021/02/aa39025-20/aa39025-20.html",
+        "https://cdsarc.cds.unistra.fr/ftp/J/A+A/646/A113/ReadMe"
+      ],
+      "direct_urls": [
+        "https://cdsarc.cds.unistra.fr/ftp/J/A+A/646/A113/ReadMe",
+        "https://cdsarc.cds.unistra.fr/ftp/J/A+A/646/A113/table2.dat",
+        "https://cdsarc.cds.unistra.fr/ftp/J/A+A/646/A113/table4.dat"
+      ],
+      "auth_status": "PUBLIC_UNAUTHENTICATED_OBSERVED",
+      "evidence": [
+        {
+          "id": "cf4_hi_readme",
+          "url": "https://cdsarc.cds.unistra.fr/ftp/J/A+A/646/A113/ReadMe",
+          "status": 200,
+          "final_url": "https://cdsarc.cds.unistra.fr/ftp/J/A+A/646/A113/ReadMe",
+          "bytes_read": 6668,
+          "content_length": "6668",
+          "content_type": "text/plain; charset=utf-8",
+          "content_range": null,
+          "response_partial": false,
+          "sha256_of_observed_bytes": "bb5e9748e2b35d0dbc3271eb739913c1998a024fd00c2457bdf45d03ab83b7a7",
+          "preview": "J/A+A/646/A113      Towards Cosmicflows-4 HI data catalog         (Dupuy+, 2021)\n================================================================================\nTowards Cosmicflows-4: The HI data catalog.\n    Dupuy A., Courtois H.M., Guinet D., Tully R.B., Kourkchi E.\n    <Astron. Astrophys. 646, A"
+        },
+        {
+          "id": "cf4_hi_table2_plain",
+          "url": "https://cdsarc.cds.unistra.fr/ftp/J/A+A/646/A113/table2.dat",
+          "status": 200,
+          "bytes": 40192,
+          "sha256": "2e7e9f979aeb862ae59ac40b377953de7602c2574515b2c880c0b55cb838249c"
+        },
+        {
+          "id": "cf4_hi_table4_plain",
+          "url": "https://cdsarc.cds.unistra.fr/ftp/J/A+A/646/A113/table4.dat",
+          "status": 200,
+          "bytes": 42042,
+          "sha256": "88e453c7c559f663fa61782707e4b47fdc2b752dcfda84d5dccd0d9103c4b8a3"
+        }
+      ],
+      "format": "fixed-width ASCII; byte schema in ReadMe",
+      "size_bytes": {
+        "ReadMe": 6668,
+        "table2": 40192,
+        "table4": 42042
+      },
+      "existing_reuse": null,
+      "what_closes": "Exact628target GBT conditional outcomes, accepted385 membership and1274telescope ancestry; actual executed result HI_COHORT_RESULT.json",
+      "what_does_not_close": "No global selection law, parent targeting probabilities, angular calibration covariance or physical mapping. CDS table4 has telescope not bibliography Source.",
+      "priority": 1
+    },
+    {
+      "id": "cf4_tf_existing_reuse",
+      "node_ids": [
+        "H02",
+        "K04"
+      ],
+      "official_urls": [
+        "https://cdsarc.cds.unistra.fr/ftp/J/ApJ/902/145/ReadMe"
+      ],
+      "direct_urls": [
+        "https://cdsarc.cds.unistra.fr/ftp/J/ApJ/902/145/table1.dat.gz",
+        "https://cdsarc.cds.unistra.fr/ftp/J/ApJ/902/145/table4.dat.gz"
+      ],
+      "auth_status": "PUBLIC_UNAUTHENTICATED_OBSERVED",
+      "evidence": [
+        {
+          "status": "PRIOR_PROJECT_DOWNLOAD_AND_EXECUTION",
+          "receipt": "H02_UPSTREAM_SELECTION_20261018/ACQUISITION_RECEIPT.json",
+          "rows": [
+            10737,
+            9792
+          ]
+        }
+      ],
+      "format": "fixed-width gzip",
+      "size_bytes": null,
+      "existing_reuse": "Do not redownload/reexecute existing analysis. Correct identity J/ApJ/902/145, not904/114.",
+      "what_closes": "Reuse PGC->CF4group joins; new628target outcomes can join frozen release",
+      "what_does_not_close": "Within-release inclusion is not initial survey targeting/detection law",
+      "priority": 0
+    },
+    {
+      "id": "pantheonplus_data_fullcov",
+      "node_ids": [
+        "S02",
+        "H02",
+        "K04"
+      ],
+      "official_urls": [
+        "https://github.com/PantheonPlusSH0ES/DataRelease/tree/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR"
+      ],
+      "direct_urls": [
+        "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/README",
+        "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES.dat",
+        "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES_STAT%2BSYS.cov",
+        "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES_STATONLY.cov"
+      ],
+      "auth_status": "PUBLIC_UNAUTHENTICATED_OBSERVED",
+      "evidence": [
+        {
+          "data_get": {
+            "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES.dat",
+            "status": 200,
+            "final_url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES.dat",
+            "size": 579283,
+            "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+            "preview": "CID IDSURVEY zHD zHDERR zCMB zCMBERR zHEL zHELERR m_b_corr m_b_corr_err_DIAG MU_SH0ES MU_SH0ES_ERR_DIAG CEPH_DIST IS_CALIBRATOR USED_IN_SH0ES_HF c cERR x1 x1ERR mB mBERR x0 x0ERR COV_x1_c COV_x1_x0 CO"
+          },
+          "counts": {
+            "rows": 1701,
+            "uniqueCID": 1543,
+            "calibrator_rows": 77,
+            "unique_calibratorCID": 43,
+            "used_shoes_hf_rows": 277
+          }
+        },
+        {
+          "id": "pantheon_stat_header",
+          "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES_STAT%2BSYS.cov",
+          "status": 206,
+          "final_url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES_STAT%2BSYS.cov",
+          "bytes_read": 65536,
+          "content_length": "65536",
+          "content_type": "text/plain; charset=utf-8",
+          "content_range": "bytes 0-65535/33284960",
+          "response_partial": true,
+          "sha256_of_observed_bytes": "3429b34ae2b5c4a088f4a680a6c429417c772be51cfdd8709942ffea5a133e85",
+          "preview": "1701\n0.03177108\n0.00575443\n0.00031006\n0.00118666\n0.00008342\n-0.00009594\n0.00131823\n0.00166302\n0.00117049\n0.00119181\n-0.00093480\n0.00070571\n0.00003195\n-0.00029378\n0.00050516\n0.00050571\n0.00035408\n0.00011671\n0.00041689\n0.00047087\n0.00042714\n-0.00045353\n-0.00027488\n0.00000764\n-0.00070253\n0.00008651\n0.0"
+        },
+        {
+          "STATONLY": "API tree observed path+size31827416; bytes not downloaded"
+        },
+        {
+          "status": "PARENT_COMPLETE_ACQUISITION_AND_DIAGNOSTIC_AFTER_WORKER_PARTIAL_PROBE",
+          "result": "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/PANTHEON_INPUT_RESULT.json",
+          "full_cov_bytes": 33284960,
+          "full_cov_sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+          "raw_max_asymmetry_mag2": 3.0000000000038676e-08,
+          "raw_symmetry_at_1e_minus10": false,
+          "symmetric_part_only_min_eigenvalue": 0.0008027816532256341,
+          "interpretation": "Historicalpartialprobeunchanged. Labelledsymmetricpartdiagnosticnotadoptedlikelihoodcovariance."
+        }
+      ],
+      "format": "ASCII dat; first covariance lineN1701 thenN*Nentries",
+      "size_bytes": {
+        "dat": 579283,
+        "stat_sys_cov": 33284960,
+        "statonly_cov": 31827416
+      },
+      "existing_reuse": null,
+      "what_closes": "Released correlated optical distance residuals, repeatedSN and calibrator metadata, redshift/frame alternatives and peculiarvelocity fields",
+      "what_does_not_close": "Covariance conditional on released analysis assumptions; no general directional selection likelihood or CF4shared calibration map",
+      "priority": 1
+    },
+    {
+      "id": "pantheonplus_selection_simulations",
+      "node_ids": [
+        "S02",
+        "H02"
+      ],
+      "official_urls": [
+        "https://github.com/PantheonPlusSH0ES/DataRelease/tree/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/6_SIMULATIONS"
+      ],
+      "direct_urls": [
+        "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/6_SIMULATIONS/README",
+        "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/6_SIMULATIONS/LCFITS/SIM_0001.FITRES.gz",
+        "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/6_SIMULATIONS/PHOTOMETRY/SIMLOWZREAL_4D_BS20/SIMGEN_LOWZ_single.INPUT"
+      ],
+      "auth_status": "PUBLIC_UNAUTHENTICATED_OBSERVED",
+      "evidence": [
+        {
+          "id": "pantheon_sim1",
+          "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/6_SIMULATIONS/LCFITS/SIM_0001.FITRES.gz",
+          "status": 200,
+          "final_url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/6_SIMULATIONS/LCFITS/SIM_0001.FITRES.gz",
+          "bytes_read": 514308,
+          "content_length": "514308",
+          "content_type": "application/octet-stream",
+          "content_range": null,
+          "response_partial": false,
+          "sha256_of_observed_bytes": "2a26a338dfe2549b969ef57c98e0f429cc4d0c798d045d4b72a44f7146e3ca2b",
+          "preview": "\u001f�\b\u0000lְb\u0000\u0003��ۮ%�r%���W,@��L���o���:\u0012\u000fI�n�\u0010%bA\u0012�\u0012\u0004�!4��ec���{D̵_T�\u0013{�Ε�s����e\\�\u000f_�ǿ�ǿ���ӿ���������7�\u000f�����������������������������������������?���?��O� ��?������/��?��O��/����ׯ�����\u001fx�������_��\u0017��׿�������;^p�����߾��?��_��\u001f����o�������3�\u000f�������������������\u001f�,��_��7�s�&�g�"
+        },
+        {
+          "id": "pantheon_lowz_input",
+          "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/6_SIMULATIONS/PHOTOMETRY/SIMLOWZREAL_4D_BS20/SIMGEN_LOWZ_single.INPUT",
+          "status": 200,
+          "final_url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/6_SIMULATIONS/PHOTOMETRY/SIMLOWZREAL_4D_BS20/SIMGEN_LOWZ_single.INPUT",
+          "bytes_read": 3369,
+          "content_length": "3369",
+          "content_type": "text/plain; charset=utf-8",
+          "content_range": null,
+          "response_partial": false,
+          "sha256_of_observed_bytes": "b02f39e0f90341902d80c56ad9d7ff6cfe359ff59f4795d7546b67e05112d989",
+          "preview": "#######################################################\n#\n# Simulate CFA3-Keplercam: \n# start with files in ~/salt2-training/magSmear_paper\n#\n# Apr 24 2013: set NTOT = 4400 and remove NGEN_UNIT key from MASTER-input file.\n#\n#########################################################\n\n\n#SIMLIB_FILE:  /"
+        },
+        {
+          "SIM0001_rows": 3235,
+          "header": "SNANA_VERSIONv11_04e; truthSIM_DLMAG,SIM_VPEC; noRADEC inFITRES",
+          "README": "10realizations LambdaCDM BS21scatter SALT2photometry"
+        }
+      ],
+      "format": "gzip SNANA FITRES; text SNANA inputs; FITS photometry",
+      "size_bytes": {
+        "SIM0001_gz": 514308,
+        "LOWZinput": 3369
+      },
+      "existing_reuse": null,
+      "what_closes": "Source-defined truth-versus-fit and within-generated-cohort controls; external resource dependency inventory",
+      "what_does_not_close": "10realizations not universal null law; FITRES no direction columns. LOWZ input requires$PS1_ROOT SIMLIB/KCOR/SEARCHEFF files; complete standalone simulator not verified. Large2GBbiascor contact-only per projectREADME",
+      "priority": 2
+    },
+    {
+      "id": "shoes_linear_ladder",
+      "node_ids": [
+        "S02",
+        "H02"
+      ],
+      "official_urls": [
+        "https://github.com/PantheonPlusSH0ES/DataRelease/tree/c447f0fea703fcd0fff57de5000947b5ca81286b/SH0ES_Data"
+      ],
+      "direct_urls": [
+        "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/SH0ES_Data/README.md",
+        "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/SH0ES_Data/alll_shoes_ceph_topantheonwt6.0_112221.fits",
+        "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/SH0ES_Data/ally_shoes_ceph_topantheonwt6.0_112221.fits",
+        "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/SH0ES_Data/allc_shoes_ceph_topantheonwt6.0_112221.fits"
+      ],
+      "auth_status": "PUBLIC_UNAUTHENTICATED_OBSERVED",
+      "evidence": [
+        {
+          "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/SH0ES_Data/README.md",
+          "status": 200,
+          "final_url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/SH0ES_Data/README.md",
+          "size": 2454,
+          "sha256": "fd845e484a184ad9740dddf26550db9d6d154d1631c1b30622dcecefe8ee7174",
+          "preview": "# DataRelease\n\n## SH0ES-2022\n\nMay 19, 2022:\nWe are providing here \"high level data products\" for the full SH0ES+Panthon+ ladder.  The data is provided in the compact matrix form (linear equations) giv"
+        },
+        {
+          "API_sizes": {
+            "L": 659520,
+            "y": 17280,
+            "C_pointer": 133
+          },
+          "C_warning": "133byte object is GitLFS pointer, not actual covariance; use media.githubusercontent.com LFS resolution only after pointer inspect; not byte-tested here"
+        }
+      ],
+      "format": "FITS y,L,C linear ladder",
+      "size_bytes": null,
+      "existing_reuse": null,
+      "what_closes": "Actual equation/calibration genealogy and nuisance design can be examined",
+      "what_does_not_close": "No independent directional anchor or CF4shared covariance automatically. LFS covariance still needs payload acquisition.",
+      "priority": 2
+    },
+    {
+      "id": "gaia_crf3_full_membership_plus_cov",
+      "node_ids": [
+        "K03"
+      ],
+      "official_urls": [
+        "https://www.cosmos.esa.int/web/gaia/gaia-crf3-cross-match-table",
+        "https://www.aanda.org/articles/aa/full_html/2022/11/aa43483-22/aa43483-22.html"
+      ],
+      "direct_urls": [
+        "https://www.cosmos.esa.int/documents/29201/1658422/gaiadr3.gaia_crf3_xm.ecsv.gz/644f3657-27bf-0cff-da37-eb6e2478678d?t=1635868539239",
+        "https://gaia.ari.uni-heidelberg.de/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+2+g.source_id%2Cg.ra%2Cg.dec%2Cg.pmra%2Cg.pmdec%2Cg.pmra_error%2Cg.pmdec_error%2Cg.pmra_pmdec_corr%2Cg.ra_pmra_corr%2Cg.ra_pmdec_corr%2Cg.dec_pmra_corr%2Cg.dec_pmdec_corr%2Cg.parallax%2Cg.parallax_error%2Cg.astrometric_params_solved%2Cg.ruwe+FROM+gaiadr3.gaia_source+AS+g+JOIN+gaiadr3.gaia_crf3_xm+AS+q+ON+g.source_id%3Dq.source_id"
+      ],
+      "auth_status": "PUBLIC_UNAUTHENTICATED_OBSERVED",
+      "evidence": [
+        {
+          "id": "gaia_crf3_ecsv",
+          "url": "https://www.cosmos.esa.int/documents/29201/1658422/gaiadr3.gaia_crf3_xm.ecsv.gz/644f3657-27bf-0cff-da37-eb6e2478678d?t=1635868539239",
+          "status": 200,
+          "final_url": "https://www.cosmos.esa.int/documents/29201/1658422/gaiadr3.gaia_crf3_xm.ecsv.gz/644f3657-27bf-0cff-da37-eb6e2478678d?t=1635868539239",
+          "bytes_read": 65536,
+          "content_length": "56064899",
+          "content_type": "application/gzip",
+          "content_range": null,
+          "response_partial": true,
+          "sha256_of_observed_bytes": "cf79e84deae55eb284779e1d9795df58befcf09c61c5d76b10b7b07cfb8e2a14",
+          "preview": "\u001f�\b\b�.ya\u0002\u0003gaiadr3.gaia_crf3_xm.ecsv\u0000̽Y�-�u&�^��U��\u001e�<´1��d��R�n[��\\�/Z�\u0014%�6)�\u001c,W���>��\fD$\u0010@d���M�>�ćaO��}���O?����M�����O>�����\u000f_���o��gO?�7�������/ɏ��������_���w�|���\u001f���o?�.��s�>��{��}��\u0017�~�\u0013?��w��\u0007�������\u001f~���o�������_�{��\u0017��e���?���;|��/���/�\u001c��������w\u001fF~����������\u000f_|�{��"
+        },
+        {
+          "id": "gaia_crf3_join_smoke",
+          "url": "https://gaia.ari.uni-heidelberg.de/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+2+g.source_id%2Cg.ra%2Cg.dec%2Cg.pmra%2Cg.pmdec%2Cg.pmra_error%2Cg.pmdec_error%2Cg.pmra_pmdec_corr%2Cg.ra_pmra_corr%2Cg.ra_pmdec_corr%2Cg.dec_pmra_corr%2Cg.dec_pmdec_corr%2Cg.parallax%2Cg.parallax_error%2Cg.astrometric_params_solved%2Cg.ruwe+FROM+gaiadr3.gaia_source+AS+g+JOIN+gaiadr3.gaia_crf3_xm+AS+q+ON+g.source_id%3Dq.source_id",
+          "status": 200,
+          "final_url": "https://gaia.ari.uni-heidelberg.de/tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=csv&QUERY=SELECT+TOP+2+g.source_id%2Cg.ra%2Cg.dec%2Cg.pmra%2Cg.pmdec%2Cg.pmra_error%2Cg.pmdec_error%2Cg.pmra_pmdec_corr%2Cg.ra_pmra_corr%2Cg.ra_pmdec_corr%2Cg.dec_pmra_corr%2Cg.dec_pmdec_corr%2Cg.parallax%2Cg.parallax_error%2Cg.astrometric_params_solved%2Cg.ruwe+FROM+gaiadr3.gaia_source+AS+g+JOIN+gaiadr3.gaia_crf3_xm+AS+q+ON+g.source_id%3Dq.source_id",
+          "bytes_read": 601,
+          "content_length": null,
+          "content_type": "text/csv;charset=UTF-8",
+          "content_range": null,
+          "response_partial": false,
+          "sha256_of_observed_bytes": "cb57e7a84af7aafa7a3a37a7f3f06546babdd12239ea4c8fad8a378a7b90a18f",
+          "preview": "source_id,ra,dec,pmra,pmdec,pmra_error,pmdec_error,pmra_pmdec_corr,ra_pmra_corr,ra_pmdec_corr,dec_pmra_corr,dec_pmdec_corr,parallax,parallax_error,astrometric_params_solved,ruwe\n3470333738112,45.07550473214164,0.15231614381156836,-1.0723705332886277,-3.191010658175275,1.5525069,1.226259,0.20776933,-"
+        },
+        {
+          "decompressed_header": "17externalcatalogue flags includingICRF3S/X,K,XKa; no astrometry in membershiptable",
+          "expected_full_count": "1614173, of which1215942fiveparameter, primarypaperSec3.4"
+        }
+      ],
+      "format": "ECSV.gz membership; TAPCSV joined astrometry",
+      "size_bytes": {
+        "membership_gz_content_length": 56064899
+      },
+      "existing_reuse": "Existing4756framerotator training subset alreadyprocessed; do not relabel as independentcosmiccurl",
+      "what_closes": "Public full-reference membership with17catalogue ancestry; per-source2x2PM covariance fromerrors+corr; new fullsample diagnostics",
+      "what_does_not_close": "GaiaDR3andEDR3 astrometry identical; not independentrepeat. Formal2x2 covariance excludescross-source scanning/frame systematics; spinT1 constrained by frameconstruction. Full joined payload notdownloaded; TOP2only observed.",
+      "priority": 2
+    },
+    {
+      "id": "independent_radio_vlba713",
+      "node_ids": [
+        "K03"
+      ],
+      "official_urls": [
+        "https://arxiv.org/html/1710.02099",
+        "https://cdsarc.cds.unistra.fr/ftp/J/ApJS/233/3/ReadMe"
+      ],
+      "direct_urls": [
+        "https://cdsarc.cds.unistra.fr/ftp/J/ApJS/233/3/table6.dat"
+      ],
+      "auth_status": "PUBLIC_UNAUTHENTICATED_OBSERVED",
+      "evidence": [
+        {
+          "GET": 200,
+          "bytes": 99085,
+          "sha256": "5358da3b6233194cad556010259400b729b7472c5037e39facf1f413e2aa3bff",
+          "rows": 713
+        },
+        {
+          "id": "vlba_readme",
+          "url": "https://cdsarc.cds.unistra.fr/ftp/J/ApJS/233/3/ReadMe",
+          "status": 200,
+          "bytes": 13460,
+          "sha256": "cb6d18077090e27b803924068c2c9a8b52e2991d61882ff6cc502cefe0274b98"
+        }
+      ],
+      "format": "fixed-width713proper-motionASCII",
+      "size_bytes": {
+        "table6": 99085,
+        "ReadMe": 13460
+      },
+      "existing_reuse": null,
+      "what_closes": "Independentradio measurements forVSHgeometry/accelerationcomparison, redshifts and epochspans",
+      "what_does_not_close": "NoRA/DecPMcrosscorrcolumn; NNRframe ties andsourcejets matter; paper warns secularsignal may be attenuated byNNR. No direct cosmicvorticitytransfer or independentframe-freeT1.",
+      "priority": 2
+    },
+    {
+      "id": "cf4_reconstructed_flow_control",
+      "node_ids": [
+        "S02",
+        "H02",
+        "K04"
+      ],
+      "official_urls": [
+        "https://projets.ip2i.in2p3.fr/cosmicflows/",
+        "https://www.aanda.org/articles/aa/full_html/2023/02/aa45331-22/aa45331-22.html"
+      ],
+      "direct_urls": [
+        "https://projets.ip2i.in2p3.fr//cosmicflows/CF4gp_new_64-z008_velocity.fits",
+        "https://projets.ip2i.in2p3.fr//cosmicflows/CF4gp_new_64-z008_velocity_cube_error.fits"
+      ],
+      "auth_status": "PUBLIC_UNAUTHENTICATED_OBSERVED",
+      "evidence": [
+        {
+          "id": "cf4flow_velocity",
+          "url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4gp_new_64-z008_velocity.fits",
+          "status": 206,
+          "final_url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4gp_new_64-z008_velocity.fits",
+          "bytes_read": 65536,
+          "content_length": "65536",
+          "content_type": "application/octet-stream",
+          "content_range": "bytes 0-65535/3150720",
+          "response_partial": true,
+          "sha256_of_observed_bytes": "17ef1e6a3e5166d3080325da65e64d98d8377a9e73121f69908df34c296e1009",
+          "preview": "SIMPLE  =                    T / conforms to FITS standard                      BITPIX  =                  -32 / array data type                                NAXIS   =                    4 / number of array dimensions                     NAXIS1  =                   64                              "
+        },
+        {
+          "author_instruction": "SGZ,SGY,SGX order; multiply velocity and associated errors by52; inspectFITSaxesbeforeapplication"
+        }
+      ],
+      "format": "FITS64^3x3 velocity; errorgrid",
+      "size_bytes": {
+        "velocity": 3150720
+      },
+      "existing_reuse": null,
+      "what_closes": "External-transfer-conditional localflow sensitivity/control",
+      "what_does_not_close": "UsesCF4itself, not independentholdout. Publishedvoxelstd notfulljointcovariance. No selection calibration law or angular cosmictransfer.",
+      "priority": 3
+    },
+    {
+      "id": "cf4pp_reconstruction_current",
+      "node_ids": [
+        "S02",
+        "K04"
+      ],
+      "official_urls": [
+        "https://projets.ip2i.in2p3.fr/cosmicflows/"
+      ],
+      "direct_urls": [
+        "https://projets.ip2i.in2p3.fr//cosmicflows/CF4pp_mean_std_grids.npz",
+        "https://projets.ip2i.in2p3.fr//cosmicflows/retrieve_CF4pp_grid_values.py"
+      ],
+      "auth_status": "PUBLIC_UNAUTHENTICATED_OBSERVED",
+      "evidence": [
+        {
+          "id": "cf4pp_npz",
+          "url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4pp_mean_std_grids.npz",
+          "status": 206,
+          "final_url": "https://projets.ip2i.in2p3.fr//cosmicflows/CF4pp_mean_std_grids.npz",
+          "bytes_read": 65536,
+          "content_length": "65536",
+          "content_type": "application/octet-stream",
+          "content_range": "bytes 0-65535/167773716",
+          "response_partial": true,
+          "sha256_of_observed_bytes": "f43efacfb098c3f338434678ebb9a08358d8ba8a077d200409dc7ab2b208b701",
+          "preview": "PK\u0003\u0004-\u0000\u0000\u0000\u0000\u0000\u0000\u0000!\u00006^\nf��������\u0010\u0000\u0014\u0000d_mean_CF4pp.npy\u0001\u0000\u0010\u0000�\u0000\u0000\u0001\u0000\u0000\u0000\u0000�\u0000\u0000\u0001\u0000\u0000\u0000\u0000�NUMPY\u0001\u0000v\u0000{'descr': '<f8', 'fortran_order': False, 'shape': (128, 128, 128), }                                                 \n�rDL˂�?�\u0010�3���?Q8&ƕ��?6����?Tjy�xF�?\u0011��mL\u0004�?6\\\u00078V�m?Xs4\u001cm�\u0006?�@~W\u0015�z?#X\u0015|#��?�\u0001C�'�?�0W!�6�?��!X�/�?��"
+        },
+        {
+          "id": "cf4flow_script",
+          "url": "https://projets.ip2i.in2p3.fr//cosmicflows/retrieve_CF4pp_grid_values.py",
+          "status": 200,
+          "final_url": "https://projets.ip2i.in2p3.fr//cosmicflows/retrieve_CF4pp_grid_values.py",
+          "bytes_read": 5519,
+          "content_length": "5519",
+          "content_type": "application/octet-stream",
+          "content_range": null,
+          "response_partial": false,
+          "sha256_of_observed_bytes": "d7adc4c9c80242df5b270ffa91f2c29af063f90131cf6a7f6231c0a9b9f481a3",
+          "preview": "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\nCreated on Fri April 18 16:01:15 2025\nUpdated on Oct 13th, 2026\n\n@author: Amber M. Hollinger\n\nCode to extract data, given an ra/l,dec/b,z/v_CMB, from the mean and standard deviations of the density and velocity grids calculated using the HMC realiza"
+        },
+        {
+          "author_page_erratum": "Oct13,2026 radialvr_data corrected; old values otherwise unchanged",
+          "script_filename_mismatch": "link hrefCF4pp_mean_std_grids.npz but label/scriptnew_CF4pp_mean_std_grids.npz; record ratherthan overwriteold identity",
+          "script_bounds": "to_grid_index clipsout-of-domain; downstreammustrejectoutsidecube"
+        }
+      ],
+      "format": "NPZ128^3 mean/std; Pythonreadexample",
+      "size_bytes": {
+        "NPZ": 167773716
+      },
+      "existing_reuse": null,
+      "what_closes": "Currentmodeldependentflow comparison if update is scientificallyneeded",
+      "what_does_not_close": "CF4++not originalCF4. Mean/std10kHMC not samples/fullcovariance. Pipeline assumptions andframe/unitsneedqualifiedmapping.",
+      "priority": 4
+    }
+  ],
+  "gaia_full_query_handoff": {
+    "endpoint": "https://gaia.ari.uni-heidelberg.de/tap/async",
+    "ADQL": "SELECT g.source_id,g.ra,g.dec,g.pmra,g.pmdec,g.pmra_error,g.pmdec_error,g.pmra_pmdec_corr,g.parallax,g.parallax_error,g.astrometric_params_solved,g.ruwe,q.icrf3sx,q.icrf3k,q.icrf3xka,q.dr14q,q.lqac5 FROM gaiadr3.gaia_source AS g JOIN gaiadr3.gaia_crf3_xm AS q ON g.source_id=q.source_id",
+    "status": "NOT_RUN fullquery; TOP2samejoin successful; useUWSasync orchunk bysource_id andcountmembership; retainMAXREC/overflowstatus"
+  },
+  "provenance_notes": [
+    "Exa searchedprimaryCF4HI,CFflow,Pantheon,VSH,VLBApages; SciSpace meaningfulsemanticqueriesreturnedGaiaEDR3accelerationpaperand6dFfundamental-planeprimarypapers.",
+    "Browserweb451/403failures distinctfromsuccessfulshellHTTPSGETs.",
+    "Onlyboundednewdata downloaded; noheavyflowsorfullGaiacatalogue, noODE/solver, noDAGclaimpromotion, no strongno-go theorem."
+  ]
+}

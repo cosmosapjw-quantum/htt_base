@@ -1,0 +1,42 @@
+First analysis attempt: session54273, exit1.
+Command: .venv/bin/python docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D06_FLOW/flow_control.py
+At page = (RAW / 'cosmicflows.html').read_text():
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xa8 in position10248: invalid start byte.
+Raw downloaded HTML unchanged. The page declares ISO-8859-1 and the reader is
+repaired to use that source encoding. This is a metadata parsing failure, not
+flow-field scientific evidence.
+
+Corrected-source analysis attempt: session51284, exit1.
+At vr, sr = grid['vr_mean_CF4pp'].copy(), grid['vr_std_CF4pp'].copy():
+KeyError: 'vr_mean_CF4pp is not a file in the archive'.
+The new source's actual key inventory is inspected before any explicit schema
+adaptation. The official query script and old archive use different key names;
+no source bytes are rewritten and the old/new schema difference is retained.
+
+Corrected-source metadata guard: session65337, exit1.
+ValueError: corrected archive schema differs from inspected seven-key release.
+Inspection shows scalar archive N=9739, while each spatial array is128^3.
+The initial guard incorrectly assumed metadata N meant grid resolution.
+Remove that invented interpretation; keep the exact seven-key inventory guard,
+derive spatial resolution from author script and actual array shapes, and record
+the unconsumed N=9739 field with semantics NOT_PROVIDED_BY_QUERY_SCRIPT.
+
+Finalization sequencing failure: session87057, exit1, 7passed/1failed.
+The worker started identity tests while metadata-refresh generator82494 was
+still running. The stored JSON had generator_sha256
+a11697cb6e8a207cfb7665f1ea47d196bddd6a8e86b2a8542c869871bc98a31c,
+whereas the metadata-edited source had
+003e6b2eabde6ad64df2790e037cbc298baf275dbe572cf3c9f66d7862b4a4d9.
+The test correctly rejected this temporary stale candidate. The chained freeze
+did not execute. Wait for82494 to finish, then rerun identity tests and freeze.
+No raw source or numerical discrepancy was observed in this failed check.
+
+Fresh Astra consolidated P2 boundary finding, independently reproduced before
+the one authorized targeted repair: 96/128 lower-nextafter neighbors of grid
+edges were misclassified by floor((x+500)/delta). In particular
+nextafter(500,-inf) produced index128, and -242.18750000000003 produced33
+instead of32. The finite/[-500,500) domain mask itself was retained.
+Repair uses binary-exact edges linspace(-500,500,129) and
+searchsorted(edges,accepted_coordinates,side='right')-1, without clipping.
+Initial candidate/result copies and original generator remain preserved.
+The full grid analysis and all494host numerical outputs are not rerun.

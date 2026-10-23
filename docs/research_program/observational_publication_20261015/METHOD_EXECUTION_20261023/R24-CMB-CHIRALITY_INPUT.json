@@ -1,0 +1,73 @@
+{
+  "task_id": "R24-CMB-CHIRALITY",
+  "base_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "theory_contract": {
+    "advisor": "/root/frontier_stepback",
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "read-only problemframing and bounded theorycontract; not independentreview",
+    "new_method": "Parity-odd CMB morphology properrotation invariant, mirrororbit separation and same-sky processingsensitivity; supplements reflection-even existing certificates",
+    "inputs": "Exactly60 corrected fullQ/O carriers from source RESULT; preservecompletecarrier,harmonic12,source/product/lmax/windowidentities",
+    "coordinate_convention": "registered5/7 independentSTF components; components interpreted Fraction.from_float(binary64), complete symmetry/traces exactly; q0=o0 EXACT Fraction(1,100000) K_CMB (precheck usedbinaryscale, illustrativevaluesNOTacceptancetargets); dimensionlessQ=T2/q0,O=T3/o0",
+    "estimand": "v_i=O_ijk Q_jk; chi=det[v,Qv,Q^2v];m2=||Q||F^2+||O||F^2; chi/m^9 supplemental normalizedpseudoscalar; fulltensorcarrier retained",
+    "orthogonal_law": "chi(R.Q,R.O)=det(R)chi(Q,O); mirror(Q,-O) has same blocknorms/detQ, oppositechi; exactO3orbitdistance0; nonzerochi provesdistinctSO3orbits",
+    "lower_bound": "d_SO3((Q,O),(Q,-O)) >=abs(chi)/(3*m2^4), exactrationalpositiveifchi!=0",
+    "proof": "OnjointFrobeniusballradiusM: ||Dv[h]||<=M||h||, ||D(Qv)[h]||<=2M^2||h||, ||D(Q^2v)[h]||<=3M^3||h||; columnsnorms<=M^2,M^3,M^4. Determinantmultilinearity/Hadamard yields |Dchi[h]|<=6M^8||h||. Bothendpointsnormm,segmentinballm,invariantdifference2abschi; infSO3 givesbound. Independentreviewmustverifyconstants.",
+    "perturbation_rho": [
+      0,
+      1e-06,
+      1e-05,
+      0.0001,
+      0.001,
+      0.05
+    ],
+    "perturbation_certificate": "Forr=rho*m, exactrational strictchi^2>36*rho^2*(1+rho)^16*m2^9 certifiessignpreservation; failureINCONCLUSIVE, notactualsignreversal; radiusSCENARIOnotmeasuredforeground",
+    "zero_strata": "chi=0INCONCLUSIVEaboutachirality; m=0normalizedundefined; zeros retained notfloored; exactzero decisions notfloatthreshold",
+    "controls": [
+      "Exactinversionandtwo rational-quaternionproperrotations",
+      "STFfixtureQdiag(1,2,-3), independentO(1,0,0,0,0,1,1):v(4,5,5),chi2000",
+      "zeroO,zeroQ,repeatedQeigenvalues,eigenvectoralignedcontraction",
+      "exactSTFcompletion roundedvsregistereddecoder scaled1e-12; reportscale/completionroundingdifferences",
+      "Independent90and130decimalcontractions/determinant agreewithexactrationalnonzero rel1e-60",
+      "All60reported; fullprimary/HM/OE/windowsigncomparisons,samesky-notindependent,nomatchedp"
+    ],
+    "outputs": [
+      "FullcarrierpreservingRESULT and exactrationalcertificates",
+      "Sourceboundprocessingsensitivityfigurewithallstrata/scenarios",
+      "Code/targetedtests/rawreceipt/manifest/report/proofconditions"
+    ],
+    "limits": {
+      "saved_bundles": 60,
+      "production_seconds": 120,
+      "tests_seconds": 180,
+      "max_RSS_MiB": 512,
+      "BLAS_threads": 1,
+      "no_maps_catalogues_refits_downloads_solver_ODE_optimizer": true,
+      "one_candidate_and_at_most_one_bounded_repair": true,
+      "no_ultra": true
+    },
+    "scope": "finitecarrierconditionaldiscriminator only; totalfieldmatchedlaw/commonmode/physicalattribution/R9/originalacceptanceunchanged"
+  },
+  "sources": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/RESULT.json",
+      "sha256": "107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb",
+      "bytes": 121214
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/MANIFEST.json",
+      "sha256": "5f21c1bde07b030fa94d9ad8989605fbb089c6da34c125f31be5c189c098e30e",
+      "bytes": 2032
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CMB_REVIEW_FINAL_RAW.json",
+      "sha256": "09969cab58099842436fd59145d02a0a30c0b6468e7297e7570a6f49d36cba19",
+      "bytes": 1852
+    },
+    {
+      "path": "htt/obsstat/planck_lowell_irrep_projection.py",
+      "sha256": "ecccebc39c4814546552b9fbc6b6ed798cc644fec1f6616a26003fda17932216",
+      "bytes": 9728
+    }
+  ]
+}

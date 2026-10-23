@@ -1,0 +1,299 @@
+{
+  "owner": "obsstat",
+  "status": "DIAGNOSTIC_ONLY",
+  "claim_tier": "C0",
+  "scope": "six source-claimed EDD records in public NumCosmo test fixture; not a full EDD export",
+  "transfer_source": "none",
+  "source_url": "https://github.com/NumCosmo/NumCosmo/blob/91ecab49a0b3c48846fd128cd8ada8c7ca6e0620/tests/python/conftest.py",
+  "source_sha256": "3580ef81c7860c63f476bfb2c03b02120b5e34da9573885aef28f456d53c2440",
+  "source_claimed_export_date": "2026-10-17",
+  "header_lines": 5,
+  "record_count": 6,
+  "field_count": 45,
+  "PGCs": [
+    250,
+    282,
+    415,
+    465,
+    515,
+    963
+  ],
+  "derived_identity_csv_sha256": "c4ab6c2451dfb54940710adad80fdf8cbc4df0c961a5b5214cf4f0d9ae0516d4",
+  "schema": [
+    {
+      "name": "pgc",
+      "format": "%7s",
+      "unit": "---",
+      "description": "The Catalogue of Principal Galaxies (PGC) Number"
+    },
+    {
+      "name": "SNIa",
+      "format": "%17s",
+      "unit": "",
+      "description": "SNIa name; multiple SN ID separated by /"
+    },
+    {
+      "name": "IDT17g",
+      "format": "%5d",
+      "unit": "",
+      "description": "Group ID in Tempel 2017 SDSS group catalog"
+    },
+    {
+      "name": "1PGC",
+      "format": "%7d",
+      "unit": "",
+      "description": "PGC identification of brightest member of group"
+    },
+    {
+      "name": "Vcmb",
+      "format": "%5d",
+      "unit": "km/s",
+      "description": "Radial velocity (cz) with respect to the CMB radiation"
+    },
+    {
+      "name": "Vmod",
+      "format": "%5d",
+      "unit": "km/s",
+      "description": "Velocity in CMB frame; cosmological adjustment described in CF2 data paper"
+    },
+    {
+      "name": "DM_zp",
+      "format": "%6.3f",
+      "unit": "mag",
+      "description": "Weighted average distance modulus shifted to absolute scale set by calibrators"
+    },
+    {
+      "name": "DM_av",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Weighted average distance moduli (w=1/sigma^2) [excluding Walker+15]"
+    },
+    {
+      "name": "eDM",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Minimum error of all measured moduli"
+    },
+    {
+      "name": "DM_pantheonplus",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "SNIa distance moduli in Scolnic Pantheonplus20"
+    },
+    {
+      "name": "eDM_pantheonplus",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "rms dispersion of the Pantheonplus20 distance measures (adding 0.15 mag in quadrature)"
+    },
+    {
+      "name": "DM_scolnic",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "distance moduli in Scolnic SNIa 3 Tables on the Pantheonplus20 scales"
+    },
+    {
+      "name": "eDM_scolnic",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "rms dispersion of the Scolnic 3 Tables distance measures (adding 0.15 mag in quadrature)"
+    },
+    {
+      "name": "DM_csp1",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "distance moduli in CSP1 Burns18 (Burns+2018,ApJ,869:56) on the Pantheonplus20 scales"
+    },
+    {
+      "name": "eDM_csp1",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "rms dispersion of the CSP1 Burns18 distance measures (adding 0.15 mag in quadrature)"
+    },
+    {
+      "name": "DM_ganesh",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "distance moduli in LOSS Ganeshalingam13 (Ganeshalingam+2013,MNRAS,433,2240) on the Pantheonplus20 scales"
+    },
+    {
+      "name": "eDM_ganesh",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "rms dispersion of the LOSS Ganeshalingam13 distance measures (adding 0.15 mag in quadrature)"
+    },
+    {
+      "name": "DM_rest",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Rest+ (2014,ApJ,795:44) distance moduli in All CF3 SNIa on the Pantheonplus20 scales"
+    },
+    {
+      "name": "eDM_rest",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "rms dispersion of the Rest+ distance measures (adding 0.15 mag in quadrature)"
+    },
+    {
+      "name": "DM_amanullah",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Union2 (Amanullah et. 2010,ApJ,716,712) distance moduli in All CF3 SNIa on the Pantheonplus20 scales"
+    },
+    {
+      "name": "eDM_amanullah",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "rms dispersion of the Union2 distance measures (adding 0.15 mag in quadrature)"
+    },
+    {
+      "name": "DM_jha",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Jha et al. (2007,ApJ,659,122) distance moduli in All CF3 SNIa on the Pantheonplus20 scales"
+    },
+    {
+      "name": "eDM_jha",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "rms dispersion of the Jha"
+    },
+    {
+      "name": "DM_prieto",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Prieto et al. (2006,ApJ,647,501) distance moduli in All CF3 SNIa on the Pantheonplus20 scales"
+    },
+    {
+      "name": "eDM_prieto",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "rms dispersion of the Prieto"
+    },
+    {
+      "name": "DM_hicken",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Hicken et al. (2009,ApJ,700,109) distance moduli in All CF3 SNIa on the Pantheonplus20 scales"
+    },
+    {
+      "name": "eDM_hicken",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "rms dispersion of the Hicken"
+    },
+    {
+      "name": "DM_folatelli",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Folatelli et al. (2010,AJ,139,120) distance moduli in All CF3 SNIa on the Pantheonplus20 scales"
+    },
+    {
+      "name": "eDM_folatelli",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "rms dispersion of the Folatelli"
+    },
+    {
+      "name": "DM_walker",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Walker et al. (2015,ApJS,219:13) distance moduli on CF2 scale"
+    },
+    {
+      "name": "eDM_walker",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "rms dispersion of the Walker"
+    },
+    {
+      "name": "DM_stahl",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Stahl et al. (2021,MNRAS,505,2300) distance moduli on Stahl"
+    },
+    {
+      "name": "eDM_stahl",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "rms dispersion of the Stahl"
+    },
+    {
+      "name": "DM_sh0es",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Pantheon+SH0ES (2021,arXiv:2112.04510) distance moduli on SH0ES scale"
+    },
+    {
+      "name": "eDM_sh0es",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Error estimates for Pantheonplus+SH0ES measures of corrected peak B magnitude"
+    },
+    {
+      "name": "DM_twins",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Boone et al. (2021,ApJ, 912, 21) distance moduli on scale assuming H0=75"
+    },
+    {
+      "name": "eDM_twins",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Mean rms dispersion of twin sample distance measures"
+    },
+    {
+      "name": "DM_avelino",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Avelino et al. (2019,ApJ, 887, 106); best of YJHK template or YJHK IRmax distance moduli on scale assuming H0=73.24"
+    },
+    {
+      "name": "eDM_avelino",
+      "format": "%5.2f",
+      "unit": "mag",
+      "description": "Approximated rms dispersion of Avelino distance measures"
+    },
+    {
+      "name": "RA",
+      "format": "%9.4f",
+      "unit": "deg",
+      "description": "Right Ascension of host, J2000"
+    },
+    {
+      "name": "DE",
+      "format": "%9.4f",
+      "unit": "deg",
+      "description": "Declination of host, J2000"
+    },
+    {
+      "name": "glon",
+      "format": "%9.4f",
+      "unit": "deg",
+      "description": "Galactic longitude of host"
+    },
+    {
+      "name": "glat",
+      "format": "%9.4f",
+      "unit": "deg",
+      "description": "Galactic latitude of host"
+    },
+    {
+      "name": "sgl",
+      "format": "%9.4f",
+      "unit": "deg",
+      "description": "Supergalactic longitude of host"
+    },
+    {
+      "name": "sgb",
+      "format": "%9.4f",
+      "unit": "deg",
+      "description": "Supergalactic latitude of host"
+    }
+  ],
+  "caveats": [
+    "Source fixture labels itself as the first six rows of an EDD export; live EDD was not queried.",
+    "No entire-catalogue contributor completeness, row independence, selection law or covariance inferred.",
+    "No upstream Python, notebook or serialized .gvar object executed or loaded."
+  ]
+}

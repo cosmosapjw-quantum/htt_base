@@ -1,0 +1,49 @@
+test_redirect_range_one_request_no_body_no_append (test_resume_acquisition.DirectHTTPBoundaries.test_redirect_range_one_request_no_body_no_append) ... FAIL
+test_429_range_metadata_preserved_without_retry (test_resume_acquisition.DirectHTTPBoundaries.test_429_range_metadata_preserved_without_retry) ... FAIL
+test_redirect_metadata_one_request_no_body (test_resume_acquisition.DirectHTTPBoundaries.test_redirect_metadata_one_request_no_body) ... FAIL
+test_429_metadata_headers_preserved_without_retry (test_resume_acquisition.DirectHTTPBoundaries.test_429_metadata_headers_preserved_without_retry) ... FAIL
+
+======================================================================
+FAIL: test_redirect_range_one_request_no_body_no_append (test_resume_acquisition.DirectHTTPBoundaries.test_redirect_range_one_request_no_body_no_append)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 197, in test_redirect_range_one_request_no_body_no_append
+    self.assert_range_rejection([302, 302, 206])
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 184, in assert_range_rejection
+    self.assertEqual(len(fixture.calls), 1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_429_range_metadata_preserved_without_retry (test_resume_acquisition.DirectHTTPBoundaries.test_429_range_metadata_preserved_without_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 200, in test_429_range_metadata_preserved_without_retry
+    self.assert_range_rejection([429])
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 184, in assert_range_rejection
+    self.assertEqual(len(fixture.calls), 1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_redirect_metadata_one_request_no_body (test_resume_acquisition.DirectHTTPBoundaries.test_redirect_metadata_one_request_no_body)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 219, in test_redirect_metadata_one_request_no_body
+    self.assert_metadata_rejection([302, 302, 200])
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 208, in assert_metadata_rejection
+    self.assertEqual(len(fixture.calls), 1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_429_metadata_headers_preserved_without_retry (test_resume_acquisition.DirectHTTPBoundaries.test_429_metadata_headers_preserved_without_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 222, in test_429_metadata_headers_preserved_without_retry
+    self.assert_metadata_rejection([429])
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/SDSS_SOURCE_NULL_20261018/test_resume_acquisition.py", line 208, in assert_metadata_rejection
+    self.assertEqual(len(fixture.calls), 1)
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 4 tests in 4.727s
+
+FAILED (failures=4)

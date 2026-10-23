@@ -1,0 +1,18 @@
+{
+  "task_id": "R24-TENSOR-BUNDLE",
+  "input_sha256": "29b5e234b1c8573384d9b41876d1a244014bda1cae2159fff17d5609a4646ed5",
+  "test_command": "python -m pytest -q test_adapter.py",
+  "test_outcome": "5 passed",
+  "first_failure": "TEST_INITIAL_FAILURE.txt",
+  "metrics": {
+    "Y18_reconstruction_max_abs": 2.220446049250313e-16,
+    "Y18_to_Z18_covariance_max_abs_vs_source": 6.976641486744484e-13,
+    "quadratic_relative_error": 8.052290739669699e-16,
+    "fisher_max_abs_error": 1.7763568394002505e-14,
+    "M24_to_Y18_rank": 18,
+    "M24_to_Y18_nullity": 6,
+    "M24_null_witness_residual": 0.0,
+    "contrast_only_rank": 12,
+    "common_mode_contrast_norm": 0.0
+  }
+}

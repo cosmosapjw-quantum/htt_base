@@ -1,0 +1,184 @@
+--- PRE_REPAIR/envelope.py
++++ envelope.py
+@@ -59,6 +59,21 @@
+ def cross_power_expectation(common: np.ndarray, cross_noise_trace: float) -> float:
+     """E[d1·d2] for centered split-specific noise, with tr N12 retained."""
+     return float(np.dot(common, common) + cross_noise_trace)
++
++
++def lower_at_rho(row: dict, rho: float) -> float:
++    """Clipped T3 lower certificate, including points between tabulated radii."""
++    if rho < 0:
++        raise ValueError("negative rho")
++    return max(0.0, row["base_lower"] - rho *
++               (row["full_norm_first"] + row["full_norm_second"]))
++
++
++def plot_lower_vertices(row: dict) -> list[tuple[float, float]]:
++    """Insert the exact clipping kink before connecting scenario points."""
++    threshold = row["rho_at_zero_lower"]
++    grid = sorted(set(RHO) | ({threshold} if 0 < threshold < RHO[-1] else set()))
++    return [(rho, 0.0 if rho == threshold else lower_at_rho(row, rho)) for rho in grid]
+ 
+ 
+ def compute() -> dict:
+@@ -136,6 +151,11 @@
+     split_residual = float(np.max(np.abs(np.diff(observed, axis=0) - np.diff(transformed, axis=0))))
+     if witness_residual > 1e-12 or split_residual > 1e-12:
+         raise ArithmeticError("common mode witness failed")
++    noise_vector = np.array([1.0, 2.0])
++    noise_samples = np.stack([noise_vector, -noise_vector])
++    cross_cov = np.mean([np.outer(n, n) for n in noise_samples], axis=0)
++    cross_trace = float(np.trace(cross_cov))
++    cross_power = float(np.mean([np.dot(n, n) for n in noise_samples]))
+     return {"task_id": "R24-CMB-ENVELOPE", "packet_id": PACKET,
+             "input_identity": "sha256:" + INPUT_HASH, "consumed_candidate": "sha256:" + SOURCE_HASH,
+             "owner": "obsstat", "status": "CONDITIONAL_DIAGNOSTIC_ONLY", "claim_tier": "C0",
+@@ -153,8 +173,15 @@
+                                     "conclusion": "unbounded source/foreground ambiguity without an external constraint"},
+             "cross_noise": {"cross_power_formula": "E[d1 dot d2]=||g+f_common||^2+tr(N12) when centered split-specific terms are absent",
+                             "trN12": "UNKNOWN", "zero_assumption": False,
+-                            "counterexample": {"n1": [1.0, 2.0], "n2": [1.0, 2.0],
+-                                               "trN12": 5.0, "zero_common_cross_power": 5.0}},
++                            "counterexample": {"law": "equiprobable S in {-1,+1}; n1=n2=S*(1,2)",
++                                               "sample_probabilities": [0.5, 0.5],
++                                               "n1_samples": noise_samples.tolist(),
++                                               "n2_samples": noise_samples.tolist(),
++                                               "mean_n1": noise_samples.mean(axis=0).tolist(),
++                                               "mean_n2": noise_samples.mean(axis=0).tolist(),
++                                               "N12": cross_cov.tolist(),
++                                               "trN12": cross_trace,
++                                               "zero_common_cross_power": cross_power}},
+             "joint_state": "within one operator, one shared processed h; cross-operator physical coupling is unavailable without a source-to-operator map; pairwise extrema and support directions are not jointly sharp",
+             "support_interpretation": "finite processing set convex-hull support at 24 dual-unit directions; no nonconvex stratum recovery",
+             "p_value": None, "berger_boos_p": None, "physical_Pi": None,
+@@ -169,7 +196,12 @@
+     rows = [x for x in result["comparisons"] if x["lmax"] == 32 and x["comparison"] == "split_vs_full"]
+     fig, ax = plt.subplots(1, 2, figsize=(12, 4.5))
+     for row in rows:
+-        ax[0].plot(RHO, [s["certified_outer_lower"] for s in row["scenarios"]], marker="o", label=row["product"])
++        vertices = plot_lower_vertices(row)
++        color = ax[0].plot([v[0] for v in vertices], [v[1] for v in vertices],
++                           label=row["product"])[0].get_color()
++        ax[0].scatter(RHO, [s["certified_outer_lower"] for s in row["scenarios"]],
++                      color=color, s=22)
++        ax[0].scatter([row["rho_at_zero_lower"]], [0.0], color=color, marker="x", s=45)
+     ax[0].set(xlabel="rho = radius / ||full||", ylabel="certified lower (invariant norm)",
+               title="Primary L32 split vs full")
+     ax[0].legend(fontsize=8)
+--- PRE_REPAIR/test_envelope.py
++++ test_envelope.py
+@@ -70,10 +70,33 @@
+ 
+ 
+ def test_nonzero_cross_noise_and_missing_law():
+-    n = np.array([1.0, 2.0])
+-    assert envelope.cross_power_expectation(np.zeros(2), float(n @ n)) == 5.0
+     result = envelope.compute()
++    example = result["cross_noise"]["counterexample"]
++    n1, n2 = np.array(example["n1_samples"]), np.array(example["n2_samples"])
++    weights = np.array(example["sample_probabilities"])
++    assert np.max(np.abs(weights @ n1)) < 1e-12
++    assert np.max(np.abs(weights @ n2)) < 1e-12
++    covariance = sum(p * np.outer(a, b) for p, a, b in zip(weights, n1, n2))
++    assert np.array_equal(covariance, np.array([[1.0, 2.0], [2.0, 4.0]]))
++    assert np.array_equal(covariance, np.array(example["N12"]))
++    assert np.trace(covariance) == example["trN12"] == 5.0
++    assert envelope.cross_power_expectation(np.zeros(2), float(np.trace(covariance))) == example["zero_common_cross_power"] == 5.0
+     assert result["cross_noise"]["trN12"] == "UNKNOWN"
+     assert result["cross_noise"]["zero_assumption"] is False
+     assert result["p_value"] is None and result["berger_boos_p"] is None
+     assert result["physical_Pi"] is None
++
++
++def test_plot_vertices_include_exact_clipping_kink():
++    result = envelope.compute()
++    rows = [x for x in result["comparisons"] if x["lmax"] == 32 and x["comparison"] == "split_vs_full"]
++    for row in rows:
++        threshold = row["rho_at_zero_lower"]
++        vertices = envelope.plot_lower_vertices(row)
++        assert any(abs(rho - threshold) < 1e-15 and y == 0 for rho, y in vertices)
++        assert envelope.lower_at_rho(row, threshold * 0.5) > 0
++        assert envelope.lower_at_rho(row, (threshold + 0.25) * 0.5) == 0
++        assert envelope.lower_at_rho(row, 0.25) == 0
++    oe1 = next(x for x in rows if x["product"] == "oe1")
++    assert abs(oe1["rho_at_zero_lower"] - 0.141120312637) < 1e-11
++    assert envelope.lower_at_rho(oe1, 0.20) == 0
+--- PRE_REPAIR/REPORT.md
++++ REPORT.md
+@@ -12,7 +12,7 @@
+ 
+ For an orbit interval `[L,U]` from the corrected result, the certified outer interval is `[max(0,L-r1-r2), U+r1+r2]`. The lower uses the already certified R24 lower; the upper uses its feasible proper-rotation witness and the T3 Lipschitz inequality. This is a conservative *pairwise* envelope. For splits under the same processing operator, the contaminant is one shared processed `h`; choosing an independent `h` for each split would overstate joint sharpness. Across primary/cached/window operators, a source-to-operator nuisance response has not been supplied. Those rows are separate scenario envelopes, not one joint physical confidence set.
+ 
+-At primary L32, the invariant full norm is `0.04482329297137265`. The four split-vs-full lower bounds at zero radius are `0.01644129` (HM1), `0.01631026` (HM2), `0.01265095` (OE1), and `0.01801714` (OE2). Their lower-bound zero thresholds in `rho` are respectively `0.183401`, `0.181940`, `0.141120`, and `0.200980`. All four stay positive at `rho=.10`; all four are zero at `.25`. All 15 primary-versus-cached zero-window lower bounds are zero by `.05`. For the 30 cached window comparisons, 9 are zero at `.10`, 27 at `.25`, and all 30 at `.50`. The figure shows the primary L32 widening. These are loss-of-discrimination thresholds of this particular lower certificate, not proof that the true orbit distances vanish.
++At primary L32, the invariant full norm is `0.04482329297137265`. The four split-vs-full lower bounds at zero radius are `0.01644129` (HM1), `0.01631026` (HM2), `0.01265095` (OE1), and `0.01801714` (OE2). Their lower-bound zero thresholds in `rho` are respectively `0.183401`, `0.181940`, `0.141120`, and `0.200980`. All four stay positive at `rho=.10`; all four are zero at `.25`. The plotted line includes each exact clipping threshold as a vertex; the original straight segment from `.10` to `.25` was not the clipped certificate (for OE1, the true lower at `.20` is zero). All 15 primary-versus-cached zero-window lower bounds are zero by `.05`. For the 30 cached window comparisons, 9 are zero at `.10`, 27 at `.25`, and all 30 at `.50`. The figure shows the primary L32 widening. These are loss-of-discrimination thresholds of this particular lower certificate, not proof that the true orbit distances vanish.
+ 
+ `RESULT.json` also recomputes support at 24 signed coordinate functionals of the orthonormal invariant representation. Each has dual norm one, so a radius `r` changes its finite-set support by at most `±r` in the same dimensionless invariant units. The five processed products within an operator form one finite set; its support summarizes the convex hull at these directions. It cannot recover disconnected, chiral, or other nonconvex processing strata, nor certify all unsearched directions. Separate support-direction endpoints generally require different `h` and are not simultaneously sharp.
+ 
+@@ -20,7 +20,7 @@
+ 
+ Write each observed split as `d_s=g+f_common+f_s+n_s`. For any tensor `h`, the transformation `g→g+h`, `f_common→f_common−h` leaves *every* `d_s` unchanged. The executable witness uses `||h||=1000||v_full||`, with maximum observed residual `1.10e-15` and exactly zero split-difference residual; scaling `h` remains unrestricted. A split contrast removes both `g` and `f_common`, so small split differences cannot set a finite bound on common foreground or identify a physical source.
+ 
+-Cross-split expected power includes `tr(N12)`. Its value is `UNKNOWN` here. A two-coordinate counterexample with correlated noises `n1=n2=(1,2)` and zero common field gives cross power 5, while a zero-cross-noise assumption would incorrectly predict zero. There is no matched total-field law, calibrated p-value, numerical Berger–Boos p-value, physical `Pi`, or physical attribution. A valid law would need the matched processed total-field/noise joint distribution, including split cross-noise, and a justified common-foreground nuisance set. A physical shared-`h` comparison across products additionally needs the source-to-each-operator response and frequency/template constraint with the same mask, beam, and windows. No available cached product here supplies those bindings.
++Cross-split expected power includes `tr(N12)`. Its value is `UNKNOWN` here. A centered two-coordinate counterexample takes equiprobable `S=±1` and `n1=n2=S(1,2)`. Both means are zero, `N12=[[1,2],[2,4]]`, and the zero-common-field expected cross power is `tr(N12)=5`; a zero-cross-noise assumption would incorrectly predict zero. There is no matched total-field law, calibrated p-value, numerical Berger–Boos p-value, physical `Pi`, or physical attribution. A valid law would need the matched processed total-field/noise joint distribution, including split cross-noise, and a justified common-foreground nuisance set. A physical shared-`h` comparison across products additionally needs the source-to-each-operator response and frequency/template constraint with the same mask, beam, and windows. No available cached product here supplies those bindings.
+ 
+ | Claim | Owner | Status | Evidence | Ceiling |
+ | --- | --- | --- | --- | --- |
+--- PRE_REPAIR/RESULT.json
++++ RESULT.json
+@@ -8746,13 +8746,48 @@
+     "trN12": "UNKNOWN",
+     "zero_assumption": false,
+     "counterexample": {
+-      "n1": [
+-        1.0,
+-        2.0
+-      ],
+-      "n2": [
+-        1.0,
+-        2.0
++      "law": "equiprobable S in {-1,+1}; n1=n2=S*(1,2)",
++      "sample_probabilities": [
++        0.5,
++        0.5
++      ],
++      "n1_samples": [
++        [
++          1.0,
++          2.0
++        ],
++        [
++          -1.0,
++          -2.0
++        ]
++      ],
++      "n2_samples": [
++        [
++          1.0,
++          2.0
++        ],
++        [
++          -1.0,
++          -2.0
++        ]
++      ],
++      "mean_n1": [
++        0.0,
++        0.0
++      ],
++      "mean_n2": [
++        0.0,
++        0.0
++      ],
++      "N12": [
++        [
++          1.0,
++          2.0
++        ],
++        [
++          2.0,
++          4.0
++        ]
+       ],
+       "trN12": 5.0,
+       "zero_common_cross_power": 5.0

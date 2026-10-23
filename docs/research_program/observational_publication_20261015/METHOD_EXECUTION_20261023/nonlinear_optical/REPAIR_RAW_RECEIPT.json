@@ -1,0 +1,52 @@
+{
+  "task_id": "R24-OPTICAL-NONLINEAR-QUOTIENT",
+  "agent_id": "/root/nonlinear_optical",
+  "input_identity": "sha256:2267073c3678dc98ae63508efd80473ace82d150f7aa1c36246783110786ffa0",
+  "base_packet_id": "47c0540b6c230d5688a97c420c89456bcf4da6b06007ca33796d2419f45ffeb5",
+  "base_candidate_identity": "sha256:d7709c3b1d5efeb2f957ff8d91587eaea335fabfebf9103fdb70dd225c2a8bf0",
+  "candidate_identity": "sha256:b93c13623afdc23215df241ca887fdf0341b56b01a3c840ef03d2280306c2b2c",
+  "raw_receipt_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/nonlinear_optical/REPAIR_RAW_RECEIPT.json",
+  "base_raw_receipt_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/nonlinear_optical/RAW_RECEIPT.json",
+  "archive_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/nonlinear_optical/pre_repair_candidate_d7709c3b",
+  "result_sha256_before_after": "7e08bebd971035c6df931bb42855a102112273d9631996d0b7391a56d313d485",
+  "commands": [
+    {
+      "command": "timeout 180s env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -B -m pytest -q .../nonlinear_optical/test_plot.py",
+      "exit_code": 1,
+      "stdout": "REPAIR_FIRST_FAILURE.txt",
+      "failure": "test incorrectly expected rho=.05 among frozen markers; stored grid has .01 and .1"
+    },
+    {
+      "command": "timeout 180s env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -B -m pytest -q .../nonlinear_optical/test_plot.py",
+      "exit_code": 1,
+      "failure": "test required exact .05 from frozen marker storing 0.049999999999999975; marker retained"
+    },
+    {
+      "command": "timeout 180s env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -B -m pytest -q .../nonlinear_optical/test_plot.py",
+      "exit_code": 0,
+      "wall_seconds": 5.848,
+      "stdout": "REPAIR_TEST_STDOUT.txt",
+      "stderr": "REPAIR_TEST_STDERR.txt",
+      "tests_passed": 2
+    },
+    {
+      "command": "timeout 180s env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLBACKEND=Agg python -B .../nonlinear_optical/plot.py",
+      "exit_code": 0,
+      "wall_seconds": 9.027,
+      "stdout": "REPAIR_PLOT_STDOUT.txt",
+      "stderr": "REPAIR_PLOT_STDERR.txt"
+    }
+  ],
+  "validation_evidence": {
+    "focused_plot_tests": "2 passed, 1 optional Axes3D import warning",
+    "all_192_fixed_rows_times_4_noise_cases": "analytic grid includes exact overlap and .05 plateau",
+    "frozen_remainder_markers": "retained verbatim",
+    "figure": "PNG and PDF regenerated",
+    "report_table_header": "one line with rho=.01",
+    "RESULT_json_sha256_unchanged": "7e08bebd971035c6df931bb42855a102112273d9631996d0b7391a56d313d485",
+    "original_manifest_sha256_unchanged": "d7709c3b1d5efeb2f957ff8d91587eaea335fabfebf9103fdb70dd225c2a8bf0"
+  },
+  "outcome": "SUCCESS_SCOPED_FIGURE_REPORT_REPAIR_PENDING_INDEPENDENT_CLOSEOUT",
+  "physical_attribution": "HOLD_UNMEASURED_REMAINDER",
+  "original_acceptance_promoted": false
+}

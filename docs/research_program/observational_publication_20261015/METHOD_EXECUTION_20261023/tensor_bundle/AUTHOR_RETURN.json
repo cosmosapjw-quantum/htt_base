@@ -1,0 +1,27 @@
+{
+  "task_id": "R24-TENSOR-BUNDLE",
+  "packet_id": "e0e4fe55a9a7a2aafe9156b29d4ae05a6b5be7380f047169dd325842f82bd443",
+  "agent_id": "/root/tensor_bundle",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "input_identity": "sha256:29b5e234b1c8573384d9b41876d1a244014bda1cae2159fff17d5609a4646ed5",
+  "source_candidate": "sha256:68aa65ba81bce4bfa61a2d7c9c302a7c77068325b80ef69d55fcc89f9272a2de",
+  "candidate_identity": "sha256:39f15bd86ecd76907beef05fcfa09fe57c48d5536218b3e4840311783e9bfc7a",
+  "outcome": "success",
+  "raw_receipt": "RAW_RECEIPT.json",
+  "validation_evidence": {
+    "path": "VALIDATION.json",
+    "test_command": "python -m pytest -q test_adapter.py",
+    "test_outcome": "5 passed",
+    "first_failure": "TEST_INITIAL_FAILURE.txt",
+    "quadratic_relative_error": 8.052290739669699e-16,
+    "fisher_max_abs_error": 1.7763568394002505e-14,
+    "M24_to_Y18_rank": 18,
+    "M24_to_Y18_nullity": 6
+  },
+  "qualified_products": [
+    "tensor_scenario"
+  ],
+  "scientific_admission": "HOLD: conditional reference scenario only; no calibrated survey coverage, physical law, MES anchor or R9 alpha",
+  "independent_review": "PENDING"
+}

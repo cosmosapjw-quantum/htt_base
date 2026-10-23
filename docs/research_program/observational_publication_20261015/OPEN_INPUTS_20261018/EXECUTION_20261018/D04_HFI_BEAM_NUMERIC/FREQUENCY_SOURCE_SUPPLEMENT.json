@@ -1,0 +1,814 @@
+{
+  "status": "REVIEW_EVIDENCE_COMPLETION_ONLY",
+  "owner": "obsstat",
+  "claim_tier": "C0",
+  "numerical_results_changed": false,
+  "reason": "Fresh reviewer requested literal upstream frequency declaration and connected E/B weight/coaddition source lines omitted by previous source_lines filter",
+  "authorization": "Astra /root/pantheon_source_response_review one bounded prefix-only completion; no numerical rerun",
+  "archive": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/weights/COM_Code_SMICA-weights-propagation_R3.00.tar.gz",
+    "sha256": "044ec9bed746ae745ad35a8b6ccf6e603f546083fec328e9c64d866ac9221f93"
+  },
+  "source_member": {
+    "name": "smica_coadd.py",
+    "ordinal": 2,
+    "bytes": 6430,
+    "sha256": "dd1f9c2435cae456b4cc0445b7257b360d01a73754455d11ea409252d3788160",
+    "raw_create_only_external_path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/weights/D04_HFI_BEAM_NUMERIC_smica_coadd_R3.00.py.source"
+  },
+  "prefix_members_reached": [
+    {
+      "ordinal": 1,
+      "name": "README",
+      "size": 2515
+    },
+    {
+      "ordinal": 2,
+      "name": "smica_coadd.py",
+      "size": 6430
+    }
+  ],
+  "gzip_validation": "PREFIX_ONLY; no new whole-archive EOF/CRC validation claimed",
+  "upstream_source_imported_or_executed": false,
+  "line_numbered_source": [
+    {
+      "line": 1,
+      "text": "#!/usr/bin/env python"
+    },
+    {
+      "line": 2,
+      "text": "import healpy as hp"
+    },
+    {
+      "line": 3,
+      "text": "import os.path as op"
+    },
+    {
+      "line": 4,
+      "text": "import glob"
+    },
+    {
+      "line": 5,
+      "text": "import numpy as np"
+    },
+    {
+      "line": 6,
+      "text": "import pyfits as pf"
+    },
+    {
+      "line": 7,
+      "text": ""
+    },
+    {
+      "line": 8,
+      "text": "# ancillary data"
+    },
+    {
+      "line": 9,
+      "text": "tmask = hp.read_map(\"transition_mask.fits.gz\")"
+    },
+    {
+      "line": 10,
+      "text": "W = dict()"
+    },
+    {
+      "line": 11,
+      "text": "W[\"X1\"] = np.loadtxt(\"weights_T_smica_R3.00_Xfull.txt\")"
+    },
+    {
+      "line": 12,
+      "text": "W[\"X2\"] = np.loadtxt(\"weights_T_smica_R3.00_Xhigh.txt\")"
+    },
+    {
+      "line": 13,
+      "text": "W_pol = np.loadtxt(\"weights_EB_smica_R3.00.txt\").reshape(2,7,4001)"
+    },
+    {
+      "line": 14,
+      "text": ""
+    },
+    {
+      "line": 15,
+      "text": "# constants"
+    },
+    {
+      "line": 16,
+      "text": "names = [\"030\", \"044\", \"070\", \"100\", \"143\", \"217\", \"353\", \"545\", \"857\"]"
+    },
+    {
+      "line": 17,
+      "text": "isel = dict()"
+    },
+    {
+      "line": 18,
+      "text": "isel[\"X1\"] = np.array([int(i) for i in \"012345678\"], dtype='int') # channel selection"
+    },
+    {
+      "line": 19,
+      "text": "isel[\"X2\"] = np.array([int(i) for i in \"345678\"], dtype='int')"
+    },
+    {
+      "line": 20,
+      "text": ""
+    },
+    {
+      "line": 21,
+      "text": ""
+    },
+    {
+      "line": 22,
+      "text": "unit_to = 'uK_CMB'"
+    },
+    {
+      "line": 23,
+      "text": "cmb_unit = 'uK_CMB'"
+    },
+    {
+      "line": 24,
+      "text": "unit_cv = dict({\"030\":1e6, #KCMB -> uKCMB "
+    },
+    {
+      "line": 25,
+      "text": "                \"044\":1e6, \"070\":1e6,"
+    },
+    {
+      "line": 26,
+      "text": "                \"100\":1e6, \"143\":1e6,"
+    },
+    {
+      "line": 27,
+      "text": "                \"217\":1e6, \"353\":1e6,"
+    },
+    {
+      "line": 28,
+      "text": "                \"545\":1e6*(1/58.0356), #MJy/sr -> uKCMB "
+    },
+    {
+      "line": 29,
+      "text": "                \"857\":1e6*(1/2.2681)})"
+    },
+    {
+      "line": 30,
+      "text": ""
+    },
+    {
+      "line": 31,
+      "text": "lmax = 4000  "
+    },
+    {
+      "line": 32,
+      "text": "nalm = (lmax+1)*(lmax+2)/2        "
+    },
+    {
+      "line": 33,
+      "text": ""
+    },
+    {
+      "line": 34,
+      "text": "def highpass_cos(lmax, l1=20, l2=40):"
+    },
+    {
+      "line": 35,
+      "text": "    \"\"\" From Planck compsep common tools"
+    },
+    {
+      "line": 36,
+      "text": "    \"\"\""
+    },
+    {
+      "line": 37,
+      "text": "    l = np.arange(lmax+1)"
+    },
+    {
+      "line": 38,
+      "text": "    b = 0.5 * (1.0 - np.cos(np.pi*(l-l1)/(l2-l1)))"
+    },
+    {
+      "line": 39,
+      "text": "    b = np.where(l < l1, 0.0, b)"
+    },
+    {
+      "line": 40,
+      "text": "    b = np.where(l > l2, 1.0, b)"
+    },
+    {
+      "line": 41,
+      "text": "    return b"
+    },
+    {
+      "line": 42,
+      "text": "tell = highpass_cos(lmax, l1=50, l2=150)"
+    },
+    {
+      "line": 43,
+      "text": "nside = 2048"
+    },
+    {
+      "line": 44,
+      "text": ""
+    },
+    {
+      "line": 45,
+      "text": "def my_freq_map_finder(name, idir, inum):"
+    },
+    {
+      "line": 46,
+      "text": "    \"\"\"Return the frequency map filename for a given directory and"
+    },
+    {
+      "line": 47,
+      "text": "    realization number."
+    },
+    {
+      "line": 48,
+      "text": "    "
+    },
+    {
+      "line": 49,
+      "text": "    To be customized by end-user. "
+    },
+    {
+      "line": 50,
+      "text": "    \"\"\""
+    },
+    {
+      "line": 51,
+      "text": "    fn = glob.glob(op.join(idir, name, \"*_%s_*_%04d.fits\"%(name,inum)))[0]"
+    },
+    {
+      "line": 52,
+      "text": "    print fn"
+    },
+    {
+      "line": 53,
+      "text": "    return fn"
+    },
+    {
+      "line": 54,
+      "text": ""
+    },
+    {
+      "line": 55,
+      "text": "def load_map_I(name, idir, inum):"
+    },
+    {
+      "line": 56,
+      "text": "    \"\"\" Load a frequency map, convert it in correct units"
+    },
+    {
+      "line": 57,
+      "text": "    \"\"\""
+    },
+    {
+      "line": 58,
+      "text": "    fn = my_freq_map_finder(name, idir, inum)"
+    },
+    {
+      "line": 59,
+      "text": "    mapF = hp.read_map(fn)"
+    },
+    {
+      "line": 60,
+      "text": "    mapF[mapF<-1e30] = 0 # replace undef with 0"
+    },
+    {
+      "line": 61,
+      "text": "    mapF[mapF!=0]-= np.mean(np.double(mapF[mapF!=0]))# remove monopole"
+    },
+    {
+      "line": 62,
+      "text": "    mapF *= unit_cv[name] # convert in unit_to"
+    },
+    {
+      "line": 63,
+      "text": "    return mapF"
+    },
+    {
+      "line": 64,
+      "text": ""
+    },
+    {
+      "line": 65,
+      "text": "def load_map_QU(name, idir, inum):"
+    },
+    {
+      "line": 66,
+      "text": "    \"\"\" Load a frequency map, convert it in correct units"
+    },
+    {
+      "line": 67,
+      "text": "    \"\"\""
+    },
+    {
+      "line": 68,
+      "text": "    fn = my_freq_map_finder(name, idir, inum)"
+    },
+    {
+      "line": 69,
+      "text": "    maps = hp.read_map(fn, field=(0,1,2))"
+    },
+    {
+      "line": 70,
+      "text": "    for mapF in maps:"
+    },
+    {
+      "line": 71,
+      "text": "        mapF[mapF<-1e30] = 0 # replace undef with 0"
+    },
+    {
+      "line": 72,
+      "text": "        mapF[mapF!=0]-= np.mean(np.double(mapF[mapF!=0]))# remove monopole"
+    },
+    {
+      "line": 73,
+      "text": "        mapF *= unit_cv[name] # convert in unit_to"
+    },
+    {
+      "line": 74,
+      "text": "    return maps"
+    },
+    {
+      "line": 75,
+      "text": ""
+    },
+    {
+      "line": 76,
+      "text": "def write_map(filename, maplist, nest=False):"
+    },
+    {
+      "line": 77,
+      "text": "    \"\"\" From Planck compsep common tools"
+    },
+    {
+      "line": 78,
+      "text": "    \"\"\""
+    },
+    {
+      "line": 79,
+      "text": "    npix = len(maplist[0][0])"
+    },
+    {
+      "line": 80,
+      "text": "    nside = hp.npix2nside(npix)"
+    },
+    {
+      "line": 81,
+      "text": "    cols = []"
+    },
+    {
+      "line": 82,
+      "text": "    for mi, ni, fi, ui in maplist:"
+    },
+    {
+      "line": 83,
+      "text": "        if npix > 1024:"
+    },
+    {
+      "line": 84,
+      "text": "            mip = mi.reshape(-1, 1024)"
+    },
+    {
+      "line": 85,
+      "text": "            fip = '1024{f}'.format(f=fi)"
+    },
+    {
+      "line": 86,
+      "text": "        else:"
+    },
+    {
+      "line": 87,
+      "text": "            mip = mi"
+    },
+    {
+      "line": 88,
+      "text": "            fip = fi"
+    },
+    {
+      "line": 89,
+      "text": "        col = pf.Column(name=ni, format=fip, unit=ui, array=mip)"
+    },
+    {
+      "line": 90,
+      "text": "        cols.append(col)"
+    },
+    {
+      "line": 91,
+      "text": "    #hdu = pf.BinTableHDU.from_columns(cols)"
+    },
+    {
+      "line": 92,
+      "text": "    hdu = pf.new_table(cols)"
+    },
+    {
+      "line": 93,
+      "text": "    hdu.header['PIXTYPE'] = ('HEALPIX', 'HEALPix pixelisation')"
+    },
+    {
+      "line": 94,
+      "text": "    hdu.header['NSIDE'] = (nside, 'Resolution parameter')"
+    },
+    {
+      "line": 95,
+      "text": "    hdu.header['FIRSTPIX'] = (0, 'First pixel (0-based)')"
+    },
+    {
+      "line": 96,
+      "text": "    hdu.header['LASTPIX'] = (npix-1, 'Last pixel (0-based)')"
+    },
+    {
+      "line": 97,
+      "text": "    hdu.header['INDXSCHM'] = ('IMPLICIT', 'Indexing scheme')"
+    },
+    {
+      "line": 98,
+      "text": "    if nest:"
+    },
+    {
+      "line": 99,
+      "text": "        hdu.header['ORDERING'] = ('NESTED', 'Pixel ordering')"
+    },
+    {
+      "line": 100,
+      "text": "    else:"
+    },
+    {
+      "line": 101,
+      "text": "        hdu.header['ORDERING'] = ('RING', 'Pixel ordering')"
+    },
+    {
+      "line": 102,
+      "text": "    #hdu.header['COORDSYS'] = ('GALACTIC', 'Coordinate system')"
+    },
+    {
+      "line": 103,
+      "text": "    hdu.writeto(filename, clobber=True)"
+    },
+    {
+      "line": 104,
+      "text": "        "
+    },
+    {
+      "line": 105,
+      "text": "def write_map_I(filename, mi, units=None, nest=False):"
+    },
+    {
+      "line": 106,
+      "text": "    \"\"\" From Planck compsep common tools"
+    },
+    {
+      "line": 107,
+      "text": "    \"\"\""
+    },
+    {
+      "line": 108,
+      "text": "    m = [(mi, 'INTENSITY', 'E', units)]"
+    },
+    {
+      "line": 109,
+      "text": "    write_map(filename, m)"
+    },
+    {
+      "line": 110,
+      "text": ""
+    },
+    {
+      "line": 111,
+      "text": "def write_map_QU(filename, mq, mu, units=None, nest=False):"
+    },
+    {
+      "line": 112,
+      "text": "    \"\"\" From Planck compsep common tools"
+    },
+    {
+      "line": 113,
+      "text": "    \"\"\" "
+    },
+    {
+      "line": 114,
+      "text": "    m = [(mq, 'Q-POLARISATION', 'E', units),"
+    },
+    {
+      "line": 115,
+      "text": "         (mu, 'U-POLARISATION', 'E', units)]"
+    },
+    {
+      "line": 116,
+      "text": "    write_map(filename, m)"
+    },
+    {
+      "line": 117,
+      "text": ""
+    },
+    {
+      "line": 118,
+      "text": "def process_I(idir, odir, inum):"
+    },
+    {
+      "line": 119,
+      "text": "    \"\"\" Compute the intensity CMB map"
+    },
+    {
+      "line": 120,
+      "text": "    \"\"\""
+    },
+    {
+      "line": 121,
+      "text": "    # preproc : map2alm"
+    },
+    {
+      "line": 122,
+      "text": "    almX0 = dict()"
+    },
+    {
+      "line": 123,
+      "text": "    for name in names:"
+    },
+    {
+      "line": 124,
+      "text": "        mapF = load_map_I(name, idir, inum)"
+    },
+    {
+      "line": 125,
+      "text": "        almX0[name] = hp.map2alm(mapF, lmax, iter=0) "
+    },
+    {
+      "line": 126,
+      "text": ""
+    },
+    {
+      "line": 127,
+      "text": "    # ILC / zones"
+    },
+    {
+      "line": 128,
+      "text": "    CMB = dict({})"
+    },
+    {
+      "line": 129,
+      "text": "    for z in [\"X2\", \"X1\"]:"
+    },
+    {
+      "line": 130,
+      "text": "        namesX = list(np.array(names)[isel[z]])"
+    },
+    {
+      "line": 131,
+      "text": "        combalm = np.zeros((nalm), dtype=np.complex128)"
+    },
+    {
+      "line": 132,
+      "text": "        for m,name in zip(range(len(namesX)),namesX):"
+    },
+    {
+      "line": 133,
+      "text": "            combalm += hp.almxfl(almX0[name], np.squeeze(W[z][m,:]))"
+    },
+    {
+      "line": 134,
+      "text": "        combalm = hp.almxfl(combalm, hp.pixwin(nside)[0:lmax])"
+    },
+    {
+      "line": 135,
+      "text": "        CMB[z] = hp.alm2map(combalm, nside)"
+    },
+    {
+      "line": 136,
+      "text": "        "
+    },
+    {
+      "line": 137,
+      "text": "    # combine the two zones"
+    },
+    {
+      "line": 138,
+      "text": "    CMB[\"X2\"] = hp.alm2map(hp.almxfl(hp.map2alm(tmask*(CMB[\"X2\"]-CMB[\"X1\"]),"
+    },
+    {
+      "line": 139,
+      "text": "                                                lmax=lmax, iter=0), tell), nside)"
+    },
+    {
+      "line": 140,
+      "text": "    CMB[\"X2\"]+= CMB[\"X1\"]"
+    },
+    {
+      "line": 141,
+      "text": "    write_map_I(op.join(odir,\"%03d_I.fits\"%inum), CMB[\"X2\"], units=cmb_unit)"
+    },
+    {
+      "line": 142,
+      "text": ""
+    },
+    {
+      "line": 143,
+      "text": "def process_QU(idir, odir, inum):"
+    },
+    {
+      "line": 144,
+      "text": "    \"\"\" Compute the intensity CMB map"
+    },
+    {
+      "line": 145,
+      "text": "    \"\"\""
+    },
+    {
+      "line": 146,
+      "text": "    # preproc : map2alm"
+    },
+    {
+      "line": 147,
+      "text": "    almXE = dict()"
+    },
+    {
+      "line": 148,
+      "text": "    almXB = dict()"
+    },
+    {
+      "line": 149,
+      "text": "    for name in names[:-2]:"
+    },
+    {
+      "line": 150,
+      "text": "        mapIQU = load_map_QU(name, idir, inum)"
+    },
+    {
+      "line": 151,
+      "text": "        alms = hp.map2alm(mapIQU, lmax, iter=0) # full sky QU->EB"
+    },
+    {
+      "line": 152,
+      "text": "        almXE[name] = alms[1]"
+    },
+    {
+      "line": 153,
+      "text": "        almXB[name] = alms[2]"
+    },
+    {
+      "line": 154,
+      "text": ""
+    },
+    {
+      "line": 155,
+      "text": "    # ILC / field"
+    },
+    {
+      "line": 156,
+      "text": "    CMB = dict({})"
+    },
+    {
+      "line": 157,
+      "text": "    for almX, z in zip([almXE, almXB], [\"EE\", \"BB\"]):"
+    },
+    {
+      "line": 158,
+      "text": "        iz = 0 if z==\"EE\" else 1"
+    },
+    {
+      "line": 159,
+      "text": "        namesX = names[:-2]"
+    },
+    {
+      "line": 160,
+      "text": "        combalm = np.zeros((nalm), dtype=np.complex128)"
+    },
+    {
+      "line": 161,
+      "text": "        for m,name in zip(range(len(namesX)),namesX):"
+    },
+    {
+      "line": 162,
+      "text": "            combalm += hp.almxfl(almX[name], np.squeeze(W_pol[iz,m,:]))"
+    },
+    {
+      "line": 163,
+      "text": "        CMB[z] = hp.almxfl(combalm, hp.pixwin(nside)[0:lmax])"
+    },
+    {
+      "line": 164,
+      "text": "        "
+    },
+    {
+      "line": 165,
+      "text": "    # EB -> QU"
+    },
+    {
+      "line": 166,
+      "text": "    CMB[\"EE\"] = hp.alm2map([np.zeros_like(CMB[\"EE\"]), CMB[\"EE\"], CMB[\"BB\"]], nside)"
+    },
+    {
+      "line": 167,
+      "text": "    write_map_QU(op.join(odir,\"%03d_QU.fits\"%inum), CMB[\"EE\"][1], CMB[\"EE\"][2], units=cmb_unit)"
+    },
+    {
+      "line": 168,
+      "text": ""
+    },
+    {
+      "line": 169,
+      "text": ""
+    },
+    {
+      "line": 170,
+      "text": "if __name__==\"__main__\":"
+    },
+    {
+      "line": 171,
+      "text": ""
+    },
+    {
+      "line": 172,
+      "text": "    import argparse"
+    },
+    {
+      "line": 173,
+      "text": "    parser = argparse.ArgumentParser()"
+    },
+    {
+      "line": 174,
+      "text": "    parser.add_argument('idir', type=str, help='location of input freq. maps')"
+    },
+    {
+      "line": 175,
+      "text": "    parser.add_argument('odir', type=str, help='output directory to store cmb maps')"
+    },
+    {
+      "line": 176,
+      "text": "    parser.add_argument('start', metavar='N', type=int, help=\"starting index of MC realization\")"
+    },
+    {
+      "line": 177,
+      "text": "    parser.add_argument('stop', metavar='N', type=int, help=\"stopping index of MC realization\")"
+    },
+    {
+      "line": 178,
+      "text": "    parser.add_argument('--polar', action='store_true', help='polarization run')"
+    },
+    {
+      "line": 179,
+      "text": ""
+    },
+    {
+      "line": 180,
+      "text": "    args = parser.parse_args()"
+    },
+    {
+      "line": 181,
+      "text": ""
+    },
+    {
+      "line": 182,
+      "text": "    for inum in range(args.start, args.stop):"
+    },
+    {
+      "line": 183,
+      "text": "        if not args.polar:"
+    },
+    {
+      "line": 184,
+      "text": "            process_I(args.idir, args.odir, inum)"
+    },
+    {
+      "line": 185,
+      "text": "        else:"
+    },
+    {
+      "line": 186,
+      "text": "            process_QU(args.idir, args.odir, inum)"
+    },
+    {
+      "line": 187,
+      "text": ""
+    },
+    {
+      "line": 188,
+      "text": ""
+    }
+  ],
+  "resources": {
+    "incremental_elapsed_seconds": 1.185517595964484,
+    "incremental_decoded_bytes": 10240,
+    "max_rss_kib": 18352,
+    "threads": 1,
+    "prior_cumulative_archive_bytes": 491268964,
+    "cumulative_archive_bytes": 491279204,
+    "prior_conservative_archive_seconds": 11.909842898018002,
+    "conservative_cumulative_archive_seconds": 13.095360493982486,
+    "original_new_execution_seconds": 7.980129107018001,
+    "review_assertion_check_seconds": 1.43,
+    "prior_new_execution_plus_review_seconds": 9.410129107018001,
+    "cumulative_new_execution_plus_review_seconds": 10.595646702982485,
+    "caps": {
+      "incremental_seconds": 10,
+      "incremental_decoded_bytes": 1048576,
+      "memory_bytes": 536870912,
+      "threads": 2,
+      "overall_new_seconds": 60,
+      "overall_new_decoded_bytes": 536870912,
+      "original_archive_bytes": 1073741824,
+      "original_archive_seconds": 120
+    }
+  },
+  "requested_runtime": "gpt-6.1-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python"
+}

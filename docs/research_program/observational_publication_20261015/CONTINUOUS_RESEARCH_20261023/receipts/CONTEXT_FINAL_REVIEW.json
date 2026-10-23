@@ -1,0 +1,206 @@
+{
+  "schema": "htt.context_final_review/1",
+  "status": "PASS_SCOPED",
+  "reviewer": "/root/r23_context_review",
+  "reviewed_at": "2026-10-22T22:38:42+00:00",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "scope": "Context-source aliasing CI cause on 01f087e3e3028f880d6c60ec3d9b2303b87cafac; five context-repair files plus bounded CI test-selection extension.",
+  "verdict": "Frozen SYMBOLS restored to original bytes; current semantics retained under CURRENT_SYMBOLS. Both actual index/hash/render triples agree, both packs satisfy their character budgets, both regressions pass, and reproducing old aliasing fails the unchanged historical loader and both regressions. No blocking findings within this scope.",
+  "blocking_findings": [],
+  "reviewed_file_sha256": {
+    ".agent-harness/context/SYMBOLS.md": "5c51f848f93430c8b49d46bd66219162409f06b35fdf778ea9f44c0bf5d214cb",
+    ".agent-harness/context/CURRENT_SYMBOLS.md": "1bdf76cbab4d200b9d621c8ab8b7ee31d5ae4558bf4b4e7b561cb897cc4a4871",
+    ".agent-harness/context/CURRENT_CONTEXT_INDEX.json": "276b7dc57fa702216f4aceb6f24360cdc90d51405b95c5c00c703a69e905600d",
+    ".agent-harness/generated/CURRENT_CONTEXT_PACK.md": "4468749e58ef1f0d800f22d8146b14c4f4fb47286bbe2a788f8e5820c818b40c",
+    "scripts/codex_harness/test_context_isolation.py": "7c3d9862f343e18bd8ba3f0cbc00e1e1b3df7335cd66c9404aeb9cc6151726fd",
+    ".github/workflows/repository-integrity.yml": "9d6741f125101cb6329ce9d56d52f325ec87a232f34cfb9ac1f3f0a3b02a7af4"
+  },
+  "frozen_file_sha256": {
+    ".agent-harness/context/CONTEXT_INDEX.json": "649463f0e5beda6fd4db761e3e711a51ca9a87559210a9de4c93c011c30b1952",
+    ".agent-harness/context/FROZEN_DECISIONS.md": "4e515ecba8243cf9e20a37720a0c3505469ee558ca27851965c0d6ca556e71b5",
+    ".agent-harness/generated/CONTEXT_PACK.md": "6e9be6f2c6824e707099d8ddb19b6fcbf067c44928d8c3f707f04e8c470d5ed5"
+  },
+  "unchanged_validator_sha256": {
+    ".agent-harness/scripts/_harness.py": "1ee499302ab799c33e9b3dde1df6cfb81f5e70963425f0445e6eae28117dd68f",
+    ".agent-harness/scripts/validate_harness.py": "8c7dc5f4b005ca1c984dffc70e819b1fc06bb20312407da3ca30d04e7749d488",
+    ".agent-harness/scripts/build_context_pack.py": "073f171b99870c968ec1754727f395c4d70a6664ea4e2e4a9529c0868d1e3234"
+  },
+  "input_evidence_sha256": {
+    "CI_FAILURE.json": "892f1702e3ff936eeda1c7f5ac94d24b13d6c4fbde777b6f7fe05e9c1760f3b0",
+    "CONTEXT_REPAIR_RECEIPT.json": "d10721754906b49ae9c28cbb39e1bd814cb8a6f5b2c0c130355a2743d1944723",
+    "CI_INPUT_PAYLOADS.json": "e1cb458af4c2f6af41dd9061a46636488f9c25ef2f1b9ae8b5dc45118132ff19",
+    "CI_RUNTIME_PAYLOADS.json": "90fd70db95aed83f2710a18722083038e2ecff50cc5d563f8f58b2149851595f",
+    "FLOAT_CANDIDATE.json": "b03b9a6940f9062b829b0fed201fef296c134abafe14c13ca210fc99fdb4d2a2",
+    "POSTPUBLICATION_READBACK.json": "8d1a8d67a685e459ec2e8a8895299b7adc86c6cdf6439978bd7749d04759df8d"
+  },
+  "preservation": {
+    "frozen_SYMBOLS_byte_identical_to_ci_inputs": true,
+    "current_SYMBOLS_equals_prior_published_SYMBOLS_hash": true,
+    "current_frozen_decisions_unchanged": true,
+    "historical_index_decisions_pack_and_validators_absent_from_patch": true,
+    "exact_original_ci_payload_byte_matches": 11,
+    "first_commit_manifest_sha256": "3a9ec59133d70ef774fa2a2aac71f97867222e389a6a9f4f8815e78ddab3837c",
+    "prior_core_identity": {
+      "path": "FLOAT_CANDIDATE.json",
+      "file_bytes_sha256": "b03b9a6940f9062b829b0fed201fef296c134abafe14c13ca210fc99fdb4d2a2",
+      "compact_sorted_json_sha256": "9d33bc528e868c8054b0b6e0b87d386055ac992b0655280b550a6d76e2ad0a83",
+      "note": "FINAL_CANDIDATE.json is an older pre-float snapshot."
+    },
+    "only_changed_prior_core_paths": [
+      ".agent-harness/context/CURRENT_CONTEXT_INDEX.json",
+      ".agent-harness/context/SYMBOLS.md",
+      ".agent-harness/generated/CURRENT_CONTEXT_PACK.md"
+    ],
+    "unchanged_core_file_sha256": {
+      ".agent-harness/context/CURRENT_FROZEN_DECISIONS.md": "019d82ff610c329970516cd0e2aa284b54a99ad7e97b31eb141799caa7cbcf16",
+      "AGENTS.md": "83f25506c2a2f3a17a1e6d1eeb229f9e9ec006252985bbe40595c1acf5affd54",
+      "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md": "dbef9a04dd657f1d663792ada66cd6f211c91a502a1b8800796c225175ea3423",
+      "docs/harness/CURRENT_CODEX_RUNTIME.md": "cdaf023caa5e16adb889c4d3907d5db376b6a195edf800b78da0f1a907b479af",
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/ASTROMETRY_RESULT.json": "fe4ed647f192d9a2ce4bbf975621cab1921ae21e0095c29854c667849362cd64",
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/FIGURES.json": "56317742e427cc8ec546b4e8239cd68c4d3dfb8be2e5ef92368f75caf2ea1bee",
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/FRONTIER.json": "da4b4a94fdb099996baae0bab3e47db8dbed5a35392daf62e94a29b82df745ea",
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/HANDOFF_PROMPT_KO.md": "d60e9a39b4c6f3e5042c20defd353abc46e413e3720a31d3f3c24bc76229c27e",
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/PR_DELTA.md": "210ab603a38fbd9712153b773750a7b7fd85d9df049b929e258f53c2c20b1417",
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/README_KO.md": "6177ebb27182cb4cec365a96b1d9726b0863233e7d5fb756d08c25577d3f68fa",
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/THEORY_AND_RESULTS.md": "731c5b2f77373ee4c328a00bda464708b3bebc266c0fa2571cc982032ffd6cb2",
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/contrast.svg": "0e4a839b7eaf9cd62e88dd6568709494c598959262e8c095d5b1e34d695efc66",
+      "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/CONTINUATION_TASKS.json": "efd2fd7bed28371f2c15c020062de9adb4b56edc81fc910090deabbc11c7dd1b",
+      "scripts/codex_harness/build_research_campaign.py": "27aeca8956de6aa4094c8faaca33572f05fae2faf3ff373d9bbf94236c94bb63",
+      "scripts/codex_harness/research_controller.py": "70cd8c262d85156fe50dd5b7f8ad2608a5eae1b6f9597049b6d4dd8c182b4cb0",
+      "scripts/codex_harness/test_build_research_campaign.py": "bd4fdf58e3aaf3fc7863cf8610f0c2a90518003cf6eea25637f6cbefdfe734d4",
+      "scripts/codex_harness/test_research_controller.py": "0a4ceb00d80ed33be0eda6ae6430b17093c97f2f9cd47ec52a3d5ff31797551c",
+      "scripts/htt_astrometry_quotient.py": "b11cdb4881bb46745b07f0adf0aa3af66462fb03df4cc5813738763747e43201",
+      "scripts/htt_plot_astrometry_quotient.py": "5f42225eeed5ee8e903186fecd24c9b7d00017e6816517145bca0eec3654bb3e",
+      "scripts/test_htt_astrometry_quotient.py": "487b49b975511f5fcd06a96d8d20407e5527932258ceee83eb50eafc438b66ec"
+    },
+    "patch_unchanged_during_review": true
+  },
+  "validation": {
+    "frozen": {
+      "context_version": "516a4a016010ec346a187918b46c7d9d9d2e34fb1a1c65dd6fd48fba3958fab4",
+      "file_hashes": {
+        ".agent-harness/context/SYMBOLS.md": "5c51f848f93430c8b49d46bd66219162409f06b35fdf778ea9f44c0bf5d214cb",
+        ".agent-harness/context/FROZEN_DECISIONS.md": "4e515ecba8243cf9e20a37720a0c3505469ee558ca27851965c0d6ca556e71b5"
+      },
+      "index_hash_exact_render": "PASS",
+      "pack_chars": 9338,
+      "pack_bytes": 9338,
+      "max_injected_chars": 12000
+    },
+    "current": {
+      "context_version": "f364114ee8bd3cb840a7efe5b72ae1840e6c02c6a98d0ad23bde5721aa3fae84",
+      "file_hashes": {
+        ".agent-harness/context/CURRENT_SYMBOLS.md": "1bdf76cbab4d200b9d621c8ab8b7ee31d5ae4558bf4b4e7b561cb897cc4a4871",
+        ".agent-harness/context/CURRENT_FROZEN_DECISIONS.md": "019d82ff610c329970516cd0e2aa284b54a99ad7e97b31eb141799caa7cbcf16"
+      },
+      "index_hash_exact_render": "PASS",
+      "pack_chars": 6589,
+      "pack_bytes": 6589,
+      "max_injected_chars": 12000
+    },
+    "current_build_idempotent": "PASS",
+    "current_source_mutations_preserve_frozen_pack": [
+      ".agent-harness/context/CURRENT_SYMBOLS.md",
+      ".agent-harness/context/CURRENT_FROZEN_DECISIONS.md"
+    ],
+    "old_alias_negative_control": {
+      "status": "EXPECTED_FAILURE",
+      "unchanged_legacy_loader_error": "Context sources changed after the generated view was built.",
+      "regression_suite_exit_code": 1,
+      "failed_regression_tests": 2
+    },
+    "regressions": {
+      "unittest": "2 passed",
+      "pytest": "UNAVAILABLE: No module named pytest"
+    },
+    "workflow": {
+      "one_command_extension_only": true,
+      "new_test_explicitly_selected": true,
+      "bash_syntax": "PASS",
+      "triggers_permissions_action_pins_other_checks": "UNCHANGED"
+    }
+  },
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "scripts/codex_harness/test_context_isolation.py",
+        "-v"
+      ],
+      "cwd": "selected-file temporary fixture",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_current_source_edit_preserves_frozen_pack (__main__.ContextIsolationTests.test_current_source_edit_preserves_frozen_pack) ... ok\ntest_repository_packs_match_their_sources (__main__.ContextIsolationTests.test_repository_packs_match_their_sources) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.005s\n\nOK\n"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "scripts/codex_harness/test_context_isolation.py"
+      ],
+      "cwd": "selected-file temporary fixture",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python: No module named pytest\n"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        ".agent-harness/scripts/build_context_pack.py",
+        "--current"
+      ],
+      "cwd": "selected-file temporary fixture",
+      "exit_code": 0,
+      "stdout": "Unchanged .agent-harness/generated/CURRENT_CONTEXT_PACK.md (no files rewritten)\ncontext_version=f364114ee8bd3cb840a7efe5b72ae1840e6c02c6a98d0ad23bde5721aa3fae84\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        ".agent-harness/scripts/build_context_pack.py",
+        "--current"
+      ],
+      "cwd": "selected-file temporary fixture",
+      "exit_code": 0,
+      "stdout": "Built .agent-harness/generated/CURRENT_CONTEXT_PACK.md\ncontext_version=068181105e33abbc40afdcf1260231962452c60ee1f9f8a9a24765eee1460478\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "scripts/codex_harness/test_context_isolation.py",
+        "-v"
+      ],
+      "cwd": "selected-file temporary fixture",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "test_current_source_edit_preserves_frozen_pack (__main__.ContextIsolationTests.test_current_source_edit_preserves_frozen_pack) ... FAIL\ntest_repository_packs_match_their_sources (__main__.ContextIsolationTests.test_repository_packs_match_their_sources) ... \n  test_repository_packs_match_their_sources (__main__.ContextIsolationTests.test_repository_packs_match_their_sources) (prefix='') ... FAIL\n\n======================================================================\nFAIL: test_current_source_edit_preserves_frozen_pack (__main__.ContextIsolationTests.test_current_source_edit_preserves_frozen_pack)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/tmp/context-review-dst9gk0l/scripts/codex_harness/test_context_isolation.py\", line 47, in test_current_source_edit_preserves_frozen_pack\n    self.assertTrue(set(frozen[\"shared_files\"]).isdisjoint(current[\"shared_files\"]))\nAssertionError: False is not true\n\n======================================================================\nFAIL: test_repository_packs_match_their_sources (__main__.ContextIsolationTests.test_repository_packs_match_their_sources) (prefix='')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/tmp/context-review-dst9gk0l/scripts/codex_harness/test_context_isolation.py\", line 28, in test_repository_packs_match_their_sources\n    self.assertEqual(index[\"context_version\"], version)\nAssertionError: '516a4a016010ec346a187918b46c7d9d9d2e34fb1a1c65dd6fd48fba3958fab4' != '6710d7150495078abc4fb85f8b37b9f3a5ea15b2386f69a0a94a59d016e0eded'\n- 516a4a016010ec346a187918b46c7d9d9d2e34fb1a1c65dd6fd48fba3958fab4\n+ 6710d7150495078abc4fb85f8b37b9f3a5ea15b2386f69a0a94a59d016e0eded\n\n\n----------------------------------------------------------------------\nRan 2 tests in 0.005s\n\nFAILED (failures=2)\n"
+    }
+  ],
+  "test_assessment": [
+    "Repository-packs regression checks both actual indices, complete hashes, exact generated renders and character budgets; frozen view is also checked through the existing production loader.",
+    "Current-edit regression requires all frozen/current shared sources to be disjoint and demonstrates that a current-only edit rotates its identity without changing the validated frozen view.",
+    "Independent review mutated both current sources separately. Reproducing the original alias and rebuilding only the current pack caused the unchanged frozen loader and both regression tests to fail.",
+    "Workflow changes only add the test file to the existing pytest command; continuation syntax passes bash -n."
+  ],
+  "limitations": [
+    "Full repository validate_harness.py and all remote CI jobs were not run; PASS_SCOPED does not establish complete remote CI success.",
+    "Direct pytest invocation was attempted but unavailable in this runtime (No module named pytest). The same unittest.TestCase regression suite passed via its unittest entry point. CI already installs pytest; its actual execution remains pending.",
+    "Character-budget checks cover generated shared packs, not a new audit of total bootstrap plus role-slice delivery.",
+    "Science/controller files and tests retain their prior published hashes. No All42 scientific acceptance, empirical validation, installation or publication is conferred by this review.",
+    "First-commit manifest/reviews remain historical snapshots; parent will publish a separate repair delta and updated package manifest."
+  ]
+}

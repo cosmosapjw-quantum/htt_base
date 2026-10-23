@@ -1,0 +1,41 @@
+{
+  "task_id": "R24-BOOST-ACCELERATION",
+  "packet_id": "047ec280a16abca82ba9e122a7b16664db1f8c905dae0ec55f3611c78427997f",
+  "input_identity": "sha256:feafebb499efb65f229cf015f8cf6478120cf86d2964d15d52206a3741670a2d",
+  "candidate_identity": "sha256:1c2aa2d75979e9d534ee2dcc4ea790bb62146320f75b2f27143d0a354a947d08",
+  "agent_id": "/root/rc_047ec280a16abca8",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration",
+  "commands": [
+    {
+      "command": "python compute.py > RUN_STDOUT.txt 2> RUN_STDERR.txt",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m unittest -v test_compute.py > TEST_STDOUT.txt 2> TEST_STDERR.txt",
+      "exit_code": 0
+    },
+    {
+      "command": "python finalize.py",
+      "exit_code": 0
+    }
+  ],
+  "first_failure": "Initial manifest key mismatch before computation; FIRST_FAILURE.txt retained; repaired to frozen files key",
+  "validation_evidence": [
+    "274 released/628 selected/354 undefined; PGC9031 at 317 km/s retained",
+    "four full authored covariance scenarios; full baseline and five STF nuisance columns",
+    "nuisance-profiled rank 12/15 at 1e-8, 1e-10, 1e-12; three exact duplicate null directions",
+    "three actual-cohort canonical angles and conditional coefficient/covariance matrices per scenario",
+    "dense 274-row Schur information reference agrees at rtol 1e-10, atol 1e-12",
+    "synthetic fixed-H optical dipole units and T1 PSD perturbation bound",
+    "three focused unittest tests pass; 2D figure generated"
+  ],
+  "scientific_admission": "HOLD",
+  "original_acceptance_met": false,
+  "physical_domain_failure": "PGC9031 317 km/s; reviewed union flow fraction 2.261954-2.445192",
+  "independent_review": "PENDING",
+  "source_hashes_checked": 7,
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/MANIFEST.json",
+  "candidate_manifest_sha256": "1c2aa2d75979e9d534ee2dcc4ea790bb62146320f75b2f27143d0a354a947d08"
+}

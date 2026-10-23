@@ -1,0 +1,569 @@
+{
+  "owner": "HTT campaign controller",
+  "scope": "Original 42 acceptance dependency cut and retained-source intake; not a universal no-go or scientific admission",
+  "claim_tier": "NON_CLAIM_BEARING_CHECKPOINT",
+  "base_commit": "855107f23fd4f25587ba242d8a5dfc1a8fc81876",
+  "original_completed": 17,
+  "original_total": 42,
+  "unfulfilled": 25,
+  "direct_external": [
+    "B02",
+    "H02",
+    "K03",
+    "K04",
+    "L03",
+    "S02",
+    "S04",
+    "V03"
+  ],
+  "dependent_only": [
+    "B03",
+    "B04",
+    "B05",
+    "H04",
+    "H05",
+    "H06",
+    "K05",
+    "K06",
+    "L04",
+    "L05",
+    "L06",
+    "S03",
+    "S05",
+    "S06",
+    "V04",
+    "V05",
+    "V06"
+  ],
+  "revised_scoped_completed": 18,
+  "V03_original_external_output_satisfied": false,
+  "rows": [
+    {
+      "id": "B02",
+      "original_acceptance": "Einstein/Boltzmann physics, recombination, constraints, IC and mode test actual",
+      "original_output": "physical atlas with source conventions and resolution acceptance",
+      "depends_on": [
+        "B01"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": true,
+      "external_ancestors_including_self": [
+        "B02"
+      ],
+      "missing_payload": [
+        "Existing physical polarized all-m T/E/B atlas, family/mode/history and initial conditions, normalized matter/shear/tilt, spin/frame/units/beam, physical evolution/recombination/constraint and equivalence calibration; T-only plots/chains/fixtures insufficient."
+      ],
+      "source_or_owner": "Existing external polarized Bianchi atlas producer",
+      "evidence": [
+        "R23-ATLAS/INDEPENDENT_REVIEW.json",
+        "R23-ATLAS/REPORT.md"
+      ]
+    },
+    {
+      "id": "B03",
+      "original_acceptance": "No fake T/E/B source or forged full-sky score",
+      "original_output": "matched likelihood and family equivalence support",
+      "depends_on": [
+        "B02",
+        "L03"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "B02",
+        "L03"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "B04",
+      "original_acceptance": "Degenerate families reported equivalence class and compared Saadeh 2016",
+      "original_output": "family confusion matrix, allowed priors, null predictive plots",
+      "depends_on": [
+        "B03"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "B02",
+        "L03"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "B05",
+      "original_acceptance": "Real Planck likelihood and family physical mode calibration, hold if unavailable",
+      "original_output": "P5 paper+readiness",
+      "depends_on": [
+        "B04",
+        "X02"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "B02",
+        "L03"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "H02",
+      "original_acceptance": "Use method-group overlap and correlated errors, reproduce source null simulations",
+      "original_output": "source-qualified distance-velocity likelihood",
+      "depends_on": [
+        "H01",
+        "X01"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": true,
+      "external_ancestors_including_self": [
+        "H02"
+      ],
+      "missing_payload": [
+        "Versioned full CF4 parent targeting/observing/rejection and distance/quality selection history with source IDs and PGC-to-group/method ancestry, or an author-qualified inclusion/selection likelihood and normalization for the H02 selected cohort",
+        "Source-qualified joint relative/common/angular calibration covariance or posterior and group/peculiar-velocity covariance with explicit shared components and no-double-counting rule",
+        "Actual CF4 or constituent survey source null mock catalogues or reproducible generator/seed and calibration/selection contract sufficient to reproduce the source nulls for the fixed H02 statistic and method-group overlap"
+      ],
+      "source_or_owner": "CF4/CF4TF/6dFGSv/SDSS survey, group/calibration/mock producers",
+      "evidence": [
+        "SOURCE_INTAKE/H02_ACQUISITION_RAW.json",
+        "R23-DISTANCE/conditional_fit/INDEPENDENT_REVIEW.json"
+      ]
+    },
+    {
+      "id": "H04",
+      "original_acceptance": "False-positive calibration plus shared calibration posterior predictive checks",
+      "original_output": "corrected joint H(z,n) posterior/identified set",
+      "depends_on": [
+        "H02",
+        "H03"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "H02"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "H05",
+      "original_acceptance": "Real novel difference is covariance/window/calibration robustness, not a recycled dipole",
+      "original_output": "same-estimand comparison and heldout tracer results",
+      "depends_on": [
+        "H04",
+        "X02"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "H02"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "H06",
+      "original_acceptance": "Actual full law, competing models, independent data validation or scientifically informative null",
+      "original_output": "P3 paper+publication readiness",
+      "depends_on": [
+        "H05"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "H02"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "K03",
+      "original_acceptance": "Independent source qualification and nonradial response demonstrated",
+      "original_output": "physical kSZ/polarization/proper-motion channel response",
+      "depends_on": [
+        "K01"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": true,
+      "external_ancestors_including_self": [
+        "K03"
+      ],
+      "missing_payload": [
+        "Release-bound source-class/centroid motion law for the actual selected optical quasar cohort, with intrinsic-motion/clock/epoch response and a justified link to the proposed matter congruence.",
+        "Qualified reportedQuaia-to-true-depth distribution, catastrophes, cohort normalization and sourcewise proper-motion/classifier selection likelihood, or justified quantitative bias bounds.",
+        "Gaia temporal/calibration response beyond additive global rotation/commonE1 and empirical residual cross-source covariance or an applicable bound for the retained cohort.",
+        "Before radio combination: sourcewise five-solution NNR/session/slope operator, cross-component covariance, Gaia-radio overlap/shared-frame covariance and radio centroid law.",
+        "A source-matched nonradial physical response for the actualomega/A/beta target with a declared finite validity/remainder domain; the reviewed pureE1 tangent subcase alone cannot supply this."
+      ],
+      "source_or_owner": "Quaia/source-population calibration custodians; Gaia DPAC astrometric calibration/covariance providers; Goddard2017a/IVS radio solution providers; physical nonradial-source model owner. No contact or message was sent.",
+      "evidence": [
+        "K03_PM/REPORT.md",
+        "K03_PM/CANDIDATE_MANIFEST.json",
+        "K03_PM/INDEPENDENT_REVIEW.json"
+      ]
+    },
+    {
+      "id": "K04",
+      "original_acceptance": "Output unbounded or undefined for genuinely null sectors; no zero fill",
+      "original_output": "bounded identified sets and source-conditioned posterior parts",
+      "depends_on": [
+        "K02",
+        "H04"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": true,
+      "external_ancestors_including_self": [
+        "H02",
+        "K04"
+      ],
+      "missing_payload": [
+        "Full CF4 parent selection and joint directional calibration/PV law together with physical optical response in one normal/matter congruence and source clock; exact undefined/null sectors."
+      ],
+      "source_or_owner": "CF4 and physical optical-response producers",
+      "evidence": [
+        "R23-CONGRUENCE/INDEPENDENT_REVIEW.md",
+        "SOURCE_INTAKE/H02_ACQUISITION_RAW.json"
+      ]
+    },
+    {
+      "id": "K05",
+      "original_acceptance": "Calibration, source clock, observer frame and shared sky treatment exact",
+      "original_output": "four-sector physical set or explicit remaining nonidentifiability",
+      "depends_on": [
+        "K03",
+        "K04",
+        "V03"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "H02",
+        "K03",
+        "K04",
+        "V03"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "K06",
+      "original_acceptance": "Source-supported physical identified combinations with independent error budget",
+      "original_output": "P6 paper and four-sector claim matrix",
+      "depends_on": [
+        "K05",
+        "X02"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "H02",
+        "K03",
+        "K04",
+        "V03"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "L03",
+      "original_acceptance": "Simulation IDs independent units; actual and null same mask/beam/foreground law",
+      "original_output": "qualified null bank and coverage tests",
+      "depends_on": [
+        "L01",
+        "X01"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": true,
+      "external_ancestors_including_self": [
+        "L03"
+      ],
+      "missing_payload": [
+        "For PR3 SMICA FULL/HM1/HM2/OE1/OE2, same-realization CMB signal, noise-plus-systematics and processed-total/foreground contributions, or an equivalent validated joint generator, with split membership and seed/realization genealogy.",
+        "Per-split effective beam, fixed weights and any weight fitting/reselection rule, preprocessing, masks and pixel/QU conventions, tied to the observed products and the retained T26846/P30021 selected-support operator.",
+        "Cross-split and cross-ID noise/shared-residual dependence and justified residual-foreground uncertainty or finite response bounds; a common fiducial foreground alone is insufficient for observed-versus-null foreground-law adequacy.",
+        "A preregistered statistic-family and selection protocol, held-out injections and autocorrelation/noise-reuse checks, with whole-sky simulation-unit accounting and an MC interval or valid analytic coverage bound."
+      ],
+      "source_or_owner": "Planck FFP10/SMICA product custodians and ESA/IRSA/NERSC",
+      "evidence": [
+        "SOURCE_INTAKE/L03_ACQUISITION_RAW.json",
+        "R23-CMB/INDEPENDENT_REVIEW.json"
+      ]
+    },
+    {
+      "id": "L04",
+      "original_acceptance": "Correct finite MC ranks, nuisance sensitivity and look elsewhere",
+      "original_output": "look-elsewhere corrected ranks and robustness",
+      "depends_on": [
+        "L02",
+        "L03"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "L03"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "L05",
+      "original_acceptance": "No independent-sky multiplication or historical p reuse",
+      "original_output": "referee tables, plots, source diagnostics",
+      "depends_on": [
+        "L04",
+        "X02"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "L03"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "L06",
+      "original_acceptance": "Qualified simulations, method novelty over Planck VII and reporting of null results",
+      "original_output": "P2 manuscript+publication readiness",
+      "depends_on": [
+        "L05"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "L03"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "S02",
+      "original_acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized",
+      "original_output": "paired functional arrays + Pi interval plots",
+      "depends_on": [
+        "S01",
+        "E2"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": true,
+      "external_ancestors_including_self": [
+        "S02"
+      ],
+      "missing_payload": [
+        "Common-congruence/frame/clock source-matched physical optical-to-kinematic response, finite-redshift/flow remainder law, selected joint calibration/covariance and exact map to existing 2048 IDs; unknown physical mass remains one."
+      ],
+      "source_or_owner": "CF4 source/calibration/mock producers and physical-response owner",
+      "evidence": [
+        "SOURCE_INTAKE/S02_ACQUISITION_RAW.json",
+        "SOURCE_INTAKE/H02_ACQUISITION_RAW.json",
+        "R23-CONGRUENCE/INDEPENDENT_REVIEW.md",
+        "R23-DISTANCE/conditional_fit/INDEPENDENT_REVIEW.json"
+      ]
+    },
+    {
+      "id": "S03",
+      "original_acceptance": "Outputs change on declared denominator/selection, zero/missing distinct",
+      "original_output": "source-coupled statistical invariants and counterexample figure",
+      "depends_on": [
+        "S02",
+        "X01"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "S02"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "S04",
+      "original_acceptance": "At least one actual selected likelihood or justified outer interval, not synthetic-only",
+      "original_output": "source and coverage/partial-identification evidence",
+      "depends_on": [
+        "S03",
+        "X03"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": true,
+      "external_ancestors_including_self": [
+        "S02",
+        "S04"
+      ],
+      "missing_payload": [
+        "S02 qualified joint physical source; actual selected likelihood or justified finite outer interval for at least one narrower functional, with coverage and unbounded sectors preserved."
+      ],
+      "source_or_owner": "Same joint-source and physical-response producers as S02",
+      "evidence": [
+        "R23-CONGRUENCE/INDEPENDENT_REVIEW.md",
+        "SOURCE_INTAKE/S02_ACQUISITION_RAW.json"
+      ]
+    },
+    {
+      "id": "S05",
+      "original_acceptance": "Distinct from standard pushforward; model comparison and source-linked robustness",
+      "original_output": "P1 manuscript with result figures and scope gate",
+      "depends_on": [
+        "S04",
+        "X02"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "S02",
+        "S04"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "S06",
+      "original_acceptance": "All P1 gates shown with actual evidence or HOLD",
+      "original_output": "P1 submitted_ready_decision.json",
+      "depends_on": [
+        "S05"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "S02",
+        "S04"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "V03",
+      "original_acceptance": "Same-frame, different radial/temporal transfer and exact source units",
+      "original_output": "external Einstein-Boltzmann history response and validation",
+      "depends_on": [
+        "V01"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": true,
+      "external_ancestors_including_self": [
+        "V03"
+      ],
+      "missing_payload": [
+        "Existing externally calibrated same-frame global-tilt history/source transport with distinct radial/temporal response, exact units, initial conditions, validity interval and source validation. The analytic alternate subcase does not deliver this original external output."
+      ],
+      "source_or_owner": "Existing external global-history transfer producer",
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/V03_SCOPE_DECISION.json"
+      ]
+    },
+    {
+      "id": "V04",
+      "original_acceptance": "Do not identify from a normalization of a null column",
+      "original_output": "source/selection/covariance error robust identifiable subspace",
+      "depends_on": [
+        "V02",
+        "V03",
+        "H04"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "H02",
+        "V03"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "V05",
+      "original_acceptance": "No unqualified Bayes evidence; calibrated null and prior family",
+      "original_output": "physical posterior or identified intervals and model comparison",
+      "depends_on": [
+        "V04",
+        "X03"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "H02",
+        "V03"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    },
+    {
+      "id": "V06",
+      "original_acceptance": "Actual distinct transfer or physical non-identifiability statement and real-data significance",
+      "original_output": "P4 paper+readiness",
+      "depends_on": [
+        "V05",
+        "X02"
+      ],
+      "status": "UNFULFILLED",
+      "direct_external": false,
+      "external_ancestors_including_self": [
+        "H02",
+        "V03"
+      ],
+      "missing_payload": [],
+      "source_or_owner": "",
+      "evidence": []
+    }
+  ],
+  "K03_review": {
+    "status": "SCOPED_CONDITIONAL_PASS_ORIGINAL_INPUT_HOLD",
+    "candidate_identity": "sha256:86942bbc9e3999b54579f8f119ae2f0d3537756c5f2deda57f5dffc096eff192",
+    "evidence": "K03_PM/INDEPENDENT_REVIEW.json",
+    "sha256": "2e7dcedb89890dd3f35dff85a591b7896f8d0ebe500dc4f4c370a2d28044cf27"
+  },
+  "controller_final_next": {
+    "status": "HOLD_UNRESOLVED_BRANCHES",
+    "ready": [],
+    "unfinished_tasks_not_eligible_by_dependencies": true,
+    "state_turn": 20,
+    "receipt": "CONTROLLER_FINAL_NEXT.json"
+  },
+  "historical_preservation": [
+    "R9/HOLD/UNKNOWN unchanged",
+    "97 LP one-use consumed; D07 nine crossings unresolved",
+    "54 histories/432 optics/651 projection and original catalogs/splits reused",
+    "ultra R23-COMMON-E1 and R23-Q consumed, no reset"
+  ],
+  "download_policy": {
+    "unbounded_product_and_aggregate": true,
+    "reserve_bytes": 2147483648,
+    "raw_root": "/mnt/extdrive/workdir/htt_open_data",
+    "mount": "/dev/sda2 fuseblk rw /mnt/extdrive",
+    "available_bytes_observed": 2480013709312,
+    "observed_space_is_not_cap": true
+  },
+  "resume": [
+    ".venv/bin/python scripts/htt_open_input_packet.py",
+    ".venv/bin/python scripts/codex_harness/research_controller.py --state .agent-harness/runtime/r23-continuous/STATE.json summary",
+    "Reconcile existing outstanding agent/result before next; do not initialize another campaign. New qualified payload must be bound and explicitly resumed through controller resume --help; preserve all attempt/allocation/history references."
+  ],
+  "conclusion": "INCOMPLETE_EXTERNAL_INPUT_CHECKPOINT_REVIEWED",
+  "source_corrections": "SOURCE_INTAKE/SOURCE_CORRECTIONS.md",
+  "independent_cut_review": {
+    "path": "REMAINING_BRANCHES_REVIEW.json",
+    "sha256": "072533ac7ff2ac241b5ce90616649f1bb26fd4afb8b1082283652d9373547bcb",
+    "verdict": "PASS_SCOPED_INCOMPLETE_EXTERNAL_INPUT_CHECKPOINT",
+    "original_acceptance_promoted": false
+  }
+}

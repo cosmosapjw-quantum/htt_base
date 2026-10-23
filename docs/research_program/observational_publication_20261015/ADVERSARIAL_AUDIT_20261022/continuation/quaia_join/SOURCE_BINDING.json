@@ -1,0 +1,33 @@
+{
+  "owner":"obsstat",
+  "scope":"Quaia v1.0.0 source conventions and release-day notebook",
+  "claim_tier":"C0_SOURCE_CONVENTION",
+  "release":"https://zenodo.org/records/10403370",
+  "producer_repository":"https://github.com/kstoreyf/gaia-quasars-lss",
+  "release_day_commit":"7a78819b484e743ab74733e8e4e4b806906047ab",
+  "blobs":{
+    "notebooks/2023-10-08_data_products_inclzsplit.ipynb":"1830439044748d26be1d1bd2872d9cc9e6925c10",
+    "code/selection_function_map.py":"8f8360bcd92cc31106ea5429f0f141b234cfa9ca",
+    "code/maps.py":"1ba100821ca21ed4417e9f051e093b45104300f7",
+    "code/utils.py":"d42748ee8326ccec7c142f82ee773e2ce80876c1",
+    "code/decontaminate.py":"5611db7a461cab15c9749aa5693428c8b78925bd"
+  },
+  "frame_order_evidence":"Notebook cells19/21/25/28 bin ra/dec via ang2pix(lonlat=True), default RING; cells31..39 read selection maps and plot coord=['C','G']; maps.py lines20..40 match.",
+  "coordinate_frame":"ICRS/equatorial producer convention; FITS lacks COORDSYS",
+  "selection_meaning":"Relative propensity; never absolute inclusion probability or inverse probability weight",
+  "pm_cut":"pm < 10**(0.4*(phot_g_mean_mag-18.25)) mas/yr; utils.py lines96..101",
+  "paper_inconsistency":"arXiv2306.17749v2 Eq in III.1 gives1mas/yr atG18.25; adjacent prose gives2.5; executable agrees with equation.",
+  "template_order":["dust","stars","m10","mcs","unwise","unwisescan","mcsunwise"],
+  "template_definitions":{
+    "dust":"CSFD A_V with R3.1 and0.86 EBV rescaling, high-resolution sampling/downsampling",
+    "stars":"Gaia random-star count map G18.5..20",
+    "m10":"DR3SelectionFunctionTCG m10 map, degraded NESTED to RING",
+    "mcs":"Gaia-star density minus Galactic-longitude-reflected density within LMC9deg/SMC5deg",
+    "unwise":"1percent unWISE source-count map with FW1>0,FW2>0,Prim=1",
+    "unwisescan":"mean nmW1 for Prim=1 unWISE rows",
+    "mcsunwise":"reflected unWISE count difference within same LMC/SMC discs"
+  },
+  "exact_generation_limit":"Release-day code/notebook qualify convention; Zenodo does not embed producer commit/run receipt, so byte-exact regeneration from this commit is not proved.",
+  "requested_metadata_runtime":"gpt-6-luna/medium",
+  "observed_runtime":"UNKNOWN"
+}

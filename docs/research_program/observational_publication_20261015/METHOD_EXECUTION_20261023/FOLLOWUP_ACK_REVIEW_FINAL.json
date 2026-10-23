@@ -1,0 +1,23 @@
+{
+  "evidence_source": "Structured extraction of actual native independent review final",
+  "reviewer": "/root/followup_ack_review",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "verdict": "SCOPED_PASS",
+  "base_head": "2c869f634e6673703f9434785fab3c4cfab76218",
+  "validation": {
+    "independent_tests": 60,
+    "subtests": 43,
+    "actual_BOOST_and_CMB_followup_receipts_in_copied_state": "PASS",
+    "role_profile_retarget_rejected_atomically": true,
+    "replay_and_post_ack_receipt_mutation_rejected": true,
+    "historical48_and_ultra_preserved": true,
+    "production_state_not_mutated_by_reviewer": true
+  },
+  "file_sha256": {
+    "scripts/codex_harness/research_controller.py": "af3690bee70df75d553f6ea2f030f7847c5db1384ec1509bef450db7e74ef7ed",
+    "scripts/codex_harness/test_research_controller_frontier.py": "fc0cb55cbbff4894c83a3278a6914aba4eaff3fc73829a733356f4192a4157d6",
+    "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md": "132dcee1542069057d3da3ee2a671e6aa6bf3e0b2a4fc87ec8d1b7fb1da839ec"
+  },
+  "scope": "controller correctness only; actual native dispatch host-attested, no scientific admission"
+}

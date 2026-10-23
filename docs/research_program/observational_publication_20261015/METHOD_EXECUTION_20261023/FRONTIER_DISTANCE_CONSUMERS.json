@@ -1,0 +1,131 @@
+{
+  "frontier_id": "R24-REVIEWED-DISTANCE-CONSUMERS",
+  "tasks": [
+    {
+      "id": "R24-SELECTION-ENVELOPE",
+      "kind": "numeric",
+      "goal": "Indicator abs heldout residual exceeds fixed diagnostic threshold; empirical density-ratio sensitivity not measured propensity",
+      "acceptance": "LP primal/dual1e-9,Gamma1 parity1e-12,nesting1e-10; unbounded physical functional witness; no5460 parent inference",
+      "input_identity": "sha256:b02fc724d3a6360617392ad1d9deee3934d09e1a42eeb4dff535ad3fcfdaeae0",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-SELECTION-ENVELOPE_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-DISTANCE-MODELS",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "min/max sum p_i*w_i*f_i; p=1/274,sum p*w=1,w in[1/Gamma,Gamma],Gamma=1,1.25,1.5,2,4; missing628-frame extension274/628\u00d7[L,U]+354/628\u00d7[0,1]"
+        },
+        "discriminator": "Interval width and vacuity boundary versus justified Gamma/overlap; 274/628 is not a propensity; LP oracle",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Indicator abs heldout residual exceeds fixed diagnostic threshold; empirical density-ratio sensitivity not measured propensity",
+        "calculation": "min/max sum p_i*w_i*f_i; p=1/274,sum p*w=1,w in[1/Gamma,Gamma],Gamma=1,1.25,1.5,2,4; missing628-frame extension274/628\u00d7[L,U]+354/628\u00d7[0,1]",
+        "acceptance": "LP primal/dual1e-9,Gamma1 parity1e-12,nesting1e-10; unbounded physical functional witness; no5460 parent inference"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    },
+    {
+      "id": "R24-OPTICAL-SHEAR",
+      "kind": "numeric",
+      "goal": "Full5coord magnitude residual STF, complete nuisance covariance; finitez effective shear scenario",
+      "acceptance": "STF/frame checks1e-12,fullcov propagation; Hminus<=0 unbounded; registeredG map and measured remainder remainHOLD",
+      "input_identity": "sha256:af216d8bd92fcc4814294e785abdcb72b4576f685ca5ca18808841b5779d09e0",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-OPTICAL-SHEAR_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/optical_shear"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-DISTANCE-MODELS",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "sigma_eff/H=-(ln10/5)*B; T2 interval vs declared remainder; retain jointH coefficient uncertainty"
+        },
+        "discriminator": "Joint H/shear/remainder bounds finite and nonvacuous or constructive failure; mask-mode mixing and alternative calibration included",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Full5coord magnitude residual STF, complete nuisance covariance; finitez effective shear scenario",
+        "calculation": "sigma_eff/H=-(ln10/5)*B; T2 interval vs declared remainder; retain jointH coefficient uncertainty",
+        "acceptance": "STF/frame checks1e-12,fullcov propagation; Hminus<=0 unbounded; registeredG map and measured remainder remainHOLD"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    },
+    {
+      "id": "R24-BOOST-ACCELERATION",
+      "kind": "numeric",
+      "goal": "Same-cohort response quotient degeneracy, no physical globalhistory",
+      "acceptance": "unit/frame/exactrelations,SVD1e-10 plus1e-8/1e-12;epsilon/P/g/tracermap missing explicit;changingVcmb alone not observerboost",
+      "input_identity": "sha256:feafebb499efb65f229cf015f8cf6478120cf86d2964d15d52206a3741670a2d",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-BOOST-ACCELERATION_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-DISTANCE-MODELS",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "constantn vs1/Vcmb*n after same nuisance;optical acceleration(5/ln10)A.n/(cH) exact degeneracy with angular calibration;T1 algebraic synthetic reference"
+        },
+        "discriminator": "Frame/unit-correct columns, rank and valid-domain power; intrinsic acceleration requires positive kinetic stress and qualified gradient/tracer information",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Same-cohort response quotient degeneracy, no physical globalhistory",
+        "calculation": "constantn vs1/Vcmb*n after same nuisance;optical acceleration(5/ln10)A.n/(cH) exact degeneracy with angular calibration;T1 algebraic synthetic reference",
+        "acceptance": "unit/frame/exactrelations,SVD1e-10 plus1e-8/1e-12;epsilon/P/g/tracermap missing explicit;changingVcmb alone not observerboost"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+First diagnostic launch attempt: relative interpreter path was miscounted.
+EXIT 127: /bin/bash: line 1: ../../../..//../../../../../../.venv/bin/python: No such file or directory
+No scientific command started. Corrected immediately to absolute canonical interpreter.
+
+COMMAND: /home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m unittest -v test_moving_lens.MovingLensTests.test_source_variant_union_contains_both_versions
+CWD: /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/MOVING_LENS_20261018
+OBSERVED_HEAD: b4a93016afb57a5b115bff4dbfa65bc3d56d4b65
+EXIT: 1
+RAW OUTPUT:
+test_source_variant_union_contains_both_versions (test_moving_lens.MovingLensTests.test_source_variant_union_contains_both_versions) ... ERROR
+
+======================================================================
+ERROR: test_source_variant_union_contains_both_versions (test_moving_lens.MovingLensTests.test_source_variant_union_contains_both_versions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/MOVING_LENS_20261018/test_moving_lens.py", line 69, in test_source_variant_union_contains_both_versions
+    result = build_result(self.source)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/MOVING_LENS_20261018/moving_lens.py", line 198, in build_result
+    raise ValueError(f'Frozen base HEAD mismatch: {observed_head}')
+ValueError: Frozen base HEAD mismatch: b4a93016afb57a5b115bff4dbfa65bc3d56d4b65
+
+----------------------------------------------------------------------
+Ran 1 test in 0.132s
+
+FAILED (errors=1)

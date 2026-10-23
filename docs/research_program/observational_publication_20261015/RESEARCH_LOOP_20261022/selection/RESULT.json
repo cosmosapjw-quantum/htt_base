@@ -1,0 +1,101 @@
+{
+  "allowed_use": "working-law selection sensitivity illustration",
+  "artifact_mode": "derived_reuse_of_retained_result",
+  "assumptions": [
+    "Gamma is finite, >=1, and caps unnormalized positive joint weights on every ordered joint atom",
+    "event completion and ratio choice are independent in the relaxed class",
+    "retained hard-ball radii are assumed, not measured"
+  ],
+  "claim_tier": "C0_EXPLORATORY_NON_CLAIM_BEARING",
+  "covariance_status": "retained source-conditioned working law only",
+  "event": "at_least_one; strict working Q threshold 0.05",
+  "forbidden_uses": [
+    "physical Pi or Q inference",
+    "S02/H02 completion",
+    "Bianchi family identification"
+  ],
+  "gamma_sweep": [
+    {
+      "assumed_hard_ball": [
+        0.14697265625,
+        0.95654296875
+      ],
+      "exact_working": [
+        0.60302734375,
+        0.60302734375
+      ],
+      "gamma": 1.0
+    },
+    {
+      "assumed_hard_ball": [
+        0.07112896555798429,
+        0.9802079279479624
+      ],
+      "exact_working": [
+        0.4030350004079302,
+        0.773647943203174
+      ],
+      "gamma": 1.5
+    },
+    {
+      "assumed_hard_ball": [
+        0.04129510220880779,
+        0.9887697160883281
+      ],
+      "exact_working": [
+        0.2752395810118119,
+        0.8586824265600557
+      ],
+      "gamma": 2.0
+    },
+    {
+      "assumed_hard_ball": [
+        0.018784323514727908,
+        0.9949774266365689
+      ],
+      "exact_working": [
+        0.1444106641721235,
+        0.9318410462776661
+      ],
+      "gamma": 3.0
+    },
+    {
+      "assumed_hard_ball": [
+        0.010653735886454536,
+        0.9971685807908885
+      ],
+      "exact_working": [
+        0.08670926068946148,
+        0.9604821853886162
+      ],
+      "gamma": 4.0
+    }
+  ],
+  "null_mock_status": "NOT_CALIBRATED_FOR_PHYSICAL_Q",
+  "owner": "HTT research intake",
+  "physical": {
+    "Q_domain": "UNRESOLVED",
+    "event_unknown_mass": 1.0,
+    "outer_bound": [
+      0.0,
+      1.0
+    ],
+    "selection_weight_bounds": "UNMEASURED"
+  },
+  "retained_event_masses": {
+    "assumed_hard_ball": [
+      0.14697265625,
+      0.95654296875
+    ],
+    "exact_working": 0.60302734375
+  },
+  "schema": "htt.normalized_selection_sensitivity/1",
+  "scope": "finite normalized-selection sensitivity of retained S02 working-law event bounds",
+  "selection_weight_semantics": "assumed unnormalized positive joint importance weights; normalized target/reference RN is r/Z with Z=p dot r",
+  "sky_support_status": "NOT_APPLICABLE_TO_THIS_EVENT",
+  "source": "docs/research_program/observational_publication_20261015/L01_S02_SHARP_20261017/results/S02_CONDITIONAL_SHARP_EVENT_ENVELOPES.json",
+  "source_git_base": "d66328b8d96ba9cc7bd8c1cbfd929be40903312c",
+  "source_sha256": "c1ff9cb02da191eca01d7675981788c028cb3ded20ae4bd7d99af97573dcd4e5",
+  "transfer_source": "CF4 H03 source-conditioned Gaussian working law; not native BASS",
+  "weight_bounds_status": "ASSUMED_SENSITIVITY_ONLY_NO_MEASURED_WEIGHTS"
+}

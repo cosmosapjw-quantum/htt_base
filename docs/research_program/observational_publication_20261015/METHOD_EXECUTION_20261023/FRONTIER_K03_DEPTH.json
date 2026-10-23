@@ -1,0 +1,116 @@
+{
+  "frontier_id": "R24-NEW-WITHINBIN-REPORTEDZ-VSH",
+  "tasks": [
+    {
+      "id": "R24-K03-DEPTH-MOMENTS",
+      "kind": "numeric",
+      "goal": "Within-old-bin continuous reported-z E1/B1 response after all102oldnuisances; observational coefficients notphysicalhistory",
+      "acceptance": "One actualnew streamingmoment pass underfrozen102nuisance+g(z)6response;conditional coefficients/full24cov,power anddepthbundle or sourceboundnumericalHOLD;no oldacceptancepromotion",
+      "input_identity": "sha256:b835863bfe99b25db95e7e73a62e2eaf27b78bc850b44c0579457397e6f58998",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-K03-DEPTH-MOMENTS_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_depth_moments"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": []
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "response": "oldpiecewisebinE1B1+6historylocalmoments"
+        },
+        "after": {
+          "response": "continuousg(z)E1B1profilesall102oldcolumns,newwithinbininformation"
+        },
+        "discriminator": "newHWH/HWX/HWy supportsactualfit,power,strong/weakresponseandfull24covariance",
+        "scope": "conditionalreported-redshiftproper-motionexperiment,notphysicalhistory"
+      },
+      "scientific_issue_identity": "R23-Q",
+      "ultra_policy": "existingconsumedultraunchanged;no newultra opportunity",
+      "one_use_limits": {
+        "one_new_full_pass": 1,
+        "chunk_rows_max": 4096,
+        "OPENBLAS_NUM_THREADS": 1,
+        "peak_RSS_MiB_max": 768,
+        "wall_seconds_max": 1800,
+        "download": false,
+        "on_started_failure": "preserveraw andHOLD;noautomaticretry"
+      },
+      "theory_contract": {
+        "advisor": "/root/method_contract",
+        "requested": "gpt-6-astra/xhigh",
+        "observed": "UNKNOWN",
+        "issue_identity": "R23-Q preserved; no new ultra",
+        "question": "Within-old-bin continuous reported-z E1/B1 response after all102oldnuisances; observational coefficients notphysicalhistory",
+        "rows": 755850,
+        "bins": [
+          0,
+          1,
+          2,
+          10
+        ],
+        "new_cuts": false,
+        "g": "z/(1+z)",
+        "new_H": "g(z)*model.dipole(ra,dec);physical B1sign omega cross n",
+        "old_X": "all102 model.design columns:18binE1B1,24ell2-3,42template,18ell4stress",
+        "working_law": "independentrowN2(0,reportedC_i) inuas/yr;notempirical spatial/selectionqualification",
+        "only_new_moments": [
+          "A=HWH:6x6",
+          "K=HWX:6x102",
+          "q=HWy:6"
+        ],
+        "reuse": "cachedG=XWX,b=XWy;nevercalloldmain/accumulate",
+        "limits": {
+          "one_new_full_pass": 1,
+          "chunk_rows_max": 4096,
+          "OPENBLAS_NUM_THREADS": 1,
+          "peak_RSS_MiB_max": 768,
+          "wall_seconds_max": 1800,
+          "download": false,
+          "on_started_failure": "preserveraw andHOLD;noautomaticretry"
+        },
+        "fit": [
+          "F=A-K solve(G,K.T)",
+          "s=q-K solve(G,b)",
+          "theta=solve(F,s)",
+          "Ctheta=invF",
+          "oldnewcov=-solve(G,K.T) Ctheta"
+        ],
+        "discriminators": [
+          "all6coefficientsandfullcov/eigenvectors",
+          "informationpre/postprofilingloss",
+          "sT invF s conditionalchi2_6scenario,notempiricalp",
+          "Waldpower_on_sphere_radii_.1_1_10_100uas/yr_usingchi2_6level.05;strongweaklambda=a\u00b2eigmax/minF",
+          "required80percentpoweramplitudesstrongweak"
+        ],
+        "fullstate": "retain18oldbinE1B1+6slope=24coordinatesandfullaugmentedcovariance,E1polarB1axialtyped",
+        "depth": {
+          "c": [
+            0.25,
+            0.5833333333333334,
+            0.7878787878787878
+          ],
+          "Yb": "gammabin+c_b*theta",
+          "representation": "Y or(Y0,Y1-Y0,Y2-Y1),fullcrosscov;gcentersnottruedistance"
+        },
+        "numerics": {
+          "scaled_eigen_threshold": 1e-10,
+          "sensitivity": [
+            1e-08,
+            1e-12
+          ],
+          "scaled_condition_max": 10000000000.0,
+          "scaled_residual_max": 1e-10,
+          "no_jitter_or_pseudoinverse": true
+        },
+        "controls": "boundedfixture directwhitenedregression;constantgabsorbedoldbinE1B1;scorelevelcontrols frommoments only",
+        "original_admission": "HOLD;centroidmatter/truedepth/spatialcov/selection/historyunknown;noR9alpha reuse"
+      }
+    }
+  ]
+}

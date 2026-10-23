@@ -1,0 +1,77 @@
+{
+  "task_id": "R23-CMB",
+  "packet_id": "cad530099dc22aecd453e2b11ebb437ac7e325ca772128a602bcaf2342f81d01",
+  "input_identity": "sha256:6186378e8671b67dde9a54c55a8a40c2dafb8b24eb18a6934abf9d24276f14de",
+  "scientific_author": {
+    "actual_agent_id": "/root/rc_cad530099dc22aec",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "mode": "read-only theory, source intake and actual new stdout calculation",
+    "reported_elapsed_seconds": 7.21,
+    "reported_exit_code": 0
+  },
+  "host_assembly": {
+    "actual_agent_id": "/root",
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "medium",
+    "observed_runtime": "UNKNOWN",
+    "mode": "mechanical persistence of exact returned stdin program, new-calculation replay and figure under frozen Astra contract",
+    "author_recipe_requested_fields_in_RESULT": "inherited recipe metadata; not observation of host model"
+  },
+  "source_head_requested": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+  "checkout_head": "855107f23fd4f25587ba242d8a5dfc1a8fc81876",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -B docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/projection.py > docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/RESULT.json",
+      "executor": "/root replay of scientific-author actual stdin",
+      "initial_session_id": 57119,
+      "initial_yield_seconds": 10.001133969,
+      "completion_exit_code": 0,
+      "end_to_end_elapsed": "NOT_MEASURED"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/plot.py",
+      "executor": "/root",
+      "exit_code": 0,
+      "tool_wall_seconds": 4.246745135
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/validate.py > docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CMB/VALIDATION.json",
+      "executor": "/root",
+      "exit_code": 0,
+      "tool_wall_seconds": 0.111024093
+    }
+  ],
+  "author_numeric_payload_parity": {
+    "status": "PASS_ACTUAL_AUTHOR_TO_HOST_REPLAY",
+    "comparisons": 33,
+    "max_absolute_difference": 0.0,
+    "absolute_and_relative_tolerance": 1e-12,
+    "algebra_controls_per_operator": 7,
+    "algebra_max": 4.133491882291226e-16,
+    "axis_points_defined": 15,
+    "min_axis_gap": 0.02711776356355211,
+    "independent_scientific_review": "PENDING_SEPARATE_REVIEWER",
+    "empirical_null_coverage": "NOT_ESTABLISHED"
+  },
+  "original_L03_state": "HOLD",
+  "joint_null_status": "UNQUALIFIED",
+  "old_campaign_reexecuted": false,
+  "source_lookup_limits": "Author-reported primary-source search excerpts; direct A&A403, ESA simulation wiki timeout, NERSC index accessible; not full-page readback",
+  "first_scientific_failures": [],
+  "figure": {
+    "category": "DIAGNOSTIC",
+    "owner": "obsstat",
+    "claim_tier": "C0",
+    "transfer_source": "none",
+    "frame": "Galactic COSMO",
+    "units": "dimensionless signed J234 and alignment squared",
+    "seed": "none",
+    "input": "RESULT.json",
+    "script": "plot.py",
+    "interpretation": "one-sky split-direction sensitivity; not physical cleaning or null probability"
+  },
+  "independent_review": "PENDING_SEPARATE_REVIEWER"
+}

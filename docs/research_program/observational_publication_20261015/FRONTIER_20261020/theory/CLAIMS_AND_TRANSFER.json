@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "unit_id": "COMPENSATED_HISTORY_20261020",
+  "author_requested_runtime": "gpt-6-astra/xhigh",
+  "author_observed_runtime": "UNKNOWN",
+  "independent_review": "PENDING_PARENT_ASSIGNED_REVIEWER",
+  "transfer_spec_style": {
+    "schema_status": "descriptive research contract; not asserted to instantiate or pass repository TransferFunctionSpec",
+    "id": "compensated-dust-radiation-distance-v1",
+    "owner": "htt",
+    "response_kind": "source-bound analytic first-order homogeneous two-fluid distance response",
+    "transfer_source": "none",
+    "source_equations": [
+      "BJMAROTO2009: Eqs.1,2,4,5",
+      "KAISERHUDSON2015: Eqs.1,8,9",
+      "HORSTMANN2022: Eqs.7,9-11,13",
+      "JOSE2022: Eqs.6,51-58,65,69"
+    ],
+    "background": "flat FLRW, separately conserved positive dust and radiation; optional unperturbed Lambda",
+    "evaluated_background": "flat Lambda=0, Omega_m=0.9999, Omega_r=0.0001",
+    "initial_conditions": {
+      "interval": "finite post-decoupling a_i <= a <= 1",
+      "a_observer": 1,
+      "normal_metric_perturbations_linear": 0,
+      "density_pressure_perturbations_linear": 0,
+      "dust_beta_at_ai": "b/a_i",
+      "radiation_beta_at_ai": "-R*b; R=3*epsilon_m0/(4*epsilon_r0)",
+      "radiation_distribution": "perfect fluid or collisionless isotropic monopole plus homogeneous first-order dipole",
+      "primordial_generation": "NOT_SUPPLIED"
+    },
+    "frames": {
+      "normal": "total-energy rest frame at linear order, synchronous zero shift",
+      "source": "dust congruence, rest-frame bolometric luminosity per source proper time",
+      "observer": "test observer beta_o=b+ell at observation",
+      "radiation": "beta_r=-R*b; distinct from normal and matter",
+      "line_of_sight": "unit vector pointing observer to source"
+    },
+    "units": {
+      "beta_b_ell": "dimensionless physical velocity divided by c",
+      "coordinate_velocity": "dx/dt=c*beta/a",
+      "energy_density_pressure": "J m^-3",
+      "H": "s^-1, or km s^-1 Mpc^-1 with compatible c and chi",
+      "chi": "length",
+      "output": "dimensionless fractional bolometric luminosity-distance residual"
+    },
+    "response": {
+      "fixed_variable": "observed redshift z",
+      "A": "c*(1+z)/(H(z)*chi(z))",
+      "h": "1+z-z*A",
+      "row": "[A*n_x,A*n_y,A*n_z,h*n_x,h*n_y,h*n_z]",
+      "parameter_order": ["ell_x", "ell_y", "ell_z", "b_x", "b_y", "b_z"],
+      "source_history": "beta_m(a)=b/a; beta_r=-R*b",
+      "relative_matter_radiation_parameter": "w=(1+R)*b"
+    },
+    "domain": [
+      "positive finite z; finite a_i > 0",
+      "all velocities small including R*|b|",
+      "Doppler redshift displacement small relative to background distance scale",
+      "no independent first-order metric/lensing/density modes",
+      "actual nuisance-projected design and conditioning must be checked before inference"
+    ],
+    "physical_nonlinear_remainder_bound": "UNKNOWN",
+    "selected_error_and_calibration_bound": "UNKNOWN",
+    "sky_support_status": "ideal shell dipoles; observational angular mask not applied",
+    "null_mock_status": "NOT_RUN; no selected sampling law",
+    "native_solver_status": "NOT_USED"
+  },
+  "claims": [
+    {
+      "claim_id": "HIST-COMPENSATED-LINEAR",
+      "text": "Specified positive dust/radiation IC preserve zero total momentum and zero first-order metric perturbations, with beta_m=b/a and beta_r=-R*b.",
+      "owner": "htt",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence": ["THEORY.md:R3,R5.1", "RESULTS.json", "WOLFRAM_CHECK.json"],
+      "caveats": ["finite post-decoupling interval", "independent IC", "first order only", "quadratic stress remains"]
+    },
+    {
+      "claim_id": "HIST-DISTANCE-KERNEL",
+      "text": "The fixed-observed-z fractional luminosity-distance response is n dot [A ell + (1+z-zA)b] in the declared mode.",
+      "owner": "htt",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence": ["THEORY.md:R5.2", "SOURCES.json", "RESULTS.json"],
+      "caveats": ["rest-frame bolometric source", "all endpoints in same normal frame", "selected observational source matching absent"]
+    },
+    {
+      "claim_id": "HIST-IDEAL-RADIAL-RANK",
+      "text": "For positive dust/radiation in a flat expanding background, two distinct positive ideal depths have a nonzero local/history radial determinant because d(h/A)/dz=H'chi/c>0.",
+      "owner": "htt",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence": ["THEORY.md:R5.3", "WOLFRAM_CHECK.json", "RESULTS.json"],
+      "caveats": ["not an observed six-parameter rank assertion", "nuisance projection can remove history column", "conditioning and covariance still required"]
+    },
+    {
+      "claim_id": "HIST-FINITE-ALGEBRA-CHECK",
+      "text": "Fourteen finite standard-library tests passed once on the declared synthetic background; external Wolfram checks returned the specified identities.",
+      "owner": "htt",
+      "status": "DIAGNOSTIC_ONLY",
+      "evidence_type": "test",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence": ["RESULTS.json", "WOLFRAM_CHECK.json"],
+      "caveats": ["not four-axis CAS", "not nonlinear GR verification", "not statistical coverage", "independent review pending"]
+    },
+    {
+      "claim_id": "HIST-CONDITIONAL-ERROR",
+      "text": "Supplied finite shell residual bounds propagate through the local-annihilating contrast by Eq.22.",
+      "owner": "htt",
+      "status": "CONDITIONAL",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence": ["THEORY.md:R8", "RESULTS.json"],
+      "caveats": ["actual physical/selected residual bounds UNKNOWN", "no confidence level", "no actual posterior or physical pushforward"]
+    }
+  ],
+  "node_disposition": {
+    "V03": "analytic subcase advanced; original acceptance HOLD",
+    "S02": "one restricted response ingredient supplied; actual physical mapping and unknown mass unchanged",
+    "K03": "nonradial transfer not constructed; HOLD",
+    "original_completed_nodes_added": [],
+    "original_completed_count": 17,
+    "direct_external_blocker_count": 8,
+    "all_six_submission_readiness": "NOT_READY_TO_SUBMIT"
+  }
+}

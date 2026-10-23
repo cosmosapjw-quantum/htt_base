@@ -1,0 +1,73 @@
+{
+  "packet_id": "91c52db37de66cb64934232cb6f7c729d3ebed5d56e230c97ec9ed4671071eef",
+  "task_id": "R23-CONGRUENCE",
+  "input_identity": "sha256:a9cf00213dbeb740d3bd74e9954db4f00580675e902e692a87a578f5787bd367",
+  "actual_agent_id": "/root/rc_91c52db37de66cb6",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "source_head_requested": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+  "checkout_head_intake": "855107f23fd4f25587ba242d8a5dfc1a8fc81876",
+  "checkout_head_at_calculation": "39cdfb01969bcf9b5897cfd6c3d8256d5e6fcac0",
+  "author_reported_actual_tool_receipt": {
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B - <<'PY' [exact stdin below] PY",
+    "exit_code": 0,
+    "wall_time_seconds": 2.146318072,
+    "tool_chunk": "4c9ddb",
+    "writes": false
+  },
+  "stdin": "import hashlib, json, subprocess, sys\nfrom pathlib import Path\nimport sympy as S\ns,o,r,p,A,z,b,ell,rho=S.symbols('s o r p A z b ell rho', real=True)\nendpoint=S.expand((2*s-o)-(s-o)-A*(s-r-p))\nh=1+z-z*A\nB=(1+z)*(1-A)\nspecial=endpoint.subs({s:(1+z)*b,o:b+ell})\nchecks={\n 'observer_endpoint_cancels': S.diff(endpoint,o),\n 'same_observer_history': S.expand(special.subs({r:b+ell,p:0})-(h*b+A*ell)),\n 'fixed_reference_history': S.expand(special.subs({r:0,p:0})-B*b),\n 'radiation_reference_history': S.expand(special.subs({r:-rho*b,p:0})-(B-rho*A)*b),\n 'quotient_column_difference': S.expand(B-(h-A)),\n 'dimensionless_pv_sign': S.diff(endpoint,p)-A,\n}\n# Exact finite-dimensional illustration of the newly derived quotient identity.\n# This is a rational algebra witness, not a retained-design or observational rank.\na=S.Matrix([1,2,3,4]); history=S.Matrix([2,-1,4,3]); identity=S.eye(4)\nprojector=identity-a*(a.T*a).inv()*a.T\nchecks['quotient_exact_annihilation']=(projector*a).norm()\nchecks['quotient_exact_history_equivalence']=(projector*(history-a)-projector*history).norm()\n# Full nuisance quotient must include the combined response K-D E.\nD=S.diag(S.Rational(2),S.Rational(3)); K=S.Matrix([1,0]); E=S.Matrix([0,1])\nQ=K-D*E\nPq=S.eye(2)-Q*(Q.T*Q).inv()*Q.T\nchecks['combined_nuisance_annihilation']=(Pq*Q).norm()\n# Splitting two channels belonging to one nuisance would remove an extra dimension.\ncombined_rank=Q.rank(); split_rank=S.Matrix.hstack(K,-D*E).rank()\n# Retain empirical rank as NOT_EVALUATED; only the formal identities are tested.\nassert all(v == 0 for v in checks.values()), checks\nroot=Path('docs/research_program/observational_publication_20261015')\npaths=['FRONTIER_20261020/theory/THEORY.md','FRONTIER_20261020/theory/CLAIMS_AND_TRANSFER.json','FRONTIER_20261020/projection/RESULT.json','ADVERSARIAL_AUDIT_20261022/theory/THEORY_AUDIT.md','ADVERSARIAL_AUDIT_20261022/continuation/two_redshift_pipeline/REPORT.md','CONTINUOUS_RESEARCH_20261023/execution/R23-Q/RETURN.json','CONTINUOUS_RESEARCH_20261023/execution/R23-SN/RETURN.json']\nprint(json.dumps({'status':'PASS_FINITE_ALGEBRA_ONLY','python':sys.version.split()[0],'sympy':S.__version__,'source_head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'checks':{k:str(v) for k,v in checks.items()},'combined_single_parameter_nuisance_rank':combined_rank,'incorrectly_split_nuisance_rank':split_rank,'new_retained_design_rank':'NOT_EVALUATED_UNQUALIFIED_PHYSICAL_PROCESSING_RESPONSE','input_sha256':{str(root/x):hashlib.sha256((root/x).read_bytes()).hexdigest() for x in paths}},indent=2))\n",
+  "stdout": "{\n  \"status\": \"PASS_FINITE_ALGEBRA_ONLY\",\n  \"python\": \"3.12.3\",\n  \"sympy\": \"1.14.0\",\n  \"source_head\": \"39cdfb01969bcf9b5897cfd6c3d8256d5e6fcac0\",\n  \"checks\": {\n    \"observer_endpoint_cancels\": \"0\",\n    \"same_observer_history\": \"0\",\n    \"fixed_reference_history\": \"0\",\n    \"radiation_reference_history\": \"0\",\n    \"quotient_column_difference\": \"0\",\n    \"dimensionless_pv_sign\": \"0\",\n    \"quotient_exact_annihilation\": \"0\",\n    \"quotient_exact_history_equivalence\": \"0\",\n    \"combined_nuisance_annihilation\": \"0\"\n  },\n  \"combined_single_parameter_nuisance_rank\": 1,\n  \"incorrectly_split_nuisance_rank\": 2,\n  \"new_retained_design_rank\": \"NOT_EVALUATED_UNQUALIFIED_PHYSICAL_PROCESSING_RESPONSE\",\n  \"input_sha256\": {\n    \"docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/THEORY.md\": \"233e815790be62dd897859bfb72fa55a8950fcd19f25113cd58a43c3d0f19b70\",\n    \"docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/CLAIMS_AND_TRANSFER.json\": \"9f51029bb22e69a037a186b82fb8c77b92f8c4d9df8887a3cc21df2b0514b6a9\",\n    \"docs/research_program/observational_publication_20261015/FRONTIER_20261020/projection/RESULT.json\": \"92bdd24510ba1dbdd4a89128558f2242cdf18b0f59fbf34004c79f08f15ec236\",\n    \"docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/theory/THEORY_AUDIT.md\": \"3875784c16d9a07a889f877f6c242652d7dd2be6bca4731d6b4c521d0aef83c5\",\n    \"docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/two_redshift_pipeline/REPORT.md\": \"3f0ef47af1d579f92090077b54e8c1f64b171325cbd1aa1f851f3dfed62c8bc6\",\n    \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/RETURN.json\": \"53ec189256b5d9889baefe5dfa9eb623b80754c9bdd4f69845acff2bd674cf01\",\n    \"docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/RETURN.json\": \"29f624c2fe0382e2c2fc2a04b9b731964ee251484a4847879214a314dccb22f8\"\n  }\n}\n",
+  "host_assembly": {
+    "actual_agent_id": "/root",
+    "requested_runtime": "gpt-6.1-sol/medium",
+    "observed_runtime": "UNKNOWN",
+    "actions": [
+      "persist exact supplied report/stdin/stdout",
+      "verify7source hashes; inspect9zero residuals",
+      "render exact author rational witness recipe"
+    ],
+    "algebra_replayed": false,
+    "plot_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CONGRUENCE/plot.py",
+    "plot_exit_code": 0,
+    "plot_tool_wall_seconds": 1.8933790240000001
+  },
+  "source_checks": {
+    "status": "AUTHOR_STDOUT_PERSISTED_SOURCE_HASHES_VERIFIED",
+    "source_hashes_verified": [
+      "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/THEORY.md",
+      "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/CLAIMS_AND_TRANSFER.json",
+      "docs/research_program/observational_publication_20261015/FRONTIER_20261020/projection/RESULT.json",
+      "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/theory/THEORY_AUDIT.md",
+      "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/two_redshift_pipeline/REPORT.md",
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/RETURN.json",
+      "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-SN/RETURN.json"
+    ],
+    "author_exact_zero_checks": 9,
+    "algebra_replayed_by_host": false,
+    "empirical_rank": "NOT_EVALUATED",
+    "figure_recipe": "Exact rational author recipe [6/5,-13/5,8/5,-1/5]; nuisance rank1/2, survivingdimension1/0",
+    "independent_review": "PENDING"
+  },
+  "figure_metadata": {
+    "category": "DIAGNOSTIC",
+    "owner": "htt",
+    "claim_tier": "C0_DERIVED_CONDITIONAL",
+    "transfer_source": "none",
+    "units": "arbitrary rational coordinates and finite algebraic ranks",
+    "frame": "NOT_APPLICABLE",
+    "seed": "none",
+    "input": "RESULT.json plus exact author rational recipe",
+    "script": "plot.py",
+    "allowed_use": "illustrate same-nuisance response combination and quotient identity",
+    "caveats": [
+      "not sky data",
+      "empirical rank UNKNOWN",
+      "no significance or uncertainty"
+    ]
+  },
+  "first_scientific_failures": [],
+  "scientific_admission": "HOLD",
+  "independent_review": "PENDING",
+  "source_lookup_attribution": "Horstmann2111.03055v2 Eqs5,7-11,13; Eq6 not used as exact finite law. GuySALT2 Sec2Eq1 supports only spectral-model structure."
+}
