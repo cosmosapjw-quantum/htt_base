@@ -1,0 +1,93 @@
+{
+  "packet_id": "ac501de4afffb28a2af5e470c457b9a1059a637df4d540f5d0d911e18a428c61",
+  "task_id": "R23-Q",
+  "input_identity": "sha256:e8001c465950ce499d9c13e966ae9af5fea4f15a6ac179d3f541878864736b3c",
+  "timestamp_utc": "2026-10-22T23:35:57.313743+00:00",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "git_head": "855107f23fd4f25587ba242d8a5dfc1a8fc81876",
+  "source_head": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+  "source_head_is_ancestor": true,
+  "interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "thread_environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1"
+  },
+  "input_files": {
+    "full_stats.npz": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/full_stats.npz",
+      "sha256": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+      "size_bytes": 63690
+    },
+    "margin_stats.npz": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/margin_stats.npz",
+      "sha256": "e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5",
+      "size_bytes": 63538
+    }
+  },
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 python scripts/htt_astrometry_quotient.py stats --input /mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/full_stats.npz --expected-sha256 4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da --output docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/full.json",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 python scripts/htt_astrometry_quotient.py stats --input /mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/margin_stats.npz --expected-sha256 e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5 --output docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/margin.json",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 .venv/bin/python scripts/htt_astrometry_quotient.py stats --input /mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/full_stats.npz --expected-sha256 4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da --output docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/full.json",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 .venv/bin/python scripts/htt_astrometry_quotient.py stats --input /mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/margin_stats.npz --expected-sha256 e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5 --output docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/margin.json",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/score_controls.py --cache-dir /mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry --output-dir docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 .venv/bin/python docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/plot_controls.py",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q scripts/test_htt_astrometry_quotient.py docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/test_model.py",
+      "exit_code": 0,
+      "stdout": ".......................                                            [100%]\n23 passed, 6 subtests passed in 13.89s\n",
+      "stderr": ""
+    },
+    {
+      "command": "Numerical recursive comparison PRE_VENV_RECORD/{full,margin}.json against final {full,margin}.json at absolute+relative tolerance 1e-10",
+      "exit_code": 0,
+      "stdout": "full: 841 numeric leaves; 409 differing; max abs 2.7533531010703882e-12; no tolerance violations. margin: 841 numeric leaves; 407 differing; max abs 1.5222667570924386e-10; no tolerance violations.",
+      "stderr": ""
+    }
+  ],
+  "runtime_identity_observation": "UNKNOWN",
+  "review_status": "PENDING_INDEPENDENT_REVIEW",
+  "no_catalogue_replay": true,
+  "no_publication": true,
+  "interpreter_note": "The two preexisting stats adapter commands ran under /usr/bin/python (NumPy 2.4.2); score controls, plot and pytest ran under the repository .venv/bin/python (NumPy 2.5.4).",
+  "stats_interpreter": "/usr/bin/python",
+  "stats_numpy": "2.4.2",
+  "timestamp_utc_updated": "2026-10-22T23:38:54.426893+00:00",
+  "environment_correction": "Initial stats adapter ran under /usr/bin/python; preserved original outputs/receipt/return/manifest in PRE_VENV_RECORD. Final stats adapter reran under verified repo .venv. Source hashes unchanged. Exact numerical comparison recorded separately.",
+  "first_record_refusal": "Parent reported controller record rejected missing agent_id/outcome/validation_evidence; no controller state change.",
+  "final_stats_interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+  "final_stats_numpy": "2.5.4",
+  "final_stats_scipy": "1.18.1"
+}

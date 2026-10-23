@@ -1,0 +1,42 @@
+{
+  "packet_id": "ac501de4afffb28a2af5e470c457b9a1059a637df4d540f5d0d911e18a428c61",
+  "task_id": "R23-Q",
+  "input_identity": "sha256:e8001c465950ce499d9c13e966ae9af5fea4f15a6ac179d3f541878864736b3c",
+  "candidate_identity": "sha256:16580ce01d8a2c7c448793f7a3b58e1dc649b418ec151c8f6913787f2117ce8d",
+  "status": "EXECUTED_PENDING_INDEPENDENT_REVIEW",
+  "scientific_admission": "HOLD",
+  "review_status": "PENDING_INDEPENDENT_REVIEW",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "raw_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/RAW_RECEIPT.json",
+  "artifact_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/ARTIFACT_MANIFEST.json",
+  "report": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/REPORT.md",
+  "figure": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/CONTROLS.png",
+  "summary": {
+    "full_signal_rank": 18,
+    "margin_signal_rank": 18,
+    "nuisance_rank": 84,
+    "all_six_contrasts_estimable": true,
+    "new_full_coverage_each_control": 0.9501953125,
+    "new_margin_coverage_each_control": 0.9423828125,
+    "old_full_coverage_l4": 0.2841796875,
+    "old_full_coverage_template_mean": 0.0,
+    "fixed_sample_nuisance_annihilation_max_abs": 1.0336145086647469e-12,
+    "residual_covariance_status": "UNKNOWN",
+    "sourcewise_selection_law_status": "UNKNOWN",
+    "old_cut_Q": "INAPPLICABLE_UNDER_UNRESTRICTED_FIXED_MEANS"
+  },
+  "next_input": "Empirical selected-source residual spatial covariance and sourcewise PM/classifier selection likelihood or justified mean bound; same-congruence physical PM/NNR/clock response remains separate.",
+  "no_dispatch_claim": true,
+  "agent_id": "/root/rc_ac501de4afffb28a",
+  "outcome": "success",
+  "validation_evidence": [
+    "SHA256 matched both frozen 102x102 caches: full 4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da; margin e0148768bfdef02c9e9291ec0bd2b79e7b1e859a5c343dc2031259c876a671e5.",
+    "OPENBLAS_NUM_THREADS=1 .venv/bin/python scripts/htt_astrometry_quotient.py stats on both caches: exit 0; signal rank 18/18, nuisance rank 84/84, all six contrasts estimable.",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python score_controls.py: exit 0; full 973/1024 and margin 965/1024 conditional coverage per injected l4/template control; numeric annihilation <=1.04e-12.",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q scripts/test_htt_astrometry_quotient.py and A22 astrometry/test_model.py: exit 0; 23 passed, 6 subtests passed.",
+    "NUMERICAL_COMPARISON.json: prior system-Python and final virtualenv stats outputs agree leafwise at absolute+relative 1e-10; prior outputs preserved in PRE_VENV_RECORD.",
+    "ARTIFACT_MANIFEST.json hashes the reviewed candidate files; report retains empirical residual covariance and sourcewise selection UNKNOWN."
+  ],
+  "environment_correction": "Final stats adapter uses repository .venv; prior system-Python outputs preserved and numerically equivalent."
+}
