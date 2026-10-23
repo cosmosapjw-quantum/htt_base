@@ -1,0 +1,42 @@
+{
+  "frontier_id": "R24-K03-VALID-DOMAIN-DESIGN",
+  "tasks": [
+    {
+      "id": "R24-K03-DESIGN",
+      "kind": "numeric",
+      "goal": "Retained profiledCbb Gaussian experiment valid-domain power sensitivity; no catalogue replay",
+      "acceptance": "PSD monotonic information,Schur/inverse1e-10;actual depth/VSH moments absent explicit acquisition need;centroidmatter/remainderHOLD",
+      "input_identity": "sha256:46dfba636f42d18eef70804060d210b775319402139d602a29889943c4f53108",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-K03-DESIGN_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_design"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": []
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "Cprime=Cbb+tau\u00b2u*uT along each originaleigenvector,tau=0,.1,.3,1uas/yr;T6 eps=.01,.1,.3;information multiplier targets.5,.8,.9"
+        },
+        "discriminator": "Quantify attainable power and required information change within validity domain; no full catalogue replay unless needed for missing moments",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Retained profiledCbb Gaussian experiment valid-domain power sensitivity; no catalogue replay",
+        "calculation": "Cprime=Cbb+tau\u00b2u*uT along each originaleigenvector,tau=0,.1,.3,1uas/yr;T6 eps=.01,.1,.3;information multiplier targets.5,.8,.9",
+        "acceptance": "PSD monotonic information,Schur/inverse1e-10;actual depth/VSH moments absent explicit acquisition need;centroidmatter/remainderHOLD"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    }
+  ]
+}

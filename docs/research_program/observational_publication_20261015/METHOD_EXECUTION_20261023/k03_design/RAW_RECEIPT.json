@@ -1,0 +1,77 @@
+{
+  "task_id": "R24-K03-DESIGN",
+  "phase": "execute",
+  "packet_id": "2c055ade5d87a49c0be7f2301d48ca4967eed30587f7b0c6e2224a43078b668b",
+  "base_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+  "first_failure": {
+    "file": "FIRST_FAILURE.txt",
+    "kind": "historical_interpreter_unavailable",
+    "scientific_failure": false
+  },
+  "run": {
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg .venv/bin/python -B docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_design/design.py",
+    "exit_code": 0,
+    "stdout": "RUN_STDOUT.txt",
+    "stderr": "RUN_STDERR.txt"
+  },
+  "tests": {
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_design/test_design.py",
+    "exit_code": 0,
+    "passed": 2,
+    "stdout": "TEST_STDOUT.txt",
+    "stderr": "TEST_STDERR.txt"
+  },
+  "source_cache_check": {
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_gaia_full_join.npz": {
+      "sha256": "4cd83b1e8bb9f71f89aacfc2db5daba87f9a79f2af8ccd2e7e94b0be57252dae",
+      "rows": 755850,
+      "fields_checked": [
+        "redshift_quaia",
+        "ra",
+        "dec",
+        "pmra_uasyr",
+        "pmdec_uasyr",
+        "pmra_error_uasyr",
+        "pmdec_error_uasyr",
+        "gaia_pmra_pmdec_corr",
+        "template_dust"
+      ]
+    },
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/full_stats.npz": {
+      "sha256": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+      "shapes": {
+        "G": [
+          102,
+          102
+        ],
+        "b": [
+          102
+        ]
+      }
+    },
+    "/mnt/extdrive/workdir/htt_open_data/k03_pm_20261023/cross_moments.npz": {
+      "sha256": "70fc2fee88803a7211c1c157ff87b4adb05b0807a00c03dc38d51f31b3842662",
+      "shapes": {
+        "A": [
+          6,
+          6
+        ],
+        "K": [
+          6,
+          102
+        ],
+        "qH": [
+          6
+        ]
+      }
+    }
+  },
+  "new_catalogue_passes": 0,
+  "new_expanded_depth_vsh_moments": "NOT_RUN",
+  "original_K03_acceptance": "HOLD",
+  "R23_Q_ultra_escalation": "unchanged_used"
+}

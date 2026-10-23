@@ -1,0 +1,36 @@
+{
+  "task_id": "R24-CMB-ORBIT",
+  "packet_id": "503086ca39900549c146176289ea3aff406bc9869397f20ae844f2a3dc86c437",
+  "input_identity": "sha256:0ae60cc8f899f3480b3c186f4f5c534989aa125744cde917f1e52f6ce4301e7a",
+  "executor_agent_id": "/root/rc_503086ca39900549",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "git_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "runtime_observed": "UNKNOWN",
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "scipy": "1.18.1",
+  "healpy": "1.19.0",
+  "matplotlib": "3.11.2",
+  "first_failure": {
+    "command": ".venv/bin/python docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/orbit.py",
+    "exit_code": 1,
+    "exception": "ValueError: primary/secondary cache mismatch",
+    "classification": "distinct cached zero-window processing realization; max absolute real harmonic residual 9.408008444155963e-11 K_CMB",
+    "action": "retained as separate primary and pilot source rows"
+  },
+  "final_run": {
+    "command": ".venv/bin/python docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/orbit.py",
+    "exit_code": 0,
+    "stdout": "{\"bundles\": 60, \"comparisons\": 57, \"cache_residual\": 9.408008444155963e-11}"
+  },
+  "tests": {
+    "command": ".venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/test_orbit.py",
+    "exit_code": 0,
+    "summary": "2 passed in 4.85s"
+  },
+  "result_sha256": "4ff9778be2177bf4c485ea0807adf2d2b5bc7e9a89367f848a86ae4be628c494",
+  "source_sha256": "7d920662534b0ce6f0be6f4fd6f50c7dfb831091db0a7b3a496b14b1d932d697",
+  "review_status": "PENDING_INDEPENDENT_REVIEW",
+  "claim_status": "DIAGNOSTIC_ONLY",
+  "original_acceptance": "UNCHANGED"
+}

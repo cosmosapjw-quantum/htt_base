@@ -1,0 +1,1596 @@
+{
+  "task_id": "R24-REPORT-RESULTS",
+  "owner": "HTT/obsstat factual report",
+  "scope": "13 independently reviewed bounded conditional analyses; no original scientific admission",
+  "claim_tier": "C0",
+  "transfer_source": "none",
+  "status": "CONDITIONAL_DIAGNOSTIC_SYNTHESIS_PENDING_REPORT_REVIEW",
+  "source_input_sha256": "1811cba7fce4808adebadebe39334545d9f3a9cd71c58bbbb874d198d8385f3f",
+  "source_entry_count": 51,
+  "clerical_count_correction": "Contract text all53 is a clerical count error; actual 51 pinned entries authoritative; no missing source invented",
+  "source_base_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "publication_base_head": "2c869f634e6673703f9434785fab3c4cfab76218",
+  "publication": "PENDING_HOST_REVIEW_AND_PUSH; final commit identity supplied by host receipt",
+  "original_acceptance": {
+    "external": "17/42",
+    "analytic_alternate": "18/42",
+    "promoted": false
+  },
+  "preservation_checks": {
+    "original48_task_objects_exact": true,
+    "original_packets_exact": true,
+    "campaign_exact": true,
+    "campaign_identity_exact": true,
+    "ultra_repairs_exact": true,
+    "ultra_pending_exact": true
+  },
+  "old_task_count": 48,
+  "conditional_research_count": 13,
+  "raw_receipts_verified": 36,
+  "extra_ultra_launches": 0,
+  "native_runtime_observation": "UNKNOWN",
+  "token_and_monetary_usage": "NOT_INDEPENDENTLY_OBSERVED",
+  "tasks": [
+    {
+      "task_id": "R24-DISTANCE-MODELS",
+      "current_candidate_identity": "sha256:1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b",
+      "outcome": "completed",
+      "input_identity": "sha256:94ba6ebeeaa029c868663cd873e0626f892976e77a56c9d60ccc54c9cf1e1812",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/RESULT.json",
+      "source_sha256": "330066f4a8605caa9874f192a938d4ef1d84cf8933bdd3e6059a40b011c28bd0",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/DISTANCE_MODELS.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DISTANCE_REVIEW_RAW.json",
+      "review_sha256": "4305359f1f25203ecd8bc4a184a18703e4ac63785837686e3f8ce61d8e4e8a1d",
+      "review_verdict": "SCOPED_PASS_EXPLORATORY_CONDITIONAL_DISCRIMINATOR",
+      "review_validation": {
+        "validation": {
+          "artifact_entries_hashed": 19,
+          "input_entries_hashed": 13,
+          "released": 274,
+          "marks": 628,
+          "undefined": 354,
+          "direction_joins": "269CF4+5uniqueHyperLEDA,J2000verified",
+          "full_fits_checked": 12,
+          "training_fits_checked": 60,
+          "groups": "all628ledgergroupskeepfold",
+          "min_relative_singular_value": 0.0219617983,
+          "max_score_abs_error": 2.16e-12,
+          "max_prediction_mag_error": 2.13e-14,
+          "full_crosscov_and_schur_predictive_covariance": "verified",
+          "full_tensor_and_nuisance_crosscovariance": "verified",
+          "tests_passed": 3,
+          "historical_T": 4.555321823822732,
+          "historical_p": 0.000976324139614352
+        }
+      },
+      "law": "plug-in Gaussian, training ML scale",
+      "caveat": "선택·물리 공분산·저속 응답 미적격",
+      "finding": "공분산 가정에 따라 A/B 예측 순위 반전",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "ff5815b75e1281ce26d4688c2d75167fc0c3a3d02788ba36232bf0ae6f91628d",
+          "agent_id": "/root/distance_models",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/RAW_RECEIPT.json",
+            "sha256": "7adfff7cbb77bc8e0d2b6d45b8c73c01bfdd344d4a502b59e2909351bff2dcfc"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "ec648820ce98ea1759b45dce5c972b55deb4dfdfff7d0743b76f8c1db5f542b3",
+          "agent_id": "/root/distance_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DISTANCE_REVIEW_RAW.json",
+            "sha256": "4305359f1f25203ecd8bc4a184a18703e4ac63785837686e3f8ce61d8e4e8a1d"
+          }
+        }
+      ],
+      "figure_sha256": "4b5d09eaf3e56f9619e7481dfbb143856d121fb0e1a9d34731fca5fcb1c0cad8",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/ARTIFACT_MANIFEST.json",
+      "figure_manifest_sha256": "1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b"
+    },
+    {
+      "task_id": "R24-CMB-ORBIT",
+      "current_candidate_identity": "sha256:107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb",
+      "outcome": "completed",
+      "input_identity": "sha256:0ae60cc8f899f3480b3c186f4f5c534989aa125744cde917f1e52f6ce4301e7a",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/RESULT.json",
+      "source_sha256": "107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/PROCESSING_SUPPORT.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CMB_REVIEW_FINAL_RAW.json",
+      "review_sha256": "09969cab58099842436fd59145d02a0a30c0b6468e7297e7570a6f49d36cba19",
+      "review_verdict": "SCOPED_PASS_CORRECTED_C0_CANDIDATE",
+      "review_validation": {
+        "validation_evidence": {
+          "tests": 18,
+          "test_seconds": 6.99,
+          "bundles_rebuilt_exact": 60,
+          "support_rows_exact": 9,
+          "basis_maps": 12,
+          "max_basis_error_K": 2.710505431213761e-20,
+          "max_norm_relative_error": 6.661338147750939e-16,
+          "intervals_checked": 58,
+          "lower_reference_digits": 130,
+          "upper_witness": "exactrationalSO3properrotationsandexactsquareddistance",
+          "min_upper_squared_relative_slack": 2.0000027952105034e-12,
+          "phase_power_relative_error": 2.220446049250313e-16,
+          "phase_determinant_difference_K3": 8.210363938798829e-23,
+          "phase_interval": [
+            2.6241070716196918e-05,
+            0.011459154141194455
+          ],
+          "first_candidate_preserved": true,
+          "original_raw_receipt_restored": true,
+          "harmonic12_support_unchanged": true,
+          "figure_inspected": true
+        }
+      },
+      "law": "고정 저장 tensor의 결정론적 orbit 경계",
+      "caveat": "동일 하늘 processing; total-field law 없음",
+      "finding": "동일 scalar power에서도 phase/orbit 구별",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "503086ca39900549c146176289ea3aff406bc9869397f20ae844f2a3dc86c437",
+          "agent_id": "/root/rc_503086ca39900549",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:4ff9778be2177bf4c485ea0807adf2d2b5bc7e9a89367f848a86ae4be628c494",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/RAW_RECEIPT.json",
+            "sha256": "ef0c8a860343e87abffade8fe040bf123c29bcdb12784379a492fc752fad2a77"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "144c5da3b0e6f2b28ebc6d01e61dee8aa40eef80b1c3a91890b976d43913dd99",
+          "agent_id": "/root/rc_144c5da3b0e6f2b2",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "blocker",
+          "candidate_identity": "sha256:4ff9778be2177bf4c485ea0807adf2d2b5bc7e9a89367f848a86ae4be628c494",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CMB_REVIEW_INITIAL_RAW.json",
+            "sha256": "214524e0939fbcd6da3d61948c305e9cdcb5089429f0217d5b2e8251760dc0fe"
+          }
+        },
+        {
+          "phase": "repair",
+          "packet_id": "cd2c685c62fd749514f9e764ec06871aaf67abef8f496303c670f737b8b09027",
+          "agent_id": "/root/cmb_projection_repair",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/REPAIR_RAW_RECEIPT.json",
+            "sha256": "b5d54a488746b3f795b3c3fc70d949ede32e70b4def5123444174701e25af04b"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "949db0eea590464cf2adf8dc4816d3885fc2a2228683c050e1d13473075ed4d7",
+          "agent_id": "/root/cmb_repair_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CMB_REVIEW_FINAL_RAW.json",
+            "sha256": "09969cab58099842436fd59145d02a0a30c0b6468e7297e7570a6f49d36cba19"
+          }
+        }
+      ],
+      "figure_sha256": "3e4c9c3093411cbc2f96ac26c213b53301ca28466fdf7000c80b5ee976da0484",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/MANIFEST.json",
+      "figure_manifest_sha256": "5f21c1bde07b030fa94d9ad8989605fbb089c6da34c125f31be5c189c098e30e"
+    },
+    {
+      "task_id": "R24-K03-DESIGN",
+      "current_candidate_identity": "sha256:01deb44501618d938a3668230501a525bba4c445f35ad0b2846d7c18cba1b482",
+      "outcome": "completed",
+      "input_identity": "sha256:46dfba636f42d18eef70804060d210b775319402139d602a29889943c4f53108",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_design/RESULT.json",
+      "source_sha256": "fd170054fae1f434ad98ad9def53dd79cf75ee09f901f066d38adc48f04e0da2",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_design/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_design/POWER_SENSITIVITY.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/K03_DESIGN_REVIEW_RAW.json",
+      "review_sha256": "09f8d5612e907563907a53089e3adeababc04f64a73830ef42167c6a64462880",
+      "review_verdict": "SCOPED_PASS",
+      "review_validation": {
+        "validation_evidence": {
+          "manifest_entries": 12,
+          "input_source_hashes": 3,
+          "source_cache_hashes": 3,
+          "tests": 2,
+          "test_seconds": 1.1,
+          "independent_method": "80decimalmpmathnotimportingcandidate",
+          "scenario_rows": 36,
+          "max_information_abs_error": 1.18363878592e-15,
+          "max_power_abs_error": 3.85798939288e-17,
+          "max_multiplier_relative_error": 1.4495720535e-15,
+          "max_reconstructed_targetpower_error": 4.71193840209e-16,
+          "Schur_inverse_abs_residual": 1.27910836355e-15,
+          "eps01_power": 0.05002494221604289,
+          "optimum_switch_tau_uasyr": 0.18330622528073293,
+          "figure_inspected": true
+        }
+      },
+      "law": "보유 Gaussian covariance의 oracle power",
+      "caveat": "epsilon은 물리 remainder 증명 아님",
+      "finding": "epsilon=.3 최적 power 0.050074856412",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "2c055ade5d87a49c0be7f2301d48ca4967eed30587f7b0c6e2224a43078b668b",
+          "agent_id": "/root/k03_design",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:01deb44501618d938a3668230501a525bba4c445f35ad0b2846d7c18cba1b482",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_design/RAW_RECEIPT.json",
+            "sha256": "43ece603218d76222db5419ac366391dc7344934fb1c9ac812f97f369e518a4b"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "f342024d593823ff09aca0bfd62ded2d2996c2dec54d0a8382bc8761d55cf6c0",
+          "agent_id": "/root/k03_design_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:01deb44501618d938a3668230501a525bba4c445f35ad0b2846d7c18cba1b482",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/K03_DESIGN_REVIEW_RAW.json",
+            "sha256": "09f8d5612e907563907a53089e3adeababc04f64a73830ef42167c6a64462880"
+          }
+        }
+      ],
+      "figure_sha256": "4275cda4aa6722770166239a020b08aed916ae492695dd943a2edb12054fe5f9",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_design/MANIFEST.json",
+      "figure_manifest_sha256": "01deb44501618d938a3668230501a525bba4c445f35ad0b2846d7c18cba1b482"
+    },
+    {
+      "task_id": "R24-SN-RELEASE",
+      "current_candidate_identity": "sha256:0e294e28a55b4ac85a2236fbe58100850d13734cb166359adf3226648507569e",
+      "outcome": "completed",
+      "input_identity": "sha256:b428afbcd61eb919bdc25100eb44dc748de87148d022d2ad3b182ba7ffec776d",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/RESULT.json",
+      "source_sha256": "9982d5c84cd35ef63d9996458ec5bd522cb48812ea2ecca4a293934861309b4f",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/RELEASE_CONTRAST.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/SN_REVIEW_RAW.json",
+      "review_sha256": "6017bd296fe87692490b391a3fd616dd494d2ccaf5bc66997bf075c93124ffb0",
+      "review_verdict": "SCOPED_PASS",
+      "review_validation": {
+        "validation_evidence": {
+          "manifest_entries": 12,
+          "registry_rows_verified": 1701,
+          "selected_HF": 277,
+          "calibrators": 0,
+          "zCMB_range": [
+            0.0222,
+            0.14882
+          ],
+          "tests": 3,
+          "independent_Gauss_Legendre_order": 80,
+          "max_mu_error_mag": 7.11e-15,
+          "models_reproduced": 5,
+          "max_coeff_relative_error": 2.65e-12,
+          "max_cov_error": 4.28e-13,
+          "max_residual_quadratic_error": 6.47e-15,
+          "profile_and_noncentral_power_error": "<1e-10",
+          "calibration_flow_crosscov": "retained",
+          "H0change": "offsetonly",
+          "rank_loss_counterexamples": "constantdepthandduplicatecolumnsreject",
+          "figure_inspected": true
+        }
+      },
+      "law": "고정 FLRW baseline+공개 total covariance Gaussian",
+      "caveat": "nominal training/FITRES parity·CF4 cross covariance 없음",
+      "finding": "277행 total covariance 1회 사용 조건부 적합",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "dcfa68e071c1c555f67920f4e7981196e3c8b437f498aafeb891bdbe75e1a84e",
+          "agent_id": "/root/rc_dcfa68e071c1c555",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:0e294e28a55b4ac85a2236fbe58100850d13734cb166359adf3226648507569e",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/RAW_RECEIPT.json",
+            "sha256": "81064f226d45a40b2ed6115b3f3c49c75eba35ac8ab3ead2afc5c0b7c511a338"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "5b5c8b08480ffb696df009def3c9207b78bc018b860f39fd05b3782e200b19d5",
+          "agent_id": "/root/sn_release_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:0e294e28a55b4ac85a2236fbe58100850d13734cb166359adf3226648507569e",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/SN_REVIEW_RAW.json",
+            "sha256": "6017bd296fe87692490b391a3fd616dd494d2ccaf5bc66997bf075c93124ffb0"
+          }
+        }
+      ],
+      "figure_sha256": "2206fb1a2ef128c44e4bde0bde8b11e8775784cb4c9534aa6d6d64f6bbf2645b",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/MANIFEST.json",
+      "figure_manifest_sha256": "f559bc63319a7630a2a27d0d2f2f893a96058dd3de9bd0e9ee7c76a693bf72e2"
+    },
+    {
+      "task_id": "R24-SELECTION-ENVELOPE",
+      "current_candidate_identity": "sha256:2a357fb7fef159b5eb4c8366c130401fe683ab2e7c75586af757f4d5d5c41454",
+      "outcome": "completed",
+      "input_identity": "sha256:b02fc724d3a6360617392ad1d9deee3934d09e1a42eeb4dff535ad3fcfdaeae0",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/RESULT.json",
+      "source_sha256": "9e725d30c9f8240ba746535785a59c3b7a2b39d6e10132938221448e9e131fe3",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/SELECTION_ENVELOPE.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/SELECTION_ENVELOPE_REVIEW_RAW.json",
+      "review_sha256": "0b109de072fe14011750624c77b0dbaf24902f5f72060ed4bab85619bc0a954f",
+      "review_verdict": null,
+      "review_validation": {
+        "validation_evidence": {
+          "manifest_artifacts": 14,
+          "frozen_sources": 6,
+          "tests": 3,
+          "scenario_combinations": 12,
+          "rows_per_combination": 274,
+          "surface_rows": 16800,
+          "display_rows": 360,
+          "exact_rational_surface_error_max": 2.498001805406602e-16,
+          "gamma1_exact_zero_width": true,
+          "nesting_violation": 0,
+          "LP_cells": 60,
+          "LP_solves": 120,
+          "LP_primal_residual_max": 4.440892098500626e-15,
+          "LP_dual_residual_max": 2.220446049250313e-15,
+          "LP_endpoint_error_max": 2.220446049250313e-15,
+          "rational_attainment_cases": 2750,
+          "strict_ties": "PASS",
+          "628_missing_width_floor": "354/628 retained",
+          "figure_inspected": true,
+          "reviewer_environment": {
+            "python": "3.12.3",
+            "numpy": "2.4.2",
+            "scipy": "1.17.0"
+          },
+          "nonfatal_warning": "Matplotlib Axes3D import warning"
+        }
+      },
+      "law": "274행 uniform empirical law와 density-ratio scenario",
+      "caveat": "parent propensity·물리 confidence 아님",
+      "finding": "Gamma=1에서도 628-frame 폭 최소 354/628",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "96ff4b1fe9fce78a81a8a696564bc8e75da1918fa020e26b5d92100171c1a41e",
+          "agent_id": "/root/selection_envelope",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:2a357fb7fef159b5eb4c8366c130401fe683ab2e7c75586af757f4d5d5c41454",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/RAW_RECEIPT.json",
+            "sha256": "7116bd94d27e3e8a7dab68d7a7c9bcf31eb31a77a6a26425f3dbe112cb0353ec"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "85b3f206bdbc802efb79debad4a3177a4702304310a2fab340adb05bb9b714c6",
+          "agent_id": "/root/rc_85b3f206bdbc802e",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:2a357fb7fef159b5eb4c8366c130401fe683ab2e7c75586af757f4d5d5c41454",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/SELECTION_ENVELOPE_REVIEW_RAW.json",
+            "sha256": "0b109de072fe14011750624c77b0dbaf24902f5f72060ed4bab85619bc0a954f"
+          }
+        }
+      ],
+      "figure_sha256": "ba9982694593607d6a793abe1968dfa94034613594dd31f3f1b5ed4c1555a605",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/ARTIFACT_MANIFEST.json",
+      "figure_manifest_sha256": "2a357fb7fef159b5eb4c8366c130401fe683ab2e7c75586af757f4d5d5c41454"
+    },
+    {
+      "task_id": "R24-OPTICAL-SHEAR",
+      "current_candidate_identity": "sha256:f2b59d7590f55235f9421371328d7fb38db9ee309e26d7cf17ec1037ba3e8796",
+      "outcome": "completed",
+      "input_identity": "sha256:af216d8bd92fcc4814294e785abdcb72b4576f685ca5ca18808841b5779d09e0",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/optical_shear/RESULT.json",
+      "source_sha256": "5a5df38fa90b6e0959b392499481944f11caef42afc7a3da6021434c11ddcab2",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/optical_shear/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/optical_shear/OPTICAL_SHEAR.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/OPTICAL_REVIEW_RAW.json",
+      "review_sha256": "c7445fd0046999dc84cc8edb68d1dcfd14fe56929f4eaa4dfc24031ee4cd5e7c",
+      "review_verdict": "SCOPED_PASS_CONDITIONAL_TENSOR_SCENARIO",
+      "review_validation": {
+        "validation_evidence": {
+          "manifest_artifacts": 14,
+          "source_hashes": 6,
+          "defined_full_STF_images": 8,
+          "undefined_A_strata": 4,
+          "full_ellipsoid_dimensions": [
+            12,
+            15
+          ],
+          "independent_starts_per_image": 10,
+          "max_optimum_error": 7.84e-14,
+          "min_zero_lift_interior_margin": 12.28,
+          "tests": 3,
+          "symmetrization_max_abs_change_mixed_units": 2.91e-11,
+          "symmetrization_relative_norm_change": 6.08e-17,
+          "figure_inspected": true
+        }
+      },
+      "law": "전체 계수 plug-in Gaussian reference region",
+      "caveat": "local G-shear 및 positive H event 없음",
+      "finding": "8개 projected ellipsoid 모두 zero 포함",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "5ac5a7bb5f48b402351b23ed99e240ccf0388c34197cc277479f69cd675ecbde",
+          "agent_id": "/root/optical_shear",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:f2b59d7590f55235f9421371328d7fb38db9ee309e26d7cf17ec1037ba3e8796",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/optical_shear/RAW_RECEIPT.json",
+            "sha256": "def5a35a13420aebb95163f8939a747228332dcab989a09a566fdb0d8f275edd"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "ec7e39c4dff5f8a0024c80f2fd67b47f844b004a4335dbf724a63553da02aba5",
+          "agent_id": "/root/optical_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:f2b59d7590f55235f9421371328d7fb38db9ee309e26d7cf17ec1037ba3e8796",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/OPTICAL_REVIEW_RAW.json",
+            "sha256": "c7445fd0046999dc84cc8edb68d1dcfd14fe56929f4eaa4dfc24031ee4cd5e7c"
+          }
+        }
+      ],
+      "figure_sha256": "bec533143a61c40ddbda704233696d3b046026bc56516c1680a8bbbacbc7bfc3",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/optical_shear/ARTIFACT_MANIFEST.json",
+      "figure_manifest_sha256": "f2b59d7590f55235f9421371328d7fb38db9ee309e26d7cf17ec1037ba3e8796"
+    },
+    {
+      "task_id": "R24-BOOST-ACCELERATION",
+      "current_candidate_identity": "sha256:6284edcecfc0cf1f40dee8ec050af1026065196e718fa919593c32bbf5677519",
+      "outcome": "completed",
+      "input_identity": "sha256:feafebb499efb65f229cf015f8cf6478120cf86d2964d15d52206a3741670a2d",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/RESULT.json",
+      "source_sha256": "7566c46526e76d04b60193848f431b32b56ed6e7c06a19b8de0733411b5c85c6",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/RESPONSE_GEOMETRY.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/BOOST_REVIEW_FINAL_RAW.json",
+      "review_sha256": "6485bbe81565b2f0ce2bba654fe203c107008ca7a03af69cd5f11ddc1cb72d54",
+      "review_verdict": "SCOPED_PASS_TARGETED_OPTICAL_LAW_REPAIR",
+      "review_validation": {
+        "validation_evidence": {
+          "tests": 5,
+          "test_seconds": 5.764,
+          "manifest_files": 11,
+          "frozen_sources": 7,
+          "archived_files": 11,
+          "byte_identical_retained_files": 9,
+          "common_RESULT_fields": "exactlyequal;onlyopticalscopefieldrenamed/replaced",
+          "all_scenario_arrays_and_figure": "unchanged",
+          "independent_decimal_digits": 70,
+          "q01_exact_mag": 0.22878745280337562,
+          "q01_linear_mag": 0.2171472409516259,
+          "q01_antipodal_mag": 0.021824027012250422,
+          "quadratic_remainder_coefficient": "5/(2ln10)verifiedpositive/negativeq",
+          "zero_limit_tolerance": "1e-5 exceedsanalytic7.238314e-6atq1e-5;rawinitialassertionretained",
+          "first_order_scope": "consistentincodeRESULTreport"
+        }
+      },
+      "law": "고정 low-z response와 Gaussian design power",
+      "caveat": "finite-q·finite-z remainder 및 물리 congruence 미적격",
+      "finding": "선형 calibration 퇴화, depth 공간과 거의 중첩",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "047ec280a16abca82ba9e122a7b16664db1f8c905dae0ec55f3611c78427997f",
+          "agent_id": "/root/rc_047ec280a16abca8",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:1c2aa2d75979e9d534ee2dcc4ea790bb62146320f75b2f27143d0a354a947d08",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/RAW_RECEIPT.json",
+            "sha256": "cb456da1545f3bebdb56285a9b75e25643a99a06117438c303ba5b92f001e34c"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "eac4eaf2d1f7036a224bd28f203f7c5cf00cc22bcce9ed3c8835afa2fec429f3",
+          "agent_id": "/root/boost_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "blocker",
+          "candidate_identity": "sha256:1c2aa2d75979e9d534ee2dcc4ea790bb62146320f75b2f27143d0a354a947d08",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/BOOST_REVIEW_INITIAL_RAW.json",
+            "sha256": "5e742f4afe4836918c203311121695e5a00743089ebbb2fdcbe3dc327b9bbfa2"
+          }
+        },
+        {
+          "phase": "repair",
+          "packet_id": "29529fff48ed81c77dabc4b64cc6a11b8966c2970ee76b140b64ee5d13a8402e",
+          "agent_id": "/root/rc_047ec280a16abca8",
+          "native_tool": "collaboration.followup_task",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:6284edcecfc0cf1f40dee8ec050af1026065196e718fa919593c32bbf5677519",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/REPAIR_RAW_RECEIPT.json",
+            "sha256": "aeee2accaf226a4d8ba3d9e65cb4d4244294ba219fc731eae5989b829e3afbab"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "447009eeb0d61f937b20e380d5ccc6f7dc71fff40aef0dcac9b4a314aa36963e",
+          "agent_id": "/root/boost_repair_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:6284edcecfc0cf1f40dee8ec050af1026065196e718fa919593c32bbf5677519",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/BOOST_REVIEW_FINAL_RAW.json",
+            "sha256": "6485bbe81565b2f0ce2bba654fe203c107008ca7a03af69cd5f11ddc1cb72d54"
+          }
+        }
+      ],
+      "figure_sha256": "6acd9c9ad0e4dc0f75b2a20901c98bf10ca3fd31e360831d3682a365c399a8a4",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/REPAIR_MANIFEST.json",
+      "figure_manifest_sha256": "6284edcecfc0cf1f40dee8ec050af1026065196e718fa919593c32bbf5677519"
+    },
+    {
+      "task_id": "R24-K03-DEPTH-MOMENTS",
+      "current_candidate_identity": "sha256:68aa65ba81bce4bfa61a2d7c9c302a7c77068325b80ef69d55fcc89f9272a2de",
+      "outcome": "completed",
+      "input_identity": "sha256:b835863bfe99b25db95e7e73a62e2eaf27b78bc850b44c0579457397e6f58998",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_depth_moments/RESULT.json",
+      "source_sha256": "a33d20b58f7a4438a273aef5b087d6e6fb560355dbe92fa60844ae0002abfb7f",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_depth_moments/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_depth_moments/POWER.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/K03_DEPTH_REVIEW_RAW.json",
+      "review_sha256": "2bacc76cf324dcc5d2bd359b73d6aa780eba5ebda9138de4b15212df8f17ae53",
+      "review_verdict": "SCOPED_PASS",
+      "review_validation": {
+        "validation_evidence": {
+          "all_hashes_match": true,
+          "rows": 755850,
+          "bins": [
+            200785,
+            369335,
+            185730
+          ],
+          "process_wall_seconds": 20.72,
+          "max_RSS_MiB": 281.1,
+          "new_moments_only": [
+            "A",
+            "K",
+            "q"
+          ],
+          "old_columns": 102,
+          "augmented_dimension": 108,
+          "full24_depth_cov_relative_error_max": 1.8e-12,
+          "true_scaled_residual_max": 9e-16,
+          "ranks": [
+            102,
+            6
+          ],
+          "thresholds": [
+            1e-08,
+            1e-10,
+            1e-12
+          ],
+          "no_jitter_or_pseudoinverse": true,
+          "bounded_physical_sign_STF_polar_axial_constant_g_controls": "PASS",
+          "directQR_fixture_cov_error_max": 1.1e-13,
+          "real_fixture_rows": 256,
+          "reviewer_full_passes": 0,
+          "Poisson_mixture_power_error_max": 3.5e-14,
+          "score": 12.140205689,
+          "critical": 12.591587244,
+          "power80_strong_uasyr": 13.616697,
+          "power80_weak_uasyr": 18.573815
+        }
+      },
+      "law": "independent-row reported-covariance Gaussian",
+      "caveat": "true depth·centroid/matter·spatial covariance 없음",
+      "finding": "755850행 1회 통과, 정보 보존 1.584853%",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "8aac035463242cfba033029620f30ba363f81e3d12f31165d73660d58bb8cbea",
+          "agent_id": "/root/k03_depth_moments",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:68aa65ba81bce4bfa61a2d7c9c302a7c77068325b80ef69d55fcc89f9272a2de",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_depth_moments/RAW_RECEIPT.json",
+            "sha256": "a0de3becc743adb18ce1612c99bedd6e4b2ed9531c188c71d1cbb32358f71188"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "a7c6601b487670cd38524bbf13c3f41027e1fa5e6f059bc35730c32f9761611f",
+          "agent_id": "/root/k03_depth_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:68aa65ba81bce4bfa61a2d7c9c302a7c77068325b80ef69d55fcc89f9272a2de",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/K03_DEPTH_REVIEW_RAW.json",
+            "sha256": "2bacc76cf324dcc5d2bd359b73d6aa780eba5ebda9138de4b15212df8f17ae53"
+          }
+        }
+      ],
+      "figure_sha256": "3f4f72f5b3bee1489e977b367646af8d1828fadacd4732edaea17e81a87eb631",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_depth_moments/MANIFEST.json",
+      "figure_manifest_sha256": "68aa65ba81bce4bfa61a2d7c9c302a7c77068325b80ef69d55fcc89f9272a2de"
+    },
+    {
+      "task_id": "R24-CMB-ENVELOPE",
+      "current_candidate_identity": "sha256:8e8fed320009b9658cdc4f932445c96a521a123bba4b280cde96443405b4ca85",
+      "outcome": "completed",
+      "input_identity": "sha256:191e516e95b044eee02c2c8c7dd51e74aa9d8863d39763930d8043f59e37a8bf",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_envelope/RESULT.json",
+      "source_sha256": "8e8fed320009b9658cdc4f932445c96a521a123bba4b280cde96443405b4ca85",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_envelope/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_envelope/ENVELOPE.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CMB_ENVELOPE_REVIEW_FINAL_RAW.json",
+      "review_sha256": "f600157d8761852af07326146f8ff6d88b62eee550c5b7ed16d61a1fdb1933bc",
+      "review_verdict": "PASS",
+      "review_validation": {
+        "validation": {
+          "focused_tests": 5,
+          "seconds": 2.39,
+          "carrier_norms": 60,
+          "intervals": 57,
+          "finite_supports": 12,
+          "max_numerical_discrepancy": 1.39e-17,
+          "clipped_curve_grid": 1001,
+          "max_plot_discrepancy": 3.47e-18,
+          "centered_noise_covariance": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              4
+            ]
+          ],
+          "expected_crosspower": 5,
+          "in_memory_recompute": "byte-identical",
+          "repair_manifest_entries": 9,
+          "preservation_entries": 9,
+          "source_hashes": "PASS"
+        }
+      },
+      "law": "결정론적 pairwise radius scenario",
+      "caveat": "cross-noise 및 cross-operator joint response 없음",
+      "finding": "공통 성분은 split difference로 제한 불가",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "3872e6f22331f3aef13a273d7bb446badf612bc7ce80d3207ba2fbd86f840fdb",
+          "agent_id": "/root/rc_3872e6f22331f3ae",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:48a7651b6684ed17f72448d5bf73381df44b24555275a619aea069fe56cf41fe",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_envelope/RAW_RECEIPT.json",
+            "sha256": "869b58e31b26fb6d02d887963aa6f3e6e1a17390769fc371aab5364cc885fa09"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "fc3d0d5643e19fb3df74d399ac67d55b341d508d44badb986f2953e00ddfad08",
+          "agent_id": "/root/cmb_envelope_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "blocker",
+          "candidate_identity": "sha256:48a7651b6684ed17f72448d5bf73381df44b24555275a619aea069fe56cf41fe",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CMB_ENVELOPE_REVIEW_INITIAL_RAW.json",
+            "sha256": "50ee0d40bba79aeb93ddf4de19094e2db8762e3c3dfd22b48ba90ca68678e56b"
+          }
+        },
+        {
+          "phase": "repair",
+          "packet_id": "f9d27a3f6cdae39fd4d6989fb3f5bc75452770951920c2c90a02e2b0dc46bb6d",
+          "agent_id": "/root/rc_3872e6f22331f3ae",
+          "native_tool": "collaboration.followup_task",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:8e8fed320009b9658cdc4f932445c96a521a123bba4b280cde96443405b4ca85",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_envelope/REPAIR_RAW_RECEIPT.json",
+            "sha256": "c2d9e8052f4c964d0ba557a8fefad0b5095c3a8ad5c5386bf2dd209dd710ead8"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "18c6df621f94916676d62df926dd9c93ababfca6d52617c6c54a65324bc03078",
+          "agent_id": "/root/cmb_envelope_final_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:8e8fed320009b9658cdc4f932445c96a521a123bba4b280cde96443405b4ca85",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CMB_ENVELOPE_REVIEW_FINAL_RAW.json",
+            "sha256": "f600157d8761852af07326146f8ff6d88b62eee550c5b7ed16d61a1fdb1933bc"
+          }
+        }
+      ],
+      "figure_sha256": "3be12c5aa97974380cdab06cc1d7f7d25000d5b0fed4b89831888449f6e135ab",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_envelope/REPAIR_MANIFEST.json",
+      "figure_manifest_sha256": "b41d0389cf4760b348772dda39b1c52ccc0d5bce1bf4501ed50094c915999e9d"
+    },
+    {
+      "task_id": "R24-TENSOR-BUNDLE",
+      "current_candidate_identity": "sha256:39f15bd86ecd76907beef05fcfa09fe57c48d5536218b3e4840311783e9bfc7a",
+      "outcome": "completed",
+      "input_identity": "sha256:29b5e234b1c8573384d9b41876d1a244014bda1cae2159fff17d5609a4646ed5",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/RESULT.json",
+      "source_sha256": "7d90415eede2b08fc51067bcff5b3276e3d554f20e90d3d7033692b885a4e7e9",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/TENSOR_DIAGNOSTICS.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/TENSOR_REVIEW_RAW.json",
+      "review_sha256": "a8c775e791f267d24d23d3c5747bdbb1390f6ff4bef83e890c0795f3fd6ce13f",
+      "review_verdict": "PASS_CONDITIONAL_TENSOR_SCENARIO",
+      "review_validation": {
+        "checks": {
+          "manifest_entries": 14,
+          "samples_replay": "exact",
+          "full24_mean": "exact",
+          "covariance_symmetry_maxabs": 7.2095e-13,
+          "M_rank": 18,
+          "nullity": 6,
+          "Y_cov_error": 0,
+          "Fisher_maxabs": 9.9476e-14,
+          "support_attainment_error": 7.1e-15,
+          "boundary_error": 4.26e-14,
+          "rotation_support_error": 1.1369e-13,
+          "Q_rotation_error": 1.33e-15,
+          "strict_empirical_Pi": 0.739990234375,
+          "physical_Pi": [
+            0,
+            1
+          ],
+          "focused_tests": 5
+        }
+      },
+      "law": "Uniform empirical law on the retained 4096 K03 full24 joint rows. Gaussian reference generated the rows; finite strict-exceedance frequencies are not continuous Gaussian probabilities. Shared only by tensor_bundle and depth_images; CMB Pi unavailable; no cross-catalogue joint law.",
+      "caveat": "Q_ref는 계산용; physical Pi [0,1]",
+      "finding": "full24와 동일 4096 replicate law 보존",
+      "qualified_products": [
+        "tensor_scenario"
+      ],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "e0e4fe55a9a7a2aafe9156b29d4ae05a6b5be7380f047169dd325842f82bd443",
+          "agent_id": "/root/tensor_bundle",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:39f15bd86ecd76907beef05fcfa09fe57c48d5536218b3e4840311783e9bfc7a",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/RAW_RECEIPT.json",
+            "sha256": "8749a29e0156010a77b2739c72efb59ca1ebd520fbeb29e70e2099cf1bc9d323"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "57be2dd26776fac86bb0e700528ffcc1d800cd95f5ddac5fe2ddc9e0b6c755a0",
+          "agent_id": "/root/tensor_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:39f15bd86ecd76907beef05fcfa09fe57c48d5536218b3e4840311783e9bfc7a",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/TENSOR_REVIEW_RAW.json",
+            "sha256": "a8c775e791f267d24d23d3c5747bdbb1390f6ff4bef83e890c0795f3fd6ce13f"
+          }
+        }
+      ],
+      "figure_sha256": "f3f0f128148f4f26bcd0d50727724a6dd446c68bd680bbaa5d9b1ed233c6c7de",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/MANIFEST.json",
+      "figure_manifest_sha256": "39f15bd86ecd76907beef05fcfa09fe57c48d5536218b3e4840311783e9bfc7a"
+    },
+    {
+      "task_id": "R24-OPTICAL-NONLINEAR-QUOTIENT",
+      "current_candidate_identity": "sha256:b93c13623afdc23215df241ca887fdf0341b56b01a3c840ef03d2280306c2b2c",
+      "outcome": "completed",
+      "input_identity": "sha256:2267073c3678dc98ae63508efd80473ace82d150f7aa1c36246783110786ffa0",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/nonlinear_optical/RESULT.json",
+      "source_sha256": "7e08bebd971035c6df931bb42855a102112273d9631996d0b7391a56d313d485",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/nonlinear_optical/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/nonlinear_optical/OPTICAL_QUOTIENT.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/NONLINEAR_REVIEW_FINAL_RAW.json",
+      "review_sha256": "7373222d197026c1fb3ce7d60763347a3a591897d43a8fd53ddc20007bb27392",
+      "review_verdict": "PASS_SCOPED_CONDITIONAL_EXPERIMENT",
+      "review_validation": {
+        "validation": {
+          "manifest_file_entries": 32,
+          "cached_csv_identities": 2,
+          "focused_tests": 6,
+          "seconds": 7.2,
+          "optional_warning": "Matplotlib Axes3D;figure2D",
+          "independent_pivoted_QR_cases": 4,
+          "max_d0_squared_error": 1.19e-16,
+          "max_sampled_cubic_error_bound_ratio": 0.03131,
+          "independent_stored_remainder_powers": 4608,
+          "max_power_error": 1.67e-16,
+          "report_table_and_figure": "PASS",
+          "exact_rho_star_and_overlap_plateau": true
+        }
+      },
+      "law": "고정 finite-q leading-low-z law, hypothetical Gaussian scale/radius",
+      "caveat": "물리 finite-z remainder 미측정",
+      "finding": "linear/quadratic 소거 후 cubic shape와 overlap",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "47c0540b6c230d5688a97c420c89456bcf4da6b06007ca33796d2419f45ffeb5",
+          "agent_id": "/root/nonlinear_optical",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:d7709c3b1d5efeb2f957ff8d91587eaea335fabfebf9103fdb70dd225c2a8bf0",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/nonlinear_optical/RAW_RECEIPT.json",
+            "sha256": "ab080fbaed0a557f3e5e5933680d7633e2ad1e3eb629b1de3ab1ddcda8dac8c2"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "d11b60c9cacec6bcce7b118ca58737d22874c8347541f5278da93e0c1a5b9d43",
+          "agent_id": "/root/nonlinear_optical_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "blocker",
+          "candidate_identity": "sha256:d7709c3b1d5efeb2f957ff8d91587eaea335fabfebf9103fdb70dd225c2a8bf0",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/NONLINEAR_REVIEW_INITIAL_RAW.json",
+            "sha256": "8418a75937069ebe04da5851db5ca6085dfcfd13c70ae24b84a31a84b2113173"
+          }
+        },
+        {
+          "phase": "repair",
+          "packet_id": "0da981bd199209d238b9e4f4453875cb4ab1cb37296d2a1748b2352085f49527",
+          "agent_id": "/root/nonlinear_optical",
+          "native_tool": "collaboration.followup_task",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:b93c13623afdc23215df241ca887fdf0341b56b01a3c840ef03d2280306c2b2c",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/nonlinear_optical/REPAIR_RAW_RECEIPT.json",
+            "sha256": "720d33371c5358a0397b8b399dec2774c2fc46c28a3184b564031f37faaa6ed1"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "79efce76d0ab6e6320235f57d46ff9184665d5255b98aa7520c76e2f5dc42799",
+          "agent_id": "/root/nonlinear_final_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:b93c13623afdc23215df241ca887fdf0341b56b01a3c840ef03d2280306c2b2c",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/NONLINEAR_REVIEW_FINAL_RAW.json",
+            "sha256": "7373222d197026c1fb3ce7d60763347a3a591897d43a8fd53ddc20007bb27392"
+          }
+        }
+      ],
+      "figure_sha256": "cf30e5f4a8c74d41d172944f49116b977a772da31bea44c715e32619e20b23b6",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/nonlinear_optical/REPAIR_MANIFEST.json",
+      "figure_manifest_sha256": "b93c13623afdc23215df241ca887fdf0341b56b01a3c840ef03d2280306c2b2c"
+    },
+    {
+      "task_id": "R24-DEPTH-IMAGES",
+      "current_candidate_identity": "sha256:1b2ca2385430924f6ad01d14be2895ff2aa727a94a0dfd47ce0b000b279263fb",
+      "outcome": "completed",
+      "input_identity": "sha256:4337e37b166e7bdc824e856202f8ed212b715ed72ae38f8c65da7e874963c9da",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/RESULT.json",
+      "source_sha256": "b93bb2829dd90d6ece1afb6e9ef065f8d6e5dd87a702fd06f1979d2681ff7ff2",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/NORM_IMAGES.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DEPTH_REVIEW_FINAL_RAW.json",
+      "review_sha256": "2d9d8e8243fec63ec58c7b44c3e992a2cc978b0aa236a30bae091e994a236a81",
+      "review_verdict": "PASS",
+      "review_validation": {
+        "validation": {
+          "frozen_sources": 6,
+          "current_outputs": 18,
+          "archived_outputs": 17,
+          "original_manifest_receipt": "preserved",
+          "nonzero_slope_depthmap": "Y_b=gamma_b+c_btheta;first6vectorsY18,adjacentZ18differences,deep-shallowdirect",
+          "full36cov_and_4096jointrows": "independentreferencePASS",
+          "full24_intercepts": "retained",
+          "counterfactual_cov": "Y18includeslopeandcrossdepth",
+          "exact_coordinate_support": "attainsellipsoidboundary",
+          "norm_bounds": "conservativeouter",
+          "strict_empirical_Pi": "exact",
+          "nontrivial_norm_cells": "25/72",
+          "nontrivial_EdotB_cells": "17/18",
+          "rank_null_None_parity_rotation": "PASS",
+          "plots": "PASSdiscrete/barsscenariocaveats",
+          "tests": 7,
+          "seconds": 1.21,
+          "max_independent_reference_error": 5.68e-14,
+          "tolerance": "rtol=atol=1e-10"
+        }
+      },
+      "law": "Uniform empirical law on the retained 4096 K03 full24 joint rows. Gaussian reference generated the rows; finite strict-exceedance frequencies are not continuous Gaussian probabilities. Shared only by tensor_bundle and depth_images; CMB Pi unavailable; no cross-catalogue joint law.",
+      "caveat": "norm bound는 conservative outer; physical Pi [0,1]",
+      "finding": "Y18 slope 포함 수정; 35/72 norm Pi 변경",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "5f33227c369ae1b0be8b3042a73f5bb148c2453b58161253992cdf8e8d7020ce",
+          "agent_id": "/root/depth_images",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:03222b7d264734313ae0836584515d9f032317653da47aaf5263dc6ee36b342a",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/RAW_RECEIPT.json",
+            "sha256": "12a492651f3add0fc298a52805a6c5dde74bd4e84c64c3ea7e350ac8498d6862"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "8cd78e66d52616bf3caa2dfb41a2386c2d11899f471d35cad4508d667f4349d2",
+          "agent_id": "/root/depth_images_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "blocker",
+          "candidate_identity": "sha256:03222b7d264734313ae0836584515d9f032317653da47aaf5263dc6ee36b342a",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DEPTH_REVIEW_INITIAL_RAW.json",
+            "sha256": "9c02f52ce734102442a00301c3979d9676305723b5f1e5b16c90f24d18e3fc7d"
+          }
+        },
+        {
+          "phase": "repair",
+          "packet_id": "53a06aaf58c68d7600b780abf5066e9ddb219ce90f96ced590451f6e67927634",
+          "agent_id": "/root/depth_images",
+          "native_tool": "collaboration.followup_task",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:1b2ca2385430924f6ad01d14be2895ff2aa727a94a0dfd47ce0b000b279263fb",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DEPTH_REPAIR_HOST_RECEIPT.json",
+            "sha256": "08f895e3dd9a1e07d32b98af7ae515327ba8943f9504d6b8d57c644796385ba5"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "a9c240be1299fc2ae75ed31537c886bcfd13ae4f6e4f15e9034609314d7cefc2",
+          "agent_id": "/root/depth_images_final_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:1b2ca2385430924f6ad01d14be2895ff2aa727a94a0dfd47ce0b000b279263fb",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DEPTH_REVIEW_FINAL_RAW.json",
+            "sha256": "2d9d8e8243fec63ec58c7b44c3e992a2cc978b0aa236a30bae091e994a236a81"
+          }
+        }
+      ],
+      "figure_sha256": "8c09ca830fa943d2cbf9339638c7c225102e5e7039c31f30ace07aec1f66b4eb",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/REPAIR_MANIFEST.json",
+      "figure_manifest_sha256": "1b2ca2385430924f6ad01d14be2895ff2aa727a94a0dfd47ce0b000b279263fb"
+    },
+    {
+      "task_id": "R24-CMB-CHIRALITY",
+      "current_candidate_identity": "sha256:e974286c0a2ca6a016a58444fafad1b8c066b9666c337f30fd54e94983b6fa51",
+      "outcome": "completed",
+      "input_identity": "sha256:ecc3f8645bc904445d513f87a0b1b1e9fe07a081c6bd0a1a4a98d6594d850bc3",
+      "source": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_chirality/RESULT.json",
+      "source_sha256": "0045854b92176a6baf08d681dad8feb42ec040f3ff29c5915eff3223a63ea95a",
+      "report": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_chirality/REPORT.md",
+      "figure": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_chirality/PROCESSING_SENSITIVITY.png",
+      "review": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CHIRALITY_REVIEW_FINAL_RAW.json",
+      "review_sha256": "dbc0787482aebb4f5b30cf52554124da72cde9a37e0f7fe11374d4c060f7f240",
+      "review_verdict": "PASS_FINITE_CARRIER_CHIRALITY_REVIEW",
+      "review_validation": {
+        "validation": {
+          "artifact_hashes": 7,
+          "frozen_sources": 4,
+          "final_manifest_unchanged": true,
+          "proof": "Orthogonal parity and derivative/Hadamard6M^8 bound valid; jointballconvexity gives SO3mirrorlowerbound; perturbationstrictinequalitycorrect; failureinconclusive",
+          "focused_tests": 3,
+          "seconds": 3.09,
+          "independent_SymPy_harmonic_polynomial_STF_reference": "all60 exact tensors/chi/norms/det/mirrorloweragree",
+          "independent_mpmath_eigenbasis_errors": [
+            3.971194e-90,
+            4.2302582e-130
+          ],
+          "candidate_Decimal_errors_reproduced": [
+            3.14688e-89,
+            1.91469e-129
+          ],
+          "additional_exact_Cayley_rotations": 120,
+          "exact_inversions": 60,
+          "independent_harmonic_tensor_checks": 840,
+          "max_scaled_harmonic_discrepancy": 5.53069e-16,
+          "full_source_carrier_deep_equality": 60,
+          "comparisons": 93,
+          "figure_inspected": true,
+          "sign_counts": {
+            "positive": 15,
+            "negative": 45
+          },
+          "certified_radius_counts": [
+            60,
+            60,
+            39,
+            0,
+            0,
+            0
+          ],
+          "split_full_sign_differences": "18/48",
+          "primary_pilot_zerowindow_sign_differences": "0/15",
+          "window_sign_differences": "3/30"
+        }
+      },
+      "law": "저장 binary64의 exact-rational 결정론적 계산",
+      "caveat": "cosmological chirality·null significance 아님",
+      "finding": "60개 finite carrier chi 비영; 15양/45음",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "4f44a7acafa117163796f8e20728bd5afc749262f65f3ecc8724224bac70d038",
+          "agent_id": "/root/cmb_chirality",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:e974286c0a2ca6a016a58444fafad1b8c066b9666c337f30fd54e94983b6fa51",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_chirality/RAW_RECEIPT.json",
+            "sha256": "2afca70374b0cd731f2e30fb7baa8abdfe5f0e849397d4bff7c5d8cd0a3d16f0"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "7c601016403c2d8b739b1ce70a7ad51c200c456e3ef5aec2965e53fa418c706f",
+          "agent_id": "/root/cmb_chirality_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:e974286c0a2ca6a016a58444fafad1b8c066b9666c337f30fd54e94983b6fa51",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CHIRALITY_REVIEW_FINAL_RAW.json",
+            "sha256": "dbc0787482aebb4f5b30cf52554124da72cde9a37e0f7fe11374d4c060f7f240"
+          }
+        }
+      ],
+      "figure_sha256": "79e73b1ab1dbd8a5ee00e32f2b5723054d8ead3cdd52b29391b15696d1dbeb7f",
+      "figure_manifest": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_chirality/MANIFEST.json",
+      "figure_manifest_sha256": "e974286c0a2ca6a016a58444fafad1b8c066b9666c337f30fd54e94983b6fa51"
+    }
+  ],
+  "six_paper_residual_obligations": {
+    "P1_statistical_functionals": "Source-qualified selection/physical law, source-congruence map, physical MES anchor or calibrated identified interval; finite scenario images available",
+    "P2_CMB": "Matched joint FULL/HM/OE processed total-field/noise/foreground/weight-estimation/selection law, justified common-contaminant constraint and crossoperator response",
+    "P3_distances": "Parent targeting/detection/rejected-source probabilities, source-qualified shared calibration/group/PV covariance, finite-z response/remainder and named source-congruence map",
+    "P4_local_global": "Actual externally supplied history and selection/calibration/jointcovariance qualified response and independent injection law; analytic alternate does not pass originalexternalhistory",
+    "P5_family": "External native polarized allm/highell family/mode/history atlas with admissibleIC/epoch, conventions/normalization, mask/operator/null/equivalence validation; cannot manufacture solver/ODE",
+    "P6_kinematic": "Centroid/matter/sourceclass response, selectedreported-to-truedepth/PM likelihood, residualGaia calibration/crosssource/spatialcovariance, physicalhistory and congruence"
+  },
+  "additional_SN_parity_hold": "Pinned public nominal trainedmodel/PS1 config/observed FITRES parity product remains missing; release-levelconditionalfit doesnotreplaceit",
+  "chirality_draft_transition": {
+    "task_id": "R24-CMB-CHIRALITY",
+    "classification": "Pre-controller-record generated output/packaging draft identity change, not immutable scientific source change",
+    "first_reported_draft_manifest_sha256": "cc5917342d4e2d673622845e957b6f35c8049da537fbde6733ca1dd857989fc0",
+    "final_sealed_manifest_sha256": "e974286c0a2ca6a016a58444fafad1b8c066b9666c337f30fd54e94983b6fa51",
+    "actual_author": "/root/cmb_chirality",
+    "source": "Actual native author final and read-only clarification",
+    "author_reported_changes": [
+      "Figure-rendering legend/source labels in chirality.py",
+      "Regenerated PNG/PDF",
+      "Regenerated rawreceipt timings",
+      "Report timings",
+      "Manifest"
+    ],
+    "author_reported_unchanged": [
+      "Scientific computation",
+      "RESULT scientificvalues and deterministic serialization",
+      "Four immutable sourceinputs",
+      "Tests"
+    ],
+    "old_draft_bytes_retained": false,
+    "limitation": "Earlier draft manifest/figure/receipt byte copies not retained by author. Only earlier reported hash and run metadata remain in native messages/tooloutputs. No old-byte verification or historical preservation is claimed for that draft.",
+    "earlier_reported_run": {
+      "production_seconds": 7.01,
+      "RSS_KiB": 128400,
+      "tests": 3,
+      "test_seconds": 3.03,
+      "test_RSS_KiB": 79404
+    },
+    "final_run": {
+      "production_seconds": 7.2,
+      "RSS_KiB": 127200,
+      "tests": 3,
+      "test_seconds": 3.88,
+      "test_RSS_KiB": 76664
+    },
+    "controller_candidate_record": "Only finale974 was recorded; earlierdraft wasnotadmitted",
+    "review_binding": "Freshreview explicitlyrebound tofinale974 afterdetectingidentitydelta; allimmutableinputs reverified",
+    "scientific_admission": "HOLD; original42/old48/R9/ultra unchanged",
+    "cumulative_accounting": {
+      "source": "Read-only native author clarification from actual tooloutputs, no rerun",
+      "production_starts": [
+        {
+          "wall_seconds": 2.04,
+          "RSS_KiB": 85256,
+          "exit_code": 0
+        },
+        {
+          "wall_seconds": 3.88,
+          "RSS_KiB": 128544,
+          "exit_code": 0
+        },
+        {
+          "wall_seconds": 7.01,
+          "RSS_KiB": 128400,
+          "exit_code": 0
+        },
+        {
+          "wall_seconds": 7.2,
+          "RSS_KiB": 127200,
+          "exit_code": 0
+        }
+      ],
+      "production_wall_seconds_total": 20.13,
+      "production_limit_seconds": 120,
+      "test_starts": [
+        {
+          "wall_seconds": 0.72,
+          "RSS_KiB": 78336,
+          "passed": 3,
+          "exit_code": 0
+        },
+        {
+          "wall_seconds": 3.03,
+          "RSS_KiB": 79404,
+          "passed": 3,
+          "exit_code": 0
+        },
+        {
+          "wall_seconds": 3.88,
+          "RSS_KiB": 76664,
+          "passed": 3,
+          "exit_code": 0
+        }
+      ],
+      "test_wall_seconds_total": 7.63,
+      "test_limit_seconds": 180,
+      "maximum_RSS_KiB": 128544,
+      "RSS_limit_MiB": 512,
+      "all_recorded_starts_charged": true,
+      "token_and_monetary_usage": "NOT_INDEPENDENTLY_OBSERVED"
+    }
+  },
+  "full_bundle_boundary": {
+    "x": "Rank/parity-aware full tensor/functional bundle; CMB full rank2/rank3 Q/O; K03 full24 retained",
+    "F": "Directional supports, deterministic outer bounds, pushforward and reference occupancy distinguished",
+    "Q": "Computational gauge/reference only; physical MES anchor unavailable",
+    "Pi": "Uniform empirical law on the retained 4096 K03 full24 joint rows. Gaussian reference generated the rows; finite strict-exceedance frequencies are not continuous Gaussian probabilities. Shared only by tensor_bundle and depth_images; CMB Pi unavailable; no cross-catalogue joint law. Physical Pi [0,1], unknown mass1; no confidence interpretation.",
+    "G_F": "Y18 and invertible anchored Z18 with full cross covariance; neither replaces full24"
+  },
+  "historical_holds": {
+    "distance_old_failure": {
+      "selected": 628,
+      "released": 274,
+      "undefined": 354,
+      "T": 4.555321823822732,
+      "p": 0.000976324139614352
+    },
+    "physical_replicate_unknown": "2048; unknown mass1",
+    "LP_D07_endpoint_crossings": 97,
+    "SN_nominal_parity": "HOLD",
+    "V03_external_history": "HOLD",
+    "B02_native_atlas": "HOLD",
+    "K03_physical": "HOLD",
+    "R9": "UNKNOWN untouched"
+  },
+  "controller_verification": {
+    "final_tests": 60,
+    "controller": 49,
+    "builder": 11,
+    "independent_subtests": 43,
+    "source": "FOLLOWUP_ACK_REVIEW_FINAL.json",
+    "earlier_review_tests": 54,
+    "run_by_report_worker": false
+  },
+  "prohibited_inferences": [
+    "42/42 scientific completion",
+    "all future methods exhausted",
+    "physical confidence",
+    "empirical observed p-value from working-law tail",
+    "posterior",
+    "cosmological chirality",
+    "native family identification"
+  ],
+  "depth_covariance_ratio": {
+    "definition": "sqrt(lambda_max(full Y-contrast covariance)) / sqrt(lambda_max(zero-cross-depth counterfactual covariance))",
+    "values": [
+      0.1959864023416547,
+      0.22805023755386244,
+      0.216109653531184,
+      0.2531142233008296,
+      0.2805632155199468,
+      0.326477547762157
+    ],
+    "status": "counterfactual diagnostic only; not replacement covariance"
+  }
+}

@@ -319,7 +319,65 @@ def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]]) -> di
             "status": "HOLD_TRANSPORT_UNAVAILABLE" if ready else summary(state)["status"]}
 
 
-def acknowledge(state: dict, packet_id: str, agent_id: str, observed: str = "UNKNOWN") -> None:
+def _repair_followup(state: dict, p: dict, t: dict, agent_id: str, evidence: str) -> dict:
+    """Validate explicit host followup evidence; never relabel a reused thread as fresh."""
+    require(t["phase"] == p["phase"] == "repair", "followup allowed only for planned repair")
+    plan = t.get("repair_plan")
+    require(isinstance(plan, str) and plan.strip(), "followup needs concrete recorded repair plan")
+    seal = _receipt(evidence)
+    data = json.loads(Path(seal["path"]).read_text())
+    require(isinstance(data, dict), "followup evidence must be an object")
+    fields = ("native_tool", "task_id", "agent_id", "phase", "packet_id", "input_identity",
+              "repair_plan_identity", "base_packet_id", "base_candidate_identity",
+              "candidate_identity", "raw_receipt", "raw_receipt_sha256")
+    require(all(isinstance(data.get(k), str) and data[k].strip() for k in fields),
+            "followup evidence requires nonempty string identities and receipt path/hash")
+    require(data.get("native_tool") == "collaboration.followup_task"
+            and data.get("task_id") == p["task_id"] and data.get("agent_id") == agent_id
+            and data.get("phase") == "repair" and data.get("packet_id") == p["packet_id"]
+            and data.get("input_identity") == p["input_identity"] == t["spec"]["input_identity"]
+            and data.get("repair_plan_identity") == digest(plan), "stale followup assignment/plan")
+    prior = [q for q in state["packets"].values() if q.get("agent_id") == agent_id]
+    history = {e["packet_id"]: e for e in t["history"]}
+    require(prior and agent_id in t["authors"] and all(
+        q["task_id"] == p["task_id"] and q["phase"] in {"execute", "repair"}
+        and q["packet_id"] in history for q in prior),
+        "followup requires prior same-task implementation author with recorded outcomes")
+    # A followup resumes the original native thread; its role/profile cannot be
+    # retargeted by a newly selected repair packet (notably Astra theory execute).
+    implementation_routes = {"subagent_specialist", "general_code", "routine_mechanical"}
+    route = p["route"]
+    require(route.get("route") in implementation_routes and route.get("transport_selected")
+            and all(q["route"].get("route") in implementation_routes
+                    and q["route"].get("requested") == route["requested"]
+                    and q["route"].get("transport_selected") == route["transport_selected"]
+                    for q in prior), "followup requires unchanged implementation route/profile")
+    source = history.get(data.get("base_packet_id"), {})
+    source_result = source.get("result", {})
+    require(source.get("phase") in {"execute", "repair"}
+            and source_result.get("agent_id") == agent_id and source_result.get("outcome") == "success"
+            and source_result.get("input_identity") == p["input_identity"]
+            and source_result.get("candidate_identity") == data.get("base_candidate_identity")
+            == t.get("candidate_identity") == p.get("candidate_identity")
+            and bool(t.get("candidate_identity")), "stale followup source candidate/author")
+    candidate = data.get("candidate_identity")
+    require(isinstance(candidate, str) and candidate.strip()
+            and candidate != t["candidate_identity"], "followup needs new candidate identity")
+    raw = _receipt(data.get("raw_receipt", ""))
+    require(raw["sha256"] == data.get("raw_receipt_sha256")
+            and raw["sha256"] not in {e["receipt"]["sha256"] for e in t["history"]},
+            "followup needs new matching raw receipt")
+    receipt_data = json.loads(Path(raw["path"]).read_text())
+    require(isinstance(receipt_data, dict) and all(receipt_data.get(k) == data.get(k) for k in
+            ("task_id", "agent_id", "input_identity", "base_packet_id", "base_candidate_identity",
+             "candidate_identity")), "followup raw receipt identity mismatch")
+    return {"evidence": seal, "native_tool": data["native_tool"], "base_packet_id": data["base_packet_id"],
+            "base_candidate_identity": data["base_candidate_identity"], "candidate_identity": candidate,
+            "repair_plan_identity": data["repair_plan_identity"], "raw_receipt": raw}
+
+
+def acknowledge(state: dict, packet_id: str, agent_id: str, observed: str = "UNKNOWN",
+                followup_evidence: str | None = None) -> None:
     require(packet_id in state["packets"], "unknown packet")
     p = state["packets"][packet_id]
     t = state["tasks"][p["task_id"]]
@@ -327,8 +385,12 @@ def acknowledge(state: dict, packet_id: str, agent_id: str, observed: str = "UNK
     require(agent_id.strip(), "actual native agent ID required")
     require(agent_id not in t["contributors"] if t["phase"] == "review" else True,
             "reviewer must be independent of all implementation/research/escalation contributors")
-    require(not any(q.get("agent_id") == agent_id for q in state["packets"].values()),
-            "fresh native launch required; agent ID already used")
+    reused = any(q.get("agent_id") == agent_id for q in state["packets"].values())
+    require(not reused or followup_evidence, "fresh native launch required; agent ID already used")
+    continuation = None
+    if followup_evidence is not None:
+        require(reused, "followup evidence requires an actual prior author thread")
+        continuation = _repair_followup(state, p, t, agent_id, followup_evidence)
     if t["phase"] == "escalation":
         repair_id = t["spec"]["approved_repair_id"]
         require(repair_id not in state["ultra_repairs"], "actual ultra launch allowance already consumed")
@@ -338,10 +400,15 @@ def acknowledge(state: dict, packet_id: str, agent_id: str, observed: str = "UNK
         t["ultra_used"].append(repair_id)
     p.update(agent_id=agent_id, launch_performed=True, observed_runtime=observed)
     t["state"] = "running"
-    t["contributors"].append(agent_id)
-    if t["phase"] not in {"research", "escalation", "review"}:
+    if continuation:
+        p.update(native_tool="collaboration.followup_task", continuation=continuation)
+    if agent_id not in t["contributors"]:
+        t["contributors"].append(agent_id)
+    if t["phase"] not in {"research", "escalation", "review"} and agent_id not in t["authors"]:
         t["authors"].append(agent_id)
-    state["events"].append({"type": "launched", "packet_id": packet_id, "agent_id": agent_id,
+    state["events"].append({**({"continuation": continuation} if continuation else {}),
+                            "type": "followup_acknowledged" if continuation else "launched",
+                            "packet_id": packet_id, "agent_id": agent_id,
                             "requested": p["route"]["requested"], "observed_runtime": observed})
 
 
@@ -455,6 +522,11 @@ def _record(state: dict, result: dict, policy: dict) -> None:
             "stale task/input identity")
     require(result.get("agent_id") == p["agent_id"], "result agent identity mismatch")
     receipt = _receipt(result.get("raw_receipt", ""))
+    if p.get("continuation"):
+        continuation = p["continuation"]
+        require(receipt == continuation["raw_receipt"]
+                and result.get("candidate_identity") == continuation["candidate_identity"],
+                "followup result must match acknowledged raw receipt/candidate")
     phase = t["phase"]
     outcome = result.get("outcome")
     require(outcome in {"success", "blocker"}, "outcome must be success or blocker")
@@ -573,6 +645,7 @@ def main() -> int:
     ack.add_argument("--packet-id", required=True)
     ack.add_argument("--agent-id", required=True)
     ack.add_argument("--observed-runtime", default="UNKNOWN")
+    ack.add_argument("--followup-evidence", help="Local identity-bound same-task repair followup JSON")
     rec = sub.add_parser("record")
     rec.add_argument("--result", type=Path, required=True)
     refused = sub.add_parser("launch-failed")
@@ -613,7 +686,7 @@ def main() -> int:
                     profiles.add((model, effort))
                 output = next_packet(state, policy, profiles)
             elif args.action == "ack":
-                acknowledge(state, args.packet_id, args.agent_id, args.observed_runtime)
+                acknowledge(state, args.packet_id, args.agent_id, args.observed_runtime, args.followup_evidence)
                 output = summary(state)
             elif args.action == "record":
                 result = json.loads(args.result.read_text())

@@ -1,0 +1,41 @@
+{
+  "task_id": "R24-CMB-ENVELOPE",
+  "agent_id": "/root/rc_3872e6f22331f3ae",
+  "input_identity": "sha256:191e516e95b044eee02c2c8c7dd51e74aa9d8863d39763930d8043f59e37a8bf",
+  "base_packet_id": "3872e6f22331f3aef13a273d7bb446badf612bc7ce80d3207ba2fbd86f840fdb",
+  "base_candidate_identity": "sha256:48a7651b6684ed17f72448d5bf73381df44b24555275a619aea069fe56cf41fe",
+  "candidate_identity": "sha256:8e8fed320009b9658cdc4f932445c96a521a123bba4b280cde96443405b4ca85",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "base_raw_receipt_sha256": "869b58e31b26fb6d02d887963aa6f3e6e1a17390769fc371aab5364cc885fa09",
+  "base_preservation_manifest_sha256": "19a3110a79b0b5f6332abd25a56480a6798e8cf8112cecc6586852a56c15cb17",
+  "repair_scope": [
+    "insert exact lower-curve clipping vertices",
+    "replace fixed cross-noise vectors by centered equiprobable correlated ensemble",
+    "add both regression tests and amend report"
+  ],
+  "python": "3.12.3",
+  "numpy": "2.5.4",
+  "matplotlib": "3.11.2",
+  "pytest": "9.1.1",
+  "runs": [
+    {
+      "command": ".venv/bin/python docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_envelope/envelope.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "{\"comparisons\": 57, \"support_sets\": 12, \"primary_positive_lower_at_rho_0.05\": 4}\n",
+      "stderr": ""
+    },
+    {
+      "command": ".venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_envelope/test_envelope.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": ".....                                                                    [100%]\n5 passed in 4.28s\n",
+      "stderr": ""
+    }
+  ],
+  "first_failures": [],
+  "historical_first_failures": "Original R24-CMB-ORBIT failure retained upstream; base R24-CMB-ENVELOPE receipt preserved at its original path and in PRE_REPAIR.",
+  "figure_inspected": true,
+  "repair_diff_sha256": "b4b7946abac3ae091ac9ab43fd60a162c0a628cdf2e87ca61f12b4ff0297e4aa"
+}

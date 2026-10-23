@@ -137,6 +137,31 @@ It schedules review, not completion. A successful review additionally requires
 The reviewer must be a fresh actual agent, distinct from every implementation,
 research and escalation contributor. Research and escalation successes instead require a concrete
 `repair_plan`; they schedule repair on the appropriate implementation route.
+A completed same-task implementation author may be acknowledged for a planned
+`repair` through `ack --followup-evidence /absolute/path/followup.json`
+(API: `acknowledge(..., followup_evidence=path)`). The host must have actually
+used `collaboration.followup_task`. The JSON requires `native_tool` with that
+value, `task_id`, `agent_id`, `phase:"repair"`, the current repair `packet_id`,
+`input_identity`, `repair_plan_identity` (`digest` of the recorded nonblank plan),
+`base_packet_id`, `base_candidate_identity`, a different `candidate_identity`,
+`raw_receipt`, and `raw_receipt_sha256`. The raw JSON receipt itself must match
+`task_id`, `agent_id`, `input_identity`, `base_packet_id`,
+`base_candidate_identity`, and `candidate_identity`. The base packet must be a
+successful recorded implementation outcome by this author under the current
+input and candidate; every previous packet for the reused thread must be a
+recorded implementation outcome for this task. The original and repair packets
+must use implementation-compatible routes (`subagent_specialist`, `general_code`,
+or `routine_mechanical`) with identical requested and transport-selected
+model/effort profiles: a native thread cannot be retargeted. Read-only theory
+execution, routine mapping, research and escalation threads cannot become repair
+workers through followup. Empty, stale, mismatched or
+previously recorded raw receipts fail closed. The subsequent result must use the
+acknowledged receipt and new candidate exactly. The current packet and a
+`followup_acknowledged` event retain hashed evidence and the actual followup tool;
+old packets, contributor identities and escalation accounting remain unchanged.
+Every other phase still requires a fresh agent, and review independence remains
+mandatory. Followup evidence does not establish an observed runtime identity.
+
 Astra research, review and escalation remain read-only, including the prompt.
 The native host must enforce these assignment bounds in the actual environment.
 Task specs may declare `contributors:["actual-parent-id","actual-prior-advisor-id"]`

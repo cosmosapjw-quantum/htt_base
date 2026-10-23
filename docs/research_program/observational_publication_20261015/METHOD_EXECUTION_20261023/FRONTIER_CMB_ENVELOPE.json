@@ -1,0 +1,47 @@
+{
+  "frontier_id": "R24-REVIEWED-CMB-COMMON-ENVELOPE",
+  "tasks": [
+    {
+      "id": "R24-CMB-ENVELOPE",
+      "kind": "numeric",
+      "goal": "Invariant norm common contaminant scenario and fullcarrier morphology support",
+      "acceptance": "monotone/zero radius1e-12; splitdifferences give no common radius;trN12 retained;no p absent matchedlaw",
+      "input_identity": "sha256:191e516e95b044eee02c2c8c7dd51e74aa9d8863d39763930d8043f59e37a8bf",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/R24-CMB-ENVELOPE_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_envelope"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-CMB-ORBIT",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "original physical source held or retained lower dimensional diagnostic"
+        },
+        "after": {
+          "method": "r/||vfull||=0,.05,.1,.25,.5,1;orbit[L,U] expands[max(0,L-r1-r2),U+r1+r2]; commonmode(g+h,f-h)witness"
+        },
+        "discriminator": "Split kernel and common-mode uncertainty both retained; certified worst-case bound or unbounded witness; calibrated p only with valid fixed-nuisance law",
+        "scope": "conditional scenario or observational method, no original acceptance promotion"
+      },
+      "theory_contract": {
+        "estimand": "Invariant norm common contaminant scenario and fullcarrier morphology support",
+        "calculation": "r/||vfull||=0,.05,.1,.25,.5,1;orbit[L,U] expands[max(0,L-r1-r2),U+r1+r2]; commonmode(g+h,f-h)witness",
+        "acceptance": "monotone/zero radius1e-12; splitdifferences give no common radius;trN12 retained;no p absent matchedlaw"
+      },
+      "qualified_products_policy": "Do not return confidence_bundle from a failed law; tensor_scenario means explicit scenario tuple only, no coverage grant",
+      "runtime_observed": "UNKNOWN"
+    }
+  ]
+}

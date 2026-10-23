@@ -1,0 +1,6 @@
+Environment preflight, before using the existing repository .venv:
+Command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python -c 'import sys,numpy,scipy,matplotlib; print(sys.version.split()[0],numpy.__version__,scipy.__version__,matplotlib.__version__)'
+Exit: 127
+stderr: /bin/bash: line 1: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python: No such file or directory
+
+This was an obsolete interpreter path in the historical retained result, not a numerical failure. The final run and tests used the existing .venv/bin/python and preserved their stdout/stderr separately.

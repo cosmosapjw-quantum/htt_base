@@ -1,0 +1,91 @@
+{
+  "task_id": "R24-SELECTION-ENVELOPE",
+  "packet_id": "96ff4b1fe9fce78a81a8a696564bc8e75da1918fa020e26b5d92100171c1a41e",
+  "agent_id": "/root/selection_envelope",
+  "input_identity": "sha256:b02fc724d3a6360617392ad1d9deee3934d09e1a42eeb4dff535ad3fcfdaeae0",
+  "source_verification": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/ADVISED_CONTRACTS.json",
+      "sha256": "9bd712d298f572e797731b359e8810ab89f902d9c5bd2879810b49895951b4bf",
+      "bytes": 4463,
+      "matched": true
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/ARTIFACT_MANIFEST.json",
+      "sha256": "1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b",
+      "bytes": 3058,
+      "matched": true
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/RESULT.json",
+      "sha256": "330066f4a8605caa9874f192a938d4ef1d84cf8933bdd3e6059a40b011c28bd0",
+      "bytes": 773836,
+      "matched": true
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/OOF_ROWS.csv",
+      "sha256": "6fd8356e041e1ece186b79bf1506b04af5411e17e6c31a489a1f66da977a3c40",
+      "bytes": 339291,
+      "matched": true
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/DIRECTION_JOIN.csv",
+      "sha256": "4e6e9c991ecdf2fda2a403f68a4ea5d744e244c73478eef1c70efbf007852b9a",
+      "bytes": 21002,
+      "matched": true
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DISTANCE_REVIEW_RAW.json",
+      "sha256": "4305359f1f25203ecd8bc4a184a18703e4ac63785837686e3f8ce61d8e4e8a1d",
+      "bytes": 1947,
+      "matched": true
+    }
+  ],
+  "execution": {
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "branch": "research/htt-open-input-theory-20261018",
+    "observed_head_at_seal": "2c869f634e6673703f9434785fab3c4cfab76218",
+    "frozen_source_base_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8",
+    "pytest": "9.1.1",
+    "actual_agent": "/root/selection_envelope",
+    "requested_runtime": "gpt-6-sol/high",
+    "observed_runtime": "UNKNOWN"
+  },
+  "commands": [
+    {
+      "command": "python -B docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/analyze.py",
+      "exit_code": 0,
+      "stdout": "RUN_STDOUT.txt",
+      "stderr": "RUN_STDERR.txt"
+    },
+    {
+      "command": "python -B -m pytest -q docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/test_analyze.py",
+      "exit_code": 0,
+      "stdout": "TEST_STDOUT.txt",
+      "stderr": "TEST_STDERR.txt"
+    }
+  ],
+  "validation": {
+    "tests_passed": 3,
+    "scenario_model_count": 12,
+    "surface_rows": 16800,
+    "oracle_cells": 60,
+    "oracle_optimizations": 120,
+    "max_lp_primal_residual": 4.6629367034256575e-15,
+    "max_lp_dual_residual": 9.992007221626409e-16,
+    "max_gamma1_parity_error": 0.0,
+    "max_nesting_violation": 0.0,
+    "max_constructive_witness_error": 1.0103029524088925e-14
+  },
+  "first_failure": "FIRST_FAILURE.txt",
+  "nonfatal_warning": "Matplotlib optional Axes3D import warning; raw logs retained",
+  "upstream_fit_rerun": false,
+  "publication": false,
+  "independent_review": "PENDING",
+  "scientific_admission": "HOLD",
+  "original_acceptance": "UNCHANGED"
+}

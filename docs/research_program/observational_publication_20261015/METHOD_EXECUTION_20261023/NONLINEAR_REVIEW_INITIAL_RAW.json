@@ -1,0 +1,39 @@
+{
+  "reviewer": "/root/nonlinear_optical_review",
+  "verdict": "HOLD_BOUNDED_FIGURE_REPAIR",
+  "candidate_identity": "sha256:d7709c3b1d5efeb2f957ff8d91587eaea335fabfebf9103fdb70dd225c2a8bf0",
+  "findings": [
+    {
+      "severity": "P2",
+      "path": "nonlinear_optical/plot.py:29",
+      "defect": "sparse radius lines overstate power after overlap",
+      "counterexample": {
+        "rho_star": 0.03864389736440061,
+        "plotted_at_star": 0.0553571961,
+        "plotted_at_05": 0.0539055514,
+        "correct": 0.05,
+        "scenario": "ac=bc=0,+ex,a=.3,tau=.5"
+      }
+    },
+    {
+      "severity": "P3",
+      "path": "nonlinear_optical/REPORT.md:11",
+      "defect": "broken rho=.01 table header"
+    }
+  ],
+  "checks": {
+    "focused_tests": 4,
+    "manifest_entries": 14,
+    "source_hashes": 10,
+    "cases": 192,
+    "max_d0_squared_error": 3.02e-16,
+    "max_midpoint_error": 1.92e-14,
+    "max_power_error": 6.11e-16,
+    "rank_and_cubic_controls": "PASS"
+  },
+  "repair_plan": "Analytic display grid including exact rho*=d0/2, power .05 throughout overlap; retain frozen markers and RESULT hash, dimensionless labels; fix table; focused plot data test; preserve initial candidate/receipts.",
+  "evidence_source": "Structured extraction of actual native independent reviewer final; full message retained in native conversation",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "original_acceptance_promoted": false
+}

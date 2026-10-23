@@ -1,0 +1,51 @@
+{
+  "task_id": "R24-OPTICAL-SHEAR",
+  "packet_id": "execute5ac5a7bb5f48b402351b23ed99e240ccf0388c34197cc277479f69cd675ecbde",
+  "executor": "/root/optical_shear",
+  "requested_runtime": "native_subagent_profile_unspecified_in_assignment",
+  "observed_runtime": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "initial_branch": "research/htt-open-input-theory-20261018",
+  "initial_head": "2c869f634e6673703f9434785fab3c4cfab76218",
+  "input_base_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "source_binding": "All six R24-OPTICAL-SHEAR_INPUT sources match frozen SHA-256; five declared byte sizes match. The base_head field is historical packet construction identity; execution uses sealed source bytes in the existing checkout.",
+  "commands": [
+    {
+      "argv": ["python", "-B", "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/optical_shear/analyze.py"],
+      "exit_code": 0,
+      "stdout": "RUN_STDOUT.txt",
+      "stderr": "RUN_STDERR.txt"
+    },
+    {
+      "argv": ["python", "-B", "-m", "pytest", "-q", "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/optical_shear/test_analysis.py"],
+      "exit_code": 0,
+      "stdout": "TEST_STDOUT.txt",
+      "stderr": "TEST_STDERR.txt",
+      "tests_passed": 3
+    },
+    {
+      "argv": ["python", "-B", "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/optical_shear/plot.py"],
+      "exit_code": 0,
+      "stdout": "PLOT_STDOUT.txt",
+      "stderr": "PLOT_STDERR.txt",
+      "note": "Optional Matplotlib Axes3D import warning only; 2D PNG/PDF generated"
+    }
+  ],
+  "versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8"
+  },
+  "numerical_checks": {
+    "defined_tensor_images": 8,
+    "undefined_model_A_strata": 4,
+    "max_rotation_reconstruction_orthogonality_norm_cov_trace_det_error": 5.551115123125783e-16,
+    "max_ellipsoid_boundary_residual": 3.2933655802480644e-12,
+    "all_projected_reference_ellipsoids_include_zero": true,
+    "full_coefficient_covariance_and_nuisance_crossblocks_retained": true
+  },
+  "first_failure": "NONE_ANALYSIS_AND_TESTS_SUCCESSFUL",
+  "scientific_admission": "HOLD_PHYSICAL_G_MAP_AND_MEASURED_REMAINDER_MISSING",
+  "original_acceptance": "UNCHANGED_17_OF_42_EXTERNAL_OR_18_OF_42_ANALYTIC_ALTERNATE"
+}

@@ -1,0 +1,29 @@
+{
+  "packet_id": "144c5da3b0e6f2b28ebc6d01e61dee8aa40eef80b1c3a91890b976d43913dd99",
+  "task_id": "R24-CMB-ORBIT",
+  "input_identity": "sha256:0ae60cc8f899f3480b3c186f4f5c534989aa125744cde917f1e52f6ce4301e7a",
+  "agent_id": "/root/rc_144c5da3b0e6f2b2",
+  "candidate_identity": "sha256:4ff9778be2177bf4c485ea0807adf2d2b5bc7e9a89367f848a86ae4be628c494",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "observed_runtime": "UNKNOWN",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "review_response_extract": true,
+  "source": "Actualnativefinalresponse /root/rc_144c5da3b0e6f2b2;fullresponse retained in nativeconversation",
+  "issue": {
+    "class": "code",
+    "severity": "P1",
+    "substantive": true,
+    "true_external": false,
+    "input_identity": "sha256:0ae60cc8f899f3480b3c186f4f5c534989aa125744cde917f1e52f6ce4301e7a",
+    "question": "Do STF tensors represent retained orthonormal harmonic carriers under declared Condon-Shortley convention andSO3action?",
+    "exact_missing_or_defect": "orbit.py63-64 passes canonical(a_l0,sqrt2Re,-sqrt2Im) into pinned projection expecting(a_l0,Re,Im). Nonzero m doubled norm-squared and sine sign reversed; inverse sameincorrectmap cannot detect. Exact90degree purea20 rotation has trueorbit0 butcandidate lower.24943707238665355 upper.2771281522005479. CorrectSTFrotationmaxresidual8.470329472543003e-22K; purea21=i1e-5 mapratio -1.414213562373095. Retained60 l2 normratio1.265..1.868 andl3 1.585..1.999."
+  },
+  "validation_evidence": [
+    "All source/candidate/manifest/payload hashesmatch",
+    "2existingtestspassbutmissconventionboundary",
+    "Independentall12basisnorm,90degreerotation,sinesignfalsifiersFAIL",
+    "Orbitboundsvalidonlyforstoredincorrecttensors;supportprofilesPASS;scope/missinglawPASS"
+  ],
+  "repair_plan": "One bounded numericcodingrepair in cmb only: preservefirstcandidate; canonicalblock->rawReIm: m0 unchanged,cos/sqrt2,sin/(-sqrt2) beforepinnedprojection; inverseconvertback. Addindependentall12basismapevaluation/norm/90degreerotation/generalproperrotationtests; regenerateaffectedSTF/bounds/phasecontrol/report/figures/manifest; preserveinput/missinglaw/originalacceptance. Freshindependentreview required."
+}

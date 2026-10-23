@@ -1,0 +1,6 @@
+Command: python -m pytest -q test_adapter.py
+Outcome: 4 passed, 1 failed.
+Failed: test_so3_and_polar_axial_parity
+adapter.py parity_transform: IndexError: too many indices for array: array is 0-dimensional, but 1 were indexed
+Cause: np.asarray(generator expression) yielded a 0-dimensional object array.
+Repair: materialized the eight parity signs as a list before broadcasting.

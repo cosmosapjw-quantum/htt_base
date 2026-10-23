@@ -1,0 +1,40 @@
+{
+  "task_id": "R24-CMB-ORBIT",
+  "reviewer": "/root/cmb_repair_review",
+  "verdict": "SCOPED_PASS_CORRECTED_C0_CANDIDATE",
+  "candidate_identity": "sha256:107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb",
+  "input_identity": "sha256:0ae60cc8f899f3480b3c186f4f5c534989aa125744cde917f1e52f6ce4301e7a",
+  "manifest_sha256": "5f21c1bde07b030fa94d9ad8989605fbb089c6da34c125f31be5c189c098e30e",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "read_only": true,
+  "validation_evidence": {
+    "tests": 18,
+    "test_seconds": 6.99,
+    "bundles_rebuilt_exact": 60,
+    "support_rows_exact": 9,
+    "basis_maps": 12,
+    "max_basis_error_K": 2.710505431213761e-20,
+    "max_norm_relative_error": 6.661338147750939e-16,
+    "intervals_checked": 58,
+    "lower_reference_digits": 130,
+    "upper_witness": "exactrationalSO3properrotationsandexactsquareddistance",
+    "min_upper_squared_relative_slack": 2.0000027952105034e-12,
+    "phase_power_relative_error": 2.220446049250313e-16,
+    "phase_determinant_difference_K3": 8.210363938798829e-23,
+    "phase_interval": [
+      2.6241070716196918e-05,
+      0.011459154141194455
+    ],
+    "first_candidate_preserved": true,
+    "original_raw_receipt_restored": true,
+    "harmonic12_support_unchanged": true,
+    "figure_inspected": true
+  },
+  "convention_references": [
+    "https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.sph_harm_y.html",
+    "https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.transform.Rotation.from_quat.html"
+  ],
+  "claim_ceiling": "Fixedscaleprocessedmapdiagnosticonly;matchedtotalfieldlawabsent,pnull,physicalattributionandoriginalacceptancesunchanged",
+  "source": "Actualfreshnativefinal /root/cmb_repair_review;fulloriginalresponse retainednativeconversation;rootextractedstructuredvalidation"
+}

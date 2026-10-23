@@ -1,0 +1,945 @@
+{
+  "owner": "HTT/obsstat campaign host",
+  "scope": "13 actual bounded conditional research analyses, before report task; not42scientificadmission",
+  "claim_tier": "conditional observational/method diagnostics only",
+  "transfer_source": "none",
+  "base_head": "dfaf171c37f2636c942a99bf2b9803b57295ac14",
+  "branch": "research/htt-open-input-theory-20261018",
+  "pre_report_state_sha256": "f3b8ba8776d31d8e84dbb8c6eb413ceb05cb7d4c13d58e301c27a9bea9e43fe3",
+  "original_acceptance": {
+    "external": "17/42",
+    "analytic_alternate": "18/42",
+    "promoted": false
+  },
+  "old_task_count": 48,
+  "current_task_count": 61,
+  "preservation_checks": {
+    "original48_task_objects_exact": true,
+    "original_packets_exact": true,
+    "campaign_exact": true,
+    "campaign_identity_exact": true,
+    "ultra_repairs_exact": true,
+    "ultra_pending_exact": true
+  },
+  "R9_UNKNOWN": "untouched; nohistoricalacceptancepromotion",
+  "extra_ultra_launches": 0,
+  "native_runtime_observation": "UNKNOWN; hostattestedtoolacceptance/ack notmodelidentityproof",
+  "raw_receipts_verified": 36,
+  "research_tasks": [
+    {
+      "task_id": "R24-DISTANCE-MODELS",
+      "state": "completed",
+      "input_identity": "sha256:94ba6ebeeaa029c868663cd873e0626f892976e77a56c9d60ccc54c9cf1e1812",
+      "candidate_identity": "sha256:1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "ff5815b75e1281ce26d4688c2d75167fc0c3a3d02788ba36232bf0ae6f91628d",
+          "agent_id": "/root/distance_models",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/RAW_RECEIPT.json",
+            "sha256": "7adfff7cbb77bc8e0d2b6d45b8c73c01bfdd344d4a502b59e2909351bff2dcfc"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "ec648820ce98ea1759b45dce5c972b55deb4dfdfff7d0743b76f8c1db5f542b3",
+          "agent_id": "/root/distance_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DISTANCE_REVIEW_RAW.json",
+            "sha256": "4305359f1f25203ecd8bc4a184a18703e4ac63785837686e3f8ce61d8e4e8a1d"
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "R24-CMB-ORBIT",
+      "state": "completed",
+      "input_identity": "sha256:0ae60cc8f899f3480b3c186f4f5c534989aa125744cde917f1e52f6ce4301e7a",
+      "candidate_identity": "sha256:107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "503086ca39900549c146176289ea3aff406bc9869397f20ae844f2a3dc86c437",
+          "agent_id": "/root/rc_503086ca39900549",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:4ff9778be2177bf4c485ea0807adf2d2b5bc7e9a89367f848a86ae4be628c494",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/RAW_RECEIPT.json",
+            "sha256": "ef0c8a860343e87abffade8fe040bf123c29bcdb12784379a492fc752fad2a77"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "144c5da3b0e6f2b28ebc6d01e61dee8aa40eef80b1c3a91890b976d43913dd99",
+          "agent_id": "/root/rc_144c5da3b0e6f2b2",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "blocker",
+          "candidate_identity": "sha256:4ff9778be2177bf4c485ea0807adf2d2b5bc7e9a89367f848a86ae4be628c494",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CMB_REVIEW_INITIAL_RAW.json",
+            "sha256": "214524e0939fbcd6da3d61948c305e9cdcb5089429f0217d5b2e8251760dc0fe"
+          }
+        },
+        {
+          "phase": "repair",
+          "packet_id": "cd2c685c62fd749514f9e764ec06871aaf67abef8f496303c670f737b8b09027",
+          "agent_id": "/root/cmb_projection_repair",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/REPAIR_RAW_RECEIPT.json",
+            "sha256": "b5d54a488746b3f795b3c3fc70d949ede32e70b4def5123444174701e25af04b"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "949db0eea590464cf2adf8dc4816d3885fc2a2228683c050e1d13473075ed4d7",
+          "agent_id": "/root/cmb_repair_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CMB_REVIEW_FINAL_RAW.json",
+            "sha256": "09969cab58099842436fd59145d02a0a30c0b6468e7297e7570a6f49d36cba19"
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "R24-K03-DESIGN",
+      "state": "completed",
+      "input_identity": "sha256:46dfba636f42d18eef70804060d210b775319402139d602a29889943c4f53108",
+      "candidate_identity": "sha256:01deb44501618d938a3668230501a525bba4c445f35ad0b2846d7c18cba1b482",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "2c055ade5d87a49c0be7f2301d48ca4967eed30587f7b0c6e2224a43078b668b",
+          "agent_id": "/root/k03_design",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:01deb44501618d938a3668230501a525bba4c445f35ad0b2846d7c18cba1b482",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_design/RAW_RECEIPT.json",
+            "sha256": "43ece603218d76222db5419ac366391dc7344934fb1c9ac812f97f369e518a4b"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "f342024d593823ff09aca0bfd62ded2d2996c2dec54d0a8382bc8761d55cf6c0",
+          "agent_id": "/root/k03_design_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:01deb44501618d938a3668230501a525bba4c445f35ad0b2846d7c18cba1b482",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/K03_DESIGN_REVIEW_RAW.json",
+            "sha256": "09f8d5612e907563907a53089e3adeababc04f64a73830ef42167c6a64462880"
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "R24-SN-RELEASE",
+      "state": "completed",
+      "input_identity": "sha256:b428afbcd61eb919bdc25100eb44dc748de87148d022d2ad3b182ba7ffec776d",
+      "candidate_identity": "sha256:0e294e28a55b4ac85a2236fbe58100850d13734cb166359adf3226648507569e",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "dcfa68e071c1c555f67920f4e7981196e3c8b437f498aafeb891bdbe75e1a84e",
+          "agent_id": "/root/rc_dcfa68e071c1c555",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:0e294e28a55b4ac85a2236fbe58100850d13734cb166359adf3226648507569e",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/sn_release/RAW_RECEIPT.json",
+            "sha256": "81064f226d45a40b2ed6115b3f3c49c75eba35ac8ab3ead2afc5c0b7c511a338"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "5b5c8b08480ffb696df009def3c9207b78bc018b860f39fd05b3782e200b19d5",
+          "agent_id": "/root/sn_release_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:0e294e28a55b4ac85a2236fbe58100850d13734cb166359adf3226648507569e",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/SN_REVIEW_RAW.json",
+            "sha256": "6017bd296fe87692490b391a3fd616dd494d2ccaf5bc66997bf075c93124ffb0"
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "R24-SELECTION-ENVELOPE",
+      "state": "completed",
+      "input_identity": "sha256:b02fc724d3a6360617392ad1d9deee3934d09e1a42eeb4dff535ad3fcfdaeae0",
+      "candidate_identity": "sha256:2a357fb7fef159b5eb4c8366c130401fe683ab2e7c75586af757f4d5d5c41454",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "96ff4b1fe9fce78a81a8a696564bc8e75da1918fa020e26b5d92100171c1a41e",
+          "agent_id": "/root/selection_envelope",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:2a357fb7fef159b5eb4c8366c130401fe683ab2e7c75586af757f4d5d5c41454",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/RAW_RECEIPT.json",
+            "sha256": "7116bd94d27e3e8a7dab68d7a7c9bcf31eb31a77a6a26425f3dbe112cb0353ec"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "85b3f206bdbc802efb79debad4a3177a4702304310a2fab340adb05bb9b714c6",
+          "agent_id": "/root/rc_85b3f206bdbc802e",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:2a357fb7fef159b5eb4c8366c130401fe683ab2e7c75586af757f4d5d5c41454",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/SELECTION_ENVELOPE_REVIEW_RAW.json",
+            "sha256": "0b109de072fe14011750624c77b0dbaf24902f5f72060ed4bab85619bc0a954f"
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "R24-OPTICAL-SHEAR",
+      "state": "completed",
+      "input_identity": "sha256:af216d8bd92fcc4814294e785abdcb72b4576f685ca5ca18808841b5779d09e0",
+      "candidate_identity": "sha256:f2b59d7590f55235f9421371328d7fb38db9ee309e26d7cf17ec1037ba3e8796",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "5ac5a7bb5f48b402351b23ed99e240ccf0388c34197cc277479f69cd675ecbde",
+          "agent_id": "/root/optical_shear",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:f2b59d7590f55235f9421371328d7fb38db9ee309e26d7cf17ec1037ba3e8796",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/optical_shear/RAW_RECEIPT.json",
+            "sha256": "def5a35a13420aebb95163f8939a747228332dcab989a09a566fdb0d8f275edd"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "ec7e39c4dff5f8a0024c80f2fd67b47f844b004a4335dbf724a63553da02aba5",
+          "agent_id": "/root/optical_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:f2b59d7590f55235f9421371328d7fb38db9ee309e26d7cf17ec1037ba3e8796",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/OPTICAL_REVIEW_RAW.json",
+            "sha256": "c7445fd0046999dc84cc8edb68d1dcfd14fe56929f4eaa4dfc24031ee4cd5e7c"
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "R24-BOOST-ACCELERATION",
+      "state": "completed",
+      "input_identity": "sha256:feafebb499efb65f229cf015f8cf6478120cf86d2964d15d52206a3741670a2d",
+      "candidate_identity": "sha256:6284edcecfc0cf1f40dee8ec050af1026065196e718fa919593c32bbf5677519",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "047ec280a16abca82ba9e122a7b16664db1f8c905dae0ec55f3611c78427997f",
+          "agent_id": "/root/rc_047ec280a16abca8",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:1c2aa2d75979e9d534ee2dcc4ea790bb62146320f75b2f27143d0a354a947d08",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/RAW_RECEIPT.json",
+            "sha256": "cb456da1545f3bebdb56285a9b75e25643a99a06117438c303ba5b92f001e34c"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "eac4eaf2d1f7036a224bd28f203f7c5cf00cc22bcce9ed3c8835afa2fec429f3",
+          "agent_id": "/root/boost_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "blocker",
+          "candidate_identity": "sha256:1c2aa2d75979e9d534ee2dcc4ea790bb62146320f75b2f27143d0a354a947d08",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/BOOST_REVIEW_INITIAL_RAW.json",
+            "sha256": "5e742f4afe4836918c203311121695e5a00743089ebbb2fdcbe3dc327b9bbfa2"
+          }
+        },
+        {
+          "phase": "repair",
+          "packet_id": "29529fff48ed81c77dabc4b64cc6a11b8966c2970ee76b140b64ee5d13a8402e",
+          "agent_id": "/root/rc_047ec280a16abca8",
+          "native_tool": "collaboration.followup_task",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:6284edcecfc0cf1f40dee8ec050af1026065196e718fa919593c32bbf5677519",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/boost_acceleration/REPAIR_RAW_RECEIPT.json",
+            "sha256": "aeee2accaf226a4d8ba3d9e65cb4d4244294ba219fc731eae5989b829e3afbab"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "447009eeb0d61f937b20e380d5ccc6f7dc71fff40aef0dcac9b4a314aa36963e",
+          "agent_id": "/root/boost_repair_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:6284edcecfc0cf1f40dee8ec050af1026065196e718fa919593c32bbf5677519",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/BOOST_REVIEW_FINAL_RAW.json",
+            "sha256": "6485bbe81565b2f0ce2bba654fe203c107008ca7a03af69cd5f11ddc1cb72d54"
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "R24-K03-DEPTH-MOMENTS",
+      "state": "completed",
+      "input_identity": "sha256:b835863bfe99b25db95e7e73a62e2eaf27b78bc850b44c0579457397e6f58998",
+      "candidate_identity": "sha256:68aa65ba81bce4bfa61a2d7c9c302a7c77068325b80ef69d55fcc89f9272a2de",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "8aac035463242cfba033029620f30ba363f81e3d12f31165d73660d58bb8cbea",
+          "agent_id": "/root/k03_depth_moments",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:68aa65ba81bce4bfa61a2d7c9c302a7c77068325b80ef69d55fcc89f9272a2de",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_depth_moments/RAW_RECEIPT.json",
+            "sha256": "a0de3becc743adb18ce1612c99bedd6e4b2ed9531c188c71d1cbb32358f71188"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "a7c6601b487670cd38524bbf13c3f41027e1fa5e6f059bc35730c32f9761611f",
+          "agent_id": "/root/k03_depth_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:68aa65ba81bce4bfa61a2d7c9c302a7c77068325b80ef69d55fcc89f9272a2de",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/K03_DEPTH_REVIEW_RAW.json",
+            "sha256": "2bacc76cf324dcc5d2bd359b73d6aa780eba5ebda9138de4b15212df8f17ae53"
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "R24-CMB-ENVELOPE",
+      "state": "completed",
+      "input_identity": "sha256:191e516e95b044eee02c2c8c7dd51e74aa9d8863d39763930d8043f59e37a8bf",
+      "candidate_identity": "sha256:8e8fed320009b9658cdc4f932445c96a521a123bba4b280cde96443405b4ca85",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "3872e6f22331f3aef13a273d7bb446badf612bc7ce80d3207ba2fbd86f840fdb",
+          "agent_id": "/root/rc_3872e6f22331f3ae",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:48a7651b6684ed17f72448d5bf73381df44b24555275a619aea069fe56cf41fe",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_envelope/RAW_RECEIPT.json",
+            "sha256": "869b58e31b26fb6d02d887963aa6f3e6e1a17390769fc371aab5364cc885fa09"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "fc3d0d5643e19fb3df74d399ac67d55b341d508d44badb986f2953e00ddfad08",
+          "agent_id": "/root/cmb_envelope_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "blocker",
+          "candidate_identity": "sha256:48a7651b6684ed17f72448d5bf73381df44b24555275a619aea069fe56cf41fe",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CMB_ENVELOPE_REVIEW_INITIAL_RAW.json",
+            "sha256": "50ee0d40bba79aeb93ddf4de19094e2db8762e3c3dfd22b48ba90ca68678e56b"
+          }
+        },
+        {
+          "phase": "repair",
+          "packet_id": "f9d27a3f6cdae39fd4d6989fb3f5bc75452770951920c2c90a02e2b0dc46bb6d",
+          "agent_id": "/root/rc_3872e6f22331f3ae",
+          "native_tool": "collaboration.followup_task",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:8e8fed320009b9658cdc4f932445c96a521a123bba4b280cde96443405b4ca85",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_envelope/REPAIR_RAW_RECEIPT.json",
+            "sha256": "c2d9e8052f4c964d0ba557a8fefad0b5095c3a8ad5c5386bf2dd209dd710ead8"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "18c6df621f94916676d62df926dd9c93ababfca6d52617c6c54a65324bc03078",
+          "agent_id": "/root/cmb_envelope_final_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:8e8fed320009b9658cdc4f932445c96a521a123bba4b280cde96443405b4ca85",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CMB_ENVELOPE_REVIEW_FINAL_RAW.json",
+            "sha256": "f600157d8761852af07326146f8ff6d88b62eee550c5b7ed16d61a1fdb1933bc"
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "R24-TENSOR-BUNDLE",
+      "state": "completed",
+      "input_identity": "sha256:29b5e234b1c8573384d9b41876d1a244014bda1cae2159fff17d5609a4646ed5",
+      "candidate_identity": "sha256:39f15bd86ecd76907beef05fcfa09fe57c48d5536218b3e4840311783e9bfc7a",
+      "qualified_products": [
+        "tensor_scenario"
+      ],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "e0e4fe55a9a7a2aafe9156b29d4ae05a6b5be7380f047169dd325842f82bd443",
+          "agent_id": "/root/tensor_bundle",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:39f15bd86ecd76907beef05fcfa09fe57c48d5536218b3e4840311783e9bfc7a",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/RAW_RECEIPT.json",
+            "sha256": "8749a29e0156010a77b2739c72efb59ca1ebd520fbeb29e70e2099cf1bc9d323"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "57be2dd26776fac86bb0e700528ffcc1d800cd95f5ddac5fe2ddc9e0b6c755a0",
+          "agent_id": "/root/tensor_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:39f15bd86ecd76907beef05fcfa09fe57c48d5536218b3e4840311783e9bfc7a",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/TENSOR_REVIEW_RAW.json",
+            "sha256": "a8c775e791f267d24d23d3c5747bdbb1390f6ff4bef83e890c0795f3fd6ce13f"
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "R24-OPTICAL-NONLINEAR-QUOTIENT",
+      "state": "completed",
+      "input_identity": "sha256:2267073c3678dc98ae63508efd80473ace82d150f7aa1c36246783110786ffa0",
+      "candidate_identity": "sha256:b93c13623afdc23215df241ca887fdf0341b56b01a3c840ef03d2280306c2b2c",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "47c0540b6c230d5688a97c420c89456bcf4da6b06007ca33796d2419f45ffeb5",
+          "agent_id": "/root/nonlinear_optical",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:d7709c3b1d5efeb2f957ff8d91587eaea335fabfebf9103fdb70dd225c2a8bf0",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/nonlinear_optical/RAW_RECEIPT.json",
+            "sha256": "ab080fbaed0a557f3e5e5933680d7633e2ad1e3eb629b1de3ab1ddcda8dac8c2"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "d11b60c9cacec6bcce7b118ca58737d22874c8347541f5278da93e0c1a5b9d43",
+          "agent_id": "/root/nonlinear_optical_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "blocker",
+          "candidate_identity": "sha256:d7709c3b1d5efeb2f957ff8d91587eaea335fabfebf9103fdb70dd225c2a8bf0",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/NONLINEAR_REVIEW_INITIAL_RAW.json",
+            "sha256": "8418a75937069ebe04da5851db5ca6085dfcfd13c70ae24b84a31a84b2113173"
+          }
+        },
+        {
+          "phase": "repair",
+          "packet_id": "0da981bd199209d238b9e4f4453875cb4ab1cb37296d2a1748b2352085f49527",
+          "agent_id": "/root/nonlinear_optical",
+          "native_tool": "collaboration.followup_task",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:b93c13623afdc23215df241ca887fdf0341b56b01a3c840ef03d2280306c2b2c",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/nonlinear_optical/REPAIR_RAW_RECEIPT.json",
+            "sha256": "720d33371c5358a0397b8b399dec2774c2fc46c28a3184b564031f37faaa6ed1"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "79efce76d0ab6e6320235f57d46ff9184665d5255b98aa7520c76e2f5dc42799",
+          "agent_id": "/root/nonlinear_final_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:b93c13623afdc23215df241ca887fdf0341b56b01a3c840ef03d2280306c2b2c",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/NONLINEAR_REVIEW_FINAL_RAW.json",
+            "sha256": "7373222d197026c1fb3ce7d60763347a3a591897d43a8fd53ddc20007bb27392"
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "R24-DEPTH-IMAGES",
+      "state": "completed",
+      "input_identity": "sha256:4337e37b166e7bdc824e856202f8ed212b715ed72ae38f8c65da7e874963c9da",
+      "candidate_identity": "sha256:1b2ca2385430924f6ad01d14be2895ff2aa727a94a0dfd47ce0b000b279263fb",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "5f33227c369ae1b0be8b3042a73f5bb148c2453b58161253992cdf8e8d7020ce",
+          "agent_id": "/root/depth_images",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:03222b7d264734313ae0836584515d9f032317653da47aaf5263dc6ee36b342a",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/RAW_RECEIPT.json",
+            "sha256": "12a492651f3add0fc298a52805a6c5dde74bd4e84c64c3ea7e350ac8498d6862"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "8cd78e66d52616bf3caa2dfb41a2386c2d11899f471d35cad4508d667f4349d2",
+          "agent_id": "/root/depth_images_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "blocker",
+          "candidate_identity": "sha256:03222b7d264734313ae0836584515d9f032317653da47aaf5263dc6ee36b342a",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DEPTH_REVIEW_INITIAL_RAW.json",
+            "sha256": "9c02f52ce734102442a00301c3979d9676305723b5f1e5b16c90f24d18e3fc7d"
+          }
+        },
+        {
+          "phase": "repair",
+          "packet_id": "53a06aaf58c68d7600b780abf5066e9ddb219ce90f96ced590451f6e67927634",
+          "agent_id": "/root/depth_images",
+          "native_tool": "collaboration.followup_task",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:1b2ca2385430924f6ad01d14be2895ff2aa727a94a0dfd47ce0b000b279263fb",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DEPTH_REPAIR_HOST_RECEIPT.json",
+            "sha256": "08f895e3dd9a1e07d32b98af7ae515327ba8943f9504d6b8d57c644796385ba5"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "a9c240be1299fc2ae75ed31537c886bcfd13ae4f6e4f15e9034609314d7cefc2",
+          "agent_id": "/root/depth_images_final_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:1b2ca2385430924f6ad01d14be2895ff2aa727a94a0dfd47ce0b000b279263fb",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/DEPTH_REVIEW_FINAL_RAW.json",
+            "sha256": "2d9d8e8243fec63ec58c7b44c3e992a2cc978b0aa236a30bae091e994a236a81"
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "R24-CMB-CHIRALITY",
+      "state": "completed",
+      "input_identity": "sha256:ecc3f8645bc904445d513f87a0b1b1e9fe07a081c6bd0a1a4a98d6594d850bc3",
+      "candidate_identity": "sha256:e974286c0a2ca6a016a58444fafad1b8c066b9666c337f30fd54e94983b6fa51",
+      "qualified_products": [],
+      "history": [
+        {
+          "phase": "execute",
+          "packet_id": "4f44a7acafa117163796f8e20728bd5afc749262f65f3ecc8724224bac70d038",
+          "agent_id": "/root/cmb_chirality",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "transport_selected": {
+            "model": "gpt-6-sol",
+            "effort": "high"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:e974286c0a2ca6a016a58444fafad1b8c066b9666c337f30fd54e94983b6fa51",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb_chirality/RAW_RECEIPT.json",
+            "sha256": "2afca70374b0cd731f2e30fb7baa8abdfe5f0e849397d4bff7c5d8cd0a3d16f0"
+          }
+        },
+        {
+          "phase": "review",
+          "packet_id": "7c601016403c2d8b739b1ce70a7ad51c200c456e3ef5aec2965e53fa418c706f",
+          "agent_id": "/root/cmb_chirality_review",
+          "native_tool": "collaboration.spawn_agent",
+          "launch_acknowledged": true,
+          "requested": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "transport_selected": {
+            "model": "gpt-6-astra",
+            "effort": "xhigh"
+          },
+          "observed_runtime": "UNKNOWN",
+          "outcome": "success",
+          "candidate_identity": "sha256:e974286c0a2ca6a016a58444fafad1b8c066b9666c337f30fd54e94983b6fa51",
+          "raw_receipt": {
+            "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/CHIRALITY_REVIEW_FINAL_RAW.json",
+            "sha256": "dbc0787482aebb4f5b30cf52554124da72cde9a37e0f7fe11374d4c060f7f240"
+          }
+        }
+      ]
+    }
+  ],
+  "one_use_K03_new_fullpass": "one actual755850row pass; reuseonly; no rerun",
+  "cumulative_chirality": "CHIRALITY_DRAFT_TRANSITION.json recordsfourproductionstarts20.13s andthreeteststarts7.63s;earlierdraftbytesunavailable",
+  "scientific_limits": "PhysicalMES/source/selectedlaw/totalfieldlaw/true-depth/nativeatlas/externalhistoryremainunavailable; nozerofill",
+  "token_cost_usage": "NOT_INDEPENDENTLY_OBSERVED; historicalaccountingpreserved"
+}
