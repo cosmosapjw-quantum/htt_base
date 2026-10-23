@@ -1,0 +1,67 @@
+{
+  "verdict": "SCOPED_PASS",
+  "scope": "Controller cooperative-checkpoint/resume source only; not producer helper approval or live lifecycle/scientific admission",
+  "reviewer": "/root/r25_blind_checkpoint_source",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "candidate_identity": "2e2336620478969d4dfd39df475fa4f792eeefb7def4b9ae876624a2e336b6fe",
+  "base_commit": "e4dd81068f03d1ee52a6864b661a4104e6336147",
+  "source_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/research_controller.py": "a394d854f8a0b90896e5e9649c056733999b06fce6b88292218a5688e7225495",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/test_research_controller_checkpoint.py": "172fc0015cd3de7ca034621476f37a91e0404b0209e6a0a8c50dc87df1914e34",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md": "174f31cf5c8064cabd2f1e7640ca2091504419fcaeaeebdd4a1ad53aed4d2d9d"
+  },
+  "closed_findings": [
+    {
+      "severity": "P1",
+      "finding": "Coherent checkpoint receipt/snapshot replacement accepted under stored identity",
+      "resolution": "_validate_stored_checkpoint compares binding/snapshot/worker/host/checkpoint identity; reused at next, ordinary ACK, prepare and resume ACK"
+    },
+    {
+      "severity": "P1",
+      "finding": "Ordinary competitor ACK omitted checkpoint freshness",
+      "resolution": "_validate_released_acquisitions now precedes ordinary/adaptive ACK state mutation"
+    },
+    {
+      "severity": "P1",
+      "finding": "Coherent plan/review/source replacement accepted after durable reservation",
+      "resolution": "Resume ACK compares validated plan against exact reserved plan"
+    },
+    {
+      "severity": "P2",
+      "finding": "Same-size or growing partial prefix overwrite accepted",
+      "resolution": "Streamed prior-length prefix digest and source-release/ref continuity; valid append remains accepted"
+    },
+    {
+      "severity": "P2",
+      "finding": "Checkpointed acquisition globally blocked independent adaptive research",
+      "resolution": "Checkpointed/resume_pending acquisitions excluded from discovery eligibility; independent branches retain existing fingerprint/allowance"
+    }
+  ],
+  "reviewer_checks": [
+    {
+      "command": "timeout 90s env PYTHONDONTWRITEBYTECODE=1 TMPDIR=/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch PYTHONPATH=scripts/codex_harness python -m unittest test_research_controller_checkpoint -q",
+      "result": "24 tests passed",
+      "elapsed_suite_seconds": 3.51
+    },
+    {
+      "command": "timeout 90s env PYTHONDONTWRITEBYTECODE=1 TMPDIR=/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch PYTHONPATH=scripts/codex_harness python /mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch/adversarial_repro.py",
+      "result": "First four invalid transitions rejected; independent discovery returns eligible_branches [SMICA] with fingerprint unchanged"
+    },
+    {
+      "check": "Final source SHA256 comparison",
+      "result": "All three exact expected hashes matched after tests"
+    }
+  ],
+  "open_blocking_findings": [],
+  "limits": [
+    "Actual worker handoff and independent host truth/completeness still required; controller verifies evidence but does not observe OS truth",
+    "Producer helpers and one-time migration implementation not covered by this source verdict",
+    "No production state mutation, processes, downloads, full active artifact hashes, SMICA execution, grant dispatch, publication or scientific admission performed",
+    "Author full-suite 120 tests/3 historical-stage skips is recorded author evidence, not independently rerun by this reviewer",
+    "Repository skills/harness and prior verdicts were not approval authority; migration clarification read separately only to answer parent procedural contract question"
+  ]
+}

@@ -1,0 +1,19 @@
+# Independent staged-four contract review
+
+**SCOPED_CONTRACT_PASS. No blocking findings.** This decision is limited to the mathematical and data-semantic executability of the exact proposed descriptive stage. Native execution, per-product qualification, implementation correctness and scientific admission remain pending.
+
+The reviewed input is `ff5db155e8266b4a913ceb48e69b60d6a6356928940305cd2d28d82fc3f690e5`; frontier is `17cb1a91c7eb0d3bc834f8060451b38be42d513a80cc6726e2b2eb17ce212e78`; theory document is `106bb1d88eb3545f53064ef26c34b58311d4ce958921f6248cfbf31416f5ada9`. Reviewer `/root/r25_blind_staged4_contract`, requested Astra/xhigh, observed runtime UNKNOWN. Repository skills and harness were not used as scientific review authority.
+
+The common NSIDE64 mask selects native pixels; it does not downgrade Q/U. Exact float32 BAD_DATA handling, nonfinite rejection, where-zeroing, unchanged native spin2 transforms and Galactic COSMO units define a coherent discrete pseudo-mode calculation. Actual headers and small receipt/header seals agree. Large-map hashes were checked against receipt fields only; no large rehash or map-data read was performed.
+
+The complete carrier contains 24 components per map, 96 overall and six 24-component contrasts, with full STF tensors retained. An independent scipy spherical-harmonic check covered all five l2 and seven l3 decoder bases at 37 directions, with maximum errors 4.44e-16 and 6.66e-16. The required raw a21=i sign agrees. A separate NSIDE 16 factorial-Wigner spin check covered all 24 canonical E/B basis inputs; synthesis agreed with installed healpy1.19.0 to 1.83e-15 and masked explicit spin quadrature to 2.49e-16. These are review fixtures, not native production outcomes.
+
+A full native 24x24 response is correctly deferred: the present consumer asks for delivered masked coefficients and differences, without inversion or inference. It would not by itself account for all higher-mode leakage. The defined canonical Q norm and four-point frequency CDF remain descriptive; physical F/MES/Pi and depth G_F retain their stated unknown/not-applicable status. A later seven-frequency/SMICA support change requires a native retransform; reuse requires identical support, operator and input identity.
+
+Execution should construct final S4 before any per-map projection and accumulate qualification/support/projection time across passes against each product 900s cap. Native 4GiB/900s feasibility is prospective, not certified by this review. Chunked reads and sums avoid unnecessary whole-map temporaries. Small-grid controls compare the same discrete operator rather than demand exact continuous round-trip recovery. Parity checks transform support with the field. An empty support is no observable, not a zero signal.
+
+The first decoder probe failed because repo-root import lacked the bass package path. The canonical import succeeded with `PYTHONPATH=htt:htt/src`; no source edit was required. A pre-existing Matplotlib Axes3D warning did not prevent spin checks. These observations and exact numerical outcomes are retained in the companion JSON.
+
+Primary references: [healpy API](https://healpy.readthedocs.io/en/latest/generated/healpy.sphtfunc.map2alm_spin.html), [HEALPix conventions](https://healpix.sourceforge.io/html/intro_HEALPix_conventions.htm), [Planck LFI products](https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/matrix_bpasscorr.html), and [Planck primary products](https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/matrix_primary.html).
+
+The next transition is lower-tier implementation of the reviewed stage, followed by actual product/control/accounting evidence and independent candidate review. Parent acquisition identities, original 17/42, alternate 18/42, historical 48/baseline 62, R9 UNKNOWN,one-use and consumed ultra remain unchanged. No production analysis, process, STATE or Git mutation was made by this review.

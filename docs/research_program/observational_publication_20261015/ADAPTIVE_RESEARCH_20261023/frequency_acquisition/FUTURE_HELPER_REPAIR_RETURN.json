@@ -1,0 +1,121 @@
+{
+  "schema": "htt.future_acquisition_helper_repair_return/1",
+  "status": "FROZEN_FOR_FRESH_INDEPENDENT_CLOSEOUT",
+  "candidate_identity": "04fd854dbc4a17dc560831955d8d3e9ac0a3d5121a4ab6408c00358ff71bae98",
+  "original_task_id": "R25-PR3-FREQUENCY-ACQUIRE",
+  "original_packet_id": "014cb70b115b051a27cf126089c1e7f270363aa236d69320c2f777f738dca00d",
+  "original_acquisition_author": "/root/rc_014cb70b115b051a",
+  "actual_repair_executor": "/root/r25_adaptive_controller_code",
+  "executor_requested": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "executor_observed_runtime": "UNKNOWN",
+  "frozen_at_utc": "2026-10-23T11:24:53.340444+00:00",
+  "source_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_resume.py": "bf78a16de4648a37044049dae0577a4b63e3eee6789c4dd9a4d0387e183a085f",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_engine.py": "62a197931b88dc20af2cc41b5f3c3c0a2babcddc51a5d5d1ff06de66a89edf72",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/test_cooperative_resume.py": "f77587002eeac78230395bd018c8dde866ad07d830a9339a2d9161f742edf66b",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/test_cooperative_integration.py": "6d431c842fd6d1e2630d70b1979be0d2790c9d4c1c579e50936bfdaa143e3667"
+  },
+  "executed_helper_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_resume.py": "bf78a16de4648a37044049dae0577a4b63e3eee6789c4dd9a4d0387e183a085f",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_engine.py": "62a197931b88dc20af2cc41b5f3c3c0a2babcddc51a5d5d1ff06de66a89edf72"
+  },
+  "reviewer_requested": "/root/r25_blind_checkpoint_source; did not implement repair",
+  "first_repair_source_preimages": "/mnt/extdrive/workdir/htt_open_data/r25_future_helper_repair/before",
+  "actual_independent_HOLD": "/mnt/extdrive/workdir/htt_open_data/r25_future_helper_repair/helper_source_review_e6b.json",
+  "first_failure": {
+    "raw": "/mnt/extdrive/workdir/htt_open_data/r25_future_helper_repair/PROGRESS_BEFORE.log",
+    "structured": "/mnt/extdrive/workdir/htt_open_data/r25_future_helper_repair/PROGRESS_BEFORE.json",
+    "outcome": "old receipt seal changed after second positive progress; abc->abcde->abcdef,2actual attempts"
+  },
+  "changes": [
+    "Per-invocation versioned product receipt working path, never reopened by subsequent acquire; immutable legacy and prior version bytes retained. Latest version discovered without a mutable pointer. All helper receipt selection/status writes use the actual version path.",
+    "Grant validates every worker.raw_evidence/host.raw_evidence/process_observation seal before any resumed writes.",
+    "Tests write only designated external receipts/scratch; previous author receipts untouched.",
+    "Two actual helper/controlled local Python-transport subprocess cycles exercise real controller/checkpoint/prepare/ACK/finalize flow; unique per-cycle dispatch/tool artifacts, immutable bound legacy receipt and all earlier source/raw/attempt records preserved."
+  ],
+  "patch": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r25_future_helper_repair/SOURCE.patch",
+    "sha256": "241ce41c60cc72f19891c5f9cb9076c18619bf796ac63637a56a59a7aba80243"
+  },
+  "test_commands": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/mnt/extdrive/workdir R25_TEST_SCRATCH=/mnt/extdrive/workdir/htt_open_data/r25_future_helper_repair R25_TEST_RECEIPT=/mnt/extdrive/workdir/htt_open_data/r25_future_helper_repair/UNIT_FINAL_RECEIPT.json /usr/bin/time -p timeout 90s python3 docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/test_cooperative_resume.py",
+      "log": "/mnt/extdrive/workdir/htt_open_data/r25_future_helper_repair/UNIT_FINAL.log",
+      "receipt": "/mnt/extdrive/workdir/htt_open_data/r25_future_helper_repair/UNIT_FINAL_RECEIPT.json",
+      "result": "9 fixture tests PASS; 8192B pipe and262159B real stdout, sticky request, exact prefix, actual-start/drain failures retained"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/mnt/extdrive/workdir PYTHONPATH=scripts/codex_harness R25_TEST_RECEIPT=/mnt/extdrive/workdir/htt_open_data/r25_future_helper_repair/INTEGRATION_FINAL_02_RECEIPT.json /usr/bin/time -p timeout 90s python3 docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/test_cooperative_integration.py",
+      "log": "/mnt/extdrive/workdir/htt_open_data/r25_future_helper_repair/INTEGRATION_FINAL_02.log",
+      "receipt": "/mnt/extdrive/workdir/htt_open_data/r25_future_helper_repair/INTEGRATION_FINAL_02_RECEIPT.json",
+      "result": "No-op plus3initial-grant corruption falsifiers plus2actual progressing helper/controller cycles PASS",
+      "wall_seconds": 7.51
+    }
+  ],
+  "integration_result": {
+    "status": "PASS",
+    "scope": "Controlled tiny fixture only; no production acquisition or review authority",
+    "source_hashes": {
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_resume.py": "bf78a16de4648a37044049dae0577a4b63e3eee6789c4dd9a4d0387e183a085f",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_engine.py": "62a197931b88dc20af2cc41b5f3c3c0a2babcddc51a5d5d1ff06de66a89edf72"
+    },
+    "actual_fixture_child_pid": 593492,
+    "actual_fixture_child_exit": 0,
+    "actual_helper_stdout_bytes": 0,
+    "actual_helper_stderr_bytes": 0,
+    "new_transfer_count": 0,
+    "corrupted_bound_evidence_rejected": [
+      "worker_raw",
+      "host_raw",
+      "host_process_observation"
+    ],
+    "progress_cycles": [
+      {
+        "sequence": 2,
+        "actual_helper_pid": 593586,
+        "actual_helper_exit": 0,
+        "cumulative_controlled_transfers": 1,
+        "retained_prefix": "abcde",
+        "versioned_receipts": 1,
+        "controller_accepted": true,
+        "prior_seals_preserved": true
+      },
+      {
+        "sequence": 3,
+        "actual_helper_pid": 593907,
+        "actual_helper_exit": 0,
+        "cumulative_controlled_transfers": 2,
+        "retained_prefix": "abcdef",
+        "versioned_receipts": 2,
+        "controller_accepted": true,
+        "prior_seals_preserved": true
+      }
+    ],
+    "prior_attempts_preserved": true,
+    "prior_completed_exact": true,
+    "prior_partial_exact": true,
+    "all_source_refs_closed": true,
+    "prepared_handoff_complete": false,
+    "explicit_next_sequence": 2,
+    "actual_controller_next_checkpoint_accepted": true
+  },
+  "mechanical_checks": {
+    "python_AST": "PASS",
+    "whitespace_and_final_newline": "PASS",
+    "executed_helper_source_hashes_match_frozen_candidate": "PASS"
+  },
+  "reproducer_note": "Preserved reviewer script copied; adapted reproduction selects result.product_receipt_path because fixed receipt file is no longer overwritten. Original script/result preserved; actual controller/process integration is decisive.",
+  "limits": "Only tiny local fixture subprocesses, no network/curl execution, production process control, GB hashing/copies, new allocation/ultra or scientific numerical execution. All tests capped90s, externalTMP and PYTHONDONTWRITEBYTECODE=1. No arbitrary new sciencebudget.",
+  "not_performed": [
+    "production helper activation or acquisition resume",
+    "original compute.py edits",
+    "production data/checkpoint/sourcearchive/receipt/pointer edits",
+    "controller/STATE edits",
+    "original earliercontract edits",
+    "Git actions"
+  ],
+  "interpretation": "Source-only prescribed repair under same logical acquisition task; original native acquisition author remains the sole actual future resumer. Independent source closeout required before actual helper use."
+}

@@ -1,0 +1,60 @@
+--- original/REPORT.md
++++ current/REPORT.md
+@@ -14,7 +14,7 @@
+ 
+ For any target frequency functional `x_a(s)=aᵀs`, the finite-dimensional theorem is `x_a` identified from `y=Ms` iff `ker M ⊆ ker x_a`, equivalently `x_a=KM` for some `K`. For a nonzero row, `P_ker=I−wwᵀ/(wᵀw)`. Set `h=P_ker a`. Then `wᵀh=0` and `aᵀh=hᵀh`; `s₀=0` and `s₁=h` have identical compressed output but different target contrast when `h≠0`. The four exact witnesses in `RESULT.json` use original decimal strings, parsed as rationals, for the 30−44 GHz contrast. They give the seven rational components of `h`, exact `wᵀh=0`, exact `aᵀh−hᵀh=0`, and independent 80-digit decimal residuals. Their full-tensor versions place this seven-vector at any one harmonic coordinate and zero elsewhere.
+ 
+-Every four-row analysis includes all seven unit-frequency and all 21 pair-difference targets: 112 targets total. For each, the result stores the target, Euclidean retained and lost projection norms and fractions, squared fractions, a seven-coordinate `(s₀,s₁)` witness, and an independent least-squares residual. The fractions use a declared Euclidean metric on the seven processed coordinates; they are **computational coordinate measures**, sensitive to coordinate scaling, not a foreground amplitude or statistical confidence. Among pair contrasts, the smallest lost norm fraction is about 0.4791 for E2/E3 (30−143 GHz) and 0.6796 for B2/B3 (30−143 GHz). The largest is about 0.999913 for E2/E3 (217−353 GHz) and 0.999969 for B2/B3 (44−217 GHz). Every listed unit or pair contrast has a nonzero lost component, so none is exactly recoverable from its single released row under this carrier definition. The accompanying figure displays all 21 pair losses for all four rows.
++Every four-row analysis includes all seven unit-frequency and all 21 pair-difference targets: 112 targets total. For each, the result stores the target, Euclidean retained and lost projection norms and fractions, squared fractions, a seven-coordinate `(s₀,s₁)` witness, and an independent least-squares residual. The fractions use a declared Euclidean metric on the seven processed coordinates; they are **computational coordinate measures**, sensitive to coordinate scaling, not a foreground amplitude or statistical confidence. Among pair contrasts, the smallest lost norm fraction is about 0.7479 for E2/E3 (30−143 GHz) and 0.8169 for B2/B3 (30−143 GHz). The largest is about 0.999913 for E2/E3 (217−353 GHz) and 0.999969 for B2/B3 (44−217 GHz). Every listed unit or pair contrast has a nonzero lost component, so none is exactly recoverable from its single released row under this carrier definition. The accompanying figure displays all 21 pair losses for all four rows.
+ 
+ ## Formalism boundary
+ 
+--- original/MANIFEST.json
++++ current/MANIFEST.json
+@@ -63,7 +63,7 @@
+       "size_bytes": 34280
+     },
+     "REPORT.md": {
+-      "sha256": "53e1b062b5fb063cb5902e2ce2caea8337223d82c603dec66c01de5a00f5b0a4",
++      "sha256": "a45eaa0162bc6ce6d771026411b41022366ad6f88d1a04d9b1d737f8edf9de78",
+       "size_bytes": 6936
+     },
+     "RAW_RECEIPT.json": {
+--- original/RETURN.json
++++ current/RETURN.json
+@@ -1,12 +1,12 @@
+ {
+   "task_id": "R25-SMICA-SPECTRAL-NULLSPACE",
+-  "packet_id": "ace2f2a19bcdf860f5f64a416beab68eb8a9efc742241ac1acce1ad68bd26ee9",
++  "packet_id": "93531c756f145f01059fad1db2ad7e5f2c2f84d90f3797adb27cd54dfc7ada69",
+   "input_identity": "sha256:69ad48a48c5f61a5314050a45077bde99af83e97ffe9b8ed270533ee9368710a",
+   "agent_id": "/root/rc_ace2f2a19bcdf860",
+-  "candidate_identity": "sha256:4faba983677d56b5d12705a77c0fea498bd3b3263000653ee8151462e3d064d0",
++  "candidate_identity": "sha256:d89b6c381c6987ac5051b77bcd053aa5a835764718e196735c5434fc94eaace9",
+   "manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/MANIFEST.json",
+-  "raw_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/RAW_RECEIPT.json",
+-  "outcome": "success_candidate_pending_independent_review",
++  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r25_smica_spectral_nullspace/report_repair_93531c756f145f01/REPAIR_RAW_RECEIPT.json",
++  "outcome": "success",
+   "validation": {
+     "production_exit": 0,
+     "production_wall_seconds": 23.122195024974644,
+@@ -20,7 +20,16 @@
+     "targets_per_operator": 28,
+     "exact_witnesses": 4,
+     "observed_runtime": "UNKNOWN",
+-    "original_acceptance": "UNCHANGED"
++    "original_acceptance": "UNCHANGED",
++    "repair_issue": "REPORT_NUMERICAL_SUMMARY_MISMATCH",
++    "report_minima_corrected": true,
++    "report_sha256": "a45eaa0162bc6ce6d771026411b41022366ad6f88d1a04d9b1d737f8edf9de78",
++    "preserved_numeric_and_raw_hashes": true,
++    "production_reruns": 0,
++    "numeric_test_reruns": 0,
++    "independent_targeted_closeout": "PENDING"
+   },
+-  "qualified_products": []
++  "qualified_products": [],
++  "base_packet_id": "ace2f2a19bcdf860f5f64a416beab68eb8a9efc742241ac1acce1ad68bd26ee9",
++  "base_candidate_identity": "sha256:4faba983677d56b5d12705a77c0fea498bd3b3263000653ee8151462e3d064d0"
+ }

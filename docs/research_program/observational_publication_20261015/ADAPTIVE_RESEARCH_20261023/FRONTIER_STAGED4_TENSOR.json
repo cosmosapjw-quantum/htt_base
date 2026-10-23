@@ -1,0 +1,50 @@
+{
+  "frontier_id": "R25-PR3-STAGED4-TENSOR-DELTA",
+  "status": "PROPOSAL_NOT_APPENDED",
+  "tasks": [
+    {
+      "id": "R25-PR3-STAGED4-TENSOR-CONTRAST",
+      "kind": "numeric",
+      "goal": "What full delivered native E2/E3/B2/B3 carriers and pairwise contrasts are present at30/44/70/100GHz under one common validity-only selected support?",
+      "acceptance": "One source-bound candidate: four actual product qualification decisions, common validity-only S4, native spin2 transforms with independent low-order controls, full96 carrier/fullSTF and six full24-coordinate contrasts; computational frequency CDF only with explicit metric; preserve parent acquisition and original acceptances",
+      "input_identity": "sha256:ff5db155e8266b4a913ceb48e69b60d6a6356928940305cd2d28d82fc3f690e5",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-PR3-STAGED4-TENSOR-CONTRAST_INPUT.json",
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-PR3-FREQUENCY-ACQUIRE_INPUT.json",
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-PR3-FREQUENCY-TENSOR_DRAFT.json",
+        "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/ORIGINAL_SELECTED_SUPPORT_RESPONSE.npz",
+        "htt/obsstat/planck_lowell_irrep_projection.py",
+        "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency/LFI_SkyMap_030-BPassCorrected_1024_R3.00_full.fits.receipt.json",
+        "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency/LFI_SkyMap_044-BPassCorrected_1024_R3.00_full.fits.receipt.json",
+        "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency/LFI_SkyMap_070-BPassCorrected_1024_R3.00_full.fits.receipt.json",
+        "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency/HFI_SkyMap_100_2048_R3.01_full.fits.receipt.json",
+        "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency/LFI_SkyMap_030-BPassCorrected_1024_R3.00_full.fits.headers.json",
+        "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency/LFI_SkyMap_044-BPassCorrected_1024_R3.00_full.fits.headers.json",
+        "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency/LFI_SkyMap_070-BPassCorrected_1024_R3.00_full.fits.headers.json",
+        "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency/HFI_SkyMap_100_2048_R3.01_full.fits.headers.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_tensor_staged_30_44_70_100"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "approved_repair_id": null,
+      "requires": {
+        "all": []
+      },
+      "semantic_delta": {
+        "kind": "observable",
+        "before": {
+          "observable": "Compressed SMICA tensor views and incomplete all-seven frequency acquisition; no actual common-support four-native-map full tensor carrier"
+        },
+        "after": {
+          "observable": "Actual30/44/70/100GHz native full E2/E3/B2/B3 carriers on S4 plus all six24-coordinate contrasts",
+          "method": "Per-product qualification inside one coherent source-bound stage, native spin2 projection and independent quadrature controls"
+        },
+        "discriminator": "Measure deterministic delivered-frequency tensor differences lost by compression without waiting for unrelated incomplete frequencies or asserting a physical foreground law",
+        "scope": "New four-frequency descriptive stage of unchanged broader question; no new original enabling/dependency edges, no old attempt reset or ultra"
+      }
+    }
+  ]
+}

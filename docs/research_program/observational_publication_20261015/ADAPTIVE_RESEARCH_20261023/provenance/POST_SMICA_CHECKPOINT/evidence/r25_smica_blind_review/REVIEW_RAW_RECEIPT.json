@@ -1,0 +1,290 @@
+{
+  "task_id": "R25-SMICA-SPECTRAL-NULLSPACE",
+  "packet_id": "81c1e4991994a7d20b47d59459ee3909802f21e8de17eb2a7bd0d151b41a935e",
+  "input_identity": "sha256:69ad48a48c5f61a5314050a45077bde99af83e97ffe9b8ed270533ee9368710a",
+  "candidate_identity": "sha256:4faba983677d56b5d12705a77c0fea498bd3b3263000653ee8151462e3d064d0",
+  "agent_id": "/root/rc_81c1e4991994a7d2",
+  "independent_check": {
+    "check": "independent_no_candidate_import",
+    "started_utc": "2026-10-23T11:45:36.878276+00:00",
+    "ended_utc": "2026-10-23T11:45:39.863665+00:00",
+    "wall_seconds": 2.9854109790176153,
+    "peak_rss_kib": 40596,
+    "candidate_identity": "sha256:4faba983677d56b5d12705a77c0fea498bd3b3263000653ee8151462e3d064d0",
+    "source_hashes_verified": true,
+    "candidate_file_hashes_verified": true,
+    "raw_evidence_hashes_verified": true,
+    "targets_verified": 112,
+    "exact_witnesses_verified": 4,
+    "independent_loss_method": "exact pairwise minors via Lagrange identity; QR kernel projection crosscheck",
+    "max_scalar_comparison_error": 4.440892098500626e-16,
+    "max_float_annihilation": 1.5579985218616699e-16,
+    "precision80_checks": {
+      "E2": {
+        "w_dot_h": "1.91E-81",
+        "a_dot_h_minus_h_dot_h": "0E-79",
+        "a_dot_h_positive": true
+      },
+      "E3": {
+        "w_dot_h": "2.28E-81",
+        "a_dot_h_minus_h_dot_h": "1E-79",
+        "a_dot_h_positive": true
+      },
+      "B2": {
+        "w_dot_h": "2.78E-81",
+        "a_dot_h_minus_h_dot_h": "0E-79",
+        "a_dot_h_positive": true
+      },
+      "B3": {
+        "w_dot_h": "2.67E-81",
+        "a_dot_h_minus_h_dot_h": "0E-79",
+        "a_dot_h_positive": true
+      }
+    },
+    "permutations_checked_per_operator": 5040,
+    "tensor_shape": [
+      24,
+      168
+    ],
+    "exact_rank": 24,
+    "exact_nullity": 144,
+    "independent_basis_vectors": 144,
+    "rank_proof": "24 pivot columns form a nonsingular diagonal minor; 144 basis vectors have distinct free coordinates",
+    "singular_value_range": [
+      0.5809880821902655,
+      0.6737023566592429
+    ],
+    "identified_fixture": "L=K M for nonconstant K; all 144 kernel columns annihilated",
+    "rank_zero_fixture": "zero row loses every nonzero target; no division",
+    "pair_extrema": {
+      "E2": {
+        "minimum": [
+          0.7479144952627661,
+          "contrast_30_143"
+        ],
+        "maximum": [
+          0.9999126413493474,
+          "contrast_217_353"
+        ]
+      },
+      "E3": {
+        "minimum": [
+          0.7479083726653117,
+          "contrast_30_143"
+        ],
+        "maximum": [
+          0.9999126269536976,
+          "contrast_217_353"
+        ]
+      },
+      "B2": {
+        "minimum": [
+          0.8168716371173212,
+          "contrast_30_143"
+        ],
+        "maximum": [
+          0.9999689184287217,
+          "contrast_44_217"
+        ]
+      },
+      "B3": {
+        "minimum": [
+          0.816877300665727,
+          "contrast_30_143"
+        ],
+        "maximum": [
+          0.9999689326216457,
+          "contrast_44_217"
+        ]
+      }
+    },
+    "exit_code": 0
+  },
+  "seals": {
+    "input": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-SMICA-SPECTRAL-NULLSPACE_INPUT.json",
+      "sha256": "69ad48a48c5f61a5314050a45077bde99af83e97ffe9b8ed270533ee9368710a",
+      "size_bytes": 4363
+    },
+    "candidate_manifest": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/MANIFEST.json",
+      "sha256": "4faba983677d56b5d12705a77c0fea498bd3b3263000653ee8151462e3d064d0",
+      "size_bytes": 3374
+    },
+    "candidate_files": {
+      "compute.py": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/compute.py",
+        "sha256": "801f9db6a05f77f71574694ff26afc6daa7c558a16337e843cbac84ceb28a40d",
+        "size_bytes": 10780
+      },
+      "test_compute.py": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/test_compute.py",
+        "sha256": "3f4f06de96aaf34237ea9b3180f0d8804919893d333414846e67787e1cadc948",
+        "size_bytes": 3729
+      },
+      "RESULT.json": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/RESULT.json",
+        "sha256": "075fa5d6a54e29afec4824c935b1056e62fa40e4531bbf000d100c611ad8cc15",
+        "size_bytes": 165309
+      },
+      "figure.png": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/figure.png",
+        "sha256": "bca8ba34e8803bae96dd9110536ce2c35148831092a4f440d6339cf2f5af3373",
+        "size_bytes": 34280
+      },
+      "REPORT.md": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/REPORT.md",
+        "sha256": "53e1b062b5fb063cb5902e2ce2caea8337223d82c603dec66c01de5a00f5b0a4",
+        "size_bytes": 6936
+      },
+      "RAW_RECEIPT.json": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/RAW_RECEIPT.json",
+        "sha256": "ab825ad7c6bff26af8b9e80d328bfb5d508b4f384fbbeae7dcbd50c80139489e",
+        "size_bytes": 3776
+      }
+    },
+    "source_archive": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/weights/COM_Code_SMICA-weights-propagation_R3.00.tar.gz",
+      "sha256": "044ec9bed746ae745ad35a8b6ccf6e603f546083fec328e9c64d866ac9221f93",
+      "size_bytes": 74625775
+    },
+    "raw_files": {
+      "production1.stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r25_smica_spectral_nullspace/production1.stdout",
+        "sha256": "17953e6229bc0a02c8549f4888343da5eba2ece6d8a47f3629c516fbefd18589",
+        "size_bytes": 88
+      },
+      "production1.stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r25_smica_spectral_nullspace/production1.stderr",
+        "sha256": "76336e260164ed00f14705aaf95bc5614667269c8cb385c7f484b6600a06d117",
+        "size_bytes": 442
+      },
+      "production1.receipt.json": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r25_smica_spectral_nullspace/production1.receipt.json",
+        "sha256": "74987126dec1115530904dd732fb348da927fed19ce5264ffcb1371c2547055b",
+        "size_bytes": 634
+      },
+      "tests1.stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r25_smica_spectral_nullspace/tests1.stdout",
+        "sha256": "76b9bb31a1001b4d50ceb378f08067c6a3bf34a3c0e0a37028e444db8f046ab5",
+        "size_bytes": 98
+      },
+      "tests1.stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r25_smica_spectral_nullspace/tests1.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size_bytes": 0
+      },
+      "tests1.receipt.json": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r25_smica_spectral_nullspace/tests1.receipt.json",
+        "sha256": "5603185b68d69456d25ed465fcb9d43782d7bd69ad5187ce26e10f34e49256ed",
+        "size_bytes": 663
+      }
+    },
+    "return": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/RETURN.json",
+      "sha256": "5fe531e2f449e86e652471bfcb76f080d97fa47bb085af4650f3762b8fa2507a",
+      "size_bytes": 1343
+    },
+    "started_utc": "2026-10-23T11:47:06.411582+00:00",
+    "ended_utc": "2026-10-23T11:47:10.716811+00:00",
+    "wall_seconds": 4.305248711956665
+  },
+  "immediate_pre_return_seals_match": true,
+  "immediate_pre_return_seal_wall_seconds": 1.3205541737843305,
+  "immediate_pre_return_utc": "2026-10-23T11:48:21.176172+00:00",
+  "findings": [
+    {
+      "code": "REPORT_NUMERICAL_SUMMARY_MISMATCH",
+      "input_identity": "sha256:69ad48a48c5f61a5314050a45077bde99af83e97ffe9b8ed270533ee9368710a",
+      "substantive": true,
+      "severity": "medium",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/REPORT.md",
+      "line": 17,
+      "description": "Report understates the minimum pair-contrast lost norm fraction while RESULT.json and figure.png contain the correct quantity.",
+      "reported": {
+        "E2_E3": 0.4791,
+        "B2_B3": 0.6796
+      },
+      "counterexample": {
+        "E2": {
+          "minimum": [
+            0.7479144952627661,
+            "contrast_30_143"
+          ],
+          "maximum": [
+            0.9999126413493474,
+            "contrast_217_353"
+          ]
+        },
+        "E3": {
+          "minimum": [
+            0.7479083726653117,
+            "contrast_30_143"
+          ],
+          "maximum": [
+            0.9999126269536976,
+            "contrast_217_353"
+          ]
+        },
+        "B2": {
+          "minimum": [
+            0.8168716371173212,
+            "contrast_30_143"
+          ],
+          "maximum": [
+            0.9999689184287217,
+            "contrast_44_217"
+          ]
+        },
+        "B3": {
+          "minimum": [
+            0.816877300665727,
+            "contrast_30_143"
+          ],
+          "maximum": [
+            0.9999689326216457,
+            "contrast_44_217"
+          ]
+        }
+      },
+      "consequence": "The candidate prose gives a materially incorrect quantitative interpretation of correctly computed coordinate losses; the complete result pack is not ready for scoped acceptance.",
+      "minimal_falsifier": "Read the minimum lost_fraction among contrast_* targets in each RESULT.json operator, or evaluate sqrt(sum_{i<j}(w_i*a_j-w_j*a_i)^2 / ((w.w)*(a.a))) from frozen decimal weights for a=e_30-e_143."
+    }
+  ],
+  "first_review_failure": "REPORT_NUMERICAL_SUMMARY_MISMATCH",
+  "execution": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 timeout 60s python check_independent.py",
+    "exit_code": 0,
+    "script": "/mnt/extdrive/workdir/htt_open_data/r25_smica_blind_review/check_independent.py",
+    "stdout": "/mnt/extdrive/workdir/htt_open_data/r25_smica_blind_review/check_independent.stdout",
+    "stderr": "/mnt/extdrive/workdir/htt_open_data/r25_smica_blind_review/check_independent.stderr",
+    "production_rerun": false
+  },
+  "runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN"
+  },
+  "artifacts": {
+    "check_independent.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_smica_blind_review/check_independent.py",
+      "sha256": "aaf6a4e0896ab05972542e5ae25f4531c3088983c091ecfc56e85588574bc000",
+      "size_bytes": 10661
+    },
+    "check_independent.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_smica_blind_review/check_independent.stdout",
+      "sha256": "e0a1cb561f1aea243a27dcf8116bc61ae5f01fe6023ac18ab1d7a201576044d5",
+      "size_bytes": 2513
+    },
+    "check_independent.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_smica_blind_review/check_independent.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "FINAL_SEALS.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_smica_blind_review/FINAL_SEALS.json",
+      "sha256": "05c65dbb836acae5a2fcac5e61000c0fb69c340dfcb71d9015e92734a829d9af",
+      "size_bytes": 4738
+    }
+  }
+}

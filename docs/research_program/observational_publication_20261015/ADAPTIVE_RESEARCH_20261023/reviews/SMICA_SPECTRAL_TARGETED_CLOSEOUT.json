@@ -1,0 +1,79 @@
+{
+  "packet_id": "fd2e685ec5a644c26e9fe30b739ede21c27ce399b7e6cca0a6d2d34e8217fade",
+  "task_id": "R25-SMICA-SPECTRAL-NULLSPACE",
+  "input_identity": "sha256:69ad48a48c5f61a5314050a45077bde99af83e97ffe9b8ed270533ee9368710a",
+  "candidate_identity": "sha256:d89b6c381c6987ac5051b77bcd053aa5a835764718e196735c5434fc94eaace9",
+  "agent_id": "/root/rc_fd2e685ec5a644c2",
+  "outcome": "success",
+  "acceptance_met": true,
+  "verdict": "SCOPED_PASS_TARGETED_CLOSEOUT",
+  "acceptance_scope": "Unchanged conditional R25 fixed released-row information audit acceptance only",
+  "findings": [],
+  "closed_issue": "REPORT_NUMERICAL_SUMMARY_MISMATCH",
+  "qualified_products": [],
+  "validation_evidence": {
+    "affected_change_checks": "PASS",
+    "corrected_report_line": 17,
+    "pair_minima": {
+      "E2": {
+        "value": 0.7479144952627661,
+        "target": "contrast_30_143",
+        "reported_rounding": "0.7479"
+      },
+      "E3": {
+        "value": 0.7479083726653117,
+        "target": "contrast_30_143",
+        "reported_rounding": "0.7479"
+      },
+      "B2": {
+        "value": 0.8168716371173212,
+        "target": "contrast_30_143",
+        "reported_rounding": "0.8169"
+      },
+      "B3": {
+        "value": 0.816877300665727,
+        "target": "contrast_30_143",
+        "reported_rounding": "0.8169"
+      }
+    },
+    "full_stored_result_inspection": "All 21 pair targets and 7 unit targets present in each of E2/E3/B2/B3; pair extrema match retained independently derived values.",
+    "diff_scope": "Only two minimum-number substitutions in REPORT.md; only its hash changes in MANIFEST.json; RETURN updates repair identity, receipt, base links and targeted metadata while retaining all original validation values.",
+    "unchanged_numeric_files": [
+      "compute.py",
+      "test_compute.py",
+      "RESULT.json",
+      "figure.png",
+      "RAW_RECEIPT.json"
+    ],
+    "identity_checks": "Frozen input, repaired/base manifests, all candidate files, archive, three source members, six production/test raw files, archived originals, and prior independent review artifacts match expected identities.",
+    "retained_numeric_component": {
+      "method": "Unchanged independently checked numerical evidence reused; script and stdout inspected, identities reverified; no numerical execution repeated",
+      "targets": 112,
+      "exact_witnesses": 4,
+      "tensor_shape": [
+        24,
+        168
+      ],
+      "rank": 24,
+      "nullity": 144,
+      "independent_kernel_vectors": 144,
+      "original_review_blocker_preserved": "REPORT_NUMERICAL_SUMMARY_MISMATCH",
+      "original_review_verdict_not_promoted": true
+    },
+    "production_reruns": 0,
+    "numeric_test_reruns": 0,
+    "claim_ceiling": "C0 source-bound fixed linear compression information audit only; physical foreground amplitude, physical null calibration, native atlas and original publication acceptance remain unpromoted.",
+    "original_acceptance": "UNCHANGED",
+    "historical_states": "48 tasks, 17/42, alternate18/42, R9, one-use allocations and solver/ODE boundaries unchanged.",
+    "immediate_return_closure_verified": true
+  },
+  "runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "transport_selected_model": "gpt-6-astra",
+    "transport_selected_effort": "xhigh",
+    "observed_runtime": "UNKNOWN"
+  },
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r25_smica_targeted_closeout/REVIEW_RAW_RECEIPT.json",
+  "raw_receipt_sha256": "022df1fc8b7b235039a4a6b8cebd3b1e33b19ffb72b537b6d76971769f080297"
+}

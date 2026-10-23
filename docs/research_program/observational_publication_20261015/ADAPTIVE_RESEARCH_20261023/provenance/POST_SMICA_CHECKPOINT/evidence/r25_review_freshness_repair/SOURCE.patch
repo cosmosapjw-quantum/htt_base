@@ -1,0 +1,244 @@
+--- before/scripts/codex_harness/research_controller.py
++++ after/scripts/codex_harness/research_controller.py
+@@ -943,10 +943,10 @@
+             "note": "Scoped task acceptance never automatically promotes original scientific nodes."}
+ 
+ 
+-def _review_context(state: dict, task_id: str) -> dict | None:
++def _review_context(state: dict, task_id: str, *, allow_running: bool = False) -> dict | None:
+     """Prove the narrow read-only slot from declared, resolved local scopes."""
+     task = state["tasks"][task_id]
+-    if (task["phase"] != "review" or task["state"] not in {"ready", "planned"}
++    if (task["phase"] != "review" or task["state"] not in ({"ready", "planned", "running"} if allow_running else {"ready", "planned"})
+             or not task.get("candidate_identity")):
+         return None
+     done = {key for key, row in state["tasks"].items() if row["state"] == "completed"}
+@@ -1065,19 +1065,43 @@
+         if binding is None:
+             return None
+         if binding.suffix.lower() == ".json":
+-            _, manifest = metadata(binding)
+-            entries = manifest.get("products_sha256", manifest.get("products", {}))
+-            if not isinstance(entries, dict):
++            manifest_raw, manifest = metadata(binding)
++            if hashlib.sha256(manifest_raw).hexdigest() != expected:
+                 return None
+-            if entries and (manifest.get("task_id", task_id) != task_id
+-                            or manifest.get("input_identity", spec["input_identity"]) != spec["input_identity"]):
+-                return None
+-            for name, record in entries.items():
+-                path = Path(local(name, True, binding.parent))
+-                expected_product = record.get("sha256") if isinstance(record, dict) else record
+-                if content_seal(path) != expected_product:
++            declarations = {}
++            for inventory in ("files", "products_sha256", "products"):
++                if inventory not in manifest:
++                    continue
++                entries = manifest[inventory]
++                if isinstance(entries, dict):
++                    entries = list(entries.items())
++                elif isinstance(entries, list) and inventory != "products_sha256":
++                    if not all(isinstance(row, dict) and "path" in row for row in entries):
++                        return None
++                    entries = [(row["path"], row) for row in entries]
++                else:
+                     return None
+-                products.add(path)
++                if entries and (manifest.get("task_id", task_id) != task_id
++                                or manifest.get("input_identity", spec["input_identity"]) != spec["input_identity"]):
++                    return None
++                for name, record in entries:
++                    path = Path(local(name, True, binding.parent))
++                    declared_hash = record.get("sha256") if isinstance(record, dict) else record
++                    if not isinstance(declared_hash, str) or len(declared_hash) != 64:
++                        return None
++                    if str(path) in declarations and declarations[str(path)] != declared_hash:
++                        return None
++                    declarations[str(path)] = declared_hash
++                    if isinstance(record, dict):
++                        if "path" in record and Path(local(record["path"], True, binding.parent)) != path:
++                            return None
++                        for size_key in ("size_bytes", "bytes"):
++                            if size_key in record and (type(record[size_key]) is not int
++                                                       or record[size_key] != path.stat().st_size):
++                                return None
++                    if content_seal(path) != declared_hash:
++                        return None
++                    products.add(path)
+         for path in products:
+             content_seal(path)
+         reads.update(candidate_seals)
+@@ -1107,8 +1131,8 @@
+         return None
+ 
+ 
+-def _review_context_matches(state: dict, packet: dict) -> bool:
+-    context = _review_context(state, packet["task_id"])
++def _review_context_matches(state: dict, packet: dict, *, allow_running: bool = False) -> bool:
++    context = _review_context(state, packet["task_id"], allow_running=allow_running)
+     expected = packet.get("review_context", {})
+     return bool(context and context["scope"] == expected.get("scope")
+                 and (context["acquisition"] is None or context["acquisition"] == expected.get("acquisition"))
+@@ -1493,6 +1517,10 @@
+     require(result.get("task_id") == p["task_id"] and result.get("input_identity") == p["input_identity"],
+             "stale task/input identity")
+     require(result.get("agent_id") == p["agent_id"], "result agent identity mismatch")
++    if p.get("review_only"):
++        require(p["phase"] == t["phase"] == "review"
++                and _review_context_matches(state, p, allow_running=True),
++                "review-only candidate/input context changed before outcome")
+     receipt = _receipt(result.get("raw_receipt", ""))
+     if p.get("continuation"):
+         continuation = p["continuation"]
+--- before/scripts/codex_harness/test_research_controller_frontier.py
++++ after/scripts/codex_harness/test_research_controller_frontier.py
+@@ -716,6 +716,149 @@
+                         rc.acknowledge(state, packet['packet_id'], 'fresh-manifest-reviewer')
+                     self.assertEqual(state, before)
+ 
++    def manifest_fixture(self, inventory="files", as_list=False):
++        import hashlib
++        state, acquisition = self.fixture(second=False)
++        row = state["tasks"]["CANDIDATE"]
++        directory = Path(row["spec"]["owned_paths"][0])
++        artifact = directory / "compute.py"
++        artifact.write_text("frozen implementation\n")
++        declaration = {"sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
++                       "size_bytes": artifact.stat().st_size}
++        entries = [{"path": artifact.name, **declaration}] if as_list else {artifact.name: declaration}
++        manifest = directory / "MANIFEST.json"
++        manifest.write_text(json.dumps({"task_id": "CANDIDATE", "input_identity": "input-v1",
++                                        inventory: entries}))
++        row.update(candidate_identity="sha256:" + hashlib.sha256(manifest.read_bytes()).hexdigest(),
++                   candidate_products=[])
++        return state, acquisition, artifact, manifest
++
++    def test_all_manifest_inventory_forms_unchanged_plan_ack_record(self):
++        for inventory, as_list in (("files", False), ("files", True),
++                                   ("products_sha256", False), ("products", False)):
++            with self.subTest(inventory=inventory, as_list=as_list):
++                state, _, artifact, _ = self.manifest_fixture(inventory, as_list)
++                packet = self.plan(state)
++                self.assertIn(str(artifact), packet["review_context"]["scope"]["candidate_seals"])
++                rc.acknowledge(state, packet["packet_id"], "actual-independent-reviewer")
++                self.result(state, packet, acceptance_met=True)
++                self.assertEqual(state["tasks"]["CANDIDATE"]["state"], "completed")
++
++    def test_all_manifest_inventories_mutation_or_removal_before_ack_rejects_atomically(self):
++        for inventory in ("files", "products_sha256", "products"):
++            for remove in (False, True):
++                with self.subTest(inventory=inventory, remove=remove):
++                    state, _, artifact, _ = self.manifest_fixture(inventory)
++                    packet = self.plan(state)
++                    if remove:
++                        artifact.unlink()
++                    else:
++                        artifact.write_text("changed implementation\n")
++                    before = copy.deepcopy(state)
++                    self.assertNotIn("spawn_args", rc.next_packet(state, POLICY, PROFILES, review_only=True))
++                    self.assertEqual(state, before)
++                    with self.assertRaises(rc.ControllerError):
++                        rc.acknowledge(state, packet["packet_id"], "actual-independent-reviewer")
++                    self.assertEqual(state, before)
++
++    def test_all_manifest_inventories_mutation_after_ack_rejects_outcome_atomically(self):
++        for inventory in ("files", "products_sha256", "products"):
++            for outcome in ("success", "blocker"):
++                with self.subTest(inventory=inventory, outcome=outcome):
++                    state, _, artifact, _ = self.manifest_fixture(inventory)
++                    packet = self.plan(state)
++                    rc.acknowledge(state, packet["packet_id"], "actual-independent-reviewer")
++                    artifact.write_text("changed after actual review ACK\n")
++                    before = copy.deepcopy(state)
++                    with self.assertRaises(rc.ControllerError):
++                        self.result(state, packet, outcome, acceptance_met=True, issue=self.issue())
++                    self.assertEqual(state, before)
++                    self.assertEqual(state["tasks"]["CANDIDATE"]["state"], "running")
++
++    def test_missing_malformed_candidate_or_changed_input_after_ack_rejects_outcome(self):
++        for change in ("remove", "malformed_manifest", "input"):
++            with self.subTest(change=change):
++                state, _, artifact, manifest = self.manifest_fixture()
++                packet = self.plan(state)
++                rc.acknowledge(state, packet["packet_id"], "actual-independent-reviewer")
++                if change == "remove":
++                    artifact.unlink()
++                elif change == "malformed_manifest":
++                    manifest.write_text("{malformed")
++                else:
++                    Path(state["tasks"]["CANDIDATE"]["spec"]["input_sources"][0]).write_text("{}")
++                before = copy.deepcopy(state)
++                with self.assertRaises(rc.ControllerError):
++                    self.result(state, packet, acceptance_met=True)
++                self.assertEqual(state, before)
++
++    def test_mixed_manifest_inventories_bind_every_file_and_reject_conflicts(self):
++        import hashlib
++        for conflict in (False, True):
++            state, _, artifact, manifest = self.manifest_fixture()
++            document = json.loads(manifest.read_text())
++            other = artifact.with_name("RESULT.txt")
++            other.write_text("independent result bytes\n")
++            document["products_sha256"] = {other.name: hashlib.sha256(other.read_bytes()).hexdigest()}
++            document["products"] = {artifact.name: {"sha256": "0" * 64 if conflict else
++                hashlib.sha256(artifact.read_bytes()).hexdigest()}}
++            manifest.write_text(json.dumps(document))
++            state["tasks"]["CANDIDATE"]["candidate_identity"] = "sha256:" + hashlib.sha256(manifest.read_bytes()).hexdigest()
++            if conflict:
++                before = copy.deepcopy(state)
++                self.assertNotIn("spawn_args", rc.next_packet(state, POLICY, PROFILES, review_only=True))
++                self.assertEqual(state, before)
++            else:
++                packet = self.plan(state)
++                seals = packet["review_context"]["scope"]["candidate_seals"]
++                self.assertTrue({str(artifact), str(other)} <= seals.keys())
++                # files and products must remain bound even when products_sha256 is present.
++                artifact.write_text("changed first inventory\n")
++                before = copy.deepcopy(state)
++                with self.assertRaises(rc.ControllerError):
++                    rc.acknowledge(state, packet["packet_id"], "actual-independent-reviewer")
++                self.assertEqual(state, before)
++
++    def test_malformed_present_inventory_cannot_hide_behind_another_valid_inventory(self):
++        import hashlib
++        for malformed in (None, "not-an-inventory", [{"sha256": "0" * 64}], {"compute.py": {"bytes": 1}}):
++            state, _, artifact, manifest = self.manifest_fixture("products_sha256")
++            document = json.loads(manifest.read_text())
++            document["files"] = malformed
++            manifest.write_text(json.dumps(document))
++            state["tasks"]["CANDIDATE"]["candidate_identity"] = "sha256:" + hashlib.sha256(manifest.read_bytes()).hexdigest()
++            before = copy.deepcopy(state)
++            self.assertNotIn("spawn_args", rc.next_packet(state, POLICY, PROFILES, review_only=True))
++            self.assertEqual(state, before)
++
++    def test_conflicting_embedded_path_or_size_declarations_rejects(self):
++        import hashlib
++        for conflict in ("path", "size_bytes", "bytes"):
++            state, _, artifact, manifest = self.manifest_fixture()
++            document = json.loads(manifest.read_text())
++            if conflict == "path":
++                other = artifact.with_name("DIFFERENT.txt")
++                other.write_text("different declared product")
++                document["files"][artifact.name]["path"] = other.name
++            else:
++                document["files"][artifact.name][conflict] = artifact.stat().st_size + 1
++            manifest.write_text(json.dumps(document))
++            state["tasks"]["CANDIDATE"]["candidate_identity"] = "sha256:" + hashlib.sha256(manifest.read_bytes()).hexdigest()
++            before = copy.deepcopy(state)
++            self.assertNotIn("spawn_args", rc.next_packet(state, POLICY, PROFILES, review_only=True))
++            self.assertEqual(state, before)
++
++    def test_ordinary_review_retains_existing_record_semantics(self):
++        state, _, artifact, _ = self.manifest_fixture()
++        state["tasks"]["Z-ACQUIRE"]["state"] = "completed"  # Fixture writer slot is free.
++        packet = rc.next_packet(state, POLICY, PROFILES)
++        self.assertEqual(packet["phase"], "review")
++        self.assertFalse(packet.get("review_only"))
++        rc.acknowledge(state, packet["packet_id"], "actual-independent-reviewer")
++        artifact.write_text("ordinary review compatibility fixture\n")
++        self.result(state, packet, acceptance_met=True)
++        self.assertEqual(state["tasks"]["CANDIDATE"]["state"], "completed")
++
+     def test_nested_contract_traversal_bound_waits_without_prose_scans(self):
+         state, _ = self.fixture(second=False)
+         contract = Path(state['tasks']['CANDIDATE']['spec']['input_sources'][0])

@@ -1,0 +1,116 @@
+{
+  "schema": "htt.cooperative_checkpoint_code_return/1",
+  "status": "FROZEN_FOR_FRESH_INDEPENDENT_SOURCE_REVIEW",
+  "candidate_identity": "2e2336620478969d4dfd39df475fa4f792eeefb7def4b9ae876624a2e336b6fe",
+  "base_commit": "e4dd81068f03d1ee52a6864b661a4104e6336147",
+  "source_hashes": {
+    "scripts/codex_harness/research_controller.py": "a394d854f8a0b90896e5e9649c056733999b06fce6b88292218a5688e7225495",
+    "scripts/codex_harness/test_research_controller_checkpoint.py": "172fc0015cd3de7ca034621476f37a91e0404b0209e6a0a8c50dc87df1914e34",
+    "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md": "174f31cf5c8064cabd2f1e7640ca2091504419fcaeaeebdd4a1ad53aed4d2d9d"
+  },
+  "requested_executor": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "observed_runtime": "UNKNOWN",
+  "contract_receipts": [
+    "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/reviews/COOPERATIVE_PROGRESS_AUDIT.json",
+    "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/reviews/COOPERATIVE_MIGRATION_CLARIFICATION.json"
+  ],
+  "frozen_at_utc": "2026-10-23T10:49:42.658867+00:00",
+  "source_before_hashes": {
+    "scripts/codex_harness/research_controller.py": "27adf2717c5f2ca192b6035af7d45d46b20822533c5b81470d29bffe746bd04e",
+    "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md": "941e8b4903266f7d3d1757920c0cec6ac421b24402d98df4bea3698d6d0a0338"
+  },
+  "patch_sha256": "bc7b1a39ee9af81a643453d4083b4265533dcfd0e2ab79c39705b36f4be4d76c",
+  "api": [
+    "acquisition_binding",
+    "checkpoint_acquisition",
+    "prepare_acquisition_resume",
+    "acknowledge_acquisition_resume"
+  ],
+  "behavior": "Explicit validated acquisition handoff to checkpointed state, durable resume_pending writer reservation, actual sameagent call ACK, then host sealed ACK grant before any worker write. Final result keeps original packet. No autoquiescence/processsignals/nativecall/daemon.",
+  "evidence_checks": "Typed complete worker/independent-host inventories and real stream-hashed source/attempt/product/partial/raw-evidence bytes; queue/PID/start/source/record freshness checks; no claims that a JSON completeness assertion proves actual missing processes. Host must perform actual OS/evidence observations.",
+  "tests": [
+    {
+      "command": "TMPDIR=/mnt/extdrive/workdir timeout 90s python3 -m unittest discover -s scripts/codex_harness -p test_research_controller_checkpoint.py -v",
+      "log": "FIRST_TESTS.log",
+      "result": "16 passed",
+      "wall_seconds": 9.283
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/mnt/extdrive/workdir /usr/bin/time -p timeout 90s python3 -m unittest discover -s scripts/codex_harness -p test_research_controller*.py -v",
+      "log": "REGRESSION_TESTS.log",
+      "result": "114 tests, 3 skips; no failure",
+      "suite_seconds": 15.922,
+      "wall_seconds": 16.03
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/mnt/extdrive/workdir /usr/bin/time -p timeout 90s python3 -m unittest discover -s scripts/codex_harness -p test_research_controller*.py -v",
+      "log": "FINAL_TESTS.log",
+      "result": "114 tests, 3 skips; no failure",
+      "suite_seconds": 15.431,
+      "wall_seconds": 15.74
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/mnt/extdrive/workdir PYTHONPATH=scripts/codex_harness /usr/bin/time -p timeout 90s python3 /mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch/adversarial_repro.py",
+      "log": "BLIND_REPRO_FINAL.log",
+      "result": "All four invalid transitions rejected; independent held SMICA discovery permitted with ACQUIRE excluded and fingerprint unchanged",
+      "wall_seconds": 2.49
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/mnt/extdrive/workdir /usr/bin/time -p timeout 90s python3 -m unittest discover -s scripts/codex_harness -p test_research_controller*.py -v",
+      "log": "REPAIRED_FINAL_TESTS.log",
+      "result": "120 tests, 3 historical-live-stage skips; PASS",
+      "suite_seconds": 13.629,
+      "wall_seconds": 13.98
+    }
+  ],
+  "skips": [
+    "Older live ready review inventory already transitioned",
+    "Older live independent review inventory transitioned",
+    "Production repair already acknowledged"
+  ],
+  "targeted_tests": 24,
+  "copied_live_named_consumer": "Existing R25-SMICA-SPECTRAL-NULLSPACE selected after valid checkpoint with unchanged input, without modifying priority/spec/task before selection; actual production file read-only",
+  "preservation": "All62 baseline task objects unchanged in copy; frozen campaign/packets/ultra/histories/cost fields preserved. Lifecycle sidecar and task.state only; adaptive fingerprint unchanged roundtrip and no new discovery packet. Duplicate calls do not launch or increment attempts.",
+  "bounded_checks": {
+    "source_and_newtest_whitespace": "PASS",
+    "git_diff_check": "PASS",
+    "python_ast": "PASS",
+    "all_three_cli_help": "PASS",
+    "context_tests": "Not rerun; hook/context source and delivery unaffected",
+    "science_tests_downloads_native_calls": "NONE"
+  },
+  "first_failures": "Actual blind four-counterexample failures preserved before repairs; additional global discovery suppression reproduced and corrected. Initial unit suite had passed and did not cover these defects.",
+  "not_performed": [
+    "production STATE/pointer changes",
+    "OS process observation/control/signals",
+    "actual acquisition yield/resume",
+    "actual SMICA dispatch/execution/review",
+    "source composition/historical receipt edits",
+    "commit/push"
+  ],
+  "limitations": [
+    "Source-only candidate requires fresh independent review, jointly with producer to check schema integration",
+    "Host must produce actual complete process/source/artifact/attempt observations, not fabricate schema-compliant labels",
+    "Actual accepted followup must WAIT for durable ACK and sealed grant before any writes",
+    "File hashing streams1MiB chunks; no scientific input size cap; actual hash cost accounted in lifecycle validation_wall_seconds",
+    "Lifecycle tests are not scientific admission or proof that live handoff occurred"
+  ],
+  "further_edits": "None until a concrete reviewer finding is assigned",
+  "first_candidate": {
+    "identity": "34fbfe0b02da62c1ddd391abaeda6d65c1de71c5fa6f58b93a89a93bfd6a9c4a",
+    "preserved": "first_candidate/",
+    "actual_blind_first_failure": "BLIND_FIRST_FAILURE.json",
+    "raw_before_reproduction": "BLIND_REPRO_BEFORE.log",
+    "raw_after_first_four_repairs": "BLIND_REPRO_AFTER.log"
+  },
+  "bounded_repairs": [
+    "Compare newly validated checkpoint receipts/snapshot/binding to immutable stored row on next/ordinary ACK/prepare/resume ACK",
+    "Revalidate all released checkpoint evidence at ordinary native ACK to close plan-to-ACK freshness gap",
+    "Compare newly validated resume plan/source/review binding to durably reserved plan at resume ACK",
+    "Stream first prior-size bytes of grown/new product against prior partial SHA256; preserve source release and prior source-ref inclusion; reject same-size replacement",
+    "Exclude checkpointed acquisition from adaptive eligible_branches, retain independent branch discovery under unchanged fingerprint/consumption rules"
+  ]
+}

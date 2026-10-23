@@ -1,0 +1,164 @@
+{
+  "schema": "htt.independent_helper_source_review/1",
+  "verdict": "SCOPED_PASS",
+  "scope": "Future cooperative acquisition helper source; no production activation, quiescence or scientific admission",
+  "candidate_identity": "04fd854dbc4a17dc560831955d8d3e9ac0a3d5121a4ab6408c00358ff71bae98",
+  "reviewer": "/root/r25_blind_checkpoint_source",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "task_id": "R25-PR3-FREQUENCY-ACQUIRE",
+  "packet_id": "014cb70b115b051a27cf126089c1e7f270363aa236d69320c2f777f738dca00d",
+  "input_identity": "sha256:ae7e2f0b136ec3dddcf3b9543f9ec91446587dc50c7908b93b3f17b77e014d9f",
+  "original_acquisition_agent": "/root/rc_014cb70b115b051a",
+  "source_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_resume.py": "bf78a16de4648a37044049dae0577a4b63e3eee6789c4dd9a4d0387e183a085f",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_engine.py": "62a197931b88dc20af2cc41b5f3c3c0a2babcddc51a5d5d1ff06de66a89edf72"
+  },
+  "test_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/test_cooperative_resume.py": "f77587002eeac78230395bd018c8dde866ad07d830a9339a2d9161f742edf66b",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/test_cooperative_integration.py": "6d431c842fd6d1e2630d70b1979be0d2790c9d4c1c579e50936bfdaa143e3667"
+  },
+  "findings": [],
+  "closed_P1_findings": [
+    {
+      "finding": "Repeated authorized progress invalidates old mutable product receipt seals",
+      "resolution": "Each acquire reserves a new versioned product receipt; legacy and earlier versions remain immutable; helper consistently reads and seals the current actual version",
+      "independent_evidence": "Two real fixture helper/controlled Python transport cycles advanced abc->abcde->abcdef; real controller accepted sequences2/3; earlier raw/source/attempt/dispatch/ACK seals, original packet and task attempt preserved; actual cumulative transport count1->2"
+    },
+    {
+      "finding": "Initial grant omitted worker/host raw_evidence and process_observation seals",
+      "resolution": "validate_grant checks every referenced worker/host raw file and the host process observation before execution",
+      "independent_evidence": "Three separately exercised corrupted-bound-evidence cases rejected with no newly created output paths"
+    }
+  ],
+  "prior_closed_findings_retained": [
+    "Dispatch/tool actual accepted-call binding and seals",
+    "Exact worker/host versus checkpoint wrapper snapshot binding",
+    "Exact initial partial artifact freshness",
+    "Complete source-reference and ordered attempt-history preservation",
+    "Actual-start callback prevents phantom attempts after sticky request",
+    "Explicit next-handoff sequence N+1 with unchanged original identities"
+  ],
+  "independent_tests": {
+    "focused_unit_checks": [
+      {
+        "test": "active_drain_8192B_pipe_262144B_JSON",
+        "status": "PASS",
+        "actual_pipe_bytes": 8192,
+        "actual_stdout_bytes": 262159
+      },
+      {
+        "test": "exact_once_and_interrupted_append_reconciliation",
+        "status": "PASS"
+      },
+      {
+        "test": "conflicting_overlap_preserved_and_rejected",
+        "status": "PASS"
+      },
+      {
+        "test": "sticky_request_blocks_retry_mirror_and_successor_launch",
+        "status": "PASS"
+      },
+      {
+        "test": "request_exact_binding_required",
+        "status": "PASS"
+      },
+      {
+        "test": "streaming_prior_prefix_rejects_same_size_overwrite",
+        "status": "PASS"
+      },
+      {
+        "test": "actual_start_boundary_no_phantom_attempt_after_inflight_request",
+        "status": "PASS",
+        "controlled_transfer_calls": 1,
+        "stored_actual_attempts": 1
+      },
+      {
+        "test": "started_identity_failure_retains_actual_attempt_and_bytes",
+        "status": "PASS"
+      },
+      {
+        "test": "started_drain_after_bytes_failure_retains_actual_attempt_and_bytes",
+        "status": "PASS"
+      }
+    ],
+    "integration": {
+      "status": "PASS",
+      "scope": "Controlled tiny fixture only; no production acquisition or review authority",
+      "source_hashes": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_resume.py": "bf78a16de4648a37044049dae0577a4b63e3eee6789c4dd9a4d0387e183a085f",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_engine.py": "62a197931b88dc20af2cc41b5f3c3c0a2babcddc51a5d5d1ff06de66a89edf72"
+      },
+      "actual_fixture_child_pid": 613635,
+      "actual_fixture_child_exit": 0,
+      "actual_helper_stdout_bytes": 0,
+      "actual_helper_stderr_bytes": 0,
+      "new_transfer_count": 0,
+      "corrupted_bound_evidence_rejected": [
+        "worker_raw",
+        "host_raw",
+        "host_process_observation"
+      ],
+      "progress_cycles": [
+        {
+          "sequence": 2,
+          "actual_helper_pid": 613986,
+          "actual_helper_exit": 0,
+          "cumulative_controlled_transfers": 1,
+          "retained_prefix": "abcde",
+          "versioned_receipts": 1,
+          "controller_accepted": true,
+          "prior_seals_preserved": true
+        },
+        {
+          "sequence": 3,
+          "actual_helper_pid": 614436,
+          "actual_helper_exit": 0,
+          "cumulative_controlled_transfers": 2,
+          "retained_prefix": "abcdef",
+          "versioned_receipts": 2,
+          "controller_accepted": true,
+          "prior_seals_preserved": true
+        }
+      ],
+      "prior_attempts_preserved": true,
+      "prior_completed_exact": true,
+      "prior_partial_exact": true,
+      "all_source_refs_closed": true,
+      "prepared_handoff_complete": false,
+      "explicit_next_sequence": 2,
+      "actual_controller_next_checkpoint_accepted": true
+    },
+    "additional_reviewer_reproducer": {
+      "script": "/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch/helper_adversarial_repro.py",
+      "control": "accepted",
+      "missing_tool_receipt": "rejected",
+      "changed_dispatch_receipt": "rejected",
+      "substituted_checkpoint_snapshot": "rejected",
+      "grown_initial_partial": "rejected"
+    },
+    "final_exact_source_and_test_hashes": "all four matched after tests"
+  },
+  "measured_closeout_wall_seconds": 185.567,
+  "wall_measurement_scope": "Elapsed reviewer time from completion of initial source/hash intake through final decision; includes source inspection and independent testing. Individual focused suite tool wall6.868384928s; integration/reproducer each completed under90s per-command timeout; exact individual durations not separately instrumented.",
+  "commands": [
+    "PYTHONDONTWRITEBYTECODE=1 TMPDIR=<external review scratch> R25_TEST_SCRATCH=<external review scratch> R25_TEST_RECEIPT=<external review scratch>/helper_closeout_unit_04fd.json timeout90s python test_cooperative_resume.py",
+    "PYTHONDONTWRITEBYTECODE=1 TMPDIR=<external review scratch> PYTHONPATH=scripts/codex_harness R25_TEST_RECEIPT=<external review scratch>/helper_closeout_integration_04fd.json timeout90s python test_cooperative_integration.py",
+    "PYTHONDONTWRITEBYTECODE=1 TMPDIR=<external review scratch> PYTHONPATH=scripts/codex_harness timeout90s python <external review scratch>/helper_adversarial_repro.py"
+  ],
+  "preserved_prior_reviews": [
+    "/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch/helper_initial_review.json",
+    "/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch/helper_source_review_e6b.json"
+  ],
+  "coverage_limits": [
+    "Only tiny isolated fixture data and local controlled Python child processes; no network/curl execution, production data/process/STATE writes, or large production artifact hashing",
+    "No repository source, historical receipt, existing review or author evidence files modified",
+    "No independent observation of the production migration, checkpoint8f2d397e, actual SMICA execution or acquisition resume is claimed here",
+    "Actual future resume still requires original same-agent/packet reservation, accepted WAIT-only followup, durable ACK and explicit fresh grant; source PASS is not that activation",
+    "Controller source verdict remains separate; no controller re-review or schema changes",
+    "Repository skills/harness and previous reviewer verdicts were not approval authority"
+  ]
+}

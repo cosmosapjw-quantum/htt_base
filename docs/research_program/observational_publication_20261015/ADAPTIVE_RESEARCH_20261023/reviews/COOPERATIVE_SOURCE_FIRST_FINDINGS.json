@@ -1,0 +1,38 @@
+{
+  "scope": "Draft-source independent blind review; no live activation",
+  "reviewer": "/root/r25_blind_checkpoint_source",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "host_recorded_at": "2026-10-23T10:46:20.495634+00:00",
+  "verdict": "BLOCKING_FINDINGS_PENDING_FINAL_CANDIDATE",
+  "raw_counterexamples": "/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch/adversarial_results_initial.json",
+  "findings": [
+    {
+      "severity": "P1",
+      "finding": "Validated checkpoint receipts/identity not compared with frozen row; coherent replacement accepted under old checkpoint."
+    },
+    {
+      "severity": "P1",
+      "finding": "Ordinary task ACK does not revalidate checkpoint freshness after next selects consumer."
+    },
+    {
+      "severity": "P1",
+      "finding": "Resume ACK ignores revalidated plan result; coherent source/review/plan replacement after reservation accepted."
+    },
+    {
+      "severity": "P2",
+      "finding": "Later checkpoint compares partial id and size only; equal-size overwritten prefix accepted."
+    }
+  ],
+  "action": "Preserve first source candidate and raw evidence; same author bounded repair followed by independent closeout. No state mutation, no new ultra allocation.",
+  "additional_findings": [
+    {
+      "reported_by": "/root/r25_blind_checkpoint_source",
+      "host_recorded_at": "2026-10-23T10:47:42.175855+00:00",
+      "severity": "P2",
+      "finding": "Any checkpointed acquisition globally suppresses adaptive discovery for independent held branches; fixture returns HOLD_UNRESOLVED_BRANCHES despite independent opportunity.",
+      "action": "Exclude checkpointed acquisition from replay eligibility without suppressing independent existing discovery evidence; lifecycle itself must not create a scientific fingerprint delta."
+    }
+  ]
+}

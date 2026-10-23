@@ -1,0 +1,70 @@
+{
+  "schema": "htt.review_only_freshness_repair_return/1",
+  "status": "FROZEN_FOR_INDEPENDENT_CLOSEOUT",
+  "candidate_identity": "14c88a65c540029d8f3d3371d6f27ce094e472999eeb6582b6f5696128f42b9e",
+  "source_hashes": {
+    "scripts/codex_harness/research_controller.py": "d682f64d9aefba6251dc75037588669c0d193fc1ac12bf348bdfc02094cb46e5",
+    "scripts/codex_harness/test_research_controller_frontier.py": "592370decfb33e36e1e49f8ca82df012d59075d9614abbe98c89a8a2457369f4"
+  },
+  "base_controller_sha256": "a394d854f8a0b90896e5e9649c056733999b06fce6b88292218a5688e7225495",
+  "source_preimages": "before/",
+  "actual_executor": "/root/r25_adaptive_controller_code",
+  "requested_model_effort": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "edit_release": "Explicit parent EDIT RELEASE received only after actual SMICA review recorded under old controller bytes; no source changes before release",
+  "frozen_at_utc": "2026-10-23T11:54:04.744694+00:00",
+  "contract": "Actual independent Astra two tiny manifest inventory/ACK-to-record freshness counterexamples; source/test only, no cache/ownership/lifecycle/science-policy expansion",
+  "changes": [
+    "Consume all present files/products_sha256/products inventories rather than fallback-selecting one; every resolved declared file joins existing content-seal context",
+    "Reject malformed inventories/hashes, conflicting resolved hashes/embedded paths/sizes, within existing metadata/path resolution and64MiB candidate-byte bounds",
+    "Allow existing context validator to inspect running review only through explicit internal keyword; no transient state mutation",
+    "Before any review_only outcome, compare exact current context with acknowledged context; reject atomically while preserving outstanding packet/history/accounting",
+    "Ordinary reviews without review_only retain previous outcome semantics; no retroactive validation claim"
+  ],
+  "patch": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r25_review_freshness_repair/SOURCE.patch",
+    "sha256": "dd3e662e0afbbda5234adb538202aa799b3240d50fe61806786d11eaa5f6ced4"
+  },
+  "first_failure": {
+    "independent_diagnostic": "REVIEW_MANIFEST_FILES_DIAGNOSTIC.json",
+    "independent_assessment": "REVIEW_MANIFEST_FILES_DIAGNOSTIC_ASSESSMENT.json",
+    "local_reproduction": "REPRO_BEFORE.json",
+    "result": "files preACKmutation accepted; products_sha postACKmutation recordedcompleted before repair",
+    "fixture_note": "REPRO_BEFORE_FIRST.json retained initial stale Python reference display; REPRO_BEFORE.json corrected reporting to read actual post-record state, without changing reproduced acceptance"
+  },
+  "after_reproduction": "REPRO_AFTER.json: both cases rejected, state unchanged",
+  "tests": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/mnt/extdrive/workdir PYTHONPATH=scripts/codex_harness /usr/bin/time -p timeout 90s python3 -m unittest test_research_controller_frontier.ConcurrentReviewTests -v",
+      "log": "FOCUSED_FIRST.log",
+      "result": "25 tests,2historical-live-stage skips; PASS",
+      "suite_seconds": 10.33,
+      "wall_seconds": 11.11
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/mnt/extdrive/workdir PYTHONPATH=scripts/codex_harness /usr/bin/time -p timeout 90s python3 -m unittest test_research_controller_frontier.ConcurrentReviewTests -v",
+      "log": "FOCUSED_FINAL.log",
+      "result": "26 tests,2historical-live-stage skips; PASS",
+      "suite_seconds": 6.048,
+      "wall_seconds": 6.16
+    }
+  ],
+  "new_tests": 8,
+  "coverage": "Unchanged dict/listfiles and products/products_sha256 planACKrecord; beforeACKchange/remove stale next+ACK rejection; postACKsuccess/blocker rejection; removed/malformedcandidate/changedinput; mixedinventoriesallbound/hash/path/sizeconflicts; malformedpresentinventory despitevalidother; ordinaryreview compatibility",
+  "mechanical_checks": {
+    "AST_parse": "PASS",
+    "whitespace_finalnewline": "PASS",
+    "diff_from_preserved_exact_preimage": "Generated without Git mutation"
+  },
+  "not_performed": [
+    "STATE edits or reads",
+    "actual next/ACK/record/dispatch",
+    "acquisition/helper/data/pointer edits",
+    "SMICA or other numerical candidate changes",
+    "sourcecache/performance/ownership/lifecycle changes",
+    "science tests/reruns/downloads/ultra",
+    "Git actions"
+  ],
+  "requested_closeout": "Same independent Astra reviewer /root/r25_blind_checkpoint_source; no source use/admission before exact candidate closeout",
+  "further_edits": "None until concrete review finding"
+}

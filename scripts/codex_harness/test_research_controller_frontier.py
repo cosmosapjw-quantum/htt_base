@@ -716,6 +716,149 @@ class ConcurrentReviewTests(unittest.TestCase):
                         rc.acknowledge(state, packet['packet_id'], 'fresh-manifest-reviewer')
                     self.assertEqual(state, before)
 
+    def manifest_fixture(self, inventory="files", as_list=False):
+        import hashlib
+        state, acquisition = self.fixture(second=False)
+        row = state["tasks"]["CANDIDATE"]
+        directory = Path(row["spec"]["owned_paths"][0])
+        artifact = directory / "compute.py"
+        artifact.write_text("frozen implementation\n")
+        declaration = {"sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
+                       "size_bytes": artifact.stat().st_size}
+        entries = [{"path": artifact.name, **declaration}] if as_list else {artifact.name: declaration}
+        manifest = directory / "MANIFEST.json"
+        manifest.write_text(json.dumps({"task_id": "CANDIDATE", "input_identity": "input-v1",
+                                        inventory: entries}))
+        row.update(candidate_identity="sha256:" + hashlib.sha256(manifest.read_bytes()).hexdigest(),
+                   candidate_products=[])
+        return state, acquisition, artifact, manifest
+
+    def test_all_manifest_inventory_forms_unchanged_plan_ack_record(self):
+        for inventory, as_list in (("files", False), ("files", True),
+                                   ("products_sha256", False), ("products", False)):
+            with self.subTest(inventory=inventory, as_list=as_list):
+                state, _, artifact, _ = self.manifest_fixture(inventory, as_list)
+                packet = self.plan(state)
+                self.assertIn(str(artifact), packet["review_context"]["scope"]["candidate_seals"])
+                rc.acknowledge(state, packet["packet_id"], "actual-independent-reviewer")
+                self.result(state, packet, acceptance_met=True)
+                self.assertEqual(state["tasks"]["CANDIDATE"]["state"], "completed")
+
+    def test_all_manifest_inventories_mutation_or_removal_before_ack_rejects_atomically(self):
+        for inventory in ("files", "products_sha256", "products"):
+            for remove in (False, True):
+                with self.subTest(inventory=inventory, remove=remove):
+                    state, _, artifact, _ = self.manifest_fixture(inventory)
+                    packet = self.plan(state)
+                    if remove:
+                        artifact.unlink()
+                    else:
+                        artifact.write_text("changed implementation\n")
+                    before = copy.deepcopy(state)
+                    self.assertNotIn("spawn_args", rc.next_packet(state, POLICY, PROFILES, review_only=True))
+                    self.assertEqual(state, before)
+                    with self.assertRaises(rc.ControllerError):
+                        rc.acknowledge(state, packet["packet_id"], "actual-independent-reviewer")
+                    self.assertEqual(state, before)
+
+    def test_all_manifest_inventories_mutation_after_ack_rejects_outcome_atomically(self):
+        for inventory in ("files", "products_sha256", "products"):
+            for outcome in ("success", "blocker"):
+                with self.subTest(inventory=inventory, outcome=outcome):
+                    state, _, artifact, _ = self.manifest_fixture(inventory)
+                    packet = self.plan(state)
+                    rc.acknowledge(state, packet["packet_id"], "actual-independent-reviewer")
+                    artifact.write_text("changed after actual review ACK\n")
+                    before = copy.deepcopy(state)
+                    with self.assertRaises(rc.ControllerError):
+                        self.result(state, packet, outcome, acceptance_met=True, issue=self.issue())
+                    self.assertEqual(state, before)
+                    self.assertEqual(state["tasks"]["CANDIDATE"]["state"], "running")
+
+    def test_missing_malformed_candidate_or_changed_input_after_ack_rejects_outcome(self):
+        for change in ("remove", "malformed_manifest", "input"):
+            with self.subTest(change=change):
+                state, _, artifact, manifest = self.manifest_fixture()
+                packet = self.plan(state)
+                rc.acknowledge(state, packet["packet_id"], "actual-independent-reviewer")
+                if change == "remove":
+                    artifact.unlink()
+                elif change == "malformed_manifest":
+                    manifest.write_text("{malformed")
+                else:
+                    Path(state["tasks"]["CANDIDATE"]["spec"]["input_sources"][0]).write_text("{}")
+                before = copy.deepcopy(state)
+                with self.assertRaises(rc.ControllerError):
+                    self.result(state, packet, acceptance_met=True)
+                self.assertEqual(state, before)
+
+    def test_mixed_manifest_inventories_bind_every_file_and_reject_conflicts(self):
+        import hashlib
+        for conflict in (False, True):
+            state, _, artifact, manifest = self.manifest_fixture()
+            document = json.loads(manifest.read_text())
+            other = artifact.with_name("RESULT.txt")
+            other.write_text("independent result bytes\n")
+            document["products_sha256"] = {other.name: hashlib.sha256(other.read_bytes()).hexdigest()}
+            document["products"] = {artifact.name: {"sha256": "0" * 64 if conflict else
+                hashlib.sha256(artifact.read_bytes()).hexdigest()}}
+            manifest.write_text(json.dumps(document))
+            state["tasks"]["CANDIDATE"]["candidate_identity"] = "sha256:" + hashlib.sha256(manifest.read_bytes()).hexdigest()
+            if conflict:
+                before = copy.deepcopy(state)
+                self.assertNotIn("spawn_args", rc.next_packet(state, POLICY, PROFILES, review_only=True))
+                self.assertEqual(state, before)
+            else:
+                packet = self.plan(state)
+                seals = packet["review_context"]["scope"]["candidate_seals"]
+                self.assertTrue({str(artifact), str(other)} <= seals.keys())
+                # files and products must remain bound even when products_sha256 is present.
+                artifact.write_text("changed first inventory\n")
+                before = copy.deepcopy(state)
+                with self.assertRaises(rc.ControllerError):
+                    rc.acknowledge(state, packet["packet_id"], "actual-independent-reviewer")
+                self.assertEqual(state, before)
+
+    def test_malformed_present_inventory_cannot_hide_behind_another_valid_inventory(self):
+        import hashlib
+        for malformed in (None, "not-an-inventory", [{"sha256": "0" * 64}], {"compute.py": {"bytes": 1}}):
+            state, _, artifact, manifest = self.manifest_fixture("products_sha256")
+            document = json.loads(manifest.read_text())
+            document["files"] = malformed
+            manifest.write_text(json.dumps(document))
+            state["tasks"]["CANDIDATE"]["candidate_identity"] = "sha256:" + hashlib.sha256(manifest.read_bytes()).hexdigest()
+            before = copy.deepcopy(state)
+            self.assertNotIn("spawn_args", rc.next_packet(state, POLICY, PROFILES, review_only=True))
+            self.assertEqual(state, before)
+
+    def test_conflicting_embedded_path_or_size_declarations_rejects(self):
+        import hashlib
+        for conflict in ("path", "size_bytes", "bytes"):
+            state, _, artifact, manifest = self.manifest_fixture()
+            document = json.loads(manifest.read_text())
+            if conflict == "path":
+                other = artifact.with_name("DIFFERENT.txt")
+                other.write_text("different declared product")
+                document["files"][artifact.name]["path"] = other.name
+            else:
+                document["files"][artifact.name][conflict] = artifact.stat().st_size + 1
+            manifest.write_text(json.dumps(document))
+            state["tasks"]["CANDIDATE"]["candidate_identity"] = "sha256:" + hashlib.sha256(manifest.read_bytes()).hexdigest()
+            before = copy.deepcopy(state)
+            self.assertNotIn("spawn_args", rc.next_packet(state, POLICY, PROFILES, review_only=True))
+            self.assertEqual(state, before)
+
+    def test_ordinary_review_retains_existing_record_semantics(self):
+        state, _, artifact, _ = self.manifest_fixture()
+        state["tasks"]["Z-ACQUIRE"]["state"] = "completed"  # Fixture writer slot is free.
+        packet = rc.next_packet(state, POLICY, PROFILES)
+        self.assertEqual(packet["phase"], "review")
+        self.assertFalse(packet.get("review_only"))
+        rc.acknowledge(state, packet["packet_id"], "actual-independent-reviewer")
+        artifact.write_text("ordinary review compatibility fixture\n")
+        self.result(state, packet, acceptance_met=True)
+        self.assertEqual(state["tasks"]["CANDIDATE"]["state"], "completed")
+
     def test_nested_contract_traversal_bound_waits_without_prose_scans(self):
         state, _ = self.fixture(second=False)
         contract = Path(state['tasks']['CANDIDATE']['spec']['input_sources'][0])

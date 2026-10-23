@@ -1,0 +1,5745 @@
+{
+  "source": {
+    "archive_sha256": "044ec9bed746ae745ad35a8b6ccf6e603f546083fec328e9c64d866ac9221f93",
+    "member_sha256": {
+      "weights_EB_smica_R3.00.txt": "541378f6c9ab37574aae909519b0f1fe020714a6cea2b8dd1c7fcedb5ffd87df",
+      "smica_coadd.py": "dd1f9c2435cae456b4cc0445b7257b360d01a73754455d11ea409252d3788160",
+      "README": "de52811701de2ef4c1c37aff05f317e264fd9cd3ad867cab6289dd3a8e4aaf27"
+    },
+    "shape": [
+      2,
+      7,
+      4001
+    ],
+    "producer_checks": [
+      "reshape(2,7,4001)",
+      "names[:-2]",
+      "W_pol[iz,m,:]",
+      "hp.almxfl(combalm, hp.pixwin(nside)[0:lmax])"
+    ]
+  },
+  "channels_GHz": [
+    30,
+    44,
+    70,
+    100,
+    143,
+    217,
+    353
+  ],
+  "coordinate_metric": "Euclidean on seven processed frequency coordinates; computational, not physical amplitude",
+  "input_coordinate_order": "(E2,E3,B2,B3); within block frequency order 30..353 GHz; within frequency m=-ell..ell",
+  "output_coordinate_order": "(E2,E3,B2,B3); within block m=-ell..ell",
+  "tensor": {
+    "input_dimension": 168,
+    "output_dimension": 24,
+    "rank": 24,
+    "nullity": 144,
+    "blocks": [
+      {
+        "key": "E2",
+        "input_start": 0,
+        "output_start": 0,
+        "harmonic_coordinates": [
+          "m=-2",
+          "m=-1",
+          "m=0",
+          "m=1",
+          "m=2"
+        ],
+        "operator": "kron(w_E2^T,I_5)",
+        "input_shape": [
+          7,
+          5
+        ],
+        "output_shape": [
+          5
+        ],
+        "pivot_frequency_index": 4,
+        "kernel_basis_rule": "for each m and j != 4: e_(j,m) - (w_j/w_4) e_(4,m)"
+      },
+      {
+        "key": "E3",
+        "input_start": 35,
+        "output_start": 5,
+        "harmonic_coordinates": [
+          "m=-3",
+          "m=-2",
+          "m=-1",
+          "m=0",
+          "m=1",
+          "m=2",
+          "m=3"
+        ],
+        "operator": "kron(w_E3^T,I_7)",
+        "input_shape": [
+          7,
+          7
+        ],
+        "output_shape": [
+          7
+        ],
+        "pivot_frequency_index": 4,
+        "kernel_basis_rule": "for each m and j != 4: e_(j,m) - (w_j/w_4) e_(4,m)"
+      },
+      {
+        "key": "B2",
+        "input_start": 84,
+        "output_start": 12,
+        "harmonic_coordinates": [
+          "m=-2",
+          "m=-1",
+          "m=0",
+          "m=1",
+          "m=2"
+        ],
+        "operator": "kron(w_B2^T,I_5)",
+        "input_shape": [
+          7,
+          5
+        ],
+        "output_shape": [
+          5
+        ],
+        "pivot_frequency_index": 4,
+        "kernel_basis_rule": "for each m and j != 4: e_(j,m) - (w_j/w_4) e_(4,m)"
+      },
+      {
+        "key": "B3",
+        "input_start": 119,
+        "output_start": 17,
+        "harmonic_coordinates": [
+          "m=-3",
+          "m=-2",
+          "m=-1",
+          "m=0",
+          "m=1",
+          "m=2",
+          "m=3"
+        ],
+        "operator": "kron(w_B3^T,I_7)",
+        "input_shape": [
+          7,
+          7
+        ],
+        "output_shape": [
+          7
+        ],
+        "pivot_frequency_index": 4,
+        "kernel_basis_rule": "for each m and j != 4: e_(j,m) - (w_j/w_4) e_(4,m)"
+      }
+    ],
+    "nonzero_entries": [
+      {
+        "output": 0,
+        "input": 0,
+        "weight": -0.04112134595417663
+      },
+      {
+        "output": 0,
+        "input": 5,
+        "weight": 0.05190456834989794
+      },
+      {
+        "output": 0,
+        "input": 10,
+        "weight": 0.24494315884870518
+      },
+      {
+        "output": 0,
+        "input": 15,
+        "weight": 0.19695590700139395
+      },
+      {
+        "output": 0,
+        "input": 20,
+        "weight": 0.5913153968427265
+      },
+      {
+        "output": 0,
+        "input": 25,
+        "weight": -0.01570151224855309
+      },
+      {
+        "output": 0,
+        "input": 30,
+        "weight": -0.0282948698505434
+      },
+      {
+        "output": 1,
+        "input": 1,
+        "weight": -0.04112134595417663
+      },
+      {
+        "output": 1,
+        "input": 6,
+        "weight": 0.05190456834989794
+      },
+      {
+        "output": 1,
+        "input": 11,
+        "weight": 0.24494315884870518
+      },
+      {
+        "output": 1,
+        "input": 16,
+        "weight": 0.19695590700139395
+      },
+      {
+        "output": 1,
+        "input": 21,
+        "weight": 0.5913153968427265
+      },
+      {
+        "output": 1,
+        "input": 26,
+        "weight": -0.01570151224855309
+      },
+      {
+        "output": 1,
+        "input": 31,
+        "weight": -0.0282948698505434
+      },
+      {
+        "output": 2,
+        "input": 2,
+        "weight": -0.04112134595417663
+      },
+      {
+        "output": 2,
+        "input": 7,
+        "weight": 0.05190456834989794
+      },
+      {
+        "output": 2,
+        "input": 12,
+        "weight": 0.24494315884870518
+      },
+      {
+        "output": 2,
+        "input": 17,
+        "weight": 0.19695590700139395
+      },
+      {
+        "output": 2,
+        "input": 22,
+        "weight": 0.5913153968427265
+      },
+      {
+        "output": 2,
+        "input": 27,
+        "weight": -0.01570151224855309
+      },
+      {
+        "output": 2,
+        "input": 32,
+        "weight": -0.0282948698505434
+      },
+      {
+        "output": 3,
+        "input": 3,
+        "weight": -0.04112134595417663
+      },
+      {
+        "output": 3,
+        "input": 8,
+        "weight": 0.05190456834989794
+      },
+      {
+        "output": 3,
+        "input": 13,
+        "weight": 0.24494315884870518
+      },
+      {
+        "output": 3,
+        "input": 18,
+        "weight": 0.19695590700139395
+      },
+      {
+        "output": 3,
+        "input": 23,
+        "weight": 0.5913153968427265
+      },
+      {
+        "output": 3,
+        "input": 28,
+        "weight": -0.01570151224855309
+      },
+      {
+        "output": 3,
+        "input": 33,
+        "weight": -0.0282948698505434
+      },
+      {
+        "output": 4,
+        "input": 4,
+        "weight": -0.04112134595417663
+      },
+      {
+        "output": 4,
+        "input": 9,
+        "weight": 0.05190456834989794
+      },
+      {
+        "output": 4,
+        "input": 14,
+        "weight": 0.24494315884870518
+      },
+      {
+        "output": 4,
+        "input": 19,
+        "weight": 0.19695590700139395
+      },
+      {
+        "output": 4,
+        "input": 24,
+        "weight": 0.5913153968427265
+      },
+      {
+        "output": 4,
+        "input": 29,
+        "weight": -0.01570151224855309
+      },
+      {
+        "output": 4,
+        "input": 34,
+        "weight": -0.0282948698505434
+      },
+      {
+        "output": 5,
+        "input": 35,
+        "weight": -0.04107515209964416
+      },
+      {
+        "output": 5,
+        "input": 42,
+        "weight": 0.05190285280874792
+      },
+      {
+        "output": 5,
+        "input": 49,
+        "weight": 0.2447965465009411
+      },
+      {
+        "output": 5,
+        "input": 56,
+        "weight": 0.19695656983920468
+      },
+      {
+        "output": 5,
+        "input": 63,
+        "weight": 0.5913162590034866
+      },
+      {
+        "output": 5,
+        "input": 70,
+        "weight": -0.015701519231835066
+      },
+      {
+        "output": 5,
+        "input": 77,
+        "weight": -0.028294880748241442
+      },
+      {
+        "output": 6,
+        "input": 36,
+        "weight": -0.04107515209964416
+      },
+      {
+        "output": 6,
+        "input": 43,
+        "weight": 0.05190285280874792
+      },
+      {
+        "output": 6,
+        "input": 50,
+        "weight": 0.2447965465009411
+      },
+      {
+        "output": 6,
+        "input": 57,
+        "weight": 0.19695656983920468
+      },
+      {
+        "output": 6,
+        "input": 64,
+        "weight": 0.5913162590034866
+      },
+      {
+        "output": 6,
+        "input": 71,
+        "weight": -0.015701519231835066
+      },
+      {
+        "output": 6,
+        "input": 78,
+        "weight": -0.028294880748241442
+      },
+      {
+        "output": 7,
+        "input": 37,
+        "weight": -0.04107515209964416
+      },
+      {
+        "output": 7,
+        "input": 44,
+        "weight": 0.05190285280874792
+      },
+      {
+        "output": 7,
+        "input": 51,
+        "weight": 0.2447965465009411
+      },
+      {
+        "output": 7,
+        "input": 58,
+        "weight": 0.19695656983920468
+      },
+      {
+        "output": 7,
+        "input": 65,
+        "weight": 0.5913162590034866
+      },
+      {
+        "output": 7,
+        "input": 72,
+        "weight": -0.015701519231835066
+      },
+      {
+        "output": 7,
+        "input": 79,
+        "weight": -0.028294880748241442
+      },
+      {
+        "output": 8,
+        "input": 38,
+        "weight": -0.04107515209964416
+      },
+      {
+        "output": 8,
+        "input": 45,
+        "weight": 0.05190285280874792
+      },
+      {
+        "output": 8,
+        "input": 52,
+        "weight": 0.2447965465009411
+      },
+      {
+        "output": 8,
+        "input": 59,
+        "weight": 0.19695656983920468
+      },
+      {
+        "output": 8,
+        "input": 66,
+        "weight": 0.5913162590034866
+      },
+      {
+        "output": 8,
+        "input": 73,
+        "weight": -0.015701519231835066
+      },
+      {
+        "output": 8,
+        "input": 80,
+        "weight": -0.028294880748241442
+      },
+      {
+        "output": 9,
+        "input": 39,
+        "weight": -0.04107515209964416
+      },
+      {
+        "output": 9,
+        "input": 46,
+        "weight": 0.05190285280874792
+      },
+      {
+        "output": 9,
+        "input": 53,
+        "weight": 0.2447965465009411
+      },
+      {
+        "output": 9,
+        "input": 60,
+        "weight": 0.19695656983920468
+      },
+      {
+        "output": 9,
+        "input": 67,
+        "weight": 0.5913162590034866
+      },
+      {
+        "output": 9,
+        "input": 74,
+        "weight": -0.015701519231835066
+      },
+      {
+        "output": 9,
+        "input": 81,
+        "weight": -0.028294880748241442
+      },
+      {
+        "output": 10,
+        "input": 40,
+        "weight": -0.04107515209964416
+      },
+      {
+        "output": 10,
+        "input": 47,
+        "weight": 0.05190285280874792
+      },
+      {
+        "output": 10,
+        "input": 54,
+        "weight": 0.2447965465009411
+      },
+      {
+        "output": 10,
+        "input": 61,
+        "weight": 0.19695656983920468
+      },
+      {
+        "output": 10,
+        "input": 68,
+        "weight": 0.5913162590034866
+      },
+      {
+        "output": 10,
+        "input": 75,
+        "weight": -0.015701519231835066
+      },
+      {
+        "output": 10,
+        "input": 82,
+        "weight": -0.028294880748241442
+      },
+      {
+        "output": 11,
+        "input": 41,
+        "weight": -0.04107515209964416
+      },
+      {
+        "output": 11,
+        "input": 48,
+        "weight": 0.05190285280874792
+      },
+      {
+        "output": 11,
+        "input": 55,
+        "weight": 0.2447965465009411
+      },
+      {
+        "output": 11,
+        "input": 62,
+        "weight": 0.19695656983920468
+      },
+      {
+        "output": 11,
+        "input": 69,
+        "weight": 0.5913162590034866
+      },
+      {
+        "output": 11,
+        "input": 76,
+        "weight": -0.015701519231835066
+      },
+      {
+        "output": 11,
+        "input": 83,
+        "weight": -0.028294880748241442
+      },
+      {
+        "output": 12,
+        "input": 84,
+        "weight": -0.04780664289627979
+      },
+      {
+        "output": 12,
+        "input": 89,
+        "weight": 0.06321738022270497
+      },
+      {
+        "output": 12,
+        "input": 94,
+        "weight": 0.22760394226611527
+      },
+      {
+        "output": 12,
+        "input": 99,
+        "weight": 0.30603691022461793
+      },
+      {
+        "output": 12,
+        "input": 104,
+        "weight": 0.42617852523354993
+      },
+      {
+        "output": 12,
+        "input": 109,
+        "weight": 0.05673867934577199
+      },
+      {
+        "output": 12,
+        "input": 114,
+        "weight": -0.03196732514479988
+      },
+      {
+        "output": 13,
+        "input": 85,
+        "weight": -0.04780664289627979
+      },
+      {
+        "output": 13,
+        "input": 90,
+        "weight": 0.06321738022270497
+      },
+      {
+        "output": 13,
+        "input": 95,
+        "weight": 0.22760394226611527
+      },
+      {
+        "output": 13,
+        "input": 100,
+        "weight": 0.30603691022461793
+      },
+      {
+        "output": 13,
+        "input": 105,
+        "weight": 0.42617852523354993
+      },
+      {
+        "output": 13,
+        "input": 110,
+        "weight": 0.05673867934577199
+      },
+      {
+        "output": 13,
+        "input": 115,
+        "weight": -0.03196732514479988
+      },
+      {
+        "output": 14,
+        "input": 86,
+        "weight": -0.04780664289627979
+      },
+      {
+        "output": 14,
+        "input": 91,
+        "weight": 0.06321738022270497
+      },
+      {
+        "output": 14,
+        "input": 96,
+        "weight": 0.22760394226611527
+      },
+      {
+        "output": 14,
+        "input": 101,
+        "weight": 0.30603691022461793
+      },
+      {
+        "output": 14,
+        "input": 106,
+        "weight": 0.42617852523354993
+      },
+      {
+        "output": 14,
+        "input": 111,
+        "weight": 0.05673867934577199
+      },
+      {
+        "output": 14,
+        "input": 116,
+        "weight": -0.03196732514479988
+      },
+      {
+        "output": 15,
+        "input": 87,
+        "weight": -0.04780664289627979
+      },
+      {
+        "output": 15,
+        "input": 92,
+        "weight": 0.06321738022270497
+      },
+      {
+        "output": 15,
+        "input": 97,
+        "weight": 0.22760394226611527
+      },
+      {
+        "output": 15,
+        "input": 102,
+        "weight": 0.30603691022461793
+      },
+      {
+        "output": 15,
+        "input": 107,
+        "weight": 0.42617852523354993
+      },
+      {
+        "output": 15,
+        "input": 112,
+        "weight": 0.05673867934577199
+      },
+      {
+        "output": 15,
+        "input": 117,
+        "weight": -0.03196732514479988
+      },
+      {
+        "output": 16,
+        "input": 88,
+        "weight": -0.04780664289627979
+      },
+      {
+        "output": 16,
+        "input": 93,
+        "weight": 0.06321738022270497
+      },
+      {
+        "output": 16,
+        "input": 98,
+        "weight": 0.22760394226611527
+      },
+      {
+        "output": 16,
+        "input": 103,
+        "weight": 0.30603691022461793
+      },
+      {
+        "output": 16,
+        "input": 108,
+        "weight": 0.42617852523354993
+      },
+      {
+        "output": 16,
+        "input": 113,
+        "weight": 0.05673867934577199
+      },
+      {
+        "output": 16,
+        "input": 118,
+        "weight": -0.03196732514479988
+      },
+      {
+        "output": 17,
+        "input": 119,
+        "weight": -0.047752939082447335
+      },
+      {
+        "output": 17,
+        "input": 126,
+        "weight": 0.06321529077237836
+      },
+      {
+        "output": 17,
+        "input": 133,
+        "weight": 0.2274677084211189
+      },
+      {
+        "output": 17,
+        "input": 140,
+        "weight": 0.3060379401649696
+      },
+      {
+        "output": 17,
+        "input": 147,
+        "weight": 0.42617914661835615
+      },
+      {
+        "output": 17,
+        "input": 154,
+        "weight": 0.056738704580436006
+      },
+      {
+        "output": 17,
+        "input": 161,
+        "weight": -0.031967337456934475
+      },
+      {
+        "output": 18,
+        "input": 120,
+        "weight": -0.047752939082447335
+      },
+      {
+        "output": 18,
+        "input": 127,
+        "weight": 0.06321529077237836
+      },
+      {
+        "output": 18,
+        "input": 134,
+        "weight": 0.2274677084211189
+      },
+      {
+        "output": 18,
+        "input": 141,
+        "weight": 0.3060379401649696
+      },
+      {
+        "output": 18,
+        "input": 148,
+        "weight": 0.42617914661835615
+      },
+      {
+        "output": 18,
+        "input": 155,
+        "weight": 0.056738704580436006
+      },
+      {
+        "output": 18,
+        "input": 162,
+        "weight": -0.031967337456934475
+      },
+      {
+        "output": 19,
+        "input": 121,
+        "weight": -0.047752939082447335
+      },
+      {
+        "output": 19,
+        "input": 128,
+        "weight": 0.06321529077237836
+      },
+      {
+        "output": 19,
+        "input": 135,
+        "weight": 0.2274677084211189
+      },
+      {
+        "output": 19,
+        "input": 142,
+        "weight": 0.3060379401649696
+      },
+      {
+        "output": 19,
+        "input": 149,
+        "weight": 0.42617914661835615
+      },
+      {
+        "output": 19,
+        "input": 156,
+        "weight": 0.056738704580436006
+      },
+      {
+        "output": 19,
+        "input": 163,
+        "weight": -0.031967337456934475
+      },
+      {
+        "output": 20,
+        "input": 122,
+        "weight": -0.047752939082447335
+      },
+      {
+        "output": 20,
+        "input": 129,
+        "weight": 0.06321529077237836
+      },
+      {
+        "output": 20,
+        "input": 136,
+        "weight": 0.2274677084211189
+      },
+      {
+        "output": 20,
+        "input": 143,
+        "weight": 0.3060379401649696
+      },
+      {
+        "output": 20,
+        "input": 150,
+        "weight": 0.42617914661835615
+      },
+      {
+        "output": 20,
+        "input": 157,
+        "weight": 0.056738704580436006
+      },
+      {
+        "output": 20,
+        "input": 164,
+        "weight": -0.031967337456934475
+      },
+      {
+        "output": 21,
+        "input": 123,
+        "weight": -0.047752939082447335
+      },
+      {
+        "output": 21,
+        "input": 130,
+        "weight": 0.06321529077237836
+      },
+      {
+        "output": 21,
+        "input": 137,
+        "weight": 0.2274677084211189
+      },
+      {
+        "output": 21,
+        "input": 144,
+        "weight": 0.3060379401649696
+      },
+      {
+        "output": 21,
+        "input": 151,
+        "weight": 0.42617914661835615
+      },
+      {
+        "output": 21,
+        "input": 158,
+        "weight": 0.056738704580436006
+      },
+      {
+        "output": 21,
+        "input": 165,
+        "weight": -0.031967337456934475
+      },
+      {
+        "output": 22,
+        "input": 124,
+        "weight": -0.047752939082447335
+      },
+      {
+        "output": 22,
+        "input": 131,
+        "weight": 0.06321529077237836
+      },
+      {
+        "output": 22,
+        "input": 138,
+        "weight": 0.2274677084211189
+      },
+      {
+        "output": 22,
+        "input": 145,
+        "weight": 0.3060379401649696
+      },
+      {
+        "output": 22,
+        "input": 152,
+        "weight": 0.42617914661835615
+      },
+      {
+        "output": 22,
+        "input": 159,
+        "weight": 0.056738704580436006
+      },
+      {
+        "output": 22,
+        "input": 166,
+        "weight": -0.031967337456934475
+      },
+      {
+        "output": 23,
+        "input": 125,
+        "weight": -0.047752939082447335
+      },
+      {
+        "output": 23,
+        "input": 132,
+        "weight": 0.06321529077237836
+      },
+      {
+        "output": 23,
+        "input": 139,
+        "weight": 0.2274677084211189
+      },
+      {
+        "output": 23,
+        "input": 146,
+        "weight": 0.3060379401649696
+      },
+      {
+        "output": 23,
+        "input": 153,
+        "weight": 0.42617914661835615
+      },
+      {
+        "output": 23,
+        "input": 160,
+        "weight": 0.056738704580436006
+      },
+      {
+        "output": 23,
+        "input": 167,
+        "weight": -0.031967337456934475
+      }
+    ]
+  },
+  "operators": {
+    "E2": {
+      "weights": [
+        -0.04112134595417663,
+        0.05190456834989794,
+        0.24494315884870518,
+        0.19695590700139395,
+        0.5913153968427265,
+        -0.01570151224855309,
+        -0.0282948698505434
+      ],
+      "source_decimal_weights": [
+        "-4.112134595417663019e-02",
+        "5.190456834989794210e-02",
+        "2.449431588487051836e-01",
+        "1.969559070013939539e-01",
+        "5.913153968427264928e-01",
+        "-1.570151224855308864e-02",
+        "-2.829486985054339987e-02"
+      ],
+      "weight_sum": 1.0000013029894503,
+      "weight_norm": 0.673702356659243,
+      "row_rank": 1,
+      "kernel_dimension": 6,
+      "target_count": 28,
+      "targets": [
+        {
+          "target": "unit_30",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.09060062385436538,
+          "retained_projection_norm": 0.061037853805483586,
+          "lost_norm": 0.9981354519316608,
+          "retained_fraction": 0.061037853805483586,
+          "lost_fraction": 0.9981354519316608,
+          "retained_squared_fraction": 0.003725619597179587,
+          "lost_squared_fraction": 0.9962743804028206,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9962743804028205,
+            0.004702586273392302,
+            0.022192003000551606,
+            0.017844328046128663,
+            0.05357354384864266,
+            -0.001422566805175869,
+            -0.002563532860337306
+          ],
+          "witness_compressed_difference": -5.380353280959316e-18,
+          "witness_target_difference": 0.9962743804028205,
+          "least_squares_residual": 0.9981354519316608
+        },
+        {
+          "target": "unit_44",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.11435876341772969,
+          "retained_projection_norm": 0.07704376841916132,
+          "lost_norm": 0.9970277116247946,
+          "retained_fraction": 0.07704376841916132,
+          "lost_fraction": 0.9970277116247946,
+          "retained_squared_fraction": 0.005935742252225358,
+          "lost_squared_fraction": 0.9940642577477746,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.004702586273392301,
+            0.9940642577477746,
+            -0.028011396753570457,
+            -0.022523633972496782,
+            -0.0676220975727983,
+            0.0017956055245328675,
+            0.0032357663271737453
+          ],
+          "witness_compressed_difference": 1.0286368111456223e-17,
+          "witness_target_difference": 0.9940642577477746,
+          "least_squares_residual": 0.9970277116247946
+        },
+        {
+          "target": "unit_70",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.5396711242205242,
+          "retained_projection_norm": 0.3635777082083102,
+          "lost_norm": 0.931563873330215,
+          "retained_fraction": 0.3635777082083102,
+          "lost_fraction": 0.931563873330215,
+          "retained_squared_fraction": 0.13218874990600715,
+          "lost_squared_fraction": 0.8678112500939927,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.022192003000551606,
+            -0.02801139675357046,
+            0.8678112500939928,
+            -0.10629141575331529,
+            -0.3191158449830196,
+            0.008473652767138976,
+            0.015269924221916172
+          ],
+          "witness_compressed_difference": -3.3068166260807885e-18,
+          "witness_target_difference": 0.8678112500939928,
+          "least_squares_residual": 0.931563873330215
+        },
+        {
+          "target": "unit_100",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.4339431901381195,
+          "retained_projection_norm": 0.2923485498522811,
+          "lost_norm": 0.9563118348108364,
+          "retained_fraction": 0.2923485498522811,
+          "lost_fraction": 0.9563118348108364,
+          "retained_squared_fraction": 0.08546767460073168,
+          "lost_squared_fraction": 0.9145323253992684,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.01784432804612866,
+            -0.022523633972496782,
+            -0.10629141575331529,
+            0.9145323253992683,
+            -0.25659728968372086,
+            0.006813564315129885,
+            0.0122783660874877
+          ],
+          "witness_compressed_difference": 1.826880660638075e-17,
+          "witness_target_difference": 0.9145323253992683,
+          "least_squares_residual": 0.9563118348108364
+        },
+        {
+          "target": "unit_143",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 1.3028159124057386,
+          "retained_projection_norm": 0.877710150480908,
+          "lost_norm": 0.47919191535624,
+          "retained_fraction": 0.877710150480908,
+          "lost_fraction": 0.47919191535624,
+          "retained_squared_fraction": 0.770375108257218,
+          "lost_squared_fraction": 0.2296248917427819,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.05357354384864265,
+            -0.06762209757279831,
+            -0.3191158449830196,
+            -0.25659728968372086,
+            0.2296248917427819,
+            0.020456180006248572,
+            0.036863006680737324
+          ],
+          "witness_compressed_difference": 1.3227266504323154e-17,
+          "witness_target_difference": 0.2296248917427819,
+          "least_squares_residual": 0.47919191535624
+        },
+        {
+          "target": "unit_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "projection_coefficient": -0.03459436388004175,
+          "retained_projection_norm": 0.023306304473111522,
+          "lost_norm": 0.9997283711947993,
+          "retained_fraction": 0.023306304473111522,
+          "lost_fraction": 0.9997283711947993,
+          "retained_squared_fraction": 0.0005431838281933782,
+          "lost_squared_fraction": 0.9994568161718065,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.001422566805175869,
+            0.0017956055245328677,
+            0.008473652767138976,
+            0.006813564315129885,
+            0.020456180006248572,
+            0.9994568161718066,
+            -0.000978843023548121
+          ],
+          "witness_compressed_difference": -2.1819568721270777e-18,
+          "witness_target_difference": 0.9994568161718066,
+          "least_squares_residual": 0.9997283711947993
+        },
+        {
+          "target": "unit_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "projection_coefficient": -0.06234068464573037,
+          "retained_projection_norm": 0.04199906616157924,
+          "lost_norm": 0.9991176499499722,
+          "retained_fraction": 0.04199906616157924,
+          "lost_fraction": 0.9991176499499722,
+          "retained_squared_fraction": 0.0017639215584447103,
+          "lost_squared_fraction": 0.9982360784415553,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.0025635328603373056,
+            0.0032357663271737453,
+            0.01526992422191617,
+            0.0122783660874877,
+            0.036863006680737324,
+            -0.000978843023548121,
+            0.9982360784415553
+          ],
+          "witness_compressed_difference": 0.0,
+          "witness_target_difference": 0.9982360784415553,
+          "least_squares_residual": 0.9991176499499722
+        },
+        {
+          "target": "contrast_30_44",
+          "target_vector": [
+            1.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.20495938727209506,
+          "retained_projection_norm": 0.1380816222246449,
+          "lost_norm": 1.4074563814213963,
+          "retained_fraction": 0.09763845143228549,
+          "lost_fraction": 0.9952219515273492,
+          "retained_squared_fraction": 0.009533267198094773,
+          "lost_squared_fraction": 0.9904667328019051,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9915717941294281,
+            -0.9893616714743824,
+            0.050203399754122066,
+            0.04036796201862544,
+            0.12119564142144096,
+            -0.0032181723297087365,
+            -0.005799299187511051
+          ],
+          "witness_compressed_difference": -1.7889335846010823e-18,
+          "witness_target_difference": 1.9809334656038105,
+          "least_squares_residual": 1.407456381421396
+        },
+        {
+          "target": "contrast_30_70",
+          "target_vector": [
+            1.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.6302717480748895,
+          "retained_projection_norm": 0.4246155620137938,
+          "lost_norm": 1.3489631664710902,
+          "retained_fraction": 0.30024854329729056,
+          "lost_fraction": 0.9538610025825853,
+          "retained_squared_fraction": 0.09014918775214496,
+          "lost_squared_fraction": 0.9098508122478549,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9740823774022688,
+            0.03271398302696276,
+            -0.8456192470934413,
+            0.12413574379944393,
+            0.37268938883166225,
+            -0.009896219572314844,
+            -0.017833457082253475
+          ],
+          "witness_compressed_difference": -1.6154612370034016e-17,
+          "witness_target_difference": 1.81970162449571,
+          "least_squares_residual": 1.3489631664710902
+        },
+        {
+          "target": "contrast_30_100",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.5245438139924848,
+          "retained_projection_norm": 0.35338640365776464,
+          "lost_norm": 1.3693494987437762,
+          "retained_fraction": 0.24988192240553192,
+          "lost_fraction": 0.9682763163761239,
+          "retained_squared_fraction": 0.06244097514508427,
+          "lost_squared_fraction": 0.9375590248549155,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9784300523566918,
+            0.027226220245889082,
+            0.12848341875386687,
+            -0.8966879973531396,
+            0.31017083353236347,
+            -0.008236131120305754,
+            -0.014841898947825005
+          ],
+          "witness_compressed_difference": -3.7513395167998453e-17,
+          "witness_target_difference": 1.8751180497098314,
+          "least_squares_residual": 1.3693494987437762
+        },
+        {
+          "target": "contrast_30_143",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -1.3934165362601039,
+          "retained_projection_norm": 0.9387480042863914,
+          "lost_norm": 1.057710822696032,
+          "retained_fraction": 0.6637950796562455,
+          "lost_fraction": 0.7479144952627661,
+          "retained_squared_fraction": 0.44062390777584126,
+          "lost_squared_fraction": 0.5593760922241583,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9427008365541778,
+            0.0723246838461906,
+            0.34130784798357117,
+            0.2744416177298495,
+            -0.17605134789413934,
+            -0.02187874681142444,
+            -0.039426539541074626
+          ],
+          "witness_compressed_difference": -7.41594285980085e-17,
+          "witness_target_difference": 1.1187521844483173,
+          "least_squares_residual": 1.0577108226960321
+        },
+        {
+          "target": "contrast_30_217",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": -0.05600625997432362,
+          "retained_projection_norm": 0.03773154933237206,
+          "lost_norm": 1.4137101294766827,
+          "retained_fraction": 0.02668023439759503,
+          "lost_fraction": 0.9996440191850744,
+          "retained_squared_fraction": 0.0007118349075106129,
+          "lost_squared_fraction": 0.9992881650924892,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9976969472079963,
+            0.0029069807488594336,
+            0.013718350233412628,
+            0.011030763730998774,
+            0.03311736384239408,
+            -1.0008793829769824,
+            -0.0015846898367891848
+          ],
+          "witness_compressed_difference": -1.5720931501039814e-18,
+          "witness_target_difference": 1.9985763301849788,
+          "least_squares_residual": 1.4137101294766827
+        },
+        {
+          "target": "contrast_30_353",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": -0.028259939208634996,
+          "retained_projection_norm": 0.01903878764390434,
+          "lost_norm": 1.414085402146932,
+          "retained_fraction": 0.013462455848575411,
+          "lost_fraction": 0.9999093770350016,
+          "retained_squared_fraction": 0.00018123771747484226,
+          "lost_squared_fraction": 0.999818762282525,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9988379132631577,
+            0.0014668199462185558,
+            0.006922078778635434,
+            0.005565961958640961,
+            0.01671053716790533,
+            -0.0004437237816277481,
+            -1.0007996113018927
+          ],
+          "witness_compressed_difference": 6.938893903907228e-18,
+          "witness_target_difference": 1.9996375245650504,
+          "least_squares_residual": 1.414085402146932
+        },
+        {
+          "target": "contrast_44_70",
+          "target_vector": [
+            0.0,
+            1.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.42531236080279444,
+          "retained_projection_norm": 0.2865339397891489,
+          "lost_norm": 1.3848820532265222,
+          "retained_fraction": 0.20261009186500506,
+          "lost_fraction": 0.9792594909800231,
+          "retained_squared_fraction": 0.04105084932554579,
+          "lost_squared_fraction": 0.9589491506744539,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.017489416727159302,
+            1.0220756545013452,
+            -0.8958226468475633,
+            0.08376778178081849,
+            0.2514937474102213,
+            -0.006678047242606107,
+            -0.012034157894742424
+          ],
+          "witness_compressed_difference": -2.813504637599884e-17,
+          "witness_target_difference": 1.9178983013489086,
+          "least_squares_residual": 1.3848820532265222
+        },
+        {
+          "target": "contrast_44_100",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.3195844267203898,
+          "retained_projection_norm": 0.21530478143311976,
+          "lost_norm": 1.3977281034207034,
+          "retained_fraction": 0.15224347097324645,
+          "lost_fraction": 0.9883430201837913,
+          "retained_squared_fraction": 0.02317807445398173,
+          "lost_squared_fraction": 0.9768219255460182,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.013141741772736358,
+            1.0165878917202715,
+            0.07828001899974482,
+            -0.9370559593717651,
+            0.18897519211092254,
+            -0.005017958790597017,
+            -0.009042599760313953
+          ],
+          "witness_compressed_difference": -8.023096076392733e-18,
+          "witness_target_difference": 1.9536438510920366,
+          "least_squares_residual": 1.3977281034207034
+        },
+        {
+          "target": "contrast_44_143",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -1.1884571489880087,
+          "retained_projection_norm": 0.8006663820617465,
+          "lost_norm": 1.1657329645489798,
+          "retained_fraction": 0.56615662822396,
+          "lost_fraction": 0.8242976842852807,
+          "retained_squared_fraction": 0.3205333276819232,
+          "lost_squared_fraction": 0.6794666723180763,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.04887095757525035,
+            1.0616863553205729,
+            0.2911044482294491,
+            0.23407365571122404,
+            -0.29724698931558036,
+            -0.0186605744817157,
+            -0.03362724035356357
+          ],
+          "witness_compressed_difference": -1.5579985218616699e-16,
+          "witness_target_difference": 1.3589333446361533,
+          "least_squares_residual": 1.1657329645489798
+        },
+        {
+          "target": "contrast_44_217",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.14895312729777144,
+          "retained_projection_norm": 0.10035007289227284,
+          "lost_norm": 1.4106487383011108,
+          "retained_fraction": 0.07095821703469046,
+          "lost_fraction": 0.9974792887249628,
+          "retained_squared_fraction": 0.005035068564742235,
+          "lost_squared_fraction": 0.9949649314352575,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.00612515307856817,
+            0.9922686522232418,
+            -0.03648504952070943,
+            -0.029337198287626667,
+            -0.08807827757904688,
+            -0.9976612106472738,
+            0.004214609350721866
+          ],
+          "witness_compressed_difference": -5.515878552520004e-18,
+          "witness_target_difference": 1.9899298628705155,
+          "least_squares_residual": 1.4106487383011108
+        },
+        {
+          "target": "contrast_44_353",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.17669944806346008,
+          "retained_projection_norm": 0.11904283458074057,
+          "lost_norm": 1.409194381033001,
+          "retained_fraction": 0.08417599558371008,
+          "lost_fraction": 0.9964509028384144,
+          "retained_squared_fraction": 0.007085598232508779,
+          "lost_squared_fraction": 0.992914401767491,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.007266119133729608,
+            0.9908284914206009,
+            -0.043281320975486634,
+            -0.03480200005998448,
+            -0.10448510425353563,
+            0.0027744485480809887,
+            -0.9950003121143816
+          ],
+          "witness_compressed_difference": 6.938893903907228e-18,
+          "witness_target_difference": 1.9858288035349825,
+          "least_squares_residual": 1.409194381033001
+        },
+        {
+          "target": "contrast_70_100",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.10572793408240466,
+          "retained_projection_norm": 0.07122915835602912,
+          "lost_norm": 1.412418637302656,
+          "retained_fraction": 0.050366620891758626,
+          "lost_fraction": 0.9987307963109707,
+          "retained_squared_fraction": 0.002536796500054136,
+          "lost_squared_fraction": 0.9974632034999455,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.0043476749544229445,
+            -0.005487762781073677,
+            0.9741026658473081,
+            -1.0208237411525836,
+            -0.06251855529929874,
+            0.0016600884520090904,
+            0.0029915581344284715
+          ],
+          "witness_compressed_difference": 2.0111950299606107e-17,
+          "witness_target_difference": 1.9949264069998915,
+          "least_squares_residual": 1.412418637302656
+        },
+        {
+          "target": "contrast_70_143",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.7631447881852144,
+          "retained_projection_norm": 0.5141324422725977,
+          "lost_norm": 1.317447468327604,
+          "retained_fraction": 0.363546536358955,
+          "lost_fraction": 0.9315760387114981,
+          "retained_squared_fraction": 0.13216608409859296,
+          "lost_squared_fraction": 0.8678339159014066,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.03138154084809105,
+            0.039610700819227844,
+            1.1869270950770123,
+            0.15030587393040556,
+            -0.5487407367258015,
+            -0.011982527239109596,
+            -0.02159308245882115
+          ],
+          "witness_compressed_difference": 3.903127820947816e-17,
+          "witness_target_difference": 1.7356678318028138,
+          "least_squares_residual": 1.3174474683276043
+        },
+        {
+          "target": "contrast_70_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.5742654881005659,
+          "retained_projection_norm": 0.3868840126814217,
+          "lost_norm": 1.3602649597528862,
+          "retained_fraction": 0.2735683088996955,
+          "lost_fraction": 0.9618525772517119,
+          "retained_squared_fraction": 0.07483961963423921,
+          "lost_squared_fraction": 0.9251603803657604,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.023614569805727473,
+            -0.029807002278103324,
+            0.8593375973268539,
+            -0.11310498006844516,
+            -0.33957202498926814,
+            -0.9909831634046676,
+            0.016248767245464292
+          ],
+          "witness_compressed_difference": 3.615814245239157e-17,
+          "witness_target_difference": 1.8503207607315215,
+          "least_squares_residual": 1.3602649597528862
+        },
+        {
+          "target": "contrast_70_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.6020118088662545,
+          "retained_projection_norm": 0.4055767743698894,
+          "lost_norm": 1.3548090197853406,
+          "retained_fraction": 0.28678608744871514,
+          "lost_fraction": 0.9579946451029138,
+          "retained_squared_fraction": 0.08224625995414207,
+          "lost_squared_fraction": 0.9177537400458575,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.024755535860888907,
+            -0.0312471630807442,
+            0.8525413258720766,
+            -0.11856978184080297,
+            -0.35597885166375687,
+            0.009452495790687096,
+            -0.9829661542196391
+          ],
+          "witness_compressed_difference": 5.204170427930421e-17,
+          "witness_target_difference": 1.8355074800917157,
+          "least_squares_residual": 1.3548090197853406
+        },
+        {
+          "target": "contrast_100_143",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.868872722267619,
+          "retained_projection_norm": 0.5853616006286269,
+          "lost_norm": 1.2873817602053759,
+          "retained_fraction": 0.41391315725071365,
+          "lost_fraction": 0.9103163726170951,
+          "retained_squared_fraction": 0.171324101745254,
+          "lost_squared_fraction": 0.8286758982547456,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.03572921580251399,
+            0.04509846360030152,
+            0.21282442922970432,
+            1.171129615082989,
+            -0.48622218142650275,
+            -0.013642615691118687,
+            -0.02458464059324962
+          ],
+          "witness_compressed_difference": -5.0523821237824507e-17,
+          "witness_target_difference": 1.657351796509492,
+          "least_squares_residual": 1.2873817602053759
+        },
+        {
+          "target": "contrast_100_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.4685375540181613,
+          "retained_projection_norm": 0.3156548543253926,
+          "lost_norm": 1.378536184850008,
+          "retained_fraction": 0.22320168800793688,
+          "lost_fraction": 0.9747722844184725,
+          "retained_squared_fraction": 0.0498189935295924,
+          "lost_squared_fraction": 0.9501810064704074,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.01926689485130453,
+            -0.02431923949702965,
+            -0.11476506852045426,
+            0.9077187610841384,
+            -0.2770534696899694,
+            -0.9926432518566768,
+            0.013257209111035822
+          ],
+          "witness_compressed_difference": 4.174178364069192e-18,
+          "witness_target_difference": 1.9003620129408152,
+          "least_squares_residual": 1.378536184850008
+        },
+        {
+          "target": "contrast_100_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.49628387478384983,
+          "retained_projection_norm": 0.33434761601386026,
+          "lost_norm": 1.3741221458319666,
+          "retained_fraction": 0.23641946655695648,
+          "lost_fraction": 0.9716510874963935,
+          "retained_squared_fraction": 0.05589416416707586,
+          "lost_squared_fraction": 0.9441058358329238,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.020407860906465965,
+            -0.025759400299670526,
+            -0.12156133997523144,
+            0.9022539593117807,
+            -0.29346029636445814,
+            0.007792407338678005,
+            -0.9859577123540676
+          ],
+          "witness_compressed_difference": 1.734723475976807e-17,
+          "witness_target_difference": 1.8882116716658484,
+          "least_squares_residual": 1.3741221458319666
+        },
+        {
+          "target": "contrast_143_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 1.3374102762857802,
+          "retained_projection_norm": 0.9010164549540194,
+          "lost_norm": 1.0900318105000844,
+          "retained_fraction": 0.6371148452586505,
+          "lost_fraction": 0.7707688849136594,
+          "retained_squared_fraction": 0.40591532604895414,
+          "lost_squared_fraction": 0.5940846739510457,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.05499611065381852,
+            -0.06941770309733117,
+            -0.32758949775015855,
+            -0.2634108539988507,
+            0.2091687117365334,
+            -0.9790006361655581,
+            0.03784184970428544
+          ],
+          "witness_compressed_difference": 8.218252467440124e-17,
+          "witness_target_difference": 1.1881693479020914,
+          "least_squares_residual": 1.0900318105000844
+        },
+        {
+          "target": "contrast_143_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 1.365156597051469,
+          "retained_projection_norm": 0.9197092166424872,
+          "lost_norm": 1.0743067331180898,
+          "retained_fraction": 0.6503326238076702,
+          "lost_fraction": 0.7596495760621678,
+          "retained_squared_fraction": 0.4229325215885686,
+          "lost_squared_fraction": 0.5770674784114312,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.05613707670897996,
+            -0.07085786389997205,
+            -0.3343857692049358,
+            -0.2688756557712086,
+            0.1927618850620446,
+            0.021435023029796694,
+            -0.961373071760818
+          ],
+          "witness_compressed_difference": 1.3877787807814457e-17,
+          "witness_target_difference": 1.1541349568228627,
+          "least_squares_residual": 1.0743067331180898
+        },
+        {
+          "target": "contrast_217_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.02774632076568862,
+          "retained_projection_norm": 0.018692761688467716,
+          "lost_norm": 1.4140900185845517,
+          "retained_fraction": 0.01321777854901962,
+          "lost_fraction": 0.9999126413493474,
+          "retained_squared_fraction": 0.00017470966977092318,
+          "lost_squared_fraction": 0.9998252903302288,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.0011409660551614368,
+            -0.0014401608026408776,
+            -0.0067962714547771955,
+            -0.005464801772357814,
+            -0.01640682667448875,
+            1.0004356591953547,
+            -0.9992149214651034
+          ],
+          "witness_compressed_difference": 3.469446951953614e-18,
+          "witness_target_difference": 1.999650580660458,
+          "least_squares_residual": 1.4140900185845517
+        }
+      ],
+      "exact_witness": {
+        "target": "contrast_30_44",
+        "source_decimal_weights": [
+          "-4.112134595417663019e-02",
+          "5.190456834989794210e-02",
+          "2.449431588487051836e-01",
+          "1.969559070013939539e-01",
+          "5.913153968427264928e-01",
+          "-1.570151224855308864e-02",
+          "-2.829486985054339987e-02"
+        ],
+        "s0": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "s1_h_exact": [
+          "1500165048544721334470294271204323731625/1512916217894059463883194685951449569742",
+          "-2245231977204551259367472692881130932568/2269374326841089195824792028927174354613",
+          "37976768840714956138682279872459870740/756458108947029731941597342975724784871",
+          "30536672210654925028432079276557462385/756458108947029731941597342975724784871",
+          "275038277166856613140890469478058822560/2269374326841089195824792028927174354613",
+          "-2434412554797128115906655932610762976/756458108947029731941597342975724784871",
+          "-26321561379615936173794317195526916023/4538748653682178391649584057854348709226"
+        ],
+        "projection_coefficient_exact": "-465129571520372861450000000000000000000/2269374326841089195824792028927174354613",
+        "w_dot_h_exact": "0",
+        "a_dot_h_exact": "8990959100043266522145828199375233060011/4538748653682178391649584057854348709226",
+        "h_dot_h_exact": "8990959100043266522145828199375233060011/4538748653682178391649584057854348709226",
+        "a_dot_h_minus_h_dot_h_exact": "0",
+        "decimal_precision": 80,
+        "decimal_w_dot_h_residual": "1.91E-81",
+        "decimal_a_dot_h_minus_h_dot_h_residual": "0E-79"
+      },
+      "controls": {
+        "projector_symmetry_max_abs": 0.0,
+        "projector_idempotence_max_abs": 1.1102230246251565e-16,
+        "projector_annihilation_norm": 1.1242293031246444e-17,
+        "projector_trace": 6.0,
+        "projection_vs_lstsq_max_abs": 2.220446049250313e-16
+      }
+    },
+    "E3": {
+      "weights": [
+        -0.04107515209964416,
+        0.05190285280874792,
+        0.2447965465009411,
+        0.19695656983920468,
+        0.5913162590034866,
+        -0.015701519231835066,
+        -0.028294880748241442
+      ],
+      "source_decimal_weights": [
+        "-4.107515209964415770e-02",
+        "5.190285280874792212e-02",
+        "2.447965465009410979e-01",
+        "1.969565698392046760e-01",
+        "5.913162590034866106e-01",
+        "-1.570151923183506562e-02",
+        "-2.829488074824144245e-02"
+      ],
+      "weight_sum": 0.9999006760726596,
+      "weight_norm": 0.6736470663306802,
+      "row_rank": 1,
+      "kernel_dimension": 6,
+      "target_count": 28,
+      "targets": [
+        {
+          "target": "unit_30",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.0905137034194632,
+          "retained_projection_norm": 0.060974290771246636,
+          "lost_norm": 0.9981393368988839,
+          "retained_fraction": 0.060974290771246636,
+          "lost_fraction": 0.9981393368988839,
+          "retained_squared_fraction": 0.0037178641350565323,
+          "lost_squared_fraction": 0.9962821358649436,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9962821358649435,
+            0.004697919425755062,
+            0.022157442008095014,
+            0.017827268548940563,
+            0.053522224494548076,
+            -0.0014212026549853167,
+            -0.002561074444335405
+          ],
+          "witness_compressed_difference": 2.72405795836983e-18,
+          "witness_target_difference": 0.9962821358649435,
+          "least_squares_residual": 0.9981393368988838
+        },
+        {
+          "target": "unit_44",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.11437375604497788,
+          "retained_projection_norm": 0.07704754522492023,
+          "lost_norm": 0.9970274197707976,
+          "retained_fraction": 0.07704754522492023,
+          "lost_fraction": 0.9970274197707976,
+          "retained_squared_fraction": 0.005936324225186129,
+          "lost_squared_fraction": 0.9940636757748141,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.0046979194257550615,
+            0.9940636757748139,
+            -0.027998300490151718,
+            -0.02252666267024484,
+            -0.06763106155269373,
+            0.0017958417301574322,
+            0.003236191788021108
+          ],
+          "witness_compressed_difference": 1.1018204577883939e-17,
+          "witness_target_difference": 0.9940636757748139,
+          "least_squares_residual": 0.9970274197707976
+        },
+        {
+          "target": "unit_70",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.5394366393176903,
+          "retained_projection_norm": 0.3633899095476433,
+          "lost_norm": 0.931637146983178,
+          "retained_fraction": 0.3633899095476433,
+          "lost_fraction": 0.931637146983178,
+          "retained_squared_fraction": 0.13205222636104436,
+          "lost_squared_fraction": 0.8679477736389556,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.022157442008095014,
+            -0.027998300490151718,
+            0.8679477736389556,
+            -0.10624559012560053,
+            -0.31897765553074975,
+            0.008469974766603189,
+            0.015263295380726178
+          ],
+          "witness_compressed_difference": -1.8431436932253575e-17,
+          "witness_target_difference": 0.8679477736389556,
+          "least_squares_residual": 0.931637146983178
+        },
+        {
+          "target": "unit_100",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.43401588643405176,
+          "retained_projection_norm": 0.2923735286372086,
+          "lost_norm": 0.9563041983345192,
+          "retained_fraction": 0.2923735286372086,
+          "lost_fraction": 0.9563041983345192,
+          "retained_squared_fraction": 0.08548228024777264,
+          "lost_squared_fraction": 0.9145177197522274,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.01782726854894056,
+            -0.02252666267024484,
+            -0.10624559012560052,
+            0.9145177197522274,
+            -0.2566406503142656,
+            0.006814708787766207,
+            0.012280427749493795
+          ],
+          "witness_compressed_difference": 3.604972223514302e-17,
+          "witness_target_difference": 0.9145177197522274,
+          "least_squares_residual": 0.9563041983345191
+        },
+        {
+          "target": "unit_143",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 1.3030316811659899,
+          "retained_projection_norm": 0.8777834693534032,
+          "lost_norm": 0.479057596672783,
+          "retained_fraction": 0.8777834693534032,
+          "lost_fraction": 0.479057596672783,
+          "retained_squared_fraction": 0.7705038190700969,
+          "lost_squared_fraction": 0.22949618092990284,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.05352222449454807,
+            -0.06763106155269373,
+            -0.3189776555307497,
+            -0.2566406503142656,
+            0.22949618092990298,
+            0.020459577001518167,
+            0.03686912602977225
+          ],
+          "witness_compressed_difference": 1.242495689668388e-16,
+          "witness_target_difference": 0.22949618092990298,
+          "least_squares_residual": 0.47905759667278297
+        },
+        {
+          "target": "unit_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "projection_coefficient": -0.03460005824294023,
+          "retained_projection_norm": 0.02330822773022736,
+          "lost_norm": 0.9997283263567537,
+          "retained_fraction": 0.02330822773022736,
+          "lost_fraction": 0.9997283263567537,
+          "retained_squared_fraction": 0.0005432734799241395,
+          "lost_squared_fraction": 0.9994567265200759,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.0014212026549853167,
+            0.0017958417301574322,
+            0.008469974766603189,
+            0.006814708787766207,
+            0.02045957700151817,
+            0.9994567265200759,
+            -0.0009790045218662023
+          ],
+          "witness_compressed_difference": -1.0706496453294356e-18,
+          "witness_target_difference": 0.9994567265200759,
+          "least_squares_residual": 0.9997283263567537
+        },
+        {
+          "target": "unit_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "projection_coefficient": -0.062350942441369364,
+          "retained_projection_norm": 0.042002529458581565,
+          "lost_norm": 0.9991175043602635,
+          "retained_fraction": 0.042002529458581565,
+          "lost_fraction": 0.9991175043602635,
+          "retained_squared_fraction": 0.0017642124809190123,
+          "lost_squared_fraction": 0.9982357875190812,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.002561074444335405,
+            0.003236191788021108,
+            0.015263295380726178,
+            0.012280427749493797,
+            0.036869126029772256,
+            -0.0009790045218662023,
+            0.998235787519081
+          ],
+          "witness_compressed_difference": -3.469446951953614e-18,
+          "witness_target_difference": 0.998235787519081,
+          "least_squares_residual": 0.9991175043602635
+        },
+        {
+          "target": "contrast_30_44",
+          "target_vector": [
+            1.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.2048874594644411,
+          "retained_projection_norm": 0.13802183599616688,
+          "lost_norm": 1.4074622455995924,
+          "retained_fraction": 0.09759617618470712,
+          "lost_fraction": 0.9952260981275177,
+          "retained_squared_fraction": 0.009525013605876391,
+          "lost_squared_fraction": 0.9904749863941235,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9915842164391884,
+            -0.9893657563490588,
+            0.05015574249824674,
+            0.04035393121918541,
+            0.1211532860472418,
+            -0.0032170443851427494,
+            -0.005797266232356513
+          ],
+          "witness_compressed_difference": -1.52059354691092e-17,
+          "witness_target_difference": 1.9809499727882471,
+          "least_squares_residual": 1.4074622455995924
+        },
+        {
+          "target": "contrast_30_70",
+          "target_vector": [
+            1.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.6299503427371534,
+          "retained_projection_norm": 0.42436420031888983,
+          "lost_norm": 1.3490422623060068,
+          "retained_fraction": 0.3000708037382934,
+          "lost_fraction": 0.9539169317838185,
+          "retained_squared_fraction": 0.09004248725614541,
+          "lost_squared_fraction": 0.9099575127438542,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9741246938568484,
+            0.03269621991590678,
+            -0.8457903316308606,
+            0.12407285867454108,
+            0.37249988002529777,
+            -0.009891177421588506,
+            -0.01782436982506158
+          ],
+          "witness_compressed_difference": -4.130810277169772e-17,
+          "witness_target_difference": 1.819915025487709,
+          "least_squares_residual": 1.349042262306007
+        },
+        {
+          "target": "contrast_30_100",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.5245295898535149,
+          "retained_projection_norm": 0.3533478194084552,
+          "lost_norm": 1.3693594555555126,
+          "retained_fraction": 0.24985463922119824,
+          "lost_fraction": 0.9682833569052216,
+          "retained_squared_fraction": 0.06242734074035513,
+          "lost_squared_fraction": 0.9375726592596448,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.978454867316003,
+            0.027224582095999903,
+            0.12840303213369553,
+            -0.8966904512032868,
+            0.31016287480881366,
+            -0.008235911442751523,
+            -0.0148415021938292
+          ],
+          "witness_compressed_difference": -4.027811070783649e-17,
+          "witness_target_difference": 1.87514531851929,
+          "least_squares_residual": 1.3693594555555124
+        },
+        {
+          "target": "contrast_30_143",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -1.3935453845854533,
+          "retained_projection_norm": 0.93875776012465,
+          "lost_norm": 1.057702164035675,
+          "retained_fraction": 0.6638019780756342,
+          "lost_fraction": 0.7479083726653117,
+          "retained_squared_fraction": 0.4406330660971248,
+          "lost_squared_fraction": 0.5593669339028748,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9427599113703954,
+            0.0723289809784488,
+            0.34113509753884474,
+            0.27446791886320615,
+            -0.17597395643535474,
+            -0.021880779656503486,
+            -0.03943020047410766
+          ],
+          "witness_compressed_difference": -3.2526065174565133e-18,
+          "witness_target_difference": 1.1187338678057501,
+          "least_squares_residual": 1.0577021640356752
+        },
+        {
+          "target": "contrast_30_217",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": -0.05591364517652296,
+          "retained_projection_norm": 0.03766606304101927,
+          "lost_norm": 1.413711875770657,
+          "retained_fraction": 0.026633928596904718,
+          "lost_fraction": 0.9996452540013856,
+          "retained_squared_fraction": 0.0007093661525050189,
+          "lost_squared_fraction": 0.9992906338474946,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9977033385199288,
+            0.0029020776955976293,
+            0.013687467241491823,
+            0.011012559761174354,
+            0.0330626474930299,
+            -1.0008779291750611,
+            -0.0015820699224692026
+          ],
+          "witness_compressed_difference": 2.5343225781848666e-18,
+          "witness_target_difference": 1.99858126769499,
+          "least_squares_residual": 1.413711875770657
+        },
+        {
+          "target": "contrast_30_353",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": -0.028162760978093834,
+          "retained_projection_norm": 0.018971761312665068,
+          "lost_norm": 1.4140863029789572,
+          "retained_fraction": 0.013415061075238065,
+          "lost_fraction": 0.9999100140194354,
+          "retained_squared_fraction": 0.00017996386365236745,
+          "lost_squared_fraction": 0.9998200361363475,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9988432103092789,
+            0.0014617276377339539,
+            0.006894146627368837,
+            0.0055468407994467665,
+            0.01665309846477582,
+            -0.00044219813311911446,
+            -1.0007968619634164
+          ],
+          "witness_compressed_difference": 0.0,
+          "witness_target_difference": 1.9996400722726952,
+          "least_squares_residual": 1.4140863029789572
+        },
+        {
+          "target": "contrast_44_70",
+          "target_vector": [
+            0.0,
+            1.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.42506288327271236,
+          "retained_projection_norm": 0.286342364322723,
+          "lost_norm": 1.3849216766279866,
+          "retained_fraction": 0.20247462755358633,
+          "lost_fraction": 0.9792875089558922,
+          "retained_squared_fraction": 0.040995974802963506,
+          "lost_squared_fraction": 0.9590040251970364,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.01745952258233995,
+            1.0220619762649656,
+            -0.8959460741291074,
+            0.08371892745535568,
+            0.251346593978056,
+            -0.006674133036445757,
+            -0.012027103592705068
+          ],
+          "witness_compressed_difference": -2.6075062248276382e-17,
+          "witness_target_difference": 1.918008050394073,
+          "least_squares_residual": 1.3849216766279866
+        },
+        {
+          "target": "contrast_44_100",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.31964213038907385,
+          "retained_projection_norm": 0.2153259834122883,
+          "lost_norm": 1.3977248373222575,
+          "retained_fraction": 0.1522584630364911,
+          "lost_fraction": 0.9883407107034322,
+          "retained_squared_fraction": 0.02318263956623453,
+          "lost_squared_fraction": 0.9768173604337654,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.013129349123185498,
+            1.0165903384450587,
+            0.07824728963544879,
+            -0.9370443824224722,
+            0.18900958876157184,
+            -0.005018867057608775,
+            -0.009044235961472687
+          ],
+          "witness_compressed_difference": -2.5045070184415152e-17,
+          "witness_target_difference": 1.953634720867531,
+          "least_squares_residual": 1.3977248373222575
+        },
+        {
+          "target": "contrast_44_143",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -1.188657925121012,
+          "retained_projection_norm": 0.800735924128483,
+          "lost_norm": 1.1656851975598317,
+          "retained_fraction": 0.5662058018909272,
+          "lost_fraction": 0.8242639079233373,
+          "retained_squared_fraction": 0.32058901009494783,
+          "lost_squared_fraction": 0.6794109899050519,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.048824305068793004,
+            1.0616947373275076,
+            0.290979355040598,
+            0.23411398764402075,
+            -0.2971272424825966,
+            -0.018663735271360737,
+            -0.03363293424175114
+          ],
+          "witness_compressed_difference": -2.168404344971009e-18,
+          "witness_target_difference": 1.3588219798101042,
+          "least_squares_residual": 1.1656851975598317
+        },
+        {
+          "target": "contrast_44_217",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.14897381428791812,
+          "retained_projection_norm": 0.1003557729551476,
+          "lost_norm": 1.4106483328011183,
+          "retained_fraction": 0.0709622475878024,
+          "lost_fraction": 0.9974790019931684,
+          "retained_squared_fraction": 0.005035640582712566,
+          "lost_squared_fraction": 0.9949643594172872,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.006119122080740378,
+            0.9922678340446565,
+            -0.03646827525675491,
+            -0.02934137145801105,
+            -0.0880906385542119,
+            -0.9976608847899184,
+            0.00421519630988731
+          ],
+          "witness_compressed_difference": 1.9786689647860456e-18,
+          "witness_target_difference": 1.989928718834575,
+          "least_squares_residual": 1.4106483328011183
+        },
+        {
+          "target": "contrast_44_353",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.17672469848634723,
+          "retained_projection_norm": 0.11905007468350179,
+          "lost_norm": 1.4091937694007353,
+          "retained_fraction": 0.08418111510946903,
+          "lost_fraction": 0.9964504703490917,
+          "retained_squared_fraction": 0.0070864601410736755,
+          "lost_squared_fraction": 0.9929135398589262,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.007258993870090466,
+            0.9908274839867928,
+            -0.04326159587087789,
+            -0.03480709041973864,
+            -0.10450018758246597,
+            0.0027748462520236343,
+            -0.9949995957310599
+          ],
+          "witness_compressed_difference": 1.734723475976807e-17,
+          "witness_target_difference": 1.9858270797178528,
+          "least_squares_residual": 1.4091937694007353
+        },
+        {
+          "target": "contrast_70_100",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.10542075288363849,
+          "retained_projection_norm": 0.07101638091043465,
+          "lost_norm": 1.4124293517349404,
+          "retained_fraction": 0.05021616451709522,
+          "lost_fraction": 0.9987383725586957,
+          "retained_squared_fraction": 0.002521663178807973,
+          "lost_squared_fraction": 0.9974783368211918,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.004330173459154451,
+            -0.0054716378199068764,
+            0.9741933637645561,
+            -1.020763309877828,
+            -0.06233700521648414,
+            0.0016552659788369817,
+            0.002982867631232381
+          ],
+          "witness_compressed_difference": 1.0028870095490916e-18,
+          "witness_target_difference": 1.994956673642384,
+          "least_squares_residual": 1.4124293517349404
+        },
+        {
+          "target": "contrast_70_143",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.7635950418482997,
+          "retained_projection_norm": 0.51439355980576,
+          "lost_norm": 1.3173455376742875,
+          "retained_fraction": 0.36373117433734076,
+          "lost_fraction": 0.9315039628553272,
+          "retained_squared_fraction": 0.13230036718482097,
+          "lost_squared_fraction": 0.8676996328151787,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.03136478248645306,
+            0.03963276106254201,
+            1.1869254291697053,
+            0.15039506018866505,
+            -0.5484738364606526,
+            -0.01198960223491498,
+            -0.021605830649046073
+          ],
+          "witness_compressed_difference": -3.176712365382528e-17,
+          "witness_target_difference": 1.7353992656303578,
+          "least_squares_residual": 1.3173455376742875
+        },
+        {
+          "target": "contrast_70_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.5740366975606305,
+          "retained_projection_norm": 0.3866981372778706,
+          "lost_norm": 1.3603178123607091,
+          "retained_fraction": 0.27343687514138876,
+          "lost_fraction": 0.9618899496891069,
+          "retained_squared_fraction": 0.07476772468708742,
+          "lost_squared_fraction": 0.9252322753129124,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.02357864466308033,
+            -0.029794142220309152,
+            0.8594777988723524,
+            -0.11306029891336673,
+            -0.3394372325322679,
+            -0.9909867517534727,
+            0.016242299902592378
+          ],
+          "witness_compressed_difference": 7.752045533271357e-18,
+          "witness_target_difference": 1.850464550625825,
+          "least_squares_residual": 1.360317812360709
+        },
+        {
+          "target": "contrast_70_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.6017875817590597,
+          "retained_projection_norm": 0.4053924390062249,
+          "lost_norm": 1.3548641889121522,
+          "retained_fraction": 0.2866557426630555,
+          "lost_fraction": 0.9580336555665944,
+          "retained_squared_fraction": 0.08217151480170787,
+          "lost_squared_fraction": 0.9178284851982919,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.02471851645243042,
+            -0.03123449227817283,
+            0.8526844782582295,
+            -0.11852601787509433,
+            -0.355846781560522,
+            0.009448979288469392,
+            -0.9829724921383548
+          ],
+          "witness_compressed_difference": 3.469446951953614e-18,
+          "witness_target_difference": 1.8356569703965842,
+          "least_squares_residual": 1.3548641889121522
+        },
+        {
+          "target": "contrast_100_143",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.8690157947319382,
+          "retained_projection_norm": 0.5854099407161948,
+          "lost_norm": 1.2873597792810918,
+          "retained_fraction": 0.4139473388544361,
+          "lost_fraction": 0.9103008297564771,
+          "retained_squared_fraction": 0.1713523993446693,
+          "lost_squared_fraction": 0.8286476006553304,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.03569495594560751,
+            0.04510439888244889,
+            0.2127320654051492,
+            1.171158370066493,
+            -0.4861368312441684,
+            -0.013644868213751962,
+            -0.024588698280278456
+          ],
+          "witness_compressed_difference": 2.2768245622195593e-17,
+          "witness_target_difference": 1.6572952013106614,
+          "least_squares_residual": 1.2873597792810918
+        },
+        {
+          "target": "contrast_100_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.468615944676992,
+          "retained_projection_norm": 0.31568175636743595,
+          "lost_norm": 1.3785300245902412,
+          "retained_fraction": 0.22322071062429352,
+          "lost_fraction": 0.9747679284570177,
+          "retained_squared_fraction": 0.049827485651614586,
+          "lost_squared_fraction": 0.9501725143483852,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.01924847120392588,
+            -0.024322504400402276,
+            -0.11471556489220372,
+            0.9077030109644612,
+            -0.27710022731578376,
+            -0.9926420177323096,
+            0.013259432271359999
+          ],
+          "witness_compressed_difference": 4.87890977618477e-18,
+          "witness_target_difference": 1.900345028696771,
+          "least_squares_residual": 1.3785300245902412
+        },
+        {
+          "target": "contrast_100_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.4963668288754211,
+          "retained_projection_norm": 0.3343760580957901,
+          "lost_norm": 1.3741152250711441,
+          "retained_fraction": 0.23643957814596012,
+          "lost_fraction": 0.9716461937794849,
+          "retained_squared_fraction": 0.055903674113839584,
+          "lost_squared_fraction": 0.9440963258861602,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.020388342993275965,
+            -0.02576285445826595,
+            -0.1215088855063267,
+            0.9022372920027336,
+            -0.2935097763440378,
+            0.00779371330963241,
+            -0.9859553597695871
+          ],
+          "witness_compressed_difference": 5.898059818321144e-17,
+          "witness_target_difference": 1.8881926517723207,
+          "least_squares_residual": 1.374115225071144
+        },
+        {
+          "target": "contrast_143_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 1.33763173940893,
+          "retained_projection_norm": 0.9010916970836306,
+          "lost_norm": 1.0899696112492963,
+          "retained_fraction": 0.6371680494787295,
+          "lost_fraction": 0.7707249034016423,
+          "retained_squared_fraction": 0.4059831232765286,
+          "lost_squared_fraction": 0.5940168767234709,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.05494342714953338,
+            -0.06942690328285116,
+            -0.32744763029735285,
+            -0.26345535910203177,
+            0.20903660392838475,
+            -0.9789971495185577,
+            0.03784813055163845
+          ],
+          "witness_compressed_difference": 7.892991815694472e-17,
+          "witness_target_difference": 1.1880337534469425,
+          "least_squares_residual": 1.0899696112492965
+        },
+        {
+          "target": "contrast_143_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 1.3653826236073594,
+          "retained_projection_norm": 0.9197859988119849,
+          "lost_norm": 1.0742409954891123,
+          "retained_fraction": 0.6503869170003962,
+          "lost_fraction": 0.7596030925389387,
+          "retained_squared_fraction": 0.4230031418052802,
+          "lost_squared_fraction": 0.5769968581947195,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.056083298938883475,
+            -0.07086725334071484,
+            -0.33424095091147593,
+            -0.26892107806375937,
+            0.19262705490013055,
+            0.021438581523384372,
+            -0.9613666614893087
+          ],
+          "witness_compressed_difference": -1.734723475976807e-17,
+          "witness_target_difference": 1.1539937163894392,
+          "least_squares_residual": 1.0742409954891123
+        },
+        {
+          "target": "contrast_217_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.027750884198429127,
+          "retained_projection_norm": 0.018694301728354207,
+          "lost_norm": 1.4140899982260284,
+          "retained_fraction": 0.013218867521666655,
+          "lost_fraction": 0.9999126269536976,
+          "retained_squared_fraction": 0.00017473845855537354,
+          "lost_squared_fraction": 0.9998252615414445,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.001139871789350088,
+            -0.0014403500578636756,
+            -0.006793320614122987,
+            -0.005465718961727588,
+            -0.016409549028254082,
+            1.000435731041942,
+            -0.9992147920409472
+          ],
+          "witness_compressed_difference": 3.469446951953614e-18,
+          "witness_target_difference": 1.9996505230828894,
+          "least_squares_residual": 1.4140899982260284
+        }
+      ],
+      "exact_witness": {
+        "target": "contrast_30_44",
+        "source_decimal_weights": [
+          "-4.107515209964415770e-02",
+          "5.190285280874792212e-02",
+          "2.447965465009410979e-01",
+          "1.969565698392046760e-01",
+          "5.913162590034866106e-01",
+          "-1.570151923183506562e-02",
+          "-2.829488074824144245e-02"
+        ],
+        "s0": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "s1_h_exact": [
+          "1499937614274660217443398597106099159091/1512667899919772436569818020756149384471",
+          "-1496581820909068050071835013607182105743/1512667899919772436569818020756149384471",
+          "75868981673739771376846063695650781260/1512667899919772436569818020756149384471",
+          "61042096390832132774649742021030794400/1512667899919772436569818020756149384471",
+          "183264686773460734806240817448188193640/1512667899919772436569818020756149384471",
+          "-4866319774022577899656688312526592628/1512667899919772436569818020756149384471",
+          "-8769338536974538000785971715574454530/1512667899919772436569818020756149384471"
+        ],
+        "projection_coefficient_exact": "-309926683027973599400000000000000000000/1512667899919772436569818020756149384471",
+        "w_dot_h_exact": "0",
+        "a_dot_h_exact": "2996519435183728267515233610713281264834/1512667899919772436569818020756149384471",
+        "h_dot_h_exact": "2996519435183728267515233610713281264834/1512667899919772436569818020756149384471",
+        "a_dot_h_minus_h_dot_h_exact": "0",
+        "decimal_precision": 80,
+        "decimal_w_dot_h_residual": "2.28E-81",
+        "decimal_a_dot_h_minus_h_dot_h_residual": "1E-79"
+      },
+      "controls": {
+        "projector_symmetry_max_abs": 0.0,
+        "projector_idempotence_max_abs": 2.220446049250313e-16,
+        "projector_annihilation_norm": 1.1817545060230221e-16,
+        "projector_trace": 6.000000000000001,
+        "projection_vs_lstsq_max_abs": 2.220446049250313e-16
+      }
+    },
+    "B2": {
+      "weights": [
+        -0.04780664289627979,
+        0.06321738022270497,
+        0.22760394226611527,
+        0.30603691022461793,
+        0.42617852523354993,
+        0.05673867934577199,
+        -0.03196732514479988
+      ],
+      "source_decimal_weights": [
+        "-4.780664289627978986e-02",
+        "6.321738022270496915e-02",
+        "2.276039422661152722e-01",
+        "3.060369102246179307e-01",
+        "4.261785252335499319e-01",
+        "5.673867934577198763e-02",
+        "-3.196732514479987824e-02"
+      ],
+      "weight_sum": 1.0000014692516805,
+      "weight_norm": 0.5810450758789732,
+      "row_rank": 1,
+      "kernel_dimension": 6,
+      "target_count": 28,
+      "targets": [
+        {
+          "target": "unit_30",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.141601742405784,
+          "retained_projection_norm": 0.08227699516076357,
+          "lost_norm": 0.9966095002895146,
+          "retained_fraction": 0.08227699516076357,
+          "lost_fraction": 0.9966095002895146,
+          "retained_squared_fraction": 0.006769503932684312,
+          "lost_squared_fraction": 0.9932304960673158,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9932304960673157,
+            0.008951691189863973,
+            0.03222911480330739,
+            0.04333535972828839,
+            0.06034762174899805,
+            0.008034295857164381,
+            -0.004526628940555894
+          ],
+          "witness_compressed_difference": -1.1600963245594897e-17,
+          "witness_target_difference": 0.9932304960673157,
+          "least_squares_residual": 0.9966095002895146
+        },
+        {
+          "target": "unit_44",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.18724785192060775,
+          "retained_projection_norm": 0.10879944232738427,
+          "lost_norm": 0.9940637209702657,
+          "retained_fraction": 0.10879944232738427,
+          "lost_fraction": 0.9940637209702657,
+          "retained_squared_fraction": 0.011837318650749815,
+          "lost_squared_fraction": 0.9881626813492503,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.008951691189863973,
+            0.9881626813492502,
+            -0.04261834927799211,
+            -0.057304754047979585,
+            -0.07980101338467475,
+            -0.010624195828307958,
+            0.0059858129650114085
+          ],
+          "witness_compressed_difference": 1.3715157481941631e-17,
+          "witness_target_difference": 0.9881626813492502,
+          "least_squares_residual": 0.9940637209702657
+        },
+        {
+          "target": "unit_70",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.6741555744299165,
+          "retained_projection_norm": 0.3917147768988636,
+          "lost_norm": 0.9200866989360695,
+          "retained_fraction": 0.3917147768988636,
+          "lost_fraction": 0.9200866989360695,
+          "retained_squared_fraction": 0.1534404664409265,
+          "lost_squared_fraction": 0.8465595335590735,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.03222911480330739,
+            -0.04261834927799211,
+            0.8465595335590735,
+            -0.20631648900923408,
+            -0.2873106284885185,
+            -0.03825069696674375,
+            0.021550950445980474
+          ],
+          "witness_compressed_difference": 3.7513395167998453e-17,
+          "witness_target_difference": 0.8465595335590735,
+          "least_squares_residual": 0.9200866989360695
+        },
+        {
+          "target": "unit_100",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.9064715090391895,
+          "retained_projection_norm": 0.5267008067518032,
+          "lost_norm": 0.8500507397602803,
+          "retained_fraction": 0.5267008067518032,
+          "lost_fraction": 0.8500507397602803,
+          "retained_squared_fraction": 0.2774137398330004,
+          "lost_squared_fraction": 0.7225862601669998,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.04333535972828839,
+            -0.057304754047979585,
+            -0.20631648900923408,
+            0.7225862601669997,
+            -0.3863186908885523,
+            -0.051431996287452625,
+            0.028977469463953173
+          ],
+          "witness_compressed_difference": 7.600257229123386e-17,
+          "witness_target_difference": 0.7225862601669997,
+          "least_squares_residual": 0.8500507397602802
+        },
+        {
+          "target": "unit_143",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 1.2623271180100826,
+          "retained_projection_norm": 0.7334689560682539,
+          "lost_norm": 0.6797229512706965,
+          "retained_fraction": 0.7334689560682539,
+          "lost_fraction": 0.6797229512706965,
+          "retained_squared_fraction": 0.5379767095158542,
+          "lost_squared_fraction": 0.46202329048414564,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.060347621748998055,
+            -0.07980101338467475,
+            -0.2873106284885185,
+            -0.3863186908885523,
+            0.4620232904841457,
+            -0.07162277357824655,
+            0.040353221420526476
+          ],
+          "witness_compressed_difference": 5.355958732078392e-17,
+          "witness_target_difference": 0.4620232904841457,
+          "least_squares_residual": 0.6797229512706965
+        },
+        {
+          "target": "unit_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.16805814778911393,
+          "retained_projection_norm": 0.0976493592342054,
+          "lost_norm": 0.9952208813329577,
+          "retained_fraction": 0.0976493592342054,
+          "lost_fraction": 0.9952208813329577,
+          "retained_squared_fraction": 0.009535397358850894,
+          "lost_squared_fraction": 0.9904646026411491,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.008034295857164383,
+            -0.01062419582830796,
+            -0.038250696966743755,
+            -0.05143199628745263,
+            -0.07162277357824656,
+            0.9904646026411491,
+            0.005372369453607436
+          ],
+          "witness_compressed_difference": 3.2526065174565133e-18,
+          "witness_target_difference": 0.9904646026411491,
+          "least_squares_residual": 0.9952208813329577
+        },
+        {
+          "target": "unit_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "projection_coefficient": -0.0946861914227436,
+          "retained_projection_norm": 0.05501694527991904,
+          "lost_norm": 0.9984854208910946,
+          "retained_fraction": 0.05501694527991904,
+          "lost_fraction": 0.9984854208910946,
+          "retained_squared_fraction": 0.0030268642679336056,
+          "lost_squared_fraction": 0.9969731357320664,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.004526628940555894,
+            0.0059858129650114085,
+            0.021550950445980474,
+            0.028977469463953173,
+            0.040353221420526476,
+            0.005372369453607436,
+            0.9969731357320664
+          ],
+          "witness_compressed_difference": -6.938893903907228e-18,
+          "witness_target_difference": 0.9969731357320664,
+          "least_squares_residual": 0.9984854208910946
+        },
+        {
+          "target": "contrast_30_44",
+          "target_vector": [
+            1.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.32884959432639177,
+          "retained_projection_norm": 0.19107643748814784,
+          "lost_norm": 1.4012458010773263,
+          "retained_fraction": 0.13511144467283678,
+          "lost_fraction": 0.9908304080509535,
+          "retained_squared_fraction": 0.01825510248158103,
+          "lost_squared_fraction": 0.9817448975184186,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9842788048774517,
+            -0.9792109901593862,
+            0.0748474640812995,
+            0.10064011377626798,
+            0.14014863513367282,
+            0.01865849168547234,
+            -0.010512441905567303
+          ],
+          "witness_compressed_difference": -2.1738253558334364e-17,
+          "witness_target_difference": 1.9634897950368377,
+          "least_squares_residual": 1.4012458010773263
+        },
+        {
+          "target": "contrast_30_70",
+          "target_vector": [
+            1.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.8157573168357005,
+          "retained_projection_norm": 0.4739917720596271,
+          "lost_norm": 1.332415775957255,
+          "retained_fraction": 0.3351627962499906,
+          "lost_fraction": 0.9421602305393106,
+          "retained_squared_fraction": 0.11233409999011273,
+          "lost_squared_fraction": 0.8876659000098869,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9610013812640082,
+            0.051570040467856085,
+            -0.8143304187557661,
+            0.2496518487375225,
+            0.34765825023751656,
+            0.04628499282390813,
+            -0.02607757938653637
+          ],
+          "witness_compressed_difference": -4.5644911461639737e-17,
+          "witness_target_difference": 1.7753318000197744,
+          "least_squares_residual": 1.3324157759572552
+        },
+        {
+          "target": "contrast_30_100",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -1.0480732514449735,
+          "retained_projection_norm": 0.6089778019125668,
+          "lost_norm": 1.2763800518567103,
+          "retained_fraction": 0.43061233332445403,
+          "lost_fraction": 0.902536990039117,
+          "retained_squared_fraction": 0.18542698161113066,
+          "lost_squared_fraction": 0.814573018388869,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9498951363390273,
+            0.06625644523784356,
+            0.23854560381254147,
+            -0.6792509004387113,
+            0.44666631263755036,
+            0.05946629214461701,
+            -0.03350409840450907
+          ],
+          "witness_compressed_difference": -9.80118763926896e-17,
+          "witness_target_difference": 1.6291460367777386,
+          "least_squares_residual": 1.27638005185671
+        },
+        {
+          "target": "contrast_30_143",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -1.4039288604158666,
+          "retained_projection_norm": 0.8157459512290177,
+          "lost_norm": 1.155230947929229,
+          "retained_fraction": 0.576819493839509,
+          "lost_fraction": 0.8168716371173212,
+          "retained_squared_fraction": 0.3327207284732674,
+          "lost_squared_fraction": 0.6672792715267324,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9328828743183176,
+            0.08875270457453874,
+            0.31953974329182594,
+            0.42965405061684075,
+            -0.4016756687351476,
+            0.07965706943541094,
+            -0.04487985036108237
+          ],
+          "witness_compressed_difference": -4.705437428587089e-17,
+          "witness_target_difference": 1.3345585430534652,
+          "least_squares_residual": 1.155230947929229
+        },
+        {
+          "target": "contrast_30_217",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": -0.3096598901948979,
+          "retained_projection_norm": 0.17992635439496896,
+          "lost_norm": 1.4027211080589528,
+          "retained_fraction": 0.1272271453068565,
+          "lost_fraction": 0.9918736076219934,
+          "retained_squared_fraction": 0.01618674650293198,
+          "lost_squared_fraction": 0.9838132534970678,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9851962002101513,
+            0.019575887018171933,
+            0.07047981177005114,
+            0.09476735601574102,
+            0.1319703953272446,
+            -0.9824303067839847,
+            -0.00989899839416333
+          ],
+          "witness_compressed_difference": -1.4094628242311558e-17,
+          "witness_target_difference": 1.967626506994136,
+          "least_squares_residual": 1.4027211080589528
+        },
+        {
+          "target": "contrast_30_353",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": -0.04691555098304039,
+          "retained_projection_norm": 0.02726004988084454,
+          "lost_norm": 1.413950808790919,
+          "retained_fraction": 0.01927576612622871,
+          "lost_fraction": 0.9998142051602622,
+          "retained_squared_fraction": 0.0003715551597530661,
+          "lost_squared_fraction": 0.9996284448402466,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9977571250078716,
+            0.0029658782248525644,
+            0.010678164357326913,
+            0.014357890264335219,
+            0.01999440032847158,
+            0.0026619264035569468,
+            -1.0014997646726223
+          ],
+          "witness_compressed_difference": -6.938893903907228e-18,
+          "witness_target_difference": 1.9992568896804939,
+          "least_squares_residual": 1.413950808790919
+        },
+        {
+          "target": "contrast_44_70",
+          "target_vector": [
+            0.0,
+            1.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.4869077225093087,
+          "retained_projection_norm": 0.28291533457147927,
+          "lost_norm": 1.3856258201492595,
+          "retained_fraction": 0.20005135157715387,
+          "lost_fraction": 0.9797854136147128,
+          "retained_squared_fraction": 0.04002054326784602,
+          "lost_squared_fraction": 0.9599794567321539,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.023277423613443413,
+            1.0307810306272422,
+            -0.8891778828370657,
+            0.14901173496125447,
+            0.20750961510384375,
+            0.027626501138435792,
+            -0.015565137480969065
+          ],
+          "witness_compressed_difference": -3.7621815385247004e-17,
+          "witness_target_difference": 1.919958913464308,
+          "least_squares_residual": 1.3856258201492595
+        },
+        {
+          "target": "contrast_44_100",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.7192236571185818,
+          "retained_projection_norm": 0.41790136442441894,
+          "lost_norm": 1.3510582702504763,
+          "retained_fraction": 0.2955008886516172,
+          "lost_fraction": 0.9553424646722789,
+          "retained_squared_fraction": 0.08732077519389549,
+          "lost_squared_fraction": 0.9126792248061042,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.03438366853842442,
+            1.0454674353972297,
+            0.16369813973124198,
+            -0.7798910142149792,
+            0.3065176775038776,
+            0.04080780045914467,
+            -0.022991656498941766
+          ],
+          "witness_compressed_difference": -3.426078865054194e-17,
+          "witness_target_difference": 1.8253584496122088,
+          "least_squares_residual": 1.3510582702504763
+        },
+        {
+          "target": "contrast_44_143",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -1.0750792660894748,
+          "retained_projection_norm": 0.6246695137408697,
+          "lost_norm": 1.268774211041013,
+          "retained_fraction": 0.4417080491666721,
+          "lost_fraction": 0.897158848421712,
+          "retained_squared_fraction": 0.19510600069862724,
+          "lost_squared_fraction": 0.8048939993013723,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.05139593055913408,
+            1.0679636947339248,
+            0.2446922792105264,
+            0.32901393684057273,
+            -0.5418243038688204,
+            0.06099857774993859,
+            -0.034367408455515065
+          ],
+          "witness_compressed_difference": -9.562663161322149e-17,
+          "witness_target_difference": 1.6097879986027452,
+          "least_squares_residual": 1.268774211041013
+        },
+        {
+          "target": "contrast_44_217",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.019189704131493842,
+          "retained_projection_norm": 0.011150083093178885,
+          "lost_norm": 1.4141696063934535,
+          "retained_fraction": 0.007884299365980264,
+          "lost_fraction": 0.9999689184287217,
+          "retained_squared_fraction": 6.21621764923968e-05,
+          "lost_squared_fraction": 0.9999378378235073,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.0009173953326995911,
+            0.9987868771775581,
+            -0.004367652311248358,
+            -0.005872757760526961,
+            -0.008178239806428206,
+            -1.001088798469457,
+            0.0006134435114039732
+          ],
+          "witness_compressed_difference": 9.825582188149884e-18,
+          "witness_target_difference": 1.999875675647015,
+          "least_squares_residual": 1.4141696063934535
+        },
+        {
+          "target": "contrast_44_353",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.28193404334335137,
+          "retained_projection_norm": 0.1638163876073033,
+          "lost_norm": 1.4046936289281353,
+          "retained_fraction": 0.11583567854660806,
+          "lost_fraction": 0.9932683905046243,
+          "retained_squared_fraction": 0.013417904424353115,
+          "lost_squared_fraction": 0.9865820955756468,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.013478320130419868,
+            0.9821768683842388,
+            -0.06416929972397259,
+            -0.08628222351193277,
+            -0.12015423480520124,
+            -0.015996565281915395,
+            -0.990987322767055
+          ],
+          "witness_compressed_difference": 2.0816681711721685e-17,
+          "witness_target_difference": 1.9731641911512938,
+          "least_squares_residual": 1.4046936289281353
+        },
+        {
+          "target": "contrast_70_100",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.23231593460927305,
+          "retained_projection_norm": 0.13498602985293964,
+          "lost_norm": 1.4077566450720598,
+          "retained_fraction": 0.09544953707446335,
+          "lost_fraction": 0.9954342699908771,
+          "retained_squared_fraction": 0.009110614127729353,
+          "lost_squared_fraction": 0.9908893858722705,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.011106244924981004,
+            0.014686404769987478,
+            1.0528760225683076,
+            -0.9289027491762337,
+            0.0990080624000338,
+            0.013181299320708877,
+            -0.007426519017972698
+          ],
+          "witness_compressed_difference": -2.474691458698164e-17,
+          "witness_target_difference": 1.9817787717445414,
+          "least_squares_residual": 1.4077566450720598
+        },
+        {
+          "target": "contrast_70_143",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.5881715435801661,
+          "retained_projection_norm": 0.3417541791693904,
+          "lost_norm": 1.372298830801898,
+          "retained_fraction": 0.24165669758951827,
+          "lost_fraction": 0.9703618090743926,
+          "retained_squared_fraction": 0.058397959489871885,
+          "lost_squared_fraction": 0.9416020405101279,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.028118506945690666,
+            0.037182664106682646,
+            1.133870162047592,
+            0.18000220187931826,
+            -0.7493339189726642,
+            0.0333720766115028,
+            -0.018802270974546002
+          ],
+          "witness_compressed_difference": -2.0599841277224584e-18,
+          "witness_target_difference": 1.8832040810202562,
+          "least_squares_residual": 1.372298830801898
+        },
+        {
+          "target": "contrast_70_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.5060974266408026,
+          "retained_projection_norm": 0.2940654176646582,
+          "lost_norm": 1.3833024001040806,
+          "retained_fraction": 0.20793565094313418,
+          "lost_fraction": 0.978142507545222,
+          "retained_squared_fraction": 0.043237234933144936,
+          "lost_squared_fraction": 0.9567627650668548,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.024194818946143008,
+            -0.031994153449684155,
+            0.8848102305258172,
+            -0.15488449272178145,
+            -0.21568785491027198,
+            -1.0287152996078928,
+            0.01617858099237304
+          ],
+          "witness_compressed_difference": 6.830473686658678e-18,
+          "witness_target_difference": 1.91352553013371,
+          "least_squares_residual": 1.3833024001040808
+        },
+        {
+          "target": "contrast_70_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.7688417658526601,
+          "retained_projection_norm": 0.44673172217878254,
+          "lost_norm": 1.3418013148000634,
+          "retained_fraction": 0.3158870301237619,
+          "lost_fraction": 0.9487968087001502,
+          "retained_squared_fraction": 0.09978461580041045,
+          "lost_squared_fraction": 0.9002153841995892,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.036755743743863284,
+            -0.04860416224300352,
+            0.8250085831130931,
+            -0.23529395847318724,
+            -0.32766384990904496,
+            -0.043623066420351186,
+            -0.9754221852860859
+          ],
+          "witness_compressed_difference": 7.28583859910259e-17,
+          "witness_target_difference": 1.800430768399179,
+          "least_squares_residual": 1.3418013148000634
+        },
+        {
+          "target": "contrast_100_143",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.355855608970893,
+          "retained_projection_norm": 0.20676814931645077,
+          "lost_norm": 1.3990164160681782,
+          "retained_fraction": 0.14620716051505492,
+          "lost_fraction": 0.9892539947931092,
+          "retained_squared_fraction": 0.02137653378587504,
+          "lost_squared_fraction": 0.9786234662141248,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.01701226202070966,
+            0.022496259336695166,
+            0.08099413947928442,
+            1.108904951055552,
+            -0.848341981372698,
+            0.02019077729079392,
+            -0.011375751956573301
+          ],
+          "witness_compressed_difference": 2.2280354644577116e-17,
+          "witness_target_difference": 1.95724693242825,
+          "least_squares_residual": 1.3990164160681782
+        },
+        {
+          "target": "contrast_100_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.7384133612500756,
+          "retained_projection_norm": 0.42905144751759783,
+          "lost_norm": 1.3475588504340188,
+          "retained_fraction": 0.3033851880175975,
+          "lost_fraction": 0.9528680011898432,
+          "retained_squared_fraction": 0.09204257230847299,
+          "lost_squared_fraction": 0.9079574276915268,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.03530106387112401,
+            -0.04668055821967163,
+            -0.16806579204249034,
+            0.7740182564544522,
+            -0.3146959173103058,
+            -1.0418965989286018,
+            0.02360510001034574
+          ],
+          "witness_compressed_difference": 8.890457814381136e-18,
+          "witness_target_difference": 1.815914855383054,
+          "least_squares_residual": 1.3475588504340188
+        },
+        {
+          "target": "contrast_100_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 1.0011577004619332,
+          "retained_projection_norm": 0.5817177520317223,
+          "lost_norm": 1.2890323723518968,
+          "retained_fraction": 0.4113365671982253,
+          "lost_fraction": 0.9114835316590089,
+          "retained_squared_fraction": 0.16919777151442011,
+          "lost_squared_fraction": 0.8308022284855795,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.04786198866884429,
+            -0.063290567012991,
+            -0.22786743945521457,
+            0.6936087907030464,
+            -0.4266719123090788,
+            -0.05680436574106007,
+            -0.9679956662681132
+          ],
+          "witness_compressed_difference": -3.469446951953614e-18,
+          "witness_target_difference": 1.6616044569711597,
+          "least_squares_residual": 1.2890323723518968
+        },
+        {
+          "target": "contrast_143_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 1.0942689702209687,
+          "retained_projection_norm": 0.6358195968340487,
+          "lost_norm": 1.2632234324464489,
+          "retained_fraction": 0.44959234853265245,
+          "lost_fraction": 0.8932338552366306,
+          "retained_squared_fraction": 0.202133279859106,
+          "lost_squared_fraction": 0.7978667201408937,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.05231332589183368,
+            -0.0691768175563668,
+            -0.24905993152177477,
+            -0.3348866946010997,
+            0.5336460640623921,
+            -1.0620873762193956,
+            0.034980851966919045
+          ],
+          "witness_compressed_difference": 1.9949319973733282e-17,
+          "witness_target_difference": 1.5957334402817878,
+          "least_squares_residual": 1.2632234324464489
+        },
+        {
+          "target": "contrast_143_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 1.3570133094328263,
+          "retained_projection_norm": 0.7884859013481731,
+          "lost_norm": 1.1740059554257631,
+          "retained_fraction": 0.5575437277132803,
+          "lost_fraction": 0.8301475722349487,
+          "retained_squared_fraction": 0.3108550083124204,
+          "lost_squared_fraction": 0.6891449916875794,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.06487425068955395,
+            -0.08578682634968617,
+            -0.308861578934499,
+            -0.41529616035250555,
+            0.42167006906361915,
+            -0.076995143031854,
+            -0.9566199143115399
+          ],
+          "witness_compressed_difference": 3.469446951953614e-17,
+          "witness_target_difference": 1.3782899833751592,
+          "least_squares_residual": 1.1740059554257631
+        },
+        {
+          "target": "contrast_217_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.2627443392118575,
+          "retained_projection_norm": 0.1526663045141244,
+          "lost_norm": 1.405949145405338,
+          "retained_fraction": 0.10795137918062779,
+          "lost_fraction": 0.9941561747195459,
+          "retained_squared_fraction": 0.011653500266999682,
+          "lost_squared_fraction": 0.988346499733,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.012560924797720276,
+            -0.016610008793319368,
+            -0.05980164741272423,
+            -0.0804094657514058,
+            -0.11197599499877303,
+            0.9850922331875417,
+            -0.991600766278459
+          ],
+          "witness_compressed_difference": 2.0816681711721685e-17,
+          "witness_target_difference": 1.9766929994660005,
+          "least_squares_residual": 1.405949145405338
+        }
+      ],
+      "exact_witness": {
+        "target": "contrast_30_44",
+        "source_decimal_weights": [
+          "-4.780664289627978986e-02",
+          "6.321738022270496915e-02",
+          "2.276039422661152722e-01",
+          "3.060369102246179307e-01",
+          "4.261785252335499319e-01",
+          "5.673867934577198763e-02",
+          "-3.196732514479987824e-02"
+        ],
+        "s0": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "s1_h_exact": [
+          "1661528471885220423420995101610035501790/1688066901016008502860709031620163209983",
+          "-3305947323198344542039758249893904074551/3376133802032017005721418063240326419966",
+          "42115842246875423869406232585995920870/562688967005336167620236343873387736661",
+          "56629081660067740525817292589440634345/562688967005336167620236343873387736661",
+          "236580272191722385655325881569617057095/1688066901016008502860709031620163209983",
+          "20997854824752173986303933001880836821/1125377934010672335240472687746775473322",
+          "-5915235076547274151105477311772904904/562688967005336167620236343873387736661"
+        ],
+        "projection_coefficient_exact": "-555120115594923795050000000000000000000/1688066901016008502860709031620163209983",
+        "w_dot_h_exact": "0",
+        "a_dot_h_exact": "6629004266968785388881748453113975078131/3376133802032017005721418063240326419966",
+        "h_dot_h_exact": "6629004266968785388881748453113975078131/3376133802032017005721418063240326419966",
+        "a_dot_h_minus_h_dot_h_exact": "0",
+        "decimal_precision": 80,
+        "decimal_w_dot_h_residual": "2.78E-81",
+        "decimal_a_dot_h_minus_h_dot_h_residual": "0E-79"
+      },
+      "controls": {
+        "projector_symmetry_max_abs": 0.0,
+        "projector_idempotence_max_abs": 1.1102230246251565e-16,
+        "projector_annihilation_norm": 9.553586958348489e-17,
+        "projector_trace": 6.0,
+        "projection_vs_lstsq_max_abs": 2.220446049250313e-16
+      }
+    },
+    "B3": {
+      "weights": [
+        -0.047752939082447335,
+        0.06321529077237836,
+        0.2274677084211189,
+        0.3060379401649696,
+        0.42617914661835615,
+        0.056738704580436006,
+        -0.031967337456934475
+      ],
+      "source_decimal_weights": [
+        "-4.775293908244733487e-02",
+        "6.321529077237836303e-02",
+        "2.274677084211189082e-01",
+        "3.060379401649696018e-01",
+        "4.261791466183561528e-01",
+        "5.673870458043600573e-02",
+        "-3.196733745693447482e-02"
+      ],
+      "weight_sum": 0.9999185140178772,
+      "weight_norm": 0.5809880821902655,
+      "row_rank": 1,
+      "kernel_dimension": 6,
+      "target_count": 28,
+      "targets": [
+        {
+          "target": "unit_30",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.14147042524112016,
+          "retained_projection_norm": 0.08219263104747974,
+          "lost_norm": 0.9966164615344727,
+          "retained_fraction": 0.08219263104747974,
+          "lost_fraction": 0.9966164615344727,
+          "retained_squared_fraction": 0.006755628598507131,
+          "lost_squared_fraction": 0.993244371401493,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9932443714014929,
+            0.008943094067309426,
+            0.032179953438958825,
+            0.043295317535054736,
+            0.060291745100996545,
+            0.008026848664624574,
+            -0.004522432823858909
+          ],
+          "witness_compressed_difference": 1.3010426069826053e-18,
+          "witness_target_difference": 0.9932443714014929,
+          "least_squares_residual": 0.9966164615344727
+        },
+        {
+          "target": "unit_44",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.18727840085128208,
+          "retained_projection_norm": 0.10880651894624617,
+          "lost_norm": 0.994062946414763,
+          "retained_fraction": 0.10880651894624617,
+          "lost_fraction": 0.994062946414763,
+          "retained_squared_fraction": 0.011838858565199825,
+          "lost_squared_fraction": 0.9881611414348,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.008943094067309426,
+            0.9881611414348002,
+            -0.04259978867841286,
+            -0.05731429603391586,
+            -0.07981414905484982,
+            -0.010625933860197369,
+            0.005986791838407979
+          ],
+          "witness_compressed_difference": 1.9244588561617704e-18,
+          "witness_target_difference": 0.9881611414348002,
+          "least_squares_residual": 0.994062946414763
+        },
+        {
+          "target": "unit_70",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.6738842479077332,
+          "retained_projection_norm": 0.3915187168101434,
+          "lost_norm": 0.9201701442599292,
+          "retained_fraction": 0.3915187168101434,
+          "lost_fraction": 0.9201701442599292,
+          "retained_squared_fraction": 0.15328690561266126,
+          "lost_squared_fraction": 0.8467130943873388,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.03217995343895882,
+            -0.04259978867841286,
+            0.8467130943873388,
+            -0.20623414713930238,
+            -0.2871954136928705,
+            -0.03823531926344617,
+            0.021542285159778997
+          ],
+          "witness_compressed_difference": 2.3093506273941244e-17,
+          "witness_target_difference": 0.8467130943873388,
+          "least_squares_residual": 0.9201701442599292
+        },
+        {
+          "target": "unit_100",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 0.9066524148451609,
+          "retained_projection_norm": 0.5267542477140631,
+          "lost_norm": 0.85001762482621,
+          "retained_fraction": 0.5267542477140631,
+          "lost_fraction": 0.85001762482621,
+          "retained_squared_fraction": 0.27747003748480853,
+          "lost_squared_fraction": 0.7225299625151915,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.043295317535054736,
+            -0.05731429603391586,
+            -0.2062341471393024,
+            0.7225299625151915,
+            -0.3863963524381825,
+            -0.0514422835230385,
+            0.028983263701499805
+          ],
+          "witness_compressed_difference": 3.393552799879629e-17,
+          "witness_target_difference": 0.7225299625151915,
+          "least_squares_residual": 0.8500176248262099
+        },
+        {
+          "target": "unit_143",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": 1.2625766342235074,
+          "retained_projection_norm": 0.733541977335756,
+          "lost_norm": 0.6796441476878538,
+          "retained_fraction": 0.733541977335756,
+          "lost_fraction": 0.6796441476878538,
+          "retained_squared_fraction": 0.5380838325136508,
+          "lost_squared_fraction": 0.46191616748634917,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.06029174510099654,
+            -0.07981414905484982,
+            -0.2871954136928705,
+            -0.3863963524381825,
+            0.4619161674863492,
+            -0.0716369626593688,
+            0.040361213331463384
+          ],
+          "witness_compressed_difference": 1.496198998029996e-17,
+          "witness_target_difference": 0.4619161674863492,
+          "least_squares_residual": 0.6796441476878538
+        },
+        {
+          "target": "unit_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.16809119645527792,
+          "retained_projection_norm": 0.09765898186161909,
+          "lost_norm": 0.9952199371303572,
+          "retained_fraction": 0.09765898186161909,
+          "lost_fraction": 0.9952199371303572,
+          "retained_squared_fraction": 0.009537276738248045,
+          "lost_squared_fraction": 0.990462723261752,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.008026848664624574,
+            -0.010625933860197369,
+            -0.03823531926344618,
+            -0.05144228352303849,
+            -0.0716369626593688,
+            0.990462723261752,
+            0.005373428000625738
+          ],
+          "witness_compressed_difference": 7.101524229780054e-18,
+          "witness_target_difference": 0.990462723261752,
+          "least_squares_residual": 0.9952199371303572
+        },
+        {
+          "target": "unit_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "projection_coefficient": -0.09470480583510787,
+          "retained_projection_norm": 0.055022363516340794,
+          "lost_norm": 0.9984851223293593,
+          "retained_fraction": 0.055022363516340794,
+          "lost_fraction": 0.9984851223293593,
+          "retained_squared_fraction": 0.0030274604869243507,
+          "lost_squared_fraction": 0.9969725395130756,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.004522432823858909,
+            0.005986791838407979,
+            0.021542285159779,
+            0.02898326370149981,
+            0.04036121333146339,
+            0.005373428000625738,
+            0.9969725395130756
+          ],
+          "witness_compressed_difference": 6.938893903907228e-18,
+          "witness_target_difference": 0.9969725395130756,
+          "least_squares_residual": 0.9984851223293593
+        },
+        {
+          "target": "contrast_30_44",
+          "target_vector": [
+            1.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.32874882609240225,
+          "retained_projection_norm": 0.19099914999372591,
+          "lost_norm": 1.4012563379702068,
+          "retained_fraction": 0.1350567941614301,
+          "lost_fraction": 0.9908378587593618,
+          "retained_squared_fraction": 0.018240337649162903,
+          "lost_squared_fraction": 0.9817596623508369,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9843012773341835,
+            -0.9792180473674907,
+            0.07477974211737168,
+            0.1006096135689706,
+            0.14010589415584637,
+            0.018652782524821943,
+            -0.010509224662266888
+          ],
+          "witness_compressed_difference": -4.174178364069192e-18,
+          "witness_target_difference": 1.9635193247016742,
+          "least_squares_residual": 1.4012563379702068
+        },
+        {
+          "target": "contrast_30_70",
+          "target_vector": [
+            1.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.8153546731488533,
+          "retained_projection_norm": 0.47371134785762314,
+          "lost_norm": 1.3325155004392684,
+          "retained_fraction": 0.3349645063951448,
+          "lost_fraction": 0.9422307463967925,
+          "retained_squared_fraction": 0.11220122054454298,
+          "lost_squared_fraction": 0.8877987794554568,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9610644179625341,
+            0.05154288274572229,
+            -0.8145331409483799,
+            0.24952946467435713,
+            0.34748715879386705,
+            0.046262167928070745,
+            -0.026064717983637905
+          ],
+          "witness_compressed_difference": 9.215718466126788e-18,
+          "witness_target_difference": 1.7755975589109139,
+          "least_squares_residual": 1.3325155004392684
+        },
+        {
+          "target": "contrast_30_100",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -1.048122840086281,
+          "retained_projection_norm": 0.6089468787615427,
+          "lost_norm": 1.276394805241143,
+          "retained_fraction": 0.43059046735466927,
+          "lost_fraction": 0.9025474222572947,
+          "retained_squared_fraction": 0.1854081505767125,
+          "lost_squared_fraction": 0.8145918494232872,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9499490538664381,
+            0.06625739010122528,
+            0.2384141005782612,
+            -0.6792346449801367,
+            0.446688097539179,
+            0.05946913218766307,
+            -0.03350569652535871
+          ],
+          "witness_compressed_difference": -4.358492733391728e-17,
+          "witness_target_difference": 1.6291836988465749,
+          "least_squares_residual": 1.276394805241143
+        },
+        {
+          "target": "contrast_30_143",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -1.4040470594646275,
+          "retained_projection_norm": 0.8157346083832357,
+          "lost_norm": 1.1552389573961956,
+          "retained_fraction": 0.5768114732363386,
+          "lost_fraction": 0.816877300665727,
+          "retained_squared_fraction": 0.3327114756570755,
+          "lost_squared_fraction": 0.6672885243429244,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9329526263004964,
+            0.08875724312215924,
+            0.3193753671318293,
+            0.4296916699732372,
+            -0.4016244223853527,
+            0.07966381132399336,
+            -0.04488364615532229
+          ],
+          "witness_compressed_difference": -2.5370330836160804e-17,
+          "witness_target_difference": 1.334577048685849,
+          "least_squares_residual": 1.1552389573961954
+        },
+        {
+          "target": "contrast_30_217",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": -0.30956162169639806,
+          "retained_projection_norm": 0.17985161290909882,
+          "lost_norm": 1.4027306930890175,
+          "retained_fraction": 0.12717429509536177,
+          "lost_fraction": 0.99188038526175,
+          "retained_squared_fraction": 0.016173301333002158,
+          "lost_squared_fraction": 0.9838266986669975,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9852175227368682,
+            0.019569027927506793,
+            0.070415272702405,
+            0.09473760105809323,
+            0.13192870776036533,
+            -0.9824358745971273,
+            -0.009895860824484645
+          ],
+          "witness_compressed_difference": 2.5478751053409354e-18,
+          "witness_target_difference": 1.9676533973339956,
+          "least_squares_residual": 1.4027306930890175
+        },
+        {
+          "target": "contrast_30_353",
+          "target_vector": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": -0.046765619406012295,
+          "retained_projection_norm": 0.027170267531138947,
+          "lost_norm": 1.4139525368845614,
+          "retained_fraction": 0.019212280417921022,
+          "lost_fraction": 0.9998154271069952,
+          "retained_squared_fraction": 0.0003691117188568316,
+          "lost_squared_fraction": 0.9996308882811431,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.9977668042253518,
+            0.0029563022289014473,
+            0.010637668279179825,
+            0.014312053833554932,
+            0.019930531769533154,
+            0.002653420663998837,
+            -1.0014949723369346
+          ],
+          "witness_compressed_difference": 0.0,
+          "witness_target_difference": 1.9992617765622864,
+          "least_squares_residual": 1.4139525368845614
+        },
+        {
+          "target": "contrast_44_70",
+          "target_vector": [
+            0.0,
+            1.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.4866058470564511,
+          "retained_projection_norm": 0.2827121978638972,
+          "lost_norm": 1.3856672808358306,
+          "retained_fraction": 0.19990771223371465,
+          "lost_fraction": 0.9798147307473399,
+          "retained_squared_fraction": 0.039963093410517674,
+          "lost_squared_fraction": 0.9600369065894822,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.023236859371649394,
+            1.030760930113213,
+            -0.8893128830657516,
+            0.14891985110538652,
+            0.20738126463802067,
+            0.027609385403248806,
+            -0.015555493321371017
+          ],
+          "witness_compressed_difference": -2.1141942363467336e-17,
+          "witness_target_difference": 1.9200738131789645,
+          "least_squares_residual": 1.3856672808358306
+        },
+        {
+          "target": "contrast_44_100",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.7193740139938788,
+          "retained_projection_norm": 0.4179477287678169,
+          "lost_norm": 1.3510439282339504,
+          "retained_fraction": 0.2955336731932392,
+          "lost_fraction": 0.9553323233351375,
+          "retained_squared_fraction": 0.0873401519910883,
+          "lost_squared_fraction": 0.9126598480089115,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.03435222346774531,
+            1.045475437468716,
+            0.16363435846088953,
+            -0.7798442585491073,
+            0.30658220338333264,
+            0.040816349662841124,
+            -0.022996471863091828
+          ],
+          "witness_compressed_difference": -1.8106176280507924e-17,
+          "witness_target_difference": 1.8253196960178233,
+          "least_squares_residual": 1.3510439282339504
+        },
+        {
+          "target": "contrast_44_143",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -1.0752982333722254,
+          "retained_projection_norm": 0.62473545838951,
+          "lost_norm": 1.2687417416601572,
+          "retained_fraction": 0.4417546790749086,
+          "lost_fraction": 0.8971358891023279,
+          "retained_squared_fraction": 0.19514719648457549,
+          "lost_squared_fraction": 0.8048528035154243,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.05134865103368712,
+            1.06797529048965,
+            0.24459562501445764,
+            0.32908205640426663,
+            -0.5417303165411991,
+            0.06101102879917143,
+            -0.03437442149305541
+          ],
+          "witness_compressed_difference": -2.667137344314341e-17,
+          "witness_target_difference": 1.609705607030849,
+          "least_squares_residual": 1.2687417416601572
+        },
+        {
+          "target": "contrast_44_217",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.01918720439600416,
+          "retained_projection_norm": 0.011147537084627089,
+          "lost_norm": 1.414169626465279,
+          "retained_fraction": 0.00788249906606833,
+          "lost_fraction": 0.9999689326216457,
+          "retained_squared_fraction": 6.21337915265681e-05,
+          "lost_squared_fraction": 0.9999378662084731,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.0009162454026848524,
+            0.9987870752949976,
+            -0.004364469414966685,
+            -0.005872012510877362,
+            -0.008177186395481024,
+            -1.0010886571219493,
+            0.0006133638377822416
+          ],
+          "witness_compressed_difference": -3.0018847650692404e-18,
+          "witness_target_difference": 1.999875732416947,
+          "least_squares_residual": 1.414169626465279
+        },
+        {
+          "target": "contrast_44_353",
+          "target_vector": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.28198320668638993,
+          "retained_projection_norm": 0.16382888246258695,
+          "lost_norm": 1.404692171712742,
+          "retained_fraction": 0.11584451374350907,
+          "lost_fraction": 0.9932673600977381,
+          "retained_squared_fraction": 0.013419951364470063,
+          "lost_squared_fraction": 0.9865800486355296,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.013465526891168334,
+            0.9821743495963922,
+            -0.06414207383819186,
+            -0.08629755973541565,
+            -0.1201753623863132,
+            -0.015999361860823104,
+            -0.9909857476746676
+          ],
+          "witness_compressed_difference": 1.3877787807814457e-17,
+          "witness_target_difference": 1.9731600972710597,
+          "least_squares_residual": 1.404692171712742
+        },
+        {
+          "target": "contrast_70_100",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            -1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.2327681669374277,
+          "retained_projection_norm": 0.1352355309039197,
+          "lost_norm": 1.407732698768177,
+          "retained_fraction": 0.09562596095952454,
+          "lost_fraction": 0.9954173373970173,
+          "retained_squared_fraction": 0.00914432440943251,
+          "lost_squared_fraction": 0.9908556755905675,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.011115364096095917,
+            0.014714507355502999,
+            1.0529472415266412,
+            -0.9287641096544939,
+            0.099200938745312,
+            0.013206964259592321,
+            -0.007440978541720809
+          ],
+          "witness_compressed_difference": 2.9815559743351372e-18,
+          "witness_target_difference": 1.981711351181135,
+          "least_squares_residual": 1.407732698768177
+        },
+        {
+          "target": "contrast_70_143",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.5886923863157743,
+          "retained_projection_norm": 0.34202326052561266,
+          "lost_norm": 1.372231791374704,
+          "retained_fraction": 0.24184696684119392,
+          "lost_fraction": 0.9703144050408169,
+          "retained_squared_fraction": 0.058489955370285535,
+          "lost_squared_fraction": 0.9415100446297142,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.02811179166203772,
+            0.03721436037643696,
+            1.1339085080802092,
+            0.18016220529888008,
+            -0.7491115811792197,
+            0.03340164339592262,
+            -0.01881892817168439
+          ],
+          "witness_compressed_difference": 2.190088388420719e-17,
+          "witness_target_difference": 1.8830200892594289,
+          "least_squares_residual": 1.3722317913747037
+        },
+        {
+          "target": "contrast_70_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.5057930514524552,
+          "retained_projection_norm": 0.2938597349485243,
+          "lost_norm": 1.383346108598995,
+          "retained_fraction": 0.207790211299783,
+          "lost_fraction": 0.9781734141183716,
+          "retained_squared_fraction": 0.04317677191200847,
+          "lost_squared_fraction": 0.9568232280879913,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.024153104774334244,
+            -0.03197385481821549,
+            0.8849484136507849,
+            -0.15479186361626388,
+            -0.21555845103350169,
+            -1.0286980425251981,
+            0.01616885715915326
+          ],
+          "witness_compressed_difference": 2.721347452938616e-17,
+          "witness_target_difference": 1.9136464561759832,
+          "least_squares_residual": 1.383346108598995
+        },
+        {
+          "target": "contrast_70_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.768589053742841,
+          "retained_projection_norm": 0.4465410803264842,
+          "lost_norm": 1.3418647709739073,
+          "retained_fraction": 0.3157522259772238,
+          "lost_fraction": 0.9488416789909834,
+          "retained_squared_fraction": 0.09969946820957178,
+          "lost_squared_fraction": 0.900300531790428,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.03670238626281773,
+            -0.04858658051682083,
+            0.8251708092275598,
+            -0.2352174108408022,
+            -0.32755662702433386,
+            -0.043608747264071906,
+            -0.9754302543532967
+          ],
+          "witness_compressed_difference": 3.469446951953614e-17,
+          "witness_target_difference": 1.8006010635808565,
+          "least_squares_residual": 1.3418647709739073
+        },
+        {
+          "target": "contrast_100_143",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "projection_coefficient": -0.35592421937834656,
+          "retained_projection_norm": 0.20678772962169292,
+          "lost_norm": 1.3990135220496995,
+          "retained_fraction": 0.14622100588166936,
+          "lost_fraction": 0.989251948413018,
+          "retained_squared_fraction": 0.021380582561047187,
+          "lost_squared_fraction": 0.9786194174389524,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            -0.016996427565941805,
+            0.022499853020933963,
+            0.0809612665535681,
+            1.108926314953374,
+            -0.8483125199245317,
+            0.0201946791363303,
+            -0.011377949629963581
+          ],
+          "witness_compressed_difference": -6.440160904563896e-17,
+          "witness_target_difference": 1.9572388348779057,
+          "least_squares_residual": 1.3990135220496995
+        },
+        {
+          "target": "contrast_100_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 0.738561218389883,
+          "retained_projection_norm": 0.429095265852444,
+          "lost_norm": 1.3475448982586888,
+          "retained_fraction": 0.30341617225930756,
+          "lost_fraction": 0.9528581355120551,
+          "retained_squared_fraction": 0.09206137358848979,
+          "lost_squared_fraction": 0.9079386264115099,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.03526846887043016,
+            -0.04668836217371849,
+            -0.16799882787585624,
+            0.7739722460382299,
+            -0.3147593897788137,
+            -1.0419050067847904,
+            0.02360983570087407
+          ],
+          "witness_compressed_difference": 1.6371452804531117e-17,
+          "witness_target_difference": 1.8158772528230203,
+          "least_squares_residual": 1.3475448982586888
+        },
+        {
+          "target": "contrast_100_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 1.0013572206802688,
+          "retained_projection_norm": 0.5817766112304039,
+          "lost_norm": 1.28900580860804,
+          "retained_fraction": 0.4113781869367483,
+          "lost_fraction": 0.9114647482555941,
+          "retained_squared_fraction": 0.16923201268736623,
+          "lost_squared_fraction": 0.8307679873126335,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.04781775035891365,
+            -0.06330108787232384,
+            -0.2277764322990814,
+            0.6935466988136916,
+            -0.4267575657696459,
+            -0.056815711523664235,
+            -0.9679892758115758
+          ],
+          "witness_compressed_difference": -2.7755575615628914e-17,
+          "witness_target_difference": 1.6615359746252674,
+          "least_squares_residual": 1.2890058086080403
+        },
+        {
+          "target": "contrast_143_217",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            -1.0,
+            0.0
+          ],
+          "projection_coefficient": 1.0944854377682296,
+          "retained_projection_norm": 0.635882995474137,
+          "lost_norm": 1.2631915199473271,
+          "retained_fraction": 0.4496371781409769,
+          "lost_fraction": 0.893211289692097,
+          "retained_squared_fraction": 0.20217359196658058,
+          "lost_squared_fraction": 0.797826408033419,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.05226489643637197,
+            -0.06918821519465246,
+            -0.24896009442942432,
+            -0.334954068915144,
+            0.5335531301457179,
+            -1.0620996859211207,
+            0.03498778533083765
+          ],
+          "witness_compressed_difference": -3.382710778154774e-17,
+          "witness_target_difference": 1.5956528160668386,
+          "least_squares_residual": 1.2631915199473271
+        },
+        {
+          "target": "contrast_143_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            -1.0
+          ],
+          "projection_coefficient": 1.3572814400586153,
+          "retained_projection_norm": 0.7885643408520968,
+          "lost_norm": 1.1739532700821178,
+          "retained_fraction": 0.5575991928184176,
+          "lost_fraction": 0.830110318071188,
+          "retained_squared_fraction": 0.3109168598317509,
+          "lost_squared_fraction": 0.6890831401682489,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.06481417792485544,
+            -0.0858009408932578,
+            -0.30873769885264946,
+            -0.4153796161396823,
+            0.42155495415488586,
+            -0.07701039065999453,
+            -0.9566113261816123
+          ],
+          "witness_compressed_difference": 3.8163916471489756e-17,
+          "witness_target_difference": 1.3781662803364982,
+          "least_squares_residual": 1.1739532700821178
+        },
+        {
+          "target": "contrast_217_353",
+          "target_vector": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            -1.0
+          ],
+          "projection_coefficient": 0.2627960022903858,
+          "retained_projection_norm": 0.15268134537795988,
+          "lost_norm": 1.4059475120976517,
+          "retained_fraction": 0.10796201467744077,
+          "lost_fraction": 0.994155019796605,
+          "retained_squared_fraction": 0.011655796613211936,
+          "lost_squared_fraction": 0.988344203386788,
+          "witness_s0": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "witness_s1": [
+            0.012549281488483484,
+            -0.01661272569860535,
+            -0.059777604423225175,
+            -0.0804255472245383,
+            -0.11199817599083219,
+            0.9850892952611262,
+            -0.99159911151245
+          ],
+          "witness_compressed_difference": -6.938893903907228e-18,
+          "witness_target_difference": 1.9766884067735762,
+          "least_squares_residual": 1.4059475120976517
+        }
+      ],
+      "exact_witness": {
+        "target": "contrast_30_44",
+        "source_decimal_weights": [
+          "-4.775293908244733487e-02",
+          "6.321529077237836303e-02",
+          "2.274677084211189082e-01",
+          "3.060379401649696018e-01",
+          "4.261791466183561528e-01",
+          "5.673870458043600573e-02",
+          "-3.196733745693447482e-02"
+        ],
+        "s0": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "s1_h_exact": [
+          "3322480925267782763024190244778789781101/3375471516471227815166420983781217338831",
+          "-3305322627303538574008341602881424252461/3375471516471227815166420983781217338831",
+          "252416889526251940421642556009510327800/3375471516471227815166420983781217338831",
+          "339604884885237403359797931909700962200/3375471516471227815166420983781217338831",
+          "472923455012792076059321144680190391200/3375471516471227815166420983781217338831",
+          "62961936115468743446050874544356489670/3375471516471227815166420983781217338831",
+          "-35473588507678839914493174125764768780/3375471516471227815166420983781217338831"
+        ],
+        "projection_coefficient_exact": "-1109682298548256979000000000000000000000/3375471516471227815166420983781217338831",
+        "w_dot_h_exact": "0",
+        "a_dot_h_exact": "6627803552571321337032531847660214033562/3375471516471227815166420983781217338831",
+        "h_dot_h_exact": "6627803552571321337032531847660214033562/3375471516471227815166420983781217338831",
+        "a_dot_h_minus_h_dot_h_exact": "0",
+        "decimal_precision": 80,
+        "decimal_w_dot_h_residual": "2.67E-81",
+        "decimal_a_dot_h_minus_h_dot_h_residual": "0E-79"
+      },
+      "controls": {
+        "projector_symmetry_max_abs": 0.0,
+        "projector_idempotence_max_abs": 1.1102230246251565e-16,
+        "projector_annihilation_norm": 4.0161752058697714e-17,
+        "projector_trace": 6.0,
+        "projection_vs_lstsq_max_abs": 2.220446049250313e-16
+      }
+    }
+  }
+}

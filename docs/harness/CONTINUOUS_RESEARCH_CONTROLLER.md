@@ -174,7 +174,8 @@ The host remains the sole state-file writer and serializes all `ack`/`record`
 commands. The reviewer reads only the bound candidate/inputs and returns its
 outcome to the host; the host stores the raw review receipt outside candidate,
 input and acquisition paths. A review failure may schedule a deterministic repair,
-but that repair waits until the acquisition finishes. A refusal preserves the
+but that repair waits until the acquisition finishes or an explicit validated
+cooperative checkpoint releases its writer slot. A refusal preserves the
 acquisition. This exception does not add a scientific acceptance, reset any
 allocation, or authorize a second writer or a daemon.
 
@@ -656,3 +657,152 @@ prohibited. Such discovery transport remains held even if science evidence
 changes. Restoration never authorizes retrying an exhausted transport. All
 provider/availability assertions must come from actual host observations, not a
 model catalog or a planned route.
+
+## Explicit cooperative acquisition checkpoint
+
+A long acquisition can hand off its writer ownership without a scientific
+outcome. The controller never requests, observes, signals, stops or resumes OS
+processes. The actual native acquisition worker first drains/reconciles its
+identified task-owned controllers, shell continuations, children and queues,
+preserves all output/attempts, and returns an actual no-further-writes handoff.
+The host independently corroborates process exits, executing source versions,
+retained bytes and complete accounting. Missing, dormant, queued, stale or
+ambiguous ownership keeps the task running. A checkpoint is not a failure,
+qualification, completed task, new allocation or scientific evidence delta.
+
+Host-only transitions (save each before any subsequent action):
+
+```bash
+python scripts/codex_harness/research_controller.py --state "$STATE" checkpoint-acquisition \
+  --task-id "$TASK" --worker-receipt "$WORKER_RECEIPT" --host-evidence "$HOST_EVIDENCE"
+# Normal next may now select the already READY independent SMICA assignment.
+python scripts/codex_harness/research_controller.py --state "$STATE" prepare-acquisition-resume \
+  --task-id "$TASK" --checkpoint-identity "$CHECKPOINT" --resume-plan "$RESUME_PLAN"
+# Only after that reservation is durable: actual same-agent followup, WAIT ONLY.
+python scripts/codex_harness/research_controller.py --state "$STATE" ack-acquisition-resume \
+  --task-id "$TASK" --reservation-identity "$RESERVATION" --dispatch-evidence "$ACTUAL_DISPATCH"
+```
+
+The APIs are `acquisition_binding(state, task_id, sequence)`,
+`checkpoint_acquisition(state, task_id, worker_receipt, host_evidence)`,
+`prepare_acquisition_resume(state, task_id, checkpoint_identity, resume_plan)`,
+and `acknowledge_acquisition_resume(state, task_id, reservation_identity,
+dispatch_evidence, observed="UNKNOWN")`. Binding construction is a read-only
+identity aid, not a checkpoint request or evidence of quiescence. Host chooses
+request and receipt paths outside frozen candidate/input scopes; no controller
+request-file watcher, daemon, native call or automatic lifecycle exists.
+
+The per-task `acquisition_lifecycle` sidecar holds monotonically numbered
+checkpoints. Only task `state` becomes `checkpointed`, then `resume_pending`,
+then `running`. Original phase, task/spec, packet/agent/input, authors, attempts,
+scientific histories, source acceptances, caps and consumed ultra remain intact.
+Each later checkpoint retains the prefix of actual attempt receipts, all
+completed product identities, nondecreasing partial sizes and cumulative numeric
+accounting. Later partial/completed products must retain the actual previous
+prefix (streamed first-old-size hash), source release and previous source refs;
+same-size replacement is rejected. Lifecycle alone leaves `adaptive_fingerprint` unchanged and cannot
+make the checkpointed acquisition a discovery branch. Independent eligible
+branches can still use existing adaptive research opportunities under the same
+fingerprint and consumed-checkpoint rules; no global discovery freeze is added.
+
+The worker receipt is JSON with the following exact fields:
+
+- `binding`: the output of `acquisition_binding`. It binds campaign identity,
+  task, original packet, frozen input/spec, original acknowledged packet digest,
+  digest of the task excluding only `state`, original agent and positive integer
+  `sequence` (first 1). It is supplied by the host, never invented by a helper.
+- `handoff_complete:true`, `inventory_complete:true`, and `raw_evidence`:
+  nonempty sealed actual HTTP/error/output/handoff records.
+- `snapshot`: `sources`, `processes`, `queued_writers:[]`,
+  `future_launchers:[]`, `attempt_receipts`, `completed_products`,
+  `partial_products`, and `accounting`. Sources, processes and actual attempt
+  receipts must be nonempty. Accounting is a nonempty map of all applicable
+  cumulative nonnegative finite numeric counters, including actual attempts,
+  elapsed time and bytes; completeness is established by worker/host evidence.
+
+A file seal is `{path,sha256,size_bytes}` against actual local bytes. Files are
+hashed in 1 MiB chunks without a scientific-input size cap or a large copy.
+Validation wall time is retained in the lifecycle row. Resume/next/ACK freshness
+checks can hash again; the host must account for that cost. Size or a path label
+alone is not a content check. These are provenance checks, not scientific
+admission. Tests use small real files and never hash external gigabyte inputs.
+
+Each process record has positive integer `pid`, actual nonempty `start_identity`
+(for example boot identity plus observed `/proc` start ticks), integer
+`parent_pid`, nonempty `session_id`, exact `command` string list, absolute `cwd`,
+`role` (`controller`, `launcher`, `transfer`, `child` or `continuation`),
+`state:"exited"`, integer `exit_code`, and nonempty `source_refs` naming sealed
+sources. Include dormant launchers, wrappers and successors, not just curl.
+Native agent infrastructure is not an exited acquisition helper: the original
+native thread is separately bound by the completed handoff and must stop issuing
+writes. A helper cannot attest its own future exit. Its actual exit is established
+before the final worker return and independent host corroboration are assembled.
+
+Each completed/partial product extends a file seal with `product_id`,
+`source_release`, and nonempty `source_refs` to sealed executing/source versions.
+Product IDs are unique across both inventories. A partial additionally has
+`offset == size_bytes` for the contiguous validated retained prefix. Conflicting
+or unvalidated bodies remain separate raw evidence, never silently appended.
+All actual attempt receipts and raw HTTP/errors survive lifecycle migration.
+
+Host evidence is a separate JSON with the identical `binding`, `worker_receipt`
+(the controller `_receipt` object `{path,sha256}` with absolute path),
+`snapshot_identity:digest(snapshot)`, `inventory_complete:true`,
+`quiescence_observed:true`, a nonempty independent `observer` distinct from the
+worker agent, a sealed `process_observation`, and nonempty sealed `raw_evidence`.
+The process observation JSON binds the same observer/binding, complete exact
+process inventory, and empty queued-writer/future-launcher inventories.
+Actual OS observations and source/artifact/accounting corroboration must have
+been performed by the host; matching JSON assertions cannot establish omitted
+processes or truthful provenance. The controller verifies content/identity
+bindings and never fabricates those observations.
+
+`checkpoint_identity` is `digest({"worker":worker_receipt,"host":host_receipt})`;
+`digest` is SHA-256 of Python `json.dumps(value, sort_keys=True,
+ensure_ascii=False).encode()` with its default separators. Returned checkpoint
+wrappers carry that explicit identity, binding, snapshot and both receipt seals.
+
+A resume plan binds `binding` and `checkpoint_identity`, nonempty sealed
+`sources` for the newly loaded cooperative helpers, and sealed `review_receipt`.
+That actual independent review JSON must have `verdict:"SCOPED_PASS"`, an
+independent `reviewer`, exact `task_id`, `packet_id`, `input_identity`, and
+`source_hashes` mapping absolute helper paths to their SHA-256 values. Review
+may precede the actual handoff; the later plan binds it to this checkpoint.
+This consumes the existing source-review decision, not another review ladder.
+
+Prepare reserves the sole writer before any actual same-agent call. It refuses
+while any other task/discovery packet is planned, running or resume-pending.
+All `next` modes and ordinary ACKs wait while resumption is ambiguous. Repeated
+prepare returns the existing reservation; it never authorizes replaying an
+unknown or previously accepted followup. After a host interruption, reconcile
+the real call instead of repeating it. No new packet, attempt or budget appears.
+
+Dispatch evidence and its sealed `tool_receipt` JSON both bind `binding`,
+`checkpoint_identity`, `reservation_identity`, original `agent_id`,
+`native_tool:"collaboration.followup_task"`, `accepted:true`, and exact original
+`requested` and `transport_selected` route profiles. These documents preserve
+actual accepted-call evidence; a selected profile or requested call is not
+acceptance. The original acquisition uses requested gpt-5.6-terra/medium,
+transport-selected gpt-6.1-sol/medium under TRANSPORT_MODEL_UNAVAILABLE;
+observed runtime remains UNKNOWN unless independently observed.
+
+The actual same-agent followup must WAIT and make no file writes until the host
+validates ACK, durably saves it, and sends a sealed ACK grant. The grant is the
+acknowledged sidecar `resume` object: `state:"acknowledged"`, original binding,
+checkpoint/reservation identities, agent/route/plan, dispatch/tool receipt seals
+and observed runtime. The worker verifies those exact grant bytes and source
+review bindings before any launch. `reservation_identity` hashes the reservation
+before adding that identity and before ACK fields, with `state:"pending"`.
+No helper may launch merely because it received a followup, flag or profile.
+This handshake prevents resumed writes racing checkpoint freshness validation.
+
+Duplicate checkpoint/ACK calls return the existing transition without another
+launch or attempt; a historical checkpoint cannot re-yield a resumed writer.
+Changed actual receipts, sources, product bytes or partial offsets fail before
+mutation. Current worker/host receipts and snapshot must equal the stored
+checkpoint on next, ordinary ACK, prepare and resume ACK. Resume ACK also compares
+the current complete plan/source/review binding with the durably reserved plan;
+a coherent replacement of documents cannot revive an older identity. Final outcome still uses the original packet and agent through ordinary
+`record`, followed by the unchanged independent scientific review. Actual
+quiescence, real SMICA execution/review, and acquisition resumption are separate
+host actions required after source review; unit tests do not claim them.

@@ -1,0 +1,153 @@
+{
+  "schema": "htt.independent_descriptive_contract_review/1",
+  "reviewer": "/root/r25_blind_staged4_contract",
+  "requested_model_effort": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "reviewed_at_utc": "2026-10-23T11:33:58.609124+00:00",
+  "verdict": "SCOPED_CONTRACT_PASS",
+  "scope": "Mathematical and data-semantic executability of one four-frequency descriptive native-resolution pseudo-tensor stage; implementation, native execution, four product qualification decisions and scientific admission remain pending.",
+  "authority": "Independent mathematics, actual local source/header evidence, and primary HEALPix/healpy/Planck documentation. Repository skills and harness policy were not review authority and no review skill was invoked.",
+  "base_head": "e4dd81068f03d1ee52a6864b661a4104e6336147",
+  "reviewed_files": {
+    "input": {
+      "path": "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-PR3-STAGED4-TENSOR-CONTRAST_INPUT.json",
+      "sha256": "ff5db155e8266b4a913ceb48e69b60d6a6356928940305cd2d28d82fc3f690e5"
+    },
+    "frontier": {
+      "path": "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/FRONTIER_STAGED4_TENSOR.json",
+      "sha256": "17cb1a91c7eb0d3bc834f8060451b38be42d513a80cc6726e2b2eb17ce212e78"
+    },
+    "theory_contract": {
+      "path": "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/reviews/STAGED4_THEORY_CONTRACT.md",
+      "sha256": "106bb1d88eb3545f53064ef26c34b58311d4ce958921f6248cfbf31416f5ada9"
+    }
+  },
+  "blocking_findings": [],
+  "determinations": [
+    {
+      "topic": "Native spin-2 operator",
+      "decision": "PASS_CONTRACT",
+      "reason": "Native NSIDE1024/2048 Q/U with only exact NESTED-to-RING permutation and explicit selected-support zeroing defines an unambiguous discrete pseudo-mode operator. No Q/U downgrade, smoothing, deconvolution or full-sky interpretation is licensed."
+    },
+    {
+      "topic": "Common support and invalid values",
+      "decision": "PASS_CONTRACT",
+      "reason": "The NSIDE64 mask is a selection surface, not a Q/U reduction. Intersecting all four maps all-child validity gives the same geometric selected cells for each native grid. Exact native-float32 BAD_DATA comparison plus nonfinite rejection and where-zeroing are correct; original30021 is explicitly not an asserted S4 outcome."
+    },
+    {
+      "topic": "Complete carrier and harmonic-STF bridge",
+      "decision": "PASS_CONTRACT",
+      "reason": "E2/E3/B2/B3 dimensions5/7/5/7 give24 real coordinates per map and96 across four maps. All six oriented differences retain24 coordinates and full tensors. Canonical sqrt(2) and negative-imaginary scaling is explicitly undone before the raw STF decoder. All raw l2/l3 coordinate bases independently reproduce the scalar harmonic functions."
+    },
+    {
+      "topic": "Units and conventions",
+      "decision": "PASS_CONTRACT",
+      "reason": "Actual four FITS headers confirm Galactic,NESTED,COSMO,K_CMB/Kcmb,Q_STOKES/U_STOKES,float32 storage and proposed NSIDEs. Unit spelling normalization requires no numerical factor. E polar/B axial labels correctly express representation parity; tests must transform support with the field when testing a masked operator."
+    },
+    {
+      "topic": "Controls and native24x24 response",
+      "decision": "PASS_CONTRACT",
+      "reason": "Small all24-basis sign/parity controls plus actual-native independent low-order quadrature, exact permutation/invalid controls and reduction stability directly check this descriptive calculation. A full production24x24 response is not a prerequisite without an inverse estimator, response correction or inferential consumer. Such a restricted matrix would not by itself characterize high-ell leakage anyway."
+    },
+    {
+      "topic": "Computational Q and empirical frequency CDF",
+      "decision": "PASS_CONTRACT",
+      "reason": "The canonical Euclidean norm is explicitly defined, dimensionless after division by q0/o0, and includes every E/B coordinate. The four-point empirical counting measure is descriptive. Physical MES/F remain NOT_EVALUABLE,Pi NOT_CALIBRATED,G_F NOT_APPLICABLE; no physical law or probability calibration is inferred."
+    },
+    {
+      "topic": "Staging and later reuse",
+      "decision": "PASS_CONTRACT",
+      "reason": "Four existing inputs can be qualified inside this candidate without waiting for all-seven acquisition. Later S7, including the separately named SMICA validity, is correctly a subset of S4. Coefficients can only be reused with identical support,input and operator; a changed support needs a newly resourced native retransform."
+    },
+    {
+      "topic": "Resources and execution",
+      "decision": "BOUNDED_IMPLEMENTATION_MAY_PROCEED",
+      "reason": "One-thread4GiB/900s per-product caps are prospective. The operator is implementable with sequential bounded reads and chunked independent sums. Native cap compliance has not been measured and is not certified by this review. No new inherited allowance or reset follows."
+    }
+  ],
+  "observed_checks": {
+    "three_reviewed_hashes": "match requested identities before review and immediately before artifact write",
+    "small_source_seals": "all four receipt/header metadata hashes match; decoder and base support hashes match",
+    "actual_map_access": "stat plus FITS headers only; all four sizes and stated header fields match; astropy data_loaded remained false",
+    "large_raw_map_hashes": "copied receipt local_sha256 values match proposal; no independent multi-GB rehash and no fresh full product qualification claimed",
+    "base_support": {
+      "shape": [
+        49152
+      ],
+      "dtype": "bool",
+      "selected_count": 30021
+    },
+    "decoder_basis_probe": {
+      "seed": 764,
+      "directions": 37,
+      "l2_basis_count": 5,
+      "l3_basis_count": 7,
+      "max_l2_pointwise_error": 4.440892098500626e-16,
+      "max_l3_pointwise_error": 6.661338147750939e-16,
+      "max_trace_error": 0.0,
+      "a21_i_Qyz": 0.7725484040463791,
+      "expected_Qyz": 0.7725484040463791
+    },
+    "independent_spin_probe": {
+      "synthetic_nside": 16,
+      "basis_cases": 24,
+      "method": "Independent finite factorial Wigner-d spin harmonics; s=0 checked against scipy sph_harm_y; spin2 synthesis checked against healpy; explicit masked +/-2 quadrature checked against map2alm_spin",
+      "s0_max_error": 5.551115123125783e-16,
+      "spin_synthesis_max_error": 1.8318679906315083e-15,
+      "masked_spin_quadrature_max_error": 2.4927944666617716e-16,
+      "m0_imaginary_max": 0.0,
+      "native_production_executed": false
+    },
+    "local_python_packages": {
+      "numpy": "2.4.2",
+      "scipy": "1.17.0",
+      "healpy": "1.19.0",
+      "astropy": "7.2.0"
+    },
+    "first_probe_failure": {
+      "command_context": "python -B from repository root; import htt.obsstat.planck_lowell_irrep_projection",
+      "exception": "ModuleNotFoundError: No module named bass",
+      "location": "htt/__init__.py:58 _importlib.import_module(name)",
+      "classification": "Existing repository import-path setup; no numerical computation occurred",
+      "resolution": "PYTHONPATH=htt:htt/src and canonical import obsstat.planck_lowell_irrep_projection succeeded; no source modification"
+    },
+    "warning": "Local healpy import emitted Matplotlib Axes3D import warning; spin operations completed and no plotting capability is certified."
+  },
+  "implementation_notes_not_extra_gates": [
+    "Construct final S4 from all four validity masks before projecting any map. Qualification/support and projection may require separate passes; accumulate all product-attributable time against the same prospective900s clock.",
+    "Use bounded FITS reads and temporary-array reuse to respect4GiB; avoid simultaneous native index/theta/phi/full harmonic basis matrices for NSIDE2048. This review did not benchmark production.",
+    "The NSIDE16 basis fixture should verify the declared discrete forward operator/signs. Do not demand exact continuous harmonic round-trip recovery or zero masked E/B leakage at1e-12; compare equal operators.",
+    "Parity of masked pseudo-modes concerns joint field/support transformation. A fixed asymmetric mask can mix E/B and must not be used to claim intrinsic parity separation.",
+    "If support construction returns no selected cells, report no supported observable under the existing no-fabricated-zero rule; do not present zero signal/CDF as a measurement."
+  ],
+  "primary_sources": [
+    {
+      "url": "https://healpy.readthedocs.io/en/latest/generated/healpy.sphtfunc.map2alm_spin.html",
+      "use": "Official spin2 API; additionally exercised installed healpy1.19.0 rather than assuming latest online version."
+    },
+    {
+      "url": "https://healpix.sourceforge.io/html/intro_HEALPix_conventions.htm",
+      "use": "Spin Q+/-iU, E/B definitions, equal-area quadrature and scalar Condon-Shortley conventions."
+    },
+    {
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/matrix_bpasscorr.html",
+      "use": "Official LFI bandpass-corrected frequency products and native ordering/coordinates/units."
+    },
+    {
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/matrix_primary.html",
+      "use": "Official primary-frequency product listing."
+    }
+  ],
+  "preservation": {
+    "production_maps": "read-only; data arrays not loaded",
+    "acquisition_processes": "not touched",
+    "STATE": "not touched",
+    "git": "no mutation",
+    "original17_of42": "unchanged",
+    "alternate18_of42": "unchanged",
+    "historical48_and_baseline62": "unchanged",
+    "R9": "UNKNOWN unchanged",
+    "one_use_and_consumed_ultra": "unchanged"
+  },
+  "next_executable_transition": "Host may bind this exact reviewed proposal to the existing campaign and dispatch lower-tier implementation in its owned output directory; complete product qualification, native controls and accounting, then obtain an independent review of the actual candidate. This is not execution or original acceptance promotion."
+}

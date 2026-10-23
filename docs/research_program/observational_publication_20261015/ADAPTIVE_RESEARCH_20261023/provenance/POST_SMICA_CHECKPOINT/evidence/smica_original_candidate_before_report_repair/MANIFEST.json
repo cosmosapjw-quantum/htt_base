@@ -1,0 +1,76 @@
+{
+  "task_id": "R25-SMICA-SPECTRAL-NULLSPACE",
+  "packet_id": "ace2f2a19bcdf860f5f64a416beab68eb8a9efc742241ac1acce1ad68bd26ee9",
+  "input_identity": "sha256:69ad48a48c5f61a5314050a45077bde99af83e97ffe9b8ed270533ee9368710a",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "owner": "obsstat fixed-operator diagnostic",
+  "scope": "PR3 SMICA polarization spectral nullspace at ell2,3; source-bound linear information audit",
+  "claim_tier": "C0",
+  "claim_status": "CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+  "transfer_source": "external Planck PR3 SMICA release weights; no native BASS transfer",
+  "sky_support_status": "no sky realization analyzed",
+  "null_mock_status": "no physical null or statistical calibration",
+  "source_identities": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-SMICA-SPECTRAL-NULLSPACE_INPUT.json",
+      "sha256": "69ad48a48c5f61a5314050a45077bde99af83e97ffe9b8ed270533ee9368710a",
+      "size_bytes": 4363
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/weights/COM_Code_SMICA-weights-propagation_R3.00.tar.gz",
+      "sha256": "044ec9bed746ae745ad35a8b6ccf6e603f546083fec328e9c64d866ac9221f93",
+      "size_bytes": 74625775
+    },
+    {
+      "member": "weights_EB_smica_R3.00.txt",
+      "sha256": "541378f6c9ab37574aae909519b0f1fe020714a6cea2b8dd1c7fcedb5ffd87df"
+    },
+    {
+      "member": "smica_coadd.py",
+      "sha256": "dd1f9c2435cae456b4cc0445b7257b360d01a73754455d11ea409252d3788160"
+    },
+    {
+      "member": "README",
+      "sha256": "de52811701de2ef4c1c37aff05f317e264fd9cd3ad867cab6289dd3a8e4aaf27"
+    }
+  ],
+  "generating_command": [
+    "python3",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/compute.py"
+  ],
+  "test_command": [
+    "python3",
+    "-m",
+    "pytest",
+    "-q",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/test_compute.py"
+  ],
+  "files": {
+    "compute.py": {
+      "sha256": "801f9db6a05f77f71574694ff26afc6daa7c558a16337e843cbac84ceb28a40d",
+      "size_bytes": 10780
+    },
+    "test_compute.py": {
+      "sha256": "3f4f06de96aaf34237ea9b3180f0d8804919893d333414846e67787e1cadc948",
+      "size_bytes": 3729
+    },
+    "RESULT.json": {
+      "sha256": "075fa5d6a54e29afec4824c935b1056e62fa40e4531bbf000d100c611ad8cc15",
+      "size_bytes": 165309
+    },
+    "figure.png": {
+      "sha256": "bca8ba34e8803bae96dd9110536ce2c35148831092a4f440d6339cf2f5af3373",
+      "size_bytes": 34280
+    },
+    "REPORT.md": {
+      "sha256": "53e1b062b5fb063cb5902e2ce2caea8337223d82c603dec66c01de5a00f5b0a4",
+      "size_bytes": 6936
+    },
+    "RAW_RECEIPT.json": {
+      "sha256": "ab825ad7c6bff26af8b9e80d328bfb5d508b4f384fbbeae7dcbd50c80139489e",
+      "size_bytes": 3776
+    }
+  },
+  "raw_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/RAW_RECEIPT.json",
+  "claim_ceiling": "Fixed released-row compression kernel only; no physical foreground amplitude, calibrated Pi/F/Q/G_F, native atlas, or original acceptance promotion"
+}

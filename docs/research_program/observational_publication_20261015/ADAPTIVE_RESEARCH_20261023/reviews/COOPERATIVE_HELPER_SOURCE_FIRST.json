@@ -1,0 +1,64 @@
+{
+  "verdict": "HOLD",
+  "scope": "Frozen cooperative helper source candidate, before targeted repair",
+  "reviewer": "/root/r25_blind_checkpoint_source",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "task_id": "R25-PR3-FREQUENCY-ACQUIRE",
+  "packet_id": "014cb70b115b051a27cf126089c1e7f270363aa236d69320c2f777f738dca00d",
+  "input_identity": "sha256:ae7e2f0b136ec3dddcf3b9543f9ec91446587dc50c7908b93b3f17b77e014d9f",
+  "source_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_resume.py": "d1bd8fce16eb18d85a7347a67a8b6903f5ad86383dd92c484b2618131d0faf3d",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/compute.py": "e67238c84faad256bda91ddd3fbd4022d183b3daa64fdbd2774bb054e93eb6fe"
+  },
+  "findings": [
+    {
+      "severity": "P1",
+      "path": "cooperative_resume.py",
+      "line": 206,
+      "issue": "Dispatch/tool receipt presence substitutes for actual seal and accepted-call identity validation",
+      "reproduced": "Valid controller ACK then delete tool file or overwrite dispatch with accepted:false: validate_grant returns success"
+    },
+    {
+      "severity": "P1",
+      "path": "cooperative_resume.py",
+      "line": 198,
+      "issue": "Unsealed checkpoint wrapper snapshot is not compared to sealed worker/host evidence",
+      "reproduced": "Replace only wrapper partial/completed/attempt arrays and reset accounting attempts to0: same grant accepted and substituted snapshot returned"
+    },
+    {
+      "severity": "P1",
+      "path": "cooperative_resume.py",
+      "line": 262,
+      "issue": "Initial resume partial validation permits growth after checkpoint/ACK",
+      "reproducer": "Grow sealed partial by appending unowned bytes; prefix_witness accepts old prefix and production does not demand exact current size/full hash"
+    },
+    {
+      "severity": "P1",
+      "path": "cooperative_resume.py",
+      "line": 318,
+      "issue": "Prepared snapshot source references/history do not satisfy reviewed controller interface",
+      "evidence": "sources only plan.sources; products add mutable receipt refs at303 absent from sources; attempt_receipts at320 only glob new cooperative files rather than retaining ordered prior attempt prefix; historical completed objects are reconstructed and changed"
+    },
+    {
+      "severity": "P2",
+      "path": "compute.py",
+      "line": 134,
+      "issue": "Checkpoint yield creates phantom next attempt and interim HOLD before next curl gate",
+      "reproduced": "Real acquire under EngineProxy with one controlled HTTP206 exit28 transfer and sticky request: one stubbed transfer, two persisted attempts, last lacks executed outcome, HOLD/YieldRequested recorded"
+    }
+  ],
+  "evidence": [
+    "helper_adversarial_initial.json",
+    "helper_adversarial_repro.py",
+    "helper_attempt_counterexample.json"
+  ],
+  "limits": [
+    "No production/network/process launch or intervention",
+    "Controller source verdict remains separate SCOPED_PASS",
+    "No scientific promotion or actual lifecycle acceptance"
+  ]
+}

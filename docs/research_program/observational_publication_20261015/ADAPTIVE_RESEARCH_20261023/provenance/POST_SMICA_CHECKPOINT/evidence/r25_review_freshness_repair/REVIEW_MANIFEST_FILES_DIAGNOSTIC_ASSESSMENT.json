@@ -1,0 +1,51 @@
+{
+  "verdict": "CONFIRMED_CONTROLLER_FRESHNESS_GAPS_DIAGNOSTIC_ONLY",
+  "requested_reviewer": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "source_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/research_controller.py": "a394d854f8a0b90896e5e9649c056733999b06fce6b88292218a5688e7225495"
+  },
+  "raw_fixture_evidence": "/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch/REVIEW_MANIFEST_FILES_DIAGNOSTIC.json",
+  "findings": [
+    {
+      "severity": "P1",
+      "source": "scripts/codex_harness/research_controller.py:1069",
+      "issue": "MANIFEST files declarations are silently treated as an empty product inventory",
+      "counterexample": "With no candidate_products, keep MANIFEST bytes fixed and change declared compute.py after next_packet(review_only=True). Context remains equal, next returns same packet, acknowledge accepts, record completes. products_sha256 control rejects the same pre-ACK change.",
+      "scope": "Automatic review-only product freshness. Actual SMICA byte drift is not asserted."
+    },
+    {
+      "severity": "P1",
+      "source": "scripts/codex_harness/research_controller.py:1522",
+      "issue": "Review outcome recording has no on-disk candidate freshness check",
+      "counterexample": "For supported products_sha256, acknowledge valid candidate, change declared compute.py without changing manifest, then record matching candidate_identity success; task becomes completed.",
+      "scope": "ACK-to-record review boundary; independent reviewer can separately verify content, but controller does not enforce it."
+    }
+  ],
+  "other_bound_mechanisms": {
+    "manifest_hash": "Binds declared hashes, not actual referenced files; this is sufficient only when a consumer checks the declared hashes.",
+    "source_contracts": "Bind input JSON, not omitted candidate files.",
+    "history_receipt": "The review recording path hashes the new review receipt and compares candidate identity strings; it does not validate historical candidate file bytes.",
+    "one_writer_read_only_instructions": "Reduce expected change risk but do not provide byte freshness. Actual independent source/product checking remains usable task-specific evidence."
+  },
+  "provenance_overhead": {
+    "measurement_source": "Parent-reported accepted acquisition checkpoint measurement, not repeated by reviewer",
+    "checkpoint_bytes_approx": 7550000000,
+    "one_full_validation_seconds": 105.8548,
+    "actual_smica_science_seconds": 23.122,
+    "one_validation_science_ratio": 4.578098780382319,
+    "next_plus_ack_seconds_if_equal_cost": 211.7096,
+    "next_plus_ack_science_ratio_if_equal_cost": 9.156197560764639,
+    "source_call_sites": [
+      "research_controller.py:1123 next_packet -> _validate_released_acquisitions",
+      "research_controller.py:1302 acknowledge -> _validate_released_acquisitions",
+      "research_controller.py:767 iterates every checkpointed acquisition",
+      "research_controller.py:760 -> _validate_checkpoint -> streamed _file_seal"
+    ]
+  },
+  "later_improvement_scope": "Justified later investigation: split task-local input/candidate freshness from disjoint dormant acquisition payload validation. Continue exact source/receipt/binding checks; amortize bulk payload reads only when a real immutable snapshot or explicitly enforced no-writer ownership epoch provides equivalent continuity. Rehash all relevant payload at handoff/resume/consumption or ownership change. A size/mtime cache alone is insufficient. No source change, repair authorization, new gate, or original acceptance change is proposed by this diagnostic.",
+  "limits": "Actual packet/manifest read only; all mutations tiny external fixture files and in-memory synthetic state. No actual candidate/STATE edits, GB hashing, production network/process operation, science rerun, or admission decision."
+}

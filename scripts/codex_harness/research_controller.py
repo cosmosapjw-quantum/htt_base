@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import tempfile
+import time
 from typing import Any
 
 from native_routing import load_policy, resolve_route
@@ -543,7 +544,8 @@ def _adaptive_next(state: dict, policy: dict, profiles: set[tuple[str, str]]) ->
     route = resolve_route(policy, "review_or_research", profiles)
     if route["transport_selected"] is None:
         return {**summary(state), "status": "HOLD_TRANSPORT_UNAVAILABLE", "discovery_route": route}
-    eligible = sorted(key for key, task in state["tasks"].items() if task["state"] != "completed")
+    eligible = sorted(key for key, task in state["tasks"].items()
+                      if task["state"] not in {"completed", "checkpointed", "resume_pending"})
     if not eligible:
         return None
     selected = route["transport_selected"]
@@ -618,6 +620,286 @@ def _adaptive_record(state: dict, result: dict) -> None:
     packet["state"] = "recorded"
 
 
+def _file_seal(value: dict) -> dict:
+    """Verify real bytes with bounded memory, including large retained products."""
+    require(isinstance(value, dict), "file seal required")
+    require(isinstance(value.get("path"), str) and value["path"], "sealed file path required")
+    path = Path(value["path"])
+    require(path.is_file() and isinstance(value.get("size_bytes"), int), "sealed file/size required")
+    hasher = hashlib.sha256()
+    size = 0
+    with path.open("rb") as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            size += len(chunk)
+            hasher.update(chunk)
+    require(size == value["size_bytes"] and hasher.hexdigest() == value.get("sha256"),
+            "sealed file bytes changed: " + str(path))
+    return {"path": str(path.resolve()), "sha256": hasher.hexdigest(), "size_bytes": size}
+
+
+def _checkpoint_document(path: str) -> tuple[dict, dict]:
+    receipt = _receipt(path)
+    require(Path(receipt["path"]).stat().st_size <= 8 * 1024 * 1024, "checkpoint metadata bound exceeded")
+    data = json.loads(Path(receipt["path"]).read_text())
+    require(isinstance(data, dict), "checkpoint document required")
+    require(_receipt(path) == receipt, "checkpoint receipt changed during inspection")
+    return data, receipt
+
+
+def acquisition_binding(state: dict, task_id: str, sequence: int) -> dict:
+    """Identity supplied to the actual worker; this does not request or observe a handoff."""
+    require(task_id in state["tasks"], "unknown acquisition")
+    task = state["tasks"][task_id]
+    packet = state["packets"].get(task.get("packet_id"), {})
+    require(task["phase"] == packet.get("phase") == "acquisition"
+            and packet.get("task_id") == task_id
+            and packet.get("input_identity") == task["spec"]["input_identity"]
+            and packet.get("launch_performed") and packet.get("agent_id"), "acknowledged acquisition required")
+    require(isinstance(sequence, int) and not isinstance(sequence, bool) and sequence > 0,
+            "positive checkpoint sequence required")
+    return {"campaign_identity": state["campaign_identity"], "task_id": task_id,
+            "packet_id": task["packet_id"], "input_identity": task["spec"]["input_identity"],
+            "task_spec_identity": digest(task["spec"]),
+            "task_identity": digest({k: v for k, v in task.items() if k != "state"}),
+            "packet_identity": digest(packet), "agent_id": packet["agent_id"], "sequence": sequence}
+
+
+def _checkpoint_snapshot(snapshot: dict) -> None:
+    required = {"sources", "processes", "queued_writers", "future_launchers", "attempt_receipts",
+                "completed_products", "partial_products", "accounting"}
+    require(isinstance(snapshot, dict) and required <= snapshot.keys(), "complete checkpoint snapshot required")
+    require(snapshot["queued_writers"] == [] and snapshot["future_launchers"] == [],
+            "queued writer or future launcher remains")
+    for key in ("sources", "processes", "attempt_receipts", "completed_products", "partial_products"):
+        require(isinstance(snapshot[key], list), "checkpoint inventory must be a list")
+    require(snapshot["sources"] and snapshot["processes"] and snapshot["attempt_receipts"],
+            "executed source/process/attempt inventory required")
+    sources = set()
+    for value in snapshot["sources"]:
+        seal = _file_seal(value)
+        require(seal["path"] not in sources, "duplicate executing source")
+        sources.add(seal["path"])
+    processes = set()
+    for process in snapshot["processes"]:
+        require(isinstance(process, dict) and isinstance(process.get("pid"), int) and process["pid"] > 0
+                and isinstance(process.get("parent_pid"), int) and process["parent_pid"] >= 0
+                and isinstance(process.get("start_identity"), str) and process["start_identity"].strip()
+                and isinstance(process.get("session_id"), str) and process["session_id"].strip()
+                and isinstance(process.get("command"), list) and process["command"]
+                and all(isinstance(v, str) and v for v in process["command"])
+                and isinstance(process.get("cwd"), str) and Path(process["cwd"]).is_absolute()
+                and process.get("role") in {"controller", "launcher", "transfer", "child", "continuation"},
+                "complete PID/start/command/cwd/parent/session identity required")
+        require(process.get("state") == "exited" and isinstance(process.get("exit_code"), int),
+                "active or dormant process retains writer ownership")
+        identity = (process["pid"], process["start_identity"])
+        require(identity not in processes, "duplicate process identity")
+        processes.add(identity)
+        require(isinstance(process.get("source_refs"), list) and process["source_refs"]
+                and {str(Path(ref).resolve()) for ref in process["source_refs"]} <= sources,
+                "process executing source binding missing")
+    for value in snapshot["attempt_receipts"]:
+        _file_seal(value)
+    products = set()
+    for key in ("completed_products", "partial_products"):
+        for value in snapshot[key]:
+            _file_seal(value)
+            require(isinstance(value.get("product_id"), str) and value["product_id"].strip()
+                    and isinstance(value.get("source_release"), str) and value["source_release"].strip()
+                    and isinstance(value.get("source_refs"), list) and value["source_refs"]
+                    and {str(Path(ref).resolve()) for ref in value["source_refs"]} <= sources,
+                    "product source/release binding required")
+            require(value["product_id"] not in products, "duplicate completed/partial product")
+            products.add(value["product_id"])
+            if key == "partial_products":
+                require(value.get("offset") == value["size_bytes"], "partial offset differs from sealed retained bytes")
+    accounting = snapshot["accounting"]
+    require(isinstance(accounting, dict) and accounting and all(
+        isinstance(v, (int, float)) and not isinstance(v, bool) and v >= 0
+        and v < float("inf") for v in accounting.values()), "finite nonnegative cumulative accounting required")
+
+
+def _validate_checkpoint(state: dict, task_id: str, worker_path: str, host_path: str) -> dict:
+    started = time.monotonic()
+    worker, worker_receipt = _checkpoint_document(worker_path)
+    host, host_receipt = _checkpoint_document(host_path)
+    require(worker_receipt["path"] != host_receipt["path"], "independent host corroboration required")
+    binding = worker.get("binding", {})
+    require(isinstance(binding, dict), "checkpoint binding object required")
+    require(binding == acquisition_binding(state, task_id, binding.get("sequence")),
+            "checkpoint task/packet/input/agent/science identity changed")
+    require(worker.get("handoff_complete") is True and worker.get("inventory_complete") is True,
+            "actual complete worker handoff required")
+    snapshot = worker.get("snapshot")
+    _checkpoint_snapshot(snapshot)
+    require(host.get("binding") == binding and host.get("worker_receipt") == worker_receipt
+            and host.get("snapshot_identity") == digest(snapshot)
+            and host.get("inventory_complete") is True and host.get("quiescence_observed") is True
+            and host.get("observer") and host["observer"] != binding["agent_id"],
+            "independent complete host corroboration missing or stale")
+    require(isinstance(worker.get("raw_evidence"), list) and worker["raw_evidence"], "actual worker raw evidence required")
+    for value in worker["raw_evidence"]:
+        _file_seal(value)
+    observation = _file_seal(host.get("process_observation", {}))
+    observed, _ = _checkpoint_document(observation["path"])
+    require(observed.get("binding") == binding and observed.get("observer") == host["observer"]
+            and observed.get("inventory_complete") is True
+            and observed.get("processes") == snapshot["processes"]
+            and observed.get("queued_writers") == [] and observed.get("future_launchers") == [],
+            "raw host process/start/launcher/queue observations do not corroborate handoff")
+    require(isinstance(host.get("raw_evidence"), list) and host["raw_evidence"], "raw host source/artifact corroboration required")
+    for value in host["raw_evidence"]:
+        _file_seal(value)
+    require(_receipt(worker_path) == worker_receipt and _receipt(host_path) == host_receipt,
+            "checkpoint receipts changed during validation")
+    return {"binding": binding, "snapshot": snapshot, "worker_receipt": worker_receipt,
+            "host_receipt": host_receipt, "checkpoint_identity": digest({"worker": worker_receipt, "host": host_receipt}),
+            "validation_wall_seconds": time.monotonic() - started}
+
+
+def _validate_stored_checkpoint(state: dict, task_id: str, row: dict) -> None:
+    current = _validate_checkpoint(state, task_id, row["worker_receipt"]["path"], row["host_receipt"]["path"])
+    require(all(current[key] == row[key] for key in
+                ("binding", "snapshot", "worker_receipt", "host_receipt", "checkpoint_identity")),
+            "stored checkpoint receipts/snapshot replaced")
+
+
+def _validate_released_acquisitions(state: dict) -> None:
+    for task_id, rows in state.get("acquisition_lifecycle", {}).items():
+        if state["tasks"][task_id]["state"] == "checkpointed":
+            _validate_stored_checkpoint(state, task_id, rows[-1])
+
+
+def _retained_prefix(previous: dict, current: dict) -> bool:
+    if (current["size_bytes"] < previous["size_bytes"]
+            or current["source_release"] != previous["source_release"]
+            or not {str(Path(ref).resolve()) for ref in previous["source_refs"]}
+            <= {str(Path(ref).resolve()) for ref in current["source_refs"]}):
+        return False
+    remaining = previous["size_bytes"]
+    hasher = hashlib.sha256()
+    with Path(current["path"]).open("rb") as stream:
+        while remaining:
+            chunk = stream.read(min(1024 * 1024, remaining))
+            if not chunk:
+                return False
+            hasher.update(chunk)
+            remaining -= len(chunk)
+    return hasher.hexdigest() == previous["sha256"]
+
+
+def checkpoint_acquisition(state: dict, task_id: str, worker_receipt: str, host_evidence: str) -> dict:
+    """Release only an actually handed-off acquisition; never observe or stop processes."""
+    task = state["tasks"].get(task_id)
+    require(task, "unknown acquisition")
+    previous = state.get("acquisition_lifecycle", {}).get(task_id, [])
+    worker_seal, host_seal = _receipt(worker_receipt), _receipt(host_evidence)
+    for row in previous:
+        if row["worker_receipt"] == worker_seal and row["host_receipt"] == host_seal:
+            return copy.deepcopy(row)  # Historical duplicate cannot checkpoint a resumed writer again.
+    require(task["state"] == "running", "only a running acknowledged acquisition can checkpoint")
+    row = _validate_checkpoint(state, task_id, worker_receipt, host_evidence)
+    require(row["binding"]["sequence"] == len(previous) + 1, "nonmonotonic checkpoint sequence")
+    if previous:
+        old, new = previous[-1]["snapshot"], row["snapshot"]
+        require(new["attempt_receipts"][:len(old["attempt_receipts"])] == old["attempt_receipts"],
+                "attempt receipt history was reset")
+        require(all(k in new["accounting"] and new["accounting"][k] >= v for k, v in old["accounting"].items()),
+                "cumulative accounting decreased")
+        require(all(v in new["completed_products"] for v in old["completed_products"]),
+                "completed immutable products changed or disappeared")
+        products = {v["product_id"]: v for key in ("completed_products", "partial_products") for v in new[key]}
+        require(all(v["product_id"] in products and _retained_prefix(v, products[v["product_id"]])
+                    for v in old["partial_products"]), "retained partial prefix/source continuity changed")
+    state.setdefault("acquisition_lifecycle", {}).setdefault(task_id, []).append(row)
+    task["state"] = "checkpointed"
+    return copy.deepcopy(row)
+
+
+def _writer_reserved(state: dict) -> bool:
+    return any(task["state"] == "resume_pending" for task in state["tasks"].values())
+
+
+def _validate_resume_plan(row: dict, plan_path: str) -> dict:
+    plan, receipt = _checkpoint_document(plan_path)
+    require(plan.get("checkpoint_identity") == row["checkpoint_identity"]
+            and plan.get("binding") == row["binding"], "resume plan checkpoint binding changed")
+    require(isinstance(plan.get("sources"), list) and plan["sources"], "reviewed cooperative source list required")
+    seals = [_file_seal(value) for value in plan["sources"]]
+    review_seal = _file_seal(plan.get("review_receipt", {}))
+    review, _ = _checkpoint_document(review_seal["path"])
+    require(review.get("verdict") == "SCOPED_PASS" and review.get("reviewer")
+            and review["reviewer"] != row["binding"]["agent_id"]
+            and review.get("task_id") == row["binding"]["task_id"]
+            and review.get("packet_id") == row["binding"]["packet_id"]
+            and review.get("input_identity") == row["binding"]["input_identity"]
+            and review.get("source_hashes") == {value["path"]: value["sha256"] for value in seals},
+            "actual independent source review must bind exact resumed helper bytes/task/input")
+    require(_receipt(plan_path) == receipt, "resume plan changed during inspection")
+    return {"plan_receipt": receipt, "sources": seals, "review_receipt": review_seal}
+
+
+def prepare_acquisition_resume(state: dict, task_id: str, checkpoint_identity: str, resume_plan: str) -> dict:
+    """Durably reserve before a same-agent followup; ambiguity retains writer ownership."""
+    task = state["tasks"].get(task_id)
+    require(task, "unknown acquisition")
+    rows = state.get("acquisition_lifecycle", {}).get(task_id, [])
+    require(rows and rows[-1]["checkpoint_identity"] == checkpoint_identity, "exact current checkpoint required")
+    row = rows[-1]
+    if "resume" in row:
+        require(row["resume"]["plan"]["plan_receipt"] == _receipt(resume_plan), "different resume plan already reserved")
+        return copy.deepcopy(row["resume"])
+    require(task["state"] == "checkpointed", "acquisition is not checkpointed")
+    require(not any(t["state"] in {"planned", "running", "resume_pending"} for t in state["tasks"].values())
+            and not any(p["state"] in {"planned", "running"} for p in state.get("adaptive", {}).get("packets", {}).values()),
+            "another native packet owns the writer slot")
+    _validate_stored_checkpoint(state, task_id, row)
+    plan = _validate_resume_plan(row, resume_plan)
+    packet = state["packets"][row["binding"]["packet_id"]]
+    reservation = {"checkpoint_identity": checkpoint_identity, "binding": copy.deepcopy(row["binding"]),
+                   "plan": plan, "route": copy.deepcopy(packet["route"]), "state": "pending",
+                   "native_tool": "collaboration.followup_task", "agent_id": packet["agent_id"]}
+    reservation["reservation_identity"] = digest(reservation)
+    row["resume"] = reservation
+    task["state"] = "resume_pending"
+    return copy.deepcopy(reservation)
+
+
+def acknowledge_acquisition_resume(state: dict, task_id: str, reservation_identity: str,
+                                   dispatch_evidence: str, observed: str = "UNKNOWN") -> None:
+    task = state["tasks"].get(task_id)
+    require(task, "unknown acquisition")
+    rows = state.get("acquisition_lifecycle", {}).get(task_id, [])
+    require(rows and rows[-1].get("resume"), "no durable resume reservation")
+    row, reservation = rows[-1], rows[-1]["resume"]
+    require(reservation["reservation_identity"] == reservation_identity, "stale resume reservation")
+    data, receipt = _checkpoint_document(dispatch_evidence)
+    if reservation["state"] == "acknowledged":
+        require(reservation["dispatch_receipt"] == receipt, "different followup already acknowledged")
+        _file_seal(reservation["tool_receipt"])
+        return
+    require(task["state"] == "resume_pending", "resume not pending")
+    require(not any(key != task_id and t["state"] in {"planned", "running", "resume_pending"}
+                    for key, t in state["tasks"].items())
+            and not any(p["state"] in {"planned", "running"} for p in state.get("adaptive", {}).get("packets", {}).values()),
+            "competing native owner appeared before resume ACK")
+    _validate_stored_checkpoint(state, task_id, row)
+    plan = _validate_resume_plan(row, reservation["plan"]["plan_receipt"]["path"])
+    require(plan == reservation["plan"], "durably reserved resume plan/source/review replaced")
+    expected = {"binding": row["binding"], "checkpoint_identity": row["checkpoint_identity"],
+                "reservation_identity": reservation_identity, "agent_id": reservation["agent_id"],
+                "native_tool": "collaboration.followup_task", "accepted": True,
+                "requested": reservation["route"]["requested"],
+                "transport_selected": reservation["route"]["transport_selected"]}
+    require(all(data.get(k) == v for k, v in expected.items()), "actual same-agent followup acceptance binding required")
+    tool_seal = _file_seal(data.get("tool_receipt", {}))
+    tool, _ = _checkpoint_document(tool_seal["path"])
+    require(all(tool.get(k) == v for k, v in expected.items()), "raw native accepted-call receipt mismatch")
+    reservation.update(state="acknowledged", dispatch_receipt=receipt, tool_receipt=tool_seal,
+                       observed_runtime=observed)
+    task["state"] = "running"
+
+
 def route_for(task: dict) -> str:
     if task["phase"] == "escalation":
         return "blocker_escalation"
@@ -636,7 +918,7 @@ def summary(state: dict) -> dict:
              and _obligation_met(t["spec"].get("requires", {"all": []}), tasks)]
     if len(done) == len(tasks):
         status = "CAMPAIGN_ACCEPTANCES_REVIEWED"
-    elif any(t["state"] in {"planned", "running"} for t in tasks.values()):
+    elif any(t["state"] in {"planned", "running", "resume_pending"} for t in tasks.values()):
         status = "AWAITING_NATIVE_OUTCOME"
     elif ready:
         status = "CONTINUE"
@@ -647,7 +929,9 @@ def summary(state: dict) -> dict:
     planning = list(adaptive.get("packets", {}).values())
     if any(p["state"] in {"planned", "running"} for p in planning):
         status = "AWAITING_NATIVE_OUTCOME"
-    return {"planning": {"enabled": bool(adaptive), "packets": len(planning),
+    return {"acquisition_lifecycle": {key: {"state": tasks[key]["state"], "checkpoints": len(rows)}
+                                      for key, rows in state.get("acquisition_lifecycle", {}).items()},
+            "planning": {"enabled": bool(adaptive), "packets": len(planning),
                           "checkpoints": len(adaptive.get("checkpoints", [])),
                           "outstanding": sum(p["state"] in {"planned", "running"} for p in planning)},
             "campaign_id": state["campaign_id"], "status": status, "states": states,
@@ -659,10 +943,10 @@ def summary(state: dict) -> dict:
             "note": "Scoped task acceptance never automatically promotes original scientific nodes."}
 
 
-def _review_context(state: dict, task_id: str) -> dict | None:
+def _review_context(state: dict, task_id: str, *, allow_running: bool = False) -> dict | None:
     """Prove the narrow read-only slot from declared, resolved local scopes."""
     task = state["tasks"][task_id]
-    if (task["phase"] != "review" or task["state"] not in {"ready", "planned"}
+    if (task["phase"] != "review" or task["state"] not in ({"ready", "planned", "running"} if allow_running else {"ready", "planned"})
             or not task.get("candidate_identity")):
         return None
     done = {key for key, row in state["tasks"].items() if row["state"] == "completed"}
@@ -781,19 +1065,43 @@ def _review_context(state: dict, task_id: str) -> dict | None:
         if binding is None:
             return None
         if binding.suffix.lower() == ".json":
-            _, manifest = metadata(binding)
-            entries = manifest.get("products_sha256", manifest.get("products", {}))
-            if not isinstance(entries, dict):
+            manifest_raw, manifest = metadata(binding)
+            if hashlib.sha256(manifest_raw).hexdigest() != expected:
                 return None
-            if entries and (manifest.get("task_id", task_id) != task_id
-                            or manifest.get("input_identity", spec["input_identity"]) != spec["input_identity"]):
-                return None
-            for name, record in entries.items():
-                path = Path(local(name, True, binding.parent))
-                expected_product = record.get("sha256") if isinstance(record, dict) else record
-                if content_seal(path) != expected_product:
+            declarations = {}
+            for inventory in ("files", "products_sha256", "products"):
+                if inventory not in manifest:
+                    continue
+                entries = manifest[inventory]
+                if isinstance(entries, dict):
+                    entries = list(entries.items())
+                elif isinstance(entries, list) and inventory != "products_sha256":
+                    if not all(isinstance(row, dict) and "path" in row for row in entries):
+                        return None
+                    entries = [(row["path"], row) for row in entries]
+                else:
                     return None
-                products.add(path)
+                if entries and (manifest.get("task_id", task_id) != task_id
+                                or manifest.get("input_identity", spec["input_identity"]) != spec["input_identity"]):
+                    return None
+                for name, record in entries:
+                    path = Path(local(name, True, binding.parent))
+                    declared_hash = record.get("sha256") if isinstance(record, dict) else record
+                    if not isinstance(declared_hash, str) or len(declared_hash) != 64:
+                        return None
+                    if str(path) in declarations and declarations[str(path)] != declared_hash:
+                        return None
+                    declarations[str(path)] = declared_hash
+                    if isinstance(record, dict):
+                        if "path" in record and Path(local(record["path"], True, binding.parent)) != path:
+                            return None
+                        for size_key in ("size_bytes", "bytes"):
+                            if size_key in record and (type(record[size_key]) is not int
+                                                       or record[size_key] != path.stat().st_size):
+                                return None
+                    if content_seal(path) != declared_hash:
+                        return None
+                    products.add(path)
         for path in products:
             content_seal(path)
         reads.update(candidate_seals)
@@ -823,8 +1131,8 @@ def _review_context(state: dict, task_id: str) -> dict | None:
         return None
 
 
-def _review_context_matches(state: dict, packet: dict) -> bool:
-    context = _review_context(state, packet["task_id"])
+def _review_context_matches(state: dict, packet: dict, *, allow_running: bool = False) -> bool:
+    context = _review_context(state, packet["task_id"], allow_running=allow_running)
     expected = packet.get("review_context", {})
     return bool(context and context["scope"] == expected.get("scope")
                 and (context["acquisition"] is None or context["acquisition"] == expected.get("acquisition"))
@@ -834,6 +1142,9 @@ def _review_context_matches(state: dict, packet: dict) -> bool:
 
 def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]], *, review_only: bool = False) -> dict:
     """Reserve one fair, dependency-ready opportunity; transport availability is live."""
+    if _writer_reserved(state):
+        return summary(state)
+    _validate_released_acquisitions(state)
     for packet in state.get("adaptive", {}).get("packets", {}).values():
         if packet["state"] == "planned":
             return summary(state) if review_only else copy.deepcopy(packet)
@@ -1011,6 +1322,8 @@ def _repair_followup(state: dict, p: dict, t: dict, agent_id: str, evidence: str
 
 def acknowledge(state: dict, packet_id: str, agent_id: str, observed: str = "UNKNOWN",
                 followup_evidence: str | None = None) -> None:
+    require(not _writer_reserved(state), "acquisition resume owns the native writer slot")
+    _validate_released_acquisitions(state)
     adaptive_packets = state.get("adaptive", {}).get("packets", {})
     if packet_id in adaptive_packets:
         p = adaptive_packets[packet_id]
@@ -1080,6 +1393,8 @@ def _receipt(path: str) -> dict:
 def launch_failed(state: dict, packet_id: str, evidence: str, classification: str, reason: str,
                   retry_prohibited: bool = False) -> None:
     """Preserve a real pre-launch transport/quota refusal without inventing an agent."""
+    require(not _writer_reserved(state), "acquisition resume owns the native writer slot")
+    _validate_released_acquisitions(state)
     adaptive_packets = state.get("adaptive", {}).get("packets", {})
     if packet_id in adaptive_packets:
         p = adaptive_packets[packet_id]
@@ -1202,6 +1517,10 @@ def _record(state: dict, result: dict, policy: dict) -> None:
     require(result.get("task_id") == p["task_id"] and result.get("input_identity") == p["input_identity"],
             "stale task/input identity")
     require(result.get("agent_id") == p["agent_id"], "result agent identity mismatch")
+    if p.get("review_only"):
+        require(p["phase"] == t["phase"] == "review"
+                and _review_context_matches(state, p, allow_running=True),
+                "review-only candidate/input context changed before outcome")
     receipt = _receipt(result.get("raw_receipt", ""))
     if p.get("continuation"):
         continuation = p["continuation"]
@@ -1388,6 +1707,19 @@ def main() -> int:
     adaptive.add_argument("--authorization", required=True)
     delta = sub.add_parser("adaptive-evidence")
     delta.add_argument("--evidence", required=True)
+    checkpoint = sub.add_parser("checkpoint-acquisition", help="Validate actual worker handoff and independent host corroboration; never stop processes")
+    checkpoint.add_argument("--task-id", required=True)
+    checkpoint.add_argument("--worker-receipt", required=True)
+    checkpoint.add_argument("--host-evidence", required=True)
+    prep = sub.add_parser("prepare-acquisition-resume", help="Reserve writer durably before actual same-agent followup")
+    prep.add_argument("--task-id", required=True)
+    prep.add_argument("--checkpoint-identity", required=True)
+    prep.add_argument("--resume-plan", required=True)
+    resume_ack = sub.add_parser("ack-acquisition-resume", help="Record actual accepted same-agent call; unknown calls retain reservation")
+    resume_ack.add_argument("--task-id", required=True)
+    resume_ack.add_argument("--reservation-identity", required=True)
+    resume_ack.add_argument("--dispatch-evidence", required=True)
+    resume_ack.add_argument("--observed-runtime", default="UNKNOWN")
     sub.add_parser("summary")
     args = parser.parse_args()
     try:
@@ -1413,6 +1745,13 @@ def main() -> int:
                 output = next_packet(state, policy, profiles, review_only=args.review_only)
             elif args.action == "ack":
                 acknowledge(state, args.packet_id, args.agent_id, args.observed_runtime, args.followup_evidence)
+                output = summary(state)
+            elif args.action == "checkpoint-acquisition":
+                output = checkpoint_acquisition(state, args.task_id, args.worker_receipt, args.host_evidence)
+            elif args.action == "prepare-acquisition-resume":
+                output = prepare_acquisition_resume(state, args.task_id, args.checkpoint_identity, args.resume_plan)
+            elif args.action == "ack-acquisition-resume":
+                acknowledge_acquisition_resume(state, args.task_id, args.reservation_identity, args.dispatch_evidence, args.observed_runtime)
                 output = summary(state)
             elif args.action == "record":
                 result = json.loads(args.result.read_text())

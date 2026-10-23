@@ -1,0 +1,18 @@
+{
+  "reviewer": "/root/r25_blind_checkpoint_source",
+  "requested": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "verdict": "ADVISORY_GAP_CURRENT_BINDING_RECONCILED",
+  "scope": "Read-only diagnosis of actual relocation receipts and startup hook; no independent live rehash or tests",
+  "finding": "Resolved external location triggers advisory reconciliation; hook does not block or dispatch. Explicit exact campaign/state/launch reconciliation permits continuation.",
+  "operational_requirement": "Resolve canonical STATE symlink before every save; never replace canonical alias.",
+  "falsifiers": [
+    "canonical resolved destination changes",
+    "campaign identity mismatch",
+    "save replaces alias and leaves divergent states"
+  ],
+  "immediate_patch_required": false
+}

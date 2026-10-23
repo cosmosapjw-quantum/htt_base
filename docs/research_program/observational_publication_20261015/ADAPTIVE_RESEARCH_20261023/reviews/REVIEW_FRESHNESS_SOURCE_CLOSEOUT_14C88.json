@@ -1,0 +1,76 @@
+{
+  "verdict": "SCOPED_PASS",
+  "candidate_identity": "14c88a65c540029d8f3d3371d6f27ce094e472999eeb6582b6f5696128f42b9e",
+  "scope": "Two-P1 controller source repair: all declared manifest files/products inventories and record-time review-only freshness; source decision only",
+  "source_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/research_controller.py": "d682f64d9aefba6251dc75037588669c0d193fc1ac12bf348bdfc02094cb46e5",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/test_research_controller_frontier.py": "592370decfb33e36e1e49f8ca82df012d59075d9614abbe98c89a8a2457369f4"
+  },
+  "base_controller_sha256": "a394d854f8a0b90896e5e9649c056733999b06fce6b88292218a5688e7225495",
+  "reviewer": {
+    "agent": "/root/r25_blind_checkpoint_source",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "authored_changes": false,
+    "approval_basis": "Owner repair contract, actual source/preimage diff, independent bounded fixture execution; repository skills/harness are audit subjects"
+  },
+  "findings": [],
+  "closed_findings": [
+    {
+      "id": "P1_FILES_INVENTORY",
+      "evidence": "files, products_sha256, products inventories all consumed; actual contents sealed; mixed inventories preserved, conflicting/malformed declarations rejected. Independent preimage accepted files pre-ACK mutation; candidate rejects atomically."
+    },
+    {
+      "id": "P1_RECORD_FRESHNESS",
+      "evidence": "Review-only record revalidates exact context with explicit allow_running before outcome/receipt mutation. Independent supported-schema post-ACK mutation accepted by preimage, rejected by candidate with original running state preserved."
+    }
+  ],
+  "verification": {
+    "preimage_identity_verified": true,
+    "provided_patch_matches_actual_preimage_diff": true,
+    "final_hashes_rechecked_after_tests": true,
+    "focused_tests": {
+      "run": 23,
+      "passed": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "excluded": [
+        "test_actual_live_copy_exposes_safe_ready_review_without_touching_live_bytes",
+        "test_live_auxiliary_and_distance_have_provable_candidate_bindings",
+        "test_scoped_62_baseline_preserves_old_campaign_packets_and_accounting"
+      ],
+      "wall_seconds": 2.5894204298965633,
+      "receipt": "/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch/review_freshness_14c88_unit.json",
+      "raw_log": "/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch/review_freshness_14c88_unit.log",
+      "command": "timeout 90s env PYTHONDONTWRITEBYTECODE=1 TMPDIR=/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch PYTHONPATH=scripts/codex_harness python3 -B - [inline unittest loader selecting ConcurrentReviewTests except the three named state-dependent tests]",
+      "tool_output_chunk_ids": [
+        "6ceffd",
+        "4dd2d1"
+      ]
+    },
+    "independent_red_green": {
+      "cases": 8,
+      "all_expected_results": true,
+      "wall_seconds": 0.14638584991917014,
+      "receipt": "/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch/review_freshness_14c88_independent_repro.json",
+      "command": "timeout 90s env PYTHONDONTWRITEBYTECODE=1 TMPDIR=/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch python3 -B - [inline independent fixture loads preserved preimage and candidate; unchanged files, changed files pre-ACK, supported schema pre-ACK and post-ACK]",
+      "tool_output_chunk_id": "c78d64"
+    }
+  },
+  "review_elapsed_wall_seconds": 130.1530073750764,
+  "wall_definition": "Elapsed from initial exact-source-hash intake through final decision; includes inspection and bounded fixture verification",
+  "compatibility": {
+    "normal_review": "Existing semantics retained; no new ordinary-review freshness guarantee claimed",
+    "already_acked_SMICA": "Parent reports actual old review recorded under a394 before edit release; not independently re-executed. No grandfather/rebinding path added. Strict mismatch leaves original packet/outcome ownership intact."
+  },
+  "limits": [
+    "No production STATE or acquisition payload validation performed",
+    "No production candidate edits, native dispatch, network/downloads, process intervention, or science rerun",
+    "No performance cache or ownership-policy changes",
+    "No broader scientific admission or original acceptance/task/cost change",
+    "Source PASS closes these two maintenance defects only; actual next consumer remains host work"
+  ],
+  "first_failure_evidence_preserved": "/mnt/extdrive/workdir/htt_open_data/r25_checkpoint_review_scratch/REVIEW_MANIFEST_FILES_DIAGNOSTIC.json"
+}

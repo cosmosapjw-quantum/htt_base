@@ -1,0 +1,87 @@
+{
+  "verdict": "HOLD",
+  "scope": "Future cooperative helper source only; controller source remains separately SCOPED_PASS",
+  "reviewer": "/root/r25_blind_checkpoint_source",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "task_id": "R25-PR3-FREQUENCY-ACQUIRE",
+  "packet_id": "014cb70b115b051a27cf126089c1e7f270363aa236d69320c2f777f738dca00d",
+  "input_identity": "sha256:ae7e2f0b136ec3dddcf3b9543f9ec91446587dc50c7908b93b3f17b77e014d9f",
+  "source_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_resume.py": "e6b1aad03bcacdccb0cf291b8a2fe2f4fb20416bfadbaad091df377121cbf8b4",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_engine.py": "6f244b773da3aaf70de53e690389d996ade7f238c8b65b1c27819d63332748ec"
+  },
+  "findings": [
+    {
+      "severity": "P1",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_resume.py",
+      "line": 332,
+      "issue": "Repeated valid progress mutates a previously sealed product receipt retained in raw_evidence and sources",
+      "related_lines": [
+        342,
+        363,
+        369
+      ],
+      "engine_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_engine.py",
+      "engine_line": 118,
+      "minimal_counterexample": "Acquire two controlled valid positive-progress ranges with a checkpoint between them. Receipt path is identical; SHA changes; old seal retained in next snapshot fails. Prefix progresses abc to abcde to abcdef and attempts remain2. No-op integration does not exercise it.",
+      "required_change": "Preserve prior exact receipt bytes using immutable versioned evidence and non-overwriting resumed receipt outputs; test two progressing controller/helper checkpoint cycles without resetting accounting or old references"
+    },
+    {
+      "severity": "P1",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition/cooperative_resume.py",
+      "line": 240,
+      "issue": "Initial resumed grant checks omit already-bound worker/host raw_evidence and process_observation seals",
+      "minimal_counterexample": "After valid controller ACK overwrite fixture raw.txt referenced by both sealed worker/host documents; validate_grant still accepts unchanged grant",
+      "required_change": "Check existing worker.raw_evidence, host.raw_evidence and host.process_observation seals before any resumed writes; preserve ambiguity as owned"
+    }
+  ],
+  "closed_original_findings": [
+    "Actual dispatch/tool receipt seals and exact accepted-call bindings now checked",
+    "Wrapper snapshot compared with sealed worker and host binding",
+    "Initial partial full seal required; post-ACK appended bytes rejected",
+    "No-op snapshot closes source refs and preserves old completed/partial/ordered-attempt inventory",
+    "Started-attempt callback prevents phantom second attempt after sticky request",
+    "Explicit next binding preserves original identities and advances N to N+1"
+  ],
+  "independent_checks": [
+    {
+      "check": "ACK control plus4 original invalid variants",
+      "result": "Control accepts; missing tool, changed dispatch, substituted wrapper and grown initial partial reject"
+    },
+    {
+      "check": "Unit fixture suite with output receipt redirected to review scratch and TARGET overridden to external scratch",
+      "result": "9 passed; includes real8192B pipe/262159B stdout and started-child identity/drain failure retention"
+    },
+    {
+      "check": "Actual short-lived helper/controller no-op integration, output receipt redirected to scratch",
+      "result": "Fixture child537261 exit0, no curl, old artifacts/history retained, prepared handoff incomplete, explicit observed-exit finalization accepted as sequence2"
+    },
+    {
+      "check": "Two controlled positive-progress engine attempts",
+      "result": "Remaining stale mutable receipt reproduced; no HTTP/process execution"
+    },
+    {
+      "check": "Final exact source hashes",
+      "result": "Both expected hashes match"
+    }
+  ],
+  "evidence_files": [
+    "reviewer_unit_receipt_e6b.json",
+    "reviewer_integration_receipt_e6b.json",
+    "helper_adversarial_repro.py",
+    "helper_receipt_progress_repro.py",
+    "helper_receipt_progress_result.json",
+    "helper_initial_review.json"
+  ],
+  "limits": [
+    "Production migration/quiescence/SMICA execution not observed or admitted by this source review",
+    "No production network or process intervention; only tiny local fixture child processes",
+    "No repository source, production state or author evidence receipt writes",
+    "Future helper activation blocked until repaired source review; this does not revoke controller source PASS or itself prevent a separately validated current checkpoint releasing SMICA",
+    "Original compute.py e672 remains historical migration source; actual future execution set is cooperative_resume.py plus cooperative_engine.py"
+  ]
+}

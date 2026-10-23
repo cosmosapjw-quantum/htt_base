@@ -1,0 +1,55 @@
+{
+  "record_type": "Host transcription of actual fresh blind read-only architecture audit",
+  "reviewer": "/root/r25_blind_cooperative_progress",
+  "requested": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "verdict": "P1_PROGRESS_BLOCKER_WITH_BOUNDED_COOPERATIVE_CHECKPOINT_PROPOSAL",
+  "controller_sha256": "27adf2717c5f2ca192b6035af7d45d46b20822533c5b81470d29bffe746bd04e",
+  "docs_sha256": "941e8b4903266f7d3d1757920c0cec6ac421b24402d98df4bea3698d6d0a0338",
+  "state_snapshot_sha256": "5c603d8f7685a239e668f88fbaca0f700016fe0ac8d6e3b7d4d19ad660f512d0",
+  "reproductions": {
+    "normal_next": "AWAITING_NATIVE_OUTCOME despite existingSMICA ready",
+    "review_only_next": "AWAITING_NATIVE_OUTCOME",
+    "checkpoint_outcome": "rejected outcome mustbe success/blocker",
+    "resume": "rejects running",
+    "ACK": "rejects running samepacket",
+    "repair_followup": "rejects acquisition",
+    "diagnostic_only_inmemory_removal_of_running_gate": "selects existingSMICA unchangedinput",
+    "live_state_unchanged": true
+  },
+  "smica_existing_source": {
+    "bytes": 74625775,
+    "sha256": "044ec9bed746ae745ad35a8b6ccf6e603f546083fec328e9c64d866ac9221f93",
+    "reviewer_independently_verified": true
+  },
+  "findings": [
+    "No honest nonterminal acquisition checkpoint exists; longdownloadserializes independentreadySMICA",
+    "Noactivecurlalone insufficient: compute.py retriespositiveprogress,continue_lane/mirrorhelpers launchsuccessors, queuedthreadpooltasks; sourceeditdoesnotretrofitloadedPython"
+  ],
+  "repair_contract": [
+    "Separate explicit acquisitioncheckpoint lifecycle, exactrunningacknowledgedtask only, phaseacquisition preserved, no scientificoutcome/failure/qualification/semanticresume event",
+    "Typedactualworkerreceipt binds campaign/task/packet/input/spec/agent,monotonicseq,executingsources,cumulativeattempt/accounting,completedidentities/partialoffsets andrawHTTP/errorrefs",
+    "Actualnativeworkerhandoff stopsfuturewrites; hostcorroborates complete process/session/launcher/queue inventory withPIDstartidentity; controllerdoesnotsignal/killorassertquiescence itself",
+    "Subsequentlyloadedhelper checksrequest beforealltransfer/product launches andafterboundedfinishedattempt; draincurrenttransfers,preventsuccessors,returncheckpoint notfakeblocker",
+    "Defaultserialization unchanged untilverifiedrelease; executeexistingSMICAnormally; lifecyclealone notadaptive scientificfingerprintdelta",
+    "Reservesameagent/packet writerresumption durably BEFORE actualfollowup, bindactualcallreceipt/currentcheckpoint/input/profiles; ACKbeforeresults; unknowncallblocksotherwriters; noattemptreset",
+    "All48/62/17of42/18of42/R9/ultra/frozenlimits preserved"
+  ],
+  "minimum_falsifiers": [
+    "activewriter/dormantlauncher/queuedfuture/stale/wrongidentity rejectsatomically",
+    "noactualcheckpoint/hostcorroboration stillwaits",
+    "resumepending/UNKNOWN blockscompetingwriters",
+    "duplicatecheckpoint/resume no extraattempt/dispatch",
+    "scientifichistories/qualification/acceptance/budgets/fingerprint unchanged acrossyieldresume",
+    "copiedlivefixtureselectsexistingSMICA onlyaftervalidrelease",
+    "actualsameagentresumepartials/attempts withoutrestartcompletedproducts"
+  ],
+  "actual_consumer_required": "SMICA realdispatch/ACK/execution/result/independentreview; four E/Bell2/3 sevenfrequency operators,28contrasts each,exactdecimalrational/80digit witnesses,full168to24rank/nullity andcontrols; nophysicalforeground/null/originalpromotion",
+  "initial_design_restriction": "No signals/termination genericyield proposed; subsequentlywithdrawn asnotownerrequirement in separateclarification",
+  "current_live_yield": "NOT_PERFORMED; noverifiedwholeacquisitionhandoffyet",
+  "read_only": true,
+  "command_seconds": "NOT_REPORTED"
+}

@@ -1,0 +1,252 @@
+{
+  "task_id": "R25-SMICA-SPECTRAL-NULLSPACE",
+  "packet_id": "81c1e4991994a7d20b47d59459ee3909802f21e8de17eb2a7bd0d151b41a935e",
+  "input_identity": "sha256:69ad48a48c5f61a5314050a45077bde99af83e97ffe9b8ed270533ee9368710a",
+  "candidate_identity": "sha256:4faba983677d56b5d12705a77c0fea498bd3b3263000653ee8151462e3d064d0",
+  "agent_id": "/root/rc_81c1e4991994a7d2",
+  "outcome": "failure",
+  "acceptance_met": false,
+  "verdict": "HOLD_TARGETED_REPAIR",
+  "findings": [
+    {
+      "code": "REPORT_NUMERICAL_SUMMARY_MISMATCH",
+      "input_identity": "sha256:69ad48a48c5f61a5314050a45077bde99af83e97ffe9b8ed270533ee9368710a",
+      "substantive": true,
+      "severity": "medium",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/REPORT.md",
+      "line": 17,
+      "description": "Report understates the minimum pair-contrast lost norm fraction while RESULT.json and figure.png contain the correct quantity.",
+      "reported": {
+        "E2_E3": 0.4791,
+        "B2_B3": 0.6796
+      },
+      "counterexample": {
+        "E2": {
+          "minimum": [
+            0.7479144952627661,
+            "contrast_30_143"
+          ],
+          "maximum": [
+            0.9999126413493474,
+            "contrast_217_353"
+          ]
+        },
+        "E3": {
+          "minimum": [
+            0.7479083726653117,
+            "contrast_30_143"
+          ],
+          "maximum": [
+            0.9999126269536976,
+            "contrast_217_353"
+          ]
+        },
+        "B2": {
+          "minimum": [
+            0.8168716371173212,
+            "contrast_30_143"
+          ],
+          "maximum": [
+            0.9999689184287217,
+            "contrast_44_217"
+          ]
+        },
+        "B3": {
+          "minimum": [
+            0.816877300665727,
+            "contrast_30_143"
+          ],
+          "maximum": [
+            0.9999689326216457,
+            "contrast_44_217"
+          ]
+        }
+      },
+      "consequence": "The candidate prose gives a materially incorrect quantitative interpretation of correctly computed coordinate losses; the complete result pack is not ready for scoped acceptance.",
+      "minimal_falsifier": "Read the minimum lost_fraction among contrast_* targets in each RESULT.json operator, or evaluate sqrt(sum_{i<j}(w_i*a_j-w_j*a_i)^2 / ((w.w)*(a.a))) from frozen decimal weights for a=e_30-e_143."
+    }
+  ],
+  "issue": {
+    "code": "REPORT_NUMERICAL_SUMMARY_MISMATCH",
+    "input_identity": "sha256:69ad48a48c5f61a5314050a45077bde99af83e97ffe9b8ed270533ee9368710a",
+    "substantive": true,
+    "severity": "medium",
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/REPORT.md",
+    "line": 17,
+    "description": "Report understates the minimum pair-contrast lost norm fraction while RESULT.json and figure.png contain the correct quantity.",
+    "reported": {
+      "E2_E3": 0.4791,
+      "B2_B3": 0.6796
+    },
+    "counterexample": {
+      "E2": {
+        "minimum": [
+          0.7479144952627661,
+          "contrast_30_143"
+        ],
+        "maximum": [
+          0.9999126413493474,
+          "contrast_217_353"
+        ]
+      },
+      "E3": {
+        "minimum": [
+          0.7479083726653117,
+          "contrast_30_143"
+        ],
+        "maximum": [
+          0.9999126269536976,
+          "contrast_217_353"
+        ]
+      },
+      "B2": {
+        "minimum": [
+          0.8168716371173212,
+          "contrast_30_143"
+        ],
+        "maximum": [
+          0.9999689184287217,
+          "contrast_44_217"
+        ]
+      },
+      "B3": {
+        "minimum": [
+          0.816877300665727,
+          "contrast_30_143"
+        ],
+        "maximum": [
+          0.9999689326216457,
+          "contrast_44_217"
+        ]
+      }
+    },
+    "consequence": "The candidate prose gives a materially incorrect quantitative interpretation of correctly computed coordinate losses; the complete result pack is not ready for scoped acceptance.",
+    "minimal_falsifier": "Read the minimum lost_fraction among contrast_* targets in each RESULT.json operator, or evaluate sqrt(sum_{i<j}(w_i*a_j-w_j*a_i)^2 / ((w.w)*(a.a))) from frozen decimal weights for a=e_30-e_143."
+  },
+  "repair_plan": {
+    "issue_code": "REPORT_NUMERICAL_SUMMARY_MISMATCH",
+    "kind": "bounded_report_correction",
+    "input_identity": "sha256:69ad48a48c5f61a5314050a45077bde99af83e97ffe9b8ed270533ee9368710a",
+    "candidate_identity": "sha256:4faba983677d56b5d12705a77c0fea498bd3b3263000653ee8151462e3d064d0",
+    "allowed_paths": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/REPORT.md",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/MANIFEST.json",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace/RETURN.json"
+    ],
+    "changes": [
+      "Replace only the wrong minimum pair-loss numbers in REPORT.md line 17: about 0.7479 for E2/E3 and about 0.8169 for B2/B3, all for 30-143 GHz.",
+      "Refresh REPORT.md size/hash in MANIFEST.json and derived candidate identity in RETURN.json; preserve the original production/test receipts and all numeric artifact bytes."
+    ],
+    "validation": [
+      "Compare corrected sentence directly with four stored minima and independently derived counterexamples.",
+      "Recheck all manifest/input/source/raw seals and confirm compute.py, test_compute.py, RESULT.json, figure.png and RAW_RECEIPT.json retain original hashes.",
+      "Return repaired exact candidate for one independent targeted closeout."
+    ],
+    "production_rerun": false,
+    "numeric_test_rerun": false,
+    "max_targeted_repairs": 1,
+    "frozen_limits_unchanged": {
+      "production_seconds": 60,
+      "tests_seconds": 120,
+      "RSS_MiB": 1024,
+      "BLAS_threads": 1
+    },
+    "stop_rule": "Any numeric/source change, new substantive failure, missing identity, or inability to verify preserved hashes returns to reviewer; no threshold or acceptance change.",
+    "scientific_claim_ceiling": "C0 fixed released-row information audit only; original acceptances unchanged."
+  },
+  "validation_evidence": {
+    "independent_numeric_checks": "PASS",
+    "complete_candidate_acceptance": "HOLD_FOR_REPORT_CORRECTION",
+    "candidate_module_imported_or_run": false,
+    "author_tests_reexecuted": false,
+    "method": "Source decimals were addressed independently from flattened release tokens; all losses were derived through the exact pairwise-minor Lagrange identity and compared with a QR kernel basis, independent of the candidate projection implementation.",
+    "targets_verified": 112,
+    "max_float_comparison_error": 4.440892098500626e-16,
+    "exact_witnesses_verified": 4,
+    "precision80_checks": {
+      "E2": {
+        "w_dot_h": "1.91E-81",
+        "a_dot_h_minus_h_dot_h": "0E-79",
+        "a_dot_h_positive": true
+      },
+      "E3": {
+        "w_dot_h": "2.28E-81",
+        "a_dot_h_minus_h_dot_h": "1E-79",
+        "a_dot_h_positive": true
+      },
+      "B2": {
+        "w_dot_h": "2.78E-81",
+        "a_dot_h_minus_h_dot_h": "0E-79",
+        "a_dot_h_positive": true
+      },
+      "B3": {
+        "w_dot_h": "2.67E-81",
+        "a_dot_h_minus_h_dot_h": "0E-79",
+        "a_dot_h_positive": true
+      }
+    },
+    "full_tensor": {
+      "shape": [
+        24,
+        168
+      ],
+      "rank": 24,
+      "nullity": 144,
+      "sparse_entries_verified": 168,
+      "exact_independent_kernel_vectors": 144,
+      "proof": "The 24 row supports are disjoint and each has a nonzero pivot. Selecting these pivot columns gives a nonzero diagonal minor. Each of the 144 kernel vectors has a distinct free coordinate equal to one and is exactly annihilated."
+    },
+    "identification_proof": "If ker(M) is contained in ker(L), define K(Ms)=Ls on image(M); this is well-defined and linear, and can be extended to the codomain. Conversely L=KM annihilates ker(M). For h=a-w*(a.w)/(w.w), w.h=0 and a.h=h.h; the displayed exact nonzero witnesses give identical compressed observations and distinct contrasts.",
+    "permutations_checked_per_operator": 5040,
+    "controls": "QR orthoprojector symmetry/idempotence/trace6/annihilation, all 112 least-squares residuals, zero response and nontrivial L=KM fixtures, separate E/B and ell blocks.",
+    "source_interpretation": {
+      "source_members": [
+        "weights_EB_smica_R3.00.txt",
+        "smica_coadd.py",
+        "README"
+      ],
+      "producer_lines": "13; 16; 22-29; 65-74; 149-167",
+      "readme_lines": "28-43",
+      "interpretation": "Seven processed polarization frequency harmonics in microkelvin_CMB. Weights include beam correction and LFI beam renormalization. E and B are different fields. The common output pixel window preserves this kernel if nonzero; no mask, actual sky or physical foreground law is inferred."
+    },
+    "formalism": "Unrestricted affine response fiber is computational; physical F/Pi/Q remain UNKNOWN, and ell/polarization bookkeeping is not cosmological depth G_F. No statistical confidence, foreground amplitude, native atlas or family identification is claimed.",
+    "figure": "Visually inspected; 21 pair-contrast columns and four operator rows with correct computational norm-fraction colorbar. Figure agrees with RESULT.json, including minimum approximately 0.75 E and 0.82 B.",
+    "initial_seals": "All MANIFEST.files, frozen input, source archive/member hashes and raw receipt files were independently hashed and matched before numeric checks in check_independent.py; successful exact equality assertions identify their actual hash values.",
+    "final_seals": "/mnt/extdrive/workdir/htt_open_data/r25_smica_blind_review/FINAL_SEALS.json",
+    "source_and_candidate_drift": "NONE_OBSERVED",
+    "source_context_urls": [
+      "https://arxiv.org/abs/1807.06208",
+      "https://arxiv.org/abs/1006.5599",
+      "https://arxiv.org/abs/2006.08628"
+    ],
+    "source_context_role": "Primary paper title/abstract context checked; local immutable release members define the operator.",
+    "scope_limit": "This review validates the post-checkpoint consumer only; repo skills, harness and receipt labels were not treated as independent proof."
+  },
+  "qualified_products": [],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r25_smica_blind_review/REVIEW_RAW_RECEIPT.json",
+  "runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN"
+  },
+  "independence": {
+    "author": "/root/rc_ace2f2a19bcdf860",
+    "reviewer": "/root/rc_81c1e4991994a7d2",
+    "candidate_edits": false,
+    "child_agents": false
+  },
+  "budget_accounting": {
+    "original_production_seconds_consumed": 23.122195024974644,
+    "original_tests_seconds_consumed": 4.414710828103125,
+    "review_numeric_child_wall_seconds": 2.9854109790176153,
+    "review_numeric_command_wall_seconds": 3.094786109,
+    "review_final_seal_wall_seconds": 4.305248711956665,
+    "review_total_reasoning_reading_wall": "NOT_INSTRUMENTED",
+    "no_budget_reset": true,
+    "production_reruns": 0,
+    "original_test_suite_reruns": 0,
+    "review_immediate_return_seal_wall_seconds": 1.3205541737843305
+  },
+  "historical_states": "17/42, alternate18/42, 48-task R9, UNKNOWN, one-use and ultra constraints unchanged.",
+  "created_utc": "2026-10-23T11:48:19.855602+00:00"
+}

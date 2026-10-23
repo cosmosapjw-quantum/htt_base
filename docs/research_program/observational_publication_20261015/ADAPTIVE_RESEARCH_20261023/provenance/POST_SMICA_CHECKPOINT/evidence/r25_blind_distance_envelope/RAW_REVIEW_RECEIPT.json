@@ -1,0 +1,54 @@
+{
+  "receipt_type": "independent_blind_finite_archived_scalar_arithmetic",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "component_verdict": "PASS_FINITE_ARCHIVED_SCALAR_ARITHMETIC_ONLY",
+  "original_scientific_admission": "HOLD",
+  "source_seals_rechecked_unchanged": {
+    "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/distance_conditional_evidence/MANIFEST.json": "735f35ad7b1cf3eab48abd5ded2e52dbceccb813f1caf504b35c9f058c4725fb",
+    "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-DISTANCE-CONDITIONAL-EVIDENCE_INPUT.json": "77439c5b5966f6f0c6a4d4e2819b28b76b7a3c24523e9b08ec9f7e12fd5ca2b8",
+    "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/distance_conditional_evidence/RESULT.json": "8977027b573794b3b85cc2cb4ff12491f553451f9572358ae92b0d0a99700a8b"
+  },
+  "command": "PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -v -o /mnt/extdrive/workdir/htt_open_data/r25_blind_distance_envelope/raw.time python3 -B /mnt/extdrive/workdir/htt_open_data/r25_blind_distance_envelope/verify_archived_arithmetic.py > /mnt/extdrive/workdir/htt_open_data/r25_blind_distance_envelope/raw.stdout 2> /mnt/extdrive/workdir/htt_open_data/r25_blind_distance_envelope/raw.stderr",
+  "exit_code": 0,
+  "observed_wall_seconds": "2.57",
+  "max_RSS_KiB": 17044,
+  "arithmetic_invocations": 1,
+  "new_fits": 0,
+  "old_tests_run": 0,
+  "candidate_code_imports": 0,
+  "git_head_observed": "e4dd81068f03d1ee52a6864b661a4104e6336147",
+  "git_branch_observed": "research/htt-adaptive-methods-20261023",
+  "files": {
+    "DISTANCE_FINITE_LIBRARY_REVIEW.json": {
+      "sha256": "12afdf915e3e87cf39b302cff89b26b202123f785448de20976cb87135b1b467",
+      "size_bytes": 99583
+    },
+    "REVIEW.md": {
+      "sha256": "9ad9c168b75f1fa65cb784f49577a9428ae49075b9d49a29afaa4b1285227d11",
+      "size_bytes": 5404
+    },
+    "git_status_observed.txt": {
+      "sha256": "3865b7c0ab078028c0a91a59f753e286d3464f619cfd579675ba010e13bd6c72",
+      "size_bytes": 28729
+    },
+    "raw.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    "raw.stdout": {
+      "sha256": "07fbce41cb23036136a90c657cca1a4e9cd3cd754942bd67b6be67804477e769",
+      "size_bytes": 2060
+    },
+    "raw.time": {
+      "sha256": "46eac3fdd1e68a44ad2bc7ae9d60e0a7100cfe945f49abbe30d646c4070b3134",
+      "size_bytes": 830
+    },
+    "verify_archived_arithmetic.py": {
+      "sha256": "d6c6d61cb5f2fc69ab7a3a72426347a4d1ffa3cfc7391bf768f324ed0a0b7bd5",
+      "size_bytes": 13074
+    }
+  },
+  "utc": "2026-10-23T12:27:45.468000+00:00"
+}
