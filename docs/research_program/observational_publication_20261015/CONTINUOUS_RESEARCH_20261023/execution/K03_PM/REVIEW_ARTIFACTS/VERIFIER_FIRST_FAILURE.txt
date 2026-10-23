@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/tmp/r23_k03_review_083f890c/check.py", line 70, in <module>
+    WH=np.linalg.solve(L,H).reshape(-1,6); WU=np.linalg.solve(L,U).reshape(-1,96); wy=np.linalg.solve(L,y).ravel()
+                                                                                      ^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/numpy/linalg/_linalg.py", line 463, in solve
+    r = gufunc(a, b, signature=signature)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: solve: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (m,m),(m,n)->(m,n) (size 256 is different from 2)

@@ -1,0 +1,4 @@
+Command: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg .venv/bin/python -B docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/K03_PM/profile.py --reuse-moments
+Exit: 1
+Traceback: profile.py main line 315 print(json.dumps(...)); TypeError: Object of type ndarray is not JSON serializable. Cause: loaded scalar n from NPZ is a zero-dimensional ndarray in the stdout summary. The RESULT.json was written before this stdout exception; no second retained-row pass occurred.
+Full stderr: REUSE_STDERR.txt.

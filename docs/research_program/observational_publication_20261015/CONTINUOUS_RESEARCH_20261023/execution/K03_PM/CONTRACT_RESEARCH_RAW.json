@@ -1,0 +1,246 @@
+{
+  "packet_id": "cadd7ac79230d94e7a6da29d51f60ebd95b16316fef75bc8eb3ec583b3efe9d0",
+  "task_id": "K03",
+  "attempt": 2,
+  "phase": "research",
+  "input_identity": "sha256:cab18c33b87e10d5903a5babc763ff0bb59568d5290eb4bd7b6baabc6c2927d2",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "agent_id": "/root/rc_cadd7ac79230d94e",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "outcome": "success",
+  "status": "DERIVED_CONDITIONAL_NEW_PM_EXECUTION_CONTRACT_READY",
+  "candidate_identity": null,
+  "original_acceptance_met": false,
+  "scientific_admission": "HOLD",
+  "no_dispatch_claim": true,
+  "raw_receipt": "/tmp/r23_k03_research_cadd7ac7/RETURN.json",
+  "checkout": {
+    "branch": "research/htt-open-input-theory-20261018",
+    "head_observed": "9ef8976dbf488ae1d5429f7c24f45d5ef1899224",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "dirty_state": "Preexisting modified and untracked research files observed and untouched; parent and other authorized agents may advance this existing checkout.",
+    "git_writes": false,
+    "only_write": "/tmp/r23_k03_research_cadd7ac7/RETURN.json"
+  },
+  "scope": {
+    "owner": "HTT for the conditional profile estimator; obsstat owns retained proper-motion features",
+    "claim_tier": "C0_DERIVED_CONDITIONAL; future fixed-covariance profile fits remain diagnostic only",
+    "transfer_source": "analytic external-literature FLRW two-ray specialization; no native transfer",
+    "sky_support_status": "fixed selected Quaia G20 Gaia-matched source directions; exact old sample",
+    "null_mock_status": "new score controls proposed, not run; prior R23-Q controls reused only for their own estimator",
+    "acceptance": "Independent source qualification and nonradial response demonstrated",
+    "acceptance_preserved": true,
+    "approved_repair_id_preserved": "R23-Q",
+    "new_work_identity": "new physical PM profile and its new cross-moments, not a renamed repeat of exhausted R23-Q work"
+  },
+  "primary_sources": [
+    {
+      "title": "Marcori, Pitrou, Uzan and Pereira, Direction and redshift drifts for general observers and their applications in cosmology",
+      "version": "arXiv:1805.12121v1",
+      "url": "https://arxiv.org/abs/1805.12121v1",
+      "local_pdf": "/mnt/extdrive/workdir/htt_open_data/r23_20261023/research/marcori_1805.12121v1/1805.12121v1.pdf",
+      "pdf_sha256": "4aa208f5e54e7f6a871d83d3b8a6a892f2e11041e472fecf4a4feac4a1ef6be4",
+      "locations": [
+        "Eqs.3.12-3.14",
+        "Eqs.3.19-3.21",
+        "Eq.3.24",
+        "Eq.4.3",
+        "AppendixA Eq.A.9"
+      ],
+      "evidence": "Retained PDF hash independently matched. Read retained text for the two-ray derivation, observer proper time, endpoint velocities, angular E/B decomposition, geodesic velocity derivative and source-observer clock ratio. Pure flat-FLRW first-order endpoint motion supplies an E dipole; perturbed metric terms require additional input."
+    },
+    {
+      "title": "Gaia Collaboration, Gaia EDR3: The celestial reference frame (Gaia-CRF3)",
+      "version": "A&A667,A148(2022),doi10.1051/0004-6361/202243483; arXiv2204.12574v2",
+      "url": "https://doi.org/10.1051/0004-6361/202243483",
+      "locations": [
+        "AppendixE, especially E.25-E.26 and final paragraph"
+      ],
+      "evidence": "Primary-publisher indexed text explicitly says orientation/spin corrections are pure rotations and published source parameters are never corrected for the assumed or estimated glide. Glide may correlate with spin in an incomplete sky. This qualifies the additive frame-rotation component only; it does not qualify all calibration effects. Direct publisher opens returned403, ESA documentation503, institutional PDF timeout, arXiv PDF content-length limit; no inaccessible full PDF is claimed read."
+    },
+    {
+      "title": "Truebenbach and Darling, The VLBA Extragalactic Proper Motion Catalog and a Measurement of the Secular Aberration Drift",
+      "version": "arXiv:1710.02099v1,5October2017",
+      "url": "https://arxiv.org/pdf/1710.02099",
+      "locations": [
+        "p2 Section2 lines88-119",
+        "p1 lines44-55",
+        "abstract"
+      ],
+      "evidence": "Actual primary PDF opened. Goddard2017a combines five source subsets/solutions, treats positions by24-hour session, and then fits source-specific time-series slopes. Radio centroid motions include relativistic jet structure; the authors warn that NNR may suppress systematic motion. This does not establish one common additive spin operator on the final713 slopes."
+    }
+  ],
+  "source_access_failures_preserved": [
+    "A&A full-html Gaia and ICRF3 pages403; ESA frame documentation503.",
+    "A&A DOI fallback403; arxiv/html/1710.02099v2 nonexistent404. Actual arxiv/pdf/1710.02099 succeeded and explicitly printsv1.",
+    "Gaia institutional PDF timed out; arxiv/pdf/2204.12574v2 exceeded web content-length limit10690123bytes. Primary-publisher indexed AppendixE text was available."
+  ],
+  "evidence_reused": [
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CONGRUENCE/REPORT.md",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-Q/REPORT.md",
+    "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D05_GAIA_RADIO/REPORT_KO.md",
+    "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/THEORY.md",
+    "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/RESULTS.json",
+    "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/quaia_join/SUPPLEMENT_RESULT.json",
+    "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/model.py",
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/stats_receipt.json"
+  ],
+  "assumptions_and_conventions": [
+    "Signature(-,+,+,+), spatially flat ds^2=-c^2dt^2+a^2 dx^2. Physical tetrad velocities beta=v/c, e0=c^-1partial_t, ei=a^-1partial_i; a_o=1. Sourceward n; P_n=I-nn^T. Tangent coordinates are ICRS(mu_alpha*cos(delta),mu_delta), not d(alpha)/dt.",
+    "Reuse the finite post-decoupling compensated mode: beta_m(a)=b/a, beta_r(a)=-R b, R=3epsilon_m0/(4epsilon_r0); separately conserved positive dust and radiation, optional unperturbed Lambda. Set independent first-order density, metric, shear and lensing perturbations to zero. At every a, epsilon_m beta_m+(4/3)epsilon_r beta_r=a^-4[epsilon_m0-(4/3)epsilon_r0 R]b=0. Quadratic anisotropic stress is outside this approximation.",
+    "The physical candidate assumes a source centroid carried by the dust. beta_s=(1+zbar)b at the retarded emission event. Observer beta_o(t)=b/a(t)+ell(t); at t_o, dot(beta_o)=-H0 b+dot(ell). The derivative is in the normal tetrad and is not itself the matter four-acceleration. A nonrotating observer tetrad is chosen; arbitrary catalogue spin is a separate nuisance.",
+    "Source-observer proper-time ratio is already used once in the two-ray construction. dot(ell) is a free depth-independent angular acceleration coefficient; in exact FLRW the observer proper acceleration divided by c is dot(ell)+H0 ell. Real local metric/solar-system effects are not thereby modeled; their common dipole can be absorbed but remaining spatial/time terms are unknown.",
+    "The physical theorem is local at first order and at true background depths. The finite retained-row experiment fixes reported Quaia redshifts/directions. Photometric-redshift errors, catastrophe law, selection, source intrinsic motion and nonlinear physical remainder are not supplied by this plug-in design.",
+    "The quantitative velocity requirement is max(|b|/a_i,R|b|,|b+ell|)<<1, plus Doppler displacement small relative to the distance-redshift variation scale. It is a validity condition, not a prior. No finite remainder or nonzero interval of certified physical accuracy is established."
+  ],
+  "constructive_derivation": {
+    "retarded_clock": "To zeroth order dt_s/dt_o=a_s/a_o. Since dx_s/dt_s=c beta_s/a_s, its displacement per observer time is c beta_s/a_o. Likewise observer displacement is c beta_o/a_o. Differentiating the sourceward unit direction gives P_n c(beta_s-beta_o)/(a_o chi). First-order aberration adds P_n dot(beta_o). Source proper-time and cosmic-time differences are quadratic in velocities in this unperturbed metric. Adding a further1/(1+z) to the source term would double-count the clock conversion.",
+    "physical_response": "mu_rad_per_time(n,zbar)=P_n{H0 k_b(zbar)b+H0 k_ell(zbar)ell+dot(ell)}+r_mu; I(z)=H0 chi(z)/c=integral_0^z du/E(u), k_b=z/I-1, k_ell=-1/I. The b column is a history response distinct from local observer velocity and the free common glide. r_mu is an unbounded physical/source/processing remainder here, never zero-filled for admission.",
+    "curl_and_acceleration": "At each fixed true depth the displayed vector field is grad_S2[n dot constant], hence pure E1 and curl-free. The homogeneous dust is geodesic and spatially irrotational at this order. No omega/cosmic-curl or matter-four-acceleration response follows. A depth-dependent sample mask can mix fitted E/B coefficients; it does not alter the physical fixed-depth statement.",
+    "closed_background": "Freeze the already evaluated synthetic background r=Omega_r=1/10000,Omega_m=1-r,Omega_Lambda=Omega_k=0,H0=70km/s/Mpc. E(z)=(1+z)^(3/2)*sqrt(1+r z). Put Q=sqrt((1+z)(1+r z)). Then I=2z/(1+z+Q), k_b=(z-1+Q)/2, k_ell=-(1+z+Q)/(2z). For stable evaluation use k_b=z/2*[1+(1+r+r z)/(Q+1)]. These are scalar closed forms; no quadrature or ODE is needed.",
+    "units": "Let K_H=H0*(Julian_year_seconds)*(microarcseconds_per_radian), with1Julianyear=31557600s,1au=149597870700m,1pc=(648000/pi)au. For H0=70km/s/Mpc,K_H=14.76646685987891microas/yr. Define fit amplitudes a_b=K_H b and a_ell=K_H ell in microas/yr. Mean row is E_i[k_b a_b+k_ell a_ell+g], with g=dot(ell) converted to microas/yr, free and unconstrained. E_i rows are east_i^T,north_i^T. The scalar profiles are dimensionless.",
+    "null_limits": "b=ell=dot(ell)=0 gives zero displayed PM. A source and observer sharing decaying dust do not generally give zero because they sample different emission times. With constant H, I=z and k_b=0 exactly. Near z=0, k_b=Eprime(0)z/2+O(z^2)=(3+r)z/4+O(z^2), while k_ell=-1/z-(3+r)/4+O(z). The local-velocity singularity requires z>0 and the finite-amplitude Doppler smallness condition. r->0 is the EdS scalar-control limit, not an admissible nonzero compensated-radiation history at r=0."
+  },
+  "identification_lemmas": {
+    "three_depth_theorem": "For0<z1<z2<z3 and strictly concave positive I on[z1,z3], the3x3 profile matrix with rows[k_b(zj),k_ell(zj),1] is nonsingular. Multiply rowj byI_j, then add column3 to column1: the resulting rows are[zj,-1,I_j], with determinant equal to det(rows[1,zj,I_j]). Therefore det(profile)=det([1,z,I])/product(I_j). Strict concavity makes the latter negative for ordered depths, hence nonzero. Iprime=1/E and Isecond=-Eprime/E^2<0 when Eprime>0. Thus history, local velocity and common glide are distinguishable in the ideal angular/depth design. Cartesian three-component separation additionally requires sufficient angular support. The actual retained sample and added nuisance span must be tested numerically; this is not an empirical rank claim.",
+    "frame_quotient_theorem": "For fixed retained rows/design/weights, let L be any linear contrast with L U=0. If the catalogue differs from ideal tangent PM by U c(y) for any possibly data-dependent coefficient vector, then L[y+U c(y)]=Ly pointwise. In particular if U includes global B1 and common E1, any additive global spin and common glide vanish. Spin coefficients may have been estimated using other sources; that does not change the result. For an operator T=I+B A,LB=0 implies L T=L for everyA. Full-sky E/B orthogonality is unnecessary. This does not cover source-dependent or time-dependent calibration outsidecol(U), changes of selected rows/weights, finite coordinate rotations without consistent basis transport, or a general NNR operator.",
+    "gaia_consequence": "Gaia AppendixE qualifies the pure global rotation correction component. The proposed U includes all three binwise B1 triplets, hence global B1, and a common E1 triplet; it removes that component and the free observer glide under the fixed-design model. This narrows the previous undifferentiated frame/glide blocker. It does not establish source selection, residual spatial covariance or full detector calibration.",
+    "radio_countercondition": "For radio sourcei with session slope functional ell_i and session spin c(t), correction to its fitted slope can be B_i ell_i[c(t)]. Different source epochs/weights and the five underlying solutions need not share ell_i[c(t)]. Thus even instantaneous rotational corrections can become source-dependent final PM corrections. A single common B1 quotient cannot be assumed to annihilate these. The actual radio NNR/time-series transfer remains HOLD; radio is excluded from the proposed new Gaia-only fit.",
+    "old_contrasts_relation": "The six R23-Q low-minus-high and middle-minus-high E1 contrasts already remove a truly common E1 amplitude. The continuously varying profiles k_b,k_ell are not generally in the18 piecewise-constant E1/B1 span. Substituting bin-centre or unweighted bin-average kernels into old coefficients would not be the new retained-row estimator. Its exact weighted response requires new cross-moments."
+  },
+  "repair_plan": "Execute the bounded K03_PM conditional six-profile-amplitude experiment in execution/K03_PM using the detailed execution_contract in this receipt. One new full retained-row pass computes only6x6 H-H,6x102 H-X and6 H-y cross-moments; reuse the unchanged old102 Gram/score and fixed nuisance definitions. Validate closed kernels, clock sign, exact frame/glide annihilation and estimator covariance on small controls, then report actual rank/amplitudes/covariance and physical-domain diagnostics. Preserve original K03 acceptance,HOLD,oldR23-Q identity/budgets and first failures. A fresh independent reviewer must inspect this theorem and final executed numbers; the research author is ineligible to review.",
+  "execution_contract": {
+    "allowed_writer_directory": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/K03_PM",
+    "allowed_outputs": [
+      "scoped implementation and focused tests",
+      "one new cross-moment NPZ and compact result JSON",
+      "report with the displayed derivation, conditional results and source links",
+      "raw command/stdout/first-failure receipt and minimal resume pointer",
+      "a diagnostic figure only if it clarifies measured profile sensitivity"
+    ],
+    "scope_boundary": "No native low-ell solver,ODE,evolution,fullTAP,downloaded catalogue replacement,oldcampaign rerun,global source fit,radio combination,physical posterior,automatic scientific admission or publication. Original input identity/dependencies/approved_repair_id remain unchanged. Parent authorizes this new owned directory; prior acquisition owned_paths=[] does not authorize other writes.",
+    "background": {
+      "Omega_r": 0.0001,
+      "Omega_m": 0.9999,
+      "Omega_Lambda": 0,
+      "Omega_k": 0,
+      "H0_km_s_Mpc": 70,
+      "R_compensation": 7499.25,
+      "kind": "same synthetic positive dust+radiation background as retainedFRONTIER,not a fitted cosmology"
+    },
+    "inputs": {
+      "row_cache": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_gaia_full_join.npz",
+      "row_cache_bytes": 104598751,
+      "row_cache_sha256": "4cd83b1e8bb9f71f89aacfc2db5daba87f9a79f2af8ccd2e7e94b0be57252dae",
+      "old_stats": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/full_stats.npz",
+      "old_stats_sha256": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+      "stats_receipt": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/stats_receipt.json",
+      "stats_receipt_sha256": "c0fb5225d65e21c2e0da752fa343017afb26c650a395cdca4ca3edf1db97d162",
+      "model_py": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/model.py",
+      "model_py_sha256": "c132f01d9d35e267aa67e8465987bb8cfbab94f46e4f8adc32e9c793f5b74659",
+      "config": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/CONFIG.json",
+      "config_sha256": "196774e641c0ee85b356762fcb6397c1592f0d701ccc99b587f5ce417c175fc2"
+    },
+    "sample": "All755850 retained rows in existing order; no extra PM,RUWE,z,sky or uncertainty cuts. Confirm positive finite reportedz without dropping rows. Use source_id only to preserve binding. Use unchanged ra,dec,redshift_quaia and pmra_uasyr,pmdec_uasyr,pmra_error_uasyr,pmdec_error_uasyr,gaia_pmra_pmdec_corr. The reportedz plug-in is an explicit conditional diagnostic.",
+    "covariance": "Exactly the previously declared within-source2x2 blocksC_i=[[sa_i^2,rho_i sa_i sd_i],[rho_i sa_i sd_i,sd_i^2]],in(microas/yr)^2. Block independence is a working assumption, not an observed absence of residual cross-source covariance. Use once; do not add template/angular random covariances because their mean columns are profiled freely. No new covariance calibration or selection-likelihood claim.",
+    "profiles": "H_i=[k_b(z_i)E_i,k_ell(z_i)E_i],shape2x6. Amplitude ordera_b_x,a_b_y,a_b_z,a_ell_x,a_ell_y,a_ell_z,inmicroas/yr. Use the stable closedkb form; no bin-centre replacement. No prior or parameter clipping.",
+    "nuisance": "Let X_old contain the exact retained 102 columns: 18 binwise E1/B1 columns followed by 84 nuisance columns. Define T (102x96): the first 84 columns select X_old[:,18:102]; the next nine select the old B1 indices [3,4,5,9,10,11,15,16,17]; the final three sum the common E1 indices [0,6,12], [1,7,13], [2,8,14]. Thus U=X_old*T contains the old 84 nuisance columns, every binwise B1 triplet, and a common E1 triplet. Reuse reference_center, reference_scale and vector_column_RMS from stats_receipt. Do not call template_reference or regenerate sky maps. Construct X_old in chunks using the unchanged design/dipole/whiten helpers or algebraically identical functions. Leave the existing R23-Q results unchanged.",
+    "new_moments": "In one chunked pass accumulate A=sum(H_i^T*C_i^-1*H_i), shape 6x6; K=sum(H_i^T*C_i^-1*Xold_i), shape 6x102; and qH=sum(H_i^T*C_i^-1*y_i), shape 6. Retain the row count and z-domain summary. Do not accumulate another old 102x102 Gram or rerun old fits, mocks, or margin selection. Existing G_old and b_old provide N=T^T*G_old*T, bU=T^T*b_old, and J=K*T. Existing ywy/logdetN may be reused if needed.",
+    "estimator": "F=A-J*N^-1*J^T, s=qH-J*N^-1*bU, theta_hat=F^-1*s, Ctheta=F^-1. Use stable symmetric Cholesky solves after column normalization, without explicit inverse calls. Record the full 6x6 F and Ctheta and all six estimates. The 3x3 top-left covariance describes a_b with a_ell profiled; verify it through the independent Schur expression Fb=Fbb-Fbell*Fell^-1*Fellb. Report actual retained-design rank and normalized condition; do not infer either from the analytic theorem.",
+    "physical_domain_reporting": "Primary outputs are the six fitted tangent profile amplitudes and their full working covariance. They are not physical beta posteriors or confidence bounds. Optional theta/K_H values are formal tangent coordinates only. Report R*norm(a_b_hat)/K_H, (1+zmax)*norm(a_b_hat)/K_H, norm(a_b_hat+a_ell_hat)/K_H, and R*sqrt(lambda_max(Cbb))/K_H. A value >=1 explicitly shows incompatibility with a small-velocity physical estimate or uncertainty scale. Values <1 still do not certify physical accuracy: the source, selection, and remainder inputs remain absent. Do not impose beta<=0.01 or another prior to manufacture a physical bound. The old 0.01 exploratory rejection ceiling was not a certified truncation tolerance.",
+    "mandatory_controls": [
+      "Compare the closed profiles with high-precision scalar expressions at z=[0.08634503930807114,0.2,1,2,4.627459688728043], r=1e-4, at absolute plus relative tolerance 1e-12. At z=1e-8 check kb/z against (3+r)/4 within 1e-7; this is a low-z truncation control.",
+      "Constant H with I=z gives kb=0. Direct substitution beta_s=(1+z)b, beta_o=b+ell, dot(beta_o)=-H0*b+dot(ell) must match H0*(kb*b+kell*ell)+dot(ell). Check the source clock without adding a second 1/(1+z). The EdS scalar-control depths [5/4,3,21/4] give determinant -1/2; this r->0 limit is not a nonzero compensated-radiation physical model.",
+      "Use a small synthetic sky/depth fixture with positive 2x2 covariances and sufficient angular/depth support. Include global B1, common E1 and representative fixed angular/template nuisance columns; it need not reproduce all 96 actual nuisance columns. Compare a dense whitened QR fit with the streaming-moment/Schur fit: all six estimates and their full covariance must agree to relative 1e-9 plus absolute 1e-10 in their units. A same-depth fixture must be classified as not estimable, without regularization.",
+      "On the synthetic fixture and final retained score model, inject arbitrary global B1, common E1 and representative old l4/template nuisance coefficient shifts, holding rows/design/weights fixed. Require the nuisance-annihilation Frobenius residual, normalized by the multiplied matrix norms, <=1e-10. Require the estimate shift <=1e-9*(1+norm(theta)) microas/yr. Include an H-signal injection and require its recovery within the same solve tolerance.",
+      "Check R*Gaug*R^T=F for R=[I6,-J*N^-1] and Gaug=[[A,J],[J^T,N]], and the estimator covariance identity Cov(theta_hat)=F^-1, with normalized Frobenius error <=1e-10. This is a conditional Gaussian algebra check; do not replay the old 1024-draw controls or call it empirical coverage."
+    ],
+    "numerical_gates": "Check finite positive input errors, |rho|<1, and positive finite z before accumulation. Preserve the raw asymmetry residual; after checking symmetry at relative 1e-10 scale, use symmetrized roundoff-level matrices. Normalize N and F by their diagonals before condition/rank reporting. Required positive definite blocks must factor with Cholesky. Normalized condition >1e10 or a nonpositive eigenvalue leaves the parameter fit NUMERICALLY_UNRESOLVED, with raw matrices retained. This condition bound matches the existing A22 policy and caps float64 roundoff amplification near 2.3e-6; it is not a scientific identifiability threshold. Do not add jitter, clip negative eigenvalues, silently truncate, or change U to obtain PASS. A truly rank-deficient fixture must be reported HOLD/NOT_ESTIMABLE. Reconcile any concrete first failure once under the bounded repair contract.",
+    "resource_bounds": "One actual full selected-row pass of 755850 rows, chunk size 4096 or smaller, with no additional catalogue campaign. Use the repository .venv, OPENBLAS_NUM_THREADS=1, OMP_NUM_THREADS=1, and MPLBACKEND=Agg if plotting. Keep the new cross-moment pass below 8 GiB RSS and 30 minutes wall time, subject to any tighter inherited campaign limit. Stop at a limit with a raw checkpoint and preserve cumulative budgets. A source hash mismatch is an immutable-input HOLD before dependent execution. Run focused tests only.",
+    "positive_transition": "After implementation and focused tests, a fresh read-only independent reviewer who did not author the acquisition, research, implementation, or integration checks the displayed two-ray, clock, and identification proofs plus the actual new moments, rank, full covariance, physical domain and claim boundaries. A scoped PASS closes only this enabling experiment. Original K03 remains HOLD pending real source, processing, and selected covariance laws; continue other READY campaign work."
+  },
+  "new_profile_domain_preflight": {
+    "n": 755850,
+    "z_min": 0.08634503930807114,
+    "z_max": 4.627459688728043,
+    "nonpositive": 0,
+    "nonfinite": 0,
+    "scope": "Only the retained redshift vector was read for the new 1/I domain; no fit, selection rebuild, or old Gram accumulation was run."
+  },
+  "validation_evidence": [
+    "New stdout-only SymPy calculation: nine exact residuals all zero; Python 3.12.3, SymPy 1.14.0, exit 0.",
+    "The three-depth determinant identity was checked symbolically. The EdS witness is -1/2 exactly; the r=1e-4 witness is -0.50006873332624531361996247574016005938320413567268.",
+    "Independently hashed the retained Marcori PDF, full_stats, stats_receipt, model.py, CONFIG, and selected local theory inputs; identities appear in actual_source_sha256.",
+    "Read the retained reported-z support: 755850 positive finite values, minimum 0.08634503930807114, maximum 4.627459688728043. New retained-design rank, fit, covariance, and estimator controls were NOT_RUN by this read-only researcher."
+  ],
+  "author_check_stdout": {
+    "kind": "new_author_side_symbolic_checks_only",
+    "python": "3.12.3",
+    "sympy": "1.14.0",
+    "residuals": {
+      "kernel_from_distance": "0",
+      "local_kernel": "0",
+      "stable_kernel": "0",
+      "distance_derivative": "0",
+      "low_z_coefficient": "0",
+      "dust_limit": "0",
+      "constant_H_history_null": "0",
+      "depth_determinant_identity": "0",
+      "EdS_three_depth_witness": "0"
+    },
+    "all_residuals_zero": true,
+    "EdS_depths": [
+      "5/4",
+      "3",
+      "21/4"
+    ],
+    "EdS_determinant": "-1/2",
+    "K_H_microas_per_year_per_dimensionless_beta": 14.76646685987891,
+    "positive_r_1e_minus4_three_depth_determinant": "-0.50006873332624531361996247574016005938320413567268",
+    "data_fit": "NOT_RUN",
+    "empirical_rank": "NOT_RUN",
+    "exit_code": 0
+  },
+  "exact_remaining_obligations": [
+    "A source-class and centroid law linking the actual selected optical quasars to the dust emitter history, including intrinsic motion and source clock/epoch response. Radio jet centroids need their own law.",
+    "A law relating reported Quaia redshift to true background depth, including catastrophic errors, selected cohort normalization, and sourcewise proper-motion/classifier selection likelihood or a justified mean bound.",
+    "Gaia calibration/time response beyond additive global rotation and common E1; empirical residual cross-source covariance or a justified bound. Per-source 2x2 blocks alone do not qualify the joint covariance.",
+    "The radio five-solution NNR/session/slope operator, RA coordinate convention, cross-component covariance, and Gaia-radio overlap/shared-frame covariance before joint use.",
+    "A finite physical remainder and small-velocity domain for using a tangent amplitude as finite b. The compensation factor R makes this restrictive. A source-matched vector/tensor/vorticity propagation law would be needed for omega/curl; the E1 subcase supplies none."
+  ],
+  "failure_classification": {
+    "prior_theory_gap": "PARTIALLY_RESOLVED: explicit PM history/local/glide profiles, clock derivation, ideal rank criterion, and frame quotient lemma",
+    "empirical_candidate": "NOT_RUN; ready for the prescribed new cross-moments",
+    "physical_original_K03": "HOLD_SOURCE_AND_SELECTED_OBSERVATION_LAW",
+    "universal_no_go": "NOT_CLAIMED",
+    "independent_review": "PENDING; this author is ineligible"
+  },
+  "skills_applied": [
+    "physmath-research-loop1.3.0:R2/R3/R5/R7/R9withinparentread-onlyresearchscope",
+    "htt-physics-math-audit",
+    "htt-transfer-provenance",
+    "htt-observable-statistics",
+    "htt-local-global-discrimination",
+    "htt-claim-firewall"
+  ],
+  "memory_use": "A lightweight MEMORY.md lookup guided reuse and claim limits. Current repository receipts and primary sources verified all scientific facts used; memory is not scientific evidence.",
+  "next_consumer": "The lower-tier K03_PM writer under this contract, followed by one fresh independent reviewer. The parent persists this raw receipt and preserves campaign accounting.",
+  "actual_source_sha256": {
+    "/mnt/extdrive/workdir/htt_open_data/r23_20261023/research/marcori_1805.12121v1/1805.12121v1.pdf": "4aa208f5e54e7f6a871d83d3b8a6a892f2e11041e472fecf4a4feac4a1ef6be4",
+    "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/verify_history_kernel.py": "082b559eb5c883e5f7589ba59451b51e1f467cb9ef84606deae1d0628ab6d7ed",
+    "docs/research_program/observational_publication_20261015/FRONTIER_20261020/theory/RESULTS.json": "41b5773bd82aa75921744d9395eeeae0c59e42bf544b3d151f5a7f476d5b7e01",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-CONGRUENCE/REPORT.md": "476c08a16060fbb4ad668fb835869b48338b3a93151979e3f7081282876233ee",
+    "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/model.py": "c132f01d9d35e267aa67e8465987bb8cfbab94f46e4f8adc32e9c793f5b74659",
+    "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/CONFIG.json": "196774e641c0ee85b356762fcb6397c1592f0d701ccc99b587f5ce417c175fc2",
+    "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/quaia_join/SUPPLEMENT_RESULT.json": "ba9977d25f193fd37dc4e3a7373d97bf20c99d674f5d9da17d4c1a60ab146239",
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/stats_receipt.json": "c0fb5225d65e21c2e0da752fa343017afb26c650a395cdca4ca3edf1db97d162",
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/full_stats.npz": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da"
+  },
+  "row_cache_hash_status": "Expected hash is taken from the retained join receipt. This researcher read the new z support only; the lower-tier worker must verify the row-cache hash before cross-moment accumulation.",
+  "author_check_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -B - (stdin below); exit 0",
+  "author_check_stdin": "import json,sys,math\nimport sympy as s\nz,r=s.symbols('z r', positive=True)\ny=1+z\nq=s.sqrt(y*(1+r*z))\nI=2*z/(y+q)\nkb=(z-1+q)/2\nkb_stable=z*(1+(1+r+r*z)/(q+1))/2\nkl=-(y+q)/(2*z)\nE=y**s.Rational(3,2)*s.sqrt(1+r*z)\nres={\n 'kernel_from_distance':s.simplify(kb-(z/I-1)),\n 'local_kernel':s.simplify(kl+1/I),\n 'stable_kernel':s.simplify(kb-kb_stable),\n 'distance_derivative':s.simplify(s.diff(I,z)-1/E),\n 'low_z_coefficient':s.simplify(s.limit(kb/z,z,0)-(3+r)/4),\n 'dust_limit':s.simplify(kb.subs(r,0)-(z+s.sqrt(1+z)-1)/2),\n 'constant_H_history_null':s.simplify(z/z-1),\n}\nzs=[s.Rational(5,4),s.Integer(3),s.Rational(21,4)]\nD=s.Matrix([[kb.subs({z:v,r:0}),kl.subs({z:v,r:0}),1] for v in zs]).det()\n# Generic column operation check, independent of any distance law.\nz1,z2,z3,I1,I2,I3=s.symbols('z1 z2 z3 I1 I2 I3',positive=True)\nM=s.Matrix([[v/i-1,-1/i,1] for v,i in zip([z1,z2,z3],[I1,I2,I3])])\nN=s.Matrix([[1,v,i] for v,i in zip([z1,z2,z3],[I1,I2,I3])])\nres['depth_determinant_identity']=s.factor(M.det()-N.det()/(I1*I2*I3))\nres['EdS_three_depth_witness']=s.simplify(D+s.Rational(1,2))\n# Units: 1 Julian year=31557600 s, IAU parsec=648000/pi au, au=149597870700 m.\npc_m=648000/math.pi*149597870700\nKH=70000/(1e6*pc_m)*31557600*(180/math.pi)*3600*1e6\nprint(json.dumps({'kind':'new_author_side_symbolic_checks_only','python':sys.version.split()[0], 'sympy':s.__version__, 'residuals':{k:str(v) for k,v in res.items()},'all_residuals_zero':all(v==0 for v in res.values()),'EdS_depths':[str(v) for v in zs],'EdS_determinant':str(D),'K_H_microas_per_year_per_dimensionless_beta':KH,'positive_r_1e_minus4_three_depth_determinant':str(s.N(s.Matrix([[kb.subs({z:v,r:s.Rational(1,10000)}),kl.subs({z:v,r:s.Rational(1,10000)}),1] for v in zs]).det(),50)),'data_fit':'NOT_RUN','empirical_rank':'NOT_RUN'},indent=2))\nassert all(v==0 for v in res.values())\n"
+}

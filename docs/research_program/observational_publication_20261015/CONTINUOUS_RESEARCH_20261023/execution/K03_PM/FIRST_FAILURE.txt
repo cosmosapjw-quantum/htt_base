@@ -1,0 +1,7 @@
+Command: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/K03_PM/test_profile.py
+Exit: 1
+F... [100%]
+FAILED test_closed_kernels_and_clock: exact mpmath determinant comparison produced -0.5000000000000000000000000000000000000000000000000000000000000000000000453 instead of exact -1/2 at dps=70. Mathematical difference about 4.53e-71; test used exact equality on finite precision evaluation.
+Warning: profile.py:241 RuntimeWarning invalid value encountered in scalar divide for identical-space control S=I, where both numerator and denominator of normalized Schur residual vanish.
+Summary: 1 failed, 3 passed, 1 warning in 6.45s.
+No retained-row pass had started.

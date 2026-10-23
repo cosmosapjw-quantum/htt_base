@@ -1,0 +1,89 @@
+{
+  "packet_id": "28d91672c82058fd380e24d6cd0281384e83a58df329159ad7fd72ae4979a88a",
+  "task_id": "K03",
+  "attempt": 3,
+  "phase": "repair",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "input_identity": "sha256:cab18c33b87e10d5903a5babc763ff0bb59568d5290eb4bd7b6baabc6c2927d2",
+  "candidate_identity": "sha256:86942bbc9e3999b54579f8f119ae2f0d3537756c5f2deda57f5dffc096eff192",
+  "agent_id": "/root/rc_28d91672c82058fd",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "outcome": "success",
+  "status": "CANDIDATE_ARTIFACT_READY_REVIEW_PENDING",
+  "original_acceptance_met": false,
+  "scientific_admission": "HOLD",
+  "no_dispatch_claim": true,
+  "independent_review": "PENDING",
+  "first_failures": [
+    "FIRST_FAILURE.txt",
+    "REUSE_FIRST_FAILURE.txt"
+  ],
+  "row_passes": 1,
+  "full_row_pass": {
+    "rows": 755850,
+    "chunk_size_max": 4096,
+    "elapsed_wall_seconds": 20.15,
+    "accumulation_seconds": 10.81566084898077,
+    "max_rss_kb": 285948,
+    "exit_code": 0,
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 1800 .venv/bin/python -B docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/K03_PM/profile.py",
+    "stdout": "RUN_STDOUT.txt",
+    "stderr_and_time": "RUN_STDERR.txt"
+  },
+  "matrix_only_postprocess": {
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg .venv/bin/python -B docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/K03_PM/profile.py --reuse-moments",
+    "exit_code": 0,
+    "stdout": "REUSE_STDOUT.txt",
+    "stderr": "REUSE_STDERR.txt"
+  },
+  "focused_tests": {
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/K03_PM/test_profile.py",
+    "exit_code": 0,
+    "result": "....                                                                     [100%]\n4 passed in 6.84s",
+    "stdout": "TEST_STDOUT.txt",
+    "stderr": "TEST_STDERR.txt"
+  },
+  "source_hashes": {
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_gaia_full_join.npz": "4cd83b1e8bb9f71f89aacfc2db5daba87f9a79f2af8ccd2e7e94b0be57252dae",
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/full_stats.npz": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+    "/mnt/extdrive/workdir/htt_open_data/a22_20261023/astrometry/stats_receipt.json": "c0fb5225d65e21c2e0da752fa343017afb26c650a395cdca4ca3edf1db97d162",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/model.py": "c132f01d9d35e267aa67e8465987bb8cfbab94f46e4f8adc32e9c793f5b74659",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/astrometry/CONFIG.json": "196774e641c0ee85b356762fcb6397c1592f0d701ccc99b587f5ce417c175fc2"
+  },
+  "moments": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/k03_pm_20261023/cross_moments.npz",
+    "sha256": "70fc2fee88803a7211c1c157ff87b4adb05b0807a00c03dc38d51f31b3842662",
+    "bytes": 6043
+  },
+  "result_sha256": "652e1ba12beb9b7099deb61eea06b75e58b7f70caa367decc659a80f6d4d07a1",
+  "manifest_sha256": "86942bbc9e3999b54579f8f119ae2f0d3537756c5f2deda57f5dffc096eff192",
+  "numerical_summary": {
+    "F_rank": 6,
+    "F_condition": 7.324460123869295,
+    "N_rank": 96,
+    "N_condition": 623346.7831738901,
+    "principal_angles_degrees": [
+      43.85519981295121,
+      44.09194996992171,
+      44.29225615384628
+    ],
+    "physical_R_norm_ab_over_KH": 958.8912130025572
+  },
+  "scope": "new reported-z conditional six-amplitude experiment only; old R23-Q, original K03 and campaign budgets unchanged",
+  "remaining_obligations": [
+    "qualified source-class centroid/dust motion law",
+    "selected reported-z/true-depth and PM likelihood",
+    "Gaia residual calibration and cross-source covariance",
+    "radio NNR/session transfer",
+    "finite physical remainder and nonradial omega/curl response"
+  ],
+  "git_branch": "research/htt-open-input-theory-20261018",
+  "git_head_at_receipt": "9ef8976dbf488ae1d5429f7c24f45d5ef1899224",
+  "publication": "NOT_RUN",
+  "raw_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/K03_PM/RAW_RECEIPT.json",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/K03_PM/CANDIDATE_MANIFEST.json"
+}

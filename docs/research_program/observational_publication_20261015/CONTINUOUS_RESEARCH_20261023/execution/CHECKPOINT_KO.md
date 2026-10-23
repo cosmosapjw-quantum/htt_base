@@ -98,29 +98,62 @@ PUBLICATION_DAG의 H02/S02/B02에는 위 참고 근거만 연결했다.
   정당해지지 않으며 별도 PR4 분석을 원래 PR3 L03 완료로 바꾸지 않는다.
   PUBLICATION_DAG의 L03에는 참고 근거만 연결했다. 원래 acceptance는 HOLD다.
 
-## 다음 실제 전이
+## 검토를 마친 새 결과: K03_PM
 
-로컬 `.agent-harness/runtime/r23-continuous/STATE.json`은48-task 원본과
-packet/실제 agent/result, 첫 실패, 이전 ultra 사용을 보존한다. 재초기화하지 않는다.
-현재 R23-Q와 R23-DISTANCE는 scoped 독립 검토 후 완료했다.
-R23-CMB의 새15개 projection 지점은 독립 검토에서 재현됐으며 한 문장을 고친 뒤
-같은 reviewer의 targeted closeout과 controller final-candidate 검토를 완료했다.
-K03은 Marcori et al. arXiv1805.12121v1을 이용한 새 해석적 응답을 유도하고,
-기존755850행에서 새 교차 통계량을 단1회 계산했다. 실제 rank6·조건수7.32446,
-principal angles43.855/44.092/44.292deg이나 formal Rnorm(b)958.89로
-small-velocity 물리 해석은 불가하다. 별도 독립 검토 전이며 원래 K03는 HOLD다.
-H02와 S02의 실제 acquisition은 필요한 source law와 physical joint response를
-확보하지 못해 정확한 입력 HOLD를 기록했다. source law·source null·parent targeting을
-새 working covariance로 대체하지 않는다. 지금 L03 acquisition packet3ea648d69d772951을
-실제 gpt-6-sol/high `/root/rc_3ea648d69d772951`에 호출·ack해 원래 PR3 null 입력을
-조사한다. 그 뒤 K03의 독립 물리/수치 검토와 남은 DAG 분기 점검을 계속한다.
-R23-ATLAS와 의존성이 풀리는 원래 노드도 router 순서로 이어간다.
+- Marcori et al. arXiv1805.12121v1의 source/observer clock을 맞춘 새 조건부
+  proper-motion 응답을 유도했다. 기존755850행 cache와102열 Gram/score를
+  재사용하고6×6/6×102 교차 통계량만 단1회 계산했다. old catalogue/quotient,
+  Gaia TAP, radio envelope, LP, Planck split을 재실행하지 않았다.
+- [새 코드·수치·그림·보고서](K03_PM/REPORT.md)는 nuisance96열을 사영한
+  joint rank6, normalized condition7.3244601239,
+  principal angles43.8551998/44.0919500/44.2922562deg를 산출했다.
+- formal point의 R‖a_b‖/K_H=958.891213으로 small-velocity domain이 성립하지
+  않는다. 이는 conditional profile amplitude의 고정 설계 분리 결과이며
+  물리 β/ω 추론이나 cosmic tilt/NNR 검증이 아니다.
+- [별도 Astra 독립 검토](K03_PM/INDEPENDENT_REVIEW.json)의17개 검사가 통과했다.
+  새 작은 synthetic fixture와 독립 augmented solve는 추정값6.8e−14,
+  공분산6.1e−15 이내에서 재현했다. 검토자는 전체 행 pass를 반복하지 않았다.
+  candidate86942bbc9e3999b54579f8f119ae2f0d3537756c5f2deda57f5dffc096eff192.
+- 실제 quasar centroid의 matter-motion law, depth/selection likelihood,
+  Gaia residual spatial covariance, radio NNR/session-slope 및 공동오차는
+  미확보다. pure E1 subcase에는 curl/ω 응답이 없다. 원래K03 acceptance는 HOLD다.
+  Radio RA의 declination factor는 원 논문에서 확인되어 missing 항목에서 제외했다.
+- 첫 fixture/serialization 실패와 최종 runner receipts, 독립 검토자의 첫
+  verifier shape 오류도 보존했다. 최종 독립 검토 raw와6개 verifier payload를
+  Git에 보존하고 원래/tmp 경로와 durable 경로의 mapping을 함께 기록했다.
+
+PUBLICATION_DAG에는 K03와 H02/S02/L03의 참고 근거만 추가했다.
+원래42개 state/acceptance/dependency/output은855107f23 기준과 같고,
+CONTINUATION_TASKS의 intake_state도 올리지 않았다.
+
+## 현재 전이와 미완료 checkpoint
+
+동일48-task campaign의 모든 실제 결과를 record한 뒤
+[controller next](CONTROLLER_FINAL_NEXT.json)는
+`HOLD_UNRESOLVED_BRANCHES`, `ready:[]`를 반환했다. planned/running packet은 없다.
+R23-Q/DISTANCE/CMB는 authored scoped 단위 완료이고,
+SN/CONGRUENCE/ATLAS 및 원래H02/S02/L03/K03는 정확한 입력 HOLD다.
+B02 등 state 문자열이 ready여도 미완료 enabling dependency 때문에 dispatch 가능하지 않다.
+
+이것만으로 종료 판정을 만들지 않았다. 별도 fresh Astra reviewer가
+[원래25개 미충족 기준의 모든 경로](REMAINING_BRANCHES.json),
+[필요한 정확한 자료·공식·소비자·재개 명령](REMAINING_INPUTS_KO.md),
+새H02/S02/L03 source intake 및 추가SN 공개 경로를 확인했다.
+H02 문헌 저자명과 README 귀속 오류는
+[정정문](SOURCE_INTAKE/SOURCE_CORRECTIONS.md)으로 고치고 첫 raw는 유지했다.
+[실제 검토 결론](REMAINING_BRANCHES_REVIEW.json)은
+`PASS_SCOPED_INCOMPLETE_EXTERNAL_INPUT_CHECKPOINT`이며 open finding은 없다.
+
+원래 external-output17/42와 analytic alternate18/42, 여섯 논문 NOT_READY를
+유지한다. 전체 목표는 완료하지 않았다. 확인한 경로의 미확보 입력을 기다리는
+**미완료 checkpoint**이며 보편적인 데이터 부재나 강한 물리 no-go가 아니다.
+실제 신규 qualified 입력 또는 구체적 검토 finding이 오면 해당 가지를 재개한다.
+
+로컬 `.agent-harness/runtime/r23-continuous/STATE.json`과 RESUME_KO.md는
+원래campaign·packet/실제agent/result·첫실패·ultra사용·one-use/R9/UNKNOWN을
+보존한다. state를 새로 만들거나 비용을 초기화하지 않는다.
+requested model/effort와 실제 backend 관측은 다르며, 후자는 UNKNOWN이다.
 
 ```bash
 .venv/bin/python scripts/codex_harness/research_controller.py --state .agent-harness/runtime/r23-continuous/STATE.json summary
 ```
-
-running packet은 기존 agent/result와 reconcile한다. 완료된 실제 결과를
-record한 다음 `next`의 정확한 spawn_args를 실제 호출하고 ack한다.
-이 문서는 전체 완료 선언이나 외부 제약 최종 판정이 아니다.
-requested model/effort와 실제 backend 관측은 다르며, 후자는 UNKNOWN이다.
