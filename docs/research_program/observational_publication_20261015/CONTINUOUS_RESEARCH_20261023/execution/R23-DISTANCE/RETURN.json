@@ -1,0 +1,44 @@
+{
+  "packet_id": "b4abc4f359950106728fe72d8ac7c960be0f58e71dc5810fb549ea4a0a2537a3",
+  "task_id": "R23-DISTANCE",
+  "attempt": 1,
+  "phase": "execute",
+  "input_identity": "sha256:68741d7ff4948cdf721c372dfaf5a0ded004ebe0eaf4d3f657ece4c0781b31d2",
+  "candidate_identity": "sha256:81182b06669521121ec386111ac669083c4e325c714c7f69322fda75d2034f90",
+  "agent_id": "/root/rc_b4abc4f359950106",
+  "outcome": "blocker",
+  "status": "HOLD_MISSING_JOINT_DISTANCE_LAW",
+  "scientific_admission": "HOLD",
+  "review_status": "PENDING_INDEPENDENT_REVIEW",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "raw_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/RAW_RECEIPT.json",
+  "artifact_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/ARTIFACT_MANIFEST.json",
+  "report": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/REPORT.md",
+  "validation_evidence": [
+    "Four immutable source SHA256 values matched; source-path content unchanged from packet source_head.",
+    "628 selected marks, 274 released moduli and 354 undefined distances reproduced.",
+    "3 focused tests passed; first quadrature error-estimate failure retained and corrected without changing normalization tolerance.",
+    "Constructed whole-group 90% interval coverage 0.9091796875/4096 draws; not source-matched selected coverage.",
+    "Actual two-row marginal-error covariance counterexample changes Gaussian log density."
+  ],
+  "completed": "Source-bound extraction and conditional joint Gaussian distance factor implementation",
+  "not_evaluable": [
+    "actual 274 distance fit",
+    "source-matched whole-group selected-mock coverage",
+    "bounded physical sensitivity law"
+  ],
+  "next_input": "Can a justified, explicitly stated conditional selected-cohort mean/covariance law or partial-identification model fit the 274 released DMbest rows while including shared calibration and group/PV dependence exactly once, preserving all 354 undefined distances, and supporting whole-group selected-mock coverage?",
+  "no_dispatch_claim": true,
+  "acceptance_met": false,
+  "issue": {
+    "class": "theory",
+    "question": "Can a justified, explicitly stated conditional selected-cohort mean/covariance law or partial-identification model fit the 274 released DMbest rows while including shared calibration and group/PV dependence exactly once, preserving all 354 undefined distances, and supporting whole-group selected-mock coverage?",
+    "exact_missing_or_defect": "The implemented factor and all 274 source rows are available, but A22 supplies marginal e_DMbest/e_logWmxi and partial group labels rather than a committed conditional mean, selection normalization, or joint total calibration/PV law. Two positive-definite covariances with the same first two released errors give different actual-row Gaussian densities. Whether a scientifically justified conditional model or partial-identification law can be specified from these inputs remains an open theory decision; no actual 274 distance fit or source-matched coverage has been evaluated.",
+    "input_identity": "sha256:68741d7ff4948cdf721c372dfaf5a0ded004ebe0eaf4d3f657ece4c0781b31d2",
+    "substantive": true,
+    "risk": "An unqualified diagonal or double-counted covariance would produce unsupported fit precision and interval coverage.",
+    "true_external": false
+  },
+  "packaging_correction": "FIRST_RETURN.json preserves the original blocked envelope; outcome and issue schema corrected without rerunning calculations."
+}

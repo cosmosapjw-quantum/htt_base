@@ -1,0 +1,102 @@
+{
+  "task_id": "R23-ATLAS",
+  "verdict": "PASS_SCOPED_SOURCE_INTAKE_ONLY",
+  "candidate_identity": "sha256:0884b68b25e62301631ef99c3be7414f7c6ac49e28d2088f5b34b12f22ab58b3",
+  "packet_id": "359b5fbd73ca86848dbd68c1c63827b06f08d4e9ff8ed8245bd3111f1390959c",
+  "input_identity": "sha256:6f9b60ac018463bba021bf9774c9f3b958a7fa4f1b052eb74028b2dba0f7abee",
+  "reviewer": "/root/r23_atlas_input_review",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "independence": "Fresh read-only reviewer; did not author or advise the candidate. No children, writes, publication or controller transitions.",
+  "review_checkout": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "head": "9ef8976dbf488ae1d5429f7c24f45d5ef1899224",
+    "branch": "research/htt-open-input-theory-20261018",
+    "existing_dirty_state": "Observed and preserved"
+  },
+  "findings": [],
+  "decision": "The candidate accurately binds the retained source evidence and identifies the missing physical payload. Its exhaustion statement is limited to inspected routes and existing records. It does not establish universal absence, original-node completion or scientific admission.",
+  "checks": [
+    {
+      "check": "Exact candidate binding",
+      "result": "PASS",
+      "evidence": "ARTIFACT_MANIFEST.json raw SHA256 equals the requested candidate identity. REPORT.md matches 4249 bytes and SHA256 1778e4cd1fb774e8bcb2e4e6652ce65faa29910f3d350894f9cbe487c344cd05; RAW_RECEIPT.json matches 5352 bytes and SHA256 3b761250078a9cfc76f4a97ca4899f64d2de4c4aa9ad1addd27724b5cfa85131."
+    },
+    {
+      "check": "Ten retained references",
+      "result": "PASS",
+      "evidence": "All ten files exist and independently recomputed SHA256 values match RAW_RECEIPT.json. RETURN, manifest and raw receipt agree on task, packet and input identities. FRONTIER.json supplies the same input identity and the bounded reuse acceptance."
+    },
+    {
+      "check": "Local content falsifiers",
+      "result": "PASS",
+      "evidence": "A22-09 is blocked_input with original_node_completion false. Sung inventory recount gives 71 members, including 64 PostScript files and seven TeX/style/class files. All 11 registry entries have T_E_B_high_l_all_m_qualified false."
+    },
+    {
+      "check": "Scientific scope and representation",
+      "result": "PASS",
+      "evidence": "The report requires physical T/E/B mode/history coefficients, IC and start epoch, normalization, curvature branch, units, spin/harmonic conventions, handedness, frame, ell/beam treatment, equivalence and same-source calibration. Sparse canonical-m support is conditional on a justified complete representation; rotation is not represented as supplying missing modes or history."
+    },
+    {
+      "check": "Acquisition-route assessment",
+      "result": "SUPPORTED_WITH_STATED_SCOPE",
+      "evidence": "Retained records distinguish Sung rendering assets, Zenodo chains/plots/animations, AniCosmo/AniCLASS code surfaces and legacy temperature-only BIANCHI fixtures from the required atlas. No concrete untried existing-payload endpoint appeared in the reviewed evidence."
+    }
+  ],
+  "inspected_paths": {
+    "base": "docs/research_program/observational_publication_20261015/",
+    "candidate": [
+      "CONTINUOUS_RESEARCH_20261023/execution/R23-ATLAS/RETURN.json",
+      "CONTINUOUS_RESEARCH_20261023/execution/R23-ATLAS/ARTIFACT_MANIFEST.json",
+      "CONTINUOUS_RESEARCH_20261023/execution/R23-ATLAS/REPORT.md",
+      "CONTINUOUS_RESEARCH_20261023/execution/R23-ATLAS/RAW_RECEIPT.json",
+      "CONTINUOUS_RESEARCH_20261023/FRONTIER.json"
+    ],
+    "ten_retained_references": [
+      "ADVERSARIAL_AUDIT_20261022/continuation/REMAINING_INPUTS_KO.md",
+      "ADVERSARIAL_AUDIT_20261022/EXECUTION_PLAN.json",
+      "FRONTIER_20261020/cmb_astrometry/sung_archive_inventory.json",
+      "FRONTIER_20261020/cmb_astrometry/search_receipts_summary.json",
+      "FRONTIER_20261020/cmb_astrometry/REPORT.md",
+      "OPEN_INPUTS_20261018/cmb/CMB_RESEARCH_KO.md",
+      "OPEN_INPUTS_20261018/cmb/DATA_CMB.json",
+      "OPEN_INPUTS_20261018/EXECUTION_20261018/D08_EXTERNAL_PAYLOAD/REPORT_KO.md",
+      "OPEN_INPUTS_20261018/EXECUTION_20261018/D08_EXTERNAL_PAYLOAD/SOURCE_MANIFEST.json",
+      "READY_20261016/B01_BIANCHI_ATLAS_REGISTRY.json"
+    ]
+  },
+  "validation_execution": {
+    "method": "Read-only python3 -B standard-library JSON parsing, SHA256/size checks, identity comparisons and inventory recounts",
+    "exit_status": 0,
+    "scientific_computation": "NOT_RUN; no new numerical scientific result exists in this intake",
+    "numeric_plot": "NOT_APPLICABLE"
+  },
+  "limitations": [
+    "The retained Sung archive's differing range ETags and NOT_CERTIFIED upstream byte identity remain explicit. The review validates the retained inventory and candidate binding.",
+    "A direct review-time open of the cited Planck DOI returned HTTP 403. The private-template provenance statement therefore remains attributed to the retained A22 record; it was not freshly confirmed against the primary page.",
+    "Current availability across all upstream repositories was not surveyed. No universal absence or strong no-go is admitted.",
+    "The candidate contains no admitted physical polarized atlas and no validation of one."
+  ],
+  "scientific_status": "HOLD",
+  "original_B02_complete": false,
+  "controller_or_original_node_completion": false,
+  "next_exact_payload": [
+    "Already computed physical numerical T/E/B coefficients over the required ell,m support, or a complete canonical-m basis with justified expansion, indexed by actual family, mode and history.",
+    "Matching IC/start epoch, metric/shear/matter/tilt and primordial-mode normalization, curvature branch and evolution/history parameters.",
+    "Temperature/polarization units, harmonic/spin conventions, handedness, coordinate/tetrad frame, ell cutoff and beam treatment.",
+    "Family/mode/orientation/parity equivalence and same-source calibration/response provenance."
+  ],
+  "next_action": "Parent may persist this independent review for the exact candidate and continue independent authorized branches. Reopen this intake when a concrete existing endpoint or producer-delivered payload supplies a new testable input. Qualify any selected-family subset only on its actual domain; original B02 remains HOLD.",
+  "required_changes": [],
+  "skill_context_used": [
+    "AGENTS.md and docs/harness/CURRENT_CODEX_RUNTIME.md",
+    ".agents/skills/htt-claim-firewall/SKILL.md",
+    ".agents/skills/htt-transfer-provenance/SKILL.md",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md",
+    ".agents/skills/htt-reviewer-mode-pre-submission/SKILL.md",
+    ".agents/skills/independent-diff-review/SKILL.md",
+    ".agents/skills/claim-source-audit/SKILL.md",
+    "/home/cosmosapjw/.codex/plugins/cache/created-by-me-remote/physmath-research-loop/1.3.0/skills/physmath-research-loop/SKILL.md",
+    "PhysMath Research Loop 1.3.0 references/POLICY_INTEGRATION.md, SUBAGENT_MODE.md, THEORY_LOOP.md R6 and CODING_LOOP.md C9"
+  ]
+}

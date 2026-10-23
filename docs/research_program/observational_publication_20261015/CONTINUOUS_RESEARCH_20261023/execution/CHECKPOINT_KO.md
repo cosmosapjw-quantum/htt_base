@@ -49,16 +49,48 @@ PUBLICATION_DAG에 K03/K05 및 K04/S04의 참고 근거만 추가했다.
 원래42개의 상태·수용기준·의존성과18/42 대17/42 구분은 그대로다.
 scoped frontier PASS로 원래 scientific 완료 수를 올리지 않았다.
 
+## 검토를 마친 새 결과: R23-DISTANCE 및 atlas intake
+
+- [실제274행 조건부 거리 fit](R23-DISTANCE/conditional_fit/REPORT.md)은
+  7열 설계·267자유도, 한 개의 명시적 공동 covariance 아래 실행했다.
+  354개의 미관측 거리는 undefined로 유지했다. 4096개 공동 그룹 mock의
+  조건부 구간 coverage는3890/4096으로 사전 범위3854–3926에 들었다.
+- 실제 자료의 잔차 진단 T=4.5553218238, p=0.0009763241396은
+  **채택한 조건부 모형을 비판한다**. 이 실패를 유지했고 모형·seed·허용오차를
+  조정하지 않았다. 측정 폭0.1dex의 조건부 contrast는0.082865876mag,
+  해당 모형의 구간[0.021790086,0.143941666]mag다. 실제 모형 진단 실패로
+  이를 경험적으로 검증된 구간이나 물리 TFR/H0/PV 추론으로 사용하지 않는다.
+- 공개 modulus 오차가 이미 선폭·보정 계수 오차를 전파한다는 원 논문
+  Appendix C를 반영했다. 사용한 공동 calibration 배분과 단일 그룹 잔차는
+  명시적 working assumptions다. source-qualified calibration/PV 법칙은 미확보다.
+- 새 코드·숫자·그림,3 tests와 별도 Astra의
+  [독립 eigenvalue/SVD 검토](R23-DISTANCE/conditional_fit/INDEPENDENT_REVIEW.json)를
+  완료했다. candidate는 dddb9635d8d761aa0ac194f93546f86da61f03a5ac6598f1e9df71843bd8c0ff.
+  최초 미평가 candidate·실패·중간 packaging seal은 모두 보존했다.
+  authored conditional 실험의 완료이며 원래 H02/S02는 HOLD다.
+- [Atlas source intake](R23-ATLAS/REPORT.md)와
+  [별도 독립 검토](R23-ATLAS/INDEPENDENT_REVIEW.json)는 기존10개 source receipt를
+  재사용했다. 새 숫자 atlas나 새 과학 계산은 없다. 확인한 Sung71항목은
+  64그림+7TeX/style이며, registry11종은 all-m T/E/B 자격이 없다.
+  source별 확인 범위를 넘는 보편적 부재를 주장하지 않는다. B02는 HOLD다.
+
+PUBLICATION_DAG의 H02/S02/B02에는 위 참고 근거만 연결했다.
+원래42개 state/acceptance/dependency/output 및 CONTINUATION_TASKS는 유지했다.
+
 ## 다음 실제 전이
 
 로컬 `.agent-harness/runtime/r23-continuous/STATE.json`은48-task 원본과
 packet/실제 agent/result, 첫 실패, 이전 ultra 사용을 보존한다. 재초기화하지 않는다.
-현재 R23-Q는 scoped 독립 검토 후 완료했고 R23-CMB는 별도 독립 검토 대기다.
-R23-DISTANCE는 정당한 조건부 평균·공동오차/부분식별 모형의 Astra 연구 대기다.
-K03 acquisition packet3b2331050b0548e1을 실제 gpt-6-sol/high agent
-`/root/rc_3b2331050b0548e1`에 호출·ack했다. Marcori et al. arXiv1805.12121v1의
-direction/redshift drift를 이용한 새 해석적 물리 응답 경로를 조사한다.
-PM/NNR/clock 유도는 연구 가능한 경로이며 입력 부재만으로 소진되었다고 보지 않는다.
+현재 R23-Q와 R23-DISTANCE는 scoped 독립 검토 후 완료했다.
+R23-CMB의 새15개 projection 지점은 독립 검토에서 재현됐으며 한 문장을 고친 뒤
+같은 reviewer의 targeted closeout을 받았다. controller final-candidate 검토가 남았다.
+K03은 Marcori et al. arXiv1805.12121v1을 이용한 새 해석적 응답을 유도하고,
+기존755850행에서 새 교차 통계량을 단1회 계산했다. 실제 rank6·조건수7.32446,
+principal angles43.855/44.092/44.292deg이나 formal Rnorm(b)958.89로
+small-velocity 물리 해석은 불가하다. 별도 독립 검토 전이며 원래 K03는 HOLD다.
+지금 H02 acquisition packetbaf792efad535efc를 실제 gpt-6-sol/high agent
+`/root/rc_baf792efad535efc`에 호출·ack해 원래 source law의 잔여 입력을 조사한다.
+source law·source null·parent targeting을 새 working covariance로 대체하지 않는다.
 R23-ATLAS와 의존성이 풀리는 원래 노드도 router 순서로 이어간다.
 
 ```bash

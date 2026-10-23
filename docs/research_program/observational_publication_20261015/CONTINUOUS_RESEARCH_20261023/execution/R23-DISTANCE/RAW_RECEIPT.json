@@ -1,0 +1,74 @@
+{
+  "packet_id": "b4abc4f359950106728fe72d8ac7c960be0f58e71dc5810fb549ea4a0a2537a3",
+  "task_id": "R23-DISTANCE",
+  "attempt": 1,
+  "phase": "execute",
+  "input_identity": "sha256:68741d7ff4948cdf721c372dfaf5a0ded004ebe0eaf4d3f657ece4c0781b31d2",
+  "source_head": "a8e66da28461a415f5da3b3d609c482554d2dcd1",
+  "execution_head": "855107f23fd4f25587ba242d8a5dfc1a8fc81876",
+  "source_path_diff_from_source_head": "none in selection_model and conditional distance model",
+  "agent_id": "/root/rc_b4abc4f359950106",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "utc_recorded": "2026-10-22T23:47:45.747572+00:00",
+  "python": "3.12.3",
+  "scientific_owner": "htt",
+  "claim_tier": "C0_CONDITIONAL_DIAGNOSTIC",
+  "source_identity_status": "PASS_FOUR_SHA256",
+  "extraction": {
+    "selected": 628,
+    "released_DMbest": 274,
+    "undefined_DMbest": 354,
+    "marks": [
+      [
+        116,
+        269
+      ],
+      [
+        21,
+        1
+      ],
+      [
+        26,
+        3
+      ],
+      [
+        191,
+        1
+      ]
+    ],
+    "mark_only_loglik": -834.3958584571346
+  },
+  "first_failure": {
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/test_distance_factor.py",
+    "exit_code": 1,
+    "result": "1 failed, 2 passed",
+    "failure": "test_density_normalizes_and_missing_marks_integrate: infinite-domain scipy quad value 1.0, reported error 2.634383481506131e-10 versus test error-estimate bound 1e-10",
+    "repair": "Integrate over mean +/- 8 standard deviations; Gaussian tail omitted below 1.3e-15; normalization tolerance unchanged."
+  },
+  "validation": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/distance_factor.py",
+      "exit_code": 0,
+      "result": "628 marks, 274 released, 354 undefined; exact source hashes matched"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/test_distance_factor.py",
+      "exit_code": 0,
+      "result": "3 passed in 0.84s"
+    },
+    {
+      "command": "bounded inline two-row covariance counterexample and constructed 8-group 4096-draw coverage",
+      "exit_code": 0,
+      "result": "same marginal errors 0.29,0.30 give log densities 0.103970093918 vs 0.081144463477; constructed 90% interval coverage 0.9091796875"
+    }
+  ],
+  "actual_distance_fit": "NOT_EVALUABLE",
+  "whole_group_selected_source_mock_coverage": "NOT_EVALUABLE",
+  "bounded_physical_sensitivity": "NOT_EVALUABLE",
+  "blocker": "No source-qualified mean/latent-distance and joint total calibration/PV covariance or decomposition for the 274 released moduli conditional on the 628 selected marks, widths, and group genealogy.",
+  "scientific_admission": "HOLD",
+  "original_H02_S02": "HOLD",
+  "independent_review": "PENDING",
+  "no_dispatch_claim": true
+}

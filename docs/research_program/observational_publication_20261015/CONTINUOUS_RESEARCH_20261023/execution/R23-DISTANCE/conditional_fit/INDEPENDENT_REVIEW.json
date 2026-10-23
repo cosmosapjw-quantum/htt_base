@@ -1,0 +1,166 @@
+{
+  "packet_id": "4fecc6b31c32c6ee26879379dfa4585d6911249d9d19e1406c3b3d4467f3d24f",
+  "task_id": "R23-DISTANCE",
+  "attempt": 4,
+  "phase": "review",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "input_identity": "sha256:68741d7ff4948cdf721c372dfaf5a0ded004ebe0eaf4d3f657ece4c0781b31d2",
+  "candidate_identity": "sha256:dddb9635d8d761aa0ac194f93546f86da61f03a5ac6598f1e9df71843bd8c0ff",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/ARTIFACT_MANIFEST.json",
+  "agent_id": "/root/rc_4fecc6b31c32c6ee",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "independence": {
+    "status": "INDEPENDENT_NONAUTHOR_REVIEW",
+    "authors_excluded": [
+      "/root/rc_b4abc4f359950106",
+      "/root/rc_5524cb188c7bd413"
+    ],
+    "contributors_excluded": [
+      "/root/rc_be079c7643e00d77"
+    ],
+    "candidate_authoring_or_advice": false,
+    "prior_review_verdict_read": false,
+    "children_spawned": false
+  },
+  "raw_receipt": "/tmp/r23_distance_review_4fecc6b3/RETURN.json",
+  "raw_receipt_kind": "self-contained reviewer receipt with raw command and stdout evidence",
+  "reviewed_author_raw_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/RAW_RECEIPT.json",
+  "reviewed_author_raw_receipt_sha256": "df4a39beadb9abfc57abd827eaa75f4bbadf7c721a23833712306b20bc37d7a7",
+  "outcome": "success",
+  "verdict": "PASS_AUTHORED_CONDITIONAL_EXPERIMENT_ONLY",
+  "acceptance_met": true,
+  "acceptance_scope": "CONDITIONAL_GLS_V1 implementation, source-bound actual-row fit, normalized conditional likelihood, exact conditional t construction, declared-law mock procedure, and truthful diagnostic reporting only",
+  "original_physical_acceptance_met": false,
+  "H02_S02": "HOLD",
+  "scientific_admission": "HOLD",
+  "findings": [],
+  "residual_holds": [
+    "The actual rows criticize the adopted mean/covariance law: T=4.555321823822732, 3/4096 stored exceedances, p=0.000976324139614352. Empirical adequacy is not established.",
+    "The common calibration and group/PV allocation is authored; source-qualified joint covariance and physical no-double-counting remain unavailable.",
+    "354 distances remain undefined, parent inclusion and its normalizer remain unknown, and no source-qualified bounded sensitivity law was supplied.",
+    "Original H02/S02 physical acceptance remains HOLD; this scoped pass must not close those nodes."
+  ],
+  "validation_evidence": [
+    "Verified final manifest SHA and all 11 sealed file hashes/sizes. Verified all 7 entries of the initial top-level manifest, all four immutable source hashes, and equality of CONTRACT.json with the prior research raw receipt.",
+    "Independent fixed-width parsing reconciled all 274 released DMbest, e_DMbest, Vcmb, logWmxi and e_logWmxi coordinates with their actual source rows. All 628 selected IDs, 354 undefined rows, eight mark counts, 622 full groups and 269 observed groups (264 singleton, 5 pair) agree.",
+    "Narrow tests executed once with bytecode/cache writing disabled: 3 passed in 6.73s.",
+    "Independent symmetric-eigen whitening plus SVD least squares reproduced all seven coefficients, RSS, both scale estimates, all 274 stored fitted means/residuals, normalized SciPy full-density log likelihood, the exact t interval and the actual residual statistic within the contract tolerance. Maximum coefficient difference was 2.1893598045608087e-13.",
+    "Independent +137.125 mag common-zero-point shift moved only the intercept and preserved all residuals/contrast to 1e-10. Minimum V eigenvalue was 0.04303732937852346 mag^2; no jitter or row removal is present.",
+    "Static examination of fit.py lines 196-207 confirms one common calibration scalar and one draw for each of the 622 full selected groups per mock, restricted to the 274 observed coordinates; no duplicate linewidth/calibration/PV component and no missing-distance imputation occurs.",
+    "Stored 4096-draw count 3890 lies in independently recomputed 3854..3926. Independently recomputed exact binomial interval is [0.9425643383185035,0.9561991915878647]. The 4096 simulations were not independently repeated.",
+    "The actual residual diagnostic and flagged PGC53938 reproduce independently. The first zero-leverage guard failure is preserved; the repair excludes that coordinate only from the diagnostic denominator while retaining it in the fit.",
+    "Packaging 8ece2022.. to dddb9635.. changes only the FIRST_FAILURE.txt manifest entry; the prior manifest and failure summary hashes match their archived identities. Numerical evidence was not changed by that reseal.",
+    "PNG inspected visually and PDF text inspected read-only. Both carry the stored interval, counts and unfavorable actual diagnostic. plot.py reads RESULT.json and ROWS.csv without refitting, and both figures are sealed by the reviewed manifest."
+  ],
+  "mathematics_audit": {
+    "assumptions": "Fixed selected membership, marks, measured covariates, released marginal errors and group partition; Gaussian response with mean X beta and total covariance sigma^2 V, with sigma>0. This is an authored conditional law.",
+    "units": "DMbest and fitted contrasts in mag; log10 velocity and measured width in dex; V in mag^2; sigma dimensionless. Vcmb remains a positive CMB-frame covariate, not a converted distance or inferred H0.",
+    "normalization": "V is strictly positive definite because every diagonal independent term is at least 0.75 s_i^2. With y=X beta+sigma Lz, the sigma^274 det(L) Jacobian cancels the Gaussian normalization. The saved 1D and 2D checks match the analytic formula; no 274-dimensional numerical integral is claimed.",
+    "exact_t": "Whitening makes coefficient projection and residual projection orthogonal Gaussian components. Thus beta_hat and RSS are independent, RSS/sigma^2 is chi-square_267, and the width contrast standardized with RSS/267 is t_267. Validity is conditional on the authored Gaussian law; observed law criticism prevents empirical survey coverage claims.",
+    "calibration_budget": "diag(s_i^2-a^2)+a^2 11T preserves the released s_i^2 marginal diagonal before the one additional group term. This verifies accounting within the declared law, not the true source covariance decomposition.",
+    "zero_point": "Since 1 lies in the design span as the intercept, adding any real common offset changes only that coefficient in exact arithmetic. Band-dependent or slope-dependent calibration is not controlled by this property.",
+    "limits": "Rank is 7 and nu is 267; all finite positive-source and Cholesky gates hold. The singleton outcome rows remain in the design. One whitened coordinate has zero residual leverage and is flagged as required."
+  },
+  "claim_audit": {
+    "owner": "htt",
+    "claim_tier": "C0_AUTHORED_CONDITIONAL_DIAGNOSTIC",
+    "transfer_source": "none",
+    "safe_claims": [
+      "actual selected-cohort conditional fit executed",
+      "conditional-law normalization and t construction checked",
+      "stored mock coverage is compatible with nominal conditional coverage",
+      "actual residual diagnostic criticizes the adopted law"
+    ],
+    "forbidden_drift_detected": false,
+    "disposition": "No candidate change required for scoped acceptance. Preserve original physical HOLD and retained poor-fit diagnostic in every downstream use.",
+    "plot_provenance": "Owner, tier and conditional diagnostic label are on the figure; the companion report and sealed manifest provide transfer, null, covariance, allowed-use and forbidden-use fields."
+  },
+  "primary_sources": [
+    {
+      "url": "https://arxiv.org/html/2009.00733#A3",
+      "title": "Kourkchi et al., Cosmicflows-4 Tully-Fisher catalog",
+      "location": "Appendix C; Section III.4",
+      "finding": "Appendix C includes measurement, linewidth, calibration-fit and adjustment-relation uncertainty in modulus errors, while separately discussing TFR scatter. Section III.4 uses Hubble trends for regularization. These support the no-duplicate-error and no-independent-H0-validation qualifications."
+    },
+    {
+      "url": "https://arxiv.org/html/2101.01515",
+      "title": "Dupuy et al., Toward Cosmicflows-4: The HI data catalog",
+      "location": "Sections 3.3.1-3.3.2",
+      "finding": "The source describes changing target lists, visual screening and adaptive observations, supporting fixed-cohort conditioning without identifying the parent inclusion law."
+    }
+  ],
+  "evidence_read": [
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/CONTRACT.json",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/ARTIFACT_MANIFEST.json",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/RETURN.json",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/RAW_RECEIPT.json",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/fit.py",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/test_fit.py",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/plot.py",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/RESULT.json",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/ROWS.csv",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/REPORT.md",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/FIRST_FAILURE.txt",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/PACKAGING_HISTORY.json",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/ARTIFACT_MANIFEST.json",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/distance_factor.py",
+    "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/EXTRACTION.json",
+    "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/selection_model/REPORT.md",
+    ".agent-harness/runtime/r23-continuous/DISTANCE_RESEARCH_RAW.json"
+  ],
+  "skills_applied": [
+    "physmath-research-loop R6/C9",
+    "htt-physics-math-audit",
+    "htt-statistical-hardening",
+    "htt-scientific-code-validation",
+    "htt-claim-firewall",
+    "htt-claim-provenance-ledger",
+    "htt-plot-provenance"
+  ],
+  "raw_validation": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python -m pytest -p no:cacheprovider -q docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/test_fit.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "chunk_id": "10694e",
+      "wall_time_seconds": 8.779830365,
+      "exit_code": 0,
+      "original_token_count": 25,
+      "output": "...                                                                      [100%]\n3 passed in 6.73s\n"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python - <<'PY'\nimport csv,json,hashlib,sys\nfrom pathlib import Path\nfrom collections import Counter\nimport numpy as np\nimport scipy\nfrom scipy import stats\nfrom scipy.linalg import cholesky\nroot=Path.cwd()\np=root/'docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE'\nd=p/'conditional_fit'\nsha=lambda q:hashlib.sha256(q.read_bytes()).hexdigest()\nexpected='dddb9635d8d761aa0ac194f93546f86da61f03a5ac6598f1e9df71843bd8c0ff'\nassert sha(d/'ARTIFACT_MANIFEST.json')==expected\nfor base in [p,d]:\n    manifest=json.loads((base/'ARTIFACT_MANIFEST.json').read_text())\n    for name,rec in manifest['files'].items():\n        q=base/name\n        assert sha(q)==rec['sha256'],str(q)\n        assert q.stat().st_size==rec['bytes'],str(q)\nassert sha(d/'CONTRACT.json')==sha(root/'.agent-harness/runtime/r23-continuous/DISTANCE_RESEARCH_RAW.json')\nold=json.loads((d/'PRE_RECEIPT_RESEAL_MANIFEST.json').read_text())\nnew=json.loads((d/'ARTIFACT_MANIFEST.json').read_text())\nchanged=[k for k in new['files'] if new['files'][k]!=old['files'][k]]\nassert changed==['FIRST_FAILURE.txt']\nhistory=json.loads((d/'PACKAGING_HISTORY.json').read_text())\nassert sha(d/history['initial_manifest'])==history['initial_manifest_sha256']\nassert sha(d/history['initial_failure_summary'])==history['initial_failure_summary_sha256']\nassert sha(d/history['expanded_full_failure'])==history['expanded_full_failure_sha256']\nup=Path('/mnt/extdrive/workdir/htt_open_data/cf4/upstream_20261018')\nsource_refs=json.loads((p/'EXTRACTION.json').read_text())['source_sha256']\nfor fn,h in source_refs.items(): assert sha(Path(fn))==h,fn\nledger=list(csv.DictReader(Path('/mnt/extdrive/workdir/htt_open_data/cf4/D02_HI_CF4_20261018/TARGET_JOIN_AND_OOF.csv').open()))\nraw=list(csv.DictReader((p/'RELEASED_ROWS.csv').open()))\nout=list(csv.DictReader((d/'ROWS.csv').open()))\nassert len(ledger)==628 and len(raw)==len(out)==274\nassert [x['pgc'] for x in raw]==[x['pgc'] for x in out]\nids={x['pgc'] for x in raw}\nassert len(ids)==274 and len({x['pgc'] for x in ledger}-ids)==354\n# Independently parse source fixed-width coordinates from the read release schema.\nwidth_lines={int(x[:7]):x for x in (up/'table1.dat').read_text().splitlines()}\ndm_lines={int(x[:7]):x for x in (up/'table4.dat').read_text().splitlines()}\nfor x in raw:\n    z=dm_lines[int(x['pgc'])]; w=width_lines[int(x['pgc'])]\n    assert float(x['DMbest_mag'])==float(z[26:31])\n    assert float(x['e_DMbest_mag'])==float(z[32:36])\n    assert float(x['vcmb_km_s'])==float(z[14:19])\n    assert float(x['logWmxi'])==float(w[54:59])\n    assert float(x['e_logWmxi'])==float(w[60:65])\ngroups={x['pgc']:('CF4:'+x['CF4_group'] if x['CF4_group'] else 'UNASSIGNED_PGC:'+x['pgc']) for x in ledger}\nlabels=[groups[x['pgc']] for x in raw]\ngc=Counter(labels)\nassert len(set(groups.values()))==622 and len(gc)==269\nassert Counter(gc.values())=={1:264,2:5}\noutcomes=['accepted','other_quality','confused','nondetection']\nmarks=[[sum(x['outcome']==o and x['pgc'] not in ids for x in ledger),sum(x['outcome']==o and x['pgc'] in ids for x in ledger)] for o in outcomes]\nassert marks==[[116,269],[21,1],[26,3],[191,1]]\narr=lambda f:np.array([float(x[f]) for x in raw])\ny=arr('DMbest_mag'); s=arr('e_DMbest_mag')\nz=np.column_stack([np.log10(arr('vcmb_km_s')),arr('logWmxi'),arr('e_logWmxi')])\nX=np.column_stack([np.ones(274),z-z.mean(0),*[np.array([x['outcome']==o for x in raw],float) for o in outcomes[1:]]])\na=s.min()/2; b=np.median(s)\nsame_group=np.equal.outer(labels,labels).astype(float)\nV=np.diag(s*s-a*a)+a*a+b*b*same_group\nnp.testing.assert_allclose(np.diag(V)-b*b,s*s,rtol=1e-12,atol=1e-14)\nev,U=np.linalg.eigh(V)\nassert min(ev)>0\n# Symmetric-eigen whitening and SVD least squares are independent of candidate QR/triangular fit.\nW=(U/np.sqrt(ev))@U.T\nZ=W@X; wy=W@y\nbeta,_,rank,_=np.linalg.lstsq(Z,wy,rcond=None)\nassert rank==7\nres=y-X@beta\nrss=float(np.sum((W@res)**2)); sigma2=rss/274; s2=rss/267\nP=np.linalg.pinv(Z)\nse=float(.1*np.sqrt(s2*np.sum(P[2]**2)))\ndelta=float(.1*beta[2])\nci=delta+np.array([-1,1])*stats.t.ppf(.975,267)*se\nr=json.loads((d/'RESULT.json').read_text())\nnp.testing.assert_allclose(beta,r['fit']['coefficients'],rtol=1e-10,atol=1e-10)\nnp.testing.assert_allclose(ci,r['fit']['delta_t95_interval_mag'],rtol=1e-10,atol=1e-10)\nnp.testing.assert_allclose(rss,r['fit']['rss_whitened'],rtol=1e-10,atol=1e-10)\nloglike=float(stats.multivariate_normal.logpdf(y,mean=X@beta,cov=sigma2*V))\nnp.testing.assert_allclose(loglike,r['conditional_distance_log_likelihood_at_ml'],rtol=1e-10,atol=1e-10)\nshift=137.125\nbeta_shift=np.linalg.lstsq(Z,W@(y+shift),rcond=None)[0]\nnp.testing.assert_allclose(beta_shift-beta,np.array([shift,0,0,0,0,0,0]),rtol=1e-10,atol=1e-10)\nnp.testing.assert_allclose(y+shift-X@beta_shift,res,rtol=1e-10,atol=1e-10)\nL=cholesky(V,lower=True)\nCX=np.linalg.solve(L,X); cr=np.linalg.solve(L,res)\nHdiag=np.sum(CX*np.linalg.pinv(CX).T,axis=1)\nmask=1-Hdiag>1e-12\nT=float(np.max(abs(cr[mask])/np.sqrt(s2*(1-Hdiag[mask]))))\nnp.testing.assert_allclose(T,r['diagnostic']['T_actual'],rtol=1e-10,atol=1e-10)\nflagged=[raw[i]['pgc'] for i in np.flatnonzero(~mask)]\nassert flagged==r['diagnostic']['zero_residual_leverage_PGCs']==['53938']\nfor i,row in enumerate(out):\n    for f,v in [('fitted_mean_mag',(X@beta)[i]),('residual_mag',res[i]),('whitened_residual',cr[i])]:\n        np.testing.assert_allclose(float(row[f]),v,rtol=1e-10,atol=1e-10)\n    assert row['group_id']==groups[row['pgc']]\nlow=int(stats.binom.ppf(.005,4096,.95)); high=int(stats.binom.ppf(.995,4096,.95))\nassert [low,high]==r['mock']['acceptance_count_range']\nassert low<=r['mock']['covered']<=high\nbinci=list(stats.binomtest(3890,4096).proportion_ci(.95,method='exact'))\nnp.testing.assert_allclose(binci,r['mock']['binomial_exact_95_interval'],rtol=1e-12,atol=1e-12)\nassert r['diagnostic']['p_plus_one']==(1+3)/(1+4096)\nassert r['diagnostic']['conditional_law_criticized'] is True\nassert r['H02_S02']=='HOLD' and r['physical_admission']=='HOLD'\nprint(json.dumps({'status':'PASS','candidate_sha256':sha(d/'ARTIFACT_MANIFEST.json'),'sealed_files_verified':11,\n'initial_manifest_files_verified':len(json.loads((p/'ARTIFACT_MANIFEST.json').read_text())['files']),\n'four_source_identities_and_all_released_source_fields':'PASS','protected_initial_receipt_sha256':sha(p/'RAW_RECEIPT.json'),\n'contract_matches_research_raw':True,'packaging_changed_entries':changed,'cohort_counts':[628,274,354],\n'group_counts':[622,269,264,5],'mark_counts':marks,'rank':int(rank),'nu':267,\n'minimum_V_eigenvalue':float(min(ev)),'beta':beta.tolist(),\n'max_beta_difference':float(max(abs(beta-np.array(r['fit']['coefficients'])))),\n'rss':rss,'sigma2_ml':sigma2,'s2_interval':s2,'loglike':loglike,'delta':delta,'delta_se':se,'ci95':ci.tolist(),\n'zero_point_shift_test_mag':shift,'actual_T':T,'zero_residual_leverage_PGCs':flagged,\n'binomial_count_range':[low,high],'binomial_exact95':binci,'diagnostic_p':r['diagnostic']['p_plus_one'],\n'mocks_reexecuted':False,'all_274_saved_row_fits_reconciled':True,'python':sys.version,'numpy':np.__version__,'scipy':scipy.__version__},indent=2))\n\nPY",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "chunk_id": "e73dd8",
+      "wall_time_seconds": 4.585843948,
+      "exit_code": 0,
+      "original_token_count": 442,
+      "output": "{\n  \"status\": \"PASS\",\n  \"candidate_sha256\": \"dddb9635d8d761aa0ac194f93546f86da61f03a5ac6598f1e9df71843bd8c0ff\",\n  \"sealed_files_verified\": 11,\n  \"initial_manifest_files_verified\": 7,\n  \"four_source_identities_and_all_released_source_fields\": \"PASS\",\n  \"protected_initial_receipt_sha256\": \"eed84047930dd5ba2dd2da08f50a875b6eaecaaf3cb6e3deddbbcd22774e43e6\",\n  \"contract_matches_research_raw\": true,\n  \"packaging_changed_entries\": [\n    \"FIRST_FAILURE.txt\"\n  ],\n  \"cohort_counts\": [\n    628,\n    274,\n    354\n  ],\n  \"group_counts\": [\n    622,\n    269,\n    264,\n    5\n  ],\n  \"mark_counts\": [\n    [\n      116,\n      269\n    ],\n    [\n      21,\n      1\n    ],\n    [\n      26,\n      3\n    ],\n    [\n      191,\n      1\n    ]\n  ],\n  \"rank\": 7,\n  \"nu\": 267,\n  \"minimum_V_eigenvalue\": 0.04303732937852346,\n  \"beta\": [\n    34.693026402957464,\n    4.146570389948833,\n    0.8286587624571284,\n    1.5778429440628015,\n    0.19902526285726996,\n    -0.4383486378167518,\n    0.5302185485433274\n  ],\n  \"max_beta_difference\": 2.1893598045608087e-13,\n  \"rss\": 353.3152072342058,\n  \"sigma2_ml\": 1.2894715592489263,\n  \"s2_interval\": 1.3232779297161266,\n  \"loglike\": -182.86875413130662,\n  \"delta\": 0.08286587624571284,\n  \"delta_se\": 0.03102043932204945,\n  \"ci95\": [\n    0.021790086201150992,\n    0.1439416662902747\n  ],\n  \"zero_point_shift_test_mag\": 137.125,\n  \"actual_T\": 4.555321823822708,\n  \"zero_residual_leverage_PGCs\": [\n    \"53938\"\n  ],\n  \"binomial_count_range\": [\n    3854,\n    3926\n  ],\n  \"binomial_exact95\": [\n    0.9425643383185035,\n    0.9561991915878647\n  ],\n  \"diagnostic_p\": 0.000976324139614352,\n  \"mocks_reexecuted\": false,\n  \"all_274_saved_row_fits_reconciled\": true,\n  \"python\": \"3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]\",\n  \"numpy\": \"2.5.4\",\n  \"scipy\": \"1.18.1\"\n}\n"
+    },
+    {
+      "command": "pdftotext docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/CONDITIONAL_DIAGNOSTIC.pdf -",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "chunk_id": "caea88",
+      "wall_time_seconds": 0.754899669,
+      "exit_code": 0,
+      "original_token_count": 144,
+      "output": "Actual minus fitted DMbest (mag)\n\nR23-DISTANCE \u2022 selected-cohort conditional diagnostic (HTT C0)\n274 released distances; authored law\nGLS conditional t interval, 95%\n1\n0\n\n\u22121\n\u22122\n\u22123\n\u22124\naccepted (269)\nother_quality (1)\nconfused (3)\nnondetection (1)\n\n\u22125\n\u22126\n\n30\n\n31\n32\n33\n34\nFitted conditional mean DMbest (mag)\n\n35\n\nMock coverage: 3890/4096 (conditional PASS)\nActual residual diagnostic: T=4.555, p=0.0009763\nAdopted conditional law criticized by actual rows\n\n36 0.00\n\n0.02\n0.04\n0.06\n0.08\n0.10\n0.12\n0.14\nConditional mean contrast for +0.1 dex measured width (mag)\n\n\f"
+    }
+  ],
+  "review_limits": "No full campaign, historical pipeline, or 4096-mock replay. Independent numerical reference plus one narrow test pass; recorded author simulation count checked against inspected deterministic algorithm and binomial calculations.",
+  "workspace": {
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "branch": "research/htt-open-input-theory-20261018",
+    "head": "9ef8976dbf488ae1d5429f7c24f45d5ef1899224",
+    "preexisting_dirty_state_preserved": true
+  },
+  "next_executable_checkpoint": "Controller may record the authored conditional experiment as reviewed, retain original R23-DISTANCE/H02/S02 physical holds, and continue independent ready work. A physical/model repair needs an evidence-based new bounded model/source contract; do not tune this preserved result.",
+  "no_dispatch_claim": true,
+  "no_repository_writes": true,
+  "no_candidate_edits": true,
+  "no_publication": true,
+  "utc_recorded": "2026-10-23T01:40:47.717255+00:00"
+}
