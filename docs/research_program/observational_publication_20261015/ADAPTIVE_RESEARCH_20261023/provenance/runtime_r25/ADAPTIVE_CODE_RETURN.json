@@ -1,0 +1,204 @@
+{
+  "task": "R25 bounded adaptive controller implementation",
+  "base_commit": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "branch": "research/htt-adaptive-methods-20261023",
+  "requested_executor": {
+    "model": "gpt-5.6-terra",
+    "effort": "medium",
+    "route": "general_code"
+  },
+  "transport_selected": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "classification": "TRANSPORT_MODEL_UNAVAILABLE"
+  },
+  "observed_runtime": "UNKNOWN",
+  "contract": "Astra internal planning contract: opt-in adaptive state outside frozen campaign; stable nonplanning fingerprint; read-only routed discovery -> executable append-frontier proposal or scoped no-action. Standard native ack/record with actual agent identity+raw receipt. Planning never qualifies scientific products. No old task/campaign/packet/ultra changes.",
+  "paths": {
+    "scripts/codex_harness/research_controller.py": "3f090ab4eb6f25f58607d1495715c3b3bf02fb5efdcefa6142eca5e1b504719c",
+    "scripts/codex_harness/test_research_controller_adaptive.py": "bd4eff453d91025618eaa6da000ef0bfdb67a70e88d1034eb33f4fb74bd76f10",
+    "scripts/codex_harness/test_context_isolation.py": "d5a6099ed3fc42309578efe8cf2e8333de7e350b375ea0a0eb799c751b2ea6ad",
+    "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md": "6117e40bf153772ac8d676568e0cac0c98c27d90792c64b2a9f45ba60a1621b1",
+    ".agents/skills/htt-dag-orchestrator/SKILL.md": "d7d2dead1524bb62fb7746c23dbe12cae68e763752954f0f3ae1db0859820d4b",
+    ".agents/skills/htt-harness-engineering/SKILL.md": "8027d8d7ab42fb9cb306d06622b3194ca24eac850f763f0d4f64c9fcbbe67f39",
+    ".agents/skills/htt-scientific-code-validation/SKILL.md": "a5a49d3844594a01f391ce06026488b38df2e10aa208b065c2835f2abfc72cdd",
+    ".agents/skills/htt-xqpi-fg-formalism/SKILL.md": "11458a2d3d414f9efed8b66b7a763082dfd11c0324c7f187a4f21aa0d15d5e98",
+    ".agent-harness/context/CURRENT_SYMBOLS.md": "e9c958e056e96934b112d57108cdbf0fe8d4a74716e4147e1694c257b3efcdfa",
+    ".agent-harness/context/CURRENT_CONTEXT_INDEX.json": "d7e834580fc31c6fa00b2df0926cef6821991b125fb94b1a648ac4f760b4ad7f",
+    ".agent-harness/generated/CURRENT_CONTEXT_PACK.md": "4303ad1d54770eb824b5274ec6a4126c98fed22a1c01e57c55d959fd75b0ac9a",
+    ".agent-harness/scripts/_harness.py": "87bf83770eea508c77fb68a2de541e398b5a1cc4dbef565263f5905db42cc042",
+    ".agent-harness/scripts/build_context_pack.py": "fd4fae901f36129cbfdcef2c2a67ebb9d1a40b1074f7ce7ffa07f4484ccb322e",
+    ".codex/hooks/session_start_context.py": "6d761b6163726d1a6b04182c9f3d60a235f8d4b596f410b1f26d3812b5068d50",
+    "scripts/codex_harness/test_research_controller_frontier.py": "641658fb906e344123bc88f042f25164df802a13f92ffe3912e017033d893386"
+  },
+  "commands": [
+    {
+      "command": "python -m unittest discover -s scripts/codex_harness -p 'test_research_controller*.py' -q",
+      "result": "49 tests PASS;1 historical fixture skip",
+      "raw": "controller_existing_tests.log"
+    },
+    {
+      "command": "python -m unittest discover -s scripts/codex_harness -p 'test_research_controller*.py' -v",
+      "result": "55 tests PASS;1 historical fixture skip",
+      "raw": "adaptive_tests_first.log"
+    },
+    {
+      "command": "python -m unittest discover -s scripts/codex_harness -p 'test_*research*.py' -v",
+      "result": "67 tests PASS;1 historical fixture skip",
+      "raw": "adaptive_tests_candidate.log"
+    },
+    {
+      "command": "python -m py_compile scripts/codex_harness/research_controller.py",
+      "result": "PASS"
+    },
+    {
+      "command": "git diff --check",
+      "result": "PASS"
+    },
+    {
+      "command": "python .agent-harness/scripts/build_context_pack.py --current",
+      "result": "PASS current context only"
+    },
+    {
+      "command": "Load controller at frozen10f3 into disposable single-file module; run four exact blind regressions",
+      "result": "EXPECTED_RED_BASELINE:4 tests;2failures+2errors",
+      "raw": "as_shipped_blind_counterexamples.log"
+    },
+    {
+      "command": "python -m unittest discover -s scripts/codex_harness -p 'test_*research*.py' -v",
+      "result": "78 tests PASS;1 historical fixture skip",
+      "raw": "adaptive_tests_final.log"
+    },
+    {
+      "command": "python -m unittest discover -s scripts/codex_harness -p 'test_context_isolation.py' -v",
+      "result": "2 tests PASS; frozen and current packs valid",
+      "raw": "context_isolation_tests_final.log"
+    },
+    {
+      "command": "Four focused new regressions loaded against preserved first candidate single-file module",
+      "result": "EXPECTED_RED_FIRST_CANDIDATE:4 tests;3failures+1error",
+      "raw": "targeted_red_first_candidate.log"
+    },
+    {
+      "command": "python -m unittest discover -s scripts/codex_harness -p 'test_*research*.py' -v",
+      "result": "First targeted run:78tests;2errors from newly illegal old fixtures; preserved before correction",
+      "raw": "targeted_repair_first_tests.log"
+    },
+    {
+      "command": "python -m unittest discover -s scripts/codex_harness -p 'test_*research*.py' -v",
+      "result": "First new successor test selected another fair ready task; corrected fixture scheduling only",
+      "raw": "targeted_repair_candidate_tests.log"
+    },
+    {
+      "command": "python -m unittest discover -s scripts/codex_harness -p 'test_*research*.py' -v",
+      "result": "88 tests PASS;1 historical fixture skip",
+      "raw": "targeted_repair_final_tests_03.log"
+    },
+    {
+      "command": "python -m unittest discover -s scripts/codex_harness -p 'test_context_isolation.py' -v",
+      "result": "2 tests PASS",
+      "raw": "targeted_repair_context_tests_03.log"
+    },
+    {
+      "command": "python -m py_compile controller, hook, context renderer and builder; git diff --check",
+      "result": "PASS"
+    },
+    {
+      "command": "python /tmp/r25-final-blind-4ef4136f-counterexample.py on preserved 4ef4136f source before repair",
+      "result": "AUTHORIZATION_REJECTED for unspent I2; raw first failure preserved",
+      "raw": "issue_attribution_first_failure.log"
+    },
+    {
+      "command": "python /tmp/r25-final-blind-4ef4136f-counterexample.py after bounded repair",
+      "result": "AUTHORIZATION_ACCEPTED; old-budget remains spent; new-budget ultra count0",
+      "raw": "issue_attribution_repaired_reproduction.log"
+    },
+    {
+      "command": "python -m unittest discover -s scripts/codex_harness -p 'test_*research*.py' -v",
+      "result": "89 tests PASS;1 historical fixture skip",
+      "raw": "issue_attribution_regression_tests.log"
+    },
+    {
+      "command": "python -m unittest discover -s scripts/codex_harness -p 'test_context_isolation.py' -v",
+      "result": "2 tests PASS",
+      "raw": "issue_attribution_context_tests.log"
+    },
+    {
+      "command": "python -m py_compile controller and adaptive tests; git diff --check",
+      "result": "PASS"
+    }
+  ],
+  "first_reproduced_failure": {
+    "classification": "fixed-ready-empty controller stall",
+    "evidence": "adaptive_stall_reproduction.json",
+    "before": "HOLD_UNRESOLVED_BRANCHES",
+    "after": "read-only discovery native packet (not dispatch)",
+    "preexisting_keys_preserved": true
+  },
+  "production_state_written": false,
+  "publication_performed": false,
+  "hook_changed": true,
+  "live_activation": "NOT_PERFORMED; source and fresh-session fixture only; no active pointer installed",
+  "scientific_admission": "NOT_GRANTED",
+  "independent_candidate_review": "REQUIRED",
+  "pending": "Frozen minimally repaired attribution candidate: fully blind reviewer targeted closeout REQUIRED, then actual native scientific continuation. No tests/source imply live activation/scientific admission.",
+  "candidate_identity": "4c3ff07ac861ad17334c5d6418d4ff21bf032c13f9eee9364e33dcaf9e329c45",
+  "changes": [
+    "Opt-in routed read-only adaptive discovery outside frozen campaign, stable nonplanning fingerprint and scoped no-action checkpoint",
+    "Actual phase-aware followup dispatch acknowledgement before results, later strict new-candidate/raw checks; completed receipt import remains compatible",
+    "Cross-frontier typed-action dedup ignores locator and wrapper metadata; new scientific sources require typed before/after meaning",
+    "Distinct counterexample deterministic closeout retains cumulative history and consumed ultra",
+    "Append-only first/distinct repair issue authorization consumes already-recorded actual Astra research decision, binding origin, typed delta, unchanged claim target and cumulative budget; no extra review ladder",
+    "Effective repair identity retains frozen approved IDs; future extension packets seal authorization identity",
+    "Read-only explicit active-pointer startup hint; current-only renderer correction with historical default untouched",
+    "Correct current native skills and full tensor/joint-law/pushforward/occupancy semantics"
+  ],
+  "historical_context_preserved": {
+    ".agent-harness/context/CONTEXT_INDEX.json": true,
+    ".agent-harness/generated/CONTEXT_PACK.md": true
+  },
+  "contract_limits": [
+    "Typed structural delta permits proposal, not machine proof of semantic novelty",
+    "Researcher assesses source adequacy and distinct issue; independent result review still required",
+    "URL is a locator, not evidence of successful retrieval",
+    "No production campaign/pointer/state writes, commit, push, native worker dispatch, solver or ODE performed by this coding agent"
+  ],
+  "previous_candidate_preserved": {
+    "identity": "ec19f5cab0f2c326f6e4a9223470672a1f4360d93c054c2bf00c34cda641577f",
+    "path": "code_first_candidate/",
+    "source_paths": 14,
+    "receipt_and_raw_logs": true
+  },
+  "targeted_closeout": {
+    "findings": [
+      "P1 cross-origin authorization borrowing",
+      "P1 partial no-action global suppression",
+      "P1 same-batch alias replay",
+      "P2 refused discovery transport recovery"
+    ],
+    "fixes": [
+      "Exact registered repair origin/issue/claim/delta validation at resume,append,reservation,planned escalation replay and ACK; explicit successors bound in the same actual Astra decision to full spec and issue/target/delta; actual new unrelated defects retained without funding",
+      "No-action must cover the exact eligible unresolved branch set frozen into the packet",
+      "Seen action signatures updated per row before atomic append; alternative-method fixture now has distinct methods",
+      "Explicit restore-discovery consumes an actual exact transport restoration receipt for a refused unacknowledged packet/fingerprint; preserves refusal/science, new unlaunched packet identity; exhausted/prohibited transport cannot be restored or bypassed with changed science"
+    ],
+    "new_ultra_performed": false,
+    "production_state_or_pointer_written": false,
+    "required_next": "Fresh independent targeted closeout, then real native scientific consumer"
+  },
+  "preserved_second_candidate": {
+    "identity": "4ef4136f9cf2ea2d1faba10864f29487e78161103a9cdb95b4bd7521a2b7fc25",
+    "path": "code_second_candidate/",
+    "source_paths": 15,
+    "receipt_and_raw_logs": true
+  },
+  "issue_attribution_closeout": {
+    "finding": "Task-wide attribution incorrectly charged every future defect to a historically budgeted task allowance",
+    "fix": "Attribute only registered operative issue approvals and exact reservation/expenditure issue bindings; historical receipt resolves its escalation assignment/preceding history; preserve all old IDs/receipts. New existing reservation/expenditure receipts retain operative issue identity. Later I2 is not charged to I1.",
+    "regression": "Same A: I1 covariance actual simulated ultra acknowledgement consumed, I2 tensor matrix [[1,0],[0,0]] expected rank1 observed0 with no expenditures; actual simulated fresh discovery decision; new I2 first authorization accepted; exact I1 sibling alias rejected atomically; historical receipt without optional field retains I1 attribution",
+    "skill": "Align htt-harness-engineering with distinct-counterexample bounded closeouts, no repeated-counterexample resets",
+    "new_ultra_performed": false,
+    "production_state_or_pointer_written": false,
+    "required_next": "Same fully blind reviewer targeted closeout on this exact source candidate, then live actual scientific consumer"
+  }
+}

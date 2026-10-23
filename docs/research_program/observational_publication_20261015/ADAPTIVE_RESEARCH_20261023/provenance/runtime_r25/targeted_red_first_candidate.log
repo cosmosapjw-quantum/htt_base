@@ -1,0 +1,43 @@
+test_registered_repair_cannot_be_borrowed_by_other_origin_resume_or_reservation (test_research_controller_adaptive.BlindRepairTests.test_registered_repair_cannot_be_borrowed_by_other_origin_resume_or_reservation) ... FAIL
+test_no_action_cannot_suppress_unexamined_assigned_branch (test_research_controller_adaptive.BlindRepairTests.test_no_action_cannot_suppress_unexamined_assigned_branch) ... FAIL
+test_same_batch_aliases_rejected_atomically (test_research_controller_adaptive.BlindRepairTests.test_same_batch_aliases_rejected_atomically) ... FAIL
+test_refused_discovery_restores_exact_transport_without_science_replay (test_research_controller_adaptive.BlindRepairTests.test_refused_discovery_restores_exact_transport_without_science_replay) ... ERROR
+
+======================================================================
+ERROR: test_refused_discovery_restores_exact_transport_without_science_replay (test_research_controller_adaptive.BlindRepairTests.test_refused_discovery_restores_exact_transport_without_science_replay)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/test_research_controller_adaptive.py", line 544, in test_refused_discovery_restores_exact_transport_without_science_replay
+    rc.restore_discovery(state, packet['packet_id'], str(delta))
+    ^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'first_candidate_controller' has no attribute 'restore_discovery'
+
+======================================================================
+FAIL: test_registered_repair_cannot_be_borrowed_by_other_origin_resume_or_reservation (test_research_controller_adaptive.BlindRepairTests.test_registered_repair_cannot_be_borrowed_by_other_origin_resume_or_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/test_research_controller_adaptive.py", line 419, in test_registered_repair_cannot_be_borrowed_by_other_origin_resume_or_reservation
+    with self.assertRaisesRegex(rc.ControllerError, 'origin/successor'):
+AssertionError: ControllerError not raised
+
+======================================================================
+FAIL: test_no_action_cannot_suppress_unexamined_assigned_branch (test_research_controller_adaptive.BlindRepairTests.test_no_action_cannot_suppress_unexamined_assigned_branch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/test_research_controller_adaptive.py", line 512, in test_no_action_cannot_suppress_unexamined_assigned_branch
+    with self.assertRaisesRegex(rc.ControllerError, 'every exact assigned eligible branch'):
+AssertionError: ControllerError not raised
+
+======================================================================
+FAIL: test_same_batch_aliases_rejected_atomically (test_research_controller_adaptive.BlindRepairTests.test_same_batch_aliases_rejected_atomically)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/test_research_controller_adaptive.py", line 492, in test_same_batch_aliases_rejected_atomically
+    with self.assertRaisesRegex(rc.ControllerError, 'logical research action'):
+AssertionError: ControllerError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.066s
+
+FAILED (failures=3, errors=1)
+EXPECTED_RED_FIRST_CANDIDATE {'tests': 4, 'failures': 3, 'errors': 1}

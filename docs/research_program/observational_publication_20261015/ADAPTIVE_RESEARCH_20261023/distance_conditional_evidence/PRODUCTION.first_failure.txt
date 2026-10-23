@@ -1,0 +1,10 @@
+Command: timeout 60s /usr/bin/time -v -o PRODUCTION.time env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 python compute.py
+Exit: 1
+Elapsed wall time observed by host: 6.939317037 s
+Traceback:
+  File "compute.py", line 252, in run
+    nf = null_supremum(r, Z, L, S)
+  File "compute.py", line 175, in null_supremum
+    "normal_equation_scaled": normal, "qr_rss": float(Rqr),
+TypeError: only 0-dimensional arrays can be converted to Python scalars
+Classification: mechanical use of scipy.linalg.lstsq(gelsy); its residual return is empty.

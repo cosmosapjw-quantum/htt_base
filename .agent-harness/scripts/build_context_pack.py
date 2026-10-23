@@ -41,6 +41,7 @@ def main() -> None:
         str(index.get("built_at", "")),
         pack_entries,
         repo,
+        current=args.current,
     )
     unchanged = (
         index.get("context_version") == version
@@ -65,6 +66,7 @@ def main() -> None:
             index["built_at"],
             pack_entries,
             repo,
+            current=args.current,
         ),
         encoding="utf-8",
     )

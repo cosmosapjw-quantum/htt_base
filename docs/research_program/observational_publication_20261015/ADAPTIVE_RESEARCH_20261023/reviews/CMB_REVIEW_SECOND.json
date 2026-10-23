@@ -1,0 +1,48 @@
+{
+  "task_id": "R25-CMB-CONDITIONAL-GRAM",
+  "packet_id": "912cd827705a733280bb7db613db5300e2e9fd4e5d457bb7809fedf2fcf2dcbc",
+  "input_identity": "sha256:46803ac5255eeb92f0aa72242a3b9a339bb380c5278a7b6654f7093e80fa153b",
+  "candidate_identity": "sha256:ec7f5fa63ffd0c5e01e946c989c1e7443af47d57f961dbc2f3054b63838a9050",
+  "reviewer": "/root/rc_912cd827705a7332",
+  "requested_model_effort": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "outcome": "blocker",
+  "verdict": "HOLD",
+  "persistence": "Host transcription of native read-only reviewer response, including explicit input identity correction",
+  "finding": {
+    "id": "R25-CMB-F3",
+    "severity": "P1",
+    "path": "cmb_conditional_gram/compute.py:112-115",
+    "defect": "load converts already canonical harmonic12_K_CMB a second time",
+    "source_convention": "(a_l0,sqrt2 Re a_lm,-sqrt2 Im a_lm)",
+    "source_STF_error_K": 0,
+    "candidate_STF_error_K": 2.997213653955644e-07,
+    "relative_Gram_changes": [
+      0.4376058820922353,
+      0.9028344929473754
+    ],
+    "first_correct_statistics": [
+      0.3497507918828861,
+      0.14081773119229218,
+      0.00021866628951079707,
+      0.2561801499231612
+    ],
+    "first_candidate_statistics": [
+      0.7415151649388139,
+      0.13685057888417135,
+      0.0018373539196845261,
+      0.22517124412895995
+    ]
+  },
+  "verified": {
+    "manifest_entries": 56,
+    "targeted_tests": "7 passed, wall 9.72 s, RSS174188 KiB",
+    "independent_fixtures": "PASS; wall6.69s, RSS125300KiB; direct harmonics/STF, representations, shared actions, determinant signs, rank/CP/Pi/ties/support",
+    "previous_sampler_rank_findings": "corrected",
+    "figure": "inspected, affected by source carrier error",
+    "production_rerun": false,
+    "reviewer_writes": false
+  },
+  "repair": "Consume source canonical coordinates directly; inverse-decode only for raw STF projection; assert exact source harmonic equality and retained STF parity across all 60 views. Preserve failed candidate and regenerate affected outputs within cumulative limits.",
+  "scientific_admission": "HOLD"
+}

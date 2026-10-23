@@ -1,0 +1,40 @@
+{
+  "record_type": "host_transcription_of_actual_fresh_blind_read_only_review",
+  "reviewer": "/root/r25_blind_review_only_patch",
+  "requested": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "verdict": "SCOPED_HOLD",
+  "candidate": "4e6cc2dfe79b012a7b80847d98a7c2e58258eb3d5af56c479712bccbc76d8a7c",
+  "findings": [
+    {
+      "priority": "P1",
+      "source": "research_controller.py:709",
+      "defect": "Nested declared input contracts are neither traversed nor sealed",
+      "counterexample": "INPUT.json -> CHILD.json -> running acquisition/data.csv using input_sources at both levels is planned/ACKed; modifying CHILD to introduce overlap after planning also ACKs",
+      "required": "Resolve declared nested contracts within explicit traversal bounds or reject unresolved; seal traversed contracts and revalidate at ACK"
+    },
+    {
+      "priority": "P1",
+      "source": "research_controller.py:718,738,746",
+      "defect": "Candidate label equality is not actual artifact binding",
+      "counterexample": "CANDIDATE.json is sole candidate product; identity=its original SHA256; change value1 to999 after planning; ACK still succeeds",
+      "required": "Validate actual bound candidate manifest/artifact and required product content at planning and ACK"
+    }
+  ],
+  "validation": {
+    "supplied_tests_passed": 9,
+    "independent_falsifiers": "Both gaps reproduced in disposable external fixtures",
+    "command_seconds": [
+      3.67,
+      1.84
+    ],
+    "total_seconds": 5.51,
+    "threads": 1
+  },
+  "unchanged_hashes": {
+    "scripts/codex_harness/research_controller.py": "d3d257ecb24aa30c20062126b1df8adef21b146665fc5734088354c6cc9ff9b0",
+    "scripts/codex_harness/test_research_controller_frontier.py": "8072dc4a7f14b3553244672f457b05418c0b211d2d2a84d3dcf61c63746c6c19",
+    "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md": "414d456c314ff56727f9fde5d5b05105b0f235fe9dd8dc9c1245c085ed78419b"
+  },
+  "activity": "No live state, pointer, process, source or science candidate writes; no scientific review. Source patch remains inactive pending repair/independent closeout."
+}

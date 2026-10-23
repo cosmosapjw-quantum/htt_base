@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py", line 321, in <module>
+    run()
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py", line 268, in run
+    tp=family_score(pilot,observed,law)
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py", line 184, in family_score
+    tails=rank_tail(pilot,values)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py", line 180, in rank_tail
+    return (1+np.moveaxis(np.array([len(p)-np.searchsorted(p[:,j],v[...,j],side='left') for j in range(p.shape[1])]),0,-1))/(len(p)+1)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py", line 1539, in searchsorted
+    return _wrapfunc(a, 'searchsorted', v, side=side, sorter=sorter)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py", line 54, in _wrapfunc
+    return bound(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^
+ValueError: object too deep for desired array

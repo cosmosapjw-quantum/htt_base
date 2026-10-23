@@ -1,0 +1,184 @@
+{
+  "task_id": "R25-K03-DEPTH-BIAS-FRONTIER",
+  "packet_id": "d2a92972cf10b9dade8f0cbcf79318411611709eda8faaa48c77f5988047fdda",
+  "input_identity": "sha256:34e88ac00f25c5cb849152167f93364491a43e88c2c609e98710d42a04fb39d2",
+  "actual_executor": "/root/rc_d2a92972cf10b9da",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "high",
+  "observed_runtime": "UNKNOWN",
+  "branch": "research/htt-adaptive-methods-20261023",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8",
+    "BLAS_threads": 1
+  },
+  "working_directory": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "started_scientific_commands": [
+    {
+      "kind": "production",
+      "attempt": 1,
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 60s python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/compute.py",
+      "exit_code": 1,
+      "elapsed_seconds": 2.99,
+      "max_rss_kib": 128040,
+      "retained_log": "FIRST_FAILURE.txt"
+    },
+    {
+      "kind": "production",
+      "attempt": 2,
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 60s python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/compute.py",
+      "exit_code": 0,
+      "elapsed_seconds": 1.52,
+      "max_rss_kib": 139348,
+      "retained_log": null
+    },
+    {
+      "kind": "production",
+      "attempt": 3,
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 60s python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/compute.py",
+      "exit_code": 0,
+      "elapsed_seconds": 1.88,
+      "max_rss_kib": 136108,
+      "retained_log": null
+    },
+    {
+      "kind": "production",
+      "attempt": 4,
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 60s python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/compute.py",
+      "exit_code": 0,
+      "elapsed_seconds": 2.84,
+      "max_rss_kib": 139796,
+      "retained_log": null
+    },
+    {
+      "kind": "production",
+      "attempt": 5,
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 60s python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/compute.py",
+      "exit_code": 0,
+      "elapsed_seconds": 6.44,
+      "max_rss_kib": 139440,
+      "retained_log": null
+    },
+    {
+      "kind": "production",
+      "attempt": 6,
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 60s python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/compute.py",
+      "exit_code": 0,
+      "elapsed_seconds": 13.1,
+      "max_rss_kib": 136512,
+      "retained_log": "PRODUCTION_LOG.txt"
+    },
+    {
+      "kind": "test",
+      "attempt": 1,
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 120s python -m pytest -q docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/test_compute.py",
+      "exit_code": 1,
+      "elapsed_seconds": 9.61,
+      "max_rss_kib": 116776,
+      "retained_log": "FIRST_TEST_FAILURE.txt"
+    },
+    {
+      "kind": "test",
+      "attempt": 2,
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 120s python -m pytest -q docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/test_compute.py",
+      "exit_code": 0,
+      "elapsed_seconds": 6.35,
+      "max_rss_kib": 120052,
+      "retained_log": null
+    },
+    {
+      "kind": "test",
+      "attempt": 3,
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 120s python -m pytest -q docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/test_compute.py",
+      "exit_code": 0,
+      "elapsed_seconds": 2.55,
+      "max_rss_kib": 117652,
+      "retained_log": null
+    },
+    {
+      "kind": "test",
+      "attempt": 4,
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 120s python -m pytest -q docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/test_compute.py",
+      "exit_code": 0,
+      "elapsed_seconds": 7.54,
+      "max_rss_kib": 116352,
+      "retained_log": null
+    },
+    {
+      "kind": "test",
+      "attempt": 5,
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 120s python -m pytest -q docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/test_compute.py",
+      "exit_code": 0,
+      "elapsed_seconds": 6.42,
+      "max_rss_kib": 119144,
+      "retained_log": "TEST_LOG.txt"
+    },
+    {
+      "kind": "targeted_numeric_diagnostic",
+      "command": "independent SLSQP status reproduction at slope6 tau10 delta1",
+      "exit_code": 0,
+      "elapsed_seconds": 0.8,
+      "max_rss_kib": null
+    },
+    {
+      "kind": "targeted_numeric_diagnostic",
+      "command": "SLSQP ftol 1e-10, 1e-11, 1e-9 comparison at slope6 tau10 delta1",
+      "exit_code": 0,
+      "elapsed_seconds": 0.7,
+      "max_rss_kib": null
+    },
+    {
+      "kind": "targeted_numeric_diagnostic",
+      "command": "common-mode block counterexample [1,1,1,0], [1,0,0,0], [1,1,1,1]",
+      "exit_code": 0,
+      "elapsed_seconds": 3.3,
+      "max_rss_kib": null
+    }
+  ],
+  "cumulative_measured_seconds": {
+    "production": 28.77,
+    "tests": 37.27
+  },
+  "limits": {
+    "production_seconds": 60,
+    "tests_seconds": 120,
+    "RSS_MiB": 1024
+  },
+  "validation": {
+    "grid_cells": 72,
+    "scope_count": 2,
+    "selected_independent_controls": 18,
+    "independent_objective_agreement": true,
+    "max_independent_objective_abs_difference": 7.406697477563284e-11,
+    "final_tests": "4 passed",
+    "monotonicity_and_rank_controls": "PASS",
+    "first_failures_preserved": [
+      "FIRST_FAILURE.txt",
+      "FIRST_TEST_FAILURE.txt"
+    ]
+  },
+  "claim_status": "CONDITIONAL_DIAGNOSTIC_ONLY",
+  "original_K03": "HOLD",
+  "R9": "UNKNOWN",
+  "original_campaign_count": "17/42",
+  "alternate_campaign_count": "18/42",
+  "independent_review": "NOT_PERFORMED_BY_AUTHOR",
+  "scientific_admission": "PENDING_INDEPENDENT_REVIEW",
+  "raw_receipt_note": "Earlier successful attempt outputs were not retained as separate logs; their measured timing/RSS and exit status are recorded above. First failures and final logs are retained.",
+  "packaging_attempts": [
+    {
+      "attempt": 1,
+      "exit_code": 1,
+      "error": "TypeError method object is not iterable",
+      "retained_log": "FIRST_FINALIZATION_FAILURE.txt"
+    },
+    {
+      "attempt": 2,
+      "exit_code": 0,
+      "purpose": "write receipt, manifest, RETURN"
+    }
+  ]
+}

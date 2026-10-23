@@ -1,0 +1,47 @@
+{
+  "frontier_id": "R25-COVARIANCE-METHOD-DELTA",
+  "tasks": [
+    {
+      "id": "R25-K03-DEPTH-COVROBUST",
+      "kind": "numeric",
+      "goal": "Determine full24-covariance robustness of reported-depth E1/B1 constancy using retained source summaries",
+      "acceptance": "Frozen 12-contrast null, full24 and cross covariance retained; moment/Gaussian reference curves and inflation breakpoints verified independently; no physical-law or original acceptance promotion",
+      "input_identity": "sha256:9abcf30af3fe40f52508554b03aba669789b212c2b8b0bfae5f8eba2ae01729f",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-K03-DEPTH-COVROBUST_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_covariance"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-DEPTH-IMAGES",
+            "evidence": "completed"
+          },
+          {
+            "task_id": "R24-TENSOR-BUNDLE",
+            "evidence": "qualified",
+            "product": "tensor_scenario"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "hypothesis": "slope6 zero; descriptive functional images",
+          "uncertainty": "one working covariance"
+        },
+        "after": {
+          "hypothesis": "three full vector depth levels equal,12 contrasts",
+          "uncertainty": "Loewner coefficient covariance upper-envelope with two reference tails"
+        },
+        "discriminator": "variance budget at which reported-depth contrast ceases discrimination",
+        "scope": "new conditional selected reported-depth target; original K03 physical HOLD preserved"
+      }
+    }
+  ]
+}

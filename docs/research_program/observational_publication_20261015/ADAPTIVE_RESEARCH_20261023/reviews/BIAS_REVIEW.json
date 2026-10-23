@@ -1,0 +1,56 @@
+{
+  "provenance": "Host transcription of actual native independent response; original and tool evidence retained in conversation",
+  "reviewer": "/root/rc_11f4e08a6bf51f77",
+  "requested_selected": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "verdict": "PASS",
+  "scope": "Frozen conditional numerical calculation and interpretation only",
+  "findings": [],
+  "identities": {
+    "task_id": "R25-K03-DEPTH-BIAS-FRONTIER",
+    "packet_id": "11f4e08a6bf51f77cd49e03b02b5c0d1bf94a47c39e0d27642cc64aa06fadeaa",
+    "input_identity": "sha256:34e88ac00f25c5cb849152167f93364491a43e88c2c609e98710d42a04fb39d2",
+    "candidate_identity": "sha256:04af80ce33b2258e434da7f13d3d168f906026cd92c0f7fe7ef9d9586e2db692"
+  },
+  "checks": {
+    "source_manifest_allfiles_match": true,
+    "final_candidate_unchanged": true,
+    "targeted_tests": "4 passed in5.99s, no bytecode/cache writes",
+    "grid_witnesses": 72,
+    "maximum_direct_objective_error": 1.7053025658242404e-13,
+    "maximum_KKT_stationarity": 2.48486338432781e-13,
+    "maximum_feasibility_excess": 7.105427357601002e-15,
+    "maximum_complementarity": 1.776027982967928e-13,
+    "continuous_crossings": 10,
+    "maximum_minimum_radius_KKT": 5.220192050420684e-14,
+    "full24_zero_radius": 10.178814272459688,
+    "maximum_rotation_parity_objective_error": 1.1937117960769683e-12,
+    "maximum_support_attainment_error": 1.7763568394002505e-15,
+    "maximum_ellipsoid_constraint_error": 1.3322676295501878e-15
+  },
+  "assessment": [
+    "Compact positive rank SVD handles zero/deficient rank,zero radius,unconstrained andorthogonal residual",
+    "Full24/slope6 ranks,monotonicity,commonmode cancellation andpolar/axial coordinates consistent",
+    "Exactzero full24 radius invariant acrosssix covariance radii; restricted floors distinct",
+    "Independent minimum-norm constrained optimization and convexKKT supportfrontiers",
+    "Full24cov,crossblocks,supportandoriginalx/Q/F/Pi/G_Fsourceobjectspreserved; empirical4096PiandcomputationalQunchanged",
+    "Figure inspected; grid/referencelevels correct; exactcrossingradii inRESULT/REPORT"
+  ],
+  "review_diagnostic_failures": [
+    {
+      "case": "Direct SLSQP full24tau10delta1",
+      "failure": "Positive directional derivative forlinesearch",
+      "objective_difference": -2.0397561417695442e-10,
+      "feasibility_excess": 1.1151155554500747e-09,
+      "resolution": "trust-constr success: objective_difference1.5999979119385443e-11,feasibility0,optimality1.6445178552260131e-15"
+    },
+    {
+      "case": "Minimum-radius SLSQP slope6tau.1momentthreshold",
+      "failure": "Unsuccessfultermination despite radiusdifference5.946603209849854e-10",
+      "resolution": "trust-constr success feasible,radiusdifference6.232525606719719e-10,optimality4.440892098500626e-15; crossingKKTalsoverified"
+    }
+  ],
+  "claim_ceiling": "Exploratory conditional deterministic bias/covariance sensitivity, not measuredGaiabound/physicalconfidence/calibratedp/native/originalpromotion",
+  "original_states": "17/42,alternate18/42,K03HOLD,R9UNKNOWN,physicalPi/QUNKNOWN",
+  "execution": "Read-only,no productionrerun/edits/children/push"
+}

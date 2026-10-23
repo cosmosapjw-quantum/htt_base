@@ -1,0 +1,57 @@
+{
+  "task_id": "R25-SMICA-SPECTRAL-NULLSPACE",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "advisor": "/root/r25_cmb_physics_theory",
+  "advisor_requested_selected": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "source": {
+    "release": "Planck PR3 R3.00 SMICA weights propagation",
+    "archive": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/weights/COM_Code_SMICA-weights-propagation_R3.00.tar.gz",
+    "bytes": 74625775,
+    "sha256": "044ec9bed746ae745ad35a8b6ccf6e603f546083fec328e9c64d866ac9221f93",
+    "members": {
+      "weights_EB_smica_R3.00.txt": "541378f6c9ab37574aae909519b0f1fe020714a6cea2b8dd1c7fcedb5ffd87df",
+      "smica_coadd.py": "dd1f9c2435cae456b4cc0445b7257b360d01a73754455d11ea409252d3788160",
+      "README": "de52811701de2ef4c1c37aff05f317e264fd9cd3ad867cab6289dd3a8e4aaf27"
+    }
+  },
+  "method": "Read tar members in memory, do not run Python2 producer or extract arbitrary paths. Reproduce documented loadtxt reshape(2,7,4001). E/B separate; channels[30,44,70,100,143,217,353]GHz. For ell2,3 use exact decimal source weights w. Operator y=w^T s at each harmonic coordinate BEFORE common output pixel window. Nonzero common pixel window leaves kernel unchanged; do not infer any particular mask operator or actual frequency signal. Weights incorporate beams and LFI renormalization; do not assume w^T1=1 or naive spectral energy distribution.",
+  "theorem": "For fixed M,L, Ls identified from Ms iff kerM subset kerL iff L=KM. w!=0 gives Pker=I-ww^T/(w^Tw), for targetcontrast a, min_b||a-bw||=||Pker a||. h=Pker a obeys w^T h=0 and a^T h=||h||^2. Pair s0=0,s1=h has identical compressed signal but different contrast whenever h!=0.",
+  "targets": "All7unitfrequencyvectors and21pairdifferencevectors per4(E/B,ell)operator; report norm, retained projection fraction, lost fraction and explicit witness. Ratios normalized by ||a||, Euclidean frequency-coordinate metric explicitly computational. No physical amplitude interpretation.",
+  "numeric": "Exact rationals parsed from original decimal strings for at least one nonzero contrast witness per4operator; output exact rational identities and80digit decimal residual check. Float64 alltargets crosscheck orthoprojector symmetry,idempotence,annihilation,trace6 and rowrank1; if any wzero handle rank0 explicitly rather than divide.",
+  "full_tensor": "Frequency state has7*(5+7)*2=168 real harmonic coordinates, compressed E/Bell2,3 total24. Explicit block operator Kronecker(w^T,I_(2ell+1)); retain blocks asfulltensor symbolic carrier, no scalarreplacement. Show rank/nullity and kernelbasis construction; E andB are distinctfields, cannotstacktheirweightrows as repeatedmeasurementofsameunknown. F is affine responsefiber plus explicit kernel directions, not bounded physicalfeasibleset; Pi physicalUNKNOWN, Q computationalcoordinate norm not physicalanchor; G_F isell/polarizationresponse bookkeeping, notcosmologicaldepth.",
+  "controls": [
+    "exactdecimalrational nullwitness peroperator",
+    "floating all28targets compare orthogonalprojection and leastsquares residual",
+    "tensorblockrank24/nullity144 if fourrowsnonzero",
+    "frequencypermutation invariance",
+    "zero andalignedcontrast fixtures; L=KM identifiedcase",
+    "sourceweightsinterpretation boundto producer and README"
+  ],
+  "limits": {
+    "production_seconds": 60,
+    "tests_seconds": 120,
+    "RSS_MiB": 1024,
+    "BLAS_threads": 1,
+    "no_new_download_required": true,
+    "no_solver_ODE": true,
+    "no_ultra": true
+  },
+  "outputs": [
+    "compute.py",
+    "test_compute.py",
+    "RESULT.json",
+    "figure.png",
+    "REPORT.md",
+    "MANIFEST.json",
+    "RAW_RECEIPT.json",
+    "RETURN.json"
+  ],
+  "claim_ceiling": "Source-bound linear compression counterexample and exact required frequency-response acquisition target. No observed foreground amplitude, matched physical CMB null, native atlas or original acceptance promotion. Existing cached compressed maps are not a seven-frequency foreground law.",
+  "primary_sources": [
+    "https://www.aanda.org/articles/aa/full_html/2020/09/aa33881-18/aa33881-18.html",
+    "https://arxiv.org/abs/1006.5599",
+    "https://arxiv.org/abs/2006.08628"
+  ],
+  "planning_identity": "Same unlaunched proposed spectral-compression method; use canonical reviewed ADAPTIVE_DAG node name, no additional issue or allocation."
+}

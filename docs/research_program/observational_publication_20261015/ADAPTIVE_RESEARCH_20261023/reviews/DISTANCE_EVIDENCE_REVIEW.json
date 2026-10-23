@@ -1,0 +1,108 @@
+{
+  "task_id": "R25-DISTANCE-CONDITIONAL-EVIDENCE",
+  "packet_id": "e834ce4377abc8f6a6aef0a0598718bbf1440bcae5328166d603f27b8c78ef96",
+  "input_identity": "sha256:77439c5b5966f6f0c6a4d4e2819b28b76b7a3c24523e9b08ec9f7e12fd5ca2b8",
+  "candidate_identity": "sha256:735f35ad7b1cf3eab48abd5ded2e52dbceccb813f1caf504b35c9f058c4725fb",
+  "record_type": "Host transcription of actual independent native review",
+  "reviewer": "/root/rc_e834ce4377abc8f6",
+  "requested": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "verdict": "HOLD",
+  "blocking_findings": [
+    {
+      "classification": "EXECUTION_CONTRACT_CAP_EXCEEDED_AND_UNDERCOUNTED",
+      "severity": "HIGH",
+      "locations": [
+        "R25-DISTANCE-CONDITIONAL-EVIDENCE_INPUT.json:limits.new_conditional_null_fits",
+        "distance_conditional_evidence/PRODUCTION.first_failure.txt:5-9",
+        "distance_conditional_evidence/RAW_RECEIPT.json:45",
+        "distance_conditional_evidence/REPORT.md:17"
+      ],
+      "evidence": "Failed first production reached null_supremum return float(Rqr) after null optimization; retry performed20. Packaging failure does not erase preceding solve.",
+      "frozen_cap": 20,
+      "successful_distinct_fits": 20,
+      "cumulative_performed_lower_bound": 21,
+      "exact_cumulative_count": "NOT_INDEPENDENTLY_RECOVERED; failed-source snapshot/intermediate outputs absent",
+      "consequence": "Unchanged execution acceptance cannot PASS; not evidence numerical answer is scientifically false",
+      "minimal_bounded_repair": "No fits/reruns. Preserve original and append correction20distinct successful versus at least21cumulative, CAP_EXCEEDED; correct unqualified cumulative-compliance claim. Metadata cannot undooverrun/promoteacceptance."
+    }
+  ],
+  "numerical_assessment": {
+    "status": "PASS_WITH_EXPLICIT_REVIEW_LIMIT",
+    "rows": 274,
+    "folds": [
+      47,
+      55,
+      53,
+      69,
+      50
+    ],
+    "unassigned_singleton_groups": 5,
+    "PGC9031_velocity_km_s": 317,
+    "saved_training_models_evaluated_without_refit": 60,
+    "BC_components_reconstructed": 40,
+    "new_fits": 0,
+    "training_RSS_abs_max": 4.433786671143025e-12,
+    "training_normal_equation_scaled_max": 3.315400488207314e-15,
+    "saved_joint_logdensity_abs_max": 1.0800249583553523e-12,
+    "component_logdensity_abs_max": 2.8421709430404007e-13,
+    "mean_abs_max": 7.105427357601002e-15,
+    "permutation_logdensity_abs_max": 2.8421709430404007e-13,
+    "all20_null_design_rank": 10,
+    "rank_thresholds": [
+      1e-08,
+      1e-10,
+      1e-12
+    ],
+    "null_likelihood_identity_abs_max": 4.263256414560601e-14,
+    "stored_QR_SVD_RSS_abs_max": 9.094947017729282e-13,
+    "minimum_sup_minus_training_A_logdensity": 4.193245576653762,
+    "independent_logEbar": -8.604831899198578,
+    "independent_Ebar": 0.00018321835875532028,
+    "full_tensor_inheritance": "All8 BC complete coefficient/covariance/angular states and sources matchR24",
+    "synthetic_normalization_error_max": 2.3e-16,
+    "saturated_limit": "sup infinity, ratio0",
+    "review_limit": "Null coefficients/residual vectors not saved; inspected normal-equation statistics/ranks/likelihood identity/QR agreement/code. Optimum not recomputed because refits forbidden."
+  },
+  "mathematical_assessment": {
+    "Schur_and_null_supremum": "Correct for fixedGaussian shape; sigma2=RSS/m; max4coversunion",
+    "training_measurability": "With fixeddesign/scenarios/folds/menu, coefficient/scale use trainingoutcomes only; inheritedfull-data carrier not usedinprediction",
+    "mixture": "8 normalized positive-scale conditionalGaussian densities; equalmixture normalized",
+    "fold_average": "Fixedarithmeticaverage preserves expectationbound despite dependence",
+    "training_uncertainty_clarification": "Any training-measurable normalizedq suffices; parameteruncertainty integration is not required for expectationargument",
+    "actual_scope": "Selected/adaptive source/method law and outward numeric supremum certificate absent; exploratoryonly",
+    "scientific_admission": "HOLD",
+    "original_acceptance_promoted": false
+  },
+  "identity_verification": {
+    "all19seals_before_after": "MATCH",
+    "candidate_unchanged": true
+  },
+  "execution": {
+    "timed_command_seconds": [
+      0.02,
+      0.03,
+      0.06,
+      0.02,
+      6.6,
+      0.02,
+      2.56,
+      1.6
+    ],
+    "command_total": 10.91,
+    "image_seconds": 0.03,
+    "reviewer_measured_total_seconds": 10.94,
+    "limit_seconds": 45,
+    "RSS_KiB": 74028,
+    "threads": 1,
+    "author_seconds_preserved": 11.43,
+    "reviewer_first_failure": "Own UNASSIGNED sentinel comparison error corrected to5singletonlabels; retainedtooloutput, notcandidatefailure",
+    "candidate_writes": 0,
+    "production_reruns": 0,
+    "downloads": 0,
+    "children": 0
+  }
+}

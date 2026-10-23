@@ -33,7 +33,7 @@ class ContextIsolationTests(unittest.TestCase):
                 self.assertEqual(
                     pack,
                     HARNESS.render_context_pack(
-                        version, index["built_at"], pack_entries, REPO
+                        version, index["built_at"], pack_entries, REPO, current=bool(prefix)
                     ),
                 )
                 self.assertLessEqual(len(pack), index["max_injected_chars"])

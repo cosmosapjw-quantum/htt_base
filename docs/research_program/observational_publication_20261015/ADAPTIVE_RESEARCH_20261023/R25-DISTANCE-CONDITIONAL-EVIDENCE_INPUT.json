@@ -1,0 +1,92 @@
+{
+  "task_id": "R25-DISTANCE-CONDITIONAL-EVIDENCE",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "advisor": "/root/r25_statistics_theory",
+  "advisor_requested_selected": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "sources": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/analyze.py",
+      "sha256": "5177f93c0c0e575b135c27dc3abe1fb3223fef421dae6bf571cbfb09fde4a63d"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/RESULT.json",
+      "sha256": "330066f4a8605caa9874f192a938d4ef1d84cf8933bdd3e6059a40b011c28bd0"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/OOF_ROWS.csv",
+      "sha256": "6fd8356e041e1ece186b79bf1506b04af5411e17e6c31a489a1f66da977a3c40"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/DIRECTION_JOIN.csv",
+      "sha256": "4e6e9c991ecdf2fda2a403f68a4ea5d744e244c73478eef1c70efbf007852b9a"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/CONTRACT.json",
+      "sha256": "150ce8734027c228af6daa042349f287d8de99dd71f60ffb79c26a7483f756fd"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/ARTIFACT_MANIFEST.json",
+      "sha256": "1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/RELEASED_ROWS.csv",
+      "sha256": "c7912bd7dd983cdcdf47408a89da9f2b76887a0cc37fd9b5a9a8e83e03d3fe20"
+    }
+  ],
+  "source_use": "Read retained small files directly. Do NOT invoke old analyze.load or run: raw external access and repeated completed fits forbidden. No old training fit rerun.",
+  "cohort": "Exactly274 uniquePGCs in RELEASED_ROWS order joined byPGC to DIRECTION_JOIN. Folds0..4 sizes[47,55,53,69,50], whole groups never split. Frozenfolds not rehashed/reselected. Vcmb/outcomes agree,positive errors/velocities,PGC9031=317km/s retained.",
+  "design": "y=DMbest, s=e_DMbest, K=-5/(ln10 Vcmb); directions J2000 savedRA/Dec. XA=(1,log10V,logW,e_logW,nx,ny,nz,Knx,Kny,Knz). XB=(1,log10V,logW,e_logW,nx,ny,nz,n^T E1 n,...,n^T E5 n). XC=(XA,STF5). Exact orthonormal E in retained CONTRACT. Unitsmag/km/s. Low-z working response only.",
+  "null": "Union over4(a,b)in{0,.055}x{0,.29}mag of N(XA beta,sigma2 V_s), betaR10,sigma2>0. V_s=diag(s_i^2-a^2)+a^2 11^T+b^2 GG^T, Ggroupmembership. Dimensionless sigma2 scales entire shape including calibration/groupterms; nominala,b not measuredamplitudes.",
+  "conditional": "ForfoldtrainingT,validationJ: B=V_JT solve(V_TT), S=V_JJ-B V_TJ, r=yJ-B yT,Z=XA_J-B XA_T. Conditionalnull N(B yT+Z beta,sigma2 S). Use solves not inverse wherepossible.",
+  "numerator": "Use each4scenario andmodelB/C stored RESULT.scenarios[s].models[m].folds[j].coefficient_raw_units and sigma2_ML_train. mu=Xm_J beta+B(yT-Xm_T beta), covariance=sigma2train S. Exactly8normalized training-fixed densities q_j=arithmeticmean. logq=logsumexp(component_logdensities)-log8. Reconstruct 40 saved conditionalblocklogs and means, compare OOF orderedCholeskycontributions grouped scenario/model/fold to joint_log_predictive_score. No meanoflogs or heldout selection.",
+  "denominator": "Exactly20new conditionalnull fits: whitenbyCholeskyS, scale whiteneddesign columns by nonzeronorm, solveR=min_beta(r-Zbeta)^T S^-1(r-Zbeta). IfpositiveR, sigma2ML=R/m (notm-rank), ellstar=-.5*[m*(log2pi+1+log(R/m))+logdetS]. Maxellstar over4scenarios per fold. logE_j=logq_j-maxellstar. Stored training-fitted A likelihood is onlycontrol, notdenominator.",
+  "aggregate": "Fixed equallyweighted mean5folds: logEbar=logsumexp(logE)-log5. Do not multiplydependentfolds or selectmaxfold oradaptweights.",
+  "theorem": "If actual fixed conditionalnull density <= denominator and numerator trainingonly normalizeddensity, conditional E[E_j|Y_T]<=1 and unconditional E[Ebar]<=1 withoutfoldindependence. UniversalInference1912.11436 sections5-6 already prove related dependent averaging/conditional noniid methods; application specialization only. Current data-selected unqualifiedsource analysis is exploratory conditional-evidence diagnostic, not confirmatory e-valid physicaltest.",
+  "singular_rules": [
+    "Nonpositive/singularVTTorS: CONDITIONAL_DENSITY_UNDEFINED,no jitter/pseudodensity",
+    "Stable rankdeficiencyZ withpositiveR: preservecoefficientnullspace,fittedmean defined. Rankdisagreement atrelative1e-8/1e-10/1e-12: NUMERICALLY_UNRESOLVED",
+    "ExactzeroR withfreescale: nullsup+infinity,Efold0. Numericallyunresolvednearzero may conservativelycontribute0 labelled CONSERVATIVE_ZERO_NUMERICALLY_UNRESOLVED,not proveninfinite. No denominatorfloor",
+    "Invalid/missing numeratorcomponent:stop, no renormalization",
+    "Numerically checked optimizer is not certifiedoutwardroundedupperbound; do not claim exactfloatingpoint e-validity. No arbitrary tolerancepadding asproof"
+  ],
+  "controls": [
+    "40numeratormeans/logdensities vsretainedOOF/RESULT rtol1e-9 logatol1e-8",
+    "Every20ellstar >= corresponding trainingfitAlogdensity minus1e-8",
+    "IndependentQR vsSVD RSS rtol1e-9 atol1e-9",
+    "DirectGaussiandensity atnullMLE vsanalyticellstar atol1e-8",
+    "Scalednormal-equation normalizedresidual<1e-10",
+    "Consistenttrain/testrowpermutation preservesblocklogsandaggregatewithin1e-8",
+    "Correlated2variable fixednullfixture deterministicintegration checksconditionalnormalization andE[E|T]=1; saturatedfixtureE0",
+    "Arithmeticmixture/average check ordinary/logspacewherefinite"
+  ],
+  "bundle": "Preserve original full angular vectors,STFcoefficientsand fullcoefficientcovariance with exact source references, no scalarreplacement. New logE is HTT modeldiagnostic attachedtofulltensorcarrier, not physicalPi,Q,F orGF. Existing missingmass/physicalanchor remainUNKNOWN; GFjoint depth support not inferred fromfold index.",
+  "outputs": [
+    "compute.py",
+    "test_compute.py",
+    "RESULT.json",
+    "figure.png",
+    "REPORT.md",
+    "MANIFEST.json",
+    "RAW_RECEIPT.json",
+    "RETURN.json"
+  ],
+  "limits": {
+    "cumulative_production_seconds": 60,
+    "cumulative_test_seconds": 60,
+    "total_execution_seconds": 120,
+    "RSS_MiB": 1024,
+    "BLAS_threads": 1,
+    "new_conditional_null_fits": 20,
+    "no_random_draws": true,
+    "no_download": true,
+    "no_full_cohort_refit": true,
+    "no_old_training_refit": true,
+    "no_raw_Gaia_CF4_pass": true,
+    "no_solver_ODE": true,
+    "no_ultra": true,
+    "planned_production_invocations": 1,
+    "repair_policy": "Substantive failure returns to Astra with raw evidence; any authorized targeted rerun stays within the same cumulative wall limits and task identity. The planned invocation count is not a new historical one-use allocation."
+  },
+  "claim_ceiling": "Exploratory conditional-evidence diagnostic; unqualifiedselected-source law, adaptivechoiceand uncertifiedfloatingpointbound remainlimits. Preserve priorfailedresidualtest,354undefineddistances,17/42 original,18/42alternate,R9UNKNOWN andconsumedallocations."
+}

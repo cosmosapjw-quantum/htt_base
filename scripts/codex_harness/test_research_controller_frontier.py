@@ -53,7 +53,12 @@ class FrontierTests(unittest.TestCase):
     def test_alternative_qualified_products_not_counterexample_completion(self):
         state = self.state([task("OLD")])
         leaf = lambda name: {"task_id":name,"evidence":"qualified","product":"confidence_bundle"}
-        self.append(state,[spec("R1"),spec("R2"),spec("USE",{"any":[leaf("R1"),leaf("R2")]})])
+        routes = [spec("R1"), spec("R2"), spec("USE", {"any": [leaf("R1"), leaf("R2")]})]
+        # Alternative scientific methods can supply the same product; aliases cannot.
+        for row, method in zip(routes, ("linear nuisance marginalization", "calibration profile likelihood",
+                                        "consume a reviewed confidence bundle")):
+            row["semantic_delta"]["after"]["method"] = method
+        self.append(state, routes)
         state["tasks"]["R1"].update(state="completed")
         state["tasks"]["R2"].update(state="held")
         self.assertNotIn("USE",rc.summary(state)["ready"])
@@ -395,6 +400,374 @@ class FrontierTests(unittest.TestCase):
             old=copy.deepcopy(state)
             with self.assertRaises(rc.ControllerError):rc.resume(state,"A",evidence,"input-v1")
             self.assertEqual(state,old)
+
+
+class ConcurrentReviewTests(unittest.TestCase):
+    """Host-only fixture transitions; no real acquisition or review is launched."""
+    setUp = base.ControllerTests.setUp
+    state = base.ControllerTests.state
+    launch = base.ControllerTests.launch
+    def result(self, state, packet, outcome="success", **kwargs):
+        if "candidate_identity" not in kwargs:
+            if packet["phase"] == "review":
+                kwargs["candidate_identity"] = state["tasks"][packet["task_id"]]["candidate_identity"]
+            elif packet["phase"] == "execute" and packet["task_id"] in {"CANDIDATE", "SECOND"}:
+                import hashlib
+                artifact = Path(state["tasks"][packet["task_id"]]["spec"]["owned_paths"][0]) / 'CANDIDATE.json'
+                kwargs["candidate_identity"] = 'sha256:' + hashlib.sha256(artifact.read_bytes()).hexdigest()
+                kwargs.setdefault("qualified_products", [str(artifact)])
+        return base.ControllerTests.result(self, state, packet, outcome, **kwargs)
+    issue = base.ControllerTests.issue
+
+    def fixture(self, state=None, second=True):
+        root = Path(self.tmp.name)
+        source = root / 'frozen.csv'
+        source.write_text('frozen input\n')
+        contract = root / 'INPUT.json'
+        contract.write_text(json.dumps({'input_sources': [{'path': str(source)}]}))
+        rows = []
+        for key, kind in [('CANDIDATE', 'numeric'), ('SECOND', 'numeric'),
+                          ('Z-ACQUIRE', 'input'), ('SMICA', 'numeric')]:
+            if key == 'SECOND' and not second:
+                continue
+            owned = root / key
+            owned.mkdir(exist_ok=True)
+            (owned / 'CANDIDATE.json').write_text(json.dumps({'value': 1, 'method': key}))
+            row = task(key, kind=kind, owned_paths=[str(owned)], input_sources=[str(contract)])
+            rows.append(row)
+        if state is None:
+            state = self.state(rows)
+        else:
+            for row in rows:
+                row.update(contract_origin='new_conditional_research', promotes_original_acceptance=False,
+                           approved_repair_id=None, requires={'all': []},
+                           semantic_delta=delta(after={'method': 'fixture bounded method for ' + row['id']}))
+            rc.append_frontier(state, {'frontier_id': 'concurrent-review-fixture', 'tasks': rows}, 'fixture owner')
+        state['tasks']['SMICA']['last_turn'] = 10000
+        self.result(state, self.launch(state))
+        if second:
+            self.result(state, self.launch(state))
+        acquisition = self.launch(state)
+        self.assertEqual(acquisition['task_id'], 'Z-ACQUIRE')
+        self.assertEqual(acquisition['phase'], 'acquisition')
+        return state, acquisition
+
+    def plan(self, state):
+        packet = rc.next_packet(state, POLICY, PROFILES, review_only=True)
+        self.assertEqual(packet.get('task_id'), 'CANDIDATE')
+        self.assertEqual(packet['phase'], 'review')
+        return packet
+
+    def test_explicit_plan_replay_ack_poll_and_no_second_review(self):
+        state, acquisition = self.fixture()
+        owner = copy.deepcopy(state['tasks']['Z-ACQUIRE'])
+        self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES))
+        packet = self.plan(state)
+        self.assertTrue(packet['review_only'])
+        self.assertEqual(packet, rc.next_packet(state, POLICY, PROFILES, review_only=True))
+        self.assertEqual(packet, rc.next_packet(state, POLICY, PROFILES))
+        rc.acknowledge(state, packet['packet_id'], 'fresh-read-only-reviewer')
+        self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
+        self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES))
+        self.assertEqual(state['tasks']['Z-ACQUIRE'], owner)
+        self.assertEqual(state['packets'][acquisition['packet_id']]['observed_runtime'], 'UNKNOWN')
+
+    def test_unknown_missing_and_overlapping_declared_scopes_wait(self):
+        for change in ('missing-input', 'missing-owned', 'overlap-owned', 'nested-input', 'symlink-input'):
+            with self.subTest(change=change):
+                state, _ = self.fixture(second=False)
+                spec = state['tasks']['CANDIDATE']['spec']
+                if change == 'missing-input':
+                    spec['input_sources'] = [str(Path(self.tmp.name) / 'absent-input')]
+                elif change == 'missing-owned':
+                    state['tasks']['Z-ACQUIRE']['spec']['owned_paths'] = []
+                elif change == 'overlap-owned':
+                    state['tasks']['Z-ACQUIRE']['spec']['owned_paths'] = spec['owned_paths']
+                else:
+                    target = Path(state['tasks']['Z-ACQUIRE']['spec']['owned_paths'][0]) / 'being-written.csv'
+                    target.write_text('partial acquisition')
+                    if change == 'symlink-input':
+                        link = Path(self.tmp.name) / 'input-link.csv'
+                        link.symlink_to(target)
+                        spec['input_sources'] = [str(link)]
+                    else:
+                        Path(spec['input_sources'][0]).write_text(json.dumps({'sources': [{'path': str(target)}]}))
+                before = copy.deepcopy(state)
+                self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
+                self.assertEqual(state, before)
+
+    def test_running_writer_or_planned_discovery_prevents_review(self):
+        for other in ('execute', 'repair', 'acquisition', 'research', 'escalation', 'discovery'):
+            with self.subTest(other=other):
+                state, _ = self.fixture(second=False)
+                if other == 'discovery':
+                    rc.enable_adaptive(state, 'fixture owner')
+                    state['adaptive']['packets']['pending'] = {'state': 'planned'}
+                else:
+                    state['tasks']['SMICA'].update(state='running', phase=other)
+                before = copy.deepcopy(state)
+                self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
+                self.assertEqual(state, before)
+
+    def test_no_review_means_no_writer_and_no_discovery(self):
+        owned = Path(self.tmp.name) / 'acquisition-only'
+        owned.mkdir()
+        state = self.state([task('ACQUIRE', kind='input', owned_paths=[str(owned)]), task('SMICA')])
+        state['tasks']['SMICA']['last_turn'] = 10000
+        self.launch(state)
+        rc.enable_adaptive(state, 'fixture owner')
+        before = copy.deepcopy(state)
+        self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
+        self.assertEqual(state, before)
+        self.assertFalse(state['adaptive']['packets'])
+
+    def test_ack_rechecks_candidate_inputs_dependencies_owner_and_freshness_atomically(self):
+        for change in ('candidate', 'input', 'contract-bytes', 'owner-paths', 'new-writer',
+                       'dependency', 'author', 'reused', 'route', 'replacement-acquisition'):
+            with self.subTest(change=change):
+                state, acquisition = self.fixture(second=False)
+                packet = self.plan(state)
+                agent = 'fresh-read-only-reviewer'
+                if change == 'candidate':
+                    state['tasks']['CANDIDATE']['candidate_identity'] = 'changed candidate'
+                elif change == 'input':
+                    state['tasks']['CANDIDATE']['spec']['input_identity'] = 'changed input'
+                elif change == 'contract-bytes':
+                    Path(state['tasks']['CANDIDATE']['spec']['input_sources'][0]).write_text('{"changed":true}')
+                elif change == 'owner-paths':
+                    state['tasks']['Z-ACQUIRE']['spec']['owned_paths'] = state['tasks']['CANDIDATE']['spec']['owned_paths']
+                elif change == 'new-writer':
+                    self.result(state, acquisition, candidate_identity='acquired-v1')
+                    state['tasks']['SMICA'].update(state='running', phase='execute')
+                elif change == 'replacement-acquisition':
+                    replacement = copy.deepcopy(state['packets'][acquisition['packet_id']])
+                    replacement['packet_id'] = 'different-acquisition-packet'
+                    state['packets'][replacement['packet_id']] = replacement
+                    state['tasks']['Z-ACQUIRE']['packet_id'] = replacement['packet_id']
+                elif change == 'dependency':
+                    state['tasks']['CANDIDATE']['spec']['requires'] = {'all': [{'task_id': 'SMICA', 'evidence': 'completed'}]}
+                elif change == 'author':
+                    agent = state['tasks']['CANDIDATE']['authors'][0]
+                elif change == 'reused':
+                    agent = state['packets'][acquisition['packet_id']]['agent_id']
+                else:
+                    state['packets'][packet['packet_id']]['route']['route'] = 'general_code'
+                before = copy.deepcopy(state)
+                with self.assertRaises(rc.ControllerError):
+                    rc.acknowledge(state, packet['packet_id'], agent)
+                self.assertEqual(state, before)
+
+    def test_result_orders_preserve_other_owner_and_writer_free_ack(self):
+        for acquisition_first in (True, False):
+            with self.subTest(acquisition_first=acquisition_first):
+                state, acquisition = self.fixture(second=False)
+                packet = self.plan(state)
+                if acquisition_first:
+                    self.result(state, acquisition, candidate_identity='acquired-v1')
+                    owner = copy.deepcopy(state['tasks']['Z-ACQUIRE'])
+                    rc.acknowledge(state, packet['packet_id'], 'fresh-reviewer-after-acquisition')
+                    self.result(state, packet, acceptance_met=True)
+                    self.assertEqual(state['tasks']['Z-ACQUIRE'], owner)
+                else:
+                    rc.acknowledge(state, packet['packet_id'], 'fresh-reviewer-during-acquisition')
+                    owner = copy.deepcopy(state['tasks']['Z-ACQUIRE'])
+                    self.result(state, packet, acceptance_met=True)
+                    self.assertEqual(state['tasks']['Z-ACQUIRE'], owner)
+                    reviewed = copy.deepcopy(state['tasks']['CANDIDATE'])
+                    self.result(state, acquisition, candidate_identity='acquired-v1')
+                    self.assertEqual(state['tasks']['CANDIDATE'], reviewed)
+                self.assertEqual(state['tasks']['CANDIDATE']['state'], 'completed')
+                self.assertEqual(state['tasks']['Z-ACQUIRE']['phase'], 'review')
+
+    def test_review_refusal_or_failure_preserves_acquisition_and_holds_repair(self):
+        for refused in (True, False):
+            with self.subTest(refused=refused):
+                state, _ = self.fixture(second=False)
+                packet = self.plan(state)
+                owner = copy.deepcopy(state['tasks']['Z-ACQUIRE'])
+                if refused:
+                    receipt = Path(self.tmp.name) / 'review-refusal.json'
+                    receipt.write_text('{"native_refusal":"temporary"}')
+                    rc.launch_failed(state, packet['packet_id'], str(receipt), 'transport', 'temporary refusal')
+                else:
+                    rc.acknowledge(state, packet['packet_id'], 'fresh-failing-reviewer')
+                    self.result(state, packet, 'blocker', issue=self.issue(), repair_plan='Concrete deterministic closeout')
+                    self.assertEqual(state['tasks']['CANDIDATE']['phase'], 'repair')
+                self.assertEqual(state['tasks']['Z-ACQUIRE'], owner)
+                self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES))
+                self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
+
+    def test_unsupported_review_transport_does_not_mutate_or_issue_writer(self):
+        state, _ = self.fixture(second=False)
+        before = copy.deepcopy(state)
+        result = rc.next_packet(state, POLICY, {('gpt-6-sol', 'high')}, review_only=True)
+        self.assertNotIn('spawn_args', result)
+        self.assertEqual(state, before)
+
+    def test_review_only_cli_reserves_only_read_only_candidate(self):
+        import subprocess
+        import sys
+        state, _ = self.fixture(second=False)
+        checkpoint = Path(self.tmp.name) / 'STATE.json'
+        policy = Path(self.tmp.name) / 'POLICY.json'
+        checkpoint.write_text(json.dumps(state))
+        policy.write_text(json.dumps(POLICY))
+        command = [sys.executable, str(Path(rc.__file__)), '--state', str(checkpoint),
+                   '--policy', str(policy), 'next', '--review-only',
+                   '--available-profile', 'gpt-6-astra/xhigh']
+        result = subprocess.run(command, text=True, capture_output=True, check=True, timeout=15)
+        packet = json.loads(result.stdout)
+        self.assertEqual(packet['phase'], 'review')
+        self.assertTrue(packet['review_only'])
+        self.assertFalse(packet['launch_performed'])
+        after = json.loads(checkpoint.read_text())
+        self.assertEqual(state['tasks']['Z-ACQUIRE'], after['tasks']['Z-ACQUIRE'])
+
+    def test_scoped_62_baseline_preserves_old_campaign_packets_and_accounting(self):
+        path = Path(__file__).resolve().parents[2] / '.agent-harness/runtime/r23-continuous/r25/STATE_BEFORE.json'
+        if not path.is_file():
+            self.skipTest('owner frozen 62-task snapshot unavailable')
+        state = json.loads(path.read_text())
+        before = copy.deepcopy(state)
+        self.assertEqual(len(state['tasks']), 62)
+        state, _ = self.fixture(state, second=False)
+        packet = self.plan(state)
+        rc.acknowledge(state, packet['packet_id'], 'fresh-frozen-baseline-reviewer')
+        self.result(state, packet, acceptance_met=True)
+        for field in ('campaign', 'campaign_identity', 'ultra_repairs', 'ultra_pending'):
+            self.assertEqual(state[field], before[field])
+        for key, value in before['tasks'].items():
+            self.assertEqual(state['tasks'][key], value)
+        for key, value in before['packets'].items():
+            self.assertEqual(state['packets'][key], value)
+
+    def test_declared_nested_contract_acquisition_overlap_waits(self):
+        state, _ = self.fixture(second=False)
+        contract = Path(state['tasks']['CANDIDATE']['spec']['input_sources'][0])
+        child = contract.parent / 'CHILD.json'
+        acquired = Path(state['tasks']['Z-ACQUIRE']['spec']['owned_paths'][0]) / 'data.csv'
+        acquired.write_text('in-progress acquisition')
+        contract.write_text(json.dumps({'input_sources': [str(child)]}))
+        child.write_text(json.dumps({'input_sources': [{'path': str(acquired)}]}))
+        before = copy.deepcopy(state)
+        self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
+        self.assertEqual(state, before)
+
+    def test_nested_contract_mutations_reject_ack_even_when_new_path_is_disjoint(self):
+        for overlap in (True, False):
+            with self.subTest(overlap=overlap):
+                state, _ = self.fixture(second=False)
+                contract = Path(state['tasks']['CANDIDATE']['spec']['input_sources'][0])
+                child = contract.parent / 'CHILD.json'
+                safe = contract.parent / 'frozen.csv'
+                contract.write_text(json.dumps({'input_sources': [str(child)]}))
+                child.write_text(json.dumps({'input_sources': [str(safe)]}))
+                packet = self.plan(state)
+                destination = (Path(state['tasks']['Z-ACQUIRE']['spec']['owned_paths'][0]) / 'data.csv'
+                               if overlap else contract.parent / 'different-safe-input.csv')
+                destination.write_text('changed child dependency')
+                child.write_text(json.dumps({'input_sources': [str(destination)]}))
+                before = copy.deepcopy(state)
+                with self.assertRaises(rc.ControllerError):
+                    rc.acknowledge(state, packet['packet_id'], 'fresh-nested-contract-reviewer')
+                self.assertEqual(state, before)
+
+    def test_candidate_bytes_are_bound_not_only_candidate_identity_label(self):
+        state, _ = self.fixture(second=False)
+        state['tasks']['CANDIDATE']['candidate_products'] = ['CANDIDATE.json']
+        artifact = Path(state['tasks']['CANDIDATE']['spec']['owned_paths'][0]) / 'CANDIDATE.json'
+        packet = self.plan(state)
+        artifact.write_text('{"value":999}')
+        before = copy.deepcopy(state)
+        with self.assertRaises(rc.ControllerError):
+            rc.acknowledge(state, packet['packet_id'], 'fresh-artifact-reviewer')
+        self.assertEqual(state, before)
+
+    def test_unmatched_candidate_identity_waits_without_state_mutation(self):
+        state, _ = self.fixture(second=False)
+        state['tasks']['CANDIDATE']['candidate_identity'] = 'sha256:' + '0' * 64
+        before = copy.deepcopy(state)
+        self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
+        self.assertEqual(state, before)
+
+    def test_manifest_identity_binds_product_bytes_at_plan_and_ack(self):
+        import hashlib
+        for stale_before_plan in (True, False):
+            with self.subTest(stale_before_plan=stale_before_plan):
+                state, _ = self.fixture(second=False)
+                task_row = state['tasks']['CANDIDATE']
+                directory = Path(task_row['spec']['owned_paths'][0])
+                artifact = directory / 'CANDIDATE.json'
+                manifest = directory / 'MANIFEST.json'
+                manifest.write_text(json.dumps({'task_id': 'CANDIDATE', 'input_identity': 'input-v1',
+                    'products_sha256': {'CANDIDATE.json': hashlib.sha256(artifact.read_bytes()).hexdigest()}}))
+                task_row['candidate_identity'] = 'sha256:' + hashlib.sha256(manifest.read_bytes()).hexdigest()
+                task_row['candidate_products'] = []
+                if stale_before_plan:
+                    artifact.write_text('{"value":999}')
+                    before = copy.deepcopy(state)
+                    self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
+                    self.assertEqual(state, before)
+                else:
+                    packet = self.plan(state)
+                    artifact.write_text('{"value":999}')
+                    before = copy.deepcopy(state)
+                    with self.assertRaises(rc.ControllerError):
+                        rc.acknowledge(state, packet['packet_id'], 'fresh-manifest-reviewer')
+                    self.assertEqual(state, before)
+
+    def test_nested_contract_traversal_bound_waits_without_prose_scans(self):
+        state, _ = self.fixture(second=False)
+        contract = Path(state['tasks']['CANDIDATE']['spec']['input_sources'][0])
+        current = contract
+        for index in range(18):
+            child = contract.parent / ('nested-' + str(index) + '.json')
+            current.write_text(json.dumps({'input_sources': [str(child)]}))
+            current = child
+        current.write_text('{"description":"prose is not a filesystem declaration"}')
+        before = copy.deepcopy(state)
+        self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
+        self.assertEqual(state, before)
+
+    def test_live_auxiliary_and_distance_have_provable_candidate_bindings(self):
+        path = Path(__file__).resolve().parents[2] / '.agent-harness/runtime/r23-continuous/STATE.json'
+        if not path.is_file():
+            self.skipTest('owner live checkpoint unavailable')
+        raw = path.read_bytes()
+        state = json.loads(raw)
+        owners = {key: copy.deepcopy(value) for key, value in state['tasks'].items() if value['state'] == 'running'}
+        for key in ('R25-DISTANCE-AUXILIARY-OVERLAP', 'R25-DISTANCE-CONDITIONAL-EVIDENCE'):
+            if state['tasks'].get(key, {}).get('state') != 'ready' or state['tasks'][key]['phase'] != 'review':
+                self.skipTest('live independent review inventory transitioned')
+            context = rc._review_context(state, key)
+            self.assertIsNotNone(context, key)
+            self.assertTrue(context['scope']['candidate_seals'])
+            self.assertTrue(context['scope']['source_contracts'])
+        for key, value in owners.items():
+            self.assertEqual(state['tasks'][key], value)
+        self.assertEqual(path.read_bytes(), raw)
+
+    def test_actual_live_copy_exposes_safe_ready_review_without_touching_live_bytes(self):
+        path = Path(__file__).resolve().parents[2] / '.agent-harness/runtime/r23-continuous/STATE.json'
+        if not path.is_file():
+            self.skipTest('owner live snapshot unavailable')
+        raw = path.read_bytes()
+        state = json.loads(raw)
+        running = {key: value for key, value in state['tasks'].items() if value['state'] == 'running'}
+        if len(running) != 1 or next(iter(running.values()))['phase'] != 'acquisition':
+            self.skipTest('live acquisition already transitioned')
+        eligible = [key for key in rc.summary(state)['ready'] if state['tasks'][key]['phase'] == 'review'
+                    and rc._review_context(state, key) is not None]
+        if not eligible:
+            self.skipTest('live ready review inventory already transitioned')
+        before = copy.deepcopy(state)
+        self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES))
+        packet = rc.next_packet(state, POLICY, PROFILES, review_only=True)
+        self.assertIn(packet['task_id'], eligible)
+        self.assertEqual(packet['phase'], 'review')
+        for key in running:
+            self.assertEqual(state['tasks'][key], before['tasks'][key])
+        self.assertEqual(path.read_bytes(), raw)
 
 
 if __name__ == "__main__": unittest.main()

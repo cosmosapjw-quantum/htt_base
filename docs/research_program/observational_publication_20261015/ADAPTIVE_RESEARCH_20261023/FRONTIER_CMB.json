@@ -1,0 +1,41 @@
+{
+  "frontier_id": "R25-CMB-SHARED-CONDITIONAL-LAWS",
+  "tasks": [
+    {
+      "id": "R25-CMB-CONDITIONAL-GRAM",
+      "kind": "numeric",
+      "goal": "Compare shared-action conditional shape/orientation laws of all60 inherited fulltensor CMB carriers",
+      "acceptance": "Full shared60 laws preserveGram/covariance; finiteMC familyrank and explicit lawscope independentlyreviewed; no physicalp or nativeatlas promotion",
+      "input_identity": "sha256:46803ac5255eeb92f0aa72242a3b9a339bb380c5278a7b6654f7093e80fa153b",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-CMB-CONDITIONAL-GRAM_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-CMB-ORBIT",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "law": "none; deterministicorbit/mirror/sensitivity only"
+        },
+        "after": {
+          "law": "two joint conditional reference group laws sharing60viewGrams",
+          "observable": "four tensor shape/orientation functionals with finiteMCfamilyrank"
+        },
+        "discriminator": "Intrinsicshape vs relativeorientation under equalpower and crossview secondmoments",
+        "scope": "processedcarrier workinglaws; originalL03 physicalHOLD"
+      }
+    }
+  ]
+}

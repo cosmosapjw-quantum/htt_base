@@ -1,15 +1,15 @@
 # Generated Shared Context View
 
-Context version: `f364114ee8bd3cb840a7efe5b72ae1840e6c02c6a98d0ad23bde5721aa3fae84`
-Built at: `2026-10-22T22:32:31+00:00`
+Context version: `08dae106ec1eafa2dfb37b4f141d29bc4b7a286c4c6957d8796597746a95cded`
+Built at: `2026-10-23T07:39:59+00:00`
 
-This compact view is generated from the machine context index. Live HEAD, DAG, status, and active-run context is computed by the hooks at use time. Reference-only files are read only when an assignment names them.
+This compact view is generated from the current machine context index. It does not compute live HEAD, DAG or status. SessionStart can read a host-installed active-controller pointer for a bounded advisory snapshot; absent or invalid pointers provide no active-state observation. Reference-only sources are read on demand.
 
 ---
 
 ## Source: `.agent-harness/context/CURRENT_SYMBOLS.md`
 
-SHA-256: `1bdf76cbab4d200b9d621c8ab8b7ee31d5ae4558bf4b4e7b561cb897cc4a4871`
+SHA-256: `e9c958e056e96934b112d57108cdbf0fe8d4a74716e4147e1694c257b3efcdfa`
 
 # Symbol and Interface Table
 
@@ -25,6 +25,20 @@ SHA-256: `1bdf76cbab4d200b9d621c8ab8b7ee31d5ae4558bf4b4e7b561cb897cc4a4871`
 
 Record overloaded symbols explicitly. A CAS axis may introduce internal names,
 but its result must map them back to this table.
+
+Current continuous campaign: use the native host loop in
+`docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md` (dispatch, ack, record, independent
+review, next). An empty fixed READY list does not exhaust possible new methods.
+Owner-authorized `enable-adaptive` adds read-only routed discovery outside frozen
+campaign state; its checkpoints are scoped to actual evidence, never scientific
+products. Preserve old tasks/packets, consumed ultra, one-use runs and R9 UNKNOWN.
+CUH-G telemetry/registration remains historical, not a current prerequisite.
+
+An explicit host-installed `.agent-harness/runtime/ACTIVE_CONTROLLER.json` binds
+state_path/campaign_id/campaign_identity for a read-only SessionStart snapshot.
+Absent pointer means no active-state observation. Reconcile pending native calls
+against host receipts; acknowledged UNKNOWN outcomes are never replayed. The
+current pack is static guidance, not live HEAD/DAG/status computation.
 
 ---
 

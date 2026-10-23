@@ -1,0 +1,47 @@
+{
+  "record_type": "host transcription of actual independent native review",
+  "reviewer": "/root/r25_blind_checkpoint_facts",
+  "requested": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "verdict": "SCOPED_HOLD",
+  "paths": {
+    "RESEARCH_PLAN_KO.md": "853a39ad71c856fb8a978a7d7d3e4a11e128e08b9b218d1bcb8d10b38c0e84eb",
+    "ADAPTIVE_DAG.json": "cce38db406c1d9d3b0e3699c25e59468553ff6cc89b119f506501f093d9c064c",
+    "PROGRESS_CHECKPOINT_KO.md": "3b8da1d83ef8b05c61ddb3e06e6103ea538dc232ae40a5f757d10ac3532c060b"
+  },
+  "findings": [
+    {
+      "severity": "P1",
+      "path": "ADAPTIVE_DAG.json",
+      "line": 1321,
+      "additional_locations": [
+        "ADAPTIVE_DAG.json:1502",
+        "PROGRESS_CHECKPOINT_KO.md:30",
+        "RESEARCH_PLAN_KO.md:85"
+      ],
+      "defect": "Only PR3 consumer waits for all7; missing independently qualified per-product full functional bundle route required by original HANDOFF line30",
+      "repair": "Add planning-only staged independent qualification of completed product then separately bound full(x,F,Pi,Q,G_F) consumer subject to actual safe writer release and host route. Preserve frozen all7 acquisition/crossprediction, history/accounting. Worker validation is not qualification; do not claim execution or concurrent writers."
+    }
+  ],
+  "checks": {
+    "original_42_mapping_equal": true,
+    "all_13_inherited_result_review_hash_pairs_match": true,
+    "baseline_62_task_objects_equal": true,
+    "two_consumed_ultra_entries_unchanged": true,
+    "current_18_path_hash_references_match": true,
+    "theorem_source_and_gaia_review_binding_match": true,
+    "reported_numeric_values_match": true,
+    "lfi_three_worker_receipt_status": "VALIDATED_LOCAL_PRODUCT; byte/FITS scientific qualification not reviewed",
+    "claim_promotion_found": false
+  },
+  "live_snapshot_sha256": "47f563f101dbcc2e70e26a28c0ba14ca3678724293112529ca459068a511d1e2",
+  "read_only_shell_invocations": 8,
+  "enclosed_python_seconds": 1.2029,
+  "total_shell_wall_seconds": "NOT_REPORTED",
+  "mutations_downloads_production_reruns_children": false,
+  "initial_comparison_correction": "Wrong source field names corrected to state/existing_evidence; zero discrepancies",
+  "scope": "Factual reporting and planning, not numerical re-admission/theorem proof/external input qualification/later state"
+}

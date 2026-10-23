@@ -1,0 +1,38 @@
+{
+  "task_id": "R25-DISTANCE-CONDITIONAL-EVIDENCE",
+  "packet_id": "80be2c56bc7d24f05d364fb63ce7fea134178e25b6a9ee5aaf96378c95f2b9ad",
+  "input_identity": "sha256:77439c5b5966f6f0c6a4d4e2819b28b76b7a3c24523e9b08ec9f7e12fd5ca2b8",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "owner": "HTT exploratory model diagnostic",
+  "scope": "R25 retained 274-row conditional composite-null comparison",
+  "claim_tier": "exploratory conditional-evidence diagnostic",
+  "scientific_admission": "HOLD",
+  "transfer_source": "R23 released observational rows and R24 external direction/working model products; no native solver transfer",
+  "sky_support_status": "274 retained J2000 source vectors; selected-cohort only",
+  "null_mock_status": "analytic fixed-law correlated two-variable control only; no external null/mock coverage",
+  "generator": "compute.py with OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1",
+  "inputs_sha256": {
+    "R25-DISTANCE-CONDITIONAL-EVIDENCE_INPUT.json": "77439c5b5966f6f0c6a4d4e2819b28b76b7a3c24523e9b08ec9f7e12fd5ca2b8",
+    "METHOD_EXECUTION_20261023/distance/analyze.py": "5177f93c0c0e575b135c27dc3abe1fb3223fef421dae6bf571cbfb09fde4a63d",
+    "METHOD_EXECUTION_20261023/distance/RESULT.json": "330066f4a8605caa9874f192a938d4ef1d84cf8933bdd3e6059a40b011c28bd0",
+    "METHOD_EXECUTION_20261023/distance/OOF_ROWS.csv": "6fd8356e041e1ece186b79bf1506b04af5411e17e6c31a489a1f66da977a3c40",
+    "METHOD_EXECUTION_20261023/distance/DIRECTION_JOIN.csv": "4e6e9c991ecdf2fda2a403f68a4ea5d744e244c73478eef1c70efbf007852b9a",
+    "METHOD_EXECUTION_20261023/distance/CONTRACT.json": "150ce8734027c228af6daa042349f287d8de99dd71f60ffb79c26a7483f756fd",
+    "METHOD_EXECUTION_20261023/distance/ARTIFACT_MANIFEST.json": "1e1e0b6fabdc535bae1060b1ba3d1c61b2b1302001119c67d4a43f035dec521b",
+    "CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/RELEASED_ROWS.csv": "c7912bd7dd983cdcdf47408a89da9f2b76887a0cc37fd9b5a9a8e83e03d3fe20"
+  },
+  "products_sha256": {
+    "compute.py": "efbe7e2925f997173a1c5104490955b9c44eab49b71de8aca56f8009c8dc622d",
+    "test_compute.py": "8209929d30ffc81a125f9d4e6188c501bee19f6150493cce245957380318606a",
+    "RESULT.json": "8977027b573794b3b85cc2cb4ff12491f553451f9572358ae92b0d0a99700a8b",
+    "figure.png": "eb124cf9b608d1fdb5adea3560e5a752960bc8148c4d130e4b0b86ad1bd17e24",
+    "REPORT.md": "c3d41ebb84ebf9a6001dcc2675a1b490cd2fb68d0fffb80be37de3ec1f4e639b",
+    "RAW_RECEIPT.json": "f55b3a85a49f4bba0b06b914cf13f572a1feb52fc168e40f3409f6d84296ee11",
+    "PRODUCTION.first_failure.txt": "8aacc2672f85fcba342c1505bc1d8275ccbcd3f9a0e82dfe74769406ea2cc732",
+    "PRODUCTION.time": "abe0957cfa40c4f103c4b3c584c184a5c41990f3e5af41db85632e3af70d145f",
+    "PRODUCTION.retry.time": "1552d092a4469c083bdd86f8d959140ab2bd4f0004462332469690c05328d2d7",
+    "TEST.time": "d3e61e7c3be181204d615ea623e85f8c3520c7ced1b96aaa0f024e3d9db5318e"
+  },
+  "qualified_products": ["RESULT.json", "figure.png", "REPORT.md"],
+  "caveats": ["selected source law unqualified", "adaptive method choice", "optimizer bound not certified outward rounded", "low-z PGC9031=317 km/s", "no physical tensor map", "prior physical HOLD unchanged"]
+}

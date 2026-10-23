@@ -1,0 +1,59 @@
+{
+  "agent_id": "/root/rc_374acda1a171699f",
+  "candidate_identity": "sha256:c40f04af7296ab6ad8ea0adfb3b93fb981d87f3e3b83b35e5d14f78dc04063f5",
+  "cumulative_wall_seconds": 32.83,
+  "first_failure_retained": true,
+  "highs_calls": 3,
+  "highs_time_limit_each_seconds": 10,
+  "input_identity": "sha256:2dfa96e815659ef53f03290f88afb3a2bd213b505856cbacd7adeeb127b2520f",
+  "max_observed_RSS_kib": 112940,
+  "numerical_commands": [
+    {
+      "argv": "timeout 75s .venv/bin/python auxiliary_overlap/compute.py",
+      "elapsed_seconds": 4.25,
+      "exit": 1,
+      "first_failure": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/FIRST_FAILURE.txt",
+      "meaning": "all exact, LP and tensor checks completed; presentation import failed under virtual-address ulimit"
+    },
+    {
+      "argv": "timeout 20s .venv/bin/python auxiliary_overlap/finish.py",
+      "elapsed_seconds": 19.76,
+      "exit": 0,
+      "meaning": "presentation from saved numerical output; no further LP"
+    },
+    {
+      "argv": "timeout 20s .venv/bin/python -m pytest -q auxiliary_overlap/test_compute.py",
+      "elapsed_seconds": 7.67,
+      "exit": 0,
+      "summary": "2 passed"
+    },
+    {
+      "argv": "timeout 20s .venv/bin/python auxiliary_overlap/finish.py",
+      "elapsed_seconds": 1.15,
+      "exit": 0,
+      "meaning": "figure label correction only; no further LP"
+    }
+  ],
+  "observed_runtime": "UNKNOWN",
+  "original_acceptance": "HOLD",
+  "outcome": "success_candidate_pending_independent_review",
+  "packet_id": "374acda1a171699f5e544a9cf1d58f6e26f78eccbe536de04b59f22f6df8dd3a",
+  "requested_runtime": "gpt-6-sol/high",
+  "scientific_status": "candidate only; independent review required",
+  "task_id": "R25-DISTANCE-AUXILIARY-OVERLAP",
+  "validation_evidence": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/RUN_TIME.txt",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/RUN_STDOUT.txt",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/RUN_STDERR.txt",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/FIRST_FAILURE.txt",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/FINISH_TIME.txt",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/FINISH_STDOUT.txt",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/FINISH_STDERR.txt",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/TEST_TIME.txt",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/TEST_STDOUT.txt",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/TEST_STDERR.txt",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/FINISH2_TIME.txt",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/FINISH2_STDOUT.txt",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/FINISH2_STDERR.txt"
+  ]
+}

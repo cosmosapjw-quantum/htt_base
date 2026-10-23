@@ -121,9 +121,11 @@ def _semantic_delta(delta: dict) -> None:
 def _semantic_meaning(value):
     """Discard seals and descriptive metadata when comparing scientific meaning."""
     if isinstance(value, dict):
-        return {k: _semantic_meaning(v) for k, v in value.items()
-                if not any(word in k.lower() for word in
-                           ("identity", "hash", "sha256", "label", "metadata"))}
+        administrative = {"identity", "input_identity", "source_identity", "candidate_identity",
+                          "semantic_identity", "hash", "sha256", "label", "labels", "metadata",
+                          "note", "notes", "name", "names", "timestamp", "timestamps",
+                          "created_at", "updated_at", "comment", "comments", "display_name"}
+        return {k: _semantic_meaning(v) for k, v in value.items() if k.lower() not in administrative}
     if isinstance(value, list):
         return [_semantic_meaning(v) for v in value]
     return value
@@ -168,6 +170,219 @@ def _obligation_met(expr: dict, tasks: dict) -> bool:
     return expr["product"] in task.get("qualified_products", [])
 
 
+def _action_signature(spec: dict) -> str:
+    # Locators, wrapper bytes and administrative metadata do not prove a new
+    # scientific action. A real source/cohort change must be explicit in the
+    # typed before/after meaning, assessed by the scientific research/reviewer.
+    return digest({"semantic_delta": _semantic_projection(spec["semantic_delta"]),
+                   "kind": spec.get("kind", "code")})
+
+
+def _repair_approved(state: dict, repair_id: str | None) -> bool:
+    return bool(repair_id and (repair_id in state["campaign"].get("approved_scientific_repairs", [])
+                              or repair_id in state.get("repair_authorizations", {})))
+
+
+def _validate_repair_binding(state: dict, repair_id: str | None, task_id: str,
+                             spec: dict | None = None, issue: dict | None = None,
+                             delta: dict | None = None, prospective: bool = False) -> None:
+    """A registered allowance funds only its reviewed issue/target and explicit successors."""
+    row = state.get("repair_authorizations", {}).get(repair_id)
+    if row is None:
+        return  # Historical frozen allowances retain their original semantics.
+    task = state["tasks"].get(task_id, {})
+    spec = spec if spec is not None else task.get("spec", {})
+    issue = issue if issue is not None else task.get("issue")
+    expected_delta = row["semantic_delta_identity"]
+    if task_id == row["origin_task_id"]:
+        require(spec.get("acceptance") == row["claim_target"], "registered repair claim target changed")
+    else:
+        binding = next((value for value in row.get("successor_bindings", [])
+                        if value["task_id"] == task_id), None)
+        require(binding is not None, "registered repair is not authorized for this origin/successor task")
+        require(binding["task_spec_identity"] == digest(spec)
+                and binding["claim_target"] == spec.get("acceptance")
+                and binding["issue_identity"] == row["issue_identity"]
+                and spec.get("semantic_delta")
+                and binding["semantic_delta_identity"] == digest(_semantic_projection(spec["semantic_delta"])),
+                "registered successor spec, issue, target or semantic delta changed")
+        expected_delta = binding["semantic_delta_identity"]
+    if not prospective:
+        require(issue and _operative_issue_identity(issue) == _operative_issue_identity(row["issue"]),
+                "registered repair operative issue changed")
+    if delta is not None:
+        require(digest(_semantic_projection(delta)) == expected_delta,
+                "registered repair semantic delta changed")
+
+
+def _task_repair_id(state: dict, task_id: str) -> str | None:
+    task = state["tasks"][task_id]
+    for key, row in reversed(list(state.get("repair_authorizations", {}).items())):
+        if row["origin_task_id"] == task_id and task.get("issue") and (
+                _operative_issue_identity(row["issue"]) == _operative_issue_identity(task["issue"])):
+            _validate_repair_binding(state, key, task_id)
+            return key
+    key = task.get("active_repair_id") or task["spec"].get("approved_repair_id")
+    row = state.get("repair_authorizations", {}).get(key)
+    if row is not None and task.get("issue") and (
+            _operative_issue_identity(task["issue"]) != _operative_issue_identity(row["issue"])):
+        # Preserve an actual newly observed defect, but do not fund it with this
+        # issue's allowance. Foreign task/claim/spec bindings still fail closed.
+        _validate_repair_binding(state, key, task_id, prospective=True)
+        return None
+    _validate_repair_binding(state, key, task_id,
+                            prospective=not task.get("issue") and task["phase"] in {"execute", "acquisition"})
+    return key
+
+
+def _operative_issue_identity(issue: dict) -> str:
+    # Risk labels and administrative changes cannot replenish the same operative defect.
+    return digest({key: _semantic_meaning(issue.get(key)) for key in
+                   ("class", "question", "exact_missing_or_defect", "input_sources", "counterexample")})
+
+
+def _bound_repair_issues(state: dict) -> set[str]:
+    """Read issue-level allowance bindings without attributing later task defects."""
+    bound = {_operative_issue_identity(row["issue"])
+             for row in state.get("repair_authorizations", {}).values()}
+    for allowance in [*state["ultra_pending"].values(), *state["ultra_repairs"].values()]:
+        if allowance.get("operative_issue_identity"):
+            bound.add(allowance["operative_issue_identity"])
+            continue
+        task = state["tasks"].get(allowance.get("task_id"), {})
+        history = task.get("history", [])
+        trigger = allowance.get("trigger_packet")
+        if trigger:
+            issue = next((event.get("result", {}).get("issue") for event in history
+                          if event["packet_id"] == trigger), None)
+            if issue:
+                bound.add(_operative_issue_identity(issue))
+                continue
+        packet_id = allowance.get("packet_id") or trigger
+        packet = state["packets"].get(packet_id, {})
+        # Historical escalation packets already delivered the operative issue in
+        # their identity-bound JSON assignment. Do not rewrite those packets.
+        message = packet.get("spawn_args", {}).get("message", "")
+        if packet.get("phase") == "escalation" and "Assignment:\n" in message:
+            try:
+                assignment = json.loads(message.rsplit("Assignment:\n", 1)[1])
+                if (assignment.get("packet_id") == packet_id
+                        and assignment.get("task_id") == allowance.get("task_id")
+                        and assignment.get("issue")):
+                    bound.add(_operative_issue_identity(assignment["issue"]))
+                    continue
+            except (ValueError, TypeError):
+                pass
+        # Fallback for old receipts: inspect only history preceding the actual
+        # escalation outcome, or the still-current acknowledged packet.
+        cutoff = next((index for index, event in enumerate(history)
+                       if event["packet_id"] == packet_id), None)
+        if cutoff is None and task.get("packet_id") == packet_id:
+            cutoff = len(history)
+        if cutoff is not None:
+            issue = next((event.get("result", {}).get("issue") for event in reversed(history[:cutoff])
+                          if event.get("result", {}).get("issue", {}).get("class")
+                          in {"theory", "numeric", "code"}), None)
+            if issue:
+                bound.add(_operative_issue_identity(issue))
+    return bound
+
+
+def authorize_repair(state: dict, authorization: dict, user_authorization: str) -> None:
+    """Append a distinct issue allowance; never replenish a historical repair alias."""
+    require(user_authorization.strip(), "current scoped user authorization required")
+    require(state["campaign_identity"] == digest(state["campaign"]), "campaign identity changed")
+    key = authorization.get("repair_id")
+    require(isinstance(key, str) and key.strip() and not _repair_approved(state, key)
+            and key not in state["ultra_repairs"] and key not in state["ultra_pending"],
+            "repair ID already approved, consumed or reserved")
+    require(authorization.get("cumulative_budget_link") == state["campaign_identity"],
+            "repair must link the existing cumulative campaign budget")
+    issue = authorization.get("issue")
+    require(isinstance(issue, dict) and issue.get("class") in {"theory", "numeric", "code"}
+            and issue.get("question") and issue.get("exact_missing_or_defect")
+            and authorization.get("scope") and authorization.get("operative_question") == issue["question"],
+            "distinct operative scientific issue and scope required")
+    signature = digest(_semantic_meaning(issue))
+    require(authorization.get("issue_identity") == signature, "issue identity must bind scientific meaning")
+    origin_id = authorization.get("origin_task_id")
+    require(origin_id in state["tasks"], "exact predecessor task required")
+    origin = state["tasks"][origin_id]
+    origin_issues = [event.get("result", {}).get("issue") for event in origin.get("history", [])]
+    origin_issues.append(origin.get("issue"))
+    origin_issues = [value for value in origin_issues if value]
+    require(any(digest(_semantic_meaning(value)) == authorization.get("origin_issue_identity")
+                for value in origin_issues), "stale predecessor issue binding")
+    require(authorization.get("claim_target") == origin["spec"]["acceptance"],
+            "repair must bind the predecessor's unchanged claim target")
+    delta = authorization.get("semantic_delta")
+    _semantic_delta(delta)
+    require(delta["kind"] != "prelaunch_transport" and delta["scope"] == authorization["scope"],
+            "bounded scientific repair delta and matching scope required")
+    # Wording a question differently is not itself an operative change.
+    def operative(value):
+        if isinstance(value, dict):
+            return {key: operative(item) for key, item in _semantic_meaning(value).items()
+                    if key not in {"question", "operative_question", "exact_missing_or_defect", "description", "risk"}}
+        if isinstance(value, list):
+            return [operative(item) for item in value]
+        return value
+    require(operative(delta["before"]) != operative(delta["after"]),
+            "question/defect wording alone cannot authorize a new repair")
+    delta_identity = digest(_semantic_projection(delta))
+    previous = list(state.get("repair_authorizations", {}).values())
+    require(not any(row.get("semantic_delta_identity") == delta_identity for row in previous),
+            "repair semantic evidence already authorized")
+    issue_key = _operative_issue_identity(issue)
+    require(not any(_operative_issue_identity(row["issue"]) == issue_key for row in previous),
+            "existing authorized issue cannot replenish a repair under a new alias")
+    require(issue_key not in _bound_repair_issues(state),
+            "approved or consumed operative issue cannot replenish an alias")
+    _source_refs(authorization.get("evidence_refs"))
+    receipts = [_receipt(ref) for ref in authorization["evidence_refs"] if Path(ref).is_file()]
+    require(receipts, "distinct issue requires at least one actual local evidence receipt")
+    review_receipt = _receipt(authorization.get("research_decision_receipt", ""))
+    review = json.loads(Path(review_receipt["path"]).read_text())
+    require(isinstance(review, dict) and review.get("decision") == "distinct_scoped_issue"
+            and isinstance(review.get("agent_id"), str) and review["agent_id"].strip()
+            and review["agent_id"] not in origin["authors"], "read-only scoped Astra research decision required")
+    packets = {**state["packets"], **state.get("adaptive", {}).get("packets", {})}
+    decision_packet = packets.get(review.get("packet_id"), {})
+    require(decision_packet.get("launch_performed") is True
+            and decision_packet.get("agent_id") == review["agent_id"]
+            and decision_packet.get("phase") in {"research", "discovery", "escalation"}
+            and decision_packet.get("route", {}).get("requested", {}).get("model") == "gpt-6-astra",
+            "decision must come from an actually acknowledged Astra research/discovery packet")
+    recorded = [event for task in state["tasks"].values() for event in task.get("history", [])]
+    recorded += state.get("adaptive", {}).get("checkpoints", [])
+    require(any(event.get("receipt") == review_receipt
+                and event.get("result", {}).get("packet_id") == decision_packet["packet_id"]
+                for event in recorded), "actual Astra decision outcome must be recorded before authorization")
+    bindings = {"origin_task_id": origin_id, "origin_issue_identity": authorization["origin_issue_identity"],
+                "issue_identity": signature, "semantic_delta_identity": delta_identity,
+                "claim_target": authorization["claim_target"], "cumulative_budget_link": state["campaign_identity"]}
+    successors = authorization.get("successor_bindings", [])
+    require(isinstance(successors, list), "successor bindings must be a list")
+    successor_ids = []
+    for successor in successors:
+        require(isinstance(successor, dict) and set(successor) == {
+                    "task_id", "task_spec_identity", "claim_target", "issue_identity", "semantic_delta_identity"}
+                and all(isinstance(value, str) and value.strip() for value in successor.values())
+                and successor["task_id"] != origin_id
+                and successor["issue_identity"] == signature, "exact successor issue/spec/target/delta binding required")
+        successor_ids.append(successor["task_id"])
+    require(len(successor_ids) == len(set(successor_ids)), "duplicate successor binding")
+    if successors:
+        require(review.get("successor_bindings") == successors, "actual Astra decision must bind successors explicitly")
+    require(all(review.get(field) == value for field, value in bindings.items()),
+            "novelty review must bind exact predecessor, delta, issue, claim and cumulative budget")
+    state.setdefault("repair_authorizations", {})[key] = {**copy.deepcopy(authorization),
+            "semantic_delta_identity": delta_identity, "research_decision": review_receipt,
+            "requested_research_runtime": decision_packet["route"]["requested"],
+            "observed_research_runtime": decision_packet.get("observed_runtime", "UNKNOWN"),
+            "user_authorization": user_authorization, "receipts": receipts}
+
+
 def append_frontier(state: dict, frontier: dict, authorization: str) -> None:
     """Append conditional questions without rewriting any frozen campaign object."""
     require(authorization.strip(), "current frontier authorization required")
@@ -178,6 +393,8 @@ def append_frontier(state: dict, frontier: dict, authorization: str) -> None:
     rows = frontier["tasks"]
     ids = [t["id"] for t in rows]
     require(len(set(ids)) == len(ids) and not set(ids) & state["tasks"].keys(), "duplicate task ID")
+    old_signatures = {_action_signature(task["spec"]) for task in state["tasks"].values()
+                      if task["spec"].get("semantic_delta") and task["spec"].get("input_sources")}
     for t in rows:
         require(t.get("contract_origin") == "new_conditional_research"
                 and t.get("promotes_original_acceptance") is False,
@@ -188,10 +405,15 @@ def append_frontier(state: dict, frontier: dict, authorization: str) -> None:
                 "new tasks use typed requires; original enabling edges cannot change")
         require(t.get("initial_state", "ready") == "ready", "new tasks require actual execution and review")
         repair = t.get("approved_repair_id")
-        require(not repair or repair in state["campaign"].get("approved_scientific_repairs", []),
+        require(not repair or _repair_approved(state, repair),
                 "append cannot authorize a new ultra repair budget")
         _semantic_delta(t.get("semantic_delta"))
         require(t["semantic_delta"]["kind"] != "prelaunch_transport", "transport is resume evidence, not a new question")
+        signature = _action_signature(t)
+        require(signature not in old_signatures,
+                "logical research action already exists; new IDs/owned paths cannot reset attempts")
+        old_signatures.add(signature)
+        _validate_repair_binding(state, repair, t["id"], spec=t, prospective=True)
     # Reuse the existing spec validator; graph validation below includes typed edges.
     new = initialize({"campaign_id": state["campaign_id"], "tasks": rows}, authorization)
     combined = {**state["tasks"], **new["tasks"]}
@@ -220,6 +442,182 @@ def append_frontier(state: dict, frontier: dict, authorization: str) -> None:
     state["events"].append({"type": "frontier_appended", "identity": entry["identity"], "task_ids": ids})
 
 
+def enable_adaptive(state: dict, authorization: str, state_source: str | None = None) -> None:
+    """Opt in outside the frozen campaign; never reset an existing witness."""
+    require(isinstance(authorization, str) and authorization.strip(), "current adaptive authorization required")
+    require(state["campaign_identity"] == digest(state["campaign"]), "campaign identity changed")
+    require(state_source is None or Path(state_source).is_file(), "adaptive state source file required")
+    if "adaptive" not in state:
+        state["adaptive"] = {"authorization": authorization, "packets": {}, "checkpoints": [],
+                             "evidence_deltas": [], "state_source": str(Path(state_source).resolve()) if state_source else None}
+
+
+def adaptive_evidence(state: dict, evidence: str) -> None:
+    """Register a real source/method change, not a discovery/event counter."""
+    require("adaptive" in state, "adaptive continuation is not enabled")
+    receipt = _receipt(evidence)
+    delta = json.loads(Path(evidence).read_text())
+    _semantic_delta(delta)
+    require(delta["kind"] != "prelaunch_transport", "adaptive evidence must change research meaning")
+    _source_refs(delta.get("source_refs"))
+    identity = digest(_semantic_projection(delta))
+    require(not any(row["identity"] == identity for row in state["adaptive"]["evidence_deltas"]),
+            "adaptive semantic evidence already registered")
+    state["adaptive"]["evidence_deltas"].append({"identity": identity, "delta": delta, "receipt": receipt})
+
+
+def restore_discovery(state: dict, packet_id: str, evidence: str) -> None:
+    """Restore only an actually refused, unacknowledged, non-exhausted discovery launch."""
+    adaptive = state.get("adaptive", {})
+    packet = adaptive.get("packets", {}).get(packet_id)
+    require(packet and packet["state"] == "held" and not packet.get("launch_performed")
+            and not packet.get("agent_id"), "only refused unacknowledged discovery may restore")
+    require(not packet["hold"].get("retry_prohibited"), "exhausted/prohibited discovery transport cannot retry")
+    require(packet["fingerprint"] == adaptive_fingerprint(state), "discovery science fingerprint changed")
+    require(not any(value["state"] in {"planned", "running"} for value in adaptive["packets"].values())
+            and not any(task["state"] in {"planned", "running"} for task in state["tasks"].values()),
+            "outstanding native opportunity cannot replay")
+    receipt = _receipt(evidence)
+    delta = json.loads(Path(evidence).read_text())
+    _semantic_delta(delta)
+    require(delta["kind"] == "prelaunch_transport" and delta.get("packet_id") == packet_id
+            and delta.get("fingerprint") == packet["fingerprint"], "exact discovery transport delta required")
+    restoration_receipt = _receipt(delta.get("restoration_receipt", ""))
+    restored = json.loads(Path(restoration_receipt["path"]).read_text())
+    require(isinstance(restored, dict) and restored.get("transport_available") is True
+            and restored.get("retry_permitted") is True
+            and restored.get("packet_id") == packet_id and restored.get("fingerprint") == packet["fingerprint"]
+            and restored.get("native_tool") == packet["native_tool"], "actual identity-bound transport restoration required")
+    record = {"packet_id": packet_id, "fingerprint": packet["fingerprint"],
+              "semantic_delta": delta, "receipt": receipt, "restoration_receipt": restoration_receipt}
+    packet["state"] = "restored"
+    adaptive.setdefault("transport_restorations", []).append(record)
+
+
+def _source_refs(refs: Any) -> None:
+    from urllib.parse import urlparse
+    require(isinstance(refs, list) and refs, "nonempty resolvable source_refs required")
+    for ref in refs:
+        require(isinstance(ref, str) and ref.strip(), "source reference must be a string")
+        url = urlparse(ref)
+        require((url.scheme in {"https", "http"} and bool(url.netloc)) or Path(ref).is_file(),
+                "source reference must be an existing file or explicit http(s) source")
+
+
+def adaptive_fingerprint(state: dict) -> str:
+    """Stable nonplanning evidence; discovery cannot make its own next opportunity."""
+    evidence = {}
+    for key, task in sorted(state["tasks"].items()):
+        history = task.get("history", [])
+        evidence[key] = {"spec": task["spec"],
+                         "latest_actual_result": history[-1] if history else None,
+                         "candidate_identity": task.get("candidate_identity"),
+                         "candidate_products": task.get("candidate_products", []),
+                         "qualified_products": task.get("qualified_products", []),
+                         "hold": task.get("hold"),
+                         "scientific_resume": task.get("scientific_resume")}
+    return digest({"tasks": evidence,
+                   "evidence_deltas": [row["identity"] for row in state.get("adaptive", {}).get("evidence_deltas", [])]})
+
+
+def _adaptive_next(state: dict, policy: dict, profiles: set[tuple[str, str]]) -> dict | None:
+    adaptive = state.get("adaptive")
+    if adaptive is None:
+        return None
+    for packet in adaptive["packets"].values():
+        if packet["state"] == "planned":
+            return copy.deepcopy(packet)
+        if packet["state"] == "running":
+            return summary(state)
+    exhausted = [packet for packet in adaptive["packets"].values()
+                 if packet["state"] == "held" and packet.get("hold", {}).get("retry_prohibited")]
+    if exhausted:
+        return {**summary(state), "status": "HOLD_TRANSPORT_UNAVAILABLE", "discovery_hold": exhausted[-1]["hold"]}
+    fingerprint = adaptive_fingerprint(state)
+    if any(row["fingerprint"] == fingerprint for row in adaptive["checkpoints"]):
+        return None
+    refused = [p for p in adaptive["packets"].values()
+               if p["fingerprint"] == fingerprint and p["state"] == "held"]
+    if refused:
+        return {**summary(state), "status": "HOLD_TRANSPORT_UNAVAILABLE", "discovery_hold": refused[-1]["hold"]}
+    route = resolve_route(policy, "review_or_research", profiles)
+    if route["transport_selected"] is None:
+        return {**summary(state), "status": "HOLD_TRANSPORT_UNAVAILABLE", "discovery_route": route}
+    eligible = sorted(key for key, task in state["tasks"].items() if task["state"] != "completed")
+    if not eligible:
+        return None
+    selected = route["transport_selected"]
+    identity = {"campaign": state["campaign_identity"], "adaptive_discovery": fingerprint}
+    restorations = [row for row in adaptive.get("transport_restorations", []) if row["fingerprint"] == fingerprint]
+    restoration = restorations[-1] if restorations else None
+    if restoration:
+        identity["transport_restoration_identity"] = digest(restoration)
+    packet_id = digest(identity)
+    assignment = {"fingerprint": fingerprint, "campaign_identity": state["campaign_identity"],
+                  "state_source": adaptive.get("state_source"), "eligible_branches": eligible,
+                  "transport_restoration": restoration,
+                  "branch_inventory": {key: {"state": task["state"], "phase": task["phase"]}
+                      for key, task in state["tasks"].items()},
+                  "evidence_delta_receipts": [row["receipt"] for row in adaptive["evidence_deltas"]]}
+    prompt = ("Read-only bounded adaptive research discovery. Do not spawn children, implement, run a native "
+              "solver/ODE, manufacture inputs, reopen exhausted attempts or alter original acceptances/budgets. "
+              "Read state_source and its source/receipt references before making claims; absent source access is an exact residual. "
+              "Examine held branches for genuine new methods, assumptions, observables, sources or counterexamples. "
+              "Return packet_id, task_id, input_identity, agent_id and raw_receipt. outcome must be proposal or "
+              "no_action. A no_action result must examine every exact assigned eligible_branches entry. "
+              "Always provide examined_branches, methods, source_refs and exact_residuals. A proposal "
+              "also needs frontier: executable new_conditional_research tasks with existing local or explicit "
+              "http(s) input_sources, typed requires, bounded owned_paths, semantic_delta and unchanged original "
+              "acceptance. Discovery has no qualified products or scientific success. Assignment: " +
+              json.dumps({"packet_id": packet_id, "task_id": "adaptive-discovery", "input_identity": fingerprint,
+                          **assignment}, ensure_ascii=False))
+    packet = {"packet_id": packet_id, "task_id": "adaptive-discovery", "input_identity": fingerprint,
+              "fingerprint": fingerprint, "eligible_branches": eligible,
+              "transport_restoration": restoration, "phase": "discovery", "state": "planned", "route": route,
+              "launch_performed": False, "observed_runtime": "UNKNOWN",
+              "native_tool": "collaboration.spawn_agent",
+              "spawn_args": {"task_name": "discovery_" + packet_id[:16], "fork_turns": "none",
+                             "model": selected["model"], "reasoning_effort": selected["effort"], "message": prompt}}
+    adaptive["packets"][packet_id] = packet
+    return copy.deepcopy(packet)
+
+
+def _adaptive_record(state: dict, result: dict) -> None:
+    adaptive = state["adaptive"]
+    packet = adaptive["packets"][result["packet_id"]]
+    require(packet["state"] == "running", "stale or unlaunched discovery result")
+    require(result.get("agent_id") == packet["agent_id"] and result.get("task_id") == packet["task_id"]
+            and result.get("input_identity") == packet["input_identity"], "stale discovery identity")
+    receipt = _receipt(result.get("raw_receipt", ""))
+    require(not result.get("qualified_products") and not result.get("acceptance_met"),
+            "discovery cannot qualify products or accept science")
+    for field in ("examined_branches", "methods", "exact_residuals"):
+        require(isinstance(result.get(field), list) and result[field]
+                and all(isinstance(v, str) and v.strip() for v in result[field]),
+                "discovery needs nonempty " + field)
+    require(set(result["examined_branches"]) <= state["tasks"].keys(), "unknown examined branch")
+    _source_refs(result.get("source_refs"))
+    outcome = result.get("outcome")
+    require(outcome in {"proposal", "no_action"}, "discovery needs proposal or scoped no_action")
+    if outcome == "proposal":
+        frontier = result.get("frontier")
+        require(isinstance(frontier, dict), "executable frontier required")
+        for task in frontier.get("tasks", []):
+            _source_refs(task.get("input_sources"))
+        append_frontier(state, frontier, adaptive["authorization"])
+        for spec in frontier["tasks"]:
+            contributors = state["tasks"][spec["id"]]["contributors"]
+            if packet["agent_id"] not in contributors:
+                contributors.append(packet["agent_id"])
+    else:
+        require(set(result["examined_branches"]) == set(packet["eligible_branches"]),
+                "no_action must cover every exact assigned eligible branch")
+        require(not result.get("frontier"), "no_action cannot append work")
+    adaptive["checkpoints"].append({"fingerprint": packet["fingerprint"], "outcome": outcome,
+                                    "receipt": receipt, "result": copy.deepcopy(result)})
+    packet["state"] = "recorded"
+
+
 def route_for(task: dict) -> str:
     if task["phase"] == "escalation":
         return "blocker_escalation"
@@ -245,7 +643,14 @@ def summary(state: dict) -> dict:
     else:
         status = "HOLD_UNRESOLVED_BRANCHES"
     originals = state["campaign"].get("original_science_contract", {}).get("nodes", [])
-    return {"campaign_id": state["campaign_id"], "status": status, "states": states,
+    adaptive = state.get("adaptive", {})
+    planning = list(adaptive.get("packets", {}).values())
+    if any(p["state"] in {"planned", "running"} for p in planning):
+        status = "AWAITING_NATIVE_OUTCOME"
+    return {"planning": {"enabled": bool(adaptive), "packets": len(planning),
+                          "checkpoints": len(adaptive.get("checkpoints", [])),
+                          "outstanding": sum(p["state"] in {"planned", "running"} for p in planning)},
+            "campaign_id": state["campaign_id"], "status": status, "states": states,
             "ready": ready, "completed": len(done), "total": len(tasks),
             "original_science": {"total": len(originals),
                                  "source_completed_scoped": sum(n.get("state") == "completed_scoped" for n in originals),
@@ -254,16 +659,208 @@ def summary(state: dict) -> dict:
             "note": "Scoped task acceptance never automatically promotes original scientific nodes."}
 
 
-def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]]) -> dict:
+def _review_context(state: dict, task_id: str) -> dict | None:
+    """Prove the narrow read-only slot from declared, resolved local scopes."""
+    task = state["tasks"][task_id]
+    if (task["phase"] != "review" or task["state"] not in {"ready", "planned"}
+            or not task.get("candidate_identity")):
+        return None
+    done = {key for key, row in state["tasks"].items() if row["state"] == "completed"}
+    if not (set(task["spec"].get("depends_on", [])) <= done
+            and _obligation_met(task["spec"].get("requires", {"all": []}), state["tasks"])):
+        return None
+    if any(packet["state"] in {"planned", "running"}
+           for packet in state.get("adaptive", {}).get("packets", {}).values()):
+        return None
+    others = [(key, row) for key, row in state["tasks"].items()
+              if key != task_id and row["state"] in {"planned", "running"}]
+    if len(others) > 1 or any(row["state"] != "running" or row["phase"] != "acquisition"
+                              for _, row in others):
+        return None
+    root = Path(__file__).resolve().parents[2]
+    def local(value, exists=False, relative_to=None):
+        if (not isinstance(value, str) or not value.strip() or "://" in value
+                or any(char in value for char in "*?[")):
+            raise ValueError("unknown local scope")
+        value = Path(value)
+        choices = {(value if value.is_absolute() else root / value).resolve()}
+        if relative_to is not None and not value.is_absolute():
+            choices.add((relative_to / value).resolve())
+        if exists:
+            choices = {path for path in choices if path.exists()}
+        if len(choices) != 1:
+            raise ValueError("missing or ambiguous local scope")
+        return str(choices.pop())
+    def metadata(path):
+        # Bounded reads even if a file grows between stat and read.
+        with path.open("rb") as stream:
+            raw = stream.read(1024 * 1024 + 1)
+        if len(raw) > 1024 * 1024:
+            raise ValueError("metadata traversal bound")
+        document = json.loads(raw)
+        if not isinstance(document, dict):
+            raise ValueError("unknown contract declarations")
+        return raw, document
+    try:
+        spec = task["spec"]
+        if (not spec.get("owned_paths") or not spec.get("input_sources")
+                or len(spec["owned_paths"]) > 256 or len(spec["input_sources"]) > 256
+                or not isinstance(task["candidate_identity"], str)):
+            return None
+        reads = {local(value, True) for value in spec["owned_paths"]}
+        contracts, queue = {}, []
+        for source in spec["input_sources"]:
+            source = source.get("path") if isinstance(source, dict) else source
+            queue.append((Path(local(source, True)), 0))
+        metadata_bytes = 0
+        while queue:
+            path, depth = queue.pop()
+            reads.add(str(path))
+            if len(reads) > 256:
+                return None
+            if path.suffix.lower() != ".json" or str(path) in contracts:
+                continue
+            if depth > 16 or len(contracts) >= 64:
+                return None
+            raw, document = metadata(path)
+            metadata_bytes += len(raw)
+            if metadata_bytes > 4 * 1024 * 1024:
+                return None
+            contracts[str(path)] = hashlib.sha256(raw).hexdigest()
+            # Traverse only declared source fields, including nested contracts.
+            for group in ("input_sources", "sources", "inputs"):
+                entries = document.get(group, [])
+                if not isinstance(entries, list):
+                    return None
+                for entry in entries:
+                    if isinstance(entry, dict) and "url" in entry and "path" not in entry:
+                        continue
+                    if len(queue) + len(reads) >= 256:
+                        return None
+                    value = entry.get("path") if isinstance(entry, dict) else entry
+                    queue.append((Path(local(value, True, path.parent)), depth + 1))
+        owned = [Path(local(value, True)) for value in spec["owned_paths"]]
+        def candidate_path(value):
+            if not isinstance(value, str) or not value.strip() or "://" in value:
+                raise ValueError("unknown candidate product")
+            path = Path(value)
+            choices = {path.resolve()} if path.is_absolute() else {
+                (root / path).resolve(), *(directory / path for directory in owned if directory.is_dir())}
+            choices = {path.resolve() for path in choices if path.is_file()}
+            if len(choices) != 1:
+                raise ValueError("missing or ambiguous candidate product")
+            return choices.pop()
+        if len(task.get("candidate_products", [])) > 256:
+            return None
+        products = {candidate_path(value) for value in task.get("candidate_products", [])}
+        candidates = set(products)
+        for path in owned:
+            if path.is_file():
+                candidates.add(path)
+            else:
+                for name in ("MANIFEST.json", "ARTIFACT_MANIFEST.json"):
+                    if (path / name).is_file():
+                        candidates.add((path / name).resolve())
+        expected = task["candidate_identity"].removeprefix("sha256:").lower()
+        if len(expected) != 64 or any(char not in "0123456789abcdef" for char in expected):
+            return None
+        candidate_seals, candidate_bytes = {}, 0
+        def content_seal(path):
+            nonlocal candidate_bytes
+            if str(path) not in candidate_seals:
+                digestor = hashlib.sha256()
+                with path.open("rb") as stream:
+                    while chunk := stream.read(1024 * 1024):
+                        candidate_bytes += len(chunk)
+                        if candidate_bytes > 64 * 1024 * 1024:
+                            raise ValueError("candidate binding byte bound")
+                        digestor.update(chunk)
+                candidate_seals[str(path)] = digestor.hexdigest()
+            return candidate_seals[str(path)]
+        binding = next((path for path in sorted(candidates) if content_seal(path) == expected), None)
+        if binding is None:
+            return None
+        if binding.suffix.lower() == ".json":
+            _, manifest = metadata(binding)
+            entries = manifest.get("products_sha256", manifest.get("products", {}))
+            if not isinstance(entries, dict):
+                return None
+            if entries and (manifest.get("task_id", task_id) != task_id
+                            or manifest.get("input_identity", spec["input_identity"]) != spec["input_identity"]):
+                return None
+            for name, record in entries.items():
+                path = Path(local(name, True, binding.parent))
+                expected_product = record.get("sha256") if isinstance(record, dict) else record
+                if content_seal(path) != expected_product:
+                    return None
+                products.add(path)
+        for path in products:
+            content_seal(path)
+        reads.update(candidate_seals)
+        acquisition = None
+        if others:
+            owner_id, owner = others[0]
+            packet = state["packets"].get(owner.get("packet_id"), {})
+            if (not packet.get("launch_performed") or not packet.get("agent_id")
+                    or packet.get("task_id") != owner_id or packet.get("phase") != "acquisition"
+                    or packet.get("input_identity") != owner["spec"].get("input_identity")
+                    or not owner["spec"].get("owned_paths")):
+                return None
+            writes = sorted({local(value) for value in owner["spec"]["owned_paths"]})
+            for read in reads:
+                for write in writes:
+                    a, b = Path(read), Path(write)
+                    if a == b or a.is_relative_to(b) or b.is_relative_to(a):
+                        return None
+            acquisition = {"task_id": owner_id, "packet_id": owner["packet_id"],
+                           "input_identity": packet["input_identity"], "owned_paths": writes}
+        return {"scope": {"candidate_identity": task["candidate_identity"],
+                           "input_identity": spec["input_identity"], "spec_identity": digest(spec),
+                           "read_paths": sorted(reads), "source_contracts": contracts,
+                           "candidate_binding": str(binding), "candidate_seals": candidate_seals},
+                "acquisition": acquisition}
+    except (OSError, ValueError, TypeError, KeyError):
+        return None
+
+
+def _review_context_matches(state: dict, packet: dict) -> bool:
+    context = _review_context(state, packet["task_id"])
+    expected = packet.get("review_context", {})
+    return bool(context and context["scope"] == expected.get("scope")
+                and (context["acquisition"] is None or context["acquisition"] == expected.get("acquisition"))
+                and packet.get("candidate_identity") == context["scope"]["candidate_identity"]
+                and packet.get("input_identity") == context["scope"]["input_identity"])
+
+
+def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]], *, review_only: bool = False) -> dict:
     """Reserve one fair, dependency-ready opportunity; transport availability is live."""
+    for packet in state.get("adaptive", {}).get("packets", {}).values():
+        if packet["state"] == "planned":
+            return summary(state) if review_only else copy.deepcopy(packet)
+        if packet["state"] == "running":
+            return summary(state)
     # One outstanding packet prevents competing writers and makes interruption replay exact.
     for p in state["packets"].values():
         task = state["tasks"][p["task_id"]]
         if task["state"] == "planned" and task.get("packet_id") == p["packet_id"]:
+            if review_only and (p["phase"] != "review" or not p.get("review_only")):
+                return summary(state)
+            if p.get("review_only") and not _review_context_matches(state, p):
+                return summary(state)
+            if p["phase"] == "escalation":
+                repair_id = _task_repair_id(state, p["task_id"])
+                require(_repair_approved(state, repair_id), "escalation requires its exact authorized operative issue")
+                _validate_repair_binding(state, repair_id, p["task_id"])
+                if repair_id in state.get("repair_authorizations", {}):
+                    require(p.get("approved_repair_id") == repair_id
+                            and p.get("repair_authorization_identity") == digest(state["repair_authorizations"][repair_id]),
+                            "stale registered escalation packet binding")
             return copy.deepcopy(p)
-    if any(t["state"] == "running" for t in state["tasks"].values()):
+    if not review_only and any(t["state"] == "running" for t in state["tasks"].values()):
         return summary(state)
     ready = summary(state)["ready"]
+    if review_only:
+        ready = [key for key in ready if _review_context(state, key) is not None]
     unavailable = []
     for key in sorted(ready, key=lambda k: (state["tasks"][k]["last_turn"], k)):
         t = state["tasks"][key]
@@ -281,6 +878,16 @@ def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]]) -> di
                          if any(row["id"] == key for row in f["frontier"]["tasks"])), None)
         if frontier is not None:
             identity.update(frontier_identity=frontier["identity"], task_spec_identity=digest(spec))
+        effective_repair = _task_repair_id(state, key)
+        if t["phase"] == "escalation":
+            require(_repair_approved(state, effective_repair), "escalation requires its exact authorized operative issue")
+        if effective_repair in state.get("repair_authorizations", {}):
+            identity.update(approved_repair_id=effective_repair,
+                            repair_authorization_identity=digest(state["repair_authorizations"][effective_repair]))
+        review_context = _review_context(state, key) if review_only else None
+        if review_only:
+            require(route["route"] == "review_or_research", "review-only route must be read-only")
+            identity.update(review_only=True, review_context_identity=digest(review_context))
         packet_id = digest(identity)
         selected = route["transport_selected"]
         # Prompts carry resumable receipt references; durable state retains every raw outcome.
@@ -288,7 +895,9 @@ def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]]) -> di
                          "receipt": event["receipt"], "outcome": event["result"].get("outcome"),
                          "candidate_identity": event["result"].get("candidate_identity")}
                         for event in t["history"][-2:]]
-        prompt = ("Execute this bounded HTT campaign assignment. Do not spawn children. "
+        prompt = (("Review-only slot: do not modify candidate, inputs, acquisition outputs or controller state. "
+                   "The host alone stores the review receipt outside those paths and serializes state mutations. "
+                   if review_only else "") + "Execute this bounded HTT campaign assignment. Do not spawn children. "
                   "No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. "
                   "Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review "
                   "are read-only. Review must be independent of all recorded authors. "
@@ -296,6 +905,8 @@ def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]]) -> di
                   "raw_receipt path. Never claim dispatch from this packet. Assignment:\n" +
                   json.dumps({**identity, "packet_id": packet_id, "spec": spec,
                               "issue": t.get("issue"), "repair_plan": t.get("repair_plan"),
+                              "repair_authorization": state.get("repair_authorizations", {}).get(effective_repair),
+                              **({"review_context": review_context} if review_only else {}),
                               "resume_evidence": t.get("resume_evidence"),
                               "scientific_resume": t.get("scientific_resume"),
                               "transport_resume": t.get("transport_resume"),
@@ -307,6 +918,7 @@ def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]]) -> di
              "transport_resume": copy.deepcopy(t.get("transport_resume")),
              "launch_performed": False, "observed_runtime": "UNKNOWN",
              "native_tool": "collaboration.spawn_agent",
+             **({"review_only": True, "review_context": review_context} if review_only else {}),
              "spawn_args": {"task_name": "rc_" + packet_id[:16], "fork_turns": "none",
                             "model": selected["model"], "reasoning_effort": selected["effort"],
                             "message": prompt}}
@@ -315,6 +927,10 @@ def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]]) -> di
         state["packets"][packet_id] = p
         state["events"].append({"type": "planned", "packet_id": packet_id})
         return copy.deepcopy(p)
+    if not ready and not review_only:
+        discovery = _adaptive_next(state, policy, profiles)
+        if discovery is not None:
+            return discovery
     return {**summary(state), "unavailable": unavailable,
             "status": "HOLD_TRANSPORT_UNAVAILABLE" if ready else summary(state)["status"]}
 
@@ -328,8 +944,10 @@ def _repair_followup(state: dict, p: dict, t: dict, agent_id: str, evidence: str
     data = json.loads(Path(seal["path"]).read_text())
     require(isinstance(data, dict), "followup evidence must be an object")
     fields = ("native_tool", "task_id", "agent_id", "phase", "packet_id", "input_identity",
-              "repair_plan_identity", "base_packet_id", "base_candidate_identity",
-              "candidate_identity", "raw_receipt", "raw_receipt_sha256")
+              "repair_plan_identity", "base_packet_id", "base_candidate_identity")
+    dispatched = data.get("status") == "dispatched"
+    if not dispatched:
+        fields += ("candidate_identity", "raw_receipt", "raw_receipt_sha256")
     require(all(isinstance(data.get(k), str) and data[k].strip() for k in fields),
             "followup evidence requires nonempty string identities and receipt path/hash")
     require(data.get("native_tool") == "collaboration.followup_task"
@@ -360,6 +978,21 @@ def _repair_followup(state: dict, p: dict, t: dict, agent_id: str, evidence: str
             and source_result.get("candidate_identity") == data.get("base_candidate_identity")
             == t.get("candidate_identity") == p.get("candidate_identity")
             and bool(t.get("candidate_identity")), "stale followup source candidate/author")
+    if dispatched:
+        require(data.get("requested") == route["requested"]
+                and data.get("transport_selected") == route["transport_selected"],
+                "followup dispatch must bind unchanged route/profile")
+        raw = _receipt(data.get("host_call_receipt", ""))
+        require(raw["sha256"] == data.get("host_call_receipt_sha256"), "host dispatch receipt hash mismatch")
+        host = json.loads(Path(raw["path"]).read_text())
+        require(isinstance(host, dict) and host.get("dispatch_accepted") is True
+                and all(host.get(k) == data.get(k) for k in
+                        ("native_tool", "agent_id", "packet_id", "task_id", "input_identity")),
+                "host followup receipt must bind actual accepted dispatch")
+        return {"mode": "dispatched", "evidence": seal, "host_call_receipt": raw,
+                "native_tool": data["native_tool"], "base_packet_id": data["base_packet_id"],
+                "base_candidate_identity": data["base_candidate_identity"],
+                "repair_plan_identity": data["repair_plan_identity"]}
     candidate = data.get("candidate_identity")
     require(isinstance(candidate, str) and candidate.strip()
             and candidate != t["candidate_identity"], "followup needs new candidate identity")
@@ -378,24 +1011,50 @@ def _repair_followup(state: dict, p: dict, t: dict, agent_id: str, evidence: str
 
 def acknowledge(state: dict, packet_id: str, agent_id: str, observed: str = "UNKNOWN",
                 followup_evidence: str | None = None) -> None:
+    adaptive_packets = state.get("adaptive", {}).get("packets", {})
+    if packet_id in adaptive_packets:
+        p = adaptive_packets[packet_id]
+        require(p["state"] == "planned", "discovery packet not awaiting launch")
+        require(isinstance(agent_id, str) and agent_id.strip(), "actual native agent ID required")
+        require(not followup_evidence, "discovery requires a fresh native context")
+        require(not any(q.get("agent_id") == agent_id for q in
+                        [*state["packets"].values(), *adaptive_packets.values()]), "fresh native discovery launch required")
+        p.update(state="running", agent_id=agent_id, launch_performed=True, observed_runtime=observed)
+        return
     require(packet_id in state["packets"], "unknown packet")
     p = state["packets"][packet_id]
     t = state["tasks"][p["task_id"]]
     require(t.get("packet_id") == packet_id and t["state"] == "planned", "packet not awaiting launch")
+    if p.get("review_only"):
+        require(p["phase"] == t["phase"] == "review" and _review_context_matches(state, p),
+                "review-only candidate, input, dependency or acquisition scope changed")
+        selected = p["route"].get("transport_selected")
+        require(p["route"].get("route") == "review_or_research" and selected
+                and p["spawn_args"].get("model") == selected["model"]
+                and p["spawn_args"].get("reasoning_effort") == selected["effort"],
+                "review-only route must remain supported and read-only")
     require(agent_id.strip(), "actual native agent ID required")
     require(agent_id not in t["contributors"] if t["phase"] == "review" else True,
             "reviewer must be independent of all implementation/research/escalation contributors")
-    reused = any(q.get("agent_id") == agent_id for q in state["packets"].values())
+    reused = any(q.get("agent_id") == agent_id for q in
+                 [*state["packets"].values(), *adaptive_packets.values()])
     require(not reused or followup_evidence, "fresh native launch required; agent ID already used")
     continuation = None
     if followup_evidence is not None:
         require(reused, "followup evidence requires an actual prior author thread")
         continuation = _repair_followup(state, p, t, agent_id, followup_evidence)
     if t["phase"] == "escalation":
-        repair_id = t["spec"]["approved_repair_id"]
+        repair_id = _task_repair_id(state, p["task_id"])
+        require(_repair_approved(state, repair_id), "escalation requires its exact authorized operative issue")
+        _validate_repair_binding(state, repair_id, p["task_id"])
+        if repair_id in state.get("repair_authorizations", {}):
+            require(p.get("approved_repair_id") == repair_id
+                    and p.get("repair_authorization_identity") == digest(state["repair_authorizations"][repair_id]),
+                    "stale registered escalation packet binding")
         require(repair_id not in state["ultra_repairs"], "actual ultra launch allowance already consumed")
         state["ultra_repairs"][repair_id] = {"task_id": p["task_id"], "packet_id": packet_id,
-                                             "agent_id": agent_id}
+                                             "agent_id": agent_id,
+                                             "operative_issue_identity": _operative_issue_identity(t["issue"])}
         state["ultra_pending"].pop(repair_id, None)
         t["ultra_used"].append(repair_id)
     p.update(agent_id=agent_id, launch_performed=True, observed_runtime=observed)
@@ -418,8 +1077,21 @@ def _receipt(path: str) -> dict:
     return {"path": str(p.resolve()), "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
 
 
-def launch_failed(state: dict, packet_id: str, evidence: str, classification: str, reason: str) -> None:
+def launch_failed(state: dict, packet_id: str, evidence: str, classification: str, reason: str,
+                  retry_prohibited: bool = False) -> None:
     """Preserve a real pre-launch transport/quota refusal without inventing an agent."""
+    adaptive_packets = state.get("adaptive", {}).get("packets", {})
+    if packet_id in adaptive_packets:
+        p = adaptive_packets[packet_id]
+        require(p["state"] == "planned", "not an unacknowledged discovery launch")
+        require(classification in {"environment", "permission", "transport"} and reason.strip(),
+                "exact launch refusal classification/reason required")
+        receipt = _receipt(evidence)
+        p.update(state="held", hold={"class": classification,
+                 "exact_missing_or_defect": reason, "receipt": receipt,
+                 "retry_prohibited": bool(retry_prohibited or "exhaust" in reason.lower()
+                                          or "monthly quota" in reason.lower())})
+        return
     require(packet_id in state["packets"], "unknown packet")
     p = state["packets"][packet_id]
     t = state["tasks"][p["task_id"]]
@@ -429,7 +1101,7 @@ def launch_failed(state: dict, packet_id: str, evidence: str, classification: st
     receipt = _receipt(evidence)
     hold = {"class": classification, "exact_missing_or_defect": reason, "receipt": receipt}
     t.update(state="held", hold=hold)
-    repair_id = t["spec"].get("approved_repair_id")
+    repair_id = _task_repair_id(state, p["task_id"])
     pending = state["ultra_pending"].get(repair_id)
     if pending and pending["task_id"] == p["task_id"]:
         state["ultra_pending"].pop(repair_id)
@@ -456,8 +1128,12 @@ def resume(state: dict, task_id: str, evidence: str, input_identity: str,
             "semantic evidence already used; do not rename exhausted attempts")
     require(input_identity.strip(), "input_identity required")
     if approved_repair_id:
-        require(approved_repair_id in state["campaign"].get("approved_scientific_repairs", []),
+        require(_repair_approved(state, approved_repair_id),
                 "repair was not covered by campaign authorization")
+    bound_repair = approved_repair_id or _task_repair_id(state, task_id)
+    prospective_spec = t["spec"] if delta["kind"] == "prelaunch_transport" else {**t["spec"], "input_identity": input_identity}
+    _validate_repair_binding(state, bound_repair, task_id, spec=prospective_spec,
+                            delta=None if delta["kind"] == "prelaunch_transport" else delta)
     if delta["kind"] == "prelaunch_transport":
         packet_id = t.get("packet_id")
         p = state["packets"].get(packet_id, {})
@@ -466,24 +1142,26 @@ def resume(state: dict, task_id: str, evidence: str, input_identity: str,
         require(any(e.get("type") == "launch_refused" and e.get("packet_id") == packet_id
                     for e in state["events"]), "confirmed prelaunch refusal required")
         require(input_identity == p["input_identity"] == t["spec"]["input_identity"]
-                and approved_repair_id in {None, t["spec"].get("approved_repair_id")},
+                and approved_repair_id in {None, _task_repair_id(state, task_id)},
                 "transport restore must preserve scientific input and repair")
         if t["phase"] == "escalation":
-            repair_id = t["spec"].get("approved_repair_id")
+            repair_id = _task_repair_id(state, task_id)
+            require(_repair_approved(state, repair_id), "escalation requires its exact authorized operative issue")
             require(repair_id not in state["ultra_repairs"] and
                     repair_id not in state["ultra_pending"], "ultra repair already used or reserved")
-            state["ultra_pending"][repair_id] = {"task_id": task_id, "trigger_packet": packet_id}
+            state["ultra_pending"][repair_id] = {"task_id": task_id, "trigger_packet": packet_id,
+                                                "operative_issue_identity": _operative_issue_identity(t["issue"])}
         t["state"] = "ready"
     else:
         require(not any(p.get("launch_performed") and p["packet_id"] == t.get("packet_id")
                         and not any(h["packet_id"] == p["packet_id"] for h in t["history"])
                         for p in state["packets"].values()), "acknowledged unknown outcome cannot replay")
         if approved_repair_id:
-            require(approved_repair_id != t["spec"].get("approved_repair_id")
+            require(approved_repair_id != (t.get("active_repair_id") or t["spec"].get("approved_repair_id"))
                     and approved_repair_id not in state["ultra_repairs"]
                     and approved_repair_id not in state["ultra_pending"],
                     "different unused approved repair required")
-            t["spec"]["approved_repair_id"] = approved_repair_id
+            t["active_repair_id"] = approved_repair_id
         t["spec"]["input_identity"] = input_identity
         t["failures"] = []
         t.update(state="ready", phase="research")
@@ -514,6 +1192,9 @@ def record(state: dict, result: dict, policy: dict) -> None:
 def _record(state: dict, result: dict, policy: dict) -> None:
     """Apply one identity-bound native outcome. Caller checkpoints before next action."""
     packet_id = result.get("packet_id")
+    if packet_id in state.get("adaptive", {}).get("packets", {}):
+        _adaptive_record(state, result)
+        return
     require(packet_id in state["packets"], "unknown result packet")
     p = state["packets"][packet_id]
     t = state["tasks"][p["task_id"]]
@@ -524,9 +1205,25 @@ def _record(state: dict, result: dict, policy: dict) -> None:
     receipt = _receipt(result.get("raw_receipt", ""))
     if p.get("continuation"):
         continuation = p["continuation"]
-        require(receipt == continuation["raw_receipt"]
-                and result.get("candidate_identity") == continuation["candidate_identity"],
-                "followup result must match acknowledged raw receipt/candidate")
+        if continuation.get("mode") == "dispatched":
+            require(result.get("base_packet_id") == continuation["base_packet_id"]
+                    and result.get("base_candidate_identity") == continuation["base_candidate_identity"],
+                    "followup result must bind acknowledged base candidate")
+            require(receipt["sha256"] not in {event["receipt"]["sha256"] for event in t["history"]},
+                    "followup result needs a new actual raw receipt")
+            raw_data = json.loads(Path(receipt["path"]).read_text())
+            require(isinstance(raw_data, dict) and all(raw_data.get(k) == result.get(k) for k in
+                    ("packet_id", "task_id", "agent_id", "input_identity", "base_packet_id",
+                     "base_candidate_identity", "outcome", "candidate_identity")),
+                    "followup raw outcome identity mismatch")
+            if result.get("outcome") == "success":
+                require(result.get("candidate_identity")
+                        and result["candidate_identity"] != continuation["base_candidate_identity"],
+                        "followup must produce a new candidate")
+        else:
+            require(receipt == continuation["raw_receipt"]
+                    and result.get("candidate_identity") == continuation["candidate_identity"],
+                    "followup result must match acknowledged raw receipt/candidate")
     phase = t["phase"]
     outcome = result.get("outcome")
     require(outcome in {"success", "blocker"}, "outcome must be success or blocker")
@@ -583,8 +1280,8 @@ def _record(state: dict, result: dict, policy: dict) -> None:
         if external or issue["class"] in {"environment", "permission"}:
             t.update(state="held", hold=issue)
         else:
-            repair_id = t["spec"].get("approved_repair_id")
-            approved = repair_id and repair_id in state["campaign"].get("approved_scientific_repairs", [])
+            repair_id = _task_repair_id(state, p["task_id"])
+            approved = _repair_approved(state, repair_id)
             failures = [f for f in t["failures"] if f["class"] == issue["class"] and f["substantive"]]
             two = len({f["receipt"]["sha256"] for f in failures}) >= 2
             high = issue.get("high_consequence") is True and bool(issue.get("risk"))
@@ -593,15 +1290,32 @@ def _record(state: dict, result: dict, policy: dict) -> None:
             require(policy["escalation"]["max_astra_ultra_repairs_per_approved_scientific_repair"] == 1,
                     "unsupported escalation budget policy")
             if approved and eligible and repair_id not in state["ultra_repairs"] and repair_id not in state["ultra_pending"]:
-                state["ultra_pending"][repair_id] = {"task_id": p["task_id"], "trigger_packet": packet_id}
+                _validate_repair_binding(state, repair_id, p["task_id"])
+                if repair_id in state.get("repair_authorizations", {}):
+                    require(p.get("approved_repair_id") == repair_id
+                            and p.get("repair_authorization_identity") == digest(state["repair_authorizations"][repair_id]),
+                            "reservation requires the exact registered repair assignment")
+                state["ultra_pending"][repair_id] = {"task_id": p["task_id"], "trigger_packet": packet_id,
+                                                    "operative_issue_identity": _operative_issue_identity(issue)}
                 t.update(phase="escalation", state="ready")
             elif (phase == "review" and issue["class"] in {"code", "numeric"}
                   and isinstance(result.get("repair_plan"), str) and result["repair_plan"].strip()
-                  and not t.get("targeted_repairs")):
-                # One concrete reviewer-directed closeout; the plan is evidence, never admission.
-                t["targeted_repairs"] = [{"candidate_identity": t["candidate_identity"],
-                                          "issue_identity": digest(issue), "packet_id": packet_id,
-                                          "repair_plan": result["repair_plan"]}]
+                  and (not t.get("targeted_repairs") or (
+                      isinstance(result.get("counterexample"), dict)
+                      and bool(_semantic_meaning(result["counterexample"]))
+                      and digest(_semantic_meaning(result["counterexample"])) not in
+                          {row.get("counterexample_identity") for row in t["targeted_repairs"]}
+                      and digest({"counterexample": _semantic_meaning(result["counterexample"]),
+                                  "repair_plan": result["repair_plan"]}) not in
+                          {row.get("repair_signature") for row in t["targeted_repairs"]}))):
+                # Each fresh concrete reviewer counterexample may have its deterministic closeout.
+                # It never resets history or buys another ultra launch.
+                t.setdefault("targeted_repairs", []).append({"candidate_identity": t["candidate_identity"],
+                    "issue_identity": digest(issue), "packet_id": packet_id,
+                    "repair_plan": result["repair_plan"],
+                    "counterexample_identity": digest(_semantic_meaning(result.get("counterexample"))),
+                    "repair_signature": digest({"counterexample": _semantic_meaning(result.get("counterexample")),
+                                                "repair_plan": result["repair_plan"]})})
                 t.update(phase="repair", state="ready", repair_plan=result["repair_plan"])
             elif repair_id in state["ultra_repairs"] and phase in {"repair", "review", "escalation"}:
                 t.update(state="held", hold={**issue, "reason": "approved repair escalation consumed; new evidence/repair authorization required"})
@@ -641,6 +1355,7 @@ def main() -> int:
     init.add_argument("--plan", type=Path)
     nxt = sub.add_parser("next")
     nxt.add_argument("--available-profile", action="append", default=[])
+    nxt.add_argument("--review-only", action="store_true", help="One disjoint read-only review beside one running acquisition")
     ack = sub.add_parser("ack")
     ack.add_argument("--packet-id", required=True)
     ack.add_argument("--agent-id", required=True)
@@ -654,6 +1369,10 @@ def main() -> int:
     refused.add_argument("--class", dest="classification", required=True,
                          choices=["environment", "permission", "transport"])
     refused.add_argument("--reason", required=True)
+    refused.add_argument("--retry-prohibited", action="store_true")
+    restore = sub.add_parser("restore-discovery")
+    restore.add_argument("--packet-id", required=True)
+    restore.add_argument("--evidence", required=True)
     reopen = sub.add_parser("resume")
     reopen.add_argument("--task-id", required=True)
     reopen.add_argument("--evidence", required=True)
@@ -662,6 +1381,13 @@ def main() -> int:
     append = sub.add_parser("append-frontier")
     append.add_argument("--frontier", type=Path, required=True)
     append.add_argument("--authorization", required=True)
+    repair_auth = sub.add_parser("authorize-repair")
+    repair_auth.add_argument("--issue", type=Path, required=True)
+    repair_auth.add_argument("--authorization", required=True)
+    adaptive = sub.add_parser("enable-adaptive")
+    adaptive.add_argument("--authorization", required=True)
+    delta = sub.add_parser("adaptive-evidence")
+    delta.add_argument("--evidence", required=True)
     sub.add_parser("summary")
     args = parser.parse_args()
     try:
@@ -684,7 +1410,7 @@ def main() -> int:
                     model, sep, effort = profile.rpartition("/")
                     require(sep and model and effort, "expected MODEL/EFFORT")
                     profiles.add((model, effort))
-                output = next_packet(state, policy, profiles)
+                output = next_packet(state, policy, profiles, review_only=args.review_only)
             elif args.action == "ack":
                 acknowledge(state, args.packet_id, args.agent_id, args.observed_runtime, args.followup_evidence)
                 output = summary(state)
@@ -694,14 +1420,27 @@ def main() -> int:
                 # Immutable content-addressed copy; state also includes the full result.
                 save(args.state.parent / (args.state.name + ".results") / (digest(result) + ".json"), result)
                 output = summary(state)
+            elif args.action == "authorize-repair":
+                authorize_repair(state, json.loads(args.issue.read_text()), args.authorization)
+                output = summary(state)
+            elif args.action == "enable-adaptive":
+                enable_adaptive(state, args.authorization, str(args.state))
+                output = summary(state)
+            elif args.action == "adaptive-evidence":
+                adaptive_evidence(state, args.evidence)
+                output = summary(state)
             elif args.action == "append-frontier":
                 append_frontier(state, json.loads(args.frontier.read_text()), args.authorization)
                 output = summary(state)
             elif args.action == "resume":
                 resume(state, args.task_id, args.evidence, args.input_identity, args.approved_repair_id)
                 output = summary(state)
+            elif args.action == "restore-discovery":
+                restore_discovery(state, args.packet_id, args.evidence)
+                output = summary(state)
             elif args.action == "launch-failed":
-                launch_failed(state, args.packet_id, args.evidence, args.classification, args.reason)
+                launch_failed(state, args.packet_id, args.evidence, args.classification, args.reason,
+                              args.retry_prohibited)
                 output = summary(state)
             else:
                 output = summary(state)

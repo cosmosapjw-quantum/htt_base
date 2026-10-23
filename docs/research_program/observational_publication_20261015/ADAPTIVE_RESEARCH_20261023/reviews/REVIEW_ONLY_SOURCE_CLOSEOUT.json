@@ -1,0 +1,32 @@
+{
+  "record_type": "host transcription of actual native read-only reviewer final",
+  "reviewer": "/root/r25_blind_review_only_patch",
+  "requested": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "candidate_identity": "68ac582536eaa35d99ec8dc16cc24f751f9fdc72ebbff34afbfe797f02ff792a",
+  "paths": {
+    "scripts/codex_harness/research_controller.py": "27adf2717c5f2ca192b6035af7d45d46b20822533c5b81470d29bffe746bd04e",
+    "scripts/codex_harness/test_research_controller_frontier.py": "8b05ce56429de46849f1bb5e71a5577c5c703ffecf7b7fc4d49895ea797d1e85",
+    "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md": "941e8b4903266f7d3d1757920c0cec6ac421b24402d98df4bea3698d6d0a0338"
+  },
+  "verdict": "SCOPED_PASS",
+  "scope": "Two original review-only freshness defects; no scientific admission or native scientific dispatch",
+  "checks": [
+    "Nested acquisition overlap prevents planning; nested contract changes reject ACK atomically",
+    "Candidate artifact and manifest product byte changes reject planning or ACK atomically",
+    "Disjoint nested inputs and valid manifest binding succeed",
+    "Default serial, planned packet replay, single review exclusion, acquisition preservation",
+    "Depth/count/per-file/aggregate metadata limits fail closed"
+  ],
+  "supplied_fixture_tests_passed": 15,
+  "independently_authored_cases_passed": 13,
+  "closeout_command_seconds": 7.32,
+  "cumulative_audit_command_seconds": 12.83,
+  "command_cap_seconds": 90,
+  "source_hashes_before_after_equal": true,
+  "live_state_pointer_process_source_modified": false,
+  "first_failure_preserved": "reviews/REVIEW_ONLY_SOURCE_FIRST.json"
+}

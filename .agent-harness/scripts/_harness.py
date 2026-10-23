@@ -170,6 +170,8 @@ def render_context_pack(
     built_at: str,
     entries: list[tuple[str, str]],
     repo: Path,
+    *,
+    current: bool = False,
 ) -> str:
     chunks = [
         "# Generated Shared Context View",
@@ -178,6 +180,11 @@ def render_context_pack(
         f"Built at: `{built_at}`",
         "",
         (
+            "This compact view is generated from the current machine context index. "
+            "It does not compute live HEAD, DAG or status. SessionStart can read a host-installed "
+            "active-controller pointer for a bounded advisory snapshot; absent or invalid pointers "
+            "provide no active-state observation. Reference-only sources are read on demand."
+            if current else
             "This compact view is generated from the machine context index. "
             "Live HEAD, DAG, status, and active-run context is computed by the "
             "hooks at use time. Reference-only files are read only when an "

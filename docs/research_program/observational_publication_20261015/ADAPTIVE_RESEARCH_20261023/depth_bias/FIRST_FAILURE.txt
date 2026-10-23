@@ -1,0 +1,9 @@
+First production attempt, 2026-10-23, exit 1, elapsed 2.99 s, max RSS 128040 KiB.
+Command: env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 60s python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/compute.py
+Traceback:
+  File "compute.py", line 211, in <module>: main()
+  File "compute.py", line 193, in main: json.dumps(result,indent=2,allow_nan=False)
+  File "/usr/lib/python3.12/json/encoder.py", line 240, in floatstr
+    raise ValueError("Out of range float values are not JSON compliant: " + repr(o))
+ValueError: Out of range float values are not JSON compliant: inf
+Cause: zero-radius branch serialized an infinite multiplier sentinel. Corrected to JSON null; the first failure remains evidence.

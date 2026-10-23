@@ -1,0 +1,341 @@
+--- a/scripts/codex_harness/research_controller.py
++++ b/scripts/codex_harness/research_controller.py
+@@ -678,46 +678,125 @@
+                               for _, row in others):
+         return None
+     root = Path(__file__).resolve().parents[2]
+-    def local(value, exists=False):
++    def local(value, exists=False, relative_to=None):
+         if (not isinstance(value, str) or not value.strip() or "://" in value
+                 or any(char in value for char in "*?[")):
+             raise ValueError("unknown local scope")
+-        path = Path(value)
+-        path = (path if path.is_absolute() else root / path).resolve()
+-        if exists and not path.exists():
+-            raise ValueError("missing review scope")
+-        return str(path)
++        value = Path(value)
++        choices = {(value if value.is_absolute() else root / value).resolve()}
++        if relative_to is not None and not value.is_absolute():
++            choices.add((relative_to / value).resolve())
++        if exists:
++            choices = {path for path in choices if path.exists()}
++        if len(choices) != 1:
++            raise ValueError("missing or ambiguous local scope")
++        return str(choices.pop())
++    def metadata(path):
++        # Bounded reads even if a file grows between stat and read.
++        with path.open("rb") as stream:
++            raw = stream.read(1024 * 1024 + 1)
++        if len(raw) > 1024 * 1024:
++            raise ValueError("metadata traversal bound")
++        document = json.loads(raw)
++        if not isinstance(document, dict):
++            raise ValueError("unknown contract declarations")
++        return raw, document
+     try:
+         spec = task["spec"]
+-        if not spec.get("owned_paths") or not spec.get("input_sources"):
++        if (not spec.get("owned_paths") or not spec.get("input_sources")
++                or len(spec["owned_paths"]) > 256 or len(spec["input_sources"]) > 256
++                or not isinstance(task["candidate_identity"], str)):
+             return None
+         reads = {local(value, True) for value in spec["owned_paths"]}
+-        contracts = {}
++        contracts, queue = {}, []
+         for source in spec["input_sources"]:
+             source = source.get("path") if isinstance(source, dict) else source
+-            path = Path(local(source, True))
++            queue.append((Path(local(source, True)), 0))
++        metadata_bytes = 0
++        while queue:
++            path, depth = queue.pop()
+             reads.add(str(path))
+-            if path.suffix.lower() == ".json":
+-                if path.stat().st_size > 1024 * 1024:
+-                    return None  # Unknown metadata scope: do not scan an unbounded input.
+-                raw = path.read_bytes()
+-                contracts[str(path)] = hashlib.sha256(raw).hexdigest()
+-                document = json.loads(raw)
+-                if not isinstance(document, dict):
++            if len(reads) > 256:
++                return None
++            if path.suffix.lower() != ".json" or str(path) in contracts:
++                continue
++            if depth > 16 or len(contracts) >= 64:
++                return None
++            raw, document = metadata(path)
++            metadata_bytes += len(raw)
++            if metadata_bytes > 4 * 1024 * 1024:
++                return None
++            contracts[str(path)] = hashlib.sha256(raw).hexdigest()
++            # Traverse only declared source fields, including nested contracts.
++            for group in ("input_sources", "sources", "inputs"):
++                entries = document.get(group, [])
++                if not isinstance(entries, list):
+                     return None
+-                # These are declared local input records, not arbitrary prose paths.
+-                for group in ("input_sources", "sources", "inputs"):
+-                    entries = document.get(group, [])
+-                    if not isinstance(entries, list):
++                for entry in entries:
++                    if isinstance(entry, dict) and "url" in entry and "path" not in entry:
++                        continue
++                    if len(queue) + len(reads) >= 256:
+                         return None
+-                    for entry in entries:
+-                        if isinstance(entry, dict) and "url" in entry and "path" not in entry:
+-                            continue  # A cited URL is not an acquisition's local output.
+-                        value = entry.get("path") if isinstance(entry, dict) else entry
+-                        reads.add(local(value, True))
+-        for value in task.get("candidate_products", []):
+-            if isinstance(value, str) and "/" in value:
+-                reads.add(local(value, True))
++                    value = entry.get("path") if isinstance(entry, dict) else entry
++                    queue.append((Path(local(value, True, path.parent)), depth + 1))
++        owned = [Path(local(value, True)) for value in spec["owned_paths"]]
++        def candidate_path(value):
++            if not isinstance(value, str) or not value.strip() or "://" in value:
++                raise ValueError("unknown candidate product")
++            path = Path(value)
++            choices = {path.resolve()} if path.is_absolute() else {
++                (root / path).resolve(), *(directory / path for directory in owned if directory.is_dir())}
++            choices = {path.resolve() for path in choices if path.is_file()}
++            if len(choices) != 1:
++                raise ValueError("missing or ambiguous candidate product")
++            return choices.pop()
++        if len(task.get("candidate_products", [])) > 256:
++            return None
++        products = {candidate_path(value) for value in task.get("candidate_products", [])}
++        candidates = set(products)
++        for path in owned:
++            if path.is_file():
++                candidates.add(path)
++            else:
++                for name in ("MANIFEST.json", "ARTIFACT_MANIFEST.json"):
++                    if (path / name).is_file():
++                        candidates.add((path / name).resolve())
++        expected = task["candidate_identity"].removeprefix("sha256:").lower()
++        if len(expected) != 64 or any(char not in "0123456789abcdef" for char in expected):
++            return None
++        candidate_seals, candidate_bytes = {}, 0
++        def content_seal(path):
++            nonlocal candidate_bytes
++            if str(path) not in candidate_seals:
++                digestor = hashlib.sha256()
++                with path.open("rb") as stream:
++                    while chunk := stream.read(1024 * 1024):
++                        candidate_bytes += len(chunk)
++                        if candidate_bytes > 64 * 1024 * 1024:
++                            raise ValueError("candidate binding byte bound")
++                        digestor.update(chunk)
++                candidate_seals[str(path)] = digestor.hexdigest()
++            return candidate_seals[str(path)]
++        binding = next((path for path in sorted(candidates) if content_seal(path) == expected), None)
++        if binding is None:
++            return None
++        if binding.suffix.lower() == ".json":
++            _, manifest = metadata(binding)
++            entries = manifest.get("products_sha256", manifest.get("products", {}))
++            if not isinstance(entries, dict):
++                return None
++            if entries and (manifest.get("task_id", task_id) != task_id
++                            or manifest.get("input_identity", spec["input_identity"]) != spec["input_identity"]):
++                return None
++            for name, record in entries.items():
++                path = Path(local(name, True, binding.parent))
++                expected_product = record.get("sha256") if isinstance(record, dict) else record
++                if content_seal(path) != expected_product:
++                    return None
++                products.add(path)
++        for path in products:
++            content_seal(path)
++        reads.update(candidate_seals)
+         acquisition = None
+         if others:
+             owner_id, owner = others[0]
+@@ -737,7 +816,8 @@
+                            "input_identity": packet["input_identity"], "owned_paths": writes}
+         return {"scope": {"candidate_identity": task["candidate_identity"],
+                            "input_identity": spec["input_identity"], "spec_identity": digest(spec),
+-                           "read_paths": sorted(reads), "source_contracts": contracts},
++                           "read_paths": sorted(reads), "source_contracts": contracts,
++                           "candidate_binding": str(binding), "candidate_seals": candidate_seals},
+                 "acquisition": acquisition}
+     except (OSError, ValueError, TypeError, KeyError):
+         return None
+--- a/scripts/codex_harness/test_research_controller_frontier.py
++++ b/scripts/codex_harness/test_research_controller_frontier.py
+@@ -407,7 +407,16 @@
+     setUp = base.ControllerTests.setUp
+     state = base.ControllerTests.state
+     launch = base.ControllerTests.launch
+-    result = base.ControllerTests.result
++    def result(self, state, packet, outcome="success", **kwargs):
++        if "candidate_identity" not in kwargs:
++            if packet["phase"] == "review":
++                kwargs["candidate_identity"] = state["tasks"][packet["task_id"]]["candidate_identity"]
++            elif packet["phase"] == "execute" and packet["task_id"] in {"CANDIDATE", "SECOND"}:
++                import hashlib
++                artifact = Path(state["tasks"][packet["task_id"]]["spec"]["owned_paths"][0]) / 'CANDIDATE.json'
++                kwargs["candidate_identity"] = 'sha256:' + hashlib.sha256(artifact.read_bytes()).hexdigest()
++                kwargs.setdefault("qualified_products", [str(artifact)])
++        return base.ControllerTests.result(self, state, packet, outcome, **kwargs)
+     issue = base.ControllerTests.issue
+ 
+     def fixture(self, state=None, second=True):
+@@ -423,6 +432,7 @@
+                 continue
+             owned = root / key
+             owned.mkdir(exist_ok=True)
++            (owned / 'CANDIDATE.json').write_text(json.dumps({'value': 1, 'method': key}))
+             row = task(key, kind=kind, owned_paths=[str(owned)], input_sources=[str(contract)])
+             rows.append(row)
+         if state is None:
+@@ -631,6 +641,112 @@
+         for key, value in before['packets'].items():
+             self.assertEqual(state['packets'][key], value)
+ 
++    def test_declared_nested_contract_acquisition_overlap_waits(self):
++        state, _ = self.fixture(second=False)
++        contract = Path(state['tasks']['CANDIDATE']['spec']['input_sources'][0])
++        child = contract.parent / 'CHILD.json'
++        acquired = Path(state['tasks']['Z-ACQUIRE']['spec']['owned_paths'][0]) / 'data.csv'
++        acquired.write_text('in-progress acquisition')
++        contract.write_text(json.dumps({'input_sources': [str(child)]}))
++        child.write_text(json.dumps({'input_sources': [{'path': str(acquired)}]}))
++        before = copy.deepcopy(state)
++        self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
++        self.assertEqual(state, before)
++
++    def test_nested_contract_mutations_reject_ack_even_when_new_path_is_disjoint(self):
++        for overlap in (True, False):
++            with self.subTest(overlap=overlap):
++                state, _ = self.fixture(second=False)
++                contract = Path(state['tasks']['CANDIDATE']['spec']['input_sources'][0])
++                child = contract.parent / 'CHILD.json'
++                safe = contract.parent / 'frozen.csv'
++                contract.write_text(json.dumps({'input_sources': [str(child)]}))
++                child.write_text(json.dumps({'input_sources': [str(safe)]}))
++                packet = self.plan(state)
++                destination = (Path(state['tasks']['Z-ACQUIRE']['spec']['owned_paths'][0]) / 'data.csv'
++                               if overlap else contract.parent / 'different-safe-input.csv')
++                destination.write_text('changed child dependency')
++                child.write_text(json.dumps({'input_sources': [str(destination)]}))
++                before = copy.deepcopy(state)
++                with self.assertRaises(rc.ControllerError):
++                    rc.acknowledge(state, packet['packet_id'], 'fresh-nested-contract-reviewer')
++                self.assertEqual(state, before)
++
++    def test_candidate_bytes_are_bound_not_only_candidate_identity_label(self):
++        state, _ = self.fixture(second=False)
++        state['tasks']['CANDIDATE']['candidate_products'] = ['CANDIDATE.json']
++        artifact = Path(state['tasks']['CANDIDATE']['spec']['owned_paths'][0]) / 'CANDIDATE.json'
++        packet = self.plan(state)
++        artifact.write_text('{"value":999}')
++        before = copy.deepcopy(state)
++        with self.assertRaises(rc.ControllerError):
++            rc.acknowledge(state, packet['packet_id'], 'fresh-artifact-reviewer')
++        self.assertEqual(state, before)
++
++    def test_unmatched_candidate_identity_waits_without_state_mutation(self):
++        state, _ = self.fixture(second=False)
++        state['tasks']['CANDIDATE']['candidate_identity'] = 'sha256:' + '0' * 64
++        before = copy.deepcopy(state)
++        self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
++        self.assertEqual(state, before)
++
++    def test_manifest_identity_binds_product_bytes_at_plan_and_ack(self):
++        import hashlib
++        for stale_before_plan in (True, False):
++            with self.subTest(stale_before_plan=stale_before_plan):
++                state, _ = self.fixture(second=False)
++                task_row = state['tasks']['CANDIDATE']
++                directory = Path(task_row['spec']['owned_paths'][0])
++                artifact = directory / 'CANDIDATE.json'
++                manifest = directory / 'MANIFEST.json'
++                manifest.write_text(json.dumps({'task_id': 'CANDIDATE', 'input_identity': 'input-v1',
++                    'products_sha256': {'CANDIDATE.json': hashlib.sha256(artifact.read_bytes()).hexdigest()}}))
++                task_row['candidate_identity'] = 'sha256:' + hashlib.sha256(manifest.read_bytes()).hexdigest()
++                task_row['candidate_products'] = []
++                if stale_before_plan:
++                    artifact.write_text('{"value":999}')
++                    before = copy.deepcopy(state)
++                    self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
++                    self.assertEqual(state, before)
++                else:
++                    packet = self.plan(state)
++                    artifact.write_text('{"value":999}')
++                    before = copy.deepcopy(state)
++                    with self.assertRaises(rc.ControllerError):
++                        rc.acknowledge(state, packet['packet_id'], 'fresh-manifest-reviewer')
++                    self.assertEqual(state, before)
++
++    def test_nested_contract_traversal_bound_waits_without_prose_scans(self):
++        state, _ = self.fixture(second=False)
++        contract = Path(state['tasks']['CANDIDATE']['spec']['input_sources'][0])
++        current = contract
++        for index in range(18):
++            child = contract.parent / ('nested-' + str(index) + '.json')
++            current.write_text(json.dumps({'input_sources': [str(child)]}))
++            current = child
++        current.write_text('{"description":"prose is not a filesystem declaration"}')
++        before = copy.deepcopy(state)
++        self.assertNotIn('spawn_args', rc.next_packet(state, POLICY, PROFILES, review_only=True))
++        self.assertEqual(state, before)
++
++    def test_live_auxiliary_and_distance_have_provable_candidate_bindings(self):
++        path = Path(__file__).resolve().parents[2] / '.agent-harness/runtime/r23-continuous/STATE.json'
++        if not path.is_file():
++            self.skipTest('owner live checkpoint unavailable')
++        raw = path.read_bytes()
++        state = json.loads(raw)
++        owners = {key: copy.deepcopy(value) for key, value in state['tasks'].items() if value['state'] == 'running'}
++        for key in ('R25-DISTANCE-AUXILIARY-OVERLAP', 'R25-DISTANCE-CONDITIONAL-EVIDENCE'):
++            if state['tasks'].get(key, {}).get('state') != 'ready' or state['tasks'][key]['phase'] != 'review':
++                self.skipTest('live independent review inventory transitioned')
++            context = rc._review_context(state, key)
++            self.assertIsNotNone(context, key)
++            self.assertTrue(context['scope']['candidate_seals'])
++            self.assertTrue(context['scope']['source_contracts'])
++        for key, value in owners.items():
++            self.assertEqual(state['tasks'][key], value)
++        self.assertEqual(path.read_bytes(), raw)
++
+     def test_actual_live_copy_exposes_safe_ready_review_without_touching_live_bytes(self):
+         path = Path(__file__).resolve().parents[2] / '.agent-harness/runtime/r23-continuous/STATE.json'
+         if not path.is_file():
+--- a/docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md
++++ b/docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md
+@@ -136,11 +136,26 @@
+ The review must be dependency/typed-obligation ready, have an exact current
+ candidate and input identity, and use a supported `review_or_research` route.
+ Its candidate owned paths, declared local input sources and explicit local path
+-records in their small JSON source contracts must be known and disjoint from the
+-acquisition's declared owned paths. Resolved paths include symlinks; missing,
+-unresolvable or overlapping scope waits. This checks declared frozen contracts,
+-not arbitrary prose or a general dependency-analysis graph. No large data scans
+-or numerical runs are needed to establish the slot.
++records in their JSON source contracts must be known and disjoint from the
++acquisition's declared owned paths. The `input_sources`, `sources` and `inputs`
++declarations are followed through nested JSON contracts, with every inspected
++contract sealed and rechecked at ACK. Traversal is bounded to 64 JSON contracts,
++16 nested levels, 1 MiB per contract, 4 MiB total metadata and 256 declared input
++paths; unresolved or over-bound scope waits. Paths resolve symlinks, with relative
++nested references accepted only when their location is unambiguous. No arbitrary
++prose scanning or broad repository discovery occurs.
++
++A candidate identity label alone is insufficient. For this concurrency path its
++SHA-256 must match an existing declared candidate artifact, owned file, or the
++owned directory's `MANIFEST.json`/`ARTIFACT_MANIFEST.json`. A bound manifest's
++`products_sha256` or `products` (with per-file `sha256`) are verified against the
++actual product bytes. Declared candidate products and inspected candidate files
++also receive content seals; all are checked again at ACK. Candidate verification
++reads at most 64 MiB, independently of acquisition files. Missing bindings,
++unmatched identities, changed nested contracts or changed candidate bytes wait
++or reject ACK without state mutation. These are freshness/ownership checks,
++not automatic scientific-integrity verdicts. Frozen task/spec/acceptance fields
++are preserved; no acquisition data scans or numerical runs are required.
+ 
+ ```sh
+ python scripts/codex_harness/research_controller.py --state STATE.json next \

@@ -1,0 +1,56 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R25-K03-DEPTH-BIAS-FRONTIER",
+  "attempt": 2,
+  "phase": "review",
+  "input_identity": "sha256:34e88ac00f25c5cb849152167f93364491a43e88c2c609e98710d42a04fb39d2",
+  "candidate_identity": "sha256:04af80ce33b2258e434da7f13d3d168f906026cd92c0f7fe7ef9d9586e2db692",
+  "frontier_identity": "4da47d00433af2fcfa0ba530fdf6afb2009e523fea95032f3f6a5dd3322b198d",
+  "task_spec_identity": "27a89f1c56cf5f385a1bb61dd2589bad3ab186f06a9a6f593bfa7b3de674e6f9",
+  "packet_id": "11f4e08a6bf51f77cd49e03b02b5c0d1bf94a47c39e0d27642cc64aa06fadeaa",
+  "route": {
+    "route": "review_or_research",
+    "requested": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_selected": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+    "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+    "launch_performed": false,
+    "availability_catalog_profiles": [
+      {
+        "model": "gpt-6-astra",
+        "effort": "ultra"
+      },
+      {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "model": "gpt-6-sol",
+        "effort": "high"
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "effort": "medium"
+      }
+    ]
+  },
+  "resume_evidence": null,
+  "scientific_resume": null,
+  "transport_resume": null,
+  "launch_performed": false,
+  "observed_runtime": "UNKNOWN",
+  "native_tool": "collaboration.spawn_agent",
+  "spawn_args": {
+    "task_name": "rc_11f4e08a6bf51f77",
+    "fork_turns": "none",
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh",
+    "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4\", \"task_id\": \"R25-K03-DEPTH-BIAS-FRONTIER\", \"attempt\": 2, \"phase\": \"review\", \"input_identity\": \"sha256:34e88ac00f25c5cb849152167f93364491a43e88c2c609e98710d42a04fb39d2\", \"candidate_identity\": \"sha256:04af80ce33b2258e434da7f13d3d168f906026cd92c0f7fe7ef9d9586e2db692\", \"frontier_identity\": \"4da47d00433af2fcfa0ba530fdf6afb2009e523fea95032f3f6a5dd3322b198d\", \"task_spec_identity\": \"27a89f1c56cf5f385a1bb61dd2589bad3ab186f06a9a6f593bfa7b3de674e6f9\", \"packet_id\": \"11f4e08a6bf51f77cd49e03b02b5c0d1bf94a47c39e0d27642cc64aa06fadeaa\", \"spec\": {\"id\": \"R25-K03-DEPTH-BIAS-FRONTIER\", \"kind\": \"numeric\", \"goal\": \"Compute joint bias-variance robustness frontier with explicit full24 and slope-restricted witnesses\", \"acceptance\": \"Frozen full24 constrained optimization and support, singular residuals, threshold frontiers and independent controls; preserve empirical Pi and physical holds\", \"input_identity\": \"sha256:34e88ac00f25c5cb849152167f93364491a43e88c2c609e98710d42a04fb39d2\", \"input_sources\": [\"docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-K03-DEPTH-BIAS-FRONTIER_INPUT.json\"], \"owned_paths\": [\"docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias\"], \"implementation_route\": \"subagent_specialist\", \"contract_origin\": \"new_conditional_research\", \"promotes_original_acceptance\": false, \"requires\": {\"all\": [{\"task_id\": \"R25-K03-DEPTH-COVROBUST\", \"evidence\": \"completed\"}]}, \"semantic_delta\": {\"kind\": \"method\", \"before\": {\"uncertainty\": \"zero bias, covariance inflation only\"}, \"after\": {\"uncertainty\": \"joint deterministic coefficient bias ball and covariance envelope, restricted slope and full24 alternatives\"}, \"discriminator\": \"smallest systematic mean-shift budget destroying full vector depth discrimination\", \"scope\": \"conditional selected reported-depth target, original physical hold unchanged\"}}, \"issue\": null, \"repair_plan\": null, \"resume_evidence\": null, \"scientific_resume\": null, \"transport_resume\": null, \"authors\": [\"/root/rc_d2a92972cf10b9da\"], \"contributors\": [\"/root/rc_d2a92972cf10b9da\"], \"history_refs\": [{\"phase\": \"execute\", \"packet_id\": \"d2a92972cf10b9dade8f0cbcf79318411611709eda8faaa48c77f5988047fdda\", \"receipt\": {\"path\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/RAW_RECEIPT.json\", \"sha256\": \"4eef9f42e4c75c18494afce0cd0fba6c89be24f446fc3330d0c499de2e53cc19\"}, \"outcome\": \"success\", \"candidate_identity\": \"sha256:04af80ce33b2258e434da7f13d3d168f906026cd92c0f7fe7ef9d9586e2db692\"}], \"history_total\": 1}"
+  }
+}

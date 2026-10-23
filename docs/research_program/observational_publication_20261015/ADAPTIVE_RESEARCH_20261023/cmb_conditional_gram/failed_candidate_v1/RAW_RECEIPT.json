@@ -1,0 +1,86 @@
+{
+  "task_id": "R25-CMB-CONDITIONAL-GRAM",
+  "packet_id": "0d4c0bbfa25cdbd87fa5a78dcb9540a60e22f10396176c266442b98ed58c0b3f",
+  "input_identity": "sha256:46803ac5255eeb92f0aa72242a3b9a339bb380c5278a7b6654f7093e80fa153b",
+  "actual_agent_id": "/root/rc_0d4c0bbfa25cdbd8",
+  "requested_model_effort": "gpt-6-sol/high",
+  "transport_selected_model_effort": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "interpreter": ".venv/bin/python",
+  "thread_limits": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1",
+  "production_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o <time-file> timeout <remaining-cap>s .venv/bin/python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py > <stdout-file> 2> <stderr-file>",
+  "test_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o <time-file> .venv/bin/python -m pytest docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/test_compute.py -q > <stdout-file> 2> <stderr-file>",
+  "attempts": [
+    {
+      "kind": "tests",
+      "sequence": 1,
+      "exit": 0,
+      "wall_seconds": 5.42,
+      "maxrss_KiB": 163084,
+      "receipt_prefix": "tests_v1",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/tests_v1.time .venv/bin/python -m pytest docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/test_compute.py -q > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/tests_v1.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/tests_v1.stderr"
+    },
+    {
+      "kind": "production",
+      "sequence": 1,
+      "exit": 1,
+      "wall_seconds": 3.66,
+      "maxrss_KiB": 167608,
+      "timeout_seconds": 180,
+      "receipt_prefix": "first_failure",
+      "first_failure": "rank_tail attempted np.searchsorted on a 2D pilot coordinate array; full traceback preserved in first_failure.stderr",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/first_failure.time timeout 180s .venv/bin/python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/first_failure.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/first_failure.stderr"
+    },
+    {
+      "kind": "production",
+      "sequence": 2,
+      "exit": 0,
+      "wall_seconds": 14.06,
+      "maxrss_KiB": 285836,
+      "timeout_seconds": 174,
+      "receipt_prefix": "production_v1",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/production_v1.time timeout 174s .venv/bin/python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/production_v1.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/production_v1.stderr"
+    },
+    {
+      "kind": "production",
+      "sequence": 3,
+      "exit": 0,
+      "wall_seconds": 8.7,
+      "maxrss_KiB": 288812,
+      "timeout_seconds": 160,
+      "receipt_prefix": "production",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/production.time timeout 160s .venv/bin/python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/production.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/production.stderr"
+    },
+    {
+      "kind": "tests",
+      "sequence": 2,
+      "exit": 0,
+      "wall_seconds": 6.85,
+      "maxrss_KiB": 177380,
+      "receipt_prefix": "tests",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/tests.time .venv/bin/python -m pytest docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/test_compute.py -q > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/tests.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/tests.stderr"
+    }
+  ],
+  "cumulative_production_wall_seconds": 26.42,
+  "cumulative_tests_wall_seconds": 12.27,
+  "maximum_observed_rss_KiB": 288812,
+  "limits": {
+    "production_seconds": 180,
+    "tests_seconds": 180,
+    "rss_MiB": 512,
+    "batch_max": 256
+  },
+  "implementation_batch": 128,
+  "source_sha256": "107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb",
+  "final_tests": "5 passed in 5.66s",
+  "final_production": "H_orient and H_Gram complete, each pilot 4096 and evaluation 16383",
+  "publication": "none",
+  "scientific_admission": "HOLD_PENDING_INDEPENDENT_REVIEW",
+  "versions": {
+    "python": "3.12",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2"
+  }
+}

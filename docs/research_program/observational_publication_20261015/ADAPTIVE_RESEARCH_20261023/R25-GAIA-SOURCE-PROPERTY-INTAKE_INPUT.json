@@ -1,0 +1,237 @@
+{
+  "schema": "htt.gaia_source_property_intake_contract/1",
+  "task_id": "R25-GAIA-SOURCE-PROPERTY-INTAKE",
+  "source_base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "document_role": "MECHANICALLY_ASSEMBLED_ADVISOR_CONTRACT_NO_EXECUTION",
+  "advisor": {
+    "agent_id": "/root/r25_statistics_theory",
+    "requested": "gpt-6-astra/xhigh",
+    "transport_selected": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "independent_review": false
+  },
+  "kind": "input",
+  "implementation_route": "general_code",
+  "contract_origin": "new_conditional_research",
+  "promotes_original_acceptance": false,
+  "requires": {
+    "all": []
+  },
+  "owned_paths": [
+    "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/gaia_source_properties",
+    "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023"
+  ],
+  "goal": "Acquire exact-ID DR3 source-property tags for retained4756EDR3source IDs without accessing proper-motion outcomes, preserving left-join missingness and outcome-blind strata",
+  "source_id_input": {
+    "path": "docs/observational_reboot_20261014/results/gaia_frame_v1/qualified_rows.npz",
+    "sha256": "41b6ddcb13131b49b97efd6107816af4518fa9e23725cf3b4272c2f3a70acb8f",
+    "allowed_array": "source_id ONLY",
+    "forbidden_array_access": [
+      "proper_motion",
+      "covariance",
+      "Other outcome arrays during intake or stratum definition"
+    ],
+    "count": 4756,
+    "identity": "Unique int64, sorted decimal ASCII each followed by LF, no header",
+    "canonical_ID_bytes": 94469,
+    "canonical_ID_sha256": "a5df0e9ec295b127beaa1309618b62540564d7e5f70abdc1ab27c9ac8747a614",
+    "join": "EDR3/DR3 same-source exact integer release join; no positional/probabilistic match"
+  },
+  "advisor_live_discovery": {
+    "TAP_SCHEMA_status": 200,
+    "table": "gaiadr3.qso_candidates",
+    "columns": {
+      "source_id": "long",
+      "host_galaxy_detected": "boolean",
+      "host_galaxy_flag": "short",
+      "n_transits": "int",
+      "classlabel_dsc_joint": "char",
+      "vari_best_class_name": "char",
+      "vari_best_class_score": "float",
+      "vari_agn_membership_score": "double",
+      "source_selection_flags": "int"
+    },
+    "column_units": "none for all9",
+    "metadata_bytes": 1155,
+    "metadata_sha256": "d8385dd6dfeea6e4ceb31345b4be2550148b0f1deb26a6d3e51a2d3310f94e19",
+    "capability_bytes": 34150,
+    "capability_sha256": "e901c47699f4a7950d6a19ffd112af55240dfcb55655b5e352af7d69be9abe24",
+    "provider_limits": {
+      "inline_uploads": true,
+      "interpretation": "Actual capability outputLimit=50000 rows and uploadLimit=100000000 bytes; no upload-row limit or download cap inferred.",
+      "outputLimit_rows": 50000,
+      "uploadLimit_bytes": 100000000
+    },
+    "source_property_rows_or_PM_queried": false
+  },
+  "request": {
+    "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+    "access": "Anonymous ephemeral inline TAP_UPLOAD; no credentials",
+    "upload_VOTable": "source_id FIELD datatype=long; never float",
+    "multipart_params": {
+      "REQUEST": "doQuery",
+      "LANG": "ADQL",
+      "FORMAT": "votable_plain",
+      "MAXREC": 5000,
+      "UPLOAD": "ids4756,param:idsfile",
+      "idsfile": "Uploaded source-ID VOTable file"
+    },
+    "main_SQL": "SELECT u.source_id AS retained_source_id,q.source_id AS qso_source_id,q.host_galaxy_detected,q.host_galaxy_flag,q.n_transits,q.classlabel_dsc_joint,q.vari_best_class_name,q.vari_best_class_score,q.vari_agn_membership_score,q.source_selection_flags FROM TAP_UPLOAD.ids4756 AS u LEFT OUTER JOIN gaiadr3.qso_candidates AS q ON u.source_id=q.source_id ORDER BY u.source_id",
+    "independent_count_SQL": "SELECT COUNT(*) AS n_left,COUNT(q.source_id) AS n_matched FROM TAP_UPLOAD.ids4756 AS u LEFT OUTER JOIN gaiadr3.qso_candidates AS q ON u.source_id=q.source_id",
+    "count_upload": "Same exact4756ID upload identity",
+    "forbidden": [
+      "TOP",
+      "PM columns",
+      "Quality filters",
+      "Score filters",
+      "Sky filters"
+    ]
+  },
+  "validation": {
+    "response": "Parse complete VOTable, including trailing QUERY_STATUS; reject OVERFLOW/ERROR/truncation",
+    "main_rows": "Exactly4756unique retained_source_id values equal inputset",
+    "qso_rows": "Every nonnull qso_source_id equals retained_source_id; no duplicate joins",
+    "count": "n_left=4756 and n_matched agrees with parsed main response",
+    "preserve": "Field masks and types; exact integer source IDs",
+    "missing_states": [
+      "FIELD_UNAVAILABLE",
+      "NO_QSO_ROW",
+      "ROW_NULL",
+      "Released literal unclassified",
+      "False",
+      "Zero",
+      "Score endpoint values"
+    ],
+    "per_field_identity": "4756=no_row+matched_null+matched_present",
+    "nonvariability": "Never infer nonvariability from missing metadata",
+    "semantic_consistency": "Report raw crosstabs and versioned table/pipeline ambiguities without recoding values or imposing flag=>host_detected implications; flag5/False is not intrinsically inconsistent.",
+    "packaging": "Packaging metadata hash changes are not scientific failures; verify semantics and schema"
+  },
+  "outcome_blind_strata": {
+    "host_flags": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "ROW_NULL",
+      "NO_QSO_ROW",
+      "UNEXPECTED_CODE"
+    ],
+    "retain_every_stratum": true,
+    "future_primary_comparison": "Host flags1–2 combined versus3; flags4–6/missing kept separately and excluded only from this comparison definition",
+    "host_semantics": {
+      "1": "Circular host fit",
+      "2": "Elliptical host fit",
+      "3": "No host galaxy detected",
+      "4": "Poor fit",
+      "5": "Nonconvergence; host_galaxy_detected may be true OR false",
+      "6": "Doubtful nearby-source category; not necessarily nonconvergence"
+    },
+    "DSC": [
+      "Exact quasar",
+      "Exact galaxy",
+      "Exact unclassified",
+      "Null",
+      "Unexpected label retained"
+    ],
+    "DSC_caveat": "Uses astrometry; not independent validation",
+    "variability": [
+      "AGN",
+      "Each other nonnull individual class name retained separately",
+      "Null",
+      "NO_QSO_ROW"
+    ],
+    "scores": "Retain vari_best_class_score and vari_agn_membership_score without thresholds, propensity or probability interpretation; AGN membership score explicitly NOT probability",
+    "selection_bit1": "Frame-rotator eligibility/use provenance only; never new filter",
+    "crosstabs": [
+      "Host flag x host_detected",
+      "Host flag x transit availability",
+      "Host flag x module selection bits"
+    ],
+    "host_flag_boolean_policy": "Do not impose flag=>host_galaxy_detected mapping. In particular flag5 with False is not intrinsically inconsistent. Preserve raw categories/crosstabs/missingness and versioned table/pipeline ambiguity."
+  },
+  "storage": {
+    "external_cache": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023",
+    "raw_payload_uploads_and_temporary_files": "ONLY external cache",
+    "external_free_reserve_bytes": 2147483648,
+    "reserve_scope": "At external cache only; not a blanket repository write gate",
+    "total_download_cap_bytes": null,
+    "compact_repository_artifacts": "Size to actual available repository disk",
+    "advisor_disk_observation": "External2.48TB free, root203MB free; observation may change and must not be treated as guaranteed capacity",
+    "deletion": "Never delete user research files"
+  },
+  "network_limits": {
+    "planned_queries": {
+      "property": 1,
+      "independent_count": 1
+    },
+    "retry": "At most1retry per failed request, transient failure only; preserve first failure",
+    "connect_timeout_seconds": 10,
+    "read_timeout_seconds": 45,
+    "total_wall_seconds": 600,
+    "forbidden": [
+      "Authentication",
+      "Author contact",
+      "Full catalogue query",
+      "Alternative release substitution",
+      "Successful-query replay"
+    ]
+  },
+  "outputs": [
+    "Raw VOTables in external cache",
+    "Upload VOTable and canonical ID identity in external cache",
+    "Exact queries/parameters/HTTP headers/hash/provider receipts",
+    "Validated left-join property table",
+    "Availability summary",
+    "Compact manifest/report/raw receipt/return in owned repository directory"
+  ],
+  "qualification": {
+    "product": "gaia_source_properties",
+    "requirements": [
+      "Actual request and complete validation",
+      "Source identity and schema/missingness checks",
+      "Independent review"
+    ],
+    "current_qualified": false
+  },
+  "future_downstream_not_current_task": {
+    "freeze_after": "Actual availability is known; no outcome-based stratum changes",
+    "sample": "Same retained frame-rotator sample",
+    "model": "Common spin nuisance B_i*omega + X_i*beta + I_host*X_i*delta",
+    "target": "Full13interaction vector+STF+STF with covariance support and identifiable subspace",
+    "contrast": "Host1–2 versus3",
+    "eligibility": "Rank/support determines eligibility; no arbitrary quota or regrouping",
+    "interpretation": "Association only, not causal centroid law or independent physical validation",
+    "unqualified": [
+      "Shared processing",
+      "Upstream outcome selection",
+      "Sky/magnitude/redshift dependence",
+      "Actual cross-source covariance"
+    ]
+  },
+  "functional_bundle": {
+    "x": "Existing carrier gains source-property tags",
+    "F": "Existing law unchanged",
+    "Pi": "Existing law unchanged; no new calibrated population probability",
+    "Q": "No physical MES anchor",
+    "G_F": "DEPTH_UNAVAILABLE"
+  },
+  "preservation": {
+    "original_external_acceptance": "17/42 unchanged",
+    "analytic_alternate_acceptance": "18/42 unchanged",
+    "historical48": "Retain exact histories/task/cost identities",
+    "one_use": "No replay or reset",
+    "ultra": "Consumed allocations unchanged",
+    "R9": "UNKNOWN unchanged"
+  },
+  "sources": [
+    "https://gea.esac.esa.int/archive/documentation/GDR3/Catalogue_consolidation/chap_cu9dr2xm/sec_cu9dr2xm_motivation/",
+    "https://gea.esac.esa.int/archive/documentation/GDR3/Gaia_archive/chap_datamodel/sec_dm_extra--galactic_tables/ssec_dm_qso_candidates.html",
+    "https://www.cosmos.esa.int/web/gaia-users/archive/programmatic-access",
+    "https://arxiv.org/html/2206.05681v1#S4.SS3.SSS1",
+    "https://arxiv.org/html/2206.14491v1#S7.SS1"
+  ],
+  "execution_or_admission_performed_by_assembly": false
+}

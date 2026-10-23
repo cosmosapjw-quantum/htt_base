@@ -1,0 +1,5 @@
+First test attempt, 2026-10-23, exit 1, elapsed 9.61 s, max RSS 116776 KiB.
+Command: env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg /usr/bin/time -v timeout 120s python -m pytest -q docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/test_compute.py
+Outcome: 1 failed, 3 passed in 4.41 s.
+Failure: test_common_mode_and_o3_equivariance expected A[:,:6] to vanish; observed max absolute value 1.0.
+Correction: the reviewed contrast cancels a common shift to all three six-vector level blocks, represented by kron([1,1,1,0], I6). A shift to the first level alone changes the contrast.

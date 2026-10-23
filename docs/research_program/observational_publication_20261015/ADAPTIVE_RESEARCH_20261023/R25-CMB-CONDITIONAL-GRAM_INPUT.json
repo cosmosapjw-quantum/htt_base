@@ -1,0 +1,49 @@
+{
+  "task_id": "R25-CMB-CONDITIONAL-GRAM",
+  "advisor": "/root/r25_cmb_physics_theory",
+  "advisor_requested_selected": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "sources": [
+    {"path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/cmb/RESULT.json", "sha256": "107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb"},
+    {"path": "htt/obsstat/planck_lowell_irrep_projection.py", "sha256": "ecccebc39c4814546552b9fbc6b6ed798cc644fec1f6616a26003fda17932216"}
+  ],
+  "estimand": "Distinguish intrinsic multipole shape and relative orientation using all60 same-sky processed tensor views, preserving their joint dependence.",
+  "carriers": "X2=5x60 and X3=7x60 corrected canonical real orthonormal harmonic coefficients. Preserve original order, product/lmax/window identities and full12/STF. O(d) must act on orthonormal harmonic coordinates, not raw independent STF components. Fixed q0=o0=1e-5 K.",
+  "laws": {
+    "H_orient": "Independent Haar SO3 rotation per ell, shared across all60 views; valid irreducible representation or proper tensor rotation. Every intrinsic shape and within-ell Gram matrix remains fixed.",
+    "H_Gram": "Independent Haar O5 and O7 actions shared across all60 views. Powers and within-ell Grams fixed, shapes vary. Implied by zero-mean independent-ell Gaussian matrices with common arbitrary, possibly singular, cross-view covariance across harmonic coordinate rows. Actual masked Planck processing has NOT been qualified for this invariance."
+  },
+  "statistics": "A=T2/||T2||F, B=T3/||T3||F, C_ij=B_ikl B_jkl-delta_ij/3, v_i=B_ijk A_jk. S=(6 tr(A^3)^2,1.5 C:C,1.5(A:C)^2,v.v), each in[0,1]. Zero norm explicit undefined, no flooring. H_Gram registers all240 coordinates; H_orient firsttwo are conditioned-away with reference tail1 and calibrates only120 relative coordinates.",
+  "monte_carlo": {
+    "generator": "PCG64",
+    "seed": 20261023025,
+    "child_stream_order": ["orient_pilot", "orient_evaluation", "gram_pilot", "gram_evaluation"],
+    "pilot_per_law": 4096,
+    "evaluation_per_law": 16383,
+    "pilot_rarity": "r_j(s)=-log((1+count pilot S_bj>=s)/4097); freeze pilot transform before evaluation",
+    "global": "T=max_j r_j(S_j). p_ref=(1+count evaluation T_b>=T_obs)/16384; retain ties/counts, no zero; 99percent Clopper-Pearson interval for underlying reference tail",
+    "Pi": "Coordinate strict > exceedances at thresholds[0,.1,.25,.5,.75,.9,1] separately with finite MC uncertainty, named conditional reference law only",
+    "samplers": "SO3 normalized Gaussian4 quaternion; O(d) Gaussian QR with diagonal-sign correction, no forced positive determinant",
+    "adaptation": "Retrospectively chosen current-data exploration; p_ref is not a qualified cosmological or confirmatory observational p-value"
+  },
+  "theorems": [
+    "Both laws have mean0 and E[X_aj X_bk]=delta_ab G_jk/(2ell+1); independent-ell actions imply cross-ell covariance0. Same second moments, potentially different shape laws.",
+    "Under group invariance and independent pilot, add-one weak-tail rank is conservative with ties. Source invariance is an explicit unverified working-law assumption.",
+    "H_Gram joint orbit support h(U)=sum_ell nuclear_norm(X_ell U_ell^T); this gives convex-hull support, not every orbit state."
+  ],
+  "bundle": "x full60x12+STF retained; four S are registered projections only. Q computational gauges fixed under both laws, physical MES unavailable. F orbit support versus empirical pushforward separated. Pi strict named conditional-law exceedances, physical Pi unknown. G_F shared-draw processing-window path with full cross-view covariance; not physical depth. Retain inputs and shared-action/seed provenance sufficient to regenerate full tensor samples.",
+  "controls": [
+    "Two independent harmonic-to-STF implementations, including sqrt2 and imaginary-sign conversion",
+    "Analytic mean/covariance checks with predetermined bounded-variable Hoeffding tolerances and a separate MC-check error budget, never R9 alpha",
+    "Scaled Gram/norm/STF symmetry/trace/common rotation errors <=1e-11",
+    "Independent statistic implementation rtol1e-10 atol1e-12",
+    "Zero/repeated-eigenvalue/mirror/isotropic tensor controls",
+    "Correlated two-view fixture: shared action preserves Gram, independent per-view action fails",
+    "Fixed-shape fixture: H_orient shape constant, H_Gram variable",
+    "Independent finite-rank and tie calculation; all ties return1"
+  ],
+  "limits": {"production_seconds": 180, "tests_seconds": 180, "RSS_MiB": 512, "BLAS_threads": 1, "batch_max": 256, "no_maps_scans_synthesis_solver_ODE_optimizer": true, "no_ultra": true},
+  "literature": ["https://arxiv.org/pdf/math/0606709", "https://arxiv.org/pdf/0704.3657", "https://pmc.ncbi.nlm.nih.gov/articles/PMC6405018/"],
+  "outputs": ["compute.py", "test_compute.py", "RESULT.json", "figure.png", "REPORT.md", "MANIFEST.json", "RAW_RECEIPT.json", "RETURN.json"]
+}

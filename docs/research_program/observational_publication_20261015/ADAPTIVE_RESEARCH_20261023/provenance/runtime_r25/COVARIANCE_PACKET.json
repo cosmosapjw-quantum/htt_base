@@ -1,0 +1,56 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R25-K03-DEPTH-COVROBUST",
+  "attempt": 1,
+  "phase": "execute",
+  "input_identity": "sha256:9abcf30af3fe40f52508554b03aba669789b212c2b8b0bfae5f8eba2ae01729f",
+  "candidate_identity": null,
+  "frontier_identity": "4c7d7c1eb05001711d0b5ca315e1612f7405979bb52ca9b5c3d6fa7820c31abc",
+  "task_spec_identity": "846962cc91537c9374ecc830cca5edc7f105c3c920af753bf89ded1c69aa68db",
+  "packet_id": "705af0c76e9f6a4dbcacf56b8eadab4af05ce4b2a9638429aeeb74d3fba93716",
+  "route": {
+    "route": "subagent_specialist",
+    "requested": {
+      "model": "gpt-6-sol",
+      "effort": "high"
+    },
+    "transport_selected": {
+      "model": "gpt-6-sol",
+      "effort": "high"
+    },
+    "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+    "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+    "launch_performed": false,
+    "availability_catalog_profiles": [
+      {
+        "model": "gpt-6-astra",
+        "effort": "ultra"
+      },
+      {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "model": "gpt-6-sol",
+        "effort": "high"
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "effort": "medium"
+      }
+    ]
+  },
+  "resume_evidence": null,
+  "scientific_resume": null,
+  "transport_resume": null,
+  "launch_performed": false,
+  "observed_runtime": "UNKNOWN",
+  "native_tool": "collaboration.spawn_agent",
+  "spawn_args": {
+    "task_name": "rc_705af0c76e9f6a4d",
+    "fork_turns": "none",
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high",
+    "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4\", \"task_id\": \"R25-K03-DEPTH-COVROBUST\", \"attempt\": 1, \"phase\": \"execute\", \"input_identity\": \"sha256:9abcf30af3fe40f52508554b03aba669789b212c2b8b0bfae5f8eba2ae01729f\", \"candidate_identity\": null, \"frontier_identity\": \"4c7d7c1eb05001711d0b5ca315e1612f7405979bb52ca9b5c3d6fa7820c31abc\", \"task_spec_identity\": \"846962cc91537c9374ecc830cca5edc7f105c3c920af753bf89ded1c69aa68db\", \"packet_id\": \"705af0c76e9f6a4dbcacf56b8eadab4af05ce4b2a9638429aeeb74d3fba93716\", \"spec\": {\"id\": \"R25-K03-DEPTH-COVROBUST\", \"kind\": \"numeric\", \"goal\": \"Determine full24-covariance robustness of reported-depth E1/B1 constancy using retained source summaries\", \"acceptance\": \"Frozen 12-contrast null, full24 and cross covariance retained; moment/Gaussian reference curves and inflation breakpoints verified independently; no physical-law or original acceptance promotion\", \"input_identity\": \"sha256:9abcf30af3fe40f52508554b03aba669789b212c2b8b0bfae5f8eba2ae01729f\", \"input_sources\": [\"docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-K03-DEPTH-COVROBUST_INPUT.json\"], \"owned_paths\": [\"docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_covariance\"], \"implementation_route\": \"subagent_specialist\", \"contract_origin\": \"new_conditional_research\", \"promotes_original_acceptance\": false, \"requires\": {\"all\": [{\"task_id\": \"R24-DEPTH-IMAGES\", \"evidence\": \"completed\"}, {\"task_id\": \"R24-TENSOR-BUNDLE\", \"evidence\": \"qualified\", \"product\": \"tensor_scenario\"}]}, \"semantic_delta\": {\"kind\": \"method\", \"before\": {\"hypothesis\": \"slope6 zero; descriptive functional images\", \"uncertainty\": \"one working covariance\"}, \"after\": {\"hypothesis\": \"three full vector depth levels equal,12 contrasts\", \"uncertainty\": \"Loewner coefficient covariance upper-envelope with two reference tails\"}, \"discriminator\": \"variance budget at which reported-depth contrast ceases discrimination\", \"scope\": \"new conditional selected reported-depth target; original K03 physical HOLD preserved\"}}, \"issue\": null, \"repair_plan\": null, \"resume_evidence\": null, \"scientific_resume\": null, \"transport_resume\": null, \"authors\": [], \"contributors\": [], \"history_refs\": [], \"history_total\": 0}"
+  }
+}

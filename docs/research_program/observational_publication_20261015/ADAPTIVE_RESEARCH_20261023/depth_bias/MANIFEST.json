@@ -1,0 +1,99 @@
+{
+  "task_id": "R25-K03-DEPTH-BIAS-FRONTIER",
+  "packet_id": "d2a92972cf10b9dade8f0cbcf79318411611709eda8faaa48c77f5988047fdda",
+  "input_identity": "sha256:34e88ac00f25c5cb849152167f93364491a43e88c2c609e98710d42a04fb39d2",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "owner": "obsstat",
+  "scope": "Joint coefficient-bias and covariance robustness of three reported-depth full E1/B1 vector levels; full24 retained. Original K03 physical acceptance remains HOLD.",
+  "claim_tier": "C0",
+  "claim_status": "CONDITIONAL",
+  "transfer_source": "none",
+  "sky_support_status": "selected reported-redshift target only; physical depth unavailable",
+  "null_mock_status": "original empirical 4096-row Pi retained; no new draws or calibration",
+  "generating_command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLBACKEND=Agg timeout 60s python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias/compute.py",
+  "files": {
+    "compute.py": {
+      "sha256": "194486f23f32c7c92264d4cd94d955f3c79873251a4893345cd58beaffb2f903",
+      "size_bytes": 10933
+    },
+    "test_compute.py": {
+      "sha256": "d6afdc3d9cf80c5b0ce2115468e8abc9a751c86e72daac33d0a50dbe8f3739d7",
+      "size_bytes": 4725
+    },
+    "RESULT.json": {
+      "sha256": "c7930c6f8a761c0eb372f2298a86cd65b9ff099828119ae930aa1d1c3b2b537f",
+      "size_bytes": 312117
+    },
+    "figure.png": {
+      "sha256": "fc1489bb53ac3cf1a72aeb0a9d82cf088eb1788593f30a6e4eb4e83b74715163",
+      "size_bytes": 136459
+    },
+    "REPORT.md": {
+      "sha256": "98acbd977ae63e0083daee387af08296824db0f7e70167091e33c450f8e82501",
+      "size_bytes": 4085
+    },
+    "RAW_RECEIPT.json": {
+      "sha256": "4eef9f42e4c75c18494afce0cd0fba6c89be24f446fc3330d0c499de2e53cc19",
+      "size_bytes": 7391
+    },
+    "PRODUCTION_LOG.txt": {
+      "sha256": "cbd92387f056e5683565df80c10c2874aa290d336f5483a788d38763c6e79f30",
+      "size_bytes": 1364
+    },
+    "TEST_LOG.txt": {
+      "sha256": "fad2662ec0a45b8361e1d8bfba5a85d0e31a70e27392da088c4c11ca2fc28a85",
+      "size_bytes": 969
+    },
+    "FIRST_FAILURE.txt": {
+      "sha256": "6837847a94d021fa7c1453164e636648a879fd9a9b92361808843832a273eb4a",
+      "size_bytes": 806
+    },
+    "FIRST_TEST_FAILURE.txt": {
+      "sha256": "41720e362a4f31addecf79389307f800df4ccdcf134610b5cf0ce6245dc1e7fd",
+      "size_bytes": 656
+    },
+    "FIRST_FINALIZATION_FAILURE.txt": {
+      "sha256": "e05ae400a06d14facf516ae44d2add72c45c8b2d5f3268788b408dbe9ac7cbec",
+      "size_bytes": 431
+    }
+  },
+  "source_identities": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-K03-DEPTH-BIAS-FRONTIER_INPUT.json",
+      "sha256": "34e88ac00f25c5cb849152167f93364491a43e88c2c609e98710d42a04fb39d2"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_covariance/RESULT.json",
+      "sha256": "fb4456451cf10582bf7ad1406ae1c5040dbf15b8d662b83ffb07a2f7de97d400"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_covariance/MANIFEST.json",
+      "sha256": "bee5babe4f0610df53656beb2fd6dc69a99028d5d91e2e847e30be320ab61e9e"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/RESULT.json",
+      "sha256": "7d90415eede2b08fc51067bcff5b3276e3d554f20e90d3d7033692b885a4e7e9"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/RESULT.json",
+      "sha256": "b93bb2829dd90d6ece1afb6e9ef065f8d6e5dd87a702fd06f1979d2681ff7ff2"
+    }
+  ],
+  "assumptions": [
+    "selected reported-depth three-level target",
+    "deterministic Euclidean bias ball in full24 or slope6",
+    "U_tau=C24+tau^2 I24",
+    "Gaussian and moment thresholds are conditional references"
+  ],
+  "caveats": [
+    "not an observed Gaia bias bound",
+    "no physical Pi or Q",
+    "no calibrated observed p-value",
+    "not a native solver or Bianchi family identification",
+    "original K03 HOLD and R9 UNKNOWN preserved",
+    "independent review pending"
+  ],
+  "self_sealed": false,
+  "return_sealed": false,
+  "claim_ceiling": "Exploratory conditional sensitivity under chosen deterministic bias/covariance envelopes; neither actual Gaia systematics bound nor physical confidence. No original acceptance promotion."
+}

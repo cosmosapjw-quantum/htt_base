@@ -1,0 +1,51 @@
+{
+  "task_id": "R25-DISTANCE-CONDITIONAL-EVIDENCE",
+  "packet_id": "80be2c56bc7d24f05d364fb63ce7fea134178e25b6a9ee5aaf96378c95f2b9ad",
+  "input_identity": "sha256:77439c5b5966f6f0c6a4d4e2819b28b76b7a3c24523e9b08ec9f7e12fd5ca2b8",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "executor": "/root/rc_80be2c56bc7d24f0",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "threads": 1,
+  "production": [
+    {
+      "command": "timeout 60s /usr/bin/time -v -o PRODUCTION.time env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 python compute.py",
+      "exit_status": 1,
+      "wall_seconds": 7.06,
+      "max_RSS_KiB": 95648,
+      "raw_time": "PRODUCTION.time",
+      "raw_failure": "PRODUCTION.first_failure.txt",
+      "classification": "mechanical SciPy gelsy residual return shape; repaired without changed scientific law"
+    },
+    {
+      "command": "timeout 45s /usr/bin/time -v -o PRODUCTION.retry.time env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 python compute.py",
+      "exit_status": 0,
+      "wall_seconds": 2.27,
+      "max_RSS_KiB": 99096,
+      "raw_time": "PRODUCTION.retry.time",
+      "stdout": "EXECUTED_EXPLORATORY; logEbar=-8.604831899198585; components=40; null_fits=20"
+    }
+  ],
+  "tests": [
+    {
+      "command": "timeout 60s /usr/bin/time -v -o TEST.time env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 python test_compute.py",
+      "exit_status": 0,
+      "wall_seconds": 2.10,
+      "max_RSS_KiB": 90684,
+      "raw_time": "TEST.time",
+      "stdout": "2 R25 tests PASS; 40 permuted blocks and aggregate checked"
+    }
+  ],
+  "cumulative_production_seconds": 9.33,
+  "cumulative_test_seconds": 2.10,
+  "cumulative_execution_seconds": 11.43,
+  "max_RSS_KiB": 99096,
+  "limits": {"production_seconds": 60, "test_seconds": 60, "total_seconds": 120, "RSS_MiB": 1024},
+  "new_conditional_null_fits": 20,
+  "new_training_fits": 0,
+  "random_draws": 0,
+  "source_status": "all eight frozen SHA256 identities matched",
+  "scientific_admission": "HOLD",
+  "claim_ceiling": "exploratory conditional-evidence diagnostic"
+}

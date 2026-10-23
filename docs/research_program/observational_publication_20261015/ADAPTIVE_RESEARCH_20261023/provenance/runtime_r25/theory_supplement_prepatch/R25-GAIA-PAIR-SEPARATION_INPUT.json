@@ -1,0 +1,291 @@
+{
+  "schema": "htt.gaia_pair_separation_contract/1",
+  "task_id": "R25-GAIA-PAIR-SEPARATION",
+  "document_role": "PLANNING_CONTRACT_NOT_CURRENT_CONTROLLER_INPUT_UNTIL_ACTUAL_DISCOVERY",
+  "source_base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "advisor": {
+    "agent_id": "/root/r25_statistics_theory",
+    "requested": "gpt-6-astra/xhigh",
+    "transport_selected": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "status": "Completed Astra source contract; host mechanically assembled; NOT independent review"
+  },
+  "kind": "numeric",
+  "implementation_route": "subagent_specialist",
+  "contract_origin": "new_conditional_research",
+  "promotes_original_acceptance": false,
+  "requires": {
+    "all": []
+  },
+  "owned_paths": [
+    "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/gaia_pair_separation"
+  ],
+  "goal": "Compute observed angular-pair proper-motion responses and a common-spin quotient on4756cached sources, retaining the shared-source covariance and full typed vector/STF profiles",
+  "inputs": [
+    {
+      "path": "docs/observational_reboot_20261014/results/gaia_frame_v1/qualified_rows.npz",
+      "sha256": "41b6ddcb13131b49b97efd6107816af4518fa9e23725cf3b4272c2f3a70acb8f"
+    },
+    {
+      "path": "docs/observational_reboot_20261014/results/gaia_frame_v1/result.json",
+      "sha256": "226481918620e95181ce8686a1b3d5f88b94d31986a7f7b32aaadf06e74a4f3c"
+    },
+    {
+      "path": "docs/solver_free_research_20261014/results/gaia_correlation/result.json",
+      "sha256": "2938805434dfbdc27bf24479c3de42858fa2ab5504ad84eff6573f4402599def"
+    }
+  ],
+  "npz_size_bytes": 381980,
+  "source_selection": {
+    "release": "Gaia EDR3 frame_rotator_source",
+    "predicate": "used_for_reference_frame_spin=true and random_index<20000000",
+    "source_count": 4756,
+    "parameter_type": "All five-parameter solutions",
+    "qualification": "Outcome-selected; NOT independent validation",
+    "arrays": [
+      "source_id[4756]",
+      "ra/dec degrees",
+      "proper_motion[4756,2] mas/yr",
+      "covariance[4756,2,2] mas^2/yr^2",
+      "octant"
+    ],
+    "ordering": "Sort unique source_id; preserve exact source identities",
+    "conversion": {
+      "proper_motion": "multiply by1000 to microarcseconds/year",
+      "covariance": "multiply by1e6 to (microarcseconds/year)^2"
+    }
+  },
+  "geometry": {
+    "n_i": "Unit ICRS direction",
+    "E_i": "[e_alpha*,e_delta],3x2 orthonormal tangent basis",
+    "y_i": "Two converted proper-motion components",
+    "pair_set": "All i<j,11307390pairs",
+    "c_ij": "n_i dot n_j",
+    "kappa_ij": "n_j^T E_i y_i + n_i^T E_j y_j",
+    "angular_identity": "d cos(theta_ij)/dt=a_mu*kappa_ij",
+    "a_mu": "pi/(180*3600*1e6)",
+    "kappa_units": "microarcsecond-equivalent/year; NOT theta-dot",
+    "theta": "atan2(norm(n_i cross n_j),c_ij)",
+    "bins_degrees": [
+      0,
+      0.5,
+      1,
+      2,
+      5,
+      10,
+      30,
+      60,
+      120,
+      180
+    ],
+    "bin_rule": "Left-closed/right-open except last right-closed",
+    "near_endpoint_count": "Count theta<=1e-12radians and pi-theta<=1e-12radians separately using cosine sign to distinguish coincidence/antipodality",
+    "forbidden": [
+      "Outcome cuts",
+      "Bin merging",
+      "Division by angular separation or sin(theta) to create angle-rate"
+    ]
+  },
+  "field_model": {
+    "mu": "P_n g + P_n S_E n + n cross S_B n + omega cross n",
+    "P_n": "I-n*n^T",
+    "beta13": [
+      "g3",
+      "S_E5",
+      "S_B5"
+    ],
+    "spin_nuisance": "omega3",
+    "STF_basis": [
+      "diag(1,-1,0)/sqrt2",
+      "diag(-1,-1,2)/sqrt6",
+      "symmetric xy/sqrt2",
+      "symmetric xz/sqrt2",
+      "symmetric yz/sqrt2"
+    ],
+    "basis_metric": "Frobenius orthonormal",
+    "X_i": "2x13 tangent design",
+    "B_i": "2x3 common-spin tangent design"
+  },
+  "pair_operator": {
+    "L_ij": "Source blocks n_j^T E_i at source i and n_i^T E_j at source j",
+    "a_ij": "L_ij X,1x13",
+    "per_bin_d": "Mean a_ij^T*kappa_ij,13coordinate vector/STF RESPONSE profile, not a beta estimate",
+    "per_bin_H": "mean a_ij^T*L_ij,13x9512",
+    "per_bin_D": "mean a_ij^T*a_ij,13x13",
+    "identities": [
+      "d=H*y",
+      "D=H*X"
+    ],
+    "retain": [
+      "H",
+      "D",
+      "d",
+      "Source and pair counts per bin",
+      "Full typed vector+twoSTF tensors",
+      "Actual tangent field and reconstructible pair kernel"
+    ],
+    "no_full_pair_matrix_required": true,
+    "response_expectation": "E[d_b]=D_b*beta under specified field/zero-mean error model; d_b generally differs from beta",
+    "response_counterexample": "Pair n_i=e_x,n_j=e_y and E1 g=e_x gives d_E1=(1,1,0), not g."
+  },
+  "covariance": {
+    "exact": "Cov(d)=H*Sigma*H^T for actual joint source law",
+    "working_C0": "Block diagonal of reported source2x2covariances",
+    "working_Cd": "Sum_i H_i*C_i*H_i^T, retaining full cross-bin/component/shared-source blocks",
+    "actual_cross_source_Sigma": "UNKNOWN",
+    "forbidden": [
+      "Independent-pair assumption",
+      "sqrt(pair-count) uncertainty scaling",
+      "Dense pair covariance"
+    ]
+  },
+  "working_reference_fit": {
+    "stack": "Stack full bin d,H,D and Cd",
+    "whitening": "Fixed y-independent declared covariance projection/range W; require spectral ||W*Cd*W^T-I_r||<=1e-9, else TAIL_UNRESOLVED",
+    "z": "W*d",
+    "M": "W*D",
+    "low_order_residual": "T_low=||(I-P_M)z||^2",
+    "degrees_of_freedom": {
+      "low": "nu_low=r-q_low",
+      "E1": "nu_E1=r-q_E1",
+      "Delta": "nu_Delta=q_low-q_E1",
+      "definition": "q values are certified complete declared projected-model image dimensions, not threshold-only ranks"
+    },
+    "nested_E1": "First3gcolumns fit; retain T_E1 and Delta=T_E1-T_low>=0 and numerical nesting checks. Delta has central working chi-square reference ONLY under E1 null.",
+    "retain": "Full residual profiles and all rank/singular-value decisions",
+    "tails": "Conditional formal Gaussian fixed-design/C0 references only when projection whitening and complete model-image criteria are met; otherwise descriptive profiles with TAIL_UNRESOLVED. No physical coverage.",
+    "missing_qualification": "Selected law and actual cross-source covariance uncalibrated; no detection, physical significance or original promotion",
+    "rank_instability": "formal TAIL_UNRESOLVED with profiles retained",
+    "empty_bin_or_zero_DOF": "Explicit status; never p=0",
+    "covariance_projection": {
+      "normalization_and_scale_selection": "Freeze independently of observed y; numerical threshold stability is not exact rank proof",
+      "retain": [
+        "Full unprojected d,H,D,Cd",
+        "All covariance eigenvectors/eigenvalues",
+        "Retained projection definition",
+        "Reconstruction error",
+        "Discarded modes tagged exact-null versus positive/ambiguous"
+      ],
+      "small_eigenvalue_counterexample": "diag(1,1e-14) has two positive modes; stable threshold rank1 does not prove rank1.",
+      "discarded_positive_modes": "Unconstrained and reported; no exact-null label solely from thresholding",
+      "support_fact": "For positive-definite C0, range(H*C0*H^T)=range(H); exact d and D support is automatic, but numerical discarded positive modes remain disclosed."
+    },
+    "full_model_tail_eligibility": {
+      "condition": "Complete projected model image must be certified: e.g. full p=3 or13column rank with smallest singular value separated from numerical error, or independently established exact rank/image",
+      "threshold_stability": "Not sufficient for complete-image certification",
+      "no_certificate": "Descriptive fits, report omitted/ambiguous model modes and TAIL_UNRESOLVED full-model tails; do not invent extra physical beta bound",
+      "no_new_certification_algorithm": "These are conditional criteria only; no new numerical certification method is asserted",
+      "counterexample": "M=[[1,1],[0,1e-13]],beta=(-1e13,1e13) gives mean(0,1). Stable threshold rank1 yields noncentral residual1 under the full model null."
+    },
+    "projectors": "Check symmetry and idempotence of declared observable-space projectors and nesting of E1 image within full image"
+  },
+  "mathematical_obligations": {
+    "spin_null": "L*B=0 and H*B=0 from scalar triple-product cancellation",
+    "uncompressed_completeness": "For tangent source velocities, K=V*N^T+N*V^T has zero diagonal. If rank(N)=3, K=0 implies (I-P)K*N=(I-P)V*(N^T*N)=0, hence V=N*A and A+A^T=0: only common rotation in full uncompressed kernel.",
+    "scope_limit": "Compressed H has at most117rows and leaves at least9395coordinate kernel directions among9512tangent coordinates; fullK rotation-only theorem does not imply compressed completeness.",
+    "covariance": "H*Sigma*H^T exact; C0 block independence is a separate unqualified working assumption",
+    "duplicate_pair_invariance": "Duplicating all pairs within bin changes no mean operator/statistic",
+    "independent_analytic_oracles": {
+      "E1": "kappa=(1-c)*(n_i+n_j) dot g",
+      "E2": "kappa=2*n_i^T*S_E*n_j-c*(n_i^T*S_E*n_i+n_j^T*S_E*n_j)",
+      "B2": "kappa=(n_i cross n_j)^T*S_B*(n_j-n_i)"
+    },
+    "physical_interpretation": "No physical boost/global-shear identification from this finite observed response"
+  },
+  "controls": {
+    "units_tangent_STF_atol": 1e-12,
+    "checks": [
+      "Cartesian kappa vs independent analytic E1/E2/B2 and spin cancellation",
+      "Fixed bounded source and pair permutations",
+      "Proper-rotation equivariance and bin-membership invariance",
+      "Pair duplication invariance",
+      "Nonuniform fixture D=H*X",
+      "Actual accumulated d vs H*y and D vs H*X",
+      "Dense covariance fixture",
+      "H*B null",
+      "Observable-projector symmetry/idempotence and E1/full-image nesting",
+      "Positive small covariance mode fixture diag(1,1e-14)",
+      "Small model-mode counterexample M=[[1,1],[0,1e-13]] with unrestricted beta",
+      "Response-profile d!=beta fixture",
+      "Rank-deficient coefficient-fiber counterexample M=(1,0)"
+    ],
+    "actual_accumulation_normalized_tolerance": 1e-09,
+    "dense_covariance_fixture_tolerance": 1e-11,
+    "HB_zero_tolerance": 1e-10,
+    "PSD_rank_policy": "Inspect normalized covariance/design at relative1e-8,1e-10,1e-12 as diagnostics only; stable thresholds do not certify exact rank. Preserve all modes and apply conditional full-image/whitening criteria or descriptive fallback.",
+    "empty_bin": "Explicit; no silent deletion or merged bin"
+  },
+  "limits": {
+    "cumulative_numerical_seconds": 300,
+    "includes": "All numerical attempts and failures, including targeted repair under remaining cap",
+    "threads": 1,
+    "RSS_bytes": 1073741824,
+    "planned_production_allpair_traversals": 1,
+    "historical_one_use_status": "This is no reuse/reset of an old one-use pass; any targeted repair remains under current cumulative caps",
+    "pair_chunk_max": 32768,
+    "forbidden": [
+      "Dense pair covariance",
+      "New download",
+      "755850-row or D05 original pass",
+      "ODE",
+      "Old fit replay"
+    ],
+    "independent_review": "Check saved operators/covariance and fixtures without another production pair traversal"
+  },
+  "functional_bundle": {
+    "x": "Full unprojected typed response d (expectation D*beta, not beta), H,D,Cd, actual tangent field and reconstructible pair kernel, plus declared projected profiles",
+    "F": {
+      "choice": "Predeclared95% joint Gaussian WORKING profile ellipsoid in the fixed declared projected observable space, not coefficient space",
+      "definition": "For z=W*d in R^r with working covariance I_r, region for its projected mean m is {m:||z-m||_2^2<=chi2_r(0.95)} for r>0; r=0 explicit zero-dimensional/undefined inference status, not p=0.",
+      "assumptions": "Only under fixed y-independent W and qualified working Gaussian/C0 assumptions; no physical observational coverage asserted",
+      "discarded_modes": "Preserve full unprojected carrier; discarded positive/ambiguous modes unconstrained",
+      "coefficient_handling": "If fitted coefficients are displayed, retain identifiable functionals, fitted profile, ker(M) and affine fiber; pseudoinverse is a representative only, never a finite full13 uncertainty region",
+      "coefficient_counterexample": "M=(1,0); pseudoinverse covariance diag(1,0) would falsely imply certainty in unidentified second coordinate."
+    },
+    "Pi": "Formal working law only; no calibrated physical Pi",
+    "Q": "No physical MES anchor",
+    "G_F": "DEPTH_UNAVAILABLE; angular path is a separate typed coordinate"
+  },
+  "outputs": [
+    "compute.py",
+    "test_compute.py",
+    "RESULT.json",
+    "Saved operator/covariance and full typed profiles",
+    "figure.png",
+    "REPORT.md",
+    "MANIFEST.json",
+    "RAW_RECEIPT.json",
+    "RETURN.json"
+  ],
+  "preservation": {
+    "original_acceptance": "17/42 and analytic18/42 unchanged",
+    "historical48_or62": "No task/history/cost reinitialization or replacement",
+    "ultra": "Consumed allocations unchanged",
+    "R9": "UNKNOWN unchanged",
+    "first_failures": "Retain raw first failures; no silent validator relaxation"
+  },
+  "independent_review": "Required; this contract/source-advisor summary is not independent admission",
+  "sources": [
+    {
+      "url": "https://arxiv.org/pdf/1310.0500",
+      "scope": "Darling equations5–7 angular rate; our cosine-response/STF formulas are separate derivations"
+    },
+    {
+      "url": "https://arxiv.org/html/2204.12574v2#A5",
+      "scope": "Gaia AppendixE tangent/spin/within-source covariance; not a supplied STF derivation"
+    },
+    {
+      "url": "https://arxiv.org/html/1808.07103v1",
+      "scope": "Truebenbach sectionIII shared objects between bins; not a calibrated Gaia error law"
+    }
+  ],
+  "execution_performed_by_assembly": false,
+  "blind_review_update": {
+    "reviewer": "/root/r25_blind_gaia_pair",
+    "requested_transport_selected": "gpt-6-astra/xhigh",
+    "observed": "UNKNOWN",
+    "decision": "Descriptive implementation after clarifications; full-model tails/coefficient-region admission conditional HOLD",
+    "independence": "Read-only; no author-summary or prior-verdict reads",
+    "no_production_by_review": true
+  }
+}

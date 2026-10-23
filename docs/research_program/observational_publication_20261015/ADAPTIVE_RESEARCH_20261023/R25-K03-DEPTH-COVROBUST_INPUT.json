@@ -1,0 +1,66 @@
+{
+  "task_id": "R25-K03-DEPTH-COVROBUST",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "advisor": "/root/r25_statistics_theory",
+  "advisor_requested_selected": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "sources": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/RESULT.json",
+      "sha256": "b93bb2829dd90d6ece1afb6e9ef065f8d6e5dd87a702fd06f1979d2681ff7ff2"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/k03_depth_moments/RESULT.json",
+      "sha256": "a33d20b58f7a4438a273aef5b087d6e6fb560355dbe92fa60844ae0002abfb7f"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/RESULT.json",
+      "sha256": "7d90415eede2b08fc51067bcff5b3276e3d554f20e90d3d7033692b885a4e7e9"
+    }
+  ],
+  "estimand": "Equality of all three reported-redshift E1/B1 vector levels (12 restrictions), distinct from slope6=0 and physical history. Preserve full24 coefficients and full covariance.",
+  "formula": "mu24=full24.mean_uasyr,C24=full24.cov_uasyr2,M=depth.M24_to_Y18. Independently construct M block b=I6 at gamma_b + c_b I6 at theta with c=(1/4,7/12,26/33). H=kron([[-1,1,0],[0,-1,1]],I6), A=H M, d=A mu24. U24(tau)=C24+tau^2 I24; Vtau=A U24 A^T; Ttau=d^T Vtau^-1 d.",
+  "tau_uasyr": [
+    0,
+    0.1,
+    0.3,
+    1,
+    3,
+    10
+  ],
+  "tails": "Gaussian-reference chi2_12 survival and distribution-free moment bound min(1,12/Ttau), latter assumes zero contrast mean and deterministic covariance upper bound; neither measured law nor observed calibrated p. alpha=.05 for standalone reference only. Also alpha=1/80 for scale comparison ONLY, never reused R9 budget.",
+  "crossings": "Solve unique nonnegative tau where Ttau=chi2_12(.95) and Ttau=12/.05; also .9875 and 12/(1/80), report absent if already below at tau0. Retain root bracket, residual <=1e-8.",
+  "theorem": "If E[d]=0 and Cov(d)<=Vtau, E[d^T Vtau^-1 d]<=12, hence P(T>=12/alpha)<=alpha by Markov; for Gaussian dominated covariance use coupling to chi2_12. Ttau decreases with tau because A has row rank12. Data-driven method choice means current data application is exploratory sensitivity, not retrospective confirmation.",
+  "bundle": "x full24; F supports of full24 U_tau reference ellipsoids, rho named reference only; computational Qref10 uasyr unchanged, physical anchor unavailable; Pi original uniform4096 empirical rows unchanged, robust tail bound is not Pi; G_F=(Y0,delta1,delta2) retains full transformed U_tau and all cross blocks.",
+  "controls": [
+    "rank A12 at 1e-8/1e-10/1e-12",
+    "common mode U=[I6;I6;I6;0] gives A U=0 and added covariance lambda U U^T cancels",
+    "fixed proper rotation and polar/axial parity invariance",
+    "consistent full24 permutation",
+    "Cholesky vs eigen quadratic rtol1e-9 atol1e-10",
+    "independent recomputation of M from rational centers",
+    "no covariance deletion/jitter/pseudoinverse",
+    "old slope statistic comparator must name different null"
+  ],
+  "limits": {
+    "production_seconds": 60,
+    "tests_seconds": 120,
+    "RSS_MiB": 1024,
+    "BLAS_threads": 1,
+    "no_raw_catalogue_pass": true,
+    "no_new_random_draws": true,
+    "no_solver_ODE": true,
+    "no_ultra": true
+  },
+  "outputs": [
+    "compute.py",
+    "test_compute.py",
+    "RESULT.json",
+    "figure.png",
+    "REPORT.md",
+    "MANIFEST.json",
+    "RAW_RECEIPT.json",
+    "RETURN.json"
+  ],
+  "follow_on": "Joint bias-variance robustness frontier; preserve original scientific acceptances and old numerical artifacts."
+}

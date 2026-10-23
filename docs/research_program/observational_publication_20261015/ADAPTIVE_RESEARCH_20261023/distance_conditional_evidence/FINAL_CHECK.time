@@ -1,0 +1,23 @@
+	Command being timed: "python -c import pathlib,json,hashlib; p=pathlib.Path("docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/distance_conditional_evidence"); m=json.loads((p/"MANIFEST.json").read_text()); r=json.loads((p/"RETURN.json").read_text()); assert all(hashlib.sha256((p/f).read_bytes()).hexdigest()==h for f,h in m["products_sha256"].items()); assert hashlib.sha256((p/"MANIFEST.json").read_bytes()).hexdigest()==r["manifest_hash"]; assert r["outcome"]=="success"; print("manifest 10/10 and return identity PASS")"
+	User time (seconds): 0.02
+	System time (seconds): 0.01
+	Percent of CPU this job got: 39%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.07
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 14924
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 67
+	Minor (reclaiming a frame) page faults: 1725
+	Voluntary context switches: 174
+	Involuntary context switches: 5
+	Swaps: 0
+	File system inputs: 17608
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

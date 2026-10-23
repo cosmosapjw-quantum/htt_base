@@ -1,0 +1,243 @@
+{
+  "schema": "htt.gaia_pair_separation_contract/1",
+  "task_id": "R25-GAIA-PAIR-SEPARATION",
+  "document_role": "PLANNING_CONTRACT_NOT_CURRENT_CONTROLLER_INPUT_UNTIL_ACTUAL_DISCOVERY",
+  "source_base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "advisor": {
+    "agent_id": "/root/r25_statistics_theory",
+    "requested": "gpt-6-astra/xhigh",
+    "transport_selected": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "status": "Completed Astra source contract; host mechanically assembled; NOT independent review"
+  },
+  "kind": "numeric",
+  "implementation_route": "subagent_specialist",
+  "contract_origin": "new_conditional_research",
+  "promotes_original_acceptance": false,
+  "requires": {
+    "all": []
+  },
+  "owned_paths": [
+    "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/gaia_pair_separation"
+  ],
+  "goal": "Compute observed angular-pair proper-motion responses and a common-spin quotient on4756cached sources, retaining the shared-source covariance and full typed vector/STF profiles",
+  "inputs": [
+    {
+      "path": "docs/observational_reboot_20261014/results/gaia_frame_v1/qualified_rows.npz",
+      "sha256": "41b6ddcb13131b49b97efd6107816af4518fa9e23725cf3b4272c2f3a70acb8f"
+    },
+    {
+      "path": "docs/observational_reboot_20261014/results/gaia_frame_v1/result.json",
+      "sha256": "226481918620e95181ce8686a1b3d5f88b94d31986a7f7b32aaadf06e74a4f3c"
+    },
+    {
+      "path": "docs/solver_free_research_20261014/results/gaia_correlation/result.json",
+      "sha256": "2938805434dfbdc27bf24479c3de42858fa2ab5504ad84eff6573f4402599def"
+    }
+  ],
+  "npz_size_bytes": 381980,
+  "source_selection": {
+    "release": "Gaia EDR3 frame_rotator_source",
+    "predicate": "used_for_reference_frame_spin=true and random_index<20000000",
+    "source_count": 4756,
+    "parameter_type": "All five-parameter solutions",
+    "qualification": "Outcome-selected; NOT independent validation",
+    "arrays": [
+      "source_id[4756]",
+      "ra/dec degrees",
+      "proper_motion[4756,2] mas/yr",
+      "covariance[4756,2,2] mas^2/yr^2",
+      "octant"
+    ],
+    "ordering": "Sort unique source_id; preserve exact source identities",
+    "conversion": {
+      "proper_motion": "multiply by1000 to microarcseconds/year",
+      "covariance": "multiply by1e6 to (microarcseconds/year)^2"
+    }
+  },
+  "geometry": {
+    "n_i": "Unit ICRS direction",
+    "E_i": "[e_alpha*,e_delta],3x2 orthonormal tangent basis",
+    "y_i": "Two converted proper-motion components",
+    "pair_set": "All i<j,11307390pairs",
+    "c_ij": "n_i dot n_j",
+    "kappa_ij": "n_j^T E_i y_i + n_i^T E_j y_j",
+    "angular_identity": "d cos(theta_ij)/dt=a_mu*kappa_ij",
+    "a_mu": "pi/(180*3600*1e6)",
+    "kappa_units": "microarcsecond-equivalent/year; NOT theta-dot",
+    "theta": "atan2(norm(n_i cross n_j),c_ij)",
+    "bins_degrees": [
+      0,
+      0.5,
+      1,
+      2,
+      5,
+      10,
+      30,
+      60,
+      120,
+      180
+    ],
+    "bin_rule": "Left-closed/right-open except last right-closed",
+    "near_endpoint_count": "Count theta<=1e-12radians and pi-theta<=1e-12radians separately using cosine sign to distinguish coincidence/antipodality",
+    "forbidden": [
+      "Outcome cuts",
+      "Bin merging",
+      "Division by angular separation or sin(theta) to create angle-rate"
+    ]
+  },
+  "field_model": {
+    "mu": "P_n g + P_n S_E n + n cross S_B n + omega cross n",
+    "P_n": "I-n*n^T",
+    "beta13": [
+      "g3",
+      "S_E5",
+      "S_B5"
+    ],
+    "spin_nuisance": "omega3",
+    "STF_basis": [
+      "diag(1,-1,0)/sqrt2",
+      "diag(-1,-1,2)/sqrt6",
+      "symmetric xy/sqrt2",
+      "symmetric xz/sqrt2",
+      "symmetric yz/sqrt2"
+    ],
+    "basis_metric": "Frobenius orthonormal",
+    "X_i": "2x13 tangent design",
+    "B_i": "2x3 common-spin tangent design"
+  },
+  "pair_operator": {
+    "L_ij": "Source blocks n_j^T E_i at source i and n_i^T E_j at source j",
+    "a_ij": "L_ij X,1x13",
+    "per_bin_d": "mean a_ij^T*kappa_ij,13vector",
+    "per_bin_H": "mean a_ij^T*L_ij,13x9512",
+    "per_bin_D": "mean a_ij^T*a_ij,13x13",
+    "identities": [
+      "d=H*y",
+      "D=H*X"
+    ],
+    "retain": [
+      "H",
+      "D",
+      "d",
+      "Source and pair counts per bin",
+      "Full typed vector+twoSTF tensors",
+      "Actual tangent field and reconstructible pair kernel"
+    ],
+    "no_full_pair_matrix_required": true
+  },
+  "covariance": {
+    "exact": "Cov(d)=H*Sigma*H^T for actual joint source law",
+    "working_C0": "Block diagonal of reported source2x2covariances",
+    "working_Cd": "Sum_i H_i*C_i*H_i^T, retaining full cross-bin/component/shared-source blocks",
+    "actual_cross_source_Sigma": "UNKNOWN",
+    "forbidden": [
+      "Independent-pair assumption",
+      "sqrt(pair-count) uncertainty scaling",
+      "Dense pair covariance"
+    ]
+  },
+  "working_reference_fit": {
+    "stack": "Stack full bin d,H,D and Cd",
+    "whitening": "Retained Cd range W with W*Cd*W^T=I_r",
+    "z": "W*d",
+    "M": "W*D",
+    "low_order_residual": "T_low=||(I-P_M)z||^2",
+    "degrees_of_freedom": "nu=r-rank(M)",
+    "nested_E1": "First3gcolumns fit; retain T_E1 and Delta=T_E1-T_low>=0",
+    "retain": "Full residual profiles and all rank/singular-value decisions",
+    "tails": "Formal Gaussian working-reference chi-square tails ONLY under fixed design and C0 assumption",
+    "missing_qualification": "Selected law and actual cross-source covariance uncalibrated; no detection, physical significance or original promotion",
+    "rank_instability": "formal TAIL_UNRESOLVED with profiles retained",
+    "empty_bin_or_zero_DOF": "Explicit status; never p=0"
+  },
+  "mathematical_obligations": {
+    "spin_null": "L*B=0 and H*B=0 from scalar triple-product cancellation",
+    "uncompressed_completeness": "For N with rows n_i^T and V with tangent velocities, full uncompressed K=V*N^T+N*V^T has only common-rotation kernel when rank(N)=3. From (I-P)K N=(I-P)V(N^T N)=0 obtain V=N A; then A+A^T=0.",
+    "scope_limit": "Uncompressed completeness is NOT completeness of compressed bins",
+    "covariance": "H*Sigma*H^T exact; C0 block independence is a separate unqualified working assumption",
+    "duplicate_pair_invariance": "Duplicating all pairs within bin changes no mean operator/statistic",
+    "independent_analytic_oracles": {
+      "E1": "kappa=(1-c)*(n_i+n_j) dot g",
+      "E2": "kappa=2*n_i^T*S_E*n_j-c*(n_i^T*S_E*n_i+n_j^T*S_E*n_j)",
+      "B2": "kappa=(n_i cross n_j)^T*S_B*(n_j-n_i)"
+    },
+    "physical_interpretation": "No physical boost/global-shear identification from this finite observed response"
+  },
+  "controls": {
+    "units_tangent_STF_atol": 1e-12,
+    "checks": [
+      "Cartesian kappa vs independent analytic E1/E2/B2 and spin cancellation",
+      "Fixed bounded source and pair permutations",
+      "Proper-rotation equivariance and bin-membership invariance",
+      "Pair duplication invariance",
+      "Nonuniform fixture D=H*X",
+      "Actual accumulated d vs H*y and D vs H*X",
+      "Dense covariance fixture",
+      "H*B null"
+    ],
+    "actual_accumulation_normalized_tolerance": 1e-09,
+    "dense_covariance_fixture_tolerance": 1e-11,
+    "HB_zero_tolerance": 1e-10,
+    "PSD_rank_policy": "Inspect normalized covariance/design at relative1e-8,1e-10,1e-12; unstable ranks imply TAIL_UNRESOLVED, retain profiles",
+    "empty_bin": "Explicit; no silent deletion or merged bin"
+  },
+  "limits": {
+    "cumulative_numerical_seconds": 300,
+    "includes": "All numerical attempts and failures, including targeted repair under remaining cap",
+    "threads": 1,
+    "RSS_bytes": 1073741824,
+    "planned_production_allpair_traversals": 1,
+    "historical_one_use_status": "This is no reuse/reset of an old one-use pass; any targeted repair remains under current cumulative caps",
+    "pair_chunk_max": 32768,
+    "forbidden": [
+      "Dense pair covariance",
+      "New download",
+      "755850-row or D05 original pass",
+      "ODE",
+      "Old fit replay"
+    ],
+    "independent_review": "Check saved operators/covariance and fixtures without another production pair traversal"
+  },
+  "functional_bundle": {
+    "x": "Full typed g3+STF5+STF5 profiles and retained actual tangent/pair kernel",
+    "F": "Only joint working-region image; physical occupancy unknown",
+    "Pi": "Formal working law only; no calibrated physical Pi",
+    "Q": "No physical MES anchor",
+    "G_F": "DEPTH_UNAVAILABLE; angular path is a separate typed coordinate"
+  },
+  "outputs": [
+    "compute.py",
+    "test_compute.py",
+    "RESULT.json",
+    "Saved operator/covariance and full typed profiles",
+    "figure.png",
+    "REPORT.md",
+    "MANIFEST.json",
+    "RAW_RECEIPT.json",
+    "RETURN.json"
+  ],
+  "preservation": {
+    "original_acceptance": "17/42 and analytic18/42 unchanged",
+    "historical48_or62": "No task/history/cost reinitialization or replacement",
+    "ultra": "Consumed allocations unchanged",
+    "R9": "UNKNOWN unchanged",
+    "first_failures": "Retain raw first failures; no silent validator relaxation"
+  },
+  "independent_review": "Required; this contract/source-advisor summary is not independent admission",
+  "sources": [
+    {
+      "url": "https://arxiv.org/pdf/1310.0500",
+      "scope": "Equations5–7 angular pair response"
+    },
+    {
+      "url": "https://arxiv.org/html/2204.12574v2#A5",
+      "scope": "Equations14–17 tangent/vector spherical-harmonic response"
+    },
+    {
+      "url": "https://arxiv.org/html/1808.07103v1",
+      "scope": "SectionsII–III correlated astrometric errors"
+    }
+  ],
+  "execution_performed_by_assembly": false
+}

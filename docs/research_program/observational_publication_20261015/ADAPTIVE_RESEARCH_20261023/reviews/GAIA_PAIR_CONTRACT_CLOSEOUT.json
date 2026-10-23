@@ -1,0 +1,25 @@
+{
+  "reviewer": "/root/r25_blind_gaia_pair",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "decision": "SCOPED_CONTRACT_PASS_FOR_BOUNDED_EXECUTION",
+  "input_sha256": "3e1714e9dabd04613e89021af295a9e6478597edacd2a9047d293191b3f2c1f6",
+  "frontier_sha256": "549e8cf9187924507323524db55f6f2c6e84c0700a3f5e0b359c8f0bb864c210",
+  "summary_sha256": "de95afd7dadf819d14610528e760d3ebaeeca9e1ef4638faef3f69a9cfdd6c57",
+  "findings_closed": [
+    "Covariance projection independent of y, original operators/responses/allmodes preserved; discarded positive modes not exactnulls",
+    "Fullmodeltails require complete projected modelimage and qualifiedwhitening; threshold stability insufficient, unresolved descriptiveTAIL_UNRESOLVED",
+    "Response profile notcoefficients; unidentifiedcoefficient directions retain affinefibers"
+  ],
+  "working_region": {
+    "definition": "F(z)={m in R^r: ||z-m||^2 <= chi2_r(.95)}",
+    "coverage": "95 percentjoint ONLY under declared z~N(m,I_r); inverseimage leavesdiscardedmodesunconstrained",
+    "requires": "Qualifiedwhitening, notfullmodel/coefficientidentifiability",
+    "failed_whitening": "Noqualified95percentregion"
+  },
+  "summary_faithful": true,
+  "further_contract_review_required": false,
+  "actual_tail_or_physical_coverage_qualified": false,
+  "original_acceptance": "UNCHANGED",
+  "persistence": "Host transcription of native read-only closeout, no reviewer writes or numericalreruns"
+}

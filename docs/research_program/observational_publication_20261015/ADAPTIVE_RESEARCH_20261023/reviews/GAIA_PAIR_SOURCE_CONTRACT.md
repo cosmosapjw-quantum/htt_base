@@ -1,0 +1,11 @@
+# Gaia pair source contract — host assembly
+
+This is a **HOST-ASSEMBLED ADVISOR SUMMARY, NOT INDEPENDENT REVIEW**. Source adviser `/root/r25_statistics_theory` requested/transport-selected `gpt-6-astra/xhigh`; observed runtime UNKNOWN. The two adjacent JSON contracts mechanically encode the adviser contract. No scientific execution, new source acquisition or admission occurred in assembly.
+
+The method uses4756cached, outcome-selected EDR3 frame-rotator sources and all11307390pairs. It computes the cosine-separation derivative response kappa without dividing by angular separation, retains full E1/E2/B2 tensor/operator profiles, and quotients common rotation. Shared-source dependence is propagated by H C0 H^T across all bins and components; C0 source independence remains a working assumption. Actual cross-source covariance and the selected-source observational law are unqualified. Independent sources or pairs are never inferred from their count.
+
+The full uncompressed tangent-pair kernel has only a common-rotation null when the direction matrix has rank3. That theorem does not assert completeness of compressed bin operators. Gaussian tails are formal working-reference quantities; unstable rank, empty bins and zero degrees of freedom require explicit unresolved/undefined states. No physical boost, shear, MES anchor, calibrated population Pi or true-depth path is supplied.
+
+Limits are300cumulative numerical seconds including failures, one thread,1GiB RSS, chunks at most32768pairs and one planned production traversal. Saved operators, covariance and fixtures support independent review without repeating production. Historical48/62task histories, one-use passes, ultra accounting, R9 UNKNOWN and original17/42 versus analytic18/42 remain unchanged.
+
+Primary references supplied by the adviser: [angular response equations5–7](https://arxiv.org/pdf/1310.0500), [tangent response equations14–17](https://arxiv.org/html/2204.12574v2#A5), and [correlation context sectionsII–III](https://arxiv.org/html/1808.07103v1). The source hashes were checked locally in contract assembly; these citations are advisor intake references, not a new independent literature audit. The frontier is planning only until actual host discovery/append; selection is not dispatch.

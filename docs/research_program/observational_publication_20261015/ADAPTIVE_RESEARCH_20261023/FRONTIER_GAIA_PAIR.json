@@ -1,0 +1,40 @@
+{
+  "frontier_id": "R25-GAIA-PAIR-SEPARATION",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "document_role": "PLANNING_FRONTIER_NOT_CURRENT_INPUT_UNTIL_ACTUAL_HOST_DISCOVERY",
+  "tasks": [
+    {
+      "id": "R25-GAIA-PAIR-SEPARATION",
+      "kind": "numeric",
+      "goal": "Compute observed angular-pair proper-motion responses and a common-spin quotient on4756cached sources, retaining the shared-source covariance and full typed vector/STF profiles",
+      "acceptance": "Observed angular-pair response d (not beta), full unprojected H,D,Cd and all covariance/model modes retained; independent controls and descriptive projected fits. Full-model tails require certified complete projected image and whitening; otherwise TAIL_UNRESOLVED. No finite full-coefficient region from pseudoinverse; no original acceptance promotion.",
+      "input_identity": "sha256:620d92030d235ee6ed8fb5e6d7ff999f4777f7540abbcb1841c23af50e878d50",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-GAIA-PAIR-SEPARATION_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/gaia_pair_separation"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": []
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "method": "Declared correlation-kernel propagation without this observed angular-pair spin quotient"
+        },
+        "after": {
+          "method": "Observed angular-pair response and common-spin quotient from cached proper motions, with shared-source H covariance"
+        },
+        "discriminator": "Independent analytic E1/E2/B2 responses, spin-null cancellation and joint angular-bin residual profiles",
+        "scope": "Conditional finite selected-source working law; no physical boost/shear or original scientific promotion"
+      },
+      "theory_contract": "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-GAIA-PAIR-SEPARATION_INPUT.json",
+      "runtime_observed": "UNKNOWN"
+    }
+  ],
+  "authorization": "Completed Astra statistics source contract under owner adaptive solver-free research; actual discovery, dispatch,ACK,raw record and independent review are future host actions."
+}

@@ -1,0 +1,56 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R25-DISTANCE-CONDITIONAL-EVIDENCE",
+  "attempt": 1,
+  "phase": "execute",
+  "input_identity": "sha256:77439c5b5966f6f0c6a4d4e2819b28b76b7a3c24523e9b08ec9f7e12fd5ca2b8",
+  "candidate_identity": null,
+  "frontier_identity": "c6a1321dc62e5b186c2679d7de125394643f6b51b927adc411f9afb1281f1b3d",
+  "task_spec_identity": "61f37fb7e3fc3ef636c030d98ebd4bd37070223b7e7b452b611105ad110f8b3b",
+  "packet_id": "80be2c56bc7d24f05d364fb63ce7fea134178e25b6a9ee5aaf96378c95f2b9ad",
+  "route": {
+    "route": "subagent_specialist",
+    "requested": {
+      "model": "gpt-6-sol",
+      "effort": "high"
+    },
+    "transport_selected": {
+      "model": "gpt-6-sol",
+      "effort": "high"
+    },
+    "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+    "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+    "launch_performed": false,
+    "availability_catalog_profiles": [
+      {
+        "model": "gpt-6-astra",
+        "effort": "ultra"
+      },
+      {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "model": "gpt-6-sol",
+        "effort": "high"
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "effort": "medium"
+      }
+    ]
+  },
+  "resume_evidence": null,
+  "scientific_resume": null,
+  "transport_resume": null,
+  "launch_performed": false,
+  "observed_runtime": "UNKNOWN",
+  "native_tool": "collaboration.spawn_agent",
+  "spawn_args": {
+    "task_name": "rc_80be2c56bc7d24f0",
+    "fork_turns": "none",
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high",
+    "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4\", \"task_id\": \"R25-DISTANCE-CONDITIONAL-EVIDENCE\", \"attempt\": 1, \"phase\": \"execute\", \"input_identity\": \"sha256:77439c5b5966f6f0c6a4d4e2819b28b76b7a3c24523e9b08ec9f7e12fd5ca2b8\", \"candidate_identity\": null, \"frontier_identity\": \"c6a1321dc62e5b186c2679d7de125394643f6b51b927adc411f9afb1281f1b3d\", \"task_spec_identity\": \"61f37fb7e3fc3ef636c030d98ebd4bd37070223b7e7b452b611105ad110f8b3b\", \"packet_id\": \"80be2c56bc7d24f05d364fb63ce7fea134178e25b6a9ee5aaf96378c95f2b9ad\", \"spec\": {\"id\": \"R25-DISTANCE-CONDITIONAL-EVIDENCE\", \"kind\": \"numeric\", \"goal\": \"Compare retained directional-distance models using correlated conditional likelihood ratios with composite-null supremum\", \"acceptance\": \"Exact274samecohort/folds;40savedtrainingdensities verified;20newconditionalnullmaxima;fixedmixtureandfoldaverage;fulltensorinheritance and exploratoryclaimceiling\", \"input_identity\": \"sha256:77439c5b5966f6f0c6a4d4e2819b28b76b7a3c24523e9b08ec9f7e12fd5ca2b8\", \"input_sources\": [\"docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-DISTANCE-CONDITIONAL-EVIDENCE_INPUT.json\"], \"owned_paths\": [\"docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/distance_conditional_evidence\"], \"implementation_route\": \"subagent_specialist\", \"contract_origin\": \"new_conditional_research\", \"promotes_original_acceptance\": false, \"requires\": {\"all\": [{\"task_id\": \"R24-DISTANCE-MODELS\", \"evidence\": \"completed\"}]}, \"semantic_delta\": {\"kind\": \"method\", \"before\": {\"comparison\": \"training-fitted predictive score contrasts across samecohort\"}, \"after\": {\"comparison\": \"conditionalcompositenull densitysupremum versusfixedtrainingmixture, fixeddependentfoldaverage\"}, \"discriminator\": \"whether normalizedalternative density dominates allA nuisancefits in heldoutconditionalblocks\", \"scope\": \"selectedsamecohort conditionaldiagnostic; originalphysicalhold unchanged\"}}, \"issue\": null, \"repair_plan\": null, \"repair_authorization\": null, \"resume_evidence\": null, \"scientific_resume\": null, \"transport_resume\": null, \"authors\": [], \"contributors\": [\"/root/discovery_ebe0878b138ad3b8\"], \"history_refs\": [], \"history_total\": 0}"
+  }
+}

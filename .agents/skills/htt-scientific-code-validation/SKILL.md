@@ -7,9 +7,10 @@ description: Use when htt_base edits can affect numerical output, scientific tes
 
 Classify the affected scientific owner and exact input/environment before running.
 Read the governing contract and use the existing interpreter. Bind required package
-versions and APIs with the global runtime receipt when applicable; do not rely on
-ambient `python`. Capture command, cwd, exit status, source identity and output.
-Use `cuhg-telemetry run` for metadata; exporter failure does not stop computation.
+versions and APIs from the actual interpreter and source evidence; do not infer
+runtime identity from a requested profile. Capture command, cwd, exit status, source identity and output.
+For current native tasks, retain actual command and native receipt metadata;
+CUH-G telemetry/registration is historical and is not required.
 
 Run the narrowest falsifier, affected unit/contract tests and necessary invariants.
 Frozen tests, tolerances, references, one-use allocations and missing-input states

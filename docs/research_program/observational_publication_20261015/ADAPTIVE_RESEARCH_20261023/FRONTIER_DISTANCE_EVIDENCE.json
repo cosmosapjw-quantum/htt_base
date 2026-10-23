@@ -1,0 +1,40 @@
+{
+  "frontier_id": "R25-DISTANCE-CONDITIONAL-DELTA",
+  "tasks": [
+    {
+      "id": "R25-DISTANCE-CONDITIONAL-EVIDENCE",
+      "kind": "numeric",
+      "goal": "Compare retained directional-distance models using correlated conditional likelihood ratios with composite-null supremum",
+      "acceptance": "Exact274samecohort/folds;40savedtrainingdensities verified;20newconditionalnullmaxima;fixedmixtureandfoldaverage;fulltensorinheritance and exploratoryclaimceiling",
+      "input_identity": "sha256:77439c5b5966f6f0c6a4d4e2819b28b76b7a3c24523e9b08ec9f7e12fd5ca2b8",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-DISTANCE-CONDITIONAL-EVIDENCE_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/distance_conditional_evidence"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-DISTANCE-MODELS",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "comparison": "training-fitted predictive score contrasts across samecohort"
+        },
+        "after": {
+          "comparison": "conditionalcompositenull densitysupremum versusfixedtrainingmixture, fixeddependentfoldaverage"
+        },
+        "discriminator": "whether normalizedalternative density dominates allA nuisancefits in heldoutconditionalblocks",
+        "scope": "selectedsamecohort conditionaldiagnostic; originalphysicalhold unchanged"
+      }
+    }
+  ]
+}

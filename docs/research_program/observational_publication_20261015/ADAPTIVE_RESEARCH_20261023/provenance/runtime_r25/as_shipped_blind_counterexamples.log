@@ -1,0 +1,56 @@
+test_scientific_classification_labels_survive_but_note_only_is_rejected (test_research_controller_adaptive.BlindRepairTests.test_scientific_classification_labels_survive_but_note_only_is_rejected) ... ERROR
+test_same_logical_action_cannot_reset_attempts_via_new_frontier_id (test_research_controller_adaptive.BlindRepairTests.test_same_logical_action_cannot_reset_attempts_via_new_frontier_id) ... FAIL
+test_second_distinct_deterministic_counterexample_does_not_need_new_ultra (test_research_controller_adaptive.BlindRepairTests.test_second_distinct_deterministic_counterexample_does_not_need_new_ultra) ... FAIL
+test_dispatch_followup_ack_precedes_result_and_keeps_unknown_outstanding (test_research_controller_adaptive.BlindRepairTests.test_dispatch_followup_ack_precedes_result_and_keeps_unknown_outstanding) ... ERROR
+
+======================================================================
+ERROR: test_scientific_classification_labels_survive_but_note_only_is_rejected (test_research_controller_adaptive.BlindRepairTests.test_scientific_classification_labels_survive_but_note_only_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/test_research_controller_adaptive.py", line 146, in test_scientific_classification_labels_survive_but_note_only_is_rejected
+    rc._semantic_delta({'kind': 'method', 'before': {'classification_labels': ['positive']},
+  File "/tmp/tmp53nez4mn/controller_as_shipped.py", line 117, in _semantic_delta
+    require(_semantic_meaning(delta["before"]) != _semantic_meaning(delta["after"]),
+  File "/tmp/tmp53nez4mn/controller_as_shipped.py", line 27, in require
+    raise ControllerError(message)
+controller_as_shipped.ControllerError: label/hash/identity change alone is not new scientific information
+
+======================================================================
+ERROR: test_dispatch_followup_ack_precedes_result_and_keeps_unknown_outstanding (test_research_controller_adaptive.BlindRepairTests.test_dispatch_followup_ack_precedes_result_and_keeps_unknown_outstanding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/test_research_controller_adaptive.py", line 261, in test_dispatch_followup_ack_precedes_result_and_keeps_unknown_outstanding
+    rc.acknowledge(state, repair['packet_id'], agent, followup_evidence=str(evidence))
+  File "/tmp/tmp53nez4mn/controller_as_shipped.py", line 393, in acknowledge
+    continuation = _repair_followup(state, p, t, agent_id, followup_evidence)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/tmp53nez4mn/controller_as_shipped.py", line 333, in _repair_followup
+    require(all(isinstance(data.get(k), str) and data[k].strip() for k in fields),
+  File "/tmp/tmp53nez4mn/controller_as_shipped.py", line 27, in require
+    raise ControllerError(message)
+controller_as_shipped.ControllerError: followup evidence requires nonempty string identities and receipt path/hash
+
+======================================================================
+FAIL: test_same_logical_action_cannot_reset_attempts_via_new_frontier_id (test_research_controller_adaptive.BlindRepairTests.test_same_logical_action_cannot_reset_attempts_via_new_frontier_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/test_research_controller_adaptive.py", line 160, in test_same_logical_action_cannot_reset_attempts_via_new_frontier_id
+    with self.assertRaisesRegex(rc.ControllerError, 'logical research action'):
+AssertionError: ControllerError not raised
+
+======================================================================
+FAIL: test_second_distinct_deterministic_counterexample_does_not_need_new_ultra (test_research_controller_adaptive.BlindRepairTests.test_second_distinct_deterministic_counterexample_does_not_need_new_ultra)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/test_research_controller_adaptive.py", line 219, in test_second_distinct_deterministic_counterexample_does_not_need_new_ultra
+    self.assertEqual(state['tasks']['A']['phase'], 'repair')
+AssertionError: 'review' != 'repair'
+- review
++ repair
+
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.008s
+
+FAILED (failures=2, errors=2)
+EXPECTED_RED_BASELINE {'tests': 4, 'failures': 2, 'errors': 2}

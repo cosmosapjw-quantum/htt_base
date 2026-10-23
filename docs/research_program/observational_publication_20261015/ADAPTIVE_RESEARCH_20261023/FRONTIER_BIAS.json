@@ -1,0 +1,40 @@
+{
+  "frontier_id": "R25-BIAS-METHOD-DELTA",
+  "tasks": [
+    {
+      "id": "R25-K03-DEPTH-BIAS-FRONTIER",
+      "kind": "numeric",
+      "goal": "Compute joint bias-variance robustness frontier with explicit full24 and slope-restricted witnesses",
+      "acceptance": "Frozen full24 constrained optimization and support, singular residuals, threshold frontiers and independent controls; preserve empirical Pi and physical holds",
+      "input_identity": "sha256:34e88ac00f25c5cb849152167f93364491a43e88c2c609e98710d42a04fb39d2",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-K03-DEPTH-BIAS-FRONTIER_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_bias"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R25-K03-DEPTH-COVROBUST",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "uncertainty": "zero bias, covariance inflation only"
+        },
+        "after": {
+          "uncertainty": "joint deterministic coefficient bias ball and covariance envelope, restricted slope and full24 alternatives"
+        },
+        "discriminator": "smallest systematic mean-shift budget destroying full vector depth discrimination",
+        "scope": "conditional selected reported-depth target, original physical hold unchanged"
+      }
+    }
+  ]
+}

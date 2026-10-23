@@ -1,0 +1,45 @@
+{
+  "provenance": "Host transcription of actual read-only native review; full original response and numerical counterexample tool evidence retained in conversation",
+  "reviewer": "/root/rc_ad7007c4808e2aa0",
+  "requested_selected": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "verdict": "HOLD",
+  "identity": {
+    "task_id": "R25-CMB-CONDITIONAL-GRAM",
+    "packet_id": "ad7007c4808e2aa0e576d288b17959a9926d27437e9b4600ebc35ef05f2a387c",
+    "input_identity": "sha256:46803ac5255eeb92f0aa72242a3b9a339bb380c5278a7b6654f7093e80fa153b",
+    "candidate_identity": "sha256:3693ddfd25226cdea2c4f3dec25204838a235271f18b001c26c7d08059e7f579"
+  },
+  "findings": [
+    {
+      "id": "R25-CMB-F1",
+      "class": "numeric",
+      "defect": "compute.py142-150 uses same SO3 rotation for both multipoles; frozen law requires independent per ell, each shared across60views",
+      "counterexample": "a20=a30=1: S=[1,.16,.16,.6]; common rotation pi/2 about y unchanged; rotate onlyell3 gives[1,.16,.04,.15]. Actual128draw maximum S3/S4 changes1.08e-16/5e-16, independent rotations .1141/.4512.",
+      "consequence": "H_orient view ranks .14013671875 to .8895263671875 rank roundoff in invariant contractions. Zero cross covariance does not prove multipole independence."
+    },
+    {
+      "id": "R25-CMB-F2",
+      "class": "numeric",
+      "defect": "family_score axis=-1 returns60scores instead ofone global over120/240 coordinates",
+      "counterexample": "Two views, three pilotrows all0/1/2; observed firstviewfirstcoordinate3; eval extremes in secondview,nowhere,firstview. Candidateviewranks[.5,1]; requiredglobalrank.75.",
+      "consequence": "No required global rank or99pctMCinterval. Minimumviewrank.03894 is uncalibrated for global family."
+    }
+  ],
+  "verified": [
+    "All21manifesthashes/sizes, frozeninput,sources,RETURN match",
+    "All60canonicalvectors and source/product/window identities exact",
+    "O(d) QR sign correction and shared Gram preservation correct",
+    "Pilot/eval streams and coordinateweaktails implemented",
+    "Targeted5testsPASS3.60s;wall4.27s;tests missboth defects",
+    "Inspectedfigure confirmsconstantorientationstatistic andviewwiseupperpanels"
+  ],
+  "repair": "Preserve failedcandidate; independent SO3 draws perell with explicit invariant/relativefixture; globalmax overviewsandactivestats, singleobservedscore/count/rank/CPinterval perlaw; crossviewfixtureandallties; regenerateoutput/report/figure underoriginalcumulativelimits",
+  "author_prior_usage": {
+    "production_seconds": 26.42,
+    "test_seconds": 12.27
+  },
+  "review_tests_wall_seconds": 4.27,
+  "original_acceptance": "17/42 unchanged; alternate18/42 unchanged; physicalnullUNKNOWN",
+  "independence": "No edits,children,priorverdicts orproductionrerun"
+}

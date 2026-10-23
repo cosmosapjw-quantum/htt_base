@@ -1,0 +1,76 @@
+{
+  "task_id": "R25-CMB-CONDITIONAL-GRAM",
+  "packet_id": "7ac6cbf3aa2d3fbbb8bae02f3154884949c612a334a5964e4df474cda97c3952",
+  "input_identity": "sha256:46803ac5255eeb92f0aa72242a3b9a339bb380c5278a7b6654f7093e80fa153b",
+  "candidate_identity": "sha256:62d064cb9675453a2eca81e4c5b581f3afabaf83d3831c7399493d976fbd5845",
+  "agent_id": "/root/rc_7ac6cbf3aa2d3fbb",
+  "requested_model_effort": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "outcome": "success",
+  "acceptance_met": true,
+  "acceptance_scope": "Frozen R25 conditional-reference computation and retained full-carrier bundle only",
+  "findings": [],
+  "validation_evidence": {
+    "identity": "Input, both sources, all100manifest members verified; finalcandidateunchanged",
+    "source_rows_exact": 60,
+    "independent_STF_relative_errors": [
+      6.711103795166883e-16,
+      1.7999860564135183e-15
+    ],
+    "independent_statistic_max_error": 1.7763568394002505e-15,
+    "rotation_errors": [
+      5.196041637906601e-16,
+      8.447498766117062e-16
+    ],
+    "laws": "Independentell/shared60, Gram/shape/commonrotation/mirror/correlatedview/partialzero/isotropicoctopole/determinants controls passed",
+    "moments": {
+      "draws_per_law": 2048,
+      "checks_per_law": 3660,
+      "separate_error_budget": 0.01,
+      "Hoeffding_bound": 0.1148348669733907,
+      "orient_max_errors": [
+        0.01406892924608667,
+        0.010159768431175
+      ],
+      "Gram_max_errors": [
+        0.025900028179053274,
+        0.011369354081956372
+      ]
+    },
+    "global": {
+      "H_orient": {
+        "ge_count": 7505,
+        "p_ref": 0.4581298828125,
+        "CP99": [
+          0.44805293460197193,
+          0.46816511244509934
+        ]
+      },
+      "H_Gram": {
+        "ge_count": 7456,
+        "p_ref": 0.45513916015625,
+        "CP99": [
+          0.4450681442503128,
+          0.4651698362922649
+        ]
+      }
+    },
+    "Pi_CP": "Strict count/invariant/thresholdone/addone checked; independent binomialtail inversion everyinterval maxresidual4.54e-15; pointwiseMC only",
+    "tests": "Recorded .venv7passed24.86s; first systemPython1failed6passed missingbass reviewer environment error preserved innative tool transcript",
+    "figure": "Inspected, markers/ranks and S3projectionmatch",
+    "full_bundle": "60x12/STF/viewIDs/Grams/regeneration Q,F,Pi,processingG_F retained"
+  },
+  "qualified_products": [],
+  "limitations": [
+    "Production MC not regenerated; bounded independent fixtures, arithmetic and intervals verified",
+    "Repo skills/harness audited, not approvalauthority",
+    "Physical law/Pi UNKNOWN; broad scientific admission HOLD",
+    "Original17/42 alternate18/42 R9UNKNOWN unchanged"
+  ],
+  "sources": [
+    "https://arxiv.org/pdf/math/0606709",
+    "https://arxiv.org/pdf/1411.7565"
+  ],
+  "persistence": "Host transcription of actual native read-only reviewer response; reviewer wrote no files",
+  "raw_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/reviews/CMB_REVIEW_CLOSEOUT.json"
+}

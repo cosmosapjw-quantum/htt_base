@@ -1,0 +1,42 @@
+{
+  "frontier_id": "R25-SMICA-SPECTRAL-DELTA",
+  "tasks": [
+    {
+      "id": "R25-SMICA-SPECTRAL-NULLSPACE",
+      "kind": "numeric",
+      "goal": "Determine which frequency contrasts survive released SMICA polarization compression and construct exact tensor kernel witnesses",
+      "acceptance": "Use actual release weights with beam/calibration interpretation;all28targets per4operators,full168to24tensor map,exactdecimalcounterexamples andnumericcontrols;no physicalforegroundamplitudeclaim",
+      "input_identity": "sha256:69ad48a48c5f61a5314050a45077bde99af83e97ffe9b8ed270533ee9368710a",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-SMICA-SPECTRAL-NULLSPACE_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/smica_spectral_nullspace"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R24-CMB-ENVELOPE",
+            "evidence": "completed"
+          }
+        ]
+      },
+      "semantic_delta": {
+        "kind": "observable",
+        "before": {
+          "source": "compressed SMICA split tensors only",
+          "identifiability": "unspecified common-foreground nuisance"
+        },
+        "after": {
+          "source": "released7frequency E/Bharmonic compression rows atell2,3",
+          "identifiability": "exactsource-bound frequencyfunctional kernel test andwitness"
+        },
+        "discriminator": "which spectralcontrast is mathematically unrecoverable from compressedmaps",
+        "scope": "fixedlinearoperator information audit; physicalnull andoriginalacceptance unchanged"
+      }
+    }
+  ]
+}

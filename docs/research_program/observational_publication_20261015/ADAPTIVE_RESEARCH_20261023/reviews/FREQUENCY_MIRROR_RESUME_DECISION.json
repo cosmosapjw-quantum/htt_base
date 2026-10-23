@@ -1,0 +1,53 @@
+{
+  "record_type": "Host transcription of actual source adviser decision and followup clarification",
+  "advisor": "/root/r25_cmb_physics_theory",
+  "requested": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "contract_sha256": "ae7e2f0b136ec3dddcf3b9543f9ec91446587dc50c7908b93b3f17b77e014d9f",
+  "decision": "APPROVE_ONE_BOUNDED_MIRROR_TRIAL_CONDITIONAL_ON_PRODUCT_SPECIFIC_PARITY",
+  "source": "https://zenodo.org/records/14173099",
+  "source_class": "Researcher deposit explicitly declaring exact originalIRSA URLs; not officialPlanckchecksumpublication",
+  "metadata": {
+    "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency/ZENODO_14173099_API.json": "5f959f94804fd0c5fa33ce79ae3bd3921ec2128c47a74ecbec61b99317c67f6f",
+    "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency/ZENODO_14173099_ASSESSMENT.json": "52aec65d31e3dbf742a0e2af8e158fee1127dc98e3bbd113616a48b7b3110744",
+    "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency/ZENODO_14173099_100_RANGE_PROBE.receipt.json": "b4c46b9edf275cacca11d4afe4688acafe8bc9b9a2f59147697c37e74bd0bd9f",
+    "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency/ZENODO_14173099_100_RANGE_PROBE.body": "1177935f5451785ec3d94be45888f1eecd919669ac2bd6decf67054408a6a264"
+  },
+  "products": {
+    "HFI_SkyMap_100_2048_R3.01_full.fits": {
+      "bytes": 2013278400,
+      "deposited_md5": "2bb9d1c09f2e75ad1af014b60486e00e"
+    },
+    "HFI_SkyMap_143_2048_R3.01_full.fits": {
+      "bytes": 2013278400,
+      "deposited_md5": "4151e22bea78a318ea19a8040625f502"
+    },
+    "HFI_SkyMap_217_2048_R3.01_full.fits": {
+      "bytes": 2013278400,
+      "deposited_md5": "03101e030eb246e307c8e5e81c3cffd1"
+    }
+  },
+  "excluded": "Deposited353 nonPSB is wrongvariant and mustnotreplace353PSB",
+  "procedure": [
+    "Atnormal900sboundary freeze retainedIRSAprefixlengthP, preserveprefix/allattempts",
+    "Per-product prefix/headeridentity plus exact131072B tail [P-131072,P-1] requires206/exactrange/total2013278400/exactbyteparity",
+    "Onpass oneactual900stransfer [P,2013278399], max2bulkstreams, separatebody, validatebeforeincorporation; neverappendHTTP200",
+    "Fullassembledsize/depositedMD5/frozenFITSchecks/localSHA256 allrequired; preserveIRSA+Zenodosegmentprovenance",
+    "HonorRetry-After;timeoutpreservevalidbytes andreturnactualthroughput fornextdecision; rejectedresponsepreserveoriginalIRSAcheckpoint"
+  ],
+  "clarification_143_first": "Approved;100first was convenience.143 mustpass itsownprefix/headerandtailchecks.100verdictnottransferred.143probesnotyetpassed atdecision.",
+  "falsifiers": [
+    "wrongproduct/release/variant",
+    "rangemetadata oroverlapbytemismatch",
+    "unexpectedtotalsize",
+    "fullMD5mismatch",
+    "failedFITS/sourcechecks"
+  ],
+  "qualification_limit": "FullMD5matchesdepositedobject, notindependentlyprovenwholeIRSAequality.Independentfinalreviewstillrequired. No accelerationclaim beforeactualtransfer.",
+  "advisor_network_failure": "Landingpage429;no furtherrequests;cachedmetadata/probereadonly",
+  "adviser_mutations": false,
+  "new_ultra": false
+}

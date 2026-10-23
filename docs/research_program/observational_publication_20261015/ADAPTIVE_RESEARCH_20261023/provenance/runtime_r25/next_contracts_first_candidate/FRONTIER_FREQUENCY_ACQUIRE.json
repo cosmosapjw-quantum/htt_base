@@ -1,0 +1,41 @@
+{
+  "frontier_id": "R25-PR3-FREQUENCY-ACQUISITION",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "tasks": [
+    {
+      "id": "R25-PR3-FREQUENCY-ACQUIRE",
+      "kind": "acquisition",
+      "goal": "Acquire and independently qualify seven actual PR3 full-mission frequency Q/U products for a predeclared native-resolution tensor comparison",
+      "acceptance": "All seven actual frequency maps validated with local bytes/hash and product/FITS metadata; independent review before qualified pr3_frequency_maps. Availability alone is not completion.",
+      "input_identity": "sha256:4421ca3aba2ef4b307c974a496bea653dd3ef365ccdc402fceaa11969eb7405c",
+      "input_sources": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-PR3-FREQUENCY-ACQUIRE_INPUT.json"
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition",
+        "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency"
+      ],
+      "implementation_route": "general_code",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": []
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "observable": "Compressed SMICA-only map does not identify arbitrary frequency contrasts"
+        },
+        "after": {
+          "observable": "Actual seven-frequency PR3 full-mission Q/U products with exact delivered processing identity"
+        },
+        "discriminator": "Enable predeclared native spin-tensor frequency crossprediction rather than infer missing frequency channels from compressed output",
+        "scope": "Delivered frequency observables; no physical foreground law or original acceptance promotion"
+      },
+      "theory_contract": "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-PR3-FREQUENCY-ACQUIRE_INPUT.json",
+      "downstream_planned_task": "R25-PR3-FREQUENCY-TENSOR-CROSSPREDICTION",
+      "runtime_observed": "UNKNOWN"
+    }
+  ],
+  "authorization": "Owner adaptive solver-free research and completed Astra source advisor definition; execution must be actually dispatched/ACKed/recorded by host; this assembly does not dispatch."
+}

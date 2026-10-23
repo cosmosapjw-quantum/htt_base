@@ -1,0 +1,56 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R25-PR3-FREQUENCY-ACQUIRE",
+  "attempt": 1,
+  "phase": "acquisition",
+  "input_identity": "sha256:ae7e2f0b136ec3dddcf3b9543f9ec91446587dc50c7908b93b3f17b77e014d9f",
+  "candidate_identity": null,
+  "frontier_identity": "c6a1321dc62e5b186c2679d7de125394643f6b51b927adc411f9afb1281f1b3d",
+  "task_spec_identity": "f489bbd24ff7fdba8e7f8ffb9d735bbeaab96115dcfd5e3de62ea022fc8e7ca5",
+  "packet_id": "014cb70b115b051a27cf126089c1e7f270363aa236d69320c2f777f738dca00d",
+  "route": {
+    "route": "general_code",
+    "requested": {
+      "model": "gpt-5.6-terra",
+      "effort": "medium"
+    },
+    "transport_selected": {
+      "model": "gpt-6.1-sol",
+      "effort": "medium"
+    },
+    "transport_status": "TRANSPORT_MODEL_UNAVAILABLE",
+    "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+    "launch_performed": false,
+    "availability_catalog_profiles": [
+      {
+        "model": "gpt-6-astra",
+        "effort": "ultra"
+      },
+      {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "model": "gpt-6-sol",
+        "effort": "high"
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "effort": "medium"
+      }
+    ]
+  },
+  "resume_evidence": null,
+  "scientific_resume": null,
+  "transport_resume": null,
+  "launch_performed": false,
+  "observed_runtime": "UNKNOWN",
+  "native_tool": "collaboration.spawn_agent",
+  "spawn_args": {
+    "task_name": "rc_014cb70b115b051a",
+    "fork_turns": "none",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4\", \"task_id\": \"R25-PR3-FREQUENCY-ACQUIRE\", \"attempt\": 1, \"phase\": \"acquisition\", \"input_identity\": \"sha256:ae7e2f0b136ec3dddcf3b9543f9ec91446587dc50c7908b93b3f17b77e014d9f\", \"candidate_identity\": null, \"frontier_identity\": \"c6a1321dc62e5b186c2679d7de125394643f6b51b927adc411f9afb1281f1b3d\", \"task_spec_identity\": \"f489bbd24ff7fdba8e7f8ffb9d735bbeaab96115dcfd5e3de62ea022fc8e7ca5\", \"packet_id\": \"014cb70b115b051a27cf126089c1e7f270363aa236d69320c2f777f738dca00d\", \"spec\": {\"id\": \"R25-PR3-FREQUENCY-ACQUIRE\", \"kind\": \"input\", \"goal\": \"Acquire and independently qualify seven actual PR3 full-mission frequency Q/U products for a predeclared native-resolution tensor comparison\", \"acceptance\": \"All seven actual frequency maps validated with local bytes/hash and product/FITS metadata; independent review before qualified pr3_frequency_maps. Availability alone is not completion.\", \"input_identity\": \"sha256:ae7e2f0b136ec3dddcf3b9543f9ec91446587dc50c7908b93b3f17b77e014d9f\", \"input_sources\": [\"docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-PR3-FREQUENCY-ACQUIRE_INPUT.json\"], \"owned_paths\": [\"docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_acquisition\", \"/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency\"], \"implementation_route\": \"general_code\", \"contract_origin\": \"new_conditional_research\", \"promotes_original_acceptance\": false, \"requires\": {\"all\": []}, \"semantic_delta\": {\"kind\": \"method\", \"before\": {\"observable\": \"Compressed SMICA-only map does not identify arbitrary frequency contrasts\"}, \"after\": {\"observable\": \"Actual seven-frequency PR3 full-mission Q/U products with exact delivered processing identity\"}, \"discriminator\": \"Enable predeclared native spin-tensor frequency crossprediction rather than infer missing frequency channels from compressed output\", \"scope\": \"Delivered frequency observables; no physical foreground law or original acceptance promotion\"}, \"theory_contract\": \"docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-PR3-FREQUENCY-ACQUIRE_INPUT.json\", \"downstream_planned_task\": \"R25-PR3-FREQUENCY-TENSOR-CROSSPREDICTION\", \"runtime_observed\": \"UNKNOWN\"}, \"issue\": null, \"repair_plan\": null, \"repair_authorization\": null, \"resume_evidence\": null, \"scientific_resume\": null, \"transport_resume\": null, \"authors\": [], \"contributors\": [\"/root/discovery_ebe0878b138ad3b8\"], \"history_refs\": [], \"history_total\": 0}"
+  }
+}

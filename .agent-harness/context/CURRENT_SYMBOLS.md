@@ -12,3 +12,17 @@
 
 Record overloaded symbols explicitly. A CAS axis may introduce internal names,
 but its result must map them back to this table.
+
+Current continuous campaign: use the native host loop in
+`docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md` (dispatch, ack, record, independent
+review, next). An empty fixed READY list does not exhaust possible new methods.
+Owner-authorized `enable-adaptive` adds read-only routed discovery outside frozen
+campaign state; its checkpoints are scoped to actual evidence, never scientific
+products. Preserve old tasks/packets, consumed ultra, one-use runs and R9 UNKNOWN.
+CUH-G telemetry/registration remains historical, not a current prerequisite.
+
+An explicit host-installed `.agent-harness/runtime/ACTIVE_CONTROLLER.json` binds
+state_path/campaign_id/campaign_identity for a read-only SessionStart snapshot.
+Absent pointer means no active-state observation. Reconcile pending native calls
+against host receipts; acknowledged UNKNOWN outcomes are never replayed. The
+current pack is static guidance, not live HEAD/DAG/status computation.

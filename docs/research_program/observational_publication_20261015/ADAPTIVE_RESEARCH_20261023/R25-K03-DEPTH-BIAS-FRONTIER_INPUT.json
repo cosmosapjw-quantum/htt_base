@@ -1,0 +1,81 @@
+{
+  "task_id": "R25-K03-DEPTH-BIAS-FRONTIER",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "advisor": "/root/r25_statistics_theory",
+  "advisor_requested_selected": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "independent_math_correction": "/root/r25_blind_plan_math_review: use compact positive rank-k SVD including k=0 and orthogonal residual",
+  "sources": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_covariance/RESULT.json",
+      "sha256": "fb4456451cf10582bf7ad1406ae1c5040dbf15b8d662b83ffb07a2f7de97d400"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_covariance/MANIFEST.json",
+      "sha256": "bee5babe4f0610df53656beb2fd6dc69a99028d5d91e2e847e30be320ab61e9e"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/tensor_bundle/RESULT.json",
+      "sha256": "7d90415eede2b08fc51067bcff5b3276e3d554f20e90d3d7033692b885a4e7e9"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/depth_images/RESULT.json",
+      "sha256": "b93bb2829dd90d6ece1afb6e9ef065f8d6e5dd87a702fd06f1979d2681ff7ff2"
+    }
+  ],
+  "estimand": "Joint coefficient-bias and covariance robustness of three reported-depth full E1/B1 vector levels; full24 retained. Original K03 physical acceptance remains HOLD.",
+  "formula": "From reviewed covariance result use mu24,C24,A12x24,d=A mu. U_tau=C24+tau^2 I24; V_tau=A U_tau A^T. For all24 bias b minimize (d-Ab)^T V_tau^-1(d-Ab), ||b||2<=delta. For slope-only sensitivity use selector S24x6 with I6 in last block and A_s=A S; b24=S b6. U,V same in both.",
+  "solver": "Whiten y=V^-1/2 d,W=V^-1/2 A_or_As; compact positive rank-k SVD W=U diag(s>0) Z^T. Preserve orthogonal residual y-UU^T y. If k=0 choose b=0,T=||y||2^2. Unconstrained minimum-norm b*=Z diag(1/s)U^T y, use if norm<=delta. If delta=0 choose zero. Otherwise unique lambda>0 solves sum s_i^2 (U^T y)_i^2/(s_i^2+lambda)^2=delta^2; b=Z diag(s/(s^2+lambda))U^T y. No zero singular division, no unexplained jitter or deleting blocks.",
+  "tau_uasyr": [
+    0,
+    0.1,
+    0.3,
+    1,
+    3,
+    10
+  ],
+  "delta_uasyr": [
+    0,
+    0.1,
+    0.3,
+    1,
+    3,
+    10
+  ],
+  "reference_thresholds": {
+    "gaussian": "chi2_12(.95)",
+    "moment": 240
+  },
+  "frontier": "For each tau and both bias scopes solve smallest delta where T<=threshold, or report already_contained at delta0 / never_reached if irreducible residual above threshold. Keep exact norm-minimizing witnesses. Full24 zero residual threshold delta0=||A^T(AA^T)^-1d|| independent of tau. Distinguish restricted least-squares radius from radius reaching zero.",
+  "bundle": "Keep x24 and typed eight polar/axial xyz blocks; all36 witnesses per scope. F support h(u)=u.mu+delta||u||+rho sqrt(u^T U_tau u) for full24 scenario; slope-only bias term delta||S^T u||. G_F joint path linear map with all covariance cross blocks and transformed bias support; no component independence assumption. Preserve original empirical4096 Pi and computationalQ10; physicalPi and physicalQ UNKNOWN. Scalar T is a probe of full state, not replacement.",
+  "controls": [
+    "independent constrained numerical optimization vs secular solution at selected interior/boundary grid points, objective rtol1e-8 atol1e-9",
+    "KKT stationarity residual and feasibility <=1e-9 with scale-aware reporting; unconstrained and delta0 branches",
+    "monotonic nonincrease in both radii",
+    "fullA rowrank12, slope-only rank6, fixed zero-rank and rank-deficient counterexamples",
+    "Ab0=d relative1e-10 and zero-residual radius independent tau",
+    "common-mode bias cancels; proper rotation and polar/axial reflection invariance",
+    "support witness attains full24 and transformed linear support; preserve entire covariance"
+  ],
+  "limits": {
+    "production_seconds": 60,
+    "tests_seconds": 120,
+    "RSS_MiB": 1024,
+    "BLAS_threads": 1,
+    "no_raw_catalogue_pass": true,
+    "no_new_random_draws": true,
+    "no_solver_ODE": true,
+    "no_ultra": true
+  },
+  "outputs": [
+    "compute.py",
+    "test_compute.py",
+    "RESULT.json",
+    "figure.png",
+    "REPORT.md",
+    "MANIFEST.json",
+    "RAW_RECEIPT.json",
+    "RETURN.json"
+  ],
+  "claim_ceiling": "Exploratory conditional sensitivity under chosen deterministic bias/covariance envelopes; neither actual Gaia systematics bound nor physical confidence. No original acceptance promotion."
+}

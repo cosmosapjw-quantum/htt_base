@@ -1,0 +1,329 @@
+{
+  "source_base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "advisor": {
+    "agent_id": "/root/r25_cmb_physics_theory",
+    "requested": "gpt-6-astra/xhigh",
+    "transport_selected": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "Completed source/theory advice; contracts mechanically assembled from host-provided approved definition"
+  },
+  "preservation": {
+    "original_external_acceptance": "17/42 unchanged",
+    "analytic_alternate_acceptance": "18/42 unchanged",
+    "historical48": "retain exact task/history/cost identities",
+    "catalogue_one_use": "preserve; no replay",
+    "ultra": "preserve consumed allocations; no replenishment",
+    "R9": "UNKNOWN unchanged"
+  },
+  "claim_ceiling": "Conditional delivered-observable research only; no native solver/ODE, physical foreground law, cosmological p, posterior, or original acceptance promotion.",
+  "schema": "htt.pr3_frequency_tensor_draft/1",
+  "task_id": "R25-PR3-FREQUENCY-TENSOR-CROSSPREDICTION",
+  "document_role": "PREDECLARED_OBSERVABLE_DRAFT_NOT_CONTROLLER_INPUT",
+  "status": "AWAITING_ACQUISITION_MANIFEST_AND_BOUNDED_EXECUTION_BINDING",
+  "requires_before_controller_intake": {
+    "all": [
+      {
+        "task_id": "R25-PR3-FREQUENCY-ACQUIRE",
+        "evidence": "qualified",
+        "product": "pr3_frequency_maps"
+      }
+    ],
+    "bind_acquisition_manifest_identity": true,
+    "freeze_observable_before_outcomes": true
+  },
+  "goal": "Test whether two frequency-anchor E tensors predict heldout B coordinates of other delivered native-resolution frequency differences",
+  "sources": [
+    {
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/matrix_bpasscorr.html",
+      "scope": "Official PR3 bandpass-corrected product matrix"
+    },
+    {
+      "url": "https://arxiv.org/html/1807.06207",
+      "scope": "Planck III section3.1.4 PSB choice and section3.3 uncertainty"
+    },
+    {
+      "url": "https://arxiv.org/html/1807.06208#S3.SS1",
+      "scope": "Extra70GHz gain template in SMICA preprocessing"
+    },
+    {
+      "url": "https://arxiv.org/html/1807.06208#S3.SS5",
+      "scope": "Component-separation uncertainty"
+    },
+    {
+      "url": "https://healpy.readthedocs.io/en/latest/generated/healpy.sphtfunc.map2alm_spin.html",
+      "scope": "Official map2alm_spin API; native spin projection"
+    }
+  ],
+  "input_products": [
+    {
+      "band_GHz": 30,
+      "filename": "LFI_SkyMap_030-BPassCorrected_1024_R3.00_full.fits",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/LFI_SkyMap_030-BPassCorrected_1024_R3.00_full.fits",
+      "advisor_head_status": 200,
+      "advisor_head_content_length": 503328960,
+      "advisor_advertised_byte_ranges": true,
+      "upstream_etag": null,
+      "upstream_sha256": null,
+      "required_nside": 1024,
+      "required_release": "R3.00",
+      "required_full_mission": true,
+      "required_product_variant": "BPassCorrected"
+    },
+    {
+      "band_GHz": 44,
+      "filename": "LFI_SkyMap_044-BPassCorrected_1024_R3.00_full.fits",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/LFI_SkyMap_044-BPassCorrected_1024_R3.00_full.fits",
+      "advisor_head_status": 200,
+      "advisor_head_content_length": 503328960,
+      "advisor_advertised_byte_ranges": true,
+      "upstream_etag": null,
+      "upstream_sha256": null,
+      "required_nside": 1024,
+      "required_release": "R3.00",
+      "required_full_mission": true,
+      "required_product_variant": "BPassCorrected"
+    },
+    {
+      "band_GHz": 70,
+      "filename": "LFI_SkyMap_070-BPassCorrected_1024_R3.00_full.fits",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/LFI_SkyMap_070-BPassCorrected_1024_R3.00_full.fits",
+      "advisor_head_status": 200,
+      "advisor_head_content_length": 503328960,
+      "advisor_advertised_byte_ranges": true,
+      "upstream_etag": null,
+      "upstream_sha256": null,
+      "required_nside": 1024,
+      "required_release": "R3.00",
+      "required_full_mission": true,
+      "required_product_variant": "BPassCorrected"
+    },
+    {
+      "band_GHz": 100,
+      "filename": "HFI_SkyMap_100_2048_R3.01_full.fits",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/HFI_SkyMap_100_2048_R3.01_full.fits",
+      "advisor_head_status": 200,
+      "advisor_head_content_length": 2013278400,
+      "advisor_advertised_byte_ranges": true,
+      "upstream_etag": null,
+      "upstream_sha256": null,
+      "required_nside": 2048,
+      "required_release": "R3.01",
+      "required_full_mission": true,
+      "required_product_variant": "HFI full"
+    },
+    {
+      "band_GHz": 143,
+      "filename": "HFI_SkyMap_143_2048_R3.01_full.fits",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/HFI_SkyMap_143_2048_R3.01_full.fits",
+      "advisor_head_status": 200,
+      "advisor_head_content_length": 2013278400,
+      "advisor_advertised_byte_ranges": true,
+      "upstream_etag": null,
+      "upstream_sha256": null,
+      "required_nside": 2048,
+      "required_release": "R3.01",
+      "required_full_mission": true,
+      "required_product_variant": "HFI full"
+    },
+    {
+      "band_GHz": 217,
+      "filename": "HFI_SkyMap_217_2048_R3.01_full.fits",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/HFI_SkyMap_217_2048_R3.01_full.fits",
+      "advisor_head_status": 200,
+      "advisor_head_content_length": 2013278400,
+      "advisor_advertised_byte_ranges": true,
+      "upstream_etag": null,
+      "upstream_sha256": null,
+      "required_nside": 2048,
+      "required_release": "R3.01",
+      "required_full_mission": true,
+      "required_product_variant": "HFI full"
+    },
+    {
+      "band_GHz": 353,
+      "filename": "HFI_SkyMap_353-psb_2048_R3.01_full.fits",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/HFI_SkyMap_353-psb_2048_R3.01_full.fits",
+      "advisor_head_status": 200,
+      "advisor_head_content_length": 2013278400,
+      "advisor_advertised_byte_ranges": true,
+      "upstream_etag": null,
+      "upstream_sha256": null,
+      "required_nside": 2048,
+      "required_release": "R3.01",
+      "required_full_mission": true,
+      "required_product_variant": "PSB"
+    }
+  ],
+  "selected_support": {
+    "path": "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/ORIGINAL_SELECTED_SUPPORT_RESPONSE.npz",
+    "sha256": "7a462ba827ebe3ef5768552565f323ad2e1a679425be5d077fe8f46b9f0fdec6",
+    "key": "selected_mask_ring64",
+    "selected_cell_count": 30021
+  },
+  "smica_full": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/cmb/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+    "sha256": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+    "source": "Advisor freshly hashed existing cached full-mission map; verify at execution",
+    "use": "Reproject under the newly specified operator; never substitute inherited60views"
+  },
+  "tensor_decoder": {
+    "path": "htt/obsstat/planck_lowell_irrep_projection.py",
+    "sha256": "ecccebc39c4814546552b9fbc6b6ed798cc644fec1f6616a26003fda17932216"
+  },
+  "common_mask": {
+    "rule": "Keep selected NSIDE64 cell iff ALL native children Q/U in all seven frequency maps plus SMICA full are valid and finite",
+    "selection": "Sentinel/finite validity only; no amplitude-based selection",
+    "record": "Retained and removed cell identities/counts and reason; exact common support used for all products",
+    "native_expansion": "Lift retained64cells to each native NSIDE without changing Q/U"
+  },
+  "projection": {
+    "operator": "Native-NSIDE map2alm_spin([M Q,M U],spin=2,lmax=3,mmax=3), uniform pixel quadrature",
+    "resolution": "Actual native NSIDE1024/2048; no silent resolution lowering",
+    "forbidden": [
+      "Q/U downgrade",
+      "smoothing",
+      "beam deconvolution",
+      "gain correction",
+      "colour correction",
+      "monopole subtraction"
+    ],
+    "preprocessing": "Do not apply existing SMICA weights to these maps as though their preprocessing matched;70GHz gain-template requirement remains explicit",
+    "retained_in_operator": [
+      "actual native beams",
+      "mapmaking",
+      "pixelization",
+      "common mask",
+      "spin operator and E/B mask mixing"
+    ],
+    "exact_CMB_cancellation_assumed": false,
+    "unit_normalization": "Treat LFI K_CMB and HFI Kcmb as same thermodynamic temperature units; retain raw FITS unit/convention keywords"
+  },
+  "tensor_carrier": {
+    "x_order": [
+      "E2",
+      "E3",
+      "B2",
+      "B3"
+    ],
+    "dimension_per_map": 24,
+    "harmonic_coordinates": "(a_l0,sqrt(2)Re(a_lm),-sqrt(2)Im(a_lm)), m increasing",
+    "retain_full_STF_tensors": true,
+    "E_parity": "polar",
+    "B_parity": "axial",
+    "all_frequency_coordinates": 168,
+    "smica_coordinates": 24,
+    "units": "K_CMB",
+    "bound_raw_STF_decoder_input": {
+      "inverse_conversion": "Re(a_lm)=c_re/sqrt(2); Im(a_lm)=-c_im/sqrt(2); m=0 unchanged",
+      "requirement": "Convert canonical orthonormal real coordinates back to raw Re/Im before calling the bound raw-STF decoder",
+      "independent_basis_fixture": {
+        "input": "Raw harmonic a_21=i, other ell2 coefficients zero",
+        "expected_Q_yz": "sqrt(15/(8*pi))",
+        "incorrect_direct_canonical_result": "-sqrt(15/(4*pi))",
+        "test_rule": "Verify independently against analytic basis, not only a round trip"
+      }
+    }
+  },
+  "frozen_crossprediction": {
+    "reference_frequency_GHz": 143,
+    "anchor_frequencies_GHz": [
+      30,
+      353
+    ],
+    "target_frequencies_GHz": [
+      44,
+      70,
+      100,
+      217
+    ],
+    "difference": "d_nu=x_nu-x_143",
+    "E_design": "A_E=[d_30,E,d_353,E] in R^(12x2)",
+    "B_design": "A_B=[d_30,B,d_353,B] in R^(12x2)",
+    "fit": "For each target, fit c using E-only least squares A_E c≈d_nu,E",
+    "prediction": "Predict d_nu,B with A_B c without refitting B",
+    "condition_requirement": "s2/s1>1e-8 is a descriptive conditioning screen only; it alone never licenses exact-relation rejection",
+    "ill_conditioned_status": "ANCHOR_FIT_ILL_CONDITIONED; retain full carrier/singular values, no unstable prediction",
+    "outputs": [
+      "full coefficients c",
+      "both singular values",
+      "condition",
+      "full E fit residual",
+      "full B prediction",
+      "full B residual",
+      "absolute K_CMB quantities",
+      "computational norm comparisons"
+    ],
+    "computational_gauges": {
+      "q0_K_CMB": 1e-05,
+      "o0_K_CMB": 1e-05
+    },
+    "logical_interpretation": "Full E rank gives unique exact E coefficients. Exact delivered-tensor relation rejection additionally requires deterministic error certification and a B residual exceeding the certified necessary bound. Without certification report full descriptive residuals and NUMERICALLY_UNRESOLVED; never infer physical component count.",
+    "B_heldout_status": "Heldout coordinates, not an independent observational sample",
+    "deterministic_error_certification": {
+      "definitions": {
+        "AE": "Computed E anchor matrix",
+        "yE": "Computed target E difference",
+        "AB": "Computed B anchor matrix",
+        "yB": "Computed target B difference",
+        "eps_AE": "Certified spectral-norm error upper bound for AE, K_CMB",
+        "eps_yE": "Certified Euclidean error upper bound for yE, K_CMB",
+        "eps_AB": "Certified spectral-norm error upper bound for AB, K_CMB",
+        "eps_yB": "Certified Euclidean error upper bound for yB, K_CMB",
+        "s": "Certified positive lower bound s<=sigma_min(AE), K_CMB",
+        "ctilde": "Computed E-fit coefficients, dimensionless",
+        "E_residual_upper": "Certified upper bound on ||yE-AE*ctilde||, K_CMB",
+        "AB_norm_upper": "Certified upper bound on spectral ||AB||, K_CMB",
+        "B_residual_roundoff": "Certified residual-evaluation roundoff upper bound, K_CMB"
+      },
+      "unresolved_if": "s<=eps_AE, or any required deterministic error/norm/residual certification unavailable",
+      "coefficient_size_bound": "C=(||yE||+eps_yE)/(s-eps_AE)",
+      "coefficient_error_bound": "Delta_c=(eps_yE+eps_AE*C+E_residual_upper)/s",
+      "necessary_B_bound": "tau_B=eps_yB+eps_AB*C+AB_norm_upper*Delta_c+B_residual_roundoff",
+      "coefficient_bound_units": "C and Delta_c dimensionless",
+      "rejection_rule": "Only an observed B residual with a certified lower bound greater than tau_B disproves the exact delivered-tensor relation under these deterministic bounds. Preserve all bounds and arithmetic provenance.",
+      "absence_of_certificate": "Report descriptive full residuals and NUMERICALLY_UNRESOLVED exact relation; no rejection",
+      "independent_implementations": "Agreement between implementations does not certify either implementation error",
+      "conditioning_counterexample": {
+        "a_K_CMB": 1e-05,
+        "construction": "AE=[a*u,a*(u+1e-7*v)], AB=[a*p,a*q]; u/v and p/q orthonormal; exact target is anchor2",
+        "target_E_error": "5e-13*v K_CMB",
+        "coefficient_shift": "(0,1) -> (-0.5,1.5)",
+        "spurious_B_residual_K_CMB_approx": 7.07e-06,
+        "lesson": "Singular ratio screen and fixed absolute agreement tolerance can pass while conditioning amplifies E error into large B residual"
+      }
+    }
+  },
+  "resources": {
+    "execution": "sequential",
+    "BLAS_threads": 1,
+    "RSS_bytes": 4294967296,
+    "checkpoint_seconds_per_product": 900,
+    "timeout": "Preserve finished product results and actual receipt; no silent resolution lowering",
+    "fits": "memmap; chunk NESTED-to-RING into two float64 Q/U arrays; do not retain seven maps simultaneously"
+  },
+  "controls": [
+    "Pure E and pure B all basis vectors and fixed mixtures",
+    "Linearity, sign, harmonic order and convention",
+    "Common mask and invalid/sentinel handling",
+    "Independent explicit low-order spin-harmonic discrete sums on real products, atol1e-12 K_CMB rtol1e-9",
+    "Chunk-size and reduction-stability comparison",
+    "Independent analytic a21=i raw-STF basis fixture with Qyz=+sqrt(15/(8*pi)); detect direct-canonical error -sqrt(15/(4*pi))",
+    "Conditioning amplification counterexample and required NUMERICALLY_UNRESOLVED outcome when no deterministic error certificate exists"
+  ],
+  "lower_resolution_comparison": "If separately approved, label as approximation only; never replace frozen native-resolution result",
+  "functional_bundle": {
+    "x": "Retain all168 frequency coordinates and24 freshly reprojected SMICA coordinates with full STF carriers",
+    "Q": "Computational gauges only; physical MES unavailable",
+    "F": "If a finite frequency-index count is used, explicitly specify seven-point measure; not a physical mixture law",
+    "Pi": "NOT_CALIBRATED",
+    "G_F": "NOT_APPLICABLE; frequency is not depth",
+    "other_bundles": "Preserve existing bundles unchanged"
+  },
+  "uncertainty": "FITS QQ/QU/UU are not a matched joint low-ell law; no cosmological p, posterior or physical foreground bound",
+  "next_decision": "Actual residual tensors determine whether matched gain-template, beam or end-to-end simulation acquisition is the next discriminating action; never claim all methods complete.",
+  "owned_paths_proposed": [
+    "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/frequency_tensor"
+  ],
+  "qualified_product_before_execution": null,
+  "execution_or_admission_performed": false
+}

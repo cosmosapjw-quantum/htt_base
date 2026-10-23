@@ -1,0 +1,182 @@
+{
+  "task_id": "R25-CMB-CONDITIONAL-GRAM",
+  "packet_id": "7ce35c1d4ec451db42ca56236cb5896605339ee65116b2ea64ba659eb0d45309",
+  "input_identity": "sha256:46803ac5255eeb92f0aa72242a3b9a339bb380c5278a7b6654f7093e80fa153b",
+  "actual_agent_id": "/root/rc_7a3cc8b9ef3a0444",
+  "requested_model_effort": "gpt-6-sol/high",
+  "transport_selected_model_effort": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "interpreter": ".venv/bin/python",
+  "thread_limits": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1",
+  "production_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o <time-file> timeout <remaining-cap>s .venv/bin/python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py > <stdout-file> 2> <stderr-file>",
+  "test_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o <time-file> .venv/bin/python -m pytest docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/test_compute.py -q > <stdout-file> 2> <stderr-file>",
+  "attempts": [
+    {
+      "kind": "tests",
+      "sequence": 1,
+      "exit": 0,
+      "wall_seconds": 5.42,
+      "maxrss_KiB": 163084,
+      "receipt_prefix": "tests_v1",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/tests_v1.time .venv/bin/python -m pytest docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/test_compute.py -q > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/tests_v1.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/tests_v1.stderr"
+    },
+    {
+      "kind": "production",
+      "sequence": 1,
+      "exit": 1,
+      "wall_seconds": 3.66,
+      "maxrss_KiB": 167608,
+      "timeout_seconds": 180,
+      "receipt_prefix": "first_failure",
+      "first_failure": "rank_tail attempted np.searchsorted on a 2D pilot coordinate array; full traceback preserved in first_failure.stderr",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/first_failure.time timeout 180s .venv/bin/python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/first_failure.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/first_failure.stderr"
+    },
+    {
+      "kind": "production",
+      "sequence": 2,
+      "exit": 0,
+      "wall_seconds": 14.06,
+      "maxrss_KiB": 285836,
+      "timeout_seconds": 174,
+      "receipt_prefix": "production_v1",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/production_v1.time timeout 174s .venv/bin/python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/production_v1.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/production_v1.stderr"
+    },
+    {
+      "kind": "production",
+      "sequence": 3,
+      "exit": 0,
+      "wall_seconds": 8.7,
+      "maxrss_KiB": 288812,
+      "timeout_seconds": 160,
+      "receipt_prefix": "production",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/production.time timeout 160s .venv/bin/python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/production.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/production.stderr"
+    },
+    {
+      "kind": "tests",
+      "sequence": 2,
+      "exit": 0,
+      "wall_seconds": 6.85,
+      "maxrss_KiB": 177380,
+      "receipt_prefix": "tests",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/tests.time .venv/bin/python -m pytest docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/test_compute.py -q > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/tests.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/tests.stderr"
+    },
+    {
+      "kind": "tests",
+      "sequence": 3,
+      "exit": 0,
+      "wall_seconds": 7.52,
+      "maxrss_KiB": 175616,
+      "timeout_seconds": 160,
+      "receipt_prefix": "repair_tests",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/repair_tests.time timeout 160s .venv/bin/python -m pytest docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/test_compute.py -q > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/repair_tests.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/repair_tests.stderr"
+    },
+    {
+      "kind": "production",
+      "sequence": 4,
+      "exit": 0,
+      "wall_seconds": 4.8,
+      "maxrss_KiB": 272072,
+      "timeout_seconds": 145,
+      "receipt_prefix": "repair_production",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/repair_production.time timeout 145s .venv/bin/python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/repair_production.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/repair_production.stderr"
+    },
+    {
+      "kind": "production",
+      "sequence": 5,
+      "exit": 0,
+      "wall_seconds": 9.29,
+      "maxrss_KiB": 273172,
+      "timeout_seconds": 140,
+      "receipt_prefix": "repair_production_v2",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/repair_production_v2.time timeout 140s .venv/bin/python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/repair_production_v2.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/repair_production_v2.stderr"
+    },
+    {
+      "kind": "tests",
+      "sequence": 4,
+      "exit": 0,
+      "wall_seconds": 2.44,
+      "maxrss_KiB": 176368,
+      "timeout_seconds": 150,
+      "receipt_prefix": "repair_tests_v2",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/repair_tests_v2.time timeout 150s .venv/bin/python -m pytest docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/test_compute.py -q > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/repair_tests_v2.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/repair_tests_v2.stderr"
+    },
+    {
+      "kind": "tests",
+      "sequence": 5,
+      "exit": 1,
+      "wall_seconds": 14.06,
+      "maxrss_KiB": 178788,
+      "timeout_seconds": 150,
+      "receipt_prefix": "second_repair_tests",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/second_repair_tests.time timeout 150s .venv/bin/python -m pytest docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/test_compute.py -q > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/second_repair_tests.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/second_repair_tests.stderr",
+      "first_failure": "np.linalg.norm rejected three-axis tuple in source_parity; complete traceback retained in second_repair_tests.stdout"
+    },
+    {
+      "kind": "tests",
+      "sequence": 6,
+      "exit": 0,
+      "wall_seconds": 6.86,
+      "maxrss_KiB": 177012,
+      "timeout_seconds": 135,
+      "receipt_prefix": "second_repair_tests_v2",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/second_repair_tests_v2.time timeout 135s .venv/bin/python -m pytest docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/test_compute.py -q > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/second_repair_tests_v2.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/second_repair_tests_v2.stderr"
+    },
+    {
+      "kind": "production",
+      "sequence": 6,
+      "exit": 0,
+      "wall_seconds": 5.34,
+      "maxrss_KiB": 275416,
+      "timeout_seconds": 130,
+      "receipt_prefix": "second_repair_production",
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -f 'exit=%x wall_s=%e maxrss_KiB=%M' -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/second_repair_production.time timeout 130s .venv/bin/python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/compute.py > docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/second_repair_production.stdout 2> docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/second_repair_production.stderr"
+    }
+  ],
+  "cumulative_production_wall_seconds": 45.85,
+  "cumulative_tests_wall_seconds": 43.15,
+  "maximum_observed_rss_KiB": 288812,
+  "limits": {
+    "production_seconds": 180,
+    "tests_seconds": 180,
+    "rss_MiB": 512,
+    "batch_max": 256
+  },
+  "implementation_batch": 128,
+  "source_sha256": "107c0ab6af308213c91cb1c38477242864fc24c6e5e0739fe6fb93b9c195bdbb",
+  "final_tests": "7 passed in 4.81s; exit=0, wall=6.86s",
+  "final_production": "Both laws regenerated from stored canonical carrier, pilot 4096 and evaluation 16383 each; exit=0, wall=5.34s",
+  "publication": "none",
+  "scientific_admission": "HOLD_PENDING_FRESH_INDEPENDENT_REVIEW",
+  "versions": {
+    "python": "3.12",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2"
+  },
+  "reviewed_failed_candidate_identity": "sha256:3693ddfd25226cdea2c4f3dec25204838a235271f18b001c26c7d08059e7f579",
+  "failed_candidate_archive": "failed_candidate_v1/",
+  "independent_review_path": "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/reviews/CMB_REVIEW_FIRST.json",
+  "review_findings_addressed_in_candidate": [
+    "R25-CMB-F1",
+    "R25-CMB-F2",
+    "R25-CMB-F3"
+  ],
+  "prior_author_agent_id": "/root/rc_0d4c0bbfa25cdbd8",
+  "prior_independent_review_wall_seconds": 4.27,
+  "qualified_products": [],
+  "first_failure_preserved": "failed_candidate_v1/first_failure.stderr",
+  "agent_id": "/root/rc_7a3cc8b9ef3a0444",
+  "candidate_identity": "sha256:62d064cb9675453a2eca81e4c5b581f3afabaf83d3831c7399493d976fbd5845",
+  "base_packet_id": "7a3cc8b9ef3a04447f27a068e63dfab06e97f480b712d2d8a020b7f360641b81",
+  "base_candidate_identity": "sha256:ec7f5fa63ffd0c5e01e946c989c1e7443af47d57f961dbc2f3054b63838a9050",
+  "raw_receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/cmb_conditional_gram/RAW_RECEIPT.json",
+  "outcome": "success",
+  "products": [],
+  "failed_candidate_archives": [
+    "failed_candidate_v1/",
+    "failed_candidate_v2/"
+  ],
+  "second_independent_review_path": "docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/reviews/CMB_REVIEW_SECOND.json",
+  "second_repair_first_failure_preserved": "second_repair_tests.stdout"
+}

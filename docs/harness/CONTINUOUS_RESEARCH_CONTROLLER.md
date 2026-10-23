@@ -101,8 +101,10 @@ admission against the full scientific DAG.
 4. Wait on the actual native worker. Save its raw outcome receipt and a result
    JSON, run `record`, then immediately call `next`. This schedules the exact
    research, escalation, bounded repair, independent review, or dependent action.
-5. If the worker is running, continue waiting; `AWAITING_NATIVE_OUTCOME` is not
-   success. On transport hold, preserve the pending opportunity and continue any
+5. While a worker runs, default `next` waits; `AWAITING_NATIVE_OUTCOME` is not
+   success. The explicit `next --review-only` exception below can admit one
+   disjoint read-only review beside one running acquisition. On transport hold,
+   preserve the pending opportunity and continue any
    other supported ready task. On exact branch hold, continue other ready work.
 
 ```sh
@@ -122,6 +124,60 @@ In the selected-input patch fixture only, set `PYTHONPATH` to
 inputs/docs/harness/NATIVE_ROUTING_POLICY_V1.json` before the subcommand. In the
 existing checkout the normal sibling router import/default policy path applies.
 
+### One read-only review during acquisition
+
+`next --review-only` (API: `next_packet(..., review_only=True)`) may reserve one
+fresh `phase=review` packet beside exactly one acknowledged running acquisition,
+or when the writer slot is free. Default serial behavior remains unchanged.
+It never returns an execute, repair, acquisition, research, escalation or discovery
+packet. Another pending/running review, a planned acquisition, or any other
+pending native work makes it wait. No eligible review means no discovery.
+
+The review must be dependency/typed-obligation ready, have an exact current
+candidate and input identity, and use a supported `review_or_research` route.
+Its candidate owned paths, declared local input sources and explicit local path
+records in their JSON source contracts must be known and disjoint from the
+acquisition's declared owned paths. The `input_sources`, `sources` and `inputs`
+declarations are followed through nested JSON contracts, with every inspected
+contract sealed and rechecked at ACK. Traversal is bounded to 64 JSON contracts,
+16 nested levels, 1 MiB per contract, 4 MiB total metadata and 256 declared input
+paths; unresolved or over-bound scope waits. Paths resolve symlinks, with relative
+nested references accepted only when their location is unambiguous. No arbitrary
+prose scanning or broad repository discovery occurs.
+
+A candidate identity label alone is insufficient. For this concurrency path its
+SHA-256 must match an existing declared candidate artifact, owned file, or the
+owned directory's `MANIFEST.json`/`ARTIFACT_MANIFEST.json`. A bound manifest's
+`products_sha256` or `products` (with per-file `sha256`) are verified against the
+actual product bytes. Declared candidate products and inspected candidate files
+also receive content seals; all are checked again at ACK. Candidate verification
+reads at most 64 MiB, independently of acquisition files. Missing bindings,
+unmatched identities, changed nested contracts or changed candidate bytes wait
+or reject ACK without state mutation. These are freshness/ownership checks,
+not automatic scientific-integrity verdicts. Frozen task/spec/acceptance fields
+are preserved; no acquisition data scans or numerical runs are required.
+
+```sh
+python scripts/codex_harness/research_controller.py --state STATE.json next \
+  --review-only --available-profile gpt-6-astra/xhigh
+```
+
+A repeated call replays the same planned review; a running review blocks another.
+Acknowledgement rechecks candidate/input/spec/source-contract identity, dependency
+readiness and acquisition packet/owned-path scope, as well as existing fresh-agent
+and contributor exclusions. If acquisition finishes first, the review can still
+acknowledge with the writer slot free. A replacement or conflicting writer fails
+closed without state mutation. The two actual outcomes may be recorded in either
+order; one outcome never changes the other owner's task or packet.
+
+The host remains the sole state-file writer and serializes all `ack`/`record`
+commands. The reviewer reads only the bound candidate/inputs and returns its
+outcome to the host; the host stores the raw review receipt outside candidate,
+input and acquisition paths. A review failure may schedule a deterministic repair,
+but that repair waits until the acquisition finishes. A refusal preserves the
+acquisition. This exception does not add a scientific acceptance, reset any
+allocation, or authorize a second writer or a daemon.
+
 A successful implementation/acquisition result has this shape:
 
 ```json
@@ -139,28 +195,34 @@ research and escalation contributor. Research and escalation successes instead r
 `repair_plan`; they schedule repair on the appropriate implementation route.
 A completed same-task implementation author may be acknowledged for a planned
 `repair` through `ack --followup-evidence /absolute/path/followup.json`
-(API: `acknowledge(..., followup_evidence=path)`). The host must have actually
-used `collaboration.followup_task`. The JSON requires `native_tool` with that
-value, `task_id`, `agent_id`, `phase:"repair"`, the current repair `packet_id`,
-`input_identity`, `repair_plan_identity` (`digest` of the recorded nonblank plan),
-`base_packet_id`, `base_candidate_identity`, a different `candidate_identity`,
-`raw_receipt`, and `raw_receipt_sha256`. The raw JSON receipt itself must match
-`task_id`, `agent_id`, `input_identity`, `base_packet_id`,
-`base_candidate_identity`, and `candidate_identity`. The base packet must be a
-successful recorded implementation outcome by this author under the current
-input and candidate; every previous packet for the reused thread must be a
-recorded implementation outcome for this task. The original and repair packets
-must use implementation-compatible routes (`subagent_specialist`, `general_code`,
-or `routine_mechanical`) with identical requested and transport-selected
-model/effort profiles: a native thread cannot be retargeted. Read-only theory
-execution, routine mapping, research and escalation threads cannot become repair
-workers through followup. Empty, stale, mismatched or
-previously recorded raw receipts fail closed. The subsequent result must use the
-acknowledged receipt and new candidate exactly. The current packet and a
-`followup_acknowledged` event retain hashed evidence and the actual followup tool;
-old packets, contributor identities and escalation accounting remain unchanged.
-Every other phase still requires a fresh agent, and review independence remains
-mandatory. Followup evidence does not establish an observed runtime identity.
+(API: `acknowledge(..., followup_evidence=path)`). After the host actually calls
+`collaboration.followup_task`, it immediately saves dispatch evidence and acknowledges
+it, before waiting for the result. The JSON contains `status:"dispatched"`,
+`native_tool:"collaboration.followup_task"`, `task_id`, actual `agent_id`,
+`phase:"repair"`, current `packet_id`, `input_identity`, `repair_plan_identity`
+(`digest` of the recorded plan), `base_packet_id`, `base_candidate_identity`, and
+exact `requested`/`transport_selected` route profiles. `host_call_receipt` and
+`host_call_receipt_sha256` bind a local JSON host receipt with the same
+native-tool/agent/packet/task/input fields and `dispatch_accepted:true`.
+
+Acknowledgement makes the packet running; UNKNOWN runtime/outcome is never
+replayed while waiting. The later result additionally names `base_packet_id`
+and `base_candidate_identity`, a new candidate on success, and a new
+`raw_receipt`. That raw JSON must bind packet/task/agent/input/base/outcome/candidate
+fields to the result. A blocker may be recorded without pretending a candidate
+exists. The original completed-receipt import protocol remains compatible:
+omit `status`, provide the different `candidate_identity`, `raw_receipt` and
+`raw_receipt_sha256` at acknowledgement; subsequent record must match them.
+
+The base packet must be a successful recorded implementation by this author
+under the current input/candidate. Every prior packet for that thread must have
+a recorded implementation outcome for this task. Original and repair routes must
+be implementation-compatible (`subagent_specialist`, `general_code`, or
+`routine_mechanical`) with identical requested and selected model/effort profiles.
+Read-only theory/research/escalation threads cannot become repair workers.
+Stale identities, profiles and receipts fail closed. Old packets, contributors
+and escalation accounting remain unchanged. Review still requires a fresh
+independent agent; followup evidence is not runtime model observation.
 
 Astra research, review and escalation remain read-only, including the prompt.
 The native host must enforce these assignment bounds in the actual environment.
@@ -218,8 +280,9 @@ failure trigger accumulator; prior receipts and consumed escalation IDs persist.
 
 `next` chooses the least recently scheduled dependency-ready task, skipping
 unavailable routes, so a repeatedly repaired branch cannot starve untouched
-independent work. It permits one outstanding native opportunity at a time: this
-is deliberately a conservative writer policy, not a throughput scheduler.
+independent work. By default it permits one outstanding native opportunity at a
+time. The explicit review-only exception permits one read-only reviewer beside
+one running acquisition, while retaining a single host writer of controller state.
 Cycles and unknown dependencies are rejected before execution. Empty ready
 sets, planned/running work, external holds, and a particular completed count are
 never reported as successful termination. `CAMPAIGN_ACCEPTANCES_REVIEWED` means
@@ -249,19 +312,17 @@ targeted closeout directly to implementation `repair`, preserving the exact
 reviewer outcome and plan. It does not require redundant research when the
 reviewer already supplies a concrete correction, and it does not approve the
 repair's scientific result. A missing/blank plan retains the research route.
-Only one reviewer-directed shortcut is allowed per task; another failed closeout
-returns to normal research/escalation rather than an endless sequence of targeted
-review repairs. The replacement must have a new candidate identity and then pass
-a fresh independent review. Both successful and failed review outcomes must bind
-the current exact candidate; a stale candidate cannot trigger a repair or pass
-review. The controller records the source candidate, issue identity, packet and
-concrete plan in `targeted_repairs` for the bounded closeout. Consuming the one
-ultra launch does not automatically cap an already-derived deterministic fix:
-a fresh explicit reviewer counterexample with a concrete numeric/code repair
-plan may still take the first targeted-repair shortcut, without another ultra
-call. If that shortcut has already been used, the existing consumed-budget hold
-applies to otherwise unresolved repair/review outcomes. Thus escalation budget
-and deterministic repair continuation remain separate decisions.
+The first concrete reviewer-directed closeout remains compatible with old results.
+A subsequent closeout additionally needs a nonempty structured `counterexample`
+with meaningful scientific fields (for example the input matrix, expected rank
+and observed rank). Its counterexample/repair signature must be new. Renaming a
+candidate, receipt or note does not replay an already used counterexample. Each
+closeout retains its source candidate, issue, packet, counterexample signature and
+plan cumulatively in `targeted_repairs`, produces a new candidate, and returns to
+fresh independent review. An eligible unused ultra diagnosis still has first
+precedence; deterministic fixes never replenish that allowance. Missing or
+repeated counterexamples retain the normal research/hold decision. New method
+search after an exact hold is available through opt-in adaptive discovery below.
 
 ## Verification
 
@@ -451,3 +512,147 @@ worker prompts. A method resume followed by a confirmed prelaunch refusal and
 transport restoration therefore retains the method, discriminator and scientific
 receipt. `resume_evidence` remains the latest accepted transition for compatibility;
 a genuinely new scientific resume clears stale active transport context.
+
+### Adaptive discovery after the fixed frontier stalls
+
+The current owner may enable adaptive continuation on the existing state; do not
+reinitialize or replace the campaign:
+
+```sh
+python scripts/codex_harness/research_controller.py --state STATE.json enable-adaptive \
+  --authorization 'Current owner solver-free adaptive methods scope'
+```
+
+When no task is ready and no native outcome is outstanding, `next` emits one
+idempotent read-only discovery packet through `review_or_research` (Astra/xhigh).
+The host must perform actual native dispatch, then use the same `ack` and `record`
+protocol. The packet references the state file for detailed source intake; its
+compact inventory is not evidence that those sources were read. An acknowledged
+UNKNOWN outcome remains outstanding and is never replayed.
+
+Discovery returns `outcome: proposal` or `no_action`, with nonempty lists
+`examined_branches` (existing task IDs), `methods`, `source_refs` (existing local
+files or explicit HTTP(S) references), and `exact_residuals`, plus ordinary
+packet/task/input/agent identities and `raw_receipt`. Proposal adds `frontier`
+using the executable append-frontier schema above. Validation is atomic; no
+proposal qualifies products, passes science or mints an escalation allowance.
+Proposed numerical/code analysis must actually execute via the existing lower
+tier routes and receive independent candidate review before its own acceptance.
+A URL is a source locator, not proof of retrieval or scientific adequacy.
+
+Each packet freezes `eligible_branches`: every currently unresolved campaign task.
+A no-action result must examine that exact set; reporting only one held branch
+cannot suppress research on an unseen sibling. Partial no-action is rejected
+atomically, leaving the actual acknowledged packet pending for a complete result.
+
+No-action suppresses only the stable fingerprint of frozen task specifications,
+latest actual outcomes, candidate/products, holds and explicit source/method
+deltas. Turns, events and discovery itself cannot trigger another discovery. A
+new actual result/candidate or registered scientific delta reopens research.
+`adaptive-evidence --evidence DELTA.json` accepts the typed semantic delta schema
+with `source_refs`; renaming a seal does not make a new method. The state retains
+all raw discovery outcomes. `summary.planning` counts planning packets/checkpoints
+separately from scientific task completion and unchanged original science.
+This is a host protocol, not a daemon, installation or live activation proof.
+
+Run `python -m unittest discover -s scripts/codex_harness -p
+'test_research_controller*.py' -v` for the fixed and adaptive controller regressions.
+
+### Authorize a genuinely distinct repair issue without rebinding old budgets
+
+`authorize-repair --issue ISSUE_AUTH.json --authorization CURRENT_SCOPE` appends
+a top-level `repair_authorizations` entry. It does not edit the frozen campaign.
+The issue object supplies a new `repair_id`, `issue` (class theory/numeric/code,
+question and exact_missing_or_defect), `operative_question` equal to its question,
+`scope`, `issue_identity` equal to `digest(_semantic_meaning(issue))`,
+`evidence_refs` (including actual local evidence), and `cumulative_budget_link`
+equal to the existing `campaign_identity`. It also binds `origin_task_id`,
+`origin_issue_identity` (the semantic digest of its current or recorded issue),
+`claim_target` equal to that task's unchanged acceptance, and bounded typed
+`semantic_delta` with the same scope. Question/defect wording alone is rejected.
+A new unapproved task may first execute and expose its concrete issue; first
+registration of that current issue remains possible without a registration cycle.
+
+Use the already-needed Astra research/discovery decision, not another approval
+ladder. `research_decision_receipt` references its recorded actual raw JSON with
+`decision:"distinct_scoped_issue"`, actual `agent_id`, `packet_id`, and exact
+origin-task/origin-issue/new-issue/claim-target/cumulative-budget bindings plus
+`semantic_delta_identity` (`digest(_semantic_projection(semantic_delta))`).
+The packet must have an actual acknowledged Astra research/discovery/escalation
+launch, its raw outcome already recorded, and its author must not have implemented
+the target. Requested and observed runtime are retained separately. The machine
+checks receipt and lineage bindings; the researcher assesses source adequacy and
+scientific distinctness. No text hash can establish novelty by itself.
+
+Current owner solver-free authorization covers a bounded distinct issue. Existing
+approved/consumed/reserved IDs and operative approved defects cannot be replenished
+through new aliases or risk annotations. R23-COMMON-E1/R23-Q histories remain
+consumed. Attribution follows the operative issue actually bound to an allowance's
+reservation or acknowledged expenditure, rather than every later defect reported
+by that task. Thus a covariance expenditure for I1 does not charge a distinct,
+previously unspent tensor-support I2. New receipts retain the issue identity;
+historical receipts use their exact escalation assignment or preceding outcome
+history without rewriting old expenditure IDs. Exact I1 aliases remain blocked.
+An extension can be referenced by append-frontier or a held-task resume;
+for its origin task, effective repair lookup binds the new exact issue without
+rewriting the frozen spec's old approved ID. Resume, append, reservation and actual
+escalation acknowledgement recheck exact task/issue/claim/delta scope. An allowance
+registered for A cannot fund OLD's consumed issue through an active-ID override.
+Future packets seal the authorization identity and deliver its reviewed contract.
+
+Successors are opt-in: the same actual Astra decision and authorization must both
+contain identical `successor_bindings`. Each item binds `task_id`, full
+`task_spec_identity` (`digest` of the exact proposed spec), `claim_target`,
+`issue_identity` and `semantic_delta_identity`. Appending another task with only
+the registered repair ID is rejected. An explicitly bound successor can execute
+before observing a defect, but only the exact authorized operative issue can
+reserve or acknowledge its shared allowance; it does not receive another budget.
+ Eligibility rules still apply; only actual native ultra acknowledgement
+consumes its one opportunity. Registration itself neither launches nor reserves
+ultra, and result admission still needs the usual fresh independent review.
+
+Cross-frontier duplicate detection compares typed semantic action meaning and
+kind, excluding task/frontier IDs, owned paths, input locator names and packaging
+bytes. The seen-signature set includes earlier rows in the same proposed batch;
+a batch containing aliases is rejected before any task is added. Identical input copied to a new path, or changed wrapper metadata, cannot
+reset the same question. A genuinely new source/cohort/observable must appear in
+the semantic before/after (for example `source_release` or `cohort`), with its real
+source evidence. Historical frontiers remain unchanged. Semantic comparison drops
+exact administrative keys (names, notes, timestamps, seals), retaining scientific
+fields such as `classification_labels`. Structural change permits a proposal; it
+is not proof of novelty or scientific adequacy.
+
+### Read-only startup recovery hint
+
+After source review the host may install the ignored
+`.agent-harness/runtime/ACTIVE_CONTROLLER.json` pointer with `state_path`,
+`campaign_id` and exact `campaign_identity`. The state file must reside under
+this checkout's `.agent-harness/runtime`. SessionStart validates that binding and
+reads a bounded task-count/pending-packet/actual-agent snapshot. With no valid
+pointer it reports no active observation. It never initializes, records, dispatches,
+replays, installs a pointer, or updates a campaign. Reconcile pending native calls
+from actual host receipts before continuation; UNKNOWN acknowledged outcomes need
+reconciliation, not replay. Hook source tests are not live-session activation.
+The current context pack describes this capability without claiming live HEAD,
+DAG or status computation. Historical pack/index bytes remain unchanged.
+
+### Restore a refused adaptive discovery launch
+
+`restore-discovery --packet-id EXACT_REFUSED_PACKET --evidence DELTA.json` is a
+transport-only transition. DELTA is typed `prelaunch_transport`, with the exact
+`packet_id`, unchanged `fingerprint`, meaningful transport `before`/`after`,
+`scope`, `discriminator`, and `restoration_receipt`. That local actual host receipt
+must bind `packet_id`, `fingerprint`, `native_tool`, `transport_available:true`
+and `retry_permitted:true`. The previous packet must be refused, unacknowledged,
+non-exhausted and have no agent. An outstanding native opportunity or changed
+science fingerprint rejects restoration atomically.
+
+Restoration retains the original refusal and scientific objects, records the
+identity-bound evidence, and makes `next` issue a distinct unlaunched packet for
+the same fingerprint. It does not change scientific evidence or replay an
+acknowledged UNKNOWN result. `launch-failed --retry-prohibited` preserves an
+explicit no-retry refusal; an exhausted/monthly-quota reason is also retained as
+prohibited. Such discovery transport remains held even if science evidence
+changes. Restoration never authorizes retrying an exhausted transport. All
+provider/availability assertions must come from actual host observations, not a
+model catalog or a planned route.

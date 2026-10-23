@@ -1,0 +1,47 @@
+{
+  "record_type": "host_transcription_of_actual_read_only_source_diagnosis",
+  "advisor": "/root/r25_cmb_physics_theory",
+  "requested": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "classification": [
+    "SOURCE_QUALIFIED_ALTERNATIVE",
+    "RANGE_RESUME_UNSUPPORTED",
+    "SPEED_ADVANTAGE_UNPROVEN"
+  ],
+  "official_sources": [
+    "https://lambda.gsfc.nasa.gov/product/planck/curr/planck_prod_irsa.html",
+    "https://esdcdoi.esac.esa.int/doi/html/data/astronomy/planck/Frequency_Maps.html"
+  ],
+  "ESA_endpoint_template": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=<exact frozen filename>",
+  "observations": {
+    "seven_prefixes": "Each 65536byte ESA HTTP200 body with exact filename Content-Disposition and no redirect; all match corresponding IRSA206 byte prefixes",
+    "ESA_prefix_elapsed_seconds_range": [
+      1.652,
+      2.383
+    ],
+    "ESA_nonzero_range_probe": "353PSB requested1048576-1114111 returned HTTP200 byte0 FITS header; range ignored",
+    "ESA_30GHz_speed_probe": {
+      "body_bytes": 524288,
+      "headers_seconds": 1.202,
+      "total_seconds": 2.889,
+      "body_seconds": 1.687,
+      "body_MiB_per_second_approx": 0.296
+    },
+    "missing_ESA_metadata": [
+      "Content-Length",
+      "Content-Range",
+      "Accept-Ranges",
+      "ETag",
+      "Last-Modified",
+      "upstream checksum"
+    ],
+    "total_diagnostic_body_bytes": 1507328
+  },
+  "recommendation": "Continue resumable IRSA acquisition; ESA fresh-file fallback only if actual transport evidence justifies. Never append ESA200 to IRSA partial. Small speed probe does not establish full-transfer speed or improvement.",
+  "not_established": [
+    "Complete mirror byte identity",
+    "Full map qualification",
+    "Successful resume from ESA"
+  ],
+  "data_handling": "No files written or full products acquired by adviser. Prefix buffers were in memory; no saved prefix artifacts. Production acquisition unaffected."
+}

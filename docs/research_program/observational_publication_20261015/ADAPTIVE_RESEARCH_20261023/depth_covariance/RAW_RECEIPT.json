@@ -1,0 +1,55 @@
+{
+  "task_id": "R25-K03-DEPTH-COVROBUST",
+  "packet_id": "705af0c76e9f6a4dbcacf56b8eadab4af05ce4b2a9638429aeeb74d3fba93716",
+  "agent_id": "/root/rc_705af0c76e9f6a4d",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "input_identity": "sha256:9abcf30af3fe40f52508554b03aba669789b212c2b8b0bfae5f8eba2ae01729f",
+  "base_head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "requested_model": "gpt-6-sol/high",
+  "transport_selected_model": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "commands": [
+    {
+      "purpose": "production",
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/time -f wall_seconds=%e,max_rss_kib=%M,exit_status=%x -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_covariance/PRODUCTION_TIME.txt timeout 60s .venv/bin/python docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_covariance/compute.py",
+      "observation": {
+        "wall_seconds": 4.76,
+        "max_rss_kib": 135796,
+        "max_rss_mib": 132.61328125,
+        "exit_status": 0
+      },
+      "stdout_summary": "T0=381.19923194468424; all four alpha/reference crossing statuses reported in RESULT.json",
+      "stderr": "",
+      "limit_seconds": 60
+    },
+    {
+      "purpose": "final tests",
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 /usr/bin/time -f wall_seconds=%e,max_rss_kib=%M,exit_status=%x -o docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_covariance/TEST_TIME.txt timeout 120s .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/depth_covariance/test_compute.py",
+      "observation": {
+        "wall_seconds": 2.95,
+        "max_rss_kib": 102440,
+        "max_rss_mib": 100.0390625,
+        "exit_status": 0
+      },
+      "stdout": "..... [100%]; 5 passed in 1.67s",
+      "stderr": "",
+      "limit_seconds": 120
+    }
+  ],
+  "first_failures": [],
+  "resource_limits": {
+    "production_seconds": 60,
+    "tests_seconds": 120,
+    "rss_mib": 1024,
+    "blas_threads": 1
+  },
+  "controls": {
+    "raw_catalogue_passes": 0,
+    "new_random_draws": 0,
+    "solver_or_ode_calls": 0,
+    "jitter_or_pseudoinverse": false
+  },
+  "source_hash_checks": "PASS",
+  "result_generated_utc": "2026-10-23T07:31:10.631364+00:00",
+  "independent_review": "PENDING"
+}
