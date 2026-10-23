@@ -1,0 +1,56 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R25-GAIA-SOURCE-PROPERTY-INTAKE",
+  "attempt": 1,
+  "phase": "acquisition",
+  "input_identity": "sha256:00508df7ec44ab6680ab8291868acaa203247aba18aaabfe2eaf029fc6ddad60",
+  "candidate_identity": null,
+  "frontier_identity": "572473771fa89c5c1a98949624c3336868e549b87272eea68ef247ba209217b1",
+  "task_spec_identity": "81cce79aab54b366946365da0ccc97cb583b73fec220f71c46140c74d497499c",
+  "packet_id": "e381b2c8bc7aa239b8df9e66c69e652c01e3f5a7cd821437b005623512581976",
+  "route": {
+    "route": "general_code",
+    "requested": {
+      "model": "gpt-5.6-terra",
+      "effort": "medium"
+    },
+    "transport_selected": {
+      "model": "gpt-6.1-sol",
+      "effort": "medium"
+    },
+    "transport_status": "TRANSPORT_MODEL_UNAVAILABLE",
+    "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+    "launch_performed": false,
+    "availability_catalog_profiles": [
+      {
+        "model": "gpt-6-astra",
+        "effort": "ultra"
+      },
+      {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "model": "gpt-6-sol",
+        "effort": "high"
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "effort": "medium"
+      }
+    ]
+  },
+  "resume_evidence": null,
+  "scientific_resume": null,
+  "transport_resume": null,
+  "launch_performed": false,
+  "observed_runtime": "UNKNOWN",
+  "native_tool": "collaboration.spawn_agent",
+  "spawn_args": {
+    "task_name": "rc_e381b2c8bc7aa239",
+    "fork_turns": "none",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "medium",
+    "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4\", \"task_id\": \"R25-GAIA-SOURCE-PROPERTY-INTAKE\", \"attempt\": 1, \"phase\": \"acquisition\", \"input_identity\": \"sha256:00508df7ec44ab6680ab8291868acaa203247aba18aaabfe2eaf029fc6ddad60\", \"candidate_identity\": null, \"frontier_identity\": \"572473771fa89c5c1a98949624c3336868e549b87272eea68ef247ba209217b1\", \"task_spec_identity\": \"81cce79aab54b366946365da0ccc97cb583b73fec220f71c46140c74d497499c\", \"packet_id\": \"e381b2c8bc7aa239b8df9e66c69e652c01e3f5a7cd821437b005623512581976\", \"spec\": {\"id\": \"R25-GAIA-SOURCE-PROPERTY-INTAKE\", \"kind\": \"input\", \"goal\": \"Acquire exact-ID DR3 source-property tags for retained4756EDR3source IDs without accessing proper-motion outcomes, preserving left-join missingness and outcome-blind strata\", \"acceptance\": \"Actual exact4756left join and independent count validated with complete VOTable/status/missingness/source identity, outcome-blind strata preserved; independent review before qualified gaia_source_properties.\", \"input_identity\": \"sha256:00508df7ec44ab6680ab8291868acaa203247aba18aaabfe2eaf029fc6ddad60\", \"input_sources\": [\"docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-GAIA-SOURCE-PROPERTY-INTAKE_INPUT.json\"], \"owned_paths\": [\"docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/gaia_source_properties\", \"/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023\"], \"implementation_route\": \"general_code\", \"contract_origin\": \"new_conditional_research\", \"promotes_original_acceptance\": false, \"requires\": {\"all\": []}, \"semantic_delta\": {\"kind\": \"input\", \"before\": {\"input\": \"Retained source IDs lack source-property tags needed for specified host contrast\"}, \"after\": {\"input\": \"Exact-ID Gaia DR3 QSO host/class/variability/provenance tags with complete4756left-join missingness\", \"observable\": \"Host1–2 versus3 interaction design is definable after availability, without PM/covariance access in intake\"}, \"discriminator\": \"Actual source-property availability and typed module semantics permit or block a future source-property interaction under rank/support checks\", \"scope\": \"New retained-source metadata intake; not renamed old task, causal centroid calibration or independent physical validation\"}, \"theory_contract\": \"docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-GAIA-SOURCE-PROPERTY-INTAKE_INPUT.json\", \"runtime_observed\": \"UNKNOWN\"}, \"issue\": null, \"repair_plan\": null, \"repair_authorization\": null, \"resume_evidence\": null, \"scientific_resume\": null, \"transport_resume\": null, \"authors\": [], \"contributors\": [\"/root/discovery_c5dbca4ecf557e36\"], \"history_refs\": [], \"history_total\": 0}"
+  }
+}

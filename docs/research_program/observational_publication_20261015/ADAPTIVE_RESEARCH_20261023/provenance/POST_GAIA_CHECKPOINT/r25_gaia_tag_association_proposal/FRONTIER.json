@@ -1,0 +1,88 @@
+{
+  "frontier_id": "R25-GAIA-RELEASE-TAG-ASSOCIATION-DELTA",
+  "status": "PROPOSED_NOT_APPENDED",
+  "tasks": [
+    {
+      "id": "R25-GAIA-RELEASE-TAG-ASSOCIATION",
+      "kind": "numeric",
+      "goal": "Measure selectedsample literalDR3AGN versus accepted wirenull FULL13 angular meanfield association with common/differentialspin nuisance and one fixed hostprocessing sensitivity",
+      "acceptance": "Exact qualified4756ID binding; frozen shared domain/toys and prePMsupport; eligibleM0/M1 only with independentM1supportHOLD; fulltensor/jointcov/maps/crosscov; exactcriteriatolerances and300sec/twofit cap; preserve physicalclaimceilings/originalacceptances",
+      "input_identity": "sha256:00209480018bcb19f29c3c22a2d847c26560bcf950045978f10579967314e39f",
+      "input_sources": [
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_tag_association_proposal/INPUT.json",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_property_method/METHOD.md",
+        "/mnt/extdrive/workdir/htt_open_data/r25_blind_tag_association_contract/REVIEW.md",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/MANIFEST.json",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/RETURN.json",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/inputs/contract.json",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/RAW_RECEIPT.json",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/products/property_table.json",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/products/property_wire_masks.json",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/products/AVAILABILITY.json",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/inputs/source_ids.txt",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/raw/property_attempt1.vot",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/acquire.py",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/finalize.py",
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/validate_consumer.py",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/R25-GAIA-SOURCE-PROPERTY-INTAKE_INPUT.json",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/observational_reboot_20261014/results/gaia_frame_v1/qualified_rows.npz",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/run_reboot_gaia_frame.py",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018/EXECUTION_20261018/D05_GAIA_RADIO/observable_vsh.py"
+      ],
+      "owned_paths": [
+        "/mnt/extdrive/workdir/htt_open_data/r25_gaia_release_tag_association"
+      ],
+      "implementation_route": "subagent_specialist",
+      "requested_model": "gpt-6-sol",
+      "requested_effort": "high",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "approved_repair_id": null,
+      "requires": {
+        "all": [
+          {
+            "task_id": "R25-GAIA-SOURCE-PROPERTY-INTAKE",
+            "evidence": "completed"
+          },
+          {
+            "task_id": "R25-GAIA-SOURCE-PROPERTY-INTAKE",
+            "evidence": "qualified",
+            "product": "gaia_source_properties"
+          }
+        ]
+      },
+      "resource_contract": {
+        "question_task_id": "R25-GAIA-RELEASE-TAG-ASSOCIATION",
+        "cumulative_numeric_seconds": 300,
+        "includes": "all numerical controls/attempts/failures and reviewer arithmetic charged to this question",
+        "max_incremental_ram_bytes": 2147483648,
+        "processes": 1,
+        "blas_threads": 1,
+        "max_observed_fit_attempts": 2,
+        "charge_at": "observed solve start, including failed solve",
+        "only_models": [
+          "M0",
+          "M1"
+        ],
+        "queries": 0,
+        "pair_passes": 0,
+        "old_fit_replay": false,
+        "ultra": false,
+        "allocation_relation": "NEW source-tag observable/question, separate from original300sec GaiaPAIR/tail cap; no reset/rename/replenishment of old issue or costs"
+      },
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "observable": "auxiliary availability and unsupported originalhost1_2exposure; pair/tail source law is differentquestion",
+          "estimator": "no release-tagFULL13contrast"
+        },
+        "after": {
+          "observable": "literalreleasedAGN versus wirenull FULL13selectedsampleangularmeanfielddifference",
+          "estimator": "prespecified32columnM0 and80columnhostprocessingM1; common/differentialspin; jointmaps/C0crosscov"
+        },
+        "discriminator": "New released exposure/estimand, not pairpass/tailrepair or substitution for unsupportedhostcontrast",
+        "scope": "One new bounded source-tag association; prior costs,budgets,acceptances unchanged"
+      }
+    }
+  ]
+}

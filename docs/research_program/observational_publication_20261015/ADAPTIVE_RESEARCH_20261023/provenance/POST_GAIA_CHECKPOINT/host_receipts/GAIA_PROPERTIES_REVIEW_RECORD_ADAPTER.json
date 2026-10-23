@@ -1,0 +1,77 @@
+{
+  "task_id": "R25-GAIA-SOURCE-PROPERTY-INTAKE",
+  "packet_id": "c84c5e7461f3c20592812fe81df0a74d6915bad037ea3f0c0d9c0d2d5c8c5464",
+  "input_identity": "sha256:00508df7ec44ab6680ab8291868acaa203247aba18aaabfe2eaf029fc6ddad60",
+  "agent_id": "/root/rc_c84c5e7461f3c205",
+  "candidate_identity": "sha256:005aa5cf96fe1350ef7690a275edd4ae61e9b30092266e8900c8b3d86b482568",
+  "outcome": "success",
+  "acceptance_met": true,
+  "qualified_products": [
+    "gaia_source_properties"
+  ],
+  "review_verdict": "PASS_SCOPED_INPUT_QUALIFICATION",
+  "requested_route": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "transport_selected": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/RAW_RECEIPT.json",
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/INDEPENDENT_CHECKS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/review_checks.py",
+    "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/documentation_fetch.json",
+    "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/IVOA_REC_VOTable_1_4.html"
+  ],
+  "actual_saved_ack": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/receipts/GAIA_PROPERTIES_REVIEW_ACTUAL_ACK.json",
+  "summary": "Unchanged intake contract met: 36 sealed files, exact 4756-ID left join and count, complete VOTable 1.4 status, all 47560 actual cells and original masks, typed missingness, outcome-blind strata/crosstabs, immutable queries/upload/source identities, two first-attempt HTTP 200 queries and original timing verified. No blocking defect found in this input candidate.",
+  "wire_null_semantics": {
+    "empty_char_TD": "ROW_NULL under VOTable TABLEDATA wire convention",
+    "astropy_empty_char_unmasked": true,
+    "raw_XML_and_original_masks_retained": true,
+    "nonempty_whitespace_preserved": true,
+    "SQL_NULL_vs_literal_empty_string": "NOT_DISTINGUISHABLE_FROM_WIRE",
+    "reference": "[IVOA VOTable 1.4 Recommendation, sections 5.1 and 5.5](https://www.ivoa.net/documents/VOTable/20191021/REC-VOTable-1.4-20191021.html)"
+  },
+  "successor_blocker": {
+    "type": "ZERO_EXPOSURE_SUPPORT",
+    "frozen_comparison": "Host flags 1-2 combined versus 3",
+    "host1_2_count": 0,
+    "host3_count": 3149,
+    "status": "NOT_EVALUABLE",
+    "minimal_required_resolution": "The frozen comparison has no exposed rows in this exact retained-source release. No flags 5/6/null substitution, regrouping or PM fit is authorized or performed by this review."
+  },
+  "findings": [],
+  "limitations": [
+    "Qualification applies only to exact retained-source metadata; full scientific inference remains conditional/unavailable.",
+    "NULL is not nonvariability; scores are not calibrated probabilities; DSC and source-selection flags are not independent physical validation.",
+    "Existing report/manifest remain author-stage pending-review records; this separate result supplies independent qualification without rewriting frozen candidate.",
+    "Repository packaging/publication remains separate and unavailable under root disk exhaustion; reviewed external candidate is complete."
+  ],
+  "preservation": {
+    "original_external_acceptance": "17/42 unchanged",
+    "analytic_alternate_acceptance": "18/42 unchanged",
+    "historical48": "unchanged",
+    "one_use": "unchanged",
+    "ultra": "unchanged",
+    "R9": "UNKNOWN unchanged"
+  },
+  "next_executable_checkpoint": "Controller may consume this exact-candidate input qualification and continue dependency-safe READY work; keep the frozen Host1-2 versus3 inference blocked.",
+  "proposed_changes": "None; read-only review.",
+  "tests_to_run": "None remaining for this bounded input qualification. Independent checks completed once.",
+  "kill_switches": [
+    "Any immutable input or sealed candidate drift invalidates this exact-candidate review.",
+    "Any extension to outcomes, source regrouping or scientific claims requires its own frozen scope and independent review."
+  ],
+  "host_mechanical_adapter": {
+    "source_return": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/RETURN.json",
+    "source_sha256": "abe5ab14a7d41eb4b4d3d9b23b04490d749f0d5570315124996900e31571addd",
+    "changes": [
+      "Non-enum outcome successor_blocker -> success from explicit scopedPASS and acceptance_met true; distinct downstream ZERO_EXPOSURE_SUPPORT object retained unchanged"
+    ],
+    "scientific_decision_changed": false
+  }
+}

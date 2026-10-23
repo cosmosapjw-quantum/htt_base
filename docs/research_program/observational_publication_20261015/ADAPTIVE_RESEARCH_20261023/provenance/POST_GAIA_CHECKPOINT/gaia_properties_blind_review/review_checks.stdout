@@ -1,0 +1,117 @@
+{
+  "started_utc": "2026-10-23T13:54:26.976551+00:00",
+  "command": "PYTHONDONTWRITEBYTECODE=1 python -B review_checks.py",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "versions": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "astropy": "7.2.0"
+  },
+  "checks": {
+    "candidate_inventory": {
+      "sha256": "005aa5cf96fe1350ef7690a275edd4ae61e9b30092266e8900c8b3d86b482568",
+      "sealed_files": 36,
+      "all_match": true
+    },
+    "source_identity": {
+      "npz_sha256": "41b6ddcb13131b49b97efd6107816af4518fa9e23725cf3b4272c2f3a70acb8f",
+      "canonical_sha256": "a5df0e9ec295b127beaa1309618b62540564d7e5f70abdc1ab27c9ac8747a614",
+      "count": 4756,
+      "upload_long_exact": true,
+      "over_2pow53": 4749
+    },
+    "requests_accounting": {
+      "successful_queries": 2,
+      "retries": 0,
+      "http_failures": 0,
+      "query_upload_and_returned_SQL_exact": true,
+      "acquisition_seconds": 41.02888906095177,
+      "HTTP_elapsed_sum_seconds": 39.091498776804656,
+      "original_start_to_offline_end_seconds": 247.342322,
+      "original_first_pass_preserved": true
+    },
+    "actual_consumer": {
+      "cells": 47560,
+      "rows": 4756,
+      "all_values_types_states_masks_strata_and_crosstabs_equal_wire": true,
+      "host_counts": {
+        "ROW_NULL": 895,
+        "3": 3149,
+        "6": 669,
+        "5": 43,
+        "1": 0,
+        "2": 0,
+        "4": 0,
+        "NO_QSO_ROW": 0,
+        "UNEXPECTED_CODE": 0
+      },
+      "variability_counts": {
+        "AGN": 3216,
+        "ROW_NULL": 1540
+      },
+      "field_null_counts": {
+        "host_galaxy_detected": 0,
+        "host_galaxy_flag": 895,
+        "n_transits": 0,
+        "classlabel_dsc_joint": 0,
+        "vari_best_class_name": 1540,
+        "vari_best_class_score": 1540,
+        "vari_agn_membership_score": 1742,
+        "source_selection_flags": 0
+      },
+      "host1_2": 0,
+      "downstream_primary": "ZERO_EXPOSURE_SUPPORT"
+    },
+    "parser_falsifiers": {
+      "rejections": [
+        {
+          "case": "OVERFLOW",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "case": "ERROR",
+          "rejected": true,
+          "exception": "AssertionError"
+        },
+        {
+          "case": "TRUNCATED_XML",
+          "rejected": true,
+          "exception": "ParseError"
+        }
+      ],
+      "exact_int64_whitespace_false_zero_endpoints": true,
+      "original_astropy_whitespace_loss_reproduced": true,
+      "author_first_failure_preserved": true,
+      "astropy_empty_char_masked": false,
+      "normalization_scope": "Wire null only; database NULL versus empty string not inferable"
+    },
+    "candidate_consumer_rerun": {
+      "status": "PASS",
+      "validated_cells": 47560,
+      "validated_rows": 4756,
+      "source_id_only": true,
+      "normalized_empty_char_nulls": 1540,
+      "preserved_false_and_zero": true,
+      "original_parser_masks_and_values_preserved": true,
+      "no_network": true,
+      "future_primary_exposed_host1_2_count": 0,
+      "downstream_primary_design": "ZERO_EXPOSURE_SUPPORT",
+      "claim_admission": false
+    },
+    "candidate_unchanged": true
+  },
+  "network_requests": 0,
+  "candidate_writes": 0,
+  "source_arrays_opened": [
+    "source_id.npy"
+  ],
+  "status": "PASS",
+  "elapsed_seconds": 2.426283234031871,
+  "resource_usage": {
+    "max_rss_kib": 119124,
+    "user_seconds": 2.229373,
+    "system_seconds": 0.172179
+  },
+  "ended_utc": "2026-10-23T13:54:29.402880+00:00"
+}
