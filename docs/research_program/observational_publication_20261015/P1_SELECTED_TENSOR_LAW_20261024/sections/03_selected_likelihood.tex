@@ -1,0 +1,127 @@
+\section{A selected-cohort likelihood and exact model-conditional regions}
+\label{sec:likelihood}
+
+\subsection{Released rows, directions, and the mean model}
+
+The selected target frame contains 628 galaxy identifiers with retained targeting and quality information. Released best distance moduli are available for 274; the remaining 354 moduli are missing. We keep this frame fixed throughout the principal analysis. The available CMB-frame velocities span $317$--$10\,459\,\kms$. Object directions are obtained by identifier from the Cosmicflows-4 individual-galaxy table, CDS catalogue J/ApJ/944/94, for 269 rows, and from the HyperLEDA PGC catalogue VII/237 for the other five. The latter identifiers are PGC 9031, 68715, 84490, 90725, and 91648. A group centre is not substituted for an individual direction.
+
+The response $Y_i$ is the released best distance modulus in magnitudes. We condition on the measured CMB-frame velocity, logarithmic linewidth and its reported error, direction, group membership, and realized selection marks. The design row for the full mean model is
+\begin{equation}
+ X_i=\bigl(1,\ell_i,w_i,e_{w,i},n_i^T,K_i n_i^T,
+                 n_i^TE_1n_i,\ldots,n_i^TE_5n_i\bigr),
+ \label{eq:design}
+\end{equation}
+where $\ell_i=\log_{10}(V_{{\rm CMB},i}/[\kms])$ and
+\begin{equation}
+ K_i=-\frac{5}{\ln10\,V_{{\rm CMB},i}}.
+ \label{eq:kresponse}
+\end{equation}
+Here $w_i$ denotes measured logarithmic linewidth, not a statistical weight. We use separate notation for weights below. Numerical centring and scaling of the design were performed within each training set; retained coefficients and covariances are in the raw coordinates of Eq.~\eqref{eq:design}.
+
+The fifteen coefficients contain four baseline terms, a three-coordinate calibration dipole, three velocity-response coefficients, and the five STF coordinates of $B$. The shared angular calibration dipole appears once. Equation~\eqref{eq:kresponse} is a declared low-redshift response in magnitudes per $\kms$, not an assertion that every fitted coefficient is a physical peculiar velocity. Similarly, $B$ is an optical residual tensor in the selected window, not a measured shear tensor.
+
+The likelihood is assigned to these selected responses. We do not derive it by ignoring a response-dependent selection process in a parent likelihood. The conditional Gaussian law below is an explicit assumption about the released cohort. If the selection changes its conditional mean or residual law, the finite-sample statements need not apply. No inference on the 354 missing moduli follows from conditioning on the observed selection marks.
+
+\subsection{Four covariance shapes}
+
+Let $s_i$ denote the released magnitude uncertainty and let $G$ be the observed group-membership matrix. We use four fixed positive-definite shapes,
+\begin{equation}
+ V_s=\diag(s_i^2-a^2)+a^2\bm1\bm1^T+b^2GG^T,
+ \qquad (a,b)\in\{0,0.055\}\times\{0,0.29\}\ \mathrm{mag}.
+ \label{eq:covariance}
+\end{equation}
+The index $s$ labels the shape. The first common component reallocates variance while preserving the released diagonal in the absence of the group term. The group term is an additional declared sensitivity component. We do not interpret these values as measured calibration variances, nor claim that they exhaust the true covariance uncertainty. Possible overlap with components already represented by released uncertainties is a physical modelling issue rather than a numerical normalization issue.
+
+For a fixed shape the model is
+\begin{equation}
+ Y\mid X,\hbox{marks, selected};\beta,\sigma^2,s
+       \sim N_n(X\beta,\sigma^2V_s),
+ \qquad n=274,\quad p=15,\quad \sigma^2>0.
+ \label{eq:law}
+\end{equation}
+The design has full column rank in the retained fits. The shape is fixed, including the reported errors; $\sigma^2$ is a dimensionless unknown common multiplier. This conditions on measurement-error summaries rather than fitting a latent-covariate model.
+
+Writing $G_s=X^TV_s^{-1}X$, the generalized least-squares estimate and residual quadratic are
+\begin{equation}
+ \widehat\beta_s=G_s^{-1}X^TV_s^{-1}Y,\qquad
+ q_s=(Y-X\widehat\beta_s)^TV_s^{-1}(Y-X\widehat\beta_s).
+ \label{eq:gls}
+\end{equation}
+The normalized row log likelihood is
+\begin{equation}
+ \log L_s(\beta,\sigma^2;Y)
+ =-\frac12\left[n\log(2\pi\sigma^2)+\log|V_s|
+       +\frac{q_s+(\beta-\widehat\beta_s)^TG_s(\beta-\widehat\beta_s)}{\sigma^2}\right].
+ \label{eq:loglike}
+\end{equation}
+Thus saved sufficient statistics evaluate an actual 274-row likelihood; they do not reduce the data dimension to fifteen or discard its normalization. This is distinct from stipulating a Gaussian law for an estimated coefficient vector without a row-level model.
+
+The maximum-likelihood scale is $\widehat\sigma^2_{\rm ML}=q_s/n$. Its covariance expression,
+\begin{equation}
+ C_{{\rm ML},s}=\frac{q_s}{n}G_s^{-1},
+ \label{eq:cml}
+\end{equation}
+is retained for all fifteen coefficients, including every cross block. It must not be mistaken for a covariance based on the unbiased residual scale $q_s/(n-p)$. The distinction controls the exact radius.
+
+\subsection{One joint event and its tensor projections}
+
+Under Eq.~\eqref{eq:law}, Gaussian projection gives an independent $\chi^2_p$ coefficient quadratic and $\chi^2_{n-p}$ residual quadratic. Consequently
+\begin{equation}
+ \frac{(\widehat\beta_s-\beta)^TG_s(\widehat\beta_s-\beta)/p}{q_s/(n-p)}
+          \sim F_{p,n-p}.
+ \label{eq:fpivot}
+\end{equation}
+In the saved maximum-likelihood covariance coordinates, the $1-\alpha$ region is
+\begin{align}
+ C_s(Y)&=\left\{\beta:(\beta-\widehat\beta_s)^TC_{{\rm ML},s}^{-1}
+                   (\beta-\widehat\beta_s)\leq c_\alpha\right\},\nonumber\\
+ c_\alpha&=\frac{np}{n-p}F_{p,n-p;1-\alpha}.
+ \label{eq:finitef}
+\end{align}
+For $\alpha=0.05$, the retained calculation gives
+\begin{equation}
+ c_{0.05}=27.058502419705658,\qquad (p,n-p)=(15,259).
+ \label{eq:radius}
+\end{equation}
+Appendix~\ref{app:pivot} records the proof. The value $\chi^2_{15;0.95}=24.995790139728616$ used in an earlier fixed-Gaussian coefficient reference is smaller and has a different justification. It remains an algebraic comparison in Fig.~\ref{fig:regions}; it is not relabelled as exact finite-sample coverage.
+
+Let $P_B$ select the five tensor coordinates and write $C_{B,s}=P_BC_{{\rm ML},s}P_B^T$. Projection of the full region gives
+\begin{equation}
+ \mathcal B_s=\left\{b:(b-\widehat b_s)^TC_{B,s}^{-1}(b-\widehat b_s)
+                                      \leq c_{0.05}\right\}.
+ \label{eq:tensorregion}
+\end{equation}
+The radius still comes from the fifteen-dimensional event. We have projected over the nuisance parameters, not conditioned on their estimates and not substituted a five-dimensional radius. In particular, the coordinate range is $\widehat b_{s,a}\pm\sqrt{c_{0.05}C_{B,s,aa}}$. Displaying those ranges is useful, but their Cartesian product does not recover the correlated tensor region.
+
+To express the covariance-shape uncertainty conservatively, we retain
+\begin{equation}
+ C_\cup(Y)=\bigcup_{s=1}^{4}C_s(Y),\qquad
+ \mathcal B_\cup=\bigcup_{s=1}^{4}\mathcal B_s.
+ \label{eq:shapeunion}
+\end{equation}
+If one of the four fixed shapes is the true conditional shape and all four models refer to the same $\beta$, then $\Prob\{\beta\in C_\cup(Y)\}\geq0.95$. The proof is simply that the union contains the valid region for the true shape. No probability weights over shapes are implied. An intersection would not have this argument, and selecting the most favourable shape after seeing the result would require a different justification. If all four shapes are wrong, or their pseudo-true means differ under misspecification, Eq.~\eqref{eq:shapeunion} has no such coverage guarantee.
+
+\subsection{Correlated held-out prediction}
+
+The five stored prediction folds keep each observed group intact. Their held-out sizes are $47,55,53,69,50$. For a training block $t$ and validation block $v$, define
+\begin{align}
+ R_s&=V_{vt,s}V_{tt,s}^{-1},&
+ W_s&=V_{vv,s}-V_{vt,s}V_{tt,s}^{-1}V_{tv,s},\nonumber\\
+ D_s&=X_v-R_sX_t,& G_{t,s}&=X_t^TV_{tt,s}^{-1}X_t.
+ \label{eq:foldblocks}
+\end{align}
+The predictor and error are
+\begin{equation}
+ \widehat Y_v=R_sY_t+D_s\widehat\beta_{t,s},\qquad
+ e_v=Y_v-\widehat Y_v.
+ \label{eq:predictor}
+\end{equation}
+The Schur-complement innovation is independent of the training data under the Gaussian model. Uncertainty in the fitted training coefficient contributes an additional term, giving
+\begin{equation}
+ M_s=W_s+D_sG_{t,s}^{-1}D_s^T,\qquad
+ \frac{e_v^TM_s^{-1}e_v/m}{q_{t,s}/(n_t-p)}\sim F_{m,n_t-p},
+ \label{eq:predf}
+\end{equation}
+where $m=|v|$ and $n_t=|t|$. This pivot includes training-coefficient uncertainty and uses the unbiased training residual scale. It is a repeated-sample statement over training and validation outcomes at the fixed selected design. It is not a conditional $F$ law after the observed training outcomes are held fixed.
+
+There are twenty stored shape--fold diagnostics. Their training samples overlap, so their tails cannot be multiplied as independent probabilities. We report two-sided reference tails and the retrospective threshold $0.05/20=0.0025$. Under a single true-shape assumption, the five diagnostics associated with that shape have the stated reference law; other shapes are sensitivity calculations. Treating all twenty as one family of valid tests would need corresponding validity assumptions for all of them. The reported absence of a threshold crossing is descriptive model criticism and does not establish those assumptions.
