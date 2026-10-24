@@ -1,0 +1,310 @@
+{
+  "accepted_candidate_identities": {
+    "actual_response": "sha256:2af5174899b0f29186177abded74f72f7bbae4f15f60bede4cb400ac25b1f388",
+    "actual_response_review_raw": "sha256:ee91936760a7763217114af4c3ae540011a21032ade9c7b4cb03c431270894c9",
+    "generic_interface": "sha256:67053800ab55cd0e349286bf645cd00f1d7867b483e421f9bc37d3af9cbf3a1e",
+    "generic_review_decision": "SCOPED_PASS"
+  },
+  "agent_id": "/root/r27_m7_covariance_application_framing",
+  "allocation_ancestry": {
+    "accepted_predecessor_task": "R26-CF4-RELEASE-STAGE-SEVEN-CHANNEL-RESPONSE",
+    "blas_threads": 1,
+    "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+    "consumer_checks_render_subcap_seconds": 50,
+    "cumulative_seconds_snapshot": 160.06943213264458,
+    "extra_ultra_allocations": 0,
+    "generic_bank_reused": false,
+    "generic_unit_bank_closed_seconds": 15.260824221652001,
+    "generic_unit_cap_seconds": 60,
+    "heavy_job_policy": "Parent waits for the active SMICA heavy job before this execution; no science run performed during framing",
+    "historical_budget_reset": false,
+    "independent_numeric_review_subcap_seconds": 10,
+    "new_allocation": false,
+    "original_task": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+    "postprocessing_total_subcap_seconds": 60,
+    "refresh_required_before_ack": true,
+    "remaining_seconds_snapshot": 439.9305678673554,
+    "rss_cap_bytes": 2147483648,
+    "same_original_cap_seconds": 600
+  },
+  "application_actual_packet_identity": null,
+  "application_candidate_identity": null,
+  "counter_preservation": {
+    "historical_48_tasks": "UNCHANGED",
+    "independently_recomputed_here": false,
+    "original_V03_alternative": "18/42",
+    "original_baseline": "17/42",
+    "parent_supplied_current_alternative": "23/42",
+    "parent_supplied_current_baseline": "22/42"
+  },
+  "field_bindings": {
+    "channel_order": [
+      "SNIa",
+      "FP",
+      "TFR",
+      "SBFm",
+      "SBFir",
+      "SNII",
+      "DirectCal"
+    ],
+    "fisher": "source_comparisons.all.schur_fisher",
+    "map_names": [
+      "nominal",
+      "witness_round_nearest",
+      "witness_one_place_outer"
+    ],
+    "maps_root": "response.maps",
+    "matrix_key": "signed_M7_5x7",
+    "nuisances": 14,
+    "output_basis": "Saved five-coordinate Frobenius-orthonormal J2000-equatorial magnitude STF basis",
+    "reference_covariance_definition": "Exact inverse of dyadic saved F_E1; working comparison only",
+    "selected_order_sha256": "f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88",
+    "selected_rows": 35970
+  },
+  "framing_execution": {
+    "CAS_calls": 0,
+    "fits": 0,
+    "new_scientific_run_debit_claimed": false,
+    "null_maps": 0,
+    "preparation_wall_time": "NOT_INSTRUMENTED",
+    "process_deviation": "Read-only git branch/rev-parse/remote/status inspection was performed despite noGit task wording; no Git mutation or repository file edit occurred. Disclosed to parent.",
+    "projections": 0,
+    "repo_code_or_controller_mutations": 0,
+    "scientific_sensitivity_runs": 0,
+    "source_metadata_inspection": "Read existing JSON, NPZ shapes/dtypes and source hashes only",
+    "tests_or_test_bank_debits": 0
+  },
+  "framing_runtime": {
+    "observed": "UNKNOWN",
+    "requested_effort": "xhigh",
+    "requested_model": "gpt-6-astra"
+  },
+  "frontier_plan": [
+    {
+      "action": "Prepare lower-tier consumer only in additive proposed worker directory; freeze candidate; do not execute during active heavy job",
+      "order": 1,
+      "owner": "Parent-dispatched gpt-6-sol/high worker"
+    },
+    {
+      "action": "Refresh same CF4 bank, obtain actual controller ACK, execute once under 50-second subcap and preserve raw outcomes",
+      "order": 2,
+      "owner": "Parent and worker"
+    },
+    {
+      "action": "Fresh independent actual-result review with at most 10 seconds of new numeric certificate checking under same bank",
+      "order": 3,
+      "owner": "Separate read-only reviewer"
+    },
+    {
+      "action": "Record scoped application result and continue next authorized independent frontier; do not promote original H02/H03 or physical functionals",
+      "order": 4,
+      "owner": "Parent"
+    },
+    {
+      "action": "For physical uncertainty, acquire a source-qualified bounded joint covariance/mean/response model with anchor and PV terms; absence stays a typed HOLD, not another arbitrary law or assurance-only node",
+      "order": 5,
+      "owner": "Scientific intake branch"
+    }
+  ],
+  "immutability_and_work_policy": {
+    "branch": "research/htt-adaptive-methods-20261023",
+    "dirty_entries_at_preparation": 154,
+    "existing_checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "head": "d93605e66adfececa89b90681124b232a5f90220",
+    "no_new_checkout": true,
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "repo_mutations_by_framing": false,
+    "sole_framing_output": "/mnt/extdrive/workdir/htt_open_data/r27_m7_covariance_application_framing",
+    "source_hashes_control_input_identity": "Unrelated dirty repository changes do not rewrite the frozen input bytes"
+  },
+  "mathematical_domains": {
+    "confidence": "Requires declared true mean/bias set, complete joint finite-moment covariance bound, fixed response/metric and optional Gaussian premise",
+    "exact": "Rational lift of binary64 parsed M and F, not producer real map",
+    "floating": "Displayed eigenvalues, square roots and profiles are numerical diagnostics",
+    "gauge": "Formal right common-shift quotient distinct from exact dyadic residual",
+    "loewner_cap": "0<=Gamma<=G with explicit PSD G in mag^2; no numerical G supplied",
+    "spectral_cap": "0<=Gamma<=tau^2 I; same parameter units but different class",
+    "trace_cap": "tr Gamma<=tau^2; tau>=0 in mag; no empirical value supplied"
+  },
+  "new_discriminator": "Actual-map exact dyadic full-rank/cone certificate, minimum trace calibration covariance reproducing F_E1 inverse, five working-normalized modes, and complete 28-coefficient map for arbitrary Loewner cap G.",
+  "owner": "common/obsstat diagnostic application framing",
+  "prepared_utc": "2026-10-24T05:00:16.986744+00:00",
+  "primary_references": [
+    {
+      "authors": "Vandenberghe, Boyd, Comanor",
+      "observed": "Author page opened",
+      "title": "Generalized Chebyshev Bounds via Semidefinite Programming",
+      "url": "https://web.stanford.edu/~boyd/papers/prob_bnds.html",
+      "year": 2007
+    },
+    {
+      "authors": "Bertsimas, Popescu",
+      "doi": "10.1137/S1052623401399903",
+      "observed": "Author-hosted published PDF opened",
+      "title": "Optimal Inequalities in Probability Theory: A Convex Optimization Approach",
+      "url": "https://www.mit.edu/~dbertsim/papers/MomentProblems/Optimal-inequalities-in-probability-theory-A-convex-optimization-approach-SIAM15.pdf",
+      "year": 2005
+    }
+  ],
+  "proposed_worker_output": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_m7_covariance_application",
+  "residual_holds": {
+    "H02": "HOLD_UNCHANGED",
+    "H03": "HOLD_UNCHANGED",
+    "R9": "UNKNOWN_UNCHANGED",
+    "actual_total_tensor_confidence": "HOLD_MISSING_TOTAL_MEAN_COVARIANCE_RESPONSE_ASSUMPTIONS",
+    "all_A_quantization_coverage": "NOT_ESTABLISHED",
+    "empirical_Gamma7": "UNKNOWN",
+    "measurement_PV_anchor_all_cross_blocks": "UNKNOWN",
+    "native_solver_family_identification": "NOT_PROMOTED",
+    "old_six_channel_acceptance": "NOT_PROMOTED",
+    "physical_response": "UNAVAILABLE",
+    "physical_x_F_Pi_Q_GF": "UNKNOWN_NOT_PROMOTED"
+  },
+  "schema": "htt.r27.m7_covariance_application_framing/1",
+  "scientific_question": "What full five-dimensional covariance shapes and minimum calibration budgets do the three accepted actual M7 maps admit relative to the saved E1 metric?",
+  "scope": [
+    "Three fixed accepted M7 representatives",
+    "Exact serialized-input algebra",
+    "Numerical full-tensor parameterized sensitivity",
+    "Theory-only mean/covariance-qualified confidence construction"
+  ],
+  "sources": {
+    "actual_report": {
+      "bytes": 908,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/actual_run/products/REPORT.md",
+      "sha256": "bc9a501d875e1786d257bc8af172b9e7388a42724e1d8f8b0fa632485fe7444c"
+    },
+    "actual_response": {
+      "bytes": 26649,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/actual_run/products/RESULT.json",
+      "sha256": "2af5174899b0f29186177abded74f72f7bbae4f15f60bede4cb400ac25b1f388"
+    },
+    "actual_response_ack_packet": {
+      "bytes": 6088,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/actual_run/ACTUAL_ACKNOWLEDGED_PACKET.json",
+      "sha256": "44492b6faf014409da955e31813be6001d8225d11ac521cd616bb5c21b6de6f5"
+    },
+    "actual_response_input": {
+      "bytes": 2116,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/INPUT.json",
+      "sha256": "2fe3811319d2dd7b6b1d43507339f410c559036ab8b0e044a5dcfa413830f004"
+    },
+    "actual_response_receipt": {
+      "bytes": 880,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/actual_run/RUN_RECEIPT.json",
+      "sha256": "051086f99ebe3ad8d45d8c5501663ec107a900dd6e3659e7450bb49ca09a185b"
+    },
+    "actual_response_review_checks": {
+      "bytes": 23201,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_seven_channel_actual_review/READ_ONLY_CHECKS.json",
+      "sha256": "069a3f412b2f6e4eecf7e93dac2ac3d93c87d3cc298561b524016c8037bdb547"
+    },
+    "actual_response_review_raw": {
+      "bytes": 8253,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_seven_channel_actual_review/ACTUAL_SCIENTIFIC_REVIEW.json",
+      "sha256": "ee91936760a7763217114af4c3ae540011a21032ade9c7b4cb03c431270894c9"
+    },
+    "actual_response_review_result": {
+      "bytes": 1763,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_seven_channel_actual_review/RESULT.json",
+      "sha256": "8f0f030703241e1bf2010c3dac2704a72fea6f138e98f2cb089367de202733d1"
+    },
+    "consumer_contract": {
+      "bytes": 15500,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_m7_covariance_application_framing/CONTRACT.md",
+      "sha256": "54006747ecd39827ed9022031a9f03aaf0c1f90474f014dcf22e37a5b49c13e6"
+    },
+    "e1_saved_result": {
+      "bytes": 68840,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/cf4_schur_loop8_20261015/results/result.json",
+      "sha256": "a2d7777cea0aab1a80af2944ae49b39b8bff718e1a2804f2ec96829458346995"
+    },
+    "framing_derivation": {
+      "bytes": 15471,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_m7_covariance_application_framing/DERIVATION.md",
+      "sha256": "69caf325a9790db13ec5725d12f613fe6279e31c8c105fa4699076a84a2d83c5"
+    },
+    "generic_actual_result": {
+      "bytes": 6094,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/repair1/RESULT.json",
+      "sha256": "d5537f88ca388880b388f3200a341f5fa553bcc2d4a6ff785e53f6ae5168cb52"
+    },
+    "generic_citations": {
+      "bytes": 6914,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_tensor_covariance_cone_theory/CITATIONS.md",
+      "sha256": "48b311162c793aadeae98faf0830ca35a7f844dccedfad98790ea9ffbf24d6ff"
+    },
+    "generic_derivation": {
+      "bytes": 26414,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_tensor_covariance_cone_theory/DERIVATION.md",
+      "sha256": "7542fc2efa7a109560d2bd8a16e8867408589d0600dea916efc72178568710d7"
+    },
+    "generic_module": {
+      "bytes": 14946,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/repair1/covariance_image.py",
+      "sha256": "9d327a7976489dd474856c3f106a248e8ebdcce34502543863961131628bd572"
+    },
+    "generic_raw_receipt": {
+      "bytes": 3817,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/repair1/RAW_RECEIPT.json",
+      "sha256": "a918830571e396bf5572fba8930c2dd089470ef820dcb6fb9a7b6c854a58c084"
+    },
+    "generic_review_result": {
+      "bytes": 3801,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_covariance_image_targeted_closeout/RESULT.json",
+      "sha256": "482cb5aca4d8df39f3e0a8cb123b048bbc0ffd075b2fa0cce34187f12d8d80e8"
+    },
+    "generic_review_verdict": {
+      "bytes": 5742,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_covariance_image_targeted_closeout/VERDICT.json",
+      "sha256": "fe54ac59ea7f7e15304c175981396d994e74c3fa74f134b45a2f0dd417bd199c"
+    },
+    "group_operator": {
+      "bytes": 1186981,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/actual_run/products/GROUP_OPERATOR.npz",
+      "sha256": "794455d0aa9846fe788bfabbbe50e79ccc2c53f00b7c80b0990046310aee78d4"
+    },
+    "locked_parameters": {
+      "bytes": 6449,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/actual_run/products/LOCKED_PARAMETERS.json",
+      "sha256": "482148d4d24600d908f9c78fb7d477fb979f6ac162b6b5d8078228edbc508305"
+    },
+    "p1_coupled_functionals": {
+      "bytes": 13222,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/sections/05_coupled_functionals.tex",
+      "sha256": "515d934b7ae5b3ab284ea84900a8f5ed1743db2490d0fdea574218ba581e70d0"
+    },
+    "p1_identification": {
+      "bytes": 7690,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/sections/02_identification.tex",
+      "sha256": "865712c29b5de95704b06622dd116e1b0548fc6abaf543abfaa033fa70f963bd"
+    },
+    "p1_proofs": {
+      "bytes": 5540,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/sections/07_proofs.tex",
+      "sha256": "e0ec9987c8ec59fae6239bee795f3c86cb96be6a86c949afbade62c5f22c0bef"
+    },
+    "prior_allocation_receipt": {
+      "bytes": 1007,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_final_group_operator_consumer/source_layout_run/RUN_RECEIPT.json",
+      "sha256": "42f1b99d0825eb303e9850d5b2187cb3601afa30d9b89bd5496c7da6b115fef5"
+    },
+    "report_math": {
+      "bytes": 19484,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/REPORT_20261024_REV1/sections/07_mathematical_details.tex",
+      "sha256": "9035b5f6bbac599c50c861110be730fb6678a2b112337e5935a3f686b23a1cd0"
+    },
+    "source_contract": {
+      "bytes": 11542,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_actual_source_model_review/CONTRACT.md",
+      "sha256": "cdf94aaf6d39a01baae0d2fc03342032b1eb5f82ef34555e83ca8631d43f7992"
+    }
+  },
+  "status": "PROPOSED_ACTUAL_CONSUMER_CONTRACT_NOT_EXECUTED",
+  "worker_runtime": {
+    "observed": "UNKNOWN",
+    "requested_effort": "high",
+    "requested_model": "gpt-6-sol",
+    "transport_selected": "NOT_DISPATCHED"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "htt.root_conservative_smica_account_head/1",
+  "status": "AUTHORITATIVE_CONSERVATIVE_RUN_ENTRY_SCOPE_WITH_EXPLICIT_RESOURCE_HOLD",
+  "component_id": "R26-SMICA-EXACT-PR3-IMPLICIT-ROW-PROJECTION",
+  "packet_id": "724014e9f218574061d517506886c7d9178a9430db57307489084b5e614996e0",
+  "base_ledger_ref": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/LEDGER.json",
+    "sha256": "816e09a203e115dcedaef5f391d1478701f87318f9ddcddde06708ed61e0edf2",
+    "bytes": 6914
+  },
+  "observed_phase_charges_seconds": 123.69659962807782,
+  "cumulative_charged_seconds": {
+    "100": 159.18368400861345,
+    "143": 461.5327016348724,
+    "217": 352.5613782292471,
+    "30": 123.76261586947201,
+    "353": 252.22075897322563,
+    "44": 107.52729198750876,
+    "70": 107.85303059145645,
+    "SMICA": 463.2732058512752
+  },
+  "additive_common_upper_debit_seconds": 399.9923411500547,
+  "shared_debit_each_of_eight_seconds": 49.99904264375684,
+  "outer_bound_evidence": {
+    "clock": "CLOCK_BOOTTIME",
+    "observed_seconds": 1452638.732018298,
+    "ticks_per_second": 100,
+    "control_child_pid": 445148,
+    "control_child_start_ticks": 145212722,
+    "first_common_elapsed_seconds": 12.166922480100766,
+    "tick_rounding_seconds": 0.01,
+    "producer_terminal_before_snapshot": true,
+    "proof": "run_entry >= control_birth-first_common_elapsed; terminal <= snapshot; BOOTTIME includes suspension, giving a conservative upper. Includes post-run idle, not an estimate of actual missing duration."
+  },
+  "no_new_budget": true,
+  "old_failed_one_use_preserved": true,
+  "native_elapsed_seconds_unchanged": 110.38916298095137,
+  "postprocess_20_second_cap": "NOT_ESTABLISHED",
+  "pre_run_entry_python_startup": "UNKNOWN_NOT_CLAIMED_MEASURED",
+  "timing_and_resource_admission": "HOLD",
+  "scientific_admission": "HOLD_PENDING_SCOPED_REVIEW",
+  "limitations": [
+    "The upper debit covers run() entry onward; it does not prove unobserved pre-entry startup duration.",
+    "The actual omitted duration and finalization20s ceiling are not established; no old/native replay authorized."
+  ]
+}

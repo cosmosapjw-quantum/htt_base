@@ -1,0 +1,33 @@
+{
+  "schema": "htt.cf4_support_quotient_actual_invocation/1",
+  "status": "FIRST_CHILD_FAILURE",
+  "requested_worker": "gpt-6-sol/high",
+  "observed_worker": "UNKNOWN",
+  "all_started_commands": [
+    {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/test_controls.py"
+      ],
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/test_controls.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/test_controls.stderr",
+      "returncode": 1,
+      "reason": null,
+      "observed_monotonic_seconds": 0.94708625,
+      "peak_polled_rss_bytes": 36970496
+    }
+  ],
+  "source_sha256": {
+    "consume.py": "d8c3a7526f97f196bcc29b5fbd0ead26aadb1a0230268ea9f2736074c8fcf798",
+    "test_controls.py": "9999b21ba314ba9cf2cc1724155f5dbaae56dbe5dcaa56e693760053fd4f064b",
+    "runner.py": "ee00bff886ba8cc4595e1cf36bc9ee6c48ac2eb056b30f33220658c9ae4f9312",
+    "INPUT.json": "570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd"
+  },
+  "clock": "time.monotonic_ns on outer Python; controller API whole-wall remains separate",
+  "limit_seconds": 120.0,
+  "child_limit_seconds": 114.0,
+  "rss_limit_bytes": 2147483648,
+  "observed_monotonic_through_products_fsync_seconds": 1.0488417,
+  "charge_rule": "max(controller API whole invocation wall, observed outer monotonic wall); no attempt omitted"
+}

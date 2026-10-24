@@ -1,0 +1,154 @@
+{
+  "schema": "htt.native_agent_result/1",
+  "task_id": "R27-EIGHT-MAP-SAVED-TENSOR-COMPARISON",
+  "packet_id": "bf87d75c6101885fefe5ff6a1f3739000731d482e357ff7d4816b3afc3d20a00",
+  "actual_native_agent": "/root/r27_eight_map_actual_scientific_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "input_identity": "sha256:7f1cf844ef1982b49bac7ef1d2a9be2fcd766b3f37d0e2cc60b48b0a99120349",
+  "candidate_identity": "sha256:dfd15e6911973d79775d3d6d9f9d14d1a88840cf46a628ecd9220852e2cd2d20",
+  "original_source_candidate_identity": "sha256:5bf4cd8d263fe9c30c6d34696fd463c16fe9c6d8d00e5554a1b471f5542ba081",
+  "outcome": "success",
+  "acceptance_met": true,
+  "review_decision": "SCOPED_PASS_SAVED_EIGHT_MAP_NUMERICS_METADATA_FIGURES_AND_PROSPECTIVE_RESOURCES",
+  "scientific_admission": "HOLD",
+  "scope": "This exact saved-output comparison and additive metadata/report candidate only. No original full8 or SMICA resource acceptance is changed.",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_actual_scientific_review/EXECUTION_RECEIPT.json",
+  "qualified_products": [],
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_actual_scientific_review/BINDING.json",
+    "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_actual_scientific_review/ACK.json",
+    "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_actual_scientific_review/NUMERICAL_CHECKS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_actual_scientific_review/AUTHENTIC_TOOL_RETURN.json",
+    "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_actual_scientific_review/EXECUTION_RECEIPT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_actual_scientific_review/ROOT_ACCOUNT_HEAD_AFTER_REVIEW.json",
+    "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_saved_tensor_comparison_numeric/receipt_tail_closeout/CANDIDATE.json",
+    "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_saved_tensor_comparison_numeric/receipt_tail_closeout/DESCRIPTIVE_RESULT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_saved_tensor_comparison_numeric/receipt_tail_closeout/REPORT.md"
+  ],
+  "independence": {
+    "authored_consumer_or_metadata_repair": false,
+    "author_oracle_read_or_run": false,
+    "producer_imported_or_rerun": false,
+    "old_fits_rerun": false,
+    "native_projection_rerun": false,
+    "checker_attempts": 1,
+    "method": "Decimal50 normal equations over exact binary64 E inputs; independent homogeneous harmonic polynomial STF extraction; scalar Decimal outer products and contractions.",
+    "checker_sha256": "ab11836c53558893bcb78856161645a6756636e4ace753a3b4bd0463b7adcf1b",
+    "supervisor_sha256": "a6ce70480f13e029994352b23f3ed995246470b3e2c21569dac9a01f11e1089b",
+    "binding_sha256": "3aeb302f1806f00d89eab5ce9239a3bff7546d8c9a672ada02c039cbc6096a0f"
+  },
+  "numerical_review": {
+    "decision": "PASS_STORED_FLOAT_MATHEMATICS",
+    "all_192_signed_carrier_coordinates": true,
+    "all_complete_STF_entries_symmetry_and_pair_traces": true,
+    "both_complete_reference_contrasts": true,
+    "seven_saved_rows_and_four_saved_fit_arrays_exact": true,
+    "support_30021_cells_exact": true,
+    "all_12_SMICA_B_predictions_and_residuals": true,
+    "relative_absolute_and_tensor_sign_identities": true,
+    "outer_entries_checked": 36864,
+    "O_shape": [
+      8,
+      8,
+      24,
+      24
+    ],
+    "G_shape": [
+      4,
+      8,
+      8
+    ],
+    "H_shape": [
+      2,
+      8,
+      8
+    ],
+    "cross_terms_interpretation": "Uncentered deterministic products, not estimated covariance or stochastic moments.",
+    "alpha_decimal50": [
+      "-0.015516881872245466236043443431325771762902639816558",
+      "-0.042775234345794025341145764202164492024450430655911"
+    ],
+    "worst_tolerance_fraction": "0.0000036146883767425499526429599479674471531415050581321",
+    "worst_comparison": "scalar_H",
+    "scalar_H_max_abs_error_K_CMB2": "6.1818327052230932229095402998236907447291016578674E-26",
+    "tolerances_unchanged": true,
+    "seven_frequency_scalar_image_unchanged": true,
+    "scalar_replacement": false
+  },
+  "visual_review": {
+    "decision": "PASS",
+    "signed24": "Eight labelled rows and all 24 signed coordinates; shared zero-centred scale, K_CMB, SMICA component-separation benchmark.",
+    "heldout_B12": "Five target panels with every 143-relative B coordinate, prediction and signed residual; algorithmic descriptive caption.",
+    "cross_terms": "Four G and two H panels with signed K_CMB^2 scales and deterministic-product labels.",
+    "limitation": "353 dominates the shared carrier scale; this is visible dynamic range, not missing coordinates or per-row normalization."
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "moderate",
+      "original_location": "consume.py:249-265 and original products/REPORT.md:3-7",
+      "finding": "The original descriptive JSON omitted source/input/operator/support identities; the original report omitted qualified source/native-resolution details and signed-coordinate interpretation.",
+      "status": "CLOSED_IN_EXACT_ADDITIVE_CANDIDATE",
+      "closure": "Repaired JSON contains source/input/contract/operator/support/SMICA qualification and claim limits; repaired report states finite native pixel-centre sums, NSIDE/COSMO/no-U-flip conditions and signed coordinate examples. Independent execution verified every original JSON key/value unchanged; original six artifacts remain hash-bound."
+    },
+    {
+      "id": "R1",
+      "severity": "low",
+      "original_location": "consume.py:119-121 and rank_ok false output path",
+      "finding": "The hypothetical rank-deficient branch omits prediction_B while the plot loop still dereferences it for four old valid rows.",
+      "status": "NONBLOCKING_FROZEN_INPUT_REUSE_LIMIT",
+      "reason": "The exact frozen anchor ratio is 0.09373936331209766 and independently confirmed above 1e-8; the reviewed actual execution never enters this branch. No general rank-deficient consumer qualification is issued, and no extra repair or control run is requested."
+    }
+  ],
+  "resource_review": {
+    "decision": "PASS_PROSPECTIVE_BOUNDED_COMPONENTS_WITH_EXPLICIT_CLOCK_PROVENANCE",
+    "checker_cap_seconds": 10,
+    "observed_provider_tool_wall_seconds": 3.6801794660000002,
+    "observed_supervisor_monotonic_through_all_owned_outputs_receipt_and_directory_fsync_seconds": 3.70554311783053,
+    "observed_whole_caller_wall_seconds": 4.238,
+    "caller_clock": "Date.now wall clock, explicitly NON_MONOTONIC; caller monotonic unavailable",
+    "provider_clock_implementation": "UNKNOWN",
+    "root_settled_checker_seconds": 4.238,
+    "settlement_rule": "MAX of authentic reported durations charged once across eight original accounts; monotonic owned scientific span and separately labelled whole caller wall are retained without relabelling.",
+    "pre_review_consumer_including_approved_closeout_debit_seconds": 20.867,
+    "aggregate_after_review_seconds": 25.105,
+    "aggregate_cap_seconds": 70,
+    "SMICA_total_after_review_seconds": 466.4113308512752,
+    "per_account_lifetime_cap_seconds": 900,
+    "account_head": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_actual_scientific_review/ROOT_ACCOUNT_HEAD_AFTER_REVIEW.json",
+      "sha256": "39f4aae7543a91b00154d414086d049c66e0e51d7f2956b27cf0abf58bcc9432",
+      "authority": "Controller supplied final settled head; reviewer creates no ledger mutation or replacement account."
+    },
+    "loaded_BLAS_threads": 1,
+    "sampled_group_peak_rss_bytes": 43446272,
+    "wait4_child_high_water_bytes": 43446272,
+    "rss_cap_bytes": 2147483648,
+    "prelaunch_mem_available_bytes": 21774819328,
+    "minimum_sampled_mem_available_bytes": 21635207168,
+    "child_exit_code": 0,
+    "reaped": true,
+    "remaining_group_members": [],
+    "first_consumer_receipt_tail_failure_preserved": true,
+    "postreturn_decision_receipt_scope": "This final reviewer decision is outside the owned numeric group per the approved repair scope; it does not alter recorded execution clocks.",
+    "limitation": "RSS sampling and wait4 high-water do not certify memory usage at every instant. Original timing failures are not retroactively passed."
+  },
+  "preserved_holds": [
+    "Original SMICA full-task timing/resource HOLD; finalization20s NOT_ESTABLISHED and pre-entry UNKNOWN.",
+    "Original full8 HOLD_NATIVE_FIRST_FAILURE.",
+    "L03/H02 HOLD.",
+    "scientific_admission HOLD."
+  ],
+  "forbidden_promotions": [
+    "No null significance or coverage.",
+    "No true-sky E/B recovery.",
+    "No physical mixture fractions, calibrated Pi, physical F/MES, or physical-law falsification.",
+    "No native solver or Bianchi family identification.",
+    "No 42-node campaign or publication-DAG completion."
+  ],
+  "next": "Root may consume this scoped review for the exact candidate and continue dependency-safe campaign work. No producer rerun, additional fit, new account, or additional review ladder is required."
+}

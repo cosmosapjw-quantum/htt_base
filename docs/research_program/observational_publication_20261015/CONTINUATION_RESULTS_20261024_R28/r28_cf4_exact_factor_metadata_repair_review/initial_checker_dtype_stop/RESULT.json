@@ -1,0 +1,95 @@
+{
+  "schema": "htt.cf4_exact_factor_metadata_actual_closeout_result/1",
+  "task_id": "R28-CF4-EXACT-CALIBRATION-FACTOR-ACTUAL-CONSUMER",
+  "agent_id": "/root/r28_exact_factor_metadata_actual_closeout",
+  "packet_id": "70ee95a8441c7c1b66bfaa80eeea67a6db7cc51d0e93d1fa98363eba2235a87e",
+  "input_identity": "sha256:db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5",
+  "candidate_identity": "sha256:289e3d4eed1bb3e89fb6dfe78751252dd7f97768a6ef7c2aa7fd260d79e1f044",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "transport_selected": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "outcome": "blocker",
+  "status": "HOLD_REVIEWER_UNCONTRACTED_INT64_REQUIREMENT",
+  "acceptance_met": false,
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/WHOLE_COMMAND_RECEIPT.json",
+  "raw_receipt_sha256": "ad73f5a67d15c86f096cd20736af4fbc8540f870929693528d47d90bfd60ec73",
+  "qualified_products": [],
+  "issue": {
+    "code": "REVIEWER_UNCONTRACTED_INT64_REQUIREMENT",
+    "class": "code",
+    "severity": "medium",
+    "source_path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/check.py",
+    "source_line": 148,
+    "exact_defect": "The reviewer requires all sparse index and channel-label arrays to have dtype int64. The unchanged nonreference_channel is signed int8 in both original and repaired factors. The contract requires integer support/index semantics and unchanged dtype/shape/bytes, not an int64 channel-label width.",
+    "source_of_requirement": "Reviewer-added assertion; absent from frozen scientific and repair contracts",
+    "candidate_scientific_failure_established": false,
+    "minimum_correction": "Use the original preserved integer dtype, or require np.issubdtype(index.dtype, np.integer) plus existing dimension/range checks. Do not change candidate arrays.",
+    "automatic_retry_authorized": false
+  },
+  "validation_evidence": {
+    "reached_and_passed": [
+      "All bound initial SHA256 checks",
+      "Root packet/agent/input/candidate/account/path-exception bindings",
+      "Every original RESULT field compared exactly except authorized factor hash/size; float binary64 bits compared",
+      "New factor hash and size binding",
+      "Prior raw traceback/checker/receipt/input binding and exact first-failure location",
+      "Every unaffected factor array dtype, shape and raw element bytes compared",
+      "Legacy parent extra mask byte parity",
+      "Full 35970 unique IDs, support/singleton/mixed shape and support partition checks"
+    ],
+    "first_failure": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/check.stderr",
+      "line": 148,
+      "assertion": "index.dtype == np.int64 and index.ndim == 1",
+      "original_and_candidate_nonreference_channel_dtype": "|i1",
+      "original_and_candidate_shape": [
+        35019
+      ],
+      "header_only_diagnosis": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/FAILURE_HEADER_DIAGNOSIS.json"
+    },
+    "not_reached": [
+      "Complete mixed/reference/nonreference partition and deterministic reference checks",
+      "Independent exact reference sums and full current masks",
+      "Complete mismatch row/ID/count report verification",
+      "Combined row/channel permutation",
+      "One-row/empty/cancellation/signed-zero/subnormal controls",
+      "Final input/candidate rehash",
+      "Successful NUMERIC_CHECK serialization"
+    ],
+    "full_actual_value_or_response_replayed": false,
+    "prior_failed_whole_review_relabelled_pass": false,
+    "numeric_commands_started": 1,
+    "retry_count": 0
+  },
+  "accounting": {
+    "parent_task_id": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+    "authentic_prelaunch_head": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_exact_factor_dispatch/ROOT_ACCOUNT_HEAD_AFTER_METADATA_REPAIR.json",
+      "sha256": "a0b36f5dc93e645d1bec3fefe48c512139241c202a7837798201d9db929e7650"
+    },
+    "prelaunch_cf4_used_seconds": 214.79277764664457,
+    "prelaunch_consumer_used_seconds": 10.5,
+    "prelaunch_review_used_seconds": 3.0,
+    "authorized_closeout_cap_seconds": 17,
+    "observations_seconds": {
+      "api_wall": 4.042,
+      "exec_host_wall": 3.500494503,
+      "kernel_elapsed": 1.69,
+      "child_reaped": 1.227679305,
+      "through_products_fsync": 1.289935739,
+      "outer_after_receipt_fsync": 1.534654419
+    },
+    "header_only_diagnosis_exec_wall_seconds": 0.025283347,
+    "settlement_owner": "root",
+    "settlement_rule": "Charge every started check/failure once using the maximum overlapping observed spans. Diagnostic read is separately identified; no reset, new allocation, borrowing or retry.",
+    "timing_intervals_overlap_do_not_sum": true
+  },
+  "claim_ceiling": "No scoped admission because targeted closeout did not complete. Candidate numerical payload parity passed; no numerical/scientific failure established. Original H02/H03/H04, physical response, residual covariance, selection/PV/null, unrestricted nuisance, exact KN/KB, native family and four-axis statuses remain UNKNOWN/HOLD.",
+  "next_executable_checkpoint": "Root classifies this reviewer-only dtype error and settles the consumed check. Any checker correction/continuation needs an explicit bounded authorization under the same frozen candidate and remaining original review/account caps; this invocation does not rerun automatically."
+}

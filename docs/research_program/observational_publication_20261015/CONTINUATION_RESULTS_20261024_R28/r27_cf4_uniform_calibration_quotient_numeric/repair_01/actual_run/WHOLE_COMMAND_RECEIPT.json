@@ -1,0 +1,73 @@
+{
+  "schema": "htt.cf4_support_quotient_repair_continuation/1",
+  "status": "BOTH_CHILDREN_EXITED_ZERO",
+  "task_id": "R27-CF4-UNIFORM-SUPPORT-CALIBRATION-QUOTIENT",
+  "input_identitysha256": "570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd",
+  "requested_worker": "gpt-6-sol/high",
+  "observed_worker": "UNKNOWN",
+  "original_first_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/WHOLE_COMMAND_RECEIPT.json",
+  "original_first_stderr": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/test_controls.stderr",
+  "original_three_pass_methods_reused": [
+    "test_exact_support_decomposition",
+    "test_rank4_rank0_and_unstable",
+    "test_stf_decode_rotation"
+  ],
+  "source_sha256": {
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/consume.py": "d8c3a7526f97f196bcc29b5fbd0ead26aadb1a0230268ea9f2736074c8fcf798",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/INPUT.json": "570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/test_controls.py": "9999b21ba314ba9cf2cc1724155f5dbaae56dbe5dcaa56e693760053fd4f064b",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/WHOLE_COMMAND_RECEIPT.json": "25df7205e60f5ec707b3cff1b2e55ac88c495c74121506214c043fe786290a5c",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/test_controls.stderr": "6fa4a6eb07357c158548857e32cfb7065323b5bd928cc64c5a010f2ca2cf0a77",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_controls_repair_research/REPAIR_CONTRACT.md": "fbf868f1f0087b0b7520f6237703e11ba76186f5e6baff04f45a9086ca7630e1",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/test_controls_repair.py": "07f8a9fdf67d946f45dc6cc5642228fa946556fd200e36fd0731cd01b0398eec",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/continue.py": "d00512b6ae32bf76ee9467b99e7cdb40e282ba82712ae71024b11c70bf98841c"
+  },
+  "expected_source_sha256": {
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/consume.py": "d8c3a7526f97f196bcc29b5fbd0ead26aadb1a0230268ea9f2736074c8fcf798",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/INPUT.json": "570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/test_controls.py": "9999b21ba314ba9cf2cc1724155f5dbaae56dbe5dcaa56e693760053fd4f064b",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/WHOLE_COMMAND_RECEIPT.json": "25df7205e60f5ec707b3cff1b2e55ac88c495c74121506214c043fe786290a5c",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/test_controls.stderr": "6fa4a6eb07357c158548857e32cfb7065323b5bd928cc64c5a010f2ca2cf0a77",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_controls_repair_research/REPAIR_CONTRACT.md": "fbf868f1f0087b0b7520f6237703e11ba76186f5e6baff04f45a9086ca7630e1"
+  },
+  "all_started_commands": [
+    {
+      "label": "corrected_failed_control",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_controls_repair.QuotientControls.test_full_rank_uniform_invariance_and_cross_covariance"
+      ],
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/actual_run/corrected_failed_control.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/actual_run/corrected_failed_control.stderr",
+      "returncode": 0,
+      "stop_reason": null,
+      "observed_monotonic_seconds": 0.330960176,
+      "peak_polled_rss_bytes": 28483584
+    },
+    {
+      "label": "first_original_consumer",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/consume.py"
+      ],
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/actual_run/first_original_consumer.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/actual_run/first_original_consumer.stderr",
+      "returncode": 0,
+      "stop_reason": null,
+      "observed_monotonic_seconds": 8.339955198,
+      "peak_polled_rss_bytes": 141271040
+    }
+  ],
+  "limit_seconds": 116.515,
+  "child_limit_seconds": 110.515,
+  "rss_limit_bytes": 2147483648,
+  "clock": "time.monotonic_ns outer; controller caller whole wall separate and may be nonmonotonic",
+  "external_resource_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/ACTUAL_LIFETIME_RESOURCE.txt",
+  "observed_monotonic_through_products_and_logs_fsync_seconds": 8.735457344,
+  "charge_rule": "max(controller whole API/caller, kernel whole wall, outer monotonic); overlapping envelopes charged once"
+}

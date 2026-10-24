@@ -1,0 +1,54 @@
+{
+  "schema": "htt.cf4_exact_factor_metadata_repair_return/1",
+  "task_id": "R28-CF4-EXACT-CALIBRATION-FACTOR-ACTUAL-CONSUMER",
+  "agent_id": "/root/r28_cf4_exact_factor_numeric",
+  "packet_id": "4bd9b1be17b570e3c09f5e04b70d37de8f4cd9671b611fe7913de9f444626ac4",
+  "input_identity": "sha256:db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5",
+  "repair_input_sha256": "77d50d2b0b1bd49a71b8f9eccc4657dd79508083dcd64e231554d8dc0cba22d3",
+  "base_packet_id": "3910317d169e1b024a10a246ff415f2f1faf918ac9a13db01042cf764febdd41",
+  "base_candidate_identity": "sha256:ce46049e719e15749ee9adf8b5101f5cb4f439de6751a6285fa26eeeb6920e02",
+  "outcome": "success",
+  "status": "METADATA_REPAIR_CANDIDATE_PENDING_FRESH_INDEPENDENT_REVIEW",
+  "candidate_identity": "sha256:289e3d4eed1bb3e89fb6dfe78751252dd7f97768a6ef7c2aa7fd260d79e1f044",
+  "candidate_dir": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/products",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/WHOLE_COMMAND_RECEIPT.json",
+  "products": [
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/products/FACTOR.npz",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/products/RESULT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/products/REPORT.md"
+  ],
+  "qualified_products": [],
+  "independent_review": "PENDING",
+  "original_exact_values_and_response_reused": true,
+  "claim_ceiling": "exact only for fixed serialized-input support-simplex additive calibration; unrestricted nuisance and physical H02/H03/H04 remain UNKNOWN/HOLD",
+  "validation_evidence": {
+    "class": "NEW_ZERO_LEVERAGE_MASK_MISMATCH",
+    "original_factor_sha256": "b152c216d287d278014b3f94cbe0d3d1d74a1312cb42b2555d2bf59d47209a80",
+    "original_result_sha256": "ce46049e719e15749ee9adf8b5101f5cb4f439de6751a6285fa26eeeb6920e02",
+    "first_failed_review_sha256": "4b654b613105679a0d3e0c93eed82d5c781afc44b37d336da05d59876c55b312",
+    "repair_contract_sha256": "4e41097df4c919f1adf7fdc128bf0ed60a2b5cb21ac2443db66d41c553fda01f",
+    "definition": "Current K_fact exact rational coefficients: mixed absent, all-zero stored L nonreferences, exact dyadic zero-sum references",
+    "current_total_count": 945,
+    "current_additional_outside_mixed_count": 1,
+    "current_additional_row_indices": [
+      1484
+    ],
+    "current_additional_group_ids": [
+      11274
+    ],
+    "legacy_parent_extra_count": 0,
+    "added_vs_legacy_row_indices": [
+      1484
+    ],
+    "added_vs_legacy_group_ids": [
+      11274
+    ],
+    "removed_vs_legacy_row_indices": [],
+    "removed_vs_legacy_group_ids": [],
+    "sbfm_witness_row_1484_group_11274_zero": true,
+    "exact_integer_dyadic_scale": "2^1074 for reference zero tests only",
+    "factor_array_unchanged_bytes_comparison": "PASS_ALL_KEYS_EXCEPT_REPLACED_AND_ADDED_MASKS",
+    "unchanged_json_fields_bit_comparison": "PASS_ALL_ORIGINAL_FIELDS_EXCEPT_FACTOR_SHA_AND_BYTES",
+    "old_producer_controls_y_contraction_response_replayed": false
+  }
+}

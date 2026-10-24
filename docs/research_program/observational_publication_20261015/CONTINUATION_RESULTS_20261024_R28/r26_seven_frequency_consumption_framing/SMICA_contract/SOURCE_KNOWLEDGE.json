@@ -1,0 +1,277 @@
+{
+  "failed_attempt": {
+    "attempt_id": "2efa6827041549caa787f6de92fe4133",
+    "effect": "Old invocation remains consumed and failed; new adapter method must not call old continuation run again.",
+    "failure_stage": "open_rows header check before os.open/pread in selected_chunks; project_pass had entered but no native sample was yielded.",
+    "ledger": {
+      "bytes": 11945,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/continuation/LEDGER.json",
+      "sha256": "182cfde08b319b6008d19f772b2247e218b2b217ce45a19334d196a69b689454"
+    },
+    "status": "FAILED",
+    "stderr": {
+      "bytes": 1682,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/continuation/SMICA.stderr",
+      "sha256": "4d49e123bd17ed80f2af1bf222ae0cb67b6227b0a4fd6b171d92e1f7e9ec6724"
+    },
+    "task_id": "R26-FULL7-STREAMED-SPIN2-QUADRATURE"
+  },
+  "fetch_limits": [
+    "Legacy ESA wiki CMB_maps endpoint returned502; another format URL was inaccessible. No2013 or2015 product format was substituted as PR3 evidence.",
+    "A precise producer comment about these four omissions was not found. It is not needed for this conditional exact-product interpretation, but unconditional producer-certified card completion is NOT_ESTABLISHED."
+  ],
+  "interpretation": {
+    "inference": "For this exact official full-sky product, with HEALPIX/NESTED geometry, Npix scalar Stokes rows and no explicit pixel column, interpret zero-based row p as NESTED pixel p for p in[0,50331648).",
+    "knowledge_type": "Product-specific source-format inference, conditional on exact qualified released body identity.",
+    "not_observed": "Missing cards have not been supplied by the producer and are not rewritten as observed metadata. Full row count alone would not qualify an arbitrary table.",
+    "scientific_scope": "Delivered-map masked spin2 coefficients; no claim about true-sky recovery, independent comparison, instrumental uncertainty or calibrated nulls.",
+    "standard_scope": "Nonconformance to later HEALPix format profile, not necessarily a violation of the core FITS BINTABLE standard."
+  },
+  "issued_utc": "2026-10-24T04:11:21.138812+00:00",
+  "observed": {
+    "columns": [
+      {
+        "TDIM": "ABSENT",
+        "TFORM": "1E",
+        "TSCAL": "ABSENT",
+        "TTYPE": "I_STOKES",
+        "TUNIT": "K_CMB",
+        "TZERO": "ABSENT"
+      },
+      {
+        "TDIM": "ABSENT",
+        "TFORM": "1E",
+        "TSCAL": "ABSENT",
+        "TTYPE": "Q_STOKES",
+        "TUNIT": "K_CMB",
+        "TZERO": "ABSENT"
+      },
+      {
+        "TDIM": "ABSENT",
+        "TFORM": "1E",
+        "TSCAL": "ABSENT",
+        "TTYPE": "U_STOKES",
+        "TUNIT": "K_CMB",
+        "TZERO": "ABSENT"
+      },
+      {
+        "TDIM": "ABSENT",
+        "TFORM": "1E",
+        "TSCAL": "ABSENT",
+        "TTYPE": "TMASK",
+        "TUNIT": "",
+        "TZERO": "ABSENT"
+      },
+      {
+        "TDIM": "ABSENT",
+        "TFORM": "1E",
+        "TSCAL": "ABSENT",
+        "TTYPE": "PMASK",
+        "TUNIT": "",
+        "TZERO": "ABSENT"
+      },
+      {
+        "TDIM": "ABSENT",
+        "TFORM": "1E",
+        "TSCAL": "ABSENT",
+        "TTYPE": "I_STOKES_INP",
+        "TUNIT": "K_CMB",
+        "TZERO": "ABSENT"
+      },
+      {
+        "TDIM": "ABSENT",
+        "TFORM": "1E",
+        "TSCAL": "ABSENT",
+        "TTYPE": "Q_STOKES_INP",
+        "TUNIT": "K_CMB",
+        "TZERO": "ABSENT"
+      },
+      {
+        "TDIM": "ABSENT",
+        "TFORM": "1E",
+        "TSCAL": "ABSENT",
+        "TTYPE": "U_STOKES_INP",
+        "TUNIT": "K_CMB",
+        "TZERO": "ABSENT"
+      },
+      {
+        "TDIM": "ABSENT",
+        "TFORM": "1E",
+        "TSCAL": "ABSENT",
+        "TTYPE": "TMASKINP",
+        "TUNIT": "",
+        "TZERO": "ABSENT"
+      },
+      {
+        "TDIM": "ABSENT",
+        "TFORM": "1E",
+        "TSCAL": "ABSENT",
+        "TTYPE": "PMASKINP",
+        "TUNIT": "",
+        "TZERO": "ABSENT"
+      }
+    ],
+    "field_selection": "Q_STOKES/U_STOKES, not *_INP",
+    "map_body_bytes": 2013265920,
+    "map_data_start_from_header_blocks": 8640,
+    "map_header": {
+      "BAD_DATA": -1.6375e+30,
+      "BITPIX": 8,
+      "COORDSYS": "GALACTIC",
+      "FIRSTPIX": "ABSENT",
+      "GCOUNT": 1,
+      "INDXSCHM": "ABSENT",
+      "LASTPIX": "ABSENT",
+      "NAXIS": 2,
+      "NAXIS1": 40,
+      "NAXIS2": 50331648,
+      "NSIDE": 2048,
+      "OBJECT": "ABSENT",
+      "ORDERING": "NESTED",
+      "PCOUNT": 0,
+      "PIXTYPE": "HEALPIX",
+      "POLCCONV": "COSMO",
+      "TFIELDS": 10,
+      "THEAP": "ABSENT",
+      "XTENSION": "BINTABLE",
+      "ZIMAGE": "ABSENT",
+      "ZTABLE": "ABSENT"
+    },
+    "missing_cards": [
+      "FIRSTPIX",
+      "LASTPIX",
+      "INDXSCHM",
+      "OBJECT"
+    ],
+    "native_pixels_from_nside": 50331648,
+    "no_explicit_pixel_index_column": true,
+    "q_byte_offset_in_row": 4,
+    "raw_arrays_accessed": false,
+    "row_bytes": 40,
+    "rows": 50331648,
+    "u_byte_offset_in_row": 8
+  },
+  "primary_sources": [
+    {
+      "access_date": "2026-10-24",
+      "claim": "Official release table offers full-mission SMICA intensity/polarization at NSIDE2048 and links the exact basename.",
+      "exact_target_url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/component-maps/cmb/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+      "fetched": "Release-table HTML only; no target FITS download.",
+      "release": "Planck PR3 R3.00",
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/matrix_cmb.html"
+    },
+    {
+      "access_date": "2026-10-24",
+      "claim": "Section2.1.1 defines implicit index p for p-th value and requires FIRSTPIX0,LASTPIX12*NSIDE^2-1,INDXSCHM IMPLICIT for new full-sky products; OBJECT FULLSKY is recommended.",
+      "date": "2020-07-22",
+      "implication": "This2018 file lacks three cards required by the2020 format profile plus optional/recommended OBJECT. No claim of modern full compliance.",
+      "url": "https://healpix.sourceforge.io/data/examples/healpix_fits_specs.pdf",
+      "version": "0.6.0"
+    },
+    {
+      "access_date": "2026-10-24",
+      "claim": "With partial=False, absence of determinable indexing scheme defaults to implicit; NESTED/RING comes from ORDERING. Reader documentation also warns explicit indexing identification needs OBJECT or INDXSCHM.",
+      "url": "https://healpy.readthedocs.io/en/1.19.0/generated/healpy.fitsfunc.read_map.html",
+      "version": "1.19.0"
+    },
+    {
+      "access_date": "2026-10-24",
+      "claim": "read_map uses supplied partial=False when OBJECT/INDXSCHM absent, preserves field row sequence, and enforces Npix=12*NSIDE^2; no FIRSTPIX/LASTPIX requirement in read_map.",
+      "local_cached_source": {
+        "bytes": 26935,
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/healpy/fitsfunc.py",
+        "sha256": "57865c2538af5179232de3c8ccbc4f7899f4e93f7c18f5c5d3f2549ebb61692b"
+      },
+      "url": "https://raw.githubusercontent.com/healpy/healpy/1.19.0/lib/healpy/fitsfunc.py",
+      "version": "tag1.19.0"
+    }
+  ],
+  "reviewer_observed_runtime": "UNKNOWN",
+  "reviewer_requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "schema": "htt.smica_exact_product_implicit_source_knowledge/1",
+  "scientific_admission": "HOLD",
+  "seven_frozen_files": {
+    "CONTRACT.json": {
+      "bytes": 17746,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/CONTRACT.json",
+      "sha256": "b94d2dee49f777069713481a0647a90e33ae89be9c01f4d57eb5e80da888f985"
+    },
+    "FRONTIER_CANDIDATE.json": {
+      "bytes": 8039,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/FRONTIER_CANDIDATE.json",
+      "sha256": "8ad7fb4259810908bfab18abcbcc217e9d3b145c7a2df3dd2410585fbf9f3cd5"
+    },
+    "INPUT.json": {
+      "bytes": 11078,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/INPUT.json",
+      "sha256": "69b4b3d1c2f398698b2dccd9f06ecb07705faaed419dea8b8ff53fbe3c0aa8c6"
+    },
+    "QUALIFICATION_OBSERVATIONS.json": {
+      "bytes": 11851,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/QUALIFICATION_OBSERVATIONS.json",
+      "sha256": "1876c19b7f9def1d466488868c2ab486fbfbaee27fec84d1154173eb212fe9ae"
+    },
+    "RETURN.json": {
+      "bytes": 2429,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/RETURN.json",
+      "sha256": "f8a3965b7d846476d093398e2239992d00cc5cab2fe0ce74d508cea4812e8bbd"
+    },
+    "REVIEW.md": {
+      "bytes": 10483,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/REVIEW.md",
+      "sha256": "6ca5f487a3926514769722f6393f5a9a6970a4eec34c700166f401054f57f620"
+    }
+  },
+  "source_identity": {
+    "actual_header_observation": {
+      "bytes": 11851,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/QUALIFICATION_OBSERVATIONS.json",
+      "sha256": "1876c19b7f9def1d466488868c2ab486fbfbaee27fec84d1154173eb212fe9ae"
+    },
+    "complete_body_receipt": {
+      "bytes": 6530,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_body_identity/SOURCE_IDENTITY.json",
+      "sha256": "fb4a85cdfde5951ef4d7cc9a04741241f89b060e95be960a47f5189d75d8fdce"
+    },
+    "current_body_rehash": false,
+    "current_stat": {
+      "device": 2050,
+      "inode": 308837,
+      "mtime_ns": 1792220431000621900,
+      "size_bytes": 2013312960
+    },
+    "current_stat_matches_qualified_body": true,
+    "intake_raw": {
+      "bytes": 4197,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_body_identity/RAW_RECEIPT.json",
+      "sha256": "f4f38839b2360fb4e592d2279e83eb814a634c7a2963ce3a1837f961416797c3"
+    },
+    "map_header_sha256": "a25bdcde564d4e6041011c497584d2884518252126e172dc35f460f130b25f26",
+    "product": {
+      "bad_data_keyword": "BAD_DATA",
+      "hdu_index": 1,
+      "nside": 2048,
+      "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/cmb/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+      "pol_keyword": "POLCCONV",
+      "q_field": "Q_STOKES",
+      "qualified_source_identity": "R26-SMICA-PR3-R3.00-FULL-NATIVE-SOURCE-QUALIFICATION-20261023",
+      "rehash_on_execution": false,
+      "release": "R3.00",
+      "sha256": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+      "size_bytes": 2013312960,
+      "tform": "1E",
+      "u_field": "U_STOKES",
+      "unit_raw": "K_CMB",
+      "variant": "full"
+    },
+    "qualified_source": {
+      "bytes": 4511,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_blind_source_contract/SMICA_PRODUCT_QUALIFICATION.json",
+      "sha256": "12641693664c5188733d5093e0b9c61b3776736a3e311f24dd12148bec3c8c3f"
+    }
+  },
+  "status": "CONDITIONALLY_JUSTIFIED_EXACT_PRODUCT_COMPATIBILITY"
+}

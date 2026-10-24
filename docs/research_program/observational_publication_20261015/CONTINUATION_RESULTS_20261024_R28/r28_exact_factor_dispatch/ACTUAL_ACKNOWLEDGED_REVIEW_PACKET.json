@@ -1,0 +1,53 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R28-CF4-EXACT-CALIBRATION-FACTOR-ACTUAL-CONSUMER",
+  "attempt": 2,
+  "phase": "review",
+  "input_identity": "sha256:db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5",
+  "candidate_identity": "sha256:ce46049e719e15749ee9adf8b5101f5cb4f439de6751a6285fa26eeeb6920e02",
+  "frontier_identity": "82159f2de2db0f20f39c68e56ed412d049e396ba28138d13d62bd6781e3f459d",
+  "task_spec_identity": "79f261750352e3cf8ac3e97d2119a090a78a17274ca05acad8c2014197730175",
+  "packet_id": "a364a309a81505064a22a4002d1e35660bd88416f847f394dbb93967617b0f12",
+  "route": {
+    "route": "review_or_research",
+    "requested": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_selected": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+    "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+    "launch_performed": false,
+    "availability_catalog_profiles": [
+      {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "model": "gpt-6-sol",
+        "effort": "high"
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "effort": "medium"
+      }
+    ]
+  },
+  "resume_evidence": null,
+  "scientific_resume": null,
+  "transport_resume": null,
+  "launch_performed": true,
+  "observed_runtime": "UNKNOWN",
+  "native_tool": "collaboration.spawn_agent",
+  "spawn_args": {
+    "task_name": "rc_a364a309a8150506",
+    "fork_turns": "none",
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh",
+    "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4\", \"task_id\": \"R28-CF4-EXACT-CALIBRATION-FACTOR-ACTUAL-CONSUMER\", \"attempt\": 2, \"phase\": \"review\", \"input_identity\": \"sha256:db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5\", \"candidate_identity\": \"sha256:ce46049e719e15749ee9adf8b5101f5cb4f439de6751a6285fa26eeeb6920e02\", \"frontier_identity\": \"82159f2de2db0f20f39c68e56ed412d049e396ba28138d13d62bd6781e3f459d\", \"task_spec_identity\": \"79f261750352e3cf8ac3e97d2119a090a78a17274ca05acad8c2014197730175\", \"packet_id\": \"a364a309a81505064a22a4002d1e35660bd88416f847f394dbb93967617b0f12\", \"spec\": {\"id\": \"R28-CF4-EXACT-CALIBRATION-FACTOR-ACTUAL-CONSUMER\", \"kind\": \"numeric\", \"goal\": \"Store an exact factored calibration-annihilating selected-source linear observable and exactly evaluate its full signed five-vector on the already reviewed actual CF4 carrier, closing the binary Khat unrestricted-Gamma leakage gap within the fixed support model.\", \"acceptance\": \"One actually acknowledged focused controls+saved-carrier consumer under60sec and sameCF4600; bitpreserved L and sparseinteger Ddiff, exact actual five-vector/direct-correction parity/channelsum/correctionprice/fullsignedtensor/numerical B,N responses; one fresh independent actual check<=20sec. Source physical H02/H03/H04, nuisance unbiasedness, residual covariance and original acceptance unchanged.\", \"input_identity\": \"sha256:db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5\", \"input_sources\": [\"/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/INPUT.json\", \"/mnt/extdrive/workdir/htt_open_data/r27_remaining_science_frontier_independent_audit/EXACT_CALIBRATION_FACTOR_CONTRACT.md\", \"/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/RESULT.json\", \"/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/ROOT_ACCOUNT_HEAD_AFTER_REVIEW.json\"], \"owned_paths\": [\"/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric\"], \"requires\": {\"all\": [{\"task_id\": \"R27-CF4-UNIFORM-SUPPORT-CALIBRATION-QUOTIENT\", \"evidence\": \"completed\"}]}, \"contract_origin\": \"new_conditional_research\", \"promotes_original_acceptance\": false, \"implementation_route\": \"subagent_specialist\", \"contributors\": [\"/root/r27_remaining_science_frontier_independent_audit\"], \"accounting_parent_task_id\": \"R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE\", \"same_CF4_cap_seconds\": 600, \"prior_cumulative_seconds\": 201.29277764664457, \"consumer_cap_seconds\": 60, \"independent_review_cap_seconds\": 20, \"aggregate_cap_seconds\": 80, \"new_ultra_allocations\": 0, \"semantic_delta\": {\"kind\": \"method\", \"before\": {\"observable\": \"stored binary Khat only has nonzero numerical calibration residual and no uniform protection for unrestricted Gamma\", \"actual_source\": \"reviewed full35970-row selected-source full5 apparent numerical estimator\"}, \"after\": {\"observable\": \"new exact rational factored L Ddiff with within-channel integer contrasts, exact full5 actual saved-input evaluation and exact correction price\", \"model_scope\": \"uniformly annihilates fixed support-simplex additive calibration while N/B responses remain numerical and physical residual law UNKNOWN\"}, \"discriminator\": \"Changes stored functional and its evaluation arithmetic to algebraically remove an unbounded-Gamma leakage mechanism, rather than repeating old estimator or renaming a failed test.\", \"scope\": \"Fixed released-support calibration model only; no physical source-law, native solver or original acceptance promotion.\"}}, \"issue\": null, \"repair_plan\": null, \"repair_authorization\": null, \"resume_evidence\": null, \"scientific_resume\": null, \"transport_resume\": null, \"repair_input_transition\": null, \"authors\": [\"/root/r28_cf4_exact_factor_numeric\"], \"contributors\": [\"/root/r27_remaining_science_frontier_independent_audit\", \"/root/r28_cf4_exact_factor_numeric\"], \"history_refs\": [{\"phase\": \"execute\", \"packet_id\": \"3910317d169e1b024a10a246ff415f2f1faf918ac9a13db01042cf764febdd41\", \"receipt\": {\"path\": \"/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/WHOLE_COMMAND_RECEIPT.json\", \"sha256\": \"e6c07ad6b7463c3f660ac8bf0386fa090bd88a2b53d36aebbecac040c10cde02\"}, \"outcome\": \"success\", \"candidate_identity\": \"sha256:ce46049e719e15749ee9adf8b5101f5cb4f439de6751a6285fa26eeeb6920e02\"}], \"history_total\": 1}"
+  },
+  "agent_id": "/root/r28_cf4_exact_factor_actual_review"
+}

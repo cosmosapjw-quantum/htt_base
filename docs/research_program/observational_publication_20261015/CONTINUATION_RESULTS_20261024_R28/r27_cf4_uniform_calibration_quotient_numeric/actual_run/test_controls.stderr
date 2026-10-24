@@ -1,0 +1,17 @@
+test_exact_support_decomposition (__main__.QuotientControls.test_exact_support_decomposition) ... ok
+test_full_rank_uniform_invariance_and_cross_covariance (__main__.QuotientControls.test_full_rank_uniform_invariance_and_cross_covariance) ... FAIL
+test_rank4_rank0_and_unstable (__main__.QuotientControls.test_rank4_rank0_and_unstable) ... ok
+test_stf_decode_rotation (__main__.QuotientControls.test_stf_decode_rotation) ... ok
+
+======================================================================
+FAIL: test_full_rank_uniform_invariance_and_cross_covariance (__main__.QuotientControls.test_full_rank_uniform_invariance_and_cross_covariance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/test_controls.py", line 76, in test_full_rank_uniform_invariance_and_cross_covariance
+    self.assertLess(np.linalg.norm(k @ cross @ ka.T), 1e-24)
+AssertionError: np.float64(3.9630100305325295e-17) not less than 1e-24
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.008s
+
+FAILED (failures=1)

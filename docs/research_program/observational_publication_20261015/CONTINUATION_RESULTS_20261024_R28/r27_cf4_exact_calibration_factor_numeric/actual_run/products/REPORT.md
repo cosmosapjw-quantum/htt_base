@@ -1,0 +1,3 @@
+# Exact factored calibration observable
+
+The stored binary64 L and sparse integer differences define an exact rational five-component functional on the retained 35,970 rows. For each singleton channel, the reference is the minimum (d, group ID); mixed leverage is zero. The saved-input five-vector, exact correction, channel sums and D-weighted squared change are in RESULT.json. The displayed tensor uses the retained floating STF basis. KB/KN are numerical diagnostics. Exact protection is limited to the fixed released-support additive calibration family; unrestricted nuisance, physical/source effects and covariance remain unresolved.

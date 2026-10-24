@@ -1,0 +1,292 @@
+{
+  "schema": "htt.cf4_exact_factor_metadata_actual_closeout_input/1",
+  "controller_go": true,
+  "task_id": "R28-CF4-EXACT-CALIBRATION-FACTOR-ACTUAL-CONSUMER",
+  "agent_id": "/root/r28_exact_factor_metadata_actual_closeout",
+  "packet_id": "70ee95a8441c7c1b66bfaa80eeea67a6db7cc51d0e93d1fa98363eba2235a87e",
+  "input_identity": "sha256:db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5",
+  "candidate_identity": "sha256:289e3d4eed1bb3e89fb6dfe78751252dd7f97768a6ef7c2aa7fd260d79e1f044",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "transport_selected": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "whole_cap_seconds": 12.8,
+  "child_deadline_seconds": 7.8,
+  "bindings": {
+    "original_factor": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/products/FACTOR.npz",
+      "sha256": "b152c216d287d278014b3f94cbe0d3d1d74a1312cb42b2555d2bf59d47209a80"
+    },
+    "original_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/products/RESULT.json",
+      "sha256": "ce46049e719e15749ee9adf8b5101f5cb4f439de6751a6285fa26eeeb6920e02"
+    },
+    "frozen_input": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/INPUT.json",
+      "sha256": "db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5"
+    },
+    "candidate_factor": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/products/FACTOR.npz",
+      "sha256": "d57bd92c1d07466996f067352efdfa40310830ac78d82779fab2ee9c9ed641a7"
+    },
+    "candidate_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/products/RESULT.json",
+      "sha256": "289e3d4eed1bb3e89fb6dfe78751252dd7f97768a6ef7c2aa7fd260d79e1f044"
+    },
+    "review_packet_ack": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_exact_factor_dispatch/ACTUAL_ACKNOWLEDGED_METADATA_CLOSEOUT_PACKET.json",
+      "sha256": "d15c5a60ca2c4d71934b0a0b3995655d7619cf53edda292347a5d29f7aab7494"
+    },
+    "account_head": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_exact_factor_dispatch/ROOT_ACCOUNT_HEAD_AFTER_METADATA_REPAIR.json",
+      "sha256": "a0b36f5dc93e645d1bec3fefe48c512139241c202a7837798201d9db929e7650"
+    },
+    "output_path_binding": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_exact_factor_dispatch/ACTUAL_REPAIR_OUTPUT_PATH_BINDING.json",
+      "sha256": "68a7fcbc822223529954cee19964643d02cee5b914383617a4529512bd841943"
+    },
+    "repair_contract": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_research/REPAIR_CONTRACT.md",
+      "sha256": "4e41097df4c919f1adf7fdc128bf0ed60a2b5cb21ac2443db66d41c553fda01f"
+    },
+    "prior_review_checker": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_actual_review/check.py",
+      "sha256": "1c743cecc232c9c22d76191b5c49eee318f177a555ca92a389fb67dde19a29c4"
+    },
+    "prior_review_input": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_actual_review/REVIEW_INPUT.json",
+      "sha256": "a6d9631a473872b86f0badc57a17b8e9ccf28f1e0d92f0b1214591399dfc6dbd"
+    },
+    "historical_contract": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_remaining_science_frontier_independent_audit/EXACT_CALIBRATION_FACTOR_CONTRACT.md",
+      "sha256": "1ae79d17ba8ce31b10ac9a6182771b4dd9587f915b9b76999e6fa957fa28f4ba"
+    },
+    "historical_source_carrier": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/CARRIER.npz",
+      "sha256": "21763a9722c8375d593c1f0dcd68d42f31cb1952f22a4140a0df1eea285d6c28"
+    },
+    "historical_source_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/RESULT.json",
+      "sha256": "c5148c206e6ec7d5f0e69cbc3ab8dc2c0c2f815d3b304431e0aa0cd16e91883d"
+    },
+    "historical_source_input": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/INPUT.json",
+      "sha256": "570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd"
+    },
+    "historical_source_contract": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_remaining_science_frontier_independent_audit/NEXT_CONTRACT.md",
+      "sha256": "80611699ffb4226b295c5dcb3a0c8ba9e5526a3f807747a17f24ba53b06c2678"
+    },
+    "historical_source_clarification": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_remaining_science_frontier_independent_audit/PRE_ACK_CLARIFICATION.md",
+      "sha256": "52fea066faafef05cdbd7db391897861b9cb0fbf8ca8b35e17a2cf4ab1b59143"
+    },
+    "historical_source_review": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/RESULT.json",
+      "sha256": "369a975ea0e1e94ca30f3cfc313b6b70101e4dc4434e31e4b1172cdc90939735"
+    },
+    "historical_author_return": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/RETURN.json",
+      "sha256": "bcac9e5207fa5bee86e9a2f8150d1448dd3ac68d54b8ff494bf3add91a13b183"
+    },
+    "historical_author_receipt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/WHOLE_COMMAND_RECEIPT.json",
+      "sha256": "e6c07ad6b7463c3f660ac8bf0386fa090bd88a2b53d36aebbecac040c10cde02"
+    },
+    "historical_author_factor_source": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/factor.py",
+      "sha256": "cd7f3d4b4c629736b2a703a3ca85421872601859842e674af5485bc002fb84e4"
+    },
+    "historical_author_control_source": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/test_controls.py",
+      "sha256": "e07074a9a0900e73fa1e655f4450fb03fdc7d9c6921047decb003e372af9ab42"
+    },
+    "prior_review_receipt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_actual_review/WHOLE_COMMAND_RECEIPT.json",
+      "sha256": "b30f313cae7b71aa73248ca6cd7b1c70017a8130d20946773313a3a2bc9887b1"
+    },
+    "prior_review_stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_actual_review/check.stderr",
+      "sha256": "d66e7b7b960b7920682af678a6b826e659d4460d8c086a352a3c040100c2c2b0"
+    },
+    "repair_receipt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/WHOLE_COMMAND_RECEIPT.json",
+      "sha256": "645b2aeea2d2633aa7b7de73b7dbb9dbd9b43d7fad85c4ab6bea02f1131c1d63"
+    },
+    "repair_source": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/repair_metadata.py",
+      "sha256": "e3210eabb3d076962c33efcc5de94a059b1f1503841f70d787c904b8ebcfe165"
+    },
+    "repair_input": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/INPUT.json",
+      "sha256": "77d50d2b0b1bd49a71b8f9eccc4657dd79508083dcd64e231554d8dc0cba22d3"
+    },
+    "candidate_report": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/products/REPORT.md",
+      "sha256": "dff08b4d221b50d3c7cdffb8bda8900d2a908c141bd86eea1490c12d5ddf03c8"
+    },
+    "continuation_authorization": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_exact_factor_dispatch/ROOT_ACCOUNT_AND_VERIFIER_DTYPE_CONTINUATION.json",
+      "sha256": "a04b41325d7e726069cc888951629ded4e38ce4ba924b1a4a08a9a57d11caa83"
+    },
+    "instrumentation_failure_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/RESULT.json",
+      "sha256": "8b9f96842e512bd8460357d294efd08a017bf7c9f5357a7dc0f5ba3e4168edd8"
+    },
+    "instrumentation_failure_checker": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/check.py",
+      "sha256": "668dc499c5b44693e27949961ef0a3015c429363d6745111dae5d0d3d24f7cc9"
+    },
+    "instrumentation_failure_receipt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/WHOLE_COMMAND_RECEIPT.json",
+      "sha256": "ad73f5a67d15c86f096cd20736af4fbc8540f870929693528d47d90bfd60ec73"
+    },
+    "instrumentation_failure_stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/check.stderr",
+      "sha256": "45b8299051a94f7d0721948ead5e1e0facfbcb42f8d3c855954c2f454e0159b2"
+    },
+    "instrumentation_failure_input": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/REVIEW_INPUT.json",
+      "sha256": "0ac4f98bbb5d1f2ddde1ab0d82a38eb45dc0cf2f6789095944f42d795a845dbd"
+    }
+  },
+  "metadata_assertions": [
+    {
+      "path": [
+        "current_total_count"
+      ],
+      "derived": "exact_zero_count"
+    },
+    {
+      "path": [
+        "current_additional_outside_mixed_count"
+      ],
+      "derived": "current_extra_zero_count"
+    },
+    {
+      "path": [
+        "legacy_parent_extra_count"
+      ],
+      "derived": "legacy_extra_zero_count"
+    },
+    {
+      "path": [
+        "current_additional_row_indices"
+      ],
+      "derived": "current_extra_row_indices"
+    },
+    {
+      "path": [
+        "current_additional_group_ids"
+      ],
+      "derived": "current_extra_group_ids"
+    },
+    {
+      "path": [
+        "added_vs_legacy_row_indices"
+      ],
+      "derived": "added_row_indices"
+    },
+    {
+      "path": [
+        "added_vs_legacy_group_ids"
+      ],
+      "derived": "added_group_ids"
+    },
+    {
+      "path": [
+        "removed_vs_legacy_row_indices"
+      ],
+      "derived": "removed_row_indices"
+    },
+    {
+      "path": [
+        "removed_vs_legacy_group_ids"
+      ],
+      "derived": "removed_group_ids"
+    },
+    {
+      "path": [
+        "class"
+      ],
+      "equals": "NEW_ZERO_LEVERAGE_MASK_MISMATCH"
+    },
+    {
+      "path": [
+        "original_factor_sha256"
+      ],
+      "equals": "b152c216d287d278014b3f94cbe0d3d1d74a1312cb42b2555d2bf59d47209a80"
+    },
+    {
+      "path": [
+        "original_result_sha256"
+      ],
+      "equals": "ce46049e719e15749ee9adf8b5101f5cb4f439de6751a6285fa26eeeb6920e02"
+    },
+    {
+      "path": [
+        "first_failed_review_sha256"
+      ],
+      "equals": "4b654b613105679a0d3e0c93eed82d5c781afc44b37d336da05d59876c55b312"
+    },
+    {
+      "path": [
+        "repair_contract_sha256"
+      ],
+      "equals": "4e41097df4c919f1adf7fdc128bf0ed60a2b5cb21ac2443db66d41c553fda01f"
+    },
+    {
+      "path": [
+        "definition"
+      ],
+      "equals": "Current K_fact exact rational coefficients: mixed absent, all-zero stored L nonreferences, exact dyadic zero-sum references"
+    },
+    {
+      "path": [
+        "sbfm_witness_row_1484_group_11274_zero"
+      ],
+      "equals": true
+    },
+    {
+      "path": [
+        "exact_integer_dyadic_scale"
+      ],
+      "equals": "2^1074 for reference zero tests only"
+    },
+    {
+      "path": [
+        "factor_array_unchanged_bytes_comparison"
+      ],
+      "equals": "PASS_ALL_KEYS_EXCEPT_REPLACED_AND_ADDED_MASKS"
+    },
+    {
+      "path": [
+        "unchanged_json_fields_bit_comparison"
+      ],
+      "equals": "PASS_ALL_ORIGINAL_FIELDS_EXCEPT_FACTOR_SHA_AND_BYTES"
+    },
+    {
+      "path": [
+        "old_producer_controls_y_contraction_response_replayed"
+      ],
+      "equals": false
+    }
+  ],
+  "execution_scope": "Single targeted metadata check; no full actual contraction, B/N computation, producer or prior reviewer replay.",
+  "continuation": {
+    "explicit_root_go": true,
+    "same_acknowledged_packet": true,
+    "candidate_unchanged": true,
+    "original_failed_attempt_preserved": true,
+    "checker_change": "Only int64 predicate replaced with integer subtype predicate; parity and bounds unchanged",
+    "latest_cf4_used_seconds": 218.99277764664456,
+    "latest_review_used_seconds": 7.2,
+    "latest_review_remaining_seconds": 12.8,
+    "automatic_retry": false
+  }
+}

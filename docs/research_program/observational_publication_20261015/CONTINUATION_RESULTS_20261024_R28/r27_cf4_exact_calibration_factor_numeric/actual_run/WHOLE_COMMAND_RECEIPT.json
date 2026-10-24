@@ -1,0 +1,47 @@
+{
+  "schema": "htt.cf4_exact_factor_whole_invocation/1",
+  "status": "CHILDREN_EXITED_ZERO",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "all_started_commands": [
+    {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/test_controls.py"
+      ],
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/test_controls.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/test_controls.stderr",
+      "returncode": 0,
+      "reason": null,
+      "observed_monotonic_seconds": 0.32023193,
+      "peak_polled_rss_bytes": 32808960
+    },
+    {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/consume.py"
+      ],
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/consume.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/consume.stderr",
+      "returncode": 0,
+      "reason": null,
+      "observed_monotonic_seconds": 3.868392983,
+      "peak_polled_rss_bytes": 51306496
+    }
+  ],
+  "whole_limit_seconds": 60.0,
+  "child_deadline_seconds": 55.0,
+  "rss_limit_bytes": 2147483648,
+  "source_sha256": {
+    "factor.py": "cd7f3d4b4c629736b2a703a3ca85421872601859842e674af5485bc002fb84e4",
+    "consume.py": "6d9d94a2f6225e479f747a31dbd7c4c9f65ee86b62c7298b498f36b35f925d45",
+    "test_controls.py": "e07074a9a0900e73fa1e655f4450fb03fdc7d9c6921047decb003e372af9ab42",
+    "runner.py": "6390595630c410f3a18e2d3019f8f41130dbc84614b42ac343f95712cbc0d58c",
+    "INPUT.json": "db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5",
+    "DISPATCH_BINDING.json": "8f2f966311ad7d94ca4ec896795c6333053de353891a26909b472fd76923fb21"
+  },
+  "monotonic_through_products_fsync_seconds": 5.346858665,
+  "charge_rule": "max(controller whole API/host wall, external kernel elapsed, outer monotonic after receipt fsync); overlapping time charged once"
+}

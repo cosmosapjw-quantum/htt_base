@@ -1,0 +1,93 @@
+{
+  "schema": "htt.cf4_exact_factor_actual_consumer_return/1",
+  "task_id": "R28-CF4-EXACT-CALIBRATION-FACTOR-ACTUAL-CONSUMER",
+  "agent_id": "/root/r28_cf4_exact_factor_numeric",
+  "packet_id": "3910317d169e1b024a10a246ff415f2f1faf918ac9a13db01042cf764febdd41",
+  "input_identity": "sha256:db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "outcome": "success",
+  "status": "ACTUAL_SAVED_INPUT_FACTOR_AND_VALUE_PENDING_INDEPENDENT_REVIEW",
+  "candidate_identity": "sha256:ce46049e719e15749ee9adf8b5101f5cb4f439de6751a6285fa26eeeb6920e02",
+  "candidate_dir": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/products",
+  "raw_receipt": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/WHOLE_COMMAND_RECEIPT.json",
+    "sha256": "e6c07ad6b7463c3f660ac8bf0386fa090bd88a2b53d36aebbecac040c10cde02"
+  },
+  "resource_receipt": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/ACTUAL_LIFETIME_RESOURCE.txt",
+    "sha256": "1adaf198dcadede4413767cc0dd8434c0b67d98ed6385e53d08ce8782f06c583"
+  },
+  "dispatch_binding": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/DISPATCH_BINDING.json",
+    "sha256": "8f2f966311ad7d94ca4ec896795c6333053de353891a26909b472fd76923fb21"
+  },
+  "source_sha256": {
+    "factor.py": "cd7f3d4b4c629736b2a703a3ca85421872601859842e674af5485bc002fb84e4",
+    "consume.py": "6d9d94a2f6225e479f747a31dbd7c4c9f65ee86b62c7298b498f36b35f925d45",
+    "test_controls.py": "e07074a9a0900e73fa1e655f4450fb03fdc7d9c6921047decb003e372af9ab42",
+    "runner.py": "6390595630c410f3a18e2d3019f8f41130dbc84614b42ac343f95712cbc0d58c",
+    "INPUT.json": "db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5",
+    "DISPATCH_BINDING.json": "8f2f966311ad7d94ca4ec896795c6333053de353891a26909b472fd76923fb21"
+  },
+  "source_carrier_sha256": "21763a9722c8375d593c1f0dcd68d42f31cb1952f22a4140a0df1eea285d6c28",
+  "source_result_sha256": "c5148c206e6ec7d5f0e69cbc3ab8dc2c0c2f815d3b304431e0aa0cd16e91883d",
+  "validation": {
+    "control_batch": "PASS_ONE_BATCH",
+    "controls": [
+      "two singleton channels with mixed rows and one-row/empty channels",
+      "tiny exact nonzero channel leakage and unbounded Gamma witness",
+      "direct/correction parity with cancellation and subnormal",
+      "combined row/channel permutation with mapped deterministic references"
+    ],
+    "actual_saved_carrier": "PASS",
+    "source_rows": 35970,
+    "channels": 7,
+    "singleton_rows": 35026,
+    "mixed_structural_zero_rows": 944,
+    "nonreference_rows": 35019,
+    "exact_direct_correction_parity": true,
+    "factor_defined_by": "binary64 L interpreted as dyadic rationals times sparse integer D_diff",
+    "b_fact_components": 5,
+    "KB_rank_relative_tolerance": {
+      "1e-12": 5,
+      "1e-10": 5,
+      "1e-08": 5
+    },
+    "KB_minus_I_fro_numerical": 2.910753887385572e-15,
+    "KN_fro_numerical": 3.09126881657751e-15
+  },
+  "timing_seconds": {
+    "runner_outer_monotonic_after_receipt_fsync": 5.903654835,
+    "external_kernel_time_elapsed_display": "0:06.20",
+    "exec_command_host_wall": 6.511767623,
+    "caller_api_whole_wall": 6.924,
+    "charge_lower_bound_max_overlapping_once": 6.924,
+    "root_reconciliation_required": true
+  },
+  "resource": {
+    "kernel_max_rss_kib": 54204,
+    "rss_cap_bytes": 2147483648,
+    "blas_threads": 1,
+    "whole_cap_seconds": 60,
+    "independent_review_reserved_seconds": 20
+  },
+  "products": [
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/products/FACTOR.npz",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/products/RESULT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/products/REPORT.md"
+  ],
+  "product_sha256": {
+    "FACTOR.npz": "b152c216d287d278014b3f94cbe0d3d1d74a1312cb42b2555d2bf59d47209a80",
+    "RESULT.json": "ce46049e719e15749ee9adf8b5101f5cb4f439de6751a6285fa26eeeb6920e02",
+    "REPORT.md": "c44c283897c0bb5e5c6bc78e5ad2f464e421be902220156c1d7e3c7dff0c738f"
+  },
+  "qualified_products": [],
+  "independent_actual_result_review": "PENDING",
+  "claim_ceiling": "exact on serialized binary64 input and fixed seven-channel support-simplex additive calibration family only; physical response, residual covariance, unrestricted nuisance, selection/PV/null and H02/H03 remain UNKNOWN/HOLD",
+  "preserved_states": {
+    "source_physical_H02_H03": "HOLD_UNCHANGED",
+    "native_solver_family": "NOT_ADMITTED",
+    "unrestricted_nuisance": "UNKNOWN"
+  }
+}

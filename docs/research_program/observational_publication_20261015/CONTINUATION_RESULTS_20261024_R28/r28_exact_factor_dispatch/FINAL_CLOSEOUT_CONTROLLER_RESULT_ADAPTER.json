@@ -1,0 +1,238 @@
+{
+  "schema": "htt.cf4_exact_factor_metadata_actual_closeout_result/1",
+  "task_id": "R28-CF4-EXACT-CALIBRATION-FACTOR-ACTUAL-CONSUMER",
+  "agent_id": "/root/r28_exact_factor_metadata_actual_closeout",
+  "packet_id": "70ee95a8441c7c1b66bfaa80eeea67a6db7cc51d0e93d1fa98363eba2235a87e",
+  "input_identity": "sha256:db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5",
+  "candidate_identity": "sha256:289e3d4eed1bb3e89fb6dfe78751252dd7f97768a6ef7c2aa7fd260d79e1f044",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "transport_selected": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "outcome": "success",
+  "status": "SCOPED_PASS_EXACT_FACTOR_METADATA_AND_ACTUAL_RESULT_CLOSEOUT",
+  "acceptance_met": true,
+  "acceptance_scope": "Metadata repair and exact-factor finite-input actual-result closeout under the frozen scientific contract, with previously reached exact-value/numerical-response checks transferred by complete unchanged-payload parity",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/attempt2/WHOLE_COMMAND_RECEIPT.json",
+  "raw_receipt_sha256": "64de017c475adaceb73f78b6d06c3bdc466fec87a6035aaa6e8a219228f96e6b",
+  "qualified_products": [],
+  "validation_evidence": {
+    "targeted_numeric_check": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/attempt2/NUMERIC_CHECK.json",
+      "sha256": "9135ec851a3d5fef60c8a0fd81ce07fccc719b0f17ba4db3e04fac49fcd01d0e"
+    },
+    "checker_source": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/attempt2/check.py",
+      "sha256": "dbf7906b8334a2bd3461f24391bc581fa49f5cd3e6cb373836f1cbe385506e31"
+    },
+    "checker_change_from_preserved_attempt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/attempt2/CHECKER_DIFF.patch",
+      "sha256": "f7a243def8138e727be0f322cae963d6d713bb51fb55a74ba2f284e229c5e19f"
+    },
+    "raw_stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/attempt2/check.stdout",
+      "sha256": "84183fac78f2c649132be0bb7b8fe450b6ccbc3ffbf65fe852cae2a2ef8f73ac"
+    },
+    "raw_stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/attempt2/check.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "review_input": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/attempt2/REVIEW_INPUT.json",
+      "sha256": "6b82a585e1fedea563aab9450a67e0f41114c1c323204ec065ffc8a10d4c244b"
+    },
+    "kernel_resource_receipt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/attempt2/ACTUAL_LIFETIME_RESOURCE.txt",
+      "sha256": "fd744bdd8135643cc64ae0477267c301f720f19eee498bb5cc4b8908ed2cf006"
+    },
+    "all_targeted_checks_passed": true,
+    "independent_algorithm": "IEEE binary64 bit decomposition into integer multiples of 2^-1074; exact per-channel L sums",
+    "mask_counts_and_mismatch": {
+      "row_count": 35970,
+      "mixed_zero_count": 944,
+      "legacy_extra_zero_count": 0,
+      "current_extra_zero_count": 1,
+      "exact_zero_count": 945,
+      "effective_nonzero_count": 35025,
+      "current_extra_row_indices": [
+        1484
+      ],
+      "current_extra_group_ids": [
+        11274
+      ],
+      "added_row_indices": [
+        1484
+      ],
+      "added_group_ids": [
+        11274
+      ],
+      "removed_row_indices": [],
+      "removed_group_ids": []
+    },
+    "full_cohort_ids_and_order_preserved": true,
+    "effective_group_ids_count": 35025,
+    "effective_group_ids_sha256_int64_le": "d3386c617c189d2af138501ea587f46bad6e8b8885412abaa4a3a695036daf82",
+    "all_unaffected_array_names": [
+      "L_binary64",
+      "STF_basis_5x3x3",
+      "active_singleton_mask",
+      "channel_names",
+      "d_binary64",
+      "difference_reference_row_index",
+      "group_id",
+      "mixed_zero_leverage_mask",
+      "nonreference_channel",
+      "nonreference_row_index",
+      "reference_row_by_channel",
+      "selected_support_7",
+      "y_binary64"
+    ],
+    "all_unaffected_result_fields": [
+      "actual_direct_correction_exact_parity",
+      "channel_row_counts",
+      "claim_ceiling",
+      "complete_3x3_tensor_display_in_saved_basis",
+      "display_b_fact",
+      "exact_b_fact",
+      "exact_change_b_fact_minus_old",
+      "exact_channel_sums_7x5",
+      "exact_delta_D_sq",
+      "exact_display_minus_b_fact",
+      "exact_old_Khat_y",
+      "exact_parent_b_min_minus_old",
+      "factor",
+      "index_base",
+      "nonreference_count",
+      "parent_b_min_binary64",
+      "reference_group_id_by_channel",
+      "reference_row_by_channel",
+      "response_numerical",
+      "schema",
+      "source",
+      "status"
+    ],
+    "all_unchanged_arrays_bit_identical": true,
+    "all_unchanged_json_fields_type_value_and_float_bits_identical": true,
+    "exact_support_factor_identity_and_partition": true,
+    "all_three_mask_semantics_verified": true,
+    "complete_mismatch_set_verified": true,
+    "combined_row_channel_reference_remapping": true,
+    "boundary_controls": {
+      "one_row_channel": true,
+      "empty_channel": true,
+      "exact_reference_cancellation": true,
+      "signed_zero": true,
+      "nonzero_subnormal_column": true,
+      "exact_subnormal_contrasts": true,
+      "tiny_nonzero_unbounded_scaling_witness": true
+    },
+    "all_bound_sources_and_candidates_unchanged_after_check": true,
+    "full_actual_contraction_response_or_producer_replayed": false,
+    "previously_reached_checks_transferred": [
+      "exact five-component direct/correction values",
+      "exact old contraction and channel sums",
+      "exact correction price",
+      "display errors and tensor",
+      "full numerical B/N responses and reported diagnostics"
+    ]
+  },
+  "preserved_failures": [
+    {
+      "classification": "ORIGINAL_CANDIDATE_ZERO_LEVERAGE_METADATA_FAILURE",
+      "result": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_actual_review/RESULT.json",
+        "sha256": "4b654b613105679a0d3e0c93eed82d5c781afc44b37d336da05d59876c55b312"
+      },
+      "raw_stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_actual_review/check.stderr",
+        "sha256": "d66e7b7b960b7920682af678a6b826e659d4460d8c086a352a3c040100c2c2b0"
+      },
+      "relabelled_pass": false
+    },
+    {
+      "classification": "REVIEWER_INSTRUMENTATION_UNCONTRACTED_INT64_REQUIREMENT",
+      "result": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/RESULT.json",
+        "sha256": "8b9f96842e512bd8460357d294efd08a017bf7c9f5357a7dc0f5ba3e4168edd8"
+      },
+      "raw_receipt": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/WHOLE_COMMAND_RECEIPT.json",
+        "sha256": "ad73f5a67d15c86f096cd20736af4fbc8540f870929693528d47d90bfd60ec73"
+      },
+      "raw_stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/check.stderr",
+        "sha256": "45b8299051a94f7d0721948ead5e1e0facfbcb42f8d3c855954c2f454e0159b2"
+      },
+      "checker_source": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/check.py",
+        "sha256": "668dc499c5b44693e27949961ef0a3015c429363d6745111dae5d0d3d24f7cc9"
+      },
+      "candidate_scientific_failure_established": false,
+      "relabelled_pass": false,
+      "explicit_continuation_authorization": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r28_exact_factor_dispatch/ROOT_ACCOUNT_AND_VERIFIER_DTYPE_CONTINUATION.json",
+        "sha256": "a04b41325d7e726069cc888951629ded4e38ce4ba924b1a4a08a9a57d11caa83"
+      }
+    }
+  ],
+  "accounting": {
+    "parent_task_id": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+    "authentic_prelaunch_head": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_exact_factor_dispatch/ROOT_ACCOUNT_AND_VERIFIER_DTYPE_CONTINUATION.json",
+      "sha256": "a04b41325d7e726069cc888951629ded4e38ce4ba924b1a4a08a9a57d11caa83"
+    },
+    "prelaunch_cf4_used_seconds": 218.99277764664456,
+    "prelaunch_consumer_used_seconds": 10.5,
+    "prelaunch_review_used_seconds": 7.2,
+    "authorized_continuation_whole_cap_seconds": 12.8,
+    "child_deadline_seconds": 7.8,
+    "numeric_starts_in_this_continuation": 1,
+    "numeric_starts_in_this_closeout_including_preserved_instrumentation_failure": 2,
+    "explicitly_authorized_continuation": true,
+    "automatic_retry": false,
+    "observations_seconds": {
+      "api_wall": 2.272,
+      "exec_host_wall": 1.6801928149999998,
+      "kernel_elapsed": 1.73,
+      "child_reaped": 1.260147799,
+      "through_products_fsync": 1.294778595,
+      "outer_after_receipt_fsync": 1.695555751
+    },
+    "polled_combined_peak_rss_bytes": 71311360,
+    "child_lifetime_maxrss_kib": 51760,
+    "rss_cap_bytes": 2147483648,
+    "BLAS_threads": 1,
+    "settlement_owner": "root",
+    "settlement_rule": "Charge each started command once; use maximum overlapping observations, separately label conservative padding; no cumulative account reset.",
+    "timing_intervals_overlap_do_not_sum": true
+  },
+  "claim_ceiling": "Exact cancellation for the stored rational L D_diff functional on the fixed seven-channel support-simplex additive calibration model, with actual five-vector and response evidence preserved by exact unchanged-payload comparisons. No exact KN=0 or KB=I, no physical-response or residual-covariance certification, no selection/PV/null or unrestricted-nuisance solution, no native-family identification or four-axis CAS admission. Original H02/H03/H04 acceptances remain UNKNOWN/HOLD.",
+  "promotes_original_acceptance": false,
+  "new_scientific_candidate_or_allocation_created": false,
+  "next_executable_checkpoint": "Root settles this same review packet and admits only the scoped changed candidate; then recompute the dependency-safe next authorized action while retaining original scientific holds.",
+  "reviewed_product_descriptors": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/products/FACTOR.npz",
+      "sha256": "d57bd92c1d07466996f067352efdfa40310830ac78d82779fab2ee9c9ed641a7",
+      "role": "exact rational factored observable with independently verified leverage masks",
+      "qualification_scope": "Fixed serialized-input seven-channel support-simplex additive calibration family only"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/products/RESULT.json",
+      "sha256": "289e3d4eed1bb3e89fb6dfe78751252dd7f97768a6ef7c2aa7fd260d79e1f044",
+      "role": "unchanged actual exact five-vector and numerical response fields with corrected mask metadata",
+      "qualification_scope": "Fixed serialized-input seven-channel support-simplex additive calibration family only"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/products/REPORT.md",
+      "sha256": "dff08b4d221b50d3c7cdffb8bda8900d2a908c141bd86eea1490c12d5ddf03c8",
+      "role": "metadata-repair scope report",
+      "qualification_scope": "Fixed serialized-input seven-channel support-simplex additive calibration family only"
+    }
+  ]
+}
