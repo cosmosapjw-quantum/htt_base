@@ -1,0 +1,41 @@
+# First-report scope and source accounting
+
+This file is companion editorial metadata. It is not part of the rendered scientific narrative and does not change any original scientific acceptance.
+
+## Deliverable and cutoff
+
+English REVTeX4-2 preprint report, dated 24 October 2026, with six main sections, two substantive appendices and a figure atlas. The author/affiliation fields are intentionally omitted because no author identity was supplied. The report collects existing results; no observational fit, physical simulation, posterior draw or production analysis was rerun to write it. Label-only rendering and reversible layout crops are builder operations recorded separately.
+
+The source intake includes the original six-paper campaign, the continuation, open-input experiments, frontier and subsequent mathematical/observational studies, and the latest retained external numerical results supplied by the parent. The current three unfinished selected-law, final-group-operator and native spin-2 consumers are excluded from empirical claims. A failed seven-frequency projection produced no seven-frequency carrier and is not a scientific result. The retained four-frequency tensor projection is reported at its finite numerical component scope.
+
+## Scientific coverage
+
+- Framework: full tensor and covariance information; signed shear/vorticity/tilt/curvature projection; gauges, image sets, directional support, strict exceedance, unknown mass and floored depth summaries. Physical normalization, parity and congruence conventions are explicit.
+- Distance indicators: 35,970-group effective expansion fits and their full four-window covariance; the distinct 628-target/274-distance experiment; covariance-dependent predictive rankings; optical STF images; finite missingness, density ratios and auxiliary-balance infeasibility; 2,048-point joint finite measures; conditional density ratios; FP pooling and membership counterexamples; upstream TF ancestry, calibration geometry, host-flow proxies, error-only mocks and joint ladder calibration.
+- Supernovae: released total covariance consumed once; inadequate early baseline and nominal-fit parity failure; covariance-aware directional fits; source simulations, same-host covariance and the source-conditioned SH0ES baseline. The source-dependent Union3--DESI prior-removal calculation is retained as sensitivity, with its unresolved released-matrix/code binding.
+- Astrometry: selected-cohort completion, full 24-coordinate reported-depth state, cross-covariance, covariance inflation, bias frontiers and oracle power; pair geometry and common-spin kernel; finite source-quotient numerical bounds under the stated Gaussian and arithmetic models; source-property support failure; full Gaia/radio dependence envelopes and synthetic coverage failures.
+- CMB: complete real harmonics/STF coordinates, finite processing leakage, original shape/orientation descriptors, matched split pilots, orbit distances and scalar-equal counterexamples; chirality of the processed E carriers; Gram-preserving conditional reference laws; shared contamination and spectral null spaces; retained four-frequency full E/B tensor contrasts. The CLASS finite split-noise rank sensitivity remains conditional on assumed score error and reference-law assumptions.
+- Physical interpretation: positive stress/acceleration relation, local optical moment and nonlinear finite response, boost/congruence distinctions, finite delivered-source response, two-redshift and projected history geometry; moving-lens compression failure; temperature-only external template representation and its absent polarization/frame limits.
+- Mathematical appendix: joint images and coverage; support and gauge stability; finite missingness and density endpoints; calibration/Farkas geometry; covariance domination, worst-case dependence and rank-aware trust regions; conditional density-ratio validity and nuisance envelopes; rotation/Gram/chirality arguments; pair-kernel and shared-source covariance identities. Typed ratio inversion, shared-nuisance weak duality, rotating-rest-space curvature caveats and the two-field perturbation test are mathematical methods, not additional observational outcomes.
+
+## Figure accounting
+
+The builder inventory contains 104 distinct stem families and preserves 185 original format files. The authored caption map includes 93 families in the atlas and excludes 11 superseded/erroneous historical candidates, each with an explicit scope exception. Controls are included with their synthetic or analytic status stated. Duplicate formats are preserved as variants, not counted as independent scientific results. The recovered projection figure is included after a layout-only asymmetric crop that preserves its axes and data. No pixel masking or numerical refit is authorized by the authoring task.
+
+The spectral-nullspace figure describes a finite 168-to-24 operator and must not be read as an observed seven-frequency result. The four-frequency figure describes a separate stored 96-coordinate projection. The all-unknown physical exceedance figure retains unknown mass one, and its displayed filling-fraction upper interval at threshold one is expressly conservative rather than sharp. Numerical-only latest results have no invented figure; their tables/prose and original JSON remain in the source map.
+
+`FIGURE_CAPTIONS.json` gives the authored scientific meaning and every exclusion. `FIGURE_INVENTORY.json` is the builder's source/render inventory, with immutable originals, hashes, review links and transformations. A related script inferred from directory proximity is not automatically the original generating procedure; confirmed external render scripts are distinguished from those candidates.
+
+## Claim and review boundaries
+
+Every numerical paragraph/table block is indexed to generated source families in `NUMERICAL_CLAIM_SOURCES.json`; mathematical constants and model specifications are distinguished from observations. The map also binds every figure and bibliography record. It embeds exact older-source JSON pointers where supplied by the intake and preserves original review scope for newer sources. The intake itself is not independent review. This index supports source review; it is not a new automatic verification of all numerical claims.
+
+A marginal printed-modulus feasibility result is not simultaneous modulus/error feasibility, a producer-stage law, or a selection model. The 1490017 deletion-only counterexample is not a universal-stage proof. The 35,970-group/four-window, 274-distance and Gaia pair-source experiments retain separate estimands. The 60 processed CMB carriers are E pseudo-modes; no physical B-parity inference follows implicitly. Conditional Gaussian confidence statements remain conditional, including the finite source-quotient tail and mean ball.
+
+The staged four-frequency numerical components have a separate reuse review. The original whole-execution RSS condition is UNKNOWN because sampled VmRSS did not establish the full run; this is neither proof of an exceedance nor evidence that the numerical tensor is wrong. No whole-node acceptance is claimed. All existing original campaign acceptances, historical failures, frozen budgets and R9 state remain unchanged.
+
+No new native Boltzmann/ODE calculation, Bianchi-family identification, model-independent posterior, physical common-source likelihood, physical exceedance calibration, four-axis CAS validation, manuscript submission or publication is claimed. Root controls final PDF verification, independent review, packaging and subsequent research continuation.
+
+## Literature and writing review
+
+Primary-source bibliography notes are the default source. New moving-lens, SH0ES reanalysis, software and Union3 source identities were checked against their primary pages; recent cosmography metadata were separately checked by the parent. Bibliographic metadata does not prove a theorem or validate empirical interpretation. The user-invoked personal research-writing protocol guided clear scientific prose while leaving equations, assumptions and claim ceilings intact. The parent's AcademicWritingToolkit records are preserved separately; parser limitations and stylistic flags do not constitute scientific verdicts.

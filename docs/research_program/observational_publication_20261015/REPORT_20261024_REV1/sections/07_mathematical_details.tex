@@ -1,0 +1,215 @@
+\section{Mathematical details and boundary cases}
+\label{app:math}
+
+The statements below collect the arguments used in the report. They are elementary consequences of the explicit assumptions or specializations of the cited methods. No claim of new mathematical priority or of a universal numerical certificate is made.
+
+\subsection{Kinematic normalization and the optical moment}
+
+With proper length $s=c\tau$, the decomposition consistent with physical rates is
+\begin{equation}
+ \nabla_a u_b=-u_a\frac{A_b}{c^2}
+ +\frac{H}{c}h_{ab}+\frac{\sigma_{ab}}{c}+\frac{\omega_{ab}}{c}.
+\end{equation}
+Thus contraction with a null direction produces inverse-length rates before multiplication by $c$. With $n$ directed toward the source and the corresponding null-direction convention, this gives Eq.~\eqref{eq:localoptical}. Antisymmetry removes the vorticity contraction. The axial-vector definition gives $\omega_{ab}=\epsilon_{abc}\omega^c$ in the chosen Euclidean spatial frame and $\omega_{ab}\omega^{ab}=2\omega_a\omega^a$. A tensor-norm vorticity budget must retain this factor.
+
+Rotational symmetry implies
+\begin{equation}
+ \langle n_an_bn_cn_d\rangle
+ =C(\delta_{ab}\delta_{cd}+\delta_{ac}\delta_{bd}+\delta_{ad}\delta_{bc}).
+\end{equation}
+Double contraction gives $1=15C$. Contracting with an STF tensor twice yields $\langle(\sigma:nn)^2\rangle=2\sigma:\sigma/15$, proving Eq.~\eqref{eq:opticalidentity}. The reconstruction formula follows by contracting once. The interval in Eq.~\eqref{eq:shearinterval} follows from the triangle inequality and the joint positive $H$ bounds. No finite-redshift remainder bound follows from smoothness alone.
+
+For Eq.~\eqref{eq:acceleration}, $z^TMz\geq\varepsilon\|z\|^2$ proves invertibility and Eq.~\eqref{eq:accelbound}. If $M'=M+\Delta M$, then $\|M'^{-1}\|\leq(m-\eta)^{-1}$ and $M'^{-1}-M^{-1}=-M'^{-1}\Delta M M^{-1}$. Applying these inequalities separately to $\Delta g$ and the inverse change proves Eq.~\eqref{eq:accelperturb}.
+
+\subsection{Joint images, anchors, support, and floors}
+
+Equation~\eqref{eq:jointimage} is a deterministic implication on one coverage event. For several regions on the same state, the union bound gives
+\begin{equation}
+ \Prob\{Z\in\cap_j C_j\}\geq1-\sum_j\alpha_j
+\end{equation}
+without independence. Regions for different physical targets cannot be intersected before defining their common state and response.
+
+If $rB\subseteq\mathcal A\subseteq RB$ with $0<r\leq R<\infty$, then convexity and balance make $\gamma_{\mathcal A}$ a norm and
+\begin{equation}
+ |\gamma_{\mathcal A}(v)-\gamma_{\mathcal A}(w)|
+ \leq\gamma_{\mathcal A}(v-w)\leq\frac{\|v-w\|}{r}.
+\end{equation}
+For an uncertain anchor satisfying $(1-\eta)\mathcal A\subseteq\mathcal A'\subseteq(1+\eta)\mathcal A$, $0\leq\eta<1$, inclusion reverses gauges:
+\begin{equation}
+ \frac{\gamma_{\mathcal A}(v)}{1+\eta}
+ \leq\gamma_{\mathcal A'}(v)
+ \leq\frac{\gamma_{\mathcal A}(v)}{1-\eta}.
+\end{equation}
+A nonbalanced anchor requires one-sided gauges. An absent anchor supplies none of these hypotheses. Simultaneously rotating state and anchor preserves the gauge by its membership definition.
+
+For an ellipsoid plus a coefficient-bias ball,
+\begin{equation}
+ K=\hat\mu+A\delta B_2+U^{1/2}(\rho B_2),\qquad U\succeq0,
+\end{equation}
+linear support is exactly
+\begin{equation}
+ h_K(a)=a^T\hat\mu+\delta\|A^Ta\|+\rho\sqrt{a^TUa}.
+ \label{eq:support}
+\end{equation}
+Each term is the maximum of a linear functional over one summand. In general the maximizing states differ with direction; coordinatewise maxima cannot all be assumed jointly attained. A norm bound obtained from the largest covariance eigenvalue is a conservative outer bound, not automatically the sharp nonlinear image.
+
+For the floored ratio $g(a,b)=\max(a,\delta)/\max(b,\delta)$ on $[0,1]^2$,
+\begin{equation}
+ |g(a,b)-g(a',b')|
+ \leq\frac{|a-a'|}{\delta}+\frac{|b-b'|}{\delta^2}.
+\end{equation}
+The floor makes the map continuous but can amplify uncertainty. An undefined fraction remains undefined before applying it. For illustration, bin draws $(0.1,0.9)$ and $(0.2,0.8)$ both average to $0.5$, so the ratio of their means is one, whereas the mean of their paired ratios is $13/9$. The operations do not commute.
+
+\subsection{Ratios and the order of shared-nuisance operations}
+
+A ratio is a typed image of a joint state. Let $C(y)\subset\mathbb R^2$ cover $(N,D)$ jointly with probability at least $1-\alpha$. A Fieller-type inversion of this common event is
+\begin{equation}
+ \mathcal R(C)=\{r\in\mathbb R:\exists d\ne0\text{ with }(rd,d)\in C\}.
+\end{equation}
+If the true denominator is nonzero, the joint coverage event implies $N/D\in\mathcal R(C)$. This proves the corresponding coverage statement without dividing separate marginal intervals. For a Gaussian ellipse the intersections can be computed from its quadratic form, but an intersection only at $(0,0)$ does not admit a finite ratio: the condition $d\ne0$ must be enforced before taking any closure. The image may be empty, disconnected, open, or unbounded. Points with $D=0$ retain a separate undefined-denominator label; $(0,0)$ remains indeterminate. These definitions specify a proposed ratio-analysis method, not a further data result in this report.
+
+For a real payoff $f(a,\eta)$ on nonempty admissible sets, with its extrema defined in the extended real sense,
+\begin{equation}
+ \sup_a\inf_\eta f(a,\eta)\leq\inf_\eta\sup_a f(a,\eta).
+\end{equation}
+Indeed, $\inf_{\eta'}f(a,\eta')\leq f(a,\eta)\leq\sup_{a'}f(a',\eta)$ for every pair; taking the indicated bounds proves weak duality. Equality requires additional conditions, such as an applicable saddle-point theorem. A physical nuisance shared across windows must therefore remain one common variable. Optimizing it independently for each window, exchanging minimization and maximization, or replacing a union by an intersection changes the question unless a separate argument permits that operation.
+
+\subsection{Rest spaces, parity, and curvature}
+
+An antipodally even weight, $w(n)=w(-n)$, cancels odd angular moments. It does not imply rotational invariance or an isotropic second moment. Likewise, the instantaneous rest spaces orthogonal to a timelike congruence are not automatically spatial hypersurfaces. By the Frobenius condition, nonzero vorticity obstructs their local hypersurface integrability. A hypersurface scalar curvature cannot then be imported into $\Delta\Omega_k$ without specifying an appropriate spatial geometry and curvature definition. This report uses the curvature contribution only as a stated same-frame functional; it does not supply a general rotating-rest-space curvature closure. A projected-connection definition and its physical observation map remain necessary before that term can be evaluated.
+
+\subsection{Finite missingness and density-ratio endpoints}
+
+For $N=n+M$ fixed targets with $m$ observed binary successes, unrestricted missing indicators have every integer sum $k\in\{0,\ldots,M\}$. Therefore the exact fraction set is $\{(m+k)/N\}$; its hull width is $M/N$. This proves Eq.~\eqref{eq:finiteidentified} without a probability model for missingness.
+
+For the observed empirical event fraction $e$, let its reweighted mass be $z$. The event and complement constraints give
+\begin{equation}
+ e/\Gamma\leq z\leq\Gamma e,\qquad
+ 1-\Gamma(1-e)\leq z\leq1-(1-e)/\Gamma.
+\end{equation}
+Their intersection is Eq.~\eqref{eq:selectionbounds}. For $0<e<1$, set the weight to $z/e$ on the event and $(1-z)/(1-e)$ on its complement. This attains every point in the interval. At $e=0$ or 1 the event mass is fixed. Consequently the unrestricted $\Gamma\to\infty$ hull becomes $[0,1]$ only for interior $e$; endpoint cases retain their endpoint-specific missingness intervals. Across thresholds, the same outcome implies nested exceedance events. Pointwise sharp bounds need not share one attaining law.
+
+The unknown-mass bounds in Eq.~\eqref{eq:unknownmass} follow by putting all unknown mass below or above the threshold. If instead $q_i\in[\ell_i,r_i]$ jointly, then simultaneous strict-tail outer bounds are
+\begin{equation}
+ \sum_i p_i\ind\{\ell_i>t\}\leq\Pi(t)
+ \leq u+\sum_i p_i\ind\{r_i>t\}.
+\end{equation}
+The same joint event supplies all thresholds. A confidence-region image does not become a posterior by normalization.
+
+\subsection{Calibration geometry and transport}
+
+Let auxiliary columns $h_i$ have first coordinate one, let $H$ collect the observed columns, and let $t$ be the finite-target mean. Nonnegative normalized weights satisfying $Hp=t$ exist if and only if $t\in\operatorname{conv}\{h_i\}$. Strictly positive weights on every observed column exist if and only if $t$ is in the relative interior. Necessity follows from a supporting face. For sufficiency, mix a nearby point in the hull with a small positive amount of the uniform observed mean.
+
+Infeasibility has a separating witness $H^T\lambda\geq0$, $t^T\lambda<0$. For a nonempty hull, take its closest point $c$ to $t$ and $a=c-t$. Then $a^Th_i\geq a^Tc$, whereas $a^Tt=a^Tc-\|a\|^2$. Subtracting $(a^Tc)$ times the constant coordinate gives the stated witness. Empty observed support is handled separately.
+
+Within a cell of prescribed mass $m_c$ and observed count $n_c>0$, Cauchy--Schwarz gives $\sum_{i\in c}p_i^2\geq m_c^2/n_c$, with equality at uniform within-cell weights. Its reciprocal concentration is not a count of independent observations. If an outcome tensor satisfies $T_u=Bh_u+e_u$, exact balance yields
+\begin{equation}
+ \overline T_U-\sum_{i\in O}p_iT_i
+ =\overline e_U-\sum_{i\in O}p_ie_i.
+\end{equation}
+Thus auxiliary balance identifies the target mean only with additional control of the remainder. Applying identical weights to all components preserves a joint atomic law and commutes with a common linear rotation. It does not prove a survey transport law.
+
+\subsection{Covariance domination and worst-case dependence}
+
+For $\E d=0$, $C=\operatorname{Cov}(d)\preceq V\succ0$, and $d\in\R^r$,
+\begin{equation}
+ \E(d^TV^{-1}d)=\tr(V^{-1}C)\leq r.
+\end{equation}
+Markov's inequality gives $\Prob(d^TV^{-1}d\geq r/\alpha)\leq\alpha$. Under a centred Gaussian law, the quadratic has distribution $\sum_i\lambda_iZ_i^2$ with $0\leq\lambda_i\leq1$, which is stochastically bounded by $\chi_r^2$ using the same independent standard normal coordinates. Nonzero mean introduces a mean-square term and changes the null.
+
+For Eq.~\eqref{eq:covsensitivity}, $A$ has full row rank, so differentiation with respect to $q=\tau^2$ gives
+\begin{equation}
+ \frac{dT}{dq}=-d^TV_\tau^{-1}AA^TV_\tau^{-1}d<0\quad(d\ne0).
+\end{equation}
+Every positive threshold below the initial statistic has one crossing. A threshold already above the initial statistic has no nonnegative crossing.
+
+If only marginal covariance blocks $C_j$ are known, arbitrary dependence gives the sharp scalar bound
+\begin{equation}
+ \operatorname{Var}\left(\sum_j a_j^TX_j\right)
+ \leq\left(\sum_j\sqrt{a_j^TC_ja_j}\right)^2.
+ \label{eq:worstdependence}
+\end{equation}
+Covariance Cauchy--Schwarz proves the upper bound. To attain it, align all nonzero projected fluctuations with one shared unit-variance scalar, while adding orthogonal residuals to reproduce each $C_j$. A separate extremizer for each projection is not one joint maximizer for every tensor functional. These results motivate covariance sensitivity rather than invented cross blocks \cite{CocciPlagborg2025}.
+
+\subsection{Bias minimization with rank loss}
+
+Whiten Eq.~\eqref{eq:bias} as $z=V^{-1/2}d$, $B=V^{-1/2}A$. Write the compact positive-rank SVD $B=U_k\diag(s_i)W_k^T$, and $y=U_k^Tz$. The objective is
+\begin{equation}
+ \sum_{i=1}^k(y_i-s_ic_i)^2+
+ \|(I-U_kU_k^T)z\|^2.
+\end{equation}
+The orthogonal residual is retained. If the unconstrained minimum-norm solution lies outside the radius, a unique positive multiplier satisfies
+\begin{equation}
+ c_i=\frac{s_iy_i}{s_i^2+\lambda},\qquad
+ \sum_i\frac{s_i^2y_i^2}{(s_i^2+\lambda)^2}=\delta^2.
+\end{equation}
+The secular function is decreasing whenever a constrained nonzero solution is required. Zero radius and zero rank are evaluated directly. If $A$ has full row rank, the radius for zero residual is $\|A^T(AA^T)^{-1}d\|$. With deficient rank, a nonzero orthogonal residual may remain at every radius; a pseudoinverse norm alone cannot certify zero residual. This is the standard trust-region geometry \cite{MoreSorensen1983}.
+
+\subsection{Conditional density ratios and nuisance envelopes}
+
+For a fixed training sigma-field $\mathcal T$, suppose $q(\cdot\mid\mathcal T)$ is nonnegative, normalized, and training-measurable. Let $D$ dominate every conditional null density with respect to the same measure. Then
+\begin{equation}
+ \E_\theta\left[\left.\frac{q(Y\mid\mathcal T)}{D(Y\mid\mathcal T)}\right|\mathcal T\right]
+ =\int q\frac{p_\theta}{D}\leq1.
+\end{equation}
+Infinite denominators give ratio zero; zero-denominator sets of null measure are specified separately. For a union null, the denominator must dominate each family, so a maximum of family suprema is appropriate. An average need not dominate them. Fixed convex averages of dependent valid ratios remain valid by linearity; products or selected maxima do not in general \cite{Wasserman2020}.
+
+For a Gaussian conditional null, partition a covariance shape $V_s$ into training $T$ and validation $J$. Put $A_s=V_{JT}V_{TT}^{-1}$, $S_s=V_{JJ}-V_{JT}V_{TT}^{-1}V_{TJ}\succ0$, $r_s=y_J-A_sy_T$, and $Z_s=X_J-A_sX_T$. If
+\begin{equation}
+ R_s=\min_\beta(r_s-Z_s\beta)^TS_s^{-1}(r_s-Z_s\beta)>0,
+\end{equation}
+maximization over unrestricted scale gives $\hat\sigma^2=R_s/m$, $m=|J|$, and
+\begin{equation}
+ \log\sup p_s=-\frac12\left[m\{\log(2\pi)+1+\log(R_s/m)\}+\log\det S_s\right].
+\end{equation}
+If $R_s=0$, the supremum is infinite as scale tends to zero. A singular $S_s$ requires an explicit support and measure, not a silently substituted pseudodensity. Numerical maximization without an outward upper bound can understate the denominator and does not certify the ratio.
+
+For valid fixed-nuisance $p_\eta$ and a $(1-\gamma)$ nuisance confidence set $C$, the Berger--Boos construction is
+\begin{equation}
+ p_{\rm BB}=\min\{1,\sup_{\eta\in C}p_\eta+\gamma\}.
+\end{equation}
+On the coverage event, rejection at $\alpha\geq\gamma$ implies $p_{\eta_0}\leq\alpha-\gamma$; adding the failure probability proves size control. Independence is unnecessary. A coarse numerical grid can underestimate the supremum and invalidate the claim \cite{BergerBoos1994}. No numerical observational Berger--Boos result is asserted in this report.
+
+\subsection{Orbit metric, chirality, and conditional reference ranks}
+\label{app:orbits}
+
+For an orthogonal action of compact $G$, the minimum in Eq.~\eqref{eq:orbit} exists. Zero distance means equal orbits; inverse rotations give symmetry; composition and the ordinary triangle inequality give the orbit triangle inequality. Applying the same minimizer to perturbed inputs yields
+\begin{equation}
+ |d_G(v,w)-d_G(v',w')|\leq\|v-v'\|+\|w-w'\|.
+\end{equation}
+This proof does not use an eigenframe and remains valid on degenerate strata. It does require an invariant norm.
+
+For Eq.~\eqref{eq:chirality}, orthogonal covariance gives $v'=Rv$, hence the determinant picks up $\det R$. On a joint tensor ball of radius $M$, product differentiation and Cauchy--Schwarz bound the three differentiated columns by $M\|h\|$, $2M^2\|h\|$, and $3M^3\|h\|$, while their undifferentiated norms are bounded by $M^2,M^3,M^4$. Hadamard's inequality then gives $|D\chi[h]|\leq6M^8\|h\|$. The segment joining a tensor to a rotated mirror lies in the radius-$m$ ball, so
+\begin{equation}
+ d_{\SO(3)}\{(A,O),(A,-O)\}\geq\frac{|\chi|}{3m^8}.
+\end{equation}
+For a relative perturbation radius $r=\rho m$, the strict sufficient sign condition is
+\begin{equation}
+ \chi^2>36\rho^2(1+\rho)^{16}(m^2)^9.
+\end{equation}
+These are conservative deterministic certificates for the retained tensor, not a noise model.
+
+Schur orthogonality proves Eq.~\eqref{eq:grammoment} for irreducible spatial rotations. Orthogonal Haar symmetry proves the same identity for coefficient-space rotations. The laws differ because $\tr(T_2^3)/\|T_2\|^3$ is fixed by spatial rotation but varies over a general coefficient-space orbit. Equal second moments are insufficient to equate laws. Under a genuine group-invariance null and an independent pilot, exchangeability gives the weak-tail rank $(1+\sum_b\ind\{T_b\geq T_{\rm obs}\})/(B+1)$; counting ties weakly makes it conservative \cite{HemerikGoeman2018}. Without source invariance it remains a named reference rank only.
+
+\subsection{Compression, angular-pair kernels, and numerical qualification}
+
+For a linear observation $y=Ms$, a target $Ls$ is identified for every source exactly when $\ker M\subseteq\ker L$. Necessity follows by comparing $s$ and $s+h$. For sufficiency define $K(Ms)=Ls$; the kernel condition makes this well defined, hence $L=KM$. This argument proves the spectral-compression obstruction without assigning a physical distribution to the missing directions.
+
+For angular pairs, arrange directions and tangent velocities as rows of $N,V$. Their complete kernel matrix is $K=VN^T+NV^T$. Tangency gives zero diagonal. If $\rank N=3$ and $K=0$, let $P=N(N^TN)^{-1}N^T$. Then $(I-P)KN=0$ implies $(I-P)V=0$, so $V=NA$. Substitution gives $A+A^T=0$, a common rotation. With lower directional rank, additional invisible motions are possible. This theorem concerns the complete pair matrix; compression to 117 rows does not preserve its completeness.
+
+If pair rows are $L_{ij}$ and source tangent bases $E_i$, shared-source covariance contains
+\begin{equation}
+ \operatorname{Cov}(\kappa_{ij},\kappa_{ik})
+ =(n_j^TE_i)C_i(E_i^Tn_k),
+\end{equation}
+which is generally nonzero. Exact whitening and the complete projected model image make a residual quadratic $\chi^2$ with the correct rank difference. A small computed whitening residual or a thresholded rank is insufficient. With a certified covariance error $\|S-I\|_2\leq\delta<1$, the matching centred Gaussian projector quadratic is stochastically bounded by $(1+\delta)\chi^2_k$. This is the basis of the finite spin-quotient result, together with explicit statistic and tail enclosures. It cannot be transferred to a differently selected physical source law.
+
+\subsection{A prospective two-field perturbation test}
+
+A derived method for future frequency comparisons tests whether one coefficient vector explains delivered $E$ and $B$ targets simultaneously. Let $A_E,A_B,y_E,y_B$ have certified operator/vector error bounds $\epsilon_{AE},\epsilon_{AB},\epsilon_{yE},\epsilon_{yB}$ relative to exact counterparts. Suppose $s\leq\sigma_{\min}(A_E)$, $s>\epsilon_{AE}$, $R_E\geq\|y_E-A_E\tilde c\|$, and $U_B\geq\|A_B\|$. If one exact $c_*$ fits both fields, then
+\begin{align}
+ C&=\frac{\|y_E\|_{\rm upper}+\epsilon_{yE}}{s-\epsilon_{AE}},\nonumber\\
+ \Delta_c&=\frac{\epsilon_{yE}+\epsilon_{AE}C+R_E}{s},\nonumber\\
+ \tau_0&=\epsilon_{yB}+\epsilon_{AB}C+U_B\Delta_c
+\end{align}
+bound $\|c_*\|$, $\|c_*-\tilde c\|$, and $\|y_B-A_B\tilde c\|$. The proof is the triangle inequality applied successively to the $E$ solution, coefficient difference, and $B$ residual. Error independence is unnecessary. A residual exceeding $\tau_0$ plus its evaluation error excludes the exact relation; a smaller residual does not prove it. This section supplies a method, not a completed seven-frequency empirical result or a count of physical foreground components.

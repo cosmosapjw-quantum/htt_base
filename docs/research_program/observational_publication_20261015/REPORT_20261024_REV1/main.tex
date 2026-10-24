@@ -1,0 +1,39 @@
+\documentclass[aps,prd,preprint,onecolumn,nofootinbib,superscriptaddress]{revtex4-2}
+\usepackage{amsmath,amssymb,bm,graphicx,booktabs,longtable,array}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\newcommand{\R}{\mathbb R}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\STF}{\mathrm{STF}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\uasy}{\ensuremath{\mu\mathrm{as}\,\mathrm{yr}^{-1}}}
+\newcommand{\kms}{\ensuremath{\mathrm{km}\,\mathrm{s}^{-1}}}
+\newcommand{\hunit}{\ensuremath{\mathrm{km}\,\mathrm{s}^{-1}\,\mathrm{Mpc}^{-1}}}
+\newcommand{\ind}{\mathbf 1}
+\begin{document}
+\title{Tensor observables, selection, and physical identification in cosmological isotropy tests: A first research report}
+\date{24 October 2026}
+\begin{abstract}
+We assemble a mathematical and observational study of departures from cosmological isotropy using distance indicators, quasar astrometry, and the low multipoles of cosmic microwave background polarization. The primary objects are joint tensor fields and their functional, set, and depth-dependent images. Scalar amplitudes are retained as particular projections. We derive local optical and kinetic identities, uncertainty bounds, selection and covariance sensitivity results, and conditions for identifying a functional after observational compression. The observational calculations use Cosmicflows-4, Pantheon+, Gaia--Quaia, and Planck products. They establish conditional angular and depth responses, exact common-mode and calibration degeneracies, incomplete-selection bounds, proper-rotation chirality of finite processed tensors, and loss of frequency information under component separation. They also expose failures: model ranking changes with assumed group covariance, a public supernova refit does not reproduce its nominal source fit, and full response rank can coexist with negligible power in a controlled small-response domain. A separate finite Gaussian astrometric experiment permits an enclosed conditional tail after exact removal of common spin; its source-selection and physical covariance assumptions remain uncalibrated. These results describe what the present observations and declared statistical models determine. They do not identify a homogeneous cosmological geometry. Physical interpretation requires source-matched response functions, selection and joint uncertainty laws, and, for family comparison, polarized cosmological transfer predictions.
+\end{abstract}
+\maketitle
+\tableofcontents
+\input{sections/01_framework.tex}
+\input{sections/02_distances.tex}
+\input{sections/03_astrometry.tex}
+\input{sections/04_cmb.tex}
+\input{sections/05_optics.tex}
+\input{sections/06_synthesis.tex}
+\appendix
+\input{sections/07_mathematical_details.tex}
+\input{sections/08_result_scope.tex}
+\IfFileExists{figures/atlas.tex}{\input{figures/atlas.tex}}{}
+\bibliographystyle{apsrev4-2}
+\bibliography{references}
+\end{document}

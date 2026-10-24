@@ -1,0 +1,129 @@
+\section{Astrometric fields, depth dependence, and information}
+\label{sec:astrometry}
+
+Astrometry gives tangent-vector information that radial distances do not supply. Vector spherical harmonics distinguish gradient-like $E$ and rotation-like $B$ patterns \cite{MignardKlioner2012}. A low-order proper-motion pattern is still an observed angular field. Its conversion to matter acceleration, shear, vorticity, or a tilt history requires a source-centroid response, a frame convention, and a distance or redshift response \cite{GaiaCRF3}. Optical photocentres, radio positions, and material worldlines need not have the same motion.
+
+\subsection{Reported-redshift moments and full covariance}
+
+A retained Gaia--Quaia selected sample contains $755\,850$ rows. Three reported-redshift intervals, $[0,1)$, $[1,2)$, and $[2,10]$, contain $200\,785$, $369\,335$, and $185\,730$ rows, respectively. These are reported-redshift bins, not independently measured physical shells. The calculation fits six continuous $g(z)=z/(1+z)$ slopes for the polar $E1$ and axial $B1$ vectors, after profiling 102 existing columns. Its working law uses the reported within-source covariance and independent rows.
+
+The slopes in Cartesian order are
+\begin{equation}
+ \hat\theta=(6.60158,0.291699,-1.501316,
+ -10.184965,-7.646654,0.481561)\ \uasy.
+\end{equation}
+The profiled information retains only $1.584853\%$ of the corresponding trace information before profiling. The six-slope quadratic is $12.140206$, below the $0.95$ quantile $12.591587$ of the six-dimensional Gaussian reference. Its reference tail is $0.058913$, not a calibrated physical $p$ value. In that same experiment, 80\% Wald power requires slope amplitudes approximately $13.617$ and $18.574\,\uasy$ along the strongest and weakest information directions.
+
+The result retains a full 24-coordinate state: eighteen bin intercept coordinates and six shared slopes, with the complete covariance. The values at the declared bin centres are
+\begin{equation}
+ Y_b=\gamma_b+c_b\theta,\qquad
+ (c_0,c_1,c_2)=\left(\frac14,\frac7{12},\frac{26}{33}\right).
+ \label{eq:depthmap}
+\end{equation}
+The resulting eighteen-coordinate map has rank eighteen and loses six full-state directions. The anchored path $(Y_0,Y_1-Y_0,Y_2-Y_1)$ is an invertible representation of $Y$, whereas differences alone lose the common mode. None replaces the full 24-coordinate state.
+
+This distinction has a numerical consequence. Using raw intercepts in place of Eq.~\eqref{eq:depthmap} changes means by as much as $8.02452\,\uasy$ and covariance entries by $10.2636\,(\uasy)^2$. In the retained finite measure it changes 35 of 72 norm-exceedance cells and all eighteen tested $E\cdot B$ exceedance cells. The corrected depth images retain the slope and all cross blocks.
+
+The functional image includes twelve polar or axial vectors: the three bin values and three contrasts for each parity. Its 36-coordinate covariance is retained, even though its dimension exceeds that of the source state. Under the shared 4096-row finite empirical measure, norm and signed pseudoscalar exceedances preserve their common draw identity. These finite frequencies must be distinguished from continuous Gaussian probabilities. Physical exceedance remains unqualified.
+
+Cross-depth covariance is material. Setting it to zero as a counterfactual changes the six contrast spectral scales; the full-to-zero-cross ratios range from $0.1960$ to $0.3265$. This is not a proposed alternative covariance. It demonstrates how strongly common components cancel in the actual linear contrast. Directional supports of the joint ellipsoid are exact; the displayed norm intervals use conservative spectral and triangle bounds and are not asserted to be sharp nonlinear images.
+
+\subsection{Constancy, covariance uncertainty, and bias}
+
+Depth constancy is a different null from zero continuous slope. Let $M$ denote Eq.~\eqref{eq:depthmap}, and let
+\begin{equation}
+ A=\begin{pmatrix}-1&1&0\\0&-1&1\end{pmatrix}\otimes I_6\;M,
+ \qquad d=A\hat\mu_{24}.
+\end{equation}
+There are twelve restrictions. The covariance-sensitivity family is
+\begin{equation}
+ V_\tau=A(C_{24}+\tau^2I_{24})A^T,\qquad
+ T_\tau=d^TV_\tau^{-1}d.
+ \label{eq:covsensitivity}
+\end{equation}
+$\tau$ has units $\uasy$. The added term is a declared envelope, not a measured Gaia spatial covariance.
+
+\begin{table}[ht]
+\caption{Reported-depth constancy under covariance inflation. The last two columns are conditional reference bounds requiring zero contrast mean and the stated covariance domination. They are not observationally calibrated tails.}
+\label{tab:depthcov}
+\begin{ruledtabular}\begin{tabular}{rrrr}
+$\tau$ [$\uasy$]&$T_\tau$&Gaussian reference tail&Moment upper bound\\
+0&381.199232&$3.60205\times10^{-74}$&0.031480\\
+0.1&365.703533&$6.78851\times10^{-71}$&0.032813\\
+0.3&277.269896&$2.73919\times10^{-52}$&0.043279\\
+1&78.081312&$9.57251\times10^{-12}$&0.153686\\
+3&11.075522&0.522458&1\\
+10&1.032367&0.999983&1
+\end{tabular}\end{ruledtabular}
+\end{table}
+
+Under $\operatorname{Cov}(d)\preceq V_\tau$ and zero mean, $\E T_\tau\leq12$. Markov's inequality gives the moment bound $\min(1,12/T_\tau)$. A centred Gaussian law permits the stronger $\chi^2_{12}$ reference domination. At level $0.05$, the moment threshold is crossed at $\tau\simeq0.377552\,\uasy$ and the Gaussian threshold at $\tau\simeq2.139565\,\uasy$. Their difference describes the strength of the distributional assumption. It does not measure the actual systematic covariance.
+
+The complementary bias experiment minimizes
+\begin{equation}
+ \min_{\|b\|\leq\delta}(d-Ab)^TV_\tau^{-1}(d-Ab).
+ \label{eq:bias}
+\end{equation}
+Bias is allowed either in all 24 coordinates or only in the six slopes. At $\tau=0$, a full-state bias radius $7.563904\,\uasy$ reaches the Gaussian reference threshold. Exact zero contrast requires $10.178814\,\uasy$, independently of $\tau$. Slope-only bias cannot remove the entire contrast: its unrestricted residual quadratic at zero covariance inflation is $232.249$. These are explicit scenario witnesses. They neither measure a systematic bias nor imply that such a bias is physically realized.
+
+\subsection{Why full rank need not imply useful power}
+
+A retained six-parameter history/local-response experiment has a profiled covariance $C_{aa}$ of its dimensional history-response amplitude $a$, with eigenvalues
+\begin{equation}
+ (0.663189609,0.696790781,0.878898866)\ (\uasy)^2.
+\end{equation}
+Write its response as $a=K_Hb$, where $K_H=14.76646685987891\,\uasy$, and restrict the illustrative small-response domain by $R\|b\|\leq\epsilon$, with $R=7499.25$. For the fixed Gaussian mean experiment the maximum squared Mahalanobis shift is
+\begin{equation}
+ d_{\max}^2=\left(\frac{K_H\epsilon}{R}\right)^2
+ \lambda_{\max}(C_{aa}^{-1}).
+ \label{eq:powermax}
+\end{equation}
+Even an oracle simple-direction test at size $\alpha$ has power at most
+\begin{equation}
+ \Phi\{\Phi^{-1}(\alpha)+d_{\max}\}.
+ \label{eq:oracle}
+\end{equation}
+At $\alpha=0.05$, the bounds for $\epsilon=0.01,0.1,0.3$ are $0.050002493775$, $0.050024942216$, and $0.050074856412$. The full-rank response is practically indistinguishable from zero in this particular domain and covariance. At $\epsilon=0.3$, reaching 80\% oracle power with the same response would require a uniform information multiplier of about $1.17502\times10^7$. This is a requirement within the experiment, not a forecast of an attainable survey improvement.
+
+Additional rank-one covariance along the best information direction makes a second eigenvector optimal once its variance becomes smaller. The maximum power can then plateau even though power along a specified physical direction continues to change. These optimized bounds do not describe every future astrometric observable. The small parameter alone also does not certify all omitted physical remainders.
+
+\subsection{Angular pairs and exact removal of common spin}
+
+A separate retained Gaia frame-source sample contains 4756 selected objects. Its $11\,307\,390$ distinct pairs are grouped into nine angular-separation bins. For unit directions $n_i$ and tangent motions $v_i$ define
+\begin{equation}
+ \kappa_{ij}=v_i\cdot n_j+n_i\cdot v_j.
+ \label{eq:pair}
+\end{equation}
+After the specified unit conversion, this is the derivative of $\cos\theta_{ij}$. It is not the derivative of the angle at coincident or antipodal directions. A common rotation $v_i=\omega\times n_i$ cancels exactly.
+
+The binned measurement is $d=Hy$, with mean $D\beta=HX\beta$. It is a response, not a coefficient estimate. The retained arrays include the full $117\times9512$ operator, thirteen response columns (three vector and five each of two STF parities), all 117 covariance modes, and the within-source covariance propagated as
+\begin{equation}
+ C_d=HC_0H^T,\qquad C_0=\operatorname{blockdiag}(C_i).
+\end{equation}
+Pairs sharing a source remain correlated even under this independent-source working model. Unknown correlations between different sources are an additional physical uncertainty.
+
+An initial covariance projection retains 88 modes at a declared numerical threshold. The discarded modes remain positive or unresolved; they are not physical null directions. Representative projected residual quadratics are $87.0026023$ for the three-coordinate model and $75.0786229$ for the full thirteen-coordinate model. Without complete-image and numerical covariance bounds these are descriptive quadratics only.
+
+A subsequent finite-source calculation supplies a stronger conditional result. Let $B$ contain the three source-spin columns. For the exact finite source coordinates,
+\begin{equation}
+ H_* =H\{I-B(B^TB)^{-1}B^T\}
+ \label{eq:spinquotient}
+\end{equation}
+annihilates spin exactly. With the same fixed covariance-derived projection $W$, numerical enclosures establish complete ranks 3 and 13, and a covariance inflation bound
+\begin{equation}
+ \|\operatorname{Cov}(WH_*Y)-I\|_2
+ \leq1.3599702443948884\times10^{-9}
+\end{equation}
+under the declared finite Gaussian law and arithmetic model. The nested-model difference is enclosed by
+\begin{equation}
+ 11.923978483828927\leq\Delta\leq11.923980198308788.
+\end{equation}
+For the matching three-coordinate mean null, the resulting conservative tail upper bound is $0.29017657168415$. A projected-mean ball with radius at most $10.954451326468204$ has at least 95\% coverage in that finite Gaussian working experiment. The radius is dimensionless after covariance scaling.
+
+This advances the conditional numerical statement beyond a thresholded rank or small floating residual. Its scope is specific: the archived finite coordinates, within-source covariance, source ordering, fixed projection, and stated binary64 operation model. It does not certify hardware arithmetic universally, the unrounded angular-bin geometry, the physical cross-source covariance, or the selected-source Gaussian law. Hence it is not a calibrated cosmological significance or coverage result.
+
+\subsection{Source properties and unsupported comparisons}
+
+Source-property information was joined by the exact retained 4756 source identities, preserving missing values and avoiding proper-motion outcomes during the property intake. The prespecified comparison between host flags 1--2 and host flag 3 has no objects in the former class and 3149 in the latter. It therefore cannot be evaluated on this sample. Replacing the empty class by another flag or by missing values would change the scientific question. A missing variability flag is not evidence of nonvariability, and a classification score is not automatically a calibrated probability of a material source class.
+
+These results clarify the next physical requirements. A response relating source centroids to matter, a reported-to-true-depth law, selection-aware source modelling, and cross-source covariance are needed to interpret the observed vector and STF fields as kinematic tensors. Their absence does not erase the measured fields or the conditional calculations. It limits the physical inference drawn from them.

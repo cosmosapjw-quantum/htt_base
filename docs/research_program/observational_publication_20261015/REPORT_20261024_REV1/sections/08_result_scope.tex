@@ -1,0 +1,80 @@
+\section{Additional observational results and interpretation}
+\label{app:inventory}
+
+This appendix retains distinct earlier experiments that provide context or a separate scientific limitation. Several use different cohorts, observables, and uncertainty models from the main analyses. They are presented separately for that reason. The accompanying atlas includes mathematical and simulated controls as such; it does not count them as additional observations.
+
+\subsection{Distance-source overlaps and joint calibration}
+
+The upstream Tully--Fisher source tables contain $10\,737$ and $9792$ rows, with intersection 9790 and unmatched counts 947 and two. Eleven entries have no released best modulus. A finite-distance subset of 7573 galaxies maps to 6697 groups in the retained group selection. These differences show that a table intersection, a target catalogue, and the final distance-bearing sample are different populations. Quality and detection marks are retained rather than replaced with a single smooth inclusion probability. The published GBT outcome illustration contains 385 Tully--Fisher-acceptable targets, 22 other detections, 29 confused sources, and 192 nondetections; it is not the same membership as every later 628-target cohort.
+
+A joint calibration comparison contains 559 pair rows, 429 groups, and 437 hosts; 75 of 77 calibrators have usable directions. Its nuisance design has rank 31 of 34 and its joint angular design rank 80 of 96. Certain sums of calibration components are estimable while a common absolute calibration direction remains unbounded. The minimum compatible reference radius is $1.417288758$ in the chosen norm. This is a sensitivity radius, not a noise quantile or a physical confidence bound. Group overlap prevents multiplying method likelihoods as independent factors.
+
+The source-conditioned SH0ES ladder calculation uses the released distance-ladder matrices and the stated Gaussian reanalysis baseline, with 3492 rows and 47 parameters.\cite{Riess2022,PerivolaropoulosSkara2022} It reproduces $H_0=73.042819\pm1.007148\,\hunit$ within the declared Gaussian and delta-method baseline, with residual quadratic $3552.7593$ on 3445 residual dimensions. This is reproduction of a supplied source model, not an independent measurement of $H_0$. Its host covariance retains the common-mode quotient. No Pantheon+--Cosmicflows joint covariance follows from it.
+
+Released supernova simulation responses contain $32\,729$ rows, with $25\,843$ qualified native directions and 61 unevaluable correlations. The colour and covariance figures describe selected simulated light-curve responses and a working two-coordinate error model. They do not provide an empirical total observer-reboost correction or a calibrated directional likelihood for the observed supernova sample. A finite spectral refit and a radial correction must be combined at their actual source and observer redshifts; substituting one redshift in both roles changes the response.
+
+The six-degree-field source comparison contains 8885 peculiar-velocity rows and $11\,102$ fundamental-plane rows. Twelve velocity rows lack the indicated source-selection flag, while 23 flagged rows are absent from the velocity table. Its released log-distance quantity already includes the source's correction. Applying that normalization again or treating the overlapping product as an independent factor would double-count information.
+
+\subsection{Flow reconstructions and error-only mock catalogues}
+
+At 494 matched hosts occupying 460 cells of a corrected flow product, the median radial mean is $-15.0891\,\kms$. The algebraic proxy $5\log_{10}[(cz-u)/cz]$ has median $0.00478774\,\mathrm{mag}$ and spans approximately $-2.86325$ to $0.586287\,\mathrm{mag}$. It is a redshift-space source lookup and proxy, not a physical luminosity-distance correction. The reconstruction and the host distances are dependent. A separate grouped-flow comparison leaves a discrepancy with the printed source summary unresolved; changing coordinate order alone did not establish source parity.
+
+The retained 64-source-box SDSS experiment removes the source's true peculiar velocity before analysing error effects. Four of its descriptive quadratics exceed the fixed threshold $2.95516685$. Across sixteen retained coefficients, empirical-to-working variance ratios range approximately $0.966717$--$1.461197$, with cross-window correlations preserved. These are error-only sample diagnostics. Neither independence of the boxes nor physical survey coverage is established by their count.
+
+Earlier generated Cosmicflows catalogues distinguish a preselection generator from a generator conditional on selected slots. Their paired precision and cross-law plots show that sampling precision and change of law are different contributions. The generated catalogues do not supply the actual parent-selection mechanism, and narrower repeated-sample scatter cannot repair an incorrect observation law.
+
+\subsection{Full-catalogue astrometry and radio comparison}
+
+The full Gaia-CRF3 field calculation uses $1\,614\,173$ sources. Its sixteen-column design has thirteen retained directions after common spin is removed. The conditional $E1$ coefficients are approximately $(-0.639242,-4.312276,-2.612798)\,\uasy$. Twelve angular deletion regions probe sensitivity on this same catalogue; their fits are not independent measurements.
+
+Allowing arbitrary positive-semidefinite dependence with fixed working marginals gives a coordinatewise standard-deviation envelope $280.823190\,\uasy$ for the first $E1$ component, compared with formal $0.318652\,\uasy$ under the block-diagonal model. This striking difference is a worst-case dependence calculation, not an estimate of the actual sky covariance. Different coordinate maxima need not be simultaneously attainable. The envelope is not a single matrix upper bound in the Loewner order.
+
+The radio comparison retains 713 sources, 621 with Gaia matches within one arcsecond. Eight fixed coordinate/correlation scenarios give 104 coordinate envelopes. In the stated tangent-correlation scenario $\rho=-0.9$, the first $E1$ standard-deviation envelope is $4.20112\,\uasy$. Neither that correlation convention nor a joint optical--radio source law is established by this sensitivity calculation. Optical and radio centroid motions can respond to different source structures.
+
+The Quaia join initially matched $692\,154$ of $755\,850$ selected identities. An exact-ID supplement supplied the remaining $63\,696$; the later full-sample astrometry uses the completed $755\,850$ rows, not only the original intersection. Simulated misspecification checks are consequential: omitting injected higher-order $E4/B4$ structure gives joint coverage $291/1024\simeq0.28418$ in one test, and a template-correlated mean gives zero of 1024. These controls demonstrate failure of the assumed inferential model under those alternatives. They are not measured physical coverage rates for Gaia.
+
+\subsection{Earlier CMB and map-processing comparisons}
+
+Retrospective tensor descriptors of the original processed products retain shape, parity, and orientation separately. Across their selected views, the squared joint-axis overlap ranges from approximately $3.82\times10^{-7}$ to $0.002126$ for temperature, $0.113727$ to $0.825508$ for $E$, and $0.026814$ to $0.314020$ for $B$. These ranges are descriptive. Incomplete tensor descriptors do not classify complete rotation orbits, and no null significance is assigned from the processing range.
+
+A literal published-decimal half-mission beam contrast has operator norm approximately $5.908757\times10^{-9}$ and a Frobenius upper bound $1.959713\times10^{-8}$ in its stated amplitude-response convention. This is a finite, fixed-weight response calculation, not a physical uncertainty estimate. Single matched split/noise tuples likewise cannot estimate an ensemble covariance. A PR4 comparison confirms identical common simulated CMB fields and distinct residual fields for the specified pair. In a separate 30-GHz map comparison, the scalar half-difference-to-sum squared ratio is $0.992195799$. It is not a measured noise fraction: foregrounds, processing, and correlations remain in both combinations.
+
+Four delivered polarization frequencies, 30, 44, 70, and 100 GHz, were projected at their delivered pixel resolution on one common validity support of $30\,021$ selected cells. The result retains all 96 real $E2/E3/B2/B3$ coordinates, the completed STF tensors, and six full 24-coordinate pair contrasts. No $Q/U$ map was downgraded, smoothed, or deconvolved in that projection. The numerical comparison concerns the retained finite projection and its complete tensor components; it does not validate a physical foreground or sky-probability model.
+
+\begin{table}[ht]
+\caption{Descriptive four-frequency tensor contrasts on a common selected support. Norms use the complete 24 real harmonic coordinates and have units $\mathrm K_{\rm CMB}$. Delivered beams, pixelization, masks, and foregrounds remain in the pseudo-modes.}
+\label{tab:frequency}
+\begin{ruledtabular}\begin{tabular}{rr}
+Oriented frequency pair [GHz]&Contrast norm\\
+30--44&$1.39889398768\times10^{-5}$\\
+30--70&$1.72279563727\times10^{-5}$\\
+30--100&$1.72187018371\times10^{-5}$\\
+44--70&$3.41091140482\times10^{-6}$\\
+44--100&$3.75007907698\times10^{-6}$\\
+70--100&$1.62068780381\times10^{-6}$
+\end{tabular}\end{ruledtabular}
+\end{table}
+
+Assigning equal mass to the four frequencies defines only a four-point computational measure. It is not a sky sampling law, physical occupancy, or redshift path. The contrasts do not by themselves reject a foreground model. They must not be extrapolated into an uncomputed seven-frequency result.
+
+\subsection{External templates, moving lenses, and physical response limits}
+
+A precomputed temperature-only template from the BIANCHI package, version 1.1,\cite{McEwenBianchi} permits a finite pixel fit through multipole 12 with rank 169. Its unit variants have a fitted scale approximately $2724.999989$, consistent with the declared temperature normalization, and a relative scale residual about $5.60\times10^{-8}$. The finite harmonic fit leaves residual fraction $0.134339$. These are finite-template representation results. Polarization is absent rather than zero, and the absolute sky frame is unqualified. No external template is relabelled as a native physical transfer or a complete morphology atlas.
+
+The moving-lens comparison tests the published ACT--DESI LS compressed-amplitude representation.\cite{Hotinli2026} Independently fitted channel summaries need not equal one common scalar filter applied before differencing. The shared-filter hypothesis is falsified beyond the stated printing-rounding allowance. Under two specified Gaussian marginal summaries and arbitrary dependence, the outward contrast interval is approximately $[0.20827,1.93173]$ in the source's dimensionless template-amplitude units. This uses the outward rounding envelope of the printed central-amplitude variant 1.07. Including the alternative printed value 1.06 widens the union to approximately $[0.19827,1.93173]$, as retained in the accompanying source-variant comparison. Both intervals are conditional on the stated marginal laws. Without an observed bound on differential filtering, spectral-energy-distribution error, and other contributions, the corresponding physical amplitude is unbounded. It is not a transverse velocity measurement.
+
+An analytic compensated matter--radiation example gives distinct finite-depth local and history responses under its specified first-order background. A two-bin determinant is nonzero, and a retained real-source projection leaves three optical-response directions. These facts demonstrate a conditional route to discrimination; arbitrary optical and selection remainders can still absorb it. The illustrative background and linear-order approximation are not fitted cosmology.
+
+Finally, earlier tensor-support controls retain full covariance, initial blocks, singular support, and nonlinear boundaries. They show that dropping cross terms changes nominal error rates, that a square-root boundary can make a linearized image unreliable, and that a depth-difference representation loses a common mode if its reference bin is removed. These simulated and mathematical controls explain why the report retains the full joint tensor state. They do not add observational constraints.
+
+\subsection{Finite rank and prior-sensitivity controls}
+
+The CLASS split-noise comparison retains 160 reference scores. Its nominal finite upper-tail rank is $1/161\simeq0.00621118$, and a common score-error allowance of approximately $0.989336$ is the first value at which the conservative upper rank reaches the specified five-percent comparison boundary. The error allowance is assumed. The rank calculation does not establish exchangeability, a physical null, or a measured systematic-error bound. Tail-probability intervals additionally require the stated independent-score assumption.
+
+A synthetic selection calculation sets $X\sim U[-1,1]$, $t=X^2+\theta$, and $Y=t+\mathcal N(0,0.1^2)$, retaining $-0.1\leq Y\leq0.4$. At $\theta=0.05$, the derivative of $\E[X^2\mid\mathrm{selected}]$ is approximately $-0.367569464$. The numerator-only derivative is approximately $-0.5$; differentiation of the selection normalizer contributes $0.132430536$. This finite example demonstrates why a selected response is not obtained by differentiating only the unnormalized numerator. It is not an observed selection law.
+
+A separate Union3--DESI distance calculation varies an assumed Gaussian distance-node-prior removal fraction over $\lambda=0,0.5,1$, fixing cross-source correlation to zero. The released-node posterior and its prior must be distinguished.\cite{Kim2024} Under the stipulated prior subtraction, the retained Gaussian precision remains positive definite in all three scenarios. Full subtraction shifts the conditional $\Omega_m$ mean by approximately $0.0613$ of its baseline standard deviation and the magnitude-offset mean by approximately $-0.2742$ of its baseline standard deviation. The exact connection between the frozen released matrix, the published prior description, and the public fitting-code branch is unresolved. These are sensitivity scenarios, not a certified reconstruction of the original-data likelihood; their normalization constants are not Bayes factors between physical models.
+
+\subsection{Reading the figure atlas}
+
+The atlas follows these scientific families rather than a sequence of software changes. Each caption identifies the observational or constructed source, the applicable measure or response, and the principal interpretive limit. Distinct negative results are retained. Superseded erroneous projections and duplicate renderings are kept in the companion source package but are not presented as current results. No unfinished calculation is turned into a plotted measurement, and no conditional law is silently renamed a physical posterior.
