@@ -1,0 +1,82 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "r26_covariance_image_capability_numeric",
+  "attempt": 2,
+  "phase": "review",
+  "packet_id": "061d64485236f891cbb1b65efba7f9c05b1164565d1b665dad2e42f380949c07",
+  "input_identity": "sha256:f827413d29aebb63ce80ecfb94e1b0695b2edc85c44a760c43d12645857f9987",
+  "candidate_identity": "sha256:aa2b12403a41d999d805b7efba0d7233879a42b2847b45346a5e35258d4eac67",
+  "agent_id": "/root/r26_covariance_image_actual_result_review",
+  "outcome": "blocker",
+  "issue": {
+    "class": "numeric",
+    "question": "Can the generic covariance-image interface safely distinguish exact or uncertified numerical zeros from nonzero unbounded directions and substantiate its bounded execution?",
+    "exact_missing_or_defect": "covariance_image.py:249-256 returns upper=0.0 for unbounded_psd with nonzero M=[[1e-200]],u=[1.0] because norm underflows. A floating-dot zero is also insufficient. Exact input validation does not exclude unqualified symbolic rank branches. run_checks.py:79-96 supplies sampled VmRSS only, leaving lifetime512MiB compliance unproved.",
+    "input_identity": "sha256:f827413d29aebb63ce80ecfb94e1b0695b2edc85c44a760c43d12645857f9987",
+    "substantive": true,
+    "true_external": false,
+    "bounded_repair_available": true,
+    "counterexample": {
+      "input": {
+        "M": [
+          [
+            1e-200
+          ]
+        ],
+        "u": [
+          1.0
+        ],
+        "covariance_class": "unbounded_psd"
+      },
+      "expected_upper": "+infinity",
+      "observed": {
+        "status": "NUMERICAL_NEAR_NULL",
+        "upper": 0.0,
+        "exact_protection_proved": false,
+        "response_norm": 0.0,
+        "diagnostic_threshold": 1e-12
+      },
+      "raw_evidence": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_actual_result_review/FIRST_COUNTEREXAMPLE.json"
+    }
+  },
+  "counterexample": {
+    "input": {
+      "M": [
+        [
+          1e-200
+        ]
+      ],
+      "u": [
+        1.0
+      ],
+      "covariance_class": "unbounded_psd"
+    },
+    "expected_upper": "+infinity",
+    "observed": {
+      "status": "NUMERICAL_NEAR_NULL",
+      "upper": 0.0,
+      "exact_protection_proved": false,
+      "response_norm": 0.0,
+      "diagnostic_threshold": 1e-12
+    },
+    "raw_evidence": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_actual_result_review/FIRST_COUNTEREXAMPLE.json"
+  },
+  "repair_plan": "One bounded lower-tier repair within the same task/allocation and 60 s cumulative bank. Preserve pre-repair source, all first raw outputs/receipt/RESULT, and FIRST_COUNTEREXAMPLE.json. Repair floating_directional_diagnostic so numerical norm or dot-product zero cannot yield finite zero for an unbounded class; certify the exact contraction of supplied binary floats, or return truthful NULL_UNCERTIFIED with no finite upper bound. Cover M=1e-200,u=1 norm underflow; M=1e-200,u=1e-200 contraction underflow; cancellation; literal zeros; and trace-cap scale extremes with robust arithmetic or explicit typed refusal. Reject unsupported free-symbol exact inputs unless zero/rank branch conditions are explicitly qualified. Add the independent rectangular-fixture minimum trace 26/5. In the same existing runner repair, capture test-child lifetime high-water RSS via wait4 or clean single-child RUSAGE_CHILDREN, retain polling as stop control, and require <=512 MiB; original64.7890625 MiB stays sampled. Run one targeted repair validation invocation with affected original fixtures and regressions, dimensions<=7 and one BLAS thread, within remaining55.631989046232775 s after cumulative4.368010953767225 s. Stop on first substantive failure/cap. No scientific tolerance, exact formula, theory/input seal, physical model, historical identity, or prior budget reset. Return final candidate and raw resource evidence for independent review; no actual CF4/H02/Pi/CAS admission.",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_actual_result_review/VERDICT.json",
+  "review_report": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_actual_result_review/REVIEW.md",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "transport_selected_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "cumulative_check_wall_seconds": 4.368010953767225,
+  "remaining_check_wall_seconds": 55.631989046232775,
+  "historical_budget_reset": false,
+  "qualified_products": [],
+  "scientific_admission": false,
+  "claim_ceiling": "No actual CF4, H02, universal theorem, four-axis CAS, physical response/law/Pi qualification."
+}

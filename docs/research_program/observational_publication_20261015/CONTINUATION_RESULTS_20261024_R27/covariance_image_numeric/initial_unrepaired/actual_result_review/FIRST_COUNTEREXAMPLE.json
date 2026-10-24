@@ -1,0 +1,27 @@
+{
+  "kind": "independent_single_counterexample_no_suite_rerun",
+  "input": {
+    "M": [
+      [
+        1e-200
+      ]
+    ],
+    "u": [
+      1.0
+    ],
+    "covariance_class": "unbounded_psd"
+  },
+  "expected_upper": "+infinity: stored nonzero M and u=1 admit Gamma_t=[t]",
+  "observed": {
+    "status": "NUMERICAL_NEAR_NULL",
+    "upper": 0.0,
+    "exact_protection_proved": false,
+    "response_norm": 0.0,
+    "diagnostic_threshold": 1e-12
+  },
+  "wall_seconds_including_import": 3.43949557794258,
+  "peak_rss_mib_ru_maxrss": 56.296875,
+  "threads_env": 1,
+  "implementation_source_modified": false,
+  "execution_stopped_after_first_counterexample": true
+}

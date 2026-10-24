@@ -1,0 +1,238 @@
+{
+  "SMICA_dependency": false,
+  "accounting_parent_task_id": "R26-FULL7-STREAMED-SPIN2-QUADRATURE",
+  "campaign_identity": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "cli_status": "REQUIRED_INTERFACE_FOR_LOWER_TIER_IMPLEMENTATION; consume.py does not exist yet; no executable command claimed",
+  "contract": {
+    "bytes": 17746,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/CONTRACT.json",
+    "sha256": "b94d2dee49f777069713481a0647a90e33ae89be9c01f4d57eb5e80da888f985"
+  },
+  "execution_authority": "Current owner solver-free campaign; parent must produce actual router packet and acknowledgement before lower-tier execution. No separate source-assurance ladder required for this saved-carrier consumer; actual result review remains required.",
+  "implementation_cli_contract": [
+    ".venv/bin/python",
+    "-B",
+    "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/consume.py",
+    "--input",
+    "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/INPUT.json",
+    "--input-sha",
+    "ACTUAL_INPUT_SHA256",
+    "--packet",
+    "ACTUAL_CONTROLLER_PACKET_PATH",
+    "--packet-sha",
+    "ACTUAL_CONTROLLER_PACKET_SHA256"
+  ],
+  "input_bands_GHz": [
+    30,
+    44,
+    70,
+    100,
+    143,
+    217,
+    353
+  ],
+  "native_projection_budget": 0,
+  "observed_runtime": "UNKNOWN",
+  "operator": {
+    "canonical_order": "E2[5],E3[7],B2[5],B3[7]; a_l0 then sqrt(2)Re(a_lm),-sqrt(2)Im(a_lm), m increasing",
+    "coordinates": "Galactic COSMO; no U sign flip",
+    "domain": "Finite delivered masked native pixel-center spin2 quadrature, ell2 and3 only",
+    "identity": "sha256:23150f922880ac39e7906758b96e27e14943656542acd1774bb88967eb1e0786",
+    "mask_policy": "Use exactly existing S7; do not expand it when omitting SMICA. Its seven-only validity intersection is already identical on every selected cell.",
+    "native_nside": {
+      "100": 2048,
+      "143": 2048,
+      "217": 2048,
+      "30": 1024,
+      "353": 2048,
+      "44": 1024,
+      "70": 1024
+    },
+    "preprocessing": "No extra smoothing, beam/pixel-window deconvolution, calibration, gain/colour correction, Q/U downgrade, mask optimization or monopole subtraction.",
+    "support": {
+      "all_seven_valid_on_selected_support": true,
+      "parent_nside": 64,
+      "parent_total_cells": 49152,
+      "removed_count": 0,
+      "retained_ring64_equal": true,
+      "s7_equals_original_selected": true,
+      "s7_equals_s4": true,
+      "selected_cell_fraction": 0.61077880859375,
+      "selected_cells": 30021
+    },
+    "transfer_scope": "Delivered Planck PR3 frequency products with their response conventions; external-transfer conditional, not a Bianchi transfer result.",
+    "units": "K_CMB; qualified Kcmb spelling alias factor1"
+  },
+  "original_acceptance": "NOT_MET",
+  "output_directory": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric",
+  "qualification": {
+    "bytes": 11851,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/QUALIFICATION_OBSERVATIONS.json",
+    "sha256": "1876c19b7f9def1d466488868c2ab486fbfbaee27fec84d1154173eb212fe9ae"
+  },
+  "references": {
+    "completed_carriers": {
+      "143": {
+        "bytes": 1451,
+        "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/CARRIER_143.npz",
+        "sha256": "5717a79e657d5c4c6ef94a39f9705623227c056c37a9d20e6f0d2b05c82b0d3e"
+      },
+      "217": {
+        "bytes": 1451,
+        "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/CARRIER_217.npz",
+        "sha256": "a14414db80aca905527198d639d6ba1fbc0fb08ca9018bc0cf9d59704dc115fd"
+      },
+      "353": {
+        "bytes": 1450,
+        "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/continuation/CARRIER_353.npz",
+        "sha256": "bbd37b8e45c89c73aead4ea8f5e9010aeae30fac4eff355a93316db1178c1195"
+      },
+      "S4": {
+        "bytes": 7772,
+        "path": "/mnt/extdrive/workdir/htt_open_data/r25_frequency_tensor_staged4/FULL_CARRIER_AND_CONTRASTS.npz",
+        "sha256": "8da1d87df61146f7c4a4a9e25171f5aac9581728ecb6f2467c392dac7daed2cd"
+      }
+    },
+    "completed_controls": {
+      "143": {
+        "bytes": 3254,
+        "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/CONTROL_143.json",
+        "sha256": "ba4953acb398efb26328c1dacb757a2e7bc03074edf80e35820586ec1e7e2d00"
+      },
+      "217": {
+        "bytes": 3257,
+        "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/CONTROL_217.json",
+        "sha256": "49f634a18df8b4fd36b495a79a8dcf25ad55c970a6048456eb6deb6003a25b68"
+      },
+      "353": {
+        "bytes": 3247,
+        "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/continuation/CONTROL_353.json",
+        "sha256": "f9f1540351524a4bb0f406e61562e12a406aeb071f990ef0e35e0f0ecd93ecfc"
+      }
+    },
+    "decoder": {
+      "bytes": 9728,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/planck_lowell_irrep_projection.py",
+      "sha256": "ecccebc39c4814546552b9fbc6b6ed798cc644fec1f6616a26003fda17932216"
+    },
+    "first_raw_receipt": {
+      "bytes": 8760,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/RAW_RECEIPT.json",
+      "sha256": "b1af1c97100b9a800357d978337ebdefbe34f9663b2d4acca1ad89ebc5e79748"
+    },
+    "frozen_input": {
+      "bytes": 17029,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/FROZEN_INPUT.json",
+      "sha256": "3634d4a9ff3ce134ac00ff95a469dd1046e2306a17ad0d4eb5fb6468b77003d7"
+    },
+    "old_math": {
+      "bytes": 10276,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_preparation/full7_math.py",
+      "sha256": "b64af9d883eba3f4f967daaf8c92eb8fc3e8b4b6fee0542ce7f251fe92e1cfca"
+    },
+    "original_selected_support": {
+      "bytes": 81652,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/L01_EXECUTION_20261018/results/ORIGINAL_SELECTED_SUPPORT_RESPONSE.npz",
+      "sha256": "7a462ba827ebe3ef5768552565f323ad2e1a679425be5d077fe8f46b9f0fdec6"
+    },
+    "s4_equivalence": {
+      "bytes": 8283,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_blind_source_contract/S4_NUMERICAL_EQUIVALENCE_REUSE.json",
+      "sha256": "50ab328633bedfe98fbe310c0c092820638bd2e156fba1bf1bc9d0a024e30ab3"
+    },
+    "s4_manifest": {
+      "bytes": 4887,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_frequency_tensor_staged4/MANIFEST.json",
+      "sha256": "e05e9aefcbee3382778bc2a74e4a4617fed311fd5a1ac7dc78ef4abe45a8e175"
+    },
+    "s4_support": {
+      "bytes": 55926,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_frequency_tensor_staged4/COMMON_SUPPORT_S4.npz",
+      "sha256": "799d953e53be1edbfd4283360b9bdb4d554b252218af0a6ac622f0d1c2ff0fad"
+    },
+    "s4_validation": {
+      "bytes": 930,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_frequency_tensor_staged4/VALIDATION_RECEIPT.json",
+      "sha256": "80c1a78d384f3e4626328fe9646937a409a66421dbe1cec689d4d48c89b8609d"
+    },
+    "s7_support": {
+      "bytes": 58834,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_preparation/run/COMMON_SUPPORT_S7.npz",
+      "sha256": "caab42ed1a0d4507b998ce34ad433e8ef9e69e7d1e4b6856f7213599b5465014"
+    },
+    "terminal_ledger": {
+      "bytes": 11945,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/continuation/LEDGER.json",
+      "sha256": "182cfde08b319b6008d19f772b2247e218b2b217ce45a19334d196a69b689454"
+    }
+  },
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "resources": {
+    "control_scope": "One focused saved-carrier consumer regression unit only, within the60s aggregate; do not repeat historical12 controls or completed native products.",
+    "large_map_reads": false,
+    "observed_worker": "RECORD_ACTUAL_OR_UNKNOWN",
+    "owned_process_group_rss_cap_bytes": 2147483648,
+    "prelaunch_mem_available_bytes": 10737418240,
+    "raw_projection_runs": 0,
+    "requested_worker": {
+      "model": "gpt-6-sol",
+      "reasoning_effort": "high"
+    },
+    "runtime_checks": "Pin numerical threads before imports, record loaded threadpools after numerical imports, supervise owned process lifetime and preserve wait4/maxrss and measured wall time on success/failure.",
+    "runtime_mem_available_floor_bytes": 4294967296,
+    "threads": 1
+  },
+  "same_accounting": {
+    "base": {
+      "bytes": 11945,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/continuation/LEDGER.json",
+      "sha256": "182cfde08b319b6008d19f772b2247e218b2b217ce45a19334d196a69b689454"
+    },
+    "base_cumulative_charged_seconds": {
+      "100": 104.19856381935486,
+      "143": 406.5475814456138,
+      "217": 297.5762580399885,
+      "30": 68.77749568021342,
+      "353": 197.23563878396703,
+      "44": 52.54217179825016,
+      "70": 52.86791040219784,
+      "SMICA": 297.8989226810652
+    },
+    "execution_envelope": "At most60s total new execution/control/postprocessing including2s kill/reap reserve; bound further by actual remaining same-account budget. This is a sub-limit inside existing accounts, not a new budget or renewed old one-use.",
+    "execution_hard_wall_cap_seconds": 60,
+    "ledger_output": "Append-only successor delta in worker-owned output directory; reference immutable terminal ledger and preserve every raw failure/attempt. Do not overwrite prior ledger or markers.",
+    "new_account": false,
+    "new_budget": false,
+    "order": [
+      "30",
+      "44",
+      "70",
+      "100",
+      "143",
+      "217",
+      "353",
+      "SMICA"
+    ],
+    "per_account_lifetime_cap_seconds": 900,
+    "remaining_seconds": {
+      "100": 795.8014361806452,
+      "143": 493.4524185543862,
+      "217": 602.4237419600115,
+      "30": 831.2225043197866,
+      "353": 702.764361216033,
+      "44": 847.4578282017499,
+      "70": 847.1320895978022,
+      "SMICA": 602.1010773189348
+    },
+    "shared_allocation": "Preserve existing eight-account convention: every shared import/check/control/calculation/serialization/render/finalization wall delta divided by8 and debited once to all eight existing accounts, including SMICA. Never drop SMICA account to change historical accounting.",
+    "stale_base": "If terminal ledger/current cumulative account head changed before dispatch, reconcile exact appended deltas in the same lineage and seal that latest head; never silently use stale base.",
+    "unknown_time": "If a started process outcome/time cannot be recovered, retain OUTCOME_UNKNOWN and charge the authorized60s envelope once /8 under the inherited policy; no fresh attempt identity or zero reset."
+  },
+  "schema": "htt.delivered_seven_frequency_input/1",
+  "scientific_admission": "HOLD",
+  "stage": "PREPARED_NOT_DISPATCHED",
+  "task_id": "R26-DELIVERED-SEVEN-FREQUENCY-DESCRIPTIVE-CONSUMPTION"
+}

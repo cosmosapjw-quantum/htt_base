@@ -1,0 +1,78 @@
+{
+  "account_base": {
+    "bytes": 2636,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/LEDGER_DELTA.json",
+    "sha256": "300a297192a18006de8ad4b05235df62aab1d0ff8faac41e106d876d3ecfc038"
+  },
+  "assignment_packet_id": "c498d3a4e554dc1e51fe7c252e323af0dd91e99e517867cf5a1426ee12a863da",
+  "cli_argv_prefix": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "-B",
+    "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/consume.py",
+    "--input",
+    "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/INPUT.json",
+    "--input-sha",
+    "69b4b3d1c2f398698b2dccd9f06ecb07705faaed419dea8b8ff53fbe3c0aa8c6",
+    "--packet",
+    "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/CONTROL_GO_PACKET.json",
+    "--packet-sha",
+    "<actual-control-go-packet-sha256>",
+    "--repair-context",
+    "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/REPAIR_CONTEXT.json",
+    "--repair-context-sha",
+    "16ab361d85202980e450b045075e5a8267363046af5c20c77dce786dfa15bd46",
+    "--control-exception"
+  ],
+  "control_go_packet_path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/CONTROL_GO_PACKET.json",
+  "control_go_packet_required_fields": {
+    "acknowledgement": {
+      "agent_id": "/root/r26_seven_exception_control_repair_code",
+      "packet_id": "<match unique packet_id>",
+      "status": "GO"
+    },
+    "agent_id": "/root/r26_seven_exception_control_repair_code",
+    "assignment_packet_id": "c498d3a4e554dc1e51fe7c252e323af0dd91e99e517867cf5a1426ee12a863da",
+    "input_identity": "sha256:69b4b3d1c2f398698b2dccd9f06ecb07705faaed419dea8b8ff53fbe3c0aa8c6",
+    "launch_performed": true,
+    "phase": "repair_execute",
+    "repair_base_sha256": "300a297192a18006de8ad4b05235df62aab1d0ff8faac41e106d876d3ecfc038",
+    "repair_context_sha256": "16ab361d85202980e450b045075e5a8267363046af5c20c77dce786dfa15bd46",
+    "repair_finding_id": "R26-SEVEN-CONTROL-01",
+    "source_sha256": "2c8a0504070f42c0e5d27d5d1151297445d7b6a90975c8e05421b25af5358d2b",
+    "task_id": "R26-DELIVERED-SEVEN-FREQUENCY-DESCRIPTIVE-CONSUMPTION"
+  },
+  "execution_performed": false,
+  "existing_assignment_packet_path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/ACTUAL_ACKNOWLEDGED_REPAIR_PACKET.json",
+  "finding_id": "R26-SEVEN-CONTROL-01",
+  "input_identity": "sha256:69b4b3d1c2f398698b2dccd9f06ecb07705faaed419dea8b8ff53fbe3c0aa8c6",
+  "observed_runtime": "UNKNOWN",
+  "remaining_wall_seconds": 33.75329753803089,
+  "repair_context": {
+    "bytes": 4181,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/REPAIR_CONTEXT.json",
+    "sha256": "16ab361d85202980e450b045075e5a8267363046af5c20c77dce786dfa15bd46"
+  },
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "schema": "htt.delivered_seven_exception_preparation/1",
+  "source": {
+    "bytes": 28628,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/consume.py",
+    "sha256": "2c8a0504070f42c0e5d27d5d1151297445d7b6a90975c8e05421b25af5358d2b"
+  },
+  "source_diff": {
+    "bytes": 11288,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/SOURCE_DIFF.patch",
+    "sha256": "c2c56d3d5fc6e4e1aa008df9d21b0f5b6421516ed53d43c06a4e023b281242fd"
+  },
+  "static_checks": [
+    "AST_PARSE_PASS",
+    "CONTROL_CHILD_RAISES_BEFORE_NUMERICAL_CHILD",
+    "ALL_IMMUTABLE_PREIMAGES_MATCH",
+    "CURRENT_SUCCESS_DELTA_SEALED"
+  ],
+  "status": "SOURCE_PREPARED_CONTROL_WAITING_FOR_ROOT_GO",
+  "task_id": "R26-DELIVERED-SEVEN-FREQUENCY-DESCRIPTIVE-CONSUMPTION"
+}

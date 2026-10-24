@@ -1,0 +1,266 @@
+{
+  "acceptance_met": false,
+  "agent_id": "/root/r26_seven_frequency_actual_result_review",
+  "blocking_findings": [
+    {
+      "classification": "code",
+      "consequence": "The explicit required control that a failing consumer records a nonzero measured debit exactly once while preserving the old base/failure has not been demonstrated. This is a contract validation gap; the completed successful numerical result and its actual debit passed independent checks.",
+      "contract_field": "focused_validation[4]",
+      "contract_path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/CONTRACT.json",
+      "evidence": "The child raises and immediately catches SIMULATED_CONSUMER_EXCEPTION locally, then calls build_ledger_delta with literal .5. No timer surrounds this simulated failure, no failure reaches main except/finally, and no simulated failure receipt/delta is persisted. The assertions cover only helper arithmetic and copied fields.",
+      "id": "R26-SEVEN-CONTROL-01",
+      "line_end": 183,
+      "line_start": 170,
+      "minimal_falsifier": "A saved isolated failure-control receipt from this candidate showing an injected consumer failure reaches its real accounting finalizer, positive observed monotonic elapsed, exactly one durable debit to all eight inherited accounts, unchanged original ledger/failure hashes, and no acquisition launch would close this finding. Existing .5-helper assertions do not provide that evidence.",
+      "minimal_fix": "Run only one bounded isolated failure/accounting control under the same remaining cumulative allowance; preserve the successful candidate and immutable old receipts. Do not rerun raw projection, the completed scientific fits/plots, or SMICA. If this exposes a finalizer defect, return its first failure for a bounded repair before closeout.",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/consume.py",
+      "severity": "P2",
+      "title": "Required measured exception/debit control was replaced by a fixed-value helper check"
+    }
+  ],
+  "bounded_repair_authorization": {
+    "already_measured_seconds": 26.246702461969107,
+    "approved": true,
+    "approved_by": "/root/r26_seven_frequency_actual_result_review",
+    "independent_targeted_closeout_required": true,
+    "new_bank": false,
+    "new_ultra": false,
+    "original_total_bank_seconds": 60.0,
+    "remaining_same_bank_seconds": 33.75329753803089,
+    "requested_worker": "lower-tier coding worker",
+    "scientific_result_rerun": false
+  },
+  "candidate_identity": "sha256:ce9001976c667cc198818e4bbf36a6e1cb8d69fed31e7127ed82708208bbe5e5",
+  "checks": {
+    "S7_S4_original_support_exact_and_all_seven_valid": 30021,
+    "STF_independent_normalization_sign_checks": {
+      "B2": {
+        "max_independent_angular_reconstruction_abs_K_CMB": 8.470329472543003e-22,
+        "symmetry_trace_and_L2_norm_identity": true
+      },
+      "B3": {
+        "max_independent_angular_reconstruction_abs_K_CMB": 3.8116482626443515e-21,
+        "symmetry_trace_and_L2_norm_identity": true
+      },
+      "E2": {
+        "max_independent_angular_reconstruction_abs_K_CMB": 6.776263578034403e-21,
+        "symmetry_trace_and_L2_norm_identity": true
+      },
+      "E3": {
+        "max_independent_angular_reconstruction_abs_K_CMB": 8.470329472543003e-21,
+        "symmetry_trace_and_L2_norm_identity": true
+      }
+    },
+    "actual_once_only_success_accounting": {
+      "child_reaped": true,
+      "each_of_eight_seconds": 3.2808378077461384,
+      "elapsed_seconds": 26.246702461969107,
+      "exit_code": 0,
+      "inherited_failure_preserved": "2efa6827041549caa787f6de92fe4133",
+      "max_cumulative_seconds": 409.8284192533599
+    },
+    "all168_coordinates_and_all28_STF_blocks_source_exact": true,
+    "candidate_hashes": {
+      "ACTUAL_ACKNOWLEDGED_EXECUTION_PACKET.json": "403c940fab3f0ff420488547bf2795c77fc20dbf8e537075ce23501a59b709eb",
+      "DESCRIPTIVE_RESULT.json": "ce9001976c667cc198818e4bbf36a6e1cb8d69fed31e7127ed82708208bbe5e5",
+      "FULL7_CARRIER.npz": "cda1a0c714221e6c69f975baa3b94ad2c0457975b901393891ac86870a42811d",
+      "LEDGER_DELTA.json": "300a297192a18006de8ad4b05235df62aab1d0ff8faac41e106d876d3ecfc038",
+      "RAW_RECEIPT.json": "0f76986c40e8d59d4eec0718887401bb5c722dd3afc03b4a546e38f45f137f63",
+      "REPORT.md": "2a25f6d312123baeae5cbdf51b67570a5d785c9d039ba0e97d836350441abe49",
+      "STARTED.json": "a68ffbbd767dcd44b3c1a796a1a1432755aab432f435e155fab90e71abbb354a",
+      "child.stderr": "cace1071573ef725e762e8856427937617c8c67e5d0784c45c0e854e56a803a8",
+      "child.stdout": "aeab9b84e3e7708bfb98c633772b45d55088c7c2b7db4c16c99398950b10d973",
+      "consume.py": "3589826c9679d86ab10560eaefd959bc3ab731fa5a054da374dc8b6ed7c76118",
+      "frequency_image.png": "69c2ef9e9cd450b9be5c5a26a735dda2ffc0ea14cd52cafc8963ffe9fe3f9e5e",
+      "heldout_B12.png": "97b629c5d6948e77ded32227992549f234d894f591405a0eef1789239799a85a",
+      "signed24.png": "57a7670528dfa812b1fd0377fba7137b2fd9f8a64ca05e5e2ea0921b117c055f"
+    },
+    "consumer_sha256": "3589826c9679d86ab10560eaefd959bc3ab731fa5a054da374dc8b6ed7c76118",
+    "contract_sha256": "b94d2dee49f777069713481a0647a90e33ae89be9c01f4d57eb5e80da888f985",
+    "immutable_contract_source_seals": 18,
+    "independent_decimal80_fits": {
+      "s2_over_s1": 0.09373936331209767,
+      "targets": {
+        "100": {
+          "B_residual_norm_K_CMB": 8.867975248793956e-07,
+          "coefficients_decimal80": [
+            0.010030378446291862,
+            -0.020576998982772637
+          ],
+          "max_alpha_abs_difference": 1.734723475976807e-17
+        },
+        "217": {
+          "B_residual_norm_K_CMB": 5.776273396431814e-07,
+          "coefficients_decimal80": [
+            0.007927913611755934,
+            0.0880204490366682
+          ],
+          "max_alpha_abs_difference": 7.979727989493313e-17
+        },
+        "44": {
+          "B_residual_norm_K_CMB": 9.135089222105496e-07,
+          "coefficients_decimal80": [
+            0.2308917927698223,
+            -0.032149455543120264
+          ],
+          "max_alpha_abs_difference": 6.938893903907228e-18
+        },
+        "70": {
+          "B_residual_norm_K_CMB": 9.293815463929214e-07,
+          "coefficients_decimal80": [
+            0.0600558314242529,
+            -0.0380904773025379
+          ],
+          "max_alpha_abs_difference": 5.551115123125783e-17
+        }
+      }
+    },
+    "input_sha256": "69b4b3d1c2f398698b2dccd9f06ecb07705faaed419dea8b8ff53fbe3c0aa8c6",
+    "qualification_sha256": "1876c19b7f9def1d466488868c2ab486fbfbaee27fec84d1154173eb212fe9ae",
+    "qualification_validity_seals": 8,
+    "sealed_control_comparisons": {
+      "143": {
+        "half_max_abs": 0.0,
+        "partition_max_abs": 2.117582368135751e-22,
+        "split_max_abs": 0.0
+      },
+      "217": {
+        "half_max_abs": 0.0,
+        "partition_max_abs": 4.235164736271502e-22,
+        "split_max_abs": 0.0
+      },
+      "353": {
+        "half_max_abs": 0.0,
+        "partition_max_abs": 1.6940658945086007e-21,
+        "split_max_abs": 0.0
+      }
+    },
+    "status": "PASS_READONLY_ACTUAL_RESULT_ARITHMETIC_AND_SOURCE_PARITY",
+    "uniform_seven_frequency_Q_F": {
+      "F_at_sorted_distinct_thresholds": [
+        0.14285714285714285,
+        0.2857142857142857,
+        0.42857142857142855,
+        0.5714285714285714,
+        0.7142857142857143,
+        0.8571428571428571,
+        1.0
+      ],
+      "Q": {
+        "100": 0.22156837509016233,
+        "143": 0.3884310871289673,
+        "217": 1.197104949318915,
+        "30": 1.8718963918065095,
+        "353": 9.512168221610475,
+        "44": 0.48624665895609176,
+        "70": 0.17445277090907255
+      }
+    }
+  },
+  "counterexample": {
+    "actual_check": "simulated[shared_debit_each_of_eight_seconds] == .5/8",
+    "contract_field": "focused_validation[4]",
+    "expected_check": "A consumer exception propagates into the real accounting finalizer and produces one durable delta based on independently observed positive elapsed, divided by8 across inherited accounts.",
+    "falsifier": "A measured negative-control receipt exercising that real failure-finalization route, with one durable same-lineage debit and unchanged source/result/base preimages.",
+    "input": "The integrated SIMULATED_CONSUMER_EXCEPTION branch.",
+    "line_end": 183,
+    "line_start": 170,
+    "observed_static_dataflow": "The exception is handled inside numerical_child; build_ledger_delta receives elapsed=.5 as a literal. No time.monotonic difference is taken in this branch and no simulated exception reaches main/finally or any receipt writer.",
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/consume.py",
+    "scientific_result_status": "All successful numerical arrays and three plots independently passed; no numeric counterexample asserted.",
+    "source_sha256": "3589826c9679d86ab10560eaefd959bc3ab731fa5a054da374dc8b6ed7c76118"
+  },
+  "created_utc": "2026-10-24T04:28:36.633956+00:00",
+  "focused_validation_review": [
+    {
+      "contract_index": 0,
+      "evidence": "Known [2,-1] synthetic E-only coefficient assertion and B-only perturbation assertion execute before actual output. Independent Decimal80 actual fits reproduce all four coefficients; static coefficient dataflow uses only E.",
+      "status": "PASS_FOR_RESULT"
+    },
+    {
+      "contract_index": 1,
+      "evidence": "Missing353 exception assertion executes before result; the completed exact seven-band run has no SMICA row and preserves failed optional comparator.",
+      "status": "PASS"
+    },
+    {
+      "contract_index": 2,
+      "evidence": "All168 coordinates, six143-relative contrasts, 28STF blocks, coefficients, all48 B targets/predictions/residuals and E residuals independently compared with JSON/NPZ and immutable sources.",
+      "status": "PASS"
+    },
+    {
+      "contract_index": 3,
+      "evidence": "Integrated rank-deficient synthetic control checks explicit ill-conditioned state and absent prediction; sealed helper threshold is fixed1e-8, no alternate anchors/weights/fallback.",
+      "status": "PASS"
+    },
+    {
+      "contract_index": 4,
+      "finding_id": "R26-SEVEN-CONTROL-01",
+      "status": "NOT_MET"
+    },
+    {
+      "contract_index": 5,
+      "evidence": "18 immutable source seals, eight validity seals, exact support, controls, actual reaped exit0 receipt, successful eight-account debit and all three scientific plots checked.",
+      "status": "PASS"
+    }
+  ],
+  "independence": "Reviewer did not author the consumer or data. Judged actual sealed arrays with independent Decimal80 normal-equation arithmetic and direct angular STF reconstruction; no skill, controller status, or prior verdict used as an approval oracle.",
+  "input_identity": "sha256:69b4b3d1c2f398698b2dccd9f06ecb07705faaed419dea8b8ff53fbe3c0aa8c6",
+  "issue": {
+    "bounded_repair_available": true,
+    "class": "code",
+    "classification": "code",
+    "counterexample": {
+      "actual_check": "simulated[shared_debit_each_of_eight_seconds] == .5/8",
+      "contract_field": "focused_validation[4]",
+      "expected_check": "A consumer exception propagates into the real accounting finalizer and produces one durable delta based on independently observed positive elapsed, divided by8 across inherited accounts.",
+      "falsifier": "A measured negative-control receipt exercising that real failure-finalization route, with one durable same-lineage debit and unchanged source/result/base preimages.",
+      "input": "The integrated SIMULATED_CONSUMER_EXCEPTION branch.",
+      "line_end": 183,
+      "line_start": 170,
+      "observed_static_dataflow": "The exception is handled inside numerical_child; build_ledger_delta receives elapsed=.5 as a literal. No time.monotonic difference is taken in this branch and no simulated exception reaches main/finally or any receipt writer.",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/consume.py",
+      "scientific_result_status": "All successful numerical arrays and three plots independently passed; no numeric counterexample asserted.",
+      "source_sha256": "3589826c9679d86ab10560eaefd959bc3ab731fa5a054da374dc8b6ed7c76118"
+    },
+    "repair_plan": "Authorize one lower-tier targeted exception-control repair and one targeted independent closeout only. Preserve the successful consume.py source3589826c9679d86ab10560eaefd959bc3ab731fa5a054da374dc8b6ed7c76118, its packet/raw receipts, DESCRIPTIVE_RESULT.json, FULL7_CARRIER.npz, REPORT.md and all three PNGs as byte-identical immutable preimages. Put any amended consumer/finalizer source and control evidence in the assigned repair-owned path; never rebind the successful historical execution to amended source. Provide a narrowly selectable injected consumer failure before numerical imports/calculation/rendering that uses the actual production accounting/finalizer path; do not substitute an independently reimplemented ledger helper or a prescribed duration. Execute exactly one measured negative-control unit under a genuine repair packet. Observe monotonic elapsed, propagate the injected failure to the finalizer, and retain one durable failure receipt and one appended ledger delta. Verify positive observed debit/8 for all eight original accounts including SMICA, same account IDs, existing nonzero cumulative values, no new bank, unchanged original terminal ledger182cfde08b319b6008d19f772b2247e218b2b217ce45a19334d196a69b689454 and old SMICA failure2efa6827041549caa787f6de92fe4133. The accounting base for the repair is the already consumed successful delta300a297192a18006de8ad4b05235df62aab1d0ff8faac41e106d876d3ecfc038 with its current cumulative totals; append measured repair elapsed/8 once, retaining the original ledger reference. Enforce aggregate new execution/control/finalization time <=33.75329753803089s, the remaining part of the SAME60s bank after26.246702461969107s; reserve2s for kill/reap and further restrict by current inherited account head. No projection/raw-map access, scientific fits, figure regeneration, SMICA acquisition/retry, null simulation or extra source-validation ladder. If the isolated negative control exposes a substantive new first failure, retain it and return within this bound; do not silently repeat. Bind the successor candidate to actual repaired-source/control receipts plus an immutable inventory of retained successful scientific files. A targeted independent closeout must check the real failure route, measured exactly-once debit, non-relaunch, process reaping and unchanged scientific hashes. No original full8/L03/campaign acceptance is promoted.",
+    "substantive": true,
+    "summary": "Required measured exception/debit control was replaced by a fixed-value helper check",
+    "true_external": false
+  },
+  "limitations": [
+    "The successful actual numerical products have no identified numerical defect. HOLD is solely the missing explicitly required measured exception-control evidence.",
+    "Frozen S4 reuse remains conditional; its historical runtime/resource UNKNOWN is not waived.",
+    "Reduction bounds are partial arithmetic diagnostics, not a total deterministic harmonic or measurement error certificate.",
+    "No raw maps were read; no new native projection, solver/ODE, null simulation, SMICA retry, controller mutation, Git operation or child agent occurred.",
+    "The independent small-array check command completed exit0 in5.022621159s; this is review work, not a replacement scientific execution."
+  ],
+  "next_transition": "One targeted lower-tier failure-control closeout on this same candidate/account lineage; preserve the passing saved numerical outputs. Root continues independent READY work; no new scientific rerun or broad assurance ladder is required.",
+  "numerical_candidate_judgment": "PASS_SAVED_SEVEN_FREQUENCY_DESCRIPTIVE_RESULT",
+  "observed_runtime": "UNKNOWN",
+  "packet_id": "a46bfad132aaa8de9eea57476fa089aa43aad6ebbdef4a9dbea7991f4b579297",
+  "preserved_claim_ceiling": {
+    "G_F": "NOT_APPLICABLE: frequency is not depth",
+    "Pi": "NOT_CALIBRATED",
+    "exact_relation_status": "NUMERICALLY_UNRESOLVED",
+    "original_L03_and_other_campaign_acceptances": "NOT_PROMOTED",
+    "original_acceptance": "NOT_MET",
+    "original_full8": "HOLD_NATIVE_FIRST_FAILURE",
+    "physical_F": "NOT_EVALUABLE",
+    "physical_MES": "NOT_EVALUABLE",
+    "scientific_admission": "HOLD"
+  },
+  "repair_plan": "Authorize one lower-tier targeted exception-control repair and one targeted independent closeout only. Preserve the successful consume.py source3589826c9679d86ab10560eaefd959bc3ab731fa5a054da374dc8b6ed7c76118, its packet/raw receipts, DESCRIPTIVE_RESULT.json, FULL7_CARRIER.npz, REPORT.md and all three PNGs as byte-identical immutable preimages. Put any amended consumer/finalizer source and control evidence in the assigned repair-owned path; never rebind the successful historical execution to amended source. Provide a narrowly selectable injected consumer failure before numerical imports/calculation/rendering that uses the actual production accounting/finalizer path; do not substitute an independently reimplemented ledger helper or a prescribed duration. Execute exactly one measured negative-control unit under a genuine repair packet. Observe monotonic elapsed, propagate the injected failure to the finalizer, and retain one durable failure receipt and one appended ledger delta. Verify positive observed debit/8 for all eight original accounts including SMICA, same account IDs, existing nonzero cumulative values, no new bank, unchanged original terminal ledger182cfde08b319b6008d19f772b2247e218b2b217ce45a19334d196a69b689454 and old SMICA failure2efa6827041549caa787f6de92fe4133. The accounting base for the repair is the already consumed successful delta300a297192a18006de8ad4b05235df62aab1d0ff8faac41e106d876d3ecfc038 with its current cumulative totals; append measured repair elapsed/8 once, retaining the original ledger reference. Enforce aggregate new execution/control/finalization time <=33.75329753803089s, the remaining part of the SAME60s bank after26.246702461969107s; reserve2s for kill/reap and further restrict by current inherited account head. No projection/raw-map access, scientific fits, figure regeneration, SMICA acquisition/retry, null simulation or extra source-validation ladder. If the isolated negative control exposes a substantive new first failure, retain it and return within this bound; do not silently repeat. Bind the successor candidate to actual repaired-source/control receipts plus an immutable inventory of retained successful scientific files. A targeted independent closeout must check the real failure route, measured exactly-once debit, non-relaunch, process reaping and unchanged scientific hashes. No original full8/L03/campaign acceptance is promoted.",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "schema": "htt.delivered_seven_frequency_actual_result_review/1",
+  "scope": "Finite saved-carrier consumption, all signed arrays, STF tensors, E-only heldout B results, three plots, and inherited successful-run accounting; no native projection or full campaign rerun.",
+  "task_id": "R26-DELIVERED-SEVEN-FREQUENCY-DESCRIPTIVE-CONSUMPTION",
+  "verdict": "HOLD_REQUIRED_EXCEPTION_CONTROL",
+  "visual_inspection": {
+    "frequency_image.png": "Seven labelled Q bars and deterministic mass1/7 step CDF at actual sorted thresholds, no calibrated-law caption.",
+    "heldout_B12.png": "Four fixed targets44/70/100/217, all12 labelled signed B coordinates, correct target/prediction/target-minus-prediction trends and K_CMB units; algorithmic descriptive scope explicit.",
+    "signed24.png": "Seven labelled rows, all24 canonical signed coordinates, symmetric zero-centered K_CMB colour scale and exact support/descriptive title. Largest magnitudes agree with actual353 row."
+  }
+}
