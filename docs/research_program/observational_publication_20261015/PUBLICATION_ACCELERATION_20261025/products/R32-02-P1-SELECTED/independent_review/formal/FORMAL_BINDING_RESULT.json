@@ -1,0 +1,70 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R32-02-P1-SELECTED",
+  "attempt": 2,
+  "phase": "review",
+  "input_identity": "sha256:a42c7da442a0c0eeb07b98ae9e770f15d4cc0c1a297d51f4560392128c670757",
+  "candidate_identity": "sha256:cf17adeaae69fd9a35a488573bb96396539fea8ea46637c88638bf69f6e37fb1",
+  "frontier_identity": "27b1e5df1ffbe44e31a69772db64138b0c2cc6902c009cef87d4b57cc4f3a508",
+  "task_spec_identity": "96a42da7249ef2f01927ea07388a8ac5e95a709e6a586c90e03a5bfecba062d8",
+  "packet_id": "286a6017df43147a14f0744a5b407281c9c910097990f10673afbe476cc1d908",
+  "schema": "htt.independent_review.formal_binding_result/1",
+  "agent_id": "/root/r35_p1_fresh_independent_review",
+  "outcome": "success",
+  "verdict": "SCOPED_PASS",
+  "review_status": "SCOPED_PASS",
+  "acceptance_met": true,
+  "acceptance_scope": [
+    "selected_cohort_manuscript"
+  ],
+  "qualified_products": [
+    "selected_cohort_manuscript"
+  ],
+  "original_acceptance_met": false,
+  "original42_acceptance_met": false,
+  "physical_admission": "HOLD",
+  "scientific_admission": "HOLD_PHYSICAL",
+  "parent_law_qualified": false,
+  "publication_decision": false,
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "runtime_status": "NOT_INDEPENDENTLY_OBSERVED",
+  "actual_native_tool": "collaboration.followup_task",
+  "actual_ack_go": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/P1_FORMAL_REVIEW_ACTUAL_ACK_GO.json",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/RAW_FORMAL_BINDING.json",
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/RESULT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/REVIEW.md",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/RAW_RECEIPT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/INDEPENDENT_VALIDATION.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/SOURCE_IDENTITY_CHECKS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/BIBLIOGRAPHY_CHECKS.json"
+  ],
+  "prior_assessment_identity": "sha256:d290c9dd4076137c1e366c9e3ca9be7796681d48553c9a996cc112fe33b8f2c5",
+  "candidate_file_identities": {
+    "ARTIFACT_MANIFEST.json": "cf17adeaae69fd9a35a488573bb96396539fea8ea46637c88638bf69f6e37fb1",
+    "RESULT.json": "2f01009587dac4cbf4f451b28f16b45f417b483f5ec18e5d49aa836c9c27d0af",
+    "main.pdf": "895ff50d0542866508bae21f99859970268943fd33d155b8a6facbddc21a732b"
+  },
+  "assessment_reused_unchanged": true,
+  "review_or_calculation_or_build_repeated": false,
+  "blocking_findings": [],
+  "nonblocking_observations": [
+    {
+      "id": "P1-EDITORIAL-1",
+      "severity": "P3",
+      "path": "figures/coupled_functionals.pdf",
+      "pdf_page": 14,
+      "source_location": "sections/05_coupled_functionals.tex:117",
+      "issue": "Legacy artwork uses S_j and B for the apparent rate tensor and declared anchor; manuscript uses T_j and B_* to avoid physical/optical notation collision. Caption and context identify the apparent quantities.",
+      "required_for_acceptance": false,
+      "optional_improvement": "Label-only alignment; no numerical rerun."
+    }
+  ],
+  "repair_required": false,
+  "scope": "Conditional selected-cohort manuscript only; no physical, parent-law, native solver, ODE, publication or original42 qualification. Controller owns subsequent state transition.",
+  "bound_utc": "2026-10-25T14:02:32.180229+00:00"
+}
