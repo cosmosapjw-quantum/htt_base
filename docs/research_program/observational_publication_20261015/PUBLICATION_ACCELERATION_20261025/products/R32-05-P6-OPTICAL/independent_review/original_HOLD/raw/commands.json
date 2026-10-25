@@ -1,0 +1,96 @@
+[
+  {
+    "label": "independent_probes",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r35_p6_fresh_independent_review/independent_probes.py"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "started_utc": "2026-10-25T12:59:39.783487+00:00",
+    "exit_code": 1
+  },
+  {
+    "label": "pdfinfo",
+    "argv": [
+      "pdfinfo",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/main.pdf"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "started_utc": "2026-10-25T12:59:40.520272+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "pdftotext",
+    "argv": [
+      "pdftotext",
+      "-layout",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/main.pdf",
+      "/mnt/extdrive/workdir/htt_open_data/r35_p6_fresh_independent_review/raw/candidate_pdf.txt"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "started_utc": "2026-10-25T12:59:40.544351+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "pdf_render",
+    "argv": [
+      "pdftoppm",
+      "-r",
+      "110",
+      "-png",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/main.pdf",
+      "/mnt/extdrive/workdir/htt_open_data/r35_p6_fresh_independent_review/raw/pdfpage"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "started_utc": "2026-10-25T12:59:40.605892+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "independent_latex_build",
+    "argv": [
+      "latexmk",
+      "-pdf",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "main.tex"
+    ],
+    "cwd": "/mnt/extdrive/workdir/htt_open_data/r35_p6_fresh_independent_review/latex_build",
+    "started_utc": "2026-10-25T12:59:42.399349+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "figure1_vector_inventory",
+    "argv": [
+      "pdfimages",
+      "-list",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/figures/error_frontier.pdf"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "started_utc": "2026-10-25T12:59:44.246153+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "figure2_vector_inventory",
+    "argv": [
+      "pdfimages",
+      "-list",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/figures/tensor_error_image.pdf"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "started_utc": "2026-10-25T12:59:44.265698+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "independent_probes_final",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r35_p6_fresh_independent_review/independent_probes.py"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "started_utc": "2026-10-25T13:00:07.367908+00:00",
+    "exit_code": 0,
+    "repair": "Reviewer-only JSON serialization of numpy scalar; original script and stderr preserved; numerical logic unchanged"
+  }
+]

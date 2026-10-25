@@ -1,0 +1,100 @@
+{
+  "schema": "htt.scientific_execute_receipt/1",
+  "campaign_identity": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "packet_id": "4061878216a65321d922f6c919d44fd3406ce3e8bfefe7d7e02a1329d703ceec",
+  "task_id": "R32-05-P6-OPTICAL",
+  "agent_id": "/root/rc_4061878216a65321",
+  "input_identity": "sha256:f900ec93d972751795cdd825ee0f362eabed3a2aae60b59e4c24d265ee6ec132",
+  "phase": "execute",
+  "attempt": 1,
+  "outcome": "success",
+  "candidate_only": true,
+  "candidate_identity": "sha256:341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd",
+  "candidate_identity_kind": "canonical embedded source/output manifest",
+  "result_file_sha256": "343622f6bed1197dd0e08b7c64fbfabefba74f5ec02baf9a51b839dda97ae9b3",
+  "candidate_path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/RESULT.json",
+  "manifest_canonical_json_sha256": "341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd",
+  "proposed_qualified_products": ["optical_inverse_note"],
+  "acceptance_met": false,
+  "acceptance_passed": false,
+  "acceptance_status": "PENDING_FRESH_INDEPENDENT_REVIEW",
+  "original_acceptance_passed": false,
+  "original42_acceptance_met": false,
+  "original42_effect": "none",
+  "scientific_author": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "scope": "Complete scientific note/proofs, frozen literal build contract, claim-source map, actual-candidate consumption and execute-stage proposal"
+  },
+  "build_contributor": {
+    "agent_id": "/root/r35_p6_prescribed_build",
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "medium",
+    "observed_runtime": "UNKNOWN",
+    "scope": "Literal retained-input consumer, targeted checks, figures, tables, RevTeX build and packaging",
+    "raw_receipts": ["report/raw/commands.json", "report/raw/consumer.stdout", "report/raw/latexmk_final.stdout", "report/raw/candidate_audit.stdout"]
+  },
+  "science_sources": {
+    "MANUSCRIPT.md": "4836adcfeda1f7b231e98a91ece8479f223d5b8a11762776a0aeef1fa2ada7ea",
+    "BUILD_CONTRACT.md": "c3e5813aa52be612b3dfe4ffb0cf9dca07d75912198970059a5df115e93dad16",
+    "RESEARCH_NOTE.md": "216dde3906336f6d87c81ecd3c46884f29353863e202af0f0d59f3c8fe2946c0"
+  },
+  "actual_built_candidate": {
+    "pages": 12,
+    "display_equations": 35,
+    "tables": 2,
+    "vector_figures": 2,
+    "references": 4,
+    "focused_checks_passed": 61,
+    "consumer_runs": 1,
+    "consumer_exit": 0,
+    "final_latexmk_exit": 0,
+    "candidate_audit_exit": 0,
+    "main_pdf_sha256": "78d0a6669c6222d4d8e84d6bd14188221492bf00634b7b7fd8f2a074f96bf591",
+    "main_tex_sha256": "6442cd7269b7fb1ead59468d5f1301490b7c20e932b8fd05fae504c8331f57ef",
+    "consumer_sha256": "dbda789168e6b87cd59a94b0f94b6786ad2e5a551112c4d202c93629572f2c65"
+  },
+  "author_candidate_consumption": {
+    "actual_result_checks_tables_claim_map_and_statuses_read": true,
+    "rendered_pages_contact_sheet_viewed": [1,2,3,4,5,6,7,8,9,10,11,12],
+    "rendered_pages_viewed_individually": [5,8,10,11],
+    "source_and_output_manifest_entries_verified_read_only": {"sources": 9, "outputs": 71, "mismatches": []},
+    "embedded_manifest_canonical_hash_matches": true,
+    "equation_preservation_evidence": "Read builder candidate_audit.json: all 35 equations match author source after layout-only equation 26 wrapping; inspected actual finite inverse proof page and figure/table pages",
+    "finding": "No substantive scientific-content or visible-layout defect found in this author consumption. This is not independent review."
+  },
+  "validation_evidence": [
+    "report/generated/checks.json: 61 PASS, including retained basis/units/norm, full5 support projection and residual-compatible/infeasible finite inverse fixtures",
+    "report/generated/candidate_audit.json: 35 equations, 12 pages, 2 tables, 2 vector figures, 4 references, zero overfull boxes or undefined references/citations",
+    "report/generated/retained_tensor_region.json preserves full tensor, coefficients, shape matrix, source basis, assumed set parameters and explicit x/F/Pi/Q/G_F statuses",
+    "Author independently checked SHA-256 and byte counts for all 9 source and 71 output manifest entries; no mismatches; embedded canonical manifest hash matches",
+    "Actual rendered pages show assumed physical radii, H multiplication for dimensional rate, dimensionless CF4 tensor convention, finite inverse kernel and unresolved sectors"
+  ],
+  "preserved_failures_and_recovery": [
+    "Builder first read-only report-directory inventory exited 2 before output directory creation; report/raw/intake_first_failure.txt retained",
+    "First successful TeX build had an overfull equation 26; final build fixes only line wrapping and preserves all equations",
+    "Builder packaging cwd error temporarily wrote root README.md, BUILD_REPORT.md and finalize.py; first error and accidental README preserved, new files moved into report, clean tracked README restored byte-exactly; report/raw/misplaced_file_recovery.json and empty root_README_restoration.diff retained",
+    "Author verified current root README SHA-256 8c3f65ae417a3d3e17b7d015b48113fcb268ec55550181a1939e8e43c608b6b0 and empty Git diff, matching restoration receipt",
+    "Author initial read-only hash command also requested a nonexistent separate ARTIFACT_MANIFEST.json and exited 1 after successfully hashing RESULT.json; the actual manifest is embedded in RESULT.json. Corrected read-only embedded-manifest verification exited 0 with no mismatches. No mutation or scientific rerun occurred."
+  ],
+  "nonblocking_layout_observations": [
+    "nameref/RevTeX label-definition warning remains",
+    "Final TeX log includes bibliography underfull hbox notices; viewed bibliography on contact sheet and no clipping or missing reference was found"
+  ],
+  "scientific_scope": {
+    "claim_tier": "C0 deterministic/conditional methods",
+    "physical_shear_detection": false,
+    "physical_error_radius_observed": false,
+    "statistical_law": "No empirical joint probability law supplied; working C is an illustrative deterministic shape",
+    "CF4_convention": "Already dimensionless apparent tensor; no second kappa or H division",
+    "linear_nonlinear_scope": "Exact identifiable-sector theorem for the declared finite linear map; complete-field exponential inverse and exact nonlinear feasible set have separate domains",
+    "undefined_sectors": ["physical d for the retained quotient", "absolute H", "vorticity", "tilt", "curvature", "energy", "temporal history", "F without measure/admissible set", "Pi without named joint law", "Q without positive policy denominator", "G_F without supported depth functional"],
+    "no_native_solver_or_ode": true,
+    "no_raw_catalogue_or_sky_rerun": true,
+    "no_historical_CAS_or_whole_provenance_replay": true,
+    "no_author_Git_or_STATE_mutation": true
+  },
+  "writer_released": true,
+  "next_action": "Host records this exact execute candidate, continues the dependency-safe campaign and dispatches its fresh independent review when selected; only that review may qualify optical_inverse_note."
+}

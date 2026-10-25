@@ -1,0 +1,123 @@
+{
+  "schema": "htt.p6.fresh_independent_review/1",
+  "task_id": "R32-05-P6-OPTICAL",
+  "verdict": "HOLD",
+  "scope": "Exact candidate optical_inverse_note conditional methods product",
+  "candidate_only": true,
+  "candidate_result_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/RESULT.json",
+  "candidate_result_sha256": "343622f6bed1197dd0e08b7c64fbfabefba74f5ec02baf9a51b839dda97ae9b3",
+  "candidate_manifest_canonical_json_sha256": "341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd",
+  "reviewer_task": "/root/r35_p6_fresh_independent_review",
+  "requested_reviewer": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime_identity": "UNKNOWN",
+  "independent_of_authors": [
+    "/root/rc_4061878216a65321",
+    "/root/r35_p6_prescribed_build"
+  ],
+  "formal_review_packet_status": "PENDING_SCHEDULER_FAIRNESS",
+  "formal_review_packet_id": null,
+  "formal_review_packet_acknowledged": false,
+  "controller_state_changed": false,
+  "controller_qualification_asserted": false,
+  "qualified_products": [],
+  "acceptance_passed": false,
+  "original_acceptance_passed": false,
+  "original42_promoted": false,
+  "scientific_admission": false,
+  "findings": [
+    {
+      "id": "P6-IR-01",
+      "severity": "P2",
+      "blocking_for_exact_methods_candidate": true,
+      "title": "Infinite support requires a nonempty feasible set",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/science/MANUSCRIPT.md",
+      "line": 172,
+      "proof_line": 178,
+      "rendered_source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/main.tex",
+      "rendered_source_line": 183,
+      "pdf_page": 5,
+      "counterexample": {
+        "file": "science/MANUSCRIPT.md",
+        "line": 172,
+        "rendered_source": "report/main.tex:183",
+        "A": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "z": [
+          0,
+          2
+        ],
+        "error_set": "closed Euclidean unit ball",
+        "J": [
+          [
+            0,
+            1
+          ]
+        ],
+        "a": [
+          1
+        ],
+        "compatibility_requirement": "e_2=2, impossible for norm(e)<=1",
+        "E_z": "EMPTY",
+        "Theta_lin": "EMPTY",
+        "J_transpose_a": [
+          0,
+          1
+        ],
+        "kernel_component": "nonzero",
+        "literal_claimed_support": "+infinity",
+        "actual_support": "-infinity under the extended-real convention; otherwise undefined, never +infinity",
+        "minimal_fix": "Require E_z nonempty before the infinite-support assertion, and state the empty-image convention."
+      },
+      "bounded_repair": "Add E_z nonempty to the infinite-support branch and proof, state empty-image support convention, rebuild only affected source/PDF/manifest, and close out with the tiny feasible/infeasible kernel-visible regression. Reuse retained data, figures, tables and completed unaffected checks."
+    }
+  ],
+  "verification": {
+    "sealed_source_output_entries": 80,
+    "identity_mismatches": 0,
+    "candidate_recorded_checks_inspected": 61,
+    "candidate_consumer_rerun": false,
+    "independent_probe_groups": 19,
+    "independent_probe_groups_satisfied": 18,
+    "independent_counterexamples": 1,
+    "independent_latex_build_exit": 0,
+    "candidate_pdf_pages_rendered_and_visually_inspected": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "tagged_equations_compared": 35,
+    "equation_differences": 0,
+    "tables": 2,
+    "vector_figures": 2,
+    "overfull_boxes": 0,
+    "undefined_references_citations": 0,
+    "packaging_incident_material_impact": "NONE_IDENTIFIED_ON_EXACT_CANDIDATE",
+    "raw_catalogue_CAS_sky_ODE_native_new_quadrature_replay": false
+  },
+  "raw_receipt": "raw/review_receipt.json",
+  "review_document": "REVIEW.md",
+  "review_document_sha256": "3c34cf8d555bd6b2e83eda19eb621ea2d64a2eebdfb36ff2f9a635c51c526d0d",
+  "probe_script": "independent_probes.py",
+  "probe_script_sha256": "81010d45e225d542a7b6c6231e179cbd063ea3631b90ae96d64661563527107c",
+  "next_executable_checkpoint": "Controller receives actual formal review packet, binds this same-candidate assessment, then routes one bounded theorem-domain repair and targeted independent closeout. No repeated full review is needed for unchanged evidence."
+}

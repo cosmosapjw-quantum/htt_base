@@ -1,0 +1,47 @@
+{
+  "schema": "htt.p6.feasibility_research_result/1",
+  "packet_id": "3bf96d9ddc16664dfd2b079f5b00c3cc4b9670541bcd80bc6851cd880c95a691",
+  "task_id": "R32-05-P6-OPTICAL",
+  "agent_id": "/root/rc_3bf96d9ddc16664d",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "attempt": 3,
+  "phase": "research",
+  "input_identity": "sha256:f900ec93d972751795cdd825ee0f362eabed3a2aae60b59e4c24d265ee6ec132",
+  "candidate_identity": "sha256:341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd",
+  "frontier_identity": "27b1e5df1ffbe44e31a69772db64138b0c2cc6902c009cef87d4b57cc4f3a508",
+  "task_spec_identity": "2c2ec56b7bb05e4c395913e49572e4f42c4e77d06f33e6bbc63fff6fa44de07a",
+  "outcome": "success",
+  "verdict": "BOUNDED_REPAIR_PLAN_APPROVED",
+  "finding_id": "P6-IR-01",
+  "requested": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "transport_selected": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "actual_native_tool": "collaboration.spawn_agent",
+  "launch_performed": true,
+  "formal_ack_go_path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/P6_RESEARCH_ACTUAL_ACK_GO.json",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r35_p6_feasibility_research/RAW_BINDING_CORRECTION.json",
+  "acceptance_met": false,
+  "acceptance_passed": false,
+  "qualified_products": [],
+  "original_acceptance_passed": false,
+  "original42_promoted": false,
+  "repair_plan": "P6-IR-01: perform one bounded lower-tier repair on the SAME R32-05-P6-OPTICAL task, preserving campaign, input identity sha256:f900ec93d972751795cdd825ee0f362eabed3a2aae60b59e4c24d265ee6ec132, historical attempts/costs and base candidate sha256:341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd. (1) Preserve the original product science/report and raw evidence unchanged. Create only products/R32-05-P6-OPTICAL/repair_01 within the existing publication product; no new checkout. Scientific edits are limited to the two paragraphs specified by /mnt/extdrive/workdir/htt_open_data/r35_p6_feasibility_repair_preparation/repair.patch, SHA256 57a5683f8dfa8eb14cefb81cfee0c3a8937bf7a994965223b6578d90f347c28a. Use the prepared manuscript SHA256 ee6d35bd8b4b571b7ec672b809d10df6b0f5c981dbf0c6d1bc88fa3b77eb59e1 and corresponding TeX SHA256 4bb9ef46647f77baee40d6c9254ff8939caa2b0dde407fbe0135a7e8bdf95704, preserving the complete remaining manuscript, all 35 equations and all other proofs. (2) State h_empty(a)=-infinity; require E_z nonempty before the visible-kernel +infinity assertion; use a feasible theta0 and k in ker A with a^T J k>0 so theta0+t k stays feasible and its functional diverges. Equation (18) remains valid with finite+(-infinity)=-infinity in the empty case. (3) Copy the prepared regression_source.py (SHA256 e4b8eb663d31aae9e381fd0b3de67d465cfffa2c3e68c0e933d5db0916d24523) into repair_01, changing only its source root from parent/prepared to parent to inspect actual repaired science/MANUSCRIPT.md and report/main.tex. Run that tiny regression once: A=diag(1,0), closed unit error ball, J=(0,1), a=1; z=(0,2) is infeasible with support -infinity, while z=(0,0) admits theta=(0,t), e=0 with support +infinity. Preserve exact witness checks at t=-10,0,10 and the three literal-source assertions. These are fixture/source regressions; the proof supplies unboundedness. Record actual exits and retain first failures. (4) Reuse all unchanged numerical data, tables, both vector figures and completed unaffected checks. Preserve CF4 dimensionless norm 0.03265680189321492 and every other retained value. Do not run the numerical consumer, reacquire data, rerun the full paper proof/check history, change tolerances, or add any radius, null law, model, native solver or ODE. (5) Mechanical path adaptation in the repair copy is permitted solely to keep existing consumers, source build, validator and packaging pointed at the existing retained inputs and new repair_01. In reproduce.py and validate_candidate.py, the extra directory requires publication-root P=R.parents[3] instead of R.parents[2]; no numerical code changes. Regenerate main.tex using the existing sibling-source build_source.py as needed and check that it matches the approved prepared TeX. Build the affected PDF with latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex; run the existing source/layout checks and inspect the changed theorem/proof pages. Record the actual page count and inspection; do not transplant the validator's old hardcoded visual statement as a new observation. (6) Package a new candidate RESULT, changed source/output manifest, claim-source references and raw repair/build receipts under repair_01, marking unaffected historical checks as reused. Do not execute the old finalize.py unchanged: it hardcodes old execution packet and command receipts. Mechanical repair packaging may bind the actual new repair packet, candidate paths, actual commands and evidence; retain old records intact. All acceptance fields stay false and qualified_products stays empty pending review. Stop and return exact failure on scientific deviations, identity mismatch of immutable sources, or unsuccessful validation; no threshold relaxation or ultra escalation. (7) Return the new exact candidate and actual evidence to the controller. A fresh different reviewer, distinct from all authors and research contributors including this agent, decides repaired-candidate acceptance. This plan authorizes the correction, not scientific admission, publication or original42 promotion.",
+  "validation_evidence": [
+    "Read the actual ACK_GO before substantive research; live task is running research attempt 3 with exact packet, task, input and candidate binding.",
+    "Independently rehashed the evidence manifest, original manuscript, original TeX, candidate RESULT, prepared files and patch; recomputed canonical candidate manifest hash 341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd.",
+    "Read Theorem 2, its proof and adjacent model/domain assumptions, formal finding P6-IR-01, the prepared literal patch and regression source.",
+    "Analytically verified the incompatible unit-ball counterexample: e2=2 is impossible, so both feasible set and carrier image are empty with extended-real support -infinity.",
+    "Analytically verified the repaired feasible branch: a feasible starting point plus a kernel vector with positive functional slope yields an unbounded feasible ray.",
+    "Checked the empty convention is compatible with equation (18), rank-zero and zero-direction cases; no physical convention or numerical tolerance change is needed.",
+    "Read current build, validator and packaging scripts to constrain path-only repair_01 relocation and prevent copied historical command/visual claims from being mislabeled as new execution.",
+    "No tests, builds, full-paper reproof, CAS campaign, implementation, product mutation, controller mutation, Git operation or child dispatch was performed in this read-only research stage."
+  ],
+  "remaining_hold": "Implementation and fresh independent candidate-bound review pending; this research success alone qualifies no product.",
+  "next_action": "Record this result through the existing controller and request its same-task lower-tier repair packet."
+}

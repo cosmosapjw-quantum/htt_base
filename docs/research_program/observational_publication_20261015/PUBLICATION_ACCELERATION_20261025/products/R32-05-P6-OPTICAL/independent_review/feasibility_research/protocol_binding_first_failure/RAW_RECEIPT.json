@@ -1,0 +1,164 @@
+{
+  "schema": "htt.p6.feasibility_research_receipt/1",
+  "recorded_at_utc": "2026-10-25 14:40:48 UTC",
+  "packet_id": "3bf96d9ddc16664dfd2b079f5b00c3cc4b9670541bcd80bc6851cd880c95a691",
+  "task_id": "R32-05-P6-OPTICAL",
+  "agent_id": "/root/rc_3bf96d9ddc16664d",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "attempt": 3,
+  "phase": "research",
+  "input_identity": "sha256:f900ec93d972751795cdd825ee0f362eabed3a2aae60b59e4c24d265ee6ec132",
+  "candidate_identity": "sha256:341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd",
+  "requested": {"model": "gpt-6-astra", "effort": "xhigh"},
+  "transport_selected": {"model": "gpt-6-astra", "effort": "xhigh"},
+  "observed_runtime": "UNKNOWN",
+  "actual_native_tool": "collaboration.spawn_agent",
+  "acknowledgment": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/P6_RESEARCH_ACTUAL_ACK_GO.json",
+    "sha256": "7099231cfc9eaef911974a6c5c54b6382fb9793aee686d94b98884de9475a137",
+    "packet_and_agent_match": true,
+    "acknowledged": true,
+    "go": true,
+    "read_before_substantive_research": true
+  },
+  "live_binding": {
+    "state_path": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/LIVE_STATE.json",
+    "read_only": true,
+    "observed_task_state": "running",
+    "observed_task_phase": "research",
+    "observed_task_attempt": 3,
+    "packet_candidate_input_campaign_match": true,
+    "old_return_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/science/CONTROLLER_RETURN.json",
+    "prior_authors": ["/root/rc_4061878216a65321", "/root/r35_p6_prescribed_build"],
+    "researcher_is_prior_author": false
+  },
+  "intake_identities": {
+    "packet_file_sha256": "0e7cd994cf02e375df42002007d2bd8bde660b7288441dc0adaf3d7556c06d5c",
+    "evidence_manifest_sha256": "10703b1d37198379ee8ec4565dbef737e7ee35e6143de404c4d94ed48658f2d3",
+    "candidate_result_sha256": "343622f6bed1197dd0e08b7c64fbfabefba74f5ec02baf9a51b839dda97ae9b3",
+    "candidate_manifest_canonical_json_sha256": "341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd",
+    "candidate_manifest_hash_recomputed": true,
+    "original_manuscript_sha256": "4836adcfeda1f7b231e98a91ece8479f223d5b8a11762776a0aeef1fa2ada7ea",
+    "original_tex_sha256": "6442cd7269b7fb1ead59468d5f1301490b7c20e932b8fd05fae504c8331f57ef",
+    "formal_review_result_sha256": "f615a7fac18fdefc44f7b1f0139f4a97db3caae5ea0d7f304d5edd2ba332e562",
+    "preparation_json_sha256": "ad911f60a8068e3d0187ad92a96216c530e25cc564d2fc629db17a5aa8815dce",
+    "prepared_patch_sha256": "57a5683f8dfa8eb14cefb81cfee0c3a8937bf7a994965223b6578d90f347c28a",
+    "prepared_regression_source_sha256": "e4b8eb663d31aae9e381fd0b3de67d465cfffa2c3e68c0e933d5db0916d24523",
+    "prepared_manuscript_sha256": "ee6d35bd8b4b571b7ec672b809d10df6b0f5c981dbf0c6d1bc88fa3b77eb59e1",
+    "prepared_tex_sha256": "4bb9ef46647f77baee40d6c9254ff8939caa2b0dde407fbe0135a7e8bdf95704"
+  },
+  "physics_math_audit_verdict": "BOUNDED_REPAIR_PLAN_APPROVED; scientific acceptance remains pending repaired-candidate review",
+  "finding_id": "P6-IR-01",
+  "assumptions_and_conventions": [
+    "Real finite-dimensional linear model z=A theta+e with e in the declared error set E; no additional physical restriction on theta in Theorem 2.",
+    "A+ is the Moore-Penrose inverse, P_A=A A+, E_z={e in E:(I-P_A)(z-e)=0}, and Theta_lin={A+(z-e)+k:e in E_z,k in ker A}.",
+    "J is a real linear carrier and a is its real functional direction. The support is the extended-real supremum; sup over the empty set is -infinity.",
+    "Compactness of E is needed for the compact identifiable image and finite support branch, not for the existence of a feasible kernel ray.",
+    "No metric signature, physical frame, harmonic normalization, optical conversion, stochastic law, numerical tolerance, or physical error radius changes in this repair. Existing dimensionless J2000 CF4 convention remains unchanged."
+  ],
+  "equation_and_definition_audit": [
+    {
+      "item": "Empty compatibility slice",
+      "status": "DEFECT_CONFIRMED",
+      "reason": "E_z empty implies Theta_lin empty directly from equation (17), hence J Theta_lin empty for every J. Its support is -infinity in every direction under the stated convention, regardless of visibility of ker A.",
+      "minimal_fix": "State h_empty(a)=-infinity and require E_z nonempty before asserting +infinity."
+    },
+    {
+      "item": "Feasible kernel-visible support",
+      "status": "PREPARED_REPAIR_VALID",
+      "reason": "If E_z is nonempty, choose e0 in E_z and theta0=A+(z-e0). Let v be the orthogonal projection of J^T a onto ker A. A nonzero v satisfies A v=0 and a^T J v=||v||^2>0. Therefore theta0+t v is feasible with the same e0 for every t>=0 and its functional tends to +infinity.",
+      "minimal_fix": "The prepared proof makes the feasible starting point explicit and uses the resulting nullspace ray."
+    },
+    {
+      "item": "Equation (18), identifiable carrier",
+      "status": "UNCHANGED_AND_COMPATIBLE",
+      "reason": "For an identifiable carrier the finite offset plus h_Ez remains correct. In the empty case it is finite+(-infinity)=-infinity. The empty image is compact. No amended equation or tolerance is needed."
+    },
+    {
+      "item": "Equation (19), physical-domain paragraph, other proofs",
+      "status": "UNAFFECTED",
+      "reason": "Equation (19) continues to concern feasible parameters with rank r>0. Physical-domain restrictions can bound kernel directions and are already distinguished. No full-paper reproving is required for this isolated missing premise."
+    }
+  ],
+  "counterexample": {
+    "A": [[1, 0], [0, 0]],
+    "z": [0, 2],
+    "J": [[0, 1]],
+    "a": [1],
+    "error_set": "closed Euclidean unit ball in R^2",
+    "compatibility": "e2=2; every compatible error has squared norm at least 4>1",
+    "E_z": "EMPTY",
+    "Theta_lin": "EMPTY",
+    "J_Theta_lin": "EMPTY",
+    "kernel_visible": true,
+    "old_assertion": "+infinity",
+    "correct_support": "-infinity"
+  },
+  "feasible_control": {
+    "A": [[1, 0], [0, 0]],
+    "z": [0, 0],
+    "J": [[0, 1]],
+    "a": [1],
+    "error_set": "closed Euclidean unit ball in R^2",
+    "exact_witness": "e=(0,0), theta=(0,t) for every real t",
+    "functional": "a^T J theta=t",
+    "correct_support": "+infinity",
+    "finite_test_values": [-10, 0, 10],
+    "finite_test_scope": "Exact witness smoke checks only; the unrestricted ray argument proves unboundedness."
+  },
+  "dimensional_sign_and_limit_checks": [
+    "Empty-set support has negative infinity, not zero or positive infinity.",
+    "The proof chooses the kernel-vector sign to give a positive slope; choosing the orthogonal projected vector gives slope ||v||^2.",
+    "When A=0, feasibility remains z in E; if infeasible the image is empty, while if feasible and J^T a is nonzero the same ray argument applies.",
+    "For a=0 the kernel-visible condition is false: support is zero for nonempty images and -infinity for an empty image.",
+    "The repair changes no units or numerical values; retained CF4 Frobenius norm remains 0.03265680189321492."
+  ],
+  "prepared_patch_assessment": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r35_p6_feasibility_repair_preparation/repair.patch",
+    "scientific_patch_approved": true,
+    "scope": "Exactly the support-branch paragraph and its proof paragraph in science/MANUSCRIPT.md and report/main.tex.",
+    "prepared_test_path": "/mnt/extdrive/workdir/htt_open_data/r35_p6_feasibility_repair_preparation/regression_source.py",
+    "test_source_read": true,
+    "test_executed": false,
+    "required_path_adaptation": "When installing as repair_01/regression_source.py, change its root from parent/prepared to parent so its text assertions read the actual repair_01/science/MANUSCRIPT.md and repair_01/report/main.tex. Preserve the two exact analytic fixtures and assertions.",
+    "test_evidence_ceiling": "Fixture and literal-source regression, not full theorem verification, numerical solver validation, or independent admission."
+  },
+  "packaging_constraints": [
+    "Preserve the complete original science/report trees and their full proofs, first failures, outputs, input identities, acceptance and review receipts. New repair_01 is a product-level repair copy in the existing checkout, not a new checkout or repository copy.",
+    "Reuse all unchanged generated numerical data, CSV/TeX tables, both vector figures and completed unaffected scientific checks. Do not rerun reproduce.py or acquire data.",
+    "The existing build_source.py uses sibling science and can regenerate repaired main.tex without scientific changes. If copied reproduce.py and validate_candidate.py need to remain runnable one directory deeper, adjust only their publication-root path P from R.parents[2] to R.parents[3]. Preserve mathematical code and tolerances.",
+    "Do not run the copied finalize.py unchanged: it hardcodes old execute-packet identity and rewrites historical commands as successful. New repair packaging must record actual repair commands and paths, while old logs remain explicitly reused historical evidence.",
+    "The existing validator hardcodes an old 12-page visual-inspection statement. Do not claim this as a new observation. Record actual repaired-PDF page count and actual affected-page inspection in repair evidence; source/layout checks may be reused with only necessary path/provenance adaptation.",
+    "Refresh the new candidate's changed source/output manifest and repair evidence. Do not alter source input manifests, acceptance rules, physical claims, historical result identities, or controller STATE."
+  ],
+  "claim_tier_implications": {
+    "current_tier": "C0 conditional finite linear inverse methods",
+    "safe_claim": "The declared unrestricted linear model has empty carrier image for an infeasible observation and infinite directional support for a feasible observation with a visible nullspace direction.",
+    "acceptance_met": false,
+    "qualified_products": [],
+    "original42_promoted": false,
+    "physical_admission": "UNCHANGED",
+    "fresh_review_required": "A different actual reviewer, distinct from every recorded author and research contributor, reviews the exact repaired candidate."
+  },
+  "fatal_blockers_to_this_plan": [],
+  "remaining_completion_requirements": [
+    "Controller records this successful research result and routes the same task to one bounded lower-tier repair.",
+    "Lower-tier worker applies the approved literal correction in new repair_01, executes the tiny adapted regression, builds and checks the affected PDF, and packages the exact candidate with actual receipts.",
+    "Fresh independent candidate-bound review decides scoped acceptance."
+  ],
+  "execution_scope": {
+    "read_only_scientific_research": true,
+    "repository_products_mutated": false,
+    "controller_state_mutated": false,
+    "git_commands_or_mutations": false,
+    "children_spawned": false,
+    "code_implemented": false,
+    "tests_or_builds_run": false,
+    "full_review_repeated": false,
+    "CAS_or_four_axis_admission_claimed": false,
+    "new_data_or_radius_or_null_or_model_or_ODE": false,
+    "tolerance_changes": false,
+    "ultra_escalation": false,
+    "writes": "Only this assigned research directory's raw receipt and RESULT.json."
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "htt.p6.actual_repair_controller_return/1",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "packet_id": "9c3ccfd20d64ff55c67e5f0c3aad1852d1bcb0f4a7c25b95f698b2deb9721db3",
+  "task_id": "R32-05-P6-OPTICAL",
+  "attempt": 4,
+  "phase": "repair",
+  "input_identity": "sha256:f900ec93d972751795cdd825ee0f362eabed3a2aae60b59e4c24d265ee6ec132",
+  "actual_agent_id": "/root/rc_9c3ccfd20d64ff55",
+  "requested_executor": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "base_candidate_identity": "sha256:341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd",
+  "outcome": "success",
+  "candidate_identity": "sha256:7e35f553fb41c9cba9e90272e9731ad5cf3235314a2fc723c1aee59b0c62bfcc",
+  "candidate_result_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/RESULT.json",
+  "candidate_result_sha256": "5cf41f57a4eae068ce25bcd98ed508e1a9df92c5a938be333023c7431aa46ecd",
+  "candidate_manifest_canonical_json_sha256": "7e35f553fb41c9cba9e90272e9731ad5cf3235314a2fc723c1aee59b0c62bfcc",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r35_p6_feasibility_actual_repair/RAW_BINDING_SUCCESSOR.json",
+  "validation_evidence": [
+    "P6_REPAIR_ACTUAL_ACK_GO.json matched packet_id, agent_id and immutable input identity before mutation.",
+    "Original candidate manifest canonical SHA256 341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd and original RESULT SHA256 343622f6bed1197dd0e08b7c64fbfabefba74f5ec02baf9a51b839dda97ae9b3 matched.",
+    "Approved prepared manuscript and TeX SHA256 matched exactly; build_source.py regenerated the approved TeX with all 35 equation tags.",
+    "Focused feasible/infeasible visible-kernel regression ran once: 3 tests passed, including exact witnesses at t=-10,0,10.",
+    "latexmk completed with exit 0; the repaired PDF has 13 pages, with readable theorem/proof on pages 5-6 and a readable four-line retained-source endnote on page 13. The existing nameref package warning remains.",
+    "Source/layout validator exit 0: 35 equation tags, two vector figures, four references, zero overfull boxes, no undefined citations or forbidden phrases, and dimensionless CF4 crosscheck.",
+    "Nine unaffected numerical/table/figure artifacts matched base bytes; the prior 61 numerical checks were reused, not rerun. The numerical consumer was not run for this repair.",
+    "First packaging path-remapping failure was retained, corrected mechanically, and the new candidate manifest was rehashed against all 63 outputs and 11 sources.",
+    "Candidate acceptance and original42 promotion remain false pending a fresh different independent reviewer."
+  ],
+  "acceptance_met": false,
+  "acceptance_passed": false,
+  "qualified_products": [
+    "optical_inverse_note"
+  ],
+  "proposed_qualified_products": [
+    "optical_inverse_note"
+  ],
+  "original_acceptance_passed": false,
+  "original42_promoted": false,
+  "remaining_hold": "Fresh different independent review of this exact repaired candidate is pending; publication layout has a readable four-line final page.",
+  "next_action": "Controller bind exact repaired candidate to a fresh different independent reviewer; preserve same task/campaign and historical costs.",
+  "writer_release": true,
+  "repository_git_writes": false,
+  "controller_state_writes": false,
+  "agent_id": "/root/rc_9c3ccfd20d64ff55",
+  "qualification_status": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+  "qualification_scope": "Controller proposed candidate product label only; fresh independent review is required before any scoped acceptance or scientific admission."
+}

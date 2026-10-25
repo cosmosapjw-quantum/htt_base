@@ -1,0 +1,68 @@
+[
+  {
+    "command": "Misplaced packaging heredocs in repository root, then .venv/bin/python docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/finalize.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit": 2,
+    "note": "Failure preserved in raw/packager_first_failure.*; narrow recovery retained in raw/misplaced_file_recovery.json"
+  },
+  {
+    "command": "ls docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit": 2,
+    "note": "First actual failure: assigned report directory absent; retained raw/intake_first_failure.txt"
+  },
+  {
+    "command": ".venv/bin/python docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/reproduce.py > docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/raw/consumer.stdout 2> docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/raw/consumer.stderr",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit": 0,
+    "runs": 1
+  },
+  {
+    "command": "python build_source.py > raw/source_build.stdout 2> raw/source_build.stderr",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report",
+    "exit": 0
+  },
+  {
+    "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex > raw/latexmk_first.stdout 2> raw/latexmk_first.stderr",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report",
+    "exit": 0,
+    "note": "Successful first build; overfull equation (26) recorded"
+  },
+  {
+    "command": "python build_source.py > raw/source_build_final.stdout 2> raw/source_build_final.stderr",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report",
+    "exit": 0,
+    "note": "Layout-only wrap of equation (26)"
+  },
+  {
+    "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex > raw/latexmk_final.stdout 2> raw/latexmk_final.stderr",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report",
+    "exit": 0
+  },
+  {
+    "command": "pdftotext -layout main.pdf raw/main.txt",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report",
+    "exit": 0
+  },
+  {
+    "command": "pdfinfo main.pdf > raw/pdfinfo.txt",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report",
+    "exit": 0
+  },
+  {
+    "command": "pdftoppm -scale-to 1100 -png main.pdf raw/layout > raw/layout_render.stdout 2> raw/layout_render.stderr",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report",
+    "exit": 0
+  },
+  {
+    "command": "python validate_candidate.py > raw/candidate_audit.stdout 2> raw/candidate_audit.stderr",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report",
+    "exit": 0
+  },
+  {
+    "command": ".venv/bin/python docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/finalize.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit": 0,
+    "note": "RESULT packager; successful creation and print is this command receipt"
+  }
+]

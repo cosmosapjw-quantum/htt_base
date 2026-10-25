@@ -1,0 +1,319 @@
+{
+  "candidate_identity": {
+    "passed": true,
+    "detail": "343622f6bed1197dd0e08b7c64fbfabefba74f5ec02baf9a51b839dda97ae9b3"
+  },
+  "canonical_manifest": {
+    "passed": true,
+    "detail": "341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd"
+  },
+  "all_sealed_files": {
+    "passed": true,
+    "detail": {
+      "count": 80,
+      "mismatches": []
+    }
+  },
+  "producer_source_identity": {
+    "passed": true,
+    "detail": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/cf4_apparent_kinematic_distribution.py",
+      "actual_sha256": "843b19e464817d14455df68e9043a93cc71cc7449ab339052c3ddfe1c7298c19",
+      "expected_sha256": "843b19e464817d14455df68e9043a93cc71cc7449ab339052c3ddfe1c7298c19"
+    }
+  },
+  "dimensionless_tensor": {
+    "passed": true,
+    "detail": {
+      "norm": 0.03265680189321492,
+      "spectrum": [
+        -0.02372716526904238,
+        0.001327948995864028,
+        0.02239921627317837
+      ],
+      "second_kappa_division_would_give": 0.015039013044835282
+    }
+  },
+  "full_five_dimensional_carrier": {
+    "passed": true,
+    "detail": {
+      "C_shape": [
+        5,
+        5
+      ],
+      "C_eigenvalues": [
+        1.2825855731768987e-05,
+        1.3625183116705145e-05,
+        1.7545964883168605e-05,
+        2.2697378375120027e-05,
+        2.8828040396977866e-05
+      ],
+      "status_fields": {
+        "x": {
+          "status": "APPARENT_TENSOR_RETAINED_CONDITIONAL_PHYSICAL_IMAGE",
+          "unresolved": [
+            "d",
+            "vorticity",
+            "H",
+            "curvature",
+            "tilt",
+            "energy",
+            "temporal_history"
+          ],
+          "x_C": "INCOMPLETE_UNKNOWN"
+        },
+        "Q": {
+          "status": "SPECIFIED_UNDEFINED_WITHOUT_POSITIVE_POLICY_DENOMINATOR",
+          "q_star": null
+        },
+        "F": {
+          "status": "UNDEFINED",
+          "missing": "support measure and admissible set"
+        },
+        "Pi": {
+          "status": "UNDEFINED",
+          "missing": "named joint probability law"
+        },
+        "G_F": {
+          "status": "UNDEFINED",
+          "missing": "registered depth functional, windows, measures and shared dependence"
+        }
+      }
+    }
+  },
+  "finite_inverse_nondiagonal_range_support": {
+    "passed": true,
+    "detail": [
+      {
+        "a": [
+          1.0,
+          0.0
+        ],
+        "primal_status": 0,
+        "error_status": 0,
+        "primal_support": 1.2,
+        "formula_support": 1.1999999999999997,
+        "residual_max": 0.3
+      },
+      {
+        "a": [
+          -1.0,
+          0.0
+        ],
+        "primal_status": 0,
+        "error_status": 0,
+        "primal_support": -0.9,
+        "formula_support": -0.8999999999999999,
+        "residual_max": 0.30000000000000004
+      },
+      {
+        "a": [
+          0.0,
+          1.0
+        ],
+        "primal_status": 0,
+        "error_status": 0,
+        "primal_support": 0.09999999999999998,
+        "formula_support": 0.09999999999999998,
+        "residual_max": 0.30000000000000004
+      },
+      {
+        "a": [
+          0.6,
+          -0.8
+        ],
+        "primal_status": 0,
+        "error_status": 0,
+        "primal_support": 1.12,
+        "formula_support": 1.1199999999999999,
+        "residual_max": 0.3
+      }
+    ]
+  },
+  "kernel_support_feasible_vs_infeasible": {
+    "passed": true,
+    "detail": {
+      "feasible_kernel_visible_LP_status": 3,
+      "infeasible_kernel_visible_LP_status": 2,
+      "meaning": "status 3 unbounded; status 2 infeasible"
+    }
+  },
+  "THEOREM_2_EMPTY_SET_COUNTEREXAMPLE": {
+    "passed": false,
+    "detail": {
+      "file": "science/MANUSCRIPT.md",
+      "line": 172,
+      "rendered_source": "report/main.tex:183",
+      "A": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "z": [
+        0,
+        2
+      ],
+      "error_set": "closed Euclidean unit ball",
+      "J": [
+        [
+          0,
+          1
+        ]
+      ],
+      "a": [
+        1
+      ],
+      "compatibility_requirement": "e_2=2, impossible for norm(e)<=1",
+      "E_z": "EMPTY",
+      "Theta_lin": "EMPTY",
+      "J_transpose_a": [
+        0,
+        1
+      ],
+      "kernel_component": "nonzero",
+      "literal_claimed_support": "+infinity",
+      "actual_support": "-infinity under the extended-real convention; otherwise undefined, never +infinity",
+      "minimal_fix": "Require E_z nonempty before the infinite-support assertion, and state the empty-image convention."
+    }
+  },
+  "sampling_outer_support_signed_window": {
+    "passed": true,
+    "detail": {
+      "vertex_max": 0.7680512989215438,
+      "formula": 0.7680512989215438,
+      "nuisance_residual": 2.6766507790745728e-16
+    }
+  },
+  "projected_boundaries_have_full_set_witnesses": {
+    "passed": true,
+    "detail": {
+      "witnesses": [
+        {
+          "eta": 0.0,
+          "maximum_witness_projection_error": 0.0,
+          "largest_hidden_coordinate_norm": 0.02476503617167105
+        },
+        {
+          "eta": 0.005,
+          "maximum_witness_projection_error": 0.0,
+          "largest_hidden_coordinate_norm": 0.02476503617167105
+        },
+        {
+          "eta": 0.01,
+          "maximum_witness_projection_error": 0.0,
+          "largest_hidden_coordinate_norm": 0.02476503617167105
+        }
+      ],
+      "projection_x_support": 0.0037493405011808866,
+      "centered_section_x_support": 0.003725218796179927,
+      "absolute_zero_hidden_section_empty": true,
+      "zero_hidden_minimum_ellipsoid_cost": 26.569492820066962
+    }
+  },
+  "singular_shape_product_support": {
+    "passed": true,
+    "detail": {
+      "witness": 0.4218677324489565,
+      "support": 0.4218677324489565
+    }
+  },
+  "frontier_attaining_tensor_witnesses": {
+    "passed": true,
+    "detail": [
+      {
+        "r_Q": 0.0,
+        "endpoint_error": 0.0,
+        "lower_positive": true,
+        "expected_positive": true
+      },
+      {
+        "r_Q": 0.005,
+        "endpoint_error": 3.469446951953614e-18,
+        "lower_positive": true,
+        "expected_positive": true
+      },
+      {
+        "r_Q": 0.01,
+        "endpoint_error": 1.734723475976807e-18,
+        "lower_positive": true,
+        "expected_positive": true
+      },
+      {
+        "r_Q": 0.02,
+        "endpoint_error": 0.0,
+        "lower_positive": true,
+        "expected_positive": true
+      },
+      {
+        "r_Q": 0.03265680189321492,
+        "endpoint_error": 0.0,
+        "lower_positive": false,
+        "expected_positive": false
+      },
+      {
+        "r_Q": 0.04,
+        "endpoint_error": 6.938893903907228e-18,
+        "lower_positive": false,
+        "expected_positive": false
+      }
+    ]
+  },
+  "rate_units_scaling": {
+    "passed": true,
+    "detail": {
+      "H_ratio": 7,
+      "dimensional_rate_ratio": 7.0,
+      "normalized_Sigma": 0.013332083544922036
+    }
+  },
+  "local_optical_units_sign": {
+    "passed": true,
+    "detail": {
+      "contraction": 0.5299999999999998,
+      "H_minus_A_dot_n_over_c_plus_shear": 0.53,
+      "vorticity_contraction": 0.0
+    }
+  },
+  "log_remainder_pointwise": {
+    "passed": true,
+    "detail": {
+      "max_remainder": 0.11398125764490841,
+      "outer_bound": 0.13959465489747377
+    }
+  },
+  "positive_normalized_field_error_ratio": {
+    "passed": true,
+    "detail": {
+      "ratios": [
+        1.0676371581403952,
+        0.9736966607231797
+      ],
+      "bounds": [
+        0.9120108393559098,
+        1.096478196143185
+      ],
+      "scope": "finite positive-weight inequality probe, not spherical reconstruction"
+    }
+  },
+  "recorded_61_check_receipt": {
+    "passed": true,
+    "detail": {
+      "count": 61,
+      "scope": "inspected receipt and implementation, not independent proof"
+    }
+  },
+  "packaging_recovery_current_evidence": {
+    "passed": true,
+    "detail": {
+      "root_README_sha256": "8c3f65ae417a3d3e17b7d015b48113fcb268ec55550181a1939e8e43c608b6b0",
+      "HEAD_README_sha256": "8c3f65ae417a3d3e17b7d015b48113fcb268ec55550181a1939e8e43c608b6b0",
+      "restoration_diff_bytes": 0,
+      "scope": "current restoration and retained recovery; no claim of independent observation of historical pre-mutation state"
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schema": "htt.p6.feasibility_repair_preparation/1",
+  "task_id": "R32-05-P6-OPTICAL",
+  "finding_id": "P6-IR-01",
+  "status": "SOURCE_PREPARATION_ONLY_PENDING_FORMAL_CONTROLLER_REPAIR_PACKET_AND_ROOT_GO",
+  "new_campaign": false,
+  "attempt_reset": false,
+  "original_candidate_replaced": false,
+  "review_path": "/mnt/extdrive/workdir/htt_open_data/r35_p6_fresh_independent_review/RESULT.json",
+  "review_sha256": "2d656229e9f92167fac04257228bf05d5ea36393407113a5cc7513679219420e",
+  "review_verdict": "HOLD",
+  "candidate_result_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/RESULT.json",
+  "candidate_result_sha256": "343622f6bed1197dd0e08b7c64fbfabefba74f5ec02baf9a51b839dda97ae9b3",
+  "candidate_manifest_canonical_json_sha256": "341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd",
+  "candidate_manifest_canonicalization": "json.dumps(manifest,sort_keys=True,separators=(comma,colon)), UTF-8",
+  "source_changes": [
+    {
+      "repository_path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/science/MANUSCRIPT.md",
+      "original_copy": "originals/science/MANUSCRIPT.md",
+      "original_sha256": "4836adcfeda1f7b231e98a91ece8479f223d5b8a11762776a0aeef1fa2ada7ea",
+      "prepared_source": "prepared/science/MANUSCRIPT.md",
+      "prepared_sha256": "ee6d35bd8b4b571b7ec672b809d10df6b0f5c981dbf0c6d1bc88fa3b77eb59e1",
+      "patch": "patches/science__MANUSCRIPT.md.patch",
+      "patch_sha256": "c4ccebd539e6091a3cb229333525441dd0a7565116b675ab429db88edb887fd7",
+      "exact_diff": "--- a/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/science/MANUSCRIPT.md\n+++ b/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/science/MANUSCRIPT.md\n@@ -169,13 +169,13 @@\n  h_{\\mathcal E_z}(-A^{+\\mathsf T}J^{\\mathsf T}a).\\tag{18}\n \\]\n \n-If \\(J^{\\mathsf T}a\\) has a nonzero component in \\(\\ker A\\), the support in that direction is \\(+\\infty\\). For \\(r>0\\), if \\(\\|e\\|_2\\le r_e\\), the identifiable coordinate obeys\n+We use the extended-real convention \\(h_{\\varnothing}(a)=-\\infty\\); thus an empty feasible set has an empty carrier image with support \\(-\\infty\\). If \\(\\mathcal E_z\\ne\\varnothing\\) and \\(J^{\\mathsf T}a\\) has a nonzero component in \\(\\ker A\\), the support in that direction is \\(+\\infty\\). For \\(r>0\\), if \\(\\|e\\|_2\\le r_e\\), the identifiable coordinate obeys\n \n \\[\n  \\|P_I\\theta-A^+z\\|_2\\le\\frac{r_e}{s_{\\min}(A)} .\\tag{19}\n \\]\n \n-*Proof.* If \\(z-e=A\\theta\\), multiplication by \\(I-P_A\\) gives the compatibility condition in (16), and multiplication by \\(A^+\\) gives \\(P_I\\theta=A^+(z-e)\\). The remaining component is in \\(\\ker A\\), proving necessity in (17). Conversely, every vector in (17) satisfies \\(A\\theta=P_A(z-e)=z-e\\). In the noiseless model two parameters have the same image exactly when their difference is in \\(\\ker A\\); applying \\(J\\) proves the stated criterion. Under that criterion, the kernel term vanishes and maximizing the affine functional of \\(e\\) gives (18). Compactness follows because \\(\\mathcal E_z\\) is a closed subset of a compact set. A nonzero kernel component can be scaled with either sign, proving the infinite-support statement. Finally \\(P_I\\theta-A^+z=-A^+e\\), and \\(\\|A^+\\|_2=1/s_{\\min}(A)\\), which proves (19). \\(\\square\\)\n+*Proof.* If \\(z-e=A\\theta\\), multiplication by \\(I-P_A\\) gives the compatibility condition in (16), and multiplication by \\(A^+\\) gives \\(P_I\\theta=A^+(z-e)\\). The remaining component is in \\(\\ker A\\), proving necessity in (17). Conversely, every vector in (17) satisfies \\(A\\theta=P_A(z-e)=z-e\\). In the noiseless model two parameters have the same image exactly when their difference is in \\(\\ker A\\); applying \\(J\\) proves the stated criterion. Under that criterion, the kernel term vanishes and maximizing the affine functional of \\(e\\) gives (18). Compactness follows because \\(\\mathcal E_z\\) is a closed subset of a compact set. When \\(\\mathcal E_z\\ne\\varnothing\\), choose a feasible \\(\\theta_0\\in\\Theta_{\\rm lin}(z)\\). A nonzero kernel component provides \\(k\\in\\ker A\\) with \\(a^{\\mathsf T}Jk>0\\); then \\(\\theta_0+tk\\) remains feasible for every \\(t\\ge0\\), and \\(a^{\\mathsf T}J(\\theta_0+tk)\\to+\\infty\\), proving the infinite-support statement. Finally \\(P_I\\theta-A^+z=-A^+e\\), and \\(\\|A^+\\|_2=1/s_{\\min}(A)\\), which proves (19). \\(\\square\\)\n \n For \\(A=0\\), every parameter is unresolved whenever \\(z\\in\\mathcal E\\); (19) is undefined. If a physical domain \\(\\Theta_0\\) is added, its feasible set is \\(\\Theta_{\\rm lin}\\cap\\Theta_0\\). Domain restrictions can bound kernel directions, but that information comes from the domain. The exact support is then that of the intersection, with (18) providing an outer bound. Likewise, the rank of the tangent \\(A=D\\Phi(0)\\) does not assert global identifiability of (15).\n \n"
+    },
+    {
+      "repository_path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/main.tex",
+      "original_copy": "originals/report/main.tex",
+      "original_sha256": "6442cd7269b7fb1ead59468d5f1301490b7c20e932b8fd05fae504c8331f57ef",
+      "prepared_source": "prepared/report/main.tex",
+      "prepared_sha256": "4bb9ef46647f77baee40d6c9254ff8939caa2b0dde407fbe0135a7e8bdf95704",
+      "patch": "patches/report__main.tex.patch",
+      "patch_sha256": "a00e7bebb8e2bd388b690ba9855e3bcb6f0fb83bdee1a7cfaef8432d4cc197e1",
+      "exact_diff": "--- a/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/main.tex\n+++ b/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/main.tex\n@@ -180,13 +180,13 @@\n  h_{\\mathcal E_z}(-A^{+\\mathsf T}J^{\\mathsf T}a).\\tag{18}\n \\end{equation}\n \n-If \\(J^{\\mathsf T}a\\) has a nonzero component in \\(\\ker A\\), the support in that direction is \\(+\\infty\\). For \\(r>0\\), if \\(\\|e\\|_2\\le r_e\\), the identifiable coordinate obeys\n+We use the extended-real convention \\(h_{\\varnothing}(a)=-\\infty\\); thus an empty feasible set has an empty carrier image with support \\(-\\infty\\). If \\(\\mathcal E_z\\ne\\varnothing\\) and \\(J^{\\mathsf T}a\\) has a nonzero component in \\(\\ker A\\), the support in that direction is \\(+\\infty\\). For \\(r>0\\), if \\(\\|e\\|_2\\le r_e\\), the identifiable coordinate obeys\n \n \\begin{equation}\n  \\|P_I\\theta-A^+z\\|_2\\le\\frac{r_e}{s_{\\min}(A)} .\\tag{19}\n \\end{equation}\n \n-\\textit{Proof.} If \\(z-e=A\\theta\\), multiplication by \\(I-P_A\\) gives the compatibility condition in (16), and multiplication by \\(A^+\\) gives \\(P_I\\theta=A^+(z-e)\\). The remaining component is in \\(\\ker A\\), proving necessity in (17). Conversely, every vector in (17) satisfies \\(A\\theta=P_A(z-e)=z-e\\). In the noiseless model two parameters have the same image exactly when their difference is in \\(\\ker A\\); applying \\(J\\) proves the stated criterion. Under that criterion, the kernel term vanishes and maximizing the affine functional of \\(e\\) gives (18). Compactness follows because \\(\\mathcal E_z\\) is a closed subset of a compact set. A nonzero kernel component can be scaled with either sign, proving the infinite-support statement. Finally \\(P_I\\theta-A^+z=-A^+e\\), and \\(\\|A^+\\|_2=1/s_{\\min}(A)\\), which proves (19). \\(\\square\\)\n+\\textit{Proof.} If \\(z-e=A\\theta\\), multiplication by \\(I-P_A\\) gives the compatibility condition in (16), and multiplication by \\(A^+\\) gives \\(P_I\\theta=A^+(z-e)\\). The remaining component is in \\(\\ker A\\), proving necessity in (17). Conversely, every vector in (17) satisfies \\(A\\theta=P_A(z-e)=z-e\\). In the noiseless model two parameters have the same image exactly when their difference is in \\(\\ker A\\); applying \\(J\\) proves the stated criterion. Under that criterion, the kernel term vanishes and maximizing the affine functional of \\(e\\) gives (18). Compactness follows because \\(\\mathcal E_z\\) is a closed subset of a compact set. When \\(\\mathcal E_z\\ne\\varnothing\\), choose a feasible \\(\\theta_0\\in\\Theta_{\\rm lin}(z)\\). A nonzero kernel component provides \\(k\\in\\ker A\\) with \\(a^{\\mathsf T}Jk>0\\); then \\(\\theta_0+tk\\) remains feasible for every \\(t\\ge0\\), and \\(a^{\\mathsf T}J(\\theta_0+tk)\\to+\\infty\\), proving the infinite-support statement. Finally \\(P_I\\theta-A^+z=-A^+e\\), and \\(\\|A^+\\|_2=1/s_{\\min}(A)\\), which proves (19). \\(\\square\\)\n \n For \\(A=0\\), every parameter is unresolved whenever \\(z\\in\\mathcal E\\); (19) is undefined. If a physical domain \\(\\Theta_0\\) is added, its feasible set is \\(\\Theta_{\\rm lin}\\cap\\Theta_0\\). Domain restrictions can bound kernel directions, but that information comes from the domain. The exact support is then that of the intersection, with (18) providing an outer bound. Likewise, the rank of the tangent \\(A=D\\Phi(0)\\) does not assert global identifiability of (15).\n \n"
+    }
+  ],
+  "combined_patch": "repair.patch",
+  "combined_patch_sha256": "57a5683f8dfa8eb14cefb81cfee0c3a8937bf7a994965223b6578d90f347c28a",
+  "regression_source": "regression_source.py",
+  "regression_source_sha256": "e4b8eb663d31aae9e381fd0b3de67d465cfffa2c3e68c0e933d5db0916d24523",
+  "validation": {
+    "ast_parse": "PASS_SYNTAX_ONLY_NO_IMPORTS",
+    "regression_execution": "NOT_RUN",
+    "numerical_tests": "NOT_RUN",
+    "producer": "NOT_RUN",
+    "tex_pdf_build": "NOT_RUN",
+    "full_source_audit": "NOT_RUN",
+    "original_sources_unchanged": {
+      "science/MANUSCRIPT.md": true,
+      "report/main.tex": true
+    },
+    "original_candidate_result_unchanged": true
+  },
+  "scope": "Prescribed empty-image support convention, nonempty feasible-set guard, feasible theta_0 proof only; unchanged formulas, finite inverse, figures, tables, C, units, tolerances and frame.",
+  "claim_audit": {
+    "owner": "mio",
+    "claim_tier": "C0",
+    "transfer_source": "none",
+    "status": "PROPOSED",
+    "claim_promotion": false,
+    "scientific_admission": false,
+    "qualification": false,
+    "forbidden_drift": "NONE_IN_PRESCRIBED_DIFF",
+    "ledger_update_needed": false
+  },
+  "risks_and_stop_rule": "No execution/application without formal current controller review then research/repair packet and root GO; return to controller if scope changes.",
+  "next_executable_checkpoint": "Controller binds these source hashes to formal review and bounded research/repair packet; root GO precedes application, regression execution and affected rebuild.",
+  "writer_release": true,
+  "repository_writes": false,
+  "git_writes": false,
+  "state_writes": false
+}

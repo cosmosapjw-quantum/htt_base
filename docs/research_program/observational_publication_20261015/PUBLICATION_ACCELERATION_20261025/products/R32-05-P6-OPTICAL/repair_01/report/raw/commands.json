@@ -1,0 +1,96 @@
+[
+  {
+    "stage": "regression",
+    "command": [
+      "/usr/bin/python",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/regression_source.py"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01",
+    "exit_code": 0,
+    "source_sha256": "214b9066e96b13fa54afdc190b97853b6198f3197217ab7b433dfe66056f6115",
+    "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/raw/regression.stdout",
+    "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/raw/regression.stderr"
+  },
+  {
+    "stage": "source_build",
+    "command": [
+      "/usr/bin/python",
+      "build_source.py"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report",
+    "exit_code": 0,
+    "generated_tex_sha256": "4bb9ef46647f77baee40d6c9254ff8939caa2b0dde407fbe0135a7e8bdf95704",
+    "approved_tex_sha256": "4bb9ef46647f77baee40d6c9254ff8939caa2b0dde407fbe0135a7e8bdf95704",
+    "matches_approved": true
+  },
+  {
+    "stage": "latexmk",
+    "command": [
+      "latexmk",
+      "-pdf",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "main.tex"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report",
+    "exit_code": 0,
+    "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/raw/latexmk.stdout",
+    "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/raw/latexmk.stderr"
+  },
+  {
+    "stage": "pdftotext",
+    "command": [
+      "pdftotext",
+      "-layout",
+      "main.pdf",
+      "raw/main.txt"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report",
+    "exit_code": 0
+  },
+  {
+    "stage": "pdfinfo",
+    "command": [
+      "pdfinfo",
+      "main.pdf"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report",
+    "exit_code": 0
+  },
+  {
+    "stage": "candidate_audit",
+    "command": [
+      "/usr/bin/python",
+      "validate_candidate.py"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report",
+    "exit_code": 0,
+    "stdout_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/raw/candidate_audit.stdout",
+    "stderr_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/raw/candidate_audit.stderr"
+  },
+  {
+    "stage": "inspection_render",
+    "receipt_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/raw/inspection_render.json",
+    "exit_codes": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "stage": "packaging_first_failure",
+    "receipt_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/raw/packaging_first_failure.json",
+    "exit_code": 1,
+    "resolved": true
+  },
+  {
+    "stage": "package_repair",
+    "command": [
+      "python",
+      "package_repair.py"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01",
+    "exit_code": 0,
+    "note": "Exit verified by caller after RESULT and manifest identity are printed."
+  }
+]

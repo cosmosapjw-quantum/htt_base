@@ -1,0 +1,18 @@
+--- a/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/science/MANUSCRIPT.md
++++ b/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/science/MANUSCRIPT.md
+@@ -169,13 +169,13 @@
+  h_{\mathcal E_z}(-A^{+\mathsf T}J^{\mathsf T}a).\tag{18}
+ \]
+ 
+-If \(J^{\mathsf T}a\) has a nonzero component in \(\ker A\), the support in that direction is \(+\infty\). For \(r>0\), if \(\|e\|_2\le r_e\), the identifiable coordinate obeys
++We use the extended-real convention \(h_{\varnothing}(a)=-\infty\); thus an empty feasible set has an empty carrier image with support \(-\infty\). If \(\mathcal E_z\ne\varnothing\) and \(J^{\mathsf T}a\) has a nonzero component in \(\ker A\), the support in that direction is \(+\infty\). For \(r>0\), if \(\|e\|_2\le r_e\), the identifiable coordinate obeys
+ 
+ \[
+  \|P_I\theta-A^+z\|_2\le\frac{r_e}{s_{\min}(A)} .\tag{19}
+ \]
+ 
+-*Proof.* If \(z-e=A\theta\), multiplication by \(I-P_A\) gives the compatibility condition in (16), and multiplication by \(A^+\) gives \(P_I\theta=A^+(z-e)\). The remaining component is in \(\ker A\), proving necessity in (17). Conversely, every vector in (17) satisfies \(A\theta=P_A(z-e)=z-e\). In the noiseless model two parameters have the same image exactly when their difference is in \(\ker A\); applying \(J\) proves the stated criterion. Under that criterion, the kernel term vanishes and maximizing the affine functional of \(e\) gives (18). Compactness follows because \(\mathcal E_z\) is a closed subset of a compact set. A nonzero kernel component can be scaled with either sign, proving the infinite-support statement. Finally \(P_I\theta-A^+z=-A^+e\), and \(\|A^+\|_2=1/s_{\min}(A)\), which proves (19). \(\square\)
++*Proof.* If \(z-e=A\theta\), multiplication by \(I-P_A\) gives the compatibility condition in (16), and multiplication by \(A^+\) gives \(P_I\theta=A^+(z-e)\). The remaining component is in \(\ker A\), proving necessity in (17). Conversely, every vector in (17) satisfies \(A\theta=P_A(z-e)=z-e\). In the noiseless model two parameters have the same image exactly when their difference is in \(\ker A\); applying \(J\) proves the stated criterion. Under that criterion, the kernel term vanishes and maximizing the affine functional of \(e\) gives (18). Compactness follows because \(\mathcal E_z\) is a closed subset of a compact set. When \(\mathcal E_z\ne\varnothing\), choose a feasible \(\theta_0\in\Theta_{\rm lin}(z)\). A nonzero kernel component provides \(k\in\ker A\) with \(a^{\mathsf T}Jk>0\); then \(\theta_0+tk\) remains feasible for every \(t\ge0\), and \(a^{\mathsf T}J(\theta_0+tk)\to+\infty\), proving the infinite-support statement. Finally \(P_I\theta-A^+z=-A^+e\), and \(\|A^+\|_2=1/s_{\min}(A)\), which proves (19). \(\square\)
+ 
+ For \(A=0\), every parameter is unresolved whenever \(z\in\mathcal E\); (19) is undefined. If a physical domain \(\Theta_0\) is added, its feasible set is \(\Theta_{\rm lin}\cap\Theta_0\). Domain restrictions can bound kernel directions, but that information comes from the domain. The exact support is then that of the intersection, with (18) providing an outer bound. Likewise, the rank of the tangent \(A=D\Phi(0)\) does not assert global identifiability of (15).
+ 

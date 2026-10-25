@@ -1,0 +1,110 @@
+{
+  "packet_id": "4efc44cf999f38c005911a892f89cd6d3d3a093aef9e197cf481cc8064e0acce",
+  "task_id": "R32-05-P6-OPTICAL",
+  "input_identity": "sha256:f900ec93d972751795cdd825ee0f362eabed3a2aae60b59e4c24d265ee6ec132",
+  "candidate_identity": "sha256:341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd",
+  "timestamp_utc": "2026-10-25T14:15:18.008044+00:00",
+  "agent_id": "/root/r35_p6_fresh_independent_review",
+  "operation": "Bind unchanged completed independent assessment to actual formal review packet after observed ACK/GO",
+  "actual_native_tool": "collaboration.followup_task",
+  "requested": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "formal_packet": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/NEXT_AFTER_BP_FORMAL_REVIEW.json",
+    "sha256": "db6cd1baae0404777e76b6367e4a470d2de86d4f16a27db95b8ed582c9e0f6ea"
+  },
+  "actual_ack_go": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/P6_FORMAL_REVIEW_ACTUAL_ACK_GO.json",
+    "sha256": "d42b490b81ea50d6899d0bd02b31c2786ceb03c5676a07ea572dc8ce7491966e",
+    "go": true,
+    "launch_performed": true
+  },
+  "current_candidate_result": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/RESULT.json",
+    "sha256": "343622f6bed1197dd0e08b7c64fbfabefba74f5ec02baf9a51b839dda97ae9b3"
+  },
+  "current_embedded_canonical_manifest_sha256": "341346452c546de7877bf839bde8e583e37c8c461703469644ab7675edba1bfd",
+  "preserved_original_review": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r35_p6_fresh_independent_review/RESULT.json",
+    "sha256": "2d656229e9f92167fac04257228bf05d5ea36393407113a5cc7513679219420e",
+    "review_path": "/mnt/extdrive/workdir/htt_open_data/r35_p6_fresh_independent_review/REVIEW.md",
+    "review_sha256": "3c34cf8d555bd6b2e83eda19eb621ea2d64a2eebdfb36ff2f9a635c51c526d0d",
+    "probe_path": "/mnt/extdrive/workdir/htt_open_data/r35_p6_fresh_independent_review/independent_probes.py",
+    "probe_sha256": "81010d45e225d542a7b6c6231e179cbd063ea3631b90ae96d64661563527107c"
+  },
+  "reused_finding": {
+    "id": "P6-IR-01",
+    "severity": "P2",
+    "blocking_for_exact_methods_candidate": true,
+    "title": "Infinite support requires a nonempty feasible set",
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/science/MANUSCRIPT.md",
+    "line": 172,
+    "proof_line": 178,
+    "rendered_source_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/report/main.tex",
+    "rendered_source_line": 183,
+    "pdf_page": 5,
+    "counterexample": {
+      "file": "science/MANUSCRIPT.md",
+      "line": 172,
+      "rendered_source": "report/main.tex:183",
+      "A": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "z": [
+        0,
+        2
+      ],
+      "error_set": "closed Euclidean unit ball",
+      "J": [
+        [
+          0,
+          1
+        ]
+      ],
+      "a": [
+        1
+      ],
+      "compatibility_requirement": "e_2=2, impossible for norm(e)<=1",
+      "E_z": "EMPTY",
+      "Theta_lin": "EMPTY",
+      "J_transpose_a": [
+        0,
+        1
+      ],
+      "kernel_component": "nonzero",
+      "literal_claimed_support": "+infinity",
+      "actual_support": "-infinity under the extended-real convention; otherwise undefined, never +infinity",
+      "minimal_fix": "Require E_z nonempty before the infinite-support assertion, and state the empty-image convention."
+    },
+    "bounded_repair": "Add E_z nonempty to the infinite-support branch and proof, state empty-image support convention, rebuild only affected source/PDF/manifest, and close out with the tiny feasible/infeasible kernel-visible regression. Reuse retained data, figures, tables and completed unaffected checks."
+  },
+  "repair_plan_copy_verification": {
+    "counterexample_equal": true,
+    "bounded_repair_verbatim_suffix": true
+  },
+  "checks_performed": [
+    "actual packet/ACK/task/input/candidate/agent consistency",
+    "ACK go=true and actual native followup",
+    "preserved original review RESULT identity",
+    "current candidate RESULT identity",
+    "current canonical embedded manifest identity"
+  ],
+  "no_full_review_probe_or_build_rerun": true,
+  "no_controller_or_production_writes": true,
+  "actual_command_argv": [
+    "python",
+    "-B",
+    "-"
+  ],
+  "command_cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base"
+}
