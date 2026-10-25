@@ -1,0 +1,149 @@
+{
+  "schema": "H03_PAPER_FRESH_REVIEW_PREPARATION_v1",
+  "task_id": "R32-08-H03-PAPER",
+  "review_agent": "/root/r35_h03_paper_fresh_review",
+  "candidate_identity": "sha256:e2c6b6420caa8a0a6c58ea6682fb509f97331f178176befd03e4a64673d2e37f",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/ARTIFACT_MANIFEST.json",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "verdict": "SCOPED_PASS",
+  "review_status": "PREPARATION_COMPLETE_AWAITING_FORMAL_PACKET_ACK",
+  "formal_packet_id": null,
+  "formal_binding_complete": false,
+  "acceptance_met": false,
+  "qualified_products": [],
+  "recommended_qualified_product_after_formal_binding": "h03_manuscript",
+  "original42_acceptance": false,
+  "original42_unchanged": true,
+  "scope": "Source-bound conditional eight-page observational-methods manuscript; no paper submission or broader physical/scientific admission.",
+  "findings": [],
+  "independence": "Fresh reviewer; no candidate authorship or product edits; own eigensystem GLS and 36D profiling implementation; upstream statuses and skills not used as correctness oracles.",
+  "reviewed_evidence": [
+    "CONTROLLER_RETURN.json",
+    "ARTIFACT_MANIFEST.json",
+    "main.tex",
+    "main.pdf",
+    "consumer.py",
+    "test_retained_frontiers.py",
+    "inputs/SOURCE_BINDINGS.json",
+    "cached H03 36-coordinate sufficient statistics and full covariance",
+    "cached CF4 quotient and producer basis",
+    "generated tables and figures",
+    "source-bound physical derivations and retained checks"
+  ],
+  "checks": {
+    "physical_conventions": "Uniform bulk zero divergence, finite-window leakage, rate/velocity units, optical acceleration sign and material-frame qualification consistent. Physical tilt, shear inference and evolution remain unclaimed.",
+    "statistical_scope": "Marginal extraction used, not Schur conditioning. Full36 free nuisance profiling independently agrees with marginal12 GLS. Gaussian tails remain conditional and original six-degree reference is held fixed after design minimization.",
+    "fit_values": {
+      "bulk": {
+        "T": 79.987012691306,
+        "df": 9,
+        "tail": 1.6257600109775002e-13,
+        "coefficients": [
+          -119.11233564945321,
+          57.67790795712847,
+          -263.5932262157527
+        ]
+      },
+      "constant_rate_dipole": {
+        "T": 94.5983167465741,
+        "df": 9,
+        "tail": 1.9373651622293867e-16,
+        "coefficients": [
+          -0.7445993637853169,
+          0.26037811684115164,
+          -2.7880873191750664
+        ]
+      },
+      "bulk_plus_constant_rate": {
+        "T": 23.396720522667113,
+        "df": 6,
+        "tail": 0.0006739334199763097,
+        "coefficients": [
+          -272.7108633304762,
+          118.34969339768357,
+          -25.93897760705181,
+          1.4400348555738702,
+          -0.6977401499683573,
+          -2.4439958213540223
+        ]
+      }
+    },
+    "full36_profile_max_T_difference": 7.247535904753022e-13,
+    "block_diagonal": {
+      "T": 8.925712182985695,
+      "tail": 0.17779927312718014
+    },
+    "marginal_not_conditional": {
+      "marginal_entry_error": 0.0,
+      "conditional_covariance_norm_difference": 0.4710111106579674,
+      "conditional_counterfactual_T": 56.27124216343338
+    },
+    "structured_frontiers": "Approved unchanged equations/rank/boundary handling reviewed and reused; consumer reproduction gives ranks 3,3,6; floors 15.316002396417126,6.660568527209027,1.3326839380583127e-28; finite rho95 5.750880608573534 and 1.5896711740651195. Coefficient and image budgets distinguished.",
+    "cf4": {
+      "norm": 0.03265680189321508,
+      "eigenvalues": [
+        -0.023727165269042484,
+        0.0013279489958640091,
+        0.02239921627317848
+      ],
+      "directional_rms": 0.011924578035260874,
+      "conditional_Sigma": 0.013332083544922102,
+      "trace": 1.734723475976807e-18
+    },
+    "tensor_retention": "All four complete rate tensors, 36x36 covariance and five signed CF4 coordinates remain in cache/carrier; no scalar replacement.",
+    "reproduction": {
+      "analysis.json": {
+        "byte_equal": false,
+        "max_numeric_abs_difference": 2.1458390619955026e-12
+      },
+      "source_carrier.json": {
+        "byte_equal": false,
+        "max_numeric_abs_difference": 1.5543122344752192e-15
+      },
+      "paper_analysis.json": {
+        "byte_equal": false,
+        "environment_comparison": {
+          "reproduced": {
+            "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+            "numpy": "2.5.4",
+            "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39"
+          },
+          "candidate": {
+            "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+            "numpy": "2.4.2",
+            "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39"
+          }
+        },
+        "max_numeric_abs_difference": 1.2114753644709708e-12
+      },
+      "fits.tex": {
+        "byte_equal": true
+      },
+      "rates.tex": {
+        "byte_equal": true
+      },
+      "table.tex": {
+        "byte_equal": true
+      },
+      "matrix_min_budget.csv": {
+        "byte_equal": false,
+        "max_numeric_abs_difference": 1.2434497875801753e-14
+      }
+    },
+    "rendered_manuscript": "All eight original pages visually inspected: three complete tables, five figures, equations, captions and bibliography present and legible; no clipping or missing assets.",
+    "public_prose": "Scientific interpretation and source aliases retained; no controller packet IDs, model routing, task-ledger statuses or campaign acceptance language inserted in public prose. No new family/native-solver/MIO-posterior claim.",
+    "source_identity": "All 36 manifest payloads match; cached source bindings verified and actually consumed by reproduced entry point; references match primary arXiv records.",
+    "novelty_scope": "Conditional finite-window response synthesis and sensitivity design; no independent cosmological discovery or original42 promotion inferred."
+  },
+  "required_changes": [],
+  "residual_limits": [
+    "Retained diagonal row-scatter working law lacks newly calibrated survey-null coverage and physical covariance.",
+    "Physical calibration Jacobian/budget, material-frame transfer and global tilt remain unavailable.",
+    "Reproduction demonstrates numerical equivalence; NumPy differs from candidate metadata and exact-byte numerical/PDF replay is not claimed.",
+    "Formal controller packet and ACK are required before this preparation verdict is bound to campaign review."
+  ],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r35_h03_paper_fresh_review/RAW_RECEIPT.json",
+  "next_executable_checkpoint": "Root supplies actual formal review packet and ACK through followup_task; bind this exact prepared review without replaying successful scientific checks."
+}

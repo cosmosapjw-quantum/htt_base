@@ -1,0 +1,52 @@
+{
+  "schema": "H03_HOST_METADATA_RECONCILIATION_REVIEW_v1",
+  "verdict": "PASS",
+  "reviewer": "/root/r35_h03_paper_fresh_review",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "scope": "One owner-authorized host metadata mapping repair; no new scientific product, source implementation, acceptance change or retry allocation.",
+  "task_id": "R32-08-H03-PAPER",
+  "review_packet_id": "6f180ce76138050aee9e6c5a3e79cc7eb35d1ad3c0165ad3ec118aafa0899317",
+  "candidate_identity": "sha256:e2c6b6420caa8a0a6c58ea6682fb509f97331f178176befd03e4a64673d2e37f",
+  "input_identity": "sha256:60da9754f4f3259c0dd9a3ed08b23be622389da4a976f916402ff52a4da47a63",
+  "observed_state_sha256": "11dfe9b23745c4c455a05b922e4cfdf2c4e2175927b20a29ca9a1738ab9487fc",
+  "observed_event_count": 635,
+  "source": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/CONTROLLER_RETURN.json",
+    "sha256": "9060bdd5b22df24271315a7404e4da20c0502de1f5ee72ab6e27403bb1321d37",
+    "execute_packet_id": "983526ea40af73d692216a3dfa6855d56234fb67bad5b57c92189d09085d4f62",
+    "agent_id": "/root/rc_983526ea40af73d6",
+    "field": "proposed_qualified_products",
+    "value": [
+      "h03_manuscript"
+    ],
+    "equal_to_existing_execute_history_result": true
+  },
+  "reason": "research_controller.py execute/repair record reads qualified_products into candidate_products, but the authentic producer envelope already proposed h03_manuscript in proposed_qualified_products. The same proposal is preserved inside the historical execute outcome. Restoring that exact proposal does not invent a reviewer-origin product. The independent review and normal subset/acceptance checks remain required.",
+  "approved_mutation": {
+    "state_field": "tasks.R32-08-H03-PAPER.candidate_products",
+    "before": [],
+    "after": [
+      "h03_manuscript"
+    ],
+    "append_event_type": "host_protocol_field_reconciliation"
+  },
+  "required_guards": [
+    "Root is the sole state writer; read the current checkpoint immediately before mutation and compare its identity with the reviewed snapshot or re-evaluate all guards if it changed.",
+    "Verify exact producer return hash, complete equality to existing execute history result, task/input/candidate/execution packet/author identity, and retained raw receipt hash; never edit the producer result or its historical event.",
+    "Require existing proposed_qualified_products exactly [h03_manuscript], existing producer qualified_products exactly [], and proposal equal to frozen spec.qualified_product_expected. Expected-product name alone is insufficient.",
+    "Require current candidate_products exactly []; task running/review/attempt 2; exact current review packet, candidate/input and actual acknowledged reviewer match FORMAL_BINDING_RESULT. No superseding result or candidate may exist.",
+    "Before normal record, change only this candidate_products field and append one event binding source hash and field, before/after values, reviewer artifact, actual host executor, same candidate and rationale. Do not set qualified_products, completion, acceptance or any scientific claim.",
+    "Retain an exact pre-reconciliation checkpoint. Compare the post-reconciliation state with its deep preimage: all task fields except the named candidate_products must match; all other root fields must match except one appended event. Historical events prefix, all task histories, packets, spec, attempts, costs/turns and allocations must remain canonically byte-equivalent.",
+    "Commit this bounded reconciliation atomically through the existing host checkpoint mechanism. Preserve the first rejected review-record outcome as evidence; do not fabricate a scientific failure or relaunch.",
+    "Only afterward call the unmodified normal record function with the already bound independent formal PASS. Its ordinary identity, evidence, acceptance and candidate-product subset gates must succeed; append the normal outcome separately."
+  ],
+  "limitations": [
+    "Approval is conditional on these guards at mutation time; it does not authorize generic state editing or weakening the product-subset gate.",
+    "No source/protocol code edits, new science/proof execution, product edits, task identity reset or original42 promotion.",
+    "This reviewer wrote only this review artifact and did not perform or verify the host mutation.",
+    "Requested/transport-selected runtime remains separate from observed UNKNOWN."
+  ],
+  "next": "Root performs the bounded guarded reconciliation, records the existing formal review normally, verifies preservation, then continues READY work."
+}

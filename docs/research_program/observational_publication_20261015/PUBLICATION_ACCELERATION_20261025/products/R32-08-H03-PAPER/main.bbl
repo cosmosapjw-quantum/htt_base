@@ -1,0 +1,109 @@
+%apsrev4-2.bst 2019-01-14 (MD) hand-edited version of apsrev4-1.bst
+%Control: key (0)
+%Control: author (72) initials jnrlst
+%Control: editor formatted (1) identically to author
+%Control: production of article title (-1) disabled
+%Control: page (0) single
+%Control: year (1) truncated
+%Control: production of eprint (0) enabled
+\begin{thebibliography}{6}%
+\makeatletter
+\providecommand \@ifxundefined [1]{%
+ \@ifx{#1\undefined}
+}%
+\providecommand \@ifnum [1]{%
+ \ifnum #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \@ifx [1]{%
+ \ifx #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \natexlab [1]{#1}%
+\providecommand \enquote  [1]{``#1''}%
+\providecommand \bibnamefont  [1]{#1}%
+\providecommand \bibfnamefont [1]{#1}%
+\providecommand \citenamefont [1]{#1}%
+\providecommand \href@noop [0]{\@secondoftwo}%
+\providecommand \href [0]{\begingroup \@sanitize@url \@href}%
+\providecommand \@href[1]{\@@startlink{#1}\@@href}%
+\providecommand \@@href[1]{\endgroup#1\@@endlink}%
+\providecommand \@sanitize@url [0]{\catcode `\\12\catcode `\$12\catcode
+  `\&12\catcode `\#12\catcode `\^12\catcode `\_12\catcode `\%12\relax}%
+\providecommand \@@startlink[1]{}%
+\providecommand \@@endlink[0]{}%
+\providecommand \url  [0]{\begingroup\@sanitize@url \@url }%
+\providecommand \@url [1]{\endgroup\@href {#1}{\urlprefix }}%
+\providecommand \urlprefix  [0]{URL }%
+\providecommand \Eprint [0]{\href }%
+\providecommand \doibase [0]{https://doi.org/}%
+\providecommand \selectlanguage [0]{\@gobble}%
+\providecommand \bibinfo  [0]{\@secondoftwo}%
+\providecommand \bibfield  [0]{\@secondoftwo}%
+\providecommand \translation [1]{[#1]}%
+\providecommand \BibitemOpen [0]{}%
+\providecommand \bibitemStop [0]{}%
+\providecommand \bibitemNoStop [0]{.\EOS\space}%
+\providecommand \EOS [0]{\spacefactor3000\relax}%
+\providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
+\let\auto@bib@innerbib\@empty
+%</preamble>
+\bibitem [{\citenamefont {Heinesen}(2021)}]{heinesen}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Heinesen}},\ }\href@noop {} {\bibfield  {journal} {\bibinfo  {journal}
+  {JCAP}\ }\textbf {\bibinfo {volume} {05}},\ \bibinfo {pages} {008}},\ \Eprint
+  {https://arxiv.org/abs/2010.06534} {arXiv:2010.06534} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Maartens}\ \emph {et~al.}(2024)\citenamefont
+  {Maartens}, \citenamefont {Santiago}, \citenamefont {Clarkson}, \citenamefont
+  {Kalbouneh},\ and\ \citenamefont {Marinoni}}]{maartens}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Maartens}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Santiago}},
+  \bibinfo {author} {\bibfnamefont {C.}~\bibnamefont {Clarkson}}, \bibinfo
+  {author} {\bibfnamefont {B.}~\bibnamefont {Kalbouneh}},\ and\ \bibinfo
+  {author} {\bibfnamefont {C.}~\bibnamefont {Marinoni}},\ }\href@noop {}
+  {\bibfield  {journal} {\bibinfo  {journal} {JCAP}\ }\textbf {\bibinfo
+  {volume} {09}},\ \bibinfo {pages} {070}},\ \Eprint
+  {https://arxiv.org/abs/2312.09875} {arXiv:2312.09875} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Adamek}\ \emph {et~al.}(2024)\citenamefont {Adamek}
+  \emph {et~al.}}]{adamek}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Adamek}} \emph {et~al.},\ }\bibfield  {journal} {\bibinfo  {journal} {Open
+  Journal of Astrophysics}\ }\textbf {\bibinfo {volume} {7}},\ \href
+  {https://doi.org/10.33232/001c.118782} {10.33232/001c.118782} (\bibinfo
+  {year} {2024}),\ \Eprint {https://arxiv.org/abs/2402.12165}
+  {arXiv:2402.12165} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Boubel}\ \emph {et~al.}(2025)\citenamefont {Boubel},
+  \citenamefont {Colless}, \citenamefont {Said},\ and\ \citenamefont
+  {Staveley-Smith}}]{boubel}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Boubel}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Colless}},
+  \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont {Said}},\ and\ \bibinfo
+  {author} {\bibfnamefont {L.}~\bibnamefont {Staveley-Smith}},\ }\href@noop {}
+  {\bibfield  {journal} {\bibinfo  {journal} {JCAP}\ }\textbf {\bibinfo
+  {volume} {03}},\ \bibinfo {pages} {066}},\ \Eprint
+  {https://arxiv.org/abs/2412.14607} {arXiv:2412.14607} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{HTT retained-statistics
+  analysis}}(2026{\natexlab{a}})}]{h03}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{HTT
+  retained-statistics analysis}}},\ }\href@noop {} {\bibinfo {title}
+  {Four-window h03 source tomography}} (\bibinfo {year} {2026}{\natexlab{a}}),\
+  \bibinfo {note} {source SHA-256:
+  5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326; cached with
+  this paper}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{HTT retained-statistics
+  analysis}}(2026{\natexlab{b}})}]{physical}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{HTT
+  retained-statistics analysis}}},\ }\href@noop {} {\bibinfo {title} {Physical
+  response extraction and independent finite checks}} (\bibinfo {year}
+  {2026}{\natexlab{b}}),\ \bibinfo {note} {physical-results SHA-256:
+  25342649e30a8d631a5364002ae39ebffae0a5d92e1e4ad25c9e2f8dfe9362cc; cached with
+  this paper}\BibitemShut {NoStop}%
+\end{thebibliography}%

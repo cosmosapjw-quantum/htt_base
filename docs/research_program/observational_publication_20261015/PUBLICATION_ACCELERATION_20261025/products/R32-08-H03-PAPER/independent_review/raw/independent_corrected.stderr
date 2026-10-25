@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r35_h03_paper_fresh_review/independent_check.py", line 65, in <module>
+    compare(json.loads((fixtures/'generated'/name).read_text()),json.loads((p/'generated'/name).read_text()))
+  File "/mnt/extdrive/workdir/htt_open_data/r35_h03_paper_fresh_review/independent_check.py", line 57, in compare
+    for k in x:compare(x[k],y[k],path+'/'+k)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r35_h03_paper_fresh_review/independent_check.py", line 57, in compare
+    for k in x:compare(x[k],y[k],path+'/'+k)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r35_h03_paper_fresh_review/independent_check.py", line 64, in compare
+    else:assert x==y,(path,x,y)
+                ^^^^
+AssertionError: ('/environment/numpy', '2.5.4', '2.4.2')

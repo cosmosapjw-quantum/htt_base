@@ -1,0 +1,73 @@
+{
+  "claims": [
+    {
+      "claim_id": "window",
+      "text": "Uniform bulk zero divergence and finite-window leakage",
+      "owner": "htt",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "claim_tier": "CONDITIONAL",
+      "transfer_source": "none",
+      "source": "inputs/physical_derivations.md: P1-P4",
+      "caveats": [
+        "Retained finite statistics and working law; physical response and survey-null coverage not established."
+      ]
+    },
+    {
+      "claim_id": "fit",
+      "text": "Full-C and block-diagonal discrepancies and conditional tails",
+      "owner": "htt",
+      "status": "CONDITIONAL",
+      "evidence_type": "artifact",
+      "claim_tier": "CONDITIONAL",
+      "transfer_source": "none",
+      "source": "generated/paper_analysis.json: fits; inputs/H03_TABLE.csv",
+      "caveats": [
+        "Retained finite statistics and working law; physical response and survey-null coverage not established."
+      ]
+    },
+    {
+      "claim_id": "structured",
+      "text": "Projected ranks, depth floor, FP and joint finite coefficient crossings",
+      "owner": "htt",
+      "status": "CONDITIONAL",
+      "evidence_type": "artifact",
+      "claim_tier": "CONDITIONAL",
+      "transfer_source": "none",
+      "source": "generated/analysis.json: designs; inputs/approved_analysis.json",
+      "caveats": [
+        "Retained finite statistics and working law; physical response and survey-null coverage not established."
+      ]
+    },
+    {
+      "claim_id": "CF4",
+      "text": "Already dimensionless signed tensor and Frobenius norm",
+      "owner": "htt",
+      "status": "CONDITIONAL",
+      "evidence_type": "artifact",
+      "claim_tier": "CONDITIONAL",
+      "transfer_source": "none",
+      "source": "inputs/cf4_producer_reference.py: stf2_orthonormal/model_matrix; inputs/CF4_QUOTIENT.json; generated/paper_analysis.json",
+      "caveats": [
+        "Retained finite statistics and working law; physical response and survey-null coverage not established."
+      ]
+    },
+    {
+      "claim_id": "bound",
+      "text": "Conditional shear norm bounds given qualified response radius",
+      "owner": "htt",
+      "status": "CONDITIONAL",
+      "evidence_type": "proof",
+      "claim_tier": "CONDITIONAL",
+      "transfer_source": "none",
+      "source": "inputs/physical_derivations.md: P7-P8",
+      "caveats": [
+        "Retained finite statistics and working law; physical response and survey-null coverage not established."
+      ]
+    }
+  ],
+  "upgraded_claims": [],
+  "forbidden_drift_detected": false,
+  "physical_x_F_Pi_Q_GF": "UNDEFINED",
+  "native_solver_ODE_execution": false
+}

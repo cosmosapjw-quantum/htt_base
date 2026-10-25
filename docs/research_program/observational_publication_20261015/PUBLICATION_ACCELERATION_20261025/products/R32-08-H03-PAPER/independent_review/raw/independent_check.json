@@ -1,0 +1,125 @@
+{
+  "independence": "Symmetric eigensystem whitening; no author code imported",
+  "fits": {
+    "bulk": {
+      "T": 79.987012691306,
+      "df": 9,
+      "tail": 1.6257600109775002e-13,
+      "coefficients": [
+        -119.11233564945321,
+        57.67790795712847,
+        -263.5932262157527
+      ]
+    },
+    "constant_rate_dipole": {
+      "T": 94.5983167465741,
+      "df": 9,
+      "tail": 1.9373651622293867e-16,
+      "coefficients": [
+        -0.7445993637853169,
+        0.26037811684115164,
+        -2.7880873191750664
+      ]
+    },
+    "bulk_plus_constant_rate": {
+      "T": 23.396720522667113,
+      "df": 6,
+      "tail": 0.0006739334199763097,
+      "coefficients": [
+        -272.7108633304762,
+        118.34969339768357,
+        -25.93897760705181,
+        1.4400348555738702,
+        -0.6977401499683573,
+        -2.4439958213540223
+      ]
+    }
+  },
+  "full36_profile": {
+    "bulk": {
+      "T": 79.9870126913061,
+      "df": 9,
+      "T_difference": 9.947598300641403e-14
+    },
+    "constant_rate_dipole": {
+      "T": 94.59831674657482,
+      "df": 9,
+      "T_difference": 7.247535904753022e-13
+    },
+    "bulk_plus_constant_rate": {
+      "T": 23.396720522667565,
+      "df": 6,
+      "T_difference": 4.511946372076636e-13
+    }
+  },
+  "block_diagonal": {
+    "T": 8.925712182985695,
+    "tail": 0.17779927312718014
+  },
+  "marginal_not_conditional": {
+    "marginal_entry_error": 0.0,
+    "conditional_covariance_norm_difference": 0.4710111106579674,
+    "conditional_counterfactual_T": 56.27124216343338
+  },
+  "cf4": {
+    "norm": 0.03265680189321508,
+    "eigenvalues": [
+      -0.023727165269042484,
+      0.0013279489958640091,
+      0.02239921627317848
+    ],
+    "directional_rms": 0.011924578035260874,
+    "conditional_Sigma": 0.013332083544922102,
+    "trace": 1.734723475976807e-18
+  },
+  "reproduction": {
+    "analysis.json": {
+      "byte_equal": false,
+      "max_numeric_abs_difference": 2.1458390619955026e-12
+    },
+    "source_carrier.json": {
+      "byte_equal": false,
+      "max_numeric_abs_difference": 1.5543122344752192e-15
+    },
+    "paper_analysis.json": {
+      "byte_equal": false,
+      "environment_comparison": {
+        "reproduced": {
+          "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+          "numpy": "2.5.4",
+          "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39"
+        },
+        "candidate": {
+          "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+          "numpy": "2.4.2",
+          "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39"
+        }
+      },
+      "max_numeric_abs_difference": 1.2114753644709708e-12
+    },
+    "fits.tex": {
+      "byte_equal": true
+    },
+    "rates.tex": {
+      "byte_equal": true
+    },
+    "table.tex": {
+      "byte_equal": true
+    },
+    "matrix_min_budget.csv": {
+      "byte_equal": false,
+      "max_numeric_abs_difference": 1.2434497875801753e-14
+    }
+  },
+  "rate_tensor_keys": [
+    "z",
+    "H_km_s_Mpc",
+    "Q_km_s_Mpc",
+    "eigenvalues_km_s_Mpc",
+    "relative_principal_rates_percent",
+    "Sigma_if_same_local_physical_response",
+    "directional_quadrupole_rms_fraction",
+    "full_dipole_quadrupole_rms_fraction"
+  ],
+  "status": "PASS"
+}

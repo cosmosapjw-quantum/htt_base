@@ -1,0 +1,92 @@
+{
+  "schema": "H03_PAPER_FRESH_REVIEW_RAW_v1",
+  "review_agent": "/root/r35_h03_paper_fresh_review",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "candidate_identity": "sha256:e2c6b6420caa8a0a6c58ea6682fb509f97331f178176befd03e4a64673d2e37f",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/ARTIFACT_MANIFEST.json",
+  "manifest_file_count": 36,
+  "manifest_mismatches": [],
+  "checkout": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "branch": "research/htt-adaptive-methods-20261023",
+    "HEAD": "94c38d0f9c8b823108ea4dec461657b0688ba3a5",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "dirty_state": "PRESERVED",
+    "product_writes": false,
+    "git_writes": false,
+    "state_writes": false
+  },
+  "commands": [
+    {
+      "command": "project .venv/bin/python -B consumer.py",
+      "cwd": "/mnt/extdrive/workdir/htt_open_data/r35_h03_paper_fresh_review/fixture",
+      "exit": 0,
+      "stdout": "raw/consumer.stdout",
+      "stderr": "raw/consumer.stderr"
+    },
+    {
+      "command": "project .venv/bin/python -B independent_check.py",
+      "exit": 0,
+      "stdout": "raw/independent_validated.stdout",
+      "stderr": "raw/independent_validated.stderr",
+      "result": "raw/independent_check.json"
+    },
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex",
+      "cwd": "/mnt/extdrive/workdir/htt_open_data/r35_h03_paper_fresh_review/fixture",
+      "exit": 0,
+      "stdout": "raw/latexmk.stdout",
+      "stderr": "raw/latexmk.stderr",
+      "pages": 8
+    },
+    {
+      "command": "pdftoppm -scale-to 1800 -png candidate/main.pdf raw/page",
+      "exit": 0,
+      "inspected_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "prior_checks_reused": {
+    "upstream_candidate_identity": "sha256:4a31b981231a10b449bee2b7be65d0efc181dbd077f35ea55cb23ac38caf4c9d",
+    "unchanged_structured_core": "diff inspected; only cached-input root and new paper_outputs were added",
+    "nine_focused_tests": "author raw evidence retained; not separately replayed",
+    "consumer_controls": "executed as part of required reproduction entry point"
+  },
+  "reviewer_check_failures_preserved": [
+    {
+      "evidence": "raw/independent.stderr",
+      "classification": "REVIEW_CHECKER_OVERSTRICT_BYTE_EQUALITY",
+      "resolution": "Numerical output compared at existing 1e-8 tolerance; scientific tables remain byte identical."
+    },
+    {
+      "evidence": "raw/independent_corrected.stderr",
+      "classification": "ENVIRONMENT_METADATA_DIFFERENCE",
+      "resolution": "Candidate NumPy 2.4.2 versus observed reproduction NumPy 2.5.4 retained separately; no exact-environment replay claim."
+    },
+    {
+      "evidence": "raw/independent_final.stderr",
+      "classification": "REVIEW_CHECKER_JSON_SERIALIZATION",
+      "resolution": "Cast NumPy degree count to Python int; scientific assertions had completed before serialization."
+    }
+  ],
+  "bibliography_primary_sources_checked": [
+    "https://arxiv.org/abs/2010.06534",
+    "https://arxiv.org/abs/2312.09875",
+    "https://arxiv.org/abs/2402.12165",
+    "https://arxiv.org/abs/2412.14607"
+  ],
+  "pdf_reproduction": "Eight-page clean build; table source identical. Extracted PDF text differs in generated-figure font/glyph extraction and ordering; reviewed original rendering is complete. Byte-identical PDF packaging not claimed.",
+  "build_warnings": [
+    "Underfull bibliography hbox only; no undefined references/citations or overfull boxes observed."
+  ]
+}

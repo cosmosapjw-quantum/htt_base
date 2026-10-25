@@ -1,0 +1,76 @@
+{
+  "packet_id": "983526ea40af73d692216a3dfa6855d56234fb67bad5b57c92189d09085d4f62",
+  "task_id": "R32-08-H03-PAPER",
+  "input_identity": "sha256:60da9754f4f3259c0dd9a3ed08b23be622389da4a976f916402ff52a4da47a63",
+  "agent_id": "/root/rc_983526ea40af73d6",
+  "ack_go_observed": true,
+  "requested_model": "gpt-5.6-terra",
+  "requested_effort": "medium",
+  "transport_selected_model": "gpt-6.1-sol",
+  "transport_selected_effort": "medium",
+  "observed_runtime": "UNKNOWN",
+  "validation": {
+    "consumer_exit": 0,
+    "focused_tests": "9 passed",
+    "final_latex_exit": 0,
+    "undefined_citations": false,
+    "overfull_boxes": false,
+    "underfull_boxes": [
+      "Underfull \\hbox (badness 10000) in paragraph at lines 95--101"
+    ],
+    "visual_check": "page 1 rendered and inspected; full PDF text extracted",
+    "source_dimensions": {
+      "H03_coefficients": 36,
+      "H03_covariance": [
+        36,
+        36
+      ],
+      "dipoles": 12,
+      "dipole_covariance": [
+        12,
+        12
+      ],
+      "CF4_STF": 5
+    },
+    "consumer_runs": 1,
+    "no_catalogue_run": true
+  },
+  "commands": [
+    {
+      "command": [
+        "/usr/bin/python3.12",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/consumer.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 3.3447670936584473
+    },
+    {
+      "command": [
+        "/usr/bin/python3.12",
+        "-m",
+        "pytest",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/test_retained_frontiers.py",
+        "-q",
+        "--noconftest"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "latexmk",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "main.tex"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER",
+      "exit_code": 0,
+      "elapsed_seconds": 3.185270309448242
+    }
+  ],
+  "first_failures": "None; all executed numerical, test and build commands succeeded. Initial BibTeX missing-file transition resolved by latexmk passes; raw logs preserved.",
+  "new_downloads": 0,
+  "new_catalogue_runs": 0
+}
