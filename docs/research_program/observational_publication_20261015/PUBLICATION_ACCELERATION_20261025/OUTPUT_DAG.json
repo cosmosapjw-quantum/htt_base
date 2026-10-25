@@ -1,0 +1,207 @@
+{
+  "schema": "htt.publication_output_dag/1",
+  "source_head": "0d5ab96bdb55398076629099664c77517ec33bb4",
+  "frontier": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/FRONTIER.json",
+  "goal": "Produce a sequence of focused reviewed scientific papers/notes from retained results; continue all feasible independent routes without waiting for the full original42 physical inference campaign.",
+  "first_task": "R32-01-QO-METHODS",
+  "initial_candidates": [
+    "R32-01-QO-METHODS",
+    "R32-02-P1-SELECTED",
+    "R32-03-H03-STRUCTURED",
+    "R32-04-BANDPASS-BOUNDS",
+    "R32-05-P6-OPTICAL",
+    "R32-06-P4-DESIGN",
+    "R32-07-P5-ALGEBRA"
+  ],
+  "counts": {
+    "original_external_output_baseline": 17,
+    "original_total": 42,
+    "alternate_V03_baseline": 18,
+    "new_output_tasks": 9,
+    "new_output_tasks_completed": 0,
+    "new_ready_candidates": 7
+  },
+  "counts_scope": "Historical 17/42 vs alternate18/42, not recomputed local live status. Source integration and old result reuse add zero original completions. Candidate readiness is not observed live dispatch.",
+  "paper_routes": {
+    "P1": [
+      "R32-02-P1-SELECTED"
+    ],
+    "P2": [
+      "R32-01-QO-METHODS",
+      "R32-04-BANDPASS-BOUNDS",
+      "R32-09-BANDPASS-PAPER"
+    ],
+    "P3": [
+      "R32-03-H03-STRUCTURED",
+      "R32-08-H03-PAPER"
+    ],
+    "P4": [
+      "R32-03-H03-STRUCTURED",
+      "R32-06-P4-DESIGN"
+    ],
+    "P5": [
+      "R32-07-P5-ALGEBRA"
+    ],
+    "P6": [
+      "R32-01-QO-METHODS",
+      "R32-05-P6-OPTICAL"
+    ]
+  },
+  "scientific_seed_results": {
+    "QO": "attained sharp bound and contraction image; optical log coupling",
+    "CF4": "corrected dimensionless quotient; 12D full-covariance residual",
+    "CMB": "finite-bandpass rank loss under free second-order moments",
+    "P1": "actual selected-cohort likelihood and missing-outcome hull"
+  },
+  "execution": {
+    "consumer": "scripts/codex_harness/research_controller.py append-frontier",
+    "preflight": "scripts/codex_harness/publication_frontier_preflight.py",
+    "state_initialization": "forbidden for existing campaign",
+    "concurrency": "existing controller single-writer scheduling; independent read-only work may be delegated under host ownership",
+    "stop": "Only when no executable work remains after existing adaptive/research routes, with exact branch-specific missing input. A worker return is never the campaign boundary.",
+    "original_acceptance": "preserved; no counter replacement",
+    "one_review_per_bounded_candidate": true
+  },
+  "tasks": [
+    {
+      "id": "R32-01-QO-METHODS",
+      "title": "Sharp tensor chirality and local optical-response methods manuscript",
+      "paper_ids": [
+        "P2",
+        "P6"
+      ],
+      "requires": {
+        "all": []
+      },
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-01-QO-METHODS"
+      ],
+      "qualified_product_expected": "qo_methods_manuscript"
+    },
+    {
+      "id": "R32-02-P1-SELECTED",
+      "title": "Selected-cohort tensor partial-identification manuscript",
+      "paper_ids": [
+        "P1"
+      ],
+      "requires": {
+        "all": []
+      },
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-02-P1-SELECTED"
+      ],
+      "qualified_product_expected": "selected_cohort_manuscript"
+    },
+    {
+      "id": "R32-03-H03-STRUCTURED",
+      "title": "Structured finite-window discrepancy frontier",
+      "paper_ids": [
+        "P3",
+        "P4"
+      ],
+      "requires": {
+        "all": []
+      },
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED"
+      ],
+      "qualified_product_expected": "structured_frontier"
+    },
+    {
+      "id": "R32-04-BANDPASS-BOUNDS",
+      "title": "Bounded foreground-moment identifiability experiment",
+      "paper_ids": [
+        "P2"
+      ],
+      "requires": {
+        "all": []
+      },
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS"
+      ],
+      "qualified_product_expected": "bounded_moment_frontier"
+    },
+    {
+      "id": "R32-05-P6-OPTICAL",
+      "title": "Optical inverse and physical error-radius frontier",
+      "paper_ids": [
+        "P6"
+      ],
+      "requires": {
+        "all": []
+      },
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL"
+      ],
+      "qualified_product_expected": "optical_inverse_note"
+    },
+    {
+      "id": "R32-06-P4-DESIGN",
+      "title": "Observer/bulk/history response design",
+      "paper_ids": [
+        "P4"
+      ],
+      "requires": {
+        "all": []
+      },
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-06-P4-DESIGN"
+      ],
+      "qualified_product_expected": "response_design_note"
+    },
+    {
+      "id": "R32-07-P5-ALGEBRA",
+      "title": "Bianchi admissible image and equivalence companion",
+      "paper_ids": [
+        "P5"
+      ],
+      "requires": {
+        "all": []
+      },
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA"
+      ],
+      "qualified_product_expected": "bianchi_algebra_note"
+    },
+    {
+      "id": "R32-08-H03-PAPER",
+      "title": "Finite-window response and discrepancy manuscript",
+      "paper_ids": [
+        "P3"
+      ],
+      "requires": {
+        "all": [
+          {
+            "task_id": "R32-03-H03-STRUCTURED",
+            "evidence": "qualified",
+            "product": "structured_frontier"
+          }
+        ]
+      },
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER"
+      ],
+      "qualified_product_expected": "h03_manuscript"
+    },
+    {
+      "id": "R32-09-BANDPASS-PAPER",
+      "title": "Finite-bandpass identification manuscript",
+      "paper_ids": [
+        "P2"
+      ],
+      "requires": {
+        "all": [
+          {
+            "task_id": "R32-04-BANDPASS-BOUNDS",
+            "evidence": "qualified",
+            "product": "bounded_moment_frontier"
+          }
+        ]
+      },
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER"
+      ],
+      "qualified_product_expected": "bandpass_manuscript"
+    }
+  ]
+}

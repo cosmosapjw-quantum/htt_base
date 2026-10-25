@@ -1,0 +1,106 @@
+{
+  "schema": "htt.p1.manuscript_build/1",
+  "build_status": "PDF_BUILD_PASS_WITH_DISCLOSED_NONFATAL_WARNINGS",
+  "scientific_admission": "NOT_DECIDED_BY_BUILD_WORKER",
+  "publication_status": "NOT_PUBLISHED_BY_BUILD_WORKER",
+  "requested_runtime": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "pages": 17,
+  "page_target": [
+    15,
+    25
+  ],
+  "page_target_met": true,
+  "command": [
+    "latexmk",
+    "-pdf",
+    "-interaction=nonstopmode",
+    "-halt-on-error",
+    "-file-line-error",
+    "-outdir=/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/latex_20261024T025228Z",
+    "main.tex"
+  ],
+  "log_dir": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/latex_20261024T025228Z",
+  "first_build_log_dir": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/latex_20261024T023051Z",
+  "returncode": 0,
+  "source_hashes": {
+    "main.tex": "3ea9f9ccfa86aeba34859a731bf407b7ffd950520e685e56932114a3876fc800",
+    "sections/01_introduction.tex": "2f0ea8e7e805e724bad5de3d21cce4278760419a006db8062643591c8fae5242",
+    "sections/02_identification.tex": "865712c29b5de95704b06622dd116e1b0548fc6abaf543abfaa033fa70f963bd",
+    "sections/03_selected_likelihood.tex": "f0e39c5d498d25c385c4d830cf3e6093ffb06fd8e521fde05b5141c786d5d408",
+    "sections/04_results_robustness.tex": "e6086373c97913c78e5e124139e5c3438c7d905a01c028f4a6eef2062ff3701f",
+    "sections/05_coupled_functionals.tex": "515d934b7ae5b3ab284ea84900a8f5ed1743db2490d0fdea574218ba581e70d0",
+    "sections/06_discussion.tex": "bd0595b712573957204b3f628cf2aca43d21c84873d97d9c56b601f1d43eb286",
+    "sections/07_proofs.tex": "e0ec9987c8ec59fae6239bee795f3c86cb96be6a86c949afbade62c5f22c0bef",
+    "references.bib": "331ab70818583ecd7b37fc1e2340c81a7ba032e48a624bb9ad7cf13828e7468a",
+    "figures/coupled_functionals.pdf": "20c5de1606c1b5c894034f9c9202df31e59dfdd2d58f801520952a702cf938cf",
+    "figures/model_comparison.pdf": "6a35d6dd82ab397d52211405caad4cfe549a664980405204c32d9cd0fe3cbc55",
+    "figures/selected_tensor_law.pdf": "01c7086e0cf771345d8ccfaa422affdf0eb6748490f0b29954e15b4b9cbb9319",
+    "figures/selection_bounds.pdf": "d69024ad9af571e776309de0b31e6e91f0fdc563b0bcbce919799f1897e3c299"
+  },
+  "main_pdf_sha256": "cb52f70f08d06f8aa9f7cafbe04be22cd32a2253a17b8e07764bfcc706cce9f1",
+  "checks": {
+    "undefined_citations": [],
+    "undefined_references": [],
+    "missing_files": [],
+    "duplicate_labels": [],
+    "overfull_boxes": [],
+    "rerun_needed": [],
+    "bibtex_warning": [
+      "Warning--missing number in Heinesen2021",
+      "Warning--missing number in Maartens2024",
+      "Warning--missing number in Kalbouneh2026"
+    ]
+  },
+  "warnings": [
+    "Class revtex4-2 Warning: No type size specified, using default 10.",
+    "Package nameref Warning: The definition of \\label has changed!",
+    "LaTeX Warning: A float is stuck (cannot be placed) on input line 46.",
+    "LaTeX Warning: A float is stuck (cannot be placed) on input line 90.",
+    "LaTeX Warning: A float is stuck (cannot be placed) on input line 25.",
+    "LaTeX Warning: A float is stuck (cannot be placed) on input line 123.",
+    "Warning--missing number in Heinesen2021",
+    "Warning--missing number in Maartens2024",
+    "Warning--missing number in Kalbouneh2026"
+  ],
+  "float_warning_classification": "Four figures and captions visually present on pages 7,9,11,14; no clipping or missing figure; retained REVTeX float placement warnings disclosed",
+  "visual_pages_inspected": [
+    1,
+    10,
+    12,
+    14,
+    15
+  ],
+  "figure_caption_count": 4,
+  "new_scientific_runs": 0,
+  "notes": [
+    "No scientific driver/test/consumer invoked; figures derive from retained display values or approved existing figure conversion.",
+    "First missing-path and optional converter install outcomes retained externally in retained_prebuild_failures.json; original first build logs retained.",
+    "No author or affiliation invented.",
+    "Native independent review pending; build success is not scientific admission."
+  ],
+  "source_bundle_sha256": "de4ff5829228b9bd66a6f7c67ff4ed02547609f3c7b02db030eba8bf99a91f60",
+  "source_bundle_bytes": 313906,
+  "bundle_entries": [
+    "CLAIM_SOURCES.json",
+    "FIGURE_PROVENANCE.json",
+    "FIGURE_SPEC.json",
+    "README_KO.md",
+    "SCIENTIFIC_SCOPE.md",
+    "figures/coupled_functionals.pdf",
+    "figures/model_comparison.pdf",
+    "figures/selected_tensor_law.pdf",
+    "figures/selection_bounds.pdf",
+    "main.tex",
+    "references.bib",
+    "sections/01_introduction.tex",
+    "sections/02_identification.tex",
+    "sections/03_selected_likelihood.tex",
+    "sections/04_results_robustness.tex",
+    "sections/05_coupled_functionals.tex",
+    "sections/06_discussion.tex",
+    "sections/07_proofs.tex"
+  ],
+  "bundle_crc_check": "PASS",
+  "bundled_inputs_match_final_source": "PASS"
+}

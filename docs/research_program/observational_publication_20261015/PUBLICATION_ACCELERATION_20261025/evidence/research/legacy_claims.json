@@ -1,0 +1,616 @@
+{
+  "task": "Bounded R2/R3/R4 legacy physical ambition map",
+  "date": "2026-10-25",
+  "source_repo_context_only": "0d5ab96bdb55398076629099664c77517ec33bb4",
+  "source_repo_currentness": "PARENT_OWNED_NOT_VERIFIED_HERE",
+  "sources": [
+    {
+      "path": "/workspace/scratch/ef61c9590364/upload/monograph_v4_final.pdf",
+      "pages": 215,
+      "sha256": "e1f78842c916559fc109c7720ed5f2f115d53d31bb82d2f658b69b25e0685512",
+      "printed_to_pdf_offset": 1,
+      "scope": "Targeted chapter excerpts; see markdown exact page ranges"
+    },
+    {
+      "path": "/workspace/scratch/ef61c9590364/project_sources/20-report-1-.pdf",
+      "pages": 36,
+      "sha256": "9f47da1383205ae8112648d2626fc2712ec913aa5f591ec76a738e234efa9418",
+      "printed_to_pdf_offset": 3,
+      "scope": "Body printed pp1-28, PDF4-31; headings/source index"
+    }
+  ],
+  "skill_context_used": [
+    "c38/physmath-research-loop SKILL.md",
+    "references/POLICY_INTEGRATION.md",
+    "references/THEORY_LOOP.md R2/R3/R4"
+  ],
+  "execution": {
+    "production_passes": 1,
+    "nested_agents": 0,
+    "ODE_runs": 0,
+    "Boltzmann_solver_runs": 0,
+    "Git_mutations": 0,
+    "calculation": "Elementary arithmetic and displayed algebraic derivations only",
+    "read_scope_caveat": "Broad page extraction outputs were sometimes truncated; retained claims were read in targeted excerpts. No complete 215-page review claim.",
+    "verification": "Exact Fraction polynomial expansion/integration independently matched the displayed sphere moment; JSON parse, 11 claims,38 method rows and page-offset readback passed. Sympy unavailable in default Python; no dependency installation attempted."
+  },
+  "physical_ambition": "Jointly measure frame velocity, expansion/shear/rotation/acceleration and radiation/geometry response through vector/tensor sky and depth observables, then predict survey distance/Hubble residuals.",
+  "claims": [
+    {
+      "id": "LEG-LNB44",
+      "headline": "ln B about +44 for tilt",
+      "source_pages": [
+        114,
+        111,
+        112,
+        146
+      ],
+      "equations": [
+        "7.7",
+        "7.8"
+      ],
+      "formula": "Z=integral L(theta) pi(theta) dtheta; legacy CF4 L uses beta directly",
+      "extra_assumptions": [
+        "finite-window CF4 bulk represents global tilt",
+        "scalar source-count dipoles have common beta response",
+        "conditional channel covariance and rho",
+        "FLRW reference fixes CF4 beta to zero",
+        "specified normalized priors",
+        "CMB and MES channels form a coherent joint law"
+      ],
+      "finding": "Legacy-number SOURCE_REPORT; not rerun. Under its primary input beta/sigma=1.051/.133, the beta=0 baseline CF4 log likelihood penalty is about -31.22.",
+      "replacement": "Compare local stochastic flow versus local+global frame response with actual survey windows, joint covariance, selection and vector/depth information.",
+      "evidence_status": "SOURCE_REPORT_WITH_LOCAL_REASSESSMENT",
+      "page_convention": "source_pages=monograph printed Arabic; PDF=printed+1; report PDF=printed+3"
+    },
+    {
+      "id": "LEG-F063",
+      "headline": "F=6.3 percent of anisotropy budget",
+      "source_pages": [
+        41,
+        42,
+        112,
+        113,
+        147,
+        175,
+        178
+      ],
+      "equations": [
+        "2.57",
+        "2.59",
+        "7.9",
+        "7.10"
+      ],
+      "formula": "F=(1+w) Omega_m sinh(chi)^2 / [(3/2) B_sigma_corr^2]",
+      "extra_assumptions": [
+        "chosen comparator",
+        "sign-clean state",
+        "positive bound on the whole numerator, not shear alone",
+        "source-matched epsilon normalizers",
+        "same joint draw and epoch for numerator and denominator"
+      ],
+      "finding": "Positive denominator and x>=0 do not prove F<=1. Legacy ratio divides tilt-energy by shear anchor; state shape is lost.",
+      "replacement": "rho_B(X), channel margin, support-use h_I(u)/h_B(u), and physical velocities/rates with explicit anchor.",
+      "evidence_status": "SOURCE_REPORT_WITH_LOCAL_REASSESSMENT",
+      "page_convention": "source_pages=monograph printed Arabic; PDF=printed+1; report PDF=printed+3"
+    },
+    {
+      "id": "LEG-TILT-ETA",
+      "headline": "eta_A=1/12 and beta_safe=epsilon1/(1+eta_A)",
+      "source_pages": [
+        44,
+        45,
+        163,
+        192
+      ],
+      "equations": [
+        "2.68",
+        "2.69",
+        "2.70",
+        "2.71",
+        "2.72",
+        "2.73",
+        "2.77"
+      ],
+      "formula": "epsilon1=(1+eta_A)chi+epsilon1_intrinsic; eta_A=w/[3(1+w)]",
+      "extra_assumptions": [
+        "single barotropic fluid",
+        "history and epoch of acceleration",
+        "specified radiation gradient/time derivative balance",
+        "alignment of dipole vectors",
+        "intrinsic dipole constrained",
+        "rapidity/speed convention"
+      ],
+      "finding": "The source term for the dipole does not alone establish an instantaneous equality epsilon1_A=|A|/Theta. Legacy scalar mapping remains a conditional closure.",
+      "replacement": "Fit vector endpoint boost plus integrated acceleration/intrinsic response; use geodesic A=0 for the declared dust branch.",
+      "evidence_status": "SOURCE_REPORT_WITH_LOCAL_REASSESSMENT",
+      "page_convention": "source_pages=monograph printed Arabic; PDF=printed+1; report PDF=printed+3"
+    },
+    {
+      "id": "LEG-H4",
+      "headline": "Hubble correction about 4 percent at 50 Mpc",
+      "source_pages": [
+        153,
+        154,
+        177
+      ],
+      "equations": [
+        "9.10",
+        "9.11"
+      ],
+      "formula": "DeltaH/H=beta*(c/H)/(3d)",
+      "extra_assumptions": [
+        "theta/H identified with beta lambda_H/d",
+        "characteristic depth represents estimator",
+        "directional versus monopolar response chosen",
+        "actual calibrator angular/selection weights"
+      ],
+      "finding": "Same closure gives 3.118 percent at primary beta=1.051e-3; a measured full-sky H shift depends on support and may cancel for pure bulk.",
+      "replacement": "deltaH=b dot sum(w*r*n)/sum(w*r^2)+theta/3+sum(w*r^2*n^T*S*n)/sum(w*r^2), for the declared weighted slope model.",
+      "evidence_status": "SOURCE_REPORT_WITH_LOCAL_REASSESSMENT",
+      "page_convention": "source_pages=monograph printed Arabic; PDF=printed+1; report PDF=printed+3"
+    },
+    {
+      "id": "LEG-J300",
+      "headline": "peculiar Jeans scale about 300 Mpc",
+      "source_pages": [
+        54,
+        55,
+        56,
+        151,
+        177
+      ],
+      "equations": [
+        "2.117",
+        "2.119",
+        "2.120",
+        "2.121",
+        "2.124",
+        "9.7"
+      ],
+      "formula": "lambda_J=lambda_H*(beta/(9q))^(1/3)",
+      "extra_assumptions": [
+        "q>0",
+        "contracting peculiar convergence",
+        "coherent radial flow closure theta/H=-beta lambda_H/lambda",
+        "scale-filtered gradient and depth conventions"
+      ],
+      "finding": "Uniform bulk has theta=0. Under the old closure, primary beta gives 274.083 Mpc; Table2.2 beta=0 infinity conflicts with its formula.",
+      "replacement": "Measure theta(lambda); solve lambda_J=lambda_H/3 sqrt[-theta(lambda_J)/(qH)] conditionally on the tested q response.",
+      "evidence_status": "SOURCE_REPORT_WITH_LOCAL_REASSESSMENT",
+      "page_convention": "source_pages=monograph printed Arabic; PDF=printed+1; report PDF=printed+3"
+    },
+    {
+      "id": "LEG-BV",
+      "headline": "Bianchi V excluded at lnB=-24.5",
+      "source_pages": [
+        75,
+        76,
+        116,
+        146,
+        147,
+        148,
+        149,
+        197,
+        198
+      ],
+      "equations": [
+        "3.27",
+        "3.28",
+        "3.29",
+        "3.30",
+        "9.1",
+        "D.1",
+        "D.3",
+        "D.6",
+        "D.8"
+      ],
+      "formula": "Sigma^2=[(1+w)Omega_m]^2 sinh(chi)^2 cosh(chi)^2/(4K)",
+      "extra_assumptions": [
+        "LRS geometry",
+        "single perfect fluid",
+        "normal-frame curvature K=(c*A0/(X*H))^2",
+        "family/mode matched radiation response",
+        "same epoch and joint allowed state",
+        "Einstein momentum constraint"
+      ],
+      "finding": "Intended inverse-K consistency curve survives a direct convention-consistent derivation. Legacy curvature signs, D.3 factor4/9, p75 shear normalization and D.6 closure conflict.",
+      "replacement": "Intersect exact momentum curve with common physical and observational allowed set; translate via Bianchi-V-specific radiation/distance response.",
+      "evidence_status": "SOURCE_REPORT_WITH_LOCAL_REASSESSMENT",
+      "page_convention": "source_pages=monograph printed Arabic; PDF=printed+1; report PDF=printed+3"
+    },
+    {
+      "id": "LEG-MES-HIERARCHY",
+      "headline": "B_sigma>B_omega>=B_A",
+      "source_pages": [
+        72,
+        73,
+        74,
+        192,
+        193
+      ],
+      "report_pages": [
+        5,
+        6
+      ],
+      "equations": [
+        "3.15",
+        "3.18",
+        "3.20",
+        "3.21",
+        "3.22",
+        "3.24"
+      ],
+      "formula": "monograph: Bomega=.75 e1+2 e2+(2/7)e3; report: Bomega=(10/3)e1+(2/15)e2",
+      "extra_assumptions": [
+        "source-matched MES branch",
+        "all-observer/Copernican and derivative premises",
+        "specified temperature tensor norm",
+        "almost-FLRW truncation",
+        "congruence match",
+        "structural acceleration branch"
+      ],
+      "finding": "Coefficient sets differ between supplied documents; ordering of one adopted set is not a cross-branch physical theorem.",
+      "replacement": "Explicit premise-conditioned channel bodies and radii; propagate radiation jets and report surviving response singular values.",
+      "evidence_status": "SOURCE_REPORT_WITH_LOCAL_REASSESSMENT",
+      "page_convention": "source_pages=monograph printed Arabic; PDF=printed+1; report PDF=printed+3"
+    },
+    {
+      "id": "LEG-DEFECT",
+      "headline": "exact scalar FLRW departure x",
+      "source_pages": [
+        37,
+        38,
+        39,
+        43,
+        50,
+        51,
+        69,
+        70
+      ],
+      "report_pages": [
+        2,
+        3
+      ],
+      "equations": [
+        "2.43",
+        "2.47",
+        "2.55"
+      ],
+      "formula": "x=Sigma^2-W^2+Omega_tilt+(Omega_k-Omega_k_ref)",
+      "extra_assumptions": [
+        "consistent congruence and curvature definition",
+        "correct Hamiltonian relation",
+        "perfect-fluid tilt energy split",
+        "chosen comparator"
+      ],
+      "finding": "Comparator subtraction is algebra once valid parent closure is fixed. Group-orbit normal has zero vorticity; legacy VIIh geometry-frame language is inconsistent with its own p43 definition.",
+      "replacement": "Frame-typed joint vector/tensor state and separate signed Hamiltonian budget; do not identify scalar curvature difference with STF curvature.",
+      "evidence_status": "SOURCE_REPORT_WITH_LOCAL_REASSESSMENT",
+      "page_convention": "source_pages=monograph printed Arabic; PDF=printed+1; report PDF=printed+3"
+    },
+    {
+      "id": "LEG-TEFF08",
+      "headline": "nonlinear Teff correction about 0.8 percent",
+      "source_pages": [
+        89,
+        90,
+        91,
+        92,
+        93,
+        98,
+        99,
+        176
+      ],
+      "equations": [
+        "5.9",
+        "5.10",
+        "5.12",
+        "5.13",
+        "5.14",
+        "5.30",
+        "5.31"
+      ],
+      "formula": "brightness Theta=1+A mu+Q P2(mu)",
+      "extra_assumptions": [
+        "positive absolute temperature or declared brightness model",
+        "correct sphere average",
+        "source/frame response for amplitudes",
+        "bandpass coherence",
+        "transport/tangent residual"
+      ],
+      "finding": "Legacy uses integral mu^2 P2=4/15 where average is2/15, doubling A^2 Q coefficient. Fixed nonlinear percentage not reused.",
+      "replacement": "Exact polynomial sphere moment; fit absolute T in its noise space and propagate through registered physical response.",
+      "evidence_status": "SOURCE_REPORT_WITH_LOCAL_REASSESSMENT",
+      "page_convention": "source_pages=monograph printed Arabic; PDF=printed+1; report PDF=printed+3"
+    },
+    {
+      "id": "LEG-VIIH-GROW",
+      "headline": "orthogonal growing tensor mode excluded by vorticity",
+      "source_pages": [
+        113,
+        114
+      ],
+      "equations": [
+        "3.31"
+      ],
+      "formula": "W^2=R_WS^2 Sigma^2",
+      "extra_assumptions": [
+        "mode-specific coupling",
+        "same congruence as external vorticity posterior",
+        "matching physical shear definition",
+        "matched transfer/covariance"
+      ],
+      "finding": "Needs explicit vector/tensor and frame match; the group-normal congruence is irrotational. Raised total tilt evidence is not a physical repair of a separate residual inconsistency.",
+      "replacement": "Mode-specific common state/transfer, polarization and off-diagonal covariance; test each consistency set.",
+      "evidence_status": "SOURCE_REPORT_WITH_LOCAL_REASSESSMENT",
+      "page_convention": "source_pages=monograph printed Arabic; PDF=printed+1; report PDF=printed+3"
+    },
+    {
+      "id": "LEG-EPS-ADAPTER",
+      "headline": "epsilon2=3.560e-6 and epsilon3=6.065e-6",
+      "source_pages": [
+        105
+      ],
+      "report_pages": [
+        5,
+        7
+      ],
+      "equations": [],
+      "formula": "C_l=2pi D_l/[l(l+1)]",
+      "extra_assumptions": [
+        "specific D_l to C_l to epsilon normalizer",
+        "temperature units",
+        "full Frobenius STF norm"
+      ],
+      "finding": "Quoted epsilon values do not follow either displayed sqrt(C_l)/T0 or later report STF norm formula for quoted D2,D3.",
+      "replacement": "Explicit unit/normalization adapter and round-trip check at every reused channel.",
+      "evidence_status": "SOURCE_REPORT_WITH_LOCAL_REASSESSMENT",
+      "page_convention": "source_pages=monograph printed Arabic; PDF=printed+1; report PDF=printed+3"
+    }
+  ],
+  "method_family_map": [
+    {
+      "family_and_report_pages": "1+3/frame decomposition; 2–3",
+      "physical_meaning": "A specified observer sees expansion, distortion, rotation and acceleration, and a specified matter/radiation relative motion.",
+      "positive_target": "Frame ledger and rate/velocity unit adapters for every inferred channel."
+    },
+    {
+      "family_and_report_pages": "Signed Gauss/comparator budget; 3",
+      "physical_meaning": "The expansion constraint balances density, curvature and kinematics; cancellation can hide large terms.",
+      "positive_target": "Joint components with correct sign and normal-frame Hamiltonian residual; never a norm from a signed sum."
+    },
+    {
+      "family_and_report_pages": "King–Ellis boost; 3,11–13",
+      "physical_meaning": "The same radiation/geometry looks different to moving observers.",
+      "positive_target": "Predicted endpoint-boost changes of Q/O and velocities under the actual estimator, separated from global history."
+    },
+    {
+      "family_and_report_pages": "PSD multifluid moments; 4",
+      "physical_meaning": "Opposing streams can cancel their mean momentum while retaining directional stress.",
+      "positive_target": "`J=sum wv`, `K=sum w vv^T`, STF stress and predicted even shear/Q response; constrain energy/stress even when bulk is small."
+    },
+    {
+      "family_and_report_pages": "Kinetic damping/forcing; 4",
+      "physical_meaning": "Initial anisotropic memory fades while persistent sources leave a floor.",
+      "positive_target": "Channelwise response envelope `B0 exp(-gamma t)+(S/gamma)(1-exp(-gamma t))` with gamma/source units."
+    },
+    {
+      "family_and_report_pages": "Entropy/KL-to-moment bridge; 4–5",
+      "physical_meaning": "Closeness of photon distributions constrains a chosen observable only through its moment/tail control.",
+      "positive_target": "A quantitative bound for a named measured multipole functional with energy-tail weights, not an entropy score renamed temperature."
+    },
+    {
+      "family_and_report_pages": "EGS/almost-EGS/visibility; 5,23",
+      "physical_meaning": "A near-isotropic radiation history can constrain geometry under all-observer and derivative conditions.",
+      "positive_target": "Conditional shear/curvature bounds from measured or bounded radiation jets and noncancellation/kernel constants."
+    },
+    {
+      "family_and_report_pages": "MES sector geometry; 5–6,21",
+      "physical_meaning": "How large a physical channel may be under stated radiation premises.",
+      "positive_target": "`sigma/H` and `omega/H` body, structural geodesic A=0, directional stress/margin and nonanchored channels flagged separately."
+    },
+    {
+      "family_and_report_pages": "Physical invariants/parity/Gram–Krylov; 6–7",
+      "physical_meaning": "Size, shape, handedness and relative alignment of actual shear, rotation and velocities.",
+      "positive_target": "`tr sigma²`, normalized `tr sigma³`, `beta^T sigma beta`, `beta·omega`; with polar/axial transformation rules and external flow axes retained."
+    },
+    {
+      "family_and_report_pages": "Harmonic–STF/full-MV; 7–8",
+      "physical_meaning": "Preserve the full measured large-angle temperature pattern in interpretable tensor coordinates.",
+      "positive_target": "Q/O in microkelvin, power norms, axes and handedness; same information in equivalent coordinates, with shared covariance."
+    },
+    {
+      "family_and_report_pages": "Cyclic orbit reconstruction; 8",
+      "physical_meaning": "Recover the full sky pattern up to a common spatial rotation when the packet is regular.",
+      "positive_target": "Representative sky tensor for a physical forward-model/template comparison, with degeneracy strata retained."
+    },
+    {
+      "family_and_report_pages": "Common-rotation orbit distance; 8–9",
+      "physical_meaning": "How different two patterns remain after removing one arbitrary coordinate orientation.",
+      "positive_target": "Distance to a predicted family/history shape; preserve absolute axis relative to flows/mask for the physical alignment question."
+    },
+    {
+      "family_and_report_pages": "Contraction fibers/Hölder boundary; 9",
+      "physical_meaning": "A compressed summary can leave a sphere of different skies, especially sensitive near a boundary.",
+      "positive_target": "A set of compatible Q/O patterns and stable intervals for physical predictions; retain full tensors near singular compression."
+    },
+    {
+      "family_and_report_pages": "Positive inverse-square sky; 10",
+      "physical_meaning": "Certain ideal anisotropic blackbody skies encode a quadratic redshift pattern.",
+      "positive_target": "Fit absolute T with instrument bandpass/noise in T-space, test model residuals and cross-frequency coherence."
+    },
+    {
+      "family_and_report_pages": "PSTF/LoS/spin-2 propagation; 10–11",
+      "physical_meaning": "How geometry, electrons and scattering histories produce temperature and polarization.",
+      "positive_target": "Family/frame-matched transfer columns for observed a_lm, E/B and covariance; source units fixed before fitting."
+    },
+    {
+      "family_and_report_pages": "BiPoSH/covariance representation; 11",
+      "physical_meaning": "Anisotropy correlates multipoles/m directions that isotropy would decouple.",
+      "positive_target": "Off-diagonal covariance functions under the same physical parameters and mask; extra response directions, not standalone evidence."
+    },
+    {
+      "family_and_report_pages": "Local boost response inverse; 11–12",
+      "physical_meaning": "Which observed octupole component could be induced by boosting a quadrupole.",
+      "positive_target": "`beta_LS=M_Q^{-1}(O:Q)` as a conditional response coordinate; intrinsic O supplies a competing component to fit."
+    },
+    {
+      "family_and_report_pages": "Nuisance quotient/rank; 12",
+      "physical_meaning": "Which physical signals survive foreground, mask and unconstrained source freedom.",
+      "positive_target": "Surviving `P_perp WJ` columns, identifiable combinations, errors and next channel that opens a null direction."
+    },
+    {
+      "family_and_report_pages": "Affine radial design; 12–13",
+      "physical_meaning": "Distinguish coherent translation from expansion and directional stretching.",
+      "positive_target": "Shellwise bulk3/expansion1/shear5, rank with actual positions; transverse response for rotation."
+    },
+    {
+      "family_and_report_pages": "Local/global depth rank and principal angles; 13,22",
+      "physical_meaning": "Separate one observer's endpoint motion from a common cosmological history by different windows.",
+      "positive_target": "Compare stacked local/global response images after nuisance projection, fitted physical depth profile and Schur conditional information."
+    },
+    {
+      "family_and_report_pages": "Curvature slaving; 14",
+      "physical_meaning": "In a specified dynamical branch curvature sources a shear history.",
+      "positive_target": "Conditional `Sigma≈[-2/(5+3w)]K` plus transient/remainder, then its sky/distance response."
+    },
+    {
+      "family_and_report_pages": "Restricted two-stream Bianchi I; 14–15",
+      "physical_meaning": "Zero bulk can coexist with anisotropic stress, shear and even CMB temperature.",
+      "positive_target": "Analytic even-T and integrated-shear example above; future source/history comparison with observed Q/O."
+    },
+    {
+      "family_and_report_pages": "Partial identification; 15–16",
+      "physical_meaning": "Several physical states can predict the same observations.",
+      "positive_target": "Range of each velocity/shear/curvature or Hubble-shift functional over one common feasible set; empty/unbounded/unresolved are different outcomes."
+    },
+    {
+      "family_and_report_pages": "Shared-nuisance fractional intervals; 16",
+      "physical_meaning": "Ratios must use numerator and denominator from the same physical state.",
+      "positive_target": "Joint intervals for channel-to-anchor use or physical ratios, with shared cosmology/calibration preserved."
+    },
+    {
+      "family_and_report_pages": "Singular Gaussian test inversion; 16–17",
+      "physical_meaning": "Compare predicted data to measured residuals on the actual stochastic support.",
+      "positive_target": "Conditional confidence regions for b/theta/S/global-state and derived H residuals; exact deterministic constraints in covariance nullspace."
+    },
+    {
+      "family_and_report_pages": "Union-bound joint confidence; 17",
+      "physical_meaning": "Combine probes without inventing independence.",
+      "positive_target": "A common-state intersection with registered alpha budget; retain valid physical constraints when another channel is unavailable."
+    },
+    {
+      "family_and_report_pages": "Estimated covariance/Hotelling/Hartlap; 17",
+      "physical_meaning": "Finite mocks introduce uncertainty into the noise metric and its tails.",
+      "positive_target": "Coverage/tail calibration for survey flow and sky residuals under the actual covariance estimator; use the proper n and effective dimension."
+    },
+    {
+      "family_and_report_pages": "Imbens–Manski endpoint law; 17",
+      "physical_meaning": "Uncertainty about a physically permitted interval differs from uncertainty about a point.",
+      "positive_target": "A calibrated interval for a physical functional only under the specified endpoint law, or a broader simulation-calibrated law."
+    },
+    {
+      "family_and_report_pages": "Bayesian evidence/prior/PPC/LOOCV; 18",
+      "physical_meaning": "Compare explicit physical response models and their prediction quality.",
+      "positive_target": "Local-flow-only versus local+global-frame evidence, prior sensitivity, held-out shells and posterior predictions in observed units."
+    },
+    {
+      "family_and_report_pages": "Exact rank/exchangeability; 18",
+      "physical_meaning": "Ask whether a measured complete sky/depth pattern is unusual under matched null skies.",
+      "positive_target": "A valid tail probability for a fixed statistic, estimator, mask, selection and reference law; this tests the null pattern, not a unique cause."
+    },
+    {
+      "family_and_report_pages": "Certified orbit/rank enclosures; 9,18",
+      "physical_meaning": "Numerical optimization uncertainty need not be confused with physical or sampling uncertainty.",
+      "positive_target": "Guaranteed distance and p intervals for a fixed pattern statistic; unresolved calculations remain intervals while other physical analysis proceeds."
+    },
+    {
+      "family_and_report_pages": "Data processing/paired pushforward; 19",
+      "physical_meaning": "Compression loses information; nonlinear quantities must use corresponding states/draws.",
+      "positive_target": "Paired full-tensor physical outputs and cross-covariances; samplewise H residual/support/gauge, not a ratio of means."
+    },
+    {
+      "family_and_report_pages": "e-values/e-process; 19",
+      "physical_meaning": "Combine or monitor valid evidence as new shells/epochs arrive while accounting for dependence.",
+      "positive_target": "Prespecified averaged e-values, or conditional-valid sequential increments for the same physical null; shared sky does not justify products."
+    },
+    {
+      "family_and_report_pages": "Nested paths/Rao–Blackwell/Doob; 19",
+      "physical_meaning": "Track how physical information accumulates under a declared data filtration.",
+      "positive_target": "Conditional expectation path or calibrated depth coherence; actual conditional law needed, not merely nested masks."
+    },
+    {
+      "family_and_report_pages": "Error envelope/singular-value stability; 20",
+      "physical_meaning": "Determine which response directions remain identifiable despite numerical/modeling uncertainty.",
+      "positive_target": "Rank lower bound and subspace-gap uncertainty for the real survey matrix under an error family with documented units."
+    },
+    {
+      "family_and_report_pages": "Radiation-jet support/Minkowski sums; 20",
+      "physical_meaning": "Propagate all admitted radiation derivative uncertainties into physical kinematic limits.",
+      "positive_target": "Exact directional support and conditional shear/curvature images, respecting equality constraints and shared state."
+    },
+    {
+      "family_and_report_pages": "Structured depth transport; 13,21",
+      "physical_meaning": "Test whether successive shells evolve as the physical response predicts.",
+      "positive_target": "`r_j=y_{j+1}-K_j y_j` with `V=C_next+K C K^T-C_cross K^T-K C_cross^T`; maps shape and amplitude together."
+    },
+    {
+      "family_and_report_pages": "Pole/shell/source-discrimination programme; 24–27",
+      "physical_meaning": "Use stable directions and new source/polarization responses to decide which history fits.",
+      "positive_target": "Registered pole functional with degeneracy handling, cross-shell axis/shape covariance and mode-specific forward response."
+    }
+  ],
+  "derived_constructions": [
+    "Affine radial bulk/expansion/shear response",
+    "Weighted Hubble-slope response to actual angular/depth support",
+    "Conditional measured-convergence Jeans crossing",
+    "Collisionless Bianchi-I integrated-shear quadrupole",
+    "Metric-derived LRS Bianchi-V curvature and momentum consistency curve",
+    "Exact axisymmetric brightness fourth moment"
+  ],
+  "numeric_checks": {
+    "constants": {
+      "H_km_s_Mpc": 67.36,
+      "c_km_s": 299792.458,
+      "T0_microkelvin": 2725480.0,
+      "beta_primary": 0.001051
+    },
+    "normalizer": [
+      {
+        "ell": 2,
+        "D_microkelvin_squared": 225.9,
+        "C_microkelvin_squared": 236.5619268153114,
+        "sqrtC_over_T0": 5.643251750840592e-06,
+        "STF_norm_over_T0": 9.748552319546475e-06,
+        "STF_norm_microkelvin": 26.569484375877526
+      },
+      {
+        "ell": 3,
+        "D_microkelvin_squared": 936.9,
+        "C_microkelvin_squared": 490.5596928580462,
+        "sqrtC_over_T0": 8.126488613448538e-06,
+        "STF_norm_over_T0": 2.5372662551065254e-05,
+        "STF_norm_microkelvin": 69.15268432967733
+      }
+    ],
+    "lambdaH_Mpc": 4450.600623515439,
+    "legacy_primary_Jeans_Mpc": 274.082953254936,
+    "legacy_primary_H_fraction_d50": 0.03118387503543151,
+    "measured_convergence_examples": [
+      {
+        "theta_over_H": -0.01,
+        "q": 0.5,
+        "lambdaJ_Mpc": 209.80332541605625
+      },
+      {
+        "theta_over_H": -0.02,
+        "q": 0.5,
+        "lambdaJ_Mpc": 296.7067082343626
+      }
+    ],
+    "theta_over_H_for_300Mpc": -0.020446443386092743
+  },
+  "positive_next_action": "Parent: apply affine velocity and weighted H design to verified actual catalog support; reconcile source-matched Q/O and MES normalizers; fit registered local/global history response and joint covariance.",
+  "artifact": "/workspace/scratch/ef61c9590364/HTT_PHYSICAL_20261025/research/legacy_physical_map.md"
+}

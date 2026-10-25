@@ -1,0 +1,41 @@
+\section{Information and domain statements}
+\label{app:fibres}
+
+The identification criterion in Eq.~\eqref{eq:fibre} follows in both directions. If $h=\widetilde h\circ\mathcal O$ for a function on observation laws, then two states with the same law have the same target. Conversely, if $h$ is constant on each fibre, define $\widetilde h(o)$ as that common value. It is well defined on the image of $\mathcal O$. The same argument applies to a deterministic compression $T$: a target can be recovered from $T$ if and only if it is constant on each fibre of $T$. A norm-only representation of the STF tensor fails that test for determinant, eigenvalue shape, and oriented directional contractions.
+
+For a partially defined target one must retain the domain statement as well. A fibre entirely inside $\mathcal D_h$ may have a singleton, bounded, or unbounded image. A fibre intersecting both $\mathcal D_h$ and its complement has an additional unresolved domain status. A fibre disjoint from $\mathcal D_h$ does not yield a zero target. These distinctions survive confidence-set propagation. In particular, a singular normalization should not be replaced by a numerical floor unless the target is explicitly changed to the floored functional.
+
+Equation~\eqref{eq:coverageimage} holds for any collection of deterministic functions defined at the true state, because the same membership event implies every image membership. The coverage level belongs to that original joint event. This argument does not authorize selecting the confidence procedure after inspecting its success, inferring a probability measure inside the set, or treating a physical response relation as known when it was omitted from the construction.
+
+\section{Gaussian pivots and nuisance projection}
+\label{app:pivot}
+
+Whiten the selected model by $V_s^{-1/2}$. The whitened residual vector is an isotropic Gaussian vector, and its projections onto the column space of $V_s^{-1/2}X$ and the orthogonal complement are independent. Their dimensions are $p$ and $n-p$. Thus
+\begin{equation}
+ \frac{(\widehat\beta_s-\beta)^TG_s(\widehat\beta_s-\beta)}{\sigma^2}
+ \sim\chi^2_p,\qquad \frac{q_s}{\sigma^2}\sim\chi^2_{n-p},
+\end{equation}
+independently. Their scaled ratio proves Eq.~\eqref{eq:fpivot}. Since $C_{{\rm ML},s}^{-1}=(n/q_s)G_s$, multiplication by $np/(n-p)$ gives Eq.~\eqref{eq:finitef}. Using a chi-square radius with this estimated scale would skip the denominator uncertainty.
+
+For a full ellipsoid $\{\Delta:\Delta^TC^{-1}\Delta\leq c\}$, minimizing the quadratic over nuisance coordinates at fixed $P_B\Delta$ gives $(P_B\Delta)^T(P_BCP_B^T)^{-1}(P_B\Delta)$. This proves Eq.~\eqref{eq:tensorregion}. It is a projection result. By contrast, fixing the nuisance coordinates at zero would use the relevant precision block and generally a narrower section. Cross blocks affect the original joint geometry even when its projection can be written using the covariance submatrix.
+
+For the prediction pivot, decompose the validation error as
+\begin{equation}
+ e_v=\left(Y_v-R_sY_t-D_s\beta\right)
+                         -D_s(\widehat\beta_{t,s}-\beta).
+\end{equation}
+The first term is a Gaussian innovation with covariance $\sigma^2W_s$, independent of the training outcomes. The second is Gaussian with covariance $\sigma^2D_sG_{t,s}^{-1}D_s^T$. Both are independent of the training residual quadratic: for the second term this follows from the training Gaussian projection. Hence $e_v^TM_s^{-1}e_v/\sigma^2\sim\chi^2_m$ independently of $q_{t,s}/\sigma^2\sim\chi^2_{n_t-p}$, proving Eq.~\eqref{eq:predf}. The proof requires positive-definite shapes, full training rank, a correct common mean, and the Gaussian law. It neither removes cross-validation dependence nor gives a law conditional on fixed realized training outcomes.
+
+\section{Event completion and density-ratio endpoints}
+\label{app:completion}
+
+For a binary event of reference mass $e$, write $q$ for its mass after reweighting. Bounding the density on both the event and its complement gives
+\begin{equation}
+ \frac e\Gamma\leq q\leq\Gamma e,\qquad
+ \frac{1-e}{\Gamma}\leq1-q\leq\Gamma(1-e).
+\end{equation}
+Their intersection is Eq.~\eqref{eq:densitybounds}. For $0<e<1$, choose densities $q/e$ on the event and $(1-q)/(1-e)$ on its complement. They are feasible at both endpoints. The cases $e=0$ and $e=1$ are immediate. This proves sharpness within the specified density class, not within an unmeasured physical selection process.
+
+For the finite target frame, exactly $k$ of the 354 missing indicators can be set to one for each integer $0\leq k\leq354$. This establishes Eq.~\eqref{eq:missingframe} and, after observed-cohort reweighting, Eq.~\eqref{eq:completedweighted}. The interval hull is an outer representation of that finite union. For an arbitrary partially known weighted event, setting every unknown indicator to zero or one gives Eq.~\eqref{eq:unknownmass}; extra domain or range constraints can remove those extremizers.
+
+At multiple thresholds $t_1<\cdots<t_m$, one scalar value has a nonincreasing exceedance-indicator vector. Therefore a common completion gives a weighted sum of threshold-prefix vectors. The product of separate pointwise intervals may include nonmonotone or otherwise unattainable curves. Likewise, separate weight choices that attain endpoints for different tensor functionals need not be one common measure. Retaining atom identity and applying the same weights is what makes the coupled calculation in Sec.~\ref{sec:coupled} a joint functional analysis.

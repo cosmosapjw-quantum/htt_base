@@ -1,0 +1,96 @@
+{
+  "schema": "htt.r32_independent_source_review/1",
+  "date": "2026-10-25",
+  "verdict": "PASS_AFTER_TARGETED_REPAIR",
+  "scope": "Additive R32 publication source integration; not original42 acceptance, manuscript submission, installation or local activation.",
+  "base_commit": "0d5ab96bdb55398076629099664c77517ec33bb4",
+  "reviewer": {
+    "agent": "/root/r32_independent_review",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "independent_author": true,
+    "nested_agents": false
+  },
+  "candidate": {
+    "root": "/workspace/scratch/ef61c9590364/HTT_DAG_REPLAN_20261025/payload",
+    "identity_scheme": "SHA256 of compact sorted JSON mapping payload-relative file paths to byte SHA256",
+    "identity": "7f4f6c8f9bf81eb7ff91c9d5b942788cf9397ccc45f224dab7f0e71ef001e325",
+    "file_count": 81,
+    "critical_file_sha256": {
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/FRONTIER.json": "f5647d555c3fb346ee09602f1e8ea52d48b0d6ed27bde6ae14ec208eb4496b01",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/OUTPUT_DAG.json": "2cd505e9ac3063288f498920c47c99aaca5b60e01c684eef7351e8c50a91a0aa",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/EVIDENCE_MANIFEST.json": "10703b1d37198379ee8ec4565dbef737e7ee35e6143de404c4d94ed48658f2d3",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/QO_COMPARATOR.md": "46a16ffce4be8cd6fc298b605e56b4249133831642c51f1a43c62df58efac789",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/PUBLICATION_STRATEGY.md": "cf90d2316f7e7d877e8bdb7a2c972e6a8b406bf22b602d9225c9f3ee87a1b5d3",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/HANDOFF_CURRENT_SESSION.md": "af903c446e967da263659a51f8237d4f942d3376a374846c814d2e93e28be737",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/reproduce_reuse.py": "2adf2edd05e67330858d617335fb5caf5d48c1e733c986c218ad351a0c59ae70",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/reuse/REUSE_RESULT.json": "244054e4f89b808f75a60e1a5f8b475650f1915bebadd68f5d466ea43e14d07d",
+      "scripts/codex_harness/publication_frontier_preflight.py": "1d950f80ddba712b68f34851e70f591125359e070ed6a8be3b06c2650c5ca7e9",
+      "scripts/htt_publication_dag.py": "58cf2b7c0c7f4fa1ef7530f12402959a4f8a1d7a2ee51d3a8e34b6e55b133c96",
+      "tests/test_publication_frontier_uptake.py": "1a590a87f5fb88d2f683903ab078c8f05cb53be3e0128a2987811ef810eb9724",
+      "docs/codex_handoff/pr_backlog.yaml": "f809f10d8e0e1eee2f07b0f9203c2d2d8f18ede75be5e85b5ac32ae8a77ab09a",
+      "docs/codex_handoff/pr_status.yaml": "e83d732eea7756ca3926d5f7c679a9964dafbf040149d9493c292a85b935b4a2",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json": "b34a1702aa5b203180cbbab1490fae4d9915812d4ece098f73a617d777c3f686"
+    },
+    "frontier_canonical_digest": "27b1e5df1ffbe44e31a69772db64138b0c2cc6902c009cef87d4b57cc4f3a508"
+  },
+  "findings": [
+    {
+      "id": "R32-REV-01",
+      "severity": "minor",
+      "status": "CLOSED",
+      "paths": [
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/QO_COMPARATOR.md",
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/PUBLICATION_STRATEGY.md"
+      ],
+      "finding": "The displayed contraction ellipsoid used M_Q inverse without excluding Q=0, where M_Q is singular.",
+      "required_repair": "State Q nonzero and o nonnegative for the inverse formula, and separately give image {0} and chirality 0 when Q=0.",
+      "closeout": "Both current payload documents explicitly state the required domain and zero case; verified against the critical file identities recorded here."
+    },
+    {
+      "id": "R32-REV-02",
+      "severity": "reproducibility",
+      "status": "CLOSED_AUTHOR_SELF_DETECTED",
+      "paths": [
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/research/independent_physical_check.py",
+        "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/EVIDENCE_MANIFEST.json"
+      ],
+      "finding": "The initially imported independent checker referenced three omitted evidence/sources/latest files. The author reported and repaired the same missing inputs while review was running.",
+      "required_repair": "Include the exact retained CF4 producer and two R28 result inputs; refresh manifest and task source bindings.",
+      "closeout": "The repaired checker exits 0, preflight verifies all 54 imported files, and all task source hashes bind the updated manifest."
+    }
+  ],
+  "open_findings": [],
+  "checks": {
+    "original_publication_dag": "Every original top-level value including all six paper records and 42 node contracts is exactly equal after JSON parsing; only the additional route pointer is new.",
+    "canonical_backlog": "All 245 original cards and original topological prefix preserved; nine pending R32 cards appended. Other policy fields unchanged.",
+    "canonical_status": "All old status entries and execution lanes preserved; exactly nine pending entries and nine execution lanes appended.",
+    "controller_and_router": "Absent from the payload; validation copies are byte-equal to base. No rewrite or new scheduler.",
+    "focused_pytest": "7 passed in 0.07s against current runnable validation overlay; no pytest cache or bytecode writes requested.",
+    "static_preflight": "STATIC_VALIDATED; 54 evidence files; seven independent candidate roots; state_observed=false; writes_state=false.",
+    "mirrors_and_backlog": "sync_pr_dag_mirrors.py --check passed; validate_pr_dag.py passed with 254 PRs.",
+    "typed_dependencies": "Own in-memory check confirms both R32-08 and R32-09 remain blocked after upstream completion alone or a wrong product; each becomes ready only after its exact product.",
+    "append_preservation": "Focused tests verify old campaign/tasks/packets/failures/attempts/ultra/event-prefix preservation, busy dispatcher behavior, duplicate rejection, readonly preflight, and path/hash rejection.",
+    "output_mapping": "All OUTPUT_DAG task projections exactly match FRONTIER task fields.",
+    "independent_physics_reuse": "Imported read-only eigensystem/SVD checker exits 0, including 36D nuisance profiling, block covariance sensitivity, finite-window identities and corrected CF4 units.",
+    "fresh_H03_calculation": {
+      "method": "Own direct Cholesky whitening and QR projection from retained 12D means/covariance; no producer imports.",
+      "T": 23.39672052266717,
+      "df": 6,
+      "conditional_Gaussian_tail": 0.0006739334199762943,
+      "fixed_chi2_95_threshold": 12.591587243743977,
+      "eta95": 1.2885530036501112,
+      "attainment": "Five radii including zero, eta95 and larger than residual norm attain max(0,sqrt(T)-eta)^2 to numerical tolerance."
+    },
+    "science_claim_hygiene": "Historical reused scientific seeds, new manuscript/conditional contracts, and original42 admission remain separate. No new physical detection, native solver result, automatic manuscript readiness or local activation is asserted.",
+    "handoff": "Uses existing checkpoint/state and serialized append-frontier; preserves outstanding packet and exact attempts/budgets, forbids reinitialization and repeated same-action IDs, and requires actual launch/ack/result/review before continuation."
+  },
+  "limits": [
+    "Selected source integration review only; actual owner checkout/state was not accessible or altered.",
+    "No whole-repository or raw catalogue/map scan; no ODE/native solver; no historical full proof/CAS replay.",
+    "Literature-wide novelty is not established; the candidate documents preserve the formula-specific comparison obligation.",
+    "No scientific task was completed or qualified by this review."
+  ],
+  "next_action": "Author may proceed with the authorized reviewed source publication. Existing host must perform current-state preflight and one serialized append at its actual checkpoint before any local execution claim."
+}
