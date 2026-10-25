@@ -1,0 +1,99 @@
+--- /mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/produce.py.preimage	2026-10-25 16:48:03.098087200 +0900
++++ /mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/produce.py	2026-10-25 17:20:37.917663500 +0900
+@@ -1,6 +1,7 @@
+ #!/usr/bin/env python3
+ """Frozen R30 finite-table spectral moment calculation; no sky data."""
+ import hashlib
++import argparse
+ import json
+ import math
+ import os
+@@ -16,18 +17,26 @@
+ import astropy
+ 
+ ROOT = Path(__file__).resolve().parent
+-PACKET = "b7adef654c4a44203860dc5206b80b0ebf67457709d16d46db22e2d534d40ca8"
++PACKET = "38cdf6b948a41ee93372fb48be413f7617e0de5bc2b6b3a704b153cc4ef011d3"
++BASE_PACKET = "b7adef654c4a44203860dc5206b80b0ebf67457709d16d46db22e2d534d40ca8"
+ TASK = "R30-CMB-NOMINAL-BANDPASS-MOMENT-IDENTIFIABILITY"
+ INPUT = "sha256:cfe7be664ca43841e1197653dc4391b9c64c239cca54eebce9a06def80d916be"
+ EXPECTED = {"LFI_RIMO_R3.31.fits": "a4794d80b378e00aef1b5e324e2759c3fa791873f2a3edcb53c93678a48dd94b", "HFI_RIMO_R3.00.fits": "deb55a5c6f76a8578e86c122f56c3f61998b803818b09c4f3e709897881fe222"}
+ H, K, C = 6.62607015e-34, 1.380649e-23, 299792458.0
+ TC, TD, NS, ND = 2.7255, 20.0, 30e9, 353e9
+-HM, KM, CM = (mp.mpf(x) for x in ("6.62607015e-34", "1.380649e-23", "299792458"))
+-TCM, TDM, NSM, NDM = (mp.mpf(x) for x in ("2.7255", "20", "30000000000", "353000000000"))
++HM=KM=CM=TCM=TDM=NSM=NDM=None
+ BANDS = [("030", 25, "LFI"), ("044", 26, "LFI"), ("070", 27, "LFI"), ("100", 2, "HFI"), ("143", 4, "HFI"), ("217", 5, "HFI"), ("353PSB", 9, "HFI")]
+ THRESHOLDS = (1e-7, 1e-8, 1e-6)
+ MP_CACHE = {}
+ 
++def set_mp_constants(dps):
++    """Parse stipulated decimal literals anew in each active precision context."""
++    global HM,KM,CM,TCM,TDM,NSM,NDM
++    mp.mp.dps=dps
++    HM,KM,CM,TCM,TDM,NSM,NDM=(mp.mpf(x) for x in (
++        "6.62607015e-34","1.380649e-23","299792458","2.7255","20",
++        "30000000000","353000000000"))
++
+ def digest(path):
+     d = hashlib.sha256()
+     with open(path, "rb") as f:
+@@ -90,7 +99,9 @@
+             flag=np.asarray(hdu.data["FLAG"]).astype(str).reshape(-1)
+             assert len(nu)==len(tau)==len(flag)
+             assert np.all(np.isfinite(nu)) and np.all(np.isfinite(tau))
+-            assert np.all(np.diff(nu)>0) and np.all(tau>=0)
++            assert np.all(np.diff(nu)>0)
++            if kind=="LFI":
++                assert np.all(tau>=0)
+             assert set(flag).issubset({"F","T"}), (name,set(flag))
+             out[name]=(nu,tau,flag,kind)
+             headers[name]={"hdu_index":ix,"extname":hdu.name,"rows":len(nu),"PROCVER":hdu.header.get("PROCVER"),"DATE":hdu.header.get("DATE"),"comments":[str(x) for x in hdu.header.get("COMMENT",[])],"frequency_raw_unit":"GHz" if kind=="LFI" else "cm^-1","transmission_dtype":str(hdu.data["TRANSMISSION"].dtype),"frequency_dtype":str(hdu.data["WAVENUMBER"].dtype)}
+@@ -124,7 +135,7 @@
+     return np.asarray(rows),selections,unity
+ 
+ def mp_matrix(tables,branch,bt,dps):
+-    mp.mp.dps=dps
++    set_mp_constants(dps)
+     rows=[]
+     for name,*_ in BANDS:
+         raw,trans,flag,kind=tables[name]
+@@ -206,7 +217,7 @@
+     return answer
+ 
+ def derivative_control():
+-    mp.mp.dps=120
++    set_mp_constants(120)
+     errs=[]; zeros={}
+     def syn(beta,n):
+         x=HM*NSM/(KM*TCM)
+@@ -233,8 +244,17 @@
+     return {"max_independent_120digit_relative_derivative_error":max(errs),"reference_derivative_zeros":zeros}
+ 
+ def main():
++    parser=argparse.ArgumentParser()
++    parser.add_argument("--output-dir",required=True)
++    args=parser.parse_args()
++    out=Path(args.output_dir).resolve()
++    assert out.parent==ROOT and out!=ROOT and out.is_dir()
++    assert not (out/"RESULT.json").exists(),"fresh output required"
+     started=time.monotonic()
+-    assert (ROOT.parent/"r30_spectral_dispatch"/"ROOT_GO.json").exists()
++    go=json.loads((ROOT.parent/"r30_spectral_dispatch"/"ROOT_REPAIR_GO.json").read_text())
++    assert go["packet_id"]==PACKET and go["input_identity"]==INPUT
++    assert go["agent_id"]=="/root/rc_b7adef654c4a4420"
++    assert go["status"]=="ROOT_GO_BOUNDED_REPAIR"
+     tables,headers=read_tables()
+     dcontrol=derivative_control()
+     branches={}
+@@ -263,8 +283,8 @@
+         assert dup_rank==5 and cmb_res<=1e-9
+         branches[key]={"lfi_convention":branch,"hfi_threshold":bt,"selected_nodes":sel,"cmb_unity_responses":unity,"float64_vs_120_relative_frobenius":rel_f,"mp80_vs_mp120_relative_frobenius":rel_mp,"F1":f1,"F2":f2,"synthetic_controls":{"duplicate_six_column_rank":dup_rank,"injected_CMB_nuisance_projection_residual":cmb_res}}
+     elapsed=time.monotonic()-started
+-    result={"packet_id":PACKET,"task_id":TASK,"input_identity":INPUT,"scope":"finite released table common spatial response conditional model; no sky fit","status":"PRODUCER_COMPUTED_PENDING_INDEPENDENT_CHECK","independent_review":"PENDING","original_L03_acceptance":"UNCHANGED_HOLD","requested_runtime":{"model":"gpt-6-sol","effort":"high"},"observed_runtime":"UNKNOWN","environment":{"python":platform.python_version(),"numpy":np.__version__,"scipy":scipy.__version__,"astropy":astropy.__version__,"mpmath":mp.__version__},"source_sha256":EXPECTED,"headers":headers,"derivative_controls":dcontrol,"branches":branches,"diagnostic_bundle":{"x":"NOT_MEASURED","observed_quotient_tensor":"NOT_MEASURED","Q":"NOT_EVALUATED","F_physical":"NOT_EVALUABLE","Pi":"NOT_CALIBRATED","G_F":"NOT_APPLICABLE_FREQUENCY_IS_NOT_DEPTH"},"remaining_hold":["actual spatial and component-specific response","omitted moment and frequency-tail remainder","real noise and joint null","blackbody contaminant"],"producer_inner_elapsed_seconds":elapsed}
+-    path=ROOT/"RESULT.json"
++    result={"packet_id":PACKET,"base_packet_id":BASE_PACKET,"base_candidate_identity":None,"base_raw_receipt":{"path":str(ROOT/"RAW_RECEIPT.json"),"sha256":"de3e9bfd950804dfffde883cac54191aea6d7a05b753c28bae142df012b35e1f"},"repair_plan_identity":"bed6207a978d4bd747e3addcc21b9f6d3278fd6425d403ad3a8558c6851c818b","task_id":TASK,"input_identity":INPUT,"agent_id":"/root/rc_b7adef654c4a4420","scope":"finite released table common spatial response conditional model; no sky fit","status":"PRODUCER_COMPUTED_PENDING_INDEPENDENT_CHECK","independent_review":"PENDING","original_L03_acceptance":"UNCHANGED_HOLD","requested_runtime":{"model":"gpt-6-sol","effort":"high"},"observed_runtime":"UNKNOWN","environment":{"python":platform.python_version(),"numpy":np.__version__,"scipy":scipy.__version__,"astropy":astropy.__version__,"mpmath":mp.__version__},"source_sha256":EXPECTED,"headers":headers,"derivative_controls":dcontrol,"branches":branches,"diagnostic_bundle":{"x":"NOT_MEASURED","observed_quotient_tensor":"NOT_MEASURED","Q":"NOT_EVALUATED","F_physical":"NOT_EVALUABLE","Pi":"NOT_CALIBRATED","G_F":"NOT_APPLICABLE_FREQUENCY_IS_NOT_DEPTH"},"remaining_hold":["actual spatial and component-specific response","omitted moment and frequency-tail remainder","real noise and joint null","blackbody contaminant"],"producer_inner_elapsed_seconds":elapsed}
++    path=out/"RESULT.json"
+     path.write_text(json.dumps(result,indent=2,allow_nan=False)+"\n")
+     print(json.dumps({"packet_id":PACKET,"task_id":TASK,"branch_summaries":{k:{"F1":v["F1"]["decision"],"F2":v["F2"]["decision"],"F1_distance":v["F1"]["principal_angle_sine"],"F2_smin":v["F2"]["normalized_singular_values"][-1]} for k,v in branches.items()},"producer_inner_elapsed_seconds":elapsed,"result_sha256":digest(path)},indent=2))
+ 

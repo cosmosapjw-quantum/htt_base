@@ -1,0 +1,56 @@
+{
+  "packet_id": "38cdf6b948a41ee93372fb48be413f7617e0de5bc2b6b3a704b153cc4ef011d3",
+  "task_id": "R30-CMB-NOMINAL-BANDPASS-MOMENT-IDENTIFIABILITY",
+  "input_identity": "sha256:cfe7be664ca43841e1197653dc4391b9c64c239cca54eebce9a06def80d916be",
+  "agent_id": "/root/rc_b7adef654c4a4420",
+  "base_packet_id": "b7adef654c4a44203860dc5206b80b0ebf67457709d16d46db22e2d534d40ca8",
+  "base_candidate_identity": null,
+  "base_raw_receipt": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/RAW_RECEIPT.json",
+    "sha256": "de3e9bfd950804dfffde883cac54191aea6d7a05b753c28bae142df012b35e1f"
+  },
+  "repair_plan_identity": "bed6207a978d4bd747e3addcc21b9f6d3278fd6425d403ad3a8558c6851c818b",
+  "go_sha256": "355fe2f05ea1bcc11af5b4e6945db4c1548b86c6e78407ddaf20a4e7378d034b",
+  "account_head_sha256": "5ccda7d603762994fcfbed9d8c484895a4b71d333b899379f039cabc9b9859b1",
+  "repair_contract_sha256": "d43c4e62d7bf643e895f5eae8cfd7d9f82ee2842a61047ac23846e7a91216bb7",
+  "source_sha256": {
+    "LFI_RIMO_R3.31.fits": "a4794d80b378e00aef1b5e324e2759c3fa791873f2a3edcb53c93678a48dd94b",
+    "HFI_RIMO_R3.00.fits": "deb55a5c6f76a8578e86c122f56c3f61998b803818b09c4f3e709897881fe222"
+  },
+  "producer_source_sha256": "32166d4d4eb9cad1a8892e475f7a71d3a28bdbdaf50f70c8d42ea4f64d583ae4",
+  "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/produce.py",
+    "--output-dir",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/attempt_38cdf6b948a41ee9"
+  ],
+  "environment_threads": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "memory_limit": "single producer process RLIMIT_AS 1 GiB; producer source launches no child processes",
+  "available_memory_prelaunch_KiB": 18908672,
+  "free_disk_prelaunch_bytes": 2460770942976,
+  "whole_supervisor_cap_seconds": 174.0,
+  "first_producer_conservative_seconds": 5.6,
+  "cumulative_producer_cap_seconds": 180,
+  "checker_reserved_seconds": 90,
+  "started_producer": true,
+  "observed_runtime": "UNKNOWN",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "effort": "high"
+  },
+  "pid": 2251539,
+  "exit_code": 0,
+  "timed_out": false,
+  "peak_child_RSS_KiB": 89612,
+  "stdout_sha256": "8004d7037aa1feb65992de94c6aa3740eed74695780ffbb5707d7df51c7c2701",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "candidate_identity": "sha256:b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "status": "PRODUCER_COMPLETE_PENDING_INDEPENDENT_CHECK",
+  "monotonic_seconds_before_receipt_write": 14.499668947188184,
+  "cap_observed_before_receipt_write": true
+}

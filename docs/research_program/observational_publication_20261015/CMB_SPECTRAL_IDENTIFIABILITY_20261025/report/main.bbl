@@ -1,0 +1,112 @@
+%apsrev4-2.bst 2019-01-14 (MD) hand-edited version of apsrev4-1.bst
+%Control: key (0)
+%Control: author (72) initials jnrlst
+%Control: editor formatted (1) identically to author
+%Control: production of article title (-1) disabled
+%Control: page (0) single
+%Control: year (1) truncated
+%Control: production of eprint (0) enabled
+\begin{thebibliography}{7}%
+\makeatletter
+\providecommand \@ifxundefined [1]{%
+ \@ifx{#1\undefined}
+}%
+\providecommand \@ifnum [1]{%
+ \ifnum #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \@ifx [1]{%
+ \ifx #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \natexlab [1]{#1}%
+\providecommand \enquote  [1]{``#1''}%
+\providecommand \bibnamefont  [1]{#1}%
+\providecommand \bibfnamefont [1]{#1}%
+\providecommand \citenamefont [1]{#1}%
+\providecommand \href@noop [0]{\@secondoftwo}%
+\providecommand \href [0]{\begingroup \@sanitize@url \@href}%
+\providecommand \@href[1]{\@@startlink{#1}\@@href}%
+\providecommand \@@href[1]{\endgroup#1\@@endlink}%
+\providecommand \@sanitize@url [0]{\catcode `\\12\catcode `\$12\catcode
+  `\&12\catcode `\#12\catcode `\^12\catcode `\_12\catcode `\%12\relax}%
+\providecommand \@@startlink[1]{}%
+\providecommand \@@endlink[0]{}%
+\providecommand \url  [0]{\begingroup\@sanitize@url \@url }%
+\providecommand \@url [1]{\endgroup\@href {#1}{\urlprefix }}%
+\providecommand \urlprefix  [0]{URL }%
+\providecommand \Eprint [0]{\href }%
+\providecommand \doibase [0]{https://doi.org/}%
+\providecommand \selectlanguage [0]{\@gobble}%
+\providecommand \bibinfo  [0]{\@secondoftwo}%
+\providecommand \bibfield  [0]{\@secondoftwo}%
+\providecommand \translation [1]{[#1]}%
+\providecommand \BibitemOpen [0]{}%
+\providecommand \bibitemStop [0]{}%
+\providecommand \bibitemNoStop [0]{.\EOS\space}%
+\providecommand \EOS [0]{\spacefactor3000\relax}%
+\providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
+\let\auto@bib@innerbib\@empty
+%</preamble>
+\bibitem [{\citenamefont {Remazeilles}\ \emph {et~al.}(2021)\citenamefont
+  {Remazeilles}, \citenamefont {Rotti},\ and\ \citenamefont {Chluba}}]{cmilc}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Remazeilles}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Rotti}},\
+  and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Chluba}},\ }\href
+  {https://doi.org/10.1093/mnras/stab648} {\bibinfo {title} {Peeling off
+  foregrounds with the constrained moment ilc method to unveil primordial {CMB}
+  {$B$}-modes}} (\bibinfo {year} {2021}),\ \bibinfo {note} {moment-expansion
+  construction, Secs. 3.1--3.2},\ \Eprint {https://arxiv.org/abs/2006.08628}
+  {arXiv:2006.08628} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Planck Collaboration}}({\natexlab{a}})}]{rimoL}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{Planck
+  Collaboration}}},\ }\href
+  {https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/LFI_RIMO_R3.31.fits}
+  {\bibinfo {title} {Lfi reduced instrument model, release r3.31}},\ \bibinfo
+  {howpublished} {IRSA Planck release 3 ancillary data} ({\natexlab{a}}),\
+  \bibinfo {note} {released nominal bandpass tables}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Planck Collaboration}}({\natexlab{b}})}]{rimoH}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{Planck
+  Collaboration}}},\ }\href
+  {https://irsa.ipac.caltech.edu/data/Planck/release_3/ancillary-data/HFI_RIMO_R3.00.fits}
+  {\bibinfo {title} {Hfi reduced instrument model, release r3.00}},\ \bibinfo
+  {howpublished} {IRSA Planck release 3 ancillary data} ({\natexlab{b}}),\
+  \bibinfo {note} {f100 extension 2 and PSB353 extension 9}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {{Planck Collaboration}}(2013)}]{lfiCal}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{Planck
+  Collaboration}}},\ }\href@noop {} {\bibinfo {title} {Planck 2013 results. v.
+  lfi calibration}} (\bibinfo {year} {2013}),\ \bibinfo {note}
+  {antenna-temperature response convention, Eqs. 13--15},\ \Eprint
+  {https://arxiv.org/abs/1303.5066} {arXiv:1303.5066} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Planck Collaboration}}({\natexlab{c}})}]{color}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{Planck
+  Collaboration}}},\ }\href
+  {https://irsa.ipac.caltech.edu/data/Planck/release_1/software/COM_Code_ColorCorr_R1.21.tar.gz}
+  {\bibinfo {title} {Unit conversion and colour-correction source, r1.21}}
+  ({\natexlab{c}}),\ \bibinfo {note} {legacy reader conventions; not a claim of
+  current physical correction}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Planck Collaboration}}(2020)}]{planckIV}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{Planck
+  Collaboration}}},\ }\href {https://doi.org/10.1051/0004-6361/201833881}
+  {\bibfield  {journal} {\bibinfo  {journal} {Astron. Astrophys.}\ }\textbf
+  {\bibinfo {volume} {641}},\ \bibinfo {pages} {A4} (\bibinfo {year}
+  {2020})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Hivon}\ \emph {et~al.}(2017)\citenamefont {Hivon},
+  \citenamefont {Mottet},\ and\ \citenamefont {Ponthieu}}]{quickpol}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {E.}~\bibnamefont
+  {Hivon}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Mottet}},\ and\
+  \bibinfo {author} {\bibfnamefont {N.}~\bibnamefont {Ponthieu}},\ }\href
+  {https://doi.org/10.1051/0004-6361/201629626} {\bibfield  {journal} {\bibinfo
+   {journal} {Astron. Astrophys.}\ }\textbf {\bibinfo {volume} {598}},\
+  \bibinfo {pages} {A25} (\bibinfo {year} {2017})}\BibitemShut {NoStop}%
+\end{thebibliography}%

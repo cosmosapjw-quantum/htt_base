@@ -1,0 +1,47 @@
+{
+  "packet_id": "f03a06d84c471fd3d03fc2435cafdd81ba21697c1b30259d1fa8ba8a0e0ad41c",
+  "task_id": "R30-CMB-NOMINAL-BANDPASS-MOMENT-IDENTIFIABILITY",
+  "input_identity": "sha256:cfe7be664ca43841e1197653dc4391b9c64c239cca54eebce9a06def80d916be",
+  "candidate_identity": "sha256:b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "agent_id": "/root/r30_cmb_fresh_actual_result_review",
+  "outcome": "blocker",
+  "status": "HOLD_INDEPENDENT_CHECKER_INTAKE_SHAPE_BUG",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "scientific_admission": "HOLD",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_fresh_actual_result_review/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "81c067a0553db6f5f17f9d76e958dd7e52124a96a9e7c9edb39a7fd091ad4326",
+  "validation_evidence": {
+    "check_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_fresh_actual_result_review/CHECK_RESULT.json",
+      "sha256": "69bfaa549c39ef626e874bd585108126b4215efe87128da347ad0a66db0e0e76"
+    },
+    "supervisor_return": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_fresh_actual_result_review/SUPERVISOR_RETURN.json",
+      "sha256": "03c665d00825bfbec31ced73e7df674a9f4deb2f9ccd876f302f16e6a12544a1"
+    },
+    "checker_source_sha256": "d97d92face2248ca4bdd4480bd7a3d9e22570f0d4f37e67b7d20221252f5e43b",
+    "response_or_derivative_calculation_started": false,
+    "first_failure": "TypeError: unhashable type: numpy.ndarray at independent_check.py:102 set(flags)",
+    "classification": "reviewer implementation intake-shape defect; not a source or scientific counterexample",
+    "minimal_proposed_fix": "Flatten the one-flag-per-row FITS array by .reshape(-1) after astype(str), with length equality assertion; preserve current source and all first receipts. No numerical method or tolerance changes."
+  },
+  "accounting": {
+    "whole_supervisor_monotonic_seconds": 7.689829048002139,
+    "native_session_id": 60556,
+    "native_initial_chunk": "15b1e1",
+    "native_terminal_chunk": "47feb7",
+    "clock": "time.monotonic; native enclosing duration requires root settlement",
+    "checker_invocations_started": 1,
+    "checker_cumulative_cap_seconds": 90,
+    "retry_started": false,
+    "new_bank": false,
+    "SMICA_new_debit": 0,
+    "required_next_decision": "Controller may approve bounded mechanical repair using remaining original checker allowance; no automatic retry authorized."
+  },
+  "historical_limits": {
+    "initial_producer_hard_cap_enforcement": "historical loose timeout plus kill window preserved; not retroactively passed",
+    "historical_source_60second_scope": "ambiguity retained by settled root head",
+    "scope": "No actual sky or original L03 promotion; all physical claim domains remain unchanged."
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "status": "MECHANICAL_EDIT_ONLY_NO_EXECUTION_NO_SCIENTIFIC_VERDICT",
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "observed_runtime": "UNKNOWN",
+  "preimage_sha256": "d97d92face2248ca4bdd4480bd7a3d9e22570f0d4f37e67b7d20221252f5e43b",
+  "final_sha256": "af785119b3998fca104cef873367866917f4395bc3d17eff9cff85a0f95f8dd0",
+  "original_raw_receipt_sha256": "81c067a0553db6f5f17f9d76e958dd7e52124a96a9e7c9edb39a7fd091ad4326",
+  "supervisor_sha256": "b1ad201d1d0b4ca9b2073f4c92e6d3c450d8c05f4f6f24a8642f6aa184517ab4",
+  "supervisor_source_binding_lines": [
+    {
+      "line": 61,
+      "text": "    record.update({'command':command,'source_sha256':digest(ROOT/'independent_check.py'),'supervisor_sha256':digest(Path(__file__)),'packet_file_sha256':digest(DISPATCH/'ACTUAL_NEXT_REVIEW_PACKET.json'),'go_sha256':digest(DISPATCH/'ROOT_INDEPENDENT_REVIEW_GO.json'),'account_head_sha256':digest(DISPATCH/'ROOT_ACCOUNT_HEAD_AFTER_REPAIRED_PRODUCER.json'),'MemAvailable_KiB':mem['MemAvailable'],'disk_free_bytes':disk,'thread_environment':threads,'memory_enforcement':'Supervisor RLIMIT_AS 64 MiB plus sole checker RLIMIT_AS 960 MiB; aggregate virtual ceilings 1 GiB. Checker starts no processes. Single-thread numerical libraries.','child_deadline_seconds':85})"
+    }
+  ],
+  "supervisor_binding_refresh_required": false,
+  "supervisor_binding_note": "run_once.py records checker digest dynamically; no hardcoded checker source SHA found. Existing supervisor is one-use and first receipts remain immutable; any continuation supervisor is root/reviewer scope.",
+  "validation": "ast.parse only; checker not executed or imported; candidate not read",
+  "diff": "--- independent_check.py.preimage\n+++ independent_check.py\n@@ -96,7 +96,7 @@\n             require(hdu.name==expected,'explicit HDU '+name)\n             freq=np.array(hdu.data['WAVENUMBER'],dtype=np.float64)\n             trans=np.array(hdu.data['TRANSMISSION'],dtype=np.float64)\n-            flags=np.asarray(hdu.data['FLAG']).astype(str)\n+            flags=np.asarray(hdu.data['FLAG']).astype(str).reshape(-1)\n             require(np.isfinite(freq).all() and np.isfinite(trans).all(),'finite raw source '+name)\n             require(np.all(np.diff(freq)>0),'raw monotonic '+name)\n             require(set(flags)<=set(('F','T')),'flag alphabet '+name)\n"
+}

@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/produce.py", line 272, in <module>
+    main()
+  File "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/produce.py", line 238, in main
+    tables,headers=read_tables()
+                   ^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/produce.py", line 93, in read_tables
+    assert np.all(np.diff(nu)>0) and np.all(tau>=0)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+Command exited with non-zero status 1
+producer_outer_elapsed=3.59 peakRSS_kB=69560 exit=1
