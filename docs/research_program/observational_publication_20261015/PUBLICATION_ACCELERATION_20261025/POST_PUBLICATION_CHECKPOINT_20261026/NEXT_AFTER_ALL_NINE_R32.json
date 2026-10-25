@@ -1,0 +1,78 @@
+{
+  "packet_id": "4b09d2d4b9587fe12ab9a87feb81854ef7d5cbe88431fc5a623e87ef9080bbef",
+  "task_id": "adaptive-discovery",
+  "input_identity": "b2e7d8e19d11f586ceb753a3c0fbe9d429e965461bf3b8e3cf38f93143132e22",
+  "fingerprint": "b2e7d8e19d11f586ceb753a3c0fbe9d429e965461bf3b8e3cf38f93143132e22",
+  "eligible_branches": [
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "H02",
+    "H04",
+    "H05",
+    "H06",
+    "K03",
+    "K04",
+    "K05",
+    "K06",
+    "L03",
+    "L04",
+    "L05",
+    "L06",
+    "R23-ATLAS",
+    "R23-CONGRUENCE",
+    "R23-SN",
+    "R25-DISTANCE-CONDITIONAL-EVIDENCE",
+    "R25-GAIA-RELEASE-TAG-ASSOCIATION",
+    "R25-PR3-FREQUENCY-TENSOR-CROSSPREDICTION",
+    "R25-PR3-STAGED4-TENSOR-CONTRAST",
+    "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+    "R26-FULL7-STREAMED-SPIN2-QUADRATURE",
+    "R26-SMICA-EXACT-PR3-IMPLICIT-ROW-PROJECTION",
+    "V04",
+    "V05",
+    "V06"
+  ],
+  "transport_restoration": null,
+  "phase": "discovery",
+  "state": "planned",
+  "route": {
+    "route": "review_or_research",
+    "requested": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_selected": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+    "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+    "launch_performed": false,
+    "availability_catalog_profiles": [
+      {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "model": "gpt-6-sol",
+        "effort": "high"
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "effort": "medium"
+      }
+    ]
+  },
+  "launch_performed": false,
+  "observed_runtime": "UNKNOWN",
+  "native_tool": "collaboration.spawn_agent",
+  "spawn_args": {
+    "task_name": "discovery_4b09d2d4b9587fe1",
+    "fork_turns": "none",
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh",
+    "message": "Read-only bounded adaptive research discovery. Do not spawn children, implement, run a native solver/ODE, manufacture inputs, reopen exhausted attempts or alter original acceptances/budgets. Read state_source and its source/receipt references before making claims; absent source access is an exact residual. Examine held branches for genuine new methods, assumptions, observables, sources or counterexamples. Return packet_id, task_id, input_identity, agent_id and raw_receipt. outcome must be proposal or no_action. A no_action result must examine every exact assigned eligible_branches entry. Always provide examined_branches, methods, source_refs and exact_residuals. A proposal also needs frontier: executable new_conditional_research tasks with existing local or explicit http(s) input_sources, typed requires, bounded owned_paths, semantic_delta and unchanged original acceptance. Discovery has no qualified products or scientific success. Assignment: {\"packet_id\": \"4b09d2d4b9587fe12ab9a87feb81854ef7d5cbe88431fc5a623e87ef9080bbef\", \"task_id\": \"adaptive-discovery\", \"input_identity\": \"b2e7d8e19d11f586ceb753a3c0fbe9d429e965461bf3b8e3cf38f93143132e22\", \"fingerprint\": \"b2e7d8e19d11f586ceb753a3c0fbe9d429e965461bf3b8e3cf38f93143132e22\", \"campaign_identity\": \"2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4\", \"state_source\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runtime/r23-continuous/STATE.json\", \"eligible_branches\": [\"B02\", \"B03\", \"B04\", \"B05\", \"H02\", \"H04\", \"H05\", \"H06\", \"K03\", \"K04\", \"K05\", \"K06\", \"L03\", \"L04\", \"L05\", \"L06\", \"R23-ATLAS\", \"R23-CONGRUENCE\", \"R23-SN\", \"R25-DISTANCE-CONDITIONAL-EVIDENCE\", \"R25-GAIA-RELEASE-TAG-ASSOCIATION\", \"R25-PR3-FREQUENCY-TENSOR-CROSSPREDICTION\", \"R25-PR3-STAGED4-TENSOR-CONTRAST\", \"R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE\", \"R26-FULL7-STREAMED-SPIN2-QUADRATURE\", \"R26-SMICA-EXACT-PR3-IMPLICIT-ROW-PROJECTION\", \"V04\", \"V05\", \"V06\"], \"transport_restoration\": null, \"branch_inventory\": {\"E0\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"E1\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"E2\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"E3\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"X01\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"X02\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"X03\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"S01\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"S02\": {\"state\": \"completed\", \"phase\": \"acquisition\"}, \"S03\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"S04\": {\"state\": \"completed\", \"phase\": \"acquisition\"}, \"S05\": {\"state\": \"completed\", \"phase\": \"review\"}, \"S06\": {\"state\": \"completed\", \"phase\": \"review\"}, \"L01\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"L02\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"L03\": {\"state\": \"held\", \"phase\": \"acquisition\"}, \"L04\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"L05\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"L06\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"H01\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"H02\": {\"state\": \"held\", \"phase\": \"acquisition\"}, \"H03\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"H04\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"H05\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"H06\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"V01\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"V02\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"V03\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"V04\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"V05\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"V06\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"B01\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"B02\": {\"state\": \"ready\", \"phase\": \"acquisition\"}, \"B03\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"B04\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"B05\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"K01\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"K02\": {\"state\": \"completed\", \"phase\": \"execute\"}, \"K03\": {\"state\": \"held\", \"phase\": \"review\"}, \"K04\": {\"state\": \"ready\", \"phase\": \"acquisition\"}, \"K05\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"K06\": {\"state\": \"ready\", \"phase\": \"execute\"}, \"R23-Q\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R23-DISTANCE\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R23-SN\": {\"state\": \"held\", \"phase\": \"execute\"}, \"R23-CMB\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R23-CONGRUENCE\": {\"state\": \"held\", \"phase\": \"execute\"}, \"R23-ATLAS\": {\"state\": \"held\", \"phase\": \"acquisition\"}, \"R24-DISTANCE-MODELS\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-CMB-ORBIT\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-K03-DESIGN\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-SN-RELEASE\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-SELECTION-ENVELOPE\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-OPTICAL-SHEAR\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-BOOST-ACCELERATION\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-K03-DEPTH-MOMENTS\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-CMB-ENVELOPE\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-TENSOR-BUNDLE\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-OPTICAL-NONLINEAR-QUOTIENT\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-DEPTH-IMAGES\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-CMB-CHIRALITY\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R24-REPORT-RESULTS\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R25-K03-DEPTH-COVROBUST\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R25-CMB-CONDITIONAL-GRAM\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R25-K03-DEPTH-BIAS-FRONTIER\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R25-DISTANCE-AUXILIARY-OVERLAP\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R25-DISTANCE-CONDITIONAL-EVIDENCE\": {\"state\": \"held\", \"phase\": \"research\"}, \"R25-SMICA-SPECTRAL-NULLSPACE\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R25-PR3-FREQUENCY-ACQUIRE\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R25-GAIA-PAIR-SEPARATION\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R25-GAIA-SOURCE-PROPERTY-INTAKE\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R25-PR3-STAGED4-TENSOR-CONTRAST\": {\"state\": \"held\", \"phase\": \"research\"}, \"R25-GAIA-SOURCE-QUOTIENT-CERTIFICATE\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R25-GAIA-RELEASE-TAG-ASSOCIATION\": {\"state\": \"held\", \"phase\": \"research\"}, \"R25-PR3-FREQUENCY-TENSOR-CROSSPREDICTION\": {\"state\": \"held\", \"phase\": \"research\"}, \"R26-SAVED-SELECTED-LAW-CONSUMPTION\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE\": {\"state\": \"held\", \"phase\": \"research\"}, \"R26-FULL7-STREAMED-SPIN2-QUADRATURE\": {\"state\": \"held\", \"phase\": \"research\"}, \"R26-CF4-RELEASE-STAGE-SEVEN-CHANNEL-RESPONSE\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R26-DELIVERED-SEVEN-FREQUENCY-DESCRIPTIVE-CONSUMPTION\": {\"state\": \"completed\", \"phase\": \"review\"}, \"r26_covariance_image_capability_numeric\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R26-SMICA-EXACT-PR3-IMPLICIT-ROW-PROJECTION\": {\"state\": \"held\", \"phase\": \"research\"}, \"R27-CF4-M7-ACTUAL-COVARIANCE-APPLICATION\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R27-EIGHT-MAP-SAVED-TENSOR-COMPARISON\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R27-CF4-UNIFORM-SUPPORT-CALIBRATION-QUOTIENT\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R28-CF4-EXACT-CALIBRATION-FACTOR-ACTUAL-CONSUMER\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R30-CMB-NOMINAL-BANDPASS-MOMENT-IDENTIFIABILITY\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R30-CF4-BAND-PV-FULL-TENSOR-COVARIANCE\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R33-CMB-WMAP-PLANCK-F2-EXTENSION\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R32-01-QO-METHODS\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R32-02-P1-SELECTED\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R32-03-H03-STRUCTURED\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R32-04-BANDPASS-BOUNDS\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R32-05-P6-OPTICAL\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R32-06-P4-DESIGN\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R32-07-P5-ALGEBRA\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R32-08-H03-PAPER\": {\"state\": \"completed\", \"phase\": \"review\"}, \"R32-09-BANDPASS-PAPER\": {\"state\": \"completed\", \"phase\": \"review\"}}, \"evidence_delta_receipts\": [{\"path\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runtime/r23-continuous/r25/NEXT_METHOD_EVIDENCE.json\", \"sha256\": \"9879e350104bc5e74167036bf578192ac8d780447fd358880fbfbe84453caaec\"}, {\"path\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runtime/r23-continuous/r25/AUXILIARY_METHOD_EVIDENCE.json\", \"sha256\": \"4c3a15de4e4b50dc01842e137484e19d919b46364094d8be9d9da1923f1a4b78\"}, {\"path\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runtime/r23-continuous/r25/GAIA_PAIR_ADAPTIVE_EVIDENCE.json\", \"sha256\": \"2a725edf0a06b58c48cc1d46135210896eff86cdc3de866ddd4f2a837723db1f\"}, {\"path\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runtime/r23-continuous/r25/GAIA_PROPERTIES_ADAPTIVE_EVIDENCE.json\", \"sha256\": \"e22d47459d4d7441dc81823459c29324a30fc5f6d21bb5ce9bef1e37b78c5459\"}, {\"path\": \"/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runtime/r23-continuous/r25/STAGED4_ADAPTIVE_EVIDENCE.json\", \"sha256\": \"b03d1145f725f9d15cc476cdf791bbc807729868aa144bb0876e7e71be065435\"}, {\"path\": \"/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/receipts/DISTANCE_FINITE_LIBRARY_ADAPTIVE_EVIDENCE.json\", \"sha256\": \"d449b5d533e3ed99c314273d2168a97b7e2defad5d2785437626cdf6e2861494\"}, {\"path\": \"/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/receipts/FULL7_CONTRACT_ADAPTIVE_EVIDENCE.json\", \"sha256\": \"034e26b278b99aba6c52cc75ed58cbb851b85d617865224104a84e0a294be8c6\"}, {\"path\": \"/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/receipts/GAIA_SOURCE_QUOTIENT_ADAPTIVE_EVIDENCE.json\", \"sha256\": \"91ed0be56f0e092b885a2dcde93d37626493136b10bb3a4e20e6bfc99bb4cc34\"}, {\"path\": \"/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/receipts/GAIA_TAG_ASSOCIATION_ADAPTIVE_EVIDENCE.json\", \"sha256\": \"ca877398b27a7d9624f78cdb576da0afa9d8c102097ef484170fa1eaf37efac7\"}]}"
+  }
+}

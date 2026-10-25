@@ -20,3 +20,6 @@ All nine companions have recorded scoped formal completion: seven manuscripts an
 | Bounded moments | [Result](products/R32-04-BANDPASS-BOUNDS/repair_05/RESULT.json) | Conditional free-signed nine-moment frontier with full signed24 carrier |
 
 See each product's `PUBLICATION_STATUS.json` and `independent_review/` for exact candidate identities and actual review scope. Scientific source manifests and cached results distinguish historical execution from later publication; publication itself is not a new numerical run or paper submission.
+
+
+[Actual continuation checkpoint and 29 residual input requirements](POST_PUBLICATION_CHECKPOINT_20261026/README.md): the acknowledged post-nine discovery returned `no_action`; the subsequent controller call recorded `HOLD_UNRESOLVED_BRANCHES`, effective `ready=[]`, and no outstanding adaptive packet. This closes the authorized iteration under its exact residual condition; original42 scientific acceptance remains unchanged. Earlier RUNNING snapshots remain historical.
