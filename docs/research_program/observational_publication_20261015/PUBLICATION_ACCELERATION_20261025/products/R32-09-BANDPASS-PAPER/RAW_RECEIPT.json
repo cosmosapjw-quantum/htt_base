@@ -1,0 +1,341 @@
+{
+  "packet_id": "c538d1a1c0b198b3ccb8aa2b7b7e9f864d5e2a874b2c05445c4c71190b179cba",
+  "task_id": "R32-09-BANDPASS-PAPER",
+  "input_identity": "sha256:2cae6d43b4647b33db316df0ebd28efef8cc0e7882fe33bcfbbfff20719fe94c",
+  "agent_id": "/root/r35_bandpass_paper_source_preparation",
+  "outcome": "success",
+  "acceptance_met": false,
+  "qualified_products": [
+    "bandpass_manuscript"
+  ],
+  "qualified_products_semantics": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+  "requested_runtime": {
+    "model": "gpt-5.6-terra",
+    "effort": "medium"
+  },
+  "transport_selected_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "observed_runtime": "UNKNOWN",
+  "phase": "execute",
+  "packet_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/NEXT_AFTER_BP_FINAL_REVIEW.json",
+  "ack_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/BANDPASS_PAPER_ACTUAL_ACK_GO.json",
+  "completed_utc": "2026-10-25T16:39:20.483056+00:00",
+  "actual_commands": [
+    {
+      "command": [
+        "/usr/bin/python",
+        "consumer.py",
+        "--qualified-dir",
+        "data",
+        "--expected-result-sha256",
+        "3517d2f6178a830248b9e32ad57b88c4c7345d6ee39d5bb8cbf9bfb54ea1a86a",
+        "--expected-r31-sha256",
+        "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+        "--output-dir",
+        "report/generated"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:34:19.535093+00:00",
+      "duration_seconds": 0.06404376029968262,
+      "exit_code": 0,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "f6089dca3f651625ebee3fb344e4c14a611b96fcfbf6c824b9b2c6a5d63ccc24",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "7db80d4b7a23341929ecf90fa0b09d4ebde92f587c085bec51549178d7aa4823"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/consumer_first.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/consumer_first.stderr"
+    },
+    {
+      "command": [
+        "latexmk",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-cd",
+        "report/main.tex"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:36:58.643313+00:00",
+      "duration_seconds": 1.7681810855865479,
+      "exit_code": 0,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "450e5eebc796f26a0f9e434338f207aae8c3ed7735b549d092af17d25e942829",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_publication.py": "a968698b1d59271c965d4350d02a9f2e7c21175b0d399a063ca7baf0441e699e",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "befc9c3ca1e561077f26275b1fa8c706767b0f9340add08eb3afc38aeef43377"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/latexmk_final.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/latexmk_final.stderr"
+    },
+    {
+      "command": [
+        "latexmk",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-cd",
+        "report/main.tex"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:34:53.738358+00:00",
+      "duration_seconds": 1.2178244590759277,
+      "exit_code": 12,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "91da09afeaa14e26a8abcff201dfedc21331bfb7e0de2cbe0096b5d2932a9093",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_publication.py": "a968698b1d59271c965d4350d02a9f2e7c21175b0d399a063ca7baf0441e699e",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "7db80d4b7a23341929ecf90fa0b09d4ebde92f587c085bec51549178d7aa4823"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/latexmk_first.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/latexmk_first.stderr"
+    },
+    {
+      "command": [
+        "latexmk",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-cd",
+        "report/main.tex"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:35:19.787049+00:00",
+      "duration_seconds": 1.8683977127075195,
+      "exit_code": 0,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "91da09afeaa14e26a8abcff201dfedc21331bfb7e0de2cbe0096b5d2932a9093",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_publication.py": "a968698b1d59271c965d4350d02a9f2e7c21175b0d399a063ca7baf0441e699e",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "7db80d4b7a23341929ecf90fa0b09d4ebde92f587c085bec51549178d7aa4823"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/latexmk_second.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/latexmk_second.stderr"
+    },
+    {
+      "command": [
+        "pdftotext",
+        "-layout",
+        "report/main.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_actual_build/main.txt"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:35:44.987585+00:00",
+      "duration_seconds": 0.06470084190368652,
+      "exit_code": 0,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "91da09afeaa14e26a8abcff201dfedc21331bfb7e0de2cbe0096b5d2932a9093",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_publication.py": "a968698b1d59271c965d4350d02a9f2e7c21175b0d399a063ca7baf0441e699e",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "7db80d4b7a23341929ecf90fa0b09d4ebde92f587c085bec51549178d7aa4823"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/pdf_text.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/pdf_text.stderr"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "publication.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:36:55.838638+00:00",
+      "duration_seconds": 2.7696151733398438,
+      "exit_code": 0,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "450e5eebc796f26a0f9e434338f207aae8c3ed7735b549d092af17d25e942829",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_publication.py": "a968698b1d59271c965d4350d02a9f2e7c21175b0d399a063ca7baf0441e699e",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "befc9c3ca1e561077f26275b1fa8c706767b0f9340add08eb3afc38aeef43377"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/publication_final.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/publication_final.stderr"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "publication.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:34:19.535141+00:00",
+      "duration_seconds": 0.16431570053100586,
+      "exit_code": 1,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "f6089dca3f651625ebee3fb344e4c14a611b96fcfbf6c824b9b2c6a5d63ccc24",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "7db80d4b7a23341929ecf90fa0b09d4ebde92f587c085bec51549178d7aa4823"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/publication_first.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/publication_first.stderr"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "publication.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:34:30.566601+00:00",
+      "duration_seconds": 4.773282766342163,
+      "exit_code": 0,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "91da09afeaa14e26a8abcff201dfedc21331bfb7e0de2cbe0096b5d2932a9093",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "7db80d4b7a23341929ecf90fa0b09d4ebde92f587c085bec51549178d7aa4823"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/publication_second.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/publication_second.stderr"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-o",
+        "addopts=",
+        "test_consumer.py",
+        "test_publication.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:34:53.739888+00:00",
+      "duration_seconds": 0.8178071975708008,
+      "exit_code": 0,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "91da09afeaa14e26a8abcff201dfedc21331bfb7e0de2cbe0096b5d2932a9093",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_publication.py": "a968698b1d59271c965d4350d02a9f2e7c21175b0d399a063ca7baf0441e699e",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "7db80d4b7a23341929ecf90fa0b09d4ebde92f587c085bec51549178d7aa4823"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/pytest_final.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/pytest_final.stderr"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-o",
+        "addopts=",
+        "test_consumer.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:34:19.535134+00:00",
+      "duration_seconds": 0.8159503936767578,
+      "exit_code": 0,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "f6089dca3f651625ebee3fb344e4c14a611b96fcfbf6c824b9b2c6a5d63ccc24",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "7db80d4b7a23341929ecf90fa0b09d4ebde92f587c085bec51549178d7aa4823"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/pytest_first.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/pytest_first.stderr"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-o",
+        "addopts=",
+        "test_consumer.py",
+        "test_publication.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:38:35.670185+00:00",
+      "duration_seconds": 0.8152556419372559,
+      "exit_code": 0,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "450e5eebc796f26a0f9e434338f207aae8c3ed7735b549d092af17d25e942829",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/reproduce.py": "adcce97053d74dfb30f031dacb9d0de5f72745f4f0c087d605d94aec273d0a7d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_publication.py": "a968698b1d59271c965d4350d02a9f2e7c21175b0d399a063ca7baf0441e699e",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "befc9c3ca1e561077f26275b1fa8c706767b0f9340add08eb3afc38aeef43377"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/pytest_sealed_source.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/pytest_sealed_source.stderr"
+    },
+    {
+      "command": [
+        "pdftoppm",
+        "-r",
+        "80",
+        "-png",
+        "report/main.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_actual_build/finalpage"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:38:35.669789+00:00",
+      "duration_seconds": 1.016028642654419,
+      "exit_code": 0,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "450e5eebc796f26a0f9e434338f207aae8c3ed7735b549d092af17d25e942829",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/reproduce.py": "adcce97053d74dfb30f031dacb9d0de5f72745f4f0c087d605d94aec273d0a7d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_publication.py": "a968698b1d59271c965d4350d02a9f2e7c21175b0d399a063ca7baf0441e699e",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "befc9c3ca1e561077f26275b1fa8c706767b0f9340add08eb3afc38aeef43377"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/render_final.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/render_final.stderr"
+    },
+    {
+      "command": [
+        "pdftoppm",
+        "-r",
+        "80",
+        "-png",
+        "report/main.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_actual_build/page"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+      "started_utc": "2026-10-25T16:35:43.972741+00:00",
+      "duration_seconds": 0.966576099395752,
+      "exit_code": 0,
+      "source_preimages_sha256": {
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_consumer.py": "2de86c77a039ed13d0897cf2759e1955e71583ecf15a37e26e7cb6f84306a667",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/publication.py": "91da09afeaa14e26a8abcff201dfedc21331bfb7e0de2cbe0096b5d2932a9093",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/test_publication.py": "a968698b1d59271c965d4350d02a9f2e7c21175b0d399a063ca7baf0441e699e",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/consumer.py": "304f44547c2fd4bafef07e6d92e7c55a014be13553d4912d2494391531e0d80d",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/report/main.tex": "7db80d4b7a23341929ecf90fa0b09d4ebde92f587c085bec51549178d7aa4823"
+      },
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/render_pdf.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/raw/render_pdf.stderr"
+    }
+  ],
+  "source_bindings": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/SOURCE_BINDINGS.json",
+  "upstream_qualified_manifest_sha256": "63c44c8344f54a1817bee1aa1e0c2b3c99e917a192d2239b02ba9188df05cf65",
+  "upstream_qualified_result_sha256": "3517d2f6178a830248b9e32ad57b88c4c7345d6ee39d5bb8cbf9bfb54ea1a86a",
+  "upstream_formal_review_sha256": "7d96d390b23b00e097cc86abe5120dbd66dc98c2899e8c77ddb7fc3697f9ad0c",
+  "preserved_first_failures": [
+    "raw/publication_first.receipt.json",
+    "raw/latexmk_first.receipt.json"
+  ],
+  "validation": [
+    "14 focused tests pass",
+    "cached-statistics consumer executed",
+    "CSV and LaTeX tables plus3 PDF/SVG figure pairs generated",
+    "REVTeX/BibTeX final compile exit0;10 pages",
+    "final PDF figures/references visually inspected"
+  ],
+  "original42_acceptance": false,
+  "independent_scientific_review": "PENDING_FRESH_ASTRA",
+  "no_upstream_scientific_rerun": true,
+  "mutation_scope": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_actual_build"
+  ]
+}

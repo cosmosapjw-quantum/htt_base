@@ -1,0 +1,58 @@
+--- base/report/main.tex
++++ repair_01/report/main.tex
+@@ -28,15 +28,41 @@
+ 
+ \section{Responses, harmonics and units}
+ 
+-The seven frequency rows are ordered as $030,044,070,100,143,217,353\mathrm{PSB}$. They use LFI RIMO R3.31 and HFI RIMO R3.00 response tables. The response normalization is the dipole-calibrated finite spectral model; the antenna-temperature and intensity-response distinction is retained~\cite{PlanckLFI2013}. For an intensity spectrum $S$ and CMB derivative $b_\nu=\partial B_\nu/\partial T|_{T_{\rm CMB}}$, the finite definition is
++The seven frequency rows are ordered as $030,044,070,100,143,217,353\mathrm{PSB}$. They use LFI RIMO R3.31 and HFI RIMO R3.00 response tables. The response normalization is the dipole-calibrated finite spectral model; the antenna-temperature and intensity-response distinction is retained~\cite{PlanckLFI2013}. We use the Planck intensity and its CMB temperature derivative,
++\begin{equation}
++ B_\nu(T)=\frac{2h\nu^3}{c^2[\exp(h\nu/(k_BT))-1]},\qquad
++ b_\nu=\left.\frac{\partial B_\nu}{\partial T}\right|_{T=T_{\rm CMB}}.
++ \label{eq:planck}
++\end{equation}
++For an intensity spectrum $S$, the finite calibrated response is
+ \begin{equation}
+  R_i[S]=\frac{\operatorname{trapz}(\tau_i S,\nu_i)}{\operatorname{trapz}(\tau_i b_\nu,\nu_i)},\qquad
+  a_i=R_i[b_\nu]=1.
+  \label{eq:response}
+ \end{equation}
+-The trapezoids join the retained released nodes. This is a finite-node definition, without a continuous-passband error certificate. Two LFI frequency conventions, A and B, are crossed with three HFI transmission thresholds $10^{-7},10^{-8},10^{-6}$. A retains the released LFI frequencies; B applies the retained half-bin shift before all frequency-dependent factors. Their difference is a version-sensitivity diagnostic. The six models do not define a calibrated uncertainty distribution.
+-
+-The synchrotron index is $\beta_s=-3$ in Rayleigh--Jeans temperature, the dust index is $\beta_d=1.5$, and the reference frequencies are $30$ and $353\,\mathrm{GHz}$. We use $T_d=20\,\mathrm K$, $T_{\rm CMB}=2.7255\,\mathrm K$ and $t=(T-T_d)/T_d$. The ordered response columns are
++For LFI, let $g_i(\nu)$ be the raw released \texttt{TRANSMISSION}. The effective intensity-response transmission is
++\begin{equation}
++ \tau_i(\nu)=g_i(\nu)\left(\frac{\nu_{{\rm ref},i}}{\nu}\right)^2,
++ \qquad \nu_{{\rm ref},i}=30,44,70\,\mathrm{GHz},
++ \label{eq:lfi-tau}
++\end{equation}
++respectively. Every finite positive-frequency LFI row is retained, with finite nonnegative transmission and no amplitude cutoff. For HFI, $\tau_i$ is the raw \texttt{TRANSMISSION} on finite positive-frequency nodes with \texttt{FLAG} exactly \texttt{F} and transmission above $B_T$. The three thresholds are $B_T=10^{-7},10^{-8},10^{-6}$. Trapezoids join adjacent retained nodes in ascending frequency, including across removed flagged intervals. This is a finite-node definition, without a continuous-passband error certificate.
++
++The two LFI conventions A and B are crossed with the three HFI thresholds. A retains the released LFI frequencies. For each LFI channel with $N_i$ retained nodes, B adds
++\begin{equation}
++ \Delta\nu_i=\frac{\nu_{i,\mathrm{last}}-\nu_{i,\mathrm{first}}}{2(N_i-1)}
++ \label{eq:lfi-shift}
++\end{equation}
++to every frequency before evaluating all frequency-dependent terms, including the $\nu^{-2}$ factor in Eq.~\eqref{eq:lfi-tau}. The first and last frequencies in Eq.~\eqref{eq:lfi-shift} are those of A. This reproduces the retained older-reader half-bin operation as a version-sensitivity diagnostic. The six models do not define a calibrated uncertainty distribution.
++
++The synchrotron index is $\beta_s=-3$ in Rayleigh--Jeans temperature, the dust index is $\beta_d=1.5$, and the reference frequencies are $30$ and $353\,\mathrm{GHz}$. We use $T_d=20\,\mathrm K$, $T_{\rm CMB}=2.7255\,\mathrm K$ and $t=(T-T_d)/T_d$. The intensity spectra per unit reference $\mathrm K_{\rm CMB}$ amplitude are
++\begin{equation}
++ S_s(\nu,\beta)=b_{\nu_s}\left(\frac{\nu}{\nu_s}\right)^{\beta+2},\qquad
++ S_d(\nu,\beta,T)=b_{\nu_d}\left(\frac{\nu}{\nu_d}\right)^\beta
++                  \frac{B_\nu(T)}{B_{\nu_d}(T)},
++ \label{eq:spectra}
++\end{equation}
++with $\nu_s=30\,\mathrm{GHz}$ and $\nu_d=353\,\mathrm{GHz}$. The dust denominator uses the same varying $T$ as the numerator before differentiation; it is not held at $T_d$. The response columns are obtained by applying $R_i$ to these spectra and their parameter derivatives, evaluated at $\beta=\beta_s$ for synchrotron and $(\beta,T)=(\beta_d,T_d)$ for dust. Thus $s_i=R_i[S_s]$, $s_{\beta,i}=R_i[\partial_{\beta_s}S_s]$, $d_i=R_i[S_d]$ and $d_{t,i}=R_i[\partial_tS_d]$, with the same construction for the remaining derivatives. The ordered response columns are
+ \begin{equation}
+  F_1=(s,s_\beta,d,d_\beta,d_t),\qquad
+  F_2=(s,s_\beta,d,d_\beta,d_t,s_{\beta\beta},d_{\beta\beta},d_{\beta t},d_{tt}).
+@@ -206,6 +232,9 @@
+ 
+ No observed target tensor or physical anisotropy parameter is measured here. In particular, full-tensor nonlinear quantities remain undefined in sectors where the target is unobserved or the required denominators are absent. A frequency axis supplies no depth information. The finite response results do not infer a local or global tilt, identify a Bianchi family, or validate a native cosmological solver. Their use is to specify which additional response directions or physically justified foreground restrictions an observational analysis must supply.
+ 
++\section*{Data availability}
++The finite response matrices and complete signed coordinate order are included with the source archive in \texttt{data/R31\_RESULT.json}; \texttt{data/RESULT.json} contains the bounded-moment sufficient statistics. The accompanying \texttt{data/SPECTRAL\_ONLY\_CONTRACT.md} specifies the released response products, retained nodes and normalization used in Eqs.~\eqref{eq:response}--\eqref{eq:spectra}. The runnable \texttt{consumer.py} reads the retained numerical values, \texttt{publication.py} generates the tables and figures, and \texttt{reproduce.py} rebuilds the complete paper. Original source identities and local copies are bound in \texttt{SOURCE\_BINDINGS.json}.
++
+ \bibliographystyle{apsrev4-2}
+ \bibliography{references}
+ \end{document}

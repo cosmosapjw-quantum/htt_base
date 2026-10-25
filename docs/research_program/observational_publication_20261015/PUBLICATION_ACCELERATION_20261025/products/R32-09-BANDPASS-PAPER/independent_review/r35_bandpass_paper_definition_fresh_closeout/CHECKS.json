@@ -1,0 +1,141 @@
+{
+  "packet_binding": {
+    "packet_id": "1862a4246299c380be0a475024d891fba39cdaeed822820a379b52e2cc23235f",
+    "task_id": "R32-09-BANDPASS-PAPER",
+    "input_identity": "sha256:2cae6d43b4647b33db316df0ebd28efef8cc0e7882fe33bcfbbfff20719fe94c",
+    "candidate_identity": "sha256:58bbadbdeb8577702b2c376b612bafe5f3c417bfbf1d1b76283763d57abfd3fc"
+  },
+  "agent_id": "/root/rc_1862a4246299c380",
+  "started_utc": "2026-10-25T16:56:56.061978+00:00",
+  "candidate_sha256": "58bbadbdeb8577702b2c376b612bafe5f3c417bfbf1d1b76283763d57abfd3fc",
+  "base_sha256": "e550dd06518c162e4ee0dc8c8d08f37e1951058dbe8bc36076a8e8de0cb57020",
+  "base_entries": {
+    "all_match": true,
+    "count": 168
+  },
+  "candidate_entries": {
+    "all_match": true,
+    "count": 68
+  },
+  "unchanged_assets": {
+    "count": 33,
+    "all_byte_identical": true,
+    "list_independently_enumerated": true
+  },
+  "contract_sha256": "fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df",
+  "source_definition_presence": {
+    "planck_intensity": true,
+    "synchrotron_normalization": true,
+    "dust_varying_temperature_ratio": true,
+    "varying_temperature_explicit": true,
+    "lfi_effective_transmission": true,
+    "half_bin_shift": true,
+    "hfi_flag_threshold": true,
+    "second_derivative_definition": true,
+    "signed_carrier": true,
+    "temperature_separate": true,
+    "data_availability": true
+  },
+  "included_assets": [
+    "generated/numbers.tex",
+    "generated/ranks.tex",
+    "figures/response_spectra.pdf",
+    "generated/coefficients.tex",
+    "figures/budget_contributions.pdf",
+    "generated/budgets.tex",
+    "figures/frontier.pdf"
+  ],
+  "reused_actual_build": {
+    "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/repair_01/raw/latexmk_repair.receipt.json",
+    "exit_code": 0,
+    "source_binding_match": true,
+    "clean_final_log": true,
+    "warning_lines": [
+      "Package nameref Warning: The definition of \\label has changed! "
+    ],
+    "initial_pass_warnings_retained": true,
+    "new_build_invoked": false
+  },
+  "commands": [
+    {
+      "command": [
+        "git",
+        "status",
+        "--short",
+        "--branch"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.14073997107334435,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/command_00.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/command_00.stderr"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.013689482817426324,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/command_01.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/command_01.stderr"
+    },
+    {
+      "command": [
+        "git",
+        "remote",
+        "get-url",
+        "origin"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.011116905137896538,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/command_02.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/command_02.stderr"
+    },
+    {
+      "command": [
+        "pdfinfo",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/repair_01/report/main.pdf"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.059702365193516016,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/command_03.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/command_03.stderr"
+    },
+    {
+      "command": [
+        "pdftotext",
+        "-layout",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/repair_01/report/main.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/main.layout.txt"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.06369933788664639,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/command_04.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/command_04.stderr"
+    },
+    {
+      "command": [
+        "pdftoppm",
+        "-scale-to",
+        "900",
+        "-png",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/repair_01/report/main.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/page"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.0542807129677385,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/command_05.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_fresh_closeout/command_05.stderr"
+    }
+  ],
+  "pdf": {
+    "pages": 11,
+    "unresolved_reference_markers": false,
+    "source_text_present": true,
+    "rendered_pages": 11,
+    "sha256": "09d92308ba44db071b51fdabb4cdc634f6b99dfd640d94cc84a3f47f348fee9f"
+  },
+  "elapsed_seconds": 1.3965635641943663,
+  "status": "PASS"
+}

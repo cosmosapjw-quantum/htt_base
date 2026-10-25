@@ -1,0 +1,189 @@
+{
+  "status": "CONTRACT_RESOLVED_REPAIR_REQUIRED",
+  "task_id": "R32-04-BANDPASS-BOUNDS",
+  "campaign": "R23",
+  "packet_sha256": "586239ab31590037b239e1e50ec95733dec4a3ff3b176231a09798ac910bea82",
+  "repair_attempt": 11,
+  "requested_reviewer": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "review_scope": "Fresh read-only semantic audit of frozen acceptance, mathematical object, actual exported API and selected witnesses; no candidate admission.",
+  "candidate_state": "UNSEALED; first pure-target failure retained; author stop was correct",
+  "candidate_consumer_sha256": "d0a3873ff78cf6960647280dd2633399d6c47ea17351635ea80f74101f04d96a",
+  "resolution": "The returned center and radius parameterize an abstract real translated 24-ball. Applying the 1e-9 all-direction squared-budget error criterion to those serialized parameters is required. Requiring arbitrary later binary64 center-plus-direction arithmetic to preserve boundary membership or completeness is an unsupported stronger condition. Actual saved synthetic witness arrays are exported and retain their own original residual and norm gates.",
+  "rationale": [
+    "The frozen FRONTIER acceptance calls for bounded moment budgets, exact residual checks and a runnable consumer. The original intake defines S_rho(Y) as a subset of R24 and separately specifies synthetic attainment witnesses. Neither requires all later floating-point samples to remain on the sphere. The generic identified() return fields contain center/radius/J0/residual/error metadata, not sampled sphere points.",
+    "The current candidate/report added a final addition-roundoff charge to every BALL. This is a method choice under audit, not authority for rewriting the original mathematical acceptance. At the same time, the generated NPZ explicitly includes selected rounded witnesses, so it would be false to say that no witnesses are exported anywhere.",
+    "Separately, the structural branch converts rho*rho to binary64 and charges its underflow as a full squared-budget error; the returned object needs only rho and the positive radius. Normalized multiprecision checks can preserve the original tolerance without that extraneous refusal. Actual radius quantization remains decision-critical, including when both rho and radius are subnormal."
+  ],
+  "formal_contract": {
+    "J": "J(s)=J_star+ell2*||s-c_star||_2^2",
+    "exported_object": "B_hat={c_hat+r_hat*u in R24: ||u||_2<=1}; binary64 parameters are lifted exactly to real numbers",
+    "all_direction_sphere_error": "D=|J_star+ell2*(||c_hat-c_star||_2^2+r_hat^2)-rho^2|+2*ell2*r_hat*||c_hat-c_star||_2",
+    "acceptance": "Uncertainty-enlarged D/max(rho^2,J_star)<=1e-9, with coherent J0, residual and ell bounds; no relaxation",
+    "structural_simplification": "Repeated rows imply c_star=common supplied row, J_star=0, exact residual=0; D/rho^2=|(ell*r_hat/rho)^2-1|",
+    "downstream_diagnostic": "fl(c_hat+fl(r_hat*u)) may not lie on or cover the abstract sphere; its addition/multiplication rounding is separate unless that actual sampled point is exported as a witness"
+  },
+  "source_evidence": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/FRONTIER.json",
+      "lines": "146-179",
+      "supports": "Original R32-04 numerical acceptance and conditional claim ceiling"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_bandpass_contract_intake/CONTRACT.md",
+      "lines": "129-147",
+      "supports": "Real identified set, exact ball theorem, separate synthetic witnesses and residual controls"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/consumer.py",
+      "lines": "353-392,556-558",
+      "supports": "Actual identified return fields; structural positive ball semantics"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/consumer.py",
+      "lines": "218-279,325-348",
+      "supports": "Current all-BALL addition charge, underflowed rho-square charge and absolute error-export refusal"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/consumer.py",
+      "lines": "566-668,776-779",
+      "supports": "Selected synthetic point/coefficient witness arrays actually exported and validated"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/report/main.tex",
+      "lines": "113-125",
+      "supports": "Current manuscript mixes abstract boundary-image correctness with directional-addition claim; this is subject of repair"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/test_pure_target_boundary.py",
+      "lines": "75-103",
+      "supports": "72 mandatory positive structural-ball cases, preserved unchanged"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/test_structural_range.py",
+      "lines": "75-90",
+      "supports": "Exact abstract sphere check is already distinct from later rounded-direction checks"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/ordinary_probe.py",
+      "lines": "9-10,61-85",
+      "supports": "Probe currently imports repair_04, and combines abstract-sphere checks with sampled-direction diagnostics"
+    }
+  ],
+  "independent_math_evidence": {
+    "records": [
+      {
+        "case": "representable_abstract_structural_ball",
+        "branch": "A_BT_1e-06",
+        "metric": "common",
+        "rho_hex": "0x1.9af2b7d0e0a2dp-685",
+        "radius_hex": "0x1.07907e2d99ecdp-686",
+        "radius": 3.2067846794347535e-207,
+        "abstract_exact_rational_budget_ratio": "1.00000000000000001993159023144477490859326698",
+        "abstract_relative_budget_error": "1.99315902314447749085932669793016298628313912e-17",
+        "rounded_axis_witness_equals_center": true,
+        "rounded_axis_witness_cost_over_budget": "0",
+        "rounded_axis_witness_absolute_boundary_error_over_budget": "1",
+        "binary64_rho_squared": 0.0,
+        "current_internal_budget_error_over_true_budget": "1.00000000000000044408920985006261616945266724",
+        "current_status": "NUMERIC_RANGE_HOLD",
+        "current_reason": "serialized full24 ball image exceeds relative budget policy"
+      },
+      {
+        "case": "representable_abstract_structural_ball",
+        "branch": "A_BT_1e-06",
+        "metric": "raw",
+        "rho_hex": "0x1.9af2b7d0e0a2dp-685",
+        "radius_hex": "0x1.b95829a3ba387p-691",
+        "radius": 1.678072177714467e-208,
+        "abstract_exact_rational_budget_ratio": "0.999999999999999934133768555511571121291889004",
+        "abstract_relative_budget_error": "6.58662314444884288787081109959537148526013477e-17",
+        "rounded_axis_witness_equals_center": true,
+        "rounded_axis_witness_cost_over_budget": "0",
+        "rounded_axis_witness_absolute_boundary_error_over_budget": "1",
+        "binary64_rho_squared": 0.0,
+        "current_internal_budget_error_over_true_budget": "1.00000000000000044408920985006261616945266724",
+        "current_status": "NUMERIC_RANGE_HOLD",
+        "current_reason": "serialized full24 ball image exceeds relative budget policy"
+      },
+      {
+        "case": "BP05_radius_quantization",
+        "branch": "A_BT_1e-06",
+        "metric": "raw",
+        "rho_hex": "0x0.0000000000040p-1022",
+        "old_radius_hex": "0x0.0000000000001p-1022",
+        "old_status": "BALL",
+        "abstract_exact_rational_budget_ratio": "0.866999362714841275426679910379121776254565671",
+        "abstract_relative_budget_error": "0.133000637285158724573320089620878223745434329",
+        "current_status": "NUMERIC_RANGE_HOLD"
+      },
+      {
+        "case": "BP05_radius_quantization",
+        "branch": "A_BT_1e-06",
+        "metric": "raw",
+        "rho_hex": "0x0.00000000007e8p-1022",
+        "old_radius_hex": "0x0.0000000000022p-1022",
+        "old_status": "BALL",
+        "abstract_exact_rational_budget_ratio": "1.00211034153157863614753372946755839795056612",
+        "abstract_relative_budget_error": "0.0021103415315786361475337294675583979505661178",
+        "current_status": "NUMERIC_RANGE_HOLD"
+      },
+      {
+        "case": "BP04_incoherent_center",
+        "branch": "A_BT_1e-06",
+        "metric": "raw",
+        "rho_hex": "0x1.ba775222664cdp-44",
+        "old_status": "BALL",
+        "old_center_hex": "0x1.fffffffffffc1p-1",
+        "current_status": "NUMERIC_BOUNDARY_HOLD",
+        "historical_output": {
+          "J0_over_budget": "0.249999999999999989876346532623652196707843345",
+          "center_cost_over_budget": "10.4137834811779167124311928181407430584421822",
+          "exact_center_col0": "0.999999999999998261633764990212527009633203715",
+          "abstract_sphere_error_over_budget": "15.6856808400998102890438236897980526517694259"
+        },
+        "nearest_binary64_abstract_parameters": {
+          "J0_over_budget": "0.249999999999999989876346532623652196707843345",
+          "center_cost_over_budget": "0.250530995305961235054740401678496201135121752",
+          "exact_center_col0": "0.999999999999998261633764990212527009633203715",
+          "abstract_sphere_error_over_budget": "0.0404432229797422909658542948677597808900490706"
+        }
+      }
+    ],
+    "assertions": "all bounded independent assertions passed; not a candidate admission"
+  },
+  "raw_failure": {
+    "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_puretarget_first.receipt.json",
+    "exit_code": 1,
+    "summary": "72 failed, 101 passed, 1 warning",
+    "source_identity_matches_live_consumer": true
+  },
+  "bounded_audit_execution": {
+    "command": "python -B /mnt/extdrive/workdir/htt_open_data/r35_bandpass_semantic_blind_audit/raw/exact_checks.py",
+    "observed_exit_code": 0,
+    "observed_wall_seconds": 3.818398665,
+    "scope": "Two exact-rational 6-row contrast inversions; five tiny diagnostic cases, no test suite replay or product generation",
+    "warning": "Matplotlib Axes3D import unavailable; unused by these algebraic probes",
+    "source_identities": "raw/SOURCE_IDENTITIES.json",
+    "raw_stdout": "raw/exact_checks.stdout",
+    "raw_stderr": "raw/exact_checks.stderr",
+    "current_review_verdicts_or_harness_used_as_oracle": false,
+    "memory_use": "Preservation workflow only; no prior scientific verdict or result used"
+  },
+  "repair_clarification": "Continue the same R23 packet 586239ab31590037b239e1e50ec95733dec4a3ff3b176231a09798ac910bea82, R32-04 repair attempt 11 and cumulative accounting; this clarification creates no new task, attempt allocation, ultra escalation, source input, or scientific admission. The lower Sol executor owns only the already assigned repair_05 candidate and its affected tests/report outputs, with one writer. Preserve first failures and frozen inputs, branch/metric/carrier ordering, mathematical model, and all existing numerical thresholds.\n\n1. Define identified() BALL as the real closed set {c_hat+r_hat*u : ||u||_2<=1}, where the serialized binary64 center and positive binary64 radius are lifted exactly to real numbers. It is an approximate parameterization of the exact identified ball under the unchanged fixed 1e-9 relative squared-budget policy. It does not promise that an arbitrary downstream binary64 evaluation of c_hat+r_hat*u samples the sphere accurately or completely.\n\n2. Keep one full24 abstract-output gate for every BALL, including structural repeated rows. On the exact retained binary64 inputs, write c_star, J_star, ell2 for the coherent exact/high-precision reference geometry and d=||c_hat-c_star||_2 using all 24 coordinates. The exact sphere discrepancy is D=|J_star+ell2*(d*d+r_hat*r_hat)-rho*rho|+2*ell2*r_hat*d. Require an uncertainty-enlarged bound D_bound/max(rho*rho,J_star)<=1e-9. This controls both inward and outward radius error in every direction; checking a center, selected directions, or feasibility alone is insufficient. Preserve the same-input 80/120-digit/conditioning allowances and actual exported J0, residual and ell consistency checks. Include actual center/radius conversion, numerical reference uncertainty, J0 and ell uncertainty, and the weighted consequence of residual serialization. Do not include the separate later center-plus-direction rounding operation in this abstract-parameter bound. This remains the existing declared numerical policy, not a new rigorous interval certificate.\n\n3. In the exactly repeated-row branch, c_star is exactly the supplied common binary64 row, J_star=0 and the exact residual is zero. Certify radius quantization using the dimensionless squared ratio (ell*r_hat/rho)^2 and its existing ell uncertainty, with the same 1e-9 tolerance. Use lifted-rho multiprecision or scaled operations so no binary64 rho*rho or binary64 1e-9*rho*rho is needed for this structural decision. Remove the structural charge |float(rho*rho)-rho_exact^2| when that rounded square is not part of the returned object or its computation. Do not waive actual radius quantization or ell error. A positive radius that serializes to zero, a nonfinite output, or an unresolved true abstract-sphere error still receives a typed HOLD with no radius. Leave unrelated generic range refusal rules and their tested counterexamples intact.\n\n4. Evaluate the gate in normalized/multiprecision arithmetic before exporting error metadata. Add a dimensionless budget_image_relative_error_bound and retain the dimensionful budget_image_error_bound: use an upward-rounded finite binary64 value when representable with the declared precision, otherwise a positive decimal string with explicit decimal encoding, parsed as multiprecision by its consumers. Apply the same explicit representation rule to any other positive decision-critical bound that would otherwise underflow. Exact zeros remain numeric zero. Do not turn a positive bound into zero, require an unreturned absolute binary64 squared budget to exist, or use 0<=0 as a certificate. This representation repair preserves the 1e-9 acceptance value.\n\n5. Keep test_pure_target_boundary.py's 72 structural positive-BALL cases and their singleton, equality, radius and center assertions unchanged. Add direct exact-rational checks of the abstract sphere for the small positive structural radii, after JSON round-trip, including all six branches, both metrics, single and mixed signed24 centers and existing amplitude scales. Preserve BP-04's exact hex input and typed no-radius result: even the nearest binary64 center yields about 0.0404432 relative sphere error. Preserve both BP-05 structural hex cases, including rho=0x0.00000000007e8p-1022 whose old radius has exact cost 1.0021103415*rho^2, and rho=0x0.0000000000040p-1022 whose cost is 0.8669993627*rho^2. Preserve the minimum-subnormal, unequal-row, generic BP-05 tolerance-underflow, overflow, domain, nullspace and existing genuine abstract-geometry tests. The exact-rational abstract-sphere bound, not a rounded sampled witness, is the oracle for BALL parameter correctness.\n\n6. Preserve the actual exported synthetic_boundary_s/U, one_U and pair_U witnesses and their original norm/reconstruction/residual acceptance checks in full24_controls and generated artifacts. Separately label any arbitrary rounded-direction probe as a downstream sampling diagnostic. In test_structural_range.py retain the exact all-direction sphere check at lines 75-84; separate lines 85-90 from the abstract BALL gate, and add an explicit tiny translated-ball example where the axis sample rounds to the center while the abstract sphere passes. Do not present this sampled point as a boundary witness. The corresponding arbitrary-point diagnostic assertions in other audit probes must not expand the BALL API contract; preserve all abstract geometry and selected exported witness assertions. Correct report/main.tex and CLAIM_SOURCE_MAP.md to state this distinction instead of claiming a universal directional-addition guarantee. No change to physical class or tolerance is authorized.\n\n7. Retarget ordinary_probe.py's hard-coded ROOT (currently repair_04 at line 9) to the actual repair_05 candidate before using it as validation. Its abstract full-sphere, center, J0 and residual checks remain acceptance evidence; arbitrary rounded-direction outcomes are separately reported diagnostics. Record and review the actual final source identity. Run the existing targeted pure-target, boundary, center, range and structural modules plus the bounded current-candidate ordinary probe and the authorized consumer/report regeneration only. No full test graph, new science/data/ODE, adjacent completed-unit rerun, STATE/Git/publication operation, or tolerance relaxation. Preserve raw outcomes and return the actual corrected candidate for a separate fresh independent review; do not self-declare candidate PASS or scientific admission.",
+  "conditions": [
+    "All source, model, branch/metric/carrier order and original tolerance facts remain fixed.",
+    "The 72 original pure-target BALL tests remain unchanged and must pass; failed raw files remain immutable evidence.",
+    "BP04 and both BP05 real-parameter counterexamples remain rejected by the abstract sphere criterion, independently of any witness-addition guard.",
+    "Actual exported selected witness arrays retain their original scientific checks; only unclaimed arbitrary future sample completeness is removed from the BALL gate.",
+    "Validation must target the final repair_05 consumer identity rather than ordinary_probe.py's current repair_04 import.",
+    "A separate fresh reviewer must inspect the corrected candidate and raw results before any scoped candidate decision; no candidate PASS, original42 promotion, publication or physical admission is made here."
+  ],
+  "scientific_admission": "NOT_DECIDED",
+  "candidate_pass": false,
+  "repository_writes": false,
+  "allowed_write_root": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_semantic_blind_audit"
+}

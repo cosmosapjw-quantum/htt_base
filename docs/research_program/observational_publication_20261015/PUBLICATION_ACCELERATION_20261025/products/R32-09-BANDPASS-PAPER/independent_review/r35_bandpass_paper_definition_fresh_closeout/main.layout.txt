@@ -1,0 +1,503 @@
+    Finite-bandpass CMB identifiability with bounded foreground moments
+
+         Frequency separation of the cosmic microwave background depends on the foreground class
+       admitted by the analysis. We examine seven released Planck passband responses acting on
+       the complete signed E2 , E3 , B2 , B3 harmonic carrier. The declared first-order synchrotron–
+       dust class leaves all 24 target coordinates spectrally identifiable in the finite model. Adding
+       four free second-order moment maps gives a 7 × 9 nuisance response of resolved rank seven
+       and removes the entire target quotient. A fixed joint quadratic coefficient bound nevertheless
+       gives a sharp compensation frontier. We state the minimum compensator, the complete
+       compatible target set and its coefficient fibres, retaining the two nuisance null directions. The
+       stored minimum budget for a unit target displacement is 3.117720–3.118388 in a common
+       column-normalized metric, and 59.572829–59.592192 in a separately declared raw-coordinate
+       metric. A single compensator has radius ρ/ℓM ; two foregrounds, each bounded by ρ, can
+       hide a separation as large as 2ρ/ℓM . These conclusions concern fixed finite response matrices
+       and free signed moments. They supply no observed CMB amplitude, physical foreground
+       bound or noise-calibrated region.
+
+
+
+             I.   THE FOREGROUND CLASS DETERMINES THE QUESTION
+
+
+   A calibrated frequency map responds to the CMB and to foreground emission after spectral av-
+eraging. Averaging spectra with different parameters introduces additional spectral shapes, as made
+explicit by the moment expansion of Chluba, Hill and Abitbol [1]. Constrained linear combinations
+preserve a target response while cancelling declared nuisance responses [2]; constrained moment
+methods apply this construction to foreground moments [3]. The possibility of such cancellation is
+a question about the chosen response space before it is a question about statistical precision.
+   We study that space for seven released Planck passbands and two nested, stipulated foreground
+classes. The first contains five synchrotron and dust columns. The second adds four second-order
+columns and allows their harmonic coefficients to vary independently. This enlarged linear class is
+a relaxation of a physical moment model. A positive intensity, a nonlinear component spectrum
+or a truncation remainder can impose relations absent from the relaxation. We do not infer those
+relations from a matrix rank.
+   The finite calculation has two distinct conclusions. With unrestricted second-order coefficients,
+the nuisance response spans every frequency row. With a specified bound on those coefficients, a
+target displacement has a nonzero minimum cost. We retain both statements, including the metric
+that defines the bound. No map fit is needed to formulate this question.
+                                                                                                                      2
+
+
+                         II.    RESPONSES, HARMONICS AND UNITS
+
+
+     The seven frequency rows are ordered as 030, 044, 070, 100, 143, 217, 353PSB. They use LFI
+RIMO R3.31 and HFI RIMO R3.00 response tables. The response normalization is the dipole-
+calibrated finite spectral model; the antenna-temperature and intensity-response distinction is re-
+tained [4]. We use the Planck intensity and its CMB temperature derivative,
+
+                                          2hν 3                                           ∂Bν
+                     Bν (T ) =                            ,                     bν =                 .               (1)
+                                 c2 [exp(hν/(kB T )) − 1]                                 ∂T T =TCMB
+
+For an intensity spectrum S, the finite calibrated response is
+
+                                          trapz(τi S, νi )
+                               Ri [S] =                      ,               ai = Ri [bν ] = 1.                      (2)
+                                          trapz(τi bν , νi )
+
+For LFI, let gi (ν) be the raw released TRANSMISSION. The effective intensity-response transmission
+is
+                                              ν           2
+                                                ref,i
+                         τi (ν) = gi (ν)                        ,        νref,i = 30, 44, 70 GHz,                    (3)
+                                                   ν
+
+respectively. Every finite positive-frequency LFI row is retained, with finite nonnegative transmis-
+sion and no amplitude cutoff. For HFI, τi is the raw TRANSMISSION on finite positive-frequency nodes
+with FLAG exactly F and transmission above BT . The three thresholds are BT = 10−7 , 10−8 , 10−6 .
+Trapezoids join adjacent retained nodes in ascending frequency, including across removed flagged
+intervals. This is a finite-node definition, without a continuous-passband error certificate.
+     The two LFI conventions A and B are crossed with the three HFI thresholds. A retains the
+released LFI frequencies. For each LFI channel with Ni retained nodes, B adds
+
+                                                            νi,last − νi,first
+                                               ∆νi =                                                                 (4)
+                                                              2(Ni − 1)
+
+to every frequency before evaluating all frequency-dependent terms, including the ν −2 factor in
+Eq. (3). The first and last frequencies in Eq. (4) are those of A. This reproduces the retained
+older-reader half-bin operation as a version-sensitivity diagnostic. The six models do not define a
+calibrated uncertainty distribution.
+     The synchrotron index is βs = −3 in Rayleigh–Jeans temperature, the dust index is βd = 1.5,
+and the reference frequencies are 30 and 353 GHz. We use Td = 20 K, TCMB = 2.7255 K and
+t = (T − Td )/Td . The intensity spectra per unit reference KCMB amplitude are
+                                             β+2                                                β
+                                         ν                                                    ν         Bν (T )
+                   Ss (ν, β) = bνs                     ,            Sd (ν, β, T ) = bνd                          ,   (5)
+                                         νs                                                   νd        Bνd (T )
+                                                                                                               3
+
+
+with νs = 30 GHz and νd = 353 GHz. The dust denominator uses the same varying T as the
+numerator before differentiation; it is not held at Td . The response columns are obtained by
+applying Ri to these spectra and their parameter derivatives, evaluated at β = βs for synchrotron
+and (β, T ) = (βd , Td ) for dust. Thus si = Ri [Ss ], sβ,i = Ri [∂βs Ss ], di = Ri [Sd ] and dt,i = Ri [∂t Sd ],
+with the same construction for the remaining derivatives. The ordered response columns are
+
+                    F1 = (s, sβ , d, dβ , dt ),     F2 = (s, sβ , d, dβ , dt , sββ , dββ , dβt , dtt ).      (6)
+
+Here the subscripts denote spectral derivatives at the stipulated pivots, rather than harmonic
+indices. Taylor factorials are absorbed into the free coefficients. The temperature second derivative
+is Td2 ∂T2 at the pivot, not (T ∂T )2 .
+   The target is the real signed carrier s ∈ R24 consisting of E2 (5), E3 (7), B2 (5), B3 (7). Within
+                                                √         √
+each multipole the order is m = 0, followed by ( 2 Re, − 2 Im) for each positive m. This is the
+retained real representation of the polarized harmonic coefficients. The E and B multipoles are
+derived from spin-two polarization using the retained convention; no new spin conversion or sign
+choice is applied here. A scalar temperature coefficient is a different observable and is not appended
+to this carrier. Neither a scalar power nor an unsigned amplitude replaces its signed coordinates.
+   All rows and components refer to one common source harmonic frame and one fixed convention.
+A change of frame must transform the full carrier consistently. We use no new observer-frame,
+matter-frame or cosmological transfer relation. Component-separated SMICA is a derived map, not
+an eighth independent frequency observation; actual component-specific spatial responses require
+separate evidence [5].
+   For F = F2 , write
+
+                            Y = asT + F U,        Y ∈ R7×24 ,      U ∈ R9×24 ,       a = 17 .                (7)
+
+Frequency-major row flattening gives target operator a ⊗ I24 and nuisance operator F ⊗ I24 . All
+moment coordinates are free and signed. Y, s, U use the same harmonic-amplitude unit, for example
+µKCMB ; F is dimensionless. There is no observed Y in this experiment.
+
+
+                     III.    UNRESTRICTED SPECTRAL IDENTIFIABILITY
+
+
+   Let PF project onto the orthogonal complement of col(F ) in the declared Euclidean channel
+coordinates. Then
+
+                                          PF ⊗I24 (a ⊗ I24 ) = (PF a) ⊗ I24 .                                (8)
+                                                                                                    4
+
+
+TABLE I. Stored finite ranks for all six conventions. rj is the nuisance rank, rj+a the augmented rank
+including the CMB response, and qj the retained signed24 target rank. The ranks concern the stipulated
+finite matrices.
+                           Branch           r1   r1+a    q1    r2    r2+a    q2
+
+                           A_BT_1e-07        5      6   24     7        7    0
+                           A_BT_1e-08        5      6   24     7        7    0
+                           A_BT_1e-06        5      6   24     7        7    0
+                           B_BT_1e-07        5      6   24     7        7    0
+                           B_BT_1e-08        5      6   24     7        7    0
+                           B_BT_1e-06        5      6   24     7        7    0
+
+
+
+Its target rank is 24 if a ∈
+                           / col(F ) and zero if a ∈ col(F ). Thus the full carrier is retained or
+lost together in this separable finite response model. This statement does not identify the physical
+origin of a retained carrier.
+
+   In all six stored branches, F1 has resolved nuisance rank five and augmented rank six, leaving
+target rank 24. The nine-column F2 has resolved rank seven and augmented rank seven, leaving
+target rank zero. The numerical rank criteria apply to unit-column matrices: singular values at
+least 10−10 are resolved nonzero; values at most 10−12 are unresolved or zero under that criterion;
+intermediate values require an unresolved classification. A resolved finite rank is not an exact
+theorem about every physical passband. The nominal first-order principal-angle sine is about
+0.03854, which already warns that algebraic retention alone does not establish useful separation
+with real noise.
+
+
+
+
+    IV.    A FIXED COEFFICIENT METRIC AND THE MINIMUM COMPENSATOR
+
+
+   We impose the joint bound
+
+
+
+                                ∥U ∥2M = tr(U T M U ) ≤ ρ2 ,        M > 0.                        (9)
+
+
+
+It covers all nine moment maps and all 24 signed coordinates together. The primary metric is
+fixed across all six branches: M = diag(d2 ), where d is the nominal A, 10−7 response column-scale
+                                                                                                                                                             5
+
+
+                                             Five-column first order                                                      Nine-column second order
+ Singular value (dimensionless)
+
+
+
+
+                                                                              Singular value (dimensionless)
+                                   100                                                                          100
+
+
+
+
+                                                                                                               10−1
+                                                                                                                           A / 1e-07
+                                                                                                                           A / 1e-08
+                                                                                                                           A / 1e-06
+                                                                                                                           B / 1e-07
+                                  10−1                                                                         10−2        B / 1e-08
+                                                                                                                           B / 1e-06
+
+                                         1      2        3        4       5                                           1      2    3     4     5     6    7
+                                             Ordered singular direction                                                     Ordered singular direction
+
+
+FIG. 1. Retained nuisance singular spectra for the five-column first-order and nine-column second-order
+classes in all six conventions. Each nuisance column is normalized within its own branch, as in the retained
+response-rank calculation; this is distinct from the common coefficient metric used below. The number of
+resolved nuisance directions changes from five to seven. Channel-space dimension is seven. These spectra
+describe finite spectral geometry, without a noise covariance.
+
+
+vector,
+
+                                         d = (1.261652382369369, 0.1777139521270542, 1.1309894216176297,
+
+                                             0.09451923139372441, 0.04109240642871376, 0.1151042544103929,
+
+                                             0.07145402059880916, 0.022520789584731377, 0.09386151314750793).                                            (10)
+
+This choice compares reference column-normalized moment amplitudes. It is a computational class
+definition, not a measured foreground prior or covariance. We separately consider M = I9 , which
+defines a different class. The budget ρ has the target-amplitude unit.
+                    For full-row-rank F define
+
+                                               K = F M −1 F T ,    cM = M −1 F T K −1 a,                                    ℓ2M = aT K −1 a.             (11)
+
+Since K is positive definite, these quantities exist. Minimizing cT M c subject to F c = a gives
+M c = F T λ and Kλ = a. Every solution is cM + n, with F n = 0, and
+
+                                                          (cM + n)T M (cM + n) = ℓ2M + nT M n.                                                           (12)
+
+This proves uniqueness and minimality. For a target displacement v, the minimum signed compen-
+sator is −cM v T and its norm is ℓM ∥v∥2 .
+                                                                                                                6
+
+
+TABLE II. Nominal A, 10−7 minimum compensator in original signed moment coordinates, with common
+metric scales dj . Both columns solve F c = a; their different minima follow from the different declared
+metrics. Coefficients and scales are dimensionless. Table values are rounded for display; full stored values
+accompany the source.
+
+                            Moment                     dj          (cM )j      (cI )j
+
+                            s                    1.26165     0.462241       0.457224
+                            s_beta              0.177714          1.00057   0.987669
+                            d                    1.13099     0.946754        0.93977
+                            d_beta             0.0945192      -2.11365       8.83797
+                            d_t                0.0410924      -6.80923      -14.1702
+                            s_betabeta          0.115104           1.4828    1.43943
+                            d_betabeta          0.071454          36.5719    38.3879
+                            d_beta_t           0.0225208      -49.2015      -42.0275
+                            d_tt               0.0938615     -0.479782        5.3136
+
+
+   The singular decomposition F M −1/2 = Uf diag(σi )VfT gives
+                                                       7
+                                                       X (uT a)2
+                                               ℓ2M =          i
+                                                                      .                                      (13)
+                                                       i=1
+                                                             σi2
+
+The cost depends on CMB alignment as well as the singular values. The vectors vi are whitened
+coefficient directions; their original-coordinate versions are M −1/2 vi . Confusing these coordinate
+systems changes the stated nuisance directions.
+
+
+                   V.    THE COMPLETE TARGET SET AND ITS FIBRES
+
+
+   For a specified Y and proposed s, the minimum-budget foreground is
+
+                Us = M −1 F T K −1 (Y − asT ),         J(s) = tr[(Y − asT )T K −1 (Y − asT )].               (14)
+
+Let
+                                Y T K −1 a                        T −1
+                        s0 =               ,     J0 = tr[(Y − asT
+                                                                0) K   (Y − asT
+                                                                              0 )].                          (15)
+                                   ℓ2M
+Completing the square gives the full identified set
+
+                                Sρ (Y ) = {s ∈ R24 : J0 + ℓ2M ∥s − s0 ∥22 ≤ ρ2 }.                            (16)
+                                                                                                 p
+It is empty for ρ2 < J0 , a singleton at equality, and otherwise a closed ball of radius             ρ2 − J0 /ℓM .
+These are exact conditional statements. In numerical work, J0 should be evaluated from the residual
+                                                                                                                                                                       7
+
+
+                                                  Fixed common metric                                                                  Raw identity metric
+ Contribution to ℓ 2 (dimensionless)    101
+
+
+
+
+                                                                                     Contribution to ℓ 2 (dimensionless)
+                                                                                                                           103
+                                        100
+
+                                                                                                                           102
+
+                                       10−1
+
+                                                                                                                           101
+
+                                       10−2
+                                                                                                                           100
+                                              1     2    3    4    5     6    7                                                  1     2    3    4    5     6    7
+                                                  Whitened singular direction                                                        Whitened singular direction
+
+
+FIG. 2. Nominal A, 10−7 contributions (uT   2  2
+                                        i a) /σi to the minimum squared budget in Eq. (13), for each
+
+metric’s own whitened singular directions. The smallest singular direction dominates the cost in this example.
+The logarithmic ordinate preserves the smaller contributions. This is spectral alignment in a computational
+coefficient class, not measured foreground power.
+
+
+in Eq. (15); an unresolved comparison with ρ2 cannot be reported as a certified boundary. No
+likelihood or coverage statement enters this construction.
+                      The numerical representation uses serialized binary64 center and radius parameters interpreted
+as exact real numbers. For a resolved ball, let c∗ , J∗ denote the exact finite-input center and
+                      c, rb be the returned parameters. With δc = ∥b
+minimum cost, and let b                                            c − c∗ ∥, the all-direction sphere
+error is
+
+                                                               D = J∗ + ℓ2M (δc2 + rb2 ) − ρ2 + 2ℓ2M rbδc .                                                          (17)
+
+The retained numerical policy requires its uncertainty-enlarged bound divided by max(ρ2 , J∗ ) to
+be at most 10−9 for admitted positive-radius balls. Unresolved geometry or radius quantization
+                                                                             c, rb. Arbitrary later
+retains a numerical hold. This policy concerns the real set parameterized by b
+                      c + rbu is a separate floating-point operation and has no universal boundary
+rounded evaluation of b
+guarantee. The particular exported attainment witnesses retain their own norm and reconstruction
+checks. This is a finite-input numerical policy, not a general interval certificate.
+                      The coefficient fibre must also be retained. Set G = F diag(d)−1 and choose a two-column
+orthonormal basis Nz of ker G. In original moment coordinates,
+
+                                                        Nc = diag(d)−1 Nz ,       F Nc = 0,                                      NcT M Nc = I2 .                     (18)
+                                                                                                  8
+
+
+Every coefficient array realizing the same Y, s is Us + Nc Z, with Z ∈ R2×24 . The orthogonality in
+Eq. (12), applied to each column, gives
+
+                                    ∥Us + Nc Z∥2M = J(s) + ∥Z∥2F .                              (19)
+
+Thus each admissible target has its complete null-coordinate fibre ∥Z∥2F ≤ ρ2 − J(s). For the
+raw metric the same construction uses its own whitening. A numerical basis is not unique; the
+coefficient nullspace, its metric and its lifted action are the invariant content.
+
+
+              VI.     SHARP FRONTIERS AND COORDINATE INVARIANCE
+
+
+   For zero data, s0 = 0 and J0 = 0. One bounded foreground hides a target displacement precisely
+when ∥v∥ ≤ ρ/ℓM . For two foregrounds each bounded by ρ, choose
+
+                      s1 = v/2,   s2 = −v/2,    U1 = −cM v T /2,    U2 = cM v T /2.             (20)
+
+Both give Y = 0, and each has budget ℓM ∥v∥/2. Conversely, F (U2 − U1 ) = a(s1 − s2 )T and
+minimality imply
+
+                                  ℓM ∥s1 − s2 ∥ ≤ ∥U2 − U1 ∥M ≤ 2ρ.                             (21)
+                                                                                      p
+The pairwise bound is attained. At a fixed nonempty generic Y , its diameter is 2      ρ2 − J0 /ℓM ,
+which need not equal 2ρ/ℓM .
+   Nonzero column rescaling is a coordinate change only when the metric is transported with it:
+F ′ = F S, U ′ = S −1 U , M ′ = S T M S for nonsingular diagonal S. Then K, ℓM and the target
+set are unchanged. A fixed orthogonal right transformation O of the carrier sends (Y, U, s) to
+(Y O, U O, OT s) and preserves the budget. The set transforms as OT Sρ (Y ). Arbitrary nonorthogo-
+nal transformations do not preserve the Euclidean carrier norm without also transporting its metric.
+   The retained values give ℓM = 3.117720–3.118388 for the common metric and ℓI = 59.572829–
+59.592192 for the raw metric. The change is a change in the bounded class. Within each metric,
+the branch envelope measures the sensitivity of these six finite conventions. Neither comparison
+establishes a physical foreground amplitude bound.
+
+
+               VII.    AN ADDITIONAL FINITE-RESPONSE COMPARISON
+
+
+   A separately checked WMAP–Planck extension reuses the seven nominal Planck rows and adds
+stipulated WMAP response averages. It distinguishes 12 instrument-band-average rows from 17
+                                                                                                                                                                                    9
+
+
+TABLE III. Source-bound six-branch minimum budgets and frontier slopes. The common metric is fixed
+across branches; the identity metric defines a different coefficient class. These are finite algebraic quantities,
+not measured CMB amplitudes.
+
+                                                        Branch                   ℓM                1/ℓM                                  2/ℓM              ℓI
+
+                                                        A_BT_1e-07         3.118381   0.320679                                      0.641358      59.592105
+                                                        A_BT_1e-08         3.118381   0.320679                                      0.641358      59.592092
+                                                        A_BT_1e-06         3.118388   0.320678                                      0.641357      59.592192
+                                                        B_BT_1e-07         3.117720   0.320747                                      0.641494      59.572842
+                                                        B_BT_1e-08         3.117720   0.320747                                      0.641494      59.572829
+                                                        B_BT_1e-06         3.117727   0.320747                                      0.641493      59.572929
+
+
+                                                   Fixed common metric                                                                          Raw identity metric
+                                                                                                                             0.14
+ Target norm / separation [μKCMB]
+
+
+
+
+                                                                                          Target norm / separation [μKCMB]
+                                    2.5       Solid: one compensator                                                                    Solid: one compensator
+                                              Dashed: two bounded foregrounds                                                           Dashed: two bounded foregrounds
+                                              Six convention curves nearly coincide                                          0.12       Six convention curves nearly coincide
+                                    2.0
+                                                                                                                             0.10
+
+                                    1.5                                                                                      0.08
+
+                                                                                                                             0.06
+                                    1.0
+                                                                                                                             0.04
+                                    0.5
+                                                                                                                             0.02
+
+                                    0.0                                                                                      0.00
+                                          0           1       2        3              4                                             0           1       2        3              4
+                                                Joint moment budget ρ [μKCMB]                                                             Joint moment budget ρ [μKCMB]
+
+
+FIG. 3. Sharp compensation frontiers in the declared joint coefficient class. Solid curves give the one-
+compensator target radius ρ/ℓ; dashed curves give the largest possible separation for two foregrounds each
+bounded by ρ. Each panel contains all six response conventions, whose slopes nearly coincide. The two panels
+use different metrics and hence different bounded classes. The horizontal range is a chosen illustrative budget
+range, not an observed foreground amplitude. All curves use stored minimum costs and slopes.
+
+
+differencing-assembly response rows; the latter are not 17 independent frequencies. Across its 12
+paired conventions, the nine-column nuisance matrix has resolved rank nine and the augmented
+matrix rank ten in both row constructions, retaining all 24 target coordinates in the finite model.
+The stored independent check gives a minimum principal-angle sine of approximately 3.6284 × 10−5
+and maximum Euclidean weight norm 7955.99. This is a severe conditioning warning. There is no
+supplied actual noise law or polarized spatial-response model from which to establish useful sky
+                                                                                                   10
+
+
+separation. The extension changes the finite response geometry; it does not replace the seven-row
+result or the coefficient class studied above.
+
+
+
+
+           VIII.    PHYSICAL INTERPRETATION AND REMAINING INPUTS
+
+
+   At zero budget, U = 0 and compatible data must equal asT . Exact pure-target data therefore
+give a singleton at ρ = 0, and a full ball at positive budget. As ρ grows without bound, the
+unrestricted second-order loss of the target quotient is recovered. These limits give a direct reading
+of the frontier: it is the cost of compensation in a stipulated coefficient class.
+
+   The independent signed coordinates do not enforce physical realizability. Positivity of an un-
+derlying intensity does not require positive polarization harmonics or positive derivative moments.
+A physical restriction needs supplied moment magnitudes and couplings, a truncation-remainder
+bound, component-specific spatial responses, and a justified metric and radius. A noise-calibrated
+region additionally needs the actual joint noise and calibration law. A nuisance with the exact
+CMB blackbody response remains spectrally confounded.
+
+   No observed target tensor or physical anisotropy parameter is measured here. In particular,
+full-tensor nonlinear quantities remain undefined in sectors where the target is unobserved or the
+required denominators are absent. A frequency axis supplies no depth information. The finite
+response results do not infer a local or global tilt, identify a Bianchi family, or validate a native
+cosmological solver. Their use is to specify which additional response directions or physically
+justified foreground restrictions an observational analysis must supply.
+
+
+
+
+                                      DATA AVAILABILITY
+
+
+   The finite response matrices and complete signed coordinate order are included with the source
+archive in data/R31_RESULT.json; data/RESULT.json contains the bounded-moment sufficient
+statistics. The accompanying data/SPECTRAL_ONLY_CONTRACT.md specifies the released response
+products, retained nodes and normalization used in Eqs. (2)–(5). The runnable consumer.py
+reads the retained numerical values, publication.py generates the tables and figures, and
+reproduce.py rebuilds the complete paper. Original source identities and local copies are bound
+                                                                                                       11
+
+
+in SOURCE_BINDINGS.json.
+
+
+
+
+[1] J. Chluba, J. C. Hill, and M. H. Abitbol, Mon. Not. R. Astron. Soc. 472, 1195 (2017), arXiv:1701.00274
+   [astro-ph.CO].
+[2] M. Remazeilles, J. Delabrouille, and J.-F. Cardoso, Mon. Not. R. Astron. Soc. 410, 2481 (2011),
+   arXiv:1006.5599 [astro-ph.CO].
+[3] M. Remazeilles, A. Rotti, and J. Chluba, Mon. Not. R. Astron. Soc. 503, 2478 (2021), arXiv:2006.08628
+   [astro-ph.CO].
+[4] Planck Collaboration, Astron. Astrophys. 571, A5 (2014), arXiv:1303.5066 [astro-ph.IM].
+[5] Planck Collaboration, Astron. Astrophys. 641, A4 (2020), arXiv:1807.06208 [astro-ph.CO].
+

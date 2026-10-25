@@ -1,0 +1,98 @@
+{
+  "packet_id": "5571b2815b538b23458aa654305dd1d5e6059a076a3b3c77e2dec3f18b99b9eb",
+  "task_id": "R32-09-BANDPASS-PAPER",
+  "agent_id": "/root/r35_bandpass_paper_source_preparation",
+  "input_identity": "sha256:2cae6d43b4647b33db316df0ebd28efef8cc0e7882fe33bcfbbfff20719fe94c",
+  "base_packet_id": "c538d1a1c0b198b3ccb8aa2b7b7e9f864d5e2a874b2c05445c4c71190b179cba",
+  "base_candidate_identity": "sha256:e550dd06518c162e4ee0dc8c8d08f37e1951058dbe8bc36076a8e8de0cb57020",
+  "outcome": "success",
+  "phase": "repair",
+  "attempt": 3,
+  "acceptance_met": false,
+  "qualified_products": [
+    "bandpass_manuscript"
+  ],
+  "qualified_products_semantics": "PROPOSED_PENDING_INDEPENDENT_CLOSEOUT",
+  "requested_runtime": {
+    "model": "gpt-5.6-terra",
+    "effort": "medium"
+  },
+  "transport_selected_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "observed_runtime": "UNKNOWN",
+  "repair_plan": "In report/main.tex section II, state the already frozen source spectra S_s(nu,beta)=b_nus*(nu/nu_s)^(beta+2) and S_d(nu,beta,T)=b_nud*(nu/nu_d)^beta*B_nu(T)/B_nud(T), with B_nu(T)=2*h*nu^3/[c^2*(exp(h*nu/(k_B*T))-1)] and b_nu=partial_T B_nu at T_CMB. Explicitly say the dust denominator uses the varying T before differentiation, and the ordered columns are R_i applied to these spectra and their declared derivatives. State effective LFI tau_i=g_i*(nu_ref,i/nu)^2 with g_i the raw released TRANSMISSION, and HFI tau_i=raw TRANSMISSION on finite positive nodes with FLAG F and transmission above BT; adjacent retained nodes are joined. State the exact existing branch-B half-bin shift (nu_last-nu_first)/(2*(N-1)) before all frequency-dependent factors. Source these definitions from included data/SPECTRAL_ONLY_CONTRACT.md lines 28-48 (sha256 fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df), without changing them. Add a concise source/data-availability pointer to the included finite matrices and runnable consumer so the numerical conventions can be found from the manuscript. Rebuild only the manuscript and refresh its affected candidate/build/claim-map wrappers. Preserve all data bytes, matrices, metrics, generated numerical values, existing tests, upstream qualification, and physical/original42 HOLDs. No upstream integrations, new physical normalization, native solver, ODE or tolerance changes. Targeted closeout checks the inserted equations against the cited source, unchanged numerical assets, clean final LaTeX log and repaired PDF.",
+  "completed_utc": "2026-10-25T16:53:30.653203+00:00",
+  "actual_commands": [
+    {
+      "command": [
+        "latexmk",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-cd",
+        "report/main.tex"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/repair_01",
+      "started_utc": "2026-10-25T16:51:28.968174+00:00",
+      "duration_seconds": 3.52074779313989,
+      "exit_code": 0,
+      "main_tex_sha256": "066f05b91d9b34a4a7ef6e1156ee77358410df53188c006ce161acd3f6845fb4",
+      "references_bib_sha256": "ae297fabe0f69ef37743297d0c04e1ed348f408c934818a1df429e0beba1c6c5",
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/repair_01/raw/latexmk_repair.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/repair_01/raw/latexmk_repair.stderr"
+    },
+    {
+      "commands": [
+        {
+          "command": [
+            "pdftoppm",
+            "-f",
+            "2",
+            "-l",
+            "3",
+            "-r",
+            "85",
+            "-png",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/repair_01/report/main.pdf",
+            "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_actual_repair/definitions"
+          ],
+          "exit_code": 0,
+          "duration_seconds": 0.24901180597953498,
+          "stderr": ""
+        },
+        {
+          "command": [
+            "pdftoppm",
+            "-f",
+            "11",
+            "-l",
+            "11",
+            "-r",
+            "85",
+            "-png",
+            "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/repair_01/report/main.pdf",
+            "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_definition_actual_repair/availability"
+          ],
+          "exit_code": 0,
+          "duration_seconds": 0.06886893301270902,
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "validation": [
+    "Exact source definitions transcribed and checked",
+    "33 data/numerical/code/test/bibliography/source-binding assets byte-identical",
+    "Original168 sealed candidate entries unchanged",
+    "11-page manuscript rebuilt with clean references/figures",
+    "Affected equations and source availability visually inspected"
+  ],
+  "preserved_first_finding": "raw/first_review_REVIEW.md",
+  "preserved_counterexample": "raw/first_review_definition_counterexample.json",
+  "independent_scientific_review": "PENDING_EXACT_CANDIDATE_CLOSEOUT",
+  "original42_acceptance": false,
+  "new_numerical_execution": false,
+  "source_contract_sha256": "fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df"
+}

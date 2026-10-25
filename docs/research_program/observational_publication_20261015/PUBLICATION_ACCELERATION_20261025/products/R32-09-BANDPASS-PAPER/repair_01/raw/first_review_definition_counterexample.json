@@ -1,0 +1,34 @@
+{
+  "kind": "manuscript-definition ambiguity counterexample; not a production redefinition",
+  "source_matrix": "data/R31_RESULT.json branches A_BT_1e-07 F2 matrix_7xk",
+  "source_dust": "b_nud*(nu/nu_d)^beta*B_nu(T)/B_nud(T)",
+  "alternative_dust": "b_nud*(nu/nu_d)^beta*B_nu(T)/B_nud(T_d)",
+  "same_at_pivot": true,
+  "different_temperature_derivative_at_reference": {
+    "source": "0",
+    "alternative": "b_nud*g(x_d)",
+    "g_xd": "1.48262360782628487849354692202357725059729147482154207004846",
+    "h_second_t": "0.175217663647516160633934425693608587249388006811102097521172"
+  },
+  "column_change": {
+    "d_t_alternative": "d_t + g_d*d",
+    "d_beta_t_alternative": "d_beta_t + g_d*d_beta",
+    "d_tt_alternative": "d_tt + 2*g_d*d_t + (g_d^2-g_d-x_d*g_prime_d)*d"
+  },
+  "fixed_metric_effect": [
+    {
+      "metric": "common_reference",
+      "original_ell_from_same_cached_matrix": "3.11838142725532703048246427603245021232330281690751284685153",
+      "alternative_ell_fixed_same_metric": "5.63945778565230585317978956967148906717002111619654863031625",
+      "relative_change": "0.808456700120847010862413435206678113859765195126235400684166"
+    },
+    {
+      "metric": "raw_identity",
+      "original_ell_from_same_cached_matrix": "59.5921045269674669935168292035840854012727587773994569952803",
+      "alternative_ell_fixed_same_metric": "65.2438264473912238081671959968943933558309112997029514590148",
+      "relative_change": "0.0948401128855276322847180240508586411952401669196529552479498"
+    }
+  ],
+  "calculation": "60-digit arithmetic on exact cached binary64 matrix; no upstream response integration",
+  "proposed_resolution": "State the original source formulas verbatim in mathematical notation; do not alter matrices, metrics, budgets or accepted upstream numerical policy."
+}

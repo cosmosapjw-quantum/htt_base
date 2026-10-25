@@ -1,0 +1,89 @@
+{
+  "packet_id": "f922c4d4434e2b91095356b7cde96be72ff1aac3d046f77fb90a72c6d027cdb5",
+  "task_id": "R32-09-BANDPASS-PAPER",
+  "input_identity": "sha256:2cae6d43b4647b33db316df0ebd28efef8cc0e7882fe33bcfbbfff20719fe94c",
+  "agent_id": "/root/rc_f922c4d4434e2b91",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "candidate_identity": "sha256:e550dd06518c162e4ee0dc8c8d08f37e1951058dbe8bc36076a8e8de0cb57020",
+  "phase": "review",
+  "original_acceptance_met": false,
+  "original42_acceptance": false,
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_fresh_review/RAW_BINDING.json",
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_fresh_review/REVIEW.md",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_fresh_review/identity_check.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_fresh_review/reproduction_receipt.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_fresh_review/reproduction.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_fresh_review/reproduction.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_fresh_review/asset_and_numbers_check.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_fresh_review/definition_counterexample.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_paper_fresh_review/bibliography_check.json"
+  ],
+  "issue": {
+    "class": "code",
+    "code": "BANDPASS_MANUSCRIPT_RESPONSE_DEFINITION_AMBIGUOUS",
+    "question": "Does the manuscript uniquely define the spectral normalization underlying its fixed-metric coefficient budget?",
+    "exact_missing_or_defect": "report/main.tex:31-45 defines R_i[S] and derivative labels but omits S_s, S_d and effective LFI tau_i. The dust temperature normalization is therefore unspecified in the manuscript. Replacing B_nud(T) by B_nud(T_d) leaves the stated pivots and base spectrum unchanged but changes derivative columns and the stated fixed-M coefficient class. Exact definitions already exist in data/SPECTRAL_ONLY_CONTRACT.md:28-48.",
+    "input_identity": "sha256:2cae6d43b4647b33db316df0ebd28efef8cc0e7882fe33bcfbbfff20719fe94c",
+    "substantive": true,
+    "high_consequence": false,
+    "risk": "A reader can reconstruct a different foreground class and minimum compensator while following the published pivots; the accepted cached numerical results themselves are unchanged.",
+    "affected_paths": [
+      "report/main.tex:31-45"
+    ],
+    "severity": "P2",
+    "scope": "manuscript-only source-definition repair"
+  },
+  "counterexample": {
+    "kind": "manuscript-definition ambiguity counterexample; not a production redefinition",
+    "source_matrix": "data/R31_RESULT.json branches A_BT_1e-07 F2 matrix_7xk",
+    "source_dust": "b_nud*(nu/nu_d)^beta*B_nu(T)/B_nud(T)",
+    "alternative_dust": "b_nud*(nu/nu_d)^beta*B_nu(T)/B_nud(T_d)",
+    "same_at_pivot": true,
+    "different_temperature_derivative_at_reference": {
+      "source": "0",
+      "alternative": "b_nud*g(x_d)",
+      "g_xd": "1.48262360782628487849354692202357725059729147482154207004846",
+      "h_second_t": "0.175217663647516160633934425693608587249388006811102097521172"
+    },
+    "column_change": {
+      "d_t_alternative": "d_t + g_d*d",
+      "d_beta_t_alternative": "d_beta_t + g_d*d_beta",
+      "d_tt_alternative": "d_tt + 2*g_d*d_t + (g_d^2-g_d-x_d*g_prime_d)*d"
+    },
+    "fixed_metric_effect": [
+      {
+        "metric": "common_reference",
+        "original_ell_from_same_cached_matrix": "3.11838142725532703048246427603245021232330281690751284685153",
+        "alternative_ell_fixed_same_metric": "5.63945778565230585317978956967148906717002111619654863031625",
+        "relative_change": "0.808456700120847010862413435206678113859765195126235400684166"
+      },
+      {
+        "metric": "raw_identity",
+        "original_ell_from_same_cached_matrix": "59.5921045269674669935168292035840854012727587773994569952803",
+        "alternative_ell_fixed_same_metric": "65.2438264473912238081671959968943933558309112997029514590148",
+        "relative_change": "0.0948401128855276322847180240508586411952401669196529552479498"
+      }
+    ],
+    "calculation": "60-digit arithmetic on exact cached binary64 matrix; no upstream response integration",
+    "proposed_resolution": "State the original source formulas verbatim in mathematical notation; do not alter matrices, metrics, budgets or accepted upstream numerical policy."
+  },
+  "repair_plan": "In report/main.tex section II, state the already frozen source spectra S_s(nu,beta)=b_nus*(nu/nu_s)^(beta+2) and S_d(nu,beta,T)=b_nud*(nu/nu_d)^beta*B_nu(T)/B_nud(T), with B_nu(T)=2*h*nu^3/[c^2*(exp(h*nu/(k_B*T))-1)] and b_nu=partial_T B_nu at T_CMB. Explicitly say the dust denominator uses the varying T before differentiation, and the ordered columns are R_i applied to these spectra and their declared derivatives. State effective LFI tau_i=g_i*(nu_ref,i/nu)^2 with g_i the raw released TRANSMISSION, and HFI tau_i=raw TRANSMISSION on finite positive nodes with FLAG F and transmission above BT; adjacent retained nodes are joined. State the exact existing branch-B half-bin shift (nu_last-nu_first)/(2*(N-1)) before all frequency-dependent factors. Source these definitions from included data/SPECTRAL_ONLY_CONTRACT.md lines 28-48 (sha256 fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df), without changing them. Add a concise source/data-availability pointer to the included finite matrices and runnable consumer so the numerical conventions can be found from the manuscript. Rebuild only the manuscript and refresh its affected candidate/build/claim-map wrappers. Preserve all data bytes, matrices, metrics, generated numerical values, existing tests, upstream qualification, and physical/original42 HOLDs. No upstream integrations, new physical normalization, native solver, ODE or tolerance changes. Targeted closeout checks the inserted equations against the cited source, unchanged numerical assets, clean final LaTeX log and repaired PDF.",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "transport_selected_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "reviewed_author": "/root/r35_bandpass_paper_source_preparation",
+  "owner": "obsstat",
+  "claim_tier": "C0",
+  "transfer_source": "none",
+  "claim_ceiling": "Conditional finite signed24 seven-passband bounded-moment manuscript; no physical sky/null, native solver/family or original42 admission",
+  "next_checkpoint": "Lower-tier manuscript-only definition repair under the existing task, followed by scoped independent exact-candidate closeout."
+}

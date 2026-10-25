@@ -1,0 +1,104 @@
+%apsrev4-2.bst 2019-01-14 (MD) hand-edited version of apsrev4-1.bst
+%Control: key (0)
+%Control: author (72) initials jnrlst
+%Control: editor formatted (1) identically to author
+%Control: production of article title (-1) disabled
+%Control: page (0) single
+%Control: year (1) truncated
+%Control: production of eprint (0) enabled
+\begin{thebibliography}{5}%
+\makeatletter
+\providecommand \@ifxundefined [1]{%
+ \@ifx{#1\undefined}
+}%
+\providecommand \@ifnum [1]{%
+ \ifnum #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \@ifx [1]{%
+ \ifx #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \natexlab [1]{#1}%
+\providecommand \enquote  [1]{``#1''}%
+\providecommand \bibnamefont  [1]{#1}%
+\providecommand \bibfnamefont [1]{#1}%
+\providecommand \citenamefont [1]{#1}%
+\providecommand \href@noop [0]{\@secondoftwo}%
+\providecommand \href [0]{\begingroup \@sanitize@url \@href}%
+\providecommand \@href[1]{\@@startlink{#1}\@@href}%
+\providecommand \@@href[1]{\endgroup#1\@@endlink}%
+\providecommand \@sanitize@url [0]{\catcode `\\12\catcode `\$12\catcode
+  `\&12\catcode `\#12\catcode `\^12\catcode `\_12\catcode `\%12\relax}%
+\providecommand \@@startlink[1]{}%
+\providecommand \@@endlink[0]{}%
+\providecommand \url  [0]{\begingroup\@sanitize@url \@url }%
+\providecommand \@url [1]{\endgroup\@href {#1}{\urlprefix }}%
+\providecommand \urlprefix  [0]{URL }%
+\providecommand \Eprint [0]{\href }%
+\providecommand \doibase [0]{https://doi.org/}%
+\providecommand \selectlanguage [0]{\@gobble}%
+\providecommand \bibinfo  [0]{\@secondoftwo}%
+\providecommand \bibfield  [0]{\@secondoftwo}%
+\providecommand \translation [1]{[#1]}%
+\providecommand \BibitemOpen [0]{}%
+\providecommand \bibitemStop [0]{}%
+\providecommand \bibitemNoStop [0]{.\EOS\space}%
+\providecommand \EOS [0]{\spacefactor3000\relax}%
+\providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
+\let\auto@bib@innerbib\@empty
+%</preamble>
+\bibitem [{\citenamefont {Chluba}\ \emph {et~al.}(2017)\citenamefont {Chluba},
+  \citenamefont {Hill},\ and\ \citenamefont {Abitbol}}]{Chluba2017}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Chluba}}, \bibinfo {author} {\bibfnamefont {J.~C.}\ \bibnamefont {Hill}},\
+  and\ \bibinfo {author} {\bibfnamefont {M.~H.}\ \bibnamefont {Abitbol}},\
+  }\href {https://doi.org/10.1093/mnras/stx1982} {\bibfield  {journal}
+  {\bibinfo  {journal} {Mon. Not. R. Astron. Soc.}\ }\textbf {\bibinfo {volume}
+  {472}},\ \bibinfo {pages} {1195} (\bibinfo {year} {2017})},\ \Eprint
+  {https://arxiv.org/abs/1701.00274} {arXiv:1701.00274 [astro-ph.CO]}
+  \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Remazeilles}\ \emph {et~al.}(2011)\citenamefont
+  {Remazeilles}, \citenamefont {Delabrouille},\ and\ \citenamefont
+  {Cardoso}}]{Remazeilles2011}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Remazeilles}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Delabrouille}},\ and\ \bibinfo {author} {\bibfnamefont {J.-F.}\ \bibnamefont
+  {Cardoso}},\ }\href {https://doi.org/10.1111/j.1365-2966.2010.17624.x}
+  {\bibfield  {journal} {\bibinfo  {journal} {Mon. Not. R. Astron. Soc.}\
+  }\textbf {\bibinfo {volume} {410}},\ \bibinfo {pages} {2481} (\bibinfo {year}
+  {2011})},\ \Eprint {https://arxiv.org/abs/1006.5599} {arXiv:1006.5599
+  [astro-ph.CO]} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Remazeilles}\ \emph {et~al.}(2021)\citenamefont
+  {Remazeilles}, \citenamefont {Rotti},\ and\ \citenamefont
+  {Chluba}}]{Remazeilles2021}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Remazeilles}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Rotti}},\
+  and\ \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Chluba}},\ }\href
+  {https://doi.org/10.1093/mnras/stab648} {\bibfield  {journal} {\bibinfo
+  {journal} {Mon. Not. R. Astron. Soc.}\ }\textbf {\bibinfo {volume} {503}},\
+  \bibinfo {pages} {2478} (\bibinfo {year} {2021})},\ \Eprint
+  {https://arxiv.org/abs/2006.08628} {arXiv:2006.08628 [astro-ph.CO]}
+  \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Planck Collaboration}}(2014)}]{PlanckLFI2013}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{Planck
+  Collaboration}}},\ }\href {https://doi.org/10.1051/0004-6361/201321527}
+  {\bibfield  {journal} {\bibinfo  {journal} {Astron. Astrophys.}\ }\textbf
+  {\bibinfo {volume} {571}},\ \bibinfo {pages} {A5} (\bibinfo {year} {2014})},\
+  \Eprint {https://arxiv.org/abs/1303.5066} {arXiv:1303.5066 [astro-ph.IM]}
+  \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {{Planck Collaboration}}(2020)}]{Planck2018IV}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibnamefont {{Planck
+  Collaboration}}},\ }\href {https://doi.org/10.1051/0004-6361/201833881}
+  {\bibfield  {journal} {\bibinfo  {journal} {Astron. Astrophys.}\ }\textbf
+  {\bibinfo {volume} {641}},\ \bibinfo {pages} {A4} (\bibinfo {year} {2020})},\
+  \Eprint {https://arxiv.org/abs/1807.06208} {arXiv:1807.06208 [astro-ph.CO]}
+  \BibitemShut {NoStop}%
+\end{thebibliography}%
