@@ -1,0 +1,1 @@
+Same-task BP-03 repair_02: prepared consumer path comment repair_01 -> repair_02; new targeted test import new_candidate.py -> consumer.py. Preserved old 29 regressions verbatim. Copied previous TeX, bibliography, and claim map for affected prose updates. No previous candidate changed.

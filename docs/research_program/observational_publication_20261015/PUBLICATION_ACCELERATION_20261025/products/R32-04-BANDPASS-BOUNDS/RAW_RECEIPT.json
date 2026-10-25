@@ -1,0 +1,137 @@
+{
+  "task_id": "R32-04-BANDPASS-BOUNDS",
+  "packet_id": "aa53140193a72f389272994ca532f59e6807107291e7e9d4b6145f29345576a6",
+  "agent_id": "/root/rc_aa53140193a72f38",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "dispatch_base_head": "7f313d6c4f2794c484791ed108a7ce231eb824b0",
+  "head_at_final_receipt": "dff1f6a330bffec122225c3b0e8edb19e8b7d122",
+  "head_change_explanation": "Concurrent checkout work after GO; source sealed by exact R31 hash; this worker made no Git changes.",
+  "frozen_inputs": {
+    "R31_RESULT_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+    "R31_SPECTRAL_ONLY_CONTRACT_sha256": "fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df",
+    "Astra_CONTRACT_sha256": "60e9fe5b62a5396f76363890b1bc12e85799c5b8f9d49388ce699d3c5524a95f",
+    "NEXT_AFTER_H03_CANDIDATE_sha256": "133189a52fb9652aaa8cdf7425a7518eb5c836a8e8155de5080ed83d24791c7c"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8",
+    "latexmk": "installed /usr/bin/latexmk"
+  },
+  "commands": [
+    {
+      "command": "/usr/bin/time -p python docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/consumer.py > docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/consumer.stdout 2> docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/consumer.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "receipt_prefix": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/consumer",
+      "elapsed_seconds": 1.3,
+      "exit_code": 0,
+      "first_failure": null,
+      "purpose": "iterative layout/code verification"
+    },
+    {
+      "command": "/usr/bin/time -p python docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/consumer.py > docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/consumer_rerun.stdout 2> docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/consumer_rerun.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "receipt_prefix": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/consumer_rerun",
+      "elapsed_seconds": 1.08,
+      "exit_code": 0,
+      "first_failure": null,
+      "purpose": "iterative layout/code verification"
+    },
+    {
+      "command": "/usr/bin/time -p python docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/consumer.py > docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/consumer_final.stdout 2> docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/consumer_final.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "receipt_prefix": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/consumer_final",
+      "elapsed_seconds": 1.34,
+      "exit_code": 0,
+      "first_failure": null,
+      "purpose": "iterative layout/code verification"
+    },
+    {
+      "command": "/usr/bin/time -p python docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/consumer.py > docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/consumer_final2.stdout 2> docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/consumer_final2.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "receipt_prefix": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/consumer_final2",
+      "elapsed_seconds": 1.13,
+      "exit_code": 0,
+      "first_failure": null,
+      "purpose": "final code/output pass"
+    },
+    {
+      "command": "/usr/bin/time -p latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex > ../raw/latexmk.stdout 2> ../raw/latexmk.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/report",
+      "receipt_prefix": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/latexmk",
+      "elapsed_seconds": 1.95,
+      "exit_code": 0,
+      "first_failure": null,
+      "purpose": "iterative layout/code verification"
+    },
+    {
+      "command": "/usr/bin/time -p latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex > ../raw/latexmk_final.stdout 2> ../raw/latexmk_final.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/report",
+      "receipt_prefix": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/latexmk_final",
+      "elapsed_seconds": 0.87,
+      "exit_code": 0,
+      "first_failure": null,
+      "purpose": "iterative layout/code verification"
+    },
+    {
+      "command": "/usr/bin/time -p latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex > ../raw/latexmk_final2.stdout 2> ../raw/latexmk_final2.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/report",
+      "receipt_prefix": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/latexmk_final2",
+      "elapsed_seconds": 1.74,
+      "exit_code": 0,
+      "first_failure": null,
+      "purpose": "iterative layout/code verification"
+    },
+    {
+      "command": "/usr/bin/time -p latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex > ../raw/latexmk_final3.stdout 2> ../raw/latexmk_final3.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/report",
+      "receipt_prefix": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/latexmk_final3",
+      "elapsed_seconds": 1.66,
+      "exit_code": 0,
+      "first_failure": null,
+      "purpose": "iterative layout/code verification"
+    },
+    {
+      "command": "/usr/bin/time -p latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex > ../raw/latexmk_final4.stdout 2> ../raw/latexmk_final4.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/report",
+      "receipt_prefix": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/latexmk_final4",
+      "elapsed_seconds": 1.5,
+      "exit_code": 0,
+      "first_failure": null,
+      "purpose": "iterative layout/code verification"
+    },
+    {
+      "command": "/usr/bin/time -p latexmk -g -pdf -interaction=nonstopmode -halt-on-error main.tex > ../raw/latexmk_release.stdout 2> ../raw/latexmk_release.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/report",
+      "receipt_prefix": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/raw/latexmk_release",
+      "elapsed_seconds": 0.82,
+      "exit_code": 0,
+      "first_failure": null,
+      "purpose": "final PDF rebuild"
+    }
+  ],
+  "scientific_checks": {
+    "max_primary_Fc_relative_residual": 5.110744840719223e-14,
+    "max_raw_Fc_relative_residual": 2.1734900892168096e-12,
+    "max_primary_KKT_relative_residual": 1.9558308429523014e-17,
+    "max_full24_basis_relative_residual": 5.1059138452244575e-14,
+    "all_six_rank7": true,
+    "all_six_full24_synthetic_controls_pass": true,
+    "pdf_pages": 6,
+    "latex_overfull_underfull_undefined_errors": 0
+  },
+  "raw_layout_review": [
+    "raw/layout-3.png",
+    "raw/layout-4.png",
+    "raw/common_fig-1.png"
+  ],
+  "known_nonfatal_warning": "Matplotlib Axes3D import warning; no 3D projection used.",
+  "independent_scientific_review": "PENDING",
+  "original42_acceptance": false,
+  "head_change_classification": "packaging/source-tree context only; exact numerical input hash unchanged"
+}

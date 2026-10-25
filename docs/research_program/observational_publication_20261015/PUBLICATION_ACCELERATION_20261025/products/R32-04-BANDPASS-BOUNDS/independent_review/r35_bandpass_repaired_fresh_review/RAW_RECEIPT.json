@@ -1,0 +1,35 @@
+{
+  "status": "REVIEW_PREPARATION_COMPLETE",
+  "verdict": "HOLD",
+  "formal_binding": "NOT_YET_SELECTED",
+  "candidate_identity": "sha256:6567e6a41858b7d549656cd078fcbcc815a04ffa804db5e0c9882bef6a7b252b",
+  "source_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "result_sha256": "523e63c400559b2872952b28d87cb2b04e6cc717d8944ab6ca332519059aba05",
+  "probe_source_sha256": "5d4b9e5d4a9dbd774a6ca6d6e6568025cd9513d21c20d6c329f14412c6148187",
+  "probe_raw_sha256": "6389b4ebd7853612f683c058ba29f61a58d1d3645e00fb87d67197b54c26fd97",
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLCONFIGDIR=<owned>/mpl python3 -B <owned>/review_probe.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "completion": "second probe completed; first reviewer-harness failure preserved",
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_repaired_fresh_review/raw/probe.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_repaired_fresh_review/raw/probe.stderr"
+    },
+    {
+      "command": "pdftoppm -scale-to 1500 -png <exact candidate>/report/main.pdf <owned>/raw/pdf-page",
+      "exit_code": 0,
+      "rendered_pages": 6
+    },
+    {
+      "command": "pdfinfo <exact candidate>/report/main.pdf",
+      "exit_code": 0,
+      "pages": 6
+    }
+  ],
+  "all_mutations_within": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_repaired_fresh_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN"
+}

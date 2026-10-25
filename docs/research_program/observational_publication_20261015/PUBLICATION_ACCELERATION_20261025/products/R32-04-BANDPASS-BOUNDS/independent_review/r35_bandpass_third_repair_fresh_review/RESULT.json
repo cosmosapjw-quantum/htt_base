@@ -1,0 +1,156 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R32-04-BANDPASS-BOUNDS",
+  "attempt": 8,
+  "phase": "review",
+  "packet_id": "d36653329cd8321cd9c27b696e7f52335e3c9cfcbd1ed1ecb40608fbeedd2a76",
+  "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+  "candidate_identity": "sha256:7391a142944844adcf7cf468d72f3e7ef1e63ee33405a1c25de099e468dcea9d",
+  "frontier_identity": "27b1e5df1ffbe44e31a69772db64138b0c2cc6902c009cef87d4b57cc4f3a508",
+  "task_spec_identity": "d74cea7d65443bf8fe20d691d256c4d9b45ff19ece3eb02fed666c003b285990",
+  "agent_id": "/root/rc_d36653329cd8321c",
+  "outcome": "blocker",
+  "decision": "HOLD",
+  "acceptance_met": false,
+  "original_acceptance_met": false,
+  "qualified_products": [],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/RAW_RECEIPT.json",
+  "validation": [
+    "Exact packet/ACK/candidate binding verified; all 48 manifest entries matched before and after review.",
+    "Affected suite executed read-only with cache and bytecode writes disabled: 186 passed; one unrelated Matplotlib Axes3D availability warning.",
+    "Independent rational 6x9 contrast solve: 1380 ordinary-range cases; 516 EMPTY, 300 BOUNDARY_UNCERTAIN, 348 NUMERIC_BOUNDARY_HOLD, 216 BALL; no violations.",
+    "For all 216 reported ordinary-range balls, exact full24 sphere extrema and rounded witnesses in every coordinate direction satisfy fixed 1e-9 policy. Maximum full-sphere error/tolerance=0.11912591376335703; maximum error/reported-bound=0.8854926453236278.",
+    "Original BP-04 exact input returns NUMERIC_BOUNDARY_HOLD and radius None. Coherent 80/120-digit fallback lifts exact F,d,a,Y, not rounded K.",
+    "All 12 compact branch/metric dictionaries, all six NPZs and both generated tables independently verified exactly equal to repair_02.",
+    "Seven-page PDF is text-extractable; source equations and report retain the free signed nine-moment finite-model scope, units, full signed24 carrier, deterministic set meaning and absent physical/sky/noise/native claims.",
+    "FAIL BP-05: exact-rational subnormal case reports BALL with zero image bound and zero tolerance; full-sphere maximum budget error is 533760.7282697366 times the unchanged policy. A serialized +e0 witness exceeds the budget by 1.648657997789238e-4 relatively.",
+    "FAIL same range family: exact zero data and rho=smallest positive binary64 return BALL with radius=0.0 and no uncertainty."
+  ],
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/BINDING.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/pytest.receipt.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/independent_probe.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/exact_subnormal_counterexample.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/structural_radius_underflow.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/parity.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/exact_subnormal_counterexample.py"
+  ],
+  "issue": {
+    "class": "numeric",
+    "question": "Do subnormal squared-budget quantities preserve the unchanged relative geometry policy and positive-radius structural semantics?",
+    "exact_missing_or_defect": "Positive error bounds and relative tolerances are downcast to binary64 zero before the BALL gate; a valid finite exact-binary case passes 0<=0 with a 5.337607282697366e-4 relative sphere error. Subnormal J0 conversion error is also omitted by the relative epsilon allowance. Positive structural rho/ell can silently underflow to zero.",
+    "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+    "substantive": true,
+    "high_consequence": false
+  },
+  "findings": [
+    {
+      "id": "BP-05",
+      "class": "numeric",
+      "severity": "high",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_03/consumer.py",
+      "lines": [
+        145,
+        150,
+        152,
+        179,
+        239,
+        241,
+        356,
+        366,
+        390,
+        391,
+        397
+      ],
+      "consequence": "Invalid BALL admission under unchanged 1e-9 squared-budget policy; serialized boundary witness lies outside the true feasible ball by far more than policy permits.",
+      "minimal_falsifier": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/exact_subnormal_counterexample.py"
+    },
+    {
+      "id": "BP-05-STRUCTURAL",
+      "class": "numeric",
+      "severity": "medium",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_03/consumer.py",
+      "lines": [
+        265,
+        270,
+        271
+      ],
+      "consequence": "Positive exact structural ball has reported radius zero without a range hold.",
+      "minimal_falsifier": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/structural_radius_underflow.json"
+    }
+  ],
+  "counterexample": {
+    "finding_id": "BP-05",
+    "class": "numeric",
+    "branch": "A_BT_1e-06",
+    "metric": "raw_identity",
+    "source_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+    "candidate_sha256": "7391a142944844adcf7cf468d72f3e7ef1e63ee33405a1c25de099e468dcea9d",
+    "consumer_sha256": "2f42591fd77f5e93af3bb690714a08b685d0a34173c77afec8a589b8a024a1e8",
+    "input_generation": "Y[:,0]=1e-150; Y[0,0]+=1e-150*1e-12; Y[6,0]-=1e-150*1e-12; all other 23 coordinates zero",
+    "Y_col0_hex": [
+      "0x1.a2fe76a3fb140p-499",
+      "0x1.a2fe76a3f9475p-499",
+      "0x1.a2fe76a3f9475p-499",
+      "0x1.a2fe76a3f9475p-499",
+      "0x1.a2fe76a3f9475p-499",
+      "0x1.a2fe76a3f9475p-499",
+      "0x1.a2fe76a3f77aap-499"
+    ],
+    "rho_hex": "0x1.1b1bf25a690e5p-535",
+    "exact_budget_squared": "9.667909403880207715982116871774207166297439563514765091e-323",
+    "exact_J0": "2.416977350970052382376897839338775855177967276682354352e-323",
+    "exact_center_col0": "9.999999999998260310975265180071663627813306040799507349e-151",
+    "exact_ell_squared": "3551.229389679989864147680912912882795538700990117095412",
+    "reported_center_hex": "0x1.a2fe76a3f8f73p-499",
+    "reported_radius_hex": "0x1.075092ecf6cf0p-541",
+    "reported_J0_relative_error": "0.0220733877438975570614467204929875282296579050",
+    "binary64_tolerance": 0.0,
+    "full_sphere_maximum_relative_budget_error": "0.000533760728269736571417186444198904340637089867",
+    "full_sphere_error_over_fixed_policy": "533760.728269736571417186444198904340637089867",
+    "full_sphere_maximum_cost_over_budget": "1.00053376072826973657141718644419890434063709",
+    "exact_rational_policy_violation": true,
+    "serialized_direction_witnesses": [
+      {
+        "sign": -1,
+        "coordinate_hex": "0x1.a2fe76a3f8b56p-499",
+        "cost_over_budget": "0.999097796637063105432462654481556533577498274",
+        "relative_budget_error": "-0.000902203362936894567537345518443466422501726189",
+        "violates_fixed_relative_policy": true
+      },
+      {
+        "sign": 1,
+        "coordinate_hex": "0x1.a2fe76a3f9390p-499",
+        "cost_over_budget": "1.00016486579977892380264387010194929617409461",
+        "relative_budget_error": "0.000164865799778923802643870101949296174094611317",
+        "violates_fixed_relative_policy": true
+      }
+    ],
+    "mathematical_reference": "Rational 6x9 contrast minimum; ell2=1/(g0 (I-A.T(AA.T)^-1 A) g0.T); J0=(Hy).T(AA.T)^-1(Hy); center=y0-g0 A.T(AA.T)^-1 Hy. Continuous extrema J0+ell2*(r +/- abs(c_report-c_exact))^2.",
+    "reported_status": "BALL",
+    "reported_budget_image_error_bound": 0.0,
+    "reported_radius": 1.4289188145581008e-163,
+    "reported_radius_uncertainty": null
+  },
+  "structural_counterexample": {
+    "branch": "A_BT_1e-06",
+    "metric": "raw_identity",
+    "Y": "exact zero 7x24",
+    "rho_hex": "0x0.0000000000001p-1022",
+    "rho_positive": true,
+    "status": "BALL",
+    "radius": 0.0,
+    "radius_uncertainty": null,
+    "consequence": "A positive mathematical ball radius rho/ell underflows to zero without a typed range hold."
+  },
+  "repair_plan": "Same-task bounded lower-tier BP-05 range repair of candidate sha256:7391a142944844adcf7cf468d72f3e7ef1e63ee33405a1c25de099e468dcea9d; retain all prior candidates, raw failures, packet/task/cumulative accounting and existing route limits. Keep the exact R31 source, all six 7x9 matrices, a=ones7, both frozen metrics, 24 signed coordinates, numerical tolerances, rank/Fc/KKT/null tests, and scientific ceilings. Repair the identified-set numerical range handling and only its narrow regressions/evidence. Audit every decision-critical rho-squared, norm, J0, tolerance, center/radius/error conversion and image-bound comparison for subnormal underflow and overflow. Preserve nonzero error information through comparison using normalized/scaled or high-precision dimensionless arithmetic; alternatively return typed NUMERIC_RANGE_HOLD (or existing NUMERIC_BOUNDARY_HOLD with explicit range reason), radius=None, when the unchanged relative 1e-9 policy cannot be represented. Never accept 0<=0 after positive tolerance/error underflow, NaN comparisons, or nonfinite intermediate arithmetic. Include actual conversion error for serialized J0, rho-squared and all returned center/residual/radius/error fields; a relative 2*epsilon*J0 allowance alone does not cover subnormal J0 rounding. No amplitude floor, clipping, tolerance relaxation, forced zero, or new physical model. Preserve exact repeated-row and zero-budget structural proofs when their returned quantities are representable, but a positive rho/ell that rounds to zero must return a typed range hold, never BALL with radius zero or a singleton. Add the exact hex BP-05 input/rho from raw/exact_subnormal_counterexample.json and the positive-minimum-subnormal structural case, plus a bounded range matrix at normal/subnormal transition, tolerance/error underflow, rho-squared overflow rejection and finite-data norm overflow. Across all 12 branch/metric pairs include single and mixed signed24 carriers and both sides of the feasibility boundary; retain the existing scales and 1380 passed ordinary-range review cases without unbounded fuzzing. Use exact-rational contrast costs at the actual serialized center and all-direction sphere extrema, plus rounded directional witnesses, to require either agreement with the original fixed relative policy or a typed hold; verify no assertion relies on a downcast zero tolerance or bound. Preserve BP-04 closure, all 186 regressions, generic EMPTY/equality/BALL and structural/domain controls. Re-execute only affected cached consumer/tests and necessary packaging; preserve first failures and exact source versions; demonstrate parity of unchanged 12 compact dictionaries, six NPZs and generated tables unless a separately demonstrated defect requires reviewed numerical change. Return the new exact candidate for fresh independent review. No reintegration, WMAP/new sky/noise/catalogue work, native solver/ODE, new ultra allocation, renamed exhausted attempt, accounting reset, full historical proofgraph rerun, or original42 promotion.",
+  "bounded_repair_plan": "Same-task bounded lower-tier BP-05 range repair of candidate sha256:7391a142944844adcf7cf468d72f3e7ef1e63ee33405a1c25de099e468dcea9d; retain all prior candidates, raw failures, packet/task/cumulative accounting and existing route limits. Keep the exact R31 source, all six 7x9 matrices, a=ones7, both frozen metrics, 24 signed coordinates, numerical tolerances, rank/Fc/KKT/null tests, and scientific ceilings. Repair the identified-set numerical range handling and only its narrow regressions/evidence. Audit every decision-critical rho-squared, norm, J0, tolerance, center/radius/error conversion and image-bound comparison for subnormal underflow and overflow. Preserve nonzero error information through comparison using normalized/scaled or high-precision dimensionless arithmetic; alternatively return typed NUMERIC_RANGE_HOLD (or existing NUMERIC_BOUNDARY_HOLD with explicit range reason), radius=None, when the unchanged relative 1e-9 policy cannot be represented. Never accept 0<=0 after positive tolerance/error underflow, NaN comparisons, or nonfinite intermediate arithmetic. Include actual conversion error for serialized J0, rho-squared and all returned center/residual/radius/error fields; a relative 2*epsilon*J0 allowance alone does not cover subnormal J0 rounding. No amplitude floor, clipping, tolerance relaxation, forced zero, or new physical model. Preserve exact repeated-row and zero-budget structural proofs when their returned quantities are representable, but a positive rho/ell that rounds to zero must return a typed range hold, never BALL with radius zero or a singleton. Add the exact hex BP-05 input/rho from raw/exact_subnormal_counterexample.json and the positive-minimum-subnormal structural case, plus a bounded range matrix at normal/subnormal transition, tolerance/error underflow, rho-squared overflow rejection and finite-data norm overflow. Across all 12 branch/metric pairs include single and mixed signed24 carriers and both sides of the feasibility boundary; retain the existing scales and 1380 passed ordinary-range review cases without unbounded fuzzing. Use exact-rational contrast costs at the actual serialized center and all-direction sphere extrema, plus rounded directional witnesses, to require either agreement with the original fixed relative policy or a typed hold; verify no assertion relies on a downcast zero tolerance or bound. Preserve BP-04 closure, all 186 regressions, generic EMPTY/equality/BALL and structural/domain controls. Re-execute only affected cached consumer/tests and necessary packaging; preserve first failures and exact source versions; demonstrate parity of unchanged 12 compact dictionaries, six NPZs and generated tables unless a separately demonstrated defect requires reviewed numerical change. Return the new exact candidate for fresh independent review. No reintegration, WMAP/new sky/noise/catalogue work, native solver/ODE, new ultra allocation, renamed exhausted attempt, accounting reset, full historical proofgraph rerun, or original42 promotion.",
+  "claim_ceiling": "Conditional finite seven-frequency, nine-free-signed-moment bounded class only; no physical foreground, observed-sky, joint-noise, native solver, ODE or original42 admission.",
+  "review_scope": "Fresh read-only independent review of repair_03 and necessary finite geometry/policy; prior unchanged science evidence reused.",
+  "independence": "No authorship or modification of candidate; no children; only assigned external review directory written."
+}

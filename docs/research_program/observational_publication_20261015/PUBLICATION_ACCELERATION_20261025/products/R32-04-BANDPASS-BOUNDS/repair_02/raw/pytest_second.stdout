@@ -1,0 +1,840 @@
+........................................................................ [ 41%]
+.................................................................FFFFFFF [ 83%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFF                                            [100%]
+=================================== FAILURES ===================================
+_ test_unresolved_near_target_is_typed_not_false_empty[1e-06-common-A_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'common', scale = 1e-06
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1e-06-common-A_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'common', scale = 1e-06
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1e-06-common-A_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'common', scale = 1e-06
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1e-06-common-B_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'common', scale = 1e-06
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1e-06-common-B_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'common', scale = 1e-06
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1e-06-common-B_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'common', scale = 1e-06
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+__ test_unresolved_near_target_is_typed_not_false_empty[1e-06-raw-A_BT_1e-07] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'raw', scale = 1e-06
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+__ test_unresolved_near_target_is_typed_not_false_empty[1e-06-raw-A_BT_1e-08] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'raw', scale = 1e-06
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+__ test_unresolved_near_target_is_typed_not_false_empty[1e-06-raw-A_BT_1e-06] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'raw', scale = 1e-06
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+__ test_unresolved_near_target_is_typed_not_false_empty[1e-06-raw-B_BT_1e-07] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'raw', scale = 1e-06
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+__ test_unresolved_near_target_is_typed_not_false_empty[1e-06-raw-B_BT_1e-08] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'raw', scale = 1e-06
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+__ test_unresolved_near_target_is_typed_not_false_empty[1e-06-raw-B_BT_1e-06] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'raw', scale = 1e-06
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1.0-common-A_BT_1e-07] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'common', scale = 1.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1.0-common-A_BT_1e-08] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'common', scale = 1.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1.0-common-A_BT_1e-06] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'common', scale = 1.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1.0-common-B_BT_1e-07] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'common', scale = 1.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1.0-common-B_BT_1e-08] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'common', scale = 1.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1.0-common-B_BT_1e-06] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'common', scale = 1.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+___ test_unresolved_near_target_is_typed_not_false_empty[1.0-raw-A_BT_1e-07] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'raw', scale = 1.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+___ test_unresolved_near_target_is_typed_not_false_empty[1.0-raw-A_BT_1e-08] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'raw', scale = 1.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+___ test_unresolved_near_target_is_typed_not_false_empty[1.0-raw-A_BT_1e-06] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'raw', scale = 1.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+___ test_unresolved_near_target_is_typed_not_false_empty[1.0-raw-B_BT_1e-07] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'raw', scale = 1.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+___ test_unresolved_near_target_is_typed_not_false_empty[1.0-raw-B_BT_1e-08] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'raw', scale = 1.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+___ test_unresolved_near_target_is_typed_not_false_empty[1.0-raw-B_BT_1e-06] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'raw', scale = 1.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1000000.0-common-A_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'common', scale = 1000000.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1000000.0-common-A_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'common', scale = 1000000.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1000000.0-common-A_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'common', scale = 1000000.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1000000.0-common-B_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'common', scale = 1000000.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1000000.0-common-B_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'common', scale = 1000000.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1000000.0-common-B_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'common', scale = 1000000.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1000000.0-raw-A_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'raw', scale = 1000000.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1000000.0-raw-A_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'raw', scale = 1000000.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1000000.0-raw-A_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'raw', scale = 1000000.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1000000.0-raw-B_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'raw', scale = 1000000.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1000000.0-raw-B_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'raw', scale = 1000000.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'EMPTY' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+_ test_unresolved_near_target_is_typed_not_false_empty[1000000.0-raw-B_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'raw', scale = 1000000.0
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    def test_unresolved_near_target_is_typed_not_false_empty(branches, name, metric, scale):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        s[0] = scale
+        Y = np.outer(a, s)
+        Y[0, 0] += scale * 1e-12
+        Y[6, 0] -= scale * 1e-12
+        J0_svd = independent_svd_J0(Y, F, a, d)
+        assert J0_svd > 0
+        result = candidate.identified(Y, F, a, d, sol, math.sqrt(J0_svd))
+>       assert result["status"] in {"BOUNDARY_UNCERTAIN", "NUMERIC_BOUNDARY_HOLD"}
+E       AssertionError: assert 'BALL' in {'BOUNDARY_UNCERTAIN', 'NUMERIC_BOUNDARY_HOLD'}
+
+test_pure_target_boundary.py:121: AssertionError
+=============================== warnings summary ===============================
+../../../../../../../../../../.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63
+  /home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+    warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1e-06-common-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1e-06-common-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1e-06-common-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1e-06-common-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1e-06-common-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1e-06-common-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1e-06-raw-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1e-06-raw-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1e-06-raw-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1e-06-raw-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1e-06-raw-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1e-06-raw-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1.0-common-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1.0-common-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1.0-common-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1.0-common-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1.0-common-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1.0-common-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1.0-raw-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1.0-raw-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1.0-raw-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1.0-raw-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1.0-raw-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1.0-raw-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1000000.0-common-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1000000.0-common-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1000000.0-common-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1000000.0-common-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1000000.0-common-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1000000.0-common-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1000000.0-raw-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1000000.0-raw-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1000000.0-raw-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1000000.0-raw-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1000000.0-raw-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_unresolved_near_target_is_typed_not_false_empty[1000000.0-raw-B_BT_1e-06]
+36 failed, 137 passed, 1 warning in 2.64s

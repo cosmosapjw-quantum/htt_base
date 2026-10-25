@@ -1,0 +1,153 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R32-04-BANDPASS-BOUNDS",
+  "attempt": 6,
+  "phase": "review",
+  "packet_id": "012f56c95463c53f0806fac50a91f6ca3db56590adc7edc7f3b5f7e57bdcd6b8",
+  "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+  "candidate_identity": "sha256:7c554d36401b01719efa4103f24fdbadcbc2a033064432f7244db3fb3d9184f8",
+  "agent_id": "/root/r35_bandpass_second_repair_fresh_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "actual_native_tool": "collaboration.followup_task",
+  "formal_packet": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/NEXT_AFTER_P6_REPAIRED_REVIEW.json",
+    "sha256": "9838356b0eb001451eac6491c5636b19d77d2ea8d940fbc7e887d3cc70f1710a"
+  },
+  "actual_ack_go": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/BP_SECOND_REPAIR_REVIEW_ACTUAL_ACK_GO.json",
+    "sha256": "dd41d76bedbd3da2ea9d6b1c1507ff9a32498f20be6c33c4258a5a42644cf3ff"
+  },
+  "acknowledged": true,
+  "go": true,
+  "completed_utc": "2026-10-25T15:22:48.156898+00:00",
+  "candidate_manifest_verified_files": 43,
+  "post_review_candidate_manifest_sha256": "7c554d36401b01719efa4103f24fdbadcbc2a033064432f7244db3fb3d9184f8",
+  "post_review_candidate_files_unchanged": true,
+  "source_input_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "commands": [
+    {
+      "command": "python -B raw/independent_probe.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 1,
+      "failure": "Reviewer harness SymPy BooleanAtom summation/serialization error after first pair; exact source and stderr preserved. No numerical conclusion used from failed run."
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLCONFIGDIR=<owned>/raw/mpl PYTHONDONTWRITEBYTECODE=1 python -B raw/independent_probe_v2.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 5.998458561021835,
+      "change_from_first_probe": "Cast exact SymPy comparison to Python bool only; numerical calculation unchanged.",
+      "cases": 540
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 MPLCONFIGDIR=<owned>/raw/mpl PYTHONDONTWRITEBYTECODE=1 python -B raw/exact_counterexample.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "purpose": "Exact rational feasible witness and independent minimum-budget proof for one serialized returned center."
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/pytest_tmp",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_02/test_bandpass_boundary_repair.py",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_02/test_pure_target_boundary.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_02",
+      "exit_code": 0,
+      "elapsed_seconds": 3.287360606016591
+    },
+    {
+      "command": "pdftoppm -scale-to 1150 -png <candidate>/report/main.pdf <owned>/raw/page",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "pages_visually_inspected": 7
+    }
+  ],
+  "environment_warning": "Matplotlib Axes3D import unavailable; unrelated to these 2D plots and finite linear algebra.",
+  "raw_artifacts": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/input_binding.json",
+      "sha256": "fd983b5d70250dd62a668d677999999cb07fed107b646143ab1c394d83e4af45"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/independent_probe.py",
+      "sha256": "544fc5e8aedf76a4fc8f3f4a9f4fbd47706385a3fedf0fe8b52c230d9f9aa7db"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/independent_probe.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/independent_probe.stderr",
+      "sha256": "c8a5e136f78598355c95571f6e4048bce14ddaf3ef5cefa5083e2c5cbaafe9a6"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/independent_probe_v2.py",
+      "sha256": "abd3695b7a090457b160cc00b903a0dec52da999de86beefb98332f93a25f84e"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/independent_probe_v2.stdout",
+      "sha256": "b787caffab1fca4488a4c0f3582dc4b4e7f6483ed7180fd27b368e5f90569a02"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/independent_probe_v2.stderr",
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/independent_probe.json",
+      "sha256": "8081971d290f72bac552d1f359b31488062a3153ebdeec128fcddef7f792a104"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/exact_counterexample.py",
+      "sha256": "d01b94d5f245e3a52446e598a8e5ac19dfec604bd6b1cf99333957173eb6dde9"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/exact_counterexample.stdout",
+      "sha256": "693998d29d68e6c2401bcac6fbddb345165392d14846b8a1c5806aa13a670dab"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/exact_counterexample.stderr",
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/exact_counterexample.json",
+      "sha256": "adc1b45685e49be47d46045a69acb6dfb4b98fa1cea7801074add64621f0ac6a"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/targeted_pytest.receipt.json",
+      "sha256": "fa24b3f7515744f280c1e504e7813da71ebe2441045229da9fc03a1fcdfcf3c8"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/targeted_pytest.stdout",
+      "sha256": "df6b0cca9ca610bbd5152b70171f52616b8a22f8cfd07241808fdbb9279fd5b2"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/targeted_pytest.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/independent_parity.json",
+      "sha256": "af3dde4191d89c57e63ec1a147baf80f6df881914dd5b3226aa74a5c41f31bf7"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/pdf_render.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/pdf_render.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "mutation_scope": "Only this reviewer-owned external directory; no Git, STATE, product, source, integration, raw sky, native solver or ODE writes/runs."
+}

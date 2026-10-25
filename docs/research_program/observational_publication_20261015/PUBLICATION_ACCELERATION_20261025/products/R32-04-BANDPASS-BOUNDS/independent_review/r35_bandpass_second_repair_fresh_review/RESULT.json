@@ -1,0 +1,231 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R32-04-BANDPASS-BOUNDS",
+  "attempt": 6,
+  "phase": "review",
+  "packet_id": "012f56c95463c53f0806fac50a91f6ca3db56590adc7edc7f3b5f7e57bdcd6b8",
+  "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+  "candidate_identity": "sha256:7c554d36401b01719efa4103f24fdbadcbc2a033064432f7244db3fb3d9184f8",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_02/ARTIFACT_MANIFEST.json",
+  "source_input_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "agent_id": "/root/r35_bandpass_second_repair_fresh_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "formal_packet_binding": "ACKNOWLEDGED_GO",
+  "review_phase": "FORMAL_INDEPENDENT_REVIEW",
+  "outcome": "blocker",
+  "verdict": "HOLD",
+  "acceptance_met": false,
+  "original_acceptance_met": false,
+  "original42_acceptance": false,
+  "qualified_products": [],
+  "R32_09_qualified": false,
+  "acceptance_scope": "bounded_moment_frontier only",
+  "independence": {
+    "implemented_candidate": false,
+    "framed_original_contract": false,
+    "prior_verdict_or_173_test_pass_used_as_verdict_oracle": false,
+    "prior_repair_definition_read": true,
+    "independent_exact_rational_contrast_method": true,
+    "nested_agents": false,
+    "repository_or_state_or_git_writes": false
+  },
+  "findings": [
+    {
+      "id": "BP-04",
+      "severity": "P1",
+      "status": "REPRODUCED_BLOCKER",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_02/consumer.py",
+      "line_start": 253,
+      "line_end": 273,
+      "related_lines": [
+        125,
+        150,
+        182,
+        183,
+        267
+      ],
+      "title": "High-precision J0 promotion returns a BALL with an infeasible stale binary64 center",
+      "description": "The fallback computes a higher-precision center internally but returns only J0/error. identified() promotes BALL and clears uncertainty while retaining s0 and R calculated before the fallback. On an exact-binary near-pure target, the reported center lies outside the true identified ball: its exact minimum required budget is10.413783481177918 times rho squared. This is an incorrect set geometry even though J0, side classification, and radius are accurate.",
+      "consequence": "A consumer can select the returned center, supposedly the safest member of the reported ball, and receive a target for which no foreground within the declared budget exists.",
+      "minimal_fix": "Return coherent numerically controlled center/residual/radius and serialization-aware uncertainty; use typed HOLD when the reported translated geometry is unresolved.",
+      "raw_evidence": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/exact_counterexample.json",
+      "raw_evidence_sha256": "adc1b45685e49be47d46045a69acb6dfb4b98fa1cea7801074add64621f0ac6a"
+    }
+  ],
+  "issue": {
+    "class": "numeric",
+    "question": "Does a J0-resolved reported BALL retain a coherent, feasible serialized center/residual/radius under the same fixed model?",
+    "exact_missing_or_defect": "The fallback computes a higher-precision center internally but returns only J0/error. identified() promotes BALL and clears uncertainty while retaining s0 and R calculated before the fallback. On an exact-binary near-pure target, the reported center lies outside the true identified ball: its exact minimum required budget is10.413783481177918 times rho squared. This is an incorrect set geometry even though J0, side classification, and radius are accurate.",
+    "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+    "substantive": true,
+    "high_consequence": false
+  },
+  "counterexample": {
+    "id": "BP-04",
+    "kind": "RETURNED_BALL_CENTER_EXACTLY_INFEASIBLE_AFTER_J0_ONLY_FALLBACK",
+    "candidate_identity": "sha256:7c554d36401b01719efa4103f24fdbadcbc2a033064432f7244db3fb3d9184f8",
+    "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+    "branch": "A_BT_1e-06",
+    "metric": "raw M=I9",
+    "a": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "Y_7x24_definition": "All entries zero except first column initially ones; perform binary64 Y[0,0]+=1e-14 and Y[6,0]-=1e-14. Exact supplied column stored below as float.hex values.",
+    "Y_col0_hex": [
+      "0x1.000000000002dp+0",
+      "0x1.0000000000000p+0",
+      "0x1.0000000000000p+0",
+      "0x1.0000000000000p+0",
+      "0x1.0000000000000p+0",
+      "0x1.0000000000000p+0",
+      "0x1.fffffffffffa6p-1"
+    ],
+    "rho": 9.82472097057662e-14,
+    "rho_hex": "0x1.ba775222664cdp-44",
+    "observed": {
+      "status": "BALL",
+      "center_col0": 0.999999999999993,
+      "center_col0_hex": "0x1.fffffffffffc1p-1",
+      "other_center_coordinates_exactly_zero": true,
+      "J0": 2.4131285537422e-27,
+      "radius": 1.4277806553590753e-15,
+      "radius_uncertainty": null,
+      "residual_col0": [
+        1.6986412276764895e-14,
+        6.994405055138486e-15,
+        6.994405055138486e-15,
+        6.994405055138486e-15,
+        6.994405055138486e-15,
+        6.994405055138486e-15,
+        -2.9976021664879227e-15
+      ]
+    },
+    "exact_center0_decimal": "0.999999999999998261633764990212527009633203715117098902159397",
+    "exact_J0_decimal": "2.41312855374219992564034923859508701082323751255326174766408e-27",
+    "minimum_budget_at_returned_center_over_rho_squared": 10.413783481177918,
+    "exact_ratio_and_positive_gap_evidence": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/exact_counterexample.json",
+    "feasible_true_center_witness": "Exact-rational U* in raw evidence reconstructs all seven Y rows and costs J0; all other23 columns are exact zero.",
+    "independent_lower_bound": "Exact rational constrained minimum at reported center; positive rational cost-minus-rho\u00b2 proves impossibility, independent of mpmath or consumer result.",
+    "distinct_mechanism": "BP-03 structural pure-target emptiness is fixed. BP-04 is newly exposed stale-center/residual geometry after high-precision J0 promotion, not a renamed prior failure.",
+    "independent_probe_summary": {
+      "cases": 540,
+      "branch_metric_pairs": 12,
+      "scales": [
+        1e-06,
+        1,
+        1000000.0
+      ],
+      "relative_perturbations": [
+        0.0001,
+        1e-12,
+        1e-14
+      ],
+      "rho_multipliers_of_exact_threshold": [
+        0.5,
+        0.9999999,
+        1,
+        1.0000001,
+        2
+      ],
+      "false_side_count": 0,
+      "infeasible_returned_centers": 86
+    },
+    "raw_evidence": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/independent_probe.json",
+    "raw_evidence_sha256": "8081971d290f72bac552d1f359b31488062a3153ebdeec128fcddef7f792a104"
+  },
+  "repair_plan": "Same-task bounded lower-tier BP-04 repair of candidate sha256:7c554d36401b01719efa4103f24fdbadcbc2a033064432f7244db3fb3d9184f8 under the controller's next actual repair packet; preserve all earlier candidates, raw failures, task identity, cumulative costs and existing allowances. Reuse exact R31 source b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f, six 7x9 matrices, a=ones7, both frozen metrics, all24 signed coordinates, existing ell/c/compact branch values and six NPZs unless an independently demonstrated numerical defect requires a separately reviewed change. Preserve rank, Fc, KKT, null-lift and all existing acceptance tolerances. Repair only the numerical identified-set output and narrow regressions/evidence needed for this reproduced defect. When a bounded high-precision calculation is used, retain a coherent center, irreducible cost, metric/ell accuracy and residual derived from the same exact binary64 F,d,a,Y inputs; do not update only J0 while returning the old binary64 center/residual. Account explicitly for conversion/serialization of every one of the24 center coordinates and the radius, for the relation R=Y-a*s_center^T, and for arithmetic in rho squared and radius extraction. Returning a rounded high-precision center alone is insufficient when its conversion error is appreciable relative to the small ball. Derive a homogeneous bound on the center Euclidean error and radius error (including retained ell error), propagate it into the squared-budget image, and use it with the unchanged relative1e-9 numerical policy. The identity J(s_hat+v)=J0+ell2*||s_hat+v-s0||^2 implies a boundary budget error term bounded by ell2*(2*r*delta_s+delta_s^2), plus radius/J0/ell errors; use this or an equivalent justified bound across the full24 directions. Return a typed NUMERIC_BOUNDARY_HOLD or BOUNDARY_UNCERTAIN with radius=None when the translated set cannot be resolved at the declared numerical policy; alternatively an explicitly bounded uncertainty image must retain its uncertainty and must not be reported as the exact translated BALL. Do not clear uncertainty merely because J0 itself converged, certify a singleton from near equality, force a residual to zero, truncate a direction, add an amplitude floor, or weaken an oracle/tolerance. Exact repeated-row/zero-budget structural certificates remain separate and unchanged. Add the exact BP-04 input/rho and both-side near-pure probes at relative perturbations1e-4,1e-12,1e-14 across all12 branch/metric pairs and scales1e-6,1,1e6. Include a mixed signed24 carrier to exercise transport and accumulation of serialization error. Independently validate minimum budget at the actual returned/serialized center, and validate boundary/directional witnesses or a justified full error image; typed uncertainty is required where geometry is unrepresentable at sufficient precision. An exact-rational row-contrast solve using H rows e_i-e_0 is available in this review and avoids the consumer's K-inverse/Schur-complement cancellation oracle. Preserve old29, all current structural/domain/null tests and generic EMPTY/equality/BALL controls. New assertions must check coherent outputs, not only status/J0 or a center tolerance measured against the large common target. Re-execute only affected cached consumer/tests and necessary packaging, retain first failures, show parity of unchanged12 metric outputs and all six NPZ sets, and return the exact candidate for fresh independent review. No cosmetic PDF changes are requested. No reintegration, WMAP extension, sky/catalogue/noise/native/ODE run, physical-model change, new ultra allocation, accounting reset, full provenance rerun or original42 promotion.",
+  "repair_plan_sha256": "ef4a7efd6eec56f487a72847101127738beea0bf03498317e43155aac56136a9",
+  "same_task_targeted_repair_required": true,
+  "no_new_ultra_or_budget_reset": true,
+  "numerical_policy_assessment": {
+    "high_precision_model_change": false,
+    "reason": "Original intake explicitly permits bounded high-precision solves on retained matrices. Fallback builds G from exact lifted binary64 F and d, not rounded K; metrics and rank convention unchanged.",
+    "80_120_digit_policy": "Two finite precision evaluations and conditioned empirical allowance are numerical policy, not all-input interval certification. Missing/unresolved fallback retains typed uncertainty. No assertion of rigorous uniform error bound is made by this review.",
+    "J0_result": "Exact-rational contrast checks found no wrong resolved EMPTY/BALL side in540 cases; all108 threshold probes returned BOUNDARY_UNCERTAIN. Exact BP-04 J0 rounding error is covered by the fallback allowance.",
+    "geometry_result": "FAIL: center and residual are not upgraded or bounded with the J0 fallback; output conversion error relative to ball radius is unchecked.173 passing tests do not establish coherent set output.",
+    "first_failure_changes": "24 failures were genuine overconservative binary64-policy outputs; subsequent36 boundary failures used an inaccurate cancellation-limited SVD oracle. Exact source/raw versions retained in candidate. Changing oracle to high precision is justified for J0 but shares implementation machinery and failed to detect stale center.",
+    "approval_limit": "No fresh physical model or relaxed tolerance is approved. Only the bounded BP-04 repair above is authorized for controller dispatch."
+  },
+  "assumptions_and_conventions": {
+    "model": "Y=a*s^T+F*U; a=ones7; frozen F7x9; signed U9x24; no observedY",
+    "carrier": "E2,E3,B2,B3; m0 then sqrt2Re and -sqrt2Im positive-m coordinates; frequency-major flattening",
+    "metrics": "One common fixed M=diag(d\u00b2); separate raw M=I9",
+    "units": "Y,s,U,rho have target harmonic amplitude unit; F,d dimensionless; J0,rho\u00b2 amplitude squared",
+    "claim_ceiling": "Conditional finite free nine-signed-moment class; no universal physical foreground realizability, measured sky, SMICA independent channel, native solver, posterior/confidence/null calibration, global tilt, family ID or original42 admission"
+  },
+  "equation_audit": {
+    "minimum_compensator": "Correct from constrained quadratic minimization; null orthogonality retained.",
+    "identified_set": "Completing square correctly yields J0+ell\u00b2||s-s0||\u00b2<=rho\u00b2.",
+    "pair_factor_two": "Correct necessary norm bound and explicit zero-data attainment witnesses.",
+    "structural_shortcuts": "Exact repeated rows yield exact center/J0; exact unequal rows at zero budget cannot be pure-target.",
+    "numerical_geometry": "BP-04 violates the exact set interpretation."
+  },
+  "validation": {
+    "manifest_files_verified": 43,
+    "post_review_candidate_files_unchanged": true,
+    "source_identity_unchanged": true,
+    "targeted_tests": "173 passed; one pre-existing Matplotlib Axes3D warning",
+    "exact_rational_cases": 540,
+    "infeasible_returned_centers": 86,
+    "independent_exact_counterexample_witness_verified": true,
+    "all12_compact_metric_outputs_exactly_unchanged": true,
+    "all6_npz_byte_and_array_parity": true,
+    "all6_npz_arrays_per_file": 18,
+    "tables_byte_identical": {
+      "budgets.tex": true,
+      "residuals.tex": true
+    },
+    "old29_module_byte_identical": true,
+    "rank_Fc_KKT_null_full24_gates": "Candidate solve_metric ran for all12 retained pairs during exact probes; preserved tests include all12 original-coordinate null lifts. No gate changed.",
+    "pdf_pages_visually_inspected": 7,
+    "pdf_build": "Not rerun; verified manifest-bound seven-page PDF plus existing successful latexmk raw output.",
+    "full_provenance_or_source_integration": "NOT_RUN per scope",
+    "reviewer_harness_first_failure": "SymPy BooleanAtom conversion only; raw source/stdout/stderr retained, then corrected cast and successful540-case run."
+  },
+  "claim_and_manuscript_audit": {
+    "skills_used": [
+      "htt-physics-math-audit",
+      "htt-scientific-code-validation",
+      "htt-claim-firewall",
+      "htt-manuscript-figure-audit"
+    ],
+    "evidence_read": [
+      "original FRONTIER task/intake contract",
+      "prior BP-03 repair definition",
+      "exact43-file candidate manifest",
+      "RESULT/CONTROLLER_RETURN/RAW_RECEIPT",
+      "current consumer/tests",
+      "both first failed source/test snapshots and stdout",
+      "NUMERIC_POLICY.md",
+      "CLAIM_SOURCE_MAP.md",
+      "main.tex and rendered pages1-7",
+      "six cached NPZs and generated tables"
+    ],
+    "conditional_scope": "Explicit free signed-moment class, fixed seven frequency rows and24 coordinates; neither all physical foregrounds nor actual seven-map/SMICA reconstruction is claimed.",
+    "figure_caption_claims": "Both metric panels retain deterministic one/pair frontiers and no observed amplitude/confidence claim.",
+    "new_cosmetic_pdf_changes_required": false,
+    "upgraded_claims": [],
+    "downgraded_claims": [
+      "Numerical identified-set acceptance remains HOLD for BP-04."
+    ],
+    "safe_claims": [
+      "Exact finite-model algebra and factor-two theorem under stated assumptions",
+      "Unchanged minimum compensator and nominal frontier numbers within existing gates",
+      "Structural exact pure-target singleton/ball theorem"
+    ],
+    "required_closeout": "Bounded repair of coherent numerical output, independent geometry falsifier, same-source parity, fresh independent review; no product qualification until that passes."
+  },
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "973f08b9d41923b8495e0f3be932947231a12797f555918af4240685707ba1fa",
+  "actual_ack_go": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/BP_SECOND_REPAIR_REVIEW_ACTUAL_ACK_GO.json"
+}

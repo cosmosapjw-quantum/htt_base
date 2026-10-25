@@ -1,0 +1,110 @@
+{
+  "task_id": "R32-04-BANDPASS-BOUNDS",
+  "stage": "SOURCE_PREPARATION_ONLY_FORMAL_REPAIR_PACKET_PENDING",
+  "created_utc": "2026-10-25T12:45:50.496305+00:00",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "writer": "/root/r35_bandpass_boundary_repair_preparation",
+  "source_parent_git_head_observed": "dff1f6a330bffec122225c3b0e8edb19e8b7d122",
+  "repair_plan_sha256_utf8": "780083816f83305686fe93538c381f8630a784cf66d5e31bebb55c279474e556",
+  "repair_plan_source": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fresh_independent_review/RESULT.json#repair_plan",
+  "source_identity_sha256": {
+    "parent_source": "aa585b921c141e9d8274a440dd8176b38f1b38f2b83efd9d73edff7be6ee7539",
+    "parent_manifest": "b519543d683702ffa3e5031b3161093b11edc1ea45a75fae5caed7097f05857a",
+    "review_result": "5576eb43f8c1813f9511ee902e4943d2e2d48a2e96b50c8c3d0a8911e18deee2",
+    "new_candidate": "7167e09e6d51a07deb182044c9aed82f427268ec59e2dea56cfd7b46a191fb6d",
+    "narrow_repair_patch": "c84203bf2cf8e6c3999f67a5ac6b6c252649ae670c09ddf2f2f79ad1c05e9de9",
+    "targeted_regression_test": "13a54af5e641ee738a1ac1dcf51ecf1a32e61ff210780de41cd28c34864bf4f5",
+    "original_source_copy": "aa585b921c141e9d8274a440dd8176b38f1b38f2b83efd9d73edff7be6ee7539"
+  },
+  "source_paths": {
+    "parent_source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/consumer.py",
+    "parent_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/ARTIFACT_MANIFEST.json",
+    "review_result": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fresh_independent_review/RESULT.json",
+    "new_candidate": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_boundary_repair_preparation/new_candidate.py",
+    "narrow_repair_patch": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_boundary_repair_preparation/narrow_repair.patch",
+    "targeted_regression_test": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_boundary_repair_preparation/test_bandpass_boundary_repair.py",
+    "original_source_copy": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_boundary_repair_preparation/original_source.py"
+  },
+  "static_validation": {
+    "ast_parse_candidate_and_test": "PASS",
+    "syntax_parse_seconds": 0.008124982938170433,
+    "module_import": "NOT_RUN",
+    "numerical_tests": "NOT_RUN",
+    "consumer_execution": "NOT_RUN",
+    "generated_artifact_validation": "NOT_RUN"
+  },
+  "scope": {
+    "repository_writes": false,
+    "original_product_writes": false,
+    "source_input_writes": false,
+    "git_mutation": false,
+    "controller_packet_mutation": false,
+    "scientific_execution": false,
+    "test_execution": false,
+    "publication": false
+  },
+  "preparation_commands": [
+    {
+      "command": "rg -n R32-04|BANDPASS|BP-01|BP-02 /home/cosmosapjw/.codex/memories/MEMORY.md",
+      "duration_seconds_observed": 1.2322e-05,
+      "purpose": "memory quick pass; no relevant hits"
+    },
+    {
+      "command": "git status --short --branch; git rev-parse HEAD; git remote -v",
+      "duration_seconds_observed": 1.2632e-05,
+      "purpose": "read-only checkout identity and dirty-state observation"
+    },
+    {
+      "command": "cat fresh review RESULT.json and REVIEW.md, candidate consumer.py and manifest; rg targeted paths",
+      "duration_seconds_observed": null,
+      "purpose": "read-only contract and source inspection; grouped tool walltime not individually attributable"
+    },
+    {
+      "command": "sha256sum parent consumer.py parent ARTIFACT_MANIFEST.json fresh review RESULT.json",
+      "duration_seconds_observed": 5.3849e-05,
+      "purpose": "frozen identities"
+    },
+    {
+      "command": "mkdir -p preparation && cp original consumer.py preparation/new_candidate.py",
+      "duration_seconds_observed": 1.518654355,
+      "purpose": "external source copy only"
+    },
+    {
+      "command": "apply_patch external new_candidate.py BP-01/BP-02 changes",
+      "duration_seconds_observed": null,
+      "purpose": "source preparation; patch tool did not report elapsed time"
+    },
+    {
+      "command": "apply_patch external test_bandpass_boundary_repair.py",
+      "duration_seconds_observed": null,
+      "purpose": "regression source only; patch tool did not report elapsed time"
+    },
+    {
+      "command": "diff -u --label a/consumer.py --label b/consumer.py original consumer.py prepared new_candidate.py > narrow_repair.patch",
+      "duration_seconds_observed": 9.267e-06,
+      "purpose": "final narrow patch; diff exit 1 means files differ"
+    },
+    {
+      "command": "python3 - <<PY [stdlib AST parse and receipt generation] PY",
+      "duration_seconds_observed": null,
+      "ast_parse_seconds": 0.008124982938170433,
+      "purpose": "static syntax only; no candidate import or scientific execution"
+    },
+    {
+      "command": "cp original consumer.py preparation/original_source.py",
+      "duration_seconds_observed": 1.5419e-05,
+      "purpose": "immutable evidence copy; byte identity checked"
+    }
+  ],
+  "later_commands_after_formal_controller_packet_and_root_GO_only": [
+    "sha256sum /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/consumer.py /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/ARTIFACT_MANIFEST.json",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python3 -m pytest -q /mnt/extdrive/workdir/htt_open_data/r35_bandpass_boundary_repair_preparation/test_bandpass_boundary_repair.py",
+    "stage prepared new_candidate.py as same-task product consumer.py only under formal packet; run bound consumer.py with raw stdout/stderr and durations; regenerate affected report, tables, figures, PDF and candidate manifest per packet",
+    "send exact changed candidate and raw regression outcomes to independent Astra reviewer for bounded closeout"
+  ],
+  "hold": "No numerical/scientific execution or production mutation before formal repair packet and root GO; R32-09 remains unqualified."
+}

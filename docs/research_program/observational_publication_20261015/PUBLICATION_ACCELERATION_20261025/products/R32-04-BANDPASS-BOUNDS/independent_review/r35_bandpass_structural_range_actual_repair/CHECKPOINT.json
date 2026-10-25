@@ -1,0 +1,61 @@
+{
+  "ack_path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/BP_STRUCTURAL_RANGE_REPAIR_ACTUAL_ACK_GO.json",
+  "actual_checks": [
+    {
+      "duration_seconds": 3.9455976486206055,
+      "elapsed_seconds": null,
+      "exit_code": 0,
+      "name": "new_structural",
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_structural_first.receipt.json"
+    },
+    {
+      "duration_seconds": 47.21011233329773,
+      "elapsed_seconds": null,
+      "exit_code": 0,
+      "name": "affected_range_center",
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_affected_first.receipt.json"
+    },
+    {
+      "duration_seconds": 15.43956446647644,
+      "elapsed_seconds": null,
+      "exit_code": 1,
+      "name": "puretarget_firstfailure",
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_puretarget_first.receipt.json"
+    },
+    {
+      "duration_seconds": null,
+      "elapsed_seconds": 1.8380119800567627,
+      "exit_code": 0,
+      "name": "cached_consumer",
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/consumer_first.receipt.json"
+    }
+  ],
+  "agent_id": "/root/r35_bandpass_boundary_repair_preparation",
+  "attempt": 11,
+  "base_candidate_identity": "sha256:0086eccfa4efc5775407dd77afa3c9709f4b055fc0c045f201d9cc726bb6bea4",
+  "base_packet_id": "6f087f140bdc10a9847edb33377a6211714d1241470c7497c879552fffd5f6d4",
+  "candidate_directory": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05",
+  "candidate_sealed": false,
+  "controller_return_written": false,
+  "exact_semantic_question": "For repeated rows with nonzero center and positive but serialization-invisible radius (e.g. center=1e-6, rho=1e-206), should old strict BALL assertions distinguish the exact mathematical ball from a numerically certified serialized BALL and permit typed NUMERIC_RANGE_HOLD under the unchanged full24 1e-9 output criterion, or is a different criterion intended?",
+  "first_failure": {
+    "observed": "72 failed, 101 passed; first `test_exact_repeated_rows_have_structural_set[single-1e-06-common-A_BT_1e-07]` requires BALL for rho=scale*1e-200 although returned status is NUMERIC_RANGE_HOLD",
+    "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_puretarget_first.receipt.json",
+    "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_puretarget_first.stderr",
+    "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_puretarget_first.stdout",
+    "stdout_sha256": "28d7205a9d06b897eb901334b85099f89542b880e5557075915df2d1f084c4e6"
+  },
+  "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+  "packet_id": "586239ab31590037b239e1e50ec95733dec4a3ff3b176231a09798ac910bea82",
+  "phase": "repair",
+  "preserved_limits": "No old test loosened, no candidate sealed, no STATE/Git/controller mutation, no new task/attempt/budget. Fresh Astra semantic audit pending.",
+  "source_hashes": {
+    "consumer.py": "d0a3873ff78cf6960647280dd2633399d6c47ea17351635ea80f74101f04d96a",
+    "test_center_geometry.py": "0cfd5baba1f837a4df7ccf4f3a7151b6511f1c3d90fbd829fa193b41bd4eeb73",
+    "test_pure_target_boundary.py": "09721bc3ee39e1d7f320a215a7c4423f171ec0db66623e76d5ff353c77414507",
+    "test_range_boundary.py": "c54b57b4887d74be9de103f5e37d7b2ac2cf5ed078c0efe123f00c1d12433689",
+    "test_structural_range.py": "81b8a2b4343bd54101ba0917f32cdb5c92c673e66bd7b10ebf2a545c4a9d95eb"
+  },
+  "status": "PAUSED_FOR_FRESH_ASTRA_SEMANTIC_CRITERION",
+  "task_id": "R32-04-BANDPASS-BOUNDS"
+}

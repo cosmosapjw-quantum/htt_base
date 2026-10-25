@@ -1,0 +1,157 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R32-04-BANDPASS-BOUNDS",
+  "attempt": 2,
+  "phase": "review",
+  "packet_id": "028b96a4467c476191fd2b8e4a3a80a0b9b2d396f165466b365d675a78486828",
+  "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+  "candidate_identity": "sha256:b519543d683702ffa3e5031b3161093b11edc1ea45a75fae5caed7097f05857a",
+  "agent_id": "/root/r35_bandpass_fresh_independent_review",
+  "reviewer_agent_id": "/root/r35_bandpass_fresh_independent_review",
+  "outcome": "blocker",
+  "verdict": "HOLD",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "proposed_qualified_products": [],
+  "acceptance_scope": "bounded_moment_frontier only",
+  "original42_acceptance": false,
+  "original_acceptance_met": false,
+  "issue": {
+    "class": "numeric",
+    "question": "Does the exact bounded-moment candidate preserve physical amplitude-unit equivariance and the stated original-coordinate nullspace semantics?",
+    "exact_missing_or_defect": "BP-01: consumer.py:99-106 uses tol=1e-9*max(1,rho^2,J0), so Y=0,rho=1e-6 returns radius0 singleton although the correct full24 radius is3.206791803148725e-7; retained generic EMPTY/BALL cases also collapse under amplitude scaling1e-6, and negative rho is accepted. BP-02: consumer.py:72,233 exports N_z=null(F/d) under coefficient_nullspace_directions_2x9 instead of N_c=N_z/d; nominal ||F N_z||/||F||=0.030178449123981835 while the original-coordinate correction gives2.5997225981406524e-16.",
+    "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+    "substantive": true,
+    "high_consequence": false
+  },
+  "counterexample": {
+    "zero_data_small_positive_radius": {
+      "input": "Y=0",
+      "rho": 1e-06,
+      "actual_status": "SINGLETON_NUMERIC_BOUNDARY",
+      "actual_radius": 0.0,
+      "exact_radius_if_nonnegative": 3.206791803148725e-07
+    },
+    "generic_unit_scaling": [
+      {
+        "case": "empty",
+        "amplitude_scale": 1.0,
+        "rho": 0.655256293352538,
+        "actual_status": "EMPTY",
+        "actual_radius": null,
+        "J0": 1.7174432399124293,
+        "gap": -1.288082429934322,
+        "expected_status": "EMPTY",
+        "expected_radius": null
+      },
+      {
+        "case": "ball",
+        "amplitude_scale": 1.0,
+        "rho": 2.0367913298556513,
+        "actual_status": "BALL",
+        "actual_radius": 0.49999999999999983,
+        "J0": 1.7174432399124293,
+        "gap": 2.431075681462723,
+        "expected_status": "BALL",
+        "expected_radius": 0.5
+      },
+      {
+        "case": "empty",
+        "amplitude_scale": 1e-06,
+        "rho": 6.552562933525379e-07,
+        "actual_status": "SINGLETON_NUMERIC_BOUNDARY",
+        "actual_radius": 0.0,
+        "J0": 1.7174432399124366e-12,
+        "gap": -1.2880824299343293e-12,
+        "expected_status": "EMPTY",
+        "expected_radius": null
+      },
+      {
+        "case": "ball",
+        "amplitude_scale": 1e-06,
+        "rho": 2.036791329855651e-06,
+        "actual_status": "SINGLETON_NUMERIC_BOUNDARY",
+        "actual_radius": 0.0,
+        "J0": 1.7174432399124366e-12,
+        "gap": 2.4310756814627146e-12,
+        "expected_status": "BALL",
+        "expected_radius": 5e-07
+      }
+    ],
+    "nullspace_nominal": {
+      "ell_independent_svd": 3.1183814272553256,
+      "ell_vs_stored_relative": 1.3601594744652974e-12,
+      "c_vs_stored_relative": 4.843666005192996e-12,
+      "Fc_exported_relative": 2.2573438451350337e-14,
+      "exported_nullspace_F_N_relative": 0.030178449123981835,
+      "exported_nullspace_G_N_relative": 1.55581305842645e-16,
+      "nullspace_after_unwhitening_F_N_relative": 2.5997225981406524e-16,
+      "singular_reconstruction_c_relative": 4.843666005215212e-12,
+      "sigma_min": 0.005544077051202238,
+      "condition_F_Mhalf": 390.34850899681896,
+      "positive_norm_increment_check": 0.999999999999984
+    },
+    "negative_radius": {
+      "input": "Y=0",
+      "rho": -1.0,
+      "actual_status": "BALL",
+      "actual_radius": 0.3206791803148725,
+      "exact_radius_if_nonnegative": null
+    }
+  },
+  "repair_plan": "Controller-approved bounded lower-tier repair of the same R32-04-BANDPASS-BOUNDS task: preserve the retained R31 7x9 matrices, six branch order, signed 24-coordinate carrier, common M=diag(d^2), raw-I sensitivity, source identities, formulas, existing residual/rank gates, previous candidate and cumulative costs. In identified(), enforce a finite nonnegative radius rho; remove the dimensionful absolute floor max(1,...) from squared-budget feasibility decisions. Use a homogeneous squared-amplitude scale built only from rho^2, J0 and, if needed for a conservative numerical error estimate, a whitened-data squared norm, so a common positive unit scaling multiplies both gap and tolerance by scale^2. Preserve the existing relative tolerance level; do not weaken any Fc, KKT, full24 or rank acceptance. Handle exact zero data/zero budget explicitly, return the positive radius for Y=0,rho>0, and distinguish genuinely unresolved numerical boundaries from a mathematically asserted singleton (use a typed boundary-uncertain status/radius uncertainty instead of silently setting a nonzero or infeasible set to radius zero). Preserve the exact equality/singleton theorem and labelled constructed equality control. Export original-coordinate nullspace directions N_c=diag(d)^(-1)N_z for G=F diag(d)^(-1), and label whitened N_z separately if retained. Check G N_z=0, F N_c=0, N_c^T M N_c=I, (N_c)^T M c_M=0, and the full24 lift (F tensor I24)(N_c tensor I24)=0 for all six branches and both metrics. Add narrow regressions for Y=0 at rho=0,1,1e-6; the retained generic EMPTY, equality/boundary and BALL cases at scale 1 and 1e-6 (optionally 1e6); radius/center scaling; negative/nonfinite rho rejection; and null-vector coordinate transport. Regenerate only this product result, affected prose/claim map, numerical tables/figures/PDF as needed, and candidate manifest under the actual future formal repair packet. A new external preparation copy may be used by the lower-tier worker; actual corrected execution/publication requires that packet, not this preparation review. No reintegration, WMAP extension, sky/catalogue/ODE/native run, new physical model, new ultra or reset/reuse of old one-use allowances. Send the exact changed candidate and raw regression outcomes back to this independent reviewer for bounded closeout; R32-09 remains unqualified until repair passes.",
+  "repair_plan_sha256": "780083816f83305686fe93538c381f8630a784cf66d5e31bebb55c279474e556",
+  "findings": [
+    {
+      "id": "BP-01",
+      "severity": "P1",
+      "status": "REPRODUCED_BLOCKER",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/consumer.py",
+      "line_start": 99,
+      "line_end": 106,
+      "title": "Squared-budget tolerance changes the identified set under amplitude-unit conversion",
+      "description": "The numeric 1 in tol=1e-9*max(1,rho^2,J0) has no matching physical unit and dominates small budgets. Exact zero data with rho=1e-6 returns SINGLETON_NUMERIC_BOUNDARY and radius=0 although the proved set is a nonzero full24 ball of radius 3.206791803148725e-7. The retained generic EMPTY and BALL controls also both become radius-zero singletons when Y and rho are scaled by 1e-6. This is a finite wrong output, not an ambiguous ill-conditioned boundary: the generic empty case is below the floor by 75 percent of J0. Negative rho is also accepted although the radius interpretation and rho/ell bounds require rho>=0.",
+      "witness": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fresh_independent_review/raw/exact_helper_probe.json",
+      "additional_witness": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fresh_independent_review/raw/independent_probe.json",
+      "minimal_fix": "Use a unit-equivariant squared-amplitude tolerance and explicit nonnegative finite radius domain; separate numerical boundary uncertainty from singleton, with scale and zero-data regressions."
+    },
+    {
+      "id": "BP-02",
+      "severity": "P2",
+      "status": "REPRODUCED_BLOCKER",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/consumer.py",
+      "line_start": 232,
+      "line_end": 233,
+      "title": "Exported coefficient nullspace vectors are still whitened",
+      "description": "solve_metric creates N=null_space(F/d) at line72 and compact exports its transpose under coefficient_nullspace_directions_2x9. For the nominal common metric, ||F N||_F/||F||_F=0.030178449123981835, so these are not nuisance directions in the declared original moment coordinates and cannot be added to c_M while preserving Fc=a. The correct original directions N/d give 2.5997225981406524e-16. All six common-metric branches exhibit the same issue; raw-I happens to conceal it.",
+      "witness": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fresh_independent_review/raw/independent_probe.json",
+      "minimal_fix": "Export N_c=N_z/d in original coordinates and explicitly name any retained whitened N_z; verify both null equations, M normalization/orthogonality and full24 lifts."
+    }
+  ],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "actual_native_tool": "collaboration.followup_task",
+  "actual_ack_go": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/BP_FORMAL_REVIEW_ACTUAL_ACK_GO.json",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fresh_independent_review/RAW_FORMAL_BINDING.json",
+  "formal_binding_time_utc": "2026-10-25T14:10:01.477860+00:00",
+  "assessment_reused_from": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fresh_independent_review/RESULT.json",
+  "assessment_reused_sha256": "5576eb43f8c1813f9511ee902e4943d2e2d48a2e96b50c8c3d0a8911e18deee2",
+  "new_scientific_probes": false,
+  "new_builds": false,
+  "candidate_identity_verified_unchanged": true,
+  "source_identities_verified_unchanged": true,
+  "reviewer_independence": {
+    "implemented_candidate": false,
+    "framed_contract": false,
+    "excluded_author": "/root/rc_aa53140193a72f38",
+    "excluded_framer": "/root/r35_h03_bandpass_contract_intake",
+    "prior_candidate_review_verdict_read": false,
+    "nested_agents": false
+  },
+  "same_task_targeted_repair_required": true,
+  "R32_09_qualified": false,
+  "no_new_ultra_or_budget_reset": true
+}

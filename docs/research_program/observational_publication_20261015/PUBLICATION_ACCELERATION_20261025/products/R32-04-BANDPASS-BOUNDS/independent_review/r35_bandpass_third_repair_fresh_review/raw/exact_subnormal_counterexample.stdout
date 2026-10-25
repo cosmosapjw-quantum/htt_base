@@ -1,0 +1,49 @@
+{
+  "finding_id": "BP-05",
+  "class": "numeric",
+  "branch": "A_BT_1e-06",
+  "metric": "raw_identity",
+  "source_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "candidate_sha256": "7391a142944844adcf7cf468d72f3e7ef1e63ee33405a1c25de099e468dcea9d",
+  "consumer_sha256": "2f42591fd77f5e93af3bb690714a08b685d0a34173c77afec8a589b8a024a1e8",
+  "input_generation": "Y[:,0]=1e-150; Y[0,0]+=1e-150*1e-12; Y[6,0]-=1e-150*1e-12; all other 23 coordinates zero",
+  "Y_col0_hex": [
+    "0x1.a2fe76a3fb140p-499",
+    "0x1.a2fe76a3f9475p-499",
+    "0x1.a2fe76a3f9475p-499",
+    "0x1.a2fe76a3f9475p-499",
+    "0x1.a2fe76a3f9475p-499",
+    "0x1.a2fe76a3f9475p-499",
+    "0x1.a2fe76a3f77aap-499"
+  ],
+  "rho_hex": "0x1.1b1bf25a690e5p-535",
+  "exact_budget_squared": "9.667909403880207715982116871774207166297439563514765091e-323",
+  "exact_J0": "2.416977350970052382376897839338775855177967276682354352e-323",
+  "exact_center_col0": "9.999999999998260310975265180071663627813306040799507349e-151",
+  "exact_ell_squared": "3551.229389679989864147680912912882795538700990117095412",
+  "reported_center_hex": "0x1.a2fe76a3f8f73p-499",
+  "reported_radius_hex": "0x1.075092ecf6cf0p-541",
+  "reported_J0_relative_error": "0.0220733877438975570614467204929875282296579050",
+  "binary64_tolerance": 0.0,
+  "full_sphere_maximum_relative_budget_error": "0.000533760728269736571417186444198904340637089867",
+  "full_sphere_error_over_fixed_policy": "533760.728269736571417186444198904340637089867",
+  "full_sphere_maximum_cost_over_budget": "1.00053376072826973657141718644419890434063709",
+  "exact_rational_policy_violation": true,
+  "serialized_direction_witnesses": [
+    {
+      "sign": -1,
+      "coordinate_hex": "0x1.a2fe76a3f8b56p-499",
+      "cost_over_budget": "0.999097796637063105432462654481556533577498274",
+      "relative_budget_error": "-0.000902203362936894567537345518443466422501726189",
+      "violates_fixed_relative_policy": true
+    },
+    {
+      "sign": 1,
+      "coordinate_hex": "0x1.a2fe76a3f9390p-499",
+      "cost_over_budget": "1.00016486579977892380264387010194929617409461",
+      "relative_budget_error": "0.000164865799778923802643870101949296174094611317",
+      "violates_fixed_relative_policy": true
+    }
+  ],
+  "mathematical_reference": "Rational 6x9 contrast minimum; ell2=1/(g0 (I-A.T(AA.T)^-1 A) g0.T); J0=(Hy).T(AA.T)^-1(Hy); center=y0-g0 A.T(AA.T)^-1 Hy. Continuous extrema J0+ell2*(r +/- abs(c_report-c_exact))^2."
+}

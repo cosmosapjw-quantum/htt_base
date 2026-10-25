@@ -1,0 +1,2244 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 41%]
+........................................................................ [ 83%]
+.............................                                            [100%]
+=================================== FAILURES ===================================
+_ test_exact_repeated_rows_have_structural_set[single-1e-06-common-A_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'common', scale = 1e-06, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1e-06-common-A_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'common', scale = 1e-06, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1e-06-common-A_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'common', scale = 1e-06, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1e-06-common-B_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'common', scale = 1e-06, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1e-06-common-B_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'common', scale = 1e-06, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1e-06-common-B_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'common', scale = 1e-06, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[single-1e-06-raw-A_BT_1e-07] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'raw', scale = 1e-06, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[single-1e-06-raw-A_BT_1e-08] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'raw', scale = 1e-06, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[single-1e-06-raw-A_BT_1e-06] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'raw', scale = 1e-06, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[single-1e-06-raw-B_BT_1e-07] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'raw', scale = 1e-06, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[single-1e-06-raw-B_BT_1e-08] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'raw', scale = 1e-06, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[single-1e-06-raw-B_BT_1e-06] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'raw', scale = 1e-06, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[single-1.0-common-A_BT_1e-07] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'common', scale = 1.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[single-1.0-common-A_BT_1e-08] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'common', scale = 1.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[single-1.0-common-A_BT_1e-06] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'common', scale = 1.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[single-1.0-common-B_BT_1e-07] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'common', scale = 1.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[single-1.0-common-B_BT_1e-08] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'common', scale = 1.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[single-1.0-common-B_BT_1e-06] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'common', scale = 1.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+___ test_exact_repeated_rows_have_structural_set[single-1.0-raw-A_BT_1e-07] ____
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'raw', scale = 1.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+___ test_exact_repeated_rows_have_structural_set[single-1.0-raw-A_BT_1e-08] ____
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'raw', scale = 1.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+___ test_exact_repeated_rows_have_structural_set[single-1.0-raw-A_BT_1e-06] ____
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'raw', scale = 1.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+___ test_exact_repeated_rows_have_structural_set[single-1.0-raw-B_BT_1e-07] ____
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'raw', scale = 1.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+___ test_exact_repeated_rows_have_structural_set[single-1.0-raw-B_BT_1e-08] ____
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'raw', scale = 1.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+___ test_exact_repeated_rows_have_structural_set[single-1.0-raw-B_BT_1e-06] ____
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'raw', scale = 1.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1000000.0-common-A_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'common', scale = 1000000.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1000000.0-common-A_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'common', scale = 1000000.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1000000.0-common-A_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'common', scale = 1000000.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1000000.0-common-B_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'common', scale = 1000000.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1000000.0-common-B_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'common', scale = 1000000.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1000000.0-common-B_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'common', scale = 1000000.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1000000.0-raw-A_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'raw', scale = 1000000.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1000000.0-raw-A_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'raw', scale = 1000000.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1000000.0-raw-A_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'raw', scale = 1000000.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1000000.0-raw-B_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'raw', scale = 1000000.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1000000.0-raw-B_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'raw', scale = 1000000.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[single-1000000.0-raw-B_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'raw', scale = 1000000.0, carrier = 'single'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1e-06-common-A_BT_1e-07] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'common', scale = 1e-06, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1e-06-common-A_BT_1e-08] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'common', scale = 1e-06, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1e-06-common-A_BT_1e-06] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'common', scale = 1e-06, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1e-06-common-B_BT_1e-07] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'common', scale = 1e-06, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1e-06-common-B_BT_1e-08] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'common', scale = 1e-06, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1e-06-common-B_BT_1e-06] __
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'common', scale = 1e-06, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+___ test_exact_repeated_rows_have_structural_set[mixed-1e-06-raw-A_BT_1e-07] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'raw', scale = 1e-06, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+___ test_exact_repeated_rows_have_structural_set[mixed-1e-06-raw-A_BT_1e-08] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'raw', scale = 1e-06, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+___ test_exact_repeated_rows_have_structural_set[mixed-1e-06-raw-A_BT_1e-06] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'raw', scale = 1e-06, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+___ test_exact_repeated_rows_have_structural_set[mixed-1e-06-raw-B_BT_1e-07] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'raw', scale = 1e-06, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+___ test_exact_repeated_rows_have_structural_set[mixed-1e-06-raw-B_BT_1e-08] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'raw', scale = 1e-06, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+___ test_exact_repeated_rows_have_structural_set[mixed-1e-06-raw-B_BT_1e-06] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'raw', scale = 1e-06, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[mixed-1.0-common-A_BT_1e-07] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'common', scale = 1.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[mixed-1.0-common-A_BT_1e-08] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'common', scale = 1.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[mixed-1.0-common-A_BT_1e-06] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'common', scale = 1.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[mixed-1.0-common-B_BT_1e-07] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'common', scale = 1.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[mixed-1.0-common-B_BT_1e-08] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'common', scale = 1.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+__ test_exact_repeated_rows_have_structural_set[mixed-1.0-common-B_BT_1e-06] ___
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'common', scale = 1.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+____ test_exact_repeated_rows_have_structural_set[mixed-1.0-raw-A_BT_1e-07] ____
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'raw', scale = 1.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+____ test_exact_repeated_rows_have_structural_set[mixed-1.0-raw-A_BT_1e-08] ____
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'raw', scale = 1.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+____ test_exact_repeated_rows_have_structural_set[mixed-1.0-raw-A_BT_1e-06] ____
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'raw', scale = 1.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+____ test_exact_repeated_rows_have_structural_set[mixed-1.0-raw-B_BT_1e-07] ____
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'raw', scale = 1.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+____ test_exact_repeated_rows_have_structural_set[mixed-1.0-raw-B_BT_1e-08] ____
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'raw', scale = 1.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+____ test_exact_repeated_rows_have_structural_set[mixed-1.0-raw-B_BT_1e-06] ____
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'raw', scale = 1.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1000000.0-common-A_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'common', scale = 1000000.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1000000.0-common-A_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'common', scale = 1000000.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1000000.0-common-A_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'common', scale = 1000000.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1000000.0-common-B_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'common', scale = 1000000.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1000000.0-common-B_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'common', scale = 1000000.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1000000.0-common-B_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'common', scale = 1000000.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1000000.0-raw-A_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-07', metric = 'raw', scale = 1000000.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1000000.0-raw-A_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-08', metric = 'raw', scale = 1000000.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1000000.0-raw-A_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'A_BT_1e-06', metric = 'raw', scale = 1000000.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1000000.0-raw-B_BT_1e-07] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-07', metric = 'raw', scale = 1000000.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1000000.0-raw-B_BT_1e-08] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-08', metric = 'raw', scale = 1000000.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+_ test_exact_repeated_rows_have_structural_set[mixed-1000000.0-raw-B_BT_1e-06] _
+
+branches = {'A_BT_1e-07': {'lfi_convention': 'A', 'hfi_threshold': 1e-07, 'selected_nodes': {'030': {'retained_rows': 188, 'frequ...253, 'lfi_added_shift_raw_GHz': 0.0, ...}, ...}, 'cmb_unity_responses': [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, ...], ...}, ...}
+name = 'B_BT_1e-06', metric = 'raw', scale = 1000000.0, carrier = 'mixed'
+
+    @pytest.mark.parametrize("name", candidate.BRANCHES)
+    @pytest.mark.parametrize("metric", ("common", "raw"))
+    @pytest.mark.parametrize("scale", (1e-6, 1.0, 1e6))
+    @pytest.mark.parametrize("carrier", ("single", "mixed"))
+    def test_exact_repeated_rows_have_structural_set(branches, name, metric, scale, carrier):
+        F, a, d, sol = inputs(branches, name, metric)
+        s = np.zeros(24)
+        if carrier == "single":
+            s[0] = scale
+        else:
+            s = scale * np.array([(-1)**i * (i+1)/24 for i in range(24)])
+        Y = np.tile(s, (7, 1))
+        at_zero = candidate.identified(Y, F, a, d, sol, 0.0)
+        assert at_zero["status"] == "SINGLETON_EXACT_STRUCTURAL"
+        assert at_zero["J0"] == at_zero["radius"] == 0.0
+        assert np.array_equal(at_zero["center"], s)
+        for rho in (scale * 1e-200, scale):
+            result = candidate.identified(Y, F, a, d, sol, rho)
+>           assert result["status"] == "BALL"
+E           AssertionError: assert 'NUMERIC_RANGE_HOLD' == 'BALL'
+E             
+E             - BALL
+E             + NUMERIC_RANGE_HOLD
+
+test_pure_target_boundary.py:93: AssertionError
+=============================== warnings summary ===============================
+../../../../../../../../../../.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63
+  /home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+    warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1e-06-common-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1e-06-common-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1e-06-common-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1e-06-common-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1e-06-common-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1e-06-common-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1e-06-raw-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1e-06-raw-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1e-06-raw-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1e-06-raw-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1e-06-raw-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1e-06-raw-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1.0-common-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1.0-common-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1.0-common-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1.0-common-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1.0-common-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1.0-common-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1.0-raw-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1.0-raw-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1.0-raw-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1.0-raw-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1.0-raw-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1.0-raw-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1000000.0-common-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1000000.0-common-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1000000.0-common-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1000000.0-common-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1000000.0-common-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1000000.0-common-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1000000.0-raw-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1000000.0-raw-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1000000.0-raw-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1000000.0-raw-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1000000.0-raw-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[single-1000000.0-raw-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1e-06-common-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1e-06-common-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1e-06-common-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1e-06-common-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1e-06-common-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1e-06-common-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1e-06-raw-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1e-06-raw-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1e-06-raw-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1e-06-raw-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1e-06-raw-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1e-06-raw-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1.0-common-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1.0-common-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1.0-common-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1.0-common-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1.0-common-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1.0-common-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1.0-raw-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1.0-raw-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1.0-raw-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1.0-raw-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1.0-raw-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1.0-raw-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1000000.0-common-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1000000.0-common-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1000000.0-common-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1000000.0-common-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1000000.0-common-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1000000.0-common-B_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1000000.0-raw-A_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1000000.0-raw-A_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1000000.0-raw-A_BT_1e-06]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1000000.0-raw-B_BT_1e-07]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1000000.0-raw-B_BT_1e-08]
+FAILED test_pure_target_boundary.py::test_exact_repeated_rows_have_structural_set[mixed-1000000.0-raw-B_BT_1e-06]
+72 failed, 101 passed, 1 warning in 14.74s

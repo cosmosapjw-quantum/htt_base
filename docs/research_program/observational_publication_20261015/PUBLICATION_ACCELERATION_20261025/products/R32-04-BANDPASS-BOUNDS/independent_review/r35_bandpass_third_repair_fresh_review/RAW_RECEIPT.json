@@ -1,0 +1,181 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R32-04-BANDPASS-BOUNDS",
+  "attempt": 8,
+  "phase": "review",
+  "packet_id": "d36653329cd8321cd9c27b696e7f52335e3c9cfcbd1ed1ecb40608fbeedd2a76",
+  "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+  "candidate_identity": "sha256:7391a142944844adcf7cf468d72f3e7ef1e63ee33405a1c25de099e468dcea9d",
+  "agent_id": "/root/rc_d36653329cd8321c",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "ack": {
+    "packet_id": "d36653329cd8321cd9c27b696e7f52335e3c9cfcbd1ed1ecb40608fbeedd2a76",
+    "agent_id": "/root/rc_d36653329cd8321c",
+    "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+    "candidate_identity": "sha256:7391a142944844adcf7cf468d72f3e7ef1e63ee33405a1c25de099e468dcea9d",
+    "go": true,
+    "acknowledged": true
+  },
+  "completed_utc": "2026-10-25T15:42:03.104015+00:00",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "source_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "candidate_reverified": true,
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "sympy": "1.14.0",
+    "mpmath": "1.3.0"
+  },
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_03/test_bandpass_boundary_repair.py",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_03/test_pure_target_boundary.py",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_03/test_center_geometry.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 30.68240638799034,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/pytest.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/pytest.stderr"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/mplconfig python3 -B /mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/probe.py",
+      "exit_code": 0,
+      "elapsed_seconds": 25.538070440059528,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/independent_probe.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/independent_probe.stderr"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 MPLCONFIGDIR=/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/mplconfig python3 -B /mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/exact_subnormal_counterexample.py",
+      "exit_code": 0,
+      "meaning": "Exact rational assertions reproduce policy violation, not scientific PASS",
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/exact_subnormal_counterexample.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/exact_subnormal_counterexample.stderr"
+    }
+  ],
+  "validation": [
+    "Exact packet/ACK/candidate binding verified; all 48 manifest entries matched before and after review.",
+    "Affected suite executed read-only with cache and bytecode writes disabled: 186 passed; one unrelated Matplotlib Axes3D availability warning.",
+    "Independent rational 6x9 contrast solve: 1380 ordinary-range cases; 516 EMPTY, 300 BOUNDARY_UNCERTAIN, 348 NUMERIC_BOUNDARY_HOLD, 216 BALL; no violations.",
+    "For all 216 reported ordinary-range balls, exact full24 sphere extrema and rounded witnesses in every coordinate direction satisfy fixed 1e-9 policy. Maximum full-sphere error/tolerance=0.11912591376335703; maximum error/reported-bound=0.8854926453236278.",
+    "Original BP-04 exact input returns NUMERIC_BOUNDARY_HOLD and radius None. Coherent 80/120-digit fallback lifts exact F,d,a,Y, not rounded K.",
+    "All 12 compact branch/metric dictionaries, all six NPZs and both generated tables independently verified exactly equal to repair_02.",
+    "Seven-page PDF is text-extractable; source equations and report retain the free signed nine-moment finite-model scope, units, full signed24 carrier, deterministic set meaning and absent physical/sky/noise/native claims.",
+    "FAIL BP-05: exact-rational subnormal case reports BALL with zero image bound and zero tolerance; full-sphere maximum budget error is 533760.7282697366 times the unchanged policy. A serialized +e0 witness exceeds the budget by 1.648657997789238e-4 relatively.",
+    "FAIL same range family: exact zero data and rho=smallest positive binary64 return BALL with radius=0.0 and no uncertainty."
+  ],
+  "evidence_files": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/BINDING.json",
+      "size_bytes": 1179,
+      "sha256": "95679001d3bce6747275606aa6603b88bd924f3c28050afed9067a68fb765172"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/candidate.diff",
+      "size_bytes": 16421,
+      "sha256": "50fdd69db7ca3335a00fbc98b1214ce2adcbcd7e6d0321b184a3453a80e16315"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/exact_subnormal_counterexample.json",
+      "size_bytes": 5682,
+      "sha256": "42a2e2e464b23be45bc7c2eeccea2dbf63fd21231e951b9da69bf35c29f76664"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/exact_subnormal_counterexample.stderr",
+      "size_bytes": 379,
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/exact_subnormal_counterexample.stdout",
+      "size_bytes": 2468,
+      "sha256": "90461e7c5ec30923eee16cc3aa3ff5824c833a08b7af240f78eb19f6e2c6a7d2"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/independent_probe.json",
+      "size_bytes": 345366,
+      "sha256": "b39ae4106c1a65c89fdfc4d6efbbf9dfc940623aee4eac553603b381579c7f8d"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/independent_probe.stderr",
+      "size_bytes": 379,
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/independent_probe.stdout",
+      "size_bytes": 3108,
+      "sha256": "f84358d1de8af0be0e1b952382811ed44dc41fedcb5f9bce2124dd3cb7eeabb4"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/paper.txt",
+      "size_bytes": 20931,
+      "sha256": "ce0dc0ccbfad14c2f05863914be587cfe675c30b002bad62882c11dd74dd7000"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/parity.json",
+      "size_bytes": 773,
+      "sha256": "facf3746ccfff25a670b4d90079a2760174d9de42ee439b00173d53e4b474283"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/pdfinfo.txt",
+      "size_bytes": 545,
+      "sha256": "43857aead94b27032b6d307a0de6fb949b3487b5245e78d0f027f0d77f13fb38"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/pytest.receipt.json",
+      "size_bytes": 1075,
+      "sha256": "b50d5b12757f980c90fc660fd70f5ea294e2054a0e2cf9ccef689b80fabece87"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/pytest.stderr",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/pytest.stdout",
+      "size_bytes": 892,
+      "sha256": "f2b793ae4b7ceb1be6d28c575ee0ed9827464abd717ad6697c8121113a68c367"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/range_probe.json",
+      "size_bytes": 3398,
+      "sha256": "d1f427700052a8aa5affa83fa0db338decac2c8a3e13d903b6018c989e1728df"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/structural_radius_underflow.json",
+      "size_bytes": 325,
+      "sha256": "c22c79838014f8c3144e0dcfc11824b2b52734e5392c98132df399b6c6b353ce"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/subnormal_geometry_probe.json",
+      "size_bytes": 3254,
+      "sha256": "4796a227c8bb730ce6278b0bae75416838333d3cf0511f6b4f544c476ad12cc8"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/probe.py",
+      "size_bytes": 7156,
+      "sha256": "fad3040aa3cb8e31a0d0b49e15f6e3f09a94aa89413eec7e568ba43af5d6369e"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/exact_subnormal_counterexample.py",
+      "size_bytes": 3952,
+      "sha256": "7abfd616d849bf140b5d3737238cd41e9939e07ac221d959ff1590303301e339"
+    }
+  ],
+  "write_scope": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review",
+  "repository_mutation": false,
+  "git_or_state_operation": false,
+  "children_spawned": false
+}

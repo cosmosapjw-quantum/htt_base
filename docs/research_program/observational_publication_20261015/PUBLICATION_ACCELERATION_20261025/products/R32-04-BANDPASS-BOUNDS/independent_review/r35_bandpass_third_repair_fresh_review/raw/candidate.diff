@@ -1,0 +1,290 @@
+--- repair_02/consumer.py
++++ repair_03/consumer.py
+@@ -19,7 +19,7 @@
+ from scipy.linalg import cho_factor, cho_solve, null_space, solve_triangular
+ 
+ HERE = Path(__file__).resolve().parent
+-P = HERE.parents[2]  # repair_02 is nested one level below the original product
++P = HERE.parents[2]  # repair_03 is nested one level below the original product
+ SOURCE = P / "evidence/R31/report/data/RESULT.json"
+ SOURCE_SHA = "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f"
+ BRANCHES = ("A_BT_1e-07", "A_BT_1e-08", "A_BT_1e-06",
+@@ -100,13 +100,14 @@
+                 predicted_increment=predicted_increment)
+ 
+ 
+-def high_precision_J0(Y: np.ndarray, F: np.ndarray, a: np.ndarray,
+-                      d: np.ndarray, condition_K: float,
+-                      whitened_norm_squared: float) -> tuple[float, float] | None:
+-    """Two-precision numerical fallback on the same exact binary64 inputs.
+-
+-    It supplies a conservative retained-matrix policy check, not an all-input
+-    interval proof. An unavailable or unresolved check returns None.
++def high_precision_geometry(Y: np.ndarray, F: np.ndarray, a: np.ndarray,
++                            d: np.ndarray, rho: float, condition_K: float,
++                            whitened_norm_squared: float,
++                            reported_ell: float) -> dict | None:
++    """Retained-input 80/120-digit center, cost, residual, and error scales.
++
++    These conditioned, two-precision allowances are a numerical policy, not a
++    rigorous all-input interval proof. No changed model or input is inferred.
+     """
+     try:
+         import mpmath as mp
+@@ -122,34 +123,125 @@
+             yy = mp.matrix([[mp.mpf(float(Y[i, j])) for j in range(24)]
+                             for i in range(7)])
+             z = Kinv * aa
+-            center = (yy.T * z) / (aa.T * z)[0]
++            ell2 = (aa.T * z)[0]
++            center = (yy.T * z) / ell2
+             residual = yy - aa * center.T
+             weighted = Kinv * residual
+-            return sum(residual[i, j] * weighted[i, j]
+-                       for i in range(7) for j in range(24))
++            j0 = sum(residual[i, j] * weighted[i, j]
++                     for i in range(7) for j in range(24))
++            center_scale = mp.sqrt(sum(
++                (sum(abs(yy[i, j] * z[i]) for i in range(7)) / ell2)**2
++                for j in range(24)))
++            inverse_frobenius = mp.sqrt(sum(Kinv[i, j]**2
++                                            for i in range(7) for j in range(7)))
++            return j0, center, mp.sqrt(ell2), center_scale, yy, inverse_frobenius
+ 
+     try:
+-        j80 = compute(80)
+-        j120 = compute(120)
++        j80, c80, ell80, _, _, _ = compute(80)
++        j120, c120, ell120, center_scale, yy, inverse_frobenius = compute(120)
+         with mp.workdps(120):
+-            if not mp.isfinite(j120) or j120 < 0:
++            if not mp.isfinite(j120) or j120 < 0 or not mp.isfinite(ell120) or ell120 <= 0:
+                 return None
+             j_float = float(j120)
+             if not math.isfinite(j_float) or (j120 > 0 and j_float == 0):
+                 return None
+-            # This is a retained-matrix numerical error policy: convergence
+-            # between 80/120 digits, a conditioned 80-digit solve allowance,
+-            # and conversion back to binary64 all scale as amplitude squared.
+-            delta = (abs(j120 - j80)
+-                     + 16 * mp.mpf(condition_K) * mp.power(10, -76)
+-                     * mp.mpf(whitened_norm_squared)
+-                     + 2 * np.finfo(float).eps * abs(j120))
+-            delta_float = float(delta)
+-            if not math.isfinite(delta_float):
++            eps = mp.mpf(float(np.finfo(float).eps))
++            conditioned = 16 * mp.mpf(float(condition_K)) * mp.power(10, -76)
++            j_error = (abs(j120 - j80)
++                       + conditioned * mp.mpf(float(whitened_norm_squared))
++                       + 2 * eps * abs(j120))
++            c_float = np.array([float(c120[j]) for j in range(24)])
++            if not np.all(np.isfinite(c_float)):
+                 return None
+-            return j_float, delta_float
++            center_error = (mp.sqrt(sum((c120[j] - c80[j])**2 for j in range(24)))
++                            + conditioned * center_scale
++                            + mp.sqrt(sum((mp.mpf(float(c_float[j])) - c120[j])**2
++                                          for j in range(24))))
++            ell_error = (abs(ell120 - ell80) + conditioned * ell120
++                         + abs(mp.mpf(float(reported_ell)) - ell120)
++                         + 2 * eps * ell120)
++            residual = np.array([[float(yy[i, j] - mp.mpf(float(a[i]))
++                                         * mp.mpf(float(c_float[j])))
++                                  for j in range(24)] for i in range(7)])
++            residual_relation_error = mp.sqrt(sum(
++                (mp.mpf(float(residual[i, j]))
++                 - (yy[i, j] - mp.mpf(float(a[i]))
++                    * mp.mpf(float(c_float[j]))))**2
++                for i in range(7) for j in range(24)))
++            rho_mp = mp.mpf(float(rho))
++            budget_roundoff = 2 * eps * rho_mp**2
++            gap = rho_mp**2 - j120
++            radius = float(mp.sqrt(gap) / ell120) if gap > 0 else None
++            values = (j_error, center_error, ell_error,
++                      residual_relation_error, budget_roundoff)
++            if not all(mp.isfinite(v) for v in values):
++                return None
++            return {"J0": j_float, "J0_error": float(j_error),
++                    "center": c_float, "center_error": float(center_error),
++                    "ell": float(ell120), "ell_error": float(ell_error),
++                    "residual": residual,
++                    "residual_relation_error": float(residual_relation_error),
++                    "radius": radius, "budget_roundoff": float(budget_roundoff),
++                    "mp_state": (j120, j_error, c120, ell120, ell_error,
++                                 rho_mp, inverse_frobenius)}
+     except (ArithmeticError, ValueError, OverflowError):
+         return None
++
++
++def output_geometry_error(high: dict, center: np.ndarray, radius: float,
++                          Y: np.ndarray, a: np.ndarray,
++                          residual: np.ndarray) -> dict | None:
++    """Homogeneous full24 image bound for serialized center/radius/witness.
++
++    Includes 24 center conversions, radius conversion, retained ell accuracy,
++    rho-square/J0 uncertainty and one final center-plus-direction rounding.
++    """
++    import mpmath as mp
++    j0, j_error, c_true, ell, ell_error, rho_mp, inverse_frobenius = high["mp_state"]
++    with mp.workdps(120):
++        eps = mp.mpf(float(np.finfo(float).eps))
++        radius_mp = mp.mpf(float(radius))
++        delta_center = (mp.sqrt(sum((mp.mpf(float(center[j])) - c_true[j])**2
++                                    for j in range(24)))
++                        + mp.mpf(float(high["center_error"])))
++        addition_roundoff = (2 * eps
++                             * (mp.sqrt(sum(mp.mpf(float(x))**2 for x in center))
++                                + radius_mp))
++        delta_center += addition_roundoff
++        gap = rho_mp**2 - j0
++        gap_error = j_error + mp.mpf(float(high["budget_roundoff"]))
++        if ell <= ell_error or gap <= 0 or radius_mp < 0:
++            return None
++        r_lower = (mp.sqrt(max(mp.mpf('0'), gap - gap_error))
++                   / (ell + ell_error))
++        r_upper = (mp.sqrt(gap + gap_error) / (ell - ell_error))
++        delta_radius = max(abs(radius_mp - r_lower), abs(r_upper - radius_mp))
++        delta_total = delta_center + delta_radius
++        ell2_error = 2 * ell * ell_error + ell_error**2
++        residual_relation_error = mp.sqrt(sum(
++            (mp.mpf(float(residual[i, j]))
++             - (mp.mpf(float(Y[i, j])) - mp.mpf(float(a[i]))
++                * mp.mpf(float(center[j]))))**2
++            for i in range(7) for j in range(24)))
++        residual_weighted_error = mp.sqrt(inverse_frobenius) * residual_relation_error
++        residual_budget_error = (2 * mp.sqrt(j0 + j_error
++                                              + ell**2 * delta_center**2)
++                                 * residual_weighted_error
++                                 + residual_weighted_error**2)
++        image_error = (j_error + mp.mpf(float(high["budget_roundoff"]))
++                       + ell**2 * (2 * radius_mp * delta_total
++                                   + delta_total**2)
++                       + ell2_error * (radius_mp + delta_total)**2
++                       + residual_budget_error)
++        if not all(mp.isfinite(v) for v in (delta_center, delta_radius,
++                                            image_error)):
++            return None
++        return {"center_error_bound": float(delta_center),
++                "radius_error_bound": float(delta_radius),
++                "budget_image_error_bound": float(image_error),
++                "residual_relation_error": float(residual_relation_error),
++                "residual_budget_error_bound": float(residual_budget_error),
++                "reported_ell_error_bound": high["ell_error"]}
+ 
+ 
+ def identified(Y: np.ndarray, F: np.ndarray, a: np.ndarray,
+@@ -250,27 +342,70 @@
+         status, radius = "NUMERIC_BOUNDARY_HOLD", None
+         uncertainty["reason"] = "binary64 error coverage unavailable"
+ 
+-    if status in ("NUMERIC_BOUNDARY_HOLD", "BOUNDARY_UNCERTAIN"):
+-        fallback = high_precision_J0(Y, F, a, d, condition_K, z_norm * z_norm)
+-        if fallback is not None:
+-            j_high, error_high = fallback
++    geometry_error = None
++    if status in ("NUMERIC_BOUNDARY_HOLD", "BOUNDARY_UNCERTAIN", "BALL"):
++        previous_status, previous_radius = status, radius
++        high = high_precision_geometry(Y, F, a, d, rho, condition_K,
++                                       z_norm * z_norm, sol["ell"])
++        if high is None:
++            status, radius = "NUMERIC_BOUNDARY_HOLD", None
++            uncertainty = {"reason": "coherent high precision geometry unavailable",
++                           "binary64_error_policy": uncertainty}
++        else:
++            j_high, error_high = high["J0"], high["J0_error"]
+             high_tolerance = 1e-9 * max(rho2, j_high)
+-            uncertainty["high_precision_J0"] = j_high
+-            uncertainty["high_precision_error_scale"] = error_high
+-            uncertainty["high_precision_squared_budget_tolerance"] = high_tolerance
+-            if error_high + budget_roundoff <= high_tolerance:
+-                Jhat = j_high
+-                if rho2 + budget_roundoff < j_high - error_high - high_tolerance:
+-                    status, radius, uncertainty = "EMPTY", None, None
+-                elif rho2 - budget_roundoff > j_high + error_high + high_tolerance:
+-                    status = "BALL"
+-                    radius = math.sqrt(rho2 - j_high) / sol["ell"]
+-                    uncertainty = None
++            high_uncertainty = {
++                "reason": "high precision side or serialized geometry unresolved",
++                "high_precision_J0": j_high,
++                "high_precision_error_scale": error_high,
++                "high_precision_squared_budget_tolerance": high_tolerance,
++                "squared_budget_tolerance": high_tolerance,
++                "center_error_bound": high["center_error"],
++                "ell_error_bound": high["ell_error"],
++                "residual_relation_error": high["residual_relation_error"]}
++            if error_high + high["budget_roundoff"] > high_tolerance:
++                status, radius = "NUMERIC_BOUNDARY_HOLD", None
++                uncertainty = high_uncertainty
++            elif rho2 + high["budget_roundoff"] < j_high - error_high - high_tolerance:
++                status, radius, uncertainty = "EMPTY", None, None
++            elif rho2 - high["budget_roundoff"] > j_high + error_high + high_tolerance:
++                # Keep previously published generic arrays if their actual
++                # serialized geometry passes the same full24 image criterion.
++                keep_binary64 = previous_status == "BALL" and previous_radius is not None
++                candidate_center = s0 if keep_binary64 else high["center"]
++                candidate_radius = previous_radius if keep_binary64 else high["radius"]
++                candidate_residual = R if keep_binary64 else high["residual"]
++                geometry_error = (output_geometry_error(high, candidate_center,
++                                                        candidate_radius, Y, a,
++                                                        candidate_residual)
++                                  if candidate_radius is not None else None)
++                if keep_binary64 and (geometry_error is None or
++                                      geometry_error["budget_image_error_bound"] > high_tolerance):
++                    candidate_center, candidate_radius = high["center"], high["radius"]
++                    geometry_error = (output_geometry_error(high, candidate_center,
++                                                            candidate_radius, Y, a,
++                                                            high["residual"])
++                                      if candidate_radius is not None else None)
++                    keep_binary64 = False
++                if (geometry_error is None or
++                        geometry_error["budget_image_error_bound"] > high_tolerance):
++                    status, radius = "NUMERIC_BOUNDARY_HOLD", None
++                    high_uncertainty["reason"] = "serialized full24 ball image exceeds relative budget policy"
++                    high_uncertainty["geometry_error"] = geometry_error
++                    uncertainty = high_uncertainty
+                 else:
+-                    status, radius = "BOUNDARY_UNCERTAIN", None
+-                    uncertainty["reason"] = "high precision budget interval overlaps zero"
++                    status, radius, uncertainty = "BALL", candidate_radius, None
++                    if not keep_binary64:
++                        s0, R, Jhat = candidate_center, high["residual"], j_high
++            else:
++                status, radius = "BOUNDARY_UNCERTAIN", None
++                high_uncertainty["reason"] = "high precision budget interval overlaps zero"
++                uncertainty = high_uncertainty
++            if status != "BALL":
++                s0, R, Jhat = high["center"], high["residual"], j_high
+     return {"center": s0, "J0": Jhat, "radius": radius, "status": status,
+-            "radius_uncertainty": uncertainty, "residual_7x24": R}
++            "radius_uncertainty": uncertainty, "residual_7x24": R,
++            "geometry_error": geometry_error}
+ 
+ 
+ def u_min(Y: np.ndarray, s: np.ndarray, F: np.ndarray, a: np.ndarray,
+@@ -501,6 +636,25 @@
+             "raw_stored_witness_norm":RAW_REFERENCE[i],
+             "full24_controls":controls,
+             "full24_binary":str(HERE/"report/generated"/(name+"_full24.npz"))}
++        if name == "A_BT_1e-06":
++            # Exact supplied-binary BP-04 regression: J0 side is resolved,
++            # but its translated binary64 boundary is not representable to
++            # the declared relative budget policy.
++            bp04_Y = np.zeros((7, 24))
++            bp04_Y[:, 0] = 1.0
++            bp04_Y[0, 0] += 1e-14
++            bp04_Y[6, 0] -= 1e-14
++            bp04_rho = float.fromhex("0x1.ba775222664cdp-44")
++            bp04 = identified(bp04_Y, F, a, np.ones(9), raw, bp04_rho)
++            require(bp04["status"] == "NUMERIC_BOUNDARY_HOLD" and
++                    bp04["radius"] is None, "BP-04 serialized geometry hold")
++            out["bp04_serialized_geometry"] = {
++                "branch": name, "metric": "raw_identity",
++                "Y_col0_hex": [float(x).hex() for x in bp04_Y[:, 0]],
++                "rho_hex": bp04_rho.hex(), "status": bp04["status"],
++                "J0": bp04["J0"], "center_col0": float(bp04["center"][0]),
++                "radius": bp04["radius"],
++                "uncertainty": bp04["radius_uncertainty"]}
+     make_figures(out["branches"])
+     make_table(out["branches"])
+     (HERE/"RESULT.json").write_text(json.dumps(out, indent=2, allow_nan=False)+"\n")

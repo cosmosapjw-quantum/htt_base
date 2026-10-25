@@ -1,0 +1,172 @@
+{
+  "acceptance_met": false,
+  "ack_path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/BP_STRUCTURAL_RANGE_REPAIR_ACTUAL_ACK_GO.json",
+  "actual_commands": [
+    {
+      "command": [
+        "/usr/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "test_pure_target_boundary.py",
+        "test_bandpass_boundary_repair.py"
+      ],
+      "duration_seconds": 15.43956446647644,
+      "exit_code": 1,
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_puretarget_first.receipt.json"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "test_pure_target_boundary.py",
+        "-k",
+        "test_exact_repeated_rows_have_structural_set"
+      ],
+      "duration_seconds": 4.173842668533325,
+      "exit_code": 1,
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_puretarget_structural_second.receipt.json"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "test_bandpass_boundary_repair.py",
+        "test_pure_target_boundary.py",
+        "test_center_geometry.py",
+        "test_range_boundary.py",
+        "test_structural_range.py"
+      ],
+      "duration_seconds": 66.86146116256714,
+      "exit_code": 0,
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_final_targeted.receipt.json"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "test_structural_range.py"
+      ],
+      "duration_seconds": 3.3127973079681396,
+      "exit_code": 0,
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_structural_final.receipt.json"
+    },
+    {
+      "command": [
+        "/usr/bin/python",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/ordinary_probe.py"
+      ],
+      "duration_seconds": 26.689985752105713,
+      "exit_code": 0,
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/ordinary_probe_final.receipt.json"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/python /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/consumer.py",
+      "duration_seconds": 1.9148344993591309,
+      "exit_code": 0,
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/consumer_final.receipt.json"
+    },
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex",
+      "duration_seconds": 1.783182144165039,
+      "exit_code": 0,
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/latexmk_final.receipt.json"
+    }
+  ],
+  "agent_id": "/root/r35_bandpass_boundary_repair_preparation",
+  "attempt": 11,
+  "base_candidate_identity": "sha256:0086eccfa4efc5775407dd77afa3c9709f4b055fc0c045f201d9cc726bb6bea4",
+  "base_packet_id": "6f087f140bdc10a9847edb33377a6211714d1241470c7497c879552fffd5f6d4",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "completed_utc": "2026-10-25T16:22:01.114537+00:00",
+  "independent_scientific_review": "PENDING_FRESH_ASTRA",
+  "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+  "mutation_scope": "Only repair_05 candidate and assigned external evidence directory; no Git, STATE, controller, older candidate, source, data, native solver or ODE mutation",
+  "observed_runtime": "UNKNOWN",
+  "original42_acceptance": false,
+  "outcome": "success",
+  "packet_id": "586239ab31590037b239e1e50ec95733dec4a3ff3b176231a09798ac910bea82",
+  "packet_path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/NEXT_AFTER_BP_FOURTH_REPAIR_REVIEW.json",
+  "packet_sha256": "e3016865a4d77ad1f976e1493b5114a08aed5f4b60ce9a0c1885bbb3535e410e",
+  "phase": "repair",
+  "preserved_first_failures": [
+    {
+      "observed": "72 failed, 101 passed on pre-clarification witness-addition gate",
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_puretarget_first.receipt.json",
+      "source_snapshot": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/executed_source.firstfailure.consumer.py",
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_puretarget_first.stdout"
+    },
+    {
+      "observed": "60 failed, 12 passed after abstract gate but before restored radius convention",
+      "receipt": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_puretarget_structural_second.receipt.json",
+      "source_snapshot": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/executed_source.secondfailure.consumer.py",
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/raw/pytest_puretarget_structural_second.stdout"
+    },
+    {
+      "external_checkpoint": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_structural_range_actual_repair/CHECKPOINT.json",
+      "sha256": "7bcb3c93efd66f10f134f42236dc529692679b48e4c877f2448bc75641d10e53"
+    },
+    {
+      "prior_candidates": "repair_01, repair_02, repair_03, repair_04 immutable; prior raw failures preserved at their original paths"
+    }
+  ],
+  "qualified_products_semantics": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+  "requested_runtime": {
+    "effort": "high",
+    "model": "gpt-6-sol"
+  },
+  "retained_input": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/R31/report/data/RESULT.json",
+    "sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f"
+  },
+  "same_packet_semantic_clarification": {
+    "ack_path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/BP_STRUCTURAL_SEMANTIC_CLARIFICATION_ACK_GO.json",
+    "result_path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_semantic_blind_audit/RESULT.json",
+    "result_sha256": "f71cc661edb88d87d9495de38a2b78801b6720d96d6b7d54eab3f5331a37a61a"
+  },
+  "scientific_contract": "Abstract real closed full24 ball with exact lifted binary64 center/radius; all-direction D/max(rho\u00b2,J*) <= fixed 1e-9 with conservative uncertainty; arbitrary future binary64 sample addition is diagnostic only. Actual exported synthetic witnesses retain their original gates. Free signed nine-moment finite model, common M and raw sensitivity; no physical positivity, sky/noise or native solver claim.",
+  "source_hashes": {
+    "CLAIM_SOURCE_MAP.md": "273ff573724ec1b26b9e71f2ee8bef68f440bc32362ec5fc83fcf34e3a78c6c2",
+    "consumer.py": "61eeec1f35728f6dddd786e63485f22286c44bfe883a27757688092f782f52d1",
+    "ordinary_probe.py": "e7f6acacb33d150a8d62dfdd5e6b71bfdfac90ac01728efd1d82f848f31a1c49",
+    "report/main.tex": "0186189c1430220e88ec4e184480792768a86d73b904d5e6f15c5e38b5ab4009",
+    "test_bandpass_boundary_repair.py": "1b493ede796e7e19cf300b67d0c4d29f90f0a908e138202c11dedd02d6ea1191",
+    "test_center_geometry.py": "0cfd5baba1f837a4df7ccf4f3a7151b6511f1c3d90fbd829fa193b41bd4eeb73",
+    "test_pure_target_boundary.py": "09721bc3ee39e1d7f320a215a7c4423f171ec0db66623e76d5ff353c77414507",
+    "test_range_boundary.py": "c54b57b4887d74be9de103f5e37d7b2ac2cf5ed078c0efe123f00c1d12433689",
+    "test_structural_range.py": "69d555fe4c85535e5372bc77025154150e4b7fb134df8dd44794b0b44a265caf"
+  },
+  "task_id": "R32-04-BANDPASS-BOUNDS",
+  "validation": {
+    "cached_six_branch_consumer": "PASS, retained R31 source hash verified",
+    "current_candidate_ordinary_probe": {
+      "abstract_failures": 0,
+      "case_count": 1380,
+      "consumer_sha256": "61eeec1f35728f6dddd786e63485f22286c44bfe883a27757688092f782f52d1",
+      "loaded_consumer_file": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/consumer.py",
+      "max_abstract_sphere_error_over_policy": 0.4338542596913388,
+      "max_arbitrary_rounded_sample_error_over_policy_diagnostic_only": 34.06566847895656,
+      "status_counts": {
+        "BALL": 229,
+        "BOUNDARY_UNCERTAIN": 300,
+        "EMPTY": 516,
+        "NUMERIC_BOUNDARY_HOLD": 335
+      }
+    },
+    "final_amended_structural_test": "14 passed, one unused Axes3D warning",
+    "five_targeted_modules": "226 passed, one unused Axes3D warning; source and tests bound in receipt",
+    "parity": {
+      "metric_summaries": 12,
+      "npz": 6,
+      "tables": 2
+    },
+    "report_pdf": "latexmk PASS, seven pages; no undefined reference/citation or missing figure"
+  }
+}

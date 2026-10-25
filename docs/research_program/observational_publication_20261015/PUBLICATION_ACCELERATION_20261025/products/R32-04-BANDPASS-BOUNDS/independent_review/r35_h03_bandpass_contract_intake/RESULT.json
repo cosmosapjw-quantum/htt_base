@@ -1,0 +1,205 @@
+{
+  "status": "SOURCE_CONTRACT_PREPARATION_COMPLETE_NOT_EXECUTED",
+  "task_ids": [
+    "R32-03-H03-STRUCTURED",
+    "R32-04-BANDPASS-BOUNDS"
+  ],
+  "agent_role": "independent scientific source and contract framer; excluded from final independent review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "controller_packet": null,
+  "controller_state_mutated": false,
+  "repo_mutated": false,
+  "original42_effect": "NONE",
+  "qualified_products": [],
+  "contract_path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_bandpass_contract_intake/CONTRACT.md",
+  "contract_sha256": "60e9fe5b62a5396f76363890b1bc12e85799c5b8f9d49388ce699d3c5524a95f",
+  "source_bindings": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/sources/H03_SOURCE_TOMOGRAPHY.json",
+      "sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/output/physical_results.json",
+      "sha256": "25342649e30a8d631a5364002ae39ebffae0a5d92e1e4ad25c9e2f8dfe9362cc"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/research/physical_checks.py",
+      "sha256": "cfe564b7980705a344f9b0f3941b91c744f4edc53096ae3e923ce716cfb7af2d"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/R31/report/data/RESULT.json",
+      "sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/R31/scientific/framing/SPECTRAL_ONLY_CONTRACT.md",
+      "sha256": "fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/R31/report/evidence/INDEPENDENT_REVIEW_RESULT.json",
+      "sha256": "ac948932ba9827ae9368ed05e8cbc1417d1fe8999cce10c0b51d9c4ec497537f"
+    }
+  ],
+  "source_hash_check": "six retained sources matched existing EVIDENCE_MANIFEST; external old R31 result has identical hash",
+  "H03": {
+    "T0": 23.396720522667167,
+    "df": 6,
+    "threshold95": 12.591587243743977,
+    "unrestricted_eta95": 1.2885530036501112,
+    "D_designs": [
+      "depth slope per saved .012 window width, ICRS xyz",
+      "FP retained weight fraction contrast, ICRS xyz",
+      "joint depth then FP"
+    ],
+    "coefficient_metric": "identity on declared dimensionless sensitivities; u0=1 km/s/Mpc",
+    "guaranteed_nonspanning_controls": [
+      "depth slope",
+      "FP contrast"
+    ],
+    "actual_physical_D": "NOT_SUPPLIED",
+    "new_threshold_budgets": "NOT_EXECUTED"
+  },
+  "bandpass": {
+    "required_rows": [
+      "030",
+      "044",
+      "070",
+      "100",
+      "143",
+      "217",
+      "353PSB"
+    ],
+    "branches": [
+      "A_BT_1e-07",
+      "A_BT_1e-08",
+      "A_BT_1e-06",
+      "B_BT_1e-07",
+      "B_BT_1e-08",
+      "B_BT_1e-06"
+    ],
+    "F2_shape": [
+      7,
+      9
+    ],
+    "retained_resolved_rank": 7,
+    "retained_target_quotient_rank": 0,
+    "tensor_coordinates": 24,
+    "primary_metric": "M=diag(d_A_BT_1e-07^2), fixed across all six branches",
+    "secondary_metric": "M=I9",
+    "minimum_budget_formula": "ell_M^2=a^T (F M^-1 F^T)^-1 a",
+    "one_compensation_max_amplitude": "rho/ell_M",
+    "pairwise_max_amplitude_difference": "2rho/ell_M",
+    "generic_fixed_data_radius": "sqrt(rho^2-J0)/ell_M when nonempty",
+    "new_primary_metric_budgets": "NOT_EXECUTED",
+    "stored_I_metric_witness_norms": [
+      59.59210452696802,
+      59.59209151806858,
+      59.592192355037646,
+      59.57284170474581,
+      59.57282871526661,
+      59.57292946657371
+    ],
+    "witness_norm_status": "scalar reuse of already accepted coefficient witnesses; no new solve"
+  },
+  "missing_inputs_for_base_conditional_products": [],
+  "stronger_physical_branch_missing": [
+    "source-bound signed per-window physical calibration/PV/selection Jacobian and joint external bound/law",
+    "physically justified foreground moment metric/radius/coupling/remainder",
+    "actual component-specific spatial response and joint noise/calibration"
+  ],
+  "computation_performed": [
+    "JSON/path/source intake",
+    "existing-source SHA comparison",
+    "scalar sums of squared retained coefficients"
+  ],
+  "computation_not_performed": [
+    "SVD",
+    "new spectral integration",
+    "raw sky",
+    "raw catalogue",
+    "controller execution",
+    "scientific admission"
+  ],
+  "accounting": {
+    "source_intake_shell_command_count": 17,
+    "known_tool_reported_command_intervals": [
+      {
+        "chunk_id": "1693bc",
+        "tool_wall_seconds": 1.2174e-05
+      },
+      {
+        "chunk_id": "183963",
+        "tool_wall_seconds": 9.309e-06
+      },
+      {
+        "chunk_id": "bb48a6",
+        "tool_wall_seconds": 1.038e-05
+      },
+      {
+        "chunk_id": "d89b0f",
+        "tool_wall_seconds": 1.6412e-05
+      },
+      {
+        "chunk_id": "8ed286",
+        "tool_wall_seconds": 9.338e-06
+      },
+      {
+        "chunk_id": "7bdb67",
+        "tool_wall_seconds": 2.4477e-05
+      },
+      {
+        "chunk_id": "b048ea",
+        "tool_wall_seconds": 2.6983e-05
+      },
+      {
+        "chunk_id": "b1ee20",
+        "tool_wall_seconds": 1.8827e-05
+      },
+      {
+        "chunk_id": "84e871",
+        "tool_wall_seconds": 1.3536e-05
+      },
+      {
+        "chunk_id": "fd3a4d",
+        "tool_wall_seconds": 1.1523e-05
+      },
+      {
+        "chunk_id": "ae0b7e",
+        "tool_wall_seconds": 1.9538e-05
+      },
+      {
+        "chunk_id": "a814d2",
+        "tool_wall_seconds": 1.529e-05
+      },
+      {
+        "chunk_id": "cdb51b",
+        "tool_wall_seconds": 1.1011e-05
+      },
+      {
+        "chunk_id": "59a46a",
+        "tool_wall_seconds": 7.795e-06
+      },
+      {
+        "chunk_id": "975092",
+        "tool_wall_seconds": 1.5279e-05
+      },
+      {
+        "chunk_id": "a00377",
+        "tool_wall_seconds": 0.063305106
+      }
+    ],
+    "known_tool_wall_seconds_sum": 0.063526978,
+    "one_interval": "The long concatenated extension-result read was truncated; elapsed field not retained here. Host transcript remains authoritative. No invented value.",
+    "source_hash_scalar_audit_inner_elapsed_seconds": 0.17647766694426537,
+    "timing_scope": "tool-reported wait/command intervals are not whole-turn walltime; inner audit timing is not added again as independent execution",
+    "soft_source_command_target_seconds": 60,
+    "new_hard_budget_created": false,
+    "old_costs_reset": false,
+    "settlement": "controller may settle preparation overhead against existing accounts; this file does not modify an account"
+  },
+  "next_action": "When existing controller selects each node, bind this contract and selected Sol worker to its actual packet, execute bounded cached-matrix work, then obtain a different fresh Astra reviewer.",
+  "note_assembly_inner_seconds_before_persist": 0.002061783103272319
+}

@@ -1,0 +1,99 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R32-04-BANDPASS-BOUNDS",
+  "attempt": 10,
+  "phase": "review",
+  "packet_id": "7c8579ab3edafb1146112057468fade2fdc0125756c74d017ccf97ef524e54c9",
+  "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+  "candidate_identity": "sha256:0086eccfa4efc5775407dd77afa3c9709f4b055fc0c045f201d9cc726bb6bea4",
+  "frontier_identity": "27b1e5df1ffbe44e31a69772db64138b0c2cc6902c009cef87d4b57cc4f3a508",
+  "task_spec_identity": "d74cea7d65443bf8fe20d691d256c4d9b45ff19ece3eb02fed666c003b285990",
+  "agent_id": "/root/rc_7c8579ab3edafb11",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "completed_utc": "2026-10-25T15:58:13.326132+00:00",
+  "outcome": "blocker",
+  "decision": "HOLD",
+  "receipt": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fourth_repair_fresh_review/raw/independent.receipt.json",
+  "fresh_validation_summary": {
+    "generic_count": 144,
+    "generic_status_counts": {
+      "EMPTY": 48,
+      "BALL": 48,
+      "NUMERIC_RANGE_HOLD": 48
+    },
+    "generic_failures": [],
+    "structural_count": 72,
+    "structural_policy_violations": 24,
+    "max_generic_sphere_error_over_policy": 0.15214081800656432,
+    "max_generic_witness_error_over_policy": 0.15352934955623473
+  },
+  "reused_evidence": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/raw/pytest_first.receipt.json",
+      "sha256": "1b6555f480ca4719a5dbc0300b59a3a0b58fb9f51a73983cc57bbacc827945b5",
+      "status": "212 PASS retained; not rerun"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/raw/ordinary_probe_first.receipt.json",
+      "sha256": "de5d8f29a2102739626fc6f010ff4d23d0fa8e6b374e62c76d209d5cf3b4748b",
+      "status": "1380 ordinary cases retained; not rerun"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fourth_repair_fresh_review/raw/BINDING.json",
+      "size_bytes": 8887,
+      "sha256": "642ecbc7cff41ae30670c930c21322e3ebc83ada71b0fedbd679cc6868587622"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fourth_repair_fresh_review/raw/INDEPENDENT_RANGE_AUDIT.json",
+      "size_bytes": 107977,
+      "sha256": "cddd41bf46850a0c7b7bc4765ccda765318ad592ba50f2235bbd6886a5849354"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fourth_repair_fresh_review/raw/PARITY.json",
+      "size_bytes": 2477,
+      "sha256": "177ef84cdef0824e64eccbb37d6d13675d9829307082baff04333b29eb542b0a"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fourth_repair_fresh_review/raw/REGRESSION_CONTROLS.json",
+      "size_bytes": 5600,
+      "sha256": "e340f41e268be26838b2bc39530f89d8f1a19a8fd74940382bef20e68ec35be2"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fourth_repair_fresh_review/raw/STRUCTURAL_COUNTEREXAMPLE.json",
+      "size_bytes": 2482,
+      "sha256": "56d4c7b515b2f780bac87c98f3f35af5bdc7ae8121caf1b678b9911598219da8"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fourth_repair_fresh_review/raw/independent.receipt.json",
+      "size_bytes": 631,
+      "sha256": "845b0c968a2ef9331f32551477c64f8281a9cea11e27da945d3edfaee3157e99"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fourth_repair_fresh_review/raw/independent.stderr",
+      "size_bytes": 379,
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fourth_repair_fresh_review/raw/independent.stdout",
+      "size_bytes": 438,
+      "sha256": "54b89f537257ae0c5710b78f0ada305cabab8bce2c7245e012861a975d69a3db"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fourth_repair_fresh_review/raw/report.txt",
+      "size_bytes": 20935,
+      "sha256": "4e8de446884ed9fd85ab203d0ac3e28c17815a584eb975a0969d1e12fb8c837f"
+    }
+  ],
+  "review_script": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_fourth_repair_fresh_review/independent_review.py",
+    "sha256": "ac432253c740c8d2b3b5d6a3fa2c4c9557f22b21975af3aab60a0be83cac5952"
+  },
+  "readonly_scope": "No candidate, Git, STATE, source, environment or product mutations; only assigned review directory written.",
+  "claim_ceiling": "Conditional finite free-signed nine-moment bounded class only; original42 and physical/noise/sky/native solver acceptances unchanged."
+}

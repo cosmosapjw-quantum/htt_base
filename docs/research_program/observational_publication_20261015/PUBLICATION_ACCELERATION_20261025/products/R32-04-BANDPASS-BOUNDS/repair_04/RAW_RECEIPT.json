@@ -1,0 +1,98 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R32-04-BANDPASS-BOUNDS",
+  "attempt": 9,
+  "phase": "repair",
+  "packet_id": "6f087f140bdc10a9847edb33377a6211714d1241470c7497c879552fffd5f6d4",
+  "input_identity": "sha256:379f02ee73f637898f98a25083d5c39aa52bb7d309b47e713008ed6a9bcf1567",
+  "base_packet_id": "ed14cfa712ccafb6fa18492cb703c107ddd087a715afc967d4989e261acfba28",
+  "base_candidate_identity": "sha256:7391a142944844adcf7cf468d72f3e7ef1e63ee33405a1c25de099e468dcea9d",
+  "prior_candidate_identity": "sha256:7391a142944844adcf7cf468d72f3e7ef1e63ee33405a1c25de099e468dcea9d",
+  "agent_id": "/root/r35_bandpass_boundary_repair_preparation",
+  "outcome": "success",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "ack_path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/BP_RANGE_REPAIR_ACTUAL_ACK_GO.json",
+  "acknowledged": true,
+  "go": true,
+  "completed_utc": "2026-10-25T15:51:11.328287+00:00",
+  "source_identity": {
+    "retained_R31_RESULT_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+    "prior_repair_03_manifest_sha256": "7391a142944844adcf7cf468d72f3e7ef1e63ee33405a1c25de099e468dcea9d",
+    "prior_repair_03_consumer_sha256": "2f42591fd77f5e93af3bb690714a08b685d0a34173c77afec8a589b8a024a1e8",
+    "BP05_review_RESULT_sha256": "eeba578bece1fa88347d3565b7d15c7d518c6736252926884dc364528108ed53",
+    "repair_plan_sha256_utf8": "96e1ef0e585b61d59af831448a7c5e5cfbcabf4402b22a17d0f4a7d116e12ce9"
+  },
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python3 -m pytest -q /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/test_bandpass_boundary_repair.py /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/test_pure_target_boundary.py /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/test_center_geometry.py /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/test_range_boundary.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04",
+      "exit_code": 0,
+      "elapsed_seconds": 30.084140747087076,
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/raw/pytest_first.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/raw/pytest_first.stderr",
+      "source_sha256": "15a67d13901cf27929440c3f560434c7bd7ddb0af3ed498e74bd19f28fdaa5ae",
+      "targeted_test_sha256": "c54b57b4887d74be9de103f5e37d7b2ac2cf5ed078c0efe123f00c1d12433689"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/ordinary_probe.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04",
+      "exit_code": 0,
+      "elapsed_seconds": 26.032703534001485,
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/raw/ordinary_probe_first.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/raw/ordinary_probe_first.stderr",
+      "source_sha256": "15a67d13901cf27929440c3f560434c7bd7ddb0af3ed498e74bd19f28fdaa5ae",
+      "probe_sha256": "83904e2b41bcd6d6e88403c7fd254634b40c6cc6f07f9ee6177573968e656111"
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python3 /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/consumer.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04",
+      "exit_code": 0,
+      "elapsed_seconds": 1.637202912941575,
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/raw/consumer_first.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/raw/consumer_first.stderr",
+      "source_sha256": "15a67d13901cf27929440c3f560434c7bd7ddb0af3ed498e74bd19f28fdaa5ae"
+    },
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/report",
+      "exit_code": 0,
+      "elapsed_seconds": 1.710812371922657,
+      "stdout": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/raw/latexmk_first.stdout",
+      "stderr": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_04/raw/latexmk_first.stderr"
+    }
+  ],
+  "validation": {
+    "affected_and_preserved_pytest": "212 PASS (186 preserved and 26 range tests), one Matplotlib Axes3D environment warning",
+    "independent_ordinary_range_exact_probe": "1380 cases, 0 failures; 516 EMPTY, 300 BOUNDARY_UNCERTAIN, 348 NUMERIC_BOUNDARY_HOLD, 216 BALL; exact-rational full24 sphere extrema and rounded witnesses",
+    "cached_six_branch_consumer": "PASS for both fixed metrics; retained R31 source SHA gate passes",
+    "BP05_exact_subnormal": "NUMERIC_RANGE_HOLD, radius None; raw/BP05_RANGE_RESULT.json",
+    "min_subnormal_structural": "NUMERIC_RANGE_HOLD, radius None; raw/BP05_RANGE_RESULT.json",
+    "parity": "all 12 compact metric dictionaries exact; all six NPZs and both tables byte-identical to repair_03; raw/parity.json",
+    "pdf_build": "latexmk PASS, 7 pages, no undefined references/citations"
+  },
+  "preserved_first_failures": {
+    "BP01_BP02_original_and_repair_01": "prior sealed product directories untouched",
+    "BP03_first24": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_02/raw/pytest_first.stdout",
+    "BP03_second36": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_02/raw/pytest_second.stdout",
+    "BP04_first12": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_03/raw/pytest_first.stdout",
+    "BP04_prior_540_probe": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_second_repair_fresh_review/raw/independent_probe.json",
+    "BP05_exact_rational_counterexample": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_third_repair_fresh_review/raw/exact_subnormal_counterexample.json"
+  },
+  "source_snapshots_sha256": {
+    "executed_source.consumer.py": "15a67d13901cf27929440c3f560434c7bd7ddb0af3ed498e74bd19f28fdaa5ae",
+    "executed_source.ordinary_probe.py": "83904e2b41bcd6d6e88403c7fd254634b40c6cc6f07f9ee6177573968e656111",
+    "executed_source.test_bandpass_boundary_repair.py": "1b493ede796e7e19cf300b67d0c4d29f90f0a908e138202c11dedd02d6ea1191",
+    "executed_source.test_center_geometry.py": "0cfd5baba1f837a4df7ccf4f3a7151b6511f1c3d90fbd829fa193b41bd4eeb73",
+    "executed_source.test_pure_target_boundary.py": "09721bc3ee39e1d7f320a215a7c4423f171ec0db66623e76d5ff353c77414507",
+    "executed_source.test_range_boundary.py": "c54b57b4887d74be9de103f5e37d7b2ac2cf5ed078c0efe123f00c1d12433689"
+  },
+  "claim_scope": "conditional finite seven-row, nine-free-signed-moment bounded class; no physical/observed/native/original42 promotion",
+  "independent_scientific_review": "PENDING",
+  "original42_acceptance": false,
+  "product_qualification": "PROPOSED_PENDING_REVIEW",
+  "mutation_scope": "repair_04 only; prior candidates, Git, STATE and controller preserved"
+}

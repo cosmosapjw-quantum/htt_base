@@ -1,0 +1,309 @@
+Finite CMB compensation budgets in a bounded nine-moment foreground class
+
+                                Anonymous methods and results note
+
+         Seven retained passband responses give a full-row-rank matrix for nine signed, second-order
+       synchrotron and dust moments in each of six fixed response conventions. In the unrestricted
+       linear class, the CMB response can consequently be represented by foreground moments in
+       every one of the 24 signed E2 /E3 /B2 /B3 coordinates. A declared joint quadratic bound
+       changes that statement quantitatively: the least moment budget for a unit CMB response
+       is 3.117720–3.118388 target-amplitude units in one common column-normalized metric. A
+       single foreground can compensate a target tensor displacement of norm at most ρ/ℓM , while
+       two bounded foregrounds can make two targets separated by as much as 2ρ/ℓM agree on the
+       same synthetic data. For arbitrary specified frequency data, the complete 24-dimensional
+       compatible target set is a calculable ball or is empty. The raw-coordinate identity metric
+       changes the unit cost to 59.572829–59.592192, displaying explicit metric sensitivity. These
+       are finite algebraic results for the declared free signed-moment class. No sky tensor, physical
+       moment bound, joint noise law, or native solver output is used.
+
+
+
+            I.   PHYSICAL MECHANISM AND FROZEN FINITE RESPONSE
+
+
+   A passband integrates spectral components before their angular coefficients are estimated. Spec-
+tral changes in a component’s index or temperature therefore add frequency response columns to
+its leading spectrum. If enough independently variable moment maps are admitted, their channel
+responses can reproduce the CMB’s calibrated response. A bound on their joint amplitude restores
+a finite compensation cost, even when the unrestricted response matrix spans all channels. That
+cost depends on which moment amplitudes the bound regards as comparable.
+   This note consumes the already computed, released-bandpass finite matrices in the retained R31
+result identified in the accompanying claim-to-source map; it performs no passband integration or
+map analysis. The seven frequency rows, in order, are 030, 044, 070, 100, 143, 217, and 353PSB.
+The nine columns are
+
+                                    (s, sβ , d, dβ , dt , sββ , dββ , dβt , dtt ).                       (1)
+
+Here t = (T − 20 K)/(20 K); the retained pivots are βs = −3 in Rayleigh–Jeans temperature,
+βd = 1.5, νs = 30 GHz, νd = 353 GHz, and TCMB = 2.7255 K. Taylor factorials are absorbed
+into the signed moment coefficients. In particular, the second temperature response uses Td2 ∂T2 ,
+with Td = 20 K. The two LFI frequency conventions A/B and three HFI transmission thresh-
+                                                                                                            2
+
+
+olds 10−7 , 10−8 , 10−6 are retained as six separate finite response models. Their envelope is not a
+calibrated passband uncertainty.
+    The full target carrier has 5 + 7 + 5 + 7 = 24 real coordinates: E2 , E3 , B2 , B3 , with m = 0
+                                   √       √
+followed for each positive m by ( 2 Re, − 2 Im). Write the frequency-major data Y ∈ R7×24 ,
+target s ∈ R24 and moment array U ∈ R9×24 as
+
+ Y = asT + F U,          a = (1, . . . , 1)T ∈ R7 ,    vecrow (Y ) = (a ⊗ I24 )s + (F ⊗ I24 ) vecrow (U ). (2)
+
+All coordinates, including derivative moments, are free and signed. s, U , and Y use the same target
+harmonic-amplitude unit, taken here as µKCMB when a unit is needed. F and the metric scales
+below are dimensionless under the retained response normalization. There is no observed Y in this
+experiment.
+   The primary class uses a single metric across all six branches:
+
+              d = (1.261652382369369, 0.1777139521270542, 1.1309894216176297,
+
+                    0.09451923139372441, 0.04109240642871376, 0.1151042544103929,
+
+                    0.07145402059880916, 0.022520789584731377, 0.09386151314750793),
+
+           M = diag(d21 , . . . , d29 ),     ∥U ∥2M := tr(U T M U ) ≤ ρ2 .                                (3)
+
+The di are the stored column norms of the nominal A, 10−7 matrix. Thus ρ is a jointly applied
+computational moment budget in the target-amplitude unit, not a measured foreground prior. We
+also compute M = I9 as an explicitly different metric. Neither metric imposes physical positivity
+or cross-moment coupling.
+
+
+              II.   MINIMUM COMPENSATOR AND SINGULAR DIRECTIONS
+
+
+   For a full-row-rank F and any symmetric positive-definite M , define
+
+                     K = F M −1 F T ,         cM = M −1 F T K −1 a,      ℓ2M = aT K −1 a.                 (4)
+
+The 7 × 7 matrix K is positive definite. Lagrange multipliers for minF c=a cT M c give M c = F T λ,
+Kλ = a, hence Eq. (4). If F c = a, then c = cM + n with F n = 0, and
+
+                                             cT M c = ℓ2M + nT M n.                                       (5)
+
+This proves the unique minimum and retains the two-dimensional coefficient nullspace. It also
+proves that the signed compensation ∆U = −cM v T has minimum budget ℓM ∥v∥2 for any complete
+                                                                                                        3
+
+
+TABLE I. Minimum cost ℓ for a unit target tensor displacement and the corresponding one-foreground
+radius per unit budget. M is the fixed common metric of Eq. (3); I is a separately declared raw-coordinate
+identity metric. A pairwise separation has twice the displayed radius. The branch labels retain the LFI
+convention and HFI threshold.
+                          Branch                ℓM      1/ℓM        ℓI          1/ℓI
+                          A_BT_1e-07 3.118381 0.320679 59.592105 0.016781
+                          A_BT_1e-08 3.118381 0.320679 59.592092 0.016781
+                          A_BT_1e-06 3.118388 0.320678 59.592192 0.016781
+                          B_BT_1e-07 3.117720 0.320747 59.572842 0.016786
+                          B_BT_1e-08 3.117720 0.320747 59.572829 0.016786
+                          B_BT_1e-06 3.117727 0.320747 59.572929 0.016786
+
+
+
+target displacement v ∈ R24 . For M = diag(d2 ), let G = F diag(d)−1 and let the columns of
+Nz span ker G. The exported original moment-coordinate directions are Nc = diag(d)−1 Nz , so
+F Nc = 0, NcT M Nc = I2 , and NcT M cM = 0. The result retains Nz separately with an explicit
+whitened-coordinate label.
+
+   To display which response directions incur the cost, factor
+
+
+                                                                          7
+                                                                          X (uT a)2
+                      F M −1/2 = Uf diag(σ1 , . . . , σ7 )VfT ,   ℓ2M =            i
+                                                                                         .             (6)
+                                                                          i=1
+                                                                                   σi2
+
+
+
+The first seven rows of VfT are orthonormal directions in whitened coefficient coordinates; M −1/2 vi
+are their original-coordinate versions. The complete singular values, projections, squared budget
+contributions, and vectors for each branch and both metrics are generated in the machine-readable
+result. The minimum singular value in the common metric is about 0.00553–0.00554. For the nom-
+inal A branch, the seventh squared-budget contribution is 7.4391 of ℓ2M = 9.7243; the singular value
+alone would not show this CMB alignment. The smallest-to-largest singular-value ratio exceeds the
+retained rank-resolution cutoff 10−10 in all six branches.
+
+   Table I gives ℓM = 3.117720–3.118388 across the six branches.                   In the raw metric, ℓI =
+59.572829–59.592192, agreeing with the previously stored raw-coordinate witnesses to relative 10−8 .
+The metric change is substantive: it defines a different feasible coefficient class. The small A/B
+and threshold variation within each metric is a finite-model sensitivity, without an inference about
+real response uncertainty.
+                                                                                                                                                                                    4
+
+
+                                                                                     LFI convention A                                            LFI convention B
+                                                                 BT=1e-07, single                                             BT=1e-07, single
+                                                    2.5          BT=1e-07, pair                                               BT=1e-07, pair
+
+
+
+
+            Compatible target norm v (same units)
+                                                                 BT=1e-08, single                                             BT=1e-08, single
+                                                                 BT=1e-08, pair                                               BT=1e-08, pair
+                                                                 BT=1e-06, single                                             BT=1e-06, single
+                                                    2.0          BT=1e-06, pair                                               BT=1e-06, pair
+
+
+                                                    1.5
+
+                                                    1.0
+
+                                                    0.5
+
+                                                    0.0
+                                                           0.0       0.5 1.0 1.5 2.0 2.5 3.0 3.5                  4.0   0.0       0.5 1.0 1.5 2.0 2.5 3.0 3.5                4.0
+                                                                        Joint budget (target amplitude units)                        Joint budget (target amplitude units)
+
+
+
+FIG. 1. Attainable full-tensor displacement norm as a function of the declared joint moment budget ρ under
+the same common metric in all six branches. Solid curves give the one-foreground limit ρ/ℓM ; dashed curves
+give the pairwise maximum 2ρ/ℓM . Colors distinguish the three HFI thresholds in each LFI panel. Nearly
+overlapping curves reflect the computed response-convention sensitivity. These are algebraic feasible-set
+frontiers for a free signed-moment class, not observed CMB amplitudes or confidence limits. Figure source:
+consumer.py, frozen R31 matrices.
+
+                                                                                     LFI convention A                                            LFI convention B
+                                                    0.14          BT=1e-07, single                                            BT=1e-07, single
+                                                                  BT=1e-07, pair                                              BT=1e-07, pair
+            Compatible target norm v (same units)
+
+
+
+
+                                                                  BT=1e-08, single                                            BT=1e-08, single
+                                                    0.12          BT=1e-08, pair                                              BT=1e-08, pair
+                                                                  BT=1e-06, single                                            BT=1e-06, single
+                                                                  BT=1e-06, pair                                              BT=1e-06, pair
+                                                    0.10
+                                                    0.08
+                                                    0.06
+                                                    0.04
+                                                    0.02
+                                                    0.00
+                                                            0.0        0.5 1.0 1.5 2.0 2.5 3.0 3.5                4.0   0.0        0.5 1.0 1.5 2.0 2.5 3.0 3.5               4.0
+                                                                         Joint budget (target amplitude units)                       Joint budget (target amplitude units)
+
+
+
+FIG. 2. The same frontiers after explicitly replacing the common column-normalized metric with raw-
+coordinate M = I9 . Axis units and the factor-of-two distinction are unchanged; the shift in slope exposes
+the dependence on the bounded class. This panel is a metric-sensitivity calculation, not a second physical
+prior.
+
+
+         III.                                       COMPLETE COMPATIBLE TARGET SET AND FACTOR OF TWO
+
+
+   For specified Y , minimize the budget over U at each proposed s. Applying Eq. (4) separately
+to the 24 columns gives
+                                                                                                                          h                           i
+                                      Us = M −1 F T K −1 (Y − asT ),                                             J(s) = tr (Y − asT )T K −1 (Y − asT ) .                           (7)
+                                                                                                     5
+
+
+Define the full signed center and its irreducible cost by
+                            Y T K −1 a             h
+                                                              T −1
+                                                                              i
+                     s0 =              ,    J0 = tr (Y − asT
+                                                           0 ) K   (Y − asT
+                                                                          0 )   ≥ 0.               (8)
+                               ℓ2M
+Expanding J(s) about s0 makes the cross term vanish by the definition of s0 , so
+
+                               Sρ (Y ) = {s ∈ R24 : J0 + ℓ2M ∥s − s0 ∥22 ≤ ρ2 }.                   (9)
+
+It is empty for ρ2 < J0 , a singleton at exact equality, and otherwise a closed 24-dimensional ball
+                            p
+centered at s0 with radius ρ2 − J0 /ℓM . Its shape matrix in the given coordinate frame is ℓ2M I24 .
+We evaluate J0 from a whitened residual equivalent to Eq. (8), avoiding subtraction of nearly equal
+quadratic forms. Since the retained CMB response is exactly seven ones, exactly repeated finite
+rows of Y have s0 equal to their common row and J0 = 0; at ρ = 0 any exactly unequal rows give
+an empty set. Thus exact pure-target data give a singleton at zero budget and a full 24-dimensional
+ball of radius ρ/ℓM at positive budget. For other data, a homogeneous squared-amplitude error
+policy covers the factorization, triangular solves and projection. A resolved J0 alone does not certify
+a returned ball: its serialized center, residual, radius, ℓM and 24-coordinate boundary image must
+also clear the same relative budget policy. An unresolved boundary or output geometry has status
+BOUNDARY_UNCERTAIN or NUMERIC_BOUNDARY_HOLD and no asserted radius. This numerical policy is
+not a general interval certificate. Equation (9) is a deterministic compatible set, not a posterior or
+confidence region.
+   The zero-data illustration Y = 0 has s0 = 0 and J0 = 0. One foreground can hide v exactly
+when ℓM ∥v∥ ≤ ρ, with U = −cM v T . For two foregrounds, each separately bounded by ρ, a common
+zero data table is obtained from
+
+                     s1 = v/2,      s2 = −v/2,      U1 = −cM v T /2,     U2 = cM v T /2.          (10)
+
+Each budget equals ℓM ∥v∥/2. Conversely F (U2 − U1 ) = a(s1 − s2 ) and the triangle inequality give
+ℓM ∥s1 − s2 ∥ ≤ ∥U2 ∥M + ∥U1 ∥M ≤ 2ρ. Thus the factor of two is both necessary and attained.
+                                      p
+At fixed generic Y , the diameter is 2 ρ2 − J0 /ℓM , when the set is nonempty. As ρ → ∞ this
+finite obstruction disappears, consistently with the zero target quotient rank of the unrestricted
+nine-moment class. At ρ = 0, U = 0 and compatible data must be exactly Y = asT .
+
+
+                         IV.     NUMERICAL EXECUTION AND SCOPE
+
+
+   The consumer checks the exact SHA-256 of the retained R31 result before reading any matrix.
+For each branch and metric, it solves K by Cholesky, compares the minimum budget with an
+                                                                                                        6
+
+
+TABLE II. Smallest resolved singular value, relative F c = a residuals under both declared metrics, and
+largest relative full-tensor basis-action residual maxj ϵj for the common-metric compensator. The residual
+gate is 10−10 for F c = a and 10−9 for the complete tensor actions.
+                 Branch         σmin (F M −1/2 ) ∥F cM − a∥/∥a∥ ∥F cI − a∥/∥a∥ maxj ϵj
+                 A_BT_1e-07          0.0055441          2.26e-14      1.13e-12 2.26e-14
+                 A_BT_1e-08          0.0055441          4.71e-14      7.16e-13 4.71e-14
+                 A_BT_1e-06          0.0055440          5.11e-14      1.22e-12 5.11e-14
+                 B_BT_1e-07          0.0055272          3.43e-14      2.17e-12 3.43e-14
+                 B_BT_1e-08          0.0055272          4.19e-14      1.61e-12 4.19e-14
+                 B_BT_1e-06          0.0055271          3.52e-14      1.03e-12 3.52e-14
+
+
+
+independently factored scaled SVD, checks F cM = a, the KKT equation, both null equations, metric
+normalization, nullspace orthogonality, the complete 24-coordinate null lift, and a positive norm
+increment. It exports each full 168 × 24 target operator A, 168 × 216 moment operator B, 216 × 24
+compensator operator, 24×168 center map and 24×24 shape matrix. The synthetic controls act on
+all 24 basis vectors and a mixed signed vector, test boundary witnesses and 1% beyond-boundary
+rejection, and construct a generic Y with J0 > 0 to test empty, constructed equality, and ball sectors.
+Targeted regressions repeat those cases after 10−6 and 106 amplitude-unit conversions, check exact
+repeated and unequal rows, near-pure targets, center and radius scaling, and reject negative or
+nonfinite budgets. A bounded 80/120-digit calculation on the same cached matrices supplies a
+coherent center, J0 , residual and radius where the binary64 policy is insufficient. A homogeneous
+full-24 budget-image check includes conversion of every center coordinate and the radius, retained
+ℓM error, residual serialization, and directional witness addition; insufficient output precision gives
+a typed hold. The BP-04 regressions compare the returned center and boundary witnesses against
+an exact-rational row-contrast solve for the retained binary64 inputs. Transporting the metric
+under nonzero column rescaling leaves K and the set invariant; a fixed orthogonal carrier rotation
+preserves the budget and set. All controls are generated in the same execution as the reported
+table, with numerical residuals in Table II.
+
+   The synthetic nonzero-data control has J0 ≃ 1.7174 in the nominal branch. It realizes an empty
+         √                          q
+set below J0 and radius 0.5 at ρ = J0 + ℓ2M (0.5)2 . Its constructed equality case illustrates the
+exact singleton theorem; the computed boundary is labelled uncertain at finite precision. This is
+a numerical witness for Eq. (9), not a sky realization. The smallest common-metric singular value
+and the complete basis residuals are shown in Table II; the exported binary64 coefficients, not only
+                                                                                                  7
+
+
+an internal intermediate, meet the residual gate.
+   The moment class permits signed independent harmonic and derivative coordinates. Physical
+component intensities, if positive, do not imply positivity of these harmonic or derivative coef-
+ficients. A physical version would need externally justified magnitude, coupling and truncation-
+remainder constraints, component-specific spatial responses, a real joint noise/calibration model,
+and a justified radius or prior. Those inputs are absent here. A nuisance with exactly the blackbody
+response remains confounded under this spectral model. We therefore make no statement about
+an observed quotient tensor, actual CMB amplitude, physical foreground filling fraction, calibrated
+exceedance, global tilt or Bianchi family. The retained status fields are x = NOT_MEASURED,
+Q = NOT_EVALUATED, Fphysical = NOT_EVALUABLE, Π = NOT_CALIBRATED, and
+GF = NOT_APPLICABLE because frequency is not depth. Complete source identities and claim
+ceilings are given in the accompanying CLAIM_SOURCE_MAP.md.
+

@@ -1,0 +1,143 @@
+--- a/consumer.py
++++ b/consumer.py
+@@ -69,19 +69,32 @@
+     ell_svd = math.sqrt(float(np.sum(contributions)))
+     rel_resid = np.linalg.norm(F @ c - a) / np.linalg.norm(a)
+     kkt = np.linalg.norm(d**2 * c - F.T @ z) / max(1.0, np.linalg.norm(F.T @ z))
+-    N = null_space(G)
+-    require(N.shape == (9, 2), "coefficient null dimension")
+-    orth = np.linalg.norm(N.T @ (d * c)) / max(1.0, np.linalg.norm(d * c))
+-    test_n = N @ np.array([.31, -.47]) / d
++    N_z = null_space(G)
++    require(N_z.shape == (9, 2), "coefficient null dimension")
++    N_c = N_z / d[:, None]  # z=diag(d)c; only N_c is in moment coordinates.
++    orth = np.linalg.norm(N_c.T @ (d**2 * c)) / max(1.0, np.linalg.norm(d * c))
++    test_n = N_c @ np.array([.31, -.47])
+     increment = float(np.sum((d * (c + test_n)) ** 2) - ell2)
+     predicted_increment = float(np.sum((d * test_n) ** 2))
++    null_G = np.linalg.norm(G @ N_z) / np.linalg.norm(G)
++    null_F = np.linalg.norm(F @ N_c) / np.linalg.norm(F)
++    null_metric = np.linalg.norm(N_c.T @ (d[:, None]**2 * N_c) - np.eye(2))
++    lift = np.kron(N_c, np.eye(24))
++    null_full24 = np.linalg.norm(np.kron(F, np.eye(24)) @ lift) / (
++        np.linalg.norm(F) * np.linalg.norm(lift))
+     require(rel_resid <= 1e-10, f"Fc=a residual {rel_resid}")
+     require(kkt <= 1e-10, f"KKT residual {kkt}")
+     require(abs(ell - ell_svd) <= 1e-10 * ell, "SVD/Cholesky budget")
+     require(orth <= 1e-10, "null orthogonality")
++    require(null_G <= 1e-10, "whitened null equation")
++    require(null_F <= 1e-10, "original coefficient null equation")
++    require(null_metric <= 1e-10, "M-normalized coefficient nullspace")
++    require(null_full24 <= 1e-10, "full24 coefficient null lift")
+     require(abs(increment - predicted_increment) <= 1e-9 * max(1, ell2), "positive norm increment")
+     return dict(G=G, K=K, Kinv=Kinv, c=c, ell=ell, ell2=ell2, z=z,
+-                sigma=sigma, u=u, vt=vt, N=N, contributions=contributions,
++                sigma=sigma, u=u, vt=vt, N_z=N_z, N_c=N_c,
++                null_G=null_G, null_F=null_F, null_metric=null_metric,
++                null_full24=null_full24, contributions=contributions,
+                 projections=projection, ell_svd=ell_svd, rel_resid=rel_resid,
+                 kkt=kkt, orth=orth, norm_increment=increment,
+                 predicted_increment=predicted_increment)
+@@ -89,26 +102,43 @@
+ 
+ def identified(Y: np.ndarray, F: np.ndarray, a: np.ndarray,
+                d: np.ndarray, sol: dict, rho: float) -> dict:
+-    """Stable center and residual-budget calculation in the complete 24-space."""
++    """Stable complete-24-space set; numeric equality needs an uncertainty label.
++
++    The exact theorem remains: rho**2=J0 gives the singleton {s0}. A floating
++    equality witness is labelled uncertain unless Y and rho are both exactly 0.
++    """
++    if not math.isfinite(rho) or rho < 0:
++        raise ValueError("rho must be finite and nonnegative")
++    rho2 = rho * rho
++    if not math.isfinite(rho2):
++        raise ValueError("rho squared must be finite")
+     Kinv = sol["Kinv"]
+     s0 = (Y.T @ sol["z"]) / sol["ell2"]
+     R = Y - a[:, None] * s0[None, :]
+     J0 = float(np.sum(R * (Kinv @ R)))
+-    require(J0 >= -1e-10 * max(1, np.linalg.norm(Y) ** 2), "negative J0")
+     require(J0 >= 0, "negative numerical J0")
+-    gap = rho**2 - J0
+-    tol = 1e-9 * max(1.0, rho**2, J0)
+-    if gap < -tol:
++    gap = rho2 - J0
++    # Squared-amplitude units throughout; a common unit conversion scales this
++    # threshold and the gap by the same factor, including for small budgets.
++    tol = 1e-9 * max(rho2, J0)
++    radius_uncertainty = None
++    if rho == 0 and not np.any(Y):
++        radius = 0.0
++        status = "SINGLETON_EXACT_ZERO"
++    elif gap < -tol:
+         radius = None
+         status = "EMPTY"
+-    elif abs(gap) <= tol:
+-        radius = 0.0
+-        status = "SINGLETON_NUMERIC_BOUNDARY"
+-    else:
++    elif gap > tol:
+         radius = math.sqrt(gap) / sol["ell"]
+         status = "BALL"
++    else:
++        radius = None
++        status = "BOUNDARY_UNCERTAIN"
++        radius_uncertainty = {"squared_budget_gap": gap,
++                              "squared_budget_tolerance": tol,
++                              "reason": "gap within relative numerical tolerance"}
+     return {"center": s0, "J0": J0, "radius": radius, "status": status,
+-            "residual_7x24": R}
++            "radius_uncertainty": radius_uncertainty, "residual_7x24": R}
+ 
+ 
+ def u_min(Y: np.ndarray, s: np.ndarray, F: np.ndarray, a: np.ndarray,
+@@ -158,7 +188,8 @@
+     outer_rho = math.sqrt(J0 + sol["ell2"] * .5**2)
+     outer = identified(Y, F, a, d, sol, outer_rho)
+     require(low["status"] == "EMPTY", "empty set")
+-    require(edge["status"] == "SINGLETON_NUMERIC_BOUNDARY", "singleton set")
++    require(edge["status"] == "BOUNDARY_UNCERTAIN" and edge["radius"] is None,
++            "constructed equality needs numeric boundary label")
+     require(outer["status"] == "BALL", "nonzero ball")
+     require(abs(outer["radius"] - .5) <= 1e-9, "radius .5")
+     s_boundary = outer["center"] + .5 * mixed
+@@ -168,7 +199,7 @@
+     require(abs(boundary_budget - outer_rho) <= 1e-9 * outer_rho, "generic boundary")
+     require(reconstruction <= 1e-9 * max(1, np.linalg.norm(Y)), "generic reconstruction")
+     zero = identified(np.zeros((7, 24)), F, a, d, sol, 0)
+-    require(zero["status"] == "SINGLETON_NUMERIC_BOUNDARY" and np.linalg.norm(zero["center"]) == 0, "rho zero")
++    require(zero["status"] == "SINGLETON_EXACT_ZERO" and np.linalg.norm(zero["center"]) == 0, "rho zero")
+ 
+     scale = np.array([.7, -1.3, 1.8, .55, -.8, 1.1, 1.5, -.65, 2.0])
+     Fnew = F * scale
+@@ -195,7 +226,9 @@
+                 "one_one_percent_larger_rejected": True,
+                 "pair_one_percent_larger_rejected": True,
+                 "generic_J0": J0, "generic_empty_status": low["status"],
+-                "generic_singleton_status": edge["status"],
++                "generic_constructed_equality_theorem": "SINGLETON_IF_RHO_SQUARED_EQUALS_J0",
++                "generic_equality_numeric_status": edge["status"],
++                "generic_equality_radius_uncertainty": edge["radius_uncertainty"],
+                 "generic_ball_status": outer["status"],
+                 "generic_center": outer["center"].tolist(),
+                 "generic_radius": outer["radius"],
+@@ -225,12 +258,17 @@
+             "Fc_equals_a_relative_residual": float(sol["rel_resid"]),
+             "KKT_relative_residual": float(sol["kkt"]),
+             "nullspace_M_orthogonality_relative": float(sol["orth"]),
++            "whitened_null_G_relative": float(sol["null_G"]),
++            "coefficient_null_F_relative": float(sol["null_F"]),
++            "coefficient_null_M_normalization_error": float(sol["null_metric"]),
++            "coefficient_null_full24_relative": float(sol["null_full24"]),
+             "positive_quadratic_norm_increment": float(sol["norm_increment"]),
+             "singular_values_7": sol["sigma"].tolist(),
+             "CMB_left_projections_7": sol["projections"].tolist(),
+             "budget_squared_contributions_7": sol["contributions"].tolist(),
+             "whitened_right_singular_directions_7x9": sol["vt"][:7,:].tolist(),
+-            "coefficient_nullspace_directions_2x9": sol["N"].T.tolist(),
++            "coefficient_nullspace_directions_2x9": sol["N_c"].T.tolist(),
++            "whitened_nullspace_directions_2x9": sol["N_z"].T.tolist(),
+             "row_Gram_K_7x7": sol["K"].tolist(),
+             "row_Gram_inverse_7x7": sol["Kinv"].tolist(),
+             "minimum_budget_from_SVD": sol["ell_svd"],

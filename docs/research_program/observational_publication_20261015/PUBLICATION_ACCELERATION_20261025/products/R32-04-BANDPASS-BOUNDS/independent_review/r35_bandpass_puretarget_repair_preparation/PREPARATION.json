@@ -1,0 +1,67 @@
+{
+  "task_id": "R32-04-BANDPASS-BOUNDS",
+  "phase": "BP-03_SOURCE_PREPARATION_ONLY",
+  "created_utc": "2026-10-25T14:52:23.373694+00:00",
+  "review_result_path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_repaired_fresh_review/RESULT.json",
+  "review_result_sha256": "523e63c400559b2872952b28d87cb2b04e6cc717d8944ab6ca332519059aba05",
+  "repair_plan_sha256_utf8": "69a60b8f47b7f703a642898dc81ba1c364dc069591000d5072e1dfbcd6b4bc82",
+  "sealed_parent_manifest_sha256": "6567e6a41858b7d549656cd078fcbcc815a04ffa804db5e0c9882bef6a7b252b",
+  "sealed_parent_source_sha256": "277e50e3c71fdd8550a61eb2a3ad029e8212875b71724b27c02563bd4099c0ee",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "author": "/root/r35_bandpass_boundary_repair_preparation",
+  "files": {
+    "original_source.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_puretarget_repair_preparation/original_source.py",
+      "sha256": "277e50e3c71fdd8550a61eb2a3ad029e8212875b71724b27c02563bd4099c0ee"
+    },
+    "new_candidate.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_puretarget_repair_preparation/new_candidate.py",
+      "sha256": "31d51917740f20bd79edb83e4656146548c2c6617057f79fde71115303586677"
+    },
+    "bp03_repair.patch": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_puretarget_repair_preparation/bp03_repair.patch",
+      "sha256": "b8a9e683fe3672628013e86883c9136ac68eaec44ab900ce1b573b17f4ee631a"
+    },
+    "old_29_regressions.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_puretarget_repair_preparation/old_29_regressions.py",
+      "sha256": "1b493ede796e7e19cf300b67d0c4d29f90f0a908e138202c11dedd02d6ea1191"
+    },
+    "test_pure_target_boundary.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_bandpass_puretarget_repair_preparation/test_pure_target_boundary.py",
+      "sha256": "b4b016d680f61dbba9410fd95e87d784ef02f81dc3a30a66a1ec76b5a910f70a"
+    }
+  },
+  "static_validation": {
+    "ast_parse": "PASS",
+    "parsed_files": [
+      "original_source.py",
+      "new_candidate.py",
+      "old_29_regressions.py",
+      "test_pure_target_boundary.py"
+    ],
+    "ast_parse_seconds": 0.01452764612622559,
+    "imports": "NOT_RUN",
+    "tests": "NOT_RUN",
+    "consumer": "NOT_RUN",
+    "scientific_numerics": "NOT_RUN",
+    "latex_build": "NOT_RUN"
+  },
+  "scope": {
+    "new_preparation_directory_only": true,
+    "sealed_candidate_writes": false,
+    "controller_writes": false,
+    "git_state_writes": false,
+    "scientific_execution": false
+  },
+  "future_formal_packet_steps": [
+    "Verify sealed parent candidate SHA256 6567e6a41858b7d549656cd078fcbcc815a04ffa804db5e0c9882bef6a7b252b, R31 input SHA256 b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f and actual packet/ACK before repair_02 mutation.",
+    "Stage new_candidate.py as repair_02/consumer.py; update only the nesting comment from repair_01 to repair_02. Stage old_29_regressions.py as repair_02/test_bandpass_boundary_repair.py. Stage test_pure_target_boundary.py as repair_02/test_pure_target_boundary.py and change its import path from new_candidate.py to consumer.py.",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python3 -m pytest -q repair_02/test_bandpass_boundary_repair.py repair_02/test_pure_target_boundary.py, capturing first raw stdout/stderr and elapsed time.",
+    "Execute only cached six-branch repair_02/consumer.py, compare unchanged ell/c and prior branch values, regenerate affected report/figures/tables/PDF/claim map/manifest as authorized, and return exact candidate to fresh independent review."
+  ],
+  "hold": "Future actual formal repair packet/ACK required; no numerical execution or product mutation in this preparation turn; existing history and budgets unchanged."
+}

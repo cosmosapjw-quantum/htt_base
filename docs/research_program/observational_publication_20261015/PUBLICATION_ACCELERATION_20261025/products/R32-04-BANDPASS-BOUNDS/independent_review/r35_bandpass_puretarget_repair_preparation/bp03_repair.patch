@@ -1,0 +1,153 @@
+--- a/consumer.py
++++ b/consumer.py
+@@ -16,7 +16,7 @@
+ matplotlib.use("Agg")
+ import matplotlib.pyplot as plt
+ import numpy as np
+-from scipy.linalg import cho_factor, cho_solve, null_space
++from scipy.linalg import cho_factor, cho_solve, null_space, solve_triangular
+ 
+ HERE = Path(__file__).resolve().parent
+ P = HERE.parents[2]  # repair_01 is nested one level below the original product
+@@ -91,7 +91,7 @@
+     require(null_metric <= 1e-10, "M-normalized coefficient nullspace")
+     require(null_full24 <= 1e-10, "full24 coefficient null lift")
+     require(abs(increment - predicted_increment) <= 1e-9 * max(1, ell2), "positive norm increment")
+-    return dict(G=G, K=K, Kinv=Kinv, c=c, ell=ell, ell2=ell2, z=z,
++    return dict(G=G, K=K, Kinv=Kinv, L=np.tril(chol[0]), c=c, ell=ell, ell2=ell2, z=z,
+                 sigma=sigma, u=u, vt=vt, N_z=N_z, N_c=N_c,
+                 null_G=null_G, null_F=null_F, null_metric=null_metric,
+                 null_full24=null_full24, contributions=contributions,
+@@ -102,43 +102,103 @@
+ 
+ def identified(Y: np.ndarray, F: np.ndarray, a: np.ndarray,
+                d: np.ndarray, sol: dict, rho: float) -> dict:
+-    """Stable complete-24-space set; numeric equality needs an uncertainty label.
++    """Complete-24-space set with exact frozen-row cases and numeric uncertainty.
+ 
+-    The exact theorem remains: rho**2=J0 gives the singleton {s0}. A floating
+-    equality witness is labelled uncertain unless Y and rho are both exactly 0.
++    The exact theorem is unchanged: rho**2=J0 gives {s0}. General floating
++    near-equality receives a typed uncertainty, not a singleton certificate.
+     """
+     if not math.isfinite(rho) or rho < 0:
+         raise ValueError("rho must be finite and nonnegative")
+-    rho2 = rho * rho
+-    if not math.isfinite(rho2):
++    if rho > math.sqrt(sys.float_info.max):
+         raise ValueError("rho squared must be finite")
+-    Kinv = sol["Kinv"]
++    if Y.shape != (7, 24) or not np.all(np.isfinite(Y)):
++        raise ValueError("Y must be finite 7x24 data")
++    if not np.array_equal(a, np.ones(7)):
++        raise ValueError("frozen CMB response must be exactly seven ones")
++
++    # Binary64 entries are the exact supplied reals for this finite task. With
++    # a=ones, row equality is an exact structural test, independent of K or rho.
++    if np.all(Y == Y[0:1, :]):
++        s0 = Y[0].copy()
++        status = ("SINGLETON_EXACT_ZERO" if not np.any(Y)
++                  else "SINGLETON_EXACT_STRUCTURAL") if rho == 0 else "BALL"
++        return {"center": s0, "J0": 0.0,
++                "radius": 0.0 if rho == 0 else rho / sol["ell"],
++                "status": status, "radius_uncertainty": None,
++                "residual_7x24": np.zeros_like(Y)}
++
+     s0 = (Y.T @ sol["z"]) / sol["ell2"]
+     R = Y - a[:, None] * s0[None, :]
+-    J0 = float(np.sum(R * (Kinv @ R)))
+-    require(J0 >= 0, "negative numerical J0")
+-    gap = rho2 - J0
+-    # Squared-amplitude units throughout; a common unit conversion scales this
+-    # threshold and the gap by the same factor, including for small budgets.
+-    tol = 1e-9 * max(rho2, J0)
+-    radius_uncertainty = None
+-    if rho == 0 and not np.any(Y):
+-        radius = 0.0
+-        status = "SINGLETON_EXACT_ZERO"
+-    elif gap < -tol:
+-        radius = None
+-        status = "EMPTY"
+-    elif gap > tol:
+-        radius = math.sqrt(gap) / sol["ell"]
+-        status = "BALL"
++    L = sol["L"]
++    Z = solve_triangular(L, Y, lower=True, check_finite=True)
++    b = solve_triangular(L, a, lower=True, check_finite=True)
++    q = b / np.linalg.norm(b)
++    Ehat = Z - np.outer(q, q @ Z)
++    e_norm = float(np.linalg.norm(Ehat))
++    z_norm = float(np.linalg.norm(Z))
++    Jhat = e_norm * e_norm
++    if rho == 0:
++        # Unequal exact supplied rows cannot be represented by a pure target.
++        return {"center": s0, "J0": Jhat, "radius": None, "status": "EMPTY",
++                "radius_uncertainty": None, "residual_7x24": R}
++    if z_norm == 0 or not all(math.isfinite(x) for x in (e_norm, z_norm, Jhat)):
++        return {"center": s0, "J0": Jhat, "radius": None,
++                "status": "NUMERIC_BOUNDARY_HOLD",
++                "radius_uncertainty": {"reason": "whitened data norm unavailable"},
++                "residual_7x24": R}
++
++    rho2 = rho * rho
++    eps = np.finfo(float).eps
++    gamma7 = 7 * eps / (1 - 7 * eps)
++    gamma24 = 24 * eps / (1 - 24 * eps)
++    K = sol["K"]
++    k_norm = float(np.linalg.norm(K))
++    l_norm = float(np.linalg.norm(L))
++    condition_K = float(np.linalg.cond(K))
++    factor_relative = float(np.linalg.norm(K - L @ L.T) / k_norm)
++    solve_relative = max(
++        float(np.linalg.norm(L @ Z - Y) / (l_norm * z_norm)),
++        float(np.linalg.norm(L @ b - a) / (l_norm * np.linalg.norm(b))))
++    # Backward-error policy: factorization, both triangular solves and the
++    # normalized rank-one projection. Conditioning enters through K and L.
++    # The safety factors are conservative for the retained matrices; this is
++    # not advertised as a rigorous all-input interval certificate.
++    relative_delta = ((factor_relative + gamma7) * condition_K
++                      + 2 * (solve_relative + gamma7) * math.sqrt(condition_K)
++                      + 8 * gamma24)
++    delta_E = relative_delta * z_norm
++    squared_error = 2 * e_norm * delta_E + delta_E**2
++    budget_roundoff = 2 * eps * rho2
++    tolerance = 1e-9 * max(rho2, Jhat, z_norm * z_norm)
++    uncertainty = {"reason": "whitened residual numerical error policy",
++                   "residual_norm_error_scale": delta_E,
++                   "squared_residual_error_scale": squared_error,
++                   "squared_budget_roundoff": budget_roundoff,
++                   "squared_budget_tolerance": tolerance,
++                   "condition_K": condition_K,
++                   "factor_relative_residual": factor_relative,
++                   "solve_relative_residual": solve_relative}
++    if (not all(math.isfinite(x) for x in (rho2, Jhat, z_norm, condition_K,
++                                          factor_relative, solve_relative,
++                                          delta_E, squared_error, tolerance))
++            or squared_error + budget_roundoff > tolerance):
++        uncertainty["reason"] = "error coverage unavailable for boundary decision"
++        return {"center": s0, "J0": Jhat, "radius": None,
++                "status": "NUMERIC_BOUNDARY_HOLD",
++                "radius_uncertainty": uncertainty, "residual_7x24": R}
++
++    lower_J0 = max(0.0, e_norm - delta_E)**2
++    upper_J0 = (e_norm + delta_E)**2
++    uncertainty["J0_interval_from_error_policy"] = [lower_J0, upper_J0]
++    if rho2 + budget_roundoff < lower_J0 - tolerance:
++        status, radius, uncertainty = "EMPTY", None, None
++    elif rho2 - budget_roundoff > upper_J0 + tolerance:
++        status, radius, uncertainty = "BALL", math.sqrt(rho2 - Jhat) / sol["ell"], None
+     else:
+-        radius = None
+-        status = "BOUNDARY_UNCERTAIN"
+-        radius_uncertainty = {"squared_budget_gap": gap,
+-                              "squared_budget_tolerance": tol,
+-                              "reason": "gap within relative numerical tolerance"}
+-    return {"center": s0, "J0": J0, "radius": radius, "status": status,
+-            "radius_uncertainty": radius_uncertainty, "residual_7x24": R}
++        status, radius = "BOUNDARY_UNCERTAIN", None
++        uncertainty["reason"] = "budget and residual intervals overlap"
++    return {"center": s0, "J0": Jhat, "radius": radius, "status": status,
++            "radius_uncertainty": uncertainty, "residual_7x24": R}
+ 
+ 
+ def u_min(Y: np.ndarray, s: np.ndarray, F: np.ndarray, a: np.ndarray,
