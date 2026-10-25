@@ -1,0 +1,152 @@
+{
+  "decision": "SCOPED_PASS",
+  "scope": "Final two-file controller code and protocol only; exact publication tree requires separate review",
+  "reviewer_task": "/root/r29_final_controller_independent_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "independence": {
+    "did_not_frame_or_implement": true,
+    "read_prior_controller_verdicts": false,
+    "production_or_source_writes": false
+  },
+  "contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_final_controller_review_input/CONTRACT.json",
+    "sha256": "0ac4acec0f8079c7b84542e8e2f08684c1c2e7eb16e7844ee92d5bc4a5a0301f",
+    "size_bytes": 7625
+  },
+  "sources": {
+    "scripts/codex_harness/research_controller.py": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/research_controller.py",
+      "sha256": "b118149b13d3568f0fa2e5afb2ef503e461434cf5df3a8f7829bbb2bb95c1dac",
+      "size_bytes": 186345
+    },
+    "scripts/codex_harness/test_research_controller_frontier.py": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/test_research_controller_frontier.py",
+      "sha256": "8fbb0bc23a55c8c3fe2695552b55a4d1f3699b1b8198b6db558f4cb3379e1fa9",
+      "size_bytes": 133649
+    }
+  },
+  "reviewed_full_diff": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_final_controller_independent_review/REVIEWED_FULL_CANDIDATE.diff",
+    "sha256": "e6591257802766b18b8d7d88d29b1de3e94192a035db42ce66b9a19aea99854b",
+    "size_bytes": 178984
+  },
+  "diff_scope": {
+    "controller_added": 1083,
+    "controller_removed": 56,
+    "tests_added": 1191,
+    "tests_removed": 4,
+    "minimal_repair_controller_added": 60,
+    "minimal_repair_controller_removed": 7,
+    "minimal_repair_tests_added": 194
+  },
+  "blocking_findings": [],
+  "requirement_results": [
+    {
+      "id": "R29-SYMLINK-SAVE",
+      "decision": "PASS",
+      "lines": [
+        2672,
+        2685,
+        2751,
+        2752,
+        2785,
+        2787
+      ],
+      "evidence": "Direct and CLI two-hop preservation; independent mid-CLI alias switch stayed on originally resolved target and placed sidecar there; replacement failure preserved durable bytes and aliases; ordinary init control passed."
+    },
+    {
+      "id": "R29-EXHAUSTED-TRANSPORT",
+      "decision": "PASS",
+      "lines": [
+        1647,
+        1649,
+        1685,
+        1689
+      ],
+      "evidence": "Explicit prohibition and exhausted/monthly reason persist. Independent legacy hold without new flag also rejects. Rejections preserve state; temporary restoration preserves input, attempt, packets and accounting."
+    },
+    {
+      "id": "R29-INITIAL-FAILURE-FOLLOWUP",
+      "decision": "PASS",
+      "lines": [
+        1441,
+        1443,
+        1466,
+        1537,
+        2544,
+        2564,
+        2578
+      ],
+      "evidence": "Independent string and object plan lifecycle through accepted dispatched same-author ACK, new receipt/candidate, and fresh reviewer. Exact representation/digest preserved. Wrong identities, unresolved prior author outcome and duplicate transitions reject atomically. Official 23-mutation negative bank additionally covers raw seals, routes, prior candidates, wrong issue type and missing ACK."
+    },
+    {
+      "id": "WHOLE-PUBLISHABLE-DIFF",
+      "decision": "PASS_WITH_STATED_VALIDATION_SCOPE",
+      "evidence": "Read source-closure, frozen repair validators, transition binding and all added test sections. Fourteen synthetic source-closure controls passed; frozen parser AST scope independently checked without executing scientific code. Historical numerical execution was not repeated."
+    }
+  ],
+  "independent_validation": [
+    {
+      "command": ".venv/bin/python -B /mnt/extdrive/workdir/htt_open_data/r29_final_controller_independent_review/independent_checks.py",
+      "exit_code": 0,
+      "groups_passed": 9,
+      "log": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_final_controller_independent_review/INDEPENDENT_CHECKS.log",
+        "sha256": "3462a57be0fafc4f68ad70ea54d01a190114638d09344f9deab39b2d7e0fe5f9",
+        "size_bytes": 591
+      },
+      "script": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_final_controller_independent_review/independent_checks.py",
+        "sha256": "715008e0983ca06741f1a8f03cb12d5571b5d1c253ad8b1ce03d265b54ad9d8b",
+        "size_bytes": 11326
+      }
+    },
+    {
+      "command": "TMPDIR=<owned>/tmp .venv/bin/python -B -m pytest -p no:cacheprovider --basetemp=<owned>/pytest-tmp scripts/codex_harness/test_research_controller_frontier.py::MinimalLifecycleRepairTests scripts/codex_harness/test_research_controller_frontier.py::FrontierTests scripts/codex_harness/test_research_controller_frontier.py::ConcurrentReviewTests -q -rs",
+      "exit_code": 0,
+      "passed": 49,
+      "skipped": 3,
+      "subtests_passed": 104,
+      "log": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_final_controller_independent_review/TARGETED_OFFICIAL.log",
+        "sha256": "f0fb10ce85d4fb7363a3f6c1b312487e1a8f5474949b311e036ef819ff68a298",
+        "size_bytes": 615
+      }
+    },
+    {
+      "command": "TMPDIR=<owned>/tmp .venv/bin/python -B -m pytest -p no:cacheprovider --basetemp=<owned>/source-closure-pytest-tmp scripts/codex_harness/test_research_controller_frontier.py -k \"test_r26 and not actual\" -q -rs",
+      "exit_code": 0,
+      "passed": 14,
+      "deselected": 104,
+      "log": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_final_controller_independent_review/SOURCE_CLOSURE_SYNTHETIC.log",
+        "sha256": "7c77a529fac801ef6939ce94067d62f31a19785f277d3ec7ee47dc09eab2ceb8",
+        "size_bytes": 115
+      }
+    }
+  ],
+  "limitations": [
+    "The first two author test commands have no contemporaneous source hashes; their raw failure/pass logs are retained but do not prove exact preimage identity. Final author validation and this review bind the supplied final hashes.",
+    "Three current lifecycle inventory tests skipped because the production repair/acquisition/review inventories have already transitioned; no historical replay was performed to turn them into PASS.",
+    "Historical fixture integration tests and hardcoded transition bindings depend on owner-local evidence. This is not a claim of a portable full-module test run or a rerun of CF4, SavedLaw, Gaia or full7 scientific work.",
+    "Validation uses a trusted local host and one production-state writer; no claim of cross-process concurrent-writer serialization, hardware power-loss recovery, daemon operation or runtime model observation is made."
+  ],
+  "production_state": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/LIVE_STATE.json",
+    "sha256": "fa4ecaca94d180c61b547706ddc546f5bbd9db197a20a6f41bd65c863c13517d",
+    "size_bytes": 4316867
+  },
+  "active_pointer": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runtime/ACTIVE_CONTROLLER.json",
+    "sha256": "d9221c1eb6a61bd33a7beee689dbcb2751fec97ab056327e08941f51ba3c924d",
+    "size_bytes": 249
+  },
+  "scientific_admission": "HOLD_UNCHANGED",
+  "publication_decision": "HOLD_PENDING_EXACT_TREE_AND_PROTOCOL_REVIEW",
+  "next_action": "Parent supplies exact candidate publication tree and protocol packet to this independent reviewer.",
+  "review_completed_utc": "2026-10-24T07:27:23.260125+00:00"
+}

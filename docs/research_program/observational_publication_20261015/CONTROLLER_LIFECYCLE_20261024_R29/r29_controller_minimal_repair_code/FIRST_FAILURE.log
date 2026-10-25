@@ -1,0 +1,108 @@
+FF.FFF                                               [100%]
+=================================== FAILURES ===================================
+_ MinimalLifecycleRepairTests.test_cli_pins_two_hop_target_and_result_sidecar __
+
+self = <test_research_controller_frontier.MinimalLifecycleRepairTests testMethod=test_cli_pins_two_hop_target_and_result_sidecar>
+
+    def test_cli_pins_two_hop_target_and_result_sidecar(self):
+        root = Path(self.tmp.name)
+        target = root / "durable" / "STATE.json"
+        campaign = root / "campaign.json"
+        campaign.write_text(json.dumps({"campaign_id": "alias-fixture", "tasks": [task("A")]}))
+        self.cli(target, "init", "--campaign", str(campaign), "--authorization", "metadata only")
+        middle, alias = root / "middle", root / "alias"
+        middle.symlink_to(target)
+        alias.symlink_to(middle)
+        args = [part for model, effort in sorted(PROFILES)
+                for part in ("--available-profile", model + "/" + effort)]
+        packet = self.cli(alias, "next", *args)
+        self.cli(alias, "ack", "--packet-id", packet["packet_id"], "--agent-id", "fixture-author")
+        raw = root / "raw.json"; raw.write_text('{"metadata":"actual fixture result"}')
+        result = {"packet_id": packet["packet_id"], "task_id": "A", "agent_id": "fixture-author",
+                  "input_identity": "input-v1", "raw_receipt": str(raw), "outcome": "success",
+                  "candidate_identity": "fixture-candidate", "validation_evidence": ["fixture control"]}
+        result_path = root / "result.json"; result_path.write_text(json.dumps(result))
+        self.cli(alias, "record", "--result", str(result_path))
+>       self.assertTrue(alias.is_symlink()); self.assertTrue(middle.is_symlink())
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: False is not true
+
+scripts/codex_harness/test_research_controller_frontier.py:456: AssertionError
+___ MinimalLifecycleRepairTests.test_empty_or_wrong_plan_rejected_at_record ____
+
+self = <test_research_controller_frontier.MinimalLifecycleRepairTests testMethod=test_empty_or_wrong_plan_rejected_at_record>
+
+    def test_empty_or_wrong_plan_rejected_at_record(self):
+        for plan in (" ", {}, [], ["repair"], True, 7):
+            state = self.state([task("A", approved_repair_id=None)])
+            self.result(state, self.launch(state), "blocker", candidate_identity=None, issue=self.issue())
+            research = self.launch(state); old = copy.deepcopy(state)
+>           with self.assertRaises(rc.ControllerError): self.result(state, research, repair_plan=plan)
+E           AssertionError: ControllerError not raised
+
+scripts/codex_harness/test_research_controller_frontier.py:577: AssertionError
+_ MinimalLifecycleRepairTests.test_initial_failure_structured_and_string_plan_review _
+
+self = <test_research_controller_frontier.MinimalLifecycleRepairTests testMethod=test_initial_failure_structured_and_string_plan_review>
+
+    def test_initial_failure_structured_and_string_plan_review(self):
+        for plan in ({"repair": "correct initial control"}, "correct initial control"):
+            state, author, repair, agent, evidence, data = self.initial_failure_fixture(plan)
+            old = copy.deepcopy(state)
+>           rc.acknowledge(state, repair["packet_id"], agent, followup_evidence=str(evidence))
+
+scripts/codex_harness/test_research_controller_frontier.py:507: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/codex_harness/research_controller.py:1550: in acknowledge
+    continuation = _repair_followup(state, p, t, agent_id, followup_evidence)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/codex_harness/research_controller.py:1445: in _repair_followup
+    require(isinstance(plan, str) and plan.strip(), "followup needs concrete recorded repair plan")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'followup needs concrete recorded repair plan'
+
+    def require(condition: Any, message: str) -> None:
+        if not condition:
+>           raise ControllerError(message)
+E           r26_actual_review_candidate.ControllerError: followup needs concrete recorded repair plan
+
+scripts/codex_harness/research_controller.py:30: ControllerError
+_ MinimalLifecycleRepairTests.test_prohibited_and_exhausted_ordinary_transport_atomic _
+
+self = <test_research_controller_frontier.MinimalLifecycleRepairTests testMethod=test_prohibited_and_exhausted_ordinary_transport_atomic>
+
+    def test_prohibited_and_exhausted_ordinary_transport_atomic(self):
+        for reason, prohibited in (("owner prohibits retry", True), ("exhausted monthly quota", False)):
+            state = self.state([task("A", approved_repair_id=None)])
+            packet = rc.next_packet(state, POLICY, PROFILES)
+            evidence = self.semantic_file({"refused": reason})
+            rc.launch_failed(state, packet["packet_id"], evidence, "transport", reason, prohibited)
+>           self.assertTrue(state["tasks"]["A"]["hold"]["retry_prohibited"])
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'retry_prohibited'
+
+scripts/codex_harness/test_research_controller_frontier.py:468: KeyError
+_______ MinimalLifecycleRepairTests.test_save_two_hop_alias_and_new_file _______
+
+self = <test_research_controller_frontier.MinimalLifecycleRepairTests testMethod=test_save_two_hop_alias_and_new_file>
+
+    def test_save_two_hop_alias_and_new_file(self):
+        root = Path(self.tmp.name)
+        target = root / "durable" / "STATE.json"
+        rc.save(target, {"generation": 1})
+        middle, alias = root / "middle", root / "alias"
+        middle.symlink_to(target)
+        alias.symlink_to(middle)
+        rc.save(alias, {"generation": 2})
+>       self.assertTrue(alias.is_symlink())
+E       AssertionError: False is not true
+
+scripts/codex_harness/test_research_controller_frontier.py:426: AssertionError
+=========================== short test summary info ============================
+FAILED scripts/codex_harness/test_research_controller_frontier.py::MinimalLifecycleRepairTests::test_cli_pins_two_hop_target_and_result_sidecar
+FAILED scripts/codex_harness/test_research_controller_frontier.py::MinimalLifecycleRepairTests::test_empty_or_wrong_plan_rejected_at_record
+FAILED scripts/codex_harness/test_research_controller_frontier.py::MinimalLifecycleRepairTests::test_initial_failure_structured_and_string_plan_review
+FAILED scripts/codex_harness/test_research_controller_frontier.py::MinimalLifecycleRepairTests::test_prohibited_and_exhausted_ordinary_transport_atomic
+FAILED scripts/codex_harness/test_research_controller_frontier.py::MinimalLifecycleRepairTests::test_save_two_hop_alias_and_new_file
+5 failed, 1 passed, 20 subtests passed in 2.92s

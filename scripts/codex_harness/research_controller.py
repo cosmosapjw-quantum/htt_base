@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import copy
 import hashlib
 import json
@@ -11,6 +12,7 @@ from pathlib import Path
 import tempfile
 import time
 from typing import Any
+from urllib.parse import urlsplit
 
 from native_routing import load_policy, resolve_route
 
@@ -943,7 +945,8 @@ def summary(state: dict) -> dict:
             "note": "Scoped task acceptance never automatically promotes original scientific nodes."}
 
 
-def _review_context(state: dict, task_id: str, *, allow_running: bool = False) -> dict | None:
+def _review_context(state: dict, task_id: str, *, allow_running: bool = False,
+                    repository_root: Path | None = None) -> dict | None:
     """Prove the narrow read-only slot from declared, resolved local scopes."""
     task = state["tasks"][task_id]
     if (task["phase"] != "review" or task["state"] not in ({"ready", "planned", "running"} if allow_running else {"ready", "planned"})
@@ -961,7 +964,7 @@ def _review_context(state: dict, task_id: str, *, allow_running: bool = False) -
     if len(others) > 1 or any(row["state"] != "running" or row["phase"] != "acquisition"
                               for _, row in others):
         return None
-    root = Path(__file__).resolve().parents[2]
+    root = Path(repository_root) if repository_root is not None else Path(__file__).resolve().parents[2]
     def local(value, exists=False, relative_to=None):
         if (not isinstance(value, str) or not value.strip() or "://" in value
                 or any(char in value for char in "*?[")):
@@ -991,38 +994,224 @@ def _review_context(state: dict, task_id: str, *, allow_running: bool = False) -
                 or len(spec["owned_paths"]) > 256 or len(spec["input_sources"]) > 256
                 or not isinstance(task["candidate_identity"], str)):
             return None
-        reads = {local(value, True) for value in spec["owned_paths"]}
-        contracts, queue = {}, []
-        for source in spec["input_sources"]:
-            source = source.get("path") if isinstance(source, dict) else source
-            queue.append((Path(local(source, True)), 0))
-        metadata_bytes = 0
+        # Establish write ownership before reading any newly declared source.
+        acquisition = None
+        writes = []
+        if others:
+            owner_id, owner = others[0]
+            packet = state["packets"].get(owner.get("packet_id"), {})
+            if (not packet.get("launch_performed") or not packet.get("agent_id")
+                    or packet.get("task_id") != owner_id or packet.get("phase") != "acquisition"
+                    or packet.get("input_identity") != owner["spec"].get("input_identity")
+                    or not owner["spec"].get("owned_paths")):
+                return None
+            writes = sorted({local(value) for value in owner["spec"]["owned_paths"]})
+            acquisition = {"task_id": owner_id, "packet_id": owner["packet_id"],
+                           "input_identity": packet["input_identity"], "owned_paths": writes}
+        def disjoint(value):
+            p = Path(value)
+            if any(p == Path(w) or p.is_relative_to(w) or Path(w).is_relative_to(p) for w in writes):
+                raise ValueError("acquisition/review source overlap")
+
+        owned_scopes = {local(value, True) for value in spec["owned_paths"]}
+        for value in owned_scopes:
+            disjoint(value)
+        reads, contracts, source_seals, aliases = set(owned_scopes), {}, {}, {}
+        inventory_alias_pairs = []
+        source_bytes = metadata_bytes = 0
+        queue = [(entry, root, 0, None) for entry in spec["input_sources"]]
+        typed_leaves = {}
+        frozen_root = "/mnt/extdrive/workdir/htt_open_data/r25_gaia_tag_association_proposal/INPUT.json"
+        frozen_sha = "00209480018bcb19f29c3c22a2d847c26560bcf950045978f10579967314e39f"
+        large_leaf = "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/products/property_table.json"
+        large_sha = "76d523bb28a1176fa3e81139b6581f3fa176ae4745129f8ec5c9dd995d207c4e"
+        frozen_role = large_role_record = False
         while queue:
-            path, depth = queue.pop()
-            reads.add(str(path))
-            if len(reads) > 256:
-                return None
-            if path.suffix.lower() != ".json" or str(path) in contracts:
+            entry, parent, depth, role = queue.pop(0)
+            def remote_url(value):
+                parsed = urlsplit(value) if isinstance(value, str) else None
+                return bool(parsed and parsed.scheme in {"http", "https"} and parsed.hostname)
+            if isinstance(entry, dict) and "url" in entry:
+                keys = set(entry)
+                if (keys not in ({"url"}, {"url", "scope"}, {"url", "role"}, {"url", "scope", "role"})
+                        or not isinstance(entry["url"], str)
+                        or ("role" in entry and entry["role"] != "reference")):
+                    raise ValueError("mixed remote/local declaration")
+                if not remote_url(entry["url"]) or ("scope" in entry and not isinstance(entry["scope"], str)):
+                    raise ValueError("invalid remote reference")
                 continue
-            if depth > 16 or len(contracts) >= 64:
-                return None
+            if isinstance(entry, str) and entry.startswith(("https://", "http://")):
+                if not remote_url(entry):
+                    raise ValueError("invalid remote reference")
+                continue
+            record = entry if isinstance(entry, dict) else {}
+            role = record.get("role", role)
+            record_keys = {"path", "resolved_path", "sha256", "bytes", "size_bytes", "role",
+                           "allowed_array", "forbidden_array_access", "count", "identity",
+                           "canonical_ID_bytes", "canonical_ID_sha256", "join"}
+            if record and ("path" not in record or set(record) - record_keys):
+                raise ValueError("unsupported source record")
+            if "role" in record and record["role"] not in {"data", "code", "contract", "manifest"}:
+                raise ValueError("unsupported local source role")
+            name = record.get("path") if record else entry
+            path = Path(local(name, True, parent))
+            disjoint(path)
+            if depth > 16 or len(reads) >= 256 and str(path) not in reads:
+                raise ValueError("source scope bound")
+            lexical = Path(name)
+            if not lexical.is_absolute():
+                relative_alias = parent / lexical
+                lexical = relative_alias if relative_alias.is_file() else root / lexical
+            lexical = str(lexical.absolute())
+            if lexical in aliases and aliases[lexical] != str(path):
+                raise ValueError("source alias redirected")
+            aliases[lexical] = str(path)
+            if "resolved_path" in record and record["resolved_path"] != str(path):
+                raise ValueError("declared source alias redirected")
+            reads.add(str(path))
+            if str(path) not in source_seals:
+                h, size = hashlib.sha256(), 0
+                before_read = path.stat()
+                with path.open("rb") as stream:
+                    while chunk := stream.read(1024 * 1024):
+                        size += len(chunk)
+                        source_bytes += len(chunk)
+                        if source_bytes > 64 * 1024 * 1024:
+                            raise ValueError("source binding byte bound")
+                        h.update(chunk)
+                after_read = path.stat()
+                if ((before_read.st_ino, before_read.st_size, before_read.st_mtime_ns)
+                        != (after_read.st_ino, after_read.st_size, after_read.st_mtime_ns)
+                        or size != after_read.st_size):
+                    raise ValueError("source changed during sealing")
+                source_seals[str(path)] = {"sha256": h.hexdigest(), "size_bytes": size}
+            seal = source_seals[str(path)]
+            if "sha256" in record and record["sha256"] != seal["sha256"]:
+                raise ValueError("declared source SHA changed")
+            for size_key in ("bytes", "size_bytes"):
+                if size_key in record and (type(record[size_key]) is not int or record[size_key] != seal["size_bytes"]):
+                    raise ValueError("declared source size changed")
+            if str(path) == frozen_root and seal["sha256"] == frozen_sha and depth == 0:
+                frozen_role = True
+            if str(path) == large_leaf and frozen_role:
+                if (seal != {"sha256": large_sha, "size_bytes": 4643777}
+                        or not large_role_record):
+                    raise ValueError("frozen data leaf role changed")
+                continue
+            if path.suffix.lower() == ".json" and role == "data" and typed_leaves.get(str(path)) == seal:
+                # An identity-bound data role cannot conceal a dependency contract.
+                with path.open("rb") as stream:
+                    raw_data = stream.read(seal["size_bytes"] + 1)
+                if len(raw_data) != seal["size_bytes"] or hashlib.sha256(raw_data).hexdigest() != seal["sha256"]:
+                    raise ValueError("typed data leaf changed during inspection")
+                data_document = json.loads(raw_data)
+                source_keys = {"input_sources", "sources", "inputs", "input_identity_binding",
+                               "method_source", "source_id_input", "original_task_identity",
+                               "files", "file_hashes", "source_hashes", "external_raw_carrier"}
+                def contains_declarations(value):
+                    if isinstance(value, dict):
+                        return bool(source_keys & value.keys()) or any(contains_declarations(v) for v in value.values())
+                    return isinstance(value, list) and any(contains_declarations(v) for v in value)
+                if contains_declarations(data_document):
+                    raise ValueError("typed data leaf declares local sources")
+                continue
+            if role in {"data", "code"} and path.suffix.lower() != ".json":
+                continue
+            if (path.suffix.lower() != ".json" and role not in {"contract", "manifest"}) or str(path) in contracts:
+                continue
+            if len(contracts) >= 64:
+                raise ValueError("metadata document bound")
             raw, document = metadata(path)
             metadata_bytes += len(raw)
-            if metadata_bytes > 4 * 1024 * 1024:
-                return None
-            contracts[str(path)] = hashlib.sha256(raw).hexdigest()
-            # Traverse only declared source fields, including nested contracts.
-            for group in ("input_sources", "sources", "inputs"):
-                entries = document.get(group, [])
-                if not isinstance(entries, list):
-                    return None
-                for entry in entries:
-                    if isinstance(entry, dict) and "url" in entry and "path" not in entry:
+            if metadata_bytes > 4 * 1024 * 1024 or hashlib.sha256(raw).hexdigest() != seal["sha256"]:
+                raise ValueError("metadata bound or identity changed")
+            contracts[str(path)] = seal["sha256"]
+            if depth == 0 and spec.get("input_identity") == "sha256:" + seal["sha256"]:
+                for value in document.get("input_sources", []):
+                    if not isinstance(value, dict) or value.get("role") != "data":
                         continue
-                    if len(queue) + len(reads) >= 256:
-                        return None
-                    value = entry.get("path") if isinstance(entry, dict) else entry
-                    queue.append((Path(local(value, True, path.parent)), depth + 1))
+                    if not (isinstance(value.get("sha256"), str)
+                            and (type(value.get("bytes")) is int or type(value.get("size_bytes")) is int)):
+                        raise ValueError("typed data leaf needs exact SHA and size")
+                    target = local(value.get("path"), True, path.parent)
+                    disjoint(target)
+                    size = value.get("bytes", value.get("size_bytes"))
+                    typed_leaves[target] = {"sha256": value["sha256"], "size_bytes": size}
+            if str(path) == frozen_root and frozen_role:
+                large_role_record = any(isinstance(v, dict) and v.get("path") == large_leaf
+                                        and v.get("sha256") == large_sha and v.get("bytes") == 4643777
+                                        for v in document.get("input_sources", []))
+            def declared(value, parent_key=None, identity=False):
+                if isinstance(value, str):
+                    if parent_key in {"task_id", "implementation_packet_id", "input_identity",
+                                      "candidate_semantic_identity", "return_manifest_sha256_field",
+                                      "identity_roles", "relocation_interpretation", "sha256"}:
+                        return
+                    if identity:
+                        raise ValueError("unsupported identity declaration")
+                    queue.append((value, path.parent, depth + 1, None))
+                elif isinstance(value, list):
+                    for child in value:
+                        declared(child, parent_key, identity)
+                elif isinstance(value, dict):
+                    if "path" in value or "url" in value:
+                        queue.append((value, path.parent, depth + 1, value.get("role")))
+                    else:
+                        for key, child in value.items():
+                            if key == "array_member_headers":
+                                continue
+                            declared(child, key, identity)
+                else:
+                    raise ValueError("unsupported source declaration")
+            for group in ("input_sources", "sources", "inputs", "input_identity_binding",
+                          "method_source", "source_id_input"):
+                if group in document:
+                    declared(document[group])
+            if "original_task_identity" in document:
+                value = document["original_task_identity"]
+                if not isinstance(value, dict):
+                    raise ValueError("unsupported original task identity")
+                if "candidate_manifest_bytes" in value:
+                    declared(value["candidate_manifest_bytes"])
+            for group in ("files", "file_hashes", "source_hashes"):
+                if group not in document:
+                    continue
+                inventory = document[group]
+                if isinstance(inventory, dict):
+                    rows = inventory.items()
+                elif group == "files" and isinstance(inventory, list):
+                    if not all(isinstance(v, dict) and "path" in v for v in inventory):
+                        raise ValueError("unsupported source manifest inventory")
+                    rows = [(v["path"], v) for v in inventory]
+                else:
+                    raise ValueError("unsupported source manifest inventory")
+                for name, value in rows:
+                    if isinstance(value, dict):
+                        if "path" in value:
+                            embedded_target = local(value["path"], True, path.parent)
+                            if embedded_target != local(name, True, path.parent):
+                                raise ValueError("conflicting source inventory path")
+                            inventory_alias_pairs.append((name, value["path"], path.parent,
+                                                          embedded_target))
+                            # Both lexical declarations must survive an alias race.
+                            queue.append(({"path": name, **{k: v for k, v in value.items() if k != "path"}},
+                                          path.parent, depth + 1, None))
+                            queue.append((value, path.parent, depth + 1, None))
+                        else:
+                            queue.append(({"path": name, **value}, path.parent, depth + 1, None))
+                    else:
+                        queue.append(({"path": name, "sha256": value}, path.parent, depth + 1, None))
+            if "external_raw_carrier" in document or "external_raw_carrier_sha256" in document:
+                if not isinstance(document.get("external_raw_carrier"), str) or not isinstance(document.get("external_raw_carrier_sha256"), str):
+                    raise ValueError("incomplete external source carrier")
+                queue.append(({"path": document["external_raw_carrier"],
+                               "sha256": document["external_raw_carrier_sha256"]}, path.parent, depth + 1, None))
+        for value in spec["owned_paths"]:
+            resolved = local(value, True)
+            disjoint(resolved)
+            reads.add(resolved)
+        if len(reads) > 256:
+            raise ValueError("source and owned scope bound")
         owned = [Path(local(value, True)) for value in spec["owned_paths"]]
         def candidate_path(value):
             if not isinstance(value, str) or not value.strip() or "://" in value:
@@ -1051,6 +1240,7 @@ def _review_context(state: dict, task_id: str, *, allow_running: bool = False) -
         candidate_seals, candidate_bytes = {}, 0
         def content_seal(path):
             nonlocal candidate_bytes
+            disjoint(path)
             if str(path) not in candidate_seals:
                 digestor = hashlib.sha256()
                 with path.open("rb") as stream:
@@ -1069,13 +1259,13 @@ def _review_context(state: dict, task_id: str, *, allow_running: bool = False) -
             if hashlib.sha256(manifest_raw).hexdigest() != expected:
                 return None
             declarations = {}
-            for inventory in ("files", "products_sha256", "products"):
+            for inventory in ("files", "products_sha256", "products", "inventory"):
                 if inventory not in manifest:
                     continue
                 entries = manifest[inventory]
                 if isinstance(entries, dict):
                     entries = list(entries.items())
-                elif isinstance(entries, list) and inventory != "products_sha256":
+                elif isinstance(entries, list) and inventory in {"files", "products", "inventory"}:
                     if not all(isinstance(row, dict) and "path" in row for row in entries):
                         return None
                     entries = [(row["path"], row) for row in entries]
@@ -1085,6 +1275,10 @@ def _review_context(state: dict, task_id: str, *, allow_running: bool = False) -
                                 or manifest.get("input_identity", spec["input_identity"]) != spec["input_identity"]):
                     return None
                 for name, record in entries:
+                    if inventory == "inventory" and (not isinstance(record, dict)
+                            or set(record) - {"path", "sha256", "size_bytes", "bytes", "resolved_path"}
+                            or not any(k in record for k in ("size_bytes", "bytes"))):
+                        return None
                     path = Path(local(name, True, binding.parent))
                     declared_hash = record.get("sha256") if isinstance(record, dict) else record
                     if not isinstance(declared_hash, str) or len(declared_hash) != 64:
@@ -1094,6 +1288,8 @@ def _review_context(state: dict, task_id: str, *, allow_running: bool = False) -
                     declarations[str(path)] = declared_hash
                     if isinstance(record, dict):
                         if "path" in record and Path(local(record["path"], True, binding.parent)) != path:
+                            return None
+                        if "resolved_path" in record and record["resolved_path"] != str(path):
                             return None
                         for size_key in ("size_bytes", "bytes"):
                             if size_key in record and (type(record[size_key]) is not int
@@ -1105,26 +1301,19 @@ def _review_context(state: dict, task_id: str, *, allow_running: bool = False) -
         for path in products:
             content_seal(path)
         reads.update(candidate_seals)
-        acquisition = None
-        if others:
-            owner_id, owner = others[0]
-            packet = state["packets"].get(owner.get("packet_id"), {})
-            if (not packet.get("launch_performed") or not packet.get("agent_id")
-                    or packet.get("task_id") != owner_id or packet.get("phase") != "acquisition"
-                    or packet.get("input_identity") != owner["spec"].get("input_identity")
-                    or not owner["spec"].get("owned_paths")):
-                return None
-            writes = sorted({local(value) for value in owner["spec"]["owned_paths"]})
-            for read in reads:
-                for write in writes:
-                    a, b = Path(read), Path(write)
-                    if a == b or a.is_relative_to(b) or b.is_relative_to(a):
-                        return None
-            acquisition = {"task_id": owner_id, "packet_id": owner["packet_id"],
-                           "input_identity": packet["input_identity"], "owned_paths": writes}
+        for value in reads:
+            disjoint(value)
+        if any(not Path(alias).is_file() or str(Path(alias).resolve()) != resolved
+               for alias, resolved in aliases.items()):
+            raise ValueError("source alias redirected during review planning")
+        if any(local(key, True, parent) != target
+               or local(embedded, True, parent) != target
+               for key, embedded, parent, target in inventory_alias_pairs):
+            raise ValueError("source inventory aliases diverged during review planning")
         return {"scope": {"candidate_identity": task["candidate_identity"],
                            "input_identity": spec["input_identity"], "spec_identity": digest(spec),
                            "read_paths": sorted(reads), "source_contracts": contracts,
+                           "source_seals": source_seals, "source_aliases": aliases,
                            "candidate_binding": str(binding), "candidate_seals": candidate_seals},
                 "acquisition": acquisition}
     except (OSError, ValueError, TypeError, KeyError):
@@ -1221,12 +1410,15 @@ def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]], *, re
                               "resume_evidence": t.get("resume_evidence"),
                               "scientific_resume": t.get("scientific_resume"),
                               "transport_resume": t.get("transport_resume"),
+                              "repair_input_transition": t.get("repair_input_transition"),
                               "authors": t["authors"], "contributors": t["contributors"],
                               "history_refs": history_refs, "history_total": len(t["history"])}, ensure_ascii=False))
         p = {**identity, "packet_id": packet_id, "route": route,
              "resume_evidence": copy.deepcopy(t.get("resume_evidence")),
              "scientific_resume": copy.deepcopy(t.get("scientific_resume")),
              "transport_resume": copy.deepcopy(t.get("transport_resume")),
+             **({"repair_input_transition": copy.deepcopy(t["repair_input_transition"])}
+                if t.get("repair_input_transition") else {}),
              "launch_performed": False, "observed_runtime": "UNKNOWN",
              "native_tool": "collaboration.spawn_agent",
              **({"review_only": True, "review_context": review_context} if review_only else {}),
@@ -1246,16 +1438,21 @@ def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]], *, re
             "status": "HOLD_TRANSPORT_UNAVAILABLE" if ready else summary(state)["status"]}
 
 
+def _concrete_repair_plan(plan: object) -> bool:
+    """Preserve the recorded representation and identity of string/object plans."""
+    return (isinstance(plan, str) and bool(plan.strip())) or (isinstance(plan, dict) and bool(plan))
+
+
 def _repair_followup(state: dict, p: dict, t: dict, agent_id: str, evidence: str) -> dict:
     """Validate explicit host followup evidence; never relabel a reused thread as fresh."""
     require(t["phase"] == p["phase"] == "repair", "followup allowed only for planned repair")
     plan = t.get("repair_plan")
-    require(isinstance(plan, str) and plan.strip(), "followup needs concrete recorded repair plan")
+    require(_concrete_repair_plan(plan), "followup needs concrete recorded repair plan")
     seal = _receipt(evidence)
     data = json.loads(Path(seal["path"]).read_text())
     require(isinstance(data, dict), "followup evidence must be an object")
     fields = ("native_tool", "task_id", "agent_id", "phase", "packet_id", "input_identity",
-              "repair_plan_identity", "base_packet_id", "base_candidate_identity")
+              "repair_plan_identity", "base_packet_id")
     dispatched = data.get("status") == "dispatched"
     if not dispatched:
         fields += ("candidate_identity", "raw_receipt", "raw_receipt_sha256")
@@ -1283,7 +1480,39 @@ def _repair_followup(state: dict, p: dict, t: dict, agent_id: str, evidence: str
                     for q in prior), "followup requires unchanged implementation route/profile")
     source = history.get(data.get("base_packet_id"), {})
     source_result = source.get("result", {})
-    require(source.get("phase") in {"execute", "repair"}
+    initial_failure = source_result.get("outcome") == "blocker"
+    if initial_failure:
+        base = state["packets"].get(data.get("base_packet_id"), {})
+        issue = source_result.get("issue", {})
+        implementation_history = [h for h in t["history"]
+                                  if h.get("phase") in {"execute", "repair"}
+                                  and h.get("result", {}).get("agent_id") == agent_id]
+        require(dispatched and implementation_history and source == implementation_history[-1]
+                and all(history[q["packet_id"]].get("result", {}).get("outcome") in {"success", "blocker"}
+                        for q in prior)
+                and base.get("launch_performed") is True and base.get("agent_id") == agent_id
+                and base.get("task_id") == p["task_id"] and base.get("phase") == source.get("phase")
+                and source.get("phase") in {"execute", "repair"}
+                and source_result.get("packet_id") == base.get("packet_id") == data.get("base_packet_id")
+                and source_result.get("task_id") == p["task_id"]
+                and source_result.get("agent_id") == agent_id
+                and source_result.get("input_identity") == base.get("input_identity") == p["input_identity"]
+                and issue.get("class") in {"code", "numeric"} and issue.get("substantive") is True
+                and issue.get("input_identity") == p["input_identity"]
+                and all(value is None for value in (source_result.get("candidate_identity"),
+                    base.get("candidate_identity"), t.get("candidate_identity"), p.get("candidate_identity"),
+                    data.get("base_candidate_identity")))
+                and not any(h.get("result", {}).get("outcome") == "success"
+                            and h.get("result", {}).get("candidate_identity") for h in t["history"]),
+                "followup needs latest acknowledged substantive initial implementation failure without candidate")
+        base_receipt = source.get("receipt")
+        require(isinstance(base_receipt, dict) and data.get("base_raw_receipt") == base_receipt
+                and _receipt(source_result.get("raw_receipt", "")) == base_receipt,
+                "initial failure followup needs exact stored raw receipt seal")
+    else:
+        require(isinstance(data.get("base_candidate_identity"), str) and data["base_candidate_identity"].strip(),
+                "followup needs nonempty base candidate identity")
+        require(source.get("phase") in {"execute", "repair"}
             and source_result.get("agent_id") == agent_id and source_result.get("outcome") == "success"
             and source_result.get("input_identity") == p["input_identity"]
             and source_result.get("candidate_identity") == data.get("base_candidate_identity")
@@ -1302,8 +1531,9 @@ def _repair_followup(state: dict, p: dict, t: dict, agent_id: str, evidence: str
                 "host followup receipt must bind actual accepted dispatch")
         return {"mode": "dispatched", "evidence": seal, "host_call_receipt": raw,
                 "native_tool": data["native_tool"], "base_packet_id": data["base_packet_id"],
-                "base_candidate_identity": data["base_candidate_identity"],
-                "repair_plan_identity": data["repair_plan_identity"]}
+                "base_candidate_identity": data.get("base_candidate_identity"),
+                "repair_plan_identity": data["repair_plan_identity"],
+                **({"base_raw_receipt": base_receipt} if initial_failure else {})}
     candidate = data.get("candidate_identity")
     require(isinstance(candidate, str) and candidate.strip()
             and candidate != t["candidate_identity"], "followup needs new candidate identity")
@@ -1414,7 +1644,9 @@ def launch_failed(state: dict, packet_id: str, evidence: str, classification: st
     require(classification in {"environment", "permission", "transport"} and reason.strip(),
             "exact launch refusal classification/reason required")
     receipt = _receipt(evidence)
-    hold = {"class": classification, "exact_missing_or_defect": reason, "receipt": receipt}
+    hold = {"class": classification, "exact_missing_or_defect": reason, "receipt": receipt,
+            "retry_prohibited": bool(retry_prohibited or "exhaust" in reason.lower()
+                                     or "monthly quota" in reason.lower())}
     t.update(state="held", hold=hold)
     repair_id = _task_repair_id(state, p["task_id"])
     pending = state["ultra_pending"].get(repair_id)
@@ -1450,6 +1682,10 @@ def resume(state: dict, task_id: str, evidence: str, input_identity: str,
     _validate_repair_binding(state, bound_repair, task_id, spec=prospective_spec,
                             delta=None if delta["kind"] == "prelaunch_transport" else delta)
     if delta["kind"] == "prelaunch_transport":
+        require(not t.get("hold", {}).get("retry_prohibited")
+                and not any(word in t.get("hold", {}).get("exact_missing_or_defect", "").lower()
+                            for word in ("exhaust", "monthly quota")),
+                "exhausted/prohibited ordinary transport cannot retry")
         packet_id = t.get("packet_id")
         p = state["packets"].get(packet_id, {})
         require(delta.get("packet_id") == packet_id and p and not p.get("launch_performed")
@@ -1496,10 +1732,791 @@ def resume(state: dict, task_id: str, evidence: str, input_identity: str,
                             "approved_repair_id": approved_repair_id})
 
 
-def record(state: dict, result: dict, policy: dict) -> None:
+def _repair_seal(value: dict) -> dict:
+    """The transition schema uses path/hash pairs, never predicted identities."""
+    require(isinstance(value, dict) and set(value) == {"path", "sha256"}, "exact repair seal required")
+    require(isinstance(value["sha256"], str) and len(value["sha256"]) == 64
+            and all(c in "0123456789abcdef" for c in value["sha256"]), "full SHA256 required")
+    actual = _receipt(value["path"])
+    require(actual == value, "stale repair seal: " + str(value.get("path")))
+    return actual
+
+
+def _repair_document(value: dict) -> dict:
+    seal = _repair_seal(value)
+    require(Path(seal["path"]).stat().st_size <= 8 * 1024 * 1024, "repair metadata too large")
+    document = json.loads(Path(seal["path"]).read_text())
+    require(isinstance(document, dict), "repair document must be an object")
+    return document
+
+
+def _validate_repair_input_transition(state: dict, result: dict, path: str) -> dict:
+    """Validate one explicitly typed source repair without scheduling or ledger mutation."""
+    seal = _receipt(path)
+    tr = _repair_document(seal)
+    fields = {"schema", "kind", "campaign", "task_id", "research_packet_id", "research_result",
+              "repair_contract", "before_input", "after_input", "raw_before", "source_review",
+              "preparation_contributors"}
+    require(set(tr) == fields and tr["schema"] == "htt.repair_input_transition/1"
+            and tr["kind"] in {"full7_memory_lifetime_same_science",
+                               "saved_law_singleton_test_same_science",
+                               "cf4_final_group_fixture_same_science",
+                               "cf4_source_layout_same_science"}, "unsupported repair transition")
+    if tr["kind"] == "cf4_source_layout_same_science":
+        return _validate_cf4_source_layout(state, result, seal, tr)
+    if tr["kind"] == "cf4_final_group_fixture_same_science":
+        return _validate_cf4_fixture_testfix(state, result, seal, tr)
+    if tr["kind"] == "saved_law_singleton_test_same_science":
+        return _validate_saved_law_testfix(state, result, seal, tr)
+    require(tr["campaign"] == state["campaign_identity"] and tr["task_id"] == result.get("task_id")
+            == "R25-PR3-FREQUENCY-TENSOR-CROSSPREDICTION", "repair campaign/task mismatch")
+    p = state["packets"].get(result.get("packet_id"), {})
+    t = state["tasks"][tr["task_id"]]
+    require(tr["research_packet_id"] == p.get("packet_id") and t.get("packet_id") == p.get("packet_id")
+            and p.get("launch_performed") is True and p.get("agent_id") == result.get("agent_id")
+            and t["state"] == "running" and t["phase"] == p.get("phase")
+            and p.get("phase") in {"research", "escalation"} and result.get("outcome") == "success"
+            and isinstance(result.get("repair_plan"), str) and result["repair_plan"].strip(),
+            "repair requires current acknowledged successful research")
+    require(not t.get("repair_input_transition") and not any(
+        q.get("task_id") == tr["task_id"] and q.get("packet_id") != p["packet_id"]
+        and q.get("launch_performed") and not any(h.get("packet_id") == q.get("packet_id")
+        for h in t["history"]) for q in state["packets"].values()), "concurrent or repeated repair transition")
+    require(_repair_document(tr["research_result"]) == result, "research result bytes mismatch")
+    _repair_seal(tr["repair_contract"])
+    before, after = _repair_document(tr["before_input"]), _repair_document(tr["after_input"])
+    require(t["spec"]["input_identity"] == result["input_identity"] == p["input_identity"]
+            == "sha256:" + tr["before_input"]["sha256"], "old input identity mismatch")
+    require(before.get("schema") == "htt.full7_native_input/1"
+            and after.get("schema") == "htt.full7_native_input/2", "repair input schema mismatch")
+    allowed = {"schema", "source_sha256", "input_sources", "ack_path", "source_contributors", "repair_lineage"}
+    require({k:v for k,v in before.items() if k not in allowed}
+            == {k:v for k,v in after.items() if k not in allowed}, "scientific input fields changed")
+    require(set(after) == set(before) | {"repair_lineage"}, "repair input fields changed")
+    require(after["ack_path"] != before["ack_path"] and not Path(after["ack_path"]).exists(),
+            "repair requires a future fresh ACK path")
+    names = {"full7_consumer.py", "full7_math.py", "test_full7_synthetic.py"}
+    require(set(before["source_sha256"]) == set(after["source_sha256"]) == names
+            and before["source_sha256"]["full7_math.py"] == after["source_sha256"]["full7_math.py"],
+            "repair source set/math changed")
+    old_sources, new_sources = before["input_sources"], after["input_sources"]
+    require(len(old_sources) == len(new_sources), "repair source inventory changed")
+    for old, new in zip(old_sources, new_sources):
+        name = Path(old["path"]).name
+        if old.get("role") == "code" and name in names:
+            require(set(old) == set(new) and {k:v for k,v in old.items() if k not in {"sha256", "bytes"}}
+                    == {k:v for k,v in new.items() if k not in {"sha256", "bytes"}}, "code source path changed")
+            require(new["sha256"] == after["source_sha256"][name], "new source seal mismatch")
+            _repair_seal({"path":new["path"], "sha256":new["sha256"]})
+            require(new.get("bytes") == Path(new["path"]).stat().st_size, "source size mismatch")
+        else:
+            require(old == new, "nonrepair source changed")
+    lineage = after["repair_lineage"]
+    require(set(lineage) == {"schema", "repair_id", "repair_contract", "research_result", "parent_input",
+            "parent_ack", "parent_packet", "parent_raw_receipt", "source_preimages", "checkpoint_seals",
+            "historical_controls", "affected_controls", "output_directory", "ledger_path",
+            "max_resumed_numerical_attempts"}, "repair lineage fields changed")
+    require(lineage["schema"] == "htt.full7_memory_repair_lineage/1"
+            and lineage["repair_id"] == "R26-FULL7-MEMORY-LIFETIME-01"
+            and lineage["max_resumed_numerical_attempts"] == 1, "repair scope changed")
+    for key, target in (("repair_contract", "repair_contract"), ("research_result", "research_result"),
+                        ("parent_input", "before_input"), ("parent_raw_receipt", "raw_before")):
+        require(lineage[key] == tr[target], "repair lineage seal mismatch: " + key)
+    raw = _repair_document(tr["raw_before"])
+    ack, parent = _repair_document(lineage["parent_ack"]), _repair_document(lineage["parent_packet"])
+    require(ack.get("status") == "CONTROLLER_ACTUAL_DISPATCH_ACKNOWLEDGED"
+            and ack.get("native_call_accepted") is True and ack.get("worker_wait_confirmed") is True
+            and ack.get("campaign_identity") == state["campaign_identity"]
+            and ack.get("task_id") == tr["task_id"] and ack.get("input_sha256") == tr["before_input"]["sha256"]
+            and ack.get("controller_packet_receipt") == lineage["parent_packet"]
+            and parent.get("packet_id") == ack.get("packet_id")
+            and parent.get("launch_performed") is True and parent.get("agent_id") == ack.get("executor_id")
+            and state["packets"].get(parent["packet_id"]) == parent, "old actual ACK/packet chain mismatch")
+    require(raw.get("input_sha256") == tr["before_input"]["sha256"]
+            and raw.get("ack_sha256") == lineage["parent_ack"]["sha256"]
+            and raw.get("controller_packet_id") == parent["packet_id"]
+            and raw.get("stage_status") == "HOLD_FIRST_FAILURE" and raw.get("first_failures"),
+            "unknown or unbound original outcome")
+    require(lineage["output_directory"] == "/mnt/extdrive/workdir/htt_open_data/r26_full7_preparation/run"
+            and lineage["ledger_path"] == lineage["output_directory"] + "/RAW_RECEIPT.json", "repair output paths expanded")
+    require(Path(lineage["ledger_path"]).read_bytes() == Path(tr["raw_before"]["path"]).read_bytes(),
+            "live old ledger changed")
+    for row in raw["products"].values():
+        require(isinstance(row.get("charged_seconds"), (int,float)) and 0 <= row["charged_seconds"] < 900,
+                "product budget exhausted")
+        for attempt in row["attempts"]:
+            require(attempt.get("child_reaped") is True and attempt.get("status") in {"FINISHED", "FAILED"}
+                    and isinstance(attempt.get("exit_code"), int), "old child unresolved")
+            proc = Path('/proc') / str(attempt["child_pid"]) / 'stat'
+            require(not proc.exists() or proc.read_text().split()[21] != str(attempt["child_start_ticks"]),
+                    "old child still running")
+    require(set(lineage["source_preimages"]) == names, "source preimages incomplete")
+    for name, ref in lineage["source_preimages"].items():
+        _repair_seal(ref)
+        require(ref["sha256"] == before["source_sha256"][name], "source preimage mismatch")
+    expected = {"VALID_" + key + ".npz" for key in raw["products"]} | {"COMMON_SUPPORT_S7.npz"}
+    require(set(lineage["checkpoint_seals"]) == expected, "checkpoint inventory changed")
+    for name, ref in lineage["checkpoint_seals"].items():
+        require(ref["path"] == lineage["output_directory"] + '/' + name, "checkpoint path changed")
+        _repair_seal(ref)
+    _repair_seal(lineage["historical_controls"])
+    require(isinstance(lineage["affected_controls"], list) and lineage["affected_controls"], "affected controls missing")
+    require(len({ref["sha256"] for ref in lineage["affected_controls"]}) == len(lineage["affected_controls"]),
+            "duplicate affected controls")
+    controls_elapsed = 0.0
+    for ref in lineage["affected_controls"]:
+        control = _repair_document(ref)
+        require(control.get("status") == "FINISHED" and control.get("exit_code") == 0
+                and control.get("child_reaped") is True and 0 < control.get("elapsed_seconds", 0) <= 30
+                and 0 < control.get("ru_maxrss_bytes", 0) <= 2 * 1024**3, "affected control failed/unobserved")
+        controls_elapsed += control["elapsed_seconds"]
+    require(controls_elapsed <= 30, "shared affected control time exhausted")
+    contributors = tr["preparation_contributors"]
+    require(isinstance(contributors, list) and {v.get("role") for v in contributors}
+            == {"controller_patch", "numerical_source"}, "preparation contributor roles missing")
+    for contributor in contributors:
+        require(set(contributor) == {"agent_id", "role", "requested_runtime", "observed_runtime", "raw_receipt"}
+                and all(contributor.get(k) for k in ("agent_id", "requested_runtime", "observed_runtime")),
+                "contributor identity missing")
+        _repair_seal(contributor["raw_receipt"])
+    require(after["source_contributors"] == before["source_contributors"] + contributors,
+            "source contributor history changed")
+    review = _repair_document(tr["source_review"])
+    require(review.get("decision") == "APPROVE_ONE_BOUNDED_SAME_TASK_MEMORY_REPAIR"
+            and review.get("scientific_admission") == "HOLD" and review.get("preserved_scientific_fields") is True
+            and review.get("preserved_caps") is True and review.get("unresolved_blocking_findings") == [],
+            "source review does not approve bounded repair")
+    for key in ("before_input", "after_input", "repair_contract", "raw_before"):
+        require(review.get(key) == tr[key], "review binding mismatch: " + key)
+    require(review.get("source_sha256") == after["source_sha256"]
+            and review.get("affected_controls") == lineage["affected_controls"], "review source/control mismatch")
+    agents = set(t["authors"] + t["contributors"] + [v["agent_id"] for v in contributors])
+    require(review.get("reviewer_id") and review["reviewer_id"] not in agents
+            and agents <= set(review.get("independent_of", [])) and review.get("requested_runtime")
+            and review.get("observed_runtime"), "source reviewer not independent")
+    require(set(review.get("diffs", {})) == {"controller_patch", "numerical_source"}, "both reviewed diffs required")
+    for ref in review["diffs"].values():
+        _repair_seal(ref)
+    require(review.get("controller_patch") == review["diffs"]["controller_patch"], "controller patch binding mismatch")
+    controller_ref = review.get("controller_source")
+    _repair_seal(controller_ref)
+    require(controller_ref["path"] == str(Path(__file__).resolve()), "review must bind actual controller source")
+    test_ref = review.get("controller_tests")
+    _repair_seal(test_ref)
+    require(test_ref["path"] == str(Path(__file__).resolve().with_name("test_research_controller_frontier.py")),
+            "review must bind actual controller tests")
+    return {"seal":seal, "document":tr, "after":after,
+            "resolved_input_sources": copy.deepcopy(after["input_sources"]) + [
+                {**tr["after_input"], "role":"contract",
+                 "bytes":Path(tr["after_input"]["path"]).stat().st_size}],
+            "parent_ack":lineage["parent_ack"]}
+
+
+_SAVED_LAW_DIRECTORY = "/mnt/extdrive/workdir/htt_open_data/r26_s04_selected_law_consumer"
+_SAVED_LAW_PARENT_SHA256 = {
+    "parent_input":"b2a0714920f3161832972bddc0251899f8edbc44473224567839f08e8b8884c0",
+    "parent_ack":"8dd199d5709161113437ba09ee8b88d1a0af034599c93e209abe5a4612ec2d17",
+    "parent_packet":"1911f54155be18fa2143a048348d9d04a6b4fe06b67edb4aa65e17591a3da8da",
+    "parent_raw_receipt":"05d6b2db036bf27d898726145903393c4b54135bde539c8d988b332734b9dbe2",
+    "parent_outcome":"5f7fe0e17d977ccfa545cdf39c2e40da422dfde286e33ef7b80fb16a8f7bf1e6",
+    "failure_log":"4bfc29039260e1a75f02ca2e90a43aeb4d260ba11577db6ea74d3f3e30fbaeed",
+    "repair_contract":"0d94b281cd348e6b7dba567ff71dd295504f222f9ab14e8c859d176fd6e8bd5f",
+}
+
+
+def _validate_saved_law_testfix(state: dict, result: dict, seal: dict, tr: dict) -> dict:
+    """One test-only scalar extraction change; no new scientific execution authority."""
+    key = "R26-SAVED-SELECTED-LAW-CONSUMPTION"
+    require(tr["campaign"] == state["campaign_identity"] and tr["task_id"] == result.get("task_id") == key,
+            "repair campaign/task mismatch")
+    t = state["tasks"][key]
+    p = state["packets"].get(result.get("packet_id"), {})
+    require(tr["research_packet_id"] == p.get("packet_id") == t.get("packet_id")
+            and p.get("launch_performed") is True and p.get("agent_id") == result.get("agent_id")
+            and t["state"] == "running" and t["phase"] == p.get("phase") == "research"
+            and result.get("outcome") == "success" and isinstance(result.get("repair_plan"), str)
+            and result["repair_plan"].strip(), "repair requires current acknowledged successful research")
+    require(not t.get("repair_input_transition") and not any(
+        q.get("task_id") == key and q.get("packet_id") != p["packet_id"] and q.get("launch_performed")
+        and not any(h.get("packet_id") == q.get("packet_id") for h in t["history"])
+        for q in state["packets"].values()), "concurrent or repeated repair transition")
+    require(_repair_document(tr["research_result"]) == result, "research result bytes mismatch")
+    _repair_seal(tr["repair_contract"])
+    before, after = _repair_document(tr["before_input"]), _repair_document(tr["after_input"])
+    require(t["spec"]["input_identity"] == result["input_identity"] == p["input_identity"]
+            == "sha256:" + tr["before_input"]["sha256"], "old input identity mismatch")
+    require(before.get("schema") == "htt.saved_selected_law_frozen_input/1"
+            and after.get("schema") == "htt.saved_selected_law_frozen_input/2"
+            and before.get("task_id") == key, "repair input schema mismatch")
+    allowed = {"schema", "source_code", "repair_lineage"}
+    require(set(after) == set(before) | {"repair_lineage"}
+            and {k:v for k,v in before.items() if k not in allowed}
+            == {k:v for k,v in after.items() if k not in allowed}
+            and len(before["source_inputs"]) == 15, "scientific input fields changed")
+    names = {"consume.py", "test_consume.py", "plot.py", "run_capped.py"}
+    require(set(before["source_code"]) == names
+            and set(after["source_code"]) == names | {"run_continuation.py"}, "repair source set changed")
+    root = Path(_SAVED_LAW_DIRECTORY)
+    require(Path(tr["after_input"]["path"]).parent == root,
+            "new frozen input path changed")
+    lineage = after["repair_lineage"]
+    require(set(lineage) == {"schema", "repair_id", "repair_contract", "research_result", "parent_input",
+        "parent_ack", "parent_packet", "parent_raw_receipt", "parent_outcome", "failure_log",
+        "source_preimages", "ack_path", "output_directory", "ledger_path", "inherited_seconds_cap",
+        "prior_charged_seconds", "inherited_rss_bytes_max", "max_resumed_numerical_attempts"},
+        "repair lineage fields changed")
+    require(lineage["schema"] == "htt.saved_law_testfix_lineage/1"
+            and lineage["repair_id"] == "R26-SAVED-LAW-SINGLETON-01"
+            and lineage["inherited_seconds_cap"] == 90
+            and lineage["prior_charged_seconds"] == 2.9794867201708257
+            and lineage["inherited_rss_bytes_max"] == 2147483648
+            and lineage["max_resumed_numerical_attempts"] == 1, "repair caps/scope changed")
+    require(lineage["output_directory"] == str(root)
+            and lineage["ledger_path"] == str(root / "RUN_ACCOUNTING_TESTFIX.json")
+            and Path(lineage["ack_path"]).resolve().is_relative_to(root.resolve())
+            and lineage["ack_path"] != str(root / "CONTROLLER_ACK.json")
+            and not Path(lineage["ack_path"]).exists()
+            and not Path(lineage["ledger_path"]).exists(), "repair requires future fresh ACK/ledger")
+    for k, target in (("repair_contract", "repair_contract"), ("research_result", "research_result"),
+                      ("parent_input", "before_input"), ("parent_raw_receipt", "raw_before")):
+        require(lineage[k] == tr[target], "repair lineage seal mismatch: " + k)
+    for k, name in (("parent_input", "FROZEN_INPUT.json"), ("parent_ack", "CONTROLLER_ACK.json"),
+                    ("parent_packet", "ACKNOWLEDGED_EXECUTION_PACKET.json"),
+                    ("parent_raw_receipt", "RUN_ACCOUNTING.json"),
+                    ("parent_outcome", "CONTROLLER_OUTCOME.json"), ("failure_log", "focused_tests.stderr.log")):
+        require(lineage[k]["path"] == str(root / name), "parent path changed: " + k)
+        _repair_seal(lineage[k])
+    require(all(lineage[k]["sha256"] == expected for k, expected in _SAVED_LAW_PARENT_SHA256.items()),
+            "frozen saved-law parent identity mismatch")
+    require(any(h.get("packet_id") == _repair_document(lineage["parent_packet"]).get("packet_id")
+                and h.get("receipt") == tr["raw_before"] for h in t["history"]),
+            "parent raw receipt not recorded in task history")
+    require(set(lineage["source_preimages"]) == names, "source preimages incomplete")
+    for name in names:
+        old, new = before["source_code"][name], after["source_code"][name]
+        _repair_seal(lineage["source_preimages"][name])
+        require(lineage["source_preimages"][name]["sha256"] == old["sha256"], "source preimage mismatch")
+        require(old["path"] == new["path"] == str(root / name), "code source path changed")
+        if name == "test_consume.py":
+            require({k:v for k,v in old.items() if k not in {"bytes", "sha256"}}
+                    == {k:v for k,v in new.items() if k not in {"bytes", "sha256"}}, "test metadata changed")
+        else:
+            require(old == new, "nonrepair source changed")
+    for name, row in after["source_code"].items():
+        require(row["path"] == str(root / name), "new source path changed")
+        _repair_seal({"path":row["path"], "sha256":row["sha256"]})
+        require(row["bytes"] == Path(row["path"]).stat().st_size, "source size mismatch")
+    preimage = Path(lineage["source_preimages"]["test_consume.py"]["path"]).read_bytes()
+    current = Path(after["source_code"]["test_consume.py"]["path"]).read_bytes()
+    old_expr, new_expr = b"float(Z@Ginv@Z.T)", b"(Z@Ginv@Z.T).item()"
+    require(preimage.count(old_expr) == 1 and current == preimage.replace(old_expr, new_expr, 1),
+            "test repair must preserve all other bytes")
+    try:
+        old_ast, new_ast = ast.parse(preimage), ast.parse(current)
+    except SyntaxError as exc:
+        raise ControllerError("test source AST invalid") from exc
+    methods = [m for c in old_ast.body if isinstance(c, ast.ClassDef) and c.name == "AnalyticContractTests"
+               for m in c.body if isinstance(m, ast.FunctionDef)
+               and m.name == "test_correlated_prediction_includes_training_uncertainty"]
+    nodes = [n for m in methods for n in ast.walk(m) if isinstance(n, ast.Call)
+             and ast.dump(n, include_attributes=False) == ast.dump(ast.parse(old_expr.decode(), mode="eval").body,
+                                                                   include_attributes=False)]
+    require(len(nodes) == 1, "repair expression not unique in affected method")
+    class Restore(ast.NodeTransformer):
+        count = 0
+        def visit_Call(self, node):
+            if ast.dump(node, include_attributes=False) == ast.dump(ast.parse(new_expr.decode(), mode="eval").body,
+                                                                  include_attributes=False):
+                self.count += 1
+                return copy.deepcopy(nodes[0])
+            return self.generic_visit(node)
+    restore = Restore()
+    restored = restore.visit(new_ast)
+    require(restore.count == 1 and ast.dump(restored, include_attributes=False)
+            == ast.dump(old_ast, include_attributes=False), "extra test AST edit")
+    ack = _repair_document(lineage["parent_ack"])
+    parent = _repair_document(lineage["parent_packet"])
+    raw = _repair_document(tr["raw_before"])
+    outcome = _repair_document(lineage["parent_outcome"])
+    require(ack.get("schema") == "htt.saved_law_actual_controller_ack/1"
+            and ack.get("controller_ack") is True and ack.get("native_call_returned_without_error") is True
+            and ack.get("worker_wait_confirmed") is True and ack.get("task_id") == key
+            and ack.get("input_identity") == parent.get("input_identity") == t["spec"]["input_identity"]
+            and ack.get("acknowledged_packet") == lineage["parent_packet"]
+            and parent.get("task_id") == key and parent.get("campaign") == state["campaign_identity"]
+            and parent.get("packet_id") == ack.get("packet_id") and parent.get("launch_performed") is True
+            and parent.get("agent_id") == ack.get("agent_id")
+            and state["packets"].get(parent["packet_id"]) == parent, "old actual ACK/packet chain mismatch")
+    debit = lineage["prior_charged_seconds"]
+    require(raw.get("schema") == "htt.r26.saved_law_cumulative_execution/1" and raw.get("task_id") == key
+            and raw.get("controller_ack_file") == lineage["parent_ack"]["path"]
+            and raw.get("controller_ack_sha256") == lineage["parent_ack"]["sha256"]
+            and raw.get("source_contract_sha256") == ack.get("contract_sha256") == before["owner_contract"]["sha256"]
+            and raw.get("seconds_cap") == 90 and raw.get("rss_cap_bytes") == 2147483648
+            and raw.get("state") == "FIRST_FAILURE" and raw.get("cumulative_elapsed_seconds") == debit
+            and len(raw.get("started_commands", [])) == 1, "original raw accounting mismatch")
+    command = raw["started_commands"][0]
+    require(command.get("label") == "focused_tests" and command.get("state") == "FIRST_FAILURE"
+            and command.get("exit_code") == 1 and command.get("elapsed_seconds") == debit
+            and command.get("stop_reason") == "NONZERO_EXIT"
+            and command.get("stderr") == lineage["failure_log"]["path"]
+            and command.get("stderr_sha256") == lineage["failure_log"]["sha256"], "old child outcome unresolved")
+    require(outcome.get("schema") == "htt.r26.controller_execute_outcome/1"
+            and all(outcome.get(k) == ack.get(k) for k in ("task_id", "packet_id", "agent_id", "input_identity"))
+            and outcome.get("raw_receipt") == tr["raw_before"]["path"]
+            and outcome.get("raw_receipt_sha256") == tr["raw_before"]["sha256"]
+            and outcome.get("first_failure_log") == lineage["failure_log"]["path"]
+            and outcome.get("first_failure_log_sha256") == lineage["failure_log"]["sha256"]
+            and outcome.get("validation_evidence", {}).get("consumer") == "NOT_STARTED"
+            and outcome.get("validation_evidence", {}).get("plot") == "NOT_STARTED", "parent outcome mismatch")
+    contributors = tr["preparation_contributors"]
+    require(isinstance(contributors, list) and len(contributors) == 2
+            and {v.get("role") for v in contributors} == {"controller_patch", "numerical_source"},
+            "preparation contributor roles missing")
+    for row in contributors:
+        require(set(row) == {"agent_id", "role", "requested_runtime", "observed_runtime", "raw_receipt"}
+                and all(row.get(k) for k in ("agent_id", "requested_runtime", "observed_runtime")),
+                "contributor identity missing")
+        _repair_seal(row["raw_receipt"])
+    review = _repair_document(tr["source_review"])
+    require(review.get("decision") == "APPROVE_ONE_BOUNDED_SAME_TASK_TEST_REPAIR"
+            and review.get("scientific_admission") == "HOLD" and review.get("preserved_scientific_fields") is True
+            and review.get("preserved_caps") is True and review.get("unresolved_blocking_findings") == [],
+            "source review does not approve bounded repair")
+    for k in ("before_input", "after_input", "repair_contract", "raw_before"):
+        require(review.get(k) == tr[k], "review binding mismatch: " + k)
+    require(review.get("source_code") == after["source_code"], "review source mismatch")
+    agents = set(t["authors"] + t["contributors"] + [r["agent_id"] for r in contributors])
+    require(review.get("contract_author_id") and review.get("reviewer_id")
+            and review["reviewer_id"] not in agents | {review["contract_author_id"]}
+            and agents | {review["contract_author_id"]} <= set(review.get("independent_of", []))
+            and review.get("requested_runtime") and review.get("observed_runtime"), "source reviewer not independent")
+    require(set(review.get("diffs", {})) == {"controller_patch", "numerical_source"}, "both reviewed diffs required")
+    for ref in review["diffs"].values():
+        _repair_seal(ref)
+    require(review.get("controller_patch") == review["diffs"]["controller_patch"], "controller patch binding mismatch")
+    for k, name in (("controller_source", "research_controller.py"),
+                    ("controller_tests", "test_research_controller_frontier.py")):
+        _repair_seal(review.get(k))
+        require(review[k]["path"] == str(Path(__file__).resolve().with_name(name)), "review source path mismatch")
+    resolved = copy.deepcopy(t["spec"]["input_sources"])
+    replacements = {before["source_code"]["test_consume.py"]["path"]:
+                    {k:v for k,v in after["source_code"]["test_consume.py"].items() if k != "ast"},
+                    tr["before_input"]["path"]: {**tr["after_input"],
+                    "bytes":Path(tr["after_input"]["path"]).stat().st_size}}
+    require(all(sum(row.get("path") == path for row in resolved) == 1 for path in replacements),
+            "old task inventory missing repair sources")
+    for row in resolved:
+        if row.get("path") in replacements:
+            row.update(replacements[row["path"]])
+    resolved.append({**{k:v for k,v in after["source_code"]["run_continuation.py"].items() if k != "ast"}, "role":"code"})
+    return {"seal":seal, "document":tr, "after":after,
+            "resolved_input_sources":resolved, "parent_ack":lineage["parent_ack"]}
+
+
+_CF4_DIRECTORY = '/mnt/extdrive/workdir/htt_open_data/r26_cf4_final_group_operator_consumer'
+_CF4_OLD_SHA256 = {'FROZEN_INPUT.json': '80b8e8104acdc1a19e330179e421ca62b81d106a2327b2e8c0c77045825be8c8',
+ 'ACTUAL_ACK_EXECUTE.json': 'f2aeab07125cf95e9cd1b5d173c4c6593e5646657dae7f289f43fb44c224158e',
+ 'ACTUAL_CONTROLLER_APPEND.json': '0913b3be492fcbb44d40f269639c31ea6146e4acd43e429e234584ffe5d3825e',
+ 'RUN_RECEIPT.json': '804686d2c0f4bbd97ead7719336cdf75d0e38ecb73e2423893c2f6c6b5f7367e',
+ 'EXECUTOR_RESULT.json': '01d45f80ac6f84590523862824873f4ec7161fbd363171b7df3457785898fe80',
+ 'EXECUTION.jsonl': 'dfe62a827771cbf83860d2f7551733bdcc8443e6686ad77b13847f53b96b5079',
+ 'tests.stderr': 'd650844c7654fd873812d8cc61058b6d34397b73785649dcd5098bc4d7698aab',
+ 'PREPARATION.json': 'aa75537f7695b1a7db330c6c79f2a3675d104debf52fd08c51dc139f2a3db75e',
+ 'consume.py': 'bc589b660472bba6f9855971a85d5cc48063b9621f06e00a2b94e612182e4cd3',
+ 'test_consume.py': '938c221f372b473aa895541298ce8b2f8d3226cf27a8f10c9241198f90018e6b',
+ 'plot.py': '782008788495dca960a785f14fab48716070738acf8225101cf85ba282978513',
+ 'driver.py': 'd9a30cd370737c5f52f85638a79a08cd8794bae874d8a0696425ac5590662b65'}
+_CF4_SOURCE_REVIEW_PATH = '/mnt/extdrive/workdir/htt_open_data/r26_cf4_fixture_source_review/REVIEW.json'
+_CF4_TASK = 'R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE'
+_CF4_RESEARCH_PACKET = '8bf9a4d1c387fae46a29aa5120f348e5f4cb8c267d0124c6c52a45374de76475'
+_CF4_CONTRACT_SHA256 = '162a2abdef2348437da20ce39c195d9362b8bac9be0078039a5ee0b3398fa0ef'
+_CF4_ALLOWED_METHODS = {'test_singleton_known_offset_and_zero_point',
+                        'test_joint_mean_error_excludes_separately_possible_mean'}
+
+
+def _cf4_test_ast(old: bytes, new: bytes) -> None:
+    """Only the two diagnosed fixture bodies may differ; never import science."""
+    try:
+        left, right = ast.parse(old), ast.parse(new)
+    except SyntaxError as exc:
+        raise ControllerError('CF4 test AST invalid') from exc
+    for tree in (left, right):
+        classes = [n for n in tree.body if isinstance(n, ast.ClassDef)
+                   and n.name == 'FinalGroupOperatorTest']
+        require(len(classes) == 1, 'CF4 test class missing')
+        methods = [n for n in classes[0].body if isinstance(n, ast.FunctionDef)
+                   and n.name.startswith('test_')]
+        require(len(methods) == 8 and len({m.name for m in methods}) == 8
+                and _CF4_ALLOWED_METHODS <= {m.name for m in methods}, 'CF4 test inventory changed')
+        for method in methods:
+            if method.name in _CF4_ALLOWED_METHODS:
+                # Preserve method signatures/decorators as well as all other module AST.
+                method.body = [ast.Pass()]
+    require(ast.dump(left, include_attributes=False) == ast.dump(right, include_attributes=False),
+            'extra CF4 test AST edit')
+
+
+def _validate_cf4_fixture_testfix(state: dict, result: dict, seal: dict, tr: dict) -> dict:
+    require(tr['campaign'] == state['campaign_identity']
+            and tr['task_id'] == result.get('task_id') == _CF4_TASK, 'repair campaign/task mismatch')
+    t = state['tasks'][_CF4_TASK]
+    p = state['packets'].get(result.get('packet_id'), {})
+    require(tr['research_packet_id'] == p.get('packet_id') == t.get('packet_id') == _CF4_RESEARCH_PACKET
+            and p.get('launch_performed') is True and p.get('agent_id') == result.get('agent_id')
+            and t['state'] == 'running' and t['phase'] == p.get('phase') == 'research'
+            and result.get('outcome') == 'success' and isinstance(result.get('repair_plan'), str)
+            and result['repair_plan'].strip(), 'repair requires current acknowledged successful research')
+    require(not t.get('repair_input_transition') and not any(
+        q.get('task_id') == _CF4_TASK and q.get('packet_id') != p['packet_id'] and q.get('launch_performed')
+        and not any(h.get('packet_id') == q.get('packet_id') for h in t['history'])
+        for q in state['packets'].values()), 'concurrent or repeated repair transition')
+    require(_repair_document(tr['research_result']) == result, 'research result bytes mismatch')
+    require(_repair_seal(tr['repair_contract'])['sha256'] == _CF4_CONTRACT_SHA256,
+            'CF4 research contract changed')
+    before, after = _repair_document(tr['before_input']), _repair_document(tr['after_input'])
+    require(t['spec']['input_identity'] == result['input_identity'] == p['input_identity']
+            == 'sha256:' + tr['before_input']['sha256'], 'old input identity mismatch')
+    require(before.get('schema') == 'htt.r26.cf4_final_group_frozen_input/1'
+            and after.get('schema') == 'htt.r26.cf4_final_group_frozen_input/2'
+            and set(after) == set(before) | {'source_code', 'repair_lineage'}
+            and {k:v for k,v in before.items() if k != 'schema'}
+            == {k:v for k,v in after.items() if k not in {'schema','source_code','repair_lineage'}},
+            'scientific input fields changed')
+    require(before['limits']['cap_seconds'] == 600
+            and before['limits']['single_invocation_subcap_seconds'] == 120
+            and before['limits']['RSS_GiB'] == 2 and before['limits']['BLAS_threads'] == 1,
+            'CF4 inherited limits changed')
+    root = Path(_CF4_DIRECTORY)
+    require(tr['before_input']['path'] == str(root/'FROZEN_INPUT.json')
+            and tr['after_input']['path'] == str(root/'FROZEN_INPUT_REPAIR.json'), 'CF4 frozen paths changed')
+    for row in [before['frozen_contract'], *before['source_inputs']]:
+        _repair_seal(row)
+    names = {'consume.py','plot.py','driver.py','test_consume.py',
+             'test_consume_repair.py','run_continuation.py'}
+    rows = after['source_code']
+    require(isinstance(rows, list) and len(rows) == 6
+            and {Path(r.get('path','')).name for r in rows} == names, 'CF4 source inventory changed')
+    source = {Path(r['path']).name:r for r in rows}
+    for name,row in source.items():
+        require(set(row) == {'path','sha256','size_bytes'} and row['path'] == str(root/name),
+                'CF4 code path/metadata changed')
+        _repair_seal({k:row[k] for k in ('path','sha256')})
+        require(row['size_bytes'] == Path(row['path']).stat().st_size, 'CF4 source size mismatch')
+    _cf4_test_ast((root/'test_consume.py').read_bytes(), (root/'test_consume_repair.py').read_bytes())
+    lineage = after['repair_lineage']
+    require(set(lineage) == {'task_id','transition_kind','old_input','research_contract','research_result',
+        'old_evidence','inherited_accounting','original_code','allowed_repaired_test_methods',
+        'future_ack_path','future_source_review_path','future_execution_ledger_path','future_run_receipt_path'}
+        and lineage['task_id'] == _CF4_TASK and lineage['transition_kind'] == tr['kind'],
+        'CF4 repair lineage scope changed')
+    for key,target in (('old_input','before_input'),('research_contract','repair_contract'),
+                       ('research_result','research_result')):
+        require(lineage[key] == tr[target], 'CF4 lineage seal mismatch: '+key)
+    require(tr['before_input']['sha256'] == _CF4_OLD_SHA256['FROZEN_INPUT.json'], 'CF4 old input changed')
+    old_names = {'consume.py','plot.py','driver.py','test_consume.py'}
+    require(set(lineage['original_code']) == old_names, 'CF4 original code set changed')
+    for name,row in lineage['original_code'].items():
+        require(row == {'path':str(root/name),'sha256':_CF4_OLD_SHA256[name]}
+                and source[name]['sha256'] == row['sha256'], 'CF4 original code changed')
+        _repair_seal(row)
+    require(len(lineage['allowed_repaired_test_methods']) == 2
+            and set(lineage['allowed_repaired_test_methods']) == _CF4_ALLOWED_METHODS,
+            'CF4 allowed test methods changed')
+    evidence = lineage['old_evidence']
+    require(set(evidence) == {'ACTUAL_ACK_EXECUTE.json','ACTUAL_CONTROLLER_APPEND.json',
+            'EXECUTION.jsonl','RUN_RECEIPT.json','EXECUTOR_RESULT.json','tests.stderr'},
+            'CF4 old failure evidence incomplete')
+    for name,row in evidence.items():
+        require(row == {'path':str(root/name),'sha256':_CF4_OLD_SHA256[name]}, 'CF4 parent seal changed')
+        _repair_seal(row)
+    ack = _repair_document(evidence['ACTUAL_ACK_EXECUTE.json'])
+    append = _repair_document(evidence['ACTUAL_CONTROLLER_APPEND.json'])
+    raw = _repair_document(tr['raw_before'])
+    outcome = _repair_document(evidence['EXECUTOR_RESULT.json'])
+    parent = state['packets'].get(ack.get('packet_id'), {})
+    require(tr['raw_before'] == evidence['RUN_RECEIPT.json'] and ack.get('decision') == 'GO'
+            and all(ack.get(k) is True for k in ('controller_ack','native_call_returned_without_error',
+                                               'worker_wait_confirmed'))
+            and ack.get('task_id') == append.get('task_id') == parent.get('task_id') == _CF4_TASK
+            and ack.get('input_identity') == append.get('input_identity') == parent.get('input_identity')
+                == result['input_identity']
+            and parent.get('launch_performed') is True and parent.get('agent_id') == ack.get('agent_id')
+            and ack.get('controller_append_sha256') == evidence['ACTUAL_CONTROLLER_APPEND.json']['sha256']
+            and any(h.get('packet_id') == parent.get('packet_id') and h.get('receipt') == tr['raw_before']
+                    for h in t['history']), 'CF4 parent ACK/history chain mismatch')
+    require(raw.get('status') == 'INTERRUPTED' and raw.get('threads') == 1 and raw.get('cap_seconds') == 600
+            and raw.get('cumulative_seconds') == 64.38265966903418
+            and raw.get('ack_sha256') == evidence['ACTUAL_ACK_EXECUTE.json']['sha256']
+            and raw.get('controller_append_sha256') == evidence['ACTUAL_CONTROLLER_APPEND.json']['sha256']
+            and all(outcome.get(k) == ack.get(k) for k in ('task_id','packet_id','agent_id','input_identity'))
+            and outcome.get('outcome') == 'blocker' and outcome.get('original_H02') == 'HOLD_UNCHANGED'
+            and outcome.get('raw_receipt') == tr['raw_before']['path']
+            and outcome.get('products') == dict.fromkeys(('operator','plot','report','result'),'NOT_RUN')
+            and outcome.get('test_summary') == {'errors':0,'failures':2,'run':8,
+                'stderr':evidence['tests.stderr']['path'],'stderr_sha256':evidence['tests.stderr']['sha256']},
+            'unknown or unbound CF4 first outcome')
+    events = [json.loads(line) for line in Path(evidence['EXECUTION.jsonl']['path']).read_text().splitlines()]
+    starts = [e for e in events if e.get('event') == 'START']
+    terminals = [e for e in events if e.get('event') == 'TERMINAL']
+    require(len(starts) == len(terminals) == 1 and starts[0].get('stage') == terminals[0].get('stage') == 'tests'
+            and terminals[0].get('exitcode') == 1 and terminals[0].get('outcome') == 'FAILED'
+            and terminals[0].get('peak_rss_bytes') == 39976960, 'CF4 old child outcome unresolved')
+    budget = lineage['inherited_accounting']
+    require(set(budget) == {'cap_seconds','cumulative_seconds','future_invocation_seconds_cap',
+            'future_scientific_invocations_max','rss_cap_bytes','threads'}
+            and budget['cap_seconds'] == 600 and budget['future_invocation_seconds_cap'] == 120
+            and budget['future_scientific_invocations_max'] == 1 and budget['rss_cap_bytes'] == 2147483648
+            and budget['threads'] == 1 and isinstance(budget['cumulative_seconds'], (int,float))
+            and max(64.38265966903418, t.get('accounting', {}).get('seconds', 0))
+                <= budget['cumulative_seconds'] < 600,
+            'CF4 repair caps/debit changed')
+    for key,name in (('future_ack_path','ACTUAL_ACKNOWLEDGED_REPAIR_PACKET.json'),
+                     ('future_execution_ledger_path','EXECUTION.jsonl'),('future_run_receipt_path','RUN_RECEIPT.json')):
+        require(lineage[key] == str(root/'repair_run'/name) and not Path(lineage[key]).exists(),
+                'CF4 repair requires future fresh ACK/ledger/receipt')
+
+    require(lineage['future_source_review_path'] == tr['source_review']['path']
+            == _CF4_SOURCE_REVIEW_PATH,
+            'CF4 future source review path mismatch')
+    contributors = tr["preparation_contributors"]
+    require(isinstance(contributors, list) and len(contributors) == 2
+            and {v.get("role") for v in contributors} == {"controller_patch", "numerical_source"},
+            "preparation contributor roles missing")
+    for row in contributors:
+        require(set(row) == {"agent_id", "role", "requested_runtime", "observed_runtime", "raw_receipt"}
+                and all(row.get(k) for k in ("agent_id", "requested_runtime", "observed_runtime")),
+                "contributor identity missing")
+        _repair_seal(row["raw_receipt"])
+    review = _repair_document(tr["source_review"])
+    require(review.get("decision") == "APPROVE_ONE_BOUNDED_SAME_TASK_FIXTURE_REPAIR"
+            and review.get("scientific_admission") == "HOLD" and review.get("preserved_scientific_fields") is True
+            and review.get("preserved_caps") is True and review.get("unresolved_blocking_findings") == [],
+            "source review does not approve bounded repair")
+    for k in ("before_input", "after_input", "repair_contract", "raw_before"):
+        require(review.get(k) == tr[k], "review binding mismatch: " + k)
+    require(review.get("source_code") == after["source_code"], "review source mismatch")
+    agents = set(t["authors"] + t["contributors"] + [r["agent_id"] for r in contributors])
+    require(review.get("contract_author_id") == p["agent_id"] and review.get("reviewer_id")
+            and review["reviewer_id"] not in agents | {review["contract_author_id"]}
+            and agents | {review["contract_author_id"]} <= set(review.get("independent_of", []))
+            and review.get("requested_runtime") and review.get("observed_runtime"), "source reviewer not independent")
+    require(set(review.get("diffs", {})) == {"controller_patch", "numerical_source"}, "both reviewed diffs required")
+    for ref in review["diffs"].values():
+        _repair_seal(ref)
+    require(review.get("controller_patch") == review["diffs"]["controller_patch"], "controller patch binding mismatch")
+    for k, name in (("controller_source", "research_controller.py"),
+                    ("controller_tests", "test_research_controller_frontier.py")):
+        _repair_seal(review.get(k))
+        require(review[k]["path"] == str(Path(__file__).resolve().with_name(name)), "review source path mismatch")
+    resolved = copy.deepcopy(t['spec']['input_sources'])
+    require(sum(row.get('path') == tr['before_input']['path'] for row in resolved) == 1,
+            'CF4 contract inventory missing or duplicated')
+    for name in old_names:
+        require(sum(row.get('path') == str(root/name) and row.get('sha256') == _CF4_OLD_SHA256[name]
+                    for row in resolved) == 1, 'CF4 consumed code inventory changed')
+    for row in resolved:
+        if row.get('path') == tr['before_input']['path']:
+            row.update(tr['after_input'], bytes=Path(tr['after_input']['path']).stat().st_size)
+    for name in ('test_consume_repair.py','run_continuation.py'):
+        require(not any(row.get('path') == source[name]['path'] for row in resolved),
+                'CF4 additive code already consumed')
+        resolved.append({'path':source[name]['path'],'sha256':source[name]['sha256'],
+                         'bytes':source[name]['size_bytes'],'role':'code'})
+    return {'seal':seal, 'document':tr, 'after':after,
+            'resolved_input_sources':resolved, 'parent_ack':evidence['ACTUAL_ACK_EXECUTE.json']}
+
+
+_CF4_LAYOUT_CONTRACT_SHA256 = '820723b444ffb5177d7080988fdc563c86a89a5eba13c6cc9d2dbe94da8294ab'
+_CF4_LAYOUT_PREFLIGHT_SHA256 = '7799b3df8bd363bed2f8de0d945d6d5b5704a2879231030d92a05f63e52a20de'
+_CF4_LAYOUT_REVIEW_PATH = '/mnt/extdrive/workdir/htt_open_data/r26_cf4_source_layout_source_review/REVIEW.json'
+_CF4_LAYOUT_PREIMAGES = {'ACTUAL_FIXTURE_INPUT_TRANSITION.json': 'c0414bd6733ed744a233bdc15bd9d932b9ae7f8b9bac81e08262a402ae199184',
+ 'FROZEN_INPUT_REPAIR.json': '26a4669b02f93d44153c235728ec0813e155fc1acee47d40d8d4ebd783688e59',
+ 'consume.py': 'bc589b660472bba6f9855971a85d5cc48063b9621f06e00a2b94e612182e4cd3',
+ 'driver.py': 'd9a30cd370737c5f52f85638a79a08cd8794bae874d8a0696425ac5590662b65',
+ 'plot.py': '782008788495dca960a785f14fab48716070738acf8225101cf85ba282978513',
+ 'repair_run/ACTUAL_ACKNOWLEDGED_REPAIR_PACKET.json': '573c93c92f9d73ef8069e92228138671d10508437f17317c4cfb61729c2bedcd',
+ 'repair_run/ACTUAL_CONTROLLER_REPAIR_PACKET.json': '512293ed8969eeec58f89bdb72ab719493e6bcc88bdbce8d49dcd4bba86c4867',
+ 'repair_run/EXECUTION.jsonl': 'd89769ea787764049bee4550b0f2ad17853e29415d433e9e58dab3d673a89290',
+ 'repair_run/EXECUTOR_REPAIR_RESULT.json': '60681fcc1f5800310b50a81cd771140a47c92ffb720c5fb13687e4e90698b6b5',
+ 'repair_run/RUN_RECEIPT.json': 'f4984863b451e9058d901b9869009f10bf92bd9c4228f982c3bfabe6e906f483',
+ 'repair_run/consumer.stderr': '456167b6cbb60162bd9bc00bceffe5315e7960c0f0c83249a02d864f04e44f21',
+ 'repair_run/tests.stderr': '7c0225b3c74e137da14f999b48621707cdaaec50fb77333695af6afb8d0d80d9',
+ 'run_continuation.py': '32cf77692d0c8c0329a995c374a8bcca3d8d58272aca90469c2c56cf7c891089',
+ 'test_consume.py': '938c221f372b473aa895541298ce8b2f8d3226cf27a8f10c9241198f90018e6b',
+ 'test_consume_repair.py': '06f87d40defc07f1364d4ba7fc46fcd5b1fa36b453f9da32526ee1d54e5b3f93'}
+
+
+def _cf4_parser_ast(old: bytes, new: bytes) -> None:
+    """A source-format repair may replace only one parser function body."""
+    try:
+        trees = [ast.parse(old), ast.parse(new)]
+    except SyntaxError as exc:
+        raise ControllerError('CF4 parser AST invalid') from exc
+    for tree in trees:
+        functions = [n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'parse_table3']
+        require(len(functions) == 1, 'CF4 parser definition missing or duplicated')
+        functions[0].body = [ast.Pass()]
+    require(ast.dump(trees[0], include_attributes=False) == ast.dump(trees[1], include_attributes=False),
+            'CF4 change outside parser body')
+
+
+def _validate_cf4_source_layout(state: dict, result: dict, seal: dict, tr: dict) -> dict:
+    """Sequential, same-task source ingestion repair; no scheduling or science execution."""
+    require(tr['campaign'] == state['campaign_identity']
+            and tr['task_id'] == result.get('task_id') == _CF4_TASK, 'CF4 layout task/campaign mismatch')
+    t = state['tasks'][_CF4_TASK]; p = state['packets'].get(result.get('packet_id'), {})
+    require(tr['research_packet_id'] == p.get('packet_id') == t.get('packet_id')
+            and t['state'] == 'running' and t['phase'] == p.get('phase') == 'research'
+            and p.get('launch_performed') is True and p.get('agent_id') == result.get('agent_id')
+            and result.get('outcome') == 'success' and result.get('repair_plan'),
+            'CF4 layout requires actual current successful research')
+    require(not any(q.get('task_id') == _CF4_TASK and q.get('packet_id') != p['packet_id']
+            and q.get('launch_performed') and not any(h.get('packet_id') == q.get('packet_id')
+            for h in t['history']) for q in state['packets'].values()), 'CF4 layout unresolved concurrent packet')
+    require(_repair_document(tr['research_result']) == result, 'CF4 layout research result mismatch')
+    root = Path(_CF4_DIRECTORY)
+    before, after = _repair_document(tr['before_input']), _repair_document(tr['after_input'])
+    require(tr['before_input']['path'] == str(root/'FROZEN_INPUT_REPAIR.json')
+            and tr['before_input']['sha256'] == _CF4_LAYOUT_PREIMAGES['FROZEN_INPUT_REPAIR.json']
+            and t['spec']['input_identity'] == p['input_identity'] == result['input_identity']
+                == 'sha256:'+tr['before_input']['sha256']
+            and tr['after_input']['path'] == str(root/'FROZEN_INPUT_SOURCE_LAYOUT.json'), 'CF4 layout input identity mismatch')
+    require(before['schema'] == 'htt.r26.cf4_final_group_frozen_input/2'
+            and after['schema'] == 'htt.r26.cf4_final_group_frozen_input/3'
+            and set(after) == set(before) | {'source_layout_code','source_layout_lineage'}
+            and {k:v for k,v in before.items() if k != 'schema'}
+                == {k:v for k,v in after.items() if k not in {'schema','source_layout_code','source_layout_lineage'}},
+            'CF4 layout changed prior scientific input/lineage')
+    lineage = after['source_layout_lineage']
+    require(set(lineage) == {'task_id','transition_kind','before_input','source_layout_contract',
+        'source_layout_preflight','predecessor_transition','failed_parent_evidence','allowed_parser_ast_delta',
+        'inherited_accounting','future_ack_path','future_execution_ledger_path','future_run_receipt_path',
+        'future_source_review_path','research_result_future_path','research_packet_status'}
+        and lineage['task_id'] == _CF4_TASK and lineage['transition_kind'] == tr['kind']
+        and lineage['before_input'] == tr['before_input'] and lineage['source_layout_contract'] == tr['repair_contract']
+        and lineage['allowed_parser_ast_delta'] == 'parse_table3_body_only'
+        and lineage['research_packet_status'] == 'PENDING_GENUINE_CONTROLLER_ACK'
+        and lineage['research_result_future_path'] == tr['research_result']['path'], 'CF4 layout lineage mismatch')
+    require(_repair_seal(tr['repair_contract'])['sha256'] == _CF4_LAYOUT_CONTRACT_SHA256
+            and _repair_seal(lineage['source_layout_preflight'])['sha256'] == _CF4_LAYOUT_PREFLIGHT_SHA256,
+            'CF4 layout contract/preflight changed')
+    predecessor = _repair_seal(lineage['predecessor_transition'])
+    prior = t.get('repair_input_transition', {})
+    require(predecessor == {k:prior.get(k) for k in ('path','sha256')}
+            and predecessor['path'] == str(root/'ACTUAL_FIXTURE_INPUT_TRANSITION.json')
+            and predecessor['sha256'] == _CF4_LAYOUT_PREIMAGES['ACTUAL_FIXTURE_INPUT_TRANSITION.json']
+            and not t.get('repair_input_transition_history'), 'CF4 layout stale/repeated predecessor')
+    for name, expected in _CF4_LAYOUT_PREIMAGES.items():
+        _repair_seal({'path':str(root/name),'sha256':expected})
+    for row in [before['frozen_contract'], *before['source_inputs']]:
+        _repair_seal(row)
+    evidence = lineage['failed_parent_evidence']
+    expected_evidence = {n for n in _CF4_LAYOUT_PREIMAGES if n.startswith('repair_run/')}
+    require(set(evidence) == expected_evidence and all(evidence[n] == {'path':str(root/n),
+            'sha256':_CF4_LAYOUT_PREIMAGES[n]} for n in expected_evidence), 'CF4 layout parent evidence mismatch')
+    ack_ref = evidence['repair_run/ACTUAL_ACKNOWLEDGED_REPAIR_PACKET.json']
+    ack = _repair_document(ack_ref)
+    packet = _repair_document(evidence['repair_run/ACTUAL_CONTROLLER_REPAIR_PACKET.json'])
+    raw = _repair_document(tr['raw_before'])
+    require(tr['raw_before'] == evidence['repair_run/RUN_RECEIPT.json']
+            and ack['actual_acknowledged_packet'] == evidence['repair_run/ACTUAL_CONTROLLER_REPAIR_PACKET.json']
+            and all(ack.get(k) == packet.get(k) for k in ('packet_id','task_id','agent_id','input_identity','phase','launch_performed'))
+            and ack['phase'] == 'repair' and ack['launch_performed'] is True
+            and ack['decision'] == 'GO' and ack['input_identity'] == result['input_identity']
+            and state['packets'].get(packet['packet_id']) == packet
+            and any(h.get('packet_id') == packet['packet_id'] and h.get('receipt') == tr['raw_before'] for h in t['history'])
+            and raw['cumulative_seconds'] == 75.37988796900027 and raw['status'] == 'INTERRUPTED'
+            and raw['ack_sha256'] == ack_ref['sha256'] and raw['products_path'] is None,
+            'CF4 layout unbound recorded failure')
+    budget = lineage['inherited_accounting']
+    require(set(budget) == {'cap_seconds','cumulative_seconds','future_invocation_seconds_cap','rss_cap_bytes','threads'}
+            and {k:v for k,v in budget.items() if k != 'cumulative_seconds'} == {'cap_seconds':600,
+                'future_invocation_seconds_cap':120,'rss_cap_bytes':2147483648,'threads':1}
+            and isinstance(budget['cumulative_seconds'],(int,float))
+            and max(75.37988796900027,t.get('accounting',{}).get('seconds',0)) <= budget['cumulative_seconds'] < 600,
+            'CF4 layout caps/debit changed')
+    for key,name in (('future_ack_path','ACTUAL_ACKNOWLEDGED_SOURCE_LAYOUT_PACKET.json'),
+                     ('future_execution_ledger_path','EXECUTION.jsonl'),('future_run_receipt_path','RUN_RECEIPT.json')):
+        require(lineage[key] == str(root/'source_layout_run'/name) and not Path(lineage[key]).exists(),
+                'CF4 layout requires unique future execution paths')
+    paths = ('source_layout/consume.py','source_layout/test_consume_repair.py',
+             'source_layout/test_source_layout.py','run_source_layout_continuation.py')
+    rows = after['source_layout_code']
+    require(isinstance(rows,list) and len(rows) == 4 and {r.get('path') for r in rows} == {str(root/n) for n in paths},
+            'CF4 layout additive source paths changed')
+    for row in rows:
+        require(set(row) == {'path','sha256','size_bytes'}, 'CF4 layout source metadata changed')
+        _repair_seal({k:row[k] for k in ('path','sha256')})
+        require(row['size_bytes'] == Path(row['path']).stat().st_size, 'CF4 layout source size mismatch')
+    require((root/'source_layout/test_consume_repair.py').read_bytes() == (root/'test_consume_repair.py').read_bytes(),
+            'CF4 layout eight mathematical tests changed')
+    _cf4_parser_ast((root/'consume.py').read_bytes(), (root/'source_layout/consume.py').read_bytes())
+    contributors = tr['preparation_contributors']
+    require(isinstance(contributors,list) and len(contributors) == 2
+            and {r.get('role') for r in contributors} == {'controller_patch','numerical_source'}, 'CF4 layout contributors missing')
+    for row in contributors:
+        require(set(row) == {'agent_id','role','requested_runtime','observed_runtime','raw_receipt'}
+                and all(row.get(k) for k in ('agent_id','requested_runtime','observed_runtime')), 'CF4 layout contributor identity missing')
+        _repair_seal(row['raw_receipt'])
+    review = _repair_document(tr['source_review'])
+    require(lineage['future_source_review_path'] == tr['source_review']['path'] == _CF4_LAYOUT_REVIEW_PATH
+            and review.get('decision') == 'APPROVE_ONE_BOUNDED_SAME_TASK_SOURCE_LAYOUT_REPAIR'
+            and review.get('scientific_admission') == 'HOLD' and review.get('preserved_scientific_fields') is True
+            and review.get('preserved_caps') is True and review.get('unresolved_blocking_findings') == []
+            and review.get('source_layout_code') == rows
+            and all(review.get(k) == tr[k] for k in ('before_input','after_input','repair_contract','raw_before')),
+            'CF4 layout source review mismatch')
+    agents = set(t['authors']+t['contributors']+[r['agent_id'] for r in contributors]+[p['agent_id']])
+    require(review.get('contract_author_id') == p['agent_id'] and review.get('reviewer_id')
+            and review['reviewer_id'] not in agents and agents <= set(review.get('independent_of',[]))
+            and review.get('requested_runtime') and review.get('observed_runtime'), 'CF4 layout reviewer not independent')
+    require(set(review.get('diffs',{})) == {'controller_patch','numerical_source'}, 'CF4 layout reviewed diffs missing')
+    for ref in review['diffs'].values():
+        _repair_seal(ref)
+    for key,name in (('controller_source','research_controller.py'),('controller_tests','test_research_controller_frontier.py')):
+        ref = _repair_seal(review.get(key))
+        require(ref['path'] == str(Path(__file__).resolve().with_name(name)), 'CF4 layout reviewed controller path mismatch')
+    resolved = copy.deepcopy(t['spec']['input_sources'])
+    require(sum(r.get('path') == tr['before_input']['path'] for r in resolved) == 1, 'CF4 layout contract row missing')
+    for old in before['source_code']:
+        require(sum(r.get('path') == old['path'] and r.get('sha256') == old['sha256'] for r in resolved) == 1,
+                'CF4 layout historical source row changed')
+    for row in resolved:
+        if row.get('path') == tr['before_input']['path']:
+            row.update(tr['after_input'],bytes=Path(tr['after_input']['path']).stat().st_size)
+    for row in rows:
+        require(not any(r.get('path') == row['path'] for r in resolved), 'CF4 layout additive source already consumed')
+        resolved.append({'path':row['path'],'sha256':row['sha256'],'bytes':row['size_bytes'],'role':'code'})
+    return {'seal':seal,'document':tr,'after':after,'resolved_input_sources':resolved,'parent_ack':ack_ref,
+            'predecessor_transition':copy.deepcopy(prior)}
+
+
+def _bind_repair_input(state: dict, binding: dict) -> None:
+    tr, after = binding["document"], binding["after"]
+    t = state["tasks"][tr["task_id"]]
+    t.setdefault("spec_history", []).append(copy.deepcopy(t["spec"]))
+    t["spec"]["input_identity"] = "sha256:" + tr["after_input"]["sha256"]
+    t["spec"]["input_sources"] = copy.deepcopy(binding["resolved_input_sources"])
+    for row in tr["preparation_contributors"]:
+        if row["agent_id"] not in t["contributors"]:
+            t["contributors"].append(row["agent_id"])
+    if "predecessor_transition" in binding:
+        t.setdefault("repair_input_transition_history", []).append(copy.deepcopy(binding["predecessor_transition"]))
+    t["repair_input_transition"] = {**binding["seal"], "parent_input":tr["before_input"],
+                                     "parent_ack":binding["parent_ack"]}
+    state["events"].append({"type":"repair_input_bound", "task_id":tr["task_id"],
+                            "transition":copy.deepcopy(t["repair_input_transition"])})
+
+
+def record(state: dict, result: dict, policy: dict, repair_input_transition: str | None = None) -> None:
     """Apply the transition atomically in memory as well as at checkpoint time."""
     candidate = copy.deepcopy(state)
+    binding = (_validate_repair_input_transition(candidate, result, repair_input_transition)
+               if repair_input_transition is not None else None)
     _record(candidate, result, policy)
+    if binding is not None:
+        _bind_repair_input(candidate, binding)
     state.clear()
     state.update(candidate)
 
@@ -1528,6 +2545,9 @@ def _record(state: dict, result: dict, policy: dict) -> None:
             require(result.get("base_packet_id") == continuation["base_packet_id"]
                     and result.get("base_candidate_identity") == continuation["base_candidate_identity"],
                     "followup result must bind acknowledged base candidate")
+            if "base_raw_receipt" in continuation:
+                require(result.get("base_raw_receipt") == continuation["base_raw_receipt"],
+                        "followup result must bind acknowledged initial failure receipt")
             require(receipt["sha256"] not in {event["receipt"]["sha256"] for event in t["history"]},
                     "followup result needs a new actual raw receipt")
             raw_data = json.loads(Path(receipt["path"]).read_text())
@@ -1535,6 +2555,9 @@ def _record(state: dict, result: dict, policy: dict) -> None:
                     ("packet_id", "task_id", "agent_id", "input_identity", "base_packet_id",
                      "base_candidate_identity", "outcome", "candidate_identity")),
                     "followup raw outcome identity mismatch")
+            if "base_raw_receipt" in continuation:
+                require(raw_data.get("base_raw_receipt") == continuation["base_raw_receipt"],
+                        "followup raw outcome must bind initial failure receipt")
             if result.get("outcome") == "success":
                 require(result.get("candidate_identity")
                         and result["candidate_identity"] != continuation["base_candidate_identity"],
@@ -1552,7 +2575,7 @@ def _record(state: dict, result: dict, policy: dict) -> None:
              "receipt": receipt, "result": copy.deepcopy(result)}
     if outcome == "success":
         if phase in {"research", "escalation"}:
-            require(result.get("repair_plan"), "research must return concrete bounded repair plan")
+            require(_concrete_repair_plan(result.get("repair_plan")), "research must return concrete bounded repair plan")
             t.update(phase="repair", state="ready", repair_plan=result["repair_plan"])
         elif phase == "review":
             require(result.get("candidate_identity") == t.get("candidate_identity"), "stale reviewed candidate")
@@ -1648,6 +2671,7 @@ def _record(state: dict, result: dict, policy: dict) -> None:
 
 def save(path: Path, value: dict) -> None:
     """Atomic checkpoint; completed outcomes retained inside state even if interrupted."""
+    path = path.resolve()
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temp = tempfile.mkstemp(dir=path.parent, prefix=".controller-")
     try:
@@ -1682,6 +2706,7 @@ def main() -> int:
     ack.add_argument("--followup-evidence", help="Local identity-bound same-task repair followup JSON")
     rec = sub.add_parser("record")
     rec.add_argument("--result", type=Path, required=True)
+    rec.add_argument("--repair-input-transition", type=str)
     refused = sub.add_parser("launch-failed")
     refused.add_argument("--packet-id", required=True)
     refused.add_argument("--evidence", required=True)
@@ -1723,6 +2748,8 @@ def main() -> int:
     sub.add_parser("summary")
     args = parser.parse_args()
     try:
+        # Pin the durable checkpoint once, before either reading or placing sidecars.
+        args.state = args.state.resolve()
         policy = load_policy(args.policy) if args.policy else load_policy()
         if args.action == "init":
             require(not args.state.exists(), "refusing to overwrite existing campaign")
@@ -1755,7 +2782,7 @@ def main() -> int:
                 output = summary(state)
             elif args.action == "record":
                 result = json.loads(args.result.read_text())
-                record(state, result, policy)
+                record(state, result, policy, args.repair_input_transition)
                 # Immutable content-addressed copy; state also includes the full result.
                 save(args.state.parent / (args.state.name + ".results") / (digest(result) + ".json"), result)
                 output = summary(state)
