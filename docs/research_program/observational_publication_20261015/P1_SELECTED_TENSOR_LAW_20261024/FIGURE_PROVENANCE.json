@@ -1,0 +1,95 @@
+{
+  "schema": "htt.p1.figure_provenance/1",
+  "owner": "routine figure/build worker",
+  "scientific_scope": "Author-owned FIGURE_SPEC.json; no numerical science execution or admission",
+  "requested_runtime": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "figures": [
+    {
+      "id": "selected_tensor_law",
+      "source": "/mnt/extdrive/workdir/htt_open_data/r26_s04_selected_law_consumer/RESULT.json",
+      "source_sha256": "405909feee3580bf826fcea675282f47da935510a45c3d79f8fd788b80fce5f8",
+      "destination": "figures/selected_tensor_law.pdf",
+      "sha256": "01c7086e0cf771345d8ccfaa422affdf0eb6748490f0b29954e15b4b9cbb9319",
+      "operation": "Label-only rendering; original axes geometry, line data, scatter arrays unchanged; saved result only",
+      "caveats": [
+        "95% refers to full15 selected-design Gaussian confidence region under each fixed covariance shape",
+        "coordinate intervals are projections; retain covariance in source",
+        "folds and shape diagnostics are dependent",
+        "nonrejection is not model validation",
+        "no physical shear interpretation"
+      ]
+    },
+    {
+      "id": "model_comparison",
+      "source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/REPORT_20261024_REV1/figures/f058_external.pdf",
+      "source_sha256": "6a35d6dd82ab397d52211405caad4cfe549a664980405204c32d9cd0fe3cbc55",
+      "destination": "figures/model_comparison.pdf",
+      "sha256": "6a35d6dd82ab397d52211405caad4cfe549a664980405204c32d9cd0fe3cbc55",
+      "operation": "Byte-identical copy of reviewed report asset",
+      "caveats": [
+        "same274 released cohort",
+        "plug-in predictive scores omit training coefficient and scale uncertainty",
+        "separate from finite-F predictive checks",
+        "no independent-source or Bayes-factor claim"
+      ]
+    },
+    {
+      "id": "selection_bounds",
+      "source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/SURFACE.csv",
+      "source_sha256": "37659b5d2df1d895b12503dd780e3c9f00d10f2f594c3a94702d45587c8b3f89",
+      "destination": "figures/selection_bounds.pdf",
+      "sha256": "d69024ad9af571e776309de0b31e6e91f0fdc563b0bcbce919799f1897e3c299",
+      "operation": "Label-only legend replacement from retained SURFACE.csv using isolated display function; axes geometry and line arrays unchanged",
+      "caveats": [
+        "event absolute held-out magnitude residual exceeds threshold",
+        "274 observed and354 missing within known628 frame",
+        "interval hull; deterministic missing-event set is discrete at Gamma=1",
+        "not parent inclusion probabilities or physical confidence intervals"
+      ],
+      "label_mapping": {
+        "A_calibration_flow": "A: vector",
+        "B_optical_STF": "B: STF",
+        "C_union": "C: both"
+      },
+      "artist_parity": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/selection_artist_parity.json",
+      "renderer": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/render_selection_label_only.py"
+    },
+    {
+      "id": "coupled_functionals",
+      "source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/REPORT_20261024_REV1/figures/original_variants/f030.svg",
+      "source_sha256": "e0ed218d0be5f2055723d10cf6010d1ae07e38d01fd7a1c8a87f515e2bc1eb06",
+      "destination": "figures/coupled_functionals.pdf",
+      "sha256": "20c5de1606c1b5c894034f9c9202df31e59dfdd2d58f801520952a702cf938cf",
+      "operation": "Pure vector SVG to PDF conversion; CairoSVG 2.9.1",
+      "caveats": [
+        "Separate35970-group source and36-dimensional apparent Hubble-rate carrier",
+        "Only panelAblue quadrature summary and panelsB\u2013D share one2048-atom measure and full36covariance",
+        "PanelA baseline/north curves are deterministic fit comparisons; no alternative uncertainty law",
+        "A=norm(STF)/H on positive-H branch; apparent anchor and floor",
+        "Not physical Q,F,Pi,G_F; physical response and identified set UNKNOWN",
+        "No optical magnitude-response equation applied to km/s/Mpc carrier"
+      ],
+      "panel_provenance": {
+        "panel_A_blue": "Mean and5\u201395%quadrature range from one retained coupled2048-atom measure using full36covariance",
+        "panel_A_grey_and_orange": "Deterministic baseline and north-weighted fits; alternative covariance and difference law unavailable",
+        "panels_B_C_D": "Summaries of the same retained2048-atom measure",
+        "visible_draws_label": "Original figure bytes preserved; denotes retained quadrature atoms, not new independent Monte Carlo draws"
+      }
+    }
+  ],
+  "selected_artist_parity": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/selected_artist_parity.json",
+  "label_renderer": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/render_selected_label_only.py",
+  "first_failures": [
+    "FIGURE_SPEC initial selection_bounds path f064_external.pdf missing; author approved actual reviewed f064.pdf",
+    "CairoSVG isolated pip script install reported missing launcher; module import and vector conversion succeeded"
+  ],
+  "created_utc": "2026-10-24T02:24:24.253578+00:00",
+  "visual_check": "All four standalone figure PDFs inspected; title, axes, legends, four-panel functionals and 5x4 STF geometry visible; no missing panels.",
+  "bounded_repair": {
+    "finding": "P1-S05-F2",
+    "change": "Panel-specific provenance correction only; all4figure PDF bytes unchanged",
+    "controller_instruction": "Caption/provenance distinction only; retain original visible draws label",
+    "source_repair_receipt_sha256": "49ea7f66cf70dcda836015b4ed7d8af35e4e2bbbf654445578b9ad87f736920c"
+  }
+}

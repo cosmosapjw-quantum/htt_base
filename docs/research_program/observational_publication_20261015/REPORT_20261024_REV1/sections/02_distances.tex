@@ -1,0 +1,157 @@
+\section{Distance indicators, calibration, and selection}
+\label{sec:distance}
+
+\subsection{Windowed expansion estimates from Cosmicflows-4}
+
+The first distance experiment uses a retained sample of $35\,970$ published Cosmicflows-4 groups. Its distances are $d_i=10^{(\mu_i-25)/5}\,\mathrm{Mpc}$ and its recession variable is $u_i=cz_{{\rm CMB},i}$. A windowed estimate is
+\begin{equation}
+ H_W=\frac{\sum_i w_i d_i u_i}{\sum_i w_i d_i^2},\qquad
+ w_i=\frac{\exp[-(z_i-z_c)^2/(2s_z^2)](1+\alpha n_{iz})}{s_i^2},
+ \label{eq:hw}
+\end{equation}
+with $s_z=0.012$, $\alpha=0$ or $0.6$, and the working variance
+\begin{equation}
+ s_i^2=(250\,\kms)^2+
+ \left[70\,\hunit\,\frac{\ln10}{5}d_i\,e_{\mu,i}\right]^2.
+\end{equation}
+These weights define a conditional estimator. They are not a released joint peculiar-velocity or calibration covariance.
+
+\begin{table}[ht]
+\caption{Conditional Cosmicflows-4 window estimates. $H_W$, the joint-fit monopole $h_0$, dipole norm, and STF norm are in $\hunit$. The last column is the fundamental-plane share of the distance-weighted denominator for the symmetric window.}
+\label{tab:cf4windows}
+\begin{ruledtabular}\begin{tabular}{rrrrrr}
+$z_c$ & $H_W$ & $h_0$ & $\|D\|$ & $\|S\|_F$ & FP share\\
+0.025 &74.629348&75.167996&3.332161&2.166730&0.30371\\
+0.040 &74.343818&75.303212&2.996321&3.175257&0.53492\\
+0.060 &72.516333&74.559217&2.708324&3.753386&0.80241\\
+0.080 &70.810223&72.445152&1.876692&1.952792&0.90189
+\end{tabular}\end{ruledtabular}
+\end{table}
+
+The joint fit uses the nine coefficients of $h_0+D\cdot n+n^aS_{ab}n^b$, with a Frobenius-orthonormal STF basis. Table~\ref{tab:cf4windows} shows why the monopole-only estimate and the joint-fit monopole must be distinguished. Both the angular response and method composition change with the window. The trend cannot be read directly as a physical expansion history. Angular weighting with $\alpha=0.6$ gives $H_W=(74.315905,74.040630,72.382225,70.828381)\,\hunit$ in the same four windows.
+
+The exact fixed-weight response to
+\begin{equation}
+ u_i=H_0d_i+d_iD\cdot n_i+B\cdot n_i+d_iS:n_in_i
+\end{equation}
+is $H_W=H_0+D\cdot m_W+B\cdot b_W+S:Q_W$, where the three window moments follow by substitution in Eq.~\eqref{eq:hw}. Antipodal symmetry removes the odd vector moments; an isotropic weighted angular second moment is additionally required to remove the STF contribution. Selected windows generally satisfy neither condition. At one fixed distance the $D$ and $B$ columns are proportional. An angular fit cannot resolve this degeneracy by itself.
+
+All four nine-coordinate estimates form one 36-coordinate joint state. If $A_r$ is the linear fitting operator for window $r$, its working covariance is
+\begin{equation}
+ C_{rs}=A_r\diag(s_i^2)A_s^T.
+ \label{eq:sharedrowcov}
+\end{equation}
+The first two joint-fit monopoles have correlation approximately $0.702$. Their difference has formal standard deviation $0.09610\,\hunit$, compared with $0.17590\,\hunit$ if their covariance is wrongly omitted. These values illustrate a shared-row effect under the stated diagonal error model, not empirical uncertainty calibration.
+
+Deleting one method family changes the fitted monopole, dipole vector, and STF vector by as much as $0.880$, $1.559$, and $2.726\,\hunit$, respectively. Deleting one fixed sky patch gives corresponding maxima $0.557$, $1.185$, and $1.623\,\hunit$. Different maxima occur for different deletions and windows. These are sensitivity calculations on one catalogue.
+
+There is also an exact mean-design degeneracy. Let $Z_m=d_i\ind\{i\hbox{ belongs to method }m\}$. For the four method families, $\sum_m Z_m=d_i$, the monopole column. Consequently the joint mean design has rank 12 rather than 13, and profiling the method columns leaves eight angular directions. This is a first-order fixed-distance and fixed-weight statement. Absolute calibration or a fuller nonlinear source model can change the problem. Similar angular expansion estimators already appear in cosmographic studies \cite{Kalbouneh2026}; the numerical fit alone does not establish methodological novelty.
+
+\subsection{A separate incomplete distance cohort}
+
+A second experiment concerns a fixed set of 628 targets, of which 274 have released distance moduli and 354 do not. This cohort is distinct from the group catalogue above. It retains its selected targets, observed quality marks, source directions, and whole-group prediction folds. The available CMB-frame velocities span $317$--$10\,459\,\kms$.
+
+All compared models have a common baseline consisting of an intercept, centred logarithmic CMB-frame velocity, measured logarithmic linewidth, and its error. A shared angular calibration dipole is included once. Model A adds the vector response $K_i n_i$, with
+\begin{equation}
+ K_i=-\frac{5}{\ln10\,V_{{\rm CMB},i}},
+ \label{eq:flowcolumn}
+\end{equation}
+in magnitudes per $\kms$. Model B instead adds five STF angular columns. Model C contains both. The coefficients are selected-window response parameters; the STF is not yet local geometric shear, and the vector is not yet a physical velocity.
+
+The four covariance scenarios are
+\begin{equation}
+ V(a,b)=\diag(s_i^2-a^2)+a^2\bm1\bm1^T+b^2GG^T,
+ \quad a\in\{0,0.055\},\quad b\in\{0,0.29\}\ \mathrm{mag},
+ \label{eq:distancecov}
+\end{equation}
+where $G$ is group membership. The first term reallocates a common variance while preserving the released diagonal; the last adds one declared group contribution. These are sensitivity scales, not measured calibration or peculiar-velocity components. The five prediction folds keep each group intact. Their Gaussian conditional predictions use the training fit and its fitted scale, with the training--validation covariance propagated through a Schur complement.
+
+\begin{table}[ht]
+\caption{Summed joint held-out log densities for the same 274 rows. Larger values are better within one covariance scenario. The plug-in predictive densities do not include a calibrated selected-source uncertainty law.}
+\label{tab:distanceprediction}
+\begin{ruledtabular}\begin{tabular}{rrrrr}
+$a$ [mag]&$b$ [mag]&A: vector&B: STF&C: union\\
+0&0&$-220.320$&$-196.843$&$-518.194$\\
+0&0.29&$-194.273$&$-195.138$&$-209.534$\\
+0.055&0&$-231.855$&$-198.340$&$-651.993$\\
+0.055&0.29&$-193.723$&$-194.545$&$-209.465$
+\end{tabular}\end{ruledtabular}
+\end{table}
+
+The ranking reverses. The STF model predicts better when the added group covariance is zero, while the vector model leads narrowly when $b=0.29\,\mathrm{mag}$. The union predicts poorly, particularly without the group term. Its low-velocity extrapolation is fragile: for the source at $317\,\kms$, the fitted union-model flow fraction is approximately $2.26$--$2.45$. A literal small-velocity interpretation would fail there. Removing the source after inspecting the scores would define a different analysis.
+
+An earlier seven-column Gaussian candidate had an actual-data discrepancy $T=4.5553218238$ and a simulation rank $(1+3)/4097=0.0009763241$. This is evidence against that specified working residual model. The success of many simulated checks under the model does not repair its actual-data failure, and the rank is not a test of the later A/B/C alternatives.
+
+For the STF models the fixed-redshift linear scenario conversion is
+\begin{equation}
+ (\sigma_{\rm eff}/H)_{ab}=-\frac{\ln10}{5}B_{ab},
+ \label{eq:effectiveshear}
+\end{equation}
+where $B$ is the magnitude-residual tensor. The full fit covariance, including all STF--nuisance cross blocks, is projected from one joint Gaussian reference ellipsoid. All eight projected ellipsoids contain the zero STF. Point norms $\|\sigma_{\rm eff}/H\|_F$ range from approximately $0.296$ to $0.397$; their reference upper norm endpoints range from $1.048$ to $1.156$. These broad endpoints do not themselves justify a small-anisotropy approximation. Even with zero declared optical remainder, no positive shear-sector lower bound follows from this reference region.
+
+\subsection{What missing targets permit}
+
+Consider the finite event $|r_i|>t$, using a saved signed predictive residual $r_i$ in magnitudes. At $t=0.5\,\mathrm{mag}$, its observed count is 71--80 across the twelve model--covariance cases. If $m$ observed targets exceed the threshold and the 354 missing event indicators are unrestricted, the exact attainable set of the uniform 628-target fraction is
+\begin{equation}
+ \left\{\frac{m+k}{628}:k=0,\ldots,354\right\}.
+ \label{eq:finiteidentified}
+\end{equation}
+Its smallest containing interval has width $354/628=0.5636942675$. The set is discrete; not every point of the interval need be attainable.
+
+For the observed cohort, let its uniform event fraction be $e=m/274$. A declared density-ratio sensitivity class with $\Gamma\geq1$ and $w_i\in[1/\Gamma,\Gamma]$, with average weight one, gives sharp endpoints
+\begin{align}
+ L_\Gamma(e)&=\max\{e/\Gamma,1-\Gamma(1-e)\},\nonumber\\
+ U_\Gamma(e)&=\min\{\Gamma e,1-(1-e)/\Gamma\}.
+ \label{eq:selectionbounds}
+\end{align}
+Holding the observed target mass at $274/628$, the completed sensitivity set is the union over $k=0,\ldots,354$ of intervals
+\begin{equation}
+ \left[\frac{274}{628}L_\Gamma(e)+\frac{k}{628},
+ \frac{274}{628}U_\Gamma(e)+\frac{k}{628}\right].
+\end{equation}
+At $\Gamma=2$ and $t=0.5\,\mathrm{mag}$, the hull widths are $0.7333$--$0.7548$; at $\Gamma=4$ they are approximately $0.8909$. This measures sensitivity inside the observed portion of a known finite target frame. The availability fraction $274/628$ is not a measured inclusion propensity for a larger survey population. The physical law for $x_C$ remains a different, unqualified object.
+
+An unrestricted missing signed residual can be assigned an arbitrary value $R$. The target mean then contains $(354/628)R$, so its identified range is unbounded in this completion model. This result concerns the residual mean, not an asserted physically realizable range of cosmological shear or curvature.
+
+Auxiliary calibration exposes a second limitation. Three cells of the 628-target frame contain no observed distances, making exact nonnegative balancing impossible. Removing those cells gives a different 625-target estimand. For that restricted target, positive weights exist, with concentration effective sample size $271.537086$. Nevertheless 351 outcomes within supported cells remain missing. Finer within-cell velocity balancing is infeasible even with signed weights: the relevant observed functional is zero, while its target sum is $2547\,\kms$. Balance does not establish a missing-at-random law or bound missing tensors.
+
+The same positive weights were applied jointly to the residual scalar, direction vector, and STF tensor of every model--covariance pair. This preserves their atomic dependence. It changes occupancy without manufacturing new outcomes. Survey-calibration and partial-identification methods provide the context for these constructions \cite{Deville1992,ImbensManski2004,AronowLee2013}; their identifying assumptions remain additional scientific inputs.
+
+\subsection{Coupled finite measures and conditional evidence}
+
+The four-window group fit supplies a separate coupled finite measure: 2048 deterministic Sobol points of one 36-coordinate working distribution, with equal weights $1/2048$. The source IDs and all cross-window covariance are retained. It supports conditional functional exceedance and sensitivity calculations, without becoming a physical posterior. For one retained event, the empirical probability $0.60302734375$ has the density-ratio envelope\begin{equation}[0.301513671875,\;0.801513671875]\qquad(\Gamma=2).\end{equation} A declared floor change from $0.005$ to $0.05$ changes one depth-ratio median from $1.718693$ to $1.025396$. These are changes in a specified finite measure and functional. Physical exceedances retain unknown mass one.
+
+A different exploratory comparison uses the 274-row cohort and five whole-group folds. Each numerator is a mixture of eight normalized conditional predictive densities, and each denominator is the largest conditional null density among four covariance scenarios. The arithmetic average of the five ratios is $0.000183218358755319$, with logarithm $-8.604831899198585$. Its small value means that the chosen alternative mixture did not outperform this composite null on those blocks. It is not evidence that the null is physically true.
+
+For a fixed training-measurable normalized numerator and a denominator that dominates the true conditional null density, this ratio has conditional expectation at most one \cite{Wasserman2020}. Training-parameter uncertainty need not be integrated for that elementary validity argument. The present calculation nevertheless lacks a qualified selected-source law, prospective control of adaptive choices, and an outward numerical certificate for its null-density supremum. Its arithmetic is informative as a conditional comparison; it is not reported as calibrated observational evidence.
+
+\subsection{Fundamental-plane pooling and source ancestry}
+
+A release-level reconstruction examines whether rounded individual fundamental-plane moduli and errors can be compatible with the published group products under a proposed pooling rule and common offset. The structurally qualified subset contains $22\,599$ groups. Under the one-last-printed-place outer rounding convention, the marginal common-offset intersection is approximately $[0.0220801,0.0257960]\,\mathrm{mag}$, and no qualified group has a disjoint marginal error interval. These are necessary marginal compatibility conditions. They do not establish simultaneous modulus--error feasibility, the actual accepted subsource membership, or the quoted error law.
+
+There are 54 structural exclusions. In 46, the published count is blank while the numerical group modulus and its error are present. A blank count is not zero and is not evidence that the method is absent. The remaining eight have count disagreement. One decisive example is group 1490017: the retained individual table has one distinct fundamental-plane galaxy, while the group count is two. No deletion-only subset of a one-element set can reproduce a count of two. This excludes that particular repair model regardless of rounding or zero-point offset. It does not prove that every possible production stage is inconsistent.
+
+Inspection of the public producer source gives reasons to keep stage identities explicit. One stage uses a minimum subsource uncertainty as a replacement galaxy error; another obtains group identifiers from available subsource identifiers; a later export imports a previously assembled group count rather than reconstructing accepted members. A matching file name or numerical offset cannot identify the actual accepted-galaxy ancestry. Moreover, minimum-error galaxy combination is generally nonassociative with a later inverse-variance group reduction. The missing information is the release-matched accepted-member and subsource record, together with the relevant stage and error rule. A Gaussian quadratic used for pooling is not by itself a selected-source likelihood.
+
+\subsection{Supernova covariance and nominal-fit parity}
+
+The supernova investigations address two distinct questions. The first uses one retained light curve, SN010010, with 59 released measurements and a fixed 23-row $gri$ selection. A measurement-only fit has $\chi^2/19=3.2323283$. Adding the public light-curve model covariance gives $\chi^2/19=0.8984302$, using iterated fixed-covariance least squares. This is a fixed-point procedure, not a normalized maximum-likelihood fit with parameter-dependent covariance.
+
+The improved residual quadratic does not reproduce the nominal source fit. Relative to its published summary, the fitted amplitude differs by $-0.81315\%$, the shape parameter by $-0.0185353$, colour by $+0.00394042$, and epoch by $-0.0131719\,\mathrm d$. All four exceed the predeclared parity tolerances. The exact nominal training model, complete fit settings, and observed fit-result record are unavailable among the retained inputs. Public-source adequacy and nominal-source parity are separate questions.
+
+The second experiment fits the released Pantheon+ Hubble-flow selection: 277 rows, 238 literal source identifiers, and 15 survey codes. The released total covariance is consumed once in its original row order. No second stochastic peculiar-velocity contribution is added. The baseline is a chosen flat FLRW distance modulus with $(\Omega_m,\Omega_r,\Omega_\Lambda)=(0.3,9\times10^{-5},0.69991)$ and $H_0=70\,\hunit$, plus a free magnitude offset. It is not a recovered nominal light-curve fit or a fitted cosmology.
+
+\begin{table}[ht]
+\caption{Pantheon+ conditional residual quadratics under the released total covariance. The numbers describe mean-model changes; no directional null significance is assigned.}
+\label{tab:sn}
+\begin{ruledtabular}\begin{tabular}{lrr}
+Mean model&Residual quadratic&Residual dimensions\\
+Common offset&242.376&276\\
+Offset and angular calibration&237.460&273\\
+Offset and frozen-flow response&233.145&273\\
+Offset and both vectors&230.426&270\\
+Survey indicators and both vectors&209.902&256
+\end{tabular}\end{ruledtabular}
+\end{table}
+
+The joint calibration coefficients are approximately $(-0.0514,-0.00353,-0.0414)\,\mathrm{mag}$; the frozen-flow coefficients are $(-390,-90.3,-304)\,\kms$. They are correlated blocks of one fit, not independent detections. Survey indicators move both. The conditional design has rank three for each profiled vector but weak power at modest amplitudes: for the stated Gaussian reference, a $0.01\,\mathrm{mag}$ calibration injection gives power about $0.052$--$0.057$, and a $100\,\kms$ response injection gives $0.058$--$0.079$. The unresolved Pantheon+--Cosmicflows cross covariance prevents treating these analyses as independent pieces of a joint likelihood.

@@ -1,0 +1,85 @@
+\section{From observations to physical questions}
+\label{sec:framework}
+
+An angular variation in a distance estimate, a proper-motion field, and a temperature or polarization multipole are different observations. Their agreement in direction would be interesting, but would not by itself identify a common physical cause. The first question is what each observation measures. The second is whether a specified physical model maps to that same observable with sufficient precision. Only then can the observations discriminate physical models.
+
+We study these questions without evolving a new cosmological radiation-transfer or matter system. This restriction still permits substantial calculations. One can retain the complete measured angular fields, determine which linear combinations survive calibration and masking, propagate a declared joint covariance, and exhibit pairs of source states that give the same observation. One can also determine how much a conclusion changes when selection, bias, or covariance is varied. The report brings these calculations together; it is a first account of their scientific content rather than a claim of a completed physical inference.
+
+The data concern four complementary experiments. Cosmicflows-4 supplies distance-modulus and redshift information for individual galaxies and groups \cite{Tully2023}. Pantheon+ supplies supernova magnitudes and a released total covariance \cite{Brout2022}. Gaia and Quaia supply astrometric fields, source identities, reported redshifts, and selection-related information \cite{GaiaCRF3,Quaia2024}. Planck supplies temperature and polarization maps, split products, and component-separation operators \cite{Planck2018IV,Planck2018VII}. Repeated windows, frequency channels, or processing choices within one experiment are correlated views of the same sources or sky.
+
+For a latent state $Z$, nuisance parameters $\eta$, selection rule $S$, physical response $\mathcal T$, and observation operator $M$, the statistical object is schematically
+\begin{equation}
+ p\{y\mid M[\mathcal T(Z)],S,\eta\}.
+ \label{eq:observation}
+\end{equation}
+The response includes the source and observer frames, optical propagation, and any approximation remainder. A catalogue fit can be well defined even when some of these physical ingredients are unknown. We call its fitted coefficients \emph{effective} or \emph{conditional} coefficients and specify the working law used to calculate them. A Gaussian reference tail is a probability within that law. It becomes an observational significance statement only if the law, selection, and statistic are justified for the actual experiment.
+
+\subsection{Conventions and tensor information}
+
+We use metric signature $(-,+,+,+)$, spatial orientation $\epsilon_{123}=+1$, and unit timelike $u^a u_a=-1$. Proper length is $s=c\tau$. Physical expansion $H$ and shear $\sigma_{ab}$ have dimensions of inverse time; physical acceleration is $A^a=c^2u^b\nabla_bu^a$. The shear is spatial and symmetric trace-free, while vorticity is spatial and antisymmetric. Its axial vector is $\omega^a=\epsilon^{abc}\omega_{bc}/2$. Every physical contraction must refer to the same congruence, frame, epoch, and normalization.
+
+These requirements matter observationally. For any direction $n$,
+\begin{equation}
+ n^a\omega_{ab}n^b=0.
+ \label{eq:radial-vorticity}
+\end{equation}
+Thus a radial velocity-gradient quadrupole does not measure vorticity. Similarly, an astrometric $E$-mode vector is polar and a $B$-mode vector is axial. Their scalar product changes sign under reflection. Treating both as ordinary vectors loses this distinction.
+
+We retain full tensor coordinates before forming invariants. A real quadrupole contains five independent STF coordinates, and an octupole contains seven. Their norms, axes, determinants, and contractions are functions of this information; none generally determines it. Under a proper rotation, tensor components and their covariance transform together. When an anisotropic uncertainty metric is held fixed while the tensor is rotated, the resulting distance is not automatically invariant.
+
+\subsection{The departure bundle}
+
+The notation $(x,F,\Pi,Q,G_F)$ denotes related mathematical objects, not five interchangeable scalar scores. Let $Z$ include the tensor state, shared nuisance variables, anchors, and response uncertainties. A registered functional $\phi$ may be scalar-, vector-, tensor-, set-, or path-valued. Then $x_\phi=\phi(Z)$ retains its rank, parity, units, frame, and support. For a joint region $C$ we retain the image $\phi(C)$, or an explicitly conservative outer set.
+
+The quantity $Q$ is a score relative to a matching anchor. For a closed, convex, balanced anchor body $\mathcal A$ containing a neighbourhood of zero, its gauge is
+\begin{equation}
+ \gamma_{\mathcal A}(v)=\inf\{t\geq0:v\in t\mathcal A\}.
+ \label{eq:gauge}
+\end{equation}
+A fixed numerical scale can define a useful computational gauge. It is not a measured physical bound. A scalar signed projection used in the present research is
+\begin{align}
+ x_C&=\Sigma_G^2-W_G^2+\Omega_{\rm tilt}+\Delta\Omega_k,\nonumber\\
+ \Sigma_G^2&=\frac{\sigma_G:\sigma_G}{6H_G^2},\qquad
+ W_G^2=\frac{\omega_G:\omega_G}{6H_G^2},\qquad
+ Q_C=\frac{x_C}{U_\sigma},\quad U_\sigma=\frac32 B_\sigma^2>0.
+ \label{eq:scalarbudget}
+\end{align}
+Here $B_\sigma$ is a specified dimensionless shear-sector scale, in the convention where a bound on $\sqrt{\sigma_G:\sigma_G}/(3|H_G|)$ yields the normalizer $U_\sigma=3B_\sigma^2/2$. This notation supplies neither an observed value of $B_\sigma$ nor a proved ceiling for the signed sum $x_C$. For a perfect fluid in its specified rest frame, an eligible tilt term is $(1+w)\Omega_{\rm rest}\sinh^2\rho$, where $\rho=\operatorname{arctanh}(v/c)$. Here $\Omega_{\rm rest}=8\pi G\varepsilon_{\rm rest}/(3c^2H_G^2)$ uses the fluid-rest-frame energy density but the same reference-congruence expansion $H_G$ as the other terms; $w=p_{\rm rest}/\varepsilon_{\rm rest}$. This is a specified normalization, not a separate observed density. The velocity fraction and rapidity cannot be interchanged. Acceleration is not an extra positive term to be inserted into Eq.~\eqref{eq:scalarbudget}.
+
+$F$ records directional support and image information and, when a measure is supplied, an occupancy. The scalar filling fraction requires its specified sign-clean sector and positive ceiling; a signed departure cannot be clipped to $[0,1]$ and reinterpreted as occupancy. For a nonempty compact set $K$, directional support is
+\begin{equation}
+ h_K(a)=\sup_{z\in K}\langle a,z\rangle.
+\end{equation}
+This function describes the closed convex hull. It does not recover disconnected or chiral parts of a nonconvex set, and it supplies no probability distribution within the set.
+
+Under a named joint measure $\mu$, an exceedance is
+\begin{equation}
+ \Pi_\mu(\phi,t)=\mu\{Q_\phi>t\}.
+ \label{eq:pi}
+\end{equation}
+The inequality is strict. A uniform finite measure on retained draws, a continuous Gaussian working distribution, a posterior, and a physical selected-source law are distinct measures. If defined draws have weights $p_i$ with total $1-u$, while the remaining mass $u$ is unknown, then
+\begin{equation}
+ \sum_i p_i\ind\{q_i>t\}\leq\Pi_\mu(t)
+ \leq u+\sum_i p_i\ind\{q_i>t\}.
+ \label{eq:unknownmass}
+\end{equation}
+Unknown mass is retained. In several applications below all physical mass is unqualified, giving $[0,1]$, although an empirical conditional measure is fully specified.
+
+$G_F$ is a structured depth path or a stated contrast of supported depth summaries. A scalar example is
+\begin{equation}
+ G_F=\frac{\max(\bar F_{\rm comparison},\delta)}{\max(\bar F_{\rm reference},\delta)},\qquad \delta>0.
+ \label{eq:gap}
+\end{equation}
+This is a ratio of bin summaries, not the average of draw-by-draw ratios. Cross-bin covariance and common draw identity are retained. An angular separation, frequency, or processing-window index is not physical depth. A depth interpretation is unavailable where the required response is absent.
+
+\subsection{Joint images and missing physical information}
+
+If $C(y)$ covers the true joint state with probability at least $1-\alpha$, then on that one event every registered image contains its true value:
+\begin{equation}
+ Z\in C(y)\quad\Longrightarrow\quad
+ \phi(Z)\in\phi\{C(y)\}\quad\hbox{for all registered }\phi.
+ \label{eq:jointimage}
+\end{equation}
+No additional multiple-testing correction is needed merely to inspect deterministic images of this same event. This statement does not validate a data-selected confidence region, combine unrelated marginal events, or turn an ellipsoid into a posterior. Independent regions require a justified common state and a joint error allocation before projection. Unknown cross-covariances cannot be set to zero for convenience.
+
+A physical target $h$ is identified by an observation map if and only if $h$ is constant on every observational fibre. Otherwise its possible values form an identified set. Empty, unbounded, undefined, and unresolved sets have different meanings. In particular, an absent physical anchor is not a zero denominator, and an unobserved tensor component is not a zero tensor. These distinctions organize the applications that follow.

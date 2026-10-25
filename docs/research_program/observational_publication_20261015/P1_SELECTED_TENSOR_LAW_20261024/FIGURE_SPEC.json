@@ -1,0 +1,46 @@
+{
+  "schema": "htt.p1.scientific_figure_spec/1",
+  "owner": "/root/rc_b62caee38ecbeb86",
+  "scope": "Four external-facing figures for the selected-tensor-law methods manuscript. Retain source numbers; no fits, draws, nulls, or numerical science reruns.",
+  "figure_owner": "controller-appointed routine builder",
+  "figures": [
+    {
+      "id": "selected_tensor_law",
+      "destination": "figures/selected_tensor_law.pdf",
+      "existing_plot": "/mnt/extdrive/workdir/htt_open_data/r26_s04_selected_law_consumer/R24_C_UNION_STF_FINITE_F.pdf",
+      "source": "/mnt/extdrive/workdir/htt_open_data/r26_s04_selected_law_consumer/RESULT.json",
+      "source_sha256": "405909feee3580bf826fcea675282f47da935510a45c3d79f8fd788b80fce5f8",
+      "fields": ["r24_selected_C_union.scenarios.*.exact_F_region.STF5_signed_beta_mag", "r24_selected_C_union.scenarios.*.exact_F_region.STF5_coordinate_bounds_mag", "r24_selected_C_union.scenarios.*.historical_chi2_reference"],
+      "operation": "Retain existing five-by-four geometry and all nontext artists exactly, label-only rendering. Display full15 finite-F coordinate projections and the preserved historical chi-square algebraic reference with distinct labels. The20fold tails belong in manuscript prose/table, not a new panel. No independent marginal confidence claim.",
+      "labels": {"title": "Selected-cohort tensor coefficients and joint-region projections", "coefficient_axis": "Signed STF coefficient [mag]", "shape": "(a,b) [mag]"},
+      "caveats": ["95% refers to full15 selected-design Gaussian confidence region under each fixed covariance shape", "coordinate intervals are projections; retain covariance in source", "folds and shape diagnostics are dependent", "nonrejection is not model validation", "no physical shear interpretation"]
+    },
+    {
+      "id": "model_comparison",
+      "destination": "figures/model_comparison.pdf",
+      "existing_plot": "../REPORT_20261024_REV1/figures/f058_external.pdf",
+      "source": "../METHOD_EXECUTION_20261023/distance/RESULT.json",
+      "fields": ["scenarios.*.models.*.total_joint_log_predictive_score", "scenarios.*.models.*.oof_residual_summaries"],
+      "operation": "Copy approved external-label report figure, or label-only rendering from exactly its saved source values.",
+      "caveats": ["same274 released cohort", "plug-in predictive scores omit training coefficient and scale uncertainty", "separate from finite-F predictive checks", "no independent-source or Bayes-factor claim"]
+    },
+    {
+      "id": "selection_bounds",
+      "destination": "figures/selection_bounds.pdf",
+      "existing_plot": "../REPORT_20261024_REV1/figures/f064.pdf",
+      "source": "../METHOD_EXECUTION_20261023/selection_envelope/RESULT.json",
+      "additional_source": "../METHOD_EXECUTION_20261023/selection_envelope/SURFACE.csv",
+      "operation": "Copy approved external-label report figure, or label-only rendering preserving finite628 event completion and Gamma=2 sensitivity curves.",
+      "caveats": ["event absolute held-out magnitude residual exceeds threshold", "274 observed and354 missing within known628 frame", "interval hull; deterministic missing-event set is discrete at Gamma=1", "not parent inclusion probabilities or physical confidence intervals"]
+    },
+    {
+      "id": "coupled_functionals",
+      "destination": "figures/coupled_functionals.pdf",
+      "existing_plot": "../REPORT_20261024_REV1/figures/original_variants/f030.svg",
+      "fallback_existing_plot": "../REPORT_20261024_REV1/figures/f030.png",
+      "source": "../CONTINUATION_20261018/P1/results/FUNCTIONAL_SENSITIVITY_RESULT.json",
+      "operation": "Preserve all four panels and their original numerical geometry. Blue quadrature summaries in panelA and panelsB-D share the coupled2048 values; panelA additionally shows separate deterministic baseline/north-weighted fits. Routine builder may replace visible word draws by quadrature atoms using a text-only label change; do not create an alternative law or modify plot data.",
+      "caveats": ["separate35970-group source and36-dimensional apparent Hubble-rate carrier", "Blue summary in panelA and panelsB-D use one2048-atom measure; shared-window covariance retained", "PanelA baseline/north fits are deterministic; alternative covariance unavailable, no alternative2048-atom law or difference uncertainty law", "A=norm(STF)/H on positive-H branch; apparent anchor and floor", "not physical Q,F,Pi,G_F; physical response and identified set unknown", "no optical magnitude-response equation applied to km/s/Mpc carrier"]
+    }
+  ]
+}

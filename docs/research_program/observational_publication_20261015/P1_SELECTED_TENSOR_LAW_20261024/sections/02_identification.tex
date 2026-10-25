@@ -1,0 +1,86 @@
+\section{Identification, tensor information, and functional domains}
+\label{sec:identification}
+
+\subsection{The observation law and its fibres}
+
+Let $\eta$ denote a complete state, including physical tensors, calibration variables, and the source-to-observation response. Let $\mathcal O(\eta)$ denote its observation law. For an observation law $o$, define the observational fibre and the image of a target $h$ by
+\begin{equation}
+ \mathcal E(o)=\{\eta:\mathcal O(\eta)=o\},\qquad
+ \mathcal I_h(o)=\{h(\eta):\eta\in\mathcal E(o)\cap\mathcal D_h\},
+ \label{eq:fibre}
+\end{equation}
+where $\mathcal D_h$ is the domain of $h$. The target is identified on the specified model class precisely when it is constant on every relevant fibre. This is a criterion for information, not a probability distribution over unobserved states. Appendix~\ref{app:fibres} gives the elementary argument and distinguishes the domain cases.
+
+By comparison, ordinary pushforward starts with an already specified probability measure $\mu$ on a state space and a measurable function $h$. It assigns the measure $h_\#\mu(A)=\mu(h^{-1}(A))$. This operation is fully appropriate when its inputs are justified. It does not choose among distinct physical states in Eq.~\eqref{eq:fibre}, supply the law of missing outcomes, or determine an absent calibration bias. Assigning a prior to that bias would define an additional model. It would not show that the observation identified the bias.
+
+An uncertainty region addresses yet another question. Suppose $C(Y)$ covers a statistical parameter $\theta_0$ with probability at least $1-\alpha$ under a stated law. On the single coverage event,
+\begin{equation}
+ \theta_0\in C(Y)\quad\Longrightarrow\quad
+ \phi(\theta_0)\in\phi\{C(Y)\}
+ \quad\hbox{for every defined deterministic }\phi.
+ \label{eq:coverageimage}
+\end{equation}
+The simultaneous image statement follows from set inclusion. It does not require treating the displayed images as independent tests. It also does not assign probability mass to points within $C$, validate a data-selected region, or combine unrelated marginal coverage statements. If physical states compatible with each $\theta$ form a set $\mathcal R(\theta)$, the appropriate propagated physical set is instead
+\begin{equation}
+ \mathcal H(Y)=\bigcup_{\theta\in C(Y)}\{h(\eta):\eta\in\mathcal R(\theta)\cap\mathcal D_h\}.
+ \label{eq:physicalimage}
+\end{equation}
+Coverage of this image requires the true physical state to satisfy the stated response relation. Statistical coverage cannot establish that relation.
+
+\subsection{A full tensor precedes its scalar summaries}
+
+We write a real STF tensor in a Frobenius-orthonormal basis,
+\begin{equation}
+ B=\sum_{a=1}^{5}b_aE_a,\qquad E_a:E_b=\delta_{ab},\qquad
+ \|B\|_F^2=\sum_{a=1}^{5}b_a^2.
+ \label{eq:tensorbasis}
+\end{equation}
+For the distance analysis the basis is
+\begin{align}
+ E_1&=\diag(1,-1,0)/\sqrt2,&
+ E_2&=\diag(-1,-1,2)/\sqrt6,\nonumber\\
+ E_3&=(e_xe_y^T+e_ye_x^T)/\sqrt2,&
+ E_4&=(e_xe_z^T+e_ze_x^T)/\sqrt2,\nonumber\\
+ E_5&=(e_ye_z^T+e_ze_y^T)/\sqrt2.
+\end{align}
+Directions are J2000 equatorial unit vectors from observer to source. The magnitude contribution is $n^TBn$; the coefficient vector $b$ has units of magnitudes.
+
+A norm cannot recover the tensor. For example, $\diag(1,-1,0)$ and $\diag(1,1,-2)/\sqrt3$ have the same Frobenius norm and different determinants. They are not related by a rotation. Further orientation information is lost when either tensor is replaced by its eigenvalues. The relevant compression test is therefore whether the desired functional is constant on the fibres of the chosen summary, not merely whether that summary has a small uncertainty.
+
+The covariance belongs to the same joint object. A tensor rotation must transform both coefficient coordinates and their covariance. Cross blocks with calibration and velocity-response coefficients are retained before any projection. Conditioning nuisance coefficients to their estimated values generally gives a smaller region than projecting them out. The latter is the operation used below.
+
+\subsection{Signed coordinates, normalized sectors, and exceedances}
+
+We distinguish the roles of a departure functional $x$, a normalized score $Q$, a sector filling fraction $F$, an exceedance $\Pi$, and a depth contrast $G_F$. A general $x_\phi=\phi(\eta)$ may be tensor-, vector-, scalar-, or set-valued. One physical scalar coordinate of interest, defined for a specified reference congruence and $H\ne0$, is
+\begin{equation}
+ x_C=\frac{\sigma_{ab}\sigma^{ab}-\omega_{ab}\omega^{ab}}{6H^2}
+       +\Omega_{\rm tilt}+\Delta\Omega_k.
+ \label{eq:xc}
+\end{equation}
+We use metric signature $(-,+,+,+)$. The shear and vorticity tensors and $H=\Theta/3$ are physical rates in the same frame; contractions in Eq.~\eqref{eq:xc} have units of inverse time squared. If an axial vorticity vector is used, $\omega_{ab}\omega^{ab}=2\omega_a\omega^a$. The tilt and curvature terms require their own density and frame conventions. They have not been measured by the distance tensor considered here.
+
+The minus sign in Eq.~\eqref{eq:xc} is substantive. The quantity can be negative. Given a specified positive dimensionless shear-sector reference $B_\sigma$, one may define
+\begin{equation}
+ U_\sigma=\frac32 B_\sigma^2>0,\qquad Q_C=x_C/U_\sigma.
+ \label{eq:q}
+\end{equation}
+This convention corresponds to a shear normalization in which $\sqrt{\sigma:\sigma}/(3|H|)$ is compared with $B_\sigma$. It does not certify $U_\sigma$ as an upper bound on the signed sum $x_C$. Neither $Q_C<0$ nor $Q_C>1$ is a mathematical contradiction. No numerical physical value of $B_\sigma$ is supplied in this paper.
+
+A filling fraction has a different domain. We define $F=a/U$ only for a separately justified nonnegative sector with $0\leq a\leq U$ and $U>0$. These conditions make $F\in[0,1]$. Clipping $Q_C$ into that interval would change the functional and would not establish those conditions. A spatial occupancy would additionally require a specified support and measure; a sector fraction is not by itself a volume fraction.
+
+For any named joint measure $\mu$ and an eligible score $q$, the exceedance is
+\begin{equation}
+ \Pi_{\mu,q}(t)=\mu\{q>t\}.
+ \label{eq:pi}
+\end{equation}
+The inequality is strict, so an atom at the threshold does not count. A Gaussian reference measure, a finite quadrature measure, and a physical posterior yield different meanings for the same formula. A confidence region supplies none of them. In particular, its coverage probability does not define a uniform sampling measure within the region.
+
+For supported fractions in two specified depth bins, an example of a further functional is
+\begin{equation}
+ G_F=\frac{\max(F_{\rm comparison},\delta)}{\max(F_{\rm reference},\delta)},
+ \qquad 0<\delta\leq1.
+ \label{eq:gf}
+\end{equation}
+Then $\delta\leq G_F\leq1/\delta$. The bin support, weighting, frame, and cross-bin dependence remain part of this definition. A ratio of bin averages is not an average of paired ratios. We will use an explicitly apparent analogue in Sec.~\ref{sec:coupled}, where a physical $F$ is unavailable.
+
+Undefined and unbounded outcomes must also remain distinct. The normalized coordinate in Eq.~\eqref{eq:xc} is undefined at $H=0$; setting it to zero would assert a value outside its domain. A response fibre can instead contain arbitrarily large defined values, giving an unbounded set. Missing knowledge of the response can leave even the identified set unresolved. Ratio confidence sets can similarly be unbounded or disconnected when a denominator is uncertain \cite{LuxburgFranz2009}. Removing inconvenient strata after observing the result changes the target.

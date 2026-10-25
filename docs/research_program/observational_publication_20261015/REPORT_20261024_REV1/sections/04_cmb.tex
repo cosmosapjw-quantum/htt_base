@@ -1,0 +1,94 @@
+\section{CMB tensor morphology and processing}
+\label{sec:cmb}
+
+\subsection{Full harmonic and STF representations}
+
+For a real sky we use the orthonormal real coefficients
+\begin{equation}
+ c_{\ell0}=a_{\ell0},\qquad
+ c_{\ell m,c}=\sqrt2\,\Re a_{\ell m},\qquad
+ c_{\ell m,s}=-\sqrt2\,\Im a_{\ell m}.
+ \label{eq:realharmonics}
+\end{equation}
+The convention is Galactic with Condon--Shortley phase. The complete quadrupole and octupole STF tensors are denoted $T_2$ and $T_3$, reserving $Q$ for an anchor score. Their norms obey
+\begin{equation}
+ \|T_2\|_F^2=\frac{15}{8\pi}\|c_2\|^2,
+ \qquad \|T_3\|_F^2=\frac{35}{8\pi}\|c_3\|^2.
+\end{equation}
+The factors in Eq.~\eqref{eq:realharmonics} must be undone at an interface that expects raw real and imaginary coefficients. Otherwise a visually plausible tensor can have the wrong amplitude and shape.
+
+The retained polarization calculations use $E$ and $B$ quantities obtained from delivered $Q/U$ maps with their stated support and processing. They are not scalar projections of temperature relabelled as polarization. Earlier finite-support calculations show leakage from higher to lower modes. On the original 30\,021-pixel support, a $64\times90$ response from multipoles 6--8 to 2--5 has numerical rank 64 and kernel dimension 26; its total operator norm is approximately $1.70061$, including an $E$-to-$B$ block norm $0.93449$. These are gains of a finite processing operator. They neither measure the high-mode sky amplitude nor bound an omitted infinite tail.
+
+Split and processing comparisons use one observed Planck sky. Their covariance cannot be estimated by counting views as independent skies. In a retained paired-simulation pilot, eight rows occupy a 96-coordinate joint representation, so the centred sample covariance has rank at most seven; it was not inverted as a full covariance. A matching total-field law must include sky, noise, common foregrounds, beam and mask response, and the dependence among splits \cite{Planck2018IV,Planck2018VII,SheehySlosar2018}.
+
+\subsection{Orbit distances and information lost by power}
+
+For positive scalar weights on each irreducible tensor block, use the invariant norm
+\begin{equation}
+ \|v\|^2=\frac{\|T_2\|_F^2}{q_0^2}+\frac{\|T_3\|_F^2}{o_0^2},
+ \qquad q_0=o_0=10^{-5}\,\mathrm K_{\rm CMB}.
+ \label{eq:orbitnorm}
+\end{equation}
+These scales are computational. The proper-rotation orbit distance is
+\begin{equation}
+ d_{\SO(3)}(v,w)=\min_{R\in\SO(3)}\|v-\rho(R)w\|.
+ \label{eq:orbit}
+\end{equation}
+It remains defined at zero tensors and repeated eigenvalues, without selecting an unstable eigenaxis. Replacing $\SO(3)$ by $O(3)$ also identifies reflections and therefore changes the scientific question \cite{LandMagueijo2005}.
+
+The orbit, chirality, and conditional-Gram collection in the following subsections consists specifically of processed $E$ pseudoalms from delivered $Q/U$, with fifteen primary bundles and 45 additional processing-window bundles. All retain the complete twelve $E$ harmonic coordinates and the full STF tensors; these results are not a joint $E/B$ morphology experiment. At the primary multipole cutoff 32, split-versus-full proper-rotation lower bounds range from $0.01265095$ to $0.01801714$ in Eq.~\eqref{eq:orbitnorm}, while feasible upper bounds range from $0.01950063$ to $0.02826828$. The lower bounds use invariants; an evaluated proper rotation supplies each upper bound. A local optimization is not treated as a certified global minimum.
+
+A phase intervention preserves quadrupole and octupole scalar powers to relative $2.22\times10^{-16}$ yet gives an orbit interval approximately $[2.624\times10^{-5},0.011459]$. Its positive lower endpoint demonstrates information lost by power alone. It is a finite tensor counterexample, not evidence for a cosmological family.
+
+Processing changes also matter. The separately retained primary and recomputed zero-window harmonic coefficients differ by as much as $9.408\times10^{-11}\,\mathrm K_{\rm CMB}$. They are therefore represented as separate processed observations. Finite directional supports summarize their convex hull at the sampled directions; they do not recover every nonconvex morphology or constitute continuum-direction coverage.
+
+\subsection{Proper-rotation chirality}
+
+Let $A=T_2/q_0$, $O=T_3/o_0$, and define
+\begin{equation}
+ v_i=O_{ijk}A_{jk},\qquad
+ \chi=\det[v,Av,A^2v],\qquad
+ m^2=\|A\|_F^2+\|O\|_F^2.
+ \label{eq:chirality}
+\end{equation}
+For an orthogonal transformation $R$, $\chi$ transforms as $\det(R)\chi$. Thus $(A,O)$ and its mirror $(A,-O)$ have identical block powers and quadrupole determinant, but opposite nonzero $\chi$. They cannot be related by a proper rotation. Zero $\chi$ is inconclusive, and the normalized diagnostic $\chi/m^9$ is undefined at $m=0$.
+
+Exact rational arithmetic on the stored finite coefficients gives nonzero $\chi$ for all sixty carriers: fifteen positive and 45 negative. This describes the retained projected values, not primordial parity violation. With the conservative derivative bound derived in Appendix~\ref{app:orbits}, every carrier has a positive proper-rotation mirror-distance lower bound. All sixty retain a certified sign at relative radius $10^{-6}$, 39 at $10^{-5}$, and none at $10^{-4}$ or above in the tested radius set. Failure of this sufficient certificate does not prove a sign change. The radius is a scenario, not an observed foreground-error bound.
+
+\subsection{Same Gram matrix, different conditional laws}
+
+At each multipole, arrange the sixty harmonic views as columns of $X_\ell$. We compare two constructed laws. The first applies a shared spatial rotation $D_\ell(R)$ to every view at that multipole, with independent rotations for $\ell=2$ and 3. The second uses shared Haar orthogonal actions in five and seven dimensions. Both preserve $G_\ell=X_\ell^TX_\ell$ exactly and have the same second moments,
+\begin{equation}
+ \E Y_{\ell,aj}Y_{\ell,bk}
+ =\delta_{ab}\frac{(G_\ell)_{jk}}{2\ell+1}.
+ \label{eq:grammoment}
+\end{equation}
+They do not have the same law. Spatial rotations preserve intrinsic STF shape; a general coefficient-space orthogonal transformation need not. Isotropy alone does not supply the Gaussian coordinate invariance needed to interpret the second law as a physical conditional distribution \cite{BaldiMarinucci2007}.
+
+A separate 4096-draw pilot fixes the statistic transformation. Each law then has 16\,383 evaluation draws, with one family statistic spanning all dependent views. The spatial-rotation reference gives an add-one weak-tail rank $0.4581298828125$; the Gram reference gives $0.45513916015625$. Their 99\% Monte Carlo intervals are respectively $[0.4480529,0.4681651]$ and $[0.4450681,0.4651698]$. The similarities of these numerical ranks do not establish equivalence of the laws. They are conditional reference probabilities chosen in an exploratory analysis; mask, foreground, and processing invariance are not qualified for a Planck-calibrated $p$ value. Strict exceedance surfaces are reported separately from these weak-tail ranks.
+
+\subsection{Common contamination and frequency compression}
+
+For split data $d_s=g+f_{\rm common}+f_s+n_s$, the transformation
+\begin{equation}
+ g\longmapsto g+h,\qquad
+ f_{\rm common}\longmapsto f_{\rm common}-h
+ \label{eq:commonmode}
+\end{equation}
+leaves every observation unchanged. A split difference annihilates both common components. Small differences therefore do not bound an arbitrary common foreground. Moreover, expected split cross power includes the cross-noise term $\tr N_{12}$; zero marginal noise means do not set it to zero.
+
+Under stated tensor-error radii, the orbit Lipschitz bound widens a distance enclosure $[L,U]$ to
+\begin{equation}
+ [(L-r_1-r_2)_+,\ U+r_1+r_2].
+\end{equation}
+At the primary cutoff, all four split/full lower certificates remain positive at relative radius $0.10$, while all have reached zero by $0.25$. This is loss of discrimination by that lower certificate, not proof that the true distances vanish. A shared contaminant must remain shared across splits; independent pairwise extremizers cannot be combined into a sharp joint confidence set.
+
+The released SMICA polarization weights provide a concrete compression example. At each $E/B$ field and multipole, a seven-frequency vector $s$ is reduced to $y=w^Ts$. The weights already include specified beam and recalibration operations; their sums are not silently reset to one. For the quadrupole and octupole together, the source representation has 168 real coordinates and the compressed output has 24. The block operator has rank 24 and kernel dimension 144.
+
+A frequency contrast $a^Ts$ is recoverable from this compressed observation for all $s$ exactly when $a$ lies in the row space of the operator. Otherwise
+\begin{equation}
+ h=\left(I-\frac{ww^T}{w^Tw}\right)a
+\end{equation}
+gives $w^Th=0$ and $a^Th=\|h\|^2>0$. Every tested individual-frequency coordinate and pair difference has a nonzero lost component. For pair differences, the smallest lost norm fraction is about $0.7479$ in $E$ and $0.8169$ in $B$; the largest is about $0.999913$ and $0.999969$, respectively. These fractions use the declared Euclidean frequency-coordinate metric. They are not foreground amplitudes or probabilities. Actual frequency maps and physical spectral assumptions can add information, as constrained component-separation methods demonstrate \cite{Remazeilles2011,Remazeilles2021}; a compressed map alone cannot supply it.
+
+The retained work also includes delivered four-frequency tensor products and source-dependent processing checks, described in Appendix~\ref{app:inventory} and the figure atlas. The full seven-frequency numerical calculation did not produce a completed scientific tensor result before this report. Acquisition of the maps is not a seven-frequency measurement. No result from that unfinished calculation is used here.

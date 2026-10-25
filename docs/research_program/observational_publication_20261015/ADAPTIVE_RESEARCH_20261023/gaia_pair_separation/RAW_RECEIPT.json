@@ -1,0 +1,144 @@
+{
+  "packet_id": "aa790df7eb0065ca2ab6172316260ada09524cd10a15bfda5ba62d7bfcb3e0f5",
+  "task_id": "R25-GAIA-PAIR-SEPARATION",
+  "input_identity": "sha256:620d92030d235ee6ed8fb5e6d7ff999f4777f7540abbcb1841c23af50e878d50",
+  "agent_id": "/root/rc_aa790df7eb0065ca",
+  "requested": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "actual_ack": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/receipts/GAIA_PAIR_ACTUAL_ACK.json",
+  "preflight_head": "e4dd81068f03d1ee52a6864b661a4104e6336147",
+  "attempts": [
+    {
+      "kind": "toy_control",
+      "ordinal": 1,
+      "status": "FAIL",
+      "reason": "NumPy advanced-index shape assignment; raw first failure retained",
+      "elapsed_seconds": 7.44
+    },
+    {
+      "kind": "toy_control",
+      "ordinal": 2,
+      "status": "PASS",
+      "elapsed_seconds": 9.39
+    },
+    {
+      "kind": "full_pair_traversal",
+      "ordinal": 1,
+      "status": "PASS",
+      "elapsed_seconds": 7.38,
+      "pairs": 11307390
+    },
+    {
+      "kind": "saved_covariance_whitening_probe",
+      "ordinal": 1,
+      "status": "PASS",
+      "elapsed_seconds": 0.07
+    },
+    {
+      "kind": "saved_carrier_packaging",
+      "ordinal": 1,
+      "status": "FAIL_ENOSPC",
+      "elapsed_seconds": 10.88,
+      "reason": "root filesystem filled during compressed carrier write; retained first stderr, removed only incomplete owned array"
+    },
+    {
+      "kind": "saved_carrier_packaging",
+      "ordinal": 2,
+      "status": "PASS",
+      "elapsed_seconds": 7.29,
+      "reason": "compressed from saved external raw carrier; no production pair traversal"
+    },
+    {
+      "kind": "saved_carrier_typed_profile",
+      "ordinal": 1,
+      "status": "PASS",
+      "elapsed_seconds": 0.71,
+      "reason": "materialized response tensors from saved d and STF basis; no production pair traversal"
+    }
+  ],
+  "raw_files": {
+    "RESULT.json": "5d572d01740615f8f2c3444ebee85d604ea2be884f8cf39a19183c70eff28d1d",
+    "covariance.npy": "51c6fe016cdbd0d8a9cef9e0d96781dbfe10d2906cd1ba7259acce2116ec1191",
+    "full_carrier.npz": "3a8b9d68eca752902b8534eaf727e06fb5bc4599380d320a710fb8367d668136",
+    "package_stderr_01.txt": "5b88c51d45fac9a84b633fe0e630692d605aad22da72804c82483c9cd2c533a3",
+    "package_stderr_02.txt": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852",
+    "package_stdout_01.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "package_stdout_02.txt": "cbf6b7adbfea80a84594dd62ab98e97befac26eb13f4684acacf5c37f1a59664",
+    "package_time_01.txt": "7b38cb165a5b5e7e54fbaf95d5047ffbaf7bec63eb411eb6f25f03088018157f",
+    "package_time_02.txt": "da2a232e5be11b3a824ae7aa348ad395bebd938f2e21321130395d1fbcce371a",
+    "production_stderr_01.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "production_stdout_01.txt": "fa8ef3b5faab15a926eb15fb657b1c838b228d8eae8326a8610fd37294873be4",
+    "production_time_01.txt": "f6eb8fd4d25552e9e9b71d852cc0d739591e6427d449d508ec4923d398026a78",
+    "test_stderr_01.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test_stderr_02.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test_stdout_01.txt": "3294c9e20e84ed38618daf8c47a7c56da68237aca2b01312d6e6765e01bd073d",
+    "test_stdout_02.txt": "b65771518c45d3baab3c3925f55dce93063d63fb8c5d5192e557a8d5d005905c",
+    "test_time_01.txt": "04557f0132f981bdfa4959455fea7ba52cd8f46271f953c05d744d08932a45fe",
+    "test_time_02.txt": "944853b0a6509375c1bf5b05ed070ab05820188891aced7b211536b9ad0e68ef",
+    "typed_stderr_01.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "typed_stdout_01.txt": "635dff33941f12d8a83fe8ebff7a911809e67f7eeaf230eaf7e9f32ef056ad01",
+    "typed_time_01.txt": "14e0801763c4eabbc073491a01e431515f83b5a4b518a456094c65461fd990b3",
+    "whitening_probe_stderr_01.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "whitening_probe_stdout_01.txt": "3df2890e3b636802f9447904ce74208fba167e88505c4f604e2ffd36d7dc9eb2",
+    "whitening_probe_time_01.txt": "3eb9b0dc834a4c311f19412b5e19a8218eea7653a28fb429c22c649350736c64"
+  },
+  "cumulative_numeric_elapsed_seconds_before_packaging": 24.28,
+  "maximum_numeric_rss_bytes": 165117952,
+  "limits": {
+    "numeric_seconds": 300,
+    "rss_bytes": 1073741824,
+    "threads": 1,
+    "pair_chunk_max": 32768
+  },
+  "source_hashes": {
+    "docs/observational_reboot_20261014/results/gaia_frame_v1/qualified_rows.npz": "41b6ddcb13131b49b97efd6107816af4518fa9e23725cf3b4272c2f3a70acb8f",
+    "docs/observational_reboot_20261014/results/gaia_frame_v1/result.json": "226481918620e95181ce8686a1b3d5f88b94d31986a7f7b32aaadf06e74a4f3c",
+    "docs/solver_free_research_20261014/results/gaia_correlation/result.json": "2938805434dfbdc27bf24479c3de42858fa2ab5504ad84eff6573f4402599def"
+  },
+  "packaging_head_host_reported": "d93605e66adfececa89b90681124b232a5f90220",
+  "notes": [
+    "One full pair traversal; no replay",
+    "Production stdout saved full carrier before downstream covariance/reference",
+    "Initial eigenbasis whitening residual 1.15e-7; saved-covariance correction reached numerical control without pair replay"
+  ],
+  "outcome": "success",
+  "candidate_identity": "sha256:0baef3b6b3fe45f459c1eb2476fbaa67ff47e4e824456ad7c67843da622c67c7",
+  "numeric_command_metrics": {
+    "test_01": {
+      "elapsed_seconds": 7.44,
+      "max_rss_bytes": 61288448,
+      "exit_status": 1
+    },
+    "test_02": {
+      "elapsed_seconds": 9.39,
+      "max_rss_bytes": 61513728,
+      "exit_status": 0
+    },
+    "production_01": {
+      "elapsed_seconds": 7.38,
+      "max_rss_bytes": 59604992,
+      "exit_status": 0
+    },
+    "whitening_probe_01": {
+      "elapsed_seconds": 0.07,
+      "max_rss_bytes": 29290496,
+      "exit_status": 0
+    },
+    "package_01": {
+      "elapsed_seconds": 10.88,
+      "max_rss_bytes": 165117952,
+      "exit_status": 1
+    },
+    "package_02": {
+      "elapsed_seconds": 7.29,
+      "max_rss_bytes": 161419264,
+      "exit_status": 0
+    },
+    "typed_01": {
+      "elapsed_seconds": 0.71,
+      "max_rss_bytes": 33050624,
+      "exit_status": 0
+    }
+  },
+  "cumulative_numeric_elapsed_seconds": 43.160000000000004
+}

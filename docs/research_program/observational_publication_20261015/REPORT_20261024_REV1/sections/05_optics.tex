@@ -1,0 +1,78 @@
+\section{Optical, kinetic, and observer responses}
+\label{sec:optics}
+
+\subsection{Positive stress and acceleration}
+
+In a smooth energy frame with vanishing energy flux, positive energy density $\varepsilon$, conserved stress tensor, and positive-semidefinite spatial stress $P=pI+\pi$, the spatial momentum equation is
+\begin{equation}
+ M\frac{A}{c^2}=-g,\qquad
+ M=\varepsilon I+P,\qquad
+ g_a=D_ap+D^b\pi_{ab}.
+ \label{eq:acceleration}
+\end{equation}
+Positivity gives $M\succeq\varepsilon I$, hence
+\begin{equation}
+ A=-c^2M^{-1}g,\qquad \|A\|\leq\frac{c^2\|g\|}{\varepsilon}.
+ \label{eq:accelbound}
+\end{equation}
+The dimensions are explicit: $g/M$ is inverse length. A nonnegative particle distribution supplies positive kinetic stress, but an external force or a nonzero energy-flux frame introduces additional terms. This is a constraint under stated assumptions, not a closed evolution system \cite{ClarksonMaartens2026}.
+
+For $\lambda_{\min}(M)\geq m>0$, $\|\Delta M\|\leq\eta<m$, and $\|\Delta g\|\leq r$, the resolvent identity yields
+\begin{equation}
+ \|\Delta A\|\leq c^2\left[
+ \frac{r}{m-\eta}+\frac{\eta\|g\|}{m(m-\eta)}\right].
+ \label{eq:accelperturb}
+\end{equation}
+The bound explains what independent density, stress, and gradient information could constrain. A catalogue dipole alone does not supply $g$, nor does it establish that the source centroids follow this matter frame.
+
+\subsection{The local optical quadrupole}
+
+For idealized emitters and observer following one smooth congruence, a regular optical vertex, locally invertible redshift, and no caustic in the local expansion, let $n$ point from observer to source. Then
+\begin{equation}
+ \mathcal H_u(n)=H_u-\frac{A_u\cdot n}{c}+\sigma_{u,ab}n^an^b,
+ \qquad d_L(z,n)=\frac{cz}{\mathcal H_u(n)}+O(z^2).
+ \label{eq:localoptical}
+\end{equation}
+This is local cosmography \cite{Heinesen2021,Maartens2024}. A moving observer requires consistent transformation of redshift, distance, and angle. Changing only catalogue redshift does not perform that transformation. Finite-redshift fitted coefficients are not automatically the local coefficients in Eq.~\eqref{eq:localoptical} \cite{Bendtsen2026}.
+
+Writing $h_2(n)=\sigma_u:nn$ and averaging with $d\Omega/(4\pi)$ gives
+\begin{align}
+ \sigma_{u,ab}&=\frac{15}{2}\left\langle h_2(n)
+ \left(n_an_b-\frac{\delta_{ab}}3\right)\right\rangle,\nonumber\\
+ \Sigma_u^2&=\frac{\sigma_u:\sigma_u}{6H_u^2}
+ =\frac54\left\langle\left(\frac{h_2}{H_u}\right)^2\right\rangle.
+ \label{eq:opticalidentity}
+\end{align}
+The proof uses the full-sphere fourth moment. A selected-sky average needs its actual angular response and joint mode fit.
+
+If one joint uncertainty event provides $\|\hat h_2-h_2\|_{L^2}\leq r$ and $0<H_-\leq H_u\leq H_+$, then
+\begin{equation}
+ \frac54\frac{(\|\hat h_2\|-r)_+^2}{H_+^2}
+ \leq\Sigma_u^2\leq
+ \frac54\frac{(\|\hat h_2\|+r)^2}{H_-^2}.
+ \label{eq:shearinterval}
+\end{equation}
+Coverage is inherited from that same event. If $H_-=0$, the upper quotient need not be finite. A sensitivity radius is not a measured remainder, and a free magnitude intercept does not provide the required absolute $H_u$. Mapping this shear to the $G$ congruence in Eq.~\eqref{eq:scalarbudget} is a separate physical obligation.
+
+\subsection{Local motion, intrinsic dipoles, and nonlinear shape}
+
+A radiation-observer velocity at one event, a radiation-matter velocity, and a finite survey-window bulk velocity are different objects. Their finite transformations use Lorentz composition. In particular, the dominant observer-motion CMB dipole is not an intrinsic cosmological multipole bound. Physical observer-boost measurements and cosmological tilt histories must be compared through their distinct responses \cite{PlanckBoost2014,Marcori2018}.
+
+The selected distance geometry makes this distinction concrete. The inverse-velocity response in Eq.~\eqref{eq:flowcolumn} is separated from a constant calibration dipole by minimum canonical angles approximately $38.3$--$39.4$ degrees. Allowing a fixed quadratic polynomial in log velocity reduces the minimum angles to approximately $0.783$--$0.796$ degrees. The union of constant, inverse-velocity, and polynomial-depth vectors has rank 12 of 15 because the constant vector columns are duplicated. Thus a response that differs from a restricted nuisance model can be almost absorbed by a broader one. With the latter nuisance span, a $30\,\kms$ conditional injection has Gaussian power only about $0.0500001$--$0.050088$ across the declared directions and covariance scenarios.
+
+The nonlinear optical calculation asks whether shape beyond the fitted dipole and quadrupole survives. For eight fixed signed directions $d$, use the leading-low-redshift, zero-shear law
+\begin{equation}
+ f_i(a)=-\frac5{\ln10}\log(1-a\,d\cdot n_i),\qquad
+ a\in\{0,0.01,0.03,0.1,0.2,0.3\}.
+ \label{eq:nonlinear}
+\end{equation}
+This expression is exact in the displayed finite angular variable within that law, not exact at arbitrary redshift. The selected response is projected against the entire twelve-column baseline, dipole, and STF space. Its linear and quadratic pieces lie in that space. The leading surviving term is cubic, with $P_Wx^3=(2/5)P_WP_3(x)$ for $x=d\cdot n$. Here $P_W$ is the selected, whitened nuisance quotient; it is not an ideal full-sky harmonic projector.
+
+At $a=0.3$, the conditional whitened separation $d_0$ spans $0.006451$--$0.087437$ across the fixed directions and covariance scenarios. With hypothetical Gaussian scale $\tau=0.5$ and size $0.05$, the oracle powers range from about $0.051345$ to $0.070784$. Equal remainder balls of radius $\rho$ under both hypotheses reduce the benchmark to
+\begin{equation}
+ \Phi\left\{\Phi^{-1}(0.05)+\frac{(d_0-2\rho)_+}{\tau}\right\}.
+ \label{eq:overlappower}
+\end{equation}
+At $\rho=d_0/2$ the midpoint belongs to both hypotheses and the benchmark is the test size. The calculation exhibits a nonzero conditional projected shape and the exact way an unrestricted remainder removes its discrimination. No measured finite-redshift or selection remainder has been supplied to turn it into physical acceleration inference.
+
+Earlier finite-source boost interventions likewise distinguish delivered-map processing from a cosmological history. For one retained map, the three response singular values are approximately $(290.0892,206.4203,179.8223)\,\mu\mathrm K$ per unit $\beta$, and the finite-minus-linear norm at $\beta=0.00123$ is $0.000564597\,\mu\mathrm K$. These describe a defined finite map response. Beam order, pixel-centre versus child-pixel treatment, and higher-mode content change that response. A physical history response and a joint observational uncertainty law remain additional inputs.
