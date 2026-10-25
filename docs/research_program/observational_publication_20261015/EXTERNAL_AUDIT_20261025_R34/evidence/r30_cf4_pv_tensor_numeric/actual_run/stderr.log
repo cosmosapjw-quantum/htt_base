@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/driver.py", line 443, in <module>
+    main()
+  File "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/driver.py", line 351, in main
+    amp,norm=s.power_amplitude()
+             ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/science.py", line 124, in power_amplitude
+    raise ValueError(f'sigma8 normalization convergence failed: {estimates}')
+ValueError: sigma8 normalization convergence failed: [(8.597026475775975e-07, 9.563184423220326e-13, 1.1123828047019182e-06), (8.59702618367951e-07, 5.54454800488548e-13, 6.449378990389936e-07)]

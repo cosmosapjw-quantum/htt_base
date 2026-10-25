@@ -1,0 +1,116 @@
+{
+  "SMICA_status": "OPTIONAL_COMPARATOR_NOT_DELIVERED_FAILED_ONE_USE",
+  "acceptance_met": false,
+  "agent_id": "/root/r26_delivered_seven_frequency_numeric",
+  "artifacts": {
+    "DESCRIPTIVE_RESULT.json": {
+      "bytes": 52850,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/DESCRIPTIVE_RESULT.json",
+      "sha256": "ce9001976c667cc198818e4bbf36a6e1cb8d69fed31e7127ed82708208bbe5e5"
+    },
+    "FULL7_CARRIER.npz": {
+      "bytes": 56812,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/FULL7_CARRIER.npz",
+      "sha256": "cda1a0c714221e6c69f975baa3b94ad2c0457975b901393891ac86870a42811d"
+    },
+    "LEDGER_DELTA.json": {
+      "bytes": 2636,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/LEDGER_DELTA.json",
+      "sha256": "300a297192a18006de8ad4b05235df62aab1d0ff8faac41e106d876d3ecfc038"
+    },
+    "RAW_RECEIPT.json": {
+      "bytes": 2131,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/RAW_RECEIPT.json",
+      "sha256": "0f76986c40e8d59d4eec0718887401bb5c722dd3afc03b4a546e38f45f137f63"
+    },
+    "REPORT.md": {
+      "bytes": 1139,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/REPORT.md",
+      "sha256": "2a25f6d312123baeae5cbdf51b67570a5d785c9d039ba0e97d836350441abe49"
+    },
+    "frequency_image.png": {
+      "bytes": 48021,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/frequency_image.png",
+      "sha256": "69c2ef9e9cd450b9be5c5a26a735dda2ffc0ea14cd52cafc8963ffe9fe3f9e5e"
+    },
+    "heldout_B12.png": {
+      "bytes": 400329,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/heldout_B12.png",
+      "sha256": "97b629c5d6948e77ded32227992549f234d894f591405a0eef1789239799a85a"
+    },
+    "signed24.png": {
+      "bytes": 96476,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/signed24.png",
+      "sha256": "57a7670528dfa812b1fd0377fba7137b2fd9f8a64ca05e5e2ea0921b117c055f"
+    }
+  },
+  "candidate_identity": "sha256:ce9001976c667cc198818e4bbf36a6e1cb8d69fed31e7127ed82708208bbe5e5",
+  "independent_actual_result_review": "REQUIRED",
+  "input_identity": "sha256:69b4b3d1c2f398698b2dccd9f06ecb07705faaed419dea8b8ff53fbe3c0aa8c6",
+  "observed_runtime": "UNKNOWN",
+  "original_full8_acceptance": "HOLD_NATIVE_FIRST_FAILURE",
+  "outcome": "success",
+  "packet_id": "94dbbcbfab989e9d23cbd722ead40350015e8aeabb23de0fab1a0c54825781ce",
+  "qualified_products": [],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/RAW_RECEIPT.json",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "schema": "htt.delivered_seven_frequency_controller_result/1",
+  "scientific_admission": "HOLD",
+  "task_id": "R26-DELIVERED-SEVEN-FREQUENCY-DESCRIPTIVE-CONSUMPTION",
+  "validation_evidence": {
+    "S7_equals_S4_observed": true,
+    "anchor_s2_over_s1": 0.09373936331209766,
+    "bands_GHz": [
+      30,
+      44,
+      70,
+      100,
+      143,
+      217,
+      353
+    ],
+    "consumer": "PASS_ACTUAL_SEVEN_SAVED_CARRIERS",
+    "focused_controls": [
+      "sealed_inputs",
+      "S7_equals_S4",
+      "seven_finite_24",
+      "STF_decode_parity",
+      "preserved_controls",
+      "synthetic_independent_fit_and_B_invariance",
+      "rank_gate",
+      "missing353_rejected",
+      "NPZ_JSON_parity",
+      "three_scientific_plots"
+    ],
+    "old_first_failures_preserved": 1,
+    "plots": "PASS_THREE_RENDERED",
+    "runtime": {
+      "child_reaped": true,
+      "combined_sampled_peak_bytes": 134889472,
+      "elapsed_measured_wall_seconds": 26.246702461969107,
+      "exit_code": 0,
+      "minimum_host_mem_available_bytes": 20474081280,
+      "wait4_ru_maxrss_bytes": 136314880
+    },
+    "same_eight_account_debit_seconds_each": 3.2808378077461384,
+    "signed_grid_shape": [
+      7,
+      24
+    ],
+    "target_bands_GHz": [
+      44,
+      70,
+      100,
+      217
+    ],
+    "target_conditioning": {
+      "100": "RANK2_DESCRIPTIVE",
+      "217": "RANK2_DESCRIPTIVE",
+      "44": "RANK2_DESCRIPTIVE",
+      "70": "RANK2_DESCRIPTIVE"
+    }
+  }
+}

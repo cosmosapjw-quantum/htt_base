@@ -1,0 +1,154 @@
+{
+  "schema": "r26.original_s02_s03.plot_only_closeout.v1",
+  "decision": "ORIGINAL_CONDITIONAL_SCOPED_ACCEPT",
+  "reviewer": "/root/r26_s02_s03_original_acceptance_review",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "plot_author": "/root/r26_s02_pi_plot (requested gpt-6.1-sol/medium; observed UNKNOWN)",
+  "reviewer_authored_candidate": false,
+  "initial_review_preserved": {
+    "VERDICT.json": {
+      "bytes": 8848,
+      "sha256": "eb2e00ca55a123468d70c03ed1013174f3c73a1b2cedb4d3260cbfd8c15da110"
+    },
+    "REVIEW.md": {
+      "bytes": 11140,
+      "sha256": "fd08075faf8f55c9b8f4e8d1610a78c1a5ad303cefe337d03c0864258492cd16"
+    },
+    "RAW_OBSERVATIONS.json": {
+      "bytes": 68442,
+      "sha256": "7c5426f776b57b05beb096cd676616383f34686aea86525597706d1e62b6dada"
+    }
+  },
+  "plot_outputs": {
+    "RETURN.json": {
+      "bytes": 3984,
+      "sha256": "f5ccb6de9e19ef3caabf8cb40419abcc4445f9998e56766bc6f8fdb3dcc93d10"
+    },
+    "renderer.py": {
+      "bytes": 5335,
+      "sha256": "7e2c947364d8ed9c4b6800095b62c913bd16c11d6676196b70261a07fa292d12"
+    },
+    "PI_INTERVALS.png": {
+      "bytes": 163699,
+      "sha256": "0cffb7c3a590053707e5395e79a1984fe5343e74b91047fd2ef2123b0b5d15f1"
+    },
+    "PI_INTERVALS.pdf": {
+      "bytes": 22557,
+      "sha256": "b8fac2f1dabfb84fb1aac3729873478571646704d52ec46bb10c6cd0f4518724"
+    },
+    "CAPTION.md": {
+      "bytes": 3280,
+      "sha256": "15c2c0bfc1c25fa253f58e8203dc50f706cf92480a19292dfb3d583ca4662ed6"
+    },
+    "SOURCE_CAPTION_METADATA.json": {
+      "bytes": 107778,
+      "sha256": "3aed8d26ec978bdd4fece756c39489e8772cb74785d201615129a7c85b2c5581"
+    }
+  },
+  "closed_findings": [
+    {
+      "id": "S02-OUT-1",
+      "status": "CLOSED",
+      "reason": "Explicit source-bound Pi_Q/Pi_F/Pi_G_F interval figure now exists and displays unchanged saved endpoints with required unknown/domain caveats."
+    },
+    {
+      "id": "S03-DEP-1",
+      "status": "CLOSED_IN_ORIGINAL_ACCEPTANCE_REVIEW",
+      "reason": "Original S02 conditional scope now satisfies its previously missing output. S03 own content/output/test/prerequisite findings are reused unchanged."
+    }
+  ],
+  "nodes": {
+    "S02": {
+      "verdict": "ORIGINAL_CONDITIONAL_SCOPED_ACCEPT",
+      "original_contract_verbatim": {
+        "objective": "Run actual-data conditional finite draw pushforward, retaining unknown physical sectors",
+        "acceptance": "One joint source, exact normalized weights; posterior unknown mass not silently renormalized",
+        "output": "paired functional arrays + Pi interval plots",
+        "test_cases": [
+          "strict tail and interval end cases",
+          "same sky never treated as nine draws"
+        ],
+        "depends_on": [
+          "S01",
+          "E2"
+        ],
+        "inputs": [
+          "docs/research_program/htt_mes_eps_loop9_20261015/results_v2/result.json"
+        ]
+      },
+      "reason": "Original objective, acceptance, outputs, tests and prerequisites satisfied at conditional numerical scope using the retained 2048 H03 source and completed Pi plot output.",
+      "scientific_physical_admission": false,
+      "remaining_node_blockers": []
+    },
+    "S03": {
+      "verdict": "ORIGINAL_CONDITIONAL_SCOPED_ACCEPT",
+      "original_contract_verbatim": {
+        "objective": "Evaluate nontrivial anchor/floor, depth and selection sensitivity",
+        "acceptance": "Outputs change on declared denominator/selection, zero/missing distinct",
+        "output": "source-coupled statistical invariants and counterexample figure",
+        "test_cases": [
+          "floor G_F and signed-quotient boundary adversarial injections"
+        ],
+        "depends_on": [
+          "S02",
+          "X01"
+        ],
+        "inputs": []
+      },
+      "reason": "Original conditional sensitivity content/output/tests supported by initial review; X01 preserved and original S02 dependency accepted by this exact closeout.",
+      "scientific_physical_admission": false,
+      "remaining_node_blockers": []
+    }
+  },
+  "scope_disambiguation": {
+    "old_conditional_2048_H03_source": "Evidence for these original S02/S03 clauses",
+    "new_628_274_residual_estimand": "Separate accepted methods result; not the evidence substituted for original nodes",
+    "later_S04_law": "Unresolved; not added retroactively to S02/S03",
+    "physical_Pi_or_posterior_admitted": false,
+    "physical_unknown_mass": 1,
+    "x_C_Q": "UNMEASURED",
+    "F_G_F": "DOMAIN_UNCERTIFIED",
+    "S04": "HOLD",
+    "P1_physical_inference": "HOLD",
+    "submission": "NOT_READY"
+  },
+  "validation": {
+    "source_output_seals": "CLOSEOUT_SOURCE_OUTPUT_SEALS.json",
+    "elapsed_small_validation_seconds": 0.6756575680337846,
+    "reused_445_comparisons": true,
+    "new_full_rerun": false,
+    "fits": 0,
+    "random_draws": 0,
+    "new_tests": 0,
+    "harness_execution": 0,
+    "renderer_execution": 0,
+    "visual_PNG_inspection": true,
+    "source_unchanged": true
+  },
+  "canonical_consumption": {
+    "automatic_state_or_count_change": false,
+    "reviewer_STATE_writes": 0,
+    "reviewer_DAG_writes": 0,
+    "scope": "Independent original-acceptance decision supplied to sole controller; actual adoption still requires its explicit history-preserving record.",
+    "recommended_route": "One root-owned atomic adoption/reconciliation of already-performed execution and independent review, limited to S02/S03. Do not call current resume (clears failures), fabricate record packets, reset/reinit, or rerun science. Preserve all spec/input/attempt/history/failure/packet/author/ultra/cost data; append one truthful original_scope_admission event to state.events (leave each task.history byte-for-byte unchanged) with immutable old/new evidence refs and reviewer/author identities; set only S02/S03 current state completed and attach explicit conditional acceptance metadata. Keep phase and historical hold/issue unchanged as history; annotate in the appended admission that the still-unresolved physical response/selected-law obligation applies to S04/P1 physical inference. S04 remains scientifically HOLD and is not marked completed.",
+    "preconditions": [
+      "No active writer/reservation or unknown acknowledged outcome for these two nodes; otherwise wait for it.",
+      "Re-read live state after full7 mutation and compare the exact S02/S03 snapshots; never overwrite another writer state.",
+      "Verify original clauses and original S01/E2/X01 dependencies and the exact closed-output seals.",
+      "Keep state.events as an exact prefix, task.history exactly equal, failures exactly equal including the S02 input receipt 3f49c..., original attempts 1 and 0, all ultra/cost counters equal; no replacement launch or claim of new execution.",
+      "Atomically write one adoption transaction with rollback on failed preservation checks; retain original snapshot and append evidence.",
+      "Only after adoption explicitly refresh canonical original-scoped counts and next-ready inventory; S04 physical-law acquisition is a separate unresolved question."
+    ],
+    "not_a_supported_current_cli": "The existing record route needs running packet identity, and no dedicated original-admission CLI exists in the inspected parser. A targeted root stdlib transaction is the minimal route; a new generalized framework is unnecessary."
+  },
+  "historical_R25_cap": "unchanged HOLD: cap20, successful20, cumulative>=21, exact total UNKNOWN",
+  "prohibited_promotions": [
+    "S04 physical law",
+    "calibrated physical Pi/posterior",
+    "native solver/family identification",
+    "submission readiness",
+    "retroactive old-budget/runtime/ordering compliance"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "decision": "ALLOW_EXISTING_ORDINARY_REPAIR_WITH_EXPLICIT_EXECUTION_LINEAGE",
+  "controller_spec_rebinding_required": false,
+  "controller_patch_required": false,
+  "controller_input_identity": "sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3",
+  "controller_source_sha256": "b118149b13d3568f0fa2e5afb2ef503e461434cf5df3a8f7829bbb2bb95c1dac",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "scientific_admission": "HOLD",
+  "original_H02_H04": "HOLD_UNCHANGED",
+  "numeric_commands_started": 0,
+  "production_mutation": false,
+  "actual_live_ack_go_observed_by_this_audit": false,
+  "next_action": "Record approved research, bind derived executable input/source lineage, perform actual same-author followup and ACK, issue sealed root GO, execute one265-second continuation, then independent actual review within60seconds.",
+  "material_caveat": "Controller receipt validation does not inspect scientific meaning of arbitrary companion fields; root GO and independent actual review must bind and check exact lineage.",
+  "report": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_blind_repair_transition_audit/REVIEW.md",
+    "sha256": "acfb46a8974b2d8270c4ce82c39637bad50dd62816534af63ab9923345c82ece"
+  },
+  "checks": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_blind_repair_transition_audit/SOURCE_CHECKS.json",
+      "sha256": "0e9f1218985f9c4be2bbd7202b6014108ce8d76f0a4034e8bd1f4555eb0dc9cf"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_blind_repair_transition_audit/SCHEMA_REJECTION.json",
+      "sha256": "400ffec911157df9bdfbbebd6c5c7bdfdfb260973f227d1920119c414d3cb177"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_blind_repair_transition_audit/LIFECYCLE_CHECK_FINAL.json",
+      "sha256": "c3476b18c984adef64d0339a5d24606e61dd989dd32df82fd20a20c52f87680d"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_blind_repair_transition_audit/check_lifecycle.py",
+      "sha256": "b8ea87c31a66f106a2f08751c57f6d2b58bb86437f92eeedffcb22e0bd9a55a7"
+    }
+  ]
+}

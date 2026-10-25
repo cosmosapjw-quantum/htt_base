@@ -1,0 +1,60 @@
+{
+  "task_id": "R25-GAIA-SOURCE-PROPERTY-INTAKE",
+  "packet_id": "e381b2c8bc7aa239b8df9e66c69e652c01e3f5a7cd821437b005623512581976",
+  "input_identity": "sha256:00508df7ec44ab6680ab8291868acaa203247aba18aaabfe2eaf029fc6ddad60",
+  "agent_id": "/root/rc_e381b2c8bc7aa239",
+  "status": "SUCCESS_PENDING_INDEPENDENT_REVIEW",
+  "candidate_identity": "sha256:005aa5cf96fe1350ef7690a275edd4ae61e9b30092266e8900c8b3d86b482568",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/RAW_RECEIPT.json",
+  "manifest": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/MANIFEST.json",
+  "report": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/REPORT.md",
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/VALIDATION.json",
+    "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/CONSUMER_VALIDATION.json",
+    "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/PARSER_TESTS.json"
+  ],
+  "qualified_products": [
+    "gaia_source_properties"
+  ],
+  "requested_route": {
+    "model": "gpt-5.6-terra",
+    "effort": "medium"
+  },
+  "transport_selected": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "transport_status": "TRANSPORT_MODEL_UNAVAILABLE",
+  "observed_runtime": "UNKNOWN",
+  "git_mutations": false,
+  "outcomes": {
+    "rows": 4756,
+    "matched": 4756,
+    "no_qso_row": 0,
+    "host1_2": 0,
+    "host3": 3149,
+    "downstream_primary_design": "ZERO_EXPOSURE_SUPPORT"
+  },
+  "residual_holds": [
+    "Independent review required before product qualification",
+    "Repository packaging unavailable at zero root free space; complete external candidate ready"
+  ],
+  "next_executable_checkpoint": "Fresh independent read-only review against this manifest identity",
+  "preservation": {
+    "original_acceptance": "17/42",
+    "alternate_acceptance": "18/42",
+    "historical48": "unchanged",
+    "one_use": "unchanged",
+    "ultra": "unchanged",
+    "R9": "UNKNOWN"
+  },
+  "outcome": "success",
+  "host_mechanical_adapter": {
+    "source_return": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/RETURN.json",
+    "sha256": "7e87e7ec8073a5b8539f4a7494719151d339bd224821edd26ce2fcaa6cd77ce6",
+    "changes": [
+      "explicit SUCCESS_PENDING_INDEPENDENT_REVIEW status mapped to outcome success",
+      "proposed product objects lowered to exact product-name list; still no independent qualification"
+    ]
+  }
+}

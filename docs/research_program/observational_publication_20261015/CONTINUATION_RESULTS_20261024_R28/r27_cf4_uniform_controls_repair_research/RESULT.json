@@ -1,0 +1,79 @@
+{
+  "schema": "htt.continuous_research_result/1",
+  "agent_id": "/root/r27_cf4_uniform_controls_repair_research",
+  "task_id": "R27-CF4-UNIFORM-SUPPORT-CALIBRATION-QUOTIENT",
+  "packet_id": "2d095345d88e976aff3933f2938bf63570afa8dee0849b3698908360c2e2b748",
+  "phase": "research",
+  "input_identity": "sha256:570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd",
+  "input_sha256": "570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd",
+  "candidate_identity": null,
+  "outcome": "success",
+  "status": "BOUNDED_TARGETED_REPAIR_APPROVED_NO_SCIENTIFIC_EXECUTION",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_controls_repair_research/RESEARCH_RECEIPT.json",
+  "raw_receipt_sha256": "10aedfbd7ef3f10e477b6188a858882b1e4d1de984dd2035c97678ea17231fc3",
+  "issue": {
+    "class": "code",
+    "classification": "CONTROL_ASSERTION_ABSOLUTE_THRESHOLD_CONFLICT",
+    "question": "Correct the invented absolute covariance-control threshold and continue the original unstarted consumer within the remaining allocation.",
+    "first_counterexample": {
+      "source": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/test_controls.py",
+      "line": 76,
+      "raw_norm": 3.9630100305325295e-17,
+      "absolute_threshold": 1e-24,
+      "normalized_result": "NOT_MEASURED_IN_THIS_RESEARCH"
+    }
+  },
+  "repair_plan": {
+    "kind": "one_bounded_targeted_test_repair",
+    "contract_path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_controls_repair_research/REPAIR_CONTRACT.md",
+    "contract_sha256": "fbf868f1f0087b0b7520f6237703e11ba76186f5e6baff04f45a9086ca7630e1",
+    "summary": "Copy the original test to repair_01, replace only its three absolute 1e-24 covariance comparisons with explicit finite Frobenius product-scale normalized <=1e-10 checks and raw logging; run only the failed method, then original unchanged consume.py once if it passes.",
+    "owned_paths": [
+      "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01"
+    ],
+    "additional_create_only_outputs": [
+      "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products",
+      "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/FIRST_FAILURE.json"
+    ],
+    "unchanged_input_identity": "sha256:570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd",
+    "unchanged_consumer_sha256": "d8c3a7526f97f196bcc29b5fbd0ead26aadb1a0230268ea9f2736074c8fcf798",
+    "reused_completed_controls": [
+      "test_exact_support_decomposition",
+      "test_rank4_rank0_and_unstable",
+      "test_stf_decode_rotation"
+    ],
+    "consumer_remaining_seconds": 116.515,
+    "independent_review_reserved_seconds": 30,
+    "stop_rule": "First failure, identity drift, rank ambiguity, resource or output violation returns precise HOLD with raw evidence; no automatic retry.",
+    "next_action": "Root bind the actual repaired source/runner packet; lower worker executes the one bounded continuation; fresh independent actual-result review follows."
+  },
+  "repair_authorization": {
+    "approved": true,
+    "scope": "Only the bounded test correction and continuation specified by REPAIR_CONTRACT.md; no scientific acceptance, algorithm/source-family/rank-threshold/Gamma-cap change, original source overwrite, extra attempt allocation or reset.",
+    "approver_agent_id": "/root/r27_cf4_uniform_controls_repair_research",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN"
+  },
+  "science_executed": false,
+  "scientific_admission": "NOT_ISSUED",
+  "binary_operator_uniform_protection": "NOT_ESTABLISHED",
+  "accounting": {
+    "parent_task_id": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+    "cap_seconds": 600,
+    "used_seconds": 181.29277764664457,
+    "remaining_seconds": 418.7072223533554,
+    "failed_invocation_charge_seconds": 3.485,
+    "consumer_subcap_seconds": 120,
+    "consumer_remaining_seconds": 116.515,
+    "independent_review_remaining_seconds": 30,
+    "aggregate_remaining_seconds": 146.515,
+    "reconciliation_before_ack": true,
+    "new_allocation_or_reset": false
+  }
+}

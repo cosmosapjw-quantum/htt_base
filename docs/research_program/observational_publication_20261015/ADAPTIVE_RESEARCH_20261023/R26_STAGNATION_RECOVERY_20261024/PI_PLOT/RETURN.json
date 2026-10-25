@@ -1,0 +1,96 @@
+{
+  "status": "PLOT_ONLY_COMPLETE_WITH_DOCUMENTED_EXECUTOR_DEVIATION_PENDING_INDEPENDENT_REVIEW",
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "medium",
+  "observed_runtime": "UNKNOWN",
+  "utc_start": "2026-10-23T22:59:26Z",
+  "command": [
+    "/usr/bin/python3.12",
+    "-B",
+    "/mnt/extdrive/workdir/htt_open_data/r26_s02_pi_plot/renderer.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 7.950659858994186,
+  "limits": {
+    "wall_seconds": 30,
+    "address_space_bytes": 2147483648,
+    "numerical_threads": 1
+  },
+  "maxrss_kib_children": 93484,
+  "source_sha256": "80792f508bd2be07fae153f662c9726ce5dc0ddabf78ea15ef66a0d27219355b",
+  "json_pointer": "/physical_functionals/Pi",
+  "new_fits": 0,
+  "new_draws": 0,
+  "new_threshold_searches": 0,
+  "old_tests_rerun": 0,
+  "cost_account": "SEPARATE_PLOT_ONLY_RENDER_NOT_H02_OR_FULL7",
+  "historical_budgets_modified": false,
+  "repository_or_STATE_or_Git_mutations": false,
+  "scientific_admission": "UNCHANGED_NO_NEW_ADMISSION",
+  "outputs": {
+    "renderer.py": {
+      "sha256": "7e2c947364d8ed9c4b6800095b62c913bd16c11d6676196b70261a07fa292d12",
+      "bytes": 5335
+    },
+    "CAPTION.md": {
+      "sha256": "15c2c0bfc1c25fa253f58e8203dc50f706cf92480a19292dfb3d583ca4662ed6",
+      "bytes": 3280
+    },
+    "PI_INTERVALS.png": {
+      "sha256": "0cffb7c3a590053707e5395e79a1984fe5343e74b91047fd2ef2123b0b5d15f1",
+      "bytes": 163699
+    },
+    "PI_INTERVALS.pdf": {
+      "sha256": "b8fac2f1dabfb84fb1aac3729873478571646704d52ec46bb10c6cd0f4518724",
+      "bytes": 22557
+    },
+    "SOURCE_CAPTION_METADATA.json": {
+      "sha256": "3aed8d26ec978bdd4fece756c39489e8772cb74785d201615129a7c85b2c5581",
+      "bytes": 107778
+    },
+    "STDOUT.txt": {
+      "sha256": "ef0174907ab247201513f6800a542002adb315923b384ea2b890029599b59549",
+      "bytes": 309
+    },
+    "STDERR.txt": {
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852",
+      "bytes": 379
+    },
+    "ACTUAL_ENVIRONMENT.json": {
+      "sha256": "0f66c4467a3d4e70645b1c1689ba18bf79285ac2036aa8763489e7c41c9318ed",
+      "bytes": 442
+    },
+    "ENVIRONMENT_STDERR.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "visual_inspection": {
+    "status": "PASS_VISUAL_LABEL_AND_LAYOUT_CHECK_ONLY",
+    "image": "PI_INTERVALS.png",
+    "notes": "Three readable panels, all saved endpoints visible; missing reasons, unknown mass and F endpoint caveat readable."
+  },
+  "executor_issue": {
+    "requested_entrypoint": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "actual_entrypoint": "/usr/bin/python3.12",
+    "cause": "Wrapper resolved venv Python symlink before exec, selecting system interpreter/user-site libraries.",
+    "first_output_preserved": true,
+    "corrective_render": "NOT_RUN_CONTROLLER_ACCEPTED_ACTUAL_EXECUTOR_FOR_THIS_PLOT_ONLY_ARTIFACT",
+    "requested_venv_entrypoint_met": false,
+    "controller_direction": "Root explicitly accepted actual global interpreter for this plot-only renderer; no waiver of historical scientific/runtime contracts and no new test PASS."
+  },
+  "stderr_classification": "Nonblocking user-site Matplotlib Axes3D import warning; unused 3D projection unavailable",
+  "actual_environment": {
+    "actual_executable": "/usr/bin/python3.12",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy_version": "2.4.2",
+    "numpy_path": "/home/cosmosapjw/.local/lib/python3.12/site-packages/numpy/__init__.py",
+    "matplotlib_version": "3.10.8",
+    "matplotlib_path": "/home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/__init__.py",
+    "operation": "read-only package identity; no rendering, fitting or test"
+  },
+  "ownership_released": true,
+  "rerenders": 0,
+  "artist_data_check": "EXACT_SAVED_THRESHOLDS_LOWER_UPPER_EQUALITY_FOR_12_INTERVALS",
+  "first_failures": "No render failure; executor deviation and unused 3D warning retained separately"
+}

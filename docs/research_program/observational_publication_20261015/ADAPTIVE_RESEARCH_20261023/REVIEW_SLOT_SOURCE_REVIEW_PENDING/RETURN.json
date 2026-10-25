@@ -1,0 +1,85 @@
+{
+  "status": "HOLD",
+  "scope": "independent controller source review only; no scientific result review or admission",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "source_sha256": "c44e0cd153831358b51766f3084ad85f7c18737c3188c8a47fa8675a2a2e8302",
+  "test_sha256": "c654cd378b4adc2bb38cd8c1a1d097dcce75e0fbc6dff008ca52a8e938ff6282",
+  "diff_sha256": "424f0f74a18f81828243e60f37a7cb37fafc38a8c9e9cb6e9a3b28c287a977bb",
+  "contract_sha256": "640e130017170175c36c24e13161c23a917875bc86b6c3c8b250b3c65cb47aec",
+  "canonical_baseline_sha256": "d682f64d9aefba6251dc75037588669c0d193fc1ac12bf348bdfc02094cb46e5",
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P1",
+      "line": 1224,
+      "title": "Actual quotient inventory is not sealed; mutated product passes replay ACK outcome"
+    },
+    {
+      "id": "F2",
+      "priority": "P1",
+      "line": 1094,
+      "title": "Explicit contract role skipped for non-json extension; nested writer overlap omitted"
+    },
+    {
+      "id": "F3",
+      "priority": "P1",
+      "line": 1165,
+      "title": "Source inventory mapping alias discarded; same-byte retarget race falsely accepts"
+    },
+    {
+      "id": "F4",
+      "priority": "P2",
+      "line": 1172,
+      "title": "Owned paths appended after local scope cap permits 257 paths"
+    }
+  ],
+  "suite_result": "102 passed, 6 skipped, 105 subtests passed in 14.10s",
+  "all_37_actual_source_records_match": true,
+  "actual_tag_context_complete": true,
+  "actual_quotient_context_complete": false,
+  "repair_scope": "one bounded external candidate controller and focused test repair for F1-F4, then independent closeout; no production activation",
+  "artifacts": {
+    "REVIEW.md": {
+      "sha256": "cbdc29dfcec75b054c3df299774a87e6ee25cc94df37521fbf05ff17de46e694",
+      "size_bytes": 10072
+    },
+    "RAW_PROBES.json": {
+      "sha256": "14bfa8ef4e2aa658cbb6d41b22a68a58f744dca4742c8c63dfea79464d50e99d",
+      "size_bytes": 3315
+    },
+    "LIFECYCLE_AND_BOUNDS.json": {
+      "sha256": "7a632fa713206699d3598791faf8fc7507617df5e1520bad18212275cccf892f",
+      "size_bytes": 15898
+    },
+    "FINAL_IDENTITY_CHECK.json": {
+      "sha256": "a0ea528081947fd4abde4a3a456929d764e2c2b5eb25130b1cf87419df125061",
+      "size_bytes": 785
+    },
+    "TESTS.txt": {
+      "sha256": "689ec06f8a5b12f056566c0d3405708f3b93cbccc064df1fb6b33ed0eda9e7c4",
+      "size_bytes": 180
+    },
+    "review_probes.py": {
+      "sha256": "b53cc6b4b671878b39332b810bff630ccd2d173a2796ea0bd95191f7f5aac158",
+      "size_bytes": 8647
+    },
+    "lifecycle_and_bounds.py": {
+      "sha256": "620929d47f555b9ac04c6e78db3af3b8709780640c846e03ebc04e4efe535e8f",
+      "size_bytes": 5771
+    },
+    "STATE_SNAPSHOT.json": {
+      "sha256": "f0fafc57e9f715c10a2944945679bf069a2b9997fa18ad145354d377d72ec25d",
+      "size_bytes": 2509462
+    },
+    "R25-GAIA-RELEASE-TAG-ASSOCIATION_CONTEXT.json": {
+      "sha256": "dc5821eacbe5e722630b309d766cc65871a96069095e4da21e1570abb1332223",
+      "size_bytes": 35915
+    },
+    "R25-GAIA-SOURCE-QUOTIENT-CERTIFICATE_CONTEXT.json": {
+      "sha256": "9c90459de58fdcaf4d90a6888c290e751a04d5cf15e8d368b57f8b3980c6fe09",
+      "size_bytes": 15977
+    }
+  }
+}

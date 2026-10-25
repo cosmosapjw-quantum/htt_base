@@ -1,0 +1,56 @@
+{
+  "status": "SOURCE_ONLY_PREPARED_AWAIT_CONTROLLER_PACKET_ACK_GO",
+  "task_id": "R30-CF4-BAND-PV-FULL-TENSOR-COVARIANCE",
+  "parent_task_id": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+  "original_input_identity": "sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3",
+  "source_sha256": {
+    "science.py": "ed9918ef9f2f12c7e6b04d5140ea8e51acd86c5fb6a541d80a27e9f42e3ad982",
+    "fast_science.py": "b160e3684bcebb4cb12a72d9fb19f70e478022a4a84e0a6244d01c2ad576e76b",
+    "driver.py": "fb30aeb48b1309c86882980a7a035ad1ff624c6c3627ada0392ee827c2cf04ee",
+    "runner.py": "6ff336ef28a90f6d3d6e315df4b48b055f16d944b5eec6dcbdd25c46c90deb38",
+    "independent_check.py": "a825c6e9240d189fa456b5a4868c8cc95801a4983c2b8b90f60659894b9b32a2"
+  },
+  "preimage_sha256": {
+    "science.py": "ed9918ef9f2f12c7e6b04d5140ea8e51acd86c5fb6a541d80a27e9f42e3ad982",
+    "driver.py": "761acd873677399248b943a1407c5b06dae3c685c184c52dc28197ce7185909f",
+    "runner.py": "d90d4fa189df74a5e9bf02acab388a4200bfd23d6b0b10cc072430dd6aa349c7",
+    "independent_check.py": "ced675e79df1653e3a35a9b7a9286501340fd90dd7564cab4f4e9a1ef66b19ec"
+  },
+  "unchanged_parent_science": true,
+  "dependency_manifest_sha256": "3c47a0982825c6455ca571fa6cc64cfeb184149735f270057d729bad0eecac96",
+  "wheel": {
+    "distribution": "finufft",
+    "version": "2.5.0",
+    "filename": "finufft-2.5.0-py3-none-manylinux_2_28_x86_64.whl",
+    "url": "https://files.pythonhosted.org/packages/76/89/52be7f07a626b106508d40733a764216dd8d03712b65d21cf0238dad6e2b/finufft-2.5.0-py3-none-manylinux_2_28_x86_64.whl",
+    "sha256": "40ec8122ff1b42542b6481ecfadf640d7d05a1285227c3f841b6110e28d3aad3",
+    "installed_record_sha256": "6050d3556b769736ccbb5da1993ee79e6ba75cd5ccc120dff6f6c809cc9675a0",
+    "installed_metadata_sha256": "4ea3d72aa8e3437886ccc5c532dd656c01f63d8c707e703338cd7f668672efdb",
+    "native_library_sha256": "6715931edf9e88f841d4d1a1895a44d1313d68f67a483fd52a12971a56ab906c",
+    "import_resolution": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/_deps/finufft/__init__.py",
+    "import_version_observed": "2.5.0",
+    "install_command": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -m pip install finufft==2.5.0 --no-deps --only-binary=:all: --target /mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/_deps"
+  },
+  "input_template_sha256": "10d93cd3f94da554c2b47dab61a81c9539047d03b80079520a7b6ddc91c285c0",
+  "source_diff_sha256": "b7bb33b3550afad08e20e56463a8be49251c8a34659d66e37097b2295f960ad0",
+  "method_contract_sha256": "8765ad540341080dbb6da3ec02a0cc9179447df45448b7a12245954c879b4706",
+  "method_result_sha256": "066bb51d1b30364a788b1070b5c3d61ed97880436aa8a524d9c69a576b862b25",
+  "reused_controls_sha256": "a168cdf69a9398c04ab0d4de13be6e56e4757b3d880f91709f1f856111da0f5b",
+  "saved_direct_spectral_sha256": {
+    "o35_b0_k0x1.acd9661a17d9ep-7.npz": "85b74fa357416ecf97bce8ec6a9a965751f387080ea6fd6befadcf4595542b9d",
+    "o35_b0_k0x1.b6450588a5f25p-7.npz": "a16430cab2fc22d1bb6fef0a1f9590153c4c21989ac808d8a96508b8525f50f3",
+    "o35_b0_k0x1.b97353b4b2faap-7.npz": "b0585eef9bfa3e68db681f68ab270099d6177d664ef52fe18ae11883b0d11b18"
+  },
+  "future_one_use_command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 /home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python /mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/runner.py --input /mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/INPUT.json",
+  "whole_producer_max_seconds": 190,
+  "active_cap_controller_bound": true,
+  "rss_cap_bytes": 6442450944,
+  "independent_checker_reserved_seconds": 60,
+  "numerical_transform_starts": 0,
+  "numerical_control_starts": 0,
+  "driver_starts": 0,
+  "checker_starts": 0,
+  "source_verification": "AST_PARSE_ONLY_NO_NUMERICAL_IMPORT",
+  "preparation_timing_note": "Wheel install measured 10.40 s; metadata import measured 1.53 s. Other source-intake, static read, copy, AST/sealing, and edit tool commands were started; parent must reconcile complete command/tool ledger against 20 s preparation reserve before GO. No science command began.",
+  "static_review_note": "Corrected target-phase roundoff vector broadcasting before source freeze; AST parse only; no numerical starts."
+}

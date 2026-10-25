@@ -1,0 +1,16 @@
+{
+  "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+  "method": "POST",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "votable_plain",
+    "MAXREC": "5000",
+    "UPLOAD": "ids4756,param:idsfile",
+    "QUERY": "SELECT u.source_id AS retained_source_id,q.source_id AS qso_source_id,q.host_galaxy_detected,q.host_galaxy_flag,q.n_transits,q.classlabel_dsc_joint,q.vari_best_class_name,q.vari_best_class_score,q.vari_agn_membership_score,q.source_selection_flags FROM TAP_UPLOAD.ids4756 AS u LEFT OUTER JOIN gaiadr3.qso_candidates AS q ON u.source_id=q.source_id ORDER BY u.source_id"
+  },
+  "upload_sha256": "3ff98ab0b395722cc3b0d2978b15bfaec9240e631c1bf81cc86f3b08e42906b1",
+  "upload_file": "inputs/ids4756.xml",
+  "connect_timeout": 10,
+  "read_timeout": 45
+}

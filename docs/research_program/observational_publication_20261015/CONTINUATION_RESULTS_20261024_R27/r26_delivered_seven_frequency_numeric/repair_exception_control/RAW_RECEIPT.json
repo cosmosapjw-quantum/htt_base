@@ -1,0 +1,42 @@
+{
+  "attempt_id": "644fd40b0e1d43ecb5a0398a268b5e45",
+  "child_pid": 399968,
+  "child_reaped": true,
+  "combined_sampled_peak_bytes": 39886848,
+  "command": [
+    "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/consume.py",
+    "--input",
+    "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/INPUT.json",
+    "--input-sha",
+    "69b4b3d1c2f398698b2dccd9f06ecb07705faaed419dea8b8ff53fbe3c0aa8c6",
+    "--packet",
+    "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/CONTROL_GO_PACKET.json",
+    "--packet-sha",
+    "f0253ca4caa72c9e32df5f81fcfa0ca431497d45c7622c03844a415f64488d39",
+    "--repair-context",
+    "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/REPAIR_CONTEXT.json",
+    "--repair-context-sha",
+    "16ab361d85202980e450b045075e5a8267363046af5c20c77dce786dfa15bd46",
+    "--control-exception"
+  ],
+  "control_exception_selected": true,
+  "cwd": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control",
+  "elapsed_measured_wall_seconds": 0.3344812549185008,
+  "exception": "Traceback (most recent call last):\n  File \"/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/consume.py\", line 462, in main\n    raise RuntimeError('INJECTED_CONSUMER_EXCEPTION_PROPAGATED')\nRuntimeError: INJECTED_CONSUMER_EXCEPTION_PROPAGATED\n",
+  "exit_code": 1,
+  "input_sha256": "69b4b3d1c2f398698b2dccd9f06ecb07705faaed419dea8b8ff53fbe3c0aa8c6",
+  "minimum_host_mem_available_bytes": 16792027136,
+  "outcome": {
+    "failure": "INJECTED_CONSUMER_EXCEPTION_PROPAGATED",
+    "status": "FAILED_PRESERVED"
+  },
+  "packet_sha256": "f0253ca4caa72c9e32df5f81fcfa0ca431497d45c7622c03844a415f64488d39",
+  "repair_context_sha256": "16ab361d85202980e450b045075e5a8267363046af5c20c77dce786dfa15bd46",
+  "schema": "htt.delivered_seven_frequency_raw_receipt/1",
+  "start_utc": "2026-10-24T04:36:12Z",
+  "stderr": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/child.stderr",
+  "stdout": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/child.stdout",
+  "trigger": null,
+  "wait4_ru_maxrss_bytes": 18989056,
+  "wait_status": 256
+}

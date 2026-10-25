@@ -1,0 +1,34 @@
+{
+  "status": "PURE_METADATA_ACK_RECORD_REVIEW_PATH_ACCEPTED",
+  "not_actual_dispatch": true,
+  "not_scientific_pass": true,
+  "numeric_commands_started": 0,
+  "production_state_mutated": false,
+  "controller_input_identity_unchanged": "sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3",
+  "task_spec_unchanged": true,
+  "accounting_unchanged": true,
+  "ultra_history_unchanged": true,
+  "first_failure_retained": true,
+  "history_length": 4,
+  "executed_controller_function_path": [
+    "initialize",
+    "next_packet execute",
+    "acknowledge execute",
+    "record blocker",
+    "next_packet research",
+    "acknowledge research",
+    "record exact approved repair_plan",
+    "next_packet repair",
+    "acknowledge same-author followup with sealed companion lineage",
+    "record repaired candidate",
+    "next_packet review",
+    "acknowledge fresh independent reviewer",
+    "record review outcome"
+  ],
+  "negative_checks": {
+    "stale_plan_rejected_atomically": "stale followup assignment/plan",
+    "changed_controller_input_rejected_atomically": "stale task/input identity",
+    "self_review_rejected": "reviewer must be independent of all implementation/research/escalation contributors"
+  },
+  "limitation": "Controller authenticates identity/plan/receipt chain; it does not inspect scientific meaning of arbitrary companion fields. Root GO and independent review must validate actual sources/config/source lineage."
+}

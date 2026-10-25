@@ -1,0 +1,11 @@
+--- attempt1/check.py
++++ attempt2/check.py
+@@ -145,7 +145,7 @@
+     assert np.array_equal(mixed, support.sum(axis=1) > 1)
+     assert np.all(singleton | mixed) and not np.any(singleton & mixed)
+     for index in [nr, channels, refs, refrows]:
+-        assert index.dtype == np.int64 and index.ndim == 1
++        assert np.issubdtype(index.dtype, np.integer) and index.ndim == 1
+     assert refs.shape == (7,) and nr.shape == channels.shape == refrows.shape
+     assert np.all((refs >= -1) & (refs < count)) and np.all((nr >= 0) & (nr < count))
+     assert np.all((channels >= 0) & (channels < 7)) and np.all(np.diff(nr) > 0)

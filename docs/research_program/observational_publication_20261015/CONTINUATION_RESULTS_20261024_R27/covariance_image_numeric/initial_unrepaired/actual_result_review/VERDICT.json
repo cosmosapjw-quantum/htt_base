@@ -1,0 +1,80 @@
+{
+  "decision": "HOLD",
+  "review_scope": "generic mathematical interface actual implementation only",
+  "reviewer_agent": "/root/r26_covariance_image_actual_result_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "candidate_identity": "sha256:aa2b12403a41d999d805b7efba0d7233879a42b2847b45346a5e35258d4eac67",
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "high",
+      "class": "numeric",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/covariance_image.py",
+      "line_start": 249,
+      "line_end": 256,
+      "reproduced": true,
+      "counterexample": {
+        "kind": "independent_single_counterexample_no_suite_rerun",
+        "input": {
+          "M": [
+            [
+              1e-200
+            ]
+          ],
+          "u": [
+            1.0
+          ],
+          "covariance_class": "unbounded_psd"
+        },
+        "expected_upper": "+infinity: stored nonzero M and u=1 admit Gamma_t=[t]",
+        "observed": {
+          "status": "NUMERICAL_NEAR_NULL",
+          "upper": 0.0,
+          "exact_protection_proved": false,
+          "response_norm": 0.0,
+          "diagnostic_threshold": 1e-12
+        },
+        "wall_seconds_including_import": 3.43949557794258,
+        "peak_rss_mib_ru_maxrss": 56.296875,
+        "threads_env": 1,
+        "implementation_source_modified": false,
+        "execution_stopped_after_first_counterexample": true
+      }
+    },
+    {
+      "id": "R1",
+      "severity": "acceptance_evidence_gap",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/run_checks.py",
+      "line_start": 79,
+      "line_end": 96,
+      "observed_cap_breach": false,
+      "lifetime_rss_first_run": "UNKNOWN",
+      "requirement": "Collect lifetime high-water RSS in same bounded repair; preserve original sampled metric."
+    }
+  ],
+  "static_unexecuted_concern": "Real/finite symbolic entry assumptions do not certify rank/zero branches. Reject free symbols unless branch conditions are supported.",
+  "failure_class": "numeric",
+  "bounded_repair_available": true,
+  "repair_plan": "One bounded lower-tier repair within the same task/allocation and 60 s cumulative bank. Preserve pre-repair source, all first raw outputs/receipt/RESULT, and FIRST_COUNTEREXAMPLE.json. Repair floating_directional_diagnostic so numerical norm or dot-product zero cannot yield finite zero for an unbounded class; certify the exact contraction of supplied binary floats, or return truthful NULL_UNCERTIFIED with no finite upper bound. Cover M=1e-200,u=1 norm underflow; M=1e-200,u=1e-200 contraction underflow; cancellation; literal zeros; and trace-cap scale extremes with robust arithmetic or explicit typed refusal. Reject unsupported free-symbol exact inputs unless zero/rank branch conditions are explicitly qualified. Add the independent rectangular-fixture minimum trace 26/5. In the same existing runner repair, capture test-child lifetime high-water RSS via wait4 or clean single-child RUSAGE_CHILDREN, retain polling as stop control, and require <=512 MiB; original64.7890625 MiB stays sampled. Run one targeted repair validation invocation with affected original fixtures and regressions, dimensions<=7 and one BLAS thread, within remaining55.631989046232775 s after cumulative4.368010953767225 s. Stop on first substantive failure/cap. No scientific tolerance, exact formula, theory/input seal, physical model, historical identity, or prior budget reset. Return final candidate and raw resource evidence for independent review; no actual CF4/H02/Pi/CAS admission.",
+  "counterexample": {
+    "status": "NUMERICAL_NEAR_NULL",
+    "upper": 0.0,
+    "exact_protection_proved": false,
+    "response_norm": 0.0,
+    "diagnostic_threshold": 1e-12
+  },
+  "cumulative_check_wall_seconds": 4.368010953767225,
+  "remaining_check_wall_seconds": 55.631989046232775,
+  "hard_cumulative_check_wall_seconds": 60,
+  "hard_rss_mib": 512,
+  "historical_budget_reset": false,
+  "controller_result_emitted": true,
+  "scientific_admission": false,
+  "qualified_products": [],
+  "claim_ceiling": "No actual CF4, H02, universal theorem, four-axis CAS, physical response/law/Pi qualification.",
+  "review_packet_id": "061d64485236f891cbb1b65efba7f9c05b1164565d1b665dad2e42f380949c07"
+}

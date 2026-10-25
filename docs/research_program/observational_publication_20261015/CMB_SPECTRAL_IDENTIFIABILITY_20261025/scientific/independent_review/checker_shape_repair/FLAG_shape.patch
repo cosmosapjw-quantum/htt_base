@@ -1,0 +1,11 @@
+--- independent_check.py.preimage
++++ independent_check.py
+@@ -96,7 +96,7 @@
+             require(hdu.name==expected,'explicit HDU '+name)
+             freq=np.array(hdu.data['WAVENUMBER'],dtype=np.float64)
+             trans=np.array(hdu.data['TRANSMISSION'],dtype=np.float64)
+-            flags=np.asarray(hdu.data['FLAG']).astype(str)
++            flags=np.asarray(hdu.data['FLAG']).astype(str).reshape(-1)
+             require(np.isfinite(freq).all() and np.isfinite(trans).all(),'finite raw source '+name)
+             require(np.all(np.diff(freq)>0),'raw monotonic '+name)
+             require(set(flags)<=set(('F','T')),'flag alphabet '+name)

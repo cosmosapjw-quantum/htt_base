@@ -1,0 +1,120 @@
+{
+  "code_review_reused": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_final_controller_independent_review/RESULT.json",
+    "sha256": "a6dc6a735aad5898254b1ea16731f66fa73ffd513b50f30099e873671e63b178"
+  },
+  "completed_utc": "2026-10-25T07:22:14.263144+00:00",
+  "decision": "HOLD_PROTOCOL_REPAIR_REQUIRED",
+  "evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/check_tree.py",
+      "sha256": "3233eb9ac79ac45ff3891065f571b7014d2ee52c54af119a4e8cefdfbf27422a"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/EXACT_TREE_CHECK.log",
+      "sha256": "b2a37b42b71273499b06a092e075f4ef48b343907ef2eee29b33d207da67a34b"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/EXACT_TREE_CHECKS.json",
+      "sha256": "e0c5e9b7c6f481f25244780e2e650df51f94f02daf7f050bc09a2be830c87aa3"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/PREPARATION_TO_REVIEW_METADATA_DIFF.json",
+      "sha256": "aefefc26acfae4697123bad6c859438dae8be943b3926784352ee2d7b5ccd9bf"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/FIELDWISE_METADATA_CLASSIFICATION.json",
+      "sha256": "cc1642a4d1fc73ee16467f076d4828fa99ed5f923bc331688b166307f61c5ce6"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/CODEX_CHECKPOINT_TREE_DIFF.txt",
+      "sha256": "9dd20580ec616e5062c28a036f645da6b3e1ba34a24286dbb2b7b2d5d032e213"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/GK_CONFIG_DRIFT.json",
+      "sha256": "7a5a8ab6614e4bb30bd66c82a5e645656c586594f5880119fd779f36b8c37a0d"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/REVIEW_PROBE_FAILURES.json",
+      "sha256": "f3b27ad75e3b3ccd052deb765d7b9b3afd0be99993124aa63bda8c98462054d3"
+    }
+  ],
+  "findings": [
+    {
+      "finding": "Frozen cross-stage snapshot equality prevents the authorized next action after classified host bookkeeping. Independently evaluating the commit predicate yields false on311 exact entries; push has the same cross-turn pattern. Current guards fail closed, so this is publication liveness, not scientific invalidity.",
+      "id": "R29-PROTOCOL-BASELINE",
+      "line": 19,
+      "minimal_fix": "Use an explicit root-sealed fresh execution baseline for the exact action while retaining immutable prior snapshots and full within-action equality. No generic drift exemptions.",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/create_reviewed_commit.py",
+      "related_line": 22,
+      "related_path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/push_approved_commit.py",
+      "reproduction": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/FROZEN_BASELINE_GUARD_REPRO.json",
+        "sha256": "8b94c355f92dfa7a819e04cdc60f1e5c3c2df5eeb82f7ca4d84128db631f39c1"
+      },
+      "severity": "P2"
+    }
+  ],
+  "independence": {
+    "did_not_author_candidate_or_package": true,
+    "no_subagents": true,
+    "only_new_owned_review_artifacts_written": true,
+    "read_only_repo_and_publication_inputs": true
+  },
+  "limits": [
+    "No commit or push executed. Root exact binding still required.",
+    "No scientific tests or old frozen numerical fixtures rerun; sealed final code review reused.",
+    "Existing pack files changed mtime only with unchanged size/mode and matching header/trailer identities; full historical packs were not rehashed.",
+    "Requested runtime is not observed runtime.",
+    "Reviewer helper schema/object-type assumptions failed during inspection and were corrected; raw failures are retained separately and are not package failures."
+  ],
+  "manifest": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/FILE_MANIFEST.json",
+    "sha256": "a6cd13791eaee6592b12881f5ef3da6bbe267710b09369a778dee01a57495ceb"
+  },
+  "metadata": {
+    "HEAD_index_git_config_branchrefs_status_preserved": true,
+    "all_changes_classified": true,
+    "during_bytecheck_changes": 0,
+    "gk_config_only_access_timestamp_proven_by_frozen_sha": true,
+    "live_source_state_pointer_seals_match": true,
+    "new_objects_are_two_reviewed_blobs_and_three_checkpoint_trees": true,
+    "prepared_to_current_changed_entries": 311
+  },
+  "next": "Reuse the lower-tier worker for the single external protocol-baseline repair, then return final script seals and raw synthetic outcomes to this independent reviewer. Preserve exact tree/packet/source/state identities; no new scientific review ladder.",
+  "observed_runtime": "UNKNOWN",
+  "packet": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/EXACT_TREE_REVIEW_PACKET.json",
+    "sha256": "45031af505c6d3ac1c99499b624ad0c901ba48344b606b5d564fd1a61b2baafc"
+  },
+  "protocol_decision": "HOLD_R29_PROTOCOL_BASELINE",
+  "publication_approval": false,
+  "repair_contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/PROTOCOL_REPAIR_CONTRACT.json",
+    "sha256": "3ca805ae866c7b7174c0e0ef2a0e7f3f925a9295893d5783b11d5610e456da4a"
+  },
+  "requested_runtime": {
+    "effort": "xhigh",
+    "model": "gpt-6-astra"
+  },
+  "reviewer_task": "/root/r29_tree_review_continuation",
+  "scientific_admission": "HOLD_UNCHANGED",
+  "scope": "Continuation of the same pending R29 independent exact-tree and publication-protocol review; not a new scientific issue or escalation",
+  "sole_parent": "71b272db893a92ec336c28164bc7efccf7c340b2",
+  "tree": "1e484cab48211ae5a433f3ae20192dddb3bbfdf1",
+  "tree_decision": "PASS_EXACT_TREE_AND_SEALS",
+  "tree_results": {
+    "added_documents": 36,
+    "changed_paths": 38,
+    "deletions": 0,
+    "inventory_correctly_excludes_itself": true,
+    "inventory_entries": 37,
+    "modes": "100644 unchanged for existing code; new documents100644",
+    "modified_existing_paths": 2,
+    "other_parent_blobs_unchanged": true,
+    "private_candidate_commit_created": false,
+    "report_P1_R27_R28_unchanged": true,
+    "source_original_payload_git_blobs_agree": true,
+    "total_bytes": 812706
+  }
+}

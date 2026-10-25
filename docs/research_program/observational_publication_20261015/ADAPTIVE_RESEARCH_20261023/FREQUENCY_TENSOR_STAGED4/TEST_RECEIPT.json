@@ -1,0 +1,19 @@
+{
+  "basis_cases": 24,
+  "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -B test_compute.py",
+  "cwd": "/mnt/extdrive/workdir/htt_open_data/r25_frequency_tensor_staged4",
+  "decoder_a21_i_Qyz": 0.7725484040463791,
+  "final_exit_code": 0,
+  "initial_failure": {
+    "cause": "external script import path lacked repo htt/src",
+    "exception": "ModuleNotFoundError: No module named common",
+    "resolution": "add htt/src to sys.path, no repository mutation"
+  },
+  "max_independent_error_K_CMB": 4.282314031187024e-21,
+  "max_joint_parity_error_K_CMB": 3.3881317890172014e-21,
+  "max_reduction_error_K_CMB": 5.955700410381799e-22,
+  "permutation": "PASS",
+  "schema": "htt.staged4_synthetic_test_receipt/1",
+  "sentinel_nonfinite": "PASS",
+  "synthetic_nside": 16
+}

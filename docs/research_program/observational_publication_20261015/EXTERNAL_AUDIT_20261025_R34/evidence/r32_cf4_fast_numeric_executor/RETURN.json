@@ -1,0 +1,44 @@
+{
+  "actual_executor": "/root/r32_cf4_fast_numeric_executor",
+  "agent_id": "/root/r32_cf4_fast_numeric_executor",
+  "candidate_identity": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/RESULT.json",
+    "qualified": false,
+    "sha256": "a6e0c9d5538195d9b217725844eb4fbbd08fa7f966e9b299aa858098cc1b911b",
+    "status": "HOLD"
+  },
+  "input_identity": "sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3",
+  "issue": {
+    "code": "FIXTURE_ANTIPODAL_HOLD",
+    "input_identity": "sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3",
+    "observation": "The frozen fixture failed max(abs(antipodal-baseline.conj())) <= 1e-9*max(max(abs(baseline)),1e-30). No failure magnitude was serialized; stderr.log retains the first traceback.",
+    "runner_first_failure": "NUMERICAL_METHOD_ACCURACY_HOLD library_warning_in_stderr.log",
+    "runner_warning_class": "FINUFFT C-contiguity copying warnings in stderr.log; runner treated any library warning as accuracy HOLD.",
+    "source": "driver.py:349"
+  },
+  "next_action": "Controller/Astra classify the substantive antipodal fixture failure and warning policy against frozen method contract; no executor restart.",
+  "observed_runtime": "UNKNOWN",
+  "original_acceptance": false,
+  "outcome": "blocker",
+  "packet_id": "dd99622e000512ddbc07894d021019b960c96806319c063f207bb98cebc5a8e5",
+  "phase": "repair",
+  "qualified_products": [],
+  "raw_outcome": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fast_numeric_executor/RAW_OUTCOME.json",
+  "raw_outcome_sha256": "b2561d2c80e04f06788b87a08e84a56e1edf90fbd9fabb4ae488429454eaff56",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/RUN_RECEIPT.json",
+  "raw_receipt_sha256": "75ae1f0a5bfffdb5f73cd42f89a21dc28759acd6c099c7976c636ba7f7bf99ef",
+  "scientific_admission": false,
+  "status": "HOLD",
+  "task_id": "R30-CF4-BAND-PV-FULL-TENSOR-COVARIANCE",
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/RESULT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/PROGRESS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/DIRECT_CONTROLS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/EXACT_REFERENCE_SUMS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/TARGET_INVENTORY.json",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/stderr.log",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/stdout.log",
+    "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fast_numeric_executor/PRODUCER_TIME.txt",
+    "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fast_numeric_executor/PRODUCER_STDERR.txt"
+  ]
+}

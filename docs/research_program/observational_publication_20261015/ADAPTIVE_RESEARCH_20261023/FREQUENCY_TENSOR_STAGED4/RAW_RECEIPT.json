@@ -1,0 +1,55 @@
+{
+  "ack_path": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/receipts/STAGED4_ACTUAL_ACK.json",
+  "ack_sha256": "b740d27ed4712763096379699570df787e6cc570db3b8d85bac3660bb362c88d",
+  "agent_id": "/root/rc_58a4f9a76a227a91",
+  "finalized_utc": "2026-10-23T13:37:46Z",
+  "finished_utc": "2026-10-23T13:34:42Z",
+  "first_failures": [
+    {
+      "exception": "KeyError(\"Keyword 'FILENAME' not found.\")",
+      "traceback": "Traceback (most recent call last):\n  File \"/mnt/extdrive/workdir/htt_open_data/r25_frequency_tensor_staged4/compute.py\", line 276, in run\n    meta=fits_meta(product)\n         ^^^^^^^^^^^^^^^^^^\n  File \"/mnt/extdrive/workdir/htt_open_data/r25_frequency_tensor_staged4/compute.py\", line 90, in fits_meta\n    assert h['FILENAME'].strip()==p.name\n           ~^^^^^^^^^^^^\n  File \"/home/cosmosapjw/.local/lib/python3.12/site-packages/astropy/io/fits/header.py\", line 170, in __getitem__\n    card = self._cards[self._cardindex(key)]\n                       ^^^^^^^^^^^^^^^^^^^^\n  File \"/home/cosmosapjw/.local/lib/python3.12/site-packages/astropy/io/fits/header.py\", line 1719, in _cardindex\n    raise KeyError(f\"Keyword {keyword!r} not found.\")\nKeyError: \"Keyword 'FILENAME' not found.\"\n",
+      "utc": "2026-10-23T13:31:46Z"
+    },
+    {
+      "exception": "IndexError('boolean index did not match indexed array along axis 0; size of axis is 12582912 but size of corresponding boolean axis is 5002')",
+      "traceback": "Traceback (most recent call last):\n  File \"/mnt/extdrive/workdir/htt_open_data/r25_frequency_tensor_staged4/compute.py\", line 304, in run\n    c,t,ctl=project_product(meta,s4nest,clock)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/extdrive/workdir/htt_open_data/r25_frequency_tensor_staged4/compute.py\", line 239, in project_product\n    if not np.all(qring[~s4nest[ns//child]]==0) or not np.all(uring[~s4nest[ns//child]]==0):\n                  ~~~~~^^^^^^^^^^^^^^^^^^^^\nIndexError: boolean index did not match indexed array along axis 0; size of axis is 12582912 but size of corresponding boolean axis is 5002\n",
+      "utc": "2026-10-23T13:32:53Z"
+    }
+  ],
+  "input_identity": "sha256:ff5db155e8266b4a913ceb48e69b60d6a6356928940305cd2d28d82fc3f690e5",
+  "observed_runtime": "UNKNOWN",
+  "packet_id": "58a4f9a76a227a91229b71a44a02044ca3d8978a1e12b2996e6fd19f734c5d9a",
+  "product_accounting": {
+    "100": {
+      "cap_rss_bytes": 4294967296,
+      "cap_seconds": 900.0,
+      "charged_seconds": 73.9318401936303,
+      "peak_rss_bytes": 2417745920
+    },
+    "30": {
+      "cap_rss_bytes": 4294967296,
+      "cap_seconds": 900.0,
+      "charged_seconds": 38.51077205448886,
+      "peak_rss_bytes": 849616896
+    },
+    "44": {
+      "cap_rss_bytes": 4294967296,
+      "cap_seconds": 900.0,
+      "charged_seconds": 22.275448172525596,
+      "peak_rss_bytes": 760668160
+    },
+    "70": {
+      "cap_rss_bytes": 4294967296,
+      "cap_seconds": 900.0,
+      "charged_seconds": 22.60118677647328,
+      "peak_rss_bytes": 840454144
+    }
+  },
+  "requested_model_effort": "gpt-6-sol/high",
+  "schema": "htt.staged4_raw_receipt/1",
+  "shared_charge_allocation": "equal fourth to each of four products",
+  "shared_control_and_packaging_wall_seconds": 24.718812217926978,
+  "stage_status": "CANDIDATE_COMPLETE_REVIEW_REQUIRED",
+  "started_utc": "2026-10-23T13:33:26Z",
+  "task_id": "R25-PR3-STAGED4-TENSOR-CONTRAST"
+}

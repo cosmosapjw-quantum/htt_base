@@ -1,0 +1,249 @@
+{
+  "accounting": {
+    "QUOTIENT_closeout_plot_wall_seconds": 5.53,
+    "QUOTIENT_cumulative_incremental_lower_bound_seconds": 38.24,
+    "QUOTIENT_incremental_after_all_reviews_and_caption_seconds": 61.03,
+    "QUOTIENT_incremental_after_all_reviews_and_closeout_seconds": 66.56,
+    "QUOTIENT_incremental_cap_seconds": 120,
+    "QUOTIENT_incremental_remaining_seconds": 53.44,
+    "QUOTIENT_parent_after_all_reviews_and_caption_seconds": 108.03,
+    "QUOTIENT_parent_after_all_reviews_and_closeout_seconds": 113.56,
+    "QUOTIENT_parent_cap_seconds": 300,
+    "QUOTIENT_parent_cumulative_lower_bound_seconds": 85.24,
+    "QUOTIENT_parent_remaining_seconds": 186.44,
+    "QUOTIENT_plot_wall_seconds_conservative": 22.35,
+    "QUOTIENT_prior_incremental_spent_seconds": 15.89,
+    "QUOTIENT_prior_parent_spent_seconds": 62.89,
+    "QUOTIENT_reviewed_caption_wall_seconds": 4.98,
+    "TAG_author_cap_seconds": 300,
+    "TAG_cumulative_lower_bound_seconds": 19.089179452070965,
+    "TAG_plot_wall_seconds_conservative": 10.47,
+    "TAG_prior_spent_seconds": 8.619179452070966,
+    "TAG_reviewer_seconds": 9.996363882906735,
+    "TAG_total_conservative_seconds": 29.0855433349777,
+    "notes": "All plot attempts charged, including first formatting failure and final caption-only render. Reviewer time and prior plot time incorporated from root accounting; no fresh allocation."
+  },
+  "allowed_use": "descriptive working-model display and independent review only",
+  "artifact_mode": "standalone PNG/PDF from frozen saved candidate arrays",
+  "claim_tier": "C0 exploratory conditional",
+  "covariance_status": "TAG marginal C0 working blocks; actual cross-source covariance unknown; QUOTIENT fixed-source C0 Gaussian conditional candidate",
+  "figure_sources": {
+    "QUOTIENT_T_DELTA_INTERVALS": [
+      "RESULT.json"
+    ],
+    "QUOTIENT_T_DELTA_INTERVALS_DISPLAY": "Rounded nine-decimal labels are approximate only; exact certified interval endpoints remain in frozen RESULT.json",
+    "TAG_FULL13_M0_M1": [
+      "COEFFICIENT_ORDER.json",
+      "M0_OBSERVED.npz",
+      "M1_OBSERVED.npz"
+    ],
+    "TAG_FULL26_JOINT_CORRELATION": [
+      "COMPARISON.npz"
+    ]
+  },
+  "fits_started": 0,
+  "forbidden_uses": [
+    "physical coverage or significance",
+    "detection",
+    "Bianchi family identification",
+    "new fit or independent outcomes"
+  ],
+  "measured_invocations": [
+    {
+      "as_limit_bytes": 2147483648,
+      "exit_status": 0,
+      "hwm_kib": 89388,
+      "mode": "tag_points",
+      "python_bytecode": false,
+      "thread_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "timeout_seconds": 15,
+      "tmpdir": "/mnt/extdrive/workdir/htt_open_data/r26_post_gaia_publication_assembly",
+      "wall_hms": "0:03.40"
+    },
+    {
+      "as_limit_bytes": 2147483648,
+      "exit_status": 0,
+      "hwm_kib": 132540,
+      "mode": "tag_cov",
+      "python_bytecode": false,
+      "thread_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "timeout_seconds": 15,
+      "tmpdir": "/mnt/extdrive/workdir/htt_open_data/r26_post_gaia_publication_assembly",
+      "wall_hms": "0:03.24"
+    },
+    {
+      "as_limit_bytes": 2147483648,
+      "exit_status": 1,
+      "hwm_kib": 69172,
+      "mode": "quotient",
+      "python_bytecode": false,
+      "thread_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "timeout_seconds": 15,
+      "tmpdir": "/mnt/extdrive/workdir/htt_open_data/r26_post_gaia_publication_assembly",
+      "wall_hms": "0:01.72"
+    },
+    {
+      "as_limit_bytes": 2147483648,
+      "exit_status": 0,
+      "hwm_kib": 85312,
+      "mode": "quotient_retry",
+      "python_bytecode": false,
+      "thread_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "timeout_seconds": 15,
+      "tmpdir": "/mnt/extdrive/workdir/htt_open_data/r26_post_gaia_publication_assembly",
+      "wall_hms": "0:04.48"
+    },
+    {
+      "as_limit_bytes": 2147483648,
+      "exit_status": 0,
+      "hwm_kib": 88444,
+      "mode": "quotient_final",
+      "python_bytecode": false,
+      "thread_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "timeout_seconds": 15,
+      "tmpdir": "/mnt/extdrive/workdir/htt_open_data/r26_post_gaia_publication_assembly",
+      "wall_hms": "0:10.18"
+    },
+    {
+      "as_limit_bytes": 2147483648,
+      "exit_status": 0,
+      "hwm_kib": 87696,
+      "mode": "quotient_visual_final",
+      "python_bytecode": false,
+      "thread_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "timeout_seconds": 15,
+      "tmpdir": "/mnt/extdrive/workdir/htt_open_data/r26_post_gaia_publication_assembly",
+      "wall_hms": "0:05.97"
+    },
+    {
+      "as_limit_bytes": 2147483648,
+      "exit_status": 0,
+      "hwm_kib": 90340,
+      "mode": "tag_points_final",
+      "python_bytecode": false,
+      "thread_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "timeout_seconds": 15,
+      "tmpdir": "/mnt/extdrive/workdir/htt_open_data/r26_post_gaia_publication_assembly",
+      "wall_hms": "0:02.05"
+    },
+    {
+      "as_limit_bytes": 2147483648,
+      "exit_status": 0,
+      "hwm_kib": 133584,
+      "mode": "tag_cov_final",
+      "python_bytecode": false,
+      "thread_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "timeout_seconds": 15,
+      "tmpdir": "/mnt/extdrive/workdir/htt_open_data/r26_post_gaia_publication_assembly",
+      "wall_hms": "0:01.78"
+    },
+    {
+      "as_limit_bytes": 2147483648,
+      "change": "caption only, same saved intervals and stored conditional p upper",
+      "exit_status": 0,
+      "hwm_kib": 87888,
+      "mode": "quotient_reviewed",
+      "python_bytecode": false,
+      "thread_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "timeout_seconds": 15,
+      "tmpdir": "/mnt/extdrive/workdir/htt_open_data/r26_post_gaia_publication_assembly",
+      "wall_hms": "0:04.98"
+    },
+    {
+      "as_limit_bytes": 2147483648,
+      "change": "approximate nine-decimal display labels and exact-endpoint footnote only",
+      "exit_status": 0,
+      "hwm_kib": 88556,
+      "mode": "quotient_closeout",
+      "python_bytecode": false,
+      "thread_environment": {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      },
+      "timeout_seconds": 15,
+      "tmpdir": "/mnt/extdrive/workdir/htt_open_data/r26_post_gaia_publication_assembly",
+      "wall_hms": "0:05.53"
+    }
+  ],
+  "null_status": "uncalibrated",
+  "owner": "htt",
+  "review_evidence": {
+    "QUOTIENT": {
+      "acceptance_met": true,
+      "claim_ceiling": "scoped fixed-source conditional only",
+      "outcome": "success",
+      "result_absolute": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_quotient_blind_review/RESULT.json",
+      "sha256": "428e5a95a0d015440494303aec5f4ff98a45308b054849309c7c85a19cd11db4"
+    },
+    "TAG": {
+      "acceptance_met": false,
+      "outcome": "blocker",
+      "result_absolute": "/mnt/extdrive/workdir/htt_open_data/r26_gaia_tag_blind_review/RESULT.json",
+      "sha256": "bb0bccf1e3885fdb06ea4953763dc114464409747d4c453083fc9f9a8069e5b4"
+    }
+  },
+  "schema": "htt.gaia_frozen_figure_assembly/1",
+  "scientific_status": {
+    "QUOTIENT": "46 checks SCOPED_CONDITIONAL_PASS under fixed source Gaussian/C0; physical coverage NOT ESTABLISHED",
+    "TAG": "130 PASS-bearing checks among 133 recorded entries (3 metadata); historical author pre-PM criterion HOLD, acceptance unmet"
+  },
+  "source_array_rewrite": false,
+  "source_manifests": {
+    "QUOTIENT": {
+      "absolute_path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_quotient_certificate/MANIFEST.json",
+      "sha256": "55e9d6bd8d9ca98d5736baf9327a51d00d8c01dac14fa8de63a26cb489022404"
+    },
+    "TAG": {
+      "absolute_path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_release_tag_association/MANIFEST.json",
+      "sha256": "3d2e96774c28cb5c3aa4d00757e022d61d1d696f50ff50e1b4dcdd31fc181793"
+    }
+  },
+  "transfer_source": "none; Gaia observational/source-law products only"
+}

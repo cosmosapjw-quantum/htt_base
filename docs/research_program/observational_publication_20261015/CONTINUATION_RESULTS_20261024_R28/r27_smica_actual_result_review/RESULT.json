@@ -1,0 +1,80 @@
+{
+  "schema": "htt.native_agent_result/1",
+  "packet_id": "929c7493e1483cf135fe5d205842e20ecb77cb8e141bd220cf16a6ca843e53c6",
+  "task_id": "R26-SMICA-EXACT-PR3-IMPLICIT-ROW-PROJECTION",
+  "input_identity": "sha256:f38fad65711947960265183d3bd61a062fc883356366d445ad75b3b62cb8800d",
+  "candidate_identity": "sha256:ddceb8014d46544bf1b029bf83abb03ae9e8b2b88a48bbfc516f98bdf981b2d8",
+  "agent_id": "/root/r27_smica_actual_result_review",
+  "outcome": "blocker",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/REVIEW.json",
+  "qualified_products": [],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "review_status": "COMPLETED_INDEPENDENT_ACTUAL_RESULT_REVIEW",
+  "full_task_decision": "HOLD_ORIGINAL_TIMING_CAP_EVIDENCE_UNAVAILABLE",
+  "numerical_component_decision": "CONDITIONAL_PASS_EXACT_RELEASED_PRODUCT_DELIVERED_MAP_ONLY_FOR_REUSE",
+  "scientific_admission": "HOLD",
+  "issue": {
+    "class": "code",
+    "question": "Did the original one-use SMICA invocation satisfy complete wrapper accounting and the frozen 20-second finalization cap?",
+    "exact_missing_or_defect": "SMICA-ACTUAL-F1: run_smica.py phase resets after persistence omit wrapper intervals (lines 323-325, 352-378, 409-417; native timer ends at 246 before persist at 269). Root has conservatively debited the missing run()-entry-onward cost upper bound, but authentic original outer/finalization monotonic timing is absent. The actual finalization <=20 s cap remains NOT_ESTABLISHED and pre-run-entry startup remains UNKNOWN. Existing tool polling fragments do not establish a full outer measurement.",
+    "input_identity": "sha256:f38fad65711947960265183d3bd61a062fc883356366d445ad75b3b62cb8800d",
+    "true_external": false,
+    "substantive": true,
+    "bounded_repair_available": false,
+    "required_payload": "Authentic retained original outer process and finalization monotonic boundary observations sufficient to establish the frozen caps; no newly timed rerun can establish the completed old invocation.",
+    "repair_boundary": "No repair of the original cap proof is currently available without missing historical evidence. Do not rerun the consumed old invocation, add a new 900-second account, or report the conservative debit as measured duration."
+  },
+  "accounting_resolution": {
+    "authoritative_conservative_head": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/ROOT_CONSERVATIVE_ACCOUNT_HEAD.json",
+      "sha256": "e3c9f09ea5091290165479d51b291a0a860998c1594e58ac2eea7011e4ad685c",
+      "bytes": 2136
+    },
+    "run_entry_onward_undercharging": "COVERED_BY_ADDITIVE_CONSERVATIVE_UPPER_DEBIT",
+    "additional_common_upper_debit_seconds": 399.9923411500547,
+    "each_of_original_eight_accounts_seconds": 49.99904264375684,
+    "smica_cumulative_seconds": 463.2732058512752,
+    "native_elapsed_seconds_unchanged": 110.38916298095137,
+    "postprocess_20_second_cap": "NOT_ESTABLISHED",
+    "pre_run_entry_python_startup": "UNKNOWN_NOT_CLAIMED_MEASURED",
+    "bound_scope": "Root CLOCK_BOOTTIME observation and original control-child start ticks bound run() entry through the already-terminal producer. The reserve includes post-run idle; it is not an observed missing duration. Original receipts and failed attempt remain unchanged."
+  },
+  "validation_evidence": {
+    "review": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/REVIEW.json",
+      "sha256": "b79831d47922f3118b554fe25350b097951cafa957cb702809fbb3574825b0a5",
+      "bytes": 10037
+    },
+    "report": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/REVIEW.md",
+      "sha256": "de3191bad0eae4ad183e26ec359846d2255d1782e52a15976c36fc6bc524f481",
+      "bytes": 6221
+    },
+    "numerical_and_lineage_checks": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/NUMERICAL_AND_LINEAGE_CHECKS.json",
+      "sha256": "fd2ae0548e357574d88f1e072df7a8969c1a8af587a3e0cdfaef827a9da1cfd5",
+      "bytes": 12862
+    },
+    "accounting_counterexample": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/ACCOUNTING_COUNTEREXAMPLE.json",
+      "sha256": "2d10e1d80490f44a3da01792fcbe7df3bd6c8a51a9841bb39ce994b4f706e4bf",
+      "bytes": 503
+    },
+    "actual_review_packet": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/ACTUAL_ACKNOWLEDGED_REVIEW_PACKET.json",
+      "sha256": "04f93a5d873ac1b65537984be40116e534a86eba94ed3f026cad5b06b1f14237",
+      "bytes": 11287
+    }
+  },
+  "remaining_claim_boundaries": [
+    "Exact qualified PR3 SMICA released-body row=p interpretation remains conditional.",
+    "24 signed coefficients and STF tensors are reusable as the finite delivered-map numerical component only.",
+    "Original full-eight, L03, H02, physical F/MES, calibrated Pi, native solver/family claims and broader scientific admission remain HOLD."
+  ],
+  "next_executable_checkpoint": "Preserve the consumed invocation and candidate. Reuse this numerical-only result where its conditional finite scope suffices; continue independent authorized scientific branches, including the ready M7 actual-data covariance-consumer framing. This full task remains HOLD unless authentic original timing evidence is recovered.",
+  "additional_production_or_control_executions": 0
+}

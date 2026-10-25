@@ -1,0 +1,156 @@
+.FF.                                                                     [100%]
+=================================== FAILURES ===================================
+_____________ test_accumulation_shared_covariance_and_permutations _____________
+
+    def test_accumulation_shared_covariance_and_permutations():
+        n, E, X, B, y, C = fixture()
+>       H, D, d, counts, _, _ = accumulate(n, E, X, y)
+                                ^^^^^^^^^^^^^^^^^^^^^^
+
+docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/gaia_pair_separation/test_compute.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = array([[ 0.77608091,  0.04067268, -0.62932039],
+       [ 0.69378546,  0.62468724,  0.35836795],
+       [-0.14981441,  ...5053675, -0.20791169],
+       [ 0.29258186, -0.65714961,  0.69465837],
+       [ 0.40659556, -0.26404624, -0.87461971]])
+E = array([[[-0.05233596,  0.62845793],
+        [ 0.99862953,  0.03293608],
+        [ 0.        ,  0.77714596]],
+
+       [...3398 ]],
+
+       [[ 0.54463904,  0.73351781],
+        [ 0.83867057, -0.47635203],
+        [ 0.        ,  0.48480962]]])
+X = array([[[-5.23359562e-02,  9.98629535e-01,  0.00000000e+00,
+         -5.74410225e-02, -3.46944695e-18,  5.46514823e-01...04081423e-01,  3.13174501e-01,
+          2.77555756e-17,  1.39434271e-01, -3.36831753e-01,
+         -5.18675415e-01]]])
+y = array([[ 1. ,  2. ],
+       [-2. ,  0.5],
+       [ 0.7, -1.1],
+       [ 4. ,  1. ],
+       [-0.3,  2. ],
+       [ 1.3, -0.7]])
+chunk_max = 32768, pair_list = None
+
+    def accumulate(n, E, X, y, *, chunk_max=32768, pair_list=None):
+        """Return all nine 13-coordinate pair means and their source operators.
+    
+        pair_list is only for small independent controls; production visits all i<j.
+        """
+        count = len(n)
+        assert 0 < chunk_max <= 32768
+        nb = len(BINS) - 1
+        H = np.zeros((nb, 13, count * 2))
+        D = np.zeros((nb, 13, 13))
+        d = np.zeros((nb, 13))
+        counts = np.zeros(nb, dtype=np.int64)
+        touched = np.zeros((nb, count), dtype=bool)
+        near = np.zeros(2, dtype=np.int64)
+        if pair_list is None:
+            groups = ((i, np.arange(i + 1, count, dtype=np.int64)) for i in range(count - 1))
+        else:
+            groups = ((i, np.asarray(js, dtype=np.int64)) for i, js in pair_list)
+        for i, all_js in groups:
+            for off in range(0, len(all_js), chunk_max):
+                js = all_js[off:off + chunk_max]
+                li, lj, a, k, c, theta, bins = pair_terms(n, E, X, y, i, js)
+                near[0] += np.count_nonzero((theta <= 1e-12) & (c >= 0))
+                near[1] += np.count_nonzero((np.pi - theta <= 1e-12) & (c < 0))
+                for b in np.unique(bins):
+                    take = bins == b
+                    j = js[take]
+                    ab, lb_i, lb_j, kb = a[take], li[take], lj[take], k[take]
+                    counts[b] += len(j)
+                    touched[b, i] = True
+                    touched[b, j] = True
+                    d[b] += ab.T @ kb
+                    D[b] += ab.T @ ab
+                    H[b, :, 2*i:2*i+2] += ab.T @ lb_i
+>                   H[b, :, 2*j] += (ab * lb_j[:, 0, None]).T
+E                   ValueError: non-broadcastable output operand with shape (1,13) doesn't match the broadcast shape (13,13)
+
+docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/gaia_pair_separation/compute.py:110: ValueError
+____________ test_duplicate_pair_means_and_response_not_coefficient ____________
+
+    def test_duplicate_pair_means_and_response_not_coefficient():
+        n, E, X, _, y, _ = fixture()
+        single = [(0, np.array([1]))]
+        twice = [(0, np.array([1, 1]))]
+>       lhs = accumulate(n, E, X, y, pair_list=single)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/gaia_pair_separation/test_compute.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = array([[ 0.77608091,  0.04067268, -0.62932039],
+       [ 0.69378546,  0.62468724,  0.35836795],
+       [-0.14981441,  ...5053675, -0.20791169],
+       [ 0.29258186, -0.65714961,  0.69465837],
+       [ 0.40659556, -0.26404624, -0.87461971]])
+E = array([[[-0.05233596,  0.62845793],
+        [ 0.99862953,  0.03293608],
+        [ 0.        ,  0.77714596]],
+
+       [...3398 ]],
+
+       [[ 0.54463904,  0.73351781],
+        [ 0.83867057, -0.47635203],
+        [ 0.        ,  0.48480962]]])
+X = array([[[-5.23359562e-02,  9.98629535e-01,  0.00000000e+00,
+         -5.74410225e-02, -3.46944695e-18,  5.46514823e-01...04081423e-01,  3.13174501e-01,
+          2.77555756e-17,  1.39434271e-01, -3.36831753e-01,
+         -5.18675415e-01]]])
+y = array([[ 1. ,  2. ],
+       [-2. ,  0.5],
+       [ 0.7, -1.1],
+       [ 4. ,  1. ],
+       [-0.3,  2. ],
+       [ 1.3, -0.7]])
+chunk_max = 32768, pair_list = [(0, array([1]))]
+
+    def accumulate(n, E, X, y, *, chunk_max=32768, pair_list=None):
+        """Return all nine 13-coordinate pair means and their source operators.
+    
+        pair_list is only for small independent controls; production visits all i<j.
+        """
+        count = len(n)
+        assert 0 < chunk_max <= 32768
+        nb = len(BINS) - 1
+        H = np.zeros((nb, 13, count * 2))
+        D = np.zeros((nb, 13, 13))
+        d = np.zeros((nb, 13))
+        counts = np.zeros(nb, dtype=np.int64)
+        touched = np.zeros((nb, count), dtype=bool)
+        near = np.zeros(2, dtype=np.int64)
+        if pair_list is None:
+            groups = ((i, np.arange(i + 1, count, dtype=np.int64)) for i in range(count - 1))
+        else:
+            groups = ((i, np.asarray(js, dtype=np.int64)) for i, js in pair_list)
+        for i, all_js in groups:
+            for off in range(0, len(all_js), chunk_max):
+                js = all_js[off:off + chunk_max]
+                li, lj, a, k, c, theta, bins = pair_terms(n, E, X, y, i, js)
+                near[0] += np.count_nonzero((theta <= 1e-12) & (c >= 0))
+                near[1] += np.count_nonzero((np.pi - theta <= 1e-12) & (c < 0))
+                for b in np.unique(bins):
+                    take = bins == b
+                    j = js[take]
+                    ab, lb_i, lb_j, kb = a[take], li[take], lj[take], k[take]
+                    counts[b] += len(j)
+                    touched[b, i] = True
+                    touched[b, j] = True
+                    d[b] += ab.T @ kb
+                    D[b] += ab.T @ ab
+                    H[b, :, 2*i:2*i+2] += ab.T @ lb_i
+>                   H[b, :, 2*j] += (ab * lb_j[:, 0, None]).T
+E                   ValueError: non-broadcastable output operand with shape (1,13) doesn't match the broadcast shape (13,13)
+
+docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/gaia_pair_separation/compute.py:110: ValueError
+=========================== short test summary info ============================
+FAILED docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/gaia_pair_separation/test_compute.py::test_accumulation_shared_covariance_and_permutations
+FAILED docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/gaia_pair_separation/test_compute.py::test_duplicate_pair_means_and_response_not_coefficient
+2 failed, 2 passed in 1.06s

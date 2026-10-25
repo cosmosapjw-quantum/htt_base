@@ -1,0 +1,132 @@
+{
+  "schema": "htt.r26.cf4_actual_source_model_review/1",
+  "owner": "/root/r26_cf4_actual_source_model_review",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "readonly_existing_checkout": true,
+  "children_spawned": false,
+  "verdict": "NEGATIVE_RECONSTRUCTION_RESULT_VALID_FROZEN_SOURCE_STAGE_HYPOTHESIS_REJECTED",
+  "execution_verdict": "PASS_AS_RECORDED_NOT_RERUN",
+  "scientific_admission": "HOLD",
+  "original_H02": "HOLD_UNCHANGED",
+  "source_data_error_established": false,
+  "actual_executor_result_sha256": "5bee2e17923e8ee95b28d016febcff74ca34ec02b2883de097e7bc72bcce2c36",
+  "actual_frozen_input_sha256": "bdb71210368d44cf4fc52e844d4d1e2577e07d306fb25a1de3d202c04b0e2adf",
+  "actual_consumer_sha256": "00dae6dc686b4bac218e43602b9a7d051a3cbd2fd8341fca491aa8576f53000b",
+  "actual_result_sha256": "51a6f43c55d3c9f95a4473fc0a7008e887ae14ea6b2ecaff108622a434ac40aa",
+  "valid_negative_scope": {
+    "noncalibrator_rows": 37825,
+    "selected_noncalibrator_rows": 35968,
+    "selected_calibrator_ids": [
+      20679,
+      59927
+    ],
+    "actual_DMav_minus_DMzp_mag": "0.147",
+    "frozen_DMav_minus_DMzp_mag": "0.137",
+    "round_nearest_difference_interval_mag": [
+      "0.146",
+      "0.148"
+    ],
+    "one_place_outer_difference_interval_mag": [
+      "0.145",
+      "0.149"
+    ]
+  },
+  "blocking_findings": [
+    {
+      "severity": "BLOCKING",
+      "path": "H02_FINAL_SOURCE_MODEL.md and frozen source_offsets_mag/final_zero_point_subtraction_mag",
+      "finding": "Exact notebook coefficients do not bind the released CDS stage; all noncalibrator rows contradict .137. Singleton TFR also contradicts .151.",
+      "minimal_fix": "Preserve rejected hypothesis; run distinct release-stage singleton-identification and held-out mixed-group test under CONTRACT.md, without retuning on held-out data."
+    },
+    {
+      "severity": "BLOCKING",
+      "path": "source_layout_run/products/RESULT.json response",
+      "finding": "FULL_COHORT_OPERATOR_UNDEFINED is correct: two selected rows have direct maser calibration but no six-method numeric inputs. No full M/Fisher check executed.",
+      "minimal_fix": "Use explicitly documented seventh direct-calibrator exposure under a new conditional contract; preserve all selected rows and original blocked six-channel scope."
+    },
+    {
+      "severity": "LIMITATION",
+      "path": "table2 and table4 selected calibrators",
+      "finding": "Maser member errors .180 and .560 mag versus group errors .100 and .100 mag. E1 D remains a working diagonal; no empirical error law established.",
+      "minimal_fix": "Keep original E1 inputs and explicitly unresolved measurement/anchor covariance; no new stochastic interpretation from seventh channel."
+    }
+  ],
+  "recommended_issue_class": "theory",
+  "next_contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_actual_source_model_review/CONTRACT.md",
+    "sha256": "cdf94aaf6d39a01baae0d2fc03342032b1eb5f82ef34555e83ca8631d43f7992",
+    "size_bytes": 11542
+  },
+  "next_contract_distinction": "Release-specific joint singleton identified calibration set and untouched mixed-group reconstruction, plus documented direct-anchor response, not a renaming or relaxed validator for the rejected notebook hypothesis.",
+  "next_dispatch_status": "NOT_DISPATCHED_NO_PACKET_FABRICATED",
+  "constraints": {
+    "selected_count": 35970,
+    "old_FP_exceptions": 54,
+    "STF_components": 5,
+    "nuisance_columns": 14,
+    "cross_covariance": "all blocks retained as unknown",
+    "new_fit_null_mock_draw_ODE_native": false,
+    "extra_ultra": false
+  },
+  "accounting": {
+    "existing_scientific_cumulative_seconds": 103.50328065082431,
+    "existing_cap_seconds": 600,
+    "next_invocation_seconds_max": 120,
+    "review_scalar_seconds": 2.1683204090222716,
+    "review_scalar_controller_debit": "NOT_ASSERTED",
+    "next_remaining_upper_bound_seconds": 496.4967193491757
+  },
+  "remaining_science_holds": [
+    "producer_to_CDS_stage_identity",
+    "upstream_FP_membership_count_closure",
+    "empirical_calibration_Gamma",
+    "peculiar_velocity_covariance",
+    "all_distance_calibration_velocity_cross_covariances",
+    "source_null_transformation_and_coverage",
+    "physical_x_F_Pi_Q_G_F",
+    "native_solver_family_identification"
+  ],
+  "artifacts": {
+    "ACTUAL_RESULT_REVIEW.md": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_actual_source_model_review/ACTUAL_RESULT_REVIEW.md",
+      "sha256": "80b5f3cd9d33374d51ada105a8c1bb8505522ddbf133088009ed831890999dfc",
+      "size_bytes": 8285
+    },
+    "CONTRACT.md": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_actual_source_model_review/CONTRACT.md",
+      "sha256": "cdf94aaf6d39a01baae0d2fc03342032b1eb5f82ef34555e83ca8631d43f7992",
+      "size_bytes": 11542
+    },
+    "SCALAR_CHECKS.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_actual_source_model_review/SCALAR_CHECKS.json",
+      "sha256": "73411f374aacc640ac7922d7fbaa0b4e19a8e6197ff44655d8d1e1161fc7fb10",
+      "size_bytes": 10332
+    },
+    "scalar_checks.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_actual_source_model_review/scalar_checks.py",
+      "sha256": "8b069eab8eada304fe2d5a550e8fafff3f9114f3c715b40aad08d9ab95375637",
+      "size_bytes": 4791
+    },
+    "PRIMARY_SOURCE_NOTES.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_actual_source_model_review/PRIMARY_SOURCE_NOTES.json",
+      "sha256": "16fa1eb020498aae270f6218352ea3fafd47aa0d70c19ff4d5f24b768ffef228",
+      "size_bytes": 1880
+    },
+    "PRIMARY_SOURCE_FETCH.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_actual_source_model_review/PRIMARY_SOURCE_FETCH.json",
+      "sha256": "1e7f808ce61bbd9d9415c98dc59e1ce01395b4b462b2f750241793ab99b32633",
+      "size_bytes": 888
+    },
+    "published_tully_2023.pdf": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_actual_source_model_review/published_tully_2023.pdf",
+      "sha256": "80ce4be8abc0df3069c418df6a0bbb281174bd5c156da3f84000896e49387388",
+      "size_bytes": 9846507
+    },
+    "published_figure16_page18.png": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_actual_source_model_review/published_figure16_page18.png",
+      "sha256": "57bb9121dea80c7c8fcac08383a565e1e27aa9db1b987854ffc9bca5cc22fb46",
+      "size_bytes": 594101
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "htt.gaia_release_tag_coefficient_order/1",
+  "packet_id": "a87f0e5da26ada1c418c11bc379901f299ae5c092ef9d6064f25d4cb2e13189c",
+  "task_id": "R25-GAIA-RELEASE-TAG-ASSOCIATION",
+  "input_identity": "sha256:00209480018bcb19f29c3c22a2d847c26560bcf950045978f10579967314e39f",
+  "zero_based_half_open_slices": true,
+  "FULL13_order": ["g_x", "g_y", "g_z", "S_E_xx_minus_yy", "S_E_zz", "S_E_xy", "S_E_xz", "S_E_yz", "S_B_xx_minus_yy", "S_B_zz", "S_B_xy", "S_B_xz", "S_B_yz"],
+  "M0": {
+    "length": 32,
+    "blocks": [
+      {"name": "common_spin_omega", "slice": [0,3]},
+      {"name": "common_FULL13_beta", "slice": [3,16]},
+      {"name": "tag_spin_eta", "slice": [16,19]},
+      {"name": "tag_FULL13_delta", "slice": [19,32]}
+    ]
+  },
+  "M1": {
+    "length": 80,
+    "blocks": [
+      {"name": "host3_baseline_spin_omega", "slice": [0,3]},
+      {"name": "host3_baseline_FULL13_beta", "slice": [3,16]},
+      {"name": "host5_baseline_spin_omega", "slice": [16,19]},
+      {"name": "host5_baseline_FULL13_beta", "slice": [19,32]},
+      {"name": "host6_baseline_spin_omega", "slice": [32,35]},
+      {"name": "host6_baseline_FULL13_beta", "slice": [35,48]},
+      {"name": "host_ROW_NULL_baseline_spin_omega", "slice": [48,51]},
+      {"name": "host_ROW_NULL_baseline_FULL13_beta", "slice": [51,64]},
+      {"name": "one_shared_tag_spin_eta", "slice": [64,67]},
+      {"name": "one_shared_tag_FULL13_delta_H", "slice": [67,80]}
+    ]
+  },
+  "applies_to": ["M0_OBSERVED.npz:coefficients", "M1_OBSERVED.npz:coefficients", "M0_PRE_PM_MAPS.npz:J", "M1_PRE_PM_MAPS.npz:J", "M0_OBSERVED.npz:full_joint_covariance", "M1_OBSERVED.npz:full_joint_covariance"],
+  "erratum": "The coefficient_order prose in immutable M1_PRE_PM_SUPPORT.json and its original copied M1_OBSERVED_BEFORE_ORDER_CORRECTION.json was ambiguous: eta and delta are each one shared tag block after all four host baselines. Numerical arrays, design and frozen pre-PM support were not changed.",
+  "execution_code_basis": "execute.py design() concatenates four host-specific B/X blocks followed once by TB and TX; observed() writes coefficient vector c from that design.",
+  "numerical_execution_added": false,
+  "pm_outcome_access_added": false
+}

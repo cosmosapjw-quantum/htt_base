@@ -1,0 +1,177 @@
+--- ../consume.py	2026-10-24 13:08:20.060158600 +0900
++++ consume.py	2026-10-24 13:34:13.926320700 +0900
+@@ -69,8 +69,9 @@
+         'charged_total_wall_seconds': charged, 'elapsed_measured_wall_seconds': elapsed,
+         'shared_debit_each_of_eight_seconds': debit, 'accounts': list(ACCOUNTS),
+         'cumulative_charged_seconds': cumulative, 'status': status,
+-        'old_first_failures_preserved': base.get('first_failures', []),
+-        'old_stage_preserved': base.get('stage')}
++        'old_first_failures_preserved': base.get('first_failures', base.get('old_first_failures_preserved', [])),
++        'old_stage_preserved': base.get('stage', base.get('old_stage_preserved')),
++        'original_terminal_ledger_ref': base.get('base_ledger_ref')}
+ 
+ 
+ def mem_available():
+@@ -92,9 +93,11 @@
+ 
+ def verify_binding(args):
+     input_path, packet_path = Path(args.input), Path(args.packet)
+-    if sha(input_path) != args.input_sha or sha(packet_path) != args.packet_sha:
++    context_path = Path(args.repair_context)
++    if (sha(input_path) != args.input_sha or sha(packet_path) != args.packet_sha
++            or sha(context_path) != args.repair_context_sha):
+         raise RuntimeError('INPUT_OR_PACKET_SHA_MISMATCH')
+-    input_data, packet = read_json(input_path), read_json(packet_path)
++    input_data, packet, context = read_json(input_path), read_json(packet_path), read_json(context_path)
+     contract = read_json(seal(input_data['contract']))
+     if input_data['stage'] != 'PREPARED_NOT_DISPATCHED':
+         raise RuntimeError('INPUT_STAGE_DRIFT')
+@@ -108,11 +111,40 @@
+         raise RuntimeError('GENUINE_CONTROLLER_GO_REQUIRED')
+     if packet.get('source_sha256') != sha(HERE / 'consume.py'):
+         raise RuntimeError('PREPARED_SOURCE_DRIFT')
++    if (not args.control_exception or packet.get('phase') != 'repair_execute'
++            or packet.get('repair_context_sha256') != args.repair_context_sha
++            or packet.get('repair_base_sha256') != context.get('repair_base_ref', {}).get('sha256')
++            or packet.get('repair_finding_id') != 'R26-SEVEN-CONTROL-01'
++            or context.get('schema') != 'htt.delivered_seven_exception_repair_context/1'
++            or context.get('status') != 'PREPARED_NOT_DISPATCHED'
++            or context.get('finding_id') != 'R26-SEVEN-CONTROL-01'
++            or context.get('input_identity') != 'sha256:' + args.input_sha
++            or context.get('control') != 'INJECTED_CONSUMER_EXCEPTION_BEFORE_NUMERICAL_IMPORTS'):
++        raise RuntimeError('REPAIR_CONTEXT_OR_CONTROL_SELECTION_DRIFT')
+     if contract['task_id'] != input_data['accounting_parent_task_id']:
+         raise RuntimeError('CONTRACT_PARENT_TASK_MISMATCH')
+     if tuple(contract['input_bands_GHz']) != BANDS:
+         raise RuntimeError('BAND_CONTRACT_DRIFT')
+-    return input_data, contract, packet
++    original = contract['same_accounting']['base']
++    if context['original_terminal_ledger_ref'] != original:
++        raise RuntimeError('ORIGINAL_TERMINAL_LEDGER_DRIFT')
++    seal(original)
++    base = read_json(seal(context['repair_base_ref']))
++    if (context['repair_base_ref']['sha256'] != '300a297192a18006de8ad4b05235df62aab1d0ff8faac41e106d876d3ecfc038'
++            or base.get('base_ledger_ref') != original
++            or base.get('old_first_failures_preserved') != read_json(Path(original['path']))['first_failures']
++            or base.get('cumulative_charged_seconds') != context['current_cumulative_charged_seconds']
++            or tuple(base.get('accounts', ())) != ACCOUNTS
++            or base.get('charged_total_wall_seconds') != context['prior_charged_wall_seconds']):
++        raise RuntimeError('REPAIR_ACCOUNT_HEAD_DRIFT')
++    if not (0 < context['remaining_wall_seconds'] <= MAX_WALL - context['prior_charged_wall_seconds']):
++        raise RuntimeError('REPAIR_REMAINING_BANK_DRIFT')
++    for ref in context['immutable_successful_science'].values():
++        seal(ref)
++    for ref in context['retained_success_execution'].values():
++        seal(ref)
++    seal(context['successful_consumer_source_ref'])
++    return input_data, contract, packet, context
+ 
+ 
+ def numerical_child(input_data, contract, packet):
+@@ -355,16 +387,18 @@
+ 
+ 
+ def child_main(args):
+-    data, contract, packet = verify_binding(args)
+-    result = numerical_child(data, contract, packet)
+-    print(json.dumps({'status': 'CANDIDATE_READY_REVIEW_REQUIRED', 'result': str(HERE / 'DESCRIPTIVE_RESULT.json'),
+-                      'carrier': str(HERE / 'FULL7_CARRIER.npz'), 'targets': len(result['crossprediction']['targets'])}), flush=True)
++    verify_binding(args)
++    # This mode is the only runnable path in the repair copy. It fails before
++    # numerical_child, hence before numerical imports, calculations or rendering.
++    raise RuntimeError('INJECTED_CONSUMER_EXCEPTION')
+ 
+ 
+ def main():
+     parser = argparse.ArgumentParser()
+     parser.add_argument('--input', required=True); parser.add_argument('--input-sha', required=True)
+     parser.add_argument('--packet', required=True); parser.add_argument('--packet-sha', required=True)
++    parser.add_argument('--repair-context', required=True); parser.add_argument('--repair-context-sha', required=True)
++    parser.add_argument('--control-exception', action='store_true', required=True)
+     parser.add_argument('--child', action='store_true')
+     args = parser.parse_args()
+     if args.child:
+@@ -375,23 +409,26 @@
+     sampled_peak = 0; minimum_mem = 2**63-1
+     output = {'status': 'PRELAUNCH'}
+     try:
+-        data, contract, packet = verify_binding(args)
+-        ledger_path = seal(contract['same_accounting']['base'])
++        data, contract, packet, context = verify_binding(args)
++        wall_cap = context['remaining_wall_seconds']
++        ledger_path = seal(context['repair_base_ref'])
+         base = read_json(ledger_path)
+-        if base['cumulative_charged_seconds'] != contract['same_accounting']['base_cumulative_charged_seconds']:
+-            raise RuntimeError('TERMINAL_ACCOUNT_HEAD_DRIFT')
+-        if any(900 - base['cumulative_charged_seconds'][k] < MAX_WALL / 8 for k in ACCOUNTS):
++        if base['cumulative_charged_seconds'] != context['current_cumulative_charged_seconds']:
++            raise RuntimeError('REPAIR_ACCOUNT_HEAD_DRIFT')
++        if any(900 - base['cumulative_charged_seconds'][k] < wall_cap / 8 for k in ACCOUNTS):
+             raise RuntimeError('INHERITED_ACCOUNT_CAP_TOO_SMALL')
+         before = mem_available()
+         if before < PRELAUNCH_MEM:
+             raise RuntimeError('PRELAUNCH_MEMAVAILABLE_BELOW_10GIB')
+-        if any((HERE / name).exists() for name in ('STARTED.json', 'LEDGER_DELTA.json', 'DESCRIPTIVE_RESULT.json')):
++        if any((HERE / name).exists() for name in ('STARTED.json', 'LEDGER_DELTA.json', 'RAW_RECEIPT.json')):
+             raise RuntimeError('ATTEMPT_ALREADY_STARTED_OR_OUTPUT_EXISTS')
+         write_json(HERE / 'STARTED.json', {'attempt_id': attempt_id, 'packet_id': packet['packet_id'],
+-            'input_sha256': args.input_sha, 'base_ledger_sha256': contract['same_accounting']['base']['sha256'],
+-            'start_utc': utc, 'wall_envelope_seconds': MAX_WALL})
++            'input_sha256': args.input_sha, 'base_ledger_sha256': context['repair_base_ref']['sha256'],
++            'start_utc': utc, 'wall_envelope_seconds': wall_cap})
+         command = [sys.executable, '-B', str(HERE / 'consume.py'), '--input', args.input,
+-                   '--input-sha', args.input_sha, '--packet', args.packet, '--packet-sha', args.packet_sha, '--child']
++                   '--input-sha', args.input_sha, '--packet', args.packet, '--packet-sha', args.packet_sha,
++                   '--repair-context', args.repair_context, '--repair-context-sha', args.repair_context_sha,
++                   '--control-exception', '--child']
+         env = os.environ.copy()
+         for key in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS', 'VECLIB_MAXIMUM_THREADS',
+                     'NUMEXPR_NUM_THREADS', 'BLIS_NUM_THREADS'):
+@@ -411,7 +448,7 @@
+                     trigger = 'OWNED_GROUP_RSS_CAP'; break
+                 if minimum_mem < RUNTIME_MEM_FLOOR:
+                     trigger = 'HOST_MEMAVAILABLE_FLOOR'; break
+-                if time.monotonic() - start >= MAX_WALL - KILL_RESERVE:
++                if time.monotonic() - start >= wall_cap - KILL_RESERVE:
+                     trigger = 'WALL_CAP_KILL_RESERVE'; break
+                 time.sleep(.05)
+             if trigger:
+@@ -421,27 +458,27 @@
+         if trigger:
+             raise RuntimeError(trigger)
+         if child.returncode != 0:
+-            raise RuntimeError('CONSUMER_CHILD_FAILED exit=' + str(child.returncode))
+-        required = ('FULL7_CARRIER.npz', 'DESCRIPTIVE_RESULT.json', 'signed24.png', 'heldout_B12.png',
+-                    'frequency_image.png', 'REPORT.md')
+-        if any(not (HERE / name).is_file() for name in required):
+-            raise RuntimeError('REQUIRED_OUTPUT_MISSING')
+-        output = {'status': 'CANDIDATE_READY_REVIEW_REQUIRED',
+-                  'output_sha256': {name: sha(HERE / name) for name in required}}
++            if 'RuntimeError: INJECTED_CONSUMER_EXCEPTION' in (HERE / 'child.stderr').read_text():
++                raise RuntimeError('INJECTED_CONSUMER_EXCEPTION_PROPAGATED')
++            raise RuntimeError('UNEXPECTED_CONSUMER_CHILD_FAILURE exit=' + str(child.returncode))
++        raise RuntimeError('INJECTED_CONSUMER_EXCEPTION_NOT_OBSERVED')
+     except BaseException as err:
+         exception = ''.join(traceback.format_exception(type(err), err, err.__traceback__))
+         output = {'status': 'FAILED_PRESERVED', 'failure': str(err)}
+     finally:
+         elapsed = time.monotonic() - start
+-        # A started process is charged once even after an exception. The old ledger is immutable.
+-        if 'contract' in locals():
+-            base = read_json(Path(contract['same_accounting']['base']['path']))
+-            delta = build_ledger_delta(base, contract['same_accounting']['base'], elapsed,
++        # This is the successful consumer's parent accounting finalizer, now
++        # bound to the consumed successful delta as its current account head.
++        if 'context' in locals():
++            base = read_json(Path(context['repair_base_ref']['path']))
++            delta = build_ledger_delta(base, context['repair_base_ref'], elapsed,
+                                        attempt_id, packet.get('packet_id'), output['status'])
+             write_json(HERE / 'LEDGER_DELTA.json', delta)
+         receipt = {'schema': 'htt.delivered_seven_frequency_raw_receipt/1', 'attempt_id': attempt_id,
+             'command': sys.argv, 'cwd': str(HERE), 'start_utc': utc, 'elapsed_measured_wall_seconds': elapsed,
+             'packet_sha256': args.packet_sha, 'input_sha256': args.input_sha, 'outcome': output,
++            'repair_context_sha256': args.repair_context_sha,
++            'control_exception_selected': args.control_exception,
+             'child_pid': child.pid if child else None, 'child_reaped': wait_status is not None,
+             'wait_status': wait_status, 'exit_code': child.returncode if child else None,
+             'wait4_ru_maxrss_bytes': usage.ru_maxrss * 1024 if usage else None,

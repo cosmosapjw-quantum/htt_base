@@ -1,0 +1,256 @@
+{
+  "task_id": "R27-EIGHT-MAP-SAVED-TENSOR-COMPARISON",
+  "status": "FRAMED_NOT_DISPATCHED_NOT_EXECUTED",
+  "question": "Compare seven delivered frequency full24/STF carriers with the exact saved SMICA component-separation benchmark, and predict its full12 B contrast from the pre-existing E-only anchors.",
+  "new_question_discriminator": "SMICA was absent from the accepted seven-map comparison. Add its full signed carrier and E-only fit against frozen30/353 anchors with143 reference; this is a new saved-output question, not an old projection retry or original full8 acceptance.",
+  "ownership": {
+    "scientific_owner": "obsstat finite observables; descriptive diagnostic only",
+    "output_directory": "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_saved_tensor_comparison_numeric",
+    "worker_requested": {
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "medium"
+    },
+    "worker_observed": "UNKNOWN_UNTIL_EXTERNALLY_OBSERVED",
+    "allowed": "One lower-tier writer owns new postprocessor, focused checks, figures and actual receipts only in the new output directory. Existing checkout and all prior artifacts read-only. Other agents work concurrently; never revert them.",
+    "forbidden": "No raw FITS body/header reads, downloads, native projection, solver/ODE, old consumer rerun, old ledger/marker overwrite, repository/controller/Git mutation, new900-second account, extra ultra or publication without root decision."
+  },
+  "frozen_inputs": {
+    "seven_carrier": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/FULL7_CARRIER.npz",
+      "sha256": "cda1a0c714221e6c69f975baa3b94ad2c0457975b901393891ac86870a42811d",
+      "bytes": 56812
+    },
+    "seven_descriptive": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/DESCRIPTIVE_RESULT.json",
+      "sha256": "ce9001976c667cc198818e4bbf36a6e1cb8d69fed31e7127ed82708208bbe5e5",
+      "bytes": 52850
+    },
+    "seven_exception_closeout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_seven_exception_targeted_closeout/RESULT.json",
+      "sha256": "96ca81cfed92c2ffcb53ac0dbab4857992ef3f9ac6c51f082e28dba3209288d6",
+      "bytes": 3908
+    },
+    "seven_exception_verdict": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_seven_exception_targeted_closeout/VERDICT.json",
+      "sha256": "9758eb0704366ab67482f3a4ca4deb5c47cd341462ee2edd125a9a16c8f7e397",
+      "bytes": 13251
+    },
+    "seven_exception_receipt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/RAW_RECEIPT.json",
+      "sha256": "178c497ce6ea1f718cc1ad93f1ea65cf0aa1978f0cec34cc74f7651cd0ec235a",
+      "bytes": 2392
+    },
+    "seven_exception_ledger": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/LEDGER_DELTA.json",
+      "sha256": "a1c267453a187cf78d4537beb8c60454e2d8bb36744a2ddb7147c70a226d2238",
+      "bytes": 2876
+    },
+    "smica_carrier": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/CARRIER_SMICA_EXACT_IMPLICIT.npz",
+      "sha256": "ddceb8014d46544bf1b029bf83abb03ae9e8b2b88a48bbfc516f98bdf981b2d8",
+      "bytes": 1447
+    },
+    "smica_product_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/RESULT.json",
+      "sha256": "61b6d3732b6e5b32e67027c5e0677bdbddc7c11554c8da2cb9e00567bfe32946",
+      "bytes": 3727
+    },
+    "smica_controls": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/CONTROL_SMICA_EXACT_IMPLICIT.json",
+      "sha256": "319c0ed3443e31b471daafd61c041a05d61fd2417f94c1496d8b2a4582ccf7e8",
+      "bytes": 3253
+    },
+    "smica_review_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/RESULT.json",
+      "sha256": "01c8dbf573e147bbc71eb54c86a1801ba930ed2963b92f233ee27be0f401a0fd",
+      "bytes": 5464
+    },
+    "smica_review": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/REVIEW.json",
+      "sha256": "b79831d47922f3118b554fe25350b097951cafa957cb702809fbb3574825b0a5",
+      "bytes": 10037
+    },
+    "smica_review_checks": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/NUMERICAL_AND_LINEAGE_CHECKS.json",
+      "sha256": "fd2ae0548e357574d88f1e072df7a8969c1a8af587a3e0cdfaef827a9da1cfd5",
+      "bytes": 12862
+    },
+    "support": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_preparation/run/COMMON_SUPPORT_S7.npz",
+      "sha256": "caab42ed1a0d4507b998ce34ad433e8ef9e69e7d1e4b6856f7213599b5465014",
+      "bytes": 58834
+    },
+    "saved_math": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_preparation/full7_math.py",
+      "sha256": "b64af9d883eba3f4f967daaf8c92eb8fc3e8b4b6fee0542ce7f251fe92e1cfca",
+      "bytes": 10276
+    },
+    "smica_source_contract": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/SMICA_contract/CONTRACT.json",
+      "sha256": "38bcd5ec436826c85b9507cf30cd0ae51c2899bcee8644a6db383c7f7fe28ff0",
+      "bytes": 20118
+    },
+    "stf_decoder": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/planck_lowell_irrep_projection.py",
+      "sha256": "ecccebc39c4814546552b9fbc6b6ed798cc644fec1f6616a26003fda17932216",
+      "bytes": 9728
+    }
+  },
+  "input_authority": "FULL7_CARRIER is the seven-row numerical authority; matching DESCRIPTIVE_RESULT supplies accepted metadata. Exact SMICA NPZ is row8. Read small sealed support and reviews; no original multi-GB map rehash. No source replacement or new ninth benchmark.",
+  "operator": {
+    "identity": "sha256:23150f922880ac39e7906758b96e27e14943656542acd1774bb88967eb1e0786",
+    "finite_definition": "Already executed at each map native NSIDE: a_plus/minus_lm=Omega_pix*sum_selected_native_pixel_centres[(Q +/- iU)*conjugate(_+/-2 Y_lm)], ell2,3; E=-(a_plus+a_minus)/2 and B=i*(a_plus-a_minus)/2. This task consumes the saved outputs and never evaluates those pixel sums.",
+    "support": "Exactly30021 of49152 NSIDE64 parent cells and all native children. Saved S7=S4=original selected support; FULL7 indices and SMICA support reference must match. No remask, expansion or downgrade.",
+    "native_nside": {
+      "30": 1024,
+      "44": 1024,
+      "70": 1024,
+      "100": 2048,
+      "143": 2048,
+      "217": 2048,
+      "353": 2048,
+      "SMICA": 2048
+    },
+    "convention": "Galactic COSMO; no U flip; K_CMB. Canonical order E2[5],E3[7],B2[5],B3[7]; each m0 real followed by sqrt(2)Re(a_lm),-sqrt(2)Im(a_lm), ascending m.",
+    "meaning": "Finite masked delivered-map spin2 coordinates. Shared support/convention does not establish identical beam, transfer, quadrature resolution, noise response or continuum/true-sky E/B recovery. No smoothing, beam/pixel-window correction, colour/gain correction, calibration or deconvolution.",
+    "tensor_scope": "All E2/B2(3,3) and E3/B3(3,3,3) entries, including off-diagonal and mixed-index/permuted components. No absolute-value, diagonal-only, eigenvalue-only or scalar replacement."
+  },
+  "smica_condition": {
+    "product": {
+      "bad_data_keyword": "BAD_DATA",
+      "hdu_index": 1,
+      "nside": 2048,
+      "path": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/cmb/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+      "pol_keyword": "POLCCONV",
+      "q_field": "Q_STOKES",
+      "qualified_source_identity": "R26-SMICA-PR3-R3.00-FULL-NATIVE-SOURCE-QUALIFICATION-20261023",
+      "rehash_on_execution": false,
+      "release": "R3.00",
+      "sha256": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+      "size_bytes": 2013312960,
+      "tform": "1E",
+      "u_field": "U_STOKES",
+      "unit_raw": "K_CMB",
+      "variant": "full"
+    },
+    "profile": "PR3-SMICA-R3.00-FULL-60952C-IMPLICIT-ROW-V1",
+    "map_header_sha256": "a25bdcde564d4e6041011c497584d2884518252126e172dc35f460f130b25f26",
+    "assumption": "Only this qualified PR3 R3.00 full body/profile admits row p=NESTED pixel p while FIRSTPIX/LASTPIX/INDXSCHM/OBJECT are absent. Inherit the reviewed exact-product interpretation, not generic missing-card acceptance or modern-format compliance.",
+    "benchmark": "SMICA itself is the one component-separation benchmark among8 maps. It is not a GHz frequency, ground truth, independent observation or noise-free CMB. A SMICA-relative difference is not estimated foreground contamination.",
+    "historical_status": "Numerical-only conditional reuse. Original finalization20s NOT_ESTABLISHED; pre-entryUNKNOWN; original full-task resource HOLD remains."
+  },
+  "method": {
+    "map_order": [
+      "30",
+      "44",
+      "70",
+      "100",
+      "143",
+      "217",
+      "353",
+      "SMICA"
+    ],
+    "full_carrier": "Stack C(8,24), retaining exact binary64 saved rows/tensors and coordinate labels. First7 rows, support, anchors and prior four-target results are copied unchanged.",
+    "contrasts": "D143_i=C_i-C_143 and DSMICA_i=C_i-C_SMICA, both(8,24), with corresponding complete STF differences. Keep all signed coordinates; own-reference rows exactly zero. These are delivered-map contrasts only.",
+    "fixed_anchors": "Use saved anchor_E and anchor_B, both12x2, with columns D143_30 and D143_353. Fix reference143, order30/353, unweighted Euclidean E objective and s2/s1>1e-8. Do not tune anchors/weights/reference on SMICA.",
+    "old_targets": "Copy accepted44/70/100/217 E/B targets, coefficients, predictions and residuals from FULL7 unchanged. Verify identities against saved carriers but do not rerun those fits.",
+    "new_target": "For SMICA only: y_E=D143_SMICA[:12],y_B=D143_SMICA[12:]; alpha=argmin||y_E-A_E alpha||_2 using float64 lstsq,rcond=None. B_hat=A_B alpha; r_E=y_E-A_E alpha; r_B=y_B-B_hat. Also save absolute B_hat_SMICA=C_143[B12]+B_hat. Only target E enters fit; all12 signed B coordinates are predicted/compared.",
+    "conditioning": "Preserve saved singular values/ratio0.09373936331209766 and check the new load against them. Nonfinite/inconsistent inputs HOLD. If s2/s1<=1e-8, retain carriers, emit ANCHOR_FIT_ILL_CONDITIONED and absent/null predictions; never zero-fill or relax threshold. The full prediction deliverable then remains unmet.",
+    "prediction_tensors": "Use identical two coefficients on complete143-relative B2/B3 anchor tensors; retain full predicted and residual tensors for all5 targets and SMICA absolute prediction. Check equivalence to canonical decoding.",
+    "new_cross_terms": "O[i,j,a,b]=C[i,a]*C[j,b], shape(8,8,24,24), units K_CMB^2. Preserve all E/B and ell2/ell3 cross-coordinate blocks. This is an uncentered deterministic outer product of fixed observed numbers, not estimated covariance or a stochastic moment.",
+    "cross_summary": "G[k,i,j]=sum_a_in_block_k C[i,a]*C[j,a] for E2,E3,B2,B3, shape(4,8,8). H[ell,i,j]=sum_m C[i,Eell,m]*C[j,Bell,m], ell2,3, shape(2,8,8); H generally need not be symmetric. These signed contractions expose component agreement/cancellation hidden by norm-only summaries. Cross-ell outer products retain the declared frame; no rotation/parity inference is required.",
+    "holdout_scope": "Algorithmic E-to-B holdout only: shared sky, mask leakage, component-separation dependence and cross-map noise remain unmodelled. A nonzero residual describes failure of this fixed finite linear rule to match coordinates, not null rejection, physical-law falsification or statistical independence.",
+    "scalar_scope": "Keep prior seven-frequency computational image unchanged. Do not add an eight-frequency CDF or replace vectors/tensors with scalar Q/Pi/F; SMICA is not a frequency."
+  },
+  "acceptance_checks": {
+    "identity_layout": "Check hash/size of consumed sealed small inputs, allow_pickle=False, exact map/coordinate order, finite shapes and support. Root seals actual new source/input before ACK; no execution from this planning document.",
+    "saved_reuse": "Exact equality of copied first7 canonical/STF rows, support30021 indices, anchors and four old-target fit arrays; NPZ/JSON parity. Existing source/review caveats retained.",
+    "stf": "Sealed decoder parity including symmetry and all pair traces, inherited comparison |delta_j|<=1e-12+1e-9*|reference_j| K_CMB. Decode raw m>0 real by /sqrt2 and imaginary by /(-sqrt2). This is numerical consistency, not total harmonic/libm/measurement uncertainty.",
+    "new_fit_oracle": "Independent small checker uses50-digit Decimal sums over exact binary64 input values to solve the2x2 normal equations for the fixed accepted well-conditioned A_E, without calling the producer fit. Compare alpha with atol1e-10,rtol1e-9, and every predicted/residual K_CMB coordinate/tensor with atol1e-12,rtol1e-9. Preserve raw discrepancies; verify E-only definition and relative/absolute sign identities.",
+    "cross_terms": "Check all O product entries and O[i,j,a,b]=O[j,i,b,a]; independently scalar-sum G/H contractions. Compare K_CMB^2 quantities with atol1e-22,rtol1e-10. This checks implementation on stored floats, not covariance precision.",
+    "focused_controls": "One tiny synthetic signed-coordinate fixture with nonzero mixed terms; changing synthetic target B leaves E-fit alpha invariant; rank-deficient synthetic A_E emits absent prediction. Actual controls occur inside the single consumer60s envelope. Do not replay historical native/format/exception batches or invent elapsed.",
+    "outputs": "Own small NPZ/JSON numerical readback for shape/parity and preservation; inspect required labelled figures for complete finite displayed data. No new blanket harness gate/schema.",
+    "failure": "Preserve first failure/raw evidence and stop. No post-result tolerance/anchor/mask change, hidden retry or rewrite of old acceptance."
+  },
+  "outputs": {
+    "FULL8_COMPARISON.npz": "Map_ids,labels,C(8,24),full4STF arrays,support; both full contrasts/tensors; frozen anchors; five-target E/B,alpha,predicted/residual vectors and full B tensors,SMICA absolute prediction; O(8,8,24,24),G(4,8,8),H(2,8,8). Rank-branch validity explicit.",
+    "DESCRIPTIVE_RESULT.json": "All192 signed carrier coordinates,5 full12 B comparisons,alpha,rank/singular values,full residual vectors,source/input/operator/support identities,readable G/H,actual checks and preserved claims. NPZ reference for large O avoids duplicate prose.",
+    "signed24.png": "All8 labelled map rows,24 signed columns,zero-centred diverging K_CMB scale; SMICA labelled component-separation benchmark. A second full24 SMICA-relative panel may aid readability; no silent per-row normalization.",
+    "heldout_B12.png": "Five panels44/70/100/217/SMICA, each all12 labelled143-relative target/prediction/residual B coordinates; explicit algorithmic descriptive caption.",
+    "cross_terms.png": "Four signed8x8 G panels and two signed8x8 H panels, K_CMB^2, labels deterministic cross-products; covariance not estimated.",
+    "REPORT.md": "Brief actual signed-coordinate patterns, SMICA benchmark and residual interpretation; include finite operator/mask/response/source conditions and old resource HOLD.",
+    "existing_receipt_conventions": "Actual command/source/input/ACK identities,externally measured wall/process/reap/threadpool/RSS evidence,append-only same-account debit,actual independent review. No new permanent registry/schema."
+  },
+  "same_account_resources": {
+    "parent_task": "R26-FULL7-STREAMED-SPIN2-QUADRATURE",
+    "snapshot_head": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/ROOT_CONSERVATIVE_ACCOUNT_HEAD.json",
+      "sha256": "e3c9f09ea5091290165479d51b291a0a860998c1594e58ac2eea7011e4ad685c",
+      "bytes": 2136
+    },
+    "snapshot_totals_seconds": {
+      "100": 159.18368400861345,
+      "143": 461.5327016348724,
+      "217": 352.5613782292471,
+      "30": 123.76261586947201,
+      "353": 252.22075897322563,
+      "44": 107.52729198750876,
+      "70": 107.85303059145645,
+      "SMICA": 463.2732058512752
+    },
+    "snapshot_is_launch_authority": false,
+    "refresh": "Root refreshes latest same-lineage head immediately before genuine ACK; this conservative head must remain in ancestry with every subsequent debit. Serialize writers. Never use a stale predecessor or reopen the closed seven-consumer bank.",
+    "accounts": [
+      "30",
+      "44",
+      "70",
+      "100",
+      "143",
+      "217",
+      "353",
+      "SMICA"
+    ],
+    "lifetime_cap_each_seconds": 900,
+    "new_question_subcaps_seconds": {
+      "consumer_with_focused_controls": 60,
+      "independent_small_numeric_checker_if_used": 10,
+      "aggregate": 70
+    },
+    "not_reset": "New sublimits bound a genuinely new saved-carrier question inside original8x900. Closed seven-consumer total26.581183716887608 stays historical; no old stage rerun. At most8.75 new shared seconds per account from70s; root shortens if latest balances require.",
+    "debit": "Every started common execution/import/check/calculation/render/persistence/finalization/reap interval is charged once/8 across all8 accounts on success or failure. Never clamp measured time to a cap; overshoot is charged and fails resource acceptance.",
+    "timing": "Already-running outer host records monotonic start before spawning Python, then stop only after all owned outputs are persisted and child/group exits/reap complete. Retain real process identities,start/stop and contiguous phases. Timer starting within run() or stopping before persistence is insufficient. Any host settlement-write tail must be accounted by an actual separately observed interval or explicitly labelled conservative bound within the cap, never fabricated measured time. Incomplete boundaries imply resource HOLD.",
+    "cleanup": "Reserve at least2s within consumer60s and checker10s for stop/kill/reap/persistence; do not extend caps. Run these sequentially,one actual attempt each. If a started outcome/time cannot be recovered, preserve OUTCOME_UNKNOWN and charge its authorized envelope conservatively once; no new attempt/reset.",
+    "threads": 1,
+    "owned_group_rss_cap_bytes": 2147483648,
+    "prelaunch_mem_available_bytes": 10737418240,
+    "runtime_mem_available_floor_bytes": 4294967296,
+    "observations": "Pin BLAS/OpenMP before imports; record loaded threadpool counts,owned-group sampled RSS,process high-water/wait4,exit and reap. Sampled RSS alone is not a certificate for every instant. No heavy/native jobs or raw arrays.",
+    "old_smica_preserved": "Snapshot SMICA463.2732058512752 includes conservative common upper debit399.9923411500547; native110.38916298095137 unchanged. Bound includes idle and is not measured missing time. Old finalization20s NOT_ESTABLISHED and pre-entryUNKNOWN remain."
+  },
+  "review_and_claims": {
+    "scoped_pass": "Only actual new eight-map saved-carrier comparison,SMICA full12 prediction,cross terms,figures,checks and prospective resource limits may pass after fresh independent read-only review. Framing/ACK/render success alone is insufficient.",
+    "reviewer_requested": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "xhigh"
+    },
+    "reviewer_observed": "UNKNOWN_UNTIL_EXTERNALLY_OBSERVED",
+    "review_independence": "Reviewer did not implement new consumer; exact final source/input/candidate and raw outcomes. At most one targeted repair if authorized within remaining same sublimits; no ultra.",
+    "preserved": [
+      "Original SMICA full-task timing/resource HOLD",
+      "Original full8 HOLD_NATIVE_FIRST_FAILURE",
+      "L03/H02 HOLD",
+      "scientific_admission HOLD",
+      "No null calibration,significance/coverage,true-sky E/B recovery,physical mixture fractions,calibrated Pi,physical F/MES,native solver or Bianchi family claim"
+    ],
+    "next": "Root binds actual reviewed result and continues next dependency-safe campaign work; no original full8 acceptance or publication-DAG completion promotion."
+  },
+  "framing_provenance": {
+    "requested": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "xhigh"
+    },
+    "observed": "UNKNOWN",
+    "new_numeric_or_control_runs": 0,
+    "basis": "Exact saved reviews/source/small hashes/NPZ headers. Inherited source qualification; no new external fact,physics proof or CAS certificate."
+  }
+}

@@ -1,0 +1,711 @@
+{
+  "schema": "htt.p1.readiness_evidence_intake/1",
+  "utc": "2026-10-24T04:07:43.811333+00:00",
+  "agent_id": "/root/r26_s06_publication_readiness_decision",
+  "scope": "Read-only source and retained-evidence intake for S06; no numerical science or TeX rerun. This is not an independent review of the forthcoming S06 decision.",
+  "acknowledgement": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_s05_final_independent_review/ACTUAL_ACKNOWLEDGED_S06_EXECUTION_PACKET.json",
+    "sha256": "fce95e1f34ad3fce7556032ba73100d7dbdb75a24541dc8f5ea18f966169a53f",
+    "bytes": 4754
+  },
+  "packet_id": "4a14f955743613a445307422da9dd87fe16954a511ad6342e6699971a89751a7",
+  "input_identity": "sha256:bf04b365dd55aa11ce952ffed948b8f94131d495cb196693a17997753b261eba",
+  "runtime": {
+    "requested": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_selected": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "observed": "UNKNOWN"
+  },
+  "repo": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "head_observed": "d93605e66adfececa89b90681124b232a5f90220",
+    "branch_observed": "research/htt-adaptive-methods-20261023",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "dirty_status_observed": true,
+    "mutated_by_this_agent": false
+  },
+  "candidate": {
+    "source_composite_sha256": "0f9c81c1ddf609e7c070554d7fff9b94886fe036d133cc8113b248d8b1d51a17",
+    "algorithm": "SHA256 UTF-8 json.dumps(actual_candidate_files,sort_keys=True,separators=(comma,colon)), unchanged author order",
+    "files": [
+      {
+        "path": "CLAIM_SOURCES.json",
+        "sha256": "a462198d588c20f5cd6d3bfd520de1038ad89e303269c884efbb932ad55de884",
+        "bytes": 15674
+      },
+      {
+        "path": "FIGURE_SPEC.json",
+        "sha256": "8f1452f18a2715bc3c72ff96fa7d8cbe4462f417f6f7b7037a694a39db343e6f",
+        "bytes": 4587
+      },
+      {
+        "path": "SCIENTIFIC_SCOPE.md",
+        "sha256": "61928ed3a8fc0bb8de22817a70f8649bb87498e8a187d6cc0d14308ce2951121",
+        "bytes": 8757
+      },
+      {
+        "path": "figures/coupled_functionals.pdf",
+        "sha256": "20c5de1606c1b5c894034f9c9202df31e59dfdd2d58f801520952a702cf938cf",
+        "bytes": 201878
+      },
+      {
+        "path": "figures/model_comparison.pdf",
+        "sha256": "6a35d6dd82ab397d52211405caad4cfe549a664980405204c32d9cd0fe3cbc55",
+        "bytes": 20024
+      },
+      {
+        "path": "figures/selected_tensor_law.pdf",
+        "sha256": "01c7086e0cf771345d8ccfaa422affdf0eb6748490f0b29954e15b4b9cbb9319",
+        "bytes": 28901
+      },
+      {
+        "path": "figures/selection_bounds.pdf",
+        "sha256": "d69024ad9af571e776309de0b31e6e91f0fdc563b0bcbce919799f1897e3c299",
+        "bytes": 37395
+      },
+      {
+        "path": "main.tex",
+        "sha256": "3ea9f9ccfa86aeba34859a731bf407b7ffd950520e685e56932114a3876fc800",
+        "bytes": 3146
+      },
+      {
+        "path": "references.bib",
+        "sha256": "331ab70818583ecd7b37fc1e2340c81a7ba032e48a624bb9ad7cf13828e7468a",
+        "bytes": 2313
+      },
+      {
+        "path": "sections/01_introduction.tex",
+        "sha256": "2f0ea8e7e805e724bad5de3d21cce4278760419a006db8062643591c8fae5242",
+        "bytes": 4407
+      },
+      {
+        "path": "sections/02_identification.tex",
+        "sha256": "865712c29b5de95704b06622dd116e1b0548fc6abaf543abfaa033fa70f963bd",
+        "bytes": 7690
+      },
+      {
+        "path": "sections/03_selected_likelihood.tex",
+        "sha256": "f0e39c5d498d25c385c4d830cf3e6093ffb06fd8e521fde05b5141c786d5d408",
+        "bytes": 9535
+      },
+      {
+        "path": "sections/04_results_robustness.tex",
+        "sha256": "e6086373c97913c78e5e124139e5c3438c7d905a01c028f4a6eef2062ff3701f",
+        "bytes": 12784
+      },
+      {
+        "path": "sections/05_coupled_functionals.tex",
+        "sha256": "515d934b7ae5b3ab284ea84900a8f5ed1743db2490d0fdea574218ba581e70d0",
+        "bytes": 13222
+      },
+      {
+        "path": "sections/06_discussion.tex",
+        "sha256": "bd0595b712573957204b3f628cf2aca43d21c84873d97d9c56b601f1d43eb286",
+        "bytes": 5175
+      },
+      {
+        "path": "sections/07_proofs.tex",
+        "sha256": "e0ec9987c8ec59fae6239bee795f3c86cb96be6a86c949afbade62c5f22c0bef",
+        "bytes": 5540
+      }
+    ],
+    "pdf": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/main.pdf",
+      "sha256": "cb52f70f08d06f8aa9f7cafbe04be22cd32a2253a17b8e07764bfcc706cce9f1",
+      "bytes": 650644
+    },
+    "source_bundle": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/source_bundle.zip",
+      "sha256": "de4ff5829228b9bd66a6f7c67ff4ed02547609f3c7b02db030eba8bf99a91f60",
+      "bytes": 313906
+    },
+    "build_report": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/BUILD_REPORT.json",
+      "sha256": "e35ca5b33acd5c311225c75775189a68243365b89da6542e26aee0b755e458b8",
+      "bytes": 4824
+    },
+    "figure_provenance": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/FIGURE_PROVENANCE.json",
+      "sha256": "3c9c3740b5ec4221d6ff4ec12b121de8b14639fad46f386a8dd1ac3b792982b5",
+      "bytes": 5828
+    }
+  },
+  "primary_sources": {
+    "selected_law": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s04_selected_law_consumer/RESULT.json",
+      "sha256": "405909feee3580bf826fcea675282f47da935510a45c3d79f8fd788b80fce5f8",
+      "bytes": 4649666,
+      "use": "r24_selected_C_union normalized likelihood, full15 saved coefficients and covariance, exact_F_region,20fold_diagnostics; h03_source36 apparent summary and saved residual diagnostics ONLY with scope_correction",
+      "expected_sha256": "405909feee3580bf826fcea675282f47da935510a45c3d79f8fd788b80fce5f8",
+      "matches_expected_sha256": true
+    },
+    "actual_review": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s04_actual_result_review/VERDICT.json",
+      "sha256": "39c7656ff9b12ce8e330f8cd4b433dfb863f9cdbbb9ae429248ef93f01a3fbec",
+      "bytes": 13147,
+      "use": "Independent scope qualification and numerical evidence for existing selected-law result; not independent review of this manuscript",
+      "expected_sha256": "39c7656ff9b12ce8e330f8cd4b433dfb863f9cdbbb9ae429248ef93f01a3fbec",
+      "matches_expected_sha256": true
+    },
+    "scope_correction": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s04_actual_result_review/SCOPE_CORRECTION.json",
+      "sha256": "8df943f0ebc032502f4ecb89a09ae8e5a6fd3e1454846999257266c30d762dd1",
+      "bytes": 2613,
+      "use": "Mandatory: H03 physical response and physical identified set UNKNOWN; optical witness applies only to magnitude STF scenario",
+      "expected_sha256": "8df943f0ebc032502f4ecb89a09ae8e5a6fd3e1454846999257266c30d762dd1",
+      "matches_expected_sha256": true
+    },
+    "numerical_checks": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s04_actual_result_review/INDEPENDENT_NUMERICAL_CHECKS.json",
+      "sha256": "6293d1b79e926c862b29500029ee50865f80b73d0367e21602ab2500e2eb3776",
+      "bytes": 10879,
+      "use": "Existing independent sufficient-statistic, covariance, log-likelihood and fold arithmetic checks",
+      "expected_sha256": "6293d1b79e926c862b29500029ee50865f80b73d0367e21602ab2500e2eb3776",
+      "matches_expected_sha256": true
+    },
+    "distance_models": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/RESULT.json",
+      "sha256": "330066f4a8605caa9874f192a938d4ef1d84cf8933bdd3e6059a40b011c28bd0",
+      "bytes": 773836,
+      "use": "Exact same274 cohort, directions, full A/B/C mean fits, retained scores, residual summaries, historical residual failure",
+      "expected_sha256": "330066f4a8605caa9874f192a938d4ef1d84cf8933bdd3e6059a40b011c28bd0",
+      "matches_expected_sha256": true
+    },
+    "distance_contract": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/CONTRACT.json",
+      "sha256": "150ce8734027c228af6daa042349f287d8de99dd71f60ffb79c26a7483f756fd",
+      "bytes": 3112,
+      "use": "Mean columns, basis, covariance, frozen prediction rule, source directions, scale and rank conventions",
+      "expected_sha256": "150ce8734027c228af6daa042349f287d8de99dd71f60ffb79c26a7483f756fd",
+      "matches_expected_sha256": true
+    },
+    "distance_inputs": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/INPUT_MANIFEST.json",
+      "sha256": "408ce22b3ea4d7c38b9d0cfbacbd170dfc6c3fb1da935dfcf99185b541d730b3",
+      "bytes": 3369,
+      "use": "Released row/target ledger and CF4/HyperLEDA provenance",
+      "expected_sha256": "408ce22b3ea4d7c38b9d0cfbacbd170dfc6c3fb1da935dfcf99185b541d730b3",
+      "matches_expected_sha256": true
+    },
+    "selection": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/RESULT.json",
+      "sha256": "9e725d30c9f8240ba746535785a59c3b7a2b39d6e10132938221448e9e131fe3",
+      "bytes": 175482,
+      "use": "Fixed-surface strict event counts, density-ratio sensitivity and finite628 hull widths",
+      "expected_sha256": "9e725d30c9f8240ba746535785a59c3b7a2b39d6e10132938221448e9e131fe3",
+      "matches_expected_sha256": true
+    },
+    "auxiliary": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/RESULT.json",
+      "sha256": "ff4b768f96bdd1f88a7b1456ca808210ae09a2d8ad4d3248d641409a0ccfc88d",
+      "bytes": 155295,
+      "use": "full628 unsupported cells, supported625 positive weights/ESS, fine625 infeasibility, joint residual tensor carrier",
+      "expected_sha256": "ff4b768f96bdd1f88a7b1456ca808210ae09a2d8ad4d3248d641409a0ccfc88d",
+      "matches_expected_sha256": true
+    },
+    "finite_measure": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/FUNCTIONAL_SENSITIVITY_RESULT.json",
+      "sha256": "80792f508bd2be07fae153f662c9726ce5dc0ddabf78ea15ef66a0d27219355b",
+      "bytes": 20755,
+      "use": "2048joint atoms, originalseed/weights, apparent quantiles, anchor/floor sensitivity, density envelope, actual north weighting and method-deletion triangle bounds",
+      "expected_sha256": "80792f508bd2be07fae153f662c9726ce5dc0ddabf78ea15ef66a0d27219355b",
+      "matches_expected_sha256": true
+    },
+    "hubble_summary": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/H03_SOURCE_TOMOGRAPHY.json",
+      "sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+      "bytes": 111342,
+      "use": "Actual35970-group source,4x9signed coefficients, full36covariance and cross-window dependence, original working law",
+      "expected_sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+      "matches_expected_sha256": true
+    },
+    "functional_definition": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/S01_THEORY_KO.md",
+      "sha256": "4c34c4986a9c66272c71d8fe90c2761871932e7453a4cf2ac808c7cc06d2e4bb",
+      "bytes": 7630,
+      "use": "Signed x_C, positive normalizer, eligible F, strict Pi, depth/floor G_F, domain/missing-mass distinctions; historical execution states not current manuscript decisions",
+      "expected_sha256": "4c34c4986a9c66272c71d8fe90c2761871932e7453a4cf2ac808c7cc06d2e4bb",
+      "matches_expected_sha256": true
+    },
+    "omnibus_source_index": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/REPORT_20261024_REV1/NUMERICAL_CLAIM_SOURCES.json",
+      "sha256": "d36595c0588ac547b92d649535cd0042e47b580b48fc8ebacd24059c87d567e6",
+      "bytes": 641090,
+      "use": "Previously reviewed report source navigation; no new numerical claim rests solely on its completeness",
+      "expected_sha256": null,
+      "matches_expected_sha256": null
+    },
+    "omnibus_figures": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/REPORT_20261024_REV1/FIGURE_INVENTORY.json",
+      "sha256": "f26ee9be9f7ccdab40ab6f4340b527f5ed84d1759a6be1cc43fa7611c2d97e07",
+      "bytes": 355963,
+      "use": "Exact retained figure identities f030,f058,f064; builder records actual publication-label/format changes",
+      "expected_sha256": null,
+      "matches_expected_sha256": null
+    },
+    "method_context": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/METHOD_SOURCE_NOTES.md",
+      "sha256": "a992055234dcb01a4c40bfaccc3f0bf2f005b72d66ec7fa1368b6be9074af707",
+      "bytes": 9295,
+      "use": "Cached primary-method citations and applicability limits",
+      "expected_sha256": null,
+      "matches_expected_sha256": null
+    }
+  },
+  "additional_evidence": {
+    "publication_dag": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+      "sha256": "8b8d2865764983191f72ffdc2f9a91f092a44340581c1ea88390e7cf3050c13c",
+      "bytes": 65296
+    },
+    "novelty_matrix": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/X02_20261016/X02_NOVELTY_MATRIX.md",
+      "sha256": "ed7e558fe9738a85e864dc553fa26b986068f1990a4a9158e3d1d8ec954e60ad",
+      "bytes": 7582
+    },
+    "s05_review": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s05_final_independent_review/VERDICT.json",
+      "sha256": "fce41d6f14d7b3f4d9693a20a208e393e409794a739661233c918438fd683441",
+      "bytes": 10112
+    },
+    "s05_review_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s05_final_independent_review/RESULT.json",
+      "sha256": "ff72d330b5d0168dfad2ea4886b495a15fd67b87d884983de3c31e123f7842b2",
+      "bytes": 4469
+    },
+    "s05_consumption": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s05_actual_repaired_consumption/RAW_RECEIPT.json",
+      "sha256": "17d3cd3f4946863ed3be373998bcd6a163594119bb6e1985eddacc255d214938",
+      "bytes": 11305
+    },
+    "old_residual_failure": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/RESULT.json",
+      "sha256": "bc8c75f8e546f3d976610ef49676807b0467abac1e1bf4edf3d552d259e36814",
+      "bytes": 3997
+    },
+    "build_final_log": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/latex_20261024T025228Z/main.log",
+      "sha256": "5c555c8f0674729db0d1f9c64d9eba835d203a810d224b5d804fb93a770564af",
+      "bytes": 23588
+    },
+    "build_stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/latex_20261024T025228Z/latexmk.stdout.log",
+      "sha256": "95086fa15fd26ef2efd71180a04157cfbdd3dc1b852865e6cfabf9dea35d9d31",
+      "bytes": 38155
+    },
+    "build_biblog": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/latex_20261024T025228Z/main.blg",
+      "sha256": "2cea2d1d14286c54a89ce372765eb1f2e12c23b8c8f20dfa6ac1403c4a17a8b0",
+      "bytes": 2092
+    }
+  },
+  "build_observation": {
+    "reported_returncode": 0,
+    "reported_pages": 17,
+    "all13source_hashes_match": true,
+    "existing_built_pdf_equals_current": true,
+    "final_log_fatal_or_unresolved_lines": [],
+    "final_log_warnings": [
+      "Class revtex4-2 Warning: No type size specified, using default 10.",
+      "Package nameref Warning: The definition of \\label has changed! ",
+      "LaTeX Warning: A float is stuck (cannot be placed) on input line 46.",
+      "LaTeX Warning: A float is stuck (cannot be placed) on input line 90.",
+      "LaTeX Warning: A float is stuck (cannot be placed) on input line 25.",
+      "LaTeX Warning: A float is stuck (cannot be placed) on input line 123."
+    ],
+    "bibtex_warnings": [
+      "Warning--missing number in Heinesen2021",
+      "Warning--missing number in Maartens2024",
+      "Warning--missing number in Kalbouneh2026"
+    ],
+    "stdout_all_targets_up_to_date": true,
+    "early_pass_warnings": "Earlier passes in latexmk.stdout.log have unresolved labels/citations; final main.log and final PDF resolve them. Retained rather than concealed.",
+    "new_builds": 0
+  },
+  "manuscript_static_observation": {
+    "tex_sections": 7,
+    "citation_keys": [
+      "AronowLee2013",
+      "Deville1992",
+      "Heinesen2021",
+      "ImbensManski2004",
+      "Kalbouneh2026",
+      "LuxburgFranz2009",
+      "Maartens2024",
+      "Tully2023"
+    ],
+    "bibliography_keys": [
+      "AronowLee2013",
+      "Deville1992",
+      "Heinesen2021",
+      "ImbensManski2004",
+      "Kalbouneh2026",
+      "LuxburgFranz2009",
+      "Maartens2024",
+      "Tully2023"
+    ],
+    "missing_citation_keys": [],
+    "undefined_reference_labels": [],
+    "duplicate_labels": [],
+    "included_figures": [
+      {
+        "path": "figures/selected_tensor_law.pdf",
+        "exists": true
+      },
+      {
+        "path": "figures/model_comparison.pdf",
+        "exists": true
+      },
+      {
+        "path": "figures/selection_bounds.pdf",
+        "exists": true
+      },
+      {
+        "path": "figures/coupled_functionals.pdf",
+        "exists": true
+      }
+    ],
+    "author_affiliation_email_declarations": [],
+    "pdfinfo": "Title:           \nSubject:         \nKeywords:        \nAuthor:          \nCreator:         LaTeX with hyperref\nProducer:        pdfTeX-1.40.25\nCreationDate:    Sat Oct 24 11:52:44 2026 KST\nModDate:         Sat Oct 24 11:52:44 2026 KST\nCustom Metadata: yes\nMetadata Stream: no\nTagged:          no\nUserProperties:  no\nSuspects:        no\nForm:            none\nJavaScript:      no\nPages:           17\nEncrypted:       no\nPage size:       612 x 792 pts (letter)\nPage rot:        0\nFile size:       650644 bytes\nOptimized:       no\nPDF version:     1.5\n",
+    "current_pdf_text_read": true,
+    "visual_checks_reused": {
+      "source": "/mnt/extdrive/workdir/htt_open_data/r26_s05_final_independent_review/VERDICT.json",
+      "pages": [
+        7,
+        9,
+        11,
+        12,
+        14
+      ],
+      "all_figures_present": true,
+      "new_rendering": false
+    }
+  },
+  "primary_field_excerpts": {
+    "r24": {
+      "selection": {
+        "selected_frame": 628,
+        "released": 274,
+        "missing_modulus": 354,
+        "parent_selection_probability": "NOT_MODELED"
+      },
+      "conditioning": "realized selected design, marks, measured covariates and uncertainties; authored V_s assumed fixed",
+      "retrospective": true,
+      "union_across_shapes": "conservative for common beta if one frozen V_s is the true conditional shape; no pooling/intersection",
+      "scenarios": {
+        "a_0.000_b_0.000": {
+          "n": 274,
+          "p": 15,
+          "nu": 259,
+          "rss_saved": 651.2182041300708,
+          "sigma2_ML_saved": 2.376708774197339,
+          "radius_sq_full": 27.058502419705654,
+          "beta_coordinates": 15,
+          "covariance_rows": 15
+        },
+        "a_0.000_b_0.290": {
+          "n": 274,
+          "p": 15,
+          "nu": 259,
+          "rss_saved": 324.9193032462889,
+          "sigma2_ML_saved": 1.1858368731616384,
+          "radius_sq_full": 27.058502419705654,
+          "beta_coordinates": 15,
+          "covariance_rows": 15
+        },
+        "a_0.055_b_0.000": {
+          "n": 274,
+          "p": 15,
+          "nu": 259,
+          "rss_saved": 682.7639947590333,
+          "sigma2_ML_saved": 2.491839396930778,
+          "radius_sq_full": 27.058502419705654,
+          "beta_coordinates": 15,
+          "covariance_rows": 15
+        },
+        "a_0.055_b_0.290": {
+          "n": 274,
+          "p": 15,
+          "nu": 259,
+          "rss_saved": 330.4526684227677,
+          "sigma2_ML_saved": 1.2060316365794441,
+          "radius_sq_full": 27.058502419705654,
+          "beta_coordinates": 15,
+          "covariance_rows": 15
+        }
+      },
+      "fold_count": 20,
+      "minimum_two_sided_tail": 0.023264709508724134
+    },
+    "distance": {
+      "cohort": {
+        "selected": 628,
+        "released": 274,
+        "undefined": 354,
+        "min_Vcmb_km_s": 317.0,
+        "max_Vcmb_km_s": 10459.0,
+        "fold_rule": "cached ledger fold; each observed CF4 group wholly in one fold",
+        "fold_counts": {
+          "3": 69,
+          "4": 50,
+          "2": 53,
+          "1": 55,
+          "0": 47
+        }
+      },
+      "covariance_law": "V(a,b)=diag(s^2-a^2)+a^2 11T+b^2 GGt; authored, physical calibration/PV overlap unresolved",
+      "prediction_law": "normalized block-conditional plug-in Gaussian; training ML sigma2; coefficient/scale uncertainty omitted",
+      "K_units": "mag per km/s response to scenario flow vector in km/s; low-z approximation unqualified at PGC9031",
+      "tensor_status": "optical effective STF on selected finite-z window; no u-to-G or finite-z remainder map",
+      "historical_residual_failure": {
+        "T": 4.555321823822732,
+        "p_plus_one": 0.000976324139614352,
+        "status": "RETAINED"
+      }
+    },
+    "selection": {
+      "law": "Uniform empirical law on each reviewed 274-row OOF cohort; Gamma bounds mean-one rowwise density ratios, not measured selection propensities",
+      "event": "abs(OOF_signed_residual_mag)>t, with strict ties, for every breakpoint and fixed display thresholds",
+      "cohort_size": 274,
+      "known_frame_size": 628,
+      "undefined_binary_rows": 354,
+      "scenario_model_count": 12,
+      "minimum_frame628_width": 0.5636942675159236,
+      "physical_unknown_mass": 1,
+      "confidence_or_geometry_probability": "NOT_ESTIMATED"
+    },
+    "h03": {
+      "source_groups": 35970,
+      "working_law": "stipulated summary Gaussian; not calibrated selected raw-source likelihood",
+      "selection_and_shared_calibration_covariance": "UNKNOWN"
+    },
+    "finite_measure": {
+      "sample_count": 2048,
+      "joint_unit": "one coupled four-window 36-vector; four windows are not independent samples",
+      "seed": 160916,
+      "antithetic": true,
+      "weight": 0.00048828125,
+      "weight_sum": 1.0,
+      "finite_measure_interpretation": "deterministic Sobol quadrature; fractions are finite-law masses, not independent Monte Carlo p-values",
+      "covariance_assumption": "inherited same 35970 groups, correlated four windows, assuming diagonal sigma_i^2 across rows",
+      "q_app_definition": "A_j=norm(STF5_app_j)/H_app_j; not Q=x_C/U_sigma",
+      "anchor_floor_identity": "g_app(B,delta)=max(A_j,B*delta)/max(A_ref,B*delta); only product B*delta matters",
+      "physical_functionals": {
+        "x_C": "UNMEASURED",
+        "Q": "UNMEASURED",
+        "F": "DOMAIN_UNCERTIFIED",
+        "G_F": "DOMAIN_UNCERTIFIED",
+        "unknown_mass": 1.0,
+        "Pi": {
+          "Q": {
+            "source": "Q",
+            "thresholds": [
+              0.0,
+              0.25,
+              0.5,
+              1.0
+            ],
+            "lower": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "upper": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "known_mass": 0.0,
+            "unknown_mass": 1.0,
+            "unmeasured_defined_mass": 1.0,
+            "domain_uncertified_mass": 0.0,
+            "pointwise_bounds": "sharp_for_unrestricted_mathematical_completions_only",
+            "physical_completion_admitted": false,
+            "joint_curve": "same_draws_monotone_coupling_required",
+            "threshold_rule": "strict_greater_than",
+            "mio_input_status": "not_consumed",
+            "claim_tier": "diagnostic_only"
+          },
+          "F": {
+            "source": "F",
+            "thresholds": [
+              0.0,
+              0.25,
+              0.5,
+              1.0
+            ],
+            "lower": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "upper": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "known_mass": 0.0,
+            "unknown_mass": 1.0,
+            "unmeasured_defined_mass": 0.0,
+            "domain_uncertified_mass": 1.0,
+            "pointwise_bounds": "sharp_for_unrestricted_mathematical_completions_only",
+            "physical_completion_admitted": false,
+            "joint_curve": "same_draws_monotone_coupling_required",
+            "threshold_rule": "strict_greater_than",
+            "mio_input_status": "not_consumed",
+            "claim_tier": "diagnostic_only"
+          },
+          "G_F": {
+            "source": "G_F",
+            "thresholds": [
+              0.0,
+              0.25,
+              0.5,
+              1.0
+            ],
+            "lower": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "upper": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "known_mass": 0.0,
+            "unknown_mass": 1.0,
+            "unmeasured_defined_mass": 0.0,
+            "domain_uncertified_mass": 1.0,
+            "pointwise_bounds": "sharp_for_unrestricted_mathematical_completions_only",
+            "physical_completion_admitted": false,
+            "joint_curve": "same_draws_monotone_coupling_required",
+            "threshold_rule": "strict_greater_than",
+            "mio_input_status": "not_consumed",
+            "claim_tier": "diagnostic_only"
+          }
+        },
+        "selection_Gamma4_outer": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    "auxiliary": {
+      "missing_outcome_law": "UNKNOWN",
+      "scope": "exploratory finite-frame auxiliary geometry; no population outcome law"
+    },
+    "old_residual": {
+      "mock": {
+        "seed": 2026102302,
+        "B": 4096,
+        "beta0": [
+          34.0,
+          5.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "sigma0": 1,
+        "covered": 3890,
+        "nominal": 0.95,
+        "acceptance_count_range": [
+          3854,
+          3926
+        ],
+        "conditional_coverage_check": "PASS",
+        "binomial_exact_95_interval": [
+          0.9425643383185035,
+          0.9561991915878647
+        ],
+        "draw": "one common scalar, one scalar per full selected group, independent residuals; fixed marks and covariates; no distances drawn for 354 missing"
+      },
+      "diagnostic": {
+        "T_actual": 4.555321823822732,
+        "mock_exceedance_count": 3,
+        "p_plus_one": 0.000976324139614352,
+        "conditional_law_criticized": true,
+        "T_mock_quantiles": [
+          3.032445153127928,
+          3.536632185439891,
+          3.7120301089370917,
+          4.059759844160903
+        ],
+        "zero_residual_leverage_PGCs": [
+          "53938"
+        ],
+        "zero_residual_leverage_count": 1
+      },
+      "physical_selection_and_joint_calibration_PV": "NOT_EVALUABLE",
+      "limitations": [
+        "authored conditional covariance allocation",
+        "actual cross-row calibration/PV covariance unavailable",
+        "354 undefined distances not imputed",
+        "parent inclusion law unknown",
+        "mock coverage is only under generated law"
+      ]
+    },
+    "mandatory_H03_correction": {
+      "r24_optical_witness": "Within the explicitly declared optical response model, unrestricted bias b makes S unrestricted; this is a conditional nonidentification witness, not observed physical calibration.",
+      "h03_physical_response": "UNKNOWN",
+      "h03_physical_identified_set": "UNKNOWN_NOT_QUALIFIED_BY_R24_OPTICAL_WITNESS",
+      "h03_physical_x_Q_F_Pi_G_F": "UNKNOWN_OR_DOMAIN_UNCERTIFIED",
+      "h03_retained_products": [
+        "Original apparent theta36 and full four-window C36 numerical carrier",
+        "Stipulated 36-dimensional Gaussian summary reference law with no calibrated raw-source likelihood claim",
+        "Unchanged 2048 coupled quadrature IDs, weights and values",
+        "Saved-coefficient residual diagnostics on original 35970 groups"
+      ],
+      "h03_original_S04_evidence": "Not relied on for actual selected-likelihood branch",
+      "r24_original_S04_evidence": "Source-bound selected-cohort likelihood and finite-F regions support the separate sealed VERDICT.json unchanged-clause decision; router binding remains administrative and pending."
+    },
+    "optical_domain_correction": "Current sections/05_coupled_functionals.tex lines6-47 further restricts the optical witness to D_S. Earlier raw unbounded strings are not adopted for bounded small-anisotropy domains."
+  },
+  "limited_primary_literature_checks": [
+    {
+      "url": "https://arxiv.org/abs/2010.06534",
+      "access_utc_date": "2026-10-24",
+      "observation": "Official record confirms Heinesen 2021 general luminosity-distance multipole context and JCAP05(2021)008; no numerical optical remainder bound imported."
+    },
+    {
+      "url": "https://arxiv.org/abs/2510.02510",
+      "access_utc_date": "2026-10-24",
+      "observation": "Official record identifies CF4/Pantheon+ multipole analysis and March2026 accepted version; overlapping apparent-expansion subject matter is prior art, not established novelty of this manuscript."
+    },
+    {
+      "url": "https://arxiv.org/abs/0711.0198",
+      "access_utc_date": "2026-10-24",
+      "observation": "Official record confirms von Luxburg/Franz ratio-confidence-set context and Statistica Sinica19(3),1095-1117(2009)."
+    }
+  ],
+  "execution_limits": {
+    "new_fits": 0,
+    "new_null_simulations": 0,
+    "new_quadrature_draws": 0,
+    "tex_builds": 0,
+    "source_edits": 0,
+    "git_mutations": 0,
+    "controller_mutations": 0,
+    "child_agents": 0,
+    "submission": false
+  },
+  "inspection_limitations": [
+    "Source and skill guidance are scope inputs, not an acceptance oracle.",
+    "No full novelty replication, empirical source-null campaign, or public supplemental accession audit performed.",
+    "A read-only field dump printed a large stored quadrature object and was truncated by the tool. No scientific computation or artifact change occurred; subsequent evidence stores selected fields only.",
+    "No remote publication content or Git ref was re-read; supplied remote commit c9df63efa4728255a5b785ad7cb752ecb8d8f3ef is attribution only here."
+  ]
+}

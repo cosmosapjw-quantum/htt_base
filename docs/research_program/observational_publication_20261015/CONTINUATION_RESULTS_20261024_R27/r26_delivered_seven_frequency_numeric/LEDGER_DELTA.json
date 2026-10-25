@@ -1,0 +1,78 @@
+{
+  "accounts": [
+    "30",
+    "44",
+    "70",
+    "100",
+    "143",
+    "217",
+    "353",
+    "SMICA"
+  ],
+  "attempt_id": "94d0782607584e4c832ac1a6b2f56e28",
+  "base_ledger_ref": {
+    "bytes": 11945,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/continuation/LEDGER.json",
+    "sha256": "182cfde08b319b6008d19f772b2247e218b2b217ce45a19334d196a69b689454"
+  },
+  "charged_total_wall_seconds": 26.246702461969107,
+  "cumulative_charged_seconds": {
+    "100": 107.479401627101,
+    "143": 409.8284192533599,
+    "217": 300.8570958477346,
+    "30": 72.05833348795956,
+    "353": 200.51647659171317,
+    "44": 55.8230096059963,
+    "70": 56.14874820994398,
+    "SMICA": 301.1797604888113
+  },
+  "elapsed_measured_wall_seconds": 26.246702461969107,
+  "old_first_failures_preserved": [
+    {
+      "marker": {
+        "attempt_id": "2efa6827041549caa787f6de92fe4133",
+        "child_reaped": true,
+        "child_start_ticks": 144836608,
+        "child_vm_hwm_bytes": 100519936,
+        "cleanup_exception": null,
+        "combined_sampled_peak_bytes": 116191232,
+        "command": [
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+          "-B",
+          "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/continuation/continue.py",
+          "child",
+          "--product",
+          "SMICA",
+          "--internal-fd",
+          "5",
+          "--attempt-id",
+          "2efa6827041549caa787f6de92fe4133"
+        ],
+        "elapsed_seconds": 2.4969793090131134,
+        "exception": null,
+        "exit_code": 1,
+        "minimum_host_mem_available_bytes": 14721695744,
+        "parent_pid": 224775,
+        "parent_start_ticks": 144826243,
+        "parent_vm_hwm_bytes": 38518784,
+        "pid": 231113,
+        "prelaunch_mem_available_bytes": 15958515712,
+        "product": "SMICA",
+        "start_utc": "2026-10-24T03:46:34Z",
+        "status": "FAILED",
+        "stderr": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/continuation/SMICA.stderr",
+        "stdout": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/continuation/SMICA.stdout",
+        "trigger": null,
+        "wait4_ru_maxrss_bytes": 98861056,
+        "wait_status": 256
+      },
+      "product": "SMICA",
+      "stage": "native"
+    }
+  ],
+  "old_stage_preserved": "HOLD_NATIVE_FIRST_FAILURE",
+  "packet_id": "94dbbcbfab989e9d23cbd722ead40350015e8aeabb23de0fab1a0c54825781ce",
+  "schema": "htt.delivered_seven_frequency_ledger_delta/1",
+  "shared_debit_each_of_eight_seconds": 3.2808378077461384,
+  "status": "CANDIDATE_READY_REVIEW_REQUIRED"
+}

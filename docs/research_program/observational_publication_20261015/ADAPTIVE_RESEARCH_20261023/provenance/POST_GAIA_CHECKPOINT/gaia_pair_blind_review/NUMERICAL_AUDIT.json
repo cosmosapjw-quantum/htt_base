@@ -1,0 +1,233 @@
+{
+  "status": "PASS",
+  "evidence": {
+    "source_and_complete_carrier": {
+      "pass": true,
+      "evidence": {
+        "shapes": {
+          "H": [
+            9,
+            13,
+            9512
+          ],
+          "D": [
+            9,
+            13,
+            13
+          ],
+          "d": [
+            9,
+            13
+          ],
+          "Cd": [
+            117,
+            117
+          ],
+          "W": [
+            88,
+            117
+          ],
+          "M": [
+            88,
+            13
+          ],
+          "z": [
+            88
+          ],
+          "covariance_eigenvectors": [
+            117,
+            117
+          ],
+          "covariance_eigenvalues": [
+            117
+          ],
+          "source_id": [
+            4756
+          ],
+          "X": [
+            4756,
+            2,
+            13
+          ],
+          "B": [
+            4756,
+            2,
+            3
+          ],
+          "C": [
+            4756,
+            2,
+            2
+          ]
+        },
+        "all_raw_carrier_arrays_exact": true,
+        "units_conversion_exact": true,
+        "pair_counts": [
+          315,
+          895,
+          3569,
+          24624,
+          85342,
+          816145,
+          2118284,
+          5222601,
+          3035615
+        ],
+        "all_bins_nonempty": true
+      }
+    },
+    "actual_operator_covariance_and_tensors": {
+      "pass": true,
+      "evidence": {
+        "max_abs_errors": {
+          "d_Hy": 2.398081733190338e-14,
+          "D_HX": 2.55351295663786e-15,
+          "HB": 7.806255641895632e-17,
+          "Cd_cholesky": 7.105427357601002e-15,
+          "C_symmetry": 0.0,
+          "tangent": 1.6653345369377348e-16,
+          "EtE": 3.3306690738754696e-16,
+          "X_cartesian": 2.220446049250313e-16,
+          "d_response_g": 0.0,
+          "E2_stf_tensor": 0.0,
+          "B2_stf_tensor": 0.0
+        },
+        "min_source_covariance_eigenvalue": 516.6647489705106,
+        "cross_bin_shared_covariance_max_abs": 1.1217232366244897e-06
+      }
+    },
+    "fixed_projection_descriptive_fits": {
+      "pass": true,
+      "evidence": {
+        "max_abs_errors": {
+          "eigenorthogonality": 2.3314683517128287e-15,
+          "reconstruction": 6.394884621840902e-14,
+          "z": 0.0,
+          "M": 0.0,
+          "declared_covariance_only_W": 0.0,
+          "json_W": 0.0,
+          "json_M": 0.0,
+          "json_z": 0.0,
+          "json_covariance_eigenvalues": 0.0,
+          "json_covariance_eigenvectors": 0.0,
+          "E1_representative": 8.215650382226158e-15,
+          "E1_profile": 8.881784197001252e-16,
+          "E1_residual": 7.771561172376096e-16,
+          "E1_unprojected_profile": 5.440092820663267e-15,
+          "E1_unprojected_residual": 5.329070518200751e-15,
+          "E1_T": 0.0,
+          "E1_sv": 8.326672684688674e-17,
+          "full13_representative": 1.1546319456101628e-14,
+          "full13_profile": 1.887379141862766e-15,
+          "full13_residual": 1.6653345369377348e-15,
+          "full13_unprojected_profile": 7.271960811294775e-15,
+          "full13_unprojected_residual": 7.105427357601002e-15,
+          "full13_T": 1.4210854715202004e-14,
+          "full13_sv": 2.498001805406602e-16,
+          "Delta": 1.4210854715202004e-14,
+          "ball_center": 0.0,
+          "ball_radius2": 0.0
+        },
+        "whitening_spectral_residual": 1.689145494493033e-13,
+        "models": {
+          "E1": {
+            "T": 87.00260228836888,
+            "numerical_rank": 3,
+            "smallest_singular_value": 0.12754211543247843,
+            "all_columns_retained": true
+          },
+          "full13": {
+            "T": 75.07862294730027,
+            "numerical_rank": 13,
+            "smallest_singular_value": 0.06093891897962603,
+            "all_columns_retained": true
+          }
+        },
+        "nesting_spectral": 7.882209827015182e-16,
+        "Delta": 11.923979341068602,
+        "retained_modes": 88,
+        "discarded_modes": 29,
+        "discarded_smallest_eigenvalue": 5.729677317472832e-12,
+        "full_tail_status": "TAIL_UNRESOLVED_INCOMPLETE_IMAGE_CERTIFICATION",
+        "mean_ball_radius_squared": 110.89800282268448,
+        "model_coefficients_no_finite_confidence_region": true
+      }
+    },
+    "independent_small_controls": {
+      "pass": true,
+      "evidence": {
+        "max_abs_errors": {
+          "analytic_E1_E2_B2_all_pairs": 3.3306690738754696e-16,
+          "spin": 2.7698938118618826e-16,
+          "independent_dense_H": 8.326672684688674e-17,
+          "independent_d": 1.3877787807814457e-16,
+          "independent_D": 1.1102230246251565e-16,
+          "shared_source_Cd": 1.1102230246251565e-16,
+          "pair_permutation_0": 1.1102230246251565e-16,
+          "pair_permutation_1": 2.220446049250313e-16,
+          "pair_permutation_2": 2.220446049250313e-16,
+          "duplication_0": 5.551115123125783e-17,
+          "duplication_1": 2.220446049250313e-16,
+          "duplication_2": 3.3306690738754696e-16,
+          "duplication_covariance": 5.551115123125783e-17,
+          "rotation_X": 3.3306690738754696e-16,
+          "rotation_H": 1.1102230246251565e-16,
+          "rotation_D": 4.440892098500626e-16,
+          "rotation_d": 4.440892098500626e-16,
+          "small_model_counterexample": 0.0
+        },
+        "fixture_sources": 8,
+        "fixture_unique_pairs": 28,
+        "all_pair_duplication_factor": 3,
+        "antipodal_endpoint_count": 1,
+        "actual_production_pair_traversals": 0,
+        "independent_Cd_shared_cross_bin_max_abs": 1.675268197440871e-08
+      }
+    },
+    "candidate_tests": {
+      "pass": true,
+      "evidence": {
+        "test_functions": [
+          "test_accumulation_shared_covariance_and_permutations",
+          "test_duplicate_pair_means_and_response_not_coefficient",
+          "test_geometry_stf_and_independent_field_oracles",
+          "test_rotation_angle_invariance_and_unidentified_modes"
+        ],
+        "passed": 4,
+        "invocation": "direct; no pytest cache or repository writes"
+      }
+    }
+  },
+  "failures": [],
+  "threadpool_info": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "/home/cosmosapjw/.local/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-096271d3.so",
+      "version": "0.3.31.dev",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "/home/cosmosapjw/.local/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-6cdc3b4a.so",
+      "version": "0.3.30",
+      "threading_layer": "pthreads",
+      "architecture": "Haswell"
+    }
+  ],
+  "environment_threads": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "elapsed_seconds_internal": 1.2012439880054444,
+  "max_rss_bytes_internal": 126251008,
+  "production_pair_traversals": 0
+}

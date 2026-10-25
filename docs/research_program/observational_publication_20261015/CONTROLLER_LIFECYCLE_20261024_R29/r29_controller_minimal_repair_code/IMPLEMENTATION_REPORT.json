@@ -1,0 +1,148 @@
+{
+  "status": "IMPLEMENTED_PENDING_FRESH_INDEPENDENT_REVIEW",
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "medium"
+  },
+  "observed_runtime": "UNKNOWN",
+  "contract": "/mnt/extdrive/workdir/htt_open_data/r29_controller_candidate_blind_audit/RESULT.json#bounded_repair_contract",
+  "files": [
+    {
+      "path": "scripts/codex_harness/research_controller.py",
+      "preimage_sha256": "f92b06c1ab9622c9210d15f1bb7a983d3ef3e7d190b2f063b90d43c6480a539e",
+      "candidate_sha256": "b118149b13d3568f0fa2e5afb2ef503e461434cf5df3a8f7829bbb2bb95c1dac",
+      "repair_diff": "/mnt/extdrive/workdir/htt_open_data/r29_controller_minimal_repair_code/research_controller.py.repair.diff",
+      "added": 60,
+      "removed": 7
+    },
+    {
+      "path": "scripts/codex_harness/test_research_controller_frontier.py",
+      "preimage_sha256": "f94f7151a2326ed32bb449b0c104d8c966dea2307d3dc8e993f175e410ecc3be",
+      "candidate_sha256": "8fbb0bc23a55c8c3fe2695552b55a4d1f3699b1b8198b6db558f4cb3379e1fa9",
+      "repair_diff": "/mnt/extdrive/workdir/htt_open_data/r29_controller_minimal_repair_code/test_research_controller_frontier.py.repair.diff",
+      "added": 194,
+      "removed": 0
+    }
+  ],
+  "tests": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "scripts/codex_harness/test_research_controller_frontier.py::MinimalLifecycleRepairTests",
+        "-q"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 1,
+      "elapsed_seconds": 5.589177485089749,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r29_controller_minimal_repair_code/FIRST_FAILURE.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "scripts/codex_harness/test_research_controller_frontier.py::MinimalLifecycleRepairTests",
+        "-q"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 6.2847159169614315,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r29_controller_minimal_repair_code/REPAIR_FOCUSED.log"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "scripts/codex_harness/test_research_controller_frontier.py::FrontierTests",
+        "scripts/codex_harness/test_research_controller_frontier.py::ConcurrentReviewTests",
+        "-q"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 5.773327841889113,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r29_controller_minimal_repair_code/AFFECTED_CONTROLS.log",
+      "source_identities": {
+        "scripts/codex_harness/research_controller.py": "55ca0ecc84e0bc198057caea568b293f3a50679e8fba9960f3145eed385c0116",
+        "scripts/codex_harness/test_research_controller_frontier.py": "4a2ce3a10bfb7b59855382b11f21e89b13eac7e7d8ad2b8827d174718f93474b"
+      }
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "scripts/codex_harness/test_research_controller_frontier.py::MinimalLifecycleRepairTests",
+        "scripts/codex_harness/test_research_controller_frontier.py::FrontierTests",
+        "scripts/codex_harness/test_research_controller_frontier.py::ConcurrentReviewTests",
+        "-q"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 3.2525657028891146,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r29_controller_minimal_repair_code/FINAL_TARGETED.log",
+      "source_identities": {
+        "scripts/codex_harness/research_controller.py": "c87de898220d48291b4b15dddaf5dae4dc195b1b086458fa4f104c06b65672f7",
+        "scripts/codex_harness/test_research_controller_frontier.py": "36ef9e3bb18744e36138982181ff06f33cf14dec66d3cf95db7bf9e3e0be1c30"
+      }
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "scripts/codex_harness/test_research_controller_frontier.py::MinimalLifecycleRepairTests",
+        "scripts/codex_harness/test_research_controller_frontier.py::FrontierTests",
+        "scripts/codex_harness/test_research_controller_frontier.py::ConcurrentReviewTests",
+        "-q",
+        "-rs"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 4.552120310021564,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r29_controller_minimal_repair_code/FINAL_TARGETED_SEALED.log",
+      "source_identities": {
+        "scripts/codex_harness/research_controller.py": "b118149b13d3568f0fa2e5afb2ef503e461434cf5df3a8f7829bbb2bb95c1dac",
+        "scripts/codex_harness/test_research_controller_frontier.py": "8fbb0bc23a55c8c3fe2695552b55a4d1f3699b1b8198b6db558f4cb3379e1fa9"
+      }
+    }
+  ],
+  "final_test_summary": "49 passed, 3 skipped, 104 subtests passed in 2.66s",
+  "skips": [
+    "production repair already acknowledged",
+    "live acquisition already transitioned",
+    "live independent review inventory transitioned"
+  ],
+  "diff_check_exit": 0,
+  "current_read_only_inventory": {
+    "path": ".agent-harness/runtime/r23-continuous/STATE.json",
+    "target": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/LIVE_STATE.json",
+    "task_count": 86,
+    "campaign_identity": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4"
+  },
+  "scientific_producer_calls": 0,
+  "production_state_writes": 0,
+  "native_dispatches": 0,
+  "git_mutations": 0,
+  "old_test_bank_seconds": "18.6652202853/30 retained; no historical CF4/SavedLaw/Gaia sweep",
+  "cumulative_started_test_command_wall_seconds": 25.451907256850973,
+  "first_failure_preserved": "/mnt/extdrive/workdir/htt_open_data/r29_controller_minimal_repair_code/FIRST_FAILURE.log",
+  "limits": "Source identities were captured contemporaneously for controls and final tests. The first two commands retain raw outputs and command-order binding; first controller is exact supplied preimage, focused controller/tests match next contemporaneously hashed controls. No installation, publication, admission or live execution claimed."
+}

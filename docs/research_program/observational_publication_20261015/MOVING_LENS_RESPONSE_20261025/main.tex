@@ -1,0 +1,191 @@
+\documentclass[aps,prd,reprint,onecolumn,notitlepage,nofootinbib]{revtex4-2}
+\usepackage{amsmath,amssymb,bm}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\newcommand{\dd}{\mathrm d}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\begin{document}
+\title{Response domains and estimator differentiation for the moving-lens effect}
+\date{25 October 2026}
+\begin{abstract}
+The moving-lens temperature signal admits a simple local-advection expression for a coherently translated gravitational potential. Its extension to arbitrary spatial matter velocities requires a separate physical response. We state the translation domain explicitly and present an instantaneous Newtonian Poisson--continuity counterexample to unrestricted local advection. We then distinguish density reconstruction, temperature response and bandpower compression, and retain data, template and covariance variation in the differential of a fitted amplitude. Angular curl and parity tests concern specified operators and ensembles; they do not by themselves determine physical matter vorticity. These distinctions delimit what an amplitude measurement can imply for a full signed tangent field and for common-congruence tensor diagnostics. No new measurement or evaluated survey response is supplied.
+\end{abstract}
+\maketitle
+
+\section{Physical conventions and the translated-potential domain}
+
+The ACT--DESI moving-lens analysis in Ref.~\cite{actdesi} measures a template amplitude using ACT DR6 temperature data and DESI Legacy Surveys DR9 luminous red galaxies. Its density reconstruction is potential-only. A weighted projected template is decomposed into angular gradient and curl, cross-correlated with temperature, and compressed into six bands and a fitted amplitude. The normalization uses surrogate scalar-density fields; the galaxy--potential amplitude uses a halo model, with external lensing calibration deferred. The temperature--curl (TC) test is an ensemble-parity test. These products must be distinguished from signed physical matter velocities, acceleration or vorticity estimates.
+
+We assume scalar weak fields about flat FLRW, metric signature $(-,+,+,+)$, Born paths, nonrelativistic bulk motion and negligible intrinsic evolution during a lens crossing. Comoving coordinates have length units and conformal time $\eta$ has time units. The physical peculiar velocity is $\vect v$, $\vect\beta=\vect v/c$ refers to the CMB frame, and $\phi=\Phi_W/c^2$ is the dimensionless Weyl potential. These conventions do not identify local peculiar motion with global matter tilt.
+
+For a rigidly translated potential,
+\begin{equation}
+ \phi(\vect x,\eta)=\phi_0(\vect x-\vect X(\eta)),
+ \qquad \vect X'=\vect v_{\rm bulk},
+\end{equation}
+with velocity constant across the lens, the chain rule gives
+$\partial_\eta\phi=-\vect v_{\rm bulk}\cdot\nabla\phi$.
+The transverse translation term in the linear integrated Sachs--Wolfe (ISW) integral is therefore
+\begin{equation}\label{eq:translation}
+ \Theta_{\rm ML}(\vect n)\equiv\frac{\Delta T}{T_0}
+ =-2\int\dd\chi\,\beta_{{\rm bulk},\perp}^{a}
+       \partial_{\perp a}\phi.
+\end{equation}
+For a thin lens, define the unreduced deflection by
+\begin{equation}
+ \alpha_a=2\int\dd\chi\,\partial_a\phi,
+ \qquad \Theta_{\rm ML}=-\alpha_a\beta_{\rm bulk}^{a}.
+\end{equation}
+Both $\alpha$ and $\beta$ are dimensionless; physical velocity is $c\beta$. At fixed potential, this term reverses under reversal of the bulk velocity and vanishes for zero bulk velocity or constant potential. Intrinsic ISW evolution is separate.
+
+Equation~\eqref{eq:translation} also describes a leading scale-separated approximation when a long-wavelength bulk velocity is nearly constant across a short-wavelength potential. The squeezed construction in Ref.~\cite{actdesi}, Sec.~III.1 and Eq.~(13), requires such a hierarchy. Reference~\cite{hotinli2020}, Sec.~II, takes the velocity effectively constant over the halo integral. Reference~\cite{wayland2026}, Sec.~2.1, likewise models coherent potential translation and excludes internal halo motion. Replacing this bulk velocity by an arbitrary spatial matter velocity is not a general physical law. The relation also does not identify the fitted $b_{\rm ML}$ of Ref.~\cite{actdesi} with $\beta$.
+
+\section{Nonlocal potential evolution: a snapshot counterexample}
+
+Consider the instantaneous Newtonian scalar subcase with negligible anisotropic stress. Let
+\begin{equation}
+ \nabla^2\phi=\kappa\delta,\qquad \kappa>0,
+ \qquad \delta'=-\nabla\cdot[(1+\delta)\vect v].
+\end{equation}
+On a specified zero-mean periodic domain, with the inverse Laplacian fixed, the velocity-dependent potential derivative is
+\begin{equation}\label{eq:poisson}
+ \phi'_v=-\kappa\nabla^{-2}\nabla\cdot[(1+\delta)\vect v].
+\end{equation}
+If the background coefficient evolves, the full derivative also contains
+$(\kappa'/\kappa)\phi$. Here $\kappa$ is held fixed at the snapshot, or only the velocity-dependent contribution is compared. The boundary and zero-mode prescription belongs to the physical response; periodic boundaries are not assumed for the actual survey.
+
+On a periodic $(x,y)$ domain, take $k,q>0$ and
+\begin{equation}\label{eq:fields}
+ \phi=\varepsilon\cos(kx),\qquad
+ \delta=-\frac{\varepsilon k^2}{\kappa}\cos(kx),\qquad
+ \vect v=V\sin(qy)\vect e_x.
+\end{equation}
+The conditions $|\varepsilon|k^2/\kappa<1$, $|\varepsilon|\ll1$ and $|V|/c\ll1$ ensure positive matter density, weak fields and slow motion. The velocity is divergence-free, with
+$\nabla\times\vect v=-Vq\cos(qy)\vect e_z$.
+Continuity and Poisson give
+\begin{align}
+ \delta'&=-\frac{\varepsilon Vk^3}{\kappa}\sin(kx)\sin(qy),\\
+ \phi'_v&=\frac{\varepsilon Vk^3}{k^2+q^2}\sin(kx)\sin(qy).
+\end{align}
+Local potential advection would instead give
+\begin{equation}
+ -\vect v\cdot\nabla\phi=\varepsilon Vk\sin(kx)\sin(qy).
+\end{equation}
+The ratio of the coefficients is
+\begin{equation}
+ \frac{k^2}{k^2+q^2}.
+\end{equation}
+At $q=k$, the physical velocity-dependent derivative is one half of the local-advection expression. Both derivatives have inverse-time units. This symbolic snapshot counterexample does not assert a global Bianchi solution. Its small-$q/k$ limit also explains why local advection can be a leading bulk/short-potential approximation while failing for arbitrary mode assignments.
+
+\section{The full signed tangent carrier and its response}
+
+For real orthonormal scalar harmonics, retain both tangent bases,
+\begin{equation}
+ Y^E_{\ell m,a}=\frac{\nabla_aY_{\ell m}}{\sqrt{\ell(\ell+1)}},
+ \qquad
+ Y^B_{\ell m,a}=\frac{\epsilon_a{}^b\nabla_bY_{\ell m}}{\sqrt{\ell(\ell+1)}}.
+\end{equation}
+With $N_r$ declared radial basis functions $b_p(\chi)$, $1\leq\ell\leq L$, both $s=E,B$ and all real signed $m$ coordinates, the kinematic tangent carrier has dimension $2N_rL(L+2)$. This counts coordinates, not physical degrees of freedom qualified as measured by the source.
+
+At fixed potential, the expression
+\begin{equation}\label{eq:formal}
+ R^{\rm adv}_{\nu p\ell ms}=-2T_0M_\nu B_\nu
+ \left[\int\dd\chi\,b_p(\chi)\partial_{\perp a}\phi\,
+ Y^s_{\ell m}{}^a\right]
+\end{equation}
+is a formal advection Jacobian. Here $B_\nu$ includes beam, filter and pixel operations, and $M_\nu$ is the mask. For arbitrary basis coefficients it differentiates only the stipulated local-advection model. It becomes a physical approximation on a separately justified subspace of coherently translating or scale-separated bulk lenses, with a qualified approximation remainder. Every signed E/B coordinate must remain visible when that subspace is specified. Removing unsupported coordinates does not establish that they vanish.
+
+Within this formal model, varying the potential adds
+\begin{equation}
+ -2T_0MB\int\dd\chi\,\beta^a\partial_a(\delta\phi).
+\end{equation}
+A general physical response $R_{\rm phys}$ must instead follow source-compatible density, potential and velocity evolution, light-cone mapping, a boundary prescription, and any vector or tensor contributions required at the retained order. Source positions, selection and filtering may also vary. Equation~\eqref{eq:poisson} prevents an unrestricted replacement of $R_{\rm phys}$ by $R^{\rm adv}$.
+
+No source-qualified map from common-congruence vorticity $\omega$, four-acceleration $A$ and tilt $\beta$ fields to this complete response is supplied. A single-epoch bulk velocity does not independently determine four-acceleration. Without a dynamical or history closure, agreement of kinematic histories on the observed light cone need not determine their time derivatives. This is a missing-closure statement, rather than an assertion of freedom in every dynamical model.
+
+\section{Reconstruction, temperature response and compression}
+
+The density reconstruction operator $R_\rho$ in Ref.~\cite{actdesi} maps scalar density into a longitudinal Fourier vector, so $\vect k\times\widehat{\vect v}=0$ away from the DC mode. Galaxy-density weighting and sky projection can nevertheless generate angular curl. In particular,
+\begin{equation}
+ \nabla\times(\rho\widehat{\vect v})=
+ \nabla\rho\times\widehat{\vect v}
+ \quad\hbox{if}\quad\nabla\times\widehat{\vect v}=0.
+\end{equation}
+Thus the angular curl template $X^C$ may be nonzero. This identity neither specifies $R_{\rm phys}$ nor proves that all physical matter vorticity is invisible. Likewise, the presence of E/B coordinate labels establishes no physical response rank. Potential-only reconstruction and a TC parity test do not imply that genuine temperature data annihilate every physical solenoidal perturbation.
+
+For fixed observed template $X$, masks, beam and filter choices, and bin weights, the temperature--gradient (TG) and TC bands form a linear temperature map,
+\begin{equation}
+ \vect d=\mathcal LT,\qquad
+ \delta\vect d=\mathcal L\delta T.
+\end{equation}
+If $X$ or selection changes, $(\delta\mathcal L)T$ must be added. For an actually specified fixed linear model $T=Ru$, the deterministic bandpower kernel is $\ker(\mathcal LR)$. For a nonlinear physical model, a derivative kernel is only a local first-order statement; it does not establish global indistinguishability. No evaluated actual-survey $R_{\rm phys}$ or physical null basis is supplied here.
+
+\section{Differentiating a refitted amplitude}
+
+Let $C$ be symmetric positive definite and $t\ne0$. Write
+\begin{equation}
+ A=C^{-1},\quad h=t^TAt>0,\quad w=\frac{At}{h},\quad
+ \widehat b=w^T\vect d.
+\end{equation}
+The symbol $A$ in this section denotes inverse covariance, rather than the four-acceleration field. The response $w^T\mathcal LR$ applies only if $C$, $t$ and the bandpower operator are fixed. Fixing $X$ alone is insufficient.
+
+When $C$ or $t$ is recomputed, the full first differential is
+\begin{align}\label{eq:gls}
+ \dd\widehat b&=w^T\dd\vect d+(\dd w)^T\vect d\nonumber\\
+ &=\frac{1}{h}\Big[
+ t^TA\dd\vect d+(\dd t)^TA(\vect d-2\widehat b t)
+ -t^TA(\dd C)A(\vect d-\widehat b t)\Big].
+\end{align}
+Here $\dd$ preceding a quantity is its differential, whereas $\vect d$ denotes the bandpower vector. Equation~\eqref{eq:gls} uses $\dd A=-A(\dd C)A$ and includes template variation; a fiducial template normalization is not held constant by default.
+
+In Ref.~\cite{actdesi}, Eq.~(23), the covariance is an empirical function of unbinned $D_\ell D_{\ell'}$. With multipole weights, support and cutoffs fixed,
+\begin{equation}
+ \dd C_{bb'}=\frac{1}{W_bW_{b'}}
+ \sum_{\substack{\ell\in b,\ell'\in b'\\|\ell-\ell'|\leq\Delta\ell}}
+ w_\ell w_{\ell'}\left[(\dd D_\ell)D_{\ell'}+
+ D_\ell(\dd D_{\ell'})\right].
+\end{equation}
+Changing these weights or supports adds their own terms. Holding the observed empirical covariance fixed defines a conditional sensitivity question; recomputing the pipeline defines a different one. A differentiable scalar output has Jacobian rank at most one at a point. This is neither an observed physical rank nor a statement about covariance information in the full data.
+
+Any eventual tensor inference must retain all signed modes, cross-frequency, cap, sample and depth covariance, and the joint dependence of data, reconstructed $X$, template $t$, estimated $C$ and physical calibration. The covariance estimate and fitted weights are not independent observations. Scalar uncertainties or independent products cannot replace that joint structure.
+
+Suppose, conditionally, that a particular fixed linear response $H$ to a mean-zero random velocity perturbation $\vect w$ is independently justified, and that $\vect w$ is independent of the scalar fields producing $X$. Then
+\begin{equation}
+ \mathbb E_{\vect w}[(H\vect w)X]=0.
+\end{equation}
+This illustrates a blind direction of that specified cross-mean. It does not establish $H=R^{\rm adv}$ for arbitrary $\vect w$, or assert that actual DESI velocities obey the independence condition. Temperature variance, cross-covariances and uncompressed maps can change. Parity cancellation supplies neither a deterministic map null, full-likelihood blindness nor a physical vorticity bound.
+
+\section{Calibration and nuisance ambiguities}
+
+In the mean cross-spectrum of Ref.~\cite{actdesi}, the physical velocity--template correlation and galaxy--potential calibration multiply. If either is unconstrained, multiplication of the former by positive $\lambda$ and the latter by $1/\lambda$ leaves every predicted bandpower unchanged. Surrogate and halo-model choices select a conditional normalization; they do not supply observed joint calibration uncertainty for arbitrary new $\omega/A/\beta$ models. This is an ambiguity of that observational parameterization, not a pair of fully dynamical Bianchi solutions.
+
+A second ambiguity arises in a thin-lens patch. Let $s_a$ denote the effective nuisance coefficient of ordinary CMB-gradient lensing in the same unreduced-$\alpha$ convention. The shared dipolar part is
+\begin{equation}
+ \Theta_{\rm patch}=\alpha_a(s^a-\beta^a).
+\end{equation}
+The simultaneous changes $\beta\mapsto\beta+q$ and $s\mapsto s+q$ leave every patch pixel unchanged. An independently measured large-scale CMB gradient and its covariance can constrain $s$; an unconstrained nuisance cannot. Ordinary-lensing dipoles and halo-mass uncertainty are discussed in Ref.~\cite{hotinli2020}, Secs.~III, V and VI. This conditional ambiguity does not deny that scale separation can suppress contamination.
+
+For a separate internal-motion example, use local physical radius $\vect r$, spherical density and potential, and $\vect v=\vect\Omega\times\vect r$, with $\vect\Omega$ parallel to the patch line of sight. Here $\nabla\cdot\vect v=0$ and $\vect v\cdot\nabla\delta=0$. Continuity gives zero velocity-induced density derivative, and the specified Poisson inverse gives zero velocity-induced scalar-potential derivative. This snapshot's scalar ISW contribution from the rotation vanishes for either sign of $\vect\Omega$, while $\nabla\times\vect v=2\vect\Omega$. It lies outside the coherent bulk-translation observable. The argument uses continuity and Poisson, not an unrestricted advection identity; it establishes neither a rigid moving-halo no-go nor a global Bianchi or actual-DESI null. It does not solve full Euler or Einstein evolution. Intrinsic evolution and higher-order or vector-metric effects remain separate.
+
+The calibration and lensing-gradient ambiguities prevent conversion of amplitude summaries into a qualified signed physical velocity field under an unspecified calibration and nuisance class. Further processing of the same scalar summaries cannot remove them. Setting missing calibration or nuisance quantities to fiducial values changes the scientific question.
+
+\section{Requirements for physical and tensor interpretation}
+
+Interpreting the published measurement requires source-bound numerical TG/TC bands; exact template, window, mask and beam definitions; full channel, cap and sample covariance; realized velocity and potential normalization with uncertainty; and any calibration cross-covariance used in combination. A new all-mode map analysis additionally requires a common-frame physical response to the full signed E/B carrier, a justified evolution, boundary and scale-separation prescription, and a qualified lensing, foreground and selection nuisance class. One must declare whether covariance, template and selection are fixed or refitted and retain their derivatives and joint dependence when they vary.
+
+The primary links inspected on 24 October 2026 did not supply a numerical moving-lens measurement, covariance and calibration bundle. This is a bounded source observation, rather than a universal absence claim. The author resource page and forecast repository, together with the \texttt{kszx} framework and notebooks, do not supply that complete product~\cite{authorpage,forecast,kszx,notebooks}. Public ACT maps and ACT cosmology spectra and covariance, and public DESI-LS LRG catalogues, remain genuine inputs~\cite{actrelease,desirelease}. The ACT PSPIPE cosmology covariance is not the covariance of the moving-lens TG/TC measurement. Raw-input availability does not establish a calibrated response.
+
+A full $(x,F,\Pi,Q,G_F)$ output is consequently not evaluable from this material: no qualified common-congruence tensor state, physical null or selection law, or complete covariance is supplied. Scalar summaries cannot replace signed modes. No physical global-tilt measurement, native Bianchi family identification, posterior or truth certificate follows. The conditional response calculations and estimator differential above do not constitute an evaluated survey Jacobian or a calibrated physical likelihood, and they imply no cosmological no-go.
+
+\clearpage
+\begin{thebibliography}{9}
+\bibitem{actdesi} Hotinli et al., \href{https://arxiv.org/html/2605.18938v1}{arXiv:2605.18938v1}, especially Eqs.~(4), (17)--(25), (38)--(42) and Secs.~III.1, IV, V.3.
+\bibitem{hotinli2020} Hotinli, Johnson and Meyers, \href{https://arxiv.org/html/2006.03060v3}{arXiv:2006.03060v3}, Secs.~II, III, V, VI.
+\bibitem{wayland2026} Wayland, Alonso and Coulton, \href{https://arxiv.org/html/2609.04133v1}{arXiv:2609.04133v1}, Sec.~2.1.
+\bibitem{authorpage} \href{https://selimhotinli.github.io/movinglenseffect/}{Author moving-lens resource page}, inspected 24 October 2026.
+\bibitem{forecast} \href{https://github.com/selimhotinli/moving_lens/tree/9e343c82930f0d8e4366507b5f1759f0559c8f09}{\texttt{moving\_lens} forecast repository}, inspected revision, 24 October 2026.
+\bibitem{kszx} \href{https://github.com/kmsmith137/kszx/tree/c64f3fda498b25cc978b2a67909f3c8f916578fd}{\texttt{kszx} framework}, inspected revision, 24 October 2026.
+\bibitem{notebooks} \href{https://github.com/kmsmith137/kszx_notebooks/tree/9dcce8cb4ce1f1e37074343444f0eae09d2bd046}{\texttt{kszx} notebooks}, inspected revision, 24 October 2026.
+\bibitem{actrelease} NASA LAMBDA, \href{https://lambda.gsfc.nasa.gov/product/act/act_dr6.02/index.html}{ACT DR6.02 products}, inspected 24 October 2026.
+\bibitem{desirelease} \href{https://data.desi.lbl.gov/public/papers/c3/lrg_xcorr_2023/v1/}{DESI-LS LRG cross-correlation release v1}; source paper \href{https://arxiv.org/html/2309.06443v2\#S7}{arXiv:2309.06443v2}, Sec.~7.
+\end{thebibliography}
+\end{document}

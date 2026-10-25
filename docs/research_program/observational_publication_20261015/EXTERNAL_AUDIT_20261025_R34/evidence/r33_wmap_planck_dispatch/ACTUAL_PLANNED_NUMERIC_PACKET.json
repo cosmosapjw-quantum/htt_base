@@ -1,0 +1,52 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R33-CMB-WMAP-PLANCK-F2-EXTENSION",
+  "attempt": 1,
+  "phase": "execute",
+  "input_identity": "sha256:d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1",
+  "candidate_identity": null,
+  "frontier_identity": "3a5d27cf590293e9bd1779b69e040859738861e358e9d214b466ea20ac9401ec",
+  "task_spec_identity": "25fe6450dfac423010b4d3995ddbb7139d25c3259e3fd4abbb06a88674140b72",
+  "packet_id": "aac87a13641ac69951c3ef4de5d0c4747d2038d9e3b30d610b6d79ad6e555d22",
+  "route": {
+    "route": "subagent_specialist",
+    "requested": {
+      "model": "gpt-6-sol",
+      "effort": "high"
+    },
+    "transport_selected": {
+      "model": "gpt-6-sol",
+      "effort": "high"
+    },
+    "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+    "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+    "launch_performed": false,
+    "availability_catalog_profiles": [
+      {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "model": "gpt-6-sol",
+        "effort": "high"
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "effort": "medium"
+      }
+    ]
+  },
+  "resume_evidence": null,
+  "scientific_resume": null,
+  "transport_resume": null,
+  "launch_performed": false,
+  "observed_runtime": "UNKNOWN",
+  "native_tool": "collaboration.spawn_agent",
+  "spawn_args": {
+    "task_name": "rc_aac87a13641ac699",
+    "fork_turns": "none",
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high",
+    "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4\", \"task_id\": \"R33-CMB-WMAP-PLANCK-F2-EXTENSION\", \"attempt\": 1, \"phase\": \"execute\", \"input_identity\": \"sha256:d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1\", \"candidate_identity\": null, \"frontier_identity\": \"3a5d27cf590293e9bd1779b69e040859738861e358e9d214b466ea20ac9401ec\", \"task_spec_identity\": \"25fe6450dfac423010b4d3995ddbb7139d25c3259e3fd4abbb06a88674140b72\", \"packet_id\": \"aac87a13641ac69951c3ef4de5d0c4747d2038d9e3b30d610b6d79ad6e555d22\", \"spec\": {\"id\": \"R33-CMB-WMAP-PLANCK-F2-EXTENSION\", \"kind\": \"numeric\", \"goal\": \"Determine actual nominal WMAP+Planck full24 F2 quotient or confounding in fixed12/17-row systems and all12responseconventions\", \"acceptance\": \"Actually generated40detector/10DA/5band responses, exact old7 rows, all24 tensor controls, ranks/angles/conditioning/weights orwitnesses, firstfailures and separate independently executed80/120digit check under same existing900s sourcebanks; no physicalL03promotion.\", \"input_identity\": \"sha256:d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1\", \"input_sources\": [\"/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_dispatch/INPUT.json\", \"/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/WMAP_PLANCK_F2_CONTRACT.md\", \"/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/RESULT.json\", \"/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/BANDPASS_SOURCE_METADATA.json\"], \"owned_paths\": [\"/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric\"], \"implementation_route\": \"subagent_specialist\", \"contract_origin\": \"new_conditional_research\", \"promotes_original_acceptance\": false, \"requires\": {\"all\": []}, \"contributors\": [\"/root/r33_cmb_additional_frequency_framing\"], \"accounting_parent_task_id\": \"R26-FULL7-STREAMED-SPIN2-QUADRATURE\", \"semantic_delta\": {\"kind\": \"input\", \"before\": {\"released_nominal_channels\": 7, \"F2_quotient\": \"all24confoundedinacceptedfinite7rowmodel\"}, \"after\": {\"new_released_WMAP_detector_curves\": 40, \"stipulated_DA_rows\": 10, \"stipulated_band_rows\": 5, \"total_response_rows\": [12, 17], \"fixed_F2_columns\": 9, \"quotient_status\": \"TO_BE_MEASURED\"}, \"discriminator\": \"Actually integrate additional released detector response functions and test fixed9moment CMB escape/conditioning in enlarged12/17frequency tensorproduct; dimensioncountalone is no result.\", \"scope\": \"Source-qualified finite equal CMB-calibrated detector/DA nominalrows; signedtails/literalanddriftproxy retained. No actualpolarizedmapresponse/noise supplied. Physicalfull(x,F,Pi,Q,G_F)undefined; originalL03/H02/H04/HOLDunchanged.\"}}, \"issue\": null, \"repair_plan\": null, \"repair_authorization\": null, \"resume_evidence\": null, \"scientific_resume\": null, \"transport_resume\": null, \"repair_input_transition\": null, \"authors\": [], \"contributors\": [\"/root/r33_cmb_additional_frequency_framing\"], \"history_refs\": [], \"history_total\": 0}"
+  }
+}

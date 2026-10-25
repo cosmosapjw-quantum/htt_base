@@ -1,0 +1,31 @@
+{
+  "schema": "htt.cf4_exact_factor_actual_review_input/1",
+  "controller_go": true,
+  "task_id": "R28-CF4-EXACT-CALIBRATION-FACTOR-ACTUAL-CONSUMER",
+  "agent_id": "/root/r28_cf4_exact_factor_actual_review",
+  "packet_id": "a364a309a81505064a22a4002d1e35660bd88416f847f394dbb93967617b0f12",
+  "requested_runtime": {"model": "gpt-6-astra", "effort": "xhigh"},
+  "transport_selected": {"model": "gpt-6-astra", "effort": "xhigh"},
+  "observed_runtime": "UNKNOWN",
+  "whole_cap_seconds": 20,
+  "bindings": {
+    "contract": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_remaining_science_frontier_independent_audit/EXACT_CALIBRATION_FACTOR_CONTRACT.md", "sha256": "1ae79d17ba8ce31b10ac9a6182771b4dd9587f915b9b76999e6fa957fa28f4ba"},
+    "source_carrier": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/CARRIER.npz", "sha256": "21763a9722c8375d593c1f0dcd68d42f31cb1952f22a4140a0df1eea285d6c28"},
+    "source_result": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/RESULT.json", "sha256": "c5148c206e6ec7d5f0e69cbc3ab8dc2c0c2f815d3b304431e0aa0cd16e91883d"},
+    "source_input": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/INPUT.json", "sha256": "570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd"},
+    "source_contract": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_remaining_science_frontier_independent_audit/NEXT_CONTRACT.md", "sha256": "80611699ffb4226b295c5dcb3a0c8ba9e5526a3f807747a17f24ba53b06c2678"},
+    "source_clarification": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_remaining_science_frontier_independent_audit/PRE_ACK_CLARIFICATION.md", "sha256": "52fea066faafef05cdbd7db391897861b9cb0fbf8ca8b35e17a2cf4ab1b59143"},
+    "source_review": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/RESULT.json", "sha256": "369a975ea0e1e94ca30f3cfc313b6b70101e4dc4434e31e4b1172cdc90939735"},
+    "candidate_factor": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/products/FACTOR.npz", "sha256": "b152c216d287d278014b3f94cbe0d3d1d74a1312cb42b2555d2bf59d47209a80"},
+    "candidate_result": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/products/RESULT.json", "sha256": "ce46049e719e15749ee9adf8b5101f5cb4f439de6751a6285fa26eeeb6920e02"},
+    "author_input": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/INPUT.json", "sha256": "db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5"},
+    "author_return": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/RETURN.json", "sha256": "bcac9e5207fa5bee86e9a2f8150d1448dd3ac68d54b8ff494bf3add91a13b183"},
+    "author_receipt": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/actual_run/WHOLE_COMMAND_RECEIPT.json", "sha256": "e6c07ad6b7463c3f660ac8bf0386fa090bd88a2b53d36aebbecac040c10cde02"},
+    "author_factor_source": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/factor.py", "sha256": "cd7f3d4b4c629736b2a703a3ca85421872601859842e674af5485bc002fb84e4"},
+    "author_control_source": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/test_controls.py", "sha256": "e07074a9a0900e73fa1e655f4450fb03fdc7d9c6921047decb003e372af9ab42"},
+    "review_packet_ack": {"path": "/mnt/extdrive/workdir/htt_open_data/r28_exact_factor_dispatch/ACTUAL_ACKNOWLEDGED_REVIEW_PACKET.json", "sha256": "1ff8b15316c34ae1d52d41ee347267e85fb691c35b11e753e331ff2b13800560"},
+    "account_head": {"path": "/mnt/extdrive/workdir/htt_open_data/r28_exact_factor_dispatch/ROOT_ACCOUNT_HEAD_AFTER_CONSUMER.json", "sha256": "cd4b6d1326721d1c310b2eab26dabcb7c5ad79e56122d9664d663e2e8a06377e"},
+    "reviewer_checker": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_actual_review/check.py", "sha256": "1c743cecc232c9c22d76191b5c49eee318f177a555ca92a389fb67dde19a29c4"},
+    "reviewer_runner": {"path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_actual_review/run_check.py", "sha256": "2ad6f02718ec20e64937d0dbdf1028beba6dbf0e1f4f93b151332f77df12caf2"}
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "packet_id": "b429c0db0f018c2a269170f90d7a9691c97bc8913d5c24f9ad7bbd1119e157aa",
+  "task_id": "R30-CMB-NOMINAL-BANDPASS-MOMENT-IDENTIFIABILITY",
+  "input_identity": "sha256:cfe7be664ca43841e1197653dc4391b9c64c239cca54eebce9a06def80d916be",
+  "agent_id": "/root/rc_b429c0db0f018c2a",
+  "phase": "research",
+  "attempt": 2,
+  "outcome": "success",
+  "candidate_identity": null,
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "scientific_admission": "HOLD",
+  "acceptance_met": false,
+  "created_at_utc": "2026-10-25T08:03:42.182018+00:00",
+  "status": "BOUNDED_REPAIR_RESEARCH_COMPLETE_NO_SCIENCE_EXECUTION",
+  "research_contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_spectral_guard_repair_framing/REPAIR_CONTRACT.md",
+    "sha256": "d43c4e62d7bf643e895f5eae8cfd7d9f82ee2842a61047ac23846e7a91216bb7"
+  },
+  "read_only_scope": [
+    "existing checkout and dirty state",
+    "frozen input/contract/theory/framing",
+    "exact cached RIMO tables",
+    "first producer/preimage/proposed diff/stdout/stderr/receipts",
+    "ACKNOWLEDGED_RESEARCH_PACKET.json",
+    "controller result-shape parser"
+  ],
+  "mutated_paths": [
+    "/mnt/extdrive/workdir/htt_open_data/r30_spectral_guard_repair_framing/REPAIR_CONTRACT.md",
+    "/mnt/extdrive/workdir/htt_open_data/r30_spectral_guard_repair_framing/RAW_RECEIPT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r30_spectral_guard_repair_framing/RESULT.json"
+  ],
+  "producer_invocations": 0,
+  "checker_invocations": 0,
+  "source_downloads": 0,
+  "repository_writes": 0,
+  "controller_state_writes": 0,
+  "old_account_updates": 0,
+  "source_identity_confirmed": {
+    "input": "cfe7be664ca43841e1197653dc4391b9c64c239cca54eebce9a06def80d916be",
+    "contract": "fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df",
+    "producer_and_preimage": "074b7148e6c7ca3d13d693639453795d69d9f142bea5e323ad5fa66780644dc0",
+    "first_raw_receipt": "de3e9bfd950804dfffde883cac54191aea6d7a05b753c28bae142df012b35e1f",
+    "first_producer_stderr": "864f5f4efd08a1e2b646df83ca62c660b4494b2084976f9e2f7ee8ead9478b18",
+    "LFI": "a4794d80b378e00aef1b5e324e2759c3fa791873f2a3edcb53c93678a48dd94b",
+    "HFI": "deb55a5c6f76a8578e86c122f56c3f61998b803818b09c4f3e709897881fe222"
+  },
+  "raw_source_audit": {
+    "tool_chunk_id": "657ce4",
+    "exit_code": 0,
+    "tool_wall_seconds": 3.363863686,
+    "inner_seconds_including_imports": 3.2815560321323574,
+    "F143_negative_rows": 20,
+    "negative_flags": [
+      "T"
+    ],
+    "first_negative_row_zero_based": 229,
+    "selected_negative_and_nonfinite": 0,
+    "retained_row_counts_in_threshold_order_1e_7_1e_8_1e_6": {
+      "100": [
+        252,
+        284,
+        230
+      ],
+      "143": [
+        267,
+        326,
+        229
+      ],
+      "217": [
+        416,
+        446,
+        338
+      ],
+      "353PSB": [
+        548,
+        571,
+        482
+      ]
+    }
+  },
+  "first_research_diagnostic_failure": {
+    "initial_chunk": "8fcc18",
+    "session_id": 96636,
+    "initial_observed_tool_wall_seconds": 1.001082192,
+    "terminal_chunk": "eca455",
+    "terminal_exit_code": 1,
+    "terminal_poll_wall_seconds": 1.0329e-05,
+    "stderr": "Traceback (most recent call last):\n  File \"<stdin>\", line 13, in <module>\nTypeError: unhashable type: numpy.ndarray\n",
+    "cause": "Inspection script omitted reshape(-1) on FITS FLAG before constructing a set. Corrected only the inspection script in the successful standalone read. No producer or checker invoked.",
+    "whole_enclosing_elapsed": "UNKNOWN_PENDING_CONTROLLER_AUTHENTIC_TOOL_TIMESTAMP_ENCLOSURE",
+    "poll_walls_are_not_total_duration": true
+  },
+  "constant_constructor_audit": {
+    "tool_chunk": "070384",
+    "exit_code": 0,
+    "tool_wall_seconds": 0.277583651,
+    "inner_seconds": 0.06907171895727515,
+    "mpmath_version": "1.3.0",
+    "initial_dps": 15,
+    "T_CMB_old_minus_fresh_120_parse": "-1.88293824976426549255847930908203125e-16",
+    "h_old_minus_fresh_120_parse": "-1.702750933242537182714723900412207595737e-50",
+    "k_B_old_minus_fresh_120_parse": "9.215216055820379332063034489386989592168e-40",
+    "scope": "standalone local constructor semantics; no producer import, response integration, rank or sky calculation"
+  },
+  "other_read_only_tool_chunks": [
+    "79623b",
+    "40bbc0",
+    "2b6ca5",
+    "325317",
+    "bbdcec",
+    "7be818",
+    "df9ca8",
+    "34b7ab",
+    "27fba4",
+    "d75c99"
+  ],
+  "accounting_status": "Parent settles all disjoint actual research/read/write intervals once from authentic enclosing observations; no total or cumulative zero inferred here. Tool inner/outer overlap is not additive. Final artifact-write tool duration is returned separately to controller.",
+  "independence": "This research agent is not a recorded code author; its role is repair framing, not final independent result review. Fresh final reviewer still required.",
+  "memory_lookup": "No relevant MEMORY.md hits; no memory fact used.",
+  "controller_terminal_recovery": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_spectral_dispatch/ROOT_NATIVE_EXECUTION_RECOVERY.json",
+    "sha256": "033d898f0b151f4e3b8dd66df874c10b0750f3258008b7c10240eb1e1d643d9c",
+    "search_enclosures_seconds": [
+      11.056,
+      34.44
+    ],
+    "all_distinct_command_enclosures_seconds": 68.95,
+    "first_producer_included_once_seconds": 4.053,
+    "source_preflight_download_enclosure_seconds": 6.008,
+    "clock_status": "Native clock implementation UNKNOWN; wall metadata enclosure, not monotonic attestation",
+    "status": "OLD_SEARCH_LIFETIME_GAPS_RECOVERED_NO_RERUN"
+  },
+  "artifact_write_observations": [
+    {
+      "tool_chunk": "20482e",
+      "exit_code": 0,
+      "tool_wall_seconds": 0.807437797,
+      "scope": "Initial research contract/raw/result write; current finalization write is separately returned to parent"
+    }
+  ]
+}

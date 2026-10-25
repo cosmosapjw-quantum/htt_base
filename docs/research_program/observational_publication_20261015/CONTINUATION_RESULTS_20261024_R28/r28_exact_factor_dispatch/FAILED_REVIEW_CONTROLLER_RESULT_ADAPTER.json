@@ -1,0 +1,170 @@
+{
+  "schema": "htt.cf4_exact_factor_independent_actual_review/1",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R28-CF4-EXACT-CALIBRATION-FACTOR-ACTUAL-CONSUMER",
+  "agent_id": "/root/r28_cf4_exact_factor_actual_review",
+  "packet_id": "a364a309a81505064a22a4002d1e35660bd88416f847f394dbb93967617b0f12",
+  "input_identity": "sha256:db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5",
+  "candidate_identity": "sha256:ce46049e719e15749ee9adf8b5101f5cb4f439de6751a6285fa26eeeb6920e02",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "transport_selected": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "outcome": "blocker",
+  "status": "HOLD",
+  "acceptance_met": false,
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_actual_review/WHOLE_COMMAND_RECEIPT.json",
+  "qualified_products": [],
+  "review_report": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_actual_review/REVIEW.md",
+  "issue": {
+    "code": "NEW_ZERO_LEVERAGE_MASK_MISMATCH",
+    "class": "code",
+    "issue_class": "code",
+    "severity": "medium",
+    "true_external": false,
+    "input_identity": "sha256:db1f79b73d50c9ea3dfbfa814d6c9759b6bedaa7851fc8f9224266fc0b20abe5",
+    "substantive_question": "Does the exact-factor product correctly identify every additional structurally zero-leverage row of its new observable?",
+    "exact_defect": "factor.py:176 copies parent extra_zero_leverage_mask into the new FACTOR.npz. SBFm has one singleton (row 1484, group_id 11274), so its new K_fact column is exactly zero, but the copied mask remains false.",
+    "source_path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/factor.py",
+    "source_line": 176,
+    "product_field": "FACTOR.npz/extra_zero_leverage_mask",
+    "first_failure": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_actual_review/check.stderr",
+    "first_failure_checker_line": 161,
+    "expected_semantics": "Current K_fact additional exact-zero columns outside mixed rows, deriving reference coefficients as exact negative sums of nonreference L. Preserve source K_hat mask under an explicitly inherited name if retained.",
+    "consequence": "The full-data factor has at least one newly zero-leverage singleton that its stored mask fails to report, violating explicit effective-leverage contract metadata.",
+    "minimum_witness": {
+      "row_index_zero_based": 1484,
+      "group_id": 11274,
+      "channel": "SBFm",
+      "singleton_channel_count": 1,
+      "expected_current_extra_zero": true,
+      "inherited_extra_zero": false
+    },
+    "complete_mismatch_set": "NOT_PERSISTED_BEFORE_FIRST_FAILURE",
+    "substantive": true,
+    "question": "Correct the exact factor zero-leverage metadata and complete remaining actual-result checks without replaying source analysis.",
+    "exact_missing_or_defect": "FACTOR.npz extra_zero_leverage_mask copied parent mask; row1484/group11274 SBFm is exactlyzero after integer contrast factor but markedfalse. Complete mismatch set not yet persisted."
+  },
+  "blocking_findings": [
+    {
+      "code": "NEW_ZERO_LEVERAGE_MASK_MISMATCH",
+      "severity": "medium",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/factor.py",
+      "line": 176,
+      "field": "FACTOR.npz/extra_zero_leverage_mask",
+      "witness_group_id": 11274
+    }
+  ],
+  "validation_evidence": {
+    "status": "PARTIAL_VALIDATION_THEN_FIRST_FAILURE",
+    "numeric_groups_started": 1,
+    "numeric_groups_repeated": 0,
+    "independent_algorithm": "Integer dyadic direct L*(y_i-y_ref), denominator 2^2148; no author import.",
+    "evidence_basis": "Bound sequential checker reached first failing line 161; all preceding assertions completed. No success-only NUMERIC_CHECK.json exists.",
+    "completed": [
+      "source/input/candidate hash bindings",
+      "35970 IDs/order and seven support channels",
+      "35026 singleton / 944 mixed masks",
+      "min(d,group_id) reference rule",
+      "bit-preserved nonreference L",
+      "integer same-channel support contrast identity",
+      "all five exact actual direct rational values",
+      "exact old contraction/channel sums/correction/price",
+      "display rational errors and parent-b numerical difference",
+      "complete 3x3 tensor display",
+      "full numerical KB/KN matrices/norms/singular values/rank labels"
+    ],
+    "failed": "current exact-factor additional zero-leverage mask",
+    "not_executed": [
+      "reviewer actual combined row/channel reference remapping at lines 162-169",
+      "reviewer independent subnormal/tiny-nonzero boundary witnesses at lines 170-180",
+      "final identity rehash",
+      "NUMERIC_CHECK.json successful serialization"
+    ],
+    "author_controls": "Separately observed successful one-batch controls; final source lines 63-70 include combined row/channel permutation.",
+    "original_estimator_or_catalogue_replayed": false,
+    "exact_values_rerun_after_failure": false
+  },
+  "semantics": {
+    "factor_calibration_annihilation": "Exact stored rational functional within fixed support-simplex model; actual integer support pairs checked before failure.",
+    "calibration_mean_covariance_cross_terms": "Exact model cancellation whenever required moments exist.",
+    "full_scoped_acceptance": "HOLD_UNTIL_METADATA_DEFECT_FIXED_AND_FRESH_REVIEW",
+    "KB_KN": "NUMERICAL_DIAGNOSTICS_ONLY",
+    "exact_unbiased_parameter": "NOT_ESTABLISHED",
+    "unrestricted_nuisance": "UNKNOWN",
+    "residual_covariance": "UNKNOWN",
+    "physical_response_selection_PV_null": "HOLD_UNCHANGED",
+    "original_H02_H03_H04": "UNCHANGED_HOLD",
+    "native_family": "NOT_ADMITTED",
+    "CAS_4AXIS": "NOT_PERFORMED"
+  },
+  "repair_handoff": {
+    "boundary": "Metadata-only repair derived from original saved factor; preserve first failure and all original candidates.",
+    "permitted_change": "Correct current exact zero-leverage mask and explicit additional-zero row metadata; preserve inherited mask under distinct name if retained; update new candidate factor identity/result/report bindings.",
+    "prohibited_replay": [
+      "producer fit",
+      "catalogue",
+      "old controls",
+      "exact full-data contraction",
+      "original estimator"
+    ],
+    "next_executor": "Root routes lower-tier bounded repair in existing research phase and same account.",
+    "changed_candidate_reviewer": "Fresh different independent reviewer; this reviewer seeded repair framing."
+  },
+  "timing_seconds": {
+    "child_reaped_monotonic": 2.410455375,
+    "products_fsync_monotonic": 2.508039219,
+    "whole_monotonic_after_receipt_fsync": 2.838776773,
+    "external_kernel_elapsed": 2.88,
+    "exec_first_host_wait": 1.001469008,
+    "exec_first_api_wall": 1.207,
+    "functions_first_displayed_span": 1.3,
+    "completion_poll_host_wait": 1.3486e-05,
+    "completion_poll_api_wall": 0.002,
+    "functions_completion_call_displayed_span_including_receipt_read": 0.1,
+    "whole_API_wall": "NOT_OBSERVED_SINGLE_SPAN_DUE_TO_YIELDED_SESSION",
+    "suggested_conservative_padded_debit": 3,
+    "suggested_debit_is_measured": false,
+    "settlement": "Root maximum overlapping whole observations once; API segments are not whole-command wall."
+  },
+  "resource": {
+    "numeric_group_cap_seconds": 20,
+    "child_deadline_seconds": 15,
+    "rss_cap_bytes": 2147483648,
+    "wait4_lifetime_maxrss_kib": 51436,
+    "kernel_lifetime_maxrss_kib": 51436,
+    "combined_polled_rss_bytes": 71258112,
+    "blas_threads": 1,
+    "official_interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python"
+  },
+  "account_binding": {
+    "parent_task_id": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+    "lifetime_cap_seconds": 600,
+    "used_before_review": 208.39277764664456,
+    "account_head_path": "/mnt/extdrive/workdir/htt_open_data/r28_exact_factor_dispatch/ROOT_ACCOUNT_HEAD_AFTER_CONSUMER.json",
+    "account_head_sha256": "cd4b6d1326721d1c310b2eab26dabcb7c5ad79e56122d9664d663e2e8a06377e",
+    "root_settlement_required": true
+  },
+  "independence": {
+    "authored_candidate": false,
+    "framed_original_contract": false,
+    "producer_files_edited": false,
+    "author_modules_imported": false,
+    "new_worktree_or_clone": false
+  },
+  "evidence_sha256": {
+    "check.py": "1c743cecc232c9c22d76191b5c49eee318f177a555ca92a389fb67dde19a29c4",
+    "run_check.py": "2ad6f02718ec20e64937d0dbdf1028beba6dbf0e1f4f93b151332f77df12caf2",
+    "REVIEW_INPUT.json": "a6d9631a473872b86f0badc57a17b8e9ccf28f1e0d92f0b1214591399dfc6dbd",
+    "check.stderr": "d66e7b7b960b7920682af678a6b826e659d4460d8c086a352a3c040100c2c2b0",
+    "WHOLE_COMMAND_RECEIPT.json": "b30f313cae7b71aa73248ca6cd7b1c70017a8130d20946773313a3a2bc9887b1",
+    "ACTUAL_LIFETIME_RESOURCE.txt": "59baacc182a5aca4acf8aca0990c83a04c477a4d4b1fcc1037aec07f527aa03c"
+  },
+  "next_executable_transition": "Root settles first review once, routes metadata-only repair without producer replay, and obtains fresh independent changed-candidate closeout.",
+  "worker_outcome_verbatim": "failure"
+}

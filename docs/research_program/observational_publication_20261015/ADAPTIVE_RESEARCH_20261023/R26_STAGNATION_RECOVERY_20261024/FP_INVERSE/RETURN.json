@@ -1,0 +1,115 @@
+{
+  "issue": "R26-FP-LATENT-MEMBERSHIP-8-ROUNDING-INVERSE",
+  "decision": "TERMINAL_CONDITIONAL_DELETION_ONLY_COUNTEREXAMPLE",
+  "scientific_status": "H02_HOLD_UNCHANGED",
+  "original_source_operator_gap": "SOURCE_GENEALOGY_HOLD",
+  "runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "agent": "/root/r26_fp_membership_inverse_research",
+    "children_spawned": false,
+    "ultra_escalation": false
+  },
+  "terminal_discriminator": {
+    "candidate_model": "For every one of the eight mismatch groups, accepted galaxies are a subset of its frozen observed table2 FP galaxies and cardinality equals released table3 o_DMfp",
+    "group": 1490017,
+    "observed_distinct_FP_galaxies": 1,
+    "released_galaxy_count": 2,
+    "candidate_subsets": 0,
+    "global_delta_identified_set": "EMPTY",
+    "proof": "A subset of a one-element set has cardinality at most one. Thus the group union is empty and every intersection including it is empty, independent of modulus, error, rounding convention and common offset.",
+    "scope": "Deletion-only conditional repair model; no diagnosis of actual producer genealogy",
+    "raw_source_lines_verified_by_byte_offset": true,
+    "no_optimization_or_mask_enumeration_needed": true
+  },
+  "additive_narrative_correction": {
+    "old_receipts_unchanged": true,
+    "old_label": "MISSING_TABLE3_FP_FIELDS",
+    "affected_group_count": 46,
+    "missing_field_for_every_case": "o_DMfp",
+    "DMfp_present_for_every_case": true,
+    "e_DMfp_present_for_every_case": true,
+    "new_interpretation": "COUNT_UNAVAILABLE; numerical FP modulus/error targets remain present",
+    "forbidden_inferences": [
+      "FP numerical target absent",
+      "FP method excluded",
+      "blank count is zero",
+      "blank count equals observed table2 count"
+    ],
+    "discriminating_example": {
+      "group": 23771,
+      "observed_n": 23,
+      "o_DMfp": null,
+      "DMfp": "36.694",
+      "e_DMfp": "0.098"
+    }
+  },
+  "public_source_discovery": {
+    "official_schema_urls": [
+      "https://edd.ifa.hawaii.edu/describe_columns.php?table=kcf4fps",
+      "https://edd.ifa.hawaii.edu/describe_columns.php?table=kcf4fpgroup"
+    ],
+    "evidence_observed": "Search-indexed official EDD column descriptions",
+    "fields_found": [
+      "per-PGC group IDs and av_flag",
+      "per-subsource accepted/outlier flags",
+      "per-subsource distance moduli and quoted errors",
+      "group Nfp, weighted modulus and error"
+    ],
+    "release_matched_rows_acquired": false,
+    "historical_release_binding": "NOT_ESTABLISHED",
+    "direct_access_outcomes": "Web timeout/502; ordinary local HTTPS certificate verification failure; failures retained",
+    "new_catalogue_download": false,
+    "current_versus_frozen_identity": "Indexed EDD snapshot counts differ from frozen CDS counts; no automatic release binding"
+  },
+  "method_specification": {
+    "state": "DERIVED_CONDITIONAL_NOT_EXECUTED",
+    "scope": "Exact simultaneous modulus/error delta interval for one fixed nonempty accepted subset under independent closed printed-rounding boxes and positive inverse-variance weights",
+    "algorithm": "Intersect total weight range with reciprocal squared target-error range; allocate capacities in sorted modulus-endpoint order; evaluate total-weight range ends and cumulative-capacity breakpoints; union all subset intervals and intersect group unions without convex-hull replacement",
+    "arithmetic": "Exact rationals for endpoints, inverse squared errors, comparisons and interval sets; outward decimals only for display",
+    "base_interval_limit": "Prior 22599-group delta intervals are necessary marginal outer bounds only; their joint modulus/error feasibility remains unestablished",
+    "all_mask_feasibility": "No complete enumeration authorized or promised: C(217,193)=51151555361451396680857696101525; terminal cardinality counterexample already resolves full eight-group model",
+    "worker_execution_contract_issued": false,
+    "reason_no_execution_contract": "No new numerical test is needed to decide the terminal discriminator; source input must change before testing a different genealogy model"
+  },
+  "minimal_next_source_input": {
+    "priority_one": "Release-matched two accepted FP PGC identities and pooling-stage group assignment for group 1490017, or authoritative correction to its released count of two, with corresponding FP modulus/error stage",
+    "other_mismatches": "Release-matched accepted PGC sets, exclusions/reassignments and stage identities for 56962 and 36071, then remaining mismatch groups",
+    "missing_counts": "Original producer o_DMfp or documented missing-count semantics for group 23771 and remaining 45 cases",
+    "separate_upstream_gap": "Accepted subsource values/flags and per-galaxy combination/error rule plus inter-stage zero-point mapping; group membership alone does not supply these",
+    "source_candidates": ["EDD kcf4fps", "EDD kcf4fpgroup", "producer release/history matching frozen CDS J/ApJ/944/94"],
+    "do_not_substitute": ["one fitted mask", "current EDD rows without release binding", "numeric agreement as ancestry", "scalar summaries for full tensor inputs"]
+  },
+  "next_transition": {
+    "H02": "Keep exact source HOLD; acquire bounded release-matched source extract when available; no completed pooling rerun",
+    "independent_ready": "Controller continues the concurrently authorized full7 work without depending on H02",
+    "no_permanent_two_failure_stop": true
+  },
+  "budget": {
+    "same_original_cap_s": 600,
+    "prior_observed_science_cumulative_s": 61.602107173996046,
+    "prior_remaining_s": 538.397892826004,
+    "new_scientific_runner_starts": 0,
+    "scientific_execution_delta_s": 0,
+    "activity": "Source/document reading, artifact hashes, witness metadata, two direct byte-offset raw checks, integer combination counts and bounded public-source discovery only",
+    "all_future_started_scientific_processes_charge_same_budget": true,
+    "new_allocation_created": false
+  },
+  "preserved_boundaries": {
+    "original_progress": "17/42_UNCHANGED",
+    "alternative_progress": "18/42_UNCHANGED",
+    "R9_and_one_use_history": "UNCHANGED",
+    "old_Y0_64_box_and_FP_TF_SNIa": "NOT_RERUN",
+    "physical_calibration_error_law": "NOT_ESTABLISHED",
+    "actual_accepted_membership": "NOT_ESTABLISHED",
+    "physical_x_F_Pi_Q_GF": "NOT_ADMITTED",
+    "native_solver_ODE": "NOT_USED",
+    "canonical_STATE_Git_source_prior_artifacts": "UNMODIFIED"
+  },
+  "artifacts": {
+    "research_and_proof": "RESEARCH.md",
+    "source_facts_and_counterexample": "SOURCE_FACTS.json",
+    "bounded_direct_source_probe_failures": "PUBLIC_SOURCE_RECEIPTS.json"
+  }
+}

@@ -1,0 +1,50 @@
+--- original/science.py
++++ normalization_repair/science.py
+@@ -117,11 +117,23 @@
+         k = math.exp(logk)
+         return k**3 * (k / .05)**NS * float(transfer(k))**2 * float(top_hat(k * 8 / H))**2 / (2 * math.pi**2)
+     estimates = []
+-    for lo, hi in ((1e-6, 1e2), (1e-7, 1e3)):
+-        val, err = quad(integrand, math.log(lo), math.log(hi), epsrel=2e-9, epsabs=1e-12, limit=600)
++    diagnostics = []
++    for lo, hi, relative_request in ((1e-6, 1e2, 2e-9), (1e-7, 1e3, 2e-10)):
++        val, err, info, *messages = quad(integrand, math.log(lo), math.log(hi),
++                                         epsrel=relative_request, epsabs=0,
++                                         limit=600, full_output=1)
+         estimates.append((val, err, err / abs(val)))
+-    if max(v[2] for v in estimates) > 1e-7 or abs(estimates[0][0] / estimates[1][0] - 1) > 1e-6:
+-        raise ValueError(f'sigma8 normalization convergence failed: {estimates}')
++        diagnostics.append({'range_mpc_inv': [lo, hi], 'epsabs_request': 0,
++                            'epsrel_request': relative_request,
++                            'neval': int(info['neval']), 'last': int(info['last']),
++                            'value': val, 'reported_error': err,
++                            'reported_relative_error': err / abs(val),
++                            'convergence_messages': [str(message) for message in messages]})
++    print('SIGMA8_QUADPACK_DIAGNOSTICS ' + json.dumps(diagnostics, sort_keys=True), flush=True)
++    if (any(entry['convergence_messages'] for entry in diagnostics) or
++        max(v[2] for v in estimates) > 1e-7 or
++        abs(estimates[0][0] / estimates[1][0] - 1) > 1e-6):
++        raise ValueError(f'sigma8 normalization convergence failed: {estimates}; diagnostics={diagnostics}')
+     amp = SIGMA8**2 / estimates[1][0]
+     return amp, estimates
+ 
+--- original/runner.py
++++ normalization_repair/runner.py
+@@ -13,7 +13,7 @@
+ 
+ ROOT = Path(__file__).resolve().parent
+ PYTHON = Path('/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python')
+-WALL = 280.0
++WALL = 265.0
+ CHILD_RESERVE = 5.0
+ RSS_CAP = 6 * 1024**3
+ MIN_AVAILABLE = 10 * 1024**3
+@@ -138,7 +138,7 @@
+             receipt['account_head_sha256']=packet['account_head_sha256']
+             receipt['account_used_seconds_before']=packet['account_used_seconds_before']
+             if packet['account_used_seconds_before']+WALL+60 > 600:
+-                raise ValueError('same-account cap lacks 280+60 seconds')
++                raise ValueError('same-account cap lacks 265+60 seconds')
+             headroom=available_bytes()
+             receipt['MemAvailable_before_bytes']=headroom
+             if headroom < MIN_AVAILABLE:

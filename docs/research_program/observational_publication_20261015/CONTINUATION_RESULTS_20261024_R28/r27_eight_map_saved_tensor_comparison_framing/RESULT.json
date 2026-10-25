@@ -1,0 +1,42 @@
+{
+  "packet_id": "529613b5542746ba85edc54e019cd6b6585e45e935f33ef5154552dcb694bd7a",
+  "task_id": "R26-SMICA-EXACT-PR3-IMPLICIT-ROW-PROJECTION",
+  "input_identity": "sha256:f38fad65711947960265183d3bd61a062fc883356366d445ad75b3b62cb8800d",
+  "candidate_identity": "sha256:ddceb8014d46544bf1b029bf83abb03ae9e8b2b88a48bbfc516f98bdf981b2d8",
+  "agent_id": "/root/r27_eight_map_saved_tensor_comparison_framing",
+  "schema": "htt.native_agent_result/1",
+  "outcome": "blocker",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_saved_tensor_comparison_framing/SMICA_TIMING_DISPOSITION.md",
+  "qualified_products": [],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "issue": {
+    "class": "code",
+    "question": "Did the original one-use SMICA invocation satisfy complete wrapper accounting and the frozen 20-second finalization cap?",
+    "exact_missing_or_defect": "SMICA-ACTUAL-F1: run_smica.py phase resets after persistence omit wrapper intervals (lines 323-325, 352-378, 409-417; native timer ends at 246 before persist at 269). Root has conservatively debited the missing run()-entry-onward cost upper bound, but authentic original outer/finalization monotonic timing is absent. The actual finalization <=20 s cap remains NOT_ESTABLISHED and pre-run-entry startup remains UNKNOWN. Existing tool polling fragments do not establish a full outer measurement.",
+    "input_identity": "sha256:f38fad65711947960265183d3bd61a062fc883356366d445ad75b3b62cb8800d",
+    "true_external": false,
+    "substantive": true,
+    "bounded_repair_available": false,
+    "required_payload": "Authentic retained original outer process and finalization monotonic boundary observations sufficient to establish the frozen caps; no newly timed rerun can establish the completed old invocation.",
+    "repair_boundary": "No repair of the original cap proof is currently available without missing historical evidence. Do not rerun the consumed old invocation, add a new 900-second account, or report the conservative debit as measured duration."
+  },
+  "full_task_decision": "HOLD_ORIGINAL_TIMING_CAP_EVIDENCE_UNAVAILABLE",
+  "numerical_component_decision": "CONDITIONALLY_REUSABLE_EXACT_RELEASED_PRODUCT_DELIVERED_MAP_ONLY",
+  "scientific_admission": "HOLD",
+  "research_disposition": "ORIGINAL_CAP_PROOF_IRRECOVERABLE_FROM_CURRENT_RECORDS",
+  "pre_entry_timing": "UNKNOWN",
+  "new_experiments": 0,
+  "new_account_charges_seconds": 0,
+  "new_ultra_allocations": 0,
+  "next_executable_checkpoint": "Preserve old full-task HOLD; continue independent authorized branches. A genuinely new saved-carrier full8 comparison may consume the conditional numerical component under its own prospective contract and the same original account lineage, without original acceptance promotion.",
+  "validation_evidence": {
+    "prior_actual_review_result": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/RESULT.json",
+    "prior_actual_review": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/REVIEW.json",
+    "authoritative_conservative_head": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/ROOT_CONSERVATIVE_ACCOUNT_HEAD.json",
+    "receipt_sha256": "7f72d992274d9396271a1dcd3c414005112e33813406edc1dee04e71d06730ef"
+  }
+}

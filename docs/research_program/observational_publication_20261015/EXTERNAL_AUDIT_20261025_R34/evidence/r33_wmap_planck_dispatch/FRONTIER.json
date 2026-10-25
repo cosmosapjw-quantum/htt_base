@@ -1,0 +1,51 @@
+{
+  "frontier_id": "R33-WMAP-PLANCK-F2-ADDITIONAL-RESPONSE-20261025",
+  "tasks": [
+    {
+      "id": "R33-CMB-WMAP-PLANCK-F2-EXTENSION",
+      "kind": "numeric",
+      "goal": "Determine actual nominal WMAP+Planck full24 F2 quotient or confounding in fixed12/17-row systems and all12responseconventions",
+      "acceptance": "Actually generated40detector/10DA/5band responses, exact old7 rows, all24 tensor controls, ranks/angles/conditioning/weights orwitnesses, firstfailures and separate independently executed80/120digit check under same existing900s sourcebanks; no physicalL03promotion.",
+      "input_identity": "sha256:d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1",
+      "input_sources": [
+        "/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_dispatch/INPUT.json",
+        "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/WMAP_PLANCK_F2_CONTRACT.md",
+        "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/RESULT.json",
+        "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/BANDPASS_SOURCE_METADATA.json"
+      ],
+      "owned_paths": [
+        "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric"
+      ],
+      "implementation_route": "subagent_specialist",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "requires": {
+        "all": []
+      },
+      "contributors": [
+        "/root/r33_cmb_additional_frequency_framing"
+      ],
+      "accounting_parent_task_id": "R26-FULL7-STREAMED-SPIN2-QUADRATURE",
+      "semantic_delta": {
+        "kind": "input",
+        "before": {
+          "released_nominal_channels": 7,
+          "F2_quotient": "all24confoundedinacceptedfinite7rowmodel"
+        },
+        "after": {
+          "new_released_WMAP_detector_curves": 40,
+          "stipulated_DA_rows": 10,
+          "stipulated_band_rows": 5,
+          "total_response_rows": [
+            12,
+            17
+          ],
+          "fixed_F2_columns": 9,
+          "quotient_status": "TO_BE_MEASURED"
+        },
+        "discriminator": "Actually integrate additional released detector response functions and test fixed9moment CMB escape/conditioning in enlarged12/17frequency tensorproduct; dimensioncountalone is no result.",
+        "scope": "Source-qualified finite equal CMB-calibrated detector/DA nominalrows; signedtails/literalanddriftproxy retained. No actualpolarizedmapresponse/noise supplied. Physicalfull(x,F,Pi,Q,G_F)undefined; originalL03/H02/H04/HOLDunchanged."
+      }
+    }
+  ]
+}

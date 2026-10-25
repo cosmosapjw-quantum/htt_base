@@ -1,0 +1,44 @@
+{
+  "packet_id": "b7adef654c4a44203860dc5206b80b0ebf67457709d16d46db22e2d534d40ca8",
+  "task_id": "R30-CMB-NOMINAL-BANDPASS-MOMENT-IDENTIFIABILITY",
+  "input_identity": "sha256:cfe7be664ca43841e1197653dc4391b9c64c239cca54eebce9a06def80d916be",
+  "status": "FIRST_PRODUCER_FAILURE_PRESERVED_REPAIR_DECISION_PENDING",
+  "attempt": 1,
+  "requested_runtime": {"model": "gpt-6-sol", "effort": "high"},
+  "observed_runtime": "UNKNOWN",
+  "source_preflight": {
+    "elapsed_seconds": 5.53,
+    "peakRSS_kB": 13264,
+    "log_path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/SOURCE_PREFLIGHT.log",
+    "log_sha256": "564e97927b6b8eb3adc968d413dbdf4878f0c840d28c7e52e4c2737ef5d9ff4d",
+    "lfi_sha256": "a4794d80b378e00aef1b5e324e2759c3fa791873f2a3edcb53c93678a48dd94b",
+    "hfi_sha256": "deb55a5c6f76a8578e86c122f56c3f61998b803818b09c4f3e709897881fe222",
+    "lfi_bytes": 771840,
+    "hfi_bytes": 1005120
+  },
+  "started_science_invocations": 1,
+  "science_invocation_1": {
+    "command": "/usr/bin/time -f 'producer_outer_elapsed=%e peakRSS_kB=%M exit=%x' timeout --signal=TERM --kill-after=2s 180s bash -c 'ulimit -v 1048576; export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1; exec /home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python /mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/produce.py'",
+    "exit_code": 1,
+    "elapsed_seconds": 3.59,
+    "peakRSS_kB": 69560,
+    "source_sha256_at_invocation": "074b7148e6c7ca3d13d693639453795d69d9f142bea5e323ad5fa66780644dc0",
+    "stdout_path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/PRODUCER.stdout",
+    "stderr_path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/PRODUCER.stderr",
+    "stderr_sha256": "864f5f4efd08a1e2b646df83ca62c660b4494b2084976f9e2f7ee8ead9478b18",
+    "failure": "read_tables asserted nonnegative transmission on all HFI rows before applying the frozen FLAG=F and TRANSMISSION>BT selection"
+  },
+  "source_only_diagnosis": {
+    "hfi_F143_negative_raw_rows": 20,
+    "first_negative_row_zero_based": 229,
+    "negative_raw_rows_flag": "T",
+    "all_selected_negative_rows": 0,
+    "diagnostic_elapsed_seconds": 0.234451724
+  },
+  "scientific_result": "NOT_COMPUTED",
+  "independent_checker": "NOT_STARTED",
+  "scientific_admission": "HOLD",
+  "same_seven_account_set": ["30", "44", "70", "100", "143", "217", "353"],
+  "SMICA_new_debit": 0,
+  "accounting_note": "Controller settles source/check/producer time once against live root head; this receipt does not overwrite historical account totals."
+}

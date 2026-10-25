@@ -1,0 +1,54 @@
+{
+  "actual_agent": "/root/r26_covariance_image_capability_numeric",
+  "allocation_ref": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4/r26-generic-covariance-image-single-check-unit",
+  "attempt": 1,
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "candidate_files_sha256": {
+    "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/HANDOFF.md": "73cecd88b7ce5b9183b97bd7f9afa7bdd476d4cfcede34aa960d6dd05d0010c6",
+    "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/covariance_image.py": "fa06279144cb2d6eed4130894bb3b57acd568a2052fa655056f64af8686cae3f",
+    "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/run_checks.py": "4b0aeca1125376a31b5672d9201c635e6a56910c66efcb4c064735274ac25bb8",
+    "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/test_covariance_image.py": "e1b74f64f4f679a06537915b73eedc0a4e2b4b8d59ee6834535086874c772a2f"
+  },
+  "candidate_identity": "sha256:aa2b12403a41d999d805b7efba0d7233879a42b2847b45346a5e35258d4eac67",
+  "claim_ceiling": "Generic synthetic covariance-image interface only; finite checks are not universal proof, four-axis CAS admission, actual CF4 qualification, H02 closeout, physical law or Pi.",
+  "controller_ack_id": "sha256:9af4e1355f64f7b78f5ee3b226bb97a6d9be52558b92a56ec7ae8463b46a326f",
+  "historical_budget_reset": false,
+  "independent_review": "PENDING",
+  "input_identity": "sha256:f827413d29aebb63ce80ecfb94e1b0695b2edc85c44a760c43d12645857f9987",
+  "observed_runtime": "UNKNOWN",
+  "outcome": "FINITE_FIXTURE_PASS_PENDING_INDEPENDENT_REVIEW",
+  "packet_id": "904f758af1f76063d6f46edf06f882e9d8bc6384c42035d0e028544824c23346",
+  "phase": "execute",
+  "qualified_products": [],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/RAW_RECEIPT.json",
+  "requested_runtime": {
+    "effort": "high",
+    "model": "gpt-6-sol"
+  },
+  "schema": "r26_packet_bound_actual_result_v1",
+  "task_id": "r26_covariance_image_capability_numeric",
+  "transport_selected_runtime": {
+    "effort": "high",
+    "model": "gpt-6-sol"
+  },
+  "validation_evidence": {
+    "command": "python3 /mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/run_checks.py --ack-file /mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/ACK.json",
+    "exit_code": 0,
+    "peak_rss_mib_observed": 64.7890625,
+    "raw_stderr": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/RAW_STDERR.txt",
+    "raw_stdout": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/RAW_STDOUT.txt",
+    "rss_measurement": "polled Linux proc VmRSS; sampling can miss transient peaks",
+    "stop_reason": null,
+    "synthetic_fixture_tests_passed": 13,
+    "synthetic_fixture_tests_run": 13,
+    "thread_cap": 1,
+    "unittest_command": [
+      "/usr/bin/python3",
+      "-m",
+      "unittest",
+      "-v",
+      "test_covariance_image"
+    ],
+    "wall_seconds": 0.9285153758246452
+  }
+}

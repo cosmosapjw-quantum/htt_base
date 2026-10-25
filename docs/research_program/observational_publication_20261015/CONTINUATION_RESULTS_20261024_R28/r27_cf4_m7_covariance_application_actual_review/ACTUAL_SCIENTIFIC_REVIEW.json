@@ -1,0 +1,168 @@
+{
+  "acceptance_unchanged": true,
+  "accounting": {
+    "application_after_seconds": 17.738345514,
+    "application_before_seconds": 12.694345514,
+    "application_cap_seconds": 60,
+    "cf4_after_seconds": 177.80777764664458,
+    "cf4_before_seconds": 172.76377764664457,
+    "charge_rule": "maximum authentic measured elapsed, charged once; conservative invocation timing includes tool overhead",
+    "conservative_invocation_return_elapsed_seconds": 5.044,
+    "external_time_elapsed_seconds": 4.78,
+    "extra_ultra_attempt": false,
+    "new_allocation": false,
+    "original_task": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+    "producer_reruns": 0,
+    "retries": 0,
+    "review_cap_seconds": 10,
+    "review_check_charge_seconds_once": 5.044,
+    "same_cf4_cap_seconds": 600,
+    "scientific_checkgroups_started": 1,
+    "whole_command_tool_wall_seconds": 4.772554803
+  },
+  "actual_product_result_sha256": "c429be98c1e081a75e9e623493ac4581cf4263b2ae3962989da045b4fa1ac506",
+  "agent_id": "/root/r27_cf4_m7_covariance_application_actual_review",
+  "attempt": 2,
+  "blocking_findings": [],
+  "candidate_identity": "sha256:a125712a778278d5839e3d2e9f31779c347a77adb61bef375477a2a518ee1a54",
+  "claim_ceiling": {
+    "R9": "UNKNOWN unchanged",
+    "counts_recomputed_here": false,
+    "historical_48_tasks_and_one_use_ultra": "UNCHANGED",
+    "historical_V03_alternative": "18/42",
+    "historical_original": "17/42",
+    "missing": [
+      "empirical Gamma",
+      "joint covariance and cross blocks",
+      "J_v/PV response",
+      "residual anchor correlations",
+      "qualified mean/bias set",
+      "sampling law or moment controls",
+      "physical carrier/state/domain"
+    ],
+    "native_solver_and_family_identification": "HOLD",
+    "original_H02_H03_and_six_channel_acceptance": "UNCHANGED",
+    "parent_supplied_alternative": "23/42",
+    "parent_supplied_current": "22/42",
+    "physical_confidence_status": "HOLD_MISSING_TOTAL_MEAN_COVARIANCE_RESPONSE_ASSUMPTIONS",
+    "physical_x_F_Pi_Q_G_F": "HOLD",
+    "scientific_admission_beyond_scoped_application": false,
+    "scope": "Exact algebra for three frozen parsed binary64 M7 matrices and saved F_E1, plus floating working-metric diagnostics. This is not physical rank, empirical covariance, a probability law, a physical tensor confidence region, or universal CAS validation."
+  },
+  "created_utc": "2026-10-24T05:21:18.151192+00:00",
+  "evidence": {
+    "ACTUAL_ACKNOWLEDGED_REVIEW_PACKET.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_m7_covariance_application_actual_review/ACTUAL_ACKNOWLEDGED_REVIEW_PACKET.json",
+      "sha256": "1222781aa517a8ea19e673a6aedadb750b335744b974dc19f048d89be94b3440"
+    },
+    "CHECK_RESULT.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_m7_covariance_application_actual_review/CHECK_RESULT.json",
+      "sha256": "d169dda3634825627fe978d82c2ac097df348a9999d3d7016983ec3cfc005e4a"
+    },
+    "RAW_EXEC_TOOL_RESULT.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_m7_covariance_application_actual_review/RAW_EXEC_TOOL_RESULT.json",
+      "sha256": "ef60158470be4c9681f98d2bf360c0af7363a43ec825b7cb4e9af125ce609c32"
+    },
+    "RAW_STDERR.txt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_m7_covariance_application_actual_review/RAW_STDERR.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "RAW_STDOUT.txt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_m7_covariance_application_actual_review/RAW_STDOUT.txt",
+      "sha256": "513404b150a88cc12d4339b12e176c0cfec91e4f8ce5573f6e6c533184be2246"
+    },
+    "RESOURCE_USAGE.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_m7_covariance_application_actual_review/RESOURCE_USAGE.json",
+      "sha256": "c8a654e62b212f6bc89f9bcdddec4fe9fbede9a1e0e386b7528dadabe7a74752"
+    },
+    "check_certificate.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_m7_covariance_application_actual_review/check_certificate.py",
+      "sha256": "43e93f6dcca6766592245a8c7909d46a408e25a526e2d5193fad713d4936b142"
+    }
+  },
+  "independence": {
+    "generic_frozen_interface_reused": true,
+    "new_children": 0,
+    "prior_evidence_files_hashed_for_identity_only": true,
+    "prior_review_verdict_contents_read": false,
+    "producer_module_imported": false,
+    "producer_or_repo_mutations": false,
+    "reviewer_is_not_author_or_framing_agent": true
+  },
+  "input_identity": "sha256:f04c2253bd33daafab55963793135b70a2aabbd35f2eeb356ad4a625a32b65db",
+  "next_transition": "Parent may close this reviewed application node only, charge this check once to existing allocation, refresh live frontier and proceed to next authorized independent READY action.",
+  "nonblocking_notes": [
+    {
+      "location": "consume.py:109-115; covariance_profiles.npz:*_coefficient_tensor_7x7x5x5",
+      "note": "The square tensor mirrors each independent off-diagonal coefficient into both triangles. Contractual contraction is sum over i<=j, as in DERIVATION.md and the exact 28-term list. Summing all i,j without a half weight on off-diagonal entries would double cross terms. This review records the required convention; no current contraction or numeric output uses that incorrect interpretation."
+    },
+    {
+      "location": "consume.py:123-132; accepted generic covariance_image.py:258-301",
+      "note": "The generic function returns no exact rational norm field. The producer retained its independently formed exact norm and checked enclosure. This independent review additionally captured and compared the unchanged generic exact response/norm; it does not attribute that added comparison to the producer."
+    },
+    {
+      "location": "actual_run/RAW_STDERR.txt",
+      "note": "Matplotlib warned that Axes3D was unavailable. The required figure is two-dimensional and was produced; no missing 3D product is part of acceptance."
+    }
+  ],
+  "observed_runtime": "UNKNOWN",
+  "packet_id": "9384cb661545879805df2a71a12ad2a3e6af50377bf73750eb548ba86f29fca3",
+  "phase": "review",
+  "producer_packet_id": "4a4830fdd9b239f6edb5334b2a213a135305c9e726ce39de3cc730ba6746b2f6",
+  "producer_standard_result_sha256": "2f6847d4b5295f30a4744fb71186d0cf8454ec5437f8c2f0d8207dfcc9d26236",
+  "requested_runtime": {
+    "effort": "xhigh",
+    "model": "gpt-6-astra"
+  },
+  "resource_execution": {
+    "address_space_limit_bytes": 2147483648,
+    "all_processes_reaped": true,
+    "blas_threads": 1,
+    "command": "env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 prlimit --as=2147483648 -- /usr/bin/time -f JSON -o RESOURCE_USAGE.json timeout --signal=TERM --kill-after=0.2s 9s python -B check_certificate.py > RAW_STDOUT.txt 2> RAW_STDERR.txt",
+    "complete_lifecycle_measured": "Command startup/imports, exact and numeric checks, CHECK_RESULT fsync, process exit and foreground reap are inside measurements; final review prose/accounting assembly is not a scientific computation",
+    "exit_code": 0,
+    "kill_grace_seconds": 0.2,
+    "memory_limit_note": "prlimit bounds address space and thus process RSS; /usr/bin/time reports actual peak RSS including the check child",
+    "peak_rss_bytes": 67293184,
+    "reaping_evidence": "Foreground timeout and GNU time completed with exit 0 and exec returned no session ID",
+    "rss_cap_bytes": 2147483648,
+    "timeout_seconds": 9
+  },
+  "schema": "r27_cf4_m7_actual_covariance_application_actual_review_v1",
+  "task_id": "R27-CF4-M7-ACTUAL-COVARIANCE-APPLICATION",
+  "transport_selected_runtime": {
+    "effort": "xhigh",
+    "model": "gpt-6-astra"
+  },
+  "validated": {
+    "all_common_shift_dyadic_residuals_nonzero_and_preserved": true,
+    "coefficient_count_per_map": 28,
+    "exact_F_symmetry_SPD_and_inverse": true,
+    "exact_dyadic_map_ranks": [
+      5,
+      5,
+      5
+    ],
+    "exact_right_inverse_and_target_covariance_identities": true,
+    "exact_signed_fixture_count": 9,
+    "figure_is_empirical_cap_estimate": false,
+    "first_lexicographic_nonzero_minors": "columns 0,1,2,3,4 for each map",
+    "five_positive_modes_per_map": true,
+    "frozen_sources": 26,
+    "full_covariance": "[K,M,K J_v] Omega [K,M,K J_v]^T retains measurement-calibration, measurement-PV, calibration-PV and transpose blocks",
+    "generic_calls": 42,
+    "generic_exact_protection_proved": false,
+    "generic_exact_response_and_norm": "Captured unchanged function return-frame exact Fraction locals independently equal saved exact contractions for all directions",
+    "generic_outward_bounds": "Exact rational comparison; no tolerance waives underflow or finite unbounded outputs",
+    "generic_prescribed_directions": 21,
+    "largest_scaled_numerical_residual": 8.326678337243073e-16,
+    "map_count": 3,
+    "minimum_spectral_cap": "Numerical largest eigenvalue of the same exact lift; the compression argument gives optimality, rounded numeric value is not an outward bound",
+    "minimum_trace_lift": "Exact row-space projector and Gamma=R C_ref R^T; uniqueness/minimality follows from orthogonal PSD compression and trace",
+    "numerical_tolerance": 1e-10,
+    "plot_review": "PDF text extraction and source/data checks: all five modes, illustrative trace/spectral profiles, signed Gamma heatmaps, mag^2 budgets and units; no new plot rendering or production run",
+    "profile_grid": "0<=z<=2, 101 points",
+    "signed_modes_responses_projectors_and_covariances_preserved": true
+  },
+  "verdict": "SCOPED_PASS"
+}

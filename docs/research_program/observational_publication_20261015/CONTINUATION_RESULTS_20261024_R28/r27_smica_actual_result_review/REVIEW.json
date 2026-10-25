@@ -1,0 +1,163 @@
+{
+  "schema": "htt.independent_smica_actual_result_review/1",
+  "reviewer_agent_id": "/root/r27_smica_actual_result_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "independence": "Reviewer did not implement the candidate; no prior verdict used; source/contract and receipts independently inspected. No repository changes or production execution.",
+  "verdict": "HOLD_ACCOUNTING_COMPLETENESS",
+  "numerical_component_decision": "CONDITIONAL_PASS_EXACT_RELEASED_PRODUCT_DELIVERED_MAP_ONLY",
+  "scientific_admission": "HOLD",
+  "contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/SMICA_contract/CONTRACT.json",
+    "sha256": "38bcd5ec436826c85b9507cf30cd0ae51c2899bcee8644a6db383c7f7fe28ff0",
+    "bytes": 20118
+  },
+  "input": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/FINAL_INPUT.json",
+    "sha256": "f38fad65711947960265183d3bd61a062fc883356366d445ad75b3b62cb8800d",
+    "bytes": 11806
+  },
+  "execution_packet_id": "724014e9f218574061d517506886c7d9178a9430db57307489084b5e614996e0",
+  "execution_packet": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/ACTUAL_ACKNOWLEDGED_EXECUTION_PACKET.json",
+    "sha256": "51da3bae5685fe47f73ae5c197357d7fba74772cdca96c86206148f436ed6bb1",
+    "bytes": 11730
+  },
+  "execution_ack": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/ACTUAL_DISPATCH_ACK.json",
+    "sha256": "f51bdefb387c112b214983d75b32e4eb791142b850e6c9980b56169683c75254",
+    "bytes": 1735
+  },
+  "implementation_sources": {
+    "smica_implicit_reader.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/smica_implicit_reader.py",
+      "sha256": "ac225850440c95913338e71677e4310e0eb2d0ff0559b37440bd767a42f09dcc",
+      "bytes": 11134
+    },
+    "project_smica.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/project_smica.py",
+      "sha256": "c27aa4ebbd3f42496cd192a7d9191d4c99eaca57d55f98642b66bcc05d607519",
+      "bytes": 14945
+    },
+    "test_format_controls.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/test_format_controls.py",
+      "sha256": "b9b55aabcf967500c43e728cf45af9d04ab24f1b6ccc28cb01ae7f42b669cdf3",
+      "bytes": 10225
+    },
+    "run_smica.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run_smica.py",
+      "sha256": "0522aad2732dc81f699fa812c598bc5d35ae6292c82e916e2b13f7c729095c52",
+      "bytes": 20100
+    }
+  },
+  "candidate_artifacts": {
+    "CARRIER_SMICA_EXACT_IMPLICIT.npz": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/CARRIER_SMICA_EXACT_IMPLICIT.npz",
+      "sha256": "ddceb8014d46544bf1b029bf83abb03ae9e8b2b88a48bbfc516f98bdf981b2d8",
+      "bytes": 1447
+    },
+    "CONTROL_SMICA_EXACT_IMPLICIT.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/CONTROL_SMICA_EXACT_IMPLICIT.json",
+      "sha256": "319c0ed3443e31b471daafd61c041a05d61fd2417f94c1496d8b2a4582ccf7e8",
+      "bytes": 3253
+    },
+    "FORMAT.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/FORMAT.stderr",
+      "sha256": "959161b5a59218b40add2ef4efec8104610df5c3383a57149b12e173058c7af6",
+      "bytes": 892
+    },
+    "FORMAT.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/FORMAT.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "FORMAT_CONTROL_RECEIPT.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/FORMAT_CONTROL_RECEIPT.json",
+      "sha256": "b35855ac85e60c92ea79b8584d0789ae96836809f7ca4f59a58be38dffe20dbb",
+      "bytes": 2890
+    },
+    "LEDGER.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/LEDGER.json",
+      "sha256": "816e09a203e115dcedaef5f391d1478701f87318f9ddcddde06708ed61e0edf2",
+      "bytes": 6914
+    },
+    "RAW_RECEIPT.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/RAW_RECEIPT.json",
+      "sha256": "816e09a203e115dcedaef5f391d1478701f87318f9ddcddde06708ed61e0edf2",
+      "bytes": 6914
+    },
+    "RESULT.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/RESULT.json",
+      "sha256": "61b6d3732b6e5b32e67027c5e0677bdbddc7c11554c8da2cb9e00567bfe32946",
+      "bytes": 3727
+    },
+    "SMICA.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/SMICA.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "SMICA.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/SMICA.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "SMICA_SIGNED24.png": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/SMICA_SIGNED24.png",
+      "sha256": "fe65cdf07af68bfa5a5b854c17e62738f4338ec019be9ccdb20a1a9237d9edaf",
+      "bytes": 104322
+    }
+  },
+  "findings": [
+    {
+      "id": "SMICA-ACTUAL-F1",
+      "severity": "P1",
+      "classification": "ACCOUNTING_COMPLETENESS_HOLD",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run_smica.py",
+      "lines": [
+        323,
+        325
+      ],
+      "title": "Phase resets omit measured-wrapper intervals from the original eight accounts",
+      "evidence": "At lines 323-325 debit() persists its receipt after the charged timestamp, then phase_start resets after that write. Lines 352-378 additionally discard pre-native marker persistence and accounting work; bounded_child elapsed stops at line 246 before terminal persist at 269, and settle_native writes before phase_start resets at 378. Lines 409-417 place final debit/persistence/LEDGER writes after the last charged timestamp.",
+      "actual_impact": "The terminal ledger sum 123.69659962807782 seconds is arithmetically consistent but is not a complete partition of wrapper wall time. The exact uncharged actual duration is UNKNOWN from these artifacts; it is not zero. No cap exceedance is established. Same-account dispatch must bind a reconciled successor rather than adopt this sum as complete.",
+      "counterexample": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/ACCOUNTING_COUNTEREXAMPLE.json",
+        "sha256": "2d10e1d80490f44a3da01792fcbe7df3bd6c8a51a9841bb39ce994b4f706e4bf",
+        "bytes": 503
+      },
+      "minimal_closeout": "Preserve all source, original receipt, carrier and attempt identities. Use an authentic outer elapsed measurement or justified upper bound to add only the previously omitted common overhead once across the same eight accounts. Keep native 110.38916298095137 seconds and its single attempt unchanged. Label any conservative amount as a bound, not measured time. Bind and ingest the additive successor before another same-lineage dispatch. No projection rerun or second control batch is required. If the actual gap cannot be bounded, retain ACCOUNTING_COMPLETENESS_HOLD.",
+      "future_prevention": "For any newly authorized runner, retain contiguous monotonic phase boundaries and an outer wrapper reconciliation; include persistence/exit overhead under an explicit bounded accounting scope."
+    }
+  ],
+  "checks": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r27_smica_actual_result_review/NUMERICAL_AND_LINEAGE_CHECKS.json",
+    "sha256": "fd2ae0548e357574d88f1e072df7a8969c1a8af587a3e0cdfaef827a9da1cfd5",
+    "bytes": 12862
+  },
+  "qualification": "Only exact body 60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac, unchanged qualified stat, exact map header a25bdcde564d4e6041011c497584d2884518252126e172dc35f460f130b25f26; conditional implicit row p equals nested pixel p. No claim of generic missing-card acceptance or producer-certified modern standards compliance.",
+  "limits": [
+    "Numerical comparisons and reduction-only bound exclude harmonic/libm and measurement uncertainty.",
+    "Observed resource scope is one wrapper and one numerical child, with loaded threadpool counts and wait4 high-water. No unrelated host process admission.",
+    "No null calibration, true-sky recovery, scientific L03/H02 or original full-eight acceptance, native solver/family identification, calibrated Pi, or physical F/MES admission.",
+    "Old failed attempt 2efa6827041549caa787f6de92fe4133 and 182cfde0 -> 300a2971 -> a1c26745 accounting lineage remain preserved.",
+    "Review packet/ACK not yet supplied at review-document creation; no claim of native host review result ingestion."
+  ],
+  "primary_sources_checked": [
+    {
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/matrix_cmb.html",
+      "supports": "Exact PR3 full-mission SMICA polarization product and NSIDE 2048 release context"
+    },
+    {
+      "url": "https://healpy.readthedocs.io/en/1.19.0/generated/healpy.fitsfunc.read_map.html",
+      "supports": "Absent determinable indexing defaults to supplied partial=False implicit mode; geometry uses ORDERING"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/healpy/healpy/1.19.0/lib/healpy/fitsfunc.py",
+      "supports": "read_map lines 396-415 preserve partial=False without OBJECT or INDXSCHM"
+    }
+  ],
+  "next_executable_checkpoint": "Recover authentic outer timing bounds; prepare a non-numerical additive same-account reconciliation for F1; reuse this candidate and review for focused closeout."
+}

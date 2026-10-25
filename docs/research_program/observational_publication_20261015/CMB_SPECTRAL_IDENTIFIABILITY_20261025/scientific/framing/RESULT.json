@@ -1,0 +1,66 @@
+{
+  "task": "R30-CMB-SPECTRAL-RESPONSE-FRAMING",
+  "scope": "Source and theory framing only; no scientific numerical execution",
+  "owner": "obsstat",
+  "claim_tier": "C0_CONDITIONAL_MODEL_DIAGNOSTIC",
+  "requested_runtime": {"model": "gpt-6-astra", "effort": "xhigh"},
+  "observed_runtime": "UNKNOWN",
+  "decision": "DISTINCT_SPECTRAL_ONLY_CONTRACT_READY_FOR_LOWER_TIER_EXECUTION",
+  "independent_review": "NOT_YET_PERFORMED",
+  "scientific_admission": "HOLD",
+  "numerical_runs_performed_by_framer": 0,
+  "novel_discriminator": "Released PR3 nominal bandpass integrated first-order five-column and second-order nine-column foreground moment subspace versus calibrated CMB response, lifted to the complete frequency tensor I24 operator",
+  "finite_model_branches": {
+    "lfi_frequency_conventions": ["literal_R3_coordinates", "older_reader_added_half_bin_diagnostic"],
+    "hfi_positive_unflagged_raw_transmission_thresholds": [1e-7, 1e-8, 1e-6],
+    "branch_count": 6,
+    "physical_uncertainty_envelope": false
+  },
+  "actual_sky_routes": {
+    "saved_signed24_quotient": "HOLD_MISSING_QUALIFIED_RESPONSE_AND_DOMAIN",
+    "new_common_bandlimit_commonbeam_spin2_operator": "POSSIBLE_DISTINCT_OPERATOR_WITH_SAME_RESPONSE_DOMAIN_HOLD",
+    "exact_missing_payload": [
+      "PR3 full-mission corrected-LFI and HFI 353-PSB association to polarized spatial response and its processing conventions",
+      "component-specific effective polarized spectral response including calibration, efficiency, angle, leakage and mapmaking terms or a controlled residual family",
+      "input angular domain and omitted-mode and omitted-moment residual control, distinguished from a finite-bandlimit hypothesis"
+    ],
+    "public_bandpasses_missing": false,
+    "public_polarized_spatial_beams_absent": false
+  },
+  "diagnostic_bundle": {
+    "x": "NOT_MEASURED",
+    "F_physical": "NOT_EVALUABLE",
+    "Pi": "NOT_CALIBRATED",
+    "Q": "NOT_EVALUATED",
+    "G_F": "NOT_APPLICABLE_FREQUENCY_IS_NOT_DEPTH",
+    "complete_tensor": "All24 E2,E3,B2,B3 coordinates retained in prospective operator and degeneracy witnesses"
+  },
+  "artifacts": {
+    "DECISION.md": "5d6200a35ea60cfd6704d41e12a2c640e686447bd31865cd1d42ad76d149093e",
+    "THEORY_AND_REOPENING.md": "46621afc10a7d9db2ac117c5004e13726c4a06ac250f8f08d29ffcbae09ac123",
+    "SPECTRAL_ONLY_CONTRACT.md": "fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df"
+  },
+  "resource_observation": {
+    "MemTotal_KiB": 32759712,
+    "MemAvailable_KiB": 17702600,
+    "external_disk_available_bytes": 2460789055488,
+    "prospective_peakRSS_bytes": 1073741824,
+    "prospective_producer_wall_seconds": 180,
+    "prospective_checker_wall_seconds": 90,
+    "disk_reserve_bytes": 2147483648,
+    "total_download_cap": null,
+    "full_sky_reread": false
+  },
+  "accounting": {
+    "ancestry": "R26-FULL7-STREAMED-SPIN2-QUADRATURE",
+    "examined_settled_head": "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_actual_scientific_review/ROOT_ACCOUNT_HEAD_AFTER_REVIEW.json",
+    "examined_head_sha256": "39f4aae7543a91b00154d414086d049c66e0e51d7f2956b27cf0abf58bcc9432",
+    "pre_ACK_live_ancestry_refresh_required": true,
+    "new_numerical_interval_allocation": "Each measured producer/checker interval divided equally across seven source-frequency accounts; SMICA unchanged",
+    "historical_caps_and_one_use_markers": "IMMUTABLE",
+    "new_ultra": false
+  },
+  "preserved_states": ["historical17/42", "historical18/42", "current22baseline", "current23restricted_alternative", "R9_UNKNOWN", "all_physical_HOLDs", "existing_ultra_receipts", "cumulative_consumed_costs"],
+  "next_transition": "Controller freezes live ancestry and contract binding, dispatches lower-tier bounded spectral execution, then separate independent Astra review; actual-sky routes remain held",
+  "next_different_scientific_branch": "Parent-planned CF4 exact-calibration quotient with Fourier or linear-theory full5 peculiar-velocity covariance and analytic P(k), independently framed"
+}

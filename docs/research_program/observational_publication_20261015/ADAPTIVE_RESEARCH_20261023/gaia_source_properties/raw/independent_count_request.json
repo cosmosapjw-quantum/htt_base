@@ -1,0 +1,16 @@
+{
+  "endpoint": "https://gea.esac.esa.int/tap-server/tap/sync",
+  "method": "POST",
+  "params": {
+    "REQUEST": "doQuery",
+    "LANG": "ADQL",
+    "FORMAT": "votable_plain",
+    "MAXREC": "5000",
+    "UPLOAD": "ids4756,param:idsfile",
+    "QUERY": "SELECT COUNT(*) AS n_left,COUNT(q.source_id) AS n_matched FROM TAP_UPLOAD.ids4756 AS u LEFT OUTER JOIN gaiadr3.qso_candidates AS q ON u.source_id=q.source_id"
+  },
+  "upload_sha256": "3ff98ab0b395722cc3b0d2978b15bfaec9240e631c1bf81cc86f3b08e42906b1",
+  "upload_file": "inputs/ids4756.xml",
+  "connect_timeout": 10,
+  "read_timeout": 45
+}

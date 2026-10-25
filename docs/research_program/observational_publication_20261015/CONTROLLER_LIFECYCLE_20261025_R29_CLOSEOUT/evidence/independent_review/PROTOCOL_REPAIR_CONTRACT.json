@@ -1,0 +1,96 @@
+{
+  "allowed_changes": [
+    "Create create_reviewed_commit_v2.py and push_approved_commit_v2.py in the existing external r29_controller_publication directory, retaining the original scripts, frozen packet, manifests and snapshots byte-for-byte.",
+    "New small shared helper only if useful, plus synthetic tests and implementation receipt in the worker assigned external artifact directory.",
+    "The v2 scripts retain the original private object directory, parent, candidate tree, remote URL/ref, unchanged guard, source seals, hook chaining, once-only attempt policy and within-action before/after equality checks."
+  ],
+  "bounded_validation": [
+    "Run only pure/synthetic metadata-baseline tests. Positive: complete current snapshot equals sealed fresh baseline and exact prior anchor remains bound.",
+    "Negative: missing baseline/reconciliation descriptor, changed baseline bytes/hash, changed prior anchor, or changed live snapshot rejects before any effectful Git call.",
+    "Use synthetic HEAD/index/config/branch-ref mutations to confirm no fields were dropped; retain original exact before/after checks and non-force single-ref guarded push by source inspection.",
+    "Return final script hashes/diff and raw outcomes for one targeted independent closeout. Reuse the passing exact-tree bytecheck unless a seal actually changes."
+  ],
+  "classified_current_delta": {
+    "codex_ref_presence_changes": 4,
+    "evidence": [
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/PREPARATION_TO_REVIEW_METADATA_DIFF.json",
+        "sha256": "aefefc26acfae4697123bad6c859438dae8be943b3926784352ee2d7b5ccd9bf"
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/FIELDWISE_METADATA_CLASSIFICATION.json",
+        "sha256": "cc1642a4d1fc73ee16467f076d4828fa99ed5f923bc331688b166307f61c5ce6"
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/GK_CONFIG_DRIFT.json",
+        "sha256": "7a5a8ab6614e4bb30bd66c82a5e645656c586594f5880119fd779f36b8c37a0d"
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/CODEX_CHECKPOINT_TREE_DIFF.txt",
+        "sha256": "9dd20580ec616e5062c28a036f645da6b3e1ba34a24286dbb2b7b2d5d032e213"
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/FROZEN_BASELINE_GUARD_REPRO.json",
+        "sha256": "8b94c355f92dfa7a819e04cdc60f1e5c3c2df5eeb82f7ca4d84128db631f39c1"
+      }
+    ],
+    "existing_loose_object_mtime_only": 292,
+    "existing_pack_mtime_only": 9,
+    "gk_config": {
+      "frozen_preimage_recovered_by_sha256": true,
+      "new": "2026-10-25T07:02:53.778Z",
+      "old": "2026-10-23T14:33:47.442Z",
+      "only_key": "branch research/htt-adaptive-methods-20261023 / gk-last-accessed"
+    },
+    "metadata_entries": 311,
+    "new_objects": {
+      "all_from_two_reviewed_code_paths_and_Codex_checkpoint": true,
+      "blobs": 2,
+      "trees": 3
+    }
+  },
+  "finding_id": "R29-PROTOCOL-BASELINE",
+  "frozen_inputs": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/EXACT_TREE_REVIEW_PACKET.json",
+      "sha256": "45031af505c6d3ac1c99499b624ad0c901ba48344b606b5d564fd1a61b2baafc"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/FILE_MANIFEST.json",
+      "sha256": "a6cd13791eaee6592b12881f5ef3da6bbe267710b09369a778dee01a57495ceb"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/CANONICAL_METADATA_AFTER_TREE.json",
+      "sha256": "5285641ed220230e7cc63125fb6d52436da3686c37d705a051302a2c518864f6"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/create_reviewed_commit.py",
+      "sha256": "56e153afe6474966eddd488922a3562df5520e0019fc9a40ea263ff34404f6a7"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/push_approved_commit.py",
+      "sha256": "7a72985a3b0cb93a307f144522411952c2648551c02ee110bb66e3baf696a222"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/prepare_publication.py",
+      "sha256": "8606d7b8a129c2896003e8133d2728d1a1255119ebefcd3c1e463700c2ce018f"
+    }
+  ],
+  "frozen_tree": "1e484cab48211ae5a433f3ae20192dddb3bbfdf1",
+  "ownership": "One lower-tier worker, external protocol implementation and synthetic metadata tests only. Reviewer remains read-only. Root remains sole production/publication writer.",
+  "problem": "The cross-turn comparison with the preparation snapshot is false after independently classified host bookkeeping. The exact tree is unchanged. The same stale-baseline pattern exists between commit and push.",
+  "required_behavior": [
+    "Replace only the cross-stage frozen snapshot equality target with a fresh execution-baseline JSON descriptor supplied and SHA-sealed in the root-approved input for that exact action. There is no automatic baseline refresh, metadata omission, blanket ignore or drift whitelist.",
+    "Bind the immutable prior snapshot descriptor too: commit prior is the frozen CANONICAL_METADATA_AFTER_TREE.json; push prior is the exact successful CANONICAL_METADATA_AFTER_COMMIT.json. Preserve both anchors unchanged.",
+    "Require a sealed root reconciliation input referencing this independent fieldwise evidence and the exact fresh baseline. Root authorizes that specific transition after checking all differences. Missing/mismatched descriptors reject before commit-tree or push.",
+    "Compare the complete live snapshot against the root-sealed fresh baseline immediately before the action, and retain complete equality before/after the action. Any later change requires fresh fieldwise root reconciliation; the scripts must not silently refresh or broaden allowance.",
+    "Retain exact HEAD, status, .git/index, .git/config, branch refs and guard/transport/parent checks. Root review_seals must also bind the actual two source files, live durable STATE and active pointer at their current frozen hashes; all remain unchanged.",
+    "Commit remains disabled until root binds this exact reviewed tree plus final v2 script seals and baseline. Push remains disabled until root binds the generated exact commit, sole parent, exact tree, candidate packet, v2 seals, guard and its fresh execution baseline.",
+    "No scientific reruns, source/test changes, new branch/ref/index/canonical-object writes, checkout/worktree creation, existing-snapshot overwrite, actual commit or push during implementation/testing."
+  ],
+  "scientific_admission": "HOLD_UNCHANGED",
+  "sole_parent": "71b272db893a92ec336c28164bc7efccf7c340b2",
+  "status": "BOUNDED_TARGETED_REPAIR_DEFINED_FOR_LOWER_TIER_WORKER",
+  "stopping_rule": "Any source/tree/manifest/guard/scientific input change or unclassified metadata drift stops the bounded repair and returns exact evidence to root. No quota retry or new scientific issue/escalation.",
+  "task": "R29 same pending exact-tree/protocol review; one bounded non-scientific protocol repair"
+}

@@ -1,0 +1,75 @@
+{
+  "packet_id": "f6b53f55fab619754f339a23c874657f709ed9f2caba72719ac7864d9a0da7d5",
+  "task_id": "R25-PR3-STAGED4-TENSOR-CONTRAST",
+  "input_identity": "sha256:ff5db155e8266b4a913ceb48e69b60d6a6356928940305cd2d28d82fc3f690e5",
+  "candidate_identity": "sha256:e05e9aefcbee3382778bc2a74e4a4617fed311fd5a1ac7dc78ef4abe45a8e175",
+  "agent_id": "/root/rc_f6b53f55fab61975",
+  "requested_model_effort": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "scoped_decision": "HOLD_RESOURCE_CAP_EVIDENCE_UNKNOWN",
+  "validation_evidence": "/mnt/extdrive/workdir/htt_open_data/r25_staged4_blind_review/REVIEW.md",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r25_staged4_blind_review/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "f4b1f5230cf80dc460e6aefe365f9db69327941238fe3094bc48d6f84205ae11",
+  "issue": {
+    "class": "code",
+    "question": "Can the original staged4 execution RSS ceiling be established from retained execution-time evidence without replaying production?",
+    "exact_missing_or_defect": "compute.py:37-63 reports max of sampled /proc/self/status VmRSS as peak_rss_bytes; project_product:242 creates temporary half-map arrays and runs native SHT without sampling while allocations are live. No process-lifetime VmHWM, ru_maxrss, time maximum-RSS, cgroup memory.peak, or equivalent original execution evidence is in the exact candidate. A synthetic 32 MiB allocation reproduces a missed ceiling crossing. Original 4 GiB compliance is UNKNOWN, not known exceeded.",
+    "input_identity": "sha256:ff5db155e8266b4a913ceb48e69b60d6a6356928940305cd2d28d82fc3f690e5",
+    "substantive": true,
+    "high_consequence": false,
+    "risk": "Whole-node acceptance would assert an unproved frozen resource condition. No numerical tensor error or astrophysical detection follows.",
+    "affected_acceptance": "Frozen INPUT controls.failure requires HOLD for missing cap compliance; limits.RSS_bytes=4294967296 and manifest_rule require RSS accounting.",
+    "minimum_falsifier_or_recovery": "Recover source/packet-bound process-lifetime high-water or equivalent contemporaneous cap evidence for all original partial/successful production executions. Preserve earlier times/failures. Relabel existing values sampled RSS. A new observer cannot reconstruct an exited process peak. If evidence is unavailable, retain historical resource acceptance UNKNOWN/HOLD. No retroactive production rerun is required or authorized by this review.",
+    "bounded_code_repair": "For future authorized work, record real process high-water and observe/enforce caps during native calls; seal execution-time package/thread metadata. Preserve existing scientific arrays and first failures.",
+    "counterexample_evidence": "/mnt/extdrive/workdir/htt_open_data/r25_staged4_blind_review/RSS_COUNTEREXAMPLE_STDOUT.txt",
+    "true_external": false
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "high",
+      "blocking": true,
+      "classification": "RESOURCE_CAP_EVIDENCE_UNKNOWN",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_frequency_tensor_staged4/compute.py",
+      "lines": "37-63, 225-245",
+      "description": "compute.py:37-63 reports max of sampled /proc/self/status VmRSS as peak_rss_bytes; project_product:242 creates temporary half-map arrays and runs native SHT without sampling while allocations are live. No process-lifetime VmHWM, ru_maxrss, time maximum-RSS, cgroup memory.peak, or equivalent original execution evidence is in the exact candidate. A synthetic 32 MiB allocation reproduces a missed ceiling crossing. Original 4 GiB compliance is UNKNOWN, not known exceeded.",
+      "fix": "Recover source/packet-bound process-lifetime high-water or equivalent contemporaneous cap evidence for all original partial/successful production executions. Preserve earlier times/failures. Relabel existing values sampled RSS. A new observer cannot reconstruct an exited process peak. If evidence is unavailable, retain historical resource acceptance UNKNOWN/HOLD. No retroactive production rerun is required or authorized by this review."
+    },
+    {
+      "id": "R2",
+      "severity": "medium",
+      "blocking": false,
+      "classification": "EXECUTION_ENVIRONMENT_PROVENANCE_INCOMPLETE",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_frequency_tensor_staged4/MANIFEST.json",
+      "field": "software identities absent",
+      "description": "Frozen manifest_rule requests software identities, but candidate lacks execution-time Python/healpy/numpy/scipy/astropy versions and loaded threadpool identities. Current reviewer environment is not historical author runtime.",
+      "fix": "Attach retained execution-time evidence if available; otherwise label historical environment unavailable. Do not promote current package inspection to past runtime observation."
+    },
+    {
+      "id": "R3",
+      "severity": "low",
+      "blocking": false,
+      "classification": "STALE_PROPOSAL_WORDING",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_frequency_tensor_staged4/RESULT.json",
+      "field": "claim_ceiling last sentence",
+      "description": "No claimed product qualification or execution from this proposal was copied into an executed result. It obscures actual source qualification/execution; surrounding scientific limits remain sound.",
+      "fix": "In a later authorized packaging update, replace only this stale sentence with executed conditional candidate subject to independent review and historical resource-evidence HOLD. No array recomputation."
+    }
+  ],
+  "independent_component_status": {
+    "source_product_qualification": "PASS_WITH_DECLARED_UPSTREAM_HASH_UNAVAILABLE",
+    "float32_BAD_DATA_nonfinite_and_support": "PASS",
+    "Galactic_COSMO_frame_and_spin": "PASS",
+    "full96_fullSTF_six_full24_contrasts": "PASS",
+    "independent_eth_basis_mixtures_parity_sign": "PASS",
+    "computational_Q_F_and_claim_ceiling": "PASS_WITH_R3_STALE_SENTENCE",
+    "execution_time_software_metadata": "INCOMPLETE",
+    "original_RSS_cap_compliance": "UNKNOWN"
+  },
+  "review_control_seconds": 7.284607506124303,
+  "review_control_seconds_per_product": 1.8211518765310757,
+  "promotes_original_acceptance": false
+}

@@ -1,0 +1,119 @@
+{
+  "schema": "htt.readonly_independent_review_receipt/1",
+  "task_id": "R25-GAIA-SOURCE-PROPERTY-INTAKE",
+  "packet_id": "c84c5e7461f3c20592812fe81df0a74d6915bad037ea3f0c0d9c0d2d5c8c5464",
+  "input_identity": "sha256:00508df7ec44ab6680ab8291868acaa203247aba18aaabfe2eaf029fc6ddad60",
+  "candidate_identity": "sha256:005aa5cf96fe1350ef7690a275edd4ae61e9b30092266e8900c8b3d86b482568",
+  "agent_id": "/root/rc_c84c5e7461f3c205",
+  "requested": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "transport_selected": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "source_head": "d93605e66adfececa89b90681124b232a5f90220",
+  "actual_saved_ack": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/receipts/GAIA_PROPERTIES_REVIEW_ACTUAL_ACK.json",
+    "sha256": "bb674270b8d2e0e78694dd6d096c5b568d25831ff8601055574c7bbd1e52ba23"
+  },
+  "finished_utc": "2026-10-23T13:56:09.232799+00:00",
+  "command_runs": [
+    {
+      "command": "Read frozen packet, input contract, candidate manifest/code/report/raw receipts, XML headers/trailers and summaries with cat/nl/sed",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "modification": false
+    },
+    {
+      "command": "git rev-parse HEAD; git status --short; git branch --show-current; git remote get-url origin (read-only commands)",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "modification": false,
+      "initial_status": "Preexisting dirty and untracked files; preserved"
+    },
+    {
+      "command": "requests.get primary IVOA REC-VOTable-1.4-20191021.html, timeout=(10,35)",
+      "network_scope": "Documentation only; no catalogue query",
+      "exit_code": 0,
+      "elapsed_seconds": 2.9255794840864837,
+      "receipt": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/documentation_fetch.json"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python -B /mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/review_checks.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 2.426283234031871,
+      "resource_usage": {
+        "max_rss_kib": 119124,
+        "user_seconds": 2.229373,
+        "system_seconds": 0.172179
+      },
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/review_checks.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/review_checks.stderr"
+    }
+  ],
+  "failures_preserved": [
+    {
+      "kind": "Documentation transport",
+      "detail": "Initial web.open official www URL timed out; non-www URL inaccessible. Direct official-document GET subsequently succeeded.",
+      "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/documentation_fetch.json"
+    },
+    {
+      "kind": "Author parser first failure",
+      "detail": "Author retained whitespace-loss failure; independent run reproduced astropy whitespace stripping and verified repaired XML-preserving scalar.",
+      "source": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_source_properties_20261023/raw/PARSER_FIRST_FAILURE.json",
+      "independent_evidence": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/INDEPENDENT_CHECKS.json"
+    }
+  ],
+  "validation_files": {
+    "review_checks.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/review_checks.py",
+      "sha256": "a91c74adcbb196237a735ca0e21d6b10bcdb1269e2093f23a2cc11606a2341a1",
+      "bytes": 13829
+    },
+    "INDEPENDENT_CHECKS.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/INDEPENDENT_CHECKS.json",
+      "sha256": "282e5dd56b80492675218a12c585b9802c193b1dee681c12459a1b47fe2f7a7d",
+      "bytes": 3509
+    },
+    "review_checks.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/review_checks.stdout",
+      "sha256": "282e5dd56b80492675218a12c585b9802c193b1dee681c12459a1b47fe2f7a7d",
+      "bytes": 3509
+    },
+    "review_checks.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/review_checks.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "documentation_fetch.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/documentation_fetch.json",
+      "sha256": "26c5b18dc175b5bf24a293c9f9ab2c2da49045db92669280de0e223b506367d9",
+      "bytes": 604
+    },
+    "IVOA_REC_VOTable_1_4.html": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_gaia_properties_blind_review/IVOA_REC_VOTable_1_4.html",
+      "sha256": "b2e6d4d97150e2f0dacbb662ced4ef93350dc44d99606b5e86154e258ff7915b",
+      "bytes": 228536
+    }
+  },
+  "access_scope": {
+    "source_NPZ_member_read": [
+      "source_id.npy"
+    ],
+    "source_NPZ_binary_hash_only_other_bytes": true,
+    "PM_or_covariance_arrays_accessed": false,
+    "catalogue_queries": 0,
+    "candidate_writes": false,
+    "repository_or_STATE_or_Git_mutations": false,
+    "children_spawned": false,
+    "prior_review_verdicts_read": false,
+    "future_association_proposals_read": false
+  },
+  "independence": "Fresh reviewer; not listed as candidate author or contributor. Local skill/harness guidance supplies criteria only, not approval.",
+  "current_evidence_only": "No prior scientific result or review from memory used.",
+  "scientific_ceiling": "Metadata qualification only; full inference remains conditional/unavailable."
+}

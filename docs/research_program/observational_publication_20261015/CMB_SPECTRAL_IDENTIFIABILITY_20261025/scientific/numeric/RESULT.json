@@ -1,0 +1,51 @@
+{
+  "packet_id": "b7adef654c4a44203860dc5206b80b0ebf67457709d16d46db22e2d534d40ca8",
+  "task_id": "R30-CMB-NOMINAL-BANDPASS-MOMENT-IDENTIFIABILITY",
+  "input_identity": "sha256:cfe7be664ca43841e1197653dc4391b9c64c239cca54eebce9a06def80d916be",
+  "agent_id": "/root/rc_b7adef654c4a4420",
+  "outcome": "blocker",
+  "status": "FIRST_PRODUCER_FAILURE_PRESERVED_REPAIR_DECISION_PENDING",
+  "qualified_products": [],
+  "candidate_identity": null,
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/RAW_RECEIPT.json",
+  "tool_return_metadata": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/TOOL_RETURN_METADATA.json",
+  "issue": {
+    "class_code": "IMPLEMENTATION_GUARD_OVERREACH_ON_EXCLUDED_SOURCE_ROWS",
+    "question": "May the same-packet bounded repair move the nonnegative-transmission assertion to after the frozen HFI FLAG=F and TRANSMISSION>BT selection, preserving the first failure and cumulative producer allowance?",
+    "exact_guard_defect": "produce.py read_tables line 93 asserts all raw HFI transmissions nonnegative before filtering; official HFI F143 has 20 negative rows, all FLAG=T, while the contract only forbids negative transmission on selected rows.",
+    "input_identity": "sha256:cfe7be664ca43841e1197653dc4391b9c64c239cca54eebce9a06def80d916be",
+    "substantive": true,
+    "high_consequence": false,
+    "true_external": false,
+    "scientific_consequence": "No finite response matrix or scientific outcome was produced; the guard rejected excluded rows."
+  },
+  "repair_proposal": {
+    "scope": "One targeted implementation guard correction in the same owned produce.py under the same packet, frozen source hashes, formulas, thresholds, and accounting ancestry.",
+    "patch_path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/PROPOSED_REPAIR.diff",
+    "preimage_path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/produce.py.preimage",
+    "preimage_sha256": "074b7148e6c7ca3d13d693639453795d69d9f142bea5e323ad5fa66780644dc0",
+    "scientific_rerun_authorized": false,
+    "remaining_producer_cap_seconds": "At most 180 seconds cumulative less the first started producer debit, subject to controller's actual enclosing time settlement; never reset the clock or add timeout kill-after outside the cap.",
+    "required_supervision": "Monotonic whole-command interval through process reap and receipt fsync, hard 1 GiB peak RSS, one BLAS/OpenMP thread."
+  },
+  "requested_runtime": {"model": "gpt-6-sol", "effort": "high"},
+  "transport_selected": {"model": "gpt-6-sol", "effort": "high"},
+  "observed_runtime": "UNKNOWN",
+  "source_identity": {
+    "LFI_RIMO_R3.31.fits_sha256": "a4794d80b378e00aef1b5e324e2759c3fa791873f2a3edcb53c93678a48dd94b",
+    "HFI_RIMO_R3.00.fits_sha256": "deb55a5c6f76a8578e86c122f56c3f61998b803818b09c4f3e709897881fe222"
+  },
+  "scientific_result": "NOT_COMPUTED",
+  "independent_checker": "NOT_STARTED",
+  "diagnostic_bundle": {
+    "x": "NOT_MEASURED",
+    "observed_quotient_tensor": "NOT_MEASURED",
+    "Q": "NOT_EVALUATED",
+    "F_physical": "NOT_EVALUABLE",
+    "Pi": "NOT_CALIBRATED",
+    "G_F": "NOT_APPLICABLE_FREQUENCY_IS_NOT_DEPTH"
+  },
+  "original_L03_acceptance": "UNCHANGED_HOLD",
+  "scientific_admission": "HOLD",
+  "controller_accounting": "Pending same-seven-account settlement of every started command against live ancestry; SMICA receives no new debit."
+}

@@ -1,0 +1,168 @@
+{
+  "schema": "htt.cf4_support_quotient_independent_actual_review/1",
+  "task_id": "R27-CF4-UNIFORM-SUPPORT-CALIBRATION-QUOTIENT",
+  "agent_id": "/root/r27_cf4_uniform_actual_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "packet_id": "e939f1c72aff447ad9b077ff0905fbe182f4b3644b7a46908d21e027f8fe6c59",
+  "input_identity": "sha256:570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd",
+  "candidate_identity": "sha256:c5148c206e6ec7d5f0e69cbc3ab8dc2c0c2f815d3b304431e0aa0cd16e91883d",
+  "outcome": "success",
+  "status": "SCOPED_PASS",
+  "acceptance_met": true,
+  "scope": "Actual full signed numerical selected-source apparent STF quotient and support-model ideal annihilator; original H02/H03/H04 physical acceptance unchanged",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/WHOLE_COMMAND_RECEIPT.json",
+  "qualified_products": [],
+  "review_report": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/REVIEW.md",
+  "independent_check": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/NUMERIC_CHECK.json",
+  "independence": {
+    "authored_candidate": false,
+    "framed_candidate_or_repair": false,
+    "candidate_consumer_imported": false,
+    "source_edits": false,
+    "producer_or_control_replay": false,
+    "numeric_groups_started": 1,
+    "numeric_groups_repeated": 0
+  },
+  "validation_evidence": {
+    "status": "ALL_INDEPENDENT_CHECKS_PASSED",
+    "source_rows": 35970,
+    "active_singleton_rows": 35026,
+    "structurally_zero_mixed_rows": 944,
+    "nuisance_ranks": [
+      19,
+      19,
+      19
+    ],
+    "signal_ranks": [
+      5,
+      5,
+      5
+    ],
+    "external_preprojection_scale": 420.57222507042695,
+    "independent_algorithm": "normalized pivoted QR nuisance and triangular signal solve; weighted channel-centering compact identity",
+    "normalized_K_difference": 1.5464808229011838e-15,
+    "normalized_b_difference": 6.760423383328517e-15,
+    "normalized_working_covariance_difference": 8.961891656735756e-16,
+    "raw_KC_frobenius": 1.579631719261872e-15,
+    "normalized_KC": 3.1591595092189126e-16,
+    "raw_KN_frobenius": 4.6218007535246535e-15,
+    "normalized_KN": 3.761771330212472e-16,
+    "raw_KA_frobenius_each_representative": 1.579631719261872e-15,
+    "information_fractions": [
+      0.8358738824502114,
+      0.8621472191532931,
+      0.8749495121072597,
+      0.8943915216901733,
+      0.9168745814476005
+    ],
+    "source_and_contract_hashes_verified": true
+  },
+  "semantic_findings": {
+    "support_decomposition": "EXACT_MODEL_IDENTITY",
+    "ideal_Kstar": "SYMBOLIC_MODEL_IDENTITY",
+    "computed_Khat": "NUMERICAL_RESIDUAL_CHECK_ONLY",
+    "binary_exact_annihilation": "NOT_ESTABLISHED",
+    "binary_unrestricted_Gamma_protection": "NOT_ESTABLISHED",
+    "binary_cross_term_cancellation": "NOT_ESTABLISHED",
+    "actual_covariance": "UNKNOWN",
+    "working_covariance": "conditional on additional D residual-error model",
+    "exact_numerical_rank": "NOT_ESTABLISHED",
+    "full_5_vector": "NUMERICAL_SELECTED_SOURCE_APPARENT_OUTPUT",
+    "original_H02_H03_H04": "UNCHANGED_HOLD",
+    "native_family": "NOT_ADMITTED",
+    "CAS_4AXIS": "NOT_PERFORMED"
+  },
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    {
+      "severity": "low",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/RESULT.json",
+      "field": "operator_residuals_scaled_for_K_hat_only",
+      "finding": "Candidate contains scaled operator residuals only. Required raw residuals are retained in the independently bound NUMERIC_CHECK.json companion.",
+      "disposition": "Closed by review evidence; no producer mutation required for this scoped unit."
+    },
+    {
+      "severity": "low",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/INFORMATION_AND_CONTRASTS.png",
+      "finding": "Right-panel title clips the end of significance unknown.",
+      "disposition": "Internal diagnostic is interpretable with bound result/report; wrap title before standalone publication. No rerender authorized or needed for current scoped result."
+    }
+  ],
+  "timing_seconds": {
+    "whole_monotonic_after_receipt_fsync": 7.55262421,
+    "kernel_time_elapsed": 7.59,
+    "exec_command_host_wall": 9.132227085,
+    "caller_api_wall": 9.46,
+    "caller_api_clock": "Date.now wall clock; authentic observation, not monotonic",
+    "functions_exec_displayed_whole_span": 9.5,
+    "suggested_conservative_padded_debit": 9.6,
+    "suggested_debit_is_measured": false,
+    "settlement": "Root takes maximum overlapping whole observations once; suggested 9.6 includes explicit conservative padding above displayed 9.5, not an exact measurement.",
+    "root_announced_conservative_debit_once": 9.6,
+    "root_announced_debit_is_measured": false
+  },
+  "resource": {
+    "numeric_group_cap_seconds": 30,
+    "child_deadline_seconds": 24,
+    "wait4_lifetime_maxrss_kib": 157760,
+    "kernel_lifetime_maxrss_kib": 157760,
+    "rss_cap_bytes": 2147483648,
+    "blas_threads": 1,
+    "official_interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python"
+  },
+  "account_binding": {
+    "parent_task_id": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+    "lifetime_cap_seconds": 600,
+    "used_before_review": 191.69277764664457,
+    "source": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/ROOT_ACCOUNT_HEAD.json",
+    "sha256": "1798bdf6dd2c37ed0fb978acbc9b2e6e6f73d2d8e4a164bc4a984a2a49179099",
+    "root_settlement_required": true
+  },
+  "next_executable_transition": "Root settles review once and returns the new apparent observable/information-loss result to original H02; continue independent READY branches without promoting original physical gates.",
+  "preserved_states": {
+    "baseline": "22/42",
+    "restricted_alternate": "23/42",
+    "R9": "UNKNOWN",
+    "first_control_failure": "PRESERVED",
+    "old_SMICA_and_CF4_failures": "PRESERVED"
+  },
+  "evidence_sha256": {
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/check.py": "6e1484fdddf073ab5ba673085cedc65b78e11d81c474a9fa029d514fe7581fb2",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/run_check.py": "c01eada27d2887757819d3e068ce6fd1d2e5f80af6634f30bbf219a34832f41c",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/NUMERIC_CHECK.json": "65144c4a12dd2bad95861247c017faf1597ac091f549bb589d14950e488f548a",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/WHOLE_COMMAND_RECEIPT.json": "7ff4d8cd07db445716edd26db8ff4705544f575425ed12b95117b8f2ca71ef19",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/ACTUAL_LIFETIME_RESOURCE.txt": "d04ad5b1c3f9a0c6295330155d2a907d88ca1b9f6f93f7c426eaa2e3a3291dc8",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/ACTUAL_ACKNOWLEDGED_REVIEW_PACKET.json": "e12efe7ea447dfc22f87ec08cab52a5d75315117ef22a8152a879804202f1812",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/REVIEW.md": "abae4359e9bd2fbc30990b647f840ef7cceb7402f3eddf18be22028c27e21d8a",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/RESULT.json": "c5148c206e6ec7d5f0e69cbc3ab8dc2c0c2f815d3b304431e0aa0cd16e91883d",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/CARRIER.npz": "21763a9722c8375d593c1f0dcd68d42f31cb1952f22a4140a0df1eea285d6c28",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/INFORMATION_AND_CONTRASTS.png": "8afbf2e1dc285a8d2be423f44c090541713765a0b275b9ca7362a05a7325a6fe",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/SOURCE_BINDING.json": "5629154dbd28fa349fa4203e116c964935dd3af574d39234be959c2a087eac4f",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/consume.py": "d8c3a7526f97f196bcc29b5fbd0ead26aadb1a0230268ea9f2736074c8fcf798",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/test_controls.py": "9999b21ba314ba9cf2cc1724155f5dbaae56dbe5dcaa56e693760053fd4f064b",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/test_controls_repair.py": "07f8a9fdf67d946f45dc6cc5642228fa946556fd200e36fd0731cd01b0398eec",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/continue.py": "d00512b6ae32bf76ee9467b99e7cdb40e282ba82712ae71024b11c70bf98841c"
+  },
+  "reviewed_candidate_products": [
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/RESULT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/CARRIER.npz",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/INFORMATION_AND_CONTRASTS.png",
+    "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_actual_review/NUMERIC_CHECK.json"
+  ],
+  "qualification_note": "The acknowledged candidate proposed no named qualified products; this scoped review does not invent product qualifications.",
+  "source_binding": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/SOURCE_BINDING.json",
+    "sha256": "5629154dbd28fa349fa4203e116c964935dd3af574d39234be959c2a087eac4f",
+    "unchanged_consumer_sha256": "d8c3a7526f97f196bcc29b5fbd0ead26aadb1a0230268ea9f2736074c8fcf798",
+    "original_test_sha256": "9999b21ba314ba9cf2cc1724155f5dbaae56dbe5dcaa56e693760053fd4f064b",
+    "copied_repair_test_sha256": "07f8a9fdf67d946f45dc6cc5642228fa946556fd200e36fd0731cd01b0398eec",
+    "continuation_source_sha256": "d00512b6ae32bf76ee9467b99e7cdb40e282ba82712ae71024b11c70bf98841c",
+    "review_mode": "READ_ONLY_PRODUCER; only reviewer-owned outputs written",
+    "diff_scope": "Exactly the three approved covariance comparisons and their diagnostic logging; original consumer and controls unchanged."
+  }
+}

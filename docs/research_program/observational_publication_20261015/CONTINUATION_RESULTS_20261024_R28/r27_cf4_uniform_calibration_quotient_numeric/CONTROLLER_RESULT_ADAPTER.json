@@ -1,0 +1,68 @@
+{
+  "agent_id": "/root/r27_cf4_uniform_calibration_quotient_numeric",
+  "task_id": "R27-CF4-UNIFORM-SUPPORT-CALIBRATION-QUOTIENT",
+  "packet_id": "696c2d10e057c4481e831218e1a6d57d41b2b29e0908080445088302d26b213e",
+  "status": "HOLD_FIRST_CONTROL_FAILURE",
+  "issue_class": "CONTROL_ASSERTION_ABSOLUTE_THRESHOLD_CONFLICT",
+  "candidate_source_sha256": "a67ab06bced8fb40a6e0eef0692bb38cebf757ae76005c4bed76905c53c0c92d",
+  "input_sha256": "570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd",
+  "source_sha256": {
+    "consume.py": "d8c3a7526f97f196bcc29b5fbd0ead26aadb1a0230268ea9f2736074c8fcf798",
+    "test_controls.py": "9999b21ba314ba9cf2cc1724155f5dbaae56dbe5dcaa56e693760053fd4f064b",
+    "runner.py": "ee00bff886ba8cc4595e1cf36bc9ee6c48ac2eb056b30f33220658c9ae4f9312"
+  },
+  "contract_sha256": "80611699ffb4226b295c5dcb3a0c8ba9e5526a3f807747a17f24ba53b06c2678",
+  "clarification_sha256": "52fea066faafef05cdbd7db391897861b9cb0fbf8ca8b35e17a2cf4ab1b59143",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/WHOLE_COMMAND_RECEIPT.json",
+  "first_failure_stderr": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/test_controls.stderr",
+  "resource_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/ACTUAL_LIFETIME_RESOURCE.txt",
+  "qualified_products": [],
+  "observed_control_outcomes": {
+    "test_exact_support_decomposition": "PASS",
+    "test_full_rank_uniform_invariance_and_cross_covariance": "FAIL",
+    "test_rank4_rank0_and_unstable": "PASS",
+    "test_stf_decode_rotation": "PASS"
+  },
+  "first_failure": {
+    "file": "test_controls.py",
+    "line": 76,
+    "observed_binary_cross_term_norm": 3.9630100305325295e-17,
+    "test_absolute_limit": 1e-24,
+    "frozen_contract_check": "normalized <=1e-10",
+    "interpretation": "The ideal K_star covariance cancellation is a symbolic model identity; this assertion on floating K_hat uses a stricter absolute threshold than the frozen normalized numerical check. Exact binary immunity and unrestricted-Gamma finite protection remain NOT_ESTABLISHED."
+  },
+  "actual_consumer_started": false,
+  "actual_fit": null,
+  "figure": null,
+  "whole_invocation_time": {
+    "outer_monotonic_through_fsync_seconds": 1.0488417,
+    "outer_monotonic_after_receipt_fsync_seconds": 1.371990187,
+    "kernel_time_v_elapsed_seconds": 1.56,
+    "exec_tool_wall_seconds": 2.499240727,
+    "caller_Date_now_whole_seconds_nonmonotonic": 3.485,
+    "conservative_charge_seconds_max_overlap_once": 3.485
+  },
+  "accounting": {
+    "parent_task_id": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+    "previous_used_seconds": 177.80777764664458,
+    "charged_after_this_attempt_seconds": 181.29277764664457,
+    "cap_seconds": 600,
+    "consumer_attempt_charged_seconds": 3.485,
+    "consumer_subcap_seconds": 120,
+    "independent_review_reserved_seconds": 30,
+    "independent_review_used_seconds": 0
+  },
+  "next_action": "Await independent Astra approval of a bounded correction to the failed control assertion and continuation of the unstarted consumer; preserve this first failure and cumulative account.",
+  "input_identity": "sha256:570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd",
+  "candidate_identity": "sha256:a67ab06bced8fb40a6e0eef0692bb38cebf757ae76005c4bed76905c53c0c92d",
+  "outcome": "blocker",
+  "issue": {
+    "class": "code",
+    "question": "Correct a floating cross-covariance control that introduced absolute1e-24 instead of frozen normalized<=1e-10, then continue only failed method and unstarted actual consumer under remaining original120/600seconds.",
+    "exact_missing_or_defect": "test_controls.py:76 fails on3.9630100305325295e-17 against inventedabsolute1e-24; frozencontract normalized<=1e-10 and idealK_star versus binaryK_hat distinction mustremain. Three other controlsPASS retained; consumer/fit/renderNOT_STARTED.",
+    "input_identity": "sha256:570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd",
+    "substantive": true,
+    "true_external": false
+  },
+  "controller_schema_adapter_note": "Root factual native return aliases input_sha256/candidate_source_sha256 and exact code issue, no source/scientific outcome changed."
+}

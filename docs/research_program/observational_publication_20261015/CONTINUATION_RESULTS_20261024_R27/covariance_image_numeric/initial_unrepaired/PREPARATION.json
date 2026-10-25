@@ -1,0 +1,48 @@
+{
+  "ack_schema": {
+    "allocation_ref": "nonempty existing cumulative accounting reference",
+    "controller_ack_id": "nonempty controller-issued string",
+    "controller_packet_id": "nonempty controller-issued string",
+    "cumulative_wall_seconds_before": "number >= 0, includes any prior attempt/approved repair",
+    "decision": "GO",
+    "max_rss_mib": "number <= 512",
+    "max_wall_seconds": "number <= 60, controller-authorized remaining hard cap",
+    "source_sha256": "exact object matching PREPARATION.json source_sha256",
+    "task_id": "r26_covariance_image_capability_numeric",
+    "worker_output_dir": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric"
+  },
+  "controller_selected_worker": "gpt-6-sol/high",
+  "limits": {
+    "blas_threads": 1,
+    "cumulative_check_wall_seconds": 60,
+    "optional_repair_requires_review_finding": true,
+    "rss_mib": 512,
+    "run_count": 1,
+    "synthetic_dimension_max": 7
+  },
+  "observed_runtime": "UNKNOWN",
+  "requested_contract_worker": "gpt-6.1-sol/medium",
+  "schema": "r26_covariance_image_preparation_v1",
+  "scientific_input_seals": {
+    "/mnt/extdrive/workdir/htt_open_data/r26_cf4_actual_source_model_review/CONTRACT.md": "cdf94aaf6d39a01baae0d2fc03342032b1eb5f82ef34555e83ca8631d43f7992",
+    "/mnt/extdrive/workdir/htt_open_data/r26_tensor_covariance_cone_theory/CITATIONS.md": "48b311162c793aadeae98faf0830ca35a7f844dccedfad98790ea9ffbf24d6ff",
+    "/mnt/extdrive/workdir/htt_open_data/r26_tensor_covariance_cone_theory/DERIVATION.md": "7542fc2efa7a109560d2bd8a16e8867408589d0600dea916efc72178568710d7",
+    "/mnt/extdrive/workdir/htt_open_data/r26_tensor_covariance_cone_theory/LOWER_PROOF_FINITE_CHECK_CONTRACT.md": "f94671b022b1254fc7999000e9129db8fb9903bb3b84b823ee1f8a14ab8348b0"
+  },
+  "scientific_status": "GENERIC_INTERFACE_ONLY_NOT_CF4_NOT_H02_NOT_CAS_ADMISSION",
+  "single_cli_after_controller_go": "python3 /mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/run_checks.py --ack-file /mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/ACK.json",
+  "source_response_budget_reset": false,
+  "source_sha256": {
+    "/mnt/extdrive/workdir/htt_open_data/r26_cf4_actual_source_model_review/CONTRACT.md": "cdf94aaf6d39a01baae0d2fc03342032b1eb5f82ef34555e83ca8631d43f7992",
+    "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/HANDOFF.md": "73cecd88b7ce5b9183b97bd7f9afa7bdd476d4cfcede34aa960d6dd05d0010c6",
+    "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/covariance_image.py": "fa06279144cb2d6eed4130894bb3b57acd568a2052fa655056f64af8686cae3f",
+    "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/run_checks.py": "4b0aeca1125376a31b5672d9201c635e6a56910c66efcb4c064735274ac25bb8",
+    "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric/test_covariance_image.py": "e1b74f64f4f679a06537915b73eedc0a4e2b4b8d59ee6834535086874c772a2f",
+    "/mnt/extdrive/workdir/htt_open_data/r26_tensor_covariance_cone_theory/CITATIONS.md": "48b311162c793aadeae98faf0830ca35a7f844dccedfad98790ea9ffbf24d6ff",
+    "/mnt/extdrive/workdir/htt_open_data/r26_tensor_covariance_cone_theory/DERIVATION.md": "7542fc2efa7a109560d2bd8a16e8867408589d0600dea916efc72178568710d7",
+    "/mnt/extdrive/workdir/htt_open_data/r26_tensor_covariance_cone_theory/LOWER_PROOF_FINITE_CHECK_CONTRACT.md": "f94671b022b1254fc7999000e9129db8fb9903bb3b84b823ee1f8a14ab8348b0"
+  },
+  "status": "SOURCE_PREPARED_NOT_DISPATCHED_NOT_RUN",
+  "task_id": "r26_covariance_image_capability_numeric",
+  "worker_output_dir": "/mnt/extdrive/workdir/htt_open_data/r26_covariance_image_capability_numeric"
+}

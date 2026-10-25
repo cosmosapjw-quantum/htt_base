@@ -1,0 +1,44 @@
+{
+  "packet_id": "f03a06d84c471fd3d03fc2435cafdd81ba21697c1b30259d1fa8ba8a0e0ad41c",
+  "task_id": "R30-CMB-NOMINAL-BANDPASS-MOMENT-IDENTIFIABILITY",
+  "input_identity": "sha256:cfe7be664ca43841e1197653dc4391b9c64c239cca54eebce9a06def80d916be",
+  "candidate_identity": "sha256:b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "agent_id": "/root/r30_cmb_fresh_actual_result_review",
+  "status": "CHECK_FAILED_OR_INCOMPLETE",
+  "science_started": true,
+  "whole_cap_seconds": 90,
+  "clock": "time.monotonic",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cmb_fresh_actual_result_review/independent_check.py"
+  ],
+  "source_sha256": "d97d92face2248ca4bdd4480bd7a3d9e22570f0d4f37e67b7d20221252f5e43b",
+  "supervisor_sha256": "b1ad201d1d0b4ca9b2073f4c92e6d3c450d8c05f4f6f24a8642f6aa184517ab4",
+  "packet_file_sha256": "e12411f6f7e853844e76385af19dd379824b79129c071631e29bb3312e17419c",
+  "go_sha256": "3816fda9053b5e7458794f4218bfaeb8f447e144860b18663a38fb22a017232c",
+  "account_head_sha256": "a16b43284fe4a5c240092145d10f0fa802b00a6511680c35b64d1b73f560471a",
+  "MemAvailable_KiB": 16410424,
+  "disk_free_bytes": 2460765007872,
+  "thread_environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "memory_enforcement": "Supervisor RLIMIT_AS 64 MiB plus sole checker RLIMIT_AS 960 MiB; aggregate virtual ceilings 1 GiB. Checker starts no processes. Single-thread numerical libraries.",
+  "child_deadline_seconds": 85,
+  "child_pid": 2295188,
+  "timed_out": false,
+  "exit_code": 1,
+  "peak_child_RSS_KiB": 51796,
+  "peak_supervisor_RSS_KiB": 333632,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "aad52b8643d5fc1c8c75c8e7c153115af4abeef7626f333dd953228e7758f013",
+  "check_result_sha256": "69bfaa549c39ef626e874bd585108126b4215efe87128da347ad0a66db0e0e76",
+  "monotonic_before_receipt_seconds": 7.609739189967513
+}

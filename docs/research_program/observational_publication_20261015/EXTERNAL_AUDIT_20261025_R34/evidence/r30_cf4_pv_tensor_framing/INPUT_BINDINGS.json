@@ -1,0 +1,183 @@
+{
+  "purpose": "Only inputs consumed by the R30 declared spectral-component contract; no permanent gate or live-state mutation",
+  "utc": "2026-10-25T07:42:01.941047+00:00",
+  "contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/CONTRACT.md",
+    "sha256": "29f5660bfee2feb379f01da2f51ddb7a87d416b05a2393f4ffaef5858fd6c8e7",
+    "bytes": 23657
+  },
+  "immutable_numeric_inputs": {
+    "corrected_factor": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/products/FACTOR.npz",
+      "sha256": "d57bd92c1d07466996f067352efdfa40310830ac78d82779fab2ee9c9ed641a7",
+      "bytes": 2020857
+    },
+    "corrected_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_exact_calibration_factor_numeric/metadata_repair_run/actual_run/products/RESULT.json",
+      "sha256": "289e3d4eed1bb3e89fb6dfe78751252dd7f97768a6ef7c2aa7fd260d79e1f044",
+      "bytes": 13229
+    },
+    "inherited_carrier": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/CARRIER.npz",
+      "sha256": "21763a9722c8375d593c1f0dcd68d42f31cb1952f22a4140a0df1eea285d6c28",
+      "bytes": 12333208
+    },
+    "selected_source": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_obs_application_20261015/loop6_kinematics/results/cf4_rawgroup_appHubble_STF2_pooled_methods_v2/selected_source_observables.npz",
+      "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+      "bytes": 1235181
+    },
+    "reference_response_source": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/cf4_apparent_kinematic_distribution.py",
+      "sha256": "843b19e464817d14455df68e9043a93cc71cc7449ab339052c3ddfe1c7298c19",
+      "bytes": 9637
+    },
+    "author_EH98_source": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/EH98_tf_fit_author_source.c",
+      "sha256": "13b69d39055a9fbefd0de6c500b02567a65eb036a26400394998ff454ee3b095",
+      "bytes": 13959
+    }
+  },
+  "read_only_evidence": {
+    "exact_factor_independent_review": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_cf4_exact_factor_metadata_repair_review/attempt2/RESULT.json",
+      "sha256": "2e175411adc5ad078af9b725920849fe3b949d2dc8f39d65d404aa7eb1d53474",
+      "bytes": 11607
+    },
+    "inherited_carrier_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products/RESULT.json",
+      "sha256": "c5148c206e6ec7d5f0e69cbc3ab8dc2c0c2f815d3b304431e0aa0cd16e91883d",
+      "bytes": 16991
+    },
+    "cf4_readme": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/ReadMe",
+      "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+      "bytes": 19918
+    },
+    "account_head": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r28_exact_factor_dispatch/ROOT_ACCOUNT_HEAD_AFTER_FINAL_CLOSEOUT.json",
+      "sha256": "91f7d4c13f5af8d2a94a652fe01297a922498579ec62399cd937855bf4c950d4",
+      "bytes": 1741
+    },
+    "old_M7_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_m7_covariance_application/actual_run/products/RESULT.json",
+      "sha256": "c429be98c1e081a75e9e623493ac4581cf4263b2ae3962989da045b4fa1ac506",
+      "bytes": 61930
+    },
+    "old_H02_report": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018/REPORT_KO.md",
+      "sha256": "3f908d964da72325aebd9742c977909b45b5527fc951540270566e1b013dbe75",
+      "bytes": 13247
+    }
+  },
+  "actual_original_contract_snapshot": {
+    "live_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runtime/r23-continuous/STATE.json",
+    "resolved_path": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/LIVE_STATE.json",
+    "snapshot": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runtime/r23-continuous/STATE.json",
+      "sha256": "fa4ecaca94d180c61b547706ddc546f5bbd9db197a20a6f41bd65c863c13517d",
+      "bytes": 4316867
+    },
+    "clauses": [
+      {
+        "id": "H02",
+        "objective": "Build empirical CF4 method-selection/calibration/velocity covariance model",
+        "acceptance": "Use method-group overlap and correlated errors, reproduce source null simulations",
+        "depends_on": [
+          "H01",
+          "X01"
+        ],
+        "output": "source-qualified distance-velocity likelihood",
+        "test_cases": [
+          "lognormal bias and zero-point shift mock",
+          "same-source method overlap"
+        ]
+      },
+      {
+        "id": "H03",
+        "objective": "Fit observed depth windows monopole/dipole/STF2 with method and patch comparisons",
+        "acceptance": "No physical global tilt inferred; nested sky/redshift windows correlated",
+        "depends_on": [
+          "H01"
+        ],
+        "output": "H_eff(z,n) empirical coefficient trajectories plus cross-window covariance",
+        "test_cases": [
+          "overlapping shell cross covariance"
+        ]
+      },
+      {
+        "id": "H04",
+        "objective": "Infer physical H(z,n) alternatives with peculiar-velocity and survey covariance",
+        "acceptance": "False-positive calibration plus shared calibration posterior predictive checks",
+        "depends_on": [
+          "H02",
+          "H03"
+        ],
+        "output": "corrected joint H(z,n) posterior/identified set",
+        "test_cases": []
+      }
+    ],
+    "role": "Original acceptance evidence, not a requirement to freeze mutable controller STATE across a later dispatch"
+  },
+  "primary_sources": [
+    {
+      "id": "EH98",
+      "url": "https://background.uchicago.edu/~whu/transfer/transferpage.html",
+      "code_url": "https://background.uchicago.edu/~whu/transfer/tf_fit.c",
+      "paper": "https://arxiv.org/abs/astro-ph/9709112",
+      "qualified_use": "Authors analytic no-wiggle fit, not native Boltzmann output; exact cached C source sealed above"
+    },
+    {
+      "id": "Hamilton2001",
+      "url": "https://arxiv.org/abs/astro-ph/0006089v3",
+      "journal_url": "https://academic.oup.com/mnras/article/322/2/419/963632",
+      "qualified_use": "Dust plus Lambda growing-mode integral and f=d lnD/d ln a"
+    },
+    {
+      "id": "WhitfordHowlettDavis2023",
+      "url": "https://arxiv.org/html/2306.11269v2",
+      "qualified_use": "Appendix A linear radial velocity covariance; source already intaken; provides neither the CF4 empirical joint law nor a new source-null release"
+    },
+    {
+      "id": "Planck2018_baseline",
+      "url": "https://wiki.cosmos.esa.int/planck-legacy-archive/images/4/43/Baseline_params_table_2018_68pc_v2.pdf",
+      "paper_url": "https://arxiv.org/abs/1807.06209v4",
+      "qualified_use": "Fixed baseline mean reference numbers; no parameter uncertainty propagated. Primary indexed PDF text checked; direct PDF open returned502, journal full HTML403. EH no-wiggle/no massive-neutrino scale-dependence approximation explicitly differs from Planck numerical spectrum."
+    },
+    {
+      "id": "SciPyLebedev",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.lebedev_rule.html",
+      "installed_version": "1.18.1",
+      "installed_source": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/scipy/integrate/_lebedev.py",
+      "qualified_use": "Verified documented orders35/53/65 and shape3xm; runtime output normalization checked in controls"
+    }
+  ],
+  "accounting": {
+    "parent_task_id": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+    "cap_seconds": 600,
+    "used_seconds_at_framing": 221.39277764664456,
+    "remaining_seconds_at_framing": 378.60722235335544,
+    "controls_plus_actual_whole_command_cap_seconds": 280,
+    "independent_review_whole_command_cap_seconds": 60,
+    "aggregate_new_cap_seconds": 340,
+    "unallocated_seconds_at_snapshot": 38.60722235335544,
+    "pre_dispatch_refresh_required": true,
+    "numeric_commands_started_by_framing": 0,
+    "new_ultra": 0
+  },
+  "workspace": {
+    "root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "head_observed_before_artifact_write": "d93605e66adfececa89b90681124b232a5f90220",
+    "branch": "research/htt-adaptive-methods-20261023",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "dirty_paths_observed": [
+      "docs/research_program/gr_statistics_loops_20260930/local_cas/GRSTAT-CAS-20260930-1308KST/ALL_OBLIGATIONS_20261011_SOURCE_RECONCILIATION/R191-A_rotating_rest_bundle_gauss_v1_20261014/SOURCE_RECOVERY.md",
+      "scripts/codex_harness/research_controller.py",
+      "scripts/codex_harness/test_research_controller_frontier.py"
+    ],
+    "no_repository_or_git_mutation": true
+  },
+  "no_dispatch": true,
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN"
+}

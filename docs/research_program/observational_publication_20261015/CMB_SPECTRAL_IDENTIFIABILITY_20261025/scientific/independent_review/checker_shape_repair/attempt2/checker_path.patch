@@ -1,0 +1,11 @@
+--- original
++++ attempt2
+@@ -13,7 +13,7 @@
+ from astropy.io import fits
+ 
+ ROOT = Path(__file__).resolve().parent
+-NUMERIC = ROOT.parent / 'r30_cmb_spectral_response_numeric'
++NUMERIC = Path('/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric')
+ CANDIDATE = NUMERIC / 'attempt_38cdf6b948a41ee9/RESULT.json'
+ SOURCES = {
+     'LFI_RIMO_R3.31.fits': 'a4794d80b378e00aef1b5e324e2759c3fa791873f2a3edcb53c93678a48dd94b',

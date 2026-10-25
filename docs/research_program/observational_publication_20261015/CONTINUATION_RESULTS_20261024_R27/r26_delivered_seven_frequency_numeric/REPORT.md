@@ -1,0 +1,5 @@
+# Delivered seven-frequency descriptive result
+
+Seven saved Planck PR3 carrier vectors use the sealed 30,021-cell support and Galactic COSMO K_CMB convention. The largest absolute signed coordinates (magnitude, GHz, coordinate, signed K_CMB) are [[5.163803883002714e-05, 353, "E2:m0", -5.163803883002714e-05], [5.161600785599406e-05, 353, "E2:-sqrt2Im2", 5.161600785599406e-05], [2.9374988793064205e-05, 353, "E3:m0", 2.9374988793064205e-05], [2.214880194694592e-05, 353, "B2:sqrt2Re1", 2.214880194694592e-05], [2.1367961875467687e-05, 353, "B3:-sqrt2Im1", -2.1367961875467687e-05]].
+
+Four fixed E-derived fits give B residual norms (K_CMB): {"44": 9.135089222105497e-07, "70": 9.293815463929219e-07, "100": 8.867975248793955e-07, "217": 5.776273396431813e-07}. These are algorithmic heldout coordinates with mask leakage and cross-frequency dependence unmodelled. Q and F_frequency are computational images of seven frequency points. No calibrated null, physical mixture fraction, true-sky E/B separation or Bianchi-family claim follows. SMICA remains the preserved optional failed comparator; the original full8 acceptance remains HOLD.

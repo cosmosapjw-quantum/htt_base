@@ -1,0 +1,350 @@
+--- preimage/research_controller.py
++++ candidate/research_controller.py
+@@ -1438,16 +1438,21 @@
+             "status": "HOLD_TRANSPORT_UNAVAILABLE" if ready else summary(state)["status"]}
+ 
+ 
++def _concrete_repair_plan(plan: object) -> bool:
++    """Preserve the recorded representation and identity of string/object plans."""
++    return (isinstance(plan, str) and bool(plan.strip())) or (isinstance(plan, dict) and bool(plan))
++
++
+ def _repair_followup(state: dict, p: dict, t: dict, agent_id: str, evidence: str) -> dict:
+     """Validate explicit host followup evidence; never relabel a reused thread as fresh."""
+     require(t["phase"] == p["phase"] == "repair", "followup allowed only for planned repair")
+     plan = t.get("repair_plan")
+-    require(isinstance(plan, str) and plan.strip(), "followup needs concrete recorded repair plan")
++    require(_concrete_repair_plan(plan), "followup needs concrete recorded repair plan")
+     seal = _receipt(evidence)
+     data = json.loads(Path(seal["path"]).read_text())
+     require(isinstance(data, dict), "followup evidence must be an object")
+     fields = ("native_tool", "task_id", "agent_id", "phase", "packet_id", "input_identity",
+-              "repair_plan_identity", "base_packet_id", "base_candidate_identity")
++              "repair_plan_identity", "base_packet_id")
+     dispatched = data.get("status") == "dispatched"
+     if not dispatched:
+         fields += ("candidate_identity", "raw_receipt", "raw_receipt_sha256")
+@@ -1475,7 +1480,39 @@
+                     for q in prior), "followup requires unchanged implementation route/profile")
+     source = history.get(data.get("base_packet_id"), {})
+     source_result = source.get("result", {})
+-    require(source.get("phase") in {"execute", "repair"}
++    initial_failure = source_result.get("outcome") == "blocker"
++    if initial_failure:
++        base = state["packets"].get(data.get("base_packet_id"), {})
++        issue = source_result.get("issue", {})
++        implementation_history = [h for h in t["history"]
++                                  if h.get("phase") in {"execute", "repair"}
++                                  and h.get("result", {}).get("agent_id") == agent_id]
++        require(dispatched and implementation_history and source == implementation_history[-1]
++                and all(history[q["packet_id"]].get("result", {}).get("outcome") in {"success", "blocker"}
++                        for q in prior)
++                and base.get("launch_performed") is True and base.get("agent_id") == agent_id
++                and base.get("task_id") == p["task_id"] and base.get("phase") == source.get("phase")
++                and source.get("phase") in {"execute", "repair"}
++                and source_result.get("packet_id") == base.get("packet_id") == data.get("base_packet_id")
++                and source_result.get("task_id") == p["task_id"]
++                and source_result.get("agent_id") == agent_id
++                and source_result.get("input_identity") == base.get("input_identity") == p["input_identity"]
++                and issue.get("class") in {"code", "numeric"} and issue.get("substantive") is True
++                and issue.get("input_identity") == p["input_identity"]
++                and all(value is None for value in (source_result.get("candidate_identity"),
++                    base.get("candidate_identity"), t.get("candidate_identity"), p.get("candidate_identity"),
++                    data.get("base_candidate_identity")))
++                and not any(h.get("result", {}).get("outcome") == "success"
++                            and h.get("result", {}).get("candidate_identity") for h in t["history"]),
++                "followup needs latest acknowledged substantive initial implementation failure without candidate")
++        base_receipt = source.get("receipt")
++        require(isinstance(base_receipt, dict) and data.get("base_raw_receipt") == base_receipt
++                and _receipt(source_result.get("raw_receipt", "")) == base_receipt,
++                "initial failure followup needs exact stored raw receipt seal")
++    else:
++        require(isinstance(data.get("base_candidate_identity"), str) and data["base_candidate_identity"].strip(),
++                "followup needs nonempty base candidate identity")
++        require(source.get("phase") in {"execute", "repair"}
+             and source_result.get("agent_id") == agent_id and source_result.get("outcome") == "success"
+             and source_result.get("input_identity") == p["input_identity"]
+             and source_result.get("candidate_identity") == data.get("base_candidate_identity")
+@@ -1494,8 +1531,9 @@
+                 "host followup receipt must bind actual accepted dispatch")
+         return {"mode": "dispatched", "evidence": seal, "host_call_receipt": raw,
+                 "native_tool": data["native_tool"], "base_packet_id": data["base_packet_id"],
+-                "base_candidate_identity": data["base_candidate_identity"],
+-                "repair_plan_identity": data["repair_plan_identity"]}
++                "base_candidate_identity": data.get("base_candidate_identity"),
++                "repair_plan_identity": data["repair_plan_identity"],
++                **({"base_raw_receipt": base_receipt} if initial_failure else {})}
+     candidate = data.get("candidate_identity")
+     require(isinstance(candidate, str) and candidate.strip()
+             and candidate != t["candidate_identity"], "followup needs new candidate identity")
+@@ -1606,7 +1644,9 @@
+     require(classification in {"environment", "permission", "transport"} and reason.strip(),
+             "exact launch refusal classification/reason required")
+     receipt = _receipt(evidence)
+-    hold = {"class": classification, "exact_missing_or_defect": reason, "receipt": receipt}
++    hold = {"class": classification, "exact_missing_or_defect": reason, "receipt": receipt,
++            "retry_prohibited": bool(retry_prohibited or "exhaust" in reason.lower()
++                                     or "monthly quota" in reason.lower())}
+     t.update(state="held", hold=hold)
+     repair_id = _task_repair_id(state, p["task_id"])
+     pending = state["ultra_pending"].get(repair_id)
+@@ -1642,6 +1682,10 @@
+     _validate_repair_binding(state, bound_repair, task_id, spec=prospective_spec,
+                             delta=None if delta["kind"] == "prelaunch_transport" else delta)
+     if delta["kind"] == "prelaunch_transport":
++        require(not t.get("hold", {}).get("retry_prohibited")
++                and not any(word in t.get("hold", {}).get("exact_missing_or_defect", "").lower()
++                            for word in ("exhaust", "monthly quota")),
++                "exhausted/prohibited ordinary transport cannot retry")
+         packet_id = t.get("packet_id")
+         p = state["packets"].get(packet_id, {})
+         require(delta.get("packet_id") == packet_id and p and not p.get("launch_performed")
+@@ -2501,6 +2545,9 @@
+             require(result.get("base_packet_id") == continuation["base_packet_id"]
+                     and result.get("base_candidate_identity") == continuation["base_candidate_identity"],
+                     "followup result must bind acknowledged base candidate")
++            if "base_raw_receipt" in continuation:
++                require(result.get("base_raw_receipt") == continuation["base_raw_receipt"],
++                        "followup result must bind acknowledged initial failure receipt")
+             require(receipt["sha256"] not in {event["receipt"]["sha256"] for event in t["history"]},
+                     "followup result needs a new actual raw receipt")
+             raw_data = json.loads(Path(receipt["path"]).read_text())
+@@ -2508,6 +2555,9 @@
+                     ("packet_id", "task_id", "agent_id", "input_identity", "base_packet_id",
+                      "base_candidate_identity", "outcome", "candidate_identity")),
+                     "followup raw outcome identity mismatch")
++            if "base_raw_receipt" in continuation:
++                require(raw_data.get("base_raw_receipt") == continuation["base_raw_receipt"],
++                        "followup raw outcome must bind initial failure receipt")
+             if result.get("outcome") == "success":
+                 require(result.get("candidate_identity")
+                         and result["candidate_identity"] != continuation["base_candidate_identity"],
+@@ -2525,7 +2575,7 @@
+              "receipt": receipt, "result": copy.deepcopy(result)}
+     if outcome == "success":
+         if phase in {"research", "escalation"}:
+-            require(result.get("repair_plan"), "research must return concrete bounded repair plan")
++            require(_concrete_repair_plan(result.get("repair_plan")), "research must return concrete bounded repair plan")
+             t.update(phase="repair", state="ready", repair_plan=result["repair_plan"])
+         elif phase == "review":
+             require(result.get("candidate_identity") == t.get("candidate_identity"), "stale reviewed candidate")
+@@ -2621,6 +2671,7 @@
+ 
+ def save(path: Path, value: dict) -> None:
+     """Atomic checkpoint; completed outcomes retained inside state even if interrupted."""
++    path = path.resolve()
+     path.parent.mkdir(parents=True, exist_ok=True)
+     fd, temp = tempfile.mkstemp(dir=path.parent, prefix=".controller-")
+     try:
+@@ -2697,6 +2748,8 @@
+     sub.add_parser("summary")
+     args = parser.parse_args()
+     try:
++        # Pin the durable checkpoint once, before either reading or placing sidecars.
++        args.state = args.state.resolve()
+         policy = load_policy(args.policy) if args.policy else load_policy()
+         if args.action == "init":
+             require(not args.state.exists(), "refusing to overwrite existing campaign")
+--- preimage/test_research_controller_frontier.py
++++ candidate/test_research_controller_frontier.py
+@@ -405,6 +405,200 @@
+             old=copy.deepcopy(state)
+             with self.assertRaises(rc.ControllerError):rc.resume(state,"A",evidence,"input-v1")
+             self.assertEqual(state,old)
++
++
++class MinimalLifecycleRepairTests(unittest.TestCase):
++    setUp = FrontierTests.setUp
++    state = FrontierTests.state
++    launch = FrontierTests.launch
++    result = FrontierTests.result
++    issue = FrontierTests.issue
++    semantic_file = FrontierTests.semantic_file
++    """Tiny metadata fixtures for the three frozen R29 lifecycle defects."""
++    def test_save_two_hop_alias_and_new_file(self):
++        root = Path(self.tmp.name)
++        target = root / "durable" / "STATE.json"
++        rc.save(target, {"generation": 1})
++        middle, alias = root / "middle", root / "alias"
++        middle.symlink_to(target)
++        alias.symlink_to(middle)
++        rc.save(alias, {"generation": 2})
++        self.assertTrue(alias.is_symlink())
++        self.assertTrue(middle.is_symlink())
++        self.assertEqual(json.loads(target.read_text()), {"generation": 2})
++        self.assertEqual(list(target.parent.glob(".controller-*")), [])
++
++    def cli(self, path, *args):
++        result = base.subprocess.run([base.sys.executable, "-B", str(Path(rc.__file__)),
++            "--state", str(path), *args], text=True, capture_output=True)
++        self.assertEqual(result.returncode, 0, result.stderr)
++        return json.loads(result.stdout)
++
++    def test_cli_pins_two_hop_target_and_result_sidecar(self):
++        root = Path(self.tmp.name)
++        target = root / "durable" / "STATE.json"
++        campaign = root / "campaign.json"
++        campaign.write_text(json.dumps({"campaign_id": "alias-fixture", "tasks": [task("A")]}))
++        self.cli(target, "init", "--campaign", str(campaign), "--authorization", "metadata only")
++        middle, alias = root / "middle", root / "alias"
++        middle.symlink_to(target)
++        alias.symlink_to(middle)
++        args = [part for model, effort in sorted(PROFILES)
++                for part in ("--available-profile", model + "/" + effort)]
++        packet = self.cli(alias, "next", *args)
++        self.cli(alias, "ack", "--packet-id", packet["packet_id"], "--agent-id", "fixture-author")
++        raw = root / "raw.json"; raw.write_text('{"metadata":"actual fixture result"}')
++        result = {"packet_id": packet["packet_id"], "task_id": "A", "agent_id": "fixture-author",
++                  "input_identity": "input-v1", "raw_receipt": str(raw), "outcome": "success",
++                  "candidate_identity": "fixture-candidate", "validation_evidence": ["fixture control"]}
++        result_path = root / "result.json"; result_path.write_text(json.dumps(result))
++        self.cli(alias, "record", "--result", str(result_path))
++        self.assertTrue(alias.is_symlink()); self.assertTrue(middle.is_symlink())
++        self.assertTrue((target.parent / "STATE.json.results" / (rc.digest(result) + ".json")).is_file())
++        self.assertFalse((root / "alias.results").exists())
++        self.assertEqual(json.loads(target.read_text())["tasks"]["A"]["phase"], "review")
++        self.assertEqual(self.cli(alias, "summary"), self.cli(target, "summary"))
++
++    def test_prohibited_and_exhausted_ordinary_transport_atomic(self):
++        for reason, prohibited in (("owner prohibits retry", True), ("exhausted monthly quota", False)):
++            state = self.state([task("A", approved_repair_id=None)])
++            packet = rc.next_packet(state, POLICY, PROFILES)
++            evidence = self.semantic_file({"refused": reason})
++            rc.launch_failed(state, packet["packet_id"], evidence, "transport", reason, prohibited)
++            self.assertTrue(state["tasks"]["A"]["hold"]["retry_prohibited"])
++            evidence = self.semantic_file(delta("prelaunch_transport", packet_id=packet["packet_id"],
++                before={"transport": "refused"}, after={"transport": "available"}))
++            old = copy.deepcopy(state)
++            with self.assertRaises(rc.ControllerError):
++                rc.resume(state, "A", evidence, "input-v1")
++            self.assertEqual(state, old)
++
++    def initial_failure_fixture(self, plan):
++        state = self.state([task("A", approved_repair_id=None)])
++        state["tasks"]["A"]["accounting"] = {"seconds": 17.25, "tokens": 13}
++        state["ultra_repairs"]["historical-used"] = {"task_id": "OLD"}
++        state["ultra_pending"]["historical-pending"] = {"task_id": "OLD"}
++        author = self.launch(state)
++        self.result(state, author, "blocker", candidate_identity=None,
++                    issue=self.issue(**{"class": "code"}))
++        research = self.launch(state)
++        self.result(state, research, repair_plan=plan, candidate_identity=None)
++        repair = rc.next_packet(state, POLICY, PROFILES)
++        agent = state["packets"][author["packet_id"]]["agent_id"]
++        source = state["tasks"]["A"]["history"][0]
++        data = {"status": "dispatched", "native_tool": "collaboration.followup_task", "task_id": "A",
++                "agent_id": agent, "phase": "repair", "packet_id": repair["packet_id"],
++                "input_identity": "input-v1", "repair_plan_identity": rc.digest(plan),
++                "base_packet_id": author["packet_id"], "base_candidate_identity": None,
++                "base_raw_receipt": copy.deepcopy(source["receipt"]),
++                "requested": repair["route"]["requested"],
++                "transport_selected": repair["route"]["transport_selected"]}
++        host = Path(self.tmp.name) / "host.json"
++        host.write_text(json.dumps({"dispatch_accepted": True, **{k:data[k] for k in
++            ("native_tool", "agent_id", "packet_id", "task_id", "input_identity")}}))
++        data.update(host_call_receipt=str(host), host_call_receipt_sha256=rc._receipt(str(host))["sha256"])
++        evidence = Path(self.tmp.name) / "followup.json"; evidence.write_text(json.dumps(data))
++        return state, author, repair, agent, evidence, data
++
++    def test_initial_failure_structured_and_string_plan_review(self):
++        for plan in ({"repair": "correct initial control"}, "correct initial control"):
++            state, author, repair, agent, evidence, data = self.initial_failure_fixture(plan)
++            if isinstance(plan, str):
++                data.pop("base_candidate_identity")
++                evidence.write_text(json.dumps(data))
++            old = copy.deepcopy(state)
++            rc.acknowledge(state, repair["packet_id"], agent, followup_evidence=str(evidence))
++            for field in ("campaign", "campaign_identity", "ultra_repairs", "ultra_pending", "turn"):
++                self.assertEqual(state[field], old[field])
++            for field in ("history", "authors", "contributors", "failures", "accounting", "attempt"):
++                self.assertEqual(state["tasks"]["A"][field], old["tasks"]["A"][field])
++            self.assertEqual(state["packets"][repair["packet_id"]]["observed_runtime"], "UNKNOWN")
++            after_ack = copy.deepcopy(state)
++            with self.assertRaises(rc.ControllerError):
++                rc.acknowledge(state, repair["packet_id"], agent, followup_evidence=str(evidence))
++            self.assertEqual(state, after_ack)
++            result = {"packet_id": repair["packet_id"], "task_id": "A", "agent_id": agent,
++                "input_identity": "input-v1", "base_packet_id": author["packet_id"],
++                "base_candidate_identity": None, "base_raw_receipt": data["base_raw_receipt"],
++                "outcome": "success", "candidate_identity": "actual-new-candidate",
++                "validation_evidence": ["new control passed"]}
++            raw = Path(self.tmp.name) / "new-outcome.json"; raw.write_text(json.dumps(result))
++            result["raw_receipt"] = str(raw)
++            for change in ({"candidate_identity": None}, {"base_packet_id": "wrong"},
++                           {"base_raw_receipt": {}}, {"raw_receipt": data["base_raw_receipt"]["path"]}):
++                with self.assertRaises(rc.ControllerError): rc.record(state, {**result, **change}, POLICY)
++                self.assertEqual(state, after_ack)
++            rc.record(state, result, POLICY)
++            after_record = copy.deepcopy(state)
++            with self.assertRaises(rc.ControllerError): rc.record(state, result, POLICY)
++            self.assertEqual(state, after_record)
++            review = rc.next_packet(state, POLICY, PROFILES)
++            with self.assertRaises(rc.ControllerError): rc.acknowledge(state, review["packet_id"], agent)
++            rc.acknowledge(state, review["packet_id"], "fresh-independent-reviewer")
++            self.result(state, review, acceptance_met=True, candidate_identity="actual-new-candidate")
++            self.assertEqual(state["tasks"]["A"]["state"], "completed")
++
++    def test_initial_failure_followup_rejects_mutations_atomically(self):
++        changes = ("plan", "receipt", "input", "agent", "route", "unknown", "unacknowledged",
++                   "environment", "nonsubstantive", "source-candidate", "task-candidate", "packet-candidate",
++                   "prior-success", "not-latest", "not-dispatched", "fake-base-candidate", "source-input",
++                   "source-agent", "source-packet", "raw-drift", "host-not-accepted", "host-hash", "research-candidate")
++        for change in changes:
++            state, author, repair, agent, evidence, data = self.initial_failure_fixture({"repair": "control"})
++            t = state["tasks"]["A"]; source = t["history"][0]
++            if change == "plan": data["repair_plan_identity"] = "wrong"
++            if change == "receipt": data["base_raw_receipt"] = {**data["base_raw_receipt"], "sha256": "wrong"}
++            if change == "input": data["input_identity"] = "wrong"
++            if change == "agent": data["agent_id"] = "wrong"
++            if change == "route": state["packets"][author["packet_id"]]["route"]["requested"] = {"model": "wrong"}
++            if change == "unknown": t["history"].pop(0)
++            if change == "unacknowledged": state["packets"][author["packet_id"]]["launch_performed"] = False
++            if change == "environment": source["result"]["issue"]["class"] = "environment"
++            if change == "nonsubstantive": source["result"]["issue"]["substantive"] = False
++            if change == "source-candidate": source["result"]["candidate_identity"] = "fake"
++            if change == "task-candidate": t["candidate_identity"] = "fake"
++            if change == "packet-candidate": state["packets"][repair["packet_id"]]["candidate_identity"] = "fake"
++            if change == "research-candidate": t["history"][1]["result"]["candidate_identity"] = "fake-success"
++            if change == "prior-success": t["history"].insert(0, {**copy.deepcopy(source), "result": {
++                **source["result"], "outcome": "success", "candidate_identity": "old-success"}})
++            if change == "not-latest": t["history"].append({**copy.deepcopy(source), "packet_id": "newer-author"})
++            if change == "not-dispatched": data["status"] = "returned"
++            if change == "fake-base-candidate": data["base_candidate_identity"] = "NO_CANDIDATE"
++            if change == "source-input": source["result"]["input_identity"] = "wrong"
++            if change == "source-agent": source["result"]["agent_id"] = "wrong"
++            if change == "source-packet": source["result"]["packet_id"] = "wrong"
++            if change == "raw-drift": Path(data["base_raw_receipt"]["path"]).write_text("changed raw bytes")
++            if change == "host-hash": data["host_call_receipt_sha256"] = "wrong"
++            if change == "host-not-accepted":
++                host = Path(data["host_call_receipt"])
++                host.write_text(json.dumps({**json.loads(host.read_text()), "dispatch_accepted": False}))
++                data["host_call_receipt_sha256"] = rc._receipt(str(host))["sha256"]
++            evidence.write_text(json.dumps(data)); old = copy.deepcopy(state)
++            with self.subTest(change=change), self.assertRaises(rc.ControllerError):
++                rc.acknowledge(state, repair["packet_id"], agent, followup_evidence=str(evidence))
++            self.assertEqual(state, old)
++
++    def test_successful_base_dispatched_followup_unchanged(self):
++        state, author, repair, agent, evidence, data = FrontierTests.followup_fixture(self)
++        data.update(status="dispatched", requested=repair["route"]["requested"],
++                    transport_selected=repair["route"]["transport_selected"])
++        host = Path(self.tmp.name) / "host-dispatch.json"
++        host.write_text(json.dumps({"dispatch_accepted": True, **{k:data[k] for k in
++            ("native_tool", "agent_id", "packet_id", "task_id", "input_identity")}}))
++        data.update(host_call_receipt=str(host), host_call_receipt_sha256=rc._receipt(str(host))["sha256"])
++        evidence.write_text(json.dumps(data))
++        rc.acknowledge(state, repair["packet_id"], agent, followup_evidence=str(evidence))
++        continuation = state["packets"][repair["packet_id"]]["continuation"]
++        self.assertEqual(continuation["base_candidate_identity"], "candidate-v1")
++        self.assertNotIn("base_raw_receipt", continuation)
++
++    def test_empty_or_wrong_plan_rejected_at_record(self):
++        for plan in (" ", {}, [], ["repair"], True, 7):
++            state = self.state([task("A", approved_repair_id=None)])
++            self.result(state, self.launch(state), "blocker", candidate_identity=None, issue=self.issue())
++            research = self.launch(state); old = copy.deepcopy(state)
++            with self.assertRaises(rc.ControllerError): self.result(state, research, repair_plan=plan)
++            self.assertEqual(state, old)
+ 
+ 
+ class ConcurrentReviewTests(unittest.TestCase):

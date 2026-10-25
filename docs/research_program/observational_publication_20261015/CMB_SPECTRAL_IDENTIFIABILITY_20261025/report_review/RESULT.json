@@ -1,0 +1,134 @@
+{
+  "status": "SCOPED_PASS",
+  "scope": "External publication approval of the exact revised report/PDF/source ZIP/code/data package only; not journal submission authority or broader scientific admission",
+  "publication_package_approved": true,
+  "candidate": {
+    "main.pdf": {
+      "sha256": "6ecbac884994457739834167348b23f50fed70d0018b3ae4133b3651c1a1dbb0",
+      "size": 229643
+    },
+    "spectral_identifiability_source.zip": {
+      "sha256": "d9812ba9c6630cf30ba9b3922c0d9fc7746954905c4beecbf04bf427bb88cdfc",
+      "size": 128269
+    },
+    "main.tex": {
+      "sha256": "1b7433357fde44a229b1738de43561442bb496c862005da4732b477bba5d9a50",
+      "size": 14909
+    },
+    "REPORT_RESULT.json": {
+      "sha256": "ae5c0db5848da0ee7bc1c28afe27c466abbe97d35398b01d3bf7fe9f723cf35e",
+      "size": 2574
+    }
+  },
+  "source_result_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "source_contract_sha256": "fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "open_blockers": [],
+  "closed_findings": [
+    {
+      "id": "R31-REPORT-F1",
+      "path": "main.tex",
+      "line": 22,
+      "closeout": "F100/F143/F217 distinguished from PSB353 in exact revised source and rendered page 2."
+    },
+    {
+      "id": "R31-REPORT-F2",
+      "path": "references.bib",
+      "line": 5,
+      "closeout": "Actual cMILC title and primary identifier verified in exact revised source and rendered page 7.",
+      "primary_source": "https://arxiv.org/abs/2006.08628"
+    },
+    {
+      "id": "R31-REPORT-NOTE1",
+      "path": "README.md",
+      "line": 39,
+      "closeout": "Archive README now correctly distinguishes locally retained build logs from ZIP contents."
+    }
+  ],
+  "nonblocking_notes": [
+    {
+      "path": "references.bib",
+      "lines": [
+        1,
+        2,
+        3
+      ],
+      "note": "Three undated versioned release/software references render empty date parentheses. All resolve by explicit version and URL; no date should be invented to satisfy a checker."
+    }
+  ],
+  "verification": {
+    "all_seven_pages_visually_reviewed": true,
+    "revised_changed_pages_visually_reviewed": [
+      2,
+      7
+    ],
+    "remaining_pages_pixel_identical": true,
+    "manifest_entries": 19,
+    "branches": 6,
+    "exact_stored_plot_values": 186,
+    "table_numeric_cells": 48,
+    "F1_all_branches": {
+      "rank": 5,
+      "augmented_rank": 6,
+      "preserved_target_coordinates": 24,
+      "HA_basis_controls": 24,
+      "HB_nuisance_basis_controls": 120
+    },
+    "F2_all_branches": {
+      "rank": 7,
+      "lost_target_coordinates": 24,
+      "signed_coefficients": 9,
+      "degeneracy_controls": 24
+    },
+    "conditional_theorem": "Independently verified by the projector mixed-product identity and injectivity of nonzero frequency vector tensor I24; exact conditional statement separated from numerical ranks.",
+    "source_zip_clean_build": "PASS",
+    "generated_data_match": "PASS",
+    "regenerated_plot_pixel_parity": "PASS",
+    "revised_isolated_pdf_text_parity": "PASS",
+    "external_manuscript_internal_jargon": "ABSENT",
+    "equations_constants_and_selection_rules": "MATCH_FROZEN_CONTRACT"
+  },
+  "boundaries": {
+    "no_observed_sky_or_noise_null_inference": true,
+    "no_global_nonlinear_physical_no_go": true,
+    "no_native_solver_or_family_or_posterior_claim": true,
+    "x": "NOT_MEASURED",
+    "observed_quotient_tensor": "NOT_MEASURED",
+    "Q": "NOT_EVALUATED",
+    "F_physical": "NOT_EVALUABLE",
+    "Pi": "NOT_CALIBRATED",
+    "G_F": "NOT_APPLICABLE_FREQUENCY_IS_NOT_DEPTH",
+    "physical_L03": "HOLD_UNCHANGED",
+    "historical_CAS": "NOT_PROMOTED"
+  },
+  "accounting": {
+    "new_scientific_invocations": 0,
+    "science_account_debit_for_this_publication_review": 0,
+    "prior_enclosing_science_seconds": 61.1,
+    "prior_science_cap_seconds": 270,
+    "all_seven_source_frequency_accounts_below_900": true,
+    "historical_accounting_caveats_retained": true
+  },
+  "execution": {
+    "candidate_or_repository_edits_by_reviewer": false,
+    "original_scientific_producer_checker_imports": false,
+    "integration_svd_fit_or_sky_runs": false,
+    "git_push_merge_submission": false,
+    "subagents": false
+  },
+  "evidence": [
+    "INITIAL_IDENTITY_CHECK.json",
+    "INITIAL_REVIEW.json",
+    "NUMBER_SOURCE_CHECK.json",
+    "BUILD_CHECK.json",
+    "PLOT_RENDER_CHECK.json",
+    "REVISED_CLOSEOUT_CHECK.json",
+    "REVISED_CHECK_FIRST_FAILURE.json",
+    "REVISED_CHECK_TEXT_ASSERTION.json"
+  ],
+  "timestamp_utc": "2026-10-25T09:02:29.947392+00:00"
+}

@@ -1,0 +1,202 @@
+{
+  "review_type": "fresh independent final-candidate scientific review",
+  "reviewer_agent": "/root/r26_s05_final_independent_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "utc": "2026-10-24T03:25:19.049099+00:00",
+  "task_id": "S05",
+  "original_objective": "Write P1 real-data statistical-functional paper",
+  "unchanged_acceptance": "Distinct from standard pushforward; model comparison and source-linked robustness",
+  "verdict": "SCOPED_PASS",
+  "summary": "The exact 17-page candidate satisfies original S05 as a real-data conditional methods paper: identification fibres and explicit domains precede propagation; normalized A/B/C predictive comparisons use the same 274 observed objects; selection, covariance, weighting, floor, and source robustness are tied to retained numerical products. No blocking finding remains in the reviewed candidate. This is not physical scientific admission, S06 completion, publication, or campaign completion.",
+  "candidate": {
+    "canonical_directory": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024",
+    "identity": "sha256:0f9c81c1ddf609e7c070554d7fff9b94886fe036d133cc8113b248d8b1d51a17",
+    "identity_algorithm": "SHA256 of UTF-8 json.dumps(actual_candidate_files,sort_keys=True,separators=(comma,colon)), receipt order; recomputed for all 16 current files",
+    "source_file_count": 16,
+    "git_HEAD_observed": "d93605e66adfececa89b90681124b232a5f90220",
+    "checkout_state": "Existing dirty canonical checkout; no source, Git, or controller mutation by reviewer",
+    "pdf_sha256": "cb52f70f08d06f8aa9f7cafbe04be22cd32a2253a17b8e07764bfcc706cce9f1",
+    "pdf_bytes": 650644,
+    "pdf_pages": 17,
+    "zip_sha256": "de4ff5829228b9bd66a6f7c67ff4ed02547609f3c7b02db030eba8bf99a91f60",
+    "zip_bytes": 313906,
+    "zip_members": 18,
+    "zip_unique_members": 18,
+    "zip_crc": "PASS",
+    "all_zip_members_equal_current_sources": true,
+    "build_source_hashes_matched": 13,
+    "actual_consumption_RESULT_sha256": "2332baff2c68e63dd4ed882db6de0ba08172ce4b4c47498105b85837a58ca069",
+    "actual_consumption_RAW_RECEIPT_sha256": "17d3cd3f4946863ed3be373998bcd6a163594119bb6e1985eddacc255d214938"
+  },
+  "acceptance_clauses": [
+    {
+      "clause": "Distinct from standard pushforward",
+      "status": "PASS_WITH_STATED_METHODS_APPLICATION_CEILING",
+      "evidence": [
+        "sections/02_identification.tex:6-28 defines observation-law fibres, identified images, one-event confidence images, and response relations before choosing any measure",
+        "sections/05_coupled_functionals.tex:6-47 proves I_S(B;D_S)=D_S within the declared optical scenario, distinguishes bounded domains from the formal unrestricted affine extension, and exhibits where a bias bound would enter",
+        "sections/04_results_robustness.tex:82-106 and sections/07_proofs.tex:32-41 give completion sets and common-measure restrictions that cannot be supplied by ordinary pushforward alone",
+        "sections/06_discussion.tex:14 explicitly disclaims priority for standard or elementary statements"
+      ]
+    },
+    {
+      "clause": "Model comparison",
+      "status": "PASS_CONDITIONAL_SAME_COHORT",
+      "evidence": [
+        "sections/03_selected_likelihood.tex:27-102 retains the normalized selected Gaussian law and full15 finite-F event with all covariance blocks",
+        "sections/04_results_robustness.tex:49-71 compares A/B/C on the same274 rows and whole-group folds; normalized plug-in scores omit training-parameter uncertainty and are clearly separated from the exact repeated-sample F diagnostic",
+        "Direct primary-result arithmetic reproduces every saved fold-score sum and the reversal between A and B under added group covariance; prior residual-law failure and PGC9031 domain failure remain disclosed"
+      ]
+    },
+    {
+      "clause": "Source-linked robustness",
+      "status": "PASS_DIAGNOSTIC_AND_CONDITIONAL",
+      "evidence": [
+        "All twelve OOF cases have the same274 unique PGC identifiers; counts at strict threshold0.5mag are71-80",
+        "354 missing outcomes remain in the628-target completion sets; auxiliary balance changes the supported target to625 and leaves351 outcomes missing",
+        "Four-window covariance, fixed2048 coupled atoms, deterministic north-weighted estimates, floor sensitivity, and unknown physical mass remain distinct",
+        "CLAIM_SOURCES primary numerical paths resolve and nine checked primary source hashes match; no prior review verdict was used as scientific evidence"
+      ]
+    }
+  ],
+  "findings": [],
+  "independent_small_checks": {
+    "new_fit_optimizer_null_or_draw": false,
+    "finite_F_radius_sq_recomputed": 27.058502419705654,
+    "manuscript_radius_sq": 27.058502419705658,
+    "n_p_nu": [
+      274,
+      15,
+      259
+    ],
+    "all_four_full_beta_and_covariance_arrays_equal_primary_distance_result": true,
+    "four_normalized_logL_max_error_from_saved_q_and_logdet": 0.0,
+    "all_twelve_model_fold_score_sums_max_error": 0.0,
+    "all_sixty_normalized_fold_log_density_formulas_max_error": 0.0,
+    "zero_tensor_mahalanobis_sq": [
+      9.846157861157252,
+      6.031362250529556,
+      10.413226397880246,
+      6.068340899656925
+    ],
+    "zero_inside_all_four_projected_regions": true,
+    "predictive_F_diagnostics": 20,
+    "minimum_two_sided_F_tail_recomputed": 0.023264709508724134,
+    "F_tail_max_difference_from_saved": 0.0,
+    "OOF_cases": 12,
+    "OOF_rows_each": 274,
+    "common_unique_PGC_set": true,
+    "event_counts_at_strict_abs_residual_gt_0p5": [
+      71,
+      76,
+      79,
+      74,
+      74,
+      77,
+      72,
+      78,
+      80,
+      74,
+      74,
+      77
+    ],
+    "finite_frame_missing_hull_width": 0.5636942675159236,
+    "Gamma2_hull_width_range": [
+      0.73328025477707,
+      0.7547770700636942
+    ],
+    "Gamma4_hull_width": 0.8909235668789809,
+    "quadrature_shape": [
+      2048,
+      4,
+      9
+    ],
+    "unique_atom_ids": 2048,
+    "weight_sum": 1.0,
+    "minimum_saved_H": 71.37635400731304,
+    "norm_T_over_H_max_difference_from_saved_A": 0.0,
+    "joint_event_count_Amax_gt_0p05": 1235,
+    "joint_event_mass": 0.60302734375,
+    "z0p06_over_z0p025_median_at_floor0p005": 1.7186930597020562,
+    "z0p06_over_z0p025_median_at_floor0p05": 1.025396101439001,
+    "floor0p075_all_three_contrasts_all_atoms_equal_one": true,
+    "H0_H1_correlation": 0.7018210181135426,
+    "H0_H1_difference_SD_joint": 0.09610203639766084,
+    "H0_H1_difference_SD_omit_covariance": 0.17589562786738408,
+    "stored_physical_x_Q_F_G_all_NaN": true,
+    "auxiliary_supported625_ESS": 271.53708568525417,
+    "auxiliary_weight_range": [
+      0.0021333333333333334,
+      0.0064
+    ],
+    "auxiliary_fine_velocity_witness": 2547
+  },
+  "build_and_visual_evidence": {
+    "existing_build_log_directory": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/latex_20261024T025228Z",
+    "existing_log_confirms": "Output written:17pages,650644bytes; latexmk all targets up-to-date",
+    "built_pdf_hash_equals_canonical": true,
+    "current_PDF_text_extracted": true,
+    "current_PDF_pages_rendered_in_memory_and_inspected": [
+      7,
+      9,
+      11,
+      12,
+      14
+    ],
+    "additional_existing_page_images_inspected": [
+      10,
+      14
+    ],
+    "all_four_figures_and_captions_present": true,
+    "unresolved_citation_reference_or_overfull_box_messages_found": false,
+    "nonfatal_warnings": "REVTeX default font size; nameref label definition; four float placement warnings; three bibliography missing-number warnings disclosed. Figures visibly present with readable captions.",
+    "new_TeX_builds": 0
+  },
+  "review_independence": {
+    "authored_candidate": false,
+    "spawned_children": false,
+    "prior_S05_review_RESULT_VERDICT_CLOSEOUT_files_opened": false,
+    "canonical_annotations": "Canonical SCIENTIFIC_SCOPE/CLAIM_SOURCES mention prior repair history. Those annotations were treated as provenance only; no prior verdict or harness/skill approval served as the decision oracle.",
+    "prior_S04_review_verdict_opened": false,
+    "evidence_basis": "Current scientific text, algebra, primary stored numerical products, independent small arithmetic, actual PDF/ZIP/build evidence, and limited primary literature checks"
+  },
+  "literature_checked": [
+    {
+      "url": "https://arxiv.org/abs/2010.06534",
+      "scope": "General luminosity-distance multipole/cosmography context; no new universal optical error bound inferred"
+    },
+    {
+      "url": "https://arxiv.org/abs/2312.09875",
+      "scope": "Observer-dependent cosmography and frame transformation context"
+    },
+    {
+      "url": "https://arxiv.org/abs/2510.02510",
+      "scope": "Prior apparent expansion/multipole analysis context; no claim of new observable or foundational novelty"
+    },
+    {
+      "url": "https://arxiv.org/abs/0711.0198",
+      "scope": "Ratio confidence-set context and journal metadata; not a full novelty or literature audit"
+    }
+  ],
+  "preserved_limits": {
+    "physical_scientific_admission": "HOLD",
+    "H03_physical_response": "UNKNOWN",
+    "H03_physical_identified_set": "UNKNOWN",
+    "physical_x_Q_F_Pi_G": "NOT_MEASURED_OR_DOMAIN_UNQUALIFIED",
+    "empirical_null_coverage": "NOT_ESTABLISHED",
+    "native_solver_or_family_identification": "NOT_CLAIMED",
+    "S06": "SEPARATE_NOT_REVIEWED_OR_COMPLETED",
+    "publication_or_submission": "NOT_PERFORMED_OR_AUTHORIZED_BY_THIS_REVIEW",
+    "campaign_scientific_completion": "NOT_IMPLIED",
+    "source_acquisition_or_full_reanalysis": "NOT_REPEATED",
+    "read_only_inspection_failures": [
+      "Initial schema inspection indexed a dict as a list (KeyError0); corrected without source change.",
+      "Optional fitz import unavailable; used installed pdfinfo,pdftotext,pdftoppm without installing anything."
+    ]
+  },
+  "administrative_status": "Factual REVIEW/VERDICT only. No controller RESULT written; genuine review packet/ACK and controller consumption remain separate."
+}

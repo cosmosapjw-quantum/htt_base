@@ -1,0 +1,206 @@
+{
+  "accounting_status": "PROPOSED_UNTIL_ROOT_INGEST",
+  "baseline_charged_seconds": {
+    "100": 107.52121178396581,
+    "143": 409.87022941022474,
+    "217": 300.89890600459944,
+    "30": 72.10014364482437,
+    "353": 200.55828674857798,
+    "44": 55.86481976286111,
+    "70": 56.190558366808794,
+    "SMICA": 301.22157064567614
+  },
+  "charges": [
+    {
+      "allocated_products": [
+        "30",
+        "44",
+        "70",
+        "100",
+        "143",
+        "217",
+        "353",
+        "SMICA"
+      ],
+      "elapsed_seconds": 12.166922480100766,
+      "label": "COMMON_PREPARATION_AND_FORMAT_CONTROL"
+    },
+    {
+      "allocated_products": [
+        "30",
+        "44",
+        "70",
+        "100",
+        "143",
+        "217",
+        "353",
+        "SMICA"
+      ],
+      "elapsed_seconds": 1.1134163020178676,
+      "label": "COMMON_NATIVE_PRELAUNCH"
+    },
+    {
+      "allocated_products": [
+        "SMICA"
+      ],
+      "attempt_id": "926379fa4f9c4d6db1054b0f304d74e6",
+      "elapsed_seconds": 110.38916298095137,
+      "label": "EXACT_SMICA_NATIVE_ONE_USE"
+    },
+    {
+      "allocated_products": [
+        "30",
+        "44",
+        "70",
+        "100",
+        "143",
+        "217",
+        "353",
+        "SMICA"
+      ],
+      "elapsed_seconds": 0.027097865007817745,
+      "label": "COMMON_FINALIZATION_OR_FAILURE"
+    }
+  ],
+  "component_id": "R26-SMICA-EXACT-PR3-IMPLICIT-ROW-PROJECTION",
+  "control": {
+    "child_reaped": true,
+    "child_start_ticks": 145212722,
+    "child_vm_hwm_bytes": 104726528,
+    "cleanup_exception": null,
+    "command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "-v",
+      "test_format_controls"
+    ],
+    "elapsed_seconds": 6.680623360909522,
+    "exception": null,
+    "exit_code": 0,
+    "max_observed_child_threads": 1,
+    "minimum_host_mem_available_bytes": null,
+    "one_use": true,
+    "owned_group_sampled_rss_peak_bytes": 138870784,
+    "parent_lifetime_ru_maxrss_bytes": 644976640,
+    "parent_pid": 444802,
+    "parent_vm_hwm_bytes": 34144256,
+    "pid": 445148,
+    "start_utc": "2026-10-24T04:49:16Z",
+    "status": "FINISHED",
+    "stderr": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/FORMAT.stderr",
+    "stdout": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/FORMAT.stdout",
+    "trigger": null,
+    "wait4_ru_maxrss_bytes": 101572608,
+    "wait_status": 0
+  },
+  "cumulative_charged_seconds": {
+    "100": 109.18464136485662,
+    "143": 411.53365899111554,
+    "217": 302.56233558549025,
+    "30": 73.76357322571518,
+    "353": 202.2217163294688,
+    "44": 57.52824934375192,
+    "70": 57.8539879476996,
+    "SMICA": 413.2741632075183
+  },
+  "delta_charged_seconds": {
+    "100": 1.6634295808908064,
+    "143": 1.6634295808908064,
+    "217": 1.6634295808908064,
+    "30": 1.6634295808908064,
+    "353": 1.6634295808908064,
+    "44": 1.6634295808908064,
+    "70": 1.6634295808908064,
+    "SMICA": 112.05259256184218
+  },
+  "first_failures": [],
+  "input_sha256": "f38fad65711947960265183d3bd61a062fc883356366d445ad75b3b62cb8800d",
+  "latest_account_head": {
+    "bytes": 2876,
+    "cumulative_charged_seconds": {
+      "100": 107.52121178396581,
+      "143": 409.87022941022474,
+      "217": 300.89890600459944,
+      "30": 72.10014364482437,
+      "353": 200.55828674857798,
+      "44": 55.86481976286111,
+      "70": 56.190558366808794,
+      "SMICA": 301.22157064567614
+    },
+    "minimum_ancestor": {
+      "bytes": 11945,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/continuation/LEDGER.json",
+      "sha256": "182cfde08b319b6008d19f772b2247e218b2b217ce45a19334d196a69b689454"
+    },
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/repair_exception_control/LEDGER_DELTA.json",
+    "sha256": "a1c267453a187cf78d4537beb8c60454e2d8bb36744a2ddb7147c70a226d2238",
+    "status": "SEALED_LATEST_POST_SEVEN_HEAD"
+  },
+  "map_header_sha256": "a25bdcde564d4e6041011c497584d2884518252126e172dc35f460f130b25f26",
+  "native": {
+    "attempt_id": "926379fa4f9c4d6db1054b0f304d74e6",
+    "child_reaped": true,
+    "child_start_ticks": 145213538,
+    "child_vm_hwm_bytes": 161779712,
+    "cleanup_exception": null,
+    "command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/project_smica.py",
+      "--input",
+      "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/FINAL_INPUT.json",
+      "--input-sha",
+      "f38fad65711947960265183d3bd61a062fc883356366d445ad75b3b62cb8800d",
+      "--packet",
+      "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/ACTUAL_ACKNOWLEDGED_EXECUTION_PACKET.json",
+      "--packet-sha",
+      "51da3bae5685fe47f73ae5c197357d7fba74772cdca96c86206148f436ed6bb1",
+      "--control-receipt",
+      "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/FORMAT_CONTROL_RECEIPT.json",
+      "--control-receipt-sha",
+      "b35855ac85e60c92ea79b8584d0789ae96836809f7ca4f59a58be38dffe20dbb",
+      "--internal-fd",
+      "3",
+      "--attempt-id",
+      "926379fa4f9c4d6db1054b0f304d74e6"
+    ],
+    "elapsed_seconds": 110.38916298095137,
+    "exception": null,
+    "exit_code": 0,
+    "max_observed_child_threads": 1,
+    "minimum_host_mem_available_bytes": 15851122688,
+    "native_bound_seconds": 300.0,
+    "owned_group_sampled_rss_peak_bytes": 195989504,
+    "parent_lifetime_ru_maxrss_bytes": 644976640,
+    "parent_pid": 444802,
+    "parent_vm_hwm_bytes": 34217984,
+    "pid": 445651,
+    "prelaunch_mem_available_bytes": 16050626560,
+    "start_utc": "2026-10-24T04:49:24Z",
+    "status": "FINISHED_REVIEW_REQUIRED",
+    "stderr": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/SMICA.stderr",
+    "stdout": "/mnt/extdrive/workdir/htt_open_data/r26_smica_exact_product_adapter_numeric/run/SMICA.stdout",
+    "trigger": null,
+    "wait4_ru_maxrss_bytes": 159834112,
+    "wait_status": 0
+  },
+  "observed_runtime": "UNKNOWN",
+  "old_failed_one_use_preserved": true,
+  "old_terminal_snapshot": {
+    "bytes": 11945,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/run/continuation/LEDGER.json",
+    "sha256": "182cfde08b319b6008d19f772b2247e218b2b217ce45a19334d196a69b689454"
+  },
+  "packet_id": "724014e9f218574061d517506886c7d9178a9430db57307489084b5e614996e0",
+  "packet_sha256": "51da3bae5685fe47f73ae5c197357d7fba74772cdca96c86206148f436ed6bb1",
+  "postprocess_shared_seconds": 0.027097865007817745,
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "schema": "htt.smica_exact_product_additive_ledger/1",
+  "scientific_admission": "HOLD",
+  "stage": "CANDIDATE_REVIEW_REQUIRED"
+}

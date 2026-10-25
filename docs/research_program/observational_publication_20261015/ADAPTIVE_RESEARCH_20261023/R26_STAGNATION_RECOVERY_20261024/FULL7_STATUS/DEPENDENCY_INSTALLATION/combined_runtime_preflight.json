@@ -1,0 +1,19 @@
+{
+  "status": "FINISHED",
+  "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "-B",
+    "-c",
+    "import importlib.metadata as m,json,sys,site\nimport numpy,scipy,healpy,astropy,threadpoolctl\ninfo=threadpoolctl.threadpool_info()\nassert threadpoolctl.__version__=='3.6.0'\nassert all(x['num_threads']==1 for x in info),info\nprint(json.dumps({'sys_executable':sys.executable,'python_version':sys.version,'prefix':sys.prefix,'base_prefix':sys.base_prefix,'site_packages':site.getsitepackages(),'sys_path':sys.path,'versions':{n:m.version(n) for n in ['numpy','scipy','healpy','astropy','threadpoolctl']},'threadpool_info':info,'all_reported_num_threads_one':True,'threadpoolctl_path':threadpoolctl.__file__},sort_keys=True))"
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "thread_env": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "parent_pid": 3473043,
+  "exit_code": 0,
+  "elapsed_seconds": 6.991908179828897
+}

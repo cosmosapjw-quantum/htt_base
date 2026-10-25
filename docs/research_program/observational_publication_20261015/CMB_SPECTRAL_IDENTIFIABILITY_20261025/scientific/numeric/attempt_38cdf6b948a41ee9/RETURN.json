@@ -1,0 +1,62 @@
+{
+  "packet_id": "38cdf6b948a41ee93372fb48be413f7617e0de5bc2b6b3a704b153cc4ef011d3",
+  "task_id": "R30-CMB-NOMINAL-BANDPASS-MOMENT-IDENTIFIABILITY",
+  "input_identity": "sha256:cfe7be664ca43841e1197653dc4391b9c64c239cca54eebce9a06def80d916be",
+  "agent_id": "/root/rc_b7adef654c4a4420",
+  "outcome": "success",
+  "status": "COMPLETE_PRODUCER_CANDIDATE_PENDING_FRESH_INDEPENDENT_ACTUAL_RESULT_REVIEW_AND_ACCOUNT_SETTLEMENT",
+  "acceptance_met": false,
+  "scientific_admission": "HOLD",
+  "base_packet_id": "b7adef654c4a44203860dc5206b80b0ebf67457709d16d46db22e2d534d40ca8",
+  "base_candidate_identity": null,
+  "base_raw_receipt": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/RAW_RECEIPT.json",
+    "sha256": "de3e9bfd950804dfffde883cac54191aea6d7a05b753c28bae142df012b35e1f"
+  },
+  "repair_plan_identity": "bed6207a978d4bd747e3addcc21b9f6d3278fd6425d403ad3a8558c6851c818b",
+  "candidate_identity": "sha256:b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "candidate_path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/attempt_38cdf6b948a41ee9/RESULT.json",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/attempt_38cdf6b948a41ee9/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "6c1d0a2508646e535d935ff636faae26f8b4f81082dce9425494111441465601",
+  "supervisor_return": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/attempt_38cdf6b948a41ee9/SUPERVISOR_RETURN.json",
+  "supervisor_return_sha256": "72fb59baaad36276bc1d0ff6e31cf30e8e5891a952ceb6eea1da3082cf6d374d",
+  "repair_diff": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/attempt_38cdf6b948a41ee9/REPAIR.diff",
+  "repair_diff_sha256": "3ee2578cb1ab38a761e4a87ae4549a7fc8d0cbfcaf4c15aa8970d5d5f26eebda",
+  "producer_source_sha256": "32166d4d4eb9cad1a8892e475f7a71d3a28bdbdaf50f70c8d42ea4f64d583ae4",
+  "supervisor_source_sha256": "d0fcf034d38d8d48d2d3c392f57b8bc14f1391e0527107ea834dcae46bd2256b",
+  "qualified_products": [
+    "six-branch released-table finite spectral response matrices",
+    "conditional common-spatial-response F1 quotient and full signed24 controls",
+    "conditional common-spatial-response F2 degeneracy and full signed24 witnesses"
+  ],
+  "branch_producer_decisions": {
+    "A_BT_1e-07": ["F1_NUMERIC_RESOLVED_QUOTIENT", "F2_NUMERIC_FULL_ROW_RANK_DEGENERACY"],
+    "A_BT_1e-08": ["F1_NUMERIC_RESOLVED_QUOTIENT", "F2_NUMERIC_FULL_ROW_RANK_DEGENERACY"],
+    "A_BT_1e-06": ["F1_NUMERIC_RESOLVED_QUOTIENT", "F2_NUMERIC_FULL_ROW_RANK_DEGENERACY"],
+    "B_BT_1e-07": ["F1_NUMERIC_RESOLVED_QUOTIENT", "F2_NUMERIC_FULL_ROW_RANK_DEGENERACY"],
+    "B_BT_1e-08": ["F1_NUMERIC_RESOLVED_QUOTIENT", "F2_NUMERIC_FULL_ROW_RANK_DEGENERACY"],
+    "B_BT_1e-06": ["F1_NUMERIC_RESOLVED_QUOTIENT", "F2_NUMERIC_FULL_ROW_RANK_DEGENERACY"]
+  },
+  "producer_execution": {
+    "inner_scientific_seconds": 4.672525845933706,
+    "whole_supervisor_monotonic_through_receipt_directory_fsync_seconds": 14.522019907133654,
+    "outer_exec_tool_wall_seconds": 14.470442208,
+    "cap_seconds": 174,
+    "exit_code": 0,
+    "peak_child_RSS_KiB": 89612,
+    "memory_hard_limit": "RLIMIT_AS 1 GiB on sole producer process",
+    "requested_runtime": {"model": "gpt-6-sol", "effort": "high"},
+    "observed_runtime": "UNKNOWN"
+  },
+  "independent_checker": "NOT_STARTED_BY_AUTHOR",
+  "original_L03_acceptance": "UNCHANGED_HOLD",
+  "diagnostic_bundle": {
+    "x": "NOT_MEASURED",
+    "observed_quotient_tensor": "NOT_MEASURED",
+    "Q": "NOT_EVALUATED",
+    "F_physical": "NOT_EVALUABLE",
+    "Pi": "NOT_CALIBRATED",
+    "G_F": "NOT_APPLICABLE_FREQUENCY_IS_NOT_DEPTH"
+  },
+  "accounting_note": "Controller must charge all distinct started command intervals once to the same seven frequency accounts, retain prior debits and the 90-second independent checker reserve; SMICA receives no new debit."
+}

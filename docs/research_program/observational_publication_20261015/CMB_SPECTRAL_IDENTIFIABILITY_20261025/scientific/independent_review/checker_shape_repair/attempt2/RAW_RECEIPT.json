@@ -1,0 +1,46 @@
+{
+  "packet_id": "f03a06d84c471fd3d03fc2435cafdd81ba21697c1b30259d1fa8ba8a0e0ad41c",
+  "task_id": "R30-CMB-NOMINAL-BANDPASS-MOMENT-IDENTIFIABILITY",
+  "input_identity": "sha256:cfe7be664ca43841e1197653dc4391b9c64c239cca54eebce9a06def80d916be",
+  "candidate_identity": "sha256:b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "agent_id": "/root/r30_cmb_fresh_actual_result_review",
+  "status": "CHECK_COMPLETE",
+  "science_started": true,
+  "whole_cap_seconds": 80,
+  "first_conservative_debit_seconds": 10,
+  "cumulative_checker_hard_cap_seconds": 90,
+  "clock": "time.monotonic",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "command": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cmb_fresh_actual_result_review/checker_shape_repair/attempt2/independent_check.py"
+  ],
+  "source_sha256": "5572f1444a17e1eeb2a7e5d0d13d6a3b907d798b6c417199d6dabdee41c48f4c",
+  "supervisor_sha256": "433ae6b5c66693bfabefdf6351357236843fa7da4685a620d8d040238dd8e10c",
+  "packet_file_sha256": "e12411f6f7e853844e76385af19dd379824b79129c071631e29bb3312e17419c",
+  "go_sha256": "7e258eb373cc423ac55e6c05dffdc22e4bc52efd8362ec30426c16d2ce964848",
+  "account_head_sha256": "a16b43284fe4a5c240092145d10f0fa802b00a6511680c35b64d1b73f560471a",
+  "MemAvailable_KiB": 21087948,
+  "disk_free_bytes": 2460764815360,
+  "thread_environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "memory_enforcement": "Supervisor RLIMIT_AS 64 MiB plus sole checker RLIMIT_AS 960 MiB; aggregate virtual ceilings 1 GiB. Checker starts no processes. Single-thread numerical libraries.",
+  "child_deadline_seconds": 75,
+  "child_pid": 2312355,
+  "timed_out": false,
+  "exit_code": 0,
+  "peak_child_RSS_KiB": 62776,
+  "peak_supervisor_RSS_KiB": 333632,
+  "stdout_sha256": "7874d7b5fd0f284e85befa96dc1e7841d59c9ebbdb1c2c67ff8d461be26da82a",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "check_result_sha256": "824b6b1d968630c29f5a51b8e49a240c6eb3c9d3f938ecf9958372223992072a",
+  "monotonic_before_receipt_seconds": 12.769514050101861
+}

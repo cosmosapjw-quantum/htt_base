@@ -1,0 +1,19 @@
+{
+  "owner": "obsstat",
+  "scope": "finite nominal Planck spectral-table conditional common-spatial-response model",
+  "claim_tier": "C0_CONDITIONAL_MODEL_DIAGNOSTIC",
+  "transfer_source": "none",
+  "sky_support_status": "NO_SKY_USED",
+  "null_mock_status": "NO_NOISE_OR_NULL_LAW",
+  "generation": "python code/assemble.py; stored fields only",
+  "source_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "figures": {
+    "spectra.pdf": "normalized_singular_values; thresholds from frozen contract",
+    "weights_witnesses.pdf": "F1.w,F1.w_norm2,F1/F2.resolved_condition,F2.cmb_in_foreground_coefficients_9"
+  },
+  "caveats": [
+    "Numerically resolved ranks do not establish exact physical ranks",
+    "No actual-sky fit or noise variance",
+    "Six branches are not a calibrated uncertainty set"
+  ]
+}

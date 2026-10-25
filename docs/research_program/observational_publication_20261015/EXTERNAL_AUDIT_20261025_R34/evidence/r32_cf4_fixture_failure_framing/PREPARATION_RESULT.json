@@ -1,0 +1,83 @@
+{
+  "status": "SOURCE_PREPARATION_COMPLETE_AWAIT_ACTUAL_PACKET_ACK_GO",
+  "scope": "independent source/theory blocker framing only",
+  "owner": "/root/r32_cf4_fixture_failure_framing",
+  "task_id": "R30-CF4-BAND-PV-FULL-TENSOR-COVARIANCE",
+  "parent_task_id": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+  "input_identity": "sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3",
+  "failed_packet_id": "dd99622e000512ddbc07894d021019b960c96806319c063f207bb98cebc5a8e5",
+  "actual_research_packet_id": null,
+  "actual_packet_ack": false,
+  "controller_go": false,
+  "controller_result": false,
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN / NOT_INDEPENDENTLY_OBSERVED",
+  "decision": "ONE_BOUNDED_TARGETED_REPAIR_JUSTIFIED_PROSPECTIVELY",
+  "repair_plan": {
+    "source_destination": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair",
+    "allowed_source_changes": [
+      "driver.py antipodal plus-conjugate residual assertion and serialization",
+      "fast_science.py same-value C-contiguous per-axis setpts inputs and bit-equality control"
+    ],
+    "unchanged_source": [
+      "science.py",
+      "runner.py",
+      "independent_check.py"
+    ],
+    "one_use_producer_max_seconds": 30,
+    "source_only_repair_max_seconds": 10,
+    "fresh_independent_checker_reserved_seconds": 60,
+    "reuse_old_warning_bearing_windows_as_candidate": false,
+    "main_transform_rerun_reason": "changed actual setpts path serves all transforms; preserve unchanged all-warning HOLD gate",
+    "model_tolerances_cohort_basis_and_controls_unchanged": true
+  },
+  "antipodal_law": "w(k,-u) = -conj(w(k,u)) for the frozen real-coefficient positive-phase window",
+  "old_failure_magnitude": "NOT_MEASURED_NOT_SERIALIZED",
+  "corrected_numerical_residual": "NOT_MEASURED",
+  "source_decision": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fixture_failure_framing/SOURCE_DECISION.md",
+    "sha256": "d1369f4f00762f82cd4a27fa89386e7d4c0ac7cd3061f7a397c27210984b1e46"
+  },
+  "source_and_evidence_sha256": {
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/driver.py": "fb30aeb48b1309c86882980a7a035ad1ff624c6c3627ada0392ee827c2cf04ee",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/fast_science.py": "b160e3684bcebb4cb12a72d9fb19f70e478022a4a84e0a6244d01c2ad576e76b",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/science.py": "ed9918ef9f2f12c7e6b04d5140ea8e51acd86c5fb6a541d80a27e9f42e3ad982",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/runner.py": "6ff336ef28a90f6d3d6e315df4b48b055f16d944b5eec6dcbdd25c46c90deb38",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/independent_check.py": "a825c6e9240d189fa456b5a4868c8cc95801a4983c2b8b90f60659894b9b32a2",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/_deps/finufft/_interfaces.py": "508eff637d85e8aaaf06e4aff78dd75dbae749421cefea9efd03631be0dc5462",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/DEPENDENCY.json": "3c47a0982825c6455ca571fa6cc64cfeb184149735f270057d729bad0eecac96",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/INPUT.json": "ab9cc134af35b5206be7dbaedb46e8a9f398ac1a5a7a4be50c5f46e7ade467e3",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/RESULT.json": "a6e0c9d5538195d9b217725844eb4fbbd08fa7f966e9b299aa858098cc1b911b",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/RUN_RECEIPT.json": "75ae1f0a5bfffdb5f73cd42f89a21dc28759acd6c099c7976c636ba7f7bf99ef",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/stderr.log": "8ef6d2938f0f53bae24ea25f9f72ee53fe43298352164c9e63e86e906fb0d3bb",
+    "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fast_numeric_executor/RETURN.json": "65e70592cbc7a4983b6a5bd27590facfd5942eb182eaaea413e9616129f6ab66",
+    "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fast_numeric_executor/RAW_OUTCOME.json": "b2561d2c80e04f06788b87a08e84a56e1edf90fbd9fabb4ae488429454eaff56",
+    "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fast_window_framing/CONTRACT.md": "8765ad540341080dbb6da3ec02a0cc9179447df45448b7a12245954c879b4706",
+    "/mnt/extdrive/workdir/htt_open_data/r32_cf4_resource_reallocation_review/RESOURCE_ADDENDUM.md": "3eba5f296412d420d9ab5b0e72068c17cf56d6672f777515fe0159bd0e9fd530",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/CONTRACT.md": "29f5660bfee2feb379f01da2f51ddb7a87d416b05a2393f4ffaef5858fd6c8e7",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/INPUT_BINDINGS.json": "d5cfe88bf297ee7d7ab6ae5b6758c951cf2491b189de8c37e6756511232dc2c4",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fast_window_dispatch/ACTUAL_FAST_FAILURE_CONTROLLER_ADAPTER.json": "41c13d5fffd442b183a5737cfa78560e8f09949cd86fd858f7be09454c5859b3",
+    "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fast_window_dispatch/ROOT_ACCOUNT_HEAD_AFTER_FAST_NUMERIC_FAILURE.json": "7eac1e3e8eb5c1158f8c50987b1a7939b483dd1e44b75a7fa7c3a5c5d910b57c"
+  },
+  "input_byte_identity_scope": "original scientific input identifier carried by frozen actual INPUT/runner; original controller payload bytes not independently rehashed",
+  "scientific_admission": false,
+  "original_acceptance": false,
+  "original_H02_H04": "HOLD",
+  "physical_x_F_Pi_Q_GF": "UNDEFINED/HOLD",
+  "global_rigorous_type3_error_enclosure": "NOT_ESTABLISHED",
+  "numerical_transform_starts": 0,
+  "checker_starts": 0,
+  "producer_starts": 0,
+  "same_lifetime_cap_seconds": 600,
+  "known_used_lower_bound_before_framing_seconds": 452.8927776466445,
+  "remaining_upper_bound_before_framing_seconds": 147.1072223533555,
+  "accounting_note": "Root must debit observed complete command/tool windows. Internal script durations are not substitutes. Pending +2.4 enclosure correction acknowledged, not applied by this read-only agent. Preserve all historical costs and source-preparation HOLD.",
+  "framing_max_command_tool_runtime_seconds": 10,
+  "internal_script_durations_already_observed_seconds": [
+    1.4367672801017761,
+    1.8921642499044538,
+    0.24575589783489704
+  ],
+  "write_script_internal_before_result_seconds": 0.8770247970242053,
+  "next_action": "WAIT for actual research packet; ACK then consume on controller GO via fresh followup; no numerical authorization now"
+}

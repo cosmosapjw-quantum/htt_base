@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/driver.py", line 443, in <module>
+    main()
+  File "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/driver.py", line 354, in main
+    a=stage(35,16,'A',data,amp,background,output,deadline,timing)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/driver.py", line 294, in stage
+    raise Hold(f'BUDGET_CONVERGENCE_HOLD forecast={forecast:.3f} remaining={deadline-time.monotonic():.3f}')
+Hold: BUDGET_CONVERGENCE_HOLD forecast=258.967 remaining=225.379

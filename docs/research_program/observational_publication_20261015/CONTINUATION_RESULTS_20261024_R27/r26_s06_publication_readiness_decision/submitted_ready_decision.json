@@ -1,0 +1,1360 @@
+{
+  "schema": "htt.p1.submitted_ready_decision/1",
+  "utc": "2026-10-24T04:11:54.704222+00:00",
+  "paper": "P1",
+  "task_id": "S06",
+  "packet_id": "4a14f955743613a445307422da9dd87fe16954a511ad6342e6699971a89751a7",
+  "input_identity": "sha256:bf04b365dd55aa11ce952ffed948b8f94131d495cb196693a17997753b261eba",
+  "goal": "Decide publication readiness without submitting",
+  "unchanged_acceptance": "All P1 gates shown with actual evidence or HOLD",
+  "decision_preparer": {
+    "agent_id": "/root/r26_s06_publication_readiness_decision",
+    "role": "scientific readiness assessment author, read-only repository",
+    "requested_runtime": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_selected": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "observed_runtime": "UNKNOWN",
+    "scientific_author_credit": "No scientific author identity inferred or created; operational agent attribution is not manuscript authorship."
+  },
+  "acknowledgement": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r26_s05_final_independent_review/ACTUAL_ACKNOWLEDGED_S06_EXECUTION_PACKET.json",
+    "sha256": "fce95e1f34ad3fce7556032ba73100d7dbdb75a24541dc8f5ea18f966169a53f",
+    "bytes": 4754
+  },
+  "manuscript": {
+    "directory": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024",
+    "title": "Selected-sample tensor laws and partially identified cosmological functionals",
+    "source_identity": "sha256:0f9c81c1ddf609e7c070554d7fff9b94886fe036d133cc8113b248d8b1d51a17",
+    "source_identity_algorithm": "SHA256 UTF-8 json.dumps(actual_candidate_files,sort_keys=True,separators=(comma,colon)), unchanged author order",
+    "pdf": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/main.pdf",
+      "sha256": "cb52f70f08d06f8aa9f7cafbe04be22cd32a2253a17b8e07764bfcc706cce9f1",
+      "bytes": 650644
+    },
+    "source_bundle": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/source_bundle.zip",
+      "sha256": "de4ff5829228b9bd66a6f7c67ff4ed02547609f3c7b02db030eba8bf99a91f60",
+      "bytes": 313906
+    },
+    "pages": 17,
+    "repo_state": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "head_observed": "d93605e66adfececa89b90681124b232a5f90220",
+      "branch_observed": "research/htt-adaptive-methods-20261023",
+      "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+      "dirty_status_observed": true,
+      "mutated_by_this_agent": false
+    },
+    "separate_omnibus_report_pages": 140,
+    "controller_supplied_remote_commit": "c9df63efa4728255a5b785ad7cb752ecb8d8f3ef",
+    "remote_verification_by_this_agent": "NOT_PERFORMED; supplied identity recorded, no publication success invented"
+  },
+  "decision": {
+    "assessment_status": "COMPLETE_CANDIDATE_PENDING_FRESH_INDEPENDENT_REVIEW",
+    "every_applicable_gate_has_evidence_or_explicit_hold": true,
+    "submission_readiness": "NOT_READY_TO_SUBMIT",
+    "submitted_ready": false,
+    "physical_scientific_admission": "HOLD",
+    "current_methods_scope": "SUPPORTED_CONDITIONAL_REAL_DATA_METHODS_APPLICATION",
+    "verdict": "REJECT / NOT READY for a submission-ready declaration; current methods result supported within its stated scope",
+    "summary": "The selected274-row likelihood, finite-F theory, same-cohort model comparison, finite-frame selection bounds and coupled apparent sensitivities support the focused conditional methods paper. They do not establish the original physical signed-functional law, empirical source null/covariance/selection, H03 physical response or full publication novelty. Actual submission is additionally unready because author metadata and an independently accessible numerical-supplement route are not established. Completion of this assessment is distinct from satisfaction of those gates.",
+    "submission_performed": false,
+    "publication_or_merge_performed": false,
+    "S06_self_admission": false,
+    "fresh_independent_S06_review": "PENDING",
+    "campaign_completion": "NOT_IMPLIED"
+  },
+  "gate_basis": {
+    "source": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+      "sha256": "8b8d2865764983191f72ffdc2f9a91f092a44340581c1ea88390e7cf3050c13c",
+      "bytes": 65296
+    },
+    "P1_definition": {
+      "id": "P1",
+      "priority": 3,
+      "slug": "x_F_Pi_Q_GF",
+      "title": "Observed-data distributions and partial identification of signed beyond-FLRW functionals",
+      "question": "Posterior/identified sets of x_C, Q, F, Pi(t), G_F conditioned on actual joint observation law",
+      "estimands": "Signed x_C (same-frame Gauss budget); Q=x_C/U with typed positive anchor; F samplewise only in admissible sign-clean sector; Pi strict threshold with unknown-mass interval; G_F depth-bin floor-stabilized ratio",
+      "minimum_publishable_result": "A real data-linked partially identified distribution + sensitivity across denominator/selection assumptions, or a calibrated posterior. No mere mathematical restatement.",
+      "existing_evidence": "PR066; PR521; MIO/HTT firewall; CF4/Planck real conditional data",
+      "principal_blocker": "Physical signed x_C has no fully identified common-congruence posterior and no certified total-x anchor",
+      "submission_gate": "Independent methods and partial-identification comparator; heldout or coverage; actual selected data law; nontrivial real-data figure",
+      "publication_status": "NOT_READY_TO_SUBMIT",
+      "allows_negative_result": true,
+      "planned_pr_id": "PR-HTT-PUBLICATION-P1",
+      "planned_pr_is_open": false
+    },
+    "original_S06_acceptance_unchanged": true,
+    "status_interpretation": "PASS means only the stated applicability scope is evidenced. HOLD marks an unfulfilled stronger or publication obligation, including UNKNOWN evidence. Physical HOLD rows do not require an honest conditional methods paper to pretend to solve the physical question. No historical node state is reset or inferred from the old PUBLICATION_DAG snapshot.",
+    "original_submission_gate_crosswalk": [
+      {
+        "clause": "Independent methods and partial-identification comparator",
+        "gate_ids": [
+          "P1-G07",
+          "P1-G12",
+          "P1-G16",
+          "P1-G17",
+          "P1-G18"
+        ]
+      },
+      {
+        "clause": "heldout or coverage",
+        "gate_ids": [
+          "P1-G05",
+          "P1-G06",
+          "P1-G10"
+        ]
+      },
+      {
+        "clause": "actual selected data law",
+        "gate_ids": [
+          "P1-G01",
+          "P1-G02",
+          "P1-G03",
+          "P1-G04",
+          "P1-G08",
+          "P1-G09"
+        ]
+      },
+      {
+        "clause": "nontrivial real-data figure",
+        "gate_ids": [
+          "P1-G15",
+          "P1-G19",
+          "P1-G20"
+        ]
+      },
+      {
+        "clause": "real data-linked partially identified distribution + denominator/selection sensitivity, or calibrated posterior",
+        "gate_ids": [
+          "P1-G08",
+          "P1-G11",
+          "P1-G12",
+          "P1-G13",
+          "P1-G14",
+          "P1-G15",
+          "P1-G16"
+        ]
+      },
+      {
+        "clause": "manuscript and independent review; actual submission readiness",
+        "gate_ids": [
+          "P1-G18",
+          "P1-G19",
+          "P1-G20",
+          "P1-G21",
+          "P1-G22",
+          "P1-G23",
+          "P1-G24",
+          "P1-G25",
+          "P1-G26"
+        ]
+      }
+    ],
+    "original_nodes_evidence_crosswalk": [
+      {
+        "node": "S01",
+        "gates": [
+          "P1-G11"
+        ],
+        "qualification": "Definitions and domains only; no physical law."
+      },
+      {
+        "node": "S02",
+        "gates": [
+          "P1-G14",
+          "P1-G15"
+        ],
+        "qualification": "Coupled normalized apparent source retained; physical unknown mass1. No current controller-state claim from this crosswalk."
+      },
+      {
+        "node": "S03",
+        "gates": [
+          "P1-G08",
+          "P1-G15"
+        ],
+        "qualification": "Actual apparent anchor/floor/depth/selection sensitivity consumed; no physical functional promotion."
+      },
+      {
+        "node": "S04",
+        "gates": [
+          "P1-G02",
+          "P1-G05",
+          "P1-G13"
+        ],
+        "qualification": "Qualified narrower selected-likelihood route; physical response remains held."
+      },
+      {
+        "node": "S05",
+        "gates": [
+          "P1-G16",
+          "P1-G18",
+          "P1-G19",
+          "P1-G20"
+        ],
+        "qualification": "Actual final exact-candidate independent SCOPED_PASS receipt consumed."
+      },
+      {
+        "node": "S06",
+        "gates": [
+          "P1-G01",
+          "P1-G26"
+        ],
+        "qualification": "This decision candidate requires fresh independent review before controller admission."
+      },
+      {
+        "node": "H02/H03",
+        "gates": [
+          "P1-G04",
+          "P1-G06",
+          "P1-G09",
+          "P1-G13"
+        ],
+        "qualification": "H03 apparent processing is usable; physical covariance/selection/response/identified-set limits remain."
+      }
+    ]
+  },
+  "evidence_index": {
+    "selected_law": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s04_selected_law_consumer/RESULT.json",
+      "sha256": "405909feee3580bf826fcea675282f47da935510a45c3d79f8fd788b80fce5f8",
+      "bytes": 4649666,
+      "use": "r24_selected_C_union normalized likelihood, full15 saved coefficients and covariance, exact_F_region,20fold_diagnostics; h03_source36 apparent summary and saved residual diagnostics ONLY with scope_correction",
+      "expected_sha256": "405909feee3580bf826fcea675282f47da935510a45c3d79f8fd788b80fce5f8",
+      "matches_expected_sha256": true
+    },
+    "actual_review": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s04_actual_result_review/VERDICT.json",
+      "sha256": "39c7656ff9b12ce8e330f8cd4b433dfb863f9cdbbb9ae429248ef93f01a3fbec",
+      "bytes": 13147,
+      "use": "Independent scope qualification and numerical evidence for existing selected-law result; not independent review of this manuscript",
+      "expected_sha256": "39c7656ff9b12ce8e330f8cd4b433dfb863f9cdbbb9ae429248ef93f01a3fbec",
+      "matches_expected_sha256": true
+    },
+    "scope_correction": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s04_actual_result_review/SCOPE_CORRECTION.json",
+      "sha256": "8df943f0ebc032502f4ecb89a09ae8e5a6fd3e1454846999257266c30d762dd1",
+      "bytes": 2613,
+      "use": "Mandatory: H03 physical response and physical identified set UNKNOWN; optical witness applies only to magnitude STF scenario",
+      "expected_sha256": "8df943f0ebc032502f4ecb89a09ae8e5a6fd3e1454846999257266c30d762dd1",
+      "matches_expected_sha256": true
+    },
+    "numerical_checks": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s04_actual_result_review/INDEPENDENT_NUMERICAL_CHECKS.json",
+      "sha256": "6293d1b79e926c862b29500029ee50865f80b73d0367e21602ab2500e2eb3776",
+      "bytes": 10879,
+      "use": "Existing independent sufficient-statistic, covariance, log-likelihood and fold arithmetic checks",
+      "expected_sha256": "6293d1b79e926c862b29500029ee50865f80b73d0367e21602ab2500e2eb3776",
+      "matches_expected_sha256": true
+    },
+    "distance_models": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/RESULT.json",
+      "sha256": "330066f4a8605caa9874f192a938d4ef1d84cf8933bdd3e6059a40b011c28bd0",
+      "bytes": 773836,
+      "use": "Exact same274 cohort, directions, full A/B/C mean fits, retained scores, residual summaries, historical residual failure",
+      "expected_sha256": "330066f4a8605caa9874f192a938d4ef1d84cf8933bdd3e6059a40b011c28bd0",
+      "matches_expected_sha256": true
+    },
+    "distance_contract": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/CONTRACT.json",
+      "sha256": "150ce8734027c228af6daa042349f287d8de99dd71f60ffb79c26a7483f756fd",
+      "bytes": 3112,
+      "use": "Mean columns, basis, covariance, frozen prediction rule, source directions, scale and rank conventions",
+      "expected_sha256": "150ce8734027c228af6daa042349f287d8de99dd71f60ffb79c26a7483f756fd",
+      "matches_expected_sha256": true
+    },
+    "distance_inputs": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/distance/INPUT_MANIFEST.json",
+      "sha256": "408ce22b3ea4d7c38b9d0cfbacbd170dfc6c3fb1da935dfcf99185b541d730b3",
+      "bytes": 3369,
+      "use": "Released row/target ledger and CF4/HyperLEDA provenance",
+      "expected_sha256": "408ce22b3ea4d7c38b9d0cfbacbd170dfc6c3fb1da935dfcf99185b541d730b3",
+      "matches_expected_sha256": true
+    },
+    "selection": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/METHOD_EXECUTION_20261023/selection_envelope/RESULT.json",
+      "sha256": "9e725d30c9f8240ba746535785a59c3b7a2b39d6e10132938221448e9e131fe3",
+      "bytes": 175482,
+      "use": "Fixed-surface strict event counts, density-ratio sensitivity and finite628 hull widths",
+      "expected_sha256": "9e725d30c9f8240ba746535785a59c3b7a2b39d6e10132938221448e9e131fe3",
+      "matches_expected_sha256": true
+    },
+    "auxiliary": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/auxiliary_overlap/RESULT.json",
+      "sha256": "ff4b768f96bdd1f88a7b1456ca808210ae09a2d8ad4d3248d641409a0ccfc88d",
+      "bytes": 155295,
+      "use": "full628 unsupported cells, supported625 positive weights/ESS, fine625 infeasibility, joint residual tensor carrier",
+      "expected_sha256": "ff4b768f96bdd1f88a7b1456ca808210ae09a2d8ad4d3248d641409a0ccfc88d",
+      "matches_expected_sha256": true
+    },
+    "finite_measure": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/results/FUNCTIONAL_SENSITIVITY_RESULT.json",
+      "sha256": "80792f508bd2be07fae153f662c9726ce5dc0ddabf78ea15ef66a0d27219355b",
+      "bytes": 20755,
+      "use": "2048joint atoms, originalseed/weights, apparent quantiles, anchor/floor sensitivity, density envelope, actual north weighting and method-deletion triangle bounds",
+      "expected_sha256": "80792f508bd2be07fae153f662c9726ce5dc0ddabf78ea15ef66a0d27219355b",
+      "matches_expected_sha256": true
+    },
+    "hubble_summary": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/H03_SOURCE_TOMOGRAPHY.json",
+      "sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+      "bytes": 111342,
+      "use": "Actual35970-group source,4x9signed coefficients, full36covariance and cross-window dependence, original working law",
+      "expected_sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+      "matches_expected_sha256": true
+    },
+    "functional_definition": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUATION_20261018/P1/source/S01_THEORY_KO.md",
+      "sha256": "4c34c4986a9c66272c71d8fe90c2761871932e7453a4cf2ac808c7cc06d2e4bb",
+      "bytes": 7630,
+      "use": "Signed x_C, positive normalizer, eligible F, strict Pi, depth/floor G_F, domain/missing-mass distinctions; historical execution states not current manuscript decisions",
+      "expected_sha256": "4c34c4986a9c66272c71d8fe90c2761871932e7453a4cf2ac808c7cc06d2e4bb",
+      "matches_expected_sha256": true
+    },
+    "omnibus_source_index": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/REPORT_20261024_REV1/NUMERICAL_CLAIM_SOURCES.json",
+      "sha256": "d36595c0588ac547b92d649535cd0042e47b580b48fc8ebacd24059c87d567e6",
+      "bytes": 641090,
+      "use": "Previously reviewed report source navigation; no new numerical claim rests solely on its completeness",
+      "expected_sha256": null,
+      "matches_expected_sha256": null
+    },
+    "omnibus_figures": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/REPORT_20261024_REV1/FIGURE_INVENTORY.json",
+      "sha256": "f26ee9be9f7ccdab40ab6f4340b527f5ed84d1759a6be1cc43fa7611c2d97e07",
+      "bytes": 355963,
+      "use": "Exact retained figure identities f030,f058,f064; builder records actual publication-label/format changes",
+      "expected_sha256": null,
+      "matches_expected_sha256": null
+    },
+    "method_context": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADAPTIVE_RESEARCH_20261023/METHOD_SOURCE_NOTES.md",
+      "sha256": "a992055234dcb01a4c40bfaccc3f0bf2f005b72d66ec7fa1368b6be9074af707",
+      "bytes": 9295,
+      "use": "Cached primary-method citations and applicability limits",
+      "expected_sha256": null,
+      "matches_expected_sha256": null
+    },
+    "publication_dag": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+      "sha256": "8b8d2865764983191f72ffdc2f9a91f092a44340581c1ea88390e7cf3050c13c",
+      "bytes": 65296
+    },
+    "novelty_matrix": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/X02_20261016/X02_NOVELTY_MATRIX.md",
+      "sha256": "ed7e558fe9738a85e864dc553fa26b986068f1990a4a9158e3d1d8ec954e60ad",
+      "bytes": 7582
+    },
+    "s05_review": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s05_final_independent_review/VERDICT.json",
+      "sha256": "fce41d6f14d7b3f4d9693a20a208e393e409794a739661233c918438fd683441",
+      "bytes": 10112
+    },
+    "s05_review_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s05_final_independent_review/RESULT.json",
+      "sha256": "ff72d330b5d0168dfad2ea4886b495a15fd67b87d884983de3c31e123f7842b2",
+      "bytes": 4469
+    },
+    "s05_consumption": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s05_actual_repaired_consumption/RAW_RECEIPT.json",
+      "sha256": "17d3cd3f4946863ed3be373998bcd6a163594119bb6e1985eddacc255d214938",
+      "bytes": 11305
+    },
+    "old_residual_failure": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONTINUOUS_RESEARCH_20261023/execution/R23-DISTANCE/conditional_fit/RESULT.json",
+      "sha256": "bc8c75f8e546f3d976610ef49676807b0467abac1e1bf4edf3d552d259e36814",
+      "bytes": 3997
+    },
+    "build_final_log": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/latex_20261024T025228Z/main.log",
+      "sha256": "5c555c8f0674729db0d1f9c64d9eba835d203a810d224b5d804fb93a770564af",
+      "bytes": 23588
+    },
+    "build_stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/latex_20261024T025228Z/latexmk.stdout.log",
+      "sha256": "95086fa15fd26ef2efd71180a04157cfbdd3dc1b852865e6cfabf9dea35d9d31",
+      "bytes": 38155
+    },
+    "build_biblog": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_p1_paper_build/latex_20261024T025228Z/main.blg",
+      "sha256": "2cea2d1d14286c54a89ce372765eb1f2e12c23b8c8f20dfa6ac1403c4a17a8b0",
+      "bytes": 2092
+    },
+    "paper:CLAIM_SOURCES.json": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/CLAIM_SOURCES.json",
+      "sha256": "a462198d588c20f5cd6d3bfd520de1038ad89e303269c884efbb932ad55de884",
+      "bytes": 15674
+    },
+    "paper:FIGURE_SPEC.json": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/FIGURE_SPEC.json",
+      "sha256": "8f1452f18a2715bc3c72ff96fa7d8cbe4462f417f6f7b7037a694a39db343e6f",
+      "bytes": 4587
+    },
+    "paper:SCIENTIFIC_SCOPE.md": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/SCIENTIFIC_SCOPE.md",
+      "sha256": "61928ed3a8fc0bb8de22817a70f8649bb87498e8a187d6cc0d14308ce2951121",
+      "bytes": 8757
+    },
+    "paper:figures/coupled_functionals.pdf": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/figures/coupled_functionals.pdf",
+      "sha256": "20c5de1606c1b5c894034f9c9202df31e59dfdd2d58f801520952a702cf938cf",
+      "bytes": 201878
+    },
+    "paper:figures/model_comparison.pdf": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/figures/model_comparison.pdf",
+      "sha256": "6a35d6dd82ab397d52211405caad4cfe549a664980405204c32d9cd0fe3cbc55",
+      "bytes": 20024
+    },
+    "paper:figures/selected_tensor_law.pdf": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/figures/selected_tensor_law.pdf",
+      "sha256": "01c7086e0cf771345d8ccfaa422affdf0eb6748490f0b29954e15b4b9cbb9319",
+      "bytes": 28901
+    },
+    "paper:figures/selection_bounds.pdf": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/figures/selection_bounds.pdf",
+      "sha256": "d69024ad9af571e776309de0b31e6e91f0fdc563b0bcbce919799f1897e3c299",
+      "bytes": 37395
+    },
+    "paper:main.tex": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/main.tex",
+      "sha256": "3ea9f9ccfa86aeba34859a731bf407b7ffd950520e685e56932114a3876fc800",
+      "bytes": 3146
+    },
+    "paper:references.bib": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/references.bib",
+      "sha256": "331ab70818583ecd7b37fc1e2340c81a7ba032e48a624bb9ad7cf13828e7468a",
+      "bytes": 2313
+    },
+    "paper:sections/01_introduction.tex": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/sections/01_introduction.tex",
+      "sha256": "2f0ea8e7e805e724bad5de3d21cce4278760419a006db8062643591c8fae5242",
+      "bytes": 4407
+    },
+    "paper:sections/02_identification.tex": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/sections/02_identification.tex",
+      "sha256": "865712c29b5de95704b06622dd116e1b0548fc6abaf543abfaa033fa70f963bd",
+      "bytes": 7690
+    },
+    "paper:sections/03_selected_likelihood.tex": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/sections/03_selected_likelihood.tex",
+      "sha256": "f0e39c5d498d25c385c4d830cf3e6093ffb06fd8e521fde05b5141c786d5d408",
+      "bytes": 9535
+    },
+    "paper:sections/04_results_robustness.tex": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/sections/04_results_robustness.tex",
+      "sha256": "e6086373c97913c78e5e124139e5c3438c7d905a01c028f4a6eef2062ff3701f",
+      "bytes": 12784
+    },
+    "paper:sections/05_coupled_functionals.tex": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/sections/05_coupled_functionals.tex",
+      "sha256": "515d934b7ae5b3ab284ea84900a8f5ed1743db2490d0fdea574218ba581e70d0",
+      "bytes": 13222
+    },
+    "paper:sections/06_discussion.tex": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/sections/06_discussion.tex",
+      "sha256": "bd0595b712573957204b3f628cf2aca43d21c84873d97d9c56b601f1d43eb286",
+      "bytes": 5175
+    },
+    "paper:sections/07_proofs.tex": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/sections/07_proofs.tex",
+      "sha256": "e0ec9987c8ec59fae6239bee795f3c86cb96be6a86c949afbade62c5f22c0bef",
+      "bytes": 5540
+    },
+    "pdf": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/main.pdf",
+      "sha256": "cb52f70f08d06f8aa9f7cafbe04be22cd32a2253a17b8e07764bfcc706cce9f1",
+      "bytes": 650644
+    },
+    "source_bundle": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/source_bundle.zip",
+      "sha256": "de4ff5829228b9bd66a6f7c67ff4ed02547609f3c7b02db030eba8bf99a91f60",
+      "bytes": 313906
+    },
+    "build_report": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/BUILD_REPORT.json",
+      "sha256": "e35ca5b33acd5c311225c75775189a68243365b89da6542e26aee0b755e458b8",
+      "bytes": 4824
+    },
+    "figure_provenance": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/P1_SELECTED_TENSOR_LAW_20261024/FIGURE_PROVENANCE.json",
+      "sha256": "3c9c3740b5ec4221d6ff4ec12b121de8b14639fad46f386a8dd1ac3b792982b5",
+      "bytes": 5828
+    },
+    "evidence_intake": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_s06_publication_readiness_decision/EVIDENCE_READ_RECEIPT.json",
+      "sha256": "f3fc5d5dd9c8101687c5d8ed1c0cd8a1c7a2c60dbcf114dee90c679d1fe0cf46",
+      "bytes": 31259
+    }
+  },
+  "gates": [
+    {
+      "id": "P1-G01",
+      "title": "Actual release, cohort and estimator identities",
+      "status": "PASS",
+      "applicability": "Both current manuscript carriers; P1 release-identity stage and X01",
+      "finding": "The principal source is 274 released moduli within628 retained target IDs, with269 CF4 and5 HyperLEDA directions. The separate source is35970 CF4 groups. Input manifests bind releases and local source bytes; these are not independent surveys or one pooled likelihood.",
+      "evidence": [
+        {
+          "source_id": "distance_inputs",
+          "locator": "entries: released rows, target join, CDS J/ApJ/944/94 ReadMe/table2, five PGC queries"
+        },
+        {
+          "source_id": "distance_models",
+          "locator": "cohort; direction_sources"
+        },
+        {
+          "source_id": "hubble_summary",
+          "locator": "source_SHA256; source_groups; common_directions"
+        },
+        {
+          "source_id": "paper:sections/03_selected_likelihood.tex",
+          "locator": "lines6-23"
+        },
+        {
+          "source_id": "paper:sections/05_coupled_functionals.tex",
+          "locator": "lines51-73"
+        }
+      ],
+      "remaining_limitation": "Input identity does not establish physical selection, error calibration, or independence. Public redistribution of all derived evidence is assessed separately.",
+      "next_action": "Reuse these source identities; any changed cohort/estimator requires its own qualified interpretation.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G02",
+      "title": "Actual selected-data normalized likelihood",
+      "status": "PASS",
+      "applicability": "Narrower identifiable P1/S04 branch; conditional methods manuscript",
+      "finding": "A normalized n274 Gaussian row law with p15 signed coefficients, fixed measured design/marks/errors, positive-definite fixed V_s and unknown common scale is explicitly specified. The source supplies full beta, all covariance blocks, q and normalization for four shapes.",
+      "evidence": [
+        {
+          "source_id": "selected_law",
+          "locator": "r24_selected_C_union.scenarios.*.likelihood; beta_hat_full_signed; covariance_ML_full_including_cross_blocks"
+        },
+        {
+          "source_id": "distance_contract",
+          "locator": "mean/covariance/prediction conventions"
+        },
+        {
+          "source_id": "paper:sections/03_selected_likelihood.tex",
+          "locator": "lines8-64"
+        },
+        {
+          "source_id": "numerical_checks",
+          "locator": "retained independent sufficient-statistic checks"
+        }
+      ],
+      "remaining_limitation": "This selected-cohort law is an authored assumption. It is not an empirically established parent sampling law, a physical distance/velocity likelihood, or a Gaussian law assigned to only15 coefficients.",
+      "next_action": "Retain the selected conditional scope and normalization in all summaries.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G03",
+      "title": "Covariance and nuisance dependence retained",
+      "status": "PASS",
+      "applicability": "Computational/statistical covariance handling under declared shapes",
+      "finding": "All15 coefficient coordinates and nuisance cross blocks precede STF5 projection. The full15 radius is retained after projection. The H03 four9-coordinate windows retain one36x36 covariance from their shared rows. No independent-window product is used.",
+      "evidence": [
+        {
+          "source_id": "selected_law",
+          "locator": "r24_selected_C_union.scenarios.*.covariance_ML_full_including_cross_blocks; exact_F_region"
+        },
+        {
+          "source_id": "hubble_summary",
+          "locator": "joint_covariance_36x36; joint_correlation_36x36"
+        },
+        {
+          "source_id": "paper:sections/03_selected_likelihood.tex",
+          "locator": "lines59-102"
+        },
+        {
+          "source_id": "paper:sections/05_coupled_functionals.tex",
+          "locator": "lines64-71"
+        }
+      ],
+      "remaining_limitation": "Declared covariance shapes and diagonal H03 row noise are working assumptions; retaining covariance numerically does not validate their source physics.",
+      "next_action": "Keep cross blocks and window coupling whenever these saved products are consumed.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G04",
+      "title": "Empirical source calibration and peculiar-velocity covariance",
+      "status": "HOLD",
+      "applicability": "Physical P1 inference and inherited H02 source-law requirement",
+      "finding": "Neither four sensitivity choices of (a,b) nor H03 diagonal row scatter supplies an observed joint calibration/PV covariance. Possible overlap with variance already in released distance uncertainties is unresolved.",
+      "evidence": [
+        {
+          "source_id": "distance_models",
+          "locator": "covariance_law"
+        },
+        {
+          "source_id": "selected_law",
+          "locator": "h03_source36.selection_and_shared_calibration_covariance"
+        },
+        {
+          "source_id": "old_residual_failure",
+          "locator": "physical_selection_and_joint_calibration_PV; limitations"
+        },
+        {
+          "source_id": "paper:sections/03_selected_likelihood.tex",
+          "locator": "lines27-42"
+        },
+        {
+          "source_id": "paper:sections/05_coupled_functionals.tex",
+          "locator": "lines58-73"
+        }
+      ],
+      "remaining_limitation": "Evidence state UNKNOWN/NOT_EVALUABLE for empirical physical covariance; numerical positive definiteness is insufficient.",
+      "next_action": "Supply source-qualified method/group/calibration/PV covariance or a defensible uncertainty class with overlap accounting and matched validations. Do not add the same released variance twice.",
+      "blocking_for": [
+        "physical_P1_readiness"
+      ]
+    },
+    {
+      "id": "P1-G05",
+      "title": "Finite-sample coverage and held-out predictive diagnostics",
+      "status": "PASS",
+      "applicability": "P1 heldout-or-coverage clause for the explicitly assumed selected law",
+      "finding": "The full15 confidence event has exact F(15,259) coverage under its assumptions; its ML-coordinate radius is27.058502419705654.20 retained shape/fold diagnostics include training-beta uncertainty; minimum two-sided reference tail0.023264709508724134. The current paper correctly distinguishes repeated-sample coverage from conditioning on realized training outcomes.",
+      "evidence": [
+        {
+          "source_id": "paper:sections/03_selected_likelihood.tex",
+          "locator": "lines68-127"
+        },
+        {
+          "source_id": "paper:sections/07_proofs.tex",
+          "locator": "lines13-27"
+        },
+        {
+          "source_id": "selected_law",
+          "locator": "r24_selected_C_union.scenarios.*.exact_F_region; fold_diagnostics"
+        },
+        {
+          "source_id": "s05_review",
+          "locator": "independent_small_checks.finite_F_radius_sq_recomputed; predictive_F_diagnostics; F_tail_max_difference_from_saved"
+        }
+      ],
+      "remaining_limitation": "Union coverage needs one true fixed shape and common beta. Under that assumption only that shape's five fold tails are automatically valid. No claim of all20 valid independent tests or selection-adjusted empirical coverage is allowed.",
+      "next_action": "Keep proof assumptions and retrospective/nonrejection caveats attached to reported intervals and tails.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G06",
+      "title": "Empirical physical null, simulation calibration and first failure",
+      "status": "HOLD",
+      "applicability": "Original publication-policy simulation-coverage stage for physical/data-generating validity",
+      "finding": "The historical seven-column working model has its own4096 simulated replicates and3890 covered nominal95% intervals, but its actual discrepancy T=4.555321823822732 has plus-one rank4/4097. This failed candidate is not the later15-coefficient model. No matched empirical source-null coverage for the latter or H03 is established.",
+      "evidence": [
+        {
+          "source_id": "old_residual_failure",
+          "locator": "mock; diagnostic; physical_admission; physical_selection_and_joint_calibration_PV"
+        },
+        {
+          "source_id": "paper:sections/04_results_robustness.tex",
+          "locator": "lines45,69-71"
+        },
+        {
+          "source_id": "selected_law",
+          "locator": "claim_limits"
+        },
+        {
+          "source_id": "s05_review",
+          "locator": "preserved_limits.empirical_null_coverage"
+        }
+      ],
+      "remaining_limitation": "Conditional algebraic coverage and nonrejection cannot repair the old failure or establish that the assumed selection/covariance law generated these observations.",
+      "next_action": "First qualify the actual source model and prospective validation target; then use a matched physical simulation/reference ensemble if physical coverage is claimed. Preserve the old failure and do not repeat old null runs as repair.",
+      "blocking_for": [
+        "physical_P1_readiness"
+      ]
+    },
+    {
+      "id": "P1-G07",
+      "title": "Same-cohort model comparison",
+      "status": "PASS",
+      "applicability": "Original S05 model-comparison clause and narrower P1 methods comparison",
+      "finding": "A/B/C have10/12/15 mean coefficients on the same274 observations and whole-group folds. Normalized retained plug-in scores show A/B order reversal under the group term. The interpretation is source-bound sensitivity rather than covariance-independent model preference.",
+      "evidence": [
+        {
+          "source_id": "distance_models",
+          "locator": "scenarios.*.models.*.total_joint_log_predictive_score; prediction_law; cohort"
+        },
+        {
+          "source_id": "paper:sections/04_results_robustness.tex",
+          "locator": "lines49-76"
+        },
+        {
+          "source_id": "s05_review",
+          "locator": "independent_small_checks.all_twelve_model_fold_score_sums_max_error; all_sixty_normalized_fold_log_density_formulas_max_error"
+        }
+      ],
+      "remaining_limitation": "Scores omit training-parameter uncertainty and are not Bayes factors, posterior odds, or a physical-family comparison. These scores are distinct from the training-uncertainty-aware F diagnostics.",
+      "next_action": "Report the procedure and reversal without selecting a favourable covariance retrospectively.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G08",
+      "title": "Selection, missing outcomes and finite-frame sensitivity",
+      "status": "PASS",
+      "applicability": "Current finite628-frame partial-identification result",
+      "finding": "354 missing indicators remain explicit. At strict |OOF residual|>0.5mag,12 retained cases have71-80 events; the exact deterministic completion set is discrete with interval-hull width354/628. Gamma reweighting is a normalized density-ratio class, and supported625 auxiliary weighting changes the target while leaving351 outcomes missing.",
+      "evidence": [
+        {
+          "source_id": "selection",
+          "locator": "fixed_surface; minimum_frame628_width; law; undefined_binary_rows"
+        },
+        {
+          "source_id": "auxiliary",
+          "locator": "full628; supported625; supported625_fine; missing_outcome_law"
+        },
+        {
+          "source_id": "paper:sections/04_results_robustness.tex",
+          "locator": "lines82-121"
+        },
+        {
+          "source_id": "paper:sections/07_proofs.tex",
+          "locator": "lines32-41"
+        }
+      ],
+      "remaining_limitation": "The interval hull is not a physical confidence interval. Feasible balance does not prove MAR or transport missing outcomes. The known frame is not a general parent population.",
+      "next_action": "Preserve the full frame, exact/discrete-versus-hull distinction, common weights, and changed estimand when using625 targets.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G09",
+      "title": "Empirical parent selection and transport law",
+      "status": "HOLD",
+      "applicability": "Physical or larger-population P1 claims",
+      "finding": "Parent inclusion probabilities and the law of the354 unobserved outcomes remain unknown. Released availability fractions and auxiliary calibration cannot determine them.",
+      "evidence": [
+        {
+          "source_id": "selected_law",
+          "locator": "r24_selected_C_union.selection.parent_selection_probability"
+        },
+        {
+          "source_id": "selection",
+          "locator": "confidence_or_geometry_probability; parent_5460; next_discriminator"
+        },
+        {
+          "source_id": "auxiliary",
+          "locator": "missing_outcome_law"
+        },
+        {
+          "source_id": "paper:sections/03_selected_likelihood.tex",
+          "locator": "line23"
+        },
+        {
+          "source_id": "paper:sections/04_results_robustness.tex",
+          "locator": "lines104,117-121"
+        }
+      ],
+      "remaining_limitation": "Physical transport or population probabilities are not supplied by the current selected-data likelihood.",
+      "next_action": "Obtain source targeting/detection/rejection information and defensible outcome/selection assumptions, or continue to report the exact finite-frame sensitivity scope.",
+      "blocking_for": [
+        "physical_P1_readiness"
+      ]
+    },
+    {
+      "id": "P1-G10",
+      "title": "Retrospective choices and multiplicity boundary",
+      "status": "PASS",
+      "applicability": "Honesty of current methods claims and X03 boundary",
+      "finding": "The manuscript explicitly calls its reuse of rows, shapes, folds, threshold and nominal level retrospective. Overlapping folds are dependent; the 0.0025 comparison is descriptive. No confirmatory interpretation is asserted.",
+      "evidence": [
+        {
+          "source_id": "paper:sections/01_introduction.tex",
+          "locator": "final paragraph"
+        },
+        {
+          "source_id": "paper:sections/03_selected_likelihood.tex",
+          "locator": "lines102,125-127"
+        },
+        {
+          "source_id": "paper:sections/04_results_robustness.tex",
+          "locator": "lines45,51,69-71"
+        }
+      ],
+      "remaining_limitation": "Prospective selection control remains NOT_ESTABLISHED. A later label or frozen receipt cannot make these choices prospective.",
+      "next_action": "Predeclare a genuinely new confirmatory target/family before using new validation evidence; retain current results as retrospective.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G11",
+      "title": "Tensor, units, signed functionals and domain semantics",
+      "status": "PASS",
+      "applicability": "P1/S01 definitions and current mathematical claims",
+      "finding": "Full STF coordinates, J2000 directions, Frobenius basis, magnitude versus rate units, metric signature(-,+,+,+), physical-rate contractions and the minus vorticity sign are explicit. H=0 is undefined; Q has a supplied positive anchor; F requires a sign-clean sector and ceiling; Pi has strict thresholds and a named law; depth ratios preserve common support/dependence.",
+      "evidence": [
+        {
+          "source_id": "paper:sections/02_identification.tex",
+          "locator": "tensor basis and signed-coordinate/domain subsections"
+        },
+        {
+          "source_id": "functional_definition",
+          "locator": "signed x_C, Q, F, Pi, G_F domains"
+        },
+        {
+          "source_id": "paper:sections/07_proofs.tex",
+          "locator": "lines4-8,39-41"
+        }
+      ],
+      "remaining_limitation": "Definitions are not measurements or a four-axis CAS certificate. No physical normalizer, shear ceiling, occupancy measure or total signed-x bound is manufactured.",
+      "next_action": "Keep physical and apparent symbols distinct and retain domain failures as distinct from zero/unknown/unbounded.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G12",
+      "title": "Optical nonidentification witness within admissible domain",
+      "status": "PASS",
+      "applicability": "Conditional mathematical response scenario; original S05 information contribution",
+      "finding": "For B=-kS+b_opt and S in D_S, unrestricted bias gives I_S(B;D_S)=D_S. Bounded small-anisotropy D_S gives a bounded image. Unboundedness is confined to the formal D_S=STF affine extension. The bounded-bias support formula is for an unrestricted algebraic outer set; the physical scenario image is intersected with D_S.",
+      "evidence": [
+        {
+          "source_id": "paper:sections/05_coupled_functionals.tex",
+          "locator": "lines6-47"
+        },
+        {
+          "source_id": "paper:sections/06_discussion.tex",
+          "locator": "optical-response paragraph"
+        },
+        {
+          "source_id": "s05_review",
+          "locator": "acceptance_clauses[0]; findings"
+        }
+      ],
+      "remaining_limitation": "Older raw selected_law.same_target_physical_image unbounded strings and the earlier correction are insufficient without the current manuscript's D_S qualification. This is not universal physical realizability or an impossibility theorem.",
+      "next_action": "Consume the qualified current statement; do not reuse raw unbounded strings without D_S.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G13",
+      "title": "Physical response, congruence and approximation calibration",
+      "status": "HOLD",
+      "applicability": "Physical P1 signed-functionals inference; H02/H03 limitations",
+      "finding": "No measured optical bias radius or admissible small-anisotropy radius is supplied. PGC9031 has a vector-response flow fraction about2.26-2.45, outside the small-flow physical interpretation. H03 has no qualified map from apparent km/s/Mpc coefficients to physical shear; both its physical response and identified set are UNKNOWN.",
+      "evidence": [
+        {
+          "source_id": "paper:sections/04_results_robustness.tex",
+          "locator": "line69"
+        },
+        {
+          "source_id": "paper:sections/05_coupled_functionals.tex",
+          "locator": "lines12,26-47,51-56"
+        },
+        {
+          "source_id": "scope_correction",
+          "locator": "affected_fields; qualified_interpretation"
+        },
+        {
+          "source_id": "distance_models",
+          "locator": "K_units; tensor_status"
+        }
+      ],
+      "remaining_limitation": "An optical magnitude witness cannot be transferred to H03. Unknown response is not proof of an unbounded physical H03 set. Common congruence, source/observer frame and finite-redshift remainder remain unqualified.",
+      "next_action": "Supply source-matched response and frame/epoch conventions, finite-redshift/peculiar-flow remainder controls and a physically justified domain/bias restriction. Do not impute zero bias or evolve a forbidden solver.",
+      "blocking_for": [
+        "physical_P1_readiness"
+      ]
+    },
+    {
+      "id": "P1-G14",
+      "title": "Physical x_C, Q, F, Pi and G_F distribution",
+      "status": "HOLD",
+      "applicability": "Original broad P1 question and physical minimum-publishable-result interpretation",
+      "finding": "Physical signed x_C is not identified across shear/vorticity/tilt/curvature in one congruence; a certified total-x anchor and eligible F sector are absent. All apparent atoms retain physical unknown mass1. Confidence-set coverage supplies no pointwise probability measure or physical posterior.",
+      "evidence": [
+        {
+          "source_id": "paper:sections/02_identification.tex",
+          "locator": "signed coordinate, Q/F/Pi/G_F definitions"
+        },
+        {
+          "source_id": "paper:sections/05_coupled_functionals.tex",
+          "locator": "lines47,126-133"
+        },
+        {
+          "source_id": "finite_measure",
+          "locator": "physical_functionals"
+        },
+        {
+          "source_id": "publication_dag",
+          "locator": "papers[P1].question; estimands; minimum_publishable_result; principal_blocker"
+        }
+      ],
+      "remaining_limitation": "A real selected optical coefficient region plus finite-frame sensitivity is a useful narrower methods result, but does not settle the original physical signed-functional distribution. Generic[0,1] unknown-event bounds need not be physically sharp or domain admissible.",
+      "next_action": "Retain physical HOLD. A future physical claim requires admissible source-to-state mapping, calibrated joint law or justified outer set, supplied anchor/sector, and common coupled support.",
+      "blocking_for": [
+        "physical_P1_readiness"
+      ]
+    },
+    {
+      "id": "P1-G15",
+      "title": "Coupled finite measure and denominator/depth sensitivity",
+      "status": "PASS",
+      "applicability": "P1/S02-S03 numerical handling at stated apparent scope",
+      "finding": "The saved2048 deterministic quadrature atoms have common IDs, weight1/2048 and one36-coordinate carrier. The product B_* delta controls the floored apparent ratio; changing effective floor changes the median from1.718693 to1.025396 and at0.075 all ratios become1. The joint strict event mass is1235/2048. Separate deterministic north-weighted fits have no alternative covariance law.",
+      "evidence": [
+        {
+          "source_id": "finite_measure",
+          "locator": "sample_count; joint_unit; weight_sum; floor_depth_sensitivity; anchor_floor_identity; actual_north_weighted_fit"
+        },
+        {
+          "source_id": "selected_law",
+          "locator": "h03_source36.paired_quadrature"
+        },
+        {
+          "source_id": "paper:sections/05_coupled_functionals.tex",
+          "locator": "lines77-122"
+        },
+        {
+          "source_id": "figure_provenance",
+          "locator": "coupled_functionals.panel_provenance"
+        }
+      ],
+      "remaining_limitation": "Finite-measure sums are exact for those atoms only; no independent Monte Carlo error, continuum quadrature convergence, physical Q/F/Pi/G_F, or alternate-weight uncertainty distribution is inferred.",
+      "next_action": "Reuse the coupled carrier, preserve unknown physical mass, and do not generate replacement draws merely to refresh the report.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G16",
+      "title": "Distinct applied contribution and honest priority ceiling",
+      "status": "PASS",
+      "applicability": "Original S05 distinction from standard pushforward; P1 methods/partial-identification comparator",
+      "finding": "The manuscript tests constancy on observation/compression fibres and domains before propagation, separates joint confidence images from a law, and demonstrates real-data covariance-order reversal, missing-frame obstruction and floor erasure. It cites partial-identification, calibration and ratio methods and disclaims priority for elementary/standard theorems.",
+      "evidence": [
+        {
+          "source_id": "paper:sections/01_introduction.tex",
+          "locator": "paragraphs3-6"
+        },
+        {
+          "source_id": "paper:sections/02_identification.tex",
+          "locator": "lines6-28"
+        },
+        {
+          "source_id": "paper:sections/06_discussion.tex",
+          "locator": "standard-statistical-results and contribution paragraphs"
+        },
+        {
+          "source_id": "novelty_matrix",
+          "locator": "P1 row and Critical overlapping prior art/P1"
+        },
+        {
+          "source_id": "method_context",
+          "locator": "selection, ratio, data-selected claims rows"
+        }
+      ],
+      "remaining_limitation": "This supports a source-linked conditional methods application. It does not establish a new foundational theorem, new observable, or physical discovery.",
+      "next_action": "Keep the contribution at applied methods/negative-information scope.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G17",
+      "title": "Publication-level novelty and matched competing analyses",
+      "status": "HOLD",
+      "applicability": "Final editorial novelty assurance beyond current limited methods comparator",
+      "finding": "The retained X02 comparator explicitly says complete-likelihood replication NOT_RUN and does not admit manuscript novelty. The focused paper has appropriate standard-method context, and limited current primary checks confirm prior multipole and ratio work, but no exhaustive/current matched-estimand replication or venue-level novelty determination is evidenced.",
+      "evidence": [
+        {
+          "source_id": "novelty_matrix",
+          "locator": "opening status; P1 row; P1/P3 primary source contrasts"
+        },
+        {
+          "source_id": "method_context",
+          "locator": "source/method scope and limits"
+        },
+        {
+          "source_id": "evidence_intake",
+          "locator": "limited_primary_literature_checks"
+        },
+        {
+          "source_id": "paper:sections/06_discussion.tex",
+          "locator": "no-priority claim paragraph"
+        }
+      ],
+      "remaining_limitation": "Do not equate a bibliography, X02 scoped completion or S05 writing PASS with final novelty approval. This HOLD does not invalidate the reported conditional calculations.",
+      "next_action": "Before a submission-ready declaration, finalize a precise comparison of this274-row selected tensor/fibre/finite-frame contribution with the closest applicable partial-identification and distance-multipole methods; restrict claims if no material extension is established. No blanket demand to reproduce unrelated papers.",
+      "blocking_for": [
+        "submission_ready_declaration"
+      ]
+    },
+    {
+      "id": "P1-G18",
+      "title": "Independent review of the exact scientific manuscript",
+      "status": "PASS",
+      "applicability": "S05 prerequisite evidence only",
+      "finding": "A separate reviewer did not author the candidate and inspected the actual seven-section source, primary saved products, small deterministic arithmetic and final PDF. Its actual packet-bound S05 result is success and verdict SCOPED_PASS for the unchanged writing acceptance.",
+      "evidence": [
+        {
+          "source_id": "s05_review",
+          "locator": "review_type; candidate; acceptance_clauses; independent_small_checks; review_independence"
+        },
+        {
+          "source_id": "s05_review_result",
+          "locator": "packet_id; input_identity; candidate_identity; outcome; acceptance_met; raw_receipt_sha256"
+        }
+      ],
+      "remaining_limitation": "Requested reviewer gpt-6-astra/xhigh; observed runtime UNKNOWN. This prior review is evidence of S05 completion, not an oracle for S06 or physical submission readiness.",
+      "next_action": "Send this new S06 decision and exact SHA to a fresh independent reviewer who did not author it before controller admission.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G19",
+      "title": "Actual manuscript build and source-package identity",
+      "status": "PASS",
+      "applicability": "Technical buildability of current17-page source package",
+      "finding": "The retained latexmk command returned0; current PDF has17 pages and650644 bytes, SHA cb52f70f08d06f8aa9f7cafbe04be22cd32a2253a17b8e07764bfcc706cce9f1. Current13 build sources match; final main.log has no undefined citations/references, duplicate labels or overfull boxes. Prior independent package inspection verified18 unique ZIP members with CRC and byte equality.",
+      "evidence": [
+        {
+          "source_id": "build_report",
+          "locator": "command; returncode; source_hashes; checks; bundle_entries"
+        },
+        {
+          "source_id": "build_final_log",
+          "locator": "final output and warnings"
+        },
+        {
+          "source_id": "s05_review",
+          "locator": "candidate.zip_*; build_and_visual_evidence"
+        },
+        {
+          "source_id": "evidence_intake",
+          "locator": "build_observation; manuscript_static_observation.pdfinfo"
+        }
+      ],
+      "remaining_limitation": "Default font/nameref/four float-placement warnings and three JCAP bibliography-field warnings remain disclosed. Early passes had unresolved references before final resolution. No build was repeated for this decision; compilation is not scientific admission.",
+      "next_action": "Rebuild and reseal only after future source changes. Preserve current build logs and first failures.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G20",
+      "title": "Figure provenance, source linkage and presentation",
+      "status": "PASS",
+      "applicability": "Four nontrivial real-data figures required for P1",
+      "finding": "All four included figures exist and have exact source identities and operations. Captions preserve full15 projection, same-cohort scores, discrete-completion hull interpretation and the2048-atom versus deterministic-fit distinction. Retained final-candidate visual inspection confirms all figures/captions visible and readable.",
+      "evidence": [
+        {
+          "source_id": "figure_provenance",
+          "locator": "figures and panel_provenance"
+        },
+        {
+          "source_id": "paper:sections/04_results_robustness.tex",
+          "locator": "figures regions/models/selection captions"
+        },
+        {
+          "source_id": "paper:sections/05_coupled_functionals.tex",
+          "locator": "lines115-119"
+        },
+        {
+          "source_id": "s05_review",
+          "locator": "build_and_visual_evidence"
+        },
+        {
+          "source_id": "evidence_intake",
+          "locator": "manuscript_static_observation.included_figures"
+        }
+      ],
+      "remaining_limitation": "Original visible draws label in Figure4 denotes retained quadrature atoms and remains explicitly qualified. Visual checks are retained reviewer evidence; this decision did not pretend to rerender them.",
+      "next_action": "Keep figure provenance and scoped captions with any distributed manuscript.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G21",
+      "title": "Readability and scope separation in the actual paper",
+      "status": "PASS",
+      "applicability": "Focused manuscript readability rather than omnibus-report status",
+      "finding": "The17-page paper follows identification, selected law, results, physical-response limits, coupled example, discussion and short proofs. Actual PDF text contains the qualified abstract and citations. Units and both source populations are separated; raw failure and missing information appear beside results.",
+      "evidence": [
+        {
+          "source_id": "paper:main.tex",
+          "locator": "abstract and seven included sections"
+        },
+        {
+          "source_id": "paper:sections/06_discussion.tex",
+          "locator": "discussion and data/provenance text"
+        },
+        {
+          "source_id": "s05_review",
+          "locator": "build_and_visual_evidence; review acceptance narrative"
+        },
+        {
+          "source_id": "evidence_intake",
+          "locator": "manuscript_static_observation.current_pdf_text_read"
+        }
+      ],
+      "remaining_limitation": "Readability is a qualitative review judgement, not journal acceptance. The separate140-page report is not this candidate and supplies no substitute for its evidence.",
+      "next_action": "Retain the focused methods scope; handle author and reference metadata below before submission.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G22",
+      "title": "References resolve; final bibliographic polish remains limited",
+      "status": "PASS",
+      "applicability": "Citation/reference usability of current source and PDF",
+      "finding": "All8 cited BibTeX keys resolve and final logs/PDF show no unresolved references. DOI/arXiv locators are retained. Limited primary-record checks confirm Heinesen and ratio-source metadata and the relevant2026 multipole prior context.",
+      "evidence": [
+        {
+          "source_id": "paper:references.bib",
+          "locator": "all8 entries"
+        },
+        {
+          "source_id": "build_report",
+          "locator": "checks.undefined_citations; checks.undefined_references; checks.bibtex_warning"
+        },
+        {
+          "source_id": "evidence_intake",
+          "locator": "manuscript_static_observation; limited_primary_literature_checks"
+        }
+      ],
+      "remaining_limitation": "Three JCAP entries omit number fields and render without visible years in the current bibliography; AronowLee2013 lacks volume/pages but has a resolvable DOI. Heinesen title is abbreviated. These are disclosed editorial corrections, not proof/citation failures. No fresh fulltext audit of every reference or journal-specific style check is claimed.",
+      "next_action": "Correct citation metadata from primary records in the next authorized editorial revision, keeping scientific claims unchanged; rerun BibTeX/TeX only after that revision.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G23",
+      "title": "Local numerical reproducibility and claim-to-source chain",
+      "status": "PASS",
+      "applicability": "Current local evidence and computation provenance",
+      "finding": "The16-file source composite matches0f9c81c1ddf609e7c070554d7fff9b94886fe036d133cc8113b248d8b1d51a17. All declared primary-source hashes in the inspected map match. Numerical tables and figures point to actual retained calculations and independent arithmetic rather than pass labels. Scope corrections take precedence over old raw interpretations.",
+      "evidence": [
+        {
+          "source_id": "paper:CLAIM_SOURCES.json",
+          "locator": "sources; claims"
+        },
+        {
+          "source_id": "evidence_intake",
+          "locator": "candidate; primary_sources; primary_field_excerpts"
+        },
+        {
+          "source_id": "numerical_checks",
+          "locator": "retained independent arithmetic"
+        },
+        {
+          "source_id": "s05_review",
+          "locator": "independent_small_checks"
+        }
+      ],
+      "remaining_limitation": "Identity is not validity; local source availability is distinct from a public reproducibility package. Historical PENDING strings in SCIENTIFIC_SCOPE/CLAIM_SOURCES are preserved provenance and do not negate the later actual S05 receipt.",
+      "next_action": "Use the exact current sources and qualified interpretation; preserve historical source/receipt bytes.",
+      "blocking_for": []
+    },
+    {
+      "id": "P1-G24",
+      "title": "External availability of the full numerical supplement",
+      "status": "HOLD",
+      "applicability": "A submission-ready independently consumable numerical evidence package",
+      "finding": "The18-member ZIP is a buildable TeX/figure/source-map bundle. Its source map includes absolute /mnt paths to selected_law RESULT, scope correction and numerical checks; those numerical artifacts are not members of that ZIP. A durable public accession or other recipient-resolvable delivery of these exact supplemental objects has not been established in this decision.",
+      "evidence": [
+        {
+          "source_id": "build_report",
+          "locator": "bundle_entries"
+        },
+        {
+          "source_id": "paper:CLAIM_SOURCES.json",
+          "locator": "sources.selected_law; actual_review; scope_correction; numerical_checks"
+        },
+        {
+          "source_id": "paper:sections/06_discussion.tex",
+          "locator": "Data and computational provenance"
+        },
+        {
+          "source_id": "evidence_intake",
+          "locator": "inspection_limitations"
+        }
+      ],
+      "remaining_limitation": "This is UNKNOWN external accessibility, not an allegation that the data are unavailable or that source publication failed. Controller-supplied remote commit c9df63efa4728255a5b785ad7cb752ecb8d8f3ef retains TeX sources; it does not by itself establish delivery of external /mnt evidence.",
+      "next_action": "For a concrete submission package, provide/identify a durable numerical supplement or recipient-resolvable access route binding the retained result, necessary primary inputs/code and mandatory interpretation corrections. Reuse existing publication/backup if its exact accession is available; no new scientific run is needed.",
+      "blocking_for": [
+        "submission_ready_declaration"
+      ]
+    },
+    {
+      "id": "P1-G25",
+      "title": "Scientific author identity, affiliation and submission metadata",
+      "status": "HOLD",
+      "applicability": "Any actual external manuscript submission",
+      "finding": "main.tex has title/date and abstract but no author, affiliation or corresponding-email declarations; pdfinfo Author is empty. Operational agent provenance is not scientific authorship and must not be substituted for the owner's or collaborators' credit.",
+      "evidence": [
+        {
+          "source_id": "paper:main.tex",
+          "locator": "title/date/abstract followed directly by maketitle"
+        },
+        {
+          "source_id": "evidence_intake",
+          "locator": "manuscript_static_observation.author_affiliation_email_declarations; pdfinfo"
+        }
+      ],
+      "remaining_limitation": "Human author list/order, affiliations, corresponding contact, acknowledgments/funding/conflicts and venue-required statements are UNKNOWN where not supplied. No author consent or journal submission authority is inferred.",
+      "next_action": "The owner supplies/approves actual scientific author and required submission metadata. Add them only through an authorized editorial task; do not fabricate names from agent IDs.",
+      "blocking_for": [
+        "submission_ready_declaration"
+      ]
+    },
+    {
+      "id": "P1-G26",
+      "title": "Claim ownership, no family promotion and no submission action",
+      "status": "PASS",
+      "applicability": "Project scientific boundaries and S06 no-submit acceptance",
+      "finding": "The paper presents an HTT conditional/statistical methods application, with separate apparent diagnostics. No MIO posterior/truth certificate, native BASS transfer, Bianchi detection/family identification, or full TSC solver claim is made. This task performs no journal upload, merge, solver evolution or new science run.",
+      "evidence": [
+        {
+          "source_id": "paper:main.tex",
+          "locator": "abstract final sentence"
+        },
+        {
+          "source_id": "paper:sections/06_discussion.tex",
+          "locator": "physical-family comparison and provenance paragraphs"
+        },
+        {
+          "source_id": "paper:sections/02_identification.tex",
+          "locator": "confidence-set versus named-measure distinction"
+        },
+        {
+          "source_id": "evidence_intake",
+          "locator": "execution_limits"
+        }
+      ],
+      "remaining_limitation": "An artifact publication commit, manuscript compile, scoped node PASS or completed S06 decision does not establish42/42 scientific success or authorize submission.",
+      "next_action": "Return this decision for independent review, then let the controller record only the S06 decision-acceptance result and continue remaining independent READY work.",
+      "blocking_for": []
+    }
+  ],
+  "gate_counts": {
+    "PASS": 18,
+    "HOLD": 8
+  },
+  "minimal_publishable_claim": "A source-linked retrospective methods application demonstrates that a normalized selected-cohort tensor likelihood and valid model-conditional confidence images can coexist with unresolved physical response; actual same-cohort covariance/model comparisons, finite-target missing-outcome sets and coupled apparent anchor/floor sensitivities expose the information needed before physical inference.",
+  "six_review_views": {
+    "relativistic_cosmology": [
+      "P1-G11",
+      "P1-G12",
+      "P1-G13",
+      "P1-G14"
+    ],
+    "statistical_inference": [
+      "P1-G02",
+      "P1-G03",
+      "P1-G04",
+      "P1-G05",
+      "P1-G06",
+      "P1-G07",
+      "P1-G08",
+      "P1-G09",
+      "P1-G10"
+    ],
+    "numerical_methods": [
+      "P1-G03",
+      "P1-G15",
+      "P1-G23"
+    ],
+    "software_reproducibility": [
+      "P1-G01",
+      "P1-G19",
+      "P1-G20",
+      "P1-G24"
+    ],
+    "claim_editor": [
+      "P1-G16",
+      "P1-G17",
+      "P1-G21",
+      "P1-G22",
+      "P1-G25",
+      "P1-G26"
+    ],
+    "skeptical_family_identification": [
+      "P1-G13",
+      "P1-G14",
+      "P1-G26"
+    ],
+    "interpretation": "These are distinct analytic views applied by this decision author, not six claimed independent reviewers or agents."
+  },
+  "strengths": [
+    "Actual normalized row likelihood and complete signed carrier with cross blocks.",
+    "Finite-sample mathematical coverage separated from empirical source adequacy.",
+    "Source-linked negative results and missing mass retained.",
+    "Focused17-page readable manuscript, nontrivial sourced figures, exact final-candidate independent S05 review."
+  ],
+  "publication_blockers": [
+    {
+      "gate_id": "P1-G17",
+      "title": "Publication-level novelty and matched competing analyses",
+      "next_action": "Before a submission-ready declaration, finalize a precise comparison of this274-row selected tensor/fibre/finite-frame contribution with the closest applicable partial-identification and distance-multipole methods; restrict claims if no material extension is established. No blanket demand to reproduce unrelated papers."
+    },
+    {
+      "gate_id": "P1-G24",
+      "title": "External availability of the full numerical supplement",
+      "next_action": "For a concrete submission package, provide/identify a durable numerical supplement or recipient-resolvable access route binding the retained result, necessary primary inputs/code and mandatory interpretation corrections. Reuse existing publication/backup if its exact accession is available; no new scientific run is needed."
+    },
+    {
+      "gate_id": "P1-G25",
+      "title": "Scientific author identity, affiliation and submission metadata",
+      "next_action": "The owner supplies/approves actual scientific author and required submission metadata. Add them only through an authorized editorial task; do not fabricate names from agent IDs."
+    }
+  ],
+  "physical_claim_blockers": [
+    {
+      "gate_id": "P1-G04",
+      "title": "Empirical source calibration and peculiar-velocity covariance",
+      "next_action": "Supply source-qualified method/group/calibration/PV covariance or a defensible uncertainty class with overlap accounting and matched validations. Do not add the same released variance twice."
+    },
+    {
+      "gate_id": "P1-G06",
+      "title": "Empirical physical null, simulation calibration and first failure",
+      "next_action": "First qualify the actual source model and prospective validation target; then use a matched physical simulation/reference ensemble if physical coverage is claimed. Preserve the old failure and do not repeat old null runs as repair."
+    },
+    {
+      "gate_id": "P1-G09",
+      "title": "Empirical parent selection and transport law",
+      "next_action": "Obtain source targeting/detection/rejection information and defensible outcome/selection assumptions, or continue to report the exact finite-frame sensitivity scope."
+    },
+    {
+      "gate_id": "P1-G13",
+      "title": "Physical response, congruence and approximation calibration",
+      "next_action": "Supply source-matched response and frame/epoch conventions, finite-redshift/peculiar-flow remainder controls and a physically justified domain/bias restriction. Do not impute zero bias or evolve a forbidden solver."
+    },
+    {
+      "gate_id": "P1-G14",
+      "title": "Physical x_C, Q, F, Pi and G_F distribution",
+      "next_action": "Retain physical HOLD. A future physical claim requires admissible source-to-state mapping, calibrated joint law or justified outer set, supplied anchor/sector, and common coupled support."
+    }
+  ],
+  "minor_editorial_concerns": [
+    "Complete JCAP issue/year and Aronow-Lee volume/page metadata from primary records.",
+    "Preserve the Figure4 panel-specific explanation for the inherited draws label.",
+    "At a future authorized release, attach current S05/S06 decisions alongside historical PENDING provenance rather than silently rewriting historical evidence."
+  ],
+  "no_required_numerical_rerun_for_this_decision": true,
+  "new_validation_performed": "Current-source and PDF/build identity checks, source/claim/figure/reference inspection, actual final logs and PDF text, primary saved-field intake and limited primary literature metadata/context checks. Retained independent numerical and visual evidence was reused; no new fit, draw, null, TeX build, solver or ODE.",
+  "exact_next_executable_checkpoint": {
+    "action": "Fresh independent read-only review of this submitted_ready_decision.json and its SHA under the original S06 packet/input; assess completeness, evidence binding and separation from actual submission readiness.",
+    "after_scoped_review_pass": "Controller may mark only original S06 decision acceptance complete and retain NOT_READY_TO_SUBMIT/physical HOLD. Continue remaining authorized independent READY campaign work; no submission or main merge.",
+    "conditional_methods_submission_preparation": "Resolve author metadata, concrete external numerical-supplement access, focused novelty comparison and disclosed bibliography edits under separately scoped authorized work. Missing physical inputs remain explicit unless a physical claim is pursued."
+  },
+  "skills_applied": [
+    "htt-claim-firewall",
+    "htt-claim-provenance-ledger",
+    "htt-reviewer-mode-pre-submission",
+    "htt-manuscript-figure-audit",
+    "htt-latex-paper-build",
+    "htt-physics-math-audit",
+    "htt-xqpi-fg-formalism",
+    "htt-statistical-hardening"
+  ],
+  "skill_scope": "Guidance for evidence organization and claim boundaries; no skill/harness label is the decision oracle.",
+  "execution_limits": {
+    "new_fits": 0,
+    "new_null_simulations": 0,
+    "new_quadrature_draws": 0,
+    "tex_builds": 0,
+    "source_edits": 0,
+    "git_mutations": 0,
+    "controller_mutations": 0,
+    "child_agents": 0,
+    "submission": false
+  },
+  "historical_evidence_rule": "No source, old result, pending annotation, receipt, cost, task identity, allocation, Git or controller state was rewritten. Current manuscript domain qualification and later actual review receipts are explicitly distinguished from earlier raw interpretations."
+}

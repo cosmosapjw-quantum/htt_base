@@ -1,0 +1,81 @@
+{
+  "status": "ACYCLIC_PRE_GO_EXECUTION_RECIPE_NO_FINAL_INPUT_HASH",
+  "original_controller_input": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/INPUT.json",
+    "sha256": "5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3"
+  },
+  "original_input_identity": "sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3",
+  "original_executable_input": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/INPUT.json",
+    "sha256": "5b9b5dd9e940c86a849e12c2383d2b1cf066c6bfb7657f7308ffd57936bdfb74"
+  },
+  "last_preparation_failure_packet_id": "7cf51a128aad518b082702323e7c3628cd15b6c3b8b39fc28bd45559b7990791",
+  "last_preparation_failure_raw": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/PREPARATION_HOLD_RAW_OUTCOME.json",
+    "sha256": "44ae710fe81cf26d3fc2ca3edd51f4094ff021aad50bfb104d4988a341c4a682"
+  },
+  "last_direct_failure_raw": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/RAW_OUTCOME.json",
+    "sha256": "2d6297a19edf37cb88dde66690ac3f33c72567dcc5879fff9530bca67340e5e2"
+  },
+  "scientific_method_contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fast_window_framing/CONTRACT.md",
+    "sha256": "8765ad540341080dbb6da3ec02a0cc9179447df45448b7a12245954c879b4706"
+  },
+  "resource_addendum": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_resource_reallocation_review/RESOURCE_ADDENDUM.md",
+    "sha256": "3eba5f296412d420d9ab5b0e72068c17cf56d6672f777515fe0159bd0e9fd530"
+  },
+  "resource_approval": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_resource_reallocation_review/RESULT.json",
+    "sha256": "4673b3a95de8f65634268eb48b783b97bf17dec256cb0205267ac148cdea50e8"
+  },
+  "prepared_source": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/PREPARATION.json",
+    "sha256": "1377733aabc93f34994aeff4d4bd3493d46aee4ac0ebb8dace62166ab1147d42"
+  },
+  "input_template": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/INPUT_TEMPLATE.json",
+    "sha256": "10d93cd3f94da554c2b47dab61a81c9539047d03b80079520a7b6ddc91c285c0"
+  },
+  "dependency_manifest": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/DEPENDENCY.json",
+    "sha256": "3c47a0982825c6455ca571fa6cc64cfeb184149735f270057d729bad0eecac96"
+  },
+  "stable_input_core": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fast_window_dispatch/STABLE_INPUT_CORE.json",
+    "sha256": "0d779dc8b58ade5aa717ce94a91cc3f1ef2724f19116aa743a25dba03067f6e2"
+  },
+  "actual_execution_packet": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fast_window_dispatch/ACTUAL_FAST_NUMERIC_PACKET.json",
+    "sha256": "139b8c981b240009f633821f5dec8655be0472a02caa5b43c2c23740a5e1eada"
+  },
+  "account_head": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fast_window_dispatch/ROOT_ACCOUNT_HEAD_AT_FAST_NUMERIC_DISPATCH.json",
+    "sha256": "03fe352971b202ad3fa7e2bcced14627b6c4c90b2c2bccad2255f7dfb0dd4100"
+  },
+  "repair_plan_identity": "c1de2ddb5f58b1b59473bfeeb486c9e8a5a5292d1658669f9666753aa8e13a80",
+  "assembly_recipe": {
+    "serialization": "json.dumps(dict,indent=2,ensure_ascii=False,allow_nan=False)+newline",
+    "core_projection_excludes_exactly": [
+      "derived_execution_lineage_path",
+      "derived_execution_lineage_sha256",
+      "root_go_path",
+      "root_go_sha256"
+    ],
+    "post_GO_additions": "Only LINEAGE path/hash and ROOT_GO path/hash; sidecar detached; later FINAL_INPUT_BINDING stores finalINPUT SHA; priorobjects never hash futureINPUT",
+    "final_input_path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/INPUT.json",
+    "no_final_input_hash_claim_before_GO": true
+  },
+  "source_hashes": {
+    "science.py": "ed9918ef9f2f12c7e6b04d5140ea8e51acd86c5fb6a541d80a27e9f42e3ad982",
+    "fast_science.py": "b160e3684bcebb4cb12a72d9fb19f70e478022a4a84e0a6244d01c2ad576e76b",
+    "driver.py": "fb30aeb48b1309c86882980a7a035ad1ff624c6c3627ada0392ee827c2cf04ee",
+    "runner.py": "6ff336ef28a90f6d3d6e315df4b48b055f16d944b5eec6dcbdd25c46c90deb38",
+    "independent_check.py": "a825c6e9240d189fa456b5a4868c8cc95801a4983c2b8b90f60659894b9b32a2"
+  },
+  "producer_whole_cap_seconds": 80.0,
+  "independent_checker_reserved_seconds": 60,
+  "physical_original_acceptance_promoted": false,
+  "numerical_starts_before_GO": 0
+}

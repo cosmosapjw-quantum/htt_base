@@ -1,0 +1,90 @@
+{
+  "actual_ack_path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/actual_run/ACTUAL_ACK.json",
+  "checks_performed": [
+    "stdlib AST parse for four new source files",
+    "SHA256 for new source and immutable input/frontier/contract"
+  ],
+  "contract_sha256": "cdf94aaf6d39a01baae0d2fc03342032b1eb5f82ef34555e83ca8631d43f7992",
+  "controller_debit_seconds": "NOT_ASSERTED",
+  "execution_cli": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python -B /mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/run_once.py --frozen-input /mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/INPUT.json --ack-json /mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/actual_run/ACTUAL_ACK.json",
+  "execution_ledger_path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/actual_run/EXECUTION.jsonl",
+  "frontier_sha256": "a431b485c2269f75cc388c372aaa6828b1fa6900e7e92b35855045e091275a89",
+  "input_sha256": "2fe3811319d2dd7b6b1d43507339f410c559036ab8b0e044a5dcfa413830f004",
+  "not_run": [
+    "project imports",
+    "unit tests",
+    "source data parsing",
+    "NumPy arrays",
+    "scientific consumer",
+    "render"
+  ],
+  "observed_runtime": "UNKNOWN",
+  "old_failure_ancestry": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE source_layout_run; 0.137-vs-0.147 all-row counterexample preserved; old task blocked",
+  "owner": "/root/r26_cf4_release_stage_numeric",
+  "products_path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/actual_run/products",
+  "requested_runtime": "gpt-6-sol/high",
+  "required_ack_fields": {
+    "baseline_cumulative_seconds": "current controller baseline >=103.50328065082431",
+    "controller_append": {
+      "path": "genuine append receipt JSON path",
+      "sha256": "actual SHA256"
+    },
+    "controller_append_sha256": "same actual append receipt SHA256",
+    "controller_packet": {
+      "path": "genuine controller packet JSON path",
+      "sha256": "actual SHA256"
+    },
+    "decision": "GO",
+    "frontier_sha256": "a431b485c2269f75cc388c372aaa6828b1fa6900e7e92b35855045e091275a89",
+    "input_identity": "sha256:2fe3811319d2dd7b6b1d43507339f410c559036ab8b0e044a5dcfa413830f004",
+    "packet_id": "genuine controller packet id, 64 hex characters",
+    "remaining_seconds": "current controller remaining >0 and <=600-baseline",
+    "source_sha256": {
+      "consume.py": "87d6de42968a8331c88e0d00f9ca165578a0a934dae93006fcdd8dadcf3efc74",
+      "plot.py": "7f51c240b9414cd4a05cea308d64a4015355bffb66df79656c43d940c4bd0c36",
+      "run_once.py": "a23bc5d13790341e2c5010ddb6c6221bda09b05f99d041d61d90056c051d00b6",
+      "test_consume.py": "c50b456017e522ee50d4b31d3165998fcb4f9b2d32ed15fde4bcd7bc6bd0e30b"
+    },
+    "task_id": "R26-CF4-RELEASE-STAGE-SEVEN-CHANNEL-RESPONSE"
+  },
+  "run_receipt_path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/actual_run/RUN_RECEIPT.json",
+  "schema": "htt.cf4_release_stage_seven_channel_preparation/1",
+  "scientific_ceiling": "Conditional release-stage and fixed E1 working-reference response; original H02 remains HOLD; Gamma/PV/cross covariance unknown; no family identification",
+  "shared_allocation": {
+    "cap_seconds": 600,
+    "minimum_actual_baseline_seconds": 103.50328065082431,
+    "new_allocation": false,
+    "rss_bytes_max": 2147483648,
+    "single_invocation_seconds_max": 120,
+    "threads": 1
+  },
+  "source": {
+    "consume.py": {
+      "bytes": 33405,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/consume.py",
+      "sha256": "87d6de42968a8331c88e0d00f9ca165578a0a934dae93006fcdd8dadcf3efc74",
+      "static_ast": "PASS"
+    },
+    "plot.py": {
+      "bytes": 2277,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/plot.py",
+      "sha256": "7f51c240b9414cd4a05cea308d64a4015355bffb66df79656c43d940c4bd0c36",
+      "static_ast": "PASS"
+    },
+    "run_once.py": {
+      "bytes": 17212,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/run_once.py",
+      "sha256": "a23bc5d13790341e2c5010ddb6c6221bda09b05f99d041d61d90056c051d00b6",
+      "static_ast": "PASS"
+    },
+    "test_consume.py": {
+      "bytes": 5332,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_cf4_release_stage_seven_channel/test_consume.py",
+      "sha256": "c50b456017e522ee50d4b31d3165998fcb4f9b2d32ed15fde4bcd7bc6bd0e30b",
+      "static_ast": "PASS"
+    }
+  },
+  "source_preparation_elapsed_seconds": "NOT_MEASURED",
+  "status": "SOURCE_PREPARED_ACTUAL_SCIENCE_WAIT_CONTROLLER_PACKET_ACK",
+  "task_id": "R26-CF4-RELEASE-STAGE-SEVEN-CHANNEL-RESPONSE"
+}

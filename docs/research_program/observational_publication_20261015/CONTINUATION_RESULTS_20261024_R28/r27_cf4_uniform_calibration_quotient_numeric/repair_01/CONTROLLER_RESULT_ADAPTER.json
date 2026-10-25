@@ -1,0 +1,74 @@
+{
+  "schema": "htt.cf4_support_quotient_repair_execution_result/1",
+  "task_id": "R27-CF4-UNIFORM-SUPPORT-CALIBRATION-QUOTIENT",
+  "agent_id": "/root/r27_cf4_uniform_repair_fresh_executor",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "input_identitysha256": "570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd",
+  "packet_id": "21076114a347d35f183e8f7b323cd4389b61fac8233c94f379d0b5c90cf00c5b",
+  "outcome": "success",
+  "scope": "one acknowledged continuation; corrected failed control selector once, then original unchanged consumer once",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/actual_run/WHOLE_COMMAND_RECEIPT.json",
+  "resource_receipt": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/ACTUAL_LIFETIME_RESOURCE.txt",
+  "validation_evidence": {
+    "wrapper_exit_code": 0,
+    "wrapper_status": "BOTH_CHILDREN_EXITED_ZERO",
+    "corrected_control": "one test passed; original three completed controls reused without rerun",
+    "control_raw_frobenius": [
+      3.2899536811709996e-32,
+      3.9630100305325295e-17,
+      3.963010030532529e-17
+    ],
+    "control_normalized": [
+      7.297041261525002e-34,
+      3.37626212046941e-18,
+      3.3762621204694098e-18
+    ],
+    "consumer_status": "FULL5_APPARENT_STF_ESTIMATOR",
+    "source_rows": 35970,
+    "mixed_saturated_rows": 944,
+    "signal_rank_at_1e_12_1e_10_1e_8": [
+      5,
+      5,
+      5
+    ],
+    "nuisance_rank_at_1e_12_1e_10_1e_8": [
+      19,
+      19,
+      19
+    ],
+    "operator_residuals_are_numerical_only": true
+  },
+  "timing_seconds": {
+    "outer_monotonic_after_receipt_fsync": 8.836370523,
+    "kernel_time_elapsed_display": "0:08.88",
+    "exec_command_host_wall": 9.839271718,
+    "caller_api_wall": "UNKNOWN",
+    "account_charge_lower_bound_from_available_overlapping_observations": 9.839271718,
+    "account_charge_rule": "maximum of controller caller/API, host, kernel and outer observations, overlapping intervals counted once; root reconciles any larger whole-call observation"
+  },
+  "resource": {
+    "kernel_max_rss_kib": 136572,
+    "wrapper_peak_polled_consumer_rss_bytes": 141271040,
+    "rss_cap_bytes": 2147483648,
+    "remaining_consumer_subcap_before_start_seconds": 116.515,
+    "parent_lifetime_used_before_start_seconds": 181.29277764664457,
+    "independent_review_reserved_seconds": 30
+  },
+  "candidate_products": {
+    "RESULT.json": "c5148c206e6ec7d5f0e69cbc3ab8dc2c0c2f815d3b304431e0aa0cd16e91883d",
+    "CARRIER.npz": "21763a9722c8375d593c1f0dcd68d42f31cb1952f22a4140a0df1eea285d6c28",
+    "INFORMATION_AND_CONTRASTS.png": "8afbf2e1dc285a8d2be423f44c090541713765a0b275b9ca7362a05a7325a6fe"
+  },
+  "candidate_dir": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/actual_run/products",
+  "claim_ceiling": "ideal support-model annihilation is symbolic; stored K_hat checks are numerical; unrestricted-Gamma binary protection NOT_ESTABLISHED; physical covariance and H02/H03/H04 gates unresolved",
+  "independent_review": "PENDING",
+  "qualified_products": [],
+  "input_identity": "sha256:570383ac224808090c57b356ee21cc7f114a27d712ee725c5c42850bf00d61fd",
+  "candidate_identity": "sha256:c5148c206e6ec7d5f0e69cbc3ab8dc2c0c2f815d3b304431e0aa0cd16e91883d",
+  "root_account_head": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r27_cf4_uniform_calibration_quotient_numeric/repair_01/ROOT_ACCOUNT_HEAD.json",
+    "sha256": "1798bdf6dd2c37ed0fb978acbc9b2e6e6f73d2d8e4a164bc4a984a2a49179099"
+  },
+  "controller_schema_adapter_note": "Root factual input_identitysha256 alias and exact actual numericalRESULT identity; conservative overlapping whole-command settlement attached; original return untouched."
+}

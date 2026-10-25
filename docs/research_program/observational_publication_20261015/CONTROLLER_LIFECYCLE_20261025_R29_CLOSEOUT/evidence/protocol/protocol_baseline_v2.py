@@ -1,0 +1,122 @@
+"""Explicit root-bound cross-stage reconciliation; no snapshot capture or Git calls."""
+from pathlib import Path
+import hashlib
+import json
+
+CONTRACT = Path('/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/PROTOCOL_REPAIR_CONTRACT.json')
+CONTRACT_SHA = '3ca805ae866c7b7174c0e0ef2a0e7f3f925a9295893d5783b11d5610e456da4a'
+PACKET_SHA = '45031af505c6d3ac1c99499b624ad0c901ba48344b606b5d564fd1a61b2baafc'
+TREE = '1e484cab48211ae5a433f3ae20192dddb3bbfdf1'
+STATE_SHA = 'fa4ecaca94d180c61b547706ddc546f5bbd9db197a20a6f41bd65c863c13517d'
+POINTER_SHA = 'd9221c1eb6a61bd33a7beee689dbcb2751fec97ab056327e08941f51ba3c924d'
+
+
+def seal(path):
+    p = Path(path)
+    return {'path': str(p), 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()}
+
+
+def load_sealed(descriptor):
+    assert set(descriptor) == {'path', 'sha256'}, 'exact path/hash descriptor required'
+    assert Path(descriptor['path']).is_absolute(), 'absolute sealed path required'
+    assert seal(descriptor['path']) == descriptor, 'sealed input byte mismatch'
+    return json.loads(Path(descriptor['path']).read_text())
+
+
+def metadata_changes(prior, baseline):
+    groups = {'non_object_metadata', 'canonical_object_stat_inventory'}
+    assert set(prior) == set(baseline) == groups, 'complete snapshot groups required'
+    changes = []
+    for group in sorted(groups):
+        assert isinstance(prior[group], dict) and isinstance(baseline[group], dict)
+        for path in sorted(set(prior[group]) | set(baseline[group])):
+            old, new = prior[group].get(path), baseline[group].get(path)
+            if old != new:
+                changes.append({'group': group, 'path': path, 'before': old, 'after': new})
+    return changes
+
+
+def validate_transition(approval, action, live, *, context, prior_descriptor,
+                        required_seals, evidence):
+    """Pure validation of complete snapshots and caller-required bindings."""
+    assert approval['protocol'] == 'R29_EXPLICIT_EXECUTION_BASELINE_V2'
+    assert approval['action'] == action
+    assert approval['prior_anchor'] == prior_descriptor, 'immutable prior anchor mismatch'
+    prior = load_sealed(prior_descriptor)
+    baseline = load_sealed(approval['execution_baseline'])
+    reconciliation = load_sealed(approval['reconciliation'])
+    assert reconciliation['status'] == 'ROOT_RECONCILED_EXACT_TRANSITION'
+    assert reconciliation['action'] == action and reconciliation['context'] == context
+    assert reconciliation['prior_anchor'] == prior_descriptor
+    assert reconciliation['execution_baseline'] == approval['execution_baseline']
+    assert reconciliation['review_seals'] == approval['review_seals']
+    actual = metadata_changes(prior, baseline)
+    declared = reconciliation['metadata_changes']
+    assert len(actual) == len(declared), 'complete fieldwise reconciliation required'
+    for expected, row in zip(actual, declared):
+        assert set(row) == {'group', 'path', 'before', 'after', 'classification'}
+        assert {k: row[k] for k in expected} == expected, 'reconciliation delta mismatch'
+        assert isinstance(row['classification'], str) and row['classification'].strip()
+    supplied = approval['review_seals']
+    assert len({x['path'] for x in supplied}) == len(supplied), 'duplicate review seal'
+    seals = {x['path']: x['sha256'] for x in supplied}
+    for descriptor in required_seals:
+        assert seals.get(descriptor['path']) == descriptor['sha256'], 'required review binding absent'
+    for descriptor in supplied:
+        assert seal(descriptor['path']) == descriptor, 'review input changed'
+    assert reconciliation['independent_evidence'] == evidence
+    for descriptor in evidence:
+        assert seal(descriptor['path']) == descriptor, 'independent evidence changed'
+    assert live == baseline, 'complete live snapshot differs from execution baseline'
+    return baseline
+
+
+def validate_action(approval, action, live, m):
+    """Fixed production identities; root supplies fresh baseline, never generated here."""
+    contract_descriptor = {'path': str(CONTRACT), 'sha256': CONTRACT_SHA}
+    contract = load_sealed(contract_descriptor)
+    for descriptor in contract['frozen_inputs']:
+        assert seal(descriptor['path']) == descriptor, 'frozen publication input changed'
+    packet_path = m.O/'EXACT_TREE_REVIEW_PACKET.json'
+    packet_descriptor = {'path': str(packet_path), 'sha256': PACKET_SHA}
+    packet = load_sealed(packet_descriptor)
+    assert packet['tree'] == TREE == approval['tree']
+    assert packet['parent'] == m.PARENT == contract['sole_parent']
+    required = [contract_descriptor, packet_descriptor, *contract['frozen_inputs']]
+    required += [{'path': str(m.R/path), 'sha256': digest}
+                 for path, digest in packet['source_seals'].items()]
+    required += [
+        {'path': str(m.B/'r25_root_space_recovery/LIVE_STATE.json'), 'sha256': STATE_SHA},
+        {'path': str(m.R/'.agent-harness/runtime/ACTIVE_CONTROLLER.json'), 'sha256': POINTER_SHA},
+        {'path': str(m.B/'r25_enospc_publication_plan_repair/hooks/pre-push'),
+         'sha256': packet['publication_guard_sha256']},
+    ]
+    required += [seal(m.O/name) for name in (
+        'create_reviewed_commit_v2.py', 'push_approved_commit_v2.py', 'protocol_baseline_v2.py')]
+    # Require root to seal all original packet inputs, including source payloads.
+    required += [{'path': str(m.O/path), 'sha256': digest}
+                 for path, digest in packet['seals'].items()]
+    required += packet['final_input_seals']
+    prior = {'path': str(m.O/'CANONICAL_METADATA_AFTER_TREE.json'),
+             'sha256': packet['seals']['CANONICAL_METADATA_AFTER_TREE.json']}
+    context = {'tree': TREE, 'sole_parent': m.PARENT, 'local_HEAD': m.LOCAL,
+               'remote_url': m.URL, 'remote_ref': m.REF,
+               'exact_tree_packet': packet_descriptor,
+               'guard_sha256': packet['publication_guard_sha256']}
+    if action == 'push':
+        candidate_path = m.O/'CANDIDATE_COMMIT_REVIEW_PACKET.json'
+        candidate_descriptor = {'path': str(candidate_path),
+                                'sha256': approval['candidate_packet_sha256']}
+        candidate = load_sealed(candidate_descriptor)
+        assert candidate['tree'] == TREE and candidate['sole_parent'] == m.PARENT
+        assert approval['commit'] == candidate['commit']
+        prior = {'path': str(m.O/'CANONICAL_METADATA_AFTER_COMMIT.json'),
+                 'sha256': candidate['canonical_after_commit_sha256']}
+        required.append(candidate_descriptor)
+        context.update(commit=candidate['commit'], candidate_packet=candidate_descriptor)
+    else:
+        assert action == 'commit' and approval['parent'] == m.PARENT
+    evidence = [contract_descriptor, *contract['classified_current_delta']['evidence']]
+    return validate_transition(approval, action, live, context=context,
+                               prior_descriptor=prior, required_seals=required,
+                               evidence=evidence)

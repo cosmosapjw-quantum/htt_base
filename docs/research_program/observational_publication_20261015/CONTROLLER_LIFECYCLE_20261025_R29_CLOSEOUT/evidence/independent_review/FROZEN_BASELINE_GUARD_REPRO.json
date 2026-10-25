@@ -1,0 +1,20 @@
+{
+  "status": "REPRODUCED_FALSE_BEFORE_COMMIT_OR_PUSH",
+  "scope": "Evaluation of exact frozen snapshot equality predicate only; protocol scripts were not executed",
+  "commit_guard": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/create_reviewed_commit.py",
+    "line": 19,
+    "expression": "snapshot() == load(CANONICAL_METADATA_AFTER_TREE.json)",
+    "value": false
+  },
+  "push_guard": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/push_approved_commit.py",
+    "line": 22,
+    "same_cross_turn_stale_baseline_pattern": true,
+    "not_executed_no_commit_exists": true
+  },
+  "baseline_sha256": "5285641ed220230e7cc63125fb6d52436da3686c37d705a051302a2c518864f6",
+  "current_snapshot_sha256": "38ef0fcbb2d1ad678de61f5831647754380bf4c7fe7e3722684d120b2bb7c854",
+  "changed_metadata_entries": 311,
+  "scientific_change": false
+}

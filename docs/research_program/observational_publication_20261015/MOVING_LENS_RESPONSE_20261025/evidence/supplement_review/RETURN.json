@@ -1,0 +1,67 @@
+{
+  "status": "SCOPED_PASS",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "NOT_INDEPENDENTLY_OBSERVED",
+  "independence": {
+    "authored_candidate": false,
+    "prior_review_verdict_files_read": false,
+    "subagents_spawned": false,
+    "repo_mutated": false,
+    "source_mutated": false
+  },
+  "scope": "Exact five-page moving-lens external-reader REVTeX supplement and source package; independent mathematics, source fidelity, bibliography, archive build and original PDF rendering review",
+  "candidate": {
+    "main.tex": "6d9f3af8eb468d9c76e2e6b13fb79b002b49f9f2d8e1c48f56237b090b3af7f4",
+    "main.pdf": "8e50c04ca93e9f635006a4d3cd79b9a12c1e5f09ff9412a47a3bc79e65fa6376",
+    "source_bundle.zip": "1d48f56bfd64d5fa62e4034741739e9551d2add9401bafdb797e24abd1b4381f",
+    "README_BUILD.md": "c357a0b9f8ebbebad73e7b1732830437e42a70a8a38b8b52ea4b1485bc609971"
+  },
+  "frozen_scientific_source": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_nonradial_moving_lens_intake/REPORT_REVISED.md",
+    "sha256": "0f66033f7f4adc86c214c45ca479e557de1ede447c1b48afedae2752d505ce2d"
+  },
+  "blocking_findings": [],
+  "nonblocking_observations": [
+    {
+      "path": "main.tex",
+      "line": 159,
+      "scope": "Prediction-level reciprocal scaling requires both factors to vary jointly; no invariance of an exactly calibrated joint likelihood is inferred. Surrounding conclusion already restricts the nuisance class.",
+      "repair_required": false
+    },
+    {
+      "path": "main.tex",
+      "line": 177,
+      "scope": "Diagnostic tuple is undefined locally but solely declared not evaluable; no numerical, probabilistic or bounded interpretation is inferred.",
+      "repair_required": false
+    }
+  ],
+  "independent_build_exit_code": 0,
+  "pages": 5,
+  "rendered_pages_inspected": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "zip_members_match_candidate": true,
+  "zip_integrity_failure": null,
+  "rebuilt_extracted_text_matches_candidate": true,
+  "warnings": [
+    "Package nameref Warning: The definition of \\label has changed!"
+  ],
+  "scientific_checks": "Manual analytic checks; no numerical science or CAS performed",
+  "publication_decision": "APPROVED_EXACT_PACKAGE_WITHIN_EXISTING_OWNER_AUTHORITY",
+  "mechanical_source_provenance_publication": "Allowed with exact inherited member identities, scope, dates and review binding; wrapper/repackaging identity must be separately recorded.",
+  "publication_performed": false,
+  "submission_authorized": false,
+  "physical_response": "HOLD",
+  "original_K03_acceptance": "UNCHANGED_HOLD",
+  "tensor_diagnostics": "NOT_EVALUABLE",
+  "broader_scientific_admission": "NOT_GRANTED",
+  "review_path": "/mnt/extdrive/workdir/htt_open_data/r30_moving_lens_supplement_review/REVIEW.md",
+  "review_sha256": "b4048ac5802da5ea871b3440ee23dbbc20ba4dec15882ccf272ebbc2b19926e7",
+  "next_action": "Controller may publish the reviewed exact package and preserve provenance under existing authority. No additional review ladder absent a concrete defect or scientific content change."
+}
