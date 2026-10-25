@@ -1,0 +1,92 @@
+{
+  "status": "PASS",
+  "checks": {
+    "fixed_density": {
+      "max_abs_error": 2.220446049250313e-16,
+      "tolerance": 2e-12,
+      "pass": true
+    },
+    "fixed_tilt_energy": {
+      "max_abs_error": 1.1102230246251565e-16,
+      "tolerance": 2e-12,
+      "pass": true
+    },
+    "fixed_pressure": {
+      "max_abs_error": 5.551115123125783e-17,
+      "tolerance": 2e-12,
+      "pass": true
+    },
+    "fixed_flux": {
+      "max_abs_error": 1.1102230246251565e-16,
+      "tolerance": 2e-12,
+      "pass": true
+    },
+    "fixed_chart": {
+      "max_abs_error": 0.0,
+      "tolerance": 0,
+      "pass": true
+    },
+    "fixed_sigma_squared": {
+      "max_abs_error": 2.7755575615628914e-16,
+      "tolerance": 2e-12,
+      "pass": true
+    },
+    "fixed_lambda": {
+      "max_abs_error": 3.3306690738754696e-16,
+      "tolerance": 2e-12,
+      "pass": true
+    },
+    "envelope_from_rest_density_quadratic": {
+      "max_abs_error": 3.3306690738754696e-16,
+      "tolerance": 2e-12,
+      "pass": true
+    },
+    "envelope_squared": {
+      "max_abs_error": 4.440892098500626e-16,
+      "tolerance": 2e-12,
+      "pass": true
+    },
+    "envelope_supremum": {
+      "max_abs_error": 0.0,
+      "tolerance": 0,
+      "pass": true
+    },
+    "envelope_order_and_strictness": {
+      "pass": true
+    },
+    "fixed_lambda_equality_branch": {
+      "pass": true,
+      "cases": [
+        {
+          "K": 0.4,
+          "Omega": 0.6,
+          "w": 0.0,
+          "Omega_Lambda": 0.0,
+          "beta_magnitude": 0.0,
+          "residual": 0.0
+        },
+        {
+          "K": 0.2,
+          "Omega": 0.3,
+          "w": 0.3333333333333333,
+          "Omega_Lambda": 0.1,
+          "beta_magnitude": 0.5996764100727929,
+          "residual": 2.220446049250313e-16
+        },
+        {
+          "K": 0.5,
+          "Omega": 0.1,
+          "w": 1.0,
+          "Omega_Lambda": 0.3,
+          "beta_magnitude": 0.5515329519609288,
+          "residual": 0.0
+        }
+      ]
+    },
+    "claim_ceiling_and_undefined_sectors": {
+      "pass": true
+    }
+  },
+  "check_count": 13,
+  "array_sha256": "fda6f716e751c44cf24cff6d96ed70a3f25bb4976f4c068c27864f69ea41d1d9"
+}

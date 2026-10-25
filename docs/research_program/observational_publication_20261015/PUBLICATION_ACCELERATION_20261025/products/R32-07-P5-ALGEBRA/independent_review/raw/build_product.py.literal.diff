@@ -1,0 +1,11 @@
+--- old/build_product.py
++++ new/build_product.py
+@@ -481,7 +481,7 @@
+     expr=re.sub(r"(?<=\d)le(?=\s|$|\\|[A-Z0-9])",r"\\le ",expr)
+     expr=re.sub(r"(?<=\d)ge(?=\s|$|\\|[A-Z0-9])",r"\\ge ",expr)
+     expr=expr.replace("vto1",r"v\to1").replace("Omegato0",r"\Omega\to0")
+-    expr=expr.replace("toinfty",r"\to\infty")
++    expr=expr.replace(r"\toinfty",r"\to\infty")
+     expr=expr.replace(r"\sqrt A,\Omega",r"\sqrt A\,\Omega").replace(r"sqrt A,\Omega",r"\sqrt A\,\Omega")
+     expr=expr.replace("partial r/partial w",r"\partial r/\partial w")
+     expr=expr.replace("leSigma",r"\le \Sigma").replace("leOmega",r"\le \Omega")

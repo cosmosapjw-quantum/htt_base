@@ -1,0 +1,33 @@
+{
+  "attempt": 1,
+  "manuscript_tex_sha256": "04c251ce91e3edc3116135811c4e5d2ffa1a71cc33eb31923d19bcff85378db1",
+  "new_pdf_sha256": "427ef5a1fc7786d4c02de70f74afc1d2b86433239c54f303938d09147ae5d0ac",
+  "numeric_rerun": "NOT_RUN",
+  "observed_builder_runtime": "UNKNOWN",
+  "observed_git_head_at_repair": "427f7b5dda53e4cee1f1189ae78fdd0ce494ec1c",
+  "old_candidate_backup": "raw/candidate_before_render_token_fix/",
+  "old_sealed_sha256": {
+    "OUTPUT_MANIFEST.json": "305d4be3be809bd2764c9e3a7328459858e509ccee5b20387ed2b811e0db2278",
+    "RESULT.json": "ab7aa3679dbf28cb1e8e9a94e050f6b2d4fbb40037b96bcbfde5c3860e9c980f",
+    "manuscript.pdf": "c511514110ca606b9b293d9ea6710d97956df65bca477949e0f8d6212cb76110"
+  },
+  "pdf_build_command": "latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error manuscript.tex",
+  "pdf_build_cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report",
+  "pdf_build_elapsed_log": "raw/render_token_latexmk.time",
+  "pdf_build_exit": 0,
+  "phase": "PRESCRIBED_RENDER_TOKEN_REPAIR",
+  "prescribed_numeric_table_figure_identity": "15/15 match prior OUTPUT_MANIFEST.json",
+  "previous_followup_failure": "A prior agent follow-up turn failed with transport/runtime cause unreported; root confirmed no intervening file mutation before this repair.",
+  "prior_defect": "B with two TeX backslashes before to was printed as a line break plus literal to infinity on PDF page 6",
+  "raw_first_failure_preserved": true,
+  "render_check": "pdftotext displays B \u2192 \u221e; page 6 visually inspected; no undefined reference, missing figure, or overfull hbox in final manuscript.log",
+  "rendered_pdf_pages": 9,
+  "renderer_sha256": "b4cda318b44635fbe060e9041cbe253a82003196ebe22195c97b3f2e5a45f46d",
+  "requested_builder_effort": "high",
+  "requested_builder_model": "gpt-6-sol",
+  "science_author_approval": "/root/rc_1f2400c98c81ce56 confirmed the intended B\\to\\infty mapping",
+  "scope": "single approved notation token in manuscript line 235 / rendered TeX line 285",
+  "source_original": "(B\\toinfty) uses one TeX backslash before to",
+  "source_rerun": "NOT_RUN",
+  "task_id": "R32-07-P5-ALGEBRA"
+}

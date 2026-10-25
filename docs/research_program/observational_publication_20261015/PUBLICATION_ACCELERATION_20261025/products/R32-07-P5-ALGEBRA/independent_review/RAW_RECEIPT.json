@@ -1,0 +1,237 @@
+{
+  "status": "EXECUTED",
+  "written_utc": "2026-10-25T13:54:21.317956+00:00",
+  "actual_commands": [
+    [
+      "python3",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/inspect_candidate.py"
+    ],
+    [
+      "python3",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/independent_probes.py"
+    ],
+    [
+      "python3",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/supplementary_probes.py"
+    ],
+    [
+      "python3",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/bind_repaired_candidate.py"
+    ],
+    [
+      "python3",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/write_assessment.py"
+    ]
+  ],
+  "nested_inspection_commands": [
+    {
+      "label": "validate_only",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/build_product.py",
+        "--validate-only"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-25T13:45:31.900272+00:00",
+      "exit_code": 0
+    },
+    {
+      "label": "pdfinfo",
+      "argv": [
+        "pdfinfo",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/manuscript.pdf"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-25T13:45:38.919063+00:00",
+      "exit_code": 0
+    },
+    {
+      "label": "pdf_text",
+      "argv": [
+        "pdftotext",
+        "-layout",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/manuscript.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/manuscript_pdf.txt"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-25T13:45:38.946462+00:00",
+      "exit_code": 0
+    },
+    {
+      "label": "pdf_pages",
+      "argv": [
+        "pdftoppm",
+        "-png",
+        "-scale-to",
+        "1600",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/manuscript.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/pages/page"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-25T13:45:39.358402+00:00",
+      "exit_code": 0
+    }
+  ],
+  "repaired_pdf_commands": [
+    {
+      "argv": [
+        "pdfinfo",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/manuscript.pdf"
+      ],
+      "exit_code": 0,
+      "time_utc": "2026-10-25T13:50:20.649729+00:00"
+    },
+    {
+      "argv": [
+        "pdftotext",
+        "-layout",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/manuscript.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/repaired_manuscript_pdf.txt"
+      ],
+      "exit_code": 0,
+      "time_utc": "2026-10-25T13:50:21.029940+00:00"
+    },
+    {
+      "argv": [
+        "pdftoppm",
+        "-png",
+        "-scale-to",
+        "1600",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/manuscript.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/pages/repaired"
+      ],
+      "exit_code": 0,
+      "time_utc": "2026-10-25T13:50:24.147385+00:00"
+    }
+  ],
+  "execution_outcomes": {
+    "consumer_validate_only_exit": 0,
+    "independent_probes_exit": 0,
+    "supplementary_probes_exit": 0,
+    "repaired_identity_and_pdf_render_exit": 0
+  },
+  "raw_probes_preserved": true,
+  "reviewer_production_mutations": false,
+  "source_checks": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/science/manuscript.md",
+      "sha256": "b4acf4ae0772e4a8cc387063a8ec19e56e166fdca85ad26c0b688843bc50d6cf"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/science/BUILD_CONTRACT.md",
+      "sha256": "9a389efd96bf0d22df3320562a9a1728a3d1ac52a20ec26c50262185af822b42"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/science/CLAIM_SOURCE_MAP.md",
+      "sha256": "924a68dbee926a83384647170b67b80ae5340494ddd3d0b42bcd729a47812904"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/science/RESEARCH_NOTES.md",
+      "sha256": "41d2c33da02a9f96e1fb9ba0eeee7f8d4cace4f064b49590c421d6aca31ffd79"
+    }
+  ],
+  "observed_head_at_closeout": "427f7b5dda53e4cee1f1189ae78fdd0ce494ec1c",
+  "artifacts": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/inspect_candidate.py",
+      "bytes": 2582,
+      "sha256": "55037cdb41ea6a10fa1ebaaa5e04e4fea10317eee2be420a786638fb522a945e"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/independent_probes.py",
+      "bytes": 11315,
+      "sha256": "e842a54564a9dd949b1c3afd6c8da9304b00807bd6407481ae495edf4aab6b26"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/supplementary_probes.py",
+      "bytes": 3135,
+      "sha256": "4c80cd2f1e42d042fde5c43787f74db234b75f14a2cdd625a5468d6b07661b79"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/bind_repaired_candidate.py",
+      "bytes": 3198,
+      "sha256": "6c265fe1b10ae996fdf00047609d53cc2fd2229fe4e271b378303b557cf9847e"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/write_assessment.py",
+      "bytes": 7110,
+      "sha256": "660beb492b33a6994f72d598466894777fd079f46f90149fca2954484ccf6d3f"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/REVIEW.md",
+      "bytes": 12625,
+      "sha256": "f50f8cf4bddef4e3b6c3cfaf85b2afad29b3618f1667213ae282323ee68c0f1a"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/identity_check.json",
+      "bytes": 5309,
+      "sha256": "e34089b7a9a10a578a775b617dc601564b131eb7604858ed23e63a6d9e88b8d9"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/commands.json",
+      "bytes": 1862,
+      "sha256": "c0a27822f9695b45668e82518e8bdb549640c20f1bf765fff0b47c2fdc36fbca"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/validate_only.stdout",
+      "bytes": 1158,
+      "sha256": "4c874c610bc5a3d859264e905719e062837a0d91d969ed770a4ccd463c2e82d0"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/validate_only.stderr",
+      "bytes": 379,
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/independent_probes.json",
+      "bytes": 12512,
+      "sha256": "a8cd4854d53e03add293d6a43fd5ea62a1c7f531c7fcdacfec02014f68402056"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/independent_probes.stdout",
+      "bytes": 192,
+      "sha256": "5eeb0c60743952b9dfae2830304f20685356edf3f492d42162c8ed110983b633"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/independent_probes.stderr",
+      "bytes": 379,
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/supplementary_probes.json",
+      "bytes": 2167,
+      "sha256": "3527bb6b011eef445c7f425ab7d799d575589700230c41fb22c58733b31967ab"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/supplementary_probes.stdout",
+      "bytes": 38,
+      "sha256": "aa0ef33473cd10fd7d715851aca06f4bc228396778af589b462ae99588c2ce4a"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/supplementary_probes.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/repaired_candidate_identity.json",
+      "bytes": 5972,
+      "sha256": "07f9490b3f84f015d373769f5b757f53abf2298b9b341458262c6b50dbba9d6d"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/repaired_RESULT_json.diff",
+      "bytes": 1042,
+      "sha256": "e5ebb752d0dd1c41faae6aab43e9a74ba8459ed8b55fe3533501fde08b1e1bc8"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/literal_repair_verification.json",
+      "bytes": 778,
+      "sha256": "08db7327538ec5569f39778a5f005347dba9d7412ba5da2d905a5239a77840d2"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "label": "validate_only",
+    "argv": [
+      "python3",
+      "-B",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/build_product.py",
+      "--validate-only"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "start_utc": "2026-10-25T13:45:31.900272+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "pdfinfo",
+    "argv": [
+      "pdfinfo",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/manuscript.pdf"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "start_utc": "2026-10-25T13:45:38.919063+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "pdf_text",
+    "argv": [
+      "pdftotext",
+      "-layout",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/manuscript.pdf",
+      "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/raw/manuscript_pdf.txt"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "start_utc": "2026-10-25T13:45:38.946462+00:00",
+    "exit_code": 0
+  },
+  {
+    "label": "pdf_pages",
+    "argv": [
+      "pdftoppm",
+      "-png",
+      "-scale-to",
+      "1600",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/manuscript.pdf",
+      "/mnt/extdrive/workdir/htt_open_data/r35_p5_fresh_independent_review/pages/page"
+    ],
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "start_utc": "2026-10-25T13:45:39.358402+00:00",
+    "exit_code": 0
+  }
+]

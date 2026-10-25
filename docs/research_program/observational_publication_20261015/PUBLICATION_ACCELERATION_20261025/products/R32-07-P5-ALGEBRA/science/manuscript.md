@@ -1,0 +1,347 @@
+# Admissible shear–tilt images in LRS Bianchi V and a radiation-history degeneracy
+
+## Abstract
+
+Momentum and energy constraints couple the curvature, shear and tilt of a homogeneous spacetime before evolution is specified. For an oriented, expanding, locally rotationally symmetric Bianchi V slice containing one perfect fluid and a nonnegative cosmological constant, we give a complete parameterization of its instantaneous algebraically admissible region. A rationalized quadratic root yields the allowed rest-density interval while preserving the signed shear, fluid flux and anisotropic stress. The same construction gives a sharp tilt bound at fixed matter density and curvature, finite-tilt shear envelopes, and an ultrarelativistic supremum. We then exhibit two smooth collisionless Bianchi I metric histories with identical full final angular temperature functions and different instantaneous shear. Their endpoint shear amplitudes differ by a factor of (9/5). This exact kinematic example identifies the history information lost by that radiation observation map. The results specify which deterministic images can be formed from the stated geometry and radiation assumptions, and which additional dynamical and observational inputs would connect those images.
+
+## 1. Geometry, orientation and matter variables
+
+Use signature ((-+++)), proper time (t), and the LRS Bianchi V metric
+
+\[
+ ds^2=-c^2dt^2+X(t)^2dz^2
+       +Y(t)^2e^{-2A_0z}(dx^2+dy^2).
+ \tag{1}
+\]
+
+The coordinates and (A_0>0) are dimensionless; (X,Y>0) have length units. The orthonormal normal-frame axes are ordered ((e_x,e_y,e_z)), with (e_z) along the oriented positive (z) direction. Set
+
+\[
+ H_X=\dot X/X,\qquad H_Y=\dot Y/Y,\qquad
+ H=(H_X+2H_Y)/3>0,\qquad s=(H_X-H_Y)/3,
+ \qquad z_s=s/H.
+ \tag{2}
+\]
+
+Here (H,s) have inverse-time units. Mean expansion does not require every directional expansion rate to be positive. In particular, (H_X=H(1+2z_s)) may be negative. The shear and spatial curvature are
+
+\[
+ \frac{\sigma_{ij}}{H}=z_s\operatorname{diag}(-1,-1,2),
+ \qquad \Sigma^2=\frac{\sigma:\sigma}{6H^2}=z_s^2,
+ \qquad {}^{(3)}R=-6(A_0/X)^2,
+ \qquad K=\left(\frac{cA_0}{XH}\right)^2>0.
+ \tag{3}
+\]
+
+The curvature identity follows by setting (r=Xz) on a fixed-time slice: its warped spatial metric has sectional curvature (-(A_0/X)^2). The normal congruence is hypersurface orthogonal, so its vorticity vanishes. These statements refer to that congruence; the matter congruence is a separate object. [S1, S2, S4]
+
+The perfect fluid has rest energy density (arepsilonge0), pressure (p=warepsilon), and signed velocity (ceta e_z), where (|eta|<1). Throughout the Bianchi V construction take
+
+\[
+ 0\le w\le1,\qquad
+ \gamma=(1-\beta^2)^{-1/2},\qquad
+ \Omega=\frac{8\pi G\varepsilon}{3c^2H^2},\qquad
+ \Omega_\Lambda=\frac{\Lambda c^2}{3H^2}\ge0.
+ \tag{4}
+\]
+
+Thus (Omega) normalizes **rest-frame energy** using the **normal-frame expansion rate**. It is not the fluid energy density measured by the normal observer. No additional matter component is included. Negative cosmological constant, (w) outside this interval, and multiple streams require a different domain calculation.
+
+## 2. A complete instantaneous constraint region
+
+The normal energy parameter is
+
+\[
+ \Omega_n=\Omega[(1+w)\gamma^2-w]
+         =\Omega\frac{1+w\beta^2}{1-\beta^2}.
+ \tag{5}
+\]
+
+For the orientation in Section 1 the momentum and Hamiltonian constraints read
+
+\[
+ 2\sqrt K\,z_s=\frac{(1+w)\Omega\beta}{1-\beta^2},
+ \qquad
+ 1=K+z_s^2+\Omega_n+\Omega_\Lambda.
+ \tag{6}
+\]
+
+The sign in the first equation is retained. In the stated coordinates, the retained metric calculation gives (G_{0z}=-6A_0s) and (T_{0z}=-cX(arepsilon+p)gamma^2eta). Their Einstein equation gives (6(A_0/X)(s/c)=(8pi G/c^4)(arepsilon+p)gamma^2eta), which fixes the factor two in (6). Squaring yields
+
+\[
+ \boxed{\displaystyle
+ \Sigma^2=\frac{[(1+w)\Omega]^2\beta^2}
+                    {4K(1-\beta^2)^2}.}
+ \tag{7}
+\]
+
+Equations (5)–(7) are the retained LRS single-fluid relations [S1, S2]. An admissible image must satisfy their joint constraints; separately chosen bounds on the variables need not describe a realizable tuple.
+
+For fixed (K,eta,w), define
+
+\[
+ A=\frac{(1+w)^2\beta^2}{4K(1-\beta^2)^2},\qquad
+ B=\frac{1+w\beta^2}{1-\beta^2},\qquad D=1-K.
+ \tag{8}
+\]
+
+**Proposition 1.** There are no admissible tuples for (K>1). For (0<Kle1), the entire algebraically admissible set is parameterized by
+
+\[
+ \begin{split}
+ \Omega_{\max}&=\frac{2D}{B+\sqrt{B^2+4AD}},
+ &\Omega&=u\Omega_{\max},\quad 0\le u\le1,\\
+ z_s&=\frac{(1+w)\Omega\beta}{2\sqrt K(1-\beta^2)},
+ &\Sigma^2&=A\Omega^2,\\
+ \Omega_n&=B\Omega,
+ &\Omega_\Lambda&=D-B\Omega-A\Omega^2.
+ \end{split}
+ \tag{9}
+\]
+
+*Proof.* Substitution in (6) gives (AOmega^2+BOmegale D). Here (Age0) and (B>0), so (f(Omega)=AOmega^2+BOmega) is strictly increasing for (Omegage0). For (D<0) no nonnegative (Omega) satisfies the inequality. For (Dge0), the unique nonnegative solution of (f(Omega)=D) is the rationalized root in (9). Its denominator is positive, including (A=0). Monotonicity gives exactly (0leOmegaleOmega_{max}). Conversely (9) supplies a nonnegative (Omega_Lambda), the signed momentum relation, and the Hamiltonian relation for every parameter value in that interval. This proves necessary and sufficient instantaneous constraint compatibility in the stipulated sector.
+
+The expression remains regular at (eta=0), where (A=0), (B=1), (Omega_{max}=1-K), and (z_s=0). At (K=1), (Omega_{max}=0). If (Omega=0), fluid stress and flux vanish and (6) forces (z_s=0); the coordinate label (eta) then has no physical matter velocity to describe. It is recorded as undefined. The shear-free result at (eta=0) belongs to this (K>0) LRS single-fluid constraint branch.
+
+The parameterization also gives an instantaneous metric witness. Choose any (H>0), (A_0>0), and (Y>0), then take
+
+\[
+ \begin{gathered}
+ X=\frac{cA_0}{H\sqrt K},\quad
+ \dot X=H(1+2z_s)X,\quad \dot Y=H(1-z_s)Y,\\
+ \varepsilon=\frac{3c^2H^2\Omega}{8\pi G},\quad
+ p=w\varepsilon,\quad \Lambda=\frac{3H^2\Omega_\Lambda}{c^2}.
+ \end{gathered}
+ \tag{10}
+\]
+
+These values satisfy the two constraints on the specified slice. A time development would require the remaining Einstein and matter equations, with compatible initial and boundary conditions. The free chart parameters in (9) are not assumed to remain constant during such a development.
+
+## 3. The joint tensor image
+
+Let (arepsilon_{mathrm{crit}}=3c^2H^2/(8pi G)), and define
+
+\[
+ E_{\mathrm{tilt}}=\frac{(1+w)\Omega\beta^2}{1-\beta^2},\qquad
+ f_z=\frac{(1+w)\Omega\beta}{1-\beta^2}=2\sqrt K\,z_s.
+ \tag{11}
+\]
+
+Here (f_z) is the normal-frame energy-flux component divided by (carepsilon_{mathrm{crit}}). Equivalently, it is momentum density divided by (arepsilon_{mathrm{crit}}/c). The fluid's full normal-frame carrier is
+
+\[
+ \begin{split}
+ \varepsilon_n/\varepsilon_{\mathrm{crit}}&=\Omega+E_{\mathrm{tilt}}=\Omega_n,
+ & p_n/\varepsilon_{\mathrm{crit}}&=w\Omega+E_{\mathrm{tilt}}/3,\\
+ \boldsymbol f&=(0,0,f_z),
+ &\boldsymbol\beta&=(0,0,\beta),\\
+ \pi_{ij}/\varepsilon_{\mathrm{crit}}&=
+ E_{\mathrm{tilt}}\operatorname{diag}(-1/3,-1/3,2/3),
+ &\sigma_{ij}/H&=z_s\operatorname{diag}(-1,-1,2).
+ \end{split}
+ \tag{12}
+\]
+
+The isotropic pressure and STF stress in (12) refer to the fluid; the cosmological constant is kept separately. Both tensors have vanishing trace, with (|sigma/H|_F^2=6Sigma^2) and (|pi/arepsilon_{mathrm{crit}}|_F^2=2E_{mathrm{tilt}}^2/3). The same axis and the same parameter tuple generate every entry.
+
+At fixed (K,eta,w), varying (u) in (9) yields the exact images
+
+\[
+ \Sigma^2\in[0,A\Omega_{\max}^2],\qquad
+ \Omega_n\in[0,B\Omega_{\max}],\qquad
+ \Omega_\Lambda\in[0,1-K].
+ \tag{13}
+\]
+
+For (eta>0), (z_sin[0,sqrt AOmega_{max}]); for (eta<0) the interval is ([-sqrt AOmega_{max},0]). These are projections of one joint curve. Its cosmological-constant contribution decreases strictly with (Omega), and the endpoint (u=1) has (Omega_Lambda=0). Combining arbitrary endpoints from the separate intervals would lose this dependence.
+
+Under (etamapsto-eta), the signed shear and flux reverse while (Sigma^2), density, pressure and anisotropic stress remain unchanged. A squared shear image therefore discards orientation even in this simple sector. The normal congruence still has exactly zero vorticity; matter-frame vorticity has not been determined by the instantaneous chart.
+
+Figure 1 displays (Omega_{max}) and its signed boundary shear for (w=0,1/3), (0.02le Kle0.98) and (-0.9leetale0.9). Figure 2 retains the coupled image curves and their signed mirror branches. The deterministic parameter grids carry no probability or population weighting. Their tabulated full tuples retain the vectors and tensors in (12).
+
+## 4. Tilt and shear bounds
+
+### 4.1 Fixed matter and curvature
+
+For fixed (K>0,Omega>0,w), with (Omega_Lambdage0) free, put
+
+\[
+ C=(1+w)\Omega,\quad a=C^2/(4K),\quad b=C+a,\quad
+ d=1-K-\Omega,\quad t=\sinh^2\chi=\frac{\beta^2}{1-\beta^2}.
+ \tag{14}
+\]
+
+Equation (6) becomes
+
+\[
+ \Omega_n=\Omega+Ct,\qquad \Sigma^2=at(1+t),\qquad
+ at^2+bt\le d.
+ \tag{15}
+\]
+
+**Proposition 2.** The fixed-matter domain is empty when (d<0). For (dge0), its exact speed interval is
+
+\[
+ 0\le t\le t_{\max}=\frac{2d}{b+\sqrt{b^2+4ad}},
+ \qquad
+ |\beta|\le\sqrt{\frac{t_{\max}}{1+t_{\max}}}.
+ \tag{16}
+\]
+
+*Proof.* Both (a) and (b) are positive. The left side of (15) is strictly increasing on (tge0), so the same monotone-root argument as in Proposition 1 applies. The transformation (tmapstosqrt{t/(1+t)}) is increasing. At the upper endpoint (Omega_Lambda=0), while (d=0) permits only (eta=0). If (Omega_Lambda) is fixed as well, replace (d) by (1-K-Omega-Omega_Lambda) and impose equality in (15): when this value is nonnegative it selects a unique (|eta|). The vacuum case uses the separate rule following (9).
+
+Figure 3 shows (16) for (Omega=0.1,0.3,0.6) and (w=0,1/3). Regions with (K+Omega>1) are empty and have no numerical speed value. The horizontal display limit (|eta|=0.9) is a plotting-domain choice, not a replacement for the exact bound.
+
+A related necessary implication is useful when a common-frame shear ceiling and matter floor are independently available. For (w>-1), (OmegageOmega_{min}>0), (Kle K_{max}), and (|z_s|leSigma_{max}), (6) gives
+
+\[
+ \frac{|\beta|}{1-\beta^2}\le a_0,
+ \qquad a_0=\frac{2\sqrt{K_{\max}}\Sigma_{\max}}
+                         {(1+w)\Omega_{\min}},
+ \qquad
+ |\beta|\le\frac{2a_0}{1+\sqrt{1+4a_0^2}}.
+ \tag{17}
+\]
+
+This retained conservative implication [S1] presupposes a nonempty compatible joint domain. A radiation quadrupole does not provide (Sigma_{max}) without a specified shear-history response.
+
+### 4.2 Finite-tilt and ultrarelativistic envelopes
+
+For (Omega>0), write (v=|eta|) and
+
+\[
+ r=\frac{|\boldsymbol f|}{\Omega_n}
+   =\frac{(1+w)v}{1+wv^2}.
+ \tag{18}
+\]
+
+For (0le wle1) and (0le v<1), (0le r<1), since
+
+\[
+ 1+wv^2-(1+w)v=(1-v)(1-wv)>0.
+ \tag{19}
+\]
+
+The momentum and Hamiltonian constraints consequently imply
+
+\[
+ 2\sqrt K\,|z_s|\le\Omega_n\le1-K-z_s^2,
+ \qquad
+ |z_s|\le1-\sqrt K,
+ \qquad \Sigma^2\le(1-\sqrt K)^2.
+ \tag{20}
+\]
+
+At (0<K<1), finite timelike matter with nonzero shear obeys a strict inequality in the last bound. Its boundary is the supremum approached as (v	o1), (Omega	o0), and (Omega_n) remains finite. For example, take (Omega_Lambda=0), choose the positive solution in (21) below, and set (Omega=Omega_n/B). Then (r	o1), (|z_s|	o1-sqrt K), (Omega_n	o2sqrt K(1-sqrt K)), and (B	oinfty). This limiting sequence is not a finite-(eta) vacuum state; setting (Omega=0) first gives zero fluid energy and zero shear. At (K=1) the zero-shear vacuum endpoint trivially attains (20).
+
+For a compact support (vle v_{max}<1), the sharper maximum at fixed (K,w) occurs at (v=v_{max}) and (Omega_Lambda=0). Indeed,
+
+\[
+ \frac{dr}{dv}=\frac{(1+w)(1-wv^2)}{(1+wv^2)^2}>0,
+ \qquad
+ z_{\max}=\frac{r(1-K)}{\sqrt{K+r^2(1-K)}+\sqrt K},
+ \qquad \Sigma^2_{\max,\mathrm{compact}}=z_{\max}^2.
+ \tag{21}
+\]
+
+The root follows from (z^2+2sqrt K z/r=1-K) for (r>0), with continuous value (z_{max}=0) at (r=0). It equals (sqrt A,Omega_{max}). At fixed (K), increasing (r) increases the root. Also (partial r/partial w=v(1-v^2)/(1+wv^2)^2ge0), so the envelope over all (0le wle1) occurs at (w=1). Figure 4 compares compact envelopes at (v_{max}=0.9) with the strict ultrarelativistic supremum in (20).
+
+## 5. Identical radiation and different shear histories
+
+The previous sections concern instantaneous Bianchi V constraints. To examine information loss in a radiation observable, use the separately specified collisionless kinematic Bianchi I metric class from [S3]:
+
+\[
+ ds^2=-c^2dt^2+a(t)^2\sum_i e^{2b_i(t)}(dx^i)^2,
+ \qquad \sum_i b_i=0.
+ \tag{22}
+\]
+
+Let (t_i=0), (t_f=Delta>0), (	au=t/Delta), (a(t)=a_i e^{t/Delta}), and (H=1/Delta). Initially the normal-frame radiation is an isotropic Planck distribution at temperature (T_i), and (b_i(0)=0). There are no subsequent collisions, emission terms or observer boosts. Define the dimensionless STF tensor
+
+\[
+ L=\epsilon\operatorname{diag}(-1,-1,2),\qquad
+ \epsilon=\frac1{50},\qquad \alpha=\frac45,
+ \tag{23}
+\]
+
+and two deformation histories (B=operatorname{diag}(b_i)):
+
+\[
+ B_A(\tau)=\tau L,\qquad
+ B_B(\tau)=[(1-\alpha)\tau+\alpha\tau^2]L.
+ \tag{24}
+\]
+
+They are smooth Lorentzian metrics with positive directional scale factors and common positive mean expansion. Their orthonormal shear tensors are
+
+\[
+ \frac{\sigma_A}{H}=L,\qquad
+ \frac{\sigma_B}{H}=(1-\alpha+2\alpha\tau)L.
+ \tag{25}
+\]
+
+Both have (B(0)=0), (B(1)=L), and (int_0^Deltasigma,dt=L), although (B_A(1/2)=L/2) and (B_B(1/2)=3L/10). At the final time,
+
+\[
+ \sigma_B(t_f)=\frac95\sigma_A(t_f),\qquad
+ \Sigma_A^2=\frac1{2500},\qquad
+ \Sigma_B^2=\frac{81}{62500},\qquad
+ \frac{\Sigma_B^2}{\Sigma_A^2}=\frac{81}{25}.
+ \tag{26}
+\]
+
+These histories have been specified kinematically. No Einstein equation or perfect-fluid matter evolution is assumed for them.
+
+**Proposition 3.** The two histories give exactly the same full final angular temperature function, despite their different instantaneous shear:
+
+\[
+ \mathcal O[B,a](\boldsymbol n)
+ =\frac{T(\boldsymbol n,t_f)}{T_0}
+ =\left[\sum_i e^{2b_i(t_f)}n_i^2\right]^{-1/2}
+ =\left[e^{-2\epsilon}(1-\mu^2)+e^{4\epsilon}\mu^2\right]^{-1/2},
+ \quad T_0=T_i a_i/a(t_f),\quad \mu=n_z.
+ \tag{27}
+\]
+
+*Proof.* Spatial translation symmetry conserves each covariant spatial photon momentum. A photon with final normal-frame energy (E) and direction (oldsymbol n) has spatial momenta proportional to (a_f e^{b_i(t_f)}E n_i). At emission (b_i=0), so
+
+\[
+ \frac{E_i}{E}=\frac{a_f}{a_i}
+           \left[\sum_i e^{2b_i(t_f)}n_i^2\right]^{1/2}.
+ \tag{28}
+\]
+
+Liouville transport preserves the phase-space occupation function of the initial Planck distribution. Its energy rescaling therefore gives (27) in each final direction. Both histories share their initial state, (a_f/a_i), and (B(t_f)), so the result agrees for every unit vector (oldsymbol n). This is equality of the entire temperature function, without a small-anisotropy or quadrupole truncation. As direct checks, (T/T_0=e^epsilon) in the equatorial plane and (e^{-2epsilon}) on the symmetry axis.
+
+Figure 5 displays the different shear and deformation histories together with their coincident final temperature functions. The analytic equality establishes noninjectivity of the specified kinematic observation map. It does not supply an equivalence between two Einstein-perfect-fluid Bianchi V solutions. That stronger problem needs a declared dynamical solution family and its radiation response.
+
+The information needed to distinguish this pair can also be stated exactly. Their final full-tensor separation is
+
+\[
+ \left\|\frac{\sigma_B-\sigma_A}{H}\right\|_F
+       =\alpha\sqrt6\,\epsilon.
+ \tag{29}
+\]
+
+If the two predictions are surrounded by equal closed deterministic Frobenius-error balls of radius (r_{mathrm{err}}), the balls are disjoint precisely when
+
+\[
+ 2r_{\mathrm{err}}<\alpha\sqrt6\,\epsilon.
+ \tag{30}
+\]
+
+At equality they touch; above it their intersection is nonempty. Figure 6 displays this geometric threshold. No probability law, confidence level or statistical power is assigned to these error balls. An intermediate-time temperature would also distinguish the pair because their deformation tensors then differ, but no such measurement is supplied here.
+
+## 6. Physical interpretation and scope
+
+The LRS Bianchi V calculation shows how curvature and momentum couple a signed shear to a rest-density and tilt state. Its allowed set is a joint instantaneous constraint image. The Bianchi I example shows that even a complete final temperature pattern can leave instantaneous shear nonunique under a specified kinematic radiation map. Connecting a measured sky to the Bianchi V bounds therefore requires a source-matched history response, together with its matter, propagation and observer assumptions.
+
+All plotted images and error bounds in this note are deterministic. There is no empirical sky, mask, covariance, null ensemble, parameter probability law, likelihood or posterior. The only radiation transfer used is the explicit collisionless map (27); no native solver, external transfer calibration, mode atlas or polarization map is used. The calculation establishes neither a Bianchi family identification nor an all-(m) temperature/polarization prediction for the Bianchi V sector. An external atlas is unnecessary for the conditional algebraic claims proved here, while stronger history and identification claims retain their own missing inputs.
+
+The tensors in (12) are defined carriers, and (Sigma^2) is a geometric scalar within the stated normal frame. A signed (x_C) requires a specified same-frame comparator with explicit energy and curvature subtraction. A normalized (Q) score requires its anchor and denominator; (F) requires a support measure and appropriate ceiling; (Pi) requires a joint probability law; and (G_F) requires supported depth-dependent (F) reports and their dependence. Those inputs are absent, so these quantities are not evaluated. The radiation quadrupole tensor, when mentioned as (Q_T), is distinct from the normalized (Q) score. Normal vorticity is exactly zero by hypersurface orthogonality; matter-frame vorticity remains undetermined.
+
+## Sources and reproducibility
+
+S1 is the retained `physical_derivations.md`, P9–P11; S2 is the retained `independent_physical_review.md`, “Metric-level LRS V check and CMB scope”; S3 is the retained `legacy_reconstruction_chapter.md`, “What the CMB quadrupole remembers” and “A conditional Bianchi-V consistency curve”; S4 is the retained `mathematical_recovery.md`, “Congruence, curvature contraction, and the signed comparator.” Their paths and SHA-256 identities are given in `science/CLAIM_SOURCE_MAP.md`. The metric identities and exact radiation map are reused from these sources; Propositions 1–3 include the proofs needed for this note. Historical finite checks remain historical supporting evidence and are not represented as newly executed symbolic or four-axis verification.
+
+The accompanying consumer verifies the frozen source identities, evaluates the explicit algebraic formulas, and writes full tensor tuples and plotting arrays. Tables and figures use binary64 and the exact finite grids stated in `science/BUILD_CONTRACT.md`. Analytic proofs establish the full-domain results; generated residual checks establish faithful evaluation on the declared grids. No differential equation is numerically integrated.
