@@ -1,0 +1,54 @@
+{
+  "schema": "htt.independent_scientific_candidate_review/1",
+  "task_id": "R32-01-QO-METHODS",
+  "created_utc": "2026-10-25T12:17:54.510881+00:00",
+  "decision": "SCOPED_PASS",
+  "acceptance_met": true,
+  "acceptance_scope": "qo_methods_manuscript",
+  "qualified_products_proposed": [
+    "qo_methods_manuscript"
+  ],
+  "promotes_original_acceptance": false,
+  "original42_acceptance_met": false,
+  "original42_acceptance_effect": "none",
+  "controller_packet_status": "PENDING",
+  "controller_packet_id": null,
+  "controller_dispatch_claimed": false,
+  "review_mode": "parallel read-only preparation; actual controller binding pending",
+  "reviewer": {
+    "agent_task": "/root/r35_qo_fresh_independent_review",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "authored_candidate": false
+  },
+  "candidate": {
+    "result_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-01-QO-METHODS/report/RESULT.json",
+    "result_sha256": "8ee4f7aa7cfa78fe785f296969727b08c3279d49b66f0c2e2e78c91533be567f",
+    "pdf_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-01-QO-METHODS/report/main.pdf",
+    "pdf_sha256": "c570b5709b22bdda8481a9209bedc24b58d0fe0aafeaa932f94ffb559d5e1471",
+    "tex_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-01-QO-METHODS/report/main.tex",
+    "tex_sha256": "e7bf9e5b7fbfccf7f168b93350c8b4b9c9b797baf8e42e81ec580d86a19198c4",
+    "manuscript_sha256": "de41872977f19f5040dc21a6bda9c3b7a84d4f05ed837c53f3b539b5b0353ac0",
+    "build_contract_sha256": "67c8e7d7b63a067fc65f9735ad4a90e1393e201b7c81eb0e4356be760d539a03",
+    "research_note_sha256": "badc957d7e714306db30ba163cab350669f68106aa9e8e3ca38410f9aec4716f"
+  },
+  "findings": [],
+  "nonblocking_comments": [
+    {
+      "severity": "LOW",
+      "location": "report/main.tex:185 / Figure 1",
+      "comment": "An explicit z_i=v_i/(o sqrt(m_i)) definition would improve figure self-containment; theorem and proof already determine the normalization."
+    }
+  ],
+  "validation_paths": [
+    "/mnt/extdrive/workdir/htt_open_data/r35_qo_fresh_independent_review/probe_result.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_qo_fresh_independent_review/probe.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r35_qo_fresh_independent_review/REVIEW.md"
+  ],
+  "raw_path": "/mnt/extdrive/workdir/htt_open_data/r35_qo_fresh_independent_review/RAW.json",
+  "claim_ceiling": "C0 deterministic tensor theorem and conditional same-congruence local optical methods; no sky/null/physical-family result",
+  "cas_admission_effect": "none; no four-axis CAS claim",
+  "publication_decision": "NOT_MADE",
+  "next_checkpoint": "Bind unchanged candidate to actual controller review packet and actual ACK/GO; do not fabricate dispatch."
+}

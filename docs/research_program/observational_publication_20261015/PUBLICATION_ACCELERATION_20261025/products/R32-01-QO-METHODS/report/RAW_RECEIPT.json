@@ -1,0 +1,56 @@
+{
+  "status": "CANDIDATE_BUILT_PENDING_INDEPENDENT_REVIEW",
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "medium",
+  "observed_runtime": "UNKNOWN",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "reproduce.py",
+        "--build"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-01-QO-METHODS/report",
+      "started_utc": "2026-10-25T12:02:05.460352+00:00",
+      "duration_seconds": 6.074854464968666,
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "latexmk",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "main.tex"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-01-QO-METHODS/report",
+      "started_utc": "2026-10-25T12:02:09.532360+00:00",
+      "duration_seconds": 1.7091257879510522,
+      "exit_code": 0,
+      "output": "raw/latexmk.stdout"
+    }
+  ],
+  "initial_failure": "raw/consumer_first_failure.stdout: Matplotlib unbraced mathcal formatting; corrected without changing scientific content",
+  "layout_validation": "raw/content_layout_checks.json and representative PNGs",
+  "source_preservation": "41 displays literal and 188 inline formulas, apart from equivalent proof-square glyph",
+  "warnings": [
+    "Package nameref Warning: The definition of \\label has changed! "
+  ],
+  "RESULT": {
+    "sha256": "8ee4f7aa7cfa78fe785f296969727b08c3279d49b66f0c2e2e78c91533be567f",
+    "bytes": 7433
+  },
+  "main.pdf": {
+    "sha256": "c570b5709b22bdda8481a9209bedc24b58d0fe0aafeaa932f94ffb559d5e1471",
+    "bytes": 509807
+  },
+  "main.tex": {
+    "sha256": "e7bf9e5b7fbfccf7f168b93350c8b4b9c9b797baf8e42e81ec580d86a19198c4",
+    "bytes": 28949
+  },
+  "reproduce.py": {
+    "sha256": "11119dd7cd2f8a9fc826f2cbbacfa93749583503d3f820d5b772c5b75c326ff6",
+    "bytes": 17145
+  },
+  "writer_released": true
+}

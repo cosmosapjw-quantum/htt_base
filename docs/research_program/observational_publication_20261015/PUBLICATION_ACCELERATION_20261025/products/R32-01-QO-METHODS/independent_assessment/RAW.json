@@ -1,0 +1,60 @@
+{
+  "schema": "htt.independent_readonly_review_raw/1",
+  "created_utc": "2026-10-25T12:17:54.510881+00:00",
+  "scope": "parallel read-only scientific review preparation",
+  "controller_review_packet": "PENDING",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "probe_command": {
+    "argv": [
+      "python3",
+      "/mnt/extdrive/workdir/htt_open_data/r35_qo_fresh_independent_review/independent_probe.py"
+    ],
+    "started_utc": "2026-10-25T12:15:42.136550+00:00",
+    "body_wall_seconds": 0.02703060209751129,
+    "tool_wall_seconds": 0.264515959,
+    "exit_code": 0,
+    "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_qo_fresh_independent_review/probe.stdout",
+    "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_qo_fresh_independent_review/probe.stderr"
+  },
+  "other_observed_commands": {
+    "git_and_path_inventory_tool_wall_seconds": 0.188939579,
+    "read_only_text_commands": "all returned exit 0 except the no-hit memory search and initial wrong relative products path; outputs preserved in tool history",
+    "review_pdfinfo": "exit 0, 14 pages, 509807 bytes",
+    "external_read_calls_tool_wall_seconds": [
+      2.9,
+      2.1,
+      2.2
+    ]
+  },
+  "no_reexecution": [
+    "historical quadrature",
+    "retained consumer",
+    "latex build",
+    "old evidence graph",
+    "native solver",
+    "ODE",
+    "CAS"
+  ],
+  "preserved_prior_failure": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-01-QO-METHODS/report/raw/consumer_first_failure.stdout",
+  "reviewer_first_scientific_failure": null,
+  "transport_or_lookup_issues": [
+    "No relevant memory search match",
+    "Initial products path assumed repo-relative; actual path resolved under publication root",
+    "Heinesen ar5iv inaccessible, arxiv HTML retrieved successfully"
+  ],
+  "visual_pages": [
+    1,
+    3,
+    6,
+    7,
+    12,
+    14
+  ],
+  "artifact_paths": {
+    "probe": "/mnt/extdrive/workdir/htt_open_data/r35_qo_fresh_independent_review/probe_result.json",
+    "note": "/mnt/extdrive/workdir/htt_open_data/r35_qo_fresh_independent_review/REVIEW.md"
+  },
+  "first_failure_policy": "No candidate or prior evidence modified or discarded; no probe failure occurred."
+}

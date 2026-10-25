@@ -1,0 +1,105 @@
+{
+  "schema": "htt.scientific_execute_receipt/1",
+  "packet_id": "336da055d13b09becf16c2600dbc305d646af22fbe33643002ada390ea11daae",
+  "task_id": "R32-01-QO-METHODS",
+  "agent_id": "/root/rc_336da055d13b09be",
+  "input_identity": "sha256:e73b57ea29626e3f12420076a432f3a91472dd48bd2e4ad534900c9682e1359f",
+  "campaign_identity": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "phase": "execute",
+  "attempt": 1,
+  "outcome": "success",
+  "candidate_identity": "sha256:8ee4f7aa7cfa78fe785f296969727b08c3279d49b66f0c2e2e78c91533be567f",
+  "candidate_path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-01-QO-METHODS/report/RESULT.json",
+  "candidate_product_proposal": ["qo_methods_manuscript"],
+  "acceptance_met": false,
+  "acceptance_status": "PENDING_FRESH_INDEPENDENT_REVIEW",
+  "original42_acceptance_met": false,
+  "original42_effect": "none",
+  "scientific_author": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "scope": "scientific framing, complete proofs, manuscript prose, source comparison, lower-tier build contract and actual-candidate binding"
+  },
+  "build_contributor": {
+    "agent_id": "/root/r35_qo_prescribed_build",
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "medium",
+    "observed_runtime": "UNKNOWN",
+    "scope": "prescribed report consumer, figures, table, bibliography, RevTeX and build",
+    "raw_receipt": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-01-QO-METHODS/report/RAW_RECEIPT.json",
+    "raw_receipt_sha256": "2886d23058cca2a60de1ddfb75e2d7a2431e722dabff635e2f61b931621dd4f8"
+  },
+  "science_sources": {
+    "MANUSCRIPT.md": "de41872977f19f5040dc21a6bda9c3b7a84d4f05ed837c53f3b539b5b0353ac0",
+    "BUILD_CONTRACT.md": "67c8e7d7b63a067fc65f9735ad4a90e1393e201b7c81eb0e4356be760d539a03",
+    "RESEARCH_NOTE.md": "badc957d7e714306db30ba163cab350669f68106aa9e8e3ca38410f9aec4716f"
+  },
+  "actual_built_paper": {
+    "pages": 14,
+    "figures": 3,
+    "display_equations": 41,
+    "table_rows": 5,
+    "retained_response_rows": 45,
+    "main_pdf_sha256": "c570b5709b22bdda8481a9209bedc24b58d0fe0aafeaa932f94ffb559d5e1471",
+    "main_tex_sha256": "e7bf9e5b7fbfccf7f168b93350c8b4b9c9b797baf8e42e81ec580d86a19198c4",
+    "consumer_sha256": "11119dd7cd2f8a9fc826f2cbbacfa93749583503d3f820d5b772c5b75c326ff6"
+  },
+  "observed_build_commands": [
+    {
+      "command": "python3 reproduce.py --build",
+      "started_utc": "2026-10-25T12:02:05.460352+00:00",
+      "duration_seconds": 6.074854464968666,
+      "exit_code": 0,
+      "receipt": "report/raw/consumer_command.json"
+    },
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex",
+      "started_utc": "2026-10-25T12:02:09.532360+00:00",
+      "duration_seconds": 1.7091257879510522,
+      "exit_code": 0,
+      "receipt": "report/raw/commands.json"
+    }
+  ],
+  "author_candidate_consumption": {
+    "read_actual_result_raw_receipt_checks_table_bibliography": true,
+    "all_report_declared_input_and_artifact_hashes_match": true,
+    "hash_mismatches": [],
+    "all_41_display_contents_identical_to_frozen_manuscript": true,
+    "builder_inline_math_preservation_count": 188,
+    "viewed_actual_rendered_pages": [1, 3, 6, 7, 12, 14],
+    "finding": "No scientific-content or visible-layout defect found in this author binding pass. This is not independent review."
+  },
+  "validation_evidence": [
+    "report/generated/checks.json: all 24 prescribed checks pass, including analytic unit witness, reflection, contraction and all 45 finite monotone retained response rows and bounds.",
+    "Author read-only SHA-256 cross-check of every input and artifact declared in report/RESULT.json: no mismatches.",
+    "Author read-only comparison of 41 Markdown display contents against 41 TeX equation environments: exact equality.",
+    "Actual report/raw/layout_page_01.png, 03, 06, 07, 12 and 14 inspected: title, complete proof, all three figures, table and bibliography visible.",
+    "Complete proof and exact equation-to-source map are retained in science/MANUSCRIPT.md and science/RESEARCH_NOTE.md."
+  ],
+  "preserved_failures_and_corrections": [
+    "Scientific author initial apply_patch invocation interpreted LaTeX escapes and failed before file creation; a raw-string invocation wrote the intended source.",
+    "A subsequent authoring call had a JavaScript template quoting syntax error and made no filesystem mutation.",
+    "Builder's first consumer run exited 1 from Matplotlib unbraced mathcal formatting; report/raw/consumer_first_failure_command.json and consumer_first_failure.stdout preserve it. The formatting repair changed no scientific content.",
+    "Author's first display comparison searched TeX for Markdown display delimiters and returned zero candidate displays. Correcting the read-only extractor to equation environments gave 41/41 literal matches.",
+    "An initial representative-page lookup omitted the filename zero padding; the existing layout_page_01.png was subsequently inspected."
+  ],
+  "nonblocking_warnings": [
+    "Package nameref reports changed label definition; references and citations resolve and builder reports no overfull boxes.",
+    "Matplotlib Axes3D is unavailable; this report uses no 3D projection."
+  ],
+  "scientific_scope": {
+    "claim_tier": "C0 deterministic/conditional",
+    "transfer_source": "none",
+    "statistical_law": "not supplied; no empirical probability or significance claim",
+    "undefined_sectors": ["unspecified physical comparator sectors", "F without declared occupancy policy/measure", "Pi without joint law", "G_F without registered depth functional"],
+    "optical_endpoint_claim": "asymptotic approach to both algebraic endpoints; no finite-amplitude exact saturation claim",
+    "new_corroborating_derivations": ["equation 35 finite determinant sign margin", "equation 36 quadrupole remainder", "equation 37 asymptotic optical extremizer family"],
+    "no_native_solver_or_ode": true,
+    "no_historical_cas_replay": true,
+    "no_raw_catalogue_or_map_rerun": true,
+    "no_git_or_controller_state_mutation_by_author": true
+  },
+  "writer_released": true,
+  "next_action": "Host records this exact execute candidate, obtains and actually dispatches the fresh independent review packet; only that review may qualify qo_methods_manuscript."
+}
