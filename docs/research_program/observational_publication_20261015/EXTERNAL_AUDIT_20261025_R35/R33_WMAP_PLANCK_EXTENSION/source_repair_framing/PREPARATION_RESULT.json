@@ -1,0 +1,126 @@
+{
+  "status": "SOURCE_DECISION_PREPARED_WAIT_REAL_RESEARCH_PACKET_ACK_GO",
+  "task_id": "R33-CMB-WMAP-PLANCK-F2-EXTENSION",
+  "scientific_input_sha256": "d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1",
+  "agent_id": "/root/r33_quotient_failure_framing",
+  "phase": "source_preparation_noncontroller",
+  "actual_controller_packet_received": false,
+  "controller_ack": false,
+  "controller_go": false,
+  "controller_result": false,
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "source_decision": "ONE_BOUNDED_STABLE_COMPLEMENT_REPAIR_JUSTIFIED_CAUSE_NOT_ESTABLISHED",
+  "scientific_status": "HOLD",
+  "scientific_admission": "NONE",
+  "original_L03_acceptance": "HOLD",
+  "actual_failure_cause": "UNMEASURED_COMPONENT_RESIDUALS_NOT_RETAINED",
+  "confirmed_source_defect": "GATE_PRECEDES_RESIDUAL_AND_RESULT_SERIALIZATION",
+  "algorithmic_hazard": "SUBTRACTIVE_PROJECTOR_AND_SMALL_PROJECTED_DENOMINATOR",
+  "repair_plan": {
+    "producer_domain": "IEEE_BINARY64_UNCHANGED_FINITE_F2",
+    "quotient": "G=U*S*Vt; Z=U[:,r:]; z=Z.T*a; rho=norm(z); d=rho/norm(a); w=Z*(z/rho)/rho",
+    "confounding": "Reuse normalized retained SVD: b=V_r*S_r^-1*U_r.T*a; c=b/column_scales; no new rank cutoff",
+    "diagnostics": "Persist factors, matrices, every residual component and full24 arrays before unchanged gates",
+    "producer_repaired_invocations_max": 1,
+    "producer_wall_seconds_max": 180,
+    "independent_checker_reserved_invocations_max": 1,
+    "checker_wall_seconds_max": 180,
+    "rss_bytes_max": 1073741824,
+    "threads": 1,
+    "new_precision_policy": false,
+    "threshold_changes": false,
+    "new_model": false,
+    "new_rows": false,
+    "exact_old_seven_rows": true,
+    "all_WMAP_samples": true,
+    "WMAP_branches": 2,
+    "paired_conventions": 12,
+    "full24_controls": true,
+    "on_second_failure": "HOLD_WITH_EXACT_DIAGNOSTICS_NO_RETRY",
+    "activation": "REAL_CONTROLLER_PACKET_ACK_GO_AND_REFRESHED_EXISTING_ACCOUNT_REQUIRED"
+  },
+  "preparation_execution": {
+    "numerical_calls": 0,
+    "scientific_imports": 0,
+    "web_calls": 0,
+    "children": 0,
+    "git_mutations": 0,
+    "live_state_writes": 0,
+    "producer_edits": 0,
+    "command_web_cap_seconds": 20,
+    "complete_outer_wall_seconds": "NOT_INDEPENDENTLY_MEASURED",
+    "individual_tool_receipts": "AVAILABLE_TO_PARENT",
+    "artifact_write_internal_seconds": 0.0693209960591048
+  },
+  "account": {
+    "ancestry": "R26-FULL7-STREAMED-SPIN2-QUADRATURE",
+    "existing_seven_frequency_banks_only": true,
+    "bank_lifetime_cap_seconds": 900,
+    "no_refund": true,
+    "no_new_bank": true,
+    "SMICA": "UNCHANGED",
+    "host_refresh_and_debit_required": true
+  },
+  "physical_tests": "REAL_DATA_RANK_NOISE_FOREGROUND_NOT_RUN",
+  "full_joint_physical_image": "UNDEFINED",
+  "source_evidence": {
+    "input": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_dispatch/INPUT.json",
+      "sha256": "d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1",
+      "verification": "BYTES_HASHED_AND_SOURCE_READ"
+    },
+    "contract": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/WMAP_PLANCK_F2_CONTRACT.md",
+      "sha256": "986e558508ef7691d3286e9eb6cab48a38c9ded6645fe8c3e1486280a2e14686",
+      "verification": "BYTES_HASHED_AND_SOURCE_READ"
+    },
+    "failed_producer_source": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/produce.py",
+      "sha256": "7ab91ca1b02b64594846be28c60170b47ae2162cacac1f4dd3caad963643136a",
+      "verification": "BYTES_HASHED_AND_SOURCE_READ"
+    },
+    "failed_supervisor_source": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/supervise.py",
+      "sha256": "502f632678083a69e7deeb61ed1fe2faee7a849a9a060cb6ee4b276a6593cb2d",
+      "verification": "BYTES_HASHED_AND_SOURCE_READ"
+    },
+    "failed_preparation": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/PREPARATION.json",
+      "sha256": "2b68bc041100cba8d470a601d8941ac678f6be9b566ca91c0888c007339f351a",
+      "verification": "BYTES_HASHED_AND_SOURCE_READ"
+    },
+    "failed_return": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/RETURN.json",
+      "sha256": "6b35cc44e63ba3e06e2c60bb64caa7be5617bd71ea30ed6a5bf2b872007972c1",
+      "verification": "BYTES_HASHED_AND_SOURCE_READ"
+    },
+    "raw_outcome": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/RAW_OUTCOME.json",
+      "sha256": "31987e25e78ff9dc0346fb6c0c56f1f882bd86b1d996d4a52c733eb9419a7d0d",
+      "verification": "BYTES_HASHED_AND_SOURCE_READ"
+    },
+    "outer_raw": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/OUTER_RAW.json",
+      "sha256": "ba935585c6281fe33a1dddffab4919a2a12d36fc93ff593053869385748fd118",
+      "verification": "BYTES_HASHED_AND_SOURCE_READ"
+    },
+    "first_stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/attempt_aac87a13641ac699/stderr.log",
+      "sha256": "76a75ad0654f740177009bb96a3b7f64e9acc7e0dc34ad7cc7de047ec5e7949a",
+      "verification": "BYTES_HASHED_AND_SOURCE_READ"
+    },
+    "controller_adapter": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_dispatch/FIRST_ACTUAL_FAILURE_CONTROLLER_ADAPTER.json",
+      "sha256": "ffc4d14de86c49c0a8d53b0b603dc407d29c441a4f0bce488b03fdb3ced09cdc",
+      "verification": "BYTES_HASHED_AND_SOURCE_READ"
+    }
+  },
+  "decision_file": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r33_quotient_failure_framing/SOURCE_DECISION.md",
+    "sha256": "b76afde26660477e69d6a33fd25f023a822eba2662c0c14404739b240161b248"
+  }
+}

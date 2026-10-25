@@ -1,0 +1,29 @@
+{
+  "task_id": "R33-CMB-WMAP-PLANCK-F2-EXTENSION",
+  "status": "CHECKER_SOURCE_FAILURE_BEFORE_RESPONSE_INTEGRATION",
+  "first_failure": {
+    "type": "AttributeError",
+    "message": "module 'mpmath' has no attribute 'one'",
+    "traceback": "Traceback (most recent call last):\n  File \"/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/check.py\", line 272, in <module>\n    try:main()\n        ^^^^^^\n  File \"/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/check.py\", line 207, in main\n    by_precision[precision][w]=response(mp,source,w)\n                               ^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/check.py\", line 90, in response\n    shift=1+mp.mpf(DRIFT[d]) if which=='W1_CENTER_DRIFT_PROXY' else mp.one\n                                                                    ^^^^^^\nAttributeError: module 'mpmath' has no attribute 'one'. Did you mean: 'ones'?\n"
+  },
+  "exit_code": 1,
+  "science_result": "NOT_PRODUCED",
+  "source_rows_archive_verification": "COMPLETED_BY_CONTROL_FLOW_BEFORE_FAILURE",
+  "response_integrations": 0,
+  "SVDs": 0,
+  "independent_numeric_verdict": "HOLD",
+  "independent_scientific_admission": "PENDING_FRESH_ASTRA",
+  "inner_elapsed_seconds": 11.826129428111017,
+  "outer_elapsed_seconds": "NOT_INDEPENDENTLY_MEASURED_CONTROLLER_TO_RECORD",
+  "peak_rss_kib": 41188,
+  "seven_way_inner_elapsed_share_seconds": 1.6894470611587167,
+  "source_sha256": "fa9ca17e2f029dc2fc09a89fcd0109c820efbeda60e82baa9681087ac8b84a01",
+  "check_go_sha256": "02fd6aee8507b2e64a0d9bba267fb693dec2cf8f674d5edd227360bfab1cebb9",
+  "raw_sha256": "4f0a9884178ac890f8611e9c72d3d4424f76f53d4899478fce9eae0c3c286d5b",
+  "stderr_sha256": "0ad6de27c31d5a6ca59a3df6b27ce0dfab9165099eacacc5af9e540baac9755a",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "command": "env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 timeout --signal=TERM --kill-after=2s 175s /usr/bin/python3 /mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/check.py --check-go /mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/CHECK_GO.json > /mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/STDOUT.log 2> /mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/STDERR.log",
+  "repair_scope_if_newly_approved": "Replace absent mpmath top-level constants mp.one and mp.zero with mp.mpf(1) and mp.mpf(0); re-seal source; do not reinterpret as numerical evidence.",
+  "retry_count": 0,
+  "result_exists": false
+}

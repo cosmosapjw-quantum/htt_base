@@ -1,0 +1,89 @@
+{
+  "status": "SOURCE_PREPARED_WAIT_CHECK_GO",
+  "task_id": "R33-CMB-WMAP-PLANCK-F2-EXTENSION",
+  "role": "INDEPENDENT_NUMERIC_CHECKER",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "source_path": "/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/check.py",
+  "source_sha256": "fa9ca17e2f029dc2fc09a89fcd0109c820efbeda60e82baa9681087ac8b84a01",
+  "source_ast": "PASS",
+  "scientific_imports_or_calculations": "NOT_RUN",
+  "input_seals": {
+    "contract": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/WMAP_PLANCK_F2_CONTRACT.md",
+      "expected_sha256": "986e558508ef7691d3286e9eb6cab48a38c9ded6645fe8c3e1486280a2e14686",
+      "actual_sha256": "986e558508ef7691d3286e9eb6cab48a38c9ded6645fe8c3e1486280a2e14686"
+    },
+    "prior_contract": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_framing/SPECTRAL_ONLY_CONTRACT.md",
+      "expected_sha256": "fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df",
+      "actual_sha256": "fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df"
+    },
+    "input": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_dispatch/INPUT.json",
+      "expected_sha256": "d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1",
+      "actual_sha256": "d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1"
+    },
+    "old_planck": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/attempt_38cdf6b948a41ee9/RESULT.json",
+      "expected_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+      "actual_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f"
+    },
+    "producer": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/stable_complement_repair/attempt_1b0195cebb59f27a/RESULT.json",
+      "expected_sha256": "c29360ba14d7bcf72d85be285ea61228c16148d35472c9dd4759e06c1eea0ee8",
+      "actual_sha256": "c29360ba14d7bcf72d85be285ea61228c16148d35472c9dd4759e06c1eea0ee8"
+    },
+    "source_metadata": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/BANDPASS_SOURCE_METADATA.json",
+      "expected_sha256": "06f2449ec8041dd968e1b9f85bf81649434dc93763dc8931ceb562a6ef6801f1",
+      "actual_sha256": "06f2449ec8041dd968e1b9f85bf81649434dc93763dc8931ceb562a6ef6801f1"
+    },
+    "source_archive": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/sources/wmap_bandpass_v5.tar.gz",
+      "expected_sha256": "5f3a3d29dd2346a31f7d4d215f3d7564c0a11b5af283737a6c14edfe6f152feb",
+      "actual_sha256": "5f3a3d29dd2346a31f7d4d215f3d7564c0a11b5af283737a6c14edfe6f152feb"
+    }
+  },
+  "interpreter": {
+    "path": "/usr/bin/python3",
+    "version": "3.12.3",
+    "numpy_spec_present": true,
+    "mpmath_spec_present": true,
+    "package_versions": "NOT_IMPORTED_AT_PREPARATION"
+  },
+  "preflight_snapshot": {
+    "mem_available_kib": 22233520,
+    "disk_free_bytes": 2460605870080
+  },
+  "one_shot_command": "env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 timeout --signal=TERM --kill-after=2s 175s /usr/bin/python3 /mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/check.py --check-go /mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/CHECK_GO.json > /mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/STDOUT.log 2> /mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/STDERR.log",
+  "go_schema": {
+    "decision": "CHECK_GO",
+    "task_id": "R33-CMB-WMAP-PLANCK-F2-EXTENSION",
+    "candidate_sha256": "c29360ba14d7bcf72d85be285ea61228c16148d35472c9dd4759e06c1eea0ee8",
+    "contract_sha256": "986e558508ef7691d3286e9eb6cab48a38c9ded6645fe8c3e1486280a2e14686",
+    "input_sha256": "d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1",
+    "source_sha256": "fa9ca17e2f029dc2fc09a89fcd0109c820efbeda60e82baa9681087ac8b84a01"
+  },
+  "result_schema": "RESULT.json has wmap_branches, 12 branch-pair F12/F17 matrices, 80/120 spectra/classes, ranks, principal angles, weights or witnesses, full24 action residuals, derivative and synthetic controls; RAW.json checkpoints and first_failure",
+  "controls_coverage": [
+    "source bytes/archive member seals",
+    "decimal-token 201-node signed RJ to intensity detector quadrature",
+    "40 detector CMB unity and denominator cancellation",
+    "4 detector per DA and five-band compression",
+    "independent dust first/mixed/second derivatives and reference zeros",
+    "exact binary64 reuse of old seven Planck rows",
+    "float64 versus 120 and 80 versus 120 response agreement",
+    "24 singular spectra and rank classifications with boundary straddle",
+    "rank/angle/weight or witness",
+    "24 target plus 216 nuisance coordinate actions via complete 24x9 arrays",
+    "duplicate nuisance, injected blackbody, column rescaling, lifted compressed weights"
+  ],
+  "preparation_command_elapsed_seconds": 0.5068875229917467,
+  "preparation_outer_elapsed_seconds": "UNKNOWN_CONTROLLER_TO_RECORD",
+  "science_invocations": 0,
+  "accounting": "All preparation and any one actual checker start charged seven-way by controller; no new bank/SMICA/ultra."
+}

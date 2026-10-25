@@ -1,0 +1,58 @@
+{
+  "status": "MECHANICAL_PREPARATION_ONLY",
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "medium",
+  "observed_runtime": "UNKNOWN",
+  "source_path": "/mnt/extdrive/workdir/htt_open_data/r35_cmb_checker_api_fix/check.py",
+  "source_sha256": "271b876e8e21eb8cec5a1f8241c243bff1ad6d201edea27a3615b31a1d381221",
+  "original_source_sha256": "fa9ca17e2f029dc2fc09a89fcd0109c820efbeda60e82baa9681087ac8b84a01",
+  "contract_path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/WMAP_PLANCK_F2_CONTRACT.md",
+  "contract_sha256": "986e558508ef7691d3286e9eb6cab48a38c9ded6645fe8c3e1486280a2e14686",
+  "constant_replacement_counts": {
+    "mp.one": 1,
+    "mp.zero": 4
+  },
+  "checks": {
+    "AST": "PASS",
+    "compile_without_execution": "PASS",
+    "installed_mpmath_scalar_API_probe": "PASS",
+    "mpmath_version": "1.3.0"
+  },
+  "response_integrations": 0,
+  "SVDs": 0,
+  "checker_executed": false,
+  "CHECK_GO_created": false,
+  "proposed_command": "env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 timeout --signal=TERM --kill-after=2s 155s /usr/bin/python3 /mnt/extdrive/workdir/htt_open_data/r35_cmb_checker_api_fix/check.py --check-go /mnt/extdrive/workdir/htt_open_data/r35_cmb_checker_api_fix/CHECK_GO.json > /mnt/extdrive/workdir/htt_open_data/r35_cmb_checker_api_fix/STDOUT.log 2> /mnt/extdrive/workdir/htt_open_data/r35_cmb_checker_api_fix/STDERR.log",
+  "required_new_GO_fields": {
+    "decision": "CHECK_GO",
+    "task_id": "R33-CMB-WMAP-PLANCK-F2-EXTENSION",
+    "candidate_sha256": "c29360ba14d7bcf72d85be285ea61228c16148d35472c9dd4759e06c1eea0ee8",
+    "contract_sha256": "986e558508ef7691d3286e9eb6cab48a38c9ded6645fe8c3e1486280a2e14686",
+    "input_sha256": "d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1",
+    "source_sha256": "271b876e8e21eb8cec5a1f8241c243bff1ad6d201edea27a3615b31a1d381221",
+    "preparation_sha256": "ROOT_TO_BIND_PREPARATION_JSON",
+    "account_head_path": "ROOT_TO_BIND_CURRENT_SAME_ANCESTRY_HEAD",
+    "account_head_sha256": "ROOT_TO_BIND_CURRENT_SAME_ANCESTRY_HEAD_SHA256",
+    "native_checker_agent": "ROOT_TO_BIND_ORIGINAL_INDEPENDENT_CHECKER",
+    "actual_native_dispatch": "ROOT_TO_RECORD_REAL_FOLLOWUP",
+    "whole_checker_cap_seconds": 160,
+    "child_timeout_seconds": 155,
+    "rss_limit_bytes": 1073741824,
+    "thread_count": 1,
+    "no_overlap_numerical_allocation_confirmed": "ROOT_TO_CONFIRM",
+    "candidate_scientific_admission": false,
+    "original_L03_acceptance": "HOLD",
+    "same_seven_bank_ancestry": true
+  },
+  "accounting": {
+    "prior_tool_command_wall_seconds": [
+      0.034852544,
+      0.264961084
+    ],
+    "this_preparation_internal_elapsed_seconds": 0.7486781589686871,
+    "cumulative_limit_seconds": 5,
+    "charge_ancestry": "existing seven frequency accounts; root records whole tool command duration",
+    "numerical_execution_seconds": 0
+  },
+  "timeout_note": "Retained original internal alarm(174); external timeout TERM at155 and KILL by157 enforce child within later root whole160s cap. No execution authorized by preparation."
+}

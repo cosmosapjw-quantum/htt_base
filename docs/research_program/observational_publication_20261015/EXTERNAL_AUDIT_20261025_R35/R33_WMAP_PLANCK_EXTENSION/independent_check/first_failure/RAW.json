@@ -1,0 +1,28 @@
+{
+  "task_id": "R33-CMB-WMAP-PLANCK-F2-EXTENSION",
+  "role": "INDEPENDENT_NUMERIC_CHECKER",
+  "status": "FAILED",
+  "started_utc": "2026-10-25T11:13:56Z",
+  "first_failure": {
+    "type": "AttributeError",
+    "message": "module 'mpmath' has no attribute 'one'",
+    "traceback": "Traceback (most recent call last):\n  File \"/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/check.py\", line 272, in <module>\n    try:main()\n        ^^^^^^\n  File \"/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/check.py\", line 207, in main\n    by_precision[precision][w]=response(mp,source,w)\n                               ^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/check.py\", line 90, in response\n    shift=1+mp.mpf(DRIFT[d]) if which=='W1_CENTER_DRIFT_PROXY' else mp.one\n                                                                    ^^^^^^\nAttributeError: module 'mpmath' has no attribute 'one'. Did you mean: 'ones'?\n"
+  },
+  "checkpoints": [
+    {
+      "stage": "seals_and_environment",
+      "elapsed_seconds": 3.955247503006831,
+      "peak_rss_kib": 36772
+    },
+    {
+      "stage": "failed",
+      "elapsed_seconds": 11.826129428111017,
+      "peak_rss_kib": 41188
+    }
+  ],
+  "environment": {
+    "python": "3.12.3",
+    "mpmath": "1.3.0",
+    "numpy": "2.4.2"
+  }
+}

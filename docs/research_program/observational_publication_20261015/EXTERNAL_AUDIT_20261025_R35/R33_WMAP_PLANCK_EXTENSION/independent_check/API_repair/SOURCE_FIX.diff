@@ -1,0 +1,31 @@
+--- /mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_independent_numeric_check/check.py
++++ /mnt/extdrive/workdir/htt_open_data/r35_cmb_checker_api_fix/check.py
+@@ -13,7 +13,7 @@
+ from pathlib import Path
+ 
+ ROOT = Path('/mnt/extdrive/workdir/htt_open_data')
+-OUT = ROOT / 'r33_wmap_planck_independent_numeric_check'
++OUT = ROOT / 'r35_cmb_checker_api_fix'
+ SOURCE = ROOT / 'r33_cmb_additional_frequency_framing'
+ CONTRACT = SOURCE / 'WMAP_PLANCK_F2_CONTRACT.md'
+ PRIOR = ROOT / 'r30_cmb_spectral_response_framing/SPECTRAL_ONLY_CONTRACT.md'
+@@ -87,7 +87,7 @@
+     det=[]; dens=[]; canc=[]; unity=[]; files=[]
+     for fname,tokens in rows:
+         d=band(fname.removeprefix('wmap_bandpass_'))
+-        shift=1+mp.mpf(DRIFT[d]) if which=='W1_CENTER_DRIFT_PROXY' else mp.one
++        shift=1+mp.mpf(DRIFT[d]) if which=='W1_CENTER_DRIFT_PROXY' else mp.mpf(1)
+         nu=[mp.mpf(z[0])*10**9/shift for z in tokens]
+         require(all(nu[i]<nu[i+1] for i in range(200)),'frequency order '+fname)
+         b=[bb(n) for n in nu]
+@@ -124,8 +124,8 @@
+             q=mp.exp(-z);return 1/(1-q)-z*q/(1-q)**2
+         D=g(x)-g(xd);E=x*gp(x)-xd*gp(xd)
+         def dust(t,beta):return (n/nd)**beta*B(n,td*(1+t))/B(nd,td*(1+t))
+-        s=dust(mp.zero,mp.mpf('1.5'))
+-        pairs=[('dust_t',s*D,mp.diff(lambda t:dust(t,mp.mpf('1.5')),mp.zero)),('dust_tt',s*(D*D-D-E),mp.diff(lambda t:dust(t,mp.mpf('1.5')),mp.zero,2)),('dust_beta_t',s*D*ld,mp.diff(lambda t:dust(t,mp.mpf('1.5'))*ld,mp.zero))]
++        s=dust(mp.mpf(0),mp.mpf('1.5'))
++        pairs=[('dust_t',s*D,mp.diff(lambda t:dust(t,mp.mpf('1.5')),mp.mpf(0))),('dust_tt',s*(D*D-D-E),mp.diff(lambda t:dust(t,mp.mpf('1.5')),mp.mpf(0),2)),('dust_beta_t',s*D*ld,mp.diff(lambda t:dust(t,mp.mpf('1.5'))*ld,mp.mpf(0)))]
+         for name,a,b in pairs:
+             err=abs(a-b)/max(1,abs(b));out.append({'ghz':ghz,'control':name,'scaled_error':float(err)})
+             require(err<=mp.mpf('1e-30'),'derivative '+name+' '+str(ghz))

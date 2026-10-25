@@ -1,0 +1,51 @@
+{
+  "task_id": "R33-CMB-WMAP-PLANCK-F2-EXTENSION",
+  "packet_id": "f4d4c6c7710456eb3caac841c1c03c1759a717a92bdca3b5615bb9d9fc7a1ee3",
+  "input_identity": "sha256:d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1",
+  "agent_id": "/root/r33_quotient_failure_framing",
+  "phase": "research",
+  "attempt": 2,
+  "candidate_identity": null,
+  "acceptance_met": false,
+  "original_L03_acceptance": "HOLD",
+  "scientific_admission": "NONE",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "outcome": "success",
+  "successor": "LOWER_TIER_ONE_BOUNDED_STABLE_COMPLEMENT_REPAIR_THEN_INDEPENDENT_CHECKER",
+  "repair_plan": "Approve one targeted lower-tier repair under SOURCE_DECISION.md SHA256 b76afde26660477e69d6a33fd25f023a822eba2662c0c14404739b240161b248: preserve the failed source and attempt; replace subtractive p=a-U_r(U_r.T*a) and w=p/(a.T*p) with the same normalized full SVD complement Z=U[:,r:], z=Z.T*a, rho=norm(z), d=rho/norm(a), w=Z*(z/rho)/rho in binary64; use the same normalized retained SVD for any confounding witness and undo column scales; serialize every matrix, singular spectrum, weight/witness, separate residual and all24 control array before unchanged gates. Preserve exact old7 rows, all201 detector samples, both WMAP branches, all12 paired conventions and every frozen rank/angle/residual/control threshold. Exactly one repaired producer <=180s with the reserved separate independent80/120-digit checker <=180s; existing7x900s ancestry, no new bank, model, precision, row noise, tolerance, numerical probe or retry. Execution requires the controller next packet and its actual ACK/GO with refreshed cumulative accounting. Any repeated failure returns exact diagnostics and HOLD.",
+  "repair_authorization": "ONE_BOUNDED_TARGETED_REPAIR_SCIENTIFICALLY_APPROVED_ACTUAL_EXECUTION_REQUIRES_NEXT_CONTROLLER_PACKET_ACK_GO",
+  "blocker": {
+    "class": "numeric",
+    "code": "R33_QUOTIENT_RESIDUAL_ASSERTION",
+    "input_identity": "sha256:d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1",
+    "question": "Does the unchanged finite F2 model satisfy its frozen constraints using a stable orthogonal-complement implementation?",
+    "exact_missing_or_defect": "The original assertion lost both residual components. Stable complement construction and pre-gate evidence serialization are justified, but the original numerical cause and repaired outcome remain unknown.",
+    "first_failure_path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/attempt_aac87a13641ac699/stderr.log",
+    "substantive": true
+  },
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r33_quotient_failure_framing/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "b26a6b0f1c8fc07ea2ddc71b4f3a89a3ace4b3f5c27f7dc97a4fec6885e92912",
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r33_quotient_failure_framing/SOURCE_DECISION.md",
+    "/mnt/extdrive/workdir/htt_open_data/r33_quotient_failure_framing/PREPARATION_RESULT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r33_quotient_failure_framing/RAW_RECEIPT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_dispatch/ACTUAL_QUOTIENT_FAILURE_RESEARCH_PACKET.json",
+    "/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_dispatch/QUOTIENT_RESEARCH_ACTUAL_ACK.json",
+    "/mnt/extdrive/workdir/htt_open_data/r33_wmap_planck_dispatch/QUOTIENT_RESEARCH_GO.json",
+    "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/RETURN.json",
+    "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/attempt_aac87a13641ac699/stderr.log"
+  ],
+  "qualified_products": [],
+  "numerical_rank": "NOT_COMPUTED_IN_RESEARCH_FRAMING",
+  "failed_residual_component": "UNKNOWN",
+  "physical_full_joint_image": "UNDEFINED",
+  "real_data_rank_noise_foreground_tests": "NOT_RUN",
+  "original_scientific_states": "UNCHANGED",
+  "independent_review": "ACTUAL_REPAIRED_CANDIDATE_AND_CHECKER_PENDING",
+  "no_scientific_acceptance_from_research_successor": true,
+  "format_adapter": "Research successor normalized to controller success, scoped source repair approval only; original RESULT/raw untouched."
+}

@@ -1,0 +1,57 @@
+{
+  "task_id": "R33-CMB-WMAP-PLANCK-F2-EXTENSION",
+  "status": "STABLE_COMPLEMENT_SOURCE_ONLY_PREPARED_WAIT_ACTUAL_REPAIR_PACKET_ACK_GO",
+  "scientific_input_sha256": "d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1",
+  "source_decision_sha256": "b76afde26660477e69d6a33fd25f023a822eba2662c0c14404739b240161b248",
+  "source_decision_result_sha256": "61d18c4392f4f3489651ed34a4fc9b8e14817c969d5365aa5ba592f4b87496db",
+  "original_preparation_sha256": "2b68bc041100cba8d470a601d8941ac678f6be9b566ca91c0888c007339f351a",
+  "original_failed_producer_sha256": "7ab91ca1b02b64594846be28c60170b47ae2162cacac1f4dd3caad963643136a",
+  "original_failed_attempt_receipt_sha256": "eba733cc3b625dbaba5f17b42a62698bbd563e37312420b53bd067e0db7fc5f7",
+  "contract_sha256": "986e558508ef7691d3286e9eb6cab48a38c9ded6645fe8c3e1486280a2e14686",
+  "framing_result_sha256": "40dad683edcd49bea3a2ef8999d7c9ed0ce76830459112f977a8e382afce3540",
+  "old_planck_result_sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+  "source_archive_sha256": "5f3a3d29dd2346a31f7d4d215f3d7564c0a11b5af283737a6c14edfe6f152feb",
+  "source_metadata_sha256": "06f2449ec8041dd968e1b9f85bf81649434dc93763dc8931ceb562a6ef6801f1",
+  "extracted_member_count": 20,
+  "extracted_member_archive_byte_parity": "VERIFIED",
+  "source_sha256": {
+    "produce.py": "7243e3d24c651e4beb7343d507b8c92d73f75539f4527fa6e4bc7c1ccbefae54",
+    "supervise.py": "502f632678083a69e7deeb61ed1fe2faee7a849a9a060cb6ee4b276a6593cb2d"
+  },
+  "source_diff_sha256": "b38fc25c273ccf0acfd876832eb1848ff434f734be43d543778cd5563d19c312",
+  "supervisor_byte_identical_to_first_preparation": true,
+  "source_AST": "PASS",
+  "science_imports": "NOT_PERFORMED",
+  "numerical_run": "NOT_STARTED",
+  "numerical_rank": "NOT_COMPUTED",
+  "checker": "INDEPENDENT_AUTHOR_PENDING",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "environment": {
+    "python": "3.12.3",
+    "python_executable": "/usr/bin/python3",
+    "package_metadata_only": {
+      "numpy": "2.4.2",
+      "mpmath": "1.3.0"
+    },
+    "MemAvailable_bytes_at_preparation": 18513645568,
+    "disk_free_bytes_at_preparation": 2460617932800
+  },
+  "future_invocation_template": "env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/python3 /mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/stable_complement_repair/supervise.py --ack <EXTERNAL_ACK_PATH> --ack-sha256 <ACTUAL_ACK_SHA256> --go <EXTERNAL_GO_PATH> --go-sha256 <ACTUAL_GO_SHA256> --attempt /mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/stable_complement_repair/<NEW_EMPTY_ATTEMPT>",
+  "future_gate": "NEW_EXTERNAL_REPAIR_PACKET_ACK_AND_GO_REQUIRED",
+  "limits": {
+    "producer_total_wall_seconds": 180,
+    "producer_tree_rss_bytes": 1073741824,
+    "min_MemAvailable_bytes": 4294967296,
+    "min_disk_free_bytes": 2147483648,
+    "threads": 1
+  },
+  "account": "R26-FULL7-STREAMED-SPIN2-QUADRATURE_EXISTING_SEVEN_900S_BANKS_NO_NEW_BANK",
+  "preparation_command_elapsed_seconds": 12.87004300695844,
+  "scientific_admission": "NONE",
+  "final_source_AST": "PASS",
+  "final_manifest_refresh_elapsed_seconds": 1.3181219000834972
+}

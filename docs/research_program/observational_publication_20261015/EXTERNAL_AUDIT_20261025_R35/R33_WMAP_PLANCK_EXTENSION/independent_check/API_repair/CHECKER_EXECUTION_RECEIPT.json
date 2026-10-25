@@ -1,0 +1,55 @@
+{
+  "task_id": "R33-CMB-WMAP-PLANCK-F2-EXTENSION",
+  "stage": "REPAIRED_INDEPENDENT_CHECKER_ACTUAL_EXECUTION",
+  "status": "INDEPENDENT_NUMERIC_CHECK_PASS",
+  "scientific_admission": "PENDING_FRESH_ASTRA",
+  "original_L03_acceptance": "HOLD",
+  "one_shot_command": "env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 timeout --signal=TERM --kill-after=2s 155s /usr/bin/python3 /mnt/extdrive/workdir/htt_open_data/r35_cmb_checker_api_fix/check.py --check-go /mnt/extdrive/workdir/htt_open_data/r35_cmb_checker_api_fix/CHECK_GO.json > /mnt/extdrive/workdir/htt_open_data/r35_cmb_checker_api_fix/STDOUT.log 2> /mnt/extdrive/workdir/htt_open_data/r35_cmb_checker_api_fix/STDERR.log",
+  "wrapper": "/usr/bin/time -f elapsed_seconds,max_rss_kib,exit_status -o OUTER_TIME.log around the prepared command",
+  "exit_code": 0,
+  "external_elapsed_seconds": 18.68,
+  "peak_rss_kib_external": 48872,
+  "inner_result_elapsed_seconds": 17.4991413122043,
+  "inner_complete_checkpoint_elapsed_seconds": 18.210716139059514,
+  "second_check_seven_way_share_seconds": 2.6685714285714286,
+  "first_failure_conservative_debit_seconds": 20,
+  "combined_checker_debit_seconds": 38.68,
+  "original_checker_lifetime_cap_seconds": 180,
+  "repaired_checker_whole_cap_seconds": 160,
+  "source_sha256": "271b876e8e21eb8cec5a1f8241c243bff1ad6d201edea27a3615b31a1d381221",
+  "preparation_sha256": "c73f7d89488a694e7d49feba6bec8a6632b60ea8a086b092bebbaaaf343567f4",
+  "check_go_sha256": "661f34d25b51c3cf4ec028b8e2889be4d75ee324674ba7e2cd4b2bc98241655e",
+  "result_sha256": "709f80e96f7b6ec343ba407ac9c7b43386bc121893e1a820c16bd2629399e1eb",
+  "raw_sha256": "f09e09fc82d6a58445c1f3ed3fdfbea3c177ff59cebe425654873f6178dc19f0",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "outer_time_sha256": "dda952234d428c177b9922dc6368d20844a3896e94c7c9bb1b9d44ab7129e84c",
+  "branch_pairs": 12,
+  "matrix_classification_counts": {
+    "RESOLVED_FINITE_F2_QUOTIENT": 24
+  },
+  "ranks_nuisance_augmented": [
+    [
+      9,
+      10
+    ]
+  ],
+  "min_principal_angle_sine": 3.6283994526652375e-05,
+  "max_weight_norm2": 7955.9910192017815,
+  "max_compression_relative_frobenius": 3.520036049287842e-18,
+  "max_80_120_response_relative_frobenius": 1.9797115095955347e-81,
+  "max_producer_120_response_relative_frobenius": 6.011979522027052e-16,
+  "max_derivative_scaled_error": 1.156069365614633e-121,
+  "max_full24_HA_column_residual": 6.298770749502416e-118,
+  "max_full24_HB_column_residual": 4.5999165252098555e-112,
+  "max_lifted_full24_HB_column_residual": 8.423961093568353e-14,
+  "raw_first_failure": null,
+  "old_failed_source_and_receipts": "PRESERVED_UNCHANGED_IN_r33_wmap_planck_independent_numeric_check",
+  "claim_ceiling": {
+    "x": "NOT_MEASURED",
+    "F_physical": "NOT_EVALUABLE",
+    "Pi": "NOT_CALIBRATED",
+    "Q": "NOT_EVALUATED",
+    "G_F": "NOT_APPLICABLE"
+  }
+}
