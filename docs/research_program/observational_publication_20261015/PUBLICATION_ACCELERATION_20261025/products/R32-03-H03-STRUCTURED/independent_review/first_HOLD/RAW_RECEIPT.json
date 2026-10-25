@@ -1,0 +1,211 @@
+{
+  "schema": "H03_FRESH_INDEPENDENT_REVIEW_RAW_v1",
+  "reviewer_agent": "/root/r35_h03_fresh_independent_review",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "candidate_identity": "sha256:85ac1bfdfc71dea645c01421811ed1e5d95df617034077c532feee6052a769ba",
+  "formal_review_packet_status": "PENDING",
+  "source_code_products_state_git_writes": false,
+  "writes_confined_to": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review",
+  "read_only_checkout_head_observed": "7f313d6c4f2794c484791ed108a7ce231eb824b0",
+  "branch_observed": "research/htt-adaptive-methods-20261023",
+  "remote_observed": "https://github.com/cosmosapjw-quantum/htt_base.git",
+  "commands": [
+    {
+      "command": "python /mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/independent_probe.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_status": 0,
+      "calculation_duration_seconds": 0.066304637119174,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/probe.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/probe.stderr"
+    },
+    {
+      "command": "python /mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/additional_probes.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_status": 0,
+      "calculation_duration_seconds": 0.011001893784850836,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/additional.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/additional.stderr"
+    },
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex",
+      "cwd": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/paper_build",
+      "exit_status": 0,
+      "elapsed_seconds": 2.4758092160336673,
+      "note": "Disposable selected manuscript assets only; no source/product mutation."
+    }
+  ],
+  "first_execution_failure": null,
+  "first_candidate_defects_preserved": [
+    {
+      "id": "H03-R1",
+      "severity": "P2",
+      "blocking": true,
+      "issue_class": "FEASIBILITY_TOLERANCE_PROMOTED_TO_EXACT_ATTAINMENT",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/consumer.py",
+      "lines": [
+        88,
+        103
+      ],
+      "contract_lines": [
+        82,
+        93
+      ],
+      "summary": "A numerical band around the floor is promoted to exact equality and a finite minimum budget. A floor strictly above tau cannot attain tau, irrespective of closeness.",
+      "counterexample": {
+        "call": "threshold(np.array([1.]), np.array([1.]), tau+5e-10, 1., tau+1.+5e-10, tau)",
+        "tau": 12.591587243743977,
+        "returned_status": "FINITE_FLOOR_EQUALITY",
+        "returned_rho95": 1.0,
+        "true_irreducible_T": 12.591587244243977,
+        "true_attainability": false
+      },
+      "fix": "Keep numerical-boundary qualification separate from exact synthetic equality. Never issue a finite budget when the certified floor is above tau. For a finite-precision floor within 1e-9 without an exact equality identity, return NUMERIC_BOUNDARY_FLOOR/HOLD with no finite budget; known exact floor=tau fixtures attain at rho_sat."
+    },
+    {
+      "id": "H03-R2",
+      "severity": "P2",
+      "blocking": true,
+      "issue_class": "PROJECTED_ROUNDOFF_SELF_NORMALIZED_AS_SIGNAL_RANK",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/consumer.py",
+      "lines": [
+        40,
+        54
+      ],
+      "related_lines": [
+        171,
+        174
+      ],
+      "contract_lines": [
+        80,
+        95
+      ],
+      "summary": "The projected-zero design D=X becomes rank six when numerical projection noise is normalized by its own maximum singular value. The existing control does not call the production SVD/curve path for D=X.",
+      "counterexample": {
+        "case": "Retained source, D=X, B=(I-Q Q.T) @ solve_triangular(L,X,lower=True)",
+        "expected_rank": 0,
+        "observed_rank": 6,
+        "projected_frobenius_norm": 2.2883204606165413e-15,
+        "T0": 23.39672052266718,
+        "false_floor": 22.491757346596945,
+        "false_saturation_budget": 1.9830537191258547e+17,
+        "independent_numpy_solve_false_floor": 13.972250012168807
+      },
+      "fix": "Handle known exact signal-span/zero designs through the same analysis path, with a positive unprojected reference scale and explicit roundoff uncertainty handling. Do not infer new physical directions or zero a genuinely nonzero small response."
+    },
+    {
+      "id": "H03-R3",
+      "severity": "P2",
+      "blocking": true,
+      "issue_class": "ATTAINED_EQUALITY_IMAGE_BUDGET_DROPPED",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/consumer.py",
+      "lines": [
+        110,
+        110
+      ],
+      "contract_lines": [
+        91,
+        91
+      ],
+      "summary": "The secondary image-budget calculation uses floor<tau rather than the contracted floor<=tau and reports None at an attained equality.",
+      "counterexample": {
+        "T0": "tau+1",
+        "floor": "tau",
+        "exact_minimum_coefficient_budget": 1.0,
+        "exact_minimum_image_budget": 1.0,
+        "returned_q_min_restricted": null
+      },
+      "fix": "Use the same exact-equality/qualified-boundary classification for both coefficient and image budgets; an analytically established floor=tau has q_min=sqrt(T0-tau), not None."
+    }
+  ],
+  "review_wall_duration": "NOT_INDEPENDENTLY_MEASURED",
+  "path_validation": {
+    "REVIEW.md": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/REVIEW.md",
+      "exists": true,
+      "bytes": 10459,
+      "sha256": "0aded0aed829b7c8d471ebf7bb467dae64b6017c07d770aeaf6a7825e7e33708"
+    },
+    "INDEPENDENT_NUMERICS.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/INDEPENDENT_NUMERICS.json",
+      "exists": true,
+      "bytes": 4665,
+      "sha256": "7bea00ff09f6cf260bbac85ed6a62d76da037bbd322ca5f838fbb01f6317388e"
+    },
+    "ADDITIONAL_PROBES.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/ADDITIONAL_PROBES.json",
+      "exists": true,
+      "bytes": 880,
+      "sha256": "2b9f5e3e61e5f32d1ce71622288c6cd2fb16f0a4656ab5adf7f805fb726034e0"
+    },
+    "independent_probe.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/independent_probe.py",
+      "exists": true,
+      "bytes": 8476,
+      "sha256": "f41ef1f6bddcf215fa4d5cd933c573505a4e9b5a8d024cfa63aaff54603b482e"
+    },
+    "additional_probes.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/additional_probes.py",
+      "exists": true,
+      "bytes": 3360,
+      "sha256": "715e96c4d1446b1ce7de2e0990d0cb331440ad910d7abf6605845a27573b212d"
+    },
+    "probe.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/probe.stdout",
+      "exists": true,
+      "bytes": 4665,
+      "sha256": "7bea00ff09f6cf260bbac85ed6a62d76da037bbd322ca5f838fbb01f6317388e"
+    },
+    "probe.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/probe.stderr",
+      "exists": true,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "additional.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/additional.stdout",
+      "exists": true,
+      "bytes": 880,
+      "sha256": "2b9f5e3e61e5f32d1ce71622288c6cd2fb16f0a4656ab5adf7f805fb726034e0"
+    },
+    "additional.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/additional.stderr",
+      "exists": true,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "BUILD_RESULT.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/BUILD_RESULT.json",
+      "exists": true,
+      "bytes": 320,
+      "sha256": "31bed266e3de08f5bd3a9a13257ad1229542531ecc83d1c07899803b4bc60b9d"
+    },
+    "build.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/build.stdout",
+      "exists": true,
+      "bytes": 14667,
+      "sha256": "3e39439a536190e50de7172ad308c68931033f3dd3620d7a0b4da334ec65961a"
+    },
+    "build.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/build.stderr",
+      "exists": true,
+      "bytes": 70,
+      "sha256": "10a12a779ef58387cb786e931a9997999975d454e10bd19f68a65e59f0573f27"
+    },
+    "candidate_pdf.txt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/candidate_pdf.txt",
+      "exists": true,
+      "bytes": 16054,
+      "sha256": "ca93ed68423e183f42eb70c37b84135eed68a7899310e3af8ee8922fef3bdce7"
+    },
+    "paper_build/main.log": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/paper_build/main.log",
+      "exists": true,
+      "bytes": 16514,
+      "sha256": "b319ee00fb60f180bf51c786055bdfaac21e852a419f95356ace4a86dbee982b"
+    }
+  },
+  "final_manifest_sha256": "85ac1bfdfc71dea645c01421811ed1e5d95df617034077c532feee6052a769ba",
+  "finished_utc": "2026-10-25T12:34:58.789834+00:00"
+}

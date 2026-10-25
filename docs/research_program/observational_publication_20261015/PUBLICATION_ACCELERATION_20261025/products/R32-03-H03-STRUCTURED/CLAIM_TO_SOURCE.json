@@ -1,0 +1,37 @@
+{
+  "schema": "H03_STRUCTURED_CLAIMS_v1",
+  "owner": "htt",
+  "claim_tier": "conditional_finite_statistical_method",
+  "transfer_source": "none",
+  "claims": [
+    {
+      "id": "H03-C1",
+      "text": "Retained full-covariance baseline T0=23.39672052266718, fixed six-degree tau95=12.591587243743977 and unrestricted eta95=1.288553003650112",
+      "status": "VALIDATED_CONDITIONAL",
+      "evidence": ["evidence/sources/H03_SOURCE_TOMOGRAPHY.json", "evidence/output/physical_results.json", "generated/analysis.json:T0,tau95,unrestricted_eta95", "consumer.py:main"],
+      "caveat": "Working covariance and Gaussian tail are retained assumptions; no new survey null calibration."
+    },
+    {
+      "id": "H03-C2",
+      "text": "For fixed finite-window response designs, the projected image is an ellipsoid with exact pseudoinverse attainment and a KKT trust-region minimum",
+      "status": "DERIVED_AND_NUMERICALLY_CHECKED",
+      "evidence": ["main.tex:equations 4-8", "consumer.py:svd_data,threshold,controls", "generated/analysis.json:designs"],
+      "caveat": "The declared coefficient norm is a sensitivity budget, not an inferred physical error distribution."
+    },
+    {
+      "id": "H03-C3",
+      "text": "Depth-slope floor 15.3160 is above the fixed threshold; FP composition and joint designs attain it at rho95=5.7509 and 1.5897",
+      "status": "VALIDATED_CONDITIONAL",
+      "evidence": ["generated/analysis.json:designs", "generated/matrix_min_budget.csv", "figures/scientific_budget.pdf", "figures/irreducible_floor.pdf"],
+      "caveat": "Designs are conditional finite-window response spaces; FP fraction is no physical Jacobian."
+    },
+    {
+      "id": "H03-C4",
+      "text": "Physical response and full x,F,Pi,Q,G_F interpretation remain undefined",
+      "status": "HOLD",
+      "evidence": ["evidence/sources/H03_SOURCE_TOMOGRAPHY.json", "main.tex:Interpretation and required physical input", "/mnt/extdrive/workdir/htt_open_data/r35_h03_bandpass_contract_intake/CONTRACT.md"],
+      "caveat": "Requires signed estimator derivatives and a justified joint coefficient law or bound; original 42-node acceptance unchanged."
+    }
+  ],
+  "forbidden_claims_detected": []
+}

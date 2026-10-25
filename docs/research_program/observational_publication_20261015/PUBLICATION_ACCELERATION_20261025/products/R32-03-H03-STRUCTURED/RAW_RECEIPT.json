@@ -1,0 +1,85 @@
+{
+  "schema": "R32-03-H03-STRUCTURED-RAW-v1",
+  "task_id": "R32-03-H03-STRUCTURED",
+  "packet_id": "0a81e3b1b567331a9a0dc0dec073bd1ba352f6df114023f922674f7f9ec00b09",
+  "input_identity": "sha256:c8dd7ac321c957c6524f3b75d4fdae47a2c0897bf9517fd353c9a1f3c5469010",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "high",
+  "observed_runtime": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED",
+  "checkout_head_at_start": "5da49ec48afd10f7bfaf1b38e950a1193df55b60",
+  "production_scope": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED",
+  "first_execution_failure": null,
+  "commands": [
+    {
+      "command": "python consumer.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED",
+      "purpose": "first actual numerical execution",
+      "exit_status": 0,
+      "duration_seconds_observed": 1.576537745,
+      "result": "baseline and crossings computed; no first failure"
+    },
+    {
+      "command": "python consumer.py > raw/consumer.stdout 2> raw/consumer.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED",
+      "purpose": "final contracted controls and generated outputs",
+      "exit_status": 0,
+      "duration_seconds_observed": 1.62,
+      "stdout": "raw/consumer.stdout",
+      "stderr": "raw/consumer.stderr"
+    },
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED",
+      "purpose": "initial preprint layout build",
+      "exit_status": 0,
+      "duration_seconds_observed": 1.45,
+      "result": "8-page preprint layout; superseded for compact presentation"
+    },
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED",
+      "purpose": "notitlepage layout check",
+      "exit_status": 0,
+      "duration_seconds_observed": 0.8,
+      "result": "preprint class retained title-only page; superseded"
+    },
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED",
+      "purpose": "two-column reprint layout check",
+      "exit_status": 0,
+      "duration_seconds_observed": 1.29,
+      "result": "overfull equations and float warning; superseded"
+    },
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED",
+      "purpose": "final one-column RevTeX review PDF",
+      "exit_status": 0,
+      "duration_seconds_observed": 1.39,
+      "stdout": "raw/latexmk.stdout",
+      "stderr": "raw/latexmk.stderr",
+      "result": "5 pages, no final warning/error/overfull lines in main.log"
+    },
+    {
+      "command": "rg -n forbidden_claim_patterns main.tex README.md CLAIM_TO_SOURCE.json generated/analysis.json",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED",
+      "exit_status": 0,
+      "result": "no matches; search wrapper used true on no-match"
+    }
+  ],
+  "input_sha256": {
+    "H03_SOURCE_TOMOGRAPHY.json": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+    "physical_results.json": "25342649e30a8d631a5364002ae39ebffae0a5d92e1e4ad25c9e2f8dfe9362cc"
+  },
+  "raw_logs": [
+    "raw/consumer.stdout",
+    "raw/consumer.stderr",
+    "raw/latexmk.stdout",
+    "raw/latexmk.stderr",
+    "main.log"
+  ],
+  "review": "independent scoped review pending at candidate handoff",
+  "original42_acceptance": false
+}

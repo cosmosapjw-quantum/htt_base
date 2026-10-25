@@ -1,0 +1,111 @@
+{
+  "schema": "H03_STRUCTURED_ARTIFACT_MANIFEST_v1",
+  "task_id": "R32-03-H03-STRUCTURED",
+  "packet_id": "0a81e3b1b567331a9a0dc0dec073bd1ba352f6df114023f922674f7f9ec00b09",
+  "input_identity": "sha256:c8dd7ac321c957c6524f3b75d4fdae47a2c0897bf9517fd353c9a1f3c5469010",
+  "checkout_head_at_start": "5da49ec48afd10f7bfaf1b38e950a1193df55b60",
+  "owner": "htt",
+  "scope": "conditional finite-window structured-response research product",
+  "claim_tier": "CONDITIONAL",
+  "transfer_source": "none",
+  "sky_support_status": "retained four-window ICRS J2000 dipole marginal",
+  "null_mock_status": "not newly calibrated; retained working Gaussian law only",
+  "source_identities": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/sources/H03_SOURCE_TOMOGRAPHY.json",
+      "sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/output/physical_results.json",
+      "sha256": "25342649e30a8d631a5364002ae39ebffae0a5d92e1e4ad25c9e2f8dfe9362cc"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_bandpass_contract_intake/CONTRACT.md",
+      "sha256": "60e9fe5b62a5396f76363890b1bc12e85799c5b8f9d49388ce699d3c5524a95f",
+      "role": "Astra executable framing, excluded from independent review"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_bandpass_contract_intake/RESULT.json",
+      "sha256": "1596a7a1948396229c008242102c4b579698165facd1564daa9b00e4378774af",
+      "role": "framer receipt"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/H03_ACTUAL_ACK_GO.json",
+      "sha256": "f0cf44271f44fdccc8960b4a3338af8ab01aa4cf54957989d8722412e82af6fd",
+      "role": "actual root writer GO receipt"
+    }
+  ],
+  "generating_command": "python consumer.py && latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex",
+  "artifacts": [
+    {
+      "path": "consumer.py",
+      "sha256": "5000c85b82cc9598ed7d33f4033318f95af68775fb648c618bdcf82b63c81610",
+      "bytes": 17203
+    },
+    {
+      "path": "main.tex",
+      "sha256": "0d35de835db28a211056c09dccd1439c6da096f6e32edb5cfbe343780abdff0a",
+      "bytes": 12700
+    },
+    {
+      "path": "main.pdf",
+      "sha256": "6941dffb1dbd302b0768de0eb947db52655e93136ad39376ed39f58f32a9a66a",
+      "bytes": 381749
+    },
+    {
+      "path": "README.md",
+      "sha256": "cdef51cec02a81c2b3096c1d4b6415f26a87c0f38befb61c87a46175f9e71b0f",
+      "bytes": 2197
+    },
+    {
+      "path": "CLAIM_TO_SOURCE.json",
+      "sha256": "c805b34e0bec5d332da1da7cdd8d962ae230c4fbf7c14c10c86a564e8da6c7f7",
+      "bytes": 2200
+    },
+    {
+      "path": "RAW_RECEIPT.json",
+      "sha256": "c54a77ad693118e758a0978ce1a6012adef55ab15c658f10b698c71b97e0eeef",
+      "bytes": 4561
+    },
+    {
+      "path": "generated/source_carrier.json",
+      "sha256": "8402739ebdf9f0d294e63f5fd6fdcdea8f33d810cb1b9d298d823a53d82073dd",
+      "bytes": 60975
+    },
+    {
+      "path": "generated/analysis.json",
+      "sha256": "6afdb6ee83f9c17a1dec01df408f39c84e8109b90b8537b3f28c2b8267490e9d",
+      "bytes": 48315
+    },
+    {
+      "path": "generated/matrix_min_budget.csv",
+      "sha256": "9726ee48e8b571b2e8af9a0183eab55df813fc097fb0a87ba63465013101ec3e",
+      "bytes": 717
+    },
+    {
+      "path": "generated/table.tex",
+      "sha256": "f47c37f572677fb4dca60760a21740af90eaa3a8bbedb43abef35f1ccd6e28ca",
+      "bytes": 631
+    },
+    {
+      "path": "figures/scientific_budget.pdf",
+      "sha256": "e7fba828ac35d634991f352b4948919d0101b27d28d148c765554bc8e6df7522",
+      "bytes": 21269
+    },
+    {
+      "path": "figures/frontier_comparison.pdf",
+      "sha256": "e5f344fa691d0cfe1b2041f1910602f187c794b12aa237772ae90360cb95a3a2",
+      "bytes": 16381
+    },
+    {
+      "path": "figures/irreducible_floor.pdf",
+      "sha256": "93bfc5e30b2e6ba7b970535bdccb2923873592e1c82a4701efb3233aecf7c8ea",
+      "bytes": 15207
+    }
+  ],
+  "caveats": [
+    "Declared design coefficients are sensitivity parameters, not physical calibration amplitudes.",
+    "Full physical x,F,Pi,Q,G_F and original 42 acceptances are unchanged.",
+    "Independent review is separate from candidate generation."
+  ]
+}

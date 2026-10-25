@@ -1,0 +1,208 @@
+{
+  "schema": "H03_STRUCTURED_REPAIR_ARTIFACT_MANIFEST_v1",
+  "task_id": "R32-03-H03-STRUCTURED",
+  "attempt": 3,
+  "phase": "repair",
+  "packet_id": "66d23ed528dd472d98681b0a586048e632a060493f722417be3861211fb97e97",
+  "input_identity": "sha256:c8dd7ac321c957c6524f3b75d4fdae47a2c0897bf9517fd353c9a1f3c5469010",
+  "previous_candidate_manifest_sha256": "85ac1bfdfc71dea645c01421811ed1e5d95df617034077c532feee6052a769ba",
+  "repair_plan_string_sha256": "2d4fc64a8459da0a481f8c62c99393d5eecfdc682a06b36310f21bf77d7f90bb",
+  "owner": "htt",
+  "scope": "conditional finite-window structured-response repair candidate",
+  "claim_tier": "CONDITIONAL",
+  "transfer_source": "none",
+  "sky_support_status": "retained four-window ICRS J2000 dipole marginal",
+  "null_mock_status": "not newly calibrated; retained working Gaussian law only",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "high",
+  "observed_runtime": "UNKNOWN",
+  "checkout_branch_observed_at_receipt": "research/htt-adaptive-methods-20261023",
+  "checkout_head_observed_at_receipt": "30c087191d72b469f8ebe042db98bb04ca97848b",
+  "source_identities": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/sources/H03_SOURCE_TOMOGRAPHY.json",
+      "sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+      "role": "immutable retained H03 source"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/output/physical_results.json",
+      "sha256": "25342649e30a8d631a5364002ae39ebffae0a5d92e1e4ad25c9e2f8dfe9362cc",
+      "role": "immutable retained physical extraction"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/ARTIFACT_MANIFEST.json",
+      "sha256": "85ac1bfdfc71dea645c01421811ed1e5d95df617034077c532feee6052a769ba",
+      "role": "preserved first candidate"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/H03_REPAIR_ACTUAL_ACK_GO.json",
+      "sha256": "f9819afb1c411782bab54b9d029f8cf4bf635e9adda61a2268f7da4f272fe461",
+      "role": "actual same-task repair GO"
+    }
+  ],
+  "generating_commands": [
+    "python consumer.py",
+    "python -m pytest -q test_boundary_repair.py",
+    "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex"
+  ],
+  "comparison_status": "all three fixed-design frontiers and 363 curve points equal old candidate within original tolerances",
+  "figure_note": "irreducible_floor.pdf copied byte-for-byte from first candidate; two regenerated figure PDFs render pixel-identically at 120 dpi despite byte differences",
+  "independent_repair_review_status": "PENDING",
+  "proposed_qualified_products": [
+    "structured_frontier"
+  ],
+  "acceptance_met": false,
+  "original42_acceptance": false,
+  "artifacts": [
+    {
+      "path": "consumer.py",
+      "sha256": "6874e968390325161bab5da6513b12663a5c5afcb82563c8a02c5a4409185768",
+      "bytes": 19650
+    },
+    {
+      "path": "test_boundary_repair.py",
+      "sha256": "a15401b2cad86b4d51999aad569fe77647230adda100a98a6148ed47370866f8",
+      "bytes": 4661
+    },
+    {
+      "path": "main.tex",
+      "sha256": "8c7c201a4848bd52f349c327627cced98cfbcae90faa2f9cbf16d9ddfca6258d",
+      "bytes": 13308
+    },
+    {
+      "path": "main.pdf",
+      "sha256": "85aa3fbcda53b6a13d62b0c8c535483ed345d535c5fbb8f2e4fb48b8115e53c7",
+      "bytes": 382433
+    },
+    {
+      "path": "README.md",
+      "sha256": "a8ac81e489f9f19874ea264be1a1cc21788911602d5dd35ccc0b3dc9bdfd40a0",
+      "bytes": 1808
+    },
+    {
+      "path": "CLAIM_TO_SOURCE.json",
+      "sha256": "74c6af673f8a3f101e8e43ce856b0aafd8ddf9f997d92fa1ef0cfc1cd85be4fe",
+      "bytes": 2331
+    },
+    {
+      "path": "RAW_RECEIPT.json",
+      "sha256": "680c89e934156167bedaaeab6a9c50634b1ed4e4896fddea4653dd07fe50a94f",
+      "bytes": 5455
+    },
+    {
+      "path": "generated/source_carrier.json",
+      "sha256": "8402739ebdf9f0d294e63f5fd6fdcdea8f33d810cb1b9d298d823a53d82073dd",
+      "bytes": 60975
+    },
+    {
+      "path": "generated/analysis.json",
+      "sha256": "6afdb6ee83f9c17a1dec01df408f39c84e8109b90b8537b3f28c2b8267490e9d",
+      "bytes": 48315
+    },
+    {
+      "path": "generated/matrix_min_budget.csv",
+      "sha256": "9726ee48e8b571b2e8af9a0183eab55df813fc097fb0a87ba63465013101ec3e",
+      "bytes": 717
+    },
+    {
+      "path": "generated/table.tex",
+      "sha256": "f47c37f572677fb4dca60760a21740af90eaa3a8bbedb43abef35f1ccd6e28ca",
+      "bytes": 631
+    },
+    {
+      "path": "figures/scientific_budget.pdf",
+      "sha256": "3cab88fbc89877829487a62dc375a570667effca38ab22d4934f6035d23c1039",
+      "bytes": 21269
+    },
+    {
+      "path": "figures/frontier_comparison.pdf",
+      "sha256": "e3d68dd8317298c23106610364e3c3190b3f88fc205c726a77900cdfbd5faa3d",
+      "bytes": 16381
+    },
+    {
+      "path": "figures/irreducible_floor.pdf",
+      "sha256": "93bfc5e30b2e6ba7b970535bdccb2923873592e1c82a4701efb3233aecf7c8ea",
+      "bytes": 15207
+    },
+    {
+      "path": "main.log",
+      "sha256": "b6baa480a987368242cc28a5f1115a657769a5425714108f58e2f47a70e7dd6c",
+      "bytes": 16514
+    },
+    {
+      "path": "raw/comparison.json",
+      "sha256": "7b564afcfe9b47456a720b197145cb6c3d0faf100d28eb791c982a405a154f45",
+      "bytes": 2961
+    },
+    {
+      "path": "raw/consumer.stderr",
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852",
+      "bytes": 379
+    },
+    {
+      "path": "raw/consumer.stdout",
+      "sha256": "9bf1e96b1a3b87dfe0c104f981a754796c5998b88f293ff39dd539c2526edf6c",
+      "bytes": 727
+    },
+    {
+      "path": "raw/figure_render_comparison.json",
+      "sha256": "6216d13d85b8d6c7f7380aca32725ff87ac4d6d0592f5865f39526dd50b96cbb",
+      "bytes": 2994
+    },
+    {
+      "path": "raw/latexmk.stderr",
+      "sha256": "10a12a779ef58387cb786e931a9997999975d454e10bd19f68a65e59f0573f27",
+      "bytes": 70
+    },
+    {
+      "path": "raw/latexmk.stdout",
+      "sha256": "6120cfc0bd15f232b4e868f793f364576fe66e1ae589b48bf11223329649f158",
+      "bytes": 14668
+    },
+    {
+      "path": "raw/new_frontier_comparison.png",
+      "sha256": "ba1acab1ab5a557c6c3fb6fe10a801ef0e37f0674c5623021ce8107aa516590e",
+      "bytes": 22311
+    },
+    {
+      "path": "raw/new_scientific_budget.png",
+      "sha256": "b719514ef941ddea482fa8d63e6a0b7bef3b65f1121b747308f0ee87a8c40685",
+      "bytes": 29315
+    },
+    {
+      "path": "raw/old_frontier_comparison.png",
+      "sha256": "ba1acab1ab5a557c6c3fb6fe10a801ef0e37f0674c5623021ce8107aa516590e",
+      "bytes": 22311
+    },
+    {
+      "path": "raw/old_scientific_budget.png",
+      "sha256": "b719514ef941ddea482fa8d63e6a0b7bef3b65f1121b747308f0ee87a8c40685",
+      "bytes": 29315
+    },
+    {
+      "path": "raw/packaging.diff",
+      "sha256": "75900d5c5455dbc35ac94d551450178ac8de41edf27251963c3cbef8143cdd26",
+      "bytes": 1351
+    },
+    {
+      "path": "raw/pytest.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/pytest.stdout",
+      "sha256": "e48001ccbbdf9852c50bad25480795ba3f6fd0e136b635669d38bc6cffb59bce",
+      "bytes": 750
+    },
+    {
+      "path": "raw/repaired_page-2.png",
+      "sha256": "d527724e54eb3266ff10c71e7729c07760ace0162cc46dc44b91e316cd0fe8ee",
+      "bytes": 365961
+    }
+  ],
+  "caveats": [
+    "Declared design coefficients are conditional sensitivity parameters, not measured physical errors.",
+    "Full physical x,F,Pi,Q,G_F and original 42-node acceptances remain unchanged.",
+    "Targeted independent closeout is required before product qualification or dependency release."
+  ]
+}

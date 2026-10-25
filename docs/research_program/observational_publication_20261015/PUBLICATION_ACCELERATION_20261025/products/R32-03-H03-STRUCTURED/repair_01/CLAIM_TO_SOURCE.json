@@ -1,0 +1,44 @@
+{
+  "schema": "H03_STRUCTURED_REPAIR_CLAIMS_v1",
+  "task_id": "R32-03-H03-STRUCTURED",
+  "owner": "htt",
+  "scope": "conditional finite-window sensitivity method",
+  "claim_tier": "CONDITIONAL",
+  "transfer_source": "none",
+  "independent_repair_closeout": "PENDING",
+  "claims": [
+    {
+      "id": "H03-R-C1",
+      "text": "The three fixed finite-window designs retain ranks 3, 3, 6, their irreducible floors and threshold budgets under the full retained 12D covariance and six-degree working reference.",
+      "status": "CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+      "evidence_type": "artifact_and_test",
+      "evidence": ["generated/analysis.json", "raw/comparison.json", "raw/consumer.stdout", "raw/pytest.stdout"],
+      "caveat": "These are conditional sensitivity spaces, not physical calibration Jacobians or survey-null coverage."
+    },
+    {
+      "id": "H03-R-C2",
+      "text": "An analytically specified floor equal to the threshold has finite coefficient radius rho_sat and image minimum sqrt(T0-tau); numerical proximity without such an identity remains unqualified.",
+      "status": "CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+      "evidence_type": "derivation_and_test",
+      "evidence": ["main.tex", "consumer.py:threshold,image_budget", "test_boundary_repair.py"],
+      "caveat": "A computed floor inside the 1e-9 boundary band returns a numerical-boundary hold and no finite budget."
+    },
+    {
+      "id": "H03-R-C3",
+      "text": "The exact D=X signal-span control has no projected response or discrepancy gain through the production analysis path.",
+      "status": "CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+      "evidence_type": "structural_identity_and_test",
+      "evidence": ["consumer.py:svd_data,analyse,controls", "test_boundary_repair.py", "raw/consumer.stdout"],
+      "caveat": "Unknown small nonzero projected responses remain NUMERIC_RANK_HOLD."
+    },
+    {
+      "id": "H03-R-C4",
+      "text": "Physical response amplitudes and the full x,F,Pi,Q,G_F interpretation remain undefined.",
+      "status": "HOLD",
+      "evidence_type": "source_scope",
+      "evidence": ["main.tex", "README.md"],
+      "caveat": "Requires signed estimator derivatives and a justified joint coefficient law or bound; original 42-node acceptance is unchanged."
+    }
+  ],
+  "forbidden_claims_detected": []
+}

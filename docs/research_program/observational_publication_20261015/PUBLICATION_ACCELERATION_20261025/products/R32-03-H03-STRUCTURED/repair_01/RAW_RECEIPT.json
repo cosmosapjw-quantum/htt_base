@@ -1,0 +1,99 @@
+{
+  "schema": "R32-03-H03-STRUCTURED-REPAIR-RAW-v1",
+  "task_id": "R32-03-H03-STRUCTURED",
+  "attempt": 3,
+  "phase": "repair",
+  "packet_id": "66d23ed528dd472d98681b0a586048e632a060493f722417be3861211fb97e97",
+  "input_identity": "sha256:c8dd7ac321c957c6524f3b75d4fdae47a2c0897bf9517fd353c9a1f3c5469010",
+  "agent_id": "/root/r35_h03_boundary_repair_preparation",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "high",
+  "observed_runtime": "UNKNOWN",
+  "ack_go_path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/H03_REPAIR_ACTUAL_ACK_GO.json",
+  "ack_go_sha256": "f9819afb1c411782bab54b9d029f8cf4bf635e9adda61a2268f7da4f272fe461",
+  "formal_packet_path": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/NEXT_AFTER_CF4_FORMAL_REVIEW.json",
+  "repair_plan_string_sha256": "2d4fc64a8459da0a481f8c62c99393d5eecfdc682a06b36310f21bf77d7f90bb",
+  "preparation_receipt_path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_boundary_repair_preparation/PREPARATION.json",
+  "original_candidate_manifest_sha256": "85ac1bfdfc71dea645c01421811ed1e5d95df617034077c532feee6052a769ba",
+  "original_consumer_sha256": "5000c85b82cc9598ed7d33f4033318f95af68775fb648c618bdcf82b63c81610",
+  "original_review_first_failures_path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/RAW_RECEIPT.json",
+  "source_sha256": {
+    "H03_SOURCE_TOMOGRAPHY.json": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+    "physical_results.json": "25342649e30a8d631a5364002ae39ebffae0a5d92e1e4ad25c9e2f8dfe9362cc"
+  },
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01",
+  "checkout_head_observed_at_receipt": "30c087191d72b469f8ebe042db98bb04ca97848b",
+  "checkout_branch_observed_at_receipt": "research/htt-adaptive-methods-20261023",
+  "environment": {
+    "python_executable": "/usr/bin/python",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8",
+    "pytest": "9.1.1"
+  },
+  "commands": [
+    {
+      "command": "python -m pytest -q /mnt/extdrive/workdir/htt_open_data/r35_h03_boundary_repair_preparation/test_boundary_repair.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_status": 0,
+      "wall_time_seconds": 1.723670653,
+      "result": "9 passed, one nonblocking Matplotlib Axes3D import warning"
+    },
+    {
+      "command": "python consumer.py > raw/consumer.stdout 2> raw/consumer.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01",
+      "exit_status": 0,
+      "wall_time_seconds": 1.33206008,
+      "stdout": "raw/consumer.stdout",
+      "stderr": "raw/consumer.stderr"
+    },
+    {
+      "command": "python -m pytest -q test_boundary_repair.py > raw/pytest.stdout 2> raw/pytest.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01",
+      "exit_status": 0,
+      "wall_time_seconds": 1.378767871,
+      "stdout": "raw/pytest.stdout",
+      "stderr": "raw/pytest.stderr",
+      "result": "9 passed"
+    },
+    {
+      "command": "python inline cached analysis comparison (source and output raw/comparison.json)",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01",
+      "exit_status": 0,
+      "wall_time_seconds": 0.031790579,
+      "result": "all 363 curve points and fixed-design values unchanged"
+    },
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex > raw/latexmk.stdout 2> raw/latexmk.stderr",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01",
+      "exit_status": 0,
+      "wall_time_seconds": 1.379378518,
+      "stdout": "raw/latexmk.stdout",
+      "stderr": "raw/latexmk.stderr",
+      "result": "five-page RevTeX PDF; no unresolved warnings in final main.log"
+    },
+    {
+      "command": "pdftoppm -f 1 -singlefile -r 120 -png [old/new figure PDFs] raw/[old/new]_[figure]",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01",
+      "exit_status": 0,
+      "receipt": "raw/figure_render_comparison.json",
+      "result": "both regenerated figures pixel-identical to preserved original at 120 dpi"
+    }
+  ],
+  "cached_comparison": "raw/comparison.json",
+  "figure_render_comparison": "raw/figure_render_comparison.json",
+  "packaging_diff": "raw/packaging.diff",
+  "first_repair_execution_failure": null,
+  "old_first_candidate_failures_preserved": true,
+  "main_pdf_pages": 5,
+  "main_pdf_visual_page_2_inspected": true,
+  "scientific_claim_status": "CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+  "proposed_qualified_products": [
+    "structured_frontier"
+  ],
+  "acceptance_met": false,
+  "original42_acceptance": false,
+  "new_ultra": 0,
+  "new_task_or_reset": false,
+  "finished_utc": "2026-10-25T14:28:14.440785+00:00"
+}

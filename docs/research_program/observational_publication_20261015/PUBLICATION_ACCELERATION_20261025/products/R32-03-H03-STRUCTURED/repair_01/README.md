@@ -1,0 +1,9 @@
+# H03 structured frontier, bounded repair candidate
+
+This is the same `R32-03-H03-STRUCTURED` task under formal repair packet `66d23ed528dd472d98681b0a586048e632a060493f722417be3861211fb97e97`. The first candidate and its manifest remain preserved in the parent directory. This candidate repairs numerical boundary classification, the exact floor-equality image budget, and the projected-zero `D=X` rank control. It does not change the three fixed sensitivity designs, the full retained covariance, the six-degree reference, or the physical interpretation.
+
+`consumer.py` reads only the two frozen H03 JSON inputs and generates `generated/analysis.json`, `generated/table.tex`, `generated/matrix_min_budget.csv`, and two response figures. The original irreducible-floor figure is copied byte-for-byte because its inputs are unchanged. Run `python consumer.py` in this directory, then `python -m pytest -q test_boundary_repair.py`. Build the five-page English RevTeX note with `latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex`.
+
+`raw/comparison.json` compares all three actual frontiers against the preserved candidate under the original tolerances; all 363 curve points and reported numerical values are unchanged. `raw/figure_render_comparison.json` records pixel-identical rendering of the two regenerated vector figures at 120 dpi. The full signed matrices, witnesses, refits, and KKT checks remain in `generated/analysis.json` and `consumer.py`.
+
+The coefficients are conditional sensitivity parameters, not measured calibration errors. The physical $(x,F,\Pi,Q,G_F)$ object remains undefined. `structured_frontier` is proposed for independent targeted review; neither this repair nor its successful local tests constitute scientific admission, publication, or original 42-node acceptance.

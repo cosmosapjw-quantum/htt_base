@@ -1,0 +1,53 @@
+{
+  "schema": "H03_BOUNDARY_REPAIR_PREPARATION_v1",
+  "task_id": "R32-03-H03-STRUCTURED",
+  "phase": "SOURCE_AND_TEST_PREPARATION_ONLY",
+  "prepared_utc": "2026-10-25T12:39:48.438896+00:00",
+  "requested_model": "gpt-6-sol",
+  "requested_effort": "high",
+  "observed_runtime": "UNKNOWN",
+  "formal_controller_repair_packet": "PENDING",
+  "root_repair_go": "PENDING",
+  "scientific_numerical_execution": "NOT_RUN",
+  "test_execution": "NOT_RUN",
+  "candidate_regeneration": "NOT_RUN",
+  "publication_decision": "NOT_MADE",
+  "original_manifest_sha256": "85ac1bfdfc71dea645c01421811ed1e5d95df617034077c532feee6052a769ba",
+  "original_consumer_sha256": "5000c85b82cc9598ed7d33f4033318f95af68775fb648c618bdcf82b63c81610",
+  "frozen_source_sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+  "frozen_physical_results_sha256": "25342649e30a8d631a5364002ae39ebffae0a5d92e1e4ad25c9e2f8dfe9362cc",
+  "independent_review_result_sha256": "59b315eaf94d8e7603334497313075753ee19f52edfd742dd602ce152937570c",
+  "repair_plan_string_sha256": "2d4fc64a8459da0a481f8c62c99393d5eecfdc682a06b36310f21bf77d7f90bb",
+  "prepared_files": {
+    "new_candidate.py": {
+      "sha256": "247d7e175b73fa40cedb0c83cf3cc993a9184fd7efabf90b0deb85fe52dc2b39",
+      "bytes": 19820
+    },
+    "test_boundary_repair.py": {
+      "sha256": "64e66f681308179d5ea1992fc7d0241091cbd4e4d28d114ca1aa826268addc57",
+      "bytes": 4666
+    },
+    "repair.patch": {
+      "sha256": "5d168edea239813c00040ee138e67125666df65f0b06d7d83ca55fd21157c40a",
+      "bytes": 9053
+    }
+  },
+  "checks": [
+    "AST parse of prepared Python sources: PASS",
+    "unified diff generated from immutable original: PASS",
+    "scientific tests: NOT_RUN"
+  ],
+  "preparation_commands": [
+    "git branch --show-current; git rev-parse HEAD; git status --short (read-only, existing dirty checkout)",
+    "sha256sum original manifest, original consumer, frozen source, frozen physical results, independent review",
+    "mkdir -p /mnt/extdrive/workdir/htt_open_data/r35_h03_boundary_repair_preparation",
+    "cp original consumer.py /mnt/extdrive/workdir/htt_open_data/r35_h03_boundary_repair_preparation/new_candidate.py",
+    "apply_patch only to owned new_candidate.py and test_boundary_repair.py",
+    "python ast.parse on both prepared Python sources",
+    "python difflib.unified_diff to owned repair.patch"
+  ],
+  "exact_proposed_go_only_test_command": "python -m pytest -q /mnt/extdrive/workdir/htt_open_data/r35_h03_boundary_repair_preparation/test_boundary_repair.py",
+  "execution_note": "new_candidate.py is a prepared replacement source; its main writes generated artifacts and must only run after a formal current-controller repair packet and root GO in the controller-designated candidate layout.",
+  "preserved_first_candidate": true,
+  "current_controller_phase_unchanged": true
+}

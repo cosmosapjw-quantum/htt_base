@@ -1,0 +1,103 @@
+{
+  "status": "PASS_TARGETED_INDEPENDENT_NUMERICS",
+  "consumer_curve_point_count": 363,
+  "independent_designs": {
+    "depth_slope": {
+      "rank": 3,
+      "floor": 15.31600239641714,
+      "rho95": null,
+      "rho_sat": 0.7465346677551388,
+      "curve_max_abs_error": 4.263256414560601e-14,
+      "direct_refit_T": null,
+      "unprojected_norm": 15.628950975784493,
+      "minimum_projected_global_ratio": 0.17669957250758603
+    },
+    "FP_composition": {
+      "rank": 3,
+      "floor": 6.660568527209009,
+      "rho95": 5.750880608573553,
+      "rho_sat": 14.577216817606802,
+      "curve_max_abs_error": 4.263256414560601e-14,
+      "direct_refit_T": 12.59158724374396,
+      "unprojected_norm": 2.881778436101364,
+      "minimum_projected_global_ratio": 0.09004754020798374
+    },
+    "joint": {
+      "rank": 6,
+      "floor": 1.281898970984144e-30,
+      "rho95": 1.589671174065129,
+      "rho_sat": 15.446116768020836,
+      "curve_max_abs_error": 4.973799150320701e-14,
+      "direct_refit_T": 12.59158724374395,
+      "unprojected_norm": 15.806548843230518,
+      "minimum_projected_global_ratio": 0.012808786793383518
+    }
+  },
+  "D_equals_X": {
+    "rank": 0,
+    "rho95": null,
+    "q_min": null,
+    "floor": 23.39672052266718,
+    "T0": 23.39672052266718,
+    "curve_constant": true,
+    "tested_rho": [
+      0.0,
+      1.0,
+      10.0,
+      1e+100
+    ],
+    "T_at_tested_rho": [
+      23.39672052266718,
+      23.39672052266718,
+      23.39672052266718,
+      23.39672052266718
+    ],
+    "projected_frobenius_norm": 2.2883204606165413e-15,
+    "global_reference": 7.83391107141197,
+    "without_structural_identity": "NUMERIC_RANK_HOLD"
+  },
+  "boundary_samples": [
+    {
+      "offset": 0.0,
+      "analytic_equality": true,
+      "status": "FINITE_FLOOR_EQUALITY",
+      "rho": 1.0,
+      "q_min": 1.0
+    },
+    {
+      "offset": 0.0,
+      "analytic_equality": false,
+      "status": "NUMERIC_BOUNDARY_FLOOR",
+      "rho": null,
+      "q_min": null
+    },
+    {
+      "offset": 5e-10,
+      "analytic_equality": false,
+      "status": "NUMERIC_BOUNDARY_FLOOR",
+      "rho": null,
+      "q_min": null
+    },
+    {
+      "offset": -5e-10,
+      "analytic_equality": false,
+      "status": "NUMERIC_BOUNDARY_FLOOR",
+      "rho": null,
+      "q_min": null
+    },
+    {
+      "offset": 0.25,
+      "analytic_equality": false,
+      "status": "THRESHOLD_UNATTAINABLE_FOR_THIS_D",
+      "rho": null,
+      "q_min": null
+    },
+    {
+      "offset": -0.25,
+      "analytic_equality": false,
+      "status": "FINITE_CROSSING",
+      "rho": 0.4999999999999991,
+      "q_min": 0.5
+    }
+  ]
+}

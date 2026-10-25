@@ -1,0 +1,95 @@
+{
+  "schema": "H03_REPAIRED_FRESH_INDEPENDENT_REVIEW_RESULT_v1",
+  "task_id": "R32-03-H03-STRUCTURED",
+  "verdict": "SCOPED_PASS",
+  "status": "SCOPED_PASS",
+  "review_scope": "affected rank/boundary repair, original-three-design output equality, full covariance, five-page manuscript",
+  "candidate_identity": "sha256:4a31b981231a10b449bee2b7be65d0efc181dbd077f35ea55cb23ac38caf4c9d",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01/ARTIFACT_MANIFEST.json",
+  "candidate_input_identity": "sha256:c8dd7ac321c957c6524f3b75d4fdae47a2c0897bf9517fd353c9a1f3c5469010",
+  "original_candidate_identity": "sha256:85ac1bfdfc71dea645c01421811ed1e5d95df617034077c532feee6052a769ba",
+  "candidate_unchanged": true,
+  "conditional_candidate_scope_satisfied": true,
+  "acceptance_met": false,
+  "acceptance_scope": "structured_frontier only; formal controller admission pending",
+  "proposed_qualified_products": [
+    "structured_frontier"
+  ],
+  "qualified_products": [],
+  "original42_acceptance": false,
+  "formal_review_packet_status": "PENDING",
+  "formal_packet_id": null,
+  "formal_input_identity": null,
+  "formal_acknowledgement": "NOT_MADE",
+  "publication_decision": "NOT_MADE",
+  "reviewer_agent": "/root/r35_h03_repaired_fresh_review",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "independence": {
+    "framed_candidate": false,
+    "implemented_candidate": false,
+    "prior_targeted_review_and_repair_plan_read": true,
+    "harness_or_skill_verdict_used_as_oracle": false,
+    "independent_calculation": "symmetric eigen whitening plus 6D left-null basis and normal equations"
+  },
+  "findings": [],
+  "closed_findings": [
+    "H03-R1",
+    "H03-R2",
+    "H03-R3"
+  ],
+  "counterexample": null,
+  "bounded_repair": null,
+  "numerical_checks": {
+    "D_equals_X_rank": 0,
+    "D_equals_X_no_gain": true,
+    "uncertain_floor_plus_minus_5e_minus_10": "NUMERIC_BOUNDARY_FLOOR with no rho/q",
+    "exact_floor_equality_rho": 1.0,
+    "exact_floor_equality_q_min": 1.0,
+    "actual_design_ranks": [
+      3,
+      3,
+      6
+    ],
+    "curve_points_checked": 363,
+    "actual_consumer_original_curve_max_abs_error": 0.0,
+    "independent_curve_max_abs_error": 4.973799150320701e-14,
+    "full12_covariance_exact": true,
+    "fixed_df": 6,
+    "tau": 12.591587243743977,
+    "candidate_tests": "9 passed"
+  },
+  "rendered_pdf": {
+    "pages": 5,
+    "all_pages_visually_inspected": true,
+    "blocking_findings": [],
+    "cosmetic_notes": [
+      "two retained underfull bibliography boxes"
+    ],
+    "build_rerun": false,
+    "reason": "manifested PDF rendered; final existing build log reused"
+  },
+  "scientific_ceiling": "conditional finite-window sensitivity design; physical x/F/Pi/Q/G_F undefined",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/RAW_RECEIPT.json",
+  "review_report": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/REVIEW.md",
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/REVIEW.md",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/INDEPENDENT_NUMERICS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/review_probe.py",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/independent_probe.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/independent_probe.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/consumer.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/consumer.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/pytest.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/pytest.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/pdfinfo.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/main.txt",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/page-1.png",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/page-2.png",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/page-3.png",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/page-4.png",
+    "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/page-5.png"
+  ],
+  "next_executable_checkpoint": "Bind this result to the later exact formal controller review packet; verify candidate/input/ACK identity before controller-scoped structured_frontier admission. Preserve the first HOLD and original42."
+}

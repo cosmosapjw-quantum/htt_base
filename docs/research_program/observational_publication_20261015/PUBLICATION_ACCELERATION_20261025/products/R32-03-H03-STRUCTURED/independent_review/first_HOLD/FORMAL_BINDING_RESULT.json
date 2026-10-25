@@ -1,0 +1,165 @@
+{
+  "schema": "H03_FORMAL_REVIEW_BINDING_RESULT_v1",
+  "packet_id": "455dd007d1ec0b607fb1625477e088c078a1b23bd1ad8359934c671fcca98bdd",
+  "task_id": "R32-03-H03-STRUCTURED",
+  "input_identity": "sha256:c8dd7ac321c957c6524f3b75d4fdae47a2c0897bf9517fd353c9a1f3c5469010",
+  "candidate_identity": "sha256:85ac1bfdfc71dea645c01421811ed1e5d95df617034077c532feee6052a769ba",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "attempt": 2,
+  "phase": "review",
+  "agent_id": "/root/r35_h03_fresh_independent_review",
+  "outcome": "blocker",
+  "verdict": "SCOPED_HOLD",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "proposed_qualified_products": [],
+  "original42_acceptance": false,
+  "physical_acceptance": "HOLD",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/RAW_FORMAL_BINDING.json",
+  "raw_receipt_sha256": "f8af0f30486454b6a88148d1c8052897ddce4991f1ca5b9588d13528fc37f6cf",
+  "issue_class": "numeric",
+  "original_issue_class": "H03_STRUCTURED_BOUNDARY_AND_PROJECTED_ZERO_NUMERICS",
+  "question": "Does the unchanged H03 implementation satisfy the frozen exact-attainment and projected-zero controls as well as the three independently reproduced actual designs?",
+  "exact_missing_or_defect": "consumer.py:92-95 returns FINITE_FLOOR_EQUALITY and rho=1 for a floor tau+5e-10 even though tau is unattainable; consumer.py:40-54 self-normalizes projection roundoff for D=X into rank six while the control at 171-174 bypasses the production path; consumer.py:110 returns no image budget at exact attainable floor=tau. These are the original H03-R1/R2/R3 numerical implementation defects, not missing physical base inputs.",
+  "substantive": true,
+  "high_consequence": false,
+  "issue": {
+    "class": "numeric",
+    "question": "Does the unchanged H03 implementation satisfy the frozen exact-attainment and projected-zero controls as well as the three independently reproduced actual designs?",
+    "exact_missing_or_defect": "consumer.py:92-95 returns FINITE_FLOOR_EQUALITY and rho=1 for a floor tau+5e-10 even though tau is unattainable; consumer.py:40-54 self-normalizes projection roundoff for D=X into rank six while the control at 171-174 bypasses the production path; consumer.py:110 returns no image budget at exact attainable floor=tau. These are the original H03-R1/R2/R3 numerical implementation defects, not missing physical base inputs.",
+    "input_identity": "sha256:c8dd7ac321c957c6524f3b75d4fdae47a2c0897bf9517fd353c9a1f3c5469010",
+    "substantive": true,
+    "high_consequence": false
+  },
+  "repair_plan": "Authorize one bounded lower-tier repair preparation in a NEW sibling directory designated by the controller; preserve the entire first candidate and manifest 85ac1bfdfc71dea645c01421811ed1e5d95df617034077c532feee6052a769ba. Actual repair execution and candidate regeneration require the later formal current-controller repair packet; this review is not a packet, ACK, execution record, or publication decision. Modify only the numerical boundary/rank handling and their controls in consumer.py, then regenerate directly dependent evidence/manuscript assets as needed. Keep immutable source hashes, full 36D-to-12D covariance extraction, all off-diagonals, X, all three D designs, M=I, units/frame, fixed df=6, tau=12.591587243743977, baseline and unrestricted comparator unchanged. Boundary policy: distinguish analytically specified equality from uncertain floating-point proximity. A floor above tau must never receive a finite budget because abs(floor-tau)<=1e-9. For actual numerical floors inside that band without an exact equality identity, return a numerical-boundary HOLD and no finite rho/q. For a declared exact floor=tau<T0 fixture, return the finite minimum-norm least-squares radius rho_sat and q_min=sqrt(T0-tau); preserve zero budget for an established already-adequate baseline. Rank repair: preserve CONTRACT.md:93 relative-to-largest-B resolved-rank rules for a certified nonzero projected response, but precede them with a positive global reference that cannot self-normalize projection roundoff: E=W D M^(-1/2), s_ref=||E||_2. D=0 is exact zero. For s_ref>0, inspect singular values of B relative to s_ref; >=1e-10 certifies resolved directions, (1e-12,1e-10) is NUMERIC_RANK_HOLD, and <=1e-12 is only a candidate numerical-null band. Treat that band as zero only when an independently known exact structural identity supplies the nullity (in particular D=X implies P W D=0; or the rank-six projector supplies the six null directions of D=L); otherwise preserve uncertainty as NUMERIC_RANK_HOLD rather than inventing a lower physical rank. Also verify the known-zero projected norm against the same reference. Once nonzero response is certified, apply the original B-relative retained-spectrum rule and fail closed on any unresolved rank. This is a guard for the existing separately specified B=0 case, not a new physical truncation. The three current unprojected references are 15.628950975784491, 2.8817784361013654, 15.806548843230516 and their smallest projected/global ratios are 0.17669957, 0.09004754, 0.01280879, so this guard must preserve ranks 3,3,6. Run the actual production analysis path for D=X at rho=0, finite rho and saturation/no-improvement; do not replace it by a manually empty singular-value vector. Add deterministic exact floor=tau, floor=tau+5e-10, floor=tau-5e-10 and materially above/below cases, checking coefficient budget, image budget and boundary status together. Keep the full signed witness/refit and KKT checks. Recheck only the affected cached-matrix controls and all three actual frontiers against the preserved candidate within original tolerances; no raw catalogue, sky, source reintegration, native solver, ODE, CAS relaunch, new task, attempt reset or ultra. Return the new exact candidate to this independent reviewer for targeted closeout; do not repeat the entire provenance analysis. No structured_frontier qualification or R32-08 dependency release until that closeout passes.",
+  "repair_plan_sha256": "2d4fc64a8459da0a481f8c62c99393d5eecfdc682a06b36310f21bf77d7f90bb",
+  "counterexample": {
+    "call": "threshold(np.array([1.]), np.array([1.]), tau+5e-10, 1., tau+1.+5e-10, tau)",
+    "tau": 12.591587243743977,
+    "returned_status": "FINITE_FLOOR_EQUALITY",
+    "returned_rho95": 1.0,
+    "true_irreducible_T": 12.591587244243977,
+    "true_attainability": false
+  },
+  "counterexamples": [
+    {
+      "call": "threshold(np.array([1.]), np.array([1.]), tau+5e-10, 1., tau+1.+5e-10, tau)",
+      "tau": 12.591587243743977,
+      "returned_status": "FINITE_FLOOR_EQUALITY",
+      "returned_rho95": 1.0,
+      "true_irreducible_T": 12.591587244243977,
+      "true_attainability": false
+    },
+    {
+      "case": "Retained source, D=X, B=(I-Q Q.T) @ solve_triangular(L,X,lower=True)",
+      "expected_rank": 0,
+      "observed_rank": 6,
+      "projected_frobenius_norm": 2.2883204606165413e-15,
+      "T0": 23.39672052266718,
+      "false_floor": 22.491757346596945,
+      "false_saturation_budget": 1.9830537191258547e+17,
+      "independent_numpy_solve_false_floor": 13.972250012168807
+    },
+    {
+      "T0": "tau+1",
+      "floor": "tau",
+      "exact_minimum_coefficient_budget": 1.0,
+      "exact_minimum_image_budget": 1.0,
+      "returned_q_min_restricted": null
+    }
+  ],
+  "findings": [
+    {
+      "id": "H03-R1",
+      "severity": "P2",
+      "blocking": true,
+      "issue_class": "FEASIBILITY_TOLERANCE_PROMOTED_TO_EXACT_ATTAINMENT",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/consumer.py",
+      "lines": [
+        88,
+        103
+      ],
+      "contract_lines": [
+        82,
+        93
+      ],
+      "summary": "A numerical band around the floor is promoted to exact equality and a finite minimum budget. A floor strictly above tau cannot attain tau, irrespective of closeness.",
+      "counterexample": {
+        "call": "threshold(np.array([1.]), np.array([1.]), tau+5e-10, 1., tau+1.+5e-10, tau)",
+        "tau": 12.591587243743977,
+        "returned_status": "FINITE_FLOOR_EQUALITY",
+        "returned_rho95": 1.0,
+        "true_irreducible_T": 12.591587244243977,
+        "true_attainability": false
+      },
+      "fix": "Keep numerical-boundary qualification separate from exact synthetic equality. Never issue a finite budget when the certified floor is above tau. For a finite-precision floor within 1e-9 without an exact equality identity, return NUMERIC_BOUNDARY_FLOOR/HOLD with no finite budget; known exact floor=tau fixtures attain at rho_sat."
+    },
+    {
+      "id": "H03-R2",
+      "severity": "P2",
+      "blocking": true,
+      "issue_class": "PROJECTED_ROUNDOFF_SELF_NORMALIZED_AS_SIGNAL_RANK",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/consumer.py",
+      "lines": [
+        40,
+        54
+      ],
+      "related_lines": [
+        171,
+        174
+      ],
+      "contract_lines": [
+        80,
+        95
+      ],
+      "summary": "The projected-zero design D=X becomes rank six when numerical projection noise is normalized by its own maximum singular value. The existing control does not call the production SVD/curve path for D=X.",
+      "counterexample": {
+        "case": "Retained source, D=X, B=(I-Q Q.T) @ solve_triangular(L,X,lower=True)",
+        "expected_rank": 0,
+        "observed_rank": 6,
+        "projected_frobenius_norm": 2.2883204606165413e-15,
+        "T0": 23.39672052266718,
+        "false_floor": 22.491757346596945,
+        "false_saturation_budget": 1.9830537191258547e+17,
+        "independent_numpy_solve_false_floor": 13.972250012168807
+      },
+      "fix": "Handle known exact signal-span/zero designs through the same analysis path, with a positive unprojected reference scale and explicit roundoff uncertainty handling. Do not infer new physical directions or zero a genuinely nonzero small response."
+    },
+    {
+      "id": "H03-R3",
+      "severity": "P2",
+      "blocking": true,
+      "issue_class": "ATTAINED_EQUALITY_IMAGE_BUDGET_DROPPED",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/consumer.py",
+      "lines": [
+        110,
+        110
+      ],
+      "contract_lines": [
+        91,
+        91
+      ],
+      "summary": "The secondary image-budget calculation uses floor<tau rather than the contracted floor<=tau and reports None at an attained equality.",
+      "counterexample": {
+        "T0": "tau+1",
+        "floor": "tau",
+        "exact_minimum_coefficient_budget": 1.0,
+        "exact_minimum_image_budget": 1.0,
+        "returned_q_min_restricted": null
+      },
+      "fix": "Use the same exact-equality/qualified-boundary classification for both coefficient and image budgets; an analytically established floor=tau has q_min=sqrt(T0-tau), not None."
+    }
+  ],
+  "original_review_result": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/RESULT.json",
+  "review_report": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/REVIEW.md",
+  "candidate_and_sources_unchanged": true,
+  "actual_three_design_results_independently_confirmed": true,
+  "full_review_repeated": false,
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "actual_native_tool": "collaboration.followup_task",
+  "actual_ack_go": "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/H03_FORMAL_REVIEW_ACTUAL_ACK_GO.json",
+  "publication_decision": "NOT_MADE",
+  "next_executable_checkpoint": "Record the actual formal HOLD, then route the already prescribed targeted repair under this same existing task/account. No ultra, renamed issue or attempt reset. R32-08 remains unqualified until independent repaired-candidate closeout."
+}

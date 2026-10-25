@@ -1,0 +1,172 @@
+--- original/consumer.py
++++ prepared/new_candidate.py
+@@ -37,15 +37,35 @@
+     return np.asarray(x, dtype=float)
+ 
+ 
+-def svd_data(B, r):
++def svd_data(B, E, r, *, known_projected_zero=False, known_nullity=0):
++    """Resolve projected rank only after comparing it with the unprojected design."""
++    s_ref = float(np.linalg.svd(E, compute_uv=False)[0]) if E.size else 0.0
+     U, s, Vt = np.linalg.svd(B, full_matrices=False)
+-    if not len(s) or s[0] == 0:
++    if s_ref == 0:
++        if np.any(E != 0) or np.any(B != 0) or known_nullity:
++            raise ValueError("NUMERIC_RANK_HOLD")
+         rank = 0
+     else:
+-        ratios = s / s[0]
+-        if np.any((ratios > 1e-12) & (ratios < 1e-10)):
++        global_ratios = s / s_ref
++        if np.any((global_ratios > 1e-12) & (global_ratios < 1e-10)):
+             raise ValueError("NUMERIC_RANK_HOLD")
+-        rank = int(np.sum(ratios >= 1e-10))
++        candidate_nulls = int(np.sum(global_ratios <= 1e-12))
++        if known_projected_zero:
++            if candidate_nulls != len(s) or np.linalg.norm(B) / s_ref > 1e-12:
++                raise ValueError("NUMERIC_RANK_HOLD")
++            rank = 0
++        else:
++            if candidate_nulls != known_nullity or not np.any(global_ratios >= 1e-10):
++                raise ValueError("NUMERIC_RANK_HOLD")
++            # The frozen resolved-rank rule remains relative to the largest B value.
++            if not len(s) or s[0] == 0:
++                raise ValueError("NUMERIC_RANK_HOLD")
++            ratios = s / s[0]
++            if np.any((ratios > 1e-12) & (ratios < 1e-10)):
++                raise ValueError("NUMERIC_RANK_HOLD")
++            rank = int(np.sum(ratios >= 1e-10))
++            if rank != len(s) - known_nullity:
++                raise ValueError("NUMERIC_RANK_HOLD")
+     U, ss, Vt = U[:, :rank], s[:rank], Vt[:rank]
+     alpha = U.T @ r
+     perp = r - U @ alpha
+@@ -85,14 +105,19 @@
+     return T, x
+ 
+ 
+-def threshold(ss, alpha, floor, sat, T0, tau):
++def threshold(ss, alpha, floor, sat, T0, tau, *, exact_floor_equality=False,
++              exact_baseline_adequate=False):
+     eps = 1e-9
+-    if T0 <= tau - eps:
++    if T0 <= tau - eps or (exact_baseline_adequate and T0 <= tau + eps):
+         return "ALREADY_ADEQUATE", 0.0, 0.0, np.zeros_like(alpha), None
+-    if abs(T0 - tau) <= eps or abs(floor - tau) <= eps:
+-        if abs(T0 - tau) <= eps:
+-            return "NUMERIC_BOUNDARY_BASELINE", None, None, None, None
++    if abs(T0 - tau) <= eps:
++        return "NUMERIC_BOUNDARY_BASELINE", None, None, None, None
++    if exact_floor_equality:
++        if abs(floor - tau) > eps or T0 <= tau or not len(ss):
++            raise ValueError("invalid exact floor equality identity")
+         return "FINITE_FLOOR_EQUALITY", sat, 0.0, alpha / ss, 0.0
++    if abs(floor - tau) <= eps:
++        return "NUMERIC_BOUNDARY_FLOOR", None, None, None, None
+     if floor > tau:
+         return "THRESHOLD_UNATTAINABLE_FOR_THIS_D", None, None, None, None
+     fun = lambda lam: at_lambda(lam, ss, alpha, floor)[1] - tau
+@@ -103,11 +128,27 @@
+     return "FINITE_CROSSING", rho, lam, x, T
+ 
+ 
+-def analyse(name, D, y, C, L, X, A, Q, Pproj, r, T0, tau):
+-    B = Pproj @ solve_triangular(L, D, lower=True)
+-    U, all_s, ss, Vt, alpha, perp, floor, sat, rank = svd_data(B, r)
+-    status, rho95, lam95, xc, _ = threshold(ss, alpha, floor, sat, T0, tau)
+-    qmin = float(np.sqrt(T0 - floor) - np.sqrt(tau - floor)) if floor < tau < T0 else (0.0 if T0 <= tau else None)
++def image_budget(status, T0, floor, tau):
++    if status == "ALREADY_ADEQUATE":
++        return 0.0
++    if status == "FINITE_FLOOR_EQUALITY":
++        return float(np.sqrt(T0 - tau))
++    if status == "FINITE_CROSSING":
++        return float(np.sqrt(T0 - floor) - np.sqrt(tau - floor))
++    return None
++
++
++def analyse(name, D, y, C, L, X, A, Q, Pproj, r, T0, tau, *,
++            known_projected_zero=False, exact_floor_equality=False):
++    if known_projected_zero and not np.array_equal(D, X):
++        raise ValueError("projected-zero identity requires D=X")
++    E = solve_triangular(L, D, lower=True)
++    B = Pproj @ E
++    U, all_s, ss, Vt, alpha, perp, floor, sat, rank = svd_data(
++        B, E, r, known_projected_zero=known_projected_zero)
++    status, rho95, lam95, xc, _ = threshold(
++        ss, alpha, floor, sat, T0, tau, exact_floor_equality=exact_floor_equality)
++    qmin = image_budget(status, T0, floor, tau)
+     rec = {
+         "design": name, "D_12xp_km_s_Mpc_per_unit_eta": D.tolist(),
+         "B_12xp_whitened": B.tolist(), "rank_B": rank,
+@@ -117,7 +158,7 @@
+         "T_floor": floor, "rho_sat": sat, "rho95": rho95,
+         "q_min_restricted": qmin, "status": status,
+         "lambda95": lam95, "T0": T0,
+-        "dimensionless_rho_bound_check": ETA_REF / float(all_s[0]) if len(all_s) and all_s[0] > 0 else None,
++        "dimensionless_rho_bound_check": ETA_REF / float(ss[0]) if rank else None,
+     }
+     if rank:
+         assert np.linalg.norm(B.T @ perp) <= 1e-10 * max(1., np.linalg.norm(B) * np.linalg.norm(perp))
+@@ -149,7 +190,7 @@
+             "KKT_residual_norm": float(np.linalg.norm((B.T @ B + lam95 * np.eye(D.shape[1])) @ eta - B.T @ r)),
+         }
+     xs = np.linspace(0, sat * 1.15 if sat else 1., 121)
+-    Ts = np.array([curve_at_rho(float(x), ss, alpha, floor, sat, T0)[0] if rank else T0 for x in xs])
++    Ts = np.array([curve_at_rho(float(x), ss, alpha, floor, sat, T0)[0] for x in xs])
+     assert abs(Ts[0] - T0) <= 1e-9 and np.all(np.diff(Ts) <= 1e-8)
+     assert abs(Ts[-1] - floor) <= 1e-8
+     rec["curve"] = {"rho": xs.tolist(), "T_min": Ts.tolist()}
+@@ -168,12 +209,16 @@
+     rb = solve_triangular(Lb, y, lower=True) - Ab @ np.linalg.lstsq(Ab, solve_triangular(Lb, y, lower=True), rcond=None)[0]
+     checks["wrong_block_diagonal_T"] = float(rb @ rb)
+     assert abs(checks["wrong_block_diagonal_T"] - 8.925712182985682) < 1e-9
+-    checks["D_equals_X_projected_norm"] = float(np.linalg.norm(Pproj @ A))
+-    assert checks["D_equals_X_projected_norm"] < 1e-10
+-    assert threshold(np.array([]),np.array([]),T0,0.,T0,tau)[0] == "THRESHOLD_UNATTAINABLE_FOR_THIS_D"
++    zero = analyse("D_equals_X", X, y, C, L, X, A, None, Pproj, r, T0, tau,
++                   known_projected_zero=True)
++    checks["D_equals_X_projected_norm"] = float(np.linalg.norm(zero["B_12xp_whitened"]))
++    assert zero["rank_B"] == 0 and zero["status"] == "THRESHOLD_UNATTAINABLE_FOR_THIS_D"
++    assert zero["rho_sat"] == 0 and zero["rho95"] is None and zero["q_min_restricted"] is None
++    assert all(abs(v - T0) <= 1e-9 for v in zero["curve"]["T_min"])
+     checks["D_equals_X_has_no_gain"] = True
+-    B = Pproj @ solve_triangular(L, designs["depth_slope"], lower=True)
+-    U, _, ss, Vt, alpha, perp, floor, sat, rank = svd_data(B, r)
++    E = solve_triangular(L, designs["depth_slope"], lower=True)
++    B = Pproj @ E
++    U, _, ss, Vt, alpha, perp, floor, sat, rank = svd_data(B, E, r)
+     synthetic = U @ alpha + perp
+     assert abs(np.linalg.norm(synthetic - B @ (Vt.T @ (alpha / ss))) ** 2 - floor) < 1e-8
+     checks["synthetic_nonspanning_floor"] = floor
+@@ -194,12 +239,16 @@
+     aa = U.T @ arbitrary
+     pp = arbitrary - U @ aa
+     assert abs(float(pp @ pp) - tau) < 1e-8
+-    eq_status, eq_rho, *_ = threshold(ss, aa, float(pp @ pp), float(np.linalg.norm(aa / ss)), float(arbitrary @ arbitrary), tau)
++    eq_status, eq_rho, *_ = threshold(ss, aa, float(pp @ pp), float(np.linalg.norm(aa / ss)), float(arbitrary @ arbitrary), tau,
++                                      exact_floor_equality=True)
+     assert eq_status == "FINITE_FLOOR_EQUALITY" and np.isfinite(eq_rho)
+     checks["exact_floor_equals_tau_budget"] = eq_rho
++    assert abs(image_budget(eq_status, float(arbitrary @ arbitrary), float(pp @ pp), tau)
++               - np.sqrt(float(arbitrary @ arbitrary) - tau)) < 1e-8
+     Bfull = Pproj @ solve_triangular(L, L, lower=True)
+     assert np.linalg.norm(Bfull - Pproj) < 1e-10
+-    Uf, _, sf, Vtf, af, pf, ff, satf, rf = svd_data(Bfull, r)
++    Uf, _, sf, Vtf, af, pf, ff, satf, rf = svd_data(Bfull, solve_triangular(L, L, lower=True), r,
++                                                   known_nullity=6)
+     assert rf == 6 and ff < 1e-20
+     for q in (0., ETA_REF, float(np.sqrt(T0))):
+         T, _ = curve_at_rho(q, sf, af, ff, satf, T0)
+@@ -219,8 +268,9 @@
+         DR = rot12 @ D @ np.kron(np.eye(D.shape[1] // 3), rot).T
+         QR, _ = np.linalg.qr(AR, mode="reduced")
+         BR = (np.eye(12)-QR@QR.T) @ solve_triangular(LL, DR, lower=True)
+-        _, _, sr, _, ar, _, fr, satr, _ = svd_data(BR, rr)
+-        _, _, so, _, ao, _, fo, sato, _ = svd_data(Pproj @ solve_triangular(L,D,lower=True), r)
++        _, _, sr, _, ar, _, fr, satr, _ = svd_data(BR, solve_triangular(LL, DR, lower=True), rr)
++        Eo = solve_triangular(L, D, lower=True)
++        _, _, so, _, ao, _, fo, sato, _ = svd_data(Pproj @ Eo, Eo, r)
+         orig = threshold(so,ao,fo,sato,T0,tau)
+         rotated = threshold(sr,ar,fr,satr,T0,tau)
+         assert abs(fr-fo) < 1e-8

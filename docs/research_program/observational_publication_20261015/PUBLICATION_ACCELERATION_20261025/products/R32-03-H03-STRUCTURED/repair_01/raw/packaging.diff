@@ -1,0 +1,25 @@
+--- prepared/new_candidate.py
++++ repair_01/consumer.py
+@@ -16,7 +16,8 @@
+ from scipy.stats import chi2
+ 
+ HERE = Path(__file__).resolve().parent
+-P = HERE.parents[1]
++# One nested repair directory below the original candidate; frozen sources stay at the same root.
++P = HERE.parents[2]
+ SOURCE = P / "evidence/sources/H03_SOURCE_TOMOGRAPHY.json"
+ PHYSICAL = P / "evidence/output/physical_results.json"
+ SOURCE_SHA = "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326"
+@@ -301,10 +302,8 @@
+     plt.xlabel(r"Projected whitened effect budget $q$");plt.ylabel(r"Minimum discrepancy")
+     plt.legend(fontsize=8);plt.grid(alpha=.2);plt.tight_layout()
+     plt.savefig(HERE/"figures/frontier_comparison.pdf");plt.close()
+-    names=list(records);floors=[records[n]["T_floor"] for n in names]
+-    fig,ax=plt.subplots(figsize=(7,3.5));ax.bar(names,floors,color=[colors[n] for n in names]);ax.axhline(tau,color="black",ls="--")
+-    ax.set_ylabel(r"Irreducible $T_\perp$");ax.set_xticks(range(3),[n.replace('_',' ') for n in names]);ax.tick_params(axis="x",labelsize=8)
+-    fig.tight_layout();fig.savefig(HERE/"figures/irreducible_floor.pdf");plt.close(fig)
++    # The irreducible-floor figure is copied byte-for-byte from the frozen candidate:
++    # none of its inputs or values changes in this numerical boundary repair.
+ 
+ 
+ def main():

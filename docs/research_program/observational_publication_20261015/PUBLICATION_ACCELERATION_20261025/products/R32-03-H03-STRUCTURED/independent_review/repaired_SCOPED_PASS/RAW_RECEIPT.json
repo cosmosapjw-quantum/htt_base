@@ -1,0 +1,176 @@
+{
+  "schema": "H03_REPAIRED_FRESH_INDEPENDENT_REVIEW_RAW_v1",
+  "task_id": "R32-03-H03-STRUCTURED",
+  "reviewer_agent": "/root/r35_h03_repaired_fresh_review",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "candidate_identity": "sha256:4a31b981231a10b449bee2b7be65d0efc181dbd077f35ea55cb23ac38caf4c9d",
+  "candidate_input_identity": "sha256:c8dd7ac321c957c6524f3b75d4fdae47a2c0897bf9517fd353c9a1f3c5469010",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01/ARTIFACT_MANIFEST.json",
+  "formal_packet_id": null,
+  "formal_input_identity": null,
+  "formal_review_packet_status": "PENDING",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "checkout_head": "0da3f61e7b144de0ad94a9d2efa8390de8578703",
+  "checkout_branch": "research/htt-adaptive-methods-20261023",
+  "environment": {
+    "python": "/usr/bin/python",
+    "python_version": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0"
+  },
+  "commands": [
+    {
+      "command": "python -B /mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/review_probe.py",
+      "exit_status": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/independent_probe.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/independent_probe.stderr",
+      "consumer_elapsed_seconds": 0.6910850929562002,
+      "description": "exact consumer with external output root plus independently authored numerical falsifiers"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python -B -m pytest -q -p no:cacheprovider /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01/test_boundary_repair.py",
+      "exit_status": 0,
+      "result": "9 passed, one unrelated Matplotlib Axes3D import warning",
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/pytest.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/pytest.stderr"
+    },
+    {
+      "command": "pdftoppm -r 120 -png /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01/main.pdf /mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/page",
+      "exit_status": 0,
+      "rendered_pages": 5,
+      "visually_inspected_pages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "command": "pdftotext -layout /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01/main.pdf /mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/main.txt",
+      "exit_status": 0
+    },
+    {
+      "command": "pdfinfo /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01/main.pdf",
+      "exit_status": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/pdfinfo.stdout"
+    }
+  ],
+  "candidate_and_original_manifest_artifacts_verified_unchanged_at_closeout": true,
+  "preserved_first_failure_evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/RESULT.json",
+      "sha256": "59b315eaf94d8e7603334497313075753ee19f52edfd742dd602ce152937570c",
+      "modified_by_this_reviewer": false
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/RAW_RECEIPT.json",
+      "sha256": "ffe2e3b417403267c4d39f0d6b72d241ac3e90c8a557778dc7ee3cdf948e008e",
+      "modified_by_this_reviewer": false
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/RAW_FORMAL_BINDING.json",
+      "sha256": "f8af0f30486454b6a88148d1c8052897ddce4991f1ca5b9588d13528fc37f6cf",
+      "modified_by_this_reviewer": false
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_fresh_independent_review/FORMAL_BINDING_RESULT.json",
+      "sha256": "f410c8d2129dbc755cfef77755f68a1414ecdeaf8c6d3a8814dfa9dd5874d72b",
+      "modified_by_this_reviewer": false
+    }
+  ],
+  "implementation_writes": false,
+  "git_writes": false,
+  "controller_state_writes": false,
+  "write_scope": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review",
+  "new_covariance_law": false,
+  "tolerance_relaxation": false,
+  "source_reintegration": false,
+  "full_campaign_rerun": false,
+  "CAS_relaunch": false,
+  "evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/REVIEW.md",
+      "sha256": "29b7073cea037ea99902d786e2b8dd157f74b80a87b397e6098d64ceaa7b7668",
+      "bytes": 5636
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/INDEPENDENT_NUMERICS.json",
+      "sha256": "7373410dd2dea4a9df3b50c79430b3fbfd0d5ba389286f498afee10d598aedf5",
+      "bytes": 19624
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/review_probe.py",
+      "sha256": "9c0df75930a638a9c2e59e5431a615a602f2c0b4afac60f859c6153553d5c1fe",
+      "bytes": 10983
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/independent_probe.stdout",
+      "sha256": "ad8cb3e5eb9cc370997a6a5187b85bf40076abfec01cb21c283e89d19366df28",
+      "bytes": 2615
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/independent_probe.stderr",
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852",
+      "bytes": 379
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/consumer.stdout",
+      "sha256": "9bf1e96b1a3b87dfe0c104f981a754796c5998b88f293ff39dd539c2526edf6c",
+      "bytes": 727
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/consumer.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/pytest.stdout",
+      "sha256": "daa72a6840813fc39b13a985951595efa33689708fb53bad9ad38768bd3eed7f",
+      "bytes": 729
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/pytest.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/raw/pdfinfo.stdout",
+      "sha256": "30be2d74e6ec16fe2c9048c34f5c1f1346cbc87bea018815018c53411d4dd715",
+      "bytes": 457
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/main.txt",
+      "sha256": "81e2501d2669167d7eeb57f313b7d983bc9a5b16232c654ca405c450bbfae5e7",
+      "bytes": 16649
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/page-1.png",
+      "sha256": "1ad4d8437983e12acaccd153107e5d7c132eafa8c78fd3e38128a54722cc6b57",
+      "bytes": 324375
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/page-2.png",
+      "sha256": "6298f6bc7d80989f0ed3fd7bc2315ae1ffe188c4f041a6e2d648f1e8ba2db12c",
+      "bytes": 351812
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/page-3.png",
+      "sha256": "e3b05733cc3ccc23587c32a26af9d89a86464dd32dc24525fb92128c4ce40583",
+      "bytes": 184350
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/page-4.png",
+      "sha256": "ada9386f479442ff8bc20ef61d59b65e3a5e27ab5a1d8ef1a719736265600121",
+      "bytes": 118623
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_h03_repaired_fresh_review/rendered/page-5.png",
+      "sha256": "ac9d1abba9507f87ca9ca78770157e05f3bfe037b3ecfc4ee484405a9f3ffaed",
+      "bytes": 50797
+    }
+  ],
+  "finished_utc": "2026-10-25T14:40:15.407386+00:00"
+}

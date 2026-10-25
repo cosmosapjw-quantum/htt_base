@@ -1,0 +1,242 @@
+        Structured finite-window response sensitivity in correlated Hubble dipoles
+
+                                                  Anonymous research draft
+                                                      (Dated: 25 October 2026)
+                Four retained redshift-window dipoles carry a 12-component correlated discrepancy after fitting a
+             bulk response and constant directional rate. We ask how much of this discrepancy can be moved by
+             three prespecified finite-window response classes. Under the retained Gaussian working covariance,
+             the baseline quadratic discrepancy is 23.3967, above the fixed six-degree 95% reference 12.5916. A
+             depth-slope response leaves an irreducible 15.3160 and cannot reach that reference at any coefficient
+             budget. An FP-composition proxy reaches it at a joint dimensionless coefficient radius 5.7509; a
+             six-column combination reaches it at 1.5897. These are exact finite-dimensional sensitivity budgets
+             for declared designs, not estimates of calibration error. We derive the image ellipsoid, its support
+             and attainment, and the minimum-budget crossing including an irreducible-floor equality case.
+
+
+
+                            I.   RETAINED CARRIER AND PHYSICAL QUESTION
+
+
+   The saved four-window analysis represents each angular-rate estimator by a monopole, three Cartesian dipole coordi-
+nates, and five signed symmetric trace-free coordinates in ICRS J2000. The centers are zw = (0.025, 0.040, 0.060, 0.080)
+with saved width h = 0.012. Its full 36-by-36 joint covariance connects axes and windows, including shared groups.
+We extract the marginal 12-by-12 dipole covariance C and window-major signed dipoles y; no conditioning on mea-
+sured monopole or STF coordinates is performed. The complete physical coefficient carrier and source covariance are
+retained in the accompanying source_carrier.json, alongside the extracted y, C and response matrices [1, 2]. This
+extraction does not replace those tensors by a scalar.
+   The retained estimator is a finite weighted angular-rate fit, czi = dDM,i [Hw + Dw · ni + nT
+                                                                                              i Qw ni ]. Its coefficients
+are in km s−1 Mpc−1 ; they are not themselves physical expansion coefficients. The source contains 35,970 groups,
+assumes a diagonal row-scatter working law, and leaves common calibration, peculiar-velocity and selection covariance
+unmeasured. The experiment here consumes only the saved statistics. It does not refit a catalogue or infer an observer-
+frame or cosmographic transfer.
+   Let R stack the saved nine-by-three bulk-velocity dipole response blocks, with units Mpc−1 , and let G = 14 ⊗ I3 .
+The six-column baseline X = [R, G] has full rank. Its model is
+
+                           y = Rb + Gd + Dη + e,             e ∼ N (0, C) (retained working law).                    (1)
+
+Here b is in km s−1 ; d, y, e are in km s−1 Mpc−1 . The coefficient η is dimensionless under our chosen D. The working
+Gaussian tail at the baseline is 6.7393 × 10−4 , a conditional diagnostic under the saved covariance, not survey-null
+coverage.
+
+
+
+                                 II.    THREE FIXED RESPONSE MECHANISMS
+
+
+  We specify a rate unit u0 = 1 km s−1 Mpc−1 , a depth coordinate tw = (zw − 0.04)/h = (−1.25, 0, 5/3, 10/3), and
+the retained FP distance-weight fractions
+
+                       p = (0.30371471, 0.53491724, 0.80241152, 0.90188987),                fw = pw − p0 .           (2)
+
+For window w and Cartesian component i, each response has one coefficient per axis a:
+
+                         (Dz )(w,i),a = u0 tw δia ,    (DFP )(w,i),a = u0 fw δia ,   Djoint = [Dz , DFP ].           (3)
+
+Dz is a linear finite-center directional-rate slope per saved width. DFP is a dipolar offset modulated by FP composition;
+subtraction of p0 changes only a constant-rate column already fitted by G. The composition fractions do not give a
+signed distance-modulus calibration derivative. The joint design has six coefficients in depth-first, then FP, Cartesian
+order. All three are declared before seeing their residual reduction, and none is preferred as a physical error model
+on that basis. The common coefficient metric for each dimension is M = Ip : ∥η∥2 ≤ ρ. This is one joint sensitivity
+budget, not independent axis allowances or an empirical prior.
+                                                                                                                        2
+
+                         III.   PROJECTION, ELLIPSOID AND MINIMUM BUDGET
+
+   Write C = LLT without jitter, W = L−1 , A = W X, and let QA have orthonormal columns spanning A. The
+                                                                            −1/2
+orthogonal residual projector is P = I − QA QT
+                                             A . With r = P W y, B = P W DM      , and ξ = M 1/2 η, profiling the
+six signal coefficients reduces Eq. (1) to
+                                Tmin (ρ) = min ∥r − Bξ∥2 ,     T0 = ∥r∥2 = 23.3967205227.                             (4)
+                                          ∥ξ∥≤ρ
+
+The covariance is the complete dipole marginal; using only within-window blocks would produce T0 = 8.92571218 and
+change the question. We retain the original six-degree reference τ = χ26,0.95 = 12.5915872437 after minimizing over ξ.
+Replacing its degree count by 12 − rank[X, D] would create a different working-law test.
+  The image Eρ = {Bξ : ∥ξ∥ ≤ ρ} is generally a degenerate ellipsoid in the 12D whitened space. Cauchy–Schwarz
+gives its exact support in direction u:
+                                                                      BTu
+                                    hEρ (u) = ρ∥B T u∥,     ξ∗ = ρ             (B T u ̸= 0).                          (5)
+                                                                     ∥B T u∥
+When B T u = 0, support is zero and ξ = 0 attains it. A proposed correction q is attainable exactly when q ∈ col B and
+∥B + q∥ ≤ ρ: the pseudoinverse is the minimum-norm preimage, while adding a kernel vector cannot lower its norm.
+An unrestricted 12D ball omits the column-space condition.
+   For the resolved thin singular-value decomposition B = U diag(σi )V T , define α = U T r and r⊥ = r − U α. The
+signed r⊥ and all singular vectors are exported with the data. Orthogonality gives the irreducible discrepancy
+T⊥ = ∥r⊥ ∥2 and saturation radius ρsat = ∥ diag(σi−1 )α∥. For 0 < ρ < ρsat , stationarity of the convex Lagrangian
+∥r − Bξ∥2 + λ(∥ξ∥2 − ρ2 ) yields
+                                        
+                                            σi
+                                                                                 X σ 2 α2
+                                                                                           i i
+                            ξλ = V diag 2          α,                       ρ2 =         2 + λ)2 ,                  (6)
+                                          σi + λ                                   i
+                                                                                      (σi
+                                         X      λ2 αi2
+                       Tmin (ρ) = T⊥ +                  .                                                             (7)
+                                         i
+                                             (σi2 + λ)2
+
+The multiplier is positive and unique on the active interval. At zero budget Tmin = T0 ; at or above saturation the
+minimum-norm solution B + r attains T⊥ . If B = 0, the discrepancy never moves. Hence the least coefficient budget
+for Tmin ≤ τ is zero when T0 ≤ τ , unattainable when T⊥ > τ , and ρsat when T⊥ = τ < T0 . The last case is finite
+attainment, including equality. In the strict crossing case T⊥ < τ < T0 , a unique positive multiplier solves Eq. (7) at
+τ , with ρ obtained from Eq. (6).
+    A second budget counts the image q = ∥Bξ∥, in whitened discrepancy units. Its exact least value for the same
+threshold inside col B is
+                                          p             p
+                                  qmin = T0 − T⊥ − τ − T⊥ ,           T⊥ ≤ τ < T0 .                                  (8)
+This follows by moving radially toward U α within the image subspace. It√differs√from the image norm q95 = ∥Bξ95 ∥
+of the least coefficient witness. The earlier unrestricted result η95 = T0 − τ = 1.2885530 is an image-space
+comparator; ρ has different units and geometry. The bound ρ95 ≥ η95 /∥B∥op and q95 ≥ η95 provide checks.
+
+
+                                         IV.   FINITE-WINDOW RESULTS
+
+   The depth response has three projected directions and leaves T⊥ = 15.3160 > τ even at infinite coefficient radius.
+The three-column FP proxy leaves T⊥ = 6.6606 and crosses at ρ95 = 5.7509, with q95 = 1.7108. The six-column joint
+design spans all six baseline residual directions numerically, leaves a floor below 2×10−28 , and crosses at ρ95 = 1.5897,
+with q95 = 2.7480. The large ρsat values in Table I show that crossing and complete removal are distinct events. The
+joint image-space minimum qmin = 1.2885530 equals the unrestricted radial comparator because the image spans the
+six-dimensional residual space; its minimum-coefficient witness follows a different route and has the larger q95 .
+   The computation exports the full D and B matrices, singular spectra, whitened residual and nonspanning remainder,
+threshold coefficient vectors, signed corrections, refitted b, d, and direct GLS residuals. The direct refits reproduce
+the fixed threshold within 10−8 . Synthetic checks recover the wrong block-diagonal baseline, zero gain when D = X,
+nonspanning floors at arbitrarily large budgets, finite equality when the floor equals the threshold, the unrestricted
+radial formula when D = L, and invariance under a simultaneous Cartesian rotation. The computation uses the
+original source hashes and no source reintegration.
+                                                                                                                               3
+
+
+TABLE I. Conditional finite-window designs. All discrepancies use the complete 12D covariance and the unchanged six-degree
+working threshold. ρ95 is a dimensionless joint coefficient budget; q95 is its projected whitened image norm. The depth design
+has no finite threshold crossing.
+
+Design                                  rank B              T⊥                  ρ95                   q95                   ρsat
+Depth slope                                  3          15.3160                  —                     —                 0.7465
+FP composition                               3           6.6606              5.7509                1.7108               14.5772
+Joint                                        6           0.0000              1.5897                2.7480               15.4461
+
+
+
+
+                                                                                                    depth slope
+                                                                                                    FP composition
+                                                                                                    joint
+                             20                                                                     fixed 6,2 . 95
+
+
+
+                             15
+          Profiled Tmin( )
+
+
+
+
+                             10
+
+
+                             5
+
+
+                             0
+                                  0.0      2.5       5.0        7.5      10.0    12.5     15.0              17.5
+                                                 Joint coefficient budget (dimensionless)
+
+FIG. 1. Profiled discrepancy against a joint dimensionless coefficient radius for the three fixed finite-window designs. Dots
+are attained crossings of the unchanged six-degree reference; dotted horizontal lines are the irreducible floors. The depth-slope
+curve stays above the reference. Generated from the retained 12D covariance in ICRS J2000.
+
+
+
+
+                                   V.   INTERPRETATION AND REQUIRED PHYSICAL INPUT
+
+
+  These results identify sensitivity of a retained finite-window fit to three explicit response spaces. The FP fractions
+encode sample composition, not a signed calibration Jacobian; family-deletion dipole norms cannot supply such a
+derivative. For an actual weighted least-squares estimator θ = N −1 b, a physical perturbation γ requires ∂γ θ =
+N −1 (∂γ b − (∂γ N )θ), including any changed distances, design and weights. A source-bound signed window response to
+named calibration, peculiar-velocity or selection parameters, together with a justified joint bound or law and shared
+covariance, is needed to interpret η as a physical error. The sky, observer and cosmographic transfer, finite remainder
+and null coverage are likewise open for stronger claims.
+  The full physical (x, F, Π, Q, GF ) object remains undefined here; no filling fraction, exceedance probability, score
+or depth-gap is zero-filled from this 12D statistic. The result supplies a conditional structured-response frontier for a
+                                                                                                                       4
+
+
+                          16
+                          14
+                          12
+                          10
+          Irreducible T
+
+
+                          8
+                          6
+                          4
+                          2
+                          0
+                               depth slope                FP composition                   joint
+
+FIG. 2. Exact best attainable discrepancy for each declared projected response subspace. The depth-slope floor exceeds
+the fixed working threshold. Bars summarize the signed 12-coordinate residual vectors retained in the companion numerical
+product; they do not encode a physical calibration distribution.
+
+
+later model-dependent analysis. It does not alter the original 42-node acceptance status or identify a Bianchi family.
+
+
+
+
+[1] Retained     H03     source    tomography,      evidence/sources/H03_SOURCE_TOMOGRAPHY.json,                SHA-256
+    5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326 (2026).
+[2] Retained      physical-results    extraction,       evidence/output/physical_results.json,                  SHA-256
+    25342649e30a8d631a5364002ae39ebffae0a5d92e1e4ad25c9e2f8dfe9362cc (2026).
+                                                                                                                              5
+
+
+                                                                                                   unrestricted
+                                                                                                   FP composition
+                                                                                                   joint
+          Minimum discrepancy   20
+
+
+                                15
+
+
+                                10
+
+
+                                5
+
+
+                                0
+                                     0   1               2              3                      4                 5
+                                               Projected whitened effect budget q
+                                                           √
+FIG. 3. Unrestricted 12D image-budget frontier max(0, T0 − q)2 and the least image radius required by each structure. No
+depth-slope point exists because its irreducible floor exceeds the threshold. For the FP and joint designs, the plotted minimum-
+image points are distinct from the coefficient-minimizing image norms q95 in Table I.
+

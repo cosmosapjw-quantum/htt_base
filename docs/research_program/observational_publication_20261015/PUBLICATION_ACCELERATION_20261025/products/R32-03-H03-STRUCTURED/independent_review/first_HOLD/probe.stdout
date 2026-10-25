@@ -1,0 +1,125 @@
+{
+  "candidate_identity": "85ac1bfdfc71dea645c01421811ed1e5d95df617034077c532feee6052a769ba",
+  "identity_checks": {
+    "manifest": "85ac1bfdfc71dea645c01421811ed1e5d95df617034077c532feee6052a769ba",
+    "artifacts": {
+      "consumer.py": true,
+      "main.tex": true,
+      "main.pdf": true,
+      "README.md": true,
+      "CLAIM_TO_SOURCE.json": true,
+      "RAW_RECEIPT.json": true,
+      "generated/source_carrier.json": true,
+      "generated/analysis.json": true,
+      "generated/matrix_min_budget.csv": true,
+      "generated/table.tex": true,
+      "figures/scientific_budget.pdf": true,
+      "figures/frontier_comparison.pdf": true,
+      "figures/irreducible_floor.pdf": true
+    },
+    "sources": {
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/sources/H03_SOURCE_TOMOGRAPHY.json": true,
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/output/physical_results.json": true,
+      "/mnt/extdrive/workdir/htt_open_data/r35_h03_bandpass_contract_intake/CONTRACT.md": true,
+      "/mnt/extdrive/workdir/htt_open_data/r35_h03_bandpass_contract_intake/RESULT.json": true,
+      "/mnt/extdrive/workdir/htt_open_data/r35_publication_acceleration_controller/H03_ACTUAL_ACK_GO.json": true
+    }
+  },
+  "method": "independent symmetric eigen whitening plus 6D left nullspace; normal-equation lambda solves; separate SLSQP constrained budget solve; no candidate main or repository audit harness executed",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0"
+  },
+  "T0": 23.396720522667206,
+  "tau95": 12.591587243743977,
+  "eta95": 1.2885530036501147,
+  "covariance_min_eigenvalue": 0.0038312674410547853,
+  "full_source_36_covariance_min_eigenvalue": 0.0010164414371172758,
+  "wrong_block_covariance_T": 8.925712182985656,
+  "designs": {
+    "depth_slope": {
+      "rank": 3,
+      "T_floor": 15.31600239641719,
+      "rho_sat": 0.7465346677551401,
+      "minimum_singular_ratio": 0.6220075929419386,
+      "rho95": null,
+      "unattainable_proved_by_floor": true,
+      "curve_max_abs_error": 6.927791673660977e-14
+    },
+    "FP_composition": {
+      "rank": 3,
+      "T_floor": 6.660568527209009,
+      "rho_sat": 14.57721681760681,
+      "minimum_singular_ratio": 0.6335072675343486,
+      "rho95": 5.750880608573573,
+      "q95": 1.710846265106953,
+      "q_min": 1.6556159413330942,
+      "lambda95": 0.11910360419364849,
+      "T_direct": 12.591587243743946,
+      "KKT_norm": 5.551115123125783e-17,
+      "SLSQP_success": true,
+      "SLSQP_message": "Optimization terminated successfully",
+      "SLSQP_norm": 5.7508806085735795,
+      "SLSQP_T": 12.59158724374397,
+      "threshold_T_bracket": [
+        6.660568527209009,
+        20.846356392871243
+      ],
+      "curve_max_abs_error": 5.3290705182007514e-14
+    },
+    "joint": {
+      "rank": 6,
+      "T_floor": 2.9582283945787943e-30,
+      "rho_sat": 15.44611676802084,
+      "minimum_singular_ratio": 0.04556394298137767,
+      "rho95": 1.5896711740651495,
+      "q95": 2.7479514141865926,
+      "q_min": 1.2885530036501147,
+      "lambda95": 0.6438120704007924,
+      "T_direct": 12.59158724374394,
+      "KKT_norm": 1.7903959895615594e-15,
+      "SLSQP_success": true,
+      "SLSQP_message": "Optimization terminated successfully",
+      "SLSQP_norm": 1.5896711740651486,
+      "SLSQP_T": 12.591587243743977,
+      "threshold_T_bracket": [
+        6.40949485492072e-31,
+        13.496761888449386
+      ],
+      "curve_max_abs_error": 8.526512829121202e-14
+    }
+  },
+  "edge_probes": {
+    "floor_minus_tau_0.0": {
+      "status": "FINITE_FLOOR_EQUALITY",
+      "returned_budget": 1.0,
+      "actual_min_T": 12.591587243743977,
+      "strictly_attainable": true
+    },
+    "floor_minus_tau_5e-10": {
+      "status": "FINITE_FLOOR_EQUALITY",
+      "returned_budget": 1.0,
+      "actual_min_T": 12.591587244243977,
+      "strictly_attainable": false
+    },
+    "floor_minus_tau_-5e-10": {
+      "status": "FINITE_FLOOR_EQUALITY",
+      "returned_budget": 1.0,
+      "actual_min_T": 12.591587243243977,
+      "strictly_attainable": true
+    },
+    "D_equals_X_actual_svd": {
+      "projected_norm": 2.2883204606165413e-15,
+      "rank": 6,
+      "floor": 22.491757346596945,
+      "saturation": 1.9830537191258547e+17,
+      "threshold_status": "THRESHOLD_UNATTAINABLE_FOR_THIS_D"
+    },
+    "exact_floor_equality_image_budget": {
+      "contract_expected": 1.0,
+      "consumer_ternary_result": null
+    }
+  },
+  "elapsed_seconds": 0.066304637119174
+}
