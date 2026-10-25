@@ -1,0 +1,100 @@
+{
+  "packet_id": "7f282807b61c2c4e9b4bc9fb50395f4fe522bde7c7b3123af4812ae1636f4039",
+  "task_id": "R30-CF4-BAND-PV-FULL-TENSOR-COVARIANCE",
+  "input_identity": "sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3",
+  "candidate_identity": "sha256:88b177047bd50170592f63f6454a957cd93c6540bcbf514d9a9a399c33d0359c",
+  "agent_id": "/root/r35_cf4_bound_fresh_closeout",
+  "phase": "review",
+  "attempt": 12,
+  "outcome": "success",
+  "status": "SCOPED_PASS",
+  "acceptance_met": true,
+  "acceptance_scope": "Completed independent affected-component closeout of the same saved-bound repair; prior unchanged component evidence retained within its original scope.",
+  "qualified_products": [
+    "PRODUCT.npz:band_joint",
+    "PRODUCT.npz:total_joint",
+    "PRODUCT.npz:tensor_covariance"
+  ],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r35_cf4_bound_fresh_closeout/RAW_FORMAL_BINDING.json",
+  "validation_evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_cf4_bound_fresh_closeout/SUPPLEMENTAL_RAW_OUTCOME.json",
+      "sha256": "8e3c40a9efdab8809a0bd08bbe32833f2663450ecfc8193ec31c3338629460a3",
+      "evidence_kind": "INDEPENDENT_SAVED_ARRAY_CHECKS",
+      "checks": [
+        "196410 operative elements compared: zero below raw, zero below old; exact byte-value equality to nextafter(max(raw,old),+infinity).",
+        "Independently reconstructed samples, endpoints and first-index magnitude/cancellation extrema from cached arrays; exact 42/42 original control-ID equality, zero missing or extra IDs. Original controls used only for final set comparison."
+      ]
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_cf4_bound_fresh_closeout/INTAKE.json",
+      "sha256": "d9d298c2c9ffaf0091b941c2ee65fdee34e35c48ae8a50d96fc06f23ac28ab7a",
+      "evidence_kind": "INDEPENDENT_SOURCE_AND_ARTIFACT_REVIEW",
+      "checks": [
+        "Correct actual reference-row indexing and exact reference-term accumulation; corrected directed positive spectral/joint propagation reviewed.",
+        "Frozen PRODUCT sha256 cfec008002fea776611d6abb70448a8b5cbed0d774a49d3377a5cfcf828a857d and corrected bounds sha256 93342f857b82fce28eb69b5b670f5fccac5a857652a09020698273a6bb9b6aba verified in completed intake.",
+        "Saved corrected arrays finite and nonnegative; complete spectral and joint array dimensions inspected."
+      ]
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_cf4_saved_bound_repair/RESULT.json",
+      "sha256": "8a2e4761ac7ce88b302fd756407ef70de4f2afc49756785d06c87a46f0da2e31",
+      "evidence_kind": "REVIEWED_PRODUCER_REPORT",
+      "checks": [
+        "All 15 original reported gate rows pass; preserved as producer execution evidence, not relabeled as a new independent full 239-check audit."
+      ]
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_cf4_bound_fresh_closeout/INTAKE_RECEIPT.json",
+      "evidence_kind": "INITIAL_EXECUTION_RECEIPT",
+      "checks": [
+        "Completed initial bounded source/artifact intake; original evidence preserved."
+      ]
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r35_cf4_bound_fresh_closeout/SUPPLEMENTAL_EXECUTION_RECEIPT.json",
+      "evidence_kind": "SUPPLEMENTAL_EXECUTION_RECEIPT",
+      "checks": [
+        "Supplemental exit 0; observed function wall 0.8 seconds within 3-second cap. Conservative aggregate 4.85 seconds within the unchanged 5-second closeout allocation."
+      ]
+    }
+  ],
+  "initial_hold_preserved": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r35_cf4_bound_fresh_closeout/INITIAL_ASSESSMENT.json",
+    "sha256": "2879e5b764b1d39dc19504e907b7d887220842c69d16c7665f2ae70c66eaf606",
+    "status": "SCOPED_HOLD",
+    "resolution": "Two missing-check obligations closed by the authorized same-unit supplemental checker; original assessment unchanged."
+  },
+  "scientific_admission": false,
+  "original_acceptance_met": false,
+  "original42_acceptance": false,
+  "H02": "HOLD",
+  "H04": "HOLD",
+  "physical_x_F_Pi_Q_G_F": "UNDEFINED/HOLD",
+  "global_rigorous_type3_error_enclosure": "NOT_ESTABLISHED",
+  "limitations": [
+    "Downstream diagnostic metrics include ordinary floating-point additions; this is not a global rigorous Type-3 error certificate.",
+    "Original 239-component checks are reused only for unchanged scope; they were not rerun or used as an oracle for the two independent supplemental checks.",
+    "The protocol adapter occurred outside the original 3.016-second numerical execution; its exact interval remains UNKNOWN and is charged to root/control accounting."
+  ],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "actual_native_tool": "collaboration.followup_task",
+  "launch_performed": true,
+  "formal_binding_only": true,
+  "new_scientific_commands": 0,
+  "new_review_or_build": false,
+  "source_and_candidate_recheck": "No new scientific intake; completed identity evidence reused and exact candidate identity bound through actual packet and ACK/GO metadata.",
+  "accounting": {
+    "bank_precharged_seconds": 599.8927776466445,
+    "independent_closeout_conservative_seconds": 4.85,
+    "independent_closeout_cap_seconds": 5.0,
+    "formal_binding_funding": "already funded root/control/receipts 10-second reserve",
+    "formal_binding_excluded_from_numeric_and_independent_execution_caps": true,
+    "refund_or_new_bank": false,
+    "reasoning_and_unobserved_host_intervals": "UNKNOWN_NOT_ZERO"
+  }
+}

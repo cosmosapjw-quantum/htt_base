@@ -1,0 +1,56 @@
+{
+  "status": "PREPARED_WAIT_CHECK_GO",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "source_only_ast_parse": true,
+  "scientific_imports_or_arrays_loaded": false,
+  "inputs": {
+    "checker": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_independent_numeric_check/checker.py",
+      "sha256": "c5f1ea70c84146aac5bbddb70df8ba515c574b30cff25f2d1a2cb88319ff9530",
+      "bytes": 14035
+    },
+    "contract": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/CONTRACT.md",
+      "sha256": "29f5660bfee2feb379f01da2f51ddb7a87d416b05a2393f4ffaef5858fd6c8e7",
+      "bytes": 23657
+    },
+    "bindings": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/INPUT_BINDINGS.json",
+      "sha256": "d5cfe88bf297ee7d7ab6ae5b6758c951cf2491b189de8c37e6756511232dc2c4",
+      "bytes": 8982
+    },
+    "method": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fast_window_framing/CONTRACT.md",
+      "sha256": "8765ad540341080dbb6da3ec02a0cc9179447df45448b7a12245954c879b4706",
+      "bytes": 18879
+    },
+    "candidate_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/actual_run/RESULT.json",
+      "sha256": "ae5d4a97c433c998e5777e6c4372ccb3dd3f800d29d5a52576fc183ea2fc5985",
+      "bytes": 68952
+    },
+    "candidate_product": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/actual_run/PRODUCT.npz",
+      "sha256": "cfec008002fea776611d6abb70448a8b5cbed0d774a49d3377a5cfcf828a857d",
+      "bytes": 2154386
+    },
+    "account_head": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fixture_repair_dispatch/ROOT_ACCOUNT_HEAD_BEFORE_INDEPENDENT_CHECK.json",
+      "sha256": "8df81bd581d7728c527ad72e3f03df810b05c08f3afc2f2437c69a2587f53897",
+      "bytes": 2995
+    }
+  },
+  "exact_one_shot_command": "bash /mnt/extdrive/workdir/htt_open_data/r32_cf4_independent_numeric_check/run_once.sh",
+  "whole_actual_cap_seconds": 50,
+  "whole_checker_prep_actual_metadata_cap_seconds": 60,
+  "process_tree_rss_cap_bytes": 6442450944,
+  "thread_count": 1,
+  "utc_unix": 1792925721.9507236,
+  "run_script": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_independent_numeric_check/run_once.sh",
+    "sha256": "54276d2d6ce644c36c5ac50126b5c96110a49b4a2a96d0ee479c908bed10958e"
+  },
+  "rss_enforcement": "prlimit --as=6442450944",
+  "child_timeout_seconds": 47
+}

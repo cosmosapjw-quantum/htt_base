@@ -1,0 +1,57 @@
+{
+  "status": "SCOPED_HOLD",
+  "candidate_identity": "sha256:88b177047bd50170592f63f6454a957cd93c6540bcbf514d9a9a399c33d0359c",
+  "candidate_identity_basis": "Controller-supplied identity",
+  "scope": [
+    "PRODUCT.npz:band_joint",
+    "PRODUCT.npz:total_joint",
+    "PRODUCT.npz:tensor_covariance"
+  ],
+  "source_review": {
+    "status": "PASS",
+    "source_sha256": "a419c75cc62ff2707f90030010eb83daffbc19e7e57a74e0dd715ba0cf4b8dab",
+    "assessment": "Correct catalogue-row indexing, exact reference-term accumulation, separate raw/old roundoff, conservative maximum construction, and directed positive spectral/joint propagation. No substantive repair defect identified."
+  },
+  "verified_artifacts": {
+    "unchanged_product_sha256": "cfec008002fea776611d6abb70448a8b5cbed0d774a49d3377a5cfcf828a857d",
+    "corrected_bounds_sha256": "93342f857b82fce28eb69b5b670f5fccac5a857652a09020698273a6bb9b6aba",
+    "sidecar_result_sha256": "8a2e4761ac7ce88b302fd756407ef70de4f2afc49756785d06c87a46f0da2e31",
+    "saved_bounds": "Finite and nonnegative; six spectral arrays and six complete 15-by-15 joint arrays inspected."
+  },
+  "blocking_evidence_gap": {
+    "classification": "INCOMPLETE_INDEPENDENT_CLOSEOUT",
+    "details": [
+      "The single probe did not independently compare the saved operative roundoff against both saved raw and old arrays.",
+      "The independent exact 42-target-ID comparison was not produced. The executed producer reports 42/42 equality, but that is not the requested independent comparison."
+    ],
+    "consequence": "The requested complete affected-component closeout is not established. These are review-evidence gaps, not demonstrated covariance errors."
+  },
+  "execution_evidence": {
+    "producer_original_gates": "15 reported rows pass",
+    "numeric_execution": "Observed 3.016 seconds within its 10-second cap",
+    "closeout_execution": "One command, exit 0; external timeout 4.80 seconds plus 0.10-second kill grace",
+    "closeout_raw_exec_wall_seconds": 0.558397739,
+    "closeout_internal_elapsed_through_serialization_seconds": 0.6386540678795427,
+    "protocol_adapter": "Occurred outside the numeric execution cap; charged to root/control reserve. Exact interval remains UNKNOWN.",
+    "cumulative_precharged_seconds": 599.8927776466445,
+    "refund_or_new_bank": false
+  },
+  "claim_ceiling": {
+    "global_rigorous_type3_error_enclosure": "NOT_ESTABLISHED",
+    "diagnostic_arithmetic": "Some downstream metric additions use ordinary floating-point addition.",
+    "H02": "HOLD",
+    "H04": "HOLD",
+    "physical_x_F_Pi_Q_G_F": "UNDEFINED/HOLD",
+    "scientific_admission": false,
+    "original42_acceptance": false,
+    "formal_packet": "PENDING",
+    "qualification": false
+  },
+  "evidence_directory": "/mnt/extdrive/workdir/htt_open_data/r35_cf4_bound_fresh_closeout",
+  "intake_sha256": "d9d298c2c9ffaf0091b941c2ee65fdee34e35c48ae8a50d96fc06f23ac28ab7a",
+  "runtime": {
+    "requested": "gpt-6-astra/xhigh",
+    "observed": "UNKNOWN"
+  },
+  "next_checkpoint": "Preserve this assessment for actual formal packet binding. No additional probe, numerical rerun, or expenditure is authorized by this closeout."
+}

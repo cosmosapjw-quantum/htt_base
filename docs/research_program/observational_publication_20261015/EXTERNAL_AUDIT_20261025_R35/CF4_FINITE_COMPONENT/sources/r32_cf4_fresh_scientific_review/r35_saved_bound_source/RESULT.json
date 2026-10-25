@@ -1,0 +1,65 @@
+{
+  "status": "PROSPECTIVE_FUNDING_FEASIBLE_PRESCRIBED_SOURCE_FIX_REQUIRED",
+  "scope": "Source/resource determination of the already approved saved-artifact repair only; no fresh scientific audit or numerical execution.",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "reviewer": "/root/r32_cf4_fresh_scientific_review",
+  "candidate_identity": "sha256:ae5d4a97c433c998e5777e6c4372ccb3dd3f800d29d5a52576fc183ea2fc5985",
+  "source": "/mnt/extdrive/workdir/htt_open_data/r35_cf4_saved_bound_repair/postprocess.py",
+  "source_sha256": "6e626e62e2c512c1665d19947b02c65c1d6ad6265b2794024e4ae473775ff097",
+  "preparation_sha256": "f2ea54e31d1071947fe6ac2f782f4fb246787850e13cdf2ddedfe50d6f458ac7",
+  "source_approval": "NOT_APPROVED_AS_CURRENTLY_WRITTEN; two prescribed local arithmetic fixes below are prospectively authorized for the lower-tier author. No reviewer implementation.",
+  "funding": {
+    "basis": "Controller supplied proposed conservative reconciliation; this source review does not independently establish every historical charge.",
+    "previous_settled_used_seconds": 512.8927776466445,
+    "additional_conservative_historical_debit_seconds": 50,
+    "preparation_debit_seconds": 7,
+    "proposed_used_seconds": 569.8927776466445,
+    "remaining_seconds": 30.1072223533555,
+    "future_reserves_seconds": {
+      "current_source_resource_decision": 5,
+      "one_actual_saved_postprocess": 10,
+      "independent_final_closeout": 5,
+      "root_control_binding_prescribed_source_fix_and_receipts": 10
+    },
+    "worst_case_final_used_seconds": 599.8927776466445,
+    "worst_case_margin_seconds": 0.1072223533555,
+    "decision": "PROSPECTIVELY_FEASIBLE_ONLY_IF root commits these charges, includes all intervening command costs and funds the complete external execution/closeout envelope. No refund, cap increase, extra bank or ultra. Any deficit returns RESOURCE_HOLD.",
+    "historical_preparation_cap_seconds": 5,
+    "historical_preparation_observed_approx_seconds": 6.56,
+    "historical_preparation_status": "HOLD_CAP_BREACH_PRESERVED; the7-second debit records the overrun and does not retroactively pass preparation."
+  },
+  "source_findings": [
+    {
+      "code": "FALSE_COMPONENTWISE_MONOTONICITY_REQUIREMENT",
+      "location": "postprocess.py:149-150",
+      "defect": "A correct reference mapping need not increase every Cartesian roundoff contribution. The old wrong rows overestimated some terms and underestimated others. Requiring the newly derived raw bound to exceed every old value can stop a valid correction before the downstream gates.",
+      "minimal_fix": "Keep raw_corrected_roundoff and old_roundoff as separately named evidence. Check raw_corrected finite/nonnegative; use an upward-rounded elementwise maximum of raw_corrected_roundoff and old_roundoff as the operative roundoff. Preserve the existing monotonicity assertion on that operative array. No covariance/window or tolerance changes."
+    },
+    {
+      "code": "FINAL_ULP_IS_NOT_REDUCTION_ENCLOSURE",
+      "location": "postprocess.py:143-148,235-247",
+      "defect": "A single nextafter after a rounded positive dot product, weighted reduction or accumulation does not generally enclose all intermediate multiplication/addition roundoff. Exact Fraction reference scales and the per-product q enclosure are useful, but they do not make later vec@base, BA einsum and repeated joint additions directed-rounded. This is a defect in the claimed upward construction, not evidence of inaccurate covariance matrices.",
+      "minimal_fix": "Use upward rounding after each elementary nonnegative product and addition for the three-coordinate dot products and scalar chains. For longer BA and BC positive reductions, use either elementwise directed products plus a directed summation, or an explicitly justified gamma_n accumulation allowance with an operation count covering every product/addition and explicit subnormal/underflow handling. Preserve finite/nonnegative checks. Retain the empirical e_sens/global_rigorous_type3_error_enclosure=NOT_ESTABLISHED ceiling; do not claim certification of FINUFFT or continuum error."
+    }
+  ],
+  "accepted_source_structure": [
+    "Uses b[unique[h],d] and exact Fraction expansion products for all30 reference sums; checks the actual row mapping and original concrete witness.",
+    "Reads frozen old windows and checks saved window/target value equality; it makes no FINUFFT, background, Bessel or new Fourier-window calls.",
+    "Reconstructs saved A/B/C maps and rederives the specified saved samples, endpoints, both angular orders and first-index extrema; exact equality to the42 already checked IDs is enforced.",
+    "Propagates corrected sensitivity through all25 spectral entries and all225 joint entries, then tests original all-band/all-radius sensitivity, convergence and support thresholds.",
+    "Keeps original PRODUCT/RESULT immutable and writes separate correction sidecars."
+  ],
+  "executable_next_step": "Lower-tier author applies only the two prescribed arithmetic fixes, AST-parses and reseals source/preparation identities within the explicitly funded remaining control reserve. Root verifies that bounded diff and refreshed account, then supplies one fresh actual ACK/GO and runs the already prepared postprocessor once. Its whole10-second cap must include interpreter startup, serialization, flushing/fsync, receipt and child reaping via an external envelope; source contains no independent whole-command timer. Preserve any source/timeout failure and stop without automatic rerun. The already reserved separate five-second independent closeout consumes the repaired sidecar and exact final identity; no extra assurance ladder is requested.",
+  "scientific_admission": false,
+  "acceptance_met": false,
+  "original_acceptance_met": false,
+  "H02": "HOLD",
+  "H04": "HOLD",
+  "physical_x_F_Pi_Q_G_F": "UNDEFINED/HOLD",
+  "global_rigorous_type3_error_enclosure": "NOT_ESTABLISHED",
+  "new_numerical_starts": 0,
+  "source_mutations_by_reviewer": 0,
+  "command_cap_seconds": 5,
+  "utc_unix": 1792927699.2592509
+}

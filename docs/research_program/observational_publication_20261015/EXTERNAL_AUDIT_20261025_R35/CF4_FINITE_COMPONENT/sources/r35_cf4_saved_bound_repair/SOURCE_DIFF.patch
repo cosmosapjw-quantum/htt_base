@@ -1,0 +1,140 @@
+--- postprocess.py
++++ postprocess_repaired.py
+@@ -56,6 +56,44 @@
+ 
+ def upward(x):
+     return np.nextafter(x, np.inf)
++
++
++def upmul(a, b):
++    """Outward product of nonnegative binary64 values; fail on underflow."""
++    aa=np.asarray(a); bb=np.asarray(b)
++    require(np.all(np.isfinite(aa)) and np.all(np.isfinite(bb)) and
++            np.all(aa>=0) and np.all(bb>=0), 'POSITIVE_PRODUCT_DOMAIN')
++    value=aa*bb
++    require(np.all(np.isfinite(value)), 'POSITIVE_PRODUCT_OVERFLOW')
++    require(not np.any((aa!=0)&(bb!=0)&(value==0)), 'POSITIVE_PRODUCT_UNDERFLOW_HOLD')
++    return np.where(value==0,0,upward(value))
++
++
++def upadd(a, b):
++    """Outward sum of nonnegative binary64 values."""
++    aa=np.asarray(a); bb=np.asarray(b)
++    require(np.all(np.isfinite(aa)) and np.all(np.isfinite(bb)) and
++            np.all(aa>=0) and np.all(bb>=0), 'POSITIVE_SUM_DOMAIN')
++    value=aa+bb
++    require(np.all(np.isfinite(value)), 'POSITIVE_SUM_OVERFLOW')
++    return np.where(value==0,0,upward(value))
++
++
++def dot3_up(left, right):
++    """Every product and addition in a three-component positive dot is outward."""
++    return upadd(upadd(upmul(left[...,0,None],right[0]),
++                       upmul(left[...,1,None],right[1])),
++                 upmul(left[...,2,None],right[2]))
++
++
++def positive_reduce_up(terms, axis, count):
++    """Nonnegative sum: <= count-1 additions, enclosed by gamma_(count+2)."""
++    require(np.all(np.isfinite(terms)) and np.all(terms>=0), 'POSITIVE_REDUCTION_DOMAIN')
++    total=np.sum(terms,axis=axis)
++    require(np.all(np.isfinite(total)), 'POSITIVE_REDUCTION_OVERFLOW')
++    require(not np.any((total==0)&np.any(terms!=0,axis=axis)),
++            'POSITIVE_REDUCTION_UNDERFLOW_HOLD')
++    return upmul(total,upadd(1.,gamma(count+2)))
+ 
+ 
+ def gamma(n):
+@@ -141,21 +179,27 @@
+     qsaved = np.asarray(json.loads((RUN/'RESULT.json').read_text())['roundoff']['q_ad'])
+     require(np.all(q >= qsaved), 'RECOMPUTED_Q_BELOW_SAVED_Q')
+     vec = abs(target[:,1:]); xmax = upward(np.max(abs(product['positions']),axis=0))
+-    dot = upward(vec @ xmax)
+-    phase = upward(2*gamma(8)*target[:,0]*dot)
+-    base = upward(gamma(4)*q + gamma(2*term_count+8)*scales)
+-    projection = upward(vec @ upward(q+scales).T)
+-    roundoff = upward(vec @ base.T + phase[:,None]*projection + gamma(8)*projection + 4096*TINY)
++    dot = dot3_up(vec,xmax[:,None])[:,0]
++    phase = upmul(upmul(upmul(2.,gamma(8)),target[:,0]),dot)
++    base = upadd(upmul(gamma(4),q),upmul(gamma(2*term_count+8),scales))
++    projection = dot3_up(vec,upadd(q,scales).T)
++    raw_corrected = upadd(upadd(dot3_up(vec,base.T),
++                                    upmul(phase[:,None],projection)),
++                             upadd(upmul(gamma(8),projection),4096*TINY))
++    require(np.all(np.isfinite(raw_corrected)) and np.all(raw_corrected>=0),
++            'RAW_CORRECTED_ROUNDOFF_INVALID')
++    roundoff = upward(np.maximum(raw_corrected,old_roundoff))
+     require(np.all(np.isfinite(roundoff)) and np.all(roundoff >= old_roundoff),
+-            'CORRECTED_ROUNDOFF_NOT_CONSERVATIVE')
++            'OPERATIVE_ROUNDOFF_NOT_CONSERVATIVE')
+     ratio = projection / np.maximum(abs(high), np.finfo(float).tiny)
+-    return roundoff, {'reference_rows':unique.tolist(), 'reference_abs_scales':scales.tolist(),
++    return roundoff, raw_corrected, {'reference_rows':unique.tolist(), 'reference_abs_scales':scales.tolist(),
+                       'q_ad_upper':q.tolist(), 'witness':witness,
+                       'reference_term_count_max':term_count,
+                       'cancellation_ratio_max_finite':float(np.max(ratio[np.isfinite(ratio)])),
+                       'cancellation_ratio_nonfinite_count':int(np.sum(~np.isfinite(ratio))),
+                       'coefficient_underflow_checked':True,
+                       'roundoff_max':float(np.max(roundoff)),
++                      'raw_corrected_roundoff_max':float(np.max(raw_corrected)),
+                       'old_roundoff_max':float(np.max(old_roundoff))}
+ 
+ 
+@@ -235,16 +279,29 @@
+ def spectral_bound(high,err,band):
+     z=high[band['indices']]; e=err[band['indices']]; w=band['weights']
+     A=np.einsum('t,nta,ntb->nab',w,z,z.conj()).real
+-    B=np.einsum('t,nta,ntb->nab',w,abs(z),e)+np.einsum('t,nta,ntb->nab',w,e,abs(z))+np.einsum('t,nta,ntb->nab',w,e,e)
+-    return A,upward(B)
++    require(np.all(np.isfinite(e)) and np.all(e>=0) and np.all(w>=0),
++            'SPECTRAL_BOUND_DOMAIN')
++    az=upward(abs(z))
++    x=az[:,:,:,None]; y=az[:,:,None,:]
++    ex=e[:,:,:,None]; ey=e[:,:,None,:]
++    terms=upadd(upadd(upmul(x,ey),upmul(ex,y)),upmul(ex,ey))
++    weighted=upmul(terms,w[None,:,None,None])
++    B=positive_reduce_up(weighted,axis=1,count=len(w))
++    return A,B
+ 
+ 
+ def joint_bound(s,band,bounds):
+     out=np.zeros((15,15))
++    inverse_denominator=upward(1/(2*math.pi**2))
+     for k,w,m in zip(band['k'],band['radial'],bounds):
+-        smooth=np.exp(-.5*(k*s.RADII/s.H)**2)
+-        out += w*s.power(k,AMP)/(2*math.pi**2)*np.kron(np.outer(smooth,smooth),m)
+-    return upward(out)
++        require(w>=0 and np.all(np.isfinite(m)) and np.all(m>=0),
++                'JOINT_BOUND_DOMAIN')
++        smooth=upward(np.exp(-.5*(k*s.RADII/s.H)**2))
++        radial=upmul(smooth[:,None],smooth[None,:])
++        factor=upmul(upmul(float(w),upward(float(s.power(k,AMP)))),inverse_denominator)
++        block=upmul(radial[:,:,None,None],m[None,None,:,:]).transpose(0,2,1,3).reshape(15,15)
++        out=upadd(out,upmul(factor,block))
++    return out
+ 
+ 
+ def metrics(stages,bounds):
+@@ -315,8 +372,9 @@
+             'CORRECTED_FACTOR_DRIFT')
+     factor=load(Path(factor_binding['path']))
+     exact=json.loads((RUN/'EXACT_REFERENCE_SUMS.json').read_text())
+-    roundoff,meta=corrected_roundoff(target,product,factor,exact,high['window'],saved['roundoff'])
+-    sens=upward(upward(10*abs(high['window']-low['window']))+roundoff)
++    roundoff,raw_corrected,meta=corrected_roundoff(
++        target,product,factor,exact,high['window'],saved['roundoff'])
++    sens=upadd(upmul(10.,upward(abs(high['window']-low['window']))),roundoff)
+     stages={label:load(RUN/f'STAGE_{label}.npz') for label in ('A','B','C')}
+     s,maps=maps_from_saved(target,stages,inventory)
+     target_check=selection(target,high['window'],maps,product,factor)
+@@ -341,7 +399,9 @@
+     report,passed=metrics(stages,corrected)
+     # Preserve all five STF and full 15-joint covariance arrays by identity:
+     # the sidecar holds only corrected envelopes; the frozen product is untouched.
+-    np.savez_compressed(OUT/'CORRECTED_BOUNDS.npz',roundoff=roundoff,sensitivity=sens,
++    np.savez_compressed(OUT/'CORRECTED_BOUNDS.npz',roundoff=roundoff,
++                        raw_corrected_roundoff=raw_corrected,old_roundoff=saved['roundoff'],
++                        sensitivity=sens,
+                         **spectral,**{f'{k}_bound{bi+1}':v[bi] for k,v in corrected.items() for bi in (0,1)})
+     payload={'status':'SAVED_BOUND_REPAIRED_PENDING_INDEPENDENT_CLOSEOUT' if passed else
+              'NUMERICAL_METHOD_ACCURACY_HOLD',

@@ -1,0 +1,280 @@
+{
+  "packet_id": "bba4d4c884d112db43ee2c25afcf44a448316379799b15c5ef2214187120671e",
+  "task_id": "R30-CF4-BAND-PV-FULL-TENSOR-COVARIANCE",
+  "input_identity": "sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3",
+  "candidate_identity": "sha256:ae5d4a97c433c998e5777e6c4372ccb3dd3f800d29d5a52576fc183ea2fc5985",
+  "phase": "review",
+  "agent_id": "/root/r32_cf4_fresh_scientific_review",
+  "status": "CONDITIONAL_ACCEPTANCE_HOLD",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "original_acceptance_met": false,
+  "scientific_admission": false,
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "independence": "Fresh reviewer; did not frame, author, execute, or check the candidate. No children, scientific imports, numerical reruns, CAS, repository/Git/live-state mutation. Read-only source and raw artifact inspection plus writes in this review directory.",
+  "issue": {
+    "class": "code",
+    "code": "REFERENCE_ROUNDOFF_SOURCE_INDEX_MISMATCH",
+    "substantive": true,
+    "input_identity": "sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3",
+    "question": "Can the unchanged candidate satisfy its sensitivity and quadrature tolerances after the reference rounding contribution is rebuilt using the actual compact-to-catalogue reference mapping?",
+    "exact_missing_or_defect": "fast_science.py:236 uses b[h,d] although h indexes unique; the correct reference evaluator uses br=b[unique] at lines160-170. Stored reference_abs_scales therefore uses rows0..5 rather than actual rows3759,5937,7666,8439,8528,8567. A justified corrected reference/phase/coefficient envelope and its propagated A/B/C matrix acceptance checks are missing.",
+    "source": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/fast_science.py:236",
+    "checker_gap": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_independent_numeric_check/checker.py:118-119,133,138-143 consumes the stored roundoff and spectral BA without independently rebuilding the reference mapping or the window-to-spectral envelope.",
+    "counterexample": {
+      "coordinate_a": 0,
+      "cartesian_d": 1,
+      "compact_h": 1,
+      "actual_reference_row": 5937,
+      "expansion_hex": "0x1.4bc1c2a1a09efp-12",
+      "actual_j": -0.0004562479149817095,
+      "actual_g": 35.580421673524114,
+      "actual_n_y": -0.20661704130548947,
+      "required_single_absolute_term": "abs(float.fromhex(expansion_hex) * actual_j * actual_g * actual_n_y) > 9.6e-7",
+      "stored_total_reference_abs_scale": 1.6999069138001732e-08,
+      "consequence": "The stored total is smaller than a single required positive absolute term. The prescribed reference-scale construction is invalid. This does not establish erroneous covariance values or failure of the numerical tolerances after correction."
+    }
+  },
+  "repair_plan": "Authorize one lower-tier saved-artifact postprocessing unit only after refreshed same600-second accounting and a new actual ACK/GO; preserve the frozen producer, candidate identity and all first failures. Use a separate utility, no FINUFFT call, no window/producer/background/Bessel rerun. Rebuild the six-reference absolute scales from exact expansion terms and b[unique[h],d], with justified upward-safe absolute sums, coefficient/phase/reference roundoff and explicit underflow handling. Independently reconstruct e_sens=10*abs(high-low)+corrected_roundoff from retained WINDOWS/SENSITIVITY, then recompute BA and BC at existing A/B/C targets and quadrature maps, and re-evaluate the original all-band/all-radius .005/.003/.02 and sensitivity5e-5/3e-5/2e-4 gates, retaining unchanged covariance arrays and failed old bounds. Demonstrate the specific a0,d1,h1 witness and check every actual reference mapping. In the same utility, rederive the deterministic retained target set from saved targets/windows and fixed maps, including endpoints, saved samples, both angular orders, magnitude/cancellation extrema and first-index ties; require exact set equality to the42 already directly checked windows, otherwise return the missing IDs without automatically recomputing them. Proposed whole-command caps: preparation5s, one postprocessing command10s, separate independent closeout5s; root must confirm funding within remaining600/280/340 and existing checker60 ceiling or return RESOURCE_HOLD. The independent closeout reviews corrected source/raw bounds and the all-entry comparisons; no new whole scientific campaign. Any correction sidecar or controller candidate rebinding must be explicit; the currently reviewed RESULT identity remains unchanged and unaccepted. No physical/H02/H04/rigorous-type3 admission.",
+  "evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fixture_repair_dispatch/ROOT_FRESH_SCIENTIFIC_REVIEW_GO.json",
+      "sha256": "d16d7ac0ef3dded3041d892a0e5b585de0bda129e4940f34680025600e8f3fab",
+      "bytes": 1121
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fixture_repair_dispatch/ACTUAL_ACKNOWLEDGED_FRESH_REVIEW_PACKET.json",
+      "sha256": "140fc4ec89c7033fca649bae2a20a4e6c7d60bc108af2dbacebdd8b09e7cc4ac",
+      "bytes": 18073
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/CONTRACT.md",
+      "sha256": "29f5660bfee2feb379f01da2f51ddb7a87d416b05a2393f4ffaef5858fd6c8e7",
+      "bytes": 23657
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/INPUT_BINDINGS.json",
+      "sha256": "d5cfe88bf297ee7d7ab6ae5b6758c951cf2491b189de8c37e6756511232dc2c4",
+      "bytes": 8982
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fast_window_framing/CONTRACT.md",
+      "sha256": "8765ad540341080dbb6da3ec02a0cc9179447df45448b7a12245954c879b4706",
+      "bytes": 18879
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fixture_failure_framing/SOURCE_DECISION.md",
+      "sha256": "d1369f4f00762f82cd4a27fa89386e7d4c0ac7cd3061f7a397c27210984b1e46",
+      "bytes": 16956
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/PREPARATION.json",
+      "sha256": "b9f93fa94f898c94aa9f23a3ac9f1090b31f6442a8418c2536f86faf08a3607e",
+      "bytes": 3316
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/SOURCE_DIFF.patch",
+      "sha256": "2b3c0b8fa77bbf5d3b5bfedf3e0950762832ce5740b4cb4ee8fcd01bdef5397f",
+      "bytes": 3874
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/fast_science.py",
+      "sha256": "5caaa72323858622bc1b3bd62159ba67e527f4204a73871ee310181be542c82f",
+      "bytes": 13807
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/driver.py",
+      "sha256": "7f5c65d5e7ba9777727cfd8f836117e4c8560f082d150d6d581a27c5570956aa",
+      "bytes": 30514
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/actual_run/RESULT.json",
+      "sha256": "ae5d4a97c433c998e5777e6c4372ccb3dd3f800d29d5a52576fc183ea2fc5985",
+      "bytes": 68952
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/actual_run/PRODUCT.npz",
+      "sha256": "cfec008002fea776611d6abb70448a8b5cbed0d774a49d3377a5cfcf828a857d",
+      "bytes": 2154386
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/actual_run/EXACT_REFERENCE_SUMS.json",
+      "sha256": "046f10128740495d7d70202ca094fb06e14e31482b65b074a5514d7c0d5c15a9",
+      "bytes": 15877
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/actual_run/SENSITIVITY.npz",
+      "sha256": "719f388cfcecc95cfd00668140e670101f424e964058263e1b5d5bb56b25a12b",
+      "bytes": 8075744
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/actual_run/STAGE_A.npz",
+      "sha256": "9be71f300e5ce9571990b3bac6698aa0ac594c5eb05685121e6718a9a398700f",
+      "bytes": 16829
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/actual_run/STAGE_B.npz",
+      "sha256": "0ce28a8a8ec4e178dbbdf39c4b489f9761205f5f83b071377f2d3bcc58fb4b01",
+      "bytes": 16830
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/actual_run/STAGE_C.npz",
+      "sha256": "3d41091133c10f756f6b80ba33d2e7ec4982126031f59ecceab5559ce02763b1",
+      "bytes": 25772
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/actual_run/DIRECT_CONTROLS.json",
+      "sha256": "b61bedf99d8a1b8594576f3a61b95e7d10b2b12a84ef65bfaee8f956a8b2c122",
+      "bytes": 50340
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/actual_run/RUN_RECEIPT.json",
+      "sha256": "134fde610d5f50403016ada3d4083bf8cfda96e9233d86911b44d35b89376606",
+      "bytes": 3080
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/actual_run/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_independent_numeric_check/checker.py",
+      "sha256": "c5f1ea70c84146aac5bbddb70df8ba515c574b30cff25f2d1a2cb88319ff9530",
+      "bytes": 14035
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_independent_numeric_check/CHECK_RESULT.json",
+      "sha256": "e1cae6799cc209fbb5130e0e978f962b7240d8e7b8a3ee1395d8d3811bbeff21",
+      "bytes": 35771
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_independent_numeric_check/RUN_RECEIPT.json",
+      "sha256": "f551d1f7da0cc5076f5795811fbef544c0c3c9ed57889db2b89dad659be46e23",
+      "bytes": 827
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_independent_numeric_check/FINAL_REPORT.json",
+      "sha256": "96c2b3b1eb5bc6e6e0d334c2d03fe49a9b1c1417bd27a5c61a3068498b0d6f3f",
+      "bytes": 1985
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/actual_run/CONTROLS.json",
+      "sha256": "a168cdf69a9398c04ab0d4de13be6e56e4757b3d880f91709f1f856111da0f5b",
+      "bytes": 3076
+    }
+  ],
+  "positive_numerical_observations": {
+    "full_cohort": 35970,
+    "nonreference_columns": 35019,
+    "mixed_zero_rows": 944,
+    "exact_zero_rows": 945,
+    "all_three_diagonal_block_ranks": [
+      5,
+      5,
+      5
+    ],
+    "matrix_arrays": {
+      "band_joint": [
+        2,
+        15,
+        15
+      ],
+      "total_joint": [
+        15,
+        15
+      ],
+      "covariance_blocks": [
+        3,
+        3,
+        3,
+        5,
+        5
+      ],
+      "tensor_covariance": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ]
+    },
+    "dtype": "binary64 covariance; retained complex128 window evaluator",
+    "full_joint_cross_radius_example_total_0_5": 4.862288104837513e-05,
+    "full_joint_cross_coordinate_example_total_0_3": 1.5976479793443837e-05,
+    "signed_observed_center": [
+      -0.01508104258001314,
+      -0.016431821419253857,
+      0.00907949492482731,
+      0.020566181835648047,
+      0.007976154841235332
+    ],
+    "independent_direct_count": 42,
+    "independent_direct_relative_l2_max": 2.14063142986404e-12,
+    "independent_direct_component_scaled_max": 1.4766162007080675e-13,
+    "independent_bessel_relative_fro": 4.349005623826308e-13,
+    "independent_bessel_normalized_entry": 1.4339076336384062e-12,
+    "spectral_joint_reconstruction_max_abs": 6.776263578034403e-21,
+    "observed_convergence_including_old_bound_max_entry": 1.6358426408212974e-08,
+    "observed_convergence_including_old_bound_max_fro": 2.7142195201977433e-08,
+    "observed_convergence_including_old_bound_max_white": 1.337406392999072e-07,
+    "actual_band1_joint_minimum_eigenvalue": 1.138477495509515e-14,
+    "actual_band2_joint_minimum_eigenvalue": 3.443510843128341e-12,
+    "actual_sum_joint_minimum_eigenvalue": 1.1856042634709051e-11,
+    "antipodal_corrected_max_abs": 9.857566152238206e-16,
+    "antipodal_old_sign_debug_max_abs": 3.3705490043313744,
+    "producer_stderr_bytes": 0,
+    "independent_checker_whole_seconds": 5.927940845489502,
+    "independent_checker_max_rss_kib": 109620
+  },
+  "selection_caveat_decision": {
+    "status": "NOT_A_SEPARATE_PROVEN_BLOCKER",
+    "reason": "The frozen method requires the specified deterministic subset and independent contractions, but does not separately require a second implementation of selection. Source review shows driver.py:129-218 selects retained samples, endpoint/split targets and magnitude/cancellation extrema for A/C (both mandatory angular orders), uses sorted unique indices/first argmin/argmax and invokes full-cohort direct evaluation. The independent checker recomputes the42 recorded values. Exact independent rederivation of the extremal selection was not performed, and no contrary selection is claimed. Its cheap rederivation is included in the necessary bound-postprocessing closure to expose any missing targets without a full rerun."
+  },
+  "manual_mathematical_review": {
+    "antipodal": "Real L,j,g,n give w(k,-u)=-conj(w(k,u)); the approved sign repair is correct.",
+    "covariance": "Positive smoothing and common Gaussian modes yield the saved full joint Gram integral with 1/(2pi^2), including nonzero cross-coordinate/cross-radius blocks; physical k and R/h conventions match the contract.",
+    "bessel": "Independent code uses (j0+j2)(ni.nj)/3-j2(ni.shat)(nj.shat), correct zero-separation limit and signed fixture contraction.",
+    "exact_references": "Checker independently reconstructs all30 dyadic sums via Fraction; the roundoff scale still uses the wrong catalogue rows.",
+    "support": "All inspected 5x5 support checks report5 at1e-12/1e-10/1e-8. Joint cross-smoothing eigenvalues can be much smaller; no joint whitening/full-rank claim was made.",
+    "error_ceiling": "Observed eps sensitivity is an empirical diagnostic, not a certified global type3 or continuum error bound. The explicit reference-roundoff defect blocks even the prescribed empirical construction until corrected."
+  },
+  "claim_ceilings": {
+    "global_rigorous_type3_error_enclosure": "NOT_ESTABLISHED",
+    "physical_x_F_Pi_Q_G_F": "UNDEFINED/HOLD",
+    "H02": "HOLD",
+    "H04": "HOLD",
+    "qualified_products": [],
+    "future_conditional_qualified_product_subset": [
+      "PRODUCT.npz:band_joint",
+      "PRODUCT.npz:total_joint",
+      "PRODUCT.npz:tensor_covariance"
+    ],
+    "not_promoted": [
+      "physical tensor image",
+      "family identification",
+      "p-value",
+      "posterior",
+      "empirical total measurement-error law",
+      "L03",
+      "four-axis CAS"
+    ]
+  },
+  "accounting": {
+    "read_only_command_cap_seconds": 10,
+    "known_tool_command_wall_seconds_before_final_write": 1.177215388,
+    "controller_reconciliation_required": true,
+    "new_numerical_starts": 0,
+    "new_ultra": 0,
+    "same_parent_lifetime_cap_seconds": 600,
+    "historical_producer_cap_seconds": 280,
+    "historical_aggregate_cap_seconds": 340,
+    "no_allocation_reset": true
+  },
+  "reviewed_at_unix": 1792926724.6050534
+}

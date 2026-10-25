@@ -1,0 +1,78 @@
+{
+  "status": "ACYCLIC_APPROVED_FIXTURE_SOURCE_REPAIR_RECIPE",
+  "original_controller_input": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/INPUT.json",
+    "sha256": "5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3"
+  },
+  "input_identity": "sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3",
+  "actual_repair_packet": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fixture_repair_dispatch/ACTUAL_PLANNED_REPAIR_PACKET.json",
+    "sha256": "3ae7f9f51719cc7681e72fdd428d8cba1ec995195f010db23c4faa55deea62ad"
+  },
+  "base_packet_id": "dd99622e000512ddbc07894d021019b960c96806319c063f207bb98cebc5a8e5",
+  "base_candidate_identity": null,
+  "base_raw_receipt": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fast_numeric_executor/RAW_OUTCOME.json",
+    "sha256": "b2561d2c80e04f06788b87a08e84a56e1edf90fbd9fabb4ae488429454eaff56"
+  },
+  "previous_actual_fast_failure": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/actual_run/RESULT.json",
+    "sha256": "a6e0c9d5538195d9b217725844eb4fbbd08fa7f966e9b299aa858098cc1b911b"
+  },
+  "source_decision": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fixture_failure_framing/SOURCE_DECISION.md",
+    "sha256": "d1369f4f00762f82cd4a27fa89386e7d4c0ac7cd3061f7a397c27210984b1e46"
+  },
+  "source_approval": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fixture_failure_framing/RESULT.json",
+    "sha256": "c2f40740ddd483deb72e976198f3b2c0ff54244b27a34e508446026839be2dae"
+  },
+  "prepared_source": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/PREPARATION.json",
+    "sha256": "b9f93fa94f898c94aa9f23a3ac9f1090b31f6442a8418c2536f86faf08a3607e"
+  },
+  "template": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/INPUT_TEMPLATE.json",
+    "sha256": "aa0274ece37f7dcd88ffc97893e9a06ca4082e11603ebd61f86a859b671cb333"
+  },
+  "stable_core": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fixture_repair_dispatch/STABLE_INPUT_CORE.json",
+    "sha256": "6e6d5e2b29aa42db634626e6e1642222be1bae4ef71b6fbea56522c6d37951aa"
+  },
+  "account_head": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fixture_repair_dispatch/ROOT_ACCOUNT_HEAD_BEFORE_REPAIR.json",
+    "sha256": "720deb73fb00f5f76a63c0f4439c85d641a790a95e0007c7034f91f03938c52d"
+  },
+  "dependency_manifest": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/DEPENDENCY.json",
+    "sha256": "3c47a0982825c6455ca571fa6cc64cfeb184149735f270057d729bad0eecac96"
+  },
+  "dependency_resolved": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/_deps",
+  "source_diff": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window_fixture_repair/SOURCE_DIFF.patch",
+    "sha256": "2b3c0b8fa77bbf5d3b5bfedf3e0950762832ce5740b4cb4ee8fcd01bdef5397f"
+  },
+  "repair_plan_identity": "2ce0b030bc3fb167e008f7a6e76e9d3b3742d69498706be7a42e92bda568907b",
+  "source_hashes": {
+    "science.py": "ed9918ef9f2f12c7e6b04d5140ea8e51acd86c5fb6a541d80a27e9f42e3ad982",
+    "runner.py": "6ff336ef28a90f6d3d6e315df4b48b055f16d944b5eec6dcbdd25c46c90deb38",
+    "independent_check.py": "a825c6e9240d189fa456b5a4868c8cc95801a4983c2b8b90f60659894b9b32a2",
+    "driver.py": "7f5c65d5e7ba9777727cfd8f836117e4c8560f082d150d6d581a27c5570956aa",
+    "fast_science.py": "5caaa72323858622bc1b3bd62159ba67e527f4204a73871ee310181be542c82f"
+  },
+  "assembly_recipe": {
+    "post_GO_additions": [
+      "derived_execution_lineage_path",
+      "derived_execution_lineage_sha256",
+      "root_go_path",
+      "root_go_sha256"
+    ],
+    "projection_equals_sealed_core": true,
+    "final_input_and_sidecar_after_GO": true,
+    "future_final_binding_not_hashed_by_priorobjects": true
+  },
+  "producer_cap_seconds": 30,
+  "checker_reserved_seconds": 60,
+  "no_scientific_threshold_or_source_model_change": true,
+  "oldfailedandwindowartifacts_preserved": true
+}
