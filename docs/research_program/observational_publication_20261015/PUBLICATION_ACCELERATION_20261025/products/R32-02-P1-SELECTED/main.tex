@@ -1,0 +1,34 @@
+\documentclass[aps,prd,onecolumn,nofootinbib,superscriptaddress,longbibliography,floatfix]{revtex4-2}
+\usepackage{amsmath,amssymb,bm,graphicx,booktabs,array}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\E}{\mathbb E}
+\newcommand{\STF}{\mathrm{STF}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\ind}{\mathbf 1}
+\newcommand{\kms}{\ensuremath{\mathrm{km}\,\mathrm{s}^{-1}}}
+\newcommand{\hunit}{\ensuremath{\mathrm{km}\,\mathrm{s}^{-1}\,\mathrm{Mpc}^{-1}}}
+\begin{document}
+\title{Selected-sample tensor laws and partially identified cosmological functionals}
+\date{25 October 2026}
+\begin{abstract}
+An angular tensor inferred from a selected catalogue can be statistically identifiable while its physical interpretation remains undetermined. We study this distinction using released galaxy distances and a separate four-window Cosmicflows-4 summary. For 274 observed objects in a fixed 628-target frame, we specify a normalized Gaussian likelihood for fifteen joint coefficients, including five signed symmetric trace-free components, under four fixed covariance shapes. The exact model-conditional coefficient region uses an $F(15,259)$ pivot; in maximum-likelihood covariance coordinates its squared radius is $27.05850$. Twenty correlated held-out-block diagnostics include training-coefficient uncertainty. Their smallest two-sided reference tail is $0.02326$, above the retrospective Bonferroni threshold $0.0025$, without validating the assumed law. On the same observed cohort, saved plug-in predictive scores reverse the ordering of vector and tensor mean models when group covariance is changed. Unrestricted completion of the 354 missing event indicators leaves a finite-frame fraction with interval-hull width at least $0.56369$. We relate the joint tensor region to observational fibres and explicit functional domains. An unrestricted optical-response bias leaves every tensor in the declared admissible shear domain observationally equivalent, even when the selected tensor coefficient is estimable. Unboundedness follows only for the formal unrestricted affine extension. A separate coupled finite measure retains all four-window covariance and shows substantial anchor and floor sensitivity; it supplies no physical posterior.
+\end{abstract}
+\maketitle
+\input{sections/01_introduction.tex}
+\input{sections/02_identification.tex}
+\input{sections/03_selected_likelihood.tex}
+\input{sections/04_results_robustness.tex}
+\input{sections/05_coupled_functionals.tex}
+\input{sections/06_discussion.tex}
+\appendix
+\input{sections/07_proofs.tex}
+\bibliographystyle{apsrev4-2}
+\bibliography{references}
+\end{document}

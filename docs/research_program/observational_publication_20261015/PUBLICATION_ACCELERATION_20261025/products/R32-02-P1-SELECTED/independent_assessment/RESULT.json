@@ -1,0 +1,60 @@
+{
+  "schema": "htt.independent_review_preparation.result/1",
+  "task_id": "R32-02-P1-SELECTED",
+  "verdict": "SCOPED_PASS",
+  "acceptance_met": true,
+  "acceptance_scope": [
+    "selected_cohort_manuscript"
+  ],
+  "proposed_qualified_products": [
+    "selected_cohort_manuscript"
+  ],
+  "original_acceptance_met": false,
+  "original42_acceptance_met": false,
+  "physical_admission": "HOLD",
+  "parent_law_qualified": false,
+  "publication_decision": false,
+  "controller_task_completed": false,
+  "formal_review_packet": "PENDING",
+  "formal_ack_created": false,
+  "reviewer_agent": "/root/r35_p1_fresh_independent_review",
+  "author_agent": "/root/rc_573ab3c80bc912af6solhigh",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN",
+    "status": "NOT_INDEPENDENTLY_OBSERVED"
+  },
+  "candidate_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-02-P1-SELECTED",
+  "candidate_identity": {
+    "ARTIFACT_MANIFEST.json": "cf17adeaae69fd9a35a488573bb96396539fea8ea46637c88638bf69f6e37fb1",
+    "RESULT.json": "2f01009587dac4cbf4f451b28f16b45f417b483f5ec18e5d49aa836c9c27d0af",
+    "main.pdf": "895ff50d0542866508bae21f99859970268943fd33d155b8a6facbddc21a732b"
+  },
+  "blocking_findings": [],
+  "nonblocking_observations": [
+    {
+      "id": "P1-EDITORIAL-1",
+      "severity": "P3",
+      "path": "figures/coupled_functionals.pdf",
+      "pdf_page": 14,
+      "source_location": "sections/05_coupled_functionals.tex:117",
+      "issue": "Legacy artwork uses S_j and B for the apparent rate tensor and declared anchor; manuscript uses T_j and B_* to avoid physical/optical notation collision. Caption and context identify the apparent quantities.",
+      "required_for_acceptance": false,
+      "optional_improvement": "Label-only alignment; no numerical rerun."
+    }
+  ],
+  "bounded_targeted_repair_required": false,
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/RAW_RECEIPT.json",
+  "validation_paths": [
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/INDEPENDENT_VALIDATION.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/SOURCE_IDENTITY_CHECKS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/BIBLIOGRAPHY_CHECKS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/REVIEW.md"
+  ],
+  "next_executable_checkpoint": "Await real controller review reservation; bind unchanged independent assessment to actual packet after candidate identity checks, without repeating analysis.",
+  "finished_utc": "2026-10-25T12:25:12.825228+00:00"
+}

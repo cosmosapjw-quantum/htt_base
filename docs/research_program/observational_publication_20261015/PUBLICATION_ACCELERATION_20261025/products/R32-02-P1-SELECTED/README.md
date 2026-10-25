@@ -1,0 +1,9 @@
+# Selected-sample tensor laws
+
+`main.tex` and `main.pdf` are the 17-page English RevTeX manuscript and its built review PDF. The review draft has no invented author or affiliation. Its four figures are retained, source-bound publication assets; `FIGURE_PROVENANCE.json` identifies each one. `CLAIM_TO_SOURCE.json` maps scientific statements to saved fields, evidence and caveats. The source files under `sections/` and `references.bib` are needed to rebuild the PDF.
+
+From this directory, run `latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error -outdir=build main.tex`. `BUILD_EXECUTION.json` records the actual build. The source-bound table consumer is `python consume_retained.py`. It checks the three SHA-256 inputs in `SOURCE_INPUTS.json` and writes four CSV tables plus `tables/CONSUMER_RESULT.json`. The `--selected-law`, `--distance` and `--selection` options can point to relocated copies, but their bytes must match the frozen hashes. It does not refit the catalogue or create a new selection model.
+
+The result is a conditional selected-cohort statistical analysis. Its full 15-coordinate likelihood, four covariance shapes, joint STF projections and finite-target completion sets apply under the stated laws. The plug-in model scores omit training-parameter uncertainty. The apparent four-window diagnostic has a separate 36-coordinate source and coupled finite measure. Physical $x_C,Q_C,F,\Pi,G_F$ and the physical response of that carrier remain unmeasured or undefined on their stated domains. This manuscript does not change the original 42-node scientific acceptances.
+
+The prior source bundle and its independent selected-law review are cited in `CLAIM_TO_SOURCE.json`. This new R32 candidate awaits a fresh independent review of its exact artifact identity before any scoped product decision.

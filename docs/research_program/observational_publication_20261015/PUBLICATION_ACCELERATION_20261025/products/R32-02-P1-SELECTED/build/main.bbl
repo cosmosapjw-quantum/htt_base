@@ -1,0 +1,127 @@
+%apsrev4-2.bst 2019-01-14 (MD) hand-edited version of apsrev4-1.bst
+%Control: key (0)
+%Control: author (72) initials jnrlst
+%Control: editor formatted (1) identically to author
+%Control: production of article title (-1) disabled
+%Control: page (0) single
+%Control: year (1) truncated
+%Control: production of eprint (0) enabled
+\begin{thebibliography}{8}%
+\makeatletter
+\providecommand \@ifxundefined [1]{%
+ \@ifx{#1\undefined}
+}%
+\providecommand \@ifnum [1]{%
+ \ifnum #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \@ifx [1]{%
+ \ifx #1\expandafter \@firstoftwo
+ \else \expandafter \@secondoftwo
+ \fi
+}%
+\providecommand \natexlab [1]{#1}%
+\providecommand \enquote  [1]{``#1''}%
+\providecommand \bibnamefont  [1]{#1}%
+\providecommand \bibfnamefont [1]{#1}%
+\providecommand \citenamefont [1]{#1}%
+\providecommand \href@noop [0]{\@secondoftwo}%
+\providecommand \href [0]{\begingroup \@sanitize@url \@href}%
+\providecommand \@href[1]{\@@startlink{#1}\@@href}%
+\providecommand \@@href[1]{\endgroup#1\@@endlink}%
+\providecommand \@sanitize@url [0]{\catcode `\\12\catcode `\$12\catcode
+  `\&12\catcode `\#12\catcode `\^12\catcode `\_12\catcode `\%12\relax}%
+\providecommand \@@startlink[1]{}%
+\providecommand \@@endlink[0]{}%
+\providecommand \url  [0]{\begingroup\@sanitize@url \@url }%
+\providecommand \@url [1]{\endgroup\@href {#1}{\urlprefix }}%
+\providecommand \urlprefix  [0]{URL }%
+\providecommand \Eprint [0]{\href }%
+\providecommand \doibase [0]{https://doi.org/}%
+\providecommand \selectlanguage [0]{\@gobble}%
+\providecommand \bibinfo  [0]{\@secondoftwo}%
+\providecommand \bibfield  [0]{\@secondoftwo}%
+\providecommand \translation [1]{[#1]}%
+\providecommand \BibitemOpen [0]{}%
+\providecommand \bibitemStop [0]{}%
+\providecommand \bibitemNoStop [0]{.\EOS\space}%
+\providecommand \EOS [0]{\spacefactor3000\relax}%
+\providecommand \BibitemShut  [1]{\csname bibitem#1\endcsname}%
+\let\auto@bib@innerbib\@empty
+%</preamble>
+\bibitem [{\citenamefont {Heinesen}(2021)}]{Heinesen2021}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Heinesen}},\ }\href {https://doi.org/10.1088/1475-7516/2021/05/008}
+  {\bibfield  {journal} {\bibinfo  {journal} {J. Cosmol. Astropart. Phys.}\
+  }\textbf {\bibinfo {volume} {2021}}\bibfield  {number} {\bibinfo  {number} {
+  (05)},\ \bibinfo {pages} {008}},\ }\Eprint {https://arxiv.org/abs/2010.06534}
+  {arXiv:2010.06534} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Maartens}\ \emph {et~al.}(2024)\citenamefont
+  {Maartens} \emph {et~al.}}]{Maartens2024}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Maartens}} \emph {et~al.},\ }\href
+  {https://doi.org/10.1088/1475-7516/2024/09/070} {\bibfield  {journal}
+  {\bibinfo  {journal} {J. Cosmol. Astropart. Phys.}\ }\textbf {\bibinfo
+  {volume} {2024}}\bibfield  {number} {\bibinfo  {number} { (09)},\ \bibinfo
+  {pages} {070}},\ }\Eprint {https://arxiv.org/abs/2312.09875}
+  {arXiv:2312.09875} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Kalbouneh}\ \emph {et~al.}(2026)\citenamefont
+  {Kalbouneh} \emph {et~al.}}]{Kalbouneh2026}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Kalbouneh}} \emph {et~al.},\ }\href
+  {https://doi.org/10.1088/1475-7516/2026/03/084} {\bibfield  {journal}
+  {\bibinfo  {journal} {J. Cosmol. Astropart. Phys.}\ }\textbf {\bibinfo
+  {volume} {2026}}\bibfield  {number} {\bibinfo  {number} { (03)},\ \bibinfo
+  {pages} {084}},\ }\Eprint {https://arxiv.org/abs/2510.02510}
+  {arXiv:2510.02510} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Tully}\ \emph {et~al.}(2023)\citenamefont {Tully},
+  \citenamefont {Kourkchi}, \citenamefont {Courtois} \emph
+  {et~al.}}]{Tully2023}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.~B.}\ \bibnamefont
+  {Tully}}, \bibinfo {author} {\bibfnamefont {E.}~\bibnamefont {Kourkchi}},
+  \bibinfo {author} {\bibfnamefont {H.~M.}\ \bibnamefont {Courtois}}, \emph
+  {et~al.},\ }\href {https://doi.org/10.3847/1538-4357/ac94d8} {\bibfield
+  {journal} {\bibinfo  {journal} {Astrophys. J.}\ }\textbf {\bibinfo {volume}
+  {944}},\ \bibinfo {pages} {94} (\bibinfo {year} {2023})},\ \Eprint
+  {https://arxiv.org/abs/2209.11238} {arXiv:2209.11238} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Imbens}\ and\ \citenamefont
+  {Manski}(2004)}]{ImbensManski2004}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {G.~W.}\ \bibnamefont
+  {Imbens}}\ and\ \bibinfo {author} {\bibfnamefont {C.~F.}\ \bibnamefont
+  {Manski}},\ }\href {https://doi.org/10.1111/j.1468-0262.2004.00555.x}
+  {\bibfield  {journal} {\bibinfo  {journal} {Econometrica}\ }\textbf {\bibinfo
+  {volume} {72}},\ \bibinfo {pages} {1845} (\bibinfo {year}
+  {2004})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Aronow}\ and\ \citenamefont
+  {Lee}(2013)}]{AronowLee2013}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.~M.}\ \bibnamefont
+  {Aronow}}\ and\ \bibinfo {author} {\bibfnamefont {D.~K.~K.}\ \bibnamefont
+  {Lee}},\ }\bibfield  {journal} {\bibinfo  {journal} {Biometrika}\ }\href
+  {https://doi.org/10.1093/biomet/ass064} {10.1093/biomet/ass064} (\bibinfo
+  {year} {2013})\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Deville}\ and\ \citenamefont
+  {S{\"a}rndal}(1992)}]{Deville1992}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {J.-C.}\ \bibnamefont
+  {Deville}}\ and\ \bibinfo {author} {\bibfnamefont {C.-E.}\ \bibnamefont
+  {S{\"a}rndal}},\ }\href {https://doi.org/10.1080/01621459.1992.10475217}
+  {\bibfield  {journal} {\bibinfo  {journal} {J. Am. Stat. Assoc.}\ }\textbf
+  {\bibinfo {volume} {87}},\ \bibinfo {pages} {376} (\bibinfo {year}
+  {1992})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {von Luxburg}\ and\ \citenamefont
+  {Franz}(2009)}]{LuxburgFranz2009}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {U.}~\bibnamefont {von
+  Luxburg}}\ and\ \bibinfo {author} {\bibfnamefont {V.~H.}\ \bibnamefont
+  {Franz}},\ }\href {https://arxiv.org/abs/0711.0198v1} {\bibfield  {journal}
+  {\bibinfo  {journal} {Statistica Sinica}\ }\textbf {\bibinfo {volume} {19}},\
+  \bibinfo {pages} {1095} (\bibinfo {year} {2009})},\ \Eprint
+  {https://arxiv.org/abs/0711.0198} {arXiv:0711.0198} \BibitemShut {NoStop}%
+\end{thebibliography}%

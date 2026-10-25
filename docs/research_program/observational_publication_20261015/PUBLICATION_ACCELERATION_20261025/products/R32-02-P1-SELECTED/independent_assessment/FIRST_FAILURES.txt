@@ -1,0 +1,14 @@
+Reviewer preparation failures; neither is a scientific candidate failure.
+[
+  {
+    "action": "optional PDF parser import",
+    "outcome": "ModuleNotFoundError: No module named fitz",
+    "disposition": "Used installed pdftotext, pdfinfo and pdftoppm successfully; no candidate change."
+  },
+  {
+    "action": "independent_probe.py first execution",
+    "outcome": "TypeError: Object of type int64 is not JSON serializable at final receipt serialization",
+    "observed_wall_seconds": 5.74510808,
+    "disposition": "All numerical, consumer, build and render assertions had already completed. Preserved first script. Converted NumPy scalars during receipt serialization and reused completed command outputs; no build or data rerun. Serialization recovery wall seconds 0.694337173."
+  }
+]

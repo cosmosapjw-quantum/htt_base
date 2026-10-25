@@ -1,0 +1,72 @@
+{
+  "schema": "htt.independent_review_preparation.raw_receipt/1",
+  "task_id": "R32-02-P1-SELECTED",
+  "reviewer_agent": "/root/r35_p1_fresh_independent_review",
+  "author_agent": "/root/rc_573ab3c80bc912af6solhigh",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN",
+    "status": "NOT_INDEPENDENTLY_OBSERVED"
+  },
+  "formal_review_packet": "PENDING",
+  "controller_ack_created": false,
+  "controller_state_written": false,
+  "publication_decision": false,
+  "reviewer_role": "read-only candidate review; assessment writes only under reviewer output directory",
+  "candidate_root": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-02-P1-SELECTED",
+  "candidate_identity": {
+    "ARTIFACT_MANIFEST.json": "cf17adeaae69fd9a35a488573bb96396539fea8ea46637c88638bf69f6e37fb1",
+    "RESULT.json": "2f01009587dac4cbf4f451b28f16b45f417b483f5ec18e5d49aa836c9c27d0af",
+    "main.pdf": "895ff50d0542866508bae21f99859970268943fd33d155b8a6facbddc21a732b"
+  },
+  "git_intake": {
+    "branch": "research/htt-adaptive-methods-20261023",
+    "HEAD": "5da49ec48afd10f7bfaf1b38e950a1193df55b60",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "status": "DIRTY; existing tracked/untracked state observed and preserved; no Git mutation"
+  },
+  "timing": {
+    "first_recorded_clock_utc": "2026-10-25T12:18:35+00:00",
+    "finished_utc": "2026-10-25T12:25:12.825228+00:00",
+    "seconds_since_first_recorded_clock": 397.825228,
+    "initial_intake_before_first_clock": "not separately timed",
+    "first_probe_command_wall_seconds": 5.74510808,
+    "serialization_recovery_command_wall_seconds": 0.694337173
+  },
+  "first_failures": [
+    {
+      "action": "optional PDF parser import",
+      "outcome": "ModuleNotFoundError: No module named fitz",
+      "disposition": "Used installed pdftotext, pdfinfo and pdftoppm successfully; no candidate change."
+    },
+    {
+      "action": "independent_probe.py first execution",
+      "outcome": "TypeError: Object of type int64 is not JSON serializable at final receipt serialization",
+      "observed_wall_seconds": 5.74510808,
+      "disposition": "All numerical, consumer, build and render assertions had already completed. Preserved first script. Converted NumPy scalars during receipt serialization and reused completed command outputs; no build or data rerun. Serialization recovery wall seconds 0.694337173."
+    }
+  ],
+  "independence": {
+    "implemented_candidate": false,
+    "nested_agents": false,
+    "prior_verdict_files_opened": false,
+    "prior_result_status_used_as_verdict": false,
+    "qualification": "Required evidence/P1/SCIENTIFIC_SCOPE and source map contain historical review references; these were visible during source intake and were not used as verdict oracles. The equations and stated scope were assessed independently."
+  },
+  "bounded_work": "Saved sufficient statistics, fixed surfaces, source probes, retained consumer, isolated LaTeX build and page rendering only; no raw catalogue fit, integration, new null, random draws or source alteration.",
+  "validation_paths": [
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/INDEPENDENT_VALIDATION.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/SOURCE_IDENTITY_CHECKS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/BIBLIOGRAPHY_CHECKS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/latex_build.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/latex_build.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/build/main.log",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/retained_consumer.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/pdfinfo.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r35_p1_fresh_independent_review/FIRST_FAILURES.txt"
+  ]
+}

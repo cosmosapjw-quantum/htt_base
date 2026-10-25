@@ -1,0 +1,5 @@
+# Research positioning outside the manuscript
+
+The fibre criterion, Gaussian finite-F pivot, confidence-set projection, fixed-family union coverage, and bounded-density event envelope are standard or elementary. The paper's specific result is their joint application to the retained 274-row selected likelihood, complete signed STF carrier, covariance-shape dependence, and 354 missing outcomes. The earlier seven-column residual failure remains tied to its own model. No priority, physical detection, native-solver output, or qualified parent-selection law is inferred from this paper.
+
+The previously reviewed draft had two concrete scope findings: an unrestricted optical bias did not imply an unbounded image under a bounded admissible shear domain, and a figure caption conflated deterministic north-weighted fits with a 2048-atom uncertainty law. The reused manuscript source contains the repaired domain statement and panel-specific caption. Fresh review must assess the current candidate identity.

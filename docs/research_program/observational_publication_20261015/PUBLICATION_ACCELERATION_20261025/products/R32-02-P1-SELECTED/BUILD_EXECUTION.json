@@ -1,0 +1,37 @@
+{
+  "schema": "htt.r32.p1.build_execution/1",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-02-P1-SELECTED",
+  "runs": [
+    {
+      "command": [
+        "latexmk",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "-outdir=build",
+        "main.tex"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.981411220971495,
+      "purpose": "initial copied-source build"
+    },
+    {
+      "command": [
+        "latexmk",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "-outdir=build",
+        "main.tex"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.0529310810379684,
+      "purpose": "final prose and bibliography build",
+      "raw_log": "raw_build.log"
+    }
+  ],
+  "first_failures": [],
+  "final_pdf": "main.pdf"
+}
