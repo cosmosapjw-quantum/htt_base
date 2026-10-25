@@ -1,0 +1,125 @@
+{
+  "task": "R30-CF4-PV-TENSOR-NUMERIC-PREPARATION",
+  "status": "SOURCE_PREPARED_AWAITING_CONTROLLER_GO_AND_FRESH_ASTRA_REVIEW",
+  "utc": "2026-10-25T07:59:01.533676+00:00",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "framing_contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/CONTRACT.md",
+    "sha256": "29f5660bfee2feb379f01da2f51ddb7a87d416b05a2393f4ffaef5858fd6c8e7"
+  },
+  "framing_input_bindings": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/INPUT_BINDINGS.json",
+    "sha256": "d5cfe88bf297ee7d7ab6ae5b6758c951cf2491b189de8c37e6756511232dc2c4"
+  },
+  "source": {
+    "science.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/science.py",
+      "sha256": "8ad141b8de354f4b1f3eb1c8711ebdd4548103b1c9c52f22ac2bd3bde1c7ab35",
+      "bytes": 9610
+    },
+    "driver.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/driver.py",
+      "sha256": "761acd873677399248b943a1407c5b06dae3c685c184c52dc28197ce7185909f",
+      "bytes": 24013
+    },
+    "runner.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/runner.py",
+      "sha256": "c19f90cbd4498d61864d45358137b5de171cd09880ac3e255053388110e3db13",
+      "bytes": 8912
+    },
+    "independent_check.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/independent_check.py",
+      "sha256": "ced675e79df1653e3a35a9b7a9286501340fd90dd7564cab4f4e9a1ef66b19ec",
+      "bytes": 12186
+    }
+  },
+  "environment_observed_metadata": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "astropy": "8.0.2",
+    "mpmath": "1.3.0",
+    "numba": "not installed per task handoff",
+    "FINUFFT": "not installed per task handoff"
+  },
+  "static_validation": {
+    "ast_parse": "PASS all four source files",
+    "scientific_numerical_tests": "NOT_RUN_WAITING_GO",
+    "driver_import": "NOT_RUN_WAITING_GO",
+    "controls": "NOT_RUN_WAITING_GO",
+    "actual_consumer": "NOT_RUN_WAITING_GO",
+    "independent_checker": "NOT_RUN_WAITING_GO"
+  },
+  "one_use_packet_template": {
+    "controller_go": true,
+    "no_overlap_allocation_confirmed": true,
+    "account_head_refreshed": true,
+    "parent_task_id": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+    "account_head_sha256": "<controller refreshed same-account head SHA256>",
+    "account_used_seconds_before": "<controller observed cumulative seconds as JSON number>",
+    "whole_command_cap_seconds": 280.0,
+    "rss_cap_bytes": 6442450944,
+    "input_bindings": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/INPUT_BINDINGS.json",
+    "input_bindings_sha256": "d5cfe88bf297ee7d7ab6ae5b6758c951cf2491b189de8c37e6756511232dc2c4",
+    "output_dir": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/actual_run",
+    "source_sha256": {
+      "science.py": "8ad141b8de354f4b1f3eb1c8711ebdd4548103b1c9c52f22ac2bd3bde1c7ab35",
+      "driver.py": "761acd873677399248b943a1407c5b06dae3c685c184c52dc28197ce7185909f",
+      "runner.py": "c19f90cbd4498d61864d45358137b5de171cd09880ac3e255053388110e3db13",
+      "independent_check.py": "ced675e79df1653e3a35a9b7a9286501340fd90dd7564cab4f4e9a1ef66b19ec"
+    }
+  },
+  "packet_binding": "Controller writes INPUT.json after refreshing ancestry and receiving ACK; writes INPUT.json.sha256 with the SHA256 digest of the final INPUT.json bytes. The sidecar avoids an impossible self-hash field. This preparation does not create an actual packet.",
+  "complete_future_one_use_command": {
+    "cwd": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/runner.py",
+      "--input",
+      "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/INPUT.json"
+    ],
+    "environment": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "external_controller_timing": "Charge from command invocation through runner receipt, including Python startup, timeout, fsync, and reaping, to the existing 600-second ancestry; one command only, at most 280 seconds."
+  },
+  "future_independent_check_command": {
+    "cwd": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/independent_check.py",
+      "--input",
+      "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/INPUT.json",
+      "--output",
+      "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/actual_run",
+      "--max-seconds",
+      "55"
+    ],
+    "environment_threads": "all BLAS/OMP/MKL/NUMEXPR=1",
+    "separate_review_cap_seconds": 60,
+    "reviewer": "fresh read-only Astra reviewer who did not implement"
+  },
+  "resource_gates": {
+    "MemAvailable_min_bytes": 10737418240,
+    "process_tree_RSS_max_bytes": 6442450944,
+    "direction_block_max": 128,
+    "computing_processes": 1,
+    "owner_half_RAM_and_nonoverlap": "controller ACK plus prelaunch headroom; no concurrent production allocation"
+  },
+  "evidence_preservation": "Per-k full spectral NPZ, stage NPZ, PROGRESS.json, controls/RESULT/REPORT/PRODUCT and stdout/stderr/RUN_RECEIPT on actual GO; first failures and partial matrices retained. No automatic retry or refit.",
+  "scientific_ceiling": "Conditional signed five-coordinate apparent STF band-PV error component only; physical x,F,Pi,Q,G_F UNDEFINED/HOLD; empirical H02/H04, publication counts, and original task accounting unchanged.",
+  "numeric_commands_started_by_preparation": 0,
+  "exact_ambiguity_requiring_framer": "NONE_IDENTIFIED_IN_STATIC_PREPARATION",
+  "source_only_directory_at_preparation": [
+    "driver.py",
+    "independent_check.py",
+    "runner.py",
+    "science.py",
+    "PREPARATION.json"
+  ]
+}

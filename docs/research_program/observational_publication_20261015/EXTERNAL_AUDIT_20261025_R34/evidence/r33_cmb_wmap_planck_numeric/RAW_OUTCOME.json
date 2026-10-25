@@ -1,0 +1,36 @@
+{
+  "task_id": "R33-CMB-WMAP-PLANCK-F2-EXTENSION",
+  "packet_id": "aac87a13641ac69951c3ef4de5d0c4747d2038d9e3b30d610b6d79ad6e555d22",
+  "input_identity": "sha256:d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1",
+  "agent_id": "/root/r33_wmap_planck_numeric_preparation",
+  "phase": "execute",
+  "attempt": 1,
+  "candidate_identity": null,
+  "independent_review": "PENDING",
+  "original_L03_acceptance": "HOLD",
+  "outcome": "HOLD",
+  "successor": "ASTRA_FAILURE_CLASSIFICATION_ON_SAME_ANCESTRY",
+  "blocker": {
+    "class": "numeric",
+    "code": "R33_QUOTIENT_RESIDUAL_ASSERTION",
+    "question": "Which frozen quotient residual failed, and does this reflect conditioning or an implementation defect?",
+    "exact_missing_or_defect": "The first F17 branch that entered RESOLVED_FINITE_F2_QUOTIENT failed the combined abs(wTa-1)<=1e-9 and norm(w@G)<=1e-9 assertion before RESULT.json was written; no component values were retained.",
+    "input_identity": "sha256:d1ef7598449adff41ba8f950d048b5290efaf0f66ae056e61c8549544c763ce1",
+    "substantive": true,
+    "first_failure_path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/attempt_aac87a13641ac699/stderr.log"
+  },
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/OUTER_RAW.json",
+  "raw_receipt_sha256": "ba935585c6281fe33a1dddffab4919a2a12d36fc93ff593053869385748fd118",
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/attempt_aac87a13641ac699/stderr.log",
+    "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/attempt_aac87a13641ac699/RAW_RECEIPT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/OUTER_TIME.txt",
+    "/mnt/extdrive/workdir/htt_open_data/r33_cmb_wmap_planck_numeric/PREPARATION.json"
+  ],
+  "qualified_products": [],
+  "numerical_rank": "NOT_REPORTED",
+  "original_scientific_states": "UNCHANGED",
+  "producer_invocations": 1,
+  "independent_checker_invocations": 0,
+  "scientific_admission": "NONE"
+}

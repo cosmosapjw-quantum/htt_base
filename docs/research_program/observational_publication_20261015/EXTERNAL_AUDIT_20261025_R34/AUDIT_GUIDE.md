@@ -1,0 +1,18 @@
+# Technical audit guide
+
+| Evidence lane | Preserved status | Main records |
+|---|---|---|
+| R30 CF4 original spectral covariance component | HOLD; first actual failure retained | `evidence/r30_cf4_pv_tensor_framing/CONTRACT.md`, `evidence/r30_cf4_pv_tensor_numeric/actual_run/` |
+| R30 normalization repair | HOLD; second actual failure retained | `evidence/r30_cf4_pv_normalization_repair_framing/`, `evidence/r30_cf4_pv_tensor_numeric/normalization_repair/` |
+| R32 fast CF4 window method | Actual packet dd99622e... failed antipodal fixture; all A/B and B/C controls pass, no qualified covariance | `evidence/r32_cf4_fast_window_framing/`, `evidence/r30_cf4_pv_tensor_numeric/fast_window/actual_run/` |
+| R32 resource/transition review | Scoped resource/framing evidence; no physical admission | `evidence/r32_cf4_resource_reallocation_review/`, `evidence/r30_blind_repair_transition_audit/`, dispatch roots |
+| R33 WMAP/Planck extension | Attempt aac87a13641ac699 HOLD on quotient residual assertion before RESULT.json; no computed rank/escape result | `evidence/r33_cmb_additional_frequency_framing/`, `evidence/r33_cmb_wmap_planck_numeric/`, `evidence/r33_wmap_planck_dispatch/` |
+| Further source-only decisions | See root-frozen supplements; no implied actual producer result | `CUTOFF.json` and `SOURCE_MAP.json` |
+
+For CF4, read the original source-bound contract and EH98 author transfer-fit source before the fast-method contract. This is a finite no-wiggle linear peculiar-velocity component with stipulated conventions, not a native Bianchi solver, empirical source-null law, or physical H02/H04 closure. Inspect original failure, normalization repair failure and fast fixture failure in order. Direct controls, exact reference sums, target inventory and STAGE_A/B/C JSON/NPZ preserve the small numerical matrices without the large windows. Copying warnings remain in stderr and the original all-warning HOLD policy is retained. Source-only changes and fixture laws are prospective until independently executed and reviewed.
+
+For CMB, inherit the reviewed Planck-only spectral supplement and then read `WMAP_PLANCK_F2_CONTRACT.md`. The finite nominal-bandpass moment model stipulates common spatial response and nine signed F2 nuisance moments with all 24 signed E2/E3/B2/B3 coordinates retained. WMAP W0 literal and W1 center-drift proxy branches are specified; the failed producer supplies no rank or quotient-escape claim. The twenty ASCII bandpasses and small archives are preserved with source metadata. Frequency is not depth; this spectral diagnostic does not calibrate physical x, F, Pi, Q or G_F.
+
+To audit execution, compare source/input SHA bindings, method contracts, historical controller packets, actual ACK/GO, process logs, runner receipts and root account heads. Preparation, dispatch, acknowledgement, execution, scoped independent review, publication and scientific admission are separate stages. The export does not reset task IDs, costs, failed attempts or original acceptance ceilings. No missing file is zero-filled; notably the R33 failed attempt has no RESULT.json.
+
+To rebuild inherited reports use their included exact TeX/bibliography/figures/source ZIP and documented toolchain. No rebuild was performed here. For numerical reproduction obtain omitted public products using the source release metadata and recorded hashes; regenerate private selected-cohort derivatives with the inherited procedures. `OMITTED_FILES.json` records every export exclusion found in the selected roots plus bound external CF4 inputs. Excluding an array prevents byte-complete replay from this small export alone; scientific conclusions are not upgraded by packaging completeness.

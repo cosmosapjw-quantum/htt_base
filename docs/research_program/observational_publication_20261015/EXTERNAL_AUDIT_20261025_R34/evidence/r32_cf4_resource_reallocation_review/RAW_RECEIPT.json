@@ -1,0 +1,120 @@
+{
+  "record_kind": "independent_resource_review_raw_receipt",
+  "packet_id": "c97f89870796595201a9ffb195605176a3c39f1eb62da6d44fa967b14bef4421",
+  "task_id": "R30-CF4-BAND-PV-FULL-TENSOR-COVARIANCE",
+  "input_identity": "sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3",
+  "agent_id": "/root/r32_cf4_resource_reallocation_review",
+  "phase": "research",
+  "status": "RESOURCE_REALLOCATION_APPROVED_PROSPECTIVELY",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "transport_selected": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "runtime_observation_status": "NOT_INDEPENDENTLY_OBSERVED",
+  "actual_ack_sha256": "2fdf6fbae4c5c101c7c506e77f6998154bc058c33f5ac9293a0c2810b62a97dc",
+  "actual_research_go_sha256": "10353edac397d4f4c8be78323d7654c372b57c9684316d2e5a09f6fc5fdc6168",
+  "review_scope": "resource arithmetic and source-level acyclic runner/template binding only; no numerical correctness/admission decision",
+  "prior_independent_review_verdict_read": false,
+  "scientific_contract_read": true,
+  "source_freeze_checks": {
+    "science.py": true,
+    "fast_science.py": true,
+    "driver.py": true,
+    "runner.py": true,
+    "independent_check.py": true
+  },
+  "source_sha256": {
+    "science.py": "ed9918ef9f2f12c7e6b04d5140ea8e51acd86c5fb6a541d80a27e9f42e3ad982",
+    "fast_science.py": "b160e3684bcebb4cb12a72d9fb19f70e478022a4a84e0a6244d01c2ad576e76b",
+    "driver.py": "fb30aeb48b1309c86882980a7a035ad1ff624c6c3627ada0392ee827c2cf04ee",
+    "runner.py": "6ff336ef28a90f6d3d6e315df4b48b055f16d944b5eec6dcbdd25c46c90deb38",
+    "independent_check.py": "a825c6e9240d189fa456b5a4868c8cc95801a4983c2b8b90f60659894b9b32a2"
+  },
+  "verified_evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fast_window_dispatch/ACTUAL_RESOURCE_RESEARCH_PACKET.json",
+      "sha256": "b92f68d9ff0902b277174d57210e427ccc7c84e4c18d362b55317055e01a2106"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fast_window_dispatch/RESOURCE_RESEARCH_ACTUAL_ACK.json",
+      "sha256": "2fdf6fbae4c5c101c7c506e77f6998154bc058c33f5ac9293a0c2810b62a97dc"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fast_window_dispatch/RESOURCE_RESEARCH_GO.json",
+      "sha256": "10353edac397d4f4c8be78323d7654c372b57c9684316d2e5a09f6fc5fdc6168"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fast_window_dispatch/ROOT_ACCOUNT_HEAD_AFTER_PREPARATION_HOLD.json",
+      "sha256": "e643407ac589477aa2804de02c56bb47af2a4a1e4861af547e9cb7583314d966"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fast_window_dispatch/PREPARATION_ACCOUNT_RECOVERY.json",
+      "sha256": "6043bcf83813e493e8ef12f9afa2592a4b3b32b8d44e25e91a745fe6ec4fe4ef"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/fast_window_dispatch/PREPARATION_RESOURCE_COUNTEREXAMPLE_RESUME.json",
+      "sha256": "86d2665176726ba616690be41832df00da98635703ac23918a8042afbbfe3409"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/PREPARATION.json",
+      "sha256": "1377733aabc93f34994aeff4d4bd3493d46aee4ac0ebb8dace62166ab1147d42"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/PREPARATION_HOLD_RETURN.json",
+      "sha256": "63ac28f2d5c1591c3589f21c56802d5ccb4101f9af3200b2341bdc148bfc722f"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/INPUT_TEMPLATE.json",
+      "sha256": "10d93cd3f94da554c2b47dab61a81c9539047d03b80079520a7b6ddc91c285c0"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/fast_window/runner.py",
+      "sha256": "6ff336ef28a90f6d3d6e315df4b48b055f16d944b5eec6dcbdd25c46c90deb38"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_fast_window_framing/CONTRACT.md",
+      "sha256": "8765ad540341080dbb6da3ec02a0cc9179447df45448b7a12245954c879b4706"
+    }
+  ],
+  "preparation_failure_preserved": true,
+  "preparation_debit_seconds": 69.9,
+  "preparation_original_subdivision_seconds": 20,
+  "historical_account_used_seconds": 391.4927776466445,
+  "historical_remaining_seconds": 208.50722235335547,
+  "lifetime_cap_seconds": 600,
+  "prospective_producer_max_seconds": 100,
+  "independent_checker_reserved_seconds": 60,
+  "first_producer_seconds": 14,
+  "direct_repair_seconds": 17,
+  "producer_cumulative_hard_seconds": 280,
+  "new_science_aggregate_hard_seconds": 340,
+  "numerical_starts_observed_in_this_review": 0,
+  "recorded_fast_method_starts_in_preparation": 0,
+  "prior_scientific_failures_unchanged": true,
+  "runtime_measurement": {
+    "command_tool_runtime_limit_seconds": 12,
+    "exec_commands_issued_including_write": 4,
+    "prior_read_internal_python_seconds": [
+      0.052613132167607546,
+      0.034133362118154764,
+      0.045674581080675125
+    ],
+    "current_write_seconds_before_raw": 0.4508198278490454,
+    "native_command_window_total_seconds": "ROOT_NATIVE_TRACE_RECONCILIATION_REQUIRED",
+    "note": "Internal script durations exclude transport/command startup and are not authoritative lifetime debits; root must charge observed command windows including this write and intervening controller operations. No commands follow this write batch."
+  },
+  "resource_addendum": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r32_cf4_resource_reallocation_review/RESOURCE_ADDENDUM.md",
+    "sha256": "3eba5f296412d420d9ab5b0e72068c17cf56d6672f777515fe0159bd0e9fd530"
+  },
+  "acceptance_met": false,
+  "scientific_admission": false,
+  "original_H02_H04": "HOLD",
+  "physical_x_F_Pi_Q_GF": "UNDEFINED",
+  "utc_unix": 1792923644.8583875
+}

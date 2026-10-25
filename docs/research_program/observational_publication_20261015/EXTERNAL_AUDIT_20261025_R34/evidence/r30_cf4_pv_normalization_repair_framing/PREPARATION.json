@@ -1,0 +1,135 @@
+{
+  "status": "DIAGNOSIS_DRAFT_PENDING_ACTUAL_RESEARCH_PACKET_ACK_GO",
+  "owner": "/root/r30_cf4_pv_tensor_framing",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "utc": "2026-10-25T08:35:10.421625+00:00",
+  "diagnosis": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_normalization_repair_framing/DIAGNOSIS_DRAFT.md",
+    "sha256": "44621420f67aff47f36888dfa8f75cce0da6c474a4a323771e4ca6c2544e1ad8",
+    "bytes": 10131
+  },
+  "evidence": {
+    "frozen_contract": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/CONTRACT.md",
+      "sha256": "29f5660bfee2feb379f01da2f51ddb7a87d416b05a2393f4ffaef5858fd6c8e7",
+      "bytes": 23657
+    },
+    "numeric_preparation": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/PREPARATION.json",
+      "sha256": "7e5ede924434d228f5d7fdb1044ca17c33af335e54fc0b35f8f4eda38e647fff",
+      "bytes": 6090
+    },
+    "first_return": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/RETURN.json",
+      "sha256": "6bf8288d5eb2cc14b3b565b1304169e8077856a32db289a0a4235442ffbbee68",
+      "bytes": 2204
+    },
+    "first_raw_outcome": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/RAW_OUTCOME.json",
+      "sha256": "054854fc916ebcfeef2d3e69f9ac0bd92859e52a62b744a55b85a668ed861167",
+      "bytes": 2799
+    },
+    "first_result": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/actual_run/RESULT.json",
+      "sha256": "c0da6b3327594bda1de7c82c6a56f38a159b85a4fdf9562d5f34a6dd19b64be9",
+      "bytes": 448
+    },
+    "first_stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/actual_run/stderr.log",
+      "sha256": "5de06f9fc52eaf8465fb4a795a916ac7054374989031b55fe6bec0bc6a59904d",
+      "bytes": 701
+    },
+    "first_runner_receipt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/actual_run/RUN_RECEIPT.json",
+      "sha256": "16b87bcfd67ff30715458b991828d631bd534808cb9d441d57bec1cd5ebc48da",
+      "bytes": 2181
+    },
+    "first_science_source": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/science.py",
+      "sha256": "8ad141b8de354f4b1f3eb1c8711ebdd4548103b1c9c52f22ac2bd3bde1c7ab35",
+      "bytes": 9610
+    },
+    "first_driver_source": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/driver.py",
+      "sha256": "761acd873677399248b943a1407c5b06dae3c685c184c52dc28197ce7185909f",
+      "bytes": 24013
+    },
+    "first_runner_source": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/runner.py",
+      "sha256": "c19f90cbd4498d61864d45358137b5de171cd09880ac3e255053388110e3db13",
+      "bytes": 8912
+    },
+    "first_independent_checker_source": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/independent_check.py",
+      "sha256": "ced675e79df1653e3a35a9b7a9286501340fd90dd7564cab4f4e9a1ef66b19ec",
+      "bytes": 12186
+    },
+    "controller_adapter": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/FIRST_FAILURE_CONTROLLER_ADAPTER.json",
+      "sha256": "ad33e11c8c9eb8895d8234879b1ddce83cd28d167a58be0e03cb5964b8071a93",
+      "bytes": 2986
+    },
+    "settled_account": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/ROOT_ACCOUNT_HEAD_AFTER_FIRST_ACTUAL_HOLD.json",
+      "sha256": "50dc4515721bb3072b2f710f727b35a4f45ecb37f445f1113a5ebbb73686d55b",
+      "bytes": 1148
+    },
+    "installed_quad_source": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/scipy/integrate/_quadpack_py.py",
+      "sha256": "c59e4133f23ef272e488204c217caf36a38b5921fe0ffeeb2a8f1b804f5ba0d9",
+      "bytes": 54620
+    }
+  },
+  "primary_method_documentation": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html",
+  "finding": "epsabs1e-12 dominates epsrel2e-9 for normalization magnitude8.6e-7; both calls also use the same tolerance despite tighter-second-call contract. Existing <=1e-7 reported-relative-error gate correctly returns HOLD.",
+  "classification": "IMPLEMENTATION_REQUESTED_ACCURACY_MISMATCH_WITH_FROZEN_RELATIVE_CONTROL",
+  "observed_first_failure": "HOLD_CONTROL_NORMALIZATION_REPORTED_ERROR",
+  "observed_spectral_evaluations": 0,
+  "proposed_science_change": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/science.py",
+    "function": "power_amplitude",
+    "epsabs_both": 0,
+    "epsrel_first": 2e-09,
+    "epsrel_extended": 2e-10,
+    "unchanged": [
+      "integrand",
+      "ranges",
+      "limit600",
+      "amplitude",
+      "1e-7 reported-relative-error gate",
+      "1e-6 range-comparison gate",
+      "all physical/numerical parameters outside the call accuracy request"
+    ],
+    "evidence_only_change": "full_output with neval/last/status retained in existing stdout/exception evidence; preserve triple return data consumed by existing driver"
+  },
+  "proposed_supervisor_change": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/runner.py",
+    "scope": "continuation-specific whole cap265 and consistent packet validation/deadline/receipt/refusal text; preserve first source snapshot and original one-use output",
+    "child_reserve_seconds": 5,
+    "rss_bytes": 6442450944,
+    "checker_source_changes": false,
+    "driver_source_changes": false
+  },
+  "settled_caps": {
+    "parent_task_id": "R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE",
+    "task_id": "R30-CF4-BAND-PV-FULL-TENSOR-COVARIANCE",
+    "bank_used_seconds": 244.59277764664455,
+    "bank_cap_seconds": 600,
+    "first_producer_conservative_seconds": 14,
+    "proposed_repair_whole_cap_seconds": 265,
+    "producer_cumulative_hard_seconds": 280,
+    "independent_checker_reserved_seconds": 60,
+    "aggregate_new_science_hard_seconds": 340,
+    "no_new_ultra": true
+  },
+  "scientific_repair_approved": false,
+  "dispatch_authorized": false,
+  "numeric_commands_started_in_diagnosis": 0,
+  "source_code_changed": false,
+  "contract_or_acceptance_tolerance_changed": false,
+  "live_state_or_git_changed": false,
+  "required_next": "Actual router research packet and ACK/GO; only then final scoped repair decision, followed by separately bound lower-tier implementation and execution GO.",
+  "scientific_admission": "HOLD",
+  "original_H02_H04": "HOLD_UNCHANGED"
+}

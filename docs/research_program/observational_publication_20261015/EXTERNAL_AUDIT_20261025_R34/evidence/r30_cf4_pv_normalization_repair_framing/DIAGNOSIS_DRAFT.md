@@ -1,0 +1,50 @@
+# R30 CF4 normalization failure: read-only diagnosis draft
+
+Status: PREPARATION_ONLY_AWAITING_ACTUAL_RESEARCH_PACKET_ACK_GO. This is not a repair approval, implementation instruction to execute, numerical PASS, or new allocation. Requested framing profile Astra/xhigh; observed runtime UNKNOWN. No scientific numerical function, control, checker, producer or benchmark was run during this diagnosis. Only the new framing directory is written.
+
+## Observed failure and exact scope
+
+The frozen contract is `/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_framing/CONTRACT.md`, SHA29f5660bfee2feb379f01da2f51ddb7a87d416b05a2393f4ffaef5858fd6c8e7. Its normalization paragraph requires both an interval-extension value change<=1e-6 relative and each integrator's reported relative error<=1e-7. The second integration must use tighter quadrature. These are separate requirements; neither replaces the other.
+
+The actual command returned HOLD at science.py:124, called from driver.py:351, before driver.py:352 controls and before any spectral stage. The first source-bound integral was8.597026475775975e-7 with error estimate9.563184423220326e-13, ratio1.1123828047019182e-6. The extended-range integral was8.59702618367951e-7 with error5.54454800488548e-13, ratio6.449378990389936e-7. Both reported errors fail the unchanged1e-7 gate. Their relative value difference is approximately3.4e-8, which satisfies only the separate interval-extension comparison. The returned spectral-evaluation list is empty; there is no covariance candidate or qualified numerical product. The independent checker did not start.
+
+The immutable worker RETURN reports outcome HOLD_CONTROL_NORMALIZATION_REPORTED_ERROR. The controller adapter maps it to a numeric blocker while preserving the reported outcome. This source-bound result remains a valid first failure, not a result to relabel PASS.
+
+## Cause supported by source and documentation
+
+science.py:120–121 invokes both integrations with epsrel=2e-9, epsabs=1e-12, limit=600. SciPy's installed `_quadpack_py.py:82–90` and the [official quad documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html) specify a combined target using the larger of the absolute tolerance and the relative tolerance times integral magnitude.
+
+At an integral magnitude about8.6e-7, the requested relative term is about1.7e-15. The absolute1e-12 term dominates, allowing approximately1.16e-6 relative error. Both returned absolute error estimates are below that absolute target. Thus these observations are consistent with the requested integration terminating normally while failing the tighter downstream contract. No QUADPACK warning appears in the retained stderr; that absence is consistent with, but not a replacement for, the source-level tolerance analysis.
+
+Classification: IMPLEMENTATION_REQUESTED_ACCURACY_MISMATCH_WITH_FROZEN_RELATIVE_CONTROL. The immediate issue is dimensionful absolute-tolerance scaling, not evidence that the EH98 normalization integral diverges, that the physical field model is invalid, or that the actual spectral algorithm fails. Conversely, close values do not establish the uncomputed true error or a rigorous tail bound. With full_output disabled, the old run did not retain evaluation counts/subinterval diagnostics; do not invent them.
+
+A second source inconsistency is explicit: both calls use identical tolerances, while the contract asks for tighter quadrature over the extended interval. This is part of the same normalization implementation issue. No parameter, spectrum formula, sigma8 target, reference source, band, smoothing radius, response, catalogue support or matrix-convergence tolerance needs to change to address it.
+
+## Bounded repair candidate, not yet approved
+
+If the actual research packet authorizes this diagnosis and the controller subsequently approves a repair, the narrow candidate is:
+
+1. In `science.py::power_amplitude`, retain the integrand, both integration ranges, limit600, amplitude formula, return ordering and the existing acceptance predicate at lines123–124. Set epsabs=0 for both calls. Keep the first epsrel=2e-9 and set the second epsrel=2e-10. Both values are above SciPy's positive-relative-tolerance floor when epsabs<=0. This removes a looser absolute stopping branch and makes the second request genuinely tighter; it does not loosen an acceptance validator or replace the source spectrum.
+2. Preserve the `(value, absolute_error, relative_error)` triples consumed by driver controls. Request full_output for these calls, retain the requested tolerances, returned value/error, `neval`, `last` and any convergence message in the existing stdout/exception evidence, and treat a returned convergence-failure message as HOLD. Do not suppress such a message and accept solely because another comparison happens to pass. This is targeted evidence for the reproduced error-policy failure, not a new artifact framework.
+3. Keep reported relative-error<=1e-7 and interval-change<=1e-6 exactly. Do not insert the previous observed values as constants, rescale the returned error without an algebraically matched integrand transformation, switch to a two-values-agree criterion, clip a warning, change sigma8, change the field band, or relax any later matrix/control tolerance.
+4. No extra normalization-only test command is permitted outside the remaining allocation. After source binding, the next authorized attempt performs the two normalizations once, then all existing controls and the actual full-five/full-fifteen consumer within one bounded command. If normalization still fails, retain that distinct result and return HOLD. No automatic method ladder, limit increase or retry follows from this draft.
+
+The suggested EPS values are a proposed implementation request, not a measured guarantee that QUADPACK will meet them within time. At high k the top-hat factor is oscillatory, although strongly decaying; a tighter request may expose a subdivision or roundoff failure. That eventual outcome requires its own actual evidence. The limit600 remains fixed for this candidate.
+
+## Same-account continuation and supervisor consequence
+
+Original unit authority records producer280s, independent checker60s and aggregate new science340s within the inherited600s bank. The contract's phrase 'one lower-tier command' does not authorize another fresh280s after a first failure. Even under the per-command reading, the unchanged340s aggregate cap and reserved60s review force the remaining producer allowance to be no greater than280s minus all producer charges already incurred by this unit. Preserve the first invocation and its one-use output directory; do not reuse old INPUT.json or overwrite actual_run.
+
+Before the actual attempt, the same bank used231.39277764664456s. The raw command receipt proposes a conservative13.113734792917967s charge; external elapsed12.25s and overlapping internal intervals must not be summed. Root has now settled13.2s once, including distinct command/caller metadata, and conservatively charged14s to this producer allowance. The current `ROOT_ACCOUNT_HEAD_AFTER_FIRST_ACTUAL_HOLD.json` SHA50dc4515721bb3072b2f710f727b35a4f45ecb37f445f1113a5ebbb73686d55b records bank used244.59277764664455s, remaining355.40722235335545s. It explicitly preserves producer cumulative hard280s and unit aggregate hard340s.
+
+The proposed continuation cap is therefore exactly265s whole-command, with the untouched60s independent-checker reserve:14+265=279<=280 producer;14+265+60=339<=340 aggregate; the settled bank plus265+60 is569.59277764664455s, leaving30.40722235335545s for additional accounted metadata/headroom. These are inherited limits from the root settlement, not a new allocation or an authorization to run. Refresh again at actual execution GO; a further debit may require a lower cap.
+
+There is a concrete supervisor constraint: runner.py:16 fixes WALL=280 and lines118–119 reject any packet with a different cap; line140 and child deadlines also use WALL. Therefore a safe continuation with a reduced cap cannot be achieved merely by editing the new packet. If approved, the narrowly allowed mechanical companion change is to bind this continuation's WALL to265s (or a later controller-specified smaller remainder), with every comparison/deadline/receipt consistently using that smaller value; update the literal280+60 refusal text accordingly. A frozen constant in a continuation-specific runner is sufficient; no generic scheduler or validator refactor is needed. Keep CHILD_RESERVE5s, RSS6GiB, thread limits, one-use output refusal, source seals and process reaping intact. Do not remove the cap check or allocate a fresh280s. The original frozen runner and its first-run hash/receipt must remain recoverable as evidence.
+
+A fresh attempt directory and resealed repaired implementation are packaging for the same task and accounting lineage, not a replacement launch identity or reset. The root's actual research packet, ACK, approved repair and subsequent execute GO must name the original task, first failure, final settled account and reduced cap. Reviewer reserve60s remains untouched. No new ultra is proposed.
+
+## Proposed falsifier and subsequent decision
+
+The actual continuation falsifies this targeted diagnosis as a sufficient repair if either normalization fails the unchanged source-normalization gates despite the corrected relative request, or emits a method/resource failure. Passing normalization would close only this control; it would not pass the downstream background, pair-kernel, angular/radial or actual tensor-covariance checks. Separate independent actual review remains required after a candidate exists.
+
+All original H02/H04 empirical acceptances, full tensorized x/F/Pi/Q/G_F undefined or unbounded states, publication22/42 baseline23/42 restricted alternate, historical17/18 and48-task evidence, and R9 UNKNOWN remain unchanged. The next action is to wait for the actual research packet/ACK/GO, then bind any approved scoped repair to the settled same-account remainder. This draft neither dispatches nor approves that action.

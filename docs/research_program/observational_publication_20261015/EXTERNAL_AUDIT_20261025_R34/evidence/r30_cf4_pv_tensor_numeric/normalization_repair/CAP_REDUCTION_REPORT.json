@@ -1,0 +1,48 @@
+{
+  "status": "SOURCE_ONLY_CAP_REDUCTION_PREPARED",
+  "utc": "2026-10-25T09:00:54.433575+00:00",
+  "task": "R30-CF4-BAND-PV-FULL-TENSOR-COVARIANCE",
+  "owner": "/root/r30_cf4_pv_numeric_preparation",
+  "resource_decision": "Reduce repaired one-use whole producer cap from265 to245 seconds; unchanged physical, tolerance, controls, source cohort, checker reserve60 and same600-second account.",
+  "accounting": {
+    "used_before_next_producer_seconds": 281.4927776466445,
+    "producer_cap_seconds": 245,
+    "checker_reserve_seconds": 60,
+    "lifetime_cap_seconds": 600,
+    "headroom_before_future_metadata_seconds": 13.507222353355473,
+    "recovery_evidence": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/REPAIR_PREPARATION_ACCOUNT_RECOVERY.json",
+      "sha256": "eab6144739934e5db136f8d55ab231dae4b65cf63bdc8ce394512caff65e822a"
+    },
+    "final_account_head": "CONTROLLER_TO_BIND_AFTER_REFRESH"
+  },
+  "cap265_preimages": {
+    "runner.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/evidence/cap265_preimage/runner.py",
+      "sha256": "89fb88fe4d5913383cb1c17ad6709c9e0138a0795542101aa543cf1320d0302c"
+    },
+    "INPUT_TEMPLATE.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/evidence/cap265_preimage/INPUT_TEMPLATE.json",
+      "sha256": "23db35a017d8ff20d0e5995715cf70abe428198b6fcaeeaecc79b0c1e93210d5"
+    },
+    "PREPARATION.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/evidence/cap265_preimage/PREPARATION.json",
+      "sha256": "c400bf8b847ec7ad6e118402accc3ef9c8789b78e50d22521b5caac9272ff9c9"
+    },
+    "SOURCE_DIFF.patch": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/evidence/cap265_preimage/SOURCE_DIFF.patch",
+      "sha256": "8363250fec57c470d49c0ce5b3b5dbee998aeefcfd8cbf7d3155145ee89331f3"
+    }
+  },
+  "current_source_sha256": {
+    "science.py": "ed9918ef9f2f12c7e6b04d5140ea8e51acd86c5fb6a541d80a27e9f42e3ad982",
+    "runner.py": "d90d4fa189df74a5e9bf02acab388a4200bfd23d6b0b10cc072430dd6aa349c7",
+    "driver.py": "761acd873677399248b943a1407c5b06dae3c685c184c52dc28197ce7185909f",
+    "independent_check.py": "ced675e79df1653e3a35a9b7a9286501340fd90dd7564cab4f4e9a1ef66b19ec"
+  },
+  "current_input_template_sha256": "07063bb98756a5bf71eb672955d92b1788fe85629ee5c56d7840eeba7fcd1623",
+  "current_source_diff_sha256": "88536117bd3f79fba723e8d8c3bd61ab5ebdd79853f137fb8de6681b6a14ec43",
+  "driver_checker_science_byte_identity": "PASS against approved repaired copies",
+  "numeric_commands_started_during_cap_reduction": 0,
+  "actual_packet_ack_go": "NOT_YET_BOUND"
+}

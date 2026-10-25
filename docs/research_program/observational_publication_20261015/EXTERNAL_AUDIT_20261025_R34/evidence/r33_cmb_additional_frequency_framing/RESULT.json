@@ -1,0 +1,153 @@
+{
+  "task_name": "r33_cmb_additional_frequency_framing",
+  "status": "SOURCE_QUALIFIED_FINITE_EXTENSION_SPECIFIED",
+  "branch_decision": "RECOMMEND_ONE_BOUNDED_12_17_ROW_F2_DISCRIMINATOR_AFTER_HOST_BUDGET_REFRESH",
+  "scientific_admission": "NONE_SOURCE_THEORY_ONLY",
+  "controller_active": false,
+  "owner": "obsstat",
+  "scope": "nominal equal calibrated detector/DA spectral response only; common spatial response finite free-moment family",
+  "claim_tier": "C0",
+  "transfer_source": "none",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/WMAP_PLANCK_F2_CONTRACT.md",
+    "sha256": "986e558508ef7691d3286e9eb6cab48a38c9ded6645fe8c3e1486280a2e14686",
+    "bytes": 23328
+  },
+  "raw_receipt": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/RAW.json",
+    "sha256": "c86a8d59a2368b9b8d917c712f8e124aff9aedb588c9a724993a844969b4a007",
+    "bytes": 3264
+  },
+  "source_seals": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/SOURCE_INTAKE_01.json",
+      "sha256": "23e82bcf0cf514a8ab5430b82632cdda3f35ad5577d454eeb559873e2e513553",
+      "bytes": 4252
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/SOURCE_INTAKE_02.json",
+      "sha256": "da8521fb78eff7dec279085e2b251a84b2e042e37e02627b314081fe3aac0a55",
+      "bytes": 411
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/BANDPASS_SOURCE_METADATA.json",
+      "sha256": "06f2449ec8041dd968e1b9f85bf81649434dc93763dc8931ceb562a6ef6801f1",
+      "bytes": 17768
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/sources/wmap_bandpass_v5.tar.gz",
+      "sha256": "5f3a3d29dd2346a31f7d4d215f3d7564c0a11b5af283737a6c14edfe6f152feb",
+      "bytes": 38783
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/sources/wmap_IDLpro_v31.tar.gz",
+      "sha256": "bad44250efd485d614108974b30c92619a1065f024eaaf72093a7714265102f2",
+      "bytes": 137920
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r33_cmb_additional_frequency_framing/sources/effective_freq.pro",
+      "sha256": "389f3450a497ac1474cdc901737c08d44bd5a5ccac8a72976f147caad07b5c74",
+      "bytes": 1755
+    }
+  ],
+  "accepted_planck_input": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_numeric/attempt_38cdf6b948a41ee9/RESULT.json",
+    "sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+    "bytes": 103858
+  },
+  "prior_contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_spectral_response_framing/SPECTRAL_ONLY_CONTRACT.md",
+    "sha256": "fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df",
+    "bytes": 18642
+  },
+  "prior_independent_acceptance": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cmb_fresh_actual_result_review/RESULT.json",
+    "sha256": "ac948932ba9827ae9368ed05e8cbc1417d1fe8999cce10c0b51d9c4ec497537f",
+    "bytes": 6037
+  },
+  "spectral_design": {
+    "frozen_family": "F2 free signed nine moments",
+    "old_planck_rows": 7,
+    "old_rows_reintegrated": false,
+    "source_radiometers": 20,
+    "source_detector_curves": 40,
+    "stipulated_DA_rows": 10,
+    "stipulated_compressed_band_rows": 5,
+    "total_rows": [
+      12,
+      17
+    ],
+    "new_independent_spectral_directions": "NOT_COMPUTED",
+    "branches": "six inherited Planck conventions times W0 literal/W1 uniform center-drift proxy",
+    "signed_tails": "ALL_LITERAL_SAMPLES_RETAINED_NOT_PHYSICAL_NEGATIVE_RESPONSE_CLAIM",
+    "detector_weights": "stipulated equal individually CMB-calibrated detector mean; not flight/map weights",
+    "polarized_map_response": "NOT_QUALIFIED",
+    "higher_family": "F3=14/F4=20 column counts only; no numerical extension without missing Planck higher columns and new contract"
+  },
+  "numerical_starts": 0,
+  "numerical_rank": "NOT_COMPUTED",
+  "principal_angles": "NOT_COMPUTED",
+  "noise_conditioning": "NOT_EVALUATED",
+  "proposed_caps": {
+    "producer_seconds": 180,
+    "independent_checker_seconds": 180,
+    "intake_seconds": 60,
+    "new_dispatch_total_seconds": 420,
+    "peak_RSS_bytes": 1073741824,
+    "min_MemAvailable_bytes": 4294967296,
+    "disk_reserve_bytes": 2147483648,
+    "BLAS_threads": 1,
+    "no_total_download_cap": true,
+    "no_ultra": true
+  },
+  "accounting": {
+    "ancestry": "R26-FULL7-STREAMED-SPIN2-QUADRATURE",
+    "examined_head": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_spectral_dispatch/ROOT_ACCOUNT_HEAD_AFTER_FINAL_REVIEW_CLOSEOUT.json",
+      "sha256": "765bb535f14cd4e85465ef948befae71e5671649b04d780c16957b1f37f0f865",
+      "bytes": 1553
+    },
+    "examined_max_seconds": 498.5136837777295,
+    "lifetime_cap_each_seconds": 900,
+    "future_reserved_increment_each_if_approved_seconds": 60,
+    "same_seven_accounts": [
+      "30",
+      "44",
+      "70",
+      "100",
+      "143",
+      "217",
+      "353"
+    ],
+    "new_WMAP_bank": false,
+    "SMICA_new_debit": 0,
+    "current_source_framing_charge": "ROOT_RECONCILIATION_REQUIRED_INCLUDE_PREPARATION_NOT_ZERO",
+    "funding": "FEASIBLE_AT_EXAMINED_HEAD_ONLY_REFRESH_BEFORE_ACK",
+    "live_account_mutated": false
+  },
+  "diagnostic_bundle": {
+    "x": "NOT_MEASURED",
+    "observed_quotient_tensor": "NOT_MEASURED",
+    "Q": "NOT_EVALUATED",
+    "F_physical": "NOT_EVALUABLE",
+    "Pi": "NOT_CALIBRATED",
+    "G_F": "NOT_APPLICABLE_FREQUENCY_IS_NOT_DEPTH",
+    "full24_joint_covariance": "UNDEFINED_NO_ACTUAL_SKY_RESPONSE_OR_NOISE",
+    "full24_action": "SPECIFIED_FOR_ALL_COORDINATES_NOT_EXECUTED"
+  },
+  "strongest_counterexample": "unrestricted common blackbody nuisance a tensor I24 confounds every target coordinate at any frequency count",
+  "actual_sky_reopening": [
+    "released uncleaned Q/U product/epoch/calibration/unit/convention identities",
+    "detector/radiometer/DA-to-map polarized response with scan/gain/coaddition/beam/S-mismatch/drift and uncertainty",
+    "common projection and complete component-specific full24 response",
+    "joint projected noise/systematic covariance or validated null simulation law",
+    "fixed physical nuisance and truncation/remainder plus blackbody/local-systematic competition"
+  ],
+  "original_states": "UNCHANGED old48/R9/historical17/18/current22/23; physical L03/H02/H04/nativeatlas HOLD",
+  "next_executable_checkpoint": "Parent completes separate CF4 transition, refreshes existing seven-frequency account including this intake, appends and ACKs one new packet; lower-tier implements and runs producer/checker under frozen caps then fresh read-only review."
+}

@@ -1,0 +1,1576 @@
+--- normalization_repair/driver.py
++++ fast_window/driver.py
+@@ -1,11 +1,8 @@
+-"""One-use R30 controls and actual fixed-cohort band-PV consumer.
+-
+-No calculation occurs at import. The controller must bind INPUT.json and start
+-this only through runner.py after its explicit GO.
+-"""
++"""One-use R32 producer. Import is inert; runner and controller GO are required."""
+ from __future__ import annotations
+ 
+ import argparse
++import hashlib
+ import json
+ import math
+ import os
+@@ -16,428 +13,520 @@
+ from scipy.integrate import quad
+ 
+ import science as s
++import fast_science as fast
++
++ROOT = Path(__file__).resolve().parent
++PREVIOUS = ROOT.parent / 'normalization_repair' / 'actual_run'
++AMP = 765245.0820764016
++DIRECT_NAMES = (
++    'o35_b0_k0x1.acd9661a17d9ep-7.npz',
++    'o35_b0_k0x1.b6450588a5f25p-7.npz',
++    'o35_b0_k0x1.b97353b4b2faap-7.npz',
++)
+ 
+ 
+ class Hold(RuntimeError):
+     pass
+ 
+ 
+-def atomic_json(path, value):
+-    path = Path(path)
+-    tmp = path.with_name(path.name + '.tmp')
+-    with open(tmp, 'w') as f:
+-        json.dump(value, f, indent=2, allow_nan=False)
+-        f.write('\n')
+-        f.flush(); os.fsync(f.fileno())
+-    os.replace(tmp, path)
+-    fd=os.open(path.parent,os.O_RDONLY|os.O_DIRECTORY)
+-    try: os.fsync(fd)
+-    finally: os.close(fd)
+-
+-
+-def atomic_npz(path, **arrays):
+-    path = Path(path)
+-    tmp = path.with_name(path.name + '.tmp.npz')
+-    np.savez_compressed(tmp, **arrays)
+-    with open(tmp, 'rb') as f:
+-        os.fsync(f.fileno())
+-    os.replace(tmp, path)
+-    fd=os.open(path.parent,os.O_RDONLY|os.O_DIRECTORY)
+-    try: os.fsync(fd)
+-    finally: os.close(fd)
+-
+-
+-def atomic_text(path,value):
+-    path=Path(path)
+-    tmp=path.with_name(path.name+'.tmp')
+-    with open(tmp,'w') as f:
+-        f.write(value);f.flush();os.fsync(f.fileno())
+-    os.replace(tmp,path)
+-    fd=os.open(path.parent,os.O_RDONLY|os.O_DIRECTORY)
++def demand(ok, detail):
++    if not bool(ok):
++        raise Hold(detail)
++
++
++def digest(path):
++    h=hashlib.sha256()
++    with open(path,'rb') as f:
++        for block in iter(lambda:f.read(1<<20),b''):
++            h.update(block)
++    return h.hexdigest()
++
++
++def atomic_json(path, payload):
++    path=Path(path); temp=path.with_name(path.name+'.tmp')
++    with open(temp,'w') as f:
++        json.dump(payload,f,indent=2,allow_nan=False)
++        f.write('\n');f.flush();os.fsync(f.fileno())
++    os.replace(temp,path)
++    fd=os.open(path.parent,os.O_DIRECTORY|os.O_RDONLY)
+     try:os.fsync(fd)
+     finally:os.close(fd)
+ 
+ 
+-def demand(condition, detail):
+-    if not condition:
+-        raise Hold(detail)
+-
+-
+-def controls(data, amp, norm, deadline):
+-    start = time.monotonic()
+-    if not np.isclose(s.transfer(0.), 1., atol=1e-15):
+-        raise Hold('TRANSFER_ZERO_LIMIT')
+-    demand(np.all(s.power(np.geomspace(1e-6, 1e2, 20), amp) >= 0), 'NEGATIVE_POWER')
+-    demand(abs(math.sqrt(amp*norm[1][0])-s.SIGMA8) <= 1e-12, 'SIGMA8_RECONSTRUCTION')
+-    demand(abs(s.BANDS[0][0] / s.H - .005) <= 1e-15, 'K_UNIT_CONVERSION')
+-    demand(abs(s.RADII[0] / s.H * s.H - 5) <= 1e-15, 'R_UNIT_CONVERSION')
+-    # In EdS, I_D(a)=(2/5)a^(5/2), D=a and f=1.
+-    a = np.array([.25, .5, 1.])
+-    eds_ia = 2*a**2.5/5
+-    eds_d = a**(-1.5)*eds_ia/(2/5)
+-    eds_f = -1.5 + 1/(a*a * a**(-4.5) * eds_ia)
+-    demand(max(np.max(abs(eds_d-a)), np.max(abs(eds_f-1))) < 1e-14, 'EDS_CONTROL')
+-    z = data['z']
+-    c32, g32, j32, _, _ = s.background(z, 32)
+-    c64, g64, j64, _, _ = s.background(z, 64)
+-    growth_diff = float(np.max(abs(g32/g64-1)))
+-    distance_diff = float(np.max(abs(c32/c64-1)))
+-    demand(growth_diff <= 1e-9 and distance_diff <= 1e-9, f'BACKGROUND_32_64 {growth_diff} {distance_diff}')
+-    # Check the inherited H0=74.6 distance modulus derivative, at spaced real rows.
+-    pick = np.linspace(0, len(z)-1, 11, dtype=int)
+-    zz = z[pick]
+-    step = np.minimum(1e-5*zz, 1e-6)
+-    def mu(x):
+-        i = s.distance_integral(x, 64)
+-        return 25+5*np.log10(s.C/74.6*(1+x)*i)
+-    derivative = (mu(zz+step)-mu(zz-step))/(2*step)
+-    expected = -s.C*j64[pick]/(1+zz)
+-    demand(np.max(abs(derivative/expected-1)) <= 2e-7 and np.all(j64[pick] < 0), 'J_FINITE_DIFFERENCE')
+-    for order in (35, 53):
+-        pts, wt, paired, pwt = s.angular_rule(order)
+-        demand(abs(np.sum(wt)-4*math.pi) < 1e-12, f'ANGULAR_CONSTANT_{order}')
+-        demand(np.max(abs(wt@pts)) < 1e-12, f'ANGULAR_LINEAR_{order}')
+-        demand(np.max(abs(np.einsum('n,ni,nj->ij',wt,pts,pts)-np.eye(3)*4*math.pi/3)) < 1e-12,
+-               f'ANGULAR_QUADRATIC_{order}')
+-        demand(abs(np.sum(pwt)-4*math.pi) < 1e-12 and len(paired)*2 == len(pts), f'ANGULAR_PAIR_{order}')
+-    for lo, hi in s.BANDS:
+-        for n in (16, 32):
+-            k,w = s.cc_rule(n,lo,hi)
+-            demand(abs(sum(w)-(hi-lo)) <= 1e-12*(hi-lo), 'CC_CONSTANT')
+-            demand(abs(w@k**2-(hi**3-lo**3)/3) <= 1e-12*(hi**3-lo**3)/3, 'CC_QUADRATIC')
+-    f = data['factor']
+-    demand(np.array_equal(f['group_id'], data['ids']), 'GROUP_IDS')
+-    demand(int(np.sum(f['mixed_zero_leverage_mask'])) == 944 and
+-           int(np.sum(f['exact_zero_leverage_mask'])) == 945 and
+-           bool(f['exact_zero_leverage_mask'][1484]) and int(data['ids'][1484]) == 11274,
+-           'CORRECTED_MASKS')
+-    demand(np.all(f['exact_zero_leverage_mask'][f['mixed_zero_leverage_mask']]), 'MASK_SUBSET')
+-    demand(np.all(f['difference_reference_row_index'] ==
+-                  f['reference_row_by_channel'][f['nonreference_channel']]), 'DIFFERENCE_REFERENCE_MAP')
+-    # Every within-channel constant cancels before L.
+-    offsets = np.arange(7., dtype=float)
+-    support=f['selected_support_7']
+-    nonref=f['nonreference_row_index']; refs=f['difference_reference_row_index']
+-    channel_i=np.argmax(support[nonref],axis=1)
+-    channel_r=np.argmax(support[refs],axis=1)
+-    demand(np.all(np.sum(support[nonref],axis=1)==1) and
+-           np.all(np.sum(support[refs],axis=1)==1) and
+-           np.array_equal(channel_i,channel_r) and
+-           np.array_equal(channel_i,f['nonreference_channel']) and
+-           np.array_equal(offsets[channel_i]-offsets[channel_r],np.zeros(len(nonref))),
+-           'CHANNEL_OFFSET_CONTRAST')
+-    # Constant field through actual redshift-only j,n against saved nuisance bulk response.
+-    m = len(np.unique(data['method']))
+-    with np.load(data['carrier_path'], allow_pickle=False) as carrier:
+-        saved_bulk = carrier['N'][:, 2*m:2*m+3]
+-    bulk = j64[:,None] * data['n']
+-    demand(np.max(abs(bulk-saved_bulk)) <= 1e-10, 'SAVED_BULK_RESPONSE_ROWS')
+-    direct = f['L_binary64'] @ (bulk[f['nonreference_row_index']]-bulk[f['difference_reference_row_index']])
+-    saved = np.asarray(data['result']['response_numerical']['KN'])[:, 2*m:2*m+3]
+-    err = abs(direct-saved)
+-    demand(np.max(err) <= 1e-10 and np.all(err <= 1e-8*np.maximum(abs(saved),abs(direct))+1e-10),
+-           'SAVED_BULK_RESPONSE_COEFFICIENTS')
+-    fixture = fixture_controls(amp, deadline)
+-    demand(time.monotonic() < deadline, 'CONTROL_DEADLINE')
+-    return {'status':'PASS', 'seconds':time.monotonic()-start, 'normalization':norm,
+-            'amplitude':amp, 'sigma8_reconstructed':math.sqrt(amp*norm[1][0]),
+-            'transfer_spots_k_mpc_inv':[0.,.003,.02,.1],
+-            'transfer_spots':[float(s.transfer(k)) for k in (0.,.003,.02,.1)],
+-            'growth_32_64_max_relative':growth_diff, 'chi_32_64_max_relative':distance_diff,
+-            'redshift_j_finite_difference_max_relative':float(np.max(abs(derivative/expected-1))),
+-            'fixture': fixture}, (c64,g64,j64)
+-
+-
+-def fixture_controls(amp, deadline):
+-    # Smooth, nontrivial signed fixture with a duplicate-position pair.
+-    x = np.array([[0,0,0],[1,0,0],[0,1,0],[0,0,1],[1,1,0],
+-                  [0,0,0],[1,0,1],[0,1,1]],float)
+-    n = np.array([[1,1,1],[1,0,1],[0,1,1],[1,1,0],[-1,1,1],
+-                  [1,1,1],[1,-1,1],[1,1,-1]],float)
+-    n /= np.linalg.norm(n,axis=1)[:,None]
+-    jg = np.array([-.7,-.8,-.9,-.65,-1.1,-.75,-.95,-.85])
+-    nonref = np.arange(1,8)
+-    refs = np.array([0,0,0,0,0,0,0])
+-    L = np.array([[1,-2,0,.5,0,0,1],[-.5,0,1,0,2,0,-1],
+-                  [0,1,-1,0,0,2,.5],[1,0,0,-1,1,-1,0],
+-                  [0,.5,.4,.2,-.7,1,-.2]],float)
+-    pts, wt, paired, pwt = s.angular_rule(53)
+-    kk, wk = s.cc_rule(32,*s.BANDS[0])
+-    spectral = np.array([s.gram(k,paired,pwt,x,n,jg,L,nonref,refs) for k in kk])
+-    angular = s.joint_from_spectral(spectral,kk,wk,amp)
+-    # Independent scalar pair-kernel route; N=8 only.
+-    K = np.zeros((5,8))
+-    for p,i in enumerate(nonref):
+-        K[:,i] += L[:,p]
+-        K[:,refs[p]] -= L[:,p]
+-    def pair_at(k):
+-        mat = (jg[:,None]*jg[None,:]) * s.pair_kernel(k,x,n)
+-        return K@mat@K.T
+-    pair = np.zeros((15,15))
++def atomic_npz(path, **arrays):
++    path=Path(path); temp=path.with_name(path.name+'.tmp.npz')
++    np.savez_compressed(temp,**arrays)
++    with open(temp,'rb') as f:os.fsync(f.fileno())
++    os.replace(temp,path)
++    fd=os.open(path.parent,os.O_DIRECTORY|os.O_RDONLY)
++    try:os.fsync(fd)
++    finally:os.close(fd)
++
++
++def source_data(bindings):
++    s.verify_bindings(bindings)
++    p={key:value['path'] for key,value in bindings['immutable_numeric_inputs'].items()}
++    with np.load(p['corrected_factor'],allow_pickle=False) as z:
++        factor={key:z[key] for key in z.files}
++    with np.load(p['selected_source'],allow_pickle=False) as z:
++        ids,zobs,n,method=(z[k] for k in ('group_id','z_CMB','n_J2000','method_family'))
++    with open(p['corrected_result']) as f:result=json.load(f)
++    demand(ids.shape==(35970,) and n.shape==(35970,3), 'SOURCE_SHAPE')
++    demand(np.array_equal(ids,factor['group_id']) and
++           hashlib.sha256(np.asarray(ids,dtype='<i8').tobytes()).hexdigest()==
++           'f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88',
++           'SOURCE_ID_ORDER')
++    demand(np.all(np.isfinite(zobs)) and np.all((zobs>0)&(zobs<=.5)) and
++           np.all(np.isfinite(n)) and np.max(abs(np.linalg.norm(n,axis=1)-1))<=2e-13,
++           'SOURCE_DOMAINS')
++    nonref=factor['nonreference_row_index']; refs=factor['difference_reference_row_index']
++    demand(len(nonref)==35019 and len(refs)==35019 and
++           factor['L_binary64'].shape==(5,35019), 'FIXED_OPERATOR_SHAPE')
++    demand(int(np.sum(factor['exact_zero_leverage_mask']))==945 and
++           int(np.sum(factor['mixed_zero_leverage_mask']))==944, 'ZERO_INDEXING')
++    return {'ids':ids,'z':zobs,'n':n,'method':method,'factor':factor,'result':result}
++
++
++def prior_controls(packet):
++    path=Path(packet['reused_controls']['path'])
++    demand(path==PREVIOUS/'CONTROLS.json' and
++           digest(path)==packet['reused_controls']['sha256'], 'REUSED_CONTROLS_IDENTITY')
++    prior=json.loads(path.read_text())
++    demand(prior['status']=='PASS' and prior['amplitude']==AMP and
++           prior['fixture']['pair_relative_frobenius']<=1e-5 and
++           prior['fixture']['pair_max_normalized_entry']<=1e-6,
++           'REUSED_SCALAR_CONTROL_CONTENT')
++    saved=[]
++    for name in DIRECT_NAMES:
++        path=PREVIOUS/'spectral'/name
++        demand(digest(path)==packet['saved_direct_spectral_sha256'][name],
++               f'SAVED_DIRECT_SPECTRAL_IDENTITY {name}')
++        with np.load(path,allow_pickle=False) as z:
++            saved.append({key:z[key] for key in z.files})
++    return prior,saved
++
++
++def direct_oracle(k,u,positions,n,jg,L,nonref,refs):
++    """Independent full-cohort difference-before-L contraction in long double."""
++    x=np.asarray(positions,dtype=np.longdouble)
++    uu=np.asarray(u,dtype=np.longdouble)
++    kval=np.longdouble(k)
++    aa=np.asarray(jg,dtype=np.longdouble)*(np.asarray(n,dtype=np.longdouble)@uu)
++    theta_r=kval*(x[refs]@uu)
++    delta=kval*((x[nonref]-x[refs])@uu)
++    # expm1 resolves nearly equal phases without subtracting two exponentials.
++    er=np.exp(np.clongdouble(1j)*theta_r)
++    dd=er*((aa[nonref]-aa[refs])+aa[nonref]*np.expm1(np.clongdouble(1j)*delta))
++    ll=np.asarray(L,dtype=np.longdouble)
++    re=ll@dd.real; im=ll@dd.imag
++    oracle=np.asarray(re,dtype=float)+1j*np.asarray(im,dtype=float)
++    abs_scale=np.asarray(np.abs(ll)@(np.abs(aa[nonref])+np.abs(aa[refs])),dtype=float)
++    demand(np.all(np.isfinite(oracle)) and np.all(np.isfinite(abs_scale)),
++           'DIRECT_ORACLE_NONFINITE')
++    return oracle,abs_scale
++
++
++def direct_controls(target,maps,high,low,roundoff,saved,positions,n,jg,L,nonref,refs):
++    keymap={(float(k).hex(),*(float(v).hex() for v in direction)):i
++            for i,(k,*direction) in enumerate(target)}
++    selected={}
++    saved_results=[]
++    for z in saved:
++        k=float(z['k']);band=int(z['band']);
++        stage=maps['A'][band]
++        node=np.where(stage['k']==k)[0]
++        demand(len(node)==1,'SAVED_DIRECT_NODE_MAPPING')
++        A=np.einsum('t,ta,tb->ab',stage['angular_weights'],
++                    high[stage['target_indices'][node[0]]],
++                    high[stage['target_indices'][node[0]]].conj()).real
++        truth=z['A'];scales=np.sqrt(np.diag(truth))
++        demand(np.all(scales>0),'SAVED_DIRECT_NONPOSITIVE_DIAGONAL')
++        fro=float(np.linalg.norm(A-truth)/np.linalg.norm(truth))
++        entry=float(np.max(abs(A-truth)/np.outer(scales,scales)))
++        demand(fro<=1e-6 and entry<=1e-6,
++               f'NUMERICAL_METHOD_ACCURACY_HOLD saved_spectral {fro} {entry}')
++        samples=[]
++        for direction,expected in zip(z['sample_u'],z['sample_w'].T):
++            key=(k.hex(),*(float(v).hex() for v in direction))
++            demand(key in keymap,'SAVED_SAMPLE_TARGET_ABSENT')
++            idx=keymap[key];selected[idx]='saved_sample'
++            diff=abs(high[idx]-expected)
++            samples.append(float(np.max(diff)))
++            demand(np.linalg.norm(diff)<=1e-8*max(np.linalg.norm(expected),1e-30),
++                   'NUMERICAL_METHOD_ACCURACY_HOLD saved_complex_sample')
++        saved_results.append({'band':band,'k_hex':k.hex(), 'relative_frobenius':fro,
++                              'max_normalized_entry':entry,'sample_max_abs':samples})
++    # Three unique physical endpoints/split, at the first four paired directions.
++    for band in maps['A']:
++        for kval in (band['k'][0],band['k'][-1]):
++            for u in band['directions'][:4]:
++                key=(float(kval).hex(),*(float(v).hex() for v in u))
++                demand(key in keymap,'ENDPOINT_TARGET_ABSENT')
++                selected[keymap[key]]='endpoint_split'
++    # Deterministic first-index ties, no row/field/coordinate deletion.
++    for name in ('A','C'):
++        indices=np.unique(np.concatenate([v['target_indices'].ravel() for v in maps[name]]))
++        directions=maps[name][0]['directions']
++        absolute_scales=np.empty((len(directions),5))
++        # Magnitude scales depend on direction, not k. Vectorize all rows in
++        # modest direction blocks; never materialize an N x N array.
++        for start in range(0,len(directions),32):
++            ub=directions[start:start+32]
++            ai=np.abs(jg[nonref,None]*(n[nonref]@ub.T))
++            ar=np.abs(jg[refs,None]*(n[refs]@ub.T))
++            absolute_scales[start:start+len(ub)]=(np.abs(L)@(ai+ar)).T
++        lookup={tuple(float(v).hex() for v in u):i for i,u in enumerate(directions)}
++        which=np.asarray([lookup[tuple(float(v).hex() for v in target[idx,1:])]
++                          for idx in indices])
++        for a in range(5):
++            mag=np.abs(high[indices,a]);hi=int(np.argmax(mag))
++            selected[int(indices[hi])]=f'{name}_coordinate_{a}_maximum'
++            scale=absolute_scales[which,a]
++            score=np.divide(mag,scale,out=np.full_like(mag,np.inf),where=scale>0)
++            selected[int(indices[int(np.argmin(score))])]=f'{name}_coordinate_{a}_cancellation'
++    demand(len(selected)<=44,f'DIRECT_TARGET_SELECTION_COUNT {len(selected)}')
++    records=[];low_delta=[];high_delta=[];allowance=[]
++    for idx,reason in sorted(selected.items()):
++        kval,*direction=map(float,target[idx])
++        oracle,abs_scale=direct_oracle(kval,direction,positions,n,jg,L,nonref,refs)
++        diff=high[idx]-oracle
++        denom=float(np.linalg.norm(oracle))
++        if denom:
++            demand(np.linalg.norm(diff)/denom<=1e-8,
++                   f'NUMERICAL_METHOD_ACCURACY_HOLD direct_l2 target={idx}')
++        else:
++            demand(np.all(abs_scale==0) and np.all(high[idx]==0),
++                   f'NUMERICAL_METHOD_ACCURACY_HOLD exact_zero target={idx}')
++        for a in range(5):
++            if abs_scale[a]:
++                demand(abs(diff[a])/abs_scale[a]<=1e-10,
++                       f'NUMERICAL_METHOD_ACCURACY_HOLD direct_component target={idx} a={a}')
++            else:
++                demand(diff[a]==0, f'DIRECT_ZERO_COMPONENT target={idx} a={a}')
++        low_delta.extend(abs(low[idx]-oracle).tolist())
++        high_delta.extend(abs(diff).tolist())
++        allowance.extend(roundoff[idx].tolist())
++        records.append({'index':idx,'reason':reason,'k_hex':kval.hex(),
++                        'u_hex':[v.hex() for v in direction],
++                        'oracle_real':oracle.real.tolist(),'oracle_imag':oracle.imag.tolist(),
++                        'high_error_abs':abs(diff).tolist(),
++                        'low_error_abs':abs(low[idx]-oracle).tolist(),
++                        'coefficient_abs_scale':abs_scale.tolist()})
++    lo=float(np.linalg.norm(low_delta));hi=float(np.linalg.norm(high_delta))
++    floor=float(np.linalg.norm(allowance))
++    demand(hi<=max(.1*lo,floor),f'NUMERICAL_METHOD_ACCURACY_HOLD eps_scaling {lo} {hi} {floor}')
++    return {'saved_spectral':saved_results,'oracle_targets':records,
++            'low_error_l2':lo,'high_error_l2':hi,'rounding_floor_l2':floor,
++            'eps_scaling_status':'ROUNDING_FLOOR_LIMITED' if lo<=floor and hi<=floor else 'PASS'}
++
++
++def support_and_bounds(joints,bounds):
++    observations=[]
++    for label,joint,bound in zip(('band1','band2','sum'),
++                                 (joints[0],joints[1],joints[0]+joints[1]),
++                                 (bounds[0],bounds[1],bounds[0]+bounds[1])):
++        sym,diag=s.matrix_diagnostics(joint)
++        sd=np.sqrt(np.diag(sym))
++        demand(np.all(sd>0),'NUMERICAL_SUPPORT_UNCERTAIN zero_diagonal')
++        normalized=float(np.max(bound/np.outer(sd,sd)))
++        demand(normalized<=5e-5,
++               f'NUMERICAL_METHOD_ACCURACY_HOLD normalized_bound {label}={normalized}')
++        block=[]
++        for r in range(3):
++            sl=slice(5*r,5*r+5);mat=sym[sl,sl];bb=bound[sl,sl]
++            eig,vec=np.linalg.eigh(mat)
++            support=eig>1e-10*eig[-1]
++            demand(np.any(support),'NUMERICAL_SUPPORT_UNCERTAIN empty')
++            H=(vec[:,support]/np.sqrt(eig[support]))@vec[:,support].T
++            fro=float(np.linalg.norm(bb)/np.linalg.norm(mat))
++            white=float(np.linalg.norm(abs(H)@bb@abs(H),2))
++            demand(fro<=3e-5 and white<=2e-4,
++                   f'NUMERICAL_METHOD_ACCURACY_HOLD propagated_bound {label} {r} {fro} {white}')
++            block.append({'radius':r,'relative_frobenius_bound':fro,
++                          'whitened_spectral_bound':white})
++        observations.append({'matrix':label,'joint_diagnostics':diag,
++                             'max_normalized_joint_entry_bound':normalized,
++                             'diagonal_blocks':block})
++    return observations
++
++
++def bounded_convergence(earlier,later,be,bl):
++    findings=[];passed=True
++    for label,A,B,EA,EB in zip(('band1','band2','sum'),
++                               (earlier[0],earlier[1],earlier[0]+earlier[1]),
++                               (later[0],later[1],later[0]+later[1]),
++                               (be[0],be[1],be[0]+be[1]),
++                               (bl[0],bl[1],bl[0]+bl[1])):
++        observed=B-A
++        envelope=EA+EB
++        D=abs(observed)+envelope
++        sd=np.sqrt(np.diag(B));demand(np.all(sd>0),'NUMERICAL_SUPPORT_UNCERTAIN diagonal')
++        norm=D/np.outer(sd,sd)
++        for r in range(3):
++            sl=slice(5*r,5*r+5); old=A[sl,sl];new=B[sl,sl]
++            delta=observed[sl,sl];error=envelope[sl,sl]
++            eig,vec=np.linalg.eigh(new);oe=np.linalg.eigvalsh(old)
++            ranks={str(t):int(np.sum(eig>t*eig[-1])) for t in (1e-12,1e-10,1e-8)}
++            oldr={str(t):int(np.sum(oe>t*oe[-1])) for t in (1e-12,1e-10,1e-8)}
++            support=eig>1e-10*eig[-1]
++            if len(set(ranks.values()))!=1 or ranks!=oldr or not np.any(support):
++                passed=False;findings.append({'matrix':label,'radius':r,
++                    'status':'NUMERICAL_SUPPORT_UNCERTAIN','ranks':ranks,'earlier_ranks':oldr});continue
++            H=(vec[:,support]/np.sqrt(eig[support]))@vec[:,support].T
++            entry=float(np.max(norm[sl,sl]))
++            fro=float((np.linalg.norm(delta)+np.linalg.norm(error))/np.linalg.norm(new))
++            white=float(np.linalg.norm(H@delta@H,2)+
++                        np.linalg.norm(abs(H)@error@abs(H),2))
++            ok=entry<=.005 and fro<=.003 and white<=.02
++            passed &=ok
++            findings.append({'matrix':label,'radius':r,'max_normalized_entry_including_sensitivity':entry,
++                'relative_frobenius_including_sensitivity':fro,
++                'whitened_spectral_including_sensitivity':white,'ranks':ranks,'pass':bool(ok)})
++        for r in range(3):
++            for t in range(r+1,3):
++                entry=float(np.max(norm[5*r:5*r+5,5*t:5*t+5]))
++                ok=entry<=.005;passed &=ok
++                findings.append({'matrix':label,'cross_radii':[r,t],
++                                 'max_normalized_entry_including_sensitivity':entry,'pass':bool(ok)})
++    return bool(passed),findings
++
++
++def fixture(packet,deadline,output):
++    """Changed route on original smooth signed/duplicate-position fixture."""
++    x=np.array([[0,0,0],[1,0,0],[0,1,0],[0,0,1],[1,1,0],
++                [0,0,0],[1,0,1],[0,1,1]],float)
++    n=np.array([[1,1,1],[1,0,1],[0,1,1],[1,1,0],[-1,1,1],
++                [1,1,1],[1,-1,1],[1,1,-1]],float)
++    n/=np.linalg.norm(n,axis=1)[:,None]
++    jg=np.array([-.7,-.8,-.9,-.65,-1.1,-.75,-.95,-.85])
++    nonref=np.arange(1,8);refs=np.zeros(7,dtype=int)
++    L=np.array([[1,-2,0,.5,0,0,1],[-.5,0,1,0,2,0,-1],
++                [0,1,-1,0,0,2,.5],[1,0,0,-1,1,-1,0],
++                [0,.5,.4,.2,-.7,1,-.2]],float)
++    target,maps=fast.inventory([('fixture',53,32)])
++    coeff,unique,expansion,_,q=fast.coefficient_fields(L,nonref,refs,jg[:,None]*n,7)
++    scales,xs=fast.power_two_scales(x[nonref]);ts,forecast=fast.conservative_grid_admission(xs,target,scales)
++    def progress(eps,w,timing):
++        atomic_npz(output/f'FIXTURE_EPS_{eps:.0e}.npz',targets=target,window=w)
++    (lo,hi),timing,_=fast.run_pair(xs,ts,coeff,target,x,jg[:,None]*n,unique,expansion,
++                                  deadline,progress)
++    joints,_,_=fast.stage_from_windows(maps['fixture'],hi,np.zeros_like(hi.real),AMP)
++    pair=np.zeros((15,15))
++    K=np.zeros((5,8))
++    for p,i in enumerate(nonref):K[:,i]+=L[:,p];K[:,refs[p]]-=L[:,p]
+     for r in range(3):
+         for t in range(3):
+             for a in range(5):
+                 for b in range(5):
+                     def integrand(k):
+-                        smooth = math.exp(-.5*(k*s.RADII[r]/s.H)**2-.5*(k*s.RADII[t]/s.H)**2)
+-                        return float(s.power(k,amp))*smooth*pair_at(k)[a,b]/(2*math.pi**2)
+-                    val,_ = quad(integrand,*s.BANDS[0],epsrel=1e-10,epsabs=1e-12)
+-                    pair[5*r+a,5*t+b] = val
+-    delta = angular-pair
+-    scale = np.sqrt(np.maximum(np.diag(pair),0))
+-    demand(np.all(scale > 0), 'FIXTURE_ZERO_VARIANCE')
+-    fro = float(np.linalg.norm(delta)/np.linalg.norm(pair))
+-    entry = float(np.max(abs(delta)/np.outer(scale,scale)))
+-    demand(fro <= 1e-5 and entry <= 1e-6 and abs(pair[0,1]) > 0, f'FIXTURE_PAIR_KERNEL {fro} {entry}')
+-    # Paired and unpaired comparison, row permutation, simultaneous spatial rotation.
+-    first = s.gram(kk[8],paired,pwt,x,n,jg,L,nonref,refs)
+-    unpaired = s.gram(kk[8],pts,wt,x,n,jg,L,nonref,refs)
+-    demand(np.max(abs(first-unpaired)) <= 1e-11*np.max(abs(first)), 'PAIRED_UNPAIRED')
+-    perm = np.array([3,5,1,7,2,0,6,4])
+-    inv = np.argsort(perm)
+-    permuted = s.gram(kk[8],paired,pwt,x[perm],n[perm],jg[perm],L,inv[nonref],inv[refs])
+-    demand(np.max(abs(first-permuted)) <= 1e-11*np.max(abs(first)), 'FIXTURE_ROW_PERMUTATION')
+-    rot = np.array([[0,-1,0],[1,0,0],[0,0,1]])
+-    rotated = s.gram(kk[8],paired,pwt,x@rot.T,n@rot.T,jg,L,nonref,refs)
+-    demand(np.max(abs(first-rotated)) <= 1e-11*np.max(abs(first)), 'FIXTURE_ROTATION')
+-    scaled = s.joint_from_spectral(4*spectral,kk,wk,amp)
+-    demand(np.max(abs(scaled-4*angular)) <= 1e-11*np.max(abs(angular)), 'POWER_SCALING')
+-    sym, diag = s.matrix_diagnostics(angular)
+-    basis = np.array([np.diag([1,-1,0])/math.sqrt(2),np.diag([1,1,-2])/math.sqrt(6),
+-                      [[0,1/math.sqrt(2),0],[1/math.sqrt(2),0,0],[0,0,0]],
+-                      [[0,0,1/math.sqrt(2)],[0,0,0],[1/math.sqrt(2),0,0]],
+-                      [[0,0,0],[0,0,1/math.sqrt(2)],[0,1/math.sqrt(2),0]]])
+-    transformed = np.einsum('aij,ik,jl,bkl->ab',basis,rot,rot,basis)
+-    block = sym[:5,:5]
+-    covariance_rotated = transformed @ block @ transformed.T
+-    tensor=np.einsum('ab,aij,bkl->ijkl',block,basis,basis)
+-    tensor_rotated=np.einsum('ip,jq,kr,ls,pqrs->ijkl',rot,rot,rot,rot,tensor)
+-    tensor_from_coeff=np.einsum('ab,aij,bkl->ijkl',covariance_rotated,basis,basis)
+-    demand(np.max(abs(transformed@transformed.T-np.eye(5))) <= 1e-12 and
+-           np.max(abs(tensor_rotated-tensor_from_coeff)) <= 1e-11*np.max(abs(tensor)) and
+-           np.max(abs(covariance_rotated-covariance_rotated.T)) <= 1e-11*np.max(abs(block)),
+-           'STF_BASIS_ROTATION')
+-    demand(time.monotonic() < deadline, 'CONTROL_DEADLINE')
+-    return {'pair_relative_frobenius':fro, 'pair_max_normalized_entry':entry,
+-            'joint_minimum_eigenvalue':diag['minimum_eigenvalue'],
+-            'paired_unpaired_max_abs':float(np.max(abs(first-unpaired))),
+-            'rotation_matrix':transformed.tolist(),
+-            'pair_band1_r10':pair[5:10,5:10].tolist(),
+-            'angular_band1_r10':angular[5:10,5:10].tolist()}
+-
+-
+-def source_data(bindings):
+-    p = {k:v['path'] for k,v in bindings['immutable_numeric_inputs'].items()}
+-    with np.load(p['corrected_factor'],allow_pickle=False) as z:
+-        factor = {k:z[k] for k in z.files}
+-    with np.load(p['selected_source'],allow_pickle=False) as z:
+-        ids,zobs,n,method = (z[k] for k in ('group_id','z_CMB','n_J2000','method_family'))
+-    with open(p['corrected_result']) as f:
+-        result = json.load(f)
+-    demand(ids.shape == (35970,) and n.shape == (35970,3), 'SOURCE_SHAPE')
+-    demand(s.sha256(p['selected_source']) == bindings['immutable_numeric_inputs']['selected_source']['sha256'], 'SOURCE_SHA')
+-    demand(__import__('hashlib').sha256(np.asarray(ids,dtype='<i8').tobytes()).hexdigest() ==
+-           'f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88', 'ID_ORDER_SHA')
+-    demand(np.array_equal(ids,factor['group_id']) and np.all(np.isfinite(zobs)) and
+-           np.all((zobs > 0) & (zobs <= .5)) and np.all(np.isfinite(n)) and
+-           np.max(abs(np.linalg.norm(n,axis=1)-1)) <= 2e-13, 'SOURCE_DOMAINS')
+-    return {'ids':ids,'z':zobs,'n':n,'method':method,'factor':factor,'result':result,
+-            'carrier_path':p['inherited_carrier']}
+-
+-
+-def stage(order, radial_n, name, data, amp, background, output, deadline, timing):
+-    f = data['factor']
+-    _,_,paired,pwt = s.angular_rule(order)
+-    positions = background[0][:,None]*data['n']
+-    jg = background[1]*background[2]
+-    matrices=[]; joints=[]
+-    for bi,(lo,hi) in enumerate(s.BANDS):
+-        k,radial = s.cc_rule(radial_n,lo,hi)
+-        spectral=[]
+-        for node,kk in enumerate(k):
+-            path = output/'spectral'/f'o{order}_b{bi}_k{float(kk).hex()}.npz'
+-            if path.exists():
+-                with np.load(path,allow_pickle=False) as z:
+-                    matrix=z['A']
+-            else:
+-                start=time.monotonic()
+-                matrix=s.gram(kk,paired,pwt,positions,data['n'],jg,f['L_binary64'],
+-                              f['nonreference_row_index'],f['difference_reference_row_index'])
+-                demand(np.all(np.isfinite(matrix)), f'NONFINITE_SPECTRAL {order} {bi} {node}')
+-                sample_u=paired[:4]
+-                phase=positions@sample_u.T
+-                amplitude=jg[:,None]*(data['n']@sample_u.T)
+-                signal=amplitude*np.exp(1j*kk*phase)
+-                sample_w=f['L_binary64']@(signal[f['nonreference_row_index']]-
+-                                           signal[f['difference_reference_row_index']])
+-                atomic_npz(path,A=matrix,k=np.array(kk),order=np.array(order),band=np.array(bi),
+-                           sample_u=sample_u,sample_w=sample_w)
+-                timing.append({'order':order,'band':bi,'node':node,'seconds':time.monotonic()-start,
+-                               'directions':len(pwt),'path':str(path)})
+-                atomic_json(output/'PROGRESS.json',{'last_completed_spectral':timing[-1],
+-                            'completed_spectral_count':len(timing),'stage':name,'utc_unix':time.time()})
+-                # Forecast all still-declared mandatory work, using actual measured rate.
+-                if len(timing) >= 3:
+-                    rates=[t['seconds']/t['directions'] for t in timing]
+-                    conservative=max(np.median(rates)*1.25,max(rates[-3:]))
+-                    mandatory=0
+-                    for oo,nn in ((35,16),(53,32)):
+-                        directions={35:217,53:487}[oo]
+-                        for bb in (0,1):
+-                            nodes,_=s.cc_rule(nn,*s.BANDS[bb])
+-                            for jj in range(nn+1):
+-                                key=output/'spectral'/f'o{oo}_b{bb}_k{float(nodes[jj]).hex()}.npz'
+-                                if not key.exists():
+-                                    mandatory += directions
+-                    forecast=mandatory*conservative + 8
+-                    if forecast > deadline-time.monotonic():
+-                        raise Hold(f'BUDGET_CONVERGENCE_HOLD forecast={forecast:.3f} remaining={deadline-time.monotonic():.3f}')
+-            spectral.append(matrix)
+-            if time.monotonic() > deadline:
+-                raise Hold(f'BUDGET_CONVERGENCE_HOLD deadline after spectral {order} {bi} {node}')
+-        a=np.stack(spectral)
+-        joint,diag=s.matrix_diagnostics(s.joint_from_spectral(a,k,radial,amp))
+-        matrices.append((k,radial,a))
+-        joints.append(joint)
+-    both,diag=s.matrix_diagnostics(joints[0]+joints[1])
+-    atomic_npz(output/f'STAGE_{name}.npz',band1=joints[0],band2=joints[1],total=both,
+-               k1=matrices[0][0],w1=matrices[0][1],A1=matrices[0][2],
+-               k2=matrices[1][0],w2=matrices[1][1],A2=matrices[1][2])
+-    atomic_json(output/f'STAGE_{name}.json',{'order':order,'radial_intervals':radial_n,
+-                'joint_diagnostics':diag,'source':'conditional band-PV component'})
+-    return joints
+-
+-
+-def summarize(joints, basis):
+-    results=[]
+-    for joint in (joints[0],joints[1],joints[0]+joints[1]):
+-        blocks=joint.reshape(3,5,3,5).transpose(0,2,1,3)
+-        corr=joint/np.outer(np.sqrt(np.diag(joint)),np.sqrt(np.diag(joint)))
+-        tensor=np.empty((3,3,3,3,3,3))
+-        for r in range(3):
+-            for t in range(3):
+-                tensor[r,t]=np.einsum('ab,aij,bkl->ijkl',blocks[r,t],basis,basis)
+-        eig=[]
+-        for r in range(3):
+-            val,vec=np.linalg.eigh(blocks[r,r])
+-            for col in range(vec.shape[1]):
+-                pivot=np.argmax(abs(vec[:,col]))
+-                if vec[pivot,col] < 0:vec[:,col]*=-1
+-            eig.append({'eigenvalues':val.tolist(),'signed_eigenvectors_columns':vec.tolist(),
+-                        'basis_labels':s.BASIS_LABELS})
+-        results.append((blocks,corr,tensor,eig))
+-    return results
++                        smooth=math.exp(-.5*(k*s.RADII[r]/s.H)**2-.5*(k*s.RADII[t]/s.H)**2)
++                        mat=(jg[:,None]*jg[None,:])*s.pair_kernel(k,x,n)
++                        return float(s.power(k,AMP))*smooth*(K@mat@K.T)[a,b]/(2*math.pi**2)
++                    pair[5*r+a,5*t+b]=quad(integrand,*s.BANDS[0],epsrel=1e-10,epsabs=1e-12)[0]
++    scale=np.sqrt(np.diag(pair));demand(np.all(scale>0),'FIXTURE_ZERO_VARIANCE')
++    delta=joints[0]-pair
++    fro=float(np.linalg.norm(delta)/np.linalg.norm(pair))
++    entry=float(np.max(abs(delta)/np.outer(scale,scale)))
++    demand(fro<=1e-5 and entry<=1e-6 and abs(pair[0,1])>0,
++           f'FIXTURE_BESSEL_HOLD {fro} {entry}')
++    k=maps['fixture'][0]['k'][8];u=maps['fixture'][0]['directions'][:4]
++    for direction in u:
++        key=(float(k).hex(),*(float(v).hex() for v in direction))
++        index=next(i for i,(kk,*vv) in enumerate(target)
++                   if (float(kk).hex(),*(float(v).hex() for v in vv))==key)
++        direct,_=direct_oracle(k,direction,x,n,jg,L,nonref,refs)
++        demand(np.linalg.norm(hi[index]-direct)<=1e-8*max(np.linalg.norm(direct),1e-30),
++               'FIXTURE_PHASE_SIGN_SCALING_HOLD')
++    def small_eval(xx,nn,jjg,ll,nr,rr,directions):
++        targets=np.column_stack((np.full(len(directions),k),directions))
++        cc,un,ex,_,_=fast.coefficient_fields(ll,nr,rr,jjg[:,None]*nn,7)
++        ss,xsmall=fast.power_two_scales(xx[nr]);tt,_=fast.conservative_grid_admission(xsmall,targets,ss)
++        (small_lo,small_hi),_,_=fast.run_pair(xsmall,tt,cc,targets,xx,jjg[:,None]*nn,
++                                              un,ex,deadline,lambda *_:None)
++        return small_lo,small_hi
++    _,baseline=small_eval(x,n,jg,L,nonref,refs,u)
++    _,antipodal=small_eval(x,n,jg,L,nonref,refs,-u)
++    demand(np.max(abs(antipodal-baseline.conj()))<=1e-9*max(np.max(abs(baseline)),1e-30),
++           'FIXTURE_ANTIPODAL_HOLD')
++    perm=np.array([3,5,1,7,2,0,6,4]);inv=np.argsort(perm)
++    _,permuted=small_eval(x[perm],n[perm],jg[perm],L,inv[nonref],inv[refs],u)
++    demand(np.max(abs(permuted-baseline))<=1e-9*max(np.max(abs(baseline)),1e-30),
++           'FIXTURE_PERMUTATION_HOLD')
++    rot=np.array([[0,-1,0],[1,0,0],[0,0,1]],float)
++    _,rotated=small_eval(x@rot.T,n@rot.T,jg,L,nonref,refs,u@rot.T)
++    demand(np.max(abs(rotated-baseline))<=1e-9*max(np.max(abs(baseline)),1e-30),
++           'FIXTURE_ROTATION_HOLD')
++    _,scaled=small_eval(x,n,2*jg,L,nonref,refs,u)
++    demand(np.max(abs(scaled-2*baseline))<=1e-9*max(np.max(abs(baseline)),1e-30),
++           'FIXTURE_SCALING_HOLD')
++    pts,wt,paired,pwt=s.angular_rule(53)
++    _,full=small_eval(x,n,jg,L,nonref,refs,pts)
++    _,paired_windows=small_eval(x,n,jg,L,nonref,refs,paired)
++    paired_gram=np.einsum('t,ta,tb->ab',pwt/(4*math.pi),
++                          paired_windows,paired_windows.conj()).real
++    full_gram=np.einsum('t,ta,tb->ab',wt/(4*math.pi),full,full.conj()).real
++    demand(np.max(abs(paired_gram-full_gram))<=1e-9*max(np.max(abs(full_gram)),1e-30),
++           'FIXTURE_PAIRED_UNPAIRED_HOLD')
++    sym,diag=s.matrix_diagnostics(joints[0]+joints[1])
++    demand(time.monotonic()<deadline,'BUDGET_CONVERGENCE_HOLD fixture')
++    return {'bessel_relative_frobenius':fro,'bessel_max_normalized_entry':entry,
++            'joint_diagnostics':diag,'transform_timing':timing,'grid_forecast':forecast,
++            'paired_unpaired_max_abs':float(np.max(abs(paired_gram-full_gram))),
++            'permutation_max_abs':float(np.max(abs(permuted-baseline))),
++            'rotation_max_abs':float(np.max(abs(rotated-baseline))),
++            'antipodal_max_abs':float(np.max(abs(antipodal-baseline.conj()))),
++            'scaling_max_abs':float(np.max(abs(scaled-2*baseline)))}
+ 
+ 
+ def main():
+-    parser=argparse.ArgumentParser()
+-    parser.add_argument('--input',required=True)
++    parser=argparse.ArgumentParser();parser.add_argument('--input',required=True)
+     args=parser.parse_args()
+-    with open(args.input) as f:
+-        packet=json.load(f)
+-    output=Path(packet['output_dir'])
+-    output.mkdir(parents=True,exist_ok=True)
+-    (output/'spectral').mkdir(exist_ok=True)
+-    deadline=float(os.environ['R30_CHILD_DEADLINE_MONOTONIC'])
+-    timing=[]
++    packet=json.loads(Path(args.input).read_text())
++    output=Path(packet['output_dir']);output.mkdir(parents=True,exist_ok=True)
++    deadline=float(os.environ['R32_CHILD_DEADLINE_MONOTONIC'])
+     status={'status':'STARTED','scientific_admission':False,'original_H02_H04':'HOLD',
++            'global_rigorous_type3_error_enclosure':'NOT_ESTABLISHED',
+             'component':'conditional fixed-band five-coordinate apparent STF error only'}
+     try:
+-        demand(packet.get('controller_go') is True, 'MISSING_CONTROLLER_GO')
+-        bindings=json.load(open(packet['input_bindings']))
+-        demand(s.sha256(packet['input_bindings']) == packet['input_bindings_sha256'], 'BINDINGS_SHA')
+-        s.verify_bindings(bindings)
+-        data=source_data(bindings)
+-        amp,norm=s.power_amplitude()
+-        control,background=controls(data,amp,norm,deadline)
+-        atomic_json(output/'CONTROLS.json',control)
+-        a=stage(35,16,'A',data,amp,background,output,deadline,timing)
+-        b=stage(53,16,'B',data,amp,background,output,deadline,timing)
+-        c=stage(53,32,'C',data,amp,background,output,deadline,timing)
+-        angular_ok,angular_findings=s.convergence(a,b)
+-        radial_ok,radial_findings=s.convergence(b,c)
+-        status.update({'angular_A_B':angular_findings,'radial_B_C':radial_findings,
+-                       'angular_A_B_pass':angular_ok,'radial_B_C_pass':radial_ok})
+-        if not radial_ok:
+-            raise Hold('RADIAL_CONVERGENCE_HOLD')
+-        final=c; final_stage='C'; refinement=None; d=None
++        demand(packet.get('controller_go') is True,'MISSING_CONTROLLER_GO')
++        bindings=json.loads(Path(packet['input_bindings']).read_text())
++        demand(digest(packet['input_bindings'])==packet['input_bindings_sha256'],
++               'INPUT_BINDINGS_SHA')
++        data=source_data(bindings);prior,saved=prior_controls(packet)
++        c,g,j,*_=s.background(data['z'],64)
++        n=data['n'];positions=c[:,None]*n;jg=j*g;b=jg[:,None]*n
++        f=data['factor'];L=f['L_binary64'];nonref=f['nonreference_row_index']
++        refs=f['difference_reference_row_index']
++        # Exact indexing/cancellation on the saved Ddiff, including zero rows.
++        demand(np.array_equal(data['ids'][nonref],f['group_id'][nonref]) and
++               np.all(np.isfinite(positions)),'POSITION_OR_DDIFF_INDEX')
++        support=f['selected_support_7']
++        channel_i=np.argmax(support[nonref],axis=1)
++        channel_r=np.argmax(support[refs],axis=1)
++        offsets=np.arange(7.,dtype=float)
++        demand(np.all(np.sum(support[nonref],axis=1)==1) and
++               np.all(np.sum(support[refs],axis=1)==1) and
++               np.array_equal(channel_i,channel_r) and
++               np.array_equal(channel_i,f['nonreference_channel']) and
++               np.array_equal(refs,f['reference_row_by_channel'][channel_i]) and
++               np.array_equal(offsets[channel_i]-offsets[channel_r],np.zeros(len(nonref))),
++               'SEVEN_CHANNEL_ADDITIVE_ZERO_CANCELLATION')
++        coeff,unique,expansions,exp_evidence,q=fast.coefficient_fields(L,nonref,refs,b)
++        atomic_json(output/'EXACT_REFERENCE_SUMS.json',{'sums':exp_evidence,
++                    'all_five_by_three_fields':True,'nonreference_columns':len(nonref)})
++        stages=[('A',35,16),('B',53,16),('C',53,32)]
++        target,maps=fast.inventory(stages)
++        scales,xscaled=fast.power_two_scales(positions[nonref])
++        tcols,forecast=fast.conservative_grid_admission(xscaled,target,scales)
++        atomic_json(output/'TARGET_INVENTORY.json',{'target_count':len(target),
++                    'stages':[(a,b,c) for a,b,c in stages], 'power_two_scale':scales.tolist(),
++                    'forecast':forecast,'eps_requests':list(fast.EPS)})
++        atomic_npz(output/'TARGETS.npz',targets=target,
++                   **{f'{name}_band{bi}_indices':v['target_indices']
++                      for name,group in maps.items() for bi,v in enumerate(group)})
++        def progress(eps,w,timing):
++            atomic_npz(output/f'WINDOWS_EPS_{eps:.0e}.npz',targets=target,window=w)
++            atomic_json(output/'PROGRESS.json',{'completed_eps':eps,'timing':timing,
++                'utc_unix':time.time(),'target_count':len(target),'all_five':True})
++            if eps==fast.EPS[0]:
++                remaining=deadline-time.monotonic()
++                projected=2.5*timing['seconds']+12
++                demand(projected<=remaining,
++                       f'BUDGET_CONVERGENCE_HOLD high_eps_forecast={projected} remaining={remaining}')
++        (low,high),transform_timing,reference=fast.run_pair(
++            xscaled,tcols,coeff,target,positions,b,unique,expansions,deadline,progress)
++        roundoff,roundmeta=fast.roundoff_envelope(target,positions,coeff,q,b,unique,
++                                                   expansions,reference,high)
++        sensitivity=10*abs(high-low)+roundoff
++        atomic_npz(output/'SENSITIVITY.npz',targets=target,roundoff=roundoff,
++                   sensitivity=sensitivity,low=low,high=high)
++        stage_results={}
++        for name,order,radial in stages:
++            joints,bounds,spectra=fast.stage_from_windows(maps[name],high,sensitivity,AMP)
++            atomic_npz(output/f'STAGE_{name}.npz',band1=joints[0],band2=joints[1],
++                       total=joints[0]+joints[1],bound1=bounds[0],bound2=bounds[1],
++                       A1=spectra[0][0],A2=spectra[1][0],
++                       BA1=spectra[0][1],BA2=spectra[1][1],
++                       k1=maps[name][0]['k'],k2=maps[name][1]['k'],
++                       w1=maps[name][0]['radial_weights'],w2=maps[name][1]['radial_weights'])
++            diagnostics=support_and_bounds(joints,bounds)
++            stage_results[name]=(joints,bounds,spectra,diagnostics)
++            atomic_json(output/f'STAGE_{name}.json',{'order':order,'radial_intervals':radial,
++                         'diagnostics':diagnostics,'full_5x5_and_15x15':True})
++        method_direct=direct_controls(target,maps,high,low,roundoff,saved,
++                                       positions,n,jg,L,nonref,refs)
++        atomic_json(output/'DIRECT_CONTROLS.json',method_direct)
++        a,ae,*_=stage_results['A'];bb,be,*_=stage_results['B'];cc,ce,*_=stage_results['C']
++        angular_ok,angular=bounded_convergence(a,bb,ae,be)
++        radial_ok,radial=bounded_convergence(bb,cc,be,ce)
++        status.update({'angular_A_B_pass':angular_ok,'radial_B_C_pass':radial_ok,
++                       'angular_A_B':angular,'radial_B_C':radial})
++        demand(radial_ok,'RADIAL_CONVERGENCE_HOLD')
++        final=cc; final_bound=ce; final_name='C';optional=None
+         if not angular_ok:
+-            rates=[t['seconds']/t['directions'] for t in timing if t['directions'] in (217,487)]
+-            if not rates:
+-                raise Hold('ANGULAR_CONVERGENCE_HOLD no timing for optional refinement')
+-            optional_forecast=727*33*2*max(np.median(rates)*1.25,max(rates[-3:]))+8
+-            if optional_forecast > deadline-time.monotonic():
+-                raise Hold(f'ANGULAR_CONVERGENCE_HOLD optional_D_forecast={optional_forecast:.3f} '
+-                           f'remaining={deadline-time.monotonic():.3f}')
+-            d=stage(65,32,'D',data,amp,background,output,deadline,timing)
+-            refinement,angular_findings=s.convergence(c,d)
+-            status.update({'angular_C_D':angular_findings,'angular_C_D_pass':refinement})
+-            if not refinement:
+-                raise Hold('ANGULAR_CONVERGENCE_HOLD')
+-            final=d;final_stage='D'
+-        summaries=summarize(final,data['factor']['STF_basis_5x3x3'])
+-        blocks=np.stack([v[0] for v in summaries]); corr=np.stack([v[1] for v in summaries])
+-        tensor=np.stack([v[2] for v in summaries])
+-        joint_values=[];joint_vectors=[]
+-        for joint in (final[0],final[1],final[0]+final[1]):
+-            values,vectors=np.linalg.eigh(joint)
+-            for col in range(vectors.shape[1]):
+-                pivot=np.argmax(abs(vectors[:,col]))
+-                if vectors[pivot,col] < 0:vectors[:,col]*=-1
+-            joint_values.append(values);joint_vectors.append(vectors)
+-        basis=data['factor']['STF_basis_5x3x3']
+-        with np.load(output/f'STAGE_{final_stage}.npz',allow_pickle=False) as final_spectral:
+-            spectra={key:final_spectral[key] for key in ('k1','w1','A1','k2','w2','A2')}
+-        stage_products={'joint_stage_A':np.stack(a),'joint_stage_B':np.stack(b),'joint_stage_C':np.stack(c)}
+-        if d is not None:stage_products['joint_stage_D']=np.stack(d)
+-        atomic_npz(output/'PRODUCT.npz',group_id=data['ids'],mixed_zero_leverage_mask=data['factor']['mixed_zero_leverage_mask'],
+-                   exact_zero_leverage_mask=data['factor']['exact_zero_leverage_mask'],
+-                   additional_zero_leverage_mask=data['factor']['extra_zero_leverage_mask'],
+-                   b_fact=np.asarray(data['result']['display_b_fact']),STF_basis_5x3x3=basis,
+-                   positions=background[0][:,None]*data['n'],n_J2000=data['n'],j=background[2],g=background[1],
+-                   band_joint=np.stack(final),total_joint=final[0]+final[1],
+-                   covariance_blocks=blocks,coordinate_correlations=corr,tensor_covariance=tensor,
+-                   joint_eigenvalues=np.stack(joint_values),joint_signed_eigenvectors=np.stack(joint_vectors),
++            remaining=deadline-time.monotonic()
++            predicted=2.5*sum(v['seconds'] for v in transform_timing)+12
++            demand(predicted<=remaining,
++                   f'ANGULAR_CONVERGENCE_HOLD optional_D_forecast={predicted} remaining={remaining}')
++            td,md=fast.inventory([('D',65,32)])
++            sd,xd=fast.power_two_scales(positions[nonref]);tt,fd=fast.conservative_grid_admission(xd,td,sd)
++            def dprogress(eps,w,timing):
++                atomic_npz(output/f'D_WINDOWS_EPS_{eps:.0e}.npz',targets=td,window=w)
++            (dl,dh),dt,dr=fast.run_pair(xd,tt,coeff,td,positions,b,unique,expansions,deadline,dprogress)
++            de,_=fast.roundoff_envelope(td,positions,coeff,q,b,unique,expansions,dr,dh)
++            dj,db,ds=fast.stage_from_windows(md['D'],dh,10*abs(dh-dl)+de,AMP)
++            ddiag=support_and_bounds(dj,db)
++            atomic_npz(output/'STAGE_D.npz',band1=dj[0],band2=dj[1],total=dj[0]+dj[1],
++                       bound1=db[0],bound2=db[1],A1=ds[0][0],A2=ds[1][0],
++                       BA1=ds[0][1],BA2=ds[1][1],k1=md['D'][0]['k'],k2=md['D'][1]['k'],
++                       w1=md['D'][0]['radial_weights'],w2=md['D'][1]['radial_weights'])
++            optional,findings=bounded_convergence(cc,dj,ce,db)
++            status.update({'angular_C_D_pass':optional,'angular_C_D':findings,
++                           'optional_D_transform_timing':dt,'optional_D_diagnostics':ddiag})
++            demand(optional,'ANGULAR_CONVERGENCE_HOLD')
++            final=dj;final_bound=db;final_name='D'
++        fixture_result=fixture(packet,deadline,output)
++        demand(time.monotonic()<deadline,'BUDGET_CONVERGENCE_HOLD closeout')
++        basis=f['STF_basis_5x3x3']
++        joints=(final[0],final[1],final[0]+final[1])
++        blocks=np.stack([m.reshape(3,5,3,5).transpose(0,2,1,3) for m in joints])
++        corr=np.stack([m/np.outer(np.sqrt(np.diag(m)),np.sqrt(np.diag(m))) for m in joints])
++        tensor=np.stack([np.einsum('rtab,aij,bkl->rtijkl',v,basis,basis) for v in blocks])
++        eig=[];vectors=[]
++        for matrix in joints:
++            values,vec=np.linalg.eigh(matrix)
++            for col in range(15):
++                pivot=np.argmax(abs(vec[:,col]))
++                if vec[pivot,col]<0:vec[:,col]*=-1
++            eig.append(values);vectors.append(vec)
++        atomic_npz(output/'PRODUCT.npz',group_id=data['ids'],positions=positions,
++                   n_J2000=n,j=j,g=g,STF_basis_5x3x3=basis,
++                   mixed_zero_leverage_mask=f['mixed_zero_leverage_mask'],
++                   exact_zero_leverage_mask=f['exact_zero_leverage_mask'],
++                   additional_zero_leverage_mask=f['extra_zero_leverage_mask'],
++                   b_fact=np.asarray(data['result']['display_b_fact']),
++                   band_joint=np.stack(final),total_joint=joints[2],
++                   band_sensitivity_bound=np.stack(final_bound),
++                   covariance_blocks=blocks,coordinate_correlations=corr,
++                   tensor_covariance=tensor,joint_eigenvalues=np.stack(eig),
++                   joint_signed_eigenvectors=np.stack(vectors),
+                    radii_hinv_mpc=s.RADII,bands_physical=np.asarray(s.BANDS),
+-                   angular_order=np.array(65 if d is not None else 53),
+-                   angular_rule_id=np.array('scipy.integrate.lebedev_rule'),
+-                   **spectra,**stage_products)
++                   angular_order=np.array(65 if final_name=='D' else 53),
++                   joint_stage_A=np.stack(a),joint_stage_B=np.stack(bb),
++                   joint_stage_C=np.stack(cc))
+         status.update({'status':'CONDITIONAL_NUMERICAL_PASS_PENDING_INDEPENDENT_REVIEW',
+-                       'final_stage':final_stage,'controls':control,'angular_A_B':angular_findings,
+-                       'radial_B_C':radial_findings,'optional_C_D_pass':refinement,
+-                       'eigensystems':[v[3] for v in summaries],
+-                       'joint_eigenbasis_labels':[f'R{r:g}:{label}' for r in s.RADII for label in s.BASIS_LABELS],
+-                       'full_tensor_images':{q:'UNDEFINED/HOLD' for q in ('x','F','Pi','Q','G_F')},
+-                       'source_bindings':bindings,'spectral_evaluations':timing,
+-                       'claim_ceiling':'declared conditional band-PV error component, no empirical total law or H02/H04 acceptance'})
+-        lines=['# R30 conditional band-PV numerical component','',
+-               'Fixed 35,970-row K_fact=L D_diff apparent STF error component; observed signed center is separate.',
+-               'EH98 no-wiggle fixed-parameter common Gaussian field, redshift-only inherited j; CMB observer metadata held fixed.',
+-               f'Final deterministic integration stage: {final_stage}. Angular A/B pass: {angular_ok}; radial B/C pass: {radial_ok}.',
+-               'Bands are q=[0.005,0.02] and [0.02,0.05] h/Mpc; smoothing radii 5,10,20 h^-1 Mpc.',
+-               'Full signed 5x5 blocks, 15x15 cross-smoothing matrices, correlations, rank diagnostics, and tensor covariance are in PRODUCT.npz.',
+-               '']
+-        for bi,label in enumerate(('B1','B2','B1+B2')):
+-            lines.append(f'## {label}')
+-            for r,rh in enumerate(s.RADII):
+-                ev=summaries[bi][3][r]['eigenvalues']
+-                vec=np.asarray(summaries[bi][3][r]['signed_eigenvectors_columns'])[:,-1]
+-                lines.append(f'R={rh:g}: eigenvalues '+', '.join(f'{v:.9g}' for v in ev))
+-                lines.append('  leading signed STF direction '+', '.join(f'{label}={v:.6g}' for label,v in zip(s.BASIS_LABELS,vec)))
+-            off=corr[bi].copy();np.fill_diagonal(off,0)
+-            lines.append(f'Maximum absolute off-diagonal 15x15 correlation: {np.max(abs(off)):.6g}')
+-            lines.append('')
+-        lines.extend(['x,F,Pi,Q,G_F: UNDEFINED/HOLD; missing physical response, total law, support, and denominator.',
+-                      'Original empirical H02/H04 acceptances remain HOLD. This component requires independent numeric review.',''])
+-        atomic_text(output/'REPORT.md','\n'.join(lines))
++                       'final_stage':final_name,'reused_controls_sha256':packet['reused_controls']['sha256'],
++                       'amplitude':AMP,'direct_controls':method_direct,'fixture':fixture_result,
++                       'roundoff':roundmeta,'transform_timing':transform_timing,
++                       'full_tensor_images':{v:'UNDEFINED/HOLD' for v in ('x','F','Pi','Q','G_F')},
++                       'claim_ceiling':'conditional finite band-PV component; no total law, physical tensor images, or original H02/H04 acceptance'})
+     except Exception as exc:
+         status.update({'status':'HOLD','first_failure':f'{type(exc).__name__}: {exc}'})
+         raise
+     finally:
+-        status['spectral_evaluations']=timing
+         status['utc_unix']=time.time()
+         atomic_json(output/'RESULT.json',status)
+ 
+ 
+-if __name__ == '__main__':
++if __name__=='__main__':
+     main()
+--- normalization_repair/runner.py
++++ fast_window/runner.py
+@@ -1,4 +1,4 @@
+-"""Single-use, controller-bound supervisor for R30. Import is inert."""
++"""Single-use R32 supervisor. Import is inert; active cap is controller sealed."""
+ from __future__ import annotations
+ 
+ import argparse
+@@ -13,7 +13,7 @@
+ 
+ ROOT = Path(__file__).resolve().parent
+ PYTHON = Path('/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python')
+-WALL = 245.0
++MAX_WALL = 190.0
+ CHILD_RESERVE = 5.0
+ RSS_CAP = 6 * 1024**3
+ MIN_AVAILABLE = 10 * 1024**3
+@@ -94,7 +94,8 @@
+     args=p.parse_args()
+     child=None; out=None;err=None
+     packet_path=Path(args.input).resolve()
+-    receipt={'status':'STARTED','utc_start_unix':utc_start,'wall_cap_seconds':WALL,
++    wall=MAX_WALL
++    receipt={'status':'STARTED','utc_start_unix':utc_start,'maximum_wall_cap_seconds':MAX_WALL,
+              'rss_cap_bytes':RSS_CAP,'command':[sys.executable,str(Path(__file__).resolve()),'--input',str(packet_path)],
+              'requested_runtime':'gpt-6-sol/high','observed_runtime':'UNKNOWN',
+              'original_H02_H04':'HOLD','scientific_admission':False}
+@@ -102,6 +103,10 @@
+     failure=None
+     try:
+         packet=json.loads(packet_path.read_text())
++        wall=float(packet['whole_command_cap_seconds'])
++        if not (0 < wall <= MAX_WALL and wall == packet['active_producer_cap_seconds']):
++            raise ValueError('sealed active cap must satisfy 0 < cap <= 190')
++        receipt['active_wall_cap_seconds']=wall
+         output=Path(packet['output_dir']).resolve()
+         if not output.is_relative_to(ROOT) or output == ROOT:
+             raise ValueError('output must be a child of owned directory')
+@@ -113,15 +118,48 @@
+             raise ValueError('one-use output directory is not empty; preserve the earlier run')
+         if packet.get('controller_go') is not True or packet.get('no_overlap_allocation_confirmed') is not True:
+             raise ValueError('controller GO or nonoverlap ACK absent')
++        if packet.get('task_id') != 'R30-CF4-BAND-PV-FULL-TENSOR-COVARIANCE' or \
++           packet.get('original_input_identity') != 'sha256:5da5fe9adeee84d6615cf9127a91ff5bccff6172e43716680ae0792ef480c5d3':
++            raise ValueError('original task/input identity mismatch')
++        if sha256(packet['method_contract_path']) != packet['method_contract_sha256'] or \
++           packet['method_contract_sha256'] != '8765ad540341080dbb6da3ec02a0cc9179447df45448b7a12245954c879b4706':
++            raise ValueError('R32 frozen method contract mismatch')
++        if sha256(packet['method_result_path']) != packet['method_result_sha256'] or \
++           packet['method_result_sha256'] != '066bb51d1b30364a788b1070b5c3d61ed97880436aa8a524d9c69a576b862b25':
++            raise ValueError('R32 research decision mismatch')
++        if sha256(packet['derived_execution_lineage_path']) != packet['derived_execution_lineage_sha256']:
++            raise ValueError('derived executable lineage mismatch')
++        if sha256(packet['controller_packet_path']) != packet['controller_packet_sha256']:
++            raise ValueError('controller packet SHA mismatch')
++        controller_packet=json.loads(Path(packet['controller_packet_path']).read_text())
++        if controller_packet.get('packet_id') != packet['packet_id'] or \
++           controller_packet.get('task_id') != packet['task_id']:
++            raise ValueError('controller packet content mismatch')
++        if sha256(packet['root_go_path']) != packet['root_go_sha256']:
++            raise ValueError('root GO record mismatch')
++        root_go=json.loads(Path(packet['root_go_path']).read_text())
++        if root_go.get('controller_go') is not True or \
++           root_go.get('packet_id') != packet['packet_id'] or \
++           root_go.get('task_id') != packet['task_id']:
++            raise ValueError('root GO content mismatch')
+         if packet.get('parent_task_id') != 'R26-CF4-FINAL-GROUP-CALIBRATION-RESPONSE':
+             raise ValueError('parent allocation identity mismatch')
+-        if packet.get('whole_command_cap_seconds') != WALL or packet.get('rss_cap_bytes') != RSS_CAP:
++        if packet.get('rss_cap_bytes') != RSS_CAP:
+             raise ValueError('frozen resource cap mismatch')
+         if packet.get('account_head_refreshed') is not True:
+             raise ValueError('same-account refresh absent')
+-        for name in ('runner.py','driver.py','science.py','independent_check.py'):
++        if sha256(packet['account_head_path']) != packet['account_head_sha256']:
++            raise ValueError('same-account head SHA mismatch')
++        for name in ('runner.py','driver.py','science.py','fast_science.py','independent_check.py'):
+             if sha256(ROOT/name) != packet['source_sha256'][name]:
+                 raise ValueError(f'bound source mismatch: {name}')
++        dependency=json.loads((ROOT/'DEPENDENCY.json').read_text())
++        if sha256(ROOT/'DEPENDENCY.json') != packet['dependency_manifest_sha256']:
++            raise ValueError('dependency manifest SHA mismatch')
++        if sha256(ROOT/'_deps/finufft-2.5.0.dist-info/RECORD') != dependency['installed_record_sha256']:
++            raise ValueError('installed FINUFFT distribution RECORD mismatch')
++        if sha256(ROOT/'_deps/finufft/libfinufft.so') != dependency['native_library_sha256']:
++            raise ValueError('installed FINUFFT native library mismatch')
+     except KeyError as exc:
+         failure=f'INVALID_PACKET_MISSING_{exc}'
+     except Exception as exc:
+@@ -135,10 +173,16 @@
+                 raise ValueError('packet sidecar SHA mismatch')
+             receipt['input_sha256']=expected
+             receipt['source_sha256']=packet['source_sha256']
++            receipt['method_contract_sha256']=packet['method_contract_sha256']
++            receipt['method_result_sha256']=packet['method_result_sha256']
++            receipt['derived_execution_lineage_sha256']=packet['derived_execution_lineage_sha256']
++            receipt['controller_packet_sha256']=packet['controller_packet_sha256']
++            receipt['root_go_sha256']=packet['root_go_sha256']
++            receipt['dependency_manifest_sha256']=packet['dependency_manifest_sha256']
+             receipt['account_head_sha256']=packet['account_head_sha256']
+             receipt['account_used_seconds_before']=packet['account_used_seconds_before']
+-            if packet['account_used_seconds_before']+WALL+60 > 600:
+-                raise ValueError('same-account cap lacks 245+60 seconds')
++            if packet['account_used_seconds_before']+wall+60 > 600:
++                raise ValueError('same-account cap lacks active producer plus independent 60 seconds')
+             headroom=available_bytes()
+             receipt['MemAvailable_before_bytes']=headroom
+             if headroom < MIN_AVAILABLE:
+@@ -148,7 +192,7 @@
+             env=os.environ.copy()
+             for key in ('OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS','NUMEXPR_NUM_THREADS','VECLIB_MAXIMUM_THREADS'):
+                 env[key]='1'
+-            env['R30_CHILD_DEADLINE_MONOTONIC']=str(began+WALL-CHILD_RESERVE)
++            env['R32_CHILD_DEADLINE_MONOTONIC']=str(began+wall-CHILD_RESERVE)
+             out=open(output/'stdout.log','wb');err=open(output/'stderr.log','wb')
+             cmd=[str(PYTHON),str(ROOT/'driver.py'),'--input',str(packet_path)]
+             receipt['child_command']=cmd
+@@ -160,7 +204,7 @@
+                 if peak > RSS_CAP:
+                     failure=f'RESOURCE_HOLD process_tree_RSS={peak}'
+                     break
+-                if time.monotonic() > began+WALL-CHILD_RESERVE:
++                if time.monotonic() > began+wall-CHILD_RESERVE:
+                     failure='BUDGET_CONVERGENCE_HOLD supervisor_deadline'
+                     break
+                 time.sleep(.1)
+@@ -173,6 +217,13 @@
+             fsync_path(output/'stdout.log');fsync_path(output/'stderr.log')
+             receipt['stdout_sha256']=sha256(output/'stdout.log')
+             receipt['stderr_sha256']=sha256(output/'stderr.log')
++            # FINUFFT can report a warning while returning a finite array.
++            # Keep both raw logs, and fail closed on any warning/clamped eps.
++            for log in ('stdout.log','stderr.log'):
++                diagnostic=(output/log).read_text(errors='replace').lower()
++                if any(token in diagnostic for token in ('warning', 'clamp', 'requested tolerance not')):
++                    failure=f'NUMERICAL_METHOD_ACCURACY_HOLD library_warning_in_{log}'
++                    receipt['library_warning_log']=log
+             result=output/'RESULT.json'
+             if result.exists():
+                 receipt['result_sha256']=sha256(result)
+@@ -196,7 +247,7 @@
+     receipt['elapsed_after_first_receipt_fsync_seconds']=time.monotonic()-began
+     receipt['conservative_charge_seconds']=receipt['elapsed_after_first_receipt_fsync_seconds']+1.0
+     receipt['whole_command_external_timing']='CONTROLLER_OBSERVATION_REQUIRED_INCLUDES_PYTHON_STARTUP_AND_FINAL_FSYNC'
+-    if receipt['conservative_charge_seconds'] > WALL:
++    if receipt['conservative_charge_seconds'] > wall:
+         failure='BUDGET_CONVERGENCE_HOLD conservative whole-command cap'
+         receipt['status']='HOLD';receipt['first_failure']=failure
+     write_receipt(output/'RUN_RECEIPT.json',receipt)
+--- normalization_repair/independent_check.py
++++ fast_window/independent_check.py
+@@ -1,8 +1,7 @@
+-"""Read-only R30 numeric checker; does not import producer science functions.
+-
+-The fresh reviewer runs this once within its separate 60-second allocation.
+-It reconstructs saved spectral integrals and a few actual Fourier windows,
+-not the full catalogue angular calculation.
++"""Independent R32 reference checker for a fresh reviewer; inert at import.
++
++No producer science modules are imported. This checks a saved candidate, not
++re-running a full type-3 transform. The reviewer owns execution and verdict.
+ """
+ from __future__ import annotations
+ 
+@@ -12,133 +11,78 @@
+ import json
+ import math
+ from pathlib import Path
+-import signal
+ import time
+ 
+ import numpy as np
+ from scipy.integrate import quad
+ from scipy.special import spherical_jn
+ 
+-H=.6736
+-OM=.3153
+-OBHH=.02237
+-TCMB=2.7255
+-NS=.9649
+-RADII=np.array([5.,10.,20.])
+-
+-
+-def digest(path):
++H=.6736; OM=.3153; OBHH=.02237; NS=.9649; TCMB=2.7255
++RADII=np.array([5.,10.,20.]); BANDS=((.005*H,.02*H),(.02*H,.05*H))
++AMP=765245.0820764016
++
++
++def sha(path):
+     h=hashlib.sha256()
+     with open(path,'rb') as f:
+-        for b in iter(lambda:f.read(1<<20),b''):
+-            h.update(b)
++        for block in iter(lambda:f.read(1<<20),b''):h.update(block)
+     return h.hexdigest()
+ 
+ 
++def require(ok,detail):
++    if not bool(ok):raise ValueError(detail)
++
++
+ def transfer(k):
+-    omhh=OM*H*H
+-    fb=OBHH/omhh
+-    s=44.5*math.log(9.83/omhh)/math.sqrt(1+10*(omhh*fb)**.75)
+-    keq=.0746*omhh/(TCMB/2.7)**2
+-    alpha=1-.328*math.log(431*omhh)*fb+.38*math.log(22.3*omhh)*fb*fb
+-    gamma=omhh*(alpha+(1-alpha)/(1+(.43*k*s)**4))
+-    q=(k/(13.41*keq))*omhh/gamma
+-    l=math.log(2*2.718282+1.8*q)
+-    c=14.2+731/(1+62.5*q)
+-    return l/(l+c*q*q)
+-
+-
+-def power(k,amplitude):
+-    return amplitude*(k/.05)**NS*transfer(k)**2
+-
+-
+-def check(cond,label):
+-    if not cond:
+-        raise AssertionError(label)
+-
+-
+-def signed_exact_center(factor,result):
+-    L=factor['L_binary64']; y=factor['y_binary64']
+-    ii=factor['nonreference_row_index'];rr=factor['difference_reference_row_index']
+-    accum=[Fraction(0) for _ in range(5)]
+-    for p,(i,r) in enumerate(zip(ii,rr)):
+-        contrast=Fraction.from_float(float(y[i]))-Fraction.from_float(float(y[r]))
+-        if contrast:
+-            for a in range(5):
+-                value=float(L[a,p])
+-                if value:
+-                    accum[a] += Fraction.from_float(value)*contrast
+-    saved=[Fraction(int(v[0]),int(v[1])) for v in result['exact_b_fact']]
+-    check(accum == saved,'EXACT_CENTER_FACTOR_IDENTITY')
+-    check(np.allclose([float(v) for v in saved],result['display_b_fact'],rtol=0,atol=1e-16),
+-          'SIGNED_CENTER_DISPLAY')
+-    return [float(v) for v in accum]
+-
+-
+-def reconstruct(stage,amplitude):
+-    out=[]
+-    for bi in (1,2):
+-        aa=stage[f'A{bi}']; kk=stage[f'k{bi}']; ww=stage[f'w{bi}']
+-        total=np.zeros((15,15))
+-        for a,k,w in zip(aa,kk,ww):
+-            sr=np.exp(-.5*(k*RADII/H)**2)
+-            total+=w*power(float(k),amplitude)/(2*math.pi**2)*np.kron(np.outer(sr,sr),a)
+-        check(np.allclose(total,stage[f'band{bi}'],rtol=1e-11,atol=1e-17),
+-              f'SPECTRAL_RECONSTRUCTION_B{bi}')
+-        out.append(total)
+-    check(np.allclose(out[0]+out[1],stage['total'],rtol=1e-11,atol=1e-17),'SPECTRAL_TOTAL')
+-    return out
+-
+-
+-def compare_saved_stages(earlier,later):
+-    issues=[]
+-    for label in ('band1','band2','total'):
+-        old=earlier[label];new=later[label]
+-        check(np.all(np.diag(new)>0),f'CONVERGENCE_ZERO_DIAGONAL_{label}')
+-        scale=np.sqrt(np.diag(new))
+-        normalized=abs(new-old)/np.outer(scale,scale)
+-        if float(np.max(normalized)) > .005:issues.append((label,'entry',float(np.max(normalized))))
+-        for r in range(3):
+-            sl=slice(5*r,5*r+5)
+-            d=new[sl,sl]-old[sl,sl]
+-            relative=float(np.linalg.norm(d)/np.linalg.norm(new[sl,sl]))
+-            if relative > .003:issues.append((label,r,'frobenius',relative))
+-            eig,vec=np.linalg.eigh(new[sl,sl])
+-            old_eig=np.linalg.eigvalsh(old[sl,sl])
+-            ranks_new=[int(np.sum(eig>tol*eig[-1])) for tol in (1e-12,1e-10,1e-8)]
+-            ranks_old=[int(np.sum(old_eig>tol*old_eig[-1])) for tol in (1e-12,1e-10,1e-8)]
+-            if len(set(ranks_new)) != 1 or ranks_new != ranks_old:
+-                issues.append((label,r,'support',ranks_old,ranks_new));continue
+-            selected=eig>1e-10*eig[-1]
+-            root=(vec[:,selected]/np.sqrt(eig[selected]))@vec[:,selected].T
+-            whitened=float(np.linalg.norm(root@d@root,2))
+-            if whitened > .02:issues.append((label,r,'whitened',whitened))
+-    return issues
+-
+-
+-def partial_actual_windows(spectral_paths,factor,product):
+-    L=factor['L_binary64']; ii=factor['nonreference_row_index'];rr=factor['difference_reference_row_index']
+-    positions=product['positions'];n=product['n_J2000']; jg=product['j']*product['g']
+-    findings=[]
+-    for path in spectral_paths:
+-        with np.load(path,allow_pickle=False) as z:
+-            k=float(z['k']);directions=z['sample_u'];saved=z['sample_w']
+-        actual=np.empty_like(saved)
+-        for column,u in enumerate(directions):
+-            phase=np.einsum('ic,c->i',positions,u)
+-            velocity=np.einsum('ic,c->i',n,u)
+-            row=jg*velocity*(np.cos(k*phase)+1j*np.sin(k*phase))
+-            # A distinct scalar-direction contraction of the saved L D_diff.
+-            actual[:,column]=np.einsum('ap,p->a',L,row[ii]-row[rr])
+-        scale=max(1.,float(np.max(abs(saved))))
+-        deviation=float(np.max(abs(actual-saved)))
+-        check(deviation <= 2e-10*scale,f'ACTUAL_WINDOW_{path.name}')
+-        findings.append({'path':str(path),'maximum_absolute_difference':deviation})
+-    return findings
+-
+-
+-def pair_fixture(amplitude):
+-    # Fresh small-pair kernel, no producer function import or full-N^2 allocation.
++    k=np.asarray(k,float);omhh=OM*H**2;fb=OBHH/omhh;theta=TCMB/2.7
++    ss=44.5*np.log(9.83/omhh)/np.sqrt(1+10*(omhh*fb)**.75)
++    keq=.0746*omhh/theta**2
++    alpha=1-.328*np.log(431*omhh)*fb+.38*np.log(22.3*omhh)*fb**2
++    gamma=omhh*(alpha+(1-alpha)/(1+(.43*k*ss)**4))
++    q=k/(13.41*keq)*omhh/gamma
++    l0=np.log(2*2.718282+1.8*q);c0=14.2+731/(1+62.5*q)
++    return l0/(l0+c0*q*q)
++
++
++def power(k):return AMP*(np.asarray(k)/.05)**NS*transfer(k)**2
++
++
++def exact_reference_check(factor,reference):
++    L=factor['L_binary64'];rr=factor['difference_reference_row_index']
++    labels=np.unique(rr);reported=reference['sums']
++    require(len(reported)==5,'exact_reference_row_count')
++    for a in range(5):
++        for h,row in enumerate(labels):
++            total=sum((Fraction.from_float(float(v)) for v in L[a,rr==row]),Fraction())
++            item=reported[a][h]
++            require(item['row']==int(row) and
++                    total==Fraction(int(item['numerator_at_2_minus_1074']),1<<1074),
++                    'exact_reference_dyadic_mismatch')
++            terms=[Fraction.from_float(float.fromhex(v)) for v in item['expansion_hex']]
++            require(sum(terms,Fraction())==total,'exact_reference_expansion_mismatch')
++    return {'rows':labels.tolist(),'exact_5_by_reference':True}
++
++
++def direct(k,u,x,n,jg,L,nonref,refs):
++    xx=np.asarray(x,np.longdouble);uu=np.asarray(u,np.longdouble)
++    aa=np.asarray(jg,np.longdouble)*(np.asarray(n,np.longdouble)@uu)
++    pr=np.longdouble(k)*(xx[refs]@uu)
++    dp=np.longdouble(k)*((xx[nonref]-xx[refs])@uu)
++    signal=np.exp(np.clongdouble(1j)*pr)*(
++        (aa[nonref]-aa[refs])+aa[nonref]*np.expm1(np.clongdouble(1j)*dp))
++    ll=np.asarray(L,np.longdouble)
++    return np.asarray(ll@signal.real,float)+1j*np.asarray(ll@signal.imag,float)
++
++
++def pair_kernel(k,x,n):
++    sep=x[:,None,:]-x[None,:,:];radius=np.linalg.norm(sep,axis=2)
++    mu=n@n.T;z=k*radius;j2=spherical_jn(2,z)
++    shat=np.divide(sep,radius[:,:,None],out=np.zeros_like(sep),where=radius[:,:,None]>0)
++    ni=np.einsum('ic,ijc->ij',n,shat);nj=np.einsum('jc,ijc->ij',n,shat)
++    return (spherical_jn(0,z)+j2)*mu/3-j2*ni*nj
++
++
++def fixture_bessel(run):
+     x=np.array([[0,0,0],[1,0,0],[0,1,0],[0,0,1],[1,1,0],
+                 [0,0,0],[1,0,1],[0,1,1]],float)
+     n=np.array([[1,1,1],[1,0,1],[0,1,1],[1,1,0],[-1,1,1],
+@@ -149,121 +93,174 @@
+                 [0,1,-1,0,0,2,.5],[1,0,0,-1,1,-1,0],
+                 [0,.5,.4,.2,-.7,1,-.2]],float)
+     K=np.zeros((5,8))
+-    for p in range(7):
+-        K[:,p+1]+=L[:,p];K[:,0]-=L[:,p]
+-    delta=x[:,None,:]-x[None,:,:]
+-    length=np.linalg.norm(delta,axis=2)
+-    shat=np.divide(delta,length[:,:,None],out=np.zeros_like(delta),where=length[:,:,None]>0)
+-    dot=n@n.T
+-    ni=np.einsum('ic,ijc->ij',n,shat)
+-    nj=np.einsum('jc,ijc->ij',n,shat)
+-    left=K*jg[None]
+-    def kernel(k):
+-        j0=spherical_jn(0,k*length);j2=spherical_jn(2,k*length)
+-        return (j0+j2)*dot/3-j2*ni*nj
+-    entries=np.zeros((5,5))
+-    for a in range(5):
+-        for b in range(5):
+-            def integrand(k):
+-                smooth=math.exp(-(k*10/H)**2)
+-                return power(k,amplitude)*smooth*(left[a]@kernel(k)@left[b])/(2*math.pi**2)
+-            entries[a,b]=quad(integrand,.005*H,.02*H,epsrel=1e-10,epsabs=1e-12)[0]
+-    return entries
++    for p,i in enumerate(range(1,8)):K[:,i]+=L[:,p];K[:,0]-=L[:,p]
++    pair=np.zeros((15,15))
++    for r in range(3):
++        for t in range(3):
++            for a in range(5):
++                for b in range(5):
++                    def integrand(k):
++                        smooth=math.exp(-.5*(k*RADII[r]/H)**2-.5*(k*RADII[t]/H)**2)
++                        matrix=(jg[:,None]*jg[None,:])*pair_kernel(k,x,n)
++                        return float(power(k))*smooth*(K@matrix@K.T)[a,b]/(2*math.pi**2)
++                    pair[5*r+a,5*t+b]=quad(integrand,*BANDS[0],epsrel=1e-10,epsabs=1e-12)[0]
++    z=np.load(run/'FIXTURE_EPS_1e-12.npz',allow_pickle=False)
++    # The full fixture angular joint is saved in producer RESULT; the checker
++    # independently reconstructs its finite angular/radial sum from windows.
++    target=z['targets'];windows=z['window']
++    from scipy.integrate import lebedev_rule
++    pts,weights=lebedev_rule(53);pts=np.asarray(pts).T
++    from scipy.spatial import cKDTree
++    mates=cKDTree(pts).query(-pts)[1]
++    chosen=np.where(np.arange(len(pts))<mates)[0]
++    directions=pts[chosen];aw=2*np.asarray(weights)[chosen]/(4*math.pi)
++    index={(float(k).hex(),*(float(v).hex() for v in u)):i
++           for i,(k,*u) in enumerate(target)}
++    def cc32(lo,hi):
++        n=32;j=np.arange(n+1);theta=np.pi*j/n
++        w=np.empty(n+1);w[0]=w[-1]=1/(n*n-1)
++        interior=np.arange(1,n);v=np.ones(n-1)
++        for m in range(1,n//2):v-=2*np.cos(2*m*theta[interior])/(4*m*m-1)
++        v-=np.cos(n*theta[interior])/(n*n-1)
++        w[interior]=2*v/n
++        return (lo+hi)/2+(hi-lo)/2*np.cos(theta),w*(hi-lo)/2
++    k,wk=cc32(*BANDS[0]);joint=np.zeros((15,15))
++    for kval,rw in zip(k,wk):
++        ids=[index[(float(kval).hex(),*(float(v).hex() for v in u))] for u in directions]
++        v=windows[ids];A=np.einsum('t,ta,tb->ab',aw,v,v.conj()).real
++        smooth=np.exp(-.5*(kval*RADII/H)**2)
++        joint+=rw*float(power(kval))/(2*math.pi**2)*np.kron(np.outer(smooth,smooth),A)
++    scale=np.sqrt(np.diag(pair));require(np.all(scale>0),'fixture_nonpositive_scale')
++    fro=float(np.linalg.norm(joint-pair)/np.linalg.norm(pair))
++    entry=float(np.max(abs(joint-pair)/np.outer(scale,scale)))
++    require(fro<=1e-5 and entry<=1e-6,'fixture_Bessel_disagreement')
++    return {'relative_frobenius':fro,'maximum_normalized_entry':entry}
++
++
++def reconstruct(stage):
++    with np.load(stage,allow_pickle=False) as z:
++        out=[]
++        for b in (1,2):
++            A=z[f'A{b}'];k=z[f'k{b}'];weights=z[f'w{b}']
++            m=np.zeros((15,15))
++            for matrix,kk,w in zip(A,k,weights):
++                smooth=np.exp(-.5*(kk*RADII/H)**2)
++                m+=w*float(power(kk))/(2*math.pi**2)*np.kron(np.outer(smooth,smooth),matrix)
++            require(np.allclose(m,z[f'band{b}'],rtol=1e-12,atol=1e-12),
++                    'spectral_to_joint_disagreement')
++            out.append(m)
++        require(np.allclose(out[0]+out[1],z['total'],rtol=1e-12,atol=1e-12),
++                'joint_sum_disagreement')
++        return out
++
++
++def numerical_gates(run,result):
++    with np.load(run/'SENSITIVITY.npz',allow_pickle=False) as z:
++        hi=z['high'];lo=z['low'];roundoff=z['roundoff'];sens=z['sensitivity']
++        require(hi.shape==lo.shape==roundoff.shape==sens.shape and hi.shape[1]==5,
++                'full_window_shape')
++        require(np.all(np.isfinite(hi)) and np.all(np.isfinite(lo)) and
++                np.all(np.isfinite(sens)) and np.all(sens>=10*abs(hi-lo)),
++                'window_sensitivity_identity')
++    stages={}
++    names=('A','B','C')+ (('D',) if result['final_stage']=='D' else ())
++    for name in names:
++        with np.load(run/f'STAGE_{name}.npz',allow_pickle=False) as z:
++            joints=[z['band1'],z['band2']]
++            bounds=[z['bound1'],z['bound2']]
++            stages[name]=(joints,bounds)
++            for matrix,bound in zip(joints,bounds):
++                require(matrix.shape==bound.shape==(15,15),'full_joint_shape')
++                require(np.max(abs(matrix-matrix.T))<=1e-12*np.trace(matrix),
++                        'pre_symmetry_gate')
++                require(np.linalg.eigvalsh((matrix+matrix.T)/2)[0]>=-1e-12*np.trace(matrix),
++                        'joint_PSD_gate')
++            for matrix,bound in zip((joints[0],joints[1],joints[0]+joints[1]),
++                                    (bounds[0],bounds[1],bounds[0]+bounds[1])):
++                sd=np.sqrt(np.diag(matrix));require(np.all(sd>0),'positive_diagonal_gate')
++                require(np.max(bound/np.outer(sd,sd))<=5e-5,'joint_sensitivity_gate')
++                for r in range(3):
++                    sl=slice(5*r,5*r+5);sub=matrix[sl,sl];bb=bound[sl,sl]
++                    eig,vec=np.linalg.eigh(sub);support=eig>1e-10*eig[-1]
++                    require(np.any(support),'support_empty_gate')
++                    root=(vec[:,support]/np.sqrt(eig[support]))@vec[:,support].T
++                    require(np.linalg.norm(bb)/np.linalg.norm(sub)<=3e-5 and
++                            np.linalg.norm(abs(root)@bb@abs(root),2)<=2e-4,
++                            'diagonal_sensitivity_gate')
++    pairs=(('A','B'),('B','C'))+ ((('C','D'),) if result['final_stage']=='D' else ())
++    for early,late in pairs:
++        enforced=(early!='A' or result['angular_A_B_pass'] is True)
++        (old,eo),(new,en)=stages[early],stages[late]
++        allold=(old[0],old[1],old[0]+old[1]);allnew=(new[0],new[1],new[0]+new[1])
++        alleo=(eo[0],eo[1],eo[0]+eo[1]);allen=(en[0],en[1],en[0]+en[1])
++        for A,B,EA,EB in zip(allold,allnew,alleo,allen):
++            D=B-A;E=EA+EB;sd=np.sqrt(np.diag(B))
++            if not enforced:
++                continue
++            require(not enforced or np.max((abs(D)+E)/np.outer(sd,sd))<=.005,
++                    'joint_convergence_gate')
++            for r in range(3):
++                sl=slice(5*r,5*r+5);old5=A[sl,sl];new5=B[sl,sl]
++                eig,vec=np.linalg.eigh(new5);oe=np.linalg.eigvalsh(old5)
++                ranks=[int(np.sum(eig>t*eig[-1])) for t in (1e-12,1e-10,1e-8)]
++                oldr=[int(np.sum(oe>t*oe[-1])) for t in (1e-12,1e-10,1e-8)]
++                require(not enforced or (len(set(ranks))==1 and ranks==oldr),
++                        'numerical_support_gate')
++                support=eig>1e-10*eig[-1]
++                root=(vec[:,support]/np.sqrt(eig[support]))@vec[:,support].T
++                require(not enforced or (np.linalg.norm(D[sl,sl])+np.linalg.norm(E[sl,sl]))/
++                        np.linalg.norm(new5)<=.003,'frobenius_convergence_gate')
++                require(not enforced or np.linalg.norm(root@D[sl,sl]@root,2)+
++                        np.linalg.norm(abs(root)@E[sl,sl]@abs(root),2)<=.02,
++                        'whitened_convergence_gate')
++    require(result['radial_B_C_pass'] is True and
++            (result['angular_A_B_pass'] is True or
++             (result['final_stage']=='D' and result['angular_C_D_pass'] is True)),
++            'reported_mandatory_convergence')
++    return {'mandatory_A_B_C_full_15x15_gates':True,'targets':len(hi)}
+ 
+ 
+ def main():
+-    p=argparse.ArgumentParser()
+-    p.add_argument('--input',required=True,help='controller packet used by numerical command')
+-    p.add_argument('--output',required=True,help='read-only numerical product directory')
+-    p.add_argument('--max-seconds',type=int,default=55)
+-    args=p.parse_args()
+-    if args.max_seconds > 55 or args.max_seconds <= 0:
+-        raise ValueError('review checker must reserve finalization inside 60 seconds')
+-    signal.signal(signal.SIGALRM,lambda *_: (_ for _ in ()).throw(TimeoutError('review checker time cap')))
+-    signal.alarm(args.max_seconds)
+-    began=time.monotonic()
+-    packet=json.load(open(args.input));bindings=json.load(open(packet['input_bindings']))
+-    review=bindings['read_only_evidence']['exact_factor_independent_review']
+-    for item in (bindings['contract'],*bindings['immutable_numeric_inputs'].values(),review):
+-        check(digest(item['path'])==item['sha256'],'IMMUTABLE_SHA_'+Path(item['path']).name)
+-    reviewed=json.load(open(review['path']))
+-    check(reviewed['status']=='SCOPED_PASS_EXACT_FACTOR_METADATA_AND_ACTUAL_RESULT_CLOSEOUT' and
+-          reviewed['candidate_identity']=='sha256:'+bindings['immutable_numeric_inputs']['corrected_result']['sha256'],
+-          'EXACT_FACTOR_CLOSEOUT')
+-    paths={k:v['path'] for k,v in bindings['immutable_numeric_inputs'].items()}
+-    with np.load(paths['corrected_factor'],allow_pickle=False) as z:
+-        factor={key:z[key] for key in z.files}
+-    with np.load(paths['selected_source'],allow_pickle=False) as z:
+-        ids=z['group_id']
+-    with open(paths['corrected_result']) as f: result=json.load(f)
+-    check(np.array_equal(ids,factor['group_id']),'GROUP_ID_PARITY')
+-    check(hashlib.sha256(np.asarray(ids,dtype='<i8').tobytes()).hexdigest()==
+-          'f54706b8ff5c50c25a5a74c4b153f7f9e719a28582db044e00e5930dd30e3c88','ID_SHA')
+-    check(int(np.sum(factor['mixed_zero_leverage_mask']))==944 and
+-          int(np.sum(factor['exact_zero_leverage_mask']))==945 and
+-          bool(factor['exact_zero_leverage_mask'][1484]),'CORRECTED_MASKS')
+-    center=signed_exact_center(factor,result)
+-    output=Path(args.output)
+-    controls=json.load(open(output/'CONTROLS.json'))
+-    for k,v in zip(controls['transfer_spots_k_mpc_inv'],controls['transfer_spots']):
+-        check(abs(transfer(float(k))-v) <= 1e-13,'TRANSFER_SPOT')
+-    amp=float(controls['amplitude'])
+-    result_numeric=json.load(open(output/'RESULT.json'))
+-    check(result_numeric['status']=='CONDITIONAL_NUMERICAL_PASS_PENDING_INDEPENDENT_REVIEW',
+-          'PRODUCER_STATUS')
+-    final=result_numeric['final_stage']
+-    with np.load(output/f'STAGE_{final}.npz',allow_pickle=False) as z:
+-        stage={k:z[k] for k in z.files}
+-    reconstructed=reconstruct(stage,amp)
+-    saved_stages={}
+-    for name in ('A','B','C')+(('D',) if final=='D' else ()):
+-        with np.load(output/f'STAGE_{name}.npz',allow_pickle=False) as z:
+-            saved_stages[name]={key:z[key] for key in ('band1','band2','total')}
+-    angular_ab=compare_saved_stages(saved_stages['A'],saved_stages['B'])
+-    radial_bc=compare_saved_stages(saved_stages['B'],saved_stages['C'])
+-    check(not radial_bc,'RADIAL_CONVERGENCE_RECHECK')
+-    if final=='D':
+-        angular_cd=compare_saved_stages(saved_stages['C'],saved_stages['D'])
+-        check(not angular_cd and angular_ab,'OPTIONAL_ANGULAR_CONVERGENCE_RECHECK')
+-    else:
+-        angular_cd=[]
+-        check(not angular_ab,'ANGULAR_CONVERGENCE_RECHECK')
+-    with np.load(output/'PRODUCT.npz',allow_pickle=False) as z:
+-        product={k:z[k] for k in z.files}
+-    check(np.allclose(np.stack(reconstructed),product['band_joint'],rtol=1e-11,atol=1e-17),
+-          'PRODUCT_JOINT')
+-    check(np.array_equal(ids,product['group_id']) and
+-          np.array_equal(product['mixed_zero_leverage_mask'],factor['mixed_zero_leverage_mask']) and
+-          np.array_equal(product['exact_zero_leverage_mask'],factor['exact_zero_leverage_mask']),
+-          'PRODUCT_COHORT_MASK')
+-    check(np.allclose(product['b_fact'],center,rtol=0,atol=1e-16),'PRODUCT_SIGNED_CENTER')
+-    sample_paths=[]
+-    for order,bi,node in ((35,0,0),(53,1,8),(53,0,16)):
+-        k,_w=(stage[f'k{bi+1}'],stage[f'w{bi+1}'])
+-        # Use an actual retained spectrum at the selected band/order.
+-        if order==35:
+-            with np.load(output/'STAGE_A.npz',allow_pickle=False) as zz:
+-                kk=float(zz['k1'][node])
+-        elif order==53 and node==8:
+-            with np.load(output/'STAGE_B.npz',allow_pickle=False) as zz:
+-                kk=float(zz['k2'][node])
+-        else:
+-            kk=float(k[node])
+-        sample_paths.append(output/'spectral'/f'o{order}_b{bi}_k{kk.hex()}.npz')
+-    windows=partial_actual_windows(sample_paths,factor,product)
+-    pair=pair_fixture(amp)
+-    stored=np.asarray(controls['fixture']['pair_band1_r10'])
+-    fro=float(np.linalg.norm(pair-stored)/np.linalg.norm(stored))
+-    check(fro <= 1e-8,'INDEPENDENT_SMALL_PAIR_KERNEL')
+-    check(time.monotonic()-began <= args.max_seconds,'CHECKER_TIME')
+-    print(json.dumps({'status':'INDEPENDENT_NUMERIC_CHECK_PASS_PENDING_REVIEWER_DECISION',
+-                      'elapsed_seconds':time.monotonic()-began,
+-                      'exact_center':center,'spectral_reconstruction':'PASS',
+-                      'angular_A_B_issues':angular_ab,'radial_B_C_issues':radial_bc,
+-                      'angular_C_D_issues':angular_cd,
+-                      'partial_actual_windows':windows,'pair_relative_frobenius':fro,
+-                      'scientific_admission':False,'original_H02_H04':'HOLD'},indent=2))
+-
+-
+-if __name__=='__main__':
+-    main()
++    p=argparse.ArgumentParser();p.add_argument('--input',required=True)
++    args=p.parse_args();packet=json.loads(Path(args.input).read_text())
++    run=Path(packet['output_dir']);begin=time.monotonic()
++    result=json.loads((run/'RESULT.json').read_text())
++    require(result['status']=='CONDITIONAL_NUMERICAL_PASS_PENDING_INDEPENDENT_REVIEW',
++            'producer_not_candidate')
++    bindings=json.loads(Path(packet['input_bindings']).read_text())
++    factor_path=bindings['immutable_numeric_inputs']['corrected_factor']['path']
++    require(sha(factor_path)==bindings['immutable_numeric_inputs']['corrected_factor']['sha256'],
++            'factor_sha_mismatch')
++    with np.load(factor_path,allow_pickle=False) as z:factor={key:z[key] for key in z.files}
++    exact=exact_reference_check(factor,json.loads((run/'EXACT_REFERENCE_SUMS.json').read_text()))
++    with np.load(run/'PRODUCT.npz',allow_pickle=False) as z:
++        x=z['positions'];n=z['n_J2000'];jg=z['j']*z['g']
++        require(z['band_joint'].shape==(2,15,15) and
++                z['covariance_blocks'].shape==(3,3,3,5,5) and
++                z['tensor_covariance'].shape==(3,3,3,3,3,3),
++                'product_full_tensor_shape')
++    records=json.loads((run/'DIRECT_CONTROLS.json').read_text())['oracle_targets']
++    selected=records[:min(4,len(records))]
++    for item in selected:
++        k=float.fromhex(item['k_hex']);u=np.array([float.fromhex(v) for v in item['u_hex']])
++        expected=np.array(item['oracle_real'])+1j*np.array(item['oracle_imag'])
++        found=direct(k,u,x,n,jg,factor['L_binary64'],
++                     factor['nonreference_row_index'],factor['difference_reference_row_index'])
++        require(np.linalg.norm(found-expected)<=1e-10*max(np.linalg.norm(expected),1e-30),
++                'direct_oracle_disagreement')
++    stage=result['final_stage'];joints=reconstruct(run/f'STAGE_{stage}.npz')
++    with np.load(run/'PRODUCT.npz',allow_pickle=False) as z:
++        require(np.allclose(np.stack(joints),z['band_joint'],rtol=1e-12,atol=1e-12),
++                'product_joint_disagreement')
++    fixture=fixture_bessel(run)
++    gates=numerical_gates(run,result)
++    require(time.monotonic()-begin<=60,'checker_wall_cap')
++    print(json.dumps({'status':'INDEPENDENT_NUMERICAL_CHECK_PASS',
++        'exact_reference':exact,'direct_subset_count':len(selected),
++        'fixture':fixture,'full_spectral_to_joint':True,'gates':gates,
++        'elapsed_seconds':time.monotonic()-begin,
++        'claim_ceiling':'conditional finite band-PV component; no H02/H04 admission'},
++        allow_nan=False,sort_keys=True))
++
++
++if __name__=='__main__':main()

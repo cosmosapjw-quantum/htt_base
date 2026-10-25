@@ -1,0 +1,104 @@
+{
+  "task": "R30-CF4-BAND-PV-FULL-TENSOR-COVARIANCE",
+  "status": "CAP245_TARGETED_REPAIR_SOURCE_PREPARED_AWAITING_FRESH_REPAIR_PACKET_ACK_GO",
+  "utc": "2026-10-25T09:00:54.865822+00:00",
+  "owner": "/root/r30_cf4_pv_numeric_preparation",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "approval": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_normalization_repair_framing/RESULT.json",
+    "sha256": "6873c9dae9c14311e94cac9dc29169e1edc3cc299d1245287f006cd00c958220",
+    "status": "BOUNDED_TARGETED_NORMALIZATION_REPAIR_APPROVED"
+  },
+  "same_bank_head_snapshot": {
+    "recovery_path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_dispatch/REPAIR_PREPARATION_ACCOUNT_RECOVERY.json",
+    "recovery_sha256": "eab6144739934e5db136f8d55ab231dae4b65cf63bdc8ce394512caff65e822a",
+    "used_seconds": 281.4927776466445,
+    "lifetime_cap_seconds": 600,
+    "finalized_account_head": "CONTROLLER_TO_BIND"
+  },
+  "original_first_failure": {
+    "result": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/actual_run/RESULT.json",
+    "return": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/RETURN.json",
+    "return_sha256": "6bf8288d5eb2cc14b3b565b1304169e8077856a32db289a0a4235442ffbbee68",
+    "original_sources_preimage_sha256": {
+      "science.py": "8ad141b8de354f4b1f3eb1c8711ebdd4548103b1c9c52f22ac2bd3bde1c7ab35",
+      "driver.py": "761acd873677399248b943a1407c5b06dae3c685c184c52dc28197ce7185909f",
+      "runner.py": "c19f90cbd4498d61864d45358137b5de171cd09880ac3e255053388110e3db13",
+      "independent_check.py": "ced675e79df1653e3a35a9b7a9286501340fd90dd7564cab4f4e9a1ef66b19ec"
+    }
+  },
+  "repaired_source_sha256": {
+    "science.py": "ed9918ef9f2f12c7e6b04d5140ea8e51acd86c5fb6a541d80a27e9f42e3ad982",
+    "runner.py": "d90d4fa189df74a5e9bf02acab388a4200bfd23d6b0b10cc072430dd6aa349c7",
+    "driver.py": "761acd873677399248b943a1407c5b06dae3c685c184c52dc28197ce7185909f",
+    "independent_check.py": "ced675e79df1653e3a35a9b7a9286501340fd90dd7564cab4f4e9a1ef66b19ec"
+  },
+  "source_diff": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/SOURCE_DIFF.patch",
+    "sha256": "88536117bd3f79fba723e8d8c3bd61ab5ebdd79853f137fb8de6681b6a14ec43"
+  },
+  "copy_parity": {
+    "driver.py": "BYTE_IDENTICAL",
+    "independent_check.py": "BYTE_IDENTICAL"
+  },
+  "narrow_change": "Approved science.py::power_amplitude repair unchanged; companion runner whole cap245 (reduced from265) and matching refusal text; reserve5/RSS6GiB/thread limits unchanged. Driver/checker byte-identical.",
+  "input_template": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/INPUT_TEMPLATE.json",
+    "sha256": "07063bb98756a5bf71eb672955d92b1788fe85629ee5c56d7840eeba7fcd1623"
+  },
+  "complete_future_one_use_command": {
+    "cwd": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair",
+    "argv": [
+      "/usr/bin/time",
+      "-f",
+      "elapsed_seconds=%e\\nmax_rss_kib=%M\\nexit_status=%x",
+      "-o",
+      "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/WHOLE_COMMAND_TIME.txt",
+      "env",
+      "OPENBLAS_NUM_THREADS=1",
+      "OMP_NUM_THREADS=1",
+      "MKL_NUM_THREADS=1",
+      "NUMEXPR_NUM_THREADS=1",
+      "VECLIB_MAXIMUM_THREADS=1",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/runner.py",
+      "--input",
+      "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/INPUT.json"
+    ],
+    "controller_external_time": "Include interpreter startup, reaping and final fsync; charge max overlapping observation plus separately labelled padding to same600-second ancestry."
+  },
+  "validation": {
+    "AST_PARSE": "PASS four files",
+    "diff_scope": "PASS approved science/runner changes only",
+    "numeric_preflight": "NOT_RUN",
+    "controls": "NOT_RUN",
+    "actual": "NOT_RUN",
+    "independent_checker": "NOT_RUN"
+  },
+  "numeric_commands_started_during_repair_preparation": 0,
+  "packet_binding": "No final repaired INPUT.json or sidecar exists; controller binds finalized refreshed same-bank head and typed repair input transition after ACK/GO.",
+  "scientific_ceiling": "No numerical PASS or H02/H04 admission; first failed command and accounting remain frozen.",
+  "cap_reduction_report": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/CAP_REDUCTION_REPORT.json",
+    "sha256": "c8c61f7ad71236bb3831b950cae529795abe80154bc49fe1749d24c92d76968f"
+  },
+  "cap265_preimages": {
+    "runner.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/evidence/cap265_preimage/runner.py",
+      "sha256": "89fb88fe4d5913383cb1c17ad6709c9e0138a0795542101aa543cf1320d0302c"
+    },
+    "INPUT_TEMPLATE.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/evidence/cap265_preimage/INPUT_TEMPLATE.json",
+      "sha256": "23db35a017d8ff20d0e5995715cf70abe428198b6fcaeeaecc79b0c1e93210d5"
+    },
+    "PREPARATION.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/evidence/cap265_preimage/PREPARATION.json",
+      "sha256": "c400bf8b847ec7ad6e118402accc3ef9c8789b78e50d22521b5caac9272ff9c9"
+    },
+    "SOURCE_DIFF.patch": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_cf4_pv_tensor_numeric/normalization_repair/evidence/cap265_preimage/SOURCE_DIFF.patch",
+      "sha256": "8363250fec57c470d49c0ce5b3b5dbee998aeefcfd8cbf7d3155145ee89331f3"
+    }
+  }
+}
