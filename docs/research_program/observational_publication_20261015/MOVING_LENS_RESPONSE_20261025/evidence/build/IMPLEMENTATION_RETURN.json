@@ -1,0 +1,119 @@
+{
+  "status": "PREPARED_BUILD_PASS_REVIEW_PENDING",
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "medium",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "NOT_INDEPENDENTLY_OBSERVED",
+  "owner": "htt",
+  "claim_tier": "C0",
+  "claim_status": "CONDITIONAL_NON_CLAIM_BEARING",
+  "transfer_source": "empirical_proxy",
+  "inputs": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_nonradial_moving_lens_intake/REPORT_REVISED.md",
+      "sha256": "0f66033f7f4adc86c214c45ca479e557de1ede447c1b48afedae2752d505ce2d",
+      "bytes": 25988
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_nonradial_moving_lens_intake/REPORT.md",
+      "sha256": "52c4a64e6013ab9ed9ebec4b19787fd2d09322f49e980e0099f77882610f6126",
+      "bytes": 18722
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_moving_lens_source_independent_review/CLOSEOUT.md",
+      "sha256": "63b357cb8db379d478c709b3274aa54eaa33228ede97f6a66c6c55e1901ba1cb",
+      "bytes": 4805
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_moving_lens_source_independent_review/REVIEW.md",
+      "sha256": "b3d771aadb12e9039396f0c97032239eb18a309ccc05e478d1945784eedd12e7",
+      "bytes": 12438
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_moving_lens_source_independent_review/SOURCE_AUDIT.json",
+      "sha256": "1ec0f99d605348364033583321c377429cdf13a105b28f92bbe9daf6d3fc4545",
+      "bytes": 40002
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_moving_lens_revtex_supplement/main.tex",
+      "sha256": "6d9f3af8eb468d9c76e2e6b13fb79b002b49f9f2d8e1c48f56237b090b3af7f4",
+      "bytes": 19202
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_moving_lens_revtex_supplement/main.pdf",
+      "sha256": "8e50c04ca93e9f635006a4d3cd79b9a12c1e5f09ff9412a47a3bc79e65fa6376",
+      "bytes": 224651
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_moving_lens_revtex_supplement/source_bundle.zip",
+      "sha256": "1d48f56bfd64d5fa62e4034741739e9551d2add9401bafdb797e24abd1b4381f",
+      "bytes": 10440
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_moving_lens_revtex_supplement/README_BUILD.md",
+      "sha256": "c357a0b9f8ebbebad73e7b1732830437e42a70a8a38b8b52ea4b1485bc609971",
+      "bytes": 5242
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_moving_lens_revtex_supplement/main.log",
+      "sha256": "63ea9745434f2f7c8bc06e1805fa1e08422d15f6472ec8649a127bf4eb91f25c",
+      "bytes": 18412
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_moving_lens_revtex_supplement/build.stdout.log",
+      "sha256": "d8df34fc8b8dc6d8f61d365ee745c8a29a28bacc76adb5e633a7c3e204c321b9",
+      "bytes": 13940
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r30_moving_lens_revtex_supplement/main.extracted.txt",
+      "sha256": "336582c34dba2cba6d831ed9bb5d4c9d53de0f0c3eac1ea3192a0067fdf303d6",
+      "bytes": 20425
+    }
+  ],
+  "commands": [
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex > build.stdout.log 2>&1",
+      "exit_code": 0
+    },
+    {
+      "command": "pdftotext -layout main.pdf main.extracted.txt",
+      "exit_code": 0
+    },
+    {
+      "command": "pdftoppm -f 1 -singlefile -scale-to 1300 -png main.pdf preview_page1",
+      "exit_code": 0
+    },
+    {
+      "command": "pdftoppm -f 2 -l 5 -scale-to 1100 -png main.pdf preview",
+      "exit_code": 0
+    },
+    {
+      "command": "pdftoppm -f 5 -singlefile -scale-to 1100 -png main.pdf preview-5",
+      "exit_code": 0
+    }
+  ],
+  "pages": 5,
+  "build_scan": {
+    "undefined": [],
+    "missing_files": [],
+    "duplicate_labels": [],
+    "overfull": [],
+    "underfull": [],
+    "warnings": [
+      "Package nameref Warning: The definition of \\label has changed! "
+    ]
+  },
+  "internal_prose_token_scan": [],
+  "figures": [],
+  "bibliography": "inline_primary_links_no_bibtex",
+  "new_numerics": false,
+  "git_mutation": false,
+  "full_report_build": false,
+  "publication": "NOT_PERFORMED",
+  "independent_supplement_review": "REQUIRED_PENDING",
+  "scientific_admission": "UNCHANGED_HOLD_SOURCE_SPECIFIC_PHYSICAL_RESPONSE",
+  "disk_free_bytes": 2460790771712,
+  "reserve_bytes": 2147483648
+}

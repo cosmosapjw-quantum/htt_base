@@ -1,0 +1,210 @@
+{
+  "blocking_findings": [],
+  "code_review_reused": {
+    "bytes": 7414,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_final_controller_independent_review/RESULT.json",
+    "sha256": "a6dc6a735aad5898254b1ea16731f66fa73ffd513b50f30099e873671e63b178"
+  },
+  "commit_created_by_reviewer": false,
+  "completed_utc": "2026-10-25T07:32:38.962513+00:00",
+  "decision": "SCOPED_PASS",
+  "exact_tree_packet": {
+    "bytes": 7756,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/EXACT_TREE_REVIEW_PACKET.json",
+    "sha256": "45031af505c6d3ac1c99499b624ad0c901ba48344b606b5d564fd1a61b2baafc"
+  },
+  "file_manifest_sha256": "a6cd13791eaee6592b12881f5ef3da6bbe267710b09369a778dee01a57495ceb",
+  "final_v2_script_seals": [
+    {
+      "bytes": 4977,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/create_reviewed_commit_v2.py",
+      "sha256": "cd184df02884435ba842d6b5b59fe91a741d4b899db385f9e9c0d1507c21b188"
+    },
+    {
+      "bytes": 5891,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/push_approved_commit_v2.py",
+      "sha256": "ec6cbb25794ddc47ef1f74b2d62d04adfa139f2acf395da499279181ff678858"
+    },
+    {
+      "bytes": 6985,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/protocol_baseline_v2.py",
+      "sha256": "e2682a9f8dcb345bb2ab9fa5eb3ca2daf0c9da103fbbf98744c5018dca0dec0d"
+    }
+  ],
+  "finding_closeout": {
+    "basis": "Both v2 actions require root-sealed complete fresh baseline, sealed immutable prior anchor, exact enumerated reconciliation and mandatory live source/state/pointer/protocol seals. Complete snapshot comparison runs twice before the effect; original within-action comparison, one-attempt sentinels, private writer without alternates, exact parent/tree/ref and non-force guarded push remain. No metadata fields are ignored and no automatic baseline refresh exists.",
+    "id": "R29-PROTOCOL-BASELINE",
+    "status": "CLOSED_FOR_EXACT_V2_SCRIPT_SEALS"
+  },
+  "frozen_original_protocol_and_metadata_seals": [
+    {
+      "bytes": 9559,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/prepare_publication.py",
+      "sha256": "8606d7b8a129c2896003e8133d2728d1a1255119ebefcd3c1e463700c2ce018f"
+    },
+    {
+      "bytes": 4809,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/create_reviewed_commit.py",
+      "sha256": "56e153afe6474966eddd488922a3562df5520e0019fc9a40ea263ff34404f6a7"
+    },
+    {
+      "bytes": 5804,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/push_approved_commit.py",
+      "sha256": "7a72985a3b0cb93a307f144522411952c2648551c02ee110bb66e3baf696a222"
+    },
+    {
+      "bytes": 1021277,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/CANONICAL_METADATA_BEFORE.json",
+      "sha256": "5285641ed220230e7cc63125fb6d52436da3686c37d705a051302a2c518864f6"
+    },
+    {
+      "bytes": 1021277,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/CANONICAL_METADATA_AFTER_TREE.json",
+      "sha256": "5285641ed220230e7cc63125fb6d52436da3686c37d705a051302a2c518864f6"
+    }
+  ],
+  "implementation_return": {
+    "bytes": 7556,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_protocol_baseline_repair/IMPLEMENTATION_RETURN.json",
+    "sha256": "0624af9e95eb3192f9556b278a76742687bf328e5704bd7c636cd3a9d3542a36"
+  },
+  "independence": {
+    "candidate_and_repair_not_authored_by_reviewer": true,
+    "no_subagents": true,
+    "only_new_owned_review_artifacts_written": true,
+    "repository_and_package_read_only": true
+  },
+  "limits": [
+    "The passing exact-tree and final code reviews are reused. No numerical/scientific test or old frozen fixture was rerun.",
+    "This review approves only the sealed tree/package and publication protocol. It is not an executed commit, successful push, installation/activation or scientific admission.",
+    "Root remains responsible for checking the exact fresh baseline transition. HEAD/index/.git/config/branch refs/source/STATE/pointer must retain their bound identities; any unclassified drift remains a stop condition.",
+    "Original HOLD result and frozen evidence are retained unchanged; this file closes only its one protocol finding.",
+    "Observed runtime identity remains UNKNOWN."
+  ],
+  "local_HEAD": "d93605e66adfececa89b90681124b232a5f90220",
+  "manifest": {
+    "bytes": 40150,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_controller_publication/FILE_MANIFEST.json",
+    "sha256": "a6cd13791eaee6592b12881f5ef3da6bbe267710b09369a778dee01a57495ceb"
+  },
+  "observed_runtime": "UNKNOWN",
+  "production_state_mutated": false,
+  "publication_guard": {
+    "bytes": 3089,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r25_enospc_publication_plan_repair/hooks/pre-push",
+    "sha256": "d6a2e8993a3e1fdf4b5969d2be60e7f796aaef14cacf51fcfad2183cc4b9f150"
+  },
+  "push_performed_by_reviewer": false,
+  "remote_ref": "refs/heads/research/htt-adaptive-methods-20261023",
+  "remote_url": "https://github.com/cosmosapjw-quantum/htt_base.git",
+  "repair_contract": {
+    "bytes": 7111,
+    "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/PROTOCOL_REPAIR_CONTRACT.json",
+    "sha256": "3ca805ae866c7b7174c0e0ef2a0e7f3f925a9295893d5783b11d5610e456da4a"
+  },
+  "requested_runtime": {
+    "effort": "xhigh",
+    "model": "gpt-6-astra"
+  },
+  "reviewer_task": "/root/r29_tree_review_continuation",
+  "root_next_procedure": [
+    "Capture a complete fresh commit execution baseline and compare fieldwise with frozen CANONICAL_METADATA_AFTER_TREE.json. Record only demonstrated bookkeeping differences; preserve all critical identities and prior snapshots.",
+    "Seal the exact reconciliation and create APPROVED_COMMIT_INPUT_V2.json binding tree, sole parent, manifest, fresh baseline, immutable prior, mandatory review seals and this TREE_APPROVAL.json plus the final three v2 script seals. Run create_reviewed_commit_v2.py at most once with ordinary Python assertions enabled.",
+    "Inspect and explicitly bind the generated exact commit payload: tree, sole parent, author/committer/message, candidate packet and unchanged guard. Then capture and reconcile a fresh push baseline against the sealed successful CANONICAL_METADATA_AFTER_COMMIT.json.",
+    "Only after that exact root binding, create APPROVED_PUSH_INPUT_V2.json and run push_approved_commit_v2.py at most once. Require provider exit0 and exact remote-ref OID verification; preserve local checkout/status/index/refs and scientific HOLD."
+  ],
+  "scientific_admission": "HOLD_UNCHANGED",
+  "scope": {
+    "additive_documentation_count": 36,
+    "all_other_parent_blobs": "unchanged",
+    "allowed_addition_prefix": "docs/research_program/observational_publication_20261015/CONTROLLER_LIFECYCLE_20261024_R29",
+    "deletions": 0,
+    "file_count": 38,
+    "inherited_report_P1_R27_R28": "unchanged",
+    "mode_changes": 0,
+    "modified_count": 2,
+    "modified_existing_code_paths": [
+      "scripts/codex_harness/research_controller.py",
+      "scripts/codex_harness/test_research_controller_frontier.py"
+    ],
+    "total_bytes": 812706
+  },
+  "sole_parent": "71b272db893a92ec336c28164bc7efccf7c340b2",
+  "source_state_pointer_seals": [
+    {
+      "bytes": 4316867,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/LIVE_STATE.json",
+      "sha256": "fa4ecaca94d180c61b547706ddc546f5bbd9db197a20a6f41bd65c863c13517d"
+    },
+    {
+      "bytes": 249,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.agent-harness/runtime/ACTIVE_CONTROLLER.json",
+      "sha256": "d9221c1eb6a61bd33a7beee689dbcb2751fec97ab056327e08941f51ba3c924d"
+    },
+    {
+      "bytes": 186345,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/research_controller.py",
+      "sha256": "b118149b13d3568f0fa2e5afb2ef503e461434cf5df3a8f7829bbb2bb95c1dac"
+    },
+    {
+      "bytes": 133649,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/test_research_controller_frontier.py",
+      "sha256": "8fbb0bc23a55c8c3fe2695552b55a4d1f3699b1b8198b6db558f4cb3379e1fa9"
+    }
+  ],
+  "status": "APPROVED_EXACT_TREE_AND_V2_PUBLICATION_PROTOCOL_FOR_ROOT_BINDING",
+  "task": "R29 same pending independent exact-tree/protocol review and R29-PROTOCOL-BASELINE targeted closeout",
+  "tree": "1e484cab48211ae5a433f3ae20192dddb3bbfdf1",
+  "tree_validation": {
+    "all_original_packet_seals_rechecked_after_repair": true,
+    "evidence": {
+      "bytes": 27989,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/EXACT_TREE_CHECKS.json",
+      "sha256": "e0c5e9b7c6f481f25244780e2e650df51f94f02daf7f050bc09a2be830c87aa3"
+    },
+    "raw_log": {
+      "bytes": 203,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/EXACT_TREE_CHECK.log",
+      "sha256": "b2a37b42b71273499b06a092e075f4ef48b343907ef2eee29b33d207da67a34b"
+    },
+    "status": "REUSED_PASS_EXACT_TREE_AND_SEALS_UNCHANGED"
+  },
+  "validation": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B /mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/test_protocol_baseline_v2_reviewer_copy.py",
+      "exit_code": 0,
+      "raw_log": {
+        "bytes": 2397,
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/V2_SYNTHETIC_TESTS.log",
+        "sha256": "61e00b8c68488da5baf08049750a2fe701183372354c73b8429b8ae199fa0ae8"
+      },
+      "source": {
+        "bytes": 8794,
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/test_protocol_baseline_v2_reviewer_copy.py",
+        "sha256": "31b164e0249d8e2ba83f1661a015896718efe2c7a28dec9f830af913f3b12de1"
+      },
+      "source_is_byte_identical_to_worker_test": true,
+      "tests_passed": 21
+    },
+    {
+      "command": "python3 -B /mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/v2_independent_checks.py",
+      "exit_code": 0,
+      "groups_passed": 5,
+      "raw_log": {
+        "bytes": 669,
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/V2_INDEPENDENT_CHECKS.log",
+        "sha256": "2658371af803a6265b1d808965fe2628d08d82eee4d5e0cc301a4fea896605fe"
+      },
+      "result": {
+        "bytes": 669,
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/V2_INDEPENDENT_CHECKS.json",
+        "sha256": "2658371af803a6265b1d808965fe2628d08d82eee4d5e0cc301a4fea896605fe"
+      },
+      "source": {
+        "bytes": 4721,
+        "path": "/mnt/extdrive/workdir/htt_open_data/r29_tree_review_continuation/v2_independent_checks.py",
+        "sha256": "b6fd0c1950a133fcefaffb4ec81fc3bc35812d1e7a92d933409175677cf12415"
+      }
+    }
+  ]
+}
