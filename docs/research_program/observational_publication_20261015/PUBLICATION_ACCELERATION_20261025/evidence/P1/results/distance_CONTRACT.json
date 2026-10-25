@@ -1,0 +1,27 @@
+{
+  "task": "R24-DISTANCE-MODELS",
+  "status": "FROZEN_BEFORE_FIT",
+  "scope": "C0 authored conditional selected-cohort model comparison; no original acceptance promotion",
+  "input_identity": "sha256:94ba6ebeeaa029c868663cd873e0626f892976e77a56c9d60ccc54c9cf1e1812",
+  "cohort": "Exact R23 274 released PGC rows, fixed 628 selected marks, 354 undefined moduli; same CMB velocity window, group partition, and realized marks in all candidates",
+  "directions": "J2000 equatorial unit source vectors by PGC; CF4 J/ApJ/944/94 table2 for 269, CDS VizieR VII/237/pgc unique PGC lookups for five; never substitute group centers",
+  "response": "Released DMbest in mag; log10(Vcmb/[km/s]) is an observed CMB-frame positive covariate, not a true distance or physical redshift expansion",
+  "baseline": ["intercept", "centered log10 Vcmb", "centered measured logWmxi", "centered e_logWmxi"],
+  "models": {
+    "A_calibration_flow": "baseline + n_x,n_y,n_z + K*n_x,K*n_y,K*n_z",
+    "B_optical_STF": "baseline + n_x,n_y,n_z + five n^T E_j n STF columns",
+    "C_union": "baseline + n_x,n_y,n_z + K*n_x,K*n_y,K*n_z + five STF columns"
+  },
+  "K": "-5/(ln(10)*Vcmb) mag/(km/s), frozen low-z flow response scenario; PGC9031 at 317 km/s explicitly small-velocity-domain limited",
+  "STF_basis": ["diag(1,-1,0)/sqrt(2)", "diag(-1,-1,2)/sqrt(6)", "sym(xy)/sqrt(2)", "sym(xz)/sqrt(2)", "sym(yz)/sqrt(2)"],
+  "covariance": "V(a,b)=diag(s_i^2-a^2)+a^2 11^T+b^2 GG^T; (a,b) in {0,0.055} x {0,0.29} mag; one total authored covariance shape; training-only ML sigma^2",
+  "selection": "Condition on realized marks and measured covariates. No parent-inclusion law or physical calibration/PV variance claim. No double-count of released width or modulus error components.",
+  "folds": "Use cached ledger folds only if every observed group is wholly in one fold, otherwise SHA256(group label) modulo five; hold out complete groups",
+  "prediction": "For train/test blocks, B=V_te,tr V_tr,tr^-1, mean=X_te beta+B(y_tr-X_tr beta), covariance=sigma2_ML_train*(V_te,te-B V_tr,te); normalized plug-in Gaussian joint-block log density; beta/sigma uncertainty omitted",
+  "rank": "Training-only centering and RMS scaling; SVD whitened design relative thresholds 1e-8,1e-10,1e-12, primary 1e-10. Deficient coefficients remain NOT_IDENTIFIABLE; predictive score only if held-out design annihilates nullspace to scaled 1e-10.",
+  "outputs": "Full coefficients and covariance including angular 3+5 tensor blocks and cross blocks, nullspace/rank, per-fold joint and per-row scores, signed direction/depth/method residual summaries; all exploratory",
+  "numerical_tolerance": {"reference_rtol": 1e-9, "reference_atol": 1e-10, "linear_algebra_scaled": 1e-10, "direction_STF": 1e-12},
+  "limits": "At most 60 fold fits and 12 full fits; no Monte Carlo required for this discriminator",
+  "historical_failure": {"T": 4.555321823822732, "p_plus_one": 0.000976324139614352, "undefined": 354},
+  "stopping": "Source/rank/covariance ambiguity or invalid numerical law holds affected candidate and records first raw failure; physical admission remains HOLD"
+}

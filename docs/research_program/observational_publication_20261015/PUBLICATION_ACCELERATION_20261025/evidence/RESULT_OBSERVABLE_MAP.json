@@ -1,0 +1,126 @@
+{
+  "schema": "htt-physical-observable-map/v1",
+  "date": "2026-10-25",
+  "remote_head": "0d5ab96bdb55398076629099664c77517ec33bb4",
+  "campaign_acceptance_changed": false,
+  "native_solver_or_ode": false,
+  "items": [
+    {
+      "id": "CF4_QUOTIENT",
+      "status": "MEASURED_APPARENT_STATISTIC",
+      "source": "research/latest_results.json",
+      "physical_meaning": "relative directional-rate quadrupole in sealed producer convention",
+      "value": {
+        "minimum": -0.023727165269042373,
+        "maximum": 0.022399216273178365,
+        "directional_rms": 0.011924578035260817,
+        "tensor_norm": 0.03265680189321492
+      },
+      "units": "dimensionless",
+      "next_input": "joint statistical and material-source response-error radius; finite-z, selection and PV response"
+    },
+    {
+      "id": "H03_JOINT_RESPONSE",
+      "status": "NEW_FINITE_ANALYSIS_OF_SAVED_OBSERVATIONS",
+      "source": "output/physical_results.json",
+      "physical_meaning": "compare coherent translation and depth-independent rate dipole through actual source windows",
+      "value": {
+        "T": 23.3967205226671,
+        "df": 6,
+        "conditional_gaussian_tail": 0.00067393342,
+        "T_without_cross_window_covariance": 8.925712183,
+        "eta95_unrestricted": 1.288553004
+      },
+      "units": "T and eta dimensionless; coefficients km/s and km/s/Mpc",
+      "next_input": "structured finite-depth/flow/calibration discrepancy with qualified residual law"
+    },
+    {
+      "id": "SHEAR_ERROR_BOUNDS",
+      "status": "DERIVED_CONDITIONAL_INEQUALITY",
+      "source": "research/physical_derivations.md",
+      "physical_meaning": "norm/eigenvalue ranges for congruence shear after bounded observation error",
+      "value": {
+        "nonzero_dimensionless_norm_lower_bound_requires_radius_below": 0.03265680189321492
+      },
+      "units": "dimensionless T or dimensional Q with explicit H division",
+      "next_input": "same-congruence and same-frame qualified error ball on a common event"
+    },
+    {
+      "id": "CMB_EIGHT_MAP",
+      "status": "SOURCE_REPORTED_PROCESSED_DATA",
+      "source": "research/latest_results.json",
+      "physical_meaning": "192 signed E2/E3/B2/B3 coordinates on common mask, including held-out E-to-B response mismatch",
+      "value": {
+        "coordinates": 192,
+        "SMICA_held_out_B_residual_norm": 0.37923421
+      },
+      "units": "microkelvin",
+      "next_input": "common component-dependent beam/pixel/mask/spatial response and joint residual law"
+    },
+    {
+      "id": "CMB_SPECTRAL",
+      "status": "SOURCE_REPORTED_FINITE_BANDPASS_MODEL",
+      "source": "research/latest_results.json",
+      "physical_meaning": "CMB response surviving the declared foreground moment image",
+      "value": {
+        "first_order_target_rank": 24,
+        "second_order_free_moment_target_rank": 0,
+        "first_order_weight_norm_about": 9.8
+      },
+      "units": "rank; dimensionless spectral response",
+      "next_input": "qualified moment/remainder restrictions, extra frequencies, or independent spatial/calibration information"
+    },
+    {
+      "id": "MOVING_LENS",
+      "status": "ANALYTIC_RESPONSE_AND_EXTERNAL_MEASUREMENT_CONTEXT",
+      "source": "research/latest_physical_results.md",
+      "physical_meaning": "transverse coherent potential motion, with nonlocal continuity/Poisson response for varying flows",
+      "value": {
+        "sinusoidal_counterexample_response_ratio_at_equal_wavenumber": 0.5
+      },
+      "units": "fractional temperature and beta=v/c",
+      "next_input": "measurement-specific scale bands, joint covariance, potential/template calibration and matter-flow relation"
+    },
+    {
+      "id": "BIANCHI_LRS_V",
+      "status": "DERIVED_CONDITIONAL_GEOMETRIC_CONSTRAINT",
+      "source": "research/physical_derivations.md",
+      "physical_meaning": "joint curvature/shear/normal-relative tilt consistency from metric constraints",
+      "value": {
+        "formula": "Sigma^2=((1+w)*Omega_m)^2*beta^2/(4*K*(1-beta^2)^2)"
+      },
+      "units": "dimensionless normalized quantities",
+      "next_input": "joint feasible curvature/matter/shear limits and corresponding history response; normal Hamiltonian constraint"
+    },
+    {
+      "id": "HUBBLE_WINDOW",
+      "status": "DERIVED_ESTIMATOR_IDENTITY",
+      "source": "research/physical_derivations.md",
+      "physical_meaning": "bulk leakage, proper-coordinate divergence and shear contributions to a specified measured Hubble slope",
+      "value": {
+        "formula": "delta_Hhat=b.dot(m_W)+theta_phys/3+S:Q_W"
+      },
+      "units": "km/s/Mpc when b in km/s and distances Mpc",
+      "next_input": "actual survey estimator, positions, likelihood/selection and response bounds"
+    },
+    {
+      "id": "THEOREM_FAMILIES",
+      "status": "DIRECT_SOURCE_SYNTHESIS_NOT_FULL_PROOF_REPLAY",
+      "source": "research/theorem_inventory.json",
+      "physical_meaning": "26 families of physical-state constraints, response maps, information loss and uncertainty laws",
+      "value": {
+        "direct_families": 26,
+        "all_PR_metadata": 558,
+        "live_branches": 297,
+        "catalog_evidence_groups": 345
+      },
+      "next_input": "claim-specific source/proof and observation binding, rather than indiscriminate lemma count"
+    }
+  ],
+  "scientific_figures": {
+    "new": 7,
+    "retained": 20,
+    "total": 27
+  },
+  "theory_coverage": "complete retrieved PR/branch metadata; representative reading of 26 families, no full historical proof verification"
+}

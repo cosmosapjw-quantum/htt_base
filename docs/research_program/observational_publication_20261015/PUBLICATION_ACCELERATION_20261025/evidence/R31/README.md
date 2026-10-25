@@ -1,0 +1,9 @@
+# Finite Planck spectral identifiability supplement
+
+The reviewed seven-page supplement is in `report/main.pdf`; its exact TeX, bibliography, figures, generated tables and self-contained source ZIP are alongside it. `report_review/RESULT.json` records the scoped independent publication decision.
+
+This is a finite nominal-bandpass linear moment model under a stipulated common spatial response. All 24 signed E2/E3/B2/B3 coordinates remain in the quotient controls and degeneracy witnesses. No observed-sky or noise/null inference is made; all physical HOLD states remain unchanged. The physical x and observed quotient tensor are not measured, Q is not evaluated, physical F is not evaluable, Pi is not calibrated, and G_F is inapplicable because frequency is not depth.
+
+`scientific/framing/` contains the frozen procedure and limits. `scientific/numeric/` preserves the actual producer source, original failure and preimage, approved repair output, and both exact released FITS inputs. `scientific/independent_review/` contains the separate numerical check, preserved failure, bounded repair, and scientific review. `scientific/root_closeout/` retains the final settled accounting and clock-wording correction. These are exact historical copies; embedded paths and historical payload hashes remain references, and source scripts are not silently rebound for execution in this publication directory. Follow the original procedure and qualified environment for numerical reproduction; building the report requires only its included source package.
+
+The original producer/checker resource-enforcement and source-scope caveats remain recorded. The settled enclosing science bound is 61.1 seconds against 270 seconds; no new numerical science was run during publication preparation. No broader scientific admission, native solver/family claim, or submission authority is implied.

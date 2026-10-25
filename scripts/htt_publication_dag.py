@@ -159,7 +159,11 @@ def main():
     doc=load(args.dag)
     if args.validate:
         payload=validate(doc);payload["ready_now"]=len(ready(doc))
-    elif args.ready:payload={"ready":ready(doc)}
+    elif args.ready:
+        payload={"ready":ready(doc)}
+        if doc.get("publication_output_route_20261025"):
+            payload["additional_publication_route"]=doc["publication_output_route_20261025"]
+            payload["route_note"]="Read-only pointer; append with the existing controller after preflight. Original ready list is unchanged."
     elif args.blocked:payload={"blocked":blocked(doc)}
     elif args.paper:
         paper=next(p for p in doc["papers"] if p["id"]==args.paper)
@@ -182,3 +186,4 @@ if __name__=="__main__":
     try:main()
     except (PublicationDAGError,OSError,ValueError) as exc:
         raise SystemExit(f"PUBLICATION_DAG_ERROR: {exc}")
+

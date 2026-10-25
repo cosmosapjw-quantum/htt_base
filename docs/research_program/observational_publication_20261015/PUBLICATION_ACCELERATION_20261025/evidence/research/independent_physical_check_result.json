@@ -1,0 +1,80 @@
+{
+  "status": "PASS for stated finite calculations; two explicit convention repairs in review",
+  "independence": "Own eigensystem/SVD implementation and metric construction; no author functions imported",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "H03_sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+  "H03_dipole_covariance_min_eigenvalue": 0.0038312674410547736,
+  "fits": {
+    "bulk": {
+      "coef": [
+        -119.11233564945314,
+        57.67790795712862,
+        -263.5932262157526
+      ],
+      "T": 79.98701269130609,
+      "df": 9,
+      "tail_if_fixed_Gaussian": 1.6257600109774348e-13,
+      "minimum_whitened_discrepancy95": 4.8302773859521,
+      "tau95": 0.49633434372455687,
+      "full36_nuisance_profile_T": 79.98701269130567,
+      "full36_rank": 27,
+      "full36_coefficient_max_difference": 5.6843418860808015e-12,
+      "block_diagonal_T": 88.56923278828353
+    },
+    "constant_rate_dipole": {
+      "coef": [
+        -0.7445993637853164,
+        0.26037811684115103,
+        -2.7880873191750686
+      ],
+      "T": 94.59831674657418,
+      "df": 9,
+      "tail_if_fixed_Gaussian": 1.9373651622293162e-16,
+      "minimum_whitened_discrepancy95": 5.612898118850828,
+      "tau95": 0.5329692131248109,
+      "full36_nuisance_profile_T": 94.59831674657417,
+      "full36_rank": 27,
+      "full36_coefficient_max_difference": 5.240252676230739e-14,
+      "block_diagonal_T": 108.93511814279665
+    },
+    "bulk_plus_constant_rate": {
+      "coef": [
+        -272.7108633304743,
+        118.34969339768395,
+        -25.938977607051875,
+        1.4400348555738725,
+        -0.6977401499683582,
+        -2.4439958213539974
+      ],
+      "T": 23.39672052266714,
+      "df": 6,
+      "tail_if_fixed_Gaussian": 0.0006739334199763024,
+      "minimum_whitened_discrepancy95": 1.2885530036501085,
+      "tau95": 0.10521104513474226,
+      "full36_nuisance_profile_T": 23.396720522667415,
+      "full36_rank": 30,
+      "full36_coefficient_max_difference": 1.4722445484949276e-11,
+      "block_diagonal_T": 8.925712182985695
+    }
+  },
+  "joint_WLS_synthetic_identity_error": 6.661338147750939e-16,
+  "joint_vs_dipole_only_bulk_response_difference": 8.78683116687737e-05,
+  "saved_constant_rate_identity_max": 5.551115123125783e-16,
+  "weighted_slope_identity_error": 2.5396351688300456e-15,
+  "sphere_moment_error": 4.440892098500626e-16,
+  "response_bound_max_violation": 0.0,
+  "spatial_scalar_curvature": "-6*k^2; exact rational connection checks",
+  "spacetime_R_0z": "-2*A0*(HX-HY); exact rational connection checks",
+  "curvature_cases": 2,
+  "momentum_cases": 2,
+  "stable_tilt_root_relative_polynomial_error": 3.1626793111351477e-16,
+  "R28_source_sha256": "843b19e464817d14455df68e9043a93cc71cc7449ab339052c3ddfe1c7298c19",
+  "R28_tensor_norm": 0.03265680189321492,
+  "R28_directional_rms": 0.011924578035260817,
+  "R28_Sigma_if_physical": 0.013332083544922036,
+  "P11_unnormalized_g_counterexample": {
+    "g_t0": 2,
+    "formula_Sigma_over_true_Sigma": 0.5
+  }
+}
