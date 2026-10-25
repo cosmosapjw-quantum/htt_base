@@ -1,0 +1,101 @@
+{
+  "task_id": "R32-06-P4-DESIGN",
+  "campaign": "R23-whole-42-solver-free",
+  "stage": "FRESH_READ_ONLY_REVIEW_PREPARATION",
+  "decision": "SCOPED_PASS",
+  "scope": "response_design_note",
+  "reviewer_agent": "/root/r35_p4_fresh_independent_review",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "independence": {
+    "contributor": false,
+    "prior_independent_candidate_verdict_read": false,
+    "excluded_contributors": [
+      "/root/rc_2a504af3ea3221e2",
+      "/root/r35_p4_prescribed_numeric_build",
+      "/root/r35_p4_p5_source_contract_intake"
+    ]
+  },
+  "candidate_result_sha256": "fd181ea1cac267317dda86b6f8e9fd374701e01777ae73a7180033cf8ec355ed",
+  "candidate_manifest_sha256": "97d4252a9d532532ff114b480629ebcea69078ab2225ff90a37fef19427fdaad",
+  "output_files_verified": 50,
+  "retained_source_files_verified": 9,
+  "science_identities": {
+    "SOURCE_IDENTITIES.json": "f5640c1ec3c2af4c9c40a9e295de23c2897f89bae84180ebfaa88b0e91d22a12",
+    "SOURCE_INTAKE.md": "b27f68e2059f62be5bac703b9392ec9f8b17883f5da210264e992be9c1b1839f",
+    "BUILD_CONTRACT.md": "cdc26625caf799110f58d101bcde3182134d77aa2e1f8b512112e5ade8aee309",
+    "BUILD_HANDOFF.md": "6664a0874f21fc444c9f4cf0bb13a117917b7f964f842929e599479c2a8721fe",
+    "CLAIM_SOURCE_MAP.md": "5322ec82ff9aa7c282cda84db0b252600559f14c651a8bbd2a9198da02c62e1f",
+    "MANUSCRIPT.md": "3d862055d3e7049c3ace78a4ede98b3e71951bc9093b31c318c407032db5bb33",
+    "RESEARCH_NOTE.md": "2c242d958ff2fe3dd1cd8e29fdd39a9e20f65a5cc1b153dc5adbe8877edac656"
+  },
+  "reviewed_product": "response_design_note",
+  "qualified_products": [],
+  "formal_review_packet_status": "PENDING_EXISTING_SCHEDULER_FAIRNESS",
+  "formal_dispatch_ack_created": false,
+  "controller_qualification": false,
+  "publication_authorized_by_this_result": false,
+  "original_acceptance_passed": false,
+  "original42_acceptance_met": false,
+  "V03_physical_acceptance": "UNCHANGED_PENDING_ACTUAL_EXTERNAL_HISTORY_KERNELS_CALIBRATION_COMMON_FRAME_AND_ERROR_MODEL",
+  "claim_ceiling": "DERIVED_CONDITIONAL_FINITE_RESPONSE_DESIGN",
+  "transfer_source": "none",
+  "undefined_sectors": {
+    "x_C": "NOT_EVALUABLE_WITH_THIS_RESPONSE",
+    "Q": "NOT_EVALUABLE_WITH_THIS_RESPONSE",
+    "F": "NOT_EVALUABLE_WITH_THIS_RESPONSE",
+    "Pi": "NOT_EVALUABLE_WITH_THIS_RESPONSE",
+    "G_F": "NOT_EVALUABLE_WITH_THIS_RESPONSE"
+  },
+  "vorticity": "NOT_MEASURED",
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    {
+      "id": "P4-REVIEW-N01",
+      "severity": "P3",
+      "class": "ARTIFACT_SEMANTIC_LABELING",
+      "path": "report/bound_fixture.json::deficient_projected_error",
+      "cause": "The saved vector is .001 times the first standard basis vector and includes a nuisance-direction component, despite its projected name.",
+      "counterexample_max_quotient_residual": 7.692307692307693e-05,
+      "projected_norm": 0.0009607689228305228,
+      "estimator_change_after_projection": 2.220446049250313e-16,
+      "consequence": "Name/support semantics are inaccurate; the conservative bound and identified estimate remain valid.",
+      "bounded_optional_fix": "Rename it raw_error or store P0@e0; keep epsilon=0.001 as the upper bound and regenerate dependent fixture/check/manifest under a new identity."
+    }
+  ],
+  "checks": {
+    "numerical_residual_checks_passed": 192,
+    "exact_rank_cases": 12,
+    "nominal_ranks": [
+      12,
+      15,
+      15,
+      18
+    ],
+    "equal_radius_ranks": [
+      8,
+      11,
+      11,
+      14
+    ],
+    "independent_error_fixtures": 64,
+    "near_equality_first_failure_reproduced": true,
+    "nominal_projector_criterion_preserved": true,
+    "pdf_pages": 17,
+    "equations": 27,
+    "propositions": 4,
+    "pdf_figures": 3,
+    "all_assertions_passed": true
+  },
+  "next_transition": "Actual formal review packet may bind this assessment after exact identity verification; unchanged candidate does not need full repeat. Controller qualification remains pending.",
+  "artifacts": {
+    "review": "REVIEW.md",
+    "probe_source": "independent_probes.py",
+    "probes": "raw/probes.json",
+    "identities": "raw/identity_check.json",
+    "commands": "raw/commands.json",
+    "document_checks": "raw/document_checks.json"
+  },
+  "scope_deviation_disclosure": "Initial read-only git status and rev-parse HEAD occurred before recognizing the parent no-Git scope; no Git mutations and no further Git commands."
+}

@@ -1,0 +1,15 @@
+/home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-06-P4-DESIGN/report/reproduce.py", line 390, in <module>
+    main()
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-06-P4-DESIGN/report/reproduce.py", line 266, in main
+    row[name]=svd_record(matrices(1+gap,name,l),rank,physical_null(1+gap,name) if name=="both" or gap else None)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-06-P4-DESIGN/report/reproduce.py", line 147, in svd_record
+    close(qn@qn.T, pk, "analytic/SVD null projectors", atol=1e-12)
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-06-P4-DESIGN/report/reproduce.py", line 45, in close
+    check(delta <= limit, f"{label}: residual {delta:.17g} > {limit:.17g}")
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-06-P4-DESIGN/report/reproduce.py", line 38, in check
+    raise AssertionError(message)
+AssertionError: analytic/SVD null projectors: residual 2.6253829486555184e-12 > 9.9999999999999998e-13

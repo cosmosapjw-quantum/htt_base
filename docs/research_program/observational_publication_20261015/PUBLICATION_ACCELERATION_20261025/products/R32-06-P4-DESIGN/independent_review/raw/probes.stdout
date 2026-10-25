@@ -1,0 +1,130 @@
+{
+  "scope": "independent finite response-design probes only",
+  "numpy": "2.4.2",
+  "sympy": "1.14.0",
+  "python": "3.12.3",
+  "nominal": [
+    {
+      "design": "baseline",
+      "rank": 12,
+      "nullity": 6,
+      "smin": 0.10665269388736835,
+      "cutoffs": {
+        "1e-12": 12,
+        "1e-10": 12,
+        "1e-08": 12
+      }
+    },
+    {
+      "design": "endpoint",
+      "rank": 15,
+      "nullity": 3,
+      "smin": 0.09763873653697801,
+      "cutoffs": {
+        "1e-12": 15,
+        "1e-10": 15,
+        "1e-08": 15
+      }
+    },
+    {
+      "design": "history",
+      "rank": 15,
+      "nullity": 3,
+      "smin": 0.10180602381390118,
+      "cutoffs": {
+        "1e-12": 15,
+        "1e-10": 15,
+        "1e-08": 15
+      }
+    },
+    {
+      "design": "both",
+      "rank": 18,
+      "nullity": 0,
+      "smin": 0.09393875068420443,
+      "cutoffs": {
+        "1e-12": 18,
+        "1e-10": 18,
+        "1e-08": 18
+      }
+    }
+  ],
+  "exact_rank_results": [
+    {
+      "q": "1",
+      "design": "baseline",
+      "quotient_rank": 8
+    },
+    {
+      "q": "1",
+      "design": "endpoint",
+      "quotient_rank": 11
+    },
+    {
+      "q": "1",
+      "design": "history",
+      "quotient_rank": 11
+    },
+    {
+      "q": "1",
+      "design": "both",
+      "quotient_rank": 14
+    },
+    {
+      "q": "2",
+      "design": "baseline",
+      "quotient_rank": 12
+    },
+    {
+      "q": "2",
+      "design": "endpoint",
+      "quotient_rank": 15
+    },
+    {
+      "q": "2",
+      "design": "history",
+      "quotient_rank": 15
+    },
+    {
+      "q": "2",
+      "design": "both",
+      "quotient_rank": 18
+    },
+    {
+      "q": "1/2",
+      "design": "baseline",
+      "quotient_rank": 12
+    },
+    {
+      "q": "1/2",
+      "design": "endpoint",
+      "quotient_rank": 15
+    },
+    {
+      "q": "1/2",
+      "design": "history",
+      "quotient_rank": 15
+    },
+    {
+      "q": "1/2",
+      "design": "both",
+      "quotient_rank": 18
+    }
+  ],
+  "rational_basis_determinant": "-1327104*(q - 1)**4/15625",
+  "deficient_fixture_quotient_diagnostic": {
+    "residual_max": 7.692307692307693e-05,
+    "norm_stored": 0.001,
+    "norm_after_projection": 0.0009607689228305228,
+    "estimate_unchanged_after_projection": 2.220446049250313e-16
+  },
+  "additional_error_cases": 64,
+  "maximum_actual_to_bound_ratio": 0.22091921042630283,
+  "rank_loss_eta_equals_smin": {
+    "perturbation_norm": 0.09393875068420442,
+    "smallest_singular_value": 6.207056983024237e-17
+  },
+  "unknown_added_offsets_quotient_rank": 12,
+  "all_assertions_passed": true
+}
+check_count 192

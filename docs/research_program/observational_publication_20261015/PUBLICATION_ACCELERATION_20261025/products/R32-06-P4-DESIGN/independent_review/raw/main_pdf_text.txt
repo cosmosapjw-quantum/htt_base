@@ -1,0 +1,698 @@
+Separating observer motion, bulk flow and a two-mode history by
+                      finite response design
+
+                HTT conditional response-design research
+                        (Dated: 25 October 2026)
+
+
+
+
+                                  1
+                                             Abstract
+     A radial velocity response measures the difference between source bulk motion and observer
+motion. A time-integrated channel also loses any history mode orthogonal to its window. We con-
+struct a finite example in which these two ambiguities can be separated explicitly. Thirteen radial
+responses at two radii determine twelve combinations of eighteen signed coefficients after removing
+a scalar calibration. Their six-dimensional kernel consists of a common observer–bulk displacement
+and an unweighted history mode. An independently calibrated three-component observer response
+removes the first ambiguity, while a second normalized history window removes the second. Either
+addition raises the rank to fifteen; together they give rank eighteen. Equal radii provide a negative
+control: the joint rank falls to fourteen. A single, fixed column normalization permits compar-
+isons of all four designs, radial leverage and channel precision. Singular-value bounds quantify the
+deterministic error amplification and the response accuracy required for a stable inverse. The con-
+struction is a conditional measurement design with prescribed response functions and calibration,
+suitable for evaluating which additional information a physical history provider must supply.
+
+
+I.    A COMMON FRAME AND A FINITE RESPONSE
+
+
+     Consider a nonrotating orthonormal spatial frame carried by an expanding fiducial normal
+observer. We use signature (− + ++), proper radial positions rn, n · n = 1, and the fixed
+scales
+
+
+                          c = 299792.458 km s−1 ,           R∗ = 100 Mpc,
+                         v∗ = 300 km s−1 ,                  β∗ = v∗ /c,                          (1)
+
+                        h∗ = v∗ /R∗ = 3 km s−1 Mpc−1 .
+     Our dimensionless radial datum is y = (c/v∗ )δz. All vector components and tensors
+below refer to this same frame. The source bulk and observer velocities are v∗ b and v∗ ℓ.
+A positive observer velocity along the observer-to-source direction reduces the first-order
+radial redshift, giving the relative-motion term n · (b − ℓ). A scalar rate coefficient h∗ m
+and a trace-free symmetric rate h∗ S complete the local affine part of the response. These
+are coefficients of a local first-order design; the reference frame and scales do not supply a
+finite-redshift propagation law or an absolute background expansion measurement.
+     Choose the Frobenius-orthonormal STF basis
+
+                                                2
+                 diag(1, −1, 0)           diag(1, 1, −2)
+              F1 =      √          , F2 =        √          ,
+                          2                        6
+                                                                                     (2)
+                 ex eTy + ey eTx          ex eTz + ez eTx          ey eTz + ez eTy
+           F3 =        √         ,   F4 =       √         ,   F5 =       √         .
+                         2                        2                        2
+   Thus S = 5a=1 sa Fa and ∥S∥2F = a s2a . We retain all five signed coordinates and the
+           P                           P
+
+full matrix, rather than its norm alone.
+   Let τ ∈ [0, 1] parametrize a stipulated two-mode matter-tilt history,
+
+
+                                         βG (τ ) = β∗ [g0 + (2τ − 1)g1 ].                                       (3)
+
+   The coefficients g0 , g1 are dimensionless vectors in the transported common frame. For a
+normalized window W , prescribe the dimensionless sensitivity
+
+                                         Z 1
+                                                        βG (τ )                     r
+                                  ρn ·         W (τ )           dτ,          ρ=        .                        (4)
+                                          0              β∗                         R∗
+   Equation (4) defines this experiment. It does not derive a universal relation between tilt,
+acceleration and a redshift-rate dipole. A physical application must provide that relation and
+its window independently. The illustrative coefficient box [−1, 1]18 ensures supτ ∥βG (τ )∥ ≤
+  √
+2 3β∗ < 1; the box serves only to locate the finite examples and is not a probability
+distribution or a cosmological admissible region.
+   Order the parameters as
+
+
+               θ = (ℓx , ℓy , ℓz , bx , by , bz , m, g0x , g0y , g0z , s1 , . . . , s5 , g1x , g1y , g1z )T .   (5)
+
+   For the baseline window W0 = 1, the integral of 2τ − 1 vanishes. With one free scalar
+calibration α, the thirteen baseline means are
+
+
+                           yi = α + ni · (b − ℓ) + ρi [m + ni · g0 + nTi Sni ].                                 (6)
+
+   The first nine directions, all at ρ = 1, are
+
+
+               ex , −ex , ey , −ey , ez , −ez , (3/5, 4/5, 0), (3/5, 0, 4/5), (0, 3/5, 4/5).                    (7)
+
+   Append ex , −ex , ey , ez at ρ = q > 0. The nominal design uses q = 2. Define E3 to have
+rows nTi , define Q5 to have rows (nTi Fa ni )5a=1 , and set R = diag(ρi ). The baseline design
+and nuisance column are
+
+                                                           3
+                      J0 = [−E3 , E3 , R1, RE3 , RQ5 , 013×3 ],               N0 = 113 .              (8)
+
+      Here R1 is a vector of dimensionless radii; it is distinct from the physical length R∗ .
+
+
+II.     ONE NUISANCE QUOTIENT AND TWO ADDITIONAL RESPONSES
+
+
+      Two independently calibrated three-component responses are proposed:
+
+                                             Z 1
+                                                         βG (τ )                g1
+                   zL = ℓ + eL ,      zG =         2τ            dτ + eG = g0 +    + eG .             (9)
+                                               0          β∗                    3
+      The first supplies an observer-velocity anchor. The second uses the normalized window
+W1 = 2τ , whose overlap with 2τ −1 is 1/3. Their declared gains express both in dimensionless
+y-equivalent units. This is a pair of hypothetical measurement functionals, rather than a
+claimed delivered survey channel. Their calibration is independent in the algebraic sense
+that neither carries the free α of (6). No stochastic independence is assumed.
+      The augmented rows are
+
+                                                                                              
+                                                                        J0               113 
+ JL = [I3 , 0, 0, 0, 0, 0],    JG = [0, 0, 0, I3 , 0, I3 /3],      J =  JL  ,        N =  03  . (10)
+                                                                                          
+                                                                                          
+                                                                        JG                   03
+
+      Block widths in (10) follow (5). Removing an addition deletes its three rows from both J
+and N . For every design, the scalar nuisance is removed once, using the complete retained
+data vector and the same construction for all parameter columns. For a positive row-
+precision matrix W , define
+
+                              (W N )(W N )T
+                    P =I−                   ,            Aphys = P W J,        ȳ = P W y.           (11)
+                                ∥W N ∥2
+      For the full design we take
+
+
+                                     W = diag(I13 , σL−1 I3 , σG
+                                                               −1
+                                                                  I3 ),                              (12)
+
+      with nominal σL = σG = 1. The subdesigns retain the applicable diagonal blocks. These
+positive scales define a deterministic comparison metric. A physical joint sampling covariance
+
+                                                     4
+and a statistical law are not supplied. In particular, the singular-value plots below do not
+carry confidence levels.
+   The kernel characterization
+
+
+                                   P W Jθ = 0     ⇐⇒      Jθ ∈ col N                             (13)
+
+   holds because W is invertible and P projects away exactly W N . Thus finite positive
+precision weights alter conditioning but not structural identifiability. Allowing unknown
+offsets for the added responses would enlarge N and require a new analysis.
+
+
+III.   EXACT RANKS AND IDENTIFIED COMBINATIONS
+
+
+   Proposition 1 (two-radius separation). For (7), the nine-dimensional spherical poly-
+nomial space consisting of a monopole, a dipole and an STF quadrupole is unisolvent. With
+the four repeated directions in (7) placed at any distinct positive radius q ̸= 1, the matrix
+
+
+                       X = [E4 , RE9 ],       E4 = [1, E3 ],    E9 = [1, E3 , Q5 ]               (14)
+
+   has rank thirteen.
+   Proof. Let f (n) = a + d · n + nT T n, T STF, vanish on the first nine directions. The
+opposite axis pairs first give d = 0, then a + Tii = 0. Taking the trace gives a = 0 and
+all three diagonal entries vanish. At the three remaining directions the nonzero cross terms
+force Txy = Txz = Tyz = 0. Hence E9 is invertible. A degree-one polynomial vanishing at
+ex , −ex , ey , ez is likewise zero, so the repeated-direction E4 is invertible. A null vector of (14)
+represents polynomials p1 + ρp2 . At ρ = 1, unisolvence gives p2 = −p1 as polynomials. At
+the four repeated directions the equation becomes (1 − q)p1 = 0, forcing p1 = p2 = 0. This
+is the retained two-radius rank argument, expressed in the orthonormal tensor coordinates
+(2). □
+   Proposition 2 (baseline quotient). At q ̸= 1, the baseline response after (11) has
+rank twelve. Its exact six-dimensional kernel is
+
+
+           ksplit (v) = (v, v, 0, 0, 0, 0),   khist (w) = (0, 0, 0, 0, 0, w),    v, w ∈ R3 .     (15)
+
+   The identified signed combinations are
+
+                                                  5
+                            b − ℓ,        m,      g0 ,     (s1 , . . . , s5 ).                     (16)
+
+  Proof. By (13), a quotient-null vector satisfies J0 θ = a1 for some a. Proposition 1 applied
+to the coefficients (−a, b − ℓ, m, g0 , s) forces a = 0, b − ℓ = 0, m = g0 = s = 0. No row
+contains g1 . These are precisely (15), proving both completeness and the rank. □
+  The ambiguity in (15) has two separate mechanisms. A shared change to source bulk and
+observer velocity leaves their relative radial velocity unchanged. A history proportional to
+2τ − 1 has zero unweighted mean. Repeated angular or radial observations with the same
+response window cannot reveal that history coefficient.
+  Proposition 3 (constructive augmentation). At q ̸= 1, either response in (9) gives
+quotient rank fifteen and a three-dimensional kernel. Their joint addition gives quotient
+rank eighteen and a unique eighteen-coordinate inverse on the quotient data image.
+  Proof. The first addition acts on (15) as JL ksplit (v) = v and JL khist (w) = 0. The
+second acts as JG ksplit (v) = 0 and JG khist (w) = w/3. Hence each addition removes exactly
+its corresponding three-dimensional kernel, and together they remove all six dimensions.
+Equation (13) extends the result to every positive finite precision weighting in (12). □
+  This count separates information supplied by an endpoint anchor from information sup-
+plied by a new history moment. The same conclusion follows by reconstructing
+
+
+                     ℓ = zL ,        b = (b − ℓ) + zL ,      g1 = 3(zG − g0 ),                     (17)
+
+  after solving for (16).
+  Proposition 4 (equal-radius negative control). At q = 1, the baseline quotient has
+rank eight. Either addition has rank eleven, and their joint addition has rank fourteen.
+  Proof. At one radius, (6) depends only on the scalar α+m, the dipole b−ℓ+g0 , and the five
+STF coefficients. The nuisance quotient removes the scalar, leaving the independent dipole
+and quadrupole, hence rank eight. Each calibrated addition contributes three independent
+output coordinates. With both additions the remaining kernel is generated by
+
+
+           δθd = (0, −d, 0, d, 0, −3d),        δθm = (0, 0, t, 0, 0, 0),         d ∈ R3 , t ∈ R.   (18)
+
+  The first leaves every raw mean, including both additions, unchanged. The second is
+absorbed by δα = −t. Conversely, a joint quotient-null vector obeys ℓ = 0, g1 = −3g0 ,
+
+                                                 6
+b = −g0 and s = 0, with m free. Thus the kernel has exactly four dimensions. □
+     Equation (18) exhibits why independent endpoint and history anchors do not replace
+radial leverage. Distinct radii separate an angular intercept from a depth-proportional dipole
+and monopole.
+
+
+IV.     EXPLICIT FINITE WITNESSES
+
+
+     Starting from θ = 0, choose v = ex /4 and w = ey /4. The two states ksplit (v) and khist (w)
+both remain in the illustrative box. Every baseline prediction is exactly zero for each state.
+The first changes zL by (1/4, 0, 0); the second changes zG by (0, 1/12, 0). Their sum changes
+both additions while leaving all thirteen baseline means unchanged. These signed nineteen-
+coordinate predicted arrays are retained in the numerical supplement.
+     The history witness corresponds to
+
+
+                                                  β∗
+                                      βG (τ ) =      (2τ − 1)ey .                           (19)
+                                                  4
+     Its time integral vanishes although the history is nonzero except at its midpoint. The
+zero baseline column is therefore a response null direction, not a statement that the physical
+history vanishes.
+     For an equal-radius joint witness in the same box, take d = ex /4 in (18): b = −ex /4,
+g0 = ex /4, g1 = −3ex /4, with all other coordinates zero. All nineteen raw means remain
+zero. A separate change m = 1/4, α = −1/4 supplies the monopole witness.
+
+
+V.     FIXED NORMALIZATION AND SPECTRAL COMPARISON
+
+
+     Velocity and rate scales in (1) are specified before numerical normalization. Let J∗ and
+P∗ denote the full design at q = 2, σL = σG = 1. Define once
+
+
+                 dj = ∥P∗ J∗ ej ∥2 > 0,     L = diag(d−1           −1
+                                                      1 , . . . , d18 ),   θ = Lz.          (20)
+
+     The normalized response is
+
+
+                                           A = P W JL.                                      (21)
+
+                                                  7
+   Nominal augmented columns have unit norm. The same numerical matrix L is then
+frozen for every subdesign, radius and precision case. In particular, the baseline’s three zero
+history columns remain zero; weaker channels are not restored to unit norm during a scan.
+The supplement records the complete dj , L, unscaled and scaled spectra and all physical
+unit conversions.
+   With A = U ΣV T , the identified scaled coordinates are VrT z = VrT L−1 θ, where Vr contains
+the right singular vectors for the nonzero spectrum. The corresponding projector is Πid =
+Vr VrT , and the kernel projector is I − Πid . The named physical combinations (16) span
+the same identified information but are not an orthonormal singular-vector basis. Singular-
+vector signs and bases within repeated singular subspaces have no physical significance.
+   The baseline is a 13 × 18 matrix of rank twelve. A thin SVD returns thirteen singular
+values and therefore only one explicit zero. The parameter kernel still has six dimensions.
+The complete eighteen-dimensional right basis and kernel projector are required to retain
+the five additional null directions absent from that thin list. The plotted spectrum may pad
+the missing five entries with structural zeros provided the caption identifies the padding.
+   The finite comparison uses the following analytic targets:
+
+
+           Design                   Rows Rank at q = 2 Kernel dimension Rank at q = 1
+
+           Baseline                   13            12                 6              8
+           Baseline plus endpoint     16            15                 3             11
+           Baseline plus history      16            15                 3             11
+           Both additions             19            18                 0             14
+
+
+
+                                                                           Identified Full-vector
+Design                      Rank           Kernel    Positive smin         condition gain
+
+baseline                      12                6         0.10665269       16.950054 unbounded
+endpoint                      15                3        0.097638737       18.655425 unbounded
+history                       15                3         0.10180602       17.900956 unbounded
+both                          18                0        0.093938751       19.539575 10.6452
+
+
+
+   To show radial sensitivity, set q = 1 + δ for
+
+                                                8
+                                                                                                                   baseline (kernel 6)
+                                                                                                                   endpoint (kernel 3)
+                                                                                                                   history (kernel 3)
+    singular value, fixed scaled coordinates
+
+
+                                                                                                                   both (kernel 0)
+                                                100
+
+
+
+
+                                               10−1
+
+
+                                                      2.5    5.0         7.5           10.0          12.5   15.0             17.5
+                                                                        positive singular-value index
+
+
+
+
+FIG. 1. Singular spectra at q=2 with the fixed normalization (20). Legends state structural null
+dimensions. The row metric is stipulated, not measured covariance.
+
+
+
+
+                                                            δ ∈ {0, 10−4 , 10−3 , 10−2 , 10−1 , 1, 3}.                                   (22)
+
+
+   At every positive separation, the analytic ranks are those of Proposition 3; as the sepa-
+ration approaches zero, four joint singular directions become weak and at equality join the
+exact kernel. Numerical threshold dependence near equality should be displayed alongside
+the structural rank. A finite threshold does not change the algebraic theorem. At equality
+the inverse gain for all eighteen coordinates is infinite, even though the fourteen identified
+directions retain finite gains.
+   For additional-channel precision, evaluate every pair
+
+
+
+                                                                   (σL , σG ) ∈ {1/2, 1, 2, 4}2                                          (23)
+
+
+   at q = 2, preserving (20). These cases measure how the weakest recoverable combination
+responds to the relative precision of the two added channels.
+
+                                                                               9
+                                                                                   equal radius: rank 14
+                                                                                                                                                                             0.094
+
+                                                                                                                                    4.0                                      0.092
+                                         10−1
+
+
+
+
+                                                                                                                                                                                     full-rank minimum singular value
+      smallest positive singular value
+
+
+                                                                                                                                                                             0.090
+
+
+
+
+                                                                                                            endpoint row scale σL
+                                              −2                                                                                                                             0.088
+                                         10                                                                                         2.0
+
+                                                                                                                                                                             0.086
+                                              −3
+                                         10                                                                                                                                  0.084
+                                                                                                                                    1.0
+                                                                                                                                                                             0.082
+                                         10−4
+                                                                                                                                                                             0.080
+                                                                                                                                    0.5
+                                                                                                                                                                             0.078
+                                         10−5
+                                                   10−4     10−3      10−2      10−1         100                                          0.5      1.0        2.0      4.0
+                                                   radius gap q−1 (equal-radius marker offset)                                                  history row scale σG
+
+
+
+
+FIG. 2. Radial leverage and additional-channel precision in fixed scaled coordinates. The equal-
+radius marker is offset horizontally for log display; its full-vector inverse gain is unbounded.
+
+
+VI.                                      DETERMINISTIC ERROR SENSITIVITY
+
+
+   Let the normalized projected data obey ȳ = Az + e, with ∥e∥2 ≤ ϵ. Suppose the operator
+                      e = A + ∆, where ∥∆∥2 ≤ η. Both errors are measured after the
+used for inversion is A
+prescribed quotient and normalization. Thus ∆ must include any error in that effective
+operator; nuisance-model changes cannot be treated as harmless coordinate changes. For a
+full-column-rank A, Weyl’s bound gives
+
+
+                                                                                           e ≥ smin (A) − η.
+                                                                                     smin (A)                                                                                                                           (24)
+
+   If smin (A) > η, the least-squares inverse satisfies
+
+                                                                                                               ϵ + η∥z∥2
+                                                                                   ∥b
+                                                                                    z − z∥2 ≤                              .                                                                                            (25)
+                                                                                                              smin (A) − η
+                                               e+ (e − ∆z). Taking norms and using (24)
+                              e gives zb − z = A
+   Proof. Full column rank of A
+proves (25). No distribution or independence assumption is used. □
+   The physical coefficient error obeys ∥θb − θ∥2 ≤ ∥L∥2 ∥b
+                                                          z − z∥2 , and any specified linear
+physical functional can use its own sharper factor ∥CL∥2 . The illustration ϵ = 10−3 , ∥z∥2 ≤ 1
+is a separate error scenario, not the claim that the whole box [−1, 1]18 lies in the unit z-ball.
+For η/smin ∈ {0, 0.1, 0.25, 0.5, 0.75, 0.9, 1, 1.1}, the bound loses certification at one. Such
+cases are reported as NOT_CERTIFIED_BY_THIS_BOUND.
+
+                                                                                                           10
+   For a fixed rank-deficient operator, the minimum-norm estimate recovers the orthogonal
+identified projection with
+
+                                                           ϵ
+                                     ∥b
+                                      z − Πid z∥2 ≤             ,                             (26)
+                                                       s+
+                                                        min (A)
+   where s+
+          min is the smallest nonzero singular value. This controls identified combinations
+
+only. An arbitrary kernel component leaves the data unchanged, so no uniform full-vector
+bound follows. Perturbations that change rank or the kernel require their own subspace
+control; (26) is the fixed-operator statement.
+   Equation (17) also gives direct, physically transparent bounds. If the errors on the
+estimated combinations obey ∥δ(b − ℓ)∥ ≤ eD , ∥δzL ∥ ≤ eL , ∥δg0 ∥ ≤ e0 , and ∥δzG ∥ ≤ eG ,
+then
+
+
+                             ∥δb∥ ≤ eD + eL ,        ∥δg1 ∥ ≤ 3(eG + e0 ).                    (27)
+
+   The history inverse incurs a factor of three because the new window overlaps the pre-
+viously invisible temporal mode by only 1/3. This penalty survives the fact that the joint
+design is injective.
+
+
+VII.   PHYSICAL INTERPRETATION AND THE NEXT MEASUREMENT
+
+
+   The design identifies what must change when a baseline response cannot separate physical
+mechanisms. The observer–bulk ambiguity requires a response to observer motion that
+is not a response to the same source bulk displacement. The history ambiguity requires
+a window with nonzero overlap with a temporal mode invisible to the existing window.
+These requirements are independent of the number of rows carrying the unchanged baseline
+response. Radial leverage performs a third job: separating angular intercepts from rate and
+mean-history coefficients.
+   For a physical implementation, the carrier remains the signed vectors (ℓ, b, g0 , g1 ), the full
+STF tensor S, scalar m, response functions and their joint error set in one frame. The ra-
+dial response contains no antisymmetric velocity-gradient measurement, because nT Ωn = 0.
+Matter vorticity therefore remains NOT_MEASURED; a chosen hypersurface normal’s irrota-
+tionality is a distinct statement. The scalar rate and fitted STF coefficients in this design
+do not alone provide a validated physical expansion/shear bridge.
+
+                                                11
+                                           101
+   deterministic upper bound on ||ẑ−z||                                                         uncertified at and above 1
+
+
+
+
+                                           100
+
+
+
+
+                                          10−1
+
+
+
+
+                                          10−2
+
+                                                 0.0   0.2   0.4              0.6         0.8               1.0
+                                                                operator error η / smin
+
+
+
+
+FIG. 3. Deterministic inverse bound (25) for epsilon=0.001 and ||z||<=1. At and above eta/smin=1
+the bound is uncertified. No sampling law is supplied.
+
+
+
+
+   No map from this finite carrier to a physical signed comparator xC , an anchored stress
+score Q, an occupancy F , an exceedance Π, or a depth functional GF has been specified.
+Each remains NOT_EVALUABLE_WITH_THIS_RESPONSE. Respectively, evaluation would require
+the full physical comparator components and frame, a sign/domain-clean anchor, a support
+measure and ceiling, a joint probability law, and compatible depth supports and joint de-
+pendence. These missing definitions are retained as undefined sectors rather than filled by
+zero.
+
+
+
+   The original V03 external-history validation remains a separate requirement. It must sup-
+ply actual endpoint and history response kernels, calibration/nuisance coupling, common-
+frame transport and units, and a justified response error or covariance. The result here is
+the exact finite conditional design and its inverse sensitivity. It neither changes the original
+scientific acceptance nor supplies a native transfer or family-identification result.
+
+                                                                   12
+  Appendix A: Numerical appendix: reproducible comparison
+
+
+  The companion consumer verifies the sealed retained inputs, constructs (2), (7)–(12),
+freezes (20), and emits all designs, full right singular bases, kernel/identified projectors,
+spectra and signed witnesses. The nominal rank counts must agree at relative cutoffs
+10−12 , 10−10 , 10−8 . Frobenius-basis and null residuals must be at most 10−12 ; reconstruc-
+tion and deterministic bound checks use relative tolerance 10−10 or absolute tolerance 10−12
+for unit-scale fixtures. Exact analytic rank remains authoritative near equal radii. The
+generated tables and figures report both numerical values and their design assumptions.
+  The source rank theorem is retained from mathematical_recovery.md, “Two radii sep-
+arate angular nuisance and depth response”, corroborated in independent_review.md,
+“Rank-thirteen example and recovered physical scope”, and related to the oracle rank crite-
+rion in NATIVE_INFERENCE_THEOREMS.md, §6. The endpoint/history distinction and common
+nuisance quotient are developed in theory_synthesis_20260913/REPORT.md, §§13–13.1,
+and theorem_physical_chapter.md, the response quotient and anchor-coordinate para-
+graphs. Their precise source identities and the new finite construction are separated in the
+companion claim map.
+
+
+  Appendix B: Generated numerical appendix tables
+
+
+
+                Parameter Physical coefficient unit          d_j         L_jj
+
+                ell_x      v*=300 km/s                2.368381466 0.4222292795
+                ell_y      v*=300 km/s                2.134695078 0.4684509794
+                ell_z      v*=300 km/s                2.181742423 0.4583492485
+                b_x        v*=300 km/s                2.146911915 0.4657852952
+                b_y        v*=300 km/s                1.885980667 0.5302281287
+                b_z        v*=300 km/s                1.939071943 0.5157106231
+                m          h*=3 km/s/Mpc              1.664100589 0.6009252126
+                g0_x       beta*=300/299792.458       3.407232127 0.2934933584
+                g0_y       beta*=300/299792.458       2.666602563 0.3750090147
+                g0_z       beta*=300/299792.458       2.698717644 0.3705463601
+
+
+                                             13
+            Parameter Physical coefficient unit           d_j         L_jj
+
+            s_1        h*=3 km/s/Mpc                 2.8381359 0.3523439452
+            s_2        h*=3 km/s/Mpc               2.664247621 0.3753404872
+            s_3        h*=3 km/s/Mpc              0.6521915717 1.533291817
+            s_4        h*=3 km/s/Mpc              0.6521915717 1.533291817
+            s_5        h*=3 km/s/Mpc              0.6521915717 1.533291817
+            g1_x       beta*=300/299792.458 0.3333333333                 3
+            g1_y       beta*=300/299792.458 0.3333333333                 3
+            g1_z       beta*=300/299792.458 0.3333333333                 3
+
+
+1.   Complete nominal scaled spectrum: baseline
+
+
+
+                       Index                       Singular value
+
+                           1                       1.80776894878
+                           2                       1.75783553205
+                           3                       1.64202991241
+                           4                       1.16693241497
+                           5                      0.977608148968
+                           6                       0.93153934285
+                           7                      0.925000426039
+                           8                       0.72695402196
+                           9                      0.556681575992
+                          10                      0.237422793074
+                          11                      0.164010989736
+                          12                      0.106652693887
+                          13                  2.28393497472e-16
+                          14 structural zero (right completion)
+                          15 structural zero (right completion)
+                          16 structural zero (right completion)
+                          17 structural zero (right completion)
+
+
+                                         14
+                      Index                    Singular value
+
+                         18 structural zero (right completion)
+
+
+2.   Complete nominal scaled spectrum: endpoint
+
+
+
+                      Index                    Singular value
+
+                          1                     1.8214921072
+                          2                    1.77388823641
+                          3                     1.6579048791
+                          4                    1.16814162944
+                          5                   0.979221208186
+                          6                   0.933867897306
+                          7                    0.92679745181
+                          8                   0.745208194267
+                          9                    0.57589372613
+                         10                   0.375920041292
+                         11                   0.375052692147
+                         12                   0.360409875835
+                         13                   0.195900842657
+                         14                   0.146618339872
+                         15                   0.097638736537
+                         16                                 0
+                         17 structural zero (right completion)
+                         18 structural zero (right completion)
+
+
+3.   Complete nominal scaled spectrum: history
+
+
+
+                      Index                    Singular value
+
+                          1                     1.8224251976
+
+
+                                       15
+                      Index                   Singular value
+
+                         2                    1.77075892464
+                         3                     1.6569969902
+                         4                    1.17889465675
+                         5                    1.05629533648
+                         6                    1.04195741167
+                         7                    1.03219924361
+                         8                   0.961460443345
+                         9                   0.921463617644
+                        10                    0.91312580769
+                        11                   0.726700364284
+                        12                    0.55634543484
+                        13                   0.230754137695
+                        14                     0.1566639275
+                        15                   0.101806023814
+                        16                 1.84960232996e-16
+                        17 structural zero (right completion)
+                        18 structural zero (right completion)
+
+
+4.   Complete nominal scaled spectrum: both
+
+
+
+                              Index   Singular value
+
+                                 1    1.83552330269
+                                 2    1.78615342167
+                                 3     1.6720014412
+                                 4    1.17933809547
+                                 5    1.05743023017
+                                 6    1.04292085192
+                                 7    1.03553442499
+                                 8 0.964471288015
+
+
+                                      16
+                                 Index   Singular value
+
+                                     9 0.924256501433
+                                    10 0.914865452434
+                                    11 0.745162919861
+                                    12   0.57555461857
+                                    13 0.371204892219
+                                    14   0.36975411719
+                                    15 0.356918568169
+                                    16 0.192824411934
+                                    17 0.141550104788
+                                    18 0.0939387506842
+
+
+  All arrays, complete right bases and source-linked checks are in the companion JSON
+artifacts. This numerical appendix is generated from the frozen design and does not add
+observed channels.
+
+
+
+
+                                         17
+
