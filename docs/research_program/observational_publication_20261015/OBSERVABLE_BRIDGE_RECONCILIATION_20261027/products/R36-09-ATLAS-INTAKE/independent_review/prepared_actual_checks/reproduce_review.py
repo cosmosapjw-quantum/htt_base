@@ -1,0 +1,137 @@
+#!/usr/bin/env python3
+"""Independent cached-byte audit only. Never imports or executes source solvers/notebooks.
+Writes audit records only to this directory; no repo or controller mutations.
+"""
+from pathlib import Path
+from collections import Counter
+from datetime import datetime, timezone
+import hashlib, io, json, tarfile, zipfile, subprocess, tempfile, traceback, ast
+import numpy as np
+from astropy.io import fits
+
+OUT = Path(__file__).resolve().parent
+ROOT = Path('/home/cosmosapjw/Dropbox/bianchi/htt_base')
+PREP = Path('/mnt/extdrive/workdir/htt_open_data/r36_atlas_source_preparation')
+RESP = PREP / 'responses'
+ACT = Path('/mnt/extdrive/workdir/htt_open_data/r36_atlas_actual')
+PRODUCT = ROOT / 'docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-09-ATLAS-INTAKE'
+raw = {'schema': 'htt.r36.fresh_cached_source_review.raw/1', 'utc': datetime.now(timezone.utc).isoformat(), 'executor': '/root/r36_atlas_fresh_review', 'requested_runtime': 'gpt-6-astra/xhigh', 'observed_runtime': 'UNKNOWN', 'failures': [], 'checks': [], 'archive_layers': [], 'notebooks': [], 'numeric_arrays': [], 'pdfs': [], 'chains': [], 'tables': [], 'fits': [], 'source_snippets': []}
+def sha(b): return hashlib.sha256(b).hexdigest()
+def gitblob(b): return hashlib.sha1(f'blob {len(b)}\0'.encode()+b).hexdigest()
+def check(name, condition, detail=None):
+    raw['checks'].append({'name':name, 'pass':bool(condition), 'detail':detail})
+    if not condition: raw['failures'].append({'check':name,'detail':detail})
+def jsonread(p): return json.loads(p.read_bytes())
+def notebook(label, b):
+    d = json.loads(b)
+    record = {'label':label,'sha256':sha(b),'cells':len(d['cells']), 'mime_counts':{}, 'outputs':[], 'numeric_literal_containers':[], 'timing_sources':[],'attachments':[]}
+    mimes = Counter()
+    for i,c in enumerate(d['cells']):
+        source = ''.join(c.get('source',[]))
+        if 'time_case' in source: record['timing_sources'].append({'cell':i,'source':source})
+        if c.get('attachments'): record['attachments'].append({'cell':i,'keys':list(c['attachments'])})
+        if c.get('cell_type') == 'code':
+            try:
+                tree = ast.parse(source)
+                for n in ast.walk(tree):
+                    if isinstance(n,(ast.List, ast.Tuple)) and len(n.elts)>=3:
+                        try:
+                            value=ast.literal_eval(n)
+                            if all(isinstance(x,(int,float,complex)) for x in value): record['numeric_literal_containers'].append({'cell':i,'line':n.lineno,'value':str(value)})
+                        except (ValueError,TypeError,MemoryError,RecursionError): pass
+            except SyntaxError: pass # Jupyter magics are not executed.
+        for o in c.get('outputs',[]):
+            data=o.get('data',{}); mimes.update(data.keys())
+            text=''.join(o.get('text',[]))+''.join(data.get('text/plain',[]))
+            record['outputs'].append({'cell':i,'type':o.get('output_type'), 'mime_types':list(data),'text':text, 'source':source, 'error':{k:o[k] for k in ['ename','evalue'] if k in o},'other_data_lengths':{k:len(str(v)) for k,v in data.items() if k!='text/plain'}})
+    record['mime_counts']=dict(mimes)
+    raw['notebooks'].append(record)
+def npy(label,b):
+    a=np.load(io.BytesIO(b),allow_pickle=False)
+    raw['numeric_arrays'].append({'label':label,'sha256':sha(b),'dtype':str(a.dtype),'shape':list(a.shape),'finite':bool(np.isfinite(a).all()),'range':[float(a.min()),float(a.max())],'first_values':a.ravel()[:6].tolist()})
+def pdf(label,b):
+    with tempfile.NamedTemporaryFile(dir=OUT,suffix='.pdf') as f:
+        f.write(b); f.flush()
+        attached=subprocess.run(['pdfdetach','-list',f.name],capture_output=True,text=True)
+        info=subprocess.run(['pdfinfo',f.name],capture_output=True,text=True)
+        txt=subprocess.run(['pdftotext',f.name,'-'],capture_output=True,text=True)
+    record={'label':label,'sha256':sha(b),'magic':b[:8].decode('ascii','replace'), 'attachment_list':attached.stdout, 'attachment_rc':attached.returncode, 'attachment_stderr':attached.stderr,'info':info.stdout,'info_rc':info.returncode,'text_excerpt':txt.stdout[:1200],'text_rc':txt.returncode,'text_stderr':txt.stderr}
+    raw['pdfs'].append(record)
+    check('pdf_parse:'+label, attached.returncode==info.returncode==txt.returncode==0)
+    check('pdf_no_attachments:'+label,attached.stdout.strip()=='0 embedded files')
+def inspect_member(label,b):
+    if label.endswith('.ipynb'): notebook(label,b)
+    elif label.endswith('.npy'): npy(label,b)
+    elif label.endswith('.pdf') and '/._' not in label: pdf(label,b)
+    elif label.endswith('.txt') and '/._' not in label and ('chains/' in label or 'decoupled_chains/' in label):
+        a=np.loadtxt(io.BytesIO(b))
+        raw['chains'].append({'label':label,'sha256':sha(b),'shape':list(a.shape),'finite':bool(np.isfinite(a).all()),'first_rows':a[:2].tolist(),'first_column_range':[float(a[:,0].min()),float(a[:,0].max())]})
+    elif label.endswith(('.whl','.zip','.tar.gz')): archive(label,b)
+def archive(label,b):
+    if zipfile.is_zipfile(io.BytesIO(b)):
+        with zipfile.ZipFile(io.BytesIO(b)) as z:
+            members=[{'name':x.filename,'size':x.file_size,'directory':x.is_dir()} for x in z.infolist()]
+            raw['archive_layers'].append({'label':label,'sha256':sha(b),'bytes':len(b),'kind':'zip','members':members})
+            for x in z.infolist():
+                if not x.is_dir(): inspect_member(label+'!/'+x.filename,z.read(x)) # read checks member CRC
+    else:
+        with tarfile.open(fileobj=io.BytesIO(b),mode='r:*') as t:
+            members=[{'name':x.name,'size':x.size,'file':x.isfile(),'type':x.type.decode('ascii','replace')} for x in t.getmembers()]
+            raw['archive_layers'].append({'label':label,'sha256':sha(b),'bytes':len(b),'kind':'tar','members':members})
+            for x in t.getmembers():
+                if x.isfile(): inspect_member(label+'!/'+x.name,t.extractfile(x).read())
+try:
+    bound={PRODUCT/'RESULT.json':'b23d17b3708e47ecc04eb5c52ae756810ae80f3e5de196e61d2f96e41acb7aeb',PRODUCT/'RETURN.json':'b990feed2d59ed8ef4a6a1de0f17ce0c47321c47aef20c235d47b7d4332e5d86',ACT/'RAW_RECEIPT.json':'220f2239265f8db2f1cd727fcc2dee2395fef25fcc07273f8e8a2eaed31cc2f6',PREP/'PREPARATION_RETURN.json':'ffc338ebfb0ed7d8cc5b2d4f8d15c3f0e2762985c93c8e7cc2a267987275d576'}
+    raw['reviewed_input_identities']=[{'path':str(p),'sha256':sha(p.read_bytes()),'expected_sha256':h} for p,h in bound.items()]
+    for p,h in bound.items():check('frozen_identity:'+p.name,sha(p.read_bytes())==h)
+    state=jsonread(ROOT/'.agent-harness/runtime/r23-continuous/STATE.json')['tasks']['R36-09-ATLAS-INTAKE']
+    raw['controller_task_observation']={k:state.get(k) for k in ['spec','state','phase','attempt','packet_id','candidate_identity','review_packet']}
+    check('controller_input_held',state['state']=='held' and state['spec']['kind']=='input')
+    result=jsonread(PRODUCT/'RESULT.json'); ret=jsonread(PRODUCT/'RETURN.json')
+    check('no_false_acceptance',result['acceptance_met'] is False and result['qualified_products']==[] and ret['candidate_identity'] is None)
+    trees={name:jsonread(RESP/name) for name in ['anilos_pinned_tree.json','vicente_aniclass_tree.json','bianchi_tree.json']}
+    raw['trees']={name:{'sha256':sha((RESP/name).read_bytes()),'provider_tree_sha':d.get('sha'),'truncated':d.get('truncated'),'entries':d['tree']} for name,d in trees.items()}
+    for name,count in [('anilos_pinned_tree.json',42),('vicente_aniclass_tree.json',314),('bianchi_tree.json',68)]:check('complete_tree:'+name,not trees[name].get('truncated') and len(trees[name]['tree'])==count)
+    atree={x['path']:x for x in trees['anilos_pinned_tree.json']['tree']}
+    meta=jsonread(RESP/'zenodo48653.json'); files={x['key']:x for x in meta['files']}
+    raw['zenodo48653']={'metadata_sha256':sha((RESP/'zenodo48653.json').read_bytes()),'description':meta['metadata']['description'],'files':meta['files']}
+    raw['archive_integrity']=[]
+    for p in sorted((ACT/'downloads').iterdir()):
+        b=p.read_bytes(); record={'path':str(p),'bytes':len(b),'sha256':sha(b),'md5':hashlib.md5(b).hexdigest(),'git_blob':gitblob(b)}
+        if p.name in files:
+            f=files[p.name]; record['expected']={'size':f['size'],'checksum':f['checksum']}; good=len(b)==f['size'] and 'md5:'+record['md5']==f['checksum']
+        else:
+            key='dist/anilos-0.1.0-cp310-cp310-linux_x86_64.whl' if p.suffix=='.whl' else 'dist/anilos-0.1.0.tar.gz'
+            f=atree[key];record['expected']={'size':f['size'],'git_blob':f['sha']};good=len(b)==f['size'] and record['git_blob']==f['sha']
+        check('archive_source_identity:'+p.name,good);raw['archive_integrity'].append(record);archive(p.name,b)
+    check('six_archives_bytes',len(raw['archive_integrity'])==6 and sum(x['bytes'] for x in raw['archive_integrity'])==126033162)
+    for p in RESP.glob('*.ipynb'):notebook(str(p),p.read_bytes())
+    for p in RESP.glob('*.npy'):
+        b=p.read_bytes(); target='examples/'+p.name.replace('anilos_','');check('npy_git_identity:'+p.name,gitblob(b)==atree[target]['sha']);npy(str(p),b)
+    ctree={x['path']:x for x in trees['vicente_aniclass_tree.json']['tree']}
+    for p in (ACT/'aniclass_candidate_tables').iterdir():
+        b=p.read_bytes();key='external/external_Pk/'+p.name if p.name.startswith('Pk_') else p.name
+        a=np.loadtxt(io.BytesIO(b));check('aniclass_table_git_identity:'+p.name,gitblob(b)==ctree[key]['sha'])
+        raw['tables'].append({'path':str(p),'provider_path':key,'sha256':sha(b),'shape':list(a.shape),'first_rows':a[:3].tolist()})
+    btree={x['path']:x for x in trees['bianchi_tree.json']['tree']}
+    for old in jsonread(PREP/'CACHED_LEGACY_FITS_HEADERS.json'):
+        p=Path(old['path']);b=p.read_bytes();check('fits_source_identity:'+p.name,gitblob(b)==btree['test/'+p.name]['sha'])
+        with fits.open(io.BytesIO(b),memmap=False) as h:
+            raw['fits'].append({'path':str(p),'bytes':len(b),'sha256':sha(b),'hdus':[{'name':x.name,'header':dict(x.header),'columns':x.columns.names if isinstance(x,fits.BinTableHDU) else None,'shape':list(x.data.shape) if x.data is not None else None} for x in h]})
+            check('fits_single_scalar_column:'+p.name,len(h)==2 and h[1].columns.names==['simulation'] and h[1].header['NSIDE']==64)
+    meta=jsonread(RESP/'zenodo48654.json');raw['zenodo48654']={'metadata_sha256':sha((RESP/'zenodo48654.json').read_bytes()),'description':meta['metadata']['description'],'files':meta['files'],'video_bytes_fetched':False}
+    check('48654_only_four_listed_mp4',len(meta['files'])==4 and all(x['key'].endswith('.mp4') for x in meta['files']))
+    for name,ranges in [('anilos_source.py',[(307,347),(566,644)]),('aniclass_bianchi.ini',[(20,115)])]:
+        lines=(RESP/name).read_text().splitlines()
+        for lo,hi in ranges:raw['source_snippets'].append({'path':str(RESP/name),'sha256':sha((RESP/name).read_bytes()),'lines':[lo,hi],'text':'\n'.join(f'{i+1}: {s}' for i,s in enumerate(lines) if lo<=i+1<=hi)})
+    check('plot_count',len(raw['pdfs'])==33)
+    check('chain_count_and_width',len(raw['chains'])==17 and all(x['shape'][1]==20 for x in raw['chains']))
+except Exception as e:
+    raw['failures'].append({'exception':type(e).__name__,'message':str(e),'traceback':traceback.format_exc()})
+finally:
+    raw['execution_boundaries']={'solver_import_or_execution':False,'notebook_execution':False,'ode_execution':False,'numeric_atlas_generation':False,'network_requests':0,'repo_mutation':False,'state_mutation':False}
+    raw['summary']={'archive_files':len(raw.get('archive_integrity',[])),'archive_bytes':sum(x['bytes'] for x in raw.get('archive_integrity',[])),'archive_layers_including_nested':len(raw['archive_layers']),'tar_layers':len([x for x in raw['archive_layers'] if x['kind']=='tar']),'pdf_count':len(raw['pdfs']),'chain_count':len(raw['chains']),'notebooks_inspected_including_repeated_nested_members':len(raw['notebooks']),'unique_notebook_bytes':len(set(x['sha256'] for x in raw['notebooks'])),'npy_arrays_including_repeated_nested_members':len(raw['numeric_arrays']),'checks':len(raw['checks']),'failures':len(raw['failures'])}
+    target=OUT/'RAW.json'
+    if target.exists():target=OUT/('RAW_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%f')+'.json')
+    target.write_text(json.dumps(raw,indent=2,default=str)+'\n')
+    print(json.dumps({'output':str(target),'sha256':sha(target.read_bytes()),'summary':raw['summary'],'failures':raw['failures']},indent=2))

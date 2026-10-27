@@ -1,0 +1,171 @@
+{
+  "schema": "htt.r36.independent_partial_source_review/1",
+  "utc": "2026-10-27T04:42:06.555740+00:00",
+  "task_id": "R36-09-ATLAS-INTAKE",
+  "reviewer": "/root/r36_atlas_fresh_review",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "author_or_preparer": false,
+  "verdict": "PARTIAL_PASS",
+  "verdict_scope": "Independent review of the source-scoped no-payload finding and retained input HOLD for this exact acquisition attempt. This is not a pass of numeric external-atlas qualification.",
+  "scientific_status": "HOLD",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "candidate_identity": null,
+  "formal_controller_review_packet": null,
+  "formal_controller_review_recorded": false,
+  "original_B02": "HOLD",
+  "original42_effect": "none",
+  "packet_id": "241250cd32d475cdd34269d69ff8f4b969911c96caf969c6228bf36936fdece0",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "reviewed_identity": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-09-ATLAS-INTAKE/RESULT.json",
+      "sha256": "b23d17b3708e47ecc04eb5c52ae756810ae80f3e5de196e61d2f96e41acb7aeb",
+      "bytes": 5658
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-09-ATLAS-INTAKE/RETURN.json",
+      "sha256": "b990feed2d59ed8ef4a6a1de0f17ce0c47321c47aef20c235d47b7d4332e5d86",
+      "bytes": 4257
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_atlas_actual/RAW_RECEIPT.json",
+      "sha256": "220f2239265f8db2f1cd727fcc2dee2395fef25fcc07273f8e8a2eaed31cc2f6",
+      "bytes": 13826
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_atlas_fresh_review/RAW.json",
+      "sha256": "fd287eddd5c071634c3df79337e41ad041b0fc7e3ea6edb9aa2bb175c652a50a",
+      "bytes": 607912
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_atlas_fresh_review/SOURCE_BINDINGS_RAW.json",
+      "sha256": "882e3b4f400ba939b132b6a4f98622ed6d0a6147ca5715b438686bae7abde6f9",
+      "bytes": 12356
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_atlas_fresh_review/FIRST_FAILURE.json",
+      "sha256": "c7d01848681a33d92afc8cb7fd1b6c664c4173409189ce9f2858908bff37def5",
+      "bytes": 782
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_atlas_fresh_review/reproduce_review.py",
+      "sha256": "5f1f44bff260982275a743566627b581963381e7185f2bb463ba1a6e3d90d82e",
+      "bytes": 12572
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_atlas_fresh_review/reproduce_source_bindings.py",
+      "sha256": "ffe5c192d11f1b57fe7f588cdc03fab7abff6900ad0ce62f18ae53e859629642",
+      "bytes": 3267
+    }
+  ],
+  "method": "Independent archive recursion, source Git blob/provider MD5 and size recalculation, all TXT chain parsing, all PDF text/attachment inspection, notebook output and literal-container inspection, NPY loading without pickle, FITS HDU/column parsing, and static source convention inspection. The product validate_intake.py and its verdict were not used as a decision oracle.",
+  "checked_results": [
+    {
+      "source": "AniLoS 9b7a2611882dcca80a1491bcad2b8f05635faca7",
+      "finding": "Complete nontruncated 42-entry tree; wheel and tar match source Git blobs. Five nested tar layers and associated wheels contain source/build/code/notebook/timing material. All eight unique notebook byte versions across 19 occurrences were inspected; saved outputs are logs, shapes, Matplotlib text and PNG images, with no serialized coefficient array or notebook attachment. Numeric literals are plot orientation tuples and a multipole-axis list, not T/E/B values."
+    },
+    {
+      "source": "AniLoS time_case1.npy and time_case2.npy",
+      "finding": "Each is finite float64 shape (249,). Source figure notebook cells 43-50 explicitly forms elapsed time_end minus time_start, saves these files, and labels Time (s). These values are timing measurements, not multipoles."
+    },
+    {
+      "source": "AniCLASS jgvicente/aniclass class_aniclass be1e43fcb1d7549710ba3ca2baa74bb0216bd228",
+      "finding": "Complete nontruncated 314-entry tree. Four downloaded numeric candidates match Git blobs and have two or three columns. P(k) table is a primordial spectrum input; psd_FD_single is a phase-space input; selection/evolution tables have input-table structure. Other listed DAT families are recombination/BBN/heating/distortion resources, not a deterministic polarized atlas. The Bianchi notebook stores maps as rendered PNG outputs and array lengths, not alms."
+    },
+    {
+      "source": "Zenodo 48653",
+      "finding": "Four ZIP sizes and provider MD5 values match. All 33 PDFs parse as posterior/triangle plots and have zero embedded files. All 17 chain TXT files parse: 260572 total rows, 20 columns each. Provider metadata identifies MC chains and posterior plots; no ell,m,T,E,B member or convention-linked polarized map payload appears."
+    },
+    {
+      "source": "Zenodo 48654",
+      "finding": "The cached authoritative record lists four MP4 files only. This review does not claim inspection of video bytes and does not infer universal absence from that record."
+    },
+    {
+      "source": "BIANCHI v1.1 1c90b9867b96eedf93983e33de72b3394f39d58e",
+      "finding": "Complete 68-entry tree. Both 204480-byte FITS match source Git blobs. Each has a single simulation column, 48 rows of 1024 floats, NSIDE 64 RING, and no Q/U or E/B columns/HDUs. Source README identifies temperature-only VIIh simulations. Their T values cannot provide missing polarization."
+    }
+  ],
+  "physical_domain_assessment": {
+    "IX": "The closed IX branch fills only the first ell channel of the T/E/B integration arrays. The internal ell_max=3 enables storage/padding; it does not supply ell=3 morphology. In the canonical tensor frame the nonzero support is ell=2 with |m|=2; rotations can populate all m at ell=2.",
+    "all_m": "Complete canonical-mode support with justified reality/rotation completion is sufficient within the declared domain. A literal dense file for every m is not required when absent canonical m values are justified exact symmetry zeros. Unprovided E/B channels are never symmetry zeros by default.",
+    "restricted_admission": "One declared family/mode/background/ell domain may support a conditional external-transfer comparison. All families, irregular modes and a native atlas are not prerequisites for that restricted comparison; unsupported domains remain UNKNOWN.",
+    "units_frame": "No numeric unit or frame conversion was performed. Metric (-,+,+,+) and explicit c remain project conventions, not proof that external data use identical conventions."
+  },
+  "metadata_necessity_assessment": [
+    {
+      "item": "Existing polarized numeric payload",
+      "necessity": "Hard missing input now. Require source-identified coefficients or sufficient-resolution numerical T plus Q/U maps (or equivalent numerical T/E/B maps), with all requested channels represented."
+    },
+    {
+      "item": "Frame, spin phase, handedness, harmonic normalization, B sign and units",
+      "necessity": "Necessary for a convention-sensitive physical comparison. Source documentation already specifies parts of the conventions; the missing object is a complete, verified binding to an actual numerical payload, not universal absence of convention information."
+    },
+    {
+      "item": "IC choice, normalization and start epoch; background/recombination/visibility",
+      "necessity": "Bind the declared physical transfer to resolvable producer release/configuration and assumptions. Existing sufficient source/configuration provenance can satisfy this; separate full history arrays and repeated solver execution are not blanket requirements."
+    },
+    {
+      "item": "sigma/H_today conversion",
+      "necessity": "Required when claiming a calibrated physical shear amplitude. A declared normalized morphology-only comparison can remain conditional on source amplitude normalization without pretending that physical conversion is known."
+    },
+    {
+      "item": "Beam/observer frame",
+      "necessity": "State the actual smoothing and frame; an unsmoothed source template can legitimately declare no beam. Do not require an instrument receipt for a theoretical unsmoothed product."
+    },
+    {
+      "item": "Convergence and independent convention-sensitive comparison",
+      "necessity": "Qualification checks after a candidate payload exists. Their absence does not prevent safe acquisition/inspection of a new source-identified candidate, and they should not be made an upstream delivery prerequisite by circular reading of missing_input."
+    }
+  ],
+  "blocking_findings": [],
+  "nonblocking_findings": [
+    {
+      "id": "R36-09-N1",
+      "target": "RESULT.json missing_input/resume_condition and RETURN.json issue.external_payload.required",
+      "finding": "The current HOLD is supported by absence of an actual polarized payload. Read the longer metadata list proportionally: physical amplitude conversion, separate full history arrays, and completed independent validation are not mandatory before inspecting every possible restricted candidate. Q/U substitution requires accompanying temperature information if T/E/B is the requested product.",
+      "minimal_action": "At a future source-positive intake, declare the comparison and its domain first; bind available source/configuration conventions; run the applicable qualification checks. No present source-gap reversal or new atlas production is justified."
+    },
+    {
+      "id": "R36-09-N2",
+      "target": "Pinned AniLoS anilos.py lines 310 and 571-572 versus implementation lines 331-334, 627-629 and 643-644",
+      "finding": "Producer docstrings say m=0, while code and AniCLASS bianchi.ini specify canonical vector m=1 and tensor m=2 support. This is a source-documentation inconsistency, not evidence of an existing numeric atlas.",
+      "minimal_action": "When an actual coefficient bundle arrives, bind the explicit canonical-mode convention and test reality/rotation and B-phase against a reference rather than importing the m=0 docstring literally."
+    }
+  ],
+  "surviving_numeric_payload": null,
+  "source_positive_lead": null,
+  "no_universal_absence_claim": true,
+  "no_new_scientific_gate": true,
+  "small_falsifiers_executed": [
+    "Recursively read all archive members and all unique notebooks, including checkpoints and nested distributions, to challenge filename-only absence inference.",
+    "Read all PDFs with pdfdetach and pdftotext to challenge hidden embedded numeric-file and plot misclassification hypotheses.",
+    "Parse all 17 full TXT members to challenge the chain-versus-multipole-table classification.",
+    "Parse both actual FITS files, not merely stored headers, to challenge hidden polarization-HDU hypotheses.",
+    "Bind cached source/notebook bytes to pinned Git blobs and inspect actual NPY provenance to challenge timing-as-TEB confusion."
+  ],
+  "not_run": [
+    "No solver, native Boltzmann, ODE, notebook execution or new numerical transfer producer.",
+    "No alm reality/rotation-norm, amplitude-linearity or independent numerical convention test; these require an actual polarized coefficient candidate.",
+    "No large archive redownload or MP4 download; only 69895 bytes of two pinned primary text documents were fetched by the supplement."
+  ],
+  "reviewer_first_failure": "FIRST_FAILURE.json preserves the initial FITS commentary JSON serialization failure and the first script bytes. It was a reviewer artifact-output failure, not solver or source evidence; the subsequent same-scope run completed with 95 checks and zero failures.",
+  "reproduce": [
+    "python3 /mnt/extdrive/workdir/htt_open_data/r36_atlas_fresh_review/reproduce_review.py",
+    "python3 /mnt/extdrive/workdir/htt_open_data/r36_atlas_fresh_review/reproduce_source_bindings.py"
+  ],
+  "primary_links": [
+    "https://raw.githubusercontent.com/jgvicente/AniLoS/9b7a2611882dcca80a1491bcad2b8f05635faca7/src/anilos/anilos.py",
+    "https://raw.githubusercontent.com/jgvicente/aniclass/be1e43fcb1d7549710ba3ca2baa74bb0216bd228/bianchi.ini",
+    "https://raw.githubusercontent.com/jgvicente/aniclass/be1e43fcb1d7549710ba3ca2baa74bb0216bd228/explanatory.ini",
+    "https://raw.githubusercontent.com/jgvicente/aniclass/be1e43fcb1d7549710ba3ca2baa74bb0216bd228/external/external_Pk/README.md",
+    "https://zenodo.org/records/48653",
+    "https://zenodo.org/records/48654",
+    "https://raw.githubusercontent.com/astro-informatics/bianchi/1c90b9867b96eedf93983e33de72b3394f39d58e/README.txt"
+  ],
+  "next_executable_checkpoint": "Retain the exact R36-09 input HOLD and continue independent ready work. Reopen this lane for a specific existing external numeric polarized payload or a genuinely new bounded source lead; apply only its declared-domain qualification. Do not treat this partial review as a formal controller review packet or original42 completion.",
+  "writes": "Review artifacts only under /mnt/extdrive/workdir/htt_open_data/r36_atlas_fresh_review; no repository, Git, controller STATE or source-cache mutation."
+}

@@ -1,0 +1,89 @@
+{
+  "schema": "htt.r36.atlas_intake.result/1",
+  "task_id": "R36-09-ATLAS-INTAKE",
+  "packet_id": "241250cd32d475cdd34269d69ff8f4b969911c96caf969c6228bf36936fdece0",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "source_preparation_sha256": "ffc338ebfb0ed7d8cc5b2d4f8d15c3f0e2762985c93c8e7cc2a267987275d576",
+  "outcome": "SOURCE_GAP_SCOPED",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "claim_tier": "C0",
+  "external_transfer_status": "NO_NUMERIC_ATLAS_IMPORTED",
+  "actual_source_attempts": [
+    {
+      "source": "AniLoS pinned Git 9b7a2611882dcca80a1491bcad2b8f05635faca7",
+      "inspection": "complete 42-entry tree, source wheel 11 members, source tar 33 outer members plus four nested distribution layers, notebooks and both 249-element timing NPY arrays",
+      "result": "code/build/notebook/timing assets; no serialized all-m T/E/B product"
+    },
+    {
+      "source": "AniCLASS author Git jgvicente/aniclass class_aniclass be1e43fcb1d7549710ba3ca2baa74bb0216bd228",
+      "inspection": "complete 314-entry tree and four Git-verified plausible numeric tables",
+      "result": "example evolution, selection, phase-space and primordial P(k) inputs, not a T/E/B atlas"
+    },
+    {
+      "source": "Zenodo 48653 authoritative API and all four source ZIPs",
+      "inspection": "four MD5/size verified ZIPs; 33 plot PDFs; 17 numeric chain TXT members with 20 columns in sampled rows",
+      "result": "plots and posterior chains, no serialized (ell,m,T,E,B) product or convention bundle"
+    },
+    {
+      "source": "Zenodo 48654 authoritative API and public record",
+      "inspection": "four MP4 names, sizes and MD5 values",
+      "result": "visualization assets; no coefficient file in record file list; video bytes not fetched"
+    },
+    {
+      "source": "Legacy BIANCHI v1.1 commit 1c90b9867b96eedf93983e33de72b3394f39d58e",
+      "inspection": "complete 68-entry tree and cached pair of 204480-byte FITS headers",
+      "result": "one simulation column of temperature-only VIIh sky pixels per FITS, no Q/U or E/B"
+    }
+  ],
+  "archive_bytes_downloaded": 126033162,
+  "validation": {
+    "status": "SOURCE_INVENTORY_CHECK_PASS_SCIENCE_HOLD",
+    "script": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-09-ATLAS-INTAKE/validate_intake.py",
+    "evidence": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-09-ATLAS-INTAKE/VALIDATION.json",
+    "plot_pdf_counts": {
+      "all_decoupled_plots.zip": 16,
+      "all_coupled_plots.zip": 17
+    },
+    "chain_files": {
+      "all_coupled_chains.zip": 9,
+      "all_decoupled_chains.zip": 8
+    },
+    "complete_tree_entries": {
+      "anilos_pinned_tree.json": 42,
+      "vicente_aniclass_tree.json": 314,
+      "bianchi_tree.json": 68
+    },
+    "anilos_distribution_layers": 5
+  },
+  "missing_input": [
+    "Existing source-published numerical T/E/B a_lm for every physical m on an explicitly declared regular family/mode/ell domain, or complete canonical-mode support with justified all-m representation; Q/U maps may substitute only with enough resolution, frame and transfer metadata for faithful conversion",
+    "IC normalization and start epoch; curvature, spiral/shear and physical amplitude conventions including sigma/H_today conversion",
+    "Background, recombination and visibility history plus beam and observer-frame receipts",
+    "Temperature and polarization units; spin phase, B-sign, handedness, harmonic and Euler conventions",
+    "Regularity and family/mode equivalence scope, convergence and independent convention-sensitive comparison"
+  ],
+  "physical_domain_guard": "AniLoS IX regular tensor has physical ell=abs(m)=2; an internal stop/padding value 3 does not constitute ell=3 morphology.",
+  "metric_signature": "(-,+,+,+)",
+  "speed_of_light": "c retained explicitly; no external numeric unit/frame conversion performed",
+  "unsupported_status": "UNKNOWN for unrepresented family/mode/history, including irregular modes and generic Bianchi-family identification",
+  "tests_not_applicable": [
+    "alm reality/rotation-norm, zero/linear-amplitude and convention-sensitive independent-reference tests require actual numeric coefficients and are NOT_RUN"
+  ],
+  "original42_effect": "none",
+  "original_B02": "HOLD",
+  "independent_review": "PENDING_FRESH_READ_ONLY",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_atlas_actual/RAW_RECEIPT.json",
+  "resume_condition": "An existing externally produced, source-identified numerical polarized coefficient/map payload with the missing fields above and a lawful access endpoint or source-owner delivery; then validate only its declared family/mode/history domain with independent review.",
+  "owner": "htt",
+  "scope": "Internal, non-claim-bearing bounded acquisition of exact pinned external archive paths; no external transfer numbers imported.",
+  "non_claim_bearing": true,
+  "transfer_source": "none",
+  "generating_procedure": "intake_archives.py streamed six pinned archives, verified source MD5 or Git blob and size; validate_intake.py inspected members and source-prepared metadata. Commands and URLs are in RAW_RECEIPT.json.",
+  "caveats": [
+    "No universal public-source absence claim",
+    "No source-published all-m polarized numeric payload or full convention/history bundle among inspected bytes",
+    "No numerical transfer, family identification or original42 admission",
+    "Independent review pending"
+  ]
+}

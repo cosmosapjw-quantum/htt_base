@@ -1,0 +1,88 @@
+{
+  "status": "SOURCE_METADATA_PREPARATION_COMPLETE_NO_SCIENTIFIC_QUALIFICATION",
+  "utc": "2026-10-27T04:05:19.421575+00:00",
+  "executor": "/root/r34_external_audit_publication",
+  "requested_runtime": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "task": "Preparation for R36-09-ATLAS-INTAKE; not a controller dispatch",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "qualified_products": [],
+  "scientific_decision": "NOT_PERFORMED",
+  "resolved_sources": [
+    {
+      "name": "AniLoS",
+      "repository": "https://github.com/jgvicente/AniLoS",
+      "commit": "9b7a2611882dcca80a1491bcad2b8f05635faca7",
+      "tree_receipt": "responses/anilos_pinned_tree.json.receipt.json",
+      "finding": "Complete tree, branch/release/tag metadata and saved notebooks inspected. Two standalone .npy files are benchmark timing arrays. Saved notebook outputs inspected are text/figures, not a serialized all-m T/E/B coefficient table. Package archives remain uninspected."
+    },
+    {
+      "name": "AniCLASS discovered through author public repository inventory",
+      "repository": "https://github.com/jgvicente/aniclass",
+      "branch": "class_aniclass",
+      "commit": "be1e43fcb1d7549710ba3ca2baa74bb0216bd228",
+      "tree_receipt": "responses/vicente_aniclass_tree.json.receipt.json",
+      "finding": "Complete 314-entry tree and branch/release/tag metadata inspected. README, bianchi.ini and example notebook retained. Numeric .dat physical/input tables and notebook figures exist; no separate .fits/.npy/.npz/.hdf5/.h5/.csv atlas coefficient product in this inspected tree. The stale pitrou/AniCLASS endpoint returned HTTP404; this does not establish universal source absence."
+    },
+    {
+      "name": "Legacy BIANCHI v1.1",
+      "repository": "https://github.com/astro-informatics/bianchi",
+      "commit": "1c90b9867b96eedf93983e33de72b3394f39d58e",
+      "numeric_payloads": [
+        "https://raw.githubusercontent.com/astro-informatics/bianchi/1c90b9867b96eedf93983e33de72b3394f39d58e/test/sky_bianchi_test.fits",
+        "https://raw.githubusercontent.com/astro-informatics/bianchi/1c90b9867b96eedf93983e33de72b3394f39d58e/test/sky_bianchi_test_mK.fits"
+      ],
+      "finding": "Existing cached 204480-byte FITS files each have a simulation column. Upstream README explicitly describes temperature-only VIIh. Exact cached identities and header schemas retained; these are not evidence of polarized E/B or Q/U."
+    },
+    {
+      "name": "Zenodo48653",
+      "url": "https://zenodo.org/records/48653",
+      "finding": "Authoritative API lists four chains/plots ZIPs. Only record metadata/file list inspected; archive members not inspected this turn."
+    },
+    {
+      "name": "Zenodo48654",
+      "url": "https://zenodo.org/records/48654",
+      "finding": "Authoritative API lists four MP4 products; metadata retained, payloads not fetched."
+    }
+  ],
+  "conventions_requiring_actual_payload_binding": [
+    "IC mode/normalization and start epoch",
+    "frame, spin phase, handedness and harmonic convention",
+    "temperature/polarization units and shear normalization",
+    "ionization/reionization and material history",
+    "beam, ell/m support, regularity and family-equivalence scope"
+  ],
+  "IX_scope": "Physical AniLoS IX ell=|m|=2; internal ell_max=3 sentinel/padding is not ell=3 coverage.",
+  "precise_open_questions": [
+    "Where is an author-published precomputed AniLoS/AniCLASS T/E/B or Q/U coefficient dataset with the listed conventions, separate from executable source and figures?",
+    "Do the uninspected AniLoS distribution archives contain precomputed coefficient payloads? Their tree locators/blob IDs/sizes are preserved; no member inventory was performed.",
+    "Do Zenodo48653 archive members include coefficient auxiliary data beyond the record-described chains/plots? This turn establishes only the authoritative file list.",
+    "Can the author identify a canonical revision/product release for the working jgvicente/aniclass repository, given the README-linked pitrou endpoint HTTP404?",
+    "For any restricted numeric payload, what exact IC/history/frame/spin/units/ell-m domain is supported? Temperature-only legacy VIIh fixtures cannot supply missing polarization metadata."
+  ],
+  "availability_observations": [
+    {
+      "url": "https://www.jasonmcewen.org/project/anicosmo/",
+      "transport": "web open",
+      "result": "timeout",
+      "meaning": "Endpoint availability observation only; not scientific or exhaustive source absence."
+    }
+  ],
+  "preservation": {
+    "checkout_writes": false,
+    "Git_mutations": false,
+    "STATE_writes": false,
+    "product_writes": false,
+    "solver_ODE_execution": false,
+    "notebook_execution": false,
+    "new_numerical_generation": false,
+    "new_R36_09_dispatch": false
+  },
+  "source_inventory": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_atlas_source_preparation/SOURCE_INVENTORY.json",
+    "sha256": "607a967fea0e3f3f6a76bba3062fb358b47dc0cd1d1c33f0ac48dc22558e62b6"
+  },
+  "raw_response_count": 26,
+  "response_payload_bytes": 11855924,
+  "scope_limit": "No scientific absence/PASS/HOLD decision. Historical source gaps and original42 acceptances remain unchanged; future numeric worker/Astra decides qualification."
+}

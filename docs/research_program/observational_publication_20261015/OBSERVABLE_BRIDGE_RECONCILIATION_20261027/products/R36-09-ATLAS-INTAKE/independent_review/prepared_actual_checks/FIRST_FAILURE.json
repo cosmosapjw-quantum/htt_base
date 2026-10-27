@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-27T04:38:34.615037+00:00",
+  "command": "python3 /mnt/extdrive/workdir/htt_open_data/r36_atlas_fresh_review/reproduce_review.py",
+  "exit_code": 1,
+  "classification": "reviewer_output_serialization_failure",
+  "error_type": "TypeError",
+  "message": "Object of type _HeaderCommentaryCards is not JSON serializable",
+  "location": "reproduce_review.py line 136 target.write_text(json.dumps(raw,indent=2))",
+  "first_script_sha256": "50edcd8c86e2ca26b8c645145fec9e192d4bd9a6374d5e69113ed05f8e937273",
+  "scientific_implication": "None; the attempt failed while serializing FITS commentary header objects. No result from this attempt was admitted.",
+  "repair": "Render unsupported FITS commentary objects as strings in JSON; rerun the same cached-byte checks."
+}

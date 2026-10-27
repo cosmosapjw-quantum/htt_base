@@ -1,0 +1,104 @@
+{
+  "status": "SOURCE_INVENTORY_CHECK_PASS_SCIENCE_HOLD",
+  "archive_count": 6,
+  "archive_sha256": {
+    "anilos-0.1.0.whl": "f1001a12aff1c14d57b0b38f7b3706f10f8c727d59dce4d22298d00bf27215e3",
+    "anilos-0.1.0.tar.gz": "399eee772ecc8efed11edf295c681f4db256a6ec2d7a1802cbcd1982a2aaca4c",
+    "all_decoupled_plots.zip": "c41e3c922c3d22c91c092634dcdb1164c21cd39e4b4c3e61f043c4e5bacc159a",
+    "all_coupled_plots.zip": "be8f8564a9935d9acaf312c2436afb7ec2860bc862936663bdb569f9098e5d07",
+    "all_coupled_chains.zip": "b5c10f05017648cecf5409437508c4c5800197228a2ccd68a3a6cb7f129011b0",
+    "all_decoupled_chains.zip": "4e2b45acbacf0c0c2d0fe3e94a2cc0114740937982e3acf059cf91fc65812829"
+  },
+  "plot_pdf_counts": {
+    "all_decoupled_plots.zip": 16,
+    "all_coupled_plots.zip": 17
+  },
+  "chain_files": {
+    "all_coupled_chains.zip": {
+      "files": 9,
+      "first_row_columns": {
+        "chains/data_scal_coup_.txt": 20,
+        "chains/data_Tirr_coup_left_.txt": 20,
+        "chains/data_Tirr_coup_right_.txt": 20,
+        "chains/data_Treg_coup_left_.txt": 20,
+        "chains/data_Treg_coup_right_.txt": 20,
+        "chains/data_vec_coup_left_.txt": 20,
+        "chains/data_vec_coup_left_unif_.txt": 20,
+        "chains/data_vec_coup_right_.txt": 20,
+        "chains/pure_LCDM_.txt": 20
+      }
+    },
+    "all_decoupled_chains.zip": {
+      "files": 8,
+      "first_row_columns": {
+        "decoupled_chains/data_scal_dec_.txt": 20,
+        "decoupled_chains/data_Tirr_dec_left_.txt": 20,
+        "decoupled_chains/data_Tirr_dec_right_.txt": 20,
+        "decoupled_chains/data_Treg_dec_left_.txt": 20,
+        "decoupled_chains/data_Treg_dec_right_.txt": 20,
+        "decoupled_chains/data_vec_dec_left_.txt": 20,
+        "decoupled_chains/data_vec_dec_left_unif_.txt": 20,
+        "decoupled_chains/data_vec_dec_right_.txt": 20
+      }
+    }
+  },
+  "anilos_distribution_layers": [
+    {
+      "depth": 0,
+      "compressed_bytes": 38463523,
+      "members": 33,
+      "numeric_paths": [
+        "anilos-0.1.0/examples/time_case1.npy",
+        "anilos-0.1.0/examples/time_case2.npy"
+      ]
+    },
+    {
+      "depth": 1,
+      "compressed_bytes": 28020444,
+      "members": 30,
+      "numeric_paths": []
+    },
+    {
+      "depth": 2,
+      "compressed_bytes": 20664092,
+      "members": 30,
+      "numeric_paths": []
+    },
+    {
+      "depth": 3,
+      "compressed_bytes": 13312315,
+      "members": 30,
+      "numeric_paths": []
+    },
+    {
+      "depth": 4,
+      "compressed_bytes": 5961027,
+      "members": 26,
+      "numeric_paths": []
+    }
+  ],
+  "anilos_timing_npy_sha256": {
+    "time_case1.npy": "53bd74404bff569dd548d067243f6dbb230da0532d21cbd5c481d6bbe4df47da",
+    "time_case2.npy": "e611584d7c91fbc94109bc09abe79d1092a980827f75d0deed73296627ba2b2b"
+  },
+  "complete_tree_entries": {
+    "anilos_pinned_tree.json": 42,
+    "vicente_aniclass_tree.json": 314,
+    "bianchi_tree.json": 68
+  },
+  "anilos_wheel_members": 11,
+  "aniclass_numeric_candidate_paths": [
+    "https://raw.githubusercontent.com/jgvicente/aniclass/be1e43fcb1d7549710ba3ca2baa74bb0216bd228/myevolution.dat",
+    "https://raw.githubusercontent.com/jgvicente/aniclass/be1e43fcb1d7549710ba3ca2baa74bb0216bd228/myselection.dat",
+    "https://raw.githubusercontent.com/jgvicente/aniclass/be1e43fcb1d7549710ba3ca2baa74bb0216bd228/psd_FD_single.dat",
+    "https://raw.githubusercontent.com/jgvicente/aniclass/be1e43fcb1d7549710ba3ca2baa74bb0216bd228/external/external_Pk/Pk_example_w_tensors.dat"
+  ],
+  "zenodo48654_movie_files": [
+    "tensors_movie.mp4",
+    "SVTT_movie.mp4",
+    "vectors_movie.mp4",
+    "scalars_movie.mp4"
+  ],
+  "qualified_external_atlas": false,
+  "reason": "Verified files are code/distribution, benchmark timing arrays, input/history tables, posterior chains, plots or movies; no source-described all-m T/E/B coefficient payload with required conventions was found."
+}
