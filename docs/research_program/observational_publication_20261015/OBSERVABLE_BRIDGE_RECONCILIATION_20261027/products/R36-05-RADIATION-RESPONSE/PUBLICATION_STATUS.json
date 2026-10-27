@@ -1,16 +1,18 @@
 {
-  "status": "PROPOSED_CANDIDATE_INDEPENDENT_REVIEW_PASS_FORMAL_CONTROLLER_REVIEW_PENDING",
+  "status": "FORMALLY_QUALIFIED_COMMON_INPUT_RADIATION_RESPONSE_COMPARISON",
   "candidate_identity": "sha256:91a3af176f7eabf3dba8d1af94616cd3a66a4e3ee374f731f45bb58236e6593d",
   "manifest_sha256": "5c033adc2bd9c6701c75587d58384857fb7803dc82ccbd2917d1df1429841323",
   "independent_actual_review": "PASS_SCOPED_CONDITIONAL_SCIENTIFIC_RESULT",
   "review_result_sha256": "931acff6c8281c3aa1c7c93382cdc4dba2efea5fc5af88bcbe57f0c80236f4f6",
   "actual_independent_checks": 392,
-  "formal_controller_review_packet": "NOT_ISSUED_PENDING_NORMAL_SERIAL_FAIRNESS",
-  "formal_controller_review_ACK": "NOT_ISSUED",
-  "acceptance_met": false,
-  "qualified_products": [],
+  "formal_controller_review_packet": "c9aea65e654c85e395aa4cb71bb0f15e1979380e1c818c6c3f83c53394702eea",
+  "formal_controller_review_ACK": "independent_review/formal_binding_01/ACK_015_GO.json",
+  "acceptance_met": true,
+  "qualified_products": [
+    "radiation_response_comparison"
+  ],
   "proposed_product": "radiation_response_comparison",
-  "task_completion_claimed": false,
+  "task_completion_claimed": true,
   "original42_acceptance_effect": "none",
   "candidate_bytes": "unchanged",
   "nonblocking_findings_retained_verbatim": 3,
@@ -18,5 +20,9 @@
   "independent_reviewer_agent": "/root/r36_radiation_fresh_review",
   "publisher_scientific_runs": 0,
   "requested_executor": "gpt-6.1-sol/medium",
-  "observed_executor": "UNKNOWN"
+  "observed_executor": "UNKNOWN",
+  "formal_return": "independent_review/formal_binding_01/CONTROLLER_RETURN.json",
+  "formal_return_sha256": "06d0e4b87ede0fb609f27a5e24d4ded1505645bf4e6f85f90cc47febcc5fbfc5",
+  "formal_raw_receipt_sha256": "cbf2f4702916b4ca82e9febc0eb22d2bbe2317399f3fc74b65c68eb0b60db848",
+  "qualification_scope": "Only radiation_response_comparison under the frozen six-case conditional synthetic experiment; no observational or original42 promotion."
 }
