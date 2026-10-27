@@ -1,0 +1,26 @@
+diff --git a/htt/htt/tests/test_bass_d2_transfer.py b/htt/htt/tests/test_bass_d2_transfer.py
+index 4d8727646..3165a6586 100644
+--- a/htt/htt/tests/test_bass_d2_transfer.py
++++ b/htt/htt/tests/test_bass_d2_transfer.py
+@@ -10,7 +10,7 @@ Verifies:
+ import sys
+ from pathlib import Path
+ _root = str(Path(__file__).resolve().parent.parent.parent)
+-for _p in [_root, _root + "/htt", _root + "/bass"]:
++for _p in [_root, _root + "/htt"]:
+     if _p not in sys.path:
+         sys.path.insert(0, _p)
+ 
+diff --git a/htt/htt/tests/test_peculiar_jeans.py b/htt/htt/tests/test_peculiar_jeans.py
+index 3fcf82d43..2785f82b3 100644
+--- a/htt/htt/tests/test_peculiar_jeans.py
++++ b/htt/htt/tests/test_peculiar_jeans.py
+@@ -2,7 +2,7 @@
+ import sys
+ from pathlib import Path
+ _root = str(Path(__file__).resolve().parent.parent.parent)
+-for _p in [_root, _root + "/htt", _root + "/bass"]:
++for _p in [_root, _root + "/htt"]:
+     if _p not in sys.path:
+         sys.path.insert(0, _p)
+ 

@@ -1,0 +1,217 @@
+........................................................................ [ 78%]
+.......FFFFF.F...FF.                                                     [100%]
+=================================== FAILURES ===================================
+____________ test_spec_fixes_one_way_scope_and_six_normalizer_kinds ____________
+
+    def test_spec_fixes_one_way_scope_and_six_normalizer_kinds() -> None:
+>       spec = yaml.safe_load(SPEC.read_text(encoding="utf-8"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/premise_anchor/pr254_spec.yaml')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/premise_anchor/pr254_spec.yaml'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+___________ test_pr254_closeout_is_methodology_only_and_review_bound ___________
+
+    def test_pr254_closeout_is_methodology_only_and_review_bound() -> None:
+        status = yaml.safe_load(STATUS.read_text(encoding="utf-8"))
+>       assert "PR-254" in status["completed"]
+E       AssertionError: assert 'PR-254' in ['PR-R36-08-PUBLIC-SN', 'PR-R36-05-RADIATION-RESPONSE', 'PR-R36-03-PM-HISTORY', 'PR-R36-01-CF4-OPERATOR', 'PR-R36-00-INTEGRATION', 'PR-R32-09-BANDPASS-PAPER', ...]
+
+tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py:109: AssertionError
+__________ test_publication_policy_uses_portable_python_first_runner ___________
+
+    def test_publication_policy_uses_portable_python_first_runner() -> None:
+>       policy = json.loads(PUBLICATION_POLICY.read_text(encoding="utf-8"))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/premise_anchor/pr254_publication_policy.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/premise_anchor/pr254_publication_policy.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+_______ test_common_contracts_are_the_same_public_objects_in_htt_and_mio _______
+
+    def test_common_contracts_are_the_same_public_objects_in_htt_and_mio() -> None:
+        from mio import formalism as mio_formalism
+    
+        from htt import core as htt_core
+    
+        public = {
+            "AnchorBodySpec": AnchorBodySpec,
+            "AnchorFamily": AnchorFamily,
+            "AnchorGaugeInterval": AnchorGaugeInterval,
+            "AnchorMarginReport": AnchorMarginReport,
+            "NormalizerBenchmarkReport": NormalizerBenchmarkReport,
+            "NormalizerPurpose": NormalizerPurpose,
+            "NormalizerSpec": NormalizerSpec,
+        }
+        for name, expected in public.items():
+>           assert getattr(htt_core, name) is expected
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'htt.core' has no attribute 'AnchorBodySpec'
+
+tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py:170: AttributeError
+______ test_counterexample_oracle_is_exact_independent_and_scope_bounded _______
+
+    def test_counterexample_oracle_is_exact_independent_and_scope_bounded() -> None:
+>       frozen = json.loads(COUNTEREXAMPLE_RECEIPT.read_text(encoding="utf-8"))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py:175: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/generated/pr254_anchor_geometry/counterexample_oracle.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/generated/pr254_anchor_geometry/counterexample_oracle.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+______ test_synthetic_benchmark_replays_same_draws_and_meets_mc_precision ______
+
+    def test_synthetic_benchmark_replays_same_draws_and_meets_mc_precision() -> None:
+>       frozen = json.loads(BENCHMARK_RECEIPT.read_text(encoding="utf-8"))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py:230: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/generated/pr254_anchor_geometry/normalizer_benchmark.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/generated/pr254_anchor_geometry/normalizer_benchmark.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+______ test_cas_contract_is_source_bound_and_has_four_noncollapsible_axes ______
+
+    def test_cas_contract_is_source_bound_and_has_four_noncollapsible_axes() -> None:
+>       contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py:376: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/generated/pr254_anchor_geometry/CAS_CONTRACT_PR254_ANCHOR_GEOMETRY.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/generated/pr254_anchor_geometry/CAS_CONTRACT_PR254_ANCHOR_GEOMETRY.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+____ test_runner_observed_four_axis_adjudication_passes_only_cas_component _____
+
+    def test_runner_observed_four_axis_adjudication_passes_only_cas_component() -> None:
+>       adjudication = json.loads(CAS_ADJUDICATION.read_text(encoding="utf-8"))
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py:415: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/lib/python3.12/pathlib.py:1029: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/generated/pr254_anchor_geometry/CAS_ADJUDICATION_PR254_ANCHOR_GEOMETRY.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/generated/pr254_anchor_geometry/CAS_ADJUDICATION_PR254_ANCHOR_GEOMETRY.json'
+
+/usr/lib/python3.12/pathlib.py:1015: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py::test_spec_fixes_one_way_scope_and_six_normalizer_kinds
+FAILED tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py::test_pr254_closeout_is_methodology_only_and_review_bound
+FAILED tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py::test_publication_policy_uses_portable_python_first_runner
+FAILED tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py::test_common_contracts_are_the_same_public_objects_in_htt_and_mio
+FAILED tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py::test_counterexample_oracle_is_exact_independent_and_scope_bounded
+FAILED tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py::test_synthetic_benchmark_replays_same_draws_and_meets_mc_precision
+FAILED tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py::test_cas_contract_is_source_bound_and_has_four_noncollapsible_axes
+FAILED tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py::test_runner_observed_four_axis_adjudication_passes_only_cas_component
+8 failed, 84 passed in 0.80s

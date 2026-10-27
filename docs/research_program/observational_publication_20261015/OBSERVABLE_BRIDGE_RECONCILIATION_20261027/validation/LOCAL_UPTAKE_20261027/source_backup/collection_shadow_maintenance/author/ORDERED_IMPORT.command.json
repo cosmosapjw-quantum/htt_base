@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "-c",
+    "import sys, runpy, importlib, sysconfig\nfrom pathlib import Path\nassert \"statistics\" not in sys.modules, \"statistics must not be preloaded\"\nfor path in [\"htt/htt/tests/test_bass_d2_transfer.py\", \"htt/htt/tests/test_peculiar_jeans.py\"]:\n    runpy.run_path(path)\n    print(\"legacy imported:\", path, \"statistics loaded:\", \"statistics\" in sys.modules)\nfor module in [\"common.structured_inference\", \"common.statistical_foundations\", \"scripts.codex_harness.run_pr254_normalizer_benchmark\"]:\n    importlib.import_module(module)\n    print(\"consumer imported:\", module)\nimport statistics\nexpected = Path(sysconfig.get_path(\"stdlib\")) / \"statistics.py\"\nprint(\"statistics origin:\", statistics.__file__)\nprint(\"stdlib expected:\", expected)\nassert Path(statistics.__file__).resolve() == expected.resolve()\nassert statistics.NormalDist().inv_cdf(.5) == 0.0\nprint(\"NormalDist.inv_cdf(0.5):\", statistics.NormalDist().inv_cdf(.5))\n"
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "exit_code": 0
+}

@@ -1,0 +1,72 @@
+htt/htt/tests/test_bass_d2_transfer.py::TestBASSShearToD2::test_import
+htt/htt/tests/test_bass_d2_transfer.py::TestBASSShearToD2::test_power_law_at_1e6
+htt/htt/tests/test_bass_d2_transfer.py::TestBASSShearToD2::test_power_law_at_1e4
+htt/htt/tests/test_bass_d2_transfer.py::TestBASSShearToD2::test_monotonically_increasing
+htt/htt/tests/test_bass_d2_transfer.py::TestBASSShearToD2::test_array_input
+htt/htt/tests/test_bass_d2_transfer.py::TestBASSShearToD2::test_zero_gives_zero
+htt/htt/tests/test_bass_d2_transfer.py::TestBASSScalingMatch::test_bass_slope_near_unity
+htt/htt/tests/test_bass_d2_transfer.py::TestBASSScalingMatch::test_aniclass_slope_near_unity
+htt/htt/tests/test_bass_d2_transfer.py::TestBASSScalingMatch::test_slopes_agree_within_10pct
+htt/htt/tests/test_bass_d2_transfer.py::TestBASSvsAniCLASSComparison::test_comparison_returns_dict
+htt/htt/tests/test_bass_d2_transfer.py::TestBASSvsAniCLASSComparison::test_aniclass_much_larger
+htt/htt/tests/test_bass_d2_transfer.py::TestBASSvsAniCLASSComparison::test_note_explains_mismatch
+htt/htt/tests/test_bass_d2_transfer.py::TestEvidenceLikelihoodUnchanged::test_shear_to_D2_unchanged
+htt/htt/tests/test_bass_d2_transfer.py::TestEvidenceLikelihoodUnchanged::test_predicted_observables_uses_shear_to_D2
+htt/htt/tests/test_peculiar_jeans.py::TestPeculiarJeansFix::test_accelerating_universe_returns_inf
+htt/htt/tests/test_peculiar_jeans.py::TestPeculiarJeansFix::test_q_zero_returns_inf
+htt/htt/tests/test_peculiar_jeans.py::TestPeculiarJeansFix::test_no_ValueError_at_negative_q
+htt/htt/tests/test_peculiar_jeans.py::TestPeculiarJeansFix::test_positive_q_still_works
+htt/htt/tests/test_peculiar_jeans.py::TestPeculiarJeansFix::test_eds_q_half
+htt/htt/tests/test_peculiar_jeans.py::TestPeculiarJeansFix::test_q_matter_helper
+htt/htt/tests/test_peculiar_jeans.py::TestPeculiarJeansFix::test_q_matter_custom_Om
+htt/htt/tests/test_peculiar_jeans.py::TestPeculiarJeansFix::test_q_matter_positive
+htt/htt/tests/test_peculiar_jeans.py::TestPeculiarJeansFix::test_lambda_J_with_q_matter
+htt/htt/tests/test_peculiar_jeans.py::TestPeculiarJeansFix::test_monotonic_in_q
+htt/htt/tests/test_peculiar_jeans.py::TestPeculiarJeansFix::test_monotonic_in_beta
+htt/htt/tests/test_peculiar_jeans.py::TestDeltaQWithBridgeQuantities::test_Delta_q_positive
+htt/htt/tests/test_peculiar_jeans.py::TestDeltaQWithBridgeQuantities::test_Delta_q_decreases_with_distance
+htt/htt/tests/test_peculiar_jeans.py::TestDeltaQWithBridgeQuantities::test_Delta_q_at_200_Mpc_is_finite
+
+==================================== ERRORS ====================================
+_________ ERROR collecting htt/src/common/test_structured_inference.py _________
+ImportError while importing test module '/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/src/common/test_structured_inference.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+htt/src/common/test_structured_inference.py:5: in <module>
+    from common.structured_inference import StructuredLinearModel
+htt/src/common/structured_inference.py:10: in <module>
+    from statistics import NormalDist
+E   ImportError: cannot import name 'NormalDist' from 'statistics' (/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/statistics.py)
+_________ ERROR collecting tests/common/test_mes_directional_state.py __________
+ImportError while importing test module '/home/cosmosapjw/Dropbox/bianchi/htt_base/tests/common/test_mes_directional_state.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/common/test_mes_directional_state.py:10: in <module>
+    from common.statistical_foundations import (
+htt/src/common/statistical_foundations.py:24: in <module>
+    from statistics import NormalDist
+E   ImportError: cannot import name 'NormalDist' from 'statistics' (/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/statistics.py)
+__ ERROR collecting tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py ___
+ImportError while importing test module '/home/cosmosapjw/Dropbox/bianchi/htt_base/tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py:29: in <module>
+    from scripts.codex_harness.run_pr254_normalizer_benchmark import (
+scripts/codex_harness/run_pr254_normalizer_benchmark.py:17: in <module>
+    from statistics import NormalDist
+E   ImportError: cannot import name 'NormalDist' from 'statistics' (/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/bass/statistics.py)
+=========================== short test summary info ============================
+ERROR htt/src/common/test_structured_inference.py
+ERROR tests/common/test_mes_directional_state.py
+ERROR tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 3 errors during collection !!!!!!!!!!!!!!!!!!!!
+28 tests collected, 3 errors in 0.35s

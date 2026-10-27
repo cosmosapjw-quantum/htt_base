@@ -1,0 +1,11 @@
+# Reviewed legacy test import-path maintenance
+
+Exactly two existing tests remove only `_root + "/bass"` from their sys.path lists, retaining `_root` and `_root + "/htt"`. Prepending a package interior had made htt/bass/statistics.py shadow the Python standard-library statistics module. Production numerical code, public bass.statistics, validators, tolerances, source inputs, controller STATE and all canonical statuses are unchanged. This is ordinary maintenance, not a new science card or qualification.
+
+The separate independent SCOPED_PASS is bound to the two final source hashes in independent_review/RETURN.json. Its ordered-import falsifier starts without statistics preloaded, imports both legacy tests and all three consumers, verifies standard-library statistics/NormalDist and separately verifies public bass.statistics still resolves to the original package module. No sys.modules preload or shim was introduced.
+
+The independent reviewer ran one final full collection: exit0,PID2816422,19.155965815s observed,10996 selected of11054 total,58 slow tests deselected by unchanged pytest.ini,0collection errors. EVIDENCE_COMPARISON.json and both full stdout snapshots establish64 restored nodeids and0removed. This corrects the earlier published checkpoint's10932/10990 and3NormalDist import errors; the original failed collection and receipt are preserved in historical_checkpoint_failure/. No full collection was rerun by the publisher.
+
+Actual authored execution was84passed/8failed; the consumer-only baseline without either repaired test was56passed with the same8PR254 failures and identical error lines. Missing historical artifact/policy/benchmark/CAS files, PR254's current status and missing public AnchorBodySpec remain separate limitations. Collection success is not a full-suite execution PASS. All first failures, source preimages, patch and focused before/after commands remain exact in author/. SOURCE_MAP.json maps the evidence and original absolute paths. No raw science arrays or full STATE export is included.
+
+No original42/scientific progress follows. R36still has4/11 qualified scientific products (five completed PRcards include integration00); originalexternal17/42 and analyticV03alternate18/42 remain unchanged. All unmeasured publisher intervals stay UNKNOWN; this backup creates no allocation or budget reset.

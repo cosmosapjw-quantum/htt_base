@@ -1,0 +1,154 @@
+{
+  "task": "r36_collection_shadow_repair",
+  "kind": "bounded ordinary maintenance",
+  "requested_model": "gpt-6.1-sol",
+  "requested_effort": "medium",
+  "observed_model": "UNKNOWN",
+  "observed_effort": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+  "owned_source_files": {
+    "htt/htt/tests/test_bass_d2_transfer.py": {
+      "before_sha256": "c24e896ae2e67254400d0dc06417ec13412def9130456dcc411bf3b5cdf6e770",
+      "after_sha256": "f2064713a7f874360acb1a54fef6aadf5de22e4d17ece4c6966c439272a13902"
+    },
+    "htt/htt/tests/test_peculiar_jeans.py": {
+      "before_sha256": "516f28ded7d55bdfd86a4f0efa8a334a5641474a8d29fb36d707ea64d5c7dc7f",
+      "after_sha256": "7536c3baafa74d74afb2e961cec97bade84abd04ebddf11935d224fb7990c842"
+    }
+  },
+  "change": "Remove only package-interior /bass from two legacy test path lists; preserve _root and _root+/htt.",
+  "commands": {
+    "AFTER_COLLECT.command.json": {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "htt/htt/tests/test_bass_d2_transfer.py",
+        "htt/htt/tests/test_peculiar_jeans.py",
+        "htt/src/common/test_structured_inference.py",
+        "tests/common/test_mes_directional_state.py",
+        "tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py"
+      ],
+      "exit_code": 0
+    },
+    "BEFORE_COLLECT.command.json": {
+      "argv": [
+        "/usr/bin/python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "htt/htt/tests/test_bass_d2_transfer.py",
+        "htt/htt/tests/test_peculiar_jeans.py",
+        "htt/src/common/test_structured_inference.py",
+        "tests/common/test_mes_directional_state.py",
+        "tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py"
+      ],
+      "exit_code": 4
+    },
+    "BEFORE_VENV_COLLECT.command.json": {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "htt/htt/tests/test_bass_d2_transfer.py",
+        "htt/htt/tests/test_peculiar_jeans.py",
+        "htt/src/common/test_structured_inference.py",
+        "tests/common/test_mes_directional_state.py",
+        "tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py"
+      ],
+      "exit_code": 2
+    },
+    "CONSUMER_ONLY_TESTS.command.json": {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "htt/src/common/test_structured_inference.py",
+        "tests/common/test_mes_directional_state.py",
+        "tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 1
+    },
+    "FOCUSED_TESTS.command.json": {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "htt/htt/tests/test_bass_d2_transfer.py",
+        "htt/htt/tests/test_peculiar_jeans.py",
+        "htt/src/common/test_structured_inference.py",
+        "tests/common/test_mes_directional_state.py",
+        "tests/pr_cards/test_pr_254_normalizer_anchor_geometry.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 1
+    },
+    "ORDERED_IMPORT.command.json": {
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-c",
+        "import sys, runpy, importlib, sysconfig\nfrom pathlib import Path\nassert \"statistics\" not in sys.modules, \"statistics must not be preloaded\"\nfor path in [\"htt/htt/tests/test_bass_d2_transfer.py\", \"htt/htt/tests/test_peculiar_jeans.py\"]:\n    runpy.run_path(path)\n    print(\"legacy imported:\", path, \"statistics loaded:\", \"statistics\" in sys.modules)\nfor module in [\"common.structured_inference\", \"common.statistical_foundations\", \"scripts.codex_harness.run_pr254_normalizer_benchmark\"]:\n    importlib.import_module(module)\n    print(\"consumer imported:\", module)\nimport statistics\nexpected = Path(sysconfig.get_path(\"stdlib\")) / \"statistics.py\"\nprint(\"statistics origin:\", statistics.__file__)\nprint(\"stdlib expected:\", expected)\nassert Path(statistics.__file__).resolve() == expected.resolve()\nassert statistics.NormalDist().inv_cdf(.5) == 0.0\nprint(\"NormalDist.inv_cdf(0.5):\", statistics.NormalDist().inv_cdf(.5))\n"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0
+    }
+  },
+  "outcomes": {
+    "initial_wrong_interpreter": {
+      "exit_code": 4,
+      "reason": "system interpreter lacks installed bass package; retained BEFORE_COLLECT evidence"
+    },
+    "exact_venv_before_collection": {
+      "exit_code": 2,
+      "result": "28 collected, three NormalDist shadowing errors"
+    },
+    "after_collection": {
+      "exit_code": 0,
+      "collected": 92
+    },
+    "ordered_import_falsifier": {
+      "exit_code": 0,
+      "legacy_imports_statistics_loaded": false,
+      "statistics_origin": "/usr/lib/python3.12/statistics.py",
+      "NormalDist_inv_cdf_half": 0.0
+    },
+    "focused_actual_suite": {
+      "exit_code": 1,
+      "passed": 84,
+      "failed": 8,
+      "skipped": 0
+    },
+    "consumer_only_actual_suite": {
+      "exit_code": 1,
+      "passed": 56,
+      "failed": 8,
+      "skipped": 0,
+      "interpretation": "Same eight PR254 failures without either repaired test imported"
+    }
+  },
+  "residual_failures": [
+    "Missing docs/research_program/premise_anchor/pr254_spec.yaml",
+    "PR-254 absent from current completed status",
+    "Missing docs/research_program/premise_anchor/pr254_publication_policy.json",
+    "htt.core lacks AnchorBodySpec",
+    "Missing docs/generated/pr254_anchor_geometry/counterexample_oracle.json",
+    "Missing docs/generated/pr254_anchor_geometry/normalizer_benchmark.json",
+    "Missing docs/generated/pr254_anchor_geometry/CAS_CONTRACT_PR254_ANCHOR_GEOMETRY.json",
+    "Missing docs/generated/pr254_anchor_geometry/CAS_ADJUDICATION_PR254_ANCHOR_GEOMETRY.json"
+  ],
+  "heavy_or_prohibited_tests": "No native solver/ODE or full collection invoked. No focused tests skipped. PR254 synthetic benchmark did not execute because its frozen receipt is absent.",
+  "review": "PENDING fresh independent Astra review before commit",
+  "publication": "NOT_PERFORMED",
+  "scientific_admission": "UNCHANGED",
+  "original_42_progress_effect": "NONE",
+  "repository_other_edits": "No other repository files written; no Git commands or child agents invoked."
+}
