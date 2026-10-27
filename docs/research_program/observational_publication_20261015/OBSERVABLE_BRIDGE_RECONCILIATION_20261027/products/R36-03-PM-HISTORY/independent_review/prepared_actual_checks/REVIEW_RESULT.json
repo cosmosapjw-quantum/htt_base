@@ -1,0 +1,125 @@
+{
+  "schema": "htt.r36.pm_history_independent_review/1",
+  "created_utc": "2026-10-27T03:03:20.914908+00:00",
+  "task_id": "R36-03-PM-HISTORY",
+  "review_phase": "FRESH_INDEPENDENT_CANDIDATE_REVIEW_PREPARATION",
+  "verdict": "PASS_SCOPED_CONDITIONAL_PRODUCT",
+  "summary": "The unchanged sealed candidate meets the R36-03 conditional pm_history_response scientific target; no blocking finding. Formal controller packet binding, acknowledgement and qualification remain pending.",
+  "parent_implementation_packet_id": "c8d9f6351c42fc6da769c1aaec2c14948806c99319324fec981e48217901637b",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_manifest": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/ARTIFACT_MANIFEST.json",
+    "sha256": "781939c14b1ae7a17f8321d268955cf099d04ede9a0bcfc4c006317d3c137424"
+  },
+  "candidate_result": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/RESULT.json",
+    "sha256": "c20cacc0cd64c6349051b5c090d65d1083aea47961ffc446019739386d6adc93",
+    "bytes": 496025
+  },
+  "contract_sha256": "e940efc6768f6607eeda4f0e2e94a2d73d32d3630e6764f0c7e8069e8c2b708a",
+  "clarification_sha256": "8e383e93e635a12fe284065fb94d1318a0f8c6ba00ffeef181f9c85b087721aa",
+  "reviewer": {
+    "agent_id": "/root/r36_pm_history_fresh_review",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "independence": "Fresh read-only reviewer; authored no scientific contract, candidate code or products; wrote only reviewer evidence under assigned external directory."
+  },
+  "authors": [
+    "/root/rc_c8d9f6351c42fc6d",
+    "/root/r36_pm_history_numeric_helper"
+  ],
+  "other_nonreviewer_contributor": "/root/r36_scientific_contract_preparation",
+  "formal_controller": {
+    "review_packet_id": null,
+    "acknowledgement": null,
+    "qualification": "PENDING_FORMAL_REVIEW_PACKET",
+    "acceptance_met": false,
+    "original42_promotion": false
+  },
+  "findings": [],
+  "evidence_read": [
+    "Frozen IMPLEMENTATION_CONTRACT.json and append-only CLARIFICATION.json",
+    "FRONTIER.json exact R36-03 acceptance; candidate source, tests, RESULT, table, interpretation and rendered figures",
+    "Retained astrometry model.py design, VSH and raw sufficient-statistic construction; stats receipt",
+    "Retained PHYSICAL_AUDIT derivation and clean Wolfram sign receipt; exact Marcori 1805.12121v1 source equation 5.13 and discussion",
+    "Numerical helper return, final raw commands, pre-repair validator and preserved earlier runs"
+  ],
+  "validation": {
+    "focused_tests": "5 passed in 4.00s; exit 0; no production writes",
+    "identity": {
+      "candidate_manifest": "781939c14b1ae7a17f8321d268955cf099d04ede9a0bcfc4c006317d3c137424",
+      "distinct_references_verified": 46,
+      "source_bindings_verified": 13,
+      "contract": "e940efc6768f6607eeda4f0e2e94a2d73d32d3630e6764f0c7e8069e8c2b708a",
+      "input": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43"
+    },
+    "runnable_consumer": "build() executed in memory and exactly matched sealed RESULT.json values",
+    "source_noise_basis": "755850 rows; 102x102 raw G and b102; common full5 STF mapped into E2 columns 18:23; source construction uses reported within-source 2x2 marginal covariance without old priors",
+    "projection": {
+      "primary_spin_glide6": {
+        "schur_relative_error": 1.3764139786690882e-15,
+        "joint_score_relative_residual": 2.4067105000125535e-15,
+        "rank": 5,
+        "nuisance_rank": 6,
+        "joint_rank": 11,
+        "eigenvalues": [
+          2.4369302855811386,
+          2.655629265565639,
+          3.171451559624809,
+          3.671454012723531,
+          4.9510152230681665
+        ]
+      },
+      "all97_sensitivity": {
+        "schur_relative_error": 1.0134257381740917e-14,
+        "joint_score_relative_residual": 6.454657829334789e-15,
+        "rank": 5,
+        "nuisance_rank": 97,
+        "joint_rank": 102,
+        "eigenvalues": [
+          0.5030147059832392,
+          0.629927212011777,
+          1.139459633949817,
+          1.4608335280432512,
+          2.382944014615607
+        ]
+      },
+      "canonical_correlation_qr_error": 1.1102230246251565e-16,
+      "free_e2_independent_relative_information": 1.5724209824505842e-31,
+      "common_spin_independent_relative_information": 1.5992830435234648e-31
+    },
+    "physical_controls": "Positive affine sign at physical 1e-18 inverse-second scale; conditional distant negative limit; nontrivial-distance finite-history inequality; candidate fixed-endpoint witness and sphere RMS controls pass",
+    "bounded_stf_repair": "Valid zero and trace-free matrices accepted; traceful and antisymmetric defects rejected at scales 1, 1e-18, 1e-160, 1e-320 and smallest positive float. Uses maxabs normalization without raw-norm underflow or projection.",
+    "history_and_power": "All five full10 maps retain rank5 and exact response null directions; independent rotation, noncentral-chi-square root and rank-deficient worst-direction controls pass",
+    "retained_outputs": "Full5 signed coefficients, covariance, joint cross covariance, information eigenvectors/eigenvalues and full10 response/null arrays present; table and rendered PDF figures consistent",
+    "reviewer_harness_first_failure": "Preserved AttributeError for numpy.row_stack in reviewer-only script; corrected to concatenate. Not a candidate defect. Corrected independent checks exit 0.",
+    "versions": {
+      "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1"
+    }
+  },
+  "proposed_changes": [],
+  "tests_to_run": [],
+  "claim_scope": "C0 first-order kinematic response and selected-sample fixed-design Gaussian working sensitivity; primary rho80 best/worst 1.609628618092837/2.2943055890880024 microarcsec/year.",
+  "residual_limits": [
+    "Stipulated cross-source independence; empirical spatial covariance UNKNOWN.",
+    "Source-specific physical depth/history law, centroid-to-matter transfer, NNR and selection calibration remain unsupplied.",
+    "Common-distance history image cannot recover endpoint and derivative components separately or arbitrary per-row depth response.",
+    "No native solver, ODE, family identification, empirical physical constraint or original42 acceptance promotion."
+  ],
+  "kill_switches": [
+    "Any frozen source or scientific candidate identity drift requires re-evaluation of the affected evidence.",
+    "Any newly demonstrated sign, covariance, null-image or physical-domain falsifier blocks scoped admission."
+  ],
+  "next_action": "Root supplies the actual formal review packet through followup and real ACK; recheck unchanged candidate/input binding and attach this independent decision. No fabricated packet, ACK or qualification.",
+  "raw_evidence": {
+    "command_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/COMMAND_RECEIPT.json",
+    "command_receipt_sha256": "aca1c7229572e260d3eb10ab768901a14cc3571b4e354d2b5b033dd2fba579fd",
+    "independent_check_script": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/independent_checks.py",
+    "independent_check_script_sha256": "39ea814fd5935a13490418f07d0c15b01f3303fd8e579153a6f77dd4162bd663",
+    "independent_checks_stdout": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/independent_checks_corrected.stdout"
+  },
+  "repository_mutation": "NONE; no Git commands, STATE edits, candidate edits, catalogue reread or production replay."
+}

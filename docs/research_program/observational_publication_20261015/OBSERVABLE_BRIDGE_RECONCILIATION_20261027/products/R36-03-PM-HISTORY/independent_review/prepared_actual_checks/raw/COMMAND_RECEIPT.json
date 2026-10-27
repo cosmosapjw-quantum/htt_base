@@ -1,0 +1,136 @@
+{
+  "review_phase": "PREPARATION_NO_FORMAL_PACKET",
+  "environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/mplconfig"
+  },
+  "commands": [
+    {
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/test_pm_history.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--basetemp",
+        "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/pytest_tmp"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "started_unix": 1793070057.916626,
+      "elapsed_seconds": 4.383711338043213,
+      "exit_code": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/focused_tests.stdout",
+        "sha256": "38d5fff17b6f7b7072badf03d18645564176b5dc46b8da38ec96cbf325830f03",
+        "bytes": 98
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/focused_tests.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/independent_checks.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "started_unix": 1793070062.3003888,
+      "elapsed_seconds": 1.3793904781341553,
+      "exit_code": 1,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/independent_checks.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/independent_checks.stderr",
+        "sha256": "95724f6deaac3f614fe6e65d90ec452cdcc25e0e43d828f6c29f1891026f9e19",
+        "bytes": 552
+      }
+    },
+    {
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/independent_checks.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "started_unix": 1793070079.6605456,
+      "elapsed_seconds": 1.325773000717163,
+      "exit_code": 0,
+      "reviewer_harness_correction": "Use concatenate in place of unavailable numpy.row_stack; original reviewer failure retained.",
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/independent_checks_corrected.stdout",
+        "sha256": "e8b252fe23ca6f201fcaa7e4e1fd9fece5244753eb18b12a080a482c0b24b5b2",
+        "bytes": 1639
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/independent_checks_corrected.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "command": [
+        "pdftoppm",
+        "-f",
+        "1",
+        "-singlefile",
+        "-r",
+        "100",
+        "-png",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/POWER_FRONTIER.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/POWER_FRONTIER"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "started_unix": 1793070121.2235136,
+      "elapsed_seconds": 0.0760502815246582,
+      "exit_code": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/POWER_FRONTIER_render.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/POWER_FRONTIER_render.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "command": [
+        "pdftoppm",
+        "-f",
+        "1",
+        "-singlefile",
+        "-r",
+        "100",
+        "-png",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/INFORMATION.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/INFORMATION"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "started_unix": 1793070121.2996237,
+      "elapsed_seconds": 0.04506707191467285,
+      "exit_code": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/INFORMATION_render.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/raw/INFORMATION_render.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    }
+  ]
+}

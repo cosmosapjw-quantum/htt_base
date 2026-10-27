@@ -1,0 +1,32 @@
+{
+  "schema": "htt.r36.pm_history_contract_clarification/1",
+  "created_utc": "2026-10-27T02:56:03.542483+00:00",
+  "packet_id": "c8d9f6351c42fc6da769c1aaec2c14948806c99319324fec981e48217901637b",
+  "task_id": "R36-03-PM-HISTORY",
+  "author_agent_id": "/root/rc_c8d9f6351c42fc6d",
+  "frozen_contract_path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_theory_actual/IMPLEMENTATION_CONTRACT.json",
+  "frozen_contract_sha256": "e940efc6768f6607eeda4f0e2e94a2d73d32d3630e6764f0c7e8069e8c2b708a",
+  "status": "APPROVED_BOUNDED_IMPLEMENTATION_CORRECTION_SAME_CONTRACT",
+  "root_authorization": "Root message approved concrete domain defect closeout before seal; preserve contract bytes and criterion, no acceptance lowering or reset.",
+  "defect": "checked_stf used absolute atol1e-12 and trace threshold1e-12*max(1,norm), admitting completely non-STF inverse-second tensors near1e-18. It violates the existing scale-relative physical-domain criterion.",
+  "pre_fix_predicate": "shape==(3,3) and finite and np.allclose(a,a.T,rtol=1e-12,atol=1e-12) and abs(trace(a))<=1e-12*max(1,norm(a))",
+  "actual_counterexample_reproduction": {
+    "traceful_1e_minus18_identity_accepted_by_old_predicate": true,
+    "antisymmetric_1e_minus18_accepted_by_old_predicate": true,
+    "traceful_trace": 3.0000000000000002e-18,
+    "antisymmetric_maxabs_a_minus_transpose": 2e-18
+  },
+  "approved_fix": "Validate finite3x3 first. Let scale=max(abs(a)); if scale==0 accept exact zero tensor. Otherwise normalized=a/scale; require normalized symmetry and trace at the unchanged1e-12 relative-domain criterion. Use maxabs scaling rather than norm on raw tiny values to avoid underflow. Do not project/symmetrize invalid input into the valid domain.",
+  "required_tests": [
+    "Accept exact zero.",
+    "Accept valid STF at ordinary and1e-18 physical-rate scales.",
+    "Reject traceful1e-18*identity.",
+    "Reject antisymmetric1e-18 off-diagonal tensor.",
+    "A subnormal/tiny nonzero scalar multiple follows the same shape-domain verdict without raw-norm underflow.",
+    "Run existing focused physics/Gram tests on final source."
+  ],
+  "scientific_impact": "This domain-validation correction does not change retained unit-basis information, physical response formula, test tolerances, source identities, acceptance boundaries, or histories.",
+  "implementation_owner": "/root/r36_pm_history_numeric_helper",
+  "acceptance_met": false,
+  "independent_review_required": true
+}

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_protocol_adapter/prepare_adapter.py", line 16, in <module>
+    try:rc.record(original_precheck,a,policy);raise AssertionError('Original envelope unexpectedly accepted')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/research_controller.py", line 2517, in record
+    _record(candidate, result, policy)
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/research_controller.py", line 2571, in _record
+    require(outcome in {"success", "blocker"}, "outcome must be success or blocker")
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/research_controller.py", line 30, in require
+    raise ControllerError(message)
+research_controller.ControllerError: outcome must be success or blocker

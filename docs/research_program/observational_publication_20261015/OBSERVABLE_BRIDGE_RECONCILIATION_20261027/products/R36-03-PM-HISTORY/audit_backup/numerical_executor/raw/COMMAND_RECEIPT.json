@@ -1,0 +1,207 @@
+{
+  "schema": "htt.r36.pm_history_helper_execution_receipt/1",
+  "task_id": "R36-03-PM-HISTORY",
+  "parent_packet_id": "c8d9f6351c42fc6da769c1aaec2c14948806c99319324fec981e48217901637b",
+  "helper_agent_id": "/root/r36_pm_history_numeric_helper",
+  "helper_host_ack": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/HELPER_ACK_GO.json",
+    "sha256": "ee7b0abe31cec1ba1b440e47913a2828b508921840643c3235cfc06880ed37d9",
+    "bytes": 719
+  },
+  "created_utc": "2026-10-27T02:57:01.188858+00:00",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+  "environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python"
+  },
+  "source_bindings_verified": {
+    "manifest": "83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+    "frontier": "8de844ee16d15eadb3085e6d3a16b172ce2ce6dd62a8bf276d265b9a8b335f24",
+    "report": "2bcb41c75d8fe69bf546c4785a1357de1b8f281df49276388d2cb181fa021d03",
+    "physical_audit": "a14d9e399d8abd9ef33beeecb14c701f506edddc3c96c6bbd64a7df56b8b9cfe",
+    "retained_derivation_receipt": "ce0bf44f53393cf1d5a90fc39beb0818b681e6e9c81ea5952bdfb07d0a961e65",
+    "retained_pm_result": "652e1ba12beb9b7099deb61eea06b75e58b7f70caa367decc659a80f6d4d07a1",
+    "retained_pm_contract": "9a2aeb8741d7db91c3820da5acb97de721d9a1e13fbc35692d309ebd6d502591",
+    "vsh_model": "c132f01d9d35e267aa67e8465987bb8cfbab94f46e4f8adc32e9c793f5b74659",
+    "vsh_config": "196774e641c0ee85b356762fcb6397c1592f0d701ccc99b587f5ce417c175fc2",
+    "full_stats": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+    "stats_receipt": "c0fb5225d65e21c2e0da752fa343017afb26c650a395cdca4ca3edf1db97d162",
+    "stf_basis": "1c7fe777e3f44183f501e599877964aa212912b0c8c78c905e0aa9404ac03d40",
+    "marcori_pdf": "4aa208f5e54e7f6a871d83d3b8a6a892f2e11041e472fecf4a4feac4a1ef6be4"
+  },
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 timeout 1800 /usr/bin/time -v .venv/bin/python -m pytest docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/test_pm_history.py -q",
+      "exit": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/test_clarified.stdout",
+        "sha256": "9d4a64071f9441eed21eefb0cef56341428f0d0ffa754d57ce18cdfcaa935aa6",
+        "bytes": 98
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/test_clarified.stderr",
+        "sha256": "e2e74ca13f0dc865c35aadd353ded2a02a77788605af45471fdda1ab38142046",
+        "bytes": 904
+      },
+      "wall_clock": "0:02.43",
+      "peak_rss_kib": 163132
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 timeout 1800 /usr/bin/time -v .venv/bin/python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/pm_history.py",
+      "exit": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/build_clarified.stdout",
+        "sha256": "7bbd8c2956917922ff1f49768896af30697ae6db6ed8dc5a54b9130925114b14",
+        "bytes": 400
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/build_clarified.stderr",
+        "sha256": "de26a17fddba22eea20a9ab102cdf2cfd1dd07e43e1cc27f997abd60a127e296",
+        "bytes": 884
+      },
+      "wall_clock": "0:02.13",
+      "peak_rss_kib": 176928
+    }
+  ],
+  "first_failures": [],
+  "earlier_runs": [
+    {
+      "kind": "build_01",
+      "exit": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/build_01.stdout",
+        "sha256": "7bbd8c2956917922ff1f49768896af30697ae6db6ed8dc5a54b9130925114b14",
+        "bytes": 400
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/build_01.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "kind": "test_01",
+      "exit": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/test_01.stdout",
+        "sha256": "cee8100de2a9e0590f38c3eb43d362b5d3358bb85c18798a327c014f0ed7437f",
+        "bytes": 98
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/test_01.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "kind": "test_02",
+      "exit": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/test_02.stdout",
+        "sha256": "4e9a65b1f5eedb755e658e404c1fe747a004c922e974656935c242c58fd20f67",
+        "bytes": 98
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/test_02.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "kind": "build_02",
+      "exit": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/build_02.stdout",
+        "sha256": "7bbd8c2956917922ff1f49768896af30697ae6db6ed8dc5a54b9130925114b14",
+        "bytes": 400
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/build_02.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "kind": "pre_repair_test_final",
+      "exit": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/test_final.stdout",
+        "sha256": "9041ff64e7be21fcb9a1da9a1ee98d9e05ab54c68aa4b3beba2d9d0a17904d3c",
+        "bytes": 98
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/test_final.stderr",
+        "sha256": "b6793257d00ac28a61d3666338d2317edd11375d8dc6e176639b4d98e8498a84",
+        "bytes": 905
+      }
+    },
+    {
+      "kind": "pre_repair_build_final",
+      "exit": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/build_final.stdout",
+        "sha256": "7bbd8c2956917922ff1f49768896af30697ae6db6ed8dc5a54b9130925114b14",
+        "bytes": 400
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/build_final.stderr",
+        "sha256": "7ac9109febe42d7561283c4f095bbc66515c397d8ef0fa12a238290e093f59c8",
+        "bytes": 885
+      }
+    },
+    {
+      "kind": "pre_clarification_test_repair",
+      "exit": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/test_repair.stdout",
+        "sha256": "fbe8847e8062fdfc8e8fa050319ef7d71ee0aed91a6942dc65874da313b44b0e",
+        "bytes": 98
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/test_repair.stderr",
+        "sha256": "fb65d3e03ea0c4d7c1cd9108464aba428f0bc5d517e833f8f4d7ed4d993dd860",
+        "bytes": 899
+      }
+    },
+    {
+      "kind": "pre_clarification_build_repair",
+      "exit": 0,
+      "stdout": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/build_repair.stdout",
+        "sha256": "7bbd8c2956917922ff1f49768896af30697ae6db6ed8dc5a54b9130925114b14",
+        "bytes": 400
+      },
+      "stderr": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/build_repair.stderr",
+        "sha256": "2d29eba86fa22b56650fd80cb6c74784b4ca8bca0c4da23e06a61bd52cb8e4ea",
+        "bytes": 885
+      }
+    }
+  ],
+  "hard_caps": {
+    "wall_seconds": 1800,
+    "rss_bytes": 2147483648
+  },
+  "hard_caps_observed_within": true,
+  "bounded_repair": {
+    "finding": "Physical-scale 1e-18 traceful/antisymmetric matrices crossed absolute STF tolerance; maxabs-normalized relative check now rejects them while accepting valid 1e-18 STF.",
+    "theory_author": "/root/rc_c8d9f6351c42fc6d",
+    "test_added": true,
+    "first_failures": [],
+    "clarification": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_theory_actual/CLARIFICATION.json",
+      "sha256": "8e383e93e635a12fe284065fb94d1318a0f8c6ba00ffeef181f9c85b087721aa",
+      "bytes": 2462
+    },
+    "pre_repair_validator": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_numeric_actual/raw/PRE_REPAIR_VALIDATOR.json",
+      "sha256": "0233a5ca455f0479e9f46cd8675a37937c1032f7dd92e7734e6f071428be0545",
+      "bytes": 639
+    }
+  }
+}

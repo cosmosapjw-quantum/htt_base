@@ -1,0 +1,10 @@
+{
+  "schema": "htt.r36.pm_history_pre_repair_validator/1",
+  "finding": "Absolute 1e-12 symmetry and max(1,norm) trace thresholds admit invalid physical-scale tensors",
+  "original_predicate": "a.shape != (3, 3) or not np.isfinite(a).all() or not np.allclose(a, a.T, rtol=1e-12, atol=1e-12) or abs(np.trace(a)) > 1e-12 * max(1, np.linalg.norm(a))",
+  "counterexamples": [
+    "1e-18*np.eye(3) is traceful but admitted",
+    "1e-18*np.array([[0,1,0],[-1,0,0],[0,0,0]]) is antisymmetric but admitted"
+  ],
+  "repair": "Check maxabs-normalized nonzero tensor at fixed relative 1e-12; accept exact zero; no scientific tolerance relaxation."
+}
