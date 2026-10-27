@@ -1,0 +1,46 @@
+{
+  "packet_id": "f7f717415da24a41132c78357939d61cdcc8ac32dd080f8a0f242087f25b5984",
+  "task_id": "R36-03-PM-HISTORY",
+  "agent_id": "/root/r36_pm_history_fresh_review",
+  "phase": "review",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_identity": "sha256:781939c14b1ae7a17f8321d268955cf099d04ede9a0bcfc4c006317d3c137424",
+  "outcome": "success",
+  "acceptance_met": true,
+  "qualified_products": [
+    "pm_history_response"
+  ],
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "original_acceptances_changed": false,
+  "original42_promotion": false,
+  "schema": "htt.r36.pm_history_formal_review_return/1",
+  "status": "PASS_SCOPED_CONDITIONAL_PRODUCT",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/formal_binding_01/RAW_BINDING.json",
+  "raw_receipt_sha256": "93ecf841d010433222d5d74ee6b53cab3ed551311eb08df0f63bf3977d737f93",
+  "review_result": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_pm_history_fresh_review/REVIEW_RESULT.json",
+    "sha256": "1f418fddc77125b3a069994ffefb0d659530043446e1f85055fc4e8b5568abcd",
+    "bytes": 7837
+  },
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/ARTIFACT_MANIFEST.json",
+  "validation_evidence": [
+    "Actual same-reviewer followup acknowledged by ACK_012_GO.json; packet, task, input and candidate match exactly; runtime remains UNKNOWN.",
+    "This reviewer independently reviewed the exact unchanged sealed candidate before formal binding; REVIEW_RESULT.json SHA256 1f418fddc77125b3a069994ffefb0d659530043446e1f85055fc4e8b5568abcd retains PASS_SCOPED_CONDITIONAL_PRODUCT with no blocking finding.",
+    "Binding-only check reverified all 13 source bindings and 9 candidate artifacts; current packet scientific task spec exactly equals the frozen task already reviewed.",
+    "Retained review evidence: 5 focused tests passed, independent in-memory consumer exactly matched sealed RESULT.json values, source G is 102x102 for 755850 selected rows.",
+    "Independent Schur projections agree to 1.38e-15 and 1.02e-14 relative error; full5 ranks 5, nuisance ranks 6/97, full covariance and cross terms retained; free E2 and B1 signal information ratios below 1.6e-31.",
+    "Positive nearby sign, distant conditional limit, finite-history inequality, fixed-endpoint witness, full10 null directions, power invariance and scale-relative STF correction passed in the retained independent review.",
+    "Qualification is only pm_history_response at C0 conditional response/design; empirical spatial covariance, physical depth/history, centroid-to-matter, NNR and selection calibration remain unsupplied. No original42 acceptance promotion."
+  ],
+  "findings": [],
+  "claim_scope": "C0 first-order kinematic response and selected-sample fixed-design Gaussian working sensitivity; primary rho80 best/worst 1.609628618092837/2.2943055890880024 microarcsec/year.",
+  "residual_limits": [
+    "Stipulated cross-source independence; empirical spatial covariance UNKNOWN.",
+    "Source-specific physical depth/history law, centroid-to-matter transfer, NNR and selection calibration remain unsupplied.",
+    "Common-distance history image cannot recover endpoint and derivative components separately or arbitrary per-row depth response.",
+    "No native solver, ODE, family identification, empirical physical constraint or original42 acceptance promotion."
+  ],
+  "no_numerical_rerun": true,
+  "next_action": "Controller records this exact candidate-bound successful review and requests the next dependency-safe task within the existing campaign."
+}
