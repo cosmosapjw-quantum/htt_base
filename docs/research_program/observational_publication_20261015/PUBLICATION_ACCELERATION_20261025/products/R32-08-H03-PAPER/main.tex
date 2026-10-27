@@ -1,5 +1,5 @@
 \documentclass[aps,prd,reprint,onecolumn,superscriptaddress,nofootinbib]{revtex4-2}
-\usepackage{amsmath,amssymb,graphicx,booktabs}
+\usepackage{amsmath,amssymb,mathrsfs,graphicx,booktabs}
 \usepackage[T1]{fontenc}
 \begin{document}
 \title{Finite survey windows, correlated Hubble dipoles, and attainable response discrepancies}
@@ -8,6 +8,14 @@
 \date{25 October 2026}
 \begin{abstract}
 A uniform bulk velocity has zero divergence, yet an angularly incomplete distance survey can mix that velocity into an apparent Hubble-rate fit. We use retained signed coefficients from four overlapping redshift windows to compare a common bulk response with a depth-independent rate dipole. Their combined fit leaves a quadratic discrepancy $T=23.3967205227$ for six residual degrees of freedom, with conditional Gaussian tail $0.00067393342$. Omitting cross-window covariance changes the same fit to $T=8.925712183$ and tail $0.177799$. We then determine which corrections can reach the unchanged 95\% reference. A depth-slope design leaves an irreducible discrepancy $15.3160$, above $12.5916$; an FP-composition proxy and a joint response reach the reference at dimensionless coefficient radii $5.7509$ and $1.5897$. Finally, a calibration-quotiented CF4 tensor has already dimensionless norm $0.0326568$, which sets a concrete target for a future physical response bound. These results specify finite-window response requirements under retained working statistics; the coefficient budgets are design sensitivities rather than measured calibration errors.
+We also propagate a common Gaussian velocity field through the exact
+finite-window estimator, retaining its cross-window and cross-smoothing
+covariance under an explicit restricted-band model. A separate two-depth
+Pantheon+ magnitude comparison retains all signed dipole and quadrupole
+coordinates and gives a joint improvement of 17.2066 for 16 angular
+coefficients, with conditional upper-tail probability 0.37235 under the
+released selected-covariance Gaussian law.
+
 \end{abstract}
 \maketitle
 
@@ -40,7 +48,7 @@ Its acceleration dipole differs from a finite-distance translation $b/r$. Assign
 
 The saved four-window analysis represents each angular-rate estimator by a monopole, three Cartesian dipole coordinates, and five signed symmetric trace-free coordinates in ICRS J2000. The centers are $z_w=(0.025,0.040,0.060,0.080)$ with saved width $h=0.012$. Its full 36-by-36 joint covariance connects axes and windows, including shared groups. We extract the marginal 12-by-12 dipole covariance $C$ and window-major signed dipoles $y$; no conditioning on measured monopole or STF coordinates is performed. The complete apparent coefficient carrier and source covariance are retained in the accompanying \texttt{source\_carrier.json}, alongside the extracted $y,C$ and response matrices \cite{h03,physical}. This extraction does not replace those tensors by a scalar.
 
-The retained estimator is a finite weighted angular-rate fit, $cz_i=d_{{\rm DM},i}[H_w+\mathbf D_w\cdot\mathbf n_i+\mathbf n_i^{\mathsf T}Q_w\mathbf n_i]$. Its coefficients are in ${\rm km\,s^{-1}\,Mpc^{-1}}$; they are not themselves physical expansion coefficients. The retained source uses 35,970 groups, assumes a diagonal row-scatter working law, and leaves common calibration, peculiar-velocity and selection covariance unmeasured. The experiment here consumes only the saved statistics. It does not refit a catalogue or infer an observer-frame or cosmographic transfer.
+The retained estimator is a finite weighted angular-rate fit, $cz_i=d_{{\rm DM},i}[H_w+\mathbf D_w\cdot\mathbf n_i+\mathbf n_i^{\mathsf T}Q_w\mathbf n_i]$. Its coefficients are in ${\rm km\,s^{-1}\,Mpc^{-1}}$; they are not themselves physical expansion coefficients. The retained source uses 35,970 groups, assumes a diagonal row-scatter working law, and leaves common calibration, peculiar-velocity and selection covariance unmeasured. The original finite-window sensitivity experiment below consumes the saved statistics; the later covariance and supernova sections consume separate retained response products. It does not refit a catalogue or infer an observer-frame or cosmographic transfer.
 
 Let $R$ stack the saved nine-by-three bulk-velocity dipole response blocks, with units ${\rm Mpc}^{-1}$, and let $G=\mathbf 1_4\otimes I_3$. The six-column baseline $X=[R,G]$ has full rank. Its model is
 \begin{equation}
@@ -140,6 +148,8 @@ Suppose a qualified observation response establishes $\|\widehat T-\sigma/H\|_F\
 \end{equation}
 A nonzero lower bound therefore requires a total radius below $0.0326568$. At zero radius the conditional value is $0.0133321$; this is a response-identity scenario, not a measured physical shear. A material-frame response and a justified joint error bound or law are needed to attach physical meaning or coverage. No evolution equation is supplied by the tensor contraction.
 
+\input{r36_bridge/velocity.tex}
+\input{r36_bridge/supernova.tex}
 \section{Interpretation and required physical input}
 
 These results identify sensitivity of a retained finite-window fit to three explicit response spaces. The FP fractions encode sample composition, not a signed calibration Jacobian; family-deletion dipole norms cannot supply such a derivative. For an actual weighted least-squares estimator $\theta=N^{-1}b$, a physical perturbation $\gamma$ requires $\partial_\gamma\theta=N^{-1}(\partial_\gamma b-(\partial_\gamma N)\theta)$, including any changed distances, design and weights. A source-bound signed window response to named calibration, peculiar-velocity or selection parameters, together with a justified joint bound or law and shared covariance, is needed to interpret $\eta$ as a physical error. The sky, observer and cosmographic transfer, finite remainder and null coverage are likewise open for stronger claims.
@@ -152,6 +162,14 @@ The actual finite-window responses distinguish a common translation from a const
 A physical extension can now target named signed calibration or selection responses and their joint law, or bound the response from a material velocity gradient to the apparent CF4 tensor. The retained norm gives a quantitative scale for that task. These are finite observational-response questions which can be addressed without integrating a native cosmological solver.
 
 \appendix
+The additional covariance transport demonstrates how a shared velocity
+field changes the joint apparent-coefficient uncertainty through the
+actual survey operator. The released-magnitude comparison gives a
+distinct observational application with its own angular response and
+covariance. Their physical combination requires source, observer-frame
+and cross-survey error models; those requirements cannot be replaced by
+treating the two apparent tensors as measurements of one material shear.
+
 \section{Reproduction from retained statistics}
 The companion \texttt{consumer.py} reads only cached sufficient statistics, checks source SHA-256 bindings, extracts the complete dipole marginal, refits the three responses and generates the tables and vector figures. It reuses the approved structured-response implementation, including exact-zero and threshold-boundary controls, with its source identity recorded in \texttt{inputs/SOURCE\_BINDINGS.json}. The package retains the full 36-coordinate source, four complete rate tensors, corrected CF4 five-coordinate carrier and its working metric, rather than replacing them with norms. The inherited source estimator used diagonal row scatter; cross-window covariance is retained at the summary level. No raw galaxy catalogue is required by this consumer. The source-bound independent checks and research derivations are included for the stated physical identities.
 \bibliographystyle{apsrev4-2}

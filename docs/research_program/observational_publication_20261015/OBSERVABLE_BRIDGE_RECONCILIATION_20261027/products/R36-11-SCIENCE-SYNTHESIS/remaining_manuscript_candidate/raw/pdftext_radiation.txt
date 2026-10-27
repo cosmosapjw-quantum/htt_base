@@ -1,0 +1,203 @@
+Radiation stress under finite observer boosts and response-preserving energy moments
+
+                                                Anonymous research draft
+                                                 (Dated: 27 October 2026)
+                A low temperature quadrupole approximates radiation stress only within its amplitude and spec-
+             tral assumptions. We compare exact bolometric fourth-power conversion with a linear temperature-
+             to-moment adapter on the same six positive synthetic skies and the same correlated errors. Both
+             adapters use the same finite-boost stress residual and invariant rest-pressure anisotropy. Their
+             physical-target coverage and interval widths differ even when their method-target calibration is
+             similar. Separately, energy moments of angular ranks zero, two and four preserve the complete
+             five-dimensional radiative shear-response operator. In a retained compression example, rank-four
+             response agreement reaches numerical precision while a positive angular entropy residual remains.
+             These are conditional full-sky radiation methods; applying them to measured channels requires
+             calibrated intensity, spectral completion and a measured joint error law. The accompanying finite-
+             bandpass foreground analysis addresses a different inverse problem and does not supply those inputs.
+
+
+                   I.    PHYSICAL MOMENTS AND TWO COMMON-INPUT ADAPTERS
+
+  Use signature (− + ++), outward sky direction n, photon direction e = −n, and bolometric energy density per
+solid angle I in J m−3 sr−1 . With a calibrated energy temperature,
+                                        4         Z                Z            Z
+                                     πkB
+                 I = Cγ TE4 , Cγ =         ,  ρ =    I dΩ, q = −c    In dΩ, π =   I STF(nn) dΩ.
+                                   60ℏ3 c3
+
+The reference temperature is 2.7255 K, giving ρref = 4.17480092 × 10−14 J/m3 . Set f = q/(cρ), P = π/ρ. On the
+positive moment domain with a unique timelike Landau eigenbranch, define
+                                                                         P3                 2 1/2
+                                       3 STF(f f T )                 [    i=1 (pL,i − ρL /3) ]
+                              D =P −      p          ,        Aγ =                                  .
+                                     2 + 4 − 3|f |2                               ρL
+
+The residual D is an observer-frame STF tensor; Aγ is invariant under observer tetrad changes on this branch. A zero
+residual tests a timelike isotropic-pressure rest stress. It does not require every higher angular multipole to vanish.
+  The source brightness is Irest /Iref = 1 + aP2 (nrest,z ), with a ∈ {0, 2 × 10−5 , 0.02}, boosted by β = b(0.6, 0, 0.8),
+b ∈ {0.00123, 0.3}. The complete positive temperature sky is obtained from this specified boost, retaining its higher
+modes.
+√       The analytic target is the Lorentz transform of diag(1, 1/3 − a/15, 1/3 − a/15, 1/3 + 2a/15)ρref , so Aγ,true =
+  6|a|/15.
+  Only the three temperature dipole and five temperature STF coordinates are perturbed. Their Gaussian standard
+deviations are 7.5 × 10−6 and 9.375 × 10−7 , and their correlation is 0.8I8 + 0.2ssT , s = (1, −1, 1, 1, −1, 1, −1, 1).
+Monopole and higher temperature modes are noiseless known inputs. Both methods receive identical errors. The
+exact adapter integrates the fourth power of that sky. The linear adapter uses flin = −4dT /3 and Plin = 8QT /15,
+with the same monopole normalization, then applies the same exact D and Landau readout. This isolates the
+temperature-to-moment approximation. The joint flux/stress covariance, including its three-by-five cross block, is
+retained; it is not replaced by independent dipole and quadrupole errors.
+
+
+                        II.   CONDITIONAL CALIBRATION, COVERAGE AND WIDTHS
+
+   Each case uses 8,191 calibration skies and 4,096 disjoint test skies. Calibration is pointwise around the known
+noiseless response of each method. For D, the confidence-region radius is the 7,783rd ordered calibration norm error,
+producing a five-dimensional ball. For Aγ , the interval subtracts the 7,988th and 204th ordered calibration errors
+and intersects the result with [0, ∞). An upper endpoint below zero produces an empty interval and is counted as
+noncoverage. The exact physical target and the noiseless method target are assessed separately; no bias correction is
+fitted to force them to coincide.
+   For the pure-boost case at b = 0.00123, the exact and linear physical-target D counts are 3,872/4,096 and
+3,035/4,096, while the invariant-anisotropy counts are 3,914/4,096 and 1,545/4,096. Their D ball diameters are
+nearly equal, 3.390 × 10−6 and 3.381 × 10−6 . Thus similar widths can conceal different target bias. The linear
+method-target coverage remains near its nominal level across the cases even where its physical-target coverage fails.
+                                                                                                                           2
+
+
+TABLE I. Physical-target hit counts and finite-test 95-percent Clopper–Pearson intervals. N = 4096 for every row. Calibration
+uses 8191 separate draws; calibration-content uncertainty is distinct from these test intervals.
+                        Case              Method D hits/N [interval]           Aγ hits/N [interval]
+                        a0_b0.00123     exact      3872/4096 [0.9379,0.9521] 3914/4096 [0.9488,0.9617]
+                        a0_b0.00123     linear     3035/4096 [0.7273,0.7543] 1545/4096 [0.3623,0.3922]
+                        a0_b0.3         exact      3934/4096 [0.9540,0.9662] 3907/4096 [0.9470,0.9601]
+                        a0_b0.3         linear     0/4096 [0.0000,0.0009]    0/4096 [0.0000,0.0009]
+                        a2e-05_b0.00123 exact      3890/4096 [0.9426,0.9562] 3862/4096 [0.9353,0.9498]
+                        a2e-05_b0.00123 linear     3055/4096 [0.7322,0.7591] 3654/4096 [0.8822,0.9014]
+                        a2e-05_b0.3     exact      3919/4096 [0.9501,0.9628] 3892/4096 [0.9431,0.9567]
+                        a2e-05_b0.3     linear     0/4096 [0.0000,0.0009]    0/4096 [0.0000,0.0009]
+                        a0.02_b0.00123 exact       3888/4096 [0.9420,0.9557] 3905/4096 [0.9465,0.9596]
+                        a0.02_b0.00123 linear      0/4096 [0.0000,0.0009]    0/4096 [0.0000,0.0009]
+                        a0.02_b0.3      exact      3873/4096 [0.9382,0.9523] 3901/4096 [0.9454,0.9587]
+                        a0.02_b0.3      linear     0/4096 [0.0000,0.0009]    0/4096 [0.0000,0.0009]
+
+
+TABLE II. Dimensionless widths displayed in units of 10−6 . Empty scalar intervals count as noncoverage; only the explicitly
+counted nonempty intervals enter their mean.
+                 Case             Method Ball diameter /10−6 Empty fraction Nnonempty Mean width /10−6
+                 a0_b0.00123     exact     3.390224               0.021729         4007      0.638565
+                 a0_b0.00123     linear    3.380536               0.000000         4096      1.490733
+                 a0_b0.3         exact     8.369104               0.029053         3977      1.884719
+                 a0_b0.3         linear    27.694794              0.000000         4096      33.419948
+                 a2e-05_b0.00123 exact     3.396305               0.000000         4096      1.887453
+                 a2e-05_b0.00123 linear    3.388694               0.000000         4096      1.932102
+                 a2e-05_b0.3     exact     8.454129               0.000000         4096      5.066372
+                 a2e-05_b0.3     linear    27.748430              0.000000         4096      33.723377
+                 a0.02_b0.00123 exact      3.415737               0.000000         4096      1.990204
+                 a0.02_b0.00123 linear     3.420747               0.000000         4096      1.995023
+                 a0.02_b0.3      exact     8.441110               0.000000         4096      6.450267
+                 a0.02_b0.3      linear    27.647888              0.000000         4096      33.857972
+
+
+  At a = 0, b = 0.3, the exact D count is 3,934/4,096, or 0.960449, with a retained 95-percent interval [0.954021,
+0.966209]. This single high estimate is an unadjusted finite-simulation diagnostic among the reported comparisons,
+not a claim of exact 95-percent coverage. Calibration-content uncertainty is separate: under continuous errors its
+retained central intervals are [0.945254,0.954684] for the ball and [0.945382,0.954801] for the scalar interval. No seeds,
+quantiles or sample counts were adjusted. Empty exact-method scalar intervals occur in 89 and 119 test skies in the
+two pure-boost cases; corresponding nonempty means use 4,007 and 3,977 skies. Empirical measured-sky error-law
+misspecification is outside these intervals.
+
+
+                        III.   THE MOMENTS NEEDED FOR THE TARGET RESPONSE
+             R
+  Let H4 =       I(e)e⟨i ej ek el⟩ dΩ. On the five-dimensional STF space, the instantaneous radiative response is
+                                                8ρ    10
+                                       LI S =      S+    STF[ 21 (Sπ + πS)] − H4 : S,
+                                                15     7
+with quadratic form
+                                                       Z
+                                          S : LI S =       I(e)[2|Se|2 − (eT Se)2 ] dΩ.
+
+Only energy moments of ranks zero, two and four enter. Matching these moments therefore preserves the entire
+operator, independently of unresolved higher angular structure. In the retained compression experiment, the operator
+error normalized by ρ0 is 0.00654243536 at rank two and 3.3393 × 10−16 at rank four on the primary quadrature,
+while the positive normalized angular entropy residual is 9.37160903 × 10−5 . The higher quadrature gives rank-four
+error 4.3301 × 10−15 ; the conclusion is numerical agreement at the checked precision, not exact binary equality.
+                                                                                                                                                                                                                       3
+
+                                                                    Conditional synthetic radiation stress: matched temperature inputs and errors
+                                                              Five-dimensional D ball                                                   Landau A interval
+                             1.0                                                                                                          1.0
+
+                             0.8                                                                                                          0.8
+  Physical-target coverage
+
+
+
+
+                                                                                                               Physical-target coverage
+                             0.6                                                                                                          0.6
+
+                             0.4                                                                                                          0.4
+
+                             0.2                                                                                                          0.2
+                                          Exact
+                                          Linear
+                             0.0                                                                                                          0.0
+                                     a=0           a=0           a=2e-05       a=2e-05    a=0.02      a=0.02                                      a=0            a=0        a=2e-05    a=2e-05    a=0.02      a=0.02
+                                    =0.00123       =0.3          =0.00123        =0.3     =0.00123     =0.3                                      =0.00123        =0.3       =0.00123     =0.3     =0.00123     =0.3
+                                   1e 5                          D ball diameter                                                                1e 5                     Mean nonempty A width
+                                                                                                                                          3.5
+                             2.5                                                                                                          3.0
+                             2.0                                                                                                          2.5
+                                                                                                                                          2.0
+                             1.5
+                                                                                                                                          1.5
+                             1.0
+                                                                                                                                          1.0
+                             0.5                                                                                                          0.5
+                             0.0                                                                                                          0.0
+                                      a=0           a=0          a=2e-05      a=2e-05    a=0.02      a=0.02                                        a=0            a=0       a=2e-05    a=2e-05   a=0.02      a=0.02
+                                     =0.00123       =0.3         =0.00123       =0.3     =0.00123     =0.3                                        =0.00123        =0.3      =0.00123     =0.3    =0.00123     =0.3
+
+
+FIG. 1. Common-input synthetic comparison of exact and linear temperature adapters. Upper panels show physical-target
+coverage and finite-test Clopper–Pearson intervals; the dashed line is the nominal calibration level. Lower panels show the
+five-dimensional residual-ball diameter and the mean width of nonempty rest-anisotropy intervals. Empty intervals count as
+noncoverage and are excluded only from the explicitly labeled nonempty width means. Both methods use the same correlated
+temperature errors, with noiseless known monopole and higher modes. These are pointwise oracle benchmarks, not calibrated
+intervals for an unknown observed CMB sky.
+
+
+TABLE III. Both retained angular quadratures and response errors normalized by ρ0 ; entropy residuals use the isotropic entropy
+normalization.
+                                                                              Quadrature Rank Operator error Entropy residual
+                                                                              256             2       0.0065424354                                 0.00037370961
+                                                                              256             4       3.3393191e-16                                9.371609e-05
+                                                                              320             2       0.0065424354                                 0.00037370961
+                                                                              320             4       4.3301414e-15                                9.371609e-05
+
+
+                                                          2
+   For the positive e8µ brightness family, a sufficient entropy lower bound is −0.352935ρ, while the actual minimum
+response eigenvalue is 0.12823282ρ > 0. A failed sufficient certificate does not establish loss of coercivity; the finite
+operator spectrum provides the direct check. If a specified transport branch supplies LI σ = −R, a shear estimate also
+needs the derivative residual R, its frame and its error. That residual is absent here, so no matter shear is inferred
+from instantaneous brightness alone.
+   The finite-bandpass foreground problem and this bolometric calculation constrain different objects. A calibrated
+intensity/spectral completion is needed to carry measured channel amplitudes into the positive energy moments used
+above. Polarization E is not such an intensity, and evaluating number and energy from one imposed blackbody
+
+
+            TABLE IV. All five rank-four response eigenvalues divided by ρ0 . Full matrices accompany the numerical supplement.
+                                                    Quadrature λ1                           λ2                  λ3                                          λ4                 λ5
+                                                    256                     0.5034920635 0.5034920635 0.5526984127 0.5526984127 0.5542857143
+                                                    320                     0.5034920635 0.5034920635 0.5526984127 0.5526984127 0.5542857143
+                                                                                                                      4
+
+temperature does not create a second independent observed channel. The present contribution is a response-specific
+stopping criterion and a matched-input stress comparison under a stated synthetic law.
+
+
+
+
+[1] The source-bound numerical supplement distributed with this manuscript retains the complete moment matrices, common-
+    input comparison statistics and qualification limitations.
+

@@ -19,3 +19,6 @@ Fourteen focused tests pass. They cover exact input hashes, signed coordinate or
 Final build has no undefined citations/references, missing assets, duplicate labels or overfull boxes. A standard nameref label-definition warning remains. The manuscript contains the exact real identified-set formula, complete coefficient fibres and the accepted numerical distinction between abstract serialized ball parameters and arbitrary later rounded sampling. Specific exported upstream witnesses retain their original checks.
 
 Physical foreground coupling/realizability, truncation remainder, component-specific map response and actual joint noise/calibration remain unavailable. No posterior, confidence, measured target amplitude, native-family or all-physical-foreground claim is made. The optional accepted WMAP--Planck paragraph distinguishes 12 instrument-band-average rows from 17 DA-response rows and states the large weight amplification. Novelty assessment remains in `RESEARCH_NOTES.md`.
+
+
+Current source-bound manuscript entrypoint: `radiation_supplement/main.tex`, a separate companion bolometric radiation methods calculation. It uses positive complete-sky synthetic radiation inputs and does not extend the parent finite-bandpass foreground class or supply measured foreground budgets.

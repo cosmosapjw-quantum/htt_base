@@ -1,0 +1,238 @@
+{
+  "acceptance_passed": false,
+  "attempt": 1,
+  "branches": {
+    "BIANCHI_I_KINEMATIC_FULL_TEMPERATURE_NONINJECTIVITY": "DERIVED_CANDIDATE",
+    "BIANCHI_V_EINSTEIN_FLUID_HISTORY_PAIR_NOT_ESTABLISHED": "NOT_ESTABLISHED",
+    "LRS_V_INSTANTANEOUS_CONSTRAINT_IMAGE": "DERIVED_CANDIDATE"
+  },
+  "campaign": "R23-whole-42-solver-free",
+  "candidate_artifacts": [
+    "arrays.npz",
+    "joint_image.csv",
+    "generated_table.csv",
+    "manuscript.tex",
+    "manuscript.pdf",
+    "CLAIM_SOURCE_MAP.json",
+    "figures/domain.pdf",
+    "figures/domain.png",
+    "figures/joint_image.pdf",
+    "figures/joint_image.png",
+    "figures/fixed_matter_tilt.pdf",
+    "figures/fixed_matter_tilt.png",
+    "figures/shear_envelope.pdf",
+    "figures/shear_envelope.png",
+    "figures/history_temperature.pdf",
+    "figures/history_temperature.png",
+    "figures/error_geometry.pdf",
+    "figures/error_geometry.png"
+  ],
+  "caveats": [
+    "Instantaneous Bianchi V constraint tuples are not evolved Einstein-fluid histories.",
+    "Kinematic Bianchi I radiation equality is not an Einstein-perfect-fluid Bianchi V pair.",
+    "No empirical sky, probability law, native transfer or T/E/B atlas is supplied."
+  ],
+  "claim_tier": "conditional",
+  "covariance_null_status": "NOT_APPLICABLE_DETERMINISTIC_NO_PROBABILITY_LAW",
+  "display_support": {
+    "K": [
+      0.02,
+      0.98,
+      161
+    ],
+    "beta": [
+      -0.9,
+      0.9,
+      181
+    ],
+    "w": [
+      0,
+      0.3333333333333333
+    ]
+  },
+  "figure_count": 6,
+  "frontier_identity": "27b1e5df1ffbe44e31a69772db64138b0c2cc6902c009cef87d4b57cc4f3a508",
+  "generating_command": "python3 docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/build_product.py",
+  "independent_review_status": "PENDING",
+  "input_identity": "sha256:d6d2dc2c653bf3f611d0272d22cceb8562e1c277c76bdda1f50fbc91bc420a71",
+  "numerical_validation": {
+    "beta_mirror": 0.0,
+    "compact_envelope_independent": 3.3306690738754696e-16,
+    "fixed_boundary_rows": 1300,
+    "fixed_empty_rows": 316,
+    "fixed_omega_boundary": 1.5543122344752192e-15,
+    "heatmap_beta_mirror": 1.1102230246251565e-15,
+    "heatmap_points": 58282,
+    "heatmap_timelike_envelope_violation": 0.0,
+    "history_endpoint_B": 0.0,
+    "history_equator_pole": 0.0,
+    "history_explicit_temperature": 0.0,
+    "history_separation": 6.938893903907228e-18,
+    "history_shear_ratio": 0.0,
+    "history_squared_norm_ratio": 4.440892098500626e-16,
+    "history_stf": 0.0,
+    "history_temperature": 0.0,
+    "joint_rows": 280,
+    "max_abs_boundary_lambda": 1.6653345369377348e-15,
+    "negative_directional_expansion_count": 8,
+    "negative_directional_expansion_example": {
+      "K": 0.05,
+      "beta": -0.5,
+      "u": 1.0,
+      "w": 0.0,
+      "z_s": -0.6251669339764029
+    },
+    "negative_directional_expansion_source": "joint_grid",
+    "normal_hamiltonian": 4.440892098500626e-16,
+    "omega_polynomial": 4.440892098500626e-16,
+    "shear_full_norm": 0.0,
+    "shear_trace": 0.0,
+    "signed_momentum": 1.1102230246251565e-16,
+    "stress_full_norm": 4.163336342344337e-17,
+    "stress_trace": 0.0,
+    "timelike_envelope_violation": 0.0
+  },
+  "observed_builder_runtime": "UNKNOWN",
+  "observed_git_head_at_build": "427f7b5dda53e4cee1f1189ae78fdd0ce494ec1c",
+  "original_acceptance_passed": false,
+  "owner": "manuscript",
+  "packet_id": "1f2400c98c81ce56b5964beb1ba8c0c0b5d00452049470f22b188ed5bdd96154",
+  "pdf_pages": 9,
+  "promotes_original_acceptance": false,
+  "proposed_qualified_product": "bianchi_algebra_note",
+  "qualified_product": null,
+  "qualified_products": [],
+  "radiation_map": "explicit analytic collisionless Bianchi I endpoint map",
+  "render_token_repair": {
+    "current_pdf_sha256": "427ef5a1fc7786d4c02de70f74afc1d2b86433239c54f303938d09147ae5d0ac",
+    "numerical_artifacts_unchanged": true,
+    "observed_git_head_at_repair": "427f7b5dda53e4cee1f1189ae78fdd0ce494ec1c",
+    "prior_candidate_manifest_sha256": "305d4be3be809bd2764c9e3a7328459858e509ccee5b20387ed2b811e0db2278",
+    "prior_candidate_result_sha256": "ab7aa3679dbf28cb1e8e9a94e050f6b2d4fbb40037b96bcbfde5c3860e9c980f",
+    "prior_pdf_sha256": "c511514110ca606b9b293d9ea6710d97956df65bca477949e0f8d6212cb76110",
+    "raw_receipt": "raw/render_token_repair.json",
+    "status": "PDF_ONLY_RESEALED"
+  },
+  "requested_builder_effort": "high",
+  "requested_builder_model": "gpt-6-sol",
+  "scope": "conditional instantaneous LRS Bianchi V algebra and exact kinematic Bianchi I radiation equivalence",
+  "sky_support_status": "NO_EMPIRICAL_SKY_ANALYTIC_FULL_SPHERE",
+  "source_head_from_preparation": "dff1f6a330bffec122225c3b0e8edb19e8b7d122",
+  "source_identifiers": {
+    "preparation_contract_sha256": "fb65137ec8263f367554d0528c68ba1dd3b42ac0940141da8b7df9ac111f0733",
+    "preparation_list_sha256": "5587eecdc83ce4a0c43a53177f792dc425741bf707753a2ff4f784f811e7de92",
+    "retained_file_count": 9,
+    "retained_files": [
+      {
+        "bytes": 6782,
+        "manifest_match": null,
+        "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/OUTPUT_DAG.json",
+        "sha256": "2cd505e9ac3063288f498920c47c99aaca5b60e01c684eef7351e8c50a91a0aa"
+      },
+      {
+        "bytes": 32321,
+        "manifest_match": null,
+        "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/FRONTIER.json",
+        "sha256": "f5647d555c3fb346ee09602f1e8ea52d48b0d6ed27bde6ae14ec208eb4496b01"
+      },
+      {
+        "bytes": 15522,
+        "manifest_match": null,
+        "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/EVIDENCE_MANIFEST.json",
+        "sha256": "10703b1d37198379ee8ec4565dbef737e7ee35e6143de404c4d94ed48658f2d3"
+      },
+      {
+        "bytes": 13137,
+        "manifest_match": true,
+        "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/research/physical_derivations.md",
+        "sha256": "9614c03ab6dc590647c6c75f124c0bc7e7cb448d319c7ced03c0e3f9cee8223f"
+      },
+      {
+        "bytes": 15261,
+        "manifest_match": true,
+        "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/research/legacy_reconstruction_chapter.md",
+        "sha256": "18f0200768df6f0a1541915e48b5ea59febb13af11e4d55a29515eae1c73b62b"
+      },
+      {
+        "bytes": 17262,
+        "manifest_match": true,
+        "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/research/independent_physical_review.md",
+        "sha256": "3a45401d67981b3ed4d1d47094f615cd8e551dce778a0536e9954139c6f98ba3"
+      },
+      {
+        "bytes": 3055,
+        "manifest_match": true,
+        "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/research/independent_physical_check_result.json",
+        "sha256": "c0166e6466b9fcfd69e6b70272fdb6c8a6d494f66b69d729e0bbc157ef0726d7"
+      },
+      {
+        "bytes": 10161,
+        "manifest_match": true,
+        "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/baseline/research/mathematical_recovery.md",
+        "sha256": "1a780acfd0a24d7e044d191200c1914560e24f091de062df5d66948fbf566d29"
+      },
+      {
+        "bytes": 13124,
+        "manifest_match": true,
+        "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/baseline/research/independent_review.md",
+        "sha256": "334e53dca957ee24f55ff45d09e2aee4bb1a426bbc9182a5ce61552371e96ea8"
+      }
+    ],
+    "science_build_contract_sha256": "9a389efd96bf0d22df3320562a9a1728a3d1ac52a20ec26c50262185af822b42",
+    "science_claim_map_sha256": "924a68dbee926a83384647170b67b80ae5340494ddd3d0b42bcd729a47812904",
+    "science_manuscript_sha256": "b4acf4ae0772e4a8cc387063a8ec19e56e166fdca85ad26c0b688843bc50d6cf",
+    "science_research_notes_sha256": "41d2c33da02a9f96e1fb9ba0eeee7f8d4cace4f064b49590c421d6aca31ffd79"
+  },
+  "statistical_law_status": "NOT_SUPPLIED_NO_PROBABILISTIC_CLAIM",
+  "status": "CANDIDATE_BUILT_PENDING_INDEPENDENT_REVIEW",
+  "table_count": 1,
+  "task_id": "R32-07-P5-ALGEBRA",
+  "task_spec_identity": "11ead068de6c2f1d1aea1adea92ef6b6fb135312c51dd47813828cd0da7544e5",
+  "transfer_source": "none",
+  "undefined_sectors": {
+    "F": {
+      "missing": "support/occupancy measure and sign-clean ceiling",
+      "status": "NOT_EVALUABLE",
+      "value": null
+    },
+    "G_F": {
+      "missing": "supported depth-F reports, bin measures and dependence",
+      "status": "NOT_EVALUABLE",
+      "value": null
+    },
+    "Pi": {
+      "missing": "joint probability law and support",
+      "status": "NOT_EVALUABLE",
+      "value": null
+    },
+    "Q": {
+      "missing": "anchor/body, denominator and policy",
+      "status": "NOT_EVALUABLE",
+      "value": null
+    },
+    "fluid_stress_flux_at_Omega_zero": {
+      "status": "EXACT_ZERO",
+      "value": 0
+    },
+    "matter_vorticity": {
+      "missing": "matter-congruence kinematic development/bridge",
+      "status": "NOT_DETERMINED",
+      "value": null
+    },
+    "normal_vorticity": {
+      "reason": "hypersurface orthogonality",
+      "status": "EXACT_ZERO",
+      "value": 0
+    },
+    "physical_beta_at_Omega_zero": {
+      "status": "UNDEFINED_ABSENT_MATTER",
+      "value": null
+    },
+    "x_C": {
+      "missing": "fixed same-frame comparator and curvature/energy subtraction",
+      "status": "NOT_EVALUABLE",
+      "value": null
+    }
+  },
+  "units_frames": "dimensionless binary64; c explicit in manuscript; normal orthonormal x,y,z axes; signed +z beta and z_s; H>0 mean expansion"
+}

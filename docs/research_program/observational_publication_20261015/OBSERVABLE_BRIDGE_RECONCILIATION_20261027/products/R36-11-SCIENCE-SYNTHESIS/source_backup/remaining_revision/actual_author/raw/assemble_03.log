@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_actual/publication_overlay.py", line 345, in <module>
+    if ARGS.action=='assemble':assemble(c,repo,out)
+                               ^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_actual/publication_overlay.py", line 175, in assemble
+    paths=validate(c,repo,out);j=semantics(paths);num=numbers(c,paths);t=generated(paths,j)
+                                                      ^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_actual/publication_overlay.py", line 52, in numbers
+    else:require(matches(v,target),'numeric locator '+n['id'])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_actual/publication_overlay.py", line 12, in require
+    if not ok: raise ValueError(label)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: numeric locator GEO-II-geometry_svd

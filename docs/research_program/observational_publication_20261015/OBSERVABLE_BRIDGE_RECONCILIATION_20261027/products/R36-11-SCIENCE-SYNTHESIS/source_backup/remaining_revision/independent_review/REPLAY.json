@@ -1,0 +1,119 @@
+[
+  {
+    "stage": "01_apply",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/remaining_manuscript_candidate/publication_overlay.py",
+      "apply",
+      "--manifest",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/remaining_manuscript_candidate/candidate/OVERLAY_MANIFEST.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture",
+      "--reviewed-manifest-sha256",
+      "d8455ea2d8d33ee17ce07deca7dec58aa8773a0a39251c84609211f3a0575abb"
+    ],
+    "returncode": 0
+  },
+  {
+    "stage": "02_installed_assemble",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py",
+      "assemble",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture"
+    ],
+    "returncode": 0
+  },
+  {
+    "stage": "03_installed_check",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py",
+      "check",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture",
+      "--falsifiers"
+    ],
+    "returncode": 0
+  },
+  {
+    "stage": "04_build_H03",
+    "argv": [
+      "latexmk",
+      "-cd",
+      "-pdf",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/main.tex"
+    ],
+    "returncode": 0
+  },
+  {
+    "stage": "05_build_P5",
+    "argv": [
+      "latexmk",
+      "-cd",
+      "-pdf",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/manuscript.tex"
+    ],
+    "returncode": 0
+  },
+  {
+    "stage": "06_build_radiation",
+    "argv": [
+      "latexmk",
+      "-cd",
+      "-pdf",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-file-line-error",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/radiation_supplement/main.tex"
+    ],
+    "returncode": 0
+  },
+  {
+    "stage": "07_built_check",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py",
+      "check",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture",
+      "--built-pdfs",
+      "--falsifiers"
+    ],
+    "returncode": 0
+  },
+  {
+    "stage": "08_second_apply",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/remaining_manuscript_candidate/publication_overlay.py",
+      "apply",
+      "--manifest",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/remaining_manuscript_candidate/candidate/OVERLAY_MANIFEST.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture",
+      "--reviewed-manifest-sha256",
+      "d8455ea2d8d33ee17ce07deca7dec58aa8773a0a39251c84609211f3a0575abb"
+    ],
+    "returncode": 0
+  }
+]

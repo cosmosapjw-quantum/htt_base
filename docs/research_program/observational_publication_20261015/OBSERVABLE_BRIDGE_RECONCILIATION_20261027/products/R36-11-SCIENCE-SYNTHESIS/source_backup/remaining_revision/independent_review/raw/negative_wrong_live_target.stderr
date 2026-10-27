@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py", line 365, in <module>
+    if ARGS.action=='apply':apply(ARGS.manifest.resolve(),ARGS.repo.resolve(),ARGS.reviewed_manifest_sha256)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py", line 344, in apply
+    contract_entry=next(b for b in m['files'] if b['path'].endswith('/r36_bridge/EDITOR_CONTRACT.json'));cp=root/contract_entry['path'];require(sha(cp)==m['contract_sha256'],'apply frozen contract');validate(json.loads(cp.read_text()),repo,root)
+                                                                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py", line 37, in validate
+    if b['mutable_in_overlay']:resolve(rel,b)
+                               ^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py", line 33, in resolve
+    require(p.is_file() and (sha(p)==post.get(rel) or (p.suffix=='.pdf' and rel in pdftexts and pdftextsha(p)==pdftexts[rel])),'unexpected live overlay mutation '+rel)
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py", line 12, in require
+    if not ok: raise ValueError(label)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: unexpected live overlay mutation docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/main.tex

@@ -1,0 +1,7 @@
+# Reviewed remaining-manuscript publication revision
+
+Publication revision d8455ea2d8d33ee17ce07deca7dec58aa8773a0a39251c84609211f3a0575abb consumes already qualified sources in the existing H03 paper (12 pages), existing P5 appendix (11 pages total) and separate radiation supplement (4 pages). The existing R36-11 qualification remains candidate83b167a9388071a1a82500716d338473bd8ac5c9abb3c978974a914a37066519. This is no new task, scientific qualification or acceptance count. Original17/42 and separate alternate18/42 remain unchanged. P4 qualified paper remains preserved.
+
+Actual production apply, newly installed cached-source assembler/check, three builds, built check, exact candidate PDF-text parity and zero-change reapply passed. Frozen candidate/contract and all numerical source identities remain unchanged. Source and baseline preimages, author first failures and independent review/probes are retained. Disposable fixture trees are omitted; no raw catalogue, new Monte Carlo, fit, solver, ODE, STATE edit or scientific producer run occurred. Historical absolute aliases resolve through SOURCE_MAP and installed contract. No04/06 admission follows.
+
+Scope: stipulated covariance through a fixed survey estimator, a separate released-magnitude two-depth Gaussian comparator, deterministic curvature initial-data images and a fixed-law synthetic radiation adapter comparison. Empirical transport/frame/spatial and physical shear claims remain conditional or unavailable as stated in the reviewed papers.

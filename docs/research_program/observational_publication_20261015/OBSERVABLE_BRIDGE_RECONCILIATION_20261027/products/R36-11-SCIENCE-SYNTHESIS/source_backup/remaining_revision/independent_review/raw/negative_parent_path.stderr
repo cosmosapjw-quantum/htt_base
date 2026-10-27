@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py", line 365, in <module>
+    if ARGS.action=='apply':apply(ARGS.manifest.resolve(),ARGS.repo.resolve(),ARGS.reviewed_manifest_sha256)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py", line 347, in apply
+    rel=pathlib.Path(b['path']);require(not rel.is_absolute() and '..' not in rel.parts,'unsafe manifest path')
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py", line 12, in require
+    if not ok: raise ValueError(label)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: unsafe manifest path

@@ -1,0 +1,177 @@
+\documentclass[aps,prd,reprint,onecolumn,superscriptaddress,nofootinbib]{revtex4-2}
+\usepackage{amsmath,amssymb,mathrsfs,graphicx,booktabs}
+\usepackage[T1]{fontenc}
+\begin{document}
+\title{Finite survey windows, correlated Hubble dipoles, and attainable response discrepancies}
+\author{Anonymous research draft}
+\noaffiliation
+\date{25 October 2026}
+\begin{abstract}
+A uniform bulk velocity has zero divergence, yet an angularly incomplete distance survey can mix that velocity into an apparent Hubble-rate fit. We use retained signed coefficients from four overlapping redshift windows to compare a common bulk response with a depth-independent rate dipole. Their combined fit leaves a quadratic discrepancy $T=23.3967205227$ for six residual degrees of freedom, with conditional Gaussian tail $0.00067393342$. Omitting cross-window covariance changes the same fit to $T=8.925712183$ and tail $0.177799$. We then determine which corrections can reach the unchanged 95\% reference. A depth-slope design leaves an irreducible discrepancy $15.3160$, above $12.5916$; an FP-composition proxy and a joint response reach the reference at dimensionless coefficient radii $5.7509$ and $1.5897$. Finally, a calibration-quotiented CF4 tensor has already dimensionless norm $0.0326568$, which sets a concrete target for a future physical response bound. These results specify finite-window response requirements under retained working statistics; the coefficient budgets are design sensitivities rather than measured calibration errors.
+We also propagate a common Gaussian velocity field through the exact
+finite-window estimator, retaining its cross-window and cross-smoothing
+covariance under an explicit restricted-band model. A separate two-depth
+Pantheon+ magnitude comparison retains all signed dipole and quadrupole
+coordinates and gives a joint improvement of 17.2066 for 16 angular
+coefficients, with conditional upper-tail probability 0.37235 under the
+released selected-covariance Gaussian law.
+
+\end{abstract}
+\maketitle
+
+
+\section{Motion, expansion and the survey window}
+Directional distance--redshift coefficients connect kinematics to observations only through a specified observer and source congruence \cite{heinesen,maartens}. Survey depth and smoothing also enter the observed coefficients \cite{adamek}. This distinction matters when comparing an apparent Hubble dipole with a bulk-flow explanation \cite{boubel}. We carry the actual finite-window response into that comparison.
+
+At an event, take an orthonormal material rest frame, proper separation $r n$, and the local affine velocity field
+\begin{equation}
+ v(rn)=b+r(HI+S+\Omega)n+O(r^2),\quad S^T=S,\quad {\rm tr}S=0,\quad\Omega^T=-\Omega.
+\end{equation}
+The radial channel is $v_r=b\cdot n+r[H+S:nn]+O(r^2)$: antisymmetry removes $\Omega$. Here $b$ has velocity units; $H,S,\Omega$ have rate units. A constant $b$ has $\nabla\cdot b=0$. Its speed alone cannot determine a volume-expansion shift.
+
+For a weighted through-origin slope, direct substitution of $v_p=b+r[(\vartheta/3)I+S]n$ gives
+\begin{align}
+ \delta\widehat H&=b\cdot m_W+\vartheta/3+S:Q_W,\\
+ m_W&=\frac{\sum_iw_ir_in_i}{\sum_iw_ir_i^2},\qquad
+ Q_W=\frac{\sum_iw_ir_i^2n_in_i^T}{\sum_iw_ir_i^2}.
+ \label{eq:window}
+\end{align}
+The inverse-length vector $m_W$ describes bulk leakage and the dimensionless tensor $Q_W$ describes angular sampling. An isotropic window has $m_W=0$ and $Q_W=I/3$, so trace-free shear also cancels from this monopole. Real windows need neither cancellation. In the joint monopole--dipole--STF fit used below, the saved response matrix performs the corresponding estimator-specific calculation rather than substituting a central distance for the window.
+
+With signature $(-+++)$, observer-to-source $n$, acceleration $A$, and proper time, the same-congruence local optical coefficient is
+\begin{equation}
+ \mathcal H_u(n)=H-A\cdot n/c+\sigma:nn,\qquad d_L=cz/\mathcal H_u(n)+O(z^2).
+\end{equation}
+Its acceleration dipole differs from a finite-distance translation $b/r$. Assigning either interpretation to an apparent catalogue coefficient therefore requires the frame, depth response and finite-redshift remainder. The retained Cartesian axes below are ICRS J2000; they specify the estimator representation, rather than identifying a material rest frame.
+
+\section{Retained carrier and physical question}
+
+The saved four-window analysis represents each angular-rate estimator by a monopole, three Cartesian dipole coordinates, and five signed symmetric trace-free coordinates in ICRS J2000. The centers are $z_w=(0.025,0.040,0.060,0.080)$ with saved width $h=0.012$. Its full 36-by-36 joint covariance connects axes and windows, including shared groups. We extract the marginal 12-by-12 dipole covariance $C$ and window-major signed dipoles $y$; no conditioning on measured monopole or STF coordinates is performed. The complete apparent coefficient carrier and source covariance are retained in the accompanying \texttt{source\_carrier.json}, alongside the extracted $y,C$ and response matrices \cite{h03,physical}. This extraction does not replace those tensors by a scalar.
+
+The retained estimator is a finite weighted angular-rate fit, $cz_i=d_{{\rm DM},i}[H_w+\mathbf D_w\cdot\mathbf n_i+\mathbf n_i^{\mathsf T}Q_w\mathbf n_i]$. Its coefficients are in ${\rm km\,s^{-1}\,Mpc^{-1}}$; they are not themselves physical expansion coefficients. The retained source uses 35,970 groups, assumes a diagonal row-scatter working law, and leaves common calibration, peculiar-velocity and selection covariance unmeasured. The original finite-window sensitivity experiment below consumes the saved statistics; the later covariance and supernova sections consume separate retained response products. It does not refit a catalogue or infer an observer-frame or cosmographic transfer.
+
+Let $R$ stack the saved nine-by-three bulk-velocity dipole response blocks, with units ${\rm Mpc}^{-1}$, and let $G=\mathbf 1_4\otimes I_3$. The six-column baseline $X=[R,G]$ has full rank. Its model is
+\begin{equation}
+ y=Rb+Gd+D\eta+e,\qquad e\sim N(0,C)\quad\text{(retained working law)}.
+ \label{eq:model}
+\end{equation}
+Here $b$ is in ${\rm km\,s^{-1}}$; $d,y,e$ are in ${\rm km\,s^{-1}\,Mpc^{-1}}$. The coefficient $\eta$ is dimensionless under our chosen $D$. The working Gaussian tail at the baseline is $6.7393\times10^{-4}$, a conditional diagnostic under the saved covariance, not survey-null coverage.
+
+\section{Observed response fits and cross-window dependence}
+\input{generated/fits.tex}
+We compare $D_w=R_wb$, $D_w=d_0$, and $D_w=R_wb+d_0$ using the actual signed dipoles and bulk-response matrices. The first two hypotheses each have three fitted coefficients; the last has six. Table~\ref{tab:fits} gives their residual discrepancies. The bulk-only fit gives $b=(-119.11,57.68,-263.59)\,{\rm km\,s^{-1}}$. The combined fit gives $b=(-272.71,118.35,-25.94)\,{\rm km\,s^{-1}}$ and $d_0=(1.4400,-0.6977,-2.4440)\,{\rm km\,s^{-1}\,Mpc^{-1}}$. The change in fitted components illustrates their dependence on the admitted response space.
+
+The full dipole covariance is a marginal of the full 36-coordinate carrier. Fitting those 36 coordinates and profiling the remaining 24 mean coordinates freely gives the same statistic; conditioning on fixed measured monopole and STF means would use a different covariance. The accompanying independent numerical check verifies the profiling identity. The three working-law tails in Table~\ref{tab:fits} do not calibrate cosmological rarity or catalogue-wide null coverage.
+
+Removing only cross-window blocks leaves the observed means unchanged but changes the combined tail from $0.00067393342$ to $0.177799$. Shared errors can cancel in depth differences, making those differences more precise than the individual windows. Dropping dependence removes that cancellation. Figure~\ref{fig:dipoles} shows the signed coordinates and finite-response fits; connecting the windows does not interpolate a motion history.
+\begin{figure}[t]\includegraphics[width=.78\linewidth]{figures/dipole_response.pdf}\caption{Retained observed dipoles and three finite-window response fits in ICRS J2000. Error bars show marginal working standard deviations for display; every fit uses the complete cross-window covariance. The four windows overlap.}\label{fig:dipoles}\end{figure}
+
+\section{Three fixed response mechanisms}
+
+We specify a rate unit $u_0=1\,{\rm km\,s^{-1}\,Mpc^{-1}}$, a depth coordinate $t_w=(z_w-0.04)/h=(-1.25,0,5/3,10/3)$, and the retained FP distance-weight fractions
+\begin{equation}
+ p=(0.30371471,0.53491724,0.80241152,0.90188987),\qquad f_w=p_w-p_0.
+\end{equation}
+For window $w$ and Cartesian component $i$, each response has one coefficient per axis $a$:
+\begin{equation}
+ (D_z)_{(w,i),a}=u_0t_w\delta_{ia},\quad
+ (D_{\rm FP})_{(w,i),a}=u_0f_w\delta_{ia},\quad
+ D_{\rm joint}=[D_z,D_{\rm FP}].
+ \label{eq:design}
+\end{equation}
+$D_z$ is a linear finite-center directional-rate slope per saved width. $D_{\rm FP}$ is a dipolar offset modulated by FP composition; subtraction of $p_0$ changes only a constant-rate column already fitted by $G$. The composition fractions do not give a signed distance-modulus calibration derivative. The joint design has six coefficients in depth-first, then FP, Cartesian order. All three are declared before seeing their residual reduction, and none is preferred as a physical error model on that basis. The common coefficient metric for each dimension is $M=I_p$: $\|\eta\|_2\leq\rho$. This is one joint sensitivity budget, not independent axis allowances or an empirical prior.
+
+\section{Projection, ellipsoid and minimum budget}
+
+Write $C=LL^{\mathsf T}$ without jitter, $W=L^{-1}$, $A=WX$, and let $Q_A$ have orthonormal columns spanning $A$. The orthogonal residual projector is $P=I-Q_AQ_A^{\mathsf T}$. With $r=PWy$, $B=PWD M^{-1/2}$, and $\xi=M^{1/2}\eta$, profiling the six signal coefficients reduces Eq.~(\ref{eq:model}) to
+\begin{equation}
+ T_{\min}(\rho)=\min_{\|\xi\|\leq\rho}\|r-B\xi\|^2,
+ \quad T_0=\|r\|^2=23.3967205227. \label{eq:profile}
+\end{equation}
+The covariance is the complete dipole marginal; using only within-window blocks would produce $T_0=8.92571218$ and change the question. We retain the original six-degree reference $\tau=\chi^2_{6,0.95}=12.5915872437$ after minimizing over $\xi$. Replacing its degree count by $12-\operatorname{rank}[X,D]$ would create a different working-law test.
+
+The image $\mathcal E_\rho=\{B\xi:\|\xi\|\leq\rho\}$ is generally a degenerate ellipsoid in the 12D whitened space. Cauchy--Schwarz gives its exact support in direction $u$:
+\begin{equation}
+ h_{\mathcal E_\rho}(u)=\rho\|B^{\mathsf T}u\|,
+ \quad \xi_*=\rho\frac{B^{\mathsf T}u}{\|B^{\mathsf T}u\|}\quad(B^{\mathsf T}u\ne0).
+ \label{eq:support}
+\end{equation}
+When $B^{\mathsf T}u=0$, support is zero and $\xi=0$ attains it. A proposed correction $q$ is attainable exactly when $q\in\operatorname{col}B$ and $\|B^+q\|\leq\rho$: the pseudoinverse is the minimum-norm preimage, while adding a kernel vector cannot lower its norm. An unrestricted 12D ball omits the column-space condition.
+
+For the resolved thin singular-value decomposition $B=U\operatorname{diag}(\sigma_i)V^{\mathsf T}$, define $\alpha=U^{\mathsf T}r$ and $r_\perp=r-U\alpha$. The signed $r_\perp$ and all singular vectors are exported with the data. Orthogonality gives the irreducible discrepancy $T_\perp=\|r_\perp\|^2$ and saturation radius $\rho_{\rm sat}=\|\operatorname{diag}(\sigma_i^{-1})\alpha\|$. For $0<\rho<\rho_{\rm sat}$, stationarity of the convex Lagrangian $\|r-B\xi\|^2+\lambda(\|\xi\|^2-\rho^2)$ yields
+\begin{align}
+ \xi_\lambda&=V\operatorname{diag}\!\left(\frac{\sigma_i}{\sigma_i^2+\lambda}\right)\alpha,
+ &\rho^2&=\sum_i\frac{\sigma_i^2\alpha_i^2}{(\sigma_i^2+\lambda)^2},\label{eq:kkt}\\
+ T_{\min}(\rho)&=T_\perp+\sum_i\frac{\lambda^2\alpha_i^2}{(\sigma_i^2+\lambda)^2}.
+ \label{eq:objective}
+\end{align}
+The multiplier is positive and unique on the active interval. At zero budget $T_{\min}=T_0$; at or above saturation the minimum-norm solution $B^+r$ attains $T_\perp$. If $B=0$, the discrepancy never moves. Hence the least coefficient budget for $T_{\min}\leq\tau$ is zero when $T_0\leq\tau$, unattainable when $T_\perp>\tau$, and $\rho_{\rm sat}$ when $T_\perp=\tau<T_0$. The last case is finite attainment, including equality. In the strict crossing case $T_\perp<\tau<T_0$, a unique positive multiplier solves Eq.~(\ref{eq:objective}) at $\tau$, with $\rho$ obtained from Eq.~(\ref{eq:kkt}).
+
+For numerical classification, proximity to $\tau$ is not an exact equality identity: a computed floor within $10^{-9}$ of $\tau$ receives a boundary hold and no finite budget unless equality is established analytically. Before resolving the singular spectrum of $B$ relative to its largest value, we compare it with the positive unprojected scale $\|WD\|_{\rm op}$ for $M=I$. This prevents projection roundoff for the exact $D=X$ zero-response control from becoming apparent signal rank. The three reported designs have certified nonzero projected directions and retain the original relative-spectrum rule.
+
+A second budget counts the image $q=\|B\xi\|$, in whitened discrepancy units. Its exact least value for the same threshold inside $\operatorname{col}B$ is
+\begin{equation}
+ q_{\min}=\sqrt{T_0-T_\perp}-\sqrt{\tau-T_\perp},\qquad T_\perp\leq\tau<T_0.\label{eq:qmin}
+\end{equation}
+This follows by moving radially toward $U\alpha$ within the image subspace. It differs from the image norm $q_{95}=\|B\xi_{95}\|$ of the least \emph{coefficient} witness. The earlier unrestricted result $\eta_{95}=\sqrt{T_0}-\sqrt\tau=1.2885530$ is an image-space comparator; $\rho$ has different units and geometry. The bound $\rho_{95}\geq\eta_{95}/\|B\|_{\rm op}$ and $q_{95}\geq\eta_{95}$ provide checks.
+
+\section{Finite-window results}
+
+\input{generated/table.tex}
+The depth response has three projected directions and leaves $T_\perp=15.3160>\tau$ even at infinite coefficient radius. The three-column FP proxy leaves $T_\perp=6.6606$ and crosses at $\rho_{95}=5.7509$, with $q_{95}=1.7108$. The six-column joint design spans all six baseline residual directions numerically, leaves a floor below $2\times10^{-28}$, and crosses at $\rho_{95}=1.5897$, with $q_{95}=2.7480$. The large $\rho_{\rm sat}$ values in Table~\ref{tab:budgets} show that crossing and complete removal are distinct events. The joint image-space minimum $q_{\min}=1.2885530$ equals the unrestricted radial comparator because the image spans the six-dimensional residual space; its minimum-coefficient witness follows a different route and has the larger $q_{95}$.
+
+\begin{figure}[t]\includegraphics[width=.85\linewidth]{figures/scientific_budget.pdf}\caption{Profiled discrepancy against a \emph{joint} dimensionless coefficient radius for the three fixed finite-window designs. Dots are attained crossings of the unchanged six-degree reference; dotted horizontal lines are the irreducible floors. The depth-slope curve stays above the reference. Generated from the retained 12D covariance in ICRS J2000.}\label{fig:budget}\end{figure}
+\begin{figure}[t]\includegraphics[width=.85\linewidth]{figures/irreducible_floor.pdf}\caption{Exact best attainable discrepancy for each declared projected response subspace. The depth-slope floor exceeds the fixed working threshold. Bars summarize the signed 12-coordinate residual vectors retained in the companion numerical product; they do not encode a physical calibration distribution.}\label{fig:floor}\end{figure}
+\begin{figure}[t]\includegraphics[width=.85\linewidth]{figures/frontier_comparison.pdf}\caption{Unrestricted 12D image-budget frontier $\max(0,\sqrt{T_0}-q)^2$ and the least image radius required by each structure. No depth-slope point exists because its irreducible floor exceeds the threshold. For the FP and joint designs, the plotted minimum-image points are distinct from the coefficient-minimizing image norms $q_{95}$ in Table~\ref{tab:budgets}.}\label{fig:frontier}\end{figure}
+
+The computation exports the full $D$ and $B$ matrices, singular spectra, whitened residual and nonspanning remainder, threshold coefficient vectors, signed corrections, refitted $b,d$, and direct GLS residuals. The direct refits reproduce the fixed threshold within $10^{-8}$. Synthetic checks recover the wrong block-diagonal baseline, zero gain when $D=X$, nonspanning floors at arbitrarily large budgets, finite equality when the floor equals the threshold, the unrestricted radial formula when $D=L$, and invariance under a simultaneous Cartesian rotation. The computation uses the original source hashes and no source reintegration.
+
+\section{The tensor carrier and a physical response target}
+\input{generated/rates.tex}
+The signed rate tensors contain directions that a scalar contraction discards. We retain all five STF coordinates per window, their complete $3\times3$ tensors and the full joint covariance in the reproduction package. Table~\ref{tab:rates} summarizes their principal contrasts. Positive relative eigenvalues mean faster apparent expansion than the fitted mean; negative ones mean slower expansion, rather than necessarily absolute contraction. Reordering eigenvalues in each window does not follow a fixed material axis through depth.
+
+The calibration-quotiented CF4 statistic supplies a complementary five-coordinate tensor. Its producer places $-\kappa$, with $\kappa=5/\ln10$, in the magnitude design, so it estimates a dimensionless relative-rate tensor $T$ directly. In general the conventions obey
+\begin{equation}
+ \delta H(n)/H=T:nn,\qquad B_\mu=-\kappa T,\qquad B_H=HT.
+\end{equation}
+The reference CF4 design uses the CMB-frame $V_{\rm cmb}/c$ redshift proxy, with fixed $H_0=74.6\,{\rm km\,s^{-1}\,Mpc^{-1}}$ and $\Omega_m=0.3153$. These choices do not identify a material congruence. The saved CF4 coefficient is $T$, not $B_\mu$. Applying $-\ln10/5$ again would convert it twice. The producer's orthonormal STF basis has second diagonal element $\operatorname{diag}(1,1,-2)/\sqrt6$; we decode the arrays with that sign. The complete signed tensor and eigenvalues are shown in Fig.~\ref{fig:cf4}. The Frobenius norm is $0.03265680189321492$, with principal extrema $-2.3727\%$ and $+2.2399\%$ and uniform-sphere directional rms $0.01192458$.
+\begin{figure}[t]\includegraphics[width=.9\linewidth]{figures/cf4_tensor.pdf}\caption{Corrected physical reading of the retained CF4 quotient: the full dimensionless signed tensor and its ordered principal contrasts. The result uses the producer basis and no second magnitude conversion. The quotient retains five target directions numerically under its declared calibration support model; its working metric is not an empirical physical covariance.}\label{fig:cf4}\end{figure}
+
+The finite quotient has numerical rank five under the retained tolerances and numerical annihilator residuals. The ideal support-model cancellation and its floating-point implementation remain distinct: unrestricted calibration-amplitude protection of the saved binary64 operator is not established. Peculiar-velocity, selection and physical residual covariance remain unmeasured. This defines the scope in which the displayed tensor is an apparent rate statistic.
+
+Suppose a qualified observation response establishes $\|\widehat T-\sigma/H\|_F\leq\epsilon$ on a common event with coefficient uncertainty. The triangle inequality then gives
+\begin{equation}
+ \frac{(\|\widehat T\|_F-\epsilon)_+}{\sqrt6}
+ \leq\Sigma\leq
+ \frac{\|\widehat T\|_F+\epsilon}{\sqrt6},\qquad
+ \Sigma^2=\frac{\sigma:\sigma}{6H^2}.
+\end{equation}
+A nonzero lower bound therefore requires a total radius below $0.0326568$. At zero radius the conditional value is $0.0133321$; this is a response-identity scenario, not a measured physical shear. A material-frame response and a justified joint error bound or law are needed to attach physical meaning or coverage. No evolution equation is supplied by the tensor contraction.
+
+\input{r36_bridge/velocity.tex}
+\input{r36_bridge/supernova.tex}
+\section{Interpretation and required physical input}
+
+These results identify sensitivity of a retained finite-window fit to three explicit response spaces. The FP fractions encode sample composition, not a signed calibration Jacobian; family-deletion dipole norms cannot supply such a derivative. For an actual weighted least-squares estimator $\theta=N^{-1}b$, a physical perturbation $\gamma$ requires $\partial_\gamma\theta=N^{-1}(\partial_\gamma b-(\partial_\gamma N)\theta)$, including any changed distances, design and weights. A source-bound signed window response to named calibration, peculiar-velocity or selection parameters, together with a justified joint bound or law and shared covariance, is needed to interpret $\eta$ as a physical error. The sky, observer and cosmographic transfer, finite remainder and null coverage are likewise open for stronger claims.
+
+The result supplies a conditional structured-response frontier. Volume filling fractions, spatial exceedance probabilities, physical vorticity and global-tilt inference require additional physical response fields and a justified sampling law; they cannot be recovered from this 12D statistic alone.
+
+\section{Conclusions}
+The actual finite-window responses distinguish a common translation from a constant apparent rate dipole under the retained covariance. Their combination leaves $T=23.3967$, whereas ignoring cross-window dependence gives $8.9257$. The discrepancy has an explicit geometric interpretation: a depth slope misses part of the residual subspace, while the composition and joint designs can reach the fixed reference at finite coefficient radii. Those radii quantify a requirement on a proposed correction. They do not measure its physical amplitude.
+
+A physical extension can now target named signed calibration or selection responses and their joint law, or bound the response from a material velocity gradient to the apparent CF4 tensor. The retained norm gives a quantitative scale for that task. These are finite observational-response questions which can be addressed without integrating a native cosmological solver.
+
+\appendix
+The additional covariance transport demonstrates how a shared velocity
+field changes the joint apparent-coefficient uncertainty through the
+actual survey operator. The released-magnitude comparison gives a
+distinct observational application with its own angular response and
+covariance. Their physical combination requires source, observer-frame
+and cross-survey error models; those requirements cannot be replaced by
+treating the two apparent tensors as measurements of one material shear.
+
+\section{Reproduction from retained statistics}
+The companion \texttt{consumer.py} reads only cached sufficient statistics, checks source SHA-256 bindings, extracts the complete dipole marginal, refits the three responses and generates the tables and vector figures. It reuses the approved structured-response implementation, including exact-zero and threshold-boundary controls, with its source identity recorded in \texttt{inputs/SOURCE\_BINDINGS.json}. The package retains the full 36-coordinate source, four complete rate tensors, corrected CF4 five-coordinate carrier and its working metric, rather than replacing them with norms. The inherited source estimator used diagonal row scatter; cross-window covariance is retained at the summary level. No raw galaxy catalogue is required by this consumer. The source-bound independent checks and research derivations are included for the stated physical identities.
+\bibliographystyle{apsrev4-2}
+\bibliography{references}
+\end{document}

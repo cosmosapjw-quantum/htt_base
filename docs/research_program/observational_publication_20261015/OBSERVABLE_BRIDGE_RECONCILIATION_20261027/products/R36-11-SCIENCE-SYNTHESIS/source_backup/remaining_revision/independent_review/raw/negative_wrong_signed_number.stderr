@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py", line 369, in <module>
+    elif ARGS.action=='check':check(c,repo,out,ARGS.built_pdfs,ARGS.falsifiers)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py", line 286, in check
+    for file,text in expected_fragments:require(text in file.read_text(),'rendered exact generated fragment '+str(file))
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/publication_overlay.py", line 12, in require
+    if not ok: raise ValueError(label)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: rendered exact generated fragment /mnt/extdrive/workdir/htt_open_data/r36_remaining_manuscript_fresh_review/fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/r36_bridge/supernova.tex
