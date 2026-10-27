@@ -1,0 +1,121 @@
+{
+  "schema": "R36-10-repair-independent-review-raw-v1",
+  "created_utc": "2026-10-27T05:57:17.914541+00:00",
+  "reviewer": "/root/r36_geometry_repair_independent_review",
+  "candidate_identity": "sha256:ca55901e8b35f163d0c7b011363e364497ba27bea752e142403c9f6d3d37ffa6",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "actual_preparatory_execution": true,
+  "formal_controller_ack": false,
+  "repo_identity_read_at_start": {
+    "branch": "research/htt-adaptive-methods-20261023",
+    "head": "42ec583a2c47ff5a1d596356fba327601da75ed7",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+    "dirty_state": "Preexisting modified/untracked files observed and preserved"
+  },
+  "commands": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider -q /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/test_geometry_image.py",
+      "exit_code": 0,
+      "tool_chunk_id": "b2010b",
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_independent_review/pytest.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_independent_review/pytest.stderr",
+      "test_result": "6 passed,1 warning in0.52s"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python -B /mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_independent_review/independent_checks.py",
+      "exit_code": 0,
+      "tool_chunk_id": "731f06",
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_independent_review/independent_checks.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_independent_review/independent_checks.stderr"
+    }
+  ],
+  "review_result_sha256": "d9ceb663b9f26fc71360449eb92b5b28f0aab4f48e3040e9705e5511a0368681",
+  "candidate_files_rechecked_unchanged_at_closeout": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/GEOMETRY_IMAGE.pdf",
+      "size": 35774,
+      "sha256": "ab0a13008523427a6f26fb3171f1a17136c679512fba03d14447dca5b61fbcec"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/GEOMETRY_IMAGE.png",
+      "size": 197969,
+      "sha256": "4e9c436746c21371b61dccb774a21922c2990a20b269fbac90993fe436320078"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/INTERPRETATION.md",
+      "size": 3772,
+      "sha256": "2e3db12822b1af460866ac6e842a31cc4dd102ecf8f310e3428585858a5bbb62"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/LRS280.jsonl",
+      "size": 235605,
+      "sha256": "d0fdfbed607e55bb43cfa0af5c6344e8f3ae5d0bf626d8b68ba8346e75df4921"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/RESULT.json",
+      "size": 6852,
+      "sha256": "ca55901e8b35f163d0c7b011363e364497ba27bea752e142403c9f6d3d37ffa6"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/TABLE.json",
+      "size": 232787,
+      "sha256": "bc6c3f47b1a609be80835586d50fb8b46bc32591ea99b4305c4c2b3cf43d6417"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/UNCERTAINTY_PROBES.jsonl",
+      "size": 1577852,
+      "sha256": "6fea2ad9dcc3256f1634bda199fd151cc0a40eaeaf3335b5682870ba0edaf18b"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/geometry_image.py",
+      "size": 28553,
+      "sha256": "deb4e0879cfb04b1142db89f9e9da1f7d2cbc367089dfb02fa83cab7b46f47ab"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/test_geometry_image.py",
+      "size": 4458,
+      "sha256": "5c8f2f9714d860eef1ba908eb5e278dbe4640f258a1f08c6b23c017075e622af"
+    }
+  ],
+  "cost_accounting": {
+    "focused_pytest_invocations": 1,
+    "independent_check_invocations": 1,
+    "candidate_producer_invocations": 0,
+    "old_campaign_invocations": 0,
+    "tokens_and_actual_model_cost": "NOT_INDEPENDENTLY_OBSERVED",
+    "historical_counts_preserved": true
+  },
+  "files": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_independent_review/independent_checks.py",
+      "sha256": "3fde664fb1f43dc28934bc7090399eeff19bef54009f950d3eb4a4471446cae1",
+      "bytes": 12702
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_independent_review/INDEPENDENT_CHECKS.json",
+      "sha256": "565891f43bc7b26b33ee40fa16d1b8959dc2d753e5a10b5e5dd355975f6f0611",
+      "bytes": 2598
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_independent_review/independent_checks.stdout",
+      "sha256": "565891f43bc7b26b33ee40fa16d1b8959dc2d753e5a10b5e5dd355975f6f0611",
+      "bytes": 2598
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_independent_review/independent_checks.stderr",
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852",
+      "bytes": 379
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_independent_review/pytest.stdout",
+      "sha256": "58d288f86ee23867f212b15eaec970abffc50b42b3208fa0777e284c272d386b",
+      "bytes": 729
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_independent_review/pytest.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

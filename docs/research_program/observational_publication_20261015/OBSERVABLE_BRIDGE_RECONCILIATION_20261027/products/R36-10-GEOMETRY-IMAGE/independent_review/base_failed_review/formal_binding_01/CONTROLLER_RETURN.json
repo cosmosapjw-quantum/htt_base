@@ -1,0 +1,116 @@
+{
+  "schema": "R36-controller-independent-review-return-v1",
+  "packet_id": "359393236f47c7a32abf10b7978d933e796c49cca603393a42519ca9e9e573ec",
+  "task_id": "R36-10-GEOMETRY-IMAGE",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "agent_id": "/root/r36_geometry_fresh_review",
+  "candidate_identity": "sha256:54ae8c59cb6c0d144cb9798079f357bdfba6254694cb416bf5a14f3a59160423",
+  "phase": "review",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "issue": {
+    "class": "code",
+    "question": "Restore the contract-specified zero-shear I and flatVII0 centers throughout controls, Jacobians and uncertainty products, then verify their full joint tensor images under the unchanged frozen contract.",
+    "exact_missing_or_defect": "geometry_image.py line221 and lines225-227/292-295 reuse Sbar=diag(0.1,-0.05,-0.05) for the frozen I and flatVII0 centers instead of Sbar=0. Saved center ebar is11.9925 instead of12, and the I joint Jacobian rank is3 instead of the exact frozen-center rank1. Both flat-center joint energy/flux uncertainty images must be regenerated from the correct center; intrinsic geometry and matched II/VII0 separation are unaffected.",
+    "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43"
+  },
+  "counterexample": {
+    "id": "R36-GEO-01",
+    "classification": "FROZEN_SCIENTIFIC_INPUT_SUBSTITUTION",
+    "locations": [
+      {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/geometry_image.py",
+        "line": 221,
+        "detail": "Shared nonzero s0 is used for every canonical control at lines225-227."
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/geometry_image.py",
+        "line": 294,
+        "detail": "The same s0 is inserted into all four z0 vectors, including frozen zero-shear I/flatVII0."
+      }
+    ],
+    "contract_path": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_contract_preparation/IMPLEMENTATION_CONTRACT.json",
+    "contract_field": "frozen_cases.flat_pair",
+    "expected": {
+      "Sbar": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "hbar": 2,
+      "epsilon_bar": 12,
+      "I_joint_J_nonzero_entries": [
+        {
+          "row": 6,
+          "column": 6,
+          "value": 12
+        }
+      ],
+      "joint_ranks_order_II_VII0_I_flatVII0": [
+        9,
+        10,
+        1,
+        6
+      ]
+    },
+    "actual": {
+      "Sbar": [
+        [
+          0.1,
+          0,
+          0
+        ],
+        [
+          0,
+          -0.05,
+          0
+        ],
+        [
+          0,
+          0,
+          -0.05
+        ]
+      ],
+      "flat_epsilon_bar": 11.9925,
+      "joint_ranks_order_II_VII0_I_flatVII0": [
+        9,
+        10,
+        3,
+        6
+      ]
+    },
+    "derivation": "At the specified I center N=0,S=0,h=2, Ric(N) and q(N,S) are homogeneous quadratic with zero first derivative. ebar=3h^2-S:S/2+tr(Ric)/2 has only derivative12 in h. Therefore joint J has exact rank1. The substituted nonzero S yields two additional q derivatives in N and rank3. Both flat center energy/flux uncertainty images therefore refer to different inputs than the frozen contract.",
+    "evidence": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_fresh_review/CENTER_COUNTEREXAMPLE.json",
+    "minimal_reproducer": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_fresh_review/reproduce_center_counterexample.py"
+  },
+  "repair_plan": "Under the unchanged contract 76e2c762c4e9fbf4d27ac1af8521c3138edefb138f62e292c776ca83d67bf6b5 and the existing R36-10 packet/input identity, define per-center shear: Sbar=0 for I and flatVII0, and retain diag(1/10,-1/20,-1/20) for matched II/VII0. Use the same explicit center definitions in both canonical controls and all uncertainty/Jacobian calculations, including rotation controls. Restore the flat controls to K=-2I, ebar=12. Recompute only this new finite geometry consumer and its affected tables/probes/figures/RESULT; retain all old candidate/first-failure receipts and cumulative execution counts. Record actually computed joint ranks 9,10,1,6 and geometry ranks 6,6,0,3; update INTERPRETATION accordingly. Add a targeted regression that checks both saved/generated flat center vectors and density, and verifies the I joint derivative has only d(ebar)/d(hbar)=12 (within the original arithmetic tolerance) and rank1, so a formula-only flat-Riemann test cannot hide a center substitution. Retain the full Hessians/singular tensors and recompute energy/flux bounds and probes for the two corrected centers. The Ricci coordinates, geometry derivatives and matched II/VII0 separation must remain unchanged to the declared numerical tolerance because Ricci depends only on N. Rerun the four focused tests plus this center regression, preserve their raw outcomes, then return the new candidate identity for one targeted independent closeout. Do not rerun old R32/Loop-D producers, old CAS campaigns, or completed independent branches; do not alter tolerances, contract, task ID, input identity, claim ceilings, or acceptance gates.",
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r36_geometry_fresh_review/REVIEW_RESULT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_geometry_fresh_review/INDEPENDENT_CHECKS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_geometry_fresh_review/CENTER_COUNTEREXAMPLE.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_geometry_fresh_review/RAW.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_geometry_fresh_review/reproduce_review.py",
+    "/mnt/extdrive/workdir/htt_open_data/r36_geometry_fresh_review/reproduce_center_counterexample.py",
+    "/mnt/extdrive/workdir/htt_open_data/r36_controller/NEXT_018.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_controller/ACK_018_GO.json"
+  ],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_fresh_review/formal_binding_01/RAW_BINDING_RECEIPT.json",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "independent_review": "Same fresh reviewer formally binds its own unchanged negative preparation after actual followup_task ACK; original authors/framer distinct. No scientific or numerical rerun.",
+  "original42_promotion": false
+}

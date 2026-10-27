@@ -1,0 +1,108 @@
+{
+  "schema": "htt.r36.controller_review_return/1",
+  "packet_id": "3a407e2341438efb5ce53700b0ff5cd941a966baef6f44e6c171aa06e8f2b1fc",
+  "task_id": "R36-02-CF4-CORRELATED",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "agent_id": "/root/r36_cf4_correlated_independent_review",
+  "candidate_identity": "sha256:dd3cb2d77c97e33380ec06e04bc5465f65129dc319f8795dc30e3bc84b3e877b",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "status": "HOLD_TARGETED_REPAIR_REQUIRED",
+  "verdict": "HOLD",
+  "review_binding": "FORMAL_PACKET_BOUND_EXISTING_OWN_INDEPENDENT_REVIEW",
+  "original_review_path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/REVIEW_RESULT.json",
+  "original_review_sha256": "c6db02c8ed7c0b73bdb56dc6a8e1bc77737e79ea7e752197f90d5c97c4d76b98",
+  "issue": {
+    "class": "code",
+    "question": "Do footprint/method sensitivity summaries compare subset and full-sample covariance at the same smoothing radius?",
+    "exact_missing_or_defect": "baseline is truncated once to total[:36,:36] (R=5), then reused for R=10 and R=20. Both trace_ratio_to_full_sample and frobenius_relative_to_full_sample mix footprint/method changes with smoothing changes.",
+    "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43"
+  },
+  "findings": [
+    {
+      "id": "R36-02-F01",
+      "severity": "P2",
+      "blocking_for_scoped_acceptance": true,
+      "title": "Match smoothing radius in footprint/method sensitivity references",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/run_sensitivity.py",
+      "lines": [
+        43,
+        44,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "mechanism": "baseline is truncated once to total[:36,:36] (R=5), then reused for R=10 and R=20. Both trace_ratio_to_full_sample and frobenius_relative_to_full_sample mix footprint/method changes with smoothing changes.",
+      "affected_artifact": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/SENSITIVITY.json",
+      "affected_claim": "Footprint/method covariance sensitivity at fixed declared R=10 or R=20 h^-1 Mpc; eight rows and sixteen summary values are affected.",
+      "counterexample": {
+        "case": "exclude_FP",
+        "R_hinv_Mpc": 20,
+        "subset_trace": 16.455321567307326,
+        "same_radius_full_trace": 14.051811035278963,
+        "reported_ratio": 0.9646490578599013,
+        "correct_same_radius_ratio": 1.1710463175169397,
+        "reported_relative_frobenius": 0.2652875605613501,
+        "correct_same_radius_relative_frobenius": 0.35610037450194054
+      },
+      "consequence": "For excluding FP at R=20, the summary appears to reduce the covariance trace by 3.54 percent, while the actual matched-radius operator increases it by 17.10 percent. This reverses the direction of that sensitivity conclusion.",
+      "unaffected": "Stored 108x108 subset covariances, PV factors, main covariance, all R=5 summaries, conditional mean model calculation, TABLE.csv, FIGURE.png and current interpretation R=5 numbers.",
+      "minimal_falsifier": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/sensitivity_summary_falsifier.py",
+      "raw_counterexample_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/sensitivity_falsifier_receipt.json",
+      "repair_plan": "Use the matched-radius full covariance block as the reference in run_sensitivity.py (full_total[36*ir:36*(ir+1), 36*ir:36*(ir+1)]). Regenerate only SENSITIVITY.json summary fields from the existing SENSITIVITY_MATRICES.npz and STAGE_C.npz; do not rerun source transforms, change quadrature/model/tolerances, or alter retained numerical matrices. Add a focused regression with distinct covariance blocks at each radius, including an identity subset that must return ratio 1 and relative Frobenius 0 at every radius, and check all twelve actual subset/radius summaries against their matched-radius references. Preserve the failed candidate/first falsifier receipts; reseal changed source/summary artifacts and return the new candidate for one targeted independent closeout under the same R36-02 task and cumulative account."
+    }
+  ],
+  "counterexample": {
+    "case": "exclude_FP",
+    "R_hinv_Mpc": 20,
+    "subset_trace": 16.455321567307326,
+    "same_radius_full_trace": 14.051811035278963,
+    "reported_ratio": 0.9646490578599013,
+    "correct_same_radius_ratio": 1.1710463175169397,
+    "reported_relative_frobenius": 0.2652875605613501,
+    "correct_same_radius_relative_frobenius": 0.35610037450194054
+  },
+  "repair_plan": "Use the matched-radius full covariance block as the reference in run_sensitivity.py (full_total[36*ir:36*(ir+1), 36*ir:36*(ir+1)]). Regenerate only SENSITIVITY.json summary fields from the existing SENSITIVITY_MATRICES.npz and STAGE_C.npz; do not rerun source transforms, change quadrature/model/tolerances, or alter retained numerical matrices. Add a focused regression with distinct covariance blocks at each radius, including an identity subset that must return ratio 1 and relative Frobenius 0 at every radius, and check all twelve actual subset/radius summaries against their matched-radius references. Preserve the failed candidate/first falsifier receipts; reseal changed source/summary artifacts and return the new candidate for one targeted independent closeout under the same R36-02 task and cumulative account.",
+  "positive_checks_preserved": [
+    "Exact manifest SHA and 28 product/external/frozen-contract source bindings verified; original candidate still unchanged at closeout.",
+    "Exact 36x35970 operator and aligned source identities agree with upstream reviewed candidate.",
+    "Frozen bridge suite: 8 tests and 10 subtests passed unchanged.",
+    "Independent ten-source oscillatory pair kernel with coincident rows, Gaussian smoothing and full normalization passed; phase-omission and normalization mutants fail.",
+    "Independent hypergeometric growing-mode solution and adaptive comoving-distance integration agree with retained finite background.",
+    "Ten selected retained full-catalogue complex modes agree with independent direct source sums; 108-coordinate factor Gram matrices reproduce retained covariance.",
+    "Full 108-coordinate angular/radial refinement passes support-whitened spectral bound even at 1e-12 cutoff; covariance support itself remains tolerance dependent.",
+    "Independent conditional covariance reconstruction uses D=150^2 and four method-design offsets with SD0.4 in km/s/Mpc, preserving PV cross-window/radius terms and excluding inherited baseline variance.",
+    "QR reproduction matches all three mean fits and stable unit-column ranks at 1e-12,1e-10,1e-8. All mean spaces contain the shared monopole, so null-mean estimation leaves selection/residual distribution invariant.",
+    "Independent Gaussian selection calibration reproduces counts 1886/113/1, zero exceedances and plus-one tail 1/2001. All nine D/Sigma sensitivity laws agree within 2.08e-12 absolute numerical error.",
+    "Actual source-observer response has relative-only rank3 at all three thresholds and common-velocity null below3e-17.",
+    "Full-mask subset refit reproduces exact upstream A with zero relative difference. Figure/table and R=5 prose agree with retained covariance."
+  ],
+  "statistical_limits": {
+    "zero_exceedance_count": 0,
+    "gaussian_draws": 2000,
+    "plus_one_tail": 0.0004997501249375312,
+    "one_sided_95percent_binomial_upper_for_underlying_tail": 0.0014967448951882837,
+    "tail_interpretation": "Finite conditional Gaussian-reference diagnostic. Reported MC SE is an approximate plug-in summary using the plus-one estimate. The zero count does not resolve a tail below the Monte Carlo resolution.",
+    "sample_covariance": "Hypothetical N64,p36 Wishart uncertainty is reported beyond Hartlap factor: diagonal fractional SD sqrt(2/63) and off-diagonal entry variance. Actual inference uses stipulated analytic covariance, not a noisy sample covariance.",
+    "empirical_source_population_coverage": "UNKNOWN",
+    "cross_source_empirical_covariance": "UNKNOWN"
+  },
+  "original42_promotion": false,
+  "science_admission": false,
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/REVIEW_RESULT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/formal_binding_01/RAW_BINDING_RECEIPT.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/INDEPENDENT_CHECKS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/ADDITIONAL_STATISTICAL_CHECKS.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/bridge_tests_receipt.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/sensitivity_falsifier_receipt.json"
+  ],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/formal_binding_01/RAW_BINDING_RECEIPT.json",
+  "next_transition": "Controller records this negative review and dispatches the same-task bounded cache-only sensitivity-summary repair. Preserve existing matrices, numerical criteria, cumulative accounting and scientific ceilings."
+}

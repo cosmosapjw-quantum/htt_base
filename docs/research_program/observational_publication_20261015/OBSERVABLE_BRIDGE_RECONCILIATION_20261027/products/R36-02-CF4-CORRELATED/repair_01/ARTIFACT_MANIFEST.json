@@ -1,0 +1,80 @@
+{
+  "acceptance": false,
+  "actual_ack_path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/ACK_023_GO.json",
+  "actual_ack_sha256": "1a25af384b7c732f466d8dac58bc8d0e23db10d277e089f6e46b82f812911d27",
+  "author_self_found_pointer_correction": {
+    "changed_file_preimages": {
+      "RESULT.json": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/INITIAL_CHANGED_FILE_PREIMAGES/RESULT.json",
+        "sha256": "f494b0c5a8d0e517571ecbecfd3cbaaa33935f5bf3590c28ec7af4eaba33a7d7"
+      },
+      "run_sensitivity.py": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/INITIAL_CHANGED_FILE_PREIMAGES/run_sensitivity.py",
+        "sha256": "02d3648c29152e057972c2912b277211a299049b364b16279c9a60ab50e84380"
+      },
+      "test_sensitivity_repair.py": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/INITIAL_CHANGED_FILE_PREIMAGES/test_sensitivity_repair.py",
+        "sha256": "9ab37abaccdb6acb65cea191408dc04e85fe21d8738260d260b195371bfd8255"
+      }
+    },
+    "initial_manifest": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/INITIAL_MANIFEST_POINTER_ERROR.json",
+    "initial_return": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/INITIAL_RETURN_POINTER_ERROR.json",
+    "nature": "repair RESULT pointer now resolves sibling SENSITIVITY.json; no numerical matrix or summary changes after first cache calculation"
+  },
+  "base_candidate_identity": "sha256:dd3cb2d77c97e33380ec06e04bc5465f65129dc319f8795dc30e3bc84b3e877b",
+  "base_manifest_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/ARTIFACT_MANIFEST.json",
+  "base_packet_id": "0c0fab5631cb19001cba35e3da1de5cd44d64dc0157950afb82d383496472c40",
+  "claim_tier": "CONDITIONAL_MODEL_COVARIANCE",
+  "independent_blocker_path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/formal_binding_01/CONTROLLER_RETURN.json",
+  "independent_blocker_sha256": "adfedb13b56408d0befedc7fbd391f9d00fa33d028a436c6d1f50392329c6d94",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "new_files": {
+    "REPAIR.md": {
+      "bytes": 2017,
+      "sha256": "8aa501f48423ba2152ef7c1d8e040419955e8ee6bab29b18b73d8a378ee3546a"
+    },
+    "RESULT.json": {
+      "bytes": 5980,
+      "sha256": "51c470b38880b7a0c09cb157c6f2b688973ff78612a413bba41252074e5b54b6"
+    },
+    "SENSITIVITY.json": {
+      "bytes": 4810,
+      "sha256": "ebacda58de95a46e5418ecdbf400976ecd21829c013f774e74ecc7c1ff3d47c5"
+    },
+    "run_sensitivity.py": {
+      "bytes": 5598,
+      "sha256": "14407c45290993d1d8a4b3e1bc7802be9e54ab71893c8afe7cd5a5ed89112db9"
+    },
+    "test_sensitivity_repair.py": {
+      "bytes": 2677,
+      "sha256": "dfbc2b26f7a80d38c9381081e2520701ad37c5ecad98a749770763d941267724"
+    }
+  },
+  "only_affected_fields": [
+    "SENSITIVITY.json results/*/bands_sum_blocks[1,2]/trace_ratio_to_full_sample",
+    "SENSITIVITY.json results/*/bands_sum_blocks[1,2]/frobenius_relative_to_full_sample",
+    "RESULT.json repair provenance metadata"
+  ],
+  "packet_id": "b15b6a1859ec6531b65123217c3b41996a206f021a1c35c7b8d79e0d3ada9fe2",
+  "retained_cache_files": {
+    "PV_FACTORS.npz": {
+      "bytes": 53314967,
+      "sha256": "b936967c449ab889acb7d1ae48a18a72cb091eb7b929f2bf33d2ea392cb705d0"
+    },
+    "RESULT_MATRICES.npz": {
+      "bytes": 177850,
+      "sha256": "7b100fa378ae28fafd9f82f7a76a494e07300fa1cf144a4da5b166fb0acf7e94"
+    },
+    "SENSITIVITY_MATRICES.npz": {
+      "bytes": 214825,
+      "sha256": "0d283bb697b3363815faedee169dfc05b80dbd447ca610be68077ca655a8e561"
+    },
+    "STAGE_C.npz": {
+      "bytes": 162276,
+      "sha256": "c18c5af40a121bab8f5d8c2013323cac3d88891b1bd77ac97588c72932ce011e"
+    }
+  },
+  "retained_numerical_source": "base candidate manifest covers original source/operator/code/figure/table/factors",
+  "schema": "htt.r36.cf4_correlated_repair_manifest/1",
+  "task_id": "R36-02-CF4-CORRELATED"
+}

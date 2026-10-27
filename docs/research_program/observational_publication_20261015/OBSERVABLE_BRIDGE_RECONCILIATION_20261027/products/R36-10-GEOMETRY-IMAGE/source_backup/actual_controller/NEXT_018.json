@@ -1,0 +1,52 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R36-10-GEOMETRY-IMAGE",
+  "attempt": 2,
+  "phase": "review",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_identity": "sha256:54ae8c59cb6c0d144cb9798079f357bdfba6254694cb416bf5a14f3a59160423",
+  "frontier_identity": "ed7520e4e2ba670fba1d15f4b0e8aae91efa97fd29efed82193a32304dabe1f8",
+  "task_spec_identity": "16e1c834af1c20b3492f2e3c691ec1ea89bedb7a7ba5c1c119e82f932cd31a9f",
+  "packet_id": "359393236f47c7a32abf10b7978d933e796c49cca603393a42519ca9e9e573ec",
+  "route": {
+    "route": "review_or_research",
+    "requested": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_selected": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+    "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+    "launch_performed": false,
+    "availability_catalog_profiles": [
+      {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "model": "gpt-6-sol",
+        "effort": "high"
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "effort": "medium"
+      }
+    ]
+  },
+  "resume_evidence": null,
+  "scientific_resume": null,
+  "transport_resume": null,
+  "launch_performed": false,
+  "observed_runtime": "UNKNOWN",
+  "native_tool": "collaboration.spawn_agent",
+  "spawn_args": {
+    "task_name": "rc_359393236f47c7a3",
+    "fork_turns": "none",
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh",
+    "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4\", \"task_id\": \"R36-10-GEOMETRY-IMAGE\", \"attempt\": 2, \"phase\": \"review\", \"input_identity\": \"sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43\", \"candidate_identity\": \"sha256:54ae8c59cb6c0d144cb9798079f357bdfba6254694cb416bf5a14f3a59160423\", \"frontier_identity\": \"ed7520e4e2ba670fba1d15f4b0e8aae91efa97fd29efed82193a32304dabe1f8\", \"task_spec_identity\": \"16e1c834af1c20b3492f2e3c691ec1ea89bedb7a7ba5c1c119e82f932cd31a9f\", \"packet_id\": \"359393236f47c7a32abf10b7978d933e796c49cca603393a42519ca9e9e573ec\", \"spec\": {\"id\": \"R36-10-GEOMETRY-IMAGE\", \"kind\": \"code\", \"title\": \"Implement the imported spatial-Ricci and constraint image with degeneracy controls\", \"goal\": \"Implement the imported spatial-Ricci and constraint image with degeneracy controls\", \"acceptance\": \"Reuse Loop D and the retained LRS V algebra. Implement finite Jacobi/Gauss-Codazzi/spatial-Ricci evaluators in the stated orthonormal frame, physical units and orientation, without evolving the field equations. Reproduce same-scalar/different-Ricci II/VII0 witnesses and flat I/VII0 presentation equivalence. Push declared tensor uncertainty sets through the algebraic map; report which tensor/curvature data distinguish the constructed cases. Complete this finite geometry compatibility product independently of a CMB transfer atlas. No CMB family identification from a scalar or morphology alone. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it.\", \"input_identity\": \"sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43\", \"contract_origin\": \"new_conditional_research\", \"promotes_original_acceptance\": false, \"initial_state\": \"ready\", \"requires\": {\"all\": []}, \"input_sources\": [{\"path\": \"docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json\", \"sha256\": \"83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43\", \"role\": \"preserved internal sources, externally supplied audit, independent corrections and actual finite replays\"}], \"owned_paths\": [\"docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE\"], \"semantic_delta\": {\"kind\": \"method\", \"before\": {\"status\": \"Retained R32 methods plus source-specific external holds; newly recovered internal results not yet consumed by this question.\"}, \"after\": {\"target\": \"Implement the imported spatial-Ricci and constraint image with degeneracy controls\"}, \"discriminator\": \"Reuse Loop D and the retained LRS V algebra. Implement finite Jacobi/Gauss-Codazzi/spatial-Ricci evaluators in the stated orthonormal frame, physical units and orientation, without evolving the field equations. Reproduce same-scalar/different-Ricci II/VII0 witnesses and flat I/VII0 presentation equivalence. Push declared tensor uncertainty sets through the algebraic map; report which tensor/curvature data distinguish the constructed cases. Complete this finite geometry compatibility product independently of a CMB transfer atlas. No CMB family identification from a scalar or morphology alone.\", \"scope\": \"Additional declared observable/conditional product; original frozen acceptance and histories unchanged.\"}, \"implementation_route\": \"subagent_specialist\", \"paper_ids\": [\"P5\", \"P6\"], \"informs_original_nodes\": [\"B02\", \"B03\", \"K04\"], \"qualified_product_expected\": \"geometry_compatibility_result\", \"reuse_first\": true, \"deliverable_rule\": \"Qualify the exact named result only after acceptance and independent review; a source-gap report cannot qualify it.\", \"next_after_hold\": \"Record exact missing input and request next independent ready task; do not reset, duplicate or rename exhausted experiments.\"}, \"issue\": null, \"repair_plan\": null, \"repair_authorization\": null, \"resume_evidence\": null, \"scientific_resume\": null, \"transport_resume\": null, \"repair_input_transition\": null, \"authors\": [\"/root/rc_5a748e12c1d19b5a\"], \"contributors\": [\"/root/rc_5a748e12c1d19b5a\", \"/root/r36_scientific_contract_preparation\"], \"history_refs\": [{\"phase\": \"execute\", \"packet_id\": \"5a748e12c1d19b5a4e636c7f31a92d772ee083ca84c2e723a98946f0a9c185d9\", \"receipt\": {\"path\": \"/mnt/extdrive/workdir/htt_open_data/r36_geometry_actual/RAW_RECEIPT.json\", \"sha256\": \"da06f5fe52b14a0cf0de041f66f93facdc8a54c9dfc3a80ba97737b09da88064\"}, \"outcome\": \"success\", \"candidate_identity\": \"sha256:54ae8c59cb6c0d144cb9798079f357bdfba6254694cb416bf5a14f3a59160423\"}], \"history_total\": 1}"
+  }
+}

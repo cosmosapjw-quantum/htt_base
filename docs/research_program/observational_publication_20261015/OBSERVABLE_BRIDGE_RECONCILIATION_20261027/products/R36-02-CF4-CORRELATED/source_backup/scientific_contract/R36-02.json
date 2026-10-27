@@ -1,0 +1,106 @@
+{
+  "status": "PREPARATION_ONLY_NOT_DISPATCH_NOT_PASS",
+  "owner": "/root/r36_scientific_contract_preparation",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "base_head_observed": "fb2bb0ac6a9537861c2c2e2c5157fc81787922d0",
+  "scope": "Source/convention/tolerance guidance for actual future selected R36 workers. Does not append frontier, reserve budget, grant review or qualify a product.",
+  "contract": {
+    "id": "R36-02-CF4-CORRELATED",
+    "qualified_target": "cf4_correlated_covariance",
+    "requires": "Reviewed h03_exact_operator; actual product key remains the frozen FRONTIER value.",
+    "sources": [
+      "bridge",
+      "bridge_tests",
+      "bridge_input",
+      "physical_audit",
+      "r30_model",
+      "r30_sources"
+    ],
+    "new_quantity": "36-coordinate covariance of the exact H03 apparent statistic. Retained R30 K_fact is a different dimensionless five-coordinate statistic; its5/15 matrices and magnitude j_i cannot be transplanted.",
+    "model_parameters": {
+      "basis": "Source-qualified R30 analytic EH98 no-wiggle common Gaussian field, retained as a conditional approximation",
+      "H0": 67.36,
+      "h": 0.6736,
+      "Omega_m": 0.3153,
+      "Omega_Lambda": 0.6847,
+      "omega_b": 0.02237,
+      "n_s": 0.9649,
+      "sigma8": 0.8111,
+      "T_CMB_K": 2.7255,
+      "q_bands_h_per_Mpc": [
+        [
+          0.005,
+          0.02
+        ],
+        [
+          0.02,
+          0.05
+        ]
+      ],
+      "R_h_Mpc": [
+        5,
+        10,
+        20
+      ],
+      "positions": "chi(z_CMB)*n from the retained finite-quadrature flat matter+Lambda background; source positions remain fixed proxies",
+      "epoch": "Reuse retained g_i=a_i H_i f_i D_i, f=dlnD/dlna, D(1)=1. No ODE/Boltzmann or new fit."
+    },
+    "factor": "For each positive radial/angular quadrature node, b_i(k,u)=g_i*(n_i.u)*exp(i*k*u.x_i)*sqrt(P0(k)*w_k*w_Omega/(2*pi)^3)*S_R(k). Split real/imaginary columns. The k^-1 velocity factor cancels k² radial measure. P0 in Mpc³, k in Mpc^-1, b in km/s. H03 V=B directly; not R30 modulus derivative j_i*B. Stream A V and accumulate its real Gram matrix; preserve all36 coordinates and cross-window/cross-smoothing blocks.",
+    "ownership_resolution": [
+      "Retained sigma²=250²+(70 ln10/5*d*e_dmzp)² is an inherited weighting/conditional law, not an empirical independent-noise decomposition. Reproduce it as C_baseline only.",
+      "Do not automatically form C_baseline+C_PV or subtract250² and call the remainder source measurement noise. That would assert unproved source ownership.",
+      "Deliver C_PV for the declared bands plus the general map C(D,Sigma)=A diag(D) A^T+C_PV+K Sigma K^T. A fully numerical total is permitted under an explicit CONDITIONAL law that independently stipulates D and calibration Sigma, excludes represented PV/calibration terms and records omitted bands/cross sources. It is not an empirical estimate. Unsupplied empirical amplitudes/cross blocks remain symbolic/UNKNOWN, never zero-filled.",
+      "The saved four-method Z=d*onehot maps mean-design offsets in km/s/Mpc. K=A Z is a legitimate design response with that parameter convention; it is not automatically a mag zero-point Jacobian. Physical modulus shifts change d, X and possibly W; derive their full chosen estimator derivative before using mag² Sigma.",
+      "If calibration/PV sources correlate, factor their joint law including cross blocks; disjoint labels alone do not establish independence."
+    ],
+    "reuse_and_limits": "Reuse R30 analytic definitions, cheap transfer/background checks and any genuinely source-level cached modes with identities. Do not restart its old K_fact runner, bank, 600-second account or exhausted refinements. New source-mode contractions belong only to the actual R36 packet and its host-specified hard cap. Preparation grants no execution budget.",
+    "controls": [
+      "Run the supplied eight covariance tests unchanged.",
+      "Use <=12-row independent pair kernel J_ij=(j0+j2)*(n_i.n_j)/3-j2*(n_i.s_hat)*(n_j.s_hat), coincident limit(n_i.n_j)/3, to check2pi, phase, positive sign and radial units; compare Frobenius relative1e-5 and normalized entries1e-6, inherited R30 fixture criteria.",
+      "Freeze positive quadrature nodes and a nested refinement before output; reuse existing angular/radial conventions if practical. Report max normalized entry change<=.005, Frobenius<=.003 and inverse-whitened spectral change<=.02 on support, inherited R30 numerical tolerances, applied separately to every H03 block; failing checks HOLD that numerical approximation, not all conditional mathematics.",
+      "Unit-column whitened SVD at primary1e-10 with1e-12/1e-8 sensitivity; identical source/observer columns keep relative-only rank. Cross-source covariance, permutation and common-field cross-window controls.",
+      "Footprint/method sensitivity must use separately declared operators; prior saved scalar sensitivities alone do not supply their new PV covariance. No repeated old model fit."
+    ],
+    "statistics": "Known analytic Gaussian law allows an exact conditional GLS reference for a fixed linear mean with known covariance and prespecified rank. Finite-mock covariance requires sample-covariance uncertainty; N64,p36 inverse factor26/63 alone is inadequate. Refit only explicitly distinct new H03 mean designs, same extraction and fixed selection rule; do not invent total mean from zero-mean PV component or claim identical CF4 samples independent.",
+    "conditional_completion": "A source-bound operator transport plus computed PSD band component and explicit parameterized calibration/decomposition sensitivity is a legitimate scientific conditional product. Full frozen acceptance still requires its named output and independent review; an input-gap report alone does not qualify.",
+    "qualified_product_expected": "cf4_correlated_response_result",
+    "owned_paths_when_actually_dispatched": [
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED"
+    ],
+    "acceptance_authority": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-02-CF4-CORRELATED",
+    "preparation_is_qualified_product": false
+  },
+  "source_bindings": {
+    "bridge": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/covariance_bridge.py",
+      "sha256": "e21fde04538579aade36023b55800ac95547b576af14e24bf7f4fd002f574753",
+      "bytes": 6923
+    },
+    "bridge_tests": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/test_covariance_bridge.py",
+      "sha256": "1662aff1a7f0e361d8680aa617755c4912fe1b44081ee14b660c5aeba578b626",
+      "bytes": 4925
+    },
+    "bridge_input": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/INPUT_CONTRACT.json",
+      "sha256": "cbcb3cbeac8fd4d5ea303940a8a97525b146fd8b3fd09040ae2bfd9f1ca9206f",
+      "bytes": 2988
+    },
+    "physical_audit": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/PHYSICAL_AUDIT.md",
+      "sha256": "a14d9e399d8abd9ef33beeecb14c701f506edddc3c96c6bbd64a7df56b8b9cfe",
+      "bytes": 16812
+    },
+    "r30_model": {
+      "path": "docs/research_program/observational_publication_20261015/EXTERNAL_AUDIT_20261025_R35/CF4_FINITE_COMPONENT/sources/r30_cf4_pv_tensor_framing/CONTRACT.md",
+      "sha256": "29f5660bfee2feb379f01da2f51ddb7a87d416b05a2393f4ffaef5858fd6c8e7",
+      "bytes": 23657
+    },
+    "r30_sources": {
+      "path": "docs/research_program/observational_publication_20261015/EXTERNAL_AUDIT_20261025_R35/CF4_FINITE_COMPONENT/sources/r30_cf4_pv_tensor_framing/INPUT_BINDINGS.json",
+      "sha256": "d5cfe88bf297ee7d7ab6ae5b6758c951cf2491b189de8c37e6756511232dc2c4",
+      "bytes": 8982
+    }
+  }
+}

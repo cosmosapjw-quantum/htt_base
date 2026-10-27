@@ -1,0 +1,86 @@
+{
+  "corrected_centers": {
+    "I": {
+      "contract_center": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "density": 12.0,
+      "joint_rank": 1,
+      "joint_singular_values": [
+        12.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_lower_bound": 11.392499999988534,
+      "geometry_unchanged": true,
+      "geometry_J_unchanged": true,
+      "polarization_residual_to_exact_derivative": 3.1401849173675503e-16
+    },
+    "flatVII0": {
+      "contract_center": [
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        2.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "density": 12.0,
+      "joint_rank": 6,
+      "joint_singular_values": [
+        12.042175245625737,
+        2.0000000000000004,
+        1.9999999999999998,
+        1.4092605698162068,
+        0.7071067811865475,
+        0.7071067811865475,
+        3.1401849173675503e-16,
+        9.962224506991256e-17,
+        4.889478124767553e-17,
+        7.028340690599478e-31
+      ],
+      "energy_lower_bound": 11.390420271048917,
+      "geometry_unchanged": true,
+      "geometry_J_unchanged": true
+    }
+  },
+  "tiny_invalid_Jacobi": [
+    {
+      "u": 1e-30,
+      "status": "INVALID_JACOBI"
+    },
+    {
+      "u": 1e-26,
+      "status": "INVALID_JACOBI"
+    },
+    {
+      "u": 1e-22,
+      "status": "INVALID_JACOBI"
+    }
+  ],
+  "meaning": "Frozen zero-shear I center has only energy-h first derivative, hence rank1. Saved rank3 is valid only at the different nonzero-shear center. Geometry image depends on N alone, so restoring S=0 preserves intrinsic tensors and matched-II/VII0 separation."
+}

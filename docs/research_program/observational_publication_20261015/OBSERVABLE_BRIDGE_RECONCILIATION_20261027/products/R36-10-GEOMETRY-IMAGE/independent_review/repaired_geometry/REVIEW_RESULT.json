@@ -1,0 +1,204 @@
+{
+  "schema": "R36-10-repair-independent-targeted-review-v1",
+  "created_utc": "2026-10-27T05:57:17.914541+00:00",
+  "task_id": "R36-10-GEOMETRY-IMAGE",
+  "verdict": "SCOPED_PASS",
+  "outcome": "success",
+  "counterexample": {},
+  "findings": [],
+  "repair_plan": "No further candidate repair is required for this targeted finite geometry closeout. Controller must bind this independent review to its actual next review packet and preserve the task/input/candidate identities before qualification.",
+  "candidate_identity": "sha256:ca55901e8b35f163d0c7b011363e364497ba27bea752e142403c9f6d3d37ffa6",
+  "candidate_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/RESULT.json",
+  "base_candidate_identity": "sha256:54ae8c59cb6c0d144cb9798079f357bdfba6254694cb416bf5a14f3a59160423",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "contract_sha256": "76e2c762c4e9fbf4d27ac1af8521c3138edefb138f62e292c776ca83d67bf6b5",
+  "author_repair_packet_id": "8da987a1500dc1afc4b9167e4e46de07bddb4a2bff47268daf108918f3a9e424",
+  "author_raw_sha256": "b48617edd81b8f51c798a1674486fd2b79f454165e51c14e0e6cc8138c6703e0",
+  "author_RETURN_sha256": "9dd57b80d03ced82ddd53577736218de941ac9ad29f0d7c6ddcdcc10d333f1d7",
+  "reviewer": "/root/r36_geometry_repair_independent_review",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_runtime": "UNKNOWN",
+  "independence": "Fresh noncontributor; did not frame contract or author implementation. Read actual candidate, frozen contract and prior counterexample; independently differentiated the polynomial and ran selected rational controls. No prior review script was reused.",
+  "phase": "PREPARATORY_ACTUAL_INDEPENDENT_REVIEW_NOT_FORMAL_CONTROLLER_ACK",
+  "controller_packet_id": null,
+  "formal_controller_ack": false,
+  "acceptance_met": false,
+  "qualified_products": [],
+  "review_recommendation": {
+    "scoped_acceptance_satisfied": true,
+    "product": "geometry_compatibility_result",
+    "scope": "Corrected finite instantaneous tensor/constraint and deterministic uncertainty geometry product only; subject to formal controller packet binding"
+  },
+  "closed_counterexample": {
+    "id": "R36-GEO-01",
+    "status": "CLOSED_ON_CURRENT_CANDIDATE",
+    "evidence": "I/flatVII0 saved controls and z0 now have Sbar=0, hbar=2, Kbar=-2I, ebar=12 and zero q. Exact I Jacobian has only [6,6]=12; numerical residual is within unchanged arithmetic tolerance. Matched II/VII0 centers retain diag(1/10,-1/20,-1/20)."
+  },
+  "assumptions_and_conventions": {
+    "signature": "(-,+,+,+)",
+    "frame": "oriented orthonormal homogeneous spatial triad, epsilon123=+1, proper SO(3)",
+    "K": "-(h I+S)",
+    "units": "n,a,h=H/c,S=sigma/c in m^-1; Ricci,Lambda,kappa epsilon,kappa q in m^-2; epsilon and q in J/m^3; physical energy flux c q; kappa=8 pi G/c^4",
+    "u_star": "1e-26 m^-1 illustrative, scale checks 1e-30 and1e-22",
+    "uncertainty": "Frozen deterministic 12D ellipsoids, not covariance, probability, confidence or population samples"
+  },
+  "equation_and_definition_audit": [
+    {
+      "item": "Frozen centers and full 10-output joint map",
+      "status": "PASS",
+      "evidence": "Independent exact SymPy center values, J and all ten12x12 Hessians agree with saved data and evaluated implementation."
+    },
+    {
+      "item": "Intrinsic and joint ranks/singular tensors",
+      "status": "PASS",
+      "evidence": "Exact geometry6,6,0,3; exact joint9,10,1,6; stored orthogonal singular coordinates reconstruct J and nullspaces. Degenerate bases were not compared componentwise."
+    },
+    {
+      "item": "Gauss-Codazzi and mixed class-B Ricci",
+      "status": "PASS",
+      "evidence": "Exact mixed Ricci=[[-13/50,0,0],[0,-27/50,-3/25],[0,-3/25,9/50]], signed momentum=(39/500,7/1000,-23/1000). Candidate direct connection agrees; focused ADM test verifies +2 rH."
+    },
+    {
+      "item": "Whole-set bounds and nonlinear image",
+      "status": "PASS",
+      "evidence": "All ten coordinate, trace and D support bounds recomputed from independent exact derivatives. h lower1.95; all energy lower bounds positive. Full Hessians and2308 direct/linear/quadratic probe vectors retained."
+    },
+    {
+      "item": "Unchanged branches",
+      "status": "PASS",
+      "evidence": "All2308 Ricci probe vectors and1154 matched full-joint vectors exactly match original final candidate; 1154 corrected flat joint vectors change. LRS280 is byte-identical."
+    },
+    {
+      "item": "Units, rotations and tiny-scale Jacobi",
+      "status": "PASS",
+      "evidence": "Actual frame evaluations at1e-30,1e-26,1e-22 retain nonzero curvature and reject invalid Jacobi; three proper rotations preserve Ricci, full Riemann and signed flux."
+    },
+    {
+      "item": "LRS retained bridge",
+      "status": "PASS",
+      "evidence": "280 rows conversion independently checked against CSV for shear, energy, flux, pressure and full pi under cyclic proper permutation; signed momentum oracle;56 vacuum beta values remain null."
+    }
+  ],
+  "numeric_evidence": {
+    "status": "PASS_SCOPED_CHECKS",
+    "candidate_identity": "sha256:ca55901e8b35f163d0c7b011363e364497ba27bea752e142403c9f6d3d37ffa6",
+    "source_bindings_verified": 13,
+    "candidate_files_verified": 9,
+    "old_final_candidate_files_verified": 10,
+    "exact_sympy_ranks": {
+      "II": {
+        "geometry": 6,
+        "joint": 9
+      },
+      "VII0matched": {
+        "geometry": 6,
+        "joint": 10
+      },
+      "I": {
+        "geometry": 0,
+        "joint": 1
+      },
+      "flatVII0": {
+        "geometry": 3,
+        "joint": 6
+      }
+    },
+    "center_derivatives_and_Hessians": {
+      "II": {
+        "J_relative_error": 3.704062477954886e-17,
+        "H_relative_error": 1.1265335754191936e-16,
+        "energy_lower_bound": 11.133438048690316,
+        "h_lower_bound": 1.95
+      },
+      "VII0matched": {
+        "J_relative_error": 3.3428539631632926e-17,
+        "H_relative_error": 1.1265335754191936e-16,
+        "energy_lower_bound": 11.129296457610149,
+        "h_lower_bound": 1.95
+      },
+      "I": {
+        "J_relative_error": 1.3084103822364794e-17,
+        "H_relative_error": 1.1265335754191936e-16,
+        "energy_lower_bound": 11.392499999988534,
+        "h_lower_bound": 1.95
+      },
+      "flatVII0": {
+        "J_relative_error": 2.4343250174169973e-17,
+        "H_relative_error": 1.1265335754191936e-16,
+        "energy_lower_bound": 11.390420271048917,
+        "h_lower_bound": 1.95
+      }
+    },
+    "independent_probe_count": 2308,
+    "independent_max_probe_relative_error": 1.5894624366785338e-16,
+    "all_Ricci_probes_exact_against_old_final": 2308,
+    "matched_joint_probes_exact_against_old_final": 1154,
+    "flat_joint_probes_changed": 1154,
+    "bound_separation": 1.4142135623730951,
+    "bound_tensor_radii_sum": 0.4169761876768374,
+    "scale_controls": [
+      {
+        "u_star": 1e-30,
+        "Ricci_relative_error": 2.9269121832827866e-16,
+        "invalid_Jacobi_rejected": true
+      },
+      {
+        "u_star": 1e-26,
+        "Ricci_relative_error": 2.3348681975755075e-16,
+        "invalid_Jacobi_rejected": true
+      },
+      {
+        "u_star": 1e-22,
+        "Ricci_relative_error": 8.008531847568787e-17,
+        "invalid_Jacobi_rejected": true
+      }
+    ],
+    "proper_rotation_checks": 3,
+    "mixed_exact_Ricci": "Matrix([[-13/50, 0, 0], [0, -27/50, -3/25], [0, -3/25, 9/50]])",
+    "mixed_exact_signed_momentum": "Matrix([[39/500], [7/1000], [-23/1000]])",
+    "lrs_rows": 280,
+    "vacuum_rows_null_beta": 56,
+    "metadata_6878_preimage_verified": true,
+    "old_6878_array_hashes": "UNAVAILABLE_NOT_RETROACTIVELY_VERIFIED",
+    "producer_invocations": 0,
+    "old_campaign_invocations": 0,
+    "requested_runtime": "gpt-6-astra/xhigh",
+    "observed_runtime": "UNKNOWN"
+  },
+  "figure_table_interpretation": {
+    "figure": "Actual PNG visually inspected; PNG/PDF are source-bound. Three panels show deterministic projected probes/tangent images and coordinate support error bars, sorted Ricci centers with conservative tensor radii, and intrinsic singular spectra. Figure unchanged as expected because this repair changes joint energy/flux, not Ricci.",
+    "table": "Actual TABLE.json contains repaired centers, full joint_J10x12, joint_H10x12x12, singular coordinates, all ten bounds, and nonlinear controls. Source provides frozen L including coupling L[7,5]=.005.",
+    "interpretation": "INTERPRETATION.md correctly states corrected flat centers, intrinsic versus joint ranks, conditional set separation, presentation equivalence and finite diagnostic claim ceiling.",
+    "separation": "SO(3)-orbit center distance sqrt(2) exceeds conservative Ricci radii sum0.4169761876768374 under declared ellipsoids only."
+  },
+  "claim_tier_implications": {
+    "allowed": "diagnostic-only finite instantaneous geometry compatibility; deterministic conditional tensor-set separation; same scalar does not fix Ricci; flat I/VII0 presentation equivalence",
+    "full_x": "Same-frame tensor/constraint carrier retained including LRS pressure/pi/velocity statuses",
+    "x_C": "NOT_EVALUATED_NO_FROZEN_COMPARATOR_RESPONSE",
+    "Q": "NOT_EVALUATED_NO_PREMISE_ANCHOR_OR_POLICY_DENOMINATOR",
+    "F": "NOT_EVALUATED_NO_OCCUPANCY_MEASURE_OR_CEILING",
+    "Pi": "NOT_EVALUATED_NO_JOINT_PROBABILITY_LAW",
+    "G_F": "NOT_EVALUATED_NO_DEPTH_WINDOWS_OR_JOINT_DEPTH_LAW",
+    "no_zero_fill": true
+  },
+  "fatal_blockers": [],
+  "residual_limits": [
+    "This is preparatory actual independent review, not a formal controller review packet ACK or qualification. Requested runtime is not observed runtime.",
+    "No empirical probability, covariance, likelihood, family identification, global topology, transfer atlas, evolved Einstein matter history or native solver admission follows.",
+    "The frozen bounded contract was checked with selected exact SymPy and finite numeric falsifiers, not a new four-axis CAS campaign or universal formal proof.",
+    "Original54ae final candidate and all ten files retain their receipt hashes. Reconstructed metadata-only6878 RESULT preimage matches its recorded hash; the earlier6878 scientific array hashes/original stdout remain unavailable and their parity is not retroactively verified.",
+    "Author receipt preserves first failure and cumulative counts; its intermediate six-test stdout was overwritten by a later author test and is disclosed as unavailable. This review has separate current raw stdout/stderr.",
+    "Matplotlib warns that optional Axes3D is unavailable; this2D product and focused tests succeed."
+  ],
+  "tests": {
+    "focused": "6 passed,1 optional Axes3D warning",
+    "independent": "PASS_SCOPED_CHECKS",
+    "candidate_generator_reruns": 0,
+    "old_R32_LoopD_CAS_native_ODE_reruns": 0
+  },
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_independent_review/RAW.json",
+  "original42_promotion": false,
+  "publication_authorized": false,
+  "next_executable_checkpoint": "Parent controller requests/ACKs the actual independent review packet and binds this result; no candidate edits or reruns are needed solely for binding."
+}

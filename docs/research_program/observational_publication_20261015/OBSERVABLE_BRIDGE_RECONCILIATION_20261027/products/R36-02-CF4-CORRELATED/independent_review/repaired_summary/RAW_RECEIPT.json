@@ -1,0 +1,66 @@
+{
+  "agent_id": "/root/r36_cf4_summary_repair_independent_review",
+  "base_candidate_identity": "sha256:dd3cb2d77c97e33380ec06e04bc5465f65129dc319f8795dc30e3bc84b3e877b",
+  "candidate_and_all_bound_files_unchanged_at_close": true,
+  "candidate_identity": "sha256:a0edd2e76d0b74630d47bbccd5cd90dcb4e372ca1772ee202585a34270d68fb4",
+  "candidate_mutated": false,
+  "commands": [
+    {
+      "command": ".venv/bin/python -B /mnt/extdrive/workdir/htt_open_data/r36_cf4_summary_repair_independent_review/independent_checks.py",
+      "elapsed_seconds_in_script": 2.0639827251434326,
+      "exit_code": 0,
+      "observed_checks_report": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_summary_repair_independent_review/INDEPENDENT_CHECKS.json"
+    },
+    {
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/repair_01/test_sensitivity_repair.py"
+      ],
+      "exit_code": 0,
+      "nested_in": "independent_checks.py",
+      "seconds": 0.5111684398725629,
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_summary_repair_independent_review/regressions.stderr.log",
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_summary_repair_independent_review/regressions.stdout.log"
+    },
+    {
+      "exit_code": 0,
+      "operation": "Unchanged copied cache-consumer source; BASE points to retained base, HERE points to review-owned consumer_copy. No producer imports or source transforms.",
+      "seconds": 0.09400609601289034,
+      "source_sha256": "14407c45290993d1d8a4b3e1bc7802be9e54ab71893c8afe7cd5a5ed89112db9",
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_summary_repair_independent_review/consumer_copy_stdout.log"
+    },
+    {
+      "command": ".venv/bin/python -B /mnt/extdrive/workdir/htt_open_data/r36_cf4_summary_repair_independent_review/check_result_references.py",
+      "evidence": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_summary_repair_independent_review/RESULT_REFERENCE_RESOLUTION.json",
+      "exit_code": 0
+    }
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "evidence_sha256": {
+    "INDEPENDENT_CHECKS.json": "9bf6661f862b98b2b3653d939e5b336ac97ce0556db1fa5a55381fbbbb1b65fe",
+    "PREIMAGE_DIFFS.json": "1b4741b91c0c403e0830782739c0811ee1ccd014caecb2f8c80cbd4fc512a512",
+    "RESULT_REFERENCE_RESOLUTION.json": "fc6873a374e6dec23fb8a61323b08976b3f329a0973e4c4712331bfa68bde21b",
+    "SOURCE_LOCATION_ERRATUM.md": "1871ea3e87143899d33c057490c2f086d77a40af17e7a08a74cf969315c2ce09",
+    "check_result_references.py": "eab898fbbc11c763f874c5adc020f68a6585f278a1fb51c2ceea6de3ef80c4e4",
+    "consumer_copy_stdout.log": "4bd90a7105f347c179265263478c8baee23aca7894cafd659dbc874baec11a06",
+    "independent_checks.py": "1beb54e90756103f8015dc638281ebf086d3ecfa1d27db5eb9bab57aff4fcbb2",
+    "regressions.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "regressions.stdout.log": "36628d9288a7053a36fef344f7d77295a6fb21e8ab5726fbbb262ff5e21f2dc0"
+  },
+  "execution_limit": "Three focused supplied tests; twelve independent cached summary rows; bounded cache-consumer copy; hashes/readbacks and source-location checks only.",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "new_full_producer_or_physics_run": false,
+  "observed_runtime": "UNKNOWN",
+  "old_R30_600s_bank_charged": false,
+  "repository_or_controller_state_mutated": false,
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "schema": "htt.r36.independent_summary_review_raw_receipt/1",
+  "task_id": "R36-02-CF4-CORRELATED",
+  "timestamp_unix": 1793080934.9851723
+}

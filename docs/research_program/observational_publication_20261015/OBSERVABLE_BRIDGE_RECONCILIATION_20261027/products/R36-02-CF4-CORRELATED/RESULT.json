@@ -1,0 +1,189 @@
+{
+  "amplitude": 765245.0820764016,
+  "angular_A_B": [
+    {
+      "frobenius_relative": 1.6216652641079896e-14,
+      "max_normalized_entry": 3.959561462756559e-14,
+      "pass": true,
+      "whitened_spectral_each_radius": [
+        6.010856819231586e-11,
+        4.6453042425320946e-11,
+        4.022791750677152e-11
+      ]
+    },
+    {
+      "frobenius_relative": 6.73628758977694e-09,
+      "max_normalized_entry": 7.003490872374998e-08,
+      "pass": true,
+      "whitened_spectral_each_radius": [
+        2.519578136825533e-07,
+        2.33394421046312e-07,
+        1.7092792745223386e-07
+      ]
+    }
+  ],
+  "angular_pass": true,
+  "background_32_64_relative": 1.1987738192977354e-15,
+  "band_and_total_diagnostics": [
+    {
+      "max_eigenvalue": 4.320638388170338,
+      "min_eigenvalue": 3.2769976570559947e-16,
+      "rank_1e_10": 71,
+      "rank_1e_12": 84,
+      "rank_1e_8": 61,
+      "trace": 26.235417371541455
+    },
+    {
+      "max_eigenvalue": 3.881283221782969,
+      "min_eigenvalue": 1.311069301955718e-10,
+      "rank_1e_10": 105,
+      "rank_1e_12": 108,
+      "rank_1e_8": 80,
+      "trace": 21.23371826811829
+    },
+    {
+      "max_eigenvalue": 6.152519575819486,
+      "min_eigenvalue": 2.1499688280135232e-10,
+      "rank_1e_10": 105,
+      "rank_1e_12": 108,
+      "rank_1e_8": 83,
+      "trace": 47.46913563965974
+    }
+  ],
+  "bands_h_Mpc": [
+    [
+      0.005,
+      0.02
+    ],
+    [
+      0.02,
+      0.05
+    ]
+  ],
+  "baseline_semantics": "inherited working covariance only; not independent source noise",
+  "claim_tier": "CONDITIONAL_MODEL_COVARIANCE",
+  "conditional_R5_diagnostics": {
+    "max_eigenvalue": 2.347566423675903,
+    "min_eigenvalue": 0.0018927130676361767,
+    "rank_1e_10": 36,
+    "rank_1e_12": 36,
+    "rank_1e_8": 36,
+    "trace": 17.68057385749905
+  },
+  "conditional_law": {
+    "D_km_s_squared": "150^2 per selected group, stipulated independent",
+    "K_units": "output/(km/s/Mpc); not a magnitude zero-point Jacobian",
+    "PV": "R=5 h^-1 Mpc EH98 Gaussian band component, common field",
+    "calibration": "four independent method mean-design offsets, SD 0.4 km/s/Mpc",
+    "cross_source_error_blocks": "UNKNOWN",
+    "empirical_noise_decomposition": "UNKNOWN",
+    "observer_field": "fixed CMB metadata",
+    "outside_bands": "UNKNOWN"
+  },
+  "controls": "CONTROLS.json",
+  "coordinate_order": "four H03 windows x nine raw theta coordinates",
+  "elapsed_seconds": 10.496122765121982,
+  "fixture": {
+    "duplicate_position": true,
+    "max_normalized_entry": [
+      6.386861870375879e-16,
+      5.1767844177753145e-16
+    ],
+    "relative_frobenius": [
+      4.539036811767278e-16,
+      4.1304975585751662e-16
+    ],
+    "source_rows": 6
+  },
+  "footprint_method_sensitivity": "SENSITIVITY.json",
+  "frames": {
+    "c_km_s": 299792.458,
+    "direction": "outward ICRS J2000",
+    "metric_signature": "(-,+,+,+)",
+    "redshift": "released z_CMB proxy"
+  },
+  "full_tensor_x_F_Pi_Q_G": "UNKNOWN; requires separate physical model and acceptance",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "mean_comparison": {
+    "calibration_MC_se": 0.0004996252342383581,
+    "calibration_draws": 2000,
+    "chosen": "shared_nine_coordinate_mean",
+    "known_covariance_gaussian_selected_tail": 0.0004997501249375312,
+    "observed_chi2": {
+      "affine_monopole": 145.15889126581789,
+      "shared_monopole": 174.92589608451235,
+      "shared_nine_coordinate_mean": 80.13769023941508
+    },
+    "ranks": {
+      "affine_monopole": 2,
+      "shared_monopole": 1,
+      "shared_nine_coordinate_mean": 9
+    },
+    "scores": {
+      "affine_monopole": 152.3259291427301,
+      "shared_monopole": 178.50941502296845,
+      "shared_nine_coordinate_mean": 112.38936068552007
+    },
+    "selection": "minimum chi2 + rank ln(36), fixed three designs",
+    "selection_counts_under_shared_monopole": {
+      "affine_monopole": 113,
+      "shared_monopole": 1886,
+      "shared_nine_coordinate_mean": 1
+    }
+  },
+  "normalization": [
+    [
+      8.597026304134634e-07,
+      1.6377752754351146e-15,
+      1.905048580167129e-09
+    ],
+    [
+      8.597026304499889e-07,
+      1.705458979612737e-16,
+      1.9837777845579685e-10
+    ]
+  ],
+  "nufft_direct_subset_relative": 2.0583813199934497e-13,
+  "nufft_eps": 1e-12,
+  "operator_sha256": "e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e",
+  "original42_promotion": false,
+  "packet_id": "0c0fab5631cb19001cba35e3da1de5cd44d64dc0157950afb82d383496472c40",
+  "radial_B_C": [
+    {
+      "frobenius_relative": 1.2018920328797117e-14,
+      "max_normalized_entry": 1.6555366581953273e-13,
+      "pass": true,
+      "whitened_spectral_each_radius": [
+        8.235473166456942e-12,
+        4.5702002378553546e-11,
+        4.88889320624787e-11
+      ]
+    },
+    {
+      "frobenius_relative": 1.7635941156105473e-11,
+      "max_normalized_entry": 3.164495499574907e-10,
+      "pass": true,
+      "whitened_spectral_each_radius": [
+        1.0554638230395641e-09,
+        1.058838950664735e-09,
+        8.254422516946081e-10
+      ]
+    }
+  ],
+  "radial_pass": true,
+  "sample_covariance_uncertainty": "CONTROLS.json#sample_covariance_if_N64_p36",
+  "schema": "htt.r36.cf4_correlated/1",
+  "smoothing_R_hinv_Mpc": [
+    5,
+    10,
+    20
+  ],
+  "source_rows": 35970,
+  "source_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "status": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+  "target_count": 39282,
+  "task_id": "R36-02-CF4-CORRELATED",
+  "transfer_source": "EH98_NO_WIGGLE_APPROXIMATION",
+  "transform_seconds": 6.3813748941756785,
+  "units": "(km/s/Mpc)^2"
+}

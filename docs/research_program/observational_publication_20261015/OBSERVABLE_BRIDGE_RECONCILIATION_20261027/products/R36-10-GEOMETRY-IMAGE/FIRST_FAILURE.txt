@@ -1,0 +1,9 @@
+First actual execution of python geometry_image.py, before implementation repair.
+Exit code: 1.
+Failure: AssertionError: ('II oracle', 1.4142135623730951, 1.0, 1.4142135623730951)
+Cause: NumPy transpose axes for the two cyclic Koszul terms were interchanged in
+the author's initial implementation. The frozen source formula was unchanged.
+Repair: replace gamma = (cc - cc.transpose(1,2,0) + cc.transpose(2,0,1))/2
+with gamma = (cc - cc.transpose(2,0,1) + cc.transpose(1,2,0))/2.
+Subsequent six-case, rotation, mixed class-B and focused tests pass. This record
+preserves the first failure; it is not evidence of first-attempt success.

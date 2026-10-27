@@ -1,0 +1,29 @@
+{
+  "packet_id": "5a748e12c1d19b5a4e636c7f31a92d772ee083ca84c2e723a98946f0a9c185d9",
+  "task_id": "R36-10-GEOMETRY-IMAGE",
+  "agent_id": "/root/rc_5a748e12c1d19b5a",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "outcome": "success",
+  "acceptance_met": false,
+  "qualified_products": [
+    "geometry_compatibility_result"
+  ],
+  "qualification_status": "PROPOSED_PENDING_FRESH_INDEPENDENT_REVIEW",
+  "candidate_identity": "sha256:54ae8c59cb6c0d144cb9798079f357bdfba6254694cb416bf5a14f3a59160423",
+  "result_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/RESULT.json",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_actual/RAW_RECEIPT.json",
+  "validation_evidence": [
+    "Frozen contract SHA256 76e2c762c4e9fbf4d27ac1af8521c3138edefb138f62e292c776ca83d67bf6b5 and input manifest SHA256 83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43 verified; 13 frozen source seals checked",
+    "Actual python -B geometry_image.py exit 0; six Ricci/sectional controls, Jacobi rejection, proper rotations, signed Codazzi and ADM +2r_H assertions pass",
+    "Actual geometry Jacobian ranks II/VII0/I/flatVII0 = 6/6/0/3; joint ranks 9/10/3/6; analytic/complex-step derivatives and exact quadratic Taylor reconstruction pass",
+    "Four synthetic 12D uncertainty images with 577 deterministic probes each and whole-set quadratic bounds; matched tensor ellipsoids separated by conservative bound",
+    "Retained 280 LRS-V rows converted without producer replay; max relative Hamiltonian 1.11e-16 and momentum 9.49e-17; signed speed and vacuum statuses preserved",
+    "python -m pytest -q test_geometry_image.py: 4 passed; matplotlib Axes3D warning does not affect 2D figures",
+    "Pre-metadata RESULT exact preimage hash recovered; metadata delta recorded; prior scientific array byte parity not independently hash verified"
+  ],
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "scientific_status": "CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+  "independent_review": "PENDING_FRESH_READ_ONLY",
+  "original42_promotion": false
+}

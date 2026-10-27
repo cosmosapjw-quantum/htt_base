@@ -1,0 +1,15 @@
+# Formally qualified conditional CF4 correlated response
+
+Actual formal review packetedea01a4abf30646edfcb599e496b50b28ecabb42e35ab6c8114ab70661c261b qualifies cf4_correlated_response_result for unchanged repaired candidatea0edd2e76d0b74630d47bbccd5cd90dcb4e372ca1772ee202585a34270d68fb4, preserving base candidate dd3cb2d77c97e33380ec06e04bc5465f65129dc319f8795dc30e3bc84b3e877b. This conditional36-coordinate R5/full108-coordinate PV response retains cross-window/radius covariance. Empirical cross-source covariance/coverage and outside-band response remain UNKNOWN. Inherited baseline PV covariance is kept separate and is neither added to nor subtracted from the conditional total. No physical full(x,F,Pi,Q,G_F), native solver/family or original42 promotion follows.
+
+The original failed radius-summary comparison and a571 pointer-error candidate/preimages remain historical. The repaired eightR10/20 rows use matched radius blocks; all fourR5 rows and retained numeric matrices are unchanged. Source code, sufficient matrices, quadrature inventory, actual execution/first-failure/repair/independent reviews and formal receipts are copied exactly. PV_FACTORS.npz53314967B, raw public observation catalogue and dependency binaries are omitted with exact cache/source identities; no factor regeneration, transform, kernel, fit, covariance producer or numerical/review replay occurred for publication. TARGET_INVENTORY stores generated quadrature targets/indices, not raw galaxy observations. Restore required cache aliases and exact dependencies for reproduction as documented in the archived source.
+
+## Consumed source-location erratum
+
+Read [SOURCE_LOCATION_ERRATUM.md](../independent_review/repaired_summary/SOURCE_LOCATION_ERRATUM.md) and its exact [RESULT_REFERENCE_RESOLUTION.json](../independent_review/repaired_summary/RESULT_REFERENCE_RESOLUTION.json). The frozen repair_01/RESULT.json shorthand fields are preserved, not silently fixed:
+
+- controls resolves explicitly to ../CONTROLS.json from repair_01/RESULT.json, i.e. the actual [parent CONTROLS.json](../CONTROLS.json).
+- sample_covariance_uncertainty resolves to ../CONTROLS.json#sample_covariance_if_N64_p36. The actual parent file SHA256 is5bc24992254da084775eff20b89f49346db9be85158a54ad12df76caefa726e9; the publisher read and hashed that file and checked the sample_covariance_if_N64_p36 key.
+- footprint_method_sensitivity resolves to repair_01/SENSITIVITY.json, SHA256ebacda58de95a46e5418ecdbf400976ecd21829c013f774e74ecc7c1ff3d47c5.
+
+SOURCE_MAP.json consumes these explicit field/fragment locations and source hashes. Bare sibling-relative controls resolution still fails because repair_01/CONTROLS.json does not exist. The bounded cache-summary consumer does not read those controls fields and independently reproduced both outputs byte-identically. This outer documentation/map resolves the P3 packaging ambiguity without changing frozen candidate bytes or pretending its locators were rewritten. Formal qualification remains limited to the named conditional product; original17/42 and analytic18/42 are unchanged.

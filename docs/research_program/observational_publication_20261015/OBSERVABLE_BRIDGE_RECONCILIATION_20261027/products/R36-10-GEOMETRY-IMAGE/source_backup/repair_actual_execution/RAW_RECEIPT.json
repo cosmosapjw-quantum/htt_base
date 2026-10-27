@@ -1,0 +1,124 @@
+{
+  "schema": "R36-10-targeted-repair-raw-receipt-v1",
+  "created_utc": "2026-10-27T05:48:06.788470+00:00",
+  "packet_id": "8da987a1500dc1afc4b9167e4e46de07bddb4a2bff47268daf108918f3a9e424",
+  "task_id": "R36-10-GEOMETRY-IMAGE",
+  "phase": "repair",
+  "attempt": 3,
+  "agent_id": "/root/rc_5a748e12c1d19b5a",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "base_packet_id": "5a748e12c1d19b5a4e636c7f31a92d772ee083ca84c2e723a98946f0a9c185d9",
+  "base_candidate_identity": "sha256:54ae8c59cb6c0d144cb9798079f357bdfba6254694cb416bf5a14f3a59160423",
+  "candidate_identity": "sha256:ca55901e8b35f163d0c7b011363e364497ba27bea752e142403c9f6d3d37ffa6",
+  "outcome": "success",
+  "qualified_products": [
+    "geometry_compatibility_result"
+  ],
+  "qualification_status": "PROPOSED_PENDING_FRESH_INDEPENDENT_TARGETED_CLOSEOUT",
+  "acceptance_met": false,
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_actual/RAW_RECEIPT.json",
+  "result_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/RESULT.json",
+  "repair_plan_identity": "da72e7c2e926cff9b87f4f7da489d84e7b8e2b597d60a979c9cb9c0476102144",
+  "controller_ack_go": "/mnt/extdrive/workdir/htt_open_data/r36_controller/ACK_022_GO.json",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "contract_sha256": "76e2c762c4e9fbf4d27ac1af8521c3138edefb138f62e292c776ca83d67bf6b5",
+  "prior_controller_history_total": 2,
+  "current_actual_commands": [
+    {
+      "command": "python -B repair_01/geometry_image.py",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_actual/geometry_image.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_actual/geometry_image.stderr",
+      "tool_session_id": 92133
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python -m pytest -q repair_01/test_geometry_image.py",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_actual/pytest.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_actual/pytest.stderr",
+      "scope": "first five tests after repair"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python -m pytest -q repair_01/test_geometry_image.py",
+      "exit_code": 0,
+      "tool_chunk_id": "fe000c",
+      "scope": "intermediate six tests after added probe parity regression",
+      "stdout_original_file_preserved": false,
+      "note": "same pytest_final.stdout file subsequently overwritten by final assertion-tightening run; actual tool returned exit 0"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python -m pytest -q repair_01/test_geometry_image.py",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_actual/pytest_final.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_actual/pytest_final.stderr",
+      "scope": "six tests after added probe parity regression; actual final command repeated once after assertion tightened"
+    }
+  ],
+  "cost_accounting": {
+    "new_finite_producer_invocations": 1,
+    "new_focused_pytest_invocations": 3,
+    "prior_controller_history_total": 2,
+    "actual_model_token_cost": "NOT_INDEPENDENTLY_OBSERVED",
+    "limits_changed": false
+  },
+  "validation_evidence": [
+    "Frozen input manifest and all 13 source bindings verified by finite generator; contract SHA256 76e2c762c4e9fbf4d27ac1af8521c3138edefb138f62e292c776ca83d67bf6b5 unchanged",
+    "python -B repair_01/geometry_image.py exit 0: six Loop D controls, Jacobi rejection, proper rotations, signed Codazzi and ADM +2r_H checks, analytic/complex-step joint derivatives, exact quadratic reconstruction, 577 probes per center, 280 retained LRS rows",
+    "PYTHONDONTWRITEBYTECODE=1 python -m pytest -q repair_01/test_geometry_image.py: 6 passed including saved/generated flat centers, I dE/dh=12 and rank1, all 2308 Ricci probe parity and unchanged full matched 1154 probes",
+    "Repair DELTA_VALIDATION.json: original candidate SHA preserved; geometry ranks 6/6/0/3; joint ranks 9/10/1/6; matched separation and tensor bound exactly unchanged; LRS280 bytes identical",
+    "Only corrected flat center joint energy/flux uncertainty images regenerated; status proposed pending fresh independent targeted closeout"
+  ],
+  "delta_validation": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_actual/DELTA_VALIDATION.json",
+  "prior_execute_raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_actual/RAW_RECEIPT.json",
+  "prior_fresh_review_raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_fresh_review/formal_binding_01/RAW_BINDING_RECEIPT.json",
+  "product_files": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/GEOMETRY_IMAGE.pdf",
+      "size": 35774,
+      "sha256": "ab0a13008523427a6f26fb3171f1a17136c679512fba03d14447dca5b61fbcec"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/GEOMETRY_IMAGE.png",
+      "size": 197969,
+      "sha256": "4e9c436746c21371b61dccb774a21922c2990a20b269fbac90993fe436320078"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/INTERPRETATION.md",
+      "size": 3772,
+      "sha256": "2e3db12822b1af460866ac6e842a31cc4dd102ecf8f310e3428585858a5bbb62"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/LRS280.jsonl",
+      "size": 235605,
+      "sha256": "d0fdfbed607e55bb43cfa0af5c6344e8f3ae5d0bf626d8b68ba8346e75df4921"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/RESULT.json",
+      "size": 6852,
+      "sha256": "ca55901e8b35f163d0c7b011363e364497ba27bea752e142403c9f6d3d37ffa6"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/TABLE.json",
+      "size": 232787,
+      "sha256": "bc6c3f47b1a609be80835586d50fb8b46bc32591ea99b4305c4c2b3cf43d6417"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/UNCERTAINTY_PROBES.jsonl",
+      "size": 1577852,
+      "sha256": "6fea2ad9dcc3256f1634bda199fd151cc0a40eaeaf3335b5682870ba0edaf18b"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/geometry_image.py",
+      "size": 28553,
+      "sha256": "deb4e0879cfb04b1142db89f9e9da1f7d2cbc367089dfb02fa83cab7b46f47ab"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/test_geometry_image.py",
+      "size": 4458,
+      "sha256": "5c8f2f9714d860eef1ba908eb5e278dbe4640f258a1f08c6b23c017075e622af"
+    }
+  ],
+  "independent_review": "PENDING_FRESH_TARGETED_CLOSEOUT",
+  "original42_promotion": false
+}

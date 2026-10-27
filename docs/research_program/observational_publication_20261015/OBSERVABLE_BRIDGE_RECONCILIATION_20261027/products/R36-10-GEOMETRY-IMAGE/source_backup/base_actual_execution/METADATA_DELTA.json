@@ -1,0 +1,36 @@
+{
+  "schema": "R36-10-metadata-delta-v1",
+  "old_result_sha256": "6878b99508cc1b26f3138445f1339788996b03cac6534f45bb930fa23ba256c1",
+  "new_result_sha256": "54ae8c59cb6c0d144cb9798079f357bdfba6254694cb416bf5a14f3a59160423",
+  "preimage_recovery": "exact reconstruction from final RESULT by removing the five added top-level metadata fields and restoring prior claim_tier value; hash matches recorded first candidate",
+  "added_metadata": [
+    "caveats",
+    "generating_command",
+    "owner",
+    "scope",
+    "transfer_source"
+  ],
+  "changed_metadata": {
+    "claim_tier": {
+      "before": "finite instantaneous geometry compatibility, synthetic uncertainty only",
+      "after": "diagnostic-only finite algebraic result"
+    }
+  },
+  "scientific_result_fields_equal": [
+    "matched_pair",
+    "flat_pair",
+    "uncertainty",
+    "lrs_retained_rows",
+    "beta_definition",
+    "x",
+    "x_C",
+    "Q",
+    "F",
+    "Pi",
+    "G_F",
+    "units"
+  ],
+  "producer_change_after_first_receipt": "only RESULT top-level metadata lines; geometry, ellipsoid, LRS, numeric tests and plot generation code unchanged",
+  "prior_array_hashes_available": false,
+  "array_byte_parity_claim": "NOT_INDEPENDENTLY_HASH_VERIFIED; unchanged generation code and unchanged numerical RESULT fields, no extra producer replay"
+}

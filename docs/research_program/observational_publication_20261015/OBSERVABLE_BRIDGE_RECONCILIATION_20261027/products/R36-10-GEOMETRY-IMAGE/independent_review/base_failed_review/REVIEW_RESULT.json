@@ -1,0 +1,163 @@
+{
+  "schema": "R36-10-independent-review-preparation-v1",
+  "task_id": "R36-10-GEOMETRY-IMAGE",
+  "reviewer": "/root/r36_geometry_fresh_review",
+  "created_utc": "2026-10-27T04:45:13.916280+00:00",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "observed_model_effort": "UNKNOWN",
+  "independence": "Fresh read-only reviewer; did not author contract or implementation; reviewed equations/source/saved arrays and ran separate bounded independent checks. Historical proof sources retain attribution.",
+  "candidate_identity": "sha256:54ae8c59cb6c0d144cb9798079f357bdfba6254694cb416bf5a14f3a59160423",
+  "contract_sha256": "76e2c762c4e9fbf4d27ac1af8521c3138edefb138f62e292c776ca83d67bf6b5",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "implementation_packet_id": "5a748e12c1d19b5a4e636c7f31a92d772ee083ca84c2e723a98946f0a9c185d9",
+  "formal_review_packet_id": null,
+  "formal_review_ack": null,
+  "protocol_status": "INDEPENDENT_REVIEW_PREPARATION_ONLY_NOT_FORMALLY_SELECTED_OR_ACKNOWLEDGED",
+  "verdict": "HOLD_TARGETED_REPAIR_REQUIRED",
+  "pass": false,
+  "acceptance_met": false,
+  "geometry_compatibility_result_qualified": false,
+  "original42_promotion": false,
+  "counterexample": {
+    "id": "R36-GEO-01",
+    "classification": "FROZEN_SCIENTIFIC_INPUT_SUBSTITUTION",
+    "locations": [
+      {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/geometry_image.py",
+        "line": 221,
+        "detail": "Shared nonzero s0 is used for every canonical control at lines225-227."
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/geometry_image.py",
+        "line": 294,
+        "detail": "The same s0 is inserted into all four z0 vectors, including frozen zero-shear I/flatVII0."
+      }
+    ],
+    "contract_path": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_contract_preparation/IMPLEMENTATION_CONTRACT.json",
+    "contract_field": "frozen_cases.flat_pair",
+    "expected": {
+      "Sbar": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "hbar": 2,
+      "epsilon_bar": 12,
+      "I_joint_J_nonzero_entries": [
+        {
+          "row": 6,
+          "column": 6,
+          "value": 12
+        }
+      ],
+      "joint_ranks_order_II_VII0_I_flatVII0": [
+        9,
+        10,
+        1,
+        6
+      ]
+    },
+    "actual": {
+      "Sbar": [
+        [
+          0.1,
+          0,
+          0
+        ],
+        [
+          0,
+          -0.05,
+          0
+        ],
+        [
+          0,
+          0,
+          -0.05
+        ]
+      ],
+      "flat_epsilon_bar": 11.9925,
+      "joint_ranks_order_II_VII0_I_flatVII0": [
+        9,
+        10,
+        3,
+        6
+      ]
+    },
+    "derivation": "At the specified I center N=0,S=0,h=2, Ric(N) and q(N,S) are homogeneous quadratic with zero first derivative. ebar=3h^2-S:S/2+tr(Ric)/2 has only derivative12 in h. Therefore joint J has exact rank1. The substituted nonzero S yields two additional q derivatives in N and rank3. Both flat center energy/flux uncertainty images therefore refer to different inputs than the frozen contract.",
+    "evidence": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_fresh_review/CENTER_COUNTEREXAMPLE.json",
+    "minimal_reproducer": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_fresh_review/reproduce_center_counterexample.py"
+  },
+  "repair_plan": "Under the unchanged contract 76e2c762c4e9fbf4d27ac1af8521c3138edefb138f62e292c776ca83d67bf6b5 and the existing R36-10 packet/input identity, define per-center shear: Sbar=0 for I and flatVII0, and retain diag(1/10,-1/20,-1/20) for matched II/VII0. Use the same explicit center definitions in both canonical controls and all uncertainty/Jacobian calculations, including rotation controls. Restore the flat controls to K=-2I, ebar=12. Recompute only this new finite geometry consumer and its affected tables/probes/figures/RESULT; retain all old candidate/first-failure receipts and cumulative execution counts. Record actually computed joint ranks 9,10,1,6 and geometry ranks 6,6,0,3; update INTERPRETATION accordingly. Add a targeted regression that checks both saved/generated flat center vectors and density, and verifies the I joint derivative has only d(ebar)/d(hbar)=12 (within the original arithmetic tolerance) and rank1, so a formula-only flat-Riemann test cannot hide a center substitution. Retain the full Hessians/singular tensors and recompute energy/flux bounds and probes for the two corrected centers. The Ricci coordinates, geometry derivatives and matched II/VII0 separation must remain unchanged to the declared numerical tolerance because Ricci depends only on N. Rerun the four focused tests plus this center regression, preserve their raw outcomes, then return the new candidate identity for one targeted independent closeout. Do not rerun old R32/Loop-D producers, old CAS campaigns, or completed independent branches; do not alter tolerances, contract, task ID, input identity, claim ceilings, or acceptance gates. Formal native review packet selection/ACK/record remains a separate controller action before this preparation can be consumed.",
+  "findings": [
+    {
+      "id": "R36-GEO-01",
+      "severity": "P1",
+      "blocking": true,
+      "title": "Restore the frozen zero-shear I and flat VII0 centers before admitting the joint tensor image",
+      "effect": "Type-I joint rank is reported as3 instead of the contract-center rank1; both flat center density and energy/flux uncertainty images use substituted inputs. Intrinsic flatness and the matched II/VII0 tensor-separation result remain valid within their scoped data."
+    }
+  ],
+  "positive_evidence": {
+    "source_and_product_bindings": {
+      "source_count": 13,
+      "receipt_products": 10,
+      "all_match": true
+    },
+    "full_frame": "Independent canonical Ricci and 3D Ricci-to-Riemann reconstruction agree with direct Koszul evaluator; signed mixed flux=(0.078,0.007,-0.023); proper rotations and actual SI tiny-scale evaluations pass.",
+    "Jacobi": "Invalid n*a input rejected at all three physical scales1e-30,1e-26,1e-22; no absolute physical zero floor found.",
+    "Gauss": "K=-(hI+S) gives trK=-3h and K:K=3h^2+S:S, so ADM residual=+2r_H. Matched density4697/400 is correct.",
+    "derivatives": "Independent analytic directional derivative/Hessian formulas match all saved J/H; exact rational ranks verify the observed centers and expose the frozen I-center mismatch.",
+    "saved_probes": {
+      "count": 2308,
+      "max_direct_error": 2.37144757181333e-15,
+      "max_exact_quadratic_residual": 3.802412560270631e-15,
+      "max_saved_tangent_error": 1.7763568394002505e-15,
+      "unique_per_center": {
+        "II": 577,
+        "VII0matched": 577,
+        "I": 577,
+        "flatVII0": 577
+      }
+    },
+    "uncertainty_theorem": "Cauchy-Schwarz and symmetric operator-norm bound applied to the exact quadratic map prove conservative whole-ellipsoid support bounds. The 577 points per center are finite falsifiers/visualizations and do not prove coverage or full boundary. Positivity holds at actual and corrected centers. Sorted Ricci eigenvalue orbit distance sqrt2 exceeds combined Frobenius radius0.4169761876768374; this constructed-set separation is sound.",
+    "degeneracies": "Flat I/VII0 have identical zero intrinsic Riemann; group presentations and global topology remain distinct questions. Exact I derivative vanishes for geometry but its quadratic image is nonconstant. A flat rotation curve remains flat while its straight tangent at t=1/4 has Ricci Frobenius norm0.125.",
+    "lrs_bridge": {
+      "rows": 280,
+      "vacuum_rows": 56,
+      "max_conversion_relative_error": 3.8113713072791197e-16,
+      "proper_permutation": true
+    },
+    "focused_tests": "4 passed; none checks the frozen center assignment.",
+    "figure": "PNG visually inspected; all three panels consume the generated arrays, show synthetic units and flat presentation equivalence.",
+    "claims": "No posterior, measured error law, family identification, native transfer, ODE, or original42 promotion. x_C,Q,F,Pi,G_F retain explicit unavailable inputs."
+  },
+  "nonblocking_limitations": [
+    "All saved J/H and bounds are correct for the actual substituted centers; arithmetic PASS does not satisfy the different frozen input contract.",
+    "Old RESULT preimage SHA6878b99508cc1b26f3138445f1339788996b03cac6534f45bb930fa23ba256c1 verifies; only five metadata fields plus claim_tier differ. Prior array byte hashes/original stdout unavailable; exact previous-array parity remains unverified and is not a scientific failure by itself.",
+    "The producer scale section only rescales stored output, but this review additionally evaluated the actual core at all three SI scales and rejected invalid Jacobi there.",
+    "Matplotlib emitted an existing Axes3D import warning; this is a 2D figure and all checks completed.",
+    "Targeted review is not a new four-axis CAS admission and does not change any historical validator status."
+  ],
+  "scientific_views": {
+    "relativity": "Signs, oriented triad, proper rotations, h=H/c,S=sigma/c, kappa*q units consistent. One frozen input mismatch blocks full candidate qualification.",
+    "statistics": "Deterministic ellipsoid shape never called measured covariance; no inference/probability quantities filled.",
+    "numerics": "Saved derivatives, Hessians, SVD subspaces, uncertainty support and probes agree; exact rational rank provides the falsifier.",
+    "reproducibility": "13 sources and10 final products match receipts; prior metadata preimage verified, prior array replay limitation explicit.",
+    "claim_hygiene": "Finite instantaneous tensor compatibility only; no broader admission.",
+    "family_equivalence": "Same scalar does not determine Ricci; full Ricci still does not identify a unique flat simply-transitive presentation. No CMB atlas is needed for this finite result."
+  },
+  "minimal_publishable_claim_after_repair": "For the stated homogeneous instantaneous constraints and synthetic deterministic tensor sets, same expansion/shear/density/flux/scalar can coexist with different Ricci spectra; flat I/VII0 retain local intrinsic presentation equivalence; full nonlinear tensor images and local sensitivity are source-bound."
+}

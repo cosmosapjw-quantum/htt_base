@@ -1,0 +1,145 @@
+{
+  "schema": "htt.r36.independent_scientific_review/1",
+  "task_id": "R36-02-CF4-CORRELATED",
+  "status": "HOLD_TARGETED_REPAIR_REQUIRED",
+  "verdict": "HOLD",
+  "outcome": "changes_requested",
+  "acceptance_met": false,
+  "formal_controller_binding_status": "PREPARATORY_REVIEW_FORMAL_PACKET_NOT_YET_SELECTED",
+  "formal_review_packet_id": null,
+  "author_packet_id": "0c0fab5631cb19001cba35e3da1de5cd44d64dc0157950afb82d383496472c40",
+  "candidate_identity": "sha256:dd3cb2d77c97e33380ec06e04bc5465f65129dc319f8795dc30e3bc84b3e877b",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "upstream_operator_candidate_identity": "sha256:164f5f63084caaf4ca18062d314ef53cf4773c528e72333a6b6d24a7e4437b14",
+  "frozen_contract_sha256": "44b6f4b18ef717d59ebd7047b654decfbc5b20b95571504484ebf20697ea9b89",
+  "reviewer_agent": "/root/r36_cf4_correlated_independent_review",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "independence": {
+    "author": "/root/rc_0c0fab5631cb1900",
+    "framer": "/root/r36_scientific_contract_preparation",
+    "implemented_candidate": false,
+    "read_another_review_verdict": false,
+    "repository_writes": false,
+    "subagents_spawned": false
+  },
+  "summary": "The sealed actual numeric candidate has one reproduced defect in smoothing-matched sensitivity summaries. Core conditional covariance, mean comparison and numerical checks passed within their declared scope. Repair the summaries from retained matrices before scoped acceptance.",
+  "findings": [
+    {
+      "id": "R36-02-F01",
+      "severity": "P2",
+      "blocking_for_scoped_acceptance": true,
+      "title": "Match smoothing radius in footprint/method sensitivity references",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/run_sensitivity.py",
+      "lines": [
+        43,
+        44,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "mechanism": "baseline is truncated once to total[:36,:36] (R=5), then reused for R=10 and R=20. Both trace_ratio_to_full_sample and frobenius_relative_to_full_sample mix footprint/method changes with smoothing changes.",
+      "affected_artifact": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/SENSITIVITY.json",
+      "affected_claim": "Footprint/method covariance sensitivity at fixed declared R=10 or R=20 h^-1 Mpc; eight rows and sixteen summary values are affected.",
+      "counterexample": {
+        "case": "exclude_FP",
+        "R_hinv_Mpc": 20,
+        "subset_trace": 16.455321567307326,
+        "same_radius_full_trace": 14.051811035278963,
+        "reported_ratio": 0.9646490578599013,
+        "correct_same_radius_ratio": 1.1710463175169397,
+        "reported_relative_frobenius": 0.2652875605613501,
+        "correct_same_radius_relative_frobenius": 0.35610037450194054
+      },
+      "consequence": "For excluding FP at R=20, the summary appears to reduce the covariance trace by 3.54 percent, while the actual matched-radius operator increases it by 17.10 percent. This reverses the direction of that sensitivity conclusion.",
+      "unaffected": "Stored 108x108 subset covariances, PV factors, main covariance, all R=5 summaries, conditional mean model calculation, TABLE.csv, FIGURE.png and current interpretation R=5 numbers.",
+      "minimal_falsifier": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/sensitivity_summary_falsifier.py",
+      "raw_counterexample_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/sensitivity_falsifier_receipt.json",
+      "repair_plan": "Use the matched-radius full covariance block as the reference in run_sensitivity.py (full_total[36*ir:36*(ir+1), 36*ir:36*(ir+1)]). Regenerate only SENSITIVITY.json summary fields from the existing SENSITIVITY_MATRICES.npz and STAGE_C.npz; do not rerun source transforms, change quadrature/model/tolerances, or alter retained numerical matrices. Add a focused regression with distinct covariance blocks at each radius, including an identity subset that must return ratio 1 and relative Frobenius 0 at every radius, and check all twelve actual subset/radius summaries against their matched-radius references. Preserve the failed candidate/first falsifier receipts; reseal changed source/summary artifacts and return the new candidate for one targeted independent closeout under the same R36-02 task and cumulative account."
+    }
+  ],
+  "counterexample": {
+    "case": "exclude_FP",
+    "R_hinv_Mpc": 20,
+    "subset_trace": 16.455321567307326,
+    "same_radius_full_trace": 14.051811035278963,
+    "reported_ratio": 0.9646490578599013,
+    "correct_same_radius_ratio": 1.1710463175169397,
+    "reported_relative_frobenius": 0.2652875605613501,
+    "correct_same_radius_relative_frobenius": 0.35610037450194054
+  },
+  "repair_plan": "Use the matched-radius full covariance block as the reference in run_sensitivity.py (full_total[36*ir:36*(ir+1), 36*ir:36*(ir+1)]). Regenerate only SENSITIVITY.json summary fields from the existing SENSITIVITY_MATRICES.npz and STAGE_C.npz; do not rerun source transforms, change quadrature/model/tolerances, or alter retained numerical matrices. Add a focused regression with distinct covariance blocks at each radius, including an identity subset that must return ratio 1 and relative Frobenius 0 at every radius, and check all twelve actual subset/radius summaries against their matched-radius references. Preserve the failed candidate/first falsifier receipts; reseal changed source/summary artifacts and return the new candidate for one targeted independent closeout under the same R36-02 task and cumulative account.",
+  "successful_checks": [
+    "Exact manifest SHA and 28 product/external/frozen-contract source bindings verified; original candidate still unchanged at closeout.",
+    "Exact 36x35970 operator and aligned source identities agree with upstream reviewed candidate.",
+    "Frozen bridge suite: 8 tests and 10 subtests passed unchanged.",
+    "Independent ten-source oscillatory pair kernel with coincident rows, Gaussian smoothing and full normalization passed; phase-omission and normalization mutants fail.",
+    "Independent hypergeometric growing-mode solution and adaptive comoving-distance integration agree with retained finite background.",
+    "Ten selected retained full-catalogue complex modes agree with independent direct source sums; 108-coordinate factor Gram matrices reproduce retained covariance.",
+    "Full 108-coordinate angular/radial refinement passes support-whitened spectral bound even at 1e-12 cutoff; covariance support itself remains tolerance dependent.",
+    "Independent conditional covariance reconstruction uses D=150^2 and four method-design offsets with SD0.4 in km/s/Mpc, preserving PV cross-window/radius terms and excluding inherited baseline variance.",
+    "QR reproduction matches all three mean fits and stable unit-column ranks at 1e-12,1e-10,1e-8. All mean spaces contain the shared monopole, so null-mean estimation leaves selection/residual distribution invariant.",
+    "Independent Gaussian selection calibration reproduces counts 1886/113/1, zero exceedances and plus-one tail 1/2001. All nine D/Sigma sensitivity laws agree within 2.08e-12 absolute numerical error.",
+    "Actual source-observer response has relative-only rank3 at all three thresholds and common-velocity null below3e-17.",
+    "Full-mask subset refit reproduces exact upstream A with zero relative difference. Figure/table and R=5 prose agree with retained covariance."
+  ],
+  "physics_math_audit": {
+    "assumptions": "Fixed selected CF4 positions/weights, analytic EH98 no-wiggle Gaussian common field, finite physical k bands, three Gaussian smoothing radii, retained matter+Lambda growth. Numerical total explicitly stipulates independent source noise/calibration/PV components; empirical cross-source law remains unknown.",
+    "conventions": "(-,+,+,+); outward ICRS J2000; released z_CMB proxies; c=299792.458 km/s; k in Mpc^-1, chi and R in Mpc, P0 in Mpc^3; g in km/s/Mpc; V in km/s; A in Mpc^-1; covariance in (km/s/Mpc)^2.",
+    "equations": "Pair kernel J=((j0+j2)/3)(ni.nj)-j2(ni.shat)(nj.shat); coincident limit(ni.nj)/3. Positive angular pair weights and dk P/(2pi^2) give a PSD common-field covariance. K=A[d onehot(method)] maps mean-design shifts in km/s/Mpc, not magnitude zero-points.",
+    "limits": "Common source/observer velocity cancels. No phase omitted; no magnitude derivative introduced; no inherited250 km/s component double-added. No native Boltzmann solver or ODE execution.",
+    "claim_tier_recommendation": "CONDITIONAL_MODEL_COVARIANCE may be considered after F01 repair and formal candidate binding; not empirical source coverage or original campaign admission."
+  },
+  "statistical_limits": {
+    "zero_exceedance_count": 0,
+    "gaussian_draws": 2000,
+    "plus_one_tail": 0.0004997501249375312,
+    "one_sided_95percent_binomial_upper_for_underlying_tail": 0.0014967448951882837,
+    "tail_interpretation": "Finite conditional Gaussian-reference diagnostic. Reported MC SE is an approximate plug-in summary using the plus-one estimate. The zero count does not resolve a tail below the Monte Carlo resolution.",
+    "sample_covariance": "Hypothetical N64,p36 Wishart uncertainty is reported beyond Hartlap factor: diagonal fractional SD sqrt(2/63) and off-diagonal entry variance. Actual inference uses stipulated analytic covariance, not a noisy sample covariance.",
+    "empirical_source_population_coverage": "UNKNOWN",
+    "cross_source_empirical_covariance": "UNKNOWN"
+  },
+  "source_verification": [
+    {
+      "url": "https://background.uchicago.edu/~whu/transfer/transferpage.html",
+      "scope": "Primary source for analytic transfer approximation; not evidence of empirical CF4 coverage."
+    },
+    {
+      "url": "https://arxiv.org/html/2306.11269v2#A1",
+      "scope": "Appendix A linear velocity covariance normalization and angular kernel; retained contract explicitly uses f=dlnD/dlna."
+    },
+    {
+      "url": "https://finufft.readthedocs.io/en/latest/python.html",
+      "scope": "Primary transform API documentation. Local observed finufft2.5.0 and direct retained-factor comparison supply exact runtime behavior checks; latest docs are development version."
+    }
+  ],
+  "scoped_claim_ceilings": {
+    "qualified_product_status": "NOT_YET_QUALIFIED",
+    "science_admission": false,
+    "original42_promotion": false,
+    "native_solver_result": false,
+    "empirical_coverage": "UNKNOWN"
+  },
+  "raw_evidence": {
+    "IDENTITY_CHECK.json": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/IDENTITY_CHECK.json",
+    "INDEPENDENT_CHECKS.json": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/INDEPENDENT_CHECKS.json",
+    "ADDITIONAL_STATISTICAL_CHECKS.json": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/ADDITIONAL_STATISTICAL_CHECKS.json",
+    "independent_checks.py": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/independent_checks.py",
+    "independent_checks_receipt.json": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/independent_checks_receipt.json",
+    "independent_checks.stdout": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/independent_checks.stdout",
+    "independent_checks.stderr": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/independent_checks.stderr",
+    "bridge_tests_receipt.json": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/bridge_tests_receipt.json",
+    "bridge_tests.stdout": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/bridge_tests.stdout",
+    "bridge_tests.stderr": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/bridge_tests.stderr",
+    "sensitivity_summary_falsifier.py": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/sensitivity_summary_falsifier.py",
+    "sensitivity_falsifier_receipt.json": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/sensitivity_falsifier_receipt.json",
+    "sensitivity_falsifier.stdout": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/sensitivity_falsifier.stdout",
+    "sensitivity_falsifier.stderr": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/sensitivity_falsifier.stderr"
+  },
+  "next_executable_transition": "Controller binds the independent negative review, author performs the single cache-only F01 repair, then same independent reviewer checks the changed candidate and targeted falsifier. No producer or old R30 bank rerun.",
+  "timestamp_unix": 1793077474.4672217
+}

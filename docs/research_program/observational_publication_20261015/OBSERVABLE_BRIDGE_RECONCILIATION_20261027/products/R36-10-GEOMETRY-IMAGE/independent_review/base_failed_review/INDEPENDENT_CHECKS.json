@@ -1,0 +1,295 @@
+{
+  "reviewer": "/root/r36_geometry_fresh_review",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "numpy": "2.4.2",
+  "sympy": "1.14.0",
+  "candidate_sha256": "54ae8c59cb6c0d144cb9798079f357bdfba6254694cb416bf5a14f3a59160423",
+  "contract_sha256": "76e2c762c4e9fbf4d27ac1af8521c3138edefb138f62e292c776ca83d67bf6b5",
+  "checks": {
+    "identities": {
+      "source_count": 13,
+      "receipt_products": 10,
+      "all_match": true
+    },
+    "derivatives_svd_bounds": {
+      "II": {
+        "J_error": 9.9968247365978e-16,
+        "H_error": 2.0561618160832724e-15,
+        "bound_error": 1.3877787807814457e-17,
+        "svd": {
+          "joint_svd": {
+            "rank": 9,
+            "reconstruction_error": 4.88835995495961e-15,
+            "null_residual": 7.89145354810713e-16
+          },
+          "geometry_svd": {
+            "rank": 6,
+            "reconstruction_error": 1.1469903903609917e-15,
+            "null_residual": 0.0
+          }
+        },
+        "energy_lower_bound": 11.133438048690316,
+        "h_lower_bound": 1.95
+      },
+      "VII0matched": {
+        "J_error": 1.0240453382145001e-15,
+        "H_error": 2.0561618160832724e-15,
+        "bound_error": 2.7755575615628914e-17,
+        "svd": {
+          "joint_svd": {
+            "rank": 10,
+            "reconstruction_error": 6.791808086837053e-15,
+            "null_residual": 6.955663872908362e-16
+          },
+          "geometry_svd": {
+            "rank": 6,
+            "reconstruction_error": 2.0921088815059305e-15,
+            "null_residual": 0.0
+          }
+        },
+        "energy_lower_bound": 11.129296457610149,
+        "h_lower_bound": 1.95
+      },
+      "I": {
+        "J_error": 7.115665691833789e-16,
+        "H_error": 2.0561618160832724e-15,
+        "bound_error": 5.204170427930421e-18,
+        "svd": {
+          "joint_svd": {
+            "rank": 3,
+            "reconstruction_error": 7.034984984899054e-16,
+            "null_residual": 7.027052991339474e-16
+          },
+          "geometry_svd": {
+            "rank": 0,
+            "reconstruction_error": 0.0,
+            "null_residual": 0.0
+          }
+        },
+        "energy_lower_bound": 11.384998515615376,
+        "h_lower_bound": 1.95
+      },
+      "flatVII0": {
+        "J_error": 9.747108502351983e-16,
+        "H_error": 2.0561618160832724e-15,
+        "bound_error": 2.7755575615628914e-17,
+        "svd": {
+          "joint_svd": {
+            "rank": 6,
+            "reconstruction_error": 7.92370655739953e-15,
+            "null_residual": 1.2648310729263634e-15
+          },
+          "geometry_svd": {
+            "rank": 3,
+            "reconstruction_error": 1.0662162723959608e-15,
+            "null_residual": 5.211410611462874e-16
+          }
+        },
+        "energy_lower_bound": 11.382918791803132,
+        "h_lower_bound": 1.95
+      }
+    },
+    "saved_probes": {
+      "count": 2308,
+      "max_direct_error": 2.37144757181333e-15,
+      "max_exact_quadratic_residual": 3.802412560270631e-15,
+      "max_saved_tangent_error": 1.7763568394002505e-15,
+      "unique_per_center": {
+        "II": 577,
+        "VII0matched": 577,
+        "I": 577,
+        "flatVII0": 577
+      }
+    },
+    "frame": {
+      "max_ricci_riemann_codazzi_error": 5.608068829092913e-16,
+      "mixed_q": [
+        0.07800000000000001,
+        0.0069999999999999975,
+        -0.023
+      ],
+      "dimensional_controls": [
+        {
+          "u": 1e-30,
+          "normalized_ricci_error": 3.0277758396689874e-16,
+          "rotation_index": 0
+        },
+        {
+          "u": 1e-26,
+          "normalized_ricci_error": 2.403703357979455e-16,
+          "rotation_index": 0
+        },
+        {
+          "u": 1e-22,
+          "normalized_ricci_error": 1.1775693440128312e-16,
+          "rotation_index": 0
+        },
+        {
+          "u": 1e-30,
+          "normalized_ricci_error": 2.443436683771534e-16,
+          "rotation_index": 1
+        },
+        {
+          "u": 1e-26,
+          "normalized_ricci_error": 2.35104635011549e-16,
+          "rotation_index": 1
+        },
+        {
+          "u": 1e-22,
+          "normalized_ricci_error": 1.6537292768255252e-16,
+          "rotation_index": 1
+        },
+        {
+          "u": 1e-30,
+          "normalized_ricci_error": 3.002224531865041e-16,
+          "rotation_index": 2
+        },
+        {
+          "u": 1e-26,
+          "normalized_ricci_error": 2.1677797545656835e-16,
+          "rotation_index": 2
+        },
+        {
+          "u": 1e-22,
+          "normalized_ricci_error": 1.7109685898544713e-16,
+          "rotation_index": 2
+        },
+        {
+          "u": 1e-30,
+          "normalized_ricci_error": 1.4752290795525882e-16,
+          "rotation_index": 3
+        },
+        {
+          "u": 1e-26,
+          "normalized_ricci_error": 3.8271003680417016e-16,
+          "rotation_index": 3
+        },
+        {
+          "u": 1e-22,
+          "normalized_ricci_error": 3.040470972244059e-16,
+          "rotation_index": 3
+        }
+      ]
+    },
+    "exact_ranks": {
+      "II": {
+        "geometry_rank": 6,
+        "actual_nonzero_shear_joint_rank": 9,
+        "zero_shear_joint_rank": 9
+      },
+      "VII0matched": {
+        "geometry_rank": 6,
+        "actual_nonzero_shear_joint_rank": 10,
+        "zero_shear_joint_rank": 10
+      },
+      "I": {
+        "geometry_rank": 0,
+        "actual_nonzero_shear_joint_rank": 3,
+        "zero_shear_joint_rank": 1
+      },
+      "flatVII0": {
+        "geometry_rank": 3,
+        "actual_nonzero_shear_joint_rank": 6,
+        "zero_shear_joint_rank": 6
+      }
+    },
+    "lrs": {
+      "rows": 280,
+      "vacuum_rows": 56,
+      "max_conversion_relative_error": 3.8113713072791197e-16,
+      "proper_permutation": true
+    },
+    "nonlinear_flat": {
+      "flat_tangent_kernel_norm": 0.0,
+      "straight_tangent_ricci_norm_at_quarter": 0.125,
+      "radial_flat_kernel": 0.0
+    }
+  },
+  "findings": [
+    {
+      "id": "R36-GEO-01",
+      "center": "I",
+      "specified_S_bar": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "actual_S_bar": [
+        [
+          0.1,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.04999999999999999,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -0.05000000000000002
+        ]
+      ],
+      "specified_density": 12.0,
+      "actual_density": 11.9925,
+      "specified_joint_rank": 1,
+      "actual_joint_rank": 3
+    },
+    {
+      "id": "R36-GEO-01",
+      "center": "flatVII0",
+      "specified_S_bar": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "actual_S_bar": [
+        [
+          0.1,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.04999999999999999,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -0.05000000000000002
+        ]
+      ],
+      "specified_density": 12.0,
+      "actual_density": 11.9925,
+      "specified_joint_rank": 6,
+      "actual_joint_rank": 6
+    }
+  ],
+  "overall": "HOLD_ONE_FROZEN_CENTER_MISMATCH"
+}

@@ -1,0 +1,67 @@
+{
+  "acceptance_met": false,
+  "actual_repair_command_shell_seconds_total": 1.7421626430000001,
+  "agent_id": "/root/rc_0c0fab5631cb1900",
+  "base_candidate_identity": "sha256:dd3cb2d77c97e33380ec06e04bc5465f65129dc319f8795dc30e3bc84b3e877b",
+  "base_manifest_sha256": "dd3cb2d77c97e33380ec06e04bc5465f65129dc319f8795dc30e3bc84b3e877b",
+  "base_packet_id": "0c0fab5631cb19001cba35e3da1de5cd44d64dc0157950afb82d383496472c40",
+  "cache_sha256": {
+    "PV_FACTORS.npz": "b936967c449ab889acb7d1ae48a18a72cb091eb7b929f2bf33d2ea392cb705d0",
+    "RESULT_MATRICES.npz": "7b100fa378ae28fafd9f82f7a76a494e07300fa1cf144a4da5b166fb0acf7e94",
+    "SENSITIVITY_MATRICES.npz": "0d283bb697b3363815faedee169dfc05b80dbd447ca610be68077ca655a8e561",
+    "STAGE_C.npz": "c18c5af40a121bab8f5d8c2013323cac3d88891b1bd77ac97588c72932ce011e"
+  },
+  "candidate_identity": "sha256:a0edd2e76d0b74630d47bbccd5cd90dcb4e372ca1772ee202585a34270d68fb4",
+  "commands": [
+    {
+      "command": ".venv/bin/python repair_01/run_sensitivity.py",
+      "exit_code": 0,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/cache_consumer.log",
+      "shell_wall_seconds": 0.657526782,
+      "source_contraction": false
+    },
+    {
+      "command": ".venv/bin/python -m pytest -q repair_01/test_sensitivity_repair.py",
+      "exit_code": 0,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/regression.log",
+      "shell_wall_seconds": 0.213701062,
+      "tests": "3 passed"
+    },
+    {
+      "command": ".venv/bin/python repair_01/run_sensitivity.py",
+      "exit_code": 0,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/cache_consumer_final.log",
+      "shell_wall_seconds": 0.566596187,
+      "source_contraction": false
+    },
+    {
+      "command": ".venv/bin/python -m pytest -q repair_01/test_sensitivity_repair.py",
+      "exit_code": 0,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/regression_final.log",
+      "shell_wall_seconds": 0.304338612,
+      "tests": "3 passed"
+    }
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "empirical_coverage": "UNKNOWN",
+  "first_failure_preserved": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_independent_review/formal_binding_01/CONTROLLER_RETURN.json",
+  "initial_pointer_error_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/INITIAL_MANIFEST_POINTER_ERROR.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/INITIAL_RETURN_POINTER_ERROR.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/INITIAL_RAW_RECEIPT_POINTER_ERROR.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/INITIAL_CHANGED_FILE_PREIMAGES/run_sensitivity.py",
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/INITIAL_CHANGED_FILE_PREIMAGES/test_sensitivity_repair.py",
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_repair_actual/INITIAL_CHANGED_FILE_PREIMAGES/RESULT.json"
+  ],
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "new_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/repair_01/ARTIFACT_MANIFEST.json",
+  "observed_runtime": "UNKNOWN",
+  "old_R30_600s_bank_charged": false,
+  "old_candidate_unchanged": true,
+  "outcome": "success",
+  "packet_id": "b15b6a1859ec6531b65123217c3b41996a206f021a1c35c7b8d79e0d3ada9fe2",
+  "requested_runtime": "gpt-6-sol/high",
+  "schema": "htt.r36.same02_repair_raw_receipt/1",
+  "task_id": "R36-02-CF4-CORRELATED",
+  "timestamp_unix": 1793080469.2961686
+}

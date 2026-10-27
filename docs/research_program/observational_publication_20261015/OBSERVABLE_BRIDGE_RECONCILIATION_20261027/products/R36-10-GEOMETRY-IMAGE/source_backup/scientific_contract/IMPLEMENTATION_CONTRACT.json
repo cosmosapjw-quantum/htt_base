@@ -1,0 +1,209 @@
+{
+  "schema": "R36-10-frozen-scientific-preparation-v1.1",
+  "created_utc": "2026-10-27T04:06:38.532155+00:00",
+  "task_id": "R36-10-GEOMETRY-IMAGE",
+  "status": "PREPARATION_ONLY_NOT_DISPATCH_NOT_QUALIFICATION",
+  "live_task_kind": "code",
+  "live_spec_path": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/LIVE_STATE.json",
+  "live_spec_canonical_sha256": "5381d66169efd60bbf7f5d3ffb8fd8557d9120433c5641e8db8baf341a426f6c",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "controller_acceptance": "Reuse Loop D and the retained LRS V algebra. Implement finite Jacobi/Gauss-Codazzi/spatial-Ricci evaluators in the stated orthonormal frame, physical units and orientation, without evolving the field equations. Reproduce same-scalar/different-Ricci II/VII0 witnesses and flat I/VII0 presentation equivalence. Push declared tensor uncertainty sets through the algebraic map; report which tensor/curvature data distinguish the constructed cases. Complete this finite geometry compatibility product independently of a CMB transfer atlas. No CMB family identification from a scalar or morphology alone. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it.",
+  "identities": {
+    "science_author": "/root/r36_scientific_contract_preparation",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_model_effort": "UNKNOWN",
+    "controller": "/root",
+    "mechanical_numeric_worker": "Not yet selected; bind actual identity/packet on future dispatch",
+    "independent_reviewer": "Different agent who did not author this contract or execute implementation",
+    "historical_sources": "Loop D and R32-P5 authors/reviewers retain original attribution; consuming their proofs is not a new independent proof"
+  },
+  "research_question": "What finite same-frame tensor and constraint images distinguish the retained II/VII0 witnesses, and which local or presentation degeneracies survive full spatial Ricci information?",
+  "scope": {
+    "in": [
+      "Finite Jacobi, connection, spatial Riemann/Ricci and Hamiltonian/momentum evaluation",
+      "Full-tensor Jacobians, singular tensors and constrained deterministic uncertainty images",
+      "New consumer of retained LRS-V tensor rows and exact orientation/unit bridge",
+      "Interpretation of local sensitivity versus global/presentation nonuniqueness"
+    ],
+    "out": [
+      "ODE/PDE/evolved Einstein-matter histories",
+      "CMB or optical transfer inference, native atlas production",
+      "Replay of the old complete CAS, R32 numerical producer or radiation-history experiment",
+      "Likelihood/posterior, measured covariance, empirical confidence, family identification or original42 promotion"
+    ]
+  },
+  "conventions": {
+    "frame": "One spatially homogeneous slice with oriented orthonormal triad e1,e2,e3, epsilon123=+1, unit future normal N, signature(-,+,+,+). Proper SO(3) rotations act jointly on all tensors/vectors. Normal is hypersurface orthogonal; matter vorticity is not inferred.",
+    "physical_units": "n_ij,a_i,h=H/c,S_ij=sigma_ij/c have m^-1; Ricci, Lambda, kappa*epsilon_N and kappa*q_i have m^-2. epsilon_N and q_i have J/m^3, with physical energy flux c*q_i and T_0i=-q_i. S is symmetric trace-free. K_ij=-(h delta_ij+S_ij).",
+    "constants": "c=299792458 m/s exactly; retain kappa=8*pi*G/c^4 symbolically. Physical J/m^3 displays may use declared G=6.67430e-11 m^3 kg^-1 s^-2 as a fixed conversion constant, not an uncertainty model. Core outputs kappa*epsilon and kappa*q do not require fitting G.",
+    "scale": "Primary u_star=10^-26 m^-1 is an exact illustrative scale, not measured cosmology. Evaluate normalized n/u_star,a/u_star,h/u_star,S/u_star and rescale curvature/constraint outputs by u_star^2. Repeat identical dimensionless controls at10^-30 and10^-22 m^-1; H=c*h, sigma=c*S.",
+    "no_physical_zero_floor": "Never compare dimensionful inputs or curvature to absolute1e-12. Nonzero10^-26 m^-1 structure constants and10^-52 m^-2 curvature must remain nonzero. Exact-zero fixtures use exact structural zeros; uncertain small eigenvalues receive unresolved-sign status instead of relabeling.",
+    "tensor_coordinates": "svec(A)=(A11,A22,A33,sqrt2*A12,sqrt2*A13,sqrt2*A23), Euclidean norm equals Frobenius norm. STF basis B1=diag(1,-1,0)/sqrt2; B2=diag(1,1,-2)/sqrt6; B3=(e1e2^T+e2e1^T)/sqrt2; B4 similarly13; B5 similarly23. Preserve all matrix entries and signed vectors, not only eigenvalues or scalar norms."
+  },
+  "core_evaluator": {
+    "domain": "Real symmetric n, real a, h>0, STF S, Lambda>=0, finite epsilon_N and q. Valid homogeneous Lie input must satisfy n*a=0; Jacobi violation is INVALID_JACOBI, never repaired by symmetrizing a curvature output. The evaluator may report residuals for incompatible supplied matter, without calling such tuples admissible.",
+    "structure": "C^k_ij=sum_l epsilon_ijl*n_lk + a_i*delta_jk - a_j*delta_ik. Gamma_ijk=(C_ijk-C_jki+C_kij)/2, with C_ijk=C^k_ij.",
+    "curvature": "R^l_mij=sum_p(Gamma_jmp*Gamma_ipl-Gamma_imp*Gamma_jpl-C^p_ij*Gamma_pml); Ric_jk=sum_i R^i_jik. Retain full Riemann, Ricci, trace and STF Ricci. Use the retained convention, positive roundIX and negativeV sectional curvature.",
+    "hamiltonian": "r_H=3*h^2-kappa*epsilon_N-Lambda-0.5*S:S+0.5*R_scalar. Independently compare R_scalar+tr(K)^2-K:K-2*kappa*epsilon_N-2*Lambda = 2*r_H.",
+    "momentum": "M_i=3*sum_j S_ij*a_j + sum_jkl epsilon_ijk*n_jl*S_kl; r_M=M-kappa*q. Independently compute D_j K_ji-D_i trK=-sum_jp(Gamma_jjp*K_pi+Gamma_jip*K_jp), since homogeneous component derivatives and derivative of trace vanish. It must equal M with the frozen sign.",
+    "outputs": "Jacobi vector and normalized residual; full spatial connection/Riemann/Ricci and STF Ricci; Hamiltonian and three momentum residuals; extrinsic and matter inputs; dimensionful and normalized arrays; exact/numerical equivalence flags. No automatic physical Bianchi classification from floating-point rank.",
+    "canonical_oracle": "For a=(a,0,0), n=diag(n1,n2,n3), n1*a=0: Ric_ii=[n_i^2-(n_j-n_k)^2]/2-2*a^2; Ric_23=Ric_32=a*(n2-n3); other off-diagonals zero. Use as independent finite oracle for the direct connection evaluator, not a formula on invalid Jacobi inputs."
+  },
+  "frozen_cases": {
+    "retained_six": "Consume exact expected matrices in loop_d_receipt.json and the rational fixtures in loop_d_check.py. Do not execute their old top-level campaign. New evaluator must match I, II, roundIX, V, flatVII0 and unequalVII0.",
+    "matched_pair": {
+      "II": "n/u_star=diag(1,0,0),a=0",
+      "VII0": "n/u_star=diag(0,2,1),a=0",
+      "shared": "h/u_star=2; S/u_star=diag(1/10,-1/20,-1/20); Lambda=0; q=0; kappa*epsilon_N/u_star^2=4697/400>0",
+      "reference": "Ric_II/u_star^2=diag(1,-1,-1)/2; Ric_VII0/u_star^2=diag(-1,3,-3)/2; both scalar=-1/2. Same expansion/shear/density/flux/scalar does not fix intrinsic Ricci."
+    },
+    "flat_pair": "I:n=0 and VII0:n/u_star=diag(0,1,1),botha=0,h/u_star=2,S=0,Lambda=0,q=0,kappa*epsilon_N/u_star^2=12. Both Ricci and spatial Riemann vanish. Flag same local Euclidean slice with distinct simply-transitive presentations. This does not identify global topology or equate all anisotropic embeddings.",
+    "class_B_mixed": "n/u_star=diag(0,7/10,11/10),a/u_star=(3/10,0,0),h/u_star=2; S/u_star=[[1/10,1/50,-1/100],[1/50,-1/20,3/100],[-1/100,3/100,-1/20]]. Lambda=0; derive energy/flux by constraints, do not call this orthogonal dust. Test nonzero Ric23=-3/25*u_star^2 and three-component momentum.",
+    "invalid_Jacobi": "Same class_B_mixed but n11/u_star=1: n*a is nonzero. Reject before geometry admission even though all SI values are far below1e-12.",
+    "rotations": "For valid cases use exact proper Rz=[[3/5,-4/5,0],[4/5,3/5,0],[0,0,1]] and Rx=[[1,0,0],[0,5/13,-12/13],[0,12/13,5/13]], plus Rx*Rz; rotate n,S,Ric as R A R^T and a,q as Rv. General-frame evaluator must remain covariant. A reflected triad requires its own orientation convention and is not silently mixed."
+  },
+  "new_jacobian_product": {
+    "class_A_map": "For arbitrary real symmetric N=n/u_star,a=0: mathcalR(N)=2*N^2-tr(N)*N+[tr(N)^2/2-tr(N^2)]*I. This rotation-covariant polynomial follows from retained diagonal Ricci and SO(3) covariance; compare it to the direct connection implementation.",
+    "derivative": "DR_N[D]=2*(N D+D N)-tr(D)*N-tr(N)*D+[tr(N)*tr(D)-2*tr(N D)]*I.",
+    "hessian": "D2R[D,E]=2*(D E+E D)-tr(D)*E-tr(E)*D+[tr(D)*tr(E)-2*tr(D E)]*I. The expansion through this Hessian is exact because the map is quadratic.",
+    "geometry_J": "Construct actual6x6 Jacobian in the orthonormal svec basis at II,VII0-matched,I,andflatVII0. Record all singular values, left/right singular tensors, rank and null residuals. Expected exact ranks6,6,0,3 respectively. Do not merely print these expected numbers.",
+    "rank_controls": "At flatVII0, kernel includes the normalized radial matrix diag(0,1,1) and symmetric12/13 directions. At I the Jacobian vanishes but R(t*N_II)=t^2*R(N_II) is nonzero for t!=0. Thus a zero derivative is not a constant nonlinear image. Test t=1/2,1/4,1/8. Along N(t)=Rz(t)*diag(0,1,1)*Rz(t)^T the exact geometry stays flat; a straight tangent line need not stay on that curved flat manifold.",
+    "joint_map": "z=(svec(N), hbar, STF5(Sbar)) has12 coordinates. With a=0 and Lambdabar=0 define Y(z)=(svec(mathcalR), ebar=3*hbar^2-0.5*Sbar:Sbar+0.5*tr(mathcalR), qbar_i=sum_jkl epsilon_ijk*N_jl*Sbar_kl), dimension10. Retain the12 input coordinates with Y; density and flux are graph outputs chosen to satisfy constraints, not independently measured data.",
+    "joint_derivatives": "Compute actual10x12 J and10 Hessian matrices at all four centers. Derive by differentiating the displayed quadratic map. Save singular values, input right-singular tensor combinations and output left-singular combinations; no anticipated rank is substituted for computation.",
+    "verification": "Compare analytic derivatives with complex-step derivative of the polynomial at step10^-30 in dimensionless coordinates (no conjugating norm inside the map). Compare exact quadratic Taylor reconstruction to direct evaluation on the frozen probes. No new generic CAS/four-axis campaign is required."
+  },
+  "uncertainty_image": {
+    "status": "Deterministic synthetic tensor uncertainty set, not empirical error bars, Gaussian covariance, probability or coverage.",
+    "domain": "At each of the four class-A centers take z=z0+L*xi, ||xi||2<=1. L has diagonal(1/20 repeated6,1/20,1/100 repeated5) and additional zero-based entry L[7,5]=1/200. Thus one geometric/shear direction is explicitly coupled. LL^T is an ellipsoid shape matrix, not an estimated covariance. The set may include multiple nearby class-A sign/rank strata; only its center has the named witness type.",
+    "physical_restriction": "a=0 makes Jacobi exact throughout the set; Lambda=0. Use the quadratic bound below to check h>0 and ebar>0 on the entire set. Outside the centers q need not vanish, so do not label the whole image orthogonal dust or single perfect fluid. Arbitrary pressure/stress/evolution remain unspecified.",
+    "probes": "Use center and xi=plus/minus e_i and (plus/minus e_i plus/minus e_j)/sqrt2 for all i<j. Evaluate both radii1/2 and1, giving577 unique prescribed probes per center. These are deterministic visualization/falsifier points, not independent samples or a full image boundary.",
+    "exact_quadratic_enclosure": "For any fixed output covector w, f=w.Y, g=J^T*w, H_w=sum_k w_k*H_k. For delta=L*xi the exact change is g^T*L*xi+0.5*xi^T*L^T*H_w*L*xi. Therefore f lies in f0 plus/minus[||L^T*g||2+0.5*||L^T*H_w*L||op]. This is a conservative whole-set support enclosure, not an exact extrema claim or a sample-based confidence interval.",
+    "directions": "Compute bounds for all10 output coordinates and the scalar trace. Also use the unit STF D=diag(-1,2,-1)/sqrt6 and x_D=D:Ric/u_star^2. Its centers are -1/sqrt6 and5/sqrt6 for II andVII0. D is a declared mathematical discriminant, not a calibrated observed sky direction. Retain the full tensor image behind it.",
+    "tensor_bound": "Obtain a conservative full-Ricci deviation norm from the six coordinate bounds. Compare the minimum SO(3)-orbit center separation, equal to the Euclidean distance between sorted Ricci eigenvalue vectors, with the sum of these radii. If the bound proves separation, report conditional set separation; if it does not, report this bound inconclusive, not intersection.",
+    "nonlinear_comparison": "For every probe retain directY, linearY0+Jdelta, exact quadratic reconstruction and linearization error. Show I has a nontrivial quadratic image despite zero geometryJ. Never propagate only JLL^T J^T and call it the exact nonlinear uncertainty.",
+    "plot": "Produce standalone PNG/PDF: (1) scalarRicci versus signed x_D, direct probes, tangent image and conservative rectangular projection bounds; (2) sorted Ricci center spectra with conditional whole-set bounds; (3) geometry singular values/rank including exact-zero I/flat branches. Mark synthetic uncertainty, fixed units and presentation equivalence; plots consume generated arrays."
+  },
+  "LRS_V_bridge": {
+    "reuse": "Load all280 retained joint_image.csv rows and consume original R32 independent review/receipts. Run only the new finite conversion/constraint checks, not build_product.py or its old grid/history/plot campaign.",
+    "orientation": "R32 axes are(x,y,z), positive curvature/tilt direction z. Apply the proper cyclic permutation(e1,e2,e3)=(ez,ex,ey) to every vector and tensor. Set h=2*u_star, H=c*h, a=(h*sqrt(K),0,0), n=0, S=h*permuted(shear), epsiloncrit=3*h^2/kappa, epsilon_N=epsiloncrit*Omega_n, q=epsiloncrit*permuted(flux), Lambda=3*h^2*Omega_Lambda. Retain pressure and pi=epsiloncrit*permuted(pi), beta vector and physical-velocity status.",
+    "signed_oracle": "M1=6*a1*h*z_s=kappa*q1. Under beta->-beta, S and q reverse; density, pressure and pi remain even. beta is signed speed v/c here, |beta|<1. The legacy egs3_bianchi_v_constraint.py parameter called beta is rapidity; do not mix its sinh/cosh expression with this speed chart.",
+    "domains": "Retained0<K<=1,0<=w<=1,0<=u<=1,|beta|<1. K>1 is empty in this single-fluid Lambda>=0 sector; K<=0 belongs outside this chart. Vacuum rows retain beta_physical=null/UNDEFINED_ABSENT_MATTER. Normal vorticity is zero; matter vorticity NOT_DETERMINED.",
+    "rounding": "Keep signed retained values, including tiny boundary Lambda roundoff. Report its scale-aware residual; do not silently clip or claim a materially negative Lambda is admissible."
+  },
+  "tolerances": {
+    "basis": "float64 epsilon=2^-52. Finite3D quadratic contractions have bounded operation count; use4096*epsilon for dimensionless relative residuals against the natural polynomial scales below. This is arithmetic validation, not a physical uncertainty or nonzero-class threshold. Retained LRS residuals are of order10^-15; inherited dimensionless1e-12 scale is consistent with this margin.",
+    "scales": "Symmetry/trace denominator is input Frobenius norm. Jacobi scale ||N||F*||A||2. Curvature scale (||N||F+||A||2)^2. Hamiltonian scale3*hbar^2+|ebar|+|Lambdabar|+0.5*||Sbar||F^2+0.5*|Rbar|. Momentum scale3*||A||*||Sbar||F+2*||N||F*||Sbar||F+||qbar||. If a scale is exactly zero, demand exact-zero result; do not insert a unitful or dimensionless floor that erases a small input.",
+    "Jacobian": "Analytic/complex-step and quadratic-reconstruction residuals<=4096*epsilon relative to the corresponding polynomial term-norm sum. Rank threshold tau=256*epsilon*max(m,n)*sigma_max of the normalized Jacobian. J exactly zero has rank0. Report any singular value in[tau/16,16*tau] as unresolved numerical rank; do not round physical structures to achieve a target rank.",
+    "singular_tensors": "Degenerate singular-vector bases are nonunique: validate subspace projector/reconstruction and null residuals, not component-wise eigenvector equality or sign. Preserve full singular spectra and coordinate scale.",
+    "bounds": "Add only a recorded roundoff enclosure based on4096*epsilon times the bound term-norm sum. A failed positivity/separation bound is inconclusive unless an actual invalid/counterexample tuple is exhibited. No post-outcome tolerance relaxation."
+  },
+  "x_F_Pi_Q_GF": {
+    "x": "Full same-frame carrier includes h,S,n,a,Ric,STF(Ric),epsilon_N,q,Lambda; LRS bridge additionally includes full pi, pressure and beta. Signed x_D is one projection, not a substitute for this carrier.",
+    "x_C": "NOT_EVALUATED_NO_FROZEN_COMPARATOR_RESPONSE",
+    "Q": "NOT_EVALUATED_NO_PREMISE_ANCHOR_OR_POLICY_DENOMINATOR; normalization by u_star is unit scaling only",
+    "F": "NOT_EVALUATED_NO_OCCUPANCY_MEASURE_OR_CEILING; deterministic probe count is not a population fraction",
+    "Pi": "NOT_EVALUATED_NO_JOINT_PROBABILITY_LAW; ellipsoid shape is not covariance or confidence",
+    "G_F": "NOT_EVALUATED_NO_DEPTH_WINDOWS_OR_JOINT_DEPTH_LAW",
+    "no_zero_fill": "Unavailable probability/covariance/response fields remain unavailable; no independent Gaussian fill or scalar family inference."
+  },
+  "acceptance_and_failure": {
+    "required": [
+      "Actual runnable finite consumer with all source bindings and frame/unit metadata",
+      "Canonical Ricci/sectional controls, independent Codazzi sign, Jacobi rejection and proper-rotation covariance",
+      "Dimensionful tiny-scale controls reproduce normalized outputs without collapsing nonzero structure/curvature",
+      "Actual Jacobians, singular tensors, ranks/nulls and nonlinear I/flat controls",
+      "Full deterministic uncertainty probes plus whole-set quadratic bounds and a generated uncertainty-image plot",
+      "LRS280-row conversion preserving sign, flux/stress cross-dependence, vacuum and chart domain",
+      "RESULT.json and concise mathematical interpretation with original42 unchanged; one fresh independent review"
+    ],
+    "falsifiers": [
+      "Jacobi-invalid structure admitted after numeric zeroing",
+      "Wrong class-B Ric23 or Codazzi sign, inconsistent c factor, or speed/rapidity substitution",
+      "Same scalar reported as equal full curvature; flat presentation counted as distinct local geometry",
+      "Physical rank/class changes only when units change",
+      "Linearized covariance replaces nonlinear deterministic image; scatter hull claimed as certified full set",
+      "Unknown covariance/occupancy/probability invented, or CMB family identification from this image"
+    ],
+    "stop_rule": "Keep first failures and return a concrete convention/source/model or substantive numerical conflict to the science owner. Routine implementation defects may be repaired under the same actual packet/cumulative accounting; do not invent an exhausted one-use allowance.",
+    "completion": "Only actual selected execution and fresh independent review may qualify geometry_compatibility_result. This preparation and old proof receipts alone do not qualify it."
+  },
+  "resource_policy": "No new hard RAM/time/attempt/producer caps. Any performance estimate is soft planning only; parent supplies actual limits. No launch is authorized by this preparation. Preserve historical budgets and use new actual packet identity only when controller selects the task.",
+  "source_bindings": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json",
+      "sha256": "8de844ee16d15eadb3085e6d3a16b172ce2ce6dd62a8bf276d265b9a8b335f24",
+      "bytes": 46502
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/INTERNAL_INTEGRATION.md",
+      "sha256": "a7a7b14eca4dab0d7b43172d12ee31256def334122a3ed91f1d26b01a2392c63",
+      "bytes": 23622
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_D_BIANCHI.md",
+      "sha256": "29deff7762b9fcecb877faf5f05abb0bc1f4682fb16a053521b2c0d3ce7cbae9",
+      "bytes": 17711
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_d_check.py",
+      "sha256": "6b2950277eed5636b87a5aebd9f62cac9538182c5214f3e57cfb8dca09584519",
+      "bytes": 1197
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_d_sympy.py",
+      "sha256": "14853b2135d5df7c3533423ef9cbbe95a4708e2535bfc9e9c440d67c7b7d4d38",
+      "bytes": 1131
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_d_receipt.json",
+      "sha256": "4c700f3b5e5e930215795ee4f16d448f2c1b5243b584e4bfacac25815288176f",
+      "bytes": 1408
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/INDEPENDENT_REVIEW.json",
+      "sha256": "638c7799941cd397f0b467d1a129f68ee90be42f4dc839b182b2b0e2f08bd95f",
+      "bytes": 15527
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/science/manuscript.md",
+      "sha256": "b4acf4ae0772e4a8cc387063a8ec19e56e166fdca85ad26c0b688843bc50d6cf",
+      "bytes": 19593
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/build_product.py",
+      "sha256": "b4cda318b44635fbe060e9041cbe253a82003196ebe22195c97b3f2e5a45f46d",
+      "bytes": 50069
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/joint_image.csv",
+      "sha256": "071d526c4bbedfe5add262a3e641e496623e27055571b009004b6c369f21ba1e",
+      "bytes": 110430
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/report/RESULT.json",
+      "sha256": "018cf0d1f4ab322813da519106f3aa94a80f07e6fb1179362c7151c6c84df3db",
+      "bytes": 9831
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/independent_review/RESULT.json",
+      "sha256": "79d15fa13e496f9a66438121ad592de32b5a929a906c4f553489e32c58b01463",
+      "bytes": 8139
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/egs3_bianchi_v_constraint.py",
+      "sha256": "97191abca5b99933c3dc5ee8e0543ce8446cb777b4168c0ed356547b46fa2943",
+      "bytes": 7146
+    }
+  ],
+  "pre_dispatch_correction": {
+    "prior_draft_path": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_contract_preparation/DRAFT_BEFORE_ARITHMETIC_CORRECTION.json",
+    "prior_draft_sha256": "1dbdf2c60c5b6f0edfa8de31e234f3876e240c0da9520f8e2c1f431fb4438af2",
+    "before_any_selected_execution": true,
+    "corrections": [
+      "The ADM scalar residual is +2*r_H for the defined r_H, not -2*r_H.",
+      "Shared density is12-1/4-(1/2)*(1/100+1/400+1/400)=4697/400."
+    ],
+    "source_equations_unchanged": true
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "R36-10-targeted-repair-controller-return-v1",
+  "packet_id": "8da987a1500dc1afc4b9167e4e46de07bddb4a2bff47268daf108918f3a9e424",
+  "task_id": "R36-10-GEOMETRY-IMAGE",
+  "agent_id": "/root/rc_5a748e12c1d19b5a",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "base_packet_id": "5a748e12c1d19b5a4e636c7f31a92d772ee083ca84c2e723a98946f0a9c185d9",
+  "base_candidate_identity": "sha256:54ae8c59cb6c0d144cb9798079f357bdfba6254694cb416bf5a14f3a59160423",
+  "candidate_identity": "sha256:ca55901e8b35f163d0c7b011363e364497ba27bea752e142403c9f6d3d37ffa6",
+  "outcome": "success",
+  "qualified_products": [
+    "geometry_compatibility_result"
+  ],
+  "qualification_status": "PROPOSED_PENDING_FRESH_INDEPENDENT_TARGETED_CLOSEOUT",
+  "acceptance_met": false,
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_geometry_repair_actual/RAW_RECEIPT.json",
+  "validation_evidence": [
+    "Frozen input manifest and all 13 source bindings verified by finite generator; contract SHA256 76e2c762c4e9fbf4d27ac1af8521c3138edefb138f62e292c776ca83d67bf6b5 unchanged",
+    "python -B repair_01/geometry_image.py exit 0: six Loop D controls, Jacobi rejection, proper rotations, signed Codazzi and ADM +2r_H checks, analytic/complex-step joint derivatives, exact quadratic reconstruction, 577 probes per center, 280 retained LRS rows",
+    "PYTHONDONTWRITEBYTECODE=1 python -m pytest -q repair_01/test_geometry_image.py: 6 passed including saved/generated flat centers, I dE/dh=12 and rank1, all 2308 Ricci probe parity and unchanged full matched 1154 probes",
+    "Repair DELTA_VALIDATION.json: original candidate SHA preserved; geometry ranks 6/6/0/3; joint ranks 9/10/1/6; matched separation and tensor bound exactly unchanged; LRS280 bytes identical",
+    "Only corrected flat center joint energy/flux uncertainty images regenerated; status proposed pending fresh independent targeted closeout"
+  ],
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "independent_review": "PENDING_FRESH_TARGETED_CLOSEOUT",
+  "original42_promotion": false,
+  "result_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/repair_01/RESULT.json",
+  "phase": "repair",
+  "scientific_status": "CANDIDATE_PENDING_FRESH_INDEPENDENT_TARGETED_CLOSEOUT"
+}

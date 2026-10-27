@@ -1,0 +1,65 @@
+{
+  "actual_cost_note": "All listed commands started; pilot, full and sensitivity program times are retained. No R30 600-second account reused.",
+  "agent_id": "/root/rc_0c0fab5631cb1900",
+  "angular_pass": true,
+  "candidate_identity": "sha256:dd3cb2d77c97e33380ec06e04bc5465f65129dc319f8795dc30e3bc84b3e877b",
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python products/R36-02-CF4-CORRELATED/run_correlated.py --pilot",
+      "exit_code": 0,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_actual/pilot.log",
+      "name": "pilot",
+      "observed_program_seconds": 5.361343750031665
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python products/R36-02-CF4-CORRELATED/run_correlated.py",
+      "exit_code": 0,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_actual/full.log",
+      "name": "full",
+      "observed_program_seconds": 10.496122765121982
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python products/R36-02-CF4-CORRELATED/run_sensitivity.py",
+      "exit_code": 0,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_actual/sensitivity.log",
+      "name": "sensitivity",
+      "observed_program_seconds": 24.886836042860523
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python products/R36-02-CF4-CORRELATED/validate_extensions.py",
+      "exit_code": 0,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_actual/controls.log",
+      "name": "controls"
+    },
+    {
+      "command": ".venv/bin/python -m pytest -q covariance/test_covariance_bridge.py",
+      "exit_code": 0,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_correlated_actual/bridge_tests.log",
+      "name": "bridge_tests"
+    },
+    {
+      "command": ".venv/bin/python -m py_compile products/R36-02-CF4-CORRELATED/*.py",
+      "exit_code": 0,
+      "name": "py_compile"
+    }
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "empirical_coverage": "UNKNOWN",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "numeric_program_seconds_known_total": 40.74430255801417,
+  "observed_runtime": "UNKNOWN",
+  "packet_id": "0c0fab5631cb19001cba35e3da1de5cd44d64dc0157950afb82d383496472c40",
+  "process_tree_peak_rss": "NOT_MEASURED",
+  "python": "3.12.3",
+  "radial_pass": true,
+  "requested_runtime": "gpt-6-sol/high",
+  "schema": "htt.r36.numeric_raw_receipt/1",
+  "science_admission": false,
+  "source_operator_sha256": {
+    "operator_artifact_sha256": "e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e",
+    "selected_source_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c"
+  },
+  "task_id": "R36-02-CF4-CORRELATED",
+  "tests": "8 passed, 10 subtests passed",
+  "timestamp_unix": 1793077047.88926
+}
