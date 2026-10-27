@@ -1,0 +1,103 @@
+{
+  "schema": "R36-07-temperature-followup-raw-receipt-v1",
+  "task_id": "R36-07-FOREGROUND-BUDGET",
+  "same_issue_continuation": true,
+  "author": {
+    "agent": "/root/r36_foreground_fresh_review",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "new research contributor; cannot independently review this followup"
+  },
+  "formal_packet": null,
+  "formal_ACK": null,
+  "acceptance_met": false,
+  "qualified_products": [],
+  "manifest": [
+    {
+      "path": "RESULT.json",
+      "bytes": 6205,
+      "sha256": "533ae712a421c9f740f80f9d1945e75781c9b20d88648155980031bc09f08227"
+    },
+    {
+      "path": "DERIVATION.md",
+      "bytes": 18686,
+      "sha256": "4726440344bd1ad13f675efd2879ab8fb8b862ace8b4d0874f46da3c530c1483"
+    },
+    {
+      "path": "NUMERIC_WITNESSES.json",
+      "bytes": 13432,
+      "sha256": "60e8e4d4d19e46fb2c611c7e468b27e9db1c7279a19a42261e5e6ab2d1c40e94"
+    },
+    {
+      "path": "reproduce.py",
+      "bytes": 6784,
+      "sha256": "593f3dfa6f6ca0f7413b19a7e857fd51801d1478bdb4eb7d23aa1b152d85f6b3"
+    },
+    {
+      "path": "SOURCE_INTAKE.json",
+      "bytes": 919,
+      "sha256": "d3acb31d609a7a3ab9e5bdd851765e1472c7462159caeb7e51db207dd153db55"
+    },
+    {
+      "path": "run1.stdout",
+      "bytes": 225,
+      "sha256": "e3ea6c3093393a62bba3006500b5c1b80db86ad1a0ab25a11b9731b64117c925"
+    },
+    {
+      "path": "run1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "prior_frozen_files_read_only_sha256": {
+    "RESULT.json": "05f3e742819ebfcaa27740c704e5e7579319029a37cc64db6c1a2549ff10ea47",
+    "RAW_RECEIPT.json": "4e848b5bc6e7875f3cb07d937ddd54569e30bf94dd2ff3dc247f78f20510dd21",
+    "NUMERIC_RESEARCH.json": "07a7e68dbcfa7c5db0ae9c58b871d29b8182e10b628989b12ac5ea75105a2c7d",
+    "DERIVATION.md": "7e82ea0465946c2ca7abfc7e448c36901e4711d21b1df88eb1b5b2e12ca8e5c2",
+    "SOURCE_INTAKE.json": "8215935ed046ed9bc902ba4b5a1f4bffe2f929fd035a58086cbd6bc5ddcf02fc"
+  },
+  "source_intake": [
+    {
+      "url": "https://arxiv.org/pdf/1302.0844",
+      "name": "da_cunha_2013.pdf",
+      "http_status": 200,
+      "bytes": 537229,
+      "sha256": "44a7f374a139be19db60d8db9446eda6564676825edd16648c7dd50a6058679e",
+      "elapsed_s": 0.6117311581037939,
+      "utc": "2026-10-27T05:09:43.070063+00:00"
+    },
+    {
+      "url": "https://arxiv.org/pdf/astro-ph/9909020",
+      "name": "waxman_draine_2000.pdf",
+      "http_status": 200,
+      "bytes": 175463,
+      "sha256": "b752f9eb95538eaf60df77ad228dc42d160b3d576548bf963220c31488c79cea",
+      "elapsed_s": 0.02729714196175337,
+      "utc": "2026-10-27T05:09:43.109858+00:00"
+    },
+    {
+      "url": "https://arxiv.org/pdf/0908.1692",
+      "name": "kama_min_dominik_2009.pdf",
+      "http_status": 200,
+      "bytes": 1025930,
+      "sha256": "23a38ac92575c4e7c81f395e2c310a7d3d17de7f744914b4bd3f2b667aca3aef",
+      "elapsed_s": 0.2704483359120786,
+      "utc": "2026-10-27T05:09:43.381629+00:00"
+    }
+  ],
+  "new_source_bytes": 1738622,
+  "additional_primary_web_source": "https://arxiv.org/pdf/astro-ph/0112457 (inspected through web tool, not cached)",
+  "execution": {
+    "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python reproduce.py",
+    "exit_code": 0,
+    "assertions": "ALL_PASS",
+    "elapsed_s": 0.09830970386974514,
+    "first_failures": [],
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]"
+  },
+  "physics_math_scope": "Analytic conditional inequalities plus small independent numerical witnesses; no ODE, no native producer run, no claim of four-axis CAS or independent review",
+  "source_reserve_bytes": 2147483648,
+  "free_bytes_at_closeout": 2458031693824,
+  "completed_utc": "2026-10-27T05:17:24.396847+00:00"
+}

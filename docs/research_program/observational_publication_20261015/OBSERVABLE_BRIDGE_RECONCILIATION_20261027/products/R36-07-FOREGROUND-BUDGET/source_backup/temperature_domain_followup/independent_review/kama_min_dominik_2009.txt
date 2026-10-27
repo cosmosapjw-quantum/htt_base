@@ -1,0 +1,1167 @@
+                                               Astronomy & Astrophysics manuscript no.
+                                               (will be inserted by hand later)
+
+
+
+
+                                                             The inner rim structures of protoplanetary discs
+                                                                                     M. Kama1 , M. Min1,2 & C. Dominik1,3
+
+                                                    1
+                                                      Anton Pannekoek Astronomical Institute, University of Amsterdam, P.O. Box 94249, 1090 GE Amsterdam, The
+                                                    Netherlands; E–mail: M.Kama@uva.nl
+                                                    2
+arXiv:0908.1692v3 [astro-ph.GA] 28 Aug 2009
+
+
+
+
+                                                      Utrecht Astronomical Institute, University of Utrecht, P.O. Box 80000, 3508 TA Utrecht, The Netherlands
+                                                    3
+                                                      Department of Astrophysics, Radboud University Nijmegen, Postbus 9010, 6500 GL Nijmegen, The Netherlands
+
+                                                    DRAFT, November 2, 2021
+
+                                                    Abstract. The inner boundary of protoplanetary discs is structured by the dramatic opacity changes at the
+                                                    transition from the dust-containing to a dust-free zone. This paper explores the variety and limits of inner rim
+                                                    structures in passively heated dusty discs. For this study, we implemented detailed sublimation physics in a fast
+                                                    Monte Carlo radiative transfer code. We show that the inner rim in dusty discs is not an infinitely sharp wall
+                                                    but a diffuse region which may be narrow or wide. Furthermore, high surface densities and large silicate grains as
+                                                    well as iron and corundum grains decrease the rim radius, from a 2.2AU radius for small silicates around a 47L
+                                                    Herbig Ae star typically to 0.4AU and as close as 0.2AU. A passive disc with grain growth and a diverse dust
+                                                    composition must thus have a small inner rim radius. Finally, an analytical expression is presented for the rim
+                                                    location as a function of dust, disc and stellar properties.
+
+
+                                              Key words. circumstellar matter – stars: formation, pre-        depth of unity in the dust is referred to as the inner rim.
+                                              main-sequence – infrared: stars                                 The dust sublimation temperature is around 1500K, so
+                                                                                                              the inner rim radiates in the near-infrared.
+                                                                                                                  In this paper, we use a new Monte Carlo radiative
+                                              1. Introduction                                                 transfer code to study the effects of various physical pa-
+                                              The inner regions of protoplanetary discs are the birth-        rameters on the inner rim structure of protoplanetary
+                                              places of terrestrial planets. Understanding their nature       discs. Our motivation is outlined in Section 2. Dust subli-
+                                              and diversity is key to our picture of the formation of         mation, backwarming and other theoretical aspects are
+                                              planetary systems.                                              introduced in Section 3 and the results are presented
+                                                  This paper uses Monte Carlo radiative transfer mod-         in Section 4. A discussion and conclusions follow in
+                                              elling and detailed sublimation physics to explore the in-      Sections 5 and 6.
+                                              ner rim structures of passive dust discs, and their merits
+                                              in reconciling theory with observation.                         2. Observational and physical motivation
+                                                  T Tauri and Herbig Ae/Be stars have prominent
+                                              infrared excesses in their spectral energy distributions        Herbig Ae/Be stars typically show excess near-infrared
+                                              (SEDs), due to the presence of protoplanetary discs. The        (NIR, λ ≈ 1.25 . . . 7µm) emission, corresponding to tem-
+                                              existence of such discs is known observationally through        peratures of ∼ 1500K. Most fractional NIR excesses,
+                                              statistics of photometric colours (Adams et al. 1987;           fNIR = LNIR /L? , form a rising histogram from fNIR ≈ 0.02
+                                              Rydgren & Zak 1987; Calvet et al. 1992; Lada & Adams            to 0.22 and are well reproduced by models including dust
+                                              1992), spectral fitting (Kenyon & Hartmann 1987), imag-         sublimation in a hydrostatic disc (Dullemond et al. 2001;
+                                              ing (McCaughrean & O’dell 1996; Burrows et al. 1996), in-       Isella & Natta 2005, hereafter DDN01 and IN05). Larger
+                                              terferometry (Mannings & Sargent 1997), and is inferred         excesses, e.g. fNIR = 0.23 and 0.25 for AB Aur and WW
+                                              from studies of the Solar System and exoplanets. Based          Vul (Natta et al. 2001), and fNIR = 0.32 for HD 142527
+                                              on broadband SEDs, discs are classified as either self-         (Dominik et al. 2003), have proven impossible to repro-
+                                              shadowed or flaring (Kenyon & Hartmann 1987; Meeus              duce with existing models without introducing unrealistic
+                                              et al. 2001; Dullemond & Dominik 2004) and their tem-           assumptions about the rim scaleheight or dust sublimation
+                                              perature structure can be approximated with two layers          temperature.
+                                              to explain solid-state silicate emission bands (Chiang &            Herbig Ae/Be and T Tauri stars have been shown to
+                                                                                                                                 1/2
+                                              Goldreich 1997). In the inner regions of discs, dust sub-       follow a Rrim ∝ L? law for inner rim radii measured in
+                                              limates. The location where starlight reaches an optical        the NIR regime (Monnier et al. 2005; Millan-Gabet et al.
+2                                      Kama, Min, Dominik: The inner rim structures of protoplanetary discs
+
+                                                                          The modern paradigm in passive disc models was devel-
+                                                                          oped by Chiang & Goldreich (1997, hereafter CG97). In
+                                                                          this approach, the disc consists of a cool midplane and a
+                                                                          hot surface layer. Such models are highly successful in re-
+                                                                          producing the general form and solid state bands of young
+                                                                          star SEDs, but not the NIR excess, as emission from the
+                 optically thin
+                                           optically thick disk           dust sublimation region is not considered.
+                     disk
+star                                                                          Any realistic dust species will sublimate at or below a
+                                                                          temperature of Tsubl ∼ 1500K, corresponding to an emis-
+                   τ=1                                                    sion maximum around 2µm. In a disc, this implies a radius
+                                                                          inside which no dust can exist. Terminating the CG97 den-
+          Cbw=1                   Cbw=4                                   sity distribution at such a radius results in a dust wall that
+         ‘optically thin’     ‘classic’ rim radius
+           rim radius                                                     is exposed to direct starlight, becomes hot and “puffs up”
+                                                                          (Natta et al. 2001, and DDN01). Backwarming, explained
+Fig. 1. A schematic of the inner few AU of a disc. The                    later, pushes the sublimation location to larger radii. The
+colour map indicates the temperature, from < 300K                         DDN01 models explain the NIR excess, but the emission
+(dark ) to > 2000K (white). At the optically thin radius,                 is very inclination dependent, an effect contradicted by
+Cbw = 1, dust can begin to condense. The classical rim,                   observations.
+at Cbw = 4, is a maximally backwarmed dust wall. The                          A semi-analytical treatment including a gas density de-
+actual rim, i.e. τ = 1 surface, is between these limits and               pendent sublimation temperature was applied successfully
+preceded by an optically thin zone.                                       in explaining observed SEDs and deriving important prop-
+                                                                          erties such as characteristic grain sizes (IN05 and Isella
+                                                                          et al. 2006). The rim surface was shown to be curved rather
+2007), thought to coincide with the dust rim. Most Herbig                 than wall-like, due to the dependence of the sublimation
+Ae/Be rims in this sample have been shown to be scat-                     temperature on gas density (IN05). Isella et al. (2006) suc-
+tered within expected limits (Monnier et al. 2005) for a                  cessfully fitted the SEDs and interferometric rim radii of
+radius determined by dust sublimation, consistent with                    four out of five Herbig Ae stars with IN05 models. In most
+an optically thin inner hole. Some Herbig Be stars, with                  cases, the best fits required astronomical silicate grains of
+L? > 103 L , conform to models where the inner hole is                    ≥ 1.2µm size. However, the modelled rim radii were larger
+optically thick in the midplane and the rim radii are con-                than those obtained by Eisner et al. (2004) by up to a fac-
+sequently smaller. Gas undergoing accretion onto the star                 tor of three, and simultaneously fitting the SED and rim
+has been assumed as the inner hole opacity source in these                radius of AB Aur was unsuccessful.
+cases.
+                                                                              In a passive disc, the structure of the inner rim is deter-
+     The presence of a smooth, extended hot emission com-
+                                                                          mined by the stellar parameters, the surface density, cool-
+ponent interior to the dust sublimation radius has been
+                                                                          ing efficiencies and sublimation temperatures of the dust
+deduced for several systems from interferometric obser-
+                                                                          species, and by backwarming. Because the dust tempera-
+vations (Eisner et al. 2007; Tannirkulam et al. 2008b,a;
+                                                                          ture and hydrostatic structure are also intimately coupled
+Kraus et al. 2008; Isella et al. 2008). A hot emission com-
+                                                                          in a non-trivial geometry, finding static, stable solutions
+ponent in the inner hole has recently gained further sup-
+                                                                          in terms of dust temperature structure is a difficult task,
+port from spatially resolved spectroscopy (Najita et al.
+                                                                          for which Monte Carlo radiative transfer is well suited.
+2009; Eisner et al. 2009).
+     Meanwhile, the physico-chemical parameter space of                       Monte Carlo radiative transfer has been used to extend
+dust rim models has been little explored in terms of vari-                the IN05 models to two grain sizes in thermal contact
+ations in global inner disc properties (surface density pro-              (Tannirkulam et al. 2007). It was shown that grain growth,
+file, composition) and dust type (astronomical silicate has               specifically the presence of grains of different sizes and
+been the standard opacity and homogeneous spheres the                     settling of large grains, strongly curves the inner rim. A
+particle shape). The complex geometry and high optical                    comparison with these results is made in Section 5.
+depth of protoplanetary discs can now be studied with fast
+Monte Carlo radiative transfer codes (Min et al. 2009),                   3.1. The bulk gas and vapour densities
+providing further incentive to incorporate more detailed
+physics to clarify the limits of dusty rim models.                        The total amount of gas in a disc is referred to as the bulk
+                                                                          gas in this paper. The bulk gas density determines the
+                                                                          amount of dust present if a fixed gas to dust mass ratio,
+3. Methods
+                                                                          e.g. fgd = 100, is assumed. Dust grains always contribute
+We consider models of passive discs, with temperature                     some particles to the gas phase. These do not apprecia-
+structures dominated by irradiation from the central star,                bly change the gas mass but do maintain the gas-grain
+and no accretional heating. (For a broader review of disc                 equilibrium, with gas phase particles of the dust species
+models, we refer the reader to Dullemond et al. 2007).                    sticking onto a grain and balancing its evaporation. If all of
+                            Kama, Min, Dominik: The inner rim structures of protoplanetary discs                                3
+
+                                                                  can be used to replace the partial pressure P of the species
+                                                                  with a function of its temperature and its vapour density,
+                                                                  ρvapour . Loosely following Zemansky (1968), the vapour
+                                                                  density at saturation pressure is given by the Clausius-
+                                                                  Clapeyron equation:
+
+                                                                                                    A
+                                                                                                           − log T−C
+                                                                                                                      
+                                                                            log (ρvapour ) = B −                  subl ,      (1)
+                                                                                                   Tsubl
+                                                                      where A, B and C are thermodynamical quantities that
+                                                                  can be fitted using laboratory measurements1 .
+                                                                      We take C = −1 and obtain A and B from a pub-
+                                                                  lished table of evaporation temperatures with correspond-
+                                                                  ing bulk gas densities and abundances (Pollack et al. 1994,
+                                                                  P94). The resulting parameters for Eq. 1, alongside those
+                                                                  obtained from other sources, are summarized in Table 3.2.
+Fig. 2. Sublimation curves of the species used in this work.      In fitting the P94 data, the partial pressure of each species
+The vapour density of the species is used. At low vapour          was expressed through its abundance and molecular mass,
+densities, corundum is the most refractory, whereas at            and the bulk gas density. Parameters from other sources
+higher values iron is relatively more refractory. At least        were converted (see Eq.2 of Lamy (1974) and Eq.10 of
+one of the two species is always relatively more refrac-          Cameron & Fegley (1982)). The table also gives Tsubl at
+tory than olivine. The expression for the curves is given         ρvapour = 10−12 g/cm3 and references for each species, with
+in Eq. 1, and the fitting parameters in Table 3.2. The            boldface denoting the species used in this study.
+IN05 fitting formula has been abundance-corrected for this            Sublimation curves of the main species used in this
+plot, otherwise it would lie ∼ 50K below our curve for any        work are shown in Fig. 2. At vapour densities of
+olivine vapour density (see Appendix B). For astronom-            10−12...−10 g/cm3 , olivine sublimates at around 1300K,
+ical silicate and forsterite, the olivine sublimation curve       iron at 1400K and corundum at 1500K. Corundum must
+was used in modelling.                                            have an abundance < 1% of the total dust mass and thus
+                                                                  will necessarily have a much lower partial density than
+                                                                  olivine or iron.
+a given dust species must be in the gas phase to maintain
+this equilibrium, we call its density the vapour density. In
+reality, many gas-phase species may combine to maintain           3.3. Backwarming
+the gas-grain equilibrium of any solid species. As at most a
+few species exist simultaneously in our models, we gener-         If a dust grain cannot cool into empty space in every di-
+ally neglect this fact, with some exceptions (see Sec. 5.2).      rection, its temperature increases due to backwarming.
+                                                                  Geometrically, the backwarming factor Cbw can be de-
+                                                                  fined as the ratio of a full 4π solid angle to the solid angle
+3.2. Dust sublimation                                             subtended by the empty sky seen by the grain. For each
+The temperature of a dust grain is determined by                  photon emitted into the sky area obscured by nearby mat-
+its wavelength-dependent opacity, and by the inten-               ter, a similar photon returns, hence the term “backwarm-
+sity and spectrum of the radiation field responsi-                ing”. An estimate of the temperature of a dust grain on
+ble for the heating. The cooling efficiency, given by             the rim surface is obtained from the equation
+ = κ0P (Tdust )/κ0P (T? ) = Cabs (Tdust )/Cabs (T? ), is a                                L?     4π
+ratio between the Planck mean opacity of the dust species                            π       2  =     σT4d ,                 (2)
+                                                                                         4πRrim   Cbw
+at its own temperature to that at the stellar temperature,
+or for a single grain the ratio of absorption cross sections.      1
+                                                                       Thermodynamically, A = ∆H/ ln (10), where ∆H is the
+In an identical stellar radiation field, a grain with a large    enthalpy of vapourization, and C = (c000    0 /R − 1). The molar
+will achieve radiative equilibrium at a lower temperature         heat capacity has been broken into constant and temperature-
+than a grain with a small , and generally epsilon increases      dependent components, c000       000    000
+                                                                                            P = c0 + ci . In addition, B = B1 +
+with grain size.                                                  log (k/µmp ), where B1 is given by
+    For a grain to be stable, the particle flux excaping                              Z T " R T 000        RT       #       !
+from its surface must be balanced by the flux coming onto                       1            0
+                                                                                               ci dT − 0 c0P dT
+                                                                       B1 =                                           dT + I ,
+it from the gas phase. If the temperature gets too high,                    ln (10)    0               T2 R
+the grain will sublimate. The first rim models assumed            and I is an integration constant. Sometimes, for example in
+that this would occur at Tsubl = const, e.g. DDN01 used           Smithells (1967) as referenced by Lamy (1974), the full form
+1500K. Generally, the sublimation temperature of a dust           of Eq. 1 must be invoked to provide a sufficiently accurate fit
+species is a function of the partial pressure of its gas phase    to experimental data, however most often, as in this paper, the
+component, Tsubl = f(P). The ideal gas equation of state          assumptions B 6= B(T ) and C = −1 are made.
+4                                                                                Kama, Min, Dominik: The inner rim structures of protoplanetary discs
+
+              Species                            Chemical                              Tsubl      A              B      Reference for A and B             Reference for opacity
+                                                 formula                                [K]     (Eq. 1)       (Eq. 1)
+     Astron. silicate                            MgFeSiO4                              1300    28030.         12.471    Pollack et al. (1994, P94)        Draine & Lee (1984)
+             Olivine                             MgFeSiO4                              1300    28030.         12.471    P94                               Dorschner et al. (1995)
+          Forsterite                             Mg2 SiO4                              1150    26091.         13.418    Cameron & Fegley (1982, CF82)     Servoin & Piriou (1973)
+                 Iron                            Fe                                    1400    21542.          6.6715   P94                               P94
+               Iron?                             Fe                                    1150    20686.          9.1134   CF82
+         Corundum                                Al2 O3                                1500    40720.         18.479    CF82                              Koike et al. (1995)
+     Orthopyroxene?                              MgSiO3                                 ...    30478.         14.898    P94
+            Quartz?                              SiO2                                   ...    26335.         11.184    Schick (1960); Lamy (1974)
+         Water ice?                              H2 O                                   150     2827.7         7.7205   P94
+           Troilite?                             FeS                                    680      155.91       -4.9516   P94 (note: Tsubl = const)
+
+Table 1. A summary of the dust properties. (? – not used in the present work, given for completeness.)
+
+
+
+                                                                                                                            Cbw = 1 yields the temperature of a grain in an op-
+                                           possible                                                                     tically thin environment, and when Tsubl is considered
+                                         optically thin                                                                 it gives the smallest possible distance from the star a
+                                             zone
+                                                                                                                        passive grain may orbit for longer than its sublimation
+                                                                                                                        timescale. This limit has been used by e.g. Tuthill (2001)
+temperature
+
+
+
+
+                                                                                           sublimation                  and Monnier & Millan-Gabet (2002) to obtain lower limits
+                                                                                                         temperature
+                                                                                                                        on disc inner radii. It must be kept in mind that such lim-
+                                                    classical inner rim radius
+
+
+
+
+                                                                                                                        its are derived under assumptions regarding grain opac-
+               dust destruction radius
+
+
+
+
+                                                                                                                        ities, sublimation temperatures and geometry. In assum-
+                                                                                                                        ing the rim was an instantaneously optically thick vertical
+                                                                                                                        wall, DDN2001 adopted Cbw = 4. This illustrates how far
+                                                                                                 dust temperature       backwarming can move the rim. As Monnier et al. (2005)
+                                                                                                                        pointed out, the rim is actually between the two limits,
+                                                                                  radius                                depending on over what distance the dust becomes opti-
+                                                                                                                        cally thick. The concept of such an optically thin region
+                                                                                                                        in front of the rim is illustrated by Figures 1 and 3.
+Fig. 3. A schematic midplane dust temperature profile of
+an efficiently backwarmed rim. In front of the rim, the                                                                     On the rim, Cbw > 4 may also be true for special
+optically thin equilibrium temperature of the dust grains                                                               locations. One can imagine this for a dust grain sitting at
+is plotted. Once this drops below the sublimation tem-                                                                  the far end of a tunnel which extends into the rim (see
+perature, dust can condense. Generally, the sublimation                                                                 also Appendix C).
+temperature decreases with radius because of the increas-
+ing scaleheight and decreasing surface density. Between                                                                 3.4. Monte Carlo radiative transfer with MCMax
+the dust destruction and classical rim radii, there is a re-
+gion in which dust may condense but need not be optically                                                               Radiative transfer through the complex dust geometries
+thick. Dust in this region is warm, but not close to the sub-                                                           we wish to consider requires a flexible method in terms
+limation temperature. The dust temperature peaks locally                                                                of density structures and dust composition. In addition,
+at the optically thick rim location, and then falls rapidly                                                             the coupled nature of the dust temperature and the hy-
+to a low value inside the disc. See also Fig. 1.                                                                        drostatic structure also calls for an iterative solution. The
+                                                                                                                        required flexibility and speed can be obtained by using
+                                                                                                                        Monte Carlo radiative transfer.
+                                                                                                                            We use here the Monte Carlo radiative transfer code
+    where the energy absorbed by a grain at a distance                                                                  MCMax (Min et al. 2009). Because of an efficient imple-
+Rrim from a star of luminosity L? is equated with that                                                                  mentation of the diffusion approximation for regions with
+emitted by it, assuming a cooling efficiency . Rigorously,                                                             high optical depth, this code is especially suited for fast
+Cbw is wavelength-dependent and its value can be ob-                                                                    computations of geometries involving high optical depths.
+tained by solving a complex radiative transfer and dust                                                                     The radiative transfer is based on the Monte Carlo
+sublimation and condensation problem, which is done in                                                                  scheme of continuous reemission developed by Bjorkman
+the Monte Carlo code we employ. However, as we show                                                                     & Wood (2001) and optically thin regions are treated with
+later, the description in Eq. 2, while simple, is useful in in-                                                         the method of Lucy (1999).
+terpreting the results of our more rigorous models, as well                                                                 To model the inner rim, dust sublimation was im-
+as other work on the subject. Other things being constant,                                                              plemented into MCMax according to Eq. 1. The density
+                                      1/2
+the rim location scales as Rrim ∝ Cbw .                                                                                 structure of the dust is solved for by iterating the radia-
+                            Kama, Min, Dominik: The inner rim structures of protoplanetary discs                          5
+
+tive transfer, dust sublimation and recondensation, and        3.5.2. Dust types
+vertical hydrostatic equilibrium. After each iteration, the
+spatial grid is rebuilt in order to properly sample the new    The opacities of the dust grains are sensitive to their size
+density structure. This ensures that in each iteration the     and shape. For modelling the effects of the grain shape on
+radial resolution around τ ≈ 1 is sufficient for ∆τ through    the opacities, we use the statistical approach (Bohren &
+any cell to be less than a fraction of unity.                  Huffman 1983; Min et al. 2003). This allows to take the
+                                                               grain shape effects into account properly using computa-
+    Condensation, if it can occur, must be treated care-       tionally favorable grain geometries. We apply the distri-
+fully. An upper limit is to transfer all the gas phase dust    bution of hollow spheres (DHS; see Min et al. 2005).
+into grains, but if done too quickly this may overheat the
+                                                                   For the composition of the grains previous studies
+cell, forcing sublimation and thus a loop. In the rim re-
+                                                               have frequently used the so-called astronomical silicate
+gion, between Cbw = 1 and 4, the change in solid dust
+                                                               (Draine & Lee 1984). This species is most likely a compos-
+mass in any cell is weighted so that the change is smaller
+                                                               ite of different materials with different sublimation laws.
+the closer the cell is to the local Tsubl . The gas fraction
+                                                               Its composition is unknown and we are thus unable to
+of any dust species is constrained to be radially and verti-
+                                                               derive a proper sublimation law for astronomical silicate.
+cally monotonous in this region. Furthermore, the optical
+                                                               Therefore, in this paper we focus mainly on well character-
+depth added radially in front of the τ = 1 surface cannot
+                                                               ized materials which have been measured in the laboratory
+exceed 0.1. Some physical solutions might be suppressed
+                                                               and are known to exist in meteorites.
+by our constraints, but we expect a proper treatment of
+these to require time-dependent modelling. For a detailed          We begin by exploring discs with various grain sizes
+discussion of the numerical aspects of implementing the        and surface densities of amorphous olivine. Then, models
+sublimation physics we refer the reader to Appendix C.         with two olivine grain sizes, and with dust types of dif-
+                                                               ferent transparency, refractivity and cooling effiency are
+    In reality, the sublimation of grains will cause the       presented.
+grains to lose mass, and thereby decrease in size. For prac-       The presence of small, ∼ 0.1µm grains in discs is re-
+tical considerations, and because we want to systemati-        vealed by fitting observed solid state emission bands. We
+cally study the effects of varying the grain size, we keep     use a model with such grains as a reference point. Large,
+the size of the grains independent of the sublimation state,   ≥ 10µm grains have a higher cooling efficiency than small
+but increase or decrease their number density.                 grains, and as grain growth is known to occur in discs, they
+                                                               are also of great interest in modelling. To study the effects
+                                                               of large grains on the inner disc structure, we present mod-
+3.5. Disc parameters                                           els with 10 or 100µm olivine grains added to 0.1µm parti-
+                                                               cles. Discs of 1, 10, 100 and 1000µm olivine are presented
+3.5.1. General properties                                      in Sections 4 and 5.
+                                                                   Surface density influences the inner rim in several
+The disc model is parametrized as follows: a radial dust
+                                                               ways: it sets the sublimation temperature, influences the
+surface density distribution Σ(R) is described by two
+                                                               backwarming efficiency and determines over what radial
+joined power laws, R−p1 and R−p2 , extending from an
+                                                               distance any given optical depth is reached. We vary the
+inner radius Rin out to Rout . The power laws are joined at
+                                                               dust surface density in the inner disc from Σd = 10−4 to
+the location Rp . The total dust mass, Mdust , gas to dust
+                                                               103 as a parameter study.
+ratio, and a dust composition are specified.
+                                                                   In modelling two grain types, we assume they are
+    In general, we assume Rin = 0.03AU, Rout = 200AU,          not in thermal contact, unless the contrary is explicitly
+p1 = 0.0, p2 = 1.5 and Rp = 4AU. A flat inner disc sur-        stated. This is to allow more efficiently cooling or refrac-
+face density makes the interpretation of our results more      tory species to exist independently of less efficiently cool-
+straightforward, especially for the optically thin zones.      ing or more volatile species. Thermal coupling will arise
+    Most of our models assume a dust mass of Mdust ≈           from the Monte Carlo radiative transfer in sufficiently
+10−4 M . For a parameter study of the inner disc surface       dense regions, where all species will be in radiative thermal
+density, this is varied from 10−7 M to 10−2 M (10−1 M⊕         equilibrium. Unless stated otherwise, abundance ratios of
+to 104 M⊕ ).                                                   9999/1, 90/10 and 10/90 are used in studying grain mix-
+                                                               tures.
+    The gas to dust ratio is 100 everywhere, and the gas
+                                                                   Above ∼ 1000K, amorphous silicates anneal to form
+and dust scaleheights are coupled. All our models use the
+                                                               crystalline silicates. The amorphous component is repre-
+star previously employed by IN05, with T? = 10000K,
+                                                               sented by olivine in our models. It has been found that the
+L? = 47L , and M? = 2.5M .
+                                                               annealed silicates are often iron-poor and magnesium-rich,
+   The IN05 comparison discs are parametrized as Rin =         e.g. forsterite and enstatite. Observations (van Boekel
+0.1AU, Rout = 200AU and p1 = p2 = 1.5, with homoge-            et al. 2004) and the short timescale of crystallization
+neous spheres (HS) of astronomical silicate as the opacity     (Lenzuni et al. 1995) suggest that the crystalline silicate
+model.                                                         fraction on the inner rim surface approaches unity.
+6                          Kama, Min, Dominik: The inner rim structures of protoplanetary discs
+
+     We only present 10µm forsterite grains in this paper.
+Given the expected high abundance of crystalline particles
+in the inner disc, we also perform full scattering computa-
+tions for our olivine and forsterite mixtures. Using a 0.1%,
+10% or 90% forsterite abundance allows to follow the tran-
+sition from an amorphous- to crystalline-dominated rim,
+assuming the former is represented by olivine and the lat-
+ter by forsterite.
+     Iron grains, plausibly a sink of iron left over from
+forsterite formation, is another component we explore.
+Small iron grains cool more efficiently than small olivine
+grains, furthermore iron is significantly more refractory
+in the high vapour density regime, as seen in Fig. 2.
+Abundance ratios of 9999/1 and 90/10 are used in our
+olivine and iron disc models.
+                                                                 Fig. 4. Distances along the midplane, in AU, where τ =
+     Corundum has been suggested to exist in discs (e.g.         0.1, 1 and 10 is reached, versus iteration number. The evo-
+Lenzuni et al. 1995). It is very refractory in the low           lution of an Σdust = 25g/cm2 inner disc with 10µm olivine
+vapour density regime, and forms a “highly refractory            over 103 iterations reveals the oscillatory long-term be-
+envelope” around olivine together with iron in Tsubl -           haviour of our models. Dust is built up over ∼ 150 itera-
+ρvapour parameter space, as seen in Fig. 2. We use a trace       tions, after which the sublimation temperature is exceeded
+olivine/corundum mass abundance of 9999/1 and com-               and a retreat occurs, during which the optically thin zone
+pare it with a model where this ratio is 99/1. The latter        is narrow. The fractional extent of the rim radius variation
+is a convenient limit, approaching one obtained by taking        is significantly smaller for smaller grains.
+a mixture with cosmic abundances and putting all alu-
+minium into corundum.
+     Materials such as olivine do not exist in single molecule
+form and decompose during sublimation (Duschl et al.             4.1.1. The developing rim
+1996). Thus, particles transferred to the gas phase from         The first important result is that the inclusion of detailed
+one grain species may contribute to upholding the gas-           condensation and sublimation physics leads to a rim loca-
+grain equilibrium of another species (Dominik et al. 1993).      tion which is not entirely stable. This is demonstrated in
+We have attempted to take this into account by using the         Fig. 4, where we show the location and sharpness of the
+summed partial pressures of amorphous olivine and crys-          rim as a function of the computational iteration number.
+talline forsterite to uphold the gas-grain equilibrium of            We begin the computation by placing the rim at the
+both. Any pure iron released by the sublimation of olivine       Cbw = 1 location (iteration 0), followed by two backwarm-
+is not considered as a separate dust species in these mod-       ing iterations where the location is dictated by an upper
+els.                                                             limit on Cbw . The radiative transfer (temperature deter-
+     For comparison with previous studies we also present        mination across the disc), vertical structure of the disc,
+several models using astronomical silicate, in these cases       and dust sublimation and condensation are iterated on 50
+the olivine sublimation law is applied.                          to 200 times. For each iteration, we plot a horizontal bar
+                                                                 in Fig. 4, showing the radii where the optical depth ra-
+                                                                 dially along the midplane ranges from 0.1 to 10, with a
+4. Results                                                       mark on the τ = 1 location. Thus a short, point-like ex-
+                                                                 tent of the bar indicates a sharp rim that jumps from low
+The results of our disc modelling are presented in this          to high optical depth very fast, i.e. the classical structure
+section. We first put forward single grain type models           as proposed by DDN01.
+with realistic opacities. Then, dependencies on grain size           Over 1000 iterations, we see that both the rim location
+and surface density are discussed. Finally, the effects of       as well as its inward motion are unstable. Around iteration
+adding various amounts of different grain sizes or types are     150, the sublimation temperature is exceeded in a small
+shown. A detailed comparison with the results of IN05 and        region in the rim, which becomes very sharp, with the
+Tannirkulam et al. (2007) may be found in Appendix B.            τ = 0.1 and 10 locations moving close together. The back-
+    The optical depths are computed using the dust Planck        warming efficiency increases and the rim recedes. Around
+mean opacity at the stellar temperature of 10000K.               iteration 250, a new cycle begins with optically thin zone
+                                                                 formation.
+4.1. Olivine grains of various sizes                                 Similar variability in the rim location is evident in
+                                                                 models with multiple grain types. The variability in rim
+For the main batch of models, we used opacities of iron-         structure which we have demonstrated can, in some cases,
+containing olivines, with sublimation properties from P94.       considerably affect the fractional NIR excess, fNIR , making
+                            Kama, Min, Dominik: The inner rim structures of protoplanetary discs                            7
+
+it difficult to associate illustrative values with a particular   0.43AU. Differences in dust temperature throughout the
+model. We are working on clarifying the issue.                    inner disc are evident.
+    It must be emphasized that while we have just de-
+scribed the changes in rim structure as if time-dependent,            Model 14, seen in the middle row, is a disc with a
+our modelling has no physical time dependence. Rather,            0.1µm to 10µm grain mass ratio of 9999/1. The trace
+our results seem to indicate that there is no unique, static      abundance of efficiently cooling large grains is sufficient
+solution for the dust distribution in the rim, at least when      to give rise to an extended, cool region of low optical
+a single grain type is used, and variations should be ex-         depth, which shifts the condensation location of 0.1µm
+pected in a proper time-dependent treatment.                      grains from 2.22AU (model 0) to 1.68AU. The τ = 10 lo-
+                                                                  cation coincides closely with this point, indicating that a
+                                                                  large amount of 0.1µm grains exists, pushing up the opac-
+4.1.2. Grain size and surface density                             ity. An optical depth of τ = 0.1 is reached at 0.81AU,
+As we saw in Section 3, both the grain size as well as the        indicating the optically thin region covers 50% of the rim
+surface density influence the rim location. This is demon-        radius and around 75% of the surface inside that radius.
+strated in the first three panels of the summary diagram
+in Fig. 5, which show the rim location and sharpness for              The effect of pulling in the rim is more pronounced in
+models with three different grain sizes and a range of sur-       model 15, seen in the bottom row of Fig. 6, where 10%
+face densities. For a given total (solid and vapour) dust         of the dust mass is in 10µm olivine grains and the rest
+surface density of 1g/cm2 (models 0-2), the rim of 0.1µm          in 0.1µm grains. The inner rim is now at 0.45AU. The
+grains is at 2.22AU, while 10µm grains put the rim at             large grains dominate the structure, which is close to that
+0.43AU and 100µm grains at 0.29AU. A shift of the rim             of the disc with only large grains (model 1). The smaller,
+location towards the star is also evident for surface den-        0.1µm grains exist all the way to the new rim location,
+sity variations with a fixed grain size of 10µm (models           in a region where they could never condense without the
+3-8) and of 100µm (models 9-13). We will return to this           presence of the larger particles.
+point in Section 5 and show how this can be understood
+analytically.                                                         Model 16 shows that a fractional mass abundance of
+                                                                  10−4 of 100µm grains has very little effect on the small
+    Another feature of the single grain type models is the
+                                                                  grain rim, for their low abundance is insufficient to con-
+relative sharpness of the rims. It seems that if enough
+                                                                  tribute to the optical depth. Model 17 demonstrates that
+condensible material is available, the rim will take a sharp
+                                                                  a 10% abundance of 100µm grains is sufficient for them to
+form, as assumed in the classical rim models. The low sur-
+                                                                  dominate the rim location at a total dust surface density
+face density computation in model 3 reveals the situation
+                                                                  of 1g/cm2 .
+in discs with low amounts of condensible material avail-
+able. In model 3, the τ = 0.1 to 10 region extends from
+0.67 to 1.88AU because the opacity is too small for the
+optical depth to rise quickly with radius even if all con-        4.3. Olivine and forsterite
+densible material is put in the solid phase. A similar effect
+is seen in models 9-13, where the same parameter study
+                                                                  Forsterite is expected to be very abundant in the in-
+as with models 3-8 is carried out with 100µm grains.
+                                                                  ner rim region. We now present modelled disc structures
+    While in these models, the low surface density or very
+                                                                  obtained with no scattering (our usual assumption) and
+large grain size might seem artifical, effects similar to those
+                                                                  with isotropic scattering for mixtures of 10µm olivine and
+seen here also emerge in multi-grain models with trace
+                                                                  forsterite.
+species that might be present in the very hot inner regions
+of discs. We will now turn our attention to these models.
+                                                                      Since relative to olivine, forsterite grains are highly
+                                                                  transparent to stellar radiation, one might imagine them
+4.2. Two sizes of olivine grains                                  to exist very close to the star. In addition to having a low
+                                                                  heating efficiency in the stellar radiation field, however,
+Increasing the grain size generally allows cooling to gain        forsterite grains cool very inefficiently at temperatures of
+in efficiency compared to heating. We will now present the        1300. . .1500K. This causes them to sublimate at approx-
+effects of this in models where small and large grains are        imately the same radius as the iron-rich silicates, leading
+mixed.                                                            to no difference between the rim structure of model 1 and
+     Models 14-17 of Fig. 5 contain two different grain sizes     models 18 to 20 in the case with no scattering, as seen
+of the same material, in this case olivine. How the optically     in Fig. 5. Including isotropic scattering (lower, dark gray
+thin region is cooled by the large olivine grains, and then       lines of models 18 to 20) slightly increases the rim radius
+filled up as the abundance is increased, is demonstrated          because of the increased backwarming efficiency. Note that
+sequentially as temperature maps in Fig. 6.                       at temperatures of a few hundred kelvin, the forsterite
+     In the upper row of Fig. 6, the 0.1µm grains (left panel)    grains will cool much more efficiently and be much cooler
+have a rim at 2.22AU, the 10µm particles (right panel) at         than the iron-containing silicate grains.
+8                           Kama, Min, Dominik: The inner rim structures of protoplanetary discs
+
+
+
+
+Fig. 5. τ = 0.1, 1 and 10 radii of selected models. Total dust surface densities are given, and normalized abundances are
+tabulated. Cases with no scattering are given (black, upper lines), with isotropic scattering indicated for forsterite (18-
+20, dark gray, lower lines). The horizontal bars indicate the τ = 0.1 and 10 radii. Models 0 . . . 2 provide a comparison
+to surface density (3 . . . 13), size (14 . . . 17) and composition (18 . . . 26) variations.
+
+
+4.4. Small amounts of effienctly cooling or                       cooling efficiency of larger olivine grains is similar to that
+     ultra-refractory material                                    of iron.
+
+Small, 0.1µm grains of iron and corundum are more ef-                  Model 25 shows the effects of a mass abundance of
+ficiently cooling than olivine of the same size, and may          0.0001 of 0.1µm corundum grains in a disc of olivine of
+exist significantly closer to the star. The high refractivity     the same size. The corundum is significantly cooler than
+of corundum and iron provides another mechanism that              the olivine, as seen in Fig. 7. The rim has moved from
+allows grains to survive near the star.                           2.22AU (the 0.1µm olivine rim in model 0) to 1.57AU,
+                                                                  with an optically thin zone beginning already at 0.84AU,
+    A mass abundance of 0.0001 in 0.1µm iron grains pulls
+                                                                  i.e. covering ≈ 45% of the radial distance and 70% of the
+the rim of similarly sized olivine from 2.22AU to 1.63AU
+                                                                  surface area inside the τ = 1 radius.
+and gives rise to an optically thin zone covering ≈ 10%
+of the rim radius (model 21). While 0.1µm iron is cooler              Allocating corundum a mass fraction of 0.01 (model
+than olivine, it does not cool the inner disc as efficiently as   26), a rough upper limit based on the assumption that
+corundum does (see below and Fig. 7). A 10% abundance             the cosmic abundance of aluminium is all in corundum,
+of small iron pulls the rim to 0.71AU, but now the rim is         demonstrates that this species can draw the rim in con-
+very sharp (model 22), and the structure resembles that           siderably. Small, 0.1µm corundum grains draw the rim
+obtained with a 90/10 mass ratio of small and large olivine       in more efficiently than iron of the same size, both be-
+grains (model 15, see Fig. 6)                                     cause they are relatively more refractory at the low densi-
+   Adding an abundance as large as 10% of either 0.1              ties they have in these models (as low as 10−17 g/cm3 , see
+or 10µm iron particles to 10µm olivine (models 23 and             Fig. 2), and because they cool more efficiently at temper-
+24) has little effect on the rim location (model 1), as the       atures typical of dust sublimation.
+                           Kama, Min, Dominik: The inner rim structures of protoplanetary discs                                     9
+
+   A comparison of how small abundances of 0.1µm                 the highest sublimation temperature to determine the rim
+corundum and iron in a disc of identically sized olivine         location.
+cool the inner disc, and how their refractivity allows them          For a given cooling efficiency, the species with the high-
+to exist closer to the star, is presented as temperature         est sublimation temperature will determine the rim loca-
+maps of models 25, 21 and 22 in Fig. 7. Corundum (top            tion, again assuming a sufficient abundance of it is present.
+row) cools more efficiently than iron (e.g. middle row),         Corundum has been considered an ultra-refractory con-
+and with a further contribution from its high refractivity,      densate in discs, which it is if one assumes that all species
+it moves the rim to 1.57AU, closer to the star than an           have equal partial pressures. However, if the dust vapour
+identical mass abundance of iron, which is at 1.63AU. A          densities are taken equal, as in vertical slices in Fig. 2,
+10% mass abundance of small iron grains is sufficient for        corundum is more refractory at vapour densities ρvapour <
+them to dominate the rim structure and decrease the ra-          10−10 , but at ρvapour > 10−10 , the sublimation tempera-
+dius considerably, to 0.71AU. Due to the similar cooling         ture of iron is higher and increases rapidly. Hence, iron
+properties of 0.1µm iron and 10µm olivine grains, models         is the most likely dust species to be responsible for rim
+15 and 22 are similar.                                           temperatures above 1500K 2 .
+                                                                     The above points to the fact that if grain growth pro-
+                                                                 ceeds steadily and the dust has a complex composition fea-
+5. Discussion
+                                                                 turing efficiently cooling and refractory metal oxides such
+5.1. Modelling summary                                           as iron or corundum, the rim will exist close to the star, at
+                                                                 0.4AU or closer for a 47L Herbig star if Σd ≥ 100 g/cm2
+We have successfully employed the Monte Carlo radiative          (see Figures 5 and 8). Evidence for grain growth is pre-
+transfer code MCMax (Min et al. 2009) in modelling the           sented in e.g. van Boekel et al. (2004) and Herbst et al.
+inner rim structures of dusty passive protoplanetary discs.      (2008). Relatively large rim radii, for a star of the type
+    Results in Section 4 show that, especially for larger        used here Rrim > 2AU, are likely to arise as the inner
+grains, a rigorous treatment of dust sublimation and con-        disc is cleared of gas by the magneto-rotational instability
+densation, together with other rim physics in MCMax,             (Chiang & Murray-Clay 2007) or a planet, lowering the
+may not always lead to a stable solution for a solid dust        sublimation temperature. Dust may also be dynamically
+density and temperature distribution in a passive, static        cleared.
+disc framework.                                                      Surface density controls the rim location for a given
+                                                                                                               s=−1/24.4
+                                                                 grain size. This is described by a Rrim ∝ Σdust         power
+5.2. Where is the rim?                                           law in the sublimation-controlled regime and is illustrated
+                                                                 in Fig. 8. The low density ends of lines in Fig. 8 branch off
+The rims of MCMax disc models are generally between the          from the power law as there is insufficient mass to reach
+optically thin destruction and the backwarmed wall radii         τ = 1 at the dust evaporation location. An analytical de-
+(the Cbw = 1 and 4 radii, respectively). Grains can begin        scription of the rim location as a function of surface den-
+to attenuate the stellar radiation field from the Cbw = 1        sity for both the sublimation-controlled and optical depth
+location outward, allowing the rim to exist closer than a        controlled regimes is given in Eq. 3. It is a curve which
+fully backwarmed estimate. That the rim location could           branches from the power law and asymptotically becomes
+vary like this has been pointed out earlier (e.g. Monnier        parallel to the x-axis.
+et al. 2005), but we have explored the phenomenon in
+detail for the first time.
+                                                                                      "                                 −0.252
+    For a given dust species, larger grains will generally                                                         
+                                                                                                                    Cbw
+cool more efficiently and thus will set the rim location, but                Rrim =   C−p
+                                                                                       1    22.09Σ0.020
+                                                                                                  subl S1                       −
+                                                                                                                      
+only if they are present in sufficient abundance, as shown
+                                                                                                                            4
+in Figures 5 and 6. Large grains of olivine can exist much                                                 1+8.080p !#− 1+4p
+                                                                           1 + 4p −1−0.078p          Cbw       8
+closer to the star than small grains. A small, 0.0001 abun-           C2         Σsubl      S2                              [cm]
+dance of 10µm grains is enough to create an extended,                        κ0                       
+cool optically thin region in front of the rim, which is still                                                         (3)
+determined by 0.1µm grains. Allocating a fraction 0.1 of            This equation, derived in Appendix A, yields the
+the mass to large grains is sufficient for them to determine     curves seen in Fig. 8. κ0 is the dust opacity at 0.55µm,
+the rim location.                                                 2
+    It was noted by IN05 that the most refractory species            This is subject to the validity of the thermodynamic data
+                                                                 for iron from P94. Sublimation temperatures more than 200K
+would determine the rim location, if it was also able to
+                                                                 lower than this are found with data from Cameron & Fegley
+build up enough optical depth. They also pointed out that        (1982). However, P94 considered a protoplanetary nebula envi-
+for one species, the largest grains would position the rim       ronment, where iron-rich silicates and other species contribute
+under the same assumption. We add the generalization             to the vapour pressure of iron. They assumed a silicate to iron
+that refractivity and cooling efficiency combine to deter-       mass ratio similar to ours, therefore we use their results with
+mine the species which sets the rim radius. A very high          confidence but state that a full treatment of the multi-species
+cooling efficiency may allow a species which does not have       gas-grain equilibria is desired.
+10                          Kama, Min, Dominik: The inner rim structures of protoplanetary discs
+
+
+
+
+Fig. 6. Temperature (main) and density (insets) maps of disc inner regions for various olivine mixtures. The axes
+show radial distance from the star along the midplane and vertical height from it. The colour levels represent the
+dust temperature in steps of 100K, for reference we give solid lines at 500K and 1300K. Also shown are the radial
+(dashed) and vertical (dotted) τ = 1 surfaces for the stellar radiation. The inset maps have total solid dust density
+contours at factors 2.7, 10, 104 , 107 and 1010 below the maximum. The dust surface density in these models is
+Σg ≈ 1g/cm2 . A typical midplane dust density is 3 · 10−13 g/cm3 . In models with several dust species, the species are
+thermally decoupled, but radiative thermal equilibrium arises naturally deep inside the disc. Non-uniformities in the
+temperature maps reflect Monte Carlo noise and the resolution of the angular grid. Top row: Models of discs with
+one grain size. Shown is the dust temperature for discs with 0.1 (left panel) and 10µm (right panel) olivine grains
+(models 0 and 1 in Fig. 5). Middle row: A disc with a small to large grain mass ratio of 9999/1 (model 14). Given
+are the temperatures of the small, 0.1µm grains (left) and the larger, 10µm grains (right). Bottom row: A disc with
+a mass abundance ratio of 90/10 in small/large grains (model 15). We again give the temperatures of the 0.1µm grains
+(left) and 10µm grains (right) that co-exist in this disc.
+
+
+in cm2 /g. Note that the surface density profile is an-        pose it as an aid in interpreting more sophisticated nu-
+chored to Σsubl , its value at the sublimation radius, with    merical models, but also observations.
+a radial dependence of Σ ∝ R−p . The properties of the
+                                                                   The sublimation properties of olivine were used in the
+central star are hidden in S1 = M0.010   ?     L−0.252
+                                                ?      and
+          − 1+0.078p   1+8.080p                                above derivation. To use the presented formalism for any
+S2 = M?      2
+                 L? 8 . The constants are given by             dust species, a power law fit to Pollack et al. (1994) data
+                −6
+C1 = 4.1982 · 10 and C2 = 4.84 · 108 .                         should be obtained (Tsubl = GK (ρgas / [1g/cm3 ])γ , see
+                                                               also IN05 and compare with Eq. 1).
+    The good correspondence of the analytical curves de-
+scribed by the above equation with our numerical results          Omittances in the above analytical approach include
+shows that Eq. 3 captures the processes that are thought       the temperature dependence of the cooling efficiency,
+to dominate the rim location in dusty discs, and we pro-       (Tdust ), and the fact that partial condensation of dust
+                           Kama, Min, Dominik: The inner rim structures of protoplanetary discs                             11
+
+
+
+
+Fig. 7. Temperature (main) and density (insets) maps of disc inner regions for various grain mixtures. See Fig. 6
+for a detailed legend. Top row: A disc with an olivine to corundum mass abundance ratio of 9999/1. Shown are
+the temperatures of the 0.1µm olivine (left) and the 0.1µm corundum (right) grains. (Model 25 of Fig. 5, compare
+with model 0.) Middle panel: A disc with an olivine/iron mass abundance ratio of 9999/1 (model 21). Shown are
+the temperatures of the 0.1µm olivine (left) and iron (right) grains. Lower panel: A disc with an olivine/iron mass
+abundance ratio of 90/10 (model 22). Given are the temperatures of the 0.1µm olivine (left) and iron (right) grains.
+
+
+occurs in front of the τ = 1 location, i.e. the rim is always   5.3. Is the rim diffuse or sharp?
+somewhat diffuse. These two effects are the main culprits
+in the discrepancies between the numerical and analytical       The optically thin inner disc region is an important con-
+curves seen in Fig. 8.                                          cept. A τ < 1 region between Cbw = 1 and 4 is supported
+                                                                by any of three conditions: 1) a low surface density, 2)
+                                                                a high surface density but very low opacity, and 3) early
+   We use a flat dust surface density profile Σ ∝ R−p ,         stages of dust condensation in a cool region.
+where p = 0, in the inner disc, however Eq. 3 is generic            Condition 1 can be met by a low-abundance of a
+and allows to use the canonical p = 1 . . . 1.5. Furthermore,   species which is more refractory than the bulk of the dust,
+the sublimation location for a given surface density and        such as corundum (see model 25 in Fig. 5), or which can
+grain type is independent of the surface density power law.     cool relatively efficiently, such as large grains or iron (mod-
+                                                                els 14 and 21 in Fig. 5).
+                                                                    Condition 2 could be met by a dust type which is very
+    Used with observed rim radii, Eq. 3 may prove useful        transparent in the optical, but cools efficiently in the NIR.
+in estimating the surface density in the inner disc. For        If the scattering phase function of such a species is not
+this, the equation should be solved numerically for Σsubl ,     strongly forward-peaked, a population of grains closer to
+inserting the stellar properties and adopting constraints       the star than the rim (determined in this case by the sub-
+on the grain opacity and the surface density power law.         limation of another, more opaque species) could further
+12                          Kama, Min, Dominik: The inner rim structures of protoplanetary discs
+
+                                                                 5.5. Observational implications
+                                                                 The smallest observed characteristic rim radii for L? ≈
+                                                                 50L stars are around 0.2AU (Millan-Gabet et al. 2007).
+                                                                 These come from ring model fits to visibility curves. In the
+                                                                 framework of our models, such small radii require grains
+                                                                 of around 100µm to be present at dust surface densities of
+                                                                 Σd ≈ 100...2 g/cm2 (Fig. 5, in particular models 11 to 13).
+                                                                     It may be feasible to put a lower limit on the inner
+                                                                 rim surface density Σrim of a system with Eq. 3, under the
+                                                                 assumptions that a measured Rrim corresponds to Cbw ≈
+                                                                 1, and that Rrim is determined by the sublimation of grains
+                                                                 with  ≈ 1. The former is suggested by comparison of
+                                                                 the Monte Carlo and analytical results in Fig. 8, and the
+                                                                 latter reflects the assumption that large, efficiently cooling
+                                                                 grains will dominate the inner disc. One could then use a
+Fig. 8. Midplane rim locations and dust surface densi-           measured Rrim with the stellar luminosity and mass to
+ties for various sizes of olivine. Boxes represent the final     obtain a simple lower limit on the surface density.
+computed MCMax iteration, usually between 50 and 200.                Furthermore, it is interesting to assume that the
+The left solid line connects models with 100µm grains,           largest grains needed to satisfactorily fit the mid- to far-
+and the right 0.1µm. Dash-dotted lines represent analyti-        infrared SED of a system provide a lower limit on the size
+cal computations for the same grain sizes with Eq. 3 for         of the grains setting the location of the inner rim. Under
+Cbw = 1 and a dust temperature of 1500K. The dotted              this assumption, an upper limit for Σrim could be obtained
+line connects models with 10µm grains, and the dashed            by using the cooling efficiency  of these grains in Eq. 3.
+one 1000µm. Grain size variations: The rim radius Rrim           If we further assume that these grains dominate the rim
+changes by almost an order of magnitude for olivine grain        location instead of  ≈ 1 grains, we are again left with a
+size variations. Surface density variations: For a given         lower limit on Σrim .
+grain size, increasing the surface density decreases Rrim , in       Comparing these limits with observed disc masses and
+one limit as a power law (shown by the long-dashed line).        canonical Σ ∝ R−1...−1.5 power laws will constrain the
+Models for a given grain size follow irregular lines due to      difference between the inner and outer disc surface density
+variations between iterations (see Fig. 4).                      profiles.
+                                                                     Our results hold if the optical depth of gas in the inner
+                                                                 hole to stellar radiation is τg,?  1 and, relatedly, if accre-
+give rise to an extended hot radiation zone through scat-        tion can be neglected. If the gas continuum opacity in the
+tering.                                                          inner hole is τgas,? ≈ 1, shielding will decrease the dust
+    Condition 3 is met as a transient phenomenon in our          destruction radius by [exp (−1)]1/2 ≈ 20%, if the gas it-
+models, which allow dust to slowly condense into an ini-         self does not approach stellar temperatures. A hot gaseous
+tially empty inner disc, creating and then filling in an         component may give rise to NIR emission observed inside
+optically thin region, as illustrated by Fig. 4. Transient       the dust destruction radius in some systems (Eisner et al.
+heating events such as a powerful flares may destroy dust        2007; Tannirkulam et al. 2008b,a; Kraus et al. 2008; Isella
+in an inner disc region, which will subsequently go through      et al. 2008).
+a similar cycle of a transient extended optically thin zone          As Najita et al. (2009) have pointed out, modelling in-
+during dust re-condensation. It would be surprising to ob-       dicates that gas in the inner hole of a Herbig Ae/Be star
+serve long-lived sharp rims composed of only large grains.       should produce spectral features of CO and H2 O, but in-
+However, our modelling also indicates that adding several        stead a continuum process was found necessary to explain
+types of dust to a model makes the rim structure much            the compact NIR excess of MWC480. Potentially relevant
+more stable.                                                     opacity sources inside the classical dust sublimation ra-
+                                                                 dius include H2 O, H− , free-free emission and highly refrac-
+                                                                 tory or transparent dust species (e.g. Najita et al. 2009).
+5.4. Dust differentiation
+                                                                 However, even the most refractory species hypothesized to
+Differentiation of dust types can occur in the optically thin    exist in discs, such as corundum, are not expected to have
+region, where highly refractory or very efficiently cooling      a significant solid fraction inside the classical silicate dust
+species can exist independently of more volatile or less         sublimation radius.
+efficiently cooling species. Maintaining such an extensive           If a dust species is responsible for a extended hot emis-
+optically thin region in a disc with a diverse and broad dis-    sion component reaching from a few stellar radii to the
+tribution of grain sizes and compositions requires consid-       optically thick dust rim, it is likely to have low absorp-
+erable fine-tuning, thus sublimation-based differentiation       tion in the visible range and a high cooling efficiency in
+in a static disc is unlikely.                                    the NIR. Moreover, species with small absorption cross-
+                           Kama, Min, Dominik: The inner rim structures of protoplanetary discs                                   13
+
+sections and relatively isotropic scattering phase functions        ble. High surface densities move the rim closer to the
+in the visible or NIR regimes may play a role in creating           star.
+an extended radiating zone in the inner disc by scattering       3. The dust component (species or size) which determines
+stellar or rim emission.                                            the rim location by building up an optical depth of
+    Forsterite meets some of the above requirements, how-           unity closest to the star need not have the highest
+ever it is not able to cool efficiently in the NIR and thus         sublimation temperature, it may instead cool very ef-
+differs little from olivine in terms of rim structure, as seen      ficiently.
+in Fig. 5.                                                       4. If large particles are abundant enough to produce opti-
+                                                                    cal depth, then the rim location will be dominated by
+                                                                    silicates. If large particles are not abundant enough,
+5.6. Looking ahead                                                  corundum and iron grains will likely set the rim loca-
+To make full use of our work, observed SEDs and interfer-           tion. In either case, for our standard star, the rim lo-
+ometric visibilities (as opposed to rim radii derived from          cation is typically around 0.4 AU, much smaller than
+them under various assumptions) need to be fitted simul-            models for 0.1µm silicate grains would predict.
+taneously with MCMax or a similarly capable code. A              5. For any given grain material and size, the rim location
+paper focussing on the observational applications of our            can be analytically expressed as a function of stellar
+models is in preparation. We are performing a study of              properties and of surface density. We give this expres-
+the extreme values of observables that can be obtained              sion in full form for a silicate-dominated rim.
+with static dust models, as well as simultaneously fitting       6. The optically thin region can cover 70% of the surface
+the SEDs and visibilities of specific objects.                      inside the rim radius in cases where a very efficiently
+    We are actively exploring whether the fractional NIR            cooling or highly refractory species is present in low
+excesses of our models provide a source of additional infor-        abundance compared to the less efficiently cooling or
+mation about the inner disc surface density and/or grain            more volatile bulk of the dust.
+type. As fNIR varies with iteration as well as grain, disc       7. In the case of very low surface densities, the build-up
+and stellar properties, a better handle on the variability          of optical depth will be slow, and the rim region will
+of the rim is needed before this fraction is useful.                be very diffuse.
+    Rim temperatures obtained from NIR SED-fitting and
+limits on inner disc gas densities would increase the use-
+fulness of Eq. 3 in constraining the amount and type of          Appendix A: Analytical relation between rim
+dust in the rim region.                                                      radius and surface density
+    We support the conclusion, overlapping in part with
+                                                                 The rim location for a given grain type is a function of
+Monnier et al. (2005), that detailed modelling of multi-
+                                                                 surface density at the rim location, as seen in Fig. 8. At
+species condensation and sublimation processes, as well as
+                                                                 high surface densities, this dependence is a power law.
+simultaneous treatment of radiative transfer in the gas and
+                                                                 This power law relation is a limiting case of a more gen-
+dust components, is needed to make further progress on
+                                                                 eral relation describing the τ = 1 location as a function
+the numerical side, and encourage gas and dust modellers
+                                                                 of surface density. At low surface densities, the rim loca-
+to join efforts.
+                                                                 tion moves away from the dust sublimation radius as not
+                                                                 enough dust is available there to reach an optical depth of
+6. Conclusions                                                   unity.
+                                                                     The calculations that follow use the cgs system of
+We have demonstrated a wide range of possible inner rim          units. This is important to keep in mind when using the
+structures in a parameter study of grain size, composition       final expressions, where everything is implicit except the
+and dust surface density, as well as multiple grain type         relevant characteristics of the dust, the disc and the star.
+models. To do this, we implemented dust sublimation and
+condensation physics into a fast Monte Carlo radiative
+transfer code. Here, we outline our main conclusions:            A.1. Sublimation-controlled regime
+                                                                 We assume initially that the rim is at the dust destruction
+1. The inner rim in dusty discs is not an infinitely sharp
+                                                                 location, Rrim ≡ Rsubl , and wish to describe this radius as
+   wall. Backwarming effects combine with sublimation
+                                                                 a function of dust surface density, Σd = Σgas /fgd , where
+   and condensation in leading to a diffuse region that can
+                                                                 fgd = 100 is the gas to dust ratio. Assuming the minimal
+   extend over a significant fraction of the rim radius. In
+                                                                 rim radius is at the dust sublimation location, with Cbw =
+   our treatment, dust generally begins to condense near
+                                                                 1, we first express the temperature of a grain at the rim
+   the Cbw = 1 location and the τ = 1 surface is closer to
+                                                                 radius from Eq. 2:
+   the star than in previous models.
+2. The inner disc surface density of a given species is an
+                                                                                               14            14
+   important parameter, because it determines the high-                                  Cbw             L?             −1
+   est possible temperature where the species can be sta-                     Td =                                    Rsubl
+                                                                                                                         2
+                                                                                                                            ,   (A.1)
+                                                                                                       16πσ
+14                           Kama, Min, Dominik: The inner rim structures of protoplanetary discs
+
+     where Cbw is the backwarming factor,  the cooling            κ0 is the mass absorption coefficient of the dust at 0.55µm.
+efficiency of the grain and L? the luminosity of the star.         ρd (R), the radial run of dust density, is obtained by mul-
+This expression assumes the disc is optically thin until the       tiplying Eq. A.2 with a factor Σsubl (Rsubl /R)−p . This is
+rim radius.                                                        a surface density power law fixed at the sublimation lo-
+     Further assuming that the gas and dust are in thermal         cation, i.e. Σsubl and Rsubl obey Eq. A.4. Assuming some
+equilibrium, their scaleheights will be the same and we can        power p relates the rim radius to the surface density at
+relate the midplane dust density ρd to the dust surface            the sublimation location.
+density via                                                            Employing Eq. A.4 for Rsubl and inserting physical
+                                                                   constants, we are left with the following description of
+                 Z ∞                                               the rim location:
+                                      z2
+                                        
+     Σd (Rrim ) =    ρd (Rrim ) exp − 2 dz,                (A.2)
+                  −∞                 2h                                              "                          −0.252
+                                                                                                             Cbw
+    where z is the vertical distance from the midplane and                   Rrim =   C−p
+                                                                                       1    22.09Σ   0.020
+                                                                                                       S1                  −
+                               1/2 3/2                                                                         
+h is the scaleheight, h ∝ Td Rrim . Integrating Eq. A.2
+                                                                                                                     4
+                                                                                                               !#− 1+4p
+and replacing the temperature with Eq. A.1, we obtain a                                             1+8.080p
+relation connecting Σd (Rrim ), ρd (Rrim ) and Rrim .                     1 + 4p −1−0.078p      Cbw      8
+                                                                       C2        Σ         S2                           [cm]
+    Using the IN05 power law fit to the sublimation law of                  κ0                   
+olivine, we can write                                                                                                     (A.6)
+                                                                       This equation yields the curves seen in Fig. 8. P re-
+                                               0.0195            lates to the surface density power law as P = (1 + 4p)/4
+                                    ρd fgd                         and the properties of the central star are hidden in
+      Td ≡ Tsubl = 2000                     .              (A.3)
+                                ad · 1g/cm3                        S1 = M0.010    L?−0.252 and S2 = M?
+                                                                                                             − 1+0.078p
+                                                                                                                2
+                                                                                                                    L? 8 .
+                                                                                                                          1+8.080p
+
+                                                                             ?
+   Here, the bulk gas density, used by IN05 in fitting,            The constants are given by C1 = 4.198 · 10−6 and
+has been broken into the dust density ρd , abundance of            C2 = 4.84 · 108 . It is important to keep in mind that the
+the species ad and the gas to dust ratio fgd . Taking the          sublimation properties of olivine were used in the above
+appropriate abundance from P94, we obtain the relation:            derivation.
+
+
+                       L0.53
+                        ?
+                                  
+                                      Cbw
+                                            0.53                  Appendix B: Differences from IN05 and
+       Rsubl = C1    0.04                           [cm]   (A.4)               Tannirkulam et al. (2007)
+                    Σd M0.02?          
+                                                                   In modelling discs parametrized identically with those of
+    This power law, where C1 = 4.198·10−6 , describes the
+                                                                   Isella & Natta (2005, IN05), we find systematically smaller
+minimum radius where dust can condense as a function
+                                                                   rim radii. The main reasons are that the IN05 formalism
+of the surface density at that location. Note that if one
+                                                                   yields a higher optically thin dust temperature and a lower
+assumes full condensation of the dust, backwarming will
+                                                                   sublimation temperature than the treatment used in this
+move the rim further, an effect which can be explored
+                                                                   work, as discussed below. A similar study by Tannirkulam
+by varying Cbw . A more general expression for the rim
+                                                                   et al. (2007, T07), which we also comment on, found re-
+location is formulated below.
+                                                                   sults different from both this work and IN05.
+                                                                       We find rim radii smaller than those of both IN05 and
+A.2. Optical depth controlled regime                               T07 and for all modelled grains, i.e. 0.1, 0.5 and 1.3µm
+                                                                   astronomical silicate. As seen in Fig. B.1, the relative dif-
+The inner rim is defined as the radial τ = 1 location for
+                                                                   ference increases with grain size, from ∆Rrim ≈ 10%RIN05
+a stellar photon at λ = 0.55µm. For high surface densi-
+                                                                   for 0.1µm grains to ∆Rrim ≈ 35%RIN05 for 1.3µm.
+ties and under the assumptions of full condensation and
+                                                                       The IN05 disc model uses the radiative transfer equa-
+Cbw = 1, this corresponds closely to the dust destruc-
+                                                                   tion given by Calvet et al. (1991) for a semi-infinite slab to
+tion radius. However, the lower the surface density, the
+                                                                   get a radial temperature structure inside the rim, and then
+longer the distance along the midplane that photons have
+                                                                   calculates the vertical structure as in CG97 and DDN01.
+to travel to reach an optical depth of unity. Thus, at rela-
+                                                                   A gas to dust ratio of 100 is used, and the total disc mass
+tively low surface densities, one predicts (and our numeri-
+                                                                   is distributed according to a Σ ∝ R−1.5 surface density
+cal results show) a turn-off from the power law of Eq. A.4.
+                                                                   power law extending from Rin = 0.1AU to Rout = 200AU.
+    We begin by integrating the optical depth through dust
+                                                                   The dust opacity determines the temperature and verti-
+radially along the midplane:
+                                                                   cal structures, and the gas density is used to compute the
+                            Z Rrim                                 dust sublimation temperature and thus governs dust sub-
+                        0
+                  τ =κ               ρd (R)dR.             (A.5)   limation.
+                             Rsubl                                     To obtain a law for the dependence of the dust sub-
+   Here, Rsubl is the dust destruction radius of Eq. A.4,          limation temperature on gas density, IN05 fitted Eq. A.3
+Rrim is the rim radius, for which one assumes τ = 1, and           to data from P94. The fitted points were Tsubl of olivine
+                            Kama, Min, Dominik: The inner rim structures of protoplanetary discs                          15
+
+
+
+
+Fig. B.1. Radial τ = 1 results for the IN05 disc models           Fig. B.2. Midplane dust temperature structures for an
+(dashed lines) and the same discs modelled with MCMax             MCMax model of the IN05 disc with 0.1µm astronomical
+(solid lines). Grain size goes from left to right as 1.3 and      silicate grains. The MCMax dust temperature structure
+0.1µm. A systematic difference in radius is evident.              (solid line) is seen to drop more rapidly, and is signif-
+                                                                  icantly cooler, in the rim region than the estimate ob-
+                                                                  tained for the same density structure with the radiative
+                                                                  transfer equation used by IN05 (dashed line). The ∼ 50K
+(olivine is used interchangeably with astronomical silicate
+                                                                  difference between our estimate of the dust sublimation
+in this appendix, as the two are assumed to differ in opti-
+                                                                  temperature (dotted line) and that of IN05 (dash-dotted
+cal, and not in sublimation properties) and ρgas , the bulk
+                                                                  line) is also clear. In the MCMax model, the rim radius
+gas density. Because the grain-gas equilibrium is main-
+                                                                  is at 1.05AU. The intersection of the extrapolated opti-
+tained by the partial pressure of olivine, this approach
+                                                                  cally thin temperature curves and the Tsubl computed by
+yields a Tsubl = T(ρgas ) law which is applicable only to
+                                                                  IN05 is at ∼ 1.16AU. Inside the rim, the MCMax dust
+gas of the same composition as that of P94. By applying
+                                                                  temperature and that computed using the IN05 radiative
+this law to a disc with a purely olivine dust composition,
+                                                                  transfer equation coincide better in later iterations, when
+IN05 obtained lower sublimation temperatures than us, as
+                                                                  more dust has condensed there and made the rim struc-
+discussed next.
+                                                                  ture more similar to a wall.
+    P94 supplied the fractional mass abundances of the
+species in their gas. For olivine, it is 0.00264, i.e. 26.4%
+of the dust mass, assuming a gas to dust ratio of 100.                The above is illustrated by Fig. B.2, which gives vari-
+Thus, in the IN05 approach, olivine contributes 100% of           ous temperatures in the rim region of an IN05 comparison
+the dust mass, but the sublimation temperature is com-            disc with 0.1µm grains, modelled with MCMax. The dash-
+puted from the bulk gas density under the assumption              dotted line is the sublimation temperature computed and
+that there is 100/26.4 times less olivine present, leading        used in MCMax, according to our fit to P94 data. The
+to a correspondingly lower Tsubl . This underlies our choice      dotted line, seen to lie ∼ 50K below the previous, shows
+to reduce the sublimation law to a dependence of Tsubl on         Tsubl calculated from the same density structure using the
+the vapour density of the species, ρvapour , and not the          IN05 sublimation law.
+bulk gas – by doing so, we may use the law for all nebular            To use the IN05 law generally, a “dummy” bulk gas
+compositions3 .                                                   density can be calculated from an olivine density using
+    Fitting the P94 data for the olivine gas density re-          both the P94 olivine abundance of 0.00264 and fgd = 100.
+moved its abundance from our Tsubl law, allowing us to            This density can be used in Eq. A.3 to obtain Tsubl . We do
+compute the olivine sublimation temperature for any mass          this when using Eq. A.3 in Appendix A, obtaining results
+abundance. In an identical disc with pure olivine dust and        which match our numerical models very well.
+fgd = 100, we obtain higher sublimation temperatures                  For radiative transfer, IN05 adopted the approach of
+than IN05, because for the same bulk gas density, pure            Calvet et al. (1991). The disc is assumed to be an irradi-
+olivine can maintain equilibrium at a higher temperature          ated semi-infinite slab. A temperature structure derived
+than that given by the law IN05 used.                             from this overestimates the disc temperature, because a
+                                                                  semi-infinite slab can only cool in one direction, but a
+ 3
+    This is valid under the assumption that olivine is the only   disc has a finite height. Two dust temperature profiles
+species contributing to its own gas pressure. While this is not   are given in Fig. B.2, one from MCMax (solid line) and
+the case as there is no gas phase olivine molecule, it is the     the other computed for the same density structure us-
+best we can do at present if we wish to model discs with a        ing Eq.1 of IN05 (dashed line). The IN05 approach over-
+composition different from the P94 nebula.                        estimates the temperature inside the rim compared to a
+16                         Kama, Min, Dominik: The inner rim structures of protoplanetary discs
+
+Monte Carlo computation. The backwarming factor as de-                 in MCMax, leading to further variations in rim location
+fined in Sec. 3.3 is useful in understanding this, as we will          which we are presently unable to quantify.
+now discuss.
+    The expression derived by IN05 (their Eq.6) from C91               Appendix C: Numerical implementation
+for the optically thin dust temperature is
+                                               2                   In this appendix we discuss the numerical implementation
+                                    1        R?                        of the sublimation physics described previously. We find
+     T4 (τd = 0) ≡ T40 =       2µ +                    T4? ,   (B.1)
+                                            2r                        that great care has to be taken in order to avoid instabil-
+                                                                       ities or incorrect results. The iterative scheme described
+    where T0 is the dust and Tstar the stellar temperature,            below is accompanied by a careful regridding of the spa-
+r the distance from the star, R? the stellar radius, µ is the          tial grid after each iteration to make sure that the optical
+sine of the incidence angle of starlight on the rim, and              depth through the disc is always sampled properly, allow-
+the cooling factor as defined before.                                  ing for accurate radiative transfer. Although the negative
+    Comparing Eq.B.1 to Eq.2, taking µ ≈ 1, we see that                effects of a somewhat less optimized spatial grid are not
+a backwarming factor of Cbw = 2√+ 1 is implicit in the                always evident at first sight, we find that the influence
+IN05 calculation. Because Rrim ∝ Cbw , the IN05 subli-                 on the temperature structure is significant and a proper
+mation locations
+            √      can be further than our estimates by up             spatial grid is of crucial importance for a proper imple-
+to a factor 2 + 1 for any given grain type (to relate this            mentation of the sublimation physics.
+to rim radii derived from interferometry, see Eq.5 and 6
+of Isella et al. 2006). Using Cbw () in Eq. A.6 decreases
+differences with IN05 considerably (from 10% to 4% of
+                                                                       C.1. Iterative method
+RIN05 for 0.1µm grains). However, as the comparison of                 A straightforward iterative implementation of dust evapo-
+results from such a Cbw and our Monte Carlo calculations               ration and recondensation does not always result in a sta-
+has shown, this assumption generally overestimates the                 ble solution for the dust density structure. This is because
+backwarming factor at the sublimation location.                        of the high optical depths through the disc and the highly
+    Midplane temperatures of a disc parametrized like an               nonlinear radiative transfer effects resulting from it. In ad-
+IN05 model with 0.1µm astronomical silicate are presented              dition, changing the dust density in one region of the disc
+in Fig. B.2. Extrapolating the optically thin dust temper-             affects the temperature structure at other places, making
+ature curves (solid and dashed lines) to an intersection               the problem highly non-local. For example, the conden-
+with the IN05 sublimation temperature curve for the same               sation of a tiny fraction of the available dust material in
+density structure (dotted line), and taking into account               the inner region can already make the region in which this
+the overestimated backwarming at the sublimation loca-                 material was condensed optically thick, enhancing the ef-
+tion, one sees how in MCMax, the inner rim is situated                 fects of backwarming and thereby lifting the temperature
+at 1.04AU and how it would be close to 1.16AU under                    of the grains above the evaporation temperature again. At
+the radiative transfer and dust sublimation assumptions                the same time, the region behind it is shielded and there
+of IN05.                                                               dust can condense. This causes situations where the den-
+    Monte Carlo radiative transfer was used by T07 to                  sity flips between two configurations which are both not
+model discs parametrized like those of IN05, obtaining                 the equilibrium solution. Thus, care has to be taken not
+rim radii larger than the MCMax results in all cases,                  to condense too much material in a single iterative step.
+but smaller than IN05 for 1.2µm grains, and larger than                However, the other extreme, condensing only so much ma-
+IN05 for 0.1µm. The T07 shift from MCMax seems to                      terial such that the change in optical depth is smaller than
+be due mostly to their use of the IN05 dust sublima-                   unity, requires a massive number of iterations which is un-
+tion law, i.e. a low Tsubl , and a more basic treatment of             feasible given the computation time required per iteration.
+dust sublimation and the associated numerical instabil-                    Therefore, one must take care that the amount of ma-
+ities (A.Tannirkulam, personal communication; see also                 terial condensed or evaporated in a single iteration is not
+Appendix C). It is not clear whether the latter accounts               too small or too large. We have considered several differ-
+for the changed order of rim radii for small and large grains          ent schemes for deciding how much dust to add or remove.
+between IN05 and TORUS (used by T07).                                  The scheme we found to be the best tradeoff between sta-
+    In summary, compared to the treatment in the present               bility and speed decides how much dust to condense or
+work, the IN05 formalism leads to higher optically thin                evaporate according to how close the temperature of the
+temperatures because of the assumptions implicit in the                dust species is to its evaporation temperature. In this way,
+radiative transfer, and lower sublimation temperatures for             it is possible to take large steps when the solution is far
+pure olivine or astronomical silicate dust because of an               from equilibrium, while the size of the steps is automat-
+inconsistent use of the dust density. These factors ex-                ically decreased when the solution is locally approached.
+plain their comparatively larger inner rim radii. The work             The method is outlined below.
+of T07 adopted the IN05 sublimation law with its im-                       The parameter we want to determine at every location
+plications for the rim radii, and the treatment of subli-              in the disc is the gas fraction of each species i, γi . The
+mation and condensation in TORUS is more basic than                    gas fraction is defined as the fraction of the total available
+                           Kama, Min, Dominik: The inner rim structures of protoplanetary discs                            17
+
+material for forming dust grains of species i that is in the        First we take the temperature structure as obtained by
+gas phase. Thus γi = 1 means dust species i is totally          Eq. (3) with an initial guess for Cbw (usually unity), ig-
+evaporated, while γi = 0 means all the material is in the       noring the thermal radiation and extinction of the stellar
+solid phase.                                                    radiation by other dust grains. This temperature struc-
+    In order to determine γi at each location in the disc       ture can then be used to compute the gas fraction at each
+we first compute the temperature structure for the initial      location in the disc, and from this we setup the first esti-
+guess of the dust density structure (see section C.2 be-        mate for the density structure. We then do a full radiative
+low). From this we compute using Eq. (1) the partial gas        transfer run through this density structure obtaining a
+pressure needed to counter the evaporation at each loca-        temperature at each location. We use this to determine
+tion in the disc. This gives the equilibrium gas fraction at    Cbw at the inner rim. Again we use Eq. (3) to determine
+this temperature, γi,0 . We also compute the sublimation        the temperature at each location in the disc using the new
+temperature at each location, Tsubl and the temperature         value for Cbw . This will result in a slightly different loca-
+of the grains in the optically thin approximation, Tthin .      tion of the inner rim. We iterate this procedure several
+The new gas fraction is then given by,                          times to get a proper value for Cbw and thereby a good
+                                                                estimate for the location of the inner rim. After this we
+             γi,new = fw γi,0 + (1 − fw )γi,old ,      (C.1)    proceed with the iterative scheme as described in the pre-
+                                                                vious section.
+   where the weighting factor fw is taken as,
+
+                                                                C.3. Restrictions on the gas fraction gradients
+                   q                q
+          T − Tsubl   Tthin − Tsubl
+                                         for T < Tsubl
+       
+       
+       
+        T + Tsubl
+       
+                     Tthin + Tsubl                             The location of the inner rim as a function of height in
+  fw =                                                          the disc is to a large extend determined by the local back-
+                (                   2 )
+       
+       
+                       
+                         Tsubl − T                              warming efficiency and the density of dust forming ma-
+        1 − exp −400                    for T > Tsubl
+       
+       
+                                                               terial. In the midplane of the disc the density is highest
+                            T    subl
+                                                                which causes the sublimation temperature to be highest
+                                                        (C.2)   and the rim radius to be small at this height. However,
+    The parameter q determines how fast the condensa-           due to the heigh density the backwarming efficiency at the
+tion of dust can take place and is adjusted such that the       midplane is also highest, which causes the rim to retreat
+increase in optical depth up to the τ = 1 surface as seen       to larger radii. When this retreating effect of backwarming
+by direct stellar radiation is always less than 10 % (i.e.      wins from the effect of a higher sublimation temperature,
+∆τ < 0.1). The second term in the equation for fw for           the rim radius at the midplane will be slightly larger than
+T < Tsubl ensures that in the region just outside the first     just above it causing a ’hole’ in the disc. Inside this hole
+few optical depths the condensation of material is not too      the dust is irradiated from almost all sides, causing the ef-
+fast. The temperature in these regions is quite low and if      fect of backwarming to increase even further and the rim
+this term is not taken into account, the shielded regions       to retreat even further. This is a runaway effect which,
+will form so much dust that it will again start heating         in the end, causes the entire disc to retreat to large radii.
+the region in front of it, causing another instability. By      When this has happened, in front of this rim the tempera-
+adding dust slowly also in these regions, the overall sta-      tures are low and dust can start forming again. This cycle
+bility of the method is increased significantly. Removal of     repeats and no stable solution is found.
+dust grains when the temperature is too high is done much
+faster than recondensation. This ensures that during the            The above instability might be a physical effect which
+iterative process only a tiny fraction of the dust grains has   can emerge in a time-dependend treatment of the problem.
+a temperature above the sublimation temperature.                However, we do not pursue this in this paper. Therefore,
+    Together with the sublimation and recondensation of         we restrict the gas fraction gradient to avoid triggering this
+dust in the disc, we also determine the vertical density        instability. We restrict the gas fraction to be monotonously
+profile of the disc from hydrostatic equilibrium.               increasing with increasing height above the midplane. In
+                                                                this way we avoid the formation of a hole in the disc.
+
+C.2. Initial guess                                                 Another problem which might arise from the iterative
+                                                                procedure explained above is that the destruction of dust
+The success of most iterative schemes depend heavily on         proceeds faster in the region which is effectively back-
+the initial guess. This is also true for the iterative scheme   warmed than in the optically thin region in front of it.
+described above. Especially the estimate for the location       This might cause the fraction of condensed material to
+of the start of the inner rim as a function of height above     decrease with increasing radius. This solution turns out
+the midplane is of crucial importance for the success of        to be unstable, and in addition we consider it to be an
+the computation. We compute the initial guess for the dust      unlikely physical solution. Thus, to avoid this we restrict
+density structure using analytic consideration as described     the gas fraction to be monotonously decreasing with in-
+below.                                                          creasing radius.
+18                         Kama, Min, Dominik: The inner rim structures of protoplanetary discs
+
+   Note that by restricting the gas fraction in the ways         Kenyon, S. J. & Hartmann, L. 1987, ApJ, 323, 714
+described above we force the rim to have the curved shape        Koike, C., Kaito, C., Yamamoto, T., et al. 1995, Icarus,
+we see in the paper. However, other structures we have             114, 203
+found have in all cases turned out to be unstable, thus we       Kraus, S., Preibisch, T., & Ohnaka, K. 2008, ApJ, 676,
+consider the curved rim a robust solution.                         490
+                                                                 Lada, C. J. & Adams, F. C. 1992, ApJ, 393, 278
+Acknowledgements. The authors thank the anonymous ref-
+                                                                 Lamy, P. L. 1974, A& A, 35, 197
+eree for providing constructive comments, which significantly
+                                                                 Lenzuni, P., Gail, H.-P., & Henning, T. 1995, ApJ, 447,
+helped to improve the paper. M.Kama gratefully acknowl-
+edges support from the Netherlands Organisation for Scientific     848
+Research (NWO) grant number 021.002.081 and from an HSP          Lucy, L. B. 1999, A& A, 344, 282
+Huygens Scholarship. M.Min acknowledges financial support        Mannings, V. & Sargent, A. I. 1997, ApJ, 490, 792
+from NWO through a Veni grant.                                   McCaughrean, M. J. & O’dell, C. R. 1996, AJ, 111, 1977
+                                                                 Meeus, G., Waters, L. B. F. M., Bouwman, J., et al. 2001,
+                                                                   A& A, 365, 476
+References
+                                                                 Millan-Gabet, R., Malbet, F., Akeson, R., et al. 2007, in
+Adams, F. C., Lada, C. J., & Shu, F. H. 1987, ApJ, 312,            Protostars and Planets V, ed. B. Reipurth, D. Jewitt,
+   788                                                             & K. Keil, 539–554
+Bjorkman, J. E. & Wood, K. 2001, ApJ, 554, 615                   Min, M., Dullemond, C. P., Dominik, C., de Koter, A., &
+Bohren, C. F. & Huffman, D. R. 1983, Absorption and                Hovenier, J. W. 2009, ArXiv e-prints
+   scattering of light by small particles (New York: Wiley,      Min, M., Hovenier, J. W., & de Koter, A. 2003, A& A,
+   1983)                                                           404, 35
+Burrows, C. J., Stapelfeldt, K. R., Watson, A. M., et al.        Min, M., Hovenier, J. W., & de Koter, A. 2005, A& A,
+   1996, ApJ, 473, 437                                             432, 909
+Calvet, N., Magris, G. C., Patino, A., & D’Alessio, P. 1992,     Monnier, J. D., Millan-Gabet, R., Billmeier, R., et al.
+   Revista Mexicana de Astronomia y Astrofisica, 24, 27            2005, ApJ, 624, 832
+Calvet, N., Patino, A., Magris, G. C., & D’Alessio, P. 1991,     Najita, J. R., Doppmann, G. W., Carr, J. S., Graham,
+   ApJ, 380, 617                                                   J. R., & Eisner, J. A. 2009, ApJ, 691, 738
+Cameron, A. G. W. & Fegley, M. B. 1982, Icarus, 52, 1            Natta, A., Prusti, T., Neri, R., et al. 2001, A& A, 371, 186
+Chiang, E. & Murray-Clay, R. 2007, Nature Physics, 3,            Pollack, J. B., Hollenbach, D., Beckwith, S., et al. 1994,
+   604                                                             ApJ, 421, 615
+Chiang, E. I. & Goldreich, P. 1997, ApJ, 490, 368                Rydgren, A. E. & Zak, D. S. 1987, Proc.Astr.Soc.Pacific,
+Dominik, C., Dullemond, C. P., Waters, L. B. F. M., &              99, 141
+   Walch, S. 2003, A& A, 398, 607                                Schick, H. L. 1960, Chemical Reviews, 60, 331
+Dominik, C., Sedlmayr, E., & Gail, H.-P. 1993, A& A,             Servoin, J. L. & Piriou, B. 1973, Phys. Status Solidi (B),
+   277, 578                                                        55, 677
+Dorschner, J., Begemann, B., Henning, T., Jaeger, C., &          Smithells, C. J. 1967, Metals Reference Book
+   Mutschke, H. 1995, A& A, 300, 503                               (Butterworths)
+Draine, B. T. & Lee, H. M. 1984, ApJ, 285, 89                    Tannirkulam, A., Harries, T. J., & Monnier, J. D. 2007,
+Dullemond, C. P. & Dominik, C. 2004, A& A, 417, 159                ApJ, 661, 374
+Dullemond, C. P., Dominik, C., & Natta, A. 2001, ApJ,            Tannirkulam, A., Monnier, J. D., Harries, T. J., et al.
+   560, 957                                                        2008a, ApJ, 689, 513
+Dullemond, C. P., Hollenbach, D., Kamp, I., & D’Alessio,         Tannirkulam, A., Monnier, J. D., Millan-Gabet, R., et al.
+   P. 2007, in Protostars and Planets V, ed. B. Reipurth,          2008b, ApJL, 677, L51
+   D. Jewitt, & K. Keil, 555–572                                 van Boekel, R., Min, M., Leinert, C., et al. 2004, Nature,
+Duschl, W. J., Gail, H.-P., & Tscharnuter, W. M. 1996,             432, 479
+   A& A, 312, 624                                                Zemansky, M. W. 1968, Heat and Thermodynamics
+Eisner, J. A., Chiang, E. I., Lane, B. F., & Akeson, R. L.         (McGraw-Hill Kogakusha, Ltd.), 346–356
+   2007, ApJ, 657, 347
+Eisner, J. A., Graham, J. R., Akeson, R. L., & Najita, J.
+   2009, ApJ, 692, 309
+Eisner, J. A., Lane, B. F., Hillenbrand, L. A., Akeson,
+   R. L., & Sargent, A. I. 2004, ApJ, 613, 1049
+Herbst, W., Hamilton, C. M., Leduc, K., et al. 2008,
+   Nature, 452, 194
+Isella, A. & Natta, A. 2005, A& A, 438, 899
+Isella, A., Tatulli, E., Natta, A., & Testi, L. 2008, A& A,
+   483, L13
+Isella, A., Testi, L., & Natta, A. 2006, A& A, 451, 951
+

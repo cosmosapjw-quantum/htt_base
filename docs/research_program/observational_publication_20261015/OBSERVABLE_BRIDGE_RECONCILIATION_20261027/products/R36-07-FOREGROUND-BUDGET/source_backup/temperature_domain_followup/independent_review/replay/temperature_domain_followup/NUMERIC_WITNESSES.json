@@ -1,0 +1,426 @@
+{
+  "task_id": "R36-07-FOREGROUND-BUDGET",
+  "followup": "temperature_domain_followup",
+  "status": "CONDITIONAL_THEORY_WITNESSES_ONLY",
+  "kinematic_floor": [
+    {
+      "speed_over_c": 0.0,
+      "gamma": 1.0,
+      "grey_equilibrium_Trest_over_local_CMB": 1.0,
+      "receding_grey_Tobs_K": 2.7255,
+      "general_bounded_speed_floor_K": 2.7255
+    },
+    {
+      "speed_over_c": 0.001,
+      "gamma": 1.0000005000003749,
+      "grey_equilibrium_Trest_over_local_CMB": 1.0000003333335,
+      "receding_grey_Tobs_K": 2.7227767689806788,
+      "general_bounded_speed_floor_K": 2.720054445554446
+    },
+    {
+      "speed_over_c": 0.01,
+      "gamma": 1.0000500037503126,
+      "grey_equilibrium_Trest_over_local_CMB": 1.0000333350001296,
+      "receding_grey_Tobs_K": 2.6984698728643233,
+      "general_bounded_speed_floor_K": 2.6715297029702962
+    },
+    {
+      "speed_over_c": 0.5,
+      "gamma": 1.1547005383792517,
+      "grey_equilibrium_Trest_over_local_CMB": 1.096289389328686,
+      "receding_grey_Tobs_K": 1.7250860757423327,
+      "general_bounded_speed_floor_K": 0.9084999999999995
+    },
+    {
+      "speed_over_c": 0.9,
+      "gamma": 2.294157338705618,
+      "grey_equilibrium_Trest_over_local_CMB": 1.6079129389114872,
+      "receding_grey_Tobs_K": 1.0053838760123954,
+      "general_bounded_speed_floor_K": 0.1434473684210526
+    },
+    {
+      "speed_over_c": 0.9999,
+      "gamma": 70.71244595191452,
+      "grey_equilibrium_Trest_over_local_CMB": 9.03602004174706,
+      "receding_grey_Tobs_K": 0.17414829693299724,
+      "general_bounded_speed_floor_K": 0.00013628181409065527
+    }
+  ],
+  "passive_temperature_floor_K": 2.7255,
+  "bounded_u_domain_K_inverse": [
+    0,
+    0.36690515501742804
+  ],
+  "MBB_uniform_passband_lower": {
+    "beta0": 1.5,
+    "a_minus": 6.762956161511272,
+    "b_plus": 0.8974383525556258,
+    "Haslam_nominal_m_SI_per_K_CMB353": 1.5572046759506683e-28,
+    "DIRBE_lower_m_MJy_sr_per_K_CMB353": 0.15768847104209432,
+    "proof": "g=f(h ref u/k)/f(h nu u/k), f(x)=expm1(x)/x, monotone in u with sign(ref-nu); extrema are T_floor and infinity; Jensen after uniform lower response.",
+    "numeric_checks": [
+      {
+        "T_K": 2.7255,
+        "DIRBE_baseline_response_MJy_sr_per_K_CMB353": 0.15768847104209432,
+        "original_t": -0.863725,
+        "original_tt_over_2": 0.3730104378125,
+        "inverse_u_K_inverse": 0.36690515501742804,
+        "normalized_inverse_coordinate_20u": 7.338103100348561
+      },
+      {
+        "T_K": 3.0,
+        "DIRBE_baseline_response_MJy_sr_per_K_CMB353": 0.3787329301414919,
+        "original_t": -0.85,
+        "original_tt_over_2": 0.36124999999999996,
+        "inverse_u_K_inverse": 0.3333333333333333,
+        "normalized_inverse_coordinate_20u": 6.666666666666667
+      },
+      {
+        "T_K": 20.0,
+        "DIRBE_baseline_response_MJy_sr_per_K_CMB353": 6071.957730335562,
+        "original_t": 0.0,
+        "original_tt_over_2": 0.0,
+        "inverse_u_K_inverse": 0.05,
+        "normalized_inverse_coordinate_20u": 1.0
+      },
+      {
+        "T_K": 100.0,
+        "DIRBE_baseline_response_MJy_sr_per_K_CMB353": 22377.041609444448,
+        "original_t": 4.0,
+        "original_tt_over_2": 8.0,
+        "inverse_u_K_inverse": 0.01,
+        "normalized_inverse_coordinate_20u": 0.2
+      },
+      {
+        "T_K": 10000.0,
+        "DIRBE_baseline_response_MJy_sr_per_K_CMB353": 28998.25228717824,
+        "original_t": 499.0,
+        "original_tt_over_2": 124500.5,
+        "inverse_u_K_inverse": 0.0001,
+        "normalized_inverse_coordinate_20u": 0.002
+      },
+      {
+        "T_K": 100000000.0,
+        "DIRBE_baseline_response_MJy_sr_per_K_CMB353": 29069.628483606048,
+        "original_t": 4999999.0,
+        "original_tt_over_2": 12499995000000.5,
+        "inverse_u_K_inverse": 1e-08,
+        "normalized_inverse_coordinate_20u": 2e-07
+      }
+    ]
+  },
+  "idealized_source_sum_sensitivity": {
+    "Jminus_K_CMB353_sr": 143561661.49326542,
+    "Jplus_K_CMB353_sr": 1842.1441692536132,
+    "M0_upper_K_CMB353_sr": 6892.912812191786,
+    "qualification": "NOT_PHYSICAL_CALIBRATION; assumes raw sums exact true fluxes, kappa=1, nominal Haslam, same pure MBB across source bands"
+  },
+  "full_24_vector_temperature_counterexample": [
+    {
+      "T_K": 2.7255,
+      "norm_U_t_for_unit_complex_atom": 0.844036409186699,
+      "norm_U_tt_for_unit_complex_atom": 0.3645076737623908
+    },
+    {
+      "T_K": 3.0,
+      "norm_U_t_for_unit_complex_atom": 0.8306242702349639,
+      "norm_U_tt_for_unit_complex_atom": 0.3530153148498596
+    },
+    {
+      "T_K": 20.0,
+      "norm_U_t_for_unit_complex_atom": 0.0,
+      "norm_U_tt_for_unit_complex_atom": 0.0
+    },
+    {
+      "T_K": 100.0,
+      "norm_U_t_for_unit_complex_atom": 3.9088200952233594,
+      "norm_U_tt_for_unit_complex_atom": 7.817640190446719
+    },
+    {
+      "T_K": 10000.0,
+      "norm_U_t_for_unit_complex_atom": 487.6253068791141,
+      "norm_U_tt_for_unit_complex_atom": 121662.51406633896
+    },
+    {
+      "T_K": 100000000.0,
+      "norm_U_t_for_unit_complex_atom": 4886024.141824176,
+      "norm_U_tt_for_unit_complex_atom": 12215057911548.367
+    }
+  ],
+  "monochromatic_interpolation_factor": [
+    {
+      "frequency_GHz": 30.0,
+      "theta_low": 0.46457594990468426,
+      "conservative_all_T_log_factor_upper": 11.78031655709594,
+      "samples": [
+        {
+          "T_K": 2.7255,
+          "log_exact_Planck_interpolation_factor": 9.848006509362484
+        },
+        {
+          "T_K": 3.0,
+          "log_exact_Planck_interpolation_factor": 8.847829376503014
+        },
+        {
+          "T_K": 20.0,
+          "log_exact_Planck_interpolation_factor": 0.9537412777497352
+        },
+        {
+          "T_K": 100.0,
+          "log_exact_Planck_interpolation_factor": 0.1613226095129221
+        },
+        {
+          "T_K": 10000.0,
+          "log_exact_Planck_interpolation_factor": 0.0015341749011383854
+        },
+        {
+          "T_K": 100000000.0,
+          "log_exact_Planck_interpolation_factor": 1.5333741743006613e-07
+        }
+      ]
+    },
+    {
+      "frequency_GHz": 44.0,
+      "theta_low": 0.41686113607881436,
+      "conservative_all_T_log_factor_upper": 12.82949022030254,
+      "samples": [
+        {
+          "T_K": 2.7255,
+          "log_exact_Planck_interpolation_factor": 10.613324319782734
+        },
+        {
+          "T_K": 3.0,
+          "log_exact_Planck_interpolation_factor": 9.535295717992334
+        },
+        {
+          "T_K": 20.0,
+          "log_exact_Planck_interpolation_factor": 1.0248722251063853
+        },
+        {
+          "T_K": 100.0,
+          "log_exact_Planck_interpolation_factor": 0.1729631900842321
+        },
+        {
+          "T_K": 10000.0,
+          "log_exact_Planck_interpolation_factor": 0.0016436267969979212
+        },
+        {
+          "T_K": 100000000.0,
+          "log_exact_Planck_interpolation_factor": 1.642755620423486e-07
+        }
+      ]
+    },
+    {
+      "frequency_GHz": 70.0,
+      "theta_low": 0.35901595639233824,
+      "conservative_all_T_log_factor_upper": 14.101414685773255,
+      "samples": [
+        {
+          "T_K": 2.7255,
+          "log_exact_Planck_interpolation_factor": 11.440119082165083
+        },
+        {
+          "T_K": 3.0,
+          "log_exact_Planck_interpolation_factor": 10.278665847118319
+        },
+        {
+          "T_K": 20.0,
+          "log_exact_Planck_interpolation_factor": 1.0998639527516403
+        },
+        {
+          "T_K": 100.0,
+          "log_exact_Planck_interpolation_factor": 0.18489250442242877
+        },
+        {
+          "T_K": 10000.0,
+          "log_exact_Planck_interpolation_factor": 0.0017546519194127086
+        },
+        {
+          "T_K": 100000000.0,
+          "log_exact_Planck_interpolation_factor": 1.753696921014125e-07
+        }
+      ]
+    },
+    {
+      "frequency_GHz": 100.0,
+      "theta_low": 0.3145798654632485,
+      "conservative_all_T_log_factor_upper": 15.078494392482236,
+      "samples": [
+        {
+          "T_K": 2.7255,
+          "log_exact_Planck_interpolation_factor": 11.952394611211659
+        },
+        {
+          "T_K": 3.0,
+          "log_exact_Planck_interpolation_factor": 10.740712387255684
+        },
+        {
+          "T_K": 20.0,
+          "log_exact_Planck_interpolation_factor": 1.1447646459108256
+        },
+        {
+          "T_K": 100.0,
+          "log_exact_Planck_interpolation_factor": 0.1916232782745908
+        },
+        {
+          "T_K": 10000.0,
+          "log_exact_Planck_interpolation_factor": 0.0018158764568241281
+        },
+        {
+          "T_K": 100000000.0,
+          "log_exact_Planck_interpolation_factor": 1.814859871274166e-07
+        }
+      ]
+    },
+    {
+      "frequency_GHz": 143.0,
+      "theta_low": 0.2700192525052377,
+      "conservative_all_T_log_factor_upper": 16.058312142636385,
+      "samples": [
+        {
+          "T_K": 2.7255,
+          "log_exact_Planck_interpolation_factor": 12.290580865980573
+        },
+        {
+          "T_K": 3.0,
+          "log_exact_Planck_interpolation_factor": 11.048805487068243
+        },
+        {
+          "T_K": 20.0,
+          "log_exact_Planck_interpolation_factor": 1.173017341305517
+        },
+        {
+          "T_K": 100.0,
+          "log_exact_Planck_interpolation_factor": 0.1952223861761837
+        },
+        {
+          "T_K": 10000.0,
+          "log_exact_Planck_interpolation_factor": 0.0018462740941629363
+        },
+        {
+          "T_K": 100000000.0,
+          "log_exact_Planck_interpolation_factor": 1.845200898742405e-07
+        }
+      ]
+    },
+    {
+      "frequency_GHz": 217.0,
+      "theta_low": 0.21806103943518115,
+      "conservative_all_T_log_factor_upper": 17.200791477027593,
+      "samples": [
+        {
+          "T_K": 2.7255,
+          "log_exact_Planck_interpolation_factor": 12.32475773634237
+        },
+        {
+          "T_K": 3.0,
+          "log_exact_Planck_interpolation_factor": 11.0890779139051
+        },
+        {
+          "T_K": 20.0,
+          "log_exact_Planck_interpolation_factor": 1.173878988600542
+        },
+        {
+          "T_K": 100.0,
+          "log_exact_Planck_interpolation_factor": 0.19355442643038145
+        },
+        {
+          "T_K": 10000.0,
+          "log_exact_Planck_interpolation_factor": 0.0018244457103691047
+        },
+        {
+          "T_K": 100000000.0,
+          "log_exact_Planck_interpolation_factor": 1.8233201615203143e-07
+        }
+      ]
+    },
+    {
+      "frequency_GHz": 353.0,
+      "theta_low": 0.15744197889610032,
+      "conservative_all_T_log_factor_upper": 18.533709216956986,
+      "samples": [
+        {
+          "T_K": 2.7255,
+          "log_exact_Planck_interpolation_factor": 11.542172594799247
+        },
+        {
+          "T_K": 3.0,
+          "log_exact_Planck_interpolation_factor": 10.40156738200082
+        },
+        {
+          "T_K": 20.0,
+          "log_exact_Planck_interpolation_factor": 1.1042809597458927
+        },
+        {
+          "T_K": 100.0,
+          "log_exact_Planck_interpolation_factor": 0.17924523636690992
+        },
+        {
+          "T_K": 10000.0,
+          "log_exact_Planck_interpolation_factor": 0.0016797569248012678
+        },
+        {
+          "T_K": 100000000.0,
+          "log_exact_Planck_interpolation_factor": 1.6786148648861854e-07
+        }
+      ]
+    }
+  ],
+  "conditional_survival_model": {
+    "citation": "Waxman and Draine 2000, equations 10-12",
+    "attempt_frequency_per_s": 1000000000000000.0,
+    "atomic_number_density_cm_minus3": 1e+23,
+    "binding_B_over_k_K": 70000.0,
+    "v0_cm_s": 21544346.900318857,
+    "examples": [
+      {
+        "constant_rest_temperature_duration_s": 10.0,
+        "a_initial_max_cm": 1e-05,
+        "limiting_temperature_K": 2280.0460299920724,
+        "status": "CONDITIONAL_RATE_MODEL_VALUE; not a universal grain ceiling or certified parameter interval"
+      },
+      {
+        "constant_rest_temperature_duration_s": 86400.0,
+        "a_initial_max_cm": 1e-05,
+        "limiting_temperature_K": 1760.3290637012105,
+        "status": "CONDITIONAL_RATE_MODEL_VALUE; not a universal grain ceiling or certified parameter interval"
+      },
+      {
+        "constant_rest_temperature_duration_s": 31557600.0,
+        "a_initial_max_cm": 1e-05,
+        "limiting_temperature_K": 1532.8733061259204,
+        "status": "CONDITIONAL_RATE_MODEL_VALUE; not a universal grain ceiling or certified parameter interval"
+      },
+      {
+        "constant_rest_temperature_duration_s": 31557600000000.0,
+        "a_initial_max_cm": 1e-05,
+        "limiting_temperature_K": 1176.8387697871253,
+        "status": "CONDITIONAL_RATE_MODEL_VALUE; not a universal grain ceiling or certified parameter interval"
+      }
+    ]
+  },
+  "transient_survival_without_T2_bound": [
+    {
+      "T_K": 10000.0,
+      "dwell_s": 2.3207944168063877e-17,
+      "eroded_radius_cm": 4.559409827772581e-13,
+      "integral_T_squared_dt_K2_s": 2.3207944168063876e-09
+    },
+    {
+      "T_K": 1000000.0,
+      "dwell_s": 2.3207944168063874e-19,
+      "eroded_radius_cm": 4.661969099529742e-12,
+      "integral_T_squared_dt_K2_s": 2.3207944168063876e-07
+    },
+    {
+      "T_K": 100000000.0,
+      "dwell_s": 2.3207944168063878e-21,
+      "eroded_radius_cm": 4.9965012247142166e-14,
+      "integral_T_squared_dt_K2_s": 2.3207944168063875e-05
+    }
+  ],
+  "assertions": "ALL_PASS",
+  "elapsed_s": 0.013116483110934496,
+  "acceptance_met": false,
+  "qualified_products": []
+}

@@ -1,0 +1,203 @@
+{
+  "schema": "R36-07-temperature-independent-review-raw-v1",
+  "task_id": "R36-07-FOREGROUND-BUDGET",
+  "reviewer": {
+    "agent": "/root/r36_foreground_temperature_independent_review",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "fresh-context independent theory/source reviewer; no contribution to candidate; own review evidence only"
+  },
+  "candidate_source_hashes": {
+    "root": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_positive_envelope_research/temperature_domain_followup",
+    "files": {
+      "DERIVATION.md": {
+        "sha256": "4726440344bd1ad13f675efd2879ab8fb8b862ace8b4d0874f46da3c530c1483",
+        "bytes": 18686
+      },
+      "NUMERIC_WITNESSES.json": {
+        "sha256": "60e8e4d4d19e46fb2c611c7e468b27e9db1c7279a19a42261e5e6ab2d1c40e94",
+        "bytes": 13432
+      },
+      "RAW_RECEIPT.json": {
+        "sha256": "a3f0b004aef84b971e87fe5da7d0c47bf4221f7659cf5b05a9cd1d0bf7e70aae",
+        "bytes": 3838
+      },
+      "RESULT.json": {
+        "sha256": "533ae712a421c9f740f80f9d1945e75781c9b20d88648155980031bc09f08227",
+        "bytes": 6205
+      },
+      "SOURCE_INTAKE.json": {
+        "sha256": "d3acb31d609a7a3ab9e5bdd851765e1472c7462159caeb7e51db207dd153db55",
+        "bytes": 919
+      },
+      "reproduce.py": {
+        "sha256": "593f3dfa6f6ca0f7413b19a7e857fd51801d1478bdb4eb7d23aa1b152d85f6b3",
+        "bytes": 6784
+      },
+      "run1.stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "run1.stdout": {
+        "sha256": "e3ea6c3093393a62bba3006500b5c1b80db86ad1a0ab25a11b9731b64117c925",
+        "bytes": 225
+      },
+      "source/da_cunha_2013.pdf": {
+        "sha256": "44a7f374a139be19db60d8db9446eda6564676825edd16648c7dd50a6058679e",
+        "bytes": 537229
+      },
+      "source/kama_min_dominik_2009.pdf": {
+        "sha256": "23a38ac92575c4e7c81f395e2c310a7d3d17de7f744914b4bd3f2b667aca3aef",
+        "bytes": 1025930
+      },
+      "source/waxman_draine_2000.pdf": {
+        "sha256": "b752f9eb95538eaf60df77ad228dc42d160b3d576548bf963220c31488c79cea",
+        "bytes": 175463
+      }
+    }
+  },
+  "dependencies": {
+    "NUMERIC_RESEARCH.json": {
+      "sha256": "07a7e68dbcfa7c5db0ae9c58b871d29b8182e10b628989b12ac5ea75105a2c7d",
+      "bytes": 18123
+    },
+    "source/DIRBE_SYSTEM_SPECTRAL_RESPONSE_TABLE.ASC": {
+      "sha256": "97cbb11d6c9d1fb740a1d2424317000c8e06ace8cc7ef179183cd9d892ff03f4",
+      "bytes": 63101
+    }
+  },
+  "same_issue_continuation": true,
+  "fresh_independence": "Reviewer did not contribute to candidate; no prior reviewer verdict read. Reviewed candidate result, derivation, code, witnesses and primary sources. No project harness verdict oracle.",
+  "execution": [
+    {
+      "kind": "author_reproducer_on_disposable_copy",
+      "command": [
+        "/usr/bin/python",
+        "reproduce.py"
+      ],
+      "cwd": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_temperature_independent_review/replay/temperature_domain_followup",
+      "exit_code": 0,
+      "elapsed_s": 0.30269235209561884,
+      "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+      "stdout": "{\"status\": \"CONDITIONAL_THEORY_WITNESSES_ONLY\", \"assertions\": \"ALL_PASS\", \"DIRBE_mplus\": 0.15768847104209432, \"b_plus\": 0.8974383525556258, \"one_year_survival_ceiling_K\": 1532.8733061259204, \"elapsed_s\": 0.013116483110934496}\n",
+      "stderr": "",
+      "numerical_payload_identical_excluding_elapsed_s": true
+    },
+    {
+      "kind": "independent_falsifiers_and_high_precision_arithmetic",
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python /mnt/extdrive/workdir/htt_open_data/r36_foreground_temperature_independent_review/independent_checks.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "tool_wall_time_s": 0.466684688,
+      "script_elapsed_s": 0.15023043914698064,
+      "output_file": "INDEPENDENT_CHECKS.json",
+      "status": "PASS_FINITE_INDEPENDENT_CHECKS",
+      "raw_first_failures": []
+    }
+  ],
+  "source_inspection": {
+    "cached_PDFs": "Three supplied PDFs independently converted with pdftotext -layout; their content identities match author intake. Full text retained only inside review directory.",
+    "additional_web_primary": "https://arxiv.org/pdf/astro-ph/0112457",
+    "web_read_scope": "Lorentz intensity/angular law and Section III linear polarization transport",
+    "additional_native_data_acquired": false
+  },
+  "candidate_final_identity": "ALL_UNCHANGED",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "formal_packet": null,
+  "formal_ACK": null,
+  "four_axis_CAS_claim": false,
+  "original_task_allocation_one_use_and_cost_reset": false,
+  "actual_runs": {
+    "copied_author_witness": 1,
+    "independent_finite_checks": 1,
+    "native_producer": 0,
+    "ODE": 0,
+    "children": 0,
+    "Ultra": 0
+  },
+  "manifest": [
+    {
+      "path": "CANDIDATE_HASHES.json",
+      "bytes": 1673,
+      "sha256": "dd52c67c2ce4e6976df469e6ccb4d4bfdc4f5eacf000d4c21a5bb8c78140d45d"
+    },
+    {
+      "path": "DEPENDENCY_HASHES.json",
+      "bytes": 299,
+      "sha256": "7be3488c5dff656c63ec7d380858b52b1a94f200651bfa08368484acd7357f4d"
+    },
+    {
+      "path": "INDEPENDENT_CHECKS.json",
+      "bytes": 7892,
+      "sha256": "63bc419cc27d70dd31588a32600988c8eecf8b559a41044d0c72dd1da75dc080"
+    },
+    {
+      "path": "REPLAY_RECEIPT.json",
+      "bytes": 647,
+      "sha256": "60d78c4c51e111d1a6ce65043ffd6e2f7344e1c2ba464f642bd1d69cf92965ba"
+    },
+    {
+      "path": "REVIEW_RESULT.json",
+      "bytes": 15240,
+      "sha256": "acca6cda9e7a804e719bbf2989893209b410f1333d0776f99701c6f136c1f87e"
+    },
+    {
+      "path": "da_cunha_2013.txt",
+      "bytes": 91809,
+      "sha256": "d73909ff401c096676f3fefcf6222bd4417b71247f3dda032f3d3b48a957905e"
+    },
+    {
+      "path": "independent_checks.py",
+      "bytes": 8750,
+      "sha256": "dec176d554d940c5b6c236b3a4fd324ea868fa9df1a7863edadd20afc03137d7"
+    },
+    {
+      "path": "kama_min_dominik_2009.txt",
+      "bytes": 120301,
+      "sha256": "0081d03f49d347b15845a201ab569f8df94748696105186ee77259774bc3103f"
+    },
+    {
+      "path": "replay/NUMERIC_RESEARCH.json",
+      "bytes": 18123,
+      "sha256": "07a7e68dbcfa7c5db0ae9c58b871d29b8182e10b628989b12ac5ea75105a2c7d"
+    },
+    {
+      "path": "replay/source/DIRBE_SYSTEM_SPECTRAL_RESPONSE_TABLE.ASC",
+      "bytes": 63101,
+      "sha256": "97cbb11d6c9d1fb740a1d2424317000c8e06ace8cc7ef179183cd9d892ff03f4"
+    },
+    {
+      "path": "replay/temperature_domain_followup/NUMERIC_WITNESSES.json",
+      "bytes": 13433,
+      "sha256": "2ea158662706a1e1947f961328553fd469aaf1f02a0d0b413495ae58fc87875d"
+    },
+    {
+      "path": "replay/temperature_domain_followup/reproduce.py",
+      "bytes": 6784,
+      "sha256": "593f3dfa6f6ca0f7413b19a7e857fd51801d1478bdb4eb7d23aa1b152d85f6b3"
+    },
+    {
+      "path": "replay.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "replay.stdout",
+      "bytes": 226,
+      "sha256": "40288e26fb3ec64a9eb0dcd579132932ff933eb64c69732787edb5952ef5c69a"
+    },
+    {
+      "path": "waxman_draine_2000.txt",
+      "bytes": 50619,
+      "sha256": "6a1018a754e4e7cc4a76a7ebe432df234bb6f1f09f74638f08914b35c3d9bc1e"
+    },
+    {
+      "path": "write_review.py",
+      "bytes": 17549,
+      "sha256": "3cb827d5e3406f2ece4bfc0c93c0a02245c8578792c693676c5b7920d0744b6e"
+    }
+  ],
+  "completed_utc": "2026-10-27T05:25:25.526403+00:00"
+}

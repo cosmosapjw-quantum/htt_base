@@ -1,0 +1,802 @@
+                                               D RAFT VERSION N OVEMBER 27, 2024
+                                               Preprint typeset using LATEX style emulateapj v. 5/2/11
+
+
+
+
+                                                                    ON THE EFFECT OF THE COSMIC MICROWAVE BACKGROUND IN HIGH-REDSHIFT
+                                                                                       (SUB-)MILLIMETER OBSERVATIONS
+                                                E LISABETE DA C UNHA 1 , B RENT G ROVES 1 , FABIAN WALTER 1 , ROBERTO D ECARLI 1 , A XEL W EISS 2 , F RANK B ERTOLDI 3 , C HRIS
+                                             C ARILLI 4 , E MANUELE DADDI 5 , DAVID E LBAZ 6 , ROB I VISON 6,7 , ROBERTO M AIOLINO 8,9 , D OMINIK R IECHERS 10 , H ANS -WALTER R IX 1 ,
+                                                                                                 M ARK S ARGENT 5 , I AN S MAIL 11
+                                                                                         1 Max-Planck-Institut für Astronomie, Königstuhl 17, 69117 Heidelberg, Germany
+                                                                                       2 Max-Planck-Institut für Radioastronomie, Auf dem Hügel 69, 53121 Bonn, Germany
+                                                                              3 Argelander Institute for Astronomy, University of Bonn, Auf dem Hügel 71, 53121 Bonn, Germany
+arXiv:1302.0844v1 [astro-ph.CO] 4 Feb 2013
+
+
+
+
+                                                                  4 National Radio Astronomy Observatory, Pete V. Domenici Array Science Center, P.O. Box O, Socorro, NM, 87801, USA
+                                                                          5 Laboratoire AIM, CEA/DSM-CNRS-Université Paris Diderot, Irfu/Service d’Astrophysique, CEA Saclay,
+                                                                                                         Orme des Merisiers, 91191 Gif-sur-Yvette Cedex, France
+                                                                        6 UK Astronomy Technology Centre, Royal Observatory, Blackford Hill, Edinburgh EH9 3HJ, United Kingdom
+                                                                           7 Institute for Astronomy, University of Edinburgh, Blackford Hill, Edinburgh EH9 3HJ, United Kingdom
+                                                                     8 Cavendish Laboratory, University of Cambridge, 19 J.J. Thomson Avenue, Cambridge, CB3 0HE, United Kingdom
+                                                                     9 Kavli Institute for Cosmology, University of Cambridge, Madingley Road, Cambridge CB3 OHA, United Kingdom
+                                                                                           10 Department of Astronomy, Cornell University, Ithaca, NY 14853, USA and
+                                                                       11 Institute for Computational Cosmology, Durham University, South Road, Durham DH1 3LE, United Kingdom
+
+                                                                                                                    Draft version November 27, 2024
+
+                                                                                                         ABSTRACT
+                                                        Modern (sub-)millimeter interferometers enable the measurement of the cool gas and dust emission of high-
+                                                        redshift galaxies (z > 5). However, at these redshifts the cosmic microwave background (CMB) temperature
+                                                        is higher, approaching, and even exceeding, the temperature of cold dust and molecular gas observed in the
+                                                        local Universe. In this paper, we discuss the impact of the warmer CMB on (sub-)millimeter observations of
+                                                        high-redshift galaxies. The CMB affects the observed (sub-)millimeter dust continuum and the line emission
+                                                        (e.g. carbon monoxide, CO) in two ways: (i) it provides an additional source of (both dust and gas) heating;
+                                                        and (ii) it is a non-negligible background against which the line and continuum emission are measured. We
+                                                        show that these two competing processes affect the way we interpret the dust and gas properties of high-redshift
+                                                        galaxies using spectral energy distribution models. We quantify these effects and provide correction factors to
+                                                        compute what fraction of the intrinsic dust (and line) emission can be detected against the CMB as a function
+                                                        of frequency, redshift and temperature. We discuss implications on the derived properties of high-redshift
+                                                        galaxies from (sub-)millimeter data. Specifically, the inferred dust and molecular gas masses can be severely
+                                                        underestimated for cold systems if the impact of the CMB is not properly taken into account.
+                                                        Subject headings: galaxies: ISM – galaxies: evolution – sub-millimeter: galaxies, ISM.
+
+                                                                                                                                                z=0                                           z=0
+                                                                           1. INTRODUCTION                                             where TCMB   is the temperature of the CMB at z = 0, TCMB  =
+                                                Modern (sub-)millimeter interferometers allow us to rou-                               2.73 K, sets a fundamental minimum temperature of the
+                                             tinely measure the gas and dust content of very high redshift                             ISM (assuming local thermal equilibrium, LTE). The in-
+                                             galaxies (z > 5), giving precious insight into the star forma-                            crease of the minimum ISM temperature with redshift af-
+                                             tion properties and physical state of the interstellar medium                             fects the physical conditions of the dust and molecular
+                                             (ISM) in early galaxies. With ALMA, for example, thanks                                   gas in galaxies, boosting both the dust continuum emis-
+                                             to the combination of increased sensitivities and the nega-                               sion and the line luminosities (e.g. Silk & Spaans 1997;
+                                             tive k-correction in the (sub-)millimeter, it will be possible,                           Blain 1999; Combes et al. 1999; Righi et al. 2008). How-
+                                             for the first time, to detect the dust continuum and CO lines                             ever, at high redshift, the CMB also becomes a stronger
+                                             from galaxies with total luminosities that are close to that of                           background against which both the dust continuum and
+                                             the Milky Way. Instead of detecting only high-luminosity                                  line fluxes are measured (e.g. in Combes et al. 1999;
+                                             starbursts at high redshifts (i.e. sub-millimeter galaxies;                               Papadopoulos et al. 2000; Obreschkow et al. 2009; Lidz et al.
+                                             e.g. Blain et al. 2002), we will gain access to the larger                                2011; Muñoz & Furlanetto 2013). These two competing ef-
+                                             population of low-luminosity (with infrared luminosities <                                fects have been discussed previously, however only in the
+                                             1012 L⊙ ) galaxies. In the local Universe, the bulk of dust                               context of CO line emission (e.g. in Combes et al. 1999;
+                                             in normal star-forming galaxies of moderate infrared lumi-                                Obreschkow et al. 2009 and briefly in other works cited
+                                             nosity typically has temperatures of ≃ 20 K (e.g. Smith et al.                            above, sometimes incorrectly: Silk & Spaans 1997). A full
+                                             2012). However, at higher redshifts, the cosmic microwave                                 exploration of the effects of the CMB on both continuum and
+                                             background (CMB) temperature approaches and can even sur-                                 line emission observations is needed now that ALMA is in
+                                             pass this temperature. This means that we must consider the                               operation. In this paper, we quantify in detail the implica-
+                                             effects of the CMB on our observations.                                                   tions of the CMB on the interpretation of (sub-)millimeter
+                                                The temperature of the CMB at any redshift z is given by:                              observations in terms of galaxy intrinsic dust and gas prop-
+                                                                                                                                       erties. Deriving the correct intrinsic galaxy properties for
+                                                                                    z=0
+                                                                       TCMB (z) = TCMB  (1 + z) ,                            (1)       (sub-)mm observations, such as the star formation rate (via
+                                                                                                                                       the total infrared luminosity) and the molecular gas mass
+                                               cunha@mpia.de                                                                           (via the CO line luminosity or the dust mass) is crucial to
+2                                                             E. da Cunha et al.
+
+our understanding of the star formation efficiency of galax-
+ies at high-redshift (e.g. Daddi et al. 2010; Genzel et al. 2010;
+Magdis et al. 2012).
+   In this study, we wish to analyze solely the effect of the
+CMB background at high redshift on (potential) observations
+of ‘Milky-Way-like’ galaxies at high redshift. Therefore, we
+fix the intrinsic properties of the galaxies under consideration
+and assume no evolution in dust properties and stellar radia-
+tion field, in order to isolate the CMB effects. We note, how-
+ever, that it is likely that high-redshift galaxies have consid-
+erably different properties than low-redshift galaxies of the
+same luminosity. For example, it is likely that galaxies with
+cold ISM such as the Milky Way do not exist due to the harder
+radiation fields in low metallicity environments. Also, the
+physical properties of dust grains may be different at high red-
+shifts. These differences are beyond the scope of this paper.
+   In Section 2, we describe the effects of the CMB on the
+dust continuum of galaxies and the implications on the de-              Figure 1. Variation of the dust temperature (red; eq. 12) and CMB tempera-
+rived physical properties of the dust; we also provide a recipe         ture (blue; eq. 1) with redshift. For dust grains in a galaxy with equilibrium
+                                                                                                z=0
+to take the effects of the CMB into account when comparing              temperature at z = 0, Tdust = 18 K, the effect of additional dust heating by the
+                                                                        CMB starts being non-negligible around z ≃ 4.
+models with observations. In Section 3, we analyze the effect
+of the CMB on the observed CO line emission of galaxies,
+focusing on the simplest LTE case, and two more general ex-             are invariant with redshift, i.e. that Qabs (ν, a) does not change
+amples of non-LTE cases. Our conclusions are summarized                 with z.
+in Section 4.                                                              At any redshift, we can write the intensity of the radiation
+ 2. EFFECT OF THE CMB ON (SUB-)MM CONTINUUM EMISSION                    field heating the dust as (e.g. Rowan-Robinson et al. 1979):
+                     2.1. Dust temperature                                                     Iν (z) = Jν∗ (z) + Bν [TCMB (z)] ,                   (5)
+   We consider a galaxy at z = 0, where diffuse dust is being           where the first term, Jν∗ (z), corresponds to the contribution by
+heated by the radiation field produced by stars in the galaxy,          the radiation produced by stars in the galaxy, and the second
+and the effects of the CMB radiation are negligible. We as-             term, Bν [TCMB (z)], is the contribution by the CMB radiation,
+sume that the dust is in thermal equilibrium with the radia-            which emits as a black body Bν of temperature TCMB (z). Thus,
+                                                   z=0
+tion field, with an equilibrium temperature Tdust      = 18 K, typi-    at a given redshift, using eq. 5, the equation of the energy
+cal of the diffuse ISM of the Milky Way (e.g. da Cunha et al.           balance of the dust grains in thermal equilibrium (eq. 2) takes
+2008; see also, e.g. Groves et al. 2012 for an analysis of the          the form:
+cold dust in M31). If we place exactly the same galaxy (i.e.              Z ∞                          Z ∞
+same starlight intensity heating the dust, same dust properties                dν Qabs (ν, a) Jν (z) +
+                                                                                               ∗
+                                                                                                            dν Qabs (ν, a) Bν [TCMB (z)]
+etc.) at z = 6, where the CMB temperature has increased from               0
+2.73 K to 19.1 K, i.e. higher than Tdust z=0
+                                             (eq. 1), how does this                                    Z0 ∞
+higher CMB temperature affect the dust temperature of the                                           =       dν Qabs (ν, a) Bν [Tdust (z)] . (6)
+galaxy? The dust grains will absorb the CMB photons, so the                                                 0
+temperature of dust in the galaxy at z = 6 will be higher than at       From this equation, the total energy produced by stars in the
+z = 0 even if the other properties of the galaxy are exactly the        galaxy (that is absorbed by the dust grains) can be written as:
+same. In the following, we derive the temperature of the dust                                                       Z ∞
+in a galaxy at redshift z, Tdust (z), when heating by the CMB is                                                          dν Qabs (ν, a) Jν∗ (z)
+taken into account.                                                                                                 0
+   If the dust grains are in thermal equilibrium, then they emit                     Z ∞
+energy at the same rate they it absorb it, i.e.:                                 =         dν Qabs (ν, a) {Bν [Tdust (z)] − Bν [TCMB (z)]} .        (7)
+                          dEem dEabs                                                  0
+                                  =        .                     (2)    We assume here that the properties of the galaxy do not
+                            dt        dt                                change with redshift, i.e. the stellar radiation field, Jν∗ , re-
+For a single dust grain, the energy loss rate through emission          mains the same. Therefore, for any redshift z,
+is:       dEem
+                      Z ∞
+                           dν Bν [Tdust (z)] πa2 Qem (ν, a) ,
+                                                                          Z ∞                           Z ∞
+                = 4π                                             (3)
+            dt         0                                                       dν Qabs (ν, a) Jν∗ (z) =     dν Qabs (ν, a) Jν∗ (z = 0) , (8)
+while the rate of energy absorbed per grain is:                              0                                  0
+                           Z ∞                                          and combining with eq. 7 we can write:
+               dEabs
+                     = 4π        dν πa2 Qabs (ν, a) Iν ,         (4)                 Z ∞
+                 dt
+                                                                                         dν Qabs (ν, a) {Bν [Tdust (z)] − Bν [TCMB (z)]}
+                            0
+where Tdust (z) is the equilibrium temperature of the dust
+                                                                                     0
+grains at redshift z, and Qem (ν, a) and Qabs (ν, a) are, respec-                       Z ∞
+tively, the emission and absorption coefficients at frequency                         =     dν Qabs (ν, a) {Bν [Tdustz=0
+                                                                                                                         ] − Bν [TCMB
+                                                                                                                                   z=0
+                                                                                                                                       ]} .         (9)
+ν, for a grain of effective radius a (see, e.g., Spitzer 1978;                             0
+Draine 2011 for more detail). In general, Qem (ν, a)=Qabs (ν, a)          At (sub-)mm wavelengths, the grain emissivity can be
+(Draine & Lee 1984), and we assume that the dust properties             approximated with a power-law function with frequency,
+                                                    Effect of the CMB in (sub-)mm observations                                                          3
+
+Qabs (ν, a) ∝ ν β , where β is the so-called dust emissivity in-               Extra dust heating as described in Section 2.2 is not the only
+dex (e.g. Draine & Lee 1984). Thus, we can replace this term                effect of the CMB radiation on the observed (sub-)millimeter
+in eq. 9 and re-arrange in order to solve for Tdust (z) as follows:         fluxes. For any (sub-)mm galaxy observation, the dust con-
+                                                                            tinuum is always measured against the CMB. Here we dis-
+       Z ∞                             Z ∞
+                                                                            cuss how this affects the detectability of the dust continuum
+             dν ν β Bν [Tdust (z)] =          dν ν β Bν [TCMB (z)]          of galaxies at high redshifts.
+        0
+                                       Z 0∞                                    We assume that the stellar radiation can be neglected at
+                                  +           dν ν β Bν [Tdust
+                                                           z=0
+                                                               ]            (sub-)millimeter wavelengths, i.e. Jν∗ = 0. From solving the
+                                        0                                   radiative transfer equation, the (rest-frame) intensity per unit
+                                       Z ∞                                  frequency from a galaxy at redshift z in the (sub-)millimeter
+                                  −           dν ν β Bν [TCMB
+                                                           z=0
+                                                               ].    (10)   is:
+                                        0
+                                                                             Iν = [1 − exp(−τν )] Bν [Tdust (z)] + exp(−τν ) Bν [TCMB (z)] , (13)
+The integral of a modified black body ν β Bν (T ) is:
+                  Z ∞                                                       where τν is the dust optical depth. The first term of this equa-
+                                                                            tion corresponds to the emission by dust in thermal equilib-
+                      dν ν β Bν (T ) ∝ T 4+β .                       (11)
+                      0                                                     rium with temperature Tdust (z) (given by eq. 12), and the sec-
+From eqs. 1, 10 and 11, we obtain the following equation for                ond term is the contribution from CMB radiation that is trans-
+the equilibrium dust temperature at redshift z:                             mitted through the galaxy ISM (i.e. the fraction of the un-
+                                                        1
+                                                                            derlying CMB that is not absorbed by dust). We assume that
+                                                                            the dust is optically thin in the (sub-)millimeter1, i.e. τν ≪ 1,
+                                                    4+β
+                     ) + (TCMB
+                 z=0 4+β    z=0 4+β
+                                     (1 + z)4+β − 1
+                                    
+  Tdust (z) = (Tdust           )                           . (12)
+                                                                            then exp(−τν ) ≈ 1 − τν . The optical depth can be expressed
+  In Fig. 1, we plot the evolution of dust and CMB tempera-                 as: τν = Σd κν , where Σd is the surface mass density of dust2
+tures with redshift, assuming a dust temperature of 18 K at                 (in units of g cm−2 ) and κν is the mass absorption coefficient
+z = 0. This shows that, for this temperature, the effect of                 (cross-section per unit mass, in units of g−1 cm−2 ). Therefore,
+dust heating by the CMB becomes non-negligible at z ≃ 4;                    eq. 13 can be re-written as:
+the higher the redshift, the dust temperature asymptotically
+approaches the temperature of the CMB.                                           Iν = Σd κν Bν [Tdust (z)] + (1 − Σd κν ) Bν [TCMB (z)] .           (14)
+                                                                            The observed flux of the galaxy is:
+    2.2. Effect on the intrinsic far-IR/sub-mm dust SEDs                                               obs               Iν
+                                                                                                      Fν/(1+z) =Ω               ,                      (15)
+   Fig. 1 shows that the effect of dust heating by the CMB on                                                        (1 + z)3
+the (cold) dust temperature of galaxies is to first order negligi-          where Ω is the solid angle subtended by the galaxy, which
+ble at redshifts z <                                                        can be written in terms of the physical area of the galaxy A
+                   ∼ 4. However, beyond this redshift, the dust             and the luminosity distance dL , as: Ω = (1 + z)4 A/dL2 . From
+temperature increases with redshift due to the extra heating by
+the CMB as demonstrated in the previous section. To investi-                eqs. 14 and 15 we obtain:
+gate how this affects the far-infrared and sub-millimeter SEDs                obs           Ω h                                                           i
+                                                                            Fν/(1+z) =            Σd κν Bν [Tdust (z)]+(1−Σd κν ) Bν [TCMB (z)] .
+of the galaxies, we plot, in Fig. 2, the predicted intrinsic SED                        (1 + z) 3
+                                                                                                                                                       (16)
+                                                 z=0
+of dust grains in thermal equilibrium with Tdust     = 18 K, at red-           The flux is always measured relative to the CMB back-
+shifts z = 0.1, 2.5, 5 and 10. In each panel, the thick grey line is        ground. The flux measured against the CMB is obtained by
+identical and shows the un-corrected SED (dust heating only                 subtracting the observed CMB flux (over the solid angle Ω)
+by star formation i.e. the radiation field Jν∗ ) and the black line         from the predicted flux in eq. 16. We obtain3:
+shows the predicted intrinsic SED when taking into account
+additional dust heating by the CMB. We stress that this is the                 obs against CMB     obs
+                                                                                                           − Ω Bν/(1+z) TCMB
+                                                                                                                            z=0 
+                                                                             Fν/(1+z)          = Fν/(1+z)
+intrinsic SED, not the actually observed one (as discussed in
+Section 2.3). As the dust temperature increases due to increas-
+                                                                                                                                 
+                                                                                                                Bν TCMB (z)
+ing CMB temperature, this affects the dust SEDs in two ways,                                   = Fν/(1+z) − Ω
+                                                                                                   obs
+                                                                                                                    (1 + z)3
+as seen in Fig. 2: (i) the peak of the SED shifts towards lower
+(rest-frame) wavelengths (i.e., higher observed frequencies)                                         Ω                                                 
+                                                                                                                                       −
+                                                                                                                                           
+                                                                                               =           Σ d κ ν   B ν   Tdust (z)     B ν   TCMB (z)
+as the dust temperature increases with redshift; (ii) the total                                   (1 + z)3
+                                                 z=0 (4+β)
+luminosity increases by a factor [Tdust (z)/Tdust    ]     (eq. 11),                              1+z                                             
+                                                                                               = 2 Md κν Bν Tdust (z) − Bν TCMB (z) .
+                                                                                                                                        
+due to additional energy from CMB photons absorbed by the
+                                                                                                   dL
+dust grains.
+   Finally, to check the impact on the intrinsic (sub-)mm con-                                                                                         (17)
+tinuum flux densities, in the top panel of Fig. 3 we plot the ef-             Based on this equation, the fraction of the intrinsic dust
+fect of the CMB heating on the continuum fluxes in 9 ALMA                   emission from the galaxy (i.e. the first term of eq. 13) that we
+bands from 38 to 870 GHz, as a function of redshift. This
+                                                                               1 This is a reasonable assumption, as the dust column required for the
+shows that the CMB has practically no effect on the fluxes
+up to z ≃ 4, but after that redshift it contributes increasingly            galaxy to be optically thick at (sub-)millimeter wavelengths are unrealis-
+                                                                            tically high. For example, using a dust mass absorption coefficient of
+to boost the intrinsic (sub-)mm fluxes in the ALMA bands.                   κν (850 µm) = 0.77 g−1 cm2 (Dunne et al. 2000), a galaxy of total dust mass
+The effect is strongest for the higher-frequency bands, which               108 M⊙ would need to have a radius smaller than 100 pc to be optically thick
+sample the dust SEDs closer to the peak (see Fig. 2).                       at 850 µm.
+                                                                               2 This can be written in terms of the total dust mass M and the physical
+                                                                                                                                      d
+                                                                            area of the galaxy A: Σd = Md /A.
+     2.3. Detectability of dust emission against the CMB                       3 The observed CMB intensity is related to the rest-frame CMB intensity
+                               background                                                   z=0
+                                                                            as: Bν/(1+z) (TCMB  ) = Bν [TCMB (z)]/(1 + z)3 .
+4                                                                      E. da Cunha et al.
+
+
+
+
+                                                                                           z=0
+Figure 2. Spectral energy distributions of dust grains in thermal equilibrium with Tdust       = 18 K, with total luminosity powered by starlight in the galaxy of
+1011 L⊙ , at redshifts z = 0.1, 2.5, 5 and 10 (redshift is indicated in the upper-right corner of each plot). grey line – intrinsic SED when no dust heating by the
+CMB is included; black solid line – intrinsic SED including dust heating by the CMB; black dashed line – actual measured SED, when contrast with the CMB
+background is included (Section 2.3). The colored vertical lines indicate the observed frequency (and rest-frame wavelength) sampled by the 9 ALMA bands
+(νobs = 38, 80, 100, 144, 230, 345, 430, 660 and 870 GHz).
+
+
+can actually measure against the CMB at a given frequency                            tiplying the intrinsic SED emitted at each redshift (including
+νobs = ν/(1 + z) is given by:                                                        heating by the CMB; black solid lines in Fig. 2) by the factor
+                                                                                     given by eq. 18 at each redshift. Figs. 2 and 3 (bottom panel)
+            obs against CMB                                                          show that the fraction of flux from a galaxy at a given redshift
+                                Bν Tdust (z) − Bν TCMB (z)
+                                                        
+           Fν/(1+z)                                                                  that can be detected against the CMB varies with frequency.
+                              =
+                intrinsic                                                            This can have severe implications on the interpretation of ob-
+                                                    
+               Fν/(1+z)                 Bν Tdust (z)
+                                                                                   served (sub-)millimeter SEDs at high redshift in terms of dust
+                                    Bν TCMB (z)                                      properties. For example, for the SED in Fig. 2, at z = 5, the
+                              = 1−               .                    (18)         Rayleigh-Jeans tail of the dust emission observed against the
+                                    Bν Tdust (z)
+                                                                                     CMB (black dashed line) is much steeper than in the intrin-
+If Tdust (z) = TCMB (z), i.e. the dust is in thermal equilibrium                     sically emitted SED (black solid line), which would be inter-
+with the CMB, then no intrinsic flux can be detected against                         preted as a higher emissivity index β of the dust grains, and
+the CMB; on the other hand, if Tdust (z) ≫ TCMB (z) (usually the                     would change the inferred dust luminosity, mass and temper-
+case at low-z), then practically all the intrinsic flux is detected                  ature, as we discuss in more detail in the next section.
+against the CMB. In the bottom panel of Fig. 3, we plot the
+fraction of flux observed against the CMB as a function of red-                       2.4. Discussion: effect on the physical interpretation of the
+shift in the 9 ALMA bands from 38 to 870 GHz, for a galaxy                                             observed (sub-)mm dust emission
+                                    z=0
+with intrinsic dust temperature Tdust   = 18 K. This figure shows                       In the previous sections we show that the CMB has an im-
+that, as the redshift increases and the CMB temperature gets                         pact on the peak of the observed dust SED and its slope in the
+closer to the dust temperature (as shown in Fig. 1), it becomes                      Rayleigh-Jeans regime. Here we investigate how this may
+increasingly difficult to detect the dust emission against the                       affect the inferred dust temperature, luminosity, emissivity
+CMB, and this effect is higher for the lower-frequency bands.                        index and mass from typical (sub-)millimeter observations.
+In Fig. 2, we add a black dashed line that represents the actu-                      It is usual practice to interpret observed far-infrared/sub-mm
+ally observed SED of a galaxy with dust intrinsic temperature                        galaxy SEDs by comparing them with modified black body
+  z=0
+Tdust = 18 K at different redshifts. This is obtained by mul-                        (MBB) functions (of the form ν β Bν [Tdust ]) that describe the
+                                                      Effect of the CMB in (sub-)mm observations                                                   5
+
+                                                                                   fluxes in five bands to a grid of modified black bodies where
+                                                                                                                                 z=0
+                                                                                   we vary the intrinsic dust temperature Tdust      between 10 and
+                                                                                   30 K, and the emissivity index β between 1 and 3.
+                                                                                      In Fig. 4, we plot the results of this fitting when includ-
+                                                                                   ing the CMB effects (in black) and the results when ignor-
+                                                                                   ing the additional effects of the CMB (in red); for each case,
+                                                                                   we plot the best-fit SED and the marginalized probability
+                                                                                   distribution functions (PDFs; computed using the approach
+                                                                                   described in da Cunha et al. 2008) for the dust temperature,
+                                                                                   emissivity, total luminosity and mass, with the best-fit value
+                                                                                   for each parameter (i.e. the value that minimizes χ2 ) indi-
+                                                                                   cated by a vertical dashed line. We first check that the best-
+                                                                                   fit model parameters obtained when including the CMB ef-
+                                                                                   fect (indicated by the black dotted lines) are equal to the in-
+                                                                                   put parameters – this confirms the robustness of the method.
+                                                                                   When the SED is fitted with models that do not include the
+                                                                                   effects of the CMB, there is a significant difference between
+                                                                                   the best-fit model parameters and the input (i.e. ‘real’) pa-
+                                                                                   rameters. The intrinsic dust temperature and emissivity index
+                                                                                                            z=0
+                                                                                   are overestimated (Tdust     = 19 K instead of 18 K, and β = 2.7
+                                                                                   instead of 2.0), while the dust luminosity and the dust mass
+                                                                                   are underestimated (log(Ldust /L⊙ ) = 10.87 instead of 11.00,
+                                                                                   and log(Mdust /M⊙ ) = 7.35 instead of 8.20). The effect on the
+                                                                                   estimated dust mass is the strongest because the dust mass de-
+                                                                                   pends on the luminosity, temperature and emissivity index as
+                                                                                                    −(4+β)
+                                                                                   Mdust ∝ Ldust Tdust     . This confirms what was already hinted
+                                                                                   in Section 2.3: the CMB makes the SEDs look hotter and
+                                                                                   steeper, and Fig. 4 shows that this has a significant impact in
+                                                                                   the deduced properties of dust in high-redshift galaxies when
+                                                                                   fitting standard MBB models to the observed dust emission.
+                                                                                   A steeper emissivity index would imply different dust proper-
+                                                                                   ties at high redshift, and the difference in inferred dust masses
+                                                                                   would also change our understanding of ISM enrichment by
+Figure 3. Top panel: Effect of additional dust heating by the increasing CMB
+temperature with redshift. We plot the ratio between the predicted flux den-       dust in high-redshift galaxies.
+sity in each ALMA band when including dust heating by the CMB and not                 In Fig. 5, we investigate these effects in a more systematic
+including dust heating by the CMB, for dust grains with an equilibrium tem-        way. We use the same model and perform the similar modified
+perature of 18 K at z = 0. This figure does not include contrast with the CMB      black body fits as in the test described in Fig. 4, but at various
+background. This shows, as in Fig. 2, that the highest frequency bands are
+the most affected by dust heating by the CMB. Bottom panel: Effect of the          redshifts between z = 0 and z = 10, and for two intrinsic input
+                                                                                                            z=0                        z=0
+CMB as an observing background. We plot the ratio between the flux in              dust temperatures, Tdust     = 18 K (in blue) and Tdust = 40 K (in
+each ALMA band that can be measured against the CMB at a given redshift,           red). The four panels of Fig. 5 show the difference between
+and the intrinsic flux emitted by the galaxy at that frequency. As for the top     the best-fit parameter value when ignoring the CMB effects
+                     z=0
+panel, we assume Tdust   = 18 K and, at each redshift, include the extra heating
+contributed by the CMB in the intrinsic emitted flux.                              on the SEDs and when including the CMB effects, for the
+                                                                                   dust temperature (a), the dust emissivity index (b), the total
+emission by dust in thermal equilibrium using only three pa-                       luminosity (c), and the dust mass (d). We show, for each tem-
+rameters: the dust emissivity index β, temperature Tdust , and                     perature, the result of fitting the same five (sub-)mm bands
+total luminosity (e.g. Dunne et al. 2000; Klaas et al. 2001).                      considered in Fig. 4: observed frequencies νobs = 100, 230,
+   We consider the fiducial model discussed in the previous                        300, 345 and 670 GHz. Not surprisingly, the overestimation
+                                                    z=0
+sections, with an intrinsic dust temperature of Tdust   = 18 K,                    of temperature and emissivity index and the underestimation
+                                                 11
+dust emissivity index β = 2, total luminosity 10 L⊙ , and total                    of luminosity and mass are worse at high redshifts, and for the
+dust mass 1.6 × 108 M⊙ . We assume that our model galaxy is                        lowest intrinsic dust temperature, since in this case the tem-
+at z = 5, and compute the predicted fluxes in five typical (sub-                   perature contrast between the CMB and the dust emission is
+)millimeter bands at 100 GHz (3 mm), 230 GHz (1.3 mm),                             small. The cold dust mass can be severely underestimated,
+300 GHz (1 mm), 345 GHz (870 µm) and 670 GHz (450 µm).                             up to about two orders of magnitude at z ≃ 10. We note that,
+These fluxes are supposed to be the ‘real’ observed fluxes,                        at very low redshifts, we underestimate the dust temperature
+therefore we take into account the effect of extra heating and                     and luminosity, and overestimate the emissivity index, even
+extra background provided by the CMB at z = 5, as discussed                        though we expect the CMB to have a minimal effect at low
+in Sections 2.1 to 2.3. We assume a typical flux uncertainty of                    redshifts: the differences should be close to zero in all panels
+5% in each band. In order to test how biased our temperature,                      at z = 0. This offset is explained by the fact that, when fitting
+emissivity, luminosity and dust mass estimates for this model                      fluxes at observed-frame frequencies 670 GHz and lower, as is
+galaxy would be if we ignored the effect of the CMB, we fit                        the case for the solid lines in these plots, we sample the SED
+the model fluxes in the five (sub-)millimeter bands using a set                    significantly lower frequencies from its peak, and relatively
+of models that does not include the effect of the CMB; we also                     close to the peak of the CMB emission at low redshifts.
+compare with a set of models that correctly includes the effect
+of the CMB. In practice, we compare our synthetic observed
+6                                                                      E. da Cunha et al.
+
+
+
+
+                                                                                                 z=0
+Figure 4. Comparison between fits to our fiducial model SED (intrinsic dust temperature of Tdust     = 18 K, dust emissivity index β = 2, total luminosity 1011 L⊙ ,
+and total dust mass 1.6 × 108 M⊙ ) at z = 5, when including the effect of the CMB in the fit (in black) and when ignoring the effect of the CMB in the fit (in red).
+The ‘observed’ fluxes are indicated as blue diamonds in the top-left panel; we use five common (sub-)millimeter bands at 100, 230, 300, 345 and 670 GHz. The
+grey SED is the intrinsic SED, i.e. before CMB corrections – the actual observed SED i.e. with the effects of the CMB included as for Fig. 2, is plotted as a
+dashed black line. The best-fit SED when fitting the blue fluxes but ignoring the effects of the CMB is plotted in red. The top-right panels and the two bottom
+panels show the probability density functions (PDFs) of the constrained parameters (dust temperature, emissivity index, luminosity and mass) computed using a
+Bayesian fitting method (da Cunha et al. 2008), with the best-fit value for each parameter indicated by a vertical dashed line.
+
+
+    2.5. How to account for the CMB when interpreting real                                   3. EFFECT OF THE CMB ON THE CO LINE EMISSION
+                     continuum measurements                                             We now discuss the effect of the CMB on the CO emis-
+  We have shown in the previous section that, when inter-                            sion at high redshifts. The mechanisms by which the CMB
+preting real (sub-)mm continuum measurements in terms of                             affects the CO excitation are not as straightforward as for the
+intrinsic dust properties, we must take the effect of the CMB                        dust case discussed in the previous section, since the local
+into account. This is the case for comparing observations with                       thermal equilibrium (LTE) conditions can only be assumed in
+dust emission models, such as modified black bodies (as de-                          particular cases, and in reality molecular clouds are often in
+scribed above), or even more complex dust emission models                            non-LTE conditions. In general, the effect of the CMB on the
+(e.g. da Cunha et al. 2008; Draine & Li 2007). To summarize,                         detectability of high-redshift CO lines is two-fold, as in the
+we can estimate the intrinsic properties of the dust in an ob-                       case of dust emission. On one hand, the higher temperature of
+served galaxy at redshift z by following these steps:                                the CMB at higher redshifts can affect the excitation of CO by
+                                                                                     helping populate high rotational levels (through mechanisms
+                                                       z=0
+    1. for a given model with intrinsic temperature Tdust  and                       that we discuss below), thus increasing the line luminosi-
+       emissivity index β, compute the extra heating provided                        ties for high-rotational number transitions (e.g. Silk & Spaans
+       by the CMB using eq. 12; the actual dust temperature                          1997). On the other hand, as the CMB temperature increases,
+       is then Tdust (z);                                                            it becomes a more important observing background against
+                                                                                     which the CO lines must be detected (see also Combes et al.
+    2. include the extra luminosity provided by the CMB                              1999; Papadopoulos et al. 2000; Obreschkow et al. 2009).
+       heating, i.e. multiply the dust emission model by                                For simplicity we assume throughout this section that the
+                    z=0 (4+β)
+       [Tdust (z)/Tdust ]     ;                                                      gas and dust are efficiently coupled, such that the dust temper-
+                                                                                     ature, Tdust , sets the minimum kinetic temperature of the gas,
+                                                                                     Tkin . This implies that the gas heating via collisions with dust
+    3. compute dust emission model in the observed frame,
+         intrinsic                                                                   grains is 100% effective (Tielens 2005). This can be the case
+       Fν/(1+z)    ;
+                                                                                     for high optical depths (Tielens & Hollenbach 1985), but, in
+                                                                                     most realistic cases, the heating of gas by dust may not be
+    4. to account for the effect of the CMB as an observ-                            100% effective. However, even in less optimal conditions the
+                                     obs against CMB
+       ing background, obtain Fν/(1+z)               by multiplying                  gas and dust temperatures are coupled so that if the dust tem-
+       the dust emission model by the factor given in eq. 18:                        perature increases, the gas temperature increases by a similar
+       1 − {Bν [TCMB (z)]/Bν [Tdust (z)]};                                           amount (Tielens 2005). We discuss deviations from the as-
+                                                                                     sumption that Tkin = Tdust where relevant.
+    5. compare the modified dust emission model (parameter-
+       ized in terms of the intrinsic dust properties from step
+       1) directly with the observations.                                                        3.1. Some general aspects of CO excitation
+                                                      Effect of the CMB in (sub-)mm observations                                                                       7
+
+
+
+
+Figure 5. Difference between different dust parameter estimates when not including the CMB effects minus when including the CMB in the fits (fitting the fluxes
+                                                                                                                              z=0                          z=0
+in five bands with νobs = 100, 230, 300, 345, 670 GHz), for the dust emission model with β = 2 and intrinsic temperature Tdust    = 18 K (in blue) and Tdust   = 40 K (in
+red): (a) temperature; (b) emissivity index; (c) logarithm of the total luminosity; (d) logarithm of the total mass. This shows that, as in Fig. 4, the dust temperature
+and emissivity index tend to be overestimated when ignoring the effect of the CMB on the SEDs at high redshift, and the total dust luminosity and mass are
+underestimated. As expected, these systematic effects are less severe for higher intrinsic dust temperatures.
+
+
+   Here we summarize some of the main aspects of CO ex-                                 quency from the radiation field are absorbed at a rate BluŨ,
+citation; more details can be found e.g. in Spitzer (1978)                              where Blu is the Einstein absorption coefficient. The Einstein
+or van der Tak et al. (2007). The frequency of the photon                               probability coefficients are related by:
+emitted during the rotational transition of the CO molecule
+from a level Ju to a lower-excitation level Jl = Ju − 1 is:                                                                         c3
+                                                                                                             gl Blu = gu Bul =            gu Aul ,                 (19)
+νul = [E(Ju ) − E(Jl )]/h = hJu /(4π 2 mre2 ) ≃ νCO Ju , where h is the                                                           8πhνul3
+Planck constant, m is the reduced mass of the CO molecule,
+re is the effective distance between the two atoms, and νCO =                           where gu and gl are the statistical weights of the levels (given
+115.2712 GHz4 .                                                                         by 2Ju + 1 and 2Jl + 1 = 2Ju − 1, respectively). The excitation
+   The transition between rotational energy levels of CO                                state and line absorption/emission by CO molecules is com-
+in molecular clouds occurs mainly via collisions with H2                                puted by taking into account collisions and radiative transi-
+molecules, with rates given by the collision coefficients Cul                           tions. In statistical equilibrium, the populations of levels u
+(for collisional de-excitation) and Clu for (collisional ex-                            and l are given by:
+citation). These collision coefficients depend mainly on                                              nu (Aul + BulŨ + Cul ) = nl (BluŨ + Clu ) ,  (20)
+the velocity-integrated collision cross-section (which depends
+among other things on the kinetic temperature of the gas, Tkin ),                                       ˜ is the average energy density of the radiation
+                                                                                        where Ũ = 4π I/c
+and the number density of collision partners, in this case nH2 .                        field, and I˜ is the intensity of the radiation field Iν averaged
+Photons of frequency νul are emitted when a molecule goes                               over the line profile. We can assume Iν = Bν (Trad ), where Trad
+from an upper energy level Ju level to a lower energy level                             is the radiation temperature.
+Jl via spontaneous emission, which occurs at a rate given by                               The ‘excitation temperature’ of a transition from Ju to Jl ,
+                                                                                          Ju
+the Einstein coefficient Aul , or by stimulated emission, which                         Texc , by definition, characterizes the level populations result-
+occurs at a rate Bul Ũ, where Bul is the Einstein stimulated                           ing from eq. 20 using the Boltzmann equation:
+emission coefficient and Ũ is the line profile-weighted mean                                                 nu gu          hν 
+                                                                                                                 = exp − Ju .                        (21)
+energy density of the radiation field. Photons of the same fre-                                               nl gl              kTexc
+                                                                                          If collisions dominate the excitation of CO, then the level
+  4 In reality, the frequency of J > 1 transitions are close but not exactly
+                                  u                                                     populations are set by the collision coefficients and the kinetic
+multiples of νCO because rotation of the molecule makes re vary slightly (due           temperature, i.e.
+to centrifugal forces); the exact frequencies of the transitions can be found in
+                                                                                                         Clu nu gu           hν 
+http://splatalogue.net.                                                                                      =    = exp −              .             (22)
+                                                                                                         Cul nl gl              kTkin
+8                                                                    E. da Cunha et al.
+
+   The radiative transfer equation is:                                           coupled. A commonly used method to deal with this is the ‘es-
+                        dIν                                                      cape probability method’ which gives the probability β that a
+                               = −κν Iν + ǫν ,             (23)                  photon emitted in the transition escapes from the cloud. In
+                        ds
+where κν = (hν/c) nl Blu − nu Bul is the absorption coefficient,                 this case, the radiation field becomes Ũ(1 − β), and the way
+                                    
+and ǫν = (hν/4π)nuAul is the emissivity. The optical depth of                    β depends on the optical depth τνJu is specified by the geome-
+a transition is defined as:                                                      try. The most widely used approximation is the large velocity
+                                  Z                                              gradient (LVG) approach, which assumes radially expanding
+                            Ju
+                         τν = κν ds ,                      (24)                  spheres characterized by a velocity gradient dv/dr along the
+                                                                                 line of sight (e.g. Scoville & Solomon 1974; Weiß et al. 2005;
+and we can define the source function Sν as:                                     van der Tak et al. 2007).
+                       ǫν     c      nu Aul
+                 Sν =      =                  ,                        (25)
+                       κν 4π nl Blu − nu Bul                                                                3.2. The LTE case
+and re-write the radiative transfer equation (eq. 23) as:                           If collisions dominate, i.e. Cul ≫ Aul (this is the case for
+                        dIν                                                      high densities), then Texc  Ju
+                                                                                                                 = Tkin for all transitions. This is the
+                             = −Iν + Sν ,                              (26)
+                        dτν                                                      local thermal equilibrium (LTE) case, and it implies that all
+which has the solution:                                                          the lines are thermalized (e.g. Obreschkow et al. 2009). As
+                                                                                 mentioned above, we assume thermodynamic equilibrium be-
+          Iν = 1 − exp − τνJu Sν + Iν0 exp − τνJu .
+                                                
+                                                                       (27)      tween the gas and the dust, i.e. Tkin = Tdust . Since in LTE,
+                                                                                   Ju                  Ju
+The first term is the ‘intrinsic’ line flux, and the second term                 Texc  = Tkin , then Texc  = Tdust , and therefore the excitation tem-
+is the transmitted background intensity. From eqs. 20, 21, and                   perature increases with redshift in the same way as the dust
+25 follows that:                                                                 temperature (eq. 12).
+                   2hν 3        1                                                  In Fig. 6, we plot the ratio between the line luminosity ob-
+                                                 Ju
+             Sν = 2                     = Bν Texc   .      (28)                served against the CMB and the intrinsic luminosity for the
+                    c exp hνJ − 1                                                CO transitions from Ju = 1 to Ju = 10 using eq. 32. We adopt
+                                     kTexcu                                                                                                  z=0
+                                                                                 two different intrinsic gas kinetic temperatures, Tkin           = 18 K
+                                                                                                         z=0
+If we assume the only background is the CMB, then the (rest-                     (top panel) and Tkin        = 40 K (bottom panel). This figure
+frame) intensity is:                                                             shows that the decrease of CO line flux due to the CMB back-
+                                                                                 ground can be a very significant effect, substantially decreas-
+   Iν = 1 − exp − τνJu Bν Texc   Ju
+                                       + exp − τνJu Bν TCMB (z) ,
+                                                         
+                                                                                 ing the measured line flux for sources at high redshifts (see
+                                                               (29)              also Combes et al. 1999; Obreschkow et al. 2009). The effect
+and, similarly to eq. 15, the observed velocity-integrated flux                  of the CMB background is more pronounced for colder in-
+of the line is:                        Ω                                         trinsic excitation temperatures (which are closer to the CMB
+                       Ju [obs]
+                      Sν/(1+z)  =            Iν .              (30)
+                                    (1 + z)3                                     temperature at any redshift). This has strong implications for
+                                                                                 the detectability of CO lines from ‘quiescent’ galaxies at high
+The velocity-integrated flux of the line measured against the                    redshift, where the radiation field from star formation in the
+CMB background is then (see also eq. 17):                                        galaxy may lead to relatively low Tkin (and therefore Texc      Ju
+                                                                                                                                                    ). For
+                                                                                    z=0
+                                                                                 Tkin   = 18 K, typically less than half of the total line luminos-
+ Ju [obs against CMB]    Ju [obs]
+                                    − ΩBν/(1+z) TCMB                             ity can be measured at z > 4, with even lower fractions for the
+                                                z=0 
+Sν/(1+z)              = Sν/(1+z)
+                            Ω                        Ju                  lowest-Ju transitions. For higher gas excitation temperatures,
+                                     1 − exp − τνJu    Bν Texc − Bν TCMB (z) .                                            z=0
+                                                                   
+                      =                                                          the effect is not as strong. For Tkin        = 40 K, over 70% of the
+                        (1 + z)   3
+                                                                                 intrinsic flux is recovered. The decrease of measured CO line
+                                                                          (31)
+                                                                                 flux at high redshift shown in these plots has strong impli-
+ The fraction of intrinsic line flux (first term in eq. 29) that is              cations for measuring the molecular gas (MH2 ) mass of high-
+observed against the CMB is:                                                     redshift galaxies using the CO line luminosity, LCO . Since
+                                                                                 MH2 ∝ LCO (e.g. Solomon & Vanden Bout 2005), if we do not
+                 J [obs against CMB]
+                 u                                                             correct for the CMB in order to obtain the intrinsic CO lu-
+               Sν/(1+z)                     Bν TCMB (z)                          minosity (using eq. 32), then we may severely underestimate
+                    Ju [intrinsic]
+                                       = 1−      J  .                (32)      LCO and consequently underestimate the molecular gas mass
+                   Sν/(1+z)                   Bν Texc
+                                                    u
+                                                                                 of the galaxies (by more than a factor of 2 at z > 4 for 18 K
+This is similar to eq. 18 and reflects the fact that we cannot                   gas).
+detect the emission from lines where the excitation temper-                         Fig. 6 also shows that the fraction of CO line luminosity
+ature is the same as the background radiation (as also in-                       that is measured against the CMB for a given gas excitation
+cluded in, e.g. Scoville & Solomon 1974; van der Tak et al.                      temperature is not the same for all CO lines as a function of
+2007; Obreschkow et al. 2009)5 .                                                 redshift. This implies that the shape of the observed CO spec-
+   The previous equations show that the observed intensity of                    tral line energy distributions (SLEDs) will change with red-
+a CO line depends on the optical depth τνJu and the excitation                   shift, even if the intrinsic shape, i.e. emitted SLED (which
+temperature TexcJu
+                   of each transition, which are set by the sta-                 depends only on the gas properties and excitation) does not
+tistical equilibrium equation (eq. 20) and the radiative trans-                  change. Like in the case of the dust SEDs, this can affect how
+fer equation (eq. 26). Computing τνJu and TexcJu
+                                                 is a non-trivial                one interprets the properties of high-redshift galaxies based
+problem since the level populations and the radiation field are                  on their observed CO SLEDs, namely the excitation condi-
+                                                                                 tions of the gas. We investigate how large this effect is by an-
+  5 We note that CO is unlikely to be observed in absorption against the         alyzing the CO SLEDs is as a function of intrinsic excitation
+CMB at any redshift, as the ubiquitous CMB radiation will effectively heat       temperature and redshift. We consider three intrinsic kinetic
+any gas (either via dust or line heating) to the temperature of the CMB.                             z=0      z=0
+                                                                                 temperatures, Tkin      = Tdust  = 18, 40, and 100 K. For each tem-
+                                                      Effect of the CMB in (sub-)mm observations                                                               9
+
+
+
+
+                                                                                   Figure 7. Variation of observed CO SLEDs with redshift for three different
+                                                                                                                     z=0
+                                                                                   intrinsic kinetic temperatures: Tkin  = 18 K (blue), 40 K (red), and 100 K
+                                                                                   (yellow). For each intrinsic temperature, we consider four different redshifts
+                                                                                   of the emitting galaxy: z = 0 (solid lines); z = 2 (dashed lines); z = 5 (dot-
+                                                                                   dashed lines); and z = 10 (dotted lines). For each temperature, all the CO
+                                                                                   SLEDs are normalized to the flux of the CO(1–0) line at z = 0, Sν1 (z = 0).
+
+
+                                                                                                            Ju
+                                                                                   and hence Tkin and Texc     , and the brighter CMB background
+                                                                                   as discussed above. The results are plotted in Fig. 7, which
+                                                                                   shows two main effects: (i) the overall flux of the lines de-
+                                                                                   creases at higher redshifts, as discussed above; (ii) the de-
+                                                                                   crease in line intensity is not the same for all transitions,
+                                                                                   which slightly changes the shape of the SLEDs. At fixed
+                                                                                     z=0
+                                                                                   Tkin  , there is a slight shift of the CO SLED peak towards
+Figure 6. Ratio between the line (velocity-integrated) flux observed against       higher Ju with increased redshift. This is a consequence both
+the CMB background and the intrinsic line flux for different CO transitions
+from Ju = 1 to Ju = 10 (shown with different colors). In the top panel, the        the slightly higher excitation temperature (due to additional
+                                           z=0                                     CMB heating) and the fact that the CMB background affects
+intrinsic gas kinematic temperature is Tkin    = 18 K; in the bottom panel, we
+                                                         z=0
+show a case with higher intrinsic gas temperature, Tkin      = 40 K. Since this    the low-Ju line measurements more than the high-Ju lines (see
+                                                  Ju
+is the LTE case, the excitation temperature Texc     is the same for all levels    Fig. 6). As expected, these effects are stronger for the lowest
+and equal to Tkin . These plots include both effects of increasing CMB tem-          z=0              z=0
+perature with redshift on observed CO lines: (i) the increase of gas kine-         Tkin  ; gas with Tkin  = 18 K is practically undetectable at z >
+                                                                                                                                                  ∼ 5.
+matic temperature (and hence the excitation temperature) as described by
+eq. 12; (ii) the growing importance of the CMB as an observing background                                3.3. Non-LTE examples
+with redshift. When SνJu [observed against the CMB]/SνJu [intrinsic] = 1, the
+measured line flux is the total intrinsic flux emitted by the source; when            In real galaxies, the molecular gas is not likely to be in LTE,
+SνJu [observed against the CMB]/SνJu [intrinsic] = 0, the line cannot be distin-   and so the radiative transfer of the lines and the population
+guished from the CMB background.
+                                                                                   levels have to be solved simultaneously as described in Sec-
+                                                                                   tion 3.1. In this section, we show how the CMB affects the
+                                                                                   detectability of the CO lines, where the line fluxes and opti-
+perature, we build the expected CO SLEDs by computing the                          cal depths are computed using the LVG model of Weiß et al.
+velocity-integrated flux of each Ju > 1 transition normalized                      (2005), which assumes an expanding sphere geometry with
+to the velocity-integrated flux of the Ju = 1 transition at z = 0                  velocity gradient dv/dr. The main free parameters of this
+(this normalization highlights the fact that the lines become                      model are:
+less bright due to lack of contrast with the CMB as shown in
+Fig. 6). We use the first term of eq. 29 to compute the intrin-                         • The kinetic temperature of the gas, Tkin . As in the previ-
+sic CO line luminosity of each transition, with the excitation                            ous section, we assume Tkin (z) = Tdust (z), i.e. that there
+               Ju
+temperature Texc  = Tkin , and the line optical depth as given by                         is a 100% effective coupling of the dust and gas tem-
+                                                                                                                                     z=0
+equation 5 in Obreschkow et al. (2009) (derived for the LTE                               peratures. We analyze three values of Tkin     : 18, 40 and
+approximation):                                                                           100 K.
+
+                               h νCO Ju2                                                • The number density of H2 molecules, nH2 . We analyze
+                                                        
+                                                  h νCO Ju
+   τν [LTE] = 7.2 τc exp −
+    Ju
+                                     Ju    sinh         Ju   , (33)                       two examples:
+                               2 k Texc           2 k Texc
+where τc is a constant. Following Obreschkow et al. (2009),                                    – ‘low-density’ case: nH2 = 103.2 cm−3
+we fix τc = 2 (which they show provides a good fit to observed                                 – ‘high-density’ case: nH2 = 104.2 cm−3
+CO SLEDs). We compute the expected CO line SLEDs for
+three intrinsic kinetic temperatures at different redshifts by in-                      • The number density of CO molecules. We assume
+cluding both the extra heating by the CMB that increases Tdust                            nCO = 8 × 10−5 nH2 .
+10                                                                       E. da Cunha et al.
+
+
+
+
+Figure 8. Excitation temperatures of the various CO transitions computed using the LVG approximation (using the models of Weiß et al. 2005), for a low-density
+                                                                                                                                       z=0
+model (left-hand panel) and a high-density model (right-hand panel). We consider three intrinsic kinetic temperatures at z = 0: Tkin       = 18 (blue), 40 (red), and
+100 K (yellow). For each model, the kinetic temperature increases with redshift following the dust temperature (eq. 12, which includes extra dust heating by
+the CMB at high redshift). The resulting excitation temperatures at different redshifts are plotted with different line styles: z = 0 (solid), z = 2.5 (dashed), z = 5
+(dot-dashed), and z = 10 (dotted). We plot only transitions where the optical depth τνJu is higher than 0.1 (Fig. 9).
+
+
+
+
+Figure 9. Optical depths of the various CO transitions computed using the LVG approximation (Weiß et al. 2005), for a low-density model (left-hand panel) and
+a high-density model (right-hand panel). The color and line meanings are the same as in Fig. 8.
+
+
+     • The velocity gradient dv/dr. Assuming that the clouds                          high redshifts, the CMB defines the minimum excitation tem-
+       are virialized, we obtain dv/dr = 8 km s−1 pc−1 for the                        perature as the CO levels become radiatively dominated. In
+       low density case and dv/dr = 3.9 km s−1 pc−1 for the                           this case, the radiative processes dominate and so the excita-
+       high density case.                                                             tion temperature gets close to Trad i.e. TCMB . Finally, these
+                                                                                                               Ju
+                                                                                      plots also show that Texc   < Tkin at low density and high Ju , i.e.
+Using these parameters, the excitation temperature and opti-                          less molecules are in excited states because there is less col-
+cal depth of each line are computed by coupling the statisti-                                                                       Ju
+                                                                                      lisional excitation. At higher redshifts, Texc   is higher because
+cal equilibrium and radiative transfer equations (Section 3.1;                        Tkin is larger due to the dust being hotter (thanks to extra CMB
+Weiß et al. 2005). In Figs. 8 and 9, we plot the variation of                         heating) and, at the same time, CMB radiative excitation be-
+                            Ju
+excitation temperatures Texc    and line optical depths τνJu , re-                    coming more important.
+                                                               z=0
+spectively, with redshift and input kinetic temperature Tkin       ,                     Once the excitation temperature and optical depth of each
+resulting from these calculations. These plots show that the                          transition are determined using the LVG models, we can com-
+                                                     Ju
+high-density case approaches LTE for low Ju : Texc      ≃ Tkin up                     pute the velocity-averaged flux of each line as described in
+to Ju ≃ 5 i.e. the low-Ju lines are thermalized (i.e. the H2                          the previous sections. In Fig. 10, we show the ratio between
+density is higher than the critical density for these levels). For                    the line luminosity observed against the CMB background
+              Ju
+higher Ju , Texc < Tkin because at these densities and kinetic                        and the intrinsic line luminosity for different CO transitions
+temperatures these levels are not as populated (as they would                         for the low- and high-density case, for intrinsic gas kinetic
+                                                               z=0                                      z=0
+be in the LTE case). We also note that, for the lowest Tkin        ,                  temperatures Tkin      of 18 and 40 K. These plots can be di-
+at high redshift, the kinetic temperature becomes very close                          rectly compared with the LTE case shown in Fig. 6. As for
+to the CMB temperature. Due to the strength of the CMB at
+                                                     Effect of the CMB in (sub-)mm observations                                                                      11
+
+
+
+
+Figure 10. Ratio between the line luminosity observed against the CMB background and the intrinsic line luminosity for different CO transitions from Ju in the
+non-LTE examples described in Section 3.3 (shown with different colors as in Fig 6). In the top panels we show models with intrinsic gas kinematic temperature
+  z=0                                                                                         z=0
+Tkin  = 18 K; in the bottom panel, we show the cases with higher intrinsic gas temperature, Tkin  = 40 K. The excitation temperature for each transition is computed
+using the Weiß et al. (2005) LVG model, with the parameters described in Section 3.3: the left-hand panels correspond to the low-density case, and the right-hand
+panels correspond to the high-density case.
+
+
+
+
+                                                                                                                    z=0
+Figure 11. Variation of observed CO SLEDs with redshift for three different intrinsic kinetic temperatures: Tkin        = 18 K (blue), 40 K (red), and 100 K (yellow),
+computed using the Weiß et al. (2005) LVG model for the low-density case (left-hand panel) and the high-density case (right-hand case). For each intrinsic
+temperature, we consider four different redshifts of the emitting galaxy: z = 0 (solid lines); z = 2 (dashed lines); z = 5 (dot-dashed lines); and z = 10 (dotted lines).
+For each temperature, all the CO SLEDs are normalized to the flux of the CO(1–0) line at z = 0, Sν1 (z = 0).
+12                                                            E. da Cunha et al.
+
+the LTE case, the contrast between the lines and the CMB                   We show that neglecting the CMB effect on (sub-)mm ob-
+decreases with redshift, and it decreases more rapidly for              servations of high-redshift galaxies can lead to significant dif-
+the low-temperature case, since the temperature is closer to            ferences in the derived intrinsic properties of dust, in partic-
+the CMB temperature. The main difference between these                  ular a severe underestimation of the dust mass. Specifically,
+plots and the LTE case are the high-Ju transitions. Since the           the intrinsic dust mass of cool dust (Tdust <
+                                                                                                                    ∼ 20 K) at z > 5 can
+higher-Ju levels are underpopulated compared to the LTE case            be underestimated by at least one order of magnitude. The in-
+(the lines are not thermalized), their excitation temperature is        ferred total dust luminosity (and hence star formation rate)
+lower than Tkin (z) (see Fig. 8), and so the contrast between           is less drastically affected: between 30% and 50%. Simi-
+these lines and the CMB is even lower than for the low-Ju lines         larly, if the effect of the CMB as an observing background
+(contrary to what happens in the LTE case). The predicted de-           is neglected when measuring CO lines, this can lead to wrong
+                                     z=0
+crease in contrast is stronger for Tkin  = 18 K, specially for low      interpretations of the molecular gas properties (such as total
+H2 density: in this case, lines with Ju > 5 become practically          mass, density and kinetic temperature) via the observed CO
+undetectable against the CMB from z = 4. For the lowest-Ju              luminosity and the SLEDs. For low gas kinetic temperatures
+transitions, the contrast behaves similar to the LTE case, be-          (18 K) and different density scenarios, we find that, at z > 5,
+cause the low-Ju are thermalized.                                       less than 20% of the intrinsic CO(1–0) or CO(2–1) line fluxes
+   In Fig. 11, we plot the CO SLEDs computed using the                  can be measured against the CMB. This implies that, without
+LVG code, i.e. with the excitation temperatures and line op-            proper corrections, the inferred molecular gas mass would be
+tical depths shown in Figs. 8 and 9. As for the LTE case                20% of the intrinsic value. At higher gas kinetic temperature
+(Fig. 7), these plots show how the flux of the lines decreases          (40 K), the underestimation of the gas mass would be less dra-
+with redshift due to decreasing contrast with the CMB (and              matic since between 20% and 60% of the intrinsic line fluxes
+also to some extent different line optical depths; Fig. 9). In          are measured (depending on the density), however this is still
+this case it is harder to distinguish differences between the           significant when studying the gas reservoir/star formation ef-
+CO SLED shapes at different redshifts caused by the dif-                ficiency of high-redshift galaxies.
+ference in contrast against the CMB or by different intrin-                Finally, our results imply that the cold ISM of galaxies at
+                   Ju
+sic values of Texc    and τνJu at different redshifts (set by in-       high redshift, with intrinsic temperatures of about 20 K, if
+creasing increasing excitation by the CMB both via extra                existent, will be difficult to measure even with the unprece-
+dust heating and radiative processes; Figs. 8 and 9), which             dented sensitivity of modern (sub-)millimeter observatories
+would produce different intrinsic CO SLEDs at different red-            such as ALMA, simply because the contrast between the con-
+shifts. However, we have shown that the effect of the CMB               tinuum (and line) emission against the CMB background de-
+background is often non-negligible (Figs. 10) and must be               creases dramatically at z >∼ 4.
+taken into account when interpreting observed SLEDs us-
+ing LVG models (e.g. Scoville & Solomon 1974; Weiß et al.                                       ACKNOWLEDGEMENTS
+2005; van der Tak et al. 2007).                                           We thank the referee for a careful reading of the manuscript.
+   We note that if we do not assume a perfect coupling be-              We are also grateful to Françoise Combes, Nick Scoville and
+tween the dust and gas temperatures, i.e. that Tkin (z)=Tdust (z),      Alberto Bolatto for comments on the manuscript. EdC ac-
+the effects presented in this section will be even more pro-            knowledges funding through the ERC grant ‘Cosmic Dawn’.
+nounced, i.e. in general the lines look weaker. Indeed, if we           RD acknowledges funding from Germany’s national research
+assume that Tkin to be constant with redshift (i.e. Tkin (z) =          center for aeronautics and space (DLR, project FKZ 50 OR
+  z=0
+Tkin  ), at the high redshifts we obtain Tkin (z) < Tdust (z), since    1104).
+Tdust increases with z due to the extra CMB heating (eq. 12).
+In this case, using our LVG modelling, we obtain the result                                           REFERENCES
+        Ju
+that Texc   tends to be lower in general (because since Tkin is
+smaller the collisions are not as effective bringing molecules          Blain, A. W. 1999, MNRAS, 309, 955
+to excited levels), and so the contrast between the lines and           Blain, A. W., Smail, I., Ivison, R. J., Kneib, J.-P., & Frayer, D. T. 2002,
+the CMB is weaker.                                                         Phys. Rep., 369, 111
+                                                                        Combes, F., Maoli, R., & Omont, A. 1999, A&A, 345, 369
+                  4. SUMMARY & CONCLUSION                               da Cunha, E., Charlot, S., & Elbaz, D. 2008, MNRAS, 388, 1595
+                                                                        Daddi, E., Elbaz, D., Walter, F., et al. 2010, ApJ, 714, L118
+   In this paper, we have analyzed in detail how the CMB af-            Draine, B. T. 2011, Physics of the Interstellar and Intergalactic Medium
+fects (sub-)millimeter observations of both the dust contin-            Draine, B. T., & Lee, H. M. 1984, ApJ, 285, 89
+uum and CO lines in high-redshift galaxies. We have shown               Draine, B. T., & Li, A. 2007, ApJ, 657, 810
+that, at high redshifts, the CMB becomes an increasingly sig-           Dunne, L., Eales, S., Edmunds, M., et al. 2000, MNRAS, 315, 115
+                                                                        Genzel, R., Tacconi, L. J., Gracia-Carpio, J., et al. 2010, MNRAS, 407, 2091
+nificant additional heating source for the dust and gas, boost-         Groves, B., Krause, O., Sandstrom, K., et al. 2012, MNRAS, 426, 892
+ing their temperatures and enhancing the dust continuum and             Klaas, U., Haas, M., Müller, S. A. H., et al. 2001, A&A, 379, 823
+CO line emission of the galaxies. However, we show that                 Lidz, A., Furlanetto, S. R., Oh, S. P., et al. 2011, ApJ, 741, 70
+at higher redshifts, since the CMB is hotter and therefore              Magdis, G. E., Daddi, E., Béthermin, M., et al. 2012, ApJ, 760, 6
+brighter, the contrast of the intrinsic dust (and line) emission        Muñoz, J. A., & Furlanetto, S. R. 2013, arXiv:1301.0619
+                                                                        Obreschkow, D., Heywood, I., Klöckner, H.-R., & Rawlings, S. 2009, ApJ,
+against the CMB decreases. We have quantified how this af-                 702, 1321
+fects the detectability of dust and lines in specific cases with        Papadopoulos, P. P., Röttgering, H. J. A., van der Werf, P. P., et al. 2000,
+fixed temperatures. Additionally, we provide general correc-               ApJ, 528, 626
+tion factors to compute what fraction of the intrinsic dust (and        Righi, M., Hernández-Monteagudo, C., & Sunyaev, R. A. 2008, A&A, 478,
+line) emission can be detected against the CMB as a function               685
+                                                                        Rowan-Robinson, M., Negroponte, J., & Silk, J. 1979, Nature, 281, 635
+of frequency, redshift and temperature, and a recipe to include         Scoville, N. Z., & Solomon, P. M. 1974, ApJ, 187, L67
+these effects when comparing dust emission models with ob-              Silk, J., & Spaans, M. 1997, ApJ, 488, L79
+servations.                                                             Smith, D. J. B., Dunne, L., da Cunha, E., et al. 2012, ArXiv e-prints
+                                                  Effect of the CMB in (sub-)mm observations                                                           13
+
+Solomon, P. M., & Vanden Bout, P. A. 2005, ARA&A, 43, 677                  van der Tak, F. F. S., Black, J. H., Schöier, F. L., Jansen, D. J., & van
+Spitzer, L. 1978, Physical processes in the interstellar medium              Dishoeck, E. F. 2007, A&A, 468, 627
+Tielens, A. G. G. M. 2005, The Physics and Chemistry of the Interstellar   Weiß, A., Walter, F., & Scoville, N. Z. 2005, A&A, 438, 533
+  Medium
+Tielens, A. G. G. M., & Hollenbach, D. 1985, ApJ, 291, 722
+

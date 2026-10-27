@@ -1,0 +1,99 @@
+{
+  "schema": "R36-07-temperature-domain-followup-v1",
+  "task_id": "R36-07-FOREGROUND-BUDGET",
+  "same_issue_continuation": true,
+  "subquestion": "Passive thermal dust temperature domain and exact-coordinate versus full-response alternatives",
+  "status": "BOUNDED_THEORY_RESEARCH_COMPLETED_PHYSICAL_INPUT_HOLD",
+  "author": {
+    "agent": "/root/r36_foreground_fresh_review",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "new research contributor; cannot independently review this followup"
+  },
+  "new_task_attempt_campaign_or_budget_reset": false,
+  "ultra_escalation": false,
+  "formal_packet": null,
+  "formal_ACK": null,
+  "acceptance_met": false,
+  "qualified_products": [],
+  "answers": {
+    "i_CMB_floor": {
+      "answer": "YES_FOR_DECLARED_COMOVING_RADIATIVE_EQUILIBRIUM; NOT_UNIVERSAL_UNDER_UNRESTRICTED_VELOCITIES",
+      "equations": [
+        "integral C_abs [B(T_d)-B(T_gamma)] = H_extra >= 0 implies T_d>=T_gamma",
+        "T_obs=D T_rest/(1+z_cos)",
+        "T_obs>=T_CMB0*(1-v_max/c)/(1+v_max/c) for the stated bounded-speed class",
+        "grey receding T_obs/T0=[gamma^2(1+v^2/(3c^2))]^(1/4)/[gamma(1+v/c)] -> 0"
+      ],
+      "old_cold_MBB_witness": "Excluded by a justified positive observer-frame floor; original unrestricted witness remains valid in its declared mathematical class",
+      "conditions": [
+        "Kirchhoff positive opacity",
+        "radiative thermal equilibrium",
+        "no additional cooling sink",
+        "explicit source/observer frames and redshifts",
+        "stochastic or transient populations separately modelled"
+      ]
+    },
+    "ii_coordinate_and_direct_response": {
+      "answer": "FINITE_CONDITIONAL_DIRECT_FULL_RESPONSE_AND_BOUNDED_U_MOMENTS; NOT_ALL_OLD_NINE_MOMENTS",
+      "exact_coordinate": "u=1/T with full nonlinear spectral response and measure pushforward preserves the physical family and native functional",
+      "bounded_inverse_domain": [
+        0,
+        0.36690515501742804
+      ],
+      "endpoint_planck_envelope": "g=f(h nu_ref u/k)/f(h nu u/k), f(x)=expm1(x)/x. min/max over u attained at 0 or 1/T_floor by monotonicity.",
+      "full_tensor": "All 7x24 real coordinates retained through full A(theta), spectral coherency rotation, Doppler factors, aberration and native operator. Bound all directional supports or the operator norm; no zero-filled columns.",
+      "old_temperature_obstruction": "t_d=1/(20 K u)-1 has a pole at u=0; fixed-amplitude hot MBB atoms have bounded finite-band responses but divergent original U_t and U_tt tensors.",
+      "needed_for_old_six_dust_rows": "M0,M1,M2 of delta_beta plus M_t2=int t_d^2 dmu; row-TV bounds [M0,M1,sqrt(M0*M_t2),M2/2,sqrt(M2*M_t2),M_t2/2]. Add all three synch rows, unchanged D, and actual operator norm to bound all nine.",
+      "changes_not_equivalent": [
+        "truncated inverse-temperature basis reusing old F,D",
+        "passive/material class restriction described as full free-complex class",
+        "B(T)-B(T_CMB) contrast substituted for old intrinsic B(T) without transfer/remainder accounting"
+      ],
+      "u_zero_semantics": "Uniform spectral closure only: exact finite-temperature coordinate has u>0. No atom at u=0 is assigned finite or zero original temperature moments."
+    },
+    "iii_survival_or_tail": {
+      "answer": "SOURCE_GROUNDED_CONDITIONAL_CLASSES_EXIST; NO_UNIVERSAL_CALIBRATED_SKY_CEILING",
+      "survival_equation": "T_rest < B_max/log(v_min*tau_min/a_max) under no replenishment, specified size, constant-temperature survival duration, and validated material-rate bounds",
+      "representative_one_year_limit_K": 1532.8733061259204,
+      "source": "Waxman and Draine 2000 equations 10-12; pressure/material limitations from Kama et al. 2009 section 3.2",
+      "caveats": [
+        "published rate parameters are approximations, not certified uniform bounds",
+        "duration/size/material/pressure population must be declared",
+        "transient survival alone does not bound T^2 moment",
+        "steady population need not imply long-lived individual grains"
+      ],
+      "noncompact_alternative": "An actual temperature-second-moment tail or a bolometric/opacity envelope supplies M_t2. For ideal grey material R_bol >= C3 T^3; E_bol then bounds int T^2 dmu by Holder. Existing single DIRBE band is not E_bol."
+    }
+  },
+  "actual_numeric_evidence": {
+    "status": "ALL_PASS",
+    "elapsed_s": 0.09830970386974514,
+    "new_DIRBE_uniform_lower_m_MJy_sr_per_K_CMB353": 0.15768847104209432,
+    "new_DIRBE_Jensen_b": 0.8974383525556258,
+    "raw_map_sum_idealization_mass_bound_K_CMB353_sr": 6892.912812191786,
+    "qualification": "Conditional theorem/table arithmetic only; no calibrated physical upper radius"
+  },
+  "operational_lower_tier_contract": {
+    "possible_with_current_inputs": false,
+    "reason": "A genuine source aggregate flux-loss/lower-response certificate and native target operator certificate remain absent. No whole-sky material/survival or intensity-weighted T^2 tail payload is qualified.",
+    "route_A": "Declare a supported observer-frame temperature floor and preserve direct nonlinear full native tensor response; then supply actual source/native domination certificates. Does not bound the old nine-coordinate metric.",
+    "route_B": "To retain all old nine rows, also supply justified material/lifetime T_max or an intensity-weighted T^2 tail bound; then use all six dust TV row inequalities and three synch rows with unchanged D and explicit remainders.",
+    "ready_now": "Fresh independent review of this bounded theory and numeric witnesses. Subsequent lower-tier consumption must reuse original Y/noise without rerunning native maps."
+  },
+  "preservation": {
+    "previous_published_research_mutated": false,
+    "original_candidate_mutated": false,
+    "repository_STATE_Git_mutations": false,
+    "children": false,
+    "native_band_or_noise_reruns": false
+  },
+  "outputs": {
+    "derivation": "DERIVATION.md",
+    "numerics": "NUMERIC_WITNESSES.json",
+    "reproducer": "reproduce.py",
+    "sources": "SOURCE_INTAKE.json"
+  },
+  "completed_utc": "2026-10-27T05:17:24.396847+00:00"
+}

@@ -1,0 +1,103 @@
+{
+  "schema": "R36-07-formal-research-binding-receipt-v1",
+  "task_id": "R36-07-FOREGROUND-BUDGET",
+  "packet_id": "043bf89a27534fc53f41e9a861036f35a8dd2d4db32134c02a8ad7aef8cb1430",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "phase": "research",
+  "attempt_from_actual_packet": 2,
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_identity": null,
+  "agent_id": "/root/r36_foreground_fresh_review",
+  "outcome": "blocker",
+  "issue_class": "input",
+  "substantive": false,
+  "acceptance_met": false,
+  "qualified_products": [],
+  "actual_packet": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/NEXT_016.json",
+    "sha256": "dd47cac499f7467e8e1b905372d2f9ac2f7cfc5d6a531511e4673589e745e31d",
+    "bytes": 8308,
+    "role": null
+  },
+  "actual_ACK": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/ACK_016_GO.json",
+    "sha256": "eada2270bde4eae3a3a35824b1ca3429fad488e1c8936925ddd85b966447e7f7",
+    "bytes": 279,
+    "role": null
+  },
+  "return": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_positive_envelope_research/formal_binding_01/CONTROLLER_RETURN.json",
+    "sha256": "ed173dffae3ef18ace2594712bb4335e3dd13bdabcdc6e871b010db36a5d6467",
+    "bytes": 10254,
+    "role": null
+  },
+  "consumed_completed_research_and_review": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_positive_envelope_research/RESULT.json",
+      "sha256": "05f3e742819ebfcaa27740c704e5e7579319029a37cc64db6c1a2549ff10ea47",
+      "bytes": 7798,
+      "role": "completed conditional source/math research"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_positive_envelope_research/RAW_RECEIPT.json",
+      "sha256": "4e848b5bc6e7875f3cb07d937ddd54569e30bf94dd2ff3dc247f78f20510dd21",
+      "bytes": 7346,
+      "role": "raw completed research receipt"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_envelope_independent_review/REVIEW_RESULT.json",
+      "sha256": "0a3ea0e32746a1d04df50a4b5b3a500c466d8a84798c6179a428ee71cd29570f",
+      "bytes": 8167,
+      "role": "fresh independent conditional-method review"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_envelope_independent_review/RAW_RECEIPT.json",
+      "sha256": "218df7eac5c06290c22da6fa984cf5b8ede5233fb9b4a0aaf7ac966922634007",
+      "bytes": 6810,
+      "role": "raw independent-review receipt"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_positive_envelope_research/temperature_domain_followup/RESULT.json",
+      "sha256": "533ae712a421c9f740f80f9d1945e75781c9b20d88648155980031bc09f08227",
+      "bytes": 6205,
+      "role": "completed passive-temperature research"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_positive_envelope_research/temperature_domain_followup/RAW_RECEIPT.json",
+      "sha256": "a3f0b004aef84b971e87fe5da7d0c47bf4221f7659cf5b05a9cd1d0bf7e70aae",
+      "bytes": 3838,
+      "role": "raw passive-temperature research receipt"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_temperature_independent_review/REVIEW_RESULT.json",
+      "sha256": "acca6cda9e7a804e719bbf2989893209b410f1333d0776f99701c6f136c1f87e",
+      "bytes": 15240,
+      "role": "fresh independent temperature-domain review"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_temperature_independent_review/RAW_RECEIPT.json",
+      "sha256": "7ef706e5a0cded7ff30ed859a51903748fceed4780f1b011823297e49bdc9eef",
+      "bytes": 7644,
+      "role": "raw independent temperature-domain review receipt"
+    }
+  ],
+  "temperature_review_status": "PASS_CONDITIONAL_THEORY_PHYSICAL_INPUT_HOLD",
+  "runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "native_tool": "collaboration.followup_task",
+    "actual_ACK_path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/ACK_016_GO.json"
+  },
+  "formal_binding_only": true,
+  "science_rerun_in_this_binding": false,
+  "source_reacquisition": false,
+  "new_task_or_attempt_reset": false,
+  "new_Ultra": false,
+  "previous_science_execution": "Completed source intake and small witnesses are preserved in the bound historical raw receipts; not represented as newly executed in this formal binding.",
+  "old_raws_and_published_files_unchanged": true,
+  "repository_STATE_Git_mutations": false,
+  "children_spawned": false,
+  "discovery_note": "An overly broad external filename discovery was interrupted with exit 130; bounded directory inspection then located exact review files. This was a read-only locator interruption, not a scientific failure.",
+  "finalized_utc": "2026-10-27T05:26:21.451764+00:00"
+}

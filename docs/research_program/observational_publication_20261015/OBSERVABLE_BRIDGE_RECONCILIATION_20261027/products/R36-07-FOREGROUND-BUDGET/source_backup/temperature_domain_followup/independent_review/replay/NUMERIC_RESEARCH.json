@@ -1,0 +1,481 @@
+{
+  "task_id": "R36-07-FOREGROUND-BUDGET",
+  "same_issue_continuation": true,
+  "status": "SOURCE_AND_ANALYTIC_RESEARCH_COMPLETED_PHYSICAL_BUDGET_UNQUALIFIED",
+  "sealed_candidate_identity": "34ac36b0a774589c213d33943e4a4c25678d4e095e9b9f6062081118a2129cc9",
+  "sealed_RESULT_sha256": "2b125b9a98060f48324740848c3b09b3b23ac00185e1a53e241645274c0d71d4",
+  "source_stats": {
+    "haslam408_ds_Remazeilles2014.fits": {
+      "pixels": 3145728,
+      "unit": "K_RJ",
+      "minimum": 10.984271049499512,
+      "median": 25.34995937347412,
+      "mean": 34.776977534774836,
+      "maximum": 4779.3154296875,
+      "equal_area_integral_K_RJ_sr": 437.0203885492236,
+      "nside": 512,
+      "ordering": "RING",
+      "interpretation": "DELIVERED_MAP_STATISTIC; not a calibrated upper bound on arbitrary positive emitter mass"
+    },
+    "lambda_haslam408_nofilt.fits": {
+      "pixels": 3145728,
+      "unit": "K_RJ",
+      "minimum": 10.731341796875,
+      "median": 25.356515625,
+      "mean": 34.78420744105677,
+      "maximum": 4817.3415,
+      "equal_area_integral_K_RJ_sr": 437.11124223106947,
+      "nside": 512,
+      "ordering": "NESTED",
+      "interpretation": "DELIVERED_MAP_STATISTIC; not a calibrated upper bound on arbitrary positive emitter mass"
+    },
+    "DIRBE_BAND10_AAM_P3B.FITS": {
+      "pixels": 393216,
+      "all_native_pixel_ids_once": true,
+      "all_positive_observation_counts": true,
+      "zodiacal_light_removed": false,
+      "unit": "MJy/sr",
+      "negative_pixels": 956,
+      "minimum": -2.462104082107544,
+      "median": 6.610655069351196,
+      "mean": 23.11605366443545,
+      "maximum": 6788.24365234375,
+      "sum_with_uniform_nominal_pixel_areas_MJy": 290.4848974887113,
+      "sigma_sum_worst_unknown_crosspixel_PSD_MJy": 14.158399418366255,
+      "Cantelli_95_percent_noise_margin_MJy_IF_released_marginals_are_valid": 61.71503226694357,
+      "stddev_definition": "standard deviation of weighted mean, per supplement Table 5.7-14; no second count division",
+      "pixel_area_status": "CSC only approximately equal-area; uniform q is a chosen functional, not an exact sphere quadrature",
+      "gain_systematic_fraction_Hauser1998_Table2": 0.116,
+      "offset_systematic_nW_m2_sr_Hauser1998_Table2": 2.0,
+      "offset_systematic_MJy_sr": 0.16011076569511298,
+      "error_interpretation": "Published error estimates; neither deterministic envelopes nor a new joint confidence claim"
+    }
+  },
+  "DIRBE_passband": {
+    "release": "DIRBE Pass 3B November 1996",
+    "reference_wavelength_um": 240.0,
+    "reference_frequency_GHz": 1249.1352416666668,
+    "positive_tabulated_frequency_GHz": [
+      663.8671745075678,
+      1839.7480132308087
+    ],
+    "piecewise_linear_support_GHz": [
+      658.7209286484895,
+      1854.1187333786877
+    ],
+    "normalization_integral_Hz_for_nuIconstant": 498899664845.7449,
+    "baseline_m_MJy_sr_per_K_CMB30": 0.6488586304557223,
+    "tbar_log_nu_over_30": 3.709985311039402,
+    "geometric_mean_frequency_GHz": 1225.5961929432992,
+    "Jensen_checks": [
+      {
+        "delta_beta": -100.0,
+        "log_H_over_m": -317.5237224487801,
+        "Jensen_lower_log": -370.9985311039402
+      },
+      {
+        "delta_beta": -20.0,
+        "log_H_over_m": -67.9939666885022,
+        "Jensen_lower_log": -74.19970622078804
+      },
+      {
+        "delta_beta": -5.0,
+        "log_H_over_m": -18.198456841406525,
+        "Jensen_lower_log": -18.54992655519701
+      },
+      {
+        "delta_beta": -1.0,
+        "log_H_over_m": -3.6968040088732472,
+        "Jensen_lower_log": -3.709985311039402
+      },
+      {
+        "delta_beta": 0.0,
+        "log_H_over_m": 0.0,
+        "Jensen_lower_log": 0.0
+      },
+      {
+        "delta_beta": 1.0,
+        "log_H_over_m": 3.722818545722275,
+        "Jensen_lower_log": 3.709985311039402
+      },
+      {
+        "delta_beta": 5.0,
+        "log_H_over_m": 18.85301757398781,
+        "Jensen_lower_log": 18.54992655519701
+      },
+      {
+        "delta_beta": 20.0,
+        "log_H_over_m": 77.81484715869058,
+        "Jensen_lower_log": 74.19970622078804
+      },
+      {
+        "delta_beta": 100.0,
+        "log_H_over_m": 404.04575265839304,
+        "Jensen_lower_log": 370.9985311039402
+      }
+    ],
+    "qualification": "Rounded response table and chosen interpolation; no empirical lower-response uncertainty certificate claimed"
+  },
+  "conditional_envelope": {
+    "status": "CONDITIONAL_SENSITIVITY_ONLY_NOT_SOURCE_QUALIFIED_UPPER_BOUND",
+    "unverified_assumptions": [
+      "Haslam monochromatic response",
+      "both positive global response lower constants kappa=1",
+      "raw sums equal true total intensities with no calibration/noise/processing error",
+      "pure unabsorbed common power laws over entire bracket"
+    ],
+    "a_minus": 4.29768548624013,
+    "b_plus": 3.709985311039402,
+    "Jminus_K_CMB30_sr": 0.001125342682784392,
+    "Jplus_K_CMB30_sr": 447.6859578560137,
+    "Holder_M0_K_CMB30_sr": 1.1392413175065765,
+    "moments": [
+      {
+        "order": 1,
+        "coefficient_minus": 0.08559943307840451,
+        "coefficient_plus": 0.09915927162212296,
+        "conditional_absolute_moment_K_CMB_sr": 44.39230982515042
+      },
+      {
+        "order": 2,
+        "coefficient_minus": 0.029309051773377007,
+        "coefficient_plus": 0.039330244594519836,
+        "conditional_absolute_moment_K_CMB_sr": 17.60763120673587
+      },
+      {
+        "order": 3,
+        "coefficient_minus": 0.01693465795710008,
+        "coefficient_plus": 0.02632471924530955,
+        "conditional_absolute_moment_K_CMB_sr": 11.785226207920463
+      },
+      {
+        "order": 4,
+        "coefficient_minus": 0.013744328253671903,
+        "coefficient_plus": 0.02474989023783611,
+        "conditional_absolute_moment_K_CMB_sr": 11.08019378503609
+      }
+    ],
+    "R32_D": [
+      1.261652382369369,
+      0.1777139521270542,
+      1.1309894216176297,
+      0.09451923139372441,
+      0.04109240642871376,
+      0.1151042544103929,
+      0.07145402059880916,
+      0.022520789584731377,
+      0.09386151314750793
+    ],
+    "conditional_synch_component_rho_bound_K_CMB": 7.898526171756386,
+    "is_full_nine_moment_physical_rho": false,
+    "nominal_remainder_examples": [
+      {
+        "nominal_frequency_GHz": 30.0,
+        "conditional_TV_remainder_K_CMB30_sr": 0.0,
+        "after_nominal_thermodynamic_conversion_and_24_harmonic_norm_K_CMB": 0.0,
+        "warning": "Nominal-frequency illustration only; native target bands must integrate this bound"
+      },
+      {
+        "nominal_frequency_GHz": 44.0,
+        "conditional_TV_remainder_K_CMB30_sr": 0.1530091237838456,
+        "after_nominal_thermodynamic_conversion_and_24_harmonic_norm_K_CMB": 0.04866873951001586,
+        "warning": "Nominal-frequency illustration only; native target bands must integrate this bound"
+      },
+      {
+        "nominal_frequency_GHz": 70.0,
+        "conditional_TV_remainder_K_CMB30_sr": 2.6006948032128756,
+        "after_nominal_thermodynamic_conversion_and_24_harmonic_norm_K_CMB": 0.22150054535756797,
+        "warning": "Nominal-frequency illustration only; native target bands must integrate this bound"
+      },
+      {
+        "nominal_frequency_GHz": 100.0,
+        "conditional_TV_remainder_K_CMB30_sr": 11.122517197779596,
+        "after_nominal_thermodynamic_conversion_and_24_harmonic_norm_K_CMB": 0.36891658286497203,
+        "warning": "Nominal-frequency illustration only; native target bands must integrate this bound"
+      },
+      {
+        "nominal_frequency_GHz": 143.0,
+        "conditional_TV_remainder_K_CMB30_sr": 38.525087083967584,
+        "after_nominal_thermodynamic_conversion_and_24_harmonic_norm_K_CMB": 0.561625716140462,
+        "warning": "Nominal-frequency illustration only; native target bands must integrate this bound"
+      },
+      {
+        "nominal_frequency_GHz": 217.0,
+        "conditional_TV_remainder_K_CMB30_sr": 149.7395420693918,
+        "after_nominal_thermodynamic_conversion_and_24_harmonic_norm_K_CMB": 1.1300444787027075,
+        "warning": "Nominal-frequency illustration only; native target bands must integrate this bound"
+      },
+      {
+        "nominal_frequency_GHz": 353.0,
+        "conditional_TV_remainder_K_CMB30_sr": 224.41720080777662,
+        "after_nominal_thermodynamic_conversion_and_24_harmonic_norm_K_CMB": 1.6973838912150954,
+        "warning": "Nominal-frequency illustration only; native target bands must integrate this bound"
+      }
+    ]
+  },
+  "spin_harmonic_norm": {
+    "all24_operator_norm": 0.9772050238058398,
+    "B12_operator_norm": 0.690988298942671,
+    "all24_addition_theorem_max_error": 6.661338147750939e-16,
+    "B12_addition_theorem_max_error": 3.885780586188048e-16,
+    "independent_library": "healpy alm2map_spin 1.19.0",
+    "fixture_nside": 4,
+    "applies_to": "common full-sky harmonic integration; a mask of magnitude <=1 preserves upper bound",
+    "native_operator_caveat": "beam/mask/mapmaking mixing needs its own norm or direct pointwise retained-kernel bound"
+  },
+  "unbounded_sector_witnesses": {
+    "curvature_witness": [
+      {
+        "reference_amplitude": 10.0,
+        "quadratic_log_curvature_k": 0.4825800689116664,
+        "low_endpoint_ratio_times_amplitude": 0.0013458664161450893,
+        "DIRBE_baseline_weighted_ratio_times_amplitude": 0.015247702331813067
+      },
+      {
+        "reference_amplitude": 1000.0,
+        "quadratic_log_curvature_k": 1.4477402067349991,
+        "low_endpoint_ratio_times_amplitude": 2.4378437600324562e-09,
+        "DIRBE_baseline_weighted_ratio_times_amplitude": 1.0821758524244561e-05
+      },
+      {
+        "reference_amplitude": 1000000.0,
+        "quadratic_log_curvature_k": 2.8954804134699983,
+        "low_endpoint_ratio_times_amplitude": 5.9430821983291826e-18,
+        "DIRBE_baseline_weighted_ratio_times_amplitude": 2.3099342472425817e-09
+      },
+      {
+        "reference_amplitude": 1000000000000.0,
+        "quadratic_log_curvature_k": 5.790960826939997,
+        "low_endpoint_ratio_times_amplitude": 3.5320226016097236e-35,
+        "DIRBE_baseline_weighted_ratio_times_amplitude": 8.15496211642398e-16
+      }
+    ],
+    "curvature_scope": "positive smooth spectra without curvature restriction; not asserted a classical synchrotron electron-spectrum construction",
+    "MBB_highT_witness": [
+      {
+        "T_K": 20.0,
+        "DIRBE_Ical_per_I353": 20.468317375595724,
+        "R32_t_second_factorial_moment_per_reference_amplitude": 0.0
+      },
+      {
+        "T_K": 100.0,
+        "DIRBE_Ical_per_I353": 75.43207807602906,
+        "R32_t_second_factorial_moment_per_reference_amplitude": 8.0
+      },
+      {
+        "T_K": 1000.0,
+        "DIRBE_Ical_per_I353": 95.59866298966192,
+        "R32_t_second_factorial_moment_per_reference_amplitude": 1200.5
+      },
+      {
+        "T_K": 1000000.0,
+        "DIRBE_Ical_per_I353": 97.99012694776796,
+        "R32_t_second_factorial_moment_per_reference_amplitude": 1249950000.5
+      }
+    ],
+    "MBB_cold_beta_tail_witness": [
+      {
+        "T_K": 1.0,
+        "beta": 13.941328048982761,
+        "reference_amplitude": 16.94132804898276,
+        "log_Haslam_monochromatic_I_per_unit_reference": -90.87898117778168,
+        "log_DIRBE_Ical_per_unit_reference": -7.81103755760134,
+        "positive_broad_target_integral_asymptotic_Hz": 3641986785165.959
+      },
+      {
+        "T_K": 0.1,
+        "beta": 166.4132804898276,
+        "reference_amplitude": 169.4132804898276,
+        "log_Haslam_monochromatic_I_per_unit_reference": -969.6578540781873,
+        "log_DIRBE_Ical_per_unit_reference": -45.7440494000115,
+        "positive_broad_target_integral_asymptotic_Hz": 11516973449358.768
+      },
+      {
+        "T_K": 0.01,
+        "beta": 1691.1328048982762,
+        "reference_amplitude": 1694.1328048982762,
+        "log_Haslam_monochromatic_I_per_unit_reference": -9757.584116454585,
+        "log_DIRBE_Ical_per_unit_reference": -416.99988251290836,
+        "positive_broad_target_integral_asymptotic_Hz": 36419867851659.59
+      },
+      {
+        "T_K": 0.001,
+        "beta": 16938.32804898276,
+        "reference_amplitude": 16941.32804898276,
+        "log_Haslam_monochromatic_I_per_unit_reference": -97641.97426444276,
+        "log_DIRBE_Ical_per_unit_reference": -4112.667896168583,
+        "positive_broad_target_integral_asymptotic_Hz": 115169734493587.66
+      }
+    ],
+    "MBB_scope": "normalized mathematical modified-blackbody family on beta real,T>0; no claim these tails represent viable thermal dust",
+    "positive_full_observation_spatial_witness": [
+      {
+        "epsilon": 0.1,
+        "positive_unit_row_beams": [
+          [
+            0.9,
+            0.1
+          ],
+          [
+            0.8,
+            0.2
+          ]
+        ],
+        "sky_mass": 10.0,
+        "all_observations_positive": [
+          1.0,
+          2.0
+        ],
+        "sum_y": 3.0,
+        "minimum_column_sum": 0.30000000000000004
+      },
+      {
+        "epsilon": 0.001,
+        "positive_unit_row_beams": [
+          [
+            0.999,
+            0.001
+          ],
+          [
+            0.998,
+            0.002
+          ]
+        ],
+        "sky_mass": 1000.0,
+        "all_observations_positive": [
+          1.0,
+          2.0
+        ],
+        "sum_y": 3.0,
+        "minimum_column_sum": 0.003
+      },
+      {
+        "epsilon": 1e-06,
+        "positive_unit_row_beams": [
+          [
+            0.999999,
+            1e-06
+          ],
+          [
+            0.999998,
+            2e-06
+          ]
+        ],
+        "sky_mass": 1000000.0,
+        "all_observations_positive": [
+          1.0,
+          2.0
+        ],
+        "sum_y": 3.0,
+        "minimum_column_sum": 3e-06
+      }
+    ],
+    "spatial_scope": "counterexample to row normalization + populated outputs implying quantitative mass domination, not evidence DIRBE has a physical hole"
+  },
+  "source_hash_checks": [
+    {
+      "name": "haslam408_ds_Remazeilles2014.fits",
+      "bytes": 12594240,
+      "sha256": "7e59071e2dad44c011703abc35ddcf16c4c50dac784c3d9d09829b84b7d8f2d1",
+      "url": "https://lambda.gsfc.nasa.gov/data/foregrounds/haslam_2014/haslam408_ds_Remazeilles2014.fits"
+    },
+    {
+      "name": "lambda_haslam408_nofilt.fits",
+      "bytes": 25174080,
+      "sha256": "ea1f5f3d595cf07ebe8dbd08d67abdf60326249f93c9e1d332de7efc3833ac4e",
+      "url": "https://lambda.gsfc.nasa.gov/data/foregrounds/haslam/lambda_haslam408_nofilt.fits"
+    },
+    {
+      "name": "DIRBE_BAND10_AAM_P3B.FITS",
+      "bytes": 10635840,
+      "sha256": "b60ff13ee003e012598ce3e8fca0cfc61db9f40320256a1078a10725c7194e72",
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/dirbe/aam/DIRBE_BAND10_AAM_P3B.FITS"
+    },
+    {
+      "name": "DIRBE_SYSTEM_SPECTRAL_RESPONSE_TABLE.ASC",
+      "bytes": 63101,
+      "sha256": "97cbb11d6c9d1fb740a1d2424317000c8e06ace8cc7ef179183cd9d892ff03f4",
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/dirbe/ancil/spec_resp/DIRBE_SYSTEM_SPECTRAL_RESPONSE_TABLE.ASC"
+    },
+    {
+      "name": "DIRBE_SKYMAP_INFO.FITS",
+      "bytes": 12620160,
+      "sha256": "391a2f839e67c8b074c1666eeb29928c7dcfcaab5b12a10be1dedae75bb67cc4",
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/dirbe/ancil/skyinfo/DIRBE_SKYMAP_INFO.FITS"
+    },
+    {
+      "name": "DIRBE_BEAM_CHARACTERISTICS_P3B.ASC",
+      "bytes": 3288,
+      "sha256": "3a247ff8f887658b177850e94970abe702effbe72ebf5f916bcbf58096fbc9ca",
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/dirbe/ancil/beam_char/DIRBE_BEAM_CHARACTERISTICS_P3B.ASC"
+    },
+    {
+      "name": "des_v2_3.pdf",
+      "bytes": 5313062,
+      "sha256": "36d98427392ecea01c3d4700bc2952aa6e53790125d5521a7d8ee03e26ee773e",
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/dirbe/doc/des_v2_3.pdf"
+    },
+    {
+      "name": "fg_2014_haslam_408_info.html",
+      "bytes": 18744,
+      "sha256": "402b69b34e1ebb3f1e8e9d7556a36d5ebd3327620832b62ee646ebd6229f085a",
+      "url": "https://lambda.gsfc.nasa.gov/product/foreground/fg_2014_haslam_408_info.html"
+    },
+    {
+      "name": "dirbe_products.html",
+      "bytes": 30746,
+      "sha256": "7ff70fd762ffea2045b4d978085675f906c9b2085c435673761fd70aad2046c3",
+      "url": "https://lambda.gsfc.nasa.gov/product/cobe/dirbe_products.html"
+    },
+    {
+      "name": "c_anual_avskymap.html",
+      "bytes": 11194,
+      "sha256": "27c40efc77a89bbf7ab413ceded57e7316b9b37834fdae871191527e9732e4f0",
+      "url": "https://lambda.gsfc.nasa.gov/product/cobe/c_anual_avskymap.html"
+    },
+    {
+      "name": "dirbe_skymap_info.html",
+      "bytes": 11137,
+      "sha256": "e09f5739622bb8d117093d4ed1f624137afd7ee6f1fdb4e55f57ab7fb7fed03e",
+      "url": "https://lambda.gsfc.nasa.gov/product/cobe/dirbe_skymap_info.html"
+    },
+    {
+      "name": "1411.3628",
+      "bytes": 388450,
+      "sha256": "7db80bcdaf5524359a38be432ef0710df618bbe32dda94ed98b2bb9415259836",
+      "url": "https://arxiv.org/html/1411.3628"
+    },
+    {
+      "name": "9806167.html",
+      "bytes": 724748,
+      "sha256": "44eed6d0fcaf75f3d5caa184e45bb5aceac95af43cb11dde89867806f93458ca",
+      "url": "https://arxiv.org/pdf/astro-ph/9806167"
+    },
+    {
+      "name": "fg_2014_haslam_408_get.html",
+      "bytes": 16904,
+      "sha256": "f2664eca2a7bf574c88e4270199d776d8f0c69bd200ad12289d9e3ae0d675f22",
+      "url": "https://lambda.gsfc.nasa.gov/product/foreground/fg_2014_haslam_408_get.html"
+    },
+    {
+      "name": "allsky_408_mhz_survey.pdf",
+      "bytes": 2462990,
+      "sha256": "9972122b90d02ae1a2cc309c366f928c98e12617b85b40c86638eb607c3f59bc",
+      "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/84003AB2198C450BC32D6D7E38DA0869/S0074180900074623a.pdf/allsky_408_mhz_survey.pdf"
+    }
+  ],
+  "acceptance_met": false,
+  "qualified_products": [],
+  "runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed": "UNKNOWN",
+    "role": "research contributor, not independent reviewer of this method"
+  },
+  "execution": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "elapsed_seconds": 1.2794473730027676,
+    "maxrss_KiB": 204384
+  }
+}
