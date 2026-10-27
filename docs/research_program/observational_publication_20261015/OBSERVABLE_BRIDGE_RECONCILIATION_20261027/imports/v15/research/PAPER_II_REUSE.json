@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "unit_id": "PAPER_II_V15_REUSE_AND_BEAM_BRIDGE",
+  "status": "derived_checked_pending_parent_independent_review",
+  "skill_context_used": {
+    "user_version": "1.0.0 explicit full loop",
+    "reference": "c38/physmath-research-loop/references/THEORY_LOOP.md",
+    "scope_override": "Full R1–R10 requested; later stage-only default not used"
+  },
+  "source_archive_sha256": "acfb9b65833c47d422f3413695a217c93e0985806dca4cef7a6d0f0006d7d1b0",
+  "read_coverage": {
+    "paper_II_tex_files": 13,
+    "scope": "All main sections, all appendices; Paper I state/radial quotient; prior B,D,E relevant sections"
+  },
+  "source_identities": [
+    {
+      "path": "sources/paper_II/TEFF_PAPER_II.tex",
+      "sha256": "72f5334af7fbb3e06b99262ec551beac2a9cd9813e303e397cb970279e08d24f"
+    },
+    {
+      "path": "sources/paper_II/appendices/A_global_calibration.tex",
+      "sha256": "bd691d3888e747f455575bc1fe4e40b82e6ebc750422c23dc94c76d86136eb71"
+    },
+    {
+      "path": "sources/paper_II/appendices/B_rank_asymptotics.tex",
+      "sha256": "2b91110480161b996d82ce9305c8cbbd4e9526f3dd2dcea1c38f23b8009a4cf1"
+    },
+    {
+      "path": "sources/paper_II/appendices/C_cutoff_proof.tex",
+      "sha256": "8d30aa6778f72e6d0b85b07642794e0c2e834d5f1a07b2a0469af90618627c19"
+    },
+    {
+      "path": "sources/paper_II/sections/00_abstract.tex",
+      "sha256": "fd12dbfa6bfa0dd2a0566f6272821c751b9e6b53cbdfe30b0f6379681aa7fb3d"
+    },
+    {
+      "path": "sources/paper_II/sections/01_introduction.tex",
+      "sha256": "986f10cf7701fcb78dee024e45418a0015e520907f177e912cd792337511fba0"
+    },
+    {
+      "path": "sources/paper_II/sections/02_effective_frame.tex",
+      "sha256": "223f1acd5b793057661f8473a64aa36d428ff57d98283064f047b445a23e2850"
+    },
+    {
+      "path": "sources/paper_II/sections/03_nested_information.tex",
+      "sha256": "bd0c2d4565d4af1043e6a04c453a0c905c14853166254023346cea3d41fbb974"
+    },
+    {
+      "path": "sources/paper_II/sections/04_angular_calculus.tex",
+      "sha256": "6e572d4ce4417a2ed9450d6477677c9eb30d7fb4970d3b05f92844a2d98d6863"
+    },
+    {
+      "path": "sources/paper_II/sections/05_matching_and_targets.tex",
+      "sha256": "862c8dd76d502059bdec14f29b0e8a0577235f58bc8ba63c9cb0d9609fd3594d"
+    },
+    {
+      "path": "sources/paper_II/sections/06_massive_extension.tex",
+      "sha256": "5b3490b7ddcee32c1e6292ff2e2c5584901d9bb1d2665cbcdfd3b47dfe6522ea"
+    },
+    {
+      "path": "sources/paper_II/sections/06b_quantitative_resolution.tex",
+      "sha256": "a47681fffb0b10657359a826cd07763c9c35c83f7d50b21671da3c059433a4ab"
+    },
+    {
+      "path": "sources/paper_II/sections/08_discussion_conclusion.tex",
+      "sha256": "f261aca4c8115e5ea9ffe490e4af2e7577d0fa92f14161ae792e479ccc128906"
+    }
+  ],
+  "semantic_correction": "Effective frame in v15 means fixed-observer number-energy calibration, not selecting a preferred Lorentz observer.",
+  "claims": [
+    {
+      "id": "II-OBS",
+      "status": [
+        "derived",
+        "numerically-checked"
+      ],
+      "statement": "Resolved massless Q_NE is Doppler weight zero under aberration; eta remaps and T has weight one",
+      "premises": [
+        "same ray",
+        "complete finite N/E integrals",
+        "same particle species/degeneracy",
+        "regular inverse for eta,T"
+      ],
+      "equations": "II1–II5",
+      "novelty": "kinetic covariance application; no priority claim"
+    },
+    {
+      "id": "II-BEAM",
+      "status": [
+        "established",
+        "literature-supported",
+        "derived",
+        "numerically-checked"
+      ],
+      "statement": "Sharp finite-temperature-range beam ratio envelope, exact generalized Kantorovich specialization; propagate via inverse Q to eta interval",
+      "premises": [
+        "positive normalized energy-independent common beam",
+        "common underlying eta0",
+        "positive bounded ray temperatures"
+      ],
+      "equations": "II6–II10",
+      "prior_art": {
+        "author": "Takayuki Furuta",
+        "title": "Basic properties of the generalized Kantorovich constant and its applications",
+        "journal": "Acta Sci. Math. (Szeged) 70 (2004) 319–337",
+        "url": "https://acta.hu/download.phtml?id=2785",
+        "read": "Definition1, TheoremA, Theorem3(i)",
+        "equivalence": "Rmin(r)=K(r^3,4/3)^(-3)"
+      },
+      "novelty": "scalar inequality known; thermochemical/instrument bridge candidate"
+    },
+    {
+      "id": "II-AVERAGE-BOOST",
+      "status": [
+        "derived",
+        "numerically-checked"
+      ],
+      "statement": "Fullsky boosted thermal ray averaging gives Qbar/Q0=(1-beta²)/(1+beta²/3)^3",
+      "equation": "II11",
+      "premises": [
+        "isotropic common thermal input",
+        "full observed-sky angular mean",
+        "bolometric moments"
+      ],
+      "novelty": "exact moment consequence, not a new boost effect"
+    },
+    {
+      "id": "II-CURRENT-FIBRE",
+      "status": [
+        "derived"
+      ],
+      "statement": "Explicit counterflow family preserves total N and entire stress-energy while changing particle current",
+      "equations": "II12–II14",
+      "reuse": "v15 counterflow with reciprocal-temperature parameterization",
+      "premises": [
+        "positive massless MB mixture",
+        "local fixed observer",
+        "fixed K0,a0,b0",
+        "vary d0 with |d0|<a0",
+        "mu=e dot z is propagation angle"
+      ]
+    },
+    {
+      "id": "II-STAT",
+      "status": [
+        "derived",
+        "implementation-verified"
+      ],
+      "statement": "Joint log-moment contrast, variance, inverse conditioning and gain nuisance",
+      "equations": "II15–II18",
+      "premises": [
+        "joint calibrated moments",
+        "delta-method regime or exact positive image",
+        "Jmin on declared regular interval",
+        "common gain constrained if chemical target used"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "R1",
+      "status": "complete_author_stage",
+      "evidence": "research/PAPER_II_REUSE.md"
+    },
+    {
+      "id": "R2",
+      "status": "complete_author_stage",
+      "evidence": "research/PAPER_II_REUSE.md"
+    },
+    {
+      "id": "R3",
+      "status": "complete_author_stage",
+      "evidence": "research/PAPER_II_REUSE.md"
+    },
+    {
+      "id": "R4",
+      "status": "complete_author_stage",
+      "evidence": "research/PAPER_II_REUSE.md"
+    },
+    {
+      "id": "R5",
+      "status": "complete_author_stage",
+      "evidence": "research/PAPER_II_REUSE.md"
+    },
+    {
+      "id": "R6",
+      "status": "complete_author_stage",
+      "evidence": "research/PAPER_II_REUSE.md"
+    },
+    {
+      "id": "R7",
+      "status": "complete_author_stage",
+      "evidence": "research/PAPER_II_REUSE.md"
+    },
+    {
+      "id": "R8",
+      "status": "complete_author_stage",
+      "evidence": "research/PAPER_II_REUSE.md"
+    },
+    {
+      "id": "R9",
+      "status": "complete_author_stage",
+      "evidence": "research/PAPER_II_REUSE.md"
+    },
+    {
+      "id": "R10",
+      "status": "complete_author_stage",
+      "evidence": "research/PAPER_II_REUSE.md"
+    }
+  ],
+  "checks": [
+    {
+      "type": "Wolfram exact",
+      "input": "cas/paper_ii_check.wl",
+      "receipt": "cas/paper_ii_check_wolfram.json",
+      "result": "four exact zero residuals plus displayed series"
+    },
+    {
+      "type": "Python finite toy",
+      "command": "python cas/paper_ii_check.py",
+      "exit_code": 0,
+      "receipt": "cas/paper_ii_check_python.json",
+      "result": "1200 beam cases, exact endpoint rational, boost quadrature and nuisance rank passed"
+    },
+    {
+      "type": "Figure",
+      "command": "python cas/paper_ii_check_figure.py",
+      "exit_code": 0,
+      "result": "Two-panel vector PDF and 220dpi PNG generated; visually inspected; eta labeled calibration not true chemical distortion"
+    }
+  ],
+  "failed_attempts": [
+    {
+      "kind": "implementation",
+      "file": "cas/paper_ii_check_figure.py",
+      "symptom": "Matplotlib mathtext rejected unbraced mathcal Q",
+      "repair": "Changed to mathcal{Q}; no scientific equation change"
+    }
+  ],
+  "protected_status": {
+    "no_push": true,
+    "no_solver_or_ode": true,
+    "no_observational_fit": true,
+    "no_original_DAG_promotion": true
+  },
+  "files": [
+    "research/PAPER_II_REUSE.md",
+    "research/PAPER_II_REUSE.json",
+    "cas/paper_ii_check.py",
+    "cas/paper_ii_check.wl",
+    "cas/paper_ii_check_wolfram.json",
+    "cas/paper_ii_check_python.json",
+    "cas/paper_ii_check_figure.py",
+    "figures/paper_ii_population_beam.pdf",
+    "figures/paper_ii_population_beam.png"
+  ],
+  "targeted_repairs": [
+    {
+      "finding": "II10 missing plus before little-o remainder",
+      "repair": "Literal + restored; mathematical remainder unchanged"
+    },
+    {
+      "finding": "constant-number counterflow needs a0 fixed",
+      "repair": "K0,a0,b0 held fixed; d0 varied; propagation-angle convention made explicit"
+    }
+  ]
+}

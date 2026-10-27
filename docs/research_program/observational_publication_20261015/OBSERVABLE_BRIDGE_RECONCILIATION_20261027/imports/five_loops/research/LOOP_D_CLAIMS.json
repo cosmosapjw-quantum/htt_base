@@ -1,0 +1,54 @@
+{
+  "schema": "htt-internal-theory-loop-d-claims-v1",
+  "date_utc": "2026-10-26",
+  "owner": "HTT internal theory campaign",
+  "scope": "instantaneous spatially homogeneous geometry and Einstein constraints; exploratory non-claim-bearing observational context",
+  "source_snapshot_supplied": "a55036ad09c53a9215dee3282e425d37cfb95443",
+  "source_snapshot_local_git_verification": "unavailable: extracted sources/repo has no .git",
+  "conventions": {
+    "signature": "(-,+,+,+)",
+    "c": "explicit",
+    "spatial_orientation": "epsilon_123=+1",
+    "spatial_curvature": "R(X,Y)Z=D_X D_Y Z-D_Y D_X Z-D_[X,Y] Z",
+    "frame_coefficients_units": "inverse length",
+    "h": "H/c, inverse length",
+    "S": "sigma_time/c, inverse length",
+    "kappa": "8 pi G/c^4",
+    "Lambda": "inverse length squared"
+  },
+  "claims": [
+    {
+      "id": "D1-curvature",
+      "statement": "For symmetric n and a with n a=0, the invariant orthonormal spatial frame has Ric_ii=[n_i^2-(n_j-n_k)^2]/2-2a^2, Ric_23=a(n_2-n_3), Ric_12=Ric_13=0 in the diagonal n, a=(a,0,0) gauge.",
+      "basis": ["derived", "numerically checked"],
+      "evidence": ["LOOP_D_BIANCHI.md (D1)-(D5)", "cas/loop_d.wl successful evaluator output", "cas/loop_d_check.py six exact-rational cases"],
+      "conditions": ["orientation and curvature sign convention", "Jacobi n a=0", "orthonormal invariant spatial frame"],
+      "obligations": []
+    },
+    {
+      "id": "D2-finite-table",
+      "statement": "The six displayed I, II, IX, V and VII0 Ricci matrices follow from D1-curvature; flat VII0 and I give an intrinsically Euclidean local slice with different simply transitive presentations.",
+      "basis": ["derived", "literature-supported", "numerically checked"],
+      "evidence": ["LOOP_D_BIANCHI.md finite table", "Ellis et al. Relativistic Cosmology Table 18.1-18.2", "cas/loop_d_receipt.json"],
+      "obligations": []
+    },
+    {
+      "id": "D3-matched-degeneracy",
+      "statement": "Type II n=(u,0,0) and VII0 n=(0,2u,u), u>0, with equal h, diagonal S, orthogonal dust, Lambda and density determined by (D9), satisfy the same Hamiltonian and zero momentum constraints and have the same scalar spatial curvature -u^2/2, while their full Ricci matrices have different spectra.",
+      "basis": ["derived", "numerically checked"],
+      "evidence": ["LOOP_D_BIANCHI.md (D6)-(D9)", "cas/loop_d_check.py"],
+      "conditions": ["3h^2-Lambda-(S:S)/2-u^2/4>0", "normal-frame dust on initial slice", "Jacobi-compatible structure data"],
+      "obligations": ["A chosen actual observational response must be derived before translating the intrinsic curvature distinction to a sky test."]
+    },
+    {
+      "id": "D4-observable-scope",
+      "statement": "The instantaneous joint image does not itself evaluate a CMB response, morphology-derived family, posterior, x anchor score, occupancy F, exceedance Pi or depth G_F.",
+      "basis": ["derived", "literature-supported"],
+      "evidence": ["LOOP_D_BIANCHI.md R6-R10", "R32-07-P5-ALGEBRA/science/manuscript.md sections 5 and closing scope", "R32-05-P6-OPTICAL/science/MANUSCRIPT.md occupancy policy", "text/20-report-1-.txt PDF pp. 24-25"],
+      "obligations": ["Resolve occupancy-versus-directional-support policy at its consuming application; specify sky/source/observer transfer before empirical evaluation."]
+    }
+  ],
+  "strong_no_go": "not proposed: the matched pair is a scoped finite degeneracy witness, not a universal impossibility theorem",
+  "next_action": "derive a curvature-sensitive observational tensor response with error model and test on the matched II/VII0 pair, quotienting flat-presentation equivalences",
+  "native_solver_status": "not run and not required for these conditional algebraic claims"
+}

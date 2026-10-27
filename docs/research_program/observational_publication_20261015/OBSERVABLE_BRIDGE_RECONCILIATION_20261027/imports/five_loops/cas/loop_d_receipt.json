@@ -1,0 +1,28 @@
+{
+  "unit": "HTT-INTERNAL-THEORY-LOOP-D",
+  "date_utc": "2026-10-26",
+  "files": ["cas/loop_d.wl", "cas/loop_d_check.py"],
+  "wolfram_evaluator": {
+    "tool": "mcp__codex_apps__wolfram_wolframlanguageevaluator",
+    "first_execution": "implementation failure: C is Protected; unresolved expression, no scientific inference",
+    "corrected_execution": "completed, exit status not exposed by provider; output contained RIC_GENERAL, RIC_CLASS_B_n1_0 and six finite Ricci/scalar pairs",
+    "class_B_result": "diag((-4 aa^2-(n2-n3)^2)/2,(-4 aa^2+n2^2-n3^2)/2,(-4 aa^2-n2^2+n3^2)/2), Ric23=Ric32=aa(n2-n3)",
+    "cases": {
+      "I": "diag(0,0,0), scalar 0",
+      "II": "u^2 diag(1,-1,-1)/2, scalar -u^2/2",
+      "IX": "u^2 I/2, scalar 3u^2/2",
+      "V": "-2 v^2 I, scalar -6v^2",
+      "VII0_flat": "diag(0,0,0), scalar 0",
+      "VII0_generic": "n=(0,u,v): Ric=diag(-(u-v)^2/2,(u^2-v^2)/2,(-u^2+v^2)/2)"
+    }
+  },
+  "independent_check": {
+    "command": "python cas/loop_d_check.py",
+    "environment": "CPython standard library Fraction, no third-party dependency",
+    "exit_code": 0,
+    "output_tail": "VII0-matched ['-2/49', '6/49', '-6/49'] scalar -2/49; PASS: six exact-rational Ricci matrices",
+    "scope": "six exact substitutions at u=2/7 and v=3/11; not a substitute for general symbolic proof"
+  },
+  "result": "pass_scoped",
+  "four_axis_status": "not_run; no four-axis admission claimed"
+}

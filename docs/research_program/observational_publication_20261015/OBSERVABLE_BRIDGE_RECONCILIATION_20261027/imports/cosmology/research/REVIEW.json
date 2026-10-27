@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "review_id": "HTT_COSMO_TEFF_REFOCUS_20261026_BOUNDED_INDEPENDENT_REVIEW",
+  "date_utc": "2026-10-26",
+  "reviewer": "/root/internal_five_loop_review_20261026",
+  "verdict": "PASS_SCOPED_AFTER_TARGETED_REPAIRS",
+  "scope": {
+    "main": [
+      "research/COSMOLOGICAL_CONSTRAINT.md",
+      "cas/stress_constraint_toy.py"
+    ],
+    "interface_read": [
+      "research/CONVENTIONS.md",
+      "research/FOUR_AXES.md"
+    ],
+    "prior_five_loops_reaudited": false,
+    "prior_v15_novelty_reaudited": false
+  },
+  "independence": {
+    "candidate_files_edited_by_reviewer": false,
+    "reviewer_owned_files": [
+      "research/REVIEW.md",
+      "research/REVIEW.json"
+    ],
+    "nested_agents_spawned": false,
+    "solver_or_ODE_run": false,
+    "publication_or_push": false,
+    "numerical_reexecution": "Source numerical portion executed in memory before figure/receipt writes; saved result compared. Additional direct inverse/rest-density and Jacobian checks executed in memory."
+  },
+  "findings": [
+    {
+      "id": "COS-01",
+      "severity": "low",
+      "status": "closed",
+      "location": "COSMOLOGICAL_CONSTRAINT.md, immediately before equation (8)",
+      "finding": "Positive beta vector lacked an explicit relative-frame direction.",
+      "repair": "Author now defines beta as the radiation energy-frame velocity measured in the chosen observer tetrad, active positive-beta convention, with the reverse observer velocity having opposite sign.",
+      "verification": "Inspected exact revised sentence; toy speed values unchanged."
+    },
+    {
+      "id": "COS-02",
+      "severity": "low",
+      "status": "closed",
+      "location": "cas/boost_null_wolfram.json",
+      "finding": "Output-only {0,0} receipt lacked submitted symbolic input.",
+      "repair": "Author retained exact input in cas/boost_null.wl.",
+      "verification": "Inspected inverse-velocity and radial stress residuals with 0<bb<1 assumptions, consistent with receipt; zero-speed boundary independently follows by continuity. No remote rerun."
+    }
+  ],
+  "open_findings": [],
+  "fatal_blockers": [],
+  "proof_checks": [
+    {
+      "id": "NULL",
+      "result": "PASS",
+      "statement": "For rho>0 and |f|<1, D=P-kappa(f^2)STF(ff)=0 iff the full tracefree tensor is positive perfect radiation in a timelike rest frame.",
+      "basis": "Explicit Lorentz decomposition, unique subluminal quadratic inverse beta=kappa f, positive reconstructed rho_L=3rho(1-beta^2)/(3+beta^2)."
+    },
+    {
+      "id": "INVARIANCE",
+      "result": "PASS",
+      "statement": "D=0 is observer independent, ||D|| is only rotationally invariant in general, and A_gamma from rest eigenpressures is a Lorentz scalar on the unique timelike positive-density branch.",
+      "basis": "Tensor orbit characterization and similarity invariance of mixed-tensor eigenvalues."
+    },
+    {
+      "id": "SCOPE",
+      "result": "PASS",
+      "statement": "Perfect stress does not imply microscopic isotropy, preferred matter congruence, global rest frame or matter shear.",
+      "basis": "Higher harmonic example I=I0[1+epsilon P4(e_z)] has D=0 with angular structure; text explicitly retains required transport residual for shear."
+    },
+    {
+      "id": "MOMENT_INTERFACE",
+      "result": "PASS",
+      "statement": "U^2=-c^2, e=-n, energy-density/radiance c factor, raw STF normalization, massless radial-index collapse, and nonlinear energy-temperature calibration are compatible."
+    },
+    {
+      "id": "LOW_MULTIPOLES",
+      "result": "PASS",
+      "statement": "Equations (11)-(12) have correct quadratic contractions and signs.",
+      "basis": "Exact polynomial angular quadrature plus analytic leading G=(4/3)STF(dd); denominator correction first enters at cubic order with zero temperature monopole."
+    },
+    {
+      "id": "LIPSCHITZ",
+      "result": "PASS",
+      "statement": "Candidate L_G(r)=2kappa(r^2)r+2sqrt(2/3)kappa_prime(r^2)r^3 is valid on r<1.",
+      "basis": "Differentiation, monotonicity and convex ball mean-value bound. Exact local Jacobian norm is 2sqrt(2/3)|f|[kappa+|f|^2 kappa_prime], no greater than candidate constant."
+    },
+    {
+      "id": "CONFIDENCE",
+      "result": "PASS_CONDITIONAL",
+      "statement": "Joint event (13) gives ||Dhat-D||<=e_P+L_G e_f; a uniformly covered event gives type-I error at most alpha for threshold rejection.",
+      "conditions": [
+        "Valid joint measurement law including nuisance/completion errors",
+        "Both flux vectors lie in the stated ball r<1",
+        "No independent marginal-error substitution"
+      ],
+      "covariance_signs": "Equation (16) has both negative cross terms and correct dimensions."
+    },
+    {
+      "id": "AXES_HTT",
+      "result": "PASS",
+      "statement": "Rotations, observers, diffeomorphism/perturbative gauge and statistical nuisance are distinguished; X/x, F namespaces and nonzero support-denominator domain are preserved."
+    }
+  ],
+  "review_executions": {
+    "max_pure_boost_null_residual": 1.6515307107109721e-16,
+    "max_landau_invariant_error": 4.557985933129061e-16,
+    "max_rotation_covariance_error": 6.080894393112985e-16,
+    "lipschitz_pairs": 200,
+    "max_observed_lipschitz_ratio": 0.6804713302395458,
+    "cubic_error_ratios": [
+      7.962562059651964,
+      7.986701517224148
+    ],
+    "independent_inverse_and_rest_density_speeds": [
+      0,
+      0.8,
+      0.99
+    ],
+    "independent_jacobian_radii": [
+      0,
+      0.2,
+      0.8,
+      0.999999
+    ],
+    "saved_author_results_match": true,
+    "toy_certificate": {
+      "a": 2e-05,
+      "speed": 0.00123,
+      "landau_A": 3.2659863237141705e-06,
+      "D_norm": 3.2659764415019133e-06,
+      "error_radius": 5.247500597440408e-07,
+      "positive_lower_bound": 2.7412263817578726e-06
+    },
+    "wolfram": "Exact submitted radial expressions and existing {0,0} receipt inspected; reviewer did not rerun remote evaluator."
+  },
+  "limitations": [
+    "No observed CMB fit or detection",
+    "No empirical confidence-coverage simulation",
+    "Toy error radii are declared inputs, not estimated instrumental errors",
+    "No microscopic-isotropy conclusion from a stress-level null",
+    "No matter-shear, vorticity or curvature constraint without the separate transport/dynamical response",
+    "No broad novelty claim: perfect-fluid boost, STF/Gaunt and confidence-set propagation ingredients are established",
+    "No full prior report, production or deployment review"
+  ],
+  "accepted_status": "DERIVED and NUMERICALLY CHECKED within specified domains; observational application remains conditional",
+  "next_consuming_step": "Common-input coverage and constraint comparison against the linear temperature-quadrupole method, followed by real-data A_gamma confidence inference on the declared branch.",
+  "candidate_and_evidence_identities": [
+    {
+      "path": "research/COSMOLOGICAL_CONSTRAINT.md",
+      "size_bytes": 15635,
+      "sha256": "de8bccc5aac9c4720034d10d164ce96af1eaaff596b9e6fd65367a0acf912615"
+    },
+    {
+      "path": "research/CONVENTIONS.md",
+      "size_bytes": 10022,
+      "sha256": "5e620a08e27a51b097ea8a3e16ea4e7950e4838d3cece5a80f65970df67cbf69"
+    },
+    {
+      "path": "research/CONVENTIONS.json",
+      "size_bytes": 5670,
+      "sha256": "b2e076b2f89c02930d3fecc5ac7ad8a80b01a4a72b2f36eac36371268efafc84"
+    },
+    {
+      "path": "research/FOUR_AXES.md",
+      "size_bytes": 12227,
+      "sha256": "76f6fe30f61da5930f215c94097e126e9912a617c5ed16772db4cb085d1d03b5"
+    },
+    {
+      "path": "research/FOUR_AXES.json",
+      "size_bytes": 6578,
+      "sha256": "b9343e9d672ac8b3095b743a750858c7e391327192ec7f779e4e2b16ab558ae9"
+    },
+    {
+      "path": "cas/stress_constraint_toy.py",
+      "size_bytes": 6040,
+      "sha256": "f44c8f85a884cf85030bab8f21ea71dfa723629189d4ccfb0dbfc4dbb780b4e9"
+    },
+    {
+      "path": "cas/stress_constraint_results.json",
+      "size_bytes": 46425,
+      "sha256": "6b8ca12a76540a404da6a3b98ef99498ef0f701adbd193db51d0879d5072f6dc"
+    },
+    {
+      "path": "cas/boost_null.wl",
+      "size_bytes": 216,
+      "sha256": "176706e54d0179d871bf204068ba142defab437f7e0120507dcf5ab9e4e6b695"
+    },
+    {
+      "path": "cas/boost_null_wolfram.json",
+      "size_bytes": 137,
+      "sha256": "911260c031a9e242cd01974dd88b3179bf0a793f817fae1fc65049cb15aad8fc"
+    }
+  ]
+}

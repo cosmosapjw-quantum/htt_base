@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "unit_id": "LOOP_E_HUBBLE_20261026",
+  "status": "complete_author_unit_pending_independent_review",
+  "source_commit": "a55036ad09c53a9215dee3282e425d37cfb95443",
+  "scope": "Internal conditional theory; no new observational estimate, native solver, ODE, or git mutation",
+  "author_runtime": {
+    "requested_model": "parent runtime",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "conventions": {
+    "signature": "-+++",
+    "u": "unit timelike",
+    "n": "outward sky",
+    "K": "past-directed E(-u+n)",
+    "lambda": "length, increasing pastward",
+    "h": "inverse length",
+    "Hdir": "c h, inverse time"
+  },
+  "stages": [
+    {
+      "id": "R1",
+      "status": "complete_author_stage",
+      "evidence": "research/LOOP_E_HUBBLE.md"
+    },
+    {
+      "id": "R2",
+      "status": "complete_author_stage",
+      "evidence": "research/LOOP_E_HUBBLE.md"
+    },
+    {
+      "id": "R3",
+      "status": "complete_author_stage",
+      "evidence": "research/LOOP_E_HUBBLE.md"
+    },
+    {
+      "id": "R4",
+      "status": "complete_author_stage",
+      "evidence": "research/LOOP_E_HUBBLE.md"
+    },
+    {
+      "id": "R5",
+      "status": "complete_author_stage",
+      "evidence": "research/LOOP_E_HUBBLE.md"
+    },
+    {
+      "id": "R6",
+      "status": "complete_author_stage",
+      "evidence": "research/LOOP_E_HUBBLE.md"
+    },
+    {
+      "id": "R7",
+      "status": "complete_author_stage",
+      "evidence": "research/LOOP_E_HUBBLE.md"
+    },
+    {
+      "id": "R8",
+      "status": "complete_author_stage",
+      "evidence": "research/LOOP_E_HUBBLE.md"
+    },
+    {
+      "id": "R9",
+      "status": "complete_author_stage",
+      "evidence": "research/LOOP_E_HUBBLE.md"
+    },
+    {
+      "id": "R10",
+      "status": "complete_author_stage",
+      "evidence": "research/LOOP_E_HUBBLE.md"
+    }
+  ],
+  "claims": [
+    {
+      "id": "E-JET",
+      "statement": "Distance coefficients E7 and finite jet invariant E11–E12",
+      "assumptions": [
+        "regular optics",
+        "photon-conserving reciprocity",
+        "h0 nonzero"
+      ],
+      "validation": "cas/loop_e_repaired_receipt.json",
+      "status": "derived_symbolically_checked"
+    },
+    {
+      "id": "E-KASNER",
+      "statement": "Bianchi I directional derivative E15 and Ricci-flat Kasner qeff E17",
+      "assumptions": [
+        "diagonal Bianchi I",
+        "common normal congruence",
+        "local optical series"
+      ],
+      "validation": "cas/loop_e_repaired_receipt.json",
+      "status": "derived_symbolically_checked"
+    },
+    {
+      "id": "E-INTERVAL",
+      "statement": "Positive denominator finite-z reciprocal bound E19",
+      "assumptions": [
+        "explicit remainder bound M",
+        "L>0"
+      ],
+      "status": "proved_conditional"
+    },
+    {
+      "id": "E-ORTHOGONAL",
+      "statement": "Augmented selected-data moment product error E22",
+      "assumptions": [
+        "conditional mean missing-at-random",
+        "positive true/working propensity",
+        "parent covariates",
+        "integrability"
+      ],
+      "status": "standard_method_derived_application"
+    },
+    {
+      "id": "E-INFORMATION",
+      "statement": "Fisher loss under parameter-independent compression E23",
+      "assumptions": [
+        "regular dominated family",
+        "differentiation under integral",
+        "finite second score moment"
+      ],
+      "status": "standard_identity_derived_application"
+    }
+  ],
+  "tool_evidence": {
+    "wolfram": "cas/loop_e.wl; cas/loop_e_repaired_receipt.json",
+    "xact": "cas/xact_null_contraction_pure.wl; cas/xact_null_contraction_pure_receipt.json",
+    "xact_scope": "Null velocity-gradient contraction only; pure WL permutation fallback",
+    "failed_attempts": [
+      "cas/loop_e_receipt.json",
+      "cas/xact_null_contraction_receipt.json"
+    ]
+  },
+  "scientific_progress": {
+    "new_observational_measurement": false,
+    "original42_completion_changed": false,
+    "native_solver_run": false,
+    "ode_solved": false,
+    "pushed": false
+  },
+  "unresolved": [
+    "Finite survey requires calibrated source law and remainder",
+    "No curvature/history separation without additional constraints",
+    "No novelty priority established"
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "schema": "htt.harness_observable_bridge_audit/1",
+  "date": "2026-10-27",
+  "reviewer": "/root/dag_harness_audit_20261027",
+  "scope": [
+    "R6",
+    "C4",
+    "C9"
+  ],
+  "source_commit": "a55036ad09c53a9215dee3282e425d37cfb95443",
+  "decision": "REUSE_CONTROLLER_PARAMETERIZE_PREFLIGHT_APPEND_DISTINCT_FRONTIER",
+  "original42_acceptance_effect": "UNCHANGED",
+  "live_state_observed": false,
+  "live_state_mutated": false,
+  "source_controller_sha256": "e5bb42598026549883b66275ec79399020e7f3007eae5ee760f91469c062d3ce",
+  "tests": {
+    "source_sha256": "e5bb42598026549883b66275ec79399020e7f3007eae5ee760f91469c062d3ce",
+    "source_git_commit": "a55036ad09c53a9215dee3282e425d37cfb95443",
+    "method": "Unchanged controller AST bodies; router import and CLI invocation omitted only",
+    "omitted": [
+      "native_routing import (routing not exercised)",
+      "__main__ invocation (CLI not exercised)"
+    ],
+    "checks": [
+      {
+        "name": "old held history and consumed ultra record retained",
+        "result": "PASS"
+      },
+      {
+        "name": "append preserves historical state and makes distinct root ready",
+        "result": "PASS"
+      },
+      {
+        "name": "duplicate frontier rejected without mutation",
+        "result": "PASS"
+      },
+      {
+        "name": "exact qualified product gates dependent readiness",
+        "result": "PASS"
+      },
+      {
+        "name": "original acceptance promotion rejected",
+        "result": "PASS"
+      },
+      {
+        "name": "new completed import rejected",
+        "result": "PASS"
+      },
+      {
+        "name": "same logical action rename rejected",
+        "result": "PASS"
+      },
+      {
+        "name": "metadata-only scientific delta rejected",
+        "result": "PASS"
+      },
+      {
+        "name": "typed obligation cycle rejected transactionally",
+        "result": "PASS"
+      },
+      {
+        "name": "direct append versus adaptive source shape mismatch reproduced",
+        "result": "PASS"
+      },
+      {
+        "name": "append structural validation does not replace source preflight",
+        "result": "PASS"
+      }
+    ],
+    "check_count": 11,
+    "live_state_read": false,
+    "live_state_mutation": false,
+    "native_dispatch": false,
+    "full_module_import_or_CLI_test": false,
+    "scientific_acceptance": false
+  },
+  "findings": [
+    {
+      "id": "H-A01",
+      "kind": "interface",
+      "blocking_relevance": "FIX_BEFORE_NEW_FRONTIER_UPTAKE",
+      "object": "publication_frontier_preflight.py",
+      "finding": "Hardcoded R32 frontier/manifest/owned root",
+      "repair": "Optional frontier and manifest parameters preserving R32 defaults and existing path/hash/ownership/state-preservation checks",
+      "status": "IMPLEMENTED_AND_FOCUSED_TESTED_IN_CANDIDATE; integration review pending"
+    },
+    {
+      "id": "H-A02",
+      "kind": "interface",
+      "blocking_relevance": "AVOID_BY_DIRECT_APPEND",
+      "object": "research_controller._adaptive_record/_source_refs versus append_frontier",
+      "finding": "Structured source objects accepted by direct append are rejected by adaptive proposal string-only source validator",
+      "repair": "Use reviewed direct append for this integration; future normalization requires its own targeted tests"
+    },
+    {
+      "id": "H-A03",
+      "kind": "representation",
+      "blocking_relevance": "FIX_IN_CURRENT_DOCUMENT_DIFF",
+      "object": "PUBLICATION_DAG.canonical_pr_backlog",
+      "finding": "JSON locator disagrees with actual YAML authority",
+      "repair": "Correct locator only; retain node/paper contracts"
+    },
+    {
+      "id": "H-A04",
+      "kind": "interpretation",
+      "blocking_relevance": "NONBLOCKING_STATUS_PROJECTION",
+      "object": "OUTPUT_DAG counts vs pr_status",
+      "finding": "Output DAG explicitly historical 0/9; current status has nine completed R32 products",
+      "repair": "Separate current snapshot from historical design counts; no original42 promotion"
+    },
+    {
+      "id": "H-A05",
+      "kind": "execution",
+      "blocking_relevance": "HOST_HANDOFF_REQUIRED",
+      "object": "next_packet",
+      "finding": "Packet planning does not launch or continue host loop",
+      "repair": "Actual spawn/ack/raw record/review/next by current local host; remote push is not activation"
+    },
+    {
+      "id": "H-A06",
+      "kind": "scientific_plan",
+      "blocking_relevance": "DO_NOT_ADOPT_EXTERNAL_CLOSURE_TALLY",
+      "object": "29-HOLD DATA/THEORY/REDEF/PROC mapping",
+      "finding": "Category does not establish original input/response acceptance; theory law does not supply empirical source law; partial atlas not full inventory",
+      "repair": "Per-branch product/claim requirements, distinct alternate estimands and preserved historical outcomes"
+    }
+  ],
+  "protected_state_fields": [
+    "campaign",
+    "campaign_identity",
+    "old task objects",
+    "old packet objects",
+    "events prefix",
+    "ultra_repairs",
+    "ultra_pending",
+    "approved repair records"
+  ],
+  "direct_frontier_required_fields": [
+    "frontier_id",
+    "tasks",
+    "authorization"
+  ],
+  "task_required_fields": [
+    "id",
+    "goal",
+    "acceptance",
+    "input_identity",
+    "contract_origin",
+    "promotes_original_acceptance",
+    "owned_paths",
+    "input_sources",
+    "requires",
+    "semantic_delta"
+  ],
+  "task_required_values": {
+    "contract_origin": "new_conditional_research",
+    "promotes_original_acceptance": false,
+    "initial_state": "ready"
+  },
+  "task_forbidden_edges": [
+    "depends_on",
+    "enables_nodes"
+  ],
+  "historical_procedural_entries": [
+    "R25-DISTANCE-CONDITIONAL-EVIDENCE",
+    "R25-GAIA-RELEASE-TAG-ASSOCIATION",
+    "R25-PR3-FREQUENCY-TENSOR-CROSSPREDICTION",
+    "R25-PR3-STAGED4-TENSOR-CONTRAST",
+    "R26-FULL7-STREAMED-SPIN2-QUADRATURE",
+    "R26-SMICA-EXACT-PR3-IMPLICIT-ROW-PROJECTION"
+  ],
+  "later_checks": [
+    "canonical DAG validation",
+    "canonical and compatibility mirror synchronization",
+    "new frontier static preflight",
+    "live state read-only preflight at host checkpoint",
+    "actual diff independent review"
+  ],
+  "report_sha256": "5e04ee0f68b7492cc19ff8d9cf3d29c6b4b4c453f02fabf1f68a623f5dc1b463",
+  "skill_context_used": [
+    "physmath-research-loop 1.3.0",
+    "POLICY_INTEGRATION",
+    "CODING_LOOP C4/C9",
+    "repository AGENTS.md",
+    "htt-dag-orchestrator",
+    "htt-harness-engineering",
+    "CURRENT_CODEX_RUNTIME.md"
+  ],
+  "implementation": {
+    "path": "lanes/harness_tests/publication_frontier_preflight.py",
+    "sha256": "52424029240951a213fe71feec614a8a17620307e0c6360e8affcf90e8ec969c",
+    "backward_compatible_check_signature": true,
+    "R32_defaults_preserved": true,
+    "new_flags": [
+      "--frontier",
+      "--manifest"
+    ],
+    "tests": {
+      "test_count": 10,
+      "failures": 0,
+      "errors": 0,
+      "successful": true,
+      "full_controller_and_router_import": true,
+      "live_state_read": false,
+      "live_state_mutation": false,
+      "candidate_sha256": "52424029240951a213fe71feec614a8a17620307e0c6360e8affcf90e8ec969c",
+      "controller_sha256": "e5bb42598026549883b66275ec79399020e7f3007eae5ee760f91469c062d3ce",
+      "router_sha256": "e42a833aab97c74e55310e91408558dfdbd05457e035438f3ec32a6917ddf68a"
+    },
+    "cli_help_exit": 0,
+    "baseline_edited": false
+  }
+}

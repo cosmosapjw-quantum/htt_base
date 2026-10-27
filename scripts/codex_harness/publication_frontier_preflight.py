@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only uptake check for R32; the existing controller alone appends state."""
+"""Read-only frontier uptake check; the existing controller alone appends state."""
 from __future__ import annotations
 import argparse
 import copy
@@ -26,12 +26,13 @@ def overlaps(a, b):
     a, b = Path(a), Path(b)
     return a == b or a in b.parents or b in a.parents
 
-def check(root, state=None):
+def check(root, state=None, *, frontier_path=None, manifest_path=None):
     import research_controller as rc
     root = Path(root).resolve()
-    frontier = json.loads((root/REL/'FRONTIER.json').read_text())
-    manifest_path = root/REL/'EVIDENCE_MANIFEST.json'
-    manifest = json.loads(manifest_path.read_text())
+    frontier_relative = Path(frontier_path) if frontier_path is not None else Path(REL)/'FRONTIER.json'
+    manifest_relative = Path(manifest_path) if manifest_path is not None else frontier_relative.parent/'EVIDENCE_MANIFEST.json'
+    frontier = json.loads(located(root,str(frontier_relative)).read_text())
+    manifest = json.loads(located(root,str(manifest_relative)).read_text())
     for row in manifest['files']:
         path = located(root, row['path'])
         if sha(path) != row['sha256']:
@@ -43,13 +44,16 @@ def check(root, state=None):
                 raise ValueError('changed task input: '+row['path'])
         for path in task['owned_paths']:
             located(root,path)
-            if not path.startswith(REL+'/products/'+task['id']+'/') and path != REL+'/products/'+task['id']:
+            owner_root = frontier_relative.parent/'products'/task['id']
+            candidate_path = Path(path)
+            if candidate_path != owner_root and owner_root not in candidate_path.parents:
                 raise ValueError('write ownership outside new task product: '+path)
             if any(overlaps(path, prior) for prior in owned):
                 raise ValueError('overlapping new task outputs: '+path)
             owned.append(path)
     result={'schema':'htt.publication_frontier_preflight/1','writes_state':False,
             'frontier_id':frontier['frontier_id'],'frontier_identity':rc.digest(frontier),
+            'frontier_path':str(frontier_relative),'manifest_path':str(manifest_relative),
             'evidence_files_verified':len(manifest['files']),
             'candidate_root_tasks':[t['id'] for t in frontier['tasks'] if t['requires']=={'all':[]}],
             'original42_effect':'none','state_observed':state is not None,
@@ -91,11 +95,14 @@ def check(root, state=None):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--state',type=Path,help='Existing state, read only; omit for static validation')
+    parser.add_argument('--frontier',type=Path,help='Repository-relative frontier JSON; defaults to the R32 frontier')
+    parser.add_argument('--manifest',type=Path,help='Repository-relative evidence manifest; defaults to EVIDENCE_MANIFEST.json beside the selected frontier')
     args=parser.parse_args()
     state=json.loads(args.state.read_text()) if args.state else None
-    print(json.dumps(check(ROOT,state),indent=2))
+    print(json.dumps(check(ROOT,state,frontier_path=args.frontier,manifest_path=args.manifest),indent=2))
 
 if __name__=='__main__':
     try: main()
     except (ValueError,OSError,KeyError) as exc:
         raise SystemExit('PUBLICATION_PREFLIGHT_ERROR: '+str(exc))
+

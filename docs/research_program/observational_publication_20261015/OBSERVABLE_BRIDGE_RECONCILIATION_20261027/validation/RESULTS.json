@@ -1,0 +1,183 @@
+{
+  "schema": "htt.r36_disposable_integration_review/1",
+  "base_head": "a55036ad09c53a9215dee3282e425d37cfb95443",
+  "selected_file_overlay_only": true,
+  "full_repository_ci_claimed": false,
+  "actual_controller_and_router_import": true,
+  "live_state_read": false,
+  "live_state_mutated": false,
+  "dispatch_performed": false,
+  "tests": [
+    {
+      "name": "original scientific contracts preserved",
+      "status": "PASS",
+      "detail": {
+        "nodes": 42,
+        "papers": 6,
+        "original_nodes_papers_policy_cards_unchanged": true
+      }
+    },
+    {
+      "name": "canonical cards and historical statuses preserved",
+      "status": "PASS",
+      "detail": {
+        "old_cards": 254,
+        "new_cards": 12,
+        "all_existing_status_objects_preserved": true
+      }
+    },
+    {
+      "name": "both canonical extension registries updated",
+      "status": "PASS",
+      "detail": {
+        "registered_new_cards": 12
+      }
+    },
+    {
+      "name": "11tasks9roots and canonical typed dependencies",
+      "status": "PASS",
+      "detail": {
+        "new_tasks": 11,
+        "initial_roots": [
+          "R36-01-CF4-OPERATOR",
+          "R36-03-PM-HISTORY",
+          "R36-04-OPTICAL-JOINT",
+          "R36-05-RADIATION-RESPONSE",
+          "R36-06-PR4-MORPHOLOGY",
+          "R36-07-FOREGROUND-BUDGET",
+          "R36-08-PUBLIC-SN",
+          "R36-09-ATLAS-INTAKE",
+          "R36-10-GEOMETRY-IMAGE"
+        ],
+        "canonical_typed_gates_match": true
+      }
+    },
+    {
+      "name": "actual canonical DAG validator",
+      "status": "PASS",
+      "detail": {
+        "exit_code": 0,
+        "stdout": "{\n  \"total\": 266,\n  \"edges\": 594,\n  \"topological_order\": [\n    \"PR-000\",\n    \"PR-001\",\n    \"PR-003\",\n    \"PR-002\",\n    \"PR-004\",\n    \"PR-005\",\n    \"PR-020\",\n    \"PR-010\",\n    \"PR-021\",\n    \"PR-011\",\n    \"PR-013\",\n    \"PR-014\",\n    \"PR-040\",\n    \"PR-012\",\n    \"PR-022\",\n    \"PR-070\",\n    \"PR-015\",\n    \"PR-050\",\n    \"PR-041\",\n    \"PR-023\",\n    \"PR-071\",\n    \"PR-080\",\n    \"PR-030\",\n    \"PR-113\",\n    \"PR-051\",\n    \"PR-042\",\n    \"PR-072\",\n    \"PR-081\",\n    \"PR-031\",\n    \"PR-052\",\n    \"PR-043\",\n    \"PR-073\",\n    \"PR-082\",\n    \"PR-032\",\n    \"PR-053\",\n    \"PR-074\",\n    \"PR-083\",\n    \"PR-054\",\n    \"PR-075\",\n    \"PR-055\",\n    \"PR-076\",\n    \"PR-056\",\n    \"PR-060\",\n    \"PR-090\",\n    \"PR-100\",\n    \"PR-084\",\n    \"PR-061\",\n    \"PR-091\",\n    \"PR-101\",\n    \"PR-102\",\n    \"PR-062\",\n    \"PR-092\",\n    \"PR-063\",\n    \"PR-110\",\n    \"PR-064\",\n    \"PR-065\",\n    \"PR-066\",\n    \"PR-103\",\n    \"PR-111\",\n    \"PR-112\",\n    \"PR-114\",\n    \"PR-115\",\n    \"PR-116\",\n    \"PR-117\",\n    \"PR-118\",\n    \"PR-119\",\n    \"PR-120\",\n    \"PR-121\",\n    \"PR-122\",\n    \"PR-123\",\n    \"PR-124\",\n    \"PR-125\",\n    \"PR-126\",\n    \"PR-127\",\n    \"PR-128\",\n    \"PR-129\",\n    \"PR-130\",\n    \"PR-131\",\n    \"PR-132\",\n    \"PR-133\",\n    \"PR-134\",\n    \"PR-135\",\n    \"PR-136\",\n    \"PR-137\",\n    \"PR-138\",\n    \"PR-139\",\n    \"PR-140\",\n    \"PR-141\",\n    \"PR-142\",\n    \"PR-143\",\n    \"PR-144\",\n    \"PR-145\",\n    \"PR-146\",\n    \"PR-147\",\n    \"PR-148\",\n    \"PR-149\",\n    \"PR-150\",\n    \"PR-151\",\n    \"PR-152\",\n    \"PR-153\",\n    \"PR-154\",\n    \"PR-155\",\n    \"PR-156\","
+      }
+    },
+    {
+      "name": "actual mirror validator",
+      "status": "PASS",
+      "detail": {
+        "exit_code": 0,
+        "stdout": "OK: PR-DAG, status, and remediation mirrors are synchronized\n"
+      }
+    },
+    {
+      "name": "actual parameterized production preflight CLI",
+      "status": "PASS",
+      "detail": {
+        "exit_code": 0,
+        "stdout": "{\n  \"schema\": \"htt.publication_frontier_preflight/1\",\n  \"writes_state\": false,\n  \"frontier_id\": \"R36-OBSERVABLE-BRIDGE-20261027\",\n  \"frontier_identity\": \"b4191660c8b0e5b852d27085cd28f7096ad8aaea57415291937ef993ea2ff2f4\",\n  \"frontier_path\": \"docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json\",\n  \"manifest_path\": \"docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json\",\n  \"evidence_files_verified\": 156,\n  \"candidate_root_tasks\": [\n    \"R36-01-CF4-OPERATOR\",\n    \"R36-03-PM-HISTORY\",\n    \"R36-04-OPTICAL-JOINT\",\n    \"R36-05-RADIATION-RESPONSE\",\n    \"R36-06-PR4-MORPHOLOGY\",\n    \"R36-07-FOREGROUND-BUDGET\",\n    \"R36-08-PUBLIC-SN\",\n    \"R36-09-ATLAS-INTAKE\",\n    \"R36-10-GEOMETRY-IMAGE\"\n  ],\n  \"original42_effect\": \"none\",\n  \"state_observed\": false,\n  \"next_action\": \"At the current host checkpoint, append-frontier once, then actual next/spawn/ack/record/review/next.\",\n  \"status\": \"STATIC_VALIDATED\",\n  \"active_tasks\": [],\n  \"runtime_original_progress\": \"read existing controller summary; this preflight does not infer original physical completion\"\n}\n"
+      }
+    },
+    {
+      "name": "production focused parameterization tests",
+      "status": "PASS",
+      "detail": {
+        "exit_code": 0,
+        "stdout": "{\n  \"test_count\": 10,\n  \"failures\": 0,\n  \"errors\": 0,\n  \"successful\": true,\n  \"full_controller_and_router_import\": true,\n  \"live_state_read\": false,\n  \"live_state_mutation\": false,\n  \"candidate_sha256\": \"52424029240951a213fe71feec614a8a17620307e0c6360e8affcf90e8ec969c\",\n  \"controller_sha256\": \"e5bb42598026549883b66275ec79399020e7f3007eae5ee760f91469c062d3ce\",\n  \"router_sha256\": \"e42a833aab97c74e55310e91408558dfdbd05457e035438f3ec32a6917ddf68a\"\n}\n"
+      }
+    },
+    {
+      "name": "preflight existing frontier and historical state unchanged",
+      "status": "PASS",
+      "detail": {
+        "schema": "htt.publication_frontier_preflight/1",
+        "writes_state": false,
+        "frontier_id": "R36-OBSERVABLE-BRIDGE-20261027",
+        "frontier_identity": "b4191660c8b0e5b852d27085cd28f7096ad8aaea57415291937ef993ea2ff2f4",
+        "frontier_path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json",
+        "manifest_path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json",
+        "evidence_files_verified": 156,
+        "candidate_root_tasks": [
+          "R36-01-CF4-OPERATOR",
+          "R36-03-PM-HISTORY",
+          "R36-04-OPTICAL-JOINT",
+          "R36-05-RADIATION-RESPONSE",
+          "R36-06-PR4-MORPHOLOGY",
+          "R36-07-FOREGROUND-BUDGET",
+          "R36-08-PUBLIC-SN",
+          "R36-09-ATLAS-INTAKE",
+          "R36-10-GEOMETRY-IMAGE"
+        ],
+        "original42_effect": "none",
+        "state_observed": true,
+        "next_action": "At the current host checkpoint, append-frontier once, then actual next/spawn/ack/record/review/next.",
+        "status": "APPEND_READY",
+        "active_tasks": [],
+        "runtime_original_progress": "read existing controller summary; this preflight does not infer original physical completion"
+      }
+    },
+    {
+      "name": "actual controller CLI append preserves history and yields9roots",
+      "status": "PASS",
+      "detail": {
+        "cli_exit": 0,
+        "original_admission": {
+          "total": 42,
+          "source_completed_scoped": 18,
+          "admission": "UNCHANGED_NOT_GRANTED_BY_CONTROLLER"
+        },
+        "ready": [
+          "R36-01-CF4-OPERATOR",
+          "R36-03-PM-HISTORY",
+          "R36-04-OPTICAL-JOINT",
+          "R36-05-RADIATION-RESPONSE",
+          "R36-06-PR4-MORPHOLOGY",
+          "R36-07-FOREGROUND-BUDGET",
+          "R36-08-PUBLIC-SN",
+          "R36-09-ATLAS-INTAKE",
+          "R36-10-GEOMETRY-IMAGE"
+        ],
+        "history_budget_campaign_unchanged": true
+      }
+    },
+    {
+      "name": "appendonce exactidentity protection",
+      "status": "PASS",
+      "detail": {
+        "exact_identity_recognized": true,
+        "repeat_append_rejected_transactionally": true
+      }
+    },
+    {
+      "name": "product gates reject gapreports and accept first qualified scientific result",
+      "status": "PASS",
+      "detail": {
+        "gap_reports_never_unblock": true,
+        "intake_products_never_unblock_synthesis": true,
+        "one_completed_exact_result_unblocks_synthesis": true,
+        "held_exact_product_does_not_unblock": true
+      }
+    },
+    {
+      "name": "all sourcehashes and frozen frontier identity",
+      "status": "PASS",
+      "detail": {
+        "verified_files": 156,
+        "same_id_changed_frontier_rejected": true
+      }
+    },
+    {
+      "name": "acquisition manifest existing entries preserved",
+      "status": "PASS",
+      "detail": {
+        "modified_keys": [
+          "resources"
+        ],
+        "old_list_entries_preserved": true
+      }
+    }
+  ],
+  "passed": 14,
+  "failed": 0,
+  "frontier_sha256": "38a239d203c6431a281264cd8ad40cd448b5b068d154fdab70270bf009eb29cd",
+  "backlog_sha256": "8cfe86596e2f739c463ff7a0730657e1f80442f42168596d7ea7a83e1aeb2b24",
+  "preflight_sha256": "52424029240951a213fe71feec614a8a17620307e0c6360e8affcf90e8ec969c"
+}

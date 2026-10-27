@@ -23,3 +23,9 @@ See each product's `PUBLICATION_STATUS.json` and `independent_review/` for exact
 
 
 [Actual continuation checkpoint and 29 residual input requirements](POST_PUBLICATION_CHECKPOINT_20261026/README.md): the acknowledged post-nine discovery returned `no_action`; the subsequent controller call recorded `HOLD_UNRESOLVED_BRANCHES`, effective `ready=[]`, and no outstanding adaptive packet. This closes the authorized iteration under its exact residual condition; original42 scientific acceptance remains unchanged. Earlier RUNNING snapshots remain historical.
+
+
+
+## Observable-bridge continuation, 27 October 2026
+
+All nine R32 outputs are completed in the current PR ledger. [The reconciliation report](../OBSERVABLE_BRIDGE_RECONCILIATION_20261027/REPORT.md) integrates the recovered internal research, corrects the external audit and supplies a new source-bound frontier. Use [the current-session handoff](../OBSERVABLE_BRIDGE_RECONCILIATION_20261027/HANDOFF_CURRENT_SESSION.md); retain historical counts and original scientific contracts.

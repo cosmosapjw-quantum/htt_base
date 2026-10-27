@@ -1,0 +1,52 @@
+{
+  "status": "PASS_SCOPED_TOY",
+  "python": "3.12.14",
+  "kernel": "exp(-0.5*((x-4)/0.8)^2)",
+  "x_max": 64,
+  "quadrature": "piecewise Gauss-Legendre; 32/64/128 points per subinterval",
+  "continuum_scope": "Finite domain numerical evaluation; tail to infinity is exponentially suppressed but no interval-certified quadrature is claimed.",
+  "cases": {
+    "MB": {
+      "xi": 0,
+      "eta0": 0.0,
+      "number": 2.0,
+      "energy": 6.000000000000002,
+      "reference_response": 0.301697760245133,
+      "sigma2_projected": 0.10447052371811957,
+      "sigma2_unprojected": 0.211243105491289,
+      "projected_to_raw_width_ratio": 0.7032433178135176,
+      "max_relative_moment_residual": 7.401486830834374e-16,
+      "max_three_point_identity_residual": 6.245004513516506e-16,
+      "min_inverse_temperature_coefficient": 0.934805339821627,
+      "quadrature_32_vs_128_max_difference": 5.828670879282072e-16
+    },
+    "BE": {
+      "xi": 1,
+      "eta0": -0.5,
+      "number": 1.3278662010896554,
+      "energy": 3.7979768096437723,
+      "reference_response": 0.2811963457098664,
+      "sigma2_projected": 0.10034470525144293,
+      "sigma2_unprojected": 0.19896651695906103,
+      "projected_to_raw_width_ratio": 0.7101616764760234,
+      "max_relative_moment_residual": 1.0523505247588491e-15,
+      "max_three_point_identity_residual": 5.74815692125791e-16,
+      "min_inverse_temperature_coefficient": 0.9200842565680608,
+      "quadrature_32_vs_128_max_difference": 1.7644653099724295e-13
+    },
+    "FD": {
+      "xi": -1,
+      "eta0": 1.0,
+      "number": 4.328331225625399,
+      "energy": 14.38935649349364,
+      "reference_response": 0.34985267141440335,
+      "sigma2_projected": 0.10611574741646775,
+      "sigma2_unprojected": 0.2337958783767799,
+      "projected_to_raw_width_ratio": 0.6737076725133154,
+      "max_relative_moment_residual": 1.026005605164601e-15,
+      "max_three_point_identity_residual": 3.1421421658165903e-16,
+      "min_inverse_temperature_coefficient": 0.9867523623748495,
+      "quadrature_32_vs_128_max_difference": 5.251441642650789e-14
+    }
+  }
+}

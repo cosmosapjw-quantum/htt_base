@@ -1,0 +1,146 @@
+{
+  "unit_id": "HTT_INTERNAL_THEORY_20261026_LOOP_C",
+  "owner": "/root/kinematics_loop_20261026",
+  "date": "2026-10-26",
+  "baseline_commit": "a55036ad09c53a9215dee3282e425d37cfb95443",
+  "scope": "Internal solver-free local optical construction, not an observational estimate or a scientific claim promotion",
+  "conventions": {
+    "metric": "(-,+,+,+)",
+    "u_norm": -1,
+    "derivative_parameter": "s=c*tau",
+    "outward_source_direction": "n",
+    "axial_vorticity": "omega_i=(1/2) epsilon_ijk omega_jk; omega_ij=epsilon_ijk omega_k",
+    "rate_coordinates": {
+      "h": "c H_g",
+      "S": "c sigma",
+      "v": "c omega",
+      "alpha": "c A"
+    },
+    "c": "explicit"
+  },
+  "assumptions": [
+    "Smooth single-valued timelike congruence shared by observer and emitters",
+    "C3 local field and regular metric in a convex normal neighbourhood",
+    "Geometric optics and unique source tracking before caustics",
+    "r first-order normalized to observer-normalized affine distance",
+    "Fermi-Walker triad and proper-time clock for physical inverse; otherwise declared nuisances",
+    "Local distance limit or controlled finite-distance remainder"
+  ],
+  "claims": [
+    {
+      "id": "C01",
+      "statement": "d(n)=lim(cz/r)=h+S:nn-alpha.n and mu(n)=lim(dn_obs/dtau)=P S n+n cross v",
+      "status": "CONDITIONAL_DERIVED",
+      "evidence": [
+        "research/LOOP_C_KINEMATICS.md R4-R5",
+        "Ellis printed80-82/PDF96-98 eq4.29-4.34; printed192/PDF208 eq8.39-8.40",
+        "Heinesen-Korzynski arXiv2406.06167v2 AppendixC C10 / HTML46"
+      ],
+      "new_to_project": "Joined optical inverse with explicit common-congruence cancellation; literature-known leading relation"
+    },
+    {
+      "id": "C02",
+      "statement": "Observer acceleration cancels the retarded-emitter term at distance order zero for a common smooth congruence; its physical A remains in radial dipole",
+      "status": "CONDITIONAL_DERIVED",
+      "evidence": [
+        "research/LOOP_C_KINEMATICS.md C5",
+        "Heinesen-Korzynski AppendixC"
+      ],
+      "limit": "A secular-aberration E1 coefficient from quasars uses a distinct observer/source relative-motion closure"
+    },
+    {
+      "id": "C03",
+      "statement": "h=<d>, alpha=-3<dn>, S=(15/2)<d STF(nn)>=5<sym(mu n)>, v=-(3/2)<n cross mu>",
+      "status": "EXACT_ANGULAR_IDENTITY",
+      "evidence": [
+        "cas/loop_c.wl",
+        "cas/loop_c_wolfram_receipt.json"
+      ],
+      "domain": "Full sphere leading response with the stated angular measure"
+    },
+    {
+      "id": "C04",
+      "statement": "Normalized vector harmonic coefficients obey mu_E2m=sqrt(6)/2*d_2m, mu_B1m=sqrt(2)*(v.n)_1m; a P D response contributes E1",
+      "status": "CONDITIONAL_DERIVED",
+      "evidence": [
+        "research/LOOP_C_KINEMATICS.md C8",
+        "Heinesen-Korzynski AppendixE"
+      ],
+      "harmonic_convention": "E_lm=gradient_S Y_lm/sqrt(l(l+1)); B_lm=n cross E_lm"
+    },
+    {
+      "id": "C05",
+      "statement": "<d^2+|mu|^2>=h^2+(1/3)S:S+(1/3)|alpha|^2+(2/3)|v|^2",
+      "status": "EXACT_ANGULAR_IDENTITY",
+      "evidence": [
+        "cas/loop_c.wl",
+        "cas/loop_c_wolfram_receipt.json"
+      ],
+      "consequence": "Full-sphere radial rank9, transverse rank8, joint rank12"
+    },
+    {
+      "id": "C06",
+      "statement": "With catalog triad angular velocity Omega, measured B1 axial rate is c omega+Omega; changing (v,Omega) by (-q,q) leaves it invariant",
+      "status": "EXPLICIT_RESPONSE_KERNEL",
+      "evidence": [
+        "research/LOOP_C_KINEMATICS.md C9",
+        "cas/loop_c_check.py",
+        "cas/loop_c_python_receipt.json"
+      ],
+      "physical_attribution": "Requires independent triad-spin calibration; no universal new no-go claimed"
+    },
+    {
+      "id": "C07",
+      "statement": "Two known distinct distance shells separate ideal E1 coefficients D and observer translation V in P D-P V/r",
+      "status": "CONDITIONAL_LINEAR_INVERSE",
+      "evidence": [
+        "research/LOOP_C_KINEMATICS.md R6"
+      ],
+      "assumptions": [
+        "Shared D and V across shells",
+        "Known distance response and compatible population selection",
+        "Small peculiar velocities and controlled local optical order"
+      ],
+      "limitation": "Arbitrary source-slip gradients can overlap physical kinematic responses"
+    },
+    {
+      "id": "C08",
+      "statement": "The joint optical inverse image may be intersected with a compatible CMB response and mapped by existing full-carrier functionals without redefining Q, Pi, F or G_F",
+      "status": "CONSTRUCTED_INTERFACE",
+      "evidence": [
+        "research/LOOP_C_KINEMATICS.md C12-C13 and R9",
+        "text/20-report-1-.txt section23",
+        "sources/repo/htt/src/common/typefree_functionals.py",
+        "sources/repo/htt/src/common/typefree_depth.py"
+      ],
+      "namespace": "Report/typefree directional support; distinct from legacy certified filling_fraction and explicit-measure occupancy prose",
+      "probability_requirement": "Exceedances require a named joint law; finite sets have no probability weights"
+    }
+  ],
+  "verification": {
+    "wolfram": "Executed exact sphere moment identities; all residuals zero",
+    "python": "Executed stdlib Fraction exact rank check on 12 rational unit directions; ranks9,8,12; unknown-spin nullity3",
+    "optional_failure": "SymPy unavailable in current Python; finite rank check replaced by exact rational stdlib code",
+    "wolfram_context": "Internal tool error; evaluator succeeded",
+    "independent_review": "PENDING_PARENT_FRESH_REVIEW",
+    "four_axis_CAS": "NOT_CLAIMED",
+    "solver_or_ODE": "NONE"
+  },
+  "strong_no_go": {
+    "adopted": false,
+    "reason": "Only explicit conditional response kernels are reported; no new universal impossibility or novelty claim promoted"
+  },
+  "remaining": [
+    "Independent review of conventions and optical derivation",
+    "Finite-distance synthetic catalogue with calibrated population/frame/clock nuisances",
+    "Catalogue-specific Jacobian/covariance/selection and bounded optical remainder before physical data inference"
+  ],
+  "artifacts": [
+    "research/LOOP_C_KINEMATICS.md",
+    "research/LOOP_C_CLAIMS.json",
+    "cas/loop_c.wl",
+    "cas/loop_c_wolfram_receipt.json",
+    "cas/loop_c_check.py",
+    "cas/loop_c_python_receipt.json"
+  ]
+}

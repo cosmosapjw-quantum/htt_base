@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-26",
+  "owner": "dipole_loop_20261026",
+  "scope": "Local pinned report verification plus newly derived ideal Gaussian utilization benchmark; no new observational data/repo refresh.",
+  "source_snapshot": "a55036ad09c53a9215dee3282e425d37cfb95443",
+  "retained_original_calculation_pin": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+  "sources": [
+    {
+      "id": "S1",
+      "path": "HTT_INTERNAL_THEORY_20261026/sources/repo/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/baseline/output/HTT_research_compact_en.md",
+      "sha256": "cfc6fc2b0cb4538ae84b93dd669cb4bbbd15932281d340a25e0dcfed04f920c0",
+      "locations": [
+        "\u00a74.1 stored carrier",
+        "\u00a74.2 equation13 sign stability",
+        "AppendixA A14\u2013A15 envelope",
+        "AppendixB numerical catalogue",
+        "equal-Gram reference-law subsection"
+      ]
+    },
+    {
+      "id": "S2",
+      "path": "HTT_INTERNAL_THEORY_20261026/sources/repo/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-01-QO-METHODS/science/MANUSCRIPT.md",
+      "sha256": "de41872977f19f5040dc21a6bda9c3b7a84d4f05ed837c53f3b539b5b0353ac0",
+      "location": "Equation35 optical logarithmic-remainder sign bound"
+    }
+  ],
+  "primary_carrier": {
+    "source_label": "P",
+    "source_meaning": "pinned-primary source, not statistical method",
+    "cutoff": 32,
+    "retained_degrees": [
+      2,
+      3
+    ],
+    "secondary_window_degrees": 0,
+    "product": "FULL",
+    "field": "Processed E pseudo-alm from masked delivered QU polarization product",
+    "harmonic_convention": "Galactic Condon\u2013Shortley real carrier (a_l0,sqrt2 Re a_lm,-sqrt2 Im a_lm)",
+    "C": -0.0967707,
+    "r": 0.0582918,
+    "envelope_source_rounded": 0.808141,
+    "U": 0.1197448
+  },
+  "cached_pilot_comparator": {
+    "source_label": "C",
+    "source_meaning": "cached-pilot source",
+    "cutoff": 32,
+    "window_degrees": 0,
+    "product": "FULL",
+    "C": -0.0967544,
+    "r": 0.0582656,
+    "U": 0.1197103
+  },
+  "rounded_arithmetic_check": {
+    "E_formula": "sqrt((1-6r)(1+3r/40))",
+    "E_value": 0.8081410859025434,
+    "absC_over_E": 0.11974480902913767,
+    "status": "pass_display_consistency_only"
+  },
+  "sign_certificate": {
+    "source": "S1 equation13",
+    "perturbation_space": "STF2 plus STF3, common oriented triad, completed tensor Frobenius metric",
+    "scales": "q0=o0=1e-5 K_CMB exact rational",
+    "m_squared": "||Q/q0||F\u00b2+||O/o0||F\u00b2",
+    "radius": "||(delta Q/q0,delta O/o0)||directsumF <= rho*m",
+    "condition": "chi\u00b2>36 rho\u00b2(1+rho)^16 (m\u00b2)^9",
+    "relative_radii": [
+      0,
+      1e-06,
+      1e-05,
+      0.0001,
+      0.001,
+      0.05
+    ],
+    "passing_counts": [
+      60,
+      60,
+      39,
+      0,
+      0,
+      0
+    ],
+    "all_meaning": "All60 saved carriers each preserve their own sign in their own hypothetical perturbation ball.",
+    "carrier_composition": {
+      "pinned_primary": 15,
+      "cached_pilot": 45,
+      "observed_skies": 1,
+      "positive_chi": 15,
+      "negative_chi": 45
+    },
+    "not_measured_uncertainty": true,
+    "equation35_status": "Accessible current R32-01 equation35 is a different optical remainder bound; historical equation35 numbering not verified."
+  },
+  "inherited_U_cdf": {
+    "claimed_value": 0.631,
+    "status": "unverified_from_available_local_sources",
+    "sample_size": null,
+    "seed": null,
+    "null_law": null,
+    "reason": "No original U-CDF receipt found; unrelated null law results must remain distinct."
+  },
+  "different_reference_comparison": {
+    "pilot_draws": 4096,
+    "evaluation_draws_per_law": 16383,
+    "statistic": "Pilot-transformed dependent-view family statistic, not FULL-row U CDF",
+    "laws": [
+      {
+        "name": "shared spatial rotations",
+        "upper_tail_count": 7505,
+        "add_one_rank": 0.4581298828125
+      },
+      {
+        "name": "shared Gram-preserving orthogonal actions",
+        "upper_tail_count": 7456,
+        "add_one_rank": 0.45513916015625
+      }
+    ]
+  },
+  "new_ideal_gaussian_lemma": {
+    "status": "derived",
+    "fixed_Q": "Nonzero simple-spectrum STF2",
+    "octupole": "Independent equal-variance zero-mean Gaussian in seven Frobenius-orthonormal STF3 coordinates conditional onQ; normalized direction uniformS6",
+    "normalization": "U=3sqrt3 abs(z1 z2 z3)",
+    "dirichlet_parameters": [
+      0.5,
+      0.5,
+      0.5,
+      2
+    ],
+    "mean_exact": "15sqrt3/(64pi)",
+    "mean": 0.1292177098644825,
+    "second_moment_exact": "3/77",
+    "second_moment": 0.03896103896103896,
+    "quadrupole_shape_independent": true,
+    "new_MC_status": "executed_by_parent; source and actual result inspected locally",
+    "not_a_Planck_processed_null": true
+  },
+  "physical_interpretation": {
+    "E_parity": "Scalar E even; multipoles transform(-1)^l; cutsky pseudoE retains processing E/B mixing.",
+    "C_parity": "Proper-rotation scalar, reflection odd; U absolute parity-even magnitude.",
+    "nonzero_C": "Realized parity-odd morphology, not evidence alone of statistical parity violation.",
+    "stress_conversion": "E-mode is not positive absolute temperature or Stokes I; I=Cgamma E^4 is not a physical map. Radiation stress requires intensity/spectral observation response."
+  },
+  "previous_files_edited": false,
+  "new_ideal_gaussian_benchmark": {
+    "model": "Independent full-sky isotropic Gaussian STF2 and STF3; conditional on a nondegenerate quadrupole; no Planck processing/noise/selection simulation.",
+    "U_law": "3 sqrt(3) abs(z1 z2 z3), z uniform on S^6",
+    "seed": 20261026,
+    "sample_size": 1048576,
+    "threshold_pinned_primary_rounded": 0.1197448,
+    "count_leq": 662397,
+    "cdf": 0.6317110061645508,
+    "cdf_MC_binomial_95_interval": [
+      0.63078695394418,
+      0.6326343307835368
+    ],
+    "upper_tail": 0.3682889938354492,
+    "mean_estimate": 0.12916766184475767,
+    "mean_exact": 0.1292177098644825,
+    "second_moment_estimate": 0.03894416412868046,
+    "second_moment_exact": 0.03896103896103896,
+    "source_script": "HTT_COSMO_TEFF_REFOCUS_20261026/cas/planck_hubble_controls.py",
+    "script_sha256": "a7e73ba72cbe87aba630029f46f45c43458dbcd3af00f1f96053368d423ff554",
+    "result_file": "HTT_COSMO_TEFF_REFOCUS_20261026/cas/planck_hubble_results.json",
+    "result_sha256": "bf9d778f4afefed23c3b09ac45c76cd3639fbfef06faddc86c0ef2aa245e06cb",
+    "reading_status": "Actual source and results inspected; not rerun by this agent",
+    "historical_receipt_recovered": false
+  }
+}

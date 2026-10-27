@@ -1,0 +1,403 @@
+{
+  "schema_version": 1,
+  "review_id": "HTT_INTERNAL_THEORY_20261026_INDEPENDENT_REVIEW",
+  "date_utc": "2026-10-26",
+  "reviewer": "/root/internal_five_loop_review_20261026",
+  "runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "requested_settings_source": "parent task assignment",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "independence": {
+    "candidate_author": false,
+    "candidate_modified_by_reviewer": false,
+    "nested_agents_spawned": false,
+    "reviewer_outputs": [
+      "research/INDEPENDENT_REVIEW.md",
+      "research/INDEPENDENT_REVIEW.json"
+    ],
+    "review_mode": "fresh bounded scientific review and targeted repair closeout"
+  },
+  "scope": "All five internal theory loops: proof, signs, units, congruences, finite inverse domains, statistical assumptions, claim/source distinctions. No solver, ODE, push or observed data fit.",
+  "verdict": "PASS_SCOPED_AFTER_TARGETED_REPAIRS",
+  "open_findings": [],
+  "fatal_blockers": [],
+  "findings": [
+    {
+      "id": "IR-01",
+      "severity": "medium",
+      "kind": "equation_transcription",
+      "target": "research/LOOP_A_LOWELL.md A5, A8, STF(M4:S)",
+      "finding": "Four literal plus signs were omitted from mathematical displays.",
+      "repair": "Four additions restored and independently checked against written proof and CAS input.",
+      "status": "closed"
+    },
+    {
+      "id": "IR-02",
+      "severity": "low",
+      "kind": "definition_transcription",
+      "target": "research/LOOP_D_BIANCHI.md first paragraph and inline math",
+      "finding": "Two vertical-tab controls corrupted epsilon_N and inline math delimiters were lost.",
+      "repair": "Controls removed and mathematical delimiters restored; no unintended controls remain.",
+      "status": "closed"
+    },
+    {
+      "id": "IR-03",
+      "severity": "medium",
+      "kind": "scientific_namespace",
+      "target": "research/LOOP_A_LOWELL.md R9; research/LOOP_A_CLAIMS.json F-TYPING",
+      "finding": "Current occupancy-F had been described as a legacy/application object despite legacy code prohibiting material-volume occupancy.",
+      "repair": "Three distinct namespaces explicitly restored in Markdown and JSON and checked against implementation.",
+      "status": "closed"
+    },
+    {
+      "id": "IR-04",
+      "severity": "low",
+      "kind": "optional_precision",
+      "target": "research/LOOP_D_BIANCHI.md matched pair",
+      "finding": "Rank-two wording could confuse tensor valence with the matrix rank-three Ricci difference.",
+      "repair": "Changed to STF Ricci difference.",
+      "status": "closed"
+    },
+    {
+      "id": "IR-05",
+      "severity": "medium",
+      "kind": "statistical_premise",
+      "target": "research/LOOP_E_HUBBLE.md E21; research/LOOP_E_CLAIMS.json",
+      "finding": "True-propensity positivity did not ensure the working-propensity denominator was nonzero.",
+      "repair": "Positive working propensity on parent support and integrability explicitly required.",
+      "status": "closed"
+    },
+    {
+      "id": "IR-06",
+      "severity": "low",
+      "kind": "observational_contract",
+      "target": "research/LOOP_E_HUBBLE.md R10",
+      "finding": "Two-coefficient fit was followed by proposed reporting of an invariant requiring the cubic coefficient.",
+      "repair": "h0/h1 use the first two coefficients; J requires a separately supported cubic d3.",
+      "status": "closed"
+    }
+  ],
+  "units": [
+    {
+      "unit": "A",
+      "verdict": "pass_scoped",
+      "checked": [
+        "occupation and Planck normalization",
+        "Liouville redshift/angular-drift sign",
+        "STF4 decomposition and 10/7 coefficient",
+        "self-adjoint positivity/coercivity and beam limit",
+        "perturbed inverse denominator and units",
+        "local non-coaxial witness scope"
+      ],
+      "limitations": [
+        "geodesic irrotational collisionless transport application",
+        "bolometric completion and derivative-jet inputs needed",
+        "no global Einstein-Liouville realization claimed"
+      ]
+    },
+    {
+      "unit": "B",
+      "verdict": "pass_scoped",
+      "checked": [
+        "exact Lorentz transform and second-order hierarchy",
+        "intrinsic quadrupole envelope and known-boost inverse",
+        "Planck derivative spectral closure",
+        "harmonic adjacent-mode response",
+        "nuisance-projected covariance and finite coverage bound",
+        "rank-deficient target estimability"
+      ],
+      "limitations": [
+        "bound conditional on registered quadrupole envelope or calibrated velocity response",
+        "known fixed covariance/design or valid calibrated noise event",
+        "no observed intrinsic dipole or global matter-tilt result"
+      ]
+    },
+    {
+      "unit": "C",
+      "verdict": "pass_scoped",
+      "checked": [
+        "radial null contraction sign",
+        "common-congruence null-boundary acceleration cancellation",
+        "epsilon orientation and Fermi/catalogue spin sign",
+        "sphere projections and exact response norm",
+        "finite-design ranks and spin kernel"
+      ],
+      "limitations": [
+        "local same-congruence smooth optical limit",
+        "finite-distance remainder not certified",
+        "source population, clock, frame spin and selection require calibration"
+      ]
+    },
+    {
+      "unit": "D",
+      "verdict": "pass_scoped",
+      "checked": [
+        "Koszul/curvature construction with Jacobi",
+        "Ricci/sectional signs and inverse-length units",
+        "Hamiltonian and momentum signs",
+        "II/VII0 same-scalar distinct-Ricci initial data",
+        "flat presentation equivalence"
+      ],
+      "limitations": [
+        "instantaneous Einstein constraint data only",
+        "physical optical response needed for curvature inference",
+        "no family identification from sky tensors"
+      ]
+    },
+    {
+      "unit": "E",
+      "verdict": "pass_scoped",
+      "checked": [
+        "past-directed energy derivative",
+        "affine focusing and cubic luminosity-distance series",
+        "FLRW curvature sign and de Sitter/Milne/EdS limits",
+        "finite-jet invariant and freedom-preserving FLRW realization",
+        "Bianchi I photon direction evolution and Kasner vacuum curvature",
+        "positive-denominator reciprocal interval",
+        "AIPW expectation identity with repaired working positivity",
+        "Fisher loss under parameter-independent compression"
+      ],
+      "limitations": [
+        "redshift coordinate requires h0 nonzero",
+        "curvature-history separation needs extra input in the stated jet map",
+        "J requires d3",
+        "selection and information identities do not establish empirical calibration"
+      ]
+    }
+  ],
+  "executed_review_checks": [
+    {
+      "command": "python cas/loop_c_check.py",
+      "exit_code": 0,
+      "result": {
+        "radial_rank": 9,
+        "proper_motion_rank": 8,
+        "joint_rank": 12,
+        "joint_with_frame_spin_rank": 12,
+        "joint_with_frame_spin_nullity": 3
+      }
+    },
+    {
+      "command": "python cas/loop_d_check.py",
+      "exit_code": 0,
+      "result": "PASS six exact-rational Ricci matrices"
+    },
+    {
+      "command": "independent inline Python Fraction calculation of minus divergence(S) from D1/D2 on 4 structure bases times 5 STF bases",
+      "exit_code": 0,
+      "result": "20/20 bilinear basis pairs match D7; covers all bilinear coefficients"
+    },
+    {
+      "command": "read repaired A/D/E mathematical text and A/E claim records; control-character scan of all five notes",
+      "exit_code": 0,
+      "result": "all six repairs verified; no unintended controls"
+    }
+  ],
+  "external_source_check": {
+    "primary_url": "https://arxiv.org/html/2406.06167v2",
+    "method": "Exa full-content retrieval; actual Appendix C equations (37),(38),(44),(46) inspected",
+    "result": "leading screen gradient and acceleration cancellation agree",
+    "retained_transport_limitation": "search-service direct fetch failed; Exa retrieval succeeded"
+  },
+  "coefficient_source_check": {
+    "local_primary": "sources/A_maartens9808163v2.txt and sources/A_maartens15.png",
+    "local_textbook": "text/ellis-relativistic-cosmology.txt and sources/A_ellis299.png",
+    "result": "MGE Eq89 displays 2/7; MGE Eq71 sigma-pi coefficient specializes to 10/7; Ellis Eq11.2 displays 10/7; direct angular derivation fixes 10/7 for note convention",
+    "scope": "No journal-erratum or whole-source validation claim"
+  },
+  "xact_scope": {
+    "null_contraction": "successful pure-Wolfram finite tensor identity and zero target residual",
+    "gradient_square": "successful pure-Wolfram B_ab B^ba = Theta^2/3 + S:S - W:W and zero target residual",
+    "failed_attempts_preserved": [
+      "cas/xact_null_contraction_receipt.json",
+      "cas/xact_gradient_square_receipt.json"
+    ],
+    "not_established": [
+      "optical endpoint lemma by CAS",
+      "full Raychaudhuri theorem",
+      "all spacetime equations",
+      "historical four-axis CAS admission"
+    ]
+  },
+  "namespace_binding": {
+    "F_cert": "legacy certified x_C/U diagnostic; no material-volume interpretation",
+    "F_sup": "current typefree/report directional support utilization",
+    "F_nu": "occupancy under separately declared measure and support",
+    "cross_loop_units": "C h,S are time rates; D h,S, E h and A sigma are inverse lengths. Convert with c and align frames/congruences before combining."
+  },
+  "claim_disposition": {
+    "internal_theory": "DERIVED/CONDITIONAL under stated premises",
+    "observation_contracts": "SPECIFIED until actual inputs/calibration/remainders supplied",
+    "new_observational_measurement": false,
+    "novelty_priority_established": false,
+    "new_universal_no_go": false,
+    "native_solver_validated": false,
+    "original42_acceptance_changed": false,
+    "publication_readiness_promoted": false
+  },
+  "source_snapshot": {
+    "supplied_commit": "a55036ad09c53a9215dee3282e425d37cfb95443",
+    "local_git_verification": "unavailable; extracted source tree has no .git"
+  },
+  "candidate_identities": [
+    {
+      "path": "research/LOOP_A_LOWELL.md",
+      "sha256": "f1f91ce863e21403157e8aa2e1e4b84bdcce7f3ba507b712a10cc893ea2a5c1a",
+      "size_bytes": 17906
+    },
+    {
+      "path": "research/LOOP_B_DIPOLE.md",
+      "sha256": "0fa7afe8d449d1ed6e6e1964198e464e8675cabeb0b5027f1c7616c2e76cb625",
+      "size_bytes": 22496
+    },
+    {
+      "path": "research/LOOP_C_KINEMATICS.md",
+      "sha256": "8ce4e984582959ba7401d3fe58ce5aa404ef7869ff2cfb3981bc5c80cd78f72d",
+      "size_bytes": 18384
+    },
+    {
+      "path": "research/LOOP_D_BIANCHI.md",
+      "sha256": "29deff7762b9fcecb877faf5f05abb0bc1f4682fb16a053521b2c0d3ce7cbae9",
+      "size_bytes": 17711
+    },
+    {
+      "path": "research/LOOP_E_HUBBLE.md",
+      "sha256": "b0cc8eca8b6db3980997788be98121c791db331cb85d54e805d69b3e73878cf4",
+      "size_bytes": 13604
+    },
+    {
+      "path": "research/LOOP_A_CLAIMS.json",
+      "sha256": "bcbdbafa42cddbea68937fefef12b757276c27189c9bbc9a096a30ef33c4741a",
+      "size_bytes": 14708
+    },
+    {
+      "path": "research/LOOP_B_CLAIMS.json",
+      "sha256": "98e6addd0c06252c448c46a5ff946a9d5dfcae8f67f03b1fca127871be677fac",
+      "size_bytes": 18272
+    },
+    {
+      "path": "research/LOOP_C_CLAIMS.json",
+      "sha256": "6210823986ecfd4cbe556212a6db6a4597db31fff6f7755bf5a43bd8b7b2ebd9",
+      "size_bytes": 6337
+    },
+    {
+      "path": "research/LOOP_D_CLAIMS.json",
+      "sha256": "cbfc13c4d05b085674c9e1a92c19dbda833caf9e1f37477b4906ee9c440a8f0a",
+      "size_bytes": 3748
+    },
+    {
+      "path": "research/LOOP_E_CLAIMS.json",
+      "sha256": "97965c1adccd39d2bc099041cbcbd65d7eeb3b7f6619475cb3eb134fafeff151",
+      "size_bytes": 4266
+    },
+    {
+      "path": "cas/loop_a.wl",
+      "sha256": "bbebc3647ea5effb9f75ed126481358de8c98e30b03006dfb88d3bb4fc9ea96b",
+      "size_bytes": 2092
+    },
+    {
+      "path": "cas/loop_a_results.json",
+      "sha256": "df9c5dae5b90e12b99b6a0f569e8b28a602842f00e7cc3f22b05fbd3a0301777",
+      "size_bytes": 827
+    },
+    {
+      "path": "cas/loop_b.wl",
+      "sha256": "a0e4b76e3a1c808e55731cba22712ca4e489c3a267a3a9525c3d638085e1612e",
+      "size_bytes": 809
+    },
+    {
+      "path": "cas/loop_b_receipt.json",
+      "sha256": "576262e113cb7ad68b5d39f2335483a832f1b2b8f27900e876e13a7fbd0b0f88",
+      "size_bytes": 1154
+    },
+    {
+      "path": "cas/loop_c.wl",
+      "sha256": "29fb02e721b035a8b81855608ebdf06d42d21443adb21d40456bcd4dbef0b406",
+      "size_bytes": 904
+    },
+    {
+      "path": "cas/loop_c_wolfram_receipt.json",
+      "sha256": "d1c49689fc99c1ebbbbdc945bb5ff622f3540d551001240d90ba26993769a46d",
+      "size_bytes": 684
+    },
+    {
+      "path": "cas/loop_c_check.py",
+      "sha256": "57207f70c68280b376565e39ffdc38f0b95c8779bd8f863e2db8925e4e3aec5a",
+      "size_bytes": 2410
+    },
+    {
+      "path": "cas/loop_c_python_receipt.json",
+      "sha256": "a9bf0d716e3a5578b71928b503fdee96fd3fcfcc15162aec8035be7f80c86d7e",
+      "size_bytes": 1157
+    },
+    {
+      "path": "cas/loop_d.wl",
+      "sha256": "1203cea2811ffdf5d5cd740588c10475efb02f4328477f7fffa353171b0bc0bd",
+      "size_bytes": 1066
+    },
+    {
+      "path": "cas/loop_d_check.py",
+      "sha256": "6b2950277eed5636b87a5aebd9f62cac9538182c5214f3e57cfb8dca09584519",
+      "size_bytes": 1197
+    },
+    {
+      "path": "cas/loop_d_receipt.json",
+      "sha256": "4c700f3b5e5e930215795ee4f16d448f2c1b5243b584e4bfacac25815288176f",
+      "size_bytes": 1408
+    },
+    {
+      "path": "cas/loop_e.wl",
+      "sha256": "cad5ac6cf131956f1635b03367d27069c6ef83edf58c6b4494f9460a923d1ef8",
+      "size_bytes": 1161
+    },
+    {
+      "path": "cas/loop_e_receipt.json",
+      "sha256": "8f19e3f7c8cab87b83e4b9009983adc28c233da3d600137366b131028cd80086",
+      "size_bytes": 321
+    },
+    {
+      "path": "cas/loop_e_repaired_receipt.json",
+      "sha256": "a3a2ce472be4a408090e01098c596d8a5463b850912e80e296ef695ac34435d9",
+      "size_bytes": 289
+    },
+    {
+      "path": "cas/xact_null_contraction.wl",
+      "sha256": "fcbc59d39df0568743865bc0afaccc998b6d25540af34dd04a366abfec1e3063",
+      "size_bytes": 1093
+    },
+    {
+      "path": "cas/xact_null_contraction_receipt.json",
+      "sha256": "6561f55370d758a142b3ad540469334da83f7174efd7f1a2f0b0df4738756d0f",
+      "size_bytes": 2021
+    },
+    {
+      "path": "cas/xact_null_contraction_pure.wl",
+      "sha256": "6c44a887558ceaa53ea07f489074dbafcb5bb5dcbe5c7570f1874862e5613625",
+      "size_bytes": 1119
+    },
+    {
+      "path": "cas/xact_null_contraction_pure_receipt.json",
+      "sha256": "ebd39378726eb5235d714aa6af269632f56f52c4a4225899b20289b1ca04b03a",
+      "size_bytes": 3727
+    },
+    {
+      "path": "cas/xact_gradient_square_repaired.wl",
+      "sha256": "8054a101fb343a51f45bb194bf109e58168517a5d32555ce274ccf2d2f2d156d",
+      "size_bytes": 1474
+    },
+    {
+      "path": "cas/xact_gradient_square_receipt.json",
+      "sha256": "ef4de032ee3aadba35da647a04d6e68b0ac29eed65db575afaa2882f2f0ac54c",
+      "size_bytes": 3658
+    },
+    {
+      "path": "cas/xact_gradient_square_repaired_receipt.json",
+      "sha256": "da07d89baba4398fb2b0b605365cd718cb1bac9f5cdfaff2758bb6c0711c9594",
+      "size_bytes": 3685
+    }
+  ],
+  "next_consuming_step": "Instantiate one named joint source-level physical response with common frames, calibration and finite remainder budget, retaining demonstrated kernels and cross-channel covariance."
+}

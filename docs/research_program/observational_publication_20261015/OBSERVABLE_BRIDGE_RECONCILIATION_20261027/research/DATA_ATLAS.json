@@ -1,0 +1,378 @@
+{
+  "schema_version": "htt.data-atlas-reconciliation.v1",
+  "date": "2026-10-27",
+  "scope": "bounded R2 R3 R5 source and mathematical audit",
+  "original42": {
+    "completed": 17,
+    "total": 42,
+    "changed": false
+  },
+  "source_search": {
+    "exa_used": true,
+    "scispace_used": true,
+    "primary_only_for_admitted_facts": true,
+    "large_data_downloaded": false,
+    "external_auth_bypass": false,
+    "author_messages_sent": false,
+    "native_solver_or_ode_executed": false
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "kind": "primary_paper",
+      "title": "Planck intermediate results LVII. Joint Planck LFI and HFI data processing",
+      "url": "https://www.aanda.org/articles/aa/pdf/2020/11/aa38073-20.pdf",
+      "arxiv": "2007.04997",
+      "sections": [
+        "4.1.5",
+        "4.3",
+        "5",
+        "Appendix A",
+        "Appendix I"
+      ],
+      "verified": "Exa full paper and official portal"
+    },
+    {
+      "id": "S2",
+      "kind": "official_release",
+      "url": "https://portal.nersc.gov/project/cmb/planck2020/",
+      "frequency_index": "https://portal.nersc.gov/cfs/cmb/planck2020/frequency_maps/",
+      "verified": "web open/click 2026-10-27",
+      "access": "some products public; complete NERSC release may require account; do not infer all simulation bytes public"
+    },
+    {
+      "id": "S3",
+      "kind": "primary_paper",
+      "url": "https://arxiv.org/html/2506.07786v2",
+      "title": "CMB line-of-sight integrators for nearly-isotropic cosmological models",
+      "version": "v2",
+      "version_date": "2026-02-13",
+      "verified": "full HTML sections III.3 and IV"
+    },
+    {
+      "id": "S4",
+      "kind": "author_code",
+      "url": "https://github.com/jgvicente/AniLoS/tree/9b7a2611882dcca80a1491bcad2b8f05635faca7",
+      "commit": "9b7a2611882dcca80a1491bcad2b8f05635faca7",
+      "file": "src/anilos/anilos.py",
+      "git_blob_sha1": "6347e3fc04ad1c06e19093dd28d5ecf8b18f2c31",
+      "verified": "GitHub commit and source fetch; no execution"
+    },
+    {
+      "id": "S5",
+      "kind": "primary_paper",
+      "url": "https://arxiv.org/abs/1701.00274",
+      "title": "Rethinking CMB foregrounds: systematic extension of foreground parameterizations",
+      "verified": "Exa search and arxiv page"
+    },
+    {
+      "id": "S6",
+      "kind": "primary_paper",
+      "url": "https://www.aanda.org/articles/aa/full_html/2023/01/aa43913-22/aa43913-22.html",
+      "doi": "10.1051/0004-6361/202243913",
+      "title": "High precision modeling of polarized signals: Moment expansion method generalized to spin-2 fields",
+      "verified": "Exa full-text sections 2 and 3; SciSpace discovery"
+    },
+    {
+      "id": "S7",
+      "kind": "primary_paper",
+      "url": "https://arxiv.org/abs/2411.11649",
+      "version": "v2",
+      "version_date": "2025-09-22",
+      "journal": "A&A 697 A212 (2025)",
+      "verified": "arxiv primary metadata; Exa fulltext; source extraction version/date mismatch not used for numerical findings"
+    },
+    {
+      "id": "S8",
+      "kind": "author_release",
+      "url": "https://github.com/PantheonPlusSH0ES/DataRelease/tree/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR",
+      "commit": "c447f0fea703fcd0fff57de5000947b5ca81286b",
+      "readme_filename": "README",
+      "readme_git_blob_sha1": "8d2d0b9af0633573b4d1c190e44adcd135bbec85",
+      "verified": "GitHub directory, commit and README fetch"
+    }
+  ],
+  "products": [
+    {
+      "id": "R36_PUBLIC_SN_DATA",
+      "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES.dat",
+      "release_commit": "c447f0fea703fcd0fff57de5000947b5ca81286b",
+      "git_blob_sha1": "cce857db0c15e9ce7a0e0ce77452b6ff62af969a",
+      "bytes": 579283,
+      "local_sha256": null,
+      "downloaded_here": false,
+      "cache_first": true,
+      "role": "standardized magnitude, coordinates, redshifts and flags"
+    },
+    {
+      "id": "R36_PUBLIC_SN_STAT_SYS_COV",
+      "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES_STAT%2BSYS.cov",
+      "release_commit": "c447f0fea703fcd0fff57de5000947b5ca81286b",
+      "git_blob_sha1": "d1a1498154e7ba826df14bdbef35ebcb7f5efba1",
+      "bytes": 33284960,
+      "local_sha256": null,
+      "downloaded_here": false,
+      "cache_first": true,
+      "role": "joint total covariance used exactly once"
+    }
+  ],
+  "minimal_SN_bytes": 33864243,
+  "items": [
+    {
+      "id": "R36_NPIPE_GENEALOGY",
+      "original_nodes": [
+        "L03"
+      ],
+      "status": "PARTIAL",
+      "closed_subproblem": "Published per-iteration construction starts with one parent CMB sky. Universal fixed-percentage difference-cross-full identity test disproved.",
+      "open_subproblem": "Exact public file-to-parent input ID/hash and complete joint processed products for selected realization IDs.",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "depends_on": [],
+      "execution_state": "READY_SOURCE_INTAKE",
+      "next_action": "Read existing PR4 receipts; validate one coherent triplet by parent identity and explicit transfer/noise model.",
+      "acceptance": [
+        "release/frequency/split/component/parent ID bound to SHA256",
+        "30 and 44 GHz recorded as temporal splits with possible correlated systematics",
+        "schema, units, ordering, spin sign, beam, mask and smoothing fixed",
+        "no equality-of-filenames or 1%-cross substitute for genealogy"
+      ],
+      "reject": [
+        "promoting a 030 triplet into a detector-set-independent joint CMB-clean null",
+        "claiming full public 600-realization availability from paper count"
+      ]
+    },
+    {
+      "id": "R36_PR4_PROCESSED_MORPHOLOGY",
+      "original_nodes": [
+        "L03",
+        "L04",
+        "L05",
+        "L06"
+      ],
+      "status": "PARTIAL",
+      "estimand": "PR4 conditional processed-sky morphology under a declared fixed-systematics/foreground model plus separately calibrated nuisance sensitivity",
+      "separate_from_original": true,
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "depends_on": [
+        "R36_NPIPE_GENEALOGY"
+      ],
+      "execution_state": "READY_INVENTORY",
+      "next_action": "Freeze processing recipe and qualify same-parent channel/split components, then process retained null skies and observation identically.",
+      "acceptance": [
+        "low-ell input/output response checked in coefficient space",
+        "adaptive selection and fitted weights reproduced per null realization",
+        "one parent sky counts once",
+        "training/calibration draws accounted separately",
+        "p=(1+exceedances)/(B+1) only under declared valid exchangeability",
+        "report fixed-foreground conditional scope"
+      ],
+      "B_if_all_eligible": 600,
+      "minimum_rank_p_if_all_eligible": 0.0016638935108153079,
+      "original_L03_satisfied": false
+    },
+    {
+      "id": "R36_EXTERNAL_BIANCHI_INTAKE",
+      "original_nodes": [
+        "B02",
+        "R23-ATLAS"
+      ],
+      "status": "PARTIAL",
+      "closed_subproblem": "Public producer scope and convention contract identified",
+      "open_subproblem": "Actual independently checked external all-m TEB product not acquired",
+      "sources": [
+        "S3",
+        "S4"
+      ],
+      "depends_on": [],
+      "execution_state": "READY_STATIC_CONVENTION_AUDIT_WAIT_EXTERNAL_PRODUCT",
+      "covered_subset": [
+        "regular vector iso/oct and regular tensor in VII_h",
+        "regular tensor IX with physical ell=abs(m)=2",
+        "V and VII_0 limiting cases with convergence explicitly verified"
+      ],
+      "excluded_from_claim": [
+        "irregular modes",
+        "generic Bianchi family",
+        "source-driven Bianchi I",
+        "nonlinear anisotropy"
+      ],
+      "next_action": "Validate any already-produced external templates; compute static rotation/reality/normalization checks. Do not run solver or ODE here.",
+      "required_fields": [
+        "code_pin",
+        "family",
+        "mode",
+        "helicity",
+        "IC",
+        "start_time",
+        "curvature",
+        "spiral_parameter",
+        "background_history_hash",
+        "recombination_visibility_history_hash",
+        "amplitude_definition",
+        "sigma_over_H_today_conversion",
+        "observer_frame",
+        "temperature_units",
+        "spin_phase_B_sign",
+        "Euler_convention",
+        "all_lm_TEB",
+        "beam_state",
+        "convergence_receipt",
+        "independent_reference",
+        "sha256",
+        "license"
+      ],
+      "acceptance": [
+        "complete slots with explicit physical zeros",
+        "reality and norm-preserving rotation",
+        "zero and linear amplitude tests",
+        "normalization and parity-sensitive comparison",
+        "comparison declared independent or merely internal convergence"
+      ],
+      "native_solver_authorized": false,
+      "original_B02_satisfied": false
+    },
+    {
+      "id": "R36_FOREGROUND_BOUNDED_MOMENTS",
+      "original_nodes": [
+        "L03",
+        "R31",
+        "R32-04",
+        "R32-09"
+      ],
+      "status": "PARTIAL",
+      "closed_subproblem": "Finite complex-moment Taylor remainder and ellipsoid support bounds derived with units; scalar net-amplitude bound disproved",
+      "open_subproblem": "Empirically justified moment/support/TV bounds in exact mask and operator",
+      "sources": [
+        "S5",
+        "S6",
+        "S7"
+      ],
+      "depends_on": [],
+      "execution_state": "READY_BANDPASS_AND_CALIBRATION_DESIGN",
+      "next_action": "Reuse exact passbands and quotient operator, form complex moment design and target-specific support curves; calibrate confidence set and remainder using actual frequency data law.",
+      "required_fields": [
+        "bandpass_hashes",
+        "parameter_coordinates_and_scaling",
+        "units",
+        "mask",
+        "harmonic_operator",
+        "fixed_or_adaptive_cleaning",
+        "spectral_support",
+        "total_variation_amplitude",
+        "third_derivative_bound",
+        "moment_metric",
+        "rho",
+        "joint_covariance",
+        "coverage_budget",
+        "calibration_data_identity"
+      ],
+      "acceptance": [
+        "polarization real/imag moments jointly retained",
+        "cross-moments and truncation remainder included",
+        "no data reuse counted twice in likelihood",
+        "finite support directions distinguished from unbounded directions",
+        "same metric and units as 0.379 microK comparison target"
+      ],
+      "bound": "epsilon3 <= A_TV*d^3*sup||K D^3 s||op/6",
+      "support": "rho*sqrt(v^T D2 H^-1 D2^T v)+epsilon3*||v||",
+      "no_empirical_radius_claimed": true
+    },
+    {
+      "id": "R36_PUBLIC_SN_OBSERVABLE",
+      "original_nodes": [
+        "H04",
+        "V04",
+        "R23-SN"
+      ],
+      "status": "CLOSED_ACQUISITION_LOCATION_ONLY",
+      "estimand": "released standardized-magnitude angular/depth residuals under released total covariance",
+      "separate_from_original": true,
+      "sources": [
+        "S8"
+      ],
+      "depends_on": [],
+      "execution_state": "READY_CACHE_OR_DOWNLOAD_THEN_ANALYZE",
+      "products": [
+        "R36_PUBLIC_SN_DATA",
+        "R36_PUBLIC_SN_STAT_SYS_COV"
+      ],
+      "next_action": "Read existing receipts or fetch pinned 33.9 MB files; validate schema; fit predeclared intercept-profiled angular/depth GLS and diagnostics.",
+      "acceptance": [
+        "1701 original rows and covariance N=1701",
+        "2893401 numeric covariance entries",
+        "same exact row ordering and subset indices",
+        "duplicate CID correlations preserved",
+        "finite retained values and symmetry/PSD/rank checked",
+        "profile global magnitude intercept for anisotropy-only lane",
+        "total covariance used once without re-adding existing PV errors",
+        "any redshift convention switch accompanied by correction/covariance contract",
+        "joint CF4 use checks object overlap and shared PV law"
+      ],
+      "required_columns": [
+        "CID",
+        "IDSURVEY",
+        "RA",
+        "DEC",
+        "zHD",
+        "zHDERR",
+        "zCMB",
+        "zCMBERR",
+        "zHEL",
+        "zHELERR",
+        "m_b_corr",
+        "IS_CALIBRATOR",
+        "USED_IN_SH0ES_HF",
+        "VPEC",
+        "VPECERR"
+      ],
+      "download_cap_bytes": null,
+      "reserve_bytes": 2147483648,
+      "original_nominal_SALT2_binding_satisfied": false
+    },
+    {
+      "id": "R36_NOMINAL_SALT2_BINDING",
+      "original_nodes": [
+        "R23-SN",
+        "H04",
+        "V04"
+      ],
+      "status": "OPEN",
+      "sources": [
+        "S8"
+      ],
+      "depends_on": [],
+      "execution_state": "WAIT_EXACT_NEW_RECEIPT_WITHOUT_BLOCKING_PUBLIC_SN_LANE",
+      "next_action": "Admit only a genuinely new receipt for nominal PS1.nml/training/error grids/FITRES generation identity; preserve prior search scope.",
+      "acceptance": [
+        "exact nominal pipeline inputs and generated observed row binding",
+        "derivative and frame/units contract",
+        "public README nominal wording alone not physical byte equivalence"
+      ],
+      "prohibited_claim": "universal public unavailability inferred from scoped negative search"
+    }
+  ],
+  "validation": {
+    "script": "validate_data_atlas_lemmas.py",
+    "receipt": "DATA_ATLAS_VALIDATION.json",
+    "checks": 4,
+    "scope": "two finite-dimensional algebra fixtures, no observations"
+  },
+  "publication_candidates": [
+    "operator-matched foreground identified-set support intervals",
+    "PR4 conditional low-ell morphology with complete selected null",
+    "public-SN apparent angular Hubble residuals with full release covariance"
+  ],
+  "not_claimed": [
+    "physical cosmic shear measurement",
+    "Bianchi type identification",
+    "full original L03 acceptance",
+    "nominal SALT2 processing derivative validation",
+    "new calibrated Planck anomaly p-value"
+  ]
+}

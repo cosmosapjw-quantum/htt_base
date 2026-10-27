@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-27",
+  "owner": "/root/external_physical_audit_20261027",
+  "scope": "R3/R5/R6 physical audit and constructive repair",
+  "skill_context_used": {
+    "package": "c38/physmath-research-loop",
+    "version": "1.3.0",
+    "read": [
+      "SKILL.md",
+      "references/THEORY_LOOP.md",
+      "references/POLICY_INTEGRATION.md"
+    ],
+    "selected_stages": [
+      "R3",
+      "R5",
+      "R6"
+    ],
+    "no_recursive_delegation": true,
+    "one_bounded_pass": true
+  },
+  "repo_source_label": "a55036ad09c53a9215dee3282e425d37cfb95443",
+  "live_remote_verification_owner": "/root",
+  "native_solver": false,
+  "ODE": false,
+  "new_observed_fit": false,
+  "original_acceptance_changed": false,
+  "verdict": "ADOPT_WITH_MATERIAL_PHYSICAL_CORRECTIONS",
+  "findings": [
+    {
+      "id": "PH-01",
+      "severity": "high",
+      "object": "N-001; K03/K05 closure",
+      "defect": "Universal no-sensitivity conclusion and mode-unqualified 1e-10 CMB shear bound",
+      "disposition": "Reject broad no-go; retain domain-specific power assessment",
+      "remaining": "Real source centroid/frame/covariance qualification"
+    },
+    {
+      "id": "PH-02",
+      "severity": "high",
+      "object": "mu=-H P S n and T04 validation",
+      "defect": "Missing endpoint/history contribution; norm-only test does not check sign",
+      "disposition": "Replace by first-order Bianchi-I two-time PM response",
+      "remaining": "Source distances/history and applicability to actual centroids"
+    },
+    {
+      "id": "PH-03",
+      "severity": "high",
+      "object": "N-003 dust interpretation",
+      "defect": "Correct geodesic-dust statement extended to arbitrary smoothing and all boosted finite-depth dipoles",
+      "disposition": "Separate A, observer expansion dipole, and finite-z residual; bind frame-corrected optical chart",
+      "remaining": "Actual source optical mean law"
+    },
+    {
+      "id": "PH-04",
+      "severity": "medium",
+      "object": "Mock covariance as universal prerequisite",
+      "defect": "Blocks conditional exact-operator covariance derivation",
+      "disposition": "Analytic stipulated-law covariance lane ready; empirical selection gate preserved",
+      "remaining": "Validate physical source law"
+    },
+    {
+      "id": "PH-05",
+      "severity": "medium",
+      "object": "T12 claim in prose",
+      "defect": "No T12 source/result receipt in attached ZIP; finite designs do not exhaust LambdaCDM",
+      "disposition": "Separate root replay pending; narrow interpretation even if reproduced",
+      "remaining": "Independent replay owned by root covariance lane"
+    },
+    {
+      "id": "PH-06",
+      "severity": "medium",
+      "object": "Hard individual speed pass/kill thresholds",
+      "defect": "Observer and bulk components not separately identified at leading order; comparison CF4 data overlap",
+      "disposition": "Use identifiable combinations and source-overlap covariance",
+      "remaining": "Independent frame input for separated speeds"
+    }
+  ],
+  "derived_results": [
+    {
+      "id": "PM-HISTORY",
+      "formula": "A_PM(z)=2c(B_o-B_s)/(a_o chi_so)-dot B_o; mu=P A_PM n",
+      "domain": "Homogeneous fixed-axis weak Bianchi I, first order, comoving emitter/observer, nonrotating observer tetrad, chi=c integral dt/a",
+      "units": "B dimensionless; chi length; A_PM and mu inverse proper time",
+      "status": "LITERATURE_SUPPORTED_AND_CONVENTION_TRANSLATED"
+    },
+    {
+      "id": "PM-RMS",
+      "formula": "mean_sphere |P A n|^2=||A||_F^2/5 for STF A",
+      "status": "DERIVED"
+    },
+    {
+      "id": "PM-LOCAL",
+      "formula": "A_PM->sigma_o as source distance->0; mu->+P sigma_o n",
+      "status": "DERIVED_AND_SYMBOLICALLY_CHECKED"
+    },
+    {
+      "id": "PM-REMAINDER",
+      "formula": "||A_PM-sigma_o||<=2|c Delta t/D-1| ||sigma_o||+c L_sigma Delta t^2/D",
+      "domain": "D>0 and ||dot sigma||<=L_sigma on interval",
+      "status": "DERIVED"
+    },
+    {
+      "id": "PM-HISTORY-DISCRIMINATOR",
+      "formula": "delta B=eps tau(1-tau)T leaves endpoints unchanged, delta A_PM=eps T/Delta t",
+      "status": "DERIVED_AND_STATICALLY_CHECKED",
+      "interpretation": "Kinematic histories only; no claimed Einstein-source solution"
+    },
+    {
+      "id": "OPTICAL-BOOST",
+      "formula": "d_boost=-2(I+S)beta+O(beta^2); beta=-0.5 inverse(I+S) d_boost+O(beta^2)",
+      "domain": "Matter dust; observer beta=v/c; qualified physical expansion slope chart; I+S invertible",
+      "status": "LITERATURE_SUPPORTED_AND_DERIVED"
+    },
+    {
+      "id": "BOOST-BULK-QUOTIENT",
+      "formula": "design [K,-K] annihilates (a,a); only relative vector identified",
+      "status": "DERIVED"
+    },
+    {
+      "id": "COVARIANCE-COMPRESSION",
+      "formula": "Vtheta=K(N+R Psi R^T)K^T; if Psi=B B^T, PV part=sum (K R b_alpha)(K R b_alpha)^T",
+      "status": "DERIVED",
+      "consumer": "root covariance replay implementation"
+    }
+  ],
+  "executed_checks": {
+    "wolfram_clean_input": "With[{rvec={Exp[hx t] x,Exp[hy t] y,Exp[hz t] z}},FullSimplify[D[rvec/Sqrt[rvec.rvec],t]-(IdentityMatrix[3]-Outer[Times,rvec,rvec]/(rvec.rvec)).DiagonalMatrix[{hx,hy,hz}].rvec/Sqrt[rvec.rvec],Assumptions->Element[{t,hx,hy,hz,x,y,z},Reals]&&x^2+y^2+z^2>0]]",
+    "wolfram_clean_output": "Out[1]= {0, 0, 0}",
+    "wolfram_time_constraint_seconds": 20,
+    "wolfram_initial_attempt": "Returned zeros with Symbol::undefined2 warning about assigned H; retained as warning, then a materially changed With expression produced clean zeros",
+    "python_command_summary": "Inline NumPy exact affine-normalization finite difference, algebraic endpoint-preserving polynomial history, near-source order and SciPy F quantile; exit 0",
+    "affine_derivative_error": 8.138146499744369e-12,
+    "wrong_sign_error": 0.0899999999978553,
+    "endpoint_delta_B_norm": 0.0,
+    "endpoint_preserving_history_pm_rms": 2.2360679774997898e-05,
+    "history_example_units": "arbitrary consistent time units; eps=1e-4, Delta t=2, ||T||F=1; not observed data",
+    "near_source_error_ratios": [
+      1.9999999999999905,
+      1.9999999999999805
+    ],
+    "N64_inverse_covariance_corrections": {
+      "p12": 0.7936507936507936,
+      "p36": 0.4126984126984127
+    },
+    "N64_p36_known_null_mean_independent_gaussian_T95": 148.77378895559423,
+    "finite_N_scope": "Known null mean, independent Gaussian test vector, unbiased covariance from N independent Gaussian mocks; not automatically applicable to fitted/selected H03 test"
+  },
+  "literature": [
+    {
+      "id": "L1",
+      "url": "https://arxiv.org/pdf/2010.06534",
+      "title": "Multipole decomposition of the general luminosity distance Hubble law",
+      "version": "v2",
+      "location": "eq4.1 and section5 eq5.1-5.7",
+      "used_for": "Same-congruence acceleration/shear law; separate observer boost"
+    },
+    {
+      "id": "L2",
+      "url": "https://arxiv.org/html/2312.09875v3",
+      "title": "Covariant cosmography: the observer-dependence of the Hubble parameter",
+      "location": "sections3.1 and4.2; eq70",
+      "used_for": "Boosted physical Hubble dipole and spurious octupole from uncorrected luminosity-distance slope"
+    },
+    {
+      "id": "L3",
+      "url": "https://arxiv.org/pdf/1805.12121",
+      "title": "Direction and redshift drifts for general observers and their applications in cosmology",
+      "version": "v1 PDF actually retrieved",
+      "location": "eq5.13 and5.18; section5.4",
+      "used_for": "Full two-time first-order Bianchi-I direction drift; distinction early/late anisotropy"
+    },
+    {
+      "id": "L4",
+      "url": "https://arxiv.org/abs/1605.07178",
+      "title": "How isotropic is the Universe?",
+      "version": "v2 abstract",
+      "used_for": "Vector4.7e-11 and regular tensor1e-6 mode-specific present shear bounds"
+    },
+    {
+      "id": "L5",
+      "url": "https://arxiv.org/abs/0905.4853",
+      "title": "Cosmic Parallax as a probe of late time anisotropic expansion",
+      "version": "v2 abstract",
+      "used_for": "Late anisotropic histories distinct from early-time CMB-mode bounds"
+    },
+    {
+      "id": "L6",
+      "url": "https://academic.oup.com/mnrasl/article/442/1/L66/955473",
+      "title": "The Hubble expansion is isotropic in the epoch of dark energy",
+      "used_for": "Direction toward faster expansion; actual 7percent bound is finite, not absent information"
+    },
+    {
+      "id": "L7",
+      "url": "https://arxiv.org/abs/astro-ph/0608064",
+      "title": "Why your model parameter confidences might be too optimistic",
+      "used_for": "Finite-mock inverse covariance bias"
+    },
+    {
+      "id": "L8",
+      "url": "https://arxiv.org/abs/1511.05969",
+      "title": "Parameter inference with estimated covariance matrices",
+      "used_for": "Covariance-marginalized likelihood beyond inverse-bias correction"
+    }
+  ],
+  "connector_use": {
+    "scispace": "Executed primary-paper discovery; discarded unrelated speculative result",
+    "exa": "Executed primary optical-law discovery",
+    "wolfram": "Actual clean symbolic check executed",
+    "web": "Primary full texts/formula locations checked"
+  },
+  "contract_changes": [
+    {
+      "node_family": "K03/K05",
+      "do": "Create conditional PM history/information product; keep original source gates",
+      "do_not": "Close input HOLD with universal no-sensitivity claim"
+    },
+    {
+      "node_family": "H02/H04/H05/H06",
+      "do": "Allow exact-operator analytic covariance under declared law; compare mocks later",
+      "do_not": "Treat survey-mismatched mocks as empirical CF4 coverage"
+    },
+    {
+      "node_family": "K04/V04/P6",
+      "do": "Require frame-aware optical chart; estimate d_effective before A or beta",
+      "do_not": "Interpret raw magnitude octupole as acceleration without transfer"
+    }
+  ],
+  "source_identities": [
+    {
+      "path": "external/htt_obs_bridge_run/RESEARCH_RUN_REPORT.md",
+      "sha256": "41553ef01cf82c2e9ce9ab66270719bdc71befec4d0d606e4e680f46cae76485",
+      "bytes": 28068
+    },
+    {
+      "path": "external/htt_obs_bridge_run/review/DECISION_GATE.md",
+      "sha256": "fd469040573487496d21c73401e92dc599a891919324d687931a0cbb027207fb",
+      "bytes": 16474
+    },
+    {
+      "path": "external/htt_obs_bridge_run/review/ADVERSARIAL_REVIEW.md",
+      "sha256": "15aff8dbafc0e9b30a668aa679648dbe998bc46861aae14f44e0e7e32e1336c0",
+      "bytes": 12645
+    },
+    {
+      "path": "external/htt_obs_bridge_run/state/NEGATIVE_RESULTS.md",
+      "sha256": "9466f5feebb05ad327d7057a7da8f708eada9b35cde8ffe54b2dfd118c058f39",
+      "bytes": 4750
+    },
+    {
+      "path": "external/htt_obs_bridge_run/validation/validate_bridges.py",
+      "sha256": "95bf46456afc7cfebf7637cf7d6e86a0519b73dbd625817d8118ecdd12f3201d",
+      "bytes": 12935
+    },
+    {
+      "path": "external/htt_obs_bridge_run/validation/results.json",
+      "sha256": "b40c420d695952239013dc15640e9ff3e60e82b7bb4e0792a8e8880732b709e3",
+      "bytes": 4670
+    },
+    {
+      "path": "external/htt_obs_bridge_run/validation/t11_h03_tomography.py",
+      "sha256": "9a2c89fb78a06c829dfb41c926f80b637e8845d0472337d21aa79b3952ff4e6f",
+      "bytes": 3926
+    },
+    {
+      "path": "baseline/AGENTS.md",
+      "sha256": "4758f47bbb6df57af8522de2333d166dcc047b7ae778abf4b0ff66e0cc6fb1e1",
+      "bytes": 27122
+    },
+    {
+      "path": "baseline/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/POST_PUBLICATION_CHECKPOINT_20261026/README.md",
+      "sha256": "33d771dbe8897e592177617cd46d411d5fcd0a37864b84fe071df5a2d23baa3c",
+      "bytes": 10776
+    }
+  ],
+  "report_sha256": "a14d9e399d8abd9ef33beeecb14c701f506edddc3c96c6bbd64a7df56b8b9cfe"
+}

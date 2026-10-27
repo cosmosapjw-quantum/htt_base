@@ -1,0 +1,313 @@
+{
+  "schema": "htt.scoped_independent_review/1",
+  "date_utc": "2026-10-27",
+  "reviewer": "/root/reconciliation_final_review",
+  "runtime": {
+    "requested_model": "inherited native default",
+    "requested_effort": "inherited native default",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "tool_runtime_python": "3.12.14"
+  },
+  "independence": "Reviewer did not author or edit candidate. Only final_review/REPORT.md and REVIEW.json written. Author fixed reported findings.",
+  "scope": [
+    "Full REPORT and listed reconciliation contracts",
+    "Covariance code/tests and saved H03 replay",
+    "Physical/claim interfaces and double-counting safeguards",
+    "Original gate preservation and feasible non-replay progress",
+    "Existing-session handoff; controller/DAG detailed audit owned by separate lane"
+  ],
+  "verdict": "PASS_SCOPED_AFTER_TARGETED_REPAIRS",
+  "findings": [
+    {
+      "id": "FINAL-01",
+      "severity": "medium",
+      "kind": "executable_tests",
+      "status": "closed",
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/test_covariance_bridge.py",
+      "finding": "Argument-taking top-level test_* helpers were collected as pytest tests and required nonexistent case/C fixtures. Initial actual-path run produced 13 passes and 2 setup errors.",
+      "initial_sha256": "f5379632d358f1306598b01bccacd4032a5a70e06f9b13ef2d90d3054630ac02",
+      "repair": "Top-level helper names changed to _check_*; eight unittest test methods retained.",
+      "verification": "Current candidate pytest: 8 passed, 10 subtests passed. unittest discovery: Ran 8 tests, OK."
+    },
+    {
+      "id": "FINAL-02",
+      "severity": "medium",
+      "kind": "physical_units",
+      "status": "closed",
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/REPORT.md",
+      "finding": "Section 6 called I physical bolometric intensity while rho=integral I and q=cJ require energy density per solid angle. This could cause a factor-c error when consuming radiance.",
+      "repair": "Explicit I in J m^-3 sr^-1 and I=c^-1 integral spectral radiance restored from imported CONVENTIONS.md.",
+      "verification": "Inspected current Section 6 defining sentence and source convention; Eq12 now has an explicit dimensional contract."
+    },
+    {
+      "id": "FINAL-03",
+      "severity": "medium",
+      "kind": "claim_gate_clarity",
+      "status": "closed",
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/REPORT.md",
+      "finding": "Section 7.3 described physical CMB family identification as an external-transfer problem, weaker than the original native-atlas gate. Frontier did not share this ambiguity.",
+      "repair": "Original native-atlas, null, mask, covariance and family-equivalence requirements now explicit; external products limited to separately declared transfer-conditional compatibility.",
+      "verification": "Inspected final paragraph against baseline AGENTS scientific boundaries and R36-09/R36-10 acceptance."
+    }
+  ],
+  "open_findings": [],
+  "fatal_blockers": [],
+  "checks": [
+    {
+      "id": "C01",
+      "command": "python -m pytest -q docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/test_covariance_bridge.py",
+      "cwd": "/workspace/scratch/ef61c9590364/HTT_RECONCILIATION_20261027/patch",
+      "exit_code": 0,
+      "result": "8 passed, 10 subtests passed in 0.80s",
+      "scope": "Current candidate in final repository-relative directory layout."
+    },
+    {
+      "id": "C02",
+      "command": "python -m unittest discover -s docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance -p 'test_covariance_bridge.py'",
+      "cwd": "/workspace/scratch/ef61c9590364/HTT_RECONCILIATION_20261027/patch",
+      "exit_code": 0,
+      "result": "Ran 8 tests in 0.012s; OK",
+      "scope": "Exact unittest-discovery form advertised in handoff; system Python substituted for offline host .venv."
+    },
+    {
+      "id": "C03",
+      "procedure": "Import current replay_h03.run; consume pinned baseline H03_SOURCE_TOMOGRAPHY.json; compare every returned scientific field against saved H03_REPLAY.json, excluding runtime metadata only.",
+      "exit_code": 0,
+      "all_scientific_fields_exact_match": true,
+      "source_sha256": "96513c4dbd1f64da7ecef0696bfe43b53ddaac7d8c0d1e438c9c448442fb66b9",
+      "statistics": [
+        79.98701269130599,
+        94.59831674657413,
+        23.396720522667163,
+        39.46067258444064,
+        22.668786318594577,
+        15.31600239641715
+      ],
+      "bulk_speed_km_s": 294.950637356504,
+      "delta_method_working_std_km_s": 19.441891818104015
+    },
+    {
+      "id": "C04",
+      "procedure": "Read bytes and verify sha256/size of all current EVIDENCE_MANIFEST and IMPORT_MANIFEST entries against patch, falling back to pinned baseline when absent from patch.",
+      "exit_code": 0,
+      "evidence_files_verified": 156,
+      "import_files_verified": 120,
+      "missing_or_mismatched": []
+    },
+    {
+      "id": "C05",
+      "procedure": "Compare each BLOCKER_MATRIX retained_requirement_verbatim to pinned POST_PUBLICATION_CHECKPOINT_20261026/README.md; compare original PUBLICATION_DAG object fields.",
+      "exit_code": 0,
+      "verbatim_blockers_matched": 29,
+      "unchanged_fields": [
+        "papers",
+        "nodes",
+        "policy",
+        "source_lock",
+        "planned_pr_cards",
+        "publication_output_route_20261025"
+      ],
+      "original_acceptance_promotion_found": false
+    },
+    {
+      "id": "C06",
+      "procedure": "Independent finite transcription check: 20 random STF2/STF3 cases, explicit symmetrization and trace removal; compare L_S^*L_S with Eq8 and orthogonal-residual identity Eq9. NumPy RNG seed 20261027.",
+      "exit_code": 0,
+      "max_M_residual": 2.6645352591003757e-15,
+      "max_joint_identity_residual": 7.105427357601002e-15,
+      "shared_0_8_0_8_budget_score": 1.131370849898476
+    },
+    {
+      "id": "C07",
+      "procedure": "Independent nearby-source PM check: central difference of normalized r+t sigma r at dt=1e-6 after C06 draws; compare positive projected shear response.",
+      "exit_code": 0,
+      "derivative_error": 5.060451087300814e-11,
+      "opposite_sign_error": 4.1276349109386725
+    },
+    {
+      "id": "C08",
+      "procedure": "Inspect all REPORT sections and 11 primary-reference links, source-record routes, internal convention and four retained independent-review scopes. Local report image resolves. Literature proofs were reused rather than wholly rerun.",
+      "result": "No remaining source attribution or conditional/observed-result conflation found in scope; Marcori title correction is present."
+    }
+  ],
+  "scientific_disposition": {
+    "new_observed_fit": false,
+    "original_external_output_acceptance": "17/42 unchanged",
+    "analytic_V03_alternate": "18/42 separate",
+    "native_solver_or_ODE_executed": false,
+    "new_conditional_tasks": 11,
+    "new_root_candidates": 9,
+    "novelty": "Conditional application/method comparison remains to be demonstrated; no first-in-literature or new-observation certification."
+  },
+  "limitations": [
+    "No fresh observational catalogue fit, empirical covariance validation or processed-Planck null.",
+    "No complete reproving of four earlier reviewed source packages; reused their explicit scope and retained identities.",
+    "No local desktop/runtime activation or observation; system Python validates command shape, not offline .venv availability.",
+    "No independent PDF layout review in this lane; current Markdown scientific text reviewed, PDF is regenerated by author after repairs.",
+    "Detailed controller, preflight and DAG execution semantics audited by separate harness lane; this verdict does not substitute for that receipt.",
+    "Scientific source-law, history, selection, calibration and native-atlas gates remain attached to their original consumers."
+  ],
+  "candidate_identities": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/REPORT.md",
+      "sha256": "2bcb41c75d8fe69bf546c4785a1357de1b8f281df49276388d2cb181fa021d03",
+      "bytes": 29475
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json",
+      "sha256": "38a239d203c6431a281264cd8ad40cd448b5b068d154fdab70270bf009eb29cd",
+      "bytes": 46502
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/RUN_CONTRACT.json",
+      "sha256": "d6c9941d58f1964d5869cd2e3ba4e5f2281bfa5a7ad340b547f64f6e130869c4",
+      "bytes": 1625
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/BLOCKER_MATRIX.json",
+      "sha256": "77a497b835348df6a2362ce172ab4d8047dedaff1a434e107da6ab7fd030fa6f",
+      "bytes": 22804
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/PR_DELTA.md",
+      "sha256": "2ade45d39d45f06933eca01f74c3083073318e576e43c2d7a33b0454125a1549",
+      "bytes": 2578
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/HANDOFF_CURRENT_SESSION.md",
+      "sha256": "8855de7612bb0cbdda4cd86d9744389ad5b577b0b8e5afcb319699604cd7106d",
+      "bytes": 11006
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json",
+      "sha256": "123a040ba2835e11cace5c46c391894eed9796448022ff035058bc5503e772ed",
+      "bytes": 43216
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/IMPORT_MANIFEST.json",
+      "sha256": "56072c7a42def39e485d8500f631dbece6b9d77381f17682de0fb5ac2b37507d",
+      "bytes": 46161
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/PHYSICAL_AUDIT.json",
+      "sha256": "ce0bf44f53393cf1d5a90fc39beb0818b681e6e9c81ea5952bdfb07d0a961e65",
+      "bytes": 11724
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/PHYSICAL_AUDIT.md",
+      "sha256": "a14d9e399d8abd9ef33beeecb14c701f506edddc3c96c6bbd64a7df56b8b9cfe",
+      "bytes": 16812
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/INTERNAL_INTEGRATION.json",
+      "sha256": "5c7aa5bbc6c5011bb9b4234064d92642c51c108d629dea4387ba90868165c88a",
+      "bytes": 23014
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/INTERNAL_INTEGRATION.md",
+      "sha256": "a7a7b14eca4dab0d7b43172d12ee31256def334122a3ed91f1d26b01a2392c63",
+      "bytes": 23622
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/DATA_ATLAS_VALIDATION.json",
+      "sha256": "584fa67f0a546f54b3208b90ea556dc4622d67eb0e8e8ba3279d15a40961aa3d",
+      "bytes": 663
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/validate_data_atlas_lemmas.py",
+      "sha256": "e26db11d15306475aca79df5429e12645a330ab35bd749946c61791f23a5016b",
+      "bytes": 2327
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/covariance_bridge.py",
+      "sha256": "e21fde04538579aade36023b55800ac95547b576af14e24bf7f4fd002f574753",
+      "bytes": 6923
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/test_covariance_bridge.py",
+      "sha256": "1662aff1a7f0e361d8680aa617755c4912fe1b44081ee14b660c5aeba578b626",
+      "bytes": 4925
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/replay_h03.py",
+      "sha256": "ee136c16da2bcffa6fa49a8a2b9889d0ad325bb0fff91c17739709cec19a7644",
+      "bytes": 6511
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/H03_REPLAY.json",
+      "sha256": "48c8f25e679d30073591af843a752ecba3d6a3eb62cda9d88cff4510e83b1f07",
+      "bytes": 20735
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/INPUT_CONTRACT.json",
+      "sha256": "cbcb3cbeac8fd4d5ea303940a8a97525b146fd8b3fd09040ae2bfd9f1ca9206f",
+      "bytes": 2988
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/VALIDATION.json",
+      "sha256": "39934d1f151c8a5f969a802b18553b5689fa7558914fe52f0a3111b547ed9863",
+      "bytes": 2860
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/README.md",
+      "sha256": "3748710a51d241ac8ba39ab7b87d7a856714592efb2ca67e9ce23560a24c1e1f",
+      "bytes": 8938
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/INDEPENDENT_REVIEW.json",
+      "sha256": "638c7799941cd397f0b467d1a129f68ee90be42f4dc839b182b2b0e2f08bd95f",
+      "bytes": 15527
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/INDEPENDENT_EXTENSION_REVIEW.json",
+      "sha256": "954745e1e4b778613f11039cc00ec2c16305461ab3ce1ff6a6c8bc2c9a55bf2c",
+      "bytes": 14057
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/REVIEW.json",
+      "sha256": "275d15520e90eb99dcb7ff44e0e2a906cfcbb7ec34cbb8864651b5468569c690",
+      "bytes": 8359
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/APPLICATION_REVIEW.json",
+      "sha256": "ddac1c58b340aab42d82091dc4150fa61697704f6ac7352ae2c88294ec8af07b",
+      "bytes": 8930
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/CONVENTIONS.md",
+      "sha256": "5e620a08e27a51b097ea8a3e16ea4e7950e4838d3cece5a80f65970df67cbf69",
+      "bytes": 10022
+    },
+    {
+      "path": "AGENTS.md",
+      "snapshot": "baseline",
+      "sha256": "4758f47bbb6df57af8522de2333d166dcc047b7ae778abf4b0ff66e0cc6fb1e1",
+      "bytes": 27122
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+      "snapshot": "baseline",
+      "sha256": "8b5f94a3df589c894b9fc17b051a2eddc787b46e1624152301d0db90e6d8262f",
+      "bytes": 65882
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+      "snapshot": "patch",
+      "sha256": "e9690277a9d4319945022edde4e33e99ce543af9fd46fd03dd1319b35632a21a",
+      "bytes": 66706
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/sources/H03_SOURCE_TOMOGRAPHY.json",
+      "snapshot": "baseline",
+      "sha256": "96513c4dbd1f64da7ecef0696bfe43b53ddaac7d8c0d1e438c9c448442fb66b9",
+      "bytes": 111343
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/POST_PUBLICATION_CHECKPOINT_20261026/README.md",
+      "snapshot": "baseline",
+      "sha256": "33d771dbe8897e592177617cd46d411d5fcd0a37864b84fe071df5a2d23baa3c",
+      "bytes": 10776
+    }
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "date_utc": "2026-10-26",
+  "review_id": "HTT_COSMO_TEFF_REFOCUS_20261026_APPLICATION_DELTA",
+  "reviewer": "/root/internal_five_loop_review_20261026",
+  "verdict": "PASS_SCOPED_AFTER_TARGETED_REPAIR",
+  "open_findings": [],
+  "fatal_blockers": [],
+  "scope": {
+    "reviewed": [
+      "research/HUBBLE_PROTOCOL.md",
+      "research/HUBBLE_PROTOCOL.json",
+      "research/PLANCK_EXAMPLE.md",
+      "research/PLANCK_EXAMPLE.json",
+      "research/APPLICATION_BRIDGE.md",
+      "cas/planck_hubble_controls.py",
+      "cas/planck_hubble_results.json"
+    ],
+    "synthesis_scope": "APPLICATION_BRIDGE consistency skim only",
+    "closed_radiation_note_reopened": false,
+    "raw_Planck_extraction_rerun": false,
+    "dynamical_solver_or_ODE": false,
+    "nested_agents": false,
+    "broad_search": false,
+    "publication_or_push": false,
+    "reviewer_edits": [
+      "research/APPLICATION_REVIEW.md",
+      "research/APPLICATION_REVIEW.json"
+    ]
+  },
+  "findings": [
+    {
+      "id": "APP-01",
+      "severity": "low",
+      "status": "closed",
+      "location": "PLANCK_EXAMPLE.md opening",
+      "finding": "Opening denied a new null simulation despite the added fresh ideal Gaussian Monte Carlo.",
+      "minimum_repair": "Separate source-number verification and fresh ideal benchmark from a processed-Planck null simulation.",
+      "verification": "Revised opening and final benchmark paragraph inspected; historical percentile remains unverified and new reference law remains explicit."
+    }
+  ],
+  "proof_checks": [
+    {
+      "id": "UNCERTAIN_S",
+      "result": "PASS",
+      "claim": "||L_deltaS||op<=sqrt(3/5)eS",
+      "basis": "L_T*L_T=||T||F^2 I/3+2T^2/5; STF3x3 operator norm squared<=2||T||F^2/3.",
+      "sharpness": "Attained by T=diag(-1,-1,2)/sqrt(6), largest lift singular value0.7745966692414835."
+    },
+    {
+      "id": "HUBBLE_JOINT",
+      "result": "PASS",
+      "claim": "H10 is the exact orthogonal decomposition of the common residual; component tests are only necessary.",
+      "profile": "H11 convex quadratic profile is a valid conservative test for the enlarged ball, with positivity/Dmax and original joint correlations retained for the physical feasible region."
+    },
+    {
+      "id": "REDSHIFT_ORDER",
+      "result": "PASS",
+      "claim": "Distance O(z^2) generally gives magnitude O(z) after division by the leading distance; O(z^2) magnitude requires subtraction/cancellation."
+    },
+    {
+      "id": "HUBBLE_PHYSICAL_BINDING",
+      "result": "PASS",
+      "claim": "d=-A/(cH) is same-congruence acceleration, S=sigma/H is directional-slope shear, Q_mu differs by -kappa and a nonlinear remainder; all octupole budget terms have magnitude units."
+    },
+    {
+      "id": "IDEAL_U",
+      "result": "PASS_CONDITIONAL",
+      "claim": "For simple Q and isotropic conditional Gaussian STF3 O, U=3sqrt3 abs(z1 z2 z3), z uniform S6.",
+      "basis": "Contraction singular values and quadrupole Vandermonde cancel in fixed-Q sharp-envelope ratio; four remaining coordinates span kernel.",
+      "domain": [
+        "Q nonzero with simple spectrum",
+        "O positive norm, almost surely under stated Gaussian",
+        "Frobenius-orthonormal coefficients with conditional equal variance"
+      ],
+      "moment_law": "E U^s=(3sqrt3)^s Gamma(7/2) Gamma((1+s)/2)^3/[Gamma(7/2+3s/2) Gamma(1/2)^3], s>-1",
+      "mean_exact": "15sqrt3/(64pi)",
+      "second_exact": "3/77"
+    },
+    {
+      "id": "PINNED_PLANCK",
+      "result": "PASS_SOURCE_BINDING_ONLY",
+      "claim": "Saved source supports P/32/0/FULL values, cached comparator, carrier units, sign-certificate counts and distinct family-statistic ranks.",
+      "limitations": "Original map/pseudoalm extraction and historical U-null receipt not reconstructed; snapshot label is retained provenance, not a new git checkout validation."
+    },
+    {
+      "id": "INTERPRETATION",
+      "result": "PASS",
+      "claim": "Polarization E morphology is not converted to positive intensity; sign robustness is not parity-violation significance; new MC is not a processed-Planck probability or a recovered historical run."
+    }
+  ],
+  "executions": {
+    "method": "Numerical source portion reexecuted in memory before figure/result writes; actual saved results compared. Additional direct moment and sharpness checks.",
+    "saved_result_match": true,
+    "ideal_null": {
+      "model": "Independent full-sky isotropic Gaussian STF2 and STF3; conditional on a nondegenerate quadrupole; no Planck processing/noise/selection simulation.",
+      "U_law": "3 sqrt(3) abs(z1 z2 z3), z uniform on S^6",
+      "seed": 20261026,
+      "sample_size": 1048576,
+      "threshold_pinned_primary_rounded": 0.1197448,
+      "count_leq": 662397,
+      "cdf": 0.6317110061645508,
+      "cdf_MC_binomial_95_interval": [
+        0.63078695394418,
+        0.6326343307835368
+      ],
+      "upper_tail": 0.3682889938354492,
+      "mean_estimate": 0.12916766184475767,
+      "mean_exact": 0.1292177098644825,
+      "second_moment_estimate": 0.03894416412868046,
+      "second_moment_exact": 0.03896103896103896
+    },
+    "hubble_joint_control": {
+      "scope": "Fixed S, direct d_obs=0, e_d=0, declared total octupole radius B; algebraic counterexample to treating two marginal tests as sufficient.",
+      "S": [
+        [
+          0.02,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.005,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -0.025
+        ]
+      ],
+      "B": 0.0001,
+      "smin": 0.018973665961010272,
+      "dipole_separate_ratio": 0.8000000000000003,
+      "orthogonal_separate_ratio": 0.8,
+      "joint_ratio": 1.1313708498984762,
+      "orthogonal_identity_absolute_residual": 4.963083675318166e-24,
+      "false_pass_of_both_separate_tests": true
+    },
+    "uncertain_S_attained_constant": 0.7745966692414835,
+    "uncertain_S_claimed_constant": 0.7745966692414834,
+    "rounded_E": 0.8081410859025434,
+    "rounded_absC_over_E": 0.11974480902913767
+  },
+  "historical_U_cdf": {
+    "status": "UNVERIFIED",
+    "new_benchmark_does_not_restore_historical_provenance": true
+  },
+  "source_attribution": {
+    "source_snapshot_label": "a55036ad09c53a9215dee3282e425d37cfb95443",
+    "retained_calculation_pin_from_S1_footnote": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+    "source_checks": "S1 sections4.1-4.3 and AppendixB plus R32-01 equations22,26,30-32,35 and response context; source text/hashes, not raw-data reproduction."
+  },
+  "limitations": [
+    "No processed-Planck null or instrumental/foreground calibration",
+    "Monte Carlo interval is simulation error only",
+    "No historical U-CDF receipt recovered",
+    "No observational coverage or power demonstration",
+    "No matter-shear/vorticity/Bianchi inference from E morphology",
+    "Hubble compatibility does not uniquely identify coupling as cause",
+    "General positive-ed trust-region fit was derived, not numerically executed",
+    "No broad novelty certification"
+  ],
+  "candidate_identities": [
+    {
+      "path": "research/HUBBLE_PROTOCOL.md",
+      "size_bytes": 8173,
+      "sha256": "5a5663e1baa96f31527663e1fd248b36bb2b4d32d77e8a984d7460ea46602142"
+    },
+    {
+      "path": "research/HUBBLE_PROTOCOL.json",
+      "size_bytes": 5313,
+      "sha256": "092f2c1a90c67e2bae1cd85a7e14759012e1ab4e08bb36b62602d4f0a64343a7"
+    },
+    {
+      "path": "research/PLANCK_EXAMPLE.md",
+      "size_bytes": 9419,
+      "sha256": "f92f096a49b48c40049bd0e002acd53f3b8d5d025acbb32b2e4ddd2b27d5047f"
+    },
+    {
+      "path": "research/PLANCK_EXAMPLE.json",
+      "size_bytes": 6631,
+      "sha256": "9e7c8785b9ef90c3647ef86e6a69aba5f3009cd2e4640d3ef5758582dbf2912b"
+    },
+    {
+      "path": "research/APPLICATION_BRIDGE.md",
+      "size_bytes": 7809,
+      "sha256": "14611203fd3945ece6f290ca4ec1624d2d98420338dc12f3a532781d1df18b1e"
+    },
+    {
+      "path": "cas/planck_hubble_controls.py",
+      "size_bytes": 4133,
+      "sha256": "a7e73ba72cbe87aba630029f46f45c43458dbcd3af00f1f96053368d423ff554"
+    },
+    {
+      "path": "cas/planck_hubble_results.json",
+      "size_bytes": 1378,
+      "sha256": "bf9d778f4afefed23c3b09ac45c76cd3639fbfef06faddc86c0ef2aa245e06cb"
+    }
+  ],
+  "local_source_identities": [
+    {
+      "path": "HTT_INTERNAL_THEORY_20261026/sources/repo/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/baseline/output/HTT_research_compact_en.md",
+      "size_bytes": 147641,
+      "sha256": "cfc6fc2b0cb4538ae84b93dd669cb4bbbd15932281d340a25e0dcfed04f920c0"
+    },
+    {
+      "path": "HTT_INTERNAL_THEORY_20261026/sources/repo/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-01-QO-METHODS/science/MANUSCRIPT.md",
+      "size_bytes": 26924,
+      "sha256": "de41872977f19f5040dc21a6bda9c3b7a84d4f05ed837c53f3b539b5b0353ac0"
+    }
+  ]
+}

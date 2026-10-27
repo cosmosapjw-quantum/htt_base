@@ -126,6 +126,34 @@
       ],
       "purpose": "Explicit semantic intake; no byte cap. Full size/hash unknown; RING; CMB frame/Q/U and full processing not yet qualified. Never add CMB/residual without ordering reconciliation. Not an independent sky or PR3 replacement.",
       "full_expected_bytes": null
+    },
+    {
+      "id": "R36_PUBLIC_SN_DATA",
+      "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES.dat",
+      "path": "bridge20261027/pantheon/Pantheon+SH0ES.dat",
+      "format": "text",
+      "expected_bytes": 579283,
+      "max_bytes": null,
+      "auto_fetch": false,
+      "node_ids": [
+        "R36-08-PUBLIC-SN"
+      ],
+      "git_blob_sha1": "cce857db0c15e9ce7a0e0ce77452b6ff62af969a",
+      "purpose": "Explicit public-observable alternate lane; reuse exact cached release first. After fetch verify git blob SHA1 and SHA256, N=1701 row/covariance binding, fields/units/frame and total-covariance ownership. Does not satisfy nominal SALT2 training parity."
+    },
+    {
+      "id": "R36_PUBLIC_SN_STAT_SYS_COV",
+      "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/Pantheon%2BSH0ES_STAT%2BSYS.cov",
+      "path": "bridge20261027/pantheon/Pantheon+SH0ES_STAT+SYS.cov",
+      "format": "text",
+      "expected_bytes": 33284960,
+      "max_bytes": null,
+      "auto_fetch": false,
+      "node_ids": [
+        "R36-08-PUBLIC-SN"
+      ],
+      "git_blob_sha1": "d1a1498154e7ba826df14bdbef35ebcb7f5efba1",
+      "purpose": "Explicit public-observable alternate lane; reuse exact cached release first. After fetch verify git blob SHA1 and SHA256, N=1701 row/covariance binding, fields/units/frame and total-covariance ownership. Does not satisfy nominal SALT2 training parity."
     }
   ],
   "default_expected_bytes_if_absent": 6293723,
@@ -141,5 +169,15 @@
     "expanded_max_bytes": null,
     "owner_direction": "2026-10-20: external drive has over 2 TB free; remove download caps. This is not a 2 TB cap.",
     "space_policy": "Verify actual external-drive mount and free space before acquisition; keep disk reserve and check free space during streaming. Expected sizes/hashes are identity checks, not quotas."
+  },
+  "observable_bridge_addition_20261027": {
+    "selected_ids": [
+      "R36_PUBLIC_SN_DATA",
+      "R36_PUBLIC_SN_STAT_SYS_COV"
+    ],
+    "expected_combined_bytes": 33864243,
+    "byte_cap": null,
+    "cache_first": true,
+    "semantic_contract": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/DATA_ATLAS.json"
   }
 }

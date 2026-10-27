@@ -1,0 +1,41 @@
+{
+  "schema": "htt.observable_bridge_run/1",
+  "base_commit": "a55036ad09c53a9215dee3282e425d37cfb95443",
+  "original_acceptance": {
+    "external_output": 17,
+    "analytic_V03_alternate": 18,
+    "total": 42,
+    "changed": false
+  },
+  "retained_publication_companions": {
+    "completed": 9,
+    "total": 9,
+    "source": "docs/codex_handoff/pr_status.yaml at a55036ad09c53a9215dee3282e425d37cfb95443"
+  },
+  "new_tasks": 11,
+  "root_tasks": [
+    "R36-01-CF4-OPERATOR",
+    "R36-03-PM-HISTORY",
+    "R36-04-OPTICAL-JOINT",
+    "R36-05-RADIATION-RESPONSE",
+    "R36-06-PR4-MORPHOLOGY",
+    "R36-07-FOREGROUND-BUDGET",
+    "R36-08-PUBLIC-SN",
+    "R36-09-ATLAS-INTAKE",
+    "R36-10-GEOMETRY-IMAGE"
+  ],
+  "runtime_state": "NOT_OBSERVED_DEVICE_OFFLINE",
+  "state_initialization": "FORBIDDEN",
+  "native_solver": false,
+  "ODE_evolution": false,
+  "automatic_downloads": {
+    "authorized": true,
+    "authentication": "public no-auth only",
+    "byte_cap": null,
+    "reserve_gib": 2,
+    "cache_first": true
+  },
+  "progress_rule": "Run next/spawn/ack/raw-result/independent-review/record/next until no executable selected work remains; a worker return is not a campaign boundary. Preserve active packets, one-use runs, historical budgets and unknowns.",
+  "blocker_rule": "A physical admission gate constrains its claim, not unrelated mathematical or conditional products. No manufactured qualified product.",
+  "escalation": "Use existing native_routing/controller profiles and actual host dispatch; preserve existing reservations and ultra usage. Record unavailable profiles as unavailable; do not simulate a spawn."
+}

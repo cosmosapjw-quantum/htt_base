@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-26",
+  "owner": "dipole_loop_20261026",
+  "scope": "R3 claim-premise alignment and R4 candidate construction only; compact corrective note; no full loop, push, solver or previous-source edits.",
+  "four_axes": [
+    "symmetry_or_gauge_and_degrees_of_freedom",
+    "invariants",
+    "observables",
+    "physical_quantities"
+  ],
+  "transformations": [
+    {
+      "name": "SO3 sky rotations",
+      "axis1": "Passive common triad relabelling; generic STF2+STF3 orbit removes three of twelve real coordinate components.",
+      "axis2": "Powers, traces, mixed contractions and SO3 chirality.",
+      "axis3": "Realized c_lm, masks and external reference axes transform jointly.",
+      "axis4": "Stress and shear both rotate tensorially but are different fields."
+    },
+    {
+      "name": "Lorentz observer change",
+      "axis1": "Physical change of measuring observer, three local boost parameters; not fixed-observer coordinate redundancy.",
+      "axis2": "Scalar occupation at same phase-space point and covariant complete contractions, not generic sky powers.",
+      "axis3": "Energy/direction/spectrum/multipoles transform together.",
+      "axis4": "Observer-resolved rho,q,pi mix; energy, matter and statistical-isotropy frames differ."
+    },
+    {
+      "name": "Spacetime diffeomorphism",
+      "axis1": "Coordinate relabelling and perturbative background/slicing conventions distinguished.",
+      "axis2": "Scalars at same event and relational observables with proper identification.",
+      "axis3": "Frequency ratios, angles and light-cone distance data tied to source/observer worldlines.",
+      "axis4": "Stress-energy, velocity-gradient and curvature tensors require physical linking equations."
+    },
+    {
+      "name": "Statistical nuisance",
+      "axis1": "Uncertain calibration/systematics/competing responses; not automatically a physical gauge.",
+      "axis2": "Only explicitly constructed estimable functions survive a stated nuisance image.",
+      "axis3": "Calibrated maps, coefficient estimator, joint covariance and selection support.",
+      "axis4": "Uncertainty or loss of identification of physical parameters, not removal of physical degrees of freedom."
+    }
+  ],
+  "notation": {
+    "c_lm": "User C_lm realized sky coefficients; distinguish ensemble C_l.",
+    "J": "Kernel-defined kinetic moment. Adopted Lewis-Challinor hierarchy K_nl=E v^(l+2n), v=cq/E; rho=J0,qphysical=cJ_a0,pi=J_ab0,P=J1/3.",
+    "Q": "Premise-anchor convex-body gauge or named response score, distinct from spacetime gauge and temperature quadrupole Q_T.",
+    "Pi": "Named law-based exceedance, distinct from stress pi_ab."
+  },
+  "diagnostics": {
+    "x": "Named scalarization/functional array; legacy xC signed comparator under sector conventions.",
+    "Fcert": "xC/Uceiling under sign-clean certified-ceiling hypotheses; ceiling utilization.",
+    "Fsup": "Set-support or signed pointwise directional support utilization; exact namespace, direction and positive denominator required.",
+    "Fnu": "nu(B intersection D)/nu(D), requires finite positive measured domain and physical interpretation of nu.",
+    "Q": "Premise-anchor gauge/margin or named response score with its domain.",
+    "Pi": "Probability of named event under declared joint law, or a nuisance envelope.",
+    "GF": "Depth-window/transport/coherence functional with cross-window covariance."
+  },
+  "candidate": {
+    "target": "Observer-qualified joint confidence constraint for local CMB radiation anisotropic stress A_pi(U)=||pi(U)||F/rho_gamma(U).",
+    "symmetry": "SO3 common representation redundancy only.",
+    "invariant": "A_pi is rotationally invariant and generally observer dependent.",
+    "observable": "Multichannel maps and realized c_lm under joint calibration/noise law.",
+    "physical_quantity": "Photon anisotropic stress at specified event and observer; no automatic shear or curvature assignment.",
+    "construction": "Push one joint confidence region for map/spectrum, observer velocity and nuisance through kinetic moment map, preserving common-state coverage.",
+    "exact_controls": [
+      "0<=A_pi<=sqrt(2/3) for positive brightness",
+      "Pure boost of isotropic radiation: A_pi=4sqrt(2/3) beta²/(3+beta²)",
+      "Nonthermal states with same directional energy have identical stress."
+    ],
+    "novelty_hypothesis": "Calibrated physical stress constraint with nonlinear temperature conversion, observer response and missing-information control; standard confidence-set mapping and thermal Gaunt products are not new.",
+    "decisive_test": "Joint coverage on injected skies against linear quadrupole-to-stress conversion at identical mask/bandpass/observer/covariance inputs; pure-boost and equal-directional-energy nonthermal controls.",
+    "shear_extension_requires": "Independent temporal/spatial radiation transport residual and joint uncertainty under specified congruence/transport assumptions."
+  },
+  "primary_precedents": [
+    {
+      "id": "MGE1999",
+      "url": "https://arxiv.org/abs/astro-ph/9808163",
+      "role": "Established nonlinear radiation moments and shear transport; source-matched prior LoopA evidence reused."
+    },
+    {
+      "id": "BENABED2009",
+      "url": "https://doi.org/10.1111/j.1365-2966.2009.15202.x",
+      "role": "Low-ell CMB likelihood and conditional ideal full-sky power-spectrum sufficiency.",
+      "read_status": "Primary search excerpts, including displayed likelihood sufficiency discussion; new search1."
+    },
+    {
+      "id": "SAADEH2016",
+      "url": "https://arxiv.org/abs/1605.07178",
+      "role": "Actual cosmological shear constraints from temperature/polarization anisotropic templates and model likelihood.",
+      "read_status": "Original abstract and primary methods excerpts; new search2; no reported numerical result imported."
+    }
+  ],
+  "sources_reused": [
+    "HTT_TEFF_V15_EXTENSION_20261026/sources/paper_I",
+    "HTT_TEFF_V15_EXTENSION_20261026/sources/paper_II",
+    "HTT_INTERNAL_THEORY_20261026/research/SYNTHESIS.md",
+    "HTT_INTERNAL_THEORY_20261026/research/LOOP_A_LOWELL.md",
+    "HTT_INTERNAL_THEORY_20261026/research/LOOP_B_DIPOLE.md",
+    "HTT_INTERNAL_THEORY_20261026/research/LEGACY_COVERAGE.md diagnostic namespaces",
+    "HTT_INTERNAL_THEORY_20261026/text/20-report-1-.txt §§23.1–23.4"
+  ],
+  "new_primary_search_count": 2,
+  "status": "complete_selected_R3_R4",
+  "next_action": "Parent integrate four-axis correction; instantiate candidate likelihood/injection comparison if separately authorized."
+}

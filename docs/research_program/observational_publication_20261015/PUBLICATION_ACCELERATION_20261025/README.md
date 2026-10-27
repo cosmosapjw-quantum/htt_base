@@ -69,3 +69,9 @@ The retained [88-page report](https://chatgpt.com/library?file_id=libfile_118673
 Use [HANDOFF_CURRENT_SESSION.md](HANDOFF_CURRENT_SESSION.md). Static preflight is read-only; runtime append is performed once by the existing host after its current checkpoint. This push records source delivery, not observed local activation. `STATE.json`, active workers, attempts, review authors, R9/one-use constraints and consumed ultra budgets stay with the existing session.
 
 No large acquisition is needed for the first seven candidates. If a later task needs new open data, reuse receipts/cache first and verify release/schema/units/frame. Preserve the existing no-download-cap preference and streaming free-space checks with the default 2 GiB reserve; keep data outside Git. Authentication walls or author requests remain branch-specific input issues.
+
+
+
+## Observable-bridge continuation, 27 October 2026
+
+All nine R32 outputs are completed in the current PR ledger. [The reconciliation report](../OBSERVABLE_BRIDGE_RECONCILIATION_20261027/REPORT.md) integrates the recovered internal research, corrects the external audit and supplies a new source-bound frontier. Use [the current-session handoff](../OBSERVABLE_BRIDGE_RECONCILIATION_20261027/HANDOFF_CURRENT_SESSION.md); retain historical counts and original scientific contracts.

@@ -1,0 +1,87 @@
+{
+  "schema": "htt.bounded_validation.v1",
+  "date": "2026-10-27",
+  "skill_context_used": [
+    "PhysMath Research Loop 1.3.0",
+    "CODING_LOOP C2-C8",
+    "POLICY_INTEGRATION",
+    "htt-scientific-code-validation",
+    "htt-local-global-discrimination"
+  ],
+  "executions": [
+    {
+      "command": "python -m pytest -q test_covariance_bridge.py",
+      "exit_code": 1,
+      "classification": "RUNTIME_DEPENDENCY_UNAVAILABLE",
+      "error": "No module named pytest",
+      "repair": "Rewrote harness using standard-library unittest; unchanged scientific assertions"
+    },
+    {
+      "command": "python test_covariance_bridge.py",
+      "exit_code": 0,
+      "unittest_methods": 8,
+      "result": "OK",
+      "scope": "finite synthetic algebraic/implementation checks"
+    },
+    {
+      "command": "python replay_h03.py --source ../../baseline/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/sources/H03_SOURCE_TOMOGRAPHY.json",
+      "exit_code": 0,
+      "result": "six reference fits and overlap diagnostics generated"
+    }
+  ],
+  "figure_visual_inspection": "performed; both panels readable",
+  "evidence_status": {
+    "GLS_and_covariance_formulae": "ESTABLISHED_LINEAR_ALGEBRA",
+    "implementation": "IMPLEMENTATION_VERIFIED_SCOPED",
+    "T12_numbers": "NUMERICALLY_REPRODUCED",
+    "physical_empirical_covariance": "UNRESOLVED"
+  },
+  "source_result_scope": "saved observed summary with inherited assumed covariance, no new catalogue fit",
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "identities": [
+    {
+      "path": "covariance_bridge.py",
+      "bytes": 6923,
+      "sha256": "e21fde04538579aade36023b55800ac95547b576af14e24bf7f4fd002f574753"
+    },
+    {
+      "path": "test_covariance_bridge.py",
+      "bytes": 4897,
+      "sha256": "f5379632d358f1306598b01bccacd4032a5a70e06f9b13ef2d90d3054630ac02"
+    },
+    {
+      "path": "replay_h03.py",
+      "bytes": 6511,
+      "sha256": "ee136c16da2bcffa6fa49a8a2b9889d0ad325bb0fff91c17739709cec19a7644"
+    },
+    {
+      "path": "H03_REPLAY.json",
+      "bytes": 20735,
+      "sha256": "48c8f25e679d30073591af843a752ecba3d6a3eb62cda9d88cff4510e83b1f07"
+    },
+    {
+      "path": "INPUT_CONTRACT.json",
+      "bytes": 2988,
+      "sha256": "cbcb3cbeac8fd4d5ea303940a8a97525b146fd8b3fd09040ae2bfd9f1ca9206f"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8938,
+      "sha256": "3748710a51d241ac8ba39ab7b87d7a856714592efb2ca67e9ce23560a24c1e1f"
+    },
+    {
+      "path": "h03_covariance_frontier.png",
+      "bytes": 142719,
+      "sha256": "fd71ad4a41a8916e5d38696b49f473a4236a70bec38253802d4d63a3bf0c0381"
+    },
+    {
+      "path": "h03_covariance_frontier.pdf",
+      "bytes": 22104,
+      "sha256": "f22ba3fe466d18dda2de765923362c765e186e2566bdc8f9ea94e5d00cd8d909"
+    }
+  ]
+}

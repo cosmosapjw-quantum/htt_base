@@ -1,0 +1,565 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-27",
+  "owner": "/root/internal_integration_20261027",
+  "scope": "R2_R3_R9_SOURCE_INTEGRATION",
+  "skill_context_used": {
+    "package": "c38/physmath-research-loop",
+    "version": "1.3.0",
+    "read": [
+      "SKILL.md",
+      "references/THEORY_LOOP.md",
+      "references/POLICY_INTEGRATION.md"
+    ],
+    "selected_stages": [
+      "R2",
+      "R3",
+      "R9"
+    ],
+    "recursive_delegation": false
+  },
+  "source_snapshot_label": "a55036ad09c53a9215dee3282e425d37cfb95443",
+  "original_acceptances_changed": false,
+  "remote_mutation": false,
+  "new_physics_execution": false,
+  "source_identities": [
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/research/V15_INTEGRATION.md",
+      "size_bytes": 9898,
+      "sha256": "527437b2e958528f5d0591e32e501639960efc4e1ad3621ea1af3b95b39506d9"
+    },
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/research/PAPER_I_REUSE.md",
+      "size_bytes": 23767,
+      "sha256": "ee6e8fba9ae7dce9353c3e92d3b32aa96c28973f854fb2717e56aa2e9015719b"
+    },
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/research/PAPER_II_REUSE.md",
+      "size_bytes": 19074,
+      "sha256": "afdcec9c945bd970cd741c47fd0dc35b9ee16204fde9a42d70e0475b27a058cd"
+    },
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/research/ENTROPIC_SHEAR_BRIDGE.md",
+      "size_bytes": 17041,
+      "sha256": "8edd9d7ecba6808d23911bdfd80f506b6633c4edc71039ff02f535c525f48930"
+    },
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/research/RESPONSE_FRONTIER.md",
+      "size_bytes": 11501,
+      "sha256": "270bd95bb7f2355294a22aaf03fc8b5ca004e34a00e813fc9e71ebe6f8c98a59"
+    },
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/prior_baseline/research/SYNTHESIS.md",
+      "size_bytes": 11251,
+      "sha256": "7106fddfa0b2c13aa08020d377a89733a0ea8f8662d931e1fc522d7dc480eeb4"
+    },
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/prior_baseline/research/LOOP_A_LOWELL.md",
+      "size_bytes": 17906,
+      "sha256": "f1f91ce863e21403157e8aa2e1e4b84bdcce7f3ba507b712a10cc893ea2a5c1a"
+    },
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/prior_baseline/research/LOOP_B_DIPOLE.md",
+      "size_bytes": 22496,
+      "sha256": "0fa7afe8d449d1ed6e6e1964198e464e8675cabeb0b5027f1c7616c2e76cb625"
+    },
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/prior_baseline/research/LOOP_C_KINEMATICS.md",
+      "size_bytes": 18384,
+      "sha256": "8ce4e984582959ba7401d3fe58ce5aa404ef7869ff2cfb3981bc5c80cd78f72d"
+    },
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/prior_baseline/research/LOOP_D_BIANCHI.md",
+      "size_bytes": 17711,
+      "sha256": "29deff7762b9fcecb877faf5f05abb0bc1f4682fb16a053521b2c0d3ce7cbae9"
+    },
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/prior_baseline/research/LOOP_E_HUBBLE.md",
+      "size_bytes": 13604,
+      "sha256": "b0cc8eca8b6db3980997788be98121c791db331cb85d54e805d69b3e73878cf4"
+    },
+    {
+      "path": "internal/HTT_COSMO_TEFF_REFOCUS_20261026/research/COSMOLOGICAL_CONSTRAINT.md",
+      "size_bytes": 15635,
+      "sha256": "de8bccc5aac9c4720034d10d164ce96af1eaaff596b9e6fd65367a0acf912615"
+    },
+    {
+      "path": "internal/HTT_COSMO_TEFF_REFOCUS_20261026/research/APPLICATION_BRIDGE.md",
+      "size_bytes": 7809,
+      "sha256": "14611203fd3945ece6f290ca4ec1624d2d98420338dc12f3a532781d1df18b1e"
+    },
+    {
+      "path": "internal/HTT_COSMO_TEFF_REFOCUS_20261026/research/FOUR_AXES.md",
+      "size_bytes": 12227,
+      "sha256": "76f6fe30f61da5930f215c94097e126e9912a617c5ed16772db4cb085d1d03b5"
+    },
+    {
+      "path": "internal/HTT_COSMO_TEFF_REFOCUS_20261026/research/CONVENTIONS.md",
+      "size_bytes": 10022,
+      "sha256": "5e620a08e27a51b097ea8a3e16ea4e7950e4838d3cece5a80f65970df67cbf69"
+    },
+    {
+      "path": "internal/HTT_COSMO_TEFF_REFOCUS_20261026/research/HUBBLE_PROTOCOL.md",
+      "size_bytes": 8173,
+      "sha256": "5a5663e1baa96f31527663e1fd248b36bb2b4d32d77e8a984d7460ea46602142"
+    },
+    {
+      "path": "internal/HTT_COSMO_TEFF_REFOCUS_20261026/research/PLANCK_EXAMPLE.md",
+      "size_bytes": 9419,
+      "sha256": "f92f096a49b48c40049bd0e002acd53f3b8d5d025acbb32b2e4ddd2b27d5047f"
+    },
+    {
+      "path": "external/htt_obs_bridge_run/RESEARCH_RUN_REPORT.md",
+      "size_bytes": 28068,
+      "sha256": "41553ef01cf82c2e9ce9ab66270719bdc71befec4d0d606e4e680f46cae76485"
+    }
+  ],
+  "review_reuse": [
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/research/INDEPENDENT_EXTENSION_REVIEW.json",
+      "verdict_recorded": "PASS_SCOPED_AFTER_TARGETED_REPAIRS",
+      "open_findings_recorded": [],
+      "current_identity_match_count": 24,
+      "current_missing": [
+        "sources/LITERATURE_BEAM_COMPARISON.json",
+        "sources/LITERATURE_FETCH_FURUTA.json",
+        "sources/LITERATURE_FETCH_LAM.json"
+      ],
+      "current_mismatch": [],
+      "new_scientific_review": false
+    },
+    {
+      "path": "internal/HTT_TEFF_V15_EXTENSION_20261026/prior_baseline/research/INDEPENDENT_REVIEW.json",
+      "verdict_recorded": "PASS_SCOPED_AFTER_TARGETED_REPAIRS",
+      "open_findings_recorded": [],
+      "current_identity_match_count": 31,
+      "current_missing": [],
+      "current_mismatch": [],
+      "new_scientific_review": false
+    },
+    {
+      "path": "internal/HTT_COSMO_TEFF_REFOCUS_20261026/research/REVIEW.json",
+      "verdict_recorded": "PASS_SCOPED_AFTER_TARGETED_REPAIRS",
+      "open_findings_recorded": [],
+      "current_identity_match_count": 9,
+      "current_missing": [],
+      "current_mismatch": [],
+      "new_scientific_review": false
+    },
+    {
+      "path": "internal/HTT_COSMO_TEFF_REFOCUS_20261026/research/APPLICATION_REVIEW.json",
+      "verdict_recorded": "PASS_SCOPED_AFTER_TARGETED_REPAIR",
+      "open_findings_recorded": [],
+      "current_identity_match_count": 7,
+      "current_missing": [],
+      "current_mismatch": [],
+      "new_scientific_review": false
+    }
+  ],
+  "result_crosswalk": [
+    {
+      "id": "INT-R01",
+      "title": "Positive radiative shear operator",
+      "source_unit": "Loop A",
+      "evidence_status": "DERIVED_NUMERICALLY_CHECKED",
+      "application_inputs": "5x5 response from bolometric moments 0,2,4; inverse additionally needs transport residual",
+      "original_nodes_informed": "S02/S04,K04",
+      "consumer_product": "R32-05-P6-OPTICAL",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    },
+    {
+      "id": "INT-R02",
+      "title": "Intrinsic radiation dipole closure",
+      "source_unit": "Loop B",
+      "evidence_status": "DERIVED_SYMBOLICALLY_CHECKED",
+      "application_inputs": "Independent velocity response or intrinsic quadrupole envelope; not global matter tilt",
+      "original_nodes_informed": "V03/V04",
+      "consumer_product": "R32-06-P4-DESIGN",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    },
+    {
+      "id": "INT-R03",
+      "title": "Common-congruence radial/transverse inverse",
+      "source_unit": "Loop C",
+      "evidence_status": "DERIVED_SYMBOLICALLY_AND_FINITE_DESIGN_CHECKED",
+      "application_inputs": "Same source congruence, clock, calibrated frame spin, distance remainder and joint law",
+      "original_nodes_informed": "K03/K04/K05/K06",
+      "consumer_product": "R32-05-P6-OPTICAL",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    },
+    {
+      "id": "INT-R04",
+      "title": "Spatial Ricci and geometry-compatible initial-data image",
+      "source_unit": "Loop D",
+      "evidence_status": "DERIVED_EXACT_FINITE_CHECKED",
+      "application_inputs": "Same-frame curvature-sensitive input for observational application; no photon atlas needed for algebra",
+      "original_nodes_informed": "B02/B03",
+      "consumer_product": "R32-07-P5-ALGEBRA",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    },
+    {
+      "id": "INT-R05",
+      "title": "Finite-distance optical jets and curvature-history combination",
+      "source_unit": "Loop E",
+      "evidence_status": "DERIVED_SYMBOLICALLY_CHECKED",
+      "application_inputs": "Joint distance coefficients and finite remainder; cubic coefficient measures J not separate curvature",
+      "original_nodes_informed": "H04/K04/V04",
+      "consumer_product": "R32-05-P6-OPTICAL",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    },
+    {
+      "id": "INT-R06",
+      "title": "Entropy-to-shear conditioning certificate",
+      "source_unit": "Paper I reuse",
+      "evidence_status": "DERIVED_NUMERICALLY_CHECKED",
+      "application_inputs": "Physical brightness entropy deficit; sufficient threshold may fail while actual operator remains invertible",
+      "original_nodes_informed": "S02/S04",
+      "consumer_product": "R32-04-BANDPASS-BOUNDS",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    },
+    {
+      "id": "INT-R07",
+      "title": "Exact response preservation at energy rank four",
+      "source_unit": "Entropic shear bridge",
+      "evidence_status": "DERIVED_IMPLEMENTATION_VERIFIED_STATIC_TOY",
+      "application_inputs": "Matched energy moments 0,2,4; finite fit mismatch measured directly",
+      "original_nodes_informed": "S02/S04",
+      "consumer_product": "R32-04-BANDPASS-BOUNDS",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    },
+    {
+      "id": "INT-R08",
+      "title": "Number-energy Doppler quotient and beam bias",
+      "source_unit": "Paper II reuse",
+      "evidence_status": "DERIVED_NUMERICALLY_CHECKED",
+      "application_inputs": "Independent number/energy information; common positive energy-independent beam for range theorem",
+      "original_nodes_informed": "V04",
+      "consumer_product": "R32-09-BANDPASS-PAPER",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    },
+    {
+      "id": "INT-R09",
+      "title": "Calibrated detector entropy frontier",
+      "source_unit": "Response frontier",
+      "evidence_status": "DERIVED_IMPLEMENTATION_VERIFIED_STATIC_TOY",
+      "application_inputs": "Real bounded kernel and physically supplied entropy/tail budget; finite-amplitude branch exists",
+      "original_nodes_informed": "S04/L03",
+      "consumer_product": "R32-09-BANDPASS-PAPER",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    },
+    {
+      "id": "INT-R10",
+      "title": "Exact finite-boost radiation-stress null and scalar",
+      "source_unit": "Cosmological constraint",
+      "evidence_status": "DERIVED_NUMERICALLY_CHECKED",
+      "application_inputs": "Calibrated intensity moments with joint law; positive moment cone and timelike rest branch",
+      "original_nodes_informed": "V04",
+      "consumer_product": "NEW_RADIATION_STRESS_METHODS",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    },
+    {
+      "id": "INT-R11",
+      "title": "Planck morphology and deterministic sign stability",
+      "source_unit": "Planck example",
+      "evidence_status": "REUSED_MEASURED_SUMMARY_SOURCE_VERIFIED",
+      "application_inputs": "Pinned primary row, correlated processing carriers; radius not instrumental error",
+      "original_nodes_informed": "L03/L04",
+      "consumer_product": "R32-01-QO-METHODS",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    },
+    {
+      "id": "INT-R12",
+      "title": "Conditional ideal Gaussian utilization law",
+      "source_unit": "Planck example",
+      "evidence_status": "DERIVED_NUMERICALLY_CHECKED",
+      "application_inputs": "Simple quadrupole and independent isotropic Gaussian STF3; ideal not processed Planck null",
+      "original_nodes_informed": "L04",
+      "consumer_product": "R32-01-QO-METHODS",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    },
+    {
+      "id": "INT-R13",
+      "title": "One shared Hubble dipole/octupole error budget",
+      "source_unit": "Hubble protocol",
+      "evidence_status": "DERIVED_NUMERICALLY_CHECKED",
+      "application_inputs": "Same normalized physical d,S, uncertainty of S, direct dipole and finite-z terms jointly",
+      "original_nodes_informed": "H04/K04",
+      "consumer_product": "R32-05-P6-OPTICAL",
+      "original_acceptance_effect": "NONE",
+      "fresh_observational_fit": false
+    }
+  ],
+  "task_contracts": [
+    {
+      "id": "INT-STRESS",
+      "title": "Joint radiation-rest stress constraint",
+      "inputs": [
+        "INT-R10",
+        "intensity or energy-temperature input operator",
+        "joint flux/stress calibration and spectral-completion law"
+      ],
+      "outputs": [
+        "moment-cone constrained D/A_gamma image",
+        "common-input comparison with linear temperature-quadrupole estimator"
+      ],
+      "acceptance": [
+        "pure boosts map to D=0",
+        "A_gamma invariant across tetrads on unique timelike branch",
+        "retain f-P cross covariance",
+        "coverage and constraint-width compared on common inputs"
+      ],
+      "stop_condition": "Static comparator is deliverable; empirical interval remains pending until calibrated input exists",
+      "depends_on": [],
+      "execution_readiness": "STATIC_METHOD_READY_EMPIRICAL_INPUT_PENDING",
+      "claim_gate": "Do not label toy residual an observed anisotropy or matter shear",
+      "original_acceptance_effect": "NONE_WITHOUT_ORIGINAL_NODE_EVIDENCE",
+      "native_solver": false,
+      "ODE_evolution": false,
+      "owning_runtime": "local Codex after canonical DAG mapping"
+    },
+    {
+      "id": "INT-HUBBLE-JOINT",
+      "title": "Shared-budget optical coupling test",
+      "inputs": [
+        "INT-R13",
+        "declared physical d,S and same-frame O_mu",
+        "joint coefficient/error region"
+      ],
+      "outputs": [
+        "profiled joint compatibility score",
+        "uncertain-S and finite-z budgets",
+        "S=0 direct-set branch"
+      ],
+      "acceptance": [
+        "counterexample 0.8/0.8 produces joint >1",
+        "orthogonal residual identity holds",
+        "no independent double use of B",
+        "distance O(z^2) maps to magnitude O(z) unless subtraction specified"
+      ],
+      "stop_condition": "Finish finite implementation and documented conditional test; do not wait for unrelated atlas",
+      "depends_on": [],
+      "execution_readiness": "METHOD_READY",
+      "claim_gate": "Catalogue acceleration attribution needs its own response; dust sets A=0",
+      "original_acceptance_effect": "NONE_WITHOUT_ORIGINAL_NODE_EVIDENCE",
+      "native_solver": false,
+      "ODE_evolution": false,
+      "owning_runtime": "local Codex after canonical DAG mapping"
+    },
+    {
+      "id": "INT-RESPONSE-SPAN",
+      "title": "Response-preserving energy-moment compression",
+      "inputs": [
+        "INT-R01",
+        "INT-R06",
+        "INT-R07",
+        "declared brightness moments"
+      ],
+      "outputs": [
+        "5x5 operator and spectrum",
+        "fit-mismatch certificate",
+        "optional conditional shear error"
+      ],
+      "acceptance": [
+        "0/2/4 exact moment matching preserves operator",
+        "positive entropy at L=4 does not block operator completion",
+        "failed entropy sufficient bound falls back to spectrum",
+        "R absent returns operator rather than invented shear"
+      ],
+      "stop_condition": "Complete operator product independently; actual shear awaits R and its error only",
+      "depends_on": [],
+      "execution_readiness": "METHOD_READY",
+      "claim_gate": "No shear value from instantaneous brightness alone",
+      "original_acceptance_effect": "NONE_WITHOUT_ORIGINAL_NODE_EVIDENCE",
+      "native_solver": false,
+      "ODE_evolution": false,
+      "owning_runtime": "local Codex after canonical DAG mapping"
+    },
+    {
+      "id": "INT-PLANCK-CALIBRATION",
+      "title": "Measured morphology with explicitly separated nulls",
+      "inputs": [
+        "INT-R11",
+        "INT-R12",
+        "qualified release-matched processing ensemble when available"
+      ],
+      "outputs": [
+        "retained measured table",
+        "ideal reference law",
+        "separate PR4 processed-null result"
+      ],
+      "acceptance": [
+        "preserve primary vs cached row",
+        "one simulation sky is one null unit",
+        "apply fixed scan rule within each sky",
+        "state deterministic radius separately from covariance",
+        "PR4 result never marks PR3 genealogy complete"
+      ],
+      "stop_condition": "Ideal method/table can finish now; processed percentile requires qualified ensemble",
+      "depends_on": [],
+      "execution_readiness": "IDEAL_REFERENCE_READY_RELEASE_BRANCH_INPUT_PENDING",
+      "claim_gate": "No parity violation or anomaly significance from sign alone",
+      "original_acceptance_effect": "NONE_WITHOUT_ORIGINAL_NODE_EVIDENCE",
+      "native_solver": false,
+      "ODE_evolution": false,
+      "owning_runtime": "local Codex after canonical DAG mapping"
+    },
+    {
+      "id": "INT-DIPOLE-CHANNELS",
+      "title": "Typed dipole responses and independent-channel design",
+      "inputs": [
+        "INT-R02",
+        "INT-R08",
+        "catalogue-specific boost/bulk/acceleration models"
+      ],
+      "outputs": [
+        "distinct parameter registry",
+        "nuisance-projected response ranks",
+        "conditional intrinsic-dipole bounds"
+      ],
+      "acceptance": [
+        "do not equate optical d with radiation d",
+        "same blackbody temperature cannot create independent N/E data",
+        "full covariance retained",
+        "near-zero calibrated boost uses direct response rather than unstable inverse"
+      ],
+      "stop_condition": "Finish response comparison with specified inputs; empirical velocity/tilt claim waits for independent response",
+      "depends_on": [],
+      "execution_readiness": "CONDITIONAL_DESIGN_READY",
+      "claim_gate": "Global history remains original V03 external task",
+      "original_acceptance_effect": "NONE_WITHOUT_ORIGINAL_NODE_EVIDENCE",
+      "native_solver": false,
+      "ODE_evolution": false,
+      "owning_runtime": "local Codex after canonical DAG mapping"
+    },
+    {
+      "id": "INT-OPTICAL-JETS",
+      "title": "Distance-jet and radial/transverse physical combinations",
+      "inputs": [
+        "INT-R03",
+        "INT-R05",
+        "source/frame/clock response",
+        "actual distance or proper-motion law for empirical fit"
+      ],
+      "outputs": [
+        "h0,h1,J identified image",
+        "radial-transverse closure",
+        "remainder and denominator domains"
+      ],
+      "acceptance": [
+        "retain B1 frame-spin kernel",
+        "common-congruence acceleration cancellation",
+        "fit raw observable response with correlated errors",
+        "no curvature-only claim from J"
+      ],
+      "stop_condition": "Deliver conditional response/injection test; empirical fit requires its chosen data law",
+      "depends_on": [],
+      "execution_readiness": "CONDITIONAL_DESIGN_READY",
+      "claim_gate": "K03/K04 completion requires actual source-qualified response, not generic VSH law",
+      "original_acceptance_effect": "NONE_WITHOUT_ORIGINAL_NODE_EVIDENCE",
+      "native_solver": false,
+      "ODE_evolution": false,
+      "owning_runtime": "local Codex after canonical DAG mapping"
+    },
+    {
+      "id": "INT-GEOMETRY",
+      "title": "Algebraic Bianchi compatibility and presentation-equivalence controls",
+      "inputs": [
+        "INT-R04",
+        "same-frame h,S,energy,flux,Lambda",
+        "optional curvature image"
+      ],
+      "outputs": [
+        "Ricci and Gauss-Codazzi residual evaluator",
+        "II/VII0 matched-pair control",
+        "flat I/VII0 equivalence flag"
+      ],
+      "acceptance": [
+        "Jacobi na=0",
+        "Hamiltonian and momentum checked in same units/sign",
+        "II/VII0 scalar-equal Ricci-different witness",
+        "no double-counted flat presentation"
+      ],
+      "stop_condition": "Finite evaluator and geometry test complete independently of transfer atlas",
+      "depends_on": [],
+      "execution_readiness": "METHOD_READY",
+      "claim_gate": "Geometry compatibility only; no CMB family identification",
+      "original_acceptance_effect": "NONE_WITHOUT_ORIGINAL_NODE_EVIDENCE",
+      "native_solver": false,
+      "ODE_evolution": false,
+      "owning_runtime": "local Codex after canonical DAG mapping"
+    },
+    {
+      "id": "INT-DETECTOR-FRONTIER",
+      "title": "Instrument-specific calibrated spectral response frontier",
+      "inputs": [
+        "INT-R09",
+        "bounded physical detector kernels",
+        "number/energy measurement law",
+        "physical entropy and tail allowance"
+      ],
+      "outputs": [
+        "joint response support set",
+        "MB/BE/FD or selected-statistics comparison",
+        "dimensional foreground/response budget adapter"
+      ],
+      "acceptance": [
+        "moment constraints retained",
+        "finite Bregman identity on regular branch",
+        "susceptibility Schur complement PSD",
+        "square-root width labelled asymptotic",
+        "unresolved energy error not double-counted"
+      ],
+      "stop_condition": "Retained toy is complete; real kernel frontier waits only for required instrument/budget inputs",
+      "depends_on": [],
+      "execution_readiness": "STATIC_METHOD_READY_REAL_KERNEL_PENDING",
+      "claim_gate": "Entropy allowance is not a p-value or inferred physical covariance",
+      "original_acceptance_effect": "NONE_WITHOUT_ORIGINAL_NODE_EVIDENCE",
+      "native_solver": false,
+      "ODE_evolution": false,
+      "owning_runtime": "local Codex after canonical DAG mapping"
+    }
+  ],
+  "publication_priorities": {
+    "immediate_methods_candidates": [
+      "INT-R13",
+      "INT-R07",
+      "INT-R10",
+      "INT-R12"
+    ],
+    "physical_example_support": [
+      "INT-R04",
+      "INT-R05"
+    ],
+    "calibration_support_pending_real_inputs": [
+      "INT-R08",
+      "INT-R09"
+    ],
+    "new_empirical_candidates": [
+      "release-qualified morphology percentile",
+      "CF4 correlated-covariance sensitivity frontier",
+      "joint optical compatibility region",
+      "radiation-rest stress interval"
+    ],
+    "independent_novelty": "UNRESOLVED_APPLICATION_COMPARISON_REQUIRED"
+  },
+  "external_corrections": [
+    "Do not make CF4 mocks prerequisite to all radiation/geometry/methods products",
+    "Preserve local accelerated-congruence law while correcting finite-window dust catalogue attribution",
+    "Do not close universal K03/K05 from one low-power forecast",
+    "Do not delay exact response for irrelevant unresolved entropy",
+    "PR4 and public-SN alternatives do not satisfy different original contracts automatically",
+    "Do not demand agreement with literature point estimates as a model-admission gate"
+  ]
+}

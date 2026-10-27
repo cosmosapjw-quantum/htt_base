@@ -1,0 +1,104 @@
+{
+  "unit": "HTT_HUBBLE_PROTOCOL_REPAIR",
+  "date": "2026-10-26",
+  "scope": "Source binding and constructive protocol repair only; no new full loop",
+  "sources": {
+    "manuscript": "HTT_INTERNAL_THEORY_20261026/sources/repo/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-01-QO-METHODS/science/MANUSCRIPT.md",
+    "baseline": "HTT_INTERNAL_THEORY_20261026/sources/repo/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/baseline/research/theory_expansion.md",
+    "locations": [
+      "Manuscript20-32,36,38-41",
+      "BaselineT1-T15"
+    ],
+    "matrix_alias": "Manuscript M_S equals baseline K_S=(S:S)I/3+2S^2/5"
+  },
+  "physical_definitions": {
+    "metric": "(-,+,+,+)",
+    "u_norm": -1,
+    "proper_length": "s=c tau",
+    "n": "outward source direction",
+    "H_sigma": "physical inverse-time rates",
+    "A": "physical acceleration length/time^2",
+    "d": "-A/(cH), dimensionless same-congruence acceleration",
+    "S": "sigma/H, dimensionless STF directional Hubble-slope shear",
+    "q": "d.n+S:nn",
+    "kappa": "5/ln10, exact mathematical constant",
+    "assumptions": [
+      "H>0",
+      "same smooth observer/emitter congruence",
+      "regular local geometric optics",
+      "sup|q|<=epsilon<1",
+      "full-sphere target projection or explicit processed estimator response"
+    ]
+  },
+  "magnitude_quadrupole": {
+    "relation": "Q_mu=-kappa S+R2",
+    "error": "E2=sqrt(15/2) kappa epsilon^2/[2(1-epsilon)]",
+    "consequence": "Shat=-Qhat/kappa requires nonlinear quadrupole remainder, data, finite-z, selection and calibration errors; Q_mu is not S"
+  },
+  "octupole": {
+    "definition": "O=(35/2)<f_mu STF(n^3)>",
+    "units": "magnitude",
+    "local_response": "O=kappa L_S d+R3",
+    "E3": "sqrt(35/2) kappa epsilon^3/[3(1-epsilon)]",
+    "domain": "Angular local-logarithm truncation; excludes finite distance and selection"
+  },
+  "finite_redshift": {
+    "distance_order": "d_L=cz/H_direction+O(z^2)",
+    "magnitude_order": "generically O(z) after dividing by leading z and taking log",
+    "explicit": "d_L=d_L1[1+z a1(n)+O(z^2)] => f_mu(z)=-kappa ln(1+q)+kappa z a1(n)+O(z^2)",
+    "when_magnitude_O_z2": "Only after modeling/subtracting linear-z correction or a specified cancellation",
+    "optional_bound": "If relative distance error<=alpha zmax<1, Bz<=sqrt(35/2)|kappa| alpha zmax/(1-alpha zmax) for ideal fullsphere octupole",
+    "Bsel": "Must bound actual selection/estimator operator on a registered signal/nuisance class"
+  },
+  "uncertain_shear": {
+    "premises": [
+      "||S-Shat||_F<=eS",
+      "|d|<=Dmax",
+      "input bounds on one joint event or deterministic feasible set"
+    ],
+    "operator_bound": "||L_deltaS||_op<=sqrt(3/5)eS",
+    "proof": "||L_T||_op^2=||T||_F^2/3+2||T||_op^2/5 and STF ||T||_op^2<=2||T||_F^2/3",
+    "B": "E3+eO+Bz+Bsel+|kappa|sqrt(3/5)eS Dmax",
+    "epsilon_requirement": "Must hold over joint admissible region; Dmax+||Shat||_op+eS<1 is sufficient"
+  },
+  "optional_kappa_uncertainty": {
+    "meaning": "Separate multiplicative magnitude calibration; kappa itself is exact",
+    "premises": "|kappa_true-kappahat|<=e_kappa, kappahat!=0; kappamax=|kappahat|+e_kappa",
+    "shear_and_kappa_terms": "kappamax sqrt(3/5)eS Dmax+e_kappa||L_Shat||_op Dmax",
+    "E3": "Evaluate with kappamax"
+  },
+  "inverse": {
+    "Mhat": "(Shat:Shat)I/3+2Shat^2/5",
+    "dhat": "kappahat^-1 Mhat^-1 (Ohat:Shat)",
+    "Operp": "Ohat-kappahat L_Shat dhat",
+    "premise": "Shat!=0",
+    "d_error": "|dhat-d|<=B/(|kappahat|smin(L_Shat))",
+    "dobs_error": "|dhat-dobs|<=B/(|kappahat|smin(L_Shat))+ed if|d-dobs|<=ed",
+    "perp_error": "||Operp||<=B",
+    "zero_B": "Exact set membership; no ratio",
+    "near_zero_S": "Use response-set test; absolute inverse gain diverges"
+  },
+  "joint_test": {
+    "key": "The vector and perpendicular inequalities share the same seven-component error budget; passing each is only necessary",
+    "ed_zero_identity": "||Ohat-kappahat L_Shat dobs||^2=||Operp||^2+kappahat^2(dhat-dobs)^T Mhat(dhat-dobs)",
+    "requirement": "Joint squared norm<=B^2",
+    "counterexample": "Orthogonal components0.8B each pass split unit thresholds but joint=sqrt(1.28)B>B",
+    "ed_positive": "Qjoint_min^2=[||Operp||^2+kappahat^2 min_|d-dobs|<=ed (dhat-d)^T Mhat(dhat-d)]/B^2",
+    "optimization": "Finite convex trust-region in3D; impose Dmax and positivity in physical feasible set",
+    "correlations": "Prefer original joint error body/law and shared nuisances; inflated B is a conservative outer envelope"
+  },
+  "interpretation": {
+    "compatible": "Joint response image intersects observed joint region under stated error model",
+    "discrepancy": "Can reject the specified response/error model",
+    "cause_attribution": "Requires different registered finite-z, selection, observer/source and coupling responses; compatibility does not establish a unique cause",
+    "depth": "Retain shared calibration and cross-window covariance/joint error set; common d,S only if same-event model warrants"
+  },
+  "status": {
+    "source_binding": "COMPLETE",
+    "constructive_proof": "COMPLETE",
+    "new_numerical_run": "NOT_NEEDED_FOR_CONVENTION_REPAIR",
+    "push": false,
+    "solver": false,
+    "source_edit": false
+  }
+}

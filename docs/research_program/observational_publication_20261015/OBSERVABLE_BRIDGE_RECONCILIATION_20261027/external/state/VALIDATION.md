@@ -1,0 +1,56 @@
+# VALIDATION (Phase 6) — physics/math checks on the serious candidates
+
+Script: `validation/validate_bridges.py` (SymPy 1.14, NumPy 2.5, SciPy 1.18; Gauss–Legendre × uniform-φ sphere quadrature, 60 × 120). Raw output: `validation/results.json`. Each item: PASS / CONCERN / FAIL / NOT_APPLICABLE / NOT_YET_TESTABLE with the evidence. Sequential; no catalogue or map read.
+
+| ID | Candidate | Check | Result | Evidence |
+|---|---|---|---|---|
+| T-01 | H-1, H-7 | Definitional consistency: HTT H_u(n) = H − A·n/c + σ:nn vs Heinesen eq. (4.1) 𝔥 = θ/3 − e·a + ee·σ; f_μ := 5 log10[d_L/(cz/H)] at O(z) equals −κ log(1+q), κ = 5/ln10 | PASS | SymPy: both differences simplify to 0 (with θ = 3H, c = 1; HTT keeps c explicitly). Same assumption set (emitters comoving with u). |
+| T-02 | H-1 (uses R32-01 law) | Independent numerical reproduction of R32-01 Table I: family d = a(1,2,3)/√14, S = a diag(0.6,−0.2,−0.4), a ∈ {2.0e−3, 6.6874e−3, 2.23607e−2, 7.47674e−2, 0.25}; O_μ = (35/2)⟨f n_⟨abc⟩⟩ vs κ L_S d; remainder vs E_3(ε); Q_μ + κS vs E_2(ε) | PASS | All five rows reproduce R32-01 values to ≤ 1e−6 relative: exact ‖O_μ‖_F = 4.280777e−6, 4.791409e−5, 5.378306e−4, 6.109723e−3, 7.445856e−2; remainders 3.798826e−9, 1.427661e−7, 5.434102e−6, 2.165379e−4, 1.041121e−2; all within E_3 and E_2 bounds. Chirality witness Q*, O* attains χ = 4√2/135 = 0.0419026 with ‖Q*‖_F = ‖O*‖_F = 1 (ratio 1.0000). Note: a midpoint-θ quadrature gave spurious bound violations at small a (quadrature error 4e−6 ≫ true remainder 4e−9) — sphere integrals of these fields require Gauss–Legendre or equivalent. |
+| T-03 | H-1 | Normalisation bridge: axisymmetric S = s diag(−½,−½,1) gives S:nn = s P_2(cos θ); ‖S‖_F = s√(3/2); η = log10(z/d_L) − monopole ≈ (S:nn)/ln10 at O(z) so Kalbouneh's Legendre coefficient η̃_2 = s/ln10 | PASS (with CONCERN on M-07) | Kalbouneh 2026 η̃_2 = (1.45, 1.12, 1.58, 1.17) × 10⁻² → s = (0.0334, 0.0258, 0.0364, 0.0269) → ‖S‖_F-equivalent = (0.041, 0.032, 0.045, 0.033). If H_2/H_0 = 0.028 is the P_2 coefficient of 𝔥/H, ‖S‖_F-equiv = 0.034. HTT ‖Ŝ_app‖_F = 0.0327 (full-sample, nuisance-projected). Same order; exact estimator correspondence not established (different windows, projection, sign/basis conventions). Directional rms √(2/15)‖S‖_F = 0.0119246 reproduces R32-05's 0.011924578. |
+| T-04 | H-3 | Proper-motion response of a shear: μ(n) = −H ⊥(S·n); rms = H‖S‖_F/√5; curl-free (gradient of −½ n·S·n) | PASS | For Ŝ_app and H_0 = 15.2 μas/yr: rms 0.222 μas/yr, peak 0.350 μas/yr. 10 % axisymmetric shear → rms 0.83 μas/yr (Darling 2014 quotes "≈1.5 μas/yr", consistent as a peak-amplitude statement). Gaia DR3 √P2^E ≈ 8.9 μas/yr and ≈12 μas/yr systematics exceed the signal by ≥ 25×; VLBI ≈1 μas/yr exceeds it by ≈3–5×. |
+| T-05 | H-1 | ΛCDM linear-theory expectation (toy, INFERENCE): (a) rms ‖σ/H‖_F of the top-hat-smoothed tidal field at the observer, f√(2/3) σ_R; (b) rms ‖S‖_F-equivalent of the ℓ = 2 part of v_r/(Hr) over Gaussian radial shells matching the CF4 windows (z_c = 0.025, 0.040, 0.060, 0.080; s_z = 0.012); EH98 no-wiggle, Ω_m = 0.315, h = 0.674, n_s = 0.965, σ_8 = 0.811, f = Ω_m^0.55 | PASS as a scale estimate; CONCERN as a comparator | (a) R = 50, 75, 100, 150, 200, 240 Mpc/h → 0.067, 0.041, 0.028, 0.016, 0.010, 0.0076. (b) shells → 0.030, 0.017, 0.011, 0.0079. Hence the linear ΛCDM apparent quadrupole falls ≈ 4× from z = 0.025 to 0.08, whereas Kalbouneh 2026 reports no decreasing trend (0.032–0.045 equivalent). HTT's 0.0327 for the full 35,970-group sample sits within ≈ 1–2× of the expectation for its effective depth. Limits: linear theory, no selection/mask/Zone of Avoidance, no observer boost, no distance-error noise bias, Gaussian shells; not a substitute for mocks. |
+| T-06 | H-7 | Heinesen 𝔔 monopole in FLRW: 𝔮_0 = θ̇/3 with 𝔥 = H gives 𝔔 = −1 − Ḣ/H² = q | PASS | SymPy identity with a(t) generic. Confirms the second-order law reduces correctly; the dipole/quadrupole couplings a·ω, −2σ·ω are quoted from E-X01 and not re-derived (NOT_YET_TESTABLE here). |
+| T-07 | (R32-07 reuse) | Bianchi I kinematic degeneracy: B_A = τL, B_B = [(1−α)τ + ατ²]L, same final map at τ = 1, shear ratio (1+α) = 9/5 for α = 4/5 | PASS | SymPy. |
+| T-08 | H-2 | AniLoS code surface: exposes `tensor_solver`, `vector_solver`, `alm_tensor`, `alm_vector`, attributes `almT/E/B_tensor`, `almT/E/B_vector`; models VII_h and IX only (V, VII_0 as limits); IC ∈ {iso, oct}; defaults h = 0.6781, Ω_K = 1e−6, ℓ_cut = 30, sqrth = 0.1 | PASS (static) ; NOT_YET_TESTABLE (numerical) | Source read at `/home/claude/jgvicente/anilos/src/anilos/anilos.py` (HEAD 9b7a2611, GPL-3.0). Requires CLASS/classy; not executed in this run. Convention audit (handedness, m-sign, spin-weight sign, units) remains to be done before any atlas is proposed. |
+| T-09 | H-4 | Same-realization property of NPIPE A/B/full simulations | NOT_YET_TESTABLE | M-01 unresolved from texts read. |
+| T-10 | H-5 | Bounded-moment radius with physical ρ | NOT_YET_TESTABLE | M-02 unresolved; formula available (E-I06). |
+
+## Repair policy applied
+
+- No candidate required a theory rewrite. One tooling repair: sphere quadrature must be Gauss–Legendre in cos θ for the magnitude-field multipoles (midpoint rule introduces O(1e−6) errors that masquerade as remainder-bound violations). Recorded for future HTT toy checks.
+
+## Gate
+
+- No fatal FAIL. H-1 and H-2 may proceed to verification design. T-05 is an INFERENCE-grade estimate and must be replaced by mocks/reconstructions before any claim.
+
+## T-11 (executed V-1 step 8) — H03 saved tomography vs linear ΛCDM toy and Kalbouneh 2026
+
+Source: `evidence/sources/H03_SOURCE_TOMOGRAPHY.json` at a55036ad (35,970 CF4 groups, four Gaussian z windows, width 0.012, working law cz = d[H_w + D_w·n + nQ_w n]; inherited 36 × 36 covariance). STF basis assumed orthonormal (T_0..T_4 as in R32-05 eq. 24); Frobenius norms are basis-independent, eigen-axes assume that basis assignment (CONCERN: confirm basis order in the producer).
+
+| z_c | H_w [km/s/Mpc] | |D_w|/H_w (±) | ‖Q_w‖_F/H_w raw / debiased | noise floor √tr(C_QQ)/H | linear ΛCDM rms (T-05b) | eigenvalues of Q_w/H_w | largest-eigenvalue axis (l,b) | dipole dir (l,b) | angle(D, max-eigvec) |
+|---|---|---|---|---|---|---|---|---|---|
+| 0.025 | 75.17 | 0.0443 ± 0.0045 | 0.0288 / 0.0273 | 0.0093 | 0.030 | (−0.0199, −0.0009, +0.0208) | (313.6, −1.2) | (286.4, −0.9) | 27° |
+| 0.040 | 75.30 | 0.0398 ± 0.0046 | 0.0422 / 0.0411 | 0.0092 | 0.017 | (−0.0265, −0.0058, +0.0323) | (301.3, −13.6) | (295.6, −10.5) | 6° |
+| 0.060 | 74.56 | 0.0363 ± 0.0063 | 0.0503 / 0.0490 | 0.0115 | 0.011 | (−0.0355, −0.0003, +0.0357) | (311.0, −17.4) | (317.2, −34.6) | 18° |
+| 0.080 | 72.45 | 0.0259 ± 0.0124 | 0.0270 / 0.0204 | 0.0176 | 0.0079 | (−0.0212, +0.0055, +0.0157) | (295.6, +58.3) | (312.2, −65.5) | 37° |
+
+STF-vs-zero χ² (5 dof, inherited marginal block): 47.7, 92.0, 117.1, 18.8. Kalbouneh 2026 symmetry axis (l,b) = (299°, 5°) lies 16°, 19°, 25° from the window-1–3 quadrupole axes; those axes are also 12–28° from the celestial south pole (survey-footprint direction). Readings (INFERENCE, conditional on the inherited working covariance): (i) the inner window matches the linear ΛCDM rms; windows 2–3 exceed it by ≈ 2.4× and 4.5× (even after adding the noise floor in quadrature: expected ≈ 0.019 and 0.016 vs observed 0.041 and 0.049); (ii) all windows show a near-pure-shear eigenstructure (middle eigenvalue ≈ 0), as does Cowell 2023's Pantheon+ quadrupole (λ_2 ≈ 3e−5); (iii) the dipole is aligned with the positive quadrupole eigen-axis (6°–27° in windows 1–3; n·Q·n along D reaches +0.75 of the maximum +0.816), reproducing Kalbouneh's shared-axis statement with the HTT machinery; (iv) the repo's own FP-deletion sensitivity changes the STF block by 1.5–2.7 km/s/Mpc (0.02–0.036 in ‖S‖), i.e. by the size of the signal, so method/footprint dependence (H-1n) is not excluded. Result for H-1: the identification S ↔ smoothed ΛCDM shear PASSES for the inner window and is in CONCERN (2–4× excess) for the middle windows; the discriminating test (mocks with CF4 selection through the exact H03 operator; independent reconstruction eigenframe) is required before any physical statement. No claim of detection is made.
+
+### T-11 correction (after decision gate, 2026-10-27)
+
+Archived script: `validation/t11_h03_tomography.py`; output `validation/t11_results.json`. Gate findings incorporated: (a) basis-order CONCERN resolved — the producer's 5-vector norm equals the Frobenius norm of the stored STF matrix (|‖STF5‖₂ − ‖Q‖_F| ≤ 4e−16), so the basis is orthonormal and eigen-axes are basis-independent; (b) the window-4 (z_c = 0.08) axis row above quoted the negative-eigenvalue eigenvector; the largest-positive-eigenvalue axis is (l,b) = (107.2°, +31.4°) (antipode (287.2°, −31.4°)), 37.3° from D_w — consistent with the quoted angle. Window 3 positive axis (131.1°, +17.3°) ≡ antipode (311.1°, −17.3°). Window 4 is noise-dominated (floor 0.0176 vs raw 0.027). No downstream statement changes. Independent reproduction by the gate reviewer from the a55036ad file matched all numbers.
+
+## T-12 (executed V-0(a), 2026-10-27) — ΛCDM dipole-law refits of the 12 saved window dipoles (conditional on the inherited covariance)
+
+Inputs: the 12 window-major dipole coordinates and their 12×12 inherited covariance from `H03_SOURCE_TOMOGRAPHY.json`; saved 9×3 bulk-response blocks R_w (per Mpc; rows 1–3); columns G (constant dipole), B_z = (1/z_w) I (pure boost/bulk scaling), Z_q = z_w I (𝔮_1-type growth). Whitened least squares.
+
+| Design | p | T | dof | τ_95 | tail | cond |
+|---|---|---|---|---|---|---|
+| bulk R_w b | 3 | 79.987 | 9 | 16.92 | 1.6e−13 | 1.4 |
+| constant dipole d_0 | 3 | 94.598 | 9 | 16.92 | 1.9e−16 | 1.5 |
+| bulk + constant (R32-03 combined) | 6 | 23.397 | 6 | 12.59 | 6.7e−4 | 384 |
+| pure 1/z_w + constant | 6 | 39.461 | 6 | 12.59 | 5.8e−7 | 114 |
+| bulk + z_w 𝔮_1-type | 6 | 22.669 | 6 | 12.59 | 9.2e−4 | 9.3 |
+| bulk + constant + z_w 𝔮_1-type | 9 | 15.316 | 3 | 7.81 | 1.6e−3 | 1.5e3 |
+
+Fitted bulk (bulk-only): |b| = 295 ± 18 km/s toward (l,b) = (287°, −5°) — direction within ≈ 13° of Kalbouneh 2026's bulk axis (299°, 5°), amplitude below their 520 ± 91 km/s (different window weighting: four Gaussian shells vs a z̃ < 0.05 sphere). Principal angles between the window-weighted bulk column R_w and the pure 1/z_w column: 4.8°, 7.2°, 8.9° → observer boost and source bulk flow are not separable at O(z) with these windows (as expected from theory). Reading: under the inherited diagonal 250 km/s metric, NO ΛCDM dipole law (bulk/boost, constant, z-growth, or all three) reaches τ; the 9-parameter fit on 12 coordinates (T = 15.3 on 3 df) also fails. Therefore the residual is (i) under-estimated correlated errors (cosmic variance of the window dipoles, which the inherited covariance does not contain), (ii) window-dependent systematics/composition (the R32-03 FP-fraction column), or (iii) physics — and only the mock-derived covariance (V-0(b)) can separate (i) from (ii)/(iii). V-0 pre-registered pass criterion remains: T_min ≤ τ AND v_o/bulk within 2σ of 188 ± 22 / 520 ± 91 km/s under the mock covariance. Status: V-0(a) EXECUTED — INFORMATIVE (no design passes under the working metric); V-0(b) PENDING.

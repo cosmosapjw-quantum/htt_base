@@ -1,0 +1,432 @@
+{
+  "schema_version": 1,
+  "workflow_version": "1.0.0",
+  "task": "research+static_toy",
+  "unit_id": "ENTROPIC_SHEAR_BRIDGE_20261026",
+  "status": "author_complete_pending_parent_fresh_review",
+  "objective": "Specialize v15 finite entropy energy-moment matching to massless shear-response preservation and quantify the unresolved rank-four response.",
+  "scope": "C0 deterministic and conditional local theory; no physical ODE, solver, measured CMB, git push, source-paper edit or posterior.",
+  "owner": "common/obsstat",
+  "transfer_source": "none",
+  "claim_tier": "C0",
+  "author_runtime": {
+    "requested": "UNKNOWN",
+    "observed": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "id": "V15-I",
+      "identity": "ANGULAR_CALCULUS_PAPER_I_v15_ACK_CLEAN_OVERLEAF.zip; sha256:c856939999ea202a5d676059907bfcef7274027299a2664fd55b86eecd69faad",
+      "locator": "sources/paper_I/ARCHIVE_IDENTITY.json",
+      "read": [
+        "sections/02_one_field_state_space.tex",
+        "sections/03_radial_quotient.tex",
+        "sections/03b_angular_response.tex",
+        "sections/04_two_axis_budget.tex",
+        "sections/05_refinement_obstructions.tex"
+      ],
+      "scope": "Retained energy moments, reduced entropy and lift, existence, two-axis budget, response kernel span."
+    },
+    {
+      "id": "LOOP-A",
+      "identity": "HTT_INTERNAL_THEORY_20261026; comparison repository a55036ad09c53a9215dee3282e425d37cfb95443",
+      "locator": "../HTT_INTERNAL_THEORY_20261026/research/LOOP_A_LOWELL.md",
+      "scope": "Exact positive operator B_e, moment decomposition, local transport and inverse error."
+    },
+    {
+      "id": "PAPER-I-REUSE",
+      "identity": "2026-10-26 companion team derivation",
+      "locator": "research/PAPER_I_REUSE.md",
+      "scope": "Companion owns global isotropic entropy bound; not rederived here."
+    },
+    {
+      "id": "SCISPACE-ES",
+      "identity": "SciSpace query executed2026-10-26",
+      "locator": "tool-call query: How do entropy-based radiation moment closures preserve a selected finite set of angular energy moments, and what error bounds control radiation pressure or the nonlinear shear-coupling operator from an entropy projection?",
+      "scope": "Discovery only, source formulas use v15 and inherited primary transport derivation."
+    }
+  ],
+  "conventions": {
+    "metric": "(-,+,+,+)",
+    "velocity": "v15 U.U=-c^2; LoopA u=U/c, u.u=-1",
+    "energy": "E=-p.U",
+    "direction": "Propagation e, opposite outward sky",
+    "brightness": "I=D int E^3 f dE, D=2/((2pi hbar)^3 c^3); energy density per solid angle, not radiance cI",
+    "entropy": "H=integral -C I^(3/4) dOmega, C=4 Cgamma^(1/4)/(3 kB), Cgamma=pi kB^4/(60 hbar^3 c^3)",
+    "domain": "0<I_min<=I,I_L<=M<infinity; finite entropy and score integrals; positive interior retained moment vector",
+    "transport": "Geodesic irrotational collisionless congruence; shear inverse additionally needs derivative residual R and error epsilon_R"
+  },
+  "claims": [
+    {
+      "id": "ES-PRESERVE",
+      "statement": "Exact matching of bolometric energy multipoles0,2,4 preserves L_I on STF2; full cutoffL>=4 suffices even if radial or higher-angle entropy remains.",
+      "owner": "common",
+      "status": [
+        "DERIVED",
+        "CONDITIONAL"
+      ],
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "source_relations": [
+        {
+          "source": "V15-I",
+          "relation": "supports",
+          "scope": "General response-kernel span principle already implies preservation when target kernel is in retained span."
+        },
+        {
+          "source": "LOOP-A",
+          "relation": "supports",
+          "scope": "The concrete shear kernel has precisely even angular degree<=4."
+        }
+      ],
+      "evidence": [
+        "research/ENTROPIC_SHEAR_BRIDGE.md ES3-ES4 and R5"
+      ],
+      "novelty": "Concrete mechanical corollary and integration, not new abstract entropy theorem.",
+      "obligations": []
+    },
+    {
+      "id": "ES-ENTROPY-OPERATOR",
+      "statement": "For any exact entropy moment projection withL>=2 and brightness<=M, ||L_I-L_IL||op^2 <=1024pi M^(5/4) D_H(I||I_L)/(945 C); L>=4 structuralerror=0 is sharper.",
+      "owner": "common",
+      "status": [
+        "DERIVED",
+        "CONDITIONAL"
+      ],
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence": [
+        "research/ENTROPIC_SHEAR_BRIDGE.md ES5-ES9",
+        "cas/entropic_shear_constants.wl",
+        "cas/entropic_shear_constants_results.json"
+      ],
+      "basis": [
+        "Strong convexity from h''=3C/(16 I^(5/4))",
+        "STF4 angular factorDelta4=32pi/315",
+        "deltaL=-deltaH4 contraction afterrho,pi matching"
+      ],
+      "caveats": [
+        "Sufficient constant, no optimality assertion",
+        "Common bounded amplitude domain and finite pairings"
+      ],
+      "obligations": []
+    },
+    {
+      "id": "ES-SHEAR",
+      "statement": "If lambda_L>epsilon_ent and residual error<=epsilon_R, ||sigma-sigma_L|| <=(epsilon_R+epsilon_ent||sigma_L||)/(lambda_L-epsilon_ent).",
+      "owner": "common",
+      "status": [
+        "DERIVED",
+        "CONDITIONAL"
+      ],
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence": [
+        "research/ENTROPIC_SHEAR_BRIDGE.md ES10-ES11"
+      ],
+      "caveats": [
+        "Single-event moment matching supplies no derivatives",
+        "Open-neighborhood exact field matching plus common smooth congruence preserves derivatives if actually supplied"
+      ],
+      "obligations": []
+    },
+    {
+      "id": "ES-TOY",
+      "statement": "Forw=1+.3P2+.2P4+.15P6, entropy fitsL2,L4 show positive angularentropy defects3.7370960887e-4 and9.3716090273e-5; operator errors/rho0=.00654243536 and1.22e-15.",
+      "owner": "obsstat",
+      "status": [
+        "IMPLEMENTED",
+        "CONDITIONAL"
+      ],
+      "evidence_type": "artifact+test",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence": [
+        "cas/entropic_shear_projection.py",
+        "cas/entropic_shear_results.json",
+        "figures/entropic_shear_projection.pdf"
+      ],
+      "caveats": [
+        "Static analytic toy; no measured CMB or transport derivative products",
+        "L4 mathematical responseerror isexactzero; floatingerror is roundoff",
+        "Quadrature refinement consistency, not intervalcertificate"
+      ],
+      "obligations": []
+    }
+  ],
+  "executions": [
+    {
+      "id": "ES-PY-FAIL1",
+      "status": "failed",
+      "command": "python HTT_TEFF_V15_EXTENSION_20261026/cas/entropic_shear_projection.py",
+      "exit_code": 1,
+      "observed": "ValueError: einstein sum subscripts string contains too many subscripts for operand1",
+      "cause": "The azimuthal dimension had been averaged away but einsum still named it.",
+      "correction": "Changed n,npab,n->ab to n,nab,n->ab and ran complete scientific checks."
+    },
+    {
+      "id": "ES-PY-PASS",
+      "status": "completed",
+      "command": "python HTT_TEFF_V15_EXTENSION_20261026/cas/entropic_shear_projection.py",
+      "exit_code": 0,
+      "environment": "Python3.12.14; NumPy2.3.5; Matplotlib3.10.8",
+      "evidence": "cas/entropic_shear_results.json",
+      "scope": "Newton momentprojection, positivity, cancellation, operator, manufactured residual shear and numerical refinement"
+    },
+    {
+      "id": "ES-WL",
+      "status": "completed",
+      "command": "Wolfram wolframlanguageevaluator using cas/entropic_shear_constants.wl",
+      "exit_code": null,
+      "provider_status": "isError=false; external kernel process exit code not exposed",
+      "evidence": "cas/entropic_shear_constants_results.json",
+      "scope": "Exact finite curvature,STF4 factor, response constant andaxisymmetric P4 slopes"
+    },
+    {
+      "id": "ES-AUTHORING-FAIL",
+      "status": "failed_before_file_creation",
+      "observed": "JavaScript SyntaxError: Invalid or unexpected token",
+      "correction": "Retried bounded file creation and exact Wolfram call successfully."
+    }
+  ],
+  "checks": [
+    {
+      "id": "MOMENT",
+      "result": "pass_scoped",
+      "max_abs_retained_moment_residual": 1.5027279279874323e-15,
+      "acceptance": 2e-12
+    },
+    {
+      "id": "CANCELLATION",
+      "result": "pass_scoped",
+      "max_abs_entropy_Bregman_difference": 1.0602413044735748e-15,
+      "acceptance": 2e-12
+    },
+    {
+      "id": "QUADRATURE",
+      "result": "pass_scoped",
+      "fit_nodes": [
+        96,
+        192
+      ],
+      "evaluation_nodes": [
+        256,
+        320
+      ],
+      "max_coefficient_difference": 4.524158825347513e-15,
+      "max_entropy_difference": 4.5512638796596505e-15,
+      "meaning": "Numerical consistency, no rigorous continuum quadrature certificate."
+    },
+    {
+      "id": "EXACT-P4",
+      "result": "pass_scoped",
+      "identity": "axisymmetric error/rho0=4|delta c4|/105",
+      "WL_slopes": [
+        "-4/105",
+        "8/315",
+        "-2/315"
+      ],
+      "max_discrepancy": 2e-15
+    },
+    {
+      "id": "ISO",
+      "result": "pass_scoped",
+      "error": 2.682783826281149e-15,
+      "acceptance": 1e-13
+    },
+    {
+      "id": "INVERSE",
+      "result": "pass_scoped",
+      "manufactured_sigma_coordinates": "(1,1,1,1,1)/sqrt5 times sigma_ref",
+      "same_residual": true,
+      "L2_error": 0.007375212759927326,
+      "L2_bound": 0.028033584013982146,
+      "L4_error": 1.7720147237901127e-15,
+      "L4_exact_bound": 0
+    },
+    {
+      "id": "PLOT",
+      "result": "pass_scoped",
+      "method": "PNG visually inspected after annotation/legend adjustment",
+      "evidence": "figures/entropic_shear_projection.png"
+    },
+    {
+      "id": "FRESH-REVIEW",
+      "result": "not_run",
+      "reason": "Parent owns independent review; author derivation and finite tool checks are complete."
+    }
+  ],
+  "stages": [
+    {
+      "id": "R1",
+      "status": "complete_author_scope",
+      "evidence": "research/ENTROPIC_SHEAR_BRIDGE.md corresponding section",
+      "note": ""
+    },
+    {
+      "id": "R2",
+      "status": "complete_author_scope",
+      "evidence": "research/ENTROPIC_SHEAR_BRIDGE.md corresponding section",
+      "note": ""
+    },
+    {
+      "id": "R3",
+      "status": "complete_author_scope",
+      "evidence": "research/ENTROPIC_SHEAR_BRIDGE.md corresponding section",
+      "note": ""
+    },
+    {
+      "id": "R4",
+      "status": "complete_author_scope",
+      "evidence": "research/ENTROPIC_SHEAR_BRIDGE.md corresponding section",
+      "note": ""
+    },
+    {
+      "id": "R5",
+      "status": "complete_author_scope",
+      "evidence": "research/ENTROPIC_SHEAR_BRIDGE.md corresponding section",
+      "note": ""
+    },
+    {
+      "id": "R6",
+      "status": "complete_author_scope",
+      "evidence": "research/ENTROPIC_SHEAR_BRIDGE.md corresponding section",
+      "note": "Independent angular/kernel argument and dimension/limit checks; parent fresh reviewer remains separate."
+    },
+    {
+      "id": "R7",
+      "status": "complete_author_scope",
+      "evidence": "research/ENTROPIC_SHEAR_BRIDGE.md corresponding section",
+      "note": "Actual Python and Wolfram execution; both successful results and failures preserved."
+    },
+    {
+      "id": "R8",
+      "status": "complete_author_scope",
+      "evidence": "research/ENTROPIC_SHEAR_BRIDGE.md corresponding section",
+      "note": ""
+    },
+    {
+      "id": "R9",
+      "status": "complete_author_scope",
+      "evidence": "research/ENTROPIC_SHEAR_BRIDGE.md corresponding section",
+      "note": ""
+    },
+    {
+      "id": "R10",
+      "status": "complete_author_scope",
+      "evidence": "research/ENTROPIC_SHEAR_BRIDGE.md corresponding section",
+      "note": ""
+    }
+  ],
+  "coding_checks": [
+    {
+      "id": "C1",
+      "status": "complete_scoped",
+      "evidence": "cas/entropic_shear_projection.py; cas/entropic_shear_results.json; reportR7-R9",
+      "scope": "Bounded static toy only."
+    },
+    {
+      "id": "C2",
+      "status": "complete_scoped",
+      "evidence": "cas/entropic_shear_projection.py; cas/entropic_shear_results.json; reportR7-R9",
+      "scope": "Bounded static toy only."
+    },
+    {
+      "id": "C3",
+      "status": "complete_scoped",
+      "evidence": "cas/entropic_shear_projection.py; cas/entropic_shear_results.json; reportR7-R9",
+      "scope": "Bounded static toy only."
+    },
+    {
+      "id": "C4",
+      "status": "complete_scoped",
+      "evidence": "cas/entropic_shear_projection.py; cas/entropic_shear_results.json; reportR7-R9",
+      "scope": "Bounded static toy only."
+    },
+    {
+      "id": "C5",
+      "status": "complete_scoped",
+      "evidence": "cas/entropic_shear_projection.py; cas/entropic_shear_results.json; reportR7-R9",
+      "scope": "Bounded static toy only."
+    },
+    {
+      "id": "C6",
+      "status": "complete_scoped",
+      "evidence": "cas/entropic_shear_projection.py; cas/entropic_shear_results.json; reportR7-R9",
+      "scope": "Bounded static toy only."
+    },
+    {
+      "id": "C7",
+      "status": "complete_scoped",
+      "evidence": "cas/entropic_shear_projection.py; cas/entropic_shear_results.json; reportR7-R9",
+      "scope": "Bounded static toy only."
+    },
+    {
+      "id": "C8",
+      "status": "complete_scoped",
+      "evidence": "cas/entropic_shear_projection.py; cas/entropic_shear_results.json; reportR7-R9",
+      "scope": "Bounded static toy only."
+    },
+    {
+      "id": "C9",
+      "status": "parent_review_pending",
+      "evidence": "No recursive delegate; parent fresh review requested.",
+      "scope": "Bounded static toy only."
+    },
+    {
+      "id": "C10",
+      "status": "complete_scoped",
+      "evidence": "cas/entropic_shear_projection.py; cas/entropic_shear_results.json; reportR7-R9",
+      "scope": "Bounded static toy only."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "REUSE-SPAN",
+      "text": "Adopt L4 preservation as explicit v15 kernel-span corollary; do not promote as new abstract entropy principle."
+    },
+    {
+      "id": "NO-ENTROPY-LOWER-ERROR",
+      "text": "Positive unresolved entropy is compatible with exactlyzero specified response error; demonstrate withL4 toy."
+    },
+    {
+      "id": "NO-NEW-F-NAMESPACE",
+      "text": "Preserve legacy F_cert, typefree F_sup, measure occupancy F_nu; entropyH is separate."
+    }
+  ],
+  "failures": [
+    {
+      "class": "implementation",
+      "execution_ref": "ES-PY-FAIL1",
+      "status": "corrected_and_rechecked"
+    },
+    {
+      "class": "tool_authoring",
+      "execution_ref": "ES-AUTHORING-FAIL",
+      "status": "corrected_no_scientific_effect"
+    }
+  ],
+  "next_actions": [
+    {
+      "action": "Parent fresh independent review of physical entropy normalization, Delta4 identity, operator constant and static toy."
+    },
+    {
+      "action": "Use actual bolometric energy moments/covariance and residual derivative jet before empirical shear evaluation."
+    }
+  ],
+  "artifacts": [
+    "research/ENTROPIC_SHEAR_BRIDGE.md",
+    "research/ENTROPIC_SHEAR_BRIDGE.json",
+    "cas/entropic_shear_projection.py",
+    "cas/entropic_shear_results.json",
+    "cas/entropic_shear_constants.wl",
+    "cas/entropic_shear_constants_results.json",
+    "figures/entropic_shear_projection.pdf",
+    "figures/entropic_shear_projection.png"
+  ],
+  "source_edits": false,
+  "push": false
+}

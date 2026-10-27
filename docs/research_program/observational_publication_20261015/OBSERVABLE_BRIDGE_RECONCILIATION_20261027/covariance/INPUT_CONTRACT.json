@@ -1,0 +1,67 @@
+{
+  "schema": "htt.source_covariance_transport_contract.v1",
+  "date": "2026-10-27",
+  "target": "fixed selected-catalogue linear estimator covariance with all windows stacked",
+  "owner": "HTT model-dependent uncertainty consumption; obsstat extraction supplies A",
+  "required_inputs": {
+    "A": {
+      "shape": "p x N",
+      "semantics": "exact fixed science extraction response, including actual nuisance treatment and all depth windows",
+      "identity": "producer commit/config + ordered source IDs",
+      "units": "output units / input observable units"
+    },
+    "independent_variance": {
+      "shape": "N",
+      "semantics": "nonnegative independent remainder, excluding every component represented by other terms",
+      "units": "input observable units squared"
+    },
+    "correlated_factor": {
+      "shape": "N x r",
+      "semantics": "qualified physical or explicitly conditional latent factor V; VV^T is input correlated covariance",
+      "units": "input observable units"
+    },
+    "calibration_response": {
+      "shape": "p x k",
+      "semantics": "K maps calibration parameters to output, with same source order/units/frame"
+    },
+    "calibration_covariance": {
+      "shape": "k x k",
+      "semantics": "symmetric PSD covariance with named calibration parameter ordering"
+    },
+    "ownership": {
+      "semantics": "disjoint physical uncertainty-source labels; supplied source provenance must justify completeness and lack of cross-group correlation"
+    }
+  },
+  "supports": [
+    "full cross-window covariance",
+    "diagonal plus low-rank latent covariance",
+    "calibration covariance in output space",
+    "conditional-on-fixed-design inference"
+  ],
+  "does_not_supply": [
+    "CF4 selection likelihood",
+    "physical mean response",
+    "empirical null",
+    "missing calibration/PV source law",
+    "original42 acceptance"
+  ],
+  "required_checks_before_physical_use": [
+    "Reproduce original diagonal producer from matching A and noise ownership",
+    "Bind source positions/distances and ICRS/frame/time labels",
+    "Account once for the inherited 250 km/s term",
+    "Retain or jointly factor cross-group error covariance",
+    "Register latent-factor approximation error if approximate",
+    "Calibrate repeat-estimator selection/weight effects when target is not conditional on fixed design",
+    "Validate the declared null/statistic law and scan protocol"
+  ],
+  "current_inputs_status": {
+    "saved_H03_12d_vector": "AVAILABLE",
+    "saved_joint_working_covariance": "AVAILABLE",
+    "exact_source_A": "MISSING_IN_THIS_SAVED_SUMMARY",
+    "qualified_PV_and_selection_law": "MISSING"
+  },
+  "next_action": "Local producer exports source-bound A or equivalent streamed row-response blocks; qualified source-law factors consumed without re-running completed summary fits",
+  "claim_ceiling": "CONDITIONAL_MODEL_COVARIANCE_UNTIL_SOURCE_LAW_CALIBRATION",
+  "original_acceptance_promotion": false,
+  "native_solver_required": false
+}

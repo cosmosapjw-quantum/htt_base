@@ -1,0 +1,587 @@
+{
+  "schema_version": 1,
+  "workflow_version": "1.0.0",
+  "task": "research",
+  "unit_id": "HTT_INTERNAL_THEORY_20261026_LOOP_B",
+  "objective": "Reconstruct precise dipole anomaly observables and finite intrinsic-dipole bounds through actual R1–R10 calculations.",
+  "scope": "Internal solver-free theoretical unit; no push/native solver/ODE/heavy catalogue fit; observational design only.",
+  "status": "complete",
+  "dependencies": [
+    {
+      "id": "D1",
+      "identity": "a55036ad09c53a9215dee3282e425d37cfb95443",
+      "description": "Latest adaptive HTT repository reference; source snapshots supplied by inventory agent."
+    },
+    {
+      "id": "D2",
+      "identity": "6b6e7311ce782f1ce770326832aaae70382c1a42c218eb2692058d5392cc9ce4",
+      "description": "FROM_A_CMB_SKY_MAP_TO_PHYSICAL_CONSTRAINTS.pdf; pp28–30 observer-response expressions."
+    },
+    {
+      "id": "D3",
+      "identity": "9f47da1383205ae8112648d2626fc2712ec913aa5f591ec76a738e234efa9418",
+      "description": "20-report-1-.pdf; pp14–16 local boost, quotient and depth distinction."
+    },
+    {
+      "id": "D4",
+      "identity": "95d27cd6f3887e4219b0d777cf305494642b0cf5769aac7433d007eae1ba09c7",
+      "description": "Ellis–Maartens–MacCallum Relativistic Cosmology; PDF pp106–108,120–121."
+    },
+    {
+      "id": "D5",
+      "identity": "b39603bc52d80551b3610e76d5fb090a1b53715e65db897883c3c6662af2ea1f",
+      "description": "Cercignani–Kremer The Relativistic Boltzmann Equation; PDF pp42–43."
+    },
+    {
+      "id": "D6",
+      "identity": "n=-e; metric(-+++); epsilon=-c p.u; beta=v/c; beta,d order lambda,Q order lambda²",
+      "description": "Convention and hierarchy contract."
+    },
+    {
+      "id": "D7",
+      "identity": "a0e4b76e3a1c808e55731cba22712ca4e489c3a267a3a9525c3d638085e1612e",
+      "description": "Executed exact local bytes cas/loop_b.wl."
+    },
+    {
+      "id": "D8",
+      "identity": "Known fixed observation design; registered nuisance image; covariance C or calibrated error event; projected remainder bound rho",
+      "description": "Statistical hypotheses for finite confidence bounds, not currently observed inputs."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E1",
+      "kind": "source",
+      "locator": "research/LOOP_B_DIPOLE.md#r2-sources-and-retained-expressions",
+      "scope": "Exact local source expressions and repository T5/T6; literature search on 2026-10-26.",
+      "dependency_ids": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5"
+      ]
+    },
+    {
+      "id": "E2",
+      "kind": "derivation",
+      "locator": "research/LOOP_B_DIPOLE.md equations B2–B7a",
+      "scope": "Exact scalar distribution, blackbody transform, second-order closure and quadrupole-envelope bound.",
+      "dependency_ids": [
+        "D6"
+      ]
+    },
+    {
+      "id": "E3",
+      "kind": "derivation",
+      "locator": "research/LOOP_B_DIPOLE.md equations B8–B11",
+      "scope": "Known-boost leakage inverse and independent spectral expansion.",
+      "dependency_ids": [
+        "D6"
+      ]
+    },
+    {
+      "id": "E4",
+      "kind": "execution",
+      "locator": "cas/loop_b_receipt.json",
+      "scope": "Exact saved file executed in connected Wolfram Language evaluator; zero residuals, diagonal Gram.",
+      "dependency_ids": [
+        "D7"
+      ]
+    },
+    {
+      "id": "E5",
+      "kind": "derivation",
+      "locator": "research/LOOP_B_DIPOLE.md equations B12–B15",
+      "scope": "Harmonic adjacent-mode response, nuisance projection, finite conditional bound.",
+      "dependency_ids": [
+        "D6",
+        "D8"
+      ]
+    },
+    {
+      "id": "E6",
+      "kind": "contract",
+      "locator": "research/LOOP_B_DIPOLE.md R9–R10",
+      "scope": "Observation inputs, remainder control, roles and scoped verdict.",
+      "dependency_ids": [
+        "D1",
+        "D6",
+        "D8"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "R1",
+      "status": "complete",
+      "evidence_refs": [
+        "E1"
+      ],
+      "dependency_ids": [
+        "D6"
+      ],
+      "reason": "Contract and target quantities fixed.",
+      "reuse": null
+    },
+    {
+      "id": "R2",
+      "status": "complete",
+      "evidence_refs": [
+        "E1"
+      ],
+      "dependency_ids": [
+        "D6"
+      ],
+      "reason": "Source expressions and primary literature read.",
+      "reuse": null
+    },
+    {
+      "id": "R3",
+      "status": "complete",
+      "evidence_refs": [
+        "E1",
+        "E2"
+      ],
+      "dependency_ids": [
+        "D6"
+      ],
+      "reason": "Conventions, physical frames and order hierarchy specified.",
+      "reuse": null
+    },
+    {
+      "id": "R4",
+      "status": "complete",
+      "evidence_refs": [
+        "E2"
+      ],
+      "dependency_ids": [
+        "D6"
+      ],
+      "reason": "Exact observer/spectral/angular channels selected.",
+      "reuse": null
+    },
+    {
+      "id": "R5",
+      "status": "complete",
+      "evidence_refs": [
+        "E2",
+        "E3"
+      ],
+      "dependency_ids": [
+        "D6"
+      ],
+      "reason": "Explicit transforms, STF closure and inverse derived.",
+      "reuse": null
+    },
+    {
+      "id": "R6",
+      "status": "complete",
+      "evidence_refs": [
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "dependency_ids": [
+        "D6"
+      ],
+      "reason": "Independent intensity differentiation, harmonic recurrences, limits and CAS checks.",
+      "reuse": null
+    },
+    {
+      "id": "R7",
+      "status": "complete",
+      "evidence_refs": [
+        "E4",
+        "E5"
+      ],
+      "dependency_ids": [
+        "D7"
+      ],
+      "reason": "Light connected Wolfram algebra executed; observational calibration remains future application.",
+      "reuse": null
+    },
+    {
+      "id": "R8",
+      "status": "complete",
+      "evidence_refs": [
+        "E2",
+        "E3",
+        "E5"
+      ],
+      "dependency_ids": [
+        "D6"
+      ],
+      "reason": "Scoped mathematical results adopted, no new no-go/novelty claim.",
+      "reuse": null
+    },
+    {
+      "id": "R9",
+      "status": "complete",
+      "evidence_refs": [
+        "E6"
+      ],
+      "dependency_ids": [
+        "D6"
+      ],
+      "reason": "Finite observable bounds, nuisance estimator and remainder contract written.",
+      "reuse": null
+    },
+    {
+      "id": "R10",
+      "status": "complete",
+      "evidence_refs": [
+        "E6"
+      ],
+      "dependency_ids": [
+        "D6"
+      ],
+      "reason": "Requested artifacts complete; parent fresh review and input-dependent application remain separate.",
+      "reuse": null
+    }
+  ],
+  "claims": [
+    {
+      "id": "B-C01",
+      "statement": "Exact incoming-sky observer transformation is f'(epsilon',n')=f(epsilon'/D,n(n')), I'nu'=D³ I_(nu'/D), T'=D T for directional blackbodies.",
+      "scope": "All beta²<1; positive temperatures for Planck-temperature interpretation.",
+      "basis": [
+        "established",
+        "derived"
+      ],
+      "evidence_refs": [
+        "E1",
+        "E2"
+      ],
+      "obligations": [],
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": []
+    },
+    {
+      "id": "B-C02",
+      "statement": "For beta,d=O(lambda), Q=O(lambda²), observed dipole a=beta+d+O(lambda³) and quadrupole K=Q+beta beta_STF+2 beta d_STF+O(lambda³).",
+      "scope": "Same dimensionless T0 convention; omitted intrinsic modes included in remainder.",
+      "basis": [
+        "derived"
+      ],
+      "evidence_refs": [
+        "E2",
+        "E4"
+      ],
+      "obligations": [],
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": []
+    },
+    {
+      "id": "B-C03",
+      "statement": "M=K−aa_STF=Q−dd_STF+O(lambda³); a quantitative quadrupole envelope qmax and residual error deltaM yield the explicit finite interval B7a for |d|².",
+      "scope": "Envelope is a model/calibration input; squared-amplitude interval retains dipole sign degeneracy.",
+      "basis": [
+        "derived"
+      ],
+      "evidence_refs": [
+        "E2"
+      ],
+      "obligations": [
+        "Instantiate qmax and a valid simultaneous deltaM event for observed use."
+      ],
+      "owner": "htt",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Instantiate qmax and a valid simultaneous deltaM event for observed use."
+      ]
+    },
+    {
+      "id": "B-C04",
+      "statement": "Known nonzero boost and controlled intrinsic quadrupole give injective map L_beta d, singular values sqrt(2)|beta|,sqrt(2)|beta|,sqrt(8/3)|beta|, and inverse B8.",
+      "scope": "Full Frobenius metric, ideal full-sphere STF2; actual mask processing changes response.",
+      "basis": [
+        "derived"
+      ],
+      "evidence_refs": [
+        "E3",
+        "E4"
+      ],
+      "obligations": [],
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": []
+    },
+    {
+      "id": "B-C05",
+      "statement": "Directional blackbody intensity quadrupole obeys I2=G K+(H/2)aa_STF, with H/G=x coth(x/2)−2.",
+      "scope": "Second total order retaining d² and specified low-multipole hierarchy.",
+      "basis": [
+        "derived"
+      ],
+      "evidence_refs": [
+        "E3",
+        "E4"
+      ],
+      "obligations": [],
+      "owner": "obsstat",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": []
+    },
+    {
+      "id": "B-C06",
+      "statement": "The spectral leakage response of an intrinsic dipole is (2G+H) beta d_STF; consistent nonlinear terms lead to closure in terms of total observed dipole.",
+      "scope": "This is a spectral-response statement. Physical assignment requires rest-frame multipole/velocity calibration.",
+      "basis": [
+        "derived",
+        "literature-supported"
+      ],
+      "evidence_refs": [
+        "E1",
+        "E3",
+        "E4"
+      ],
+      "obligations": [],
+      "owner": "obsstat",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": []
+    },
+    {
+      "id": "B-C07",
+      "statement": "Weight-one temperature adjacent-mode covariance B12 supplies a conditional angular velocity response beyond the measured dipole.",
+      "scope": "Statistically isotropic reference covariance and first-order observer boost; other physical dipolar covariance must be calibrated or bounded.",
+      "basis": [
+        "derived",
+        "literature-supported"
+      ],
+      "evidence_refs": [
+        "E1",
+        "E5"
+      ],
+      "obligations": [
+        "Build actual bandpass, mask, beam and competing-response calibrated R_ang."
+      ],
+      "owner": "obsstat",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Build actual bandpass, mask, beam and competing-response calibrated R_ang."
+      ]
+    },
+    {
+      "id": "B-C08",
+      "statement": "Under full projected rank and fixed known Gaussian feature covariance, B14–B15 give an estimator and finite intrinsic-dipole confidence bound including projected remainder bias.",
+      "scope": "Gaussian approximation is optional; calibrated norm-event bound is provided for non-Gaussian features.",
+      "basis": [
+        "derived"
+      ],
+      "evidence_refs": [
+        "E5"
+      ],
+      "obligations": [
+        "Obtain observed joint covariance/calibrated noise law, nuisance design and finite rho."
+      ],
+      "owner": "htt",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Obtain observed joint covariance/calibrated noise law, nuisance design and finite rho."
+      ]
+    },
+    {
+      "id": "B-C09",
+      "statement": "A small blackbody temperature dipole d has physical radiation energy flux F=−(4/3)c U_gamma d to first order; its statistical reference frame and radiation energy frame differ when d is nonzero.",
+      "scope": "Incoming sky convention; bolometric Planck integration; isotropic monopole dominates.",
+      "basis": [
+        "derived",
+        "literature-supported"
+      ],
+      "evidence_refs": [
+        "E1",
+        "E2"
+      ],
+      "obligations": [],
+      "owner": "common",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": []
+    },
+    {
+      "id": "B-C10",
+      "statement": "A calibrated radiation–observer endpoint dipole response supplies a local-frame constraint; mapping to a global matter-tilt history additionally requires matter-frame, depth-window and dynamical response inputs.",
+      "scope": "Scientific scope and observable mapping; no global matter tilt measurement claimed from apparent dipole alone.",
+      "basis": [
+        "literature-supported",
+        "derived"
+      ],
+      "evidence_refs": [
+        "E1",
+        "E6"
+      ],
+      "obligations": [
+        "Supply the additional matter/depth response if global tilt is later targeted."
+      ],
+      "owner": "htt",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Supply the additional matter/depth response if global tilt is later targeted."
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "B-K1",
+      "domain": "math",
+      "result": "pass_scoped",
+      "evidence_refs": [
+        "E4"
+      ],
+      "reason": "Saved WL input checked exact expansion, Gram/inverse and spectral identities.",
+      "execution_ref": "B-X1"
+    },
+    {
+      "id": "B-K2",
+      "domain": "physics",
+      "result": "pass_scoped",
+      "evidence_refs": [
+        "E1",
+        "E2",
+        "E3"
+      ],
+      "reason": "Incoming/outward sign, forward hot spot, beta=0, d=0, dimensions and frame meanings verified.",
+      "execution_ref": null
+    },
+    {
+      "id": "B-K3",
+      "domain": "math",
+      "result": "pass_scoped",
+      "evidence_refs": [
+        "E5"
+      ],
+      "reason": "Projection annihilates nuisance, covariance propagation and triangle/operator norm prove finite bound under stated law.",
+      "execution_ref": null
+    },
+    {
+      "id": "B-K4",
+      "domain": "numerics",
+      "result": "not_run",
+      "evidence_refs": [
+        "E6"
+      ],
+      "reason": "No observed input products or calibrated joint law supplied to this unit; no numerical intrinsic-dipole interval asserted.",
+      "execution_ref": null
+    }
+  ],
+  "executions": [
+    {
+      "id": "B-X1",
+      "status": "completed",
+      "command": "Connected Wolfram Language evaluator of exact cas/loop_b.wl bytes",
+      "environment": "Stateless connected Wolfram Language kernel, 20-second time constraint",
+      "evidence_refs": [
+        "E4"
+      ],
+      "exit_code": 0,
+      "reason": "Kernel returned exact residual zeros and diagonal Gram; no terminal process exit code exists, 0 denotes successful tool completion."
+    }
+  ],
+  "literature": [
+    {
+      "id": "L1",
+      "url": "https://arxiv.org/abs/1403.6117v2",
+      "title": "Dai and Chluba, New operator approach to the CMB aberration kernels in harmonic space",
+      "relation": "supports",
+      "scope": "Doppler weights and exact Lorentz boost kernels"
+    },
+    {
+      "id": "L2",
+      "url": "https://arxiv.org/abs/1303.5087v3",
+      "title": "Planck 2013 results XXVII, Doppler boosting of the CMB",
+      "relation": "supports",
+      "scope": "Angular-coupling velocity measurement/calibration strategy"
+    },
+    {
+      "id": "L3",
+      "url": "https://arxiv.org/abs/1610.00015v4",
+      "title": "Yasini and Pierpaoli, Beyond the Boost",
+      "relation": "supports",
+      "scope": "Low-multipole spectral leakage and Appendices A–C reference-frame/nonlinear assumptions"
+    },
+    {
+      "id": "L4",
+      "url": "https://arxiv.org/abs/1603.02664v2",
+      "title": "Roldan, Notari and Quartin, Interpreting CMB aberration and Doppler measurements",
+      "relation": "limits",
+      "scope": "Physical dipolar potential contributions to velocity-channel interpretation"
+    }
+  ],
+  "decisions": [
+    {
+      "decision": "Adopt exact observer formulas and conditional finite bounds as internal derived results.",
+      "evidence_refs": [
+        "E2",
+        "E3",
+        "E5"
+      ]
+    },
+    {
+      "decision": "Keep observed intrinsic-dipole values and global-tilt inference as input-dependent follow-up; no numerical or novelty promotion.",
+      "evidence_refs": [
+        "E6"
+      ]
+    }
+  ],
+  "overrides": [],
+  "failures": [
+    {
+      "class": "environment",
+      "evidence_refs": [
+        "E4"
+      ],
+      "description": "Initial trial used undeclared uppercase G,H and emitted symbol warnings while returning residual zeros; clean lowercase-symbol call and exact saved-file rerun supersede it.",
+      "next_action": "No further correction required."
+    }
+  ],
+  "independent_review": {
+    "status": "pending_parent_fresh_review",
+    "author_review": "Independent spectral differentiation and rotation-covariant algebra checks complete.",
+    "fresh_review_owner": "parent",
+    "scope": "Check equations B5–B15 and calibrated physical interpretation; do not treat process completeness as observed validation."
+  },
+  "next_actions": [
+    "Parent fresh scoped review of finished note and claims.",
+    "Instantiate released dipole plus calibrated angular-coupling product, common support and bandpasses.",
+    "Compute projected rank/singular values, covariance/noise-event radius and calibration rho.",
+    "Evaluate B7a only with a registered intrinsic-quadrupole envelope; evaluate B15 only with its calibrated design."
+  ],
+  "artifacts": [
+    "research/LOOP_B_DIPOLE.md",
+    "research/LOOP_B_CLAIMS.json",
+    "cas/loop_b.wl",
+    "cas/loop_b_receipt.json"
+  ]
+}

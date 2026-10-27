@@ -1,0 +1,136 @@
+{
+  "unit": "HTT_COSMO_TEFF_REFOCUS_CONVENTIONS",
+  "date": "2026-10-26",
+  "scope": "Bounded R2-R3 source/convention work for existing HTT inference; no new broad research loop",
+  "observed_coefficients": {
+    "C_lm": "Must carry field label and units; full phase/component information",
+    "C_l_hat": "(2l+1)^-1 sum_m |C_lm|^2; map power, squared units",
+    "C_l_theory": "Named ensemble/statistical power; distinct from a specific sky realization",
+    "reality": "C_l,-m=(-1)^m conjugate(C_lm)"
+  },
+  "conventions": {
+    "metric": "(-,+,+,+)",
+    "observer": "U.U=-c^2",
+    "directions": "e=-n; e photon propagation, n outward sky",
+    "speed": "v=cq/E dimensionless",
+    "state_measure": "dnu_U=g_s/(2pi hbar)^3 q^2 dq dOmega",
+    "I": "Physical bolometric energy density per solid angle [J m^-3 sr^-1]",
+    "radiance_conversion": "I=(1/c) integral spectral_radiance_nu dnu"
+  },
+  "hierarchy": {
+    "definition": "J^(i)_<A_l>=integral E v^(l+2i) e_<A_l> f dnu_U",
+    "radial_index": "i>=0",
+    "LC_velocity_degree": "n=l+2i",
+    "LC_source": "Lewis-Challinor2002 eq10 (signature+---, c=1)",
+    "massless": "v=1 => J^(i)_A_l=J_A_l for all i",
+    "MGE_expansion_coefficient": "Pi_A_l=integral E^3 F_A_l dE, eq50",
+    "MGE_older_label": "Footnote11 uses J^(l)_A_l=Delta_l Pi_A_l; its superscript labels angular rank in that notation",
+    "warning": "Do not reuse a bare superscript n until its defining integral is identified"
+  },
+  "harmonic_STF": {
+    "Delta_l": "4pi l!/(2l+1)!!",
+    "basis": "Y_lm(n)=calY_lm_A n^A; calY*_lm:calY_lmprime=delta_mmprime/Delta_l",
+    "forward": "J_A_l=(-1)^l Delta_l sum_m b_lm calY_lm_A",
+    "inverse": "b_lm=(-1)^l calY*_lm:J_A_l",
+    "norm": "J:J=Delta_l sum_m |b_lm|^2",
+    "real_basis": "J=(-1)^l sqrt(Delta_l) sum_a b_la E_la for orthonormal STF E",
+    "values": {
+      "l0": "4pi",
+      "l1": "4pi/3",
+      "l2": "8pi/15",
+      "l3": "8pi/35",
+      "l4": "32pi/315"
+    }
+  },
+  "physical_quantities": {
+    "rho": "J rank0",
+    "energy_flux_Q": "c J rank1",
+    "momentum_density": "J rank1/c",
+    "anisotropic_stress_pi": "J rank2",
+    "pressure_massless": "rho/3",
+    "H3": "J rank3",
+    "H4": "J rank4"
+  },
+  "temperature_conversion": {
+    "photon_constant": "C_gamma=pi k_B^4/(60 hbar^3 c^3)",
+    "exact": "I=C_gamma T_E^4",
+    "harmonic": "b_lm=I0 integral [1+4Theta+6Theta^2+4Theta^3+Theta^4] Y*_lm dOmega",
+    "linear_l_ge1": "b_lm=4I0 C^Theta_lm+O(Theta^2)",
+    "linear_pi": "pi=(8rho0/15) Q^Theta+O(Theta^2)",
+    "domain": "Planck ray temperatures or full-bolometric-energy calibrated T_E; a generic channel thermodynamic-K map requires its spectral/calibration model"
+  },
+  "quadratic_joint_pi": {
+    "inputs": "Theta=d.n+Q:nn+O:nnn; Q,O STF; allO(Theta); zero angular monopole",
+    "formula": "pi/rho=8Q/15+4STF(dd)/5+24 d^c O_abc/35+16 STF(Q_ac Q_bc)/35+8 STF(O_acd O_bcd)/35+O(Theta^3)",
+    "check": "Independent exact isotropic moment pairing counts",
+    "counts": {
+      "dO": "6/105 before coefficient6 and cross-factor2",
+      "QQ": "8/105 before coefficient6",
+      "OO": "36/945 before coefficient6"
+    },
+    "zero_terms": "dQ and QO have odd parity",
+    "rho_normalization": "Changes first-order pi only at cubic order for meanTheta=0"
+  },
+  "specific_source_discrepancy": {
+    "source": "MGE arXivastro-ph/9808163v2 PDFp15 eq81",
+    "printed": "tau_ab approximately15 pi_ab/(2rho_R)",
+    "source_implied": "MGE eq50 plus80 implies15 pi_ab/(8rho_R)",
+    "adopted": "Denominator8, consistent with direct angular integration and attached prior report",
+    "verification": "PDF page15 rendered and visually inspected; equations47/49/50/80 read",
+    "scope": "Localized factor-four display inconsistency; no journal erratum claimed"
+  },
+  "bandpass": {
+    "measured": "Band-weighted spectral-radiance harmonics with actual response beam/mask/fit operator",
+    "bolometric_requirement": "Calibrated spectral completion or bounded omitted-band contribution",
+    "finite_energy_transport": "integral_E1^E2 E^4 partial_E f dE=[E^4 f]_E1^E2 -4 integral_E1^E2 E^3 f dE",
+    "consequence": "Keep endpoint terms; uncorrected bolometric hierarchy is not independent per-band transport"
+  },
+  "physically_constrainable": "Observer-event radiation tensors from calibrated moments; matter shear/vorticity/acceleration/tilt/curvature additionally require registered physical response and derivative/nuisance inputs",
+  "sources": [
+    {
+      "id": "PaperI_v15",
+      "paths": [
+        "02_one_field_state_space.tex",
+        "03b_angular_response.tex",
+        "03c_massive_calculus.tex",
+        "07_physical_interpretation.tex"
+      ],
+      "labels": [
+        "eq:observer-split",
+        "eq:massive-velocity-hierarchy",
+        "eq:physical-energy-flux-stress",
+        "eq:detector-observation-map"
+      ]
+    },
+    {
+      "id": "Ellis_RelativisticCosmology",
+      "location": "printed104-108/PDF120-124; eq5.81-5.83,5.95-5.101"
+    },
+    {
+      "id": "MGE1999",
+      "url": "https://arxiv.org/abs/astro-ph/9808163v2",
+      "location": "PDF10,14-15; eq47,49-50,77-81"
+    },
+    {
+      "id": "LewisChallinor2002",
+      "url": "https://arxiv.org/html/astro-ph/0203507",
+      "location": "II eq2,4,10-12; III massless reduction"
+    },
+    {
+      "id": "Prior_internal_loops",
+      "paths": [
+        "LOOP_A_LOWELL.md",
+        "LOOP_B_DIPOLE.md",
+        "LOOP_C_KINEMATICS.md"
+      ]
+    }
+  ],
+  "status": {
+    "source_convention_mapping": "COMPLETE",
+    "quadratic_coefficients": "PAIRING_CHECKED",
+    "ODE": "NOT_RUN",
+    "solver": "NOT_RUN",
+    "observational_fit": "NOT_RUN",
+    "publication_or_push": false
+  }
+}

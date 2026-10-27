@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "workflow_version": "1.0.0",
+  "task": "research",
+  "unit_id": "LOOP_A_LOWELL_20261026",
+  "objective": "Construct a solver-free local radiative-moment to shear response with nonlinear positivity and finite observation error.",
+  "scope": "Internal C0 conditional theory; no native solver, ODE, raw-data execution, or git mutation.",
+  "status": "complete_author_unit_pending_parent_independent_review",
+  "owner": "common/obsstat; conditional MIO diagnostic images",
+  "source_commit": "a55036ad09c53a9215dee3282e425d37cfb95443",
+  "author_runtime": {
+    "requested_model": "UNKNOWN",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "conventions": {
+    "signature": "(-,+,+,+)",
+    "congruence": "U.U=-1; geodesic and irrotational for transport application",
+    "derivative": "dot=U.nabla per proper length s=c*tau",
+    "brightness": "I_E=2 E^3 f/((2 pi hbar)^3 c^3), I=int_0^infty I_E dE",
+    "direction": "propagation e=-outward n",
+    "units": "rho,q,pi,H_l J m^-3; sigma,Theta m^-1; physical flux c q",
+    "boundary": "E^4 f -> 0 at 0 and infinity; domination for differential energy integration"
+  },
+  "dependencies": [
+    {
+      "id": "LEGACY55",
+      "identity": "sha256:6b6e7311ce782f1ce770326832aaae70382c1a42c218eb2692058d5392cc9ce4",
+      "description": "55p attachment PDF49-53 E1-E20, first-order radiative moment bridge and derivative envelopes"
+    },
+    {
+      "id": "REPORT36",
+      "identity": "sha256:9f47da1383205ae8112648d2626fc2712ec913aa5f591ec76a738e234efa9418",
+      "description": "36p report PDF10 section8.1 and PDF24-26 section23 tensorized carriers"
+    },
+    {
+      "id": "ELLIS",
+      "identity": "sha256:95d27cd6f3887e4219b0d777cf305494642b0cf5769aac7433d007eae1ba09c7",
+      "description": "PDF121-124 equations5.81-5.101; PDF299 equations11.1-11.2"
+    },
+    {
+      "id": "BOLTZMANN",
+      "identity": "sha256:b39603bc52d80551b3610e76d5fb090a1b53715e65db897883c3c6662af2ea1f",
+      "description": "Cercignani/Kremer PDF56-57 equations2.68-2.78 moment definitions"
+    },
+    {
+      "id": "MGE99",
+      "identity": "arXiv:astro-ph/9808163v2; DOI:10.1103/PhysRevD.59.083506; local_sha256:47d15d34a2702462ee1b30795d74aa52dce79a10a2a20ee19f26e41ccb729e72",
+      "description": "Actual primary PDF download; p14 Eq71 and p15 Eq89 coefficient discrepancy"
+    },
+    {
+      "id": "R32QO",
+      "identity": "repository:a55036ad09c53a9215dee3282e425d37cfb95443",
+      "description": "R32-01-QO-METHODS science/RESEARCH_NOTE.md retained scope and comparator map"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "REPORT",
+      "kind": "derivation",
+      "locator": "research/LOOP_A_LOWELL.md",
+      "scope": "A1-A13 analytic derivation and source audit",
+      "dependency_ids": [
+        "LEGACY55",
+        "REPORT36",
+        "ELLIS",
+        "BOLTZMANN",
+        "MGE99",
+        "R32QO"
+      ]
+    },
+    {
+      "id": "WOLFRAM",
+      "kind": "symbolic_computation",
+      "locator": "cas/loop_a.wl; cas/loop_a_results.json",
+      "scope": "finite polynomial and Planck angular integral checks; not xAct or four-axis CAS",
+      "dependency_ids": [
+        "ELLIS",
+        "MGE99"
+      ]
+    },
+    {
+      "id": "SCISPACE",
+      "kind": "literature_search",
+      "locator": "sources/A_SCISPACE_SEARCH.json",
+      "scope": "Discovery only; formula claims use primary PDF",
+      "dependency_ids": [
+        "MGE99"
+      ]
+    },
+    {
+      "id": "SOURCE_RENDER",
+      "kind": "source_inspection",
+      "locator": "sources/A_ellis299.png; sources/A_maartens15.png",
+      "scope": "Visually inspected coefficient10/7 vs2/7 source discrepancy",
+      "dependency_ids": [
+        "ELLIS",
+        "MGE99"
+      ]
+    },
+    {
+      "id": "FIGURE-A",
+      "kind": "analytic_illustration",
+      "locator": "figures/figure_a_radiation.pdf; figures/figure_a_radiation.png; cas/make_a_figure.py",
+      "scope": "Analytic axisymmetric positive brightness family; exact eigenvalue branches with 4-point independent matrix assembly; no measured CMB",
+      "dependency_ids": [
+        "ELLIS"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "id": "R1",
+      "status": "complete",
+      "evidence_refs": [
+        "REPORT"
+      ],
+      "reason": "See corresponding coherent report section."
+    },
+    {
+      "id": "R2",
+      "status": "complete",
+      "evidence_refs": [
+        "REPORT",
+        "SCISPACE",
+        "SOURCE_RENDER"
+      ],
+      "reason": "See corresponding coherent report section."
+    },
+    {
+      "id": "R3",
+      "status": "complete",
+      "evidence_refs": [
+        "REPORT"
+      ],
+      "reason": "See corresponding coherent report section."
+    },
+    {
+      "id": "R4",
+      "status": "complete",
+      "evidence_refs": [
+        "REPORT"
+      ],
+      "reason": "See corresponding coherent report section."
+    },
+    {
+      "id": "R5",
+      "status": "complete",
+      "evidence_refs": [
+        "REPORT"
+      ],
+      "reason": "See corresponding coherent report section."
+    },
+    {
+      "id": "R6",
+      "status": "complete",
+      "evidence_refs": [
+        "REPORT"
+      ],
+      "reason": "Independent mathematical method, source comparison, limits and dimensional checks completed by author; parent fresh review remains external closeout."
+    },
+    {
+      "id": "R7",
+      "status": "complete",
+      "evidence_refs": [
+        "REPORT",
+        "WOLFRAM"
+      ],
+      "reason": "See corresponding coherent report section."
+    },
+    {
+      "id": "R8",
+      "status": "complete",
+      "evidence_refs": [
+        "REPORT"
+      ],
+      "reason": "See corresponding coherent report section."
+    },
+    {
+      "id": "R9",
+      "status": "complete",
+      "evidence_refs": [
+        "REPORT"
+      ],
+      "reason": "See corresponding coherent report section."
+    },
+    {
+      "id": "R10",
+      "status": "complete",
+      "evidence_refs": [
+        "REPORT"
+      ],
+      "reason": "Requested bounded author unit completed; parent owns fresh independent review and aggregate campaign."
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "A-PLANCK-MIX",
+      "text": "For T=T0(1+d.n), |d|<1, rho/rho0=1+2|d|^2+|d|^4/5 and pi/rho0=(4/5+4|d|^2/35) STF(d d), although temperature Q and O vanish.",
+      "owner": "obsstat",
+      "status": [
+        "DERIVED",
+        "CONDITIONAL"
+      ],
+      "evidence_type": "proof",
+      "basis": [
+        "derived",
+        "symbolically checked"
+      ],
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence_refs": [
+        "REPORT",
+        "WOLFRAM"
+      ],
+      "caveats": [
+        "Absolute positive Planck temperature field, both helicities, declared frame."
+      ],
+      "obligations": []
+    },
+    {
+      "claim_id": "A-POSITIVE-RESPONSE",
+      "text": "L_I S=8rho S/15+10STF(S pi)/7-H4:S equals angular integral B_e S; lambda_min(M2)||S||^2<=<S,L_I S><=rho||S||^2 for I>=0.",
+      "owner": "common",
+      "status": [
+        "DERIVED",
+        "CONDITIONAL"
+      ],
+      "evidence_type": "proof",
+      "basis": [
+        "derived",
+        "symbolically checked"
+      ],
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence_refs": [
+        "REPORT",
+        "WOLFRAM"
+      ],
+      "caveats": [
+        "Nonnegative finite bolometric brightness; inverse requires positive response eigenvalue."
+      ],
+      "obligations": []
+    },
+    {
+      "claim_id": "A-STABLE-INVERSE",
+      "text": "If L_I sigma=-R, errors satisfy ||I-Ihat||_L1<=epsI and ||R-Rhat||<=epsR, and lambdahat=lambda_min(L_Ihat)>epsI, then ||sigma-sigmahat||<=(epsR+epsI||sigmahat||)/(lambdahat-epsI).",
+      "owner": "common",
+      "status": [
+        "DERIVED",
+        "CONDITIONAL"
+      ],
+      "evidence_type": "proof",
+      "basis": [
+        "derived"
+      ],
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence_refs": [
+        "REPORT"
+      ],
+      "caveats": [
+        "Exact local transport branch; derivative residual and bolometric completion certificates supplied externally."
+      ],
+      "obligations": []
+    },
+    {
+      "claim_id": "A-NONCOAXIAL-WITNESS",
+      "text": "Positive l=0+2 brightness with b in(-3/2,3) and off-diagonal shear S yields [pi,S]=2rho*b*k(E31-E13)/15 and exact local residual R=-L_I S.",
+      "owner": "common",
+      "status": [
+        "DERIVED",
+        "CONDITIONAL"
+      ],
+      "evidence_type": "proof",
+      "basis": [
+        "derived",
+        "symbolically checked"
+      ],
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence_refs": [
+        "REPORT",
+        "WOLFRAM"
+      ],
+      "caveats": [
+        "Algebraic local quadrupole witness, not a constructed global Einstein-Liouville spacetime."
+      ],
+      "obligations": []
+    },
+    {
+      "claim_id": "A-COEFFICIENT-AUDIT",
+      "text": "MGE arXiv v2 Eq89 displays2/7, inconsistent with its exact Eq71 specialized to l=2 and matching textbook10/7; direct angular integration fixes10/7 for current conventions.",
+      "owner": "common",
+      "status": [
+        "DERIVED"
+      ],
+      "evidence_type": "proof",
+      "basis": [
+        "derived",
+        "source inspected",
+        "symbolically checked"
+      ],
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence_refs": [
+        "REPORT",
+        "SOURCE_RENDER",
+        "WOLFRAM"
+      ],
+      "caveats": [
+        "No claim about a journal erratum or entire source validity."
+      ],
+      "obligations": []
+    },
+    {
+      "claim_id": "A-DATA-APPLICATION",
+      "text": "Frequency channel response plus a bolometric and derivative-jet error certificate can populate the conditional inverse.",
+      "owner": "obsstat",
+      "status": [
+        "SPECIFIED",
+        "CONDITIONAL"
+      ],
+      "evidence_type": "artifact",
+      "basis": [
+        "specified"
+      ],
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "evidence_refs": [
+        "REPORT"
+      ],
+      "caveats": [
+        "No empirical derivative-jet product was available; finite-band boundary terms must be supplied or bounded."
+      ],
+      "obligations": [
+        "Supply frame-bound brightness response, tail/error budget, and local derivative residual."
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "A-CAS",
+      "domain": "math",
+      "result": "pass_scoped",
+      "evidence_refs": [
+        "WOLFRAM"
+      ],
+      "execution_ref": "WL-A-1",
+      "reason": "Zero polynomial remainders and exact integrals; deliberately wrong2/7 fails."
+    },
+    {
+      "id": "A-PHYSICS",
+      "domain": "physics",
+      "result": "pass_scoped",
+      "evidence_refs": [
+        "REPORT"
+      ],
+      "reason": "Planck normalization; propagation parity; FLRW coefficient; zero density; beam degeneracy; dimensions; support typed separately."
+    },
+    {
+      "id": "A-INDEPENDENT-REVIEW",
+      "domain": "math",
+      "result": "not_run",
+      "evidence_refs": [],
+      "reason": "Fresh review is parent-owned after this bounded author delivery."
+    },
+    {
+      "id": "A-FIGURE-MATRIX",
+      "domain": "numerics",
+      "result": "pass_scoped",
+      "evidence_refs": [
+        "FIGURE-A"
+      ],
+      "execution_ref": "PY-A-FIGURE",
+      "reason": "All five eigenvalues match exact branches at a=-0.8,0,0.5,1.5; max error2.220446049250313e-16. PNG visually inspected: no clipping/overlap."
+    }
+  ],
+  "executions": [
+    {
+      "id": "WL-A-1",
+      "status": "completed",
+      "command": "Wolfram wolframlanguageevaluator, cas/loop_a.wl core through association",
+      "environment": "Connected Wolfram kernel; stateless",
+      "evidence_refs": [
+        "WOLFRAM"
+      ],
+      "exit_code": null,
+      "reason": "Tool completed with isError=false and returned exact expressions; external kernel process exit code was not exposed."
+    },
+    {
+      "id": "WL-A-2",
+      "status": "completed",
+      "command": "Wolfram wolframlanguageevaluator, same core plus upper-gap expression",
+      "environment": "Connected Wolfram kernel; stateless",
+      "evidence_refs": [
+        "WOLFRAM"
+      ],
+      "exit_code": null,
+      "reason": "Tool completed with isError=false and returned exact expressions; external kernel process exit code was not exposed."
+    },
+    {
+      "id": "PY-A-FIGURE",
+      "status": "completed",
+      "command": "python HTT_INTERNAL_THEORY_20261026/cas/make_a_figure.py",
+      "environment": "Local Python, NumPy and Matplotlib; no ODE",
+      "evidence_refs": [
+        "FIGURE-A"
+      ],
+      "exit_code": 0,
+      "reason": "Actual shell exit0; PDF+PNG created; analytical curves and direct5x5 assembly agree."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "ADOPT-CONDITIONAL",
+      "text": "Adopt written theorem and observations contract for internal use; retain empirical and publication novelty status separately."
+    }
+  ],
+  "overrides": [
+    {
+      "id": "COEFFICIENT-CORRECTION",
+      "previous": "MGE99 arXiv v2 Eq89 displayed2/7",
+      "basis": "Same source Eq71, attached Ellis Eq11.2, direct angular derivation and zero polynomial remainder",
+      "replacement": "10/7 for declared moment convention",
+      "impact": "Exact shear response and its positivity proof."
+    },
+    {
+      "id": "F-TYPING",
+      "previous": "Legacy filling_fraction.py F_cert=x_C/U; current typefree/report F_sup directional support utilization; current skill/manuscript F_nu explicit-measure occupancy.",
+      "basis": "Existing source inventory distinguishes all three namespaces; user requested preservation of tensorized report definitions.",
+      "replacement": "Keep F_cert (certified normalized diagnostic rejecting material/volume occupancy), F_sup (directional support utilization), and F_nu (occupancy under declared measure and support) separately typed.",
+      "impact": "Corrects report terminology only; no inferred occupancy measure, material volume or changed scalar implementation."
+    }
+  ],
+  "failures": [],
+  "next_actions": [
+    {
+      "id": "REVIEW",
+      "action": "Parent fresh independent review of proof, source coefficient discrepancy and error certificate."
+    },
+    {
+      "id": "DATA",
+      "action": "Supply bolometric brightness and derivative-jet product; then form L_I and evaluate response eigenvalue and A13."
+    }
+  ],
+  "storage": {
+    "local_bytes": "research/LOOP_A_LOWELL.md, research/LOOP_A_CLAIMS.json, cas/loop_a.wl, cas/loop_a_results.json",
+    "persistence": "Parent owns aggregate deliverable persistence; no git mutation."
+  },
+  "novelty": "No priority assertion; bounded comparator identifies extension over retained R32 morphology result."
+}

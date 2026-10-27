@@ -256,7 +256,19 @@
       "PR-R32-06-P4-DESIGN",
       "PR-R32-07-P5-ALGEBRA",
       "PR-R32-08-H03-PAPER",
-      "PR-R32-09-BANDPASS-PAPER"
+      "PR-R32-09-BANDPASS-PAPER",
+      "PR-R36-00-INTEGRATION",
+      "PR-R36-01-CF4-OPERATOR",
+      "PR-R36-02-CF4-CORRELATED",
+      "PR-R36-03-PM-HISTORY",
+      "PR-R36-04-OPTICAL-JOINT",
+      "PR-R36-05-RADIATION-RESPONSE",
+      "PR-R36-06-PR4-MORPHOLOGY",
+      "PR-R36-07-FOREGROUND-BUDGET",
+      "PR-R36-08-PUBLIC-SN",
+      "PR-R36-09-ATLAS-INTAKE",
+      "PR-R36-10-GEOMETRY-IMAGE",
+      "PR-R36-11-SCIENCE-SYNTHESIS"
     ],
     "strict_extension_cards": [
       "PR-SOLVER-FREE-DOSSIER",
@@ -310,7 +322,28 @@
       "PR-MES-FULL-HANDOFF",
       "PR-MES-I1-I2-MATERIALIZE",
       "PR-TYPEFREE-INFERENCE-PORT",
-      "PR-GR-STATISTICS-CAS-HANDOFF"
+      "PR-GR-STATISTICS-CAS-HANDOFF",
+      "PR-R36-00-INTEGRATION",
+      "PR-R36-01-CF4-OPERATOR",
+      "PR-R36-02-CF4-CORRELATED",
+      "PR-R36-03-PM-HISTORY",
+      "PR-R36-04-OPTICAL-JOINT",
+      "PR-R36-05-RADIATION-RESPONSE",
+      "PR-R36-06-PR4-MORPHOLOGY",
+      "PR-R36-07-FOREGROUND-BUDGET",
+      "PR-R36-08-PUBLIC-SN",
+      "PR-R36-09-ATLAS-INTAKE",
+      "PR-R36-10-GEOMETRY-IMAGE",
+      "PR-R36-11-SCIENCE-SYNTHESIS",
+      "PR-R32-01-QO-METHODS",
+      "PR-R32-02-P1-SELECTED",
+      "PR-R32-03-H03-STRUCTURED",
+      "PR-R32-04-BANDPASS-BOUNDS",
+      "PR-R32-05-P6-OPTICAL",
+      "PR-R32-06-P4-DESIGN",
+      "PR-R32-07-P5-ALGEBRA",
+      "PR-R32-08-H03-PAPER",
+      "PR-R32-09-BANDPASS-PAPER"
     ],
     "checkpoint_every_completed_prs": 5,
     "no_native_lowell_solver_implementation": true,
@@ -13831,6 +13864,402 @@
       "user_authorized": true,
       "authorization": "Owner 2026-10-25 explicitly requests integrating new research into the DAG, accelerating publication results, push and current-session handoff.",
       "task_packet": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/FRONTIER.json#R32-09-BANDPASS-PAPER"
+    },
+    {
+      "id": "PR-R36-00-INTEGRATION",
+      "wave": 0,
+      "title": "Integrate internal observable bridges and correct external audit",
+      "owner": "HTT",
+      "depends": [],
+      "files": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027",
+        "scripts/codex_harness/publication_frontier_preflight.py"
+      ],
+      "tests": [
+        "Scoped H03 GLS/covariance tests",
+        "Controller/preflight and canonical-DAG/mirror tests",
+        "Independent candidate review"
+      ],
+      "dod": [
+        "Publish source-bound external-audit reconciliation, preserved internal results, actual T12 replay and exact covariance transport.",
+        "Append explicit alternate/conditional contracts without modifying original42 nodes or live runtime."
+      ],
+      "kill": "No original scientific promotion, state reset, native solver/ODE, main merge or submission.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-27 requests current-branch audit, critical external-review integration, parallel blocker research, DAG/contracts updates, push and local continuation. Explicit PR4/public-SN alternate estimands retain original contracts.",
+      "task_packet": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/RUN_CONTRACT.json"
+    },
+    {
+      "id": "PR-R36-01-CF4-OPERATOR",
+      "wave": 0,
+      "title": "Export the exact existing H03/R32 estimator and source ownership",
+      "owner": "HTT",
+      "depends": [],
+      "files": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR"
+      ],
+      "tests": [
+        "Run source-qualified targeted tests defined in the frontier",
+        "One independent scientific review and concrete finding closeout"
+      ],
+      "dod": [
+        "Export the exact existing H03/R32 estimator and source ownership",
+        "Recover the exact selected 35970-row order, cached source identities, four window operators, nuisance projection and distance/velocity conventions from the existing producer. Export the small-output operator A or streamed blocks; reproduce the saved 36 coefficients and inherited cross-window covariance at predeclared tolerances. Do not refit a frozen exhausted experiment. The exported response AN must be used for both leading source bulk and observer motion with the appropriate opposite signs; no 1/z(center) replacement for one of them. If raw input is absent, locate/cache-acquire its exact open release; preserve historical one-use limits. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it."
+      ],
+      "kill": "No original42 promotion, duplicate exhausted experiment, fabricated product, solver/ODE, main merge or submission.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-27 requests current-branch audit, critical external-review integration, parallel blocker research, DAG/contracts updates, push and local continuation. Explicit PR4/public-SN alternate estimands retain original contracts.",
+      "task_packet": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-01-CF4-OPERATOR",
+      "product_requires": {
+        "all": []
+      }
+    },
+    {
+      "id": "PR-R36-02-CF4-CORRELATED",
+      "wave": 0,
+      "title": "Transport correlated velocity/calibration uncertainty through the exact estimator",
+      "owner": "HTT",
+      "depends": [
+        "PR-R36-01-CF4-OPERATOR"
+      ],
+      "files": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED"
+      ],
+      "tests": [
+        "Run source-qualified targeted tests defined in the frontier",
+        "One independent scientific review and concrete finding closeout"
+      ],
+      "dod": [
+        "Transport correlated velocity/calibration uncertainty through the exact estimator",
+        "Consume h03_exact_operator. Use covariance/covariance_bridge.py with a declared physical decomposition and matched units. Compute A diag(D) A^T+(AV)(AV)^T+K Sigma K^T, retaining cross-window terms and rejecting double-counted PV/calibration sources. Start with a literature-supported linear-velocity PSD kernel or existing qualified mock factor; mark model assumptions and perform footprint/method sensitivity. A conditional model-based result may complete without author-only mocks. Actual source-population coverage needs selected mocks or a justified alternative validation. Report sample-covariance uncertainty, not only an inverse correction; identical CF4 catalogues are not independent confirmations. Refit distinct mean models using the same extraction and calibrated selection rule. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it."
+      ],
+      "kill": "No original42 promotion, duplicate exhausted experiment, fabricated product, solver/ODE, main merge or submission.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-27 requests current-branch audit, critical external-review integration, parallel blocker research, DAG/contracts updates, push and local continuation. Explicit PR4/public-SN alternate estimands retain original contracts.",
+      "task_packet": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-02-CF4-CORRELATED",
+      "product_requires": {
+        "all": [
+          {
+            "task_id": "R36-01-CF4-OPERATOR",
+            "evidence": "qualified",
+            "product": "h03_exact_operator"
+          }
+        ]
+      }
+    },
+    {
+      "id": "PR-R36-03-PM-HISTORY",
+      "wave": 0,
+      "title": "Implement the history-aware proper-motion response and its identifiable image",
+      "owner": "HTT",
+      "depends": [],
+      "files": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY"
+      ],
+      "tests": [
+        "Run source-qualified targeted tests defined in the frontier",
+        "One independent scientific review and concrete finding closeout"
+      ],
+      "dod": [
+        "Implement the history-aware proper-motion response and its identifiable image",
+        "Use the audited first-order Bianchi-I response P[2c(B_o-B_s)/(a_o chi)-dot B_o]n with source/observer endpoint and clock conventions, near-source +P sigma_o n and the finite-history bound. Implement endpoint/derivative response and VSH projection without integrating an ODE. Compare local-affine and distant-source limits, changing B(t) at fixed endpoints, frame spin/glide and actual available PM covariance. Report a source-specific sensitivity frontier; do not convert a CF4-scale forecast or a vector-mode CMB limit into a universal no-go. Generic response completion does not supply optical-centroid-to-matter/NNR laws. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it."
+      ],
+      "kill": "No original42 promotion, duplicate exhausted experiment, fabricated product, solver/ODE, main merge or submission.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-27 requests current-branch audit, critical external-review integration, parallel blocker research, DAG/contracts updates, push and local continuation. Explicit PR4/public-SN alternate estimands retain original contracts.",
+      "task_packet": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-03-PM-HISTORY",
+      "product_requires": {
+        "all": []
+      }
+    },
+    {
+      "id": "PR-R36-04-OPTICAL-JOINT",
+      "wave": 0,
+      "title": "Implement the shared-budget optical inverse in a correctly defined observer chart",
+      "owner": "HTT",
+      "depends": [],
+      "files": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT"
+      ],
+      "tests": [
+        "Run source-qualified targeted tests defined in the frontier",
+        "One independent scientific review and concrete finding closeout"
+      ],
+      "dod": [
+        "Implement the shared-budget optical inverse in a correctly defined observer chart",
+        "Implement the full profiled seven-component Hubble consistency test, uncertain S term, direct-dipole uncertainty, S=0 set branch and finite-z remainder. The separate 0.8/0.8 counterexample must reject jointly. Preserve accelerated same-congruence d=-A/(cH); add the dust moving-observer interpretation d_boost=-2(I+S) beta at first order only with corrected distance d_L/(1+z)^2 and shifted vertex redshift. Derive the raw-to-target estimator response before using a catalogue dipole. Distinguish nonlinear magnitude octupole from a spurious uncorrected-distance octupole. No observed-acceleration claim from raw CF4 harmonic coefficients. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it."
+      ],
+      "kill": "No original42 promotion, duplicate exhausted experiment, fabricated product, solver/ODE, main merge or submission.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-27 requests current-branch audit, critical external-review integration, parallel blocker research, DAG/contracts updates, push and local continuation. Explicit PR4/public-SN alternate estimands retain original contracts.",
+      "task_packet": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-04-OPTICAL-JOINT",
+      "product_requires": {
+        "all": []
+      }
+    },
+    {
+      "id": "PR-R36-05-RADIATION-RESPONSE",
+      "wave": 0,
+      "title": "Build a physical radiation-stress confidence image and response-preserving compression",
+      "owner": "HTT",
+      "depends": [],
+      "files": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE"
+      ],
+      "tests": [
+        "Run source-qualified targeted tests defined in the frontier",
+        "One independent scientific review and concrete finding closeout"
+      ],
+      "dod": [
+        "Build a physical radiation-stress confidence image and response-preserving compression",
+        "Reuse the exact finite-boost stress null D, Landau rest-stress scalar A_gamma, nonlinear harmonic adapter and existing finite-error tests. Implement a common-input comparison with the linear temperature-quadrupole estimator using the full f-P covariance and physical moment cone. Assemble the 5x5 radiative response from energy moments of ranks 0,2,4; exact moment matching must preserve it even with unresolved higher moments/entropy. Test actual singular spectrum if a sufficient entropy bound fails. Publish a conditional coverage/width comparison; observational intervals additionally require calibrated intensity and spectral completion. Do not turn polarization E into positive intensity or construct an independent photon-number channel from one blackbody temperature map. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it."
+      ],
+      "kill": "No original42 promotion, duplicate exhausted experiment, fabricated product, solver/ODE, main merge or submission.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-27 requests current-branch audit, critical external-review integration, parallel blocker research, DAG/contracts updates, push and local continuation. Explicit PR4/public-SN alternate estimands retain original contracts.",
+      "task_packet": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-05-RADIATION-RESPONSE",
+      "product_requires": {
+        "all": []
+      }
+    },
+    {
+      "id": "PR-R36-06-PR4-MORPHOLOGY",
+      "wave": 0,
+      "title": "Qualify a separate PR4 simulation branch and compute a fixed morphology statistic",
+      "owner": "HTT",
+      "depends": [],
+      "files": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-06-PR4-MORPHOLOGY"
+      ],
+      "tests": [
+        "Run source-qualified targeted tests defined in the frontier",
+        "One independent scientific review and concrete finding closeout"
+      ],
+      "dod": [
+        "Qualify a separate PR4 simulation branch and compute a fixed morphology statistic",
+        "Use source URLs and contracts in research/DATA_ATLAS.json. Reuse existing NPIPE cache before downloading. Bind release, iteration, input sky, A/B split, CMB/noise/processed residual role, RING/NESTED, IQU, beam and weights. 30/44 A/B are time splits, not detector sets. Verify pairing from source genealogy and response identities; a universal 1% cross-spectrum threshold is not a genealogy proof. After qualification process one sky as one null unit and apply the same within-sky scan as for observations. Start with a bounded streaming pilot, then extend the declared Monte Carlo accuracy. Report ideal U law separately from processed-null rank. This is an authorized PR4 alternate experiment, not original PR3 FULL/HM/OE acceptance. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it."
+      ],
+      "kill": "No original42 promotion, duplicate exhausted experiment, fabricated product, solver/ODE, main merge or submission.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-27 requests current-branch audit, critical external-review integration, parallel blocker research, DAG/contracts updates, push and local continuation. Explicit PR4/public-SN alternate estimands retain original contracts.",
+      "task_packet": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-06-PR4-MORPHOLOGY",
+      "product_requires": {
+        "all": []
+      }
+    },
+    {
+      "id": "PR-R36-07-FOREGROUND-BUDGET",
+      "wave": 0,
+      "title": "Calibrate a dimensional complex polarization-moment budget",
+      "owner": "HTT",
+      "depends": [],
+      "files": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET"
+      ],
+      "tests": [
+        "Run source-qualified targeted tests defined in the frontier",
+        "One independent scientific review and concrete finding closeout"
+      ],
+      "dod": [
+        "Calibrate a dimensional complex polarization-moment budget",
+        "Consume existing R31/R32 coefficients and actual frequency-map/noise products. Fix coefficient units, spin frame and target low-l extraction. Use complex Q+iU spin moments, signed/complex line-of-sight weights and an explicit total-variation Taylor remainder. Estimate or externally bound the physical radius from heldout channels or an independently justified foreground model. Report the identified response over a range of justified radii with covariance; do not call a dimensionless free radius measured contamination, and do not count derived SMICA as an independent frequency channel. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it."
+      ],
+      "kill": "No original42 promotion, duplicate exhausted experiment, fabricated product, solver/ODE, main merge or submission.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-27 requests current-branch audit, critical external-review integration, parallel blocker research, DAG/contracts updates, push and local continuation. Explicit PR4/public-SN alternate estimands retain original contracts.",
+      "task_packet": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-07-FOREGROUND-BUDGET",
+      "product_requires": {
+        "all": []
+      }
+    },
+    {
+      "id": "PR-R36-08-PUBLIC-SN",
+      "wave": 0,
+      "title": "Fit a public released-magnitude anisotropy comparator with full covariance",
+      "owner": "HTT",
+      "depends": [],
+      "files": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN"
+      ],
+      "tests": [
+        "Run source-qualified targeted tests defined in the frontier",
+        "One independent scientific review and concrete finding closeout"
+      ],
+      "dod": [
+        "Fit a public released-magnitude anisotropy comparator with full covariance",
+        "Acquire or reuse the pinned c447 Pantheon+ table and STAT+SYS covariance listed in the existing acquisition manifest. Verify Git blob identity, local SHA256, 1701-row order, N^2 covariance entries, duplicate observations and calibration flags. Use the total covariance once; m_b_corr_ERR_DIAG is for plots, not a fit. Bind zHEL/zCMB/zHD and do not add already included PV uncertainty again. Profile the additive magnitude calibration for anisotropy-only inference; MU_SH0ES is not an independent absolute-H0 determination. Fit a prespecified low-z/depth and angular response, report covariance-aware null/robustness and observer-chart correction. This is an explicit released-observable estimand, not a replacement for nominal SALT2 training parity. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it."
+      ],
+      "kill": "No original42 promotion, duplicate exhausted experiment, fabricated product, solver/ODE, main merge or submission.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-27 requests current-branch audit, critical external-review integration, parallel blocker research, DAG/contracts updates, push and local continuation. Explicit PR4/public-SN alternate estimands retain original contracts.",
+      "task_packet": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-08-PUBLIC-SN",
+      "product_requires": {
+        "all": []
+      }
+    },
+    {
+      "id": "PR-R36-09-ATLAS-INTAKE",
+      "wave": 0,
+      "title": "Qualify an existing external numeric polarized atlas in its actual family/mode domain",
+      "owner": "HTT",
+      "depends": [],
+      "files": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-09-ATLAS-INTAKE"
+      ],
+      "tests": [
+        "Run source-qualified targeted tests defined in the frontier",
+        "One independent scientific review and concrete finding closeout"
+      ],
+      "dod": [
+        "Qualify an existing external numeric polarized atlas in its actual family/mode domain",
+        "Search exact primary release paths listed in DATA_ATLAS and existing receipts for numeric all-m T/E/B products; code, plots and chains are not that product. Consume only existing external outputs, no solver execution or generation here. Bind IC normalization, frame/spin phase/handedness, beam/history, regularity and family equivalence. AniLoS IX has physical ell=|m|=2; an array sentinel is not ell<=3 coverage. Admit a declared restricted external-transfer template comparison when the product qualifies; leave unsupported modes/families unknown. If no new payload exists, return a specific source gap and continue other lanes, not an invented atlas or original B02 PASS. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it."
+      ],
+      "kill": "No original42 promotion, duplicate exhausted experiment, fabricated product, solver/ODE, main merge or submission.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-27 requests current-branch audit, critical external-review integration, parallel blocker research, DAG/contracts updates, push and local continuation. Explicit PR4/public-SN alternate estimands retain original contracts.",
+      "task_packet": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-09-ATLAS-INTAKE",
+      "product_requires": {
+        "all": []
+      }
+    },
+    {
+      "id": "PR-R36-10-GEOMETRY-IMAGE",
+      "wave": 0,
+      "title": "Implement the imported spatial-Ricci and constraint image with degeneracy controls",
+      "owner": "HTT",
+      "depends": [],
+      "files": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE"
+      ],
+      "tests": [
+        "Run source-qualified targeted tests defined in the frontier",
+        "One independent scientific review and concrete finding closeout"
+      ],
+      "dod": [
+        "Implement the imported spatial-Ricci and constraint image with degeneracy controls",
+        "Reuse Loop D and the retained LRS V algebra. Implement finite Jacobi/Gauss-Codazzi/spatial-Ricci evaluators in the stated orthonormal frame, physical units and orientation, without evolving the field equations. Reproduce same-scalar/different-Ricci II/VII0 witnesses and flat I/VII0 presentation equivalence. Push declared tensor uncertainty sets through the algebraic map; report which tensor/curvature data distinguish the constructed cases. Complete this finite geometry compatibility product independently of a CMB transfer atlas. No CMB family identification from a scalar or morphology alone. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it."
+      ],
+      "kill": "No original42 promotion, duplicate exhausted experiment, fabricated product, solver/ODE, main merge or submission.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-27 requests current-branch audit, critical external-review integration, parallel blocker research, DAG/contracts updates, push and local continuation. Explicit PR4/public-SN alternate estimands retain original contracts.",
+      "task_packet": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-10-GEOMETRY-IMAGE",
+      "product_requires": {
+        "all": []
+      }
+    },
+    {
+      "id": "PR-R36-11-SCIENCE-SYNTHESIS",
+      "wave": 0,
+      "title": "Integrate the first qualified new result into the existing manuscripts",
+      "owner": "HTT",
+      "depends": [],
+      "files": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS"
+      ],
+      "tests": [
+        "Run source-qualified targeted tests defined in the frontier",
+        "One independent scientific review and concrete finding closeout"
+      ],
+      "dod": [
+        "Integrate the first qualified new result into the existing manuscripts",
+        "Require at least one exact qualified new result listed by the dependency expression. Update the relevant existing R32 companion manuscript with actual equations/results, physical explanation and scientific plots. Keep mathematical invariants, observables and inferred physical quantities separate. Compare methods on common data/assumptions and state the genuinely added result; write novelty evaluation in a research memo, not manuscript prose. Additional available lanes may be integrated without waiting for every external source. Do not substitute an intake/gap report for scientific output or declare all six papers submission-ready. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it."
+      ],
+      "kill": "No original42 promotion, duplicate exhausted experiment, fabricated product, solver/ODE, main merge or submission.",
+      "level": "L0",
+      "scope": "conditional_alternate",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-10-27 requests current-branch audit, critical external-review integration, parallel blocker research, DAG/contracts updates, push and local continuation. Explicit PR4/public-SN alternate estimands retain original contracts.",
+      "task_packet": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-11-SCIENCE-SYNTHESIS",
+      "product_requires": {
+        "any": [
+          {
+            "task_id": "R36-02-CF4-CORRELATED",
+            "evidence": "qualified",
+            "product": "cf4_correlated_response_result"
+          },
+          {
+            "task_id": "R36-03-PM-HISTORY",
+            "evidence": "qualified",
+            "product": "pm_history_response"
+          },
+          {
+            "task_id": "R36-04-OPTICAL-JOINT",
+            "evidence": "qualified",
+            "product": "optical_joint_response"
+          },
+          {
+            "task_id": "R36-05-RADIATION-RESPONSE",
+            "evidence": "qualified",
+            "product": "radiation_response_comparison"
+          },
+          {
+            "task_id": "R36-06-PR4-MORPHOLOGY",
+            "evidence": "qualified",
+            "product": "pr4_morphology_result"
+          },
+          {
+            "task_id": "R36-07-FOREGROUND-BUDGET",
+            "evidence": "qualified",
+            "product": "foreground_budget_result"
+          },
+          {
+            "task_id": "R36-08-PUBLIC-SN",
+            "evidence": "qualified",
+            "product": "public_sn_anisotropy_result"
+          },
+          {
+            "task_id": "R36-10-GEOMETRY-IMAGE",
+            "evidence": "qualified",
+            "product": "geometry_compatibility_result"
+          }
+        ]
+      }
     }
   ]
 }

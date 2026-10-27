@@ -1,0 +1,347 @@
+{
+  "schema_version": 1,
+  "review_id": "HTT_TEFF_V15_EXTENSION_20261026_INDEPENDENT_REVIEW",
+  "date_utc": "2026-10-26",
+  "reviewer": "/root/internal_five_loop_review_20261026",
+  "runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "requested_source": "inherited parent reviewer assignment; not an observed runtime assertion",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "verdict": "PASS_SCOPED_AFTER_TARGETED_REPAIRS",
+  "open_findings": [],
+  "fatal_blockers": [],
+  "findings": [
+    {
+      "id": "EXT-01",
+      "severity": "medium",
+      "target": "RESPONSE_FRONTIER.md R7",
+      "problem": "Number-normalized outputs were converted using the common density-of-states scale without reference number n0.",
+      "repair": "Explicit N_ref=Dcal(k_B T_*)^3 n0; normalized response/divergence/susceptibility multiplied by N_ref; raw number/energy conversions distinguished.",
+      "status": "closed"
+    },
+    {
+      "id": "EXT-02",
+      "severity": "medium",
+      "target": "PAPER_II_REUSE.md II12 and JSON II-CURRENT-FIBRE",
+      "problem": "Fixed-total-number family did not explicitly hold a0 fixed.",
+      "repair": "K0,a0,b0 fixed; d0 varies within its positive-temperature interval; propagation-angle convention explicit.",
+      "status": "closed"
+    },
+    {
+      "id": "EXT-03",
+      "severity": "low",
+      "target": "PAPER_II_REUSE.md II10",
+      "problem": "Missing addition sign before little-o remainder.",
+      "repair": "Literal plus restored.",
+      "status": "closed"
+    },
+    {
+      "id": "EXT-04",
+      "severity": "medium",
+      "target": "V15_INTEGRATION.md theoretical reference paragraph",
+      "problem": "Zero-fugacity phrase incorrectly described eta=0.",
+      "repair": "Zero chemical potential, eta=0 and unit fugacity explicitly stated.",
+      "status": "closed"
+    },
+    {
+      "id": "EXT-05",
+      "severity": "low",
+      "target": "V15_INTEGRATION.md tensorized interpretation",
+      "problem": "x was used for the underlying physical state rather than its retained sample-by-functional definition.",
+      "repair": "Underlying carrier X and sample-by-functional array x explicitly distinguished.",
+      "status": "closed"
+    }
+  ],
+  "scope": [
+    "Paper I entropy-controlled shear-response bridge",
+    "Paper II Doppler quotient, finite beam range and population response",
+    "Rank-four shear preservation and finite entropy error",
+    "Quantum-statistical detector response frontier",
+    "Bounded integration formula/numerical consistency skim"
+  ],
+  "independence": {
+    "candidate_author": false,
+    "candidate_source_edits": false,
+    "source_manuscript_edits": false,
+    "nested_agents": false,
+    "solver_or_ode": false,
+    "push": false,
+    "reviewer_deliverables": [
+      "research/INDEPENDENT_EXTENSION_REVIEW.md",
+      "research/INDEPENDENT_EXTENSION_REVIEW.json"
+    ]
+  },
+  "proof_checks": {
+    "paper_I": [
+      "Massless contracted entropy normalization and cancellation of reference energy",
+      "Global scalar divergence inequality and sharp scalar constant 3/32",
+      "Mass-matched operator centering by Id/2",
+      "Entropy-to-response bound and sufficient delta<8/75 threshold",
+      "Inverse denominator and optical consistency factors of c",
+      "Quadratic pressure cost coefficient45/64"
+    ],
+    "paper_II": [
+      "Massless resolved-ray Doppler weights3 and4 and weight-zero quotient",
+      "Regular calibration domain and aberration qualification",
+      "Convex-secant derivation, optimizing mean, endpoint attaining mixture and upper equality",
+      "Exact generalized Kantorovich prior-art specialization",
+      "Full-sky boost moment averages and calibrated apparent offset",
+      "Fixed-number fixed-stress counterflow under repaired parameter premise",
+      "Contrast covariance, finite inverse conditioning, rank and common-gain nuisance"
+    ],
+    "entropic_shear": [
+      "Energy harmonic sectors0,2,4 exactly determine the operator",
+      "Reduced entropy curvature and common brightness-domain L2 bound",
+      "STF coefficient Delta4=32pi/315 and response constant1024pi/(945C)",
+      "Conditional inverse error with positive denominator",
+      "Moment values versus derivative-field distinction",
+      "Positive natural-field toy and normalized bound coefficient256/945"
+    ],
+    "response_frontier": [
+      "Exact three-point Bregman sign and extremizer attainment",
+      "Conditional existence and regular quantum occupation domains",
+      "Gram projection, local susceptibility and multichannel Schur complement",
+      "Asymptotic square-root frontier distinguished from finite bound",
+      "Physical normalization after repair",
+      "Existing information-projection and Lam prior art acknowledged"
+    ],
+    "integration": [
+      "V1–V9 formulas",
+      "Quoted angular toy, beam, boost and frontier numerical values",
+      "U=cu, e=-n, zero chemical potential/unit fugacity, X/x and F namespace distinctions"
+    ]
+  },
+  "review_executions": [
+    {
+      "name": "Paper I supplied finite checks, write section disabled",
+      "result": "pass",
+      "quadrupolar_cases": 10,
+      "strong_k20_lambda_min_over_rho": 0.050119324370676406,
+      "strong_k20_entropy_lower": -0.5753306424683374
+    },
+    {
+      "name": "Paper II supplied finite checks, write section disabled",
+      "result": "pass",
+      "beam_cases": 1200,
+      "sharp_r2": "702464/1366875",
+      "max_pointwise_quotient_error": 9.992007221626409e-16,
+      "contrast_variance": 3.3999999999999996e-06
+    },
+    {
+      "name": "Angular projection reviewer rerun",
+      "result": "pass",
+      "fit_nodes": 128,
+      "evaluation_nodes": 288,
+      "L2_operator_error_over_rho": 0.006542435355817666,
+      "L4_operator_error_over_rho": 1.3323092437476974e-15,
+      "L4_entropy_defect": 9.371609027232771e-05,
+      "maximum_moment_residual": 5.21744851641158e-15
+    },
+    {
+      "name": "Quantum frontier reviewer rerun",
+      "result": "pass",
+      "quadrature_nodes_per_subinterval": 96,
+      "signed_tilts": [
+        -1.5,
+        -0.3,
+        -0.01,
+        0.01,
+        0.3,
+        1.5
+      ],
+      "statistics": [
+        "MB",
+        "BE",
+        "FD"
+      ],
+      "projected_susceptibilities_per_number": [
+        0.10447052371811939,
+        0.10034470525144272,
+        0.10611574741646741
+      ],
+      "maximum_relative_moment_residual": 5.921189464667501e-16,
+      "maximum_three_point_identity_residual": 1.5390084077469012e-16
+    },
+    {
+      "name": "Reviewer wrapper classification failure",
+      "result": "repaired",
+      "initial_error": "KeyError while summarizing: paper_ii filename matched paper_i substring; numerical calculations had executed.",
+      "closeout": "Separate corrected Paper II wrapper completed successfully; no candidate edits."
+    }
+  ],
+  "prior_art": {
+    "beam_bound": "Established exact specialization K(r^3,4/3)^(-3), Furuta2004; scalar novelty not asserted",
+    "response_frontier": "Established convex information-projection/entropy-robust expectation mechanism; Lam2016 Theorem3.1 and Proposition3.1 inspected",
+    "scalar_entropy": "Established f-divergence inequality specialized to alpha3/4",
+    "project_contributions": "Physical normalization, shear-response transfer and inverse bounds, response-specific sufficient angular set, calibrated beam/population interpretation, and detector-specific quantum toy",
+    "literature_wide_priority_established": false
+  },
+  "unit_and_domain_bindings": {
+    "four_velocity": "v15 U^2=-c^2; preceding u=U/c has u^2=-1",
+    "directions": "propagation e=-outward n; current uses propagation angle",
+    "brightness": "I=E_* rho_f is angular energy density; radiance carries c",
+    "entropy": "D_H is number density; k_B D_H is entropy density",
+    "frontier_normalization": "Normalized outputs multiply N_ref=Dcal(k_B T_*)^3 n0",
+    "thermal_fields": "Paper I beta dimensionless, Paper II physical inverse temperature distinct from observer beta",
+    "state_and_functionals": "X underlying carrier; x sample-by-functional; F_cert,F_sup,F_nu distinct"
+  },
+  "limitations": [
+    "No measured CMB, instrument fit or empirical calibration",
+    "No automatic likelihood or confidence coverage from kinetic entropy",
+    "No global existence asserted for every detector entropy budget or BE boundary",
+    "Finite quadrature evidence is not interval-certified continuum computation",
+    "Rank-four matching of values at one event does not supply transport derivatives",
+    "Source-paper theorem inventories not wholly independently reproved",
+    "Only changed interfaces of the prior five-loop report reviewed",
+    "No native solver, production namespace, original DAG acceptance or remote publication changes"
+  ],
+  "source_archives": {
+    "paper_I_sha256": "c856939999ea202a5d676059907bfcef7274027299a2664fd55b86eecd69faad",
+    "paper_II_sha256": "acfb9b65833c47d422f3413695a217c93e0985806dca4cef7a6d0f0006d7d1b0"
+  },
+  "primary_literature_inspection": [
+    "https://acta.hu/download.phtml?id=2785",
+    "https://arxiv.org/html/1303.0326"
+  ],
+  "candidate_and_evidence_identities": [
+    {
+      "path": "research/PAPER_I_REUSE.md",
+      "sha256": "ee6e8fba9ae7dce9353c3e92d3b32aa96c28973f854fb2717e56aa2e9015719b",
+      "size_bytes": 23767
+    },
+    {
+      "path": "research/PAPER_I_REUSE.json",
+      "sha256": "6c59df44b0d08996603af600614d81f941d67ad5264847331f3ee6ff644bc558",
+      "size_bytes": 21438
+    },
+    {
+      "path": "research/PAPER_II_REUSE.md",
+      "sha256": "afdcec9c945bd970cd741c47fd0dc35b9ee16204fde9a42d70e0475b27a058cd",
+      "size_bytes": 19074
+    },
+    {
+      "path": "research/PAPER_II_REUSE.json",
+      "sha256": "8cab1d6040e19e8ea60a9d58cbaef4b998dda70558480fd200a22197be8a4fc8",
+      "size_bytes": 8958
+    },
+    {
+      "path": "research/ENTROPIC_SHEAR_BRIDGE.md",
+      "sha256": "8edd9d7ecba6808d23911bdfd80f506b6633c4edc71039ff02f535c525f48930",
+      "size_bytes": 17041
+    },
+    {
+      "path": "research/ENTROPIC_SHEAR_BRIDGE.json",
+      "sha256": "362bfa96f1e413e24854a30f322bd587f918de8071a1540b9c2c2529bc320b1d",
+      "size_bytes": 15386
+    },
+    {
+      "path": "research/RESPONSE_FRONTIER.md",
+      "sha256": "270bd95bb7f2355294a22aaf03fc8b5ca004e34a00e813fc9e71ebe6f8c98a59",
+      "size_bytes": 11501
+    },
+    {
+      "path": "research/V15_INTEGRATION.md",
+      "sha256": "527437b2e958528f5d0591e32e501639960efc4e1ad3621ea1af3b95b39506d9",
+      "size_bytes": 9898
+    },
+    {
+      "path": "cas/paper_i_check.py",
+      "sha256": "9b00121f42d42b3b365fbabf4636fc0caed4ffbc19fe08c510f6a38f5d8aab3a",
+      "size_bytes": 3510
+    },
+    {
+      "path": "cas/paper_i_check.wl",
+      "sha256": "c6a603e1372ae4af2479603d3085b1690e18c65a13954c7d2dc9a6991fbe6531",
+      "size_bytes": 256
+    },
+    {
+      "path": "cas/paper_i_check_receipt.json",
+      "sha256": "0b36ed60dc700b0a40998633245cbe0cf13bc724b87a49b2cb9a518e462f9936",
+      "size_bytes": 5723
+    },
+    {
+      "path": "cas/paper_i_check_wolfram_receipt.json",
+      "sha256": "4ac19578a49a425bdc963662c33fcf764b3badf4d22f6c35470ddf2b2c119e63",
+      "size_bytes": 397
+    },
+    {
+      "path": "cas/paper_ii_check.py",
+      "sha256": "d9103ff21e83c61064998892fa85be2d937ee8cdbceff53225937763c2cf5ae2",
+      "size_bytes": 4163
+    },
+    {
+      "path": "cas/paper_ii_check.wl",
+      "sha256": "77de701e5510ff66e99f2751cdc002b4e0b01a58c8e5d8240d375e776a1fb9fb",
+      "size_bytes": 888
+    },
+    {
+      "path": "cas/paper_ii_check_python.json",
+      "sha256": "1c64ee25a2bbe134fbacbf6ee1910f0ee53f549345c6167147b5a9cf11251bfa",
+      "size_bytes": 2452
+    },
+    {
+      "path": "cas/paper_ii_check_wolfram.json",
+      "sha256": "0f2872527a22ea11de29a54149c2c1e43499779a7e1fa4ccb52c24bde4e2b257",
+      "size_bytes": 322
+    },
+    {
+      "path": "cas/entropic_shear_projection.py",
+      "sha256": "28c1734323be54db6f4ae0dcbc4a574659f6e3fea959a5e3758548b35bc829bc",
+      "size_bytes": 10817
+    },
+    {
+      "path": "cas/entropic_shear_results.json",
+      "sha256": "91cda920278be692d181cc3a8cedef8484ee39ef0e23650a8b4ad8c83647f241",
+      "size_bytes": 4593
+    },
+    {
+      "path": "cas/entropic_shear_constants.wl",
+      "sha256": "f6d61534f972621e62b62307360fa3f67a09fc1dc35955011527bc9d51629818",
+      "size_bytes": 642
+    },
+    {
+      "path": "cas/entropic_shear_constants_results.json",
+      "sha256": "874971aa9b6906834583389030122d16ca6bf1f4c9aab88dbf4ecb4eb66b37dd",
+      "size_bytes": 427
+    },
+    {
+      "path": "cas/response_frontier_toy.py",
+      "sha256": "eefd4b9442135a3d085e6eb7d62f34ec9c159a7edfd900a386756663ecb92f53",
+      "size_bytes": 6223
+    },
+    {
+      "path": "cas/response_frontier_results.json",
+      "sha256": "e4fd31a4ed5e9874c802ea862365d49edf510825140c054d2ce4e47ca98a9fcf",
+      "size_bytes": 2100
+    },
+    {
+      "path": "sources/paper_I/ARCHIVE_IDENTITY.json",
+      "sha256": "231df69a4de158408a7bedd7ea27b28616b448d7a3411b250516c999ceb6cdea",
+      "size_bytes": 1709
+    },
+    {
+      "path": "sources/paper_II/ARCHIVE_IDENTITY.json",
+      "sha256": "bbd5b3b51de089f5c80f10a7d9c1dde0b92373447b581474ba82119d418fa5ce",
+      "size_bytes": 1426
+    },
+    {
+      "path": "sources/LITERATURE_BEAM_COMPARISON.json",
+      "sha256": "88021e70a7ae3faa4cb0297af45a8b4db50abd05bda19c2207c8aedc230ec938",
+      "size_bytes": 950
+    },
+    {
+      "path": "sources/LITERATURE_FETCH_FURUTA.json",
+      "sha256": "49f55585edb413bf6ac846df9c54209e486fc767c0b94816da9034fb36d9de7a",
+      "size_bytes": 22899
+    },
+    {
+      "path": "sources/LITERATURE_FETCH_LAM.json",
+      "sha256": "5eeac32ae8ff708968cb0f765f205feefca2017342839f0cab4d5a741799cac5",
+      "size_bytes": 20653
+    }
+  ],
+  "next_consuming_step": "Apply one declared physical detector or bolometric response with its shared measurement/calibration law and justified entropy/tail budget; supply transport jets before shear inference."
+}

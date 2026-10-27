@@ -1,0 +1,109 @@
+{
+  "schema": "htt.scoped_registration_review_addendum/1",
+  "date_utc": "2026-10-27",
+  "reviewer": "/root/reconciliation_final_review",
+  "parent_review": "REVIEW.json",
+  "verdict": "PASS_SCOPED_METADATA_ADDENDUM",
+  "open_findings": [],
+  "scope": "Only append of nine existing R32 IDs to policy.strict_extension_cards, regenerated mirrors and registration receipt; no scientific rerun.",
+  "added_existing_cards": [
+    "PR-R32-01-QO-METHODS",
+    "PR-R32-02-P1-SELECTED",
+    "PR-R32-03-H03-STRUCTURED",
+    "PR-R32-04-BANDPASS-BOUNDS",
+    "PR-R32-05-P6-OPTICAL",
+    "PR-R32-06-P4-DESIGN",
+    "PR-R32-07-P5-ALGEBRA",
+    "PR-R32-08-H03-PAPER",
+    "PR-R32-09-BANDPASS-PAPER"
+  ],
+  "independent_checks": [
+    {
+      "check": "Remove exactly the nine added lines from strict_extension_cards in current canonical YAML; hash the reconstructed prior bytes.",
+      "result": "PASS",
+      "reconstructed_prior_sha256": "3e41bfe7216448c00502bb039130c7a2e1e6914ca3021696a6b2fe1342d75446",
+      "matches": "Retained RESULTS_pre_final_regeneration.json backlog_sha256. This binds the complete narrow byte delta, not only a semantic comparison."
+    },
+    {
+      "check": "All 254 historical PR card objects equal baseline prefix; every added registration refers to an existing baseline R32 card; strict registration old prefix preserved and each added ID occurs once.",
+      "result": "PASS"
+    },
+    {
+      "check": "Canonical YAML, canonical JSON and both machine_readable backlog mirrors have identical parsed objects.",
+      "result": "PASS"
+    },
+    {
+      "command": "python scripts/codex_harness/sync_pr_dag_mirrors.py --check",
+      "cwd": "lanes/integration_tests/overlay",
+      "exit_code": 0,
+      "output": "OK: PR-DAG, status, and remediation mirrors are synchronized"
+    },
+    {
+      "check": "Rehash all 31 identities in prior independent REVIEW.json against current files.",
+      "result": "PASS",
+      "identity_drift": []
+    },
+    {
+      "check": "Inspect repair script and R32_REGISTRATION_REPAIR.json; script checks all other backlog objects and both status byte strings unchanged before writing receipt.",
+      "result": "PASS"
+    }
+  ],
+  "reused_harness_receipts": {
+    "results_file": "lanes/integration_tests/RESULTS.json",
+    "passed": 14,
+    "failed": 0,
+    "candidate_backlog_sha256": "8cfe86596e2f739c463ff7a0730657e1f80442f42168596d7ea7a83e1aeb2b24",
+    "full_strict_comparison_file": "lanes/integration_tests/strict_comparison_final.json",
+    "baseline_stop": "Unregistered nine R32 strict extension cards",
+    "candidate_stop": "PR-167 advocate intake requires its pre-intake semantic receipt",
+    "interpretation": "Registration defect repaired. Full strict validation is still incomplete because selected-file snapshot lacks historical intake evidence; this is not a full CI pass. Check historical receipt in owner checkout."
+  },
+  "scientific_effect": "None. Frontier, prior reviewed scientific files, original acceptance and card contents unchanged. Previous scientific PASS remains applicable.",
+  "limitations": [
+    "14 integration checks reused from current harness receipt; not rerun in this addendum.",
+    "No desktop live-state or full repository CI observation.",
+    "No new empirical, solver or ODE execution."
+  ],
+  "candidate_identities": [
+    {
+      "path": "docs/codex_handoff/pr_backlog.yaml",
+      "sha256": "8cfe86596e2f739c463ff7a0730657e1f80442f42168596d7ea7a83e1aeb2b24",
+      "bytes": 511116
+    },
+    {
+      "path": "docs/codex_handoff/pr_backlog.json",
+      "sha256": "3432949a7f4b9daef150373c7daf33153af9064b99c6e2b50f7c109525d45b3a",
+      "bytes": 620723
+    },
+    {
+      "path": "machine_readable/pr_backlog.yaml",
+      "sha256": "8cfe86596e2f739c463ff7a0730657e1f80442f42168596d7ea7a83e1aeb2b24",
+      "bytes": 511116
+    },
+    {
+      "path": "machine_readable/pr_backlog.json",
+      "sha256": "3432949a7f4b9daef150373c7daf33153af9064b99c6e2b50f7c109525d45b3a",
+      "bytes": 620723
+    },
+    {
+      "path": "docs/codex_handoff/pr_status.yaml",
+      "sha256": "b8809b6ebaaaa931e1a7a4cb1da70b15f4f8310fc8363ca2c78066f4c82b4b2e",
+      "bytes": 127015
+    },
+    {
+      "path": "machine_readable/pr_status.yaml",
+      "sha256": "b8809b6ebaaaa931e1a7a4cb1da70b15f4f8310fc8363ca2c78066f4c82b4b2e",
+      "bytes": 127015
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json",
+      "sha256": "38a239d203c6431a281264cd8ad40cd448b5b068d154fdab70270bf009eb29cd",
+      "bytes": 46502
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/validation/R32_REGISTRATION_REPAIR.json",
+      "sha256": "2f97ffc5bb734eaeb10fd4b6103612ac55a10a58e9fe63f6d0e8b2362a1d4c13",
+      "bytes": 633
+    }
+  ]
+}

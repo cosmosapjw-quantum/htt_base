@@ -1,0 +1,637 @@
+{
+  "unit": "PAPER_I_REUSE_v15",
+  "owner": "/root/kinematics_loop_20261026",
+  "date": "2026-10-26",
+  "source_identity": {
+    "archive": "ANGULAR_CALCULUS_PAPER_I_v15_ACK_CLEAN_OVERLEAF.zip",
+    "sha256": "c856939999ea202a5d676059907bfcef7274027299a2664fd55b86eecd69faad",
+    "files": [
+      {
+        "name": "TEFF_PAPER_I.tex",
+        "bytes": 2962
+      },
+      {
+        "name": "sections/00_abstract.tex",
+        "bytes": 1895
+      },
+      {
+        "name": "sections/01_introduction.tex",
+        "bytes": 4217
+      },
+      {
+        "name": "sections/02_one_field_state_space.tex",
+        "bytes": 5620
+      },
+      {
+        "name": "sections/03_radial_quotient.tex",
+        "bytes": 6367
+      },
+      {
+        "name": "sections/03b_angular_response.tex",
+        "bytes": 11179
+      },
+      {
+        "name": "sections/03c_massive_calculus.tex",
+        "bytes": 15975
+      },
+      {
+        "name": "sections/04_two_axis_budget.tex",
+        "bytes": 6435
+      },
+      {
+        "name": "sections/05_refinement_obstructions.tex",
+        "bytes": 6095
+      },
+      {
+        "name": "sections/07_physical_interpretation.tex",
+        "bytes": 3430
+      },
+      {
+        "name": "sections/08_discussion_conclusion.tex",
+        "bytes": 3363
+      },
+      {
+        "name": "sections/figures/paper_i_massive_susceptibility.pdf",
+        "bytes": 18484
+      },
+      {
+        "name": "sections/figures/paper_i_realizability_envelope.pdf",
+        "bytes": 32664
+      },
+      {
+        "name": "references/TEFF_PAPER_I_REFERENCES.bib",
+        "bytes": 20602
+      },
+      {
+        "name": "appendices/A_existence.tex",
+        "bytes": 6169
+      },
+      {
+        "name": "appendices/B_realizability_interior.tex",
+        "bytes": 2359
+      },
+      {
+        "name": "appendices/C_energetic_tail.tex",
+        "bytes": 2414
+      },
+      {
+        "name": "appendices/D_observer_stability.tex",
+        "bytes": 4034
+      }
+    ]
+  },
+  "source_read_scope": {
+    "all_tex_files": [
+      "sources/paper_I/TEFF_PAPER_I.tex",
+      "sources/paper_I/appendices/A_existence.tex",
+      "sources/paper_I/appendices/B_realizability_interior.tex",
+      "sources/paper_I/appendices/C_energetic_tail.tex",
+      "sources/paper_I/appendices/D_observer_stability.tex",
+      "sources/paper_I/sections/00_abstract.tex",
+      "sources/paper_I/sections/01_introduction.tex",
+      "sources/paper_I/sections/02_one_field_state_space.tex",
+      "sources/paper_I/sections/03_radial_quotient.tex",
+      "sources/paper_I/sections/03b_angular_response.tex",
+      "sources/paper_I/sections/03c_massive_calculus.tex",
+      "sources/paper_I/sections/04_two_axis_budget.tex",
+      "sources/paper_I/sections/05_refinement_obstructions.tex",
+      "sources/paper_I/sections/07_physical_interpretation.tex",
+      "sources/paper_I/sections/08_discussion_conclusion.tex"
+    ],
+    "total_lines": 944,
+    "bibliography": "Selected entries for entropy, relativistic radiation/moments, boost response and massive moments"
+  },
+  "loop_stages": {
+    "R1": "Question/achieved bridge",
+    "R2": "Exact v15 source inventory",
+    "R3": "Legacy replacement and conventions",
+    "R4": "Candidate and physical units",
+    "R5": "Constructive proof",
+    "R6": "Sharpness/proof inspection/limits",
+    "R7": "Executed symbolic and toy checks",
+    "R8": "Reuse and novelty verdict",
+    "R9": "Physical observable integration",
+    "R10": "Checkpoint and next lemma"
+  },
+  "v15_numbered_results": [
+    {
+      "label": "thm:main-poisson-factorization",
+      "source": "sections/03c_massive_calculus.tex",
+      "statement": "Positive speed-shell Poisson factorization, entropy contraction and strict dressed-vs-direction-only realizability sets and interiors",
+      "conditions": [
+        "fixed z>=0",
+        "finite number and energy",
+        "FD0<=f<=1",
+        "finite entropy for entropy claim"
+      ],
+      "strictness": "z>0 and L>=1",
+      "existing_v15": true
+    },
+    {
+      "label": "thm:representative",
+      "source": "sections/04_two_axis_budget.tex",
+      "statement": "Smooth bijection from positive finite inverse-temperature natural fields to interior dual energy-moment cone; unique regular max-entropy representative",
+      "conditions": [
+        "fixed z>=0 and statistics",
+        "finite L",
+        "regular finite-entropy occupations",
+        "energy-only constraints"
+      ],
+      "existing_v15": true
+    },
+    {
+      "label": "prop:conditional-observer-bound",
+      "source": "appendices/D_observer_stability.tex",
+      "statement": "Positive-patch H1 bound on observer variation of finite-rank angular information",
+      "conditions": [
+        "exact fitted and raw-projected beta in common[b,B]",
+        "H1 exact beta",
+        "massless boost family"
+      ],
+      "existing_v15": true
+    }
+  ],
+  "source_label_index": [
+    {
+      "label": "app:radial-proofs",
+      "source": "sources/paper_I/appendices/A_existence.tex"
+    },
+    {
+      "label": "eq:conjugates",
+      "source": "sources/paper_I/appendices/A_existence.tex"
+    },
+    {
+      "label": "eq:massive-radial-hessian",
+      "source": "sources/paper_I/appendices/A_existence.tex"
+    },
+    {
+      "label": "eq:hot-rescaling",
+      "source": "sources/paper_I/appendices/A_existence.tex"
+    },
+    {
+      "label": "eq:app-hot-asymptotics",
+      "source": "sources/paper_I/appendices/A_existence.tex"
+    },
+    {
+      "label": "eq:massive-bessel-dual",
+      "source": "sources/paper_I/appendices/A_existence.tex"
+    },
+    {
+      "label": "eq:positive-hessian",
+      "source": "sources/paper_I/appendices/A_existence.tex"
+    },
+    {
+      "label": "eq:boundary-barrier-proof",
+      "source": "sources/paper_I/appendices/A_existence.tex"
+    },
+    {
+      "label": "eq:linear-coercivity",
+      "source": "sources/paper_I/appendices/A_existence.tex"
+    },
+    {
+      "label": "eq:primal-gap-appendix",
+      "source": "sources/paper_I/appendices/A_existence.tex"
+    },
+    {
+      "label": "app:poisson-calculus",
+      "source": "sources/paper_I/appendices/B_realizability_interior.tex"
+    },
+    {
+      "label": "eq:poisson-cap-ratio",
+      "source": "sources/paper_I/appendices/B_realizability_interior.tex"
+    },
+    {
+      "label": "eq:interior-score-gram",
+      "source": "sources/paper_I/appendices/B_realizability_interior.tex"
+    },
+    {
+      "label": "app:observable-proofs",
+      "source": "sources/paper_I/appendices/C_energetic_tail.tex"
+    },
+    {
+      "label": "eq:entropy-ball-divergence",
+      "source": "sources/paper_I/appendices/C_energetic_tail.tex"
+    },
+    {
+      "label": "eq:entropy-tail-normalization",
+      "source": "sources/paper_I/appendices/C_energetic_tail.tex"
+    },
+    {
+      "label": "eq:entropy-budget-tail-construct",
+      "source": "sources/paper_I/appendices/C_energetic_tail.tex"
+    },
+    {
+      "label": "eq:entropy-tail-moment-growth",
+      "source": "sources/paper_I/appendices/C_energetic_tail.tex"
+    },
+    {
+      "label": "app:observer-consistency",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "app:eq:boost-information-definitions",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "prop:conditional-observer-bound",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "app:eq:boost-positive-patch",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "app:eq:boost-information-derivative",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "app:eq:boost-information-derivative-bound",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "app:eq:boost-information-finite-bound",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "app:eq:boost-pointwise-divergence",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "app:eq:boost-pointwise-hessian",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "app:eq:boost-patch-coercivity",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "app:eq:boost-matched-tail-bound",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "app:eq:boost-resolved-local-bound",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "app:eq:first-boost-leakage",
+      "source": "sources/paper_I/appendices/D_observer_stability.tex"
+    },
+    {
+      "label": "sec:intro",
+      "source": "sources/paper_I/sections/01_introduction.tex"
+    },
+    {
+      "label": "eq:intro-planck-ray",
+      "source": "sources/paper_I/sections/01_introduction.tex"
+    },
+    {
+      "label": "sec:state",
+      "source": "sources/paper_I/sections/02_one_field_state_space.tex"
+    },
+    {
+      "label": "sec:kinetic-setting",
+      "source": "sources/paper_I/sections/02_one_field_state_space.tex"
+    },
+    {
+      "label": "eq:observer-split",
+      "source": "sources/paper_I/sections/02_one_field_state_space.tex"
+    },
+    {
+      "label": "eq:main-density-normalization",
+      "source": "sources/paper_I/sections/02_one_field_state_space.tex"
+    },
+    {
+      "label": "eq:shape-functions",
+      "source": "sources/paper_I/sections/02_one_field_state_space.tex"
+    },
+    {
+      "label": "eq:entropy-functional",
+      "source": "sources/paper_I/sections/02_one_field_state_space.tex"
+    },
+    {
+      "label": "eq:bregman-def",
+      "source": "sources/paper_I/sections/02_one_field_state_space.tex"
+    },
+    {
+      "label": "eq:directional-energy-density",
+      "source": "sources/paper_I/sections/02_one_field_state_space.tex"
+    },
+    {
+      "label": "eq:Vl",
+      "source": "sources/paper_I/sections/02_one_field_state_space.tex"
+    },
+    {
+      "label": "eq:retained-moments",
+      "source": "sources/paper_I/sections/02_one_field_state_space.tex"
+    },
+    {
+      "label": "sec:maxent",
+      "source": "sources/paper_I/sections/03_radial_quotient.tex"
+    },
+    {
+      "label": "eq:fiber-equilibrium-stationarity",
+      "source": "sources/paper_I/sections/03_radial_quotient.tex"
+    },
+    {
+      "label": "eq:ray-energy-monotonicity",
+      "source": "sources/paper_I/sections/03_radial_quotient.tex"
+    },
+    {
+      "label": "eq:teff-family",
+      "source": "sources/paper_I/sections/03_radial_quotient.tex"
+    },
+    {
+      "label": "eq:matched-entropy-cancellation",
+      "source": "sources/paper_I/sections/03_radial_quotient.tex"
+    },
+    {
+      "label": "eq:matched-physical-entropy-gap",
+      "source": "sources/paper_I/sections/03_radial_quotient.tex"
+    },
+    {
+      "label": "eq:main-contracted-entropy",
+      "source": "sources/paper_I/sections/03_radial_quotient.tex"
+    },
+    {
+      "label": "eq:rho-beta-chain",
+      "source": "sources/paper_I/sections/03_radial_quotient.tex"
+    },
+    {
+      "label": "eq:main-lift-identity",
+      "source": "sources/paper_I/sections/03_radial_quotient.tex"
+    },
+    {
+      "label": "sec:angular-response",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "eq:physical-radial-response",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "eq:radial-temperature-derivative",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "eq:angular-response-expansion",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "eq:dipole-induced-quadrupole",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "eq:dipole-quadrupole-product",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "eq:explicit-gaunt-coupling",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "subsec:angular-pressure-example",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "eq:quadrupolar-ray-temperature",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "eq:quadrupolar-pressure",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "subsec:beam-mixing",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "eq:beam-mixing-spectrum",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "eq:energy-matched-mixing-residual",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "eq:kinetic-fisher-metric",
+      "source": "sources/paper_I/sections/03b_angular_response.tex"
+    },
+    {
+      "label": "sec:massive-calculus",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:massive-velocity-hierarchy",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:physical-energy-flux-stress",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:massive-pressure-trace",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:velocity-tensor-degree",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:massive-energy-measure",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:massive-mode-susceptibility",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:massive-dimensionless-susceptibility",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "fig:massive-response",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:poisson-shell-action",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:main-poisson-moment-factorization",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "thm:main-poisson-factorization",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:main-realizability-factorization",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:massive-flux-bound",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:physical-flux-envelope",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "fig:massive-realizability",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "eq:two-band-kernel-witness",
+      "source": "sources/paper_I/sections/03c_massive_calculus.tex"
+    },
+    {
+      "label": "sec:budget",
+      "source": "sources/paper_I/sections/04_two_axis_budget.tex"
+    },
+    {
+      "label": "eq:beta-family",
+      "source": "sources/paper_I/sections/04_two_axis_budget.tex"
+    },
+    {
+      "label": "thm:representative",
+      "source": "sources/paper_I/sections/04_two_axis_budget.tex"
+    },
+    {
+      "label": "eq:diffeomorphism",
+      "source": "sources/paper_I/sections/04_two_axis_budget.tex"
+    },
+    {
+      "label": "eq:two-matching-cancellations",
+      "source": "sources/paper_I/sections/04_two_axis_budget.tex"
+    },
+    {
+      "label": "eq:exact-two-axis-budget",
+      "source": "sources/paper_I/sections/04_two_axis_budget.tex"
+    },
+    {
+      "label": "eq:quadrupole-entropy-cost",
+      "source": "sources/paper_I/sections/04_two_axis_budget.tex"
+    },
+    {
+      "label": "eq:adjacent-angular-budget",
+      "source": "sources/paper_I/sections/04_two_axis_budget.tex"
+    },
+    {
+      "label": "sec:obstructions",
+      "source": "sources/paper_I/sections/05_refinement_obstructions.tex"
+    },
+    {
+      "label": "eq:spectral-residual-family",
+      "source": "sources/paper_I/sections/05_refinement_obstructions.tex"
+    },
+    {
+      "label": "eq:spectral-witness-fingerprint",
+      "source": "sources/paper_I/sections/05_refinement_obstructions.tex"
+    },
+    {
+      "label": "subsec:nonthermal-angular-witness",
+      "source": "sources/paper_I/sections/05_refinement_obstructions.tex"
+    },
+    {
+      "label": "eq:nonthermal-angular-direct",
+      "source": "sources/paper_I/sections/05_refinement_obstructions.tex"
+    },
+    {
+      "label": "eq:nonthermal-angular-response",
+      "source": "sources/paper_I/sections/05_refinement_obstructions.tex"
+    },
+    {
+      "label": "subsec:score-span-identification",
+      "source": "sources/paper_I/sections/05_refinement_obstructions.tex"
+    },
+    {
+      "label": "sec:physical",
+      "source": "sources/paper_I/sections/07_physical_interpretation.tex"
+    },
+    {
+      "label": "eq:detector-observation-map",
+      "source": "sources/paper_I/sections/07_physical_interpretation.tex"
+    },
+    {
+      "label": "eq:main-doppler-convention",
+      "source": "sources/paper_I/sections/07_physical_interpretation.tex"
+    },
+    {
+      "label": "eq:main-boost-leakage",
+      "source": "sources/paper_I/sections/07_physical_interpretation.tex"
+    },
+    {
+      "label": "sec:discussion",
+      "source": "sources/paper_I/sections/08_discussion_conclusion.tex"
+    }
+  ],
+  "conventions": {
+    "metric": "(-,+,+,+)",
+    "paper_I_observer": "U.U=-c^2",
+    "prior_loops_observer": "u.u=-1; U=c u",
+    "direction": "PaperI e=photon propagation; LoopB/C n=-e",
+    "I": "Physical bolometric energy density per solid angle J m^-3 sr^-1",
+    "rho": "Integral I dOmega, J m^-3",
+    "paperI_scaled_ray_energy": "rho_f=I/E_star",
+    "sigma": "Geometric shear inverse length; optical physical-rate shear S=c sigma"
+  },
+  "bridge": {
+    "id": "P1_GLOBAL_ENTROPY_SHEAR",
+    "status": "DERIVED_CONDITIONAL_NEW_PROJECT_BRIDGE",
+    "formula": "||L_I-(8rho/15)Id||_op <=rho sqrt(8delta/3)",
+    "delta": "k_B I_ang,0 /S_iso=1-<w^(3/4)>; w=4pi I/rho; normalized fullsphere average",
+    "assumptions": [
+      "nonnegative finite bolometric brightness with rho>0",
+      "massless energy-only entropy section",
+      "same observer epoch and normalization",
+      "LoopA operator definition and its pointwise0<=B_e<=Id"
+    ],
+    "scalar_primary": "Gilardoni arXivcs/0603097 Theorem3/Corollaries4,6; retrieved2026-10-26",
+    "scalar_self_contained_check": "G'''=35(t-1)t^(-9/4)/256; G(1)=G'(1)=G''(1)=0; weighted Cauchy Schwarz",
+    "centered_step": "Integral(I-Iiso)=0 permits B_e-Id/2 and half L1 bound",
+    "sufficient_threshold": "delta<8/75",
+    "inverse_bound": "||sigma-sigma0|| <=[epsilon_R/rho+eta||sigma0||]/(8/15-eta), sigma0=-15Rhat/(8rho), eta=sqrt(8delta/3)",
+    "optical_consistency": "||Rhat+(8rho/15c)Sopt|| <=epsilon_R+(rho/c)epsilon_S+(rho eta/c)||Sopt||",
+    "local_pressure_cost": "delta=(45/64)||pi/rho||_F^2+(3/32)<r^2>+O(||w-1||_infinity^3)",
+    "sharpness": {
+      "scalar_3_over_32": "Sharp as scalar probability inequality",
+      "half_L1_centering": "Optimal using only mass matching and operator range[0,1]",
+      "combined_entropy_operator_constant": "Not claimed sharp",
+      "threshold": "Sufficient; actual positive operators can lie beyond it"
+    },
+    "novelty": "Scalar inequality existing; exact physical composition new within inspected project materials; independent literature priority remains open"
+  },
+  "finite_computations": {
+    "wolfram": "cas/paper_i_check.wl executed; result{0,{0,0,0},0,0}",
+    "python": "cas/paper_i_check.py executed;10 quadrupole states,4 exponential angular states, local quadratic cost and finite scalar contrast checks",
+    "receipts": [
+      "cas/paper_i_check_wolfram_receipt.json",
+      "cas/paper_i_check_receipt.json"
+    ],
+    "observational_data": false,
+    "ODE_solver": false
+  },
+  "specific_proof_inspection": {
+    "appendix_A": "BE endpoint/boundary barrier/coercivity checked",
+    "appendix_B": "compact annulus score Gram and FD interior checked",
+    "appendix_C": "exact number-energy compensation and tail growth checked",
+    "appendix_D": "score cancellation and second-argument Hessian checked",
+    "concrete_failure_found": false,
+    "scope": "Bounded inspection; not blanket certification of unexamined extensions"
+  },
+  "novelty_search": {
+    "date": "2026-10-26",
+    "method": "Exa primary-paper search/retrieval",
+    "sources": [
+      "https://ar5iv.labs.arxiv.org/html/cs/0603097",
+      "https://arxiv.org/abs/cond-mat/9709104",
+      "https://www.numdam.org/item/AIHPA_1997__67_2_123_0.pdf",
+      "https://doi.org/10.1086/174640"
+    ],
+    "strong_no_go_adopted": false
+  },
+  "next_lemma": "Moment-aware minimum angular entropy at fixed total energy, lower moments and selected shear-response quadratic form, using explicit quartic kernel and positive rank4 natural field.",
+  "parent_review": "Pending independent review of centering, normalization and c factors",
+  "source_edits": false,
+  "push": false
+}
