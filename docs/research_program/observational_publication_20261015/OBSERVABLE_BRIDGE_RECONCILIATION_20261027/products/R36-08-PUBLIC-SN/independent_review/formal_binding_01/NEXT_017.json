@@ -1,0 +1,52 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R36-08-PUBLIC-SN",
+  "attempt": 2,
+  "phase": "review",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_identity": "sha256:efeb05dfe755f47c48c994d1684312659277816a3f7294f6d76f63f27f9f046c",
+  "frontier_identity": "ed7520e4e2ba670fba1d15f4b0e8aae91efa97fd29efed82193a32304dabe1f8",
+  "task_spec_identity": "4799f2e02a5d649f96279aea7aa47769f2d335b60c102d13f74245e1ccfe54fb",
+  "packet_id": "53df9b5a78c6543c23f0210f25b330efbd23cfe1b7c804ff0b550263c209fe50",
+  "route": {
+    "route": "review_or_research",
+    "requested": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_selected": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+    "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+    "launch_performed": false,
+    "availability_catalog_profiles": [
+      {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "model": "gpt-6-sol",
+        "effort": "high"
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "effort": "medium"
+      }
+    ]
+  },
+  "resume_evidence": null,
+  "scientific_resume": null,
+  "transport_resume": null,
+  "launch_performed": false,
+  "observed_runtime": "UNKNOWN",
+  "native_tool": "collaboration.spawn_agent",
+  "spawn_args": {
+    "task_name": "rc_53df9b5a78c6543c",
+    "fork_turns": "none",
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh",
+    "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4\", \"task_id\": \"R36-08-PUBLIC-SN\", \"attempt\": 2, \"phase\": \"review\", \"input_identity\": \"sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43\", \"candidate_identity\": \"sha256:efeb05dfe755f47c48c994d1684312659277816a3f7294f6d76f63f27f9f046c\", \"frontier_identity\": \"ed7520e4e2ba670fba1d15f4b0e8aae91efa97fd29efed82193a32304dabe1f8\", \"task_spec_identity\": \"4799f2e02a5d649f96279aea7aa47769f2d335b60c102d13f74245e1ccfe54fb\", \"packet_id\": \"53df9b5a78c6543c23f0210f25b330efbd23cfe1b7c804ff0b550263c209fe50\", \"spec\": {\"id\": \"R36-08-PUBLIC-SN\", \"kind\": \"numeric\", \"title\": \"Fit a public released-magnitude anisotropy comparator with full covariance\", \"goal\": \"Fit a public released-magnitude anisotropy comparator with full covariance\", \"acceptance\": \"Acquire or reuse the pinned c447 Pantheon+ table and STAT+SYS covariance listed in the existing acquisition manifest. Verify Git blob identity, local SHA256, 1701-row order, N^2 covariance entries, duplicate observations and calibration flags. Use the total covariance once; m_b_corr_ERR_DIAG is for plots, not a fit. Bind zHEL/zCMB/zHD and do not add already included PV uncertainty again. Profile the additive magnitude calibration for anisotropy-only inference; MU_SH0ES is not an independent absolute-H0 determination. Fit a prespecified low-z/depth and angular response, report covariance-aware null/robustness and observer-chart correction. This is an explicit released-observable estimand, not a replacement for nominal SALT2 training parity. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it.\", \"input_identity\": \"sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43\", \"contract_origin\": \"new_conditional_research\", \"promotes_original_acceptance\": false, \"initial_state\": \"ready\", \"requires\": {\"all\": []}, \"input_sources\": [{\"path\": \"docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json\", \"sha256\": \"83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43\", \"role\": \"preserved internal sources, externally supplied audit, independent corrections and actual finite replays\"}], \"owned_paths\": [\"docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN\"], \"semantic_delta\": {\"kind\": \"method\", \"before\": {\"status\": \"Retained R32 methods plus source-specific external holds; newly recovered internal results not yet consumed by this question.\"}, \"after\": {\"target\": \"Fit a public released-magnitude anisotropy comparator with full covariance\"}, \"discriminator\": \"Acquire or reuse the pinned c447 Pantheon+ table and STAT+SYS covariance listed in the existing acquisition manifest. Verify Git blob identity, local SHA256, 1701-row order, N^2 covariance entries, duplicate observations and calibration flags. Use the total covariance once; m_b_corr_ERR_DIAG is for plots, not a fit. Bind zHEL/zCMB/zHD and do not add already included PV uncertainty again. Profile the additive magnitude calibration for anisotropy-only inference; MU_SH0ES is not an independent absolute-H0 determination. Fit a prespecified low-z/depth and angular response, report covariance-aware null/robustness and observer-chart correction. This is an explicit released-observable estimand, not a replacement for nominal SALT2 training parity.\", \"scope\": \"Additional declared observable/conditional product; original frozen acceptance and histories unchanged.\"}, \"implementation_route\": \"subagent_specialist\", \"paper_ids\": [\"P3\", \"P4\", \"P6\"], \"informs_original_nodes\": [\"R23-SN\", \"H04\", \"V04\", \"K04\"], \"qualified_product_expected\": \"public_sn_anisotropy_result\", \"reuse_first\": true, \"deliverable_rule\": \"Qualify the exact named result only after acceptance and independent review; a source-gap report cannot qualify it.\", \"next_after_hold\": \"Record exact missing input and request next independent ready task; do not reset, duplicate or rename exhausted experiments.\"}, \"issue\": null, \"repair_plan\": null, \"repair_authorization\": null, \"resume_evidence\": null, \"scientific_resume\": null, \"transport_resume\": null, \"repair_input_transition\": null, \"authors\": [\"/root/rc_63f9184ae48b3e55\"], \"contributors\": [\"/root/rc_63f9184ae48b3e55\", \"/root/r36_scientific_contract_preparation\"], \"history_refs\": [{\"phase\": \"execute\", \"packet_id\": \"63f9184ae48b3e5526a9a289bceb653315839de2955b4667738a9a64f7821606\", \"receipt\": {\"path\": \"/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/RAW_RECEIPT.json\", \"sha256\": \"26b7396d3871a70863f420190f4edb845841a9ed2445307a6e3c89c1a6b05730\"}, \"outcome\": \"success\", \"candidate_identity\": \"sha256:efeb05dfe755f47c48c994d1684312659277816a3f7294f6d76f63f27f9f046c\"}], \"history_total\": 1}"
+  }
+}
