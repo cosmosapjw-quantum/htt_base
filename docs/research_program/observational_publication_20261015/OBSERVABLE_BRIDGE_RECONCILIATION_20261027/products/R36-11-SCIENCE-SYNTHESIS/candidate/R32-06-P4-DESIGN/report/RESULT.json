@@ -1,0 +1,507 @@
+{
+  "task_id": "R32-06-P4-DESIGN",
+  "attempt": 1,
+  "campaign": "R23-whole-42-solver-free",
+  "execute_packet_sha256": "2a504af3ea3221e2f1ecf03938a5b042296403afb7c07384eafef5847ec8c459",
+  "input_identity": "sha256:263f8707d940df778ea5a6eeef1023cd7784fe5dac5ebe1be2795f0c6e4de450",
+  "scientific_author": "/root/rc_2a504af3ea3221e2",
+  "builder_agent": "/root/r35_p4_prescribed_numeric_build",
+  "requested_builder_model": "gpt-6-sol",
+  "requested_builder_effort": "high",
+  "observed_runtime": "UNKNOWN",
+  "proposed_product": "response_design_note",
+  "candidate_only": true,
+  "acceptance_met": false,
+  "original_acceptance_passed": false,
+  "original42_acceptance_met": false,
+  "qualified_products": [],
+  "independent_review": "PENDING_FRESH_NONAUTHOR_REVIEW",
+  "claim_status": "DERIVED_CONDITIONAL_FINITE_DESIGN",
+  "transfer_source": "none",
+  "full_physical_covariance": "NOT_SUPPLIED",
+  "external_history_provider": "NOT_SUPPLIED",
+  "vorticity": "NOT_MEASURED",
+  "undefined_sectors": {
+    "x_C": "NOT_EVALUABLE_WITH_THIS_RESPONSE",
+    "Q": "NOT_EVALUABLE_WITH_THIS_RESPONSE",
+    "F": "NOT_EVALUABLE_WITH_THIS_RESPONSE",
+    "Pi": "NOT_EVALUABLE_WITH_THIS_RESPONSE",
+    "G_F": "NOT_EVALUABLE_WITH_THIS_RESPONSE"
+  },
+  "V03_original_requirement": "ACTUAL_EXTERNAL_HISTORY_KERNELS_CALIBRATION_COMMON_FRAME_AND_ERROR_MODEL_PENDING",
+  "source_manifest_sha256": "f5640c1ec3c2af4c9c40a9e295de23c2897f89bae84180ebfaa88b0e91d22a12",
+  "literal_contract_sha256": "cdc26625caf799110f58d101bcde3182134d77aa2e1f8b512112e5ade8aee309",
+  "retained_source_files": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/OUTPUT_DAG.json",
+      "sha256": "2cd505e9ac3063288f498920c47c99aaca5b60e01c684eef7351e8c50a91a0aa",
+      "bytes": 6782
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/FRONTIER.json",
+      "sha256": "f5647d555c3fb346ee09602f1e8ea52d48b0d6ed27bde6ae14ec208eb4496b01",
+      "bytes": 32321
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/EVIDENCE_MANIFEST.json",
+      "sha256": "10703b1d37198379ee8ec4565dbef737e7ee35e6143de404c4d94ed48658f2d3",
+      "bytes": 15522
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/baseline/research/mathematical_recovery.md",
+      "sha256": "1a780acfd0a24d7e044d191200c1914560e24f091de062df5d66948fbf566d29",
+      "bytes": 10161
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/baseline/research/independent_review.md",
+      "sha256": "334e53dca957ee24f55ff45d09e2aee4bb1a426bbc9182a5ce61552371e96ea8",
+      "bytes": 13124
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/research/physical_derivations.md",
+      "sha256": "9614c03ab6dc590647c6c75f124c0bc7e7cb448d319c7ced03c0e3f9cee8223f",
+      "bytes": 13137
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/research/theorem_physical_chapter.md",
+      "sha256": "ff51a261dd3b7baa8488a7fc75593ff957216a3fa7d6f08ba45389ae4f758618",
+      "bytes": 34703
+    },
+    {
+      "path": "docs/research_program/gr_statistics_loops_20260930/statistics/NATIVE_INFERENCE_THEOREMS.md",
+      "sha256": "e215836882047c50a1a5ae6da605d62aa2c553d0de055e279eee3ce35ec8e322",
+      "bytes": 25537
+    },
+    {
+      "path": "docs/research_reports/theory_synthesis_20260913/REPORT.md",
+      "sha256": "0a4d0c5d2ba8e161ceff5a9cb2858ebc51b40f05858b221870211cf1ce893a6e",
+      "bytes": 85533
+    }
+  ],
+  "claim_map": {
+    "P4-C01": {
+      "claim_and_location": "Common units, frame, local radial sign and STF carrier, (1)\u2013(8)",
+      "retained_source_and_locator": "`evidence/research/physical_derivations.md`, P1; `evidence/research/theorem_physical_chapter.md`, affine/radial response discussion",
+      "construction_and_scope": "Explicit local affine design plus declared normalization; full tensor, no finite-redshift physical transfer.",
+      "status": "DERIVED_CONDITIONAL",
+      "generated_evidence": [
+        "column_scales.json",
+        "matrices.json"
+      ]
+    },
+    "P4-C02": {
+      "claim_and_location": "Two-radius rank thirteen, Proposition 1",
+      "retained_source_and_locator": "`evidence/baseline/research/mathematical_recovery.md`, \u201cTwo radii separate angular nuisance and depth response\u201d; `evidence/baseline/research/independent_review.md`, \u201cRank-thirteen example and recovered physical scope\u201d; `docs/research_program/gr_statistics_loops_20260930/statistics/NATIVE_INFERENCE_THEOREMS.md`, \u00a76",
+      "construction_and_scope": "Reuse theorem in invertibly changed STF coordinates; manuscript gives self-contained unisolvence and zero-kernel proof.",
+      "status": "DERIVED_CONDITIONAL",
+      "generated_evidence": [
+        "radial_grid.json",
+        "checks.json"
+      ]
+    },
+    "P4-C03": {
+      "claim_and_location": "Complete baseline rank twelve/kernel six, Proposition 2",
+      "retained_source_and_locator": "C02; `docs/research_reports/theory_synthesis_20260913/REPORT.md`, \u00a713 duplicated-response kernel and \u00a713.1 endpoint/history",
+      "construction_and_scope": "Apply one scalar quotient to the specific 18-column design; proof of completeness and six explicit kernel generators.",
+      "status": "DERIVED_CONDITIONAL",
+      "generated_evidence": [
+        "matrices.json",
+        "spectra.json"
+      ]
+    },
+    "P4-C04": {
+      "claim_and_location": "Endpoint/history additions individually rank fifteen, jointly eighteen, Proposition 3",
+      "retained_source_and_locator": "`REPORT.md`, \u00a713.1 for conceptual common form; `evidence/research/theorem_physical_chapter.md`, response quotient/anchor paragraphs",
+      "construction_and_scope": "Authored conditional windows/gains and exact actions on the two kernel factors. No actual new observed channel.",
+      "status": "DERIVED_CONDITIONAL",
+      "generated_evidence": [
+        "matrices.json",
+        "spectra.json"
+      ]
+    },
+    "P4-C05": {
+      "claim_and_location": "Equal-radius ranks 8/11/11/14, Proposition 4",
+      "retained_source_and_locator": "C02 retained equal-radius control",
+      "construction_and_scope": "Exact remaining four-dimensional joint kernel and full signed witness; arbitrary numerical near-zero threshold is not analytic rank.",
+      "status": "DERIVED_CONDITIONAL",
+      "generated_evidence": [
+        "radial_grid.json",
+        "witnesses.json"
+      ]
+    },
+    "P4-C06": {
+      "claim_and_location": "Fixed column scaling, right projectors and numerical spectra, \u00a75",
+      "retained_source_and_locator": "`NATIVE_INFERENCE_THEOREMS.md`, \u00a76 scaling caveat; `theorem_physical_chapter.md`, anchor coordinate map",
+      "construction_and_scope": "Mathematical normalization is specified; actual values status is SPECIFIED until generated from the literal contract. Preserve all 18 right coordinates.",
+      "status": "DERIVED_CONDITIONAL",
+      "generated_evidence": [
+        "spectra.json",
+        "column_scales.json"
+      ]
+    },
+    "P4-C07": {
+      "claim_and_location": "Finite witness distinguishes two additions, \u00a74",
+      "retained_source_and_locator": "C03\u2013C04 proof; `REPORT.md`, \u00a713.1 history distinction",
+      "construction_and_scope": "Explicit signed theta and nineteen-coordinate predictions; finite equality plus nonzero added coordinates.",
+      "status": "DERIVED_CONDITIONAL",
+      "generated_evidence": [
+        "witnesses.json"
+      ]
+    },
+    "P4-C08": {
+      "claim_and_location": "Deterministic perturbation and identified-projection bounds, (24)\u2013(27)",
+      "retained_source_and_locator": "Standard finite-dimensional norm argument stated and proved in manuscript; retained source only motivates sensitivity",
+      "construction_and_scope": "Pseudoinverse/Weyl derivation; generated bounded fixtures check implementation. No joint law, covariance, null or coverage supplied.",
+      "status": "DERIVED_CONDITIONAL",
+      "generated_evidence": [
+        "error_grid.json",
+        "bound_fixture.json"
+      ]
+    },
+    "P4-C09": {
+      "claim_and_location": "Radial blind antisymmetric sector, \u00a77",
+      "retained_source_and_locator": "`physical_derivations.md`, P1; `REPORT.md`, \u00a713",
+      "construction_and_scope": "`n^T Omega n=0`; matter vorticity NOT_MEASURED and no inference of zero.",
+      "status": "DERIVED_CONDITIONAL",
+      "generated_evidence": []
+    },
+    "P4-C10": {
+      "claim_and_location": "Undefined x_C/Q/F/Pi/G_F, \u00a77",
+      "retained_source_and_locator": "`theorem_physical_chapter.md`, joint carrier, anchor and functional-image discussion",
+      "construction_and_scope": "All statuses NOT_EVALUABLE_WITH_THIS_RESPONSE. Missing physical map, anchor, support measure, joint law and depth dependence are explicit.",
+      "status": "DERIVED_CONDITIONAL",
+      "generated_evidence": []
+    },
+    "P4-C11": {
+      "claim_and_location": "V03 and original42 acceptances unaffected, \u00a77",
+      "retained_source_and_locator": "Frozen actual R32-06 task spec; `BUILD_CONTRACT.md`, scope and source obligations",
+      "construction_and_scope": "Conditional product only; original_acceptance_passed=false, independent physical external-history requirement retained.",
+      "status": "DERIVED_CONDITIONAL",
+      "generated_evidence": []
+    }
+  },
+  "report_pdf_pages": 17,
+  "vector_figure_count": 3,
+  "commands_and_exit_statuses": {
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-06-P4-DESIGN/report",
+    "final_successes": [
+      {
+        "command": "python3 -B reproduce.py > raw/numerical.stdout 2> raw/numerical.stderr",
+        "exit_code": 0
+      },
+      {
+        "command": "python3 -B build_tex.py > raw/tex_generation.stdout 2> raw/tex_generation.stderr",
+        "exit_code": 0
+      },
+      {
+        "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex > raw/latexmk.stdout 2> raw/latexmk.stderr",
+        "exit_code": 0
+      },
+      {
+        "command": "pdftoppm -png -r 55 main.pdf preview/page > raw/pdf_preview.stdout 2> raw/pdf_preview.stderr",
+        "exit_code": 0
+      }
+    ],
+    "preserved_first_failures": [
+      {
+        "command": "python3 -B reproduce.py",
+        "exit_code": 1,
+        "evidence": "raw/numerical_first_failure.stderr",
+        "classification": "empty full-rank null array reduction in check helper; corrected without tolerance change"
+      },
+      {
+        "command": "python3 -B reproduce.py",
+        "exit_code": 1,
+        "evidence": "raw/numerical_second_failure.stderr",
+        "classification": "optional near-equal-radius SVD/analytic projector comparison exceeded nominal-only 1e-12 criterion; removed that extra grid assertion; nominal assertion retained"
+      },
+      {
+        "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex",
+        "exit_code": 12,
+        "evidence": "raw/latexmk_first_failure.stdout",
+        "classification": "TeX split alignment conversion; changed to aligned"
+      },
+      {
+        "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex",
+        "exit_code": 12,
+        "evidence": "raw/latexmk_second_failure.stdout",
+        "classification": "erroneous local real macro shadowed calc package; removed"
+      }
+    ],
+    "versions": {
+      "python": "3.12.3",
+      "numpy": "2.4.2",
+      "matplotlib": "3.10.8",
+      "pandoc": "3.1.3",
+      "latexmk": "4.83",
+      "pdftex": "1.40.25 (TeX Live 2023/Debian)"
+    },
+    "validation_scope": "literal finite contract, nominal ranks and exact equal-radius negative control, finite grids, deterministic bounds, complete RevTeX and three vector figures",
+    "warnings": [
+      "Matplotlib Axes3D import warning; only 2D plots used",
+      "nameref label warning and amsmath legacy over warning; no undefined reference/citation or overfull box in final log"
+    ]
+  },
+  "candidate_identity_definition": "SHA-256 of canonical JSON (sorted keys, compact separators) of output_manifest below; RESULT.json and raw/finalize files excluded",
+  "output_manifest": {
+    "reproduce.py": {
+      "sha256": "b5628ae225e2e4617a43d0c8479f22b6305dd898b3b8ef927b3de068a95bcf5f",
+      "bytes": 26145
+    },
+    "build_tex.py": {
+      "sha256": "206c67ebba903df7b45b8bb128849cb9231e737e2416d3af028567dcbda30a0a",
+      "bytes": 2463
+    },
+    "body.tex": {
+      "sha256": "72cb0ece3aeab00658769264478e7743f38e0f950fe12b7bf3d50a558c88b303",
+      "bytes": 28189
+    },
+    "matrices.json": {
+      "sha256": "ab82069e3b179540ce709846f3b3915223275e040a342db5b0583751b5a72a5d",
+      "bytes": 134942
+    },
+    "spectra.json": {
+      "sha256": "c0d9830330929fd970f112d061024e2a4d03133d8e0b6461be425e08c7b46c67",
+      "bytes": 140025
+    },
+    "radial_grid.json": {
+      "sha256": "0c21a71ec8a12414c18ab87d46ddd68d92c238bc59213a808b493ccb1536de6b",
+      "bytes": 39166
+    },
+    "precision_grid.json": {
+      "sha256": "88bc34d122e4b9256662756b35c2c4bb775f099e957be1b36834b6e5f0dcf281",
+      "bytes": 9799
+    },
+    "error_grid.json": {
+      "sha256": "103ee04f9e7b74ce56ae050139bae13f064e6df43eab9bf866b63ba7789cda97",
+      "bytes": 1397
+    },
+    "witnesses.json": {
+      "sha256": "0d7358574d966d9dbd4dc06a94fd0aecd15342a9ae910a381f68c1573a45fee5",
+      "bytes": 5954
+    },
+    "bound_fixture.json": {
+      "sha256": "63da771f5114b891aa79740f7c5ae4242477383c711111d303d9bf7b420b2cad",
+      "bytes": 13669
+    },
+    "column_scales.json": {
+      "sha256": "6b1b2cd62145c63d03646e93d2826fa301dc2152ea4769b615064918191f1552",
+      "bytes": 2804
+    },
+    "checks.json": {
+      "sha256": "bea89125aa950e45079dd563c06869065d1e49d2f0ab8fd8ff0aeaf6dc2bce56",
+      "bytes": 1350
+    },
+    "manuscript_generated.md": {
+      "sha256": "67c88e45e0f7158a3784d8f201b4cb795ad3366f1029e0b2f63fb9a32580e678",
+      "bytes": 26482
+    },
+    "main.tex": {
+      "sha256": "8ea6d31ae7d372266d19ecd138d01e172221f0a3c05039c9c17c34375d26b9e3",
+      "bytes": 29934
+    },
+    "main.pdf": {
+      "sha256": "6c92e400ff84cd259356322b8c61c0d8ebcb3a56b78261ab9c1d9399298553b0",
+      "bytes": 379521
+    },
+    "main.log": {
+      "sha256": "d25b46a525f61770dfb5eface141efb888aaf2f338a02dcc67b7126638d66ee6",
+      "bytes": 22137
+    },
+    "figure1_spectra.pdf": {
+      "sha256": "a6a025c644ee5e60399ecda68ba5096a154e6985bedcf46f2ddfbf917988c964",
+      "bytes": 15461
+    },
+    "figure2_leverage_precision.pdf": {
+      "sha256": "34a0f227e49d47ac2fbb803de8108e541ac9beb6622b00662ae02b8c5dd6267f",
+      "bytes": 18478
+    },
+    "figure3_error_bound.pdf": {
+      "sha256": "b4dce2dc47d74cf32b83d4f4278d0a5c9b01bbec064e975fc100fb2a89c61a51",
+      "bytes": 11765
+    },
+    "CLAIM_SOURCE_MAP.md": {
+      "sha256": "54437b094855c499f82bbe77a35bf49d0e347e121858db2bbd4ae8b9537d0744",
+      "bytes": 5245
+    },
+    "README.md": {
+      "sha256": "cbb26a0cbebed699cf34a196eec1b2ef1d11c62be9b60af5af95dcac610377b8",
+      "bytes": 3135
+    },
+    "raw/numerical.stdout": {
+      "sha256": "60d6a193a5879cbdab7a3480399742b7734d35a42a3f0072bf1a0f12f24921c5",
+      "bytes": 435
+    },
+    "raw/numerical.stderr": {
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852",
+      "bytes": 379
+    },
+    "raw/numerical_first_failure.stderr": {
+      "sha256": "1ec799b7104097a6a25e4ba56613cb150689aeb881224f82b09e3cfcc2c85be7",
+      "bytes": 2154
+    },
+    "raw/numerical_second_failure.stderr": {
+      "sha256": "dcc4924e261b30a59d4e099f045a7c8b5d0fa10d76fc5479eadb8dbea8cad543",
+      "bytes": 1976
+    },
+    "raw/tex_generation.stdout": {
+      "sha256": "dae834f3c1713d4590a17b3c4057039e45ade2848c36474086efcc12e35b3d31",
+      "bytes": 69
+    },
+    "raw/tex_generation.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "raw/latexmk.stdout": {
+      "sha256": "6e20942d2ecb3c403c08aa58d246eb66a36098252fdf29ae10453a5d2e588c84",
+      "bytes": 15896
+    },
+    "raw/latexmk.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "raw/latexmk_first_failure.stdout": {
+      "sha256": "b3f298628aa961b15d951425ffaa9854a0201fb989bff0ac4aab6dfa9e0d7abb",
+      "bytes": 6471
+    },
+    "raw/latexmk_second_failure.stdout": {
+      "sha256": "f473f148465a5d81fc84ac132ba920f76c0be9421b712bb469d0e8d2a58eae95",
+      "bytes": 6632
+    },
+    "raw/commands.json": {
+      "sha256": "00a3261494859375db3ce0f541880aa6959818499deb907397a635e5f90928f5",
+      "bytes": 2514
+    },
+    "preview/contact_sheet.png": {
+      "sha256": "86731f881b5df0fb2c0ab74adadf36f5185359ff168ec8c48542aeacdeca3b3d",
+      "bytes": 935738
+    },
+    "preview/page-01.png": {
+      "sha256": "f407e4b25de0d2b1a03f118212bbfb1cb21f38265412b81e9450969984810312",
+      "bytes": 11117
+    },
+    "preview/page-02.png": {
+      "sha256": "6801a7ac5f8ecd0b828e2ddd427543c0d6abd5e6545fa708f1898e0f37c79499",
+      "bytes": 68785
+    },
+    "preview/page-03.png": {
+      "sha256": "aa3a30e989680fb77ea9e657a4196155ba60cb89406ff91926369a8f8d1f0c94",
+      "bytes": 58920
+    },
+    "preview/page-04.png": {
+      "sha256": "94339f6bbe65b5251e1682bc91c62d4bdfb520893c4692558bd4ee08448081f5",
+      "bytes": 56763
+    },
+    "preview/page-05.png": {
+      "sha256": "7fbcfa4e967313c285f33ee60f48eea630339080140b7c865b3f85d37dda74c8",
+      "bytes": 65356
+    },
+    "preview/page-06.png": {
+      "sha256": "21898fb53b6cf469032d5918f070351871b9f617b0e2dea45b3521d0e82f045e",
+      "bytes": 75196
+    },
+    "preview/page-07.png": {
+      "sha256": "8d3e6899cfd23639b43719337691e3da4012a0293bdba4dfe917d6460df48b65",
+      "bytes": 58196
+    },
+    "preview/page-08.png": {
+      "sha256": "85e1af6a07253e2c83e81562b66831617955417d65e517086bcf066d1a932d71",
+      "bytes": 58040
+    },
+    "preview/page-09.png": {
+      "sha256": "566f57f6e63914b1657f25a6662b8859339abbde19173b69b76f32fc1947e3f5",
+      "bytes": 46500
+    },
+    "preview/page-10.png": {
+      "sha256": "d100f030cfaac752de9e989a8565d6af1524c173abe49e81d93496d502d14bb1",
+      "bytes": 58914
+    },
+    "preview/page-11.png": {
+      "sha256": "7260c14faf4bdb08ea6f242ea59306a9d7e3ac651bd24f13f142b491ef622655",
+      "bytes": 69127
+    },
+    "preview/page-12.png": {
+      "sha256": "cae4a1eb898bc79c35b396356126f9381b3906ac95e5ca03310598ff686bc91b",
+      "bytes": 47780
+    },
+    "preview/page-13.png": {
+      "sha256": "452c9af8a255ff4cf3a8c4b5a76199266473767c07f35a28da7ab6c2b7d9deda",
+      "bytes": 64669
+    },
+    "preview/page-14.png": {
+      "sha256": "6cd8b9aaa22aba0897418f61efdf5cf8d19b1af78c3c5c18a125405cd8c5d8a5",
+      "bytes": 28602
+    },
+    "preview/page-15.png": {
+      "sha256": "df986eec703a19d330b5566a0768f228a9851faf700ae5615f5b01af4e9cd21d",
+      "bytes": 26354
+    },
+    "preview/page-16.png": {
+      "sha256": "057e22e1c45e82e2be6011aa250554e2083264222f1bcfcd269cebc9372a8590",
+      "bytes": 26140
+    },
+    "preview/page-17.png": {
+      "sha256": "0405e7dba5fe5565d1e043614ab7db083abc1ad18ad232114c6446b4788f8554",
+      "bytes": 18790
+    }
+  },
+  "validation": {
+    "source_count": 9,
+    "nominal_projection": {
+      "baseline": {
+        "projection_symmetry": 0.0,
+        "projection_idempotence": 4.440892098500626e-16,
+        "nuisance_annihilation": 5.551115123125783e-17
+      },
+      "endpoint": {
+        "projection_symmetry": 0.0,
+        "projection_idempotence": 4.440892098500626e-16,
+        "nuisance_annihilation": 1.6653345369377348e-16
+      },
+      "history": {
+        "projection_symmetry": 0.0,
+        "projection_idempotence": 4.440892098500626e-16,
+        "nuisance_annihilation": 1.6653345369377348e-16
+      },
+      "both": {
+        "projection_symmetry": 0.0,
+        "projection_idempotence": 4.440892098500626e-16,
+        "nuisance_annihilation": 1.6653345369377348e-16
+      }
+    },
+    "nominal_rank_cutoffs": {
+      "baseline": {
+        "1e-12": 12,
+        "1e-10": 12,
+        "1e-08": 12
+      },
+      "endpoint": {
+        "1e-12": 15,
+        "1e-10": 15,
+        "1e-08": 15
+      },
+      "history": {
+        "1e-12": 15,
+        "1e-10": 15,
+        "1e-08": 15
+      },
+      "both": {
+        "1e-12": 18,
+        "1e-10": 18,
+        "1e-08": 18
+      }
+    },
+    "basis_orthonormal_max_residual": 2.220446049250313e-16,
+    "full_rank_actual_error": 0.1808603122455374,
+    "full_rank_bound": 0.18086031224553567,
+    "deficient_actual_error": 0.005251254865478183,
+    "deficient_bound": 0.00937622823719821,
+    "all_required_checks_passed": true
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "matplotlib": "3.10.8"
+  },
+  "candidate_manifest_sha256": "97d4252a9d532532ff114b480629ebcea69078ab2225ff90a37fef19427fdaad"
+}

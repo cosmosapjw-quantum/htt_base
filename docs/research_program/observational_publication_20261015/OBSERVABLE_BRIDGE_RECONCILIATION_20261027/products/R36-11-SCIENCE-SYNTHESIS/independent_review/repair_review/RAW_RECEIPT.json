@@ -1,0 +1,529 @@
+{
+  "commands": [
+    {
+      "name": "01_apply",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "-c",
+        "import pathlib,runpy,sys,json; m=runpy.run_path(sys.argv[1]); print(json.dumps({'changed':m['apply'](pathlib.Path(sys.argv[2]))},indent=2))",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/apply_candidate.py",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:36.530462+00:00",
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/01_apply.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/01_apply.stderr",
+      "stdout_sha256": "2c4e2315475e3ba0328fdd0b6e8f0f88d29f9f5cfc595b684d3f73713efa094f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "02_assemble",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/assemble.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:37.161004+00:00",
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/02_assemble.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/02_assemble.stderr",
+      "stdout_sha256": "7ed80b96f416e4ab6ea5fcadd0b56d3833219f08083234b004d74939facc3326",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "03_check_before_build",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:38.759331+00:00",
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/03_check_before_build.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/03_check_before_build.stderr",
+      "stdout_sha256": "e911dd071b9988b57cfd89dd33517fd95e4611d7b1ec38c72cea51f66b3b3ac4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "04_build",
+      "command": [
+        "latexmk",
+        "-g",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-cd",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/main.tex"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:39.618766+00:00",
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/04_build.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/04_build.stderr",
+      "stdout_sha256": "3fca9c20def828c7a41f9c632f5785260892d41aba3fc14e6ecdeaa75fe94383",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "05_check_after_build",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:48.584479+00:00",
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/05_check_after_build.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/05_check_after_build.stderr",
+      "stdout_sha256": "e911dd071b9988b57cfd89dd33517fd95e4611d7b1ec38c72cea51f66b3b3ac4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "06_apply_idempotent",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "-c",
+        "import pathlib,runpy,sys,json; m=runpy.run_path(sys.argv[1]); print(json.dumps({'changed':m['apply'](pathlib.Path(sys.argv[2]))},indent=2))",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/apply_candidate.py",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:49.379642+00:00",
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/06_apply_idempotent.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/06_apply_idempotent.stderr",
+      "stdout_sha256": "a344b81ddcd45bb29b2c5ed37771d663056ccfb0ec62caaf4e3b51471d4d7acc",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "07_pdfinfo",
+      "command": [
+        "pdfinfo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/main.pdf"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:49.472662+00:00",
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/07_pdfinfo.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/07_pdfinfo.stderr",
+      "stdout_sha256": "8ec58451d1b3512f465881c757ece9fdb674fd3556aadd87a29d1c76d0ffa584",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "08_pdftext",
+      "command": [
+        "pdftotext",
+        "-layout",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/main.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture_pdf.txt"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:49.612509+00:00",
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/08_pdftext.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/08_pdftext.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "09_wrong_apply_preimage",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "-c",
+        "import pathlib,runpy,sys,json; m=runpy.run_path(sys.argv[1]); print(json.dumps({'changed':m['apply'](pathlib.Path(sys.argv[2]))},indent=2))",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/apply_candidate.py",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:50.653781+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/09_wrong_apply_preimage.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/09_wrong_apply_preimage.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "ca1ef848e26ce41254c61ee5dea7ec0c6c3cad737e3b62ff45f7edd1031cda5d"
+    },
+    {
+      "name": "10_baseline_0",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:50.833962+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/10_baseline_0.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/10_baseline_0.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "eebb2bdf7e7757595efdd0f61701cb12b0c357791b5399d038cdf49eb1dde415"
+    },
+    {
+      "name": "11_assemble_baseline_0",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/assemble.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.098894+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/11_assemble_baseline_0.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/11_assemble_baseline_0.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7535c5f6664ebf4344066bf3b82cc04366759f0c4cfac1b027a26ba506278fb0"
+    },
+    {
+      "name": "12_applied_0",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.152570+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/12_applied_0.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/12_applied_0.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e8b40eff8bd16f00be7f172c23386c6e742a2c24c0dfd9c3d6fb1c42d09d1cf1"
+    },
+    {
+      "name": "10_baseline_1",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.246554+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/10_baseline_1.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/10_baseline_1.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "03387bc0f374920e6cdf011f6c730737761e86f25c739ea429443b5cda65008f"
+    },
+    {
+      "name": "11_assemble_baseline_1",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/assemble.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.317927+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/11_assemble_baseline_1.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/11_assemble_baseline_1.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "918a5e65f08461d6b4299a88697eabd4978bcd2009d7f0b194128fa0a88b7067"
+    },
+    {
+      "name": "12_applied_1",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.382339+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/12_applied_1.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/12_applied_1.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "32f6a588803d54f311e0e72411be9a89c7160d3f581189611ca93621eba845cb"
+    },
+    {
+      "name": "10_baseline_2",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.435789+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/10_baseline_2.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/10_baseline_2.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "98edc65cd12dd63d917d0bf0c85ed8a26417bdbe439e68408a9b05551cd7db94"
+    },
+    {
+      "name": "11_assemble_baseline_2",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/assemble.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.489401+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/11_assemble_baseline_2.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/11_assemble_baseline_2.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "08eeb0bf40fc1d644eb3220870e17814aa9463ff644734a2387066556822383d"
+    },
+    {
+      "name": "12_applied_2",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.551183+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/12_applied_2.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/12_applied_2.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "9732701242dbeb20dbc76263268bbc4106125ca685ae4cc20af86e32d7de0e4e"
+    },
+    {
+      "name": "10_baseline_3",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.598536+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/10_baseline_3.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/10_baseline_3.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d4b41ea8a31b230360819bf98e02e9de1f2133dcb9928d93ff0f02cad9b774c7"
+    },
+    {
+      "name": "11_assemble_baseline_3",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/assemble.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.645735+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/11_assemble_baseline_3.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/11_assemble_baseline_3.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "61c5ca108c2afe6c7b5e8d48e2f4e54083cec296001f9aef617069f6242cc975"
+    },
+    {
+      "name": "12_applied_3",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.720879+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/12_applied_3.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/12_applied_3.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "7850d0066003608d6a1e49e2b8c58a1df036ffbb4c36d34595e9aa2e13c8b3f9"
+    },
+    {
+      "name": "10_baseline_4",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.804461+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/10_baseline_4.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/10_baseline_4.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d9577230e77b534cc172ed0cf2b73509f14e2bf7a70d5d4a669940819f5e50ca"
+    },
+    {
+      "name": "11_assemble_baseline_4",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/assemble.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.854124+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/11_assemble_baseline_4.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/11_assemble_baseline_4.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "96509815a2e1fa19ab7b5d937141d67ed015903b476d93cb36de5a76f88dcdf3"
+    },
+    {
+      "name": "12_applied_4",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.914332+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/12_applied_4.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/12_applied_4.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "41fc41cfb3163f52d36efca4429fab3283d11f1e4fc231fe7fcbcc3f855f4fc2"
+    },
+    {
+      "name": "10_baseline_5",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:51.999297+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/10_baseline_5.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/10_baseline_5.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "57738b91ddf242f326b22896f3d192d20ba6870f298f51e90f675987fca2f9db"
+    },
+    {
+      "name": "11_assemble_baseline_5",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/assemble.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:52.084779+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/11_assemble_baseline_5.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/11_assemble_baseline_5.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "cff14b10d08db251badab403f6fd06fef69f1cff92a9a62c09c07d77f4b258a9"
+    },
+    {
+      "name": "12_applied_5",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:52.145187+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/12_applied_5.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/12_applied_5.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "75146361da89fbfff4fe3865d828f99de72a2955c8b4c25b678c2b24a701378b"
+    },
+    {
+      "name": "13_wrong_cli_path",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/apply_candidate.py",
+        "--apply-reviewed-candidate",
+        "--test-target",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/outside_target"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:52.199198+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/13_wrong_cli_path.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/13_wrong_cli_path.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "4ae43a27fde44c42b0c58a000b642186e83898a4c8d371cf1dbf98437a086c73"
+    },
+    {
+      "name": "14_wrong_target_assemble.py",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/assemble.py",
+        "--target",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/outside_target"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:52.274424+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/14_wrong_target_assemble.py.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/14_wrong_target_assemble.py.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "8175d078a3ecbfe7ff5a166904a31562930126aa3675038317b6d644983ac6f9"
+    },
+    {
+      "name": "14_wrong_target_check.py",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py",
+        "--target",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/outside_target"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:52.327160+00:00",
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/14_wrong_target_check.py.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/14_wrong_target_check.py.stderr",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "8a88544bf803096ba76278d58578e79447a5b836ae026af0acd784a53456903e"
+    },
+    {
+      "name": "15_final_check",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/check.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "start_utc": "2026-10-27T06:12:52.372504+00:00",
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/15_final_check.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/15_final_check.stderr",
+      "stdout_sha256": "e911dd071b9988b57cfd89dd33517fd95e4611d7b1ec38c72cea51f66b3b3ac4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "candidate_identity": "sha256:83b167a9388071a1a82500716d338473bd8ac5c9abb3c978974a914a37066519",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "science_producer_runs": 0,
+  "production_writes": 0,
+  "fixture": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4",
+  "phase": "COMPLETE",
+  "status": "PASS",
+  "workflow_result_sha256": "208276b48cffa148770e125e7c2a7904033897c30b285aa5623d61bc2178cc4d"
+}

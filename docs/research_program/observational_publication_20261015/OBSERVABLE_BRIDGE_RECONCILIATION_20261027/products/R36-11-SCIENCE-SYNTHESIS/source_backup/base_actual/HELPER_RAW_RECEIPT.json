@@ -1,0 +1,62 @@
+{
+  "task_id": "R36-11-SCIENCE-SYNTHESIS",
+  "requested_runtime": "gpt-6.1-sol/medium",
+  "observed_runtime": "UNKNOWN",
+  "actual_executor": "/root/r36_science_synthesis_typesetting",
+  "assembly_executions": 5,
+  "latexmk_executions": 5,
+  "old_science_executions": 0,
+  "source_bindings_verified": 30,
+  "first_failures": [
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex",
+      "attempt": 1,
+      "exit": 12,
+      "reason": "Nested math shorthand conversion"
+    },
+    {
+      "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error -cd candidate/report/main.tex",
+      "attempt": 2,
+      "exit": 12,
+      "reason": "Raw caption exponent outside math"
+    }
+  ],
+  "final_build_exit": 0,
+  "check_candidate_executions": 2,
+  "final_check_exit": 0,
+  "application_test": "all overlay files then idempotent no-op; original preimages preserved",
+  "claim_guard": "executed; expected added math/numbers and changed prose reviewed, not semantic proof",
+  "logs": [
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/assembly_01.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/assembly_01.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/assembly_02.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/assembly_02.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/assembly_03.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/assembly_03.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/assembly_04.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/assembly_04.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/assembly_05.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/assembly_05.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/check_01.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/check_01.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/check_02.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/check_02.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/claim_guard.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/claim_guard.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/latexmk_01.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/latexmk_01.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/latexmk_02.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/latexmk_02.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/latexmk_03.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/latexmk_03.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/latexmk_04.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/latexmk_04.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/latexmk_05.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/latexmk_05.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/seal_01.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/seal_01.stdout"
+  ],
+  "cumulative_token_usage": "UNKNOWN_NOT_EXPOSED_BY_HELPER_RUNTIME",
+  "cumulative_task_identity": "unchanged; no replacement packet/allocation",
+  "scientific_admission": false
+}

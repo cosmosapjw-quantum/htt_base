@@ -1,0 +1,1511 @@
+Separating endpoint and history information in radial and
+astrometric response design
+HTT conditional response-design research
+(Dated: 25 October 2026)
+
+1
+
+Abstract
+A radial velocity response measures the difference between source bulk motion and observer motion. A time-integrated channel also loses any history mode orthogonal to its window. We first
+construct a finite example in which independently calibrated observer and history responses remove
+these two ambiguities. Thirteen radial measurements at two radii determine twelve combinations of
+eighteen signed coefficients after removing a scalar calibration. Either additional three-component
+response raises the rank to fifteen; together they give rank eighteen. Equal radii reduce the joint
+rank to fourteen. We then examine a proper-motion response whose five-component trace-free tensor combines a source–observer endpoint difference with the present observer-time derivative. The
+associated ten-coordinate history map has rank five even when the observable tensor is fully determined. For a retained sample of 755,850 astrometric sources, we compare six common spin/glide
+nuisance coefficients with all 97 coefficients outside the common electric-quadrupole signal span,
+using the same complete normal matrix and score. Both projected tensor responses have rank five.
+Under the stipulated Gaussian noise law, their worst-direction tensor radii for 80 percent power
+are 2.2943 and 5.0499 microarcseconds per year, respectively. These are conditional design sensitivities. Their interpretation as matter shear requires a physical distance/history response, an
+optical-centroid transfer and a calibrated spatial error model.
+
+I.
+
+A COMMON FRAME AND A FINITE RESPONSE
+
+Consider a nonrotating orthonormal spatial frame carried by an expanding fiducial normal
+observer. We use signature (− + ++), proper radial positions rn, n · n = 1, and the fixed
+scales
+c = 299792.458 km s−1 ,
+
+R∗ = 100 Mpc,
+
+v∗ = 300 km s−1 ,
+
+β∗ = v∗ /c,
+
+(1)
+
+h∗ = v∗ /R∗ = 3 km s−1 Mpc−1 .
+Our dimensionless radial datum is y = (c/v∗ )δz. All vector components and tensors
+below refer to this same frame. The source bulk and observer velocities are v∗ b and v∗ ℓ.
+A positive observer velocity along the observer-to-source direction reduces the first-order
+radial redshift, giving the relative-motion term n · (b − ℓ). A scalar rate coefficient h∗ m
+2
+
+and a trace-free symmetric rate h∗ S complete the local affine part of the response. These
+are coefficients of a local first-order design; the reference frame and scales do not supply a
+finite-redshift propagation law or an absolute background expansion measurement.
+Choose the Frobenius-orthonormal STF basis
+diag(1, −1, 0)
+diag(1, 1, −2)
+√
+√
+, F2 =
+,
+2
+6
+(2)
+ey eTz + ez eTy
+ex eTy + ey eTx
+ex eTz + ez eTx
+√
+√
+√
+,
+F4 =
+,
+F5 =
+.
+F3 =
+2
+2
+2
+P
+P
+Thus S = 5a=1 sa Fa and ∥S∥2F = a s2a . We retain all five signed coordinates and the
+F1 =
+
+full matrix, rather than its norm alone.
+Let τ ∈ [0, 1] parametrize a stipulated two-mode matter-tilt history,
+
+βG (τ ) = β∗ [g0 + (2τ − 1)g1 ].
+
+(3)
+
+The coefficients g0 , g1 are dimensionless vectors in the transported common frame. For a
+normalized window W , prescribe the dimensionless sensitivity
+Z 1
+ρn ·
+
+W (τ )
+0
+
+βG (τ )
+dτ,
+β∗
+
+ρ=
+
+r
+.
+R∗
+
+(4)
+
+Equation (4) defines this experiment. It does not derive a universal relation between tilt,
+acceleration and a redshift-rate dipole. A physical application must provide that relation and
+its window independently. The illustrative coefficient box [−1, 1]18 ensures supτ ∥βG (τ )∥ ≤
+√
+2 3β∗ < 1; the box serves only to locate the finite examples and is not a probability
+distribution or a cosmological admissible region.
+Order the parameters as
+
+θ = (ℓx , ℓy , ℓz , bx , by , bz , m, g0x , g0y , g0z , s1 , . . . , s5 , g1x , g1y , g1z )T .
+
+(5)
+
+For the baseline window W0 = 1, the integral of 2τ − 1 vanishes. With one free scalar
+calibration α, the thirteen baseline means are
+
+yi = α + ni · (b − ℓ) + ρi [m + ni · g0 + nTi Sni ].
+The first nine directions, all at ρ = 1, are
+3
+
+(6)
+
+ex , −ex , ey , −ey , ez , −ez , (3/5, 4/5, 0), (3/5, 0, 4/5), (0, 3/5, 4/5).
+
+(7)
+
+Append ex , −ex , ey , ez at ρ = q > 0. The nominal design uses q = 2. Define E3 to have
+rows nTi , define Q5 to have rows (nTi Fa ni )5a=1 , and set R = diag(ρi ). The baseline design
+and nuisance column are
+
+J0 = [−E3 , E3 , R1, RE3 , RQ5 , 013×3 ],
+
+N0 = 113 .
+
+(8)
+
+Here R1 is a vector of dimensionless radii; it is distinct from the physical length R∗ .
+
+II.
+
+ONE NUISANCE QUOTIENT AND TWO ADDITIONAL RESPONSES
+
+Two independently calibrated three-component responses are proposed:
+Z 1
+zL = ℓ + eL ,
+
+zG =
+
+2τ
+0
+
+g1
+βG (τ )
+dτ + eG = g0 +
++ eG .
+β∗
+3
+
+(9)
+
+The first supplies an observer-velocity anchor. The second uses the normalized window
+W1 = 2τ , whose overlap with 2τ −1 is 1/3. Their declared gains express both in dimensionless
+y-equivalent units. This is a pair of hypothetical measurement functionals, rather than a
+claimed delivered survey channel. Their calibration is independent in the algebraic sense
+that neither carries the free α of (6). No stochastic independence is assumed.
+The augmented rows are
+
+
+
+JL = [I3 , 0, 0, 0, 0, 0],
+
+JG = [0, 0, 0, I3 , 0, I3 /3],
+
+
+
+ J0 
+ 
+J =  JL  ,
+ 
+JG
+
+
+
+
+
+113 
+ 
+N =  03  . (10)
+ 
+03
+
+Block widths in (10) follow (5). Removing an addition deletes its three rows from both J
+and N . For every design, the scalar nuisance is removed once, using the complete retained
+data vector and the same construction for all parameter columns. For a positive rowprecision matrix W , define
+
+P =I−
+
+(W N )(W N )T
+,
+∥W N ∥2
+
+Aphys = P W J,
+4
+
+ȳ = P W y.
+
+(11)
+
+For the full design we take
+−1
+W = diag(I13 , σL−1 I3 , σG
+I3 ),
+
+(12)
+
+with nominal σL = σG = 1. The subdesigns retain the applicable diagonal blocks. These
+positive scales define a deterministic comparison metric. A physical joint sampling covariance
+and a statistical law are not supplied. In particular, the singular-value plots below do not
+carry confidence levels.
+The kernel characterization
+
+P W Jθ = 0
+
+⇐⇒
+
+Jθ ∈ col N
+
+(13)
+
+holds because W is invertible and P projects away exactly W N . Thus finite positive
+precision weights alter conditioning but not structural identifiability. Allowing unknown
+offsets for the added responses would enlarge N and require a new analysis.
+
+III.
+
+EXACT RANKS AND IDENTIFIED COMBINATIONS
+
+Proposition 1 (two-radius separation). For (7), the nine-dimensional spherical polynomial space consisting of a monopole, a dipole and an STF quadrupole is unisolvent. With
+the four repeated directions in (7) placed at any distinct positive radius q ̸= 1, the matrix
+
+X = [E4 , RE9 ],
+
+E4 = [1, E3 ],
+
+E9 = [1, E3 , Q5 ]
+
+(14)
+
+has rank thirteen.
+Proof. Let f (n) = a + d · n + nT T n, T STF, vanish on the first nine directions. The
+opposite axis pairs first give d = 0, then a + Tii = 0. Taking the trace gives a = 0 and
+all three diagonal entries vanish. At the three remaining directions the nonzero cross terms
+force Txy = Txz = Tyz = 0. Hence E9 is invertible. A degree-one polynomial vanishing at
+ex , −ex , ey , ez is likewise zero, so the repeated-direction E4 is invertible. A null vector of (14)
+represents polynomials p1 + ρp2 . At ρ = 1, unisolvence gives p2 = −p1 as polynomials. At
+the four repeated directions the equation becomes (1 − q)p1 = 0, forcing p1 = p2 = 0. This
+is the retained two-radius rank argument, expressed in the orthonormal tensor coordinates
+(2). □
+5
+
+Proposition 2 (baseline quotient). At q ̸= 1, the baseline response after (11) has
+rank twelve. Its exact six-dimensional kernel is
+
+ksplit (v) = (v, v, 0, 0, 0, 0),
+
+khist (w) = (0, 0, 0, 0, 0, w),
+
+v, w ∈ R3 .
+
+(15)
+
+The identified signed combinations are
+
+b − ℓ,
+
+m,
+
+g0 ,
+
+(s1 , . . . , s5 ).
+
+(16)
+
+Proof. By (13), a quotient-null vector satisfies J0 θ = a1 for some a. Proposition 1 applied
+to the coefficients (−a, b − ℓ, m, g0 , s) forces a = 0, b − ℓ = 0, m = g0 = s = 0. No row
+contains g1 . These are precisely (15), proving both completeness and the rank. □
+The ambiguity in (15) has two separate mechanisms. A shared change to source bulk and
+observer velocity leaves their relative radial velocity unchanged. A history proportional to
+2τ − 1 has zero unweighted mean. Repeated angular or radial observations with the same
+response window cannot reveal that history coefficient.
+Proposition 3 (constructive augmentation). At q ̸= 1, either response in (9) gives
+quotient rank fifteen and a three-dimensional kernel. Their joint addition gives quotient
+rank eighteen and a unique eighteen-coordinate inverse on the quotient data image.
+Proof. The first addition acts on (15) as JL ksplit (v) = v and JL khist (w) = 0. The
+second acts as JG ksplit (v) = 0 and JG khist (w) = w/3. Hence each addition removes exactly
+its corresponding three-dimensional kernel, and together they remove all six dimensions.
+Equation (13) extends the result to every positive finite precision weighting in (12). □
+This count separates information supplied by an endpoint anchor from information supplied by a new history moment. The same conclusion follows by reconstructing
+
+ℓ = zL ,
+
+b = (b − ℓ) + zL ,
+
+g1 = 3(zG − g0 ),
+
+(17)
+
+after solving for (16).
+Proposition 4 (equal-radius negative control). At q = 1, the baseline quotient has
+rank eight. Either addition has rank eleven, and their joint addition has rank fourteen.
+Proof. At one radius, (6) depends only on the scalar α+m, the dipole b−ℓ+g0 , and the five
+STF coefficients. The nuisance quotient removes the scalar, leaving the independent dipole
+6
+
+and quadrupole, hence rank eight. Each calibrated addition contributes three independent
+output coordinates. With both additions the remaining kernel is generated by
+
+δθd = (0, −d, 0, d, 0, −3d),
+
+δθm = (0, 0, t, 0, 0, 0),
+
+d ∈ R3 , t ∈ R.
+
+(18)
+
+The first leaves every raw mean, including both additions, unchanged. The second is
+absorbed by δα = −t. Conversely, a joint quotient-null vector obeys ℓ = 0, g1 = −3g0 ,
+b = −g0 and s = 0, with m free. Thus the kernel has exactly four dimensions. □
+Equation (18) exhibits why independent endpoint and history anchors do not replace
+radial leverage. Distinct radii separate an angular intercept from a depth-proportional dipole
+and monopole.
+
+IV.
+
+EXPLICIT FINITE WITNESSES
+
+Starting from θ = 0, choose v = ex /4 and w = ey /4. The two states ksplit (v) and khist (w)
+both remain in the illustrative box. Every baseline prediction is exactly zero for each state.
+The first changes zL by (1/4, 0, 0); the second changes zG by (0, 1/12, 0). Their sum changes
+both additions while leaving all thirteen baseline means unchanged. These signed nineteencoordinate predicted arrays are retained in the numerical supplement.
+The history witness corresponds to
+
+βG (τ ) =
+
+β∗
+(2τ − 1)ey .
+4
+
+(19)
+
+Its time integral vanishes although the history is nonzero except at its midpoint. The
+zero baseline column is therefore a response null direction, not a statement that the physical
+history vanishes.
+For an equal-radius joint witness in the same box, take d = ex /4 in (18): b = −ex /4,
+g0 = ex /4, g1 = −3ex /4, with all other coordinates zero. All nineteen raw means remain
+zero. A separate change m = 1/4, α = −1/4 supplies the monopole witness.
+
+V.
+
+FIXED NORMALIZATION AND SPECTRAL COMPARISON
+
+Velocity and rate scales in (1) are specified before numerical normalization. Let J∗ and
+P∗ denote the full design at q = 2, σL = σG = 1. Define once
+7
+
+dj = ∥P∗ J∗ ej ∥2 > 0,
+
+−1
+L = diag(d−1
+1 , . . . , d18 ),
+
+θ = Lz.
+
+(20)
+
+The normalized response is
+
+A = P W JL.
+
+(21)
+
+Nominal augmented columns have unit norm. The same numerical matrix L is then
+frozen for every subdesign, radius and precision case. In particular, the baseline’s three zero
+history columns remain zero; weaker channels are not restored to unit norm during a scan.
+The supplement records the complete dj , L, unscaled and scaled spectra and all physical
+unit conversions.
+With A = U ΣV T , the identified scaled coordinates are VrT z = VrT L−1 θ, where Vr contains
+the right singular vectors for the nonzero spectrum. The corresponding projector is Πid =
+Vr VrT , and the kernel projector is I − Πid . The named physical combinations (16) span
+the same identified information but are not an orthonormal singular-vector basis. Singularvector signs and bases within repeated singular subspaces have no physical significance.
+The baseline is a 13 × 18 matrix of rank twelve. A thin SVD returns thirteen singular
+values and therefore only one explicit zero. The parameter kernel still has six dimensions.
+The complete eighteen-dimensional right basis and kernel projector are required to retain
+the five additional null directions absent from that thin list. The plotted spectrum may pad
+the missing five entries with structural zeros provided the caption identifies the padding.
+The finite comparison uses the following analytic targets:
+Rows Rank at q = 2 Kernel dimension Rank at q = 1
+
+Design
+Baseline
+
+13
+
+12
+
+6
+
+8
+
+Baseline plus endpoint
+
+16
+
+15
+
+3
+
+11
+
+Baseline plus history
+
+16
+
+15
+
+3
+
+11
+
+Both additions
+
+19
+
+18
+
+0
+
+14
+
+Identified Full-vector
+Design
+
+Rank
+
+Kernel
+
+Positive smin
+
+baseline
+
+12
+
+6
+
+0.10665269
+
+8
+
+condition gain
+16.950054 unbounded
+
+Identified Full-vector
+Rank
+
+Kernel
+
+Positive smin
+
+condition gain
+
+endpoint
+
+15
+
+3
+
+0.097638737
+
+18.655425 unbounded
+
+history
+
+15
+
+3
+
+0.10180602
+
+17.900956 unbounded
+
+both
+
+18
+
+0
+
+0.093938751
+
+19.539575 10.6452
+
+singular value, fixed scaled coordinates
+
+Design
+
+baseline (kernel 6)
+endpoint (kernel 3)
+history (kernel 3)
+both (kernel 0)
+
+100
+
+10−1
+2.5
+
+5.0
+
+7.5
+10.0
+12.5
+positive singular-value index
+
+15.0
+
+17.5
+
+FIG. 1. Singular spectra at q=2 with the fixed normalization (20). Legends state structural null
+dimensions. The row metric is stipulated, not measured covariance.
+
+To show radial sensitivity, set q = 1 + δ for
+δ ∈ {0, 10−4 , 10−3 , 10−2 , 10−1 , 1, 3}.
+
+(22)
+
+At every positive separation, the analytic ranks are those of Proposition 3; as the separation approaches zero, four joint singular directions become weak and at equality join the
+exact kernel. Numerical threshold dependence near equality should be displayed alongside
+the structural rank. A finite threshold does not change the algebraic theorem. At equality
+the inverse gain for all eighteen coordinates is infinite, even though the fourteen identified
+directions retain finite gains.
+9
+
+For additional-channel precision, evaluate every pair
+
+(σL , σG ) ∈ {1/2, 1, 2, 4}2
+
+(23)
+
+at q = 2, preserving (20). These cases measure how the weakest recoverable combination
+responds to the relative precision of the two added channels.
+
+endpoint row scale σL
+
+smallest positive singular value
+
+4.0
+
+10−1
+
+10−2
+
+10
+
+−3
+
+0.092
+0.090
+0.088
+
+2.0
+
+0.086
+0.084
+
+1.0
+
+0.082
+
+10−4
+
+0.080
+0.5
+
+full-rank minimum singular value
+
+0.094
+
+equal radius: rank 14
+
+0.078
+
+10−5
+10−4
+
+10−3
+
+10−2
+
+10−1
+
+100
+
+0.5
+
+radius gap q−1 (equal-radius marker offset)
+
+1.0
+2.0
+history row scale σG
+
+4.0
+
+FIG. 2. Radial leverage and additional-channel precision in fixed scaled coordinates. The equalradius marker is offset horizontally for log display; its full-vector inverse gain is unbounded.
+
+VI.
+
+DETERMINISTIC ERROR SENSITIVITY
+
+Let the normalized projected data obey ȳ = Az + e, with ∥e∥2 ≤ ϵ. Suppose the operator
+e = A + ∆, where ∥∆∥2 ≤ η. Both errors are measured after the
+used for inversion is A
+prescribed quotient and normalization. Thus ∆ must include any error in that effective
+operator; nuisance-model changes cannot be treated as harmless coordinate changes. For a
+full-column-rank A, Weyl’s bound gives
+
+e ≥ smin (A) − η.
+smin (A)
+
+(24)
+
+If smin (A) > η, the least-squares inverse satisfies
+
+∥b
+z − z∥2 ≤
+
+ϵ + η∥z∥2
+.
+smin (A) − η
+
+10
+
+(25)
+
+e gives zb − z = A
+e+ (e − ∆z). Taking norms and using (24)
+Proof. Full column rank of A
+proves (25). No distribution or independence assumption is used. □
+The physical coefficient error obeys ∥θb − θ∥2 ≤ ∥L∥2 ∥b
+z − z∥2 , and any specified linear
+physical functional can use its own sharper factor ∥CL∥2 . The illustration ϵ = 10−3 , ∥z∥2 ≤ 1
+is a separate error scenario, not the claim that the whole box [−1, 1]18 lies in the unit z-ball.
+For η/smin ∈ {0, 0.1, 0.25, 0.5, 0.75, 0.9, 1, 1.1}, the bound loses certification at one. Such
+cases are reported as outside the certified domain.
+For a fixed rank-deficient operator, the minimum-norm estimate recovers the orthogonal
+identified projection with
+
+∥b
+z − Πid z∥2 ≤
+
+ϵ
+
+,
+s+
+min (A)
+
+(26)
+
+where s+
+min is the smallest nonzero singular value. This controls identified combinations
+only. An arbitrary kernel component leaves the data unchanged, so no uniform full-vector
+bound follows. Perturbations that change rank or the kernel require their own subspace
+control; (26) is the fixed-operator statement.
+Equation (17) also gives direct, physically transparent bounds. If the errors on the
+estimated combinations obey ∥δ(b − ℓ)∥ ≤ eD , ∥δzL ∥ ≤ eL , ∥δg0 ∥ ≤ e0 , and ∥δzG ∥ ≤ eG ,
+then
+
+∥δb∥ ≤ eD + eL ,
+
+∥δg1 ∥ ≤ 3(eG + e0 ).
+
+(27)
+
+The history inverse incurs a factor of three because the new window overlaps the previously invisible temporal mode by only 1/3. This penalty survives the fact that the joint
+design is injective.
+
+VII.
+A.
+
+A PROPER-MOTION ENDPOINT AND HISTORY RESPONSE
+Signed response and its physical domain
+
+The finite radial construction shows how an additional response can reveal a previously
+invisible history moment. A proper-motion observable provides a related example in which
+the endpoint and derivative contributions are already present in the same measured direction
+11
+
+deterministic upper bound on ||ẑ−z||
+
+101
+
+uncertified at and above 1
+
+100
+
+10−1
+
+10−2
+0.0
+
+0.2
+
+0.4
+0.6
+operator error η / smin
+
+0.8
+
+1.0
+
+FIG. 3. Deterministic inverse bound (25) for epsilon=0.001 and ||z||<=1. At and above eta/smin=1
+the bound is uncertified. No sampling law is supplied.
+
+drift. To specify its domain, consider a weak homogeneous Bianchi I metric with fixed
+principal axes,
+
+ds2 = −c2 dt2 + a(t)2 [e2B(t) ]ij dxi dxj ,
+
+B T = B,
+
+tr B = 0.
+
+(28)
+
+Here B is dimensionless, t is cosmic proper time and the signature is (−, +, +, +). Source
+and observer are comoving. We express the outward source direction n in a nonrotating
+orthonormal observer frame. To first order in the weak anisotropy, the direction-drift formula
+of Marcori et al. [1] [their Eq. (5.13)] becomes
+Z to
+Dso = ao c
+ts
+
+dt
+> 0,
+a(t)
+
+µ(n) = Pn APM n,
+
+Pn = I − nnT ,
+
+2c
+APM =
+(Bo − Bs ) − Ḃo .
+Dso
+
+(29)
+
+The two terms are the parallax contribution from the endpoint difference and the local
+aberration contribution. They have the same physical rate units. With c in kilometres per
+second and D in kilometres, APM has units of inverse seconds; the catalogue calculation
+converts radians per second to microarcseconds per Julian year of 365.25 days. The two
+12
+
+catalogue components are (µα cos δ, µδ ) in the ICRS basis. Identifying that basis with the
+transported model frame is a stated response convention, not a calibration of matter motion.
+For a nearby affine separation, Bo − Bs = σo ∆t + O(∆t2 ), Dso = c∆t + O(∆t2 ), and σo =
+Ḃo . Equation (29) therefore gives µ = Pn σo n + O(∆t). The sign is positive. Differentiating
+the normalized separation when ṙ = (HI + σo )r gives the same sign directly. In contrast,
+when the endpoint contribution is negligible at large distance, (29) approaches −Pn σo n. A
+large reported redshift alone does not establish that premise.
+The accuracy of the nearby limit can be bounded without choosing a dynamical evolution.
+If ∥σ̇(t)∥F ≤ Lσ throughout the source–observer interval, the retained first-order response
+satisfies
+cLσ ∆t2
+c∆t
+− 1 ∥σo ∥F +
+.
+∥APM − σo ∥F ≤ 2
+Dso
+Dso
+
+(30)
+
+This is a bound within the linear response, rather than a bound on omitted higher-order
+metric terms. It requires Dso , ∆t and Lσ . These inputs are not supplied by the common-field
+catalogue statistics.
+Equal endpoint deformations also need not give equal direction drifts. For a fixed STF
+tensor T, the kinematic perturbation δB = ετ (1 − τ )T , with τ = (t − ts )/∆t, leaves both
+endpoints unchanged and changes the present derivative by −εT /∆t. Hence it changes APM
+by +εT /∆t. This witness imposes no field equation or matter closure.
+
+B.
+
+Observable tensor and unresolved histories
+
+Expand APM =
+
+P5
+
+a=1 aa Fa in (2), retaining the signed coefficient vector a.
+
+A common
+
+APM produces an electric quadrupole. Its full-sphere mean square is
+1
+4π
+
+Z
+
+|Pn APM n|2 dΩ =
+
+∥APM ∥2F
+aT a
+=
+.
+5
+5
+
+(31)
+
+The integral is an analytic sphere average. It is not the average over the selected catalogue.
+The norm alone also loses the signed tensor pattern.
+For a declared common distance, choose a positive reference time Tref and express (Bo −
+Bs )/Tref and Ḃo in the same rate units, with five-vectors q H and sH . Then
+13
+
+
+a = Rκ 
+
+qH
+sH
+
+
+,
+
+Rκ = [κI5 , −I5 ],
+
+κ=
+
+2cTref
+.
+Dso
+
+(32)
+
+The five exact null directions obey δsH = κδq H . If I is the information for the observable
+tensor, the complete history information is
+
+IH = RκT IRκ = 
+
+2
+
+κ I −κI
+−κI
+
+I
+
+
+.
+
+(33)
+
+Its rank remains five when I has rank five. The off-diagonal blocks cannot be omitted.
+Resolving B_o and B_s separately introduces the additional common-endpoint invariance
+δBo = δBs . A time-independent deformation can represent a spatial-coordinate rescaling
+within the weak fixed-axis metric; this coordinate freedom is distinct from the unresolved
+endpoint–derivative histories in (32). The ten-coordinate map describes an enlarged kinematic parameter space. A fixed-axis physical history may impose further restrictions, including common principal axes, and requires a separate model. The catalogue fit does not
+select one.
+As an explicit conditional family, set q H = sH . The signed gains at κ = 0, 0.1, 1, 2, 10 are
+−1, −0.9, 0, 1, 9. Their squared values multiply a quadratic signal strength. The cancellation
+at κ = 1 belongs to this chosen family; it is not a universal absence of astrometric sensitivity.
+Likewise, the common-distance calculation does not assign a physical distance to every
+catalogue source.
+
+C.
+
+A common-data nuisance comparison
+
+We use the retained normal matrix and score for 755,850 selected astrometric sources.
+The 102-column design contains a common electric quadrupole and the other retained angular and template responses. Its working covariance includes each source’s reported twocomponent marginal covariance and stipulates independence between different sources. It
+does not supply an empirical spatial covariance or a likelihood for the source selection.
+Let X denote the retained design, Cw this working covariance, and y the measured propermotion vector. The stored quantities are G = X T Cw−1 X and b = X T Cw−1 y. The fivecomponent embedding J selects the complete common electric-quadrupole span and changes
+its coordinates to the Frobenius basis (2). For a nuisance embedding N, profiling gives
+14
+
+IN = J T GJ − J T GN (N T GN )+ N T GJ,
+hN = J T b − J T GN (N T GN )+ N T b,
+b N = IN−1 hN ,
+a
+
+(34)
+
+Ca,N = IN−1 .
+
+The inverse in the last line applies to the rank-five cases below. The numerical evaluation
+uses an orthogonal projection in whitened coordinates. It preserves the signal–nuisance cross
+terms, the complete five-dimensional covariance and the joint signal–nuisance covariance.
+The first profile fits six common spin/glide coefficients. They are formed by summing the
+corresponding columns in the three disjoint reported-redshift bins. The second profiles all
+97 original non-E2 columns. Both profiles use the same sample, coefficients, units, G and
+b; the second is a sensitivity calculation on the same realization. Enlarging the nuisance
+space reduces information in positive-semidefinite order. Full-sphere harmonic orthogonality
+cannot be used to discard cross terms on this selected, weighted sky.
+Nuisance dimension
+
+a1
+
+a2
+
+a3
+
+a4
+
+a5
+
+6 -2.262422 2.271772 -3.653029 -2.718689 2.395232
+97 -5.727189 1.156649 -7.427496 -5.561747 6.176964
+
+Signed common electric-quadrupole coefficients in the basis (2), in microarcseconds per
+year, from the same selected sample under two nuisance profiles. The complete covariances
+and signal–nuisance cross covariances accompany the numerical supplement. These coefficients describe the selected optical proper-motion field under the stipulated error law; they
+are not calibrated matter-shear estimates.
+Nuisance
+6
+
+Rank Information eigenvalues Best / worst radius
+5 2.43693, 2.65563,
+
+1.60963 / 2.29431
+
+3.17145, 3.67145,
+4.95102
+97
+
+5 0.503015, 0.629927,
+1.13946, 1.46083,
+2.38294
+
+15
+
+2.32015 / 5.04990
+
+Information eigenvalues have units (µas yr−1 )−2 ; radii are in microarcseconds per year.
+Eigenvectors need not coincide between profiles.
+The first profile has information eigenvalues (2.43693, 2.65563, 3.17145, 3.67145, 4.95102)
+in (µas yr−1 )−2 . With all 97 nuisance coefficients they become (0.503015, 0.629927, 1.13946,
+1.46083, 2.38294). The common tensor remains identifiable in both working designs, although its least constrained direction becomes substantially weaker.
+There is a useful limiting check. If an arbitrary common E2 nuisance is admitted, it spans
+exactly the signal image and the profiled information vanishes. A free common spin similarly
+absorbs a common magnetic dipole. The corresponding coefficient set is unbounded unless
+another domain restriction is supplied. It is not empty. This is a reference-field ambiguity,
+and a calibrated frame condition would need its own response and uncertainty.
+
+D.
+
+Conditional detection power
+
+For a stipulated Gaussian fixed-design experiment, a five-dimensional quadratic test has
+a central chi-square law under the zero-field null and a noncentral law under a specified
+coefficient vector. At size alpha=0.05, define
+
+λ = aT IN a,
+
+P(a) = Pr{χ25 (λ) > χ25,0.95 }.
+
+(35)
+
+For a prescribed Frobenius radius ρ = ∥a∥2 , the largest and smallest noncentralities
+are ρ2 λmax (IN ) and ρ2 λmin (IN ). The retained calculation gives χ25,0.95 = 11.07049769 and
+the noncentrality 12.82760657 for 80 percent power. The resulting best/worst radii are
+1.60963/2.29431 microarcseconds per year for the six-coefficient profile and 2.32015/5.04990
+for the 97-coefficient profile. At ρ = 0 the power is 0.05.
+The Gaussian power calculation uses the actual selected angular coverage and marginal error weights. It does not justify a matter-shear limit from the selected coefficients. That step
+requires a source-dependent distance/history law, an optical-centroid-to-matter response,
+reference-frame calibration, selection modelling and a measured or justified spatial covariance. In particular, common-E2 sufficient statistics cannot generate arbitrary new depthweighted E2 cross moments.
+16
+
+conditional Gaussian power
+
+1.0
+
+best STF direction
+worst STF direction
+
+0.8
+0.6
+0.4
+0.2
+0.0
+
+0
+101
+−100
+100
+full-five tensor radius (microarcsec/year)
+
+102
+
+FIG. 4. Conditional Gaussian power for the common five-component proper-motion tensor after
+profiling six common spin/glide coefficients. The radius is the Frobenius norm in microarcseconds
+per year. Markers are retained evaluated radius points for the best and worst information eigenvectors; connecting segments are visual guides, not evaluated interpolation. The 80-percent radii come
+from the numerical table and Eq. (35), not crossings of those segments; the analytic full-sphere
+√
+RMS is ρ/ 5. The plotted probabilities use the reported marginal source errors and stipulated
+cross-source independence. They are design sensitivities, not empirical exclusion limits or a p-value
+for the observed field.
+VIII.
+
+PHYSICAL INTERPRETATION AND THE NEXT MEASUREMENT
+
+The radial and astrometric examples separate observable information from the physical
+history to which it may be attributed. In the finite radial design, an independently calibrated
+observer response removes the observer–bulk ambiguity, while a second temporal window
+removes a history moment invisible to the first. Radial leverage remains necessary: at equal
+radii four parameter combinations survive even after both additions. These conclusions
+follow from the stated response functions and common nuisance quotient.
+For the astrometric example, the observable is a signed STF tensor APM . It combines
+an endpoint difference and a present derivative. The selected catalogue supports a rank17
+
+4
+
+Projected full-five information
+0
+
+STF coefficient
+
+1
+2
+2
+1
+3
+
+(microarcsec/year)^-2
+
+3
+
+0
+
+4
+0
+
+1
+
+2
+3
+STF coefficient
+
+4
+
+−1
+
+FIG. 5. Full five-component projected information for the six-coefficient common spin/glide profile,
+in the Frobenius basis (2), with units (µas yr−1 )−2 . Off-diagonal entries retain the coupling induced
+by selected sky coverage and working weights. The 97-coefficient sensitivity profile uses the same
+data and is compared in the accompanying table.
+
+five common-field fit under both nuisance profiles, but the associated ten-coordinate history
+information retains five null directions. More precise measurements of the same common field
+do not remove them. A physically calibrated distance dependence or another independent
+response is needed. The numerical power frontier quantifies sensitivity to this observable
+tensor under its working noise law.
+The complete carrier therefore retains the signed radial vectors, scalar rate, full STF
+tensors, response functions, joint covariance or error set, and the relevant sky and depth
+supports. The radial contraction cannot measure an antisymmetric velocity gradient be18
+
+cause nT Ωn = 0. Matter vorticity remains unmeasured. A chosen hypersurface normal’s
+irrotationality does not determine matter vorticity, and neither a fitted radial tensor nor
+an optical proper-motion quadrupole by itself supplies a calibrated matter-frame expansion/shear tensor.
+A physical comparator x, including any declared signed projection x_C, requires its complete tensor components and frame. The normalized score Q additionally needs a physically
+defined anchor and denominator domain. The occupancy F needs a support measure and
+an admissible ceiling; the exceedance Pi needs its specified joint law; and the depth functional G_F needs compatible depth supports and their joint dependence. The results here
+do not supply those missing sectors. They remain unknown and are not assigned zero.
+Deterministic tensor images may nevertheless be reported within the stated response model.
+The additional physical inputs are concrete: endpoint and history response kernels, source
+and observer frame transport, units, calibration and nuisance coupling, and a justified response error or joint covariance. The first-order Bianchi I expression illustrates one possible
+response under its own assumptions. Its use here does not identify a Bianchi family from
+the observed morphology.
+
+Appendix A: Numerical appendix: reproducible comparison
+
+The companion consumer verifies the sealed retained inputs, constructs (2), (7)–(12),
+freezes (20), and emits all designs, full right singular bases, kernel/identified projectors,
+spectra and signed witnesses. The nominal rank counts must agree at relative cutoffs
+10−12 , 10−10 , 10−8 . Frobenius-basis and null residuals must be at most 10−12 ; reconstruction and deterministic bound checks use relative tolerance 10−10 or absolute tolerance 10−12
+for unit-scale fixtures. Exact analytic rank remains authoritative near equal radii. The
+generated tables and figures report both numerical values and their design assumptions.
+The supplementary source map records the retained rank argument, response conventions
+and numerical inputs. The astrometric supplement retains the full five-component coefficients, covariance, signal–nuisance cross covariance, information eigenbasis, ten-coordinate
+history information and exact response-null arrays. The two nuisance profiles consume the
+same 102-dimensional normal matrix and score; no old prior is imported. All displayed
+astrometric values and figures are generated from these retained quantities.
+19
+
+Appendix B: Generated numerical appendix tables
+
+Parameter Physical coefficient unit
+
+1.
+
+d_j
+
+L_jj
+
+ell_x
+
+v*=300 km/s
+
+2.368381466 0.4222292795
+
+ell_y
+
+v*=300 km/s
+
+2.134695078 0.4684509794
+
+ell_z
+
+v*=300 km/s
+
+2.181742423 0.4583492485
+
+b_x
+
+v*=300 km/s
+
+2.146911915 0.4657852952
+
+b_y
+
+v*=300 km/s
+
+1.885980667 0.5302281287
+
+b_z
+
+v*=300 km/s
+
+1.939071943 0.5157106231
+
+m
+
+h*=3 km/s/Mpc
+
+1.664100589 0.6009252126
+
+g0_x
+
+beta*=300/299792.458
+
+3.407232127 0.2934933584
+
+g0_y
+
+beta*=300/299792.458
+
+2.666602563 0.3750090147
+
+g0_z
+
+beta*=300/299792.458
+
+2.698717644 0.3705463601
+
+s_1
+
+h*=3 km/s/Mpc
+
+2.8381359 0.3523439452
+
+s_2
+
+h*=3 km/s/Mpc
+
+2.664247621 0.3753404872
+
+s_3
+
+h*=3 km/s/Mpc
+
+0.6521915717 1.533291817
+
+s_4
+
+h*=3 km/s/Mpc
+
+0.6521915717 1.533291817
+
+s_5
+
+h*=3 km/s/Mpc
+
+0.6521915717 1.533291817
+
+g1_x
+
+beta*=300/299792.458 0.3333333333
+
+3
+
+g1_y
+
+beta*=300/299792.458 0.3333333333
+
+3
+
+g1_z
+
+beta*=300/299792.458 0.3333333333
+
+3
+
+Complete nominal scaled spectrum: baseline
+
+Index
+
+Singular value
+
+1
+
+1.80776894878
+
+2
+
+1.75783553205
+
+3
+
+1.64202991241
+
+4
+
+1.16693241497
+
+5
+
+0.977608148968
+
+20
+
+Index
+
+Singular value
+
+6
+
+0.93153934285
+
+7
+
+0.925000426039
+
+8
+
+0.72695402196
+
+9
+
+0.556681575992
+
+10
+
+0.237422793074
+
+11
+
+0.164010989736
+
+12
+
+0.106652693887
+
+13
+
+2.28393497472e-16
+
+14 structural zero (right completion)
+15 structural zero (right completion)
+16 structural zero (right completion)
+17 structural zero (right completion)
+18 structural zero (right completion)
+
+2.
+
+Complete nominal scaled spectrum: endpoint
+
+Index
+
+Singular value
+
+1
+
+1.8214921072
+
+2
+
+1.77388823641
+
+3
+
+1.6579048791
+
+4
+
+1.16814162944
+
+5
+
+0.979221208186
+
+6
+
+0.933867897306
+
+7
+
+0.92679745181
+
+8
+
+0.745208194267
+
+9
+
+0.57589372613
+
+10
+
+0.375920041292
+
+11
+
+0.375052692147
+
+12
+
+0.360409875835
+
+21
+
+Index
+
+Singular value
+
+13
+
+0.195900842657
+
+14
+
+0.146618339872
+
+15
+
+0.097638736537
+
+16
+
+0
+
+17 structural zero (right completion)
+18 structural zero (right completion)
+
+3.
+
+Complete nominal scaled spectrum: history
+
+Index
+
+Singular value
+
+1
+
+1.8224251976
+
+2
+
+1.77075892464
+
+3
+
+1.6569969902
+
+4
+
+1.17889465675
+
+5
+
+1.05629533648
+
+6
+
+1.04195741167
+
+7
+
+1.03219924361
+
+8
+
+0.961460443345
+
+9
+
+0.921463617644
+
+10
+
+0.91312580769
+
+11
+
+0.726700364284
+
+12
+
+0.55634543484
+
+13
+
+0.230754137695
+
+14
+
+0.1566639275
+
+15
+
+0.101806023814
+
+16
+
+1.84960232996e-16
+
+17 structural zero (right completion)
+18 structural zero (right completion)
+
+22
+
+Index
+
+4.
+
+Singular value
+
+Complete nominal scaled spectrum: both
+
+Index
+
+Singular value
+
+1
+
+1.83552330269
+
+2
+
+1.78615342167
+
+3
+
+1.6720014412
+
+4
+
+1.17933809547
+
+5
+
+1.05743023017
+
+6
+
+1.04292085192
+
+7
+
+1.03553442499
+
+8 0.964471288015
+9 0.924256501433
+10 0.914865452434
+11 0.745162919861
+12
+
+0.57555461857
+
+13 0.371204892219
+14
+
+0.36975411719
+
+15 0.356918568169
+16 0.192824411934
+17 0.141550104788
+18 0.0939387506842
+
+All arrays, complete right bases and source-linked checks are in the companion JSON
+artifacts. This numerical appendix is generated from the frozen design and does not add
+23
+
+observed channels.
+
+[1] O. H. Marcori, C. Pitrou, J.-P. Uzan, and T. S. Pereira, “Direction and redshift drifts for
+general observers and their applications in cosmology,” Phys. Rev. D 98, 023517 (2018),
+arXiv:1805.12121.
+
+24
+
+

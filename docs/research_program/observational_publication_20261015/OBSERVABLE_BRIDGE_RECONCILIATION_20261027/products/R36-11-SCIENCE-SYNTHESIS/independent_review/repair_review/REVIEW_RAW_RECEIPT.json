@@ -1,0 +1,124 @@
+{
+  "schema": "htt.r36.independent_review_raw/1",
+  "agent_id": "/root/r36_synthesis_repair_fresh_review",
+  "task_id": "R36-11-SCIENCE-SYNTHESIS",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_identity": "sha256:83b167a9388071a1a82500716d338473bd8ac5c9abb3c978974a914a37066519",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "actual_consumer_receipt": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/RAW_RECEIPT.json",
+    "sha256": "135cf85114b9f152ad2ebcda7714ef0864552d00a94a33ae7f25c0ece7ae5c77",
+    "bytes": 27996
+  },
+  "additional_executed_commands": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/ADDITIONAL_COMMANDS.json",
+    "sha256": "6b7afedb9965074e194b144ee1ae9a5736713e91930d7d99498e8271c4b93a4d",
+    "bytes": 4936
+  },
+  "actual_successful_workflow_commands": 31,
+  "additional_commands": 9,
+  "first_failed_probe": {
+    "command": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/check_retained_science.py"
+    ],
+    "exit": 1,
+    "preserved": [
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/SCIENCE_CHECK_FIRST_FAILURE.txt",
+        "sha256": "a33efade2de17c24cbd75bd86b1286175ae8ae64ad067402cb8ba58ea5a7f869",
+        "bytes": 500
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/check_retained_science_first.py",
+        "sha256": "8d3378dda0396a4cb29aaced33e30aa6d0e21c889a015db103a694734f00a605",
+        "bytes": 4532
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/FIRST_FAILURE_DIAGNOSIS.json",
+        "sha256": "0346a03537cab99c41ad8de713b95552f3fa30067b4ee5a9e3b6ffc947be5a01",
+        "bytes": 639
+      }
+    ],
+    "classification": "Reviewer diagnostic used an unscaled absolute cutoff for heterogeneous joint coefficients. Subsequent dimensionless residual is 8.95e-11. No candidate changes or threshold relaxation in production/source tests."
+  },
+  "pdf_commands": [
+    {
+      "command": [
+        "pdftotext",
+        "-layout",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/candidate/R32-06-P4-DESIGN/report/main.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/sealed_candidate_pdf.txt"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "pdftoppm",
+        "-f",
+        "14",
+        "-l",
+        "17",
+        "-scale-to",
+        "1600",
+        "-png",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/main.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/page"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "pdftoppm",
+        "-f",
+        "18",
+        "-l",
+        "18",
+        "-scale-to",
+        "1600",
+        "-png",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/main.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/page"
+      ],
+      "exit": 0
+    }
+  ],
+  "retained_author_raw_receipt": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/RAW_RECEIPT.json",
+    "sha256": "9723b007065f0fdde339faaa8c10951382e8b1456e963214b57d163fcaee3c48",
+    "bytes": 9711
+  },
+  "prior_author_failures_preserved": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/first_assemble_failure.txt",
+      "sha256": "e500c7430ff26396aed0807a886ef97ee5d2a1570dbc475237e134d395ea7f7e",
+      "bytes": 875
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/second_assemble_failure.txt",
+      "sha256": "1f3d336a8ede80970683551de56c85fa9fb012eca140e3e1369b5db5b87d7f58",
+      "bytes": 1229
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/postbuild_noop_first_failure.txt",
+      "sha256": "5e5588f8f6ca870ce99543dc4350b2d3c0848c60432b14e37065db71817cf576",
+      "bytes": 544
+    }
+  ],
+  "production_tree_unchanged": true,
+  "production_writes": 0,
+  "STATE_writes": 0,
+  "git_writes": 0,
+  "scientific_producer_runs": 0,
+  "old_P4_numerical_consumer_runs": 0,
+  "native_solver_runs": 0,
+  "ODE_runs": 0,
+  "children_spawned": 0,
+  "prior_synthesis_reviewer_verdict_file_read": false,
+  "late_formal_packet_contains_historical_outcome": "Read only after independent workflow, science checks and no-blocker conclusion; no previous reviewer result file opened.",
+  "actual_runtime_identity": "NOT_INDEPENDENTLY_OBSERVED",
+  "cumulative_token_usage": "UNKNOWN_NOT_EXPOSED",
+  "task_identity_reset": false
+}

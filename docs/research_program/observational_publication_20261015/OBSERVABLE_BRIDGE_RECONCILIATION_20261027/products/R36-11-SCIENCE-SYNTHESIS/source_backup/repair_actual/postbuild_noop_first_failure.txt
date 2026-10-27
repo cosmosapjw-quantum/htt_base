@@ -1,0 +1,7 @@
+Command: .venv/bin/python repair_01/apply_candidate.py --apply-reviewed-candidate --test-target external/fixture/P4
+Exit: 1
+AssertionError: ('destination drift', 'report/main.pdf')
+Candidate PDF SHA: a1d2c033f2d943b236400ff202b5ad952fcd4fc5a838a34fa70b19284eeccb0b
+Rebuilt fixture PDF SHA: d77afd7aca0fa1fb53fa7b5806e5684e749d6807712205e46da23ce720dcb590
+Both pdftotext -layout hashes: 079023c3e23e82cf419666a8b3372442cda95cc3789cf9a1563e98790bc2acb4
+Resolution: PDF treated as build output, excluded from source overlay; sources remain exact.

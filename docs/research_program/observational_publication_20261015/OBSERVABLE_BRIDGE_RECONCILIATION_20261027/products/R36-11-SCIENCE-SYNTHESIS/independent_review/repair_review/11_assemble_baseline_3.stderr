@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/assemble.py", line 31, in <module>
+    p=json.load(open(c['source_bindings']['pm_result']['path']));validate(c,p)
+                                                                 ^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_synthesis_repair_fresh_review/fixture/P4/report/r36_11/assemble.py", line 17, in validate
+    assert sha(source)==b['sha256'],('source identity',key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('source identity', 'p4_report_body.tex')

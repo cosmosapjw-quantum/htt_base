@@ -1,0 +1,3 @@
+# P4 applied-companion reproduction
+
+From the P4 companion root, use the repository `/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python report/r36_11/assemble.py` and `/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python report/r36_11/check.py`, followed by `latexmk -pdf -interaction=nonstopmode -halt-on-error -cd report/main.tex`. The source contract and number map are in this directory. `baseline/` contains only the six replaced R32 source preimages. The complete PM supplement is `../pm_history_supplement.json`. This assembly extracts already retained values and never reruns the PM science producer or the old P4 numerical consumer.

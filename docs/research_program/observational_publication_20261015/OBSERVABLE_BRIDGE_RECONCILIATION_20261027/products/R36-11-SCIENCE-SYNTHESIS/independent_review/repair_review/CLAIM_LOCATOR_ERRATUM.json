@@ -1,0 +1,102 @@
+{
+  "schema": "htt.r36.outer_claim_locator_erratum/1",
+  "candidate_identity": "sha256:83b167a9388071a1a82500716d338473bd8ac5c9abb3c978974a914a37066519",
+  "candidate_manifest": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/ARTIFACT_MANIFEST.json",
+    "sha256": "83b167a9388071a1a82500716d338473bd8ac5c9abb3c978974a914a37066519",
+    "bytes": 11173
+  },
+  "scope": "Nonblocking packaging/provenance locator corrections only; no candidate file or scientific value changed.",
+  "consumer": "Publisher may include this outer map with the source/PDF package. The actual assembly/build/check consumers do not use the stale historical section labels.",
+  "affected_files": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/candidate/R32-06-P4-DESIGN/science/CLAIM_SOURCE_MAP.md",
+      "sha256": "b6075a741530e4ff26ff765c3f299a6ae2530fee23c3286ffc4093ee33711fa3",
+      "bytes": 7025
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/candidate/R32-06-P4-DESIGN/report/CLAIM_SOURCE_MAP.md",
+      "sha256": "0b87f4b60f972e259e23e7da03e0853df1ec358691e4c74539448ec5715959bb",
+      "bytes": 7746
+    }
+  ],
+  "manuscript": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/candidate/R32-06-P4-DESIGN/science/MANUSCRIPT.md",
+    "sha256": "623ab6298bbf5029c1528ba369d4f3150fd4c20b6caac4f8a65450875ac3c94a",
+    "bytes": 36248
+  },
+  "entries": [
+    {
+      "claim_id": "P4-C09",
+      "map_line": 15,
+      "field": "Claim and manuscript location",
+      "old_section": "§7",
+      "actual_section": "§8. Physical interpretation and the next measurement",
+      "actual_manuscript_line": 449,
+      "paragraph_starts": "The complete carrier therefore retains",
+      "reason": "The proper-motion section was inserted as section 7, moving the physical discussion to section 8."
+    },
+    {
+      "claim_id": "P4-C10",
+      "map_line": 16,
+      "field": "Claim and manuscript location",
+      "old_section": "§7",
+      "actual_section": "§8. Physical interpretation and the next measurement",
+      "actual_manuscript_line": 451,
+      "paragraph_starts": "A physical comparator x",
+      "reason": "The full-comparator and missing-sector discussion is now in section 8."
+    },
+    {
+      "claim_id": "P4-C11",
+      "map_line": 17,
+      "field": "Claim and manuscript location",
+      "old_section": "§7",
+      "actual_section": "Administrative acceptance statement is outside the physics manuscript; related physical requirements remain in §8, line 453.",
+      "actual_manuscript_line": 453,
+      "paragraph_starts": "The additional physical inputs are concrete",
+      "authoritative_administrative_sources": [
+        {
+          "file": {
+            "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/RESULT.json",
+            "sha256": "344be3f69e92d086fd1cf84f32307b066c88dc872a25e5ab82fbbc32cb27d323",
+            "bytes": 2582
+          },
+          "json_pointer": "/original42_promotion",
+          "value": false
+        },
+        {
+          "file": {
+            "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/candidate/R32-06-P4-DESIGN/report/r36_11/SOURCE_CONTRACT.json",
+            "sha256": "a08fb04382885c4ba7f62cd213a10de6a5755e609a47ca27d982629ec0e27ebf",
+            "bytes": 20757
+          },
+          "json_pointer": "/hard_scope/original_acceptances_changed",
+          "value": false
+        },
+        {
+          "file": {
+            "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/candidate/R32-06-P4-DESIGN/report/r36_11/SOURCE_CONTRACT.json",
+            "sha256": "a08fb04382885c4ba7f62cd213a10de6a5755e609a47ca27d982629ec0e27ebf",
+            "bytes": 20757
+          },
+          "json_pointer": "/hard_scope/original_17_of_42_and_analytic18_of_42",
+          "value": "UNCHANGED"
+        }
+      ],
+      "reason": "The frozen editor contract explicitly moves internal V03/acceptance wording out of physics prose. Do not represent that administrative statement as present in section 8."
+    }
+  ],
+  "consumer_evidence": {
+    "assemble_py": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/candidate/R32-06-P4-DESIGN/report/r36_11/assemble.py",
+      "sha256": "ac3b63ce885551d0653a61fc8e5de2d3076f1c02039481d64082c1bb4492ef70",
+      "bytes": 10138
+    },
+    "check_py": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/candidate/R32-06-P4-DESIGN/report/r36_11/check.py",
+      "sha256": "149fc7209da01bf110db76f62974d90176affe591b2d01dc38b5847d339048aa",
+      "bytes": 4559
+    },
+    "explanation": "The assembler reads frozen source hashes and prose; check.py validates hashes and four literal report/r36_11 or supplement path strings in the maps, not P4-C09/C10/C11 or section numbers. Actual fixture assembly/check/build succeeded."
+  }
+}

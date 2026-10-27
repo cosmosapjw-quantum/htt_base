@@ -17,3 +17,22 @@ Common fields: owner `htt` for the inverse-design research, manuscript consumer 
 | P4-C11 | V03 and original42 acceptances unaffected, §7 | Frozen actual R32-06 task spec; `BUILD_CONTRACT.md`, scope and source obligations | Conditional product only; original_acceptance_passed=false, independent physical external-history requirement retained. |
 
 Paths beginning `evidence/` are relative to `PUBLICATION_ACCELERATION_20261025/`. Paths beginning `docs/` are relative to the repository root. `REPORT.md` in this table means the sealed `docs/research_reports/theory_synthesis_20260913/REPORT.md`, not the new product. `theorem_physical_chapter.md` and `physical_derivations.md` mean the sealed publication-acceleration evidence copies. The unchanged build contract is the source of this exact new response construction, not independent review evidence.
+
+
+## Proper-motion response extension
+
+Owner: manuscript/obsstat response; HTT conditional Gaussian design. Claim tier C0 CONDITIONAL; transfer source none (first-order kinematic response).
+
+| Claim | Source | Status and limits |
+|---|---|---|
+| Signed endpoint–derivative response, nearby positive sign | retained Marcori arXiv:1805.12121v1 Eq. 5.13 and frozen author text, equations 28–30 | DERIVED under weak homogeneous fixed-axis, comoving, nonrotating-frame assumptions; no dynamics |
+| Full five STF field and ten-coordinate history image | report/pm_history_supplement.json: response, history_images, history_family_q_equals_s | CONDITIONAL kinematic domain; five null directions; common-endpoint gauge distinct |
+| Same-data six versus 97 nuisance profiles | report/pm_history_supplement.json: gram.primary_spin_glide6 and gram.all97_sensitivity | CONDITIONAL selected optical field; full covariance and cross covariance retained |
+| Gaussian power, equations 34–35, figures 4–5 | report/pm_history_supplement.json: power_frontier; report/r36_11/NUMBER_FIGURE_MAP.json; copied sealed figures | CONDITIONAL design sensitivity, not empirical significance or a shear exclusion |
+
+Full five-dimensional coefficients, all covariances, history arrays and eigenbases remain in report/pm_history_supplement.json. Exact source hashes are in report/r36_11/SOURCE_CONTRACT.json. Unknown spatial covariance, source selection, distance/history law, optical-centroid transfer and frame calibration block an empirical matter-shear interpretation. Physical x,Q,F,Pi,G_F, vorticity and family identity remain unevaluated.
+
+
+### Applied companion reproduction locators
+
+The retained source contract is at `report/r36_11/SOURCE_CONTRACT.json`; the exact source-preimage baseline is at `report/r36_11/baseline/`; the generated number and figure map is at `report/r36_11/NUMBER_FIGURE_MAP.json`; the complete five-component and history supplement is at `report/pm_history_supplement.json`; and the sealed figures are `report/pm_history_power.pdf` and `report/pm_history_information.pdf`. From this companion directory, run `/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python report/r36_11/assemble.py`, then `/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python report/r36_11/check.py`, then `latexmk -pdf -interaction=nonstopmode -halt-on-error -cd report/main.tex` using the repository interpreter and LaTeX environment. These are source-bound manuscript checks, not a new PM science run.

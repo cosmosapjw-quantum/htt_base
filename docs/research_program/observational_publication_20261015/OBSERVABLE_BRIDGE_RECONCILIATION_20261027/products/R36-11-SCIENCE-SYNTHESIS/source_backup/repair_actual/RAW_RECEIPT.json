@@ -1,0 +1,167 @@
+{
+  "task_id": "R36-11-SCIENCE-SYNTHESIS",
+  "packet_id": "802f27624f89c741d95571fb1798a640bb28f17e40aba3b5022f6ac03a60d276",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "fixture": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_04/P4",
+  "commands": [
+    {
+      "name": "apply_04",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/apply_candidate.py",
+        "--apply-reviewed-candidate",
+        "--test-target",
+        "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_04/P4"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/apply_04.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/apply_04.stderr"
+    },
+    {
+      "name": "assemble_04",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_04/P4/report/r36_11/assemble.py"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/assemble_04.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/assemble_04.stderr"
+    },
+    {
+      "name": "check_before_build_04",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_04/P4/report/r36_11/check.py"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/check_before_build_04.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/check_before_build_04.stderr"
+    },
+    {
+      "name": "build_04",
+      "command": [
+        "latexmk",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-cd",
+        "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_04/P4/report/main.tex"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/build_04.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/build_04.stderr"
+    },
+    {
+      "name": "check_after_build_04",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_04/P4/report/r36_11/check.py"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/check_after_build_04.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/check_after_build_04.stderr"
+    },
+    {
+      "name": "apply_noop_04",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/apply_candidate.py",
+        "--apply-reviewed-candidate",
+        "--test-target",
+        "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_04/P4"
+      ],
+      "cwd": null,
+      "exit": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/apply_noop_04.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/apply_noop_04.stderr"
+    },
+    {
+      "name": "wrong_source_rejection",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/apply_candidate.py",
+        "--apply-reviewed-candidate",
+        "--test-target",
+        "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_bad_04/P4"
+      ],
+      "cwd": null,
+      "exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/wrong_source_rejection.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/wrong_source_rejection.stderr"
+    },
+    {
+      "name": "wrong_path_rejection",
+      "command": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/repair_01/apply_candidate.py",
+        "--apply-reviewed-candidate",
+        "--test-target",
+        "/tmp/r36_wrong_target"
+      ],
+      "cwd": null,
+      "exit": 1,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/wrong_path_rejection.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/wrong_path_rejection.stderr"
+    }
+  ],
+  "pdf_pages": 24,
+  "old_R32_unchanged": true,
+  "scientific_producer_runs": 0,
+  "old_P4_numerical_consumer_runs": 0,
+  "qualified_products": [
+    "observable_bridge_manuscript_update"
+  ],
+  "acceptance_met": false,
+  "outcome": "success",
+  "agent_id": "/root/rc_802f27624f89c741",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "qualification_status": "PROPOSED_ONLY",
+  "original42_promotion": false,
+  "prior_candidate_identity": "sha256:c9ff174599cb33ed85077947f60ca8f5f638914aa7dd51edadb3d5f6e7a92909",
+  "prior_helper_raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_actual/HELPER_RAW_RECEIPT.json",
+  "prior_negative_independent_review": "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_independent_review/formal_binding_01/CONTROLLER_RETURN.json",
+  "first_failures": [
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/first_assemble_failure.txt",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/second_assemble_failure.txt",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/postbuild_noop_first_failure.txt"
+  ],
+  "cumulative_repair_command_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/candidate_build.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/candidate_build.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/apply_first.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/apply_first.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_assemble.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_assemble.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_check.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_check.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_build.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/fixture_build.stderr",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/apply_02.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/assemble_02.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/check_before_build_02.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/build_02.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/apply_noop_02.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/apply_03.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/assemble_03.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/check_before_build_03.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/build_03.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/apply_noop_03.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/apply_04.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/assemble_04.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/check_before_build_04.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/build_04.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/apply_noop_04.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_science_synthesis_repair_actual/claim_guard.json"
+  ],
+  "cumulative_token_usage": "UNKNOWN_NOT_EXPOSED_BY_NATIVE_RUNTIME",
+  "cumulative_task_identity": "R36-11-SCIENCE-SYNTHESIS same task, no reset",
+  "scientific_admission": false,
+  "status": "REPAIRED_CANDIDATE_AWAITING_INDEPENDENT_REVIEW",
+  "candidate_identity": "sha256:83b167a9388071a1a82500716d338473bd8ac5c9abb3c978974a914a37066519"
+}

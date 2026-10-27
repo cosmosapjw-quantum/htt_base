@@ -1,8 +1,8 @@
-# Separating observer motion, bulk flow and a two-mode history by finite response design
+# Separating endpoint and history information in radial and astrometric response design
 
 ## Abstract
 
-A radial velocity response measures the difference between source bulk motion and observer motion. A time-integrated channel also loses any history mode orthogonal to its window. We construct a finite example in which these two ambiguities can be separated explicitly. Thirteen radial responses at two radii determine twelve combinations of eighteen signed coefficients after removing a scalar calibration. Their six-dimensional kernel consists of a common observer–bulk displacement and an unweighted history mode. An independently calibrated three-component observer response removes the first ambiguity, while a second normalized history window removes the second. Either addition raises the rank to fifteen; together they give rank eighteen. Equal radii provide a negative control: the joint rank falls to fourteen. A single, fixed column normalization permits comparisons of all four designs, radial leverage and channel precision. Singular-value bounds quantify the deterministic error amplification and the response accuracy required for a stable inverse. The construction is a conditional measurement design with prescribed response functions and calibration, suitable for evaluating which additional information a physical history provider must supply.
+A radial velocity response measures the difference between source bulk motion and observer motion. A time-integrated channel also loses any history mode orthogonal to its window. We first construct a finite example in which independently calibrated observer and history responses remove these two ambiguities. Thirteen radial measurements at two radii determine twelve combinations of eighteen signed coefficients after removing a scalar calibration. Either additional three-component response raises the rank to fifteen; together they give rank eighteen. Equal radii reduce the joint rank to fourteen. We then examine a proper-motion response whose five-component trace-free tensor combines a source–observer endpoint difference with the present observer-time derivative. The associated ten-coordinate history map has rank five even when the observable tensor is fully determined. For a retained sample of 755,850 astrometric sources, we compare six common spin/glide nuisance coefficients with all 97 coefficients outside the common electric-quadrupole signal span, using the same complete normal matrix and score. Both projected tensor responses have rank five. Under the stipulated Gaussian noise law, their worst-direction tensor radii for 80 percent power are 2.2943 and 5.0499 microarcseconds per year, respectively. These are conditional design sensitivities. Their interpretation as matter shear requires a physical distance/history response, an optical-centroid transfer and a calibrated spatial error model.
 
 ## 1. A common frame and a finite response
 
@@ -279,7 +279,7 @@ If \(s_{\min}(A)>\eta\), the least-squares inverse satisfies
 *Proof.* Full column rank of \(\widetilde A\) gives
 \(\widehat z-z=\widetilde A^+(e-\Delta z)\). Taking norms and using (24) proves (25). No distribution or independence assumption is used. \(\square\)
 
-The physical coefficient error obeys \(\|\widehat\theta-\theta\|_2\le\|L\|_2\|\widehat z-z\|_2\), and any specified linear physical functional can use its own sharper factor \(\|CL\|_2\). The illustration \(\epsilon=10^{-3}\), \(\|z\|_2\le1\) is a separate error scenario, not the claim that the whole box \([-1,1]^{18}\) lies in the unit \(z\)-ball. For \(\eta/s_{\min}\in\{0,0.1,0.25,0.5,0.75,0.9,1,1.1\}\), the bound loses certification at one. Such cases are reported as `NOT_CERTIFIED_BY_THIS_BOUND`.
+The physical coefficient error obeys \(\|\widehat\theta-\theta\|_2\le\|L\|_2\|\widehat z-z\|_2\), and any specified linear physical functional can use its own sharper factor \(\|CL\|_2\). The illustration \(\epsilon=10^{-3}\), \(\|z\|_2\le1\) is a separate error scenario, not the claim that the whole box \([-1,1]^{18}\) lies in the unit \(z\)-ball. For \(\eta/s_{\min}\in\{0,0.1,0.25,0.5,0.75,0.9,1,1.1\}\), the bound loses certification at one. Such cases are reported as outside the certified domain.
 
 For a fixed rank-deficient operator, the minimum-norm estimate recovers the orthogonal identified projection with
 
@@ -305,21 +305,176 @@ The history inverse incurs a factor of three because the new window overlaps the
 \caption{Deterministic inverse bound (25) for epsilon=0.001 and ||z||<=1. At and above eta/smin=1 the bound is uncertified. No sampling law is supplied.}
 \end{figure}
 
-## 7. Physical interpretation and the next measurement
+## 7. A proper-motion endpoint and history response
 
-The design identifies what must change when a baseline response cannot separate physical mechanisms. The observer–bulk ambiguity requires a response to observer motion that is not a response to the same source bulk displacement. The history ambiguity requires a window with nonzero overlap with a temporal mode invisible to the existing window. These requirements are independent of the number of rows carrying the unchanged baseline response. Radial leverage performs a third job: separating angular intercepts from rate and mean-history coefficients.
+### Signed response and its physical domain
 
-For a physical implementation, the carrier remains the signed vectors \((\ell,b,g_0,g_1)\), the full STF tensor \(S\), scalar \(m\), response functions and their joint error set in one frame. The radial response contains no antisymmetric velocity-gradient measurement, because \(n^T\Omega n=0\). Matter vorticity therefore remains `NOT_MEASURED`; a chosen hypersurface normal's irrotationality is a distinct statement. The scalar rate and fitted STF coefficients in this design do not alone provide a validated physical expansion/shear bridge.
+The finite radial construction shows how an additional response can reveal a previously invisible history moment. A proper-motion observable provides a related example in which the endpoint and derivative contributions are already present in the same measured direction drift. To specify its domain, consider a weak homogeneous Bianchi I metric with fixed principal axes,
 
-No map from this finite carrier to a physical signed comparator \(x_C\), an anchored stress score \(Q\), an occupancy \(F\), an exceedance \(\Pi\), or a depth functional \(G_F\) has been specified. Each remains `NOT_EVALUABLE_WITH_THIS_RESPONSE`. Respectively, evaluation would require the full physical comparator components and frame, a sign/domain-clean anchor, a support measure and ceiling, a joint probability law, and compatible depth supports and joint dependence. These missing definitions are retained as undefined sectors rather than filled by zero.
+\[
+ds^2=-c^2dt^2+a(t)^2[e^{2B(t)}]_{ij}dx^i dx^j,
+\qquad B^T=B,\quad \operatorname{tr}B=0.
+\tag{28}
+\]
 
-The original V03 external-history validation remains a separate requirement. It must supply actual endpoint and history response kernels, calibration/nuisance coupling, common-frame transport and units, and a justified response error or covariance. The result here is the exact finite conditional design and its inverse sensitivity. It neither changes the original scientific acceptance nor supplies a native transfer or family-identification result.
+Here B is dimensionless, t is cosmic proper time and the signature is \((- ,+,+,+)\). Source and observer are comoving. We express the outward source direction n in a nonrotating orthonormal observer frame. To first order in the weak anisotropy, the direction-drift formula of Marcori et al. \cite{Marcori2018} [their Eq. (5.13)] becomes
+
+\[
+\begin{aligned}
+D_{so}&=a_o c\int_{t_s}^{t_o}\frac{dt}{a(t)}>0,\qquad
+P_n=I-nn^T,\\
+\mu(n)&=P_n A_{\rm PM}n,\qquad
+A_{\rm PM}=\frac{2c}{D_{so}}(B_o-B_s)-\dot B_o.
+\end{aligned}
+\tag{29}
+\]
+
+The two terms are the parallax contribution from the endpoint difference and the local aberration contribution. They have the same physical rate units. With c in kilometres per second and D in kilometres, \(A_{\rm PM}\) has units of inverse seconds; the catalogue calculation converts radians per second to microarcseconds per Julian year of 365.25 days. The two catalogue components are \((\mu_\alpha\cos\delta,\mu_\delta)\) in the ICRS basis. Identifying that basis with the transported model frame is a stated response convention, not a calibration of matter motion.
+
+For a nearby affine separation, \(B_o-B_s=\sigma_o\Delta t+O(\Delta t^2)\), \(D_{so}=c\Delta t+O(\Delta t^2)\), and \(\sigma_o=\dot B_o\). Equation (29) therefore gives \(\mu=P_n\sigma_o n+O(\Delta t)\). The sign is positive. Differentiating the normalized separation when \(\dot r=(H I+\sigma_o)r\) gives the same sign directly. In contrast, when the endpoint contribution is negligible at large distance, (29) approaches \(-P_n\sigma_o n\). A large reported redshift alone does not establish that premise.
+
+The accuracy of the nearby limit can be bounded without choosing a dynamical evolution. If \(\|\dot\sigma(t)\|_F\le L_\sigma\) throughout the source–observer interval, the retained first-order response satisfies
+
+\[
+\|A_{\rm PM}-\sigma_o\|_F
+\le 2\left|\frac{c\Delta t}{D_{so}}-1\right|\|\sigma_o\|_F
++\frac{c L_\sigma\Delta t^2}{D_{so}}.
+\tag{30}
+\]
+
+This is a bound within the linear response, rather than a bound on omitted higher-order metric terms. It requires \(D_{so}\), \(\Delta t\) and \(L_\sigma\). These inputs are not supplied by the common-field catalogue statistics.
+
+Equal endpoint deformations also need not give equal direction drifts. For a fixed STF tensor T, the kinematic perturbation \(\delta B=\varepsilon\tau(1-\tau)T\), with \(\tau=(t-t_s)/\Delta t\), leaves both endpoints unchanged and changes the present derivative by \(-\varepsilon T/\Delta t\). Hence it changes \(A_{\rm PM}\) by \(+\varepsilon T/\Delta t\). This witness imposes no field equation or matter closure.
+
+### Observable tensor and unresolved histories
+
+Expand \(A_{\rm PM}=\sum_{a=1}^5 a_aF_a\) in (2), retaining the signed coefficient vector \(\boldsymbol a\). A common \(A_{\rm PM}\) produces an electric quadrupole. Its full-sphere mean square is
+
+\[
+\frac{1}{4\pi}\int |P_nA_{\rm PM}n|^2\,d\Omega
+=\frac{\|A_{\rm PM}\|_F^2}{5}
+=\frac{\boldsymbol a^T\boldsymbol a}{5}.
+\tag{31}
+\]
+
+The integral is an analytic sphere average. It is not the average over the selected catalogue. The norm alone also loses the signed tensor pattern.
+
+For a declared common distance, choose a positive reference time \(T_{\rm ref}\) and express \((B_o-B_s)/T_{\rm ref}\) and \(\dot B_o\) in the same rate units, with five-vectors \(\boldsymbol q_H\) and \(\boldsymbol s_H\). Then
+
+\[
+\boldsymbol a=R_\kappa
+\begin{pmatrix}\boldsymbol q_H\\\boldsymbol s_H\end{pmatrix},
+\qquad R_\kappa=[\kappa I_5,-I_5],\qquad
+\kappa=\frac{2cT_{\rm ref}}{D_{so}}.
+\tag{32}
+\]
+
+The five exact null directions obey \(\delta\boldsymbol s_H=\kappa\delta\boldsymbol q_H\). If \(\mathcal I\) is the information for the observable tensor, the complete history information is
+
+\[
+\mathcal I_H=R_\kappa^T\mathcal I R_\kappa
+=\begin{pmatrix}\kappa^2\mathcal I&-\kappa\mathcal I\\
+-\kappa\mathcal I&\mathcal I\end{pmatrix}.
+\tag{33}
+\]
+
+Its rank remains five when \(\mathcal I\) has rank five. The off-diagonal blocks cannot be omitted. Resolving B_o and B_s separately introduces the additional common-endpoint invariance \(\delta B_o=\delta B_s\). A time-independent deformation can represent a spatial-coordinate rescaling within the weak fixed-axis metric; this coordinate freedom is distinct from the unresolved endpoint–derivative histories in (32). The ten-coordinate map describes an enlarged kinematic parameter space. A fixed-axis physical history may impose further restrictions, including common principal axes, and requires a separate model. The catalogue fit does not select one.
+
+As an explicit conditional family, set \(\boldsymbol q_H=\boldsymbol s_H\). The signed gains at \(\kappa=0,0.1,1,2,10\) are \(-1,-0.9,0,1,9\). Their squared values multiply a quadratic signal strength. The cancellation at \(\kappa=1\) belongs to this chosen family; it is not a universal absence of astrometric sensitivity. Likewise, the common-distance calculation does not assign a physical distance to every catalogue source.
+
+### A common-data nuisance comparison
+
+We use the retained normal matrix and score for 755,850 selected astrometric sources. The 102-column design contains a common electric quadrupole and the other retained angular and template responses. Its working covariance includes each source's reported two-component marginal covariance and stipulates independence between different sources. It does not supply an empirical spatial covariance or a likelihood for the source selection.
+
+Let X denote the retained design, \(C_w\) this working covariance, and y the measured proper-motion vector. The stored quantities are \(G=X^TC_w^{-1}X\) and \(\boldsymbol b=X^TC_w^{-1}y\). The five-component embedding J selects the complete common electric-quadrupole span and changes its coordinates to the Frobenius basis (2). For a nuisance embedding N, profiling gives
+
+\[
+\begin{aligned}
+\mathcal I_N&=J^TGJ-J^TGN(N^TGN)^+N^TGJ,\\
+\boldsymbol h_N&=J^T\boldsymbol b
+-J^TGN(N^TGN)^+N^T\boldsymbol b,\\
+\widehat{\boldsymbol a}_N&=\mathcal I_N^{-1}\boldsymbol h_N,
+\qquad C_{a,N}=\mathcal I_N^{-1}.
+\end{aligned}
+\tag{34}
+\]
+
+The inverse in the last line applies to the rank-five cases below. The numerical evaluation uses an orthogonal projection in whitened coordinates. It preserves the signal–nuisance cross terms, the complete five-dimensional covariance and the joint signal–nuisance covariance.
+
+The first profile fits six common spin/glide coefficients. They are formed by summing the corresponding columns in the three disjoint reported-redshift bins. The second profiles all 97 original non-E2 columns. Both profiles use the same sample, coefficients, units, G and b; the second is a sensitivity calculation on the same realization. Enlarging the nuisance space reduces information in positive-semidefinite order. Full-sphere harmonic orthogonality cannot be used to discard cross terms on this selected, weighted sky.
+
+
+
+| Nuisance dimension | $a_1$ | $a_2$ | $a_3$ | $a_4$ | $a_5$ |
+|---:|---:|---:|---:|---:|---:|
+| 6 | -2.262422 | 2.271772 | -3.653029 | -2.718689 | 2.395232 |
+| 97 | -5.727189 | 1.156649 | -7.427496 | -5.561747 | 6.176964 |
+
+Signed common electric-quadrupole coefficients in the basis (2), in microarcseconds per year, from the same selected sample under two nuisance profiles. The complete covariances and signal–nuisance cross covariances accompany the numerical supplement. These coefficients describe the selected optical proper-motion field under the stipulated error law; they are not calibrated matter-shear estimates.
+
+
+
+
+| Nuisance | Rank | Information eigenvalues | Best / worst radius |
+|---:|---:|:---|:---|
+| 6 | 5 | 2.43693, 2.65563, 3.17145, 3.67145, 4.95102 | 1.60963 / 2.29431 |
+| 97 | 5 | 0.503015, 0.629927, 1.13946, 1.46083, 2.38294 | 2.32015 / 5.04990 |
+
+Information eigenvalues have units $(\mu\mathrm{as}\,\mathrm{yr}^{-1})^{-2}$; radii are in microarcseconds per year. Eigenvectors need not coincide between profiles.
+
+
+The first profile has information eigenvalues \((2.43693,\allowbreak 2.65563,\allowbreak 3.17145,\allowbreak 3.67145,\allowbreak 4.95102)\) in \((\mu{\rm as}\,{\rm yr}^{-1})^{-2}\). With all 97 nuisance coefficients they become \((0.503015,\allowbreak 0.629927,\allowbreak 1.13946,\allowbreak 1.46083,\allowbreak 2.38294)\). The common tensor remains identifiable in both working designs, although its least constrained direction becomes substantially weaker.
+
+There is a useful limiting check. If an arbitrary common E2 nuisance is admitted, it spans exactly the signal image and the profiled information vanishes. A free common spin similarly absorbs a common magnetic dipole. The corresponding coefficient set is unbounded unless another domain restriction is supplied. It is not empty. This is a reference-field ambiguity, and a calibrated frame condition would need its own response and uncertainty.
+
+### Conditional detection power
+
+For a stipulated Gaussian fixed-design experiment, a five-dimensional quadratic test has a central chi-square law under the zero-field null and a noncentral law under a specified coefficient vector. At size alpha=0.05, define
+
+\[
+\lambda=\boldsymbol a^T\mathcal I_N\boldsymbol a,\qquad
+\mathcal P(\boldsymbol a)
+=\Pr\{\chi^2_5(\lambda)>\chi^2_{5,0.95}\}.
+\tag{35}
+\]
+
+For a prescribed Frobenius radius \(\rho=\|\boldsymbol a\|_2\), the largest and smallest noncentralities are \(\rho^2\lambda_{\max}(\mathcal I_N)\) and \(\rho^2\lambda_{\min}(\mathcal I_N)\). The retained calculation gives \(\chi^2_{5,0.95}=11.07049769\) and the noncentrality 12.82760657 for 80 percent power. The resulting best/worst radii are 1.60963/2.29431 microarcseconds per year for the six-coefficient profile and 2.32015/5.04990 for the 97-coefficient profile. At \(\rho=0\) the power is 0.05.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.88\linewidth]{pm_history_power.pdf}
+\caption{Conditional Gaussian power for the common five-component proper-motion tensor after profiling six common spin/glide coefficients. The radius is the Frobenius norm in microarcseconds per year. Markers are retained evaluated radius points for the best and worst information eigenvectors; connecting segments are visual guides, not evaluated interpolation. The 80-percent radii come from the numerical table and Eq. (35), not crossings of those segments; the analytic full-sphere RMS is $\rho/\sqrt{5}$. The plotted probabilities use the reported marginal source errors and stipulated cross-source independence. They are design sensitivities, not empirical exclusion limits or a p-value for the observed field.}
+\end{figure}
+
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.88\linewidth]{pm_history_information.pdf}
+\caption{Full five-component projected information for the six-coefficient common spin/glide profile, in the Frobenius basis (2), with units $({\mu\rm as}\,{\rm yr}^{-1})^{-2}$. Off-diagonal entries retain the coupling induced by selected sky coverage and working weights. The 97-coefficient sensitivity profile uses the same data and is compared in the accompanying table.}
+\end{figure}
+
+
+The Gaussian power calculation uses the actual selected angular coverage and marginal error weights. It does not justify a matter-shear limit from the selected coefficients. That step requires a source-dependent distance/history law, an optical-centroid-to-matter response, reference-frame calibration, selection modelling and a measured or justified spatial covariance. In particular, common-E2 sufficient statistics cannot generate arbitrary new depth-weighted E2 cross moments.
+
+## 8. Physical interpretation and the next measurement
+
+The radial and astrometric examples separate observable information from the physical history to which it may be attributed. In the finite radial design, an independently calibrated observer response removes the observer–bulk ambiguity, while a second temporal window removes a history moment invisible to the first. Radial leverage remains necessary: at equal radii four parameter combinations survive even after both additions. These conclusions follow from the stated response functions and common nuisance quotient.
+
+For the astrometric example, the observable is a signed STF tensor \(A_{\rm PM}\). It combines an endpoint difference and a present derivative. The selected catalogue supports a rank-five common-field fit under both nuisance profiles, but the associated ten-coordinate history information retains five null directions. More precise measurements of the same common field do not remove them. A physically calibrated distance dependence or another independent response is needed. The numerical power frontier quantifies sensitivity to this observable tensor under its working noise law.
+
+The complete carrier therefore retains the signed radial vectors, scalar rate, full STF tensors, response functions, joint covariance or error set, and the relevant sky and depth supports. The radial contraction cannot measure an antisymmetric velocity gradient because \(n^T\Omega n=0\). Matter vorticity remains unmeasured. A chosen hypersurface normal's irrotationality does not determine matter vorticity, and neither a fitted radial tensor nor an optical proper-motion quadrupole by itself supplies a calibrated matter-frame expansion/shear tensor.
+
+A physical comparator x, including any declared signed projection x_C, requires its complete tensor components and frame. The normalized score Q additionally needs a physically defined anchor and denominator domain. The occupancy F needs a support measure and an admissible ceiling; the exceedance Pi needs its specified joint law; and the depth functional G_F needs compatible depth supports and their joint dependence. The results here do not supply those missing sectors. They remain unknown and are not assigned zero. Deterministic tensor images may nevertheless be reported within the stated response model.
+
+The additional physical inputs are concrete: endpoint and history response kernels, source and observer frame transport, units, calibration and nuisance coupling, and a justified response error or joint covariance. The first-order Bianchi I expression illustrates one possible response under its own assumptions. Its use here does not identify a Bianchi family from the observed morphology.
 
 ## Numerical appendix: reproducible comparison
 
 The companion consumer verifies the sealed retained inputs, constructs (2), (7)–(12), freezes (20), and emits all designs, full right singular bases, kernel/identified projectors, spectra and signed witnesses. The nominal rank counts must agree at relative cutoffs \(10^{-12},10^{-10},10^{-8}\). Frobenius-basis and null residuals must be at most \(10^{-12}\); reconstruction and deterministic bound checks use relative tolerance \(10^{-10}\) or absolute tolerance \(10^{-12}\) for unit-scale fixtures. Exact analytic rank remains authoritative near equal radii. The generated tables and figures report both numerical values and their design assumptions.
 
-The source rank theorem is retained from `mathematical_recovery.md`, “Two radii separate angular nuisance and depth response”, corroborated in `independent_review.md`, “Rank-thirteen example and recovered physical scope”, and related to the oracle rank criterion in `NATIVE_INFERENCE_THEOREMS.md`, §6. The endpoint/history distinction and common nuisance quotient are developed in `theory_synthesis_20260913/REPORT.md`, §§13–13.1, and `theorem_physical_chapter.md`, the response quotient and anchor-coordinate paragraphs. Their precise source identities and the new finite construction are separated in the companion claim map.
+The supplementary source map records the retained rank argument, response conventions and numerical inputs. The astrometric supplement retains the full five-component coefficients, covariance, signal–nuisance cross covariance, information eigenbasis, ten-coordinate history information and exact response-null arrays. The two nuisance profiles consume the same 102-dimensional normal matrix and score; no old prior is imported. All displayed astrometric values and figures are generated from these retained quantities.
 
 ## Generated numerical appendix tables
 
