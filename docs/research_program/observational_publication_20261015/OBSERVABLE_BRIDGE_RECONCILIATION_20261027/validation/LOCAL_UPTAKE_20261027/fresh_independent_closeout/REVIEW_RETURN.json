@@ -1,0 +1,63 @@
+{
+  "schema": "htt.r36_intake_repair_closeout/1",
+  "decision": "APPROVE",
+  "scope": "Exact six-file serialization and intake-binding repair only. No scientific admission, STATE append, commit or publication performed.",
+  "remaining_findings": [],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "base_HEAD": "fb2bb0ac6a9537861c2c2e2c5157fc81787922d0",
+  "contract_path": "/mnt/extdrive/workdir/htt_open_data/r36_blind_intake_binding_review/REPAIR_CONTRACT.json",
+  "contract_sha256": "019ad3396b0b732bf40149d69ddf84fc9652f28f3a48288282e542ca424af7b9",
+  "exact_candidate_six_file_diff_sha256": "373af66c24764d8ebe05b32ae8637dfbc8f2c77712b09194ff6523687696636f",
+  "candidate_evidence_manifest_sha256": "83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_frontier_file_sha256": "8de844ee16d15eadb3085e6d3a16b172ce2ce6dd62a8bf276d265b9a8b335f24",
+  "checks": {
+    "six_exact_before_and_after_identities": true,
+    "only_permitted_structured_and_byte_delta": true,
+    "CSV_token_and_H03_Decimal_JSON_parity": "EXACT_ZERO_TOLERANCE",
+    "old_H03_R32_manifests_and_historical_receipts": "UNCHANGED",
+    "manifest_closure": {
+      "EVIDENCE_MANIFEST.json": {
+        "verified": 156,
+        "total": 156
+      },
+      "IMPORT_MANIFEST.json": {
+        "verified": 120,
+        "total": 120
+      },
+      "DELIVERY_MANIFEST.json": {
+        "verified": 196,
+        "total": 196
+      }
+    },
+    "Git_CSV_text_unset_and_filtered_bytes_preserve_CRLF": true,
+    "protected_dirty_files": 752,
+    "Gaia_symlink_and_old_PDF_mode": "PRESERVED",
+    "historical_actual_failed_preflight_commands_preserved": 1,
+    "historical_packaging_mismatches_preserved": 2,
+    "state_index_unrelated_dirty_status": "UNCHANGED",
+    "state_sha256": "da6843fe155d4d5ca6359c4368a137ef57940adabfa8cca2ab512e0713cd8f97",
+    "state_tasks_packets_events": [
+      98,
+      201,
+      677
+    ],
+    "R36_already_appended": false,
+    "actual_read_only_preflight": "APPEND_READY",
+    "declared_roots": 9,
+    "writes_state": false,
+    "scientific_values_acceptance_tolerances_routes_task_IDs_history_costs": "UNCHANGED"
+  },
+  "checks_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/CHECKS.json",
+  "raw_receipt_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/RAW_RECEIPT.json",
+  "exact_diff_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/EXACT_SIX_FILE_DIFF.stdout",
+  "actual_preflight_stdout_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/ACTUAL_PREFLIGHT.stdout",
+  "actual_preflight_stderr_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/ACTUAL_PREFLIGHT.stderr",
+  "verification_method": "Independent byte and structured-delta checks completed before actual parameterized preflight. No author verifier imported; project harness used only as the consumer execution surface.",
+  "test_scope": "No repeated scientific runs or whole-science suite; incoming 10 parameterized and 8 covariance test results were not rerun for unchanged code.",
+  "limits": "This approves packaging/binding correctness, not future R36 scientific products or original acceptance completion. Existing historical validation receipts retain their original candidate identities.",
+  "next_executable_checkpoint": "Controller may append this exact corrected frontier once under existing authorization, then dispatch the next actual ready scientific packet. Publication remains a separately authorized publisher action."
+}

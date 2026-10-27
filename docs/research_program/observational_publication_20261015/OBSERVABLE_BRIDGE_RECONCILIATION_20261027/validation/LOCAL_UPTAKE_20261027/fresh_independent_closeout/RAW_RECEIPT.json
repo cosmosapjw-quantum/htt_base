@@ -1,0 +1,299 @@
+[
+  {
+    "name": "index_path",
+    "argv": [
+      "git",
+      "rev-parse",
+      "--git-path",
+      "index"
+    ],
+    "exit_code": 0,
+    "seconds": 0.0031638231594115496,
+    "stdout_sha256": "742e1586a644af64934a892663d03c75415bfb01edafdfdd924a8627573bfb9c",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": ".git/index\n",
+    "stderr": ""
+  },
+  {
+    "name": "head",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "seconds": 0.0034059900790452957,
+    "stdout_sha256": "e2845c60f168a7843c429152a2b4e5c82852ec7f00559626c2a271ca34973943",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "fb2bb0ac6a9537861c2c2e2c5157fc81787922d0\n",
+    "stderr": ""
+  },
+  {
+    "name": "branch",
+    "argv": [
+      "git",
+      "branch",
+      "--show-current"
+    ],
+    "exit_code": 0,
+    "seconds": 0.002885629190132022,
+    "stdout_sha256": "54297b952352f7b424887bcdecc8c6f15cdf398fd8af1e94552c502c0c7580e3",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "research/htt-adaptive-methods-20261023\n",
+    "stderr": ""
+  },
+  {
+    "name": "origin",
+    "argv": [
+      "git",
+      "remote",
+      "get-url",
+      "origin"
+    ],
+    "exit_code": 0,
+    "seconds": 0.003134968923404813,
+    "stdout_sha256": "c209c8730a49e1743adbfdb9674b622da059fd4a2fe30bd3df52ba73b1a9aad4",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "https://github.com/cosmosapjw-quantum/htt_base.git\n",
+    "stderr": ""
+  },
+  {
+    "name": "status_before",
+    "argv": [
+      "git",
+      "status",
+      "--porcelain=v1",
+      "-z"
+    ],
+    "exit_code": 0,
+    "seconds": 0.15072043100371957,
+    "stdout_sha256": "9e7a824ddf538b232cb83f8f3274e08a71f423ba9aa6913bcea0bfc34d988596",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/status_before.stdout",
+    "stderr_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/status_before.stderr"
+  },
+  {
+    "name": "staged_before",
+    "argv": [
+      "git",
+      "diff",
+      "--cached",
+      "--name-only",
+      "-z"
+    ],
+    "exit_code": 0,
+    "seconds": 0.008948457892984152,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "name": "head_blob_1",
+    "argv": [
+      "git",
+      "show",
+      "HEAD:.gitattributes"
+    ],
+    "exit_code": 0,
+    "seconds": 0.004330051830038428,
+    "stdout_sha256": "08729b3f4df5e04635945d165d20c8ff8e07cc5a6cd048ab6c0f909243731951",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "# Preserve the hash-pinned upstream methodology snapshots byte-for-byte. Their\n# Markdown templates contain intentional trailing spaces on blank list items.\nharness_templates/vendor/physmath-gpt56/3.1.0/** -text whitespace=-trailing-space\n",
+    "stderr": ""
+  },
+  {
+    "name": "head_blob_2",
+    "argv": [
+      "git",
+      "show",
+      "HEAD:docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv"
+    ],
+    "exit_code": 0,
+    "seconds": 0.0037583650555461645,
+    "stdout_sha256": "351154375b7916eaa016fdd894b4a9fddb5de2e4acd02db8569a7055e9483074",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "head_blob_3",
+    "argv": [
+      "git",
+      "show",
+      "HEAD:docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json"
+    ],
+    "exit_code": 0,
+    "seconds": 0.004309493117034435,
+    "stdout_sha256": "123a040ba2835e11cace5c46c391894eed9796448022ff035058bc5503e772ed",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "head_blob_4",
+    "argv": [
+      "git",
+      "show",
+      "HEAD:docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json"
+    ],
+    "exit_code": 0,
+    "seconds": 0.0038610079791396856,
+    "stdout_sha256": "38a239d203c6431a281264cd8ad40cd448b5b068d154fdab70270bf009eb29cd",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "head_blob_5",
+    "argv": [
+      "git",
+      "show",
+      "HEAD:docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/HANDOFF_CURRENT_SESSION.md"
+    ],
+    "exit_code": 0,
+    "seconds": 0.0037163239903748035,
+    "stdout_sha256": "8855de7612bb0cbdda4cd86d9744389ad5b577b0b8e5afcb319699604cd7106d",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "head_blob_6",
+    "argv": [
+      "git",
+      "show",
+      "HEAD:docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/DELIVERY_MANIFEST.json"
+    ],
+    "exit_code": 0,
+    "seconds": 0.004625478992238641,
+    "stdout_sha256": "a8f34a870ff79ee746bfade5322fa01273b9b450841ce556e73f1e23b4e050c8",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "historical_tracked_diff",
+    "argv": [
+      "git",
+      "diff",
+      "--name-only",
+      "HEAD",
+      "--",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027"
+    ],
+    "exit_code": 0,
+    "seconds": 0.015449692029505968,
+    "stdout_sha256": "adce5670561d7f14f7a745c750e9aac9875ef7c8161fd34bd887c705c987f713",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/DELIVERY_MANIFEST.json\ndocs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json\ndocs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json\ndocs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/HANDOFF_CURRENT_SESSION.md\ndocs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv\n",
+    "stderr": ""
+  },
+  {
+    "name": "attributes",
+    "argv": [
+      "git",
+      "check-attr",
+      "text",
+      "--",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv"
+    ],
+    "exit_code": 0,
+    "seconds": 0.007577833952382207,
+    "stdout_sha256": "565248c910dc2b5ab236c0e1b94dfcd4a3a00ce8e9032c41c2f0a506a71a554f",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv: text: unset\n",
+    "stderr": ""
+  },
+  {
+    "name": "filtered_blob",
+    "argv": [
+      "git",
+      "hash-object",
+      "--path=docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv"
+    ],
+    "exit_code": 0,
+    "seconds": 0.002795719075948,
+    "stdout_sha256": "dfc9b175a2049883d1d182e071ff1801577205f282b7d872842a99d148df3cc1",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "108f872fe9e919fc9521584ada607158fc5f87a9\n",
+    "stderr": ""
+  },
+  {
+    "name": "unfiltered_blob",
+    "argv": [
+      "git",
+      "hash-object",
+      "--no-filters",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv"
+    ],
+    "exit_code": 0,
+    "seconds": 0.00267072394490242,
+    "stdout_sha256": "dfc9b175a2049883d1d182e071ff1801577205f282b7d872842a99d148df3cc1",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "108f872fe9e919fc9521584ada607158fc5f87a9\n",
+    "stderr": ""
+  },
+  {
+    "name": "EXACT_SIX_FILE_DIFF",
+    "argv": [
+      "git",
+      "diff",
+      "--binary",
+      "--no-ext-diff",
+      "--",
+      ".gitattributes",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/HANDOFF_CURRENT_SESSION.md",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/DELIVERY_MANIFEST.json"
+    ],
+    "exit_code": 0,
+    "seconds": 0.016080891946330667,
+    "stdout_sha256": "373af66c24764d8ebe05b32ae8637dfbc8f2c77712b09194ff6523687696636f",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/EXACT_SIX_FILE_DIFF.stdout",
+    "stderr_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/EXACT_SIX_FILE_DIFF.stderr"
+  },
+  {
+    "name": "ACTUAL_PREFLIGHT",
+    "argv": [
+      ".venv/bin/python",
+      "scripts/codex_harness/publication_frontier_preflight.py",
+      "--state",
+      ".agent-harness/runtime/r23-continuous/STATE.json",
+      "--frontier",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json",
+      "--manifest",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json"
+    ],
+    "exit_code": 0,
+    "seconds": 0.20035016094334424,
+    "stdout_sha256": "4ac58b78da43c0ae3e57028f077263cf72d439411bf028110d606119aa670691",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/ACTUAL_PREFLIGHT.stdout",
+    "stderr_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/ACTUAL_PREFLIGHT.stderr"
+  },
+  {
+    "name": "status_after",
+    "argv": [
+      "git",
+      "status",
+      "--porcelain=v1",
+      "-z"
+    ],
+    "exit_code": 0,
+    "seconds": 0.1394756860099733,
+    "stdout_sha256": "9e7a824ddf538b232cb83f8f3274e08a71f423ba9aa6913bcea0bfc34d988596",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/status_after.stdout",
+    "stderr_path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_repair_fresh_closeout/status_after.stderr"
+  },
+  {
+    "name": "head_after",
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "seconds": 0.0030818390659987926,
+    "stdout_sha256": "e2845c60f168a7843c429152a2b4e5c82852ec7f00559626c2a271ca34973943",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "fb2bb0ac6a9537861c2c2e2c5157fc81787922d0\n",
+    "stderr": ""
+  }
+]

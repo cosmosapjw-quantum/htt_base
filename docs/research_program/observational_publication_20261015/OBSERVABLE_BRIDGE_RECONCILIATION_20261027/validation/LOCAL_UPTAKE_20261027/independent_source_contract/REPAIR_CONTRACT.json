@@ -1,0 +1,251 @@
+{
+  "schema": "htt.r36_bounded_intake_binding_repair/1",
+  "decision": "APPROVE_BOUNDED_REPAIR_ONLY",
+  "review_mode": "Fresh source/binding review. No prior verdict adopted; dependency references in historical review receipts inspected only to distinguish immutable observations from current metadata. Project harness code inspected as consumer semantics, not a verdict oracle. No harness executed for this decision.",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "base": {
+    "root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "HEAD": "fb2bb0ac6a9537861c2c2e2c5157fc81787922d0",
+    "branch": "research/htt-adaptive-methods-20261023",
+    "origin": "https://github.com/cosmosapjw-quantum/htt_base.git"
+  },
+  "scope": "One lower-tier implementation of the proven serialization/source-binding corrections before first R36 append; then one fresh different read-only reviewer. Approval does not admit science, append state, commit or publish.",
+  "finding": {
+    "evidence_rows": 156,
+    "current_matching_rows": 154,
+    "all_156_current_equal_HEAD": true,
+    "import_manifest_rows": 120,
+    "import_mismatches": [
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv"
+    ],
+    "delivery_manifest_rows": 196,
+    "delivery_mismatches": [
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv"
+    ]
+  },
+  "classification": [
+    {
+      "object": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv",
+      "class": "1 immutable imported source bytes, with packaging/EOL transport cause",
+      "consequence": "Strict intake remains blocked until exact declared source identity is restored. Proven token equality excludes a change in scientific CSV values; no scientific-integrity failure is inferred."
+    },
+    {
+      "object": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/sources/H03_SOURCE_TOMOGRAPHY.json",
+      "class": "1 immutable existing scientific source; the faulty new R36 manifest binding is class 4 packaging metadata",
+      "consequence": "The source is already correct under R32. Correct only the new R36 manifest row; never append LF to the old source."
+    },
+    {
+      "object": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/H03_REPLAY.json",
+      "class": "2 deterministic historical evidence with source-serialization provenance",
+      "consequence": "Preserve all bytes and the recorded 96513... source identity. Exact JSON equivalence is documented separately; do not pretend that historical replay used the local 5d31... byte serialization."
+    },
+    {
+      "object": "Scientific parsed CSV/H03 content",
+      "class": "3 scientifically identical representation",
+      "consequence": "Exact parsed equality suffices; no fit, solver, tolerance adjustment or physical admission follows."
+    },
+    {
+      "object": "R36 EVIDENCE_MANIFEST, FRONTIER, DELIVERY_MANIFEST and current handoff",
+      "class": "4 preappend packaging/current intake metadata",
+      "consequence": "Update only the proven dependency closure; retain prior receipts and incoming preimages."
+    }
+  ],
+  "allowed_repository_paths": [
+    ".gitattributes",
+    "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv",
+    "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json",
+    "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json",
+    "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/HANDOFF_CURRENT_SESSION.md",
+    "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/DELIVERY_MANIFEST.json"
+  ],
+  "exact_changes": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv",
+      "operation": "Assert source is 351154... / 25101 bytes, 0 CR and 241 LF; replace every LF byte with CRLF once. Require exact ebd371... / 25342-byte result and token equality. No numeric/token rewrite."
+    },
+    {
+      "path": ".gitattributes",
+      "operation": "Append exactly the following bytes; preserve every existing byte.",
+      "append_text": "\n# Preserve the exact imported R36 CSV bytes required by its source manifests.\ndocs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv -text\n"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json",
+      "operation": "Only files[155] for the exact existing H03 path: sha256 96513... -> 5d31... and bytes 111343 -> 111342. Preserve file count/order, paths, other rows, schema, base_commit and original formatting."
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json",
+      "operation": "Exactly 11 tasks: replace each /tasks/i/input_identity with sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43 and /tasks/i/input_sources/0/sha256 with 83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43. These 22 fields are the entire permitted structured delta. Preserve task IDs, acceptance, requires, owned_paths, products, routing, authorizations and all other fields."
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/HANDOFF_CURRENT_SESSION.md",
+      "operation": "Append exactly the following explanatory current-uptake note, only after the preceding corrections and parity checks succeed. Preserve existing text.",
+      "append_text": "\n## Local uptake binding repair, 27 October 2026\n\nThe incoming pack failed the local exact-byte preflight: 154 of 156 evidence rows matched. The imported `imports/v15/cas/response_frontier.csv` has been restored to its declared CRLF bytes (SHA256 `ebd371c45b643658693c356a84efed868133bd6c47f8b796d1b2bd6af71ef751`, 25342 bytes), with an exact-path Git `-text` attribute. The new R36 evidence entry now binds the unchanged older H03 source (SHA256 `5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326`, 111342 bytes). The earlier R36 H03 source representation adds exactly one terminal LF and parses to identical values. CSV fields and all H03 scientific values are unchanged.\n\nThe corrected evidence manifest SHA256 is `83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43`; the corrected frontier file SHA256 is `8de844ee16d15eadb3085e6d3a16b172ce2ce6dd62a8bf276d265b9a8b335f24`. Existing validation receipts and `covariance/H03_REPLAY.json` retain their historical candidate/source identities; they do not certify this corrected local pack. Preserve the incoming preimages and first failed preflight. Require fresh exact verification of all 156 evidence rows, the import and delivery manifests, and the read-only current-state preflight before append. The repair leaves the older H03/R32 sources, contracts, results and live campaign history unchanged. It qualifies no scientific product and changes no original acceptance, numerical tolerance, solver boundary or budget.\n"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/DELIVERY_MANIFEST.json",
+      "operation": "Update sha256/bytes only for the existing entries naming EVIDENCE_MANIFEST.json, FRONTIER.json and HANDOFF_CURRENT_SESSION.md. Keep all 196 paths/order and all remaining entries byte-equivalent. CSV row remains ebd371... / 25342 unchanged. Preserve base_head/excludes_self/schema."
+    }
+  ],
+  "preimages_and_exact_target_identities": [
+    {
+      "before": {
+        "path": ".gitattributes",
+        "bytes": 239,
+        "sha256": "08729b3f4df5e04635945d165d20c8ff8e07cc5a6cd048ab6c0f909243731951"
+      },
+      "after": {
+        "path": ".gitattributes",
+        "bytes": 461,
+        "sha256": "af6472e5d3a26fd56cf09b02dd39dcf277a65d0c975f4a6feedbd733df62611b"
+      }
+    },
+    {
+      "before": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv",
+        "bytes": 25101,
+        "sha256": "351154375b7916eaa016fdd894b4a9fddb5de2e4acd02db8569a7055e9483074"
+      },
+      "after": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv",
+        "bytes": 25342,
+        "sha256": "ebd371c45b643658693c356a84efed868133bd6c47f8b796d1b2bd6af71ef751"
+      }
+    },
+    {
+      "before": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json",
+        "bytes": 43216,
+        "sha256": "123a040ba2835e11cace5c46c391894eed9796448022ff035058bc5503e772ed"
+      },
+      "after": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json",
+        "bytes": 43216,
+        "sha256": "83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43"
+      }
+    },
+    {
+      "before": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json",
+        "bytes": 46502,
+        "sha256": "38a239d203c6431a281264cd8ad40cd448b5b068d154fdab70270bf009eb29cd"
+      },
+      "after": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json",
+        "bytes": 46502,
+        "sha256": "8de844ee16d15eadb3085e6d3a16b172ce2ce6dd62a8bf276d265b9a8b335f24"
+      }
+    },
+    {
+      "before": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/HANDOFF_CURRENT_SESSION.md",
+        "bytes": 11006,
+        "sha256": "8855de7612bb0cbdda4cd86d9744389ad5b577b0b8e5afcb319699604cd7106d"
+      },
+      "after": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/HANDOFF_CURRENT_SESSION.md",
+        "bytes": 12505,
+        "sha256": "e0ee5937d3d51bfb13ece0e4f927555fbdffeccff021ec6e7ef5f4265d23605c"
+      }
+    },
+    {
+      "before": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/DELIVERY_MANIFEST.json",
+        "bytes": 52908,
+        "sha256": "a8f34a870ff79ee746bfade5322fa01273b9b450841ce556e73f1e23b4e050c8"
+      },
+      "after": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/DELIVERY_MANIFEST.json",
+        "bytes": 52908,
+        "sha256": "39b11b22a738f948c34f774656b59f5edcc5c88232233e5e2108e029037b57b8"
+      }
+    }
+  ],
+  "protected_inputs": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/sources/H03_SOURCE_TOMOGRAPHY.json",
+      "bytes": 111342,
+      "sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/IMPORT_MANIFEST.json",
+      "bytes": 46161,
+      "sha256": "56072c7a42def39e485d8500f631dbece6b9d77381f17682de0fb5ac2b37507d"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/H03_REPLAY.json",
+      "bytes": 20735,
+      "sha256": "48c8f25e679d30073591af843a752ecba3d6a3eb62cda9d88cff4510e83b1f07"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/EVIDENCE_MANIFEST.json",
+      "bytes": 15522,
+      "sha256": "10703b1d37198379ee8ec4565dbef737e7ee35e6143de404c4d94ed48658f2d3"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/inputs/SOURCE_BINDINGS.json",
+      "bytes": 4782,
+      "sha256": "38cfb63a8814d3117ba363275079bf7e8ef08bb26e03b41fe0cb0ac4db2580dc"
+    }
+  ],
+  "forbidden_changes": [
+    "All existing H03 source copies and all PUBLICATION_ACCELERATION_20261025 files",
+    "All historical contracts, R32 bindings, imported source/review receipts, prior R36 validation/* receipts, covariance/H03_REPLAY.json and external/* results",
+    "IMPORT_MANIFEST.json, RUN_CONTRACT.json, all source code, tests, validators, equations, numerical policies, tolerances, acceptance criteria and scientific values",
+    "Any repository path outside the six-path allowlist",
+    "Any live STATE, campaign, events, packets, ultra records, original 98 task objects, allocation/cost identity or budget",
+    "Git staging/commit/reset/clean/stash/worktree/clone or publication by the implementation worker; controller handles later lifecycle after independent review"
+  ],
+  "state_at_review": {
+    "path": ".agent-harness/runtime/r23-continuous/STATE.json",
+    "bytes": 5832759,
+    "sha256": "da6843fe155d4d5ca6359c4368a137ef57940adabfa8cca2ab512e0713cd8f97",
+    "campaign_id": "R23-whole-42-solver-free",
+    "tasks": 98,
+    "packets": 201,
+    "events": 677,
+    "R36_tasks": 0,
+    "R36_frontiers": 0
+  },
+  "raw_failure_to_retain": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_serialization_repair/DIAGNOSIS_STOP.json",
+      "sha256": "a8313dc6cba233cf505371c1defdae98d3786f330123befdfc571ec721bfb55a"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_serialization_repair/ALL_156_MANIFEST_COMPARISONS.json",
+      "sha256": "e4a2a47d802b9ad010bb8547ec75b30578b1d16a7d8e8c24df995f48041b03d3"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_intake_serialization_repair/FIRST_PREFLIGHT.stderr",
+      "requirement": "Keep first failure unmodified, plus existing incoming manifest and CSV preimages. Preserve new six-path preimages in the lower-tier worker external evidence directory before writes."
+    }
+  ],
+  "independent_parity_observations": {
+    "CSV_LF_count": 241,
+    "CSV_CR_count_before": 0,
+    "CSV_row_count_including_header": 241,
+    "CSV_columns_each_row": 6,
+    "CSV_exact_token_matrix_parity": true,
+    "CSV_expected_identity_recovered": true,
+    "H03_plus_one_LF_sha256": "96513c4dbd1f64da7ecef0696bfe43b53ddaac7d8c0d1e438c9c448442fb66b9",
+    "H03_exact_Decimal_JSON_value_parity": true,
+    "tolerance": "Exact serialized token/value equality; zero tolerance. No scientific numerical recomputation or tolerance change is needed."
+  },
+  "required_final_gates": [
+    "Fresh recheck base HEAD, six before identities, protected source identities, absence of all R36 tasks/frontier in actual live state. If any drift appears, stop before edits and report exact delta; do not rebind an appended frontier.",
+    "All six candidate bytes equal exact after identities. Structured diffs obey exact_changes. Preserve every unrelated dirty or untracked path; no restore/reset/clean.",
+    "Independent raw SHA256 + byte-length verification: evidence 156/156, import 120/120, delivery 196/196. Do not rely only on prior PR CI or stored PASS receipts.",
+    "Exact token/value parity controls above pass; unchanged H03 hash/bytes and old R32 manifest/source bindings pass. No new observed-data fit, Monte Carlo, solver or numerical-policy change.",
+    "git check-attr text -- exact CSV reports unset. Read-only git hash-object --path=exact_CSV exact_CSV and git hash-object --no-filters exact_CSV agree, demonstrating active clean filters preserve restored bytes. Do not use -w or alter the index.",
+    "Run .venv/bin/python scripts/codex_harness/publication_frontier_preflight.py --state .agent-harness/runtime/r23-continuous/STATE.json --frontier docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json --manifest docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json with raw stdout/stderr/exit retained externally. Require APPEND_READY, 156 verified rows, exactly 9 declared roots, writes_state false; independently compare STATE bytes before/after.",
+    "Read-only current preflight/test execution must not modify any protected source, historical receipt, Git index or live state. Use PYTHONDONTWRITEBYTECODE=1 and GIT_OPTIONAL_LOCKS=0. No extra broad suite or completed scientific rerun is needed for this packaging repair.",
+    "A fresh different reviewer checks actual diff, exact final identities, parity controls and current-state preflight. Prior review of incoming PR is not a closeout for this candidate."
+  ],
+  "stopping_rule": "One bounded prescribed patch. Any unexpected mismatch, extra dependency, source-value change, appended R36 frontier, parity failure or preflight failure returns exact evidence/HOLD without relaxing validation. No new scientific product or acceptance is implied.",
+  "next_executable_checkpoint": "After fresh independent repair closeout, the parent/controller may use existing authorization to append this corrected frontier once and dispatch the next actual ready scientific packet, preserving the old 98 tasks, 201 packets, event prefix, campaign and ultra accounting. This review itself does not authorize state mutation.",
+  "reviewer_mutations": "Only this REPAIR_CONTRACT.json in the assigned external review directory. Repository and live state were read only."
+}
