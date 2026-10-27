@@ -1,0 +1,8 @@
+Command: python -m pytest -q docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/test_radiation_core.py
+CWD: /home/cosmosapjw/Dropbox/bianchi/htt_base
+Exit: 1
+...F [100%]
+FAILED test_failed_entropy_sufficiency_triggers_actual_spectrum
+Assertion: actual_lambda_min_over_rho > 0.1
+Observed: 0.0501193243706874
+Classification: test threshold assumed from a different saved positive family; actual finite operator is positive but this new exp(20 mu^2) fixture has smaller minimum. Correct the test to require positivity, as the source theorem specifies.

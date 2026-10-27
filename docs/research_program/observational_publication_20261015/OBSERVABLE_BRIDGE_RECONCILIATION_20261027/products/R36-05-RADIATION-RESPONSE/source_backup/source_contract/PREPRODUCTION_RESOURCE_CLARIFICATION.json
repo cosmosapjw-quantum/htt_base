@@ -1,0 +1,28 @@
+{
+  "schema": "r36-preproduction-resource-clarification-v1",
+  "status": "PREPARATION_ONLY_BEFORE_SCIENTIFIC_PRODUCTION",
+  "task_id": "R36-05",
+  "author": "/root/r36_scientific_contract_preparation",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "original_contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_contract_preparation/IMPLEMENTATION_CONTRACT.json",
+    "sha256": "01e5cbafcc2ba5fefe242d04f4b49dd8727411cdbb1e5397e22c1ec30458637d",
+    "preserved_byte_for_byte": true
+  },
+  "trigger": "Parent identified that the existing owner/RUN_CONTRACT preserves old one-use budgets but establishes no new R36-05 one-use cap. Parent reports no scientific producer has run; only source intake and code checks occurred.",
+  "finding": "The preparer supplied the one-invocation, 180-second and 2-GiB figures without an inherited source-backed hard cap. Their original hard-limit wording was an unsupported resource-policy decision.",
+  "precedence": "This clarification supersedes only the resource-cap and rerun consequences of execution_limits.numerical_subcap. All scenarios, seeds, draws, working error law, numerical tolerances, acceptance, scientific claim boundaries, and prohibitions on replaying old exhausted work remain frozen.",
+  "corrected_resource_policy": {
+    "authority": "The parent/controller supplies actual R36-05 execution limits. No new hard cap, one-use allowance, exhausted status, or replacement allocation is established by this preparation.",
+    "wall_time_seconds_180": "SOFT_PERFORMANCE_TARGET only; exceeding this target alone is not scientific failure or exhaustion.",
+    "process_tree_rss_2_GiB": "SOFT_PERFORMANCE_TARGET only; exceeding this target alone is not scientific failure or exhaustion.",
+    "one_producer_invocation": "Preferred batching target, not a one-use cap or a prohibition on bounded implementation repair and verification.",
+    "threading": "Retain BLAS/OMP/MKL threads=1 as the reproducibility/performance configuration.",
+    "execution_accounting": "Retain first failures and record cumulative commands, elapsed time and available resource measurements across attempts under the same actual packet/task identity. Do not reset historical costs or old allowances.",
+    "bounded_repairs": "A soft-target overrun or implementation defect may be reported and resolved through the existing parent-directed bounded coding/repair workflow. This preparation does not force refusal or invent a newly exhausted allowance. Scientific design changes still require scientific-owner interpretation before production.",
+    "existing_hard_limits": "Any independently applicable actual controller or owner hard limit remains binding and must be cited from its real source; do not infer a new one from the superseded numerical_subcap text."
+  },
+  "scope": "Resource-policy clarification before outcomes; no scientific design change, production, PASS, or review decision.",
+  "independent_review": "A future reviewer must be another agent; this author remains a preparation contributor to R36-05."
+}

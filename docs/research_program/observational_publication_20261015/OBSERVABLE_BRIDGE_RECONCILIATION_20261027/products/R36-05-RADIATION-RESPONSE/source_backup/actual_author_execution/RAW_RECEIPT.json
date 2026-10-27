@@ -1,0 +1,67 @@
+{
+  "schema": "htt.r36_05.actual_execution_receipt/1",
+  "packet_id": "1a4ba501f02b8e078ab488ce45996b4415b55ce96308ec4dc5c2b3701a9a5371",
+  "task_id": "R36-05-RADIATION-RESPONSE",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "agent_id": "/root/rc_1a4ba501f02b8e07",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "head_at_source_intake": "348cd299be062dc49bb5a96aec4e5dd922294117",
+  "contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_contract_preparation/IMPLEMENTATION_CONTRACT.json",
+    "sha256": "01e5cbafcc2ba5fefe242d04f4b49dd8727411cdbb1e5397e22c1ec30458637d",
+    "author": "/root/r36_scientific_contract_preparation"
+  },
+  "resource_clarification": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_contract_preparation/PREPRODUCTION_RESOURCE_CLARIFICATION.json",
+    "sha256": "b84a53e4aaf31a8563cf7916ed39ab41642ed95ed3973b8c32247b628a13db80",
+    "effect": "180 s, 2 GiB, one invocation are soft targets, not new hard caps"
+  },
+  "producer_invocations": [
+    {
+      "number": 1,
+      "command": "env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -v python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/run_comparison.py",
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_response_actual/raw/producer_stdout.txt",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_response_actual/raw/producer_stderr.txt",
+      "time_file": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_response_actual/raw/producer_time.txt",
+      "exit_status": 0,
+      "wall_seconds": 8.57,
+      "peak_rss_kib": 201632,
+      "preserved_result": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_response_actual/raw/producer1_RESULT.json",
+      "preserved_arrays": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_response_actual/raw/producer1_sample_arrays.npz"
+    },
+    {
+      "number": 2,
+      "command": "env OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 /usr/bin/time -v python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/run_comparison.py",
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_response_actual/raw/producer2_stdout.txt",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_response_actual/raw/producer2_stderr.txt",
+      "time_file": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_response_actual/raw/producer2_time.txt",
+      "exit_status": 0,
+      "wall_seconds": 9.07,
+      "peak_rss_kib": 217032,
+      "repair": "Retain full rho and 4x4 T for every method and draw; fixed scientific design and seeds."
+    }
+  ],
+  "cumulative_producer_wall_seconds": 17.64,
+  "maximum_observed_peak_rss_kib": 217032,
+  "first_failure": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_response_actual/raw/core_test_first_failure.txt",
+    "classification": "Overstrong fixture-specific eigenvalue threshold corrected to source positivity condition; preserved before producer."
+  },
+  "parity_after_repair": {
+    "old_array_keys": 156,
+    "new_array_keys": 204,
+    "old_keys_exact_value_equal": true,
+    "unchanged_status_preflight_methods_response_temperature_law_rng_equal": true,
+    "tensor_carrier_reconstruction_max_error": 1.1005414380380399e-16
+  },
+  "validation": {
+    "focused_pytest": "7 passed, 1 unrelated Matplotlib Axes3D import warning",
+    "saved_array_recount": "PASS_SCOPED_RECOUNT, 12 rows",
+    "result_sha256": "074b49cc8ce3edcfb8dc106a83858ecf5bb5c08c824952d748377b911879529d",
+    "arrays_sha256": "78234e70cf67dee2d179aa7cf49ee9eef9419bc278b8ebd179a2c462ce315abc",
+    "validation_sha256": "d1817f4e61b0a9b676ea9a707c04369b70de3a8b384feb5ed151d6ae348b7a5d"
+  },
+  "scope": "Conditional synthetic radiation method result; no independent scientific review or empirical Planck interval."
+}

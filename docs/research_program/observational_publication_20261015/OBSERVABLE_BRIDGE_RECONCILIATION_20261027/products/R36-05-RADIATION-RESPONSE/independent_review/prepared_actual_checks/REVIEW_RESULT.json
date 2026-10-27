@@ -1,0 +1,178 @@
+{
+  "schema": "htt.r36_05.fresh_independent_scientific_review_preparation/1",
+  "task_id": "R36-05-RADIATION-RESPONSE",
+  "reviewer": "/root/r36_radiation_fresh_review",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "role": "fresh read-only independent reviewer; neither contract preparer nor implementer",
+  "state": "REVIEW_PREPARATION_COMPLETE_FORMAL_PACKET_PENDING",
+  "formal_review_packet": null,
+  "formal_review_ACK": null,
+  "acceptance": false,
+  "controller_admission": false,
+  "publication_authorized_by_this_review": false,
+  "recommendation": "PASS_SCOPED_CONDITIONAL_SCIENTIFIC_RESULT",
+  "verdict_scope": "The frozen six-case matched-input radiation-stress numerical experiment and static rank-0/2/4 response computation are scientifically consistent within their declared finite synthetic scope. This is a preparation recommendation, not a formal controller acceptance.",
+  "bindings": {
+    "CANDIDATE.json": "91a3af176f7eabf3dba8d1af94616cd3a66a4e3ee374f731f45bb58236e6593d",
+    "MANIFEST.json": "5c033adc2bd9c6701c75587d58384857fb7803dc82ccbd2917d1df1429841323",
+    "IMPLEMENTATION_CONTRACT.json": "01e5cbafcc2ba5fefe242d04f4b49dd8727411cdbb1e5397e22c1ec30458637d",
+    "PREPRODUCTION_RESOURCE_CLARIFICATION.json": "b84a53e4aaf31a8563cf7916ed39ab41642ed95ed3973b8c32247b628a13db80",
+    "RESULT.json": "074b49cc8ce3edcfb8dc106a83858ecf5bb5c08c824952d748377b911879529d",
+    "sample_arrays.npz": "78234e70cf67dee2d179aa7cf49ee9eef9419bc278b8ebd179a2c462ce315abc",
+    "source_execution_packet": "1a4ba501f02b8e078ab488ce45996b4415b55ce96308ec4dc5c2b3701a9a5371",
+    "review_raw_receipt_sha256": "956c79427103dc317425bf6c7b338a4c42928d089a2d8bd0ae77fc14ac9aceb2",
+    "reproducer_sha256": "ecd18224869edb8a957dc3ddb6db18bf5785ca0b161af7971c2caaa3a6190fcb"
+  },
+  "independence": {
+    "other_agent_review_results_read": false,
+    "project_harness_verdict_used_as_oracle": false,
+    "author_validation_verdict_used_as_oracle": false,
+    "primary_evidence": "Frozen contract, implementation source, retained original source equations and coefficients, raw saved arrays, independent direct quadrature, high-precision Landau eigenvalues and explicit statistical definitions.",
+    "candidate_mutation": false,
+    "source_replay_or_refit": false,
+    "new_MC_draws": 0,
+    "new_producer_invocations": 0
+  },
+  "assumptions_and_conventions": {
+    "geometry": "Local observer; metric (-,+,+,+); outward sky n and photon propagation e=-n. No spacetime evolution is inferred.",
+    "units": "I is bolometric energy density per solid angle, I=C_gamma*T_E^4; normalized stress uses rho_ref=4*pi*C_gamma*(2.7255 K)^4. Physical flux is c times T0i.",
+    "truth": "Six positive intrinsic quadrupolar radiation distributions with a in {0,2e-5,0.02}, beta magnitude in {0.00123,0.3}, intrinsic z axis and velocity direction (0.6,0,0.8).",
+    "observation": "The full positive temperature sky is known; only its eight dipole/quadrupole coordinates have the specified joint Gaussian measurement error. Monopole and higher temperature modes are noiseless known inputs.",
+    "inference": "Pointwise oracle calibration around each known method response; disjoint calibration and test streams, common errors across both methods. No empirical CMB likelihood or deployable unknown-sky confidence procedure.",
+    "domain": "All retained samples have certified positive temperature, positive energy density, positive moment matrix and a well-defined unique Landau branch."
+  },
+  "equation_and_definition_audit": [
+    {
+      "item": "Full temperature to radiation stress",
+      "status": "PASS_SCOPED",
+      "evidence": "Fourth-power temperature conversion, photon sign, Lorentz sky and all 4x4 tensor entries agree with independent refined quadrature and analytic boosted tensors."
+    },
+    {
+      "item": "Linear temperature adapter",
+      "status": "PASS_SCOPED",
+      "evidence": "Every retained linear f/P carrier agrees with -4(d+eta_d)/3 and 8(Q+eta_Q)/15 from the same stored eta. Both methods apply identical exact D and Landau target definitions."
+    },
+    {
+      "item": "D and Landau A_gamma",
+      "status": "PASS_SCOPED",
+      "evidence": "D is an observer-frame signed STF tensor, not an invariant norm substituted for A. The exact a=0 null is kept analytically at zero. 117 stored A readouts match 65-digit direct stress eigenvalues."
+    },
+    {
+      "item": "Joint covariance and full tensor carriers",
+      "status": "PASS_SCOPED",
+      "evidence": "All 12 full 8x8 f/P covariances and standardized 3x5 cross blocks recount. Saved rho and T provide the full reconstructible 9x9 rho/f/P covariance, recorded in review evidence. No redundant candidate serialization is required."
+    },
+    {
+      "item": "Finite Monte Carlo confidence construction",
+      "status": "PASS_SCOPED",
+      "evidence": "D radius uses order 7783/8191; A errors use orders 204 and 7988. Exact physical targets and noiseless method targets are distinct. Empty A sets are counted as noncoverage, with full N=4096 denominator."
+    },
+    {
+      "item": "Coverage and width uncertainty",
+      "status": "PASS_SCOPED",
+      "evidence": "Clopper-Pearson counts and intervals independently match beta-inversion formulas. Calibration-content beta intervals, tie counts, nonempty widths and paired common-valid/common-nonempty width differences agree. Paired SE is conditional on frozen calibration; constant interval lengths can legitimately yield zero empirical test-sample SE."
+    },
+    {
+      "item": "Rank-0/2/4 response",
+      "status": "PASS_SCOPED",
+      "evidence": "Full 5x5 response matrices match independent direct kernel integration at 256/320 mu nodes. Isotropic 8/15 identity and a separate non-axisymmetric matrix control pass. Saved L2/L4 coefficients were evaluated without refitting."
+    },
+    {
+      "item": "Entropy sufficiency failure versus actual spectrum",
+      "status": "PASS_SCOPED",
+      "evidence": "For exp(8 mu^2), entropy lower bound is negative, but actual refined lambda_min/rho remains 0.1282328197286 > 0; sufficient-bound failure is not treated as spectral failure."
+    }
+  ],
+  "numerical_evidence": {
+    "checks_passed": 392,
+    "failed_checks": 0,
+    "focused_candidate_test_calls": 7,
+    "saved_method_case_rows_recounted": 12,
+    "producer_array_parity": {
+      "first_keys": 156,
+      "current_keys": 204,
+      "changed_old_keys": []
+    },
+    "independent_refined_saved_sky_checks": 46,
+    "maximum_direct_normalized_tensor_error": 1.3100631690576847e-14,
+    "high_precision_Landau_checks": 117,
+    "high_precision_digits": 65,
+    "maximum_high_precision_A_difference": 6.270254565674156e-16,
+    "minimum_saved_moment_matrix_eigenvalue": 0.16540281539949797,
+    "maximum_saved_flux_norm": 0.41012103210482453,
+    "minimum_positive_temperature_margin_among_checked_extremes": 0.7436492423069062,
+    "density_scale_probe": "Same physical tensor at density scale 1e-250, 1 and 1e250 preserves D/A and passes production guards.",
+    "cross_block_falsifier": "At a=0,beta=0.3, dropping the d/Q cross block changes D linearized covariance trace by +2.0668 percent and whitened directional variance ratios span 0.71563 to 1.74698. This deterministic diagnostic is not substituted for the retained joint-sample inference.",
+    "manifest_and_immutable_source_checks": "All 12 candidate manifest entries and all 12 frozen source bindings match.",
+    "resource_clarification": "Both historical producer invocations remain recorded; the 180-second, 2-GiB and one-invocation figures are soft targets only. No new one-use cap or allocation was inferred."
+  },
+  "findings": [
+    {
+      "id": "R36-REVIEW-N1",
+      "severity": "NONBLOCKING_SCOPED_API_LIMITATION",
+      "location": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/radiation_core.py:124",
+      "title": "Convenience stress_readout is not a general physical-domain validator",
+      "counterexample": "Directly constructing Moments with rho=1, flux=0, pi=diag(1,-1/2,-1/2), and T=diag(1,4/3,-1/6,-1/6) gives finite A_gamma=1.224744871391589 from stress_readout despite negative principal pressures.",
+      "consequence": "Do not admit that helper as a standalone validator for arbitrary externally supplied Moments. This does not contaminate the reviewed MC result: run_comparison.analyze_moments performs the moment-cone/pressure checks and rejects the identical fixture; the actual MC never calls stress_readout.",
+      "bounded_repair_if_general_reuse_is_planned": "Add explicit rho/finiteness/cone/pressure consistency checks to the helper or document and enforce a validated-Moments precondition, with this fixture. No statistical rerun or change to the frozen scientific design is needed.",
+      "blocks_current_scientific_result": false
+    },
+    {
+      "id": "R36-REVIEW-N2",
+      "severity": "NONBLOCKING_FINITE_MC_DIAGNOSTIC",
+      "location": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/RESULT.json / methods[case=a0_b0.3,method=exact].D_physical_target_coverage",
+      "title": "One exact D coverage estimate is high relative to nominal calibration content",
+      "evidence": {
+        "case": "a0_b0.3",
+        "target": "D",
+        "hits": 3934,
+        "N": 4096,
+        "one_sided_beta_binomial_predictive_tail": 0.005242898881604341,
+        "scope": "Unadjusted diagnostic for continuous method-target calibration law; one of multiple displayed estimates. No additional draws or tuning."
+      },
+      "consequence": "Keep the observed 3934/4096=0.96044921875 result and its interval. It is an unusually high single estimate among multiple reported comparisons, not exact 95 percent conditional coverage. Independent array recount and tensor/Landau checks find no implementation cause.",
+      "bounded_action": "Retain this raw diagnostic and the separation between test uncertainty and calibration-content uncertainty. Do not tune seeds, quantiles, tolerances or sample counts to force nominal coverage.",
+      "blocks_current_scientific_result": false
+    },
+    {
+      "id": "R36-REVIEW-N3",
+      "severity": "NONBLOCKING_INTERPRETATION_LIMIT",
+      "location": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/run_comparison.py:498",
+      "title": "Paired A width difference is conditional on both intervals being nonempty",
+      "evidence": "The pair counts are 4007 and 3977 for the two a=0 cases, versus 4096 total skies. Remaining cases use all 4096. Individual nonempty means and empty rates are separately reported.",
+      "consequence": "Interpret the paired means and empirical SE on their declared common nonempty sample. They are not unconditional mean-width contrasts over all 4096 skies; calibration uncertainty is also separate.",
+      "bounded_action": "Maintain the denominator when quoting these values. The saved arrays suffice to compute alternative explicitly labeled widths; the review receipt includes empty-zero unconditional widths as a diagnostic, without ranking by width alone.",
+      "blocks_current_scientific_result": false
+    }
+  ],
+  "fatal_blockers": [],
+  "required_scientific_repairs_for_this_candidate": [],
+  "safe_claims": [
+    "Under this fixed six-case synthetic temperature law, the exact bolometric adapter preserves the defined radiation-stress target; the linear adapter exhibits physical-target bias despite approximately nominal method-target coverage.",
+    "Energy moments of ranks 0,2,4 preserve the specified instantaneous 5x5 response in the retained static example, while higher angular entropy remains positive.",
+    "The sufficient entropy lower bound can fail while the directly computed finite response spectrum remains positive."
+  ],
+  "claim_ceilings": [
+    "No empirical Planck interval, measured error law, spectral completion, mask/beam validation, or general unknown-sky procedure.",
+    "No independent photon-number observation inferred from an imposed blackbody field and no polarization E-as-intensity substitution.",
+    "No supplied transport derivative R, matter-shear inference, native Bianchi solver or family identification.",
+    "No new all-domain theorem, four-axis CAS admission, original campaign acceptance update or paper submission authority."
+  ],
+  "official_API_references": [
+    {
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats._result_classes.BinomTestResult.proportion_ci.html",
+      "use": "Verified exact means Clopper-Pearson; installed runtime is separately recorded as SciPy 1.17.0."
+    },
+    {
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.beta.html",
+      "use": "Verified beta PPF semantics; beta laws were checked from order-statistic definitions and actual indices."
+    }
+  ],
+  "next_executable_checkpoint": "Parent obtains the actual formal controller review packet, sends it by followup to this same independent reviewer, and records the actual ACK. Recheck unchanged candidate and manifest hashes, then bind this completed review evidence to that packet. Until then formal packet/ACK are unset and acceptance is false.",
+  "artifacts": {
+    "review_result": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_fresh_review/REVIEW_RESULT.json",
+    "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_fresh_review/RAW_RECEIPT.json",
+    "reproducer": "/mnt/extdrive/workdir/htt_open_data/r36_radiation_fresh_review/reproducer.py"
+  }
+}

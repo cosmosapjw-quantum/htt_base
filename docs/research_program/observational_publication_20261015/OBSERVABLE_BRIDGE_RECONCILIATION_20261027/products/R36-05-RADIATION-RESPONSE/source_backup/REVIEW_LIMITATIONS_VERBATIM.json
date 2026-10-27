@@ -1,0 +1,48 @@
+{
+  "source_review_sha256": "931acff6c8281c3aa1c7c93382cdc4dba2efea5fc5af88bcbe57f0c80236f4f6",
+  "findings": [
+    {
+      "id": "R36-REVIEW-N1",
+      "severity": "NONBLOCKING_SCOPED_API_LIMITATION",
+      "location": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/radiation_core.py:124",
+      "title": "Convenience stress_readout is not a general physical-domain validator",
+      "counterexample": "Directly constructing Moments with rho=1, flux=0, pi=diag(1,-1/2,-1/2), and T=diag(1,4/3,-1/6,-1/6) gives finite A_gamma=1.224744871391589 from stress_readout despite negative principal pressures.",
+      "consequence": "Do not admit that helper as a standalone validator for arbitrary externally supplied Moments. This does not contaminate the reviewed MC result: run_comparison.analyze_moments performs the moment-cone/pressure checks and rejects the identical fixture; the actual MC never calls stress_readout.",
+      "bounded_repair_if_general_reuse_is_planned": "Add explicit rho/finiteness/cone/pressure consistency checks to the helper or document and enforce a validated-Moments precondition, with this fixture. No statistical rerun or change to the frozen scientific design is needed.",
+      "blocks_current_scientific_result": false
+    },
+    {
+      "id": "R36-REVIEW-N2",
+      "severity": "NONBLOCKING_FINITE_MC_DIAGNOSTIC",
+      "location": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/RESULT.json / methods[case=a0_b0.3,method=exact].D_physical_target_coverage",
+      "title": "One exact D coverage estimate is high relative to nominal calibration content",
+      "evidence": {
+        "case": "a0_b0.3",
+        "target": "D",
+        "hits": 3934,
+        "N": 4096,
+        "one_sided_beta_binomial_predictive_tail": 0.005242898881604341,
+        "scope": "Unadjusted diagnostic for continuous method-target calibration law; one of multiple displayed estimates. No additional draws or tuning."
+      },
+      "consequence": "Keep the observed 3934/4096=0.96044921875 result and its interval. It is an unusually high single estimate among multiple reported comparisons, not exact 95 percent conditional coverage. Independent array recount and tensor/Landau checks find no implementation cause.",
+      "bounded_action": "Retain this raw diagnostic and the separation between test uncertainty and calibration-content uncertainty. Do not tune seeds, quantiles, tolerances or sample counts to force nominal coverage.",
+      "blocks_current_scientific_result": false
+    },
+    {
+      "id": "R36-REVIEW-N3",
+      "severity": "NONBLOCKING_INTERPRETATION_LIMIT",
+      "location": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/run_comparison.py:498",
+      "title": "Paired A width difference is conditional on both intervals being nonempty",
+      "evidence": "The pair counts are 4007 and 3977 for the two a=0 cases, versus 4096 total skies. Remaining cases use all 4096. Individual nonempty means and empty rates are separately reported.",
+      "consequence": "Interpret the paired means and empirical SE on their declared common nonempty sample. They are not unconditional mean-width contrasts over all 4096 skies; calibration uncertainty is also separate.",
+      "bounded_action": "Maintain the denominator when quoting these values. The saved arrays suffice to compute alternative explicitly labeled widths; the review receipt includes empty-zero unconditional widths as a diagnostic, without ranking by width alone.",
+      "blocks_current_scientific_result": false
+    }
+  ],
+  "claim_ceilings": [
+    "No empirical Planck interval, measured error law, spectral completion, mask/beam validation, or general unknown-sky procedure.",
+    "No independent photon-number observation inferred from an imposed blackbody field and no polarization E-as-intensity substitution.",
+    "No supplied transport derivative R, matter-shear inference, native Bianchi solver or family identification.",
+    "No new all-domain theorem, four-axis CAS admission, original campaign acceptance update or paper submission authority."
+  ]
+}
