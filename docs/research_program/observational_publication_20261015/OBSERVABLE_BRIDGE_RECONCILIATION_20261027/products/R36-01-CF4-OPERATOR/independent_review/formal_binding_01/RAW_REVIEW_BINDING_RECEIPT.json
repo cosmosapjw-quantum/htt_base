@@ -1,0 +1,83 @@
+{
+  "schema": "htt.r36.formal_independent_review_receipt/1",
+  "packet_id": "6a1d06c19d5c65bc02ba6520e7c23462848dac98798bc79c8edf0bb258c21172",
+  "task_id": "R36-01-CF4-OPERATOR",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_identity": "sha256:164f5f63084caaf4ca18062d314ef53cf4773c528e72333a6b6d24a7e4437b14",
+  "agent_id": "/root/r36_cf4_operator_fresh_review",
+  "outcome": "success",
+  "verdict": "PASS",
+  "acceptance_met": true,
+  "qualified_products": [
+    "h03_exact_operator"
+  ],
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "completed_recorded_utc": "2026-10-27T04:49:47.990607+00:00",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "actual_dispatch": {
+    "native_tool": "collaboration.followup_task",
+    "agent_id": "/root/r36_cf4_operator_fresh_review",
+    "host_ACK_GO": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/ACK_010_GO.json",
+      "sha256": "4d7d649cc75a3a15d2052c924e33ea387e6a09b45d71aa31bf1bd9da14d52c9a"
+    },
+    "observed_by_reviewer": "Actual same-agent formal followup and root GO received before binding."
+  },
+  "commands": [
+    {
+      "command": ".venv/bin/python -B /mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/formal_binding_01/bind_review.py > /mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/formal_binding_01/binding.log 2>&1",
+      "exit_status": 0,
+      "raw_log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/formal_binding_01/binding.log",
+      "raw_log_sha256": "084a2dce13cacee05ae8671ddd838a4e105b3217b754c2778dad9c7788772bb3",
+      "script_sha256": "b8d1d7b4cfcd6119d4031226d38fa16055b87ef0e38265eee09def4636bb8e5f",
+      "outcome": "47 exact binding checks passed"
+    }
+  ],
+  "prior_independent_review": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/REVIEW_RESULT.json",
+    "sha256": "abd68f67ce33ff6c64e38f525106bba4c9fa146f207af7d863721b66e1c11d06"
+  },
+  "independence": {
+    "same_reviewer": true,
+    "author_or_contract_contributor": false,
+    "prior_review_sealed_before_formal_packet": true
+  },
+  "evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/REVIEW_RESULT.json",
+      "sha256": "abd68f67ce33ff6c64e38f525106bba4c9fa146f207af7d863721b66e1c11d06"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/NUMERICAL_CHECKS.json",
+      "sha256": "5cc09e247f97c6dba42df824e9290f22ff7e2e05093d9db1a9aafc58801b185f"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/RAW_REVIEW_RECEIPT.json",
+      "sha256": "f57abf72095eb15b71286b489223be6fc710a5a61de24e97a54403200f12f187"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/independent_numerics.log",
+      "sha256": "7856729a43d72e3cf15d5c5a9426d994704b720e44452f64fd864acd25bc52f3"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/actual_consumer.log",
+      "sha256": "878371afa0465931882fdbb2074024822f9d46c5b8145cf26496c9d9beaa0e98"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/permuted_id_consumer.log",
+      "sha256": "ffc78904848ff2a10677ca3ed637c011cc2b436905be9acd2dc74b2e9d29779c"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/formal_binding_01/IDENTITY_BINDING.json",
+      "sha256": "e4934df0f460e00797eb6b0357527626e487a16382533d054bf675b84d720aea"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/formal_binding_01/binding.log",
+      "sha256": "084a2dce13cacee05ae8671ddd838a4e105b3217b754c2778dad9c7788772bb3"
+    }
+  ],
+  "numerical_work": "No numerical producer, estimator fit, sensitivity bank or full review rerun. Adopts own unchanged 76-check review and successful actual consumer with rejected row-ID falsifier.",
+  "scope": "h03_exact_operator under fixed d,w,n working law; no physical42/native/matter proof or original42 promotion.",
+  "original42_effect": "none"
+}
