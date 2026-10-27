@@ -1,0 +1,7 @@
+identities PASS
+geometry PASS
+spin_libsharp PASS
+PSD_completion_and_noise_summaries PASS
+native_source_samples FAIL
+FIRAS PASS
+{"all_checks_pass": false, "elapsed_seconds": 20.29010795103386, "failures": [{"check": "native_source_samples", "exception_type": "AssertionError", "message": "", "traceback": "Traceback (most recent call last):\n  File \"/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproduce_review.py\", line 269, in main\n    value=fn();out['checks'][name]={'status':'PASS','elapsed_seconds':time.monotonic()-t,'evidence':value}\n          ^^^^\n  File \"/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproduce_review.py\", line 216, in native_samples_check\n    assert f[1].columns['QQ_COV'].unit in ('K_CMB^2','(K_CMB)^2')\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"}]}

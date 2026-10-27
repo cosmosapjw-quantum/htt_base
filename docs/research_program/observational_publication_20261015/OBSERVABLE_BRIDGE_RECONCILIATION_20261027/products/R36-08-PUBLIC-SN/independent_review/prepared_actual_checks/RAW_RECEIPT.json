@@ -1,0 +1,264 @@
+{
+  "schema": "htt.r36_public_sn_independent_review_raw_receipt/1",
+  "created_utc": "2026-10-27T04:25:18.967094+00:00",
+  "task_id": "R36-08-PUBLIC-SN",
+  "reviewer_agent_id": "/root/r36_public_sn_fresh_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "execution": "Independent read-only review preparation; formal controller review packet and ACK not yet selected.",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "git_head": "7a751cc2419f32e98446642b35ca50fa767ebe93",
+  "git_branch": "research/htt-adaptive-methods-20261023",
+  "workspace_state": "Existing dirty checkout inspected; no repository, Git, controller STATE, candidate or input mutation.",
+  "candidate_identity": "sha256:efeb05dfe755f47c48c994d1684312659277816a3f7294f6d76f63f27f9f046c",
+  "candidate_identity_verified_at_close": true,
+  "external_return_sha256": "98fb262093675aa3a9471a60ba9d2fb8aad854fc4a0342f8f19e3928cd0836a7",
+  "scientific_contract_sha256": "6f8c24d0deec3c54c4e44bc3b23f0f514f4cacbf45bc8f4ee6d9a6eb61fbe715",
+  "repair_decision_sha256": "3cd28db0b16f66baef4175c5dfe80f6af0f0522465931ac4fdea315cf92e4ab3",
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python /mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/reproduce_review.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/reproduce_review.attempt1.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/reproduce_review.attempt1.stderr",
+      "scope": "One independent primary QR check plus input/covariance checks, saved sufficient-statistic algebra and small candidate fixture; no producer main or 16-fit rerun."
+    },
+    {
+      "command": ".venv/bin/python test_consumer.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN",
+      "exit_code": 127,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/documented_command.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/documented_command.stderr",
+      "scope": "Exact documented command counterexample; interpreter absent, no script or fit executed."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python - (inline JSON/raw comparison and independent printed-STF conversion)",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/additional_checks.stdout",
+      "scope": "No fit; raw-to-compact equality and printed tensor rounding checks."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python - (inline Path.is_file/os.access checks)",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/command_resolution.stdout",
+      "scope": "Verify corrected root-cwd interpreter and all four script paths resolve; no fit."
+    }
+  ],
+  "first_failures": [
+    {
+      "kind": "DISCOVERY_ONLY",
+      "command": "rg --files over four external task directories",
+      "exit_code": 2,
+      "reason": "Review output directory did not yet exist; remaining directories successfully inventoried. Directory then created only within authorized external review scope.",
+      "scientific_effect": "NONE"
+    },
+    {
+      "kind": "REPRODUCED_DOCUMENTATION_DEFECT",
+      "command": ".venv/bin/python test_consumer.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN",
+      "exit_code": 127,
+      "raw_error": "/bin/bash: line 1: .venv/bin/python: No such file or directory",
+      "preserved_stderr": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/documented_command.stderr",
+      "scientific_effect": "No numerical candidate defect; original documentation command is not runnable."
+    }
+  ],
+  "numerical_checks": {
+    "environment": {
+      "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1"
+    },
+    "candidate_files_verified": 9,
+    "producer_raw_logs_verified": 15,
+    "global_asymmetry": {
+      "maximum": 3.0000000000038676e-8,
+      "threshold": 9.452311688562532e-12,
+      "pairs": 389
+    },
+    "cohorts": {
+      "primary": {
+        "n": 490,
+        "counts": [
+          490,
+          342,
+          148,
+          62
+        ],
+        "exact_symmetry": true,
+        "min_eigenvalue": 0.0052423566085437745,
+        "quadrature_spot_check_max_residual_mag": 0,
+        "Wald_equals_deltaT": 17.206587975582316,
+        "full_rank": 16,
+        "null_full_df": [
+          488,
+          472
+        ],
+        "contrast_cross_bin_max_abs_covariance_mag2": 0.00014387417198367892
+      },
+      "lower_z_sensitivity": {
+        "n": 705,
+        "counts": [
+          705,
+          557,
+          148,
+          114
+        ],
+        "exact_symmetry": true,
+        "min_eigenvalue": 0.005227654064226413,
+        "quadrature_spot_check_max_residual_mag": 0,
+        "Wald_equals_deltaT": 16.55408937651716,
+        "full_rank": 16,
+        "null_full_df": [
+          703,
+          687
+        ],
+        "contrast_cross_bin_max_abs_covariance_mag2": 0.00007226838585032437
+      }
+    },
+    "primary_independent_QR": {
+      "max_coefficient_error_mag": 9.298117831235686e-15,
+      "max_covariance_error_mag2": 4.336808689942018e-18,
+      "chi_square_residual": 416.25192935519624
+    },
+    "leave_survey_saved_evidence": {
+      "records": 16,
+      "row_deletions_and_chi_square_tails": "PASS",
+      "delta_T_range": [
+        14.041466168385805,
+        18.92508187579595
+      ],
+      "all_16_fits_rerun": false
+    },
+    "candidate_fixture": "PASS",
+    "review_scope": "selected data validation, saved statistic algebra, one primary QR check and small fixture; no full producer reanalysis",
+    "result": "PASS_CONDITIONAL_NUMERICAL_CHECKS"
+  },
+  "additional_checks": {
+    "raw_compact_content_identity_except_declared_omissions": "PASS",
+    "printed_STF_matrix_max_rounding_errors_mag": [
+      4.497365520689245e-7,
+      3.443113967410705e-7
+    ],
+    "documented_relative_interpreter_exists": false
+  },
+  "corrected_command_resolution": {
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "interpreter_resolved": "/usr/bin/python3.12",
+    "interpreter_executable": true,
+    "commands": [
+      {
+        "script": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/consumer.py",
+        "script_resolved": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/consumer.py",
+        "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/consumer.py",
+        "executed_in_this_check": false
+      },
+      {
+        "script": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/test_consumer.py",
+        "script_resolved": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/test_consumer.py",
+        "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/test_consumer.py",
+        "executed_in_this_check": false
+      },
+      {
+        "script": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/survey_robustness.py",
+        "script_resolved": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/survey_robustness.py",
+        "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/survey_robustness.py",
+        "executed_in_this_check": false
+      },
+      {
+        "script": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/plot_result.py",
+        "script_resolved": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/plot_result.py",
+        "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/plot_result.py",
+        "executed_in_this_check": false
+      }
+    ],
+    "status": "PATH_RESOLUTION_PASS_ONLY_NO_NEW_FITS"
+  },
+  "online_primary_source_verification": {
+    "readme": {
+      "url": "https://github.com/PantheonPlusSH0ES/DataRelease/blob/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/README",
+      "sha": "8d2d0b9af0633573b4d1c190e44adcd135bbec85",
+      "content": "Nominal SN and Cepheid-host Distances used in\n  Pantheon+ arXiv:2202.04077\n  SH0ES arXiv:2112.04510\nare provided in Pantheon+SH0ES.dat\n\nStatistical and Stat+Systematic Covariance matrices are provided in\nPantheon+SH0ES_STATONLY.cov\nPantheon+SH0ES_STAT+SYS.cov (all systematics)\n\nCovariances for specific sources of systematics can be found in sytematic_groupings/\n\nThe format of the covariance (.cov) file is NxN lines where the matrix should be read in sequentially.  The first line gives the number of rows/columns in the matrix (N=1701).  The STATONLY matrix has only elements that correspond to the statistical distance uncertainties for individual SNe. This includes intrinsic scatter off-diagonal components when the light-curves represent the same SN observed by different surveys. The STAT+SYS matrix also includes all the covariance between SNe (and also Cepheid host covariance) due to systematic uncertainties.\n\nPantheon+SH0ES.dat Column Definitions: \n  CID - Candidate ID\n  IDSURVEY - {1:'SDSS', 4:'SNLS', 5:'CSP', 10:'DES', 15:'PS1MD', 18:’CNIa0.02’, 50:'LOWZ/JRK07', 51:'LOSS1', 56:'SOUSA', 57:’LOSS2’, 61:'CFA1', 62:'CFA2', 63:'CFA3S', 64:'CFA3K' ,65:'CFA4p2', 66:'CFA4p3', 100:'HST', 101:'SNAP', 106:'CANDELS', 150:'FOUND'}\n  zHD - Hubble Diagram Redshift (with CMB and VPEC corrections)\n  zHDERR - Hubble Diagram Redshift Uncertainty\n  zCMB - CMB Corrected Redshift\n  zCMBERR - CMB Corrected Redshift Uncertainty \n  zHEL - Heliocentric Redshift\n  zHELERR - Heliocentric Redshift Uncertainty\n  m_b_corr - Tripp1998 corrected/standardized m_b magnitude\n  m_b_corr_err_DIAG - Tripp1998 corrected/standardized m_b magnitude uncertainty as determined from the diagonal of the covariance matrix. **WARNING, DO NOT FIT COSMOLOGICAL PARAMETERS WITH THESE UNCERTAINTIES. YOU MUST USE THE FULL COVARIANCE. THIS IS ONLY FOR PLOTTING/VISUAL PURPOSES**\n  MU_SH0ES - Tripp1998 corrected/standardized distance modulus where fiducial SNIa magnitude (M) has been determined from SH0ES 2021 Cepheid host distances.\n  MU_SH0ES_ERR_DIAG - Uncertainty on MU_SH0ES as determined from the diagonal of the covariance matrix. **WARNING, DO NOT FIT COSMOLOGICAL PARAMETERS WITH THESE UNCERTAINTIES. YOU MUST USE THE FULL COVARIANCE. THIS IS ONLY FOR PLOTTING/VISUAL PURPOSES**\n  CEPH_DIST - cepheid calculated absolute distance to host (uncertainty is incorporated in covariance matrix .cov)\n  IS_CALIBRATOR - binary to designate if this SN is in a host that has an associated cepheid distance\n  USED_IN_SH0ES_HF - 1 if used in SH0ES 2021 Hubble Flow dataset. 0 if not included.\n  c - SALT2 color\n  cERR - SALT2 color uncertainty\n  x1 - SALT2 stretch\n  x1ERR - SALT2 stretch uncertainty\n  mB - SALT2 uncorrected brightness\n  mBERR - SALT2 uncorrected brightness uncertainty\n  x0 - SALT2 light curve amplitude\n  x0ERR - SALT2 light curve amplitude uncertainty\n  COV_x1_c - SALT2 fit covariance between x1 and c\n  COV_x1_x0 - SALT2 fit covariance between x1 and x0\n  COV_c_x0 - - SALT2 fit covariance between c and x0\n  RA - Right Ascension \n  DEC - Declination\n  HOST_RA - Host Galaxy RA\n  HOST_DEC - Host Galaxy DEC\n  HOST_ANGSEP - Angular separation between SN and host (arcsec)\n  VPEC - Peculiar velocity (km/s)\n  VPECERR - Peculiar velocity uncertainty (km/s)\n  MWEBV - Milky Way E(B-V)\n  HOST_LOGMASS - Host Galaxy Log Stellar Mass\n  HOST_LOGMASS_ERR - Host Galaxy Log Stellar Mass Uncertainty\n  PKMJD - Fit Peak Date\n  PKMJDERR  - Fit Peak Date Uncertainty\n  NDOF - Number of degrees of freedom in SALT2 fit\n  FITCHI2 - SALT2 fit chi squared\n  FITPROB - SNANA Fitprob\n  m_b_corr_err_RAW - statistical only error on the fitted m_B\n  m_b_corr_err_VPEC - VPECERR propagated into a magnitude error assuming a fiducial LCDM cosmology\n  biasCor_m_b - Bias correction applied to brightness m_b\n  biasCorErr_m_b  - Uncertainty on bias correction applied to brightness m_b\n  biasCor_m_b_COVSCALE - Reduction in uncertainty due to selection effects (multiplicative)\n  biasCor_m_b_COVADD  - Uncertainty floor as given by the intrinsic scatter model (quadriture)\n\n"
+    },
+    "directory": {
+      "url": "https://api.github.com/repos/PantheonPlusSH0ES/DataRelease/contents/Pantheon%2B_Data/4_DISTANCES_AND_COVAR?ref=c447f0fea703fcd0fff57de5000947b5ca81286b",
+      "content": [
+        {
+          "name": "Pantheon+SH0ES.dat",
+          "sha": "cce857db0c15e9ce7a0e0ce77452b6ff62af969a",
+          "size": 579283,
+          "path": "Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES.dat"
+        },
+        {
+          "name": "Pantheon+SH0ES_STAT+SYS.cov",
+          "sha": "d1a1498154e7ba826df14bdbef35ebcb7f5efba1",
+          "size": 33284960,
+          "path": "Pantheon+_Data/4_DISTANCES_AND_COVAR/Pantheon+SH0ES_STAT+SYS.cov"
+        },
+        {
+          "name": "README",
+          "sha": "8d2d0b9af0633573b4d1c190e44adcd135bbec85",
+          "size": 4056,
+          "path": "Pantheon+_Data/4_DISTANCES_AND_COVAR/README"
+        }
+      ]
+    }
+  },
+  "network_activity": "Two read-only GitHub metadata/README requests. No science payload download; exact cached table and covariance reused. Transport byte count not observed.",
+  "reviewed_figure": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/PUBLIC_SN_SIGNED_COORDINATES.png",
+    "method": "Direct image inspection plus plot_result.py source audit",
+    "result": "Signed dipole/STF coordinates and marginal 1-sigma display agree with result; no simultaneous-coverage or physical-frame claim."
+  },
+  "artifact_files": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/additional_checks.stdout",
+      "bytes": 210,
+      "sha256": "0977df80112cb099c4e59ff89139f7d7618857f49f803af76e853e26e795c5cd"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/command_resolution.stdout",
+      "bytes": 3059,
+      "sha256": "3c4ba40b9e6c2d4e95318eda2a311a93b5666e57fd8b99603b68e53ad3ea965d"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/documented_command.stderr",
+      "bytes": 63,
+      "sha256": "1c20d31a1d938012bf3458c1dff3e32f4ef5fade0c9272ad494cb7999ffd09a2"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/documented_command.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/reproduce_review.attempt1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/reproduce_review.attempt1.stdout",
+      "bytes": 2047,
+      "sha256": "c5e35a1570a2dfd703e271aa0bd90b236e0ab6975467a9f1ecccb1abf5a8eaf2"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/reproduce_review.py",
+      "bytes": 8337,
+      "sha256": "0185d4320c01d5fff1959b98ba2fa789ce22be18276f713e9900f9a08c7edb1d"
+    }
+  ],
+  "first_producer_failure_preserved": true,
+  "review_numerical_failures": [],
+  "original42_acceptance_changed": false,
+  "formal_review_packet": null,
+  "formal_review_ack": null,
+  "acceptance_met": false,
+  "no_new_solver_or_ode": true,
+  "no_children": true
+}

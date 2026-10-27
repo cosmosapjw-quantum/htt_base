@@ -1,0 +1,7 @@
+# Reviewed partial foreground-budget backup
+
+The exact source-manifest candidate34ac36b0a774589c213d33943e4a4c25678d4e095e9b9f6062081118a2129cc9 has independent PASS_PARTIAL_NUMERICAL_CANDIDATE_WITH_INPUT_HOLD. RESULT.json file SHA256 is separately2b125b9a98060f48324740848c3b09b3b23ac00185e1a53e241645274c0d71d4. No finite physical foreground radius is calibrated; acceptance=false and qualified_outputs=[] remain. Global physical conclusions and original42 acceptances remain unchanged.
+
+Actual168 coefficients, derived geometry/noise contractions, six response branches, tables/figures and original793f exploratory24-artifact preimage are preserved. Correct native stream count146022144 is retained; earlier count typos remain only as historical raw evidence. FIRAS C-vector-squared versus covariance-diagonal relationship is UNRESOLVED (relative difference3.815836032363304e-05), and was not used to admit a physical radius. No numerical replay or extra covariance/symmetry/tolerance repair occurred.
+
+SOURCE_MAP.json maps exact copies to original paths; OMITTED_INPUTS.json records released observational FITS exclusions. Actual/source cache receipts carry release URLs and inherited hashes. Archived absolute paths are historical source/cache aliases and may require remapping for reproduction. The required next inputs remain source-qualified positive absolute intensity/domain/native-response information or a rigorously justified alternate finite bound. Independent review weaker-path notes are research suggestions, not acquired inputs or execution authorization.

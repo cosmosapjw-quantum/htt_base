@@ -1,0 +1,283 @@
+{
+  "schema": "R36-07-fresh-review-raw-receipt-v1",
+  "candidate_identity": "34ac36b0a774589c213d33943e4a4c25678d4e095e9b9f6062081118a2129cc9",
+  "review_result": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/REVIEW_RESULT.json",
+    "sha256": "a5361452413879aa268c1277f2d0a8ea0b77333a8e9f67a1c8e7dbd67f35a11a"
+  },
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "agent_id": "/root/r36_foreground_fresh_review",
+  "formal_controller_review_packet": null,
+  "actual_partial_review_ack": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/ACK_07_PARTIAL_INDEPENDENT_REVIEW.json",
+    "sha256": "ea34e55135a8902288359f0f0688b0cd76a8b190a8c0bb8c55e3aa0ccff6d381"
+  },
+  "repository": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "branch": "research/htt-adaptive-methods-20261023",
+    "HEAD": "7a751cc2419f32e98446642b35ca50fa767ebe93",
+    "initial_HEAD": "7a751cc2419f32e98446642b35ca50fa767ebe93",
+    "initial_state": "DIRTY_EXISTING_CHECKOUT",
+    "writes_by_reviewer": false
+  },
+  "commands": [
+    {
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 -B reproduce_review.py",
+      "exit_code": 0,
+      "check_status": "5 PASS, reviewer native-unit assertion FAIL",
+      "elapsed_seconds": 20.29010795103386,
+      "maxrss_kib": 1104912
+    },
+    {
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python3 -B reproduce_review.py native_source_samples",
+      "exit_code": 0,
+      "check_status": "PASS",
+      "elapsed_seconds": 115.31420543417335,
+      "maxrss_kib": 4053712
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -B weaker_path.py",
+      "exit_code": 0,
+      "check_status": "PASS analytic-envelope examples; physical calibration false"
+    }
+  ],
+  "cumulative_timed_numeric_seconds": 135.6043133852072,
+  "full_native_producer_or_noise_rerun": false,
+  "children_spawned": false,
+  "repo_or_STATE_mutation": false,
+  "read_files_manifest": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET/compute.py",
+      "sha256": "7f3ac27e1051e2b7bce17f7980f2d7dc7253f3e46b15fb7063a3e9c267c54221",
+      "bytes": 18908
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET/firas_feasibility.py",
+      "sha256": "e9c83db089c993ccfd6b548ee49ce1e728f3569796f021d29147e32def0ce7a7",
+      "bytes": 5656
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET/plot.py",
+      "sha256": "be1eb467df962cc12c9095ab7eefbac800246da5ec9e103cc7facff034afad05",
+      "bytes": 1548
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET/test_compute.py",
+      "sha256": "f5d6b909e29fb13b0c0f57c2b4742232388d81da96c8bbdbbfc50c8403e8388c",
+      "bytes": 3105
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET/finalize.py",
+      "sha256": "9a09d105eee6b2b2625beabea456313174d4288347d03b80e55a654f185f8512",
+      "bytes": 18470
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET/branch_sensitivity.py",
+      "sha256": "7320af6523d934995db4135bf47a38cd5d8fb1ecba8eab020d429a5f29379916",
+      "bytes": 1741
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET/ACTUAL_TABLE.csv",
+      "sha256": "e123efe789df03f417e75cb06d8da3a2f68f3b2f542485c17874432a909bb3f4",
+      "bytes": 406
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET/NOISE_TABLE.csv",
+      "sha256": "56bf99bc0bdfa211a30fe04041642cc3af6ad3be43de5f0b33606e08e9c3c79e",
+      "bytes": 4004
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET/BRANCH_SENSITIVITY.csv",
+      "sha256": "6ae853e57605c02846f4b6310260b74514e9f3375a3f41b889f4eaa53c93aa63",
+      "bytes": 500
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET/RESULT.json",
+      "sha256": "2b125b9a98060f48324740848c3b09b3b23ac00185e1a53e241645274c0d71d4",
+      "bytes": 19618
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET/REPORT.md",
+      "sha256": "bbe01693c7b570daf66920af179516354051c1d201750cda7399ae4f2d6f6e1f",
+      "bytes": 4329
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/GEOMETRY.json",
+      "sha256": "a5f3edcfbed4f5a7efe16fda2daea81d7899cb8d5dc7090b1aa512e3e89315ca",
+      "bytes": 4682
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/ACTUAL_GEOMETRY.npz",
+      "sha256": "a999bd0bc6195b96b5002cb715d62d96e667cf4750b64525c79220083ebb248d",
+      "bytes": 8226
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/NOISE.json",
+      "sha256": "4677a8d888ca30b6321fbc6f104452d89602dbf887485b146989de93c3950772",
+      "bytes": 12330
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/FIRAS_FEASIBILITY.json",
+      "sha256": "c146f24619d25036bd80a73d13003a60020578d521379127dc874e3c4b8c7469",
+      "bytes": 3101
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/BRANCH_SENSITIVITY.json",
+      "sha256": "47a167327017364a36d794761558409816f16c68045cc6ebbc1b144609799372",
+      "bytes": 1749
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/FIRAS_COVERAGE_DIAGNOSTIC.npz",
+      "sha256": "6dd36c015d32c03b7126ee82d1f285c9dff42f3d108cf731ef41283b28ce1fa2",
+      "bytes": 297488
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/FIRAS_VALID43_TABLE.csv",
+      "sha256": "e980301d64649a778368cf80ac3ec7e790d82a14d3d0393ea8f9e1cd3a23c126",
+      "bytes": 5041
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/conditional_geometry.png",
+      "sha256": "0a134e5d9639db03443e5806aad69f93ddb8a7fedd43b4719b0bbc31920a44f5",
+      "bytes": 98477
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/conditional_geometry.pdf",
+      "sha256": "6e0798ca20c0629ee767869c2df9f4435ea48ea7bf7b2cf0687421af644e6688",
+      "bytes": 22182
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/FIRST_FAILURE_geometry.json",
+      "sha256": "f09f9a82aa1f43d5a9c0217921cd73c77d9a8e2a7654fa2405cffe050cb9d03d",
+      "bytes": 88
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/FIRST_FAILURE_firas.json",
+      "sha256": "222f8145209f9534aba4d7bfda3901aa7f92ef738434077fb86932b8fbb438d5",
+      "bytes": 586
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/RUN_geometry.json",
+      "sha256": "894f0db8a4050120a90ee99cf1132717f7a64318dd4eb46f873a2f648c648c64",
+      "bytes": 445
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/RUN_noise.json",
+      "sha256": "f1b6c4e0bb5a1ee076b3c54b7752c018d51e1beaf3988bcaff136ef4dfb65bd2",
+      "bytes": 441
+    }
+  ],
+  "output_manifest": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/FIRST_FAILURE.json",
+      "bytes": 669,
+      "sha256": "80cc707538cead307cd56b0edd3c0d2b1bf63ead84e9857d8a4285137a36e653"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/NUMERIC_CHECKS.json",
+      "bytes": 7413,
+      "sha256": "78d94c0af7ca20d8e015edd1503eaeac3ae312786246269a6d6a0b30aaa86cef"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/NUMERIC_CHECKS_RUN1.json",
+      "bytes": 7413,
+      "sha256": "78d94c0af7ca20d8e015edd1503eaeac3ae312786246269a6d6a0b30aaa86cef"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/NUMERIC_CHECKS_native_source_samples.json",
+      "bytes": 5916,
+      "sha256": "035b93f2df4f3ef05cc4eccf1f9255f5b11cd8fa1818b36bf062503e51a9c1f8"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/REVIEW_RESULT.json",
+      "bytes": 14788,
+      "sha256": "a5361452413879aa268c1277f2d0a8ea0b77333a8e9f67a1c8e7dbd67f35a11a"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/WEAKER_PATH.json",
+      "bytes": 4377,
+      "sha256": "081e0e7081e19ceb670c3bb9170b22739602316c28fc840efd99bf6f8818be61"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproduce_review.py",
+      "bytes": 15992,
+      "sha256": "5fca44d6d0cc701aad9bc24999a5dd5fc4b205eed61253782707fb1ab70e3956"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproduce_review_RUN1.py",
+      "bytes": 15759,
+      "sha256": "cf3906ffb905f21d7674797ad9b6e96ecffd7cf21b138df16cda8da39fd8617f"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproducer.stderr",
+      "bytes": 379,
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproducer.stdout",
+      "bytes": 866,
+      "sha256": "7fb66bd8ca5c3e44b931bdefad867b7305b1026a2f0112162fe2a7418a1ab984"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproducer_RUN1.stderr",
+      "bytes": 379,
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproducer_RUN1.stdout",
+      "bytes": 866,
+      "sha256": "7fb66bd8ca5c3e44b931bdefad867b7305b1026a2f0112162fe2a7418a1ab984"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproducer_native_samples.stderr",
+      "bytes": 379,
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproducer_native_samples.stdout",
+      "bytes": 108,
+      "sha256": "424ba21967087fda2a7b59e7810148f75a2e4b8568a5db119ab0320e3dbe9de4"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/weaker_path.py",
+      "bytes": 3705,
+      "sha256": "33fbb474689bd64de811e84c80708ce7ed6ec7beba4c0cd8e9a27912328e1783"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/weaker_path.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/weaker_path.stdout",
+      "bytes": 115,
+      "sha256": "ae5c23268b074c9b05570207a28eeded3fac59ca9ddea475cc77554804765396"
+    }
+  ],
+  "external_source_reads": [
+    "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/",
+    "https://arxiv.org/html/2205.01049",
+    "https://arxiv.org/html/1807.06208v2",
+    "https://lambda.gsfc.nasa.gov/product/cobe/firas_dss_get.html",
+    "https://lambda.gsfc.nasa.gov/product/cobe/firas_spectral_anc.html",
+    "https://lambda.gsfc.nasa.gov/data/cobe/firas/doc/FES4_SEC7.pdf",
+    "https://lambda.gsfc.nasa.gov/data/cobe/firas/doc/FES4_SEC8.pdf",
+    "https://lambda.gsfc.nasa.gov/product/cobe/firas_bp_info.html",
+    "https://lambda.gsfc.nasa.gov/product/foreground/fg_2014_haslam_408_info.html",
+    "https://arxiv.org/html/1411.3628"
+  ],
+  "web_transport_or_lookup_failures": [
+    "FIRAS cm_info.html and cvect_info.html lookup endpoints unavailable; used the original explanatory PDF and released FITS instead.",
+    "Haslam .cfm endpoint unavailable; current .html provider page successfully read.",
+    "Two phrase searches on arXiv returned no match; exact Appendix A.2 text was subsequently read."
+  ],
+  "diagnostic_warning": "Matplotlib emitted an optional Axes3D import warning; review used no 3D plotting and numerical checks completed.",
+  "acceptance_met": false,
+  "qualified_outputs": [],
+  "final_candidate_manifest_rechecked": true,
+  "completed_utc": "2026-10-27T04:20:19.605762+00:00"
+}

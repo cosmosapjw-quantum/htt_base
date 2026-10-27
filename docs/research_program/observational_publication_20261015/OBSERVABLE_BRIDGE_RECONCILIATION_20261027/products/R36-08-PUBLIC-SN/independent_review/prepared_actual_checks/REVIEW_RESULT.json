@@ -1,0 +1,129 @@
+{
+  "schema": "htt.r36_public_sn_independent_review/1",
+  "created_utc": "2026-10-27T04:25:18.967094+00:00",
+  "task_id": "R36-08-PUBLIC-SN",
+  "reviewer_agent_id": "/root/r36_public_sn_fresh_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "independence": "Reviewer did not frame, author or repair this candidate. Read-only candidate audit; only designated external review directory written. Repair decision was read as governing contract, not accepted as a verdict oracle.",
+  "candidate_identity": "sha256:efeb05dfe755f47c48c994d1684312659277816a3f7294f6d76f63f27f9f046c",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/CANDIDATE_MANIFEST.json",
+  "scientific_contract_sha256": "6f8c24d0deec3c54c4e44bc3b23f0f514f4cacbf45bc8f4ee6d9a6eb61fbe715",
+  "repair_decision_sha256": "3cd28db0b16f66baef4175c5dfe80f6af0f0522465931ac4fdea315cf92e4ab3",
+  "external_return_sha256": "98fb262093675aa3a9471a60ba9d2fb8aad854fc4a0342f8f19e3928cd0836a7",
+  "verdict": "SCOPED_CONDITIONAL_PASS",
+  "blocking_findings": [],
+  "qualification_recommendation": "Candidate supports the released-magnitude fixed-background conditional comparator described in its contract. Formal controller binding and ACK remain necessary before controller qualification; this preparation changes no acceptance.",
+  "formal_controller_state": "REVIEW_PACKET_NOT_YET_SELECTED_ACK_NOT_YET_BOUND",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "original42_acceptance_changed": false,
+  "scientific_scope": {
+    "owner": "htt",
+    "claim_tier": "C1",
+    "status": "CONDITIONAL",
+    "transfer_source": "none; empirical released magnitudes and selected released STAT+SYS covariance",
+    "assumptions": [
+      "Fixed released redshifts, RA/DEC chart, design, cohort cuts and Omega_m=0.3153.",
+      "Gaussian law stipulated on each selected cohort with known covariance; no empirical coverage claim.",
+      "Two nuisance intercepts and 16 signed bin-specific angular coefficients; selected covariance consumed once."
+    ],
+    "conventions": [
+      "Signature (-,+,+,+); c=299792458 m/s, absorbed with H0 and absolute luminosity into additive magnitude calibration.",
+      "zHD in radial integral and zHEL in luminosity prefactor; RA/DEC interpreted as degree-valued released chart only.",
+      "Dipole/STF coefficients have mag units; covariance mag^2; no acceleration, shear or rate conversion."
+    ],
+    "allowed_claim": "Primary DeltaT=17.206587975582305 with conditional chi-square_16 upper-tail p=0.37235223370312737. This does not reject the stipulated isotropic two-level nuisance model at nominal 0.05.",
+    "held": [
+      "Full 1701-dimensional covariance validity",
+      "Upstream asymmetry cause",
+      "Physical sky-frame and boost interpretation",
+      "Raw-to-congruence response",
+      "Absolute H0",
+      "Nominal SALT2 training parity and original H04/V04 acceptance",
+      "Joint CF4 shared-PV/overlap covariance",
+      "Empirical population/null coverage",
+      "Native Bianchi family identification",
+      "Original 42-node scientific acceptance"
+    ]
+  },
+  "checks": [
+    {
+      "item": "Source identity and row joins",
+      "status": "PASS",
+      "evidence": "All 9 manifest files, contract, repair, RETURN and 15 producer raw artifacts verified. Live pinned-release metadata agrees with local Git blob hashes and sizes. Original 1701 rows, full finite N^2 entries, duplicate observations, calibrator/HF flags and row order verified."
+    },
+    {
+      "item": "Covariance validation-scope repair",
+      "status": "PASS_CONDITIONAL",
+      "evidence": "Independently reproduced 778 entries/389 pairs above the unchanged whole-array tolerance; all endpoints outside the frozen 705-row union. Selected 490/705 matrices are exactly symmetric as stored and positive definite, min eigenvalues 0.0052423566085437745 and 0.005227654064226413 mag^2.",
+      "reasoning": "For a fixed selected-response law the consumed covariance is the selected raw block P C P^T. No excluded response is conditioned upon, so a Schur complement or full-inverse block would change the estimand. A valid Gaussian law can be stipulated directly on the positive-definite 705-row block and its 490-row subblock even though the nonsymmetric full raw array is not itself a valid covariance. This does not repair or certify the full array. Cohorts and tolerances remained unchanged; no symmetry averaging, diagonal addition or source mutation occurred."
+    },
+    {
+      "item": "Whitened nuisance-profiled GLS",
+      "status": "PASS",
+      "evidence": {
+        "max_coefficient_error_mag": 9.298117831235686e-15,
+        "max_covariance_error_mag2": 4.336808689942018e-18,
+        "chi_square_residual": 416.25192935519624
+      },
+      "reasoning": "Independent explicit polynomial design and full 18-column QR agree with projected/SVD estimates. Full covariance is the inverse whitened information block after profiling nuisances; no reduced-chi-square rescaling."
+    },
+    {
+      "item": "Known-Gaussian null calibration",
+      "status": "PASS_CONDITIONAL",
+      "evidence": "Null/dipole/full ranks are 2/8/18. Primary residual df are 488/482/472 and sensitivity 703/697/687. Nested null-to-full projection difference is idempotent rank 16, so its quadratic form has chi-square_16 law under the stipulated null. Saved DeltaT, T_null-T_full and b^T V^-1 b agree; chi-square tails and 95% ellipsoid radius independently checked.",
+      "limitation": "Known-C and fixed-design assumptions are stipulated. Estimated population/selection/PV effects and empirical calibration are not thereby validated. Dipole/bin/contrast/survey outputs are descriptive, with only the joint primary comparison designated primary."
+    },
+    {
+      "item": "Reference, chart and units",
+      "status": "PASS",
+      "evidence": "Independent adaptive-quadrature spot checks on 14 real rows agree with saved residuals; source implementation matches frozen mean and 32/64 control. Two-sided subtraction of 10 log10(1+zHEL) is an algebraic residual invariance; one-sided fixture fails. This is a conditional luminosity-distance chart redefinition, not a physical boost."
+    },
+    {
+      "item": "Signed STF tensors and depth covariance",
+      "status": "PASS",
+      "evidence": "Explicit Frobenius polynomial basis matches H03 signs and normalizations. Trace and Frobenius norm identities checked; printed primary tensors agree within 4.50e-7 mag rounding. Full 16x16 covariance is retained, positive definite, and exact high-minus-low covariance uses both cross-bin blocks."
+    },
+    {
+      "item": "Survey robustness and figure",
+      "status": "PASS_DESCRIPTIVE",
+      "evidence": "All 16 saved survey deletion records match actual survey populations, remaining row counts, ranks and chi-square tails. Source retains selected covariance blocks and fixed design. DeltaT range 14.041466168385805 to 18.92508187579595 is descriptive. Figure visually inspected; raw/compact results identical except declared omitted row arrays.",
+      "limitation": "No full 16-fit reanalysis; code, retained execution evidence and saved outcomes audited. Whitened Cholesky leverage is order-dependent and is not per-source influence or empirical calibration, consistent with its descriptive label."
+    },
+    {
+      "item": "Claim firewall",
+      "status": "PASS_WITH_STATED_CEILINGS",
+      "evidence": "No physical-frame, absolute-H0, SALT2-parity, acceleration/shear, native solver, MIO posterior, family-ID or original42 admission claim found. Current result remains proposed pending review in frozen candidate."
+    }
+  ],
+  "findings": [
+    {
+      "id": "R36-08-REVIEW-DOC-01",
+      "severity": "P3",
+      "blocking": false,
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/RESEARCH_NOTE.md",
+      "line": 49,
+      "title": "Reproduction commands use the wrong current directory",
+      "evidence": "The note asks to run '.venv/bin/python test_consumer.py' from the product directory. That directory has no .venv/bin/python; the exact command exits 127 before executing the script. Preserved stderr in documented_command.stderr.",
+      "consequence": "A reader following the original note cannot reproduce the result using the stated relative interpreter path. Numerical candidate and source identities are unaffected.",
+      "minimal_fix": "Publish an erratum linked to original line 49, preserving the original candidate and manifest: use the repository root as cwd and prefix each script with its product-relative path.",
+      "corrected_cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "corrected_commands": [
+        "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/consumer.py",
+        "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/test_consumer.py",
+        "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/survey_robustness.py",
+        "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/plot_result.py"
+      ],
+      "validation": "Interpreter exists and is executable; all four corrected script paths resolve locally. The small fixture already ran through the independent reviewer; corrected full producer/survey/figure invocations were not executed again.",
+      "remaining_limit": "Until the consuming publication incorporates and verifies the command correction, the original note's command remains broken. No scientific repair, rerun or cost/task reset is justified by this documentation defect."
+    }
+  ],
+  "bounded_scientific_repair_required": false,
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/RAW_RECEIPT.json",
+  "reproducer": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_fresh_review/reproduce_review.py",
+  "next_checkpoint": "Controller binds this exact candidate and independent evidence to its formal review packet/ACK. Preserve the frozen candidate; consume the line-49 command erratum in publication. No automatic qualification or original42 promotion follows from this preparation."
+}

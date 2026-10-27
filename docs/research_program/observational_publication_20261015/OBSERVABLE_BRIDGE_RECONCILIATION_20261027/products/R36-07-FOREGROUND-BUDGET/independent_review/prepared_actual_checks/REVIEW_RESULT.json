@@ -1,0 +1,193 @@
+{
+  "schema": "R36-07-fresh-independent-partial-review-v1",
+  "task_id": "R36-07-FOREGROUND-BUDGET",
+  "review_agent": "/root/r36_foreground_fresh_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "independence": {
+    "candidate_author": false,
+    "candidate_framer": false,
+    "read_prior_verdict": false,
+    "review_mode": "fresh context, read-only candidate/source review; no children"
+  },
+  "candidate_identity": "34ac36b0a774589c213d33943e4a4c25678d4e095e9b9f6062081118a2129cc9",
+  "candidate_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET/RESULT.json",
+  "scientific_contract_sha256": "ca09bcbcba470c7712a34c69c793703181b99836f4cb51febdd7471435121089",
+  "formal_controller_review_packet": null,
+  "formal_controller_review_ack": null,
+  "actual_partial_review_host_ack": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/ACK_07_PARTIAL_INDEPENDENT_REVIEW.json",
+    "sha256": "ea34e55135a8902288359f0f0688b0cd76a8b190a8c0bb8c55e3aa0ccff6d381"
+  },
+  "verdict": "PASS_PARTIAL_NUMERICAL_CANDIDATE_WITH_INPUT_HOLD",
+  "partial_numerical_review_pass": true,
+  "input_hold_justified": true,
+  "acceptance_met": false,
+  "qualified_outputs": [],
+  "original42_acceptance_promoted": false,
+  "findings": [],
+  "summary": "The exact candidate supports its conditional actual-Y geometry, free coefficient-class obstruction, marginal-noise support and cautious FIRAS feasibility statements. No blocking numerical or scientific defect was reproduced. No finite physical foreground radius is calibrated, so R36-07 remains input HOLD and unqualified.",
+  "scope_reviewed": [
+    "All 168 saved actual coefficients and all six R32 corrected response branches, complete tensors rather than power spectra or producer status strings.",
+    "Metric, factorial moment convention, units, actual-Y compensators, full24/B projection radii, near-boundary construction and descriptive SMICA distinction.",
+    "Spin-2 Q/U extraction against independent healpy/libsharp on a bounded sparse map, including every E2/E3/B2/B3 real coordinate.",
+    "Analytic worst-PSD-completion scalar formula, a full 6x6 block covariance attaining it, saved 168 marginal contractions, SVD-derived center weights and Markov24 ball.",
+    "Seven native FITS headers and 63 selected native covariance/Q/U samples; S7 mask/ring identity, expected selected-row arithmetic and original source identities.",
+    "All 6067x43 valid FIRAS samples, padding semantics, C/covariance numerical difference and all S7 nearest-centre distances.",
+    "Original source documentation, physical positivity/domain/operator prerequisites, report and displayed figure claim language."
+  ],
+  "independent_results": {
+    "all_six_branch_SVD_checks": "PASS",
+    "high_precision_ell": "3.118381427255327030482464276032450212323302816907512846850156693949643",
+    "high_precision_J0_K_CMB_squared": "0.00000001288852875897360470053574503939858861457843439046994084252583666380838",
+    "high_precision_rho_min_K_CMB": "0.0001135276563616707657988199906368792144999416331989633391707272885424666",
+    "max_center_error_against_70_digit_K_CMB": 4.1326737496537314e-17,
+    "spin_libsharp_max_abs_error_K_CMB": 9.512577044359818e-24,
+    "center95pct_Euclidean_radius_K_CMB_from_SVD": 0.2455843232396786,
+    "full_PSD_completion_variance": 7.730173245970736,
+    "full_PSD_completion_expected_variance": 7.730173245970737,
+    "native_covariance_samples": 63,
+    "recorded_native_stream_count": 146022144,
+    "FIRAS_valid_shape": [
+      6067,
+      43
+    ],
+    "FIRAS_padding_columns": 139,
+    "FIRAS_negative_valid_samples": 621,
+    "S7_centres_beyond_3p5deg": 31,
+    "nearest_max_deg": 4.493343308965641,
+    "C_vector_diagonal_relative_max": 3.815836032363304e-05
+  },
+  "equation_assessment": {
+    "geometry": "With B=F D^-1 full row rank, V=B^+(Y-a s^T) minimizes the weighted coefficient norm. Orthogonal projection onto B^+a gives J0 and center; the remaining budget gives radius sqrt((rho^2-J0)/(a^T C a)). Independent rectangular SVD and 70-digit arithmetic agree.",
+    "unboundedness": "Fc=a gives U_lambda=U0-lambda c v^T and s_lambda=s0+lambda v. This preserves actual Y at all tested amplitudes and proves the unrestricted coefficient-class obstruction. No positive-emissivity realizability is inferred.",
+    "noise": "For blocks Sigma_i and fixed l_i, scalar variance is at most (sum sqrt(l_i^T Sigma_i l_i))^2 by Cauchy-Schwarz. A shared scalar plus independent residual blocks attains it. Summing separate coordinate variance maxima gives a valid, generally loose trace bound even though the coordinate maxima need not be attained jointly. Markov on the Euclidean norm squared then proves the displayed simultaneous radii conditional on zero means and released marginal variances.",
+    "complex_TV_and_Taylor": "The absolute-amplitude/positive-intensity distinction is correct. The 1/6 third-order integral remainder is valid on an admitted convex domain with a finite derivative envelope and TV bound. No numerical remainder is claimed absent these inputs.",
+    "boundary": "The zero-radius point is the algebraically constructed rho_min boundary; no arbitrary input radius below J0 was admitted or clipped. This does not supersede inherited unresolved-boundary guards.",
+    "units_frame": "Thermodynamic K_CMB amplitudes and squared noise units; Galactic COSMO Q+iU and canonical sqrt(2) real coordinates match the independent harmonic implementation. Metric signature and c are retained metadata without spurious dynamical use."
+  },
+  "input_hold_assessment": [
+    {
+      "issue": "ABSOLUTE_INTENSITY_DOMINATION",
+      "assessment": "JUSTIFIED_CURRENT_INPUT_HOLD",
+      "reason": "Finite positive upper functionals can bound complex-emission TV, but calibrated source confidence and nonnegative response domination on every target atom have not been established. Negative noisy spectra cannot be clipped to zero. The nearest-centre diagnostic proves neither missing physical sky nor an actual lower-response envelope.",
+      "weaker_sufficient_input": "A valid full-sky absolute integral with a conservative flux/operator norm, or a nonnegative aggregate response lower bound, suffices; an exact beam reconstruction is not required."
+    },
+    {
+      "issue": "PHYSICAL_LOS_DOMAIN",
+      "assessment": "JUSTIFIED_WITH_ALTERNATIVES_ALREADY_ALLOWED",
+      "reason": "A hard compact domain is sufficient rather than logically necessary. Tail-moment constraints or a direct response bound can replace it. Existing numerical parameter cutoffs and projected map scatter do not calibrate the required LOS moments. In the unrestricted normalized MBB continuation, T can tend to infinity while finite-band ratios remain bounded and the R32 t^2 moment diverges; some physical temperature/tail input is meaningful.",
+      "optional_weaker_path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/WEAKER_PATH.json"
+    },
+    {
+      "issue": "NATIVE_RESPONSE_OR_CONSERVATIVE_NORM",
+      "assessment": "JUSTIFIED_FOR_PHYSICAL_R32_INFERENCE",
+      "reason": "The reused common-response F tensor I24 is explicitly conditional, while native maps have different beams/pixel responses. A physical source bound needs its response transported to the target or a conservative operator norm. Neither a low-ell beam scalar nor the small different-fit SMICA residual supplies this bridge.",
+      "weaker_sufficient_input": "A direct native-band positive-intensity bound with controlled response norms may bypass common-response deconvolution."
+    }
+  ],
+  "nonblocking_research_notes": [
+    {
+      "id": "SYNCH_POSITIVE_BRACKET_ENVELOPE",
+      "kind": "possible_new_acquisition_or_model_repair",
+      "statement": "Two qualified positive absolute intensity functionals below and above 30 GHz can bound all finite beta moments of an admitted pure-power-law emitter measure without compact beta support. The external reproducer gives the global analytic exponential envelope and numerical examples.",
+      "source_candidate": "NASA LAMBDA destriped-only 408 MHz Haslam product retaining sources, paired with an appropriate higher-frequency absolute functional.",
+      "not_yet_solved": [
+        "source upper confidence sets and angular/spectral domination",
+        "power-law validity across the bracket including curvature/absorption",
+        "dust-temperature tails and neglected components",
+        "native-response transport"
+      ],
+      "changes_current_verdict": false
+    },
+    {
+      "id": "FIRAS_C_VECTOR_DIFFERENCE",
+      "kind": "source_relationship_unresolved_nonblocking",
+      "statement": "The recorded 3.815836e-5 diagonal difference is reproduced. It was not used in a physical radius and is not an equivalence/admission gate. No cause is inferred from its size alone.",
+      "changes_current_verdict": false
+    }
+  ],
+  "reviewer_first_failure": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/FIRST_FAILURE.json",
+    "classification": "REVIEW_REPRODUCER_UNIT_SPELLING_ERROR",
+    "details": "The initial sample assertion accepted only LFI K_CMB spellings. Actual HFI headers use Kcmb^2, consistent with their Kcmb signal units and official PR3 documentation. Corrected only the reviewer assertion to verify squared units against each source unit_raw. Candidate files were not changed.",
+    "first_run_preserved": [
+      "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproduce_review_RUN1.py",
+      "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/NUMERIC_CHECKS_RUN1.json",
+      "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproducer_RUN1.stdout",
+      "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproducer_RUN1.stderr"
+    ],
+    "closeout": "Only native_source_samples was rerun; it passed for all seven sources."
+  },
+  "limits": [
+    "No complete native covariance stream was rerun; its 146022144-row producer receipt and final contractions were reused. This review samples native values and independently tests the complete operator/support formulas.",
+    "No 13 GB native-map rehash; exact source identities remain inherited from the frozen terminal manifest, with actual sizes/headers and selected source data checked.",
+    "No actual physical intensity confidence set, sky/beam certificate, calibrated TV radius, numerical Taylor remainder or matched physical B-residual bound was produced.",
+    "No CAS4axis or new theorem/scientific admission is claimed.",
+    "The optional bracketing model analysis is not an acquired/calibrated foreground result and does not authorize a new producer run.",
+    "Producer focused pytest outcomes were read as historical evidence; reviewer independent checks are separately recorded."
+  ],
+  "sources_primary": [
+    {
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/",
+      "locator": "Primary maps, first paragraphs",
+      "supports": "Galactic NESTED NSIDE1024/2048 maps, thermodynamic temperature units, and QQ/QU/UU variance/covariance fields."
+    },
+    {
+      "url": "https://arxiv.org/html/2205.01049",
+      "locator": "Section 3.4, equations 14-16",
+      "supports": "Complex spin moments; signed polarization average can vanish, while normalization uses absolute amplitudes."
+    },
+    {
+      "url": "https://arxiv.org/html/1807.06208v2",
+      "locator": "Appendix A.2 and F.2",
+      "supports": "Hard parameter limits facilitate numerical lookup tables; zero-level and calibration uncertainties must be propagated. Pixel-level priors do not establish LOS compact support."
+    },
+    {
+      "url": "https://lambda.gsfc.nasa.gov/product/cobe/firas_dss_get.html",
+      "locator": "LOWF release entry",
+      "supports": "Identity of released LOWF destriped spectrum product."
+    },
+    {
+      "url": "https://lambda.gsfc.nasa.gov/product/cobe/firas_spectral_anc.html",
+      "locator": "Destriped Sky Spectra description",
+      "supports": "Calibrated and coadded channel/scan combinations; destriping corrects unidentified instrumental offsets."
+    },
+    {
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/firas/doc/FES4_SEC7.pdf",
+      "locator": "Section 7.1 C matrix and uncertainty discussion",
+      "supports": "C-vector denotes a covariance square root; interpixel and calibration terms exist. No numeric FIRAS source confidence bound is certified by this review."
+    },
+    {
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/firas/doc/FES4_SEC8.pdf",
+      "locator": "Opening discussion, sections 8.1-8.2",
+      "supports": "Component modelling subtracts zodiacal/CMB models after combined sky data and requires correlation-aware uncertainty propagation."
+    },
+    {
+      "url": "https://lambda.gsfc.nasa.gov/product/cobe/firas_bp_info.html",
+      "locator": "Instantaneous Beam Profile description",
+      "supports": "Representative Moon profile omits effective scan elongation; the table alone is not an all-direction lower-response certificate."
+    },
+    {
+      "url": "https://lambda.gsfc.nasa.gov/product/foreground/fg_2014_haslam_408_info.html",
+      "locator": "Destriped Haslam 408 MHz",
+      "supports": "A destriped-only all-sky map retaining extragalactic sources is publicly listed. Source-subtracted and synthetic-small-scale products are distinct."
+    },
+    {
+      "url": "https://arxiv.org/html/1411.3628",
+      "locator": "Sections 2.1 and 4.4",
+      "supports": "Original absolute total-power map has quoted scale and zero-level uncertainties; paper discusses their limitations. This is a possible future source, not a calibrated current constraint."
+    }
+  ],
+  "outputs": {
+    "numeric_first_run": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/NUMERIC_CHECKS_RUN1.json",
+    "native_sample_closeout": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/NUMERIC_CHECKS_native_source_samples.json",
+    "reproducer": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproduce_review.py",
+    "weaker_path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/WEAKER_PATH.json"
+  },
+  "next_executable_checkpoint": "Controller may record/publish the exact reviewed partial candidate and typed input HOLD, with this independent partial review linked; keep acceptance=false and qualified_outputs=[]. Continue independent READY work. Any bracketing-source repair is a distinct bounded acquisition/model task and reuses completed Y/noise.",
+  "completed_utc": "2026-10-27T04:20:19.521774+00:00"
+}

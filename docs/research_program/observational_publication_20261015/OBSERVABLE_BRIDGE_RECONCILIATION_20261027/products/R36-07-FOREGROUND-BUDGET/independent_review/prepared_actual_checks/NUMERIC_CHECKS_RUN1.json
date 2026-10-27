@@ -1,0 +1,181 @@
+{
+  "schema": "R36-07-independent-bounded-checks-v1",
+  "candidate_identity": "34ac36b0a774589c213d33943e4a4c25678d4e095e9b9f6062081118a2129cc9",
+  "checks": {
+    "identities": {
+      "status": "PASS",
+      "elapsed_seconds": 0.7078668980393559,
+      "evidence": {
+        "candidate_identity": "34ac36b0a774589c213d33943e4a4c25678d4e095e9b9f6062081118a2129cc9",
+        "manifest_count": 24,
+        "contract_input_count": 19,
+        "all_exact_small_inputs_and_candidate_members_match": true
+      }
+    },
+    "geometry": {
+      "status": "PASS",
+      "elapsed_seconds": 0.03850097698159516,
+      "evidence": {
+        "branches": [
+          {
+            "branch": "A_BT_1e-07",
+            "rank": 7,
+            "condition_F_over_D": 390.34850899681896,
+            "rho_min_K_CMB_svd": 0.00011352765636167105,
+            "ell_svd": 3.1183814272553274,
+            "center_B_norm_K_CMB_svd": 2.5009267507757987e-05,
+            "reconstruction_Frobenius_K_CMB_svd": 8.0071726039939785e-19
+          },
+          {
+            "branch": "A_BT_1e-08",
+            "rank": 7,
+            "condition_F_over_D": 390.3471668425826,
+            "rho_min_K_CMB_svd": 0.00011352761124437414,
+            "ell_svd": 3.1183811106900805,
+            "center_B_norm_K_CMB_svd": 2.5009220685096368e-05,
+            "reconstruction_Frobenius_K_CMB_svd": 2.728100271718848e-19
+          },
+          {
+            "branch": "A_BT_1e-06",
+            "rank": 7,
+            "condition_F_over_D": 390.35427976487847,
+            "rho_min_K_CMB_svd": 0.00011352785269825665,
+            "ell_svd": 3.1183883545816222,
+            "center_B_norm_K_CMB_svd": 2.500982556797842e-05,
+            "reconstruction_Frobenius_K_CMB_svd": 7.340078483109068e-19
+          },
+          {
+            "branch": "B_BT_1e-07",
+            "rank": 7,
+            "condition_F_over_D": 391.6198907547331,
+            "rho_min_K_CMB_svd": 0.00011369840129698342,
+            "ell_svd": 3.1177199555490134,
+            "center_B_norm_K_CMB_svd": 2.50755499542622e-05,
+            "reconstruction_Frobenius_K_CMB_svd": 2.7965213012484875e-19
+          },
+          {
+            "branch": "B_BT_1e-08",
+            "rank": 7,
+            "condition_F_over_D": 391.6185429003108,
+            "rho_min_K_CMB_svd": 0.00011369835515435882,
+            "ell_svd": 3.117719639334704,
+            "center_B_norm_K_CMB_svd": 2.507550297097886e-05,
+            "reconstruction_Frobenius_K_CMB_svd": 1.4114157043473367e-19
+          },
+          {
+            "branch": "B_BT_1e-06",
+            "rank": 7,
+            "condition_F_over_D": 391.6256826439261,
+            "rho_min_K_CMB_svd": 0.00011369860101124894,
+            "ell_svd": 3.1177268778022977,
+            "center_B_norm_K_CMB_svd": 2.5076109833911753e-05,
+            "reconstruction_Frobenius_K_CMB_svd": 2.2253683922876707e-19
+          }
+        ],
+        "high_precision_decimal_digits": 70,
+        "high_precision_ell": "3.118381427255327030482464276032450212323302816907512846850156693949643",
+        "high_precision_J0_K_CMB_squared": "0.00000001288852875897360470053574503939858861457843439046994084252583666380838",
+        "high_precision_rho_min_K_CMB": "0.0001135276563616707657988199906368792144999416331989633391707272885424666",
+        "max_center_absolute_error_K_CMB": 4.1326737496537314e-17,
+        "compensators": [
+          {
+            "amplitude_K_CMB": 0,
+            "residual_K_CMB": 1.3755173471288098e-16,
+            "budget_K_CMB": 0.00011352765636155995
+          },
+          {
+            "amplitude_K_CMB": 1e-06,
+            "residual_K_CMB": 1.375518052663231e-16,
+            "budget_K_CMB": 0.00011357047618846157
+          },
+          {
+            "amplitude_K_CMB": 1e-05,
+            "residual_K_CMB": 1.3753804175794655e-16,
+            "budget_K_CMB": 0.00011773257421599611
+          },
+          {
+            "amplitude_K_CMB": 0.0001,
+            "residual_K_CMB": 1.3754810979219104e-16,
+            "budget_K_CMB": 0.0003318607479303595
+          },
+          {
+            "amplitude_K_CMB": 1,
+            "residual_K_CMB": 5.971841113367436e-14,
+            "budget_K_CMB": 3.1183814293133976
+          }
+        ],
+        "orthogonal_coordinate_transport": "PASS"
+      }
+    },
+    "spin_libsharp": {
+      "status": "PASS",
+      "elapsed_seconds": 0.04281702800653875,
+      "evidence": {
+        "independent_library": "healpy.map2alm_spin/libsharp",
+        "healpy_version": "1.19.0",
+        "native_like_sparse_map_nside": 16,
+        "tested_pixel_count": 8,
+        "all_24_coordinates_max_error_K_CMB": 9.512577044359818e-24
+      }
+    },
+    "PSD_completion_and_noise_summaries": {
+      "status": "PASS",
+      "elapsed_seconds": 0.0013970278669148684,
+      "evidence": {
+        "full_6x6_PSD_completion_min_eigenvalue": 0.0,
+        "full_block_completion_variance": 7.730173245970736,
+        "sharp_variance_formula": 7.730173245970737,
+        "released_per_band_entries_checked": 168,
+        "raw_168_trace_upper_K_CMB_squared": 8.527490518711464e-06,
+        "center_24_trace_upper_K_CMB_squared": 0.003015582991054547,
+        "center_95pct_Euclidean_radius_K_CMB": 0.2455843232396786,
+        "center_weights_SVD": [
+          -0.2251450022506039,
+          3.626158175696022,
+          -19.940819001192043,
+          38.580803898363285,
+          -25.32972070904337,
+          4.308199073486409,
+          -0.019476435059697365
+        ],
+        "meaning": "Each coordinate maximum may use a different completion; their summed variances remain a valid uniform trace upper bound, not a joint covariance."
+      }
+    },
+    "native_source_samples": {
+      "status": "FAIL",
+      "elapsed_seconds": 19.3518393880222
+    },
+    "FIRAS": {
+      "status": "PASS",
+      "elapsed_seconds": 0.12068975390866399,
+      "evidence": {
+        "rows": 6067,
+        "valid_frequency_count": 43,
+        "padding_columns": 139,
+        "valid_negative_entries": 621,
+        "nominal_GHz_minmax": [
+          68.020812,
+          639.395616
+        ],
+        "nearest_centre_max_deg": 4.493343308965641,
+        "target_centres_beyond_3p5deg": 31,
+        "C_squared_cov_diagonal_relative_max": 3.815836032363304e-05,
+        "inference": "Centre distances establish neither actual holes nor an angular lower-response certificate; C diagonal difference does not block partial geometry/noise."
+      }
+    }
+  },
+  "failures": [
+    {
+      "check": "native_source_samples",
+      "exception_type": "AssertionError",
+      "message": "",
+      "traceback": "Traceback (most recent call last):\n  File \"/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproduce_review.py\", line 269, in main\n    value=fn();out['checks'][name]={'status':'PASS','elapsed_seconds':time.monotonic()-t,'evidence':value}\n          ^^^^\n  File \"/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/reproduce_review.py\", line 216, in native_samples_check\n    assert f[1].columns['QQ_COV'].unit in ('K_CMB^2','(K_CMB)^2')\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    }
+  ],
+  "elapsed_seconds": 20.29010795103386,
+  "maxrss_kib": 1104912,
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "numpy": "2.4.2",
+  "reproducer_sha256": "cf3906ffb905f21d7674797ad9b6e96ecffd7cf21b138df16cda8da39fd8617f",
+  "all_checks_pass": false
+}

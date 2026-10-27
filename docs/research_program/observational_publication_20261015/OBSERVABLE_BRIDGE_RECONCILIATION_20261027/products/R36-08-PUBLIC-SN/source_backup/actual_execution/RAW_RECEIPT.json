@@ -1,0 +1,163 @@
+{
+  "schema": "htt.r36_public_sn_raw_receipt/1",
+  "packet_id": "63f9184ae48b3e5526a9a289bceb653315839de2955b4667738a9a64f7821606",
+  "task_id": "R36-08-PUBLIC-SN",
+  "attempt": 1,
+  "agent_id": "/root/rc_63f9184ae48b3e55",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_identity": "sha256:efeb05dfe755f47c48c994d1684312659277816a3f7294f6d76f63f27f9f046c",
+  "source_release_commit": "c447f0fea703fcd0fff57de5000947b5ca81286b",
+  "original_contract_sha256": "6f8c24d0deec3c54c4e44bc3b23f0f514f4cacbf45bc8f4ee6d9a6eb61fbe715",
+  "repair_decision_sha256": "3cd28db0b16f66baef4175c5dfe80f6af0f0522465931ac4fdea315cf92e4ab3",
+  "first_code_sha256": "9fb0ad33e615defea9ef65c57007343e07c6086ca02f4f1adc64daf6d0c49e40",
+  "input_products": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/bridge20261027/pantheon/Pantheon+SH0ES.dat",
+      "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+      "bytes": 579283
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/bridge20261027/pantheon/Pantheon+SH0ES_STAT+SYS.cov",
+      "sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+      "bytes": 33284960
+    }
+  ],
+  "commands": [
+    {
+      "purpose": "first producer invocation; stopped before fit at global source symmetry assertion",
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python consumer.py",
+      "exit_code": 1,
+      "capture": "tool output; same failure rerun captured below"
+    },
+    {
+      "purpose": "capture preserved first failure under original code",
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python consumer.py > first_run.stdout 2> first_run.stderr",
+      "exit_code": 1
+    },
+    {
+      "purpose": "initial fixture before bounded repair",
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python test_consumer.py",
+      "exit_code": 0
+    },
+    {
+      "purpose": "targeted repair fixture including three covariance falsifiers",
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python test_consumer.py > test_consumer.stdout 2> test_consumer.stderr",
+      "exit_code": 0
+    },
+    {
+      "purpose": "first repaired same-packet fit",
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python consumer.py > repaired_run.stdout 2> repaired_run.stderr",
+      "exit_code": 0
+    },
+    {
+      "purpose": "figure",
+      "command": "OPENBLAS_NUM_THREADS=1 MPLBACKEND=Agg PYTHONDONTWRITEBYTECODE=1 .venv/bin/python plot_result.py > plot.stdout 2> plot.stderr",
+      "exit_code": 0
+    },
+    {
+      "purpose": "16 descriptive leave-survey fits",
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python survey_robustness.py > survey_robustness.stdout 2> survey_robustness.stderr",
+      "exit_code": 0
+    },
+    {
+      "purpose": "final same-packet fit after chart coefficient invariant check",
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python consumer.py > repaired_run_final.stdout 2> repaired_run_final.stderr",
+      "exit_code": 0
+    },
+    {
+      "purpose": "final fixture recheck",
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python test_consumer.py",
+      "exit_code": 0
+    }
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "first_failure_preserved": true,
+  "full_source_symmetry": "FAILED_OUTSIDE_CONSUMED_SUPPORT",
+  "selected_covariance_status": "VALIDATED_PRIMARY_AND_SENSITIVITY_ONLY",
+  "primary_n": 490,
+  "sensitivity_n": 705,
+  "primary_delta_T": 17.206587975582305,
+  "primary_conditional_p": 0.37235223370312737,
+  "logs": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/first_run.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/first_run.stderr",
+      "bytes": 797,
+      "sha256": "c34ccf22be0fae447cfc33e0225adc32483be30249117e374d76857ef8429f11"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/COVARIANCE_FIRST_FAILURE.json",
+      "bytes": 178918,
+      "sha256": "e9323db17b40fd5dbfe06c0eb179f0e3dd19bdd1efc6ee7bde0961a59c78f709"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/consumer_before_gate_scope_repair.py",
+      "bytes": 13600,
+      "sha256": "9fb0ad33e615defea9ef65c57007343e07c6086ca02f4f1adc64daf6d0c49e40"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/test_consumer.stdout",
+      "bytes": 151,
+      "sha256": "d2bfa04d1c5ec2baa228682188fb1874a04dd08cf377b2a1908b0d65e8d0267d"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/test_consumer.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/repaired_run.stdout",
+      "bytes": 157,
+      "sha256": "ba9e76b0eef5573ebc010d4f6139eba5a24d97326a6331121edff4a905033642"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/repaired_run.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/repaired_run_final.stdout",
+      "bytes": 157,
+      "sha256": "ba9e76b0eef5573ebc010d4f6139eba5a24d97326a6331121edff4a905033642"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/repaired_run_final.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/survey_robustness.stdout",
+      "bytes": 79,
+      "sha256": "840e7f7dd0393beeacf20a35e3f447ac8a81e142bfddbc79bddda14d782c15b5"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/survey_robustness.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/plot.stdout",
+      "bytes": 200,
+      "sha256": "2496066f1768a7b43429180d94b9f9ee02d1277b8fd07f9b0f0edcc4d96c0fa8"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/plot.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/RESULT_RAW.json",
+      "bytes": 215818,
+      "sha256": "76138793fe3b61804db70a714697d8b46f3a2312906db42fcf27dce364c3ee37"
+    }
+  ],
+  "new_network_bytes": 0,
+  "native_solver_calls": 0,
+  "ode_calls": 0,
+  "scientific_review": "PENDING_FRESH_INDEPENDENT_REVIEW",
+  "original42_acceptance_changed": false
+}

@@ -1,0 +1,153 @@
+{
+  "schema": "R36-08-bounded-scientific-repair-decision-v1",
+  "created_utc": "2026-10-27T04:16:21.403943+00:00",
+  "task_id": "R36-08-PUBLIC-SN",
+  "packet_id": "63f9184ae48b3e5526a9a289bceb653315839de2955b4667738a9a64f7821606",
+  "decision": "APPROVE_BOUNDED_VALIDATION_SCOPE_REPAIR_NOT_SCIENTIFIC_PASS",
+  "science_author": "/root/r36_scientific_contract_preparation",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "actual_code_owner": "/root/rc_63f9184ae48b3e55",
+  "independence": "This author contributed the original contract and this repair decision; fresh independent review must use another agent.",
+  "original_contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_scientific_contract_preparation/R36-08.json",
+    "sha256": "6f8c24d0deec3c54c4e44bc3b23f0f514f4cacbf45bc8f4ee6d9a6eb61fbe715",
+    "bytes": 9711
+  },
+  "preserved_first_failure": {
+    "record": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/COVARIANCE_FIRST_FAILURE.json",
+      "sha256": "e9323db17b40fd5dbfe06c0eb179f0e3dd19bdd1efc6ee7bde0961a59c78f709",
+      "bytes": 178918
+    },
+    "stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/first_run.stderr",
+      "sha256": "c34ccf22be0fae447cfc33e0225adc32483be30249117e374d76857ef8429f11",
+      "bytes": 797
+    },
+    "stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_actual/first_run.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/consumer.py",
+    "exit_code": 1,
+    "executed_stage": "Full1701 symmetry check before any fit; no result is discarded or reclassified as PASS."
+  },
+  "observed_pre_repair_consumer": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/consumer.py",
+    "sha256": "9fb0ad33e615defea9ef65c57007343e07c6086ca02f4f1adc64daf6d0c49e40",
+    "bytes": 13600
+  },
+  "immutable_sources": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/bridge20261027/pantheon/Pantheon+SH0ES.dat",
+      "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+      "git_blob_sha1": "cce857db0c15e9ce7a0e0ce77452b6ff62af969a",
+      "bytes": 579283
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/bridge20261027/pantheon/Pantheon+SH0ES_STAT+SYS.cov",
+      "sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+      "git_blob_sha1": "d1a1498154e7ba826df14bdbef35ebcb7f5efba1",
+      "bytes": 33284960
+    }
+  ],
+  "finding": {
+    "classification": "Real released-array asymmetry, reproduced byte-identically; not source corruption or numerical producer error. Fatal whole-array validation is overbroad for the fixed selected estimands. The full1701 array does not pass the frozen symmetry test and must not be claimed as a validated full covariance.",
+    "full1701": {
+      "rows": 1701,
+      "max_abs_asymmetry_mag2": 3.0000000000038676e-08,
+      "original_zero_based_pair": [
+        84,
+        97
+      ],
+      "values_mag2": [
+        0.00048592,
+        0.00048595
+      ],
+      "contract_symmetry_tolerance_mag2": 9.452311688562532e-12,
+      "entries_above_tolerance": 778,
+      "asymmetric_unordered_pairs": 389,
+      "pairs_both_outside_sensitivity": 389,
+      "pairs_one_inside_sensitivity": 0,
+      "pairs_both_inside_sensitivity": 0
+    },
+    "source_precision": "Exact source tokens C[84,97]=0.00048592 and C[97,84]=0.00048595 have eight decimal places. Their difference is three10^-8 mag^2 increments, much larger than the frozen float64 arithmetic tolerance. Its upstream cause is UNKNOWN; no assertion that simple rounding of an exactly symmetric matrix explains it.",
+    "maximum_pair_metadata": [
+      {
+        "index": 84,
+        "CID": "2001bg",
+        "IDSURVEY": 57,
+        "zHD": 0.00855,
+        "IS_CALIBRATOR": 1
+      },
+      {
+        "index": 97,
+        "CID": "2006D",
+        "IDSURVEY": 64,
+        "zHD": 0.00925,
+        "IS_CALIBRATOR": 1
+      }
+    ],
+    "affected_scope": "All389 asymmetric unordered pairs are outside the705-row predeclared sensitivity union; no affected pair touches either consumed cohort. This support statement is recomputed by the worker before fitting.",
+    "cohorts": {
+      "0.0233": {
+        "rows": 490,
+        "max_abs_asymmetry_mag2": 0.0,
+        "tolerance_mag2": 1.5538599967612755e-12,
+        "nonzero_asymmetry_entries": 0,
+        "contains_offending_pair": false,
+        "low_count": 342,
+        "high_count": 148,
+        "duplicates_kept": 62,
+        "mask_indices_sha256": "0760fe0b45bc1213a7963aa24c63882b2190275aba07a45733059b9ab93def3b"
+      },
+      "0.01": {
+        "rows": 705,
+        "max_abs_asymmetry_mag2": 0.0,
+        "tolerance_mag2": 2.2356557096259167e-12,
+        "nonzero_asymmetry_entries": 0,
+        "contains_offending_pair": false,
+        "low_count": 557,
+        "high_count": 148,
+        "duplicates_kept": 114,
+        "mask_indices_sha256": "524de98a264c167755848a8634656aef0cff4416c6824d8321e6a6886f4b6f21"
+      }
+    }
+  },
+  "scientific_reason": [
+    "The original contract explicitly calls for Cholesky-whitening the released subset C and slicing rows and both covariance axes identically. Source dimensions, finiteness, hashes and full row identity remain global input gates; symmetry/positive-definiteness of the actually consumed covariance are the statistical gates.",
+    "For a fixed selection matrix P, the consumed covariance is C_S=P*C*P^T. Excluded responses are not conditioned upon or used in fitting, so no Schur complement or block of the full inverse is appropriate. No independence from excluded rows is assumed.",
+    "The known-C Gaussian law is stipulated directly on each selected released-observable cohort. Do not assert a valid1701-dimensional Gaussian law for the nonsymmetric raw array. The705-row sensitivity covariance is the common selected support containing the490-row primary, so preserving it also retains their shared dependence.",
+    "The full-source defect remains reportable, but it cannot alter any selected coefficient, covariance or statistic because its entries are never consumed. No selection was changed after seeing covariance or fit outcomes."
+  ],
+  "approved_targeted_patch": [
+    "In consumer.main, replace only the fatal full1701 symmetry assertion with an explicit source diagnostic containing failure status, original threshold, maximum pair/values and affected-pair counts. Keep its calculation and preserve the original first-failure files.",
+    "Keep global SHA256/Git-blob/bytes/schema1701/2893401/finiteness/row-key checks blocking. Compute the frozen primary and sensitivity row masks without reading fitted outcomes; retain original order and all duplicates. Verify that both masks match preserved first-failure cohort indices and that all detected asymmetric pairs lie outside their union.",
+    "Validate C_S exactly as released for each cohort before any numerical fit: finite; maxabs(C_S-C_S.T)<=64*eps*N_S*maxabs(C_S); eigen/Cholesky positive-definiteness without jitter. Existing selected-block tolerances and all other numerical/rank/quadrature controls stay unchanged.",
+    "Retain all selected off-diagonal, duplicate-CID, survey and cross-depth covariance terms. Do not symmetrize either full or selected arrays, copy one triangle, rescale errors, add a diagonal, erase cross-blocks, or use full-C inverse blocks.",
+    "Record the repair decision hash and distinct statuses FULL_SOURCE_SYMMETRY_FAILED_OUTSIDE_CONSUMED_SUPPORT and SELECTED_COVARIANCE_VALIDATED_ONLY after actual validation. Do not label full-source symmetry PASS. Existing cohorts, means, angular columns, depth bins, Gaussian-law caveats and claim ceilings are unchanged."
+  ],
+  "falsifiers_before_repaired_fit": [
+    "Local fixture: changing only entries outside both frozen masks leaves selected arrays byte-for-byte unchanged; source diagnostic detects the change. Do not mutate the immutable released input for this test.",
+    "Local fixture: introduce a one-sided asymmetry greater than the unchanged selected tolerance in a consumed entry. Selected-covariance validation must reject it before Cholesky/fitting; no averaging repair is allowed.",
+    "Local fixture: a symmetric non-positive-definite consumed matrix is rejected without jitter. Preserve existing exact row-slicing and full-covariance GLS checks.",
+    "Real preflight: reproduce490 primary rows(342low,148high),705 sensitivity rows(557low,148high), unchanged row order/duplicates and zero selected asymmetry. If these differ or an asymmetric pair enters the union, stop and return to the science owner; do not select a different cohort.",
+    "Verify original contract and both input hashes remain unchanged. Preserve raw first failure, new actual attempt receipts and cumulative accounting."
+  ],
+  "unchanged_tolerances": {
+    "symmetry": "64*eps*N_S*maxabs(C_S)",
+    "primary_selected_mag2": 1.5538599967612755e-12,
+    "sensitivity_selected_mag2": 2.2356557096259167e-12,
+    "global_failed_threshold_mag2": 9.452311688562532e-12,
+    "other_controls": "All original contract thresholds, rank sensitivity, quadrature, whitening and chart-conversion tolerances unchanged."
+  },
+  "permission_and_limits": "The sole numeric worker may implement this bounded patch, run its targeted fixtures/preflight, then resume the already-authorized same-packet fits if they pass. No new fit plan, cohort, attempt budget, producer allowance, hard resource cap or old-budget reset. First failure remains charged. Original contract bytes are unchanged.",
+  "claim_status": "Repair approval only; no scientific qualification, fit result, PSD result or independent-review verdict from this author. Empirical coverage, physical-frame/acceleration/shear claims and original42 acceptance remain unchanged.",
+  "primary_source": {
+    "url": "https://raw.githubusercontent.com/PantheonPlusSH0ES/DataRelease/c447f0fea703fcd0fff57de5000947b5ca81286b/Pantheon%2B_Data/4_DISTANCES_AND_COVAR/README",
+    "inspected": "2026-10-27",
+    "support": "Sequential1701x1701 format; STAT+SYS total covariance includes cross-SN and Cepheid-host systematic terms; repeated observations have statistical correlations; diagonal errors are not for fitting. This source does not supply an explanation or authorized tolerance for the observed asymmetry."
+  }
+}

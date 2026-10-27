@@ -1,0 +1,92 @@
+{
+  "status": "UNQUALIFIED_ANALYTIC_MODEL_EXAMPLES_ONLY",
+  "whole_domain_proof": "Small independent source-class falsifiers and optional future repair.\n\nThese are analytic model examples, not measured foreground budgets.\n\nFor a positive pure-power-law emitter measure mu at nu0, let delta=beta-beta0,\nt_minus=log(nu_minus/nu0)<0<t_plus=log(nu_plus/nu0), and\nJ_plusminus=integral exp(t_plusminus*delta) dmu. The baseline spectral factors\nmust be divided out of a qualified intensity upper constraint to bound J.\nFor k>=1 and x>=0, max x^k exp(-a*x)=(k/(e*a))^k. Applying this to positive\nand negative delta separately proves, on the whole real line,\n integral |delta|^k dmu <= (k/(e*abs(t_minus)))^k J_minus\n                           +(k/(e*t_plus))^k J_plus.\nFor k=0, integral dmu <= J_minus+J_plus. Signed/complex polarization moments\nare bounded by these positive moments when |dnu|<=dmu. Factorial moments\ndivide this upper bound by k!. Compact beta support is sufficient, not\nnecessary. A pair of qualified absolute source functionals on either side\nof 30 GHz could provide this weaker route. It still assumes a supported\npower-law source model and matching spatial/spectral response domination.\n\nBy contrast, no such temperature-tail bound follows solely from a finite\ncollection of normalized modified blackbodies if arbitrarily large T is\nadmitted. At fixed reference amplitude at nu0, B_nu(T)/B_nu0(T) tends to\n(nu/nu0)^2 as T tends to infinity. All finitely many intensities stay finite\nbut the R32 second moment ((T-20)/20)^2/2 diverges. This mathematical limit\ndoes not describe viable hot dust; a justified physical ceiling or tail\nmoment bound excludes it and remains a scientifically meaningful input.\n",
+  "bracket_GHz": [
+    0.408,
+    30.0,
+    68.020812
+  ],
+  "synchrotron_positive_moment_envelope": [
+    {
+      "order": 0,
+      "J_below_multiplier": 1.0,
+      "J_above_multiplier": 1.0,
+      "grid_min_slack": 0.552244988385129
+    },
+    {
+      "order": 1,
+      "J_below_multiplier": 0.08559943307840451,
+      "J_above_multiplier": 0.4493917665859773,
+      "grid_min_slack": 0.00045327312279330734
+    },
+    {
+      "order": 2,
+      "J_below_multiplier": 0.029309051773377007,
+      "J_above_multiplier": 0.807811839501062,
+      "grid_min_slack": 1.0704428649255249e-05
+    },
+    {
+      "order": 3,
+      "J_below_multiplier": 0.01693465795710008,
+      "J_above_multiplier": 2.4504119299515392,
+      "grid_min_slack": 0.00012212271763445415
+    }
+  ],
+  "MBB_temperature_tail_example": [
+    {
+      "T_K": 20.0,
+      "response_ratio_fixed_reference_intensity": [
+        0.004549404386484879,
+        0.01684555353824295,
+        0.05580436626206681,
+        0.2184112337618242,
+        1.0,
+        5.3071817074738465
+      ],
+      "factorial_second_t_moment_per_reference_amplitude": 0.0
+    },
+    {
+      "T_K": 100.0,
+      "response_ratio_fixed_reference_intensity": [
+        0.0033669271033247993,
+        0.012871592752303873,
+        0.044543430537748056,
+        0.18831882088552163,
+        1.0,
+        7.446504151368402
+      ],
+      "factorial_second_t_moment_per_reference_amplitude": 8.0
+    },
+    {
+      "T_K": 1000.0,
+      "response_ratio_fixed_reference_intensity": [
+        0.003162348748723505,
+        0.012173905555153972,
+        0.04252629060014116,
+        0.18273348806195522,
+        1.0,
+        7.943023088670462
+      ],
+      "factorial_second_t_moment_per_reference_amplitude": 1200.5
+    },
+    {
+      "T_K": 1000000.0,
+      "response_ratio_fixed_reference_intensity": [
+        0.0031407823604221847,
+        0.0121001615254871,
+        0.042312321194861446,
+        0.18213735142320964,
+        1.0,
+        7.997961997440105
+      ],
+      "factorial_second_t_moment_per_reference_amplitude": 1249950000.5
+    }
+  ],
+  "limits": [
+    "No Haslam data acquired or calibrated; source paper alone supplies no admitted upper confidence set.",
+    "FIRAS sky and spectral response domination still missing.",
+    "The pure power law must be justified across the bracket; curvature or low-frequency absorption cannot be ignored.",
+    "Source-subtracted or inpainted maps require bounds on removed intensity; use a retained total-power product if available.",
+    "This is a possible new acquisition/model repair; it does not alter current candidate acceptance."
+  ]
+}

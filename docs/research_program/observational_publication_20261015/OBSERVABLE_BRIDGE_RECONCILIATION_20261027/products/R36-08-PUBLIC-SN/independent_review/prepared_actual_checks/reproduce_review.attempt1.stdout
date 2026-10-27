@@ -1,0 +1,72 @@
+PASS independent QR GLS, covariance, permutation/unit invariance, chart, excluded-asymmetry invariance, selected-asymmetry rejection, non-PD rejection
+{
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1"
+  },
+  "candidate_files_verified": 9,
+  "producer_raw_logs_verified": 15,
+  "global_asymmetry": {
+    "maximum": 3.0000000000038676e-08,
+    "threshold": 9.452311688562532e-12,
+    "pairs": 389
+  },
+  "cohorts": {
+    "primary": {
+      "n": 490,
+      "counts": [
+        490,
+        342,
+        148,
+        62
+      ],
+      "exact_symmetry": true,
+      "min_eigenvalue": 0.0052423566085437745,
+      "quadrature_spot_check_max_residual_mag": 0.0,
+      "Wald_equals_deltaT": 17.206587975582316,
+      "full_rank": 16,
+      "null_full_df": [
+        488,
+        472
+      ],
+      "contrast_cross_bin_max_abs_covariance_mag2": 0.00014387417198367892
+    },
+    "lower_z_sensitivity": {
+      "n": 705,
+      "counts": [
+        705,
+        557,
+        148,
+        114
+      ],
+      "exact_symmetry": true,
+      "min_eigenvalue": 0.005227654064226413,
+      "quadrature_spot_check_max_residual_mag": 0.0,
+      "Wald_equals_deltaT": 16.55408937651716,
+      "full_rank": 16,
+      "null_full_df": [
+        703,
+        687
+      ],
+      "contrast_cross_bin_max_abs_covariance_mag2": 7.226838585032437e-05
+    }
+  },
+  "primary_independent_QR": {
+    "max_coefficient_error_mag": 9.298117831235686e-15,
+    "max_covariance_error_mag2": 4.336808689942018e-18,
+    "chi_square_residual": 416.25192935519624
+  },
+  "leave_survey_saved_evidence": {
+    "records": 16,
+    "row_deletions_and_chi_square_tails": "PASS",
+    "delta_T_range": [
+      14.041466168385805,
+      18.92508187579595
+    ],
+    "all_16_fits_rerun": false
+  },
+  "candidate_fixture": "PASS",
+  "review_scope": "selected data validation, saved statistic algebra, one primary QR check and small fixture; no full producer reanalysis",
+  "result": "PASS_CONDITIONAL_NUMERICAL_CHECKS"
+}

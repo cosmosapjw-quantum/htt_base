@@ -1,0 +1,460 @@
+{
+  "schema": "R36-07-scientific-implementation-contract-v1",
+  "task_id": "R36-07-FOREGROUND-BUDGET",
+  "prepared_at_utc": "2026-10-27T03:54:55.969586+00:00",
+  "status": "READY_FOR_ACTUAL_DATA_CONSUMPTION_AND_BOUND_FEASIBILITY; PHYSICAL_FINITE_RADIUS_NOT_YET_ESTABLISHED",
+  "owner": "obsstat",
+  "scope": "New conditional complex-polarization foreground budget and source feasibility, solver-free; preserve all original R31/R32 and original42 acceptances.",
+  "framer": {
+    "agent": "/root/r36_radiation_fresh_review",
+    "requested_model": "gpt-6-astra",
+    "requested_reasoning_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "role": "R36-07 scientific contributor; ineligible to independently review R36-07; prior R36-05 review sealed"
+  },
+  "controller_binding": {
+    "campaign_identity": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+    "spec": {
+      "id": "R36-07-FOREGROUND-BUDGET",
+      "kind": "numeric",
+      "title": "Calibrate a dimensional complex polarization-moment budget",
+      "goal": "Calibrate a dimensional complex polarization-moment budget",
+      "acceptance": "Consume existing R31/R32 coefficients and actual frequency-map/noise products. Fix coefficient units, spin frame and target low-l extraction. Use complex Q+iU spin moments, signed/complex line-of-sight weights and an explicit total-variation Taylor remainder. Estimate or externally bound the physical radius from heldout channels or an independently justified foreground model. Report the identified response over a range of justified radii with covariance; do not call a dimensionless free radius measured contamination, and do not count derived SMICA as an independent frequency channel. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it.",
+      "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+      "contract_origin": "new_conditional_research",
+      "promotes_original_acceptance": false,
+      "initial_state": "ready",
+      "requires": {
+        "all": []
+      },
+      "input_sources": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json",
+          "sha256": "83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+          "role": "preserved internal sources, externally supplied audit, independent corrections and actual finite replays"
+        }
+      ],
+      "owned_paths": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET"
+      ],
+      "semantic_delta": {
+        "kind": "method",
+        "before": {
+          "status": "Retained R32 methods plus source-specific external holds; newly recovered internal results not yet consumed by this question."
+        },
+        "after": {
+          "target": "Calibrate a dimensional complex polarization-moment budget"
+        },
+        "discriminator": "Consume existing R31/R32 coefficients and actual frequency-map/noise products. Fix coefficient units, spin frame and target low-l extraction. Use complex Q+iU spin moments, signed/complex line-of-sight weights and an explicit total-variation Taylor remainder. Estimate or externally bound the physical radius from heldout channels or an independently justified foreground model. Report the identified response over a range of justified radii with covariance; do not call a dimensionless free radius measured contamination, and do not count derived SMICA as an independent frequency channel.",
+        "scope": "Additional declared observable/conditional product; original frozen acceptance and histories unchanged."
+      },
+      "implementation_route": "subagent_specialist",
+      "paper_ids": [
+        "P2"
+      ],
+      "informs_original_nodes": [
+        "L03",
+        "L04",
+        "S04"
+      ],
+      "qualified_product_expected": "foreground_budget_result",
+      "reuse_first": true,
+      "deliverable_rule": "Qualify the exact named result only after acceptance and independent review; a source-gap report cannot qualify it.",
+      "next_after_hold": "Record exact missing input and request next independent ready task; do not reset, duplicate or rename exhausted experiments."
+    },
+    "spec_canonical_sha256": "815f7e494d4d9af571360d6a9f925dbba35c7dbb3a4f76bbc0fdc7fe65d970e6",
+    "formal_packet_id": null,
+    "formal_ack": null,
+    "production_executed": false,
+    "qualified_outputs": [],
+    "acceptance": false,
+    "original_acceptance_promoted": false,
+    "binding_rule": "Controller may dispatch this frozen preparation under the actual current packet; record actual packet/ACK and executor in the execution receipt, without retrospectively claiming preparation was dispatch."
+  },
+  "primary_question": "Can the actual seven-frequency low-ell complex polarization data and released noise products, together with independent positive-intensity information, give a finite dimensional foreground-moment budget under a separately justified physical class?",
+  "subquestions": [
+    "What conditional response follows from the corrected R31/R32 operator and the actual full24 carrier?",
+    "What covariance support is defensible using released QQ/QU/UU marginals without invented cross-correlations?",
+    "Does an absolute-intensity source certify positive domination on every target direction and spectral domain?",
+    "Which physically justified moment-domain and Taylor-remainder bounds survive, and are they useful relative to the saved 0.3792342121 microK comparator?"
+  ],
+  "inputs": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json",
+      "sha256": "83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+      "role": "frozen R36 source identity"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/DATA_ATLAS.md",
+      "sha256": "ddef506770924e44378fe6bf022b86cc81e4c740c79ce801539026ddf0070c75",
+      "role": "bounded complex foreground derivation"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/DATA_ATLAS.json",
+      "sha256": "39294a4e135b0886831a1d96dc00989d01b8048790cdf92f1c789df1151c4919",
+      "role": "research intake"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/R31/scientific/framing/SPECTRAL_ONLY_CONTRACT.md",
+      "sha256": "fb137b19b2ec901604691f5d4aa62f05a29e5cbe86404c3c748bf8c8c40386df",
+      "role": "retained free spectral class"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/R31/scientific/framing/THEORY_AND_REOPENING.md",
+      "sha256": "46621afc10a7d9db2ac117c5004e13726c4a06ac250f8f08d29ffcbae09ac123",
+      "role": "physical response and domain gap"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/R31/report/data/RESULT.json",
+      "sha256": "b4c20f3595fc1148ff387df3b012ce7fd87dae4098be16a0d24dd914d183291f",
+      "role": "R31 numerical bandpass coefficients"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/RESULT.json",
+      "sha256": "3517d2f6178a830248b9e32ad57b88c4c7345d6ee39d5bb8cbf9bfb54ea1a86a",
+      "role": "corrected finite conditional geometry"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_delivered_seven_frequency_numeric/FULL7_CARRIER.npz",
+      "sha256": "cda1a0c714221e6c69f975baa3b94ad2c0457975b901393891ac86870a42811d",
+      "role": "actual seven-frequency phase-resolved coefficients"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_saved_tensor_comparison_numeric/run/products/FULL8_COMPARISON.npz",
+      "sha256": "42a46b0af55bee19b9ce92d51327222509b5e95ac6e32fbd3da5b3f516c71c05",
+      "role": "derived SMICA descriptive comparator"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_preparation/run/COMMON_SUPPORT_S7.npz",
+      "sha256": "caab42ed1a0d4507b998ce34ad433e8ef9e69e7d1e4b6856f7213599b5465014",
+      "role": "exact S7 sky mask"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_full7_preparation/full7_math.py",
+      "sha256": "b64af9d883eba3f4f967daaf8c92eb8fc3e8b4b6fee0542ce7f251fe92e1cfca",
+      "role": "native-pixel spin-2 linear extraction"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_seven_frequency_consumption_framing/CONTRACT.json",
+      "sha256": "b94d2dee49f777069713481a0647a90e33ae89be9c01f4d57eb5e80da888f985",
+      "role": "historical extraction and source references; its old resources do not bind this new task"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r26_streamed_spin2_numeric/FROZEN_INPUT.json",
+      "sha256": "3634d4a9ff3ce134ac00ff95a469dd1046e2306a17ad0d4eb5fb6468b77003d7",
+      "role": "historical map identities and cache references"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/report/generated/A_BT_1e-07_full24.npz",
+      "sha256": "45b708672f423c9e8ae7b93bce1c51a60aa8155b1b643dcb74ff89c57895d04e",
+      "role": "reuse F,a,center operator only; synthetic_Y is not observed data"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/report/generated/A_BT_1e-08_full24.npz",
+      "sha256": "de9735536ef428b58e0c47aaf1ada07b57d1eb578a6b6bcea73a533468135360",
+      "role": "reuse F,a,center operator only; synthetic_Y is not observed data"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/report/generated/A_BT_1e-06_full24.npz",
+      "sha256": "80d79aa487c30eed00f2c536137e6bcd8be95ed435e90381ddc0febef16c2d9b",
+      "role": "reuse F,a,center operator only; synthetic_Y is not observed data"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/report/generated/B_BT_1e-07_full24.npz",
+      "sha256": "497f2ea01c087924fc00bd27bb0c1fcca663135a2b4fb7763cd9df6e99ca872e",
+      "role": "reuse F,a,center operator only; synthetic_Y is not observed data"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/report/generated/B_BT_1e-08_full24.npz",
+      "sha256": "361db317f1c7c27f227395eec2c9cebcd9cb1d7f90943608d21d5f3c056be70f",
+      "role": "reuse F,a,center operator only; synthetic_Y is not observed data"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/repair_05/report/generated/B_BT_1e-06_full24.npz",
+      "sha256": "5302a3e3043b2d7ce2d45c3636d809af07ccbf9da2e595a3c31fd16bf7f05633",
+      "role": "reuse F,a,center operator only; synthetic_Y is not observed data"
+    }
+  ],
+  "execution_ownership": {
+    "worker_requested": "gpt-6.1-sol/medium unless controller transport selects another declared executor",
+    "repository_write_scope": [
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-07-FOREGROUND-BUDGET"
+    ],
+    "external_numeric_root": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual",
+    "forbidden": [
+      "solver or ODE implementation",
+      "modifying R31/R32 historical results",
+      "modifying original S7 support to hide uncovered sectors",
+      "promoting original42 acceptance",
+      "using this framer as independent reviewer",
+      "spawning children from this contract"
+    ],
+    "resource_policy": "No new scientific hard time/RSS cap or one-use rule is created. Obey actual controller allocation and host limits. Stream native FITS covariance columns and retain progress/accounting; do not reload completed projection campaigns. One batched worker invocation is preferred, not a scientific cap."
+  },
+  "conventions": {
+    "signature": "(-,+,+,+)",
+    "c_m_per_s": 299792458,
+    "h_J_s": 6.62607015e-34,
+    "k_B_J_per_K": 1.380649e-23,
+    "T_CMB_K": 2.7255,
+    "frequency_bands_GHz": [
+      30,
+      44,
+      70,
+      100,
+      143,
+      217,
+      353
+    ],
+    "polarization": "P=Q+iU; Galactic COSMO convention; no additional U flip; if rotating frame, rotate both P and spin basis consistently",
+    "map_units": "K_CMB; covariance K_CMB^2; final display microK_CMB by multiplying amplitudes by 1e6",
+    "intensity_units": "FIRAS MJy/sr; use 1 MJy/sr = 1e-20 W m^-2 Hz^-1 sr^-1 and the declared dB_nu/dT conversion, not an RJ approximation",
+    "sky": "exact original S7: 30021 NSIDE64 RING cells of 49152; native LFI NSIDE1024 and HFI NSIDE2048 pixel centres selected by their S7 parent",
+    "coordinate_order": "Use exact 24 labels in FULL7_CARRIER: real E2(5), E3(7), B2(5), B3(7); a_l0, sqrt(2) Re(a_lm), -sqrt(2) Im(a_lm)",
+    "operator": "Reconstruct linear Q/U weights from full7_math.independent_low_sum. No new smoothing, beam division, low-ell-only deconvolution, Q/U downgrade, colour correction or mask repair in the existing-observable lane. Different native beams make F tensor I24 an explicitly conditional common-response calculation, not an empirically qualified sky operator."
+  },
+  "reuse_exactly": {
+    "R32_primary_branch": "A_BT_1e-07, repair_05; all six branches retained as numerical convention/cutoff sensitivity, not probabilistic physical uncertainty",
+    "moment_order": [
+      "s",
+      "s_beta",
+      "d",
+      "d_beta",
+      "d_t",
+      "s_betabeta",
+      "d_betabeta",
+      "d_beta_t",
+      "d_tt"
+    ],
+    "pivots": {
+      "beta_s": -3.0,
+      "beta_d": 1.5,
+      "T_d_K": 20.0,
+      "t": "(T_d-20 K)/(20 K)",
+      "syn_reference_GHz": 30,
+      "dust_reference_GHz": 353
+    },
+    "spectra": "S_s=b_30*(nu/30GHz)^(beta_s+2); S_d=b_353*(nu/353GHz)^beta_d*B_nu(T)/B_353(T). F columns are derivatives at the pivot; factorials reside in moment amplitudes. Bandpass-integrate intensity before conversion to delivered K_CMB. LFI effective intensity transmission g(nu)*(nu_ref/nu)^2. HFI PSB353, declared flagged samples and cutoff. Do not regress to pre-repair dust normalization.",
+    "physical_monomials": {
+      "syn": [
+        "1",
+        "delta_beta_s",
+        "0",
+        "0",
+        "0",
+        "delta_beta_s^2/2",
+        "0",
+        "0",
+        "0"
+      ],
+      "dust": [
+        "0",
+        "0",
+        "1",
+        "delta_beta_d",
+        "delta_t",
+        "0",
+        "delta_beta_d^2/2",
+        "delta_beta_d*delta_t",
+        "delta_t^2/2"
+      ]
+    },
+    "metric": "D=diag(common_reference_column_scales); M=D^2 from repair_05. rho=||D U||_F has K_CMB units when U contains physical reference-temperature harmonic moments. Its scale is a convention, not an empirical contamination measurement.",
+    "known_guard": "Retain bp04_serialized_geometry.NUMERIC_BOUNDARY_HOLD and all inherited boundary handling; never clamp a negative or unresolved rho^2-J0 to zero."
+  },
+  "minimum_executable_unit": [
+    {
+      "step": 1,
+      "action": "Load actual FULL7_CARRIER frequency_canonical_7x24 and R32 F,a,Kinv, full24_center_linear_operator; assert exact band/coordinate ordering and units. Recount the FULL8 SMICA residual_B target norm from saved data. Preserve arbitrary overall phase and signed coordinates; no C_l-only reduction."
+    },
+    {
+      "step": 2,
+      "action": "Consume native released Planck QQ_COV,QU_COV,UU_COV on the same selected pixels for all seven actual frequency products. Open the existing exact filenames; bind to validated final input identities/headers, preserving partial acquisition receipts as history. Stream rows, inspect invalid values/PSD, and accumulate the conservative covariance-support quantities below. Do not rerun full map projection merely to read covariance."
+    },
+    {
+      "step": 3,
+      "action": "Evaluate the existing finite common-response geometry on actual Y. Compute J0, center, rho_min=sqrt(J0), and support curves explicitly labelled conditional sensitivity. rho_min is the minimum algebraic representation budget, not an upper physical bound. Use saved null directions/compensator to construct actual-Y foreground/CMB-equivalent examples at increasing amplitude and preserve full tensors and residual norms. This is a real coefficient-consumption obstruction result, not a synthetic sky claim."
+    },
+    {
+      "step": 4,
+      "action": "Read the actual FIRAS LOWF public FITS and its C/covariance, stripe, calibration, model-selection and beam source products as required for the proposed intensity functional. Identify supported frequencies from NUM_FREQ (first43 here); trailing 139 stored zero slots are not observed zero intensity. Compute actual S7 coverage and any proposed nonnegative kernel-domination certificate. A nearest-centre or nominal top-hat plot alone is insufficient. Report finite certified sectors and unbounded/uncertain sectors separately."
+    },
+    {
+      "step": 5,
+      "action": "If the positive-intensity/source-domain prerequisites below are established, derive source-based moment/TV upper budgets and confidence variants, evaluate support including Taylor remainder/noise/systematics, and compare in matching units/operators. Otherwise produce an honest source-bound numerical obstruction result with qualified_outputs=[] and the exact missing payload; a gap report never qualifies foreground_budget_result. Request next ready controller action. Independent review is required for any qualified scientific outcome."
+    }
+  ],
+  "map_noise_input_files": {
+    "root": "/mnt/extdrive/workdir/htt_open_data/planck/PR3/frequency",
+    "filenames": [
+      "LFI_SkyMap_030-BPassCorrected_1024_R3.00_full.fits",
+      "LFI_SkyMap_044-BPassCorrected_1024_R3.00_full.fits",
+      "LFI_SkyMap_070-BPassCorrected_1024_R3.00_full.fits",
+      "HFI_SkyMap_100_2048_R3.01_full.fits",
+      "HFI_SkyMap_143_2048_R3.01_full.fits",
+      "HFI_SkyMap_217_2048_R3.01_full.fits",
+      "HFI_SkyMap_353-psb_2048_R3.01_full.fits"
+    ],
+    "columns": [
+      "Q_STOKES",
+      "U_STOKES",
+      "QQ_COV",
+      "QU_COV",
+      "UU_COV"
+    ],
+    "header_rule": "Resolve actual released field names rather than assuming aliases; compare Galactic,NESTED,COSMO, NSIDE, units and BAD_DATA with saved headers. HFI is R3.01; LFI BPassCorrected R3.00. An old .receipt.json marked partial is not the final integrity oracle; follow FROZEN_INPUT/terminal acquisition manifests.",
+    "missing_joint_noise": "Cross-pixel and cross-channel covariance not supplied by marginal FITS blocks. SMICA O tensor is an uncentered outer product of one sky and is never a covariance."
+  },
+  "covariance_construction": {
+    "model": "n_bp has mean zero and released marginal Sigma_bp=[[QQ,QU],[QU,UU]]; conditional on those marginal variance estimates and explicitly excluded unbounded systematic biases. All unspecified correlations range over every PSD completion.",
+    "scalar_support": "For fixed real Q/U weights l_bp(v), sigma_worst(v) = sum_bp sqrt(l_bp(v)^T Sigma_bp l_bp(v)). Then sup_PSD_completion Var(sum l_bp^T n_bp) = sigma_worst(v)^2. This is sharp for one scalar direction via a shared latent scalar plus independent orthogonal residuals.",
+    "full_vector": "Store the marginal blocks/source operator or sufficient contractions and a callable support description, not a fabricated single full covariance. For a pair of outputs, |Cov(z_i,z_j)|<=sigma_worst(e_i)*sigma_worst(e_j). These entrywise bounds do not determine a joint covariance matrix.",
+    "simultaneous_confidence": "A covariance-only 1-alphaN Euclidean confidence ball is ||Ln||_2 <= sqrt(sum_i sigma_worst(e_i)^2/alphaN), by E||Ln||^2 and Markov; valid uniformly over unknown correlations if the marginal model is true. For a fixed prespecified scalar use Chebyshev sigma/sqrt(alphaN), or one-sided Cantelli sqrt((1-alphaN)/alphaN)*sigma. An adaptively chosen residual direction requires the simultaneous bound or a uniform procedure; no post-selection scalar CI.",
+    "alpha_policy": "Report alphaN=0.10,0.05,0.01 sensitivity. Combined foreground/noise coverage >=1-alphaF-alphaN via union bound, no independence claim. Any parameter-domain confidence alphaD must also be counted. Gaussian z scores optional only under a separately declared Gaussian joint model.",
+    "data_dependence": "Recomputed E-fit weights, cleaning weights, amplitude bounds or domain selection depend on data: include their joint uncertainty or optimize uniformly over their admitted confidence set. Freezing observed weights yields a conditional descriptive calculation only. Released noise covariance omits some calibration/leakage residuals; a stochastic-only bound may be reported with that explicit ceiling, not as total sky error."
+  },
+  "retained_unboundedness": {
+    "finite_R31": "F has row rank7. For any 24-vector s, U=F^+(Y-a s^T) reproduces actual Y; equivalently U_lambda=U_0-lambda c v^T, s_lambda=s_0+lambda v with Fc=a. No finite upper budget follows from Y alone. Nullspace directions also increase ||DU|| at unchanged Y. This preserves the original free coefficient class and does not assert arbitrary U is a physically realizable emissivity distribution.",
+    "general_complex_measure": "For k finite channel linear functionals on an unrestricted complex-measure domain with at least k+1 distinct atoms, their k by (k+1) response matrix has a nonzero kernel. Eta=sum c_j delta_theta_j has zero channel response but positive TV, and ||nu0+lambda Eta||TV >= |lambda| ||Eta||TV - ||nu0||TV. Finite extra polarized channels alone do not impose a TV upper bound. Positive independent intensity constraints can remove this construction by charging its absolute emissivity; therefore this is not a no-go against the proposed positive-intensity model."
+  },
+  "positive_intensity_model": {
+    "assumptions": [
+      "Each admitted synchrotron/dust emitting component is optically thin and adds nonnegative specific intensity; its Stokes coherency matrix is PSD, so reference |dnu|<=dmu_I. No hidden absorption/cancellation of intensity is used.",
+      "All polarized components relevant to the reported foreground are included in the physical model or given a separate finite bound. Merely modelling dust/synch does not certify arbitrary unmodelled polarized emission.",
+      "A compact spectral domain D and any out-of-domain intensity mass have independent physical justification, or are clearly declared conditional model restrictions; a sky-pixel standard deviation or a numerical lookup-table prior is not a LOS support bound.",
+      "Absolute source intensity/calibration and response conventions are preserved; raw differential Planck I, CMB monopole spectrum alone, CIB monopole alone, or CMB-subtracted FIRAS dust maps alone are not absolute total-sky upper bounds."
+    ],
+    "domination_theorem": "Let mu_c(n,theta)>=0 be reference intensity in K_CMB per solid angle, nu_c its complex polarization with |dnu_c|<=dmu_c. Let z_j= sum_c integral R_jc(n,theta) dmu_c + other nonnegative sky emission, with a simultaneously valid upper confidence set for z. For a target moment/noise-free observable support integrand h_c(n,theta)>=0, any fixed q_j>=0 satisfying sum_j q_j R_jc(n,theta)>=h_c(n,theta) everywhere implies target absolute support <=q^T z. With separate upper bounds z<=z_plus, use q^T z_plus. If q is data-selected, use a simultaneous source confidence region or optimize its support, not a fixed-q error bar.",
+    "global_shortcut": "If an actual full-sky absolute integrated spectral functional Z_upper exists, and normalized positive flux-preserving beams apply, use ||K||infinity times Z_upper divided by a positive minimum spectral response over D. Beam elongation then need not be separately reconstructed. FIRAS partial directional samples alone do not establish this full-sky Z_upper.",
+    "partial_coverage": "A nonnegative dual/LP certificate can use overlapping beam samples and may remain finite despite missing pixel centres. Evaluate the full target domain, including mask boundaries and beam leakage from outside S7. If there is a source atom with h>0 and all admitted source responses zero, scaling its positive intensity gives an explicit unbounded witness. Failure of one coarse LP or lack of a beam lower bound is UNKNOWN/HOLD, not proof of a physical hole.",
+    "spectral_response": "R_jc must include FIRAS channel spectral response and reference conversion. Do not treat a Fourier-spectrometer sample or an apodized line response as a positive delta-function without checking. A positive combination may be certified over the conditional continuum model domain, including bounds for any signed spectral lobes or unmodelled lines. Choose source weights without inspecting the target residual for tuning.",
+    "source_upper_confidence": "Use FIRAS Pass4 uncertainty law from Explanatory Supplement section7.10 Eq35: C_frequency*(delta_ppprime/N_p + beta_pk beta_pprimek + 0.04^2) plus gain and calibration terms as documented. Use original PDF to verify symbols; C-vector is sqrt(diagonal covariance), not variance. Include absolute external-calibrator uncertainty, correlated stripe/offset/gain and model-selection sensitivity; never scale all errors as independent pixels. No deterministic certainty is inferred from finite-sigma calibration estimates.",
+    "beam_evidence": "Released Moon radial profile is representative instantaneous response, normalized to unit central amplitude; it omits scan elongation and is not by itself a certified lower envelope. Exact scan-beam reconstruction is unnecessary if a weaker positive aggregate domination lower bound or a genuine full-sky integral bound suffices."
+  },
+  "moment_and_remainder_budget": {
+    "operator_level_TV": "For a fixed spin-functional K, A_K,c = integral |K(n)| dmu_c(n,theta). Bound it via positive intensity domination, not |integral K dnu|. Harmonic weights are signed/complex; do not apply Stokes positivity to a signed harmonic coefficient as though it were local intensity.",
+    "rho_mapping": "For the exact shared-response model, let L(n) map (ReP,ImP) to the24 real coordinates and m_c(theta) be the nine factorial-normalized monomials above. Then ||D U||F <= sum_c integral ||D m_c(theta)||2 * ||L(n)||op dmu_c(n,theta). This produces a conservative K_CMB rho_upper from the same positive-source dual; a less conservative joint moment set is allowed if fully specified. Native different-beam data require their actual operators instead of silently imposing shared L.",
+    "Taylor": "Use dimensionless theta=(beta_s,beta_d,t), explicit positive scalings if Euclidean domains are changed. For C3 spectral response on convex D and radius d, ||K r3|| <= A_TV*d^3/6 * sup_D ||K D^3 s||op. Prefer direct componentwise multivariate integral remainder bounds when the domain is large. Include exact-factorial convention. Compute and display the remainder even when it dominates the result.",
+    "support": "For justified omitted-moment ellipsoid u^T H u<=rho^2, support = rho*sqrt(v^T D2 H^-1 D2^T v)+epsilon3*||v||. H must be SPD on directions consumed; if a null direction affects the response and is unbounded, return unbounded. Real/imaginary stacked moments need not form a PSD matrix.",
+    "large_domain": "An absolute-intensity bound can be finite yet scientifically non-discriminating; that is an admissible conditional outcome. Do not choose a smaller domain/radius to force the remainder below the target."
+  },
+  "identified_response": {
+    "conditional_R32_geometry": "C=(F M^-1 F^T)^-1; ell^2=a^T C a; s0=Y^T C a/ell^2; J0=tr[Y^T(C-Caa^TC/ell^2)Y]. For rho^2>=J0 the center is s0 and radius sqrt((rho^2-J0)/ell^2), with existing numerical boundary guards. Below J0 the exact finite model is infeasible. Include actual-Y values and distinguish algebraic lower radius from source-derived upper radius.",
+    "physical_curves": "Only source-derived upper radii/credible variants from documented confidence/domain assumptions may be called physically justified. Arbitrary grids can be shown as sensitivity curves with no measured-contamination label. Add Taylor, response discrepancy and covariance-support bounds in compatible units; do not combine independent standard errors without justified independence.",
+    "comparator": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r27_eight_map_saved_tensor_comparison_numeric/run/products/FULL8_COMPARISON.npz",
+      "field": "norm(residual_B[target_ids==SMICA])",
+      "K_CMB": 3.792342121138971e-07,
+      "microK_CMB": 0.3792342121138971,
+      "meaning": "Descriptive B2+B3 Euclidean residual after E-only anchor fit relative143, original S7 and native delivered maps. Derived SMICA is neither an independent frequency channel nor foreground-free truth.",
+      "comparison_rule": "Only a bound on the same B residual/operator may be tested against this magnitude. Different operator/mask or a24-vector norm must be explicitly converted/recomputed. If uncertainty on this fitted statistic is unavailable, use the number only as a descriptive scale. A bound above the value gives no cleanliness guarantee; a small bound under an unverified model gives no detection."
+    }
+  },
+  "falsifiers_and_acceptance": {
+    "required_checks": [
+      "Actual carrier units/order agree with saved extraction; use observed Y, never synthetic_Y from R32 NPZ.",
+      "R32 corrected branch reproduces ell=3.118381427251084 within inherited numerical tolerances; do not rerun old campaign.",
+      "Free-class actual-Y compensators reproduce Y while amplitudes/budgets grow; report finite residuals and rank, not only status strings.",
+      "Two opposite polarization phases cancel M0 while intensity/TV adds; test physical |P|<=I before harmonic projection.",
+      "Known QU included, covariance marginals PSD, scalar CS construction saturates on a small analytic example, and uniform noise bound handles post-selected directions.",
+      "Removing a positively weighted coverage sector or admitting a spectral atom with vanishing source response must yield an unbounded/uncertain sector, not zero fill.",
+      "FIRAS NUM_FREQ limits valid samples, full absolute intensity retained, units and error-vector interpretation checked against original PDF.",
+      "Support increases monotonically under larger source/domain/confidence sets; coordinate/pivot changes transport metric and factorials consistently.",
+      "Exact spectral mixture examples lie inside the certified Taylor interval; a sampled grid maximum alone is not a supremum proof.",
+      "Distinguish conditional finite geometry, source-calibrated radius, physical applicability, statistical coverage, and formal independent admission."
+    ],
+    "numerical_tolerances": {
+      "carrier_reuse": "Exact stored labels and band order; numerical comparisons use original extraction tolerance, no arbitrary hash requirement for equivalent computed outputs.",
+      "PSD": "Symmetrize only roundoff-level asymmetry; negative eigenvalue below -64*eps*max(diagonal scale,tiny) is a substantive failure. Do not floor negative covariance or bad-data sentinels to zero.",
+      "upper_bounds": "Use analytic/interval envelopes or grid plus a proved Lipschitz/curvature bound. Bound numerical integration/optimization error explicitly and add it outward. Target error <=max(1e-12 K_CMB,1e-6*bound); resolving the comparator requires numerical error below1% of comparator. Tolerance failure gives unresolved, not changed physics.",
+      "inherited_geometry": "Preserve repair_05 near-boundary policy including NUMERIC_BOUNDARY_HOLD; no new clamp."
+    },
+    "qualification": "foreground_budget_result may qualify only after actual frequency/noise consumption, justified finite physical source/domain budget or a contract-accepted scientific obstruction outcome (the present live spec does NOT qualify a gap), full complex/remainder/covariance treatment, interpretable actual response, and fresh independent review. Missing finite-budget prerequisites leave qualified_outputs=[]; original acceptances unchanged."
+  },
+  "precise_current_missing_inputs": [
+    {
+      "id": "ABSOLUTE_INTENSITY_DOMINATION",
+      "missing": "An upper confidence bound on a genuine full-sky absolute spectral integral, OR a nonnegative aggregate FIRAS response lower certificate dominating the exact target kernel on all sky/spectral atoms it consumes.",
+      "bounded_repair": "Acquire/consume Pass4 sky spectra and error products; attempt the global-integral shortcut first if valid coverage/integration evidence exists, else a coarse positive dual followed by rigorous angular/spectral refinement. Do not demand an exact full beam model if a conservative lower bound suffices; record uncovered/uncertain sectors without changing S7."
+    },
+    {
+      "id": "PHYSICAL_LOS_DOMAIN",
+      "missing": "Independently justified compact support (or finite out-of-domain moment/TV bounds) for LOS synch/dust parameters, including neglected polarized components.",
+      "bounded_repair": "Use an explicitly identified physical foreground model with positive emitter intensities and documented finite support, or validate a prespecified domain with independent intensity/multifrequency constraints and account for residual mass. Current Planck Gaussian prior/skymap parameter scatter and numerical hard priors are not deterministic LOS support. A new purely hypothetical compact-domain family may be analysed, but must not be represented as a calibrated physical radius."
+    },
+    {
+      "id": "NATIVE_RESPONSE_OR_CONSERVATIVE_NORM",
+      "missing": "A qualified common-response operator for direct physical R32-ball inference, or an adequate conservative native-operator norm/positive-intensity domination formulation.",
+      "bounded_repair": "Prefer direct native-band bounds with response-norm controls; otherwise consume full beam/pixel/mask operators and high-ell leakage. Low-ell-only beam division cannot reconstruct masked discarded high modes."
+    }
+  ],
+  "outputs_required": {
+    "product_result": "RESULT.json with actual numerical tables, input identities, method/support laws, explicit conditional/physical status, missing-input objects where applicable, qualified_outputs and acceptance ceiling",
+    "arrays": "Actual-Y coefficient/center/residual tensors; numerical support curves and source/confidence parameters; covariance support contractions or reconstructible operator/source references. Do not require serialization of a giant covariance matrix if a correct support oracle is reconstructible.",
+    "implementation": "Runnable lower-tier implementation and focused falsifiers; source intake/evidence and first failures preserved.",
+    "receipt": "Actual packet/ACK/executor or UNKNOWN; actual producer invocations, elapsed/RSS/input reads, output identities. Preparation is not production.",
+    "review": "Fresh read-only independent reviewer who did not frame or implement R36-07."
+  },
+  "sources_primary": [
+    {
+      "url": "https://arxiv.org/abs/1701.00274",
+      "use": "Chluba, Hill, Abitbol intensity moment expansion; not a LOS polarization TV upper-bound source."
+    },
+    {
+      "url": "https://arxiv.org/html/2205.01049",
+      "locator": "section3.4, complex spin-moment normalization",
+      "use": "Complex amplitude cancellation and need for absolute-amplitude normalization."
+    },
+    {
+      "url": "https://arxiv.org/html/1807.06208v2",
+      "locator": "AppendixA.2, Table7, AppendixF.2",
+      "use": "Foreground modelling priors and intensity zero levels; hard spectral cutoffs explicitly serve numerical lookup tables, not observational LOS support."
+    },
+    {
+      "url": "https://arxiv.org/html/1807.06207",
+      "locator": "section3.1.4",
+      "use": "Planck intensity monopoles require external information; raw differential maps are not absolute positive-source bounds."
+    },
+    {
+      "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/",
+      "use": "Actual PR3 full-mission IQU covariance products, units and coordinate convention."
+    },
+    {
+      "url": "https://lambda.gsfc.nasa.gov/product/cobe/firas_dss_get.html",
+      "use": "FIRAS Pass4 destriped absolute sky spectra and exact filenames."
+    },
+    {
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/firas/doc/FES4_SEC8.pdf",
+      "locator": "section8.1-8.2",
+      "use": "Project sky spectra retain zodiacal intensity; CMB subtraction belongs to analysed component products."
+    },
+    {
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/firas/doc/FES4_SEC7.pdf",
+      "locator": "sections7.1,7.2,7.9.4,7.10/Eq35",
+      "use": "C-vector, interpixel stripes, gain/absolute calibration uncertainty, beam and covariance propagation."
+    },
+    {
+      "url": "https://lambda.gsfc.nasa.gov/product/cobe/firas_bp_info.html",
+      "use": "Instantaneous representative Moon beam omits scan elongation."
+    },
+    {
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/firas/beam_profile/firas_beam_radial_profile.txt",
+      "use": "Measured radial profile extends to9.1612968deg; positive measured sidelobes are not automatically a lower confidence envelope."
+    }
+  ],
+  "claim_firewall": {
+    "status": "SPECIFIED / CONDITIONAL / DIAGNOSTIC_ONLY as applicable; no new VALIDATED result from this preparation",
+    "transfer_source": "none; measured-map observational operator, no native solver",
+    "scientific_admission": false,
+    "allowed_final_scientific_outcome": "A source-calibrated finite but non-discriminating conditional bound is scientifically useful and may pass if all stated prerequisites are established. Actual obstruction and partial covariance consumption are useful research outputs but do not satisfy the current finite-budget qualification by themselves.",
+    "forbidden_promotions": [
+      "free R32 radius called empirical",
+      "Gaussian prior width called LOS compact support",
+      "derived SMICA called independent channel",
+      "one-sky outer product called covariance",
+      "mask holes or missing channels zero-filled",
+      "weak bound called foreground cleanliness or Bianchi detection",
+      "frame preparation called formal ACK or independent review"
+    ]
+  }
+}

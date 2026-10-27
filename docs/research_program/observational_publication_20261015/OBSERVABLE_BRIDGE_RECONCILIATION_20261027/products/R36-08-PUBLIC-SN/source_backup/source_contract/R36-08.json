@@ -1,0 +1,102 @@
+{
+  "status": "PREPARATION_ONLY_NOT_DISPATCH_NOT_PASS",
+  "owner": "/root/r36_scientific_contract_preparation",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "base_head_observed": "fb2bb0ac6a9537861c2c2e2c5157fc81787922d0",
+  "scope": "Source/convention/tolerance guidance for actual future selected R36 workers. Does not append frontier, reserve budget, grant review or qualify a product.",
+  "contract": {
+    "id": "R36-08-PUBLIC-SN",
+    "sources": [
+      "data_atlas"
+    ],
+    "preparation_only_intake": false,
+    "source_identity": {
+      "release_commit": "c447f0fea703fcd0fff57de5000947b5ca81286b",
+      "table_blob": "cce857db0c15e9ce7a0e0ce77452b6ff62af969a",
+      "covariance_blob": "d1a1498154e7ba826df14bdbef35ebcb7f5efba1",
+      "bytes": [
+        579283,
+        33284960
+      ],
+      "acquisition_ids": [
+        "R36_PUBLIC_SN_DATA",
+        "R36_PUBLIC_SN_STAT_SYS_COV"
+      ]
+    },
+    "qualification_steps": [
+      "Inputs already reused and metadata-validated by separate preparation with0 new network bytes; bind exact receipt/products above. Recheck only identities needed by the actual packet; no duplicate fetch.",
+      "Verify Git blob identity and local SHA256;1701 original rows and covariance header N1701 plus2893401 finite entries. Keep original index order, CID duplicates, survey IDs and calibrator/HF flags; subset rows and both covariance axes identically.",
+      "Use m_b_corr and full STAT+SYS covariance once. m_b_corr_ERR_DIAG is display-only; no added PV/error diagonal. Retain zHEL,zCMB,zHD,VPEC/VPECERR definitions; a change of redshift convention requires a new explicit response/covariance transformation.",
+      "Use the predeclared selection/mean/design above. Profile additive magnitude calibration and depth-level nuisance; MU_SH0ES does not independently measure H0.",
+      "Use whitened intercept-profiled GLS, exact covariance cross blocks and source-bound angular/depth response. Fixed Gaussian-law tests need known full rank and predeclared scan; report leverage/leave-survey robustness, not source independence. Joint CF4 analysis additionally needs overlap/shared PV covariance."
+    ],
+    "actual_unresolved_choice": "Low-z/depth cuts, nuisance and angular design are now predeclared above before fitting. Physical-frame and raw-to-congruence interpretation remain source-limited; the released-coordinate conditional comparator is executable.",
+    "boundary": "Released-magnitude alternate; no nominal SALT2 training parity or original H04/V04 admission.",
+    "qualified_product_expected": "public_sn_anisotropy_result",
+    "owned_paths_when_actually_dispatched": [
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN"
+    ],
+    "acceptance_authority": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-08-PUBLIC-SN",
+    "preparation_is_qualified_product": false,
+    "prepared_intake": {
+      "receipt": "/mnt/extdrive/workdir/htt_open_data/r36_public_sn_acquisition_preparation/PREPARATION_RETURN.json",
+      "sha256": "37d7aa8cbf64b8afbf13a7294930fe9150331ab8fd7f922f9c23631119bbf487",
+      "status": "PREPARATION_INTAKE_COMPLETE_NOT_SCIENTIFICALLY_QUALIFIED",
+      "new_network_bytes": 0,
+      "products": [
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/bridge20261027/pantheon/Pantheon+SH0ES.dat",
+          "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+          "git_blob_sha1": "cce857db0c15e9ce7a0e0ce77452b6ff62af969a",
+          "bytes": 579283
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/bridge20261027/pantheon/Pantheon+SH0ES_STAT+SYS.cov",
+          "sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+          "git_blob_sha1": "d1a1498154e7ba826df14bdbef35ebcb7f5efba1",
+          "bytes": 33284960
+        }
+      ]
+    },
+    "preregistration_status": "FROZEN_BY_SCIENTIFIC_PREPARER_BEFORE_ANY_R36_SN_FIT; actual packet and independent review still required",
+    "released_coordinate_chart": "Convert released RA,DEC degrees to n=(cosDEC cosRA,cosDEC sinRA,sinDEC), label axes as released RA/DEC Cartesian chart only. No independent ICRS/J2000 assertion is available in the intake receipt. Physical-frame interpretation remains held.",
+    "prespecified_selection": {
+      "primary": "IS_CALIBRATOR==0 and0.0233<=zHD<=0.15; finite required values. Keep every released duplicate observation and full covariance subblock in original row order. No use of USED_IN_SH0ES_HF as a second undocumented selection.",
+      "depth_bins": "bin0:0.0233<=zHD<0.06; bin1:0.06<=zHD<=0.15; boundary0.06 assigned to high bin exactly.",
+      "reason": "Declared low-z released-observable design, with conservative low-z exclusion and a fixed depth split overlapping the H03 tomography range. These cuts are method choices, not claims that peculiar velocity/selection effects vanish.",
+      "robustness": "Exactly one prespecified lower-z sensitivity extends bin0 to0.01<=zHD<0.06, leaving upper bin and all other choices fixed. No outcome-selected further cuts, masks or axes. Report insufficient rank instead of choosing a new cut."
+    },
+    "prespecified_mean": {
+      "reference": "mu_ref=5 log10[(1+zHEL)*integral_0^zHD dz/sqrt(0.3153*(1+z)^3+0.6847)]; dimensionless distance reference. The additive magnitude intercept absorbs c/H0,25 and absolute luminosity. This is a declared fixed-background conditional comparator, not a fitted physical mean law or independent H0 measurement.",
+      "observed_response": "y=m_b_corr-mu_ref [mag]. No PV addition/subtraction; use released total C [mag²] once.",
+      "nuisance": "One global additive magnitude intercept plus one high-bin offset. This is equivalent to two bin means and profiles calibration/mean level jointly with angular terms; neither bin mean estimates H0.",
+      "angular_design": "Within each of the two disjoint bins,8 columns [n_x,n_y,n_z,n^T E1 n,...,n^T E5 n], with the H03 Frobenius basis and its signs. Full design2 nuisance+16 angular=18 columns. Parameters are apparent magnitude dipole/STF coefficients, not shear/acceleration.",
+      "fixed_comparators": [
+        "Null:2 nuisance columns only.",
+        "Dipole:2 nuisance+6 bin-specific dipole columns.",
+        "Full:2 nuisance+16 bin-specific dipole/STF columns."
+      ],
+      "depth_image": "Report both signed8-vectors, their full16x16 covariance and high-minus-low8-vector using the exact covariance contrast, including cross-bin blocks. One combined16D primary test; binwise/contrast outputs descriptive unless a simultaneous testing rule is separately declared before use."
+    },
+    "covariance_and_test": {
+      "method": "Cholesky-whiten released subset C once; profile nuisances by orthogonal projection; unit-column SVD. Rank primary1e-10 with1e-12/1e-8 spectrum sensitivity. Preserve cross-CID, survey and depth terms.",
+      "primary_statistic": "DeltaT=T_null-T_full with rank difference r, under an explicitly stipulated fixed-design Gaussian released-total-covariance law. Report conditional chi-square_r upper-tail and nominal0.05 threshold only when rank/known-C premises hold. Do not rescale C to force reduced chi-square1, infer empirical source-population coverage or search a best direction after testing.",
+      "uncertainty": "Coefficient covariance from the same GLS; simultaneous ellipsoid for identifiable angular subspace. Rank deficiency returns fitted observable image/nullspace, not unique coefficients.",
+      "precision": "Finite and symmetric covariance; symmetry residual <=64*eps*N*maxabs(C). Require Cholesky PD or diagnose eigenmodes without jitter; any materially negative mode holds the fit. Float64 independent GLS/QR fixture rtol1e-9,atol1e-10 in dimensionless whitened quantities; column-order/unit invariance1e-10. Reference quadrature32 vs64 relative1e-10 for dimensionless integral, without ODE.",
+      "robustness_reporting": "Compare primary and predeclared lower-z sensitivity on their distinct cohorts. They overlap and are correlated; differences are sensitivity, not independent confirmations. No old distance/20-fit experiment is rerun."
+    },
+    "observer_chart_test": {
+      "deterministic_conversion": "At fixed released redshifts, m_star=m_b_corr-10log10(1+zHEL), mu_ref_star=mu_ref-10log10(1+zHEL). Transform both data and mean; residual y, selected covariance and fitted angular coefficients must remain unchanged to numerical tolerance. This is dL/(1+zHEL)^2 chart conversion conditional on released redshifts, not a new physical-frame fit.",
+      "physical_ceiling": "A physical boost also changes redshift vertex, directions/aberration, distance response, selection and possibly uncertainty; use R36-04 chart before such interpretation. zHD already uses VPEC corrections, while zHEL is the observed redshift label; substituting zCMB or zHD for photon redshift in the correction requires a source-bound derivation. Do not add redshift/PV uncertainty again when already in C.",
+      "falsifier": "Changing only data or only mean creates an artificial redshift-dependent residual; this inconsistent transformation must fail the equivalence test. No physical acceleration claim follows from apparent magnitudes."
+    }
+  },
+  "source_bindings": {
+    "data_atlas": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/DATA_ATLAS.json",
+      "sha256": "39294a4e135b0886831a1d96dc00989d01b8048790cdf92f1c789df1151c4919",
+      "bytes": 14137
+    }
+  }
+}
