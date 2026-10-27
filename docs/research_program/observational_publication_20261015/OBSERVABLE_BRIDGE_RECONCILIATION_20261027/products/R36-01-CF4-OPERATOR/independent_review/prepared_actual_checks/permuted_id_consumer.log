@@ -1,0 +1,24 @@
+PASS immutable source selected_source_observables.npz
+PASS immutable source H03_SOURCE_TOMOGRAPHY.json
+PASS immutable source H03_MEAN_GAUGE.json
+PASS immutable source h03_tomography.py
+PASS immutable source run_h03.py
+PASS immutable source h03_method_gauge.py
+PASS immutable source H03_RUN_RECEIPT.json
+PASS source columns
+PASS exact row count and shapes
+PASS unique ordered group IDs
+PASS finite physical input bounds
+PASS ICRS unit directions
+PASS four original methods
+PASS artifact SHA256
+PASS operator and gauge shapes
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/export_operator.py", line 274, in <module>
+    else: consume(args.product)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/export_operator.py", line 255, in consume
+    check(np.array_equal(ids, a["group_id"]), "operator source row identity")
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/export_operator.py", line 57, in check
+    raise AssertionError(label)
+AssertionError: operator source row identity

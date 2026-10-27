@@ -1,0 +1,63 @@
+{
+  "schema": "htt.r36.independent_raw_receipt/1",
+  "mode": "PREPARATION_ONLY_NOT_FORMAL_CONTROLLER_RETURN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "env_overrides": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "MPLCONFIGDIR": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/mplconfig"
+  },
+  "commands": [
+    {
+      "name": "independent_numerics",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/check_candidate.py"
+      ],
+      "started_utc": "2026-10-27T02:46:33.744191+00:00",
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "expected_outcome_matched": true,
+      "elapsed_seconds": 1.1632081579882652,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/independent_numerics.log",
+      "log_sha256": "7856729a43d72e3cf15d5c5a9426d994704b720e44452f64fd864acd25bc52f3"
+    },
+    {
+      "name": "actual_consumer",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/export_operator.py",
+        "consume"
+      ],
+      "started_utc": "2026-10-27T02:46:34.910834+00:00",
+      "exit_status": 0,
+      "expected_exit_status": 0,
+      "expected_outcome_matched": true,
+      "elapsed_seconds": 2.9590387360658497,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/actual_consumer.log",
+      "log_sha256": "878371afa0465931882fdbb2074024822f9d46c5b8145cf26496c9d9beaa0e98"
+    },
+    {
+      "name": "permuted_id_consumer",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/export_operator.py",
+        "consume",
+        "--product",
+        "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/permuted_id_fixture"
+      ],
+      "started_utc": "2026-10-27T02:46:37.872108+00:00",
+      "exit_status": 1,
+      "expected_exit_status": 1,
+      "expected_outcome_matched": true,
+      "elapsed_seconds": 0.6299566221423447,
+      "log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/permuted_id_consumer.log",
+      "log_sha256": "ffc78904848ff2a10677ca3ed637c011cc2b436905be9acd2dc74b2e9d29779c"
+    }
+  ]
+}

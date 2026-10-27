@@ -1,0 +1,46 @@
+{
+  "schema": "htt.r36.production_receipt/1",
+  "packet_id": "330a41bd1b4f2a5fc85a4d35cee08d31bd25fc272992c4a3ff63ecea1fc14d2f",
+  "task_id": "R36-01-CF4-OPERATOR",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "agent_id": "/root/rc_330a41bd1b4f2a5f",
+  "outcome": "success",
+  "acceptance_met": false,
+  "qualification_status": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+  "candidate_identity": "sha256:164f5f63084caaf4ca18062d314ef53cf4773c528e72333a6b6d24a7e4437b14",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/ARTIFACT_MANIFEST.json",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "requested_runtime": "gpt-6-sol/high",
+  "observed_runtime": "UNKNOWN",
+  "framing_contributor": "/root/r36_scientific_contract_preparation",
+  "commands": [
+    {
+      "command": "python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/export_operator.py export",
+      "exit_status": 1,
+      "raw_log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_exact_operator_actual/first_failure.log",
+      "classification": "implementation typo in STF einsum, before any artifact; corrected in final candidate"
+    },
+    {
+      "command": "python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/export_operator.py export",
+      "exit_status": 0,
+      "raw_log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_exact_operator_actual/export_final.log"
+    },
+    {
+      "command": "python docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/export_operator.py consume",
+      "exit_status": 0,
+      "raw_log": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_exact_operator_actual/consume_final.log"
+    }
+  ],
+  "source_identity": {
+    "EVIDENCE_MANIFEST.json": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+    "selected_source_observables.npz": "sha256:86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c"
+  },
+  "artifact_identity": "sha256:e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e",
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_exact_operator_actual/export_final.log",
+    "/mnt/extdrive/workdir/htt_open_data/r36_cf4_exact_operator_actual/consume_final.log",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/RESULT.json",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/ARTIFACT_MANIFEST.json"
+  ],
+  "scientific_admission": "PENDING_INDEPENDENT_REVIEW"
+}

@@ -1,0 +1,90 @@
+{
+  "copied_derived_artifact": {
+    "path": "audit_backup/derived/A_RAW_36x35970.npz",
+    "sha256": "e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e",
+    "bytes": 12435409,
+    "headers": [
+      {
+        "member": "A_raw.npy",
+        "descr": "<f8",
+        "fortran_order": true,
+        "shape": [
+          36,
+          35970
+        ]
+      },
+      {
+        "member": "AN.npy",
+        "descr": "<f8",
+        "fortran_order": false,
+        "shape": [
+          36,
+          3
+        ]
+      },
+      {
+        "member": "Qz_whitened.npy",
+        "descr": "<f8",
+        "fortran_order": false,
+        "shape": [
+          4,
+          35970,
+          4
+        ]
+      },
+      {
+        "member": "group_id.npy",
+        "descr": "<i8",
+        "fortran_order": false,
+        "shape": [
+          35970
+        ]
+      },
+      {
+        "member": "theta36.npy",
+        "descr": "<f8",
+        "fortran_order": false,
+        "shape": [
+          36
+        ]
+      },
+      {
+        "member": "covariance36.npy",
+        "descr": "<f8",
+        "fortran_order": false,
+        "shape": [
+          36,
+          36
+        ]
+      },
+      {
+        "member": "sigma.npy",
+        "descr": "<f8",
+        "fortran_order": false,
+        "shape": [
+          35970
+        ]
+      },
+      {
+        "member": "source_sha256.npy",
+        "descr": "<U64",
+        "fortran_order": false,
+        "shape": []
+      }
+    ],
+    "selection_reason": "Modest derived operator/covariance/gauge/noise arrays plus exact row IDs; no source positions/redshifts/distances or raw catalogue observation columns."
+  },
+  "excluded": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_obs_application_20261015/loop6_kinematics/results/cf4_rawgroup_appHubble_STF2_pooled_methods_v2/selected_source_observables.npz",
+      "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+      "reason": "Raw source observation catalogue excluded; obtain/reconstruct the exact released CF4 selected-source input using frozen contract and source identity."
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/permuted_id_fixture/A_permuted_ids.npz",
+      "sha256": "7f92bdd1b6ffdff3d9637d4bd1956af8aa2820d1149652d364c5777728066844",
+      "bytes": 12373796,
+      "reason": "Deliberately invalid reordered-ID fixture duplicates the modest derived operator; raw guard rejection and generating reviewer source retained."
+    }
+  ]
+}

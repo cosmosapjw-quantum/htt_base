@@ -1,0 +1,158 @@
+{
+  "schema": "htt.r36.independent_review_preparation/1",
+  "task_id": "R36-01-CF4-OPERATOR",
+  "reviewer_agent_id": "/root/r36_cf4_operator_fresh_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "mode": "READ_ONLY_PREPARATION_PENDING_REAL_REVIEW_PACKET",
+  "review_packet_id": null,
+  "controller_dispatch_acknowledged": false,
+  "verdict": "PASS",
+  "verdict_scope": "Exact retained h03_exact_operator export under the frozen fixed-distance/fixed-weight H03 working law only.",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "formal_controller_binding_required": true,
+  "candidate_identity": "sha256:164f5f63084caaf4ca18062d314ef53cf4773c528e72333a6b6d24a7e4437b14",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/ARTIFACT_MANIFEST.json",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "implementation_packet_id": "330a41bd1b4f2a5fc85a4d35cee08d31bd25fc272992c4a3ff63ecea1fc14d2f",
+  "contract_path": "/mnt/extdrive/workdir/htt_open_data/r36_scientific_contract_preparation/R36-01.json",
+  "contract_sha256": "ea8b302fa428c69411e6ee0bca94ef971319106411f43b6f7eb6eaeecff3643d",
+  "source_npz_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "artifact_npz_sha256": "e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e",
+  "independence": {
+    "implementation_author": "/root/rc_330a41bd1b4f2a5f",
+    "contract_contributor": "/root/r36_scientific_contract_preparation",
+    "reviewer_authored_product_or_contract": false,
+    "other_review_verdict_read": false,
+    "review_product_or_state_mutations": false,
+    "independent_method": "Explicit scalar STF features; weighted normal-equation residuals of retained A; source-chunked direct variance contraction; saved Qz range/rank checks; executable original consumer and deliberately corrupted row-ID fixture."
+  },
+  "summary": "No blocking defect found. All 76 independent retained-artifact checks passed; actual consume exited 0 and the permuted-row-ID consumer fixture was rejected at its identity guard. No estimator/sensitivity-bank refit was executed.",
+  "findings": [],
+  "numerical_assessment": {
+    "theta": {
+      "check": "saved_theta_parity",
+      "pass": true,
+      "max_abs": 5.706546346573305e-14,
+      "max_tolerance_fraction": 5.624251442347437e-06,
+      "atol": 1e-08,
+      "rtol": 1e-10
+    },
+    "full_covariance": {
+      "check": "saved_full_covariance_parity",
+      "pass": true,
+      "max_abs": 2.220446049250313e-16,
+      "max_tolerance_fraction": 7.319921731616693e-07,
+      "atol": 1e-10,
+      "rtol": 1e-09
+    },
+    "covariance_PSD": {
+      "check": "covariance_PSD_no_clipping",
+      "pass": true,
+      "min_eigenvalue": 0.001016441437117307,
+      "max_eigenvalue": 0.9211399794580806,
+      "psd_roundoff_bound": 5.115907697472721e-13,
+      "symmetry_max_abs": 2.7755575615628914e-17
+    },
+    "raw_operator_max_weighted_normal_equation_relative": 2.220073684849815e-15,
+    "raw_operator_max_A_X_error": 8.881784197001252e-16,
+    "gauge_joined_ranks": [
+      12,
+      12,
+      12,
+      12
+    ],
+    "gauge_projected_ranks": [
+      8,
+      8,
+      8,
+      8
+    ],
+    "response": {
+      "check": "source_observer_rank_and_null",
+      "pass": true,
+      "singular_value_ratios": [
+        1.0,
+        0.939671880898956,
+        0.9116593205159231,
+        2.767765924856065e-16,
+        5.623877622934714e-17,
+        3.5498277713930135e-17
+      ],
+      "null_residual_max": 0.0
+    },
+    "wrong_row_order": {
+      "check": "unchanged_A_permuted_rows_falsifies",
+      "pass": true,
+      "max_theta_error": 132.34524923503994
+    },
+    "author_parity_assessment": "The reported theta 7.19e-14 and covariance 2.22e-16 are not acceptance inputs. Independent retained-array application gives 5.706546346573305e-14 and 2.220446049250313e-16. Largest normalized errors consume 5.624251442347437e-6 and 7.319921731616693e-7 of the predeclared elementwise allowances. Difference in theta roundoff is numerical equivalence, not a source-identity mismatch."
+  },
+  "physics_and_claim_audit": {
+    "assumptions": "Frozen outward ICRS J2000 n, released z_CMB, d=10^((dmzp-25)/5) Mpc, cz km/s; fixed distances/weights/directions; Gaussian width .012 and centers .025,.04,.06,.08; diagonal working sigma with 250 km/s PV and 70 km/s/Mpc reference.",
+    "units_signs": "A has Mpc^-1, theta km/s/Mpc, covariance (km/s/Mpc)^2; metric (-,+,+,+), c=299792.458 km/s. Under stipulated additive radial velocity, source +AN and observer -AN. Three common-boost nulls are exact in the saved response.",
+    "gauge": "Raw coefficients have identity nuisance treatment. Separate whitened four-method Qz spans d*onehot(method); joined rank 12/13, projected theta rank 8/9. No anchored monopole is exported.",
+    "source_order": "Exact source bytes and all 35970 unique group IDs match in unchanged order. Consumers reject a digest-consistent but misordered group-ID artifact.",
+    "covariance": "All six cross-window blocks independently match; minimum eigenvalue 0.001016441437117307 exceeds the negative roundoff floor by many orders. No material clipping.",
+    "figure_and_table": "TABLE.csv values independently match theta/covariance; FIGURE.png inspected and labels show a working coefficient. INTERPRETATION.md states correlated windows and conditional noise bars.",
+    "forbidden_claim_drift": "No forbidden positive claim found; no physical H(z), native transfer/family inference, empirical CF4 likelihood or original42 promotion.",
+    "safe_claim": "A source-bound, executable diagnostic export of the exact fixed-weight H03 estimator and its conditional cross-window covariance."
+  },
+  "limits": [
+    "The source frame is bound to the frozen NPZ/producer convention; this review does not reconstruct a catalogue sky-coordinate transformation or verify a complete observer-frame correction.",
+    "The response is a derivative at fixed distances, weights and directions. It excludes redshift-window, distance and aberration changes.",
+    "The diagonal working covariance excludes empirical CF4 selection, method/calibration covariance and the physical peculiar-velocity field.",
+    "The actual NPZ is external at the manifest-resolved path and was loaded successfully here; a portable relocation is outside this candidate.",
+    "This prepared verdict does not ACK a controller packet, qualify a product, or change original scientific acceptances. Exact unchanged candidate/input must be checked again when the real review packet is supplied."
+  ],
+  "reuse_and_execution": {
+    "reused": "Exact frozen H03 source, saved tomography/gauge and existing derivations; no unchanged theory reproof.",
+    "not_executed": [
+      "run_h03.compute/main",
+      "sensitivity banks",
+      "old20fits",
+      "R30 PV600 bank",
+      "native solver",
+      "ODE evolution"
+    ],
+    "commands_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/RAW_REVIEW_RECEIPT.json",
+    "independent_checks": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/NUMERICAL_CHECKS.json",
+    "retained_author_first_failure": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_exact_operator_actual/first_failure.log",
+    "author_first_failure_classification": "Retained missing STF einsum operand; final candidate fixes it and actual consume plus explicit independent STF contraction pass."
+  },
+  "next_action": "Wait for actual R36-01 review packet via real followup and ACK; verify exact packet candidate/input, then bind this unchanged scientific review without rerunning completed numerical checks.",
+  "evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/check_candidate.py",
+      "sha256": "6ef1ad6f6541c25924951a01a0c832db5efe5806e00c3536bc98cc755c2bc0c0"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/run_review_checks.py",
+      "sha256": "525024697b362776127d5b87cee887c5d004bd42a8bcf05a12989275984e57c6"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/NUMERICAL_CHECKS.json",
+      "sha256": "5cc09e247f97c6dba42df824e9290f22ff7e2e05093d9db1a9aafc58801b185f"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/RAW_REVIEW_RECEIPT.json",
+      "sha256": "f57abf72095eb15b71286b489223be6fc710a5a61de24e97a54403200f12f187"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/independent_numerics.log",
+      "sha256": "7856729a43d72e3cf15d5c5a9426d994704b720e44452f64fd864acd25bc52f3"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/actual_consumer.log",
+      "sha256": "878371afa0465931882fdbb2074024822f9d46c5b8145cf26496c9d9beaa0e98"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_cf4_operator_fresh_review/permuted_id_consumer.log",
+      "sha256": "ffc78904848ff2a10677ca3ed637c011cc2b436905be9acd2dc74b2e9d29779c"
+    }
+  ]
+}

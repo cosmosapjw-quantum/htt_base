@@ -1,0 +1,135 @@
+{
+  "status": "PREPARATION_ONLY_NOT_DISPATCH_NOT_PASS",
+  "owner": "/root/r36_scientific_contract_preparation",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "base_head_observed": "fb2bb0ac6a9537861c2c2e2c5157fc81787922d0",
+  "scope": "Source/convention/tolerance guidance for actual future selected R36 workers. Does not append frontier, reserve budget, grant review or qualify a product.",
+  "contract": {
+    "id": "R36-01-CF4-OPERATOR",
+    "qualified_target": "h03_exact_operator",
+    "readiness": "EXACT_RAW_CACHE_AND_PRODUCER_LOCATED",
+    "sources": [
+      "h03_raw",
+      "h03_operator",
+      "h03_producer",
+      "h03_gauge",
+      "h03_saved",
+      "h03_saved_gauge",
+      "h03_receipt"
+    ],
+    "immutable_input": {
+      "N": 35970,
+      "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+      "columns": [
+        "z_CMB",
+        "dmzp",
+        "e_dmzp",
+        "n_J2000",
+        "method_family",
+        "group_id"
+      ],
+      "row_order": "NPZ order, no sorting/subsetting; retain all unique IDs",
+      "frame": "outward ICRS J2000 n; z_CMB is released metadata, not proof of a complete observer-frame correction"
+    },
+    "fixed_parameters": {
+      "window_centres": [
+        0.025,
+        0.04,
+        0.06,
+        0.08
+      ],
+      "width_z": 0.012,
+      "H_reference_km_s_Mpc": 70.0,
+      "working_PV_km_s": 250.0,
+      "methods": [
+        "FP",
+        "OTHER",
+        "SN",
+        "TF"
+      ],
+      "STF_order": [
+        "diag(1,-1,0)/sqrt2",
+        "diag(1,1,-2)/sqrt6",
+        "sym(xy)/sqrt2",
+        "sym(xz)/sqrt2",
+        "sym(yz)/sqrt2"
+      ]
+    },
+    "operator": "d=10^((dmzp-25)/5) Mpc; y=c*z_CMB km/s; X=d*[1,n,STF(n*n)]; sigma=hypot(250,70*(ln10/5)*d*e_dmzp); w_k=exp(-0.5*((z-zk)/.012)^2)/sigma^2. Thin QR of sqrt(w)X gives A_k=R^-1 Q^T diag(sqrt(w)); stack in centre order into 36x35970. Units A=Mpc^-1, theta=km/s/Mpc.",
+    "critical_nuisance_resolution": "The original saved theta4x9 has NO method projection: nuisance treatment is identity. Export this A_raw first. The separate H03_MEAN_GAUGE has Z=d*onehot(method), four nuisance columns, joined rank12 and projected theta rank8. Export its whitened projector or an explicitly named projected identifiable response only as a separate product; it cannot reproduce the original 36 raw coefficients or furnish an anchored monopole. No R26 14-nuisance/K_fact substitution.",
+    "leading_physical_response": "For a stipulated additive radial-velocity perturbation at fixed d,w,n, R=I_N and N=n_J2000; response [A_raw N,-A_raw N] for constant source bulk and observer velocity. Only their difference is identified; null vectors (h,h). A change of redshift/windows/distance/aberration is a separate full estimator derivative.",
+    "allowed_new_execution": [
+      "Read exact cache; construct/export four fixed QR row operators or equivalent streamed blocks only once; apply A to saved y and sigma for parity.",
+      "Do not call run_h03.compute/main: it also reruns 4 baseline fits, method/patch/north sensitivity banks. Reuse saved sensitivity outcomes. Export construction is not a new selected-model fit.",
+      "Retain A_raw, source IDs/config, 36-vector, 36x36 covariance, AN, separate nuisance representation and compact parity receipt; no N-by-N covariance."
+    ],
+    "predeclared_tolerances": {
+      "theta_allclose": {
+        "rtol": 1e-10,
+        "atol": 1e-08,
+        "units": "km/s/Mpc"
+      },
+      "covariance_allclose": {
+        "rtol": 1e-09,
+        "atol": 1e-10,
+        "units": "(km/s/Mpc)^2"
+      },
+      "A_k_X_identity_max_abs": 1e-09,
+      "n_unit_abs": 5e-12,
+      "scaled_rank_primary": 1e-10,
+      "basis_frobenius_abs": 1e-12,
+      "justification": "Inherited QR/SVD source guard is1e-8; saved differences are2.89e-14 and3.09e-14. Four saved design conditions4.13,4.66,6.98,13.98 are moderate. Float64 accumulation over35970 rows has gamma_N about8e-12; 1e-9 covariance relative and1e-10 absolute allow platform contraction variation while remaining far below saved covariance min eigenvalue0.00101644. These are numerical replay criteria, not physical uncertainties."
+    },
+    "minimal_controls": [
+      "Exact source hash and row identity; A_k X=I9; A y parity; A diag(sigma²) A^T parity including nonzero cross-window blocks.",
+      "Compare AN against every saved 9x3 bulk response and A(d*n) against dipole selector; opposite-sign observer columns must not gain rank.",
+      "Separate gauge test: monopole=sum four method columns, joined rank12/projected rank8; no arbitrary anchored parameter estimate.",
+      "Fail one deliberately permuted-source-row/unchanged-A fixture; require covariance PSD within 64*eps*36*matrix_scale roundoff, no material clipping."
+    ],
+    "stop": "Immutable input mismatch or parity failure; retain first outcome. Missing empirical CF4 law does not block this exact deterministic export.",
+    "qualified_product_expected": "h03_exact_operator",
+    "owned_paths_when_actually_dispatched": [
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR"
+    ],
+    "acceptance_authority": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json#R36-01-CF4-OPERATOR",
+    "preparation_is_qualified_product": false
+  },
+  "source_bindings": {
+    "h03_raw": {
+      "path": "docs/research_program/theory_obs_application_20261015/loop6_kinematics/results/cf4_rawgroup_appHubble_STF2_pooled_methods_v2/selected_source_observables.npz",
+      "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+      "bytes": 1235181
+    },
+    "h03_operator": {
+      "path": "docs/research_program/observational_publication_20261015/H03_20261016/src/h03_tomography.py",
+      "sha256": "1c7fe777e3f44183f501e599877964aa212912b0c8c78c905e0aa9404ac03d40",
+      "bytes": 7695
+    },
+    "h03_producer": {
+      "path": "docs/research_program/observational_publication_20261015/H03_20261016/src/run_h03.py",
+      "sha256": "dd6554623e18db399d310d0bdb17b3e393a3998f1b859779f15ff9e64703007c",
+      "bytes": 10460
+    },
+    "h03_gauge": {
+      "path": "docs/research_program/observational_publication_20261015/H03_20261016/src/h03_method_gauge.py",
+      "sha256": "13f9dd8e5be1ae33cd9c1d438f4e46a74fbf6b5c73c7d83e021dd6c6ab6dcf14",
+      "bytes": 2334
+    },
+    "h03_saved": {
+      "path": "docs/research_program/observational_publication_20261015/H03_20261016/results/source_h03_v1/H03_SOURCE_TOMOGRAPHY.json",
+      "sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+      "bytes": 111342
+    },
+    "h03_saved_gauge": {
+      "path": "docs/research_program/observational_publication_20261015/H03_20261016/results/source_h03_v1/H03_MEAN_GAUGE.json",
+      "sha256": "c4ea98f7b80b0f47ee649a727999b5450373c554327e3b21412b2e6ab7d0a4c9",
+      "bytes": 4965
+    },
+    "h03_receipt": {
+      "path": "docs/research_program/observational_publication_20261015/H03_20261016/docs/H03_RUN_RECEIPT.json",
+      "sha256": "e13eaacbc23c5d44d517cae068bfd7e286fb9c9797b01da9f42b2dfb20edff06",
+      "bytes": 1546
+    }
+  }
+}
