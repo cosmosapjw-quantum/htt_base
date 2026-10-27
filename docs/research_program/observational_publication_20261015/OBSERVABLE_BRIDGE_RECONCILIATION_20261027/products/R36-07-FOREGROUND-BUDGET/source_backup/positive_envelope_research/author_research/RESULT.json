@@ -1,0 +1,137 @@
+{
+  "schema": "R36-07-continuing-positive-envelope-research-v1",
+  "task_id": "R36-07-FOREGROUND-BUDGET",
+  "same_issue_continuation": true,
+  "status": "RESEARCH_COMPLETED_INPUT_HOLD",
+  "physical_budget_status": "NOT_QUALIFIED",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "new_campaign_or_task_or_attempt_reset": false,
+  "author": {
+    "agent_id": "/root/r36_foreground_fresh_review",
+    "role": "research contributor for new method",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "independent_reviewer_of_this_new_method": false
+  },
+  "formal_controller_packet": null,
+  "formal_controller_ack": null,
+  "formal_binding_note": "Preparatory source/math research in same issue; host will bind formal 07 research followup when selected. This artifact creates no formal acceptance.",
+  "sealed_prior": {
+    "candidate_identity": "34ac36b0a774589c213d33943e4a4c25678d4e095e9b9f6062081118a2129cc9",
+    "RESULT_sha256": "2b125b9a98060f48324740848c3b09b3b23ac00185e1a53e241645274c0d71d4",
+    "partial_review_path": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_fresh_review/REVIEW_RESULT.json",
+    "prior_files_changed": false
+  },
+  "new_results": [
+    {
+      "id": "NONCOMPACT_BETA_PASSBAND_ENVELOPE",
+      "status": "ANALYTIC_DERIVATION_WITH_NUMERIC_WITNESSES_AWAITING_INDEPENDENT_REVIEW",
+      "statement": "Two positive source functionals whose baseline-weighted mean log frequencies bracket 30 GHz bound every finite absolute beta moment via Jensen and exponential tails. No compact beta prior is needed.",
+      "formula": "M_k <= (k/(e a))^k J_minus + (k/(e b))^k J_plus, k>=1; M0 <= J_minus^(b/(a+b)) J_plus^(a/(a+b))",
+      "proof": "DERIVATION.md sections 1-3"
+    },
+    {
+      "id": "COMPLEX_TV_AND_REMAINDER",
+      "status": "ANALYTIC_DERIVATION_WITH_NUMERIC_WITNESSES_AWAITING_INDEPENDENT_REVIEW",
+      "statement": "|deta|<=dmu bounds full complex factorial moments. Exact exponential-interpolation and cubic-margin formulas bound total-variation second-order Taylor remainder; include finite endpoints and native passband integration.",
+      "proof": "DERIVATION.md sections 4-5"
+    },
+    {
+      "id": "ACTUAL_RETAINED_SOURCE_INTAKE",
+      "status": "ACQUIRED_AND_INSPECTED",
+      "files": 15,
+      "Haslam_full_pixels": 3145728,
+      "DIRBE_full_pixels": 393216,
+      "DIRBE_all_pixels_observed": true,
+      "DIRBE_ZLREMOV": false,
+      "source_intake": "SOURCE_INTAKE.json"
+    },
+    {
+      "id": "ACTUAL_DIRBE_PASSBAND",
+      "status": "TABLE_INTEGRATION_UNDER_DECLARED_INTERPOLANT",
+      "tbar": 3.709985311039402,
+      "baseline_m_MJy_sr_per_K_CMB30": 0.6488586304557223,
+      "lower_response_uncertainty_certificate_present": false
+    },
+    {
+      "id": "EXECUTABLE_CONDITIONAL_CALCULATION",
+      "status": "COMPLETED_SENSITIVITY_ONLY",
+      "rho_syn_K_CMB": 7.898526171756386,
+      "assumptions": [
+        "Haslam monochromatic response",
+        "both positive global response lower constants kappa=1",
+        "raw sums equal true total intensities with no calibration/noise/processing error",
+        "pure unabsorbed common power laws over entire bracket",
+        "same reference emitter sky across Haslam, DIRBE and target-map observing epochs, or separately bounded changes"
+      ],
+      "is_measured_physical_budget": false,
+      "is_full_nine_moment_budget": false,
+      "command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python reproduce_research.py"
+    },
+    {
+      "id": "MBB_UNBOUNDED_SECTORS",
+      "status": "EXPLICIT_ANALYTIC_AND_NUMERIC_COUNTEREXAMPLES",
+      "statement": "Fixed-amplitude T->infinity defeats the original t and t^2 moment norm while finite-band intensities stay bounded; T->0 with beta=h*353GHz/(kT)-3 hides an increasingly large 353GHz peak from Haslam and DIRBE. These concern the unrestricted mathematical MBB class, not viable dust claims.",
+      "witnesses": "NUMERIC_RESEARCH.json#unbounded_sector_witnesses"
+    },
+    {
+      "id": "AGGREGATE_RESPONSE_COUNTEREXAMPLE",
+      "status": "EXPLICIT_TWO_ATOM_WITNESS",
+      "statement": "Positive row-normalized kernels and populated observations alone do not give a numerical global mass bound; an aggregate column-response lower bound suffices. No actual DIRBE/FIRAS hole is claimed."
+    }
+  ],
+  "remaining_inputs": [
+    {
+      "id": "SOURCE_UPPER_FUNCTIONAL_AND_AGGREGATE_RESPONSE",
+      "status": "HOLD",
+      "minimal_payload": "Prespecified nonnegative source weights and a simultaneous upper bound including absolute gain/offset, noise and map-processing loss, together with kappa>0 or direct positive spectral-angular domination of the consumed moment weight.",
+      "actual_gap": "Haslam multiple-survey nominal label has no acquired lower passband functional; DIRBE annual robust map coadds and pixel-dependent PSFs lack a certified aggregate lower response/loss bound for arbitrary positive sky atoms. Published calibration estimates are available and may support an explicit conditional error model.",
+      "not_required": [
+        "exact beam equality",
+        "independent pixel noise",
+        "byte-equivalence of FIRAS C^2 and covariance diagonal",
+        "proof of actual beam holes"
+      ]
+    },
+    {
+      "id": "PHYSICAL_SPECTRAL_CLASS_AND_OMITTED_COMPONENTS",
+      "status": "HOLD",
+      "minimal_payload": "Physically supported common power-law class across the bracket or bounded curvature/phase deviations; same emitter sky across source/target epochs or bounded temporal changes; dust and other polarized-emitter tail-moment/response domination. A justified noncompact tail inequality can replace compact support.",
+      "witness": "DERIVATION.md section 8; NUMERIC_RESEARCH.json#unbounded_sector_witnesses",
+      "not_required": [
+        "an invented rectangular LOS prior",
+        "fitted map parameter scatter treated as LOS support"
+      ]
+    },
+    {
+      "id": "NATIVE_TARGET_RESPONSE_BOUND",
+      "status": "HOLD_FOR_PHYSICAL_ACTUAL_Y_CONNECTION",
+      "minimal_payload": "Conservative bound for the retained native-band spin operators including mask/high-ell leakage, or direct source-to-target positive domination. Reuse actual Y and all existing native noise results."
+    }
+  ],
+  "resume": {
+    "same_issue": "R36-07-FOREGROUND-BUDGET",
+    "production_repair_contract_issued": false,
+    "reason": "Physical input fields remain absent; a frozen contract with invented numerical response/domain bounds would manufacture the result.",
+    "next_executable_checkpoint": "Host may source-publish the clearly conditional research artifacts after fresh independent review. For physical continuation, first supply/derive a quantitative aggregate source response or global flux-loss bound and a supported dust/tail class; then freeze their values and confidence convention for a lower-tier component-budget calculation.",
+    "lower_tier_consumption_after_input_and_review": "Read existing Y/F/D/noise artifacts unchanged; apply Jensen/envelope formulas and native-band remainder integrals to the supplied source certificate; report component and total budgets separately; no seven-band rerun.",
+    "new_method_needs_different_independent_reviewer": true
+  },
+  "boundaries": {
+    "repository_mutations": false,
+    "git_or_STATE_mutations": false,
+    "children_spawned": false,
+    "original_7band_or_noise_reruns": false,
+    "new_source_stream_reserve_GiB": 2,
+    "physical_acceptance_or_original42_promotion": false
+  },
+  "artifacts": {
+    "derivation": "DERIVATION.md",
+    "numeric": "NUMERIC_RESEARCH.json",
+    "reproducer": "reproduce_research.py",
+    "source_intake": "SOURCE_INTAKE.json"
+  },
+  "completed_utc": "2026-10-27T04:50:25.666436+00:00"
+}

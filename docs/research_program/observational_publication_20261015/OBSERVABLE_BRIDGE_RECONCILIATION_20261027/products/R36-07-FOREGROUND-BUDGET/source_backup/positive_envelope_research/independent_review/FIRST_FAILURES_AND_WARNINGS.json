@@ -1,0 +1,33 @@
+{
+  "review_scientific_failures": [],
+  "preflight_lookup_failure": {
+    "command": "rg ... /mnt/extdrive/workdir/htt_open_data/r36_foreground_budget_actual/RESULT.json ...",
+    "exit": 2,
+    "reason": "External ACTUAL_GEOMETRY directory has no RESULT.json; existing repository candidate RESULT was found and read instead; no production change"
+  },
+  "reproduction_warning_file": "raw/reproduce.stderr",
+  "independent_fixture_first_failure": {
+    "cause": "mpmath default almosteq tolerance at 70 digits is too strict for multi-operation k=50 equality witness",
+    "detail": [
+      {
+        "k": 50,
+        "c": "4.297685486240130727570734836489800590589702538848581354474033837507817",
+        "relative_error": "1.539465443400541102476550279450924602716030303683653492229044531289035e-70"
+      },
+      {
+        "k": 50,
+        "c": "3.709985311039402",
+        "relative_error": "1.8111358157653424735018238581775583561365062396278276379165229779871e-70"
+      }
+    ],
+    "repair": "Use explicit relative tolerance 1e-60 for 70-digit arithmetic identity checks. Analytic maximum follows exactly by differentiation; no theorem acceptance relaxed.",
+    "raw_script": "raw/independent_checks_run1.py",
+    "raw_stderr": "raw/independent_checks_run1.stderr"
+  },
+  "independent_fixture_second_failure": {
+    "cause": "Exact == comparison of rounded mpmath decimal matrix product rejected expected y=1,2 at roundoff",
+    "repair": "Use exact Fraction arithmetic for rational two-atom spatial example",
+    "raw_script": "raw/independent_checks_run2.py",
+    "raw_stderr": "raw/independent_checks_run2.stderr"
+  }
+}

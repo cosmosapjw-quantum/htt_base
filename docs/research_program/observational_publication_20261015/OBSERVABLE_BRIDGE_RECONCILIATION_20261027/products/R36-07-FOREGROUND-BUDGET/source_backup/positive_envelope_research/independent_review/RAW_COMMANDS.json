@@ -1,0 +1,142 @@
+[
+  {
+    "name": "branch",
+    "argv": [
+      "git",
+      "-C",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "branch",
+      "--show-current"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 0.005009111948311329,
+    "stdout": "raw/branch.stdout",
+    "stderr": "raw/branch.stderr"
+  },
+  {
+    "name": "head",
+    "argv": [
+      "git",
+      "-C",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 0.0032431099098175764,
+    "stdout": "raw/head.stdout",
+    "stderr": "raw/head.stderr"
+  },
+  {
+    "name": "origin",
+    "argv": [
+      "git",
+      "-C",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "remote",
+      "get-url",
+      "origin"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 0.004084237152710557,
+    "stdout": "raw/origin.stdout",
+    "stderr": "raw/origin.stderr"
+  },
+  {
+    "name": "status",
+    "argv": [
+      "git",
+      "-C",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "status",
+      "--short"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 0.4552456378005445,
+    "stdout": "raw/status.stdout",
+    "stderr": "raw/status.stderr"
+  },
+  {
+    "name": "reproduce",
+    "argv": [
+      "python",
+      "reproduce_research.py"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 1.5058737760409713,
+    "stdout": "raw/reproduce.stdout",
+    "stderr": "raw/reproduce.stderr"
+  },
+  {
+    "name": "independent_checks",
+    "argv": [
+      "python",
+      "independent_checks.py"
+    ],
+    "exit_code": 1,
+    "elapsed_s": 0.265928405104205,
+    "stdout": "raw/independent_checks.stdout",
+    "stderr": "raw/independent_checks.stderr"
+  },
+  {
+    "name": "independent_checks_run2",
+    "argv": [
+      "python",
+      "independent_checks.py"
+    ],
+    "exit_code": 1,
+    "elapsed_s": 0.5668922229669988,
+    "stdout": "raw/independent_checks_run2.stdout",
+    "stderr": "raw/independent_checks_run2.stderr"
+  },
+  {
+    "name": "independent_checks_run3",
+    "argv": [
+      "python",
+      "independent_checks.py"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 0.4897743340115994,
+    "stdout": "raw/independent_checks_run3.stdout",
+    "stderr": "raw/independent_checks_run3.stderr"
+  },
+  {
+    "name": "DIRBE_supplement_source_extract",
+    "argv": [
+      "pdftotext",
+      "-layout",
+      "/mnt/extdrive/workdir/htt_open_data/r36_foreground_envelope_independent_review/source/des_v2_3.pdf",
+      "/mnt/extdrive/workdir/htt_open_data/r36_foreground_envelope_independent_review/raw/DIRBE_supplement.txt"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 0.7420139911118895,
+    "stdout": "raw/DIRBE_supplement_extract.stdout",
+    "stderr": "raw/DIRBE_supplement_extract.stderr"
+  },
+  {
+    "name": "Haslam_original_source_extract",
+    "argv": [
+      "pdftotext",
+      "-layout",
+      "/mnt/extdrive/workdir/htt_open_data/r36_foreground_envelope_independent_review/source/allsky_408_mhz_survey.pdf",
+      "/mnt/extdrive/workdir/htt_open_data/r36_foreground_envelope_independent_review/raw/Haslam_original.txt"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 0.1277770739980042,
+    "stdout": "raw/Haslam_original_extract.stdout",
+    "stderr": "raw/Haslam_original_extract.stderr"
+  },
+  {
+    "name": "Hauser1998_source_extract",
+    "argv": [
+      "pdftotext",
+      "-layout",
+      "/mnt/extdrive/workdir/htt_open_data/r36_foreground_envelope_independent_review/source/9806167.html",
+      "/mnt/extdrive/workdir/htt_open_data/r36_foreground_envelope_independent_review/raw/Hauser1998.txt"
+    ],
+    "exit_code": 0,
+    "elapsed_s": 0.1860847210045904,
+    "stdout": "raw/Hauser1998_extract.stdout",
+    "stderr": "raw/Hauser1998_extract.stderr"
+  }
+]

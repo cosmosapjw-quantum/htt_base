@@ -1,0 +1,1222 @@
+                                       THE ASTROPHYSICAL JOURNAL
+
+
+                                                         THE COBE DIFFUSE INFRARED BACKGROUND EXPERIMENT
+                                                           SEARCH FOR THE COSMIC INFRARED BACKGROUND:
+                                                                      I. LIMITS AND DETECTIONS
+                                              M.G. Hauser1 , R.G. Arendt2 , T. Kelsall3 , E. Dwek3 , N. Odegard2 , J.L. Weiland2 , H.T. Freudenreich2 ,
+                                                W.T. Reach4 , R.F. Silverberg3, S.H. Moseley3 , Y.C. Pei1 , P. Lubin5 , J.C. Mather3 , R.A. Shafer3 ,
+                                                                  G.F. Smoot6 , R. Weiss7 , D.T. Wilkinson8 , and E.L. Wright9
+                                                                         Received 1998 January 6; accepted 1998 June 3
+arXiv:astro-ph/9806167v1 11 Jun 1998
+
+
+
+
+                                                                                                 ABSTRACT
+
+                                                   The Diffuse Infrared Background Experiment (DIRBE) on the Cosmic Background Explorer
+                                                (COBE) spacecraft was designed primarily to conduct a systematic search for an isotropic cosmic
+                                                infrared background (CIB) in ten photometric bands from 1.25 to 240 µm. The results of that
+                                                search are presented here. Conservative limits on the CIB are obtained from the minimum observed
+                                                brightness in all-sky maps at each wavelength, with the faintest limits in the DIRBE spectral range
+                                                being at 3.5 µm (νIν < 64 nW m−2 sr−1 , 95% CL) and at 240 µm (νIν < 28 nW m−2 sr−1 , 95% CL).
+                                                The bright foregrounds from interplanetary dust scattering and emission, stars, and interstellar dust
+                                                emission are the principal impediments to the DIRBE measurements of the CIB. These foregrounds
+                                                have been modeled and removed from the sky maps. Assessment of the random and systematic
+                                                uncertainties in the residuals and tests for isotropy show that only the 140 and 240 µm data provide
+                                                candidate detections of the CIB. The residuals and their uncertainties provide CIB upper limits
+                                                more restrictive than the dark sky limits at wavelengths from 1.25 to 100 µm. No plausible solar
+                                                system or Galactic source of the observed 140 and 240 µm residuals can be identified, leading to the
+                                                conclusion that the CIB has been detected at levels of νIν = 25 ± 7 and 14 ± 3 nW m−2 sr−1 at 140
+                                                and 240 µm respectively. The integrated energy from 140 to 240 µm, 10.3 nW m−2 sr−1 , is about
+                                                twice the integrated optical light from the galaxies in the Hubble Deep Field, suggesting that star
+                                                formation might have been heavily enshrouded by dust at high redshift. The detections and upper
+                                                limits reported here provide new constraints on models of the history of energy-releasing processes
+                                                and dust production since the decoupling of the cosmic microwave background from matter.
+                                                Subject headings: cosmology: observations — diffuse radiation — infrared: general
+
+
+                                                                                                             emissions of pregalactic, protogalactic, and evolved
+                                                          1. INTRODUCTION
+                                                                                                             galactic systems, would provide new insight into the
+                                          The search for the cosmic infrared background (CIB)                cosmic “dark ages” following the decoupling of matter
+                                       radiation is a relatively new field of observational cos-             from the cosmic microwave background (CMB) radia-
+                                       mology. The term “CIB” itself has been used with                      tion (Partridge & Peebles 1967; Harwit 1970; Bond,
+                                       various meanings in the literature; we define it here to              Carr, & Hogan 1986, 1991; Franceschini et al. 1991,
+                                       mean all diffuse infrared radiation arising external to the           1994; Fall, Charlot, & Pei 1996).
+                                       Milky Way Galaxy. Measurement of this distinct radia-                    The search for the CIB is impeded by two fundamen-
+                                       tive background, expected to arise from the cumulative                tal challenges: there is no unique spectral signature of
+                                           1 Space Telescope Science Institute, 3700 San Martin Drive,          5 UCSB, Physics Department, Santa Barbara, CA 93106
+
+                                       Baltimore, MD 21218                                                      6 Lawrence Berkeley Laboratory, Space Sciences Laboratory,
+                                           2 Raytheon STX, Code 685, NASA Goddard Space Flight Cen-          Department of Physics, UC Berkeley, CA 94720
+                                       ter, Greenbelt, MD 20771                                                 7 Massachusetts Institute of Technology, Room 20F-001, De-
+                                           3 Code 685, NASA Goddard Space Flight Center, Greenbelt,
+                                                                                                             partment of Physics, Cambridge, MA 02139
+                                       MD 20771                                                                 8 Princeton University, Department of Physics, Jadwin Hall,
+                                          4 California Institute of Technology,   IPAC/JPL, MS 100-22,       Box 708, Princeton, NJ 08544
+                                                                                                                9 UCLA, Astronomy Department, Los Angeles, CA 90024
+                                       Pasadena, CA 91125
+
+
+                                                                                                         1
+such a background, and there are many local contrib-                vestigation, in which a direct measurement of the CIB
+utors to the infrared sky brightness at all wavelengths,            has been made by measuring the absolute sky brightness
+several of them quite bright. The lack of a distinct spec-          at ten infrared wavelengths and searching for isotropic
+tral signature arises in part because so many different             radiation arising outside of the solar system and Galaxy.
+sources of primordial luminosity are possible (e.g., Bond,          We report upper limits on the CIB from 1.25 to 100 µm,
+Carr, & Hogan 1986), in part because the radiant char-              and detection of the CIB at 140 and 240 µm. Section 2
+acteristics of evolving galaxies are imperfectly known,             briefly describes the DIRBE instrument and the charac-
+and in part because the primary emissions at any epoch              ter of its data. Section 2 also summarizes the procedures
+are then shifted into the infrared by the cosmic red-shift          used to model foreground radiations, and for estimating
+and possibly by dust absorption and re-emission. Hence,             the random and systematic uncertainties in the measure-
+the present spectrum depends in a complex way on the                ments and the models. Because the foreground models
+characteristics of the luminosity sources, on their cos-            are critical to our conclusions, they are also described
+mic history, and on the dust formation history of the               more extensively in separate papers. Details of the in-
+Universe.                                                           terplanetary dust (IPD) model used to discriminate the
+   Setting aside the difficult possibility of recognizing the       sky brightness contributed by dust in the solar system
+CIB by its angular fluctuation spectrum (Bond, Carr,                are provided by Kelsall et al. (1998, hereafter Paper
+& Hogan 1991; Kashlinsky et al. 1996a, b), the only                 II). Arendt et al. (1998, hereafter Paper III) describe
+identifying CIB characteristic for which one can search             the Galactic foreground discrimination procedures and
+is an isotropic signal. Possible evidence for an isotropic          summarize systematic errors in the foreground determi-
+infrared background, or at least limits on emission in              nation process. Section 3 of this paper summarizes the
+excess of local foregrounds, has been reported on the               observational results, presented in compact form in Ta-
+basis of very limited data from rocket experiments (Mat-            ble 2. Dwek et al. (1998, hereafter Paper IV) show in
+sumoto et al. 1988; Matsumoto 1990; Noda et al. 1992;               detail that the isotropic residuals detected at 140 and
+Kawada et al. 1994). Puget et al. (1996) have used                  240 µm are not likely to arise from unmodeled solar sys-
+data from the COBE Far Infrared Absolute Spectropho-                tem or Galactic sources. Section 4 of this paper summa-
+tometer (FIRAS) to conclude that there is tentative ev-             rizes that analysis, provides a comparison of the DIRBE
+idence for a CIB at submillimeter wavelengths. Indirect             results with other diffuse brightness and integrated dis-
+upper limits, and even possible lower limits, on the ex-            crete source measurements, presents limits on the inte-
+tragalactic infrared background have been inferred from             grated energy in the cosmic infrared background implied
+the apparent attenuation of TeV γ-rays in propagation               by the DIRBE measurements, and briefly discusses the
+from distant sources (de Jager, Stecker, & Salamon 1994;            implications of these results for models of cosmic evolu-
+Dwek & Slavin 1994; Biller et al. 1995; Stecker 1996;               tion. A more extensive discussion of the implications is
+Stecker & de Jager 1997). However, the detection of                 provided in Paper IV. Independent confirmation of the
+TeV γ-rays from Markarian 421 recently reported by                  DIRBE observational results and extension of the CIB
+Krennrich et al. (1997) casts some doubt on the in-                 detection to longer wavelengths is provided by Fixsen
+frared background inferred in this manner. The inte-                et al. (1998), as discussed in § 4.2.1. The remainder of
+grated energy density of the CIB in units of the criti-             this Section provides an overview of the rather exten-
+cal density might, on the basis of pre-COBE observa-                sive arguments presented in this paper as a guide to the
+tions (Ressell & Turner 1990), exceed that of the CMB,              reader.
+ΩCMB = 1 × 10−4 h−2  50 , and preliminary DIRBE results                From absolute brightness maps of the entire sky over
+(Hauser 1995, 1996a, b) only set limits on the integrated           ten months of observation, the faintest measured value
+CIB which are comparable to the energy density in the               at each wavelength is determined (§ 3.1 and Table 2).
+CMB.                                                                These “dark sky” values are either direct measurements
+   Direct detection of the CIB requires a number of                 of the CIB (if we were fortuitously located in the Uni-
+steps. One must solve the formidable observational                  verse), or yield conservative upper limits on it. Since the
+problem of making absolute brightness measurements in               measured infrared sky brightness is not isotropic at any
+the infrared. One must then discriminate and remove                 wavelength in the DIRBE range, it cannot be concluded
+the strong signals from foregrounds arising from one’s              that these dark sky values are direct detections of the
+instrument or observing environment, the terrestrial at-            CIB. As expected, the dark sky values are least near 3.5
+mosphere, the solar system, and the Galaxy. Particular              µm, in the relative minimum between scattering of sun-
+attention must be given to possible isotropic contribu-             light by interplanetary dust and re-emission of absorbed
+tions from any of these foreground sources.                         sunlight by the same dust, and at the longest DIRBE
+   This paper summarizes the results of the DIRBE in-               wavelength, 240 µm, where emission from interstellar
+
+                                                                2
+dust is decreasing from its peak at shorter wavelengths            artifacts from the foreground removal, and covers about
+and the cosmic microwave background has not yet be-                2% of the sky. It includes regions in both the northern
+come significant.                                                  and southern hemispheres and allows isotropy testing
+   To proceed further, the contributions from the solar            on 8,140 map pixels over angular scales up to 43 degrees
+system and Galaxy to the DIRBE maps are determined.                within each hemisphere and from 137 to 180 degrees be-
+The contribution of interplanetary dust is recognizable            tween hemispheres. In this region, the mean residuals
+because motion of the Earth in its orbit through this              are determined and their uncertainties are estimated.
+cloud causes annual variation of the sky brightness in all         More precise estimates of the mean residuals at 100, 140
+directions. An empirical, parametric model of the IPD              and 240 µm are obtained from a weighted average of val-
+cloud (§ 2.3 and Paper II) is used to extract the IPD              ues determined in the HQB region and in well-studied
+contribution. Though this model is not unique, Paper II            faint regions toward the Lockman hole and the north
+demonstrates that the implications for the CIB are rea-            ecliptic pole. The residuals are tested for significance by
+sonably robust, that is, rather insensitive to variations          requiring that they exceed three times the estimated un-
+in the model.                                                      certainty including both random and systematic effects.
+   The Galactic contribution from discrete sources bright             The final step toward recognition of the CIB is to test
+enough to be detected individually is simply deleted               for isotropy of the residuals. Though a number of ap-
+from further analysis by blanking a small surrounding              proaches are discussed (§ 3.5), the conclusions are finally
+region in the maps. The integrated contributions of faint          based upon the absence of significant spatial correlations
+discrete Galactic sources are calculated at each wave-             of the residuals with any of the foreground models or
+length from 1.25 to 25 µm from a detailed statistical              with galactic or ecliptic latitude and the absence of sig-
+model of Galactic sources and their spatial distribution           nificant structure in the 2-point correlation function in
+(§ 2.3 and Paper III). The contribution from the dif-              the HQB region.
+fuse interstellar medium (ISM) at each wavelength is                  Only at 140 and 240 µm do the results meet our two
+obtained by scaling a template map of ISM emission to              necessary criteria for CIB detection: significant residual
+that wavelength. At all wavelengths except 100 µm, the             in excess of 3σ and isotropy in the HQB region (§ 3.6).
+template is the residual 100 µm map after removal of the           These isotropic residuals are unlikely to arise from un-
+IPD contribution, a map where ISM emission is promi-               modeled solar system or Galactic sources (§ 4.1 and Pa-
+nent. To remove the ISM contribution without removing              per IV), leading to the conclusion that the CIB has been
+some fraction of the CIB at other wavelengths, the 100             detected at 140 and 240 µm. At each wavelength shorter
+µm extragalactic light is first estimated by extrapolating         than 100 µm, an upper limit to the CIB is set at 2σ
+the H I − 100 µm correlation to zero H I column density            above the mean HQB residual, which in all cases is a
+for two fields, the Lockman hole (Lockman, Jahoda, &               more restrictive limit than the dark sky limit. At 100
+McCammon 1986) and north ecliptic pole, where there                µm, the most restrictive limit is found from the weighted
+is known to be little other interstellar gas (molecular or         average of the residuals in the HQB region, the Lockman
+ionized) in the line of sight (§ 3.4). This estimate is sub-       hole and the north ecliptic pole. The last line of Table
+tracted from the 100 µm map before scaling it to other             2 shows the final CIB limits and detected values.
+wavelengths. The ISM template at 100 µm was chosen
+to be the map of H I emission, scaled by the slope of the
+                                                                          2. DIRBE, DATA, AND PROCEDURES
+H I-to-100 µm correlation (§ 2.3 and Paper III).
+   Clearly, drawing the proper conclusions from the                   This section provides a brief review of the important
+DIRBE measurements and foreground models is criti-                 features of the DIRBE instrument, the data it provides,
+cally dependent upon assessment of the uncertainties in            and our reduction of the data with the goal of extracting
+both the measurements and the models. These uncer-                 the CIB. These topics are more thoroughly described
+tainties are discussed at length in Papers II and III, and         in the COBE/DIRBE Explanatory Supplement (1997),
+are summarized here in § 2.4 and Table 2.                          and Papers II and III.
+   Because the foreground emissions are so bright, the
+definitive search for evidence of the CIB is carried out                    2.1. DIRBE Instrument Description
+on the residual maps after removal of the solar system                The COBE Diffuse Infrared Background Experiment
+and Galactic foregrounds in a restricted region of the             was the first satellite instrument designed specifically
+sky at high galactic and ecliptic latitudes (designated            to carry out a systematic search for the CIB in the
+the “high quality” region B, HQB, discussed in § 3.3               1.25−240 µm range. A detailed description of the COBE
+and defined in Table 3). The HQB region is the largest             mission has been given by Boggess et al. (1992), and the
+area in which the residual maps do not clearly contain             DIRBE instrument has been described by Silverberg et
+
+                                                               3
+al. (1993). The DIRBE observational approach was                          tual sky brightness, and below many of the predictions
+to obtain absolute brightness maps of the full sky in 10                  for the CIB. Averaging over substantial sky areas, once
+broad photometric bands at 1.25, 2.2, 3.5, 4.9, 12, 25, 60,               foregrounds are removed, increases the sensitivity for an
+100, 140, and 240 µm. Table 1 summarizes the instru-                      isotropic signal.
+mental parameters, including the effective band width,                       (c) Stray light rejection. The DIRBE optical config-
+beam solid angle, detector type, and filter construction.                 uration (Magner 1987) was carefully designed for strong
+Though linear polarization was also measured at 1.25,                     rejection of stray light from the Sun, Earth limb, Moon
+2.2, and 3.5 µm, the polarization information has not                     or other off-axis celestial radiation, as well as radia-
+been used in this analysis.                                               tion from other parts of the COBE payload (Evans
+   DIRBE characteristics of particular relevance to the                   1983). Extrapolations of the off-axis response to the
+CIB search include:                                                       Moon indicate that stray light contamination for a sin-
+   (a) Highly redundant sky coverage over a range of                      gle field-of-view in faint regions of the sky does not ex-
+elongation angles. Because the diffuse infrared bright-                   ceed 1 nW m−2 sr−1 at any wavelength (COBE/DIRBE
+ness of the entire sky varies as a result of our motion                   Explanatory Supplement 1997).
+within the IPD cloud (and possible variations of the                         (d) Instrumental offsets. The instrument, which
+cloud itself), the DIRBE was designed to scan half the                    was maintained at a temperature below 2 K within
+sky every day, providing detailed “light curves” with                     the COBE superfluid helium dewar, measured absolute
+hundreds of samples over the mission for every pixel.                     brightness by chopping between the sky signal and a
+This sampling provides a strong means of discriminat-                     zero-flux internal reference at 32 Hz. Instrumental off-
+ing solar system emission. The scanning was produced                      sets were measured about five times per orbit by clos-
+by offsetting the DIRBE line-of-sight by 30◦ from the                     ing a cold shutter located at the prime focus. A radia-
+COBE spin axis, which was normally fixed at a solar                       tive offset signal in the long wavelength detectors arising
+elongation angle of 94◦ , providing sampling at elonga-                   from JFETs (operating at about 70 K) used to amplify
+tion angles ranging from 64◦ to 124◦. Such sampling also                  the detector signals was identified and measured in this
+modulates the signal from any nearby spherically sym-                     fashion and removed from the DIRBE data. Because
+metric Sun-or Earth-centered IPD component, which                         the offset signal was stable over the course of the mis-
+would otherwise appear as a constant (i.e., “isotropic”)                  sion, it would appear as an isotropic signal if left un-
+signal.                                                                   corrected. To establish the origin of the radiative offset
+   (b) Sensitivity. Table 2 lists one-sigma instrumental                  signal, and determine whether its value was the same
+sensitivities, σ(νIν ), for each 0.◦ 7 × 0.◦ 7 field of view over         whether the instrument shutter was closed (when the
+the complete 10 months of cryogenic operation. These                      offset was monitored) or open (when the sky brightness
+single field-of-view values are generally below the ac-                   plus offset was measured), special tests were conducted
+
+                                                                TABLE 1
+                                              DIRBE INSTRUMENT CHARACTERISTICS
+
+ Band    λa        ∆νe b      Beam Solid Angle        Detector Type                 Filter Constructionc        Absolute Calibration
+        (µm)       (Hz)          (10−4 sr)                                                                       Reference Source
+
+  1     1.25d   5.95 × 1013        1.198                  InSbe                       Coated Glass                     Sirius
+  2     2.2d    2.24 × 1013        1.420                  InSbe                       Coated Glass                     Sirius
+  3     3.5d    2.20 × 1013        1.285                  InSbe                    Coated Germanium                    Sirius
+  4      4.9    8.19 × 1012        1.463                  InSbe                    MLIF/Germanium                      Sirius
+  5       12    1.33 × 1013        1.427               Si:Ga BIB                MLIF/Germanium/ZnSe                    Sirius
+  6       25    4.13 × 1012        1.456               Si:Ga BIB                      MLIF/Silicon                   NGC 7027
+  7       60    2.32 × 1012        1.512                 Ge:Ga             MLIF/Sapphire/KRS5/Crystal Quartz          Uranus
+  8      100    9.74 × 1011        1.425                 Ge:Ga                 MLIF/KCl/CaF2 /Sapphire                Uranus
+  9      140    6.05 × 1011        1.385         Si/diamond bolometer       Sapphire/Mesh Grids/BaF2 /KBr             Jupiter
+  10     240    4.95 × 1011        1.323         Si/diamond bolometer        Sapphire/Grids/BaF2 /CsI/AgCl            Jupiter
+
+a Nominal wavelength of DIRBE band.
+b Effective bandwidth assuming source spectrum νI
+                                                      ν = constant.
+c MLIF = multi–layer interference filter.
+d Linear polarization and total intensity measured.
+e Anti–reflection coated for the band center wavelength.
+
+
+                                                                      4
+during two one-week periods of the mission. In these             shape to obtain comparable maps), Fixsen et al. (1997)
+tests, power to individual JFETs was turned off sequen-          found statistically significant, but small, corrections (3σ
+tially while measuring the offset (shutter closed) and sky       or greater) to the DIRBE calibration only at 240 µm. All
+brightness (shutter open) with all remaining operating           results in this paper are based upon the DIRBE calibra-
+detectors. The sky brightness measurements at each               tion and its uncertainties. The small effect of adopting
+wavelength with JFETs off and on at other wavelengths            the FIRAS calibration at 140 and 240 µm, which has no
+were carefully compared. The offsets measured in this            qualitative effect on the conclusions presented here, is
+fashion were consistent with those measured by closing           discussed in § 4.2.1.
+the shutter in normal operations, demonstrating that
+changing the position of the shutter did not significantly                         2.2. The DIRBE Data
+modify the offset. The final uncertainties in the offset            The calibrated DIRBE photometric observations are
+corrections, shown as S(offset) in Table 2, are domi-            made into maps of the sky by binning each sample into
+nated by the uncertainties in the results of these special       a pixel on the COBE sky cube projection in geocentric
+tests, due to the limited amount of time devoted to them.        ecliptic coordinates (COBE/DIRBE Explanatory Sup-
+The uncertainties are quite negligible at wavelengths less       plement 1997). The projection is nearly equal-area and
+than 140 µm. The accuracy of the DIRBE measurement               avoids geometrical distortions at the poles. Pixels are
+zero point at 140 and 240 µm, where the offset uncer-            roughly 20′ on a side. Forty-one Weekly Maps have been
+tainty exceeds 1 nW m−2 sr−1 , has been independently            produced by forming a robust average of all observations
+confirmed by comparison with COBE/FIRAS data, as                 of each pixel taken during a week. About one-half of
+discussed below.                                                 the sky is covered each week; complete sky coverage is
+   (e) Gain stability. Short-term stability and linearity        achieved within four months. Data used in this analysis
+of the instrument response were monitored using inter-           originate from the Weekly Sky Maps produced by the
+nal radiative reference sources which were used to stim-         1996 Pass 3b DIRBE pipeline software, as documented
+ulate all detectors each time the shutter was closed. The        in the COBE/DIRBE Explanatory Supplement (1997).
+highly redundant sky sampling allowed the use of stable             All analysis is performed on maps in the original sky-
+celestial sources to provide precise photometric closure         cube coordinate system. For illustrational purposes, the
+over the sky and reproducible photometry to ∼ 1% or              maps shown in Figure 1 of this paper are reprojected into
+better for the duration of the mission.                          an azimuthal equal-area projection. The DIRBE surface
+   (f) Absolute gain calibration. Calibration of the             brightness maps are stored as Iν in units of MJy sr−1 .
+DIRBE photometric scale was obtained from observa-               Many of the results in this paper are presented as νIν ,
+tions of a few isolated bright celestial sources (COBE/          where νIν (nW m−2 sr−1 ) = (3000 µm/λ)Iν (MJy sr−1 ).
+DIRBE Explanatory Supplement 1997). Table 1 lists the
+DIRBE gain reference sources, and Table 2 lists the un-                      2.3. Foreground Removal Procedures
+certainties in the absolute gain, S(gain), for each DIRBE           Conservative upper limits on the CIB are easily de-
+spectral band.                                                   termined from the minimum sky signal observed at each
+   An independent check of the DIRBE offset and ab-              wavelength; these results are quoted in § 3.1. In order
+solute gain calibrations at 100, 140 and 240 µm has              to derive more interesting limits or detections, one must
+been performed by Fixsen et al. (1997) using data                address the problem of discriminating the various contri-
+taken concurrently by the FIRAS instrument on board              butions to the measured sky brightness. The procedures
+COBE. The FIRAS calibration is intrinsically more ac-            used to discriminate and remove foreground emissions
+curate than that of the DIRBE, but the FIRAS sensitiv-           from the solar system and Galaxy are carefully based
+ity drops rapidly at wavelengths shorter than 200 µm,            on distinguishing observational characteristics of these
+effectively only partially covering the DIRBE 100 µm             sources. Isotropy of the residuals was not assumed or
+bandpass. In general, the two independent calibrations           imposed, but was rigorously tested (§ 3.5).
+are consistent within the estimated DIRBE uncertain-                The approach adopted here is to derive, for each
+ties. Quantitatively, Fixsen et al. evaluated the gain           DIRBE wavelength, λ, an all-sky map of the residual in-
+and offset corrections needed to bring the two sets of           tensity Ires remaining after the removal of solar-system
+measurements into agreement. Taking account of the               and Galactic foregrounds from the observed sky bright-
+absolute FIRAS calibration uncertainty and the uncer-            ness Iobs :
+tainty arising from the comparison process itself (due
+in part to the need to integrate the FIRAS data over              Ires (l, b, λ) = Iobs (l, b, λ, t) − Z(l, b, λ, t) − G(l, b, λ), (1)
+the broad DIRBE spectral response in each band and to
+integrate the DIRBE data over the large FIRAS beam               where l and b are galactic longitude and latitude, t is
+
+                                                             5
+                                                                                   TABLE 2
+                                                                   Results of the DIRBE Search for the CIB
+
+
+    Wavelength (µm)        1.25          2.2            3.5          4.9           12            25             60            100            140            240         240 (ISM2)
+
+
+     σ(νIν )               2.4            1.6          0.9         0.8           0.9           0.9           0.9           0.5             32.8           10.7          10.7
+     S(gain)              3.1%           3.1%         3.1%        3.0%          5.1%          15.1%        10.4%          13.5%           10.6%          11.6%         11.6%
+     S(offset)            0.05          0.028        0.015        0.010         0.015         0.010         1.34           0.81              5              2             2
+     νIν (dark)         374 ± 12       143 ± 4       60 ± 2      183 ± 5     2520 ± 129    2160 ± 330     261 ± 27       74 ± 10          57 ± 8         22 ± 3        22 ± 3
+     νI0 (NEP)         40(3.0)(18)   6(1.3)(11)    6(0.7)(6)    16(0.3)(7) 125(0.3)(89) 145(0.2)(98) 30(0.2)(17)        21(0.3)(8)     16(1.4)(12)    7.2(0.5)(5)   22(1.3)(12)
+     νI0 (SEP)        −9.2(6.4)(18) −5.7(3.0)(11) −2.4(1.1)(6) 16(0.6)(7) 112(0.4)(88) 122(0.2)(98) 21(0.1)(17)             ···        37(2.6)(12)     20(0.8)(5)   16(2.4)(12)
+     νI0 (NGP)         42(2.1)(21)   21(0.9)(12)   15(0.5)(6) 32(0.2)(8) 261(0.4)(138) 247(0.2)(156) 24(0.1)(27) 29(0.2)(10)           11(1.8)(12)    5.5(0.6)(5)   17(1.7)(12)
+     νI0 (SGP)         36(2.3)(20)   19(0.9)(11)   16(0.5)(6) 36(0.3)(8) 255(0.5)(128) 232(0.3)(145) 22(0.1)(25)        24(0.2)(9)    7.0(1.9)(12)    4.5(0.6)(5)   20(1.8)(12)
+     νI0 (LH)          69(5.9)(19)   26(2.4)(11)   16(1.1)(6) 30(0.6)(7) 208(0.3)(102) 215(0.3)(112) 24(0.1)(19)        23(0.2)(9)     18(3.4)(12)     11(1.0)(5)   14(3.2)(12)
+     νI0 (HQA)         33(0.5)(21)   13(0.2)(12)   11(0.1)(6) 26(0.1)(8) 195(0.2)(138) 192(0.2)(156) 22(0.1)(27) 21(0.1)(10)           19(0.3)(12)    9.4(0.1)(5)   16(0.3)(12)
+     νI0 (HQB)        33.0(1.6)(21) 14.9(0.6)(12) 11.4(0.4)(6) 24.8(0.2)(8) 192(0.2)(138) 192(0.2)(156) 20.6(0.1)(27) 19.0(0.1)(9.5) 18.5(0.5)(12.0) 9.7(0.2)(5.2) 13.8(0.5)(12)
+     νI0 (LH′ ,HI)         ···            ···          ···         ···           ···            ···          ···      22.3(0.2)(6.1) 26.6(0.9)(7.3) 13.9(0.3)(2.6)       ···
+     νI0 (NEP′ ,HI)        ···            ···          ···         ···           ···            ···          ···      17.3(0.4)(6.3) 23.1(1.9)(13.2) 14.3(0.6)(4.5)      ···
+     ∂b νI0 (HQB)      67.2 ± 25.0    1.4 ± 10.9 −19.5 ± 5.3 −33.4 ± 2.7 −159 ± 3.6        −115 ± 4.4     1.1 ± 0.9    −26.0 ± 1.9      3.2 ± 15.4      2.2 ± 5.1    6.6 ± 14.6
+     ∂β νI0 (HQB)      −9.3 ± 11.5    3.9 ± 5.0    15.3 ± 2.5 20.9 ± 1.3      104 ± 1.5     83.3 ± 1.9   −0.8 ± 0.4     19.4 ± 0.9     −9.5 ± 7.2     −3.5 ± 2.4     3.6 ± 6.9
+6
+
+
+
+
+     νI0 (95% CL)         < 75           < 39         < 23        < 41         < 468          < 504         < 75           < 38            < 43           < 20          < 28
+     hνI0 i                ···            ···          ···         ···           ···            ···          ···        21.9 ± 6.1      25.0 ± 6.9     13.6 ± 2.5        ···
+     Isotropy              no             no           no           no           no             no           no             no              yes            yes           yes
+     CIB                  < 75           < 39         < 23        < 41         < 468          < 504         < 75           < 34         25.0 ± 6.9     13.6 ± 2.5        ···
+
+       NOTE.—Subscript 0 means residual. Results are in units of nW m−2 sr−1 . Row 1: nominal wavelength of the DIRBE photometric bands. The last column presents results at
+    240 µm using the two-component ISM model. Row 2: mission-averaged 1σ instrument sensitivity per 0.◦7 × 0.◦ 7 field-of-view. Row 3: percent uncertainty in the absolute gain
+    calibration. Row 4: uncertainty in the instrumental offset (zero point) calibration. Row 5: minimum observed sky brightness. Errors are estimated from the quadrature sum of
+    the gain and offset uncertainties. Rows 6 − 10: residual intensity derived using the 100 µm map as a template for the ISM at small patches toward the north (NEP) and south
+    (SEP) ecliptic poles, the north (NGP) and south (SGP) galactic poles, and the Lockman hole (LH). The 100 µm column shows residuals using the Bell Labs H I map as the ISM
+    template. Final column shows results using the 2-component (100 and 140 µm) ISM template. Random (systematic) 1σ errors are shown in the first (second) parentheses. Rows
+    11 − 12: residual intensity derived using the 100 µm map as a template for the ISM (Bell Labs H I template in the 100 µm column and 2-component template in the last column)
+    at the “high quality” HQA and HQB regions defined in Table 3 in units of nW m−2 sr−1 . Random (systematic) 1σ errors are shown in the first (second) parentheses. Rows
+    13 − 14: residual intensity derived from the H I correlation at the Lockman hole (LH) and the north ecliptic pole (NEP). Random errors (systematic errors) are shown in the
+    first (second) parentheses. Rows 15 − 16: spatial gradients of the residual intensities in the HQB region with respect to csc |b| and csc |β|. Row 17: 2σ upper limit on the CIB,
+    derived from the HQB region using random and systematic uncertainties combined in quadrature. The 240 (ISM2) entry is derived from the dark sky value, since it yields a more
+    restrictive limit. Row 18: weighted average of the residuals at the HQB region, the Lockman hole, and the north ecliptic pole (rows 12, 13, & 14), weighted by the quadrature
+    sum of the random and non-common mode systematic errors in each region. Errors in the mean include the random and all systematic errors. Row 19: result of the 2-point
+    correlation function isotropy test of the residual intensities in the HQB region: no = not consistent with isotropy; yes = consistent with isotropy. Row 20: DIRBE detections of
+    the CIB or 95% confidence upper limits.
+   Fig. 1.—DIRBE residual intensity maps after removal of foreground emission at 1.25 − 240 µm, shown in galactic
+coordinates with an azimuthal equal-area projection. The left (right) circle represents the projected north (south)
+Galactic hemisphere with b = +90◦ (b = −90◦) in the center and b = 0◦ at the edge. Contours of fixed latitude
+are concentric circles with r ∝ [(1 − sin |b|)/2]. Longitude lines run radially from the pole to the edge and increase
+clockwise (counterclockwise) on the left (right) hemisphere. The longitude l = 0◦ runs from the center to the bottom
+edge of each projected hemisphere. All maps are plotted on a linear scale with color-coded brightness ranges of
+(−0.05, 0.3), (−0.05, 0.3), (−0.01, 0.2), (0, 0.2), (0, 2), (0.5, 3), (0, 3), (0, 15), (0, 20), and (0, 20) in units of MJy sr−1 .
+Values below (above) the plot range are shown in black (white).
+
+
+
+time, Z(l, b, λ, t) is the contribution from the interplan-         a three-dimensional dust density distribution function.
+etary dust cloud, and G(l, b, λ) is the contribution from           The emissivity function includes both thermal emission
+both stellar and interstellar dust components within the            and scattering. The thermal emission at each location
+Galaxy. Both Z and G are derived from models. The                   assumes a single dust temperature for all cloud compo-
+choice of models is motivated by the primary goal of en-            nents. The temperature is a function only of distance
+suring that no part of the CIB is inadvertently included            from the Sun and varies inversely as a power law with
+in the interplanetary dust cloud or Galactic emission               distance. The density distribution includes a smooth
+components. Figure 1 presents maps of Ires as derived               cloud, three pairs of asteroidal dust bands, and a cir-
+from the foreground removal process.                                cumsolar dust ring. The model is intrinsically static,
+   The DIRBE IPD model (Paper II) is a semi-physical,               except that structure within the circumsolar ring near
+parametric model of the sky brightness similar, but not             1 AU is assumed to co-orbit the Sun with the Earth.
+identical, to that used to create the IRAS Sky Sur-                 The apparent seasonal brightness variation arises from
+vey Atlas (Wheelock et al. 1994). The model repre-                  the motion of the Earth on an eccentric orbit within
+sents the sky brightness as the integral along the line-            the cloud, which is not required to be symmetric with
+of-sight of the product of an emissivity function and               respect to the ecliptic plane.
+
+                                                                7
+  Fig. 1.—continued.
+
+
+
+   Analytical forms are assumed for the density distri-         The calculated IPD map is then subtracted from each
+butions, scattering phase function, and thermal emission        DIRBE Weekly Map and an average mission residual
+characteristics of the dust. Parameters for the analyt-         computed. This simple model represents the IPD signal
+ical functions are determined by optimizing the model           fairly well, but there are clearly systematic artifacts in
+to match the observed temporal variations in brightness         the residuals at the level of a few percent of the IPD
+toward a grid of directions over the sky. By fitting only       model brightness (Paper II). Because the zodiacal emis-
+the observed time variation to determine the model pa-          sion is so bright, uncertainties in the residual sky maps
+rameters, Galactic and extragalactic components of the          at 12 − 60 µm are dominated by the uncertainties in the
+measured brightness are totally excluded. However, it           IPD signal.
+must be emphasized that this method can not uniquely               The Galactic model G is removed from the mission-
+determine the true IPD signal; in particular, an arbi-          averaged residuals formed after removal of the IPD
+trary isotropic component could be added to the model           contribution (Paper III). The Galactic model actu-
+without affecting the parameter values determined in            ally consists of three separate components: bright dis-
+our fitting to the seasonal variation of the signal. No         crete sources, faint discrete sources, and the interstel-
+such arbitrary constants are added to the brightnesses          lar medium. Both stellar and extended discrete sources
+obtained directly from our model, and limits on unmod-          whose intensity above the local background exceeded a
+eled isotropic components of the IPD cloud emission are         wavelength-dependent threshold are excluded by blank-
+set based upon independent knowledge of the nature of           ing a small surrounding region from each of the ten
+the cloud (§ 4.1). Once the optimal model parameters            maps. The blanked regions appear black in Figure 1,
+are determined, the IPD model is integrated along the           and are most evident in the 1.25 − 4.9 µm maps and at
+line of sight to evaluate Z at the mean time of observa-        low galactic latitude. The contribution from faint dis-
+tion of each DIRBE pixel for each week of the mission.          crete sources sources below the bright-source blanking
+
+                                                            8
+   Fig. 1.—continued. The last panel indicates the sky locations of the five small patches (§ 3.2) and the two selected
+high quality regions (§ 3.3): the tiny white square in the left hemisphere is the Lockman hole, the centered white
+square in the left (right) hemisphere is the north (south) Galactic pole, and the remaining white square in the left
+(right) hemisphere is the north (south) ecliptic pole; the large grey area in the left (right) sphere is the north (south)
+high quality region A, and the small light grey area in the left (right) hemisphere is the north (south) high quality
+region B.
+
+
+
+threshold at 1.25 − 25 µm is then removed by subtract-          and subtraction of the FSM. The ISM spatial template
+ing the integrated light from a statistical source-count        is constructed so that it does not contain diffuse extra-
+model based on that of Wainscoat et al. (1992), with            galactic emission. To the extent that this is success-
+elaborations by Cohen (1993, 1994, 1995). We call this          ful, when the scaled ISM template at any wavelength,
+the faint source model (FSM). The use of a source-count         GI (l, b, λ), is subtracted from the intermediate residual
+based model ensures that the related intensity repre-           map at that wavelength, any CIB signal in the resulting
+sents only Galactic sources. The stellar contribution is        final residual map Ires (l, b, λ) is not modified. This lin-
+neglected at wavelengths longward of 25 µm.                     ear ISM model works well in that it removes the evident
+   The basic model of emission from interstellar dust,          cirrus clouds, especially in the high galactic latitude re-
+GI (l, b, λ), consists of a standard spatial (wavelength-       gions where the search for the CIB is conducted.
+independent) template of the brightness of the interstel-          Several approaches have been used to create the ISM
+lar medium (ISM), scaled by a single factor R(λ) at each        spatial template. In one approach, the 100 µm ISM map,
+wavelength. The factor R(λ) is determined by the slope          GI (l, b, 100 µm), obtained by subtracting the contribu-
+of a linear correlation of the standard spatial template        tions from the IPD and bright and faint discrete Galactic
+with the intermediate residual map at wavelength λ ob-          sources from the observed map at 100 µm, was used as
+tained from the measured map, Iobs (l, b, λ, t), by sub-        the spatial template for all other wavelengths from 12
+traction of the IPD model, blanking of bright sources,          to 240 µm. No significant ISM emission could be iden-
+
+                                                            9
+tified at 1.25 and 2.2 µm, and a modified form of this            discussed above (see § 3.4).
+procedure was required to detect the weak ISM emission               The 100 µm − H I correlation was also evaluated us-
+at 3.5 and 4.9 µm (Paper III). The use of the 100 µm              ing the new Leiden/Dwingeloo H I survey (Hartmann
+ISM emission as the template at other wavelengths has             & Burton 1997), but this made little difference in the
+the advantages of good signal-to-noise ratio and an ideal         scaling factor or the residual intensity Ires (l, b, 100 µm).
+match of angular resolution with the other DIRBE data.            Use of the Leiden/Dwingeloo H I survey as the spatial
+Furthermore, the use of an infrared map as the template           template of the ISM at 100 µm produces a cleaner map
+automatically includes contributions from dust in all gas         of residual emission Ires (l, b, 100 µm) than does use of
+phases of the ISM. The procedure used to estimate the             the Bell Labs data, because of a better match to the
+100 µm CIB signal so as to remove it from the 100 µm              DIRBE angular resolution, but the differences are not
+ISM map is described briefly below and in § 3.4.                  very apparent in maps made in the projection and scale
+    For additional analysis of the 240 µm map, a two-             of those in Figure 1. Results quoted in this paper are
+component model of the ISM emission (“ISM2”) was also             based on the Bell Labs H I survey and other observa-
+generated. This model used a linear combination of the            tions that are directly calibrated to that data set (Elvis,
+DIRBE 100 and 140 µm ISM maps as a template. While                Lockman, & Fassnacht 1994; Snowden et al. 1994).
+the one-component (100 µm) model (“ISM1”) appears to
+work adequately at high latitudes, where we could best                                 2.4. Uncertainties
+test for isotropic residuals, the ISM2 model can account             For this analysis it is useful to make distinctions be-
+for spatial variations in dust temperature throughout the         tween three forms of uncertainties. First are the random
+ISM (Paper III). This leads to a more accurate model of           uncertainties which include instrumental noise, uncor-
+the ISM emission, particularly at low galactic latitudes,         rected instrument gain variations, random fluctuations
+and a residual map Ires (l, b, 240 µm) that is more weakly        of the stellar distribution, and certain deficiencies in the
+correlated with the ISM template than in the case of the          foreground modelling procedures. The key property of
+ISM1 model. Figure 1 shows maps of Ires (l, b, λ) at 240          random uncertainties is that they are reduced as one av-
+µm for both the ISM1 and ISM2 models.                             erages over longer time intervals or larger regions of the
+    To search for evidence of an isotropic CIB residual           sky. Table 2 lists typical values for the detector noise per
+at 100 µm, an ISM spatial template independent of the             pixel averaged over the entire mission, σ(νIν ), assum-
+measured 100 µm map was needed. For this purpose a                ing 400 observations per pixel. The bolometer detectors
+velocity-integrated map of H I column density was used            used at 140 and 240 µm are distinctly less sensitive than
+as the spatial template of the ISM emission. The range            the other detectors.
+of velocities in the H I map was restricted so that it               The second form of uncertainty is the gain uncer-
+contained only Galactic H I emission. The success of this         tainty. This is the uncertainty in the gain factor used
+procedure of course depends on the accuracy with which            in the absolute calibration of the DIRBE data. While
+the H I traces the dust distribution, at least at the high        the gain uncertainty does affect the quoted intensities,
+galactic latitudes of interest here. Paper III provides           including the residual intensities, in a systematic way, it
+extensive discussion of the uncertainty in the correlation        does not alter the signal-to-noise ratio of the results or
+of infrared brightness with H I column density.                   the detectability of an isotropic residual signal using our
+    The H I spatial template used to remove ISM emis-             methods. We therefore distinguish the gain uncertainty,
+sion from the map at 100 µm was the Bell Labs H I                 shown as S(gain) for each wavelength band in Table 2,
+survey (Stark et al. 1992). This survey has the ad-               from other systematic errors.
+vantages of a well-established baseline and large area               Finally there are the systematic uncertainties, which
+coverage, but the disadvantage of lower angular reso-             are the uncertainties in the data and the foreground
+lution than the DIRBE data. Higher resolution H I                 models that tend to be isotropic or very large scale.
+data (Elvis, Lockman, & Fassnacht 1994; Snowden et                The systematic uncertainties cannot be reduced by av-
+al. 1994), obtained in small regions where there are ob-          eraging, and therefore are the ultimate limitations in
+servational constraints on the amount of molecular and            the detection of the CIB. Table 2 lists the detector off-
+ionized material (Paper III), and calibrated with the Bell        set uncertainties, σ(offset). The offset uncertainties are
+Labs H I survey, were used to establish the scaling factor        important contributors to the total uncertainty only at
+between the H I and 100 µm ISM emission. These same               140 and 240 µm. The systematic uncertainties of the
+high resolution data were used to estimate the 100 µm             IPD model, the stellar emission model, and the ISM
+brightness at zero H I column density so as to remove             model are important respectively at 1.25 − 100 µm,
+diffuse extragalactic emission from the ISM spatial tem-          1.25 − 4.9 µm, and 100 − 240 µm. Papers II and III
+plate, GI (l, b, 100 µm), used at all other wavelengths as        discuss in detail the estimation of the systematic un-
+
+                                                             10
+certainties in the foreground models; Table 6 of Paper              contributions. Scattering and emission from the inter-
+III lists the systematic uncertainty associated with each           planetary dust dominates all other signals from 1.25 to
+foreground. The systematic uncertainty in each residual             100 µm. This is true even at 3.5 µm, the spectral “win-
+shown in Table 2 of this paper is the quadrature sum                dow” between the maxima of the scattered and emitted
+of the individual contributions identified in Paper III.            IPD signal. Only at 140 and 240 µm does some other
+The total uncertainties used to state our most restric-             foreground signal, that from the interstellar medium (in-
+tive upper limits on the CIB, and the uncertainty in                frared cirrus), become dominant.
+the CIB detections at 140 and 240 µm, are estimated as                  Some insight into the residuals is provided by looking
+the quadrature sum of the random and systematic un-                 at several high latitude regions (Hauser 1996a, b). For
+certainties. Table 2 of this paper and Table 6 of Paper             this purpose, we have examined the residuals in 10◦ ×10◦
+III clearly show that the total uncertainties are dom-              fields at the north and south Galactic and ecliptic poles
+inated by the systematic uncertainties in removing the              (designated NGP, SGP, NEP, and SEP respectively),
+foreground contributions to the infrared sky brightness.            and a 5◦ × 5◦ field in the Lockman hole (LH). Table 2
+                                                                    lists the mean residual brightnesses for these five patches
+                                                                    after all of the foreground removal steps listed above. As
+           3. OBSERVATIONAL RESULTS
+                                                                    discussed in § 2.3, the 100 µm map was used as the ISM
+                                                                    template in producing the residual maps at all wave-
+                   3.1. Dark Sky Limits                             lengths except 100 µm. At 100 µm, the Bell Labs H I
+    The most conservative direct observational limits on            map was used as the ISM template. While the range of
+the CIB are derived from the minimum observed sky                   residual values at each wavelength is substantial, typ-
+brightnesses. In each DIRBE weekly sky map, the                     ically a factor of 2 or more, comparison with the dark
+faintest direction has been determined for each wave-               sky values shows that these residuals are small fractions,
+length. At wavelengths where interplanetary dust scat-              approaching 10% at wavelengths shortward of 100 µm,
+tering or emission is strong, the sky is darkest near the           of the dark sky values. However, the fact that the resid-
+ecliptic poles. At wavelengths where the IPD signal is              uals are brightest in the region of peak IPD thermal
+rather weak (i.e., longward of 100 µm), the sky is dark-            emission, 12 to 25 µm, strongly suggests that significant
+est near the galactic poles or in minima of H I column              foreground emission still remains, at least in the middle
+density. The smallest of these values at each wavelength            of the DIRBE spectral range. This is not surprising in
+over the duration of the mission is the “dark sky” value,           view of the very apparent residual IPD modelling errors
+listed in Table 2 as νIν (dark). The uncertainty shown              at these wavelengths (e.g., Fig. 1, especially 4.9 to 100
+for each value is the quadrature sum of the contributions           µm; and Paper II).
+from the gain and offset 1σ uncertainties. We define
+“dark sky” upper limits to the CIB at the 95% confi-                          3.3. Residuals in High Quality Regions
+dence level (CL) as 2σ above the measured dark sky                     While each of the small dark patches (§ 3.2) is situ-
+values.                                                             ated where one of the IPD, stellar, or ISM foregrounds is
+                                                                    minimized, each patch is also located in a region where
+          3.2. Residuals in Small Dark Patches                      the other foregrounds may be strong. Therefore, we de-
+   After removing the contributions of interplanetary               fined “high quality” (HQ) regions where all foregrounds
+dust (Paper II), bright and faint discrete galactic sources,        are expected to be relatively weak. The range of eclip-
+and the interstellar medium (Paper III) from the mea-               tic latitude, β, was restricted to exclude bright scatter-
+sured sky brightness, the residual signal at high galac-            ing and emission from the IPD, and the range of galac-
+tic and ecliptic latitudes is positive and generally rather         tic latitude, b, was restricted to exclude regions with
+featureless, though low level artifacts from systematic             bright stellar emission. To avoid regions with bright ISM
+errors in the models are clearly present. To illustrate             emission, locations where the 100 µm brightness, after
+the magnitude of the foreground signals, Figure 2 shows             the IPD contribution was removed, was more than 0.2
+the DIRBE spectrum of the total observed sky bright-                MJy sr−1 above the local mean level were also excluded.
+ness averaged over a 5◦ × 5◦ region at the Lockman hole,            The largest region that can reasonably be considered as
+the region of minimum H I column density at (l, b) ∼                high quality covers ∼ 20% of the sky between the Galac-
+(150◦ , +53◦ ) [geocentric ecliptic coordinates (λ, β) ∼            tic and ecliptic poles and is designated HQA. A much
+(137◦ , +45◦ )] (Lockman, Jahoda, & McCammon 1986;                  more restrictive region, designated HQB, lies in the cen-
+Jahoda, Lockman, & McCammon 1990). Figure 2 also                    ter of the HQA region and includes ∼ 2% of the sky.
+shows the individual contributions from the foreground              Table 3 lists the constraints for the HQ regions, and the
+sources and the residuals after removing the foreground             last panel of Figure 1 shows the areas covered by the HQ
+
+                                                               11
+   Fig. 2.—Contributions of foreground emission to the DIRBE data at 1.25 − 240 µm in the Lockman hole area:
+observed sky brightness (open circles), interplanetary dust (triangles), bright galactic sources (crosses), faint galactic
+sources (stars), and the interstellar medium (squares). Filled circles show the residual brightness after removing all
+foregrounds from the measurements.
+
+
+
+regions. Each HQ region is composed of corresponding             tainties are larger when dealing with other areas where
+northern and southern segments.                                  the foreground emission removed was stronger.
+   Table 2 lists the mean residual intensities, νI0 (HQA)
+and νI0 (HQB), for the HQ regions after all foregrounds                     3.4. Residuals at the Lockman Hole
+have been removed. As in the analysis of the small dark                          and the North Ecliptic Pole
+patches (§ 3.2), the 100 µm map was used as the ISM                 The intercept of a linear fit to the correlation between
+template in producing the residual maps at all wave-             the infrared emission and the H I column density yields
+lengths except 100 µm. At 100 µm, the Bell Labs H I              an estimate of the isotropic residual component of in-
+map was used as the ISM template. The statistical un-            frared emission. This technique was used (§ 2.3 and Pa-
+certainty of the mean, which is calculated from the ob-          per III) to establish the amount of emission that needed
+served rms variation of the residual emission over the           to be removed to create the 100 µm template of the
+region, is also shown. For HQB, the total systematic un-         ISM. The H I data were from Snowden et al. (1994) for
+certainty estimated for each band is also listed in Table        a 250 deg2 region covering the Lockman hole (LH′ ), and
+2. While some portions of the systematic uncertainty             from Elvis, Lockman, & Fassnacht (1994) for a 70 deg2
+needed to be evaluated at regions other than the HQ              region around the north ecliptic pole (NEP′ ). These re-
+regions (see Papers II and III), the numbers listed here         gions are denoted with primes to distinguish them from
+should be appropriate for HQB. The systematic uncer-             the “dark patches” LH (5◦ ×5◦ patch) and NEP(10◦ ×10◦
+
+                                                            12
+patch) at similar locations but of somewhat different size           these regions (Paper III). We estimate that dust in the
+discussed in § 3.2. Figures 7 and 8 of Paper III show                ionized ISM uncorrelated with H I contributes less than
+that the 100 µm brightness and H I column density are                4 nW m−2 sr−1 to the 100 µm residual intensity. Assum-
+linearly related at low column density in these regions.             ing that the infrared spectrum of the ionized medium is
+Within these regions, linear fits to the correlations be-            the same as that of the neutral medium, the contribu-
+tween the 140 and 240 µm emission and the H I column                 tions from the ionized ISM at 140 and 240 µm are less
+density were also calculated. Table 2 lists the intercepts           than 5 nW m−2 sr−1 and 2 nW m−2 sr−1 respectively.
+of these fits as νI0 (LH′ , HI) and νI0 (NEP′ , HI).                 If such large contributions were to exist, then the resid-
+   The advantage of this technique for estimating the                ual intensities listed in Table 2 would have to be reduced
+CIB at 140 and 240 µm, over our standard method us-                  accordingly. Even in this case, the 240 µm result would
+ing the 100 µm data for the ISM template, is that the                still be a 3 σ detection of residual emission.
+systematic uncertainties of the 100 µm data, including                   Analysis in Paper III also shows that infrared emis-
+those caused by uncertainties in the 100 µm IPD model                sion from the molecular ISM is only poorly constrained
+and in the extrapolation of the 100 µm—H I correla-                  by upper limits on CO observations. Constraints based
+tion to zero H I column density, are not propagated into             on visual extinction measurements suggest the contri-
+the 140 and 240 µm results. Thus, the systematic un-                 bution from dust in the molecular ISM is negligible at
+certainties for νI0 (LH′ , HI) are smaller than those for            100 µm. Contributions at 140 and 240 µm should be
+νI0 (HQB). For the NEP region, the intercept of the                  similarly low.
+correlation must be extrapolated over a longer interval
+of H I column density and from fewer data, so the sys-                        3.5. Isotropy of the Residual Emission
+tematic uncertainties for νI0 (NEP′ , HI) are only smaller              The signature of the diffuse CIB is an isotropic sig-
+than those of νI0 (HQB) at 100 µm.                                   nal. Several tests of the isotropy of our residual signals
+   A disadvantage of this technique is that the H I does             have therefore been performed. Fundamentally, each
+not trace other phases of the ISM (ionized and molec-                test checks whether the background intensities in dif-
+ular gas) that may also contribute to the observed in-               ferent directions agree within the limit of the estimated
+frared emission. Any part of the emission from other                 uncertainties.
+phases that is not directly correlated with the H I col-
+umn density will appear as an additional contribution                             3.5.1. Mean Patch Brightnesses
+to νI0 (LH′ , HI) and νI0 (NEP′ , HI). Additionally, even               The first test involves comparison of the mean bright-
+within the neutral ISM, the assumed linear correlation               nesses of the small dark patches discussed in § 3.2.
+between infrared brightness and H I column density can-              For each patch the mean brightness and the standard
+not track large- or small-scale variations in the dust tem-          deviation of the mean (νI0 ± σm ) are listed as the
+perature or gas-to-dust mass ratio. This is apparent in              residual value and random error in Table 2. Two
+the 100 µm residual map (Fig. 1), where the ISM emis-                patches
+                                                                      p       whose means differ by less than 2σm (total) =
+sion is strongly oversubtracted in the outer Galaxy and              2 σm (1)2 + σm (2)2 are consistent with isotropy be-
+undersubtracted in the inner Galaxy. Emission from nu-               tween those regions of the sky. This is a strict constraint
+merous molecular clouds is also visible at high latitudes.           on isotropy, in that it does not allow for differences be-
+   Because there are available data on all gas phases in             tween patches that are larger than the random errors
+the NEP′ and LH′ regions, it is possible to set tight                but within the systematic uncertainties.
+limits on the uncertainty in the extrapolation of the                   Some pairs of patches pass this strict test for isotropy
+infrared—H I correlation to zero H I column density in               at 1.25, 2.2, 3.5, 4.9, 140 and 240 µm. For the ISM2
+
+
+                                                        TABLE 3
+                                             HIGH QUALITY REGION DDEFINITIONS
+
+                                                              100 µm ISM                            Areaa
+
+         Region           |b| limit        |β| limit         limit (MJy/sr)         (pixels)        (deg2 )        (sr)
+
+          HQA              > 30             > 25                 < 0.2              83671           8780           2.67
+          HQB              > 60             > 45                 < 0.2               8140            854           0.26
+
+a Bright source removal reduces these areas by up to 35% at near-IR wavelengths.
+
+
+
+                                                                13
+model (§ 2.3), the mean 240 µm residual intensity of              25 µm, even though the contribution from stars is small
+each patch except the NEP is consistent with that of              enough that this additional term is minor. The expected
+each of the other patches. However, in most cases the             intensity distribution for the entire patch is then con-
+differences between the mean residuals of the patches             structed from the sum of these Gaussian distributions
+are larger than expected for purely random noise in               over all pixels.
+measurements of an isotropic residual. At mid-infrared               For wavelengths of 1.25 − 4.9 µm, the residual fluctu-
+wavelengths, the systematic effect of the residual IPD            ations from faint sources dominate the variations within
+emission is evident in that the north and south ecliptic          the HQ regions. For these wavelengths and for each HQ
+pole patches are at nearly the same brightness, while the         region, the faint source model (§ 2.3) was used to gener-
+lower ecliptic latitude patches at the Galactic poles are         ate random samples of pixel brightnesses using Poisson
+significantly brighter.                                           statistics. We then added random Gaussian errors corre-
+   If the criterion for isotropy is taken to be agree-            sponding to the combined detector noise and IPD model
+ment within the systematic uncertainties, which are also          uncertainties, and the ISM uncertainties at wavelengths
+shown in Table 2, then most pairs of patches pass the             for which the ISM was modeled (3.5 and 4.9 µm).
+test at all wavelengths. Exceptions are that intensities             For all wavelengths, the observed and expected resid-
+at the Galactic poles tend to differ from those at the            ual brightness distributions were compared using the
+ecliptic poles at wavelengths where the IPD emission is           Kolmogorov-Smirnov (K-S) test. At wavelengths greater
+strong, and the residual intensity in the SEP patch is            than 12 µm the χ2 test was also applied. These statistics
+anomalously low in the near-infrared and high in the              indicate isotropy for the 240 µm residuals in the HQA
+far-infrared.                                                     (ISM1) and HQB (ISM1 & ISM2) regions. The residu-
+   A test for equal mean intensities was also applied for         als in the HQB region are also found to be isotropic at
+the north and south halves of the HQB region. In this             140 µm. The 60 and 100 µm intensity distributions fail
+case, the confidence levels of the equality were deter-           the tests, despite their qualitatively similar observed and
+mined through the bootstrap method and the t-statistic            expected distributions. The 12 and 25 µm distributions
+of the Fisher-Behrens test:                                       fail the test badly, because of residual structure from
+                                                                  imperfect removal of the IPD emission. At the near-
+                        N −S
+                t= p 2               ,                (2)         infrared wavelengths, the FSM predicts slightly wider
+                    σN /nN + σS2 /nS                              distributions than are observed.
+where N and S are the mean intensities over nN and                   This brightness distribution test moves beyond the
+nS pixels in the north and south halves of the HQB re-            simple comparison of mean intensities and can reveal
+gion. Only at 3.5 µm and 240 µm were the two means                the presence of unusually bright or dark features within
+plausibly equal, to significance levels of 36% and 75%            a region. The main drawback of this test is that it lacks
+respectively. At the other wavelengths, the highest sig-          any sensitivity to the spatial distribution of the residual
+nificance level of equality was only 0.3% (at 140 µm).            emission within a region.
+
+              3.5.2. Brightness Distributions                                3.5.3. Systematic Spatial Variations
+   The next set of isotropy tests involves checking                  An area where the residual intensity is isotropic will
+whether the dispersion in brightness for pixels in an             have no significant spatial variations or structure. The
+area is consistent with the dispersion due to the known           residual emission in the HQ regions has been tested for
+random uncertainties. If the data show no variation in            systematic variations by looking for linear correlations of
+excess of that expected from the random uncertainties             the residual intensity with csc(|b|) and csc(|β|), and with
+then the patch is said to be isotropic. This test gains           the intensities of the IPD, faint source and ISM models.
+statistical significance when large patches are used. We          The slopes of these correlations indicate the gradients
+applied this test in the HQ regions defined in § 3.3.             in the residual intensities with respect to each correlant.
+   For wavelengths of 12 − 240 µm, the probability dis-           There were statistically significant slopes to all of these
+tributions for the intensity of each pixel were calculated        correlations in the HQA regions. These correlants are
+assuming Gaussian dispersions of both ISM model errors            not all independent. Correlations with all of them can
+(proportional to the ISM intensity) and a combination             be produced by low-level artifacts due to imperfections
+of detector noise and IPD model errors (measured at               in any one of the foreground models. Examination of
+each pixel as the standard deviation of the weekly map            the residual maps (Fig. 1) shows evident residuals from
+intensities, after removal of IPD emission). The random           the IPD and ISM model removal in the HQA region,
+uncertainties of the stellar model are included as an ad-         consistent with these formal tests. In the HQB regions,
+ditional Gaussian component to the dispersion at 12 and           the residual emission at 140 and 240 µm did not exhibit
+
+                                                             14
+any significant correlations, even though the tests were              One can only say they are consistent with being flat.
+sensitive enough to detect correlations as strong as those            However, there may be clustering or some other irreg-
+found in the larger HQA regions. At other wavelengths,                ular structure which, to a smooth polynomial surface,
+correlations with at least one of the models were present.            appears as noise.
+For HQB, the slopes of the correlations with respect to
+csc(|b|) and csc(|β|) and their statistical uncertainties                       3.5.4. Two-Point Correlation Functions
+are listed as ∂b νI0 (HQB) and ∂β νI0 (HQB) in Table 2.                  A more sophisticated test of the isotropy of the resid-
+The high quality regions HQA and HQB were defined a                   ual infrared emission is the two-point correlation func-
+priori as regions of least solar system and galactic fore-            tion of the residuals. The procedures used were very
+ground, not based upon the outcome of isotropy tests of               similar to those employed for the analysis of the CMB
+residuals. Since the HQA region contains evident model                anisotropy in the COBE/DMR data (Hinshaw et al.
+artifacts, the remaining tests were restricted to the HQB             1996). The two-point correlation function is expressed
+region.                                                               as C(θ) = hνIi νIj i where the angle brackets denote the
+   A more general test for structure within an area, such             average over all Nij pixel pairs in the region of interest
+as the HQB region, is to fit a trend surface. If the scat-            that are separated by an angular distance θ. The pixel
+ter of the residuals of the fit is significantly less than the        intensities, Ii , have had the mean residual intensity (i.e.,
+scatter about the mean value in the patch, structure ex-              the monopole term) subtracted.
+ists. To determine the significance of a measure of scat-                Figures 3a, 3b, and 3c show the two-point correlation
+ter in a patch, without making any assumptions about                  functions for the 3.5, 100, and 240 µm residual emission
+the nature of the data, the intensity values of its pix-              in the HQB region. The correlation function is binned
+els were randomly permuted spatially, creating a “flat”               into 0.◦ 25 bins, which is slightly less than half of the
+reference patch. Applying a surface fit to many such                  width of the DIRBE beam. The degree of isotropy of the
+randomized versions of a patch allowed the derivation of              two-point correlation function was evaluated by compar-
+the empirical distribution function of the χ2 of the fit              ing the correlation function of the real data with two-
+to a flat patch. The same type of surface was then fit-               point correlation functions generated from an ensemble
+ted to the actual patch data (no permutation), and the                of Monte Carlo simulations of the residual brightness in
+χ2 calculated. The fraction of randomized patches with                the HQB regions. The simulations assumed zero mean
+smaller values of χ2 is the significance level to which the           intensities with random Gaussian uncertainties in each
+patch is flat. This analysis was performed individually               pixel that were estimated from the weekly variation of
+on the two HQB patches, using polynomials through de-                 the observed data, after removal of the IPD emission
+gree n in a galactic coordinate system, l and csc b.                  (see Paper III for details). We increased the number
+   Table 4 lists the results of this analysis applied to              of simulations until the statistical results (below) were
+the separate north and south halves of the HQB region                 unaffected by the size of the sample. This required 7200
+(HQBN and HQBS) for a surface of up to degree 3 (10                   simulations at 240 µm (9600 for ISM2), and 4800 sim-
+terms). The entries at wavelengths of 12 to 100 µm                    ulations at 140 µm. At other wavelengths, comparison
+are omitted since at these wavelengths the residuals are              of the observed correlationp  function with the theoretical
+clearly not isotropic: surface trends are obvious and the             uncertainties (σC(θ) = σI2 / Nij , assuming that a single
+significance level of flatness less than 0.1%. The HQBS               σI applies for all pixels) was sufficient to demonstrate a
+region at 4.9 µm also bears evidence of structure, but                clear lack of isotropy.
+the test was inconclusive for the other entries in Table 4.              For the data and each of the simulations, a χ2 statistic
+
+
+
+                                                           TABLE 4
+                                             TEST FOR SURFACE TRENDS IN HQB
+
+                                                            Flatness of HQBN, HQBS (%)
+
+           Surface           1.25 µm          2.2 µm             3.5 µm          4.9 µm          140 µm           240 µm
+
+         P1 (l, csc b)        47, 36          50, 43             48, 45           28, 10          50, 52          51, 52
+         P2 (l, csc b)        46, 26          48, 29             38, 40           22, 6           50, 50          52, 49
+         P3 (l, csc b)        44, 24          46, 39             38, 39           23, 4           50, 49          53, 50
+
+
+
+
+                                                                 15
+   Fig. 3.—Two-point correlation function used to test the isotropy of the DIRBE residual emission in the high
+quality region B (Table 3). The top three panels show the correlation functions of the residuals at three wavelengths,
+while the bottom panel shows the correlation function of the interstellar medium model (ISM1) at 240 µm. The solid
+lines in each panel are the ±1σ uncertainties estimated by Monte Carlo simulations. Separations of 0◦ ≤ θ < 45◦
+are obtained within each of the north and south high quality B regions, while separations of 135◦ < θ ≤ 180◦ are
+obtained between the north and south high quality B regions. The large uncertainties at θ ≈ 45◦ and 135◦ are due
+to the small number of pixel pairs at these separations.
+
+
+
+was calculated as                                               fectly isotropic distribution [C(θ) = 0 except C(0) =
+                                                                σ 2 ] and M−1 is the inverse of the correlation matrix
+                χ2 = ∆CT · M−1 · ∆C                  (3)        M = h(∆C)(∆C)T i, where the angle brackets here de-
+                                                                note an average over all Monte Carlo simulations. If
+where (∆C)i = C(θi ) − σ 2 δ(0) is the difference be-           there were no cross-correlation between the terms of
+tween the correlation function of the data (or one of           the two-point correlation function, this definition of χ2
+the simulations) and the correlation function for a per-        would reduce to the usual form. The lines in the two-
+
+                                                           16
+point correlation of Figure 3c indicate the ±1σ (rms)                than the standard 100 µm template of the ISM emission.
+variations in C(θ) for all the simulated correlation func-           The LH region is smaller than the HQB region, and
+tions at 240 µm. In Figures 3a and 3b, the p  lines indicate         only samples angular separations in the range 0◦ ≤ θ <       ∼
+the theoretically expected variation of σ 2 / Nij for the            22◦ . Using the H I column density as the ISM template,
+3.5 and 100 µm data.                                                 the 140 µm residual emission in the LH region exhibits
+    Ideally, if the data are isotropic the reduced χ2 , χ2ν ,        isotropy at roughly the same level of confidence as does
+should be ≈ 1.0 and the fraction of simulations that                 the 140 µm residual in the HQB region when the 100
+have a smaller χ2 than the data should be P (< χ2 ) ≈                µm data are used as the ISM template. At 240 µm, use
+0.5. Table 5 lists the results at 240 µm for the entire              of the H I data as the ISM template leads to residuals
+HQB region, and for the north and south halves consid-               that are indistinguishable from the random simulations.
+ered independently. The results of the analysis of the               Apparently, within this region of low H I column density,
+residuals from the two-component ISM model (ISM2)                    there is little or no indication of anisotropic emission
+are also presented. Within the subsets of the HQBS                   from the ionized and molecular phases of the ISM.
+(ISM1) and HQBN (ISM2) regions, the 240 µm data are                     Two-point correlation functions for the 140 and 240
+found to be indistinguishable from the random simula-                µm residual emission often exhibit an increase at the
+tions. In the full HQB region, the P (< χ2 ) values, while           smallest angular scales, θ < 1◦ (e.g., Fig. 3c). However,
+more marginal, do not support rejection of the hypothe-              any apparent correlation on these roughly beam-sized
+sis that the residual 240 µm emission in the HQB region              angular scales does not strongly influence the overall cor-
+is isotropic. As a further comparison, Figure 3d shows               relation statistics. When the statistics of the correlation
+the correlation function in the HQB region for the ISM1              functions are calculated excluding correlations on angu-
+model used in creating the 240 µm residual map. Struc-               lar scales smaller than 1◦ , the values of χ2ν show only
+ture of this character is absent in the 240 µm residual              modest decreases at best, and the corresponding proba-
+map (Fig. 3c). The 100 µm ISM map was clearly a good                 bilities for isotropy are only slightly improved. Examples
+template for the 240 µm ISM emission. On the other                   of these are given in the last columns of Table 5.
+hand, the large features in the correlation function of                 Finally, to place limits on the anisotropy of the
+the 100 µm residual map (Fig. 3b), which was created                 240 µm residual emission within the HQB region, a
+using an H I map as the ISM template, indicate that                  technique commonly used to limit temperature fluc-
+there generally are some deficiencies in the assumption              tuations in the CMB is employed (e.g., Readhead et
+that H I is an accurate spatial tracer of dust (as noted             al. 1989; Church et al. 1997). The observed cor-
+in § 3.4).                                                           relation function is compared with Gaussian autocor-
+    For the 140 µm residual emission, the case for isotropy          relation function (GACF) models of the form C(θ) =
+of the residual emission is not as strong, but is still not          C0 (θc ) exp (−θ2 /2θc2 ), where θc is the intrinsic corre-
+                                                                                                                  1/2
+thoroughly rejected (Table 5). At wavelengths shorter                lation scale of the fluctuations and C0 (θc ) is their
+than 140 µm, isotropy can be ruled out by the fact that              mean amplitude. Convolution of intrinsic fluctuations
+the two-point correlation functions display significant              with a Gaussian approximation to the DIRBE beam
+structure (caused by imperfect removal of foreground                 [exp(−θ2 /2θ02 ) with θ0 ≈ 0.3◦ ] gives a correlation func-
+emission) and χ2ν ≫ 1.0 (e.g., Figs. 3a and 3b).                     tion of the form:
+    As a further check on the isotropy of the residual                                          θc2
+                                                                                                           
+                                                                                                                   θ2
+                                                                                                                             
+emission in the HQB region, we also calculated the two-                     C(θ) = C0 (θc ) 2          exp −                   . (4)
+                                                                                             2θ0 + θc2        2(2θ02 + θc2 )
+point cross-correlations between the residual 140 µm
+emission and the IPD and ISM models used in deriv-                   Fitting this model to the data provides limits on C0 (θc ).
+ing those residuals. The same cross-correlations were                For the HQB region and the 240 µm residual emission
+calculated for both the ISM1 and ISM2 residual emis-                 after removal of the ISM1 model,     the best fit GACF has
+                                                                                                  θc2                     −2
+sion maps at 240 µm. Table 5 shows the results of                    an amplitude of C0 (θc ) 2θ2 +θ  2 = 10 ± 2 nW m         sr−1
+                                                                                                 0    c
+                                                                                                          2    2       2
+these cross-correlations. The cross-correlations indicate            and an apparent scale length 2θ0 + θc ≈ 2θ0 . If this
+isotropy at about the same level of confidence as the                correlation is removed, there is no other correlation on
+auto-correlations.                                                   angular scales larger than ∼ 2◦ , limited by C0 (θc ) <
+    Table 5 also includes the results found when the two-            1 nW m−2 sr−1 . For the 240 µm residual emission after
+point correlation functions of the residual emission at              removal of the ISM2 model, correlation is again found on
+140 and 240 µm are calculated over the region of the                 a scale comparable to the      beam, but with an increased
+                                                                                             θc2                         −2
+Lockman hole. For this test, the residual emission was               amplitude of C0 (θc ) 2θ2 +θ 2 = 50 ± 20 nW m           sr−1 .
+                                                                                             0    c
+generated by the subtraction of the H I emission scaled              Fluctuations on other scales can not be limited as tightly
+by the slope of the H I - IR correlation (§ 3.4), rather             as for the residual emission of the ISM1 model subtrac-
+
+                                                                17
+tion. The small-scale angular correlation appearing in                  relation. However, the cause of this unexpected instru-
+the first several angular bins of the 240 µm plot has been              mental effect is not known.
+investigated. Residual structures in the IPD cloud and
+interstellar medium do not produce effects this large.                               3.6. Conclusions from Residuals
+The extrapolated emission of the sources in the IRAS                       The signatures of a candidate CIB detection are a sig-
+Point Source Catalog also does not produce this much                    nificantly positive residual and isotropy over the tested
+correlated power. After the small-scale angular correla-                area of the sky. We require that a significant mean resid-
+tion was found in the residual maps, a weak time cor-                   ual exceed 3σ, where the uncertainty, σ, is the quadra-
+relation in successive samples of the 240 µm dark noise                 ture sum of the random errors and systematic uncer-
+data (DIRBE shutter closed) was found. This temporal                    tainties of the measurements and foreground removal.
+correlation maps into adjacent pixels in the sky, and is                The smallest sky area considered meaningful for isotropy
+large enough to produce the observed small-angle cor-                   testing is the 2% of the sky where there are generally
+
+
+
+                                                         TABLE 5
+                                            RESULTS FROM TWO-POINT CORRELATION
+
+                                                               0◦ ≤ θ ≤ 180◦                               1◦ ≤ θ ≤ 180◦
+
+         Wavelength (µm)            Location           χ2ν a            P (< χ2ν )b                χ2ν a             P (< χ2ν )b
+
+         140                         HQB               1.31               0.99                     1.24                 0.97
+         140                         HQBN              1.24               0.92                     1.16                 0.85
+         140                         HQBS              1.09               0.75                     1.05                 0.67
+         140c                         LH               1.27               0.91                      ···                 ···
+         240                         HQB               1.19               0.95                     1.13                 0.87
+         240                         HQBN              1.34               0.97                     1.31                 0.96
+         240                         HQBS              1.06               0.68                     0.98                 0.48
+         240c                         LH               0.94               0.41                      ···                 ···
+         240d                        HQB               1.10               0.83                     1.10                 0.81
+         240d                        HQBN              0.99               0.52                     1.00                 0.54
+         240d                        HQBS              1.13               0.80                     1.13                 0.81
+
+         140 × IPD                   HQB               1.21               1.00                      ···                 ···
+         140 × IPD                   HQBN              1.09               0.81                      ···                 ···
+         140 × IPD                   HQBS              1.30               1.00                      ···                 ···
+         140 × ISM                   HQB               1.28               1.00                      ···                 ···
+         140 × ISM                   HQBN              1.16               0.93                      ···                 ···
+         140 × ISM                   HQBS              1.15               0.92                      ···                 ···
+         240 × IPD                   HQB               1.12               0.95                      ···                 ···
+         240 × IPD                   HQBN              0.99               0.48                      ···                 ···
+         240 × IPD                   HQBS              1.17               0.95                      ···                 ···
+         240 × ISM                   HQB               1.13               0.95                      ···                 ···
+         240 × ISM                   HQBN              1.03               0.63                      ···                 ···
+         240 × ISM                   HQBS              1.07               0.77                      ···                 ···
+         240d × IPD                  HQB               1.21               1.00                      ···                 ···
+         240d × IPD                  HQBN              1.05               0.71                      ···                 ···
+         240d × IPD                  HQBS              1.29               1.00                      ···                 ···
+         240d × ISM                  HQB               1.16               0.98                      ···                 ···
+         240d × ISM                  HQBN              1.06               0.71                      ···                 ···
+         240d × ISM                  HQBS              1.06               0.73                      ···                 ···
+
+a For 0◦ ≤ θ ≤ 180◦ : ν = 360 for HQB and ν = 180 for HQBN and HQBS. For 1◦ ≤ θ ≤ 180◦ : ν = 356 for HQB and ν = 176 for HQBN
+
+and HQBS.
+b The probability of one Monte Carlo simulation having a smaller χ2 than the value listed in the preceding column.
+                                                                    ν
+c Residuals after subtraction of the Snowden et al. (1994) H I data as the ISM model.
+d Residual at 240 µm after subtraction of the 2-component ISM model (ISM2).
+
+
+
+                                                                   18
+minimal foregrounds, the HQB region.                               µm, νIν = 25 ± 7 and 14 ± 3 nW m−2 sr−1 respec-
+   Within the HQB region, there are gradients in the               tively, exceed 3σ and satisfy the isotropy tests, these
+residual emission and little or no consistency with                residuals are either detections of the CIB or unmodeled
+isotropy in the two-point correlation functions and other          isotropic contributions from sources in the solar system
+isotropy tests for all wavelengths from 1.25 to 100 µm.            or Galaxy. Arguments against the foreground interpre-
+Furthermore, at all of these wavelengths, with the excep-          tation are presented in Paper IV and summarized in
+tion of 4.9 µm, the mean residual emission is less than            § 4.1. Though the weighted-average residual at 100 µm
+3σ. Therefore, from 1.25 to 100 µm, we are only able               in the HQB region, Lockman hole, and north ecliptic
+to establish upper limits on an isotropic background.              pole regions exceeds 3σ, the anisotropy in the HQB re-
+Using the HQB analysis, upper limits at the 95% confi-             gion excludes this as a candidate detection of the CIB.
+dence level (CL) are taken to be the residual intensities,         The anisotropy at 100 µm may be the result of inaccu-
+νI0 (HQB), plus twice the quadrature sum of their ran-             racy in the ISM model due to use of the H I template
+dom and systematic uncertainties. These upper limits               (§ 3.4), as well as the appreciable artifacts from the IPD
+are listed as νI0 (95% CL) in Row 17 of Table 2.                   model at this wavelength. The weighted-average resid-
+   At 140 and 240 µm the two-point correlation func-               ual at 100 µm provides a slightly more restrictive upper
+tions indicate that the residual emission is isotropic over        limit on the CIB than the HQB analysis alone. The last
+the HQB region, particularly if the North and South                row of Table 2 shows the values of the two measurements
+halves of the region are considered separately (Table              of the CIB at 140 and 240 µm and the most restrictive
+5). The absence of significant gradients with ecliptic             upper limits at all other wavelengths.
+or galactic latitude (Table 2, rows 15–16) also supports
+this conclusion. However, the mean residuals at these
+wavelengths in the HQB region alone does not exceed                       4. DISCUSSION AND CONCLUSIONS
+3σ, primarily as a result of the large systematic uncer-
+tainty arising from using the 100 µm map as the ISM                             4.1. Possible Contributions from
+template. As discussed in § 3.4, direct correlation of the                        Unmodeled Isotropic Sources
+infrared emission with the H I column density in the                  In order to verify that the probable isotropic resid-
+well-studied LH′ region at the Lockman hole results in             ual emission at 140 and 240 µm is of extragalactic ori-
+smaller systematic uncertainties in the residual intensi-          gin, we need to demonstrate that local contributions of
+ties than yielded by our map-based procedures for sub-             isotropic or nearly isotropic components, both within the
+tracting the ISM contribution in HQB. The same is true             solar system and within the Galaxy, do not contribute
+at 240 µm for the NEP′ region at the north ecliptic pole.          significantly to the residual emission. Circumterrestrial
+In particular, the correlation procedure yields residual           material is ruled out by lack of variation of the mea-
+intensities in the Lockman hole region that are greater            sured sky brightness with zenith angle, and by the low
+than 3σ at 100, 140 and 240 µm, and that are consistent            color temperature of the residual radiation. Heliocen-
+with the mean residuals and their uncertainties in the             tric material within the solar system may have escaped
+HQB and NEP′ regions.                                              our modeling efforts if it lies in the outer solar system,
+   In order to make full use of the most accurate deter-           where its intensity will show little or no modulation as
+minations of the residuals at these long wavelengths, the          the Earth moves along its orbit. Such a cloud would not
+weighted average of the residuals in the HQB, LH′ (HI)             have been detectable by the IPD modeling procedures
+and NEP′ (HI) regions was determined. The weighting                applied, which relied on the apparent temporal varia-
+factors are the inverse squares of the combined random             tions of the IPD emission. An isotropic component of
+and non-common-mode systematic uncertainties for the               the Galactic emission may not have been removed by our
+three regions. For these purposes, gain, offset, and IPD           models if it arises from sources distributed in a roughly
+model errors were considered common-mode errors, leav-             spherical halo around the Galactic center of radius much
+ing the uncertainty in the ISM removal as the system-              larger than 8.5 kpc.
+atic error. This weights the LH′ (HI) determination most              These potential solar system and Galactic sources are
+heavily. Row 18 of Table 2 shows the resulting weighted            considered in detail in Paper IV. In the case of the solar
+averages, hνI0 i, at 100, 140, and 240 µm. The uncertain-          system, it is shown that a spherical cloud formed early
+ties in these values include the formal propagated uncer-          in the history of the solar system would not survive to
+tainty of the averaging process added in quadrature with           the present. A persistent spherical cloud would require
+the common-mode systematic uncertainties excluded in               a source of replenishment, and no plausible source for
+the averaging.                                                     a cloud of adequate mass can be identified. Difficulties
+   Since the weighted-average residuals at 140 and 240             with attributing a significant portion of the 140 and 240
+
+                                                              19
+µm isotropic residual emission to a Galactic dust com-            ing using DIRBE long wavelength data as a tracer of the
+ponent include the lack of a plausible mechanism for              interstellar dust. Using a simpler long-wavelength IPD
+creating and maintaining a large, smooth, shell-like dis-         model than ours (Paper II), they have found uniform
+tribution of dust, and the absence of a heating source            backgrounds at 140 and 240 µm which they identify as
+which could maintain a uniform dust temperature as                CIB detections at levels similar to the residual values
+high as that implied by the detections (∼17 K) at large           reported here.
+distances from the Galactic plane. Furthermore, such a               Figure 4 also shows the tentative detection of a
+shell would require such a large dust mass that the asso-         170 − 1260 µm background based upon FIRAS data re-
+ciated gas mass would be at least comparable to that in           ported by Puget et al. (1996). This result is signifi-
+the Galactic disk (assuming metallicity no greater than           cantly below the 140 − 240 µm detections reported here.
+solar).                                                           Even if the DIRBE result were to be recalibrated using
+   Hence, there is no known or likely source, consistent          the DIRBE–FIRAS calibration comparison of Fixsen et
+with other present knowledge of the solar system and              al. (1997), this significant difference would remain. We
+Galaxy, which can meet the combination of constraints             have no ready explanation for that difference. However,
+imposed by the low color temperature and isotropy of              Fixsen et al. (1998) have recently completed an exten-
+the long wavelength residual detections. We conclude              sive assessment of the evidence for the CIB in the FI-
+that it is unlikely that significant fractions of the ob-         RAS data. In order to investigate the magnitude of the
+served 140 and 240 µm residual emission can arise from            systematic uncertainties involved in separating Galactic
+either an IPD or a Galactic emission component. The               emission from the CIB, they have used three indepen-
+most likely conclusion is that these signals arise from an        dent methods to derive the CIB spectrum. One of these
+extragalactic infrared background.                                methods assumes that our DIRBE results are correct,
+                                                                  and so we ignore that one here for purposes of comparing
+         4.2 Comparison with Previous Limits                      the DIRBE and FIRAS results. Figure 4 shows the av-
+                                                                  erage of the Fixsen et al. (1998) results using two other
+     4.2.1. Direct Infrared Brightness Measurements               methods for separation of Galactic emission: a method
+   Figure 4 summarizes the current state of direct in-            based upon assuming a single color temperature for the
+frared background measurements. DIRBE results pre-                ISM emission; and a method using maps of H I and
+sented in this paper are shown from 1.25 to 240 µm for            C II emission to trace the ISM. Convolving this average
+both the dark sky upper limits (2σ above the lowest               of the results of Fixsen et al. (1998) with the DIRBE
+measured values, from Table 2) and the limits and de-             spectral responses at 140 and 240 µm yields FIRAS val-
+tections after foreground removal. Dark sky upper limits          ues at the same effective wavelengths of νIν = 11.5 and
+from 120 to 650 µm determined in “broad bands” from               11.3 nW m−2 sr−1 respectively. These values are within
+COBE/FIRAS data (Shafer et al. 1998) are also shown.              2σ and 1σ of the DIRBE results (Table 2) respectively,
+In the 140–240 µm region, the FIRAS dark sky limits are           and so are entirely consistent with them. If we formally
+in excellent agreement with the corresponding DIRBE               transform the DIRBE results to the FIRAS photomet-
+limits. Since the calibrations of the two instruments are         ric scale according to the determination of Fixsen et al.
+very consistent (Fixsen et al. 1997), this suggests that          (1997), we obtain νIν = 15.0 and 12.7 nW m−2 sr−1
+there are no small regions (on the scale of the DIRBE             at 140 and 240 µm respectively. Thus, even the small
+beam) in which the DIRBE has a better view beyond                 difference between the DIRBE 240 µm result and that
+the Galaxy than does the FIRAS with its much larger               of Fixsen et al. (1998) arises in large part from the small
+beam.                                                             difference in photometric scales of the two instruments,
+   Near-infrared limits from recent rocket measurements           and not in the separation of the foreground radiations
+(Matsuura et al. 1994) are similar to the DIRBE dark              from the CIB. The difference between the experiments
+sky limits, whereas the “unknown residual emission” af-           at 140 µm mostly arises from the calibration difference.
+ter foreground removal by Noda et al. (1992) is close to          We conclude that the FIRAS analysis of Fixsen et al.
+the foreground-removed DIRBE upper limits. For com-               (1998) provides strong independent confirmation of the
+parison, an upper limit obtained from sky photometry              DIRBE observational conclusions.
+in the optical is also shown (Mattila 1990). Far-infrared
+limits from the rocket data of Kawada et al. (1994) are                      4.2.2. Angular Fluctuation Limits
+generally similar to the COBE dark sky values, though                An alternative approach to searching for evidence of
+the quoted residual upper limit at 154 µm is very close to        the CIB is to study the fluctuations in maps of the in-
+the DIRBE detection at 140 µm. Schlegel, Finkbeiner,              frared sky brightness. If the spatial correlation func-
+& Davis (1997) have recently studied Galactic redden-             tion of the sources is known, the diffuse background
+
+                                                             20
+   Fig. 4.—Cosmic background intensity Iν times frequency ν as a function of wavelength λ. The circles with error
+bars are the detections based on DIRBE data after removal of foreground emission at 140 and 240 µm, while those
+with arrows are 2σ upper limits with the arrows extending to the measured residuals at 1.25 − 100 µm. The hatched
+thick lines are dark sky limits (95% CL) from the DIRBE data at 1.25 − 240 µm, while the hatched thin lines are
+dark sky “broad–band” limits (95% CL) from FIRAS data at 120 − 650 µm (Shafer et al. 1998). The crosses are
+upper limits derived from rocket experiments at 134 − 186 µm (Kawada et al. 1994) and 2.5 − 4.0 µm (Matsuura et
+al. 1994). The dashed line from 1.4 − 2.6 µm is residual radiation after foreground removal from the rocket data of
+Noda et al. (1992). The diamonds with arrows are lower limits derived from IRAS counts at 25 − 100 µm (Hacking
+& Soifer 1991; 60 µm limit from Gregorich et al. 1995). The dotted curve from 170 − 1260 µm shows the tentative
+infrared background determined from FIRAS data by Puget et al. (1996), while the solid curve is the average of the
+two DIRBE-independent methods of FIRAS analysis used by Fixsen et al. (1998). The triangles are lower limits
+derived from the Hubble Deep Field at 3600 − 8100 Å (Pozzetti et al. 1998) and K-band galaxy counts at 2.2 µm
+(Cowie et al. 1994). The square is an upper limit derived from sky photometry at 4400 Å (Mattila 1990).
+
+
+
+produced by them can be estimated from the measured             mined the rms fluctuations in the DIRBE maps from
+correlation function of sky brightness. Using such argu-        2.2 − 100 µm, and argue that these values imply that
+ments, Kashlinsky et al. (1996a) obtained upper lim-            the CIB due to matter clustered like galaxies is less
+its on the CIB from clustered matter of 200, 78, and            than about 10 − 15 nW m−2 sr−1 over this wavelength
+26 nW m−2 sr−1 at 1.25, 2.2, and 3.5 µm respec-                 range. In the near infrared and at 100 µm, these values
+tively, values modestly above the present direct DIRBE          are close to the observed residuals reported in Table 2.
+brightness limits in Table 2 and Figure 4. In an exten-         In the thermal infrared region, 12 − 60 µm, where the
+sion of this approach, Kashlinsky et al. (1996b) deter-         accurate removal of the large contribution from the in-
+
+                                                           21
+terplanetary dust is so difficult, these limits are much         derived from galaxy counts in the Hubble Deep Field
+below the limits reported here. However, relating the            (Pozzetti et al. 1998). It is comforting to see that
+limit on rms map fluctuations to the absolute brightness         the integrated discrete source estimates still lie below
+of the sky does involve model-dependent assumptions              the diffuse sky brightness residuals, and the gap is not
+about the clustered sources of radiation.                        large at some wavelengths. For example, the bright
+                                                                 end of the evolution models considered by Hacking &
+          4.2.3. Limits from TeV Gamma Rays                      Soifer (1991) at 60 and 100 µm [as amended by Gre-
+   Indirect evidence for the CIB can be obtained in prin-        gorich et al. (1995) at 60 µm] is only about a factor of
+ciple by observing attenuation of very energetic γ-rays          two below the DIRBE measured residuals at the corre-
+from extragalactic sources (Gould & Schreder 1967). At-          sponding wavelengths. The estimated integrated galaxy
+tenuation will arise from pair-production in the interac-        far-infrared background contribution should become less
+tion of the γ-rays with infrared photons. Such argu-             uncertain as deeper counts from space missions such as
+ments, based upon apparent evidence for attenuation              ISO, WIRE, and SIRTF are obtained.
+of TeV γ-rays from Mk 421, have been used to obtain
+both upper and lower limits on the CIB. The limits ob-                 4.4. Limit on Integrated Infrared Background
+tained depend on the assumed spectrum of the CIB, as                The CIB limits and detections reported here provide
+well as of the intrinsic spectrum of the γ-ray source (de        an upper limit on the integrated energy density of the
+Jager, Stecker, & Salamon 1994; Dwek & Slavin 1994;              CIB, an overall constraint on the integrated cosmic lu-
+Biller et al. 1995; Stecker 1996; Stecker & de Jager             minosity. Denoting the integrated infrared background
+1997). However, Krennrich et al. (1997) have recently            energy density in units of the critical closure energy den-
+reported detection of γ-rays with energies exceeding 5           sity by ΩIR and the corresponding quantity for the CMB
+TeV from Mk 421. These authors conclude that there is            by ΩCMB , one finds that (for TCMB = 2.728 K, Fixsen et
+no present evidence in the data for attenuation by pair          al. 1996) ΩIR /ΩCMB = 1×10−3 ×(IIR / nW m−2 sr−1 ),
+production on optical or near-infrared photons, though           where IIR is the sky brightness integrated over the in-
+given the uncertainty in the intrinsic γ-ray source spec-        frared spectrum. Taking the range of integration for the
+trum, the possibility of some such attenuation can not           infrared to be 1 − 300 µm, the dark sky upper limits of
+be totally ruled out. Under the above assumptions,               Table 2 give ΩIR /ΩCMB < 2.4, not a very restrictive
+even with no evident attenuation, these observations             limit. If the DIRBE upper limits plus likely detections
+provide upper limits on the CIB between 15 and 40 µm             shown in Table 2 are used, one finds an upper limit of
+of about 10 − 20 nW m−2 sr−1 (e.g., Dwek & Slavin                ΩIR /ΩCMB < 0.5.
+1994). These limits are well below the present direct               To provide substantially more stringent limits on the
+limits from DIRBE data, and are comparable to those              integrated infrared background over this broad spectral
+obtained by Kashlinsky, Mather & Odenwald (1996b)                range, the peak in the limits over the thermal infrared
+from their analysis of fluctuations in the DIRBE maps            range (∼ 5 − 60 µm), which may largely be due to the
+(§ 4.2.2). Recent analysis of the TeV γ-ray data from Mk         difficulty in discriminating the IPD signal to better than
+501 by Stanev and Franceschini (1997) yields limits from         a few percent of its value, must be substantially reduced.
+1 to 40 µm in the range 1 − 20 nW m−2 sr−1 depending             However, the limits on both the short-wavelength and
+upon the assumed spectrum of the CIB. Because of the             long-wavelength sides of this peak are themselves of in-
+large observational and theoretical uncertainties inher-         terest, since they constrain both the directly radiated en-
+ent in these limits, we do not yet regard them as strong         ergy density and that due to primary radiation absorbed
+constraints on currently popular theoretical models of           by dust and re-emitted at longer wavelengths. The
+the CIB in this wavelength interval (Paper IV).                  strong upper limits found from the dark sky upper lim-
+                                                                 its of Table 2 are ΩIR /ΩCMB < 0.16 and ΩIR /ΩCMB <
+ 4.3. Relationship to Integrated Brightness of Galaxies          0.05 in the ranges 1 − 5 µm and 100 − 240 µm respec-
+   Lower limits to the extragalactic infrared background         tively. Using the foreground-removed upper limits and
+can be obtained by integrating the brightness of ob-             detections from Table 2, the corresponding limits are
+served galaxies. Figure 4 shows such results from the            ΩIR /ΩCMB < 0.04 and ΩIR /ΩCMB < 0.02.
+near-infrared galaxy counts of Cowie et al. (1994), and
+from the IRAS survey by Hacking & Soifer (1991) and                                    4.5. Implications
+Gregorich et al. (1995). The IRAS results are shown                 The DIRBE CIB detections and upper limits cover a
+as a range to encompass the various galaxy luminos-              broad spectral range from 1.25 µm to 240 µm. The CIB
+ity or density evolution models considered. Figure 4             intensity in the 1.25 − 5 µm range is likely dominated
+also shows lower limits at UV and optical wavelengths            by direct starlight from galaxies, whereas the intensity in
+
+                                                            22
+   Fig. 5.—Predicted contributions to the cosmic infrared background radiation. The data points and FIRAS curves
+are the same measurement results as in Fig. 4. The short-dashed lines show CIB estimates by Bond, Carr, & Hogan
+(1991) for some possible pregalactic and protogalactic sources in a dust-free universe, including exploding stars (ES),
+massive objects (MO), halo black holes (BH), active galactic nuclei (AGN), and primeval galaxies (PG) . The long-
+dashed lines are calculations of Franceschini et al. (1994) using models of photometric evolution of galaxies with two
+cases of dust opacity. The solid lines are calculations of Fall, Charlot, & Pei (1996) using closed-box (lower curve)
+and inflow (upper curve) models of cosmic chemical evolution.
+
+
+
+the 100−240 µm range is likely dominated by reradiated          measurements for star formation and dust production in
+starlight from dust within galaxies. Under these assump-        galaxies based largely upon published models. Paper IV
+tions, one of the important implications of the DIRBE           provides more extensive discussion of the cosmological
+results is that they provide valuable constraints on the        implications.
+global history of star formation and dust production in            One of the surprising consequences of the DIRBE re-
+the universe. In general, the CIB is a fossil containing        sults presented here is that
+                                                                                         R the detected energy level of
+the cumulative energy release of astrophysical objects          the far-IR background, νIν d ln ν = 10.3 nW m−2 sr−1
+or processes in the universe. The DIRBE results can             in the 140 − 240 µm range, is a factor of ∼ 2.5 higher
+therefore be used to discriminate and constrain possible        than the integrated optical
+                                                                                     R      light from the galaxies in the
+contributors to the CIB, such as active galactic nuclei,        Hubble Deep Field, νIν d ln ν = 4.2 nW m−2 sr−1 in
+halo black holes, pregalactic stars, decaying particles,        the 3600 − 8100 Å range (Pozzetti et al. 1998). Since
+and gravitational collapse (e.g., Bond, Carr, & Hogan           the full spectrum of the cosmic background in the UV-
+1991). Here we briefly discuss the implications of our          optical and far-infrared wavelength ranges is unknown,
+
+                                                           23
+the exact ratio of the backgrounds in these ranges is still        ness, especially of what was known prior to the COBE
+quite uncertain. Nevertheless, the DIRBE detections,               mission. The quality of the DIRBE measurements them-
+when compared with the Hubble Deep Field results, in-              selves is such that improved knowledge of the local
+dicate that a substantial fraction of the total stellar lu-        foregrounds could permit the search for the CIB to
+minosity from galaxies might have been reradiated by               be carried to more sensitive levels using DIRBE data.
+dust in the far-infrared at the expense of the obscured            Such knowledge will be provided by future measure-
+UV-optical luminosity. This implies that star formation            ments, such as the sensitive all-sky surveys at 2 microns
+might be heavily shrouded by dust at high redshifts.               (2MASS and DENIS) and more extensive measurements
+   Figure 5 shows the same data as in Figure 4, superim-           of Galactic H II emission at high latitudes, and pos-
+posed on CIB estimates for some early models of possible           sibly by improved techniques to model or discriminate
+pregalactic and protogalactic sources in a dust-free uni-          the very dominant contribution from interplanetary dust
+verse (Bond, Carr, & Hogan 1991). Clearly the DIRBE                (e.g., Gor’kavyi et al. 1997a; 1997b). Of course, further
+upper limits in the near-infrared and the lower limits             direct measurements of the absolute infrared sky bright-
+from deep optical and near-infrared galaxy counts ei-              ness with higher angular resolution, preferably from a
+ther rule out such models or require revision of their pa-         location more distant from the Sun so as to reduce the
+rameters. Figure 5 also shows two examples of the pre-             contribution of the interplanetary dust to the sky bright-
+dicted contributions of galaxies to the CIB. The dashed            ness, could advance this search dramatically.
+curves are the calculations of Franceschini et al. (1994)
+using evolutionary models with moderate and opaque
+dust optical depth, largely based on emission proper-
+ties of galaxies at the present epoch. The solid curves               The authors gratefully acknowledge the contributions
+are the calculations of Fall, Charlot, & Pei (1996) using          over many years of the talented and dedicated engi-
+closed-box and inflow models of cosmic chemical evo-               neers, managers, scientists, analysts,   and program-
+lution, largely based on absorption properties of galax-           mers engaged in the DIRBE investigation. We thank
+ies at different redshifts. Both classes of models mod-            G. Hinshaw for expert advice on two-point correlation
+estly underpredict the DIRBE measurements of the far-              functions. The National Aeronautics and Space Admin-
+infrared background. Since star formation and dust pro-            istration/Goddard Space Flight Center (NASA/GSFC)
+duction are coupled, fitting CIB estimates from models             was responsible for the design, development, and oper-
+of cosmic chemical evolution to the DIRBE detections               ation of the COBE. Scientific guidance was provided by
+can determine the rates of both star formation and dust            the COBE Science Working Group. GSFC was also re-
+production as a function of redshift. In this fashion, the         sponsible for the development of the analysis software
+DIRBE results taken together with deep optical surveys             and for the production of the mission data sets.
+of galaxies promise to yield improved estimates of the
+history of global star formation, metal and dust pro-
+duction, and the efficiency of UV-optical absorption by
+dust.                                                                                  REFERENCES
+
+                      4.6. Summary                                 Arendt, R. G., Odegard, N., Weiland, J. L., Sodroski,
+   The DIRBE investigation was designed to detect di-                T. J., Hauser, M. G., Dwek, E., Kelsall, T., Moseley,
+rectly the CIB, or set limits on it imposed by the bright-           S. H., Silverberg, R. F., Leisawitz, D., Mitchell, K.,
+ness of our local cosmic environment. The observa-                   & Reach, W. T. 1998, ApJ, submitted (Paper III)
+tional results reported here, supported by Papers II and           Biller, S. D., et al. 1995, ApJ, 445, 227
+III, show evidence for detection of such a background              Boggess, N. et al. 1992, ApJ, 397, 420
+at the level of 25 ± 7 nW m−2 sr−1 at 140 µm and                   Bond, J. R., Carr, B. J., & Hogan, C. J. 1986, ApJ,
+14 ± 3 nW m−2 sr−1 at 240 µm, and upper limits at                    306, 428
+wavelengths from 1.25 to 100 µm. As our analyses show,             Bond, J. R., Carr, B. J., & Hogan, C. J. 1991, ApJ,
+the uncertainties in these results are indeed dominated              367, 420
+by the uncertainties in our ability to discriminate or             Cohen, M. 1993, AJ, 105, 1860
+model the contributions to the infrared sky brightness             Cohen, M. 1994, AJ, 107, 582
+from sources within the solar system and Milky Way                 Cohen, M. 1995, ApJ, 444, 875
+Galaxy.                                                            Church, S. E., Ganga, K. M., Ade, P. A. R., Holzapfel,
+   These results very substantially advance our prior di-            W. L., Mauskopf, P. D., Wilbanks, T. M., & Lange,
+rect knowledge of the extragalactic infrared sky bright-             A. E. 1997, ApJ, 484, 523
+
+
+                                                              24
+COBE Diffuse Infrared Background Experiment                         Kluwer), 99
+  (DIRBE) Explanatory Supplement, version 2.1, ed.               Hauser, M. G. 1996b, in Unveiling the Cosmic Infrared
+  M. G. Hauser, T. Kelsall, D. Leisawitz, and J. Wei-               Background, ed. E. Dwek (New York: IAP Press), 11
+  land, COBE Ref. Pub. No. 97-A (Greenbelt, MD:                   Hinshaw, G., Banday, A. J., Bennett, C. L., Górski,
+  NASA/GSFC), available in electronic form from the                 K. M., Kogut, A., Lineweaver, C. H., Smoot, G. F.,
+  NSSDC at http://www.gsfc.nasa.gov/astro/cobe                      & Wright, E.L., 1996, ApJ, 464, L25
+  /cobe home.html                                                 Jahoda, K., Lockman, F. J., & McCammon, D. 1990,
+Cowie, L. L., Gardner, J. P., Hu, E. M., Songaila, A.,              ApJ, 354, 184
+  Hodapp, K.-W., & Wainscoat, R. J. 1994, ApJ, 434,              Kashlinsky, A., Mather, J. C., Odenwald, S., & Hauser,
+  114                                                               M. G. 1996a, ApJ, 470, 681
+de Jager, O. C., Stecker, F. W. & Salamon, M. H. 1994,            Kashlinsky, A., Mather, J. C., & Odenwald, S. 1996b,
+  Nature, 369, 294                                                  ApJ, 473, L9
+Dwek, E. & Slavin, J. 1994, ApJ, 436, 696                        Kawada, M., Bock, J. J., Christov, V. V., Lange, A. E.,
+Dwek, E., Arendt, R. G., Hauser, M. G., Fixsen, D.,                 Matsuhara, H.,     Matsumoto, T.,       Matsuura, S.,
+  Leisawitz, D., Pei, Y.C., Wright, E. L., Kelsall, T.,             Mauskopf, P. D., Richards, P. L., & Tanaka, T. 1994,
+  Mather, J. C., Moseley, S. H., Odegard, N., Shafer,               ApJ, 425, L89
+  R., Silverberg, R. F., & Weiland, J. L. 1998, ApJ,             Kelsall, T., Weiland, J. L., Franz, B. A., Reach, W. T.,
+  submitted (Paper IV)                                              Arendt, R. G., Dwek, E., Freudenreich, H. T., Hauser,
+Elvis, M., Lockman, F.J., & Fassnacht, C. 1994, ApJS,               M. G., Moseley, S. H., Odegard, N. P., & Silverberg,
+  95, 413.                                                          R. F. 1998, ApJ, submitted (Paper II)
+Evans, D. C. 1983, Proc. SPIE, 384, 82                            Krennrich, F. et al. 1997, ApJ, 481, 758
+Fall, S.M., Charlot, S., & Pei, Y.C. 1996, ApJ, 464, L43         Lei96 Leinert, C. 1996, in Unveiling the Cosmic Infrared
+Fixsen, D. J., Cheng, E. S., Gales, J. M., Mather, J. C.,           Background, ed. E. Dwek, (Woodbury, NY: AIP), 53
+  Shafer, R. A., & Wright, E. L. 1996, ApJ, 473, 576              Lockman, F. J., Jahoda, K., & McCammon, D. 1986,
+Fixsen, D. J., Weiland, J. L., Brodd, S., Hauser, M. G.,            ApJ, 302, 432
+  Kelsall, T., Leisawitz, D. T., Mather, J. C., Jensen,           Magner, T. J. 1987, OptEng, 26, 264
+  K. A., Shafer, R. A., & Silverberg, R. F. 1997, ApJ,           Matsumoto, T. 1990, in The Galactic and Extragalactic
+  490, 482                                                          Background Radiation, IAU Symposium 139, ed. S.
+Fixsen, D. J. et al. 1998, in preparation                           Bowyer & C. Leinert (Dordrecht: Kluwer), 317
+Franceschini, A., Toffolatti, L., Mazzei, P., & de Zotti,        Matsumoto, T., Akiba, M., & Murakami, H. 1988, ApJ,
+  G. 1991, A&AS, 89, 285                                            332, 575
+Franceschini, A., Mazzei, P., de Zotti, G., & Danese, L.          Matsuura, S., Kawada, M., Matsuhara, T., Noda, M.,
+  1994, ApJ, 427, 140                                               & Tanaka, M. 1994, PASP, 106, 770
+Gor’kavyi, N. N., Ozernoy, L. M., & Mather, J. C.                 Mattila, K. 1990, in IAU Symposium 139, The Galac-
+  1997a, ApJ, 474, 496                                              tic and Extragalactic Background Radiation, ed.
+Gor’kavyi, N. N., Ozernoy, L. M., Mather, J. C., &                  S. Bowyer & C. Leinert (Dordrecht: Kluwer), 257
+  Taidakova, T. 1997b, ApJ, 488, 268                             Noda, M., Christov, V. V., Matsuhara, H., Matsumoto,
+Gould, R. J. & Schreder, G. 1967, Phys. Rev., 155,                  T., Matsuura, S., Noguchi, K., & Sato, S. 1992, ApJ,
+  1408                                                              391, 456
+ Gregorich, D. T., Neugebauer, G., Soifer, B. T.,                Partridge, R. B. & Peebles, P. J. E. 1967, ApJ, 148, 377
+  Gunn, J. E., & Herter, T. L. 1995, AJ, 110, 259                Pozzetti, L., Madau, P., Zamorani, G., Ferguson, H. C.,
+Hacking, P. B., & Soifer, B. T. 1991, ApJ, 367, L49                 & Bruzual, G. A. 1998, MNRAS, submitted
+Hartmann, D., & Burton, W. B. 1997, Atlas of Galactic            Puget, J.-L., Abergel, A., Bernard, J.-P., Boulanger, F.,
+  Neutral Hydrogen, (New York: Cambridge University                 Burton, W. B., Désert, F.-X., & Hartmann, D. 1996,
+  Press)                                                            A&A, 308, L5
+Harwit, M. 1970, Rivista del Nuovo Cimento, II, 253               Readhead, A. C. S., Lawrence, C. R., Myers, S. T.,
+Hauser, M. G. 1995, in Extragalactic Background Ra-                 Sargent, W. L. W., Hardebeck, H. E., & Moffet, A.
+  diation, Space Telescope Sci. Inst. Symp. Ser. 7,                 T. 1989, ApJ, 346, 566
+  ed. D. Calzetti, M. Livio, & P. Madau, (Cambridge:              Ressell, M. T. & Turner, M. S. 1990, Comments on
+  Cambridge Univ. Press), 135                                       Astrophysics, 14, 323
+Hauser, M. G. 1996a, in Proc. IAU Symposium 168,                  Schlegel, D. J., Finkbeiner, D. P., & Davis, M. 1997,
+  Examining the Big Bang and Diffuse Background Ra-                 preprint
+  diations, ed. M. Kafatos & Y. Kondo, (Dordrecht:               Shafer, R. A.,Mather, J. C.,Fixsen, D. J.,Jensen, K. A.,
+
+                                                            25
+  Reach, W. T., Wright, E. L., Dwek, E., & Cheng, E. S.          Linke, R. A., Heiles, C., & Hurwitz, M. 1992, ApJS,
+  1998, preprint                                                 79, 77
+Silverberg, R. F. et al. 1993, Proc. SPIE Conf. 2019,          Stecker, F. W. 1996, in Unveiling the Cosmic Infrared
+  Infrared Spaceborne Remote Sensing, ed. M. S. Scholl           Background, ed. E. Dwek (Woodbury, NY: AIP), 181
+  (Bellingham: SPIE), 180                                      Stecker, F. W., & de Jager, O. C. 1997, ApJ, 476, 712
+Snowden, S.L., Hasinger, G., Jahoda, K., Lockman,              Wainscoat, R. J., Cohen, M., Volk, K., Walker, H. J.,
+  F.J., McCammon, D., & Sanders, W.T. 1994, ApJ,                 & Schwartz, D. E. 1992, ApJS, 83, 111
+  430, 601                                                     Wheelock, S.L. et al. 1994, IRAS Sky Survey At-
+Stanev, T. & Franceschini, A. 1997, ApJ, submitted               las Explanatory Supplement, JPL Publication 94-11
+Stark, A. A., Gammie, C. F., Wilson, R. W., Bally, J.,           (Pasadena:JPL)
+
+
+
+
+                                                          26
+

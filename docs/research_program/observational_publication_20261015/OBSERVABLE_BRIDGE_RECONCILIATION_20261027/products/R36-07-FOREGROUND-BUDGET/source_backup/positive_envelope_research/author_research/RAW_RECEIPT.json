@@ -1,0 +1,198 @@
+{
+  "schema": "R36-07-positive-envelope-raw-receipt-v1",
+  "task_id": "R36-07-FOREGROUND-BUDGET",
+  "same_issue_continuation": true,
+  "author": {
+    "agent_id": "/root/r36_foreground_fresh_review",
+    "role": "research contributor for new method",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "independent_reviewer_of_this_new_method": false
+  },
+  "formal_controller_packet": null,
+  "formal_controller_ack": null,
+  "acceptance_met": false,
+  "qualified_products": [],
+  "artifact_manifest": [
+    {
+      "path": "RESULT.json",
+      "bytes": 7798,
+      "sha256": "05f3e742819ebfcaa27740c704e5e7579319029a37cc64db6c1a2549ff10ea47"
+    },
+    {
+      "path": "DERIVATION.md",
+      "bytes": 20434,
+      "sha256": "7e82ea0465946c2ca7abfc7e448c36901e4711d21b1df88eb1b5b2e12ca8e5c2"
+    },
+    {
+      "path": "NUMERIC_RESEARCH.json",
+      "bytes": 18123,
+      "sha256": "07a7e68dbcfa7c5db0ae9c58b871d29b8182e10b628989b12ac5ea75105a2c7d"
+    },
+    {
+      "path": "reproduce_research.py",
+      "bytes": 14976,
+      "sha256": "6d2761578e3a26b3c40090e509054eade7007e953bc840577ede9314a7ec1ef2"
+    },
+    {
+      "path": "SOURCE_INTAKE.json",
+      "bytes": 10139,
+      "sha256": "8215935ed046ed9bc902ba4b5a1f4bffe2f929fd035a58086cbd6bc5ddcf02fc"
+    },
+    {
+      "path": "source_intake.py",
+      "bytes": 3282,
+      "sha256": "30b3fd7306fada359e77f2258ab4c5dfe6353ffa54e8f6bb98a8714462a31378"
+    },
+    {
+      "path": "source_intake_INITIAL.py",
+      "bytes": 3002,
+      "sha256": "24b32752672a6774d4e5cd650a388575fb9dfda52345452c45e8d521e0c8d269"
+    },
+    {
+      "path": "FIRST_FAILURES_AND_WARNINGS.json",
+      "bytes": 907,
+      "sha256": "89ad066bbc578102762eb53a55d44a86e1e7697f0c01a8c45196880e494b9998"
+    },
+    {
+      "path": "research_run1.stdout",
+      "bytes": 229,
+      "sha256": "48f6700db25e6405900ae38470cd4b8dd8d4081847a779a9f2ac456551b5a4cf"
+    },
+    {
+      "path": "research_run1.stderr",
+      "bytes": 379,
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852"
+    },
+    {
+      "path": "intake.stdout",
+      "bytes": 499,
+      "sha256": "266f06ab0a917c20d417e0cb1ed5299ee7bdb274417568417d91f3b1216ecea5"
+    },
+    {
+      "path": "intake.stderr",
+      "bytes": 179,
+      "sha256": "205e7dfa6170d917654180fbea4e0bd553d3a37850325c9daeeb66b74f6b9e2d"
+    },
+    {
+      "path": "intake_additional.stdout",
+      "bytes": 492,
+      "sha256": "d3c8da15e5eb86f96e194514f1537f7be565997817c65740024f00f9c1f3dc92"
+    },
+    {
+      "path": "intake_additional.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "source_files": [
+    {
+      "name": "haslam408_ds_Remazeilles2014.fits",
+      "bytes": 12594240,
+      "sha256": "7e59071e2dad44c011703abc35ddcf16c4c50dac784c3d9d09829b84b7d8f2d1",
+      "url": "https://lambda.gsfc.nasa.gov/data/foregrounds/haslam_2014/haslam408_ds_Remazeilles2014.fits"
+    },
+    {
+      "name": "lambda_haslam408_nofilt.fits",
+      "bytes": 25174080,
+      "sha256": "ea1f5f3d595cf07ebe8dbd08d67abdf60326249f93c9e1d332de7efc3833ac4e",
+      "url": "https://lambda.gsfc.nasa.gov/data/foregrounds/haslam/lambda_haslam408_nofilt.fits"
+    },
+    {
+      "name": "DIRBE_BAND10_AAM_P3B.FITS",
+      "bytes": 10635840,
+      "sha256": "b60ff13ee003e012598ce3e8fca0cfc61db9f40320256a1078a10725c7194e72",
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/dirbe/aam/DIRBE_BAND10_AAM_P3B.FITS"
+    },
+    {
+      "name": "DIRBE_SYSTEM_SPECTRAL_RESPONSE_TABLE.ASC",
+      "bytes": 63101,
+      "sha256": "97cbb11d6c9d1fb740a1d2424317000c8e06ace8cc7ef179183cd9d892ff03f4",
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/dirbe/ancil/spec_resp/DIRBE_SYSTEM_SPECTRAL_RESPONSE_TABLE.ASC"
+    },
+    {
+      "name": "DIRBE_SKYMAP_INFO.FITS",
+      "bytes": 12620160,
+      "sha256": "391a2f839e67c8b074c1666eeb29928c7dcfcaab5b12a10be1dedae75bb67cc4",
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/dirbe/ancil/skyinfo/DIRBE_SKYMAP_INFO.FITS"
+    },
+    {
+      "name": "DIRBE_BEAM_CHARACTERISTICS_P3B.ASC",
+      "bytes": 3288,
+      "sha256": "3a247ff8f887658b177850e94970abe702effbe72ebf5f916bcbf58096fbc9ca",
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/dirbe/ancil/beam_char/DIRBE_BEAM_CHARACTERISTICS_P3B.ASC"
+    },
+    {
+      "name": "des_v2_3.pdf",
+      "bytes": 5313062,
+      "sha256": "36d98427392ecea01c3d4700bc2952aa6e53790125d5521a7d8ee03e26ee773e",
+      "url": "https://lambda.gsfc.nasa.gov/data/cobe/dirbe/doc/des_v2_3.pdf"
+    },
+    {
+      "name": "fg_2014_haslam_408_info.html",
+      "bytes": 18744,
+      "sha256": "402b69b34e1ebb3f1e8e9d7556a36d5ebd3327620832b62ee646ebd6229f085a",
+      "url": "https://lambda.gsfc.nasa.gov/product/foreground/fg_2014_haslam_408_info.html"
+    },
+    {
+      "name": "dirbe_products.html",
+      "bytes": 30746,
+      "sha256": "7ff70fd762ffea2045b4d978085675f906c9b2085c435673761fd70aad2046c3",
+      "url": "https://lambda.gsfc.nasa.gov/product/cobe/dirbe_products.html"
+    },
+    {
+      "name": "c_anual_avskymap.html",
+      "bytes": 11194,
+      "sha256": "27c40efc77a89bbf7ab413ceded57e7316b9b37834fdae871191527e9732e4f0",
+      "url": "https://lambda.gsfc.nasa.gov/product/cobe/c_anual_avskymap.html"
+    },
+    {
+      "name": "dirbe_skymap_info.html",
+      "bytes": 11137,
+      "sha256": "e09f5739622bb8d117093d4ed1f624137afd7ee6f1fdb4e55f57ab7fb7fed03e",
+      "url": "https://lambda.gsfc.nasa.gov/product/cobe/dirbe_skymap_info.html"
+    },
+    {
+      "name": "1411.3628",
+      "bytes": 388450,
+      "sha256": "7db80bcdaf5524359a38be432ef0710df618bbe32dda94ed98b2bb9415259836",
+      "url": "https://arxiv.org/html/1411.3628"
+    },
+    {
+      "name": "9806167.html",
+      "bytes": 724748,
+      "sha256": "44eed6d0fcaf75f3d5caa184e45bb5aceac95af43cb11dde89867806f93458ca",
+      "url": "https://arxiv.org/pdf/astro-ph/9806167"
+    },
+    {
+      "name": "fg_2014_haslam_408_get.html",
+      "bytes": 16904,
+      "sha256": "f2664eca2a7bf574c88e4270199d776d8f0c69bd200ad12289d9e3ae0d675f22",
+      "url": "https://lambda.gsfc.nasa.gov/product/foreground/fg_2014_haslam_408_get.html"
+    },
+    {
+      "name": "allsky_408_mhz_survey.pdf",
+      "bytes": 2462990,
+      "sha256": "9972122b90d02ae1a2cc309c366f928c98e12617b85b40c86638eb607c3f59bc",
+      "url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/84003AB2198C450BC32D6D7E38DA0869/S0074180900074623a.pdf/allsky_408_mhz_survey.pdf"
+    }
+  ],
+  "source_bytes_acquired": 70068684,
+  "source_intake_elapsed_seconds_sum": 172.59639011882246,
+  "research_execution": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "elapsed_seconds": 1.2794473730027676,
+    "maxrss_KiB": 204384
+  },
+  "research_command": "env OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python reproduce_research.py",
+  "research_exit_code": 0,
+  "preserved_prior_RESULT_sha256": "2b125b9a98060f48324740848c3b09b3b23ac00185e1a53e241645274c0d71d4",
+  "prior_review_sha256": "a5361452413879aa268c1277f2d0a8ea0b77333a8e9f67a1c8e7dbd67f35a11a",
+  "repository_mutation": false,
+  "original_noise_rerun": false,
+  "free_bytes_at_closeout": 2458120384512,
+  "reserve_bytes": 2147483648,
+  "finalized_utc": "2026-10-27T04:51:22.188852+00:00"
+}

@@ -1,0 +1,148 @@
+{
+  "schema": "R36-07-positive-envelope-independent-review-v1",
+  "task_id": "R36-07-FOREGROUND-BUDGET",
+  "same_issue_continuation": true,
+  "status": "PASS_CONDITIONAL_METHOD_PHYSICAL_INPUT_HOLD",
+  "conditional_theorem_holds": true,
+  "physical_nine_moment_radius_qualified": false,
+  "original_acceptance_met": false,
+  "qualified_products": [],
+  "formal_controller_packet": null,
+  "formal_controller_ack": null,
+  "four_axis_CAS_adjudication": false,
+  "publication_authorized_by_this_review": false,
+  "reviewer": {
+    "agent_id": "/root/r36_foreground_envelope_independent_review",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_runtime": "UNKNOWN",
+    "read_only_independent_of_author": true,
+    "prior_review_verdict_read": false,
+    "children_spawned": false
+  },
+  "author_agent_id": "/root/r36_foreground_fresh_review",
+  "reviewed_identity": {
+    "directory": "/mnt/extdrive/workdir/htt_open_data/r36_foreground_positive_envelope_research",
+    "RESULT_sha256": "05f3e742819ebfcaa27740c704e5e7579319029a37cc64db6c1a2549ff10ea47",
+    "RAW_RECEIPT_sha256": "4e848b5bc6e7875f3cb07d937ddd54569e30bf94dd2ff3dc247f78f20510dd21",
+    "DERIVATION_sha256": "7e82ea0465946c2ca7abfc7e448c36901e4711d21b1df88eb1b5b2e12ca8e5c2",
+    "reproducer_sha256": "6d2761578e3a26b3c40090e509054eade7007e953bc840577ede9314a7ec1ef2",
+    "all_original_research_files_unchanged": true
+  },
+  "conditional_scope": [
+    "Nonnegative emitter intensity measure and complex polarization total-variation domination in the stated spin frame.",
+    "Common unabsorbed power-law intensity law with RJ beta0=-3, delta=beta+3, reference 30GHz; frequency and epoch deviations separately bounded.",
+    "Two nonnegative calibrated response lower functionals with positive finite mass and strictly bracketing weighted mean log frequencies; aggregate source domination on every admitted atom.",
+    "Finite simultaneous source upper bounds under a declared error and selection model.",
+    "Target exponential/remainder consumption inside the certified log-frequency bracket or separately dominated outside-band contribution.",
+    "Common retained operator for the displayed three-row rho; native response/error bridge required for actual Y."
+  ],
+  "decisions": {
+    "Jensen_finite_passband_noncompact_beta": "PASS_CONDITIONAL",
+    "k_over_ea_power_k_constant": "PASS_ANALYTIC_SHARP_SINGLE_TAIL_NOT_OPTIMAL_TWO_CONSTRAINT_SUM",
+    "Holder_M0_and_intermediate_exponential": "PASS_CONDITIONAL_INCLUDING_ENDPOINTS",
+    "complex_TV_factorial_moments": "PASS_CONDITIONAL",
+    "Taylor_triangle_endpoint_and_cubic_interior": "PASS_CONDITIONAL",
+    "native_passband_integration": "VALID_PRESCRIPTION_NOT_EXECUTED_FOR_NATIVE_BANDS",
+    "synch_only_rho_units": "PASS_CONDITIONAL_THREE_ROWS_ONLY",
+    "unrestricted_MBB_hot_coordinate_obstruction": "PASS_COUNTEREXAMPLE",
+    "unrestricted_MBB_cold_source_hiding_and_target_growth": "PASS_COUNTEREXAMPLE",
+    "aggregate_response_counterexample": "PASS_NO_ACTUAL_SKY_HOLE_ASSERTED",
+    "source_weight_response_loss_requirement": "GENUINE_MISSING_PHYSICAL_CERTIFICATE",
+    "exact_beam_equivalence_gate": "NOT_REQUIRED",
+    "full_physical_nine_moment_radius": "HOLD"
+  },
+  "numeric_reproduction": {
+    "all_nonexecution_fields_exactly_equal": true,
+    "raw_receipt_artifact_hashes_match": 14,
+    "source_hashes_match": 15,
+    "reproducer_script_unmodified": true,
+    "source_copy_policy": "original 70MB source reused read-only via symlink; only small script/intake copied"
+  },
+  "independent_checks": {
+    "status": "ALL_BOUNDED_REVIEW_CHECKS_PASSED",
+    "precision_digits": 70,
+    "analytic_tbar": "3.709985311039401868659870542256316828587452088873070227714340086719971",
+    "elapsed_seconds": 0.37167965015396476,
+    "first_fixture_failures_preserved": "FIRST_FAILURES_AND_WARNINGS.json",
+    "author_scientific_assertion_failure_found": false
+  },
+  "unit_comparison": {
+    "synch_only_conditional_upper_K_CMB": 7.898526171756386,
+    "synch_only_conditional_upper_microK_CMB": 7898526.171756387,
+    "original_algebraic_minimum_K_CMB": 0.00011352765636162132,
+    "ratio_for_scale_only": 69573.58607489523,
+    "full_radius_comparison_admissible": false,
+    "reason": "Missing dust/omitted components and native response remainder bridge; conditional upper bound not a measured norm."
+  },
+  "findings": [
+    {
+      "severity": "CLARIFICATION",
+      "location": "DERIVATION.md section 3 / RESULT.json new_results NONCOMPACT_BETA_PASSBAND_ENVELOPE",
+      "issue": "Displayed numerical M_k is for centered delta=beta+3, although raw beta moments are also finite.",
+      "minimal_change_if_consumed": "Name centered index moments explicitly; translate bounds before using raw powers of beta.",
+      "blocking": false
+    },
+    {
+      "severity": "CLARIFICATION",
+      "location": "reproduce_research.py lines 64-65",
+      "issue": "The phrase exact integrals describes Gaussian quadrature under a selected interpolant; it is numerical integration.",
+      "minimal_change_if_reworded": "Say high-order quadrature; independent analytic interval integration confirms the supplied numerical result.",
+      "blocking": false
+    },
+    {
+      "severity": "DOMAIN_REQUIREMENT",
+      "location": "DERIVATION.md section 5 / future native target certificate",
+      "issue": "Integrating the stated bound requires response support inside [-a,b] or additional domination for its outside portion.",
+      "minimal_change_if_consumed": "Include any positive outside-bracket target response in the source domination/error certificate; no exact full passband equality is required.",
+      "blocking_for_physical_use": true,
+      "new_defect_in_conditional_theorem": false
+    }
+  ],
+  "genuine_missing_certificate": {
+    "source": "Fixed nonnegative weights and a calibrated finite simultaneous upper functional, including gain/offset/noise/processing and temporal loss; quantitative aggregate positive response lower constant or direct target-weight dual domination.",
+    "spectral": "Supported synchrotron common-law or deviation class, plus justified dust/other-emitter tail or response inequalities for the actual frozen coordinates and remainder.",
+    "target": "Conservative retained native-band operator norm or direct source-to-target domination, including mask/high-mode leakage, thermodynamic normalization and any response outside the certified exponent bracket.",
+    "acceptable_replacements": [
+      "Flux-preserving global response with a quantified flux-loss allowance in place of detailed beam reconstruction.",
+      "Positive dual source-to-target inequality in place of separate angular/spectral constants.",
+      "Noncompact justified tail inequalities in place of compact rectangular LOS priors."
+    ],
+    "not_required": [
+      "Exact beam equality.",
+      "Independent pixel noise.",
+      "Byte equivalence of FIRAS C^2 and covariance diagonal.",
+      "Proof of actual beam holes.",
+      "Invented compact beta or dust LOS prior."
+    ]
+  },
+  "repair_plan": {
+    "mathematical_repair_required": false,
+    "production_repair_contract_issued": false,
+    "next_same_issue_checkpoint": "Supply or derive numerical source/domination and spectral-tail inputs; freeze their assumptions and confidence convention; use lower-tier calculation of component bounds and actual native-band remainder with existing Y/F/D/noise unchanged; independently review final physical connection."
+  },
+  "full_scientific_state": {
+    "coordinates_preserved": [
+      "x",
+      "F",
+      "Pi",
+      "Q",
+      "G_F"
+    ],
+    "scalar_collapse": false,
+    "new_tensor_or_diagnostic_values": false,
+    "original42_state_changed": false,
+    "native_solver_claim": false
+  },
+  "boundaries": {
+    "only_review_directory_written": true,
+    "repository_or_STATE_or_Git_edits": false,
+    "original_source_or_research_edits": false,
+    "seven_native_bands_rerun": false,
+    "original_noise_rerun": false,
+    "large_source_reacquisition": false,
+    "ultra_escalation": false
+  },
+  "report": "REVIEW.md",
+  "completed_utc": "2026-10-27T04:59:11.532532+00:00"
+}
