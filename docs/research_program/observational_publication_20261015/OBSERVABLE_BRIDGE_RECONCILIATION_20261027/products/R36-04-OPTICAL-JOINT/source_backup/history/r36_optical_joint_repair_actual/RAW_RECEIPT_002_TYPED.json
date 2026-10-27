@@ -1,0 +1,87 @@
+{
+  "schema": "htt.r36.optical_joint_repair_raw_receipt/1",
+  "packet_id": "b45990f8f466f668fbce8dbde2614c0d8b37084affad61b45bf490612673657c",
+  "base_packet_id": "9441945b45b2b78644d2f089d1da3b5a142cbb353406bf9a56bbdd4cef42c1c5",
+  "base_candidate_identity": "sha256:a200cc9b67de72f24ab8050f8254ac4fd85fb8b6f2dea9e18835a5f57025bed5",
+  "task_id": "R36-04-OPTICAL-JOINT",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "agent_id": "/root/rc_9441945b45b2b786",
+  "repair_plan_identity": "35e65778c13bcac9fd274dde0657f2a1a9049d4f20a5e1740306ba3170941f1f",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "candidate_identity": "sha256:193630441180a6a38d856442c7b7fe2e9c322032842ce72b07aace9211fef8e0",
+  "candidate_manifest": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_01/ARTIFACT_MANIFEST.json",
+    "sha256": "193630441180a6a38d856442c7b7fe2e9c322032842ce72b07aace9211fef8e0",
+    "bytes": 9835
+  },
+  "command_receipts": {
+    "pytest": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_repair_actual/PYTEST_FINAL.stdout",
+      "sha256": "4872d3233641a875fac95ef2740e02ce8af747e8107bae0cc40f66c279735846",
+      "bytes": 730
+    },
+    "consumer": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_repair_actual/CONSUMER_02.stdout",
+      "sha256": "ce410cb6f361bec1413ff2512dab17117d60ec27f84a16f40d5a802711722494",
+      "bytes": 126
+    },
+    "first_failure_original": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_actual/PYTEST.stdout",
+      "sha256": "ec4d2a39be8f539f789fb8a5ab3dd028b47fba29b1ca7fb636aab916f699324a",
+      "bytes": 5869
+    },
+    "reviewed_witness": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/REVIEW_RESULT.json",
+      "sha256": "8b8113d5bdc411408c2b4fbb4ac8cee344b9b56cb481a8bb8aa6e51db5287b89",
+      "bytes": 12315
+    },
+    "pytest_command": "PYTHONDONTWRITEBYTECODE=1 python -m pytest -q /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_01/test_optical_joint.py",
+    "consumer_command": "PYTHONDONTWRITEBYTECODE=1 python /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_01/consume.py",
+    "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "exit_status": {
+      "pytest": 0,
+      "consumer": 0
+    }
+  },
+  "command_observed_wall_seconds": {
+    "pytest_final": 1.11,
+    "consumer_final": 1.63
+  },
+  "native_token_cost": "UNKNOWN_NOT_INDEPENDENTLY_OBSERVED",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+  "old_candidate_unchanged": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/ARTIFACT_MANIFEST.json",
+    "sha256": "a200cc9b67de72f24ab8050f8254ac4fd85fb8b6f2dea9e18835a5f57025bed5",
+    "bytes": 9286
+  },
+  "first_failure_preserved": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_actual/PYTEST.stdout",
+    "sha256": "ec4d2a39be8f539f789fb8a5ab3dd028b47fba29b1ca7fb636aab916f699324a",
+    "bytes": 5869
+  },
+  "acceptance_met": false,
+  "qualified_products": [
+    "optical_joint_response"
+  ],
+  "qualification_status": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+  "outcome": "success",
+  "host_serialization_adapter": {
+    "source_raw": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_repair_actual/RAW_RECEIPT.json",
+      "sha256": "bf073fbaa1de07c44ff370f36f6657c2a7059b095aff6bf317002d8b1a5c4b25"
+    },
+    "source_return": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_repair_actual/RETURN.json",
+      "sha256": "8f73c6c56b8189cabd9fee6ae9f5549f70f487b0819b0cd8e9a4d52f0b5e928c"
+    },
+    "only_correction": "Mirror actual worker success outcome in top-level raw outcome field required by acknowledged same-agent followup; science/commands/candidate unchanged.",
+    "first_failure": "ControllerError followup raw outcome identity mismatch at research_controller.py2554; atomic STATE unchanged.",
+    "actual_adapter": "root controller mechanical serialization",
+    "observed_runtime": "UNKNOWN"
+  }
+}

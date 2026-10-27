@@ -1,0 +1,2018 @@
+[
+  {
+    "name": "recorded_interior",
+    "inputs": {
+      "o": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.001,
+        0.0,
+        0.0
+      ],
+      "budget": 1e-08,
+      "e_d": 0.002,
+      "d_max": 0.01
+    },
+    "witness": {
+      "d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "direct_distance": 0.001,
+      "physical_norm": 0.0,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 0.0,
+      "parallel_norm": 0.0,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 0.0,
+      "inverse_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 0.0,
+      "residual_squared": 0.0,
+      "budget": 1e-08,
+      "score": 0.0,
+      "compatible": true,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 0.0,
+        "complementarity_error": 0.0,
+        "kkt_residual": 0.0,
+        "active_constraints": [],
+        "multipliers": []
+      },
+      "roundoff_allowance_applied": false
+    }
+  },
+  {
+    "name": "recorded_zero_underflow",
+    "inputs": {
+      "o": [
+        1e-200,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 0,
+      "d_max": null
+    },
+    "observed": {
+      "branch": "S_ZERO_DIRECT_MEMBERSHIP",
+      "perpendicular_norm": 1e-200,
+      "parallel_norm": 0.0,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 0.0,
+      "inverse_d": null,
+      "profiled_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1e-200,
+      "residual_squared": 0.0,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "FIXED_DIRECT_DIPOLE",
+        "kkt_residual": 0.0
+      },
+      "roundoff_allowance_applied": false
+    }
+  },
+  {
+    "name": "recorded_nonzero_underflow",
+    "inputs": {
+      "o": [
+        1e-200,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          1e-200,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -1e-200,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 0,
+      "d_max": null
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 3.952847075210475e-201,
+      "parallel_norm": 9.185586535436917e-201,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 0.0,
+      "inverse_d": [
+        0.4095795037619138,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1e-200,
+      "residual_squared": 0.0,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "FIXED_DIRECT_DIPOLE",
+        "kkt_residual": 0.0
+      },
+      "roundoff_allowance_applied": false
+    }
+  },
+  {
+    "name": "narrow_direct_0.0001_B0.0",
+    "inputs": {
+      "o": [
+        2.070339805121008e-05,
+        0.0,
+        0.0,
+        -8.909323984693307e-06,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "budget": 0.0,
+      "e_d": 0.0001,
+      "d_max": 0.1
+    },
+    "witness": {
+      "d": [
+        0.01005,
+        0.0,
+        0.0
+      ],
+      "direct_distance": 4.99999999999997e-05,
+      "physical_norm": 0.01005,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 0.0,
+      "parallel_norm": 0.0,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 0.0,
+      "inverse_d": [
+        0.01005,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.01005,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 0.0,
+      "residual_squared": 0.0,
+      "budget": 0.0,
+      "score": null,
+      "compatible": true,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 6.7734846420257906e-21,
+        "complementarity_error": 0.0,
+        "kkt_residual": 6.7734846420257906e-21,
+        "active_constraints": [],
+        "multipliers": []
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "narrow_direct_0.0001_B5.606717652536874e-08",
+    "inputs": {
+      "o": [
+        2.070339805121008e-05,
+        0.0,
+        0.0,
+        -8.909323984693307e-06,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "budget": 5.606717652536874e-08,
+      "e_d": 0.0001,
+      "d_max": 0.1
+    },
+    "witness": {
+      "d": [
+        0.01005,
+        0.0,
+        0.0
+      ],
+      "direct_distance": 4.99999999999997e-05,
+      "physical_norm": 0.01005,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 0.0,
+      "parallel_norm": 0.0,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 0.0,
+      "inverse_d": [
+        0.01005,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.01005,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 0.0,
+      "residual_squared": 0.0,
+      "budget": 5.606717652536874e-08,
+      "score": 0.0,
+      "compatible": true,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 6.7734846420257906e-21,
+        "complementarity_error": 0.0,
+        "kkt_residual": 6.7734846420257906e-21,
+        "active_constraints": [],
+        "multipliers": []
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "narrow_direct_1e-06_B0.0",
+    "inputs": {
+      "o": [
+        2.0601426090659346e-05,
+        0.0,
+        0.0,
+        -8.865442239694073e-06,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "budget": 0.0,
+      "e_d": 1e-06,
+      "d_max": 0.1
+    },
+    "witness": {
+      "d": [
+        0.0100005,
+        0.0,
+        0.0
+      ],
+      "direct_distance": 5.000000000005e-07,
+      "physical_norm": 0.0100005,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 1.1436088792981717e-21,
+      "parallel_norm": 1.121343530508116e-09,
+      "perpendicular_squared": 1.3078412688096201e-42,
+      "parallel_squared": 1.257411313412406e-18,
+      "inverse_d": [
+        0.0100005,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.121343530508568e-09,
+      "residual_squared": 1.2574113134134198e-18,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925333377781084e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925333377781084e-09,
+        "active_constraints": [],
+        "multipliers": []
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "narrow_direct_1e-06_B5.606717652542515e-10",
+    "inputs": {
+      "o": [
+        2.0601426090659346e-05,
+        0.0,
+        0.0,
+        -8.865442239694073e-06,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "budget": 5.606717652542515e-10,
+      "e_d": 1e-06,
+      "d_max": 0.1
+    },
+    "witness": {
+      "d": [
+        0.0100005,
+        0.0,
+        0.0
+      ],
+      "direct_distance": 5.000000000005e-07,
+      "physical_norm": 0.0100005,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 1.1436088792981717e-21,
+      "parallel_norm": 1.121343530508116e-09,
+      "perpendicular_squared": 1.3078412688096201e-42,
+      "parallel_squared": 1.257411313412406e-18,
+      "inverse_d": [
+        0.0100005,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.121343530508568e-09,
+      "residual_squared": 1.2574113134134198e-18,
+      "budget": 5.606717652542515e-10,
+      "score": 2.000000000000116,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925333377781084e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925333377781084e-09,
+        "active_constraints": [],
+        "multipliers": []
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "narrow_direct_1e-08_B0.0",
+    "inputs": {
+      "o": [
+        2.060040637105384e-05,
+        0.0,
+        0.0,
+        -8.86500342224408e-06,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "budget": 0.0,
+      "e_d": 1e-08,
+      "d_max": 0.1
+    },
+    "witness": {
+      "d": [
+        0.010000005000000001,
+        0.0,
+        0.0
+      ],
+      "direct_distance": 5.000000000837668e-09,
+      "physical_norm": 0.010000005000000001,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 0.0,
+      "parallel_norm": 1.1213435308464668e-11,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 1.257411314171221e-22,
+      "inverse_d": [
+        0.010000005000000001,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.1213435308464668e-11,
+      "residual_squared": 1.257411314171221e-22,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925920001796392e-13,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925920001796392e-13,
+        "active_constraints": [],
+        "multipliers": []
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "narrow_direct_1e-08_B5.606717653476222e-12",
+    "inputs": {
+      "o": [
+        2.060040637105384e-05,
+        0.0,
+        0.0,
+        -8.86500342224408e-06,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "budget": 5.606717653476222e-12,
+      "e_d": 1e-08,
+      "d_max": 0.1
+    },
+    "witness": {
+      "d": [
+        0.010000005000000001,
+        0.0,
+        0.0
+      ],
+      "direct_distance": 5.000000000837668e-09,
+      "physical_norm": 0.010000005000000001,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 0.0,
+      "parallel_norm": 1.1213435308464668e-11,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 1.257411314171221e-22,
+      "inverse_d": [
+        0.010000005000000001,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.1213435308464668e-11,
+      "residual_squared": 1.257411314171221e-22,
+      "budget": 5.606717653476222e-12,
+      "score": 2.0000000002697167,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925920001796392e-13,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925920001796392e-13,
+        "active_constraints": [],
+        "multipliers": []
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "narrow_direct_1e-10_B0.0",
+    "inputs": {
+      "o": [
+        2.0600396173857784e-05,
+        0.0,
+        0.0,
+        -8.86499903406958e-06,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "budget": 0.0,
+      "e_d": 1e-10,
+      "d_max": 0.1
+    },
+    "witness": {
+      "d": [
+        0.010000000050000001,
+        0.0,
+        0.0
+      ],
+      "direct_distance": 5.00000006675716e-11,
+      "physical_norm": 0.010000000050000001,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 1.1435517074308446e-21,
+      "parallel_norm": 1.1213435298136113e-13,
+      "perpendicular_squared": 1.3077105075679999e-42,
+      "parallel_squared": 1.2574113118548493e-26,
+      "inverse_d": [
+        0.010000000050000001,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.1213435343338963e-13,
+      "residual_squared": 1.2574113219924341e-26,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925925886888518e-17,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925925886888518e-17,
+        "active_constraints": [],
+        "multipliers": []
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "narrow_direct_1e-10_B5.606717727394617e-14",
+    "inputs": {
+      "o": [
+        2.0600396173857784e-05,
+        0.0,
+        0.0,
+        -8.86499903406958e-06,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "budget": 5.606717727394617e-14,
+      "e_d": 1e-10,
+      "d_max": 0.1
+    },
+    "witness": {
+      "d": [
+        0.010000000050000001,
+        0.0,
+        0.0
+      ],
+      "direct_distance": 5.00000006675716e-11,
+      "physical_norm": 0.010000000050000001,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 1.1435517074308446e-21,
+      "parallel_norm": 1.1213435298136113e-13,
+      "perpendicular_squared": 1.3077105075679999e-42,
+      "parallel_squared": 1.2574113118548493e-26,
+      "inverse_d": [
+        0.010000000050000001,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.1213435343338963e-13,
+      "residual_squared": 1.2574113219924341e-26,
+      "budget": 5.606717727394617e-14,
+      "score": 1.9999999801220116,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925925886888518e-17,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925925886888518e-17,
+        "active_constraints": [],
+        "multipliers": []
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "narrow_direct_1e-12_B0.0",
+    "inputs": {
+      "o": [
+        2.0600396071885822e-05,
+        0.0,
+        0.0,
+        -8.864998990187834e-06,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "budget": 0.0,
+      "e_d": 1e-12,
+      "d_max": 0.1
+    },
+    "witness": {
+      "d": [
+        0.0100000000005,
+        0.0,
+        0.0
+      ],
+      "direct_distance": 4.999993474807951e-13,
+      "physical_norm": 0.0100000000005,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 1.1435517017702635e-21,
+      "parallel_norm": 1.1213435450125304e-15,
+      "perpendicular_squared": 1.3077104946216658e-42,
+      "parallel_squared": 1.2574113459412689e-30,
+      "inverse_d": [
+        0.0100000000005,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.121343997041352e-15,
+      "residual_squared": 1.2574123597006756e-30,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.9259283908077235e-21,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.9259283908077235e-21,
+        "active_constraints": [],
+        "multipliers": []
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "narrow_direct_1e-12_B5.606710335555019e-16",
+    "inputs": {
+      "o": [
+        2.0600396071885822e-05,
+        0.0,
+        0.0,
+        -8.864998990187834e-06,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "budget": 5.606710335555019e-16,
+      "e_d": 1e-12,
+      "d_max": 0.1
+    },
+    "witness": {
+      "d": [
+        0.0100000000005,
+        0.0,
+        0.0
+      ],
+      "direct_distance": 4.999993474807951e-13,
+      "physical_norm": 0.0100000000005,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 1.1435517017702635e-21,
+      "parallel_norm": 1.1213435450125304e-15,
+      "perpendicular_squared": 1.3077104946216658e-42,
+      "parallel_squared": 1.2574113459412689e-30,
+      "inverse_d": [
+        0.0100000000005,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.121343997041352e-15,
+      "residual_squared": 1.2574123597006756e-30,
+      "budget": 5.606710335555019e-16,
+      "score": 2.0000034421795183,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.9259283908077235e-21,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.9259283908077235e-21,
+        "active_constraints": [],
+        "multipliers": []
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "concentric_boundary_0.0",
+    "inputs": {
+      "o": [
+        0.00206003960708558,
+        0.0,
+        0.0,
+        -0.0008864998989744585,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 1,
+      "d_max": 1
+    },
+    "witness": {
+      "d": [
+        1,
+        0,
+        0
+      ],
+      "direct_distance": 1.0,
+      "physical_norm": 1.0,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 1.143551701713086e-19,
+      "parallel_norm": 0.0,
+      "perpendicular_squared": 1.3077104944908948e-38,
+      "parallel_squared": 0.0,
+      "inverse_d": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.143551701713086e-19,
+      "residual_squared": 1.3077104944908948e-38,
+      "budget": 0.0,
+      "score": null,
+      "compatible": true,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 0.0,
+        "complementarity_error": 0.0,
+        "kkt_residual": 0.0,
+        "active_constraints": [
+          0,
+          1
+        ],
+        "multipliers": [
+          1.1944098013747943e-17,
+          0.0
+        ]
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "concentric_boundary_1e-12",
+    "inputs": {
+      "o": [
+        0.0020600396070876406,
+        0.0,
+        0.0,
+        -0.000886499898975345,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 1,
+      "d_max": 1
+    },
+    "witness": {
+      "d": [
+        1,
+        0,
+        0
+      ],
+      "direct_distance": 1.0,
+      "physical_norm": 1.0,
+      "residual_norm": 2.2430551043448584e-15
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 0.0,
+      "parallel_norm": 2.2431484143142926e-15,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 5.031714808640725e-30,
+      "inverse_d": [
+        1.000000000001,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 2.2431484143142926e-15,
+      "residual_squared": 5.031714808640725e-30,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 0.0,
+        "complementarity_error": 0.0,
+        "kkt_residual": 0.0,
+        "active_constraints": [
+          0,
+          1
+        ],
+        "multipliers": [
+          5.927144974404104e-13,
+          0.0
+        ]
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "concentric_boundary_1e-10",
+    "inputs": {
+      "o": [
+        0.0020600396072915843,
+        0.0,
+        0.0,
+        -0.0008864998990631085,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 1,
+      "d_max": 1
+    },
+    "witness": {
+      "d": [
+        1,
+        0,
+        0
+      ],
+      "direct_distance": 1.0,
+      "physical_norm": 1.0,
+      "residual_norm": 2.2426879564129361e-13
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 1.1435517018274412e-19,
+      "parallel_norm": 2.2426875421657708e-13,
+      "perpendicular_squared": 1.3077104947524368e-38,
+      "parallel_squared": 5.029647411785546e-26,
+      "inverse_d": [
+        1.0000000001,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 2.2426879941948385e-13,
+      "residual_squared": 5.029649439305668e-26,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 0.0,
+        "complementarity_error": 0.0,
+        "kkt_residual": 0.0,
+        "active_constraints": [
+          0,
+          1
+        ],
+        "multipliers": [
+          5.925928390511428e-11,
+          0.0
+        ]
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "concentric_boundary_1e-08",
+    "inputs": {
+      "o": [
+        0.002060039627685976,
+        0.0,
+        0.0,
+        -0.0008864999078394574,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 1,
+      "d_max": 1
+    },
+    "witness": {
+      "d": [
+        1,
+        0,
+        0
+      ],
+      "direct_distance": 1.0,
+      "physical_norm": 1.0,
+      "residual_norm": 2.2426870469975147e-11
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 1.143551713148603e-19,
+      "parallel_norm": 2.242687045311986e-11,
+      "perpendicular_squared": 1.3077105206451047e-38,
+      "parallel_squared": 5.029645183210206e-22,
+      "inverse_d": [
+        1.00000001,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 2.242687049832271e-11,
+      "residual_squared": 5.029645203485376e-22,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 0.0,
+        "complementarity_error": 0.0,
+        "kkt_residual": 0.0,
+        "active_constraints": [
+          0,
+          1
+        ],
+        "multipliers": [
+          5.925925777859544e-09,
+          0.0
+        ]
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "concentric_boundary_1e-06",
+    "inputs": {
+      "o": [
+        0.002060041667125187,
+        0.0,
+        0.0,
+        -0.0008865007854743573,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 1,
+      "d_max": 1
+    },
+    "witness": {
+      "d": [
+        1,
+        0,
+        0
+      ],
+      "direct_distance": 1.0,
+      "physical_norm": 1.0,
+      "residual_norm": 2.2426870606977434e-09
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 1.1435528452647875e-19,
+      "parallel_norm": 2.2426870606348743e-09,
+      "perpendicular_squared": 1.307713109913191e-38,
+      "parallel_squared": 5.029645251939092e-18,
+      "inverse_d": [
+        1.000001,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 2.2426870606800773e-09,
+      "residual_squared": 5.029645252141845e-18,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 0.0,
+        "complementarity_error": 0.0,
+        "kkt_residual": 0.0,
+        "active_constraints": [
+          0,
+          1
+        ],
+        "multipliers": [
+          5.925914073207503e-07,
+          0.0
+        ]
+      },
+      "roundoff_allowance_applied": true
+    }
+  },
+  {
+    "name": "singleton_or_tangent_0.0_1.0_1.0",
+    "inputs": {
+      "o": [
+        0.006180118821256741,
+        0.0,
+        0.0,
+        -0.0026594996969233754,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 0.0,
+      "d_max": 1.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 3.430655105139258e-19,
+      "parallel_norm": 0.004485374122029527,
+      "perpendicular_squared": 1.1769394450418053e-37,
+      "parallel_squared": 2.0118581014572154e-05,
+      "inverse_d": [
+        3.0,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 0.004485374122029527,
+      "residual_squared": 2.0118581014572154e-05,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "FIXED_DIRECT_DIPOLE",
+        "kkt_residual": 0.0
+      },
+      "roundoff_allowance_applied": false
+    }
+  },
+  {
+    "name": "singleton_or_tangent_1.0_0.0_1.0",
+    "inputs": {
+      "o": [
+        0.006180118821256741,
+        0.0,
+        0.0,
+        -0.0026594996969233754,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 1.0,
+      "d_max": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 3.430655105139258e-19,
+      "parallel_norm": 0.006728061183044289,
+      "perpendicular_squared": 1.1769394450418053e-37,
+      "parallel_squared": 4.526680728278732e-05,
+      "inverse_d": [
+        3.0,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 0.006728061183044289,
+      "residual_squared": 4.526680728278732e-05,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "SINGLETON_PHYSICAL_SET",
+        "kkt_residual": 0.0
+      },
+      "roundoff_allowance_applied": false
+    }
+  },
+  {
+    "name": "singleton_or_tangent_1.0_1.0_2.0",
+    "inputs": {
+      "o": [
+        0.006180118821256741,
+        0.0,
+        0.0,
+        -0.0026594996969233754,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        2.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 1.0,
+      "d_max": 1.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 3.430655105139258e-19,
+      "parallel_norm": 0.004485374122029527,
+      "perpendicular_squared": 1.1769394450418053e-37,
+      "parallel_squared": 2.0118581014572154e-05,
+      "inverse_d": [
+        3.0,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 0.004485374122029527,
+      "residual_squared": 2.0118581014572154e-05,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 0.0,
+        "complementarity_error": 0.0,
+        "kkt_residual": 0.0,
+        "active_constraints": [
+          0,
+          1
+        ],
+        "multipliers": [
+          0.0,
+          0.5267489711934157
+        ]
+      },
+      "roundoff_allowance_applied": false
+    }
+  },
+  {
+    "name": "singleton_or_tangent_1.0_1.0_2.0000000001",
+    "inputs": {
+      "o": [
+        0.006180118821256741,
+        0.0,
+        0.0,
+        -0.0026594996969233754,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        2.0000000001,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 1.0,
+      "d_max": 1.0
+    },
+    "observed": {
+      "compatible": false,
+      "physical_set_empty": true,
+      "reason": "direct and physical dipole balls do not intersect",
+      "profile_certificate": {
+        "status": "PHYSICAL_SET_EMPTY"
+      }
+    }
+  },
+  {
+    "name": "nonzero_s_scale_1e-200",
+    "inputs": {
+      "o": [
+        1e-200,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          1e-200,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -1e-200,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 0,
+      "d_max": null
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 3.952847075210475e-201,
+      "parallel_norm": 9.185586535436917e-201,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 0.0,
+      "inverse_d": [
+        0.4095795037619138,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1e-200,
+      "residual_squared": 0.0,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "FIXED_DIRECT_DIPOLE",
+        "kkt_residual": 0.0
+      },
+      "roundoff_allowance_applied": false
+    }
+  },
+  {
+    "name": "nonzero_s_scale_1e-300",
+    "inputs": {
+      "o": [
+        1e-300,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          1e-300,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -1e-300,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 0,
+      "d_max": null
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 3.952847075210475e-301,
+      "parallel_norm": 9.185586535436919e-301,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 0.0,
+      "inverse_d": [
+        0.4095795037619138,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1e-300,
+      "residual_squared": 0.0,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "FIXED_DIRECT_DIPOLE",
+        "kkt_residual": 0.0
+      },
+      "roundoff_allowance_applied": false
+    }
+  },
+  {
+    "name": "nonzero_s_scale_1e-320",
+    "inputs": {
+      "o": [
+        1e-320,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          1e-320,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -1e-320,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 0,
+      "d_max": null
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 3.953e-321,
+      "parallel_norm": 9.185e-321,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 0.0,
+      "inverse_d": [
+        0.40958510990918084,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1e-320,
+      "residual_squared": 0.0,
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "FIXED_DIRECT_DIPOLE",
+        "kkt_residual": 0.0
+      },
+      "roundoff_allowance_applied": false
+    }
+  },
+  {
+    "name": "huge_residual_display",
+    "inputs": {
+      "o": [
+        1e+200,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0,
+      "e_d": 0,
+      "d_max": null
+    },
+    "observed": {
+      "branch": "S_ZERO_DIRECT_MEMBERSHIP",
+      "perpendicular_norm": 1e+200,
+      "parallel_norm": 0.0,
+      "perpendicular_squared": {
+        "nonfinite": "inf"
+      },
+      "parallel_squared": 0.0,
+      "inverse_d": null,
+      "profiled_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1e+200,
+      "residual_squared": {
+        "nonfinite": "inf"
+      },
+      "budget": 0.0,
+      "score": null,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "FIXED_DIRECT_DIPOLE",
+        "kkt_residual": 0.0
+      },
+      "roundoff_allowance_applied": false
+    }
+  }
+]

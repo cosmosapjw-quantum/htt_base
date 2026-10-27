@@ -1,0 +1,275 @@
+{
+  "packet_id": "b04adb630576fdeb71da9d413b9f22f8d08c5509f2ed48586521eb05400fa057",
+  "task_id": "R36-04-OPTICAL-JOINT",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_identity": "sha256:8d2f7cdd340803ecbb2777f757cb224455f989b5f81a5a7ab456ff9ec3153e5f",
+  "agent_id": "/root/r36_optical_norm_certificate_fresh_review",
+  "outcome": "blocker",
+  "substantive_failure": true,
+  "acceptance_met": false,
+  "qualified_products": [],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/formal_binding_01/RAW_BINDING_RECEIPT.json",
+  "issue": {
+    "class": "numeric",
+    "issue_class": "numeric",
+    "substantive": true,
+    "question": "Does the candidate preserve strict original closed-ball feasibility and correctly enclose every reported norm bound and upper score, including singleton/tangent/zero-response cases?",
+    "exact_missing_or_defect": "A direct singleton outside the physical ball is falsely accepted after 100-digit norm rounding; nearest-float conversion breaks certified residual/score endpoints; an exactly representable tangent singleton loses its witness.",
+    "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+    "candidate_identity": "sha256:8d2f7cdd340803ecbb2777f757cb224455f989b5f81a5a7ab456ff9ec3153e5f",
+    "finding_ids": [
+      "R36-04-NCF1",
+      "R36-04-NCF2",
+      "R36-04-NCF3"
+    ]
+  },
+  "counterexample": {
+    "strict_original_ball_false_acceptance": {
+      "name": "strict_original_physical_ball_fraction_counterexample",
+      "result": {
+        "input": {
+          "S": [
+            [
+              0.001,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              -0.001,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "d_obs": [
+            0.125,
+            1e-60,
+            0.0
+          ],
+          "e_d": 0,
+          "d_max": 0.125,
+          "O": [
+            0.0002575049508856975,
+            1.9623511783879178e-63,
+            0.0,
+            -0.00011081248737180731,
+            0.0,
+            -1.085736204758129e-63,
+            0.0
+          ],
+          "budget": 1e-07
+        },
+        "exact_feasible_set_empty": true,
+        "squared_norm_excess_numerator": "13093562431584566705790186509161",
+        "squared_norm_excess_denominator": "13093562431584567480052758787310396608866568184172259157933165472384535185618698219533080369303616628603546736510240284036869026183541572213314110357504",
+        "candidate": {
+          "branch": "INVERTIBLE_S",
+          "perpendicular_norm": 1.4294396271413575e-20,
+          "parallel_norm": 1.4232679421569282e-79,
+          "perpendicular_squared": 2.043297647642023e-40,
+          "parallel_squared": 2.0256916351716173e-158,
+          "squared_display_status": {
+            "residual": "FINITE",
+            "perpendicular": "FINITE",
+            "parallel": "FINITE"
+          },
+          "inverse_d": [
+            0.125,
+            9.999999999999998e-61,
+            0.0
+          ],
+          "profiled_d": [
+            0.125,
+            1e-60,
+            0.0
+          ],
+          "residual_norm": 1.3552527156068805e-20,
+          "residual_squared": 1.8367099231598242e-40,
+          "budget": 1e-07,
+          "score": 6.468066477188156e-11,
+          "score_kind": "CERTIFIED_UPPER_BOUND",
+          "certified_lower_bound": 0.0,
+          "certified_upper_bound": 6.468066477188156e-18,
+          "compatible": true,
+          "physical_set_empty": false,
+          "profile_certificate": {
+            "status": "NORM_BOUNDS_CERTIFIED",
+            "compatible": true,
+            "witness": [
+              0.125,
+              1e-60,
+              0.0
+            ],
+            "residual_norm": 1.3552527156068805e-20,
+            "lower_bound": 0.0,
+            "upper_bound": 6.468066477188156e-18,
+            "operator_error_envelope": 6.454513950032087e-18,
+            "cancellation_allowance": 3.9838124994680216e-18,
+            "roundoff_allowance_applied": true,
+            "direct_distance": 0.0,
+            "physical_norm": 0.125,
+            "candidate_method": "FIXED_DIRECT_DIPOLE"
+          },
+          "roundoff_allowance_applied": true
+        },
+        "unexpected_compatible": true
+      },
+      "wall_seconds": 0.0030929918866604567
+    },
+    "exported_bound_counterexamples": [
+      {
+        "name": "display_bound_exact_sqrt_2",
+        "result": {
+          "O": [
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "candidate": {
+            "branch": "S_ZERO_DIRECT_MEMBERSHIP",
+            "perpendicular_norm": 1.4142135623730951,
+            "parallel_norm": 0.0,
+            "perpendicular_squared": 2.0000000000000004,
+            "parallel_squared": 0.0,
+            "squared_display_status": {
+              "residual": "FINITE",
+              "perpendicular": "FINITE",
+              "parallel": "FINITE"
+            },
+            "inverse_d": null,
+            "profiled_d": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "residual_norm": 1.4142135623730951,
+            "residual_squared": 2.0000000000000004,
+            "budget": 2.0,
+            "score": 0.7071067811865476,
+            "score_kind": "CERTIFIED_UPPER_BOUND",
+            "certified_lower_bound": 1.4142135623730951,
+            "certified_upper_bound": 1.4142135623730951,
+            "compatible": true,
+            "physical_set_empty": false,
+            "profile_certificate": {
+              "status": "NORM_BOUNDS_CERTIFIED",
+              "compatible": true,
+              "witness": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "residual_norm": 1.4142135623730951,
+              "lower_bound": 1.4142135623730951,
+              "upper_bound": 1.4142135623730951,
+              "operator_error_envelope": 0.0,
+              "cancellation_allowance": 0.0,
+              "roundoff_allowance_applied": false,
+              "direct_distance": 0.0,
+              "physical_norm": 0.0,
+              "candidate_method": "FIXED_DIRECT_DIPOLE"
+            },
+            "roundoff_allowance_applied": false
+          },
+          "exact_lower_exceeds_minimum": true,
+          "exact_upper_below_minimum": false,
+          "exact_score_upper_below_optimum": false
+        }
+      },
+      {
+        "name": "display_bound_exact_sqrt_3",
+        "result": {
+          "O": [
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "candidate": {
+            "branch": "S_ZERO_DIRECT_MEMBERSHIP",
+            "perpendicular_norm": 1.7320508075688772,
+            "parallel_norm": 0.0,
+            "perpendicular_squared": 2.9999999999999996,
+            "parallel_squared": 0.0,
+            "squared_display_status": {
+              "residual": "FINITE",
+              "perpendicular": "FINITE",
+              "parallel": "FINITE"
+            },
+            "inverse_d": null,
+            "profiled_d": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "residual_norm": 1.7320508075688772,
+            "residual_squared": 2.9999999999999996,
+            "budget": 2.0,
+            "score": 0.8660254037844386,
+            "score_kind": "CERTIFIED_UPPER_BOUND",
+            "certified_lower_bound": 1.7320508075688772,
+            "certified_upper_bound": 1.7320508075688772,
+            "compatible": true,
+            "physical_set_empty": false,
+            "profile_certificate": {
+              "status": "NORM_BOUNDS_CERTIFIED",
+              "compatible": true,
+              "witness": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "residual_norm": 1.7320508075688772,
+              "lower_bound": 1.7320508075688772,
+              "upper_bound": 1.7320508075688772,
+              "operator_error_envelope": 0.0,
+              "cancellation_allowance": 0.0,
+              "roundoff_allowance_applied": false,
+              "direct_distance": 0.0,
+              "physical_norm": 0.0,
+              "candidate_method": "FIXED_DIRECT_DIPOLE"
+            },
+            "roundoff_allowance_applied": false
+          },
+          "exact_lower_exceeds_minimum": false,
+          "exact_upper_below_minimum": true,
+          "exact_score_upper_below_optimum": true
+        }
+      }
+    ],
+    "representable_tangent_singleton": {
+      "name": "exact_tangent_representable",
+      "exception_type": "NumericalProfileFailure",
+      "exception": "NUMERICAL_FAILURE: no representable feasible witness",
+      "code": "NUMERICAL_FAILURE",
+      "wall_seconds": 0.006429434986785054
+    }
+  },
+  "repair_plan": "One bounded targeted repair of the same R36-04-OPTICAL-JOINT task from candidate sha256:8d2f7cdd340803ecbb2777f757cb224455f989b5f81a5a7ab456ff9ec3153e5f. Preserve this candidate, all earlier candidates/failures, source identities, task/attempt/cost history and current cumulative limits. No automatic Ultra escalation, budget reset, renamed attempt, or permanent two-failure stopping rule follows.\n\nInterpret every binary64 coordinate/radius exactly using as_integer_ratio/Fraction or equivalent integer-power-of-two arithmetic. Compare sum((d_i-center_i)^2) <= e_d^2 and sum(d_i^2) <= Dmax^2 exactly; avoid fixed-precision sqrt in set decisions.\n\nFor a finite physical radius compare sum(center_i^2) to (e_d+Dmax)^2 exactly. Greater means empty; equality is external tangency. Handle e_d=0 and Dmax=0 as singleton decisions before a generic optimizer.\n\nAt exact tangency construct d = Dmax/(e_d+Dmax) * center using exact rational arithmetic (the zero denominator case is the origin singleton). If a returned binary64 witness exists, verify its exact membership; otherwise return explicit representability uncertainty, never false emptiness or an invalid witness.\n\nRetain the valid norm-support lower bound or another proved norm-convex bound; an optimizer remains proposal-only. Every true decision must have a verified original-set witness and upper residual enclosure, with only the existing justified response cancellation allowance. Every false decision must have certified emptiness or a global lower bound exceeding the unchanged budget plus global allowance.\n\nExport lower endpoints rounded downward and upper endpoints rounded upward relative to their internal conservative enclosures. Round the upper-score division conservatively; do not label a nearest scalar as a certified interval or optimum.\n\nTreat exact zero response and singleton/zero-radius objectives explicitly where exact squared comparisons decide membership; avoid artificial uncertainty for elementary cases such as S=0,O=(.001,0,...),B=.001. Preserve typed numerical/range uncertainty for genuinely unresolved or unrepresentable cases.\n\nFrozen scope: Same seven signed STF3 response, fixed frame, c and magnitude conventions; same original direct and optional physical radii. Same one shared error budget, cancellation ownership, full correlated covariance and source bindings. No optimizer slack, physical tolerance inflation, changed empirical law, solver/ODE addition, old CAS or original42 promotion.\n\nAllowed scope: Controller-designated next immutable optical candidate: optical_joint.py and its focused tests; consumer/result/interpretation only where affected by these exact findings. Preserve repair_02 and historical evidence. No controller/Git/STATE/production writes by this reviewer.\n\nValidation: Reproduce and close NCF1 using exact fractional oracle, including its empty ed=0 geometry. Reproduce and close NCF2 with rational squared checks for sqrt(2) lower and sqrt(3) upper/score. Reproduce and close NCF3 with d=(.125,0,0), center=(.25,0,0), e_d=Dmax=.125. Run the unchanged 15 focused candidate tests including RF1/RF2/RF3, old .8/.8, tiny nonzero S, covariance and finite-z/chart controls; run the actual consumer in an external small fixture. Reuse unchanged successful evidence. No generic new validation ladder or adjacent scientific reruns.\n\nStopping rule: On source drift, ambiguous scientific convention, new substantive model/acceptance failure, or unresolved exact-set/certificate obligation, stop with exact evidence under the same task; do not relax validators or restart budgets.\n\nThis negative binding records the completed independent judgment of repair_02. Prospective framing does not constitute authorship of that reviewed candidate. The controller must subsequently designate this reviewer as the next repair framer and dispatch the lower-tier implementation under the same task. A different fresh independent reviewer must judge the next candidate. No scientific admission or publication follows.",
+  "validation_evidence": [
+    "Unchanged completed independent HOLD review: /mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/REVIEW_RESULT.json sha256:48f1f9b4fad764c4a0ae82d7449b6cafa9099f17bf3064c5f9a85f3d7f9e6406",
+    "Original raw evidence: /mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/RAW_RECEIPT.json sha256:631275384c68e1cb4da62cf1bf9c35d13046ecfb93f05069d5596ea4c4f92918",
+    "15 focused tests passed; actual consumer reproduced; 50 one-axis/unit checks and 6 rotations passed; these do not remove the concrete findings.",
+    "No test, consumer, scientific experiment, or numerical analysis rerun during formal binding."
+  ],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "requested_cost": "UNKNOWN",
+  "observed_cost": "UNKNOWN",
+  "binding_only": true,
+  "qualification": false
+}

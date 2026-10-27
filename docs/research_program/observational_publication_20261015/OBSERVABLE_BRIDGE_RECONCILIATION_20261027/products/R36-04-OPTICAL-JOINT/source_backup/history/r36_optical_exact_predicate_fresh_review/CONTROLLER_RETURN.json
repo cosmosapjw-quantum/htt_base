@@ -1,0 +1,151 @@
+{
+  "packet_id": "95e5a85a0b844f73611609f1b2d45d40320a3b89309ca558aa2b84f550c6b134",
+  "task_id": "R36-04-OPTICAL-JOINT",
+  "agent_id": "/root/r36_optical_exact_predicate_fresh_review",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_identity": "sha256:ec4421a423a87889cc268c65d551a772846ca93298b028d08143201ec824137b",
+  "outcome": "blocker",
+  "review_decision": "HOLD",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "validation_evidence": [
+    "225 frozen source/candidate/historical/raw identities matched before and after review; IDENTITY_INITIAL.json and IDENTITY_FINAL.json",
+    "External-fixture pytest: 18 passed, one unrelated Matplotlib Axes3D warning; PYTEST.stdout and EXECUTION_RECEIPTS.json",
+    "Actual consumer in external small fixture exited 0; RESULT exact semantic equality and TABLE byte equality; CONSUMER_COMPARISON.json",
+    "Independent checks: 25 PASS, 2 FAIL reproductions of one P2 defect; INDEPENDENT_CHECKS.json, INDEPENDENT.stdout and INDEPENDENT.stderr",
+    "NCF1 exact Fraction emptiness, NCF2 directed sqrt2/sqrt3 and upper score, NCF3 tangent witness all passed",
+    "18 exact rational one-axis interval cases passed at common output scales 1, 1e-30 and 1e-150, including unequal .0001 physical radius; exact witness memberships and residual bounds checked",
+    "Independent full-tensor index formula, Gram identity, full correlated covariance including cross terms, all 8 response Jacobian columns and three-axis rotation passed",
+    "Tiny nonzero S=1e-200, zero/singleton/empty sets and typed large-output/K-overflow controls passed",
+    "Finite-z source control and shifted corrected observer chart passed; all three generated figures visually inspected and readable",
+    "Primary chart source checked: https://arxiv.org/html/2312.09875v3; imported frozen HUBBLE_PROTOCOL.json reused; no unchanged theorem re-proving or exact CAS gate added"
+  ],
+  "issue": {
+    "class": "numeric",
+    "question": "Does finite easy closed-ball membership retain an available binary64 witness one ulp inside external tangency?",
+    "exact_missing_or_defect": "Fixed radial shrink discards an exactly representable witness in a one-ulp overlapping lens; optical_joint.py:217 and certificate fallback at lines 325-328.",
+    "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+    "candidate_identity": "sha256:ec4421a423a87889cc268c65d551a772846ca93298b028d08143201ec824137b",
+    "substantive": true,
+    "high_consequence": false,
+    "severity": "P2",
+    "finding_ids": [
+      "R36-04-EPF1"
+    ],
+    "risk": "The required finite easy-case execution fails with NUMERICAL_FAILURE even for an identically zero response and zero objective. This is a candidate-construction defect; no false scientific rejection or invalid accepted witness was observed."
+  },
+  "substantive_failure": true,
+  "counterexample": {
+    "case_id": "R36-04-EPF1",
+    "zero_response": {
+      "center": [
+        0.24999999999999997,
+        0.0,
+        0.0
+      ],
+      "e_d": 0.125,
+      "d_max": 0.125,
+      "S": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "O": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0.001,
+      "witness": [
+        0.125,
+        0.0,
+        0.0
+      ],
+      "direct_squared_slack": "9007199254740991/1298074214633706907132624082305024",
+      "physical_squared_slack": "0",
+      "residual_squared": "0",
+      "budget_squared": "1329227995784915928244039281409/1329227995784915872903807060280344576",
+      "exact_oracle": "nonempty closed-ball intersection; representable witness; residual strictly within unchanged budget",
+      "actual": {
+        "code": "NUMERICAL_FAILURE",
+        "detail": "NUMERICAL_FAILURE: no representable feasible witness"
+      }
+    },
+    "nonzero_response": {
+      "center": [
+        0.24999999999999997,
+        0.0,
+        0.0
+      ],
+      "e_d": 0.125,
+      "d_max": 0.125,
+      "S": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "O": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0.001,
+      "witness": [
+        0.125,
+        0.0,
+        0.0
+      ],
+      "direct_squared_slack": "9007199254740991/1298074214633706907132624082305024",
+      "physical_squared_slack": "0",
+      "residual_squared": "427874897920579094684454174087209/5444517870735015415413993718908291383296",
+      "budget_squared": "1329227995784915928244039281409/1329227995784915872903807060280344576",
+      "exact_oracle": "nonempty closed-ball intersection; representable witness; residual strictly within unchanged budget",
+      "actual": {
+        "code": "NUMERICAL_FAILURE",
+        "detail": "NUMERICAL_FAILURE: no representable feasible witness"
+      }
+    },
+    "expected": "compatible true with exact verified witness",
+    "observed": "typed NUMERICAL_FAILURE despite explicit available binary64 witness"
+  },
+  "repair_plan": "One bounded candidate-construction repair of the same R36-04-OPTICAL-JOINT task from candidate sha256:ec4421a423a87889cc268c65d551a772846ca93298b028d08143201ec824137b. Preserve repair_03, all earlier candidates, failures, exact sources and cumulative task/attempt/cost limits. No Ultra escalation, budget reset, new physics or additional assurance ladder is requested. Restrict implementation to the next controller-designated immutable candidate optical_joint.py feasible-witness construction and its focused regression test; regenerate affected consumer artifacts only if necessary. For center=(nextafter(.25,0),0,0), e_d=Dmax=.125, O=0, B=.001, both S=0 and S=diag(.001,-.001,0) must return a compatible result with a binary64 witness satisfying both existing exact Fraction predicates. The explicit witness (.125,0,0) is available and has a residual safely below the unchanged budget. Test the unshrunk physical-boundary proposal before shrinking it, or construct another exact-verified representable witness in the overlap; do not use a fixed shrink that crosses the direct-ball boundary. Preserve exact tangency handling, the nonrepresentable tangent typed failure, NCF1 exact emptiness, directed endpoint/score enclosures, all seven signed components, shared budget, fixed frame/c/units and full covariance. Add the adjacent one-ulp exterior center as an exact-empty control. Run the focused suite and the actual consumer in an external small fixture; reuse unchanged passing evidence. Return the new candidate to a different fresh nonauthor reviewer. No production/STATE/Git writes by this reviewer, no native solver/ODE, original42 promotion or scientific admission follows.",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_optical_exact_predicate_fresh_review/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "6cf92ffb5cce24e9cf7200b880f361f470719e3c8741dc44b01388f1092af0b0"
+}

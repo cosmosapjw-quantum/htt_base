@@ -1,0 +1,532 @@
+{
+  "schema": "htt.r36.optical_repair_independent_review/2",
+  "task_id": "R36-04-OPTICAL-JOINT",
+  "reviewer_agent_id": "/root/r36_optical_repair_independent_review",
+  "agent_id": "/root/r36_optical_repair_independent_review",
+  "author_agent_id": "/root/rc_9441945b45b2b786",
+  "review_kind": "ACTUAL_PREPARATORY_INDEPENDENT_TARGETED_CLOSEOUT",
+  "formal_controller_packet_selected": false,
+  "controller_ack_fabricated": false,
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "candidate_identity": "sha256:193630441180a6a38d856442c7b7fe2e9c322032842ce72b07aace9211fef8e0",
+  "candidate_manifest": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_01/ARTIFACT_MANIFEST.json",
+    "sha256": "193630441180a6a38d856442c7b7fe2e9c322032842ce72b07aace9211fef8e0",
+    "bytes": 9835
+  },
+  "base_candidate_identity": "sha256:a200cc9b67de72f24ab8050f8254ac4fd85fb8b6f2dea9e18835a5f57025bed5",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "outcome": "blocker",
+  "scoped_verdict": "HOLD",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "qualification_status": "NOT_QUALIFIED_NEGATIVE_INDEPENDENT_REVIEW",
+  "issue_class": "numeric",
+  "substantive": true,
+  "issue": {
+    "class": "numeric",
+    "issue_class": "numeric",
+    "substantive": true,
+    "question": "Does the repaired profile certify the original seven-component shared-budget membership without curvature floors, optimizer radius inflation or nonfinite results?",
+    "exact_missing_or_defect": "New feasible narrow-ball input is falsely rejected under KKT_CERTIFIED; new physical-boundary input is falsely accepted using an out-of-ball dipole; finite large residual produces untyped Inf fields. See RF1-RF3 and counterexample DICT.",
+    "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+    "candidate_identity": "sha256:193630441180a6a38d856442c7b7fe2e9c322032842ce72b07aace9211fef8e0",
+    "finding_ids": [
+      "R36-04-RF1",
+      "R36-04-RF2",
+      "R36-04-RF3"
+    ]
+  },
+  "findings": [
+    {
+      "id": "R36-04-RF1",
+      "severity": "HIGH",
+      "blocking": true,
+      "issue_class": "numeric",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_01/optical_joint.py",
+      "lines": [
+        124,
+        125,
+        128,
+        129,
+        153,
+        154,
+        172,
+        173,
+        174,
+        183,
+        227
+      ],
+      "summary": "Small objective curvature is incorrectly treated as a certified optimum; a strictly feasible near-zero-residual dipole is falsely rejected.",
+      "evidence": "S=diag(.001,-.001,0), d_obs=(.01,0,0), e_d=1e-6, Dmax=.1, O=K(.0100005,0,0), B=5.606717652542515e-10. Returned d=d_obs, residual=1.121343530508568e-9, compatible=false, KKT_CERTIFIED with residual=5.925333377781084e-9. The 90-digit exact-binary witness residual is 4.60678893055e-22 < B and its direct distance is approximately 5e-7 < e_d.",
+      "cause": "Normalization by the large canceled O/Kd_obs makes A^T A tiny; max(1, ...) leaves an absolute 1e-8 stationarity cutoff unrelated to profile accuracy or B.",
+      "minimal_fix": "Use nonzero objective/curvature scale and a feasible upper/certified lower decision bound; return numerical unresolved if the bounds cannot establish the verdict."
+    },
+    {
+      "id": "R36-04-RF2",
+      "severity": "HIGH",
+      "blocking": true,
+      "issue_class": "numeric",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_01/optical_joint.py",
+      "lines": [
+        145,
+        146,
+        158,
+        159,
+        172,
+        173,
+        174,
+        179,
+        181,
+        183,
+        227
+      ],
+      "summary": "Optimizer constraint tolerance expands the physical ball and produces a false compatible verdict.",
+      "evidence": "S=diag(.001,-.001,0), d_obs=0, e_d=.1, Dmax=1e-4, O=K(.00010000000090000001,0,0), B=1.0092091825422658e-15. Returned d_x=.00010000000090000002 exceeds Dmax by 9.000000180878209e-13 and is marked compatible/KKT_CERTIFIED. A 90-digit support lower bound on every feasible residual is 2.0184183667169286e-15; subtracting B and the full existing signal roundoff allowance still leaves 1.0092059971246345e-15 > 0.",
+      "cause": "Physical slack is normalized by the much larger e_d; 1e-8 primal/reconstruction tolerances are admitted as scientific feasibility.",
+      "minimal_fix": "Certify original-ball feasibility before any true verdict, repair/clip and recompute or return typed unresolved; do not enlarge either radius by optimizer tolerances."
+    },
+    {
+      "id": "R36-04-RF3",
+      "severity": "MEDIUM",
+      "blocking": true,
+      "issue_class": "numeric",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_01/optical_joint.py",
+      "lines": [
+        221,
+        222,
+        253,
+        256
+      ],
+      "summary": "Finite input with representable residual norm silently returns infinite display fields.",
+      "evidence": "O=(1e200,0,...), S=0, d_obs=0, B=0 returns residual_norm=1e200 and residual_squared=perpendicular_squared=Inf with an ordinary scientific result. The initial review JSON serializer then failed with ValueError: Out of range float values are not JSON compliant.",
+      "minimal_fix": "Guard representational range of every returned numerical field and raise typed NUMERIC_RANGE or return an explicitly typed unavailable display quantity instead of Inf."
+    }
+  ],
+  "counterexample": {
+    "narrow_direct_ball_false_rejection": {
+      "name": "narrow_direct_1e-06_B5.606717652542515e-10",
+      "inputs": {
+        "o": [
+          2.0601426090659346e-05,
+          0.0,
+          0.0,
+          -8.865442239694073e-06,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "s": [
+          [
+            0.001,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.001,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "d_obs": [
+          0.01,
+          0.0,
+          0.0
+        ],
+        "budget": 5.606717652542515e-10,
+        "e_d": 1e-06,
+        "d_max": 0.1
+      },
+      "witness": {
+        "d": [
+          0.0100005,
+          0.0,
+          0.0
+        ],
+        "direct_distance": 5.000000000005e-07,
+        "physical_norm": 0.0100005,
+        "residual_norm": 0.0
+      },
+      "observed": {
+        "branch": "INVERTIBLE_S",
+        "perpendicular_norm": 1.1436088792981717e-21,
+        "parallel_norm": 1.121343530508116e-09,
+        "perpendicular_squared": 1.3078412688096201e-42,
+        "parallel_squared": 1.257411313412406e-18,
+        "inverse_d": [
+          0.0100005,
+          0.0,
+          0.0
+        ],
+        "profiled_d": [
+          0.01,
+          0.0,
+          0.0
+        ],
+        "residual_norm": 1.121343530508568e-09,
+        "residual_squared": 1.2574113134134198e-18,
+        "budget": 5.606717652542515e-10,
+        "score": 2.000000000000116,
+        "compatible": false,
+        "physical_set_empty": false,
+        "profile_certificate": {
+          "status": "KKT_CERTIFIED",
+          "solver_success": true,
+          "primal_error": 0.0,
+          "stationarity_error": 5.925333377781084e-09,
+          "complementarity_error": 0.0,
+          "kkt_residual": 5.925333377781084e-09,
+          "active_constraints": [],
+          "multipliers": []
+        },
+        "roundoff_allowance_applied": true
+      },
+      "independent_high_precision_witness": {
+        "arithmetic": "mpmath 90 digits on exact binary64 supplied O,K,d",
+        "residual_norm": "0.000000000000000000000460678893055132778216176029244954328998744787039677586530407590635585671351859134966319002",
+        "direct_distance": "0.00000050000000000050004445029117050580680370330810546875",
+        "physical_norm": "0.01000050000000000070821126740838735713623464107513427734375",
+        "budget": 5.606717652542515e-10,
+        "residual_below_budget": true
+      }
+    },
+    "physical_ball_false_acceptance": {
+      "inputs": {
+        "o": [
+          2.060039625625937e-07,
+          0.0,
+          0.0,
+          -8.864999069529576e-08,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "s": [
+          [
+            0.001,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.001,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "d_obs": [
+          0.0,
+          0,
+          0
+        ],
+        "budget": 1.0092091825422658e-15,
+        "e_d": 0.1,
+        "d_max": 0.0001
+      },
+      "interval": [
+        -0.0001,
+        0.0001
+      ],
+      "target": 0.00010000000090000001,
+      "analytic_minimum_residual": 2.0184183650845316e-15,
+      "observed": {
+        "branch": "INVERTIBLE_S",
+        "perpendicular_norm": 2.287103424010103e-23,
+        "parallel_norm": 0.0,
+        "perpendicular_squared": 5.230842072118737e-46,
+        "parallel_squared": 0.0,
+        "inverse_d": [
+          0.00010000000090000002,
+          0.0,
+          0.0
+        ],
+        "profiled_d": [
+          0.00010000000090000002,
+          0.0,
+          0.0
+        ],
+        "residual_norm": 2.287103424010103e-23,
+        "residual_squared": 5.230842072118737e-46,
+        "budget": 1.0092091825422658e-15,
+        "score": 2.2662332681602596e-08,
+        "compatible": true,
+        "physical_set_empty": false,
+        "profile_certificate": {
+          "status": "KKT_CERTIFIED",
+          "solver_success": true,
+          "primal_error": 1.800000048881136e-14,
+          "stationarity_error": 2.3328316433101455e-20,
+          "complementarity_error": 0.0,
+          "kkt_residual": 1.800000048881136e-14,
+          "active_constraints": [
+            1
+          ],
+          "multipliers": [
+            0.0
+          ]
+        },
+        "roundoff_allowance_applied": true
+      },
+      "direct_violation": -0.0998999999991,
+      "physical_violation": 9.000000180878209e-13,
+      "independent_high_precision_bound": {
+        "arithmetic": "mpmath 90 digits on exact binary64 O,K,Dmax; triangle inequality ||O-Kd|| >= ||O||-||K||op Dmax for all feasible d",
+        "K": [
+          [
+            0.00206003960708558,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.001962351178387918,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.001401679413134227
+          ],
+          [
+            -0.0008864998989744585,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.001085736204758129,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            -0.0010857362047581294
+          ]
+        ],
+        "operator_norm": "0.00224268706101476332855621259847382137806057773009297797929811085525155248192997361654820882",
+        "lower_bound": "0.000000000000002018418366716928614066839465958527661917230602444279725537356449456147519752889777175107",
+        "budget": "0.0000000000000010092091825422658201584897122431197006805526916739523812793777324259281158447265625",
+        "lower_over_budget": "2.00000000161750111075856667645689929337711704364306569807707778214196926087460876944205291",
+        "max_existing_signal_roundoff_allowance": "0.00000000000000000000318705002825786764219480468968943506167162936040780274839441703271901733311165242689869179",
+        "lower_minus_budget_minus_allowance": "0.0000000000000010092059971246345360407075589107182718016162391409669364552303226131866848908301030226801",
+        "bound_remains_strict": true,
+        "all_source_inputs_finite": true
+      }
+    },
+    "nonfinite_display": {
+      "name": "huge_residual_display",
+      "inputs": {
+        "o": [
+          1e+200,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "s": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "d_obs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "budget": 0,
+        "e_d": 0,
+        "d_max": null
+      },
+      "observed": {
+        "branch": "S_ZERO_DIRECT_MEMBERSHIP",
+        "perpendicular_norm": 1e+200,
+        "parallel_norm": 0.0,
+        "perpendicular_squared": {
+          "nonfinite": "inf"
+        },
+        "parallel_squared": 0.0,
+        "inverse_d": null,
+        "profiled_d": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "residual_norm": 1e+200,
+        "residual_squared": {
+          "nonfinite": "inf"
+        },
+        "budget": 0.0,
+        "score": null,
+        "compatible": false,
+        "physical_set_empty": false,
+        "profile_certificate": {
+          "status": "FIXED_DIRECT_DIPOLE",
+          "kkt_residual": 0.0
+        },
+        "roundoff_allowance_applied": false
+      }
+    }
+  },
+  "repair_plan": "One bounded lower-tier numerical repair within the existing R36-04-OPTICAL-JOINT task and cumulative history, from frozen candidate sha256:193630441180a6a38d856442c7b7fe2e9c322032842ce72b07aace9211fef8e0. Preserve repair_01, the original a200 candidate, all original and new failure receipts, source/contract identities, Hubble H1-H11 response, seven signed components, one budget, physical radii, and the original scientific tolerances. Make a distinct next candidate under the same owned R36-04 product subtree; do not overwrite either preimage, reset task/cost/attempt identity, alter physical sources/calibration/positivity assumptions, broaden into native/ODE/CAS production, or qualify/publish from this contract.\n\nRepair only joint_test profiling/certification, numerical range handling, focused regressions and directly generated result/table/interpretation/figures/manifests. The two new counterexamples are different failure regimes of repair_01: (i) a narrow direct ball gives small objective curvature and the max(1, ...) stationarity floor falsely certifies a nonminimum, and (ii) unequal ball radii let normalized optimizer feasibility tolerances and the 1+1e-8 reconstruction check enlarge Dmax, giving a false compatible verdict. A small absolute gradient, solver success or raw KKT residual is never a membership certificate.\n\nSeparate optimization from the final scientific decision. Solve the three-variable convex profile using stable centered/scaled residuals or the quadratic H=A^T A, g=A^T b after removing any constant perpendicular term. Normalize the varying quadratic by its own nonzero curvature/linear scale, not an arbitrary 1 floor, a large canceled signal or B; retain exact-zero branches and use the well-conditioned nonzero STF lift without a new absolute S threshold. A stable unconstrained least-squares/inverse candidate may be used first when its feasibility is independently established. Keep analytic derivatives and bounded iteration, and expose typed NUMERICAL_FAILURE/NUMERIC_RANGE if an operation or convergence cannot be certified.\n\nFor every true compatibility verdict, verify a primal witness lies in the original closed direct and physical balls and its full seven-component residual is within the unchanged B, permitting only the already justified signal-relative cancellation roundoff allowance. Optimizer constraint tolerances must not become radius inflation. Repair/projection of a witness is allowed only if both original constraints are rechecked and the residual is recomputed at that feasible witness; near-boundary uncertainty must trigger higher-precision/outward arithmetic or a typed unresolved outcome. Preserve exact e_d=0, Dmax=0, empty/tangent intersections and S=0 set cases.\n\nFor a false compatibility verdict with a nonempty feasible set, require a valid lower bound on the true minimum residual above B after numerical-error accounting. An approximate KKT point alone is insufficient. A suitable finite certificate is a convex dual/primal gap or a support-function lower bound. For normalized f(d)=0.5||r(d)||^2 and gradient g at a feasible d*, convexity gives lower bounds f(d*)+g\u00b7(d_obs-d*)-e_d||g|| and, if Dmax exists, f(d*)-g\u00b7d*-Dmax||g||; their maximum with zero is valid. A nonnegative-multiplier quadratic Lagrangian dual, evaluated by a stable small linear solve, can give a sharper bound. Derive whichever bound is implemented and conservatively account for all rounding in residual, gradient, support, solve and bound conversion. Use scaled norms/bounds to avoid underflow/overflow when comparing to B. If the lower and upper bounds straddle the decision boundary, return typed numerical unresolved rather than a scientific rejection. Existing cancellation allowance may account only for representational signal cancellation; it must not hide optimization error or a witness outside either physical ball. A scalar profile score may be labelled the optimum only when its bound/gap supports that accuracy; otherwise label an upper bound/interval or return unresolved. Do not silently overclaim a globally exact profile.\n\nGuard all returned numerical fields: the finite O=(1e200,0,...), S=0, d_obs=0, B=0 control must not return Inf in residual_squared/perpendicular_squared. Return an explicit typed NUMERIC_RANGE for an unrepresentable requested quantity (or finite residual plus explicitly typed unavailable display metadata if supported consistently); never rely on a later JSON serialization failure. Preserve robust norms, nonzero S at 1e-200, and unrepresentable response handling.\n\nAdd exact frozen new false-rejection and false-acceptance inputs from this REVIEW_RESULT.counterexample, plus their rotations/common output-unit rescalings and the residual-display range control. Include an analytic one-axis interval oracle across narrow e_d/d_obs and large e_d/Dmax ratios, checking strict original-ball feasibility and residual decision bounds. Retain the three old counterexamples, 0.8/0.8 joint rejection, correlated covariance, STF/frame/c/units, rank/support, boost chart/shifted vertex and source finite-z controls. Run only this focused suite and consumer, with outputs in the new candidate and raw failures preserved; no broad historical reruns. The recorded easy feasible witness must return compatible with a valid witness; the recorded infeasible-budget case must return incompatible with a valid lower bound or explicit numerical unresolved, never compatible. Send the exact next manifest and raw logs to this nonauthor reviewer for one targeted closeout; acceptance and qualification remain false pending that independent decision. No automatic ultra escalation or renamed exhausted attempt is authorized.\n\nPreferred numerical certificate refinement: use the nonsquared norm-objective lower bound validated in /mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review/NORM_BOUND_CONTRACT.json (sha256:85b268eb8e03172364b48501362fb6abad0eade98c9a7a7e055daa224e8a295d). For phi(d)=||O-A d||, q=-A^T r/||r|| (valid zero-residual subgradient at r=0), g1=||d-d_obs||-e_d, optional g2=||d||-Dmax, norm-constraint subgradients n_i and arbitrary finite lambda_i>=0, min_C phi >= phi(d)+sum lambda_i*g_i(d)-||q+sum lambda_i*n_i||*D, where D is an upper bound from the minimum of the applicable ball triangle bounds. This follows from convex supporting inequalities plus Cauchy, with no KKT convergence assumption. Use valid zero-center subgradients; conservatively enclose every quantity and accumulated arithmetic error, round D upward and the final certificate downward, and apply only the original justified signal-cancellation error policy. A verified primal upper bound decides true, a conservative lower bound above B decides false, and an undecided interval yields typed numerical unresolved. Strict original-ball feasibility is independent of normalized optimizer tolerances. All prior scope and preservation requirements remain.",
+  "validation": {
+    "focused_pytest": {
+      "passed": 10,
+      "failed": 0,
+      "warning": "Installed Matplotlib cannot load Axes3D; unrelated 2D figures render successfully.",
+      "receipt": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review/PYTEST_RECEIPT.json",
+        "sha256": "ce7ca764cc193a958882f4d62b5444818dc5b122584d088c431f45255a1605f3",
+        "bytes": 646
+      }
+    },
+    "old_counterexamples": "Recorded interior zero witness now compatible; zero-budget 1e-200 O rejects for S=0 and nonzero S, with the latter on INVERTIBLE_S. Original issues repaired only at their recorded points.",
+    "new_checks": {
+      "initial_cases": 26,
+      "interval_cases": 504,
+      "interval_false_acceptances": 54,
+      "interval_typed_numerical_failures": 6,
+      "rotated_scaled_witnesses": 12,
+      "high_precision": "mpmath 90 digits, exact binary64 inputs, analytical convex support bound; diagnostic arithmetic only, not CAS or theorem admission"
+    },
+    "identity": {
+      "candidate_and_base_record_bindings": 41,
+      "all_matched": true,
+      "frozen_source_file_bindings": 156,
+      "all_source_files_matched": true,
+      "final_candidate_bindings": [
+        {
+          "name": "optical_joint.py",
+          "match": true
+        },
+        {
+          "name": "consume.py",
+          "match": true
+        },
+        {
+          "name": "test_optical_joint.py",
+          "match": true
+        },
+        {
+          "name": "RESULT.json",
+          "match": true
+        },
+        {
+          "name": "TABLE.csv",
+          "match": true
+        },
+        {
+          "name": "INTERPRETATION.md",
+          "match": true
+        },
+        {
+          "name": "JOINT_RESPONSE.pdf",
+          "match": true
+        },
+        {
+          "name": "JOINT_RESPONSE.svg",
+          "match": true
+        },
+        {
+          "name": "SOURCE_AND_FINITE_Z.pdf",
+          "match": true
+        },
+        {
+          "name": "SOURCE_AND_FINITE_Z.svg",
+          "match": true
+        }
+      ],
+      "old_source_preimages": "Preserved, no repo edits or source producer execution."
+    },
+    "consumer": {
+      "external_only_output_redirection": true,
+      "table_byte_identical": true,
+      "json_numerically_equivalent": true,
+      "json_differing_fields": 4,
+      "max_dipole_difference": 1.9949319973733282e-17,
+      "parallel_norm_difference": 2.330291862653762e-20,
+      "classification": "NUMERICALLY_EQUIVALENT_OUTPUT, no source identity mismatch or scientific-integrity failure.",
+      "comparison": {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review/CONSUMER_COMPARISON.json",
+        "sha256": "fdd1eecb535a6eabf8d8eeb8c0276a4bcf3089046d6750c4312bcab1b5de3649",
+        "bytes": 812
+      }
+    },
+    "figures": "Both PDF replays rendered and visually inspected: .8/.8 joint rejection, selected-source Jacobian, full synthetic joint covariance and O(z) magnitude shift. Labels and interpretation retain synthetic scope.",
+    "retained_scope": "Full STF lift and M identity; single residual budget; nonzero cross-covariance pushforward; exact S=0 branch; finite-z order; explicit (-,+,+,+), c, source basis, dimensionless apparent P6 S; rank-loss guard; chart/vertex and same-congruence acceleration versus dust boost distinction retained.",
+    "not_run": [
+      "Historical CAS axes",
+      "Loop D",
+      "source producers",
+      "native solver",
+      "ODE evolution",
+      "broad historical suites",
+      "Git publication",
+      "controller ACK/record/qualification"
+    ]
+  },
+  "claim_audit": {
+    "owner": "common optical response; obsstat source-level estimator",
+    "claim_tier": "C0 conditional method only; numerical joint-membership qualification HOLD",
+    "unsafe_current_claim": "INTERPRETATION repair paragraph says the KKT check certifies computed profile; RF1/RF2 disprove that general claim. Revise after repair to describe actual decision bounds.",
+    "retained_claims": "No empirical CF4 acceleration/boost/shear inference; actual direct law, covariance and physical Bz/Bsel/eS/eO remain unavailable. No Bianchi family, native transfer, posterior, original42 or publication promotion.",
+    "source_equations": "Retained Hubble H1-H11 read and matched; unchanged derivations reused, not independently re-proved."
+  },
+  "repair_contract_status": "BOUNDED_NUMERICAL_REPAIR_PROPOSAL_FOR_OWNER_AUTHORIZED_CAMPAIGN; parent routes execution under existing task/history",
+  "independence": {
+    "reviewer_noncontributor": true,
+    "repo_read_only": true,
+    "external_output_directory": "/mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review",
+    "children_spawned": false,
+    "prior_review_used_only_for": "Frozen prescribed repair and regression inputs, not as a verdict oracle."
+  },
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review/RAW_RECEIPT_002_NORM_BOUND.json",
+  "timestamp_utc": "2026-10-27T05:53:07.307713+00:00",
+  "review_revision": {
+    "preimage": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review/REVIEW_RESULT.json",
+      "sha256": "1bc53a40551013452a70539f557bba51522b3b18c739195531f4e43c7a008326",
+      "bytes": 24567
+    },
+    "kind": "Repair framing clarification only; same negative findings, frozen candidate and raw executions. Norm lower bound supplied as a parent proposal and independently validated algebraically by reviewer.",
+    "new_numerical_execution": false,
+    "new_verdict": false,
+    "timestamp_utc": "2026-10-27T05:54:52.050669+00:00"
+  },
+  "norm_bound_contract": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review/NORM_BOUND_CONTRACT.json",
+    "sha256": "85b268eb8e03172364b48501362fb6abad0eade98c9a7a7e055daa224e8a295d",
+    "bytes": 4314
+  }
+}

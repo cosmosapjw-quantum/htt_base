@@ -1,0 +1,85 @@
+........F......                                                          [100%]
+=================================== FAILURES ===================================
+_______ test_profile_boundary_norm_bounds_scale_and_rotation_invariance ________
+
+    def test_profile_boundary_norm_bounds_scale_and_rotation_invariance():
+        s = np.diag([.02,-.03,.01])
+        k = KAPPA*lift_matrix(s)
+        d_obs = np.array([.001,0.,0.])
+        o = k@np.array([.003,0,0])
+        boundary = joint_test(o,s,d_obs,1e-6,e_d=.001,d_max=.001)
+        assert boundary['profile_certificate']['status'] == 'NORM_BOUNDS_CERTIFIED'
+        np.testing.assert_allclose(boundary['profiled_d'], [.001,0,0],atol=2e-8)
+        assert boundary['certified_lower_bound'] > 1e-6
+        for factor in (1e-30, 1e-150):
+            scaled = joint_test(o*factor,s*factor,d_obs,1e-6*factor,e_d=.001,d_max=.001)
+            np.testing.assert_allclose(scaled['score'],boundary['score'],rtol=2e-8)
+            assert scaled['compatible'] == boundary['compatible']
+        theta=.37
+        r=np.array([[np.cos(theta),-np.sin(theta),0],
+                    [np.sin(theta),np.cos(theta),0],[0,0,1]])
+        ot=np.tensordot(o,B3,axes=(0,0))
+        ort=np.einsum('ia,jb,kc,abc->ijk',r,r,r,ot)
+        orc=np.einsum('aijk,ijk->a',B3,ort)
+>       rotated=joint_test(orc,r@s@r.T,r@d_obs,1e-6,e_d=.001,d_max=.001)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/test_optical_joint.py:176: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/optical_joint.py:331: in joint_test
+    cert=_norm_certificate(o,k,d_obs,e_d,d_max,budget,candidate)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+o = array([ 5.24496929e-05,  1.40481468e-04,  0.00000000e+00, -5.05454546e-05,
+        0.00000000e+00, -3.94131107e-05,  0.00000000e+00])
+k = array([[ 2.77316640e-02, -2.31509967e-02,  0.00000000e+00],
+       [ 3.78054194e-02,  3.20233279e-02,  0.00000000e+00]...      [ 1.20194118e-17, -3.63305943e-02,  0.00000000e+00],
+       [ 0.00000000e+00,  0.00000000e+00, -3.63305943e-02]])
+d_obs = array([0.00093233, 0.00036162, 0.        ]), e_d = 0.001, d_max = 0.001
+budget = 1e-06, candidate = array([0.00093233, 0.00036162, 0.        ])
+
+    def _norm_certificate(o, k, d_obs, e_d, d_max, budget, candidate):
+        """Primal upper and norm-support dual lower bounds in high precision.
+    
+        For any unit u, ||O-Kd|| >= u.O-u.Kd. The support of an intersection
+        is at most the minimum of each ball support. This lower bound is valid
+        without optimizer convergence. Conservative source/rounding envelopes
+        are applied before either decision.
+        """
+        with mp.workdps(100):
+            om,km,center,ed,physical,bm=_mp_data(o,k,d_obs,e_d,d_max,budget)
+            center_norm=_mp_norm(center)
+            if physical is not None and center_norm>ed+physical:
+                return {'status':'PHYSICAL_SET_EMPTY'}
+            cap=center_norm+ed if physical is None else min(center_norm+ed,physical)
+            kf=mp.sqrt(sum(x*x for row in km for x in row))
+            on=_mp_norm(om)
+            operator_error=64*_mp_float(np.finfo(float).eps)*kf*cap
+            global_allowance=64*_mp_float(np.finfo(float).eps)*max(on,kf*cap)
+            scale=max(on,kf*cap,bm)
+            mp_error=mp.mpf('1e-75')*scale
+            if candidate is None:
+                candidate=_feasible_anchor(d_obs,e_d,d_max)
+            if candidate is None:
+                raise NumericalProfileFailure('NUMERICAL_FAILURE','no representable feasible witness')
+            witness=[_mp_float(x) for x in candidate]
+            if not _mp_feasible(witness,center,ed,physical):
+                fallback=_feasible_anchor(d_obs,e_d,d_max)
+                if fallback is None:
+                    raise NumericalProfileFailure('NUMERICAL_FAILURE','candidate outside both original balls')
+                witness=[_mp_float(x) for x in fallback]
+                if not _mp_feasible(witness,center,ed,physical):
+>                   raise NumericalProfileFailure('NUMERICAL_FAILURE','no verified original-ball witness')
+E                   optical_joint.NumericalProfileFailure: NUMERICAL_FAILURE: no verified original-ball witness
+
+docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/optical_joint.py:259: NumericalProfileFailure
+=============================== warnings summary ===============================
+../../../.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63
+  /home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+    warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/test_optical_joint.py::test_profile_boundary_norm_bounds_scale_and_rotation_invariance
+1 failed, 14 passed, 1 warning in 0.92s

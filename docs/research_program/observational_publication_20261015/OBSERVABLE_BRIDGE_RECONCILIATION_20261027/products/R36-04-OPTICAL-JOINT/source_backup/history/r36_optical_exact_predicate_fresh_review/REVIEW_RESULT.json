@@ -1,0 +1,195 @@
+{
+  "packet_id": "95e5a85a0b844f73611609f1b2d45d40320a3b89309ca558aa2b84f550c6b134",
+  "task_id": "R36-04-OPTICAL-JOINT",
+  "agent_id": "/root/r36_optical_exact_predicate_fresh_review",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_identity": "sha256:ec4421a423a87889cc268c65d551a772846ca93298b028d08143201ec824137b",
+  "review_decision": "HOLD",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "findings": [
+    {
+      "id": "R36-04-EPF1",
+      "severity": "P2",
+      "class_": "numeric",
+      "acceptance_blocking": true,
+      "file": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_03/optical_joint.py",
+      "line": 217,
+      "related_lines": [
+        218,
+        257,
+        258,
+        259,
+        325,
+        326,
+        327,
+        328
+      ],
+      "title": "Fixed radial shrink discards an exactly representable witness in a one-ulp overlapping lens",
+      "impact": "The required finite easy-case execution fails with NUMERICAL_FAILURE even for an identically zero response and zero objective. This is a candidate-construction defect; no false scientific rejection or invalid accepted witness was observed.",
+      "cause": "The physical-ball radial proposal is multiplied by 1-16*eps before the unshrunk boundary point is tested. This moves farther than the overlap width and outside the direct ball. The zero-response path returns this absent anchor, and the certificate fallback repeats it before claiming no representable witness.",
+      "exact_oracle": "center=(1/4-2^-55,0,0), e_d=Dmax=1/8; witness=(1/8,0,0). Direct squared slack is 2^-57-2^-110>0, physical squared slack is zero. With S=O=0 its residual is exactly zero and is strictly below B=.001.",
+      "counterexample": {
+        "center": [
+          0.24999999999999997,
+          0.0,
+          0.0
+        ],
+        "e_d": 0.125,
+        "d_max": 0.125,
+        "S": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "O": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "budget": 0.001,
+        "witness": [
+          0.125,
+          0.0,
+          0.0
+        ],
+        "direct_squared_slack": "9007199254740991/1298074214633706907132624082305024",
+        "physical_squared_slack": "0",
+        "residual_squared": "0",
+        "budget_squared": "1329227995784915928244039281409/1329227995784915872903807060280344576",
+        "exact_oracle": "nonempty closed-ball intersection; representable witness; residual strictly within unchanged budget",
+        "actual": {
+          "code": "NUMERICAL_FAILURE",
+          "detail": "NUMERICAL_FAILURE: no representable feasible witness"
+        }
+      },
+      "corroborating_nonzero_case": {
+        "center": [
+          0.24999999999999997,
+          0.0,
+          0.0
+        ],
+        "e_d": 0.125,
+        "d_max": 0.125,
+        "S": [
+          [
+            0.001,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.001,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "O": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "budget": 0.001,
+        "witness": [
+          0.125,
+          0.0,
+          0.0
+        ],
+        "direct_squared_slack": "9007199254740991/1298074214633706907132624082305024",
+        "physical_squared_slack": "0",
+        "residual_squared": "427874897920579094684454174087209/5444517870735015415413993718908291383296",
+        "budget_squared": "1329227995784915928244039281409/1329227995784915872903807060280344576",
+        "exact_oracle": "nonempty closed-ball intersection; representable witness; residual strictly within unchanged budget",
+        "actual": {
+          "code": "NUMERICAL_FAILURE",
+          "detail": "NUMERICAL_FAILURE: no representable feasible witness"
+        }
+      },
+      "recommendation": "Try exact-verified unshrunk radial/boundary candidates before an inward adjustment; any adjustment must retain both original-ball memberships. Keep a typed unsupported outcome only when the available proposal/certificate remains unresolved, not for this explicitly representable elementary witness."
+    }
+  ],
+  "validation_evidence": [
+    "225 frozen source/candidate/historical/raw identities matched before and after review; IDENTITY_INITIAL.json and IDENTITY_FINAL.json",
+    "External-fixture pytest: 18 passed, one unrelated Matplotlib Axes3D warning; PYTEST.stdout and EXECUTION_RECEIPTS.json",
+    "Actual consumer in external small fixture exited 0; RESULT exact semantic equality and TABLE byte equality; CONSUMER_COMPARISON.json",
+    "Independent checks: 25 PASS, 2 FAIL reproductions of one P2 defect; INDEPENDENT_CHECKS.json, INDEPENDENT.stdout and INDEPENDENT.stderr",
+    "NCF1 exact Fraction emptiness, NCF2 directed sqrt2/sqrt3 and upper score, NCF3 tangent witness all passed",
+    "18 exact rational one-axis interval cases passed at common output scales 1, 1e-30 and 1e-150, including unequal .0001 physical radius; exact witness memberships and residual bounds checked",
+    "Independent full-tensor index formula, Gram identity, full correlated covariance including cross terms, all 8 response Jacobian columns and three-axis rotation passed",
+    "Tiny nonzero S=1e-200, zero/singleton/empty sets and typed large-output/K-overflow controls passed",
+    "Finite-z source control and shifted corrected observer chart passed; all three generated figures visually inspected and readable",
+    "Primary chart source checked: https://arxiv.org/html/2312.09875v3; imported frozen HUBBLE_PROTOCOL.json reused; no unchanged theorem re-proving or exact CAS gate added"
+  ],
+  "claim_audit": {
+    "owner": "common optical response; obsstat source estimator",
+    "scope": "independent C0 conditional-method numerical review",
+    "transfer_source": "none",
+    "claim_tier": "C0",
+    "evidence_read": [
+      "NEXT_032 and ACK_032_GO",
+      "actual author RETURN and bound candidate",
+      "frozen Hubble protocol and approved norm-bound framing",
+      "candidate code/tests/result/interpretation",
+      "raw finite independent executions"
+    ],
+    "proposed_changes": "No candidate edits. Return same-task bounded candidate-construction repair criterion.",
+    "tests_to_run": "Completed focused suite, consumer replay and independent checks; repair regression belongs to the implementation owner.",
+    "risks_and_kill_switches": "Source drift or changed scientific conventions stop the bounded review. General unresolved numerical cases remain typed; this explicit representable easy witness must execute.",
+    "artifacts_status": "HOLD; no qualified product",
+    "upgraded_claims": [],
+    "downgraded_claims": [
+      "Candidate acceptance remains false pending P2 repair and fresh independent review"
+    ],
+    "forbidden_drift_detected": false,
+    "ledger_updates_needed": "Host records this identity-bound review; no repository claim ledger or historical acceptance edits.",
+    "caveats": [
+      "CF4 direct-dipole law, empirical joint covariance and finite-z/selection/uncertain-S radii remain unavailable.",
+      "No native solver, ODE, original42 promotion or publication approval.",
+      "Requested gpt-6-astra/xhigh; actual model and effort remain UNKNOWN."
+    ]
+  },
+  "independence": {
+    "authored_candidate": false,
+    "prior_reviewer_verdict_files_read": false,
+    "previous_review_files_hashed_only": true,
+    "framing_read": "NORM_BOUND_CONTRACT.json plus mandatory controller repair requirements",
+    "production_writes": false
+  },
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "mpmath": "1.3.0",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39"
+  },
+  "finished_utc": "2026-10-27T07:17:56.124866+00:00"
+}

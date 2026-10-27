@@ -1,0 +1,279 @@
+{
+  "schema": "htt.r36.independent_review_preparation/1",
+  "task_id": "R36-04-OPTICAL-JOINT",
+  "reviewer_agent_id": "/root/r36_optical_joint_fresh_review",
+  "author_agent_id": "/root/rc_9441945b45b2b786",
+  "review_status": "PREPARED",
+  "outcome": "blocker",
+  "issue_class": "numeric/code",
+  "scoped_verdict": "HOLD",
+  "candidate_identity": "sha256:a200cc9b67de72f24ab8050f8254ac4fd85fb8b6f2dea9e18835a5f57025bed5",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/ARTIFACT_MANIFEST.json",
+  "implementation_packet_id": "9441945b45b2b78644d2f089d1da3b5a142cbb353406bf9a56bbdd4cef42c1c5",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "formal_review_packet_id": null,
+  "formal_dispatch_acknowledgement": null,
+  "qualification_status": "PENDING_FORMAL_CONTROLLER_REVIEW",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "summary": "Two reproduced numerical counterexamples block the declared conditional profiled compatibility product. This is not a missing physical-calibration hold. All seven supplied tests pass and all manifest source/candidate/validation bindings match.",
+  "findings": [
+    {
+      "id": "R36-04-F1",
+      "severity": "high",
+      "kind": "FALSE_REJECTION",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/optical_joint.py",
+      "line_start": 106,
+      "line_end": 127,
+      "title": "Absolute SLSQP stopping falsely rejects a strictly feasible zero-residual dipole",
+      "consequence": "With S=diag(0.001,-0.001,0), O=0, d_obs=(0.001,0,0), e_d=0.002, Dmax=0.01 and B=1e-8, the optimizer returns the starting d_obs and score 224.26870610147634 / incompatible. The explicit d=0 witness lies strictly inside both balls and has exactly zero residual; the true profiled score is zero.",
+      "cause": "Unscaled squared objective/constraints, absolute ftol and finite-difference gradients are accepted without a verified optimality residual.",
+      "counterexample_key": "false_rejection"
+    },
+    {
+      "id": "R36-04-F2",
+      "severity": "high",
+      "kind": "FALSE_ACCEPTANCE_AND_DOMAIN_MISCLASSIFICATION",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/optical_joint.py",
+      "line_start": 128,
+      "line_end": 154,
+      "related_lines": [
+        55,
+        56,
+        108
+      ],
+      "title": "Squared-norm underflow turns a nonzero residual into exact membership and nonzero S into S=0",
+      "consequence": "At S=0, O=(1e-200,0,0,0,0,0,0), d_obs=0 and B=0, the exact residual norm is 1e-200 but the function returns residual_squared=0, score=0, compatible=true. Replacing S by diag(1e-200,-1e-200,0) also incorrectly selects S_ZERO_DIRECT_MEMBERSHIP. These finite values are representable and violate the promised small-nonzero-S and zero-budget domains.",
+      "cause": "Branching on np.linalg.norm(S)==0 and using sqrt(r@r) for membership allow representational underflow to become a physical verdict.",
+      "counterexample_key": "false_acceptance"
+    }
+  ],
+  "counterexample": {
+    "false_rejection": {
+      "inputs": {
+        "S": [
+          [
+            0.001,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.001,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "O": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "d_obs": [
+          0.001,
+          0.0,
+          0.0
+        ],
+        "budget": 1e-08,
+        "e_d": 0.002,
+        "d_max": 0.01
+      },
+      "witness": {
+        "d": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "distance_to_d_obs": 0.001,
+        "physical_norm": 0.0,
+        "residual_norm": 0.0,
+        "strictly_inside_both_balls": true
+      },
+      "expected_compatible": true,
+      "observed": {
+        "branch": "INVERTIBLE_S",
+        "perpendicular_squared": 0.0,
+        "parallel_squared": 5.029645253643037e-12,
+        "inverse_d": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "profiled_d": [
+          0.001,
+          0.0,
+          0.0
+        ],
+        "residual_squared": 5.029645253643037e-12,
+        "budget": 1e-08,
+        "score": 224.26870610147634,
+        "compatible": false,
+        "physical_set_empty": false
+      }
+    },
+    "false_acceptance": {
+      "inputs": {
+        "S": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "O": [
+          1e-200,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "d_obs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "budget": 0.0,
+        "e_d": 0.0
+      },
+      "exact_residual_norm": 1e-200,
+      "expected_compatible": false,
+      "observed": {
+        "branch": "S_ZERO_DIRECT_MEMBERSHIP",
+        "perpendicular_squared": 0.0,
+        "parallel_squared": 0.0,
+        "inverse_d": null,
+        "profiled_d": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "residual_squared": 0.0,
+        "budget": 0.0,
+        "score": 0.0,
+        "compatible": true,
+        "physical_set_empty": false
+      }
+    },
+    "wrong_zero_branch": {
+      "inputs": {
+        "S": [
+          [
+            1e-200,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1e-200,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "O": [
+          1e-200,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "d_obs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "budget": 0.0,
+        "e_d": 0.0
+      },
+      "S_has_nonzero_entries": true,
+      "expected_branch": "INVERTIBLE_S",
+      "expected_compatible": false,
+      "observed": {
+        "branch": "S_ZERO_DIRECT_MEMBERSHIP",
+        "perpendicular_squared": 0.0,
+        "parallel_squared": 0.0,
+        "inverse_d": null,
+        "profiled_d": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "residual_squared": 0.0,
+        "budget": 0.0,
+        "score": 0.0,
+        "compatible": true,
+        "physical_set_empty": false
+      }
+    }
+  },
+  "repair_plan": "Within the existing R36-04 candidate only, repair joint_test numerical profiling and its domain/norm helpers; preserve the Hubble protocol, physical radii, mathematical tolerance and first-failure evidence. Normalize decision variables, response/objective and ball constraints before solving the convex least-squares/trust-region profile; use analytic derivatives or an equivalent bounded solver, and verify primal feasibility plus an appropriately scaled optimality/KKT residual before issuing compatibility. A solver success flag or small absolute gradient alone is not an optimality certificate. When certification fails, return an explicit numerical failure rather than a scientific rejection. Use robust scaled norms and direct residual-versus-budget comparison; detect S=0 from exact zero entries or zero maximum absolute entry, never a squared norm. Do not let underflowed residual_squared or M_S classify a nonzero finite residual as compatible; preserve the signal-relative roundoff allowance only in its justified cancellation regime. Add the recorded interior feasible-witness false-rejection and zero-budget false-acceptance regressions, nonzero S at 1e-200, scale/rotation invariance and a constrained boundary optimality control. Retain the existing 0.8/0.8 rejection, correlated covariance propagation, chart/vertex and source units controls. Rerun the focused tests and consumer, preserve pre-repair outputs, refresh candidate hashes, and return the exact new identity for one targeted independent closeout. No physical calibration request, model change, tolerance relaxation, solver/ODE, ultra escalation, broad rewrite, or qualification/publication is authorized by this review preparation.",
+  "evidence": {
+    "identity": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/IDENTITY.json",
+    "all_bindings_match": true,
+    "pytest": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/PYTEST.stdout",
+    "pytest_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/PYTEST_RECEIPT.json",
+    "pytest_result": "7 passed; one existing Matplotlib Axes3D import warning",
+    "reproducer": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/REPRODUCE.py",
+    "counterexample_raw_stdout": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/COUNTEREXAMPLES.stdout",
+    "counterexample_raw_stderr": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/COUNTEREXAMPLES.stderr",
+    "initial_scale_sweep": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/FALSIFIER_RESULTS.json",
+    "consumer": "SOURCE_AND_STORED_RESULT_INSPECTED; independent rerun NOT_RUN after concrete blockers, to avoid writing candidate products",
+    "first_author_failure": "Preserved and manifest hash verified: /mnt/extdrive/workdir/htt_open_data/r36_optical_joint_actual/PYTEST.stdout; original 1e-120 decomposition-cancellation failure remains available. The final 64*eps*signal_scale comparison is reasonable for that cancellation but does not prevent deeper squared-norm underflow."
+  },
+  "reviewed_scope": {
+    "contract": "Exact FRONTIER R36-04 acceptance; REPORT section 5; imported HUBBLE_PROTOCOL H1-H11; LOOP_C_KINEMATICS congruence/frame/source conditions; retained R32 P6 manuscript units and finite-estimator response",
+    "physics_and_units": "(-,+,+,+), outward n, orthonormal frame, c explicit in A/(cH), H and sigma inverse time; corrected CF4 S norm 0.03265680189321492 remains dimensionless, without an extra 5/ln10 division.",
+    "math_supported_at_declared_scope": "Seven-component lift and M identity, shared 0.8/0.8 rejection, uncertain-S outer radius and direct/O full covariance pushforward match the retained protocol. Source-level K times logarithmic-response Jacobian is explicit. Transporting a covariance alone is not correlated confidence-region profiling and the candidate does not claim empirical coverage.",
+    "physical_bounds": "Finite-z and selection radii, actual CF4 direct-dipole law and joint covariance stay unavailable; the synthetic covariance and finite-z O(z) illustration do not zero-fill those physical gaps. These absent empirical inputs do not themselves block the declared conditional response/design product.",
+    "observer_chart": "Primary equations verified: corrected d_L/(1+z)^2 and shifted vertex precede the dust moving-observer interpretation; same-congruence acceleration, nonlinear magnitude octupole and uncorrected-distance slope octupole remain distinct.",
+    "primary_source": {
+      "url": "https://arxiv.org/html/2312.09875v3",
+      "equations": [
+        "27",
+        "34b",
+        "62",
+        "68",
+        "70"
+      ],
+      "access_date": "2026-10-27"
+    },
+    "artifacts": "RESULT.json, TABLE.csv, vector figure provenance and consume.py inspected. Existing output identities verified, but no new figure rendering or consumer replay is claimed.",
+    "no_admission": "No empirical acceleration, native solver, ODE evolution, original42 acceptance or publication decision."
+  },
+  "execution_environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0"
+  },
+  "completed_at_utc": "2026-10-27T03:17:20.209869+00:00"
+}

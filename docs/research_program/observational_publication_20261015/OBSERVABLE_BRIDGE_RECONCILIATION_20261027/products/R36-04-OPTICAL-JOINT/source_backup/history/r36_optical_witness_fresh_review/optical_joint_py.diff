@@ -1,0 +1,52 @@
+--- repair_03/optical_joint.py
++++ repair_04/optical_joint.py
+@@ -7,6 +7,7 @@
+ 
+ from fractions import Fraction
+ import math
++from itertools import product
+ import numpy as np
+ from scipy.linalg import norm as robust_norm
+ from scipy.optimize import minimize
+@@ -206,16 +207,33 @@
+ 
+ 
+ def _feasible_anchor(d_obs, e_d, d_max):
+-    """A known feasible point, or None for an empty/tangent numeric case."""
++    """Find a representable point in the original closed-ball intersection.
++
++    The exact weighted center lies in the real intersection whenever the two
++    balls intersect. Its binary64 rounding and nearby candidates must still
++    pass the unchanged exact predicates; no fixed inward shrink is valid.
++    """
+     if d_max is None or _verified_feasible(d_obs,d_obs,e_d,d_max):
+         return d_obs.copy()
+-    n = _safe_norm(d_obs)
+-    if n == 0:
+-        return d_obs.copy()
+-    # Move strictly inside the physical ball; verify the original direct ball
+-    # later with exact-binary arithmetic, never a normalized optimizer slack.
+-    d = d_obs*min(1.0,d_max/n)*(1-16*np.finfo(float).eps)
+-    return d if _verified_feasible(d,d_obs,e_d,d_max) else None
++    total=_fraction(e_d)+_fraction(d_max)
++    if total==0:
++        return None
++    weight=_fraction(d_max)/total
++    weighted=np.array([float(weight*_fraction(x)) for x in d_obs])
++    n=_safe_norm(d_obs)
++    radial=d_obs*min(1.0,d_max/n) if n else np.zeros(3)
++    for proposal in (weighted,radial):
++        if _verified_feasible(proposal,d_obs,e_d,d_max):
++            return proposal
++    # One-ulp neighborhoods cover float rounding of a very thin overlap.
++    for proposal in (weighted,radial):
++        options=[(math.nextafter(float(x),-math.inf),float(x),
++                  math.nextafter(float(x),math.inf)) for x in proposal]
++        for coordinates in product(*options):
++            candidate=np.array(coordinates,float)
++            if _verified_feasible(candidate,d_obs,e_d,d_max):
++                return candidate
++    return None
+ 
+ 
+ def _verified_feasible(d, d_obs, e_d, d_max):

@@ -1,0 +1,52 @@
+--- repair_03/consume.py
++++ repair_04/consume.py
+@@ -113,6 +113,16 @@
+         raise RuntimeError('NCF3 representable tangent witness lost')
+     if not ncf_sqrt3['certified_upper_bound']>np.sqrt(3):
+         raise RuntimeError('NCF2 upper endpoint was not rounded outward')
++    epf_center=np.array([np.nextafter(.25,0.),0.,0.])
++    epf_zero=joint_test(np.zeros(7),np.zeros((3,3)),epf_center,.001,
++                        e_d=.125,d_max=.125)
++    epf_shear=joint_test(np.zeros(7),narrow_s,epf_center,.001,
++                         e_d=.125,d_max=.125)
++    epf_exterior=joint_test(np.zeros(7),narrow_s,
++                            np.array([np.nextafter(.25,np.inf),0.,0.]),
++                            .001,e_d=.125,d_max=.125)
++    if not epf_zero['compatible'] or not epf_shear['compatible'] or not epf_exterior['physical_set_empty']:
++        raise RuntimeError('EPF1 near-tangent closed-ball construction failed')
+     # Source-level finite-z ratio has O(z) magnitude change.
+     a1 = np.einsum('ijk,ni,nj,nk->n', B3[0], n, n, n)
+     zvals = np.array([.02, .01, .005])
+@@ -154,6 +164,8 @@
+         ('NCF3 tangent witness coordinate',ncf_tangent['profiled_d'][0],'exact representable intersection singleton'),
+         ('NCF2 sqrt3 lower bound',ncf_sqrt3['certified_lower_bound'],'directed downward, seven-component fixed objective'),
+         ('NCF2 sqrt3 upper bound',ncf_sqrt3['certified_upper_bound'],'directed upward, seven-component fixed objective'),
++        ('EPF1 one-ulp overlap shear residual upper',epf_shear['certified_upper_bound'],'verified original-ball witness, B=.001'),
++        ('EPF1 adjacent exterior verdict',int(epf_exterior['physical_set_empty']),'exact binary64 squared-ball emptiness'),
+         ('reviewed S=0 tiny nonzero residual norm', underflow_zero['residual_norm'], 'zero budget rejects'),
+         ('reviewed S nonzero tiny residual norm', underflow_nonzero['residual_norm'], 'invertible branch, zero budget rejects'),
+         ('synthetic finite-z shift z=0.02', shifts[0], 'source-level selected estimator'),
+@@ -209,10 +221,10 @@
+     fig.savefig(HERE/'NORM_BOUND_DECISION.svg')
+     plt.close(fig)
+     result = {
+-        'packet_id': 'b5bac779afef84c0ac243fe864feb7624de29c25e3d50b09837a0fa5fa078ebd',
+-        'base_packet_id': 'd95f447b56ba49a7cd2a5ebd4a4af8806f3152a0ece690f744111f9834b36956',
+-        'base_candidate_identity': 'sha256:8d2f7cdd340803ecbb2777f757cb224455f989b5f81a5a7ab456ff9ec3153e5f',
+-        'repair_plan_identity': 'OWNER_AUTHORIZED_IN_NEXT_031',
++        'packet_id': 'a3c0cf3a91f1e9e9b42655aae9d807b977a9b429f41740a6b5a19a505156def8',
++        'base_packet_id': 'b5bac779afef84c0ac243fe864feb7624de29c25e3d50b09837a0fa5fa078ebd',
++        'base_candidate_identity': 'sha256:ec4421a423a87889cc268c65d551a772846ca93298b028d08143201ec824137b',
++        'repair_plan_identity': 'OWNER_AUTHORIZED_IN_NEXT_033',
+         'task_id': 'R36-04-OPTICAL-JOINT', 'agent_id': '/root/rc_9441945b45b2b786',
+         'requested_runtime': {'model': 'gpt-6-sol', 'reasoning_effort': 'high'},
+         'observed_runtime': 'UNKNOWN',
+@@ -243,6 +255,8 @@
+         'exact_set_and_directed_certificate_controls': {'NCF1_empty_singleton':ncf_empty,
+             'NCF2_sqrt3_fixed_objective':ncf_sqrt3,'NCF3_representable_tangent':ncf_tangent,
+             'NCF2_rational_endpoint_oracles':'IN_FOCUSED_TESTS'},
++        'available_witness_controls': {'EPF1_zero_response':epf_zero,
++            'EPF1_nonzero_response':epf_shear,'EPF1_adjacent_exterior':epf_exterior},
+         'S_zero_example': zero, 'uncertain_S_coefficient': float(KAPPA*np.sqrt(3/5)),
+         'H7_example_angular_only_epsilon_0p1': budget_unit,
+         'finite_z_example': {'z': zvals.tolist(), 'STF3_norm': shifts, 'doubling_ratios': ratio},

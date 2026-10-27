@@ -1,0 +1,33 @@
+--- repair_03/test_optical_joint.py
++++ repair_04/test_optical_joint.py
+@@ -287,3 +287,30 @@
+     assert out['profile_certificate']['candidate_method']=='TANGENT_SINGLETON'
+     with pytest.raises(NumericalProfileFailure,match='NUMERICAL_FAILURE'):
+         joint_test(np.zeros(7),s,np.array([3.,4.,0.]),1.,e_d=2.,d_max=3.)
++
++
++def test_epf1_one_ulp_overlap_retains_exact_verified_binary_witness():
++    inner=np.nextafter(.25,0.)
++    outer=np.nextafter(.25,np.inf)
++    rotations=(np.eye(3),np.array([[0.,1.,0.],[0.,0.,1.],[1.,0.,0.]]),
++               np.diag([-1.,1.,-1.]))
++    for r in rotations:
++        center=r@np.array([inner,0.,0.])
++        exterior=r@np.array([outer,0.,0.])
++        available=r@np.array([.125,0.,0.])
++        direct2=sum((Fraction.from_float(float(available[i]))-
++                     Fraction.from_float(float(center[i])))**2 for i in range(3))
++        physical2=sum(Fraction.from_float(float(x))**2 for x in available)
++        assert direct2<=Fraction(1,8)**2 and physical2<=Fraction(1,8)**2
++        for shear in (0.,.001):
++            for output_scale in (1e-30,1.,1e30):
++                s=output_scale*r@np.diag([shear,-shear,0.])@r.T
++                budget=.001*output_scale
++                out=joint_test(np.zeros(7),s,center,budget,e_d=.125,d_max=.125)
++                assert out['compatible'] and not out['physical_set_empty']
++                d=np.asarray(out['profiled_d'])
++                assert sum((Fraction.from_float(float(d[i]))-
++                            Fraction.from_float(float(center[i])))**2 for i in range(3))<=Fraction(1,8)**2
++                assert sum(Fraction.from_float(float(x))**2 for x in d)<=Fraction(1,8)**2
++        empty=joint_test(np.zeros(7),np.zeros((3,3)),exterior,.001,e_d=.125,d_max=.125)
++        assert not empty['compatible'] and empty['physical_set_empty']

@@ -1,0 +1,186 @@
+{
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "numpy": "2.4.2",
+  "scipy": "1.17.0",
+  "false_rejection": {
+    "inputs": {
+      "S": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "O": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "d_obs": [
+        0.001,
+        0.0,
+        0.0
+      ],
+      "budget": 1e-08,
+      "e_d": 0.002,
+      "d_max": 0.01
+    },
+    "witness": {
+      "d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "distance_to_d_obs": 0.001,
+      "physical_norm": 0.0,
+      "residual_norm": 0.0,
+      "strictly_inside_both_balls": true
+    },
+    "expected_compatible": true,
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 5.029645253643037e-12,
+      "inverse_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.001,
+        0.0,
+        0.0
+      ],
+      "residual_squared": 5.029645253643037e-12,
+      "budget": 1e-08,
+      "score": 224.26870610147634,
+      "compatible": false,
+      "physical_set_empty": false
+    }
+  },
+  "false_acceptance": {
+    "inputs": {
+      "S": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "O": [
+        1e-200,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0.0,
+      "e_d": 0.0
+    },
+    "exact_residual_norm": 1e-200,
+    "expected_compatible": false,
+    "observed": {
+      "branch": "S_ZERO_DIRECT_MEMBERSHIP",
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 0.0,
+      "inverse_d": null,
+      "profiled_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual_squared": 0.0,
+      "budget": 0.0,
+      "score": 0.0,
+      "compatible": true,
+      "physical_set_empty": false
+    }
+  },
+  "wrong_zero_branch": {
+    "inputs": {
+      "S": [
+        [
+          1e-200,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -1e-200,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "O": [
+        1e-200,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "d_obs": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "budget": 0.0,
+      "e_d": 0.0
+    },
+    "S_has_nonzero_entries": true,
+    "expected_branch": "INVERTIBLE_S",
+    "expected_compatible": false,
+    "observed": {
+      "branch": "S_ZERO_DIRECT_MEMBERSHIP",
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 0.0,
+      "inverse_d": null,
+      "profiled_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual_squared": 0.0,
+      "budget": 0.0,
+      "score": 0.0,
+      "compatible": true,
+      "physical_set_empty": false
+    }
+  }
+}

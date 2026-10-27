@@ -1,0 +1,168 @@
+{
+  "schema": "htt.r36.fresh_review_raw_receipt/1",
+  "task_id": "R36-04-OPTICAL-JOINT",
+  "candidate_identity": "sha256:8d2f7cdd340803ecbb2777f757cb224455f989b5f81a5a7ab456ff9ec3153e5f",
+  "verdict": "HOLD",
+  "formal_qualification": false,
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "commands": [
+    {
+      "name": "PYTEST",
+      "command": [
+        "/usr/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-c",
+        "/dev/null",
+        "-p",
+        "no:cacheprovider",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/fixture/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/test_optical_joint.py"
+      ],
+      "cwd": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/fixture",
+      "exit_code": 0,
+      "wall_seconds": 11.964257585816085,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/PYTEST.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/PYTEST.stderr"
+    },
+    {
+      "name": "CONSUMER",
+      "command": [
+        "/usr/bin/python",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/fixture/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/consume.py"
+      ],
+      "cwd": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/fixture",
+      "exit_code": 0,
+      "wall_seconds": 2.3785966320428997,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/CONSUMER.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/CONSUMER.stderr"
+    }
+  ],
+  "additional_commands": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python /mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/run_checks.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": null,
+      "outputs": [
+        "INITIAL_CHECKS.stdout",
+        "INITIAL_CHECKS.stderr"
+      ],
+      "exit_observation": "Outer exec return metadata was not retained; nested pytest/consumer exit codes and completed runner outputs are preserved. Do not infer outer process exit from those files."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python /mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/independent_sweep.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "outputs": [
+        "SWEEP.stdout",
+        "SWEEP.stderr"
+      ]
+    }
+  ],
+  "artifacts": {
+    "COMMAND_RECEIPT.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/COMMAND_RECEIPT.json",
+      "sha256": "90c52faab0a49486290ab1d7def3ed7b33bd9a3eecc525a4186470d5a41c30f9",
+      "bytes": 1531
+    },
+    "CONSUMER.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/CONSUMER.stderr",
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852",
+      "bytes": 379
+    },
+    "CONSUMER.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/CONSUMER.stdout",
+      "sha256": "098c74abbd1406873d1c3facf086e525bd263148aa4984c88dbd50213a1d512c",
+      "bytes": 126
+    },
+    "CONSUMER_COMPARISON.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/CONSUMER_COMPARISON.json",
+      "sha256": "7458b010dddef45d3b3093c702deb5106f3640c82a493a96ff9b9d97d010b19c",
+      "bytes": 397
+    },
+    "ENVIRONMENT.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/ENVIRONMENT.json",
+      "sha256": "23c96ebabf41fa8faeef96070dafbd8ce804ed7a1207b485976820f81e5e9d73",
+      "bytes": 466
+    },
+    "INDEPENDENT_INITIAL_CHECKS.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/INDEPENDENT_INITIAL_CHECKS.json",
+      "sha256": "a0523e09df5a70c9aee75bd957bd9cb87c6d963b35af232716bfe56affc04245",
+      "bytes": 6312
+    },
+    "INDEPENDENT_SWEEP.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/INDEPENDENT_SWEEP.json",
+      "sha256": "4ab01552ad17166103331a5d9884518074659d68432ae1e001c7dd56dc46d5c5",
+      "bytes": 28814
+    },
+    "independent_sweep.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/independent_sweep.py",
+      "sha256": "468854661a1698cecc30c1c508ef96d4710277ebd781b22e306b2650987afc33",
+      "bytes": 4936
+    },
+    "INITIAL_CHECKS.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/INITIAL_CHECKS.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "INITIAL_CHECKS.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/INITIAL_CHECKS.stdout",
+      "sha256": "2316dedf801ca71022cf245c3372a093620833b95400e4f9b4c93e7effb6857e",
+      "bytes": 5965
+    },
+    "POST_REVIEW_SEALS.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/POST_REVIEW_SEALS.json",
+      "sha256": "1626cbfec56bcf7798f6c366f823a2a126931fea20b6f261bfd2706e2de488c8",
+      "bytes": 12020
+    },
+    "PYTEST.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/PYTEST.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "PYTEST.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/PYTEST.stdout",
+      "sha256": "b1ea1aa329ec4840da94424dec1d492af7c44f948864a08d8df3d9ea599cffef",
+      "bytes": 756
+    },
+    "REVIEW_RESULT.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/REVIEW_RESULT.json",
+      "sha256": "48f1f9b4fad764c4a0ae82d7449b6cafa9099f17bf3064c5f9a85f3d7f9e6406",
+      "bytes": 10587
+    },
+    "run_checks.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/run_checks.py",
+      "sha256": "17af24f98fd7abca460e8e352913c198c82502d29153935b9fb8506f9a07104c",
+      "bytes": 2827
+    },
+    "SAME_TASK_REPAIR_CONTRACT_PROPOSED.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/SAME_TASK_REPAIR_CONTRACT_PROPOSED.json",
+      "sha256": "80d21dd10ff2acffbdbb03baed90719d0f2cca76ed252138c9440d665abd2d86",
+      "bytes": 4220
+    },
+    "SOURCE_IDENTITY_CHECKS.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/SOURCE_IDENTITY_CHECKS.json",
+      "sha256": "df5a5bb63a75c8524854346200ed5154dba2a85c415d98b45a28bbe1f9ba81b4",
+      "bytes": 14069
+    },
+    "SWEEP.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/SWEEP.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "SWEEP.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/SWEEP.stdout",
+      "sha256": "c582b97240fbaf3033853b1a176fe0700b7e663d0874cb84af8a070257ad13a9",
+      "bytes": 1416
+    },
+    "write_review.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_norm_certificate_fresh_review/write_review.py",
+      "sha256": "f8210b00b4815817b6173318b5fa374aa3aa886fd9f831eada2fa59739b06476",
+      "bytes": 14094
+    }
+  }
+}

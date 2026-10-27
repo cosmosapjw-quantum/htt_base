@@ -1,0 +1,43 @@
+.......FF.                                                               [100%]
+=================================== FAILURES ===================================
+___________ test_reviewed_interior_witness_and_underflow_rejections ____________
+
+    def test_reviewed_interior_witness_and_underflow_rejections():
+        s = np.diag([.001,-.001,0.])
+        out = joint_test(np.zeros(7), s, np.array([.001,0,0]),
+                         1e-8, e_d=.002, d_max=.01)
+        assert out['compatible'] and not out['physical_set_empty']
+        assert out['residual_norm'] == 0
+        np.testing.assert_allclose(out['profiled_d'], np.zeros(3), atol=1e-14)
+>       assert out['profile_certificate']['status'] == 'KKT_CERTIFIED'
+E       AssertionError: assert 'NORM_BOUNDS_CERTIFIED' == 'KKT_CERTIFIED'
+E         
+E         - KKT_CERTIFIED
+E         + NORM_BOUNDS_CERTIFIED
+
+docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/test_optical_joint.py:146: AssertionError
+___________ test_profile_boundary_kkt_scale_and_rotation_invariance ____________
+
+    def test_profile_boundary_kkt_scale_and_rotation_invariance():
+        s = np.diag([.02,-.03,.01])
+        k = KAPPA*lift_matrix(s)
+        d_obs = np.array([.001,0.,0.])
+        o = k@np.array([.003,0,0])
+        boundary = joint_test(o,s,d_obs,1e-6,e_d=.001,d_max=.001)
+>       assert boundary['profile_certificate']['status'] == 'KKT_CERTIFIED'
+E       AssertionError: assert 'NORM_BOUNDS_CERTIFIED' == 'KKT_CERTIFIED'
+E         
+E         - KKT_CERTIFIED
+E         + NORM_BOUNDS_CERTIFIED
+
+docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/test_optical_joint.py:163: AssertionError
+=============================== warnings summary ===============================
+../../../.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63
+  /home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+    warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/test_optical_joint.py::test_reviewed_interior_witness_and_underflow_rejections
+FAILED docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/test_optical_joint.py::test_profile_boundary_kkt_scale_and_rotation_invariance
+2 failed, 8 passed, 1 warning in 0.83s

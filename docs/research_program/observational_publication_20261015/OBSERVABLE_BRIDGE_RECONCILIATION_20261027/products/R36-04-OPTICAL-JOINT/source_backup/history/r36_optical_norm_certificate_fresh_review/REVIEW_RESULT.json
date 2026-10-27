@@ -1,0 +1,213 @@
+{
+  "schema": "htt.r36.optical_fresh_independent_review/1",
+  "task_id": "R36-04-OPTICAL-JOINT",
+  "verdict": "HOLD",
+  "candidate_identity": "sha256:8d2f7cdd340803ecbb2777f757cb224455f989b5f81a5a7ab456ff9ec3153e5f",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/ARTIFACT_MANIFEST.json",
+  "qualification": false,
+  "formal_packet_binding": "NOT_PERFORMED_PREPARATORY_REVIEW_ONLY",
+  "controller_state_mutated": false,
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "reviewer": "/root/r36_optical_norm_certificate_fresh_review",
+  "independence": {
+    "candidate_authored_by_reviewer": false,
+    "previous_independent_verdicts_read": false,
+    "author_claimed_pass_used_as_oracle": false,
+    "children_spawned": false,
+    "git_operations": false,
+    "production_or_candidate_writes": false
+  },
+  "summary": "The new norm-support method and exercised ordinary cases are sound at the checked scales, but one exact original-set false acceptance and two certificate/degenerate-set defects block the proposed numerical qualification.",
+  "findings": [
+    {
+      "id": "R36-04-NCF1",
+      "severity": "P1",
+      "title": "Fixed precision certifies a point outside the original closed physical ball",
+      "location": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/optical_joint.py",
+        "lines": [
+          120,
+          126,
+          129,
+          146,
+          149,
+          241,
+          242,
+          331,
+          334
+        ]
+      },
+      "reproducer": {
+        "S": "diag(.001,-.001,0)",
+        "d_obs": [
+          0.125,
+          1e-60,
+          0
+        ],
+        "e_d": 0,
+        "Dmax": 0.125,
+        "O": "KAPPA * lift_matrix(S) @ d_obs",
+        "B": 1e-07
+      },
+      "exact_oracle": "With e_d=0 the direct set is the singleton d_obs. Fraction.from_float squared arithmetic gives ||d_obs||^2-Dmax^2=Fraction.from_float(1e-60)^2 > 0. The feasible intersection is empty.",
+      "observed": "compatible=true, physical_set_empty=false, NORM_BOUNDS_CERTIFIED; witness (.125,1e-60,0), reported physical_norm=.125.",
+      "cause": "100-decimal-digit square/sum/sqrt rounds away the positive 1e-120 contribution; no outward interval or exact comparison protects ball membership or emptiness. The response cancellation allowance cannot enlarge the dipole domain.",
+      "minimum_repair": "Use exact binary64 rational/integer squared comparisons for both balls and ball-intersection geometry; uncertainty must never become a feasible witness.",
+      "evidence": "INDEPENDENT_INITIAL_CHECKS.json#strict_original_physical_ball_fraction_counterexample"
+    },
+    {
+      "id": "R36-04-NCF2",
+      "severity": "P2",
+      "title": "Float serialization invalidates certified residual and score enclosures",
+      "location": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/optical_joint.py",
+        "lines": [
+          289,
+          290,
+          296,
+          297,
+          367,
+          375,
+          376
+        ]
+      },
+      "reproducer": {
+        "S": "zero 3x3",
+        "d_obs": [
+          0,
+          0,
+          0
+        ],
+        "e_d": 0,
+        "B": 2,
+        "O_cases": [
+          [
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "exact_oracle": "The minima are sqrt(2) and sqrt(3). Fraction(returned_lower)^2 > 2 in the first case; Fraction(returned_upper)^2 < 3 and Fraction(score)^2 < 3/4 in the second.",
+      "observed": "Both interval endpoints equal nearest float sqrt(2)=1.4142135623730951 or sqrt(3)=1.7320508075688772; score for sqrt(3) is 0.8660254037844386 with score_kind CERTIFIED_UPPER_BOUND.",
+      "cause": "The internal 1e-75 scale enclosure disappears under round-to-nearest conversion; upper/lower and subsequent division are not rounded outward.",
+      "minimum_repair": "Round exported lower down and upper up against the internal enclosures, and conservatively round the upper-score division. Preserve explicit typed range handling.",
+      "evidence": "INDEPENDENT_SWEEP.json#display_bound_exact_sqrt_2 and #display_bound_exact_sqrt_3"
+    },
+    {
+      "id": "R36-04-NCF3",
+      "severity": "P2",
+      "title": "A representable tangent singleton is lost by the shrunken-anchor construction",
+      "location": {
+        "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/optical_joint.py",
+        "lines": [
+          133,
+          142,
+          143,
+          155,
+          163,
+          251,
+          254
+        ]
+      },
+      "reproducer": {
+        "S": "diag(.001,-.001,0)",
+        "d_obs": [
+          0.25,
+          0,
+          0
+        ],
+        "e_d": 0.125,
+        "Dmax": 0.125,
+        "O": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "B": 0.001
+      },
+      "exact_oracle": "The two closed balls are externally tangent at d=(.125,0,0), exactly representable and within both original balls; its residual is less than .001.",
+      "observed": "NUMERICAL_FAILURE: no representable feasible witness.",
+      "cause": "The radial anchor is multiplied by (1-16 eps), moving the tangent point outside the direct ball. There is no explicit tangent singleton branch.",
+      "minimum_repair": "Detect tangency exactly and construct/verify its unique witness. Distinguish a real nonempty tangent set with an unrepresentable float witness from an empty set. Also retain exact zero-radius/zero-response membership paths.",
+      "evidence": "INDEPENDENT_INITIAL_CHECKS.json#exact_tangent_representable"
+    }
+  ],
+  "mathematical_audit": {
+    "assumptions": "Fixed real STF S, seven signed Frobenius-orthonormal STF3 coordinates, magnitude O and kappa=5/ln(10); dimensionless direct d=-A/(cH) in one declared congruence. Moving-observer beta=v/c is a distinct target. Supplied radii remain declared bounds; empirical CF4 error law is absent.",
+    "support_lemma": "For ||u||<=1, ||O-Kd|| >= u.O-(K^T u).d. Over C=ball(center,e_d) intersect ball(0,R), h_C(v) <= min(v.center+e_d||v||, R||v||); subtracting that upper support gives a valid lower residual bound. No multiplier, KKT floor or solver success is needed. This is a valid alternative to the supplied norm-subgradient lemma.",
+    "global_allowance": "cap=min(||center||+e_d,R) bounds ||d|| over the intersection, and ||Kd||<=||K||F cap. The use of max(||O||,||K||F cap) covers the cancellation scale globally in the rejection test, rather than only at the current iterate.",
+    "remaining_enclosure_defects": "Exact set predicates lack enclosures (NCF1); float output conversion lacks directed rounding (NCF2). High precision alone is not exact membership or a public certified interval.",
+    "rank": "For nonzero STF S, M=(S:S)I/3+2S^2/5 is positive definite even when S is rank deficient. The checked rank-2 S gives rank-3 L; S=0 remains a separate sector.",
+    "source_and_covariance": "Full source covariance and all d/O cross blocks are retained under the supplied synthetic map. Source-level finite-z control is O(z) in magnitude. They do not infer a real optical input law or coverage.",
+    "primary_source_verification": {
+      "url": "https://arxiv.org/html/2312.09875v3",
+      "equations": [
+        "27",
+        "34",
+        "68",
+        "70"
+      ],
+      "assessment": "Corrected distance/chart and leading spurious slope octupole are consistent with the cited primary source; this does not validate empirical CF4 attribution."
+    }
+  },
+  "validation": {
+    "source_identity_checks": {
+      "count": 32,
+      "all_match": true,
+      "file": "SOURCE_IDENTITY_CHECKS.json"
+    },
+    "focused_pytest": "15 passed, one existing Matplotlib Axes3D warning; exit 0",
+    "actual_consumer": "exit 0 in own five-file fixture; generated RESULT semantically identical to saved candidate RESULT",
+    "independent_scalar_oracle": "50/50 correct decisions across 5 scenarios x 5 common output units (1e-150,1e-60,1,1e60,1e120) x 2 budget sides; mp400 oracle, exact Fraction witness predicates; no wrong decisions or invalid witnesses in this sweep.",
+    "independent_rotations": "6/6 expected decisions for rotations about (1,2,3), angles .13,.57,1.14",
+    "degeneracies": "S=0 exact-zero, R=0 singleton and clearly separated empty set behaved correctly; representable tangent failure and S=0 equal-budget uncertainty preserved.",
+    "post_review_seals": "All 32 inspected identities unchanged.",
+    "raw_files": [
+      "INDEPENDENT_INITIAL_CHECKS.json",
+      "INDEPENDENT_SWEEP.json",
+      "INITIAL_CHECKS.stdout",
+      "INITIAL_CHECKS.stderr",
+      "SWEEP.stdout",
+      "SWEEP.stderr",
+      "PYTEST.stdout",
+      "PYTEST.stderr",
+      "CONSUMER.stdout",
+      "CONSUMER.stderr",
+      "COMMAND_RECEIPT.json",
+      "CONSUMER_COMPARISON.json",
+      "ENVIRONMENT.json",
+      "POST_REVIEW_SEALS.json"
+    ]
+  },
+  "provenance": {
+    "first_seal_96eca": "Reconstructed code/test preimages currently exist and match the retained first-seal manifest hashes. This verifies current preimage identity, not a newly invented historical runtime observation.",
+    "candidate_sha_mismatch": false,
+    "numerical_result_comparison": "Semantic equality; figure packaging bytes were not promoted into scientific acceptance.",
+    "formal_binding": "Pending controller writer availability; no packet ACK or qualification submitted."
+  },
+  "repair_proposal": "SAME_TASK_REPAIR_CONTRACT_PROPOSED.json",
+  "claim_ceiling": "C0 conditional numerical optical method only; scientific acceptance false, empirical direct/joint covariance and physical finite-z/selection/uncertain-S radii remain unavailable; no native solver/ODE, old CAS or original42 promotion.",
+  "completed_utc": "2026-10-27T06:40:40.464137+00:00"
+}

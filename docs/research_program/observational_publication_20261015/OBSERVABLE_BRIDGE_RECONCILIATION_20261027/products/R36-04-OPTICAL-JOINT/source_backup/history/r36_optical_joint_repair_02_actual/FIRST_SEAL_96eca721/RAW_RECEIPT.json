@@ -1,0 +1,61 @@
+{
+  "packet_id": "d95f447b56ba49a7cd2a5ebd4a4af8806f3152a0ece690f744111f9834b36956",
+  "task_id": "R36-04-OPTICAL-JOINT",
+  "agent_id": "/root/rc_9441945b45b2b786",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "base_packet_id": "b45990f8f466f668fbce8dbde2614c0d8b37084affad61b45bf490612673657c",
+  "base_candidate_identity": "sha256:193630441180a6a38d856442c7b7fe2e9c322032842ce72b07aace9211fef8e0",
+  "outcome": "success",
+  "candidate_identity": "sha256:96eca721bf7328f2d2d36c9a5d5d213e61a1e0513c3b3aea4235823c0152a99d",
+  "schema": "htt.r36.optical_joint_repair_raw_receipt/2",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_repair_02_actual/RAW_RECEIPT.json",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02/ARTIFACT_MANIFEST.json",
+  "candidate_status": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+  "acceptance_met": false,
+  "qualified_products": [
+    "optical_joint_response"
+  ],
+  "validation_evidence": [
+    "Focused pytest: 15 passed; /mnt/extdrive/workdir/htt_open_data/r36_optical_joint_repair_02_actual/PYTEST_03.stdout",
+    "Source-bound consumer passed; /mnt/extdrive/workdir/htt_open_data/r36_optical_joint_repair_02_actual/CONSUMER_01.stdout",
+    "RF1 feasible, RF2 rejected by lower bound, RF3 typed NUMERIC_RANGE; original controls retained",
+    "Manifest source and candidate files rehashed successfully"
+  ],
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "requested_cost": "UNKNOWN",
+  "observed_cost": "UNKNOWN",
+  "observed_command_wall_seconds": "UNKNOWN",
+  "source_hashes": {
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json": "83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/research/latest_results.json": "96845acabac86fa9cddd55c036b299217cb24f7a119f49c1314c4d1d84996d7b",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/ARTIFACT_MANIFEST.json": "a200cc9b67de72f24ab8050f8254ac4fd85fb8b6f2dea9e18835a5f57025bed5",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_01/ARTIFACT_MANIFEST.json": "193630441180a6a38d856442c7b7fe2e9c322032842ce72b07aace9211fef8e0",
+    "/mnt/extdrive/workdir/htt_open_data/r36_controller/NEXT_029.json": "831236284fa74a4e26e3606027fe3bf99a155667e892203eac7e51223a2aeeb2",
+    "/mnt/extdrive/workdir/htt_open_data/r36_controller/ACK_029_GO.json": "a0b4d97e7fe77f808466fa1e32a69088e88402857960fef17256a2c87a09c880",
+    "/mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review/REVIEW_RESULT_002_NORM_BOUND.json": "f7cbeb7aada2f52593b826fcc20cbcef7d65e373fce0f11bf390eaf6df7d6fca",
+    "/mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review/NORM_BOUND_CONTRACT.json": "85b268eb8e03172364b48501362fb6abad0eade98c9a7a7e055daa224e8a295d"
+  },
+  "candidate_file_hashes": {
+    "optical_joint.py": "8913a68a19c96d19db77aa2e92e486a4dd3f21f38c4982129fa016fe81de9bdf",
+    "consume.py": "5aa3270e62dc3d9cdea9a9f73970b619656bcf123fabb219c8d4e549ddd19091",
+    "test_optical_joint.py": "ac8a8da51b8ac729186a4748c67424739b6bfac3ddf16aeed79db041a98bd925",
+    "RESULT.json": "7f8ef99837eea193641d277eadbc9c737afcf59b979daed78ddac92a7d1410c3",
+    "TABLE.csv": "0c80f4c6ba21f4c7f3db2943d08372ae3e1cb41aa6e486553c5512dc83a3978f",
+    "INTERPRETATION.md": "1b8ae4c5a63f40479e801aeacaf0917fc46fe0c2db701c0714ed9999234bed38",
+    "JOINT_RESPONSE.pdf": "bbf8ad90b71f1213a45b3a7376b39a09de3f6389de1672192b33f5db10ff79fe",
+    "JOINT_RESPONSE.svg": "154ed5cc6c126306d20795752f94e909258f5d22ef6e812d316a75cae9b89d15",
+    "SOURCE_AND_FINITE_Z.pdf": "b06d9eecea6a6947933f027e591d8ec672766bb6bb48d2fcbd44d9732370b24b",
+    "SOURCE_AND_FINITE_Z.svg": "49eecae96eb81c00a51437c61860fecc675d41ed5892ca57e3e601f4849a72cc",
+    "NORM_BOUND_DECISION.pdf": "12146d55973343fd49ea7828596e6a6c298621cf414ea5c418f69fdf186f1245",
+    "NORM_BOUND_DECISION.svg": "c5871853792c24ee3b6c81bf0ec92a0241992b6a111a2879f9fdbf54fafbf2e1"
+  },
+  "first_failures": [
+    "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_repair_02_actual/PYTEST_01.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_repair_02_actual/PYTEST_02.stdout"
+  ],
+  "scope": "C0 conditional numerical optical response; independent review pending"
+}

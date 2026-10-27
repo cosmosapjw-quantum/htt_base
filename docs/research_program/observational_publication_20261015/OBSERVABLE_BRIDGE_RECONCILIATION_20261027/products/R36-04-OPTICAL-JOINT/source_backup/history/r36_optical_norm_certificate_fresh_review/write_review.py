@@ -1,0 +1,70 @@
+from pathlib import Path
+import json,hashlib,datetime
+out=Path(__file__).resolve().parent
+repo=Path('/home/cosmosapjw/Dropbox/bianchi/htt_base')
+rel='docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_02'
+source=f'{repo}/{rel}/optical_joint.py'
+identity='sha256:8d2f7cdd340803ecbb2777f757cb224455f989b5f81a5a7ab456ff9ec3153e5f'
+findings=[
+ {'id':'R36-04-NCF1','severity':'P1','title':'Fixed precision certifies a point outside the original closed physical ball','location':{'path':source,'lines':[120,126,129,146,149,241,242,331,334]},'reproducer':{'S':'diag(.001,-.001,0)','d_obs':[.125,1e-60,0],'e_d':0,'Dmax':.125,'O':'KAPPA * lift_matrix(S) @ d_obs','B':1e-7},'exact_oracle':'With e_d=0 the direct set is the singleton d_obs. Fraction.from_float squared arithmetic gives ||d_obs||^2-Dmax^2=Fraction.from_float(1e-60)^2 > 0. The feasible intersection is empty.','observed':'compatible=true, physical_set_empty=false, NORM_BOUNDS_CERTIFIED; witness (.125,1e-60,0), reported physical_norm=.125.','cause':'100-decimal-digit square/sum/sqrt rounds away the positive 1e-120 contribution; no outward interval or exact comparison protects ball membership or emptiness. The response cancellation allowance cannot enlarge the dipole domain.','minimum_repair':'Use exact binary64 rational/integer squared comparisons for both balls and ball-intersection geometry; uncertainty must never become a feasible witness.','evidence':'INDEPENDENT_INITIAL_CHECKS.json#strict_original_physical_ball_fraction_counterexample'},
+ {'id':'R36-04-NCF2','severity':'P2','title':'Float serialization invalidates certified residual and score enclosures','location':{'path':source,'lines':[289,290,296,297,367,375,376]},'reproducer':{'S':'zero 3x3','d_obs':[0,0,0],'e_d':0,'B':2,'O_cases':[[1,1,0,0,0,0,0],[1,1,1,0,0,0,0]]},'exact_oracle':'The minima are sqrt(2) and sqrt(3). Fraction(returned_lower)^2 > 2 in the first case; Fraction(returned_upper)^2 < 3 and Fraction(score)^2 < 3/4 in the second.','observed':'Both interval endpoints equal nearest float sqrt(2)=1.4142135623730951 or sqrt(3)=1.7320508075688772; score for sqrt(3) is 0.8660254037844386 with score_kind CERTIFIED_UPPER_BOUND.','cause':'The internal 1e-75 scale enclosure disappears under round-to-nearest conversion; upper/lower and subsequent division are not rounded outward.','minimum_repair':'Round exported lower down and upper up against the internal enclosures, and conservatively round the upper-score division. Preserve explicit typed range handling.','evidence':'INDEPENDENT_SWEEP.json#display_bound_exact_sqrt_2 and #display_bound_exact_sqrt_3'},
+ {'id':'R36-04-NCF3','severity':'P2','title':'A representable tangent singleton is lost by the shrunken-anchor construction','location':{'path':source,'lines':[133,142,143,155,163,251,254]},'reproducer':{'S':'diag(.001,-.001,0)','d_obs':[.25,0,0],'e_d':.125,'Dmax':.125,'O':[0,0,0,0,0,0,0],'B':.001},'exact_oracle':'The two closed balls are externally tangent at d=(.125,0,0), exactly representable and within both original balls; its residual is less than .001.','observed':'NUMERICAL_FAILURE: no representable feasible witness.','cause':'The radial anchor is multiplied by (1-16 eps), moving the tangent point outside the direct ball. There is no explicit tangent singleton branch.','minimum_repair':'Detect tangency exactly and construct/verify its unique witness. Distinguish a real nonempty tangent set with an unrepresentable float witness from an empty set. Also retain exact zero-radius/zero-response membership paths.','evidence':'INDEPENDENT_INITIAL_CHECKS.json#exact_tangent_representable'}]
+repair={
+ 'schema':'htt.r36.same_task_targeted_repair_proposal/1',
+ 'task_id':'R36-04-OPTICAL-JOINT','base_candidate_identity':identity,
+ 'status':'PROPOSED_ONLY_PENDING_FORMAL_NEGATIVE_PACKET_BINDING_AND_CONTROLLER_DISPATCH',
+ 'framer_role':'Prospective framing input only; this reviewer is not formally reframed or authorized to execute a repair by this file.',
+ 'scope':'One bounded correction of exact original-ball decisions, explicit degenerate sets, and norm-certificate output enclosures; same scientific task and cumulative accounting.',
+ 'allowed_paths':'Controller-designated next immutable optical candidate: optical_joint.py and its focused tests; consumer/result/interpretation only where affected by these exact findings. Preserve repair_02 and historical evidence. No controller/Git/STATE/production writes by this reviewer.',
+ 'frozen_science':['Same seven signed STF3 response, fixed frame, c and magnitude conventions; same original direct and optional physical radii.','Same one shared error budget, cancellation ownership, full correlated covariance and source bindings.','No optimizer slack, physical tolerance inflation, changed empirical law, solver/ODE addition, old CAS or original42 promotion.'],
+ 'implementation_obligations':[
+  'Interpret every binary64 coordinate/radius exactly using as_integer_ratio/Fraction or equivalent integer-power-of-two arithmetic. Compare sum((d_i-center_i)^2) <= e_d^2 and sum(d_i^2) <= Dmax^2 exactly; avoid fixed-precision sqrt in set decisions.',
+  'For a finite physical radius compare sum(center_i^2) to (e_d+Dmax)^2 exactly. Greater means empty; equality is external tangency. Handle e_d=0 and Dmax=0 as singleton decisions before a generic optimizer.',
+  'At exact tangency construct d = Dmax/(e_d+Dmax) * center using exact rational arithmetic (the zero denominator case is the origin singleton). If a returned binary64 witness exists, verify its exact membership; otherwise return explicit representability uncertainty, never false emptiness or an invalid witness.',
+  'Retain the valid norm-support lower bound or another proved norm-convex bound; an optimizer remains proposal-only. Every true decision must have a verified original-set witness and upper residual enclosure, with only the existing justified response cancellation allowance. Every false decision must have certified emptiness or a global lower bound exceeding the unchanged budget plus global allowance.',
+  'Export lower endpoints rounded downward and upper endpoints rounded upward relative to their internal conservative enclosures. Round the upper-score division conservatively; do not label a nearest scalar as a certified interval or optimum.',
+  'Treat exact zero response and singleton/zero-radius objectives explicitly where exact squared comparisons decide membership; avoid artificial uncertainty for elementary cases such as S=0,O=(.001,0,...),B=.001. Preserve typed numerical/range uncertainty for genuinely unresolved or unrepresentable cases.'
+ ],
+ 'bounded_validation':[
+  'Reproduce and close NCF1 using exact fractional oracle, including its empty ed=0 geometry.','Reproduce and close NCF2 with rational squared checks for sqrt(2) lower and sqrt(3) upper/score.','Reproduce and close NCF3 with d=(.125,0,0), center=(.25,0,0), e_d=Dmax=.125.','Run the unchanged 15 focused candidate tests including RF1/RF2/RF3, old .8/.8, tiny nonzero S, covariance and finite-z/chart controls; run the actual consumer in an external small fixture.','Reuse unchanged successful evidence. No generic new validation ladder or adjacent scientific reruns.'
+ ],
+ 'stopping_rule':'On source drift, ambiguous scientific convention, new substantive model/acceptance failure, or unresolved exact-set/certificate obligation, stop with exact evidence under the same task; do not relax validators or restart budgets.',
+ 'review_requirement':'A different fresh independent read-only reviewer must judge the next candidate; this reviewer becomes its framer only after formal negative packet binding. No admission or publication follows from this proposal.'
+}
+(out/'SAME_TASK_REPAIR_CONTRACT_PROPOSED.json').write_text(json.dumps(repair,indent=2)+'\n')
+review={
+ 'schema':'htt.r36.optical_fresh_independent_review/1','task_id':'R36-04-OPTICAL-JOINT','verdict':'HOLD','candidate_identity':identity,'candidate_manifest':f'{repo}/{rel}/ARTIFACT_MANIFEST.json',
+ 'qualification':False,'formal_packet_binding':'NOT_PERFORMED_PREPARATORY_REVIEW_ONLY','controller_state_mutated':False,
+ 'requested_runtime':{'model':'gpt-6-astra','reasoning_effort':'xhigh'},'observed_runtime':'UNKNOWN',
+ 'reviewer':'/root/r36_optical_norm_certificate_fresh_review','independence':{'candidate_authored_by_reviewer':False,'previous_independent_verdicts_read':False,'author_claimed_pass_used_as_oracle':False,'children_spawned':False,'git_operations':False,'production_or_candidate_writes':False},
+ 'summary':'The new norm-support method and exercised ordinary cases are sound at the checked scales, but one exact original-set false acceptance and two certificate/degenerate-set defects block the proposed numerical qualification.',
+ 'findings':findings,
+ 'mathematical_audit':{
+  'assumptions':'Fixed real STF S, seven signed Frobenius-orthonormal STF3 coordinates, magnitude O and kappa=5/ln(10); dimensionless direct d=-A/(cH) in one declared congruence. Moving-observer beta=v/c is a distinct target. Supplied radii remain declared bounds; empirical CF4 error law is absent.',
+  'support_lemma':'For ||u||<=1, ||O-Kd|| >= u.O-(K^T u).d. Over C=ball(center,e_d) intersect ball(0,R), h_C(v) <= min(v.center+e_d||v||, R||v||); subtracting that upper support gives a valid lower residual bound. No multiplier, KKT floor or solver success is needed. This is a valid alternative to the supplied norm-subgradient lemma.',
+  'global_allowance':'cap=min(||center||+e_d,R) bounds ||d|| over the intersection, and ||Kd||<=||K||F cap. The use of max(||O||,||K||F cap) covers the cancellation scale globally in the rejection test, rather than only at the current iterate.',
+  'remaining_enclosure_defects':'Exact set predicates lack enclosures (NCF1); float output conversion lacks directed rounding (NCF2). High precision alone is not exact membership or a public certified interval.',
+  'rank':'For nonzero STF S, M=(S:S)I/3+2S^2/5 is positive definite even when S is rank deficient. The checked rank-2 S gives rank-3 L; S=0 remains a separate sector.',
+  'source_and_covariance':'Full source covariance and all d/O cross blocks are retained under the supplied synthetic map. Source-level finite-z control is O(z) in magnitude. They do not infer a real optical input law or coverage.',
+  'primary_source_verification':{'url':'https://arxiv.org/html/2312.09875v3','equations':['27','34','68','70'],'assessment':'Corrected distance/chart and leading spurious slope octupole are consistent with the cited primary source; this does not validate empirical CF4 attribution.'}
+ },
+ 'validation':{
+  'source_identity_checks':{'count':32,'all_match':True,'file':'SOURCE_IDENTITY_CHECKS.json'},
+  'focused_pytest':'15 passed, one existing Matplotlib Axes3D warning; exit 0',
+  'actual_consumer':'exit 0 in own five-file fixture; generated RESULT semantically identical to saved candidate RESULT',
+  'independent_scalar_oracle':'50/50 correct decisions across 5 scenarios x 5 common output units (1e-150,1e-60,1,1e60,1e120) x 2 budget sides; mp400 oracle, exact Fraction witness predicates; no wrong decisions or invalid witnesses in this sweep.',
+  'independent_rotations':'6/6 expected decisions for rotations about (1,2,3), angles .13,.57,1.14',
+  'degeneracies':'S=0 exact-zero, R=0 singleton and clearly separated empty set behaved correctly; representable tangent failure and S=0 equal-budget uncertainty preserved.',
+  'post_review_seals':'All 32 inspected identities unchanged.',
+  'raw_files':['INDEPENDENT_INITIAL_CHECKS.json','INDEPENDENT_SWEEP.json','INITIAL_CHECKS.stdout','INITIAL_CHECKS.stderr','SWEEP.stdout','SWEEP.stderr','PYTEST.stdout','PYTEST.stderr','CONSUMER.stdout','CONSUMER.stderr','COMMAND_RECEIPT.json','CONSUMER_COMPARISON.json','ENVIRONMENT.json','POST_REVIEW_SEALS.json']
+ },
+ 'provenance':{'first_seal_96eca':'Reconstructed code/test preimages currently exist and match the retained first-seal manifest hashes. This verifies current preimage identity, not a newly invented historical runtime observation.','candidate_sha_mismatch':False,'numerical_result_comparison':'Semantic equality; figure packaging bytes were not promoted into scientific acceptance.','formal_binding':'Pending controller writer availability; no packet ACK or qualification submitted.'},
+ 'repair_proposal':'SAME_TASK_REPAIR_CONTRACT_PROPOSED.json',
+ 'claim_ceiling':'C0 conditional numerical optical method only; scientific acceptance false, empirical direct/joint covariance and physical finite-z/selection/uncertain-S radii remain unavailable; no native solver/ODE, old CAS or original42 promotion.',
+ 'completed_utc':datetime.datetime.now(datetime.timezone.utc).isoformat()
+}
+(out/'REVIEW_RESULT.json').write_text(json.dumps(review,indent=2)+'\n')
+files=[p for p in out.iterdir() if p.is_file() and p.name not in ['RAW_RECEIPT.json']]
+receipt={'schema':'htt.r36.fresh_review_raw_receipt/1','task_id':review['task_id'],'candidate_identity':identity,'verdict':'HOLD','formal_qualification':False,'requested_runtime':review['requested_runtime'],'observed_runtime':'UNKNOWN','commands':json.loads((out/'COMMAND_RECEIPT.json').read_text()),'additional_commands':[{'command':'PYTHONDONTWRITEBYTECODE=1 python '+str(out/'run_checks.py'),'cwd':str(repo),'exit_code':0,'outputs':['INITIAL_CHECKS.stdout','INITIAL_CHECKS.stderr']},{'command':'PYTHONDONTWRITEBYTECODE=1 python '+str(out/'independent_sweep.py'),'cwd':str(repo),'exit_code':0,'outputs':['SWEEP.stdout','SWEEP.stderr']}],'artifacts':{p.name:{'path':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size} for p in files}}
+(out/'RAW_RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n')
+print(json.dumps({'review':str(out/'REVIEW_RESULT.json'),'review_sha256':hashlib.sha256((out/'REVIEW_RESULT.json').read_bytes()).hexdigest(),'receipt':str(out/'RAW_RECEIPT.json'),'receipt_sha256':hashlib.sha256((out/'RAW_RECEIPT.json').read_bytes()).hexdigest(),'verdict':'HOLD','findings':len(findings),'formal_qualification':False},indent=2))

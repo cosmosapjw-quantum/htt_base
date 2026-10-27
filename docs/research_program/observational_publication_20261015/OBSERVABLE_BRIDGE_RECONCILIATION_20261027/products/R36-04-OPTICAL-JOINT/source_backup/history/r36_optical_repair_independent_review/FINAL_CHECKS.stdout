@@ -1,0 +1,362 @@
+{
+  "high_precision_false_reject": {
+    "arithmetic": "mpmath 90 digits on exact binary64 supplied O,K,d",
+    "residual_norm": "0.000000000000000000000460678893055132778216176029244954328998744787039677586530407590635585671351859134966319002",
+    "direct_distance": "0.00000050000000000050004445029117050580680370330810546875",
+    "physical_norm": "0.01000050000000000070821126740838735713623464107513427734375",
+    "budget": 5.606717652542515e-10,
+    "residual_below_budget": true
+  },
+  "high_precision_false_accept": {
+    "arithmetic": "mpmath 90 digits on exact binary64 O,K,Dmax; triangle inequality ||O-Kd|| >= ||O||-||K||op Dmax for all feasible d",
+    "K": [
+      [
+        0.00206003960708558,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.001962351178387918,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.001401679413134227
+      ],
+      [
+        -0.0008864998989744585,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -0.001085736204758129,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -0.0010857362047581294
+      ]
+    ],
+    "operator_norm": "0.00224268706101476332855621259847382137806057773009297797929811085525155248192997361654820882",
+    "lower_bound": "0.000000000000002018418366716928614066839465958527661917230602444279725537356449456147519752889777175107",
+    "budget": "0.0000000000000010092091825422658201584897122431197006805526916739523812793777324259281158447265625",
+    "lower_over_budget": "2.00000000161750111075856667645689929337711704364306569807707778214196926087460876944205291",
+    "max_existing_signal_roundoff_allowance": "0.00000000000000000000318705002825786764219480468968943506167162936040780274839441703271901733311165242689869179",
+    "lower_minus_budget_minus_allowance": "0.0000000000000010092059971246345360407075589107182718016162391409669364552303226131866848908301030226801",
+    "bound_remains_strict": true,
+    "all_source_inputs_finite": true
+  },
+  "rotation_scale_checks": [
+    {
+      "case": "false_reject",
+      "factor": 1.0,
+      "rotated": false,
+      "compatible": false,
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.121343530508568e-09,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925333377781084e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925333377781084e-09,
+        "active_constraints": [],
+        "multipliers": []
+      }
+    },
+    {
+      "case": "false_reject",
+      "factor": 1.0,
+      "rotated": true,
+      "compatible": false,
+      "profiled_d": [
+        0.007633762307488082,
+        0.005710888773421961,
+        -0.0030185132847773345
+      ],
+      "residual_norm": 1.1213435305114937e-09,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 8.185309403376218e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 8.185309403376218e-09,
+        "active_constraints": [],
+        "multipliers": []
+      }
+    },
+    {
+      "case": "false_reject",
+      "factor": 1e-150,
+      "rotated": false,
+      "compatible": false,
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.1213435305085681e-159,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925333377781084e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925333377781084e-09,
+        "active_constraints": [],
+        "multipliers": []
+      }
+    },
+    {
+      "case": "false_reject",
+      "factor": 1e-150,
+      "rotated": true,
+      "compatible": false,
+      "profiled_d": [
+        0.007633762307488082,
+        0.005710888773421961,
+        -0.0030185132847773345
+      ],
+      "residual_norm": 1.1213435305107191e-159,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 8.185309403370565e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 8.185309403370565e-09,
+        "active_constraints": [],
+        "multipliers": []
+      }
+    },
+    {
+      "case": "false_reject",
+      "factor": 1e+100,
+      "rotated": false,
+      "compatible": false,
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.121343530506467e+91,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925333377769982e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925333377769982e-09,
+        "active_constraints": [],
+        "multipliers": []
+      }
+    },
+    {
+      "case": "false_reject",
+      "factor": 1e+100,
+      "rotated": true,
+      "compatible": false,
+      "profiled_d": [
+        0.007633762307488082,
+        0.005710888773421961,
+        -0.0030185132847773345
+      ],
+      "residual_norm": 1.1213435305114798e+91,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 8.185309403376116e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 8.185309403376116e-09,
+        "active_constraints": [],
+        "multipliers": []
+      }
+    },
+    {
+      "case": "false_accept",
+      "factor": 1.0,
+      "rotated": false,
+      "compatible": true,
+      "profiled_d": [
+        0.00010000000090000002,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 2.287103424010103e-23,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.800000048881136e-14,
+        "stationarity_error": 2.3328316433101455e-20,
+        "complementarity_error": 0.0,
+        "kkt_residual": 1.800000048881136e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          0.0
+        ]
+      }
+    },
+    {
+      "case": "false_accept",
+      "factor": 1.0,
+      "rotated": true,
+      "compatible": true,
+      "profiled_d": [
+        7.633762376191945e-05,
+        5.710888824819959e-05,
+        -3.0185133119439527e-05
+      ],
+      "residual_norm": 7.508982847907274e-23,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.8000000277053124e-14,
+        "stationarity_error": 3.7850877726595896e-20,
+        "complementarity_error": 1.0848434361824384e-30,
+        "kkt_residual": 1.8000000277053124e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          6.026907886026122e-17
+        ]
+      }
+    },
+    {
+      "case": "false_accept",
+      "factor": 1e-150,
+      "rotated": false,
+      "compatible": true,
+      "profiled_d": [
+        0.00010000000090000001,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 2.287103424010103e-173,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.8000000065294887e-14,
+        "stationarity_error": 0.0,
+        "complementarity_error": 2.0995484676992934e-31,
+        "kkt_residual": 1.8000000065294887e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          1.1664158111573304e-17
+        ]
+      }
+    },
+    {
+      "case": "false_accept",
+      "factor": 1e-150,
+      "rotated": true,
+      "compatible": true,
+      "profiled_d": [
+        7.633762376191945e-05,
+        5.710888824819959e-05,
+        -3.0185133119439527e-05
+      ],
+      "residual_norm": 6.2536762136207e-173,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.8000000277053124e-14,
+        "stationarity_error": 8.701673742523735e-20,
+        "complementarity_error": 1.1731149622692402e-30,
+        "kkt_residual": 1.8000000277053124e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          6.517305245626903e-17
+        ]
+      }
+    },
+    {
+      "case": "false_accept",
+      "factor": 1e+100,
+      "rotated": false,
+      "compatible": true,
+      "profiled_d": [
+        0.00010000000090000001,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.1435517120050514e+77,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.8000000065294887e-14,
+        "stationarity_error": 0.0,
+        "complementarity_error": 4.199096935398587e-31,
+        "kkt_residual": 1.8000000065294887e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          2.3328316223146607e-17
+        ]
+      }
+    },
+    {
+      "case": "false_accept",
+      "factor": 1e+100,
+      "rotated": true,
+      "compatible": true,
+      "profiled_d": [
+        7.633762376191946e-05,
+        5.710888824819959e-05,
+        -3.0185133119439527e-05
+      ],
+      "residual_norm": 5.2225802815823e+77,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.800000048881136e-14,
+        "stationarity_error": 1.8879094502587565e-19,
+        "complementarity_error": 8.219272998174894e-31,
+        "kkt_residual": 1.800000048881136e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          4.5662626527615487e-17
+        ]
+      }
+    }
+  ],
+  "consumer_replay": {
+    "redirection": "Only consume.HERE output directory redirected after module import; SOURCE/MANIFEST/ROOT unchanged. No code edit.",
+    "result_equal": false,
+    "table_equal": true,
+    "source": {
+      "manifest_sha256": "83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+      "p6_saved_results_sha256": "96845acabac86fa9cddd55c036b299217cb24f7a119f49c1314c4d1d84996d7b",
+      "p6_tensor_norm": 0.03265680189321492,
+      "p6_working_covariance_scope": "metric-derived only if D is adopted as an additional residual-error model; not empirical covariance or physical error bars"
+    },
+    "output": "/mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review/consumer_replay"
+  },
+  "source_file_count": 156,
+  "source_mismatches": []
+}

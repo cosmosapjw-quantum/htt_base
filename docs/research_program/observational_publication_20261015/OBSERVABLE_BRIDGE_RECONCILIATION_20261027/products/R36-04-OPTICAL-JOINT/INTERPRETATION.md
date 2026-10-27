@@ -1,0 +1,34 @@
+# R36-04 conditional optical joint response
+
+Owner: `common` for the finite optical response and shared compatibility algebra; `obsstat` for the source-level harmonic estimator. Scope: solver-free, C0 conditional method and diagnostic example. Transfer source: none. Observer rest-frame coordinates are orthonormal with metric signature ((-+++)), outward source direction (n), explicit light speed (c), and (H,sigma) in inverse time. The saved CF4 (S) is a dimensionless apparent tensor in its retained J2000 source basis. The output does not convert it into a physical same-event shear.
+
+## The observable and its response
+
+For one smooth emitter/observer congruence, (H(n)=H-A\cdot n/c+\sigma:nn=H(1+d\cdot n+S:nn)), (d=-A/(cH)), and (S=\sigma/H). The local magnitude field after removing its intercept is (f_\mu=-\kappa\log(1+d\cdot n+S:nn)), with \(\kappa=5/\ln10\) and a strictly positive logarithm argument. The seven signed STF3 coefficients obey (O_\mu=\kappa L_S d+R_3), (L_S d=\operatorname{STF}(d\otimes S)). In an orthonormal tensor basis, (L_S^TL_S=M_S=(S:S)I/3+2S^2/5). These are the retained P6 and Hubble-protocol identities; this consumer reuses them.
+
+The actual finite estimator is explicit. For each source direction (n_i), the design row is ([1,n_i,T^{(2)}_a:n_in_i,T^{(3)}_b:n_in_in_i]). Positive selected-source weights (w_i) give (K_{fit}=(X^TWX)^{-1}X^TW) when full rank. The consumer reports (K=J K_{fit}), where (J) selects the signed direct dipole with factor (-1/\kappa) and all seven magnitude STF3 coordinates. The exact nonlinear source law is (y_i=-\kappa\log(1+q_i)). Its derivative is (\partial y_i/\partial(d,S)=-\kappa[n_i,T^{(2)}_a:n_in_i]/(1+q_i)), hence the saved raw-to-target Jacobian is (K\partial y/\partial(d,S)). This response, including selection weights and any nuisance projection in a real catalogue, must be derived before assigning a physical target to a catalogue coefficient. The retained P6 CF4 tensor has norm **0.03265680189321492** in its existing dimensionless convention; it is never divided by (5/\ln10) again.
+
+## One budget for all seven coordinates
+
+With measured \(\widehat S\), direct dipole \(d_{obs}\), and octupole \(\widehat O\), the code minimizes \(\|\widehat O-\kappa L_{\widehat S}d\|\) over the supplied direct-dipole ball (and optional physical (D_{max}) ball). At fixed (d), the norm splits exactly into perpendicular and parallel terms. When (S=0), the test uses direct set membership; it never calls an inverse. A nonzero but very small (S) is rescaled before inversion so a fixed absolute numerical threshold does not silently change its domain.
+
+The declared outer radius is (B=E_3(\epsilon)+e_O+B_z+B_{sel}+|\kappa|\sqrt{3/5}e_SD_{max}), with (E_3=\sqrt{35/2}|\kappa|\epsilon^3/[3(1-\epsilon)]). (B_z) belongs to finite-redshift/optical-jet modeling, and (B_{sel}) belongs to the catalogue selection, calibration, mask and fitted operator. They remain **unavailable for CF4**. A direct-dipole radius is profiled, not added again to (B). If a full joint direct-dipole/octupole covariance is supplied, `residual_covariance` pushes **all** blocks through ([ -\kappa L_S, I_7]); a covariance by itself supplies no confidence threshold. The synthetic source covariance in this result demonstrates that map and has no empirical calibration.
+
+The exact unit-budget falsifier has perpendicular and parallel scores (0.8) each but combined score \(\sqrt{1.28}=1.1313708498984756\). Thus both separate checks pass and the single seven-component test rejects. A failure means incompatibility with the specified response and error class. It does not uniquely identify its cause. Figure `JOINT_RESPONSE` displays this split and the selected-source Jacobian. `SOURCE_AND_FINITE_Z` shows the full synthetic cross-covariance and the expected (O(z)) magnitude shift when an (O(z^2)) distance term is retained. The axes refer to declared synthetic controls, with no estimated physical error radius.
+
+## Observer chart and physical interpretation
+
+For separately conserved geodesic dust, the same-congruence (A=0). A moving observer relative to that dust has a distinct first-order target (d_{boost}=-2(I+S)\beta+O(\beta^2)), \(\beta=v/c\). The inverse \(\beta=-\tfrac12(I+S)^{-1}d_{boost}\) is conditional on invertibility, a correctly constructed chart and bounded higher orders. It is not the same physical referent as (d=-A/(cH)).
+
+In the Maartens et al. convention, (1+\widetilde z=(1+z)/\Gamma), \(\widetilde d_L=d_L/\Gamma\), and (d_{L*}=d_L/(1+z)^2). Consequently \(\widetilde d_{L*}=\Gamma d_{L*}\), and the boosted vertex is \(\widetilde z_o=1/\Gamma-1\), generally nonzero. The corrected derivative (d\widetilde z/d\widetilde d_{L*}|_o=\Gamma^{-2}dz/dd_{L*}|_o). The raw (d\widetilde z/d\widetilde d_L\) omits this factor. In the primary paper's first-order expansion the uncorrected slope produces an **artefactual slope octupole** (2\operatorname{STF}(\beta\otimes S)). The logarithm of the correctly defined dipole-plus-quadrupole slope can independently produce a **nonlinear magnitude octupole** \(\kappa L_Sd\). The test exercises both effects as different tensors and verifies the shifted vertex. Source: [Maartens et al., equations (27), (34), (68)–(70)](https://arxiv.org/html/2312.09875v3).
+
+## Claim audit and remaining input
+
+| Claim | Owner | Status | Evidence | Limit |
+|---|---|---|---|---|
+| Full signed STF3 lift, split and shared-budget rejection | common | DERIVED and SMOKE_TESTED, C0 | retained Hubble protocol; seven targeted falsifiers | conditional finite error class |
+| Selected-source raw-to-target Jacobian and covariance pushforward | obsstat | IMPLEMENTED and SMOKE_TESTED, C0 | runnable consumer, finite difference and full-matrix tests | synthetic design, no real catalogue response |
+| Corrected moving-observer chart | common | DERIVED and SMOKE_TESTED, C0 | primary equations and chart tests | first order in observer speed, dust target |
+| CF4 apparent tensor norm | mio | DIAGNOSTIC_ONLY, C0 | corrected P6 saved sufficient statistic and source identity | no direct dipole law, joint covariance, finite-z or selection radius |
+
+No (x,Q,F,\Pi,G_F) diagnostic is completed: the required owners, denominators, null law and shared-depth inputs are unavailable. No posterior or family-identification claim follows. The candidate awaits a fresh independent review. No native Boltzmann solver or ODE evolution was used.

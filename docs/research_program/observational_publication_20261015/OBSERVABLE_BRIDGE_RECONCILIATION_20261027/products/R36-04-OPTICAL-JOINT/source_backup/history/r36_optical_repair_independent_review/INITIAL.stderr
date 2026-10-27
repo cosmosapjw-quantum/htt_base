@@ -1,0 +1,28 @@
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_01/optical_joint.py:253: RuntimeWarning: overflow encountered in scalar power
+  'perpendicular_squared':perp_norm**2,
+/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_01/optical_joint.py:256: RuntimeWarning: overflow encountered in scalar power
+  'residual_norm':residual, 'residual_squared':residual**2,
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review/run_checks.py", line 59, in <module>
+    save('INITIAL_COUNTEREXAMPLES.json',results)
+  File "/mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review/run_checks.py", line 11, in save
+    def save(n,v): (HERE/n).write_text(json.dumps(v,indent=2,allow_nan=False)+'\n')
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/encoder.py", line 202, in encode
+    chunks = list(chunks)
+             ^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/encoder.py", line 430, in _iterencode
+    yield from _iterencode_list(o, _current_indent_level)
+  File "/usr/lib/python3.12/json/encoder.py", line 326, in _iterencode_list
+    yield from chunks
+  File "/usr/lib/python3.12/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.12/json/encoder.py", line 398, in _iterencode_dict
+    yield _floatstr(value)
+          ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/encoder.py", line 240, in floatstr
+    raise ValueError(
+ValueError: Out of range float values are not JSON compliant: np.float64(inf)

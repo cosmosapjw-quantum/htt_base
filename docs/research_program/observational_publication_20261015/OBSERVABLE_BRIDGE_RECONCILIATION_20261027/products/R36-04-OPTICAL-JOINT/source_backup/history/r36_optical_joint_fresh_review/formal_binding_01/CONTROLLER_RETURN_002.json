@@ -1,0 +1,265 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R36-04-OPTICAL-JOINT",
+  "attempt": 2,
+  "phase": "review",
+  "packet_id": "3ba5f4f0afd2a3e3c61ba4c2c85c67d8c8b956d3ebac21438a8ea5bad2f5dbd2",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_identity": "sha256:a200cc9b67de72f24ab8050f8254ac4fd85fb8b6f2dea9e18835a5f57025bed5",
+  "frontier_identity": "ed7520e4e2ba670fba1d15f4b0e8aae91efa97fd29efed82193a32304dabe1f8",
+  "task_spec_identity": "3c296eebc3eeaaee3a1e865c854d9da7a48d132db3c966ef58886d5290bfb6c9",
+  "schema": "htt.r36.formal_review_controller_return/1",
+  "agent_id": "/root/r36_optical_joint_fresh_review",
+  "reviewer_agent_id": "/root/r36_optical_joint_fresh_review",
+  "author_agent_id": "/root/rc_9441945b45b2b786",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "qualification_status": "NOT_QUALIFIED_NEGATIVE_INDEPENDENT_REVIEW",
+  "scoped_verdict": "HOLD",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/formal_binding_01/RAW_BINDING_RECEIPT_002.json",
+  "raw_receipt_sha256": "3b54fe52021a5deef8097cfc13d164a4e318dd1aa9853e90aa9ce16d7a9577c5",
+  "bound_original_review": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/REVIEW_RESULT.json",
+    "sha256": "8b8113d5bdc411408c2b4fbb4ac8cee344b9b56cb481a8bb8aa6e51db5287b89",
+    "bytes": 12315
+  },
+  "binding_kind": "SAME_AGENT_UNCHANGED_PREPARED_NEGATIVE_REVIEW",
+  "issue_class": "numeric",
+  "substantive": true,
+  "issue": {
+    "class": "numeric",
+    "issue_class": "numeric",
+    "substantive": true,
+    "question": "Does joint_test compute the true profiled seven-component shared-budget membership without optimizer scale or representational norm underflow changing the finite mathematical domain?",
+    "exact_defect": "False rejection: the recorded S=diag(.001,-.001,0), O=0, d_obs=(.001,0,0), e_d=.002, Dmax=.01, B=1e-8 returns score 224.26870610147634 although d=0 lies strictly inside both balls with zero residual. False acceptance: S=0, O=(1e-200,0,...), d_obs=0, B=0 returns compatible because r@r underflows. Nonzero S=diag(1e-200,-1e-200,0) also takes the S=0 branch.",
+    "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+    "candidate_identity": "sha256:a200cc9b67de72f24ab8050f8254ac4fd85fb8b6f2dea9e18835a5f57025bed5",
+    "finding_ids": [
+      "R36-04-F1",
+      "R36-04-F2"
+    ]
+  },
+  "counterexample": {
+    "false_rejection": {
+      "inputs": {
+        "S": [
+          [
+            0.001,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.001,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "O": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "d_obs": [
+          0.001,
+          0.0,
+          0.0
+        ],
+        "budget": 1e-08,
+        "e_d": 0.002,
+        "d_max": 0.01
+      },
+      "witness": {
+        "d": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "distance_to_d_obs": 0.001,
+        "physical_norm": 0.0,
+        "residual_norm": 0.0,
+        "strictly_inside_both_balls": true
+      },
+      "expected_compatible": true,
+      "observed": {
+        "branch": "INVERTIBLE_S",
+        "perpendicular_squared": 0.0,
+        "parallel_squared": 5.029645253643037e-12,
+        "inverse_d": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "profiled_d": [
+          0.001,
+          0.0,
+          0.0
+        ],
+        "residual_squared": 5.029645253643037e-12,
+        "budget": 1e-08,
+        "score": 224.26870610147634,
+        "compatible": false,
+        "physical_set_empty": false
+      }
+    },
+    "false_acceptance": {
+      "inputs": {
+        "S": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "O": [
+          1e-200,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "d_obs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "budget": 0.0,
+        "e_d": 0.0
+      },
+      "exact_residual_norm": 1e-200,
+      "expected_compatible": false,
+      "observed": {
+        "branch": "S_ZERO_DIRECT_MEMBERSHIP",
+        "perpendicular_squared": 0.0,
+        "parallel_squared": 0.0,
+        "inverse_d": null,
+        "profiled_d": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "residual_squared": 0.0,
+        "budget": 0.0,
+        "score": 0.0,
+        "compatible": true,
+        "physical_set_empty": false
+      }
+    },
+    "wrong_zero_branch": {
+      "inputs": {
+        "S": [
+          [
+            1e-200,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -1e-200,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "O": [
+          1e-200,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "d_obs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "budget": 0.0,
+        "e_d": 0.0
+      },
+      "S_has_nonzero_entries": true,
+      "expected_branch": "INVERTIBLE_S",
+      "expected_compatible": false,
+      "observed": {
+        "branch": "S_ZERO_DIRECT_MEMBERSHIP",
+        "perpendicular_squared": 0.0,
+        "parallel_squared": 0.0,
+        "inverse_d": null,
+        "profiled_d": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "residual_squared": 0.0,
+        "budget": 0.0,
+        "score": 0.0,
+        "compatible": true,
+        "physical_set_empty": false
+      }
+    }
+  },
+  "repair_plan": "Within the existing R36-04 candidate only, repair joint_test numerical profiling and its domain/norm helpers; preserve the Hubble protocol, physical radii, mathematical tolerance and first-failure evidence. Normalize decision variables, response/objective and ball constraints before solving the convex least-squares/trust-region profile; use analytic derivatives or an equivalent bounded solver, and verify primal feasibility plus an appropriately scaled optimality/KKT residual before issuing compatibility. A solver success flag or small absolute gradient alone is not an optimality certificate. When certification fails, return an explicit numerical failure rather than a scientific rejection. Use robust scaled norms and direct residual-versus-budget comparison; detect S=0 from exact zero entries or zero maximum absolute entry, never a squared norm. Do not let underflowed residual_squared or M_S classify a nonzero finite residual as compatible; preserve the signal-relative roundoff allowance only in its justified cancellation regime. Add the recorded interior feasible-witness false-rejection and zero-budget false-acceptance regressions, nonzero S at 1e-200, scale/rotation invariance and a constrained boundary optimality control. Retain the existing 0.8/0.8 rejection, correlated covariance propagation, chart/vertex and source units controls. Rerun the focused tests and consumer, preserve pre-repair outputs, refresh candidate hashes, and return the exact new identity for one targeted independent closeout. No physical calibration request, model change, tolerance relaxation, solver/ODE, ultra escalation, broad rewrite, or qualification/publication is authorized by this review preparation.",
+  "validation": [
+    "Actual root ACK_014_GO.json identifies this same agent and packet, with collaboration.followup_task accepted and ACK/GO true.",
+    "Original independent review SHA256 remains 8b8113d5bdc411408c2b4fbb4ac8cee344b9b56cb481a8bb8aa6e51db5287b89; original result, counterexample DICT and repair_plan STRING are unchanged.",
+    "Current candidate manifest identity, all 10 candidate file hashes/sizes and frozen input manifest identity match the formal review packet.",
+    "Prior review execution: seven supplied tests passed; independent false-rejection and false-acceptance counterexamples reproduced. This binding runs no numerical tests or consumer.",
+    "Reviewer is distinct from all authors/contributors in the formal assignment. Requested gpt-6-astra/xhigh; observed runtime UNKNOWN.",
+    "Negative review only: acceptance_met=false, qualified_products=[], no escalation or task/accounting reset.",
+    "Protocol-only correction: issue.class is numeric; frozen counterexample DICT and repair_plan STRING unchanged, with original rejected artifacts preserved."
+  ],
+  "validation_evidence": [
+    "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/COUNTEREXAMPLES.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/PYTEST.stdout",
+    "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/IDENTITY.json",
+    "/mnt/extdrive/workdir/htt_open_data/r36_controller/ACK_014_GO.json"
+  ],
+  "new_numerical_execution": false,
+  "new_scientific_review": false,
+  "protocol_serialization_correction": {
+    "sequence": 2,
+    "original_controller_return": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/formal_binding_01/CONTROLLER_RETURN.json",
+      "sha256": "68011add047c589c6c4ab863ef27380484192396804db8522fb76a2d42955f1d",
+      "bytes": 9259
+    },
+    "original_raw_binding_receipt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_fresh_review/formal_binding_01/RAW_BINDING_RECEIPT.json",
+      "sha256": "b2b805451084ff1dfc43b102026910abbe42985614a2626b67434a93526433bf",
+      "bytes": 7469
+    },
+    "only_scientific_classification_encoding_changed": "numeric/code -> numeric",
+    "new_scientific_review": false,
+    "new_numerical_execution": false
+  }
+}

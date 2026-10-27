@@ -1,0 +1,228 @@
+[
+  {
+    "name": "strict_original_physical_ball_fraction_counterexample",
+    "result": {
+      "input": {
+        "S": [
+          [
+            0.001,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            -0.001,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "d_obs": [
+          0.125,
+          1e-60,
+          0.0
+        ],
+        "e_d": 0,
+        "d_max": 0.125,
+        "O": [
+          0.0002575049508856975,
+          1.9623511783879178e-63,
+          0.0,
+          -0.00011081248737180731,
+          0.0,
+          -1.085736204758129e-63,
+          0.0
+        ],
+        "budget": 1e-07
+      },
+      "exact_feasible_set_empty": true,
+      "squared_norm_excess_numerator": "13093562431584566705790186509161",
+      "squared_norm_excess_denominator": "13093562431584567480052758787310396608866568184172259157933165472384535185618698219533080369303616628603546736510240284036869026183541572213314110357504",
+      "candidate": {
+        "branch": "INVERTIBLE_S",
+        "perpendicular_norm": 1.4294396271413575e-20,
+        "parallel_norm": 1.4232679421569282e-79,
+        "perpendicular_squared": 2.043297647642023e-40,
+        "parallel_squared": 2.0256916351716173e-158,
+        "squared_display_status": {
+          "residual": "FINITE",
+          "perpendicular": "FINITE",
+          "parallel": "FINITE"
+        },
+        "inverse_d": [
+          0.125,
+          9.999999999999998e-61,
+          0.0
+        ],
+        "profiled_d": [
+          0.125,
+          1e-60,
+          0.0
+        ],
+        "residual_norm": 1.3552527156068805e-20,
+        "residual_squared": 1.8367099231598242e-40,
+        "budget": 1e-07,
+        "score": 6.468066477188156e-11,
+        "score_kind": "CERTIFIED_UPPER_BOUND",
+        "certified_lower_bound": 0.0,
+        "certified_upper_bound": 6.468066477188156e-18,
+        "compatible": true,
+        "physical_set_empty": false,
+        "profile_certificate": {
+          "status": "NORM_BOUNDS_CERTIFIED",
+          "compatible": true,
+          "witness": [
+            0.125,
+            1e-60,
+            0.0
+          ],
+          "residual_norm": 1.3552527156068805e-20,
+          "lower_bound": 0.0,
+          "upper_bound": 6.468066477188156e-18,
+          "operator_error_envelope": 6.454513950032087e-18,
+          "cancellation_allowance": 3.9838124994680216e-18,
+          "roundoff_allowance_applied": true,
+          "direct_distance": 0.0,
+          "physical_norm": 0.125,
+          "candidate_method": "FIXED_DIRECT_DIPOLE"
+        },
+        "roundoff_allowance_applied": true
+      },
+      "unexpected_compatible": true
+    },
+    "wall_seconds": 0.0030929918866604567
+  },
+  {
+    "name": "exact_tangent_representable",
+    "exception_type": "NumericalProfileFailure",
+    "exception": "NUMERICAL_FAILURE: no representable feasible witness",
+    "code": "NUMERICAL_FAILURE",
+    "wall_seconds": 0.006429434986785054
+  },
+  {
+    "name": "empty_separated",
+    "result": {
+      "compatible": false,
+      "physical_set_empty": true,
+      "reason": "direct and physical dipole balls do not intersect",
+      "profile_certificate": {
+        "status": "PHYSICAL_SET_EMPTY"
+      }
+    },
+    "wall_seconds": 0.001761722844094038
+  },
+  {
+    "name": "physical_zero",
+    "result": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 0.0,
+      "parallel_norm": 0.0,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 0.0,
+      "squared_display_status": {
+        "residual": "FINITE",
+        "perpendicular": "FINITE",
+        "parallel": "FINITE"
+      },
+      "inverse_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 0.0,
+      "residual_squared": 0.0,
+      "budget": 0.0,
+      "score": null,
+      "score_kind": "UNDEFINED_ZERO_BUDGET",
+      "certified_lower_bound": 0.0,
+      "certified_upper_bound": 0.0,
+      "compatible": true,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "NORM_BOUNDS_CERTIFIED",
+        "compatible": true,
+        "witness": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "residual_norm": 0.0,
+        "lower_bound": 0.0,
+        "upper_bound": 0.0,
+        "operator_error_envelope": 0.0,
+        "cancellation_allowance": 0.0,
+        "roundoff_allowance_applied": false,
+        "direct_distance": 0.125,
+        "physical_norm": 0.0,
+        "candidate_method": "SINGLETON_PHYSICAL_SET"
+      },
+      "roundoff_allowance_applied": false
+    },
+    "wall_seconds": 0.002842098008841276
+  },
+  {
+    "name": "zero_s_equal_budget_boundary",
+    "exception_type": "NumericalProfileFailure",
+    "exception": "NUMERICAL_FAILURE: certified residual interval straddles the unchanged budget",
+    "code": "NUMERICAL_FAILURE",
+    "wall_seconds": 0.00105920503847301
+  },
+  {
+    "name": "zero_s_exact_zero",
+    "result": {
+      "branch": "S_ZERO_DIRECT_MEMBERSHIP",
+      "perpendicular_norm": 0.0,
+      "parallel_norm": 0.0,
+      "perpendicular_squared": 0.0,
+      "parallel_squared": 0.0,
+      "squared_display_status": {
+        "residual": "FINITE",
+        "perpendicular": "FINITE",
+        "parallel": "FINITE"
+      },
+      "inverse_d": null,
+      "profiled_d": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 0.0,
+      "residual_squared": 0.0,
+      "budget": 0.0,
+      "score": null,
+      "score_kind": "UNDEFINED_ZERO_BUDGET",
+      "certified_lower_bound": 0.0,
+      "certified_upper_bound": 0.0,
+      "compatible": true,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "NORM_BOUNDS_CERTIFIED",
+        "compatible": true,
+        "witness": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "residual_norm": 0.0,
+        "lower_bound": 0.0,
+        "upper_bound": 0.0,
+        "operator_error_envelope": 0.0,
+        "cancellation_allowance": 0.0,
+        "roundoff_allowance_applied": false,
+        "direct_distance": 0.0,
+        "physical_norm": 0.0,
+        "candidate_method": "FIXED_DIRECT_DIPOLE"
+      },
+      "roundoff_allowance_applied": false
+    },
+    "wall_seconds": 0.0007260639686137438
+  }
+]

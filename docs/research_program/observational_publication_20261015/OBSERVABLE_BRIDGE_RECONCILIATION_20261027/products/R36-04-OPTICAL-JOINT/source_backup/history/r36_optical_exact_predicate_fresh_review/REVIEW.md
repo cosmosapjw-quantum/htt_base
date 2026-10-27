@@ -1,0 +1,13 @@
+# R36-04 repair_03 independent review: HOLD
+
+Candidate `sha256:ec4421a423a87889cc268c65d551a772846ca93298b028d08143201ec824137b` has one acceptance-blocking P2 execution defect. No candidate or production file was edited.
+
+At `optical_joint.py:217`, the radial anchor is shrunk by `1-16*eps` before testing the unshrunk boundary candidate. Let `center=(nextafter(.25,0),0,0)`, `e_d=Dmax=.125`, `O=0`, and `B=.001`. Both `S=0` and `S=diag(.001,-.001,0)` raise `NUMERICAL_FAILURE: no representable feasible witness`. Yet `d=(.125,0,0)` is exactly representable and satisfies both original closed balls. Its direct squared slack is `2^-57-2^-110>0`; its physical squared slack is zero. The residual is zero for `S=0` and approximately `2.80336e-4` for the nonzero case, safely below `.001`. The fallback at lines 325–328 repeats the failed shrunken anchor.
+
+This is a candidate-construction failure, distinct from a legitimate unsupported or nonrepresentable set. The current contract explicitly requires finite easy cases to execute. The exact ball predicates should remain unchanged. A bounded repair should test the unshrunk boundary proposal or another exact-verified feasible witness before shrinking, and verify that any inward adjustment remains inside the direct ball. Add the one-ulp interior/exterior controls while retaining all current numerical and physical requirements.
+
+225 identities matched before and after review. The focused suite passed 18 tests. The actual consumer ran in a small copied external fixture: RESULT matched semantically and TABLE matched byte-for-byte. Independent checks passed 25 cases, with two reproductions of this one defect. Passing checks include the required exact-empty, directed square-root/score and exact-tangent controls; 18 rational one-axis interval cases across three common-unit scales; full tensor reconstruction; correlated covariance including cross terms; all eight response derivatives; rotation; tiny nonzero response; typed range errors; and finite-z/chart controls. All three replay figures were inspected. The unrelated Matplotlib Axes3D warning did not affect these 2D outputs.
+
+The conditional chart interpretation is consistent with the checked [primary source](https://arxiv.org/html/2312.09875v3); the frozen Hubble protocol and norm-bound framing were reused. The candidate retains C0 conditional-method limits and unavailable empirical CF4 inputs. No native solver, ODE, old CAS or original42 acceptance is promoted.
+
+Requested reviewer runtime: gpt-6-astra/xhigh. Observed runtime: UNKNOWN. Review execution and outputs are bound in REVIEW_RESULT.json, RAW_RECEIPT.json, CONTROLLER_RETURN.json and SEAL.json.

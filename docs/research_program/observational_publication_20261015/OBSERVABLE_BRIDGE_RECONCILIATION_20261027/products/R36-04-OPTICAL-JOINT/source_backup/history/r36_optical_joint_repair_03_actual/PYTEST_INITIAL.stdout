@@ -1,0 +1,21 @@
+.........F.....                                                          [100%]
+=================================== FAILURES ===================================
+____________ test_unrepresentable_response_is_typed_numerical_range ____________
+
+    def test_unrepresentable_response_is_typed_numerical_range():
+        s=np.diag([1e-200,-1e-200,0])
+>       with pytest.raises(NumericalProfileFailure,match='NUMERIC_RANGE'):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'NUMERIC_RANGE'
+E         Actual message: 'NUMERICAL_FAILURE: fixed-point residual within global response allowance'
+
+docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_03/test_optical_joint.py:183: AssertionError
+=============================== warnings summary ===============================
+../../../.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63
+  /home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+    warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_03/test_optical_joint.py::test_unrepresentable_response_is_typed_numerical_range
+1 failed, 14 passed, 1 warning in 1.48s

@@ -1,0 +1,1623 @@
+{
+  "false_rejection": {
+    "name": "narrow_direct_1e-06_B5.606717652542515e-10",
+    "inputs": {
+      "o": [
+        2.0601426090659346e-05,
+        0.0,
+        0.0,
+        -8.865442239694073e-06,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "budget": 5.606717652542515e-10,
+      "e_d": 1e-06,
+      "d_max": 0.1
+    },
+    "witness": {
+      "d": [
+        0.0100005,
+        0.0,
+        0.0
+      ],
+      "direct_distance": 5.000000000005e-07,
+      "physical_norm": 0.0100005,
+      "residual_norm": 0.0
+    },
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 1.1436088792981717e-21,
+      "parallel_norm": 1.121343530508116e-09,
+      "perpendicular_squared": 1.3078412688096201e-42,
+      "parallel_squared": 1.257411313412406e-18,
+      "inverse_d": [
+        0.0100005,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.121343530508568e-09,
+      "residual_squared": 1.2574113134134198e-18,
+      "budget": 5.606717652542515e-10,
+      "score": 2.000000000000116,
+      "compatible": false,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925333377781084e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925333377781084e-09,
+        "active_constraints": [],
+        "multipliers": []
+      },
+      "roundoff_allowance_applied": true
+    },
+    "independent_high_precision_witness": {
+      "arithmetic": "mpmath 90 digits on exact binary64 supplied O,K,d",
+      "residual_norm": "0.000000000000000000000460678893055132778216176029244954328998744787039677586530407590635585671351859134966319002",
+      "direct_distance": "0.00000050000000000050004445029117050580680370330810546875",
+      "physical_norm": "0.01000050000000000070821126740838735713623464107513427734375",
+      "budget": 5.606717652542515e-10,
+      "residual_below_budget": true
+    }
+  },
+  "false_acceptance": {
+    "inputs": {
+      "o": [
+        2.060039625625937e-07,
+        0.0,
+        0.0,
+        -8.864999069529576e-08,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "s": [
+        [
+          0.001,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "d_obs": [
+        0.0,
+        0,
+        0
+      ],
+      "budget": 1.0092091825422658e-15,
+      "e_d": 0.1,
+      "d_max": 0.0001
+    },
+    "interval": [
+      -0.0001,
+      0.0001
+    ],
+    "target": 0.00010000000090000001,
+    "analytic_minimum_residual": 2.0184183650845316e-15,
+    "observed": {
+      "branch": "INVERTIBLE_S",
+      "perpendicular_norm": 2.287103424010103e-23,
+      "parallel_norm": 0.0,
+      "perpendicular_squared": 5.230842072118737e-46,
+      "parallel_squared": 0.0,
+      "inverse_d": [
+        0.00010000000090000002,
+        0.0,
+        0.0
+      ],
+      "profiled_d": [
+        0.00010000000090000002,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 2.287103424010103e-23,
+      "residual_squared": 5.230842072118737e-46,
+      "budget": 1.0092091825422658e-15,
+      "score": 2.2662332681602596e-08,
+      "compatible": true,
+      "physical_set_empty": false,
+      "profile_certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.800000048881136e-14,
+        "stationarity_error": 2.3328316433101455e-20,
+        "complementarity_error": 0.0,
+        "kkt_residual": 1.800000048881136e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          0.0
+        ]
+      },
+      "roundoff_allowance_applied": true
+    },
+    "direct_violation": -0.0998999999991,
+    "physical_violation": 9.000000180878209e-13,
+    "independent_high_precision_bound": {
+      "arithmetic": "mpmath 90 digits on exact binary64 O,K,Dmax; triangle inequality ||O-Kd|| >= ||O||-||K||op Dmax for all feasible d",
+      "K": [
+        [
+          0.00206003960708558,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.001962351178387918,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.001401679413134227
+        ],
+        [
+          -0.0008864998989744585,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -0.001085736204758129,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          -0.0010857362047581294
+        ]
+      ],
+      "operator_norm": "0.00224268706101476332855621259847382137806057773009297797929811085525155248192997361654820882",
+      "lower_bound": "0.000000000000002018418366716928614066839465958527661917230602444279725537356449456147519752889777175107",
+      "budget": "0.0000000000000010092091825422658201584897122431197006805526916739523812793777324259281158447265625",
+      "lower_over_budget": "2.00000000161750111075856667645689929337711704364306569807707778214196926087460876944205291",
+      "max_existing_signal_roundoff_allowance": "0.00000000000000000000318705002825786764219480468968943506167162936040780274839441703271901733311165242689869179",
+      "lower_minus_budget_minus_allowance": "0.0000000000000010092059971246345360407075589107182718016162391409669364552303226131866848908301030226801",
+      "bound_remains_strict": true,
+      "all_source_inputs_finite": true
+    }
+  },
+  "rotation_scale_checks": [
+    {
+      "case": "false_reject",
+      "factor": 1.0,
+      "rotated": false,
+      "compatible": false,
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.121343530508568e-09,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925333377781084e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925333377781084e-09,
+        "active_constraints": [],
+        "multipliers": []
+      }
+    },
+    {
+      "case": "false_reject",
+      "factor": 1.0,
+      "rotated": true,
+      "compatible": false,
+      "profiled_d": [
+        0.007633762307488082,
+        0.005710888773421961,
+        -0.0030185132847773345
+      ],
+      "residual_norm": 1.1213435305114937e-09,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 8.185309403376218e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 8.185309403376218e-09,
+        "active_constraints": [],
+        "multipliers": []
+      }
+    },
+    {
+      "case": "false_reject",
+      "factor": 1e-150,
+      "rotated": false,
+      "compatible": false,
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.1213435305085681e-159,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925333377781084e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925333377781084e-09,
+        "active_constraints": [],
+        "multipliers": []
+      }
+    },
+    {
+      "case": "false_reject",
+      "factor": 1e-150,
+      "rotated": true,
+      "compatible": false,
+      "profiled_d": [
+        0.007633762307488082,
+        0.005710888773421961,
+        -0.0030185132847773345
+      ],
+      "residual_norm": 1.1213435305107191e-159,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 8.185309403370565e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 8.185309403370565e-09,
+        "active_constraints": [],
+        "multipliers": []
+      }
+    },
+    {
+      "case": "false_reject",
+      "factor": 1e+100,
+      "rotated": false,
+      "compatible": false,
+      "profiled_d": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.121343530506467e+91,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 5.925333377769982e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 5.925333377769982e-09,
+        "active_constraints": [],
+        "multipliers": []
+      }
+    },
+    {
+      "case": "false_reject",
+      "factor": 1e+100,
+      "rotated": true,
+      "compatible": false,
+      "profiled_d": [
+        0.007633762307488082,
+        0.005710888773421961,
+        -0.0030185132847773345
+      ],
+      "residual_norm": 1.1213435305114798e+91,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 0.0,
+        "stationarity_error": 8.185309403376116e-09,
+        "complementarity_error": 0.0,
+        "kkt_residual": 8.185309403376116e-09,
+        "active_constraints": [],
+        "multipliers": []
+      }
+    },
+    {
+      "case": "false_accept",
+      "factor": 1.0,
+      "rotated": false,
+      "compatible": true,
+      "profiled_d": [
+        0.00010000000090000002,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 2.287103424010103e-23,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.800000048881136e-14,
+        "stationarity_error": 2.3328316433101455e-20,
+        "complementarity_error": 0.0,
+        "kkt_residual": 1.800000048881136e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          0.0
+        ]
+      }
+    },
+    {
+      "case": "false_accept",
+      "factor": 1.0,
+      "rotated": true,
+      "compatible": true,
+      "profiled_d": [
+        7.633762376191945e-05,
+        5.710888824819959e-05,
+        -3.0185133119439527e-05
+      ],
+      "residual_norm": 7.508982847907274e-23,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.8000000277053124e-14,
+        "stationarity_error": 3.7850877726595896e-20,
+        "complementarity_error": 1.0848434361824384e-30,
+        "kkt_residual": 1.8000000277053124e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          6.026907886026122e-17
+        ]
+      }
+    },
+    {
+      "case": "false_accept",
+      "factor": 1e-150,
+      "rotated": false,
+      "compatible": true,
+      "profiled_d": [
+        0.00010000000090000001,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 2.287103424010103e-173,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.8000000065294887e-14,
+        "stationarity_error": 0.0,
+        "complementarity_error": 2.0995484676992934e-31,
+        "kkt_residual": 1.8000000065294887e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          1.1664158111573304e-17
+        ]
+      }
+    },
+    {
+      "case": "false_accept",
+      "factor": 1e-150,
+      "rotated": true,
+      "compatible": true,
+      "profiled_d": [
+        7.633762376191945e-05,
+        5.710888824819959e-05,
+        -3.0185133119439527e-05
+      ],
+      "residual_norm": 6.2536762136207e-173,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.8000000277053124e-14,
+        "stationarity_error": 8.701673742523735e-20,
+        "complementarity_error": 1.1731149622692402e-30,
+        "kkt_residual": 1.8000000277053124e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          6.517305245626903e-17
+        ]
+      }
+    },
+    {
+      "case": "false_accept",
+      "factor": 1e+100,
+      "rotated": false,
+      "compatible": true,
+      "profiled_d": [
+        0.00010000000090000001,
+        0.0,
+        0.0
+      ],
+      "residual_norm": 1.1435517120050514e+77,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.8000000065294887e-14,
+        "stationarity_error": 0.0,
+        "complementarity_error": 4.199096935398587e-31,
+        "kkt_residual": 1.8000000065294887e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          2.3328316223146607e-17
+        ]
+      }
+    },
+    {
+      "case": "false_accept",
+      "factor": 1e+100,
+      "rotated": true,
+      "compatible": true,
+      "profiled_d": [
+        7.633762376191946e-05,
+        5.710888824819959e-05,
+        -3.0185133119439527e-05
+      ],
+      "residual_norm": 5.2225802815823e+77,
+      "certificate": {
+        "status": "KKT_CERTIFIED",
+        "solver_success": true,
+        "primal_error": 1.800000048881136e-14,
+        "stationarity_error": 1.8879094502587565e-19,
+        "complementarity_error": 8.219272998174894e-31,
+        "kkt_residual": 1.800000048881136e-14,
+        "active_constraints": [
+          1
+        ],
+        "multipliers": [
+          4.5662626527615487e-17
+        ]
+      }
+    }
+  ],
+  "consumer_replay": {
+    "redirection": "Only consume.HERE output directory redirected after module import; SOURCE/MANIFEST/ROOT unchanged. No code edit.",
+    "result_equal": false,
+    "table_equal": true,
+    "source": {
+      "manifest_sha256": "83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+      "p6_saved_results_sha256": "96845acabac86fa9cddd55c036b299217cb24f7a119f49c1314c4d1d84996d7b",
+      "p6_tensor_norm": 0.03265680189321492,
+      "p6_working_covariance_scope": "metric-derived only if D is adopted as an additional residual-error model; not empirical covariance or physical error bars"
+    },
+    "output": "/mnt/extdrive/workdir/htt_open_data/r36_optical_repair_independent_review/consumer_replay"
+  },
+  "all_source_checks": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/H03_REPLAY.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "48c8f25e679d30073591af843a752ecba3d6a3eb62cda9d88cff4510e83b1f07",
+      "expected": "48c8f25e679d30073591af843a752ecba3d6a3eb62cda9d88cff4510e83b1f07"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/INPUT_CONTRACT.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "cbcb3cbeac8fd4d5ea303940a8a97525b146fd8b3fd09040ae2bfd9f1ca9206f",
+      "expected": "cbcb3cbeac8fd4d5ea303940a8a97525b146fd8b3fd09040ae2bfd9f1ca9206f"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/README.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "3748710a51d241ac8ba39ab7b87d7a856714592efb2ca67e9ce23560a24c1e1f",
+      "expected": "3748710a51d241ac8ba39ab7b87d7a856714592efb2ca67e9ce23560a24c1e1f"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/VALIDATION.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "39934d1f151c8a5f969a802b18553b5689fa7558914fe52f0a3111b547ed9863",
+      "expected": "39934d1f151c8a5f969a802b18553b5689fa7558914fe52f0a3111b547ed9863"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/covariance_bridge.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "e21fde04538579aade36023b55800ac95547b576af14e24bf7f4fd002f574753",
+      "expected": "e21fde04538579aade36023b55800ac95547b576af14e24bf7f4fd002f574753"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/h03_covariance_frontier.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "f22ba3fe466d18dda2de765923362c765e186e2566bdc8f9ea94e5d00cd8d909",
+      "expected": "f22ba3fe466d18dda2de765923362c765e186e2566bdc8f9ea94e5d00cd8d909"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/h03_covariance_frontier.png",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "fd71ad4a41a8916e5d38696b49f473a4236a70bec38253802d4d63a3bf0c0381",
+      "expected": "fd71ad4a41a8916e5d38696b49f473a4236a70bec38253802d4d63a3bf0c0381"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/replay_h03.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ee136c16da2bcffa6fa49a8a2b9889d0ad325bb0fff91c17739709cec19a7644",
+      "expected": "ee136c16da2bcffa6fa49a8a2b9889d0ad325bb0fff91c17739709cec19a7644"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/covariance/test_covariance_bridge.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "1662aff1a7f0e361d8680aa617755c4912fe1b44081ee14b660c5aeba578b626",
+      "expected": "1662aff1a7f0e361d8680aa617755c4912fe1b44081ee14b660c5aeba578b626"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/RESEARCH_RUN_REPORT.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "41553ef01cf82c2e9ce9ab66270719bdc71befec4d0d606e4e680f46cae76485",
+      "expected": "41553ef01cf82c2e9ce9ab66270719bdc71befec4d0d606e4e680f46cae76485"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/review/ADVERSARIAL_REVIEW.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "15aff8dbafc0e9b30a668aa679648dbe998bc46861aae14f44e0e7e32e1336c0",
+      "expected": "15aff8dbafc0e9b30a668aa679648dbe998bc46861aae14f44e0e7e32e1336c0"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/review/DECISION_GATE.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "fd469040573487496d21c73401e92dc599a891919324d687931a0cbb027207fb",
+      "expected": "fd469040573487496d21c73401e92dc599a891919324d687931a0cbb027207fb"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/state/CLAIM_AUDIT.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "39a60662c4413e3925765cda911225c0a4dc20c6784c689748aa43447f263eda",
+      "expected": "39a60662c4413e3925765cda911225c0a4dc20c6784c689748aa43447f263eda"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/state/CLOSEOUT.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "1f720c9b2607417fe17add5bd4fb3fe58794be27fc3543c2f9a3dd9a5413d0ee",
+      "expected": "1f720c9b2607417fe17add5bd4fb3fe58794be27fc3543c2f9a3dd9a5413d0ee"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/state/DECISION_LOG.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "4f57c5d319a6453ba5edfd114e777302a12768ab26934329f5b43e7bdb0cf049",
+      "expected": "4f57c5d319a6453ba5edfd114e777302a12768ab26934329f5b43e7bdb0cf049"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/state/EVIDENCE_LEDGER.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "c7ce92ccbe48f18215fe42a347960e414511796626672d7dd08bb7acb9d4c51c",
+      "expected": "c7ce92ccbe48f18215fe42a347960e414511796626672d7dd08bb7acb9d4c51c"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/state/HYPOTHESIS_GRAPH.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "1024db84622eb2d0b472aefcf79ea20f55f8a4a678866db5e57de7469899b116",
+      "expected": "1024db84622eb2d0b472aefcf79ea20f55f8a4a678866db5e57de7469899b116"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/state/NEGATIVE_RESULTS.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "9466f5feebb05ad327d7057a7da8f708eada9b35cde8ffe54b2dfd118c058f39",
+      "expected": "9466f5feebb05ad327d7057a7da8f708eada9b35cde8ffe54b2dfd118c058f39"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/state/RESEARCH_STATE.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "aab5f91811dada4be51823b76c5d4a3b7148332223d19ff612edc8ce516716eb",
+      "expected": "aab5f91811dada4be51823b76c5d4a3b7148332223d19ff612edc8ce516716eb"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/state/VALIDATION.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "7c39f19e03184707c0aea59927960124c35e44568c0e66515d03f65523068ef8",
+      "expected": "7c39f19e03184707c0aea59927960124c35e44568c0e66515d03f65523068ef8"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/state/VERIFICATION_DESIGN.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "9d64f69d312b60b5f48c3cbf92871145d5c4afc3dabdded3369fd73cadb24fef",
+      "expected": "9d64f69d312b60b5f48c3cbf92871145d5c4afc3dabdded3369fd73cadb24fef"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/validation/results.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "b40c420d695952239013dc15640e9ff3e60e82b7bb4e0792a8e8880732b709e3",
+      "expected": "b40c420d695952239013dc15640e9ff3e60e82b7bb4e0792a8e8880732b709e3"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/validation/t11_h03_tomography.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "9a2c89fb78a06c829dfb41c926f80b637e8845d0472337d21aa79b3952ff4e6f",
+      "expected": "9a2c89fb78a06c829dfb41c926f80b637e8845d0472337d21aa79b3952ff4e6f"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/validation/t11_results.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "a35d6e27ee37ba1569ded4cc4e8ddce8bc29e7a003bee4a3dfbb398f98dcf616",
+      "expected": "a35d6e27ee37ba1569ded4cc4e8ddce8bc29e7a003bee4a3dfbb398f98dcf616"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/external/validation/validate_bridges.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "95bf46456afc7cfebf7637cf7d6e86a0519b73dbd625817d8118ecdd12f3201d",
+      "expected": "95bf46456afc7cfebf7637cf7d6e86a0519b73dbd625817d8118ecdd12f3201d"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/cas/EXECUTION_NOTES.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ad88fd7d23f869b3dfb7f630e48bec4920826a8c6a12d9f343a9c42f006ad5f8",
+      "expected": "ad88fd7d23f869b3dfb7f630e48bec4920826a8c6a12d9f343a9c42f006ad5f8"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/cas/boost_null.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "176706e54d0179d871bf204068ba142defab437f7e0120507dcf5ab9e4e6b695",
+      "expected": "176706e54d0179d871bf204068ba142defab437f7e0120507dcf5ab9e4e6b695"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/cas/boost_null_wolfram.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "911260c031a9e242cd01974dd88b3179bf0a793f817fae1fc65049cb15aad8fc",
+      "expected": "911260c031a9e242cd01974dd88b3179bf0a793f817fae1fc65049cb15aad8fc"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/cas/planck_hubble_controls.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "a7e73ba72cbe87aba630029f46f45c43458dbcd3af00f1f96053368d423ff554",
+      "expected": "a7e73ba72cbe87aba630029f46f45c43458dbcd3af00f1f96053368d423ff554"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/cas/planck_hubble_results.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "bf9d778f4afefed23c3b09ac45c76cd3639fbfef06faddc86c0ef2aa245e06cb",
+      "expected": "bf9d778f4afefed23c3b09ac45c76cd3639fbfef06faddc86c0ef2aa245e06cb"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/cas/stress_constraint_results.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "6b8ca12a76540a404da6a3b98ef99498ef0f701adbd193db51d0879d5072f6dc",
+      "expected": "6b8ca12a76540a404da6a3b98ef99498ef0f701adbd193db51d0879d5072f6dc"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/cas/stress_constraint_toy.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "f44c8f85a884cf85030bab8f21ea71dfa723629189d4ccfb0dbfc4dbb780b4e9",
+      "expected": "f44c8f85a884cf85030bab8f21ea71dfa723629189d4ccfb0dbfc4dbb780b4e9"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/figures/planck_hubble_controls.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "a32f8439e3fb4113897eb7e9e14725cbb3320a8ca5a7139ef3c29cd47d5c0134",
+      "expected": "a32f8439e3fb4113897eb7e9e14725cbb3320a8ca5a7139ef3c29cd47d5c0134"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/figures/planck_hubble_controls.png",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "785ebc3203c21d7a88839cd67c38e854abdc054f9d03ef640f8a9d9c44ded1af",
+      "expected": "785ebc3203c21d7a88839cd67c38e854abdc054f9d03ef640f8a9d9c44ded1af"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/figures/radiation_stress_constraint.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "d57bd0315b7b29e3b292f80fe358d07ef70c5e0bea33f3b051a08e7938d869dc",
+      "expected": "d57bd0315b7b29e3b292f80fe358d07ef70c5e0bea33f3b051a08e7938d869dc"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/figures/radiation_stress_constraint.png",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "c58ddc044a07887ecb4051da4502189a911236099d7b74409c6eb27d33c1c917",
+      "expected": "c58ddc044a07887ecb4051da4502189a911236099d7b74409c6eb27d33c1c917"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/output/HTT_COSMOLOGICAL_CONSTRAINT.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "d3ff3157cc456c26175e4e3ba41eed752b1f902d0308b9171293787a563479bd",
+      "expected": "d3ff3157cc456c26175e4e3ba41eed752b1f902d0308b9171293787a563479bd"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/output/HTT_COSMOLOGICAL_CONSTRAINT.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "77b0cd438d06275322b39272009207b213b10d2a4877246e0f2cc4041e0bfae9",
+      "expected": "77b0cd438d06275322b39272009207b213b10d2a4877246e0f2cc4041e0bfae9"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/APPLICATION_BRIDGE.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "14611203fd3945ece6f290ca4ec1624d2d98420338dc12f3a532781d1df18b1e",
+      "expected": "14611203fd3945ece6f290ca4ec1624d2d98420338dc12f3a532781d1df18b1e"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/APPLICATION_REVIEW.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ddac1c58b340aab42d82091dc4150fa61697704f6ac7352ae2c88294ec8af07b",
+      "expected": "ddac1c58b340aab42d82091dc4150fa61697704f6ac7352ae2c88294ec8af07b"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/APPLICATION_REVIEW.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "d29165fa2987017d9dc264cc051164d825b05b16ebf7c6a8fff37a99b89fe0ee",
+      "expected": "d29165fa2987017d9dc264cc051164d825b05b16ebf7c6a8fff37a99b89fe0ee"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/CONVENTIONS.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "b2e076b2f89c02930d3fecc5ac7ad8a80b01a4a72b2f36eac36371268efafc84",
+      "expected": "b2e076b2f89c02930d3fecc5ac7ad8a80b01a4a72b2f36eac36371268efafc84"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/CONVENTIONS.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "5e620a08e27a51b097ea8a3e16ea4e7950e4838d3cece5a80f65970df67cbf69",
+      "expected": "5e620a08e27a51b097ea8a3e16ea4e7950e4838d3cece5a80f65970df67cbf69"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/COSMOLOGICAL_CONSTRAINT.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "de8bccc5aac9c4720034d10d164ce96af1eaaff596b9e6fd65367a0acf912615",
+      "expected": "de8bccc5aac9c4720034d10d164ce96af1eaaff596b9e6fd65367a0acf912615"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/FOUR_AXES.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "b9343e9d672ac8b3095b743a750858c7e391327192ec7f779e4e2b16ab558ae9",
+      "expected": "b9343e9d672ac8b3095b743a750858c7e391327192ec7f779e4e2b16ab558ae9"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/FOUR_AXES.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "76f6fe30f61da5930f215c94097e126e9912a617c5ed16772db4cb085d1d03b5",
+      "expected": "76f6fe30f61da5930f215c94097e126e9912a617c5ed16772db4cb085d1d03b5"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/HUBBLE_PROTOCOL.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "092f2c1a90c67e2bae1cd85a7e14759012e1ab4e08bb36b62602d4f0a64343a7",
+      "expected": "092f2c1a90c67e2bae1cd85a7e14759012e1ab4e08bb36b62602d4f0a64343a7"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/HUBBLE_PROTOCOL.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "5a5663e1baa96f31527663e1fd248b36bb2b4d32d77e8a984d7460ea46602142",
+      "expected": "5a5663e1baa96f31527663e1fd248b36bb2b4d32d77e8a984d7460ea46602142"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/PLANCK_EXAMPLE.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "9e7c8785b9ef90c3647ef86e6a69aba5f3009cd2e4640d3ef5758582dbf2912b",
+      "expected": "9e7c8785b9ef90c3647ef86e6a69aba5f3009cd2e4640d3ef5758582dbf2912b"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/PLANCK_EXAMPLE.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "f92f096a49b48c40049bd0e002acd53f3b8d5d025acbb32b2e4ddd2b27d5047f",
+      "expected": "f92f096a49b48c40049bd0e002acd53f3b8d5d025acbb32b2e4ddd2b27d5047f"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/REVIEW.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "275d15520e90eb99dcb7ff44e0e2a906cfcbb7ec34cbb8864651b5468569c690",
+      "expected": "275d15520e90eb99dcb7ff44e0e2a906cfcbb7ec34cbb8864651b5468569c690"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/cosmology/research/REVIEW.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "216b07ee3a03249a469b2d13f86a14456f74b5bb52e89e884a28aa65b61bde4f",
+      "expected": "216b07ee3a03249a469b2d13f86a14456f74b5bb52e89e884a28aa65b61bde4f"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_a.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "bbebc3647ea5effb9f75ed126481358de8c98e30b03006dfb88d3bb4fc9ea96b",
+      "expected": "bbebc3647ea5effb9f75ed126481358de8c98e30b03006dfb88d3bb4fc9ea96b"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_a_results.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "df9c5dae5b90e12b99b6a0f569e8b28a602842f00e7cc3f22b05fbd3a0301777",
+      "expected": "df9c5dae5b90e12b99b6a0f569e8b28a602842f00e7cc3f22b05fbd3a0301777"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_b.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "a0e4b76e3a1c808e55731cba22712ca4e489c3a267a3a9525c3d638085e1612e",
+      "expected": "a0e4b76e3a1c808e55731cba22712ca4e489c3a267a3a9525c3d638085e1612e"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_b_receipt.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "576262e113cb7ad68b5d39f2335483a832f1b2b8f27900e876e13a7fbd0b0f88",
+      "expected": "576262e113cb7ad68b5d39f2335483a832f1b2b8f27900e876e13a7fbd0b0f88"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_c.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "29fb02e721b035a8b81855608ebdf06d42d21443adb21d40456bcd4dbef0b406",
+      "expected": "29fb02e721b035a8b81855608ebdf06d42d21443adb21d40456bcd4dbef0b406"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_c_check.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "57207f70c68280b376565e39ffdc38f0b95c8779bd8f863e2db8925e4e3aec5a",
+      "expected": "57207f70c68280b376565e39ffdc38f0b95c8779bd8f863e2db8925e4e3aec5a"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_c_python_receipt.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "a9bf0d716e3a5578b71928b503fdee96fd3fcfcc15162aec8035be7f80c86d7e",
+      "expected": "a9bf0d716e3a5578b71928b503fdee96fd3fcfcc15162aec8035be7f80c86d7e"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_c_wolfram_receipt.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "d1c49689fc99c1ebbbbdc945bb5ff622f3540d551001240d90ba26993769a46d",
+      "expected": "d1c49689fc99c1ebbbbdc945bb5ff622f3540d551001240d90ba26993769a46d"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_d.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "1203cea2811ffdf5d5cd740588c10475efb02f4328477f7fffa353171b0bc0bd",
+      "expected": "1203cea2811ffdf5d5cd740588c10475efb02f4328477f7fffa353171b0bc0bd"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_d_check.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "6b2950277eed5636b87a5aebd9f62cac9538182c5214f3e57cfb8dca09584519",
+      "expected": "6b2950277eed5636b87a5aebd9f62cac9538182c5214f3e57cfb8dca09584519"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_d_receipt.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "4c700f3b5e5e930215795ee4f16d448f2c1b5243b584e4bfacac25815288176f",
+      "expected": "4c700f3b5e5e930215795ee4f16d448f2c1b5243b584e4bfacac25815288176f"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_d_sympy.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "14853b2135d5df7c3533423ef9cbbe95a4708e2535bfc9e9c440d67c7b7d4d38",
+      "expected": "14853b2135d5df7c3533423ef9cbbe95a4708e2535bfc9e9c440d67c7b7d4d38"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_e.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "cad5ac6cf131956f1635b03367d27069c6ef83edf58c6b4494f9460a923d1ef8",
+      "expected": "cad5ac6cf131956f1635b03367d27069c6ef83edf58c6b4494f9460a923d1ef8"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_e_receipt.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "8f19e3f7c8cab87b83e4b9009983adc28c233da3d600137366b131028cd80086",
+      "expected": "8f19e3f7c8cab87b83e4b9009983adc28c233da3d600137366b131028cd80086"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/loop_e_repaired_receipt.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "a3a2ce472be4a408090e01098c596d8a5463b850912e80e296ef695ac34435d9",
+      "expected": "a3a2ce472be4a408090e01098c596d8a5463b850912e80e296ef695ac34435d9"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/make_a_figure.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ab4964ca23d99908d5bcacd94a4e501dcd1fcd4d75574f9dcbde24a0492e6398",
+      "expected": "ab4964ca23d99908d5bcacd94a4e501dcd1fcd4d75574f9dcbde24a0492e6398"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/make_b_figure.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "5503707611e99dfedce2884354b0f7c6a571850db7bf1e690518e400ac637202",
+      "expected": "5503707611e99dfedce2884354b0f7c6a571850db7bf1e690518e400ac637202"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/make_c_figure.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "9e1d87d2e0988f9a523caa54d8f221ce7ff551e4748a03683d90161c732d6166",
+      "expected": "9e1d87d2e0988f9a523caa54d8f221ce7ff551e4748a03683d90161c732d6166"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/make_de_figures.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "863e535386bc7b21ebbc80080501d2138165c9bfce57c0d2e7b6052b20e6fa55",
+      "expected": "863e535386bc7b21ebbc80080501d2138165c9bfce57c0d2e7b6052b20e6fa55"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/xAct/xAct/xCoba/xCoba.m",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "e70ffaca3ac372f4c143021a7f28b84f7404a76e91a6f8186c1335e49a062c78",
+      "expected": "e70ffaca3ac372f4c143021a7f28b84f7404a76e91a6f8186c1335e49a062c78"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/xAct/xAct/xCore/xCore.m",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "b3d9c0e0afd4bac0d7c31cc026165d522941c86945f6a0e9beaa8c8b498df212",
+      "expected": "b3d9c0e0afd4bac0d7c31cc026165d522941c86945f6a0e9beaa8c8b498df212"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/xAct/xAct/xPerm/xPerm.m",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "de6ad000fa61dd6fe025aacf12cdbcba1f30f6fd00eae26404c5c79d35c13a96",
+      "expected": "de6ad000fa61dd6fe025aacf12cdbcba1f30f6fd00eae26404c5c79d35c13a96"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/xAct/xAct/xTensor/xTensor.m",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "04e1cf3c7e81f1eff61ca633c84537c3f3cbb0fdd42ea01441e89172086d8b36",
+      "expected": "04e1cf3c7e81f1eff61ca633c84537c3f3cbb0fdd42ea01441e89172086d8b36"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/xact_gradient_square.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "b0cdc17995a5096e8880e7d3152b103d5a247387a1bb8416c29d67857f56d61d",
+      "expected": "b0cdc17995a5096e8880e7d3152b103d5a247387a1bb8416c29d67857f56d61d"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/xact_gradient_square_receipt.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ef4de032ee3aadba35da647a04d6e68b0ac29eed65db575afaa2882f2f0ac54c",
+      "expected": "ef4de032ee3aadba35da647a04d6e68b0ac29eed65db575afaa2882f2f0ac54c"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/xact_gradient_square_repaired.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "8054a101fb343a51f45bb194bf109e58168517a5d32555ce274ccf2d2f2d156d",
+      "expected": "8054a101fb343a51f45bb194bf109e58168517a5d32555ce274ccf2d2f2d156d"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/xact_gradient_square_repaired_receipt.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "da07d89baba4398fb2b0b605365cd718cb1bac9f5cdfaff2758bb6c0711c9594",
+      "expected": "da07d89baba4398fb2b0b605365cd718cb1bac9f5cdfaff2758bb6c0711c9594"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/xact_null_contraction.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "fcbc59d39df0568743865bc0afaccc998b6d25540af34dd04a366abfec1e3063",
+      "expected": "fcbc59d39df0568743865bc0afaccc998b6d25540af34dd04a366abfec1e3063"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/xact_null_contraction_pure.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "6c44a887558ceaa53ea07f489074dbafcb5bb5dcbe5c7570f1874862e5613625",
+      "expected": "6c44a887558ceaa53ea07f489074dbafcb5bb5dcbe5c7570f1874862e5613625"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/xact_null_contraction_pure_receipt.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ebd39378726eb5235d714aa6af269632f56f52c4a4225899b20289b1ca04b03a",
+      "expected": "ebd39378726eb5235d714aa6af269632f56f52c4a4225899b20289b1ca04b03a"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/cas/xact_null_contraction_receipt.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "6561f55370d758a142b3ad540469334da83f7174efd7f1a2f0b0df4738756d0f",
+      "expected": "6561f55370d758a142b3ad540469334da83f7174efd7f1a2f0b0df4738756d0f"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/figures/figure_a_radiation.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "626bab146aa34e5ca62b549df9c9bdeb3c134446bbff6cce9e9d65c4a3aebef0",
+      "expected": "626bab146aa34e5ca62b549df9c9bdeb3c134446bbff6cce9e9d65c4a3aebef0"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/figures/figure_a_radiation.png",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ab8a000db08f642b5e253fa67e29454eeb2ff7ca1e13aea828c63856d297293a",
+      "expected": "ab8a000db08f642b5e253fa67e29454eeb2ff7ca1e13aea828c63856d297293a"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/figures/figure_b_dipole.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "301bbea59b6cd112ee3b89ce23e66215ea7c0c747ff908dacec67cff7222fef0",
+      "expected": "301bbea59b6cd112ee3b89ce23e66215ea7c0c747ff908dacec67cff7222fef0"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/figures/figure_b_dipole.png",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "69d714524e84cd3331ff7389631eb70a46a586a099eaa4021b25110f3cd60ed1",
+      "expected": "69d714524e84cd3331ff7389631eb70a46a586a099eaa4021b25110f3cd60ed1"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/figures/figure_c_kinematics.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "f3d43fb2e2f621961eb21f1eedd4c428e71a39e16b86e05a6ba5adf6de124269",
+      "expected": "f3d43fb2e2f621961eb21f1eedd4c428e71a39e16b86e05a6ba5adf6de124269"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/figures/figure_c_kinematics.png",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "5feb5a065d0c613c9b66e26cdeb391ced13808717a7bba6cd308466d2ef73c94",
+      "expected": "5feb5a065d0c613c9b66e26cdeb391ced13808717a7bba6cd308466d2ef73c94"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/figures/figure_de_geometry.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "246d17fdb7a01670dd18bfefe0481102065328c8fde87415832a6369d6add205",
+      "expected": "246d17fdb7a01670dd18bfefe0481102065328c8fde87415832a6369d6add205"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/figures/figure_de_geometry.png",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ee35b28309c460b5bd2b9afbbdf9f6c556626307af26c02caa6db680cb184bfe",
+      "expected": "ee35b28309c460b5bd2b9afbbdf9f6c556626307af26c02caa6db680cb184bfe"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/INDEPENDENT_REVIEW.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "638c7799941cd397f0b467d1a129f68ee90be42f4dc839b182b2b0e2f08bd95f",
+      "expected": "638c7799941cd397f0b467d1a129f68ee90be42f4dc839b182b2b0e2f08bd95f"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/INDEPENDENT_REVIEW.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "721d9e0512f9087d114b5492d7fdf1b741406e9514d4ffacecab665ac68fad28",
+      "expected": "721d9e0512f9087d114b5492d7fdf1b741406e9514d4ffacecab665ac68fad28"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/INTERNAL_STATUS.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "434f5fb0e9e79dac99fcf235ace558674864dbe7b3729cb127bbe3dc40790327",
+      "expected": "434f5fb0e9e79dac99fcf235ace558674864dbe7b3729cb127bbe3dc40790327"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LEGACY_COVERAGE.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "c04706b3d76e713ced68f37f100a11440d0469aebc1531128d4b60be57b7e662",
+      "expected": "c04706b3d76e713ced68f37f100a11440d0469aebc1531128d4b60be57b7e662"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_A_CLAIMS.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "bcbdbafa42cddbea68937fefef12b757276c27189c9bbc9a096a30ef33c4741a",
+      "expected": "bcbdbafa42cddbea68937fefef12b757276c27189c9bbc9a096a30ef33c4741a"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_A_LOWELL.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "f1f91ce863e21403157e8aa2e1e4b84bdcce7f3ba507b712a10cc893ea2a5c1a",
+      "expected": "f1f91ce863e21403157e8aa2e1e4b84bdcce7f3ba507b712a10cc893ea2a5c1a"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_B_CLAIMS.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "98e6addd0c06252c448c46a5ff946a9d5dfcae8f67f03b1fca127871be677fac",
+      "expected": "98e6addd0c06252c448c46a5ff946a9d5dfcae8f67f03b1fca127871be677fac"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_B_DIPOLE.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "0fa7afe8d449d1ed6e6e1964198e464e8675cabeb0b5027f1c7616c2e76cb625",
+      "expected": "0fa7afe8d449d1ed6e6e1964198e464e8675cabeb0b5027f1c7616c2e76cb625"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_C_CLAIMS.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "6210823986ecfd4cbe556212a6db6a4597db31fff6f7755bf5a43bd8b7b2ebd9",
+      "expected": "6210823986ecfd4cbe556212a6db6a4597db31fff6f7755bf5a43bd8b7b2ebd9"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_C_KINEMATICS.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "8ce4e984582959ba7401d3fe58ce5aa404ef7869ff2cfb3981bc5c80cd78f72d",
+      "expected": "8ce4e984582959ba7401d3fe58ce5aa404ef7869ff2cfb3981bc5c80cd78f72d"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_D_BIANCHI.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "29deff7762b9fcecb877faf5f05abb0bc1f4682fb16a053521b2c0d3ce7cbae9",
+      "expected": "29deff7762b9fcecb877faf5f05abb0bc1f4682fb16a053521b2c0d3ce7cbae9"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_D_CLAIMS.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "cbfc13c4d05b085674c9e1a92c19dbda833caf9e1f37477b4906ee9c440a8f0a",
+      "expected": "cbfc13c4d05b085674c9e1a92c19dbda833caf9e1f37477b4906ee9c440a8f0a"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_E_CLAIMS.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "97965c1adccd39d2bc099041cbcbd65d7eeb3b7f6619475cb3eb134fafeff151",
+      "expected": "97965c1adccd39d2bc099041cbcbd65d7eeb3b7f6619475cb3eb134fafeff151"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_E_HUBBLE.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "b0cc8eca8b6db3980997788be98121c791db331cb85d54e805d69b3e73878cf4",
+      "expected": "b0cc8eca8b6db3980997788be98121c791db331cb85d54e805d69b3e73878cf4"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/SYNTHESIS.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "7106fddfa0b2c13aa08020d377a89733a0ea8f8662d931e1fc522d7dc480eeb4",
+      "expected": "7106fddfa0b2c13aa08020d377a89733a0ea8f8662d931e1fc522d7dc480eeb4"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/entropic_shear_constants.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "f6d61534f972621e62b62307360fa3f67a09fc1dc35955011527bc9d51629818",
+      "expected": "f6d61534f972621e62b62307360fa3f67a09fc1dc35955011527bc9d51629818"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/entropic_shear_constants_results.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "874971aa9b6906834583389030122d16ca6bf1f4c9aab88dbf4ecb4eb66b37dd",
+      "expected": "874971aa9b6906834583389030122d16ca6bf1f4c9aab88dbf4ecb4eb66b37dd"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/entropic_shear_projection.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "28c1734323be54db6f4ae0dcbc4a574659f6e3fea959a5e3758548b35bc829bc",
+      "expected": "28c1734323be54db6f4ae0dcbc4a574659f6e3fea959a5e3758548b35bc829bc"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/entropic_shear_results.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "91cda920278be692d181cc3a8cedef8484ee39ef0e23650a8b4ad8c83647f241",
+      "expected": "91cda920278be692d181cc3a8cedef8484ee39ef0e23650a8b4ad8c83647f241"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/paper_i_check.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "9b00121f42d42b3b365fbabf4636fc0caed4ffbc19fe08c510f6a38f5d8aab3a",
+      "expected": "9b00121f42d42b3b365fbabf4636fc0caed4ffbc19fe08c510f6a38f5d8aab3a"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/paper_i_check.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "c6a603e1372ae4af2479603d3085b1690e18c65a13954c7d2dc9a6991fbe6531",
+      "expected": "c6a603e1372ae4af2479603d3085b1690e18c65a13954c7d2dc9a6991fbe6531"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/paper_i_check_receipt.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "0b36ed60dc700b0a40998633245cbe0cf13bc724b87a49b2cb9a518e462f9936",
+      "expected": "0b36ed60dc700b0a40998633245cbe0cf13bc724b87a49b2cb9a518e462f9936"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/paper_i_check_wolfram_receipt.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "4ac19578a49a425bdc963662c33fcf764b3badf4d22f6c35470ddf2b2c119e63",
+      "expected": "4ac19578a49a425bdc963662c33fcf764b3badf4d22f6c35470ddf2b2c119e63"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/paper_ii_check.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "d9103ff21e83c61064998892fa85be2d937ee8cdbceff53225937763c2cf5ae2",
+      "expected": "d9103ff21e83c61064998892fa85be2d937ee8cdbceff53225937763c2cf5ae2"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/paper_ii_check.wl",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "77de701e5510ff66e99f2751cdc002b4e0b01a58c8e5d8240d375e776a1fb9fb",
+      "expected": "77de701e5510ff66e99f2751cdc002b4e0b01a58c8e5d8240d375e776a1fb9fb"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/paper_ii_check_figure.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "929edb3315917757625039afd2e1e595535f739ee938d0b7072b2985bfa2fa26",
+      "expected": "929edb3315917757625039afd2e1e595535f739ee938d0b7072b2985bfa2fa26"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/paper_ii_check_python.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "1c64ee25a2bbe134fbacbf6ee1910f0ee53f549345c6167147b5a9cf11251bfa",
+      "expected": "1c64ee25a2bbe134fbacbf6ee1910f0ee53f549345c6167147b5a9cf11251bfa"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/paper_ii_check_wolfram.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "0f2872527a22ea11de29a54149c2c1e43499779a7e1fa4ccb52c24bde4e2b257",
+      "expected": "0f2872527a22ea11de29a54149c2c1e43499779a7e1fa4ccb52c24bde4e2b257"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier.csv",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ebd371c45b643658693c356a84efed868133bd6c47f8b796d1b2bd6af71ef751",
+      "expected": "ebd371c45b643658693c356a84efed868133bd6c47f8b796d1b2bd6af71ef751"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier_results.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "e4fd31a4ed5e9874c802ea862365d49edf510825140c054d2ce4e47ca98a9fcf",
+      "expected": "e4fd31a4ed5e9874c802ea862365d49edf510825140c054d2ce4e47ca98a9fcf"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/cas/response_frontier_toy.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "eefd4b9442135a3d085e6eb7d62f34ec9c159a7edfd900a386756663ecb92f53",
+      "expected": "eefd4b9442135a3d085e6eb7d62f34ec9c159a7edfd900a386756663ecb92f53"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/figures/entropic_shear_projection.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "869bbfce737c3bb6ab489b9a60b8a2dfdacab8b5b4e206338cf1e1b5862a212a",
+      "expected": "869bbfce737c3bb6ab489b9a60b8a2dfdacab8b5b4e206338cf1e1b5862a212a"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/figures/entropic_shear_projection.png",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "895ff287690f03c09c03acf83e92e5e325a5caf3b6351ee49f46ca3bc00a2e8b",
+      "expected": "895ff287690f03c09c03acf83e92e5e325a5caf3b6351ee49f46ca3bc00a2e8b"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/figures/paper_ii_population_beam.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "73d2543978e8f5c96ec8ca1aef83c27ffeefff97caf8d49ac7100023d8f88d20",
+      "expected": "73d2543978e8f5c96ec8ca1aef83c27ffeefff97caf8d49ac7100023d8f88d20"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/figures/paper_ii_population_beam.png",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "56bb647a4212c6d82a784765817b9d7785d33841ccacd2a416d0b2267674d929",
+      "expected": "56bb647a4212c6d82a784765817b9d7785d33841ccacd2a416d0b2267674d929"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/figures/response_frontier.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "a51279e2d707a4220dc265b2abc70e5420c108bd14e9e10a5d09e1bd1e0c2c0e",
+      "expected": "a51279e2d707a4220dc265b2abc70e5420c108bd14e9e10a5d09e1bd1e0c2c0e"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/figures/response_frontier.png",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "b41c2fca00051d7f76092356da1709b7c239f2d7bd34a02c6d90a8e52b3e9e89",
+      "expected": "b41c2fca00051d7f76092356da1709b7c239f2d7bd34a02c6d90a8e52b3e9e89"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/output/HTT_INTEGRATED_V15.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "be5b92dc40a2a9963db9d1cc0f6d435f7d83acf2bf6de0f2a9c893c3130b37b5",
+      "expected": "be5b92dc40a2a9963db9d1cc0f6d435f7d83acf2bf6de0f2a9c893c3130b37b5"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/output/HTT_INTEGRATED_V15.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "040e8443a89d394faac51cd15374147dc7759e3b8da590447fec3d8e2242c1fd",
+      "expected": "040e8443a89d394faac51cd15374147dc7759e3b8da590447fec3d8e2242c1fd"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/output/HTT_NOVELTY_STRATEGY_V15.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "582db92386b39650240ee1d17e4616f9347b0d58c936232fb6415229b4b6544e",
+      "expected": "582db92386b39650240ee1d17e4616f9347b0d58c936232fb6415229b4b6544e"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/output/HTT_NOVELTY_STRATEGY_V15.pdf",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "9beabc7af39522eff945e57a020f9908bd257c6ed26323da748615e661f0eeea",
+      "expected": "9beabc7af39522eff945e57a020f9908bd257c6ed26323da748615e661f0eeea"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/ENTROPIC_SHEAR_BRIDGE.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "362bfa96f1e413e24854a30f322bd587f918de8071a1540b9c2c2529bc320b1d",
+      "expected": "362bfa96f1e413e24854a30f322bd587f918de8071a1540b9c2c2529bc320b1d"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/ENTROPIC_SHEAR_BRIDGE.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "8edd9d7ecba6808d23911bdfd80f506b6633c4edc71039ff02f535c525f48930",
+      "expected": "8edd9d7ecba6808d23911bdfd80f506b6633c4edc71039ff02f535c525f48930"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/INDEPENDENT_EXTENSION_REVIEW.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "954745e1e4b778613f11039cc00ec2c16305461ab3ce1ff6a6c8bc2c9a55bf2c",
+      "expected": "954745e1e4b778613f11039cc00ec2c16305461ab3ce1ff6a6c8bc2c9a55bf2c"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/INDEPENDENT_EXTENSION_REVIEW.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "daa07ddc018ecd8869a8bc3876471c2dd617bab7b85fc5eb576aad3e87bf35d0",
+      "expected": "daa07ddc018ecd8869a8bc3876471c2dd617bab7b85fc5eb576aad3e87bf35d0"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/NOVELTY_LITERATURE.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ecb74bf0ecf6a991aff702ea90dd258d308dc6ed01e50eff449b051ef10f7573",
+      "expected": "ecb74bf0ecf6a991aff702ea90dd258d308dc6ed01e50eff449b051ef10f7573"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/NOVELTY_LITERATURE.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "647217659a82c4bf435a43fe8c9e511d357577385e5e95329c69352bc5d87385",
+      "expected": "647217659a82c4bf435a43fe8c9e511d357577385e5e95329c69352bc5d87385"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/PAPER_II_REUSE.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "8cab1d6040e19e8ea60a9d58cbaef4b998dda70558480fd200a22197be8a4fc8",
+      "expected": "8cab1d6040e19e8ea60a9d58cbaef4b998dda70558480fd200a22197be8a4fc8"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/PAPER_II_REUSE.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "afdcec9c945bd970cd741c47fd0dc35b9ee16204fde9a42d70e0475b27a058cd",
+      "expected": "afdcec9c945bd970cd741c47fd0dc35b9ee16204fde9a42d70e0475b27a058cd"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/PAPER_I_REUSE.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "6c59df44b0d08996603af600614d81f941d67ad5264847331f3ee6ff644bc558",
+      "expected": "6c59df44b0d08996603af600614d81f941d67ad5264847331f3ee6ff644bc558"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/PAPER_I_REUSE.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ee6e8fba9ae7dce9353c3e92d3b32aa96c28973f854fb2717e56aa2e9015719b",
+      "expected": "ee6e8fba9ae7dce9353c3e92d3b32aa96c28973f854fb2717e56aa2e9015719b"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/RESPONSE_FRONTIER.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "d8e605371793e05605858c36c5e0688c4584f88f0f545dfec03e34e37e5ca000",
+      "expected": "d8e605371793e05605858c36c5e0688c4584f88f0f545dfec03e34e37e5ca000"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/RESPONSE_FRONTIER.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "270bd95bb7f2355294a22aaf03fc8b5ca004e34a00e813fc9e71ebe6f8c98a59",
+      "expected": "270bd95bb7f2355294a22aaf03fc8b5ca004e34a00e813fc9e71ebe6f8c98a59"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/v15/research/V15_INTEGRATION.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "527437b2e958528f5d0591e32e501639960efc4e1ad3621ea1af3b95b39506d9",
+      "expected": "527437b2e958528f5d0591e32e501639960efc4e1ad3621ea1af3b95b39506d9"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/DATA_ATLAS.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "39294a4e135b0886831a1d96dc00989d01b8048790cdf92f1c789df1151c4919",
+      "expected": "39294a4e135b0886831a1d96dc00989d01b8048790cdf92f1c789df1151c4919"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/DATA_ATLAS.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ddef506770924e44378fe6bf022b86cc81e4c740c79ce801539026ddf0070c75",
+      "expected": "ddef506770924e44378fe6bf022b86cc81e4c740c79ce801539026ddf0070c75"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/DATA_ATLAS_VALIDATION.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "584fa67f0a546f54b3208b90ea556dc4622d67eb0e8e8ba3279d15a40961aa3d",
+      "expected": "584fa67f0a546f54b3208b90ea556dc4622d67eb0e8e8ba3279d15a40961aa3d"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/HARNESS_AUDIT.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "1ab48dda865614025d10905efa551be77ed9cb9d156417c5daaf255f7f27d8c8",
+      "expected": "1ab48dda865614025d10905efa551be77ed9cb9d156417c5daaf255f7f27d8c8"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/HARNESS_AUDIT.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "5e04ee0f68b7492cc19ff8d9cf3d29c6b4b4c453f02fabf1f68a623f5dc1b463",
+      "expected": "5e04ee0f68b7492cc19ff8d9cf3d29c6b4b4c453f02fabf1f68a623f5dc1b463"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/INTERNAL_INTEGRATION.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "5c7aa5bbc6c5011bb9b4234064d92642c51c108d629dea4387ba90868165c88a",
+      "expected": "5c7aa5bbc6c5011bb9b4234064d92642c51c108d629dea4387ba90868165c88a"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/INTERNAL_INTEGRATION.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "a7a7b14eca4dab0d7b43172d12ee31256def334122a3ed91f1d26b01a2392c63",
+      "expected": "a7a7b14eca4dab0d7b43172d12ee31256def334122a3ed91f1d26b01a2392c63"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/PHYSICAL_AUDIT.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "ce0bf44f53393cf1d5a90fc39beb0818b681e6e9c81ea5952bdfb07d0a961e65",
+      "expected": "ce0bf44f53393cf1d5a90fc39beb0818b681e6e9c81ea5952bdfb07d0a961e65"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/PHYSICAL_AUDIT.md",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "a14d9e399d8abd9ef33beeecb14c701f506edddc3c96c6bbd64a7df56b8b9cfe",
+      "expected": "a14d9e399d8abd9ef33beeecb14c701f506edddc3c96c6bbd64a7df56b8b9cfe"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/validate_data_atlas_lemmas.py",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "e26db11d15306475aca79df5429e12645a330ab35bd749946c61791f23a5016b",
+      "expected": "e26db11d15306475aca79df5429e12645a330ab35bd749946c61791f23a5016b"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/evidence/sources/H03_SOURCE_TOMOGRAPHY.json",
+      "sha_match": true,
+      "size_match": true,
+      "actual": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+      "expected": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326"
+    }
+  ],
+  "source_file_count": 156,
+  "source_mismatches": []
+}

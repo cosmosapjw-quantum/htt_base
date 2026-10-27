@@ -1,0 +1,95 @@
+..F....                                                                  [100%]
+=================================== FAILURES ===================================
+___________________ test_tiny_nonzero_s_keeps_inverse_domain ___________________
+
+    def test_tiny_nonzero_s_keeps_inverse_domain():
+        unit = np.diag([1., -1., 0.])
+        s = unit * 1e-120
+        d = np.array([.1,.2,-.3])
+        o = KAPPA * lift_matrix(s) @ d
+>       out = joint_test(o, s, d, 1e-118)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/test_optical_joint.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+o = array([ 2.06003961e-121,  3.92470236e-121, -4.20503824e-121,
+       -8.86499899e-122,  0.00000000e+000, -2.17147241e-121,
+        3.25720861e-121])
+s = array([[ 1.e-120,  0.e+000,  0.e+000],
+       [ 0.e+000, -1.e-120,  0.e+000],
+       [ 0.e+000,  0.e+000,  0.e+000]])
+d_obs = array([ 0.1,  0.2, -0.3]), budget = 1e-118, e_d = 0.0, d_max = None
+kappa = np.float64(2.1714724095162588)
+
+    def joint_test(o, s, d_obs, budget, e_d=0.0, d_max=None, kappa=KAPPA):
+        """Profile a direct-dipole ball against one shared STF3 residual ball.
+    
+        A finite direct radius is a supplied uncertainty, never inferred here.
+        With S=0 the test remains direct membership and no inverse is attempted.
+        """
+        o = np.asarray(o, float)
+        d_obs = np.asarray(d_obs, float)
+        s = validate_s(s)
+        if o.shape != (7,) or d_obs.shape != (3,) or not np.isfinite(o).all() or not np.isfinite(d_obs).all():
+            raise ValueError('finite seven-component O and three-component d required')
+        if not np.isfinite([budget, e_d]).all() or budget < 0 or e_d < 0:
+            raise ValueError('nonnegative finite radii required')
+        if d_max is not None and (not np.isfinite(d_max) or d_max < 0):
+            raise ValueError('invalid physical dipole radius')
+        l = lift_matrix(s)
+        k = kappa * l
+        eps = np.finfo(float).eps
+        if d_max is not None and np.linalg.norm(d_obs) > d_max + e_d + 32*eps*max(np.linalg.norm(d_obs), d_max, e_d):
+            return {'compatible': False, 'physical_set_empty': True, 'reason': 'direct dipole ball misses physical radius'}
+        def objective(d):
+            r = o - k @ d
+            return float(r @ r)
+        if e_d == 0:
+            profiled = d_obs.copy()
+        elif d_max == 0:
+            profiled = np.zeros(3)
+        else:
+            constraints = [{'type': 'ineq', 'fun': lambda d: e_d**2 - np.sum((d-d_obs)**2)}]
+            if d_max is not None:
+                constraints.append({'type': 'ineq', 'fun': lambda d: d_max**2 - np.sum(d**2)})
+            start = d_obs.copy()
+            if d_max is not None and np.linalg.norm(start) > d_max:
+                start *= d_max / np.linalg.norm(start)
+            solution = minimize(objective, start, method='SLSQP', constraints=constraints,
+                                options={'ftol': 1e-15, 'maxiter': 2000})
+            profiled = solution.x
+            feasibility = np.linalg.norm(profiled-d_obs) <= e_d + 1e-9 * max(e_d, np.linalg.norm(d_obs), np.linalg.norm(profiled))
+            if d_max is not None:
+                feasibility &= np.linalg.norm(profiled) <= d_max + 1e-9 * max(d_max, np.linalg.norm(profiled))
+            if not feasibility or (not solution.success and np.linalg.norm(solution.jac) > 1e-7):
+                raise RuntimeError(f'dipole profile failed: {solution.message}')
+        squared = objective(profiled)
+        if np.linalg.norm(s) == 0:
+            split = {'branch': 'S_ZERO_DIRECT_MEMBERSHIP', 'perpendicular_squared': squared,
+                     'parallel_squared': 0.0, 'inverse_d': None}
+        else:
+            # Scale first: M_S may underflow for a valid but very small nonzero S.
+            scale = np.max(np.abs(s))
+            l_unit = lift_matrix(s / scale)
+            m_unit = l_unit.T @ l_unit
+            d_hat = np.linalg.solve(m_unit, l_unit.T @ (o / (kappa * scale)))
+            perp = o - k @ d_hat
+            parallel = float(np.linalg.norm(k @ (d_hat-profiled))**2)
+            split = {'branch': 'INVERTIBLE_S', 'perpendicular_squared': float(perp @ perp),
+                     'parallel_squared': float(parallel), 'inverse_d': d_hat.tolist()}
+            if not np.isclose(squared, split['perpendicular_squared'] + parallel,
+                              rtol=1e-10, atol=1e-28 * max(squared, split['perpendicular_squared'] + parallel)):
+>               raise AssertionError('orthogonal decomposition failed')
+E               AssertionError: orthogonal decomposition failed
+
+docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/optical_joint.py:144: AssertionError
+=============================== warnings summary ===============================
+../../../.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63
+  /home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+    warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/test_optical_joint.py::test_tiny_nonzero_s_keeps_inverse_domain
+1 failed, 6 passed, 1 warning in 0.71s

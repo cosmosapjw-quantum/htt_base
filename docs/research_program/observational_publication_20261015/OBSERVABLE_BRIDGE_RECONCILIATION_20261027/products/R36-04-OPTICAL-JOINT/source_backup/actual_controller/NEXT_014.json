@@ -1,0 +1,52 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "task_id": "R36-04-OPTICAL-JOINT",
+  "attempt": 2,
+  "phase": "review",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "candidate_identity": "sha256:a200cc9b67de72f24ab8050f8254ac4fd85fb8b6f2dea9e18835a5f57025bed5",
+  "frontier_identity": "ed7520e4e2ba670fba1d15f4b0e8aae91efa97fd29efed82193a32304dabe1f8",
+  "task_spec_identity": "3c296eebc3eeaaee3a1e865c854d9da7a48d132db3c966ef58886d5290bfb6c9",
+  "packet_id": "3ba5f4f0afd2a3e3c61ba4c2c85c67d8c8b956d3ebac21438a8ea5bad2f5dbd2",
+  "route": {
+    "route": "review_or_research",
+    "requested": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_selected": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_status": "TRANSPORT_REQUESTED_PROFILE_AVAILABLE",
+    "observed_runtime": "NOT_INDEPENDENTLY_OBSERVED",
+    "launch_performed": false,
+    "availability_catalog_profiles": [
+      {
+        "model": "gpt-6-astra",
+        "effort": "xhigh"
+      },
+      {
+        "model": "gpt-6-sol",
+        "effort": "high"
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "effort": "medium"
+      }
+    ]
+  },
+  "resume_evidence": null,
+  "scientific_resume": null,
+  "transport_resume": null,
+  "launch_performed": false,
+  "observed_runtime": "UNKNOWN",
+  "native_tool": "collaboration.spawn_agent",
+  "spawn_args": {
+    "task_name": "rc_3ba5f4f0afd2a3e3",
+    "fork_turns": "none",
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh",
+    "message": "Execute this bounded HTT campaign assignment. Do not spawn children. No native low-ell solver or ODE evolution; preserve HTT/MIO and transfer provenance. Do not weaken acceptance or promote scoped diagnostics. Research/escalation/review are read-only. Review must be independent of all recorded authors. Return a result JSON bound to packet_id, task_id, input_identity, plus a local raw_receipt path. Never claim dispatch from this packet. Assignment:\n{\"campaign\": \"2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4\", \"task_id\": \"R36-04-OPTICAL-JOINT\", \"attempt\": 2, \"phase\": \"review\", \"input_identity\": \"sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43\", \"candidate_identity\": \"sha256:a200cc9b67de72f24ab8050f8254ac4fd85fb8b6f2dea9e18835a5f57025bed5\", \"frontier_identity\": \"ed7520e4e2ba670fba1d15f4b0e8aae91efa97fd29efed82193a32304dabe1f8\", \"task_spec_identity\": \"3c296eebc3eeaaee3a1e865c854d9da7a48d132db3c966ef58886d5290bfb6c9\", \"packet_id\": \"3ba5f4f0afd2a3e3c61ba4c2c85c67d8c8b956d3ebac21438a8ea5bad2f5dbd2\", \"spec\": {\"id\": \"R36-04-OPTICAL-JOINT\", \"kind\": \"code\", \"title\": \"Implement the shared-budget optical inverse in a correctly defined observer chart\", \"goal\": \"Implement the shared-budget optical inverse in a correctly defined observer chart\", \"acceptance\": \"Implement the full profiled seven-component Hubble consistency test, uncertain S term, direct-dipole uncertainty, S=0 set branch and finite-z remainder. The separate 0.8/0.8 counterexample must reject jointly. Preserve accelerated same-congruence d=-A/(cH); add the dust moving-observer interpretation d_boost=-2(I+S) beta at first order only with corrected distance d_L/(1+z)^2 and shifted vertex redshift. Derive the raw-to-target estimator response before using a catalogue dipole. Distinguish nonlinear magnitude octupole from a spurious uncorrected-distance octupole. No observed-acceleration claim from raw CF4 harmonic coefficients. Retain (-,+,+,+), c and explicit frame/units. Reuse the imported derivations and tests; do not re-prove unchanged results. Deliver source-bound RESULT.json, runnable implementation, meaningful falsifiers and a physical interpretation with one scoped independent review. No native solver, ODE evolution, original42 promotion or journal submission. A qualified product requires the stated output; a gap report never qualifies it.\", \"input_identity\": \"sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43\", \"contract_origin\": \"new_conditional_research\", \"promotes_original_acceptance\": false, \"initial_state\": \"ready\", \"requires\": {\"all\": []}, \"input_sources\": [{\"path\": \"docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/EVIDENCE_MANIFEST.json\", \"sha256\": \"83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43\", \"role\": \"preserved internal sources, externally supplied audit, independent corrections and actual finite replays\"}], \"owned_paths\": [\"docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT\"], \"semantic_delta\": {\"kind\": \"method\", \"before\": {\"status\": \"Retained R32 methods plus source-specific external holds; newly recovered internal results not yet consumed by this question.\"}, \"after\": {\"target\": \"Implement the shared-budget optical inverse in a correctly defined observer chart\"}, \"discriminator\": \"Implement the full profiled seven-component Hubble consistency test, uncertain S term, direct-dipole uncertainty, S=0 set branch and finite-z remainder. The separate 0.8/0.8 counterexample must reject jointly. Preserve accelerated same-congruence d=-A/(cH); add the dust moving-observer interpretation d_boost=-2(I+S) beta at first order only with corrected distance d_L/(1+z)^2 and shifted vertex redshift. Derive the raw-to-target estimator response before using a catalogue dipole. Distinguish nonlinear magnitude octupole from a spurious uncorrected-distance octupole. No observed-acceleration claim from raw CF4 harmonic coefficients.\", \"scope\": \"Additional declared observable/conditional product; original frozen acceptance and histories unchanged.\"}, \"implementation_route\": \"subagent_specialist\", \"paper_ids\": [\"P3\", \"P4\", \"P6\"], \"informs_original_nodes\": [\"H04\", \"K04\", \"K05\", \"V04\"], \"qualified_product_expected\": \"optical_joint_response\", \"reuse_first\": true, \"deliverable_rule\": \"Qualify the exact named result only after acceptance and independent review; a source-gap report cannot qualify it.\", \"next_after_hold\": \"Record exact missing input and request next independent ready task; do not reset, duplicate or rename exhausted experiments.\"}, \"issue\": null, \"repair_plan\": null, \"repair_authorization\": null, \"resume_evidence\": null, \"scientific_resume\": null, \"transport_resume\": null, \"repair_input_transition\": null, \"authors\": [\"/root/rc_9441945b45b2b786\"], \"contributors\": [\"/root/rc_9441945b45b2b786\"], \"history_refs\": [{\"phase\": \"execute\", \"packet_id\": \"9441945b45b2b78644d2f089d1da3b5a142cbb353406bf9a56bbdd4cef42c1c5\", \"receipt\": {\"path\": \"/mnt/extdrive/workdir/htt_open_data/r36_optical_joint_actual/RAW_RECEIPT.json\", \"sha256\": \"0eac7aca603aa6b77e4f8b1301c8be3db08f71cd1fa58e5f87c903893ee833fa\"}, \"outcome\": \"success\", \"candidate_identity\": \"sha256:a200cc9b67de72f24ab8050f8254ac4fd85fb8b6f2dea9e18835a5f57025bed5\"}], \"history_total\": 1}"
+  }
+}
