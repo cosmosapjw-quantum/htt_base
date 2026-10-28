@@ -1,0 +1,164 @@
+\documentclass[aps,prd,reprint,onecolumn,nofootinbib]{revtex4-2}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,graphicx,booktabs}
+\usepackage{xurl}\usepackage[colorlinks=true]{hyperref}
+\setlength{\emergencystretch}{4em}
+\InputIfFileExists{generated/numbers.tex}{}{\PackageError{PR4}{PENDING_SOURCE_QUALIFICATION}{Final qualified MC100 source required.}\stop}
+\begin{document}
+\title{Low-multipole polarization morphology in processed Commander maps}
+\author{Conditional methods research draft}\noaffiliation
+\maketitle
+\hypertarget{observable-and-processing}{%
+\section{Observable and processing}\label{observable-and-processing}}
+
+We compare a fixed polarization morphology statistic in the Planck PR4
+Commander full-mission map with the corresponding released
+NPIPE/Commander simulations. This is an experiment on processed maps.
+The related finite-bandpass calculation uses the 24 real signed
+coordinates of E and B at multipoles 2 and 3. Here multipole 4 is
+additionally required by the statistic. The experiment supplies neither
+a new spectral-rank result nor a measured bound on foreground moments.
+
+The observed polarization comes from the NSIDE = 2048 Q and U extension
+of \nolinkurl{COM_CMB_IQU-commander_4096_R4.00_full.fits}; the
+higher-resolution temperature extension is unused. Simulations are the
+fixed 100 full-mission products
+\nolinkurl{npipe6v20_commander_cmb_2048_mc_0300_005a.fits} through
+\nolinkurl{..._0399_005a.fits}. Each simulation identifier contributes
+one parent-sky realization. Temporal splits and alternative products of
+the same sky do not add independent realizations.
+
+We retain Galactic coordinates and the released COSMO polarization
+convention. Observed Q and U are in K\_CMB; simulated values are
+converted from microkelvin to kelvin before analysis. The binary
+Lollipop mask retains 1273 of 3072 NSIDE = 16 pixels. Each NESTED parent
+value is copied to its 16384 NSIDE = 2048 children, and the same mask is
+applied to native-resolution Q and U. The masked maps are reordered to
+RING for spin-two analysis with lmax = mmax = 4:
+
+\[
+ \widetilde a^X_{\ell m}=\mathcal A^X_{\ell m}[M Q,M U],
+ \qquad X\in\{E,B\},\quad \ell=2,3,4.
+\]
+
+We use the delivered maps without additional smoothing, beam inversion
+or noise subtraction. No scalar effective beam is specified or inferred;
+the delivered processing response and the additional mask response are
+retained. The complete signed E and B coefficients, satisfying
+\(\widetilde a^X_{\ell,-m}=(-1)^m\overline{\widetilde a^X_{\ell m}}\),
+are retained with their source, unit and processing metadata.
+
+\hypertarget{a-fixed-parity-odd-contraction}{%
+\section{A fixed parity-odd
+contraction}\label{a-fixed-parity-odd-contraction}}
+
+For each nonzero E multipole define
+
+\[
+ v_{\ell m}=\frac{\widetilde a^E_{\ell m}}
+ {\left(\sum_{r=-\ell}^{\ell}|\widetilde a^E_{\ell r}|^2\right)^{1/2}},
+ \quad
+ J_{234}=\operatorname{Im}\sum_{m+n+p=0}
+ \begin{pmatrix}2&3&4\\m&n&p\end{pmatrix}
+ v_{2m}v_{3n}v_{4p},\qquad T=|J_{234}|.
+\]
+
+The sum uses every allowed signed index, with no additional
+symmetrization factor. Reality of the field and the Wigner-symbol
+symmetry make the unprojected contraction purely imaginary: its
+conjugate is \((-1)^{2+3+4}\) times itself. Common proper rotations
+preserve the contraction; coefficient parity reverses J and preserves T.
+These algebraic properties concern the extracted coefficients. Rotating
+a sky through a fixed Galactic mask is a different operation.
+
+T is dimensionless and uses one field, one multipole triple, one map
+product and one mask. There is no maximization over these choices.
+Powers
+\(\widetilde C_\ell^X=(2\ell+1)^{-1}\sum_m|\widetilde a^X_{\ell m}|^2\),
+in K\_CMB squared, and quadrupole--octupole axis alignment are
+descriptive quantities. An undefined descriptive axis does not
+invalidate an otherwise valid J. This contraction is distinct from
+\(\chi=\det(v,Qv,Q^2v)\); the sharp bound for that determinant and ideal
+spherical reference laws are not used to calibrate T.
+
+\hypertarget{released-pipeline-reference-and-finite-simulation-precision}{%
+\section{Released-pipeline reference and finite-simulation
+precision}\label{released-pipeline-reference-and-finite-simulation-precision}}
+
+The released simulation construction uses independent CMB realizations
+with end-to-end processing, fixed foreground and instrumental settings,
+and Commander mixing matrices estimated from the observed data, with
+amplitudes fitted for each simulation. We use this as a plug-in
+processed-map working law. Fixing estimated mixing matrices does not
+establish the exact conditional distribution given their estimates or
+unconditional physical coverage. The data products and processing
+genealogy are documented by the NPIPE release and the Planck Legacy
+Archive\textasciitilde{}\cite{NPIPE2020,ESA_SIMULATION,PLA_PRODUCTS}.
+
+For the complete prescribed ensemble, define
+
+\[
+ B=100,\qquad k=\sum_{b=1}^{100}{\bf1}\{T_b\ge T_{\rm obs}\},
+ \qquad \widehat\theta=k/B,\qquad p_{\rm rank}=(1+k)/(B+1).
+\]
+
+Ties are included. The smallest rank value is 1/101. Interpreting this
+rank as a Monte Carlo significance reference additionally assumes
+exchangeability of the observed statistic and simulated statistics under
+the stipulated working model. No selection or early stopping uses
+intermediate tail counts.
+
+For the working-law tail probability
+\(\theta=\Pr_{\rm work}(T_*\ge T_{\rm obs})\), we report the two-sided
+95\% Clopper--Pearson interval from k successes in B independent
+simulation draws. Its endpoints are 0 for k = 0 or
+\(F^{-1}_{\mathrm{Beta}(k,B-k+1)}(0.025)\) otherwise, and 1 for k = B or
+\(F^{-1}_{\mathrm{Beta}(k+1,B-k)}(0.975)\) otherwise. The interval uses
+B binomial trials, not B + 1 pseudo-observations. Its half-width must
+meet the specified 0.105 precision criterion. It measures
+finite-simulation uncertainty in this tail probability, without
+accounting for unrepresented foreground, calibration or model
+uncertainty.
+
+\hypertarget{results-and-interpretation}{%
+\section{Results and interpretation}\label{results-and-interpretation}}
+
+For all 100 prescribed realizations, the observed value is
+\PRFourTobs{}, with \PRFourK{} inclusive exceedances. The empirical tail
+fraction is \PRFourEmpirical{}, and the plus-one rank is \PRFourRank{}.
+The 95\% binomial interval is \([\PRFourCPlow,\PRFourCPhigh]\), with
+half-width \PRFourCPhalf{}. Figure 1 displays the complete simulation
+distribution and observed statistic. The accompanying numerical tables
+retain every simulation and its signed E/B coefficients.
+
+Three unit-norm harmonic inputs, E(2,0), a real-field
+E(3,\textbar m\textbar=1) mode and a real-field
+B(4,\textbar m\textbar=2) mode, illustrate the native-resolution
+mask-and-analysis response in Figure 2. Their outputs retain every E/B
+component through multipole 4. They are three selected response columns;
+they do not reconstruct the full analysis operator or an upstream NPIPE
+transfer matrix. The qualified numerical supplement records linearity,
+masked-pixel, unit, reality, parity, rotation and retained-coefficient
+stability checks.
+
+The comparison quantifies compatibility with this particular
+processed-map working law. It does not measure a physical foreground
+budget, infer radiation stress or matter shear from E, identify a
+Bianchi family, or establish unconditional false-positive control.
+
+\input{generated/methods_table.tex}
+\input{generated/results_table.tex}
+
+\begin{figure}[htbp]
+\centering\includegraphics[width=.95\linewidth,height=.72\textheight,keepaspectratio]{figures/morphology_survival.pdf}
+\caption{Empirical survival fraction of T for all 100 fixed processed Commander realizations, with the observed value marked. At the observed threshold the inclusive fraction is k/100; the separately reported rank is (1+k)/101. The interval in the result table describes simulation-tail uncertainty under the working law.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering\includegraphics[width=.95\linewidth,height=.72\textheight,keepaspectratio]{figures/mask_response_columns.pdf}
+\caption{Three selected columns of the common mask-and-spin-analysis response, shown in the real signed E/B representation at multipoles 2, 3 and 4. Rows within each multipole are m = 0 followed by (sqrt(2) Re, -sqrt(2) Im) for positive m. Each input has unit harmonic norm. Positive-m inputs for the last two columns are 1/sqrt(2) and i/sqrt(2), respectively, with negative m fixed by reality. The display includes inter-multipole and E/B coupling where present; it is not a complete transfer matrix.}
+\end{figure}
+
+\bibliographystyle{apsrev4-2}\bibliography{references}
+\end{document}

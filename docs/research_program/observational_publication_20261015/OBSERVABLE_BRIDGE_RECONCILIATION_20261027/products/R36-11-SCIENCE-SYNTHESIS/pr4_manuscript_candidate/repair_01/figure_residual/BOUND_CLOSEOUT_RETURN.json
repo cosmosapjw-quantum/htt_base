@@ -1,0 +1,53 @@
+{
+  "review_kind": "SCOPED_CODE_REVIEW_TARGETED_CLOSEOUT",
+  "decision": "F1_CLOSED_F2_RESIDUAL_REPAIR_REQUIRED",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "reviewer": "/root/r36_pr4_paper_consumer_code_review",
+  "reviewed_preparation_manifest_sha256": "866c6666844ed321931a39e0501650b793460401c65de3fef64197f217ea687c",
+  "reviewed_assemble_sha256": "57e139e34786132b6e13c703f5ab26bd34658e28ee28f37f23e3c3a132c1019c",
+  "author_return_sha256": "e231f2afd67ffb87b5aea2e6f0cb4340ff9c6c499ff82d2ea87af006ac812c7d",
+  "prior_review_return_sha256": "4dc6134f095718b053f733685c5430df5c15e2d4f9af01de28984ca230b4248a",
+  "resolution": {
+    "F1": "CLOSED; original and additional full-lossless-payload negatives reject",
+    "F2": "PARTIAL; original stale numbers reject, same-number stale response PDF still accepted"
+  },
+  "findings": [
+    {
+      "id": "F2",
+      "priority": "P1",
+      "path": "assemble.py",
+      "line_start": 301,
+      "line_end": 318,
+      "title": "Current build input records and scalar text do not bind the actual PDF response figure",
+      "counterexample": "After actual current response rebuild, restoring the older PDF with identical scalar paragraph returns VERIFIED_CURRENT_BUILD despite 23119 changed response-page pixels.",
+      "evidence": "CLOSEOUT_PROBE.json / closeout_probe_first.log / old_response.pdf / current_response.pdf",
+      "minimal_fix": "Ensure the actual output being verified comes from a current bounded successful build, or verify full build-output content association including figures while allowing metadata equivalence."
+    }
+  ],
+  "validation": {
+    "manifest_files_checked": 74,
+    "manifest_mismatches": 0,
+    "affected_supplied_test": "1 passed,35 deselected",
+    "original_F1_counterexamples_rejected": true,
+    "original_F2_counterexample_rejected": true,
+    "actual_forced_synthetic_current_builds": "PASS",
+    "no_op_and_metadata_only_variation": "PASS",
+    "remaining_F2_probe_exit": 1
+  },
+  "source_science_gate_changed": false,
+  "actual_scientific_or_manuscript_qualification": false,
+  "production_edits": false,
+  "review_report_sha256": "2429553f4f22ab87c78ced282ff9d37cf5ec852f6252bb250a1686b2cb3efd43",
+  "raw_probe_sha256": "6c59b3df853e50a5f11293a1a7e817058c1f97cfdb294028d608769734b6648e",
+  "pending": [
+    "remaining F2 actual output association",
+    "complete actual MC100 source",
+    "fresh formal scientific source qualification",
+    "actual manuscript build",
+    "independent final manuscript review"
+  ]
+}

@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_manuscript_author/repair_01/rebuild_regression.py", line 8, in <module>
+    before_ready=a.check_rendered_products(c,out,built=False);assert before_ready['pdf_verification']=='UNVERIFIED_PREBUILD';build('current_02_build.log');assert a.check_rendered_products(c,out,built=True)['pdf_verification']=='VERIFIED_CURRENT_BUILD'
+                                                                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_manuscript_author/assemble.py", line 333, in check_rendered_products
+    if verify:verify_current_pdf(context,out)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_manuscript_author/assemble.py", line 317, in verify_current_pdf
+    matches=list(re.finditer(pattern,text));require(len(matches)==1,'PDF_BUILD_UNVERIFIED: unique current numerical paragraph '+','.join(keys))
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_manuscript_author/assemble.py", line 21, in require
+    if not ok:raise ValueError(label)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: PDF_BUILD_UNVERIFIED: unique current numerical paragraph Empirical,Rank

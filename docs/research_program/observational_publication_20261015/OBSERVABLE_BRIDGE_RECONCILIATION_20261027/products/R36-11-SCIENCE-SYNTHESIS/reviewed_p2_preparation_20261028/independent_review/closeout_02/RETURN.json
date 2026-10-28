@@ -1,0 +1,52 @@
+{
+  "review_kind": "SCOPED_CODE_REVIEW_TARGETED_CLOSEOUT",
+  "decision": "SCOPED_CODE_REVIEW_PASS",
+  "eligibility_scope": "prepared cached-consumer code only",
+  "source_qualification_status": "PREPARED_PENDING_SOURCE_QUALIFICATION",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "reviewer": "/root/r36_pr4_paper_consumer_code_review",
+  "reviewed_preparation_manifest_sha256": "a59298455cf9d63e2518834c5c40f59948ac9f3cd1a7e557f88e30ad938ebf4e",
+  "reviewed_assemble_sha256": "4c2a7dcfce6124d859d3c1d59ed57819ab99fc120237047d7086d738b59fea8a",
+  "author_return_sha256": "d3b25b327f4eadbdf1aea1f4ae2b909fd54c466b7f3e19d19deeb799c139f8a9",
+  "prior_review_return_sha256": {
+    "original": "4dc6134f095718b053f733685c5430df5c15e2d4f9af01de28984ca230b4248a",
+    "closeout_01": "9514e5146eb12a1791667c7e4e08d95fe7439cbbb8439c0099f68db8f9a3a519"
+  },
+  "resolution": {
+    "F1": "CLOSED; signed B loss rejected before build; shared lossless path unchanged",
+    "F2": "CLOSED; actual verifier build replaces restored old PDF and consumes current response figure"
+  },
+  "findings": [],
+  "validation": {
+    "probe_exit": 0,
+    "manifest_files_checked": 106,
+    "manifest_mismatches": 0,
+    "only_changed_function": "verify_current_pdf",
+    "response_after_verification_vs_current_changed_pixels": 0,
+    "response_after_verification_vs_old_changed_pixels": 23119,
+    "same_scalar_old_current_pdf_text_equal": true,
+    "actual_verifier_build_executed": true,
+    "metadata_only_pdf_variation_allowed": true,
+    "source_pending_cli_exit": 3,
+    "missing_source_prevents_build": true,
+    "intentional_actual_build_failure_rejected": true,
+    "latexmk_invocations_started": 6,
+    "latexmk_successes": 5,
+    "latexmk_intentional_failure_negatives": 1,
+    "unchanged_prior_evidence": "36 supplied +8 independent baseline and closed F1 reused"
+  },
+  "actual_scientific_or_manuscript_qualification": false,
+  "production_edits": false,
+  "review_report_sha256": "b66d7b6f7259bfab16dffa7c2c4d207510737f5451ee76026f4d1cc1b531f281",
+  "raw_probe_sha256": "c51dddfcee35a525fe1adbf22af4a8efc893cad34b3c4a7b11e43f9bdc118a5c",
+  "pending": [
+    "complete actual MC100 source",
+    "fresh independent formal scientific source qualification and final binding/export",
+    "actual manuscript assembly/build",
+    "fresh independent final manuscript review"
+  ]
+}

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_manuscript_author/prepare.py", line 18, in <module>
+    result=subprocess.run(['latexmk','-pdf','-interaction=nonstopmode','-halt-on-error','-outdir='+str(A/'pending_build'),str(out/'main.tex')],cwd=out,capture_output=True,text=True);(A/'raw/pending_build.log').write_text(result.stdout+result.stderr);assert result.returncode!=0 and 'PENDING_SOURCE_QUALIFICATION' in result.stdout and not (out/'main.pdf').exists()
+                                                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

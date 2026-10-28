@@ -1,0 +1,107 @@
+{
+  "fixture_only": "SYNTHETIC_UNIT_FIXTURE",
+  "actual_scientific_qualification": false,
+  "findings": {},
+  "prebuild": {
+    "assembled_ready": true,
+    "pdf_verification": "UNVERIFIED_PREBUILD"
+  },
+  "F1_missing_supplement": {
+    "rejected": true,
+    "error": "missing complete numerical supplement"
+  },
+  "F1_missing_observed_B": {
+    "rejected": true,
+    "error": "complete lossless numerical supplement parity"
+  },
+  "F1_missing_simulation_B": {
+    "rejected": true,
+    "error": "complete lossless numerical supplement parity"
+  },
+  "F1_changed_response": {
+    "rejected": true,
+    "error": "complete lossless numerical supplement parity"
+  },
+  "F1_changed_binding": {
+    "rejected": true,
+    "error": "complete lossless numerical supplement parity"
+  },
+  "F1_changed_export": {
+    "rejected": true,
+    "error": "complete lossless numerical supplement parity"
+  },
+  "F1_missing_receipts": {
+    "rejected": true,
+    "error": "complete lossless numerical supplement parity"
+  },
+  "first_build": {
+    "assembled_ready": true,
+    "pdf_verification": "VERIFIED_CURRENT_BUILD"
+  },
+  "F2_exact_stale_02_to_06": {
+    "rejected": true,
+    "error": "PDF_BUILD_UNVERIFIED: current input not consumed generated/numbers.tex"
+  },
+  "rebuilt_T06": {
+    "assembled_ready": true,
+    "pdf_verification": "VERIFIED_CURRENT_BUILD"
+  },
+  "F2_old_numeric_PDF_current_dependency_record": {
+    "rejected": true,
+    "error": "PDF_BUILD_UNVERIFIED: current numerical text Tobs"
+  },
+  "no_op_reassembly": {
+    "assembled_ready": true,
+    "pdf_verification": "VERIFIED_CURRENT_BUILD"
+  },
+  "F2_changed_dependency_main.tex": {
+    "rejected": true,
+    "error": "PDF_BUILD_UNVERIFIED: current input not consumed main.tex"
+  },
+  "F2_changed_dependency_generated/methods_table.tex": {
+    "rejected": true,
+    "error": "PDF_BUILD_UNVERIFIED: current input not consumed generated/methods_table.tex"
+  },
+  "F2_changed_dependency_figures/mask_response_columns.pdf": {
+    "rejected": true,
+    "error": "PDF_BUILD_UNVERIFIED: current input not consumed figures/mask_response_columns.pdf"
+  },
+  "F2_changed_dependency_references.bib": {
+    "rejected": true,
+    "error": "PDF_BUILD_UNVERIFIED: current input not consumed references.bib"
+  },
+  "metadata_rebuild": {
+    "assembled_ready": true,
+    "pdf_verification": "VERIFIED_CURRENT_BUILD"
+  },
+  "metadata_only_pdf_bytes_changed": true,
+  "metadata_rebuild_text_equal": true,
+  "F2_unbuilt_changed_response": {
+    "rejected": true,
+    "error": "PDF_BUILD_UNVERIFIED: current input not consumed figures/mask_response_columns.pdf"
+  },
+  "rebuilt_changed_response": {
+    "assembled_ready": true,
+    "pdf_verification": "VERIFIED_CURRENT_BUILD"
+  },
+  "F2_old_figure_PDF_current_dependency_record": {
+    "accepted": true,
+    "status": {
+      "assembled_ready": true,
+      "pdf_verification": "VERIFIED_CURRENT_BUILD"
+    }
+  },
+  "same_scalar_different_response_pdf_text_equal": true,
+  "old_response_pdf_sha256": "69145bddaf8680054fe6a409ac344b6b57dda8dab74fdd65fb5a4d1afda1b897",
+  "current_response_pdf_sha256": "f3e26fd9b8ae41c49661ae4fe7b9c896a7fa6e6e56858227495bba0401e9973c",
+  "response_page_changed_pixels": 23119,
+  "response_page_shape": [
+    660,
+    510,
+    3
+  ]
+}
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_paper_consumer_code_review/closeout_01/probe_closeout.py", line 74, in <module>
+    raise AssertionError('F2 residual: old response figure PDF accepted with current dependency records and unchanged scalar paragraph')
+AssertionError: F2 residual: old response figure PDF accepted with current dependency records and unchanged scalar paragraph

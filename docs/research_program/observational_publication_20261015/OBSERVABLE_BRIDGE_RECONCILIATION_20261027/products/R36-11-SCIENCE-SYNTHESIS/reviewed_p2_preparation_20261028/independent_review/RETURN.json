@@ -1,0 +1,65 @@
+{
+  "review_kind": "SCOPED_CODE_REVIEW",
+  "decision": "REPAIR_REQUIRED_PREPARATORY_CODE",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "reviewer": "/root/r36_pr4_paper_consumer_code_review",
+  "repo_head": "bdead6a8f51282ca647224b460b0f65de085568b",
+  "reviewed_preparation_manifest_sha256": "e08b2523083a5b7bb9ddf45c18cc32967d2425b8e50e722af2ae4210949833c4",
+  "reviewed_assemble_sha256": "626f80c691ed95916c097932311a960379238483ad945891e853341529ac886d",
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P2",
+      "title": "Required full numerical supplement is omitted from output validation",
+      "path": "assemble.py",
+      "line_start": 286,
+      "line_end": 294,
+      "first_failure": {
+        "missing_numerical_supplement_accepted": true,
+        "lost_observed_B_coefficients_accepted": true
+      },
+      "repair": "Require and compare complete lossless supplement content against current validated context, including all signed E/B, response, source candidate/export identities and preserved metadata/receipts."
+    },
+    {
+      "id": "F2",
+      "priority": "P1",
+      "title": "Stale PDF accepted after changing assembled source numbers",
+      "path": "assemble.py",
+      "line_start": 295,
+      "line_end": 297,
+      "first_failure": {
+        "stale_pdf_after_source_update_accepted": true,
+        "pdf_unchanged_after_update": true,
+        "old_Tobs": 0.2,
+        "new_Tobs": 0.6,
+        "old_k": 54,
+        "new_k": 0,
+        "old_p_rank": 0.5445544554455446,
+        "new_p_rank": 0.009900990099009901
+      },
+      "repair": "Establish that a successful current build consumed current assembled inputs; reject or mark stale PDFs unverified and verify current numerical text after bounded forced build. Use existing build evidence rather than new governance schema."
+    }
+  ],
+  "validation": {
+    "supplied_tests_passed": 36,
+    "independent_tests_passed": 8,
+    "synthetic_build_exit": 0,
+    "actual_pending_cli_exit": 3,
+    "actual_pending_tex_exit": 12,
+    "actual_result_pdf_created": false
+  },
+  "science_or_manuscript_qualification": false,
+  "production_edits": false,
+  "pending": [
+    "complete actual fixed100 source",
+    "actual fresh independent formal source-science return and final export binding",
+    "bounded prepared-code repair and closeout",
+    "actual paper build",
+    "fresh final manuscript review"
+  ],
+  "review_report_sha256": "66907925f429ce69241e7a5c6a57c5b886acac60d00eda4322d7f7ab26991387"
+}

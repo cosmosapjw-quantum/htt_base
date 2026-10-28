@@ -1,0 +1,387 @@
+{
+  "schema": "htt.pr4_processed_morphology_manuscript_editor_contract/1",
+  "created_utc": "2026-10-28T07:21:07.407181+00:00",
+  "status": "CONDITIONAL_AUTHOR_FRAMING_COMPLETE; FINAL_MC100_SOURCE_AND_PUBLICATION_PENDING",
+  "existing_publication_task": "R36-11-SCIENCE-SYNTHESIS",
+  "source_task": "R36-06-PR4-MORPHOLOGY",
+  "source_packet_id": "902ebd6a521d6b31864e0bfce63336c62d6cec5ff2f6c3128de7ab68046fce35",
+  "source_input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "provenance": {
+    "author": "/root/r36_optical_manuscript_fresh_review",
+    "role": "AUTHOR_FRAMER; not independent reviewer of this manuscript or concurrency helper",
+    "requested_runtime": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "observed_runtime": "UNKNOWN",
+    "repo_head_at_framing": "7f3f49a6b6d95b6ae0323d5bebd3afce0067b1a7"
+  },
+  "scientific_owner": "obsstat feature extraction; manuscript reports qualified conditional comparison. No HTT posterior or MIO certificate is created.",
+  "selected_consumer": {
+    "parent": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER",
+    "qualified_parent_candidate": "sha256:58bbadbdeb8577702b2c376b612bafe5f3c417bfbf1d1b76283763d57abfd3fc",
+    "qualified_parent_entry": "repair_01/report/main.pdf",
+    "new_companion": "pr4_morphology_supplement",
+    "new_reader_link": "README_PR4_MORPHOLOGY.md",
+    "reason": "Separate processed-map experiment with ell4 and a working null; parent finite seven-bandpass model concerns signed E2/E3/B2/B3,24coordinates and has no observed data or physical foreground budget. Existing bolometric supplement demonstrates standalone companion scope. A new link avoids modifying sealed old README bytes."
+  },
+  "allowed_future_edits": [
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/pr4_morphology_supplement/** (new files only)",
+    "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/README_PR4_MORPHOLOGY.md (new file only)"
+  ],
+  "preserve": [
+    "Every pre-existing P2 file and manifest, both parent manuscripts and original equation/proof content",
+    "Existing radiation/optical publications, historical seals including d845 and P4 evidence",
+    "Scientific producer/contracts/inputs and old observed row; replay approval below is external output only",
+    "Original17/42 and alternate18/42 acceptances; existing11 completed/frozen identity; PR3 FULL/HM/OE acceptance and all other scientific holds",
+    "No production, STATE or Git writes by this author; no new task/identity/allocation"
+  ],
+  "frozen_science": {
+    "statistic": "T=abs(Im sum Wigner3j(2,3,4;m,n,p) v2m*v3n*v4p), sum over all signed allowed indices m+n+p=0; each E ell separately normalized in complete signed norm; no extra factor",
+    "carrier": "Retain full signed E and B at ell2,3,4, reality relation, frame, units, source/operator genealogy; T uses E only. Do not infer a new spectral rank from the42real retained coordinates.",
+    "fixed_ensemble": "100 distinct released Commander FULL npipe6v20 005a products; IDs0300..0399 inclusive, same NSIDE2048 lifted Lollipop mask and spin2 analysis; no substitutions or split inflation",
+    "rank": "k=count(Tb>=Tobs), B=100, ties inclusive; p_rank=(1+k)/101; empirical_tail=k/100",
+    "interval": "95% exact Clopper-Pearson binomial interval from k/B, endpoint branches at0,100; half-width<=0.105. It covers simulation-tail uncertainty under independent draws of the stipulated law, not the rank pseudo-count or physical coverage.",
+    "working_law": "Plug-in released NPIPE/Commander processed law with observed-estimated mixing matrices held fixed. Observed/simulated exchangeability is an explicit additional assumption for rank interpretation; neither exact conditional nor unconditional physical null is established.",
+    "separations": [
+      "QO determinant chi=det(v,Qv,Q^2v) differs from J234; its sharp bound cannot be transferred.",
+      "Ideal U law is a different observable and is not used or plotted as this null.",
+      "Prior030 A/B/coadd statistic is descriptive and cannot be calibrated by this Commander ensemble.",
+      "No fit, statistic scan, rotated-sky selection, new noise or foreground budget, native-family inference, radiation/shear inference, or PR3 acceptance."
+    ]
+  },
+  "pending_final_binding": {
+    "qualified_result_path": null,
+    "qualified_result_sha256": null,
+    "source_candidate_identity": null,
+    "source_candidate_manifest_path": null,
+    "source_candidate_manifest_sha256": null,
+    "formal_source_return_path": null,
+    "formal_source_return_sha256": null,
+    "independent_scientific_reviewer_identity": null,
+    "qualified_observed_replay_row_path": null,
+    "qualified_observed_replay_row_sha256": null,
+    "replay_comparison_receipt_path": null,
+    "replay_comparison_receipt_sha256": null,
+    "numerical_slots": [
+      "T_obs",
+      "k",
+      "k_over_B",
+      "p_rank",
+      "CP_low",
+      "CP_high",
+      "CP_half_width"
+    ],
+    "status": "PENDING; populate a separate FINAL_SOURCE_BINDING.json after qualification, preserving this frozen contract"
+  },
+  "source_eligibility_gate": [
+    "Final source must be the complete Commander result, expected COMMANDER_RESULT.json, not the old030 root RESULT.json or pilot receipt.",
+    "Verify exact result/candidate/manifest/formalRETURN bindings. Formal source return must match task/packet/input and exact candidate; successful phase review, acceptance_met=true, qualified_products includes pr4_morphology_result, and a structurally recognized independent scientific pass. A word PASS in prose is insufficient.",
+    "Historical producer qualification_status/acceptance_met=false may remain frozen. A separately bound formal source review qualifies it; do not rewrite historical status to make a gate pass.",
+    "Require100 unique prescribed IDs, every source-qualified row and whole-file receipt, full-signed E/B, finite nonzero E multipoles, reality, identical operator/mask/units/frame, existing controls, selected response columns and prescribed observed/0300 stability. All failed acquisitions and scientific invalids remain accounted; no replacement/drop.",
+    "Bind and select the new observed replay row, its exact source seals and parity receipt; old execution identity remains UNKNOWN. Fresh science review must address this resolution.",
+    "No final numbers, result figures or public-ready build from partial rows. Download progress and pilot controls alone never qualify the source."
+  ],
+  "cached_editor_implementation": {
+    "inputs": "Qualified final result and explicit formal return/manifest; reviewed observed replay and three-column response JSON/NPZ. Read small cached numerical outputs only, never FITS maps or network.",
+    "new_files": [
+      "main.tex",
+      "references.bib",
+      "assemble.py (cached extraction/check only)",
+      "test_assemble.py (bounded deterministic fixtures)",
+      "FINAL_SOURCE_BINDING.json",
+      "NUMERICAL_SUPPLEMENT.json",
+      "NUMBER_FIGURE_MAP.json",
+      "generated/numbers.tex",
+      "generated/methods_table.tex",
+      "generated/results_table.tex",
+      "generated/all_draws.csv",
+      "figures/morphology_survival.pdf",
+      "figures/mask_response_columns.pdf",
+      "README.md",
+      "main.pdf"
+    ],
+    "extraction": "Embed exact source result and response objects or complete lossless JSON equivalents, retaining all101 rows, signed E/B, J/T, powers, controls and input metadata. Include immutable source identities and explicit qualified observed selection. Flat all_draws.csv is additional readable index, not replacement for complete coefficients.",
+    "deterministic_checks": "Recompute inclusive k,rank,k/B,CP endpoints/half-width from all100 cached T values and qualified observed row; cross-check source fields. Check T=abs(signedJ), complete signed-index sets and reality. Exact integer/identity checks; float absolute1e-12 for dimensionless derived scalar parity; existing1e-12 algebra and1e-10 coefficient thresholds remain unchanged. No new scientific tolerances.",
+    "tables": "Product/operator/units/mask table; one final result row with Tobs,k,B,k/B,p_rank,95%CP,half-width; per-draw CSV with actual ID,sourceSHA,J,T and relevant descriptive status.",
+    "figure1": "Deterministic inclusive empirical survival step plot of all100 T values, observed vertical line, separately annotated k/100 and(1+k)/101; no kernel fit/bin tuning/idealU overlay. Retain duplicate thresholds with correct inclusive counts.",
+    "figure2": "Heatmap of the cached three mask-response columns,42real E/B coordinates using order E2,E3,E4,B2,B3,B4 and m0,(sqrt2Re,-sqrt2Im) perpositive m; allcolumns one signed color scale. Show individual selected columns, not a reconstructed fullmatrix/rank. Complete complex signed outputs retained separately.",
+    "body": "Use only public-text block in MANUSCRIPT_ADDITIONS.md; keep novelty/operational memo external. No task IDs, controller/packet jargon or incomplete placeholders in final body. All scientific numbers, captions and figures trace to source fields via NUMBER_FIGURE_MAP.",
+    "commands_contract": [
+      "python3 pr4_morphology_supplement/assemble.py --binding pr4_morphology_supplement/FINAL_SOURCE_BINDING.json",
+      "python3 pr4_morphology_supplement/assemble.py --binding pr4_morphology_supplement/FINAL_SOURCE_BINDING.json --check",
+      "python3 -m pytest -q pr4_morphology_supplement/test_assemble.py",
+      "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex (inside new supplement)",
+      "pdftotext -layout main.pdf main.layout.txt (new supplement or external review fixture)"
+    ],
+    "build_rules": "Use existing installed TeX tools. Resolve citations against cached sources; no new reference claims from unverified metadata. Deterministic JSON/CSV/TeX/figure data parity; PDF metadata-byte changes alone are packaging differences, assessed by text/visual parity. Existing source/manifests unchanged; no full repo copy or new source producers."
+  },
+  "meaningful_tests": [
+    "A complete100-row fixed fixture passes; missing ID, duplicate ID,0300..0398plus0400, wrong candidate/RETURN source, changed mask/frame/unit/source seal, nonfinite or zero E multipole reject. Fixtures are deterministic validation data, never empirical null rows.",
+    "Tie fixture verifies inclusive k and distinct k/100 vs(1+k)/101. CP endpoint fixturesk0,k100 and interiork37 independently checked against beta quantiles/binomial-tail equations; fail CP computed using B+1 or rank numerator.",
+    "Full signed negative-m loss or sign mutation rejects; valid J with descriptive axis ABSTAIN remains eligible. B components survive extraction and response plot even though T uses E.",
+    "Historical unbound observed row alone fails final source eligibility; reviewed replay selection succeeds only with source and parity bindings.",
+    "Cached all-row number/table/figure parity, missing figure/citation and remaining PENDING marker reject; no pilot or idealU curve admitted to finalresult.",
+    "Bounded small manuscript fixture: assemble,check,build,check,PDF text/figure visual inspection; second assemble idempotent. Metadata-only PDF rebuild checked by content/text rather than an invented byte-science failure.",
+    "Fresh independent review of final source and later exact manuscript candidate by agents who did not author/implement them. Reviewer verifies physical conditional limits, equations, source choices and generated PDF readability."
+  ],
+  "observed_replay_approval": {
+    "decision": "APPROVED_ONE_BOUNDED_CACHED_OBSERVED_REPLAY",
+    "reason": "Historical executing source bytes are UNKNOWN after a receipt/preimage search. This is a provenance limitation, not automatic scientific failure. A new source-bound observed row is needed for the final MC100 comparison.",
+    "authority": "Controller request following author provenance sidecar; same existing scientific task and cumulative accounting, no new one-use allowance.",
+    "execution_owner": "Existing lower-tier science author; this framing agent does not execute or review the replay.",
+    "operation": "Import the sealed current consumer and call consume('observed', stability=True), redirecting only ANALYSIS to a new external observed_replay directory. Existing no-overwrite guard remains; no changes to map source, operator, scientific source files or constants.",
+    "output_root": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis_observed_replay_001",
+    "input_sha256": "61b9060ff4f80248ca52832137867c28697346f460a6a4b80f4654b114f4b900",
+    "mask_sha256": "7d7df63e77066a7739cc7faed3a005593bb3612af6cdeea2ed48a37fb600946d",
+    "consumer_sha256": "dc609faf425190441160cfc3caffe92e8a11ed35bb6aa992aaebe5e2f9741324",
+    "feature_sha256": "73fd20c0d347d94ee1aa143b3ec6ef4acda46bd3f7b3b1eb9b03e9b944cbddce",
+    "power_kernel_sha256": "2defab06372951fc5c072f29924f17e8ecce5d85f657182f102c74a0469bbb7a",
+    "capture": [
+      "Loaded module paths and before/after SHA-256 of consumer, feature donor and power kernel; exact loaded files must match seals.",
+      "Input receipt/full-file identity, mask identity, HDU/fields/units/frame/order, software versions, actual executor observation, command, stdout/stderr and exit status.",
+      "New JSON and NPZ; retain all full-signed E/B at ell2,3,4 and signed J/T, controls and native lmax4-versus8 check."
+    ],
+    "parity_criteria": {
+      "complete_signed_joint_EB_relative_norm_max": 1e-10,
+      "signed_J_and_T_absolute_difference_max": 1e-12,
+      "each_nonzero_stored_power_relative_difference_max": 1e-12,
+      "zero_norm_rule": "Handle zero explicitly; do not divide by zero or add an invented tolerance. Zero whole retained norm or zero E multipole is invalid under the original contract.",
+      "native_lmax4_vs8_relative_norm_max": 1e-10,
+      "existing_output_algebra_max": 1e-12,
+      "exact_metadata": [
+        "same input identity",
+        "same mask",
+        "GALACTIC",
+        "COSMO",
+        "K_CMB",
+        "native NSIDE2048 NESTED",
+        "analysis RING",
+        "spin2",
+        "ell2,3,4",
+        "no new smoothing/deconvolution/subtraction"
+      ]
+    },
+    "stop_rule": "One replay only; preserve all failures. Numerical disagreement or source drift returns HOLD for interpretation, without retuning. Source metadata uncertainty alone is not a scientific failure. Fixed MC acquisition continues independently.",
+    "final_selection": "The final scientific result must explicitly use the new reviewed source-bound observed row. A small read-only staged analysis view containing this observed row and the same100 MC rows may supply existing assemble() without changing its arithmetic. Do not silently fall back to the old observed row.",
+    "historical_status": "Never replace UNKNOWN for the old executed consumer/source hashes with later hashes; numeric agreement establishes numerical parity only.",
+    "prohibitions": [
+      "No old JSON/NPZ/log/receipt edit",
+      "No new data/download",
+      "No MC regeneration/selection/stopping change",
+      "No optimizer/solver/ODE",
+      "No full reanalysis",
+      "No invocation/cost reset"
+    ],
+    "execution_status": "ALREADY_EXECUTED_ONCE_BY_EXISTING_AUTHOR; this recorded approval authorizes no repeat",
+    "evidence": [
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis_observed_replay_001/observed.json",
+        "sha256": "c4611a07fc9a2b8be043cf8d8291911ba9899e3e97cbcdf56a7d553c6b65e8f1",
+        "size_bytes": 8008,
+        "role": "new source-bound observed row selected for future final100 result; independent science qualification pending"
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis_observed_replay_001/observed_lowell_EB.npz",
+        "sha256": "56da085ee5cceb0d0227685e537d2f67d9a470874745f8b7eb0627f1e7ee7490",
+        "size_bytes": 743,
+        "role": "new observed replay harmonic output"
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/OBSERVED_REPLAY_PARITY_RECEIPT.json",
+        "sha256": "c094c89bdbb155d6fdbf11cb763a51c7d952ffb839160f12b7b4ab733a84c1da",
+        "size_bytes": 3788,
+        "role": "author-reported exact numerical parity; fresh independent science review pending"
+      },
+      {
+        "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/OBSERVED_REPLAY_RUN_RECEIPT.json",
+        "sha256": "0755eb9e7761c69adf0297d256728d26b13ebc5ff9aefa7c6af0f70868ea8aa4",
+        "size_bytes": 4546,
+        "role": "actual once-only run seals and loaded paths"
+      }
+    ]
+  },
+  "publication_gate": "Only after final100 source scientific qualification, complete slots, successful cached assembly/build/checks and fresh independent manuscript review of the exact candidate may the lower-tier owner publish the new companion and new reader link within existing authorization. This author contract is not publication or scientific acceptance.",
+  "resume_check": [
+    "Keep fixed MC acquisition running. The once-only observed replay is completed; send its source/parity evidence to final fresh science review. Do not rerun it.",
+    "Wait for complete100 source candidate and fresh independent scientific decision; bind exact formalRETURN/result/manifest/replay without altering this frozen contract.",
+    "Lower-tier editor builds the isolated new companion from cached qualified inputs, then submits exact candidate for fresh read-only review.",
+    "On missing binding/failed source gate, report precise pending input; preserve available preparation and ongoing acquisition."
+  ],
+  "resource_policy": "Inherit existing parent-controlled cumulative limits. No new walltime, invocation, RAM, total-byte or one-use cap; preserve >=2GiB external reserve. No new scientific run except the explicitly approved one observed replay by its existing owner.",
+  "source_bindings": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_contract_preparation/IMPLEMENTATION_CONTRACT.json",
+      "sha256": "fa08a55ccbf7a5e488cfc2866f0138d0682d3732fe01a785870f8adf9fc677d4",
+      "size_bytes": 19577,
+      "role": "governing scientific contract; original conventions and tolerances"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-06-PR4-MORPHOLOGY/pr4_commander_morphology.py",
+      "sha256": "dc609faf425190441160cfc3caffe92e8a11ed35bb6aa992aaebe5e2f9741324",
+      "size_bytes": 24704,
+      "role": "sealed current scientific consumer; not proof of historical observed execution"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/cmb_counterpairs/morphology.py",
+      "sha256": "73fd20c0d347d94ee1aa143b3ec6ef4acda46bd3f7b3b1eb9b03e9b944cbddce",
+      "size_bytes": 10335,
+      "role": "full-signed normalized Wigner feature definition"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/lowell_poles.py",
+      "sha256": "2defab06372951fc5c072f29924f17e8ecce5d85f657182f102c74a0469bbb7a",
+      "size_bytes": 12844,
+      "role": "descriptive power-tensor kernel"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/PILOT8_EXECUTION_RECEIPT.json",
+      "sha256": "12dd968a2b7b474ed01449cfd3ef094e99cd630460d35aa18fc5020c346eb15f",
+      "size_bytes": 3993,
+      "role": "execution evidence only; no final rank or qualification"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/observed.json",
+      "sha256": "f922cfdbb8b578613102075819a6f2a5ea65074a7238d3e444c7f4034eb3b3f8",
+      "size_bytes": 7083,
+      "role": "immutable historical observed row; executing consumer hash UNKNOWN"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/observed_lowell_EB.npz",
+      "sha256": "56da085ee5cceb0d0227685e537d2f67d9a470874745f8b7eb0627f1e7ee7490",
+      "size_bytes": 743,
+      "role": "historical observed full harmonic output; preserve"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/OBSERVED_CONSUMER_SOURCE_PROVENANCE_SIDECAR.json",
+      "sha256": "cbc7e7fcd0976289c4f043c96f76a8d92e8d559ba8f75897e042e4f76267150b",
+      "size_bytes": 5417,
+      "role": "confirmed historical execution-source limitation"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/mc_0300.json",
+      "sha256": "244c9521f2cf438682abb3f99f0590d6fac47f9625528d35643f4f83c0fdd7bd",
+      "size_bytes": 7976,
+      "role": "pilot row schema and operator example only"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/mask_response_three_columns.json",
+      "sha256": "58e7e2c1e8f1d1db625effb9be43e82632f48a12089e9e4ef350e96794e413b0",
+      "size_bytes": 14310,
+      "role": "cached three selected native mask-response columns; pending final source review"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_contract_preparation/ESA_NPIPE_EXCERPT.txt",
+      "sha256": "c8d95e87f49ed355426ad886fa8396cc6c1ff6f22a7dcd7f8b83cc6c97112b35",
+      "size_bytes": 5785,
+      "role": "cached source genealogy reference"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/independent_review/r35_bandpass_paper_definition_fresh_closeout/CONTROLLER_RETURN.json",
+      "sha256": "edc838be8e9b4bd3ff04a6d792e279d8c2e3ae1a87f3236f89a23def4566efc4",
+      "size_bytes": 2808,
+      "role": "qualified P2 parent formal return"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/PUBLICATION_STATUS.json",
+      "sha256": "a08fde5f92daab9c0ecf677ff54a5078dee5eae36f4cc799a2d74f069b64032c",
+      "size_bytes": 2109,
+      "role": "current parent source status"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/repair_01/report/main.tex",
+      "sha256": "066f05b91d9b34a4a7ef6e1156ee77358410df53188c006ce161acd3f6845fb4",
+      "size_bytes": 22918,
+      "role": "qualified parent scientific body"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/repair_01/report/main.pdf",
+      "sha256": "09d92308ba44db071b51fdabb4cdc634f6b99dfd640d94cc84a3f47f348fee9f",
+      "size_bytes": 356626,
+      "role": "qualified eleven-page parent PDF"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/README.md",
+      "sha256": "d3b71e524e67539f7c846aa7e1bdd51b7eeff14f80223026c23bb8b17f148381",
+      "size_bytes": 4198,
+      "role": "existing reader entry: preserve unchanged"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/ARTIFACT_MANIFEST.json",
+      "sha256": "e550dd06518c162e4ee0dc8c8d08f37e1951058dbe8bc36076a8e8de0cb57020",
+      "size_bytes": 29815,
+      "role": "historical root manifest: preserve unchanged"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/repair_01/ARTIFACT_MANIFEST.json",
+      "sha256": "58bbadbdeb8577702b2c376b612bafe5f3c417bfbf1d1b76283763d57abfd3fc",
+      "size_bytes": 12518,
+      "role": "qualified repair manifest: preserve unchanged"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/radiation_supplement/main.tex",
+      "sha256": "1b6ce5ffd4e055c300eeef7767555a5818f65ca6bbee83491c194b02babd7436",
+      "size_bytes": 12470,
+      "role": "existing independent companion pattern; preserve unchanged"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_manuscript_framing/MANUSCRIPT_ADDITIONS.md",
+      "sha256": "61e879fcf53a9c3c069f2cee45bf78afd542b0308a55f36cf70b7755c75efe62",
+      "size_bytes": 10447,
+      "role": "proposed prose and private novelty memo"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis_observed_replay_001/observed.json",
+      "sha256": "c4611a07fc9a2b8be043cf8d8291911ba9899e3e97cbcdf56a7d553c6b65e8f1",
+      "size_bytes": 8008,
+      "role": "new source-bound observed row selected for future final100 result; independent science qualification pending"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis_observed_replay_001/observed_lowell_EB.npz",
+      "sha256": "56da085ee5cceb0d0227685e537d2f67d9a470874745f8b7eb0627f1e7ee7490",
+      "size_bytes": 743,
+      "role": "new observed replay harmonic output"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/OBSERVED_REPLAY_PARITY_RECEIPT.json",
+      "sha256": "c094c89bdbb155d6fdbf11cb763a51c7d952ffb839160f12b7b4ab733a84c1da",
+      "size_bytes": 3788,
+      "role": "author-reported exact numerical parity; fresh independent science review pending"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/OBSERVED_REPLAY_RUN_RECEIPT.json",
+      "sha256": "0755eb9e7761c69adf0297d256728d26b13ebc5ff9aefa7c6af0f70868ea8aa4",
+      "size_bytes": 4546,
+      "role": "actual once-only run seals and loaded paths"
+    }
+  ],
+  "selected_observed_replay": {
+    "row": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis_observed_replay_001/observed.json",
+      "sha256": "c4611a07fc9a2b8be043cf8d8291911ba9899e3e97cbcdf56a7d553c6b65e8f1",
+      "size_bytes": 8008,
+      "role": "new source-bound observed row selected for future final100 result; independent science qualification pending"
+    },
+    "npz": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis_observed_replay_001/observed_lowell_EB.npz",
+      "sha256": "56da085ee5cceb0d0227685e537d2f67d9a470874745f8b7eb0627f1e7ee7490",
+      "size_bytes": 743,
+      "role": "new observed replay harmonic output"
+    },
+    "author_parity_receipt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/OBSERVED_REPLAY_PARITY_RECEIPT.json",
+      "sha256": "c094c89bdbb155d6fdbf11cb763a51c7d952ffb839160f12b7b4ab733a84c1da",
+      "size_bytes": 3788,
+      "role": "author-reported exact numerical parity; fresh independent science review pending"
+    },
+    "run_receipt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/OBSERVED_REPLAY_RUN_RECEIPT.json",
+      "sha256": "0755eb9e7761c69adf0297d256728d26b13ebc5ff9aefa7c6af0f70868ea8aa4",
+      "size_bytes": 4546,
+      "role": "actual once-only run seals and loaded paths"
+    },
+    "status": "EXECUTED_ONCE; AUTHOR_PARITY_REPORT_ZERO_DIFFERENCES; FRESH_INDEPENDENT_SCIENCE_REVIEW_PENDING",
+    "final_source_requirement": "Final COMMANDER_RESULT observed object must be this exact row, selected explicitly. Final binding records exact row and receipt hashes; no substitution with old observed row.",
+    "historical_consumer_execution_sha256": "UNKNOWN"
+  }
+}

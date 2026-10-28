@@ -1,0 +1,216 @@
+{
+  "schema": "htt.pr4_morphology_editor_interface_clarification/1",
+  "created_utc": "2026-10-28T08:02:25.094288+00:00",
+  "status": "AUTHOR_INTERFACE_CLARIFICATION_ONLY; NO_FUTURE_VERDICT",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "scope": "New sidecar only. The5acd editor contract,61e prose,fa08 scientific contract and all scientific operators remain byte-unchanged. This defines their final06 binding interface and qualifies an unsupported descriptive citation; it does not instantiate a passing return or admit incomplete MC results.",
+  "formal_return_interface": {
+    "example": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_witness_fresh_review/CONTROLLER_RETURN.json",
+      "sha256": "1b663971c2e78ddaa271c07fa88fb82834aa7fc42fb81e1fd3648ab8004f8614",
+      "bytes": 1706,
+      "role": "canonical structured formal return example"
+    },
+    "canonical_facts": "The example has review_status=PASS_SCOPED_CONDITIONAL,outcome=success,acceptance_met=true,substantive_failure=false,task_id,input_identity,candidate_identity,packet_id,agent_id,qualified_products and raw receipt. It has no phase or independent_scientific_review field. Do not require those aliases.",
+    "final06_required_equalities": {
+      "task_id": "R36-06-PR4-MORPHOLOGY",
+      "source_packet_id": "902ebd6a521d6b31864e0bfce63336c62d6cec5ff2f6c3128de7ab68046fce35",
+      "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+      "outcome": "success",
+      "acceptance_met": true,
+      "review_status": "PASS_SCOPED_CONDITIONAL",
+      "substantive_failure": false,
+      "qualified_products_contains_exact_string": "pr4_morphology_result"
+    },
+    "verdict_warning": "These are future eligibility predicates, not values assigned to any future review now. Only the actual fresh independent reviewer may issue the return.",
+    "packet_semantics": "packet_id identifies the actual review assignment; it need not equal the author/source packet. Canonical example review packetf2eced... differs from author manifest packeta3c0cf.... For final06 add explicit source_packet_id as above, while preserving the actual review packet_id. Check it against the candidate manifest packet_id. Do not invent a new review packet or silently equate independent assignments.",
+    "candidate_identity": "Exactly sha256: followed by SHA256 of the actual frozen candidate ARTIFACT_MANIFEST.json bytes. The canonical repair04 manifest digest is d796c9df... and is the formal candidate identity. Do not hash reserialized JSON or insert a self-hash into the manifest.",
+    "publication_export_identity": "For the proposed small-export interface below, the fresh reviewer additionally records publication_export_identity=sha256:<actual PUBLICATION_EXPORT.json byte hash>. That packaging identity is distinct from the scientific candidate identity.",
+    "other_semantic_checks": [
+      "agent_id must identify the actual independent reviewer, different from the source author and contributing science framers; requested and observed runtime stay separate. Bind the raw receipt and its SHA.",
+      "findings=[] is accepted. Nonempty findings require explicit structured resolution/nonblocking classification from that reviewer; unknown or unresolved substantive findings remain HOLD.",
+      "phase is optional; when present it must be review. A status-word substring or a narrative PASS is never sufficient.",
+      "Final source manifest/RESULT may retain proposed status and acceptance_met=false as frozen author evidence. Qualification comes from the separately bound formal return; do not rewrite source status.",
+      "Exact source task, input, candidate, source packet, qualified product and export identity are all checked together. Review of a different candidate or product does not qualify this export."
+    ]
+  },
+  "candidate_manifest_interface": {
+    "canonical_example_schema": "htt.r36.optical_joint_repair_candidate_manifest/4",
+    "recommended_final06_schema": "htt.r36.pr4_morphology_candidate_manifest/1",
+    "required_top_level": [
+      "schema",
+      "task_id",
+      "packet_id",
+      "input_identity",
+      "agent_id",
+      "owner",
+      "scope",
+      "claim_tier",
+      "transfer_source",
+      "qualification_status",
+      "acceptance_met",
+      "qualified_products",
+      "source_bindings",
+      "candidate_files"
+    ],
+    "author_packet_id": "902ebd6a521d6b31864e0bfce63336c62d6cec5ff2f6c3128de7ab68046fce35",
+    "entry_shape": {
+      "logical_filename": {
+        "path": "original canonical file path",
+        "sha256": "64 lowercase hexadecimal characters",
+        "bytes": "nonnegative JSON integer"
+      }
+    },
+    "entry_semantics": "candidate_files is an object keyed by logical filename; source_bindings is an object keyed by original source identity/path. Each entry has path,sha256,bytes. The repair04 example uses bytes, not size_bytes. Row.source retains its existing size_bytes field; do not rewrite it to match the manifest.",
+    "minimum_small_payload": [
+      "Final COMMANDER_RESULT.json containing all100 fixed MC rows and the selected source-bound observed replay row, plus signed E/B,J/T,mask/operator/units/frame/genealogy,controls and final rank/CP fields.",
+      "Exact101 individual source-row JSON files; source-bound observed replay/parity/run receipts; three-column mask-response JSON and NPZ. The final result may also embed row objects; preserve the original row files for byte-identity checks.",
+      "Small RAW_INPUT_INVENTORY.json and exact source verification/acquisition/header receipts needed to cross-check each retained row. Raw FITS,response.bin and large prefixes stay outside the publication payload.",
+      "Frozen scientific contract, necessary consumer/feature source identities, final source-scope/citation clarification and execution/review evidence referenced by the source reviewer."
+    ],
+    "result_schema": "htt.r36_pr4_commander_morphology_result/1",
+    "raw_inventory_fields": [
+      "kind and MC_ID (null for observed)",
+      "official product filename/URL/catalog role and release",
+      "whole-file SHA256 and size_bytes",
+      "HDU/field/unit/frame/order qualification evidence",
+      "references to exported row, verified receipt, completed acquisition receipt and actual operator/consumer identity"
+    ],
+    "receipt_coherence": "For each MC ID, row.source.sha256 = cache .verified.json sha256 = underlying completed acquisition RETURN sha256; all item ID/filename/bytes/catalog role agree. The successful underlying attempt has status COMPLETE,clean_eof=true,HTTP200,exact decoded full-file length and retained source/transport evidence. A later CACHE_VERIFIED reuse may point to that same original completed receipt. Do not mistake source_sha256 (downloader code) for the map-file hash or invent a provider checksum.",
+    "observed_selection": "Use c4611a07fc9a2b8be043cf8d8291911ba9899e3e97cbcdf56a7d553c6b65e8f1 observed replay row and its bound parity/run receipts, subject to final science review. Historical executing source remains UNKNOWN. No replacement by old f922...row.",
+    "no_mass_replay_requirement": "The source reviewer qualifies the actual completed computation and its receipt chain. A public-paper rebuild validates the small exported evidence against that qualified candidate. It does not reopen, rehash or redownload all raw FITS; source replay from maps is a separate capability."
+  },
+  "publication_export_interface": {
+    "schema": "htt.r36.pr4_morphology_publication_export/1",
+    "file": "PUBLICATION_EXPORT.json",
+    "required_top_level": [
+      "schema",
+      "source_candidate_identity",
+      "source_manifest",
+      "files",
+      "roles",
+      "raw_inputs_policy"
+    ],
+    "source_manifest_shape": {
+      "relative_path": "relative path to unchanged copy of canonical ARTIFACT_MANIFEST.json",
+      "sha256": "actual canonical manifest hash",
+      "bytes": "actual byte count"
+    },
+    "files_entry_shape": {
+      "manifest_section": "candidate_files OR source_bindings",
+      "manifest_key": "exact key in that canonical manifest section",
+      "original_path": "exact path string in that source entry",
+      "relative_path": "payload path relative to export root",
+      "sha256": "same file hash as source entry",
+      "bytes": "same byte count as source entry"
+    },
+    "roles": "roles is a JSON object. result,observed_row,mask_response_json,mask_response_npz,raw_input_inventory,observed_replay_parity,observed_replay_run,scientific_contract,source_scope_note each map to one existing files key. mc_rows is an ordered100-element list of files keys for IDs0300..0399. source_receipts is a list of files keys covering actual per-product verified/acquisition/header evidence. No basename inference.",
+    "raw_inputs_policy": "METADATA_AND_REVIEWED_RECEIPTS_ONLY; raw FITS retained externally; raw_source_replay_requires_external_inputs; CACHED_PUBLICATION_REBUILD does not reopen maps.",
+    "freeze_order": [
+      "Freeze all required small evidence and canonical candidate manifest first.",
+      "Create the export index mapping those exact files and the unchanged manifest copy. Every exported scientific file must match a canonical candidate_files/source_bindings entry; the index is packaging metadata outside the self-hash of that manifest.",
+      "Fresh source reviewer reviews exact candidate and export index, then issues formal return with both identities. Do not include the future formal return hash inside the export index or create a self-referential hash cycle.",
+      "Place the actual formal return beside the export. P2 FINAL_SOURCE_BINDING.json binds actual manifest,candidate,export-index and formal-return hashes/paths and selected observed replay receipts. These final values remain pending until real artifacts/review exist."
+    ],
+    "validation": "Resolve relative paths within the export root, check exact sizes/hashes and original-entry equality, then evaluate the structured formal gate and all fixed100/operator/statistic/CP checks from the frozen editor contract. Do not follow embedded absolute raw paths during cached publication rebuild. Preserve exact JSON payload bytes; relocation is described by the index, not by rewriting frozen receipts.",
+    "failure_classes": [
+      "Missing or mismatched small payload: EXPORT_BINDING_HOLD.",
+      "Absent/not-passing/different-candidate review: SOURCE_QUALIFICATION_PENDING_OR_MISMATCH.",
+      "Unavailable external FITS during paper rebuild alone: RAW_SOURCE_REPLAY_UNAVAILABLE, not an automatic paper-build or scientific-integrity failure.",
+      "Present but unreviewed future-number slots: PENDING_SOURCE_QUALIFICATION; no public-ready rendering."
+    ],
+    "files_container": "files is a JSON object keyed by unique stable export IDs, e.g. result,observed_row,mc_0300,verified_0300,acquire_0300. Every value has exactly the fields described in files_entry_shape; manifest_key/original_path preserve canonical source identity while relative_path locates the copy.",
+    "final_binding_additions": "Alongside the existing pending fields in5acd, FINAL_SOURCE_BINDING explicitly records publication_export_path,publication_export_sha256,source_packet_id,review_packet_id. Its source_candidate_manifest_path points to the unchanged exported manifest copy; formal_source_return_path points to the actual reviewer return. qualified_result_path and qualified_observed_replay_row_path resolve to the corresponding exported copies, whose original paths/hashes are retained in the index."
+  },
+  "citation_scope": {
+    "finding_id": "COMMANDER_NOMINAL_BEAM_CITATION_SCOPE_UNVERIFIED",
+    "exact_claim_location": "fa08 contract inputs.beam_and_response.nominal_resolution and primary_references arXiv2502.07654v1 Section2.1; frozen prose sentence beginning The delivered resolution is described as nominally5arcmin.",
+    "current_evidence_status": "Root official-arXiv check, bound by48dc6265...receipt, establishes that the paper analyses SEVEM and Commander observations but uses a300-member SEVEM simulation ensemble. Its5arcmin paragraph does not independently qualify these exact Commander005a simulations. Root cached header-only checks found no FWHM/BEAM cards in observed or MC0300 products, and no such catalog fields. Exact product-matched Commander physical beam descriptor remains UNKNOWN. This framer consumed the root receipt; it did not independently fetch the paper or read FITS.",
+    "citation_rule": "arXiv2502.07654v1 Section2.1 may document the paper's actual stated data use, but its SEVEM ensemble or nominal beam paragraph cannot establish the exact Commander005a polarization beam, matched beam transfer or null law. A filename suffix or shared NSIDE is not a measured or product-matched effective beam. Do not import SEVEM beam, intensity statistics or ensemble qualification.",
+    "interim_final_prose": "We use the delivered maps without additional smoothing, beam inversion or noise subtraction. No scalar effective beam is specified or inferred; the delivered processing response and the additional mask response are retained.",
+    "editor_action": "Keep frozen61e prose unchanged as historical framing. In the eventual rendered manuscript replace its unqualified5arcmin sentence with the interim sentence unless exact Commander-product primary support has been bound and accepted by the final source reviewer. A verified release descriptor may later be identified as nominal only, never as a measured full anisotropic response.",
+    "source_author_action": "Include a small SOURCE_SCOPE_NOTE.json in the final candidate/export with commander_effective_beam_status=UNKNOWN,descriptor_citation_status=UNVERIFIED (or exact later primary proof),and numerically_used=false for any5arcmin descriptor. Preserve historical metadata strings; final fresh science review must confirm the delivered-map operator never uses that descriptor.",
+    "physical_impact": "This is a source/wording finding for the descriptor, not evidence of a changed numerical operator or a whole-file mismatch. Delivered-map nativeNS2048 masked spin2 extraction, no deconvolution and the stipulated processed working law remain unchanged. No re-consumption, new MC, source rewrite or scientific failure is implied solely by the citation gap.",
+    "future_review_requirement": "The final fresh science review must address the exact Commander source/response match and retain the explicit processed-working-law exchangeability assumption. Restrict the beam wording to UNKNOWN unless product-matched evidence establishes more. This citation restriction does not lower any source or acceptance threshold or automatically admit a broader scope; fixed100 acquisition continues.",
+    "verified_bibliography": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_editorial_tools/Sullivan2025PR4_verified.bib",
+      "sha256": "4ce329e8b87972b90e2e622b131673a2b59b64ca553a0354aef9894b9f0307f4",
+      "bytes": 430,
+      "role": "verified Version1 bibliographic metadata; reuse without invented title or network"
+    },
+    "source_scope_receipt": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_editorial_tools/ARXIV_2502_07654_SOURCE_RECEIPT.json",
+      "sha256": "48dc62655faccfc1e7398e82333a3508284d57edab6916ea2ab86b19ff85275d",
+      "bytes": 1363,
+      "role": "root verified official primary-source scope and cached header-only beam probe"
+    },
+    "no_normalization_shortcut": "Do not claim that normalizing each extracted multipole cancels an unknown beam through the Galactic mask: the mask mixes multipoles. Identical post-release masking/spin analysis does not itself prove equal upstream beam/processing response or observed/simulated exchangeability."
+  },
+  "source_bindings": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_manuscript_framing/EDITOR_CONTRACT.json",
+      "sha256": "5acd1188f3eeeb15002f2ff2cdec6825589b3a9944829c3d297b8f0c0e344d49",
+      "bytes": 28187,
+      "role": "unchanged frozen editor contract"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_manuscript_framing/MANUSCRIPT_ADDITIONS.md",
+      "sha256": "61e879fcf53a9c3c069f2cee45bf78afd542b0308a55f36cf70b7755c75efe62",
+      "bytes": 10447,
+      "role": "unchanged frozen proposed prose"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_contract_preparation/IMPLEMENTATION_CONTRACT.json",
+      "sha256": "fa08a55ccbf7a5e488cfc2866f0138d0682d3732fe01a785870f8adf9fc677d4",
+      "bytes": 19577,
+      "role": "unchanged scientific contract"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_optical_witness_fresh_review/CONTROLLER_RETURN.json",
+      "sha256": "1b663971c2e78ddaa271c07fa88fb82834aa7fc42fb81e1fd3648ab8004f8614",
+      "bytes": 1706,
+      "role": "canonical structured formal return example"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_04/ARTIFACT_MANIFEST.json",
+      "sha256": "d796c9df0a8e86e4834d6affb8ac0e4731e65d11cd4f865723b45dab3caafcbc",
+      "bytes": 15518,
+      "role": "canonical candidate manifest entry and identity example"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/mc_0300.json",
+      "sha256": "244c9521f2cf438682abb3f99f0590d6fac47f9625528d35643f4f83c0fdd7bd",
+      "bytes": 7976,
+      "role": "actual source-row example"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/cache/npipe6v20_commander_cmb_2048_mc_0300_005a.fits.verified.json",
+      "sha256": "bd491ef7ca8d22f64c343ad6e9ae4dfcf2e7694f0373af6f87a5dfd220f15d97",
+      "bytes": 1605,
+      "role": "actual whole-file verification receipt example"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/acquisition_attempts/batch-4309df2cd9a64bb4be51b29dacdf8da7/0300-2e502ab273894f1c93df10b3e5af5fca/RETURN.json",
+      "sha256": "646412978b551939a955e655c4666aa9bca17b768eaf3319c8577161a95697e0",
+      "bytes": 4446,
+      "role": "actual completed acquisition receipt example"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_editorial_tools/ARXIV_2502_07654_SOURCE_RECEIPT.json",
+      "sha256": "48dc62655faccfc1e7398e82333a3508284d57edab6916ea2ab86b19ff85275d",
+      "bytes": 1363,
+      "role": "root verified official primary-source scope and cached header-only beam probe"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_editorial_tools/Sullivan2025PR4_verified.bib",
+      "sha256": "4ce329e8b87972b90e2e622b131673a2b59b64ca553a0354aef9894b9f0307f4",
+      "bytes": 430,
+      "role": "verified Version1 bibliographic metadata; reuse without invented title or network"
+    }
+  ],
+  "no_actions": "No implementation, network, FITS read, source producer, STATE/Git write, child agent or goal API call. No frozen parent artifact modified."
+}
