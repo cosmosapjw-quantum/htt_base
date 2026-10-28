@@ -1,0 +1,339 @@
+{
+  "schema": "R36-06-read-only-scientific-preparation-v1",
+  "created_utc": "2026-10-27T03:44:11.820716+00:00",
+  "task_id": "R36-06-PR4-MORPHOLOGY",
+  "packet_id": "902ebd6a521d6b31864e0bfce63336c62d6cec5ff2f6c3128de7ab68046fce35",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "status": "FROZEN_PREPARATION_FOR_LOWER_SOL_EXECUTION_NOT_PASS",
+  "provenance": {
+    "science_author": "/root/r36_scientific_contract_preparation",
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_model_effort": "UNKNOWN",
+    "controller": "/root",
+    "actual_implementation_owner": "/root/rc_902ebd6a521d6b31",
+    "prior_intake_contributor": "/root/r35_bandpass_paper_source_preparation",
+    "independent_reviewer": "must be another agent; preparer and implementer are contributors"
+  },
+  "prospective_choice": {
+    "primary": "PR4 Commander FULL, singleton within-sky statistic abs(J234)",
+    "reason": "Official complete PLA inventory and actual headers identify a processed component-separated polarization ensemble. This choice is based on source availability, before any Commander morphology outcome.",
+    "already_seen_other_estimand": "The worker has completed the separately frozen 030 A/B/equal-coadd diagnostic. Its values must not choose Commander masks, multipoles, scan, MC IDs or stopping.",
+    "source_sufficiency": "Official PR4/npipe6v20 COMP_SEPARATION provenance plus header-qualified QU supports this released-pipeline conditional comparison. Missing upstream per-parent hashes do not veto it. This does not establish an inverse phase-level physical transfer or qualify PR3."
+  },
+  "inputs": {
+    "observed": {
+      "product": "COM_CMB_IQU-commander_4096_R4.00_full.fits",
+      "url": "https://pla.esac.esa.int/pla/aio/product-action?MAP.MAP_ID=COM_CMB_IQU-commander_4096_R4.00_full.fits",
+      "catalog_map_oid": 15001,
+      "expected_bytes": 1207972800,
+      "hdu_index": 2,
+      "fields": [
+        "Q_POLARIZATION",
+        "U_POLARIZATION"
+      ],
+      "nside": 2048,
+      "ordering": "NESTED",
+      "frame": "GALACTIC",
+      "polcconv": "COSMO",
+      "units": "K_CMB",
+      "notes": "HDU1 is temperature NSIDE4096 and is not used. Internal FILENAME contains 4096_2048; delivered catalog basename omits _2048. Bind actual complete file and HDU, not basename equality."
+    },
+    "simulation": {
+      "url_template": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=npipe6v20_commander_cmb_2048_mc_{ID:04d}_005a.fits",
+      "role": "released foreground-cleaned processed Commander CMB estimate including simulated instrumental/processing residuals",
+      "release": "PR4",
+      "version": "npipe6v20",
+      "catalog_type": "COMP_SEPARATION",
+      "period": "full",
+      "expected_bytes_each": 603990720,
+      "hdu_index": 1,
+      "fields": [
+        "Q_STOKES",
+        "U_STOKES"
+      ],
+      "nside": 2048,
+      "ordering": "NESTED",
+      "frame": "GALACTIC",
+      "polcconv": "COSMO",
+      "units": "uK_CMB",
+      "conversion_to_K_CMB": 1e-06,
+      "available_exact_family_ids": "0300-0599 and 0700-0799, 400 distinct FULL products; never assume 0600-0699 exists",
+      "excluded_family": "0200-0299 Commander mc_0200.fits family is temperature-only in inspected headers, not a QU null"
+    },
+    "mask": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/research20261022/pr4/mask_PR4_Lollipop_ns16.fits",
+      "sha256": "7d7df63e77066a7739cc7faed3a005593bb3612af6cdeea2ed48a37fb600946d",
+      "nside": 16,
+      "ordering": "RING",
+      "frame": "GALACTIC",
+      "retained_pixels": 1273,
+      "total_pixels": 3072,
+      "operator": "Convert mask to NESTED and lift exactly by repeating each parent value (2048/16)^2=16384 times. Scalar binary mask on native QU; then convert masked QU to RING for spin transform."
+    },
+    "beam_and_response": {
+      "nominal_resolution": "Released 5 arcmin products; observed nominal map resolution is supported by PR4 usage documentation, simulation suffix 005a by release resolution convention and official catalog. Exact anisotropic response is the delivered Commander/NPIPE pipeline, not this Gaussian descriptor. FITS probes contain no FWHM card; do not claim header-measured beam.",
+      "treatment": "Use delivered maps without additional smoothing, beam/pixel deconvolution, noise rescaling, inpainting or scalar transfer correction. Same post-release operator for observed and simulated maps. Low-ell suppression and anisotropic processing remain in the released null.",
+      "limitation": "No all-m upstream transfer matrix is reconstructed. This is a processed-map conditional morphology law, not deconvolved cosmic E inference. A contradictory product/header/version finding must return for scientific interpretation before mixing products."
+    }
+  },
+  "operator": {
+    "owner": "obsstat",
+    "metric_convention": "(-,+,+,+); c retained explicitly when relevant; no velocity, stress or dynamical conversion is used here",
+    "map_stage": "Read named QU fields and flatten their vector columns in HEALPix pixel order; reject header disagreement. Convert to float64 K_CMB. Apply frozen mask at native NSIDE2048, explicit NESTED-to-RING. No I/T map enters.",
+    "harmonics": "healpy.map2alm_spin([masked_Q,masked_U], spin=2, lmax=4, mmax=4), record healpy/libsharp versions. Preserve E and B packed coefficients and full signed-m E for ell=2,3,4 with a(l,-m)=(-1)^m conjugate(a(l,m)). Use the existing COSMO healpy convention without an unexplained U or E sign flip.",
+    "statistic": "For each ell, normalize E coefficients by sqrt(sum_m abs(a_lm)^2). J234 = Im sum_{m+n+p=0} Wigner3j(2,3,4;m,n,p) v_2m v_3n v_4p. Primary T=abs(J234), with signed J also retained.",
+    "reuse": "docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/cmb_counterpairs/morphology.py :: normalized, contraction, features ONLY; do not run its old main or use its joint_score",
+    "scan": "Exactly one Commander FULL product, one fixed mask, ell triple (2,3,4), E field, abs(J234). No parameter fitting, rotation search, pipeline selection, extra-mask scan or combination with 030 is in primary T.",
+    "secondary": "Retain C_ell and axis alignment23_squared as descriptive outputs without a second calibrated significance claim. Axis degeneracy is ABSTAIN for alignment only, not rejection of a finite valid J.",
+    "invalids": "Require finite unmasked QU and finite nonzero ell norms. Explicitly set excluded pixels to zero rather than multiply NaN by zero. Record bad/missing products; do not substitute zeros, skip unfavorable MC draws or silently alter the mask. Resume acquisition/repair for the same IDs. Unexpected physical/source invalidity returns to science owner."
+  },
+  "working_null": {
+    "law": "One public NPIPE/Commander end-to-end processed FULL CMB estimate per distinct MC ID, with its original joint sky, noise and processing. The published construction uses FFP10 CMB, fixed foreground/instrument settings and Commander mixing matrices estimated from the observed data, with amplitudes fitted per simulation.",
+    "interpretation": "Conditional plug-in released-pipeline working law. Fixed observed mixing matrices are not a proof of unconditional coverage or the exact conditional distribution given their estimated values. Finite-MC interval covers only simulation tail uncertainty under independent realizations of this law.",
+    "exchangeability": "The plus-one rank is a conditional Monte Carlo reference under the explicitly assumed observed/simulated exchangeability of this working model. Do not assert guaranteed physical false-positive control or robustness to unrepresented foreground/calibration uncertainty.",
+    "unit": "One parent sky/iteration is one null unit. A/B/full, repeated masks, and split products never increase B.",
+    "no_reconstruction": "Do not manufacture processed totals from cached symmetric-beam raw CMB plus regressed residual. No foreground, transfer or cross-block is added independently. No extra empirical noise alignment is inferred from a filename."
+  },
+  "mc_plan": {
+    "pilot_ids": [
+      300,
+      301,
+      302,
+      303,
+      304,
+      305,
+      306,
+      307
+    ],
+    "pilot_role": "Eight sequential products test source handling, common operator, invalid branches and streaming accounting. Pilot is not the final precision target; keep all pilot outcomes.",
+    "final_ids": [
+      300,
+      301,
+      302,
+      303,
+      304,
+      305,
+      306,
+      307,
+      308,
+      309,
+      310,
+      311,
+      312,
+      313,
+      314,
+      315,
+      316,
+      317,
+      318,
+      319,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327,
+      328,
+      329,
+      330,
+      331,
+      332,
+      333,
+      334,
+      335,
+      336,
+      337,
+      338,
+      339,
+      340,
+      341,
+      342,
+      343,
+      344,
+      345,
+      346,
+      347,
+      348,
+      349,
+      350,
+      351,
+      352,
+      353,
+      354,
+      355,
+      356,
+      357,
+      358,
+      359,
+      360,
+      361,
+      362,
+      363,
+      364,
+      365,
+      366,
+      367,
+      368,
+      369,
+      370,
+      371,
+      372,
+      373,
+      374,
+      375,
+      376,
+      377,
+      378,
+      379,
+      380,
+      381,
+      382,
+      383,
+      384,
+      385,
+      386,
+      387,
+      388,
+      389,
+      390,
+      391,
+      392,
+      393,
+      394,
+      395,
+      396,
+      397,
+      398,
+      399
+    ],
+    "target_valid_draws": 100,
+    "accuracy_target": "95% two-sided Clopper-Pearson interval for the tail probability with half its width <=0.105; N=100 guarantees approximately this coarse worst-case precision. Report actual interval. This is an accuracy target, not a resource/one-use allowance or detection threshold.",
+    "rank": "k=count(T_b>=T_obs), ties inclusive; p_rank=(1+k)/(B+1); minimum at B=100 is 1/101. Also report k, B, k/B.",
+    "mc_interval": "For k out of B, lower=0 if k=0 else BetaQuantile(0.025;k,B-k+1); upper=1 if k=B else BetaQuantile(0.975;k+1,B-k). Interval is for the underlying conditional tail probability, not plus-one pseudo-observations.",
+    "stopping": "Complete fixed 0300-0399 regardless of intermediate tails. No early significance stopping. Acquisition failures remain explicitly incomplete/resumable and are not scientific exclusion criteria.",
+    "extension": "If greater precision is later desired, a prospectively declared extension can use remaining catalog-qualified IDs (0400-0599,0700-0799), retaining all earlier draws/accounting. Do not claim an optional-stopping-safe combined interval without a new declared construction.",
+    "seed": "No new random draws needed: public fixed MC IDs are the reproducible ensemble. Use fixed algebra control angles 0.41 and 0.37 radians; no random seed can certify released genealogy."
+  },
+  "controls_and_tolerances": [
+    {
+      "test": "Source/geometry",
+      "criterion": "Full-file sizes, actual HDUs/fields/units/frame/COSMO/order match; mask binary,1273/3072 retained, NESTED parent-child lift exact. Record source SHA256 as downloaded; upstream unavailable hashes are UNKNOWN rather than invented."
+    },
+    {
+      "test": "Float64 algebra",
+      "criterion": "Reuse existing normalized-reality and imaginary-Wigner checks at 1e-12. Post-extraction parity a_lm->(-1)^ell a_lm reverses J; z rotation a_lm->exp(-i*m*0.41)a_lm preserves J and powers within1e-12 normalized/relative. These are output-space controls, not rotated-sky-through-fixed-mask claims."
+    },
+    {
+      "test": "Units and linearity",
+      "criterion": "On a retained nonzero vector, positive unit rescaling leaves J within1e-12 and powers scale quadratically; transform of Q1+Q2 equals coefficient sum to relative norm1e-10. No tolerance is an empirical genealogy threshold."
+    },
+    {
+      "test": "Retained coefficient analysis stability",
+      "criterion": "On observed and pilot0300 compare retained ell<=4 coefficients from lmax4 versus lmax8, same map/mask and noniterated transform: relative joint E/B norm residual <=1e-10 (zero norm handled explicitly). This is floating-point consistency, not a physical response tolerance; record failure without retuning."
+    },
+    {
+      "test": "Minimal anisotropic mask response",
+      "criterion": "Generate three unit-norm real-field harmonic injections separately: E(ell2,m0); E(ell3,|m|1) with positive-m1/sqrt2; B(ell4,|m|2) with positive-m i/sqrt2 and reality-related negative m. Synthesize native NSIDE2048 QU in the same spin convention; apply identical mask+analysis. Save all output E/B ell2..4 coefficients as three response columns; demonstrate finite anisotropic coupling and E/B mixing where present, never require each off-diagonal to be nonzero. Verify masked-pixel QU is exactly zero and linear superposition relative norm<=1e-10. No full42x42 or NPIPE reprocessing is required."
+    },
+    {
+      "test": "Boundaries",
+      "criterion": "Exercise bad header/unit, nonfinite retained pixel, zero ell, missing MC ID and axis-degenerate handling. Keep original failures. A valid J with degenerate descriptive axis remains valid."
+    }
+  ],
+  "supplemental_030": {
+    "status": "Previously frozen and executed descriptive branch, retained without retuning",
+    "data": "Cached LFI 030 year1-3=A; year2-4=B includes start of year5 per source. Native1024 Galactic/COSMO K_CMB. Same NS16 mask lift, spin2 lmax4. Equal coefficient coadd C=(A+B)/2 is synthetic, not released FULL.",
+    "statistic": "T030=max(abs(J_A),abs(J_B),abs(J_C)); one observed sky, no qualified matching processed frequency-total null.",
+    "prohibition": "Do not calibrate T030 using singleton Commander T draws, count splits as independent skies, or rename raw-CMB+residual as total. Keep values in separate supplemental rows with p=null."
+  },
+  "ideal_U": {
+    "action": "Reuse imported cosmology/cas/planck_hubble_controls.py and retained evidence only; no old producer rerun",
+    "law": "U=3*sqrt(3)*abs(z1*z2*z3), z uniform S^6; E[U]=15*sqrt(3)/(64*pi), E[U^2]=3/77",
+    "ceiling": "Different ideal statistic/law, presented separately; never use its quantiles as J234 null."
+  },
+  "execution_and_return": {
+    "producer": "Only selected lower Sol actual packet executes the new consumer; preparer has performed source/header research only.",
+    "resource_policy": "No new walltime, invocation, RAM, total-byte or one-use cap. Parent controls limits. Stream/cache-reuse; maintain owner-required >=2GiB disk reserve and cumulative acquisition/CPU/failure accounting. Preserve first failures and resume same IDs/packet. A lengthy download is an acquisition checkpoint, not a permanent scientific HOLD.",
+    "deliverables": [
+      "Source-bound RESULT.json with named estimand, contract hash, actual executor, exact inputs, processing versions, per-draw coefficients/J/T, invalids and completed IDs",
+      "Observed and MC T distribution figure with rank and finite-MC interval, conditional-law caption",
+      "Three analysis-response columns and falsifier residuals; source/response assumptions and conditional limits",
+      "Runnable consumer; actual execution receipts and cumulative acquisition status"
+    ],
+    "qualification": "pr4_morphology_result requires actual source-qualified observed+matched null computation, declared MC accuracy, controls and fresh independent review. Preparation, inventory discovery, 030 diagnostic, or an eight-draw pilot alone cannot qualify the final product.",
+    "claim_ceiling": "Conditional processed PR4 morphology compatibility. No native solver/ODE/PDE, no inferred radiation stress/matter shear from E, no Bianchi identification, no original42/PR3 promotion. No physical significance beyond the stated released-pipeline law."
+  },
+  "primary_references": [
+    {
+      "url": "https://arxiv.org/html/2007.04997",
+      "sections": "4.1.5/Table5, 5, 7.7, AppendixA",
+      "use": "split semantics; end-to-end construction; observed-fixed mixing matrices and processed Commander simulation roles"
+    },
+    {
+      "url": "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php/Simulation_data",
+      "use": "2020 NPIPE simulation product roles and official Commander product endpoint"
+    },
+    {
+      "url": "https://pla.esac.esa.int/pla/aio/metadata-action?RESOURCE_CLASS=SIMULATED_MAP&RELEASE.NAME=PR4&PAGE=1&PAGE_SIZE=20000",
+      "use": "Complete actual6700-product inventory;400 selected-family FULL Commander QU products"
+    },
+    {
+      "url": "https://pla.esac.esa.int/pla/aio/metadata-action?RESOURCE_CLASS=MAP_EXTENSION&MAP.MAP_OID=15001&PAGE=1&PAGE_SIZE=1000",
+      "use": "Official observed QU extension2048 K_CMB Galactic/COSMO/NESTED"
+    },
+    {
+      "url": "https://arxiv.org/html/2502.07654v1",
+      "sections": "2.1",
+      "use": "Nominal2048/5arcmin PR4 component-separated map resolution only; do not import that paper SEVEM null for Commander"
+    },
+    {
+      "url": "https://healpy.readthedocs.io/en/latest/generated/healpy.sphtfunc.map2alm_spin.html",
+      "use": "Spin transform API; installed version recorded by executor"
+    }
+  ],
+  "source_bindings": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_contract_preparation/ESA_SIMULATION_DATA.html",
+      "sha256": "a57aa31f03ba6fe82be92cd402c3539c51602466c5ceb4e33c1c123406d82db4"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_contract_preparation/ESA_NPIPE_EXCERPT.txt",
+      "sha256": "c8d95e87f49ed355426ad886fa8396cc6c1ff6f22a7dcd7f8b83cc6c97112b35"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_contract_preparation/PLA_PR4_ALL_SIMULATED_MAPS.json",
+      "sha256": "05ae88c82a63887829a4f691b8dbfccfdbba7268c5a230ecc5546c5e7b0224f0"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_contract_preparation/PLA_PR4_OBSERVED_CMB_MAPS.json",
+      "sha256": "39015ad4d211b1d5e8e61b77133677d98201678b4e29ea15817e3f90596ec3d9"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_contract_preparation/COMMANDER_OBS_EXT_QUERY_0.json",
+      "sha256": "9aaae5e9750b8f85215762efb802b7a9b37217bcbd17e8ceaed8e7f1a5c2b5f8"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_contract_preparation/COMMANDER_HEADER_PROBE.json",
+      "sha256": "e4b3bccac2914be627b975ed271f0a6753270da7a4ed3c22e8cd469389bab3a5"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/research/DATA_ATLAS.md",
+      "sha256": "ddef506770924e44378fe6bf022b86cc81e4c740c79ce801539026ddf0070c75"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/FRONTIER.json",
+      "sha256": "8de844ee16d15eadb3085e6d3a16b172ce2ce6dd62a8bf276d265b9a8b335f24"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/cmb_counterpairs/morphology.py",
+      "sha256": "73fd20c0d347d94ee1aa143b3ec6ef4acda46bd3f7b3b1eb9b03e9b944cbddce"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/lowell_poles.py",
+      "sha256": "2defab06372951fc5c072f29924f17e8ecce5d85f657182f102c74a0469bbb7a"
+    }
+  ]
+}

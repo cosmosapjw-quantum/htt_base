@@ -1,0 +1,218 @@
+{
+  "scenario": "metadata",
+  "signal": 15,
+  "requests": [
+    {
+      "url": "https://pla.esac.esa.int/pla-sl/urldata-action?SIMULATED_MAP.SIMULATED_MAP_OID=93000",
+      "version": "HTTP/1.0",
+      "headers": {
+        "Host": "127.0.0.1:40961",
+        "User-Agent": "HTT-R36-06-acquisition/2",
+        "Accept": "*/*",
+        "Accept-Encoding": "identity"
+      }
+    }
+  ],
+  "batch": {
+    "results": [
+      {
+        "item": {
+          "id": 300,
+          "filename": "npipe6v20_commander_cmb_2048_mc_0300_005a.fits",
+          "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=npipe6v20_commander_cmb_2048_mc_0300_005a.fits",
+          "bytes": 603990720,
+          "catalog_row": {
+            "identifier": 93000,
+            "SIMULATED_MAP__SIMULATED_MAP_OID": 93000,
+            "SIMULATED_MAP__DISTRIBUTION_PATH": "simulated_maps/PR4/comp_separation",
+            "SIMULATED_MAP__FILE": "/pla/plaps/simulated_maps/PR4/comp_separation",
+            "SIMULATED_MAP__FILE_ID": "npipe6v20_commander_cmb_2048_mc_0300_005a.fits",
+            "SIMULATED_MAP__SIZE": 603990720,
+            "RELEASE__NAME": "PR4",
+            "SIMULATED_MAP__TYPE": "COMP_SEPARATION",
+            "SIMULATED_MAP__MC_NUMBER": 300,
+            "SIMULATED_MAP__FREQUENCY": "null",
+            "SIMULATED_MAP__PERIOD": "full",
+            "SIMULATED_MAP__CMB_TYPE": "NA",
+            "SIMULATED_MAP__FOREGROUND_COMPONENT": "null",
+            "SIMULATED_MAP__VERSION_MAP": "npipe6v20",
+            "SIMULATED_MAP__VERSION_NUMBER": 0,
+            "SIMULATED_MAP__LEGACY": "false",
+            "SIMULATED_MAP__COMP_SEP_TYPE": "cmb",
+            "SIMULATED_MAP__COMP_SEP_METHOD": "commander",
+            "SIMULATED_MAP__RING_HALF": 0,
+            "SIMULATED_MAP__PSM_STAGE": "null",
+            "SIMULATED_MAP__FIDUCIAL": "false",
+            "dataAccessReference": "data-action?SIMULATED_MAP.SIMULATED_MAP_OID=93000"
+          }
+        },
+        "process": {
+          "pid": 3136540,
+          "parent_pid": 3136083,
+          "session_id": 3136051,
+          "cwd": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01",
+          "argv": [
+            "fixture-main",
+            "--ids",
+            "300",
+            "301",
+            "--cache",
+            "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/metadata-gpyttv2j/cache",
+            "--receipts",
+            "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/metadata-gpyttv2j/attempts",
+            "--concurrency",
+            "1",
+            "--handoff",
+            "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/checkpoint/WORKER_HANDOFF_002.json",
+            "--handoff-sha256",
+            "013af5f0b4614169d881a74e7aa87a0ad38a8182496353d12ddaf4690f1c20ab",
+            "--mode",
+            "official-resolver-http10",
+            "--requested-executor-runtime",
+            "gpt-6-sol/high",
+            "--observed-executor-runtime",
+            "UNKNOWN"
+          ],
+          "proc_stat": "3136540 (python) S 3136083 3136051 3136051 0 -1 4194304 10324 157 1 1 11 5 0 0 20 0 2 0 172050874 126525440 8720 18446744073709551615 4325376 7352253 140722661853328 0 0 0 0 16781312 16386 0 0 0 17 9 0 0 0 0 0 10653128 12216448 519716864 140722661856853 140722661858739 140722661858739 140722661863400 0\n",
+          "boot_id": "3aace473-175a-4672-9b33-21fc1790e0f2"
+        },
+        "utc_start": 1793085738.782097,
+        "network_bytes": 0,
+        "redundant_prefix_bytes": 0,
+        "appended_bytes": 0,
+        "provider_checksum": "UNKNOWN",
+        "source_sha256": "7d0c3ee5a2afe9655f86f674052323a69da0fc64d920d3eb2cb81c3eb2e6a2ee",
+        "transport_mode": "official-resolver-http10",
+        "executor_runtime": {
+          "requested": "gpt-6-sol/high",
+          "observed": "UNKNOWN"
+        },
+        "network_bytes_semantics": "decoded bytes read; lower bound on network reception",
+        "actual_network_bytes": "UNKNOWN",
+        "retained_prefix": {
+          "bytes": 0,
+          "sha256": null,
+          "stat": null
+        },
+        "status": "INTERRUPTED",
+        "error": "OSError('curl exit -15')",
+        "stop_signal": 15,
+        "interrupted": true,
+        "elapsed_seconds": 0.6510662192013115,
+        "response_bytes_retained": 0,
+        "qualification_attempts": [
+          {
+            "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/metadata-gpyttv2j/attempts/batch-2b374eece89644449c98560c2b488b6c/0300-037f11740c8e40e0823f6596ebced8c7/resolver-transport/CURL_RETURN.json",
+            "exit_code": -15,
+            "decoded_bytes_read_lower_bound": 16384,
+            "actual_network_bytes": "UNKNOWN; subprocess/kernel buffering not measured",
+            "all_child_processes_reaped": true,
+            "interrupted": true,
+            "stop_signal": 15,
+            "cleanup_errors": []
+          }
+        ],
+        "auxiliary_decoded_bytes_lower_bound": 16384,
+        "resolver_metadata_bytes_retained": 16384,
+        "received_bytes_not_retained": 0
+      },
+      {
+        "item": {
+          "id": 301,
+          "filename": "npipe6v20_commander_cmb_2048_mc_0301_005a.fits",
+          "url": "https://pla.esac.esa.int/pla/aio/product-action?SIMULATED_MAP.FILE_ID=npipe6v20_commander_cmb_2048_mc_0301_005a.fits",
+          "bytes": 603990720,
+          "catalog_row": {
+            "identifier": 93001,
+            "SIMULATED_MAP__SIMULATED_MAP_OID": 93001,
+            "SIMULATED_MAP__DISTRIBUTION_PATH": "simulated_maps/PR4/comp_separation",
+            "SIMULATED_MAP__FILE": "/pla/plaps/simulated_maps/PR4/comp_separation",
+            "SIMULATED_MAP__FILE_ID": "npipe6v20_commander_cmb_2048_mc_0301_005a.fits",
+            "SIMULATED_MAP__SIZE": 603990720,
+            "RELEASE__NAME": "PR4",
+            "SIMULATED_MAP__TYPE": "COMP_SEPARATION",
+            "SIMULATED_MAP__MC_NUMBER": 301,
+            "SIMULATED_MAP__FREQUENCY": "null",
+            "SIMULATED_MAP__PERIOD": "full",
+            "SIMULATED_MAP__CMB_TYPE": "NA",
+            "SIMULATED_MAP__FOREGROUND_COMPONENT": "null",
+            "SIMULATED_MAP__VERSION_MAP": "npipe6v20",
+            "SIMULATED_MAP__VERSION_NUMBER": 0,
+            "SIMULATED_MAP__LEGACY": "false",
+            "SIMULATED_MAP__COMP_SEP_TYPE": "cmb",
+            "SIMULATED_MAP__COMP_SEP_METHOD": "commander",
+            "SIMULATED_MAP__RING_HALF": 0,
+            "SIMULATED_MAP__PSM_STAGE": "null",
+            "SIMULATED_MAP__FIDUCIAL": "false",
+            "dataAccessReference": "data-action?SIMULATED_MAP.SIMULATED_MAP_OID=93001"
+          }
+        },
+        "process": {
+          "pid": 3136540,
+          "parent_pid": 3136083,
+          "session_id": 3136051,
+          "cwd": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01",
+          "argv": [
+            "fixture-main",
+            "--ids",
+            "300",
+            "301",
+            "--cache",
+            "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/metadata-gpyttv2j/cache",
+            "--receipts",
+            "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/metadata-gpyttv2j/attempts",
+            "--concurrency",
+            "1",
+            "--handoff",
+            "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/checkpoint/WORKER_HANDOFF_002.json",
+            "--handoff-sha256",
+            "013af5f0b4614169d881a74e7aa87a0ad38a8182496353d12ddaf4690f1c20ab",
+            "--mode",
+            "official-resolver-http10",
+            "--requested-executor-runtime",
+            "gpt-6-sol/high",
+            "--observed-executor-runtime",
+            "UNKNOWN"
+          ],
+          "proc_stat": "3136540 (python) S 3136083 3136051 3136051 0 -1 4194304 10350 755 1 9 11 5 0 0 20 0 2 0 172050874 126525440 8720 18446744073709551615 4325376 7352253 140722661853328 0 0 0 0 16781312 16386 0 0 0 17 6 0 0 0 0 0 10653128 12216448 519716864 140722661856853 140722661858739 140722661858739 140722661863400 0\n",
+          "boot_id": "3aace473-175a-4672-9b33-21fc1790e0f2"
+        },
+        "utc_start": 1793085739.5696979,
+        "network_bytes": 0,
+        "redundant_prefix_bytes": 0,
+        "appended_bytes": 0,
+        "provider_checksum": "UNKNOWN",
+        "source_sha256": "7d0c3ee5a2afe9655f86f674052323a69da0fc64d920d3eb2cb81c3eb2e6a2ee",
+        "transport_mode": "official-resolver-http10",
+        "executor_runtime": {
+          "requested": "gpt-6-sol/high",
+          "observed": "UNKNOWN"
+        },
+        "network_bytes_semantics": "decoded bytes read; lower bound on network reception",
+        "actual_network_bytes": "UNKNOWN",
+        "status": "INTERRUPTED",
+        "error": "InterruptedError('controlled acquisition stop signal=15')",
+        "stop_signal": 15,
+        "interrupted": true,
+        "elapsed_seconds": 0.03229876211844385,
+        "response_bytes_retained": 0,
+        "qualification_attempts": [],
+        "auxiliary_decoded_bytes_lower_bound": 0,
+        "resolver_metadata_bytes_retained": 0,
+        "received_bytes_not_retained": 0
+      }
+    ],
+    "elapsed_seconds": 0.9733836520463228,
+    "all_futures_drained": true,
+    "interrupted": true,
+    "stop_signal": 15,
+    "network_bytes": 0,
+    "auxiliary_decoded_bytes_lower_bound": 16384,
+    "actual_network_bytes": "UNKNOWN; byte counts are decoded lower bounds"
+  },
+  "executor": {
+    "exit_code": 1,
+    "owned_children": 0,
+    "stop": true
+  }
+}

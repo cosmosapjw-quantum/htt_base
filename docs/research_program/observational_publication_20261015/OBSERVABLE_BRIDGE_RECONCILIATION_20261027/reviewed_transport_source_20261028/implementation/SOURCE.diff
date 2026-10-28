@@ -1,0 +1,17 @@
+--- /mnt/extdrive/workdir/htt_open_data/r36_pr4_transfer_repair_preparation/fetch_commander_mc.py
++++ /mnt/extdrive/workdir/htt_open_data/r36_pr4_concurrency_implementation/fetch_commander_mc.py
+@@ -341,12 +341,12 @@
+  install_stop_handlers()
+  ap=argparse.ArgumentParser(description=__doc__)
+  ap.add_argument('--ids',nargs='+',type=int,required=True,help='Explicit batch; start with 300..307. Extension requires another explicit batch.')
+- ap.add_argument('--cache',type=pathlib.Path,required=True);ap.add_argument('--receipts',type=pathlib.Path,required=True);ap.add_argument('--concurrency',type=int,default=4)
++ ap.add_argument('--cache',type=pathlib.Path,required=True);ap.add_argument('--receipts',type=pathlib.Path,required=True);ap.add_argument('--concurrency',type=int,default=4,help='Concurrent distinct-ID transfers: 1..16 (default: 4; controlled ramp required).')
+  ap.add_argument('--handoff',type=pathlib.Path,required=True);ap.add_argument('--handoff-sha256',required=True)
+  ap.add_argument('--mode',choices=['canonical-http10','official-resolver-http10'],required=True)
+  ap.add_argument('--requested-executor-runtime',required=True);ap.add_argument('--observed-executor-runtime',default='UNKNOWN')
+  a=ap.parse_args()
+- if not 1<=a.concurrency<=4:ap.error('concurrency must be within 1..4')
++ if not 1<=a.concurrency<=16:ap.error('concurrency must be within 1..16')
+  for n,s in SEALS.items():
+   if digest(BASE/n)!=s:raise ValueError('frozen source seal changed: '+n)
+  if digest(RESEARCH)!=RESEARCH_SHA256 or digest(ADDENDUM)!=ADDENDUM_SHA256:raise ValueError('frozen repair source changed')

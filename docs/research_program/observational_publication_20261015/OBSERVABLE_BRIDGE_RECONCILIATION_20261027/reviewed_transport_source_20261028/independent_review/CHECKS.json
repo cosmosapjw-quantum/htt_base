@@ -1,0 +1,97 @@
+{
+  "source": {
+    "reverse_exact_bytes": true,
+    "normalized_AST_equal": true,
+    "binding_count": 11,
+    "unchanged_raw_reuse_count": 6
+  },
+  "CLI": [
+    {
+      "value": "0",
+      "exit_code": 2,
+      "parsed_concurrency": null,
+      "cache_receipts_created": false
+    },
+    {
+      "value": "17",
+      "exit_code": 2,
+      "parsed_concurrency": null,
+      "cache_receipts_created": false
+    },
+    {
+      "value": "1",
+      "exit_code": 0,
+      "parsed_concurrency": 1,
+      "cache_receipts_created": false
+    },
+    {
+      "value": "4",
+      "exit_code": 0,
+      "parsed_concurrency": 4,
+      "cache_receipts_created": false
+    },
+    {
+      "value": "8",
+      "exit_code": 0,
+      "parsed_concurrency": 8,
+      "cache_receipts_created": false
+    },
+    {
+      "value": "16",
+      "exit_code": 0,
+      "parsed_concurrency": 16,
+      "cache_receipts_created": false
+    },
+    {
+      "value": "default",
+      "exit_code": 0,
+      "parsed_concurrency": 4,
+      "cache_receipts_created": false
+    }
+  ],
+  "signals": [
+    {
+      "signal": "SIGTERM",
+      "result": "PASS",
+      "active_children_observed": 16,
+      "queued_without_HTTP": 2,
+      "typed_interrupted_results": 18,
+      "raw_and_partial_payloads_exact": true,
+      "decoded_lower_bound_bytes": 524288,
+      "preserved_prefix_bytes": 131072,
+      "appended_bytes": 393216,
+      "future_drain": true,
+      "no_failed_finals": true,
+      "at": "2026-10-28T07:14:20.090276+00:00"
+    },
+    {
+      "signal": "SIGINT",
+      "result": "PASS",
+      "active_children_observed": 16,
+      "queued_without_HTTP": 2,
+      "typed_interrupted_results": 18,
+      "raw_and_partial_payloads_exact": true,
+      "decoded_lower_bound_bytes": 524288,
+      "preserved_prefix_bytes": 131072,
+      "appended_bytes": 393216,
+      "future_drain": true,
+      "no_failed_finals": true,
+      "at": "2026-10-28T07:14:23.581148+00:00"
+    }
+  ],
+  "nooverwrite": [
+    {
+      "case": "unreceipted_final",
+      "result": "PASS"
+    },
+    {
+      "case": "corrupt_receipted_final",
+      "result": "PASS"
+    },
+    {
+      "case": "orphan_receipt",
+      "result": "PASS"
+    }
+  ],
+  "finished": "2026-10-28T07:14:24.181488+00:00"
+}

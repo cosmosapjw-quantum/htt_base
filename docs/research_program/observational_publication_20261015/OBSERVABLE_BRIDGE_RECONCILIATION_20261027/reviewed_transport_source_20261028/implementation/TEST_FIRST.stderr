@@ -1,0 +1,33 @@
+test_actual_cli_guards (test_cli.CLI.test_actual_cli_guards) ... ok
+test_sixteen_active_and_two_queued_sigterm_sigint (test_actual_main16.ActualMain.test_sixteen_active_and_two_queued_sigterm_sigint) ... 
+  test_sixteen_active_and_two_queued_sigterm_sigint (test_actual_main16.ActualMain.test_sixteen_active_and_two_queued_sigterm_sigint) (signal=<Signals.SIGTERM: 15>) ... FAIL
+  test_sixteen_active_and_two_queued_sigterm_sigint (test_actual_main16.ActualMain.test_sixteen_active_and_two_queued_sigterm_sigint) (signal=<Signals.SIGINT: 2>) ... FAIL
+test_cache_mismatch_never_overwritten (test_affected_controls.Cases.test_cache_mismatch_never_overwritten) ... ok
+test_unreceipted_completed_target_preserved (test_affected_controls.Cases.test_unreceipted_completed_target_preserved) ... ok
+
+======================================================================
+FAIL: test_sixteen_active_and_two_queued_sigterm_sigint (test_actual_main16.ActualMain.test_sixteen_active_and_two_queued_sigterm_sigint) (signal=<Signals.SIGTERM: 15>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_concurrency_implementation/test_actual_main16.py", line 46, in test_sixteen_active_and_two_queued_sigterm_sigint
+    with self.subTest(signal=sig): self.exercise('concurrent',sig)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_concurrency_implementation/test_actual_main16.py", line 103, in exercise
+    self.assertTrue(all(p.stat().st_size==19712 for p in raws+partials))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_sixteen_active_and_two_queued_sigterm_sigint (test_actual_main16.ActualMain.test_sixteen_active_and_two_queued_sigterm_sigint) (signal=<Signals.SIGINT: 2>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_concurrency_implementation/test_actual_main16.py", line 46, in test_sixteen_active_and_two_queued_sigterm_sigint
+    with self.subTest(signal=sig): self.exercise('concurrent',sig)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_concurrency_implementation/test_actual_main16.py", line 103, in exercise
+    self.assertTrue(all(p.stat().st_size==19712 for p in raws+partials))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 4 tests in 22.851s
+
+FAILED (failures=2)

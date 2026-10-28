@@ -1,0 +1,67 @@
+test_four_active_and_two_queued_sigterm_sigint (test_main_closeout.ActualMain.test_four_active_and_two_queued_sigterm_sigint) ... 
+  test_four_active_and_two_queued_sigterm_sigint (test_main_closeout.ActualMain.test_four_active_and_two_queued_sigterm_sigint) (signal=<Signals.SIGTERM: 15>) ... FAIL
+  test_four_active_and_two_queued_sigterm_sigint (test_main_closeout.ActualMain.test_four_active_and_two_queued_sigterm_sigint) (signal=<Signals.SIGINT: 2>) ... FAIL
+test_full_eof_then_stop_before_promotion (test_main_closeout.ActualMain.test_full_eof_then_stop_before_promotion) ... FAIL
+test_resolver_metadata_and_qualification_stop (test_main_closeout.ActualMain.test_resolver_metadata_and_qualification_stop) ... 
+  test_resolver_metadata_and_qualification_stop (test_main_closeout.ActualMain.test_resolver_metadata_and_qualification_stop) (stage='metadata') ... FAIL
+  test_resolver_metadata_and_qualification_stop (test_main_closeout.ActualMain.test_resolver_metadata_and_qualification_stop) (stage='qualification') ... FAIL
+
+======================================================================
+FAIL: test_four_active_and_two_queued_sigterm_sigint (test_main_closeout.ActualMain.test_four_active_and_two_queued_sigterm_sigint) (signal=<Signals.SIGTERM: 15>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py", line 42, in test_four_active_and_two_queued_sigterm_sigint
+    with self.subTest(signal=sig): self.exercise('concurrent',sig)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py", line 81, in exercise
+    self.assertTrue(ready.wait(10),'server did not reach intended stop stage')
+AssertionError: False is not true : server did not reach intended stop stage
+
+======================================================================
+FAIL: test_four_active_and_two_queued_sigterm_sigint (test_main_closeout.ActualMain.test_four_active_and_two_queued_sigterm_sigint) (signal=<Signals.SIGINT: 2>)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py", line 42, in test_four_active_and_two_queued_sigterm_sigint
+    with self.subTest(signal=sig): self.exercise('concurrent',sig)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py", line 81, in exercise
+    self.assertTrue(ready.wait(10),'server did not reach intended stop stage')
+AssertionError: False is not true : server did not reach intended stop stage
+
+======================================================================
+FAIL: test_full_eof_then_stop_before_promotion (test_main_closeout.ActualMain.test_full_eof_then_stop_before_promotion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py", line 47, in test_full_eof_then_stop_before_promotion
+    self.exercise('completion',None)
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py", line 88, in exercise
+    batch=json.loads(batches[0].read_text());self.assertTrue(batch['all_futures_drained']);self.assertTrue(batch['interrupted'])
+                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_resolver_metadata_and_qualification_stop (test_main_closeout.ActualMain.test_resolver_metadata_and_qualification_stop) (stage='metadata')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py", line 45, in test_resolver_metadata_and_qualification_stop
+    with self.subTest(stage=scenario): self.exercise(scenario,signal.SIGTERM)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py", line 81, in exercise
+    self.assertTrue(ready.wait(10),'server did not reach intended stop stage')
+AssertionError: False is not true : server did not reach intended stop stage
+
+======================================================================
+FAIL: test_resolver_metadata_and_qualification_stop (test_main_closeout.ActualMain.test_resolver_metadata_and_qualification_stop) (stage='qualification')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py", line 45, in test_resolver_metadata_and_qualification_stop
+    with self.subTest(stage=scenario): self.exercise(scenario,signal.SIGTERM)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py", line 81, in exercise
+    self.assertTrue(ready.wait(10),'server did not reach intended stop stage')
+AssertionError: False is not true : server did not reach intended stop stage
+
+----------------------------------------------------------------------
+Ran 3 tests in 46.593s
+
+FAILED (failures=5)

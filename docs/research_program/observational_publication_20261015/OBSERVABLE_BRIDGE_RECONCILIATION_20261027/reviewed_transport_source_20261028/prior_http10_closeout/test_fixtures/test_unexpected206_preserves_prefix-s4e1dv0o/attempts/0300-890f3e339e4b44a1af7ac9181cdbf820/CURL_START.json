@@ -1,0 +1,38 @@
+{
+  "pid": 3123285,
+  "proc_stat": "3123285 (curl) R 3117333 3117326 3117326 0 -1 4194304 16 0 0 0 0 0 0 0 20 0 1 0 172033546 708608 51 18446744073709551615 94599378329600 94599378443917 140725568044928 0 0 0 0 0 0 0 0 0 17 7 0 0 0 0 0 94599378560144 94599378579568 94599510601728 140725568048007 140725568048482 140725568048482 140725568053226 0\n",
+  "command": [
+    "curl",
+    "--http1.0",
+    "--silent",
+    "--show-error",
+    "--connect-timeout",
+    "60",
+    "--header",
+    "Accept-Encoding: identity",
+    "--user-agent",
+    "HTT-R36-06-acquisition/2",
+    "--dump-header",
+    "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_fixtures/test_unexpected206_preserves_prefix-s4e1dv0o/attempts/0300-890f3e339e4b44a1af7ac9181cdbf820/curl.headers",
+    "--url",
+    "http://127.0.0.1:43489/?SIMULATED_MAP.FILE_ID=npipe6v20_commander_cmb_2048_mc_0300_005a.fits",
+    "--header",
+    "Range: bytes=17000-"
+  ],
+  "parent": {
+    "pid": 3117333,
+    "parent_pid": 3117326,
+    "session_id": 3117326,
+    "cwd": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01",
+    "argv": [
+      "python -m unittest",
+      "-v",
+      "test_fetch_commander_mc",
+      "test_transport_repair",
+      "test_signal_queue",
+      "test_auxiliary_retention"
+    ],
+    "proc_stat": "3117333 (python) R 3117326 3117326 3117326 0 -1 4194304 28876 15474 4 0 163 40 7 15 20 0 2 0 172025407 430600192 11512 18446744073709551615 4325376 7352253 140732837376544 0 0 0 0 16781312 16386 0 0 0 17 5 0 0 0 0 0 10653128 12216448 169152512 140732837379310 140732837379424 140732837379424 140732837384168 0\n",
+    "boot_id": "3aace473-175a-4672-9b33-21fc1790e0f2"
+  }
+}

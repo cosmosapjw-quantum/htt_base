@@ -1,0 +1,32 @@
+{
+  "kind": "PREPRODUCTION_ACQUISITION_CHECKPOINT_CLARIFICATION",
+  "created_utc": "2026-10-27T03:45:30.510025+00:00",
+  "task_id": "R36-06-PR4-MORPHOLOGY",
+  "packet_id": "902ebd6a521d6b31864e0bfce63336c62d6cec5ff2f6c3128de7ab68046fce35",
+  "contract_path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_contract_preparation/IMPLEMENTATION_CONTRACT.json",
+  "contract_sha256": "fa08a55ccbf7a5e488cfc2866f0138d0682d3732fe01a785870f8adf9fc677d4",
+  "author": "/root/r36_scientific_contract_preparation",
+  "requested_runtime": "gpt-6-astra/xhigh",
+  "observed_runtime": "UNKNOWN",
+  "scope": "Same-task acquisition continuity only. Original frozen contract, science, IDs, accuracy and acceptance unchanged. No science producer executed by this preparer.",
+  "approved_source_assumptions": [
+    "Use the exact official product-action URL and product ID in the main contract. A successful HTTP200 full response is a new actual acquisition attempt, not a new task or allowance.",
+    "No independently published provider checksum is currently available. Record that provenance limit; actual downloaded SHA256, official product identity, expected total bytes and FITS/header checks are sufficient here. Do not invent upstream byte identity.",
+    "Range was ignored by the observed server. The proposed resume method therefore starts a new full GET, byte-compares its prefix with the preserved partial file, and appends only after the entire preserved prefix matches. It does not claim network-byte savings.",
+    "A completed assembly consists byte-for-byte of that one fresh response: its prefix has been verified against retained bytes, and its suffix comes from the same response. This is valid exact assembly without a provider hash."
+  ],
+  "required_controls": [
+    "Use a new helper source file; never modify executing fetch source. Controller and worker own the cooperative checkpoint. Before replacement, prove previous writer has stopped/quiesced, record PID/start/status, preserved partial path/length/SHA256 and elapsed/downloaded counters; only one writer per partial file.",
+    "New helper opens the retained prefix read-only for comparison. It must not truncate or overwrite existing bytes. Check exact URL/product, HTTP200, compatible FITS content and payload header before accepting append mode.",
+    "Compare the entire old prefix byte-for-byte before appending any new suffix. A prefix mismatch, response shorter than prefix, wrong product, unexpected content or concurrent file-size change stops with original partial unchanged and records evidence. Do not silently restart/delete or accept an offset-only match.",
+    "Once prefix matches, append only subsequent bytes of the same response. On another interruption, preserve the longer partial with fresh size/hash and cumulative receipt; the next attempt again compares its full retained prefix.",
+    "Completion requires clean response termination, exact catalog size, full assembled-file SHA256 and FITS/header/schema verification. Extra or missing bytes remain incomplete/error. Promote to final path atomically only after these checks.",
+    "Test helper mechanics with small local prefix-match, mismatch, truncation, interrupted suffix and sole-writer fixtures. These are transport tests, not additional science draws. A different Astra agent independently reviews helper and actual receipts."
+  ],
+  "resource_and_controller_policy": [
+    "No new invocation/walltime/RAM/total-byte cap or reset. Parent supplies actual limits. Count every attempt, repeated prefix network bytes, walltime and failures cumulatively under the same packet.",
+    "Maintain owner-required at least2GiB free disk reserve. Pause acquisition cooperatively before losing this reserve; preserve validated partial and receipts. Do not remove unrelated data.",
+    "Controller may checkpoint this acquisition, dispatch independent READY work, and later resume this exact packet/helper state. This is resumable acquisition, not permanent scientific HOLD, cancellation or qualified product.",
+    "Unknown historical PID/start observations stay UNKNOWN. Existing successful exit0 producer receipts remain preserved and are not manufactured into historical process observation."
+  ]
+}

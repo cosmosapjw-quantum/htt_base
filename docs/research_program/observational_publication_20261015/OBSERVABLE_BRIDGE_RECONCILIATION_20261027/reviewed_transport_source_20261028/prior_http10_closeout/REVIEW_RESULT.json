@@ -1,0 +1,264 @@
+{
+  "schema": "htt.r36_06.source_helper_independent_review_closeout/1",
+  "verdict": "SCOPED_PASS",
+  "reviewer": "/root/r36_pr4_http10_source_fresh_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "task_id": "R36-06-PR4-MORPHOLOGY",
+  "packet_id": "902ebd6a521d6b31864e0bfce63336c62d6cec5ff2f6c3128de7ab68046fce35",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "source_hashes": {
+    "/mnt/extdrive/workdir/htt_open_data/r36_pr4_transfer_repair_preparation/fetch_commander_mc.py": "7d0c3ee5a2afe9655f86f674052323a69da0fc64d920d3eb2cb81c3eb2e6a2ee"
+  },
+  "scope": "Eligibility of this exact source/transport helper after one targeted lifecycle repair. Original independent nonauthor reviewer closes its own two HIGH findings. No actual MC product or scientific significance qualification.",
+  "prior_review": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/REVIEW_RESULT.json",
+    "sha256": "bb32f39d96d7d9170953b945b74186458c290f827cefb034d46ad4b320d34e2b",
+    "verdict": "HOLD",
+    "preserved": true
+  },
+  "closed_findings": [
+    {
+      "id": "F1",
+      "outcome": "CLOSED",
+      "evidence": "Original injected post-Popen CURL_START failure now reaps the actual child, closes descriptors, preserves ERROR and writes cleanup evidence. Protection starts before spawning and includes constructor record failure.",
+      "raw": "ORIGINAL_FALSIFIERS.stderr"
+    },
+    {
+      "id": "F2",
+      "outcome": "CLOSED",
+      "evidence": "Original real SIGTERM parent test now reaps curl and emits interrupted closeout. Actual main SIGTERM/SIGINT with4active+2queued records all six INTERRUPTED, makes exactly4HTTP requests, drains futures and leaves no owned process. Header/body, resolver metadata/qualification and complete-EOF boundary checks also pass.",
+      "raw": [
+        "ORIGINAL_FALSIFIERS.stderr",
+        "AFFECTED.stderr",
+        "MAIN_CLOSEOUT_FINAL.stderr",
+        "AUX_REAL_FINAL.stderr",
+        "OWNED_CHILD_CLOSEOUT.json"
+      ]
+    }
+  ],
+  "findings": [],
+  "checks": [
+    {
+      "check": "Affected transfer/source/lock/storage/prefix/HTTP206/shortEOF/cache/nooverwrite tests plus signal queue and auxiliary retention",
+      "outcome": "PASS",
+      "executions": 91,
+      "raw": "AFFECTED.stderr",
+      "command": "PYTHONPATH=/mnt/extdrive/workdir/htt_open_data/r36_pr4_transfer_repair_preparation python -B -m unittest -v test_fetch_commander_mc test_transport_repair test_signal_queue test_auxiliary_retention",
+      "note": "Execution count includes inherited duplicate cases."
+    },
+    {
+      "check": "Original reviewer real failing fixtures and exact603990720 synthetic whole-response/file SHA fixture",
+      "outcome": "PASS",
+      "executions": 3,
+      "raw": "ORIGINAL_FALSIFIERS.stderr",
+      "command": "python -B -m unittest -v test_independent",
+      "retained_prefix_bytes": 2097169,
+      "note": "Real schema header with synthetic body, no real MC acquisition; source expected size remains603990720."
+    },
+    {
+      "check": "Actual main4active+2queued under SIGTERM and SIGINT",
+      "outcome": "PASS",
+      "raw": "MAIN_CLOSEOUT_FINAL.stderr",
+      "note": "Exactly4HTTP1.0 requests, identity encoding, all six results INTERRUPTED, futures drained, all curl PIDs absent."
+    },
+    {
+      "check": "Stop after clean fullEOF during final digest before hardlink/receipt",
+      "outcome": "PASS",
+      "raw": "MAIN_CLOSEOUT_FINAL.stderr",
+      "note": "Validated first item stays COMPLETE; queued item INTERRUPTED and makes no HTTP request; exactly one verified artifact."
+    },
+    {
+      "check": "Actual resolver metadata and qualification interruption after observed decoded bytes",
+      "outcome": "PASS",
+      "raw": "AUX_REAL_FINAL.stderr",
+      "command": "python -B -m unittest -v test_main_closeout.ActualMain.test_resolver_metadata_and_qualification_stop",
+      "metadata_retained_bytes": 16384,
+      "qualification_retained_bytes": 8192,
+      "note": "Exact retained partial bytes preserved, proper per-ID OID93000, canonical item.url retained, no final MC receipt, lower-bound byte counts and actual-network UNKNOWN retained."
+    },
+    {
+      "check": "Source seals, handoff002, old14source/raw preimages and validation semantics",
+      "outcome": "PASS",
+      "raw": [
+        "SOURCE_SEALS.json",
+        "SOURCE_PRESERVATION.json"
+      ],
+      "note": "AST-identical select/role/disposition/storage/cache/handoff/transport-URL validation. Original review unchanged."
+    },
+    {
+      "check": "Requested executor and actual runtime separation",
+      "outcome": "PASS",
+      "note": "Actual-main fixtures retain requested gpt-6-sol/high and observed UNKNOWN; preparation profile is not used as executor evidence."
+    },
+    {
+      "check": "Owner mount loss, real remote transfer completion, physical product qualification, MC result or coverage",
+      "outcome": "NOT_RUN_OUT_OF_SCOPE"
+    }
+  ],
+  "review_fixture_first_failures": [
+    {
+      "raw": "SETUP_FIRST_FAILURE.txt",
+      "classification": "No process started: requested workdir did not yet exist; setup corrected within owned directory."
+    },
+    {
+      "raw": "MAIN_CLOSEOUT_FIRST.stderr",
+      "classification": "Reviewer local URL adapter read replaced argv and constructed invalid301URL. Source helper not at fault. Corrected own fixture; original script preserved."
+    },
+    {
+      "raw": "MAIN_CLOSEOUT_FINAL.stderr",
+      "classification": "Auxiliary assertions assumed server-written tiny data had already reached parent; actual CURL_RETURN correctly recorded decoded0 and networkUNKNOWN. Corrected observation trigger to wait for known retained bytes; only affected resolver test rerun and passed.",
+      "details": "AUX_REAL_FIXTURE_CORRECTION.json"
+    }
+  ],
+  "packaging_classification": "Old preservation-manifest self-entry hash is class4 packaging metadata. All14original source/raw preimages match; corrected consuming view used. Original manifest and initial evidence retained. No scientific-integrity promotion.",
+  "residual_limits": [
+    "Controlled SIGTERM/SIGINT are covered. Uncatchable SIGKILL, power loss or unmount remain crash/checkpoint reconciliation cases, not a claim of clean closeout.",
+    "No complete real MC transfer demonstrated by these synthetic/local tests; official per-ID resolution lifetime and uninterrupted603990720-byte remote response remain actual acquisition work.",
+    "Original pilot8/fixed100 and physical/statistical acceptance requirements remain unchanged.",
+    "Same06 actual resume ACK and host transition are still required. This result does not perform resume, formal controller qualification, scientific admission, CAS, native solver or ODE execution."
+  ],
+  "environment": {
+    "executable": "/usr/bin/python",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "cwd": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01",
+    "production_network_requests": 0,
+    "real_acquisition_cache_mutations": 0,
+    "STATE_mutations": 0,
+    "Git_mutations": 0
+  },
+  "raw_evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/AFFECTED.stderr",
+      "sha256": "11bb53c5f91645640a901c91cb13da1ef7279eca4de4d5d5e569379c32df266a"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/AFFECTED.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/AUX_REAL_FINAL.stderr",
+      "sha256": "26eb3072be6870b7d667460291fdefc7aa77108453f2bcf1512d254cadbd21da"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/AUX_REAL_FINAL.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/AUX_REAL_FIXTURE_CORRECTION.json",
+      "sha256": "375caa2896a536f3314ef56f04395846077481c07fad7cfbecd28dc3e463deff"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/MAIN_CLOSEOUT_FINAL.stderr",
+      "sha256": "671f4aac3d9b75fb394431ee26447a2b1e323b4fc212ba41327c5f6e66175ae5"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/MAIN_CLOSEOUT_FINAL.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/MAIN_CLOSEOUT_FIRST.stderr",
+      "sha256": "e586754faf19a5d6cc2df6be2dfe3de64fe79cbeef83b10a5ec1feef5554597c"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/MAIN_CLOSEOUT_FIRST.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/MAIN_FIXTURE_CORRECTION.json",
+      "sha256": "7af2cf8ccfab8f6343263b7e9ae9d2adc595216524c48e24d820990df60483b0"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/ORIGINAL_FALSIFIERS.stderr",
+      "sha256": "9870d7326578ca9a83192c80527c594bedb37a59969a28c466bbae016f852213"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/ORIGINAL_FALSIFIERS.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/OWNED_CHILD_CLOSEOUT.json",
+      "sha256": "57b8c5da126266b212ee22c5f9d635242708eed2b108cb6750da08137e54b7c9"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/SETUP_FIRST_FAILURE.txt",
+      "sha256": "3ce0b5db3bb7a98f07841ce48cc9149f5b4e3f815abbacca8cd7758c7c4b0e59"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/SOURCE_PRESERVATION.json",
+      "sha256": "b7bc2cda557b49fdcbe2090f492f2e09db88b3a3e96040b21b136133dbf82d96"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/SOURCE_SEALS.json",
+      "sha256": "16207e0ef6dcdf61cdf51c46adfd20dca6da3df092db3c2ba479096def94eb02"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/completion-lsqqx1cc/OBSERVATION.json",
+      "sha256": "8387e20aab585baeeba4b4cae2cd4010b91e69136b6b381df8aba121329a4378"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/concurrent-40oe89mz/OBSERVATION.json",
+      "sha256": "f5c0c0f13f09aaf8f19c40ed799d44066549df36e5ad0db9109285d6b05269bf"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/concurrent-a6f21fbg/OBSERVATION.json",
+      "sha256": "5898114ca1c70e22d3fe9ef8a18feb46a20afd16587e069dd0328303ed624808"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/full_size_fixture/attempts/0300-a8f2a2e2140647faac60067be5e6bc1b/RETURN.json",
+      "sha256": "61f3da73d7befee9afd815eff2309420a4c275c9d2a0835fa81e4d67554308b3"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/metadata-gpyttv2j/OBSERVATION.json",
+      "sha256": "a52aa791efc91caf486a57193483dfef8e2399ce6386081920c4201db9960028"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/qualification-z3mevtd0/OBSERVATION.json",
+      "sha256": "708970af216476946191b4646fda3c5fe032f41b6d89d6b33963e846d3d616d9"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/sigterm_fixture/OBSERVATION.json",
+      "sha256": "b140e66e3a6721b9cd8122ee652f551884bd857aefab8bec355db6a16548ddbb"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/start_record_failure_fixture/OBSERVATION.json",
+      "sha256": "7e10fb1a8b677f3ef6199a4ac2e63b0a87df99cbcb4beaf9513efc02e3f758f6"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_auxiliary_retention.py",
+      "sha256": "817e0c575de198b7e74025debbbbee6465ce112308bce6c3ff73c539f72ff3ca"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_fetch_commander_mc.py",
+      "sha256": "f6383ea8a77744924dbffa2012ab02cc3ea436b65972e6de1659b83a3d93e45b"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_independent.py",
+      "sha256": "c09430bc7e6a6c291e48de59a2ab2e35dccbef53278822a60a0b870f26b4aa36"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py",
+      "sha256": "3a940f2628e486963c746a133c070494363d65fdabebd1915ba5261e48a7eb15"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout_first_fixture.py",
+      "sha256": "4fbd18e00eb18f4779a916c125f9992139943959e6a2fff2c4e29b7374a45f48"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout_second_fixture.py",
+      "sha256": "be10d5bf6c831728aca1a51de674616ee8305691a809cbd93e50a955af727212"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_signal_queue.py",
+      "sha256": "ecda2d0098d6dc10fd3c07b5ff3c78fda36ded29045b4df71e943444a177459b"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_transport_repair.py",
+      "sha256": "5e20a42ce7e7b71c629c299fd070cceaa52ae27330d8add1c9d385732b32ebe0"
+    }
+  ],
+  "created_utc": "2026-10-27T07:24:09.850442+00:00"
+}

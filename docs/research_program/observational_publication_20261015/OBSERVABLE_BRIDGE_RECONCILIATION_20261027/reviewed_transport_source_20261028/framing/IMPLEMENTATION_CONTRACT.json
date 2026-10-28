@@ -1,0 +1,130 @@
+{
+  "schema": "htt.r36_06.concurrency_resource_implementation_contract/1",
+  "status": "FROZEN_APPROVED_FOR_PRESCRIBED_IMPLEMENTATION_NOT_ADOPTED",
+  "task_id": "R36-06-PR4-MORPHOLOGY",
+  "packet_id": "902ebd6a521d6b31864e0bfce63336c62d6cec5ff2f6c3128de7ab68046fce35",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "checkpoint_sequence": 2,
+  "framer": {
+    "agent_id": "/root/r36_optical_manuscript_fresh_review",
+    "requested_runtime": {
+      "model": "gpt-6-astra",
+      "reasoning_effort": "xhigh"
+    },
+    "observed_runtime": "UNKNOWN",
+    "role": "Read-only contract author; not implementation or independent reviewer",
+    "previous_manuscript_review": "Separate completed candidate53c00f review; not reused as helper approval"
+  },
+  "source_bindings": {
+    "scientific_contract": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_contract_preparation/IMPLEMENTATION_CONTRACT.json",
+      "sha256": "fa08a55ccbf7a5e488cfc2866f0138d0682d3732fe01a785870f8adf9fc677d4",
+      "bytes": 19577
+    },
+    "active_helper": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_transfer_repair_preparation/fetch_commander_mc.py",
+      "sha256": "7d0c3ee5a2afe9655f86f674052323a69da0fc64d920d3eb2cb81c3eb2e6a2ee",
+      "bytes": 24200
+    },
+    "prior_independent_helper_closeout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/REVIEW_RESULT.json",
+      "sha256": "0b2d56f12abe474f255035c831cffbd783db26d1c728602087c02f6dcc1cc4a0",
+      "bytes": 14528
+    },
+    "pilot8_execution": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/PILOT8_EXECUTION_RECEIPT.json",
+      "sha256": "12dd968a2b7b474ed01449cfd3ef094e99cd630460d35aa18fc5020c346eb15f",
+      "bytes": 3993
+    },
+    "handoff002": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/checkpoint/WORKER_HANDOFF_002.json",
+      "sha256": "013af5f0b4614169d881a74e7aa87a0ad38a8182496353d12ddaf4690f1c20ab",
+      "bytes": 34743
+    },
+    "prior_actual_main_fixture": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py",
+      "sha256": "3a940f2628e486963c746a133c070494363d65fdabebd1915ba5261e48a7eb15",
+      "bytes": 8710
+    }
+  },
+  "decision": "APPROVE_BOUNDED_IMPLEMENTATION_WITH_CONDITIONAL_RAMP",
+  "question": "Can the existing exact source-qualified transfer helper permit up to16 distinct-ID transfers while preserving its validation/lifecycle semantics and measuring any throughput benefit through a controlled8then16 ramp?",
+  "resource_policy": "No new walltime, invocation, RAM, total-byte or one-use cap. Parent controls limits. Stream/cache-reuse; maintain owner-required >=2GiB disk reserve and cumulative acquisition/CPU/failure accounting. Preserve first failures and resume same IDs/packet. A lengthy download is an acquisition checkpoint, not a permanent scientific HOLD.",
+  "measurement_basis": {
+    "pilot4_streams": {
+      "elapsed_seconds": 2330.4819307308644,
+      "whole_response_bytes": 3623944320,
+      "aggregate_MB_per_s": 1.5550192740020479,
+      "concurrency": 4,
+      "all_futures_drained": true
+    },
+    "pilot_mem_available_bytes": 9741697024,
+    "pilot_disk_free_bytes": 2441737797632,
+    "RSS_MB_each": {
+      "range": [
+        10,
+        45
+      ],
+      "source": "Controller observation, not a new independent measurement or RAM cap"
+    },
+    "current4_note": "Controller reports healthy recent aggregate about2.6MB/s; refresh actual completed current4batch throughput before adoption. Neither the old1.555MB/s nor the recent window is a promised8/16rate.",
+    "remaining_at_pilot_completion_bytes": 55567146240,
+    "speedup": "NOT_MEASURED"
+  },
+  "ownership": {
+    "implementer": "Controller-assigned lower Sol worker; requested and observed runtime recorded separately.",
+    "independent_reviewer": "Fresh reviewer who did not author this contract or candidate; this framer cannot self-admit.",
+    "new_helper_root": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_concurrency_implementation",
+    "new_operational_receipts_root": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_concurrency_actual",
+    "shared_cache": "Existing pinned acquisition cache and per-ID locks, unchanged.",
+    "active_helper": "7d0c remains immutable; current4streams continue. No production/STATE/Git writes by framer; no children/Ultra."
+  },
+  "production_source_allowlist": {
+    "base_sha256": "7d0c3ee5a2afe9655f86f674052323a69da0fc64d920d3eb2cb81c3eb2e6a2ee",
+    "default_concurrency_remains": 4,
+    "maximum_allowed_concurrency": 16,
+    "only_two_lines": [
+      {
+        "line_in_base": 344,
+        "old": " ap.add_argument('--cache',type=pathlib.Path,required=True);ap.add_argument('--receipts',type=pathlib.Path,required=True);ap.add_argument('--concurrency',type=int,default=4)",
+        "new": " ap.add_argument('--cache',type=pathlib.Path,required=True);ap.add_argument('--receipts',type=pathlib.Path,required=True);ap.add_argument('--concurrency',type=int,default=4,help='Concurrent distinct-ID transfers: 1..16 (default: 4; controlled ramp required).')"
+      },
+      {
+        "line_in_base": 349,
+        "old": " if not 1<=a.concurrency<=4:ap.error('concurrency must be within 1..4')",
+        "new": " if not 1<=a.concurrency<=16:ap.error('concurrency must be within 1..16')"
+      }
+    ],
+    "proof_of_scope": "Reverse these two exact replacements in the candidate bytes and recover active_helper SHA7d0c3ee5a2afe9655f86f674052323a69da0fc64d920d3eb2cb81c3eb2e6a2ee. Entire remaining source bytes and AST remain unchanged. No auto-ramp/retry implementation is allowed.",
+    "test_changes": "New tests and bounded copies/adaptations of prior tests may point to the new helper and expected candidate SHA only. Each process must prove __file__/source_sha256 uses the candidate, never accidentally test old7d0c."
+  },
+  "invariants": [
+    "Same06 task/packet/input, exact sequence2 handoff path/hash, IDs0300-0399, pilot8cache prerequisite and fixedMC100; no early significance stop.",
+    "Default concurrency4. Only maximum acceptedCLI16 and help/error text change; ThreadPool scheduling, callbacks, signal/child cleanup and every other source byte remain unchanged.",
+    "Source/catalog/URL/OID/resolver/HTTP1.0/identity-encoding/FITS-header-role-unit-frame-order, whole603990720-byte response, prefix/stat comparison, fullhash/cleanEOF/nooverwrite and per-IDlock semantics unchanged.",
+    "Existing mount checks, >=2GiB reserve, preserved prefixes/raw/failedattempts, cumulative byte/CPU/failure accounting and UNKNOWNactual-network/runtime semantics unchanged.",
+    "No new walltime/invocation/RAM/totalbyte/one-usecap, no retryloop, no source/solver/operator/tolerance/null/physicalacceptance change.",
+    "One productionCLI at a time across versions; no parallelCLI effective-limit bypass or sameIDwriters."
+  ],
+  "validation_before_adoption": {
+    "reuse": "Reuse prior exact7d0c independent closeout and unchanged adversarial controls by source invariance; do not rerun all93historical cases merely to frame this two-line change.",
+    "source_diff": "Reverse the two allowed line replacements and recover exact7d0c bytes/SHA; verify active7d0c unchanged. Every fixture child must identify the new helper path and candidateSHA, not accidentally import oldsource.",
+    "CLI": "Actual0and17 with otherwise complete arguments reject at concurrencyguard(argparse2), no receipt/storage/network action; default4 unchanged, actual8and16 entry accepted.",
+    "actual16_cleanup": "Fresh reviewer must execute actual main with realcurl localhost fixtures:18distinctIDs,16observed simultaneous active requests/CURL_START children and2queued. TestSIGTERM andSIGINT separately. Require exactly16HTTP1.0 identity requests, all18INTERRUPTED, no queued request afterstop, allfuturesdrained, allownedchildren reaped, no verifiedfinal artifacts, retained partial/raw/accounting. A configured max_workers16 is not execution proof.",
+    "affected_controls": "Preserve prior adversarial test bodies; run only directly affected selected concurrency/signal/nooverwrite/accounting controls. Reuse exact-source prior proof for unchanged schema/prefix/fullhash/EOF/resolver/constructorfailure logic. If adaptation reveals a substantive new failure, retain it and return bounded repair definition rather than weakening validation.",
+    "review_return": "Fresh nonauthor/nonframer exactcandidateSHA independent source/lifecyclePASS required before adoption. This contract is not that PASS. Tests are bounded local fixtures, not realMC reacquisition/scienceproducer runs."
+  },
+  "operational_ramp": {
+    "handover": "After independentPASS, let current4batch naturally complete/drain. Record its completed whole-file goodput and prove no remaining oldchildren/queuedfuturelaunchers. Preserve002identity and cumulative receipts; start only the new reviewed helper for subsequent work.",
+    "stage8": "Next8distinct incomplete fixedIDs (or fewer if fewerremain), ascending live inventory, explicit concurrency8, newreceiptsroot, samecache. Observe actual concurrency and wait for wholebatch complete proof.",
+    "healthy_complete_proof": "All selected unique products COMPLETE with603990720-byte wholeidentity/cleanEOF (CACHE_VERIFIED excluded from throughput numerator), allchildren/futuresclosed, no source/header/storage/accounting fault or429/503RetryAfter condition, >=2GiBreserve and no observed hostpressure/swapthrash. Record useful aggregate uniquecompletedbytes/wholebatchelapsed plus actualdecoded/auxiliary/redundant accounting. No new numericRAM/timebudget.",
+    "stage16_prerequisite": "Only healthy completed8proof with aggregate useful throughput improving over the completedcurrent4comparison permits a subsequent concurrency16batch. If benefit is absent/unclear, continue4; do not HOLD or shortenMC100.",
+    "stage16": "Next16distinct incomplete fixedIDs (or fewerremaining), sameproof. Continue16 only with measured benefit over8and healthy provider/host. No speeduppromise.",
+    "fallback": "On throttling/errors/regression/unclearbenefit or host/storagepressure, retain evidence and drain or controlled-stop ownedexecutor as conditionrequires; subsequent eligible work returns4. No short-window4/8/16oscillation or repeated high-concurrency trial absent newmeasured evidence/controllerdecision; this is not an invocation/attemptcap.",
+    "RetryAfter": "On429/503 retain status/rawheaders, defer newproviderrequests/retries until validRetryAfter delay/date expires; no parallelCLI bypass. Missing/invalid delay needs explicit conservative controller cooldown/providerhealthdecision, never immediate retry. Healthy currentrequests mayfinish. No retryimplementation is added.",
+    "no_scientific_stopping": "Continue fixed0300-0399 regardless intermediateT/J/p. Capability/review/acquisition difficulty cannot reduceMC100, resetidentities/costs or claim scientificfailure/success."
+  },
+  "completion_and_transition": "Lowerworker prepares candidate+affectedtests; fresh reviewer decides sourceeligibility; controller executes actual8thenconditional16ramp. Ifworker/reviewunavailable, continue reviewed4. No production activation or scientificadmission has occurred.",
+  "preserved_scientific_ceiling": "Conditional processed PR4 morphology compatibility. No native solver/ODE/PDE, no inferred radiation stress/matter shear from E, no Bianchi identification, no original42/PR3 promotion. No physical significance beyond the stated released-pipeline law.",
+  "prior_full_draft": "Unconsumed verbose framing draft retained separately; this compact final contract alone is the implementation/adoption consumer."
+}

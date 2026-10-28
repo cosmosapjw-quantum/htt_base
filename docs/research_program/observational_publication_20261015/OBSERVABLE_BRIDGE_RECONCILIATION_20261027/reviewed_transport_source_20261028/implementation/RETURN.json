@@ -1,0 +1,82 @@
+{
+  "status": "PRESCRIBED_TWO_LINE_CANDIDATE_PREPARED_TESTED_QUIESCENT_NOT_ADOPTED",
+  "created_utc": "2026-10-28T07:08:41.242946+00:00",
+  "task_id": "R36-06-PR4-MORPHOLOGY",
+  "packet_id": "902ebd6a521d6b31864e0bfce63336c62d6cec5ff2f6c3128de7ab68046fce35",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "checkpoint_sequence": 2,
+  "author_requested_runtime": "gpt-6.1-sol/medium",
+  "author_observed_runtime": "UNKNOWN",
+  "candidate_path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_concurrency_implementation/fetch_commander_mc.py",
+  "candidate_sha256": "139804aa216430b5db1b711823087099c31300e8e9e6c1ff56f3602178aaabe6",
+  "active_helper_unchanged_sha256": "7d0c3ee5a2afe9655f86f674052323a69da0fc64d920d3eb2cb81c3eb2e6a2ee",
+  "contract_sha256": "223fde11036657cea437313e06f26a94190f3eda27d40680bc689f0da38e1ac2",
+  "decision_sha256": "54597d53b77dcb62bbf6cbc4d9d070911257698a17fd0750892c300886d65119",
+  "source_bindings_verified": {
+    "scientific_contract": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_contract_preparation/IMPLEMENTATION_CONTRACT.json",
+      "sha256": "fa08a55ccbf7a5e488cfc2866f0138d0682d3732fe01a785870f8adf9fc677d4",
+      "bytes": 19577
+    },
+    "active_helper": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_transfer_repair_preparation/fetch_commander_mc.py",
+      "sha256": "7d0c3ee5a2afe9655f86f674052323a69da0fc64d920d3eb2cb81c3eb2e6a2ee",
+      "bytes": 24200
+    },
+    "prior_independent_helper_closeout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/REVIEW_RESULT.json",
+      "sha256": "0b2d56f12abe474f255035c831cffbd783db26d1c728602087c02f6dcc1cc4a0",
+      "bytes": 14528
+    },
+    "pilot8_execution": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/PILOT8_EXECUTION_RECEIPT.json",
+      "sha256": "12dd968a2b7b474ed01449cfd3ef094e99cd630460d35aa18fc5020c346eb15f",
+      "bytes": 3993
+    },
+    "handoff002": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/checkpoint/WORKER_HANDOFF_002.json",
+      "sha256": "013af5f0b4614169d881a74e7aa87a0ad38a8182496353d12ddaf4690f1c20ab",
+      "bytes": 34743
+    },
+    "prior_actual_main_fixture": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_http10_source_fresh_review/closeout_01/test_main_closeout.py",
+      "sha256": "3a940f2628e486963c746a133c070494363d65fdabebd1915ba5261e48a7eb15",
+      "bytes": 8710
+    }
+  },
+  "change": "Exactly two frozen allowlist lines: CLI help advertises1..16; accepted maximum/error text4->16. Default4 and all remaining source bytes unchanged.",
+  "proof_commands": [
+    {
+      "command": "python -B -m unittest -v test_cli test_actual_main16.ActualMain.test_sixteen_active_and_two_queued_sigterm_sigint test_affected_controls.Cases.test_cache_mismatch_never_overwritten test_affected_controls.Cases.test_unreceipted_completed_target_preserved",
+      "cwd": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_concurrency_implementation",
+      "exit_code": 0,
+      "raw_stdout": "TEST_SECOND.stdout",
+      "raw_stderr": "TEST_SECOND.stderr",
+      "result": "4 test methods PASS; CLI7values; actual SIGTERM andSIGINT16active+2queued; two nooverwrite controls"
+    },
+    {
+      "command": "python -B verify_candidate.py",
+      "cwd": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_concurrency_implementation",
+      "exit_code": 0,
+      "raw_stdout": "FINAL_PROOF.stdout",
+      "raw_stderr": "FINAL_PROOF.stderr",
+      "result": "Exact reverse-byte/normalizedAST/sourcebinding/candidateimport/live16distinct/queued2/262144retained/all18interrupted/allownedchildrenabsent PASS"
+    }
+  ],
+  "prior_controls_reused": "Frozen exact7d0c independent closeout and93 unchanged adversarial controls by byte invariance; no broad93rerun.",
+  "first_failure": "TEST_FIRST.stderr and test_actual_main16.first.py retained. Fixture initially waited19712bytes while stalled curl stdio retained16384 and buffered3328. Revised localhost sender emits exactly16384 so sent/retained/accounting assertions stay exact; helper unchanged. Failed fixtures were cleaned; exactPIDs all absent.",
+  "fixture_scope": "Actual main and real curl HTTP1.0 identity requests mapped exclusively to127.0.0.1. Frozen catalog still selects18distinctIDs0300..0317. Fixture substitutes pilot-cache prerequisite only to reach18jobs without realMCdata; records and asserts exact8pilot IDs. Scientific gate remains byte-identical. CLI admission tests stop at instrumentedStorage before writes/network. Test executor metadata gpt-6-sol/high is synthetic roundtrip fixture input, not author/runtime observation.",
+  "lifecycle_results": "Both signals:16livePIDs simultaneously observed with parentPPID,16distinctHTTPrequests,2queued neverrequest,18INTERRUPTED,262144decodedbytes retained in raw+partials,allfuturesdrained,nochildren/noverifiedfinals.",
+  "production_network_requests": 0,
+  "production_active_helper_edits": 0,
+  "production_cache_checkpoint_STATE_Git_mutations": 0,
+  "scientific_admission": false,
+  "adoption_performed": false,
+  "speedup": "NOT_MEASURED",
+  "manifest": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_concurrency_implementation/MANIFEST.json",
+    "sha256": "d5eff985d8bc11c7e649dd91c5fa3f5b7402a7dc46261edf2cf9878ba30b1edc"
+  },
+  "next_action": "Fresh independent nonauthor/nonframer Astra source/lifecycle review of exactcandidateSHA. Parent adoption only afterreview,current4drained; stage8 requires measured healthycomplete benefit overcurrent4 before16. SamefixedMC100/seq2/taskpacket/cumulativeaccounting; existing4continues.",
+  "directory_resolution": "Host corrected initial preparation path to exactcontract concurrency_implementation before any candidatefileswerecreated; no abandoned packaging directory or source deviation."
+}
