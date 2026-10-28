@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_author/publication_overlay.py", line 248, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_author/publication_overlay.py", line 243, in main
+    if a.action=='apply':apply(a.manifest.resolve(),a.repo.resolve(),a.reviewed_manifest_sha256,a.review_return.resolve());return
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_author/publication_overlay.py", line 217, in apply
+    if r.get('fixture_only'):require(str(repo)==r.get('fixture_root') and (repo/'.P6_DISPOSABLE_FIXTURE').is_file(),'test return cannot authorize primary checkout')
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_author/publication_overlay.py", line 10, in require
+    if not ok:raise ValueError(s)
+              ^^^^^^^^^^^^^^^^^^^
+ValueError: test return cannot authorize primary checkout

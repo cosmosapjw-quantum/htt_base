@@ -1,0 +1,684 @@
+{
+  "schema": "htt.independent_manuscript_review_raw/1",
+  "existing_task_id": "R36-11-SCIENCE-SYNTHESIS",
+  "candidate_identity": "sha256:53c00f723ea81cb88f2a63656444a0054470c422180a517b8ecf403d5373bcaa",
+  "agent_id": "/root/r36_optical_manuscript_fresh_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "commands": [
+    {
+      "name": "01_apply",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/publication_overlay.py",
+        "apply",
+        "--manifest",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/optical_manuscript_candidate/candidate/OVERLAY_MANIFEST.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--reviewed-manifest-sha256",
+        "53c00f723ea81cb88f2a63656444a0054470c422180a517b8ecf403d5373bcaa",
+        "--review-return",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/FIXTURE_ONLY_RETURN.json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "02_installed_assemble",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+        "assemble",
+        "--contract",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--output-root",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "03_installed_check_falsifiers",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+        "check",
+        "--contract",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--output-root",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--falsifiers"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "04_build",
+      "argv": [
+        "latexmk",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-cd",
+        "-outdir=r36_optical/build",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.tex"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "05_installed_built_check",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+        "check",
+        "--contract",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--output-root",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--built-pdfs"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "06_fixture_pdf_text",
+      "argv": [
+        "pdftotext",
+        "-layout",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.pdf",
+        "-"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "07_candidate_pdf_text",
+      "argv": [
+        "pdftotext",
+        "-layout",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/optical_manuscript_candidate/candidate/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.pdf",
+        "-"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "08_idempotent_apply",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/publication_overlay.py",
+        "apply",
+        "--manifest",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/optical_manuscript_candidate/candidate/OVERLAY_MANIFEST.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--reviewed-manifest-sha256",
+        "53c00f723ea81cb88f2a63656444a0054470c422180a517b8ecf403d5373bcaa",
+        "--review-return",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/FIXTURE_ONLY_RETURN.json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "09_metadata_rebuild",
+      "argv": [
+        "latexmk",
+        "-g",
+        "-pdf",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-cd",
+        "-outdir=r36_optical/build",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.tex"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "10_metadata_check",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+        "check",
+        "--contract",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--output-root",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--built-pdfs"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "11_metadata_idempotent_apply",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/publication_overlay.py",
+        "apply",
+        "--manifest",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/optical_manuscript_candidate/candidate/OVERLAY_MANIFEST.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--reviewed-manifest-sha256",
+        "53c00f723ea81cb88f2a63656444a0054470c422180a517b8ecf403d5373bcaa",
+        "--review-return",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/FIXTURE_ONLY_RETURN.json"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "12_metadata_pdf_text",
+      "argv": [
+        "pdftotext",
+        "-layout",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.pdf",
+        "-"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "negative_drop_O7",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+        "check",
+        "--contract",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--output-root",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1
+    },
+    {
+      "name": "negative_swap_signed_O1_O2",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+        "check",
+        "--contract",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--output-root",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1
+    },
+    {
+      "name": "negative_zero_full_cross_block",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+        "check",
+        "--contract",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--output-root",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1
+    },
+    {
+      "name": "negative_change_basis_sign",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+        "check",
+        "--contract",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--output-root",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1
+    },
+    {
+      "name": "negative_unreviewed_installed_tex",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+        "check",
+        "--contract",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--output-root",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1
+    },
+    {
+      "name": "13_restored_fixture_check",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+        "check",
+        "--contract",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+        "--repo",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--output-root",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+        "--built-pdfs"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "render_appendix_12_20",
+      "argv": [
+        "pdftoppm",
+        "-f",
+        "12",
+        "-l",
+        "20",
+        "-r",
+        "105",
+        "-png",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/render/page"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "top_level_execution": {
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/review_checks.py"
+    ],
+    "exit_code": 0,
+    "observed_unified_exec_session": 22391,
+    "replayed_after_interruption": false
+  },
+  "files": [
+    {
+      "path": "BUILD_AND_CITATIONS.json",
+      "sha256": "d74dab461740d7dbd053e74adca7e252d1d76864aa2caf28a341988d792886a5",
+      "bytes": 10725
+    },
+    {
+      "path": "COMMANDS.json",
+      "sha256": "03a3d82d432a55b11fd6d0713d3199df1f1ef00603405bab44550cc7a8bdd5b9",
+      "bytes": 16125
+    },
+    {
+      "path": "FIXTURE_ONLY_RETURN.json",
+      "sha256": "5542d873611c8679cf783f981c410000c269b0f1cc6a0578f0b12364c5b2ce99",
+      "bytes": 403
+    },
+    {
+      "path": "FIXTURE_RESULT.json",
+      "sha256": "506b4c7ebbd9c3b0eb9d0f3314f2a0c7348ff3634ef4272769b8766c9fcb64bf",
+      "bytes": 812
+    },
+    {
+      "path": "INDEPENDENT_CACHED_CHECKS.json",
+      "sha256": "c3058e92f0897641aa91bd36b1cda2a654dd911e1ef36cf636d686b4c72f92fc",
+      "bytes": 1637
+    },
+    {
+      "path": "MANUSCRIPT_ADDITIONS.md",
+      "sha256": "432f6fe92c505f68f0486c043d96cc452e86a3f0b0ce21e5600c360c490b3f2a",
+      "bytes": 25728
+    },
+    {
+      "path": "MISSING_FORMAL_FALSIFIERS.json",
+      "sha256": "ea6f75fccd8b4a764557d0602978b922bd54665cd4a9b81c678c85176831d011",
+      "bytes": 511
+    },
+    {
+      "path": "PRESERVATION.json",
+      "sha256": "f9f7f9e791ee321714b847fe56fadfc0c5a45c5320356eb8b30174dbbacd1101",
+      "bytes": 413
+    },
+    {
+      "path": "REVIEW.md",
+      "sha256": "e32a6a0bd91d12e05c4d22c556250526eec6b919081598adb0711c0c4460f7d0",
+      "bytes": 9133
+    },
+    {
+      "path": "SOURCE04_MANIFEST_AUDIT.json",
+      "sha256": "51b6036532af59e5703f5831e07df4bad2214da2455ebf464c9bdfd39913c07f",
+      "bytes": 6895
+    },
+    {
+      "path": "SOURCE_SEALS_FINAL.json",
+      "sha256": "ad4cd5e1417c0b6c1505b94eed0318c3537f54d87f472b0abe9f901987b94d5e",
+      "bytes": 20974
+    },
+    {
+      "path": "SOURCE_SEALS_INITIAL.json",
+      "sha256": "ad4cd5e1417c0b6c1505b94eed0318c3537f54d87f472b0abe9f901987b94d5e",
+      "bytes": 20974
+    },
+    {
+      "path": "final_git_status.txt",
+      "sha256": "1e16ac5ed98cc9e64b99bfc53a2825479173e3178c55d36184aec68d2eb5fd97",
+      "bytes": 49162
+    },
+    {
+      "path": "initial_git_status.txt",
+      "sha256": "1e16ac5ed98cc9e64b99bfc53a2825479173e3178c55d36184aec68d2eb5fd97",
+      "bytes": 49162
+    },
+    {
+      "path": "publication_overlay.py",
+      "sha256": "1fa7ffdc339b244ac5f12ac77c8504e0494a23cfd6e7e3dee70ce21637723cca",
+      "bytes": 21283
+    },
+    {
+      "path": "raw/01_apply.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/01_apply.stdout",
+      "sha256": "80ca771f1043d0d26da98ddaf857f3bbe9763e849f058d316f9307f38045ba20",
+      "bytes": 111
+    },
+    {
+      "path": "raw/02_installed_assemble.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/02_installed_assemble.stdout",
+      "sha256": "e028efbfa2c862dc44120bba29acf819f1eb666c779001cc0804921659b138c8",
+      "bytes": 65
+    },
+    {
+      "path": "raw/03_installed_check_falsifiers.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/03_installed_check_falsifiers.stdout",
+      "sha256": "ecd2fcdc0120f68ed56ee893ef44c4112b0a9286dc5a0b77c50b9b69a0c6388c",
+      "bytes": 2158
+    },
+    {
+      "path": "raw/04_build.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/04_build.stdout",
+      "sha256": "b980f8f3fb4020576ef1e5d58123f737947118d00bdf8b16a9624e24c2d34e2e",
+      "bytes": 72024
+    },
+    {
+      "path": "raw/05_installed_built_check.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/05_installed_built_check.stdout",
+      "sha256": "a24ad1585c7cddf28788b09897bc9803d5541c33d8401eb15baca538705ee799",
+      "bytes": 485
+    },
+    {
+      "path": "raw/06_fixture_pdf_text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/06_fixture_pdf_text.stdout",
+      "sha256": "fb0b932e1cbe2006b75c548dcc53df1c340c9986cfc8abcb5e0aa9908b337870",
+      "bytes": 58661
+    },
+    {
+      "path": "raw/07_candidate_pdf_text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/07_candidate_pdf_text.stdout",
+      "sha256": "fb0b932e1cbe2006b75c548dcc53df1c340c9986cfc8abcb5e0aa9908b337870",
+      "bytes": 58661
+    },
+    {
+      "path": "raw/08_idempotent_apply.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/08_idempotent_apply.stdout",
+      "sha256": "c9bbaaba0a3bf650fd68e58b590c36e4739a790340427764f38284619919a11e",
+      "bytes": 110
+    },
+    {
+      "path": "raw/09_metadata_rebuild.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/09_metadata_rebuild.stdout",
+      "sha256": "4dd3327e4371a35f699b15ce11d22d96b2a1eb6e21422405bcc1d92c60a77f94",
+      "bytes": 36327
+    },
+    {
+      "path": "raw/10_metadata_check.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/10_metadata_check.stdout",
+      "sha256": "4e53cdb5fe15a6b1ebe92324ffc33039fe335142c97998185e40856ab695c60c",
+      "bytes": 485
+    },
+    {
+      "path": "raw/11_metadata_idempotent_apply.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/11_metadata_idempotent_apply.stdout",
+      "sha256": "c9bbaaba0a3bf650fd68e58b590c36e4739a790340427764f38284619919a11e",
+      "bytes": 110
+    },
+    {
+      "path": "raw/12_metadata_pdf_text.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/12_metadata_pdf_text.stdout",
+      "sha256": "fb0b932e1cbe2006b75c548dcc53df1c340c9986cfc8abcb5e0aa9908b337870",
+      "bytes": 58661
+    },
+    {
+      "path": "raw/13_restored_fixture_check.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/13_restored_fixture_check.stdout",
+      "sha256": "4e53cdb5fe15a6b1ebe92324ffc33039fe335142c97998185e40856ab695c60c",
+      "bytes": 485
+    },
+    {
+      "path": "raw/negative_change_basis_sign.stderr",
+      "sha256": "1f0b3d2d394579546f87fc91470ba4e85f2ba9d2656e715984cdf97441887a5e",
+      "bytes": 2169
+    },
+    {
+      "path": "raw/negative_change_basis_sign.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/negative_drop_O7.stderr",
+      "sha256": "c20cce51fa9f421bccfc620099612758159a180669bc46fee092cc340101be4f",
+      "bytes": 2318
+    },
+    {
+      "path": "raw/negative_drop_O7.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/negative_swap_signed_O1_O2.stderr",
+      "sha256": "c20cce51fa9f421bccfc620099612758159a180669bc46fee092cc340101be4f",
+      "bytes": 2318
+    },
+    {
+      "path": "raw/negative_swap_signed_O1_O2.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/negative_unreviewed_installed_tex.stderr",
+      "sha256": "b8ea8a4885251bc26f3dc75f336fe2e93fa0745c5e159ee31a3e9b7a8b840765",
+      "bytes": 2655
+    },
+    {
+      "path": "raw/negative_unreviewed_installed_tex.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/negative_zero_full_cross_block.stderr",
+      "sha256": "c20cce51fa9f421bccfc620099612758159a180669bc46fee092cc340101be4f",
+      "bytes": 2318
+    },
+    {
+      "path": "raw/negative_zero_full_cross_block.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/render.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "raw/render.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "render/contact_12_14.png",
+      "sha256": "2f01b03c2909ed1206da8468ea9a340c47472dd17870fb12b3649e20a9645742",
+      "bytes": 376250
+    },
+    {
+      "path": "render/contact_15_17.png",
+      "sha256": "0a0608538f17d9303985f5c7e77e030ca6f79c2659868ab62e241e16782cc602",
+      "bytes": 371135
+    },
+    {
+      "path": "render/contact_18_20.png",
+      "sha256": "c4b3fd3f7649e50b3cca8b8217704b8a7e8699b5cc228f9d83185ad4b5f94847",
+      "bytes": 351444
+    },
+    {
+      "path": "render/page-12.png",
+      "sha256": "9e24c53dc862de78d9e112daf006a4967c2f5e37ed639bcbc8761753ca3be934",
+      "bytes": 188217
+    },
+    {
+      "path": "render/page-13.png",
+      "sha256": "04357e89b21562925523d3f90a1be760407a83d12c11e19bfd1182128533fd02",
+      "bytes": 169465
+    },
+    {
+      "path": "render/page-14.png",
+      "sha256": "0c810765247b62e9bcf4477b827d1e0f4263e942cef49d1f7584a78dea311e30",
+      "bytes": 139068
+    },
+    {
+      "path": "render/page-15.png",
+      "sha256": "4bae5533017e22dadd3f62526fdae6f63fe9150aaed0582c4bb231b98116d270",
+      "bytes": 175567
+    },
+    {
+      "path": "render/page-16.png",
+      "sha256": "f575487cb8ec40c1820d35b3e6154f803d968753af3e8f19dae6f92944eaf964",
+      "bytes": 181564
+    },
+    {
+      "path": "render/page-17.png",
+      "sha256": "f33928bfb8c7b7c88ed916b9a5db281272fb42cf25df4a341a097b27312f7266",
+      "bytes": 159552
+    },
+    {
+      "path": "render/page-18.png",
+      "sha256": "8a243e8ff6fbca0399dd0a31230c78f2fb4f662b666463495e2e6012e63ab272",
+      "bytes": 183000
+    },
+    {
+      "path": "render/page-19.png",
+      "sha256": "5645a145e59b0eb2656c2ea9b9fdfc29da921a467f32e603c6b8d5bb166cf16c",
+      "bytes": 212458
+    },
+    {
+      "path": "render/page-20.png",
+      "sha256": "aeb1eb1ffdcd3e527bb9bb63265c755a08f2132f0177960775fa02d2882fdde8",
+      "bytes": 83179
+    },
+    {
+      "path": "review_checks.py",
+      "sha256": "b32fa9f9791c958d93d9998bc054e813c4ffed46321f8a9562610565f1ea949e",
+      "bytes": 12896
+    }
+  ],
+  "continuation": {
+    "same_review": true,
+    "same_candidate": true,
+    "completed_unaffected_checks_rerun": false,
+    "candidate_manifest_RETURN_and_PACKAGE_identity_rechecked": true,
+    "runtime_identity_not_inferred": true
+  },
+  "preservation": {
+    "git_status_exactly_unchanged": true,
+    "HEAD": "8c9e51c06a770f0e327a794918e9d08c061c3824",
+    "original_35_equation_tags_and_main_recoverable": true,
+    "source04_manifest_entries_verified": 22,
+    "production_applied": false,
+    "repository_writes": false,
+    "STATE_writes": false,
+    "source_producers_run": false,
+    "optimization_runs": false,
+    "observational_downloads": false,
+    "children_spawned": false
+  }
+}

@@ -1,0 +1,305 @@
+{
+  "owner": "manuscript",
+  "scope": "conditional optical response, cached synthetic controls",
+  "claim_tier": "C0",
+  "transfer_source": "none",
+  "numbers": {
+    "source.p6_tensor_norm": {
+      "source": "04_result",
+      "locator": "/source/p6_tensor_norm",
+      "value": 0.03265680189321492,
+      "scope": "dimensionless apparent tensor"
+    },
+    "source.p6_working_covariance_scope": {
+      "source": "04_result",
+      "locator": "/source/p6_working_covariance_scope",
+      "value": "metric-derived only if D is adopted as an additional residual-error model; not empirical covariance or physical error bars",
+      "scope": "scope"
+    },
+    "synthetic_source_design.rows": {
+      "source": "04_result",
+      "locator": "/synthetic_source_design/rows",
+      "value": 96,
+      "scope": "mathematical illustration"
+    },
+    "synthetic_source_design.rank": {
+      "source": "04_result",
+      "locator": "/synthetic_source_design/rank",
+      "value": 16,
+      "scope": "finite design rank"
+    },
+    "synthetic_source_design.weights": {
+      "source": "04_result",
+      "locator": "/synthetic_source_design/weights",
+      "value": "1+0.4 n_z",
+      "scope": "synthetic positive weight definition"
+    },
+    "synthetic_source_design.raw_covariance": {
+      "source": "04_result",
+      "locator": "/synthetic_source_design/raw_covariance",
+      "value": "1e-8 (I+0.2 uu^T), u=linspace(-1,1,96); mathematical control only",
+      "scope": "synthetic covariance definition"
+    },
+    "synthetic_source_design.full_signed_summary": {
+      "source": "04_result",
+      "locator": "/synthetic_source_design/full_signed_summary",
+      "value": [
+        0.012074086313833032,
+        -0.00903120168213684,
+        0.005918106384212241,
+        -0.000548756550802814,
+        0.00040268605514401997,
+        0.0002216647131432144,
+        -0.0003932903924462935,
+        -4.627898479000938e-06,
+        9.873909732886332e-06,
+        -0.00017109448468495634
+      ],
+      "scope": "first three dimensionless, last seven mag"
+    },
+    "finite_z_example": {
+      "source": "04_result",
+      "locator": "/finite_z_example",
+      "value": {
+        "z": [
+          0.02,
+          0.01,
+          0.005
+        ],
+        "STF3_norm": [
+          0.04342971604250298,
+          0.021714693414132947,
+          0.010857342173346137
+        ],
+        "doubling_ratios": [
+          2.0000151608973153,
+          2.0000008351436778
+        ]
+      },
+      "scope": "source-level finite-z control"
+    },
+    "undefined_sectors": {
+      "source": "04_result",
+      "locator": "/undefined_sectors",
+      "value": {
+        "CF4_direct_dipole_physical_referent": "UNKNOWN",
+        "CF4_direct_octupole_joint_covariance": "UNAVAILABLE",
+        "physical_Bz_Bsel_eS_eO": "UNAVAILABLE",
+        "x_Q_F_Pi_G": "UNDEFINED_WITHOUT_OWNER_SPECIFIC_INPUTS"
+      },
+      "scope": "missing physical sectors stay missing"
+    },
+    "counterexample.certified_lower_bound": {
+      "source": "04_result",
+      "locator": "/counterexample/certified_lower_bound",
+      "value": 1.1313708498984756,
+      "scope": "shared unit-budget lower endpoint"
+    },
+    "counterexample.certified_upper_bound": {
+      "source": "04_result",
+      "locator": "/counterexample/certified_upper_bound",
+      "value": 1.1313708498984758,
+      "scope": "shared unit-budget upper endpoint"
+    },
+    "available_witness_controls.EPF1_nonzero_response.profiled_d": {
+      "source": "04_result",
+      "locator": "/available_witness_controls/EPF1_nonzero_response/profiled_d",
+      "value": [
+        0.12499999999999999,
+        0.0,
+        0.0
+      ],
+      "scope": "saved actual witness"
+    },
+    "available_witness_controls.EPF1_nonzero_response.certified_upper_bound": {
+      "source": "04_result",
+      "locator": "/available_witness_controls/EPF1_nonzero_response/certified_upper_bound",
+      "value": 0.00028033588262685186,
+      "scope": "available-witness upper residual endpoint"
+    },
+    "min singular value of L_S": {
+      "source": "04_table",
+      "locator": {
+        "column": "quantity",
+        "equals": "min singular value of L_S",
+        "value_column": "value"
+      },
+      "value": "0.018873110043440326",
+      "scope": "dimensionless inverse conditioning"
+    },
+    "max singular value of L_S": {
+      "source": "04_table",
+      "locator": {
+        "column": "quantity",
+        "equals": "max singular value of L_S",
+        "value_column": "value"
+      },
+      "value": "0.024097307981999622",
+      "scope": "dimensionless response"
+    },
+    "min eigenvalue M_S": {
+      "source": "04_table",
+      "locator": {
+        "column": "quantity",
+        "equals": "min eigenvalue M_S",
+        "value_column": "value"
+      },
+      "value": "0.0003561942827118082",
+      "scope": "dimensionless squared response"
+    },
+    "synthetic direct/octupole cross-cov norm": {
+      "source": "04_table",
+      "locator": {
+        "column": "quantity",
+        "equals": "synthetic direct/octupole cross-cov norm",
+        "value_column": "value"
+      },
+      "value": "1.7820478375045505e-12",
+      "scope": "declared design covariance"
+    },
+    "synthetic joint residual covariance trace": {
+      "source": "04_table",
+      "locator": {
+        "column": "quantity",
+        "equals": "synthetic joint residual covariance trace",
+        "value_column": "value"
+      },
+      "value": "1.317508814238013e-08",
+      "scope": "declared design covariance"
+    }
+  },
+  "certificate_cases": [
+    {
+      "label": "Shared unit budget",
+      "source": "04_result",
+      "locator": "/counterexample",
+      "retain_entire_object": true,
+      "expected_table": {
+        "certified_lower_bound": 1.1313708498984756,
+        "certified_upper_bound": 1.1313708498984758,
+        "budget": 1.0,
+        "compatible": false,
+        "physical_set_empty": false
+      }
+    },
+    {
+      "label": "Zero response, zero budget",
+      "source": "04_result",
+      "locator": "/S_zero_example",
+      "retain_entire_object": true,
+      "expected_table": {
+        "certified_lower_bound": 0.0,
+        "certified_upper_bound": 0.0,
+        "budget": 0.0,
+        "compatible": true,
+        "physical_set_empty": false
+      }
+    },
+    {
+      "label": "Narrow feasible ball",
+      "source": "04_result",
+      "locator": "/norm_bound_repair_controls/RF1_feasible_narrow_ball",
+      "retain_entire_object": true,
+      "expected_table": {
+        "certified_lower_bound": 0.0,
+        "certified_upper_bound": 5.176664520037313e-19,
+        "budget": 5.606717652542515e-10,
+        "compatible": true,
+        "physical_set_empty": false
+      }
+    },
+    {
+      "label": "Excluded physical boundary",
+      "source": "04_result",
+      "locator": "/norm_bound_repair_controls/RF2_excluded_physical_boundary",
+      "retain_entire_object": true,
+      "expected_table": {
+        "certified_lower_bound": 2.0184131778458593e-15,
+        "certified_upper_bound": 2.0184235050681796e-15,
+        "budget": 1.0092091825422658e-15,
+        "compatible": false,
+        "physical_set_empty": false
+      }
+    },
+    {
+      "label": "Tangent singleton",
+      "source": "04_result",
+      "locator": "/exact_set_and_directed_certificate_controls/NCF3_representable_tangent",
+      "retain_entire_object": true,
+      "expected_table": {
+        "certified_lower_bound": 0.0002803358826268454,
+        "certified_upper_bound": 0.00028033588262684546,
+        "budget": 0.001,
+        "compatible": true,
+        "physical_set_empty": false
+      }
+    },
+    {
+      "label": "One-spacing interior overlap",
+      "source": "04_result",
+      "locator": "/available_witness_controls/EPF1_nonzero_response",
+      "retain_entire_object": true,
+      "expected_table": {
+        "certified_lower_bound": 0.00028033588262683885,
+        "certified_upper_bound": 0.00028033588262685186,
+        "budget": 0.001,
+        "compatible": true,
+        "physical_set_empty": false
+      }
+    },
+    {
+      "label": "Zero response, fixed sqrt(3) norm",
+      "source": "04_result",
+      "locator": "/exact_set_and_directed_certificate_controls/NCF2_sqrt3_fixed_objective",
+      "retain_entire_object": true,
+      "expected_table": {
+        "certified_lower_bound": 1.7320508075688772,
+        "certified_upper_bound": 1.7320508075688774,
+        "budget": 2.0,
+        "compatible": true,
+        "physical_set_empty": false
+      }
+    },
+    {
+      "label": "Empty direct singleton",
+      "source": "04_result",
+      "locator": "/exact_set_and_directed_certificate_controls/NCF1_empty_singleton",
+      "retain_entire_object": true,
+      "expected_table": {
+        "certified_lower_bound": null,
+        "certified_upper_bound": null,
+        "budget": null,
+        "compatible": false,
+        "physical_set_empty": true
+      }
+    },
+    {
+      "label": "Adjacent exterior empty set",
+      "source": "04_result",
+      "locator": "/available_witness_controls/EPF1_adjacent_exterior",
+      "retain_entire_object": true,
+      "expected_table": {
+        "certified_lower_bound": null,
+        "certified_upper_bound": null,
+        "budget": null,
+        "compatible": false,
+        "physical_set_empty": true
+      }
+    }
+  ],
+  "figures": {
+    "04_joint_figure": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_04/JOINT_RESPONSE.pdf",
+      "sha256": "bcbf2e3e5d0d5ac441fc59f1964f80e065cc01b0ea0835fb5bdfd7c19cf6be20",
+      "bytes": 15259,
+      "role": "sealed figure 1"
+    },
+    "04_source_figure": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/repair_04/SOURCE_AND_FINITE_Z.pdf",
+      "sha256": "bab3144cb91632577aa64e008716809ad1e44b5bce7f10aec951888f71cf9128",
+      "bytes": 14151,
+      "role": "sealed figure 2"
+    }
+  },
+  "original_acceptances_unchanged": true
+}

@@ -1,0 +1,311 @@
+[
+  {
+    "name": "01_apply",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/publication_overlay.py",
+      "apply",
+      "--manifest",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/optical_manuscript_candidate/candidate/OVERLAY_MANIFEST.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--reviewed-manifest-sha256",
+      "53c00f723ea81cb88f2a63656444a0054470c422180a517b8ecf403d5373bcaa",
+      "--review-return",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/FIXTURE_ONLY_RETURN.json"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "02_installed_assemble",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+      "assemble",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "03_installed_check_falsifiers",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+      "check",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--falsifiers"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "04_build",
+    "argv": [
+      "latexmk",
+      "-pdf",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-cd",
+      "-outdir=r36_optical/build",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.tex"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "05_installed_built_check",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+      "check",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--built-pdfs"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "06_fixture_pdf_text",
+    "argv": [
+      "pdftotext",
+      "-layout",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.pdf",
+      "-"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "07_candidate_pdf_text",
+    "argv": [
+      "pdftotext",
+      "-layout",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/optical_manuscript_candidate/candidate/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.pdf",
+      "-"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "08_idempotent_apply",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/publication_overlay.py",
+      "apply",
+      "--manifest",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/optical_manuscript_candidate/candidate/OVERLAY_MANIFEST.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--reviewed-manifest-sha256",
+      "53c00f723ea81cb88f2a63656444a0054470c422180a517b8ecf403d5373bcaa",
+      "--review-return",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/FIXTURE_ONLY_RETURN.json"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "09_metadata_rebuild",
+    "argv": [
+      "latexmk",
+      "-g",
+      "-pdf",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-cd",
+      "-outdir=r36_optical/build",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.tex"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "10_metadata_check",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+      "check",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--built-pdfs"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "11_metadata_idempotent_apply",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/publication_overlay.py",
+      "apply",
+      "--manifest",
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/optical_manuscript_candidate/candidate/OVERLAY_MANIFEST.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--reviewed-manifest-sha256",
+      "53c00f723ea81cb88f2a63656444a0054470c422180a517b8ecf403d5373bcaa",
+      "--review-return",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/FIXTURE_ONLY_RETURN.json"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "12_metadata_pdf_text",
+    "argv": [
+      "pdftotext",
+      "-layout",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.pdf",
+      "-"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "negative_drop_O7",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+      "check",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+    ],
+    "exit_code": 1,
+    "expected_exit_code": 1
+  },
+  {
+    "name": "negative_swap_signed_O1_O2",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+      "check",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+    ],
+    "exit_code": 1,
+    "expected_exit_code": 1
+  },
+  {
+    "name": "negative_zero_full_cross_block",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+      "check",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+    ],
+    "exit_code": 1,
+    "expected_exit_code": 1
+  },
+  {
+    "name": "negative_change_basis_sign",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+      "check",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+    ],
+    "exit_code": 1,
+    "expected_exit_code": 1
+  },
+  {
+    "name": "negative_unreviewed_installed_tex",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+      "check",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+    ],
+    "exit_code": 1,
+    "expected_exit_code": 1
+  },
+  {
+    "name": "13_restored_fixture_check",
+    "argv": [
+      "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+      "-B",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+      "check",
+      "--contract",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+      "--repo",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--output-root",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture",
+      "--built-pdfs"
+    ],
+    "exit_code": 0,
+    "expected_exit_code": 0
+  },
+  {
+    "name": "render_appendix_12_20",
+    "argv": [
+      "pdftoppm",
+      "-f",
+      "12",
+      "-l",
+      "20",
+      "-r",
+      "105",
+      "-png",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.pdf",
+      "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/render/page"
+    ],
+    "exit_code": 0
+  }
+]

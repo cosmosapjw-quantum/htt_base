@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_author/small_p6_fixture_02/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py", line 248, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_author/small_p6_fixture_02/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py", line 246, in main
+    elif a.action=='check':check(c,repo,out,a.built_pdfs,a.falsifiers)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_author/small_p6_fixture_02/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py", line 179, in check
+    paths=validate(c,repo,out);s=support(c,out);data=load(s/'NUMERICAL_SUPPLEMENT.json');semantics(c,paths,data)
+          ^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_author/small_p6_fixture_02/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py", line 48, in validate
+    else:paths[k]=resolve(rel,b)
+                  ^^^^^^^^^^^^^^
+  File "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_author/small_p6_fixture_02/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py", line 39, in resolve
+    require(p.is_file() and (sha(p)==post.get(rel) or (p.suffix=='.pdf' and rel in texts and pdfhash(p)==texts[rel])),'unexpected live overlay mutation '+rel)
+  File "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_author/small_p6_fixture_02/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py", line 10, in require
+    if not ok:raise ValueError(s)
+              ^^^^^^^^^^^^^^^^^^^
+ValueError: unexpected live overlay mutation docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.tex

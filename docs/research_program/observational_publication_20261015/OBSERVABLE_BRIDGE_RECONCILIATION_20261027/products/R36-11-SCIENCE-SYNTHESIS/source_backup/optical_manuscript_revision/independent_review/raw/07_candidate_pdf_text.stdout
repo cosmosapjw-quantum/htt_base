@@ -1,0 +1,1014 @@
+   Finite optical inverses and the error radius required for a shear constraint
+
+                                  Conditional methods review draft
+
+         A local distance law encodes expansion, acceleration and shear, but a catalogue measures
+       that law through selected directions and nuisance projections. We compose these operations
+       and derive the exact identifiable sector of the resulting finite linear response. Its inverse
+       is a set: measurement and response errors determine a residual-compatible image, while
+       the response kernel remains free. We give its support function, a stable inverse bound,
+       and an explicit tensor ellipsoid with an additional bounded response term. For the com-
+       plete positive angular magnitude field, normalized exponentiation instead gives an exact
+       intercept-independent inverse; a uniform field error yields a finite bound on the recovered
+       dipole and shear. These two inverses have different domains. A retained CF4 calibration
+       quotient illustrates the finite construction with five dimensionless tensor coordinates, norm
+       0.0326568018932, and principal values approximately -0.0237272, 0.00132795 and 0.0223992.
+       Conditional shear bounds become positive only below the apparent tensor norm. We show
+       their dependence on an assumed response-error radius and Hubble normalization, retaining
+       the tensor region and the physical sectors absent from the local slope.
+
+
+
+
+                  I.   WHAT THE LOCAL DISTANCE SLOPE CONTAINS
+
+
+   The first distance coefficient is a directional rate. Its physical content depends on the source
+congruence and observer, while its recovery depends on how the directions and distances were
+sampled. A finite tensor estimate therefore poses two questions: which combinations survive the
+observation operator, and which physical states remain compatible with its errors? We answer these
+questions with a composed response and a set-valued inverse.
+
+   General luminosity-distance cosmography expresses the local coefficients through finitely many
+kinematic multipoles [1]. Observer transformations must also be carried through the distance
+and redshift observables [2]. We use the same-congruence local law and logarithmic remainder
+established in the companion optical construction [3]. Our finite result retains the sampling and
+nuisance operators before attempting an inverse. Its error regions are deterministic sets unless a
+joint sampling law is explicitly supplied.
+
+   Use signature (− + ++), proper length s = cτ , and a unit timelike congruence ua ua = −1. Let
+n point from observer to source, with past-directed null direction ℓ = −u + n. In the orthonormal
+rest space at the observation event,
+                                                                                                          2
+
+
+
+
+                   ∇a ub = −ua Ab /c2 + (Hhab + σab + ωab )/c,            hab = gab + ua ub .            (1)
+
+
+   Here H, σ, ω have units of inverse time and A of length per time squared. Since ℓa ℓb ωab = 0,
+
+
+
+                                                                                     cz
+              Hu (n) = cℓa ℓb ∇a ub = H − A · n/c + σ : nn,           dL (z, n) =          + O(z 2 ).    (2)
+                                                                                    Hu (n)
+
+   Equation (2) assumes smooth emitters and an observer following this congruence, with a regular
+local geometric-optics distance expansion. The acceleration sign follows from our direction conven-
+tion. Finite-distance peculiar motion, frame changes and calibration enter the application response
+separately.
+   For H > 0, define the dimensionless vector and STF tensor
+
+
+
+         d = −A/(cH),          S = σ/H,      qθ (n) = d · n + S : nn,     θ = (d, S),    κ = 5/ ln 10.   (3)
+
+
+   The local angular magnitude field is
+
+
+
+                                       dL (z, n)
+                fθ (n) = lim 5 log10             = −κ log[1 + qθ (n)],      inf [1 + qθ (n)] > 0.        (4)
+                         z↓0            cz/H                                 n
+
+
+   The ratio has a finite limit even though each magnitude diverges. The absolute scale H is absent
+from (4). Multiplying (H, A, σ) by the same positive constant preserves (d, S) and this angular field.
+
+
+                 II.   AN INVERSE FOR THE COMPLETE ANGULAR FIELD
+
+
+   Let ⟨·⟩ denote normalized full-sphere integration. The following inverse requires the complete
+field and this measure.
+   Proposition 1 (intercept-independent inverse and a finite field-error bound). For any
+constant intercept b, set
+
+
+
+                                                       e−(fθ (n)+b)/κ
+                                            rf (n) =                  .                                  (5)
+                                                       ⟨e−(fθ +b)/κ ⟩
+
+   Then rf = 1 + qθ , and
+                                                                                                              3
+
+
+
+
+                                                            15
+                                 di = 3⟨rf ni ⟩,    Sij =      ⟨rf (ni nj − δij /3)⟩.                       (6)
+                                                            2
+
+   Suppose a complete perturbed field is fθ + b + u, with ∥u∥∞ ≤ δ, and ∥qθ ∥∞ ≤ ϵ < 1. Apply
+(5)–(6) to that field to obtain (d,
+                                 e S).
+                                    e Then
+
+
+
+                             √                         p
+                |de − d| ≤       3B,     ∥Se − S∥F ≤    15/2B,          B = (1 + ϵ)(e2δ/κ − 1).             (7)
+
+   Proof. Trace freedom and spherical symmetry give ⟨qθ ⟩ = 0, so the denominator in (5) is exactly
+e−b/κ . The identities ⟨ni nj ⟩ = δij /3 and ⟨ni nj nk nl ⟩ = (δij δkl + δik δjl + δil δjk )/15 prove (6). Write
+r = 1 + qθ . For the perturbed field,
+
+
+                                         re    e−u/κ
+                                            =           ∈ [e−2δ/κ , e2δ/κ ].                                (8)
+                                         r    ⟨re−u/κ ⟩
+
+   The denominator is an average with positive normalized weight r, which proves this interval.
+       r − r∥2 ≤ B in normalized spherical L2 . Orthogonal harmonic projection cannot increase
+Hence ∥e
+that norm. A dipole has squared spherical norm |d|2 /3, and an STF quadrupole has squared norm
+2∥S∥2F /15. Applying these identities to the two projected differences proves (7). A constant u
+cancels exactly, although the uniform bound does not exploit that special case. □
+   This is also an injectivity result: two complete fields differing only by an intercept have the
+same d, S. Replacing the field by a truncated fit introduces the omitted field as an additional u;
+replacing the sphere by selected directions changes the integration operator. Without a bound on
+those changes, exponentiating a noisy low-order map does not inherit Proposition 1.
+
+
+       III.   SAMPLING, NUISANCE REMOVAL AND THE OPTICAL RESPONSE
+
+
+   Let S be a specified finite sampling operator from angular fields to m magnitude coordinates.
+Point evaluations and normalized, possibly signed, window averages are examples. We require each
+row to have finite total variation ℓi , so |(Sg)i | ≤ ℓi ∥g∥∞ . Let N β be a finite linear nuisance family
+in those same coordinates and let W be a nonsingular working whitening matrix. Using W as a
+metric imposes no stochastic law. Define
+
+
+
+               U = W N,            PN = I − U U + ,         z = PN W y,        Φ(θ) = PN W Sfθ .            (9)
+                                                                                                            4
+
+
+   The superscript + denotes the Moore–Penrose inverse. Since PN W N = 0, the observation
+equation becomes
+
+
+
+                             y = Sfθ + N β + e0 ,        z = Φ(θ) + PN W e0 .                          (10)
+
+   This is the composed nonlinear map. Its exact equivalence relation is θ ∼ θ′ when PN W S(fθ −
+fθ′ ) = 0. Global injectivity of (5) does not establish injectivity of (9).
+   To expose a constructive finite inverse, choose Frobenius-orthonormal coordinates for S, and
+write V θ = qθ . In the domain ∥qθ ∥∞ ≤ ϵ < 1,
+
+
+                                                                                      κϵ2
+                       fθ = −κV θ + R1 (θ),         ∥R1 (θ)∥∞ ≤ b1 (ϵ) :=                    .         (11)
+                                                                                    2(1 − ϵ)
+                                                                                                      k
+                                                                                                 P
+   Indeed, the tail of log(1 + q) after its linear term has absolute value at most               k≥2 ϵ /k   ≤
+ϵ2 /[2(1 − ϵ)]. Set
+
+
+
+                      A = −κPN W SV,         z = Aθ + e,        e = PN W [e0 + SR1 (θ)].               (12)
+
+   If e0 ∈ E0 , a uniform finite outer error region is
+
+
+                                                             m
+                                                             Y
+                                 E = P N W E0 ⊕ P N W          [−ℓi b1 , ℓi b1 ].                      (13)
+                                                             i=1
+
+   For a compact set E, write hE (a) = supe∈E       aT e. Equation (13) has the computable support
+
+
+                                                             X
+                             hE (a) = hE0 (W T PN a) + b1          ℓi |(W T PN a)i |.                  (14)
+                                                               i
+
+   The optical tail is correlated across directions and depends on θ. The box in (13) deliberately
+enlarges its image; (14) is exact for that outer set. The exact nonlinear feasible set instead retains
+the dependence,
+
+
+
+                         Θnl (z) = {θ : inf (1 + qθ ) > 0,     z − Φ(θ) ∈ PN W E0 }.                   (15)
+                                         n
+
+   On the stated ϵ domain, (12)–(13) contain (15). A fit of only five shear columns is obtained by
+placing the chosen dipole and intercept columns in N . Their linear contribution is then removed,
+while their nonlinear coupling remains in R1 . This separation prevents nuisance projection from
+being mistaken for removal of every physical effect of those fields.
+                                                                                                         5
+
+
+                    IV.     THE EXACT FINITE IDENTIFIABLE SECTOR
+
+
+   We now analyze the declared linear error model z = Aθ + e, e ∈ E, without imposing an
+additional physical restriction on θ. Let
+
+
+
+ A = Ur Dr VrT ,        PA = AA+ ,     PI = A+ A = Vr VrT ,       Ez = {e ∈ E : (I − PA )(z − e) = 0}.
+                                                                                                   (16)
+   Only positive singular values occur in Dr . A numerical rank policy is a separately recorded
+approximation to this exact algebraic definition.
+   Theorem 2 (finite inverse and support). The model is feasible exactly when Ez ̸= ∅. Its
+full parameter set is
+
+
+
+                            Θlin (z) = {A+ (z − e) + k : e ∈ Ez , k ∈ ker A}.                      (17)
+
+
+   A linear carrier Jθ is determined by the noiseless observation for all θ precisely when ker A ⊆
+ker J. For such a carrier, its error image is compact when E is compact, and
+
+
+
+                               hJΘlin (a) = aT JA+ z + hEz (−A+T J T a).                           (18)
+
+
+   We use the extended-real convention h∅ (a) = −∞; thus an empty feasible set has an empty
+carrier image with support −∞. If Ez ̸= ∅ and J T a has a nonzero component in ker A, the support
+in that direction is +∞. For r > 0, if ∥e∥2 ≤ re , the identifiable coordinate obeys
+
+
+
+                                                            re
+                                      ∥PI θ − A+ z∥2 ≤            .                                (19)
+                                                         smin (A)
+
+   Proof. If z − e = Aθ, multiplication by I − PA gives the compatibility condition in (16), and
+multiplication by A+ gives PI θ = A+ (z−e). The remaining component is in ker A, proving necessity
+in (17). Conversely, every vector in (17) satisfies Aθ = PA (z −e) = z −e. In the noiseless model two
+parameters have the same image exactly when their difference is in ker A; applying J proves the
+stated criterion. Under that criterion, the kernel term vanishes and maximizing the affine functional
+of e gives (18). Compactness follows because Ez is a closed subset of a compact set. When Ez ̸= ∅,
+choose a feasible θ0 ∈ Θlin (z). A nonzero kernel component provides k ∈ ker A with aT Jk > 0;
+                                                                                                    6
+
+
+then θ0 + tk remains feasible for every t ≥ 0, and aT J(θ0 + tk) → +∞, proving the infinite-support
+statement. Finally PI θ − A+ z = −A+ e, and ∥A+ ∥2 = 1/smin (A), which proves (19). □
+   For A = 0, every parameter is unresolved whenever z ∈ E; (19) is undefined. If a physical
+domain Θ0 is added, its feasible set is Θlin ∩ Θ0 . Domain restrictions can bound kernel directions,
+but that information comes from the domain. The exact support is then that of the intersection,
+with (18) providing an outer bound. Likewise, the rank of the tangent A = DΦ(0) does not assert
+global identifiability of (15).
+   Residual compatibility matters. Sending every e ∈ E through A+ while ignoring (I −PA )(z−e) =
+0 can report a nonempty inverse for an inconsistent observation. This is the finite counterpart of
+carrying the unobserved angular field in Proposition 1.
+
+
+                                   A.    An explicit tensor image
+
+
+   For a fully identified five-coordinate STF estimate, suppose a chosen coefficient-error model is
+
+
+
+                     bb = b + C 1/2 u + Gv,    ∥u∥2 ≤ ρ,   ∥v∥2 ≤ η,      C ⪰ 0.                 (20)
+
+   Here C is an adopted dimensionless shape matrix, G maps the response-error coordinates to
+coefficient space, and both radii are specified externally. Under this independent product of error
+balls, the exact coefficient region and support are
+
+
+                                                                √
+                  B = bb + C 1/2 Bρ ⊕ GBη ,    hB (a) = aTbb + ρ aT Ca + η∥GT a∥2 .              (21)
+
+   The error sets are centrally symmetric, explaining the plus sign. The support follows by maximiz-
+ing independently over u, v; Cauchy–Schwarz attains each maximum, including the zero-response
+cases by continuity. An arbitrary joint error region need not have this product structure. With
+                                                   P
+an orthonormal STF basis Tα , the tensor is S =       α bα Tα , and a tensor functional L : S uses
+
+aα = L : Tα in (21). The full tensor region is preserved by this isometry.
+   A sufficient Frobenius radius containing (21) is
+
+
+                                           p
+                                     rQ = ρ λmax (C) + η∥G∥2 .                                   (22)
+
+   It discards anisotropic shape and can be conservative. If a fixed Gaussian joint coefficient law is
+additionally justified, one may select a quantile for ρ; the deterministic shape matrix alone supplies
+                                                                                                           7
+
+
+no coverage. Shared calibration and cross-window dependence belong in that joint law or joint error
+region.
+
+
+     V.   THE RETAINED CF4 QUOTIENT AND CONDITIONAL SHEAR BOUNDS
+
+
+   The retained calibration quotient fits a five-coordinate apparent directional-rate tensor using
+magnitude residuals. Its design already contains the optical conversion,
+
+
+
+                        yi = DMzpi − µref,i ,       Biα = −κ(nT
+                                                              i Tα ni ),
+                                                                                bb = Ky.                 (23)
+
+   The coefficient bb is dimensionless, while y has magnitude units and K inverse magnitude units.
+The basis is
+
+
+                      diag(1, −1, 0)            diag(1, 1, −2)                         ei eT       T
+                                                                                           j + ej ei
+               T0 =        √         ,   T1 =        √         ,   Txy , Txz , Tyz =         √       .   (24)
+                             2                         6                                       2
+   Thus ∥Sbapp ∥F = |bb|. The source uses J2000 Cartesian directions and a fixed reference cosmology.
+Its 35,970 selected rows include 944 mixed-support rows saturated by the nuisance quotient; the
+corrected exact factor has 945 zero-leverage rows. The saved target numerical rank is five, with
+singular values between 186.248352167 and 279.226623496 in its working metric [4]. This establishes
+survival of five apparent tensor directions in that finite design.
+   The retained matrix is
+
+                                                                        
+                               −0.01737217048 0.00642017243 0.01454248664
+                                                                        
+                      Sbapp =  0.00642017243 0.00395564447 0.00563999318 ,                             (25)
+                                                                        
+                                                                        
+                                0.01454248664 0.00563999318 0.01341652601
+
+   with
+
+
+                                   t := ∥Sbapp ∥F = 0.03265680189321492,
+
+                                                   λ(Sbapp ) =                                           (26)
+
+           (−0.023727165269042373, 0.001327948995864026, 0.022399216273178365).
+                         p
+   The directional RMS is 2/15 t = 0.011924578035260817. The full precision matrix and co-
+ordinates, rather than the rounded display (25), generate the numerical table and figures. The
+magnitude quadrupole Qµ is a different tensor: at leading order Qµ = −κS, with
+                                                                                                      8
+
+
+TABLE I. Retained apparent tensor in the dimensionless J2000 source basis (24). Singular values use the
+retained working metric. All central values are generated from full precision retained inputs.
+                               Quantity                                 Value
+                               b0                           -0.01508104258
+                               b1                         -0.0164318214193
+                               b2                         0.00907949492483
+                               b3                          0.0205661818356
+                               b4                         0.00797615484124
+                               lambda1                     -0.023727165269
+                               lambda2                    0.00132794899586
+                               lambda3                     0.0223992162732
+                               Frobenius norm              0.0326568018932
+                               Directional RMS             0.0119245780353
+                               Numerical rank                                5
+                               Minimum singular value        186.248352167
+                               Maximum singular value        279.226623496
+
+
+TABLE II. Conditional frontier for assumed rQ and assumed rH /H∗ = 0.1. Rate columns mean
+       √
+∥σ∥F /( 6H∗ ). The zero-radius row is an exact-response limiting scenario, without a calibrated physi-
+cal error estimate.
+               Assumed rQ                 Σ−              Σ+        Rate/H∗ : −      Rate/H∗ : +
+                          0 0.013332083545 0.013332083545         0.01199887519 0.014665291899
+                      0.005 0.011290842093 0.015373324997 0.010161757883 0.016910657497
+                       0.01 0.0092496006403 0.01741456645 0.0083246405763 0.019156023095
+                       0.02 0.0051671177356 0.021497049354 0.0046504059621 0.02364675429
+           0.032656801893                  0 0.02666416709                       0 0.029330583799
+                       0.04                0 0.029662015163                      0 0.03262821668
+
+
+
+
+                                                     p            κϵ2
+                                    ∥Qµ + κS∥F ≤         15/2            .                          (27)
+                                                                2(1 − ϵ)
+
+   This follows by projecting (11) and using the quadrupole norm identity in Proposition 1. The
+conversion in (23) is already present in the CF4 producer. Dividing (26) by κ again would change
+its units convention and its physical scale.
+   Proposition 3 (shear-radius frontier). Suppose a response qualification on one common
+event, congruence and frame establishes
+                                                                                                      9
+
+
+
+
+                S = σ/H,       ∥S − Sbapp ∥F ≤ rQ ,       H ∈ [H− , H+ ],   0 < H− ≤ H+ .          (28)
+
+     The radius must cover the applicable statistical, calibration, sampling, finite-redshift, peculiar-
+motion and frame-response errors. Then the dimensionless shear amplitude and dimensional shear
+rate satisfy
+
+
+                                   (t − rQ )+        ∥σ∥F  t + rQ
+                                       √      ≤ Σ := √    ≤ √ ,                                    (29)
+                                         6             6H      6
+
+
+
+                                 H− (t − rQ )+  ∥σ∥F H+ (t + rQ )
+                                      √        ≤ √ ≤     √        .                                (30)
+                                        6         6        6
+
+     Proof. The triangle and reverse triangle inequalities give (t − rQ )+ ≤ ∥S∥F ≤ t + rQ . Divide by
+√
+    6 for (29) and multiply by a positive H ∈ [H− , H+ ] for (30). Over the unrestricted STF ball, the
+two norm endpoints are attained along Sbapp , or at zero if rQ ≥ t. Independent endpoint choices
+for H attain the dimensional endpoints over the corresponding product set. Additional physical or
+correlated-error restrictions can narrow these intervals. □
+     The lower endpoint is strictly positive exactly when rQ < t. The present retained products do
+not estimate this qualified radius. Figure 1 therefore shows a requirement on the error budget, with
+rQ /t and rH /H∗ as assumed sensitivity coordinates. In (30), write H± = H∗ ± rH , 0 ≤ rH < H∗ ,
+and divide the plotted dimensional shear rate by H∗ . No numerical Hubble rate is needed.
+                                                            b H , with ∥σ − Q
+     If the measured tensor were instead a dimensional rate Q               b H ∥F ≤ rQ , the
+                                                                                       H
+
+normalized bounds would be
+
+
+                                 b H ∥F − rQ )+
+                               (∥Q                  ∥Q
+                                                     b H ∥F + rQ
+                                            H                    H
+                                     √          ≤Σ≤     √          .                               (31)
+                                       6H+                6H−
+
+     Equation (31) belongs to a different input convention. Applying its Hubble division to (26)
+would count the normalization twice. Ordered eigenvalues under (28) obey
+
+
+
+                                        |λi (S) − λi (Sbapp )| ≤ rQ .                              (32)
+
+     This follows from the min–max characterization and ∥S − Sbapp ∥op ≤ rQ . For example, the largest
+principal value is guaranteed positive by this bound only if rQ < 0.022399216273178365. It refers
+                                                                                                                                                                       10
+
+
+                                                                                                                   δH = 0
+                                                                                                      0.04
+                            t = 0.0326568018932                                                                    δH = 0.1
+                   0.030    rQ assumed                                                                             δH = 0.25
+
+                   0.025
+                                                                                                      0.03
+Σ = ‖σ‖F/(√ 6 H)
+
+
+
+
+                                                                                    ‖σ‖F/(√ 6 H * )
+                   0.020
+
+                                                                                                      0.02
+                   0.015
+
+
+                   0.010
+                                                                                                      0.01
+
+                   0.005
+                                  Lower
+                   0.000          Upper                                                               0.00
+
+                           0.0     0.2    0.4     0.6   0.8       1.0   1.2   1.4                            0.0     0.2       0.4   0.6   0.8       1.0   1.2   1.4
+                                                   Assumed rQ/t                                                                       Assumed rQ/t
+
+
+
+
+FIG. 1. Conditional shear bounds from the retained apparent CF4 tensor. The horizontal coordinate is an
+assumed qualified dimensionless response-error radius divided by the apparent norm. The left panel gives
+the dimensionless shear-amplitude interval. The right panel converts it to a dimensional shear rate, divided
+by a symbolic reference Hubble rate, for three assumed relative Hubble intervals. A positive lower bound
+requires rQ below the apparent norm. The figure assumes the same-event, same-congruence response in
+equation (28); neither error radius nor a physical shear detection is estimated here.
+
+
+to expansion relative to the local mean. Eigenvector directions require an additional gap-sensitive
+perturbation analysis.
+                   Figure 2 retains more information than the ball in (29): it shows a two-coordinate projection of
+(21), using the saved working shape matrix with ρ = 1, G = I, and selected assumed η. The curves
+are deterministic images of those chosen sets. They have no assigned confidence level.
+
+
+                             VI.         TENSOR CARRIERS AND UNRESOLVED PHYSICAL SECTORS
+
+
+                   Let Z retain the tensor state, support and response parameters, rather than only its norm. A
+suitable optical carrier and its deterministic image are
+
+
+
+                                 xϕ (Z) = (d, S, ω/H, H, other physical sectors),                                    xϕ [Θ] = {xϕ (Z) : Z ∈ Θ}.                    (33)
+
+                   For a finite linear model Θ includes the kernel in (17); for the complete field, d, S are determined
+but H and vorticity remain unresolved. The local slope contains no antisymmetric velocity gradient,
+and the angular normalization removes the absolute expansion scale. Curvature, a matter-frame
+energy split and a temporal history are also absent. The signed comparator xC = Σ2 − W 2 +
+Ωtilt + Ωk,aniso consequently remains incomplete when only the shear sector is bounded. Here the
+                                                                                                                                                                 11
+
+      0.000                                           η=0                                                                                                η=0
+                                                      η = 0.005                                                                                          η = 0.005
+                                                      η = 0.01
+                                                                                                             0.014                                       η = 0.01
+     −0.005                                           Apparent center
+
+
+
+
+                                                                          Centered support (dimensionless)
+                                                      Origin
+                                                                                                             0.012
+     −0.010
+
+                                                                                                             0.010
+     −0.015
+b1
+
+
+
+
+                                                                                                             0.008
+     −0.020
+
+
+                                                                                                             0.006
+     −0.025
+
+
+
+     −0.030                                                                                                  0.004
+
+
+              −0.030 −0.025 −0.020 −0.015 −0.010 −0.005 0.000     0.005                                              0     1   2       3         4   5      6
+                                      b0                                                                                           φ (radians)
+
+
+
+
+FIG. 2. A deterministic projection of the tensor error region. The retained working matrix supplies an
+illustrative ellipsoidal shape, with unit assumed ellipsoid radius and three assumed isotropic response radii.
+Curves show the projection onto the first two Frobenius-orthonormal source coordinates, and the corre-
+sponding centered directional support. The product error-set assumption gives the support exactly. The
+unit radius has no assigned confidence level, and the additional response radii are sensitivity choices.
+
+
+comparator quantity W 2 is the dimensionless vorticity contribution; it is distinct from the working
+whitening matrix W in Section 3. Unmeasured terms are not assigned zero.
+      For a declared positive tolerance q∗ , one may form a policy score, for example
+
+
+
+
+                                              Qϕ (Z) = ∥S∥F /q∗ ,                                                    q∗ > 0.                                (34)
+
+
+      Its interval image follows from the tensor region. The denominator is a policy input, not a
+fitted significance. At zero tolerance, use an exact set constraint instead of defining a ratio. The
+remaining diagnostics require different inputs:
+
+
+
+                ν(B ∩ D)
+     Fν (B) =            ,        0 < ν(D) < ∞;                   ΠP (a) = P {Qϕ (Z) > a};                                           GF = G(F1 , . . . , Fk ).
+                  ν(D)
+                                                                                                                                                            (35)
+      Occupancy F requires a support measure and a specified admissible set or sign-clean ceiling.
+Exceedance Π requires a named joint law. A depth functional GF requires registered windows,
+their measures and shared dependence. Here xϕ has an apparent measured tensor component and
+conditional physical image; Q is specified only after q∗ is chosen; F, Π, GF are undefined because
+the corresponding measure, law and depth functional have not been supplied. The saved working
+                                                                                                 12
+
+
+matrix does not supply these missing objects. A model-dependent probability pushforward belongs
+to HTT; the deterministic region can be reported as a MIO diagnostic.
+
+
+                                       VII.    DISCUSSION
+
+
+   There are two useful inverses. A complete positive local magnitude field determines its dimen-
+sionless acceleration and shear after normalized exponentiation. A finite observation first passes
+through sampling and nuisance removal, leaving an identifiable subspace, a kernel and a residual-
+compatibility condition. Their error bounds answer different questions, so the full-field identity
+cannot be substituted into an incomplete map without controlling the missing field.
+   The retained CF4 quotient makes the error target concrete.           Its apparent tensor norm is
+0.0326568 in the producer’s dimensionless convention. To obtain a positive lower shear bound
+through the stated response identity, a qualified common-event radius must lie below this scale. A
+supplied response region can be propagated with (18) or (21), retaining anisotropy and dependence
+before taking the simpler norm bounds. An absolute Hubble interval then converts a dimensionless
+shear range to a dimensional rate.
+   This construction isolates what an additional physical input must do: constrain the response
+error or a currently unresolved sector. It also permits a complete conditional inverse result while
+those stronger inputs remain unavailable. The attainable sets and their support functions are the
+methods result; the apparent tensor is its retained finite-data illustration.
+
+
+         Appendix A: Joint optical residuals with a separate direct-dipole constraint
+
+
+                  1.   The seven-component response and its physical domain
+
+
+   The finite inverse can retain the complete signed octupole when testing a common local optical
+response. We use the same outward direction, signature (− + ++), and orthonormal observer rest
+frame as in the main text. With H > 0, d = −A/(cH), S = σ/H, and κ = 5/ ln 10, the local field is
+−κ ln[1 + d · n + S : nn]. The quantities H and σ have inverse-time units; d, S are dimensionless. A
+physical application assumes one smooth emitter congruence and a regular local distance expansion.
+Let supn |d · n + S : nn| ≤ ϵ < 1 throughout the proposed parameter region. This is a condition on
+the region, not merely on its central estimate.
+   In Frobenius-orthonormal rank-three symmetric trace-free coordinates, the magnitude octupole
+has seven signed components. The retained local expansion gives [3]
+                                                                                                   13
+
+
+
+                                                                              r
+                                                                                  35 |κ|ϵ3
+          O = κLS d + R3 ,      LS d = STF(d ⊗ S),        ∥R3 ∥F ≤ E3 (ϵ) =                  .   (A1)
+                                                                                  2 3(1 − ϵ)
+   The response has the Gram matrix
+
+
+                                                   S:S    2
+                                   MS = LTS LS =       I + S2.                                   (A2)
+                                                    3     5
+   For nonzero S, this three-dimensional matrix is positive definite, while the seven-dimensional
+octupole still has four directions perpendicular to the response image. The measured appar-
+ent CF4 tensor retained in the main text has Frobenius norm 0.03265680189321492. Inserting
+that same dimensionless tensor gives minimum and maximum singular values of LS equal to
+0.018873110043440326 and 0.024097307981999622. These quantify the conditional linear inverse.
+The tensor is already dimensionless and is not divided by κ again; its physical interpretation as
+σ/H still requires the stated response qualification.
+  Suppose ∥S − S∥
+                b F ≤ eS and ∥d∥ ≤ Dmax hold on the same deterministic region or joint event.
+                                    p
+The STF identity implies ∥LS−Sb∥op ≤ 3/5 eS . A single outer radius for the seven-component
+optical residual is therefore
+
+
+                                                           p
+                          B = E3 (ϵ) + eO + Bz + Bsel + |κ| 3/5 eS Dmax .                        (A3)
+
+   Here eO bounds the remaining observational octupole error, Bz the finite-distance contribution,
+and Bsel the effect of selection, calibration and the specified fitting operator. Each contribution is
+included once according to its definition. The angular logarithmic remainder does not supply the
+finite-distance or selection bounds. A sufficient uniform domain condition is Dmax + ∥S∥
+                                                                                      b op + eS ≤
+
+ϵ < 1. More restrictive joint regions can also establish the required bound. A nonzero uncertain-
+shear term requires a finite bound on ∥d∥; omitting that bound cannot silently set the term to
+zero.
+   A separately supplied direct-dipole region constrains the argument of the optical map. For a
+spherical direct region and an optional physical amplitude bound, write
+
+
+
+            D = {d : ∥d − dobs ∥ ≤ rd } ∩ {d : ∥d∥ ≤ Dmax },     r∗ = min ∥O
+                                                                           b − κL bd∥F .
+                                                                                 S
+                                                                                                 (A4)
+                                                                      d∈D
+
+   The second ball may be omitted in the purely mathematical fixed-response problem. Physical
+use still requires the uniform angular domain and any amplitude bound used to construct B.
+                                                                                                                                                                                       14
+
+
+Compatibility with the outer residual model means D ̸= ∅ and r∗ ≤ B. The direct-dipole radius
+rd is profiled through D; it is not an additional octupole-error term in B. A supplied correlated
+error body may be more restrictive than these separate outer bounds.
+
+   For Sb ̸= 0, set db = κ−1 M b−1 LTb O
+                                       b and O    b − κL bd.
+                                             b⊥ = O
+                                                        S
+                                                          b At every admissible d,
+                                                                   S       S
+
+
+
+
+                                                               b − κL bd∥2 = ∥O
+                                                              ∥O              b⊥ ∥2 + κ2 (db − d)T M b(db − d).                                                                      (A5)
+                                                                     S   F        F                 S
+
+
+
+
+   Both terms spend the same squared residual budget. Two orthogonal contributions of 0.8B each
+    √
+give 1.28B > B, although each passes its separate threshold. The saved unit-budget example has
+certified residual endpoints 1.1313708498984756 and 1.1313708498984758 and is incompatible. At
+S = 0, the response is zero and the appropriate test is directly ∥O∥
+                                                                  b F ≤ B, together with nonempti-
+
+ness of D. No inverse is used. At B = 0, retain exact membership instead of a normalized score.
+Arbitrarily small nonzero S remains a distinct inverse problem; an absolute numerical threshold
+cannot replace it by S = 0.
+
+
+                                                      Exact seven-component split                                                         Selected-source response Jacobian
+                                                                                                                                  0
+
+                                      1.0
+                                                                                            Raw-fit direct d (3) and STF3 O (7)
+   Score / one declared unit budget
+
+
+
+
+                                                                                                                                  2
+                                      0.8
+
+                                                                                                                                  4
+                                      0.6
+
+
+                                      0.4                                                                                         6
+
+
+
+                                      0.2                                                                                         8
+
+
+                                      0.0
+                                            perpendicular       parallel            joint                                             0   1    2        3        4       5   6   7
+                                                                                                                                                   Input d (3) and S (5)
+
+
+
+
+FIG. 3. A shared optical residual budget and a finite selected-source response. Left: the two orthogonal
+residual components each have size 0.8 of one declared unit budget; their combined norm exceeds that
+budget. Right: the saved 10-by-8 local Jacobian maps three dimensionless dipole and five dimensionless
+shear coordinates to three fitted direct-dipole coordinates and seven magnitude-octupole coordinates. Both
+panels are deterministic mathematical controls. The sampled response is not identified with a physical
+catalogue dipole.
+                                                                                                           15
+
+
+                               2.   Sampling, covariance and finite distance
+
+
+   Before assigning a physical meaning to fitted harmonics, retain the map from source magnitudes.
+      (2)        (3)
+Let Ta      and Tb     be Frobenius-orthonormal STF bases. For directions ni and positive weights wi ,
+use the full-rank 16-column design
+
+
+
+                                    (3)
+    Xi = (1, nTi , Ta(2) : ni ni , Tb     : ni ni ni ),   K = J(X T W X)−1 X T W,       W = diag(wi ).   (A6)
+
+   The selector J multiplies the three fitted magnitude-dipole coordinates by −1/κ and retains all
+seven fitted octupole coordinates. Thus Ky is a ten-coordinate fitted summary; its first three entries
+need not equal the physical d. For the local source model yi = −κ ln(1 + qi ), qi = d · ni + S : ni ni ,
+its derivative is
+
+
+                                                          
+                                 ∂(Ky)               −κ
+                                         = K diag            [ nTi , Ta(2) : ni ni ].                    (A7)
+                                 ∂(d, S)            1 + qi
+
+   The fixed illustration uses 96 deterministic directions, weights 1 + 0.4nz , and an input vector
+(0.012, −0.009, 0.006), with the retained apparent tensor inserted as a mathematical coefficient. The
+rank of its sampled design is 16. The direction index is i = 0, . . . , 95, with zi = 1 − 2(i + 1/2)/96,
+             √              q              q
+ϕi = iπ(3 − 5), and ni = ( 1 − zi2 cos ϕi , 1 − zi2 sin ϕi , zi ). These directions and coefficients are
+an illustration, not a CF4 data selection or a measured acceleration.
+   The signed coordinate convention in this illustration is fixed by lexicographic Cartesian unit
+monomials, STF projection, and successive Frobenius orthogonalization with positive normaliza-
+tion. The full rank-two and rank-three basis arrays accompany the numerical supplement. This
+rank-two coordinate ordering differs from the five-coordinate display in the main text; the common
+object is the Cartesian tensor S, not an untransformed coordinate list.
+   For a supplied full source covariance Cy , the fitted covariance is C10 = KCy K T . At fixed S,
+                                                                                                b its
+
+contribution to the residual covariance is
+
+
+
+                                        Cr = AC10 AT ,       A = [−κLSb     I7 ].                        (A8)
+
+   The off-diagonal direct-dipole–octupole blocks contribute to this expression. The illustration
+stipulates Cy = 10−8 (I + 0.2uuT ) mag2 , where the 96 components of u are equally spaced from
+−1 to 1. Its direct-dipole–octupole cross-block Frobenius norm is 1.7820478375045505 × 10−12 in
+                                                                                                          16
+
+
+TABLE III. Complete signed response of the declared 96-direction mathematical illustration. The seven
+octupole entries use the explicit STF basis in the numerical supplement; neither the fitted direct vector nor
+this octupole is a measured CF4 physical quantity.
+                         Fitted coordinate Signed value              Unit
+                         dx                 +0.012074086313833       dimensionless
+                         dy                 -0.00903120168213684     dimensionless
+                         dz                 +0.00591810638421224 dimensionless
+                         O1                 -0.000548756550802814 mag
+                         O2                 +0.00040268605514402 mag
+                         O3                 +0.000221664713143214 mag
+                         O4                 -0.000393290392446293 mag
+                         O5                 -4.62789847900094e-06    mag
+                         O6                 +9.87390973288633e-06 mag
+                         O7                 -0.000171094484684956 mag
+
+
+dimensionless-dipole times magnitude units, and tr Cr = 1.317508814238013×10−8 mag2 . The com-
+plete 10-by-10 covariance, 7-by-7 residual covariance and 10-by-8 response derivative are retained,
+with their coordinate order and units. This is a source-covariance illustration at fixed S, not a
+supplied empirical CF4 covariance, not an uncertain-S covariance calculation, and not a confidence
+region. A confidence threshold would additionally require a sampling law and its calibration. No
+unknown empirical cross-block is filled with zero.
+     Finite distance requires a separate contribution even when the angular expansion is controlled.
+If
+
+
+                                           cz
+                                  dL =            [1 + za1 (n) + O(z 2 )],                             (A9)
+                                         H(1 + q)
+     then the magnitude correction is κza1 (n) + O(z 2 ), generally first order in redshift.            The
+                                                   (3)
+saved source-level control uses a1 (n) =          T1      : nnn and passes κ ln[1 + za1 (n)] through
+the same fitted octupole operator.            At z       = (0.02, 0.01, 0.005), its octupole norms are
+(0.04342971604250298, 0.021714693414132947, 0.010857342173346137) mag. The successive ratios
+2.0000151608973153 and 2.0000008351436778 illustrate the leading linear order. These values do
+not determine a physical Bz for a survey; that bound needs a controlled finite-distance coefficient
+and the actual estimator and depth weights.
+     Observer motion also changes the target. The same-congruence coefficient d = −A/(cH) is
+not interchangeable with a peculiar-velocity dipole. For the dust moving-observer construction,
+                                                                                                                                     17
+
+              Full synthetic direct/STF3 covariance
+          0                                                                          selected STF3 magnitude shift
+                                                                          4 × 10−2   linear reference
+
+
+          2
+                                                                          3 × 10−2
+
+
+
+
+                                                       STF3 shift (mag)
+          4
+
+                                                                          2 × 10−2
+
+          6
+
+
+
+          8
+
+
+
+              0       2      4       6       8                                       6 × 10−3               10−2          2 × 10−2
+                                                                                                      Finite redshift z
+
+
+
+
+FIG. 4. Declared source covariance and a finite-redshift response control. Left: all entries of the synthetic
+ten-coordinate covariance, ordered as three fitted dimensionless direct-dipole coordinates followed by seven
+magnitude-octupole coordinates. Entry units follow the corresponding pair of coordinates; the white lines
+mark the shared-source cross-blocks. The full numerical matrix accompanies the text. Right: the same
+selected octupole operator applied to a declared relative-distance perturbation, compared with a linear-
+redshift reference. Neither panel supplies an empirical CF4 joint law or a physical finite-distance error
+radius.
+
+
+the first-order relation is dboost = −2(I + S)β + O(∥β∥2 ), with β = v/c; its inverse requires
+invertibility of I + S and control of the omitted order. At a fixed ray, the Doppler factor Γ > 0
+gives 1 + ze = (1 + z)/Γ, deL = dL /Γ, and a shifted vertex zeo = Γ−1 − 1. The corrected distance
+d∗L = dL /(1 + z)2 obeys de∗L = Γd∗L , so the vertex derivative transforms as de
+                                                                               z /dde∗L = Γ−2 dz/dd∗L [2].
+The uncorrected-distance artefact 2 STF(β ⊗ S) is distinct from the nonlinear magnitude octupole
+κLS d. Neither relation turns a raw catalogue harmonic into a measured acceleration or observer
+velocity.
+
+
+
+                                    3.    Closed sets and numerical certificates
+
+
+   The numerical compatibility calculation keeps the two original dipole balls closed. Finite bi-
+nary64 coordinates and radii are treated as exact rational inputs for squared-ball membership and
+emptiness. Zero-radius balls and external tangency are handled before optimization. A rounded
+tangent point is accepted only if it satisfies both original predicates. Failure to represent or verify
+a feasible witness returns numerical uncertainty, not physical exclusion or an enlarged radius.
+   An optimizer supplies a candidate, not a compatibility certificate. A verified feasible candi-
+date supplies a primal residual bound. A lower bound follows from the seven-component support
+                                                                                                    18
+
+
+inequality: for ∥u∥ ≤ 1,
+
+
+
+                               r∗ ≥ uT O
+                                       b − hD (KST u),     KS = κLSb,                           (A10)
+
+   where the support function obeys
+
+
+
+                              hD (v) ≤ min{v T dobs + rd ∥v∥, Dmax ∥v∥}.                        (A11)
+
+   If the amplitude ball is omitted, only the first expression is used. This support bound need not
+be sharp. The implementation uses candidate residual and observation directions and incorporates
+its declared response-roundoff envelopes. It exports a lower endpoint rounded downward and an
+upper endpoint rounded upward. The positive-budget score is the upward-rounded quotient of the
+exported upper endpoint and B; it is an upper bound, not a claim to have computed the exact
+minimizing score.
+   For a general nondegenerate case, the implemented decisions compare the upper endpoint be-
+fore display rounding with B + δloc , or the lower endpoint with B + δglob . With binary64 machine
+                                                                  b ∥KS dw ∥) only when both
+epsilon εmach , the cancellation allowance is δloc = 64εmach max(∥O∥,
+terms are nonzero and the witness residual is at most half the larger norm; otherwise it is zero.
+                                                             b ∥KS ∥F Dcap ), where Dcap is the
+The conservative rejection allowance is δglob = 64εmach max(∥O∥,
+upward-enclosed triangle cap ∥dobs ∥ + rd , restricted by Dmax when supplied. These are numerical
+response allowances, separate from the physical radii. A positive cancellation allowance is explicitly
+recorded, and an accepted case must not be advertised as a strict zero-allowance residual certifi-
+cate unless its exported upper bound also lies below B. A straddling interval remains numerical
+uncertainty.
+   For a singleton set or zero response, the finite-response residual square is compared with B 2 using
+exact rational arithmetic, including equality. A nonzero-response exclusion too close to the declared
+global response allowance is still returned as numerical uncertainty. Underflow of a displayed square
+does not set a nonzero residual to zero. The complete certificates retain the witness, endpoint
+bounds, response envelope, cancellation allowance and display status.
+   The near-tangent examples make the closed-set convention concrete.              Set both radii to
+1/8.   A center (1/4, 0, 0) has the representable unique intersection (1/8, 0, 0).      For the adja-
+cent binary64 center below 1/4, a feasible saved witness is (0.12499999999999999, 0, 0); with
+S = diag(0.001, −0.001, 0), zero observed octupole and B = 0.001, its exported upper residual
+                                                                                                              19
+
+
+TABLE IV. Saved finite-response controls. Endpoints bound the profiled residual or the exact fixed objective
+under the stated numerical response conventions; they are not uncertainty intervals for physical cosmological
+parameters. Empty-set decisions precede residual comparison. All radii are stipulated. Full witnesses and
+all diagnostic fields accompany the numerical supplement.
+Case                            Lower                  Upper                   B                     Result
+Shared unit budget              1.1313708498984756     1.1313708498984758      1.0                   Incompatible
+Zero response, zero budget      0.0                    0.0                     0.0                   Compatible
+Narrow feasible ball            0.0                    5.176664520037313e-19   5.606717652542515e-10 Compatible
+Excluded physical boundary      2.0184131778458593e-15 2.0184235050681796e-15 1.0092091825422658e-15 Incompatible
+Tangent singleton               0.0002803358826268454 0.00028033588262684546 0.001                   Compatible
+One-spacing interior overlap    0.00028033588262683885 0.00028033588262685186 0.001                  Compatible
+Zero response, fixed sqrt(3) norm 1.7320508075688772   1.7320508075688774      2.0                   Compatible
+Empty direct singleton          —                      —                       —                     Empty
+Adjacent exterior empty set     —                      —                       —                     Empty
+
+
+
+bound is 0.00028033588262685186 < B. The adjacent center above 1/4 gives an exactly empty
+intersection. A direct singleton at (1/8, 10−60 , 0) lies outside the physical ball of radius 1/8: the
+second component gives a strictly positive exact squared excess, even when a rounded norm hides
+it. The decimal 10−60 here denotes its supplied binary64 value, whose square is near 10−120 , not
+exactly that decimal rational. Zero and nonzero shear controls also preserve a residual of 10−200
+against a zero budget. These examples test witness availability and range handling; they do not
+prove that every feasible real intersection has a representable witness or that every numerical
+optimization is decisive.
+   The physical output remains a conditional response-compatible set.                   The apparent tensor,
+source-covariance illustration and numerical controls do not supply an empirical joint direct-
+dipole–octupole law, the missing finite-distance and selection bounds, or a common physical
+source/observer transfer.       Vorticity, curvature, energy, absolute expansion and history remain
+unresolved as described in the main text. Full signed coordinates and shared dependence must be
+retained before any later scalar summary or physical attribution.
+
+
+
+
+[1] A. Heinesen, “Multipole decomposition of the general luminosity distance ‘Hubble law’—a new
+   framework for observational cosmology,” JCAP 05, 008 (2021), DOI 10.1088/1475-7516/2021/05/008,
+   arXiv:2010.06534v2. https://arxiv.org/abs/2010.06534v2
+[2] R. Maartens, J. Santiago, C. Clarkson, B. Kalbouneh and C. Marinoni, “Covariant cosmogra-
+   phy: the observer-dependence of the Hubble parameter,” JCAP 09, 070 (2024), DOI 10.1088/1475-
+                                                                                                             20
+
+
+   7516/2024/09/070, arXiv:2312.09875v3. https://arxiv.org/abs/2312.09875v3
+[3] “Sharp quadrupole–octupole chirality and the nonlinear local distance response,” retained companion
+   methods manuscript, R32-01-QO-METHODS (2026), equations (20)–(24), (36), (38)–(39); repository
+   source products/R32-01-QO-METHODS/science/MANUSCRIPT.md. This is a repository manuscript,
+   not an asserted journal publication.
+[4] Source-bound    CF4    calibration-quotient    sufficient   statistics,        EVIDENCE_MANIFEST.json
+   and    evidence/research/latest_results.json,    retained    release       25    October   2026,   especially
+   units_correction and cf4_calibration_quotient. Original numerical producer R28 at commit
+   71b272db893a92ec336c28164bc7efccf7c340b2;       corrected interpretation bound to model SHA-256
+   843b19e464817d14455df68e9043a93cc71cc7449ab339052c3ddfe1c7298c19. These are retained numerical
+   research products, not an independently calibrated physical error law.
+

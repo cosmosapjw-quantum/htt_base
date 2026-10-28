@@ -1,0 +1,259 @@
+{
+  "schema": "htt.p6_optical_manuscript_independent_review/1",
+  "task_id": "R36-11-SCIENCE-SYNTHESIS",
+  "work": "existing11 publication revision, not a new scientific task",
+  "agent_id": "/root/r36_optical_manuscript_fresh_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "independence": {
+    "author": false,
+    "framer": false,
+    "prior_manuscript_verdict_used": false,
+    "repo_harness_and_skills": "AUDIT_INPUTS_NOT_VERDICT_ORACLE"
+  },
+  "candidate_identity": "sha256:53c00f723ea81cb88f2a63656444a0054470c422180a517b8ecf403d5373bcaa",
+  "candidate_manifest": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-11-SCIENCE-SYNTHESIS/optical_manuscript_candidate/candidate/OVERLAY_MANIFEST.json",
+  "candidate_return_sha256": "b12a34a6694e34b92f68f0946047caf41ab448796f10720585c4470ebd01ea5b",
+  "candidate_result_sha256": "5994f46946acd030e9d83b4e30998ae4cc8bc86d91ebc803dd40413fdd744c4d",
+  "package_receipt_sha256": "882d3a24cb89d7cdf2fdfb7571ba41203f6f685049711a2393b2ae555f90db8e",
+  "candidate_pdf": {
+    "path": "candidate/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.pdf",
+    "sha256": "402ec7f5b212bfce13ecb13369fb5f9b8794e257c208e041a6ae373bedf44b8f",
+    "pages": 20,
+    "text_sha256": "fb0b932e1cbe2006b75c548dcc53df1c340c9986cfc8abcb5e0aa9908b337870"
+  },
+  "source_identities": {
+    "science04_repair04": "sha256:d796c9df0a8e86e4834d6affb8ac0e4731e65d11cd4f865723b45dab3caafcbc",
+    "science04_formal_return": "sha256:1b663971c2e78ddaa271c07fa88fb82834aa7fc42fb81e1fd3648ab8004f8614",
+    "historical_qualified_P6": "sha256:7e35f553fb41c9cba9e90272e9731ad5cf3235314a2fc723c1aee59b0c62bfcc",
+    "editor_contract": "sha256:54362612409de22c86aebff678df11da462dc4fc38042deb382fa0582e55a22c",
+    "author_prose": "sha256:432f6fe92c505f68f0486c043d96cc452e86a3f0b0ce21e5600c360c490b3f2a"
+  },
+  "outcome": "success",
+  "review_status": "PASS_SCOPED_CONDITIONAL",
+  "acceptance_met": true,
+  "acceptance_scope": "Exact conditional P6 manuscript overlay only; no new scientific-node acceptance",
+  "findings": [],
+  "required_repairs": [],
+  "nonblocking_observations": [
+    {
+      "severity": "low",
+      "path": "candidate/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/appendix.tex",
+      "line": 19,
+      "observation": "Manual equation tags reuse equation.A.1 PDF destinations, extending the baseline manual-tag warning mechanism. Printed tags and text are correct; no new equation-reference links consume those targets.",
+      "consequence": "PDF navigation limitation; no scientific or build failure.",
+      "minimal_optional_fix": "In a separately reviewed editorial revision, give destinations unique anchors without changing visible equation tags or historical preimages.",
+      "required_for_this_scoped_publication": false
+    }
+  ],
+  "independent_checks": {
+    "source_bindings": 31,
+    "overlay_files": 20,
+    "formal_source_eligibility": "PASS",
+    "P6_formal_eligibility": "PASS",
+    "old_manifest_all_paths": "PASS",
+    "original35_equations_and_bytes": "PASS",
+    "STF_basis_orthonormal_symmetry_traces": "PASS",
+    "explicit_STF_response_and_Gram": "PASS",
+    "gram_max_absolute_error": 1.2366681029912785e-19,
+    "singular_values": [
+      0.02409730798199961,
+      0.023583444599095546,
+      0.018873110043440337
+    ],
+    "covariance_parity_max_abs_mag2": 1.0097419586828951e-28,
+    "cross_block_norm": 1.7820478375045505e-12,
+    "zeroing_cross_blocks_max_effect_mag2": 6.4201111332655e-14,
+    "residual_covariance_trace_mag2": 1.317508814238013e-08,
+    "certificate_controls": [
+      {
+        "case": "Shared unit budget",
+        "endpoints_and_score": "PASS"
+      },
+      {
+        "case": "Zero response, zero budget",
+        "endpoints_and_score": "PASS"
+      },
+      {
+        "case": "Narrow feasible ball",
+        "endpoints_and_score": "PASS"
+      },
+      {
+        "case": "Excluded physical boundary",
+        "endpoints_and_score": "PASS"
+      },
+      {
+        "case": "Tangent singleton",
+        "endpoints_and_score": "PASS"
+      },
+      {
+        "case": "One-spacing interior overlap",
+        "endpoints_and_score": "PASS"
+      },
+      {
+        "case": "Zero response, fixed sqrt(3) norm",
+        "endpoints_and_score": "PASS"
+      },
+      {
+        "case": "Empty direct singleton",
+        "endpoints_and_score": "PASS"
+      },
+      {
+        "case": "Adjacent exterior empty set",
+        "endpoints_and_score": "PASS"
+      }
+    ],
+    "exact_binary64_geometry_and_directed_sqrt3": "PASS",
+    "B0_and_tiny_residual_semantics": "PASS"
+  },
+  "fixture": {
+    "first_apply": {
+      "changed_targets": 20,
+      "manifest_sha256": "53c00f723ea81cb88f2a63656444a0054470c422180a517b8ecf403d5373bcaa"
+    },
+    "installed_assemble_check_build_check": "PASS",
+    "PDF_text_parity": "PASS",
+    "second_apply": {
+      "changed_targets": 0,
+      "manifest_sha256": "53c00f723ea81cb88f2a63656444a0054470c422180a517b8ecf403d5373bcaa"
+    },
+    "metadata_only_rebuild_pdf_sha256": "d1a582e27105e24af666bd0d545febdf42bef54ede47b37bc3df6d0761e54910",
+    "metadata_rebuild_byte_identity_differs": true,
+    "metadata_text_parity": "PASS",
+    "metadata_reapply": {
+      "changed_targets": 0,
+      "manifest_sha256": "53c00f723ea81cb88f2a63656444a0054470c422180a517b8ecf403d5373bcaa"
+    },
+    "fixture": "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/small_manuscript_fixture"
+  },
+  "visual_review": {
+    "render_source": "independent fixture build with exact candidate PDF text parity",
+    "pages": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "full_page_additional_checks": [
+      14,
+      16,
+      17,
+      19
+    ],
+    "signed_table": "all 10 rows readable",
+    "certificate_table": "all 9 cases readable, empty fields are dash, endpoints retained",
+    "figures": "two added figures and complete captions readable and unclipped",
+    "status": "PASS"
+  },
+  "build_and_citations": {
+    "citations": [
+      "CF4Retained",
+      "Heinesen2021",
+      "Maartens2024",
+      "QOMethods"
+    ],
+    "bibliography_keys": [
+      "CF4Retained",
+      "Heinesen2021",
+      "Maartens2024",
+      "QOMethods"
+    ],
+    "missing_citations": [],
+    "figures": [
+      {
+        "path": "figures/error_frontier.pdf",
+        "exists": true
+      },
+      {
+        "path": "figures/tensor_error_image.pdf",
+        "exists": true
+      },
+      {
+        "path": "r36_optical/JOINT_RESPONSE.pdf",
+        "exists": true
+      },
+      {
+        "path": "r36_optical/SOURCE_AND_FINITE_Z.pdf",
+        "exists": true
+      }
+    ],
+    "undefined_refs": false,
+    "overfull_hbox": false,
+    "latex_errors": false
+  },
+  "allowed_production_publication_scope": {
+    "allowed": true,
+    "condition": "Apply and publish only this exact reviewed overlay within existing owner authorization. Use CONTROLLER_RETURN.json, never the fixture mock return.",
+    "manifest_sha256": "53c00f723ea81cb88f2a63656444a0054470c422180a517b8ecf403d5373bcaa",
+    "allowed_paths": [
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/README_CURRENT_OPTICAL.md",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.pdf",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.tex",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EDITOR_CONTRACT.json",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EXPECTED_APPLIED.json",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/EXPECTED_PDF_TEXT.json",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/JOINT_RESPONSE.pdf",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/MANUSCRIPT_ADDITIONS.md",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/NUMBER_FIGURE_MAP.json",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/NUMERICAL_SUPPLEMENT.json",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/SOURCE_AND_FINITE_Z.pdf",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/appendix.tex",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/baseline/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.pdf",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/baseline/docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/main.tex",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/publication_overlay.py",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/source_backup/04_author_raw",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/source_backup/04_author_return",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/source_backup/04_formal_raw",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/source_backup/04_formal_return",
+      "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/repair_01/report/r36_optical/source_backup/04_formal_review"
+    ],
+    "allowed_path_count": 20,
+    "preserve_original_preimages": true,
+    "preserve_P4_83b_and_d845": true,
+    "paper_submission_authorized": false,
+    "Git_or_production_actions_performed_by_reviewer": false
+  },
+  "claim_ceiling": {
+    "product": "Conditional optical methods appendix, signed joint response, declared synthetic covariance, saved finite-response controls.",
+    "not_supplied": [
+      "empirical CF4 direct-dipole/octupole joint law",
+      "physical finite-distance and selection bounds",
+      "common source/congruence/frame transfer",
+      "absolute H and history",
+      "owner-specific x/Q/F/Pi/G inputs"
+    ],
+    "scientific_admission": false,
+    "original42_acceptance_promoted": false,
+    "original17_of_42": "UNCHANGED",
+    "alternate18_of_42": "UNCHANGED_SEPARATE",
+    "existing11_completion": "UNCHANGED",
+    "frozen83b": "UNCHANGED",
+    "prior_d845": "UNCHANGED"
+  },
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "3284f46908835790a866a4b77d75d8c7109544152cbf14e4522bfa64c35d943d",
+  "review": "/mnt/extdrive/workdir/htt_open_data/r36_optical_manuscript_fresh_review/REVIEW.md",
+  "review_sha256": "e32a6a0bd91d12e05c4d22c556250526eec6b919081598adb0711c0c4460f7d0",
+  "preservation": {
+    "git_status_exactly_unchanged": true,
+    "HEAD": "8c9e51c06a770f0e327a794918e9d08c061c3824",
+    "original_35_equation_tags_and_main_recoverable": true,
+    "source04_manifest_entries_verified": 22,
+    "production_applied": false,
+    "repository_writes": false,
+    "STATE_writes": false,
+    "source_producers_run": false,
+    "optimization_runs": false,
+    "observational_downloads": false,
+    "children_spawned": false
+  },
+  "next_action": "Controller/lower-tier publisher applies exact reviewed overlay, verifies installed assembly/build and authorized publication transition without rerunning completed scientific producers."
+}
