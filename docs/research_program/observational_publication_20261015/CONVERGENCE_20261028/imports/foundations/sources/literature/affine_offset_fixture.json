@@ -1,0 +1,38 @@
+{
+  "fixture": "Missing affine-offset direction under union-of-derivatives compression",
+  "models": [
+    "mu0=(theta,0,0)",
+    "mu1=(0,phi,1)"
+  ],
+  "observation_covariance": "I3",
+  "parameter_priors": "theta,phi independent N(0,1) under respective models",
+  "rows": [
+    {
+      "y": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "common_score_carrier": [
+        0.0,
+        0.0
+      ],
+      "full_log_BF_01": 0.5,
+      "compressed_log_BF_01": 0.0
+    },
+    {
+      "y": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "common_score_carrier": [
+        0.0,
+        0.0
+      ],
+      "full_log_BF_01": -0.5,
+      "compressed_log_BF_01": 0.0
+    }
+  ],
+  "interpretation": "Different model baselines must enter the common span unless their difference already lies in its response span. This fixture does not refute the user common-m0 theorem."
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python",
+    "scripts/codex_harness/validate_pr_dag.py",
+    "docs/codex_handoff/pr_backlog.yaml",
+    "--status",
+    "docs/codex_handoff/pr_status.yaml",
+    "--strict-rescue-slice",
+    "--json"
+  ],
+  "exit_code": 0,
+  "stdout_log": "STRICT_CANONICAL_RESULT.json",
+  "stderr_log": "STRICT_CANONICAL_STDERR.log"
+}

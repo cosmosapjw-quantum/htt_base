@@ -1,0 +1,13 @@
+{
+  "code": "ClearAll[z,cc,hh,dd,tt]; curv=(hh[z]^2 Derivative[1][dd][z]^2/cc^2-1)/dd[z]^2; cbl=1+hh[z]^2/cc^2(dd[z]Derivative[2][dd][z]-Derivative[1][dd][z]^2)+hh[z]Derivative[1][hh][z]/cc^2 dd[z]Derivative[1][dd][z]; first=FullSimplify[D[curv,z]-2 Derivative[1][dd][z]cbl/dd[z]^3]; obs=dd[z]Exp[tt[z]/2]; corrected=((hh[z]^2/cc^2)(D[obs,z]-D[tt[z],z]obs/2)^2-Exp[tt[z]])/obs^2; {first,FullSimplify[corrected-curv]}",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Out[1]= {0, 0}"
+      }
+    ],
+    "structuredContent": null,
+    "isError": false
+  }
+}

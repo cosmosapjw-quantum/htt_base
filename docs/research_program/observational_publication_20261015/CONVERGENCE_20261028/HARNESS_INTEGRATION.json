@@ -1,0 +1,28 @@
+{
+  "schema": "htt.convergence_harness_integration/1",
+  "base_commit": "bdead6a8f51282ca647224b460b0f65de085568b",
+  "selected_stages": ["C2", "C4", "C5", "C6"],
+  "skill_context_used": ["convergence_work/WORK_PACKET.md", "AGENTS.md", ".agents/skills/htt-dag-orchestrator/SKILL.md", ".agents/skills/htt-harness-engineering/SKILL.md", "docs/harness/CURRENT_CODEX_RUNTIME.md", "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md"],
+  "changed_paths": ["scripts/codex_harness/research_controller.py", "scripts/codex_harness/test_research_controller_convergence.py"],
+  "actual_prechange_findings": [
+    {"id": "ordering", "fixture": "R36-OLD priority100 and R37-00-FIRST-REPORT priority0 are both ready", "observed": "R36-OLD selected", "cause": "Only last_turn and task_id determine ready order; arbitrary priority metadata ignored"},
+    {"id": "unbounded_discovery", "fixture": "All tasks held; historical adaptive mode enabled", "observed": "A new adaptive-discovery packet is planned", "cause": "No caller-level finite-convergence option"}
+  ],
+  "implemented_cli": {"--prefer-task": "repeatable ordered preference among eligible ready tasks", "--defer-task": "repeatable ready-task deferral behind other executable known work", "--no-discovery": "suppress new adaptive discovery without deleting existing packets/history"},
+  "default_behavior_unchanged": true,
+  "state_migration_required": false,
+  "protected": ["outstanding packet replay", "running writer exclusivity", "acquisition resume reservation", "typed prerequisites", "review independence and qualification", "historical task specifications", "cumulative turn/attempt/ultra accounting", "original scientific acceptance"],
+  "tests": [
+    {"command": "python -m unittest discover -s scripts/codex_harness -p test_research_controller_convergence.py -v", "run": 13, "pass": 13, "exit": 0, "log": "HARNESS_FOCUSED_TEST.log"},
+    {"command": "python -m unittest discover -s scripts/codex_harness -p test_research_controller.py -v", "run": 30, "pass": 30, "exit": 0, "log": "HARNESS_CORE_TEST.log"},
+    {"command": "python -m unittest discover -s scripts/codex_harness -p test_research_controller_checkpoint.py -v", "run": 24, "pass": 23, "skip": 1, "exit": 0, "log": "HARNESS_CHECKPOINT_TEST.log"},
+    {"command": "python -m unittest discover -s scripts/codex_harness -p 'test_research_controller*.py' -v", "run": 198, "pass": 173, "skip": 13, "errors": 12, "exit": 1, "log": "HARNESS_REGRESSION_TEST.log"},
+    {"command": "exact HEAD controller temporary-fixture reproduction of borrowed-repair import-identity test", "run": 1, "errors": 1, "exit": 1, "log": "HARNESS_BASELINE_REPAIR_TEST.log"}
+  ],
+  "broad_suite_limits": {"missing_owner_frozen_fixtures": 10, "missing_sparse_checkout_hook": 1, "baseline_test_module_exception_identity_collision": 1},
+  "local_runtime_observed": false,
+  "local_runtime_mutated": false,
+  "native_dispatch_performed": false,
+  "push_performed": false,
+  "scope": "Finite scheduler options and fixture validation; no observational or scientific acceptance result"
+}

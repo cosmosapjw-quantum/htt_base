@@ -290,6 +290,23 @@ never reported as successful termination. `CAMPAIGN_ACCEPTANCES_REVIEWED` means
 all explicitly authorized campaign tasks passed review or have evidence-bound
 reuse; it is not a claim that the 42 original scientific acceptances passed.
 
+For the owner-authorized 2026-10-28 finite convergence release, `next` also
+accepts repeatable ordered `--prefer-task ID`, repeatable `--defer-task ID`, and
+`--no-discovery`. IDs must already exist in the current state. Existing packets,
+writer reservations, dependencies and review phases take precedence. Among ready
+tasks, preferred IDs go first, ordinary known tasks next, and deferred tasks last;
+without these flags the previous fair ordering is unchanged. `--no-discovery`
+only suppresses creation of new adaptive discovery, preserving already-issued
+packets and task research/repair routes. Keep the flags on every subsequent call;
+they are explicit selection controls, not a state migration or native dispatch.
+
+The exact six-task convergence contract and current-session handoff are in
+`docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/`.
+Render its supplied baseline first, finish feasible existing frozen-scope work,
+then publish the final report with exact residual obligations and stop the release.
+A final report does not mark held analyses or original scientific criteria complete.
+Do not initialize a new state or generate a new research frontier for that release.
+
 State uses atomic fsynced file replacement after planning, acknowledgement,
 resumption and every recorded outcome. Each outcome also gets a content-addressed
 result JSON next to the state in `<state-name>.results/`; raw receipt path/hash

@@ -1,0 +1,88 @@
+{
+  "schema": "htt.goal1_thomson_response/1",
+  "scope": "Cold-electron fixed-frame one-scatter gain and instantaneous shear response; no ODE and no observed-sky fit",
+  "sphere_nodes": 968,
+  "gain_spectrum": [
+    0.4999999999999981,
+    0.4999999999999982,
+    0.5000000000000044,
+    0.6999999999999995,
+    0.6999999999999997,
+    0.7000000000000011,
+    0.7000000000000017,
+    0.7000000000000026,
+    1.0000000000000064
+  ],
+  "spectrum_max_error": 6.439293542825908e-15,
+  "equal_gain_different_shear": {
+    "amplitude": 0.6,
+    "minimum_intensity": 0.4337949857072444,
+    "M_difference": 1.2010463160309213e-13,
+    "pointwise_gain_max_difference": 1.4099832412739488e-14,
+    "shear_operator_difference_norm": 0.5744626566564465,
+    "Lplus_eigenvalues": [
+      6.414832999330015,
+      6.654192439603503,
+      6.654192439603536,
+      6.893551879877042,
+      6.8935518798770445
+    ],
+    "Lminus_eigenvalues": [
+      6.510576775439398,
+      6.510576775439399,
+      6.749936215712911,
+      6.749936215712917,
+      6.989295655986457
+    ],
+    "analytic_global_intensity_lower_bound": 0.4,
+    "minimum_intensity_scope": "Quadrature grid; analytic global bound is separately recorded."
+  },
+  "joint_response": {
+    "input_components": 23,
+    "output_rows": 24,
+    "rank": 23,
+    "minimum_singular_value": 0.5649300136872485,
+    "shear_scalar_rank": 15,
+    "singular_values": [
+      5.071516766553606,
+      5.071516766553601,
+      5.071516766553588,
+      5.071516766553587,
+      5.071516766553586,
+      4.696909808076823,
+      2.961921958772239,
+      2.961921958772233,
+      2.961921958772233,
+      1.3998021203414683,
+      1.3998021203414632,
+      1.3998021203414626,
+      1.3998021203414601,
+      1.399802120341459,
+      0.5649300136872577,
+      0.564930013687252,
+      0.5649300136872517,
+      0.5649300136872516,
+      0.5649300136872502,
+      0.5649300136872498,
+      0.5649300136872489,
+      0.5649300136872488,
+      0.5649300136872485
+    ]
+  },
+  "detector_ranks": {
+    "intensity_six_directions": 6,
+    "linear_effects_three_screens": 6,
+    "full_Stokes_effects_three_screens": 9
+  },
+  "polarized_collision": {
+    "gamma_units": "inverse time; gamma=.4 in declared toy time unit",
+    "collision_quadrupole_error_at_gamma1": 1.7439117270264e-14,
+    "positive_screen_min_eigenvalue": 0.41562992567900514,
+    "structural_full_matrix_min_eigenvalue": -2.636779683484747e-16,
+    "omitted_polarization_shear_bias_norm": 0.007199999999999974,
+    "bound": 0.0071999999999999755
+  },
+  "validation": {
+    "all_pass": true
+  }
+}

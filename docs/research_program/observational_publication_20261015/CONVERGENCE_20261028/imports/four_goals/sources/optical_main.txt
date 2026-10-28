@@ -1,0 +1,700 @@
+Sharp quadrupole–octupole chirality and the nonlinear local distance response
+
+                                       Anonymous review draft
+
+         An angular observable can contain an octupole even when its underlying local rate contains
+       only a dipole and a quadrupole. We show how the logarithm of the directional distance law
+       generates this coupling, and identify the tensor operator that controls its geometry. For real
+       symmetric trace-free tensors Q and O of ranks two and three, the contraction v = O : Q fills
+       a solid ellipsoid at fixed octupole norm. Its minimum-norm lift yields the attained maximum
+       of the pseudoscalar χ = det[v, Qv, Q2 v], and optimization over quadrupole shape gives the
+                                √
+       sharp inequality |χ| ≤ (4 2/135)∥Q∥6F ∥O∥3F . We give its equality cases, both signs, and
+       the complete fixed-norm fibres, including zero and repeated-spectrum sectors. The same lift
+       generates the leading acceleration–shear contribution to the local magnitude octupole. A
+       finite logarithmic remainder bounds its four-component residual and the error of a construc-
+       tive acceleration inverse. An explicit positive local-response family approaches both sharp
+       chirality endpoints as its amplitude tends to zero. The complete ideal magnitude field also
+       determines the dimensionless dipole and shear independently of an additive intercept. Re-
+       tained spherical quadratures illustrate the quadratic coupled response, its cubic pure-dipole
+       limit and the analytic remainder envelope.
+
+
+
+                                        I.   INTRODUCTION
+
+
+   Directional observations retain more information than their multipole powers. A quadrupole
+supplies principal directions and eigenvalue shape; an octupole carries a relative orientation and
+components that cannot be reconstructed from one preferred axis. Their joint geometry can there-
+fore matter even when their scalar powers are fixed. Multipole-vector constructions provide a
+familiar representation of this information [1], while harmonic-tensor invariant theory and tensor-
+moment pseudoscalars supply a broader mathematical setting [2–4].
+   We study the contraction of an octupole with a quadrupole. Repeated application of the
+quadrupole to this vector gives three vectors whose oriented volume measures one aspect of the
+pair’s handedness. The resulting quantity has a useful optimization problem: at prescribed tensor
+norms, which contractions and oriented volumes are actually attained? Solving that problem gives
+a bounded shape coordinate, together with the tensor components it leaves unresolved.
+   There is a local optical use of the same construction. The directional redshift–distance slope of a
+smooth congruence contains expansion, acceleration and shear. The logarithm entering a distance
+modulus mixes their angular components. Its acceleration–shear product generates an octupole
+                                                                                                                  2
+
+
+whose three-dimensional image is exactly the adjoint image of the algebraic contraction. We derive
+this relation in one source and observer congruence, following the local distance expansion of Kris-
+tian and Sachs and Heinesen [5, 6]. The response considered here is the nonlinear conversion of a
+distance to a magnitude. Changing the physical observer introduces the additional transformations
+studied in covariant cosmography [7].
+   The argument proceeds from the exact tensor image to its sharp oriented-volume bound, and
+then to the optical response and inverse. The geometric statements are deterministic. The numerical
+illustration evaluates a specified local response and supplies no sampling distribution for an observed
+sky.
+
+
+
+            II.    TENSOR CONVENTIONS AND THE CONTRACTION IMAGE
+
+
+   Let Q ∈ STF2 (R3 ) and O ∈ STF3 (R3 ) be real tensors in an oriented Euclidean space. A colon
+contracts all displayed paired indices. Norms are full ordered-index Frobenius norms, so repeated
+off-diagonal entries retain their multiplicities. In particular,
+
+
+
+                            X               X                          X             X
+                  ∥Q∥2F =        Q2ii + 2         Q2ij ,     ∥O∥2F =        2
+                                                                           Oiii +3           2
+                                                                                            Oiij     2
+                                                                                                 + 6O123 .       (1)
+                            i               i<j                        i             i̸=j
+
+
+   We write
+
+
+
+ t = Q : Q,       j = tr(Q3 ),    o = ∥O∥F ,               CQ O = O : Q = v,         χ(Q, O) = det[v, Qv, Q2 v]. (2)
+
+
+   If the amplitudes of Q and O have units q and u, then v has units qu and χ has units q 6 u3 . Under
+a common orthogonal transformation R, the contraction transforms as a vector and χ transforms by
+det R. It is invariant under proper rotations and odd under reflection. A nonzero value consequently
+distinguishes a pair from its mirror under proper rotations. A zero value does not classify the
+complete tensor pair.
+   Theorem 1 (attained contraction image). For Q ̸= 0, define
+
+
+
+                                                         t   2
+                                                     MQ = I + Q2 .                                               (3)
+                                                         3   5
+
+   The image of the sphere ∥O∥F = o, o ≥ 0, under CQ is exactly
+                                                                                                      3
+
+
+
+
+                                                       −1
+                                      EQ,o = {v : v T MQ  v ≤ o2 }.                               (4)
+
+             ∗ . The fibre above v consists of
+   Let LQ = CQ
+
+
+
+                         −1                                                        −1
+                 O = LQ MQ  v + K,          K ∈ ker CQ ,         ∥K∥2F = o2 − v T MQ  v.          (5)
+
+   The kernel is four dimensional. For o > 0, a fibre is a translated three-sphere at an interior
+point, a singleton on the boundary, and empty outside the ellipsoid. At o = 0, its only nonempty
+fibre is {0}. At Q = 0, the image is {0}, the kernel is all of STF3 , and the nonempty fixed-norm
+fibre is a six-sphere when o > 0.
+   Proof. The adjoint is
+
+
+                        wi Qjk + wj Qik + wk Qij    2
+          (LQ w)ijk =                            −    [δij (Qw)k + δik (Qw)j + δjk (Qw)i ] .      (6)
+                                   3               15
+   The trace of the first term is 2Qw/3, and that of the bracket is 5Qw, so LQ w is trace free.
+Contracting it with an STF tensor O removes the Kronecker terms and gives w · CQ O. A further
+contraction with Q yields
+
+
+                                                           
+                                      t             2   4
+                             CQ LQ w = w +            −         Q2 w = MQ w.                      (7)
+                                      3             3 15
+   Since MQ ⪰ (t/3)I > 0, CQ is onto and its kernel has dimension 7 − 3 = 4. Its minimum-norm
+                      −1
+lift of v is O0 = LQ MQ  v. Every other lift differs by a kernel element, orthogonal to O0 , whence
+
+
+
+                                                      −1
+                                    ∥O0 + K∥2F = v T MQ  v + ∥K∥2F .                              (8)
+
+   This proves necessity of (4). Conversely, every vector satisfying (4) can be lifted to norm o by
+assigning the residual squared norm to any direction in the kernel. Equation (5) and all stated fibre
+cases follow. The zero-Q case follows directly from C0 = 0. □
+   Without the norm constraint, the fibre is a four-dimensional affine space. Intersecting it with the
+norm sphere produces the three-sphere in Theorem 1. This distinction explains why a fixed-norm
+tensor sphere can have a solid three-dimensional image. The construction is rotation covariant:
+MRQRT = RMQ RT , and common rotation carries each fibre to the fibre above Rv. At fixed Q, only
+its stabilizer acts without changing that quadrupole.
+                                                                                                   4
+
+
+                            III.     THE SHARP CHIRALITY BOUND
+
+
+  Theorem 2 (fixed-shape and global extrema). Let λi be the eigenvalues of Q, and put
+   Q
+V = i<j (λj − λi ). For Q ̸= 0,
+
+
+                                                         p
+                                                     |V | det MQ 3
+                                     max |χ(Q, O)| =      √     o .                               (9)
+                                    ∥O∥F =o              3 3
+
+   For arbitrary Q, O,
+
+
+                                                    √
+                                                   4 2
+                                       |χ(Q, O)| ≤     ∥Q∥6F ∥O∥3F .                             (10)
+                                                   135
+
+   For a simple spectrum and o > 0, equality in (9) occurs precisely at the eight contractions
+
+
+                                  p
+                     v i = εi o    mi /3,     mi = t/3 + 2λ2i /5,      εi ∈ {−1, 1},             (11)
+
+                                                −1
+   with their unique boundary lifts O = LQ MQ      v. Four choices attain each sign. Nontrivial
+                                                                           p       p
+equality in (10) additionally requires j = 0, equivalently the spectrum (− t/2, 0, t/2) up to
+permutation. For repeated eigenvalues, χ = 0 for every O, so every fixed-norm octupole attains the
+zero maximum in (9). If either tensor is zero, both sides of (10) vanish.
+   Proof. Choose a positively oriented orthonormal eigenframe. Factoring the three components of
+v from the determinant gives
+
+
+
+                                              χ = V v 1 v2 v3 .                                  (12)
+
+                  √
+   Write yi = vi / mi . Theorem 1 gives i yi2 ≤ o2 . The arithmetic–geometric mean inequality
+                                              P
+                                                   √                                         √
+applied to their squares gives |y1 y2 y3 | ≤ o3 /(3 3), with equality exactly when |yi | = o/ 3. This
+exhausts the ellipsoid radius, and (8) forces K = 0. Thus the bound and all simple-spectrum
+equality cases in (9) are attained. When V = 0, (12) proves the repeated-spectrum statement
+directly.
+   To optimize the shape, trace freedom gives the characteristic polynomial
+
+
+
+                                                         t   j
+                                       det(sI − Q) = s3 − s − .                                  (13)
+                                                         2   3
+                                                                                                         5
+
+
+   Its discriminant and elementary symmetric functions give
+
+
+
+                     t3                      64t3      8j 2               j2   1
+                V2 =    − 3j 2 ,    det MQ =       +         ,   0 ≤ r := 3 ≤ .                (14)
+                     2                        675     1125                t    6
+
+   For completeness, i<j λ2i λ2j = t2 /4 and i λ2i = j 2 /9; expanding i (t/3 + 2λ2i /5) proves the
+                    P                       Q                          Q
+
+middle identity. After removing t6 o6 /27 from the squared bound in (9), the remaining factor is
+
+
+                                                     
+                               1             64   8r                            316 + 48r
+                  p(r) =         − 3r           +           ,      p′ (r) = −             < 0.         (15)
+                               2             675 1125                             1125
+
+   The maximum therefore occurs at j = 0. Substitution gives (10). A unit-norm witness is
+
+
+                        √        √                       √        √
+           Q∗ = diag(−1/ 2, 0, 1/ 2),              w∗ = ( 10/4, 1, 10/4),              O∗ = LQ∗ w∗ .   (16)
+
+   Here MQ∗ = diag(8/15, 1/3, 8/15), so ∥O∗ ∥2F = w∗T MQ∗ w∗ = 1. Its contraction is
+  √             √                            √
+(2 10/15, 1/3, 2 10/15), and (12) gives χ = 4 2/135. Replacing O∗ by −O∗ , or reflecting the
+pair, gives the negative endpoint. □
+   For nonzero Q and O, define the dimensionless coordinate
+
+
+
+                      135χ                                      p
+                   C= √        ,             |C| ≤ E(r) :=       (1 − 6r)(1 + 3r/40) ≤ 1.              (17)
+                     4 2 t3 o3
+
+   The global endpoints occur at r = 0, and repeated spectra give r = 1/6 and C = 0. The ratio
+|C|/E(r) is defined only for simple spectra. Neither normalized ratio is assigned a value at a zero
+tensor. The polynomial and its unnormalized bound remain defined there. Positive amplitude
+rescaling cancels from C, consistently with χ(aQ, bO) = a6 b3 χ(Q, O).
+   For a simple diagonal quadrupole, its proper-rotation stabilizer consists of diagonal sign matrices
+of determinant one. These connect the four extrema with each product sign in (11). Thus the
+eight boundary lifts form two proper-rotation classes at fixed Q. Figure 1 shows their contraction
+geometry and the shape envelope; Figure 2 displays an extremal pair and its mirror.
+
+
+                        A.       Relation to a conventional tensor covariant
+
+
+   The spectral factor in (14) is the discriminant appearing in harmonic-tensor invariant theory [3].
+To fix the cross-product convention explicitly, define
+                                                                                                                    6
+
+
+                (a) Section z3 = 1/√ 3                                      (b) Sharp signed shape envelope
+                  z1z2z3 > 0          z1z2z3 < 0              1.00
+      0.75
+                                                              0.75
+      0.50
+                                                              0.50
+      0.25                                                    0.25
+
+      0.00                                                    0.00
+z2
+
+
+
+
+                                                         
+     −0.25                                                   −0.25
+
+                                                             −0.50
+     −0.50
+                                                             −0.75
+     −0.75
+                                                             −1.00
+               −0.5            0.0       0.5                         0.00 0.02 0.04 0.06 0.08 0.10 0.12 0.14 0.16
+                               z1                                                        r = j 2/t 3
+
+
+
+
+FIG. 1. Attained contraction geometry. At fixed quadrupole and octupole norm the normalized contraction
+vector fills the unit ball. The displayed section contains four of the eight simple-spectrum extremizers; the
+remaining four lie in the opposite section. The fixed-norm fibre is a translated three-sphere in the interior
+and a singleton on the boundary. The right panel shows the sharp signed shape envelope, which reaches both
+global endpoints at a zero-cubic-trace quadrupole and vanishes at repeated eigenvalues. The coordinates
+are dimensionless analytic quantities, not sample probabilities.
+
+
+
+
+                                     Kijk = Symijk [(Q2 )ia ϵajb Qbk ],      ϵ123 = 1,                         (18)
+
+     where Sym averages all six index permutations. This is the Q × Q2 convention obtained from
+the adjacent contractions in Desmorat et al.’s definition. In an eigenframe all repeated-index
+components vanish and K123 = V /6. Therefore
+
+
+
+                   K : v ⊗3 = χ(Q, O),              ∥K∥2F = V 2 /6,         t3 − 6j 2 = 12∥K∥2F .              (19)
+
+     The last equality agrees with the established discriminant identity. Equations (4) and (9) re-
+solve the additional contraction-image and fixed-norm optimization questions for the pair (Q, O).
+Pseudoscalars formed from tensor moments also arise in the general constructions of Pisanty et al.
+[4]; their existence alone does not specify this norm-constrained image.
+
+
+                IV.     A SAME-CONGRUENCE LOCAL OPTICAL RESPONSE
+
+
+     We use metric signature (− + ++), proper length s = cτ , and a unit timelike congruence
+ua ua = −1. The physical expansion, shear and vorticity rates H, σ, ω have units of inverse time;
+                                                                                                                      7
+
+
+               (a) Analytic witness,  = +1                                         (b) Reflected witness,  = −1
+
+
+
+
+                       −1.0             −0.5                   0.0                   0.5              1.0
+                                            Q * : nn + O * : nnn (unit-tensor field)
+
+
+
+
+FIG. 2. An analytic pair attaining the sharp constant and its mirror. Both STF tensors have unit Frobenius
+norm. Reflection preserves their norms and reverses the determinant coordinate. The fields illustrate the
+algebraic theorem; the exact logarithmic optical response has its separately stated amplitude and remainder
+restrictions. These unit-tensor angular fields are synthetic illustrations in the specified common Euclidean
+frame.
+
+
+the physical acceleration A has units of length per time squared. In the instantaneous rest space,
+
+
+
+                  ∇a ub = −ua Ab /c2 + (Hhab + σab + ωab )/c,                              hab = gab + ua ub .      (20)
+
+   Let n point from the observer toward the source, and use the past-directed null direction ℓ =
+−u + n, with u · ℓ = 1. Its contraction is
+
+
+                                                                           A·n
+                                 Hu (n) = cℓa ℓb ∇a ub = H −                   + σ : nn.                            (21)
+                                                                            c
+
+   Antisymmetry removes vorticity from this contraction. The acceleration sign follows from the
+stated direction convention. For smooth emitters and an observer following the same congruence,
+under the regular local geometric-optics distance assumptions,
+
+
+                                                             cz
+                                           dL (z, n) =             + O(z 2 ).                                       (22)
+                                                            Hu (n)
+
+   These are local quantities at the observation event [5, 6]. We assume H > 0, define
+
+
+                                     A                   σ
+                              d=−      ,         S=        ,         q(n) = d · n + S : nn,                         (23)
+                                    cH                   H
+                                                                                                            8
+
+
+   and require 1 + q(n) > 0 over the full sphere. The local angular magnitude field is then
+
+
+                                          dL (z, n)                                           5
+                   fµ (n) = lim 5 log10             = −κ log[1 + q(n)],             κ=            .       (24)
+                            z↓0            cz/H                                             ln 10
+   The ratio has a finite limit even though each individual magnitude diverges. The nonlinear
+angular field in (24) has higher multipoles than the rate in (21). It is evaluated in the same
+physical frame; the distance and redshift transformations required for a boosted observer are a
+separate operation [7].
+   For normalized full-sphere averaging ⟨g⟩ = (4π)−1               g dΩ, let P3 fµ = Oµ : n3 . The rank-three
+                                                               R
+
+tensor is
+
+
+                                                     35
+                                          Oµ,abc =      ⟨fµ n⟨a nb nc⟩ ⟩.                                 (25)
+                                                     2
+   It has magnitude units. It is distinct from a temperature or polarization octupole, which has its
+own radiation and processing response.
+   Proposition 3 (finite coupled response). Suppose supn |q(n)| ≤ ϵ < 1. With the lift (6),
+
+                                                                            r
+                                                                                35 κϵ3
+                      Oµ = κLS d + R3 ,          ∥R3 ∥F ≤ E3 (ϵ) :=                        .              (26)
+                                                                                2 3(1 − ϵ)
+   When S = 0, the stronger odd-sector expansion gives
+
+                                                                    r
+                     κ                                                  35 κ|d|5
+               Oµ = − STF(d⊗3 ) + R3,d ,             ∥R3,d ∥F ≤                         ,      |d| < 1.   (27)
+                     3                                                   2 5(1 − |d|2 )
+   Proof. The harmonic cubic part of (d · n)(S : nn) is
+
+
+                                                              2
+                               (LS d) : n3 = (d · n)(S : nn) − (Sd) · n.                                  (28)
+                                                              5
+   For example, the Laplacian of (d · x)(xT Sx) is 4(Sd) · x, while that of |x|2 (Sd) · x is 10(Sd) · x,
+which proves the trace subtraction. In −κ(q − q 2 /2), only the odd cross term of q 2 contributes to
+degree three; its coefficient is +κLS d.
+   The remaining scalar series obeys
+
+
+                                                             X ϵk              ϵ3
+                             log(1 + q) − q + q 2 /2 ≤                  ≤            .                    (29)
+                                                                    k       3(1 − ϵ)
+                                                             k≥3
+                                                                                                        9
+
+
+   For an STF cubic T , spherical sixth moments give ⟨(T : n3 )2 ⟩ = 2∥T ∥2F /35. Orthogonal projec-
+tion is a contraction in this normalized L2 norm, so the scalar bound implies (26). With S = 0,
+only odd powers contribute to the degree-three projection. The cubic coefficient is that in (27), and
+the remaining odd tail is bounded by |d|5 /[5(1 − |d|2 )]. The same norm conversion proves (27). □
+   A convenient sufficient choice is ϵ = |d| + ∥S∥op < 1. The bound controls angular truncation of
+the local logarithm. Applying it to a finite-redshift catalogue additionally requires its finite-distance,
+calibration and frame-response errors.
+
+
+    V.    INVERSION, RESIDUAL MORPHOLOGY AND OPTICAL EXTREMIZERS
+
+
+   For fixed S ̸= 0, (7) gives
+
+
+                                    S:S 2 2
+                                                                         q
+      L∗S LS = MS ,      ∥LS d∥2F =    |d| + |Sd|2 ,           si (LS ) = (S : S)/3 + 2λ2i /5.       (30)
+                                       3          5
+   Thus all three vector components are retained by the leading coupling, including at repeated
+nonzero shear eigenvalues. For a supplied octupole O, its least-squares vector and residual are
+
+
+
+                        dbS (O) = κ−1 MS−1 (O : S),      O⊥ = O − κLS dbS (O).                       (31)
+
+   The first term is the orthogonal projection onto im LS ; O⊥ ∈ ker CS has four independent
+components. Proposition 3 immediately yields
+
+
+                                                                        E3 (ϵ)
+                          ∥Oµ,⊥ ∥F ≤ E3 (ϵ),      |dbS (Oµ ) − d| ≤               .                  (32)
+                                                                      κsmin (LS )
+   Indeed, orthogonal projection cannot enlarge the remainder, and the pseudoinverse has norm
+1/smin (LS ). For trace-free S, λ2i ≤ 2(S : S)/3. Hence the singular values squared lie between
+                                                                      p
+(S : S)/3 and 3(S : S)/5, and the relative condition number is at most 9/5. The absolute inverse
+gain nevertheless diverges as S → 0. Equation (27) describes that separate pure-dipole sector.
+   The quadratic optical response selects exactly the minimum-norm lift of its contraction:
+
+
+
+                                 Oµ(2) = κLS d,       Oµ(2) : S = κMS d.                             (33)
+
+   Consequently it occupies the ellipsoid boundary at its own norm, with no kernel component.
+The full logarithm can acquire a kernel component through R3 . Since MS commutes with S, its
+oriented volume obeys
+                                                                                                      10
+
+
+
+
+                               χ(S, Oµ(2) ) = κ3 det MS det[d, Sd, S 2 d].                           (34)
+
+   The determinant of MS is positive. For simple-spectrum shear the sign is therefore that of
+d1 d2 d3 V (λ) in a positively oriented eigenframe. Repeated eigenvalues or a missing vector component
+make this particular determinant vanish.
+                                                                                       p
+   This sign relation has a finite sufficient stability test. Put v0 = κMS d and h =    λmax (MS )E3 (ϵ).
+Contraction of the remainder gives |v − v0 | ≤ h. Expanding the determinant by multilinearity and
+applying Hadamard’s inequality gives
+
+
+
+                        |χ(S, Oµ ) − χ(S, Oµ(2) )| ≤ ∥S∥3op (|v0 | + h)3 − |v0 |3 .
+                                                                                
+                                                                                                     (35)
+
+   Each term with k perturbed columns is bounded by ∥S∥3op |v0 |3−k hk , with the binomial multi-
+plicity. If the magnitude in (34) exceeds (35), its sign survives the logarithmic remainder. This test
+uses a known shear; errors in an inferred shear must also enter the joint response region.
+   There is also a direct connection to the measured magnitude quadrupole. Let Qµ denote its
+STF rank-two coefficient. The same argument using ⟨(T : nn)2 ⟩ = 2∥T ∥2F /15 gives
+
+
+                                                               r
+                                                                   15 κϵ2
+                           Qµ = −κS + R2 ,          ∥R2 ∥F ≤                  .                      (36)
+                                                                   2 2(1 − ϵ)
+
+   Corollary 4 (approach to both sharp optical endpoints). Take d = aw∗ and S = aQ∗
+                                     √
+from (16), with a > 0. For a(3/2 + 1/ 2) < 1, the full-sphere logarithm is defined and
+
+
+
+             Qµ = −κaQ∗ + O(a2 ),          Oµ = κa2 O∗ + O(a3 ),         lim C(Qµ , Oµ ) = 1.        (37)
+                                                                         a↓0
+
+   Reflecting this family gives the limit −1.
+                                                    √
+   Proof. The norms are |w∗ | = 3/2 and ∥Q∗ ∥op = 1/ 2, which give the stated positive-response
+domain. Equations (26) and (36) give the two expansions. After dividing by their nonzero leading
+amplitudes, the tensors tend to −Q∗ and O∗ . The normalized coordinate is continuous at this pair,
+and its even degree in Q gives C(−Q∗ , O∗ ) = 1. A common reflection changes its sign. □
+   This is an asymptotic realization by the actual logarithmic multipoles. It does not require every
+finite-amplitude algebraic extremizer to be an exact optical response. Directional positivity and
+the higher-order response remain part of the physical construction.
+                                                                                                           11
+
+
+                          A.    Exact inverse of the complete angular field
+
+
+   The full ideal field contains a separate, nonperturbative inverse. For an arbitrary additive
+intercept b, define
+
+
+                                                exp[−(fµ (n) + b)/κ]
+                                       r(n) =                        .                                   (38)
+                                                 ⟨exp[−(fµ + b)/κ]⟩
+
+   Since ⟨q⟩ = 0, the intercept cancels and r = 1 + q. The second and fourth spherical moments
+then give
+
+
+                                                         15
+                               di = 3⟨rni ⟩,     Sij =      ⟨r(ni nj − δij /3)⟩ .                        (39)
+                                                          2
+
+   For the first identity, only the dipole survives and ⟨ni nj ⟩ = δij /3. For the second, the monopole
+and dipole vanish after the STF projection, while ⟨ni nj nk nl ⟩ = (δij δkl + δik δjl + δil δjk )/15 contracts
+with S to give 2Sij /15. Thus the dimensionless acceleration and shear are exactly reconstructed
+under this local full-field law. Absolute H, A, σ require their normalization. Exponentiating a
+truncated or noisy harmonic fit, or replacing the full-sphere measure by selected directions, changes
+the inverse problem.
+
+
+               VI.    NUMERICAL ILLUSTRATION AND INTERPRETATION
+
+
+   Figure 3 uses retained spherical quadratures for
+
+
+                            √
+             d = a(1, 2, 3)/ 14,        S = a diag(0.6, −0.2, −0.4),          0.002 ≤ a ≤ 0.25.          (40)
+
+   The sufficient bound is ϵ = 1.6a ≤ 0.4. The 45 saved amplitudes compare the logarithmic
+octupole with its quadratic coupling, and compare the pure-dipole logarithm with its cubic limit.
+Every retained coupled remainder satisfies (26). The primary 40 × 80 and comparison 60 × 120
+Gauss–Legendre–azimuthal grids have maximum tensor difference 1.2046551275404449×10−14 mag-
+nitude. This comparison measures consistency of those quadratures; the analytic error envelope
+follows from Proposition 3. Table I gives five actual saved amplitudes and their response and
+remainder norms.
+   The theorem, response and inverse concern a retained tensor carrier. In an application, we
+retain the common state Z, its support and error region before forming scalar summaries. For the
+                                                                                                                                                                                      12
+
+
+                                                  (a) Synthetic octupole response                                                          (b) Synthetic coupled remainder
+                             10−1          Coupled: exact logarithm                                                                  Actual coupled remainder
+                                           Coupled: quadratic                                                                 10−1   Analytic bound E3(ε)
+                             10−2          Pure dipole: exact logarithm
+                                           Pure dipole: cubic
+Frobenius norm (magnitude)
+
+
+
+
+                                                                                                 Frobenius norm (magnitude)
+                                                                                                                              10−2
+                             10−3
+                                                                                                                              10−3
+                             10−4
+                                                                                                                              10−4
+                                  −5
+                             10
+                                                                                                                              10−5
+                             10−6
+                                                                                                                              10−6
+                                  −7
+                             10                                                                                               10−7
+
+                             10−8                                                                                             10−8
+
+
+                                                           10−2                    10−1                                                             10−2                    10−1
+                                                         Dimensionless amplitude a                                                                Dimensionless amplitude a
+
+
+
+
+FIG. 3. Nonlinear local magnitude response for the specified synthetic acceleration and shear. The coupled
+octupole is quadratic at small common amplitude, whereas the pure-dipole response begins at cubic order.
+The right panel compares the saved exact-logarithm projection error with its analytic finite angular envelope.
+Curves consume the retained 45-row quadrature result; finite-redshift propagation and observational errors
+are separate inputs. All norm ordinates are in magnitude units; amplitude is dimensionless, and the response
+uses the same source and observer congruence.
+
+
+TABLE I. Five retained synthetic local-response amplitudes. The amplitude a is dimensionless; all other
+entries are full ordered-index Frobenius norms in magnitude units. The remainder is relative to the quadratic
+coupling, and the bound is E3 (1.6a).
+
+                                       a                      Exact coupled                 Quadratic                                         Remainder                      Bound
+2.00000 × 10−3                                               4.28078 × 10−6               4.27877 × 10−6                                   3.79883 × 10−9               9.95392 × 10−8
+6.68740 × 10−3                                               4.79141 × 10−5               4.78381 × 10−5                                   1.42766 × 10−7               3.74935 × 10−6
+2.23607 × 10−2                                               5.37830 × 10−4               5.34847 × 10−4                                   5.43409 × 10−6               1.43810 × 10−4
+7.47674 × 10−2                                               6.10973 × 10−3               5.97977 × 10−3                                   2.16538 × 10−4               5.88821 × 10−3
+2.50000 × 10−1                                               7.44586 × 10−2               6.68558 × 10−2                                   1.04112 × 10−2               3.22984 × 10−1
+
+
+optical construction, a suitable deterministic carrier is xϕ (Z) = (d, S, Oµ , Oµ,⊥ ), with the shear
+contribution Σ2u = (S : S)/6. At fixed known S ̸= 0, a justified observational octupole error radius
+eO gives the policy score
+
+
+                                                                                               ∥Obµ,⊥ ∥F
+                                                                                    Qcpl =                .                                                                          (41)
+                                                                                              E3 (ϵ) + eO
+
+                             The denominator is required to be positive; a zero denominator is handled as the exact constraint
+O
+bµ,⊥ = 0, without assigning a ratio. Uncertain shear requires the image over the joint admissible
+                                                                                                  13
+
+
+state region. A single best-fit eigenframe does not retain that dependence.
+
+   For a declared support measure ν on an application domain D, an occupancy can be defined as
+Fν (B) = ν(B∩D)/ν(D), provided 0 < ν(D) < ∞. The occupied set B, and any admissible physical
+ceiling used to define it, belong to that policy. A threshold exceedance ΠP (t) = P {Qcpl (Z) > t}
+additionally requires a named joint law P . A depth comparison GF requires registered windows and
+a specified functional of their F values, retaining shared calibration and cross-window dependence.
+The present synthetic family specifies neither such a sampling law nor an observational occupancy
+measure or depth functional, so these sectors remain undefined. Its deterministic xϕ , C and response
+bounds do not supply them.
+
+   The local slope does not determine vorticity, curvature or a matter-frame energy split. Conse-
+quently the shear contribution alone cannot fill the other sectors of a signed physical comparator
+x. Likewise, a temperature or polarization tensor pair requires its own transfer, mask and noise
+response before the optical interpretation can be applied. These requirements specify the measure-
+ments needed for a physical application; they do not enter the proof of the tensor inequality.
+
+
+
+
+                                       VII.   DISCUSSION
+
+
+   The contraction O : Q reduces seven octupole components to three, but its lost information
+has a simple exact form. A four-dimensional affine kernel remains, and a norm constraint turns its
+interior fibres into three-spheres. The ellipsoid boundary selects a unique minimum-norm tensor.
+Balancing the three normalized contraction components then gives the fixed-quadrupole chirality
+maximum; a zero cubic trace of the quadrupole gives the sharp global constant.
+
+   The local distance response provides an interpretation of that boundary lift. Acceleration and
+shear enter the directional rate at first order, and their product generates a constrained octupole
+after the logarithmic magnitude conversion. Its complementary four components provide a residual
+morphology test, with a finite angular bound and a constructive inverse. The complete ideal field
+supplies an intercept-independent inverse, while an explicit small-amplitude family approaches both
+algebraic chirality endpoints.
+
+   These results organize amplitude, shape and response before a statistical law is introduced. An
+observational use can pass a joint tensor region through the same maps, with its finite-redshift,
+frame and calibration response retained. That preserves the information required to ask whether a
+                                                                                                      14
+
+
+measured higher multipole has the shape of a specified physical coupling.
+
+
+
+
+[1] C. J. Copi, D. Huterer, and G. D. Starkman, Phys. Rev. D 70, 043515 (2004), arXiv:astro-ph/0310511.
+[2] M. Olive and N. Auffray, J. Math. Phys. 55, 092901 (2014).
+[3] R. Desmorat, N. Auffray, B. Desmorat, M. Olive, and B. Kolev, Minimal functional bases for elasticity
+   tensor symmetry classes (2021), arXiv:2105.14930 [math.RT].
+[4] E. Pisanty, N. Mayer, A. Ordóñez, A. Löhr, and M. Khokhlova, Chiral moments make chiral measures
+   (2026), arXiv:2603.26793v1 [physics.data-an].
+[5] J. Kristian and R. K. Sachs, Astrophys. J. 143, 379 (1966).
+[6] A. Heinesen, JCAP 2021 (05), 008, arXiv:2010.06534 [gr-qc].
+[7] R. Maartens, J. Santiago, C. Clarkson, B. Kalbouneh, and C. Marinoni, JCAP 2024 (09), 070,
+   arXiv:2312.09875 [gr-qc].
+

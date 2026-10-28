@@ -1,0 +1,90 @@
+{
+  "schema": "htt.four_goals.goal4/1",
+  "skill_context_used": "WORK_PACKET.md; PhysMath1.3 selected R2/R3/R4/R5/R7/R9 and bounded review/no-push policies",
+  "source_head": "7f3f49a6b6d95b6ae0323d5bebd3afce0067b1a7",
+  "source_sections": [
+    "MF02 3.4 pp67-68",
+    "MF02 4.6 pp81-82",
+    "MF02 11.9 p130",
+    "main.pdf IV-VI",
+    "R36-04 current interpretation and qualification"
+  ],
+  "status": "CONSTRUCTIVE_DERIVATION_AND_FINITE_CHECKS_COMPLETE",
+  "original_acceptance_change": false,
+  "push": false,
+  "solver_or_ODE": false,
+  "derived_results": [
+    "Local directional expansion interval with finite-z and opacity bounds",
+    "Exact distance interval from transmission spectral bounds",
+    "Finite log/inverse-square-root perturbation bounds",
+    "Opacity-aware CBL outer confidence/identified image",
+    "Lower-derivative opacity-corrected curvature estimator"
+  ],
+  "reused_results": [
+    "MF02 CP tomography and distance-loss factorization",
+    "MF02 noncommutative Jordan CBL identity",
+    "CBL curvature consistency relation",
+    "R36 optical selected-source response"
+  ],
+  "proposal_corrections": [
+    "Xi fixes relative transmission only; grey scalar and its derivatives remain",
+    "Rank-one Choi implies single filter; TP and equal dimensions needed for unitary",
+    "Q_in=A*(I) and Q_out=A(I) must remain distinct",
+    "Directional angular fit is not automatically FLRW H(z)",
+    "Algebraic geometry/transmission separation requires supplied transmission to become statistical identification"
+  ],
+  "checks": {
+    "scope": "New finite algebra/quadrature-free matrix checks and synthetic opacity calculation; no observed data, solver or ODE.",
+    "matrix_jordan_numeric_residual": 2.6711882913272985e-14,
+    "covariant_gauge_numeric_residual": 2.366084829917215e-14,
+    "noncommutator_max_F": 0.13356302405876627,
+    "min_W_eigenvalue": 1.8121453615411793,
+    "tomography_design_rank": 16,
+    "tomography_design_condition": 22.9564392373896,
+    "tomography_reconstruction_F_error": 1.6996749443881478e-17,
+    "distance_identified_interval_with_TNI": [
+      0,
+      3.0
+    ],
+    "distance_interval_with_transmission_lower_0p1": [
+      1.5811388300841895,
+      3.0
+    ],
+    "grey_scaling_Xi_residual": 0.0,
+    "filter_Choi_rank": 1,
+    "filter_is_unitary": false,
+    "depolarizing_Choi_rank": 4,
+    "amplitude_damping_Astar_I": [
+      [
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0
+      ]
+    ],
+    "amplitude_damping_A_I": [
+      [
+        1.2999999999999998,
+        0.0
+      ],
+      [
+        0.0,
+        0.7000000000000001
+      ]
+    ],
+    "linear_opacity_at_z1p5": 0.30000000000000004,
+    "naive_CBL_at_z1p5": -0.3498588075760032,
+    "constant_calibration_CBL": -0.2100000000000002,
+    "corrected_CBL_max_residual": 2.220446049250313e-16,
+    "opacity_outer_interval_at_z1p5": [
+      -0.38023063074646335,
+      0.022499999999999964
+    ],
+    "corrected_curvature_max_residual": 8.872906852216423e-12,
+    "distance_identified_interval_with_TNI_lower_open": true
+  },
+  "code_sha256": "e856a1ea63f86c1453882384db7a3460be1fb1477def311f8d7f6dd016389122",
+  "next_unit": "Apply common-confidence angular slope bound and first-derivative curvature image to existing released optical/SN carrier with separately qualified H response and explicit opacity function class."
+}

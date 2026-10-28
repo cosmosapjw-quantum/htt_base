@@ -1,0 +1,13 @@
+{
+  "code": "Clear[r, th, t]; p = Sqrt[2/Pi] Exp[-(r^2 + th^2)/2] Cosh[r th]; s = FullSimplify[D[Log[p], th], Assumptions -> {r >= 0, th \\[Element] Reals}]; s0 = Simplify[s /. th -> 0]; st0 = Assuming[r >= 0, FullSimplify[Limit[D[Log[Sqrt[2/Pi] Exp[-(r^2+t)/2] Cosh[r Sqrt[t]]], t], t -> 0, Direction -> \"FromAbove\"]]]; it0 = Integrate[st0^2 Sqrt[2/Pi] Exp[-r^2/2], {r,0,Infinity}]; <|\"signed_score\" -> s,\"score_at_signed_null\" -> s0,\"one_sided_squared_amplitude_score\" -> st0,\"boundary_score_second_moment\" -> it0|>",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Power::infy: -- Message text not found -- (1/Sqrt[0])\nGeneral::messages: Messages were generated which may indicate errors.\n\nOut[1]= <|\"signed_score\" -> -th + r*Tanh[r*th], \"score_at_signed_null\" -> 0, \"one_sided_squared_amplitude_score\" -> (-1 + r^2)/2, \"boundary_score_second_moment\" -> 1/2|>"
+      }
+    ],
+    "structuredContent": null,
+    "isError": false
+  }
+}

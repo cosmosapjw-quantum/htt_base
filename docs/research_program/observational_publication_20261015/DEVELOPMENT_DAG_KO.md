@@ -1,5 +1,10 @@
 # HTT 출판 중심 관측연구 DAG: 여섯 독립 논문
 
+## Current finite convergence route — 2026-10-28
+
+Use [the report-first convergence plan](CONVERGENCE_20261028/README_KO.md) and [existing-session handoff](CONVERGENCE_20261028/HANDOFF_CURRENT_SESSION.md). Produce the initial report, four bounded physical-goal result updates, then refined final reports while completing existing executable work. Original42 and six-paper scientific acceptance remain unchanged. New adaptive frontier creation is disabled only for this finite release; existing packets, repair and resume paths remain authoritative.
+
+
 작성 2026-10-15 KST · 활성 authority: PUBLICATION_DAG.json / schema htt.observational_six_paper_dag/1.
 
 기본 전략은 단순하다. 하나의 거대 Bianchi+low-ell+CF4+posterior 프로그램을 각 분야의 독립적인 falsifiable 관측 논문 여섯 편으로 분리한다. 서로 재사용하는 수학·source·instrument 연산자는 공유하되, 관측 결론·통계법칙·관측 likelihood·독립적인 투고판정은 각각 둔다. 기존 PR533 및 2026-10-15 CF4 Schur와 Planck–MES 연구의 scoped 결과는 재사용한다. 원래 미커밋 작업 트리와 245개 PR canonical backlog를 수정하지 않으며, 본 프로그램은 publication-specific ACTIVE OVERLAY다.

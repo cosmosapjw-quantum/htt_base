@@ -1,0 +1,9 @@
+# Proposed optical-manuscript bridge insertions
+
+
+*The antisymmetric part of the congruence gradient is absent from the directional scalar rate because it is contracted with two copies of the same null direction. The lift used here nevertheless has an immediate representation-theoretic extension. Replacing the polar vector in \(L_Sd=\mathrm{STF}(S\otimes d)\) by an axial vector gives the same contraction and minimum-norm geometry, with pseudotensor rather than polar parity. A physical use of that axial sector requires a parity-sensitive observable and its transfer response; the tensor identity alone does not insert vorticity into the scalar luminosity-distance law. Joint longitudinal and transverse response fields provide a complementary route: when both are calibrated in a common frame, their angular moments recover the full spatial gradient.*
+
+*A polarization-resolved extension can retain the source coherency matrix and the detector transfer map before taking a scalar flux. For a single unitary path the variation of the matrix logarithm contains the commutator with the transported polarization rotation, together with the scalar geometric dilution and the source variation. A calibrated analyzer can therefore retain a relative rotation that total flux removes. Its measured magnitude still involves the logarithm of the detector-contracted flux, whose derivative follows from the same joint observation model. This construction extends the response domain of the retained tensor carrier while preserving the distinction between optical geometry, internal transport and source or frame nuisance.*
+
+These are proposed insertions, not edits of main.pdf. The first fits at the end of the local-response or discussion section; the second belongs in the outlook unless a detector-level worked example is added to the manuscript.
+

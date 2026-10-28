@@ -268,6 +268,13 @@ policy:
   - PR-R36-09-ATLAS-INTAKE
   - PR-R36-10-GEOMETRY-IMAGE
   - PR-R36-11-SCIENCE-SYNTHESIS
+  - PR-R37-CONVERGENCE
+  - PR-R37-00-FIRST-REPORT
+  - PR-R37-01-RADIATION
+  - PR-R37-02-KINEMATICS
+  - PR-R37-03-HUBBLE
+  - PR-R37-04-CLASSIFICATION
+  - PR-R37-05-FINAL-REPORT
   strict_extension_cards:
   - PR-SOLVER-FREE-DOSSIER
   - PR-SF-GAIA-CORRELATION
@@ -342,6 +349,13 @@ policy:
   - PR-R32-07-P5-ALGEBRA
   - PR-R32-08-H03-PAPER
   - PR-R32-09-BANDPASS-PAPER
+  - PR-R37-CONVERGENCE
+  - PR-R37-00-FIRST-REPORT
+  - PR-R37-01-RADIATION
+  - PR-R37-02-KINEMATICS
+  - PR-R37-03-HUBBLE
+  - PR-R37-04-CLASSIFICATION
+  - PR-R37-05-FINAL-REPORT
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -361,6 +375,12 @@ policy:
     ordinary_scheduler_lane: defensible
     separate_nonautomatic_lane: hypothesis_only
     native_dormant_lane: needs_native
+  finite_convergence_20261028:
+    entry: docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/HANDOFF_CURRENT_SESSION.md
+    frontier: docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/FRONTIER.json
+    new_task_count: 6
+    scope: prioritize reports, finish existing executable work, then stop this release
+    scientific_acceptance: original contracts unchanged
 waves:
 - wave: 0
   title: Intake, packaging, DAG harness, and no-science preflight
@@ -12244,3 +12264,316 @@ prs:
     - task_id: R36-10-GEOMETRY-IMAGE
       evidence: qualified
       product: geometry_compatibility_result
+- id: PR-R37-CONVERGENCE
+  wave: 0
+  title: Converge retained research into staged reports and bounded execution
+  owner: HTT
+  depends: []
+  files:
+  - docs/research_program/observational_publication_20261015/CONVERGENCE_20261028
+  - scripts/codex_harness/research_controller.py
+  - scripts/codex_harness/test_research_controller_convergence.py
+  tests:
+  - python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+    --strict
+  - python scripts/codex_harness/sync_pr_dag_mirrors.py --check
+  - python scripts/codex_harness/publication_frontier_preflight.py --frontier docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/FRONTIER.json
+  - python -m unittest discover -s scripts/codex_harness -p test_research_controller_convergence.py
+  - python docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/validation/check_convergence_package.py
+  dod:
+  - Source-bound initial report and imported research/user notes available
+  - Six finite execution/report contracts and original DAG crosswalk
+  - Report-priority/deferred-final/no-new-discovery flags preserve existing controller
+    lifecycle and defaults
+  - Exact existing-state handoff; no live state reset or physical acceptance promotion
+  kill: No native solver/ODE, original acceptance rewriting, raw data upload, active
+    worker overwrite, main merge or journal submission
+  level: L0
+  scope: finite_convergence_integration
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: 'Owner 2026-10-28: converge the existing programme into staged final
+    research reports, prioritize already-derived four-goal results, continue feasible
+    original work, upload needed user notes, push and hand off to the running local
+    session; no native solver/ODE, no new unbounded research cycle.'
+- id: PR-R37-00-FIRST-REPORT
+  wave: 0
+  title: Source-bound baseline report
+  owner: HTT
+  depends:
+  - PR-R37-CONVERGENCE
+  files:
+  - docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT
+  tests:
+  - Source/law/frame/units and task-specific falsifiers in docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/DATA_ANALYSIS_CONTRACTS.md
+  - Render and visually inspect the actual report delta and linked figures
+  - One independent scoped review; retain exact failure and targeted repair
+  dod:
+  - Source-bound baseline report
+  - Consume the supplied BASELINE_REPORT and prior rendered reports first. Reconcile
+    with current live R32/R36 qualified products and actual source revisions; do not
+    re-fit catalogues or re-prove completed results. Publish a substantive four-goal
+    English baseline and six-paper crosswalk with source-bound values, physical interpretation,
+    existing vector figures and successful PDF/source build. Preserve a frozen list
+    of current existing continuation task IDs at uptake in the same task output. This
+    receipt is a report-production product, not new original scientific acceptance.  Preserve
+    original42 acceptance and scientific claims; report uncertainty and source-qualified
+    conditional or synthetic results at their actual scope. Reuse saved data/receipts
+    and executed proofs; no rerun of exhausted or completed producers. Use same full
+    law, nuisance and physical target for competing methods; infer no extra information
+    over correct joint GLS. No solver/ODE or journal submission. A task needs its
+    substantive numeric/analytic/report product, not a plan or gap list alone. One
+    independent scoped review; repair concrete defects, then continue.
+  kill: No native solver/ODE, original acceptance rewriting, raw data upload, active
+    worker overwrite, main merge or journal submission
+  level: L0
+  scope: report
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: 'Owner 2026-10-28: converge the existing programme into staged final
+    research reports, prioritize already-derived four-goal results, continue feasible
+    original work, upload needed user notes, push and hand off to the running local
+    session; no native solver/ODE, no new unbounded research cycle.'
+  task_packet: docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/FRONTIER.json#R37-00-FIRST-REPORT
+  product_requires:
+    all: []
+  qualified_product_expected: convergence_baseline_report
+- id: PR-R37-01-RADIATION
+  wave: 0
+  title: Joint radiation/shear confidence image
+  owner: HTT
+  depends:
+  - PR-R37-00-FIRST-REPORT
+  files:
+  - docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION
+  tests:
+  - Source/law/frame/units and task-specific falsifiers in docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/DATA_ANALYSIS_CONTRACTS.md
+  - Render and visually inspect the actual report delta and linked figures
+  - One independent scoped review; retain exact failure and targeted repair
+  dod:
+  - Joint radiation/shear confidence image
+  - Compare full response, exact common carrier, gain-only and unpolarized reductions
+    on identical inputs Compute directional shear support versus physical remainder
+    allowance Propagate correlated physical approximation error once Run only missing
+    matched coverage/width/cost controls full/common carrier agreement under declared
+    scale-aware tolerance positive-input and rank controls calculated information-loss/bias
+    consequence same law and physical target for all baselines derivative residual
+    remains a sensitivity axis unless supplied Preserve original42 acceptance and
+    scientific claims; report uncertainty and source-qualified conditional or synthetic
+    results at their actual scope. Reuse saved data/receipts and executed proofs;
+    no rerun of exhausted or completed producers. Use same full law, nuisance and
+    physical target for competing methods; infer no extra information over correct
+    joint GLS. No solver/ODE or journal submission. A task needs its substantive numeric/analytic/report
+    product, not a plan or gap list alone. One independent scoped review; repair concrete
+    defects, then continue.
+  kill: No native solver/ODE, original acceptance rewriting, raw data upload, active
+    worker overwrite, main merge or journal submission
+  level: L0
+  scope: conditional_physical_or_finite_methods_result
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: 'Owner 2026-10-28: converge the existing programme into staged final
+    research reports, prioritize already-derived four-goal results, continue feasible
+    original work, upload needed user notes, push and hand off to the running local
+    session; no native solver/ODE, no new unbounded research cycle.'
+  task_packet: docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/FRONTIER.json#R37-01-RADIATION
+  product_requires:
+    all:
+    - task_id: R37-00-FIRST-REPORT
+      evidence: qualified
+      product: convergence_baseline_report
+  qualified_product_expected: joint_radiation_shear_image
+- id: PR-R37-02-KINEMATICS
+  wave: 0
+  title: Optical/PM kinematic and information-preservation product
+  owner: HTT
+  depends:
+  - PR-R37-00-FIRST-REPORT
+  files:
+  - docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-02-KINEMATICS
+  tests:
+  - Source/law/frame/units and task-specific falsifiers in docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/DATA_ANALYSIS_CONTRACTS.md
+  - Render and visually inspect the actual report delta and linked figures
+  - One independent scoped review; retain exact failure and targeted repair
+  dod:
+  - Optical/PM kinematic and information-preservation product
+  - Apply one shared optical compatibility budget Compare scalar, separate bins, joint
+    GLS and common family carrier on identical saved inputs Map physical remainder
+    into identifiable parameter region Retain nuisance kernel and discarded-space
+    adequacy Integrate two optical bridge paragraphs and exact fixed-Q sign-radius
+    supplement same-source comparison law/covariance no duplicated direct-dipole radius
+    S=0 and small-S domains treated frame-spin/source nullspace explicit no invented
+    depth cross-moments fixed-Q sign theorem domain explicit Preserve original42 acceptance
+    and scientific claims; report uncertainty and source-qualified conditional or
+    synthetic results at their actual scope. Reuse saved data/receipts and executed
+    proofs; no rerun of exhausted or completed producers. Use same full law, nuisance
+    and physical target for competing methods; infer no extra information over correct
+    joint GLS. No solver/ODE or journal submission. A task needs its substantive numeric/analytic/report
+    product, not a plan or gap list alone. One independent scoped review; repair concrete
+    defects, then continue.
+  kill: No native solver/ODE, original acceptance rewriting, raw data upload, active
+    worker overwrite, main merge or journal submission
+  level: L0
+  scope: conditional_physical_or_finite_methods_result
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: 'Owner 2026-10-28: converge the existing programme into staged final
+    research reports, prioritize already-derived four-goal results, continue feasible
+    original work, upload needed user notes, push and hand off to the running local
+    session; no native solver/ODE, no new unbounded research cycle.'
+  task_packet: docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/FRONTIER.json#R37-02-KINEMATICS
+  product_requires:
+    all:
+    - task_id: R37-00-FIRST-REPORT
+      evidence: qualified
+      product: convergence_baseline_report
+  qualified_product_expected: converged_kinematic_image
+- id: PR-R37-03-HUBBLE
+  wave: 0
+  title: Directional optical and opacity-qualified Hubble/curvature product
+  owner: HTT
+  depends:
+  - PR-R37-00-FIRST-REPORT
+  files:
+  - docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE
+  tests:
+  - Source/law/frame/units and task-specific falsifiers in docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/DATA_ANALYSIS_CONTRACTS.md
+  - Render and visually inspect the actual report delta and linked figures
+  - One independent scoped review; retain exact failure and targeted repair
+  dod:
+  - Directional optical and opacity-qualified Hubble/curvature product
+  - Compute local directional-Hubble/optical sensitivity intervals from retained outputs
+    Keep covariance once and preserve selected row/duplicate-CID scope If inputs are
+    supplied, calculate first-derivative curvature and one common constant test across
+    windows Compare same-input opacity-aware scalar baseline Keep grey attenuation
+    separate from dichroic channel shape no absolute H0 from intercept-profiled angular
+    carrier correct photon redshift/observer chart joint uncertainty event finite
+    opacity family fixed before scan transparent vertex and calibration offset separated
+    traceless log not used to infer grey transmission Preserve original42 acceptance
+    and scientific claims; report uncertainty and source-qualified conditional or
+    synthetic results at their actual scope. Reuse saved data/receipts and executed
+    proofs; no rerun of exhausted or completed producers. Use same full law, nuisance
+    and physical target for competing methods; infer no extra information over correct
+    joint GLS. No solver/ODE or journal submission. A task needs its substantive numeric/analytic/report
+    product, not a plan or gap list alone. One independent scoped review; repair concrete
+    defects, then continue.
+  kill: No native solver/ODE, original acceptance rewriting, raw data upload, active
+    worker overwrite, main merge or journal submission
+  level: L0
+  scope: conditional_physical_or_finite_methods_result
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: 'Owner 2026-10-28: converge the existing programme into staged final
+    research reports, prioritize already-derived four-goal results, continue feasible
+    original work, upload needed user notes, push and hand off to the running local
+    session; no native solver/ODE, no new unbounded research cycle.'
+  task_packet: docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/FRONTIER.json#R37-03-HUBBLE
+  product_requires:
+    all:
+    - task_id: R37-00-FIRST-REPORT
+      evidence: qualified
+      product: convergence_baseline_report
+  qualified_product_expected: opacity_qualified_optical_result
+- id: PR-R37-04-CLASSIFICATION
+  wave: 0
+  title: Compatible physical families and stability product
+  owner: HTT
+  depends:
+  - PR-R37-00-FIRST-REPORT
+  files:
+  - docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION
+  tests:
+  - Source/law/frame/units and task-specific falsifiers in docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/DATA_ANALYSIS_CONTRACTS.md
+  - Render and visually inspect the actual report delta and linked figures
+  - One independent scoped review; retain exact failure and targeted repair
+  dod:
+  - Compatible physical families and stability product
+  - Calculate compatible family sets and minimum separation versus amplitude/noise/error
+    Use common family carrier plus adequacy residual Compare strong scalar invariant
+    baseline for the II/VII0 witness Preserve equivalent geometric presentations and
+    FLRW-limit overlap Use full T/E/B only if actual template metadata are qualified
+    gauge/frame covariance same covariance/nuisance approximation error included all
+    candidate families can be rejected by adequacy fixed-Q/simple-spectrum assumptions
+    stated no forced class when sets overlap Preserve original42 acceptance and scientific
+    claims; report uncertainty and source-qualified conditional or synthetic results
+    at their actual scope. Reuse saved data/receipts and executed proofs; no rerun
+    of exhausted or completed producers. Use same full law, nuisance and physical
+    target for competing methods; infer no extra information over correct joint GLS.
+    No solver/ODE or journal submission. A task needs its substantive numeric/analytic/report
+    product, not a plan or gap list alone. One independent scoped review; repair concrete
+    defects, then continue.
+  kill: No native solver/ODE, original acceptance rewriting, raw data upload, active
+    worker overwrite, main merge or journal submission
+  level: L0
+  scope: conditional_physical_or_finite_methods_result
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: 'Owner 2026-10-28: converge the existing programme into staged final
+    research reports, prioritize already-derived four-goal results, continue feasible
+    original work, upload needed user notes, push and hand off to the running local
+    session; no native solver/ODE, no new unbounded research cycle.'
+  task_packet: docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/FRONTIER.json#R37-04-CLASSIFICATION
+  product_requires:
+    all:
+    - task_id: R37-00-FIRST-REPORT
+      evidence: qualified
+      product: convergence_baseline_report
+  qualified_product_expected: physical_family_compatibility
+- id: PR-R37-05-FINAL-REPORT
+  wave: 0
+  title: Frozen final reports and selected legacy closure
+  owner: HTT
+  depends:
+  - PR-R37-00-FIRST-REPORT
+  files:
+  - docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-05-FINAL-REPORT
+  tests:
+  - Source/law/frame/units and task-specific falsifiers in docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/DATA_ANALYSIS_CONTRACTS.md
+  - Render and visually inspect the actual report delta and linked figures
+  - One independent scoped review; retain exact failure and targeted repair
+  dod:
+  - Frozen final reports and selected legacy closure
+  - Run last using --defer-task. Consume every accepted R37 result and qualified delta
+    from the frozen existing-task list. For each original task preserve its actual
+    state; complete all still-executable work before final freeze, including named
+    acquisition/resume actions, or document the exact remaining external/capability
+    condition after its bounded allowed attempt. Do not require unavailable physical
+    inputs to render the report. A held R37 analysis remains held and cannot be counted
+    complete; the final report may explicitly close its released scope with that residual
+    obligation. Produce a refined integrated English report, six focused paper extracts
+    where substantive content exists (otherwise a scoped disposition), editable sources,
+    source-bound numerical tables/vector figures, reproduction instructions and a
+    residual-obligations appendix. Close only current report-affecting findings. Final
+    result separates report_release_complete, completed_analysis_units, original42
+    and paper_submission_status. Stop this release without a new frontier or new theory
+    cycle.  Preserve original42 acceptance and scientific claims; report uncertainty
+    and source-qualified conditional or synthetic results at their actual scope. Reuse
+    saved data/receipts and executed proofs; no rerun of exhausted or completed producers.
+    Use same full law, nuisance and physical target for competing methods; infer no
+    extra information over correct joint GLS. No solver/ODE or journal submission.
+    A task needs its substantive numeric/analytic/report product, not a plan or gap
+    list alone. One independent scoped review; repair concrete defects, then continue.
+  kill: No native solver/ODE, original acceptance rewriting, raw data upload, active
+    worker overwrite, main merge or journal submission
+  level: L0
+  scope: report
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: 'Owner 2026-10-28: converge the existing programme into staged final
+    research reports, prioritize already-derived four-goal results, continue feasible
+    original work, upload needed user notes, push and hand off to the running local
+    session; no native solver/ODE, no new unbounded research cycle.'
+  task_packet: docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/FRONTIER.json#R37-05-FINAL-REPORT
+  product_requires:
+    all:
+    - task_id: R37-00-FIRST-REPORT
+      evidence: qualified
+      product: convergence_baseline_report
+  qualified_product_expected: converged_research_reports

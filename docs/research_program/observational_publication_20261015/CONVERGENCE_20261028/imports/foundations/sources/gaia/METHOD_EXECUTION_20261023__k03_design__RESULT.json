@@ -1,0 +1,573 @@
+{
+  "task_id": "R24-K03-DESIGN",
+  "scope": "retained profiled C_bb Gaussian working experiment; conditional covariance scenarios",
+  "alpha_one_sided": 0.05,
+  "original_covariance_eigenvalues_uasyr2": [
+    0.663189609069188,
+    0.6967907812958589,
+    0.8788988664685645
+  ],
+  "covariance_update": "Cprime = Cbb + tau^2 uu^T; u is one unit eigenvector of original Cbb",
+  "power_formula": "Phi(Phi^{-1}(alpha) + sqrt((K_H epsilon / R)^2 lambda_max(Cprime^{-1})))",
+  "multiplier_formula": "(Phi^{-1}(1-alpha) + Phi^{-1}(target_power))^2 / dmax^2",
+  "rows": [
+    {
+      "covariance_eigenvector_index": 0,
+      "original_covariance_eigenvalue_uasyr2": 0.663189609069188,
+      "tau_uasyr": 0.0,
+      "epsilon": 0.01,
+      "best_information_per_uasyr2": 1.5078643970365249,
+      "mahalanobis_max": 2.4179087493026384e-05,
+      "noncentrality_max": 5.84628271995425e-10,
+      "oracle_level_005_power_upper": 0.05000249377526175,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 4627801260.553108,
+        "0.8": 10575193722.53032,
+        "0.9": 14648363346.230698
+      }
+    },
+    {
+      "covariance_eigenvector_index": 0,
+      "original_covariance_eigenvalue_uasyr2": 0.663189609069188,
+      "tau_uasyr": 0.0,
+      "epsilon": 0.1,
+      "best_information_per_uasyr2": 1.5078643970365249,
+      "mahalanobis_max": 0.00024179087493026385,
+      "noncentrality_max": 5.84628271995425e-08,
+      "oracle_level_005_power_upper": 0.05002494221604289,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 46278012.605531074,
+        "0.8": 105751937.22530319,
+        "0.9": 146483633.46230698
+      }
+    },
+    {
+      "covariance_eigenvector_index": 0,
+      "original_covariance_eigenvalue_uasyr2": 0.663189609069188,
+      "tau_uasyr": 0.0,
+      "epsilon": 0.3,
+      "best_information_per_uasyr2": 1.5078643970365249,
+      "mahalanobis_max": 0.0007253726247907915,
+      "noncentrality_max": 5.261654447958825e-07,
+      "oracle_level_005_power_upper": 0.050074856411508,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 5142001.400614564,
+        "0.8": 11750215.24725591,
+        "0.9": 16275959.273589663
+      }
+    },
+    {
+      "covariance_eigenvector_index": 0,
+      "original_covariance_eigenvalue_uasyr2": 0.663189609069188,
+      "tau_uasyr": 0.1,
+      "epsilon": 0.01,
+      "best_information_per_uasyr2": 1.4854655902706058,
+      "mahalanobis_max": 2.3998829558625128e-05,
+      "noncentrality_max": 5.759438201839392e-10,
+      "oracle_level_005_power_upper": 0.05000247518350761,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 4697582228.126596,
+        "0.8": 10734653303.589998,
+        "0.9": 14869240801.877062
+      }
+    },
+    {
+      "covariance_eigenvector_index": 0,
+      "original_covariance_eigenvalue_uasyr2": 0.663189609069188,
+      "tau_uasyr": 0.1,
+      "epsilon": 0.1,
+      "best_information_per_uasyr2": 1.4854655902706058,
+      "mahalanobis_max": 0.0002399882955862513,
+      "noncentrality_max": 5.7594382018393925e-08,
+      "oracle_level_005_power_upper": 0.05002475623219586,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 46975822.28126596,
+        "0.8": 107346533.03589997,
+        "0.9": 148692408.0187706
+      }
+    },
+    {
+      "covariance_eigenvector_index": 0,
+      "original_covariance_eigenvalue_uasyr2": 0.663189609069188,
+      "tau_uasyr": 0.1,
+      "epsilon": 0.3,
+      "best_information_per_uasyr2": 1.4854655902706058,
+      "mahalanobis_max": 0.0007199648867587539,
+      "noncentrality_max": 5.183494381655453e-07,
+      "oracle_level_005_power_upper": 0.05007429801776922,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 5219535.809029551,
+        "0.8": 11927392.55954444,
+        "0.9": 16521378.668752288
+      }
+    },
+    {
+      "covariance_eigenvector_index": 0,
+      "original_covariance_eigenvalue_uasyr2": 0.663189609069188,
+      "tau_uasyr": 0.3,
+      "epsilon": 0.01,
+      "best_information_per_uasyr2": 1.4351510192776182,
+      "mahalanobis_max": 2.3588893258290705e-05,
+      "noncentrality_max": 5.564358851510326e-10,
+      "oracle_level_005_power_upper": 0.050002432902810055,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 4862273491.511158,
+        "0.8": 11110996607.168215,
+        "0.9": 15390537489.04692
+      }
+    },
+    {
+      "covariance_eigenvector_index": 0,
+      "original_covariance_eigenvalue_uasyr2": 0.663189609069188,
+      "tau_uasyr": 0.3,
+      "epsilon": 0.1,
+      "best_information_per_uasyr2": 1.4351510192776182,
+      "mahalanobis_max": 0.00023588893258290705,
+      "noncentrality_max": 5.564358851510327e-08,
+      "oracle_level_005_power_upper": 0.05002433327627772,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 48622734.91511157,
+        "0.8": 111109966.07168214,
+        "0.9": 153905374.8904692
+      }
+    },
+    {
+      "covariance_eigenvector_index": 0,
+      "original_covariance_eigenvalue_uasyr2": 0.663189609069188,
+      "tau_uasyr": 0.3,
+      "epsilon": 0.3,
+      "best_information_per_uasyr2": 1.4351510192776182,
+      "mahalanobis_max": 0.0007076667977487212,
+      "noncentrality_max": 5.007922966359294e-07,
+      "oracle_level_005_power_upper": 0.05007302815670928,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 5402526.101679063,
+        "0.8": 12345551.78574246,
+        "0.9": 17100597.210052133
+      }
+    },
+    {
+      "covariance_eigenvector_index": 0,
+      "original_covariance_eigenvalue_uasyr2": 0.663189609069188,
+      "tau_uasyr": 1.0,
+      "epsilon": 0.01,
+      "best_information_per_uasyr2": 1.4351510192776185,
+      "mahalanobis_max": 2.3588893258290705e-05,
+      "noncentrality_max": 5.564358851510327e-10,
+      "oracle_level_005_power_upper": 0.050002432902810055,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 4862273491.511157,
+        "0.8": 11110996607.168213,
+        "0.9": 15390537489.046917
+      }
+    },
+    {
+      "covariance_eigenvector_index": 0,
+      "original_covariance_eigenvalue_uasyr2": 0.663189609069188,
+      "tau_uasyr": 1.0,
+      "epsilon": 0.1,
+      "best_information_per_uasyr2": 1.4351510192776185,
+      "mahalanobis_max": 0.00023588893258290707,
+      "noncentrality_max": 5.5643588515103274e-08,
+      "oracle_level_005_power_upper": 0.05002433327627772,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 48622734.915111564,
+        "0.8": 111109966.07168213,
+        "0.9": 153905374.89046916
+      }
+    },
+    {
+      "covariance_eigenvector_index": 0,
+      "original_covariance_eigenvalue_uasyr2": 0.663189609069188,
+      "tau_uasyr": 1.0,
+      "epsilon": 0.3,
+      "best_information_per_uasyr2": 1.4351510192776185,
+      "mahalanobis_max": 0.0007076667977487212,
+      "noncentrality_max": 5.007922966359294e-07,
+      "oracle_level_005_power_upper": 0.05007302815670928,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 5402526.101679063,
+        "0.8": 12345551.78574246,
+        "0.9": 17100597.210052133
+      }
+    },
+    {
+      "covariance_eigenvector_index": 1,
+      "original_covariance_eigenvalue_uasyr2": 0.6967907812958589,
+      "tau_uasyr": 0.0,
+      "epsilon": 0.01,
+      "best_information_per_uasyr2": 1.5078643970365249,
+      "mahalanobis_max": 2.4179087493026384e-05,
+      "noncentrality_max": 5.84628271995425e-10,
+      "oracle_level_005_power_upper": 0.05000249377526175,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 4627801260.553108,
+        "0.8": 10575193722.53032,
+        "0.9": 14648363346.230698
+      }
+    },
+    {
+      "covariance_eigenvector_index": 1,
+      "original_covariance_eigenvalue_uasyr2": 0.6967907812958589,
+      "tau_uasyr": 0.0,
+      "epsilon": 0.1,
+      "best_information_per_uasyr2": 1.5078643970365249,
+      "mahalanobis_max": 0.00024179087493026385,
+      "noncentrality_max": 5.84628271995425e-08,
+      "oracle_level_005_power_upper": 0.05002494221604289,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 46278012.605531074,
+        "0.8": 105751937.22530319,
+        "0.9": 146483633.46230698
+      }
+    },
+    {
+      "covariance_eigenvector_index": 1,
+      "original_covariance_eigenvalue_uasyr2": 0.6967907812958589,
+      "tau_uasyr": 0.0,
+      "epsilon": 0.3,
+      "best_information_per_uasyr2": 1.5078643970365249,
+      "mahalanobis_max": 0.0007253726247907915,
+      "noncentrality_max": 5.261654447958825e-07,
+      "oracle_level_005_power_upper": 0.050074856411508,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 5142001.400614564,
+        "0.8": 11750215.24725591,
+        "0.9": 16275959.273589663
+      }
+    },
+    {
+      "covariance_eigenvector_index": 1,
+      "original_covariance_eigenvalue_uasyr2": 0.6967907812958589,
+      "tau_uasyr": 0.1,
+      "epsilon": 0.01,
+      "best_information_per_uasyr2": 1.5078643970365246,
+      "mahalanobis_max": 2.4179087493026384e-05,
+      "noncentrality_max": 5.846282719954249e-10,
+      "oracle_level_005_power_upper": 0.05000249377526175,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 4627801260.553108,
+        "0.8": 10575193722.530321,
+        "0.9": 14648363346.2307
+      }
+    },
+    {
+      "covariance_eigenvector_index": 1,
+      "original_covariance_eigenvalue_uasyr2": 0.6967907812958589,
+      "tau_uasyr": 0.1,
+      "epsilon": 0.1,
+      "best_information_per_uasyr2": 1.5078643970365246,
+      "mahalanobis_max": 0.00024179087493026385,
+      "noncentrality_max": 5.846282719954249e-08,
+      "oracle_level_005_power_upper": 0.05002494221604289,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 46278012.60553108,
+        "0.8": 105751937.2253032,
+        "0.9": 146483633.46230698
+      }
+    },
+    {
+      "covariance_eigenvector_index": 1,
+      "original_covariance_eigenvalue_uasyr2": 0.6967907812958589,
+      "tau_uasyr": 0.1,
+      "epsilon": 0.3,
+      "best_information_per_uasyr2": 1.5078643970365246,
+      "mahalanobis_max": 0.0007253726247907915,
+      "noncentrality_max": 5.261654447958824e-07,
+      "oracle_level_005_power_upper": 0.050074856411508,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 5142001.400614565,
+        "0.8": 11750215.247255912,
+        "0.9": 16275959.273589667
+      }
+    },
+    {
+      "covariance_eigenvector_index": 1,
+      "original_covariance_eigenvalue_uasyr2": 0.6967907812958589,
+      "tau_uasyr": 0.3,
+      "epsilon": 0.01,
+      "best_information_per_uasyr2": 1.5078643970365246,
+      "mahalanobis_max": 2.4179087493026384e-05,
+      "noncentrality_max": 5.846282719954249e-10,
+      "oracle_level_005_power_upper": 0.05000249377526175,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 4627801260.553108,
+        "0.8": 10575193722.530321,
+        "0.9": 14648363346.2307
+      }
+    },
+    {
+      "covariance_eigenvector_index": 1,
+      "original_covariance_eigenvalue_uasyr2": 0.6967907812958589,
+      "tau_uasyr": 0.3,
+      "epsilon": 0.1,
+      "best_information_per_uasyr2": 1.5078643970365246,
+      "mahalanobis_max": 0.00024179087493026385,
+      "noncentrality_max": 5.846282719954249e-08,
+      "oracle_level_005_power_upper": 0.05002494221604289,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 46278012.60553108,
+        "0.8": 105751937.2253032,
+        "0.9": 146483633.46230698
+      }
+    },
+    {
+      "covariance_eigenvector_index": 1,
+      "original_covariance_eigenvalue_uasyr2": 0.6967907812958589,
+      "tau_uasyr": 0.3,
+      "epsilon": 0.3,
+      "best_information_per_uasyr2": 1.5078643970365246,
+      "mahalanobis_max": 0.0007253726247907915,
+      "noncentrality_max": 5.261654447958824e-07,
+      "oracle_level_005_power_upper": 0.050074856411508,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 5142001.400614565,
+        "0.8": 11750215.247255912,
+        "0.9": 16275959.273589667
+      }
+    },
+    {
+      "covariance_eigenvector_index": 1,
+      "original_covariance_eigenvalue_uasyr2": 0.6967907812958589,
+      "tau_uasyr": 1.0,
+      "epsilon": 0.01,
+      "best_information_per_uasyr2": 1.5078643970365249,
+      "mahalanobis_max": 2.4179087493026384e-05,
+      "noncentrality_max": 5.84628271995425e-10,
+      "oracle_level_005_power_upper": 0.05000249377526175,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 4627801260.553108,
+        "0.8": 10575193722.53032,
+        "0.9": 14648363346.230698
+      }
+    },
+    {
+      "covariance_eigenvector_index": 1,
+      "original_covariance_eigenvalue_uasyr2": 0.6967907812958589,
+      "tau_uasyr": 1.0,
+      "epsilon": 0.1,
+      "best_information_per_uasyr2": 1.5078643970365249,
+      "mahalanobis_max": 0.00024179087493026385,
+      "noncentrality_max": 5.84628271995425e-08,
+      "oracle_level_005_power_upper": 0.05002494221604289,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 46278012.605531074,
+        "0.8": 105751937.22530319,
+        "0.9": 146483633.46230698
+      }
+    },
+    {
+      "covariance_eigenvector_index": 1,
+      "original_covariance_eigenvalue_uasyr2": 0.6967907812958589,
+      "tau_uasyr": 1.0,
+      "epsilon": 0.3,
+      "best_information_per_uasyr2": 1.5078643970365249,
+      "mahalanobis_max": 0.0007253726247907915,
+      "noncentrality_max": 5.261654447958825e-07,
+      "oracle_level_005_power_upper": 0.050074856411508,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 5142001.400614564,
+        "0.8": 11750215.24725591,
+        "0.9": 16275959.273589663
+      }
+    },
+    {
+      "covariance_eigenvector_index": 2,
+      "original_covariance_eigenvalue_uasyr2": 0.8788988664685645,
+      "tau_uasyr": 0.0,
+      "epsilon": 0.01,
+      "best_information_per_uasyr2": 1.5078643970365249,
+      "mahalanobis_max": 2.4179087493026384e-05,
+      "noncentrality_max": 5.84628271995425e-10,
+      "oracle_level_005_power_upper": 0.05000249377526175,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 4627801260.553108,
+        "0.8": 10575193722.53032,
+        "0.9": 14648363346.230698
+      }
+    },
+    {
+      "covariance_eigenvector_index": 2,
+      "original_covariance_eigenvalue_uasyr2": 0.8788988664685645,
+      "tau_uasyr": 0.0,
+      "epsilon": 0.1,
+      "best_information_per_uasyr2": 1.5078643970365249,
+      "mahalanobis_max": 0.00024179087493026385,
+      "noncentrality_max": 5.84628271995425e-08,
+      "oracle_level_005_power_upper": 0.05002494221604289,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 46278012.605531074,
+        "0.8": 105751937.22530319,
+        "0.9": 146483633.46230698
+      }
+    },
+    {
+      "covariance_eigenvector_index": 2,
+      "original_covariance_eigenvalue_uasyr2": 0.8788988664685645,
+      "tau_uasyr": 0.0,
+      "epsilon": 0.3,
+      "best_information_per_uasyr2": 1.5078643970365249,
+      "mahalanobis_max": 0.0007253726247907915,
+      "noncentrality_max": 5.261654447958825e-07,
+      "oracle_level_005_power_upper": 0.050074856411508,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 5142001.400614564,
+        "0.8": 11750215.24725591,
+        "0.9": 16275959.273589663
+      }
+    },
+    {
+      "covariance_eigenvector_index": 2,
+      "original_covariance_eigenvalue_uasyr2": 0.8788988664685645,
+      "tau_uasyr": 0.1,
+      "epsilon": 0.01,
+      "best_information_per_uasyr2": 1.5078643970365257,
+      "mahalanobis_max": 2.417908749302639e-05,
+      "noncentrality_max": 5.846282719954253e-10,
+      "oracle_level_005_power_upper": 0.05000249377526175,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 4627801260.553105,
+        "0.8": 10575193722.530313,
+        "0.9": 14648363346.23069
+      }
+    },
+    {
+      "covariance_eigenvector_index": 2,
+      "original_covariance_eigenvalue_uasyr2": 0.8788988664685645,
+      "tau_uasyr": 0.1,
+      "epsilon": 0.1,
+      "best_information_per_uasyr2": 1.5078643970365257,
+      "mahalanobis_max": 0.00024179087493026393,
+      "noncentrality_max": 5.846282719954254e-08,
+      "oracle_level_005_power_upper": 0.05002494221604289,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 46278012.605531044,
+        "0.8": 105751937.22530311,
+        "0.9": 146483633.46230686
+      }
+    },
+    {
+      "covariance_eigenvector_index": 2,
+      "original_covariance_eigenvalue_uasyr2": 0.8788988664685645,
+      "tau_uasyr": 0.1,
+      "epsilon": 0.3,
+      "best_information_per_uasyr2": 1.5078643970365257,
+      "mahalanobis_max": 0.0007253726247907918,
+      "noncentrality_max": 5.261654447958828e-07,
+      "oracle_level_005_power_upper": 0.050074856411508,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 5142001.4006145615,
+        "0.8": 11750215.247255903,
+        "0.9": 16275959.273589654
+      }
+    },
+    {
+      "covariance_eigenvector_index": 2,
+      "original_covariance_eigenvalue_uasyr2": 0.8788988664685645,
+      "tau_uasyr": 0.3,
+      "epsilon": 0.01,
+      "best_information_per_uasyr2": 1.507864397036526,
+      "mahalanobis_max": 2.4179087493026394e-05,
+      "noncentrality_max": 5.846282719954254e-10,
+      "oracle_level_005_power_upper": 0.05000249377526175,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 4627801260.553104,
+        "0.8": 10575193722.530312,
+        "0.9": 14648363346.230686
+      }
+    },
+    {
+      "covariance_eigenvector_index": 2,
+      "original_covariance_eigenvalue_uasyr2": 0.8788988664685645,
+      "tau_uasyr": 0.3,
+      "epsilon": 0.1,
+      "best_information_per_uasyr2": 1.507864397036526,
+      "mahalanobis_max": 0.00024179087493026395,
+      "noncentrality_max": 5.8462827199542546e-08,
+      "oracle_level_005_power_upper": 0.05002494221604289,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 46278012.60553104,
+        "0.8": 105751937.2253031,
+        "0.9": 146483633.46230686
+      }
+    },
+    {
+      "covariance_eigenvector_index": 2,
+      "original_covariance_eigenvalue_uasyr2": 0.8788988664685645,
+      "tau_uasyr": 0.3,
+      "epsilon": 0.3,
+      "best_information_per_uasyr2": 1.507864397036526,
+      "mahalanobis_max": 0.0007253726247907919,
+      "noncentrality_max": 5.261654447958829e-07,
+      "oracle_level_005_power_upper": 0.050074856411508,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 5142001.40061456,
+        "0.8": 11750215.2472559,
+        "0.9": 16275959.27358965
+      }
+    },
+    {
+      "covariance_eigenvector_index": 2,
+      "original_covariance_eigenvalue_uasyr2": 0.8788988664685645,
+      "tau_uasyr": 1.0,
+      "epsilon": 0.01,
+      "best_information_per_uasyr2": 1.507864397036525,
+      "mahalanobis_max": 2.4179087493026387e-05,
+      "noncentrality_max": 5.846282719954251e-10,
+      "oracle_level_005_power_upper": 0.05000249377526175,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 4627801260.553107,
+        "0.8": 10575193722.530317,
+        "0.9": 14648363346.230696
+      }
+    },
+    {
+      "covariance_eigenvector_index": 2,
+      "original_covariance_eigenvalue_uasyr2": 0.8788988664685645,
+      "tau_uasyr": 1.0,
+      "epsilon": 0.1,
+      "best_information_per_uasyr2": 1.507864397036525,
+      "mahalanobis_max": 0.00024179087493026387,
+      "noncentrality_max": 5.846282719954251e-08,
+      "oracle_level_005_power_upper": 0.05002494221604289,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 46278012.60553107,
+        "0.8": 105751937.22530316,
+        "0.9": 146483633.46230695
+      }
+    },
+    {
+      "covariance_eigenvector_index": 2,
+      "original_covariance_eigenvalue_uasyr2": 0.8788988664685645,
+      "tau_uasyr": 1.0,
+      "epsilon": 0.3,
+      "best_information_per_uasyr2": 1.507864397036525,
+      "mahalanobis_max": 0.0007253726247907916,
+      "noncentrality_max": 5.261654447958826e-07,
+      "oracle_level_005_power_upper": 0.050074856411508,
+      "information_multiplier_to_oracle_power": {
+        "0.5": 5142001.400614563,
+        "0.8": 11750215.247255908,
+        "0.9": 16275959.273589661
+      }
+    }
+  ],
+  "checks": {
+    "original_schur_vs_inverse_scaled_residual": 8.578245881073995e-16,
+    "maximum_updated_inverse_vs_sherman_morrison_scaled_residual": 3.539931131989356e-16,
+    "maximum_information_psd_violation": 5.608891092905335e-16,
+    "baseline_epsilon_01_power_absolute_difference": 0.0,
+    "scaled_residual_limit": 1e-10
+  },
+  "environment": {
+    "python": "3.12.3",
+    "python_executable": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "matplotlib": "3.11.2"
+  },
+  "original_acceptance_promoted": false,
+  "physical_remainder_status": "HOLD",
+  "centroid_matter_response_status": "HOLD",
+  "new_depth_vsh_moment_performance": "NOT_EVALUABLE"
+}

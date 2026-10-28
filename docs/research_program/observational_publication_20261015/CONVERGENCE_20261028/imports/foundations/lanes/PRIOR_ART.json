@@ -1,0 +1,138 @@
+{
+  "schema": "htt.foundations_prior_art/1",
+  "date": "2026-10-28",
+  "skill_context_used": "PhysMath Research Loop1.3.0 SKILL, THEORY_LOOP R2/R3 and POLICY_INTEGRATION inherited actual read context",
+  "selected_scope": "R2/R3 primary comparison with elementary counterexample",
+  "status": "COMPLETE_BOUNDED_PRIOR_ART_COMPARISON",
+  "sources": [
+    {
+      "id": "MOPED2000",
+      "authors": "Heavens, Jimenez, Lahav",
+      "date": "2000",
+      "url": "https://arxiv.org/abs/astro-ph/9911102",
+      "read_scope": "primary abstract/publisher metadata",
+      "relevance": "Fixed-covariance Fisher-preserving linear compression"
+    },
+    {
+      "id": "SCORE2018",
+      "authors": "Alsing, Wandelt",
+      "date": "2018",
+      "url": "https://arxiv.org/abs/1712.00012",
+      "read_scope": "primary full text via Exa; section3 eq17",
+      "relevance": "Gaussian linear+quadratic score; fiducial-local general result"
+    },
+    {
+      "id": "NUISANCE2019",
+      "authors": "Alsing, Wandelt",
+      "date": "2019",
+      "url": "https://arxiv.org/html/1903.01473v1",
+      "read_scope": "primary full text via Exa; section5 eq11",
+      "relevance": "Leading-order/Laplace nuisance hardening"
+    },
+    {
+      "id": "POLLARD2012",
+      "authors": "David Pollard",
+      "date": "2012 v2",
+      "url": "https://arxiv.org/pdf/1107.3797",
+      "read_scope": "primary full PDF via Exa; Theorem7 and proof",
+      "relevance": "Conditional score under DQM; FI preservation not equivalent to general sufficiency"
+    },
+    {
+      "id": "MOPEDPC2020",
+      "authors": "Heavens, Sellentin, Jaffe",
+      "date": "2020",
+      "url": "https://arxiv.org/abs/2006.06706",
+      "read_scope": "primary full text via Exa",
+      "relevance": "Additional generalized-PC modes preserve sensitivity to unlisted/new physics"
+    },
+    {
+      "id": "MODELCOMP2023",
+      "authors": "Heavens, Mootoovaloo, Trotta, Sellentin",
+      "date": "2023",
+      "url": "https://arxiv.org/html/2306.15998v2",
+      "read_scope": "primary full text via Exa; sections2.1\u20132.3 eqs2.18\u20132.23",
+      "relevance": "Combined model summaries and covariance for model comparison; retain affine conditions"
+    },
+    {
+      "id": "GUIDE2026",
+      "authors": "Pyne, Joachimi, Gordon, Lin",
+      "date": "2026-09-04",
+      "url": "https://arxiv.org/pdf/2609.04829",
+      "read_scope": "primary full PDF via Exa; sections3\u20136 appendicesA\u2013D",
+      "relevance": "Verified title/date/authors and fixed weak-lensing benchmark; not a universal ranking"
+    },
+    {
+      "id": "HALL2019",
+      "authors": "Alex Hall",
+      "date": "2019",
+      "url": "https://arxiv.org/abs/1811.05454",
+      "read_scope": "primary abstract via Exa/arxiv and publisher indexed text",
+      "relevance": "Spin-weighted PM formalism and optimal likelihood estimators"
+    },
+    {
+      "id": "MAKAROV2025",
+      "authors": "Valeri V. Makarov",
+      "date": "2025",
+      "url": "https://arxiv.org/abs/2507.01798",
+      "read_scope": "primary abstract via Exa/arxiv and publisher",
+      "relevance": "Depth-binned VSH; possible hidden-systematic interpretation retained"
+    },
+    {
+      "id": "CRF32022",
+      "authors": "Gaia Collaboration",
+      "date": "2022",
+      "url": "https://arxiv.org/abs/2204.12574",
+      "read_scope": "primary abstract and publisher text via Exa",
+      "relevance": "Reference-frame and large-angle systematic context"
+    }
+  ],
+  "tools_used": [
+    "search_service system1 and system2",
+    "Exa search and primary fetch",
+    "SciSpace semantic search",
+    "local Python finite affine-offset fixture"
+  ],
+  "verified_recent_reference": {
+    "arxiv": "2609.04829v1",
+    "title": "A guide to choosing data compression methods for cosmological inference",
+    "authors": [
+      "Susan Pyne",
+      "Benjamin Joachimi",
+      "Calum Gordon",
+      "Kiyam Lin"
+    ],
+    "submitted": "2026-09-04",
+    "pages": 18,
+    "figures": 14,
+    "venue_status": "submitted to RASTI per primary metadata",
+    "full_pdf_read": true
+  },
+  "closest_additional_prior_art": [
+    "MOPEDPC2020",
+    "MODELCOMP2023"
+  ],
+  "claim_dispositions": {
+    "five_factor_notation_novel_general_statistics": "NOT_ESTABLISHED",
+    "tensorization_beats_optimal_same_law_GLS": "FALSE_IN_STATED_AFFINE_GAUSSIAN_DOMAIN",
+    "delayed_scalarization_motivation": "ESTABLISHED_CLOSE_PRIOR_ART",
+    "common_family_score_span": "ESTABLISHED_GAUSSIAN_SPECIALIZATION",
+    "MES_response_specific_compression_certificate": "CONSTRUCTIVE_RESEARCH_CANDIDATE_NOT_PRIORITY_CLAIMED",
+    "same_confidence_event_physical_images": "STANDARD_INFERENCE_PRINCIPLE_WITH_POSSIBLE_NEW_PHYSICAL_APPLICATION"
+  },
+  "required_scope_corrections": [
+    "Local FI is not general global sufficiency",
+    "Include family baseline offsets unless common m0",
+    "Keep complement lack-of-fit diagnostic for beyond-FLRW question",
+    "Parameter-dependent covariance needs quadratic score terms",
+    "Different nuisance families cannot use one arbitrary common projector",
+    "Score coordinates being scalar numbers does not mean destructive scalar power compression",
+    "Scalar norm null is nonregular for signed parameter",
+    "Probability factors derived from same carrier are not independent likelihood factors"
+  ],
+  "fixture": "sources/literature/affine_offset_fixture.json",
+  "source_access_limits": "Some direct web opens disabled/redirect-blocked; Exa primary retrieval supplied actual available text. Hall/Makarov/CRF3 claims limited to abstract and inspected publisher text.",
+  "literature_absence_proved": false,
+  "raw_catalogue_fit": false,
+  "native_solver_ODE": false,
+  "remote_mutation": false
+}

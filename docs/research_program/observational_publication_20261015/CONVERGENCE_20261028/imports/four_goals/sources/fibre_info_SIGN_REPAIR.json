@@ -1,0 +1,33 @@
+{
+  "finding": "Original strict LLR>0 rule counted all exact ties as failures, so its label as equal-prior classifier accuracy was inaccurate.",
+  "repair": "Use exact integer sufficient statistic and independent fair class assignment at ties; dedicated count and tie seeds.",
+  "scope": "Only sign block rerun; all coverage/power/current/gauge calculations unchanged.",
+  "prior_strict_result": {
+    "rate": 0.98004,
+    "MCSE": 0.00044228495791740396,
+    "successes": 98004,
+    "draws": 100000,
+    "binomial95": [
+      0.979154082128614,
+      0.9808979185788984
+    ]
+  },
+  "corrected_result": {
+    "rate": 0.98086,
+    "MCSE": 0.00043328582252365525,
+    "successes": 98086,
+    "draws": 100000,
+    "binomial95": [
+      0.9799916921764994,
+      0.9817002563063891
+    ],
+    "count_seed": 20261030,
+    "tie_seed": 20261031,
+    "tie_count": 155,
+    "strict_successes": 98012,
+    "strict_success_fraction": 0.98012,
+    "expected_accuracy_with_half_ties": 0.980895,
+    "tie_rule": "Independent equal-probability class assignment for exact zero integer LLR statistic"
+  },
+  "code_sha256": "36908228277f81e20cc63d44955824dc5c938edaf332e4667c3947b17a0a59d4"
+}

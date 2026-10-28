@@ -1,0 +1,106 @@
+{
+  "schema": "htt.goal2.kinematic_detector_design/1",
+  "seed": 20261028,
+  "scope": "Synthetic fixed source/detector linear response; no empirical physical detection",
+  "source_equations": [
+    "MF02 (1.12.8)",
+    "MF02 (2.7.10)",
+    "MF02 (2.8.10)-(2.8.11)",
+    "main.pdf (21),(26),(31)-(35),(38)-(39)"
+  ],
+  "rank_cases": {
+    "trace_HQ": 9,
+    "helicity_HQ": 18,
+    "full_HQ": 36,
+    "full_H_only": 24,
+    "full_Q_only": 32
+  },
+  "matrix_parameter_count": 36,
+  "full_HQ_measurements": 144,
+  "nuisance_spin_rank": 3,
+  "profile_information_rank": 33,
+  "profile_F_positive_eigenvalues": [
+    802.365985814355,
+    752.5347024012058,
+    734.6824460136216,
+    733.2960843062996,
+    711.8139848624228,
+    609.1992814641892,
+    325.8113751263392,
+    302.70601895737207,
+    295.17817297229226,
+    283.07956202119914,
+    278.0086341464073,
+    272.0638806220765,
+    270.6426171960361,
+    263.29079878994116,
+    261.28883200030555,
+    256.9645479432026,
+    252.5429733018126,
+    247.54608421774336,
+    243.87121126201754,
+    242.80419181307923,
+    234.582056335311,
+    232.05007430644304,
+    230.4095590604189,
+    224.8231297054444,
+    221.92765282929392,
+    219.59601389502728,
+    213.71140760089506,
+    202.86280159557612,
+    199.32731705433892,
+    197.5831711062958,
+    194.52117367384375,
+    181.61241494880232,
+    173.61096807473473
+  ],
+  "profiled_spin_projection_norm": 3.144141606250704e-15,
+  "profiled_estimate_image_error": 1.5735644044405583e-15,
+  "confidence95_no_remainder": {
+    "fraction": 0.9497,
+    "MCSE": 0.001261875720240838,
+    "draws": 30000
+  },
+  "confidence95_shifted_nominal": {
+    "fraction": 0.9477,
+    "MCSE": 0.001285362594756826,
+    "draws": 30000
+  },
+  "confidence95_shifted_with_bound": {
+    "fraction": 0.9850666666666666,
+    "MCSE": 0.0007002458827414103,
+    "draws": 30000
+  },
+  "whitened_remainder_radius": 0.4,
+  "ideal_six_axis_inverse_max_error": 1.1102230246251565e-16,
+  "internal_gauge_measurement_max_error": 2.220446049250313e-16,
+  "STF_trace_max_error": 2.0816681711721685e-17,
+  "STF_product_max_error": 8.326672684688674e-17,
+  "axial_parity_max_error": 0.0,
+  "matrix_log_steps": [
+    0.1,
+    0.05,
+    0.025,
+    0.0125,
+    0.00625
+  ],
+  "matrix_log_central_difference_errors": [
+    0.0008164734425650411,
+    0.00020419492051961953,
+    5.1053516190472426e-05,
+    1.276367819296744e-05,
+    3.190938245079493e-06
+  ],
+  "matrix_log_error_ratios": [
+    3.9985002589062564,
+    3.9996250161850018,
+    3.9999062510524594,
+    3.9999765625829182
+  ],
+  "trace_rotation_derivative": 0.0,
+  "coherence_analyzer_rotation_derivative": 0.5,
+  "coherence_scalar_log_derivative": 0.3333333333333333,
+  "coherence_pairing_matrix_log_derivative": 0.34657359027997264,
+  "physical_qualification": "H and Q are supplied mathematical response fields; a detector/source law is required to identify them with catalogue redshift, proper motion or polarization drift.",
+  "finite_identity_assertions": "PASS"
+}

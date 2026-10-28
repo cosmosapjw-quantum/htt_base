@@ -1,0 +1,13 @@
+{
+  "code": "g=Array[g,{3,3}]; m=Table[Sum[g[[a,k]] (KroneckerDelta[i,j] KroneckerDelta[k,a]+KroneckerDelta[i,k] KroneckerDelta[j,a]+KroneckerDelta[i,a] KroneckerDelta[j,k])/5,{a,3},{k,3}],{i,3},{j,3}]; stf[x_]:=(x+Transpose[x])/2-Tr[x] IdentityMatrix[3]/3; {FullSimplify[stf[m]-2 stf[g]/5],FullSimplify[(8 Pi/15)/(4 Pi/3)],Table[Factorial2[2 l+1](2l+1)/(4 Pi Factorial[l]),{l,1,4}]}",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "$RecursionLimit::reclim: Recursion depth of 1024 exceeded.\n$RecursionLimit::reclim: Recursion depth of 1024 exceeded.\n$RecursionLimit::reclim: Recursion depth of 1024 exceeded.\nGeneral::stop: Further output of $RecursionLimit::reclim will be suppressed during this calculation.\nGeneral::messages: Messages were generated which may indicate errors.\n\nOut[1]= {{{-1/3*Tr[TerminatedEvaluation[\"RecursionLimit\"]], 0, 0}, {0, -1/3*Tr[TerminatedEvaluation[\"RecursionLimit\"]], 0}, {0, 0, -1/3*Tr[TerminatedEvaluation[\"RecursionLimit\"]]}} + (TerminatedEvaluation[\"RecursionLimit\"] + Transpose[TerminatedEvaluation[\"RecursionLimit\"]])/2 - (2*({{-1/3*Tr[TerminatedEvaluation[\"RecursionLimit\"]], 0, 0}, {0, -1/3*Tr[TerminatedEvaluation[\"RecursionLimit\"]], 0}, {0, 0, -1/3*Tr[TerminatedEvaluation[\"RecursionLimit\"]]}} + (TerminatedEvaluation[\"RecursionLimit\"] + Transpose[TerminatedEvaluation[\"RecursionLimit\"]])/2))/5, 2/5, {9/(4*Pi), 75/(8*Pi), 245/(8*Pi), 2835/(32*Pi)}}"
+      }
+    ],
+    "structuredContent": null,
+    "isError": false
+  }
+}

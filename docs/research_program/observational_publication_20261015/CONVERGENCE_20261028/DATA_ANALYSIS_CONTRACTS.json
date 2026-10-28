@@ -1,0 +1,312 @@
+{
+  "schema": "htt.convergence_data_analysis_contracts/1",
+  "source_head": "bdead6a8f51282ca647224b460b0f65de085568b",
+  "date": "2026-10-28",
+  "status": "SPECIFIED_NOT_EXECUTED",
+  "new_raw_downloads_required_for_conditional_routes": 0,
+  "scope": "C2/C4; no scientific state promotion",
+  "units": [
+    {
+      "goal": "radiation_morphology_to_shear",
+      "consume": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/RESULT.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/VALIDATION.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/PUBLICATION_STATUS.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/radiation_core.py"
+      ],
+      "new_action": "Compute joint full/reduced shear support images over declared transport and polarization-error budgets; same source law and physical assumptions.",
+      "outputs": [
+        "RADIATION_IMAGE_RESULT.json",
+        "SHEAR_SUPPORT.csv",
+        "radiation_response_spectrum.pdf",
+        "shear_support_vs_transport_budget.pdf",
+        "polarization_omission_bias.pdf",
+        "REPORT_DELTA.md"
+      ],
+      "sufficient_now": "Retained positive synthetic radiation source, exact static operator and newly derived polarized-source response; explicit derivative/error sensitivity inputs.",
+      "optional_inputs": [
+        "calibrated bolometric intensity and Q/U with joint law, processing and spectral completion",
+        "same-frame transport derivative/remainder for physical shear claim"
+      ],
+      "boundary": "CMB E is not intensity; R36 radiation comparison is synthetic; no derivative obtained from one sky.",
+      "task_id": "R37-01-RADIATION",
+      "intermediate_outputs": [
+        "shear_support.csv",
+        "carrier_preservation.json",
+        "polarization_omission.csv",
+        "shear_support.pdf",
+        "bias_budget.pdf"
+      ]
+    },
+    {
+      "goal": "kinematics_and_compression",
+      "consume": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/RESULT.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/PUBLICATION_STATUS.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/pm_history.py",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/RESULT.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/PUBLICATION_STATUS.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/optical_joint.py"
+      ],
+      "additional_import": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/foundations/sources/gaia/METHOD_EXECUTION_20261023__k03_depth_moments__RESULT.json",
+      "additional_git_blob": "e45d91abca9108e41136cea00ab1d641328e9537",
+      "new_action": "Consume E1/B1 Gaussian law for compression; separately consume E2 Gram for history/shear combinations; complete finite optical shared-budget and fixed-Q sign-radius results.",
+      "outputs": [
+        "KINEMATIC_IMAGE_RESULT.json",
+        "OPTICAL_COMPATIBILITY.json",
+        "COMPRESSION_COMPARISON.json",
+        "optical_joint_compatibility.pdf",
+        "physical_region_vs_remainder.pdf",
+        "REPORT_DELTA.md"
+      ],
+      "sufficient_now": "Saved 24D E1/B1 law and separate E2 Gram plus optical finite response examples.",
+      "optional_inputs": [
+        "centroid-to-matter response",
+        "true-depth/history law",
+        "spatial covariance",
+        "source selection and radio-frame calibration",
+        "actual cross-statistics before combining E1/B1 and E2"
+      ],
+      "boundary": "24D E1/B1 is not E2 shear; no invented independence or SU2 geometric converter.",
+      "task_id": "R37-02-KINEMATICS",
+      "intermediate_outputs": [
+        "information_comparison.csv",
+        "E2_identified_combinations.csv",
+        "optical_joint_budget.csv",
+        "nullspaces.json",
+        "physical_error_frontier.pdf",
+        "chirality_radius.pdf"
+      ]
+    },
+    {
+      "goal": "anisotropy_family_compatibility",
+      "consume": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/TABLE.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/LRS280.jsonl",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/UNCERTAINTY_PROBES.jsonl",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/RESULT.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/PUBLICATION_STATUS.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/geometry_image.py"
+      ],
+      "new_action": "Compute finite-domain compatible family sets and separation/error frontiers; retain scalar-invariant comparator and discarded-coordinate adequacy residual.",
+      "outputs": [
+        "FAMILY_COMPATIBILITY_RESULT.json",
+        "FAMILY_SEPARATION.csv",
+        "family_compatibility_vs_amplitude.pdf",
+        "separation_vs_error_budget.pdf",
+        "adequacy_residual.pdf",
+        "REPORT_DELTA.md"
+      ],
+      "sufficient_now": "Source-qualified finite II/VII0/I geometry and declared working observation/error law.",
+      "optional_inputs": [
+        "numeric existing full T/E/B external family/mode/history outputs with conventions",
+        "qualified Weyl/stress response for observed spatial-Ricci route"
+      ],
+      "boundary": "No scalar/shear-only family identification; finite geometry classification does not require running a solver.",
+      "task_id": "R37-04-CLASSIFICATION",
+      "intermediate_outputs": [
+        "family_compatibility.csv",
+        "separation_budget.csv",
+        "adequacy_residual.csv",
+        "sign_radius.csv",
+        "family_separation.pdf"
+      ]
+    },
+    {
+      "goal": "directional_hubble_optical_consistency",
+      "consume": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/RESULT.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/PUBLICATION_STATUS.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/RESULT.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/SENSITIVITY.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/CONTROLS.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/PUBLICATION_STATUS.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/RESULT.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/SURVEY_ROBUSTNESS.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/PUBLICATION_STATUS.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/consumer.py"
+      ],
+      "new_action": "Map signed16 common-event magnitude contrasts to apparent directional log H ratios and declared opacity/remainder envelopes; show CF4 apparent windows separately; finish analytic CBL control.",
+      "outputs": [
+        "HUBBLE_OPACITY_RESULT.json",
+        "LOCAL_H_IDENTIFIED_REGION.csv",
+        "local_H_region_vs_opacity.pdf",
+        "distance_transmission_identified_interval.pdf",
+        "REPORT_DELTA.md"
+      ],
+      "sufficient_now": "SN16 vector/full covariance and CF4 four-window36 vector/full covariance with original units/chart; bounded optical assumptions.",
+      "optional_inputs": [
+        "overlapping radial distance/derivative law and independently qualified H(z)",
+        "grey attenuation/calibration anchor",
+        "new selected-covariance validation if redshift support expands"
+      ],
+      "boundary": "SN full1701 covariance is not certified; current selected490/705 only; two-bin angular coefficients do not define empirical CBL derivatives.",
+      "task_id": "R37-03-HUBBLE",
+      "intermediate_outputs": [
+        "directional_logH_ratio.csv",
+        "joint_depth_contrasts.csv",
+        "opacity_remainder_envelope.csv",
+        "CF4_retained_H_windows.csv",
+        "directional_H_ratio.pdf",
+        "opacity_frontier.pdf"
+      ]
+    }
+  ],
+  "source_records": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/PUBLICATION_STATUS.json",
+      "sha256": "6b8fe94c47b81efe2909a3feb23e69d219d2857e75c437f7ac1d07da5d04b9a4",
+      "bytes": 1441
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/RESULT.json",
+      "sha256": "31f31c79c0fb1d11724dcb9da1373dcd3421c7fc8717eeecd4c54cc1237c5b62",
+      "bytes": 47590
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/CONTROLS.json",
+      "sha256": "5bc24992254da084775eff20b89f49346db9be85158a54ad12df76caefa726e9",
+      "bytes": 3686
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/PUBLICATION_STATUS.json",
+      "sha256": "fa3169a268fa1fcb273d4edaa63a166e3b3043477c5141517eac58f8452f4634",
+      "bytes": 1012
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/RESULT.json",
+      "sha256": "a7458dbd0d8fad934b968733562125acf2a50881bddbf483dfb9fa8084137523",
+      "bytes": 5656
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/SENSITIVITY.json",
+      "sha256": "be5f79ede2325d50ce7157ca06e8ec3d8d4e230e122baf97e66363359810ff9b",
+      "bytes": 4141
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/PUBLICATION_STATUS.json",
+      "sha256": "0cc79baffcbb4e3db3957b5ea54ba363cc8b9a4530941f20a7552e113d3cb17c",
+      "bytes": 1681
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/RESULT.json",
+      "sha256": "c20cacc0cd64c6349051b5c090d65d1083aea47961ffc446019739386d6adc93",
+      "bytes": 496025
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/pm_history.py",
+      "sha256": "0fe914612c1ac8c1d6dfe578b0efe3f243bb154509a9d0d5cb360a9fad35a6e0",
+      "bytes": 19208
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/PUBLICATION_STATUS.json",
+      "sha256": "f3ba7ad782fe708b9c3e483dacd5114e3c1282a39e73271537d91a3dba9c1214",
+      "bytes": 741
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/RESULT.json",
+      "sha256": "9bd8bee99c3584dbf09a535f93d8eda53a00ef02571a0f8b761d6017467b92a2",
+      "bytes": 12703
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/optical_joint.py",
+      "sha256": "29387323a87492817727552329afafd4d34f7273ad1b9d121ec1c9067c55ae19",
+      "bytes": 10852
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/PUBLICATION_STATUS.json",
+      "sha256": "a9776c2b0c2fc09af4222ab05a7337d35d9551d236597824bd395d5516cb2b03",
+      "bytes": 1651
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/RESULT.json",
+      "sha256": "074b49cc8ce3edcfb8dc106a83858ecf5bb5c08c824952d748377b911879529d",
+      "bytes": 108626
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/VALIDATION.json",
+      "sha256": "d1817f4e61b0a9b676ea9a707c04369b70de3a8b384feb5ed151d6ae348b7a5d",
+      "bytes": 2298
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/radiation_core.py",
+      "sha256": "a1eca64b2964529872faf9da5089074e68215f13432079287a364bbc631d844d",
+      "bytes": 8553
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/PUBLICATION_STATUS.json",
+      "sha256": "bb4062b13afc91a59d777fdc4d088211a36ec1b4b7722d757f2ed316c2e23e35",
+      "bytes": 1265
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/RESULT.json",
+      "sha256": "f1a9246b7e1ab216fd6fb927a3fc2e28360cf2e5626aba5d7a88f2af05f7e82b",
+      "bytes": 56800
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/SURVEY_ROBUSTNESS.json",
+      "sha256": "62f4721b55ae2e89326332d59181cec0bcd3a972f7bb69849a7fa3a971bf0b04",
+      "bytes": 4446
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/consumer.py",
+      "sha256": "79966f55098b3432e8ae6f88601dd8928786e7d7ce4fa6b83452bf8b3be00bed",
+      "bytes": 16594
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/LRS280.jsonl",
+      "sha256": "d0fdfbed607e55bb43cfa0af5c6344e8f3ae5d0bf626d8b68ba8346e75df4921",
+      "bytes": 235605
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/PUBLICATION_STATUS.json",
+      "sha256": "a7b15db7743b3d745bf6b065b0a5622b9fe72f348949febfcbd3f2e3e4a6e592",
+      "bytes": 903
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/RESULT.json",
+      "sha256": "54ae8c59cb6c0d144cb9798079f357bdfba6254694cb416bf5a14f3a59160423",
+      "bytes": 6538
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/TABLE.json",
+      "sha256": "eaf4e567f856a8d01e40f6721613239b8f64e6dc0fbe7d5b35070bfc9faeb363",
+      "bytes": 229741
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/UNCERTAINTY_PROBES.jsonl",
+      "sha256": "a29c1c2a8d719baddd6c8cfe401a43a2360dd3d2b10072908480d3d2320d0efa",
+      "bytes": 1634276
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/geometry_image.py",
+      "sha256": "a07f332bc7107db74e66a36347c40c1a43da1cc27effb5595da2e4a27a5bcac2",
+      "bytes": 27193
+    }
+  ],
+  "optional_cc_input": {
+    "author_repository": "https://gitlab.com/mmoresco/CCcovariance",
+    "table": "https://gitlab.com/mmoresco/CCcovariance/-/blob/master/data/HzTable_MM_BC03.dat?ref_type=heads",
+    "rows_read": 15,
+    "z_range": [
+      0.1791,
+      1.965
+    ],
+    "current_sn_upper_z": 0.15,
+    "overlap": false,
+    "full_commit_and_bytes_qualified": false,
+    "source_check": "Exa search and full-page fetch on 2026-10-28",
+    "promotion": "not an admitted dataset; optional intake only"
+  },
+  "protected_state": [
+    "R36-06 existing MC/streaming task and partials",
+    "historical one-use producer contracts",
+    "original42 acceptances",
+    "later publication statuses separate from immutable candidate prose"
+  ],
+  "skill_context_used": [
+    "WORK_PACKET.md PhysMath1.3 C2/C4 and integrated policies",
+    "AGENTS.md"
+  ],
+  "readme": "DATA_ANALYSIS_CONTRACTS.md"
+}

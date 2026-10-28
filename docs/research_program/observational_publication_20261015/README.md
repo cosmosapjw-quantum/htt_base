@@ -1,5 +1,10 @@
 # HTT 관측논문 6트랙 출판 중심 DAG
 
+## Current finite convergence route — 2026-10-28
+
+Use [the report-first convergence plan](CONVERGENCE_20261028/README_KO.md) and [existing-session handoff](CONVERGENCE_20261028/HANDOFF_CURRENT_SESSION.md). Produce the initial report, four bounded physical-goal result updates, then refined final reports while completing existing executable work. Original42 and six-paper scientific acceptance remain unchanged. New adaptive frontier creation is disabled only for this finite release; existing packets, repair and resume paths remain authoritative.
+
+
 2026-10-15 KST. 기준 commit 398dc461c849235581260d3c6d510599350abd59.
 이 디렉터리는 기존의 245개 canonical PR backlog나 PR533/RB/SF 계획을 덮어쓰지 않는 **publication programme overlay**다. 원본 미커밋 htt_base 작업은 읽기만 했으며 변경하지 않았다.
 

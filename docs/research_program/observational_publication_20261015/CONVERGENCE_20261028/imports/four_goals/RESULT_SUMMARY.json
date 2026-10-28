@@ -1,0 +1,319 @@
+{
+  "schema": "htt.four_goal_result_summary/1",
+  "date": "2026-10-28",
+  "status": "INTERNAL_FINITE_THEORY_STUDY_COMPLETE",
+  "report_pages": 37,
+  "scientific_figures": 6,
+  "source_repository": "cosmosapjw-quantum/htt_base",
+  "source_branch": "research/htt-adaptive-methods-20261023",
+  "source_head": "7f3f49a6b6d95b6ae0323d5bebd3afce0067b1a7",
+  "execution": {
+    "native_parallel_lanes": [
+      "fibre_goal1_morphology",
+      "fibre_goal2_kinematics",
+      "fibre_goal3_classification",
+      "fibre_goal4_hubble_cbl",
+      "fibre_info_experiment"
+    ],
+    "independent_reviewer": "fibre_integrated_review",
+    "root_integration": "joint physical-remainder map, coverage, report and research units"
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8"
+  },
+  "restrictions": {
+    "push": false,
+    "live_controller_mutation": false,
+    "native_solver": false,
+    "ODE_integration": false,
+    "raw_catalogue_refit": false,
+    "original_acceptance_promoted": false
+  },
+  "data_status": "Source-bound earlier theoretical/observational interpretations reused; new experiments are finite synthetic method controls, not new empirical detections.",
+  "goal1": {
+    "receipt": "lanes/GOAL1_NUMERICS.json",
+    "joint_response": {
+      "input_components": 23,
+      "output_rows": 24,
+      "rank": 23,
+      "minimum_singular_value": 0.5649300136872485,
+      "shear_scalar_rank": 15,
+      "singular_values": [
+        5.071516766553606,
+        5.071516766553601,
+        5.071516766553588,
+        5.071516766553587,
+        5.071516766553586,
+        4.696909808076823,
+        2.961921958772239,
+        2.961921958772233,
+        2.961921958772233,
+        1.3998021203414683,
+        1.3998021203414632,
+        1.3998021203414626,
+        1.3998021203414601,
+        1.399802120341459,
+        0.5649300136872577,
+        0.564930013687252,
+        0.5649300136872517,
+        0.5649300136872516,
+        0.5649300136872502,
+        0.5649300136872498,
+        0.5649300136872489,
+        0.5649300136872488,
+        0.5649300136872485
+      ]
+    },
+    "polarized_collision": {
+      "gamma_units": "inverse time; gamma=.4 in declared toy time unit",
+      "collision_quadrupole_error_at_gamma1": 1.7439117270264e-14,
+      "positive_screen_min_eigenvalue": 0.41562992567900514,
+      "structural_full_matrix_min_eigenvalue": -2.636779683484747e-16,
+      "omitted_polarization_shear_bias_norm": 0.007199999999999974,
+      "bound": 0.0071999999999999755
+    }
+  },
+  "goal2": {
+    "receipt": "lanes/GOAL2_KINEMATICS.json",
+    "rank_cases": {
+      "trace_HQ": 9,
+      "helicity_HQ": 18,
+      "full_HQ": 36,
+      "full_H_only": 24,
+      "full_Q_only": 32
+    },
+    "matrix_parameter_count": 36,
+    "profile_information_rank": 33
+  },
+  "goal3": {
+    "receipt": "lanes/GOAL3_CLASSIFICATION.json",
+    "source_table_git_blob": "1ae270fec9ae55375c01ec1f346f8755d9257049",
+    "rotation_orbit_gap": 1.4142135623730951,
+    "common_LR_carrier_dimension": 5,
+    "sign_radius_independent_check": {
+      "radius": 0.5773502691896256,
+      "predicted_sharp_radius": 0.5773502691896258,
+      "attaining_zero_chirality_max_residual": 9.868649107779162e-18,
+      "distance_attainment_max_error": 1.1102230246251565e-16
+    }
+  },
+  "goal4": {
+    "receipt": "lanes/GOAL4_CHECKS.json",
+    "naive_CBL_at_z1p5": -0.3498588075760032,
+    "opacity_outer_interval_at_z1p5": [
+      -0.38023063074646335,
+      0.022499999999999964
+    ],
+    "matrix_jordan_numeric_residual": 2.6711882913272985e-14
+  },
+  "fibre": {
+    "receipt": "lanes/FIBRE_INFO.json",
+    "design_ranks": {
+      "A_trace": {
+        "known_calibration_rank": 0,
+        "unknown_common_signed_dipole_rank": 0,
+        "profile_information_per_informative_photon": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "B_helicity": {
+        "known_calibration_rank": 1,
+        "unknown_common_signed_dipole_rank": 0,
+        "profile_information_per_informative_photon": [
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "C_xyz_effects": {
+        "known_calibration_rank": 3,
+        "unknown_common_signed_dipole_rank": 2,
+        "profile_information_per_informative_photon": [
+          [
+            0.22222222222222224,
+            -0.1111111111111111,
+            -0.1111111111111111
+          ],
+          [
+            -0.1111111111111111,
+            0.22222222222222224,
+            -0.1111111111111111
+          ],
+          [
+            -0.1111111111111111,
+            -0.1111111111111111,
+            0.22222222222222224
+          ]
+        ]
+      },
+      "D_two_calibrated_paths": {
+        "known_calibration_rank": 2,
+        "unknown_common_signed_dipole_rank": 1,
+        "profile_information_per_informative_photon": [
+          [
+            0.25,
+            0.0,
+            -0.24999999999999994
+          ],
+          [
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            -0.24999999999999994,
+            0.0,
+            0.2499999999999999
+          ]
+        ]
+      },
+      "balanced_six_effects": {
+        "known_calibration_rank": 3,
+        "unknown_common_signed_dipole_rank": 3,
+        "profile_information_per_informative_photon": [
+          [
+            0.3333333333333333,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.3333333333333333,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.3333333333333333
+          ]
+        ]
+      }
+    },
+    "finite_natural_span": {
+      "known_zero_calibration_natural_parameter_span_rank": 3,
+      "unknown_calibration_natural_parameter_span_rank": 6,
+      "unknown_span_singular_values": [
+        2.4423443698428553,
+        2.2223376840156637,
+        1.9576856175205226,
+        1.6016391360398472,
+        0.009817040776034637,
+        0.009296293232689797
+      ],
+      "consequence": "At delta=0, opposite-axis successes can be pooled into three sufficient binomial counts; unknown common delta requires the six count channels for exact likelihood preservation on the open parameter family."
+    },
+    "equal_prior_sign_accuracy": {
+      "rate": 0.98086,
+      "MCSE": 0.00043328582252365525,
+      "successes": 98086,
+      "draws": 100000,
+      "binomial95": [
+        0.9799916921764994,
+        0.9817002563063891
+      ],
+      "count_seed": 20261030,
+      "tie_seed": 20261031,
+      "tie_count": 155,
+      "strict_successes": 98012,
+      "strict_success_fraction": 0.98012,
+      "expected_accuracy_with_half_ties": 0.980895,
+      "tie_rule": "Independent equal-probability class assignment for exact zero integer LLR statistic"
+    }
+  },
+  "joint_remainder": {
+    "receipt": "lanes/JOINT_REMAINDER.json",
+    "joint_gram": {
+      "G": [
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          4.0
+        ]
+      ],
+      "B": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          -1.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "K": [
+        [
+          1.25,
+          0.75,
+          2.0
+        ],
+        [
+          0.75,
+          1.25,
+          2.0
+        ],
+        [
+          2.0,
+          2.0,
+          4.0
+        ]
+      ],
+      "direction": [
+        1.0,
+        1.0,
+        -1.0
+      ],
+      "exact_support": 0.0,
+      "sample_support": 2.220446049250313e-16,
+      "coordinate_box_support": 4.23606797749979
+    },
+    "parameter_bias": {
+      "epsilon_state": 0.3,
+      "operator_bound": 0.47085157262313965,
+      "attained": 0.47085157262313965,
+      "response_orthogonal_error_parameter_effect": 1.6314325008596735e-15
+    }
+  },
+  "review": {
+    "receipt": "lanes/INDEPENDENT_REVIEW.json",
+    "status": "BOUNDED_REVIEW_CLOSED_CONDITIONAL_CONSTRUCTIONS_SUPPORTED",
+    "remaining_obligations": "physical adapters, calibrated nuisance/derivative/error budgets, matched-baseline empirical comparison; no state promotion"
+  },
+  "next_work": "RESEARCH_UNITS.json",
+  "contribution_assessment": "output/RESEARCH_DECISION.md"
+}

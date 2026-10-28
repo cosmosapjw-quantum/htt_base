@@ -1,0 +1,98 @@
+{
+  "schema": "htt.independent_review_checks/1",
+  "seed": 109282026,
+  "production_scripts_imported": false,
+  "exact_carrier": {
+    "shape": [
+      24,
+      23
+    ],
+    "joint_rank": 23,
+    "intensity_shear_rank": 15,
+    "gain_rank": 9,
+    "linear_only_joint_rank": 20,
+    "gain_symmetric_identity_exact": true
+  },
+  "positive_sky_delta_L": {
+    "eigenvalues_from_exact_angular_moments": [
+      -0.5744626566564194,
+      -0.0957437761094032,
+      -0.0957437761094032,
+      0.3829751044376128,
+      0.3829751044376128
+    ],
+    "operator_norm": 0.5744626566564194,
+    "production_difference": 2.708944180085382e-14
+  },
+  "kinematic_spatial_ranks_H_Q_both": [
+    6,
+    8,
+    9
+  ],
+  "path_analyzer_ranks": {
+    "helicity_phase_only": 1,
+    "calibrated_SU2_conversion": 2
+  },
+  "fixed_Q_chirality_radius": {
+    "radius": 0.5773502691896256,
+    "predicted_sharp_radius": 0.5773502691896258,
+    "attaining_zero_chirality_max_residual": 9.868649107779162e-18,
+    "distance_attainment_max_error": 1.1102230246251565e-16
+  },
+  "matrix_CBL_max_relative_residual": 8.658202256602311e-15,
+  "scalar_opacity_identity_exact": true,
+  "nonunitary_rank1_filter": {
+    "Choi_rank": 1,
+    "TP_Frobenius_residual": 1.200585794518659
+  },
+  "joint_bias_bound_attainment_error": 1.1102230246251565e-16,
+  "noncentral_ball_exact_coverage": [
+    {
+      "bias_bound": 0,
+      "minimum_exact_coverage": 0.95,
+      "critical_radius": 3.080215745168048
+    },
+    {
+      "bias_bound": 0.5,
+      "minimum_exact_coverage": 0.95,
+      "critical_radius": 3.1733587659913014
+    },
+    {
+      "bias_bound": 1,
+      "minimum_exact_coverage": 0.95,
+      "critical_radius": 3.4215826385856984
+    },
+    {
+      "bias_bound": 2,
+      "minimum_exact_coverage": 0.95,
+      "critical_radius": 4.16044743711367
+    },
+    {
+      "bias_bound": 4,
+      "minimum_exact_coverage": 0.95,
+      "critical_radius": 5.95205938891379
+    }
+  ],
+  "source_provenance_correction": "Rendered MF02 p17 Eq1.6.8 is multiplicative f0(E)[I+epsilon(n.e)sigma3]. Additive text in extraction/pasted proposal must not be attributed to original PDF.",
+  "execution_repair": {
+    "initial": "Default Python failed: no sympy",
+    "diagnostic_retry": "Primary Python also lacks sympy",
+    "substantive_repair": "Replaced SymPy with local exact Fraction polynomial arithmetic and Gaussian elimination; no installation needed"
+  },
+  "scope": "Selected independent exact algebra and finite numerical checks; no observational test, ODE, promotion or push.",
+  "review_status": "BOUNDED_REVIEW_CLOSED_CONDITIONAL_CONSTRUCTIONS_SUPPORTED",
+  "targeted_readback": {
+    "integrated_opening_and_continuation": "read; conditional scope retained",
+    "u_normalization": "corrected in GOAL2 and integrated report",
+    "fibre_transport": "phase-only versus converter distinction retained",
+    "sign_tie_repair": {
+      "verified": true,
+      "accuracy": 0.98086,
+      "MCSE": 0.00043328582252365525,
+      "ties": 155,
+      "draws": 100000,
+      "old_and_new_evidence": "sources/fibre_info_SIGN_REPAIR.json"
+    },
+    "remaining_scientific_obligations": "physical adapters, calibrated nuisance/derivative/error budgets, matched-baseline empirical comparison; no state promotion"
+  }
+}

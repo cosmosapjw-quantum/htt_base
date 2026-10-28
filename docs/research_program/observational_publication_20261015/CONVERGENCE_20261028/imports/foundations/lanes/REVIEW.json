@@ -1,0 +1,119 @@
+{
+  "schema": "htt.foundation_review/1",
+  "date": "2026-10-28",
+  "reviewer": "/root/foundations_review_20261028",
+  "scope": "One fresh finite review of current foundation formulas, production lanes, lightweight calculations and integrated FOUNDATION_REPORT.md; no historical audit, raw catalogue fit, solver, ODE or push.",
+  "status": "PASS_SCOPED_FOUNDATION_AND_SAVED_LAW_RESULTS",
+  "candidate_sha256": {
+    "lanes/MES_FOUNDATION.md": "ddc860696b9b194a8b886e9b9ab852e050e51a96c368a123ba890385d4981cc6",
+    "lanes/GAIA_INFO.md": "b177abb6bd59fcba3563d64188e24d42b09be2551f8c8346b61301a9c70bd471",
+    "lanes/GAIA_INFO.json": "2210edfb3b1bc61197f4d462344eec0c12ee7228e2436eae771cb496644a29c5",
+    "lanes/PRIOR_ART.md": "52df1d287874635e7daa151c3b3d2b9fcedc1aa00fe65248f74e91073165e3ed",
+    "code/foundation_checks.py": "0bf698b16e1bcf75bb4521556ffcc236ced083cc94a378d567e2cb58f9338ead",
+    "code/gaia_info.py": "1cdb3d61aa846bdef4a7ddbfb925a14ae40f12cb0182ae05b5e279b1842a0f5e",
+    "lanes/FOUNDATION_CHECKS.json": "f1251412aa0193cd68ea6bff306057d2635e3649ab9e5c4fa3936ffa4bb0142b",
+    "output/FOUNDATION_REPORT.md": "e6b93d432dfb37fd082aa66c7617189728b52ebbc34e2d8563b37bd641be5c9a",
+    "lanes/GAIA_INFO_VALIDATION.json": "ed78e15ffc3e345d104fe185fd0e7cdc559fd0a02c22fac8dfaca08e45c665aa"
+  },
+  "independence": "Fresh reviewer distinct from production authors; actual reexecution of both authored scripts with Path.write_text and Figure.savefig suppressed; additional direct finite calculations authored by reviewer. Not an independent rederivation of all inherited MES/optical physics.",
+  "checks": {
+    "foundation_checks_script": "PASS; reproduced saved JSON exactly",
+    "gaia_info_script": "PASS; 100000 draws, seed 20261028, reproduced saved JSON exactly",
+    "common_affine_200_trial_max_logLR_error": 1.4210854715202004e-14,
+    "nonlinear_remainder_401_cases": "PASS; max actual 0.465, max certificate 0.555",
+    "GLS_tensor_parameter_max_difference": 2.4158453015843406e-13,
+    "GLS_tensor_information_max_difference": 2.1510571102112408e-16,
+    "gaia_common_carrier_rank": 12,
+    "gaia_common_carrier_logLR_error": 0.0,
+    "joint_GLS_coverage": 0.94927,
+    "independent_bin_coverage": 1.0,
+    "sandwich_corrected_coverage": 0.94976,
+    "joint_GLS_power": 0.4213,
+    "independent_bin_power": 0.0,
+    "sandwich_corrected_power": 0.40135,
+    "two_candidate_remainder_500_trial_max_error": 8.881784197001252e-15,
+    "two_candidate_remainder_bound_min_slack": 2.2991852552486653,
+    "radiation_operator_angular_quadrature_identity_error": 1.0658141036401503e-14,
+    "radiation_operator_positive_lower_bound_slack": 6.389769155317589,
+    "optical_radial_shear_inverse_error": 8.881784197001252e-15,
+    "optical_transverse_shear_inverse_error": 1.2212453270876722e-15,
+    "optical_vorticity_inverse_sign_error": 1.7763568394002505e-15
+  },
+  "logical_checks_passed": [
+    "Common covariance and nuisance projection are explicit; affine offsets are retained.",
+    "Known-family profile ratios are separated from omitted-residual lack-of-fit and classification direction.",
+    "Parameter-dependent covariance requires quadratic score terms.",
+    "Gaia original 24D E1/B1 carrier is distinguished from latest R36 five-component E2 response.",
+    "1.5848527% is labelled a coordinate-dependent information trace fraction with invariant generalized-directional retentions alongside.",
+    "Free-bin original slopes and constrained cross-bin mean-family slope are different estimands; 24-to-18 zero-information conclusion uses the appropriate free nuisances.",
+    "Joint confidence images use a common event; independent factor multiplication is not proposed.",
+    "MES radii are conditional norm bounds, not a likelihood; same-data denominators require joint propagation.",
+    "Observer peculiar velocity in exact FLRW is not identified with matter/radiation deviation; local kinematic null is not a complete FLRW characterization.",
+    "Units, vector/tensor vorticity conversion, geodesic restriction, positive-radius domain, frame-spin degeneracy and rank-five history kernel are stated."
+  ],
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "nonblocking representation",
+      "object": "Minimum common linear carrier statement",
+      "observation": "The minimum is the span of pairwise mean differences. Using span(mu-m0) is exactly minimal when m0 is an admitted reference-family mean; an arbitrary external origin may add a common offset dimension.",
+      "smallest_fix": "Declare m0 to be one admitted baseline mean, or state the minimum using pairwise differences.",
+      "status": "CLOSED_BY_TARGETED_READBACK"
+    },
+    {
+      "id": "R2",
+      "severity": "nonblocking provenance/label",
+      "object": "GAIA_INFO_VALIDATION.json and gaia_info.py console labels",
+      "observation": "Validation code_sha256 c43e0cee... differs from reviewed b62043d8...; numerical output independently reproduces saved JSON. Console E2_coverage and E2_power refer to experiment 2, while underlying carrier is E1/B1.",
+      "smallest_fix": "Refresh validation hash after final code edit; rename console keys to experiment2_coverage and experiment2_power.",
+      "status": "CLOSED_BY_TARGETED_READBACK"
+    },
+    {
+      "id": "R3",
+      "severity": "local mathematical notation correction",
+      "object": "Integrated score and affine-family formula",
+      "observation": "Uncentered score is labelled general efficient score although it is the score at theta=0; common-family identity reuses uncentered z despite centering t by m0.",
+      "smallest_fix": "State general score J^T W^T M(WY-WJ theta), or label the given expression the zero-score summary. Define z=MW(Y-m0) and U_* orthonormal in affine-family subsection.",
+      "status": "CLOSED_BY_TARGETED_READBACK"
+    },
+    {
+      "id": "R4",
+      "severity": "nonblocking standalone presentation",
+      "object": "Integrated MES equation references and physical-target symbols",
+      "observation": "Imported references Eq. (3),(4),(7),(8),(11),(12) no longer resolve after tags were removed; current-progress section uses mathscr D and PM k,q,s,B,D without standalone definitions.",
+      "smallest_fix": "Use descriptive references or restored unique labels; include compact definitions already in MES_FOUNDATION.",
+      "status": "CLOSED_BY_TARGETED_READBACK"
+    },
+    {
+      "id": "R5",
+      "severity": "local statistical wording",
+      "object": "Radiation stress-defect confidence image",
+      "observation": "The inserted phrase nonzero confidence image could be read as only containing nonzero values.",
+      "smallest_fix": "Require a confidence image excluding zero.",
+      "status": "CLOSED_BY_TARGETED_READBACK"
+    }
+  ],
+  "material_scientific_defects": [],
+  "review_boundary": "Scientific content of final report and identified lane/code candidates passed. Subsequent typography/LaTeX delimiter-only rendering edits may be checked for semantic/content identity without another scientific review; refreshed byte hashes do not by themselves require rerunning numerical evidence.",
+  "integration_checks": {
+    "minimum_rank_condition": "PASS; admitted baseline and pairwise span explicit",
+    "common_confidence_event": "PASS; simultaneous deterministic images inherit one covering event under declared true response/remainder/nuisance class",
+    "reference_body_gauge_support": "PASS; positive support denominator from bounded convex absorbing body with origin interior",
+    "efficient_score": "PASS; general efficient score subtracts I_eff theta and zero-score summary is separately labelled",
+    "affine_family_centering": "PASS; z=MW(Y-m0) and orthonormal U_* explicit",
+    "physics_interpretation": "PASS; same-response comparisons and exact versus stochastic FLRW null distinguished",
+    "broken_equation_references": "PASS; descriptive references replace stripped internal tags; source letter Eq. (6) remains valid",
+    "physical_symbols": "PASS; stress defect and PM B,D,q_hist,s,k,T_ref locally defined; optical inverse follows verified lane conventions",
+    "stress_defect_confidence_claim": "PASS; confidence image must exclude zero",
+    "console_labels_and_validation": "PASS; experiment2 labels unambiguous and validation code hash matches"
+  },
+  "final_report_sha256": "e6b93d432dfb37fd082aa66c7617189728b52ebbc34e2d8563b37bd641be5c9a",
+  "review_completion": "Same finite review pass completed after one bounded integration repair and targeted readback. No unresolved scientific or representation finding in reviewed scope.",
+  "code_edit_equivalence": {
+    "final_sha256": "1cdb3d61aa846bdef4a7ddbfb925a14ae40f12cb0182ae05b5e279b1842a0f5e",
+    "previous_independently_executed_sha256": "b62043d8070a6a4c4b9b1f132cd332130499125dcf6378e976144b36f9082273",
+    "method": "Reverse replacement of experiment2_coverage/power to former E2_coverage/power exactly reproduces previously independently executed code SHA-256.",
+    "relation": "BYTE_IDENTITY after reversal of console-label-only edit; numerical computation unchanged; no repeated MC run needed"
+  },
+  "unresolved_findings": []
+}

@@ -1,0 +1,9 @@
+# PR-R37-CONVERGENCE
+
+The programme had useful retained scientific products but no execution-enforced report-first order or finite release boundary. This change supplies a 10-page, six-figure source-bound baseline, imports the completed foundations/four-goal results and user theory notes, and adds six bounded output contracts to the existing canonical DAG. Four substantive analysis products refine the existing four physical goals; the final report consumes their accepted results and feasible legacy work without turning missing physical inputs into an all-success document barrier.
+
+The existing controller adds explicit `--prefer-task`, `--defer-task` and `--no-discovery` selection controls. Existing packet/writer precedence, dependencies, review, scientific acceptance, default scheduling and live state are preserved. No second controller is introduced. Current-session uptake is documented in `HANDOFF_CURRENT_SESSION.md`.
+
+Validation is recorded in `validation/`. The narrow tests and static preflight validate this delta. A prior broad local attempt found owner-only frozen files absent from this environment, one omitted sparse-checkout hook and an existing cross-module exception-class collision; that attempt is not reported as a whole-suite pass. The actual local campaign has not been activated from this environment. The package card records integration only; all six execution cards remain pending until the local host runs and reviews their outputs.
+
+Original 42-node/paper objects and prior canonical cards/status membership are compared to bdead6a8f51282ca647224b460b0f65de085568b. No native solver/ODE, main merge or journal submission occurs. No new raw data download is required for the retained conditional routes; qualified public inputs may be fetched locally without an aggregate byte cap under the existing reserve and provenance checks.

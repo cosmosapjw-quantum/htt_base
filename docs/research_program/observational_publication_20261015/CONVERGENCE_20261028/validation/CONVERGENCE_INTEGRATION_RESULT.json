@@ -1,0 +1,110 @@
+{
+  "schema": "htt.convergence_package_validation/1",
+  "source_head": "bdead6a8f51282ca647224b460b0f65de085568b",
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "original_science_preserved",
+      "status": "PASS",
+      "detail": {
+        "nodes_preserved": 42,
+        "papers_preserved": 6,
+        "frozen_base": "bdead6a8f51282ca647224b460b0f65de085568b"
+      }
+    },
+    {
+      "check": "canonical_cards_statuses_and_mirrors",
+      "status": "PASS",
+      "detail": {
+        "old_cards_preserved": 266,
+        "new_cards": [
+          "PR-R37-00-FIRST-REPORT",
+          "PR-R37-01-RADIATION",
+          "PR-R37-02-KINEMATICS",
+          "PR-R37-03-HUBBLE",
+          "PR-R37-04-CLASSIFICATION",
+          "PR-R37-05-FINAL-REPORT",
+          "PR-R37-CONVERGENCE"
+        ],
+        "status_mirrors_equal": true
+      }
+    },
+    {
+      "check": "finite_dependency_and_delivery_contract",
+      "status": "PASS",
+      "detail": {
+        "units": 6,
+        "first_report_is_root": true,
+        "final_all_science_success_barrier": false
+      }
+    },
+    {
+      "check": "manifest_and_direct_source_bindings",
+      "status": "PASS",
+      "detail": {
+        "manifest_files": 201,
+        "task_input_counts": {
+          "R37-00-FIRST-REPORT": 6,
+          "R37-01-RADIATION": 7,
+          "R37-02-KINEMATICS": 7,
+          "R37-03-HUBBLE": 7,
+          "R37-04-CLASSIFICATION": 6,
+          "R37-05-FINAL-REPORT": 5
+        }
+      }
+    },
+    {
+      "check": "source_binding_negative_controls",
+      "status": "PASS",
+      "detail": {
+        "changed_hash_rejected": true,
+        "wrong_identity_rejected": true
+      }
+    },
+    {
+      "check": "production_preflight",
+      "status": "PASS",
+      "detail": {
+        "schema": "htt.publication_frontier_preflight/1",
+        "writes_state": false,
+        "frontier_id": "R37-CONVERGENCE-20261028",
+        "frontier_identity": "dff361d472c5d3827efe560a2bf87a95572f560ebefc6ff3d021685373f0f329",
+        "frontier_path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/FRONTIER.json",
+        "manifest_path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/EVIDENCE_MANIFEST.json",
+        "evidence_files_verified": 201,
+        "candidate_root_tasks": [
+          "R37-00-FIRST-REPORT"
+        ],
+        "original42_effect": "none",
+        "state_observed": false,
+        "next_action": "At the current host checkpoint, append-frontier once, then actual next/spawn/ack/record/review/next.",
+        "status": "STATIC_VALIDATED",
+        "active_tasks": [],
+        "runtime_original_progress": "read existing controller summary; this preflight does not infer original physical completion"
+      }
+    },
+    {
+      "check": "append_and_active_packet_preservation",
+      "status": "PASS",
+      "detail": {
+        "old_packet_and_writer_preserved": true,
+        "one_use_and_adaptive_history_preserved": true,
+        "repeat_append_rejected_without_mutation": true
+      }
+    },
+    {
+      "check": "ready_order_legacy_continuation_and_finite_exhaustion",
+      "status": "PASS",
+      "detail": {
+        "baseline_requires_qualified_product": true,
+        "legacy_work_continues": true,
+        "final_emits_with_external_holds": true,
+        "no_discovery_is_effective_and_preserves_history": true
+      }
+    }
+  ],
+  "live_runtime_read_or_mutation": false,
+  "native_launch": false,
+  "scientific_acceptance_promotion": false,
+  "scope": "Static source bindings and synthetic production-controller integration; no observational fit or scientific qualification."
+}

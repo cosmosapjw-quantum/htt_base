@@ -1,0 +1,69 @@
+{
+  "scope": "Internal finite theory/measurement design",
+  "skill_context_used": "PhysMath1.3 WORK_PACKET.md excerpts R2/R3/R4/R5/R7/R9",
+  "source_head": "7f3f49a6b6d95b6ae0323d5bebd3afce0067b1a7",
+  "primary_sources": [
+    {
+      "url": "https://arxiv.org/abs/2010.06534",
+      "authors": "Asta Heinesen",
+      "year": 2021,
+      "read_scope": "Primary abstract/publisher record; explicit optical formula read in user main.pdf."
+    },
+    {
+      "url": "https://arxiv.org/abs/1805.12121",
+      "authors": "Marcori, Pitrou, Uzan, Pereira",
+      "year": 2018,
+      "read_scope": "Primary abstract; Eq.5.13 response reused from qualified R36 product."
+    },
+    {
+      "url": "https://arxiv.org/html/2312.09875v3",
+      "authors": "Maartens et al.",
+      "year": 2024,
+      "read_scope": "Primary HTML excerpt; full observer-chart contract read in R36-04."
+    },
+    {
+      "url": "https://www.aanda.org/articles/aa/full_html/2012/11/aa19927-12/aa19927-12.html",
+      "authors": "Mignard, Klioner",
+      "year": 2012,
+      "read_scope": "Primary \u00a77 frame spin/glide and catalogue covariance/physical assumptions via Exa."
+    }
+  ],
+  "execution": "OPENBLAS_NUM_THREADS=1 python code/goal2_kinematic_design.py",
+  "exit_code": 0,
+  "wolfram_initial_status": "D::ivar for incorrect second-derivative syntax; other outputs valid, not passed as whole",
+  "wolfram_repair": "Explicit D[expr,{x,2}] in each coordinate; harmonic Laplacian and six-axis inverse residual exactly zero",
+  "read_attachment_sections": [
+    "main.pdf pp1-14",
+    "MF02 \u00a7\u00a71.2-1.3,1.12,2.7-2.8; p58 visual check"
+  ],
+  "artifacts": [
+    {
+      "path": "lanes/GOAL2_KINEMATICS.md",
+      "sha256": "76cc93985d12cb97131349c2bff63a600ac9d1d73520ac90c2d3752f784bf26a"
+    },
+    {
+      "path": "lanes/GOAL2_KINEMATICS.json",
+      "sha256": "29f5306a907a5d48a81fb573c79f668f1ba295428c8c6d9927b34ec91360fbb1"
+    },
+    {
+      "path": "code/goal2_kinematic_design.py",
+      "sha256": "8b0b801c2f68c883d5553e0c8287eef726914250211e48bc50a712953d519fc3"
+    },
+    {
+      "path": "figures/goal2_kinematic_design.png",
+      "sha256": "92dbb4a067ab9d444e1e8146ff516806856d6c35a68ab589d5c96ce25d8a5637"
+    },
+    {
+      "path": "figures/goal2_kinematic_design.pdf",
+      "sha256": "f7c6723fa58e0f6fe064816a005076d72b4a414a756f7ffb5ce4742dee3051f5"
+    },
+    {
+      "path": "sources/goal2_WOLFRAM_INITIAL.json",
+      "sha256": "9bb1b0bcae9f217f67e856d36918cb0225c389cf2a7e014d9d301783585674fe"
+    },
+    {
+      "path": "sources/goal2_WOLFRAM_CORRECTED.json",
+      "sha256": "e1e5693e0311910c4330d85af4a6defa29f0b3afb85006821b34fc4b5a0b415e"
+    }
+  ]
+}

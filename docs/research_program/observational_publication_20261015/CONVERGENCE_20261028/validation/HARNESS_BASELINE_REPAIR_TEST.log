@@ -1,0 +1,28 @@
+Baseline git HEAD controller, temporary fixture only
+test_registered_repair_cannot_be_borrowed_by_other_origin_resume_or_reservation (test_research_controller_adaptive.BlindRepairTests.test_registered_repair_cannot_be_borrowed_by_other_origin_resume_or_reservation) ... ERROR
+
+======================================================================
+ERROR: test_registered_repair_cannot_be_borrowed_by_other_origin_resume_or_reservation (test_research_controller_adaptive.BlindRepairTests.test_registered_repair_cannot_be_borrowed_by_other_origin_resume_or_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/htt-convergence-baseline-_nh_ig6s/scripts/codex_harness/test_research_controller_adaptive.py", line 430, in test_registered_repair_cannot_be_borrowed_by_other_origin_resume_or_reservation
+    self.result(state, packet, 'blocker',
+  File "/tmp/htt-convergence-baseline-_nh_ig6s/scripts/codex_harness/test_research_controller.py", line 58, in result
+    rc.record(s, r, POLICY)
+  File "/tmp/htt-convergence-baseline-_nh_ig6s/scripts/codex_harness/research_controller.py", line 2517, in record
+    _record(candidate, result, policy)
+  File "/tmp/htt-convergence-baseline-_nh_ig6s/scripts/codex_harness/research_controller.py", line 2625, in _record
+    repair_id = _task_repair_id(state, p["task_id"])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/htt-convergence-baseline-_nh_ig6s/scripts/codex_harness/research_controller.py", line 234, in _task_repair_id
+    _validate_repair_binding(state, key, task_id, prospective=True)
+  File "/tmp/htt-convergence-baseline-_nh_ig6s/scripts/codex_harness/research_controller.py", line 205, in _validate_repair_binding
+    require(binding is not None, "registered repair is not authorized for this origin/successor task")
+  File "/tmp/htt-convergence-baseline-_nh_ig6s/scripts/codex_harness/research_controller.py", line 30, in require
+    raise ControllerError(message)
+r26_actual_review_candidate.ControllerError: registered repair is not authorized for this origin/successor task
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (errors=1)

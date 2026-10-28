@@ -1,0 +1,309 @@
+{
+  "artifact": "MES_FOUNDATION",
+  "date": "2026-10-28",
+  "owner": "/root/foundations_mes_20261028",
+  "status": "CONSTRUCTIVE_CONDITIONAL_FOUNDATION",
+  "repository_head_supplied_by_parent": "7f3f49a6b6d95b6ae0323d5bebd3afce0067b1a7",
+  "prior_import_source_pin": "fb2bb0ac6a9537861c2c2e2c5157fc81787922d0",
+  "scope": {
+    "solver": false,
+    "ode_integration": false,
+    "push": false,
+    "repository_mutation": false,
+    "new_observational_fit": false,
+    "original_acceptance_effect": "none"
+  },
+  "question": "Restore response-qualified kinematic inference from signed sky information using MES as a conditional reference, while preserving nonlinear physical mappings and joint uncertainty.",
+  "physical_conventions": {
+    "metric_signature": "-+++",
+    "congruence_norm": "U.U=-1",
+    "dot": "proper-length derivative s=c tau unless explicitly marked proper-time",
+    "expansion_rate": "H=c Theta/3",
+    "shear_rate": "Sigma=c sigma_geom",
+    "vorticity_rate": "Omega=c omega_geom",
+    "physical_acceleration": "A=c^2 a_geom",
+    "sky_direction": "n=-e; e photon propagation direction",
+    "radiation_q": "energy-density moment; physical energy flux=c q",
+    "beta_target": "beta_RM separate from beta_MO observer nuisance"
+  },
+  "normalization": {
+    "B_sigma": "5 epsilon_1/3+3 epsilon_2+3 epsilon_3/7",
+    "B_omega": "10 epsilon_1/3+2 epsilon_2/15",
+    "shear_coordinate": "Sigma/(3 H B_sigma)",
+    "vorticity_vector_coordinate": "sqrt(2) Omega/(3 H B_omega)",
+    "acceleration_coordinate": "A/(c H a_star)",
+    "tilt_coordinate": "beta_RM/b_star",
+    "non_MES_anchors": [
+      "a_star",
+      "b_star"
+    ],
+    "conditions": [
+      "H>0",
+      "positive applicable reference radii",
+      "same congruence and derivative premises",
+      "joint propagation for data-dependent anchors"
+    ],
+    "geodesic_acceleration": "domain restriction A=0, not zero-radius division"
+  },
+  "results": [
+    {
+      "id": "MES-F01",
+      "type": "SOURCE_QUALIFIED_NORMALIZATION",
+      "equations": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "claim": "MES norm envelopes and harmonic/STF normalization retain derivative assumptions and full-tensor conventions."
+    },
+    {
+      "id": "MES-F02",
+      "type": "REUSED_PHYSICAL_RESPONSE",
+      "equations": [
+        8,
+        9,
+        10,
+        13
+      ],
+      "claim": "Positive 5D radiation shear operator and finite-error inverse. R_tau is an explicit separate input.",
+      "source": "LOOP_A_LOWELL.md"
+    },
+    {
+      "id": "MES-F03",
+      "type": "DERIVED_ELEMENTARY_SUPPORT_IMAGE",
+      "equations": [
+        11
+      ],
+      "claim": "For fixed invertible L and residual set R, S=-L^-1 R and h_S(u)=h_R(-L^-T u).",
+      "novelty": "Elementary convex/linear geometry; no general theorem priority claim."
+    },
+    {
+      "id": "MES-F04",
+      "type": "SPECIFIED_CONDITIONAL_LIKELIHOOD",
+      "equations": [
+        12
+      ],
+      "claim": "Qualified Gaussian residual gives Gaussian shear likelihood; MES anchor is not a likelihood."
+    },
+    {
+      "id": "MES-F05",
+      "type": "REUSED_PHYSICAL_NULL",
+      "equations": [
+        14
+      ],
+      "claim": "Exact radiation-rest stress null gives physical anisotropy target without hierarchy integration.",
+      "source": "R36_INTERNAL_INTEGRATION.md"
+    },
+    {
+      "id": "MES-F06",
+      "type": "REUSED_OPTICAL_RESPONSE",
+      "equations": [
+        15,
+        16
+      ],
+      "claim": "Common-congruence local radial/transverse response recovers 12 rate components under ideal calibrated conditions.",
+      "source": "LOOP_C_KINEMATICS.md"
+    },
+    {
+      "id": "MES-F07",
+      "type": "LATEST_QUALIFIED_RESPONSE_REUSED",
+      "equations": [
+        "16a"
+      ],
+      "claim": "Full-five PM E2 carrier measures A_PM=k q-s, not its ten history parameters separately.",
+      "rank": 5,
+      "input_parameter_dimension": 10,
+      "power80_best_worst_microas_per_year": [
+        1.609628618092837,
+        2.2943055890880024
+      ],
+      "source": "R36-03-PM-HISTORY_INTERPRETATION.md",
+      "qualification": "FORMALLY_QUALIFIED_CONDITIONAL_PM_HISTORY_RESPONSE"
+    },
+    {
+      "id": "MES-F08",
+      "type": "LATEST_QUALIFIED_SYNTHETIC_RESULT_REUSED",
+      "claim": "Common-input exact radiation map restores physical-target coverage lost by linear adapter under frozen synthetic law.",
+      "low_boost_D_coverage_exact_linear": [
+        0.9453,
+        0.741
+      ],
+      "low_boost_A_coverage_exact_linear": [
+        0.9556,
+        0.3772
+      ],
+      "test_draws_per_case": 4096,
+      "calibration_draws_per_case": 8191,
+      "cases": 6,
+      "source": "R36-05-RADIATION-RESPONSE_INTERPRETATION.md",
+      "qualification": "FORMALLY_QUALIFIED_COMMON_INPUT_RADIATION_RESPONSE_COMPARISON"
+    },
+    {
+      "id": "MES-F09",
+      "type": "SPECIFIED_COMPATIBILITY_INFERENCE",
+      "equations": [
+        17
+      ],
+      "claim": "Report model-family compatibility set under common source response; do not infer Bianchi type from morphology axes alone."
+    }
+  ],
+  "next_contracts": [
+    {
+      "id": "FOUND-RADIATION-SUPPORT",
+      "depends": [
+        "retained brightness moments 0/2/4 and covariance"
+      ],
+      "output": [
+        "response eigensystem",
+        "directional support frontiers versus derivative budget"
+      ],
+      "acceptance": [
+        "operator preserves the target moments",
+        "uncertainty includes cross-moment dependence",
+        "each derivative budget has physical units and stated premises"
+      ],
+      "may_run_now": true,
+      "physical_shear_measurement_requires": [
+        "transport residual or justified residual set",
+        "matched frame and response error"
+      ]
+    },
+    {
+      "id": "FOUND-PM-E2-COMPRESSION",
+      "depends": [
+        "qualified R36-03 selected 102D Gram",
+        "VSH-to-STF adapter"
+      ],
+      "output": [
+        "matched-law GLS versus tensorized and scalar compression comparison",
+        "five identifiable history combinations"
+      ],
+      "acceptance": [
+        "retain signed five response coefficients",
+        "rank-five nullspace explicitly shown",
+        "same nuisance and covariance for fair comparator"
+      ],
+      "may_run_now": true
+    },
+    {
+      "id": "FOUND-RADIATION-EMPIRICAL",
+      "depends": [
+        "calibrated intensity moment joint region",
+        "spectral completion and positivity control"
+      ],
+      "output": [
+        "radiation-rest stress confidence image"
+      ],
+      "acceptance": [
+        "exact physical target",
+        "joint error law",
+        "no E-polarization substitution for intensity"
+      ],
+      "may_run_now": "conditional studies ready; empirical data inputs required"
+    },
+    {
+      "id": "FOUND-ANCHOR-JOINT",
+      "depends": [
+        "named physical target",
+        "positive external or conditional reference body"
+      ],
+      "output": [
+        "typed x_obs and x_kin",
+        "Q gauge",
+        "F support",
+        "Pi finite-event law",
+        "G_F joint depth law"
+      ],
+      "acceptance": [
+        "no probability assigned to unweighted deterministic set",
+        "same-data anchor covariance retained",
+        "FLRW model null distinct from local zero-kinematics null"
+      ],
+      "may_run_now": true
+    }
+  ],
+  "checks": {
+    "fraction_normalization": "PASS",
+    "wolfram_first_call": "FAILED_SELF_REFERENTIAL_ARRAY_SYMBOL",
+    "wolfram_repaired_call": "PASS_ZERO_3X3_AND_EXACT_RATIONAL_COEFFICIENTS",
+    "sympy": "NOT_INSTALLED_USED_FRACTIONS_INSTEAD",
+    "xact": "NOT_EXECUTED",
+    "independent_scientific_review": "NOT_PERFORMED_IN_THIS_LANE"
+  },
+  "source_caution": {
+    "1995_preprint_equation14": "Text extraction displays gradient coefficient 2; moment algebra and later retained exact hierarchy give 2/5. No journal erratum claim; historical norm bounds retained as published.",
+    "1999_equation89": "Prior Loop A resolved 2/7 versus 10/7 using direct angular derivation; reused scope only."
+  },
+  "primary_sources": [
+    {
+      "url": "https://arxiv.org/pdf/astro-ph/9501016",
+      "doi": "10.1103/PhysRevD.51.1525",
+      "purpose": "MES underlying transport and conditional bounds"
+    },
+    {
+      "url": "https://arxiv.org/pdf/astro-ph/9510126",
+      "purpose": "Explicit derivative assumptions and shear budgets, equations6–7"
+    },
+    {
+      "url": "https://arxiv.org/pdf/astro-ph/9904346",
+      "doi": "10.1086/303633",
+      "purpose": "Corrected norm coefficients and harmonic-to-STF conversion"
+    },
+    {
+      "url": "https://arxiv.org/abs/astro-ph/9808163",
+      "doi": "10.1103/PhysRevD.59.083506",
+      "purpose": "Nonlinear radiation hierarchy; reused Loop A coefficient check"
+    }
+  ],
+  "files": [
+    {
+      "path": "sources/mes/legacy.txt",
+      "sha256": "7e900db440093aab9717a5f3c5d28cfef2af4a438dc0180977ff5d26ae5f1991"
+    },
+    {
+      "path": "sources/mes/K1R.md",
+      "sha256": "56cd15145f821dc86740eb289556a12ed84a2facf2fa17b4cc2271bbac5618d2"
+    },
+    {
+      "path": "sources/mes/LOOP_A_LOWELL.md",
+      "sha256": "6da4321c5bba6767215447ded37a8da4163d04271bb9257ed5edcd4f86493586"
+    },
+    {
+      "path": "sources/mes/LOOP_C_KINEMATICS.md",
+      "sha256": "4e4034cc122970a21df64f64f489f9c1507eadfdb442f4378cd66bc855db430e"
+    },
+    {
+      "path": "sources/R36_INTERNAL_INTEGRATION.md",
+      "sha256": "2242cf10e9f5444dce0b1d78fd936781f807b6cd7b513d7d9b1c179c0674abd3"
+    },
+    {
+      "path": "sources/current/R36-03-PM-HISTORY_INTERPRETATION.md",
+      "sha256": "88ea3917ade3ac676cb701f05f468ec5747f7acec8e95681c209dcafc62f154a"
+    },
+    {
+      "path": "sources/current/R36-03-PM-HISTORY_PUBLICATION_STATUS.json",
+      "sha256": "83241d7712278185792a0e1ae6d59a84ac70c1ea1e257605160f9a4892a46f7c"
+    },
+    {
+      "path": "sources/current/R36-05-RADIATION-RESPONSE_INTERPRETATION.md",
+      "sha256": "141a87da8880c0abfdd1f98704547b72e2c3cab1a4851595d9a071cc31280f0f"
+    },
+    {
+      "path": "sources/current/R36-05-RADIATION-RESPONSE_PUBLICATION_STATUS.json",
+      "sha256": "ee2ab6b88e336f535a8a3d77680fa11abde934a57ca84c0642c5614e086de361"
+    },
+    {
+      "path": "sources/mes/normalization_check.json",
+      "sha256": "fa785f72296d6e6431eee65ec2b2f10772e9648d92b316b874f66ff125d596de"
+    },
+    {
+      "path": "sources/mes/MES_NORMALIZATION_WOLFRAM.json",
+      "sha256": "264ebf7206bbe8df353075326067580c85271466aefbc94cafaec110284ac984"
+    },
+    {
+      "path": "sources/mes/MES_NORMALIZATION_WOLFRAM_REPAIRED.json",
+      "sha256": "696f46eb6f6f92c09fc1b51664b3b043f0cfff0eb47d3c0dc734e3a1d65738a7"
+    }
+  ]
+}

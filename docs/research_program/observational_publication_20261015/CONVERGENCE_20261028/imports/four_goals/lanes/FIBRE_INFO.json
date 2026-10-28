@@ -1,0 +1,661 @@
+{
+  "schema": "htt.fibre_info_01/1",
+  "scope": "Finite positive count-law methods experiment, no observational detection or new spacetime congruence",
+  "skill_context_used": "WORK_PACKET.md; PhysMath1.3 R2/R3/R5/R7/R9",
+  "source": "MF02 PDF p17 section1.6.4 equations1.6.8-10 already contains correct multiplicative distribution; pasted proposal omits brackets/f0 factor",
+  "seed": 20261028,
+  "draws_per_case": 100000,
+  "photon_budget": 6000,
+  "settings": 6,
+  "per_setting_photons": 1000,
+  "directions": "six Cartesian sphere quadrature directions",
+  "signal": "f0(E)[I+(n.e)theta.sigma], e=z, norm(theta)<=1",
+  "n0": "integral f0(E) d^3p/(2pi hbar)^3 per internal channel",
+  "units": "theta and detector/calibration contrasts dimensionless; j/(c n0), v/c dimensionless",
+  "checks": {
+    "density_max_error": 0.0,
+    "current_max_error": 2.7755575615628914e-17,
+    "trace_stress_max_error": 0.0,
+    "minimum_occupation_eigenvalue": 0.4614835192865495,
+    "literal_additive_counterexample_eigenvalues": [
+      -0.1,
+      0.30000000000000004
+    ],
+    "joint_basis_path_effect_covariance_error": 1.1102230246251565e-16,
+    "effective_path_axes": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.0,
+        1.895269253967044e-16
+      ],
+      [
+        0.0,
+        1.0,
+        1.895269253967044e-16
+      ]
+    ],
+    "dephasing_max_error": 1.5202354861220294e-16
+  },
+  "design_ranks": {
+    "A_trace": {
+      "known_calibration_rank": 0,
+      "unknown_common_signed_dipole_rank": 0,
+      "profile_information_per_informative_photon": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "B_helicity": {
+      "known_calibration_rank": 1,
+      "unknown_common_signed_dipole_rank": 0,
+      "profile_information_per_informative_photon": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ]
+      ]
+    },
+    "C_xyz_effects": {
+      "known_calibration_rank": 3,
+      "unknown_common_signed_dipole_rank": 2,
+      "profile_information_per_informative_photon": [
+        [
+          0.22222222222222224,
+          -0.1111111111111111,
+          -0.1111111111111111
+        ],
+        [
+          -0.1111111111111111,
+          0.22222222222222224,
+          -0.1111111111111111
+        ],
+        [
+          -0.1111111111111111,
+          -0.1111111111111111,
+          0.22222222222222224
+        ]
+      ]
+    },
+    "D_two_calibrated_paths": {
+      "known_calibration_rank": 2,
+      "unknown_common_signed_dipole_rank": 1,
+      "profile_information_per_informative_photon": [
+        [
+          0.25,
+          0.0,
+          -0.24999999999999994
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.24999999999999994,
+          0.0,
+          0.2499999999999999
+        ]
+      ]
+    },
+    "balanced_six_effects": {
+      "known_calibration_rank": 3,
+      "unknown_common_signed_dipole_rank": 3,
+      "profile_information_per_informative_photon": [
+        [
+          0.3333333333333333,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.3333333333333333,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.3333333333333333
+        ]
+      ]
+    }
+  },
+  "geometric_U1_connection": {
+    "helicity_detector_rank": 1,
+    "linear_detector_rank": 2,
+    "helicity_effect_axes": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "linear_effect_axes": [
+      [
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.7384685587295879,
+        0.6742879116281452,
+        0.0
+      ],
+      [
+        -0.5885011172553459,
+        0.8084964038195901,
+        0.0
+      ]
+    ],
+    "assumption": "Only opposite helicity phases; generic SU2 converters require a separately supplied interaction/analyzer."
+  },
+  "count_law": "p(n,s|k)=(1+s(n.e)(m_k.theta+delta))/12 on six directions and s=+/-1; an identity angular-selection nuisance eta(n.e) can be added and cancels from the r=s(n.e) marginal conditional on |n.e|=1",
+  "statistics": "Conditionally n_k~Binomial(1000,1/3), k_k|n_k~Binomial(n_k,(1+m_k.theta+delta)/2); theta_hat_i=(t_hat_+i-t_hat_-i)/2; exact simultaneous event is six Bonferroni Clopper-Pearson intervals",
+  "cases": {
+    "null": {
+      "theta": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "calibration_delta": 0.025,
+      "wald_joint95_coverage": {
+        "rate": 0.94823,
+        "MCSE": 0.000700641613808372,
+        "successes": 94823,
+        "draws": 100000,
+        "binomial95": [
+          0.9468387124321651,
+          0.9495952165118284
+        ]
+      },
+      "exact_common_event_coverage": {
+        "rate": 0.95897,
+        "MCSE": 0.0006272681970258018,
+        "successes": 95897,
+        "draws": 100000,
+        "binomial95": [
+          0.9577221938837324,
+          0.9601910954206295
+        ]
+      },
+      "projected_physical_image_coverage": {
+        "rate": 0.99797,
+        "MCSE": 0.00014233337978141237,
+        "successes": 99797,
+        "draws": 100000,
+        "binomial95": [
+          0.9976710619439046,
+          0.9982394344541715
+        ]
+      },
+      "projected_image_excludes_zero": {
+        "rate": 0.00203,
+        "MCSE": 0.00014233337978141318,
+        "successes": 203,
+        "draws": 100000,
+        "binomial95": [
+          0.0017605655458284807,
+          0.0023289380560953914
+        ]
+      },
+      "joint3_false_positive_or_power": {
+        "rate": 0.05177,
+        "MCSE": 0.0007006416138083721,
+        "successes": 5177,
+        "draws": 100000,
+        "binomial95": [
+          0.050404783488171616,
+          0.053161287567834885
+        ]
+      },
+      "helicity_z_false_positive_or_power": {
+        "rate": 0.05064,
+        "MCSE": 0.000693365635144979,
+        "successes": 5064,
+        "draws": 100000,
+        "binomial95": [
+          0.049289076922627115,
+          0.052017061172896215
+        ]
+      },
+      "trace_null_likelihood_ratio": 1.0,
+      "mean_estimate": [
+        -0.00025001726349748436,
+        -3.752343304015132e-05,
+        0.0001707591958817308
+      ]
+    },
+    "x_signal": {
+      "theta": [
+        0.1,
+        0.0,
+        0.0
+      ],
+      "calibration_delta": 0.025,
+      "wald_joint95_coverage": {
+        "rate": 0.94877,
+        "MCSE": 0.0006971763557379151,
+        "successes": 94877,
+        "draws": 100000,
+        "binomial95": [
+          0.9473854878461886,
+          0.9501284090675741
+        ]
+      },
+      "exact_common_event_coverage": {
+        "rate": 0.95869,
+        "MCSE": 0.0006293129896959061,
+        "successes": 95869,
+        "draws": 100000,
+        "binomial95": [
+          0.957438194782349,
+          0.9599151112807478
+        ]
+      },
+      "projected_physical_image_coverage": {
+        "rate": 0.99824,
+        "MCSE": 0.00013254819500845659,
+        "successes": 99824,
+        "draws": 100000,
+        "binomial95": [
+          0.9979601909912836,
+          0.9984902399163156
+        ]
+      },
+      "projected_image_excludes_zero": {
+        "rate": 0.13004,
+        "MCSE": 0.0010636239861906086,
+        "successes": 13004,
+        "draws": 100000,
+        "binomial95": [
+          0.12796108596324057,
+          0.1321403973610973
+        ]
+      },
+      "joint3_false_positive_or_power": {
+        "rate": 0.57437,
+        "MCSE": 0.0015635507765979332,
+        "successes": 57437,
+        "draws": 100000,
+        "binomial95": [
+          0.5712983764544173,
+          0.5774373093024733
+        ]
+      },
+      "helicity_z_false_positive_or_power": {
+        "rate": 0.05076,
+        "MCSE": 0.0006941427979890016,
+        "successes": 5076,
+        "draws": 100000,
+        "binomial95": [
+          0.04940755023027538,
+          0.052138580743572194
+        ]
+      },
+      "trace_null_likelihood_ratio": 1.0,
+      "mean_estimate": [
+        0.10017269921787789,
+        7.229961378785329e-05,
+        1.736956241008003e-06
+      ]
+    },
+    "z_signal": {
+      "theta": [
+        0.0,
+        0.0,
+        0.1
+      ],
+      "calibration_delta": 0.025,
+      "wald_joint95_coverage": {
+        "rate": 0.94829,
+        "MCSE": 0.0007002576375877669,
+        "successes": 94829,
+        "draws": 100000,
+        "binomial95": [
+          0.9468994631936729,
+          0.9496544621919706
+        ]
+      },
+      "exact_common_event_coverage": {
+        "rate": 0.95794,
+        "MCSE": 0.0006347515766030045,
+        "successes": 95794,
+        "draws": 100000,
+        "binomial95": [
+          0.9566775584107683,
+          0.9591757925158082
+        ]
+      },
+      "projected_physical_image_coverage": {
+        "rate": 0.99806,
+        "MCSE": 0.00013914871181581426,
+        "successes": 99806,
+        "draws": 100000,
+        "binomial95": [
+          0.9977672882185165,
+          0.9983231874990486
+        ]
+      },
+      "projected_image_excludes_zero": {
+        "rate": 0.13093,
+        "MCSE": 0.001066711465673825,
+        "successes": 13093,
+        "draws": 100000,
+        "binomial95": [
+          0.12884500887470243,
+          0.13303642257162385
+        ]
+      },
+      "joint3_false_positive_or_power": {
+        "rate": 0.57166,
+        "MCSE": 0.0015648157859633192,
+        "successes": 57166,
+        "draws": 100000,
+        "binomial95": [
+          0.5685859757520573,
+          0.5747298672206179
+        ]
+      },
+      "helicity_z_false_positive_or_power": {
+        "rate": 0.73586,
+        "MCSE": 0.001394166634229926,
+        "successes": 73586,
+        "draws": 100000,
+        "binomial95": [
+          0.7331156687760949,
+          0.7385906452751411
+        ]
+      },
+      "trace_null_likelihood_ratio": 1.0,
+      "mean_estimate": [
+        -5.486716587662224e-05,
+        3.832443216543111e-05,
+        0.10005568177534975
+      ]
+    },
+    "mixed": {
+      "theta": [
+        0.12,
+        0.08,
+        0.06
+      ],
+      "calibration_delta": 0.025,
+      "wald_joint95_coverage": {
+        "rate": 0.94815,
+        "MCSE": 0.0007011531751336506,
+        "successes": 94815,
+        "draws": 100000,
+        "binomial95": [
+          0.9467577122142736,
+          0.9495162214739694
+        ]
+      },
+      "exact_common_event_coverage": {
+        "rate": 0.95817,
+        "MCSE": 0.0006330896547883248,
+        "successes": 95817,
+        "draws": 100000,
+        "binomial95": [
+          0.9569108086485076,
+          0.9594025285238951
+        ]
+      },
+      "projected_physical_image_coverage": {
+        "rate": 0.99823,
+        "MCSE": 0.00013292355321763141,
+        "successes": 99823,
+        "draws": 100000,
+        "binomial95": [
+          0.9979494573047188,
+          0.9984809762274767
+        ]
+      },
+      "projected_image_excludes_zero": {
+        "rate": 0.3999,
+        "MCSE": 0.0015491287551394816,
+        "successes": 39990,
+        "draws": 100000,
+        "binomial95": [
+          0.3968617029889946,
+          0.4029441039816541
+        ]
+      },
+      "joint3_false_positive_or_power": {
+        "rate": 0.93976,
+        "MCSE": 0.000752403763945928,
+        "successes": 93976,
+        "draws": 100000,
+        "binomial95": [
+          0.9382675160323046,
+          0.9412269139944037
+        ]
+      },
+      "helicity_z_false_positive_or_power": {
+        "rate": 0.34587,
+        "MCSE": 0.0015041407616975214,
+        "successes": 34587,
+        "draws": 100000,
+        "binomial95": [
+          0.3429214430593706,
+          0.34882749886531406
+        ]
+      },
+      "trace_null_likelihood_ratio": 1.0,
+      "mean_estimate": [
+        0.12011349678765645,
+        0.08010095403640548,
+        0.06028194070855284
+      ]
+    }
+  },
+  "equal_prior_sign_accuracy": {
+    "rate": 0.98086,
+    "MCSE": 0.00043328582252365525,
+    "successes": 98086,
+    "draws": 100000,
+    "binomial95": [
+      0.9799916921764994,
+      0.9817002563063891
+    ],
+    "count_seed": 20261030,
+    "tie_seed": 20261031,
+    "tie_count": 155,
+    "strict_successes": 98012,
+    "strict_success_fraction": 0.98012,
+    "expected_accuracy_with_half_ties": 0.980895,
+    "tie_rule": "Independent equal-probability class assignment for exact zero integer LLR statistic"
+  },
+  "trace_or_sorted_state_spectrum_sign_accuracy": 0.5,
+  "dephasing": {
+    "lambda": [
+      0.0,
+      0.05,
+      0.1,
+      0.15000000000000002,
+      0.2,
+      0.25,
+      0.30000000000000004,
+      0.35000000000000003,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6000000000000001,
+      0.65,
+      0.7000000000000001,
+      0.75,
+      0.8,
+      0.8500000000000001,
+      0.9,
+      0.9500000000000001,
+      1.0
+    ],
+    "Fisher_retained_by_axis": [
+      [
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0025000000000000005,
+        0.0025000000000000005,
+        1.0
+      ],
+      [
+        0.010000000000000002,
+        0.010000000000000002,
+        1.0
+      ],
+      [
+        0.022500000000000006,
+        0.022500000000000006,
+        1.0
+      ],
+      [
+        0.04000000000000001,
+        0.04000000000000001,
+        1.0
+      ],
+      [
+        0.0625,
+        0.0625,
+        1.0
+      ],
+      [
+        0.09000000000000002,
+        0.09000000000000002,
+        1.0
+      ],
+      [
+        0.12250000000000003,
+        0.12250000000000003,
+        1.0
+      ],
+      [
+        0.16000000000000003,
+        0.16000000000000003,
+        1.0
+      ],
+      [
+        0.2025,
+        0.2025,
+        1.0
+      ],
+      [
+        0.25,
+        0.25,
+        1.0
+      ],
+      [
+        0.30250000000000005,
+        0.30250000000000005,
+        1.0
+      ],
+      [
+        0.3600000000000001,
+        0.3600000000000001,
+        1.0
+      ],
+      [
+        0.42250000000000004,
+        0.42250000000000004,
+        1.0
+      ],
+      [
+        0.4900000000000001,
+        0.4900000000000001,
+        1.0
+      ],
+      [
+        0.5625,
+        0.5625,
+        1.0
+      ],
+      [
+        0.6400000000000001,
+        0.6400000000000001,
+        1.0
+      ],
+      [
+        0.7225000000000001,
+        0.7225000000000001,
+        1.0
+      ],
+      [
+        0.81,
+        0.81,
+        1.0
+      ],
+      [
+        0.9025000000000001,
+        0.9025000000000001,
+        1.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    "channel": "((1+lambda)/2)rho+((1-lambda)/2)sigma_z rho sigma_z",
+    "at_lambda_zero_rank": 1
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5"
+  },
+  "push": false,
+  "native_solver_or_ODE": false,
+  "exact_binomial_natural_span": {
+    "known_zero_calibration_natural_parameter_span_rank": 3,
+    "unknown_calibration_natural_parameter_span_rank": 6,
+    "unknown_span_singular_values": [
+      2.4423443698428553,
+      2.2223376840156637,
+      1.9576856175205226,
+      1.6016391360398472,
+      0.009817040776034637,
+      0.009296293232689797
+    ],
+    "consequence": "At delta=0, opposite-axis successes can be pooled into three sufficient binomial counts; unknown common delta requires the six count channels for exact likelihood preservation on the open parameter family."
+  }
+}

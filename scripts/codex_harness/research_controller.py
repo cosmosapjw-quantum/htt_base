@@ -1329,8 +1329,16 @@ def _review_context_matches(state: dict, packet: dict, *, allow_running: bool = 
                 and packet.get("input_identity") == context["scope"]["input_identity"])
 
 
-def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]], *, review_only: bool = False) -> dict:
-    """Reserve one fair, dependency-ready opportunity; transport availability is live."""
+def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]], *, review_only: bool = False,
+                preferred_tasks: tuple[str, ...] = (), deferred_tasks: tuple[str, ...] = (),
+                allow_discovery: bool = True) -> dict:
+    """Reserve a ready opportunity; optional convergence hints never preempt a packet."""
+    for label, values in (("preferred", preferred_tasks), ("deferred", deferred_tasks)):
+        require(isinstance(values, (tuple, list))
+                and all(isinstance(key, str) and key in state["tasks"] for key in values),
+                f"unknown {label} task ID; append the frontier before selecting its tasks")
+        require(len(values) == len(set(values)), f"duplicate {label} task ID")
+    require(not set(preferred_tasks) & set(deferred_tasks), "task cannot be both preferred and deferred")
     if _writer_reserved(state):
         return summary(state)
     _validate_released_acquisitions(state)
@@ -1362,7 +1370,9 @@ def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]], *, re
     if review_only:
         ready = [key for key in ready if _review_context(state, key) is not None]
     unavailable = []
-    for key in sorted(ready, key=lambda k: (state["tasks"][k]["last_turn"], k)):
+    preference = {key: index for index, key in enumerate(preferred_tasks)}
+    for key in sorted(ready, key=lambda k: (k in deferred_tasks,
+                      preference.get(k, len(preference)), state["tasks"][k]["last_turn"], k)):
         t = state["tasks"][key]
         route = resolve_route(policy, route_for(t), profiles)
         if route["transport_selected"] is None:
@@ -1430,7 +1440,7 @@ def next_packet(state: dict, policy: dict, profiles: set[tuple[str, str]], *, re
         state["packets"][packet_id] = p
         state["events"].append({"type": "planned", "packet_id": packet_id})
         return copy.deepcopy(p)
-    if not ready and not review_only:
+    if not ready and not review_only and allow_discovery:
         discovery = _adaptive_next(state, policy, profiles)
         if discovery is not None:
             return discovery
@@ -2699,6 +2709,12 @@ def main() -> int:
     nxt = sub.add_parser("next")
     nxt.add_argument("--available-profile", action="append", default=[])
     nxt.add_argument("--review-only", action="store_true", help="One disjoint read-only review beside one running acquisition")
+    nxt.add_argument("--prefer-task", action="append", default=[], metavar="TASK_ID",
+                     help="Prefer these ready tasks in argument order; preserve outstanding packets and gates")
+    nxt.add_argument("--defer-task", action="append", default=[], metavar="TASK_ID",
+                     help="Run these ready tasks after other executable known work, without adding dependencies")
+    nxt.add_argument("--no-discovery", action="store_true",
+                     help="Do not create a new adaptive-discovery packet; preserve existing discovery and task history")
     ack = sub.add_parser("ack")
     ack.add_argument("--packet-id", required=True)
     ack.add_argument("--agent-id", required=True)
@@ -2769,7 +2785,9 @@ def main() -> int:
                     model, sep, effort = profile.rpartition("/")
                     require(sep and model and effort, "expected MODEL/EFFORT")
                     profiles.add((model, effort))
-                output = next_packet(state, policy, profiles, review_only=args.review_only)
+                output = next_packet(state, policy, profiles, review_only=args.review_only,
+                                     preferred_tasks=tuple(args.prefer_task), deferred_tasks=tuple(args.defer_task),
+                                     allow_discovery=not args.no_discovery)
             elif args.action == "ack":
                 acknowledge(state, args.packet_id, args.agent_id, args.observed_runtime, args.followup_evidence)
                 output = summary(state)
