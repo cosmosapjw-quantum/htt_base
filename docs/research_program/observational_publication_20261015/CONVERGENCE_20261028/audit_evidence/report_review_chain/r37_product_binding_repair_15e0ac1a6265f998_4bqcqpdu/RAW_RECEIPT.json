@@ -1,0 +1,394 @@
+{
+  "schema": "htt.r37_controller_product_binding_repair_raw_receipt/1",
+  "created_utc": "2026-10-28T14:02:59.890264+00:00",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "packet_id": "15e0ac1a6265f998a9f8814aca007dfbf5c7817885872f4e2d787322fe0ae8ce",
+  "packet_sha256": "e3b2f2c9b289786450949a6343f6675d55fe56953154bdbf7c73fdfdce699a21",
+  "task_id": "R37-00-FIRST-REPORT",
+  "attempt": 7,
+  "phase": "repair",
+  "agent_id": "/root/rc_15e0ac1a6265f998",
+  "input_identity": "sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "b1e51d6e2d7d97855a13014087cf34b9f729b0478c12a78c0a7accf96bf12932",
+  "outcome": "success",
+  "acceptance_met": false,
+  "candidate_identity": "sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee",
+  "base_candidate_identity": "sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee",
+  "producer_packet_id": "a21f9000155d921999f51dcff003c2233922f4ce75b1fe2b0aeb82092282bd16",
+  "research_packet_id": "dc129b9607d7267e948f3c8a72d08146109b7001429a1b9b2f297d686011d585",
+  "qualified_products": [
+    "convergence_baseline_report"
+  ],
+  "validation_evidence": [
+    "Current ARTIFACT_MANIFEST.json SHA-256 equals unchanged candidate sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee; producer_packet_id remains a21f9000155d921999f51dcff003c2233922f4ce75b1fe2b0aeb82092282bd16.",
+    "Read-only SHA-256 and available-size checks passed for all seven manifest artifacts, six retained vector figures, and six frozen input sources; no report/source bytes changed.",
+    "Preserved author RESULT.json identity matches the retained producer/candidate. Prior independent review receipt and its eleven sealed evidence artifacts match their expected SHA-256; that review closed F1 and held only the controller product binding.",
+    "Previously recorded controller envelope lacks qualified_products and live candidate_products remains []; this new repair envelope proposes only convergence_baseline_report for the unchanged candidate.",
+    "Retained BUILD_VALIDATION.json records a successful 12-page PDF/source build and six figures for byte-identical artifacts; no build or scientific producer was rerun."
+  ],
+  "checks": [
+    {
+      "name": "candidate_manifest",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/ARTIFACT_MANIFEST.json",
+      "expected_sha256": "d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee",
+      "observed_sha256": "d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee",
+      "expected_bytes": null,
+      "observed_bytes": 3720,
+      "passed": true
+    },
+    {
+      "name": "artifact:REPORT_STAGE0.md",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/REPORT_STAGE0.md",
+      "expected_sha256": "10574ea7c1b6eaeddafd1e7b31e8ea9b941e5321a3bb0d7db352050436e2b1f8",
+      "observed_sha256": "10574ea7c1b6eaeddafd1e7b31e8ea9b941e5321a3bb0d7db352050436e2b1f8",
+      "expected_bytes": 28065,
+      "observed_bytes": 28065,
+      "passed": true
+    },
+    {
+      "name": "artifact:REPORT_STAGE0.tex",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/REPORT_STAGE0.tex",
+      "expected_sha256": "a4025682c1af43ff0a26b692ef942d91efdd737bf17412a347d32333187d946e",
+      "observed_sha256": "a4025682c1af43ff0a26b692ef942d91efdd737bf17412a347d32333187d946e",
+      "expected_bytes": 36033,
+      "observed_bytes": 36033,
+      "passed": true
+    },
+    {
+      "name": "artifact:REPORT_STAGE0.pdf",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/REPORT_STAGE0.pdf",
+      "expected_sha256": "290bce07cb184864388758ffecdedb01ed9b5d043bf2fef45dba5ca5828badd7",
+      "observed_sha256": "290bce07cb184864388758ffecdedb01ed9b5d043bf2fef45dba5ca5828badd7",
+      "expected_bytes": 235757,
+      "observed_bytes": 235757,
+      "passed": true
+    },
+    {
+      "name": "artifact:CLAIM_EVIDENCE_MAP.json",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/CLAIM_EVIDENCE_MAP.json",
+      "expected_sha256": "def88def2846ef7f4955b2d349b244efb67ea420695075b8f88ddbaeaebb6714",
+      "observed_sha256": "def88def2846ef7f4955b2d349b244efb67ea420695075b8f88ddbaeaebb6714",
+      "expected_bytes": 24787,
+      "observed_bytes": 24787,
+      "passed": true
+    },
+    {
+      "name": "artifact:PAPER_GOAL_CROSSWALK.json",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/PAPER_GOAL_CROSSWALK.json",
+      "expected_sha256": "3b069037de4aeeabed902994d4860dbffe0571e9f1189cdbe705af3e15fec136",
+      "observed_sha256": "3b069037de4aeeabed902994d4860dbffe0571e9f1189cdbe705af3e15fec136",
+      "expected_bytes": 2209,
+      "observed_bytes": 2209,
+      "passed": true
+    },
+    {
+      "name": "artifact:LEGACY_SCOPE.json",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/LEGACY_SCOPE.json",
+      "expected_sha256": "8c679ed2d9951dd8b0f95f78befdddbe300bbf8a778437c935ea10b761b6be6e",
+      "observed_sha256": "8c679ed2d9951dd8b0f95f78befdddbe300bbf8a778437c935ea10b761b6be6e",
+      "expected_bytes": 3229,
+      "observed_bytes": 3229,
+      "passed": true
+    },
+    {
+      "name": "artifact:BUILD_VALIDATION.json",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/BUILD_VALIDATION.json",
+      "expected_sha256": "872af1cdb8de85e255f24c72d987b34b6baa805c6dd544db2225b853609ba70c",
+      "observed_sha256": "872af1cdb8de85e255f24c72d987b34b6baa805c6dd544db2225b853609ba70c",
+      "expected_bytes": 690,
+      "observed_bytes": 690,
+      "passed": true
+    },
+    {
+      "name": "figure:FIGURE_JOINT_REMAINDER",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/figures/joint_remainder.pdf",
+      "expected_sha256": "d894cc270bfb632f478db4eece3d102bb97ca434e6a56868bd00af06bb0432aa",
+      "observed_sha256": "d894cc270bfb632f478db4eece3d102bb97ca434e6a56868bd00af06bb0432aa",
+      "expected_bytes": null,
+      "observed_bytes": 19615,
+      "passed": true
+    },
+    {
+      "name": "figure:FIGURE_RADIATION_COMPARISON",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/comparison.pdf",
+      "expected_sha256": "af3f67cccc7ecd57b4bd9cf2d2385820eb7f9f8043fa865087ca91adfcd256e6",
+      "observed_sha256": "af3f67cccc7ecd57b4bd9cf2d2385820eb7f9f8043fa865087ca91adfcd256e6",
+      "expected_bytes": null,
+      "observed_bytes": 21498,
+      "passed": true
+    },
+    {
+      "name": "figure:FIGURE_PM_INFORMATION",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/INFORMATION.pdf",
+      "expected_sha256": "0008d0890a6a693e829401d1be33d4861be9c1a89f60b1361c7c29c87379b888",
+      "observed_sha256": "0008d0890a6a693e829401d1be33d4861be9c1a89f60b1361c7c29c87379b888",
+      "expected_bytes": null,
+      "observed_bytes": 17162,
+      "passed": true
+    },
+    {
+      "name": "figure:FIGURE_FAMILY_COMPATIBILITY",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/figures/goal3_classification.pdf",
+      "expected_sha256": "a16b466a735a992bbd72f6d7655f405bd31208446c7378eae0a52449f80d6cda",
+      "observed_sha256": "a16b466a735a992bbd72f6d7655f405bd31208446c7378eae0a52449f80d6cda",
+      "expected_bytes": null,
+      "observed_bytes": 27587,
+      "passed": true
+    },
+    {
+      "name": "figure:FIGURE_PUBLIC_SN",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/PUBLIC_SN_SIGNED_COORDINATES.pdf",
+      "expected_sha256": "0f2018b4bb4d1589e45a3e8dfba7634094e460c73a0ca2e600d3a637785ae23d",
+      "observed_sha256": "0f2018b4bb4d1589e45a3e8dfba7634094e460c73a0ca2e600d3a637785ae23d",
+      "expected_bytes": null,
+      "observed_bytes": 29179,
+      "passed": true
+    },
+    {
+      "name": "figure:FIGURE_OPACITY_CBL",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/figures/goal4_cbl_opacity.pdf",
+      "expected_sha256": "1077268975a04c6e99fba277b513ac4c7a886d501405d538994413bb3be9348d",
+      "observed_sha256": "1077268975a04c6e99fba277b513ac4c7a886d501405d538994413bb3be9348d",
+      "expected_bytes": null,
+      "observed_bytes": 33354,
+      "passed": true
+    },
+    {
+      "name": "frozen_input:DEVELOPMENT_PLAN.md",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/DEVELOPMENT_PLAN.md",
+      "expected_sha256": "771e3415d0d7ff7dca5dacbd269723d6cc14bb9f9d1fac75673b82534ad9d4aa",
+      "observed_sha256": "771e3415d0d7ff7dca5dacbd269723d6cc14bb9f9d1fac75673b82534ad9d4aa",
+      "expected_bytes": null,
+      "observed_bytes": 20296,
+      "passed": true
+    },
+    {
+      "name": "frozen_input:DATA_ANALYSIS_CONTRACTS.md",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/DATA_ANALYSIS_CONTRACTS.md",
+      "expected_sha256": "11f8d3870c929202de785bcbc66805e6ff33000178a5d6bd2f29683e1eef10e0",
+      "observed_sha256": "11f8d3870c929202de785bcbc66805e6ff33000178a5d6bd2f29683e1eef10e0",
+      "expected_bytes": null,
+      "observed_bytes": 15040,
+      "passed": true
+    },
+    {
+      "name": "frozen_input:SOURCE_REUSE.json",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/SOURCE_REUSE.json",
+      "expected_sha256": "f3a79443086652a4e2eb53a9cb3030db18f16a38568f4a13bc062174bc653616",
+      "observed_sha256": "f3a79443086652a4e2eb53a9cb3030db18f16a38568f4a13bc062174bc653616",
+      "expected_bytes": null,
+      "observed_bytes": 7574,
+      "passed": true
+    },
+    {
+      "name": "frozen_input:BASELINE_REPORT.md",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/baseline/BASELINE_REPORT.md",
+      "expected_sha256": "780a6f76ee15fdf8a4b68b7e637debce44bd863c5ed352bbc8b8da50fc984f8a",
+      "observed_sha256": "780a6f76ee15fdf8a4b68b7e637debce44bd863c5ed352bbc8b8da50fc984f8a",
+      "expected_bytes": null,
+      "observed_bytes": 23604,
+      "passed": true
+    },
+    {
+      "name": "frozen_input:BASELINE_REPORT.json",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/baseline/BASELINE_REPORT.json",
+      "expected_sha256": "5bf9787b48381a74e39a23d6150dbff27bed517e3805c177a01ba2fd260c34c8",
+      "observed_sha256": "5bf9787b48381a74e39a23d6150dbff27bed517e3805c177a01ba2fd260c34c8",
+      "expected_bytes": null,
+      "observed_bytes": 15375,
+      "passed": true
+    },
+    {
+      "name": "frozen_input:BASELINE_REPORT.pdf",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/baseline/BASELINE_REPORT.pdf",
+      "expected_sha256": "baa9bacea49fb254990e322b83a91be4df1ea1e590efcc8cc8607b7c69d0ce87",
+      "observed_sha256": "baa9bacea49fb254990e322b83a91be4df1ea1e590efcc8cc8607b7c69d0ce87",
+      "expected_bytes": null,
+      "observed_bytes": 217601,
+      "passed": true
+    },
+    {
+      "name": "preserved_author_result",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/RESULT.json",
+      "expected_sha256": "3f117e5ae60fbefe81b2806f519ebd6b7fb144417e7bdb2723013bcc8e40dfbe",
+      "observed_sha256": "3f117e5ae60fbefe81b2806f519ebd6b7fb144417e7bdb2723013bcc8e40dfbe",
+      "expected_bytes": null,
+      "observed_bytes": 3307,
+      "passed": true
+    },
+    {
+      "name": "prior_independent_review",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/RAW_RECEIPT.json",
+      "expected_sha256": "8f2f4aebc9d2f2f1e63ee24ed76df904266c3a8f56ee8fdc858e832f50c1bf77",
+      "observed_sha256": "8f2f4aebc9d2f2f1e63ee24ed76df904266c3a8f56ee8fdc858e832f50c1bf77",
+      "expected_bytes": null,
+      "observed_bytes": 10042,
+      "passed": true
+    },
+    {
+      "name": "sealed_review_evidence:REVIEW_CONTEXT.json",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/REVIEW_CONTEXT.json",
+      "expected_sha256": "c7abffa2ad2391c3ffccb30bc5b5c61d22edcc141c8be5282855bd70b2e6e4ae",
+      "observed_sha256": "c7abffa2ad2391c3ffccb30bc5b5c61d22edcc141c8be5282855bd70b2e6e4ae",
+      "expected_bytes": null,
+      "observed_bytes": 565,
+      "passed": true
+    },
+    {
+      "name": "sealed_review_evidence:PRODUCT_START.json",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/PRODUCT_START.json",
+      "expected_sha256": "7e2d5c8dd73ab23eebb968e5cd54f0ce2ff2171469f950f7aecf9ac1e11bdfdc",
+      "observed_sha256": "7e2d5c8dd73ab23eebb968e5cd54f0ce2ff2171469f950f7aecf9ac1e11bdfdc",
+      "expected_bytes": null,
+      "observed_bytes": 5537,
+      "passed": true
+    },
+    {
+      "name": "sealed_review_evidence:F1_SOURCE_COMPARISON.json",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/F1_SOURCE_COMPARISON.json",
+      "expected_sha256": "ab7d242bfe472cc7fbfd9e89a384a383619fea807b0ab471cfeae598ba079dc0",
+      "observed_sha256": "ab7d242bfe472cc7fbfd9e89a384a383619fea807b0ab471cfeae598ba079dc0",
+      "expected_bytes": null,
+      "observed_bytes": 3460,
+      "passed": true
+    },
+    {
+      "name": "sealed_review_evidence:CANDIDATE_DIFF.json",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/CANDIDATE_DIFF.json",
+      "expected_sha256": "591171569f56cdee22c7761340c10f2564ec10fbda304dfc3d368be09808a58d",
+      "observed_sha256": "591171569f56cdee22c7761340c10f2564ec10fbda304dfc3d368be09808a58d",
+      "expected_bytes": null,
+      "observed_bytes": 6757,
+      "passed": true
+    },
+    {
+      "name": "sealed_review_evidence:IDENTITY_CHECKS.json",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/IDENTITY_CHECKS.json",
+      "expected_sha256": "1840cee6de1cd81b5703f40834b1da8154cd26b0912a333772940ce5fa2efc4c",
+      "observed_sha256": "1840cee6de1cd81b5703f40834b1da8154cd26b0912a333772940ce5fa2efc4c",
+      "expected_bytes": null,
+      "observed_bytes": 76170,
+      "passed": true
+    },
+    {
+      "name": "sealed_review_evidence:QUALIFICATION_CHECKS.json",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/QUALIFICATION_CHECKS.json",
+      "expected_sha256": "62a927e0113e040fc7c64820c8371c26044999b95a9a0fd47296be66bb73060d",
+      "observed_sha256": "62a927e0113e040fc7c64820c8371c26044999b95a9a0fd47296be66bb73060d",
+      "expected_bytes": null,
+      "observed_bytes": 5490,
+      "passed": true
+    },
+    {
+      "name": "sealed_review_evidence:VALIDATION.json",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/VALIDATION.json",
+      "expected_sha256": "a74d8e20f96747fea92d1b5cbedf1da378d3f527a0deb5c3b6f168f6630c651f",
+      "observed_sha256": "a74d8e20f96747fea92d1b5cbedf1da378d3f527a0deb5c3b6f168f6630c651f",
+      "expected_bytes": null,
+      "observed_bytes": 10969,
+      "passed": true
+    },
+    {
+      "name": "sealed_review_evidence:PRIOR_EVIDENCE_REUSE.json",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/PRIOR_EVIDENCE_REUSE.json",
+      "expected_sha256": "3265541b61d10f21bcf27c5be0fd9d19be4ab9ec7024b61394ac70303940b779",
+      "observed_sha256": "3265541b61d10f21bcf27c5be0fd9d19be4ab9ec7024b61394ac70303940b779",
+      "expected_bytes": null,
+      "observed_bytes": 2999,
+      "passed": true
+    },
+    {
+      "name": "sealed_review_evidence:CONTROLLER_PRODUCT_BINDING.json",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/CONTROLLER_PRODUCT_BINDING.json",
+      "expected_sha256": "b381fd94de11b59a724ba9305ecc214ecf5ba51331967c9f20c38b1846d226eb",
+      "observed_sha256": "b381fd94de11b59a724ba9305ecc214ecf5ba51331967c9f20c38b1846d226eb",
+      "expected_bytes": null,
+      "observed_bytes": 1599,
+      "passed": true
+    },
+    {
+      "name": "sealed_review_evidence:FINAL_FRESHNESS.json",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/FINAL_FRESHNESS.json",
+      "expected_sha256": "81f2d4f6d5182d5a6b871c31b75d270c0a785e9cc5ed4cf486e7ed1628d38a0f",
+      "observed_sha256": "81f2d4f6d5182d5a6b871c31b75d270c0a785e9cc5ed4cf486e7ed1628d38a0f",
+      "expected_bytes": null,
+      "observed_bytes": 407,
+      "passed": true
+    },
+    {
+      "name": "sealed_review_evidence:verify_closeout.py",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/verify_closeout.py",
+      "expected_sha256": "f6b2dfb0a20f730f13e1869c031e49bd9607f6314b71853deab7b9cc4fc92837",
+      "observed_sha256": "f6b2dfb0a20f730f13e1869c031e49bd9607f6314b71853deab7b9cc4fc92837",
+      "expected_bytes": null,
+      "observed_bytes": 13373,
+      "passed": true
+    },
+    {
+      "name": "prior_controller_envelope",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_repair_a21f9000155d9219_3o0ik77x/CONTROLLER_RESULT_VALIDATED_cull00vg.json",
+      "expected_sha256": "4436eddaf01e33640bd3f7f1f5c3d052506e93510fbcedf91db864a754f7a607",
+      "observed_sha256": "4436eddaf01e33640bd3f7f1f5c3d052506e93510fbcedf91db864a754f7a607",
+      "expected_bytes": null,
+      "observed_bytes": 2477,
+      "passed": true
+    },
+    {
+      "name": "approved_research_receipt",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_product_binding_research_dc129b9607d7267e_sfut30pi/RAW_RECEIPT.json",
+      "expected_sha256": "284e3d7498248b4e32cfbefab54cea5d6a2cb416d8105b0ed05d483b0e4f4566",
+      "observed_sha256": "284e3d7498248b4e32cfbefab54cea5d6a2cb416d8105b0ed05d483b0e4f4566",
+      "expected_bytes": null,
+      "observed_bytes": 3472,
+      "passed": true
+    }
+  ],
+  "checked_file_count": 35,
+  "failed_check_count": 0,
+  "live_task_pre_record": {
+    "state": "planned",
+    "phase": "repair",
+    "attempt": 7,
+    "history_count": 6,
+    "candidate_products": [],
+    "targeted_repairs": null,
+    "candidate_identity": "sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee"
+  },
+  "previous_blocker_review": {
+    "packet_id": "8e95f6fc426eb9bdc66f1a347b94f652102f92236f31c1a29b37cbd3267efb65",
+    "receipt_path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/RAW_RECEIPT.json",
+    "receipt_sha256": "8f2f4aebc9d2f2f1e63ee24ed76df904266c3a8f56ee8fdc858e832f50c1bf77",
+    "F1_status": "CLOSED",
+    "outcome": "blocker",
+    "reason": "controller product binding omitted"
+  },
+  "preserved_author_result": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/RESULT.json",
+    "sha256": "3f117e5ae60fbefe81b2806f519ebd6b7fb144417e7bdb2723013bcc8e40dfbe",
+    "packet_id": "a21f9000155d921999f51dcff003c2233922f4ce75b1fe2b0aeb82092282bd16",
+    "agent_id": "/root/rc_a21f9000155d9219"
+  },
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "transport_selected": {
+    "model": "gpt-6-sol",
+    "effort": "high"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "reasoning_effort": "UNKNOWN",
+    "status": "NOT_INDEPENDENTLY_OBSERVED"
+  },
+  "report_qualification": "PENDING_FRESH_INDEPENDENT_SCOPED_REVIEW",
+  "scientific_admission": "UNCHANGED",
+  "original42_effect": "none",
+  "repository_writes": 0,
+  "STATE_writes": 0,
+  "Git_mutations": 0,
+  "report_build_runs": 0,
+  "scientific_producer_runs": 0,
+  "children_spawned": false
+}

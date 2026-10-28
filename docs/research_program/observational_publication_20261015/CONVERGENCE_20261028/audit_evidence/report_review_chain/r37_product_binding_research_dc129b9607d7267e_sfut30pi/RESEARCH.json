@@ -1,0 +1,325 @@
+{
+  "schema": "htt.r37_controller_product_binding_research/1",
+  "task_id": "R37-00-FIRST-REPORT",
+  "packet_id": "dc129b9607d7267e948f3c8a72d08146109b7001429a1b9b2f297d686011d585",
+  "agent_id": "/root/rc_dc129b9607d7267e",
+  "input_identity": "sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba",
+  "candidate_identity": "sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee",
+  "diagnosis": {
+    "classification": "controller result-envelope product binding omission; packaging/metadata only",
+    "exact_omission": "CONTROLLER_RESULT_VALIDATED_cull00vg.json lacks qualified_products; singular qualified_product_candidate in retained author RESULT.json is not consumed by record()",
+    "effect": "record() defaults to [] and stores candidate_products=[]; review cannot add an undeclared product; empty-product success leaves typed product dependency false",
+    "F1_status_from_sealed_review": "CLOSED",
+    "no_new_scientific_failure": true
+  },
+  "supported_transition": [
+    "Host actual ACK of research packet if still planned",
+    "Host record this research success -> repair/ready",
+    "Host next preferred R37-00 and fresh lower-tier dispatch/ACK",
+    "Worker external envelope proposes exact product against unchanged candidate",
+    "Host record -> review/ready with candidate_products containing report product",
+    "Fresh independent exact-candidate scoped review, then normal host record",
+    "Checkpoint current report and stop other work under latest owner direction"
+  ],
+  "repair_plan": "Perform exactly one controller-envelope-only repair for R37-00-FIRST-REPORT after this acknowledged research result is recorded. Use the next ordinary repair packet under the same task/input/frontier/spec; retain candidate sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee, whose unchanged ARTIFACT_MANIFEST.json is bound to producer packet a21f9000155d921999f51dcff003c2233922f4ce75b1fe2b0aeb82092282bd16. The current missing product binding is a controller result-envelope omission, not an F1 scientific/report-content failure. The newly returned controller envelope binds the NEW actual repair packet and worker agent, while its candidate identity and producer_packet_id refer truthfully to this retained producer. Do not relabel the unchanged manifest or retained RESULT.json as authored by the new worker. No repository write, manifest refresh, report rebuild, new numerical producer, solver/ODE, theorem, Git mutation or publication is required or authorized by this repair.\nBefore execution confirm the frozen input sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba, candidate, task spec and frontier match the current repair packet; retain all historical raw receipts, F1 closure and the product-binding blocker. Confirm the live task has no targeted_repairs and the new packet has no continuation binding requiring a changed candidate. Use a fresh lower-tier repair agent through the supported route and actual host ACK. A reused-author followup currently requires a new candidate; it is not the unchanged-candidate path. If fresh transport is unavailable, return the exact blocker and checkpoint; do not fabricate a dispatch, mutate STATE or manufacture a packaging identity merely to bypass that requirement.\nThe worker writes only a unique external raw receipt and controller result envelope. Include the new actual packet_id, task_id, agent_id, input_identity, frontier_identity, task_spec_identity, outcome=success, candidate_identity=sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee, qualified_products=[\"convergence_baseline_report\"], acceptance_met=false, meaningful validation_evidence and actual raw_receipt path/hash. This field proposes the product during repair; it does not independently qualify it. Bind producer_packet_id=a21f9000155d921999f51dcff003c2233922f4ce75b1fe2b0aeb82092282bd16, base_candidate_identity equal to the unchanged candidate, this research packet, the previous blocker/review receipt and the preserved author-result identity. Preserve requested/transport-selected/observed-runtime separation; UNKNOWN remains UNKNOWN without independent evidence.\nValidate the exact manifest identity, all seven manifest artifact hashes/sizes, six retained figures and frozen input references against retained expectations. Reuse the prior independent review's sealed F1 closure and build/source checks for byte-identical objects; do not rerun report/PDF build or scientific producers. The host then records this new repair result through research_controller.py record and verifies from the recorded task that phase=review, state=ready, candidate_products=[\"convergence_baseline_report\"], unchanged candidate/input/spec, preserved history/failures and cumulative accounting. No direct STATE edit, historical-envelope overwrite, campaign reinitialization, resume/append or acceptance rewrite is permitted.\nDispatch and ACK one fresh independent reviewer, distinct from all recorded contributors, for this exact candidate and new binding. The reviewer checks the binding, retained candidate/source bytes, prior sealed F1 closure and unchanged report acceptance; only on its actual scoped pass may it return acceptance_met=true and qualified_products=[\"convergence_baseline_report\"]. This true flag is exclusively the R37 report-production acceptance, with original42_effect=none and no new scientific admission. If this exact product is omitted, do not accept empty-product completion as a report qualification. Record review normally, confirm task qualified_products and preserved original scientific contracts, then follow the latest owner direction: checkpoint and stop other work; do not dispatch downstream or unrelated branches. If any immutable identity drifts or a new substantive defect appears, return the exact blocker without expanding this repair.",
+  "evidence_sources": [
+    {
+      "path": "scripts/codex_harness/research_controller.py",
+      "lines": "2587-2611",
+      "supports": "research/repair/review transition and opt-in product lists"
+    },
+    {
+      "path": "scripts/codex_harness/research_controller.py",
+      "lines": "2571-2574",
+      "supports": "dispatched reused-author followup requires new candidate"
+    },
+    {
+      "path": "scripts/codex_harness/research_controller.py",
+      "lines": "164-173",
+      "supports": "typed qualified product dependency"
+    },
+    {
+      "path": "docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md",
+      "lines": "485-492",
+      "supports": "documented opt-in product contract"
+    }
+  ],
+  "raw_checks": [
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/ARTIFACT_MANIFEST.json",
+      "sha256": "d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee",
+      "bytes": 3720,
+      "matches_expected": true,
+      "label": "unchanged candidate manifest"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/REPORT_STAGE0.md",
+      "sha256": "10574ea7c1b6eaeddafd1e7b31e8ea9b941e5321a3bb0d7db352050436e2b1f8",
+      "bytes": 28065,
+      "matches_expected": true,
+      "label": "retained report artifact"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/REPORT_STAGE0.tex",
+      "sha256": "a4025682c1af43ff0a26b692ef942d91efdd737bf17412a347d32333187d946e",
+      "bytes": 36033,
+      "matches_expected": true,
+      "label": "retained report artifact"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/REPORT_STAGE0.pdf",
+      "sha256": "290bce07cb184864388758ffecdedb01ed9b5d043bf2fef45dba5ca5828badd7",
+      "bytes": 235757,
+      "matches_expected": true,
+      "label": "retained report artifact"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/CLAIM_EVIDENCE_MAP.json",
+      "sha256": "def88def2846ef7f4955b2d349b244efb67ea420695075b8f88ddbaeaebb6714",
+      "bytes": 24787,
+      "matches_expected": true,
+      "label": "retained report artifact"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/PAPER_GOAL_CROSSWALK.json",
+      "sha256": "3b069037de4aeeabed902994d4860dbffe0571e9f1189cdbe705af3e15fec136",
+      "bytes": 2209,
+      "matches_expected": true,
+      "label": "retained report artifact"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/LEGACY_SCOPE.json",
+      "sha256": "8c679ed2d9951dd8b0f95f78befdddbe300bbf8a778437c935ea10b761b6be6e",
+      "bytes": 3229,
+      "matches_expected": true,
+      "label": "retained report artifact"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/BUILD_VALIDATION.json",
+      "sha256": "872af1cdb8de85e255f24c72d987b34b6baa805c6dd544db2225b853609ba70c",
+      "bytes": 690,
+      "matches_expected": true,
+      "label": "retained report artifact"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/figures/joint_remainder.pdf",
+      "sha256": "d894cc270bfb632f478db4eece3d102bb97ca434e6a56868bd00af06bb0432aa",
+      "bytes": 19615,
+      "matches_expected": true,
+      "label": "retained figure"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/comparison.pdf",
+      "sha256": "af3f67cccc7ecd57b4bd9cf2d2385820eb7f9f8043fa865087ca91adfcd256e6",
+      "bytes": 21498,
+      "matches_expected": true,
+      "label": "retained figure"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/INFORMATION.pdf",
+      "sha256": "0008d0890a6a693e829401d1be33d4861be9c1a89f60b1361c7c29c87379b888",
+      "bytes": 17162,
+      "matches_expected": true,
+      "label": "retained figure"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/figures/goal3_classification.pdf",
+      "sha256": "a16b466a735a992bbd72f6d7655f405bd31208446c7378eae0a52449f80d6cda",
+      "bytes": 27587,
+      "matches_expected": true,
+      "label": "retained figure"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/PUBLIC_SN_SIGNED_COORDINATES.pdf",
+      "sha256": "0f2018b4bb4d1589e45a3e8dfba7634094e460c73a0ca2e600d3a637785ae23d",
+      "bytes": 29179,
+      "matches_expected": true,
+      "label": "retained figure"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/figures/goal4_cbl_opacity.pdf",
+      "sha256": "1077268975a04c6e99fba277b513ac4c7a886d501405d538994413bb3be9348d",
+      "bytes": 33354,
+      "matches_expected": true,
+      "label": "retained figure"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/DEVELOPMENT_PLAN.md",
+      "sha256": "771e3415d0d7ff7dca5dacbd269723d6cc14bb9f9d1fac75673b82534ad9d4aa",
+      "bytes": 20296,
+      "matches_expected": true,
+      "label": "frozen input"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/DATA_ANALYSIS_CONTRACTS.md",
+      "sha256": "11f8d3870c929202de785bcbc66805e6ff33000178a5d6bd2f29683e1eef10e0",
+      "bytes": 15040,
+      "matches_expected": true,
+      "label": "frozen input"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/SOURCE_REUSE.json",
+      "sha256": "f3a79443086652a4e2eb53a9cb3030db18f16a38568f4a13bc062174bc653616",
+      "bytes": 7574,
+      "matches_expected": true,
+      "label": "frozen input"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/baseline/BASELINE_REPORT.md",
+      "sha256": "780a6f76ee15fdf8a4b68b7e637debce44bd863c5ed352bbc8b8da50fc984f8a",
+      "bytes": 23604,
+      "matches_expected": true,
+      "label": "frozen input"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/baseline/BASELINE_REPORT.json",
+      "sha256": "5bf9787b48381a74e39a23d6150dbff27bed517e3805c177a01ba2fd260c34c8",
+      "bytes": 15375,
+      "matches_expected": true,
+      "label": "frozen input"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/baseline/BASELINE_REPORT.pdf",
+      "sha256": "baa9bacea49fb254990e322b83a91be4df1ea1e590efcc8cc8607b7c69d0ce87",
+      "bytes": 217601,
+      "matches_expected": true,
+      "label": "frozen input"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/RAW_RECEIPT.json",
+      "sha256": "1a93882d1f8bb2a51ba862e3b75ed1b1e11c2444b8c7c4c0b4a47f4fecdd6943",
+      "bytes": 2168,
+      "matches_expected": true,
+      "label": "historical receipt"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/RAW_RECEIPT.json",
+      "sha256": "fa8c4983a24a7b20e30bddd0173b940bd554b7572a0cfb75196190f4872f15d1",
+      "bytes": 10584,
+      "matches_expected": true,
+      "label": "historical receipt"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_research_87fae2f18825112e_20261028T124957Z_75a93c18/RAW_RECEIPT.json",
+      "sha256": "14f4a81941a22031bd82210ff2f9c7fe5a0e80b583eb4ce31e681a66e45fe074",
+      "bytes": 9987,
+      "matches_expected": true,
+      "label": "historical receipt"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_repair_a21f9000155d9219_3o0ik77x/RAW_RECEIPT.json",
+      "sha256": "c3d14e72293d981786dd7ca5cbbf4bf05f79ec343c95d5632058e94ed6902333",
+      "bytes": 5666,
+      "matches_expected": true,
+      "label": "historical receipt"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/RAW_RECEIPT.json",
+      "sha256": "8f2f4aebc9d2f2f1e63ee24ed76df904266c3a8f56ee8fdc858e832f50c1bf77",
+      "bytes": 10042,
+      "matches_expected": true,
+      "label": "historical receipt"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/RESULT.json",
+      "sha256": "3f117e5ae60fbefe81b2806f519ebd6b7fb144417e7bdb2723013bcc8e40dfbe",
+      "bytes": 3307,
+      "matches_expected": false,
+      "label": "current author result"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_repair_a21f9000155d9219_3o0ik77x/CONTROLLER_RESULT_VALIDATED_cull00vg.json",
+      "sha256": "4436eddaf01e33640bd3f7f1f5c3d052506e93510fbcedf91db864a754f7a607",
+      "bytes": 2477,
+      "matches_expected": false,
+      "label": "recorded repair envelope omitted qualified_products"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_NEXT_006.json",
+      "sha256": "060c591f131e6847bfb190754ff217e5a93d03390285b8a8b4808c623267579d",
+      "bytes": 14676,
+      "matches_expected": false,
+      "label": "diagnostic source"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/research_controller.py",
+      "sha256": "8ebfd714959e0cbbebbd2cf43a1ec0afc5cb3fe99d3ca2fe1751f7a6c438dd5e",
+      "bytes": 187936,
+      "matches_expected": false,
+      "label": "diagnostic source"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/native_routing.py",
+      "sha256": "b8fe85f92d10f5a24d1e766b407a6ccad6104c9ee9d756006f2c17758b159b1c",
+      "bytes": 4319,
+      "matches_expected": false,
+      "label": "diagnostic source"
+    },
+    {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/harness/NATIVE_ROUTING_POLICY_V1.json",
+      "sha256": "fda8a956a582b0fb9a037cbbcd2f2ea51431a51879811f94e22d679419824730",
+      "bytes": 3925,
+      "matches_expected": false,
+      "label": "diagnostic source"
+    }
+  ],
+  "state_observation": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/LIVE_STATE.json",
+    "before_sha256": "692f1363033e0b98cf21a50f8be7a2bbe84435bf9f4ccb987b61fb5c97ae7ee8",
+    "after_sha256": "692f1363033e0b98cf21a50f8be7a2bbe84435bf9f4ccb987b61fb5c97ae7ee8",
+    "bytes_unchanged_during_probe": true,
+    "research_state_at_start": "planned",
+    "research_state_at_end": "planned",
+    "packet_agent_at_start": null,
+    "packet_agent_at_end": null,
+    "no_state_write_performed_by_research": true
+  },
+  "transition_proof": {
+    "kind": "SYNTHETIC_IN_MEMORY_CONTROLLER_TEST_ONLY",
+    "scope_limitation": "Only in-memory controller transition/product gates tested; unrelated released-acquisition file rehash excluded in fixture and ledger checked unchanged. Not end-to-end host ACK verification. Actual controller unmodified.",
+    "first_probe": "FIRST_PROBE_INTERRUPTION.json; interrupted owned read-only probe while unrelated PR4 map was being hashed; no state or science failure",
+    "actual_native_dispatches": 0,
+    "live_state_writes": 0,
+    "repository_writes": 0,
+    "scientific_acceptance": false,
+    "controls": {
+      "omitted_products_rejects_review_product": "review cannot invent candidate scientific products",
+      "reject_is_atomic": true,
+      "empty_product_success_does_not_satisfy_report_dependency": true,
+      "explicit_product_repair_accepts_unchanged_candidate": true,
+      "explicit_product_fresh_review_satisfies_typed_dependency": true,
+      "same_task_input_spec_candidate_preserved": true,
+      "all_prior_task_history_failures_preserved": true,
+      "all_other_tasks_campaign_frontiers_ultra_acquisition_preserved": true,
+      "reused_author_without_followup_rejected": "fresh native launch required; agent ID already used"
+    },
+    "fixture_only_attempts": {
+      "research": 6,
+      "repair": 7,
+      "review": 8
+    },
+    "in_memory_ack_of_actual_research_was_needed": true,
+    "test_source_sha256": "8ebfd714959e0cbbebbd2cf43a1ec0afc5cb3fe99d3ca2fe1751f7a6c438dd5e"
+  },
+  "runtime": {
+    "requested": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "transport_selected": {
+      "model": "gpt-6-astra",
+      "effort": "xhigh"
+    },
+    "observed": "UNKNOWN",
+    "observation_status": "NOT_INDEPENDENTLY_OBSERVED",
+    "actual_agent_id": "/root/rc_dc129b9607d7267e"
+  },
+  "original42_effect": "none",
+  "scientific_admission": "UNCHANGED",
+  "report_qualification": "PENDING_ACTUAL_ENVELOPE_REPAIR_AND_INDEPENDENT_REVIEW",
+  "executed_scientific_runs": 0,
+  "git_commands": 0,
+  "repository_writes": 0,
+  "controller_writes": 0,
+  "children_spawned": 0
+}

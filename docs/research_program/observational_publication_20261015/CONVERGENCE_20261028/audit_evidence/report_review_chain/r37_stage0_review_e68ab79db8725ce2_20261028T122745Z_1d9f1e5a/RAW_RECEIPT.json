@@ -1,0 +1,185 @@
+{
+  "schema": "htt.r37_stage0_raw_review_receipt/1",
+  "packet_id": "e68ab79db8725ce2f5b70749e597de0d10d4ffa686105345f6c175803c762d2d",
+  "task_id": "R37-00-FIRST-REPORT",
+  "agent_id": "/root/rc_e68ab79db8725ce2",
+  "input_identity": "sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba",
+  "candidate_identity": "sha256:676298caadd2a7c4267f47c188ad54299f9f11da6932e5847bca2b45377f5208",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "b1e51d6e2d7d97855a13014087cf34b9f729b0478c12a78c0a7accf96bf12932",
+  "packet_sha256": "53d60794fd5e55cfc0665a15a9b1645e74d98cb62dadf687fc31c12e022427aa",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "review_verdict": "HOLD_TARGETED_REPORT_METADATA_REPAIR",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "reasoning_effort": "UNKNOWN",
+    "status": "NOT_INDEPENDENTLY_OBSERVED"
+  },
+  "commands": [
+    {
+      "command": "Independent read-only SHA-256 checks of candidate manifest, 61 bound source/output/input/receipt references; exact 109-ID preappend comparison",
+      "outcome": "PASS",
+      "artifact": "IDENTITY_CHECKS.json"
+    },
+    {
+      "command": "latexmk -xelatex -interaction=nonstopmode -halt-on-error -file-line-error -outdir=/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/build REPORT_STAGE0.tex",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT",
+      "exit_code": 0,
+      "artifact": "build.stdout.txt"
+    },
+    {
+      "command": "pdftotext -layout candidate and rebuilt PDF; compare extracted bytes",
+      "outcome": "PASS_EQUAL",
+      "artifact": "BUILD_CHECKS.json"
+    },
+    {
+      "command": "pandoc recorded command, then exact-font-variable reconstruction",
+      "outcome": "Three font statements absent from recorded invocation; exact-font reconstruction byte-identical",
+      "artifact": "BUILD_CHECKS.json"
+    },
+    {
+      "command": "pdftoppm -scale-to 1300 -png candidate PDF to external review render directory; inspect all-page contact sheet",
+      "outcome": "12 pages; all six figures visible",
+      "artifact": "render/contact_sheet.png"
+    },
+    {
+      "command": "Read retained JSON selectors and figure producer source; compare SN plot source coefficients/covariance with report source",
+      "outcome": "PASS_WITH_METADATA_FINDING_F1",
+      "artifact": "SAVED_NUMERIC_COMPARISON.json"
+    },
+    {
+      "command": "Final candidate and 61-reference freshness check",
+      "outcome": "PASS_ALL_UNCHANGED",
+      "artifact": "FINAL_FRESHNESS.json"
+    },
+    {
+      "command": "Independent rebuild PDF render with pdftoppm -scale-to 1300, per-page pixel comparison",
+      "outcome": "PASS_ALL_12_PIXEL_IDENTICAL",
+      "artifact": "PDF_PIXEL_PARITY.json"
+    },
+    {
+      "command": "Current R36 publication statuses and upstream preparation sources SHA/scope comparison",
+      "outcome": "13/13 references match; physical/source scopes preserved",
+      "artifact": "QUALIFICATION_CHECKS.json"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "MEDIUM",
+      "blocking_for_candidate": true,
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/CLAIM_EVIDENCE_MAP.json",
+      "lines": [
+        67,
+        73
+      ],
+      "additional_locations": [
+        {
+          "lines": [
+            130,
+            136
+          ],
+          "claim": "E5"
+        },
+        {
+          "lines": [
+            182,
+            188
+          ],
+          "claim": "E7"
+        },
+        {
+          "lines": [
+            292,
+            298
+          ],
+          "claim": "E10"
+        }
+      ],
+      "title": "Claim map rewrites source-specific ceilings and transfer provenance",
+      "evidence": "E3 is labeled transfer_source=empirical_proxy, but its bound R36-05 RESULT has transfer_source=none and claim_tier=conditional_synthetic_method_experiment; current PUBLICATION_STATUS admits only the frozen synthetic experiment. E5 is recoded C1 although its RESULT/INTERPRETATION are C0_CONDITIONAL_METHOD. E7 is C1/empirical_proxy although its RESULT has C0 conditional response/design and none; first-order kinematic response, and its current PUBLICATION_STATUS explicitly qualifies C0. E10 is empirical_proxy although its RESULT specifies EH98_NO_WIGGLE_APPROXIMATION and CONDITIONAL_MODEL_COVARIANCE. No mapping or new tier decision supports these changes.",
+      "consequence": "The required machine-readable claim/evidence product misclassifies a synthetic result as empirical and drops the actual external analytic transfer approximation. Downstream tier/provenance consumers cannot recover the preserved source ceilings from these fields alone; cautious report prose does not repair their contradictory metadata. This is a report transcription defect, not a failure of the underlying calculations.",
+      "minimal_fix": "Preserve the source-specific claim_tier and transfer_source strings for E3/E5/E7/E10, or use an explicitly conservative existing canonical equivalent while retaining the original source ceiling/provenance. In particular E3 transfer is none, E5/E7 remain C0 conditional, and E10 identifies EH98_NO_WIGGLE_APPROXIMATION. Audit the other existing claim rows for the same template substitution. Update candidate manifest/result identities after the bounded metadata repair; retain all original source files, qualifications, numerical results and historical receipts. No scientific rerun is needed.",
+      "minimal_validation": "Compare every revised claim row with its immutable RESULT plus later scoped PUBLICATION_STATUS; verify the new manifest/output hashes and that scientific source hashes and report numerical content did not change."
+    },
+    {
+      "id": "N1",
+      "severity": "LOW",
+      "blocking_for_candidate": false,
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/REPORT_STAGE0.md",
+      "lines": [
+        27,
+        27
+      ],
+      "title": "Distinguish raw support from the normalized framework support quantity",
+      "evidence": "The report explicitly defines F(W)=sup<x,W>. The imported FOUNDATION_REPORT.md lines 183-203 distinguishes its constructive namespace and defines directional support utilization h_Theta(v)/h_K0(v); LOOP_C_KINEMATICS.md lines 154-156 also separates support and occupancy namespaces. The baseline report inherited the raw-support abbreviation.",
+      "consequence": "The displayed formula is a valid support function, but readers can confuse it with normalized F or legacy occupancy and lose the declared denominator. No displayed numerical result uses this ambiguous notation.",
+      "minimal_fix": "Call the displayed raw support h_C(W), or state that F here is an explicitly unnormalized support quantity distinct from normalized utilization and occupancy; preserve any source reference body/denominator when the normalized quantity is used."
+    },
+    {
+      "id": "N2",
+      "severity": "LOW",
+      "blocking_for_candidate": false,
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/RAW_RECEIPT.json",
+      "lines": [
+        20,
+        22
+      ],
+      "title": "Recorded Markdown-to-TeX command omits font variables",
+      "evidence": "Running the recorded pandoc command externally produced TeX differing only by the three DejaVu font statements. Adding -V mainfont=\"DejaVu Serif\" -V sansfont=\"DejaVu Sans\" -V monofont=\"DejaVu Sans Mono\" reproduced the delivered TeX byte-for-byte. Independent latexmk build of the delivered TeX succeeded and its extracted PDF text matches exactly.",
+      "consequence": "The source is buildable; the recorded generation command alone does not exactly recreate its font configuration.",
+      "minimal_fix": "In the successor receipt record the font variables or the actual documented font-injection step. Preserve the historical raw receipt as evidence."
+    }
+  ],
+  "independence": {
+    "candidate_author": false,
+    "candidate_editing": false,
+    "prior_verdict_for_this_candidate_read": false,
+    "children_spawned": false,
+    "repository_writes": false,
+    "STATE_writes": false,
+    "Git_mutations": false
+  },
+  "source_head": "cab89d25af52a1b978a4da8c11eecdc25bb22759",
+  "original42_effect": "none",
+  "scientific_producer_runs": 0,
+  "review_artifact": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/REVIEW.json",
+    "sha256": "e49fa064301c8931c650063e984cc9022f320d42b88cbcb7c409b05a5b01b143"
+  },
+  "evidence_artifacts": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/IDENTITY_CHECKS.json",
+      "sha256": "841bda2cf5bd2012065e8315109a32e71b4287ab08d24c2a8db39ec93dc1e5bf"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/BUILD_CHECKS.json",
+      "sha256": "41bdbdee73267f8e6ae43586a01049e4f8e37d063e353222b297f1a23e291a6f"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/SAVED_NUMERIC_COMPARISON.json",
+      "sha256": "eeafc841cfd15117f4c58047e12c4c7748890046a473625af7dd80391adad344"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/FINAL_FRESHNESS.json",
+      "sha256": "3c72037ebc68f165fca07c24bd558a32ee81267e292dd7374714970a1236767d"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/build.stdout.txt",
+      "sha256": "4641f090f4811091dab21ccefdc8c6c389209cf59ea4cd9687871595d9645e69"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/PDF_PIXEL_PARITY.json",
+      "sha256": "25fb6b4e211c30b7b6f9fda620b526e986a701e783c8b0d01b6ad20d413e3fad"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/QUALIFICATION_CHECKS.json",
+      "sha256": "faec1e866d29d7c928ae35660657e885fd125af930d379cd277e11e92c1b2e92"
+    }
+  ]
+}

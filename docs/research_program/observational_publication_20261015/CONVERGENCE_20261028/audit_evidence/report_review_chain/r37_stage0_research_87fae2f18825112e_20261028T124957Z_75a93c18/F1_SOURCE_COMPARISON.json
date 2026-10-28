@@ -1,0 +1,134 @@
+{
+  "finding": "F1",
+  "classification": "report metadata transcription defect; no missing scientific input",
+  "patches": [
+    {
+      "claim_id": "E3",
+      "source": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/RESULT.json",
+        "sha256": "074b49cc8ce3edcfb8dc106a83858ecf5bb5c08c824952d748377b911879529d",
+        "selectors": [
+          "rng.calibration_per_case",
+          "rng.test_per_case",
+          "methods[0:4].D_physical_target_coverage.fraction",
+          "methods[0:4].A_physical_target_coverage.fraction",
+          "response_compression.L2_L4[0:2].operator_error_over_rho0"
+        ]
+      },
+      "publication_status": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/PUBLICATION_STATUS.json",
+        "sha256": "a9776c2b0c2fc09af4222ab05a7337d35d9551d236597824bd395d5516cb2b03",
+        "status": "FORMALLY_QUALIFIED_COMMON_INPUT_RADIATION_RESPONSE_COMPARISON",
+        "scope": "Only radiation_response_comparison under the frozen six-case conditional synthetic experiment; no observational or original42 promotion."
+      },
+      "before": {
+        "claim_tier": "C1",
+        "transfer_source": "empirical_proxy"
+      },
+      "after": {
+        "claim_tier": "conditional_synthetic_method_experiment",
+        "transfer_source": "none"
+      }
+    },
+    {
+      "claim_id": "E5",
+      "source": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/RESULT.json",
+        "sha256": "9bd8bee99c3584dbf09a535f93d8eda53a00ef02571a0f8b761d6017467b92a2",
+        "selectors": [
+          "counterexample"
+        ]
+      },
+      "publication_status": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/PUBLICATION_STATUS.json",
+        "sha256": "f3ba7ad782fe708b9c3e483dacd5114e3c1282a39e73271537d91a3dba9c1214",
+        "status": "FORMALLY_QUALIFIED_SCOPED_CONDITIONAL_PRODUCT",
+        "scope": "See bound scoped publication status; no broader promotion"
+      },
+      "before": {
+        "claim_tier": "C1",
+        "transfer_source": "none"
+      },
+      "after": {
+        "claim_tier": "C0_CONDITIONAL_METHOD",
+        "transfer_source": "none; saved apparent CF4 proxy is not native transfer"
+      }
+    },
+    {
+      "claim_id": "E7",
+      "source": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/RESULT.json",
+        "sha256": "c20cacc0cd64c6349051b5c090d65d1083aea47961ffc446019739386d6adc93",
+        "selectors": [
+          "source.selected_rows",
+          "gram.primary_spin_glide6.joint.selected_sample_full5_coefficients_uasyr",
+          "gram.all97_sensitivity.joint.selected_sample_full5_coefficients_uasyr",
+          "power_frontier",
+          "history_images"
+        ]
+      },
+      "publication_status": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/PUBLICATION_STATUS.json",
+        "sha256": "0cc79baffcbb4e3db3957b5ea54ba363cc8b9a4530941f20a7552e113d3cb17c",
+        "status": "FORMALLY_QUALIFIED_CONDITIONAL_PM_HISTORY_RESPONSE",
+        "scope": "C0 first-order kinematic response and selected-sample fixed-design Gaussian working sensitivity; primary rho80 best/worst 1.609628618092837/2.2943055890880024 microarcsec/year."
+      },
+      "before": {
+        "claim_tier": "C1",
+        "transfer_source": "empirical_proxy"
+      },
+      "after": {
+        "claim_tier": "C0 conditional response/design",
+        "transfer_source": "none; first-order kinematic response"
+      }
+    },
+    {
+      "claim_id": "E10",
+      "source": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/RESULT.json",
+        "sha256": "a7458dbd0d8fad934b968733562125acf2a50881bddbf483dfb9fa8084137523",
+        "selectors": [
+          "source_rows",
+          "conditional_R5_diagnostics.trace"
+        ]
+      },
+      "publication_status": {
+        "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/PUBLICATION_STATUS.json",
+        "sha256": "fa3169a268fa1fcb273d4edaa63a166e3b3043477c5141517eac58f8452f4634",
+        "status": "FORMALLY_QUALIFIED_SCOPED_CONDITIONAL_PRODUCT",
+        "scope": "The named R36-02 conditional correlated-response product, combining retained unchanged base scientific evidence with the independently verified SAME02 matched-radius summary repair. Does not promote original 42-node acceptances, empirical coverage, native-solver claims or broader scientific admission."
+      },
+      "before": {
+        "claim_tier": "C1",
+        "transfer_source": "empirical_proxy"
+      },
+      "after": {
+        "claim_tier": "CONDITIONAL_MODEL_COVARIANCE",
+        "transfer_source": "EH98_NO_WIGGLE_APPROXIMATION"
+      }
+    }
+  ],
+  "other_rows_audit": {
+    "claim_ids": [
+      "E1",
+      "E2",
+      "E4",
+      "E6",
+      "E8",
+      "E9",
+      "E11",
+      "E12",
+      "A1"
+    ],
+    "result": "Read retained root metadata and later qualifications. No additional source-declared C0 conflict established beyond E5/E7, and no other transfer approximation replacement established beyond the prescribed rows. This bounded decision does not assign new scientific tiers to the remaining rows.",
+    "scope_notes": {
+      "E8": "The retained geometry source is diagnostic-only finite algebraic and synthetic geometry-response work; C1 is not an authorization of empirical or native-family inference. Preserve this declared scope.",
+      "E9": "Retained source explicitly C1 conditional released-magnitude comparison; no native transfer or physical congruence claim.",
+      "A1": "Retained C0 report row denotes a diagnostic-only first48 processed-map result; original R36-07 HOLD and no source-established physical/selective coverage remain."
+    }
+  },
+  "nonblocking_notes": {
+    "N1": "Deferred: report raw-support notation clarification is outside F1 metadata-only repair; no equation or PDF change prescribed.",
+    "N2": "Successor repair receipt may state the previously verified historical pandoc font variables without altering the historical raw receipt or claiming a new build."
+  }
+}

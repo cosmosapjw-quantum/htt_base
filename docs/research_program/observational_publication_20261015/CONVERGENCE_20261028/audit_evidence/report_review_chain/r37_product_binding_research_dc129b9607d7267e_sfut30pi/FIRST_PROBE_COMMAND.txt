@@ -1,0 +1,135 @@
+python3 -B - <<'PY'
+from pathlib import Path
+import copy,datetime,hashlib,importlib.util,json,sys,tempfile
+root=Path('/home/cosmosapjw/Dropbox/bianchi/htt_base')
+external=Path('/mnt/extdrive/workdir/htt_open_data')
+out=Path(tempfile.mkdtemp(prefix='r37_product_binding_research_dc129b9607d7267e_',dir=external))
+packet_path=external/'r36_controller/R37_NEXT_006.json'
+packet=json.loads(packet_path.read_text());assignment=json.loads(packet['spawn_args']['message'].split('Assignment:\n',1)[1])
+task_id=packet['task_id'];agent='/root/rc_dc129b9607d7267e'; product='convergence_baseline_report'
+state_path=(root/'.agent-harness/runtime/r23-continuous/STATE.json').resolve()
+state_bytes=state_path.read_bytes();live=json.loads(state_bytes);task=live['tasks'][task_id]
+sha=lambda b:hashlib.sha256(b).hexdigest()
+def write(name,data):
+ p=out/name
+ assert p.parent==out
+ p.write_text(json.dumps(data,indent=2,ensure_ascii=False)+'\n')
+ return str(p)
+assert task['packet_id']==packet['packet_id'] and task['phase']=='research'
+assert task['spec']['input_identity']==packet['input_identity']
+assert task['candidate_identity']==packet['candidate_identity'] and task['candidate_products']==[]
+assert not task.get('targeted_repairs')
+assert task['spec']['qualified_product_expected']==product
+assert task['spec']['promotes_original_acceptance'] is False
+product_dir=root/task['spec']['owned_paths'][0]
+manifest_path=product_dir/'ARTIFACT_MANIFEST.json';manifest=json.loads(manifest_path.read_text())
+assert 'sha256:'+sha(manifest_path.read_bytes())==packet['candidate_identity']
+file_checks=[]
+def check(path,expected=None,size=None,label=None):
+ p=Path(path);p=p if p.is_absolute() else root/p
+ b=p.read_bytes();h=sha(b)
+ assert expected is None or h==expected,(str(p),h,expected)
+ assert size is None or len(b)==size,(str(p),len(b),size)
+ file_checks.append({'path':str(p),'sha256':h,'bytes':len(b),'matches_expected':expected is not None,'label':label})
+ return h
+check(manifest_path,packet['candidate_identity'].split(':')[1],label='unchanged candidate manifest')
+for name,info in manifest['artifacts'].items():check(product_dir/name,info['sha256'],info['bytes'],'retained report artifact')
+for info in manifest['reused_figures'].values():check(info['path'],info['sha256'],label='retained figure')
+for info in task['spec']['input_sources']:check(info['path'],info['sha256'],label='frozen input')
+for event in task['history']:check(event['receipt']['path'],event['receipt']['sha256'],label='historical receipt')
+source_result=json.loads((product_dir/'RESULT.json').read_text())
+assert source_result['qualified_product_candidate']==product
+check(product_dir/'RESULT.json',label='current author result')
+recorded_repair=next(e for e in task['history'] if e['packet_id']=='a21f9000155d921999f51dcff003c2233922f4ce75b1fe2b0aeb82092282bd16')
+assert 'qualified_products' not in recorded_repair['result']
+envelope=Path('/mnt/extdrive/workdir/htt_open_data/r37_stage0_repair_a21f9000155d9219_3o0ik77x/CONTROLLER_RESULT_VALIDATED_cull00vg.json')
+assert json.loads(envelope.read_text())==recorded_repair['result']
+check(envelope,label='recorded repair envelope omitted qualified_products')
+prior_review=task['history'][-1]
+assert prior_review['result']['F1_status']=='CLOSED'
+assert prior_review['result']['source_bound_report_checks']=='PASS_SCOPED_F1_REPAIR_AND_PRESERVATION'
+for p in [packet_path,root/'scripts/codex_harness/research_controller.py',root/'scripts/codex_harness/native_routing.py',root/'docs/harness/NATIVE_ROUTING_POLICY_V1.json']:
+ check(p,label='diagnostic source')
+plan='''Perform exactly one controller-envelope-only repair for R37-00-FIRST-REPORT after this acknowledged research result is recorded. Use the next ordinary repair packet under the same task/input/frontier/spec; retain candidate sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee, whose unchanged ARTIFACT_MANIFEST.json is bound to producer packet a21f9000155d921999f51dcff003c2233922f4ce75b1fe2b0aeb82092282bd16. The current missing product binding is a controller result-envelope omission, not an F1 scientific/report-content failure. The newly returned controller envelope binds the NEW actual repair packet and worker agent, while its candidate identity and producer_packet_id refer truthfully to this retained producer. Do not relabel the unchanged manifest or retained RESULT.json as authored by the new worker. No repository write, manifest refresh, report rebuild, new numerical producer, solver/ODE, theorem, Git mutation or publication is required or authorized by this repair.
+Before execution confirm the frozen input sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba, candidate, task spec and frontier match the current repair packet; retain all historical raw receipts, F1 closure and the product-binding blocker. Confirm the live task has no targeted_repairs and the new packet has no continuation binding requiring a changed candidate. Use a fresh lower-tier repair agent through the supported route and actual host ACK. A reused-author followup currently requires a new candidate; it is not the unchanged-candidate path. If fresh transport is unavailable, return the exact blocker and checkpoint; do not fabricate a dispatch, mutate STATE or manufacture a packaging identity merely to bypass that requirement.
+The worker writes only a unique external raw receipt and controller result envelope. Include the new actual packet_id, task_id, agent_id, input_identity, frontier_identity, task_spec_identity, outcome=success, candidate_identity=sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee, qualified_products=[\"convergence_baseline_report\"], acceptance_met=false, meaningful validation_evidence and actual raw_receipt path/hash. This field proposes the product during repair; it does not independently qualify it. Bind producer_packet_id=a21f9000155d921999f51dcff003c2233922f4ce75b1fe2b0aeb82092282bd16, base_candidate_identity equal to the unchanged candidate, this research packet, the previous blocker/review receipt and the preserved author-result identity. Preserve requested/transport-selected/observed-runtime separation; UNKNOWN remains UNKNOWN without independent evidence.
+Validate the exact manifest identity, all seven manifest artifact hashes/sizes, six retained figures and frozen input references against retained expectations. Reuse the prior independent review's sealed F1 closure and build/source checks for byte-identical objects; do not rerun report/PDF build or scientific producers. The host then records this new repair result through research_controller.py record and verifies from the recorded task that phase=review, state=ready, candidate_products=[\"convergence_baseline_report\"], unchanged candidate/input/spec, preserved history/failures and cumulative accounting. No direct STATE edit, historical-envelope overwrite, campaign reinitialization, resume/append or acceptance rewrite is permitted.
+Dispatch and ACK one fresh independent reviewer, distinct from all recorded contributors, for this exact candidate and new binding. The reviewer checks the binding, retained candidate/source bytes, prior sealed F1 closure and unchanged report acceptance; only on its actual scoped pass may it return acceptance_met=true and qualified_products=[\"convergence_baseline_report\"]. This true flag is exclusively the R37 report-production acceptance, with original42_effect=none and no new scientific admission. If this exact product is omitted, do not accept empty-product completion as a report qualification. Record review normally, confirm task qualified_products and preserved original scientific contracts, then follow the latest owner direction: checkpoint and stop other work; do not dispatch downstream or unrelated branches. If any immutable identity drifts or a new substantive defect appears, return the exact blocker without expanding this repair.'''
+write('REPAIR_PLAN.json',{'repair_plan':plan,'repo_writes_allowed':[],'state_writer':'host via supported controller only','scope':'envelope-only product proposal'})
+# This proof operates exclusively on deep-copied dictionaries. It never calls save/main.
+sys.path.insert(0,str(root/'scripts/codex_harness'))
+import research_controller as rc
+from native_routing import load_policy
+rc.save=lambda *args,**kwargs:(_ for _ in ()).throw(AssertionError('disk state save prohibited in read-only proof'))
+policy=load_policy();profiles={(x['model'],x['effort']) for x in packet['route']['availability_catalog_profiles']}
+fixture_path=write('TRANSITION_FIXTURE_RECEIPT.json',{'kind':'SYNTHETIC_IN_MEMORY_CONTROLLER_TEST_ONLY','native_execution':False,'scientific_validation':False,'purpose':'exercise existing record gates on a deep copy; never submit this fixture'})
+work=copy.deepcopy(live)
+ack_needed=work['tasks'][task_id]['state']=='planned'
+if ack_needed:rc.acknowledge(work,packet['packet_id'],agent,'UNKNOWN')
+else:assert work['packets'][packet['packet_id']]['agent_id']==agent
+research_fixture={'packet_id':packet['packet_id'],'task_id':task_id,'agent_id':agent,'input_identity':packet['input_identity'],'candidate_identity':packet['candidate_identity'],'outcome':'success','repair_plan':plan,'raw_receipt':fixture_path}
+rc.record(work,research_fixture,policy)
+assert work['tasks'][task_id]['phase']=='repair' and work['tasks'][task_id]['state']=='ready'
+repair_packet=rc.next_packet(work,policy,profiles,preferred_tasks=(task_id,),allow_discovery=False)
+assert repair_packet['task_id']==task_id and repair_packet['phase']=='repair'
+rc.acknowledge(work,repair_packet['packet_id'],'FIXTURE_ONLY_FRESH_REPAIR_NO_NATIVE_DISPATCH','UNKNOWN')
+repair_result={'packet_id':repair_packet['packet_id'],'task_id':task_id,'agent_id':'FIXTURE_ONLY_FRESH_REPAIR_NO_NATIVE_DISPATCH','input_identity':packet['input_identity'],'candidate_identity':packet['candidate_identity'],'outcome':'success','acceptance_met':False,'raw_receipt':fixture_path,'validation_evidence':['FIXTURE ONLY: previously checked retained candidate identity']}
+def review_on_copy(state,label,products):
+ review_packet=rc.next_packet(state,policy,profiles,preferred_tasks=(task_id,),allow_discovery=False)
+ assert review_packet['phase']=='review'
+ rc.acknowledge(state,review_packet['packet_id'],label,'UNKNOWN')
+ return {'packet_id':review_packet['packet_id'],'task_id':task_id,'agent_id':label,'input_identity':packet['input_identity'],'candidate_identity':packet['candidate_identity'],'outcome':'success','acceptance_met':True,'qualified_products':products,'validation_evidence':['SYNTHETIC FIXTURE ONLY; not an actual scientific/report review verdict'],'raw_receipt':fixture_path}
+negative=copy.deepcopy(work);rc.record(negative,repair_result,policy)
+assert negative['tasks'][task_id]['candidate_products']==[]
+negative_review=review_on_copy(negative,'FIXTURE_ONLY_NEGATIVE_REVIEW_NO_NATIVE_DISPATCH',[product]);before_reject=copy.deepcopy(negative)
+try:rc.record(negative,negative_review,policy)
+except rc.ControllerError as exc:
+ rejection=str(exc);assert rejection=='review cannot invent candidate scientific products'
+else:raise AssertionError('missing-product negative control unexpectedly accepted')
+assert negative==before_reject
+empty=copy.deepcopy(before_reject);empty_result=dict(negative_review,qualified_products=[]);rc.record(empty,empty_result,policy)
+obligation={'task_id':task_id,'evidence':'qualified','product':product}
+assert empty['tasks'][task_id]['state']=='completed' and not rc._obligation_met(obligation,empty['tasks'])
+positive=copy.deepcopy(work);rc.record(positive,{**repair_result,'qualified_products':[product]},policy)
+assert positive['tasks'][task_id]['candidate_products']==[product]
+assert positive['tasks'][task_id]['candidate_identity']==packet['candidate_identity']
+positive_review=review_on_copy(positive,'FIXTURE_ONLY_POSITIVE_REVIEW_NO_NATIVE_DISPATCH',[product]);rc.record(positive,positive_review,policy)
+assert positive['tasks'][task_id]['qualified_products']==[product] and rc._obligation_met(obligation,positive['tasks'])
+for k in ('campaign','campaign_identity','frontiers','ultra_repairs','ultra_pending','acquisition_lifecycle'):
+ assert positive.get(k)==live.get(k),k
+assert {k:v for k,v in positive['tasks'].items() if k!=task_id}=={k:v for k,v in live['tasks'].items() if k!=task_id}
+assert positive['tasks'][task_id]['spec']==task['spec']
+assert positive['tasks'][task_id]['history'][:len(task['history'])]==task['history']
+assert positive['tasks'][task_id]['failures']==task['failures']
+assert positive['tasks'][task_id]['ultra_used']==task['ultra_used']
+# Existing acknowledgment correctly rejects an already-used author without followup.
+reuse=copy.deepcopy(work)
+# We test this on a fresh planned repair state, not the already acknowledged copy.
+reuse=copy.deepcopy(live)
+if reuse['tasks'][task_id]['state']=='planned':rc.acknowledge(reuse,packet['packet_id'],agent,'UNKNOWN')
+rc.record(reuse,research_fixture,policy);reuse_packet=rc.next_packet(reuse,policy,profiles,preferred_tasks=(task_id,),allow_discovery=False)
+reuse_before=copy.deepcopy(reuse)
+try:rc.acknowledge(reuse,reuse_packet['packet_id'],task['authors'][-1],'UNKNOWN')
+except rc.ControllerError as exc:reuse_rejection=str(exc)
+else:raise AssertionError('reused agent accepted without followup')
+assert reuse==reuse_before
+proof={'kind':'SYNTHETIC_IN_MEMORY_CONTROLLER_TEST_ONLY','actual_native_dispatches':0,'live_state_writes':0,'repository_writes':0,'scientific_acceptance':False,'controls':{'omitted_products_rejects_review_product':rejection,'reject_is_atomic':True,'empty_product_success_does_not_satisfy_report_dependency':True,'explicit_product_repair_accepts_unchanged_candidate':True,'explicit_product_fresh_review_satisfies_typed_dependency':True,'same_task_input_spec_candidate_preserved':True,'all_prior_task_history_failures_preserved':True,'all_other_tasks_campaign_frontiers_ultra_acquisition_preserved':True,'reused_author_without_followup_rejected':reuse_rejection},'fixture_only_attempts':{'research':packet['attempt'],'repair':repair_packet['attempt'],'review':positive['tasks'][task_id]['attempt']},'in_memory_ack_of_actual_research_was_needed':ack_needed,'test_source_sha256':sha((root/'scripts/codex_harness/research_controller.py').read_bytes())}
+proof_path=write('TRANSITION_PROOF.json',proof)
+# Recheck every observed file; no write permission to the candidate/source or state is used.
+for row in file_checks:assert sha(Path(row['path']).read_bytes())==row['sha256'],row['path']
+end_state_bytes=state_path.read_bytes();end_state=json.loads(end_state_bytes)
+state_observation={'path':str(state_path),'before_sha256':sha(state_bytes),'after_sha256':sha(end_state_bytes),'bytes_unchanged_during_probe':state_bytes==end_state_bytes,'research_state_at_start':task['state'],'research_state_at_end':end_state['tasks'][task_id]['state'],'packet_agent_at_start':live['packets'][packet['packet_id']].get('agent_id'),'packet_agent_at_end':end_state['packets'][packet['packet_id']].get('agent_id'),'no_state_write_performed_by_research':True}
+report={'schema':'htt.r37_controller_product_binding_research/1','task_id':task_id,'packet_id':packet['packet_id'],'agent_id':agent,'input_identity':packet['input_identity'],'candidate_identity':packet['candidate_identity'],'diagnosis':{'classification':'controller result-envelope product binding omission; packaging/metadata only','exact_omission':'CONTROLLER_RESULT_VALIDATED_cull00vg.json lacks qualified_products; singular qualified_product_candidate in retained author RESULT.json is not consumed by record()','effect':'record() defaults to [] and stores candidate_products=[]; review cannot add an undeclared product; empty-product success leaves typed product dependency false','F1_status_from_sealed_review':'CLOSED','no_new_scientific_failure':True},'supported_transition':['Host actual ACK of research packet if still planned','Host record this research success -> repair/ready','Host next preferred R37-00 and fresh lower-tier dispatch/ACK','Worker external envelope proposes exact product against unchanged candidate','Host record -> review/ready with candidate_products containing report product','Fresh independent exact-candidate scoped review, then normal host record','Checkpoint current report and stop other work under latest owner direction'],'repair_plan':plan,'evidence_sources':[{'path':'scripts/codex_harness/research_controller.py','lines':'2587-2611','supports':'research/repair/review transition and opt-in product lists'},{'path':'scripts/codex_harness/research_controller.py','lines':'2571-2574','supports':'dispatched reused-author followup requires new candidate'},{'path':'scripts/codex_harness/research_controller.py','lines':'164-173','supports':'typed qualified product dependency'},{'path':'docs/harness/CONTINUOUS_RESEARCH_CONTROLLER.md','lines':'485-492','supports':'documented opt-in product contract'}],'raw_checks':file_checks,'state_observation':state_observation,'transition_proof':proof,'runtime':{'requested':packet['route']['requested'],'transport_selected':packet['route']['transport_selected'],'observed':'UNKNOWN','observation_status':'NOT_INDEPENDENTLY_OBSERVED','actual_agent_id':agent},'original42_effect':'none','scientific_admission':'UNCHANGED','report_qualification':'PENDING_ACTUAL_ENVELOPE_REPAIR_AND_INDEPENDENT_REVIEW','executed_scientific_runs':0,'git_commands':0,'repository_writes':0,'controller_writes':0,'children_spawned':0}
+report_path=write('RESEARCH.json',report)
+raw={'schema':'htt.r37_controller_product_binding_raw_receipt/1','created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'packet_id':packet['packet_id'],'task_id':task_id,'agent_id':agent,'phase':'research','attempt':packet['attempt'],'input_identity':packet['input_identity'],'candidate_identity':packet['candidate_identity'],'frontier_identity':packet['frontier_identity'],'task_spec_identity':packet['task_spec_identity'],'outcome':'success','report_path':report_path,'report_sha256':sha(Path(report_path).read_bytes()),'transition_proof_path':proof_path,'transition_proof_sha256':sha(Path(proof_path).read_bytes()),'validation':proof['controls'],'checked_file_count':len(file_checks),'state_observation':state_observation,'requested_runtime':packet['route']['requested'],'transport_selected':packet['route']['transport_selected'],'observed_runtime':'UNKNOWN','scope':'read-only controller diagnosis and in-memory transition tests; external evidence writes only','actual_execution':{'tool':'functions.exec -> exec_command python3 -B','controller_state_saved':False,'scientific_runs':0,'native_dispatches':0,'git_commands':0,'repository_writes':0},'original42_effect':'none','scientific_admission':'UNCHANGED','report_qualification':'PENDING_ACTUAL_ENVELOPE_REPAIR_AND_INDEPENDENT_REVIEW'}
+raw_path=write('RAW_RECEIPT.json',raw)
+result={'schema':'htt.r37_controller_product_binding_research_result/1','campaign':packet['campaign'],'packet_id':packet['packet_id'],'task_id':task_id,'attempt':packet['attempt'],'phase':'research','agent_id':agent,'input_identity':packet['input_identity'],'candidate_identity':packet['candidate_identity'],'frontier_identity':packet['frontier_identity'],'task_spec_identity':packet['task_spec_identity'],'outcome':'success','acceptance_met':False,'qualified_products':[],'repair_plan':plan,'raw_receipt':raw_path,'raw_receipt_sha256':sha(Path(raw_path).read_bytes()),'research_artifact':report_path,'research_artifact_sha256':sha(Path(report_path).read_bytes()),'validation_evidence':['Reproduced exact live/envelope omission: candidate_products=[]; recorded repair envelope omits qualified_products; retained author singular product field is not the controller proposal field.','Validated unchanged candidate manifest, seven artifacts, six retained figures, six frozen inputs, five historical raw receipts and exact recorded repair envelope.','Executed in-memory current-controller negative control: omitted product rejects review qualification atomically; empty-product completion fails typed dependency.','Executed in-memory current-controller positive control: ordinary fresh repair with explicit product accepts unchanged candidate, then independent fixture review satisfies typed dependency while original contracts, prior history/failures, other tasks and ultra/acquisition accounting remain unchanged. These fixture tests are not actual native dispatch or scientific/report acceptance.','No repository/STATE/Git writes, scientific producer, report rebuild or child dispatch performed; bounded external evidence only.'],'requested_runtime':{'model':packet['route']['requested']['model'],'reasoning_effort':packet['route']['requested']['effort']},'transport_selected':packet['route']['transport_selected'],'observed_runtime':'UNKNOWN','scientific_admission':'UNCHANGED; report qualification pending real repair and fresh scoped review','original42_effect':'none','next_executable_phase':'repair','owner_stop_boundary':'Complete current report qualification only, checkpoint, and stop others; do not advance other branches.'}
+result_path=write('CONTROLLER_RESULT.json',result)
+# Validate this final actual research return against a deep copy; no production record.
+finalcopy=copy.deepcopy(end_state)
+if finalcopy['tasks'][task_id]['state']=='planned':rc.acknowledge(finalcopy,packet['packet_id'],agent,'UNKNOWN')
+assert finalcopy['packets'][packet['packet_id']]['agent_id']==agent
+rc.record(finalcopy,result,policy)
+assert finalcopy['tasks'][task_id]['phase']=='repair' and finalcopy['tasks'][task_id]['state']=='ready'
+print(json.dumps({'output_directory':str(out),'controller_result':result_path,'raw_receipt':raw_path,'raw_receipt_sha256':result['raw_receipt_sha256'],'outcome':'success','candidate_identity':packet['candidate_identity'],'checked_files':len(file_checks),'final_research_result_record_validation':'PASS_ON_DEEP_COPY_ONLY','state_observation':state_observation,'proof':proof['controls']},indent=2))
+PY
