@@ -1,0 +1,377 @@
+{
+  "packet_id": "4daaaa408fc3227b03d578d395d7cab0105ae8d64c7cb2496eda5db3bbd3fca6",
+  "task_id": "R37-04-CLASSIFICATION",
+  "input_identity": "sha256:68bbd1814f6d7e761290fcb54632240fd952d4a15f96e929762f8697c0072656",
+  "candidate_identity": "sha256:b1a0eec816b5d922349d17aaa0afc3ce8b58c83154c8a2f7427f1965212d085a",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "a6ced0f72920821bfd119b1394f276a10343282c0acb0c09ed09ce9a78bf6518",
+  "attempt": 4,
+  "phase": "review",
+  "agent_id": "/root/rc_4daaaa408fc3227b",
+  "reviewer": "/root/rc_4daaaa408fc3227b",
+  "outcome": "success",
+  "verdict": "SCOPED_PASS_TARGETED_CLOSEOUT",
+  "acceptance_met": true,
+  "qualified_products": [
+    "physical_family_compatibility"
+  ],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "findings": [],
+  "original42_acceptance_effect": "none",
+  "scientific_scope": "Source-qualified conditional finite supplied-family compatibility only; no empirical family identification, native sky transfer, full FLRW inference, or original42 promotion.",
+  "validation_evidence": [
+    "All nine current artifact SHA256/size pairs, six frozen source hashes, original producer receipt, two historical review/repair receipts, predecessor manifest and source publication-status hash match; candidate identity remains exact.",
+    "Captured actual plot has 200 points y=abs(s)/sqrt(2), witness marker (1,0.7071067811865475), and common-event tau=0.5258155191041224. At s=0.6 it gives 0.42426406871192845 and compatible set [II]; raw shift threshold is 0.7436154384232991. Both sides of threshold and negative shifts independently checked.",
+    "Sealed adequacy_residual.pdf and current plot-only replay render to identical 640x420 RGB pixels; max channel difference 0; candidate writes 0.",
+    "All 135 CSV rows are byte-identical to pre-repair SHA256 5a6462730c613217115ab0d68c261e0c3c4d4ea925ae297719d341e1051df7de; independent spectral-permutation checks reproduce every numerical/membership column with max numeric error 8.881784197001252e-16 and zero membership discrepancies.",
+    "Independent normalized 7-to-6 nuisance quotient has orthonormal rows and rank 6, annihilates the common nuisance, and exact chi-square(6) CDF at the declared quantile is 0.95. Seventy-five deterministic fixed-amplitude rotations preserve STF5 pairwise LR to 8.881784197001252e-16 while independent amplitudes exhibit the explicitly excluded 5D failure.",
+    "Candidate/result/report explicitly limit a=0 to spatial-Ricci overlap; retained flat source has nonzero extrinsic STF norm 0.12247448713915901. Common fixed amplitude, STF5/trace-adequacy distinction, source-error a=1 scope and original42 ceiling remain explicit.",
+    "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -B -m pytest -p no:cacheprovider -q <product>/test_classification.py: 4 passed, 1 nonfatal Matplotlib Axes3D import warning; exit 0. Independent closeout script also exits 0.",
+    "Observed diff is limited to intended plot scale/marker, focused regression, explicit Ricci-origin wording, corresponding PDF/result/script seals and report test count. Numerical result JSON changes only script_sha256 and flrw_origin; no prior numerical fields change."
+  ],
+  "schema": "htt.r37.independent_review_raw_receipt/1",
+  "timestamp_utc": "2026-10-29T04:00:46.748700+00:00",
+  "packet_path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_NEXT_022_20261029.json",
+  "packet_sha256": "db65bde98da73e5db5948a50fa0957b8e3451ee43fb672c74e839168e9b472d4",
+  "candidate_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/ARTIFACT_MANIFEST.json",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "base_head_observed": "8ab3b72ffaae5e21baaa53d6cc969434c10b1c1f",
+  "base_branch_observed": "research/htt-adaptive-methods-20261023",
+  "review_independence": {
+    "fresh_agent": true,
+    "not_in_authors_or_contributors": true,
+    "recorded_authors": [
+      "/root/rc_05d056d4e58335c3",
+      "/root/rc_1b528451805cca51"
+    ],
+    "recorded_contributors": [
+      "/root/rc_05d056d4e58335c3",
+      "/root/rc_e8c3d4289604b043",
+      "/root/rc_1b528451805cca51"
+    ],
+    "repo_or_candidate_edits": 0
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8",
+    "pytest": "9.1.1",
+    "Pillow": "10.2.0"
+  },
+  "commands": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/independent_closeout.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 5.261733770370483,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/independent_closeout.stdout.txt",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/independent_closeout.stderr.txt",
+      "environment_overrides": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "MPLCONFIGDIR": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/mpl_independent_closeout",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1"
+      }
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/test_classification.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "elapsed_seconds": 4.253528833389282,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/pytest.stdout.txt",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/pytest.stderr.txt",
+      "environment_overrides": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "MPLCONFIGDIR": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/mpl_pytest",
+        "PYTEST_DISABLE_PLUGIN_AUTOLOAD": "1"
+      }
+    },
+    {
+      "command": [
+        "pdftoppm",
+        "-png",
+        "-singlefile",
+        "-r",
+        "100",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/adequacy_residual.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/adequacy_sealed"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "pdftoppm",
+        "-png",
+        "-singlefile",
+        "-r",
+        "100",
+        "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/adequacy_plot_replay.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/adequacy_replay"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "independent_checks": {
+    "artifact_hashes": {
+      "classification.py": "d47f329baea5e2cbfac8c89ea6be009b1679f20cdb0339eb23b5e2a7b0eef865",
+      "test_classification.py": "f69de862f31a24792b247fce2c090ba54122cb33fe8dbb190b5a542b097dcf7c",
+      "FAMILY_COMPATIBILITY_RESULT.json": "e43da5d48df1db293d237375dd7b0a9b624b430cf40d9e730b5ee98a79b2f752",
+      "FAMILY_SEPARATION.csv": "5a6462730c613217115ab0d68c261e0c3c4d4ea925ae297719d341e1051df7de",
+      "family_compatibility_vs_amplitude.pdf": "3115e4d3b95b6f02cf787a43991b674c38d18711a6d0d2895ff733a11d19ff56",
+      "separation_vs_error_budget.pdf": "f4ceecaa4372232a1335a9d74aa6feb3f3d8571b75e9b9510510648984a2cf79",
+      "adequacy_residual.pdf": "087e7e6b6bae06bec4e6249b4d0446ee6490d86f064272ebf304d9315fe35c13",
+      "chirality_stability_radius.pdf": "b7eebb774247f0217aa96535f26f008b0bfdc16168ac0aff7abf3af93e66179f",
+      "REPORT_DELTA.md": "2a82feb373eec244fc5aa6f412ee34fedc009084dc6ac73562853b5bf97f8d59"
+    },
+    "frozen_inputs": {
+      "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/DEVELOPMENT_PLAN.md": "771e3415d0d7ff7dca5dacbd269723d6cc14bb9f9d1fac75673b82534ad9d4aa",
+      "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/DATA_ANALYSIS_CONTRACTS.md": "11f8d3870c929202de785bcbc66805e6ff33000178a5d6bd2f29683e1eef10e0",
+      "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/SOURCE_REUSE.json": "f3a79443086652a4e2eb53a9cb3030db18f16a38568f4a13bc062174bc653616",
+      "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL3_CLASSIFICATION.json": "51d18036b5b56bf359a7e0dce1e8ce811e0f88e19ec15991559ef871048e3dd8",
+      "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/INDEPENDENT_REVIEW.json": "c4fb380e87eb51482c7fd8178a17386b666bac541c5e6594ec3bf16af72846a2",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/TABLE.json": "eaf4e567f856a8d01e40f6721613239b8f64e6dc0fbe7d5b35070bfc9faeb363"
+    },
+    "historical_receipts": {
+      "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_REVIEW_e8c3d4289604b043_20261029T032119Z/RAW_RECEIPT.json": "7b0c1e69394befb7c0d6dfde3bd10e4ba4290c589980dfe00634d1f3c128c88a",
+      "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_REPAIR_1b528451805cca51_20261029T033937Z_85acb207/RAW_RECEIPT.json": "9b3a4ecf5655862234b5414d51068095b7f1452cd9bd6e80db993cd1ce49d473"
+    },
+    "original_producer_receipt_sha256": "74fc4e1dbf8b8b1cedcea64c3d9664655033045d1ba0819ec6bcd61da5841c6c",
+    "changed_artifacts": [
+      "classification.py",
+      "test_classification.py",
+      "FAMILY_COMPATIBILITY_RESULT.json",
+      "adequacy_residual.pdf",
+      "REPORT_DELTA.md"
+    ],
+    "changed_result_fields": [
+      "script_sha256",
+      "flrw_origin"
+    ],
+    "source_publication_status_sha256": "a7b15db7743b3d745bf6b065b0a5622b9fe72f348949febfcbd3f2e3e4a6e592",
+    "origin_control": {
+      "spatial_ricci_zero": true,
+      "extrinsic_STF_norm": 0.12247448713915901,
+      "interpretation": "Spatial Ricci origin overlap only; nonzero extrinsic STF prevents inferring full FLRW."
+    },
+    "common_event": {
+      "profiled_dimension": 6,
+      "cdf_at_declared_quantile": 0.95,
+      "noise_quantile": 3.54846265920102,
+      "tube": 0.5258155191041224,
+      "raw_shift_threshold": 0.7436154384232991
+    },
+    "actual_plot": {
+      "curve_points": 200,
+      "x_axis_label": "Raw trace-only shift",
+      "y_at_raw_shift_0p6": 0.42426406871192845,
+      "witness_marker": [
+        1.0,
+        0.7071067811865475
+      ],
+      "threshold": 0.5258155191041224,
+      "raw_axis_threshold": 0.7436154384232991,
+      "candidate_pdf_writes": 0,
+      "probes": [
+        {
+          "shift": -1.0,
+          "II_profile_distance": 0.7071067811865475,
+          "compatible_set": []
+        },
+        {
+          "shift": -0.6,
+          "II_profile_distance": 0.42426406871192857,
+          "compatible_set": [
+            "II"
+          ]
+        },
+        {
+          "shift": 0.0,
+          "II_profile_distance": 0.0,
+          "compatible_set": [
+            "II"
+          ]
+        },
+        {
+          "shift": 0.6,
+          "II_profile_distance": 0.42426406871192845,
+          "compatible_set": [
+            "II"
+          ]
+        },
+        {
+          "shift": 0.7436154284232991,
+          "II_profile_distance": 0.5258155120330545,
+          "compatible_set": [
+            "II"
+          ]
+        },
+        {
+          "shift": 0.7436154484232992,
+          "II_profile_distance": 0.5258155261751902,
+          "compatible_set": []
+        },
+        {
+          "shift": 1.0,
+          "II_profile_distance": 0.7071067811865475,
+          "compatible_set": []
+        }
+      ]
+    },
+    "numerical_rows": {
+      "count": 135,
+      "byte_identical_to_pre_repair": true,
+      "sha256": "5a6462730c613217115ab0d68c261e0c3c4d4ea925ae297719d341e1051df7de",
+      "maximum_numeric_error": 8.881784197001252e-16,
+      "membership_discrepancies": 0
+    },
+    "carrier_adequacy": {
+      "fixed_amplitude_comparisons": 75,
+      "max_LR_difference": 8.881784197001252e-16,
+      "varying_amplitude_5D_LR_failure": -0.0390625,
+      "interpretation": "5D STF preserves fixed-common-amplitude pairwise LR only; trace-calibration adequacy remains in all compatibility tubes."
+    }
+  },
+  "pdf_comparison": {
+    "commands": [
+      {
+        "command": [
+          "pdftoppm",
+          "-png",
+          "-singlefile",
+          "-r",
+          "100",
+          "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/adequacy_residual.pdf",
+          "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/adequacy_sealed"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "pdftoppm",
+          "-png",
+          "-singlefile",
+          "-r",
+          "100",
+          "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/adequacy_plot_replay.pdf",
+          "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/adequacy_replay"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "sealed_shape": [
+      420,
+      640,
+      3
+    ],
+    "replay_shape": [
+      420,
+      640,
+      3
+    ],
+    "identical_pixels": true,
+    "max_channel_difference": 0
+  },
+  "physics_math_audit": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_CLOSEOUT_4daaaa408fc3227b_20261029T035627Z_d5fe9602/REVIEW.md",
+    "sha256": "184c37ba4baa9e4693d264d15fbc6e7e8f7a3c7bb7409f0adf7ee785bdf236c1"
+  },
+  "scope_controls": {
+    "source_producer_reruns": 0,
+    "Monte_Carlo_reruns": 0,
+    "solver_runs": 0,
+    "ODE_runs": 0,
+    "STATE_writes": 0,
+    "Git_writes": 0,
+    "repo_writes": 0,
+    "children_spawned": 0
+  },
+  "review_scope": "Targeted repair closeout plus independent finite row, source identity, common-event, amplitude and claim-boundary checks. Broader unchanged geometry/sign-radius evidence reused from prior bound review; no four-axis proof claim.",
+  "non_scientific_discovery_errors": [
+    {
+      "command": "rg -n ... scripts/codex_harness/continuous_research_controller.py",
+      "exit_code": 2,
+      "reason": "Guessed optional controller source path absent; governing controller documentation read successfully. No scientific execution failure."
+    }
+  ],
+  "external_evidence": {
+    "REVIEW.md": {
+      "sha256": "184c37ba4baa9e4693d264d15fbc6e7e8f7a3c7bb7409f0adf7ee785bdf236c1",
+      "bytes": 4682
+    },
+    "adequacy_plot_replay.pdf": {
+      "sha256": "8c7aa2f6aacb02a3dac2eb44b86a50285a3892e76865ee97b4ee02ddca5bdafe",
+      "bytes": 18642
+    },
+    "adequacy_replay.png": {
+      "sha256": "de2e440c13e6bccfc668504fb918e1babd5da1df3917d965b680160034d55b51",
+      "bytes": 20063
+    },
+    "adequacy_sealed.png": {
+      "sha256": "de2e440c13e6bccfc668504fb918e1babd5da1df3917d965b680160034d55b51",
+      "bytes": 20063
+    },
+    "independent_closeout.py": {
+      "sha256": "7acb33cf39cecf15d1268a698485bfb51d231acb2d0c80dc6222b4fc293b78aa",
+      "bytes": 12132
+    },
+    "independent_closeout.stderr.txt": {
+      "sha256": "55db772ccecf91045aeaa03c8bf66fae5dfa8ce2a75a4c3e77d53dc7f2b03852",
+      "bytes": 379
+    },
+    "independent_closeout.stdout.txt": {
+      "sha256": "fb2feda59755fb9d4dc212d71e3b33506280fdf0276c34c59e488f0ef3fecd1a",
+      "bytes": 5277
+    },
+    "independent_closeout_execution.json": {
+      "sha256": "5fc48b0ecd1a4cee1d81e16e99dff5b7b97e7c24e466fa2b4552a41b058c6ea9",
+      "bytes": 916
+    },
+    "pdf_comparison.json": {
+      "sha256": "8b4c0d206024f62f9a728867a1f9404574e654e02ffdfce77d888d3405d6dcaf",
+      "bytes": 1162
+    },
+    "pytest.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "pytest.stdout.txt": {
+      "sha256": "6106a60e200b93b0fb124699c58764dacba1ac2fc776807a802d1c6258620ac6",
+      "bytes": 729
+    },
+    "pytest_execution.json": {
+      "sha256": "57716c2ddfb626792cf63bce1a811062500d2cca790035958489831dd47a256e",
+      "bytes": 982
+    },
+    "repair_diff.txt": {
+      "sha256": "fd4b5148fda966766d72de42f0f7b35033ab75278b69d84b69f8cb97389bb853",
+      "bytes": 7201
+    }
+  }
+}

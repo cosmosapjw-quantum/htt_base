@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python",
+    "-B",
+    "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_REVIEW_e8c3d4289604b043_20261029T032119Z/plot_falsifier.py"
+  ],
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "exit_code": 1,
+  "stdout": "{\n  \"x_axis_label\": \"Raw trace-only shift\",\n  \"probe_raw_trace_shift\": 0.6,\n  \"actual_plotted_adequacy\": 0.6,\n  \"expected_adequacy\": 0.42426406871192845,\n  \"tube\": 0.5258155191041224,\n  \"compatible_set\": [\n    \"II\"\n  ],\n  \"actual_marker\": [\n    0.7071067811865475,\n    0.7071067811865475\n  ],\n  \"expected_marker\": [\n    1.0,\n    0.7071067811865475\n  ],\n  \"pdf_files_written\": 0\n}\n",
+  "stderr": "/home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.\n  warnings.warn(\"Unable to import Axes3D. This may be due to multiple versions of \"\nTraceback (most recent call last):\n  File \"/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_REVIEW_e8c3d4289604b043_20261029T032119Z/plot_falsifier.py\", line 22, in <module>\n    assert np.allclose(y,np.asarray(x)/np.sqrt(2),rtol=0,atol=1e-14), 'Raw trace-shift plot overstates profiled adequacy by sqrt(2) and changes rejection decisions'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Raw trace-shift plot overstates profiled adequacy by sqrt(2) and changes rejection decisions\n",
+  "script_sha256": "d0ed99f78de9c46a52fa2ac4374e9849dce2967a905729a8288cf51ec9247625",
+  "purpose": "Expected failing review falsifier; all Figure.savefig calls intercepted; no candidate producer/main call or repo write"
+}

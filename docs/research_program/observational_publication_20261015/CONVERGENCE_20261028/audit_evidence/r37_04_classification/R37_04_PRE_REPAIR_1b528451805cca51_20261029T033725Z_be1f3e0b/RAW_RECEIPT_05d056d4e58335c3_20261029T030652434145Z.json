@@ -1,0 +1,66 @@
+{
+  "schema": "htt.r37_native_execute_raw_receipt/1",
+  "packet_id": "05d056d4e58335c37642b8ebd66affa7121e599f05db62ee6f7094a54f7fd3e6",
+  "packet_path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_NEXT_019_20261029.json",
+  "task_id": "R37-04-CLASSIFICATION",
+  "attempt": 1,
+  "phase": "execute",
+  "input_identity": "sha256:68bbd1814f6d7e761290fcb54632240fd952d4a15f96e929762f8697c0072656",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "a6ced0f72920821bfd119b1394f276a10343282c0acb0c09ed09ce9a78bf6518",
+  "agent_id": "/root/rc_05d056d4e58335c3",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "timestamp_utc": "2026-10-29T03:06:52.434177+00:00",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "base_branch": "research/htt-adaptive-methods-20261023",
+  "base_head": "8ab3b72ffaae5e21baaa53d6cc969434c10b1c1f",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8",
+    "pytest": "9.1.1"
+  },
+  "candidate_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/ARTIFACT_MANIFEST.json",
+  "candidate_identity": "sha256:c1efab3e58510a0aa1dd8a9d286540381bf55993e54d2ddcb0558fbb951e1da3",
+  "commands": [
+    {
+      "cmd": "OPENBLAS_NUM_THREADS=1 python -B docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/classification.py",
+      "exit_code": 0,
+      "outcome": "135 CSV rows, result JSON and four vector PDFs generated; Matplotlib Axes3D import warning only"
+    },
+    {
+      "cmd": "OPENBLAS_NUM_THREADS=1 python -B -m pytest -q docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/test_classification.py",
+      "exit_code": 0,
+      "outcome": "3 passed, one Matplotlib Axes3D warning"
+    },
+    {
+      "cmd": "pdfinfo <each of four output PDFs>",
+      "exit_code": 0,
+      "outcome": "each one page; sizes 15,776 to 17,962 bytes"
+    }
+  ],
+  "validation_evidence": [
+    "All six frozen assignment input SHA256 values match.",
+    "Exact II/VII0 SO(3) orbit gap sqrt(2) at a=1; analytic amplitude law sqrt(2)a^2 and global FLRW-origin overlap.",
+    "R36 source conservative radii 0.1471034953 and 0.2698726924 bind a=1; source-plus-synthetic-noise margin at sigma=.12 is 0.1456063364880129.",
+    "Common 7D Gaussian law with same calibration nuisance, 6D profile, 5D fixed-amplitude LR carrier plus 1D adequacy; 200 randomized orientation/profile checks have errors <1e-12.",
+    "Strong scalar quadratic STF baseline separates the witness at sigma=.12, eps=.1; trace does not.",
+    "Out-of-family trace shift rejects every listed candidate while the STF carrier is unchanged.",
+    "Fixed-Q simple-spectrum ambient STF3 sign radius 1/sqrt(3) is attained.",
+    "Three targeted tests pass; four vector PDFs are one page each."
+  ],
+  "source_reruns": 0,
+  "solver_runs": 0,
+  "ODE_runs": 0,
+  "STATE_writes": 0,
+  "Git_writes": 0,
+  "children_spawned": 0,
+  "scientific_admission": "PENDING_INDEPENDENT_REVIEW",
+  "original42_acceptance_effect": "none",
+  "repo_write_scope": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION"
+}

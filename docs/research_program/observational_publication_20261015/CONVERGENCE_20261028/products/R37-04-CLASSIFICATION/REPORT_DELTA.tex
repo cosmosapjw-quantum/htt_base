@@ -1,0 +1,296 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage[margin=22mm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{DejaVu Serif}
+  \setsansfont[]{DejaVu Sans}
+  \setmonofont[]{DejaVu Sans Mono}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\hypertarget{r37-04-finite-physical-family-compatibility}{%
+\section{R37-04: finite physical-family
+compatibility}\label{r37-04-finite-physical-family-compatibility}}
+
+This is a source-qualified \textbf{conditional geometry-response
+calculation} for the two instantaneous R36-10 spatial-Ricci witnesses.
+It supplies a result for the P2/P5 methods discussion, not an observed
+CMB morphology or a Bianchi-family identification. The R36-10 later
+publication status formally qualifies its finite diagnostic product; its
+earlier immutable candidate prose still says pending and is retained.
+The original publication count remains \textbf{17/42 scientific}, with a
+separately reported \textbf{18/42 analytic} count. This result does not
+promote either count.
+
+\hypertarget{geometry-and-physical-domain}{%
+\subsection{Geometry and physical
+domain}\label{geometry-and-physical-domain}}
+
+In the R36 oriented orthonormal hypersurface-normal frame, signature
+\texttt{(-,+,+,+)}, \texttt{epsilon\_123=+1}, Ricci has units
+\texttt{u\_*\^{}2}. The retained II and unequal-VII0 witnesses are, up
+to proper rotations,
+
+\texttt{R\_II\ =\ diag(1/2,-1/2,-1/2)},
+\texttt{R\_VII0\ =\ diag(-1/2,3/2,-3/2)}.
+
+Their trace is \texttt{-1/2} in both cases, whereas \texttt{tr(R\^{}2)}
+is \texttt{3/4} and \texttt{19/4}. The trace-free quadratic values
+differ by the same \texttt{4}. These are actual R36 supplied finite
+geometries, not a complete parameterization of either Bianchi type. For
+a declared conditional family path, multiplying each source spatial
+structure coefficient by the same dimensionless amplitude
+\texttt{a\ in\ {[}0,1{]}} gives \texttt{R(a)=a\^{}2\ R(1)} by curvature
+homogeneity. The nuisance and noise law are identical between the
+competing paths. At each fixed \texttt{a}, each family permits its own
+proper \texttt{SO(3)} orientation. The figures sample
+\texttt{a=0,1/8,...,1}; the reported separation is analytic over the
+full continuous path. No source history, polarization transport, native
+solver, or ODE evolution is supplied by this scaling.
+
+For a single symmetric tensor under isotropic Frobenius error,
+minimizing over proper rotations is exactly the Euclidean distance
+between sorted eigenvalue triples. The source witness therefore has
+\texttt{delta(a)=sqrt(2)\ a\^{}2}. This is an \textbf{attained analytic
+minimum over orientations}, not a finite-grid upper bound. Its global
+infimum over \texttt{a\ in\ {[}0,1{]}} is zero at the common Ricci
+origin. The retained I and flat-VII0 controls also give identical flat
+local geometry through distinct simply transitive presentations. We
+preserve both labels as equivalent presentations; the compatible output
+can contain both. Local Ricci spectra alone cannot label a universal
+Bianchi presentation. The \texttt{a=0} statement is only a spatial-Ricci
+origin overlap; it does not establish a full FLRW spacetime, including
+its extrinsic geometry.
+
+The Gauss bridge used by the imported goal-3 analysis requires the
+electric Weyl tensor, anisotropic stress, normal-frame \texttt{h} and
+\texttt{Sigma}, density, and cosmological term, with a common congruence
+and conventions. A shear tensor alone cannot provide \texttt{R\_ij}. The
+imported direct-index Gauss check and independent review were read; this
+task did not replay their producers.
+
+\hypertarget{one-matched-conditional-law-and-compatible-sets}{%
+\subsection{One matched conditional law and compatible
+sets}\label{one-matched-conditional-law-and-compatible-sets}}
+
+The declared synthetic raw event has seven coordinates: trace divided by
+\texttt{sqrt(3)}, five orthonormal STF components, and a calibration
+coordinate. Noise is \texttt{N(0,sigma\^{}2\ I\_7)} and the same
+nuisance shifts trace and calibration. Profiling it leaves six
+orthonormal coordinates. At fixed \texttt{a}, all pairwise family mean
+differences, including orientation orbits, lie in the five STF
+coordinates. The 5D carrier preserves the full profiled family
+likelihood ratios. The sixth coordinate,
+\texttt{(y\_trace-y\_calibration)/sqrt(2)-tr(R)/sqrt(6)}, is the
+discarded-space adequacy residual; retaining it permits rejection of
+every listed family. If amplitude is jointly fitted rather than
+conditioned, its trace varies and the sixth coordinate must enter the
+common response carrier. We do not use the 5D reduction for that
+enlarged question.
+
+For one common 95\% six-dimensional Gaussian event, let
+\(r_{95}=\sqrt{\chi^2_6(0.95)}=3.5484626592\). A bounded joint
+deterministic response remainder \texttt{epsilon} gives each declared
+family a tube of radius \texttt{tau=r95*sigma+epsilon}. The compatible
+set is \emph{all} family orbits whose profiled distance from the same
+event is at most \texttt{tau}; an empty set is allowed. When both
+families have that same error, their tubes are guaranteed disjoint if
+\texttt{sqrt(2)a\^{}2-2tau\textgreater{}0}. The plots'
+\texttt{epsilon=0,0.1,0.2} are \textbf{sensitivity inputs}, not
+measurements of a response remainder.
+
+\footnotesize
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1538}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1538}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1538}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1538}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1538}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1154}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 12\tabcolsep) * \real{0.1154}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedleft
+Fixed amplitude
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+sigma
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+epsilon
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Exact orbit gap
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Conservative\\ exclusive margin
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+II-center compatible set
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Orbit-midpoint set
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & 0.12 & 0.10 & 0 & -1.05163 & II, VII0 & II, VII0 \\
+0.5 & 0.03 & 0.10 & 0.35355 & -0.05935 & II & II, VII0 \\
+0.5 & 0.12 & 0.10 & 0.35355 & -0.69808 & II, VII0 & II, VII0 \\
+1 & 0.12 & 0.10 & 1.41421 & +0.36258 & II & neither \\
+\end{longtable}
+\normalsize
+
+The sign of the conservative margin is a sufficient separation
+certificate, not a claim that negative margin forces the center to be
+ambiguous. The midpoint uses sorted eigenvalue triples and the exact
+orbit metric. The full 135-row calculation is in
+\texttt{FAMILY\_SEPARATION.csv}; its columns distinguish the exact
+analytic orbit gap from the conditional sampled grid of noise and error
+values.
+
+R36 itself provides \textbf{different, source-qualified deterministic
+bounds} for the two full-tensor image sets: \texttt{0.1471034953} (II)
+and \texttt{0.2698726924} (VII0), sum \texttt{0.4169761877}. Their
+source-set gap is at least \texttt{0.9972373747} at \texttt{a=1} without
+a new noise assumption. If the same synthetic Gaussian response law has
+\texttt{sigma=0.12}, the source-bound exclusive margin after two 95\%
+noise radii remains \texttt{0.145606336} (the exact generated value is
+in the result JSON). The R36 bound applies to its supplied \texttt{a=1}
+ellipsoids; we do not extrapolate that bound to scaled amplitudes. The
+577 old probes per center are illustrative checks, not a covering proof;
+the conservative whole-set bound is the evidence used here.
+
+At \texttt{a=1}, the weak trace statistic cannot distinguish the
+witnesses. A strong scalar comparator is the invariant
+\texttt{\textbar{}\textbar{}STF(R)\textbar{}\textbar{}\_F\^{}2}: its
+noiseless values are \texttt{2/3} and \texttt{14/3}. Under the
+\textbf{same} STF part of the joint error event, its exact compatible
+intervals follow from radii
+\texttt{max(0,\textbar{}\textbar{}STF(R)\textbar{}\textbar{}-tau)} to
+\texttt{\textbar{}\textbar{}STF(R)\textbar{}\textbar{}+tau}, squared.
+The radial center gap is \texttt{1.3437503185}, compared with the
+signed-tensor orbit gap \texttt{1.4142135624}. At
+\texttt{a=1,\ sigma=0.12,\ epsilon=0.1}, its sufficient exclusive margin
+is \texttt{0.2921192803}, also positive. Thus this particular pair does
+not require the full signed tensor to separate under the stated budget.
+The signed tensor remains necessary for orientation- or multi-tensor
+questions, and the adequacy residual remains necessary for open-ended
+model checks. No independent scalar data set or extra information beyond
+the joint law is assumed.
+
+For an explicit out-of-family control, shift the raw trace coordinate by
+\texttt{1} from the II center, leaving the five STF likelihood-ratio
+coordinates unchanged. Its profiled adequacy residual is
+\texttt{1/sqrt(2)=0.707107}, above the \texttt{0.525816} tube at
+\texttt{sigma=0.12,\ epsilon=0.1}; both listed candidates are rejected.
+On the adequacy figure's raw-shift axis, the rejection threshold is
+\texttt{sqrt(2)*tau=0.7436154384}; a shift of \texttt{0.6} retains II.
+Reusing the imported 50,000-draw synthetic Monte Carlo at
+\texttt{a=1,\ epsilon=0.1}, the saved \texttt{sigma=0.12} row retained
+the true family in 49,960 draws and the wrong family in zero draws.
+These are frequencies from the old declared Gaussian experiment, with
+finite binomial uncertainty; they do not establish empirical sky null
+coverage.
+
+\hypertarget{fixed-q-optical-sign-radius-and-remaining-gate}{%
+\subsection{Fixed-Q optical sign radius and remaining
+gate}\label{fixed-q-optical-sign-radius-and-remaining-gate}}
+
+The imported sharp chirality witness was independently recomputed from
+its fixed quadrupole and STF octupole construction. With \texttt{Q}
+fixed and having simple spectrum, the ambient STF-octupole Frobenius
+distance to the nearest zero-chirality hyperplane is exactly
+\texttt{1/sqrt(3)=0.5773502692}. An explicit orthogonal perturbation
+attains a zero component and zero chirality at that radius. This does
+not bound a joint error in \texttt{Q,O} or a fixed-norm \texttt{O}
+sphere. The full tensor and orientation convention are retained.
+
+The family gate remains below empirical identification: there is no
+qualified full T/E/B family/mode/history/IC atlas with frame, spin,
+beams, masks, cross-channel law, nulls, and equivalence checks. R36-09
+recorded that input HOLD. The finite II/VII0 result and sign radius are
+conditional methods products only. No anisotropy-family posterior,
+native-transfer claim, or observed geometry detection follows.
+
+\hypertarget{reproducibility-and-scope}{%
+\subsection{Reproducibility and scope}\label{reproducibility-and-scope}}
+
+The generating script checks SHA-256 of the retained R36
+\texttt{TABLE.json} and the imported goal-3 result/review before
+writing. The R36 table's Git blob
+\texttt{1ae270fec9ae55375c01ec1f346f8755d9257049} is verified by the
+imported goal-3 source record. The R36 later
+\texttt{PUBLICATION\_STATUS.json} is read for the qualified scoped
+status. The local \texttt{classification.py} contains the pure response
+functions and writes only this product directory. It imports no old
+producer. Rotation checks give maximum gap drift below \texttt{2e-15}
+over 200 random rotations, and direct full-profile versus common-carrier
+squared-distance differences below \texttt{8e-15}. Four targeted local
+tests pass.
+
+Each table and vector figure inherits the owner, conditional claim tier,
+synthetic/null and covariance status, transfer source, allowed use, and
+forbidden empirical-family use recorded under
+\texttt{artifact\_metadata} in
+\texttt{FAMILY\_COMPATIBILITY\_RESULT.json}. The figures are
+analytic/synthetic visualizations, not likelihood results from an
+observed sky. This product does not modify the campaign STATE, Git
+history, or any original receipt.
+
+\end{document}

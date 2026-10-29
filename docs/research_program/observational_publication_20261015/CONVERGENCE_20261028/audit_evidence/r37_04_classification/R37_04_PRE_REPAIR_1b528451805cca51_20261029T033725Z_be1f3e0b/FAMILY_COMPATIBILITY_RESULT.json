@@ -1,0 +1,293 @@
+{
+  "schema": "htt.r37.family_compatibility/1",
+  "owner": "R37-04-CLASSIFICATION",
+  "claim_tier": "conditional finite geometry-response method; no observed family identification",
+  "artifact_mode": "source-qualified conditional numeric/analytic",
+  "allowed_use": "P2/P5 finite methods/report delta",
+  "forbidden_uses": [
+    "observed Bianchi label",
+    "native solver or full T/E/B atlas",
+    "independent combination with Gaia/CF4/PM"
+  ],
+  "transfer_source": "none; instantaneous R36 geometry",
+  "null_status": "synthetic Gaussian control only; empirical nulls unavailable",
+  "covariance_status": "declared common sigma^2 I7 with one common calibration nuisance; no observed covariance",
+  "orientation": "proper SO(3), oriented orthonormal triad, epsilon123=+1; isotropic Frobenius tensor metric",
+  "frame_units": "R36 hypersurface-normal frame; spatial Ricci in u_*^2; amplitudes dimensionless",
+  "input_sha256": {
+    "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/TABLE.json": "eaf4e567f856a8d01e40f6721613239b8f64e6dc0fbe7d5b35070bfc9faeb363",
+    "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL3_CLASSIFICATION.json": "51d18036b5b56bf359a7e0dce1e8ce811e0f88e19ec15991559ef871048e3dd8",
+    "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/INDEPENDENT_REVIEW.json": "c4fb380e87eb51482c7fd8178a17386b666bac541c5e6594ec3bf16af72846a2"
+  },
+  "script_sha256": "519b48384d7ff4b72fdfeadaa61ff8776fb3ce515c6d5f15165fb3aa896043aa",
+  "source_publication_status": "FORMALLY_QUALIFIED_SCOPED_CONDITIONAL_PRODUCT",
+  "family_domain": "For each fixed a in [0,1], structure coefficients are multiplied by a, Ricci by a^2; SO(3) orientations independent per family; no physical history or sky transfer assumed",
+  "amplitude_grid": [
+    0.0,
+    0.125,
+    0.25,
+    0.375,
+    0.5,
+    0.625,
+    0.75,
+    0.875,
+    1.0
+  ],
+  "noise_grid": [
+    0.03,
+    0.06,
+    0.12,
+    0.18,
+    0.27
+  ],
+  "joint_error_grid": [
+    0.0,
+    0.1,
+    0.2
+  ],
+  "analytic_orbit_gap": "sqrt(2) a^2 exactly for the two supplied Ricci spectra; finite grid evaluates this formula, not a minimizer approximation",
+  "analytic_global_domain_gap": 0.0,
+  "R36_source_set_bounds_at_amplitude_1": {
+    "per_family_Frobenius_radii": {
+      "II": 0.14710349531620642,
+      "VII0matched": 0.269872692360631
+    },
+    "sum": 0.4169761876768374,
+    "no_noise_center_set": [
+      "II"
+    ],
+    "margin_at_sigma_0p12": 0.1456063364880129,
+    "scope": "Conservative R36 deterministic ellipsoid-image bounds; only bound at supplied a=1. Added synthetic Gaussian noise is a declared sensitivity, not measured noise."
+  },
+  "flrw_origin": "Both scaled families meet at Ricci=0 for a=0; I and flatVII0 are equivalent local flat presentations at all source control values",
+  "witness": {
+    "II_eigenvalues": [
+      -0.5,
+      -0.5,
+      0.5
+    ],
+    "VII0_eigenvalues": [
+      -1.5,
+      -0.5,
+      1.5
+    ],
+    "trace_each": -0.5,
+    "tr_R2": [
+      0.75,
+      4.75
+    ],
+    "STF_norms": [
+      0.816496580927726,
+      2.160246899469287
+    ],
+    "strong_scalar_STF_quadratic_gap": 4.000000000000001
+  },
+  "common_event": {
+    "alpha": 0.05,
+    "profiled_dimension": 6,
+    "noise_quantile": 3.54846265920102,
+    "tube_formula": "tau=sqrt(chi2_6(.95))*sigma+epsilon, one joint event and one joint response-error ball",
+    "coverage": "at least .95 for a listed true family under this declared zero-bias Gaussian law and bounded deterministic error"
+  },
+  "carrier": {
+    "fixed_amplitude_pairwise_LR_dimension": 5,
+    "profiled_raw_dimension": 6,
+    "discarded_adequacy_dimension": 1,
+    "max_full_vs_carrier_squared_distance_difference": 7.105427357601002e-15,
+    "adequacy_coordinate": "(y_trace-y_calibration)/sqrt(2)-tr(R)/sqrt(6)",
+    "varying_amplitude_warning": "If a is fitted jointly rather than conditioned, trace changes and the common carrier must include the sixth profiled coordinate."
+  },
+  "orientation_check_max_absolute_error": 1.7763568394002505e-15,
+  "out_of_family_control": {
+    "raw_trace_shift": 1.0,
+    "adequacy_residual": 0.7071067811865475,
+    "tube_at_sigma_0p12_epsilon_0p1": 0.5258155191041224,
+    "compatible_set": []
+  },
+  "prior_saved_MC_at_a1_epsilon0p1": [
+    {
+      "sigma": 0.03,
+      "draws": 50000,
+      "true_family_retained": 1.0,
+      "wrong_family_retained": 0.0,
+      "both_retained": 0.0,
+      "neither_retained": 0.0,
+      "nearest_orbit_correct": 1.0,
+      "tube_radius": 0.2064538797760306,
+      "separation_margin": 1.001305802821034
+    },
+    {
+      "sigma": 0.06,
+      "draws": 50000,
+      "true_family_retained": 0.99998,
+      "wrong_family_retained": 0.0,
+      "both_retained": 0.0,
+      "neither_retained": 2e-05,
+      "nearest_orbit_correct": 1.0,
+      "tube_radius": 0.3129077595520612,
+      "separation_margin": 0.7883980432689728
+    },
+    {
+      "sigma": 0.09,
+      "draws": 50000,
+      "true_family_retained": 0.99964,
+      "wrong_family_retained": 0.0,
+      "both_retained": 0.0,
+      "neither_retained": 0.00036,
+      "nearest_orbit_correct": 1.0,
+      "tube_radius": 0.4193616393280918,
+      "separation_margin": 0.5754902837169116
+    },
+    {
+      "sigma": 0.12,
+      "draws": 50000,
+      "true_family_retained": 0.9992,
+      "wrong_family_retained": 0.0,
+      "both_retained": 0.0,
+      "neither_retained": 0.0008,
+      "nearest_orbit_correct": 1.0,
+      "tube_radius": 0.5258155191041224,
+      "separation_margin": 0.3625825241648504
+    },
+    {
+      "sigma": 0.15,
+      "draws": 50000,
+      "true_family_retained": 0.99864,
+      "wrong_family_retained": 0.0,
+      "both_retained": 0.0,
+      "neither_retained": 0.00136,
+      "nearest_orbit_correct": 1.0,
+      "tube_radius": 0.632269398880153,
+      "separation_margin": 0.14967476461278917
+    },
+    {
+      "sigma": 0.18,
+      "draws": 50000,
+      "true_family_retained": 0.99794,
+      "wrong_family_retained": 0.00034,
+      "both_retained": 0.00014,
+      "neither_retained": 0.00186,
+      "nearest_orbit_correct": 0.99964,
+      "tube_radius": 0.7387232786561836,
+      "separation_margin": -0.06323299493927204
+    },
+    {
+      "sigma": 0.22,
+      "draws": 50000,
+      "true_family_retained": 0.99738,
+      "wrong_family_retained": 0.02614,
+      "both_retained": 0.02524,
+      "neither_retained": 0.00172,
+      "nearest_orbit_correct": 0.99518,
+      "tube_radius": 0.8806617850242244,
+      "separation_margin": -0.3471100076753537
+    },
+    {
+      "sigma": 0.27,
+      "draws": 50000,
+      "true_family_retained": 0.99664,
+      "wrong_family_retained": 0.22638,
+      "both_retained": 0.22462,
+      "neither_retained": 0.0016,
+      "nearest_orbit_correct": 0.97216,
+      "tube_radius": 1.0580849179842755,
+      "separation_margin": -0.7019562735954559
+    },
+    {
+      "sigma": 0.33,
+      "draws": 50000,
+      "true_family_retained": 0.99536,
+      "wrong_family_retained": 0.60176,
+      "both_retained": 0.59828,
+      "neither_retained": 0.00116,
+      "nearest_orbit_correct": 0.90952,
+      "tube_radius": 1.2709926775363367,
+      "separation_margin": -1.1277717926995783
+    },
+    {
+      "sigma": 0.4,
+      "draws": 50000,
+      "true_family_retained": 0.99524,
+      "wrong_family_retained": 0.87996,
+      "both_retained": 0.87588,
+      "neither_retained": 0.00068,
+      "nearest_orbit_correct": 0.80392,
+      "tube_radius": 1.5193850636804083,
+      "separation_margin": -1.6245565649877214
+    },
+    {
+      "sigma": 0.5,
+      "draws": 50000,
+      "true_family_retained": 0.99336,
+      "wrong_family_retained": 0.99138,
+      "both_retained": 0.98516,
+      "neither_retained": 0.00042,
+      "nearest_orbit_correct": 0.63584,
+      "tube_radius": 1.8742313296005102,
+      "separation_margin": -2.334249096827925
+    }
+  ],
+  "prior_saved_MC_scope": "50,000 synthetic draws per noise level; reused, not replayed; frequencies are not analytic probabilities or empirical null coverage",
+  "fixed_Q_chirality": {
+    "radius": 0.5773502691896256,
+    "nearest_hyperplane": 1,
+    "attaining_perturbation_norm": 0.5773502691896256,
+    "boundary_chirality": 0.0,
+    "domain": "Q fixed, simple spectrum; ambient STF rank-3 O Frobenius ball; not uncertain Q or fixed O norm"
+  },
+  "gauss_bridge": "R3 = E + pi/2 - h Sigma + STF(Sigma^2) + [2rho+2Lambda-6h^2+Sigma:Sigma] I/3 in declared kappa=1 units; shear alone does not supply E or pi",
+  "classification_limit": "II/VII0 separation is for supplied instantaneous scaled fixtures and the declared response law; no universal Bianchi type classification",
+  "original42": "17/42 scientific; separate analytic 18/42; no promotion by this product",
+  "artifact_metadata": {
+    "FAMILY_SEPARATION.csv": {
+      "owner": "R37-04-CLASSIFICATION",
+      "claim_tier": "conditional finite methods",
+      "artifact_mode": "synthetic/analytic",
+      "allowed_use": "source-qualified P2/P5 finite comparison",
+      "transfer_source": "none",
+      "null_status": "synthetic only",
+      "covariance_status": "same declared Gaussian law and nuisance; no observed covariance",
+      "forbidden_use": "empirical Bianchi family identification"
+    },
+    "family_compatibility_vs_amplitude.pdf": {
+      "owner": "R37-04-CLASSIFICATION",
+      "claim_tier": "conditional finite methods",
+      "artifact_mode": "synthetic/analytic",
+      "allowed_use": "source-qualified P2/P5 finite comparison",
+      "transfer_source": "none",
+      "null_status": "synthetic only",
+      "covariance_status": "same declared Gaussian law and nuisance; no observed covariance",
+      "forbidden_use": "empirical Bianchi family identification"
+    },
+    "separation_vs_error_budget.pdf": {
+      "owner": "R37-04-CLASSIFICATION",
+      "claim_tier": "conditional finite methods",
+      "artifact_mode": "synthetic/analytic",
+      "allowed_use": "source-qualified P2/P5 finite comparison",
+      "transfer_source": "none",
+      "null_status": "synthetic only",
+      "covariance_status": "same declared Gaussian law and nuisance; no observed covariance",
+      "forbidden_use": "empirical Bianchi family identification"
+    },
+    "adequacy_residual.pdf": {
+      "owner": "R37-04-CLASSIFICATION",
+      "claim_tier": "conditional finite methods",
+      "artifact_mode": "synthetic/analytic",
+      "allowed_use": "source-qualified P2/P5 finite comparison",
+      "transfer_source": "none",
+      "null_status": "synthetic only",
+      "covariance_status": "same declared Gaussian law and nuisance; no observed covariance",
+      "forbidden_use": "empirical Bianchi family identification"
+    },
+    "chirality_stability_radius.pdf": {
+      "owner": "R37-04-CLASSIFICATION",
+      "claim_tier": "conditional finite methods",
+      "artifact_mode": "synthetic/analytic",
+      "allowed_use": "source-qualified P2/P5 finite comparison",
+      "transfer_source": "none",
+      "null_status": "synthetic only",
+      "covariance_status": "same declared Gaussian law and nuisance; no observed covariance",
+      "forbidden_use": "empirical Bianchi family identification"
+    }
+  }
+}
