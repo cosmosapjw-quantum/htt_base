@@ -1,0 +1,10 @@
+Command: OPENBLAS_NUM_THREADS=1 .venv/bin/python docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-02-KINEMATICS/kinematic_image.py
+Exit: 1
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-02-KINEMATICS/kinematic_image.py", line 274, in <module>
+    main()
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-02-KINEMATICS/kinematic_image.py", line 262, in main
+    write_csv("information_comparison.csv", [{"method": k, "coverage95": v["rate"], "MCSE": v["MCSE"], "power_at_2p5": cc["matched_power"][k]["rate"]} for cc in [g["constrained_bin_depth"]] for k, v in cc["joint_coverage"].items()])
+                                                                                                                       ~~~~~~~~~~~~~~~~~~~^^^
+KeyError: 'independent_point_estimator_with_correct_joint_sandwich'
+Classification: consumer key spelling mismatch between saved coverage and power dictionaries. Fixed by explicit key mapping; no source law or scientific value changed.
