@@ -1,0 +1,56 @@
+{
+  "packet_id": "3dab57f35de216561506e56a9b5a018e4683c2a883c0931d10da5d3b17c33830",
+  "task_id": "R37-03-HUBBLE",
+  "input_identity": "sha256:15d9b17d0852724f6774adf53e09a32627ead44ead7d7b5c705e7a26254df47f",
+  "candidate_identity": "sha256:a9cec4e49645247b15a8ccebb3cee992db04f9526882291dc886e06a081ded77",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "1a905cd2261cbfeb497cc95fc16cacc9019450baf9b74198aaa57299a3de4f1a",
+  "attempt": 2,
+  "agent_id": "/root/rc_3dab57f35de21656",
+  "phase": "review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "schema": "R37-03-independent-review-result-v1",
+  "outcome": "success",
+  "verdict": "SCOPED_CONDITIONAL_PASS",
+  "acceptance_met": true,
+  "acceptance": true,
+  "qualified_products": [
+    "opacity_qualified_optical_result"
+  ],
+  "candidate_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE/ARTIFACT_MANIFEST.json",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "a30d8346a81a654ed27694ca8f6c5d65e7214a3cb6f5f2e09a6b9617b87e94d3",
+  "review_report": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/REVIEW.md",
+  "review_report_sha256": "c7da80a619818b0db015019e6354bf0d5885abffce9a796fb6a730ee59c6dfbf",
+  "findings": [],
+  "validation_evidence": {
+    "independent_checks_passed": 343,
+    "focused_pytest_passed": 3,
+    "candidate_manifest_and_all_14_artifacts_match": true,
+    "seven_frozen_sources_match": true,
+    "all_48_interval_rows_and_attained_extrema_verified": true,
+    "max_ratio_endpoint_residual": 2.220446049250313e-16,
+    "min_normalized_reference_H_on_ellipsoids": 0.9021581671713473,
+    "full16_cross_depth_covariance_consumed_once": true,
+    "same_input_scalar_physical_intervals_match": true,
+    "optical_transmission_endpoints_and_exclusion_verified": true,
+    "common_synthetic_opacity_parameter": 0.2,
+    "both_figures_rendered_and_inspected": true
+  },
+  "qualification_scope": "Conditional released-observable angular H-ratio and bounded opacity sensitivity; finite synthetic optical and first-derivative CBL control only",
+  "residual_holds": [
+    "Empirical CBL requires independently qualified overlapping H(z), radial distance derivative and joint law",
+    "Empirical null coverage remains unknown",
+    "No absolute H0 or physical-congruence identification; positive normalization scale is unmeasured",
+    "The 705-row selection overlaps the 490-row primary and is sensitivity only",
+    "Physical response and opacity bounds are supplied assumptions; no grey transmission inferred from traceless log"
+  ],
+  "original42_acceptance_effect": "none",
+  "original42_completed": "17/42",
+  "analytic_alternate_completed": "18/42",
+  "next_transition": "Controller may record this scoped qualified product and request next dependency-safe packet"
+}
