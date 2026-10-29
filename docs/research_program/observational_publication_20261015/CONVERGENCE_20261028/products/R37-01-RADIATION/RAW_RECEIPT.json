@@ -1,0 +1,67 @@
+{
+  "schema": "htt.r37_native_repair_raw_receipt/1",
+  "packet_id": "2f6838f317ed915d677c5f9e6369faf9eba1df3651df2a94bcc9dc4e60b85f11",
+  "packet_sha256": "eb1a0865ed52ca33525c24b5615ffc5715bb6cdc9225f66f7fd64224a827b5e2",
+  "task_id": "R37-01-RADIATION",
+  "attempt": 3,
+  "phase": "repair",
+  "input_identity": "sha256:7503451fc55c359618c388655a85851dd61f784140a7bd457d715ccd870ee134",
+  "prior_candidate_identity": "sha256:d35cc0bfb10bd3fbd6de53d957ff4ff794fac96624a1cf4592332432d80ef602",
+  "agent_id": "/root/rc_2f6838f317ed915d",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "timestamp_utc": "2026-10-29T00:36:36.367936+00:00",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "base_branch": "research/htt-adaptive-methods-20261023",
+  "base_head": "5029f20af96c1fdf20c4ac864135a7d9ba8a76a5",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2",
+    "pytest": "9.1.1"
+  },
+  "prior_candidate_backup": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_PRIOR_e519d7b4_before_2f6838f3",
+  "prior_manifest_sha256": "d35cc0bfb10bd3fbd6de53d957ff4ff794fac96624a1cf4592332432d80ef602",
+  "prior_raw_receipt_sha256": "16482c11f1bd5a7989d2b27b30524c3bedcf1606c912967955ee5a0698be63d7",
+  "commands": [
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLCONFIGDIR=/tmp/r37_repair_2f6838f3_mpl .venv/bin/python docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/radiation_image.py",
+      "exit_code": 0,
+      "outcome": "300 support rows; 75 gain identified support rows; 20 coverage rows; joint event 3888/4096"
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLCONFIGDIR=/tmp/r37_repair_2f6838f3_mpl .venv/bin/python -m pytest -q -p no:cacheprovider docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/test_radiation_image.py docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/test_radiation_core.py",
+      "exit_code": 0,
+      "outcome": "8 passed in 0.86s"
+    },
+    {
+      "cmd": "pdfinfo docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/matched_coverage_width.pdf",
+      "exit_code": 0,
+      "outcome": "one-page PDF 1.4; rendered and visually inspected"
+    }
+  ],
+  "validation_evidence": [
+    "All seven frozen task input SHA256 identities match the packet; R36 retained array SHA256 matches the candidate source binding.",
+    "Prior 13-artifact candidate and its raw receipt were copied to a distinct external directory and verified against their original manifest/receipt hashes before replacement.",
+    "One shared 20-coordinate 95% maximum event on the exact retained 8191 calibration draws produced 3888/4096 simultaneous centered hits on the exact retained 4096 test draws; the old five-marginal full-response regions reproduce 3389/4096.",
+    "Actual fixed-profile angular-kernel ranks are 15 full, 11 H4-dropped retaining separate rho/pi/P_star, and 6 true V=0 Thomson gain M. A positive same-M pair differs in true full shear by norm 0.00011802799239325179.",
+    "300 fixed-operator directional support rows, 75 two-member gain-fibre support rows, 20 labelled coverage rows and four one-page vector PDFs generated from the existing consumer and source; the matched coverage/width panel was visually inspected.",
+    "Focused R37 and R36 tests: 8 passed in 0.86 s under .venv Python with bytecode/cache writes disabled. No old producer, new RNG campaign, solver, ODE, STATE or Git mutation."
+  ],
+  "no_old_producer_invocation": true,
+  "new_draw_generation": false,
+  "repo_write_scope": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION",
+  "STATE_write_count": 0,
+  "git_mutations": 0,
+  "children_spawned": 0,
+  "scientific_claim": "conditional synthetic response/shear image; gain M-only yields a finite inner identified-set witness; no empirical shear, native solver or original42 admission",
+  "independent_review": "PENDING_TARGETED_CLOSEOUT",
+  "supersedes_receipt": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REPAIR_2f6838f317ed915d_RAW_RECEIPT.json",
+    "sha256": "488c5aaae9b6a1e0252a82bd474c30fb873ec92e21ed4e5e7a9f6f22827ac309",
+    "reason": "initial receipt used shell interpreter package metadata; corrected receipt records the actual .venv interpreter used for computation and tests"
+  }
+}

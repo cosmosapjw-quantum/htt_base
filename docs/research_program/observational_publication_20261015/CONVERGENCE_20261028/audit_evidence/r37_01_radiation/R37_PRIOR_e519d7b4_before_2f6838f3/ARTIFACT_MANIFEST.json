@@ -1,0 +1,87 @@
+{
+  "schema": "htt.r37_radiation_candidate_manifest/1",
+  "task_id": "R37-01-RADIATION",
+  "packet_id": "e519d7b4b6696b6c7bfe75e6a566cc5d6c0d78de1f9900facec42bb1f1995e11",
+  "input_identity": "sha256:7503451fc55c359618c388655a85851dd61f784140a7bd457d715ccd870ee134",
+  "metadata_for_all_tables_and_figures": {
+    "owner": "htt",
+    "claim_tier": "conditional_synthetic_method_experiment",
+    "artifact_mode": "finite_methods_image",
+    "allowed_use": "conditional response and shear sensitivity only",
+    "transfer_source": "none",
+    "null_status": "saved R36 oracle synthetic draws; no empirical sky null",
+    "covariance_status": "same saved R36 eight-coordinate correlated temperature law; physical remainder is one shared two-dimensional body",
+    "forbidden_uses": [
+      "empirical shear",
+      "Bianchi family identification",
+      "native solver validation"
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "radiation_image.py",
+      "sha256": "f9f083ce78f133e18658f3229932e301c204259142f52b2be1321a69764a0256",
+      "size_bytes": 20018
+    },
+    {
+      "path": "test_radiation_image.py",
+      "sha256": "39f5f225603cefbc0ee63ec3da5e2b75fd4659c1e1795266d5e823d8a1f6281c",
+      "size_bytes": 3018
+    },
+    {
+      "path": "RADIATION_IMAGE_RESULT.json",
+      "sha256": "bc459825699e8a5aac8534ec7942dc8dc34ee15cf7b3d7b7a99204b8e5027ddf",
+      "size_bytes": 13728
+    },
+    {
+      "path": "SHEAR_SUPPORT.csv",
+      "sha256": "f619e44d6b54db23b6ca826362093e6282af7430aff21958848b01812929744f",
+      "size_bytes": 33249
+    },
+    {
+      "path": "MATCHED_COVERAGE.csv",
+      "sha256": "f14e18e69704b1764f20b0ecad105f070209f2db3ec2d4a00a8871002a3dea30",
+      "size_bytes": 2127
+    },
+    {
+      "path": "radiation_response_spectrum.pdf",
+      "sha256": "6aacad211c9daf1207b5c8bfc887b68a33f0fa3d0f5e835b671c9d4e14fb4d85",
+      "size_bytes": 15533
+    },
+    {
+      "path": "shear_support_vs_transport_budget.pdf",
+      "sha256": "2ea9dabd4220566f6f7430698845390592160ce28d50a5ca6cd326c6e869a675",
+      "size_bytes": 14882
+    },
+    {
+      "path": "polarization_omission_bias.pdf",
+      "sha256": "2420b3f010e9594fea3aa52b55859dea781b4c38e67e4855b5d7bc2fded29335",
+      "size_bytes": 13753
+    },
+    {
+      "path": "matched_coverage_width.pdf",
+      "sha256": "4b7cb2077ffb2ce15390b0e17428936202e2a18262c6da0cee19165b2e13e11d",
+      "size_bytes": 16298
+    },
+    {
+      "path": "REPORT_DELTA.md",
+      "sha256": "ae962a28e189cf2ed067d9cae20a71e71a639daae2a5b6a8cf88735711d8c967",
+      "size_bytes": 2392
+    },
+    {
+      "path": "SCIENCE_AUDIT.md",
+      "sha256": "e032b34cef28671fd99f62613a0937dae824859c27f1803a3ac59b20469e62b2",
+      "size_bytes": 3795
+    },
+    {
+      "path": "FIRST_FAILURE.txt",
+      "sha256": "bf3cf3b99c59bf113e42c1b9e26b41d9e0248f13eb3740b28b29aa60ae9509bc",
+      "size_bytes": 638
+    },
+    {
+      "path": "RAW_RECEIPT.json",
+      "sha256": "16482c11f1bd5a7989d2b27b30524c3bedcf1606c912967955ee5a0698be63d7",
+      "size_bytes": 3087
+    }
+  ]
+}

@@ -1,0 +1,602 @@
+{
+  "schema": "htt.r37_radiation_image/2",
+  "task_id": "R37-01-RADIATION",
+  "case": "a0.02_b0.3",
+  "source_metadata": {
+    "owner": "htt",
+    "claim_tier": "conditional_synthetic_method_experiment",
+    "artifact_mode": "finite_methods_image",
+    "allowed_use": "conditional response and shear sensitivity only",
+    "transfer_source": "none",
+    "null_status": "saved R36 oracle synthetic draws; no empirical sky null",
+    "covariance_status": "same saved R36 eight-coordinate correlated temperature law; physical remainder is one shared two-dimensional body",
+    "forbidden_uses": [
+      "empirical shear",
+      "Bianchi family identification",
+      "native solver validation"
+    ]
+  },
+  "source_bindings": {
+    "R36_RESULT_sha256": "074b49cc8ce3edcfb8dc106a83858ecf5bb5c08c824952d748377b911879529d",
+    "R36_PUBLICATION_STATUS_sha256": "a9776c2b0c2fc09af4222ab05a7337d35d9551d236597824bd395d5516cb2b03",
+    "R36_qualification": "FORMALLY_QUALIFIED_COMMON_INPUT_RADIATION_RESPONSE_COMPARISON",
+    "R36_CORE_sha256": "a1eca64b2964529872faf9da5089074e68215f13432079287a364bbc631d844d",
+    "R36_ARRAYS_sha256": "78234e70cf67dee2d179aa7cf49ee9eef9419bc278b8ebd179a2c462ce315abc",
+    "GOAL1_sha256": "c500fd2dbdd11f3ff7d331abf90a69189e56d738ae8984f8b6816364aaf3ce7b",
+    "DEVELOPMENT_PLAN_sha256": "771e3415d0d7ff7dca5dacbd269723d6cc14bb9f9d1fac75673b82534ad9d4aa",
+    "DATA_ANALYSIS_CONTRACTS_sha256": "11f8d3870c929202de785bcbc66805e6ff33000178a5d6bd2f29683e1eef10e0",
+    "SOURCE_REUSE_sha256": "f3a79443086652a4e2eb53a9cb3030db18f16a38568f4a13bc062174bc653616",
+    "JOINT_REMAINDER_sha256": "cc9f7c92b73f2193b018e438fea5851a24d6a0d8ca3b0d493af9ecf0892373a6"
+  },
+  "conventions": {
+    "metric": "(-,+,+,+)",
+    "observer": "R36 local observer; e=-n",
+    "energy": "rho_ref normalized",
+    "time": "declared toy time unit",
+    "gamma_T": 0.4,
+    "temperature_to_intensity": "positive Planckian ray I/I0=(T/T0)^4",
+    "polarization": "integrated real screen STF P_star; V=0",
+    "R_tau": "constructed central value plus declared two-dimensional remainder, not measured"
+  },
+  "predeclared_tolerance": 2e-10,
+  "full_common_max_error": 8.881784197001252e-16,
+  "carrier": {
+    "generic_joint_rank": 23,
+    "generic_linear_no_V_rank": 20,
+    "fixed_profile_angular_kernel_ranks": {
+      "full_fixed_profile": 15,
+      "H4_dropped_retaining_rho_pi_Pstar": 11,
+      "true_thomson_gain_at_V_zero": 6
+    },
+    "positive_screen_min_eigenvalue": 0.41555458146623403,
+    "positive_intensity_minimum": 0.29297310743135474,
+    "saved_equal_gain_different_shear_control": {
+      "amplitude": 0.6,
+      "minimum_intensity": 0.4337949857072444,
+      "M_difference": 1.2010463160309213e-13,
+      "pointwise_gain_max_difference": 1.4099832412739488e-14,
+      "shear_operator_difference_norm": 0.5744626566564465,
+      "Lplus_eigenvalues": [
+        6.414832999330015,
+        6.654192439603503,
+        6.654192439603536,
+        6.893551879877042,
+        6.8935518798770445
+      ],
+      "Lminus_eigenvalues": [
+        6.510576775439398,
+        6.510576775439399,
+        6.749936215712911,
+        6.749936215712917,
+        6.989295655986457
+      ],
+      "analytic_global_intensity_lower_bound": 0.4,
+      "minimum_intensity_scope": "Quadrature grid; analytic global bound is separately recorded."
+    }
+  },
+  "response": {
+    "full_eigenvalues": [
+      0.5394692793588469,
+      0.5394726237878565,
+      0.6371878678680143,
+      0.6380560318829573,
+      0.6644527319008641
+    ],
+    "full_condition": 1.2316785354127273,
+    "H4_dropped_eigenvalues": [
+      0.5399750137145644,
+      0.5399776639141519,
+      0.6350993093982501,
+      0.6361061475667195,
+      0.6674804002048501
+    ],
+    "H4_dropped_condition": 1.236132012133595,
+    "minimum_coercivity": 0.5394692793588469
+  },
+  "target": {
+    "STF5_shear": [
+      0.014,
+      -0.008,
+      0.006,
+      0.002,
+      -0.003
+    ],
+    "R_tau_center": [
+      -0.02471669511170089,
+      0.024129711440858265,
+      -0.0032997290250315918,
+      -0.03381562001564902,
+      0.001531748728591817
+    ],
+    "C_pi_center": [
+      -0.016776505166041674,
+      0.019293199208052253,
+      8.210251108015868e-18,
+      -0.03172164646561276,
+      -4.61913324159135e-18
+    ],
+    "P_star_center": [
+      0.05879387686542435,
+      -0.0028958533372106954,
+      6.094014314582557e-19,
+      -0.00650256941976494,
+      1.2128982409089547e-18
+    ],
+    "pi_center": [
+      0.033536097268910346,
+      -0.05294869705854277,
+      -2.294167561814591e-17,
+      0.08956070005331654,
+      1.2561392728662867e-17
+    ]
+  },
+  "centers": {
+    "full": [
+      0.013999999999999997,
+      -0.008000000000000002,
+      0.006,
+      0.0019999999999999974,
+      -0.0029999999999999996
+    ],
+    "common_carrier": [
+      0.01400000000000001,
+      -0.008000000000000007,
+      0.006000000000000004,
+      0.002000000000000005,
+      -0.0029999999999999988
+    ],
+    "H4_dropped_closure": [
+      0.013977456135181919,
+      -0.00797094650065841,
+      0.005996636097169302,
+      0.001970631588153083,
+      -0.002993885635580569
+    ],
+    "unpolarized": [
+      0.022352134491471574,
+      -0.008694659547509814,
+      0.006,
+      0.0005600646220374002,
+      -0.0029999999999999996
+    ]
+  },
+  "H4_dropped_bias_norm": 4.757663895070362e-05,
+  "true_gain_only_identified_set": {
+    "assumptions": "positive bolometric brightness; same fixed V=0 screen profile and R_tau; M=rho I/3-pi/2+P_star",
+    "sampling_status": "deterministic positive fibre witness; separate from the retained R36 stochastic draw law",
+    "minimum_brightness": 0.2895947795833415,
+    "M_max_difference": 1.1102230246251565e-15,
+    "M_components": [
+      1.1319894505494505,
+      0.04202582823096924,
+      0.02357849519206067,
+      1.3102911479754382e-17,
+      -0.05128291944642323,
+      -4.6730278304427716e-18
+    ],
+    "member_shears": [
+      [
+        0.013943578710866694,
+        -0.007985678228821765,
+        0.005990766190658912,
+        0.002004348796254814,
+        -0.0029989953740268047
+      ],
+      [
+        0.014056230023662214,
+        -0.008014291684454196,
+        0.006009262260157156,
+        0.0019956650417330543,
+        -0.003001007012940764
+      ]
+    ],
+    "member_separation_norm": 0.00011802799239325179,
+    "member_coordinate_separation": [
+      0.00011265131279552046,
+      2.861345563243134e-05,
+      1.8496069498243756e-05,
+      8.683754521759523e-06,
+      2.011638913959179e-06
+    ],
+    "interpretation": "finite two-member inner witness; the full positive M-fibre may be wider"
+  },
+  "polarization_omission": {
+    "difference_full_minus_unpolarized": [
+      -0.008352134491471578,
+      0.000694659547509812,
+      0.0,
+      0.0014399353779625972,
+      0.0
+    ],
+    "norm": 0.008503770713235631,
+    "coercive_upper_bound": 0.008782441325531753
+  },
+  "physical_error": {
+    "primitive": "one shared z in unit Euclidean disk",
+    "U": [
+      [
+        0.8978011550364462,
+        0.08978011550364463
+      ],
+      [
+        0.17956023100728927,
+        0.7182409240291571
+      ],
+      [
+        0.26934034651093386,
+        -0.35912046201457853
+      ],
+      [
+        0.0,
+        0.4489005775182231
+      ],
+      [
+        -0.17956023100728927,
+        0.26934034651093386
+      ]
+    ],
+    "V": [
+      [
+        0.6918067022308364,
+        0.27672268089233454
+      ],
+      [
+        0.13836134044616727,
+        -0.8301680426770036
+      ],
+      [
+        -0.4150840213385018,
+        0.27672268089233454
+      ],
+      [
+        0.5534453617846691,
+        0.13836134044616727
+      ],
+      [
+        0.0,
+        -0.27672268089233454
+      ]
+    ],
+    "epsilon_R_grid": [
+      0.0,
+      0.002,
+      0.005,
+      0.01,
+      0.02
+    ],
+    "epsilon_P_grid": [
+      0.0,
+      0.01,
+      0.03
+    ],
+    "map": "-L_center_inverse (epsilon_R U + gamma_T epsilon_P V/5) z; applied once",
+    "qualification": "fixed central operator sensitivity layer; statistical event includes saved-draw operator variation; combined physical and statistical coverage is not calibrated"
+  },
+  "matched_law": {
+    "cal_draws": 8191,
+    "test_draws": 4096,
+    "joint_event": {
+      "definition": "maximum over all four computable modes and five STF coordinates of absolute saved-draw shear minus mode center divided by common full-mode marginal scale",
+      "calibration": "one 95% higher quantile of the 20-coordinate maximum on the retained calibration draws",
+      "common_scales": [
+        1.965615907035048e-06,
+        2.7497469592147744e-06,
+        1.861840803453474e-06,
+        3.5069603619821213e-06,
+        2.4502669344664794e-06
+      ],
+      "threshold": 1.2708886309936558,
+      "radii": [
+        2.4980789091511254e-06,
+        3.4946221485754325e-06,
+        2.366192309829114e-06,
+        4.4569560533884734e-06,
+        3.114016389913126e-06
+      ],
+      "simultaneous_centered_test_hits": 3888,
+      "simultaneous_centered_test_coverage": 0.94921875,
+      "per_method_simultaneous_target_coverage": {
+        "full": 0.953125,
+        "common_carrier": 0.953125,
+        "H4_dropped_closure": 0.0,
+        "unpolarized": 0.0
+      },
+      "old_five_marginal_full_joint_test_hits": 3389
+    },
+    "coverage_target": "same declared STF5 shear for every computable method; true gain reports an identified-set witness, not point coverage",
+    "statistical_cost": {
+      "full_kernel_rows": 1176,
+      "generic_common_carrier_components": 20,
+      "fixed_profile_angular_kernel_ranks": {
+        "full_fixed_profile": 15,
+        "H4_dropped_retaining_rho_pi_Pstar": 11,
+        "true_thomson_gain_at_V_zero": 6
+      },
+      "H4_dropped_stored_scalar_components": 11,
+      "true_gain_stored_scalar_components": 6,
+      "unpolarized_stored_scalar_components": 15,
+      "inference_only_timing": {
+        "full": {
+          "median_seconds_for_4096_test_draws": 0.0009748970624059439,
+          "scope": "inference-only; precomputed carrier; five local trials"
+        },
+        "common_carrier": {
+          "median_seconds_for_4096_test_draws": 0.0010128398425877094,
+          "scope": "inference-only; precomputed carrier; five local trials"
+        },
+        "H4_dropped_closure": {
+          "median_seconds_for_4096_test_draws": 0.0010002660565078259,
+          "scope": "inference-only; precomputed carrier; five local trials"
+        },
+        "unpolarized": {
+          "median_seconds_for_4096_test_draws": 0.0009798670653253794,
+          "scope": "inference-only; precomputed carrier; five local trials"
+        }
+      }
+    },
+    "coverage_rows": [
+      {
+        "method": "full",
+        "direction": "STF1",
+        "marginal_radius_diagnostic": 1.965615907035048e-06,
+        "marginal_target_coverage_test_diagnostic": 0.9443359375,
+        "joint_event_radius": 2.4980789091511254e-06,
+        "joint_event_width": 4.996157818302251e-06,
+        "joint_direction_centered_coverage_test": 0.98486328125,
+        "joint_direction_target_coverage_test": 0.98486328125,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": -3.469446951953614e-18
+      },
+      {
+        "method": "full",
+        "direction": "STF2",
+        "marginal_radius_diagnostic": 2.7497469592147744e-06,
+        "marginal_target_coverage_test_diagnostic": 0.95166015625,
+        "joint_event_radius": 3.4946221485754325e-06,
+        "joint_event_width": 6.989244297150865e-06,
+        "joint_direction_centered_coverage_test": 0.986572265625,
+        "joint_direction_target_coverage_test": 0.986572265625,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": -1.734723475976807e-18
+      },
+      {
+        "method": "full",
+        "direction": "STF3",
+        "marginal_radius_diagnostic": 1.861840803453474e-06,
+        "marginal_target_coverage_test_diagnostic": 0.953369140625,
+        "joint_event_radius": 2.366192309829114e-06,
+        "joint_event_width": 4.732384619658228e-06,
+        "joint_direction_centered_coverage_test": 0.988037109375,
+        "joint_direction_target_coverage_test": 0.988037109375,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": 0.0
+      },
+      {
+        "method": "full",
+        "direction": "STF4",
+        "marginal_radius_diagnostic": 3.5069603619821213e-06,
+        "marginal_target_coverage_test_diagnostic": 0.94921875,
+        "joint_event_radius": 4.4569560533884734e-06,
+        "joint_event_width": 8.913912106776947e-06,
+        "joint_direction_centered_coverage_test": 0.987548828125,
+        "joint_direction_target_coverage_test": 0.987548828125,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": -2.6020852139652106e-18
+      },
+      {
+        "method": "full",
+        "direction": "STF5",
+        "marginal_radius_diagnostic": 2.4502669344664794e-06,
+        "marginal_target_coverage_test_diagnostic": 0.957275390625,
+        "joint_event_radius": 3.114016389913126e-06,
+        "joint_event_width": 6.228032779826252e-06,
+        "joint_direction_centered_coverage_test": 0.990234375,
+        "joint_direction_target_coverage_test": 0.990234375,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": 4.336808689942018e-19
+      },
+      {
+        "method": "common_carrier",
+        "direction": "STF1",
+        "marginal_radius_diagnostic": 1.965615907048926e-06,
+        "marginal_target_coverage_test_diagnostic": 0.9443359375,
+        "joint_event_radius": 2.4980789091511254e-06,
+        "joint_event_width": 4.996157818302251e-06,
+        "joint_direction_centered_coverage_test": 0.98486328125,
+        "joint_direction_target_coverage_test": 0.98486328125,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": 1.0408340855860843e-17
+      },
+      {
+        "method": "common_carrier",
+        "direction": "STF2",
+        "marginal_radius_diagnostic": 2.7497469592095702e-06,
+        "marginal_target_coverage_test_diagnostic": 0.95166015625,
+        "joint_event_radius": 3.4946221485754325e-06,
+        "joint_event_width": 6.989244297150865e-06,
+        "joint_direction_centered_coverage_test": 0.986572265625,
+        "joint_direction_target_coverage_test": 0.986572265625,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": -6.938893903907228e-18
+      },
+      {
+        "method": "common_carrier",
+        "direction": "STF3",
+        "marginal_radius_diagnostic": 1.8618408034500045e-06,
+        "marginal_target_coverage_test_diagnostic": 0.953369140625,
+        "joint_event_radius": 2.366192309829114e-06,
+        "joint_event_width": 4.732384619658228e-06,
+        "joint_direction_centered_coverage_test": 0.988037109375,
+        "joint_direction_target_coverage_test": 0.988037109375,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": 3.469446951953614e-18
+      },
+      {
+        "method": "common_carrier",
+        "direction": "STF4",
+        "marginal_radius_diagnostic": 3.5069603619747487e-06,
+        "marginal_target_coverage_test_diagnostic": 0.94921875,
+        "joint_event_radius": 4.4569560533884734e-06,
+        "joint_event_width": 8.913912106776947e-06,
+        "joint_direction_centered_coverage_test": 0.987548828125,
+        "joint_direction_target_coverage_test": 0.987548828125,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": 4.7704895589362195e-18
+      },
+      {
+        "method": "common_carrier",
+        "direction": "STF5",
+        "marginal_radius_diagnostic": 2.450266934467347e-06,
+        "marginal_target_coverage_test_diagnostic": 0.957275390625,
+        "joint_event_radius": 3.114016389913126e-06,
+        "joint_event_width": 6.228032779826252e-06,
+        "joint_direction_centered_coverage_test": 0.990234375,
+        "joint_direction_target_coverage_test": 0.990234375,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": 1.3010426069826053e-18
+      },
+      {
+        "method": "H4_dropped_closure",
+        "direction": "STF1",
+        "marginal_radius_diagnostic": 1.964213941699558e-06,
+        "marginal_target_coverage_test_diagnostic": 0.0,
+        "joint_event_radius": 2.4980789091511254e-06,
+        "joint_event_width": 4.996157818302251e-06,
+        "joint_direction_centered_coverage_test": 0.98486328125,
+        "joint_direction_target_coverage_test": 0.0,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": -2.25438648180816e-05
+      },
+      {
+        "method": "H4_dropped_closure",
+        "direction": "STF2",
+        "marginal_radius_diagnostic": 2.7436422704689434e-06,
+        "marginal_target_coverage_test_diagnostic": 0.0,
+        "joint_event_radius": 3.4946221485754325e-06,
+        "joint_event_width": 6.989244297150865e-06,
+        "joint_direction_centered_coverage_test": 0.98681640625,
+        "joint_direction_target_coverage_test": 0.0,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": 2.9053499341590017e-05
+      },
+      {
+        "method": "H4_dropped_closure",
+        "direction": "STF3",
+        "marginal_radius_diagnostic": 1.8689633035588044e-06,
+        "marginal_target_coverage_test_diagnostic": 0.0595703125,
+        "joint_event_radius": 2.366192309829114e-06,
+        "joint_event_width": 4.732384619658228e-06,
+        "joint_direction_centered_coverage_test": 0.988037109375,
+        "joint_direction_target_coverage_test": 0.148681640625,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": -3.363902830698373e-06
+      },
+      {
+        "method": "H4_dropped_closure",
+        "direction": "STF4",
+        "marginal_radius_diagnostic": 3.497033449443177e-06,
+        "marginal_target_coverage_test_diagnostic": 0.0,
+        "joint_event_radius": 4.4569560533884734e-06,
+        "joint_event_width": 8.913912106776947e-06,
+        "joint_direction_centered_coverage_test": 0.987548828125,
+        "joint_direction_target_coverage_test": 0.0,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": -2.9368411846916916e-05
+      },
+      {
+        "method": "H4_dropped_closure",
+        "direction": "STF5",
+        "marginal_radius_diagnostic": 2.460416169717313e-06,
+        "marginal_target_coverage_test_diagnostic": 0.001953125,
+        "joint_event_radius": 3.114016389913126e-06,
+        "joint_event_width": 6.228032779826252e-06,
+        "joint_direction_centered_coverage_test": 0.9892578125,
+        "joint_direction_target_coverage_test": 0.0068359375,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": 6.114364419431036e-06
+      },
+      {
+        "method": "unpolarized",
+        "direction": "STF1",
+        "marginal_radius_diagnostic": 1.9678347204094004e-06,
+        "marginal_target_coverage_test_diagnostic": 0.0,
+        "joint_event_radius": 2.4980789091511254e-06,
+        "joint_event_width": 4.996157818302251e-06,
+        "joint_direction_centered_coverage_test": 0.984375,
+        "joint_direction_target_coverage_test": 0.0,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": 0.008352134491471574
+      },
+      {
+        "method": "unpolarized",
+        "direction": "STF2",
+        "marginal_radius_diagnostic": 2.7494284533177704e-06,
+        "marginal_target_coverage_test_diagnostic": 0.0,
+        "joint_event_radius": 3.4946221485754325e-06,
+        "joint_event_width": 6.989244297150865e-06,
+        "joint_direction_centered_coverage_test": 0.986572265625,
+        "joint_direction_target_coverage_test": 0.0,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": -0.0006946595475098138
+      },
+      {
+        "method": "unpolarized",
+        "direction": "STF3",
+        "marginal_radius_diagnostic": 1.8595032030702466e-06,
+        "marginal_target_coverage_test_diagnostic": 0.953369140625,
+        "joint_event_radius": 2.366192309829114e-06,
+        "joint_event_width": 4.732384619658228e-06,
+        "joint_direction_centered_coverage_test": 0.988037109375,
+        "joint_direction_target_coverage_test": 0.988037109375,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": 0.0
+      },
+      {
+        "method": "unpolarized",
+        "direction": "STF4",
+        "marginal_radius_diagnostic": 3.587246028151402e-06,
+        "marginal_target_coverage_test_diagnostic": 0.0,
+        "joint_event_radius": 4.4569560533884734e-06,
+        "joint_event_width": 8.913912106776947e-06,
+        "joint_direction_centered_coverage_test": 0.9853515625,
+        "joint_direction_target_coverage_test": 0.0,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": -0.0014399353779625998
+      },
+      {
+        "method": "unpolarized",
+        "direction": "STF5",
+        "marginal_radius_diagnostic": 2.3756215782838423e-06,
+        "marginal_target_coverage_test_diagnostic": 0.957275390625,
+        "joint_event_radius": 3.114016389913126e-06,
+        "joint_event_width": 6.228032779826252e-06,
+        "joint_direction_centered_coverage_test": 0.9921875,
+        "joint_direction_target_coverage_test": 0.9921875,
+        "cal_N": 8191,
+        "test_N": 4096,
+        "signed_bias": 4.336808689942018e-19
+      }
+    ]
+  },
+  "limits": "Conditional synthetic complete sky only. Central R_tau manufactured from declared target; derivative remainder sensitivity unmeasured. Fixed polarization profile and oracle noise. No empirical shear, native transfer, or family claim.",
+  "elapsed_seconds": 0.912022590637207
+}

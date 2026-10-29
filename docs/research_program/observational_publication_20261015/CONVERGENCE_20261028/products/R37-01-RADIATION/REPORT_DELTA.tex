@@ -1,0 +1,125 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{DejaVu Serif}
+  \setsansfont[]{DejaVu Sans}
+  \setmonofont[]{DejaVu Sans Mono}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\hypertarget{r37-01-radiation-and-stf5-shear-sensitivity}{%
+\section{R37-01 radiation and STF5 shear
+sensitivity}\label{r37-01-radiation-and-stf5-shear-sensitivity}}
+
+The positive synthetic R36 a0.02\_b0.3 temperature sky and saved paired
+R36 noise draws determine this conditional methods image. The same sky,
+local observer, nuisance, correlated eight-coordinate temperature law,
+and constructed central derivative target are used for every computable
+adapter. The derivative is an \textbf{assumption}, not a measured
+radiation history.
+
+Full direct quadrature and exact (rho, pi, H4) common-carrier response
+differ by 8.88e-16 in normalized energy units, below the preregistered
+2e-10 tolerance. The full response eigenvalues are {[}0.539469 0.539473
+0.637188 0.638056 0.664453{]} and its condition number is 1.2317. The
+generic joint gain/shear carrier has rank 23, or 20 at V=0, as reused
+from Goal 1. For this fixed screen profile the actual angular kernels
+have ranks 15 (full), 11 (H4-dropped with separate rho/pi/P\_star), and
+6 (true V=0 Thomson gain M). The screen remains positive with minimum
+physical eigenvalue 0.41555.
+
+The H4-dropped closure retains separate rho, pi and P\_star; its central
+STF5 bias norm is 4.7577e-05. It is not a gain-only estimator. At fixed
+R\_tau and fixed screen profile, two strictly positive brightness fields
+have the same true rank-6 gain M to 1.11e-15 yet their true shear
+solutions differ in norm by 0.000118028. Thus M alone identifies a set,
+not one shear. This deterministic positive fibre witness is separate
+from the retained R36 stochastic draw law. GAIN\_IDENTIFIED\_SUPPORT.csv
+gives a two-member inner witness of this set and its common-disk
+physical sensitivity; the full positive M-fibre may be wider. Omitting
+P\_star with the exact intensity response gives full-minus-unpolarized
+bias norm 0.0085038, bounded by gamma\_T
+\textbar\textbar P\_star\textbar\textbar/(5 lambda\_min) = 0.0087824.
+
+One shared statistical event uses the maximum standardized centered
+shear deviation over all 20 mode-coordinate pairs on the retained 8191
+calibration draws. Its higher-quantile threshold is 1.27089;
+simultaneous centered test coverage on the same 4096 saved draws is
+3888/4096 = 0.949219. The earlier five marginal full-response intervals
+jointly hit only 3389/4096, retained as a regression diagnostic.
+MATCHED\_COVERAGE.csv labels marginal diagnostics separately and reports
+joint radii, widths, target coverage and signed bias. The common event
+includes saved-draw operator variation because each response is
+recomputed on each draw.
+
+The physical sensitivity uses a single two-coordinate unit-disk
+primitive z. The same z drives derivative and polarization errors
+through the displayed U,V matrices; their effects are summed before one
+central inverse map. SHEAR\_SUPPORT.csv gives fixed-operator directional
+support over the declared budgets. Its triangle half-width is a
+sensitivity layer; combined physical/statistical coverage has not been
+calibrated. Structural ranks and five-trial median inference-only
+timings on identical precomputed test arrays appear in JSON; timings
+exclude carrier extraction.
+
+The figures and tables have owner htt, claim tier
+conditional\_\allowbreak{}synthetic\_\allowbreak{}method\_\allowbreak{}experiment, artifact mode
+finite\_methods\_image, transfer source none, synthetic null status and
+the same R36 correlated noise law. Allowed use is a conditional
+response/shear sensitivity image. Empirical shear, native solver
+validation and Bianchi family identification are forbidden uses.
+Original 42-node acceptance remains 17/42; analytic alternate remains
+18/42.
+
+\end{document}

@@ -1,0 +1,47 @@
+{
+  "packet_id": "56f59a96f87af3c10ea198af5c1fa6e131956aa89f457e4b8a1a39af1a6a5447",
+  "task_id": "R37-01-RADIATION",
+  "input_identity": "sha256:7503451fc55c359618c388655a85851dd61f784140a7bd457d715ccd870ee134",
+  "candidate_identity": "sha256:4a62eba6dfa08099b7e440474820bcc753bdcdeabf4e1188dbd8190bfaaf0dd0",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "aedeab19939b6f375e5276b6e185e4e934f6d0f3e0f1ad672fde70530d31b4cb",
+  "agent_id": "/root/rc_56f59a96f87af3c1",
+  "phase": "review",
+  "outcome": "success",
+  "acceptance_met": true,
+  "qualified_products": [
+    "joint_radiation_shear_image"
+  ],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "566e276430172479f5f21648c3fc89f491fac9c76a8212c0e6169a2e6a4265c5",
+  "validation_evidence": [
+    "Candidate manifest matches sha256:4a62eba6dfa08099b7e440474820bcc753bdcdeabf4e1188dbd8190bfaaf0dd0; all 14 candidate artifacts, seven frozen inputs, two history receipts, retained arrays and source publication status verify. Prior 13-artifact candidate and first failure remain preserved.",
+    "Independent angular-kernel and rank-0/2/4 moment constructions evaluated all 8191 calibration plus 4096 test draws without generating RNG or invoking any old producer. Full/common all-draw matrix difference 3.3306690738754696e-16; shear difference 8.673617379884035e-18, below 2e-10.",
+    "Independent explicit order statistics reproduce the shared maximum over 20 mode-coordinate deviations: threshold 1.2708886309993337, 3888/4096 centered joint hits, and 3389/4096 old marginal full-response joint hits. Common/full simultaneous physical-target hits are 3904/4096; H4-dropped and unpolarized simultaneous target hits are both zero, as correctly reported.",
+    "All 20 coverage rows reproduce with maximum numeric difference 5.759569931445066e-17. All 300 physical support rows reproduce within 2.7755575615628914e-17. Derivative and polarization errors use the same two-coordinate disk and are summed before one inverse; independent separate bounds would differ by as much as 0.0061869411864086885.",
+    "Independent angular-kernel SVD confirms ranks 15 full fixed profile, 11 H4-dropped retaining rho/pi/P_star, and 6 actual V=0 Thomson gain. A separately reconstructed QR-nullspace pair has minimum brightness 0.2895947795833415, M difference 2.220446049250313e-16 and true shear separation norm 0.00011802799239330833. All 75 inner-witness support rows reproduce within 1.734723475976807e-16.",
+    "Positive saved temperatures and coercive responses are retained: minimum temperature 0.7356810199682031; minimum saved response eigenvalue 0.539456306788622. Polarization omission sign matches -gamma L_inverse P_star/5 within 7.37257477290143e-18 and its norm satisfies the stated coercive bound.",
+    "Eight focused R37/R36 tests passed in 3.96 seconds with bytecode/cache writes disabled. Four one-page PDF 1.4 figures parsed, rendered and were visually inspected; labels distinguish the H4-dropped closure, fixed-operator physical sensitivity, coordinate target coverage, and joint-event width.",
+    "No scalar replacement, posterior/MIO conflation, native solver/ODE, empirical shear or Bianchi-family claim is admitted. R_tau remains constructed and its residual a sensitivity axis. Original PUBLICATION_DAG.json equals HEAD with SHA256 e59da3e51c5bd2069a4c424ebecced89025885a6c4843f59c0042a668a63b6c9. Final Git status, branch, HEAD and all candidate artifacts are unchanged."
+  ],
+  "qualifications": [
+    "Acceptance is only for joint_radiation_shear_image under the new conditional R37-01 contract. It is not observational shear, a calibrated joint physical/statistical coverage claim, four-axis CAS admission, or original42 acceptance.",
+    "The 3888/4096 result is simultaneous coverage of mode-centered output deviations under the retained oracle law. It must not be reported as 95% simultaneous coverage of the same physical target by all reduced methods; those biased target coverages are separately reported and can be zero.",
+    "Calibration and test samples are reused saved preselection draws. The 95% higher empirical quantile and descriptive test frequency are finite conditional evidence, not a distribution-free or prospective nominal-coverage theorem. The event has 20 entries with duplicate full/common information; it does not claim 20 independent coordinates.",
+    "The deterministic derivative/polarization disk is one shared source, not a stochastic covariance. Its propagation uses the central operator; combined physical/statistical half-widths remain an explicitly uncalibrated sensitivity layer.",
+    "The true gain-only comparison is a positive two-member identified-set witness on the declared fixed-profile finite angular domain, separate from the retained stochastic law. It is neither an M-only point estimator nor an outer bound for the entire positive fibre.",
+    "Generic ranks 23/20 and fixed-profile ranks 15/11/6 concern different domains. Timing is inference-only on precomputed carriers and does not measure acquisition, extraction cost or a speed advantage over correct joint GLS."
+  ],
+  "findings": [],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "scientific_admission": "SCOPED_CONDITIONAL_FINITE_RESULT_ONLY",
+  "original42_acceptance_effect": "none",
+  "original42_completed": "17/42",
+  "analytic_alternate_completed": "18/42",
+  "candidate_unchanged": true,
+  "next_executable_checkpoint": "Host records this exact packet/candidate-bound independent success, then requests the next dependency-safe authorized READY packet under unchanged cumulative campaign accounting."
+}

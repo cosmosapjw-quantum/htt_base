@@ -1,0 +1,94 @@
+{
+  "schema": "htt.r37_radiation_candidate_manifest/2",
+  "task_id": "R37-01-RADIATION",
+  "packet_id": "2f6838f317ed915d677c5f9e6369faf9eba1df3651df2a94bcc9dc4e60b85f11",
+  "input_identity": "sha256:7503451fc55c359618c388655a85851dd61f784140a7bd457d715ccd870ee134",
+  "prior_candidate_identity": "sha256:d35cc0bfb10bd3fbd6de53d957ff4ff794fac96624a1cf4592332432d80ef602",
+  "prior_backup": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_PRIOR_e519d7b4_before_2f6838f3",
+  "metadata_for_all_tables_and_figures": {
+    "owner": "htt",
+    "claim_tier": "conditional_synthetic_method_experiment",
+    "artifact_mode": "finite_methods_image",
+    "allowed_use": "conditional response and shear sensitivity only",
+    "transfer_source": "none",
+    "null_status": "saved R36 oracle synthetic draws; no empirical sky null",
+    "covariance_status": "same saved R36 eight-coordinate correlated temperature law; physical remainder is one shared two-dimensional body",
+    "forbidden_uses": [
+      "empirical shear",
+      "Bianchi family identification",
+      "native solver validation"
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "radiation_image.py",
+      "sha256": "18cdb9b49290492a643b834e5ffafe1b801cee8db9a885ea3abeea57bca77ff3",
+      "size_bytes": 28927
+    },
+    {
+      "path": "test_radiation_image.py",
+      "sha256": "0c69c59f63aa088fd39da3bd09b754d534014da7a3e564dae68a931f274da265",
+      "size_bytes": 5328
+    },
+    {
+      "path": "RADIATION_IMAGE_RESULT.json",
+      "sha256": "28d839424a996b6dc541aba647ae411648079a08d06759e730a8c7f24892f683",
+      "size_bytes": 21483
+    },
+    {
+      "path": "SHEAR_SUPPORT.csv",
+      "sha256": "fdf4cbfa95ea42639ce33b0d326f8870b3bc1d2d1926c6f5e518b57b70d47dea",
+      "size_bytes": 33940
+    },
+    {
+      "path": "GAIN_IDENTIFIED_SUPPORT.csv",
+      "sha256": "29aa19afc15e4eb05006da7a093928d700ba306a1313ed0eaf51aa1f02a04aff",
+      "size_bytes": 12876
+    },
+    {
+      "path": "MATCHED_COVERAGE.csv",
+      "sha256": "5d4c5be21763eeeb4597725511c5a5f5dc808877ebc23a107244af4291e1b409",
+      "size_bytes": 3269
+    },
+    {
+      "path": "radiation_response_spectrum.pdf",
+      "sha256": "c3d687bd6f25fbb16fd12d19c177e325b020f9fcbfecf337196db22d96049d5d",
+      "size_bytes": 16120
+    },
+    {
+      "path": "shear_support_vs_transport_budget.pdf",
+      "sha256": "aed9d34713069f338218cdef8d7ea288e349812983a3ca1cf1a757471f35c63f",
+      "size_bytes": 15160
+    },
+    {
+      "path": "polarization_omission_bias.pdf",
+      "sha256": "e5eb8bfbf6b3f679fe08f241366a0618540aea867b3e7f2f05164b6cced30079",
+      "size_bytes": 14820
+    },
+    {
+      "path": "matched_coverage_width.pdf",
+      "sha256": "a133c0798a3330862b13452d9db85f01a9650b7e50dc7ec14b61da50bbedb186",
+      "size_bytes": 20683
+    },
+    {
+      "path": "REPORT_DELTA.md",
+      "sha256": "67d1fa389d658e743e4a0d2860c1f9ed21bb8bf70a4c4c627d202b5da0370b0d",
+      "size_bytes": 3442
+    },
+    {
+      "path": "SCIENCE_AUDIT.md",
+      "sha256": "2f3dde128b6e6f6e0fa4f550b0c9b4cc9a1c931b8242a2ca5058173180044415",
+      "size_bytes": 4619
+    },
+    {
+      "path": "FIRST_FAILURE.txt",
+      "sha256": "bf3cf3b99c59bf113e42c1b9e26b41d9e0248f13eb3740b28b29aa60ae9509bc",
+      "size_bytes": 638
+    },
+    {
+      "path": "RAW_RECEIPT.json",
+      "sha256": "ef2d6b96e874e9f9d124799107e1e29c19073a026d5245ec5b1b8660c888b8d5",
+      "size_bytes": 4717
+    }
+  ]
+}
