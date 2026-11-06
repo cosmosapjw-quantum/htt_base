@@ -791,7 +791,7 @@ def evaluate_kinematical_functionals(
     else:
         status, reason = "AVAILABLE", ""
     out.append(_value(state, "OMEGA_VECTOR_NORM2_H",
-                      None if status != "AVAILABLE" else np.array([omega @ omega / (6.0 * H**2)]),
+                      None if status != "AVAILABLE" else np.array([omega @ omega / (H**2)]),
                       representation="NONNEGATIVE_SCALAR", units="1", parity="EVEN",
                       basis_id=state.basis_id, inputs=("omega_A", "H"),
                       normalization_id="OMEGA_VECTOR_NORM_SQUARED_OVER_H2", status=status, reason=reason))
