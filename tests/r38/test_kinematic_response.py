@@ -45,6 +45,25 @@ def test_velocity_composition():
         compose_velocities(v_lum, v2)
 
 
+def test_velocity_composition_non_collinear_exact():
+    # Both velocities are measured in the same inertial frame. The result is
+    # the velocity of A as measured in B's standard-boost axes.
+    v_a = np.array([0.3, 0.0, 0.0])
+    v_b = np.array([0.0, 0.4, 0.0])
+    expected = np.array([0.275, -0.4, 0.0])
+    actual = compose_velocities(v_a, v_b)
+    assert np.allclose(actual, expected, rtol=1e-13, atol=1e-14)
+    assert float(np.linalg.norm(actual)) < 1.0
+
+    # Limiting cases: B at rest, and A at rest in the common frame.
+    assert np.allclose(compose_velocities(v_a, np.zeros(3)), v_a)
+    assert np.allclose(compose_velocities(np.zeros(3), v_b), -v_b)
+
+
+def test_velocity_composition_rejects_nonfinite_inputs():
+    with pytest.raises(KinematicsError, match="finite"):
+        compose_velocities(np.array([np.nan, 0.0, 0.0]), np.zeros(3))
+
 def test_kinematic_response_model():
     # Initialize with observer boost 0.00123 (approx CMB dipole speed ~ 369 km/s)
     bro = [0.00123, 0.0, 0.0]
