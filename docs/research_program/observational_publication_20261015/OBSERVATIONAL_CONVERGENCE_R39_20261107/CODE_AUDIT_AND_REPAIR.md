@@ -88,7 +88,7 @@ Therefore none of these current adapters should be passed as the completed R39 m
 
 ### Relative-velocity frame identity safeguard
 
-The kinematical functional kernel now stores beta_RM_frame_id and beta_MO_frame_id in addition to their spatial basis IDs. It distinguishes an axis-only FrameTransport from a physical Lorentz/tetrad bridge. If the relative-velocity vector belongs to a different physical frame, its direct value remains available, but mixed functionals and beta_RO first-order closure return RELATIVISTIC_FRAME_BRIDGE_REQUIRED. A spatial 3x3 rotation cannot satisfy this requirement. A new regression test checks this boundary. Local pytest remains NOT_RUN.
+The canonical adapter copies all beta_RO/RM/MO components into the physical view using the shared VelocityFrameBundle.coordinate_frame and basis, while retaining the radiation/matter/observer endpoint IDs in velocity_frame_ids. The beta_RM_frame_id/beta_MO_frame_id fields in the derived view denote component coordinate_frame, not endpoint rest-frame identity. A spatial FrameTransport only changes axes in that common frame. An external vector from a genuinely different component coordinate frame needs a Lorentz/tetrad bridge before mixing. The closure residual/status/remainder remain bound to the canonical state.
 
 ### Independent numerical design check and runtime limit
 
@@ -96,3 +96,8 @@ A separate NumPy construction of the declared ideal local optical source-level J
 
 Desktop Commander was online but its first read-only configuration call returned the monthly usage-limit blocker and instructed no retry/reconnect. The committed module and tests therefore remain source/readback verified only; local import/compile/pytest are NOT_RUN.
 
+
+
+### Canonical STF5 chart and x-bundle ownership
+
+The R39 optical view uses the canonical STF5 Cartesian representation exactly as defined by `orbit_nonlinearity.stf5_to_matrix` / `matrix_to_stf5`: `(Sxx,Syy,Sxy,Sxz,Syz)` and `Szz=-Sxx-Syy`. This is not an orthonormal STF basis. Its induced Gram metric must accompany any flattened SVD/covariance operation. `build_kinematical_x_bundle` binds existing `TensorFunctionalSpec/Result` objects and physical-SI mixed views to one canonical JointAnisotropyState.content_id; the physical view is derived and does not create a competing state authority.
