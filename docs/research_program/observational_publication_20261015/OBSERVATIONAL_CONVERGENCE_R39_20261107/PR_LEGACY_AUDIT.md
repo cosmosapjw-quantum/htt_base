@@ -68,3 +68,43 @@ Closest primary literature:
 - Low-ell mask sensitivity: https://arxiv.org/html/2509.03720v1
 
 The candidate novelty is not tensor x itself, CMB/radio/Gaia combination, or x_C. It is conditional on a validated source-conditioned cosmological observation operator and data-supported tensor-functional quotient.
+
+## Additional R39 PR metadata census and tensor/observable overlap audit
+
+A complete PR metadata request returned **561 records**, issue/PR numbers #2–#564, with 430 closed and 131 open at the time of retrieval. The updated timestamps span 2026-07-22 through 2026-10-28. This is a metadata/title/state census, not a content review of every diff.
+
+Depth of review in this R39 turn:
+- 17 selected high-leverage PRs had their full GitHub PR diff/body retrieved and inspected: #360, #364, #365, #367, #368, #378, #394, #401, #402, #403, #467, #468, #548, #550, #557, #563, #564.
+- 15 additional high-relevance PRs had their full PR metadata/body read: #7, #13, #419, #442, #443, #444, #449, #533, #540, #544, #545, #552, #553, #558, #559.
+- Therefore 561 metadata records were screened and 32 selected PR bodies were read, but only 17 selected diffs were retrieved. No claim of all-561 line-by-line diff review is made.
+
+### Additional scientific lineage
+
+| PR | Finding relevant to R39 | What remains unestablished |
+|---|---|---|
+| #7 (PR-251) | Identifiability-aware low-ell angular-momentum pole kernel from dense real-map a_lm, typed antipodal axis and eigen-gap abstention. | No Planck/CAMB/shell adapter, observed inference, or mask/noise/foreground uncertainty model. |
+| #13 (PR-252) | Correlated real-sky shell a_lm generator preserves cross-shell covariance and the real-map m>0 real/imaginary covariance convention, with PSD checks and no jitter. | Reference DGP only, not CAMB/CLASS or a physical source/transfer model. |
+| #419 (PMG-WU-001) | Canonical observer/data-space ObservableIrrepBlock and ObservableIrrepState; harmonic/STF support bound to carrier/projection authority. | Diagnostic enabling state only; no physical shear/vorticity, local/global, geometry, Bianchi-family or statistical promotion. |
+| #442 (PMG-WU-010, open) | Full-sky local-observer Lorentz pullback, STF2-to-STF3 response, and independent stored-real harmonic ell=2-to-(1,3) oracle. | Explicitly local boost only, no empirical beta or global matter tilt; full-sky result does not certify processed cut-sky response. |
+| #443 (PMG-WU-011, open) | Corrected design for processed cut-sky local-boost response, including source beam/pixel convolution and a matrix-valued transfer. | Design-only; no production implementation, raw-data run or observed statistic. |
+| #444 (PMG-WU-011, open) | Source-equivalent local execution audit for a synthetic processed local-boost response; 12 regression paths passed in an externally orchestrated Python/Pyodide execution. | GitHub CI was blocked before runner startup; no Planck absolute-temperature product, observed beta, global tilt, polarization result or Bianchi attribution. |
+| #449 | Detailed document synthesis of observable tensors, typed kinematical MES and response-limited identification; document artifact acceptance was explicitly separated from canonical migration and publication approval. | It does not establish a new native Planck/FFP observational result. |
+| #533 (open) | Solver-free dossier extends selection-law, robust geometry, finite-rank/error-sensitivity and source-conditioned analysis. | Physical unknowns, transfer providers and observed-likelihood gates remain explicitly conditional. |
+| #540/#544/#545 (open drafts) | CF4 source-window Hubble working law, source IDs/selection history, finite boosts, radial identifiability and conditional rank are active project lines. | These are scoped paper/DAG branches; they do not authorize replacing the six-paper/42-node status or promote physical CF4 anisotropy without admitted source/transfer. |
+| #552/#553 (open drafts) | Planck T-mask finite operator and CF4 coherent-transfer bounds; #553 explicitly uses a scalar temperature mask with manufactured spin-2 coefficients rather than native PR3 polarization PMASK/observed E/B. | No physical Planck B leakage or E2E polarization result; CF4 transfer bounds are conditional on externally assumed hard bounds. |
+| #558/#559 (open drafts) | Same-sky Planck mask/beam/covariance adapter, checked SMICA source fetch, overlap-aware split covariance and local checkout recovery. | Native full SMICA Q/U/beam/FFP10 end-to-end and full 1.9-GiB transfer were not complete; six-paper DAG remained 14/42 completed-scoped, READY L01/S02, all papers NOT_READY_TO_SUBMIT in those records. |
+
+### Consequence for R39 novelty
+
+The repository already contains:
+- an observable-irrep state and typed harmonic/STF carriers;
+- local full-sky Lorentz pullback and STF2-to-STF3 harmonic coupling;
+- a design/diagnostic path for processed cut-sky boost response;
+- low-ell morphology and pole/orbit statistics;
+- shell-correlated real-sky covariance generation;
+- tensorized MES, functional images and response-limited identification;
+- substantial Planck same-sky/mask/beam and CF4 source-window work.
+
+Therefore the candidate is **not** a new low-ell tensor, an exact local-boost pullback, a generic tensor MES framework, a source-count dipole combination, or a scalar x_C identity. The remaining conditional gap is narrower: an admitted, source-conditioned, processed multi-probe cosmological observation operator whose same typed physical state predicts and jointly identifies its CMB harmonic, selection-aware count, Gaia VSH and finite-z distance functional images with justified cross-covariance. The improvement over existing full-sky local-boost/cut-sky design and six-paper branches must be demonstrated by a data-backed functional quotient and the preregistered x_C versus tensor-x ablation.
+
+This candidate may still collapse to a null result. Existing open PRs #442–444 and #548–559 are direct predecessor work and must be reused by the local agent before adding a parallel implementation.
