@@ -370,12 +370,16 @@ only where the matching support is positive and the registered domain is satisfi
 
 ### Pi — law-conditional exceedance surface
 
-For a registered score \(q_\alpha\), explicit law \(\nu\), conditions \(\eta\), and threshold \(c\),
+For a registered functional \(\phi_\alpha\), matching anchor body \(\mathcal A_\alpha\), registered acceptance score \(Q_{\mathcal A_\alpha}\), score map \(T_\alpha\), explicit law \(\nu\), conditions \(\eta\), and threshold \(c\), define
 
 \[
-\Pi_{\alpha}(c\mid\eta;\nu)
-=\Pr_\nu[q_\alpha(\theta,\psi,\eta,\xi)\ge c\mid\eta].
+q_\alpha(Z)=T_\alpha\!\left(Q_{\mathcal A_\alpha}(\phi_\alpha(Z))\right),
+\qquad
+\Pi_{\phi_\alpha,T_\alpha}(c\mid\eta;\nu)
+=\Pr_\nu[q_\alpha(Z)\ge c\mid\eta].
 \]
+
+This is the conditional exceedance contract. \(Q_{\mathcal A}\) itself is a registered acceptance-body/gauge score; \(T_\alpha\) is part of the functional specification.
 
 The law must be named as null simulation, injection, bootstrap/resampling, posterior or posterior-predictive pushforward. Likelihood and profile likelihood are not probability laws. A posterior exceedance, frequentist null tail and compatibility-set bound are different interpretations.
 
