@@ -80,7 +80,7 @@ Store the frame, congruence, epoch/redshift window, averaging scale, triad, unit
 
 The isotropic expansion \(H=\vartheta/3\) and other background/matter parameters can be included in a larger joint state \((\theta,\psi)\), or held in a declared background sector \(\psi\). They must not be silently absorbed into a dimensionless kinematical ratio.
 
-### 1.3 Canonical STF5 component chart
+### 1.2 Canonical STF5 component chart
 
 The canonical JointAnisotropyState uses the fixed Cartesian STF5 chart STF5_CARTESIAN_XX_YY_XY_XZ_YZ_V1, not an orthonormal STF basis. For a symmetric trace-free spatial tensor,
 
@@ -106,7 +106,7 @@ These five stored coordinates are not an orthonormal coordinate basis under the 
 \(\operatorname{tr}\sigma^2=2(s_1^2+s_2^2+s_1s_2+s_3^2+s_4^2+s_5^2)\).
 Any Euclidean SVD, whitening or covariance operation in flattened STF5 coordinates must use the induced Gram metric (or an explicit orthonormal transform) and must record that transform. The R39 physical view and local optical Jacobian use this exact canonical chart so their component identities match the existing state and tensor-functional contracts.
 
-### 1.2 Physical realizability is a separate layer
+### 1.3 Physical realizability is a separate layer
 
 Arbitrary values of \((\sigma,\omega,A,\beta)\) at a point define a kinematical coordinate tuple, not automatically a solution of Einstein–matter dynamics. A physical model must impose the appropriate 1+3 Ricci identities, constraint/evolution equations, matter conservation, frame/tetrad compatibility, regularity and boundary/initial conditions. A solver-free phenomenological likelihood may first constrain an admissible kinematical response family, but it must report that level explicitly and may not promote it to a Bianchi family or GR solution.
 
