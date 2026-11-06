@@ -30,7 +30,8 @@
     "remote_desktop": "NOT_USED",
     "native_subagents": "NOT_RUN",
     "r39_code_change": "GITHUB_COMMITTED_WITH_WOLFRAM_FORMULA_CHECK",
-    "r39_small_beta_stability_test": "AUTHORED_NOT_RUN"
+    "r39_small_beta_stability_test": "AUTHORED_NOT_RUN",
+    "legacy_audit_scope": "COMPLETE_561_PR_METADATA_CENSUS_32_SELECTED_BODIES_17_FULL_DIFFS_NOT_ALL_DIFFS"
   },
   "authority": {
     "tensor_semantics": "docs/research_program/observational_publication_20261015/METHOD_REBOOT_20261023/THEOREMS.md at dfaf171c37f2636c942a99bf2b9803b57295ac14",
@@ -359,7 +360,7 @@
     ]
   ],
   "paper_scope": {
-    "working_title": "Frame-covariant identifiability of vector/tensor cosmological functionals across CMB, source-count and astrometric multipoles",
+    "working_title": "Source-conditioned frame-covariant identification of cosmological vector/tensor observables across CMB, source-count, astrometric and distance probes",
     "primary_blocks": [
       "Planck T/E boost/BipoSH",
       "Quaia/NVSS/RACS source counts",
@@ -375,7 +376,16 @@
       "arbitrary vorticity/rotation absent an E/B response",
       "Bianchi family label absent family-specific native transfer"
     ],
-    "principal_estimand": "typed x[s,alpha]=phi_alpha(Z_s), with tensor/set-valued images K_alpha(D); x_C is an optional scalar ablation only"
+    "principal_estimand": "typed x[s,alpha]=phi_alpha(Z_s), with tensor/set-valued images K_alpha(D); x_C is an optional scalar ablation only",
+    "prior_work_reuse": [
+      "PR-251 identifiability-aware low-ell pole kernel (#7)",
+      "PR-252 correlated real-sky shell alm generator (#13)",
+      "PMG-WU-001 canonical observable irrep state (#419)",
+      "PMG-WU-010 full-sky local boost pullback and STF2-to-STF3 response (#442)",
+      "PMG-WU-011 processed cut-sky design and source-equivalent diagnostics (#443/#444)",
+      "Report A observable tensors and typed kinematical MES (#449)",
+      "Planck/CF4 six-paper conditional source/window sequence (#533-559)"
+    ]
   },
   "claim_gates": {
     "exact_boost_kernel": "REQUIRED",
@@ -406,5 +416,41 @@
     "Do not assume block-diagonal cross-probe covariance without evidence.",
     "Do not report local tests/Cobaya runs unless executed with receipts."
   ],
-  "latest_document_checkpoint": "0c5b60ce3264b08fa190e4acfed4f83b760985dc"
+  "latest_document_checkpoint": "0c5b60ce3264b08fa190e4acfed4f83b760985dc",
+  "legacy_audit": {
+    "total_pr_metadata": 561,
+    "number_range": [
+      2,
+      564
+    ],
+    "states": {
+      "closed": 430,
+      "open": 131
+    },
+    "metadata_updated_range": [
+      "2026-07-22",
+      "2026-10-28"
+    ],
+    "selected_pr_bodies_read": 32,
+    "full_diffs_retrieved": 17,
+    "all_561_diffs_line_by_line": false,
+    "critical_predecessors": [
+      7,
+      13,
+      419,
+      442,
+      443,
+      444,
+      449,
+      533,
+      540,
+      544,
+      545,
+      552,
+      553,
+      558,
+      559
+    ],
+    "novelty_consequence": "Existing observable-irrep, local full-sky boost/STF2-to-STF3, processed cut-sky boost design, shell-correlated a_lm covariance and Planck/CF4 source-window work narrow the remaining candidate to validated source-conditioned cross-probe tensor-functional identification."
+  }
 }
