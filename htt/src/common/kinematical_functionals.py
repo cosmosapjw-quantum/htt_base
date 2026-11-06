@@ -589,6 +589,37 @@ def evaluate_kinematical_functionals(
                               status="CONDITIONAL_FIRST_ORDER",
                               reason="not an exact relativistic velocity composition"))
 
+    if state.beta_RO is None:
+        out.append(_value(state, "BETA_RO_CANONICAL_VIEW", None,
+                          representation="VECTOR_POLAR", units="1", parity="EVEN",
+                          basis_id=state.basis_id, inputs=("canonical_velocity_frames.beta_RO",),
+                          status="UNAVAILABLE", reason="canonical beta_RO component is unavailable"))
+    else:
+        closure_status = state.velocity_closure_status or "UNASSESSED"
+        out.append(_value(state, "BETA_RO_CANONICAL_VIEW", state.beta_RO,
+                          representation="VECTOR_POLAR", units="1", parity="EVEN",
+                          basis_id=state.beta_RO_basis_id or state.basis_id,
+                          inputs=("canonical_velocity_frames.beta_RO", "canonical_closure_status"),
+                          normalization_id="CANONICAL_VFB_FIRST_ORDER_VIEW",
+                          status="CONDITIONAL_FIRST_ORDER",
+                          reason=f"canonical closure status: {closure_status}; beta_RO is not an extra independent velocity parameter"))
+    out.append(_value(state, "BETA_CLOSURE_RESIDUAL",
+                      state.velocity_closure_residual,
+                      representation="VECTOR_POLAR", units="1", parity="EVEN",
+                      basis_id=state.basis_id,
+                      inputs=("canonical_velocity_frames.closure_residual",),
+                      normalization_id="FIRST_ORDER_CLOSURE_DIAGNOSTIC",
+                      status=None if state.velocity_closure_residual is not None else "UNAVAILABLE",
+                      reason="" if state.velocity_closure_residual is not None else "canonical closure residual unavailable"))
+    out.append(_value(state, "DELTA_OMEGA_K",
+                      None if state.delta_omega_k is None else np.array([state.delta_omega_k]),
+                      representation="SCALAR", units="1", parity="EVEN",
+                      basis_id=state.basis_id,
+                      inputs=("canonical_geometry_state.delta_omega_k",),
+                      normalization_id="SIGNED_CURVATURE_BUDGET_DEPARTURE",
+                      status=None if state.delta_omega_k is not None else "UNAVAILABLE",
+                      reason="" if state.delta_omega_k is not None else "geometry state unavailable"))
+
     if sigma is None:
         status_sigma, reason_sigma = "UNAVAILABLE", "sigma_AB not admitted"
     elif H is None:
@@ -1039,6 +1070,18 @@ def transform_state_o3(
         beta_MO_basis_id=None if state.beta_MO is None else new_basis_id,
         beta_RM_frame_id=state.beta_RM_frame_id,
         beta_MO_frame_id=state.beta_MO_frame_id,
+        beta_RO=None if state.beta_RO is None else R @ state.beta_RO,
+        beta_RO_basis_id=None if state.beta_RO is None else new_basis_id,
+        beta_RO_frame_id=state.beta_RO_frame_id,
+        beta_semantic_role=state.beta_semantic_role,
+        velocity_frame_ids=state.velocity_frame_ids,
+        velocity_closure_status=state.velocity_closure_status,
+        velocity_closure_residual=None if state.velocity_closure_residual is None else R @ state.velocity_closure_residual,
+        velocity_truncation_remainder_bound=state.velocity_truncation_remainder_bound,
+        canonical_state_id=state.canonical_state_id,
+        canonical_geometry_id=state.canonical_geometry_id,
+        delta_omega_k=state.delta_omega_k,
+        canonical_units_convention=state.canonical_units_convention,
         H=state.H,
         perturbative_order=state.perturbative_order,
         units_convention=state.units_convention,
