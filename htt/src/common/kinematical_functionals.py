@@ -1173,7 +1173,12 @@ def evaluate_canonical_tensor_functionals(
 
 @dataclass(frozen=True)
 class KinematicalXBundle:
-    """One x bundle combining canonical tensor results and physical-SI views."""
+    """Kinematical functional sub-bundle of x from canonical and SI views.
+
+    This object does not yet contain observed/predicted CMB, count, Gaia or
+    distance carriers. Those source-bound carriers must be joined by the
+    observation-provider layer without changing the canonical state identity.
+    """
 
     canonical_state_id: str
     physical_view_state_id: str
@@ -1181,10 +1186,13 @@ class KinematicalXBundle:
     speed_of_light: float
     canonical_functionals: tuple[TensorFunctionalResult, ...]
     physical_functionals: tuple[FunctionalValue, ...]
+    scope: str = "KINEMATICAL_FUNCTIONAL_SUBBUNDLE_ONLY"
 
     def __post_init__(self) -> None:
         _nonempty(self.canonical_state_id, "canonical_state_id")
         _nonempty(self.physical_view_state_id, "physical_view_state_id")
+        if self.scope != "KINEMATICAL_FUNCTIONAL_SUBBUNDLE_ONLY":
+            raise KinematicalStateError("KinematicalXBundle scope must remain kinematical-only")
         theta = _finite_scalar(self.expansion_scalar, "expansion_scalar")
         c = _finite_scalar(self.speed_of_light, "speed_of_light")
         if theta == 0.0 or c <= 0.0:
@@ -1219,13 +1227,15 @@ def build_kinematical_x_bundle(
     anchor_ids: Mapping[str, str] | None = None,
     anchors: Mapping[str, object] | None = None,
 ) -> KinematicalXBundle:
-    """Build x from one canonical state, never from parallel parameter copies.
+    """Build the kinematical functional sub-bundle of x from one canonical state.
 
     canonical_functionals retain the registered theta-normalized HTT
     operators and their TensorFunctionalSpec/Result authority. The physical
     functionals are explicit-SI direct/mixed views derived from the same
-    canonical_state_id after supplying Theta=3H and c. No likelihood term is
-    formed here; this is the typed x construction stage.
+    canonical_state_id after supplying Theta=3H and c. Observed and predicted
+    CMB/count/Gaia/distance carriers are not fabricated here; source-bound
+    observation providers must add them in the complete x bundle. No likelihood
+    term is formed by this function.
     """
     if type(joint_state) is not JointAnisotropyState:
         raise TypeError("joint_state must be an exact canonical JointAnisotropyState")
