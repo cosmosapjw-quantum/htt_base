@@ -400,9 +400,7 @@ def evaluate_kinematical_functionals(
 
     # beta_RO is only a first-order closure view of the two independent relative velocities.
     if beta_rm is None or beta_mo is None:
-        closure_status = "FRAME_TRANSPORT_REQUIRED" if (
-            state.beta_RM is not None and state.beta_MO is not None
-        ) else "UNAVAILABLE"
+        closure_status = beta_rm_status if beta_rm is None else beta_mo_status
         closure_reason = mixed_reason or mixed_reason_mo or "both independent frame velocities are required"
         out.append(_value(state, "BETA_RO_FIRST_ORDER_VIEW", None,
                           representation="VECTOR_POLAR", units="1", parity="EVEN",
@@ -465,16 +463,23 @@ def evaluate_kinematical_functionals(
                       basis_id=state.basis_id, inputs=("A_A", "H", "c"),
                       normalization_id="DIVIDE_BY_cH", status=status_acc, reason=reason_acc))
 
-    mixed_reason = "beta_RM unavailable" if state.beta_RM is None else (
-        "explicit beta_RM frame transport to congruence basis required" if beta_rm_status != "AVAILABLE" else ""
-    )
-    mixed_reason_mo = "beta_MO unavailable" if state.beta_MO is None else (
-        "explicit beta_MO frame transport to congruence basis required" if beta_mo_status != "AVAILABLE" else ""
-    )
+    def _beta_reason(name: str, status: str) -> str:
+        if status == "AVAILABLE":
+            return ""
+        if status == "UNAVAILABLE":
+            return f"{name} unavailable"
+        if status == "FRAME_TRANSPORT_REQUIRED":
+            return f"explicit spatial basis transport for {name} is required"
+        if status == "RELATIVISTIC_FRAME_BRIDGE_REQUIRED":
+            return f"{name} belongs to another physical frame; a Lorentz/tetrad bridge is required"
+        return f"{name} status is {status}"
+
+    mixed_reason = _beta_reason("beta_RM", beta_rm_status)
+    mixed_reason_mo = _beta_reason("beta_MO", beta_mo_status)
     if sigma is None:
         mixed_status, mixed_reason2 = "UNAVAILABLE", "sigma_AB unavailable"
     elif beta_rm is None:
-        mixed_status = "FRAME_TRANSPORT_REQUIRED" if state.beta_RM is not None else "UNAVAILABLE"
+        mixed_status = beta_rm_status
         mixed_reason2 = mixed_reason or "beta_RM unavailable"
     elif H is None or H == 0.0:
         mixed_status = "UNDEFINED" if H == 0.0 else "UNAVAILABLE"
@@ -491,7 +496,7 @@ def evaluate_kinematical_functionals(
     if omega is None:
         mixed_status, mixed_reason2 = "UNAVAILABLE", "omega_A unavailable"
     elif beta_rm is None:
-        mixed_status = "FRAME_TRANSPORT_REQUIRED" if state.beta_RM is not None else "UNAVAILABLE"
+        mixed_status = beta_rm_status
         mixed_reason2 = mixed_reason or "beta_RM unavailable"
     elif H is None or H == 0.0:
         mixed_status = "UNDEFINED" if H == 0.0 else "UNAVAILABLE"
@@ -536,7 +541,7 @@ def evaluate_kinematical_functionals(
     if acceleration is None:
         mixed_status, mixed_reason2 = "UNAVAILABLE", "A_A unavailable"
     elif beta_mo is None:
-        mixed_status = "FRAME_TRANSPORT_REQUIRED" if state.beta_MO is not None else "UNAVAILABLE"
+        mixed_status = beta_mo_status
         mixed_reason2 = mixed_reason_mo or "beta_MO unavailable"
     elif H is None or H == 0.0:
         mixed_status = "UNDEFINED" if H == 0.0 else "UNAVAILABLE"
