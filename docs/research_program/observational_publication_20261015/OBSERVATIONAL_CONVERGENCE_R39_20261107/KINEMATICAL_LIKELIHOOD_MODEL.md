@@ -294,6 +294,59 @@ For source \(i\), express the two tangent-plane proper-motion components as a ve
 
 with the full astrometric covariance and any inter-source/systematic covariance retained. The predicted tangent field is projected onto spin-1/vector spherical harmonics. E1 glide, B1 spin and E2 shear-like coefficients are distinct observed functionals with their own parity and systematic response; none is automatically equal to \(A_a\), \(\omega_a\) or \(\sigma_{ab}\). Cross-match, magnitude/colour, parallax, scanning-law and reference-frame systematics must enter the observation model.
 
+### 4.5 Local optical angular drift: the complementary vorticity channel
+
+The leading radial Hubble diagram is blind to the antisymmetric vorticity tensor, but the same local optical problem has a transverse direction-drift channel. This is an existing derived result in the repository's LOOP C construction (2026-10-26), based on the covariant connecting-vector and null-Jacobi endpoint map; R39 must reuse it rather than re-derive it under a new name.
+
+For a smooth common timelike congruence in a convex normal neighbourhood, before caustics, with geometric optics, differentiable source tracking and an observer Fermi-Walker triad, define for sourceward unit direction \(n\)
+
+\[
+d(n)=\lim_{r\to0}\frac{cz(n,r)}{r},\qquad
+\mu(n)=\lim_{r\to0}\frac{dn_{\rm obs}}{d\tau},\qquad
+P(n)=I-nn^T.
+\]
+
+Here \(r\) is a locally calibrated optical distance with the affine-distance normalization specified in LOOP C. With the same \((-+++)\), outward-\(n\), axial-vorticity convention as the R39 state, the response is
+
+\[
+\boxed{
+d(n)=H+\sigma_{ij}n^in^j-\frac{A_i n^i}{c},
+\qquad
+\mu_{\rm FW}(n)=P(n)\sigma n+n\times\omega.
+}
+\]
+
+All terms in \(d\) and \(\mu\) have units s\(^{-1}\). The \(A/c\) term is an inverse-time vector. The angular formula is an optical endpoint result, not simply a simultaneous-constant-time relative-velocity argument: observer aberration and retarded emitter motion cancel the apparent extra acceleration term at this order. Do not append \(c\,P A\) to the transverse response. The physical acceleration is instead carried by the radial dipole.
+
+If the catalogue triad rotates relative to the Fermi-Walker triad with angular velocity \(\Omega\), and \(k=d\tau/dt_{\rm cat}>0\), the measured angular field is
+
+\[
+\mu_{\rm cat}(n)=k\{P(n)\sigma n+n\times[\omega+\Omega]\}.
+\]
+
+Thus its B1 channel measures the sum \(\omega+\Omega\), not physical vorticity alone. A gyro or independent nonrotating-frame calibration is needed to separate them. Without that calibration, the exact three-dimensional null transformation \((\delta\omega,\delta\Omega)=(-q,q)\) remains. The source's own transverse motion, structural/centroid drift, propagation effects, observer translation and source slip must also be represented; a distant quasar is not automatically a comoving dust marker.
+
+For the ideal uniformly weighted full sphere and calibrated Fermi-Walker clock/triad, exact moment inverses are
+
+\[
+H=\langle d\rangle,\qquad
+\frac{A_i}{c}=-3\langle d\,n_i\rangle,
+\]
+
+\[
+\sigma_{ij}
+=\frac{15}{2}\left\langle d\left(n_i n_j-\frac{\delta_{ij}}{3}\right)\right\rangle
+=5\langle\mu_{(i}n_{j)}\rangle,
+\qquad
+\omega=-\frac32\langle n\times\mu\rangle.
+\]
+
+This is a conditional local inverse, not yet a finite-survey estimator or a cosmological solution. Under the ideal full-sphere response, radial data have rank 9 (H, STF2 shear, polar acceleration), transverse data rank 8 (shared shear and axial vorticity), and the joint kinematical map rank 12. Adding unknown triad spin gives 15 columns but leaves rank 12. These are algebraic properties of this particular local response and full-sphere design, not rank statements about Gaia or a real selected catalogue.
+
+For an actual catalogue, form source-level rows for both radial and transverse observables using the real \(\hat n_a\), tangent basis, distance window, selection, frame conversion and source population. The relevant finite-source Jacobian has a radial block with derivatives against \((H,\sigma_I,A/c)\), and a transverse block against \((\sigma_I,\omega,\Omega)\). Whiten on the full covariance support, project source slip, triad spin, clock, selection, calibration and other nuisance directions in that same metric, then compute the supported quotient. The radial–transverse shear closure residual is an additional model check; finite-distance/remainder and selection effects can make it nonzero without identifying a unique failure mechanism.
+
+The new R39 code kernel common.kinematical_functionals.local_optical_response and local_optical_jacobian reuses the existing common.relativistic_kinematics.kinematics_from_velocity_jet adapter. The Jacobian is an unwhitened ideal source-level derivative; it is not itself the observed Gaia/CF4 Jacobian and cannot certify empirical rank.
+
 ## 5. Joint likelihood, nuisance projection and functional identifiability
 
 The full joint data vector is not generally a product of independent probe vectors. If a Gaussian approximation to the admitted joint summaries is justified, stack
