@@ -11,7 +11,7 @@
     "base_commit": "cab89d25af52a1b978a4da8c11eecdc25bb22759"
   },
   "working_branch": "research/r39-observational-identifiability-20261107",
-  "current_code_checkpoint": "8c18c12a39493e9841c3d50e476c4893b803be66",
+  "current_code_checkpoint": "a1e43d7d89efcf1c814fcdf99c9170bfb4f22b4e",
   "claim_ceiling": "C0_DESIGN_AND_CODE_CONTRACT_ONLY",
   "novelty_status": "CONDITIONAL_CANDIDATE_NOT_ESTABLISHED",
   "execution_boundary": {
@@ -38,7 +38,8 @@
     "local_optical_response": "IDEAL_POINTWISE_FORWARD_MAP_AND_UNWHITENED_JACOBIAN_IMPLEMENTED",
     "observed_gaia_loopc": "NOT_RUN_NO_SOURCE_SELECTION_OR_COVARIANCE_ADMISSION",
     "canonical_x_integration": "GITHUB_SOURCE_AND_TESTS_POSTED_READBACK_VERIFIED_NOT_RUNTIME_VERIFIED",
-    "stf5_coordinate_metric": "CANONICAL_CARTESIAN_STF5_CHART_ALIGNED; INDUCED_GRAM_METRIC_REQUIRED_FOR_SVD_COVARIANCE"
+    "stf5_coordinate_metric": "CANONICAL_CARTESIAN_STF5_CHART_ALIGNED; INDUCED_GRAM_METRIC_REQUIRED_FOR_SVD_COVARIANCE",
+    "vorticity_anchor_mapping": "STANDARD_LOCAL_AXIAL_DUAL_RECORDED; CANONICAL_OMEGA_AXIAL3_TO_MES_W2_METRIC_MAPPING_UNRESOLVED; NO_AUTOMATIC_Q_BINDING"
   },
   "authority": {
     "tensor_semantics": "docs/research_program/observational_publication_20261015/METHOD_REBOOT_20261023/THEOREMS.md at dfaf171c37f2636c942a99bf2b9803b57295ac14",
@@ -299,6 +300,11 @@
       "id": "R39-19-CANONICAL-X",
       "status": "GITHUB_SOURCE_AND_TESTS_COMMITTED_NOT_RUNTIME_VERIFIED",
       "deliverable": "Canonical JointAnisotropyState-to-SI view, v1 TensorFunctionalSpec/Result reuse and same-state-id x bundle; STF5 Cartesian chart preserved"
+    },
+    {
+      "id": "R39-20-VORTICITY-NORM",
+      "status": "NORMALIZATION_BOUNDARY_DOCUMENTED_ANCHOR_MAPPING_OPEN",
+      "deliverable": "Keep axial-vector norm and two-form MES W2 invariant distinct until canonical dual metric is verified"
     }
   ],
   "dependencies": [
@@ -429,6 +435,10 @@
     [
       "R39-19-CANONICAL-X",
       "R39-06-OBSERVATION-CODE"
+    ],
+    [
+      "R39-20-VORTICITY-NORM",
+      "R39-13-IDENTIFIABILITY"
     ]
   ],
   "paper_scope": {
@@ -528,7 +538,7 @@
     ],
     "novelty_consequence": "Existing observable-irrep, local full-sky boost/STF2-to-STF3, processed cut-sky boost design, shell-correlated a_lm covariance and Planck/CF4 source-window work narrow the remaining candidate to validated source-conditioned cross-probe tensor-functional identification."
   },
-  "test_checkpoint": "6e5b42efc52b1f9b9127aa417c913403127c95e1",
+  "test_checkpoint": "af3d17f477bc031156ebd3420e5621b613917081",
   "kinematical_state": {
     "canonical": "JointAnisotropyState with field-valued or declared basis-truncated theta_K",
     "raw_independent_blocks": [
@@ -588,7 +598,8 @@
         "ideal_unwhitened_finite_source_jacobian",
         "exact_canonical_JointAnisotropyState_to_physical_SI_view",
         "canonical_TensorFunctionalSpec_and_TensorFunctionalResult_adapter",
-        "single_state_id_KinematicalXBundle"
+        "single_state_id_KinematicalXBundle",
+        "explicit_axial_vector_norm_functional_separate_from_two_form_MES_W2_anchor"
       ],
       "verification": "GITHUB_SOURCE_AND_TEST_READBACK_ONLY; PYTEST_NOT_RUN"
     },
@@ -629,6 +640,13 @@
       "metric": "tr(S^2)=2(s1^2+s2^2+s1*s2+s3^2+s4^2+s5^2)",
       "scope": "used by canonical state, physical x component extraction and ideal local optical Jacobian",
       "rule": "Any flattened SVD/covariance requires induced Gram metric or an explicit orthonormal coordinate transform"
+    },
+    "vorticity_dual_convention": {
+      "local_optical_kernel": "omega_A=(1/2) epsilon_ABC omega^BC",
+      "induced_identity": "omega_AB omega^AB=2 omega_A omega^A",
+      "canonical_mes_W2": "omega_ab omega^ab/(6H^2)=omega_A omega^A/(3H^2) if the canonical vector uses the same dual convention",
+      "r39_functional": "OMEGA_VECTOR_NORM2_H=omega_A omega^A/H^2",
+      "anchor_boundary": "Do not bind OMEGA_VECTOR_NORM2_H to MES_G_OMEGA. The exact canonical omega_axial3 metric/normalization map must be source-verified before Q uses W2."
     }
   },
   "likelihood_contract": {
