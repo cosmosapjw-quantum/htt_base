@@ -149,7 +149,7 @@ The initial registry should include at least the following examples. \(H\ne0\) i
 | BETA_CROSS_OMEGA | \(\epsilon^A{}_{BC}\beta_{\rm RM}^B\omega^C/H\) | polar vector | Mixed polar/axial coupling |
 | BETA_DOT_ACCEL | \(\beta_{\rm MO}^A A_A/(cH)\) | scalar, even | Observer-frame acceleration coupling |
 | SIGMA_CUBIC | \(\mathrm{tr}(\sigma^3)/H^3\) | scalar, even | Shear-shape invariant |
-| OMEGA_STRESS | \(\omega_A\omega^A/(6H^2)\) | nonnegative scalar | Vorticity sector stress |
+| OMEGA_VECTOR_NORM2_H | \\(\\omega_A\\omega^A/H^2\\) | nonnegative scalar | Norm of the registered axial-vector view; not automatically the canonical two-form MES W2 invariant |
 
 These are not all equivalent targets. A scalar contraction is one additional registered functional and never replaces its vector/tensor source. For an orthogonal transformation \(R\in O(3)\),
 
@@ -161,6 +161,14 @@ A'\!=RA,\qquad
 \]
 
 Thus \(\beta\cdot\omega\) is a pseudoscalar; \(\beta^A\sigma_{AB}\beta^B\) is an even scalar. SO(3) orbit outputs retain handedness; an O(3) quotient deliberately identifies reflection-related states. Store the transformation law with the functional, not infer it from numerical component signs.
+
+For the axial dual convention used by the R39 local optical adapter,
+\[
+\omega_A=\frac12\epsilon_{ABC}\omega^{BC},
+\qquad
+\omega_{AB}\omega^{AB}=2\omega_A\omega^A.
+\]
+Therefore \(\omega_A\omega^A/(6H^2)\) is not interchangeable with the canonical crosswalk target \(\omega_{AB}\omega^{AB}/(6H^2)\); the latter equals \(\omega_A\omega^A/(3H^2)\) under this dual convention. R39 registers the dimensionless axial-vector norm \(\omega_A\omega^A/H^2\) separately and does not bind it to the canonical \(W_2\) MES anchor until the exact anchor-coordinate normalization is explicitly verified. This prevents a factor-of-two convention from entering Q or a likelihood by name alone.
 
 ### 2.2 Relation to CMB and other observable harmonics
 
