@@ -123,6 +123,24 @@ with shared primordial/LSS/foreground/source fields integrated once and with ful
 
 Local distance data constrain the leading expansion/acceleration/shear angular pattern, while vorticity remains blind in the leading symmetric radial contraction. Local observer boost and intrinsic congruence acceleration are distinct response directions. Functional-specific identifiability is assessed on the full likelihood tangent and observation fibres. The tensorized x,Q,Pi,F,G_F outputs are then computed from one common posterior/compatibility region; they are not separate likelihood factors. This is a source-conditioned likelihood-to-functional inference programme, not a new claim about the already established kinematic decomposition, CMB boost kernel or tensor MES geometry.
 
+## Local optical radial–transverse inverse and the vorticity channel
+
+The local optical operator now connects T3 kinematics to the astrometric likelihood. Reusing the existing LOOP C derivation, the sourceward radial rate and the transverse angular drift are
+
+\[
+d(n)=H+\sigma_{ij}n^in^j-\frac{A_i n^i}{c},
+\qquad
+\mu_{\rm FW}(n)=P(n)\sigma n+n\times\omega.
+\]
+
+An observed catalogue triad with angular velocity \(\Omega\) measures
+\[
+\mu_{\rm cat}(n)=k\{P(n)\sigma n+n\times(\omega+\Omega)\}.
+\]
+The acceleration contribution is radial at this leading order; the observer-aberration and retarded-source terms cancel from the transverse drift. The B1 response does not separately identify \(\omega\) and \(\Omega\): independent triad-spin calibration is required.
+
+In the ideal uniform full-sphere/Fermi-Walker limit, the existing moment inverse recovers H, A/c and sigma from radial rates and sigma/omega from angular drift. The joint local map has kinematical rank 12; adding unknown triad spin makes 15 columns but leaves rank 12. This is a property of the ideal source-independent local operator, not of Gaia or another selected survey. R39 now implements its pointwise forward response and unwhitened finite-source Jacobian; production inference still requires the actual catalogue tangent bases, source selection, covariance, source-slip/translation terms and finite-distance remainder.
+
 ## Tensorized x and novelty
 
 Pinned T7 defines one common state/confidence region and all functional images. Q is the matching anchor/gauge/margin; F separates directional support, pushforward and occupancy; Pi is a strict exceedance surface under a named law; G_F is a full-covariance depth path. These are established geometric/statistical constructs applied to this cosmological operator problem, not new mathematical priority claims.
