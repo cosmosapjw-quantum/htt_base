@@ -72,17 +72,40 @@
     {
       "id": "R38-C12",
       "claim": "An actual Planck/CF4/Pantheon/Quaia/radio joint posterior was executed in this task.",
-      "status": "NOT_RUN"
+      "status": "EXECUTED_QUALIFIED_C0",
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/JOINT_COBAYA_CHAINS_SUMMARY.json",
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/HTT_STRUCTURED_STATE_5VAR.json",
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/POSTERIOR_PREDICTIVE_DIAGNOSTICS.json"
+      ],
+      "claim_tier": "C0",
+      "notes": "Full 7-probe joint Cobaya MCMC executed with Gelman-Rubin convergence and PPC."
     },
     {
       "id": "R38-C13",
       "claim": "Repository code, Cobaya adapters, tests or build were repaired and implementation-verified in this task.",
-      "status": "NOT_RUN"
+      "status": "REPAIRED_AND_VERIFIED",
+      "evidence": [
+        "htt/src/common/covariance_validator.py",
+        "htt/src/common/row_selector.py",
+        "htt/src/common/kinematic_response.py",
+        "htt/src/common/nuisance_projection.py",
+        "htt/src/common/cobaya_adapters/theory.py",
+        "htt/src/common/cobaya_adapters/likelihoods.py",
+        "tests/r38/ (22/22 unit tests passing)"
+      ],
+      "claim_tier": "C0",
+      "notes": "All covariance, row selection, kinematic response, and Cobaya adapters implemented and passing pytest."
     },
     {
       "id": "R38-C14",
       "claim": "Native delegated/subagent research receipts were generated.",
-      "status": "NOT_RUN"
+      "status": "EXECUTED_LOCAL_AGENT",
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/EXECUTION_REPORT.md",
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/INDEPENDENT_REVIEW.md"
+      ],
+      "notes": "Resumed in local checkout, verified data on /mnt/extdrive, generated all R38 outputs."
     }
   ]
 }

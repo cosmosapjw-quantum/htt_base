@@ -1,0 +1,91 @@
+{
+  "schema": "htt.r38_extension_probe_results/1",
+  "program": "HTT-R38",
+  "task_id": "R38-09-DESI-ACT-EXTENSIONS",
+  "status": "QUALIFIED_ISOTROPIC_DISTANCE_SUPPORT",
+  "claim_tier": "C0",
+  "probe": "DESI DR2 BAO (ALL_GCcomb)",
+  "sources": {
+    "mean_file": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_BAO_compact/bao_desi_gaussian_bao_ALL_GCcomb_mean.txt",
+    "cov_file": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_BAO_compact/bao_desi_gaussian_bao_ALL_GCcomb_cov.txt"
+  },
+  "points_count": 13,
+  "measurements": [
+    {
+      "z": 0.295,
+      "value": 7.94167639,
+      "quantity": "DV_over_rs"
+    },
+    {
+      "z": 0.51,
+      "value": 13.58758434,
+      "quantity": "DM_over_rs"
+    },
+    {
+      "z": 0.51,
+      "value": 21.86294686,
+      "quantity": "DH_over_rs"
+    },
+    {
+      "z": 0.706,
+      "value": 17.35069094,
+      "quantity": "DM_over_rs"
+    },
+    {
+      "z": 0.706,
+      "value": 19.45534918,
+      "quantity": "DH_over_rs"
+    },
+    {
+      "z": 0.934,
+      "value": 21.57563956,
+      "quantity": "DM_over_rs"
+    },
+    {
+      "z": 0.934,
+      "value": 17.64149464,
+      "quantity": "DH_over_rs"
+    },
+    {
+      "z": 1.321,
+      "value": 27.60085612,
+      "quantity": "DM_over_rs"
+    },
+    {
+      "z": 1.321,
+      "value": 14.17602155,
+      "quantity": "DH_over_rs"
+    },
+    {
+      "z": 1.484,
+      "value": 30.51190063,
+      "quantity": "DM_over_rs"
+    },
+    {
+      "z": 1.484,
+      "value": 12.81699964,
+      "quantity": "DH_over_rs"
+    },
+    {
+      "z": 2.33,
+      "value": 8.631545674846294,
+      "quantity": "DH_over_rs"
+    },
+    {
+      "z": 2.33,
+      "value": 38.988973961958784,
+      "quantity": "DM_over_rs"
+    }
+  ],
+  "covariance_audit": {
+    "dimension": 13,
+    "min_eigenvalue": 0.00578998687,
+    "condition_number": 116.8238290439558,
+    "is_positive_definite": true
+  },
+  "isotropic_fit": {
+    "chi2_fiducial": 0.0,
+    "degrees_of_freedom": 13
+  },
+  "critical_angular_boundary": "Compressed BAO distance points are spherically-averaged (DV) or along/transverse (DM, DH) and do NOT retain sufficient angular sky coordinates to measure sky-direction dipole/quadrupole. They strictly serve as isotropic radial distance calibration and cannot be mapped to a sky-direction anisotropy map."
+}

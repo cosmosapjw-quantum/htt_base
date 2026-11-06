@@ -1,0 +1,95 @@
+"""Unit tests for frame-aware kinematic and shear response.
+
+Phase C of HTT-R38 Observational Convergence.
+Tests frame decomposition, relativistic composition, superluminal bounds,
+basis normalization, and carrier separation.
+"""
+from __future__ import annotations
+
+import math
+import numpy as np
+import pytest
+
+from common.kinematic_response import (
+    KinematicFrameState,
+    KinematicResponseModel,
+    STF_BASIS,
+    compose_velocities,
+    KinematicsError,
+    BetaTruncationError,
+)
+
+def test_stf_basis_orthonormality():
+    # Verify Frobenius orthonormality: Tr(E_a E_b) = delta_ab
+    gram = np.einsum("aij,bij->ab", STF_BASIS, STF_BASIS)
+    assert np.allclose(gram, np.eye(5), atol=1e-14)
+    # Verify each basis matrix is symmetric and traceless
+    for a in range(5):
+        E_a = STF_BASIS[a]
+        assert np.allclose(E_a, E_a.T, atol=1e-14)
+        assert math.isclose(float(np.trace(E_a)), 0.0, abs_tol=1e-14)
+
+
+def test_velocity_composition():
+    # Collinear velocities: 0.1c and 0.05c
+    v1 = np.array([0.1, 0.0, 0.0])
+    v2 = np.array([0.05, 0.0, 0.0])
+    v_rel = compose_velocities(v1, v2)
+    # Expected: (0.1 - 0.05) / (1 - 0.1*0.05) = 0.05 / 0.995 = 0.05025125...
+    expected = (0.1 - 0.05) / (1.0 - 0.005)
+    assert math.isclose(v_rel[0], expected, rel_tol=1e-10)
+
+    # Superluminal rejection
+    v_lum = np.array([1.0, 0.0, 0.0])
+    with pytest.raises(BetaTruncationError, match="strictly subluminal"):
+        compose_velocities(v_lum, v2)
+
+
+def test_kinematic_response_model():
+    # Initialize with observer boost 0.00123 (approx CMB dipole speed ~ 369 km/s)
+    bro = [0.00123, 0.0, 0.0]
+    brm = [0.00020, 0.0, 0.0]
+    dint = [0.00005, 0.0, 0.0]
+    model = KinematicResponseModel.from_parameters(
+        beta_RO=bro, beta_RM=brm, d_int=dint
+    )
+    
+    # Matter-observer velocity: 0.00123 - 0.00020 = 0.00103
+    assert np.allclose(model.state.beta_MO, [0.00103, 0.0, 0.0])
+    
+    # Direction along +x
+    n_x = np.array([[1.0, 0.0, 0.0]])
+    # CMB dipole along +x: beta_RO + d_int = 0.00123 + 0.00005 = 0.00128
+    dip_x = model.cmb_temperature_dipole(n_x)
+    assert math.isclose(dip_x[0], 0.00128, rel_tol=1e-12)
+
+    # Direction along +y (orthogonal) -> 0.0
+    n_y = np.array([[0.0, 1.0, 0.0]])
+    dip_y = model.cmb_temperature_dipole(n_y)
+    assert math.isclose(dip_y[0], 0.0, abs_tol=1e-14)
+
+    # Second-order kinetic quadrupole along +x:
+    # Q_kin = 0.5 * ( (n.beta)^2 - 1/3 beta^2 ) = 0.5 * (2/3 * beta^2) = (1/3) * beta^2
+    qkin_x = model.cmb_kinetic_quadrupole(n_x)
+    expected_qkin_x = (1.0 / 3.0) * (0.00123 ** 2)
+    assert math.isclose(qkin_x[0], expected_qkin_x, rel_tol=1e-12)
+
+    # Matter count dipole: [2 + 0.75*(1 + 1)] * beta_MO = 3.5 * 0.00103 = 0.003605
+    count_dip = model.matter_count_dipole(n_x, spectral_index=0.75, flux_slope=1.0)
+    assert math.isclose(count_dip[0], 3.5 * 0.00103, rel_tol=1e-12)
+
+
+def test_carrier_separation():
+    # E1/B1 polar/axial carrier vs E2/STF shear
+    model = KinematicResponseModel.from_parameters(
+        beta_RO=[0.001, 0.0, 0.0],
+        stf_shear=[1e-5, -2e-5, 0.0, 0.0, 0.0],
+        e1_polar=[1e-6, 0.0, 0.0],
+        b1_axial=[0.0, 1e-6, 0.0],
+    )
+    assert model.state.stf_shear_amplitudes.shape == (5,)
+    assert model.state.e1_polar_vector.shape == (3,)
+    assert model.state.b1_axial_vector.shape == (3,)
+    # Verify that E1 and STF are maintained as distinct tensors
+    assert not np.array_equal(model.state.e1_polar_vector, model.state.stf_shear_amplitudes[:3])
+

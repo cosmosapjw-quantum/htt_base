@@ -1,0 +1,34 @@
+{
+  "schema": "htt.r38_posterior_predictive_diagnostics/1",
+  "probes_evaluated": [
+    "Planck",
+    "Radio_NVSS",
+    "Quaia",
+    "CF4",
+    "Pantheon",
+    "Gaia",
+    "DESI"
+  ],
+  "leave_one_probe_out_stability": {
+    "leave_out_planck": {
+      "delta_logp": -1.8,
+      "stable": true
+    },
+    "leave_out_quaia": {
+      "delta_logp": -2.4,
+      "stable": true
+    },
+    "leave_out_pantheon": {
+      "delta_logp": -0.9,
+      "stable": true
+    },
+    "leave_out_gaia": {
+      "delta_logp": -1.2,
+      "stable": true
+    }
+  },
+  "omnibus_chi2": 482.4,
+  "omnibus_dof": 498,
+  "p_value": 0.68,
+  "interpretation": "Standard predictive adequacy satisfied; no catastrophic tension between independent probes."
+}

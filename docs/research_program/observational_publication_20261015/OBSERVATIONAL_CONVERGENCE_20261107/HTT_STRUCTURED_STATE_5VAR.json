@@ -1,0 +1,45 @@
+{
+  "schema": "htt.structured_inference_product/1",
+  "program": "HTT-R38",
+  "claim_tier": "C0",
+  "status": "QUALIFIED_STRUCTURED_DIAGNOSTIC",
+  "variables": {
+    "x_departure": {
+      "value": 0.00123,
+      "uncertainty": 5e-05,
+      "physical_meaning": "Observer boost departure from isotropic FLRW comoving frame",
+      "units": "c=1"
+    },
+    "Q_shear": {
+      "value": 1.82e-05,
+      "uncertainty": 5.4e-06,
+      "physical_meaning": "STF metric shear quadrupole amplitude ||sigma||",
+      "units": "dimensionless"
+    },
+    "Pi_parity": {
+      "value": 0.0,
+      "uncertainty": 1e-06,
+      "physical_meaning": "Axial/magnetic B-mode odd-parity invariant",
+      "units": "dimensionless"
+    },
+    "F_fidelity": {
+      "value": 0.9984,
+      "uncertainty": 0.0012,
+      "physical_meaning": "Frame certificate fidelity between CRF3 and CMB frames",
+      "units": "unitless [0, 1]"
+    },
+    "G_F_depth_gap": {
+      "value": 0.041,
+      "uncertainty": 0.012,
+      "physical_meaning": "Depth-gap parameter between low-z optical shell and CMB decoupling",
+      "units": "dimensionless"
+    }
+  },
+  "joint_information": {
+    "rank_retained": 13,
+    "null_directions": 4,
+    "gelman_rubin_Rminus1": 0.028,
+    "posterior_predictive_check_chi2_p": 0.34
+  },
+  "claim_firewall": "Diagnostic-only certificate; does NOT constitute Bianchi geometry detection or family identification without external native solver transfer."
+}

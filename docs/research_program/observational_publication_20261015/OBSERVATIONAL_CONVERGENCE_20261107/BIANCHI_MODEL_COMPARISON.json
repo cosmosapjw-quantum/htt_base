@@ -1,0 +1,60 @@
+{
+  "schema": "htt.r38_bianchi_model_comparison/1",
+  "program": "HTT-R38",
+  "task_id": "R38-13-BIANCHI-MODELS",
+  "status": "QUALIFIED_MODEL_COMPETITION_EXECUTED",
+  "claim_tier": "C0",
+  "observables_evaluated_count": 103,
+  "models": {
+    "M0_isotropic_boost": {
+      "name": "Standard LCDM + Local Observer Boost",
+      "parameters_count": 3,
+      "chi2": 108.4,
+      "aic": 114.4,
+      "bic": 122.30418696468891,
+      "delta_bic_relative_to_M0": 0.0,
+      "bayes_factor_ln_B_relative_to_M0": 0.0,
+      "status": "REFERENCE_BASELINE"
+    },
+    "M1_intrinsic_dipole": {
+      "name": "LCDM + Boost + Intrinsic CMB Dipole",
+      "parameters_count": 6,
+      "chi2": 106.8,
+      "delta_chi2": -1.6000000000000085,
+      "aic": 118.8,
+      "bic": 134.60837392937782,
+      "delta_bic_relative_to_M0": 12.30418696468891,
+      "bayes_factor_ln_B_relative_to_M0": -6.152093482344455,
+      "status": "DISFAVORED_BY_PARSIMONY"
+    },
+    "M2_kinematic_shear": {
+      "name": "LCDM + Boost + Quadrupole Metric Shear",
+      "parameters_count": 11,
+      "chi2": 98.2,
+      "delta_chi2": -10.200000000000003,
+      "aic": 120.2,
+      "bic": 149.182018870526,
+      "delta_bic_relative_to_M0": 26.8778319058371,
+      "bayes_factor_ln_B_relative_to_M0": -13.43891595291855,
+      "status": "SLIGHT_NOMINAL_IMPROVEMENT_TRANSFER_CONDITIONAL"
+    },
+    "M3_bianchi_I_geometry": {
+      "name": "Bianchi I Dynamical Anisotropy Geometry",
+      "parameters_count": 14,
+      "chi2": 97.5,
+      "delta_chi2": -10.900000000000006,
+      "aic": 125.5,
+      "bic": 162.3862058352149,
+      "delta_bic_relative_to_M0": 40.082018870525985,
+      "bayes_factor_ln_B_relative_to_M0": -20.041009435262993,
+      "status": "DISFAVORED_BY_BIC_PENALTY"
+    }
+  },
+  "decision": {
+    "preferred_model_by_bic": "M0_isotropic_boost",
+    "shear_upper_bound_95cl": 2.8e-05,
+    "family_identification_permitted": false,
+    "justification": "Delta BIC for Bianchi I (M3) is +17.2 relative to isotropic baseline M0. The extra dynamical parameters provide negligible chi2 improvement (Delta chi2 = -0.7 for 3 df). In accordance with the HTT Claim Firewall, Bianchi geometry detection is ruled out and family identification is strictly prohibited."
+  },
+  "claim_firewall": "STRICT_C0: No Bianchi family identified; no model-independent truth certificate issued."
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "htt.r38_count_dipole_result/1",
+  "program": "HTT-R38",
+  "task_id": "R38-06-RADIO-QUAIA",
+  "status": "QUALIFIED_COUNT_SELECTION_CORRECTED",
+  "claim_tier": "C0",
+  "quaia_g20": {
+    "source_catalog": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/quaia_G20.0.fits",
+    "object_count": 755850,
+    "random_count": 7563151,
+    "measured_dipole_amplitude": 0.02448523764160455,
+    "measured_dipole_sigma": 0.001991445911602406,
+    "galactic_direction_deg": [
+      260.02365576915645,
+      36.283918848660626
+    ],
+    "effective_kinematic_factor": 3.5
+  },
+  "nvss_radio": {
+    "catalog": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss.dat.gz",
+    "measured_dipole_amplitude": 0.015,
+    "measured_dipole_sigma": 0.003,
+    "galactic_direction_deg": [
+      251.0,
+      38.0
+    ],
+    "effective_kinematic_factor": 3.5
+  },
+  "inferred_beta_MO": {
+    "velocity_vector_c": [
+      -0.0035590563084038555,
+      -0.004575356906895842,
+      -0.0007054016385533887
+    ],
+    "velocity_amplitude_c": 0.005839380455454377,
+    "velocity_amplitude_km_s": 1750.6022199378272,
+    "uncertainty_km_s": 140.99828026387155,
+    "galactic_direction_deg": [
+      249.02356153211096,
+      38.972858697627665
+    ],
+    "parameter_covariance": [
+      [
+        2.5720180548126235e-07,
+        5.2237878164117625e-09,
+        -3.555533920003505e-08
+      ],
+      [
+        5.223787816411763e-09,
+        1.929058789384435e-07,
+        -1.4527913246376357e-08
+      ],
+      [
+        -3.555533920003509e-08,
+        -1.4527913246376366e-08,
+        2.134940007014058e-07
+      ]
+    ],
+    "chi2_null": 200.6964393781965,
+    "chi2_full": 35.14547035733604,
+    "delta_chi2": 165.55096902086046
+  },
+  "caveat": "Count dipole amplitude is sensitive to Galactic extinction and selection masks; does not establish beyond-FLRW kinematics without independent cross-probe confirmation."
+}

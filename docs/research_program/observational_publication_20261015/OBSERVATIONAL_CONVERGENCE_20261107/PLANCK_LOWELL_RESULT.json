@@ -1,0 +1,55 @@
+{
+  "schema": "htt.r38_planck_lowell_result/1",
+  "program": "HTT-R38",
+  "task_id": "R38-05-PLANCK-LOWELL",
+  "status": "QUALIFIED_TRANSFER_CONDITIONAL",
+  "claim_tier": "C0",
+  "probe": "Planck PR4 Commander (NPIPE)",
+  "source_map": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/COM_CMB_IQU-commander_4096_R4.00_full.fits",
+  "data_dimension": 60,
+  "mc_null_simulations_count": 100,
+  "covariance": {
+    "dimension": 60,
+    "min_eigenvalue": 5.575551310594557e-17,
+    "condition_number": 178.62330204372643,
+    "is_positive_definite": true
+  },
+  "signal_rank": {
+    "effective_rank": 3,
+    "is_full_rank": true,
+    "singular_values": [
+      1.0954704064355605,
+      0.9971436427951994,
+      0.8975796032982405
+    ]
+  },
+  "fit": {
+    "chi2_null": 56.05035022219843,
+    "chi2_full": 52.435680177233245,
+    "delta_chi2": 3.6146700449651874,
+    "p_value_conditional": 0.16409085305894897,
+    "fitted_coefficients": [
+      -1.0627170025420126e-07,
+      -1.8421683586689245e-09,
+      -1.1515636319919063e-07
+    ],
+    "parameter_covariance": [
+      [
+        1.8747497926573138e-14,
+        -1.2632045710335291e-15,
+        9.959751348477407e-16
+      ],
+      [
+        -1.2632045710335297e-15,
+        3.2622687158766705e-15,
+        -4.548345126832143e-17
+      ],
+      [
+        9.959751348477411e-16,
+        -4.548345126832142e-17,
+        4.063824237019102e-15
+      ]
+    ]
+  },
+  "caveat": "Planck PR4 Commander and PR3 SMICA are processing alternatives on the same CMB sky; not independent realizations."
+}

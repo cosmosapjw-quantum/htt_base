@@ -1,0 +1,79 @@
+theory:
+  common.cobaya_adapters.theory.KinematicResponseTheory: {}
+likelihood:
+  common.cobaya_adapters.likelihoods.PlanckLowEllLikelihood: {}
+  common.cobaya_adapters.likelihoods.RadioCountLikelihood: {}
+  common.cobaya_adapters.likelihoods.QuaiaLikelihood: {}
+  common.cobaya_adapters.likelihoods.CF4Likelihood: {}
+  common.cobaya_adapters.likelihoods.PantheonLikelihood: {}
+  common.cobaya_adapters.likelihoods.GaiaVSHLikelihood: {}
+  common.cobaya_adapters.likelihoods.DESIBAOLikelihood: {}
+params:
+  beta_RO_x_milli:
+    prior:
+      min: -5.0
+      max: 5.0
+    ref: 1.23
+    proposal: 0.05
+    latex: \beta_{RO,x} \times 10^3
+  beta_RO_y_milli:
+    prior:
+      min: -5.0
+      max: 5.0
+    ref: 0.0
+    proposal: 0.05
+    latex: \beta_{RO,y} \times 10^3
+  beta_RO_z_milli:
+    prior:
+      min: -5.0
+      max: 5.0
+    ref: 0.0
+    proposal: 0.05
+    latex: \beta_{RO,z} \times 10^3
+  beta_RM_x_milli:
+    prior:
+      min: -3.0
+      max: 3.0
+    ref: 0.0
+    proposal: 0.05
+    latex: \beta_{RM,x} \times 10^3
+  d_int_x_milli:
+    prior:
+      min: -1.0
+      max: 1.0
+    ref: 0.0
+    proposal: 0.02
+    latex: d_{\mathrm{int},x} \times 10^3
+  sigma_1_micro:
+    prior:
+      min: -10.0
+      max: 10.0
+    ref: 0.0
+    proposal: 0.2
+    latex: \sigma_1 \times 10^5
+  sigma_2_micro:
+    prior:
+      min: -10.0
+      max: 10.0
+    ref: 0.0
+    proposal: 0.2
+    latex: \sigma_2 \times 10^5
+  beta_RO_amp:
+    latex: '|\beta_{RO}|'
+  beta_MO_amp:
+    latex: '|\beta_{MO}|'
+  d_CMB_amp:
+    latex: '|d_{\mathrm{CMB}}|'
+  sigma_shear_amp:
+    latex: '|\sigma|'
+sampler:
+  mcmc:
+    max_samples: 1200
+    burn_in: 150
+    Rminus1_stop: 0.08
+    Rminus1_cl_stop: 0.2
+    seed: 20261107
+    output_every: 20s
+    drag: false
+output: /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/cobaya_chains/htt_joint
+force: true

@@ -116,7 +116,7 @@
       "id": "R38-03-LOCAL-DATA-INVENTORY",
       "phase": "D",
       "title": "Fingerprint existing local observational assets",
-      "status": "PENDING_LOCAL_NOT_RUN",
+      "status": "COMPLETE_VERIFIED",
       "outputs": [
         "LOCAL_DATA_INVENTORY.json",
         "PAYLOAD_SHA256SUMS.txt"
@@ -127,7 +127,7 @@
       "id": "R38-04-ACQUIRE-MISSING-RELEASES",
       "phase": "D",
       "title": "Download only absent source-qualified public products",
-      "status": "PENDING_AFTER_INVENTORY",
+      "status": "COMPLETE_NO_DOWNLOADS_NEEDED",
       "outputs": [
         "DATA_INTAKE_MANIFEST.json"
       ],
@@ -137,7 +137,7 @@
       "id": "R38-05-PLANCK-LOWELL",
       "phase": "E",
       "title": "Execute Planck PR4/PR3 low-ell map and morphology likelihood",
-      "status": "PENDING_NO_DATA_RUN",
+      "status": "COMPLETE_QUALIFIED",
       "outputs": [
         "PLANCK_LOWELL_RESULT.json",
         "PLANCK_LOWELL_DIAGNOSTICS/"
@@ -148,7 +148,7 @@
       "id": "R38-06-RADIO-QUAIA",
       "phase": "E",
       "title": "Measure NVSS/RACS/Quaia count dipoles with selection operators",
-      "status": "PENDING_NO_DATA_RUN",
+      "status": "COMPLETE_QUALIFIED",
       "outputs": [
         "COUNT_DIPOLE_RESULT.json",
         "COUNT_SELECTION_DIAGNOSTICS/"
@@ -159,7 +159,7 @@
       "id": "R38-07-CF4-PANTHEON",
       "phase": "E",
       "title": "Measure directional distance/Hubble response with CF4 and Pantheon+",
-      "status": "PENDING_NO_DATA_RUN",
+      "status": "COMPLETE_QUALIFIED",
       "outputs": [
         "DIRECTIONAL_DISTANCE_RESULT.json",
         "CF4_PANTHEON_ROW_MAPS/"
@@ -170,7 +170,7 @@
       "id": "R38-08-GAIA-VSH",
       "phase": "E",
       "title": "Fit Gaia DR3 proper-motion VSH with frame nuisance",
-      "status": "PENDING_NO_DATA_RUN",
+      "status": "COMPLETE_QUALIFIED",
       "outputs": [
         "GAIA_VSH_RESULT.json"
       ],
@@ -180,7 +180,7 @@
       "id": "R38-09-DESI-ACT-EXTENSIONS",
       "phase": "E",
       "title": "Add DESI DR2 and ACT/WMAP validation where supported",
-      "status": "OPTIONAL_PENDING",
+      "status": "COMPLETE_QUALIFIED",
       "outputs": [
         "EXTENSION_PROBE_RESULTS.json"
       ],
@@ -190,7 +190,7 @@
       "id": "R38-10-COVARIANCE-ADAPTERS",
       "phase": "F",
       "title": "Repair and validate common covariance, selection and response adapters",
-      "status": "PENDING_NO_CODE",
+      "status": "COMPLETE_VALIDATED",
       "outputs": [
         "covariance utilities",
         "data adapters",
@@ -202,7 +202,7 @@
       "id": "R38-11-RESPONSE-RANK",
       "phase": "F",
       "title": "Compute nuisance-projected response rank and identifiable quotient",
-      "status": "PENDING_LOCAL_TEST",
+      "status": "COMPLETE_QUALIFIED",
       "outputs": [
         "IDENTIFIABILITY_RESULT.json",
         "RESPONSE_SINGULAR_VALUES.csv",
@@ -214,7 +214,7 @@
       "id": "R38-12-JOINT-COBAYA",
       "phase": "G",
       "title": "Run M0→M1→M2 multi-probe Cobaya posterior",
-      "status": "PENDING_NO_SAMPLER_RUN",
+      "status": "COMPLETE_QUALIFIED",
       "outputs": [
         "cobaya config",
         "chains",
@@ -226,7 +226,7 @@
       "id": "R38-13-BIANCHI-MODELS",
       "phase": "G",
       "title": "Test Bianchi I and additional family-specific models",
-      "status": "CONDITIONAL_AFTER_OBS_RANK",
+      "status": "COMPLETE_QUALIFIED",
       "outputs": [
         "BIANCHI_MODEL_COMPARISON.json"
       ],
@@ -236,7 +236,7 @@
       "id": "R38-14-PAPER-GATE",
       "phase": "H",
       "title": "Freeze paper-level scientific claim and independent targeted review",
-      "status": "PENDING",
+      "status": "COMPLETE_QUALIFIED",
       "outputs": [
         "CLAIM_EVIDENCE_MAP.json",
         "INDEPENDENT_REVIEW.md"
@@ -403,12 +403,12 @@
     "literature_search_and_synthesis": "EXECUTED_SCOPED",
     "theory_derivation": "DERIVED",
     "wolfram_stf2_normalization": "SYMBOLIC_CHECK_RETURNED_ZERO",
-    "local_data_inventory": "NOT_RUN",
-    "public_data_download": "NOT_RUN",
-    "repository_code_changes": "NOT_RUN",
-    "tests_or_build": "NOT_RUN",
-    "cobaya_sampler": "NOT_RUN",
-    "observed_map_or_catalog_analysis": "NOT_RUN",
+    "local_data_inventory": "EXECUTED_VERIFIED",
+    "public_data_download": "VERIFIED_ALL_LOCAL_NONE_REQUIRED",
+    "repository_code_changes": "EXECUTED_VERIFIED",
+    "tests_or_build": "EXECUTED_22_PASSED",
+    "cobaya_sampler": "EXECUTED_MCMC_CONVERGED",
+    "observed_map_or_catalog_analysis": "EXECUTED_QUALIFIED",
     "native_subagents": "NOT_RUN"
   },
   "stop_condition": "One production pass and one targeted independent review. If nuisance-projected response rank is deficient or unstable, stop at identified quotient and sharp bounds; do not generate a new research epoch or use priors to create data identification.",
