@@ -69,3 +69,7 @@ One numerical representation check on a randomly generated improper orthogonal m
 The local optical relation is recorded as H_u(n)=vartheta/3-A·n/c+sigma_ab n^a n^b for sourceward n, with d_L=cz/H_u(n)+O(z^2) in the local optical domain. The leading symmetric radial projection is blind to vorticity. Observer-MO Doppler and intrinsic congruence acceleration remain separate channels.
 
 No production TensorFunctionalBundle, CMB/count/SN/Gaia joint likelihood, source-bound cross-covariance, new posterior, observed kinematic estimate or native Bianchi transfer has been implemented/run. Local pytest/CI and Cobaya remain NOT_RUN.
+
+### Relative-velocity physical-frame safeguard
+
+The typed state now records physical frame IDs separately from spatial basis IDs for beta_RM and beta_MO. Axis rotation alone does not convert a vector between distinct physical rest frames. Mixed functionals and beta_RO closure are withheld with RELATIVISTIC_FRAME_BRIDGE_REQUIRED until an ordered Lorentz/tetrad bridge is admitted. This prevents a 3D basis adapter from masquerading as relativistic velocity composition.
