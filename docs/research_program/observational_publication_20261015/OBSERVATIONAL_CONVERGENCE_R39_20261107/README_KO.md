@@ -8,7 +8,7 @@
 
 ## 핵심 결정
 
-R39는 scalar x_C가 아니라 tensorized HTT의 벡터/텐서 기능값 bundle x를 주 estimand로 삼는다. x는 sample × functional이며 각 functional의 rank/parity/frame/units/support를 보존한다. x_C는 기존 signed budget의 선택적 scalar projection으로만 유지한다. 물리 상태, 관측 carrier, nuisance, anchors 및 response remainder를 하나의 joint region에 보존하고 각 functional의 identified-set/posterior image를 계산한다.
+R39의 주 parameter는 관측 harmonic 배열만이 아니라 field-valued 또는 선언된 basis로 절단한 kinematical state θ_K={σ_AB, ω_A, A_A, β_RM,A, β_MO,A}다. pointwise finite core는 17 real components이며 β_RO는 1차 closure의 파생 view다. x는 direct kinematic components, H-normalized copies, 혼합 tensor functionals, predicted CMB/count/Gaia/distance carriers를 모두 포함하는 sample × functional bundle다. x_C는 기존 signed budget의 선택적 scalar projection으로만 유지한다. 최종 목표는 D={a_lm,z_i,n_hat_i,flux,distance,proper motion,...}에 대한 단일 source-conditioned L(θ,ψ,η;D)=p(D|θ,ψ,η)를 구성하고, 하나의 joint posterior/compatibility region에서 x,Q,Pi,F,G_F를 산출하는 것이다.
 
 상세 적용 규격은 VECTOR_TENSOR_X_FRAMEWORK.md에 있다. 이 문서는 기존 R8/R9의 vector/tensor MES, joint state, functional images, full covariance 및 depth path를 이번 cosmology programme에 연결한다. 이 통합 자체가 새 수학 정리나 관측 discovery라는 주장은 하지 않는다.
 
@@ -29,6 +29,16 @@ R38 branch와 commit은 실제 GitHub에서 확인했다. 그러나 R38 README�
 6. local boost vs global tilt → ordered tetrad map and nuisance-projected source-conditioned identifiable quotient.
 
 주 분석 블록은 CMB T/E boost/BipoSH, Quaia/NVSS/RACS source counts, Gaia E/B VSH다. Pantheon+/CF4는 directional distance/Hubble validation 블록이다. DESI isotropic BAO compression에는 sky-axis leverage가 없으므로 directional evidence로 전환하지 않는다.
+
+## Kinematical theta와 likelihood
+
+물리 state는 \(\sigma_{AB}\)(STF2 polar, 5), \(\omega_A\)(axial vector, 3), \(A_A\)(polar vector, 3), \(\beta_{\rm RM,A}\)(3), \(\beta_{\rm MO,A}\)(3)로 구성한다. \(\beta_{\rm RO}\)는 독립 vector가 아니라 first-order closure 또는 정확한 ordered tetrad composition으로 산출한다. optional \(\Delta\Omega_k\), spatial Ricci, Weyl blocks는 별도 extension이다.
+
+Likelihood는 CMB T/E/B full covariance, selection-aware source-count point process, SN/CF4 direction-dependent distance, Gaia proper-motion VSH를 공통 \(\theta\)에 조건부로 연결한다. 공통 LSS/foreground/overlapping sources/calibration은 shared latent 또는 full cross-covariance로 처리한다. 각 probe의 marginal posterior를 단순 곱하지 않는다.
+
+정식 계약과 예시 registry:
+- KINEMATICAL_LIKELIHOOD_MODEL.md
+- KINEMATICAL_FUNCTIONAL_REGISTRY.json
 
 ## HTT five-variable semantics
 
