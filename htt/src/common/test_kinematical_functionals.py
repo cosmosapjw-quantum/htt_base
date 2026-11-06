@@ -11,6 +11,21 @@ from common.kinematical_functionals import (
     transform_state_o3,
 )
 from common.relativistic_kinematics import METRIC
+from common.joint_anisotropy_state import (
+    AccelerationNormalization,
+    BetaSemanticRole,
+    CongruenceKinematics,
+    GeometryState,
+    JointAnisotropyState,
+    JointStateSourceKind,
+    UnitsConvention,
+    VelocityNormalization,
+    build_velocity_frame_bundle,
+    missing_component,
+)
+from common.orbit_nonlinearity import STF5_CARTESIAN_BASIS, stf5_to_matrix
+from common.tensor_functionals_v1 import FunctionalDomainStatus
+from common.transfer_registry import TransferSource
 
 
 BASIS = "TETRAD_A"
@@ -254,7 +269,7 @@ def test_velocity_jet_adapter_extracts_raw_congruence_kinematics():
 def test_spatial_rotation_does_not_substitute_for_lorentz_frame_bridge():
     state = make_state(
         beta_RM_basis_id="RADIATION_TETRAD_AXES",
-        beta_RM_frame_id="radiation-frame",
+        beta_RM_frame_id="radiation-coordinate-frame",
     )
     rotation = np.array([[0.0, -1.0, 0.0],
                          [1.0, 0.0, 0.0],
@@ -272,3 +287,174 @@ def test_spatial_rotation_does_not_substitute_for_lorentz_frame_bridge():
     assert values["BETA_RM"].status == "AVAILABLE"
     assert values["SIGMA_CONTRACT_BETA"].status == "RELATIVISTIC_FRAME_BRIDGE_REQUIRED"
     assert values["BETA_RO_FIRST_ORDER_VIEW"].status == "RELATIVISTIC_FRAME_BRIDGE_REQUIRED"
+
+
+
+def make_canonical_joint_state(*, acceleration_available=True):
+    frame = "observer-coordinate-frame"
+    congruence = "matter-congruence"
+    epoch = "z-window-0.01"
+    averaging = "pointwise-local"
+    basis = STF5_CARTESIAN_BASIS
+    units = UnitsConvention.EXPLICIT_C_THETA_NORMALIZED
+    perturbative_order = "first_order_small_velocity"
+
+    acceleration_hat = (
+        (0.001, -0.002, 0.003)
+        if acceleration_available
+        else missing_component(
+            "acceleration_polar3",
+            "manufactured missing-acceleration case",
+            required_for=("local radial optical response",),
+        )
+    )
+    kinematics = CongruenceKinematics(
+        sigma_stf5=(0.12, -0.07, 0.03, -0.02, 0.01),
+        omega_axial3=(0.04, -0.02, 0.01),
+        acceleration_polar3=acceleration_hat,
+        frame=frame,
+        congruence_id=congruence,
+        epoch_window=epoch,
+        averaging_scale=averaging,
+        basis=basis,
+        units_convention=units,
+        velocity_normalization=VelocityNormalization.BETA_EQUALS_V_OVER_C,
+        perturbative_order=perturbative_order,
+        acceleration_normalization=(
+            AccelerationNormalization.A_OVER_C_THETA
+            if acceleration_available else None
+        ),
+    )
+    beta_rm = (0.020, -0.010, 0.005)
+    beta_mo = (-0.003, 0.002, 0.001)
+    beta_ro = tuple(beta_rm[i] + beta_mo[i] for i in range(3))
+    velocities = build_velocity_frame_bundle(
+        beta_RO=beta_ro,
+        beta_RM=beta_rm,
+        beta_MO=beta_mo,
+        coordinate_frame=frame,
+        radiation_frame_id="radiation-rest-frame",
+        matter_frame_id="matter-rest-frame",
+        observer_frame_id="observer-rest-frame",
+        basis=basis,
+        epoch_window=epoch,
+        averaging_scale=averaging,
+        first_order_beta_ceiling=0.1,
+        source_decomposition_id="manufactured-velocity-decomposition",
+    )
+    geometry = GeometryState(
+        delta_omega_k=0.015,
+        frame=frame,
+        congruence_id=congruence,
+        epoch_window=epoch,
+        averaging_scale=averaging,
+        basis=basis,
+        units_convention=units,
+        perturbative_order=perturbative_order,
+    )
+    return JointAnisotropyState(
+        congruence_kinematics=kinematics,
+        velocity_frames=velocities,
+        geometry_state=geometry,
+        frame=frame,
+        congruence=congruence,
+        epoch_window=epoch,
+        averaging_scale=averaging,
+        basis=basis,
+        units_convention=units,
+        perturbative_order=perturbative_order,
+        beta_semantic_role=BetaSemanticRole.DIRECT_STATE,
+        transfer_source=TransferSource.NONE,
+        transfer_spec=None,
+        source_kind=JointStateSourceKind.DIRECT,
+        source_identity="manufactured-r39-joint-state",
+    )
+
+
+def test_canonical_joint_state_is_the_only_x_source_and_units_round_trip():
+    joint = make_canonical_joint_state()
+    theta = 0.21
+    c = 299_792_458.0
+    view = KinematicalState.from_joint_anisotropy_state(
+        joint, expansion_scalar=theta, speed_of_light=c
+    )
+
+    assert view.canonical_state_id == joint.content_id
+    np.testing.assert_allclose(
+        view.sigma,
+        theta * stf5_to_matrix(joint.congruence_kinematics.sigma_stf5),
+    )
+    np.testing.assert_allclose(
+        view.omega,
+        theta * np.asarray(joint.congruence_kinematics.omega_axial3),
+    )
+    np.testing.assert_allclose(
+        view.acceleration,
+        c * theta * np.asarray(joint.congruence_kinematics.acceleration_polar3),
+    )
+    assert view.beta_RM_frame_id == joint.velocity_frames.coordinate_frame
+    assert view.beta_MO_frame_id == joint.velocity_frames.coordinate_frame
+    assert view.velocity_frame_ids == (
+        joint.velocity_frames.radiation_frame_id,
+        joint.velocity_frames.matter_frame_id,
+        joint.velocity_frames.observer_frame_id,
+    )
+
+    from common.kinematical_functionals import build_kinematical_x_bundle
+    bundle = build_kinematical_x_bundle(
+        joint, expansion_scalar=theta, speed_of_light=c
+    )
+    assert bundle.canonical_state_id == joint.content_id
+    assert all(v.state_id == joint.content_id for v in bundle.physical_functionals)
+    assert all(v.source_state_id == joint.content_id for v in bundle.canonical_functionals)
+
+    physical = {v.functional_id: v for v in bundle.physical_functionals}
+    assert physical["SIGMA_RAW"].units == "s^-1"
+    assert physical["ACCEL_RAW"].units == "m s^-2"
+    np.testing.assert_allclose(
+        physical["ACCEL_RAW"].components,
+        c * theta * np.asarray(joint.congruence_kinematics.acceleration_polar3),
+    )
+    np.testing.assert_allclose(
+        physical["SIGMA_H"].components,
+        3.0 * stf2_components(view.sigma),
+    )
+    np.testing.assert_allclose(
+        physical["BETA_RO_CANONICAL_VIEW"].components,
+        joint.velocity_frames.beta_RO,
+    )
+    np.testing.assert_allclose(
+        physical["BETA_RO_FIRST_ORDER_VIEW"].components,
+        joint.velocity_frames.beta_RM + joint.velocity_frames.beta_MO,
+    )
+    np.testing.assert_allclose(
+        physical["BETA_CLOSURE_RESIDUAL"].components,
+        np.zeros(3),
+    )
+
+    canonical = {v.spec.functional_id: v for v in bundle.canonical_functionals}
+    np.testing.assert_allclose(
+        canonical["SIGMA_THETA_STF5"].value,
+        joint.congruence_kinematics.sigma_stf5,
+    )
+    np.testing.assert_allclose(
+        canonical["BETA_RM_SIGMA_BETA_RM_THETA"].value,
+        np.asarray(joint.velocity_frames.beta_RM)
+        @ stf5_to_matrix(joint.congruence_kinematics.sigma_stf5)
+        @ np.asarray(joint.velocity_frames.beta_RM),
+    )
+    assert canonical["DELTA_OMEGA_K"].source_state_id == joint.content_id
+
+
+def test_canonical_missing_acceleration_remains_missing_in_both_functional_layers():
+    joint = make_canonical_joint_state(acceleration_available=False)
+    from common.kinematical_functionals import build_kinematical_x_bundle
+    bundle = build_kinematical_x_bundle(joint, expansion_scalar=0.21)
+    physical = {v.functional_id: v for v in bundle.physical_functionals}
+    canonical = {v.spec.functional_id: v for v in bundle.canonical_functionals}
+
+    assert physical["ACCEL_RAW"].status == "UNAVAILABLE"
+    assert physical["ACCEL_C_H"].status == "UNAVAILABLE"
+    assert physical["BETA_DOT_ACCEL"].status == "UNAVAILABLE"
+    assert canonical["ACCELERATION_C_THETA_POLAR3"].domain.status is FunctionalDomainStatus.MISSING_COMPONENT
+    assert canonical["ACCELERATION_C_THETA_POLAR3"].value is None
