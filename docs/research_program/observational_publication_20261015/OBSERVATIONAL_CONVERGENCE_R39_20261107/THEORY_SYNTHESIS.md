@@ -109,6 +109,20 @@ Local boost acts through universal observer-frame Lorentz remapping/modulation. 
 
 For functional phi_alpha, local identifiability requires ker(J_eff) subset ker(D phi_alpha). Global identification requires phi_alpha constant on each observation fibre. Otherwise retain K_alpha(D)=phi_alpha(C(D)) as a set. This is the actual convergence target for vector/tensor x.
 
+## Cross-loop closure: kinematical theta and one joint likelihood
+
+The six theory loops share one physical parameter domain rather than six independently fitted anomaly vectors. The state includes raw \(\sigma_{AB}\), axial \(\omega_A\), polar \(A_A\), and role-labelled \(\beta_{\rm RM,A},\beta_{\rm MO,A}\); \(\beta_{\rm RO}\) is a derived closure view. A functional registry then includes identity maps of these components, normalized copies, mixed contractions such as \(\sigma_{AB}\beta_{\rm RM}^A\beta_{\rm RM}^B/H\) and \(\beta_{\rm RM}^A\omega_A/H\), and predicted observer-space carriers.
+
+The likelihood target is
+\[
+\mathcal L(\theta,\psi,\eta;D)
+=p(D_{\rm CMB},D_{\rm count},D_{\rm SN/CF4},D_{\rm Gaia},\ldots
+\mid\theta,\psi,\eta),
+\]
+with shared primordial/LSS/foreground/source fields integrated once and with full cross-probe covariance or an explicit conditional-independence model. The CMB harmonic covariance, count point process, directional distance likelihood and Gaia spin-1 proper-motion likelihood are observation operators on this same state. BipoSH, VSH and distance multipoles are typed predicted carriers or derived summaries, not extra independent data when computed from the same raw observation.
+
+Local distance data constrain the leading expansion/acceleration/shear angular pattern, while vorticity remains blind in the leading symmetric radial contraction. Local observer boost and intrinsic congruence acceleration are distinct response directions. Functional-specific identifiability is assessed on the full likelihood tangent and observation fibres. The tensorized x,Q,Pi,F,G_F outputs are then computed from one common posterior/compatibility region; they are not separate likelihood factors. This is a source-conditioned likelihood-to-functional inference programme, not a new claim about the already established kinematic decomposition, CMB boost kernel or tensor MES geometry.
+
 ## Tensorized x and novelty
 
 Pinned T7 defines one common state/confidence region and all functional images. Q is the matching anchor/gauge/margin; F separates directional support, pushforward and occupancy; Pi is a strict exceedance surface under a named law; G_F is a full-covariance depth path. These are established geometric/statistical constructs applied to this cosmological operator problem, not new mathematical priority claims.
