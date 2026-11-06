@@ -40,6 +40,8 @@ Likelihood는 CMB T/E/B full covariance, selection-aware source-count point proc
 - KINEMATICAL_LIKELIHOOD_MODEL.md
 - KINEMATICAL_FUNCTIONAL_REGISTRY.json
 
+`build_kinematical_x_bundle`는 canonical JointAnisotropyState를 단일 SSOT로 사용하며, 기존 TensorFunctionalSpec/Result 결과와 explicit-SI direct/mixed functional view를 동일한 content ID에 묶는다. 이는 sampler나 likelihood 실행을 뜻하지 않고 x construction 단계다.
+
 ## Canonical STF5 chart
 
 Shear 5-vector는 정규직교 기저가 아니라 `(Sxx,Syy,Sxy,Sxz,Syz)` 순서의 `STF5_CARTESIAN_XX_YY_XY_XZ_YZ_V1`이며 `Szz=-Sxx-Syy`다. 따라서 평탄화한 covariance/SVD에는 유도 Gram metric을 쓰거나 명시적으로 orthonormal basis로 변환해야 한다. R39 optical kernel은 이 canonical chart를 사용한다.
