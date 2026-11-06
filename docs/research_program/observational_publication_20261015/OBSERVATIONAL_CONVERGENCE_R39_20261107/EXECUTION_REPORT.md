@@ -94,3 +94,6 @@ The five shear components use the canonical Cartesian STF5 ordering `(Sxx,Syy,Sx
 ## Vorticity dual normalization boundary
 
 The local optical kernel uses the standard axial dual omega_A=(1/2) epsilon_ABC omega^BC, hence omega_AB omega^AB=2 omega_A omega^A. The R39 functional `OMEGA_VECTOR_NORM2_H` is explicitly omega_A omega^A/H^2. It is not relabelled as the canonical MES W2 target omega_ab omega^ab/(6H^2), which would equal omega_A omega^A/(3H^2) under that dual convention. The K0 crosswalk's exact canonical omega_axial3 metric/normalization mapping is not proven by the current state schema, so no automatic MES W2 anchor binding or Q promotion is performed. The vorticity-vector norm is a typed x functional only.
+
+
+The committed `KinematicalXBundle` is explicitly scoped `KINEMATICAL_FUNCTIONAL_SUBBUNDLE_ONLY`. It contains canonical and physical-SI direct/mixed kinematical functionals bound to one JointAnisotropyState ID; it does not yet contain observed/predicted CMB, source-count, Gaia or distance carriers. Those require admitted source-bound observation providers and remain part of R39-06/07 onward.
