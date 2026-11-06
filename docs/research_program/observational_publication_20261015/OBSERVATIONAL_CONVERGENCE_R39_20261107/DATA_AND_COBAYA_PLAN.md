@@ -20,6 +20,20 @@ Require original source rows, random catalogues/completeness maps, flux/spectral
 
 Fit the source-specific response over the full selection, not one universal Ellis-Baldwin coefficient. Model local clustering separately. Test count overdispersion and multi-component sources; compare Poisson with negative-binomial/hierarchical likelihood. Do not double-count shared catalogue objects.
 
+### P2 Gaia DR3/CRF3 VSH and local optical angular drift
+
+Require source-level proper motions, full astrometric covariance, exact source selection, cross-match IDs, redshift, magnitude/color and scanning-law templates. Fit E1 glide, B1 spin, E2 shear-like modes and higher nuisance templates in one declared basis.
+
+Reuse the existing LOOP C local optical inverse. In the sourceward convention,
+\[
+d(n)=H+\sigma_{ij}n^in^j-A_i n^i/c,\quad
+\mu_{\rm FW}=P(n)\sigma n+n\times\omega,\quad
+\mu_{\rm cat}=k[P(n)\sigma n+n\times(\omega+\Omega)].
+\]
+The physical acceleration term does not enter the leading transverse drift. The B1 catalogue mode is the sum of physical vorticity and catalogue triad rotation; constrain \(\Omega\) from independent frame/gyro/calibrator data or leave that combination unidentified. Source proper motion, source slip, centroid structure, observer translation and the clock-scale factor must be modeled, not interpreted as kinematic \(\omega\).
+
+The ideal full-sphere inverse is a benchmark only. For real Gaia rows, compute the source-level Jacobian in the actual tangent bases, pass it through scanning-law/selection and frame operators, use the complete astrometric and cross-source covariance, and project E1/B1/E2 systematics in the same metric. The R39 kernel's local_optical_jacobian is unwhitened and pre-selection; it is not the empirical Gaia response.
+
 ### P2 Gaia DR3/CRF3 VSH
 
 Require source-level proper motions, full astrometric covariance, exact source selection, cross-match IDs, redshift, magnitude/color and scanning-law templates. Fit E1 glide, B1 spin, E2 STF2-like modes and higher nuisance templates in one declared basis. A residual E2 coefficient is not metric shear without the cosmological response and scan systematic control.
