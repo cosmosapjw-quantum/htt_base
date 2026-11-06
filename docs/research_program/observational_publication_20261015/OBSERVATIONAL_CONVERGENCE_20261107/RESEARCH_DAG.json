@@ -1,0 +1,416 @@
+{
+  "schema": "htt.observational_convergence_dag/1",
+  "program": "HTT-R38",
+  "created": "2026-11-07",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "base": {
+    "branch": "research/htt-adaptive-methods-20261023",
+    "commit": "cab89d25af52a1b978a4da8c11eecdc25bb22759",
+    "inherited_r37_status": "documentation merged; six R37 execution cards remain pending"
+  },
+  "branch": "research/observational-convergence-r38-20261107",
+  "authority_files": [
+    "README_KO.md",
+    "THEORY_AND_OBSERVABLES.md",
+    "DATA_AND_SAMPLER_PLAN.md",
+    "PR_LEGACY_AUDIT.md",
+    "CLAIM_LEDGER.json",
+    "LOCAL_AGENT_RESUME.md"
+  ],
+  "native_subagent": "NOT_RUN",
+  "task_count": 21,
+  "tasks": [
+    {
+      "id": "R38-00-ANCHOR",
+      "phase": "A",
+      "title": "Pin the current research branch and preserve R37 lineage",
+      "status": "COMPLETE_GITHUB_VERIFIED",
+      "outputs": [
+        "README_KO.md",
+        "PR_LEGACY_AUDIT.md"
+      ],
+      "acceptance": "Exact branch/commit and R37 status recorded; main untouched."
+    },
+    {
+      "id": "R38-01-PR-LEGACY-AUDIT",
+      "phase": "A",
+      "title": "Enumerate PR history and audit scientific claim boundaries",
+      "status": "COMPLETE_SCOPED",
+      "outputs": [
+        "PR_LEGACY_AUDIT.md"
+      ],
+      "acceptance": "561 PR records inventoried; 71 title-screened; core ancestry bodies reviewed; scope limitation explicit."
+    },
+    {
+      "id": "R38-02-LITERATURE-NOVELTY-GATE",
+      "phase": "B",
+      "title": "Compare the six questions to prior art and formulate a falsifiable novelty candidate",
+      "status": "COMPLETE_SCOPED_CANDIDATE",
+      "outputs": [
+        "README_KO.md",
+        "THEORY_AND_OBSERVABLES.md"
+      ],
+      "acceptance": "Closest primary literature identified; no premature novelty claim."
+    },
+    {
+      "id": "R38-T1-LOWELL-PHYSICS",
+      "phase": "C",
+      "title": "Derive low-ell morphology to calibrated radiation observables",
+      "status": "DERIVED_DESIGN_ONLY",
+      "outputs": [
+        "THEORY_AND_OBSERVABLES.md"
+      ],
+      "acceptance": "Signed harmonic carrier, STF/BipoSH and frequency-intensity bridge; mask/beam/foreground transfer retained."
+    },
+    {
+      "id": "R38-T2-DIPOLE",
+      "phase": "C",
+      "title": "Separate CMB dipole, observer boost and count dipoles",
+      "status": "DERIVED_DESIGN_ONLY",
+      "outputs": [
+        "THEORY_AND_OBSERVABLES.md"
+      ],
+      "acceptance": "Beta_RO/RM/MO, intrinsic dipole and beta-squared effects kept distinct."
+    },
+    {
+      "id": "R38-T3-KINEMATICS",
+      "phase": "C",
+      "title": "Map beyond-FLRW 1+3 kinematics to optical/astrometric observables",
+      "status": "DERIVED_DESIGN_ONLY",
+      "outputs": [
+        "THEORY_AND_OBSERVABLES.md"
+      ],
+      "acceptance": "Congruence, units, optical local limit and finite-redshift caveat explicit."
+    },
+    {
+      "id": "R38-T4-BIANCHI",
+      "phase": "C",
+      "title": "Construct anisotropy/Bianchi family discrimination contract",
+      "status": "DERIVED_DESIGN_ONLY",
+      "outputs": [
+        "THEORY_AND_OBSERVABLES.md"
+      ],
+      "acceptance": "Ricci STF, Weyl E/B, structure constants, dynamics and family transfer required."
+    },
+    {
+      "id": "R38-T5-DIRECTIONAL-H",
+      "phase": "C",
+      "title": "Connect directional Hubble multipoles to SN/CF4/BAO distance observables",
+      "status": "DERIVED_DESIGN_ONLY",
+      "outputs": [
+        "THEORY_AND_OBSERVABLES.md"
+      ],
+      "acceptance": "Local z→0 law separated from finite-z shell response; H0 intercept caveat preserved."
+    },
+    {
+      "id": "R38-T6-BOOST-TILT",
+      "phase": "C",
+      "title": "Build common multi-probe local boost/global tilt identifiability problem",
+      "status": "DERIVED_IDENTIFIABILITY_CONTRACT",
+      "outputs": [
+        "THEORY_AND_OBSERVABLES.md"
+      ],
+      "acceptance": "Common nuisance-projected covariance and response nullspace; prior cannot inflate data rank."
+    },
+    {
+      "id": "R38-03-LOCAL-DATA-INVENTORY",
+      "phase": "D",
+      "title": "Fingerprint existing local observational assets",
+      "status": "PENDING_LOCAL_NOT_RUN",
+      "outputs": [
+        "LOCAL_DATA_INVENTORY.json",
+        "PAYLOAD_SHA256SUMS.txt"
+      ],
+      "acceptance": "Paths, bytes, SHA256, FITS headers, row order, frames, covariance and source release verified."
+    },
+    {
+      "id": "R38-04-ACQUIRE-MISSING-RELEASES",
+      "phase": "D",
+      "title": "Download only absent source-qualified public products",
+      "status": "PENDING_AFTER_INVENTORY",
+      "outputs": [
+        "DATA_INTAKE_MANIFEST.json"
+      ],
+      "acceptance": "Cache-first immutable acquisition, official source, byte size and SHA256 verified; no Git raw-data uploads."
+    },
+    {
+      "id": "R38-05-PLANCK-LOWELL",
+      "phase": "E",
+      "title": "Execute Planck PR4/PR3 low-ell map and morphology likelihood",
+      "status": "PENDING_NO_DATA_RUN",
+      "outputs": [
+        "PLANCK_LOWELL_RESULT.json",
+        "PLANCK_LOWELL_DIAGNOSTICS/"
+      ],
+      "acceptance": "Matched frequency/split/mask/beam/FFP covariance; same-sky processing alternatives not independent."
+    },
+    {
+      "id": "R38-06-RADIO-QUAIA",
+      "phase": "E",
+      "title": "Measure NVSS/RACS/Quaia count dipoles with selection operators",
+      "status": "PENDING_NO_DATA_RUN",
+      "outputs": [
+        "COUNT_DIPOLE_RESULT.json",
+        "COUNT_SELECTION_DIAGNOSTICS/"
+      ],
+      "acceptance": "Flux/z bins, randoms, completeness, calibration and declination masks included."
+    },
+    {
+      "id": "R38-07-CF4-PANTHEON",
+      "phase": "E",
+      "title": "Measure directional distance/Hubble response with CF4 and Pantheon+",
+      "status": "PENDING_NO_DATA_RUN",
+      "outputs": [
+        "DIRECTIONAL_DISTANCE_RESULT.json",
+        "CF4_PANTHEON_ROW_MAPS/"
+      ],
+      "acceptance": "Exact row selection on vector and both covariance axes; source frames/calibration and redshift windows preserved."
+    },
+    {
+      "id": "R38-08-GAIA-VSH",
+      "phase": "E",
+      "title": "Fit Gaia DR3 proper-motion VSH with frame nuisance",
+      "status": "PENDING_NO_DATA_RUN",
+      "outputs": [
+        "GAIA_VSH_RESULT.json"
+      ],
+      "acceptance": "Redshift bins, source selection, spin/glide and full covariance; E1/B1 distinct from E2/STF5."
+    },
+    {
+      "id": "R38-09-DESI-ACT-EXTENSIONS",
+      "phase": "E",
+      "title": "Add DESI DR2 and ACT/WMAP validation where supported",
+      "status": "OPTIONAL_PENDING",
+      "outputs": [
+        "EXTENSION_PROBE_RESULTS.json"
+      ],
+      "acceptance": "BAO vector/covariance and angular-window support explicitly distinguished; no false sky map from compressed BAO."
+    },
+    {
+      "id": "R38-10-COVARIANCE-ADAPTERS",
+      "phase": "F",
+      "title": "Repair and validate common covariance, selection and response adapters",
+      "status": "PENDING_NO_CODE",
+      "outputs": [
+        "covariance utilities",
+        "data adapters",
+        "focused tests"
+      ],
+      "acceptance": "Cholesky/row identity/nuisance projection/response provenance pass adversarial tests."
+    },
+    {
+      "id": "R38-11-RESPONSE-RANK",
+      "phase": "F",
+      "title": "Compute nuisance-projected response rank and identifiable quotient",
+      "status": "PENDING_LOCAL_TEST",
+      "outputs": [
+        "IDENTIFIABILITY_RESULT.json",
+        "RESPONSE_SINGULAR_VALUES.csv",
+        "RESPONSE_NULL_VECTORS.csv"
+      ],
+      "acceptance": "Rank stable under covariance/source/mask/truncation changes; unsupported directions abstain."
+    },
+    {
+      "id": "R38-12-JOINT-COBAYA",
+      "phase": "G",
+      "title": "Run M0→M1→M2 multi-probe Cobaya posterior",
+      "status": "PENDING_NO_SAMPLER_RUN",
+      "outputs": [
+        "cobaya config",
+        "chains",
+        "posterior predictive diagnostics"
+      ],
+      "acceptance": "Single-probe gates and cross-covariance review pass; sampler convergence and PPC recorded."
+    },
+    {
+      "id": "R38-13-BIANCHI-MODELS",
+      "phase": "G",
+      "title": "Test Bianchi I and additional family-specific models",
+      "status": "CONDITIONAL_AFTER_OBS_RANK",
+      "outputs": [
+        "BIANCHI_MODEL_COMPARISON.json"
+      ],
+      "acceptance": "Family transfer and geometry qualified; extra Ricci/Weyl signatures beyond one quadrupole tested."
+    },
+    {
+      "id": "R38-14-PAPER-GATE",
+      "phase": "H",
+      "title": "Freeze paper-level scientific claim and independent targeted review",
+      "status": "PENDING",
+      "outputs": [
+        "CLAIM_EVIDENCE_MAP.json",
+        "INDEPENDENT_REVIEW.md"
+      ],
+      "acceptance": "At least one real observable has posterior/credible bound; robustness, selection and null tests pass; one bounded fresh review."
+    }
+  ],
+  "edges": [
+    {
+      "from": "R38-00-ANCHOR",
+      "to": "R38-01-PR-LEGACY-AUDIT",
+      "type": "source_lock"
+    },
+    {
+      "from": "R38-00-ANCHOR",
+      "to": "R38-02-LITERATURE-NOVELTY-GATE",
+      "type": "source_lock"
+    },
+    {
+      "from": "R38-01-PR-LEGACY-AUDIT",
+      "to": "R38-03-LOCAL-DATA-INVENTORY",
+      "type": "lineage_to_inventory"
+    },
+    {
+      "from": "R38-02-LITERATURE-NOVELTY-GATE",
+      "to": "R38-T1-LOWELL-PHYSICS",
+      "type": "prior_art_to_theory"
+    },
+    {
+      "from": "R38-02-LITERATURE-NOVELTY-GATE",
+      "to": "R38-T2-DIPOLE",
+      "type": "prior_art_to_theory"
+    },
+    {
+      "from": "R38-02-LITERATURE-NOVELTY-GATE",
+      "to": "R38-T3-KINEMATICS",
+      "type": "prior_art_to_theory"
+    },
+    {
+      "from": "R38-02-LITERATURE-NOVELTY-GATE",
+      "to": "R38-T4-BIANCHI",
+      "type": "prior_art_to_theory"
+    },
+    {
+      "from": "R38-02-LITERATURE-NOVELTY-GATE",
+      "to": "R38-T5-DIRECTIONAL-H",
+      "type": "prior_art_to_theory"
+    },
+    {
+      "from": "R38-02-LITERATURE-NOVELTY-GATE",
+      "to": "R38-T6-BOOST-TILT",
+      "type": "prior_art_to_theory"
+    },
+    {
+      "from": "R38-T1-LOWELL-PHYSICS",
+      "to": "R38-05-PLANCK-LOWELL",
+      "type": "observable_contract"
+    },
+    {
+      "from": "R38-T2-DIPOLE",
+      "to": "R38-06-RADIO-QUAIA",
+      "type": "observable_contract"
+    },
+    {
+      "from": "R38-T3-KINEMATICS",
+      "to": "R38-07-CF4-PANTHEON",
+      "type": "observable_contract"
+    },
+    {
+      "from": "R38-T3-KINEMATICS",
+      "to": "R38-08-GAIA-VSH",
+      "type": "observable_contract"
+    },
+    {
+      "from": "R38-T4-BIANCHI",
+      "to": "R38-13-BIANCHI-MODELS",
+      "type": "family_contract"
+    },
+    {
+      "from": "R38-T5-DIRECTIONAL-H",
+      "to": "R38-07-CF4-PANTHEON",
+      "type": "observable_contract"
+    },
+    {
+      "from": "R38-T6-BOOST-TILT",
+      "to": "R38-10-COVARIANCE-ADAPTERS",
+      "type": "identifiability_contract"
+    },
+    {
+      "from": "R38-03-LOCAL-DATA-INVENTORY",
+      "to": "R38-04-ACQUIRE-MISSING-RELEASES",
+      "type": "acquire_only_missing"
+    },
+    {
+      "from": "R38-04-ACQUIRE-MISSING-RELEASES",
+      "to": "R38-05-PLANCK-LOWELL",
+      "type": "qualified_source"
+    },
+    {
+      "from": "R38-04-ACQUIRE-MISSING-RELEASES",
+      "to": "R38-06-RADIO-QUAIA",
+      "type": "qualified_source"
+    },
+    {
+      "from": "R38-04-ACQUIRE-MISSING-RELEASES",
+      "to": "R38-07-CF4-PANTHEON",
+      "type": "qualified_source"
+    },
+    {
+      "from": "R38-04-ACQUIRE-MISSING-RELEASES",
+      "to": "R38-08-GAIA-VSH",
+      "type": "qualified_source"
+    },
+    {
+      "from": "R38-05-PLANCK-LOWELL",
+      "to": "R38-10-COVARIANCE-ADAPTERS",
+      "type": "qualified_probe"
+    },
+    {
+      "from": "R38-06-RADIO-QUAIA",
+      "to": "R38-10-COVARIANCE-ADAPTERS",
+      "type": "qualified_probe"
+    },
+    {
+      "from": "R38-07-CF4-PANTHEON",
+      "to": "R38-10-COVARIANCE-ADAPTERS",
+      "type": "qualified_probe"
+    },
+    {
+      "from": "R38-08-GAIA-VSH",
+      "to": "R38-10-COVARIANCE-ADAPTERS",
+      "type": "qualified_probe"
+    },
+    {
+      "from": "R38-09-DESI-ACT-EXTENSIONS",
+      "to": "R38-10-COVARIANCE-ADAPTERS",
+      "type": "optional_qualified_probe"
+    },
+    {
+      "from": "R38-10-COVARIANCE-ADAPTERS",
+      "to": "R38-11-RESPONSE-RANK",
+      "type": "validated_response"
+    },
+    {
+      "from": "R38-11-RESPONSE-RANK",
+      "to": "R38-12-JOINT-COBAYA",
+      "type": "rank_gate"
+    },
+    {
+      "from": "R38-12-JOINT-COBAYA",
+      "to": "R38-13-BIANCHI-MODELS",
+      "type": "posterior_support"
+    },
+    {
+      "from": "R38-12-JOINT-COBAYA",
+      "to": "R38-14-PAPER-GATE",
+      "type": "scientific_result"
+    }
+  ],
+  "novelty_candidate": "Frame-explicit, covariance-consistent multi-probe identification of local observer boost, intrinsic radiation dipole and redshift-evolving global kinematic tensors, returning identifiable tensor-functional quotient and null directions.",
+  "novelty_status": "CANDIDATE_NOT_YET_ESTABLISHED",
+  "execution_boundary": {
+    "github_and_library_audit": "EXECUTED_SCOPED",
+    "literature_search_and_synthesis": "EXECUTED_SCOPED",
+    "theory_derivation": "DERIVED",
+    "wolfram_stf2_normalization": "SYMBOLIC_CHECK_RETURNED_ZERO",
+    "local_data_inventory": "NOT_RUN",
+    "public_data_download": "NOT_RUN",
+    "repository_code_changes": "NOT_RUN",
+    "tests_or_build": "NOT_RUN",
+    "cobaya_sampler": "NOT_RUN",
+    "observed_map_or_catalog_analysis": "NOT_RUN",
+    "native_subagents": "NOT_RUN"
+  },
+  "stop_condition": "One production pass and one targeted independent review. If nuisance-projected response rank is deficient or unstable, stop at identified quotient and sharp bounds; do not generate a new research epoch or use priors to create data identification.",
+  "no_claim_promotion": true
+}
