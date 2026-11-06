@@ -173,6 +173,36 @@
         "RESEARCH_DAG.json"
       ],
       "boundary": "No observed likelihood, posterior, Bianchi transfer, or physical kinematical parameter estimate has been implemented/executed."
+    },
+    {
+      "id": "R39-C20",
+      "claim": "A source-posted KinematicalState/functional kernel implements direct raw kinematic blocks, normalized and mixed functionals, explicit frame transport, O(3) actions, and local radial/transverse optical response.",
+      "status": "GITHUB_SOURCE_VERIFIED_NOT_RUNTIME_VERIFIED",
+      "evidence": [
+        "htt/src/common/kinematical_functionals.py",
+        "htt/src/common/test_kinematical_functionals.py"
+      ],
+      "boundary": "Local pytest/import/compile were NOT_RUN. The implemented optical Jacobian is ideal and unwhitened, not a survey-derived likelihood."
+    },
+    {
+      "id": "R39-C21",
+      "claim": "The leading local transverse optical drift is P(n)sigma n+n cross omega in a Fermi-Walker triad; a rotating catalogue triad measures omega+Omega, making B1 insufficient for physical vorticity without independent frame-spin calibration.",
+      "status": "INTERNAL_PRIOR_DERIVATION_REUSED",
+      "evidence": [
+        "OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_C_KINEMATICS.md",
+        "KINEMATICAL_LIKELIHOOD_MODEL.md"
+      ],
+      "boundary": "Local common-congruence, geometric-optics, C3/convex-normal-neighbourhood and pre-caustic scope; not a Gaia inference."
+    },
+    {
+      "id": "R39-C22",
+      "claim": "The existing legacy directional_hubble_variation no longer subtracts raw physical acceleration from a dimensionless response; physical A requires explicit c and H0, or A/(cH0) must be supplied.",
+      "status": "GITHUB_SOURCE_AND_REGRESSION_TEST_COMMITTED_NOT_RUNTIME_VERIFIED",
+      "evidence": [
+        "htt/src/common/kinematic_response.py",
+        "tests/r38/test_kinematic_response.py"
+      ],
+      "boundary": "Regression tests were added but not run in this environment."
     }
   ]
 }
