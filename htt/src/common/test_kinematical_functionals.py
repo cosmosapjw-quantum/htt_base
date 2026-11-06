@@ -429,7 +429,8 @@ def test_canonical_joint_state_is_the_only_x_source_and_units_round_trip():
     )
     np.testing.assert_allclose(
         physical["BETA_RO_FIRST_ORDER_VIEW"].components,
-        joint.velocity_frames.beta_RM + joint.velocity_frames.beta_MO,
+        np.asarray(joint.velocity_frames.beta_RM)
+        + np.asarray(joint.velocity_frames.beta_MO),
     )
     np.testing.assert_allclose(
         physical["BETA_CLOSURE_RESIDUAL"].components,
