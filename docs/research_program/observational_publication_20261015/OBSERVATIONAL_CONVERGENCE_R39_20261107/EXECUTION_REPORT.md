@@ -37,3 +37,21 @@ A complete GitHub metadata call returned 561 accessible PR records (#2–#564): 
 Additional predecessor bodies reviewed: #7 (identifiability-aware low-ell pole kernel), #13 (correlated real-sky shell alm generator), #419 (canonical observable-irrep state), #442 (full-sky local boost pullback and STF2→STF3 response), #443/#444 (processed cut-sky boost design and source-equivalent synthetic execution), #449 (observable tensors and typed kinematical MES report), #533, #540, #544/#545, #552/#553 and #558/#559 (solver-free selection/geometry, CF4 source-window and Planck same-sky/mask/beam work).
 
 This prior art narrows the novelty candidate: tensor x, observable-irrep state, local full-sky Lorentz pullback, STF2→STF3 harmonic coupling, low-ell pole statistics and generic tensor MES are already project predecessors. A remaining candidate is a validated, source-conditioned, processed multi-probe observation operator for the same typed physical state, with justified cross-covariance and a data-supported functional-identifiable quotient across CMB harmonics, selected source counts, Gaia VSH and finite-z distance carriers. It must be compared directly against the existing PR-442/443/444 and six-paper branches, not implemented as a parallel duplicate.
+
+
+## Kinematical theta and joint likelihood extension
+
+The user clarified that x must include direct components of the physical congruence kinematics, not only a_lm and other observer-space data carriers. R39 now specifies the field-valued/basis-truncated state theta_K={sigma_AB, omega_A, A_A, beta_RM_A, beta_MO_A}, with beta_RO retained as a derived first-order closure view (exact ordered tetrad composition beyond first order). The pointwise independent core is 17 real components; optional DeltaOmega_k makes 18. These counts are coordinate dimensions, not data rank.
+
+New artifacts:
+- KINEMATICAL_LIKELIHOOD_MODEL.md: 1+3 decomposition with explicit c, direct and mixed kinematic functionals, source-conditioned CMB/count/SN/Gaia likelihood blocks, shared-latent dependence, full-covariance Fisher/identifiability and the five HTT outputs.
+- KINEMATICAL_FUNCTIONAL_REGISTRY.json: machine-readable design registry for direct state blocks, mixed functionals, observer-space carriers, likelihood requirements and HTT outputs.
+- VECTOR_TENSOR_X_FRAMEWORK.md and THEORY_SYNTHESIS.md updated to make direct theta and the likelihood-to-functional map explicit.
+- LOCAL_AGENT_RESUME.md updated to require reuse of the existing physical kinematics and observable-irrep contracts and to implement the common likelihood rather than scalar adapters.
+- RESEARCH_DAG.json and CLAIM_LEDGER.json updated with design-only status and claim ceiling.
+
+One numerical representation check on a randomly generated improper orthogonal matrix verified that beta·omega flips sign, beta·sigma·beta remains invariant, and beta×omega transforms as a polar vector. This is a bounded algebraic fixture only, not a formal proof or production test.
+
+The local optical relation is recorded as H_u(n)=vartheta/3-A·n/c+sigma_ab n^a n^b for sourceward n, with d_L=cz/H_u(n)+O(z^2) in the local optical domain. The leading symmetric radial projection is blind to vorticity. Observer-MO Doppler and intrinsic congruence acceleration remain separate channels.
+
+No production TensorFunctionalBundle, CMB/count/SN/Gaia joint likelihood, source-bound cross-covariance, new posterior, observed kinematic estimate or native Bianchi transfer has been implemented/run. Local pytest/CI and Cobaya remain NOT_RUN.
