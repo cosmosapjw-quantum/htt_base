@@ -166,14 +166,20 @@ class KinematicalState:
         for name in ("beta_RM", "beta_MO"):
             value = getattr(self, name)
             basis_name = f"{name}_basis_id"
+            frame_name = f"{name}_frame_id"
             basis_id = getattr(self, basis_name)
+            physical_frame_id = getattr(self, frame_name)
             if value is None:
-                if basis_id is not None:
-                    raise KinematicalStateError(f"{basis_name} supplied without {name}")
+                if basis_id is not None or physical_frame_id is not None:
+                    raise KinematicalStateError(
+                        f"{basis_name}/{frame_name} supplied without {name}"
+                    )
                 continue
             if basis_id is None:
                 raise KinematicalStateError(f"{name} requires its component basis identity")
             _nonempty(basis_id, basis_name)
+            if physical_frame_id is not None:
+                _nonempty(physical_frame_id, frame_name)
             vector = finite_array(value, shape=(3,), name=name)
             if float(vector @ vector) >= 1.0:
                 raise KinematicalStateError(f"{name} must be strictly subluminal")
