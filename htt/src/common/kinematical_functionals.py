@@ -275,15 +275,26 @@ class FunctionalValue:
         object.__setattr__(self, "inputs", tuple(self.inputs))
         if type(self.dimension) is not int or self.dimension < 0:
             raise KinematicalStateError("functional dimension must be a nonnegative integer")
-        if self.status == "AVAILABLE":
+        value_statuses = {"AVAILABLE", "CONDITIONAL_FIRST_ORDER"}
+        if self.status in value_statuses:
             if self.components is None:
-                raise KinematicalStateError("AVAILABLE functional requires components")
+                raise KinematicalStateError(f"{self.status} functional requires components")
             object.__setattr__(
                 self, "components",
                 finite_array(self.components, shape=(self.dimension,), name=self.functional_id),
             )
         elif self.components is not None:
             raise KinematicalStateError("non-available functional must not carry numerical components")
+
+
+_REPRESENTATION_DIMENSIONS = {
+    "STF2_POLAR": 5,
+    "VECTOR_AXIAL": 3,
+    "VECTOR_POLAR": 3,
+    "SCALAR": 1,
+    "PSEUDOSCALAR": 1,
+    "NONNEGATIVE_SCALAR": 1,
+}
 
 
 def _value(
@@ -297,19 +308,23 @@ def _value(
     basis_id: str,
     inputs: tuple[str, ...],
     normalization_id: str = "RAW",
-    status: str = "AVAILABLE",
+    status: str | None = None,
     reason: str = "",
 ) -> FunctionalValue:
+    if representation not in _REPRESENTATION_DIMENSIONS:
+        raise KinematicalStateError(f"unregistered functional representation {representation!r}")
+    resolved_status = ("UNAVAILABLE" if value is None else "AVAILABLE") if status is None else status
     if value is None:
         return FunctionalValue(
             functional_id, state.sample_id, state.state_id, representation,
-            0, units, parity, basis_id, status, None, inputs, normalization_id,
+            _REPRESENTATION_DIMENSIONS[representation], units, parity, basis_id,
+            resolved_status, None, inputs, normalization_id,
             reason or "required component unavailable",
         )
     components = np.atleast_1d(np.asarray(value, dtype=float))
     return FunctionalValue(
         functional_id, state.sample_id, state.state_id, representation,
-        int(components.size), units, parity, basis_id, status, components,
+        int(components.size), units, parity, basis_id, resolved_status, components,
         inputs, normalization_id, reason,
     )
 
