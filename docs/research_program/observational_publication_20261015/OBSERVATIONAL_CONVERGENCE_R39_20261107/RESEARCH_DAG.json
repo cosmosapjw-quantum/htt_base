@@ -11,7 +11,7 @@
     "base_commit": "cab89d25af52a1b978a4da8c11eecdc25bb22759"
   },
   "working_branch": "research/r39-observational-identifiability-20261107",
-  "current_code_checkpoint": "a1e43d7d89efcf1c814fcdf99c9170bfb4f22b4e",
+  "current_code_checkpoint": "2a994b20657ed06e9f8eb1425d2c278822fc34c2",
   "claim_ceiling": "C0_DESIGN_AND_CODE_CONTRACT_ONLY",
   "novelty_status": "CONDITIONAL_CANDIDATE_NOT_ESTABLISHED",
   "execution_boundary": {
@@ -298,8 +298,8 @@
     },
     {
       "id": "R39-19-CANONICAL-X",
-      "status": "GITHUB_SOURCE_AND_TESTS_COMMITTED_NOT_RUNTIME_VERIFIED",
-      "deliverable": "Canonical JointAnisotropyState-to-SI view, v1 TensorFunctionalSpec/Result reuse and same-state-id x bundle; STF5 Cartesian chart preserved"
+      "status": "GITHUB_SOURCE_AND_TESTS_COMMITTED_NOT_RUNTIME_VERIFIED_KINEMATICAL_SUBBUNDLE",
+      "deliverable": "Canonical JointAnisotropyState-to-SI view, v1 TensorFunctionalSpec/Result reuse and same-state-id kinematical x sub-bundle; observed/predicted probe carriers remain pending"
     },
     {
       "id": "R39-20-VORTICITY-NORM",
@@ -601,7 +601,8 @@
         "single_state_id_KinematicalXBundle",
         "explicit_axial_vector_norm_functional_separate_from_two_form_MES_W2_anchor"
       ],
-      "verification": "GITHUB_SOURCE_AND_TEST_READBACK_ONLY; PYTEST_NOT_RUN"
+      "verification": "GITHUB_SOURCE_AND_TEST_READBACK_ONLY; PYTEST_NOT_RUN",
+      "scope": "KINEMATICAL_FUNCTIONAL_SUBBUNDLE_ONLY; observer-space carriers await source-bound providers"
     },
     "local_optical": {
       "radial": "d(n)=H+sigma_ij n^i n^j-A_i n^i/c",
@@ -647,7 +648,8 @@
       "canonical_mes_W2": "omega_ab omega^ab/(6H^2)=omega_A omega^A/(3H^2) if the canonical vector uses the same dual convention",
       "r39_functional": "OMEGA_VECTOR_NORM2_H=omega_A omega^A/H^2",
       "anchor_boundary": "Do not bind OMEGA_VECTOR_NORM2_H to MES_G_OMEGA. The exact canonical omega_axial3 metric/normalization map must be source-verified before Q uses W2."
-    }
+    },
+    "observed_carriers_status": "NOT_INCLUDED_IN_CURRENT_KINEMATICAL_X_BUNDLE"
   },
   "likelihood_contract": {
     "document": "KINEMATICAL_LIKELIHOOD_MODEL.md",
