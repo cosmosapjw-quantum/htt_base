@@ -627,9 +627,9 @@ def evaluate_kinematical_functionals(
                           representation="VECTOR_POLAR", units="1", parity="EVEN",
                           basis_id=state.beta_RO_basis_id or state.basis_id,
                           inputs=("canonical_velocity_frames.beta_RO", "canonical_closure_status"),
-                          normalization_id="CANONICAL_VFB_FIRST_ORDER_VIEW",
-                          status="CONDITIONAL_FIRST_ORDER",
-                          reason=f"canonical closure status: {closure_status}; beta_RO is not an extra independent velocity parameter"))
+                          normalization_id="CANONICAL_VFB_RECORDED_CLOSURE_VIEW",
+                          status="AVAILABLE",
+                          reason=f"canonical VelocityFrameBundle carrier; recorded first-order closure status: {closure_status}; beta_RO is not an independent coordinate"))
     out.append(_value(state, "BETA_CLOSURE_RESIDUAL",
                       state.velocity_closure_residual,
                       representation="VECTOR_POLAR", units="1", parity="EVEN",
