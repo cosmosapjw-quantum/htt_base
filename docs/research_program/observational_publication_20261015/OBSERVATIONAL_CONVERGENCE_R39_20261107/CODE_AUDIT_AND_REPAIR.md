@@ -56,3 +56,32 @@ The module is source-posted and readback verified; local pytest/import/compile w
 - Do not report PASS until actual commands, environment, return code and commit SHA are attached.
 
 No local test, CI or sampler was executed in this GitHub-only turn.
+
+## Existing likelihood adapter source audit
+
+The current branch was read at these exact files:
+- htt/src/common/cobaya_adapters/likelihoods.py blob 751822a5702f3758855f04cc7526c28f83bfa6d6;
+- htt/htt/htt/rest_frame/cf4_likelihood.py blob 61b48a10c71d1dbbbf4712fdb3e541e9f27be7e8;
+- htt/bass/likelihood/observer_frame_adapter.py blob 121ade17571e2234e46acdd33e3b79d5ce378ee8;
+- htt/src/common/bulkflow_likelihood.py blob e8368c732d8dddb2f596fd958f99a6b3af547720;
+- htt/bass/inference/planck_likelihood.py blob ec6b9dc9ed7ada16a3b3e7e4dcb4bc2aebd3995c;
+- htt/htt/htt/infer/dipole_vector_likelihood.py blob 770ac92278b1f25307fc11e737830b916ac69416.
+
+Confirmed defects/limits in the R38 Cobaya joint adapter:
+- Planck initializes a zero data vector and diagonal covariance; the prediction is also mostly zero with only a placeholder boost quadrupole slice.
+- NVSS and Quaia initialize hard-coded dipole amplitude/direction and diagonal covariance rather than reading source catalogues/selections.
+- CF4 initializes a zero 20-vector and diagonal covariance, then compares it with repeated STF shear amplitudes.
+- Pantheon has a zero/random-direction fallback when source files are absent.
+- Gaia starts from zero VSH modes/diagonal covariance.
+- The joint likelihood adds each probe's marginal logp in a loop without an admitted shared latent/cross-probe covariance construction.
+- DESI has a zero-vector fallback for missing source products.
+
+The separate CF4 forward module explicitly reports diagnostic_only, diagonal_diagnostic_gaussian_score, diagonal_only_no_group_method_covariance, matched_nulls_not_bound, group_method_calibration_covariance_not_bound, and ppc_loocv_not_bound. It is not an evidence-grade likelihood.
+
+Reuse decisions:
+- BulkFlowLikelihood is a properly normalized source-level Gaussian radial bulk-flow component with optional sampling covariance and explicit active-row semantics; it is not the full tensor kinematic likelihood.
+- ObserverFrameLikelihood reuses the boost-remapping architecture around FB-7, but its marginalise_boost is a finite support-point average. It needs quadrature/prior-weight convergence before continuous-prior marginalization can be claimed.
+- PlanckLikelihood is a useful fail-closed synthetic/real dataset gate, but its C_l-only route does not replace a full anisotropic T/E/B harmonic likelihood.
+- DipoleVectorLikelihood is a directional amplitude/axis projection, not the joint physical theta likelihood.
+
+Therefore none of these current adapters should be passed as the completed R39 multi-probe likelihood. Reuse their scoped components and contracts, but create a new observed-data path that preflights exact source/row/selection/covariance/operator identity, admits shared latent fields/cross-covariance, and fails closed when those inputs are missing.
