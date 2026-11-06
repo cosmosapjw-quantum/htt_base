@@ -99,7 +99,7 @@ class KinematicFrameState:
     beta_RM: np.ndarray          # Radiation-matter drift velocity (c=1), 3-vector
     beta_MO: np.ndarray          # Matter-observer boost velocity (c=1), 3-vector
     d_int: np.ndarray            # Intrinsic radiation dipole, 3-vector
-    stf_shear_amplitudes: np.ndarray # 5-vector of E2/STF amplitudes
+    stf_shear_amplitudes: np.ndarray # 5-vector of dimensionless sigma/H0 E2/STF amplitudes
     e1_polar_vector: np.ndarray  # E1 polar carrier, 3-vector
     b1_axial_vector: np.ndarray  # B1 axial carrier, 3-vector
     
@@ -135,7 +135,13 @@ class KinematicResponseModel:
         e1_polar: Sequence[float] | None = None,
         b1_axial: Sequence[float] | None = None,
     ) -> "KinematicResponseModel":
-        """Factory initializing state from parameters with strict validation."""
+        """Legacy factory with a first-order frame-velocity closure.
+
+        This compatibility adapter sets beta_MO = beta_RO - beta_RM at
+        first order only. It is not an exact relativistic composition and
+        does not replace the canonical R39 state with independent beta_RM
+        and beta_MO plus ordered tetrad metadata.
+        """
         bro = np.asarray(beta_RO, dtype=np.float64)
         if bro.shape != (3,):
             raise KinematicsError("beta_RO must be a 3-vector")
@@ -143,7 +149,8 @@ class KinematicResponseModel:
         if brm.shape != (3,):
             raise KinematicsError("beta_RM must be a 3-vector")
             
-        # Compute matter-observer velocity: beta_MO = beta_RO - beta_RM
+        # First-order only: beta_RO = beta_RM + beta_MO + O(beta^2).
+        # Exact non-collinear frame chains require ordered tetrads/Wigner rotation.
         bmo = bro - brm
         
         dint = np.zeros(3, dtype=np.float64) if d_int is None else np.asarray(d_int, dtype=np.float64)
@@ -196,7 +203,11 @@ class KinematicResponseModel:
         return factor * (n @ self.state.beta_MO)
 
     def optical_shear_quadrupole(self, directions: np.ndarray) -> np.ndarray:
-        """STF shear quadrupole: sum_a stf_a * (n^T E_a n)."""
+        """Dimensionless STF shear quadrupole for stored sigma/H0 coefficients.
+
+        Physical sigma_ab must first be divided by the same nonzero H0.
+        This carrier adapter is not a replacement for the raw kinematic tensor.
+        """
         n = np.asarray(directions, dtype=np.float64)
         # Evaluate n^T E_a n for each basis element a
         stf_angular = np.einsum("ni,aij,nj->na", n, STF_BASIS, n, optimize=True)
