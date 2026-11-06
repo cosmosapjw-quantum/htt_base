@@ -62,6 +62,29 @@ Construct the complete covariance, including known cross-probe blocks caused by 
 
 Whiten only on the positive covariance support; project nuisance directions in the same metric. Derive J from the actual observation and estimator operator, not a hand-authored response matrix. Report raw/whitened singular values, scaling, null and weak directions, supported quotient condition number and mask/cut sensitivity.
 
+## Existing likelihood/provider audit and reuse decision
+
+The following modules were read on the current R39 branch. They are not equivalent to the target source-conditioned joint kinematical likelihood.
+
+| Existing module | Current implementation boundary | R39 reuse decision |
+|---|---|---|
+| common.bulkflow_likelihood.BulkFlowLikelihood | Normalized Gaussian radial bulk-flow likelihood for a 3-vector V, with active-row selection and optional SamplingCovariance. It models u_i=n_hat_i dot V plus noise, not sigma, omega, A, beta_RM and beta_MO jointly. | Reuse source-row, selection and covariance mechanics where semantically applicable to a specific radial channel; extend the mean/operator and nuisance model rather than relabel V as the full kinematic state. |
+| bass.likelihood.observer_frame_adapter.ObserverFrameLikelihood | Wraps an FB-7 cosmological-frame likelihood and applies observer boost remapping. Supports a finite boost support and discrete marginalization/profile over support points. | Reuse the observer-frame remapping path only after matching its boost convention and full-sky/processed operator domain. The current support-point average is not an exact continuous prior marginal unless quadrature weights/convergence justify it. |
+| bass.inference.planck_likelihood.PlanckLikelihood | Explicitly separates synthetic fixtures from real data and blocks real fitting until its gate ladder is met. Its C_l-only route is not a full tensor/harmonic covariance likelihood. | Reuse the fail-closed dataset tier and gate semantics. A real R39 CMB lane needs the source-bound T/E/B harmonic or map likelihood and full processed covariance. |
+| htt.htt.rest_frame.cf4_likelihood.evaluate_cf4_forward_likelihood | Self-declared diagnostic-only; independent diagonal distance-variable Gaussian score; group/method/calibration covariance, matched nulls and PPC/LOOCV not admitted. | Reuse its typed catalog/hash/preflight checks; do not use its log-likelihood as evidence-grade CF4 likelihood. |
+| common.cobaya_adapters.likelihoods.HTTJointMultiProbeLikelihood | Current adapter initializes Planck with a zero data vector/identity-like covariance; NVSS/Quaia use hard-coded dipole summaries and diagonal covariance; CF4 uses zero summaries/diagonal covariance; Pantheon can enter a zero/random-direction fixture fallback; Gaia uses zero vectors; DESI zero fallback is present; the joint class loops over providers and sums marginal logp values. | Diagnostic/legacy only. Must not emit an observed-data or tensorized posterior claim. Replace observed mode with source-bound provider contracts and a common latent/cross-covariance model. |
+| htt.htt.infer.dipole_vector_likelihood.DipoleVectorLikelihood | Axis/amplitude directional likelihood. | A narrow projection/diagnostic only, not the common state likelihood. |
+
+### Required replacement boundary
+
+The observed-data Cobaya adapter must have separate observed and synthetic modes. In observed mode:
+1. Require real source paths, release IDs, SHA-256, ordered row IDs, units, frame, selection/window, covariance identity and provider version for each probe.
+2. Validate each full within-probe covariance and every required cross-probe block or an explicit conditional-independence model.
+3. Fail before sampling if a required block is missing, instead of instantiating zero vectors or identity covariances.
+4. Construct one common latent-state likelihood or an equivalent proven joint summary likelihood, not a blind sum of separately marginalized probe likelihoods.
+5. Derive x, Q, Pi, F, G_F only after the common posterior/compatibility region is formed.
+
+The legacy adapters remain useful as bounded fixtures or narrow likelihood components after their inputs and semantics are qualified. They must not be silently promoted or used to manufacture a data likelihood.
 ## Model ladder
 
 - M0: isotropic background + observer boost + probe selection/calibration/foreground/local-structure nuisance.
