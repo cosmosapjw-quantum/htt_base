@@ -141,6 +141,8 @@ class KinematicalState:
     beta_MO: np.ndarray | None = None
     beta_RM_basis_id: str | None = None
     beta_MO_basis_id: str | None = None
+    beta_RM_frame_id: str | None = None
+    beta_MO_frame_id: str | None = None
     H: float | None = None
     perturbative_order: str = "DECLARED_KINEMATICAL_STATE"
     units_convention: str = "PHYSICAL_SI_EXPLICIT_C_V1"
@@ -203,6 +205,8 @@ class KinematicalState:
         beta_MO: Sequence[float] | None = None,
         beta_RM_basis_id: str | None = None,
         beta_MO_basis_id: str | None = None,
+        beta_RM_frame_id: str | None = None,
+        beta_MO_frame_id: str | None = None,
         perturbative_order: str = "EXACT_LOCAL_VELOCITY_JET",
     ) -> "KinematicalState":
         """Project an admitted 4D velocity jet into a declared spatial triad.
@@ -245,6 +249,8 @@ class KinematicalState:
             beta_MO=None if beta_MO is None else np.asarray(beta_MO, dtype=float),
             beta_RM_basis_id=beta_RM_basis_id,
             beta_MO_basis_id=beta_MO_basis_id,
+            beta_RM_frame_id=beta_RM_frame_id,
+            beta_MO_frame_id=beta_MO_frame_id,
             H=float(jet.expansion) / 3.0,
             perturbative_order=perturbative_order,
         )
@@ -337,6 +343,9 @@ def _transport_beta(
     vector = getattr(state, name)
     if vector is None:
         return None, "UNAVAILABLE"
+    source_frame = getattr(state, f"{name}_frame_id")
+    if source_frame is None or source_frame != state.frame_id:
+        return None, "RELATIVISTIC_FRAME_BRIDGE_REQUIRED"
     source_basis = getattr(state, f"{name}_basis_id")
     if source_basis == state.basis_id:
         return vector, "AVAILABLE"
@@ -855,6 +864,8 @@ def transform_state_o3(
         beta_MO=None if state.beta_MO is None else R @ state.beta_MO,
         beta_RM_basis_id=None if state.beta_RM is None else new_basis_id,
         beta_MO_basis_id=None if state.beta_MO is None else new_basis_id,
+        beta_RM_frame_id=state.beta_RM_frame_id,
+        beta_MO_frame_id=state.beta_MO_frame_id,
         H=state.H,
         perturbative_order=state.perturbative_order,
         units_convention=state.units_convention,
