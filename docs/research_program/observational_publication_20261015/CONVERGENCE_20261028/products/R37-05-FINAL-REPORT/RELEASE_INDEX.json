@@ -1,0 +1,136 @@
+{
+  "schema": "htt.r37_final_release_index/1",
+  "release_id": "R37_CONVERGENCE_FINAL_RELEASE_20261106",
+  "task_id": "R37-05-FINAL-REPORT",
+  "title": "Frozen Final Reports, Paper Extracts, and Observable Framework Synthesis",
+  "date": "2026-11-06",
+  "claim_tier": "C0_DIAGNOSTIC_ONLY",
+  "git_branch": "research/htt-adaptive-methods-20261023",
+  "status_summary": {
+    "report_release_complete": true,
+    "completed_analysis_units": 6,
+    "total_dag_nodes_completed": 208,
+    "residual_held_nodes": 65,
+    "original42_scientific_acceptance": 17,
+    "original42_analytic_alternate": 18,
+    "paper_submission_status": "PREPARED_NOT_SUBMITTED"
+  },
+  "constituent_units": [
+    {
+      "unit_id": "R37-00-FIRST-REPORT",
+      "title": "Stage 0 Source-Bound Baseline Report",
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT",
+      "claim_tier": "C0_DIAGNOSTIC_ONLY",
+      "key_products": [
+        "REPORT_STAGE0.md",
+        "REPORT_STAGE0.pdf",
+        "CLAIM_EVIDENCE_MAP.json"
+      ]
+    },
+    {
+      "unit_id": "R37-01-RADIATION",
+      "title": "Joint Radiation Response, Carrier Completeness & Polarization Omission Bias",
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION",
+      "claim_tier": "conditional_synthetic_method_experiment",
+      "key_products": [
+        "REPORT_DELTA.md",
+        "radiation_response_spectrum.pdf",
+        "polarization_omission_bias.pdf"
+      ]
+    },
+    {
+      "unit_id": "R37-02-KINEMATICS",
+      "title": "Converged Kinematic Image: Gaia DR3 Astrometry, CF4 Flow & Fixed-Q Sign Radius",
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-02-KINEMATICS",
+      "claim_tier": "C0_DIAGNOSTIC_ONLY",
+      "key_products": [
+        "REPORT_DELTA.md",
+        "GLS_tensor_scalar_comparison.pdf",
+        "chirality_radius.pdf"
+      ]
+    },
+    {
+      "unit_id": "R37-03-HUBBLE",
+      "title": "Directional Hubble Sensitivity, Quantum Channel Transmission & Opacity Cosmology",
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE",
+      "claim_tier": "conditional_released_observable_sensitivity",
+      "key_products": [
+        "REPORT_DELTA.md",
+        "local_H_region_vs_opacity.pdf",
+        "distance_transmission_identified_interval.pdf"
+      ]
+    },
+    {
+      "unit_id": "R37-04-CLASSIFICATION",
+      "title": "Finite Physical-Family Compatibility, Quadratic Invariants & Exclusive Stability Radii",
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION",
+      "claim_tier": "conditional_geometry_response_calculation",
+      "key_products": [
+        "REPORT_DELTA.md",
+        "family_compatibility_vs_amplitude.pdf",
+        "adequacy_residual.pdf"
+      ]
+    },
+    {
+      "unit_id": "R36-06-PR4-MORPHOLOGY",
+      "title": "Planck PR4 Commander Low-Ell Polarization Morphology & 100 MC Null Qualification",
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-06-PR4-MORPHOLOGY",
+      "claim_tier": "C0_DIAGNOSTIC_ONLY",
+      "key_products": [
+        "REPORT_DELTA.md",
+        "COMMANDER_MC100_AGGREGATE.json",
+        "null_distribution_histograms.pdf"
+      ]
+    }
+  ],
+  "paper_extracts": [
+    {
+      "paper_id": "P1",
+      "file": "PAPER_EXTRACTS/P1_MOMENTUM_REST_FRAME.md",
+      "title": "Momentum Rest Frame, Astrometric Kinematics & Signed Beyond-FLRW Functionals"
+    },
+    {
+      "paper_id": "P2",
+      "file": "PAPER_EXTRACTS/P2_BIANCHI_RADIATION_TRANSFER.md",
+      "title": "Bianchi Radiation Transfer, Polarisation Omission Bias & Common Carrier Completeness"
+    },
+    {
+      "paper_id": "P3",
+      "file": "PAPER_EXTRACTS/P3_OPACITY_COSMOLOGY.md",
+      "title": "Directional Expansion Tomography, Quantum Channel Opacity & Non-Perturbative CBL Control"
+    },
+    {
+      "paper_id": "P4",
+      "file": "PAPER_EXTRACTS/P4_DIRECTIONAL_EXPANSION_TOMOGRAPHY.md",
+      "title": "Kinematic vs Metric Anisotropy Separation, Bilinear Optical Operators & Subspace Witnesses"
+    },
+    {
+      "paper_id": "P5",
+      "file": "PAPER_EXTRACTS/P5_GEOMETRY_COMPATIBILITY_ATLAS.md",
+      "title": "Finite Geometry Compatibility Atlas, Spatial Ricci Orbits & Invariant Stability Radii"
+    },
+    {
+      "paper_id": "P6",
+      "file": "PAPER_EXTRACTS/P6_OBSERVABLE_FRAMEWORK_SYNTHESIS.md",
+      "title": "Observable Framework Synthesis, Five-Coordinate Metric Governance & Solver-Ready Architecture"
+    }
+  ],
+  "firewall_policy": {
+    "forbidden_claims": [
+      "Bianchi geometry detected",
+      "Bianchi family identified",
+      "model-independent truth certificate",
+      "MIO posterior",
+      "TSC full solver",
+      "Teff full polarisation closure",
+      "external transfer validated as native"
+    ],
+    "admitted_claims": [
+      "claim-tiered observational/statistical framework",
+      "transfer-conditional result",
+      "diagnostic-only certificate",
+      "local/global discrimination candidate",
+      "morphology compatibility"
+    ]
+  }
+}
