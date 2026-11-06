@@ -52,7 +52,13 @@
         "representation": "VECTOR_POLAR",
         "O3_parity": "EVEN",
         "units": "1",
-        "role": "RADIATION_MATTER_RELATIVE_VELOCITY"
+        "role": "RADIATION_MATTER_RELATIVE_VELOCITY",
+        "required_metadata": [
+          "physical_frame_id",
+          "spatial_basis_id",
+          "velocity_definition",
+          "boost_convention"
+        ]
       },
       {
         "id": "beta_MO_A",
@@ -61,7 +67,13 @@
         "representation": "VECTOR_POLAR",
         "O3_parity": "EVEN",
         "units": "1",
-        "role": "MATTER_OBSERVER_RELATIVE_VELOCITY"
+        "role": "MATTER_OBSERVER_RELATIVE_VELOCITY",
+        "required_metadata": [
+          "physical_frame_id",
+          "spatial_basis_id",
+          "velocity_definition",
+          "boost_convention"
+        ]
       }
     ],
     "derived_blocks": [
@@ -111,7 +123,16 @@
         "role": "ANISOTROPIC_GEOMETRY"
       }
     ],
-    "dimension_note": "17 core independent components at one fixed point/epoch when beta_RM and beta_MO are both present; 18 with scalar DeltaOmega_k. For a single beta only, sigma+omega+A+beta has 14 components. These are coordinate counts, not observational rank."
+    "dimension_note": "17 core independent components at one fixed point/epoch when beta_RM and beta_MO are both present; 18 with scalar DeltaOmega_k. For a single beta only, sigma+omega+A+beta has 14 components. These are coordinate counts, not observational rank.",
+    "frame_transport_policy": {
+      "spatial_basis_transport": "An orthogonal 3x3 FrameTransport changes only triad axes inside the same physical frame.",
+      "relativistic_frame_bridge": "Different beta_RM/beta_MO physical_frame_id values require an explicit ordered Lorentz/tetrad bridge; an SO(3)/O(3) spatial rotation is insufficient.",
+      "mixed_functional_statuses": [
+        "FRAME_TRANSPORT_REQUIRED",
+        "RELATIVISTIC_FRAME_BRIDGE_REQUIRED",
+        "UNAVAILABLE"
+      ]
+    }
   },
   "functionals": [
     {
@@ -455,7 +476,8 @@
     "x_C remains one optional legacy scalar projection",
     "local radial and transverse optical response is jointly tested in the ideal common-congruence limit",
     "catalogue angular B1 is not promoted to physical vorticity without independent triad-spin calibration",
-    "finite-survey optical response uses source-level selection, tangent-basis transformation, covariance support and finite-distance remainder"
+    "finite-survey optical response uses source-level selection, tangent-basis transformation, covariance support and finite-distance remainder",
+    "beta_RM and beta_MO mixed functionals are evaluated only after both vectors share one physical tetrad; a spatial rotation is never treated as a Lorentz boost"
   ],
   "implementation": {
     "module": "htt/src/common/kinematical_functionals.py",
