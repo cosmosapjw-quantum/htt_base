@@ -38,6 +38,20 @@ Candidate observable carriers: CMB T/E/B a_lm, STF T2/T3, BipoSH A_LM,ell,ell', 
 
 Implement representation actions and parity tests for O(3)/SO(3). An improper transformation must not silently identify polar and axial vectors or even/odd STF2 carriers. Preserve chirality under SO(3); O(3) quotient is a separate declared view. Any flattening for SVD/storage must declare the orthonormal basis, metric, units, parity transform and inverse map.
 
+## Mandatory reuse check before implementing new observables
+
+Do not create a parallel local-boost, low-ell pole or observable-irrep implementation before inspecting these predecessor branches and files:
+- PR #7 / PR-251: identifiability-aware low-ell pole kernel (typed antipodal axis, eigen-gap abstention).
+- PR #13 / PR-252: correlated real-sky shell a_lm generator with full cross-shell covariance and no jitter.
+- PR #419 / PMG-WU-001: canonical ObservableIrrepBlock and ObservableIrrepState.
+- PR #442 / PMG-WU-010: full-sky local-observer Lorentz pullback, STF2-to-STF3 response and stored-real harmonic ell=2 to ell=1,3 oracle. Scope is local boost only.
+- PR #443 / PMG-WU-011 design and PR #444 source-equivalent synthetic execution: processed cut-sky response design, beam/pixel/window and nuisance structure. They do not establish an observed Planck response.
+- PR #449: observable tensors, typed kinematical MES and response-limited identification report.
+- PR #533 and #540/#544/#545: selection-law, CF4 source-window and finite-boost/radial identifiability work.
+- PR #552/#553 and #557/#559: Planck T/POL mask distinctions, same-sky covariance, beam adapter and local data recovery boundaries.
+
+Read the exact branch/head and current file contents of each relevant predecessor before importing or extending code. Separate direct reuse, required transform, conditional reuse and unverified predecessor claims. The novelty target is only the integrated source-conditioned multi-probe operator, cross-probe dependence model and identifiable vector/tensor functional quotient. Do not re-implement a full-sky boost kernel or pole tensor under a new name.
+
 ## Work package B: reuse existing R9 code safely
 
 Read and reuse:
