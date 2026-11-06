@@ -425,6 +425,7 @@ def test_canonical_joint_state_is_the_only_x_source_and_units_round_trip():
         stf2_from_components(stf2_components(view.sigma)),
         view.sigma,
     )
+    assert physical["BETA_RO_CANONICAL_VIEW"].status == "AVAILABLE"
     np.testing.assert_allclose(
         physical["BETA_RO_CANONICAL_VIEW"].components,
         joint.velocity_frames.beta_RO,
