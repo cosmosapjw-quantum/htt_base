@@ -1,0 +1,137 @@
+{
+  "schema": "htt.r39_claim_ledger/1",
+  "claim_ceiling": "C0_DESIGN_CODE_CONTRACT_ONLY",
+  "claims": [
+    {
+      "id": "R39-C01",
+      "claim": "R38 remote branch and stated commit exist.",
+      "status": "GITHUB_VERIFIED",
+      "evidence": [
+        "research/observational-convergence-r38-20261107",
+        "05e9d53449bd02973848da3306f72f63edd7fc54"
+      ]
+    },
+    {
+      "id": "R39-C02",
+      "claim": "R38 documents conflict on observed execution state.",
+      "status": "GITHUB_VERIFIED",
+      "evidence": [
+        "R38 README_KO.md",
+        "R38 RESEARCH_DAG.json",
+        "R38 CLAIM_LEDGER.json",
+        "R38 EXECUTION_REPORT.md"
+      ]
+    },
+    {
+      "id": "R39-C03",
+      "claim": "R38 joint likelihood defaults do not establish source-bound observed-data inference.",
+      "status": "SOURCE_CODE_VERIFIED",
+      "evidence": [
+        "htt/src/common/cobaya_adapters/likelihoods.py",
+        "scripts/r38/run_joint_cobaya.py"
+      ]
+    },
+    {
+      "id": "R39-C04",
+      "claim": "R38 response-rank uses manual design blocks and diagonal covariance.",
+      "status": "SOURCE_CODE_VERIFIED",
+      "evidence": [
+        "scripts/r38/run_response_rank.py"
+      ]
+    },
+    {
+      "id": "R39-C05",
+      "claim": "R38 rank 13/17 is not a stable-identification claim; reported condition number is approximately 2.5342e17.",
+      "status": "DERIVED_FROM_RECORDED_SINGULAR_SPECTRUM",
+      "evidence": [
+        "R38 IDENTIFIABILITY_RESULT.json"
+      ]
+    },
+    {
+      "id": "R39-C06",
+      "claim": "R38 Bianchi decision text contradicts BIC table arithmetic; likelihood provenance is not established.",
+      "status": "JSON_ARITHMETIC_AND_PROVENANCE_AUDIT",
+      "evidence": [
+        "R38 BIANCHI_MODEL_COMPARISON.json"
+      ]
+    },
+    {
+      "id": "R39-C07",
+      "claim": "x_C is a legacy scalar projection of the standard 1+3 generalized Friedmann/Gauss-Codazzi relation.",
+      "status": "PROJECT_INTERNAL_LITERATURE_VERDICT",
+      "tier": "LITERATURE_SUPPORTED",
+      "evidence": [
+        "docs/generated/claim_adjudication/literature_verdicts.json",
+        "METHOD_REBOOT_20261023/THEOREMS.md"
+      ],
+      "prohibited": "Do not present x_C as new physical novelty."
+    },
+    {
+      "id": "R39-C08",
+      "claim": "Canonical HTT x is sample × functional with functional rank and parity preserved; Q,F,Pi,G_F retain their tensor/set/law/path meanings.",
+      "status": "PROJECT_THEOREM_AUTHORITY",
+      "tier": "INTERNAL_FORMAL_CONTRACT",
+      "evidence": [
+        "METHOD_REBOOT_20261023/THEOREMS.md T7",
+        "tensor_joint_r9/revision2/MODEL_TO_DATA.md",
+        "tensor_joint_r9/revision2/THEORY_EXTENSION.md"
+      ]
+    },
+    {
+      "id": "R39-C09",
+      "claim": "A cosmology-wide frame-covariant source-conditioned tensor functional quotient is a conditional novelty candidate.",
+      "status": "CONJECTURAL_NOT_ESTABLISHED",
+      "evidence": [
+        "VECTOR_TENSOR_X_FRAMEWORK.md",
+        "bounded prior-art audit"
+      ],
+      "prohibited": "Absence in a bounded search is not proof of novelty."
+    },
+    {
+      "id": "R39-C10",
+      "claim": "R39 applies typed x to cosmology observables and defines a scalar x_C ablation.",
+      "status": "DOCUMENTED_DESIGN_ONLY",
+      "evidence": [
+        "VECTOR_TENSOR_X_FRAMEWORK.md",
+        "RESEARCH_DAG.json"
+      ]
+    },
+    {
+      "id": "R39-C11",
+      "claim": "Generic two-frame non-collinear Lorentz velocity transformation is corrected in source and tests.",
+      "status": "GITHUB_COMMITTED_NOT_RUNTIME_VERIFIED",
+      "evidence": [
+        "htt/src/common/kinematic_response.py",
+        "tests/r38/test_kinematic_response.py"
+      ],
+      "prohibited": "No pytest/CI PASS claim until local execution."
+    },
+    {
+      "id": "R39-C12",
+      "claim": "R38 inventory reports 42 items and 10,471,574,322 bytes.",
+      "status": "GITHUB_METADATA_RECORD_ONLY",
+      "tier": "USER_LOCAL_RECEIPT_NOT_REHASHED",
+      "evidence": [
+        "R38 LOCAL_DATA_INVENTORY.json"
+      ]
+    },
+    {
+      "id": "R39-C13",
+      "claim": "New observed multi-probe posterior or physical anisotropy detection was produced.",
+      "status": "NOT_CLAIMED",
+      "tier": "NOT_RUN"
+    },
+    {
+      "id": "R39-C14",
+      "claim": "A Bianchi family is identified or excluded by R39.",
+      "status": "NOT_CLAIMED",
+      "tier": "BLOCKED_NATIVE_TRANSFER_AND_OBSERVED_LIKELIHOOD"
+    },
+    {
+      "id": "R39-C15",
+      "claim": "All 561 historical PR diffs were re-audited line-by-line.",
+      "status": "NOT_CLAIMED",
+      "tier": "BOUNDED_HIGH_RELEVANCE_REAUDIT_ONLY"
+    }
+  ]
+}
