@@ -119,3 +119,21 @@ def test_carrier_separation():
     # Verify that E1 and STF are maintained as distinct tensors
     assert not np.array_equal(model.state.e1_polar_vector, model.state.stf_shear_amplitudes[:3])
 
+
+
+def test_directional_hubble_acceleration_requires_cH_normalization():
+    model = KinematicResponseModel.from_parameters(beta_RO=[0.0, 0.0, 0.0])
+    n = np.array([[1.0, 0.0, 0.0], [-1.0, 0.0, 0.0]])
+    physical_acceleration = np.array([6.0, 0.0, 0.0])
+
+    with pytest.raises(KinematicsError, match="explicit H0 and speed_of_light"):
+        model.directional_hubble_variation(n, acceleration_vector=physical_acceleration)
+
+    physical = model.directional_hubble_variation(
+        n, acceleration_vector=physical_acceleration, H0=2.0, speed_of_light=3.0
+    )
+    normalized = model.directional_hubble_variation(
+        n, acceleration_over_cH=np.array([1.0, 0.0, 0.0])
+    )
+    np.testing.assert_allclose(physical, [-1.0, 1.0])
+    np.testing.assert_allclose(normalized, physical)
