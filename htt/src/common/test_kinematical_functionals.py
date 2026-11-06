@@ -33,6 +33,8 @@ def make_state(**overrides):
         beta_MO=np.array([-0.001, 0.003, 0.002]),
         beta_RM_basis_id=BASIS,
         beta_MO_basis_id=BASIS,
+        beta_RM_frame_id="matter-frame",
+        beta_MO_frame_id="matter-frame",
         H=0.07,
     )
     values.update(overrides)
@@ -247,3 +249,26 @@ def test_velocity_jet_adapter_extracts_raw_congruence_kinematics():
     assert state.omega.shape == (3,)
     assert state.acceleration.shape == (3,)
     assert state.acceleration[0] == pytest.approx(2.0**2 * 0.05)
+
+
+def test_spatial_rotation_does_not_substitute_for_lorentz_frame_bridge():
+    state = make_state(
+        beta_RM_basis_id="RADIATION_TETRAD_AXES",
+        beta_RM_frame_id="radiation-frame",
+    )
+    rotation = np.array([[0.0, -1.0, 0.0],
+                         [1.0, 0.0, 0.0],
+                         [0.0, 0.0, 1.0]])
+    transport = FrameTransport(
+        source_basis_id="RADIATION_TETRAD_AXES",
+        target_basis_id=BASIS,
+        matrix=rotation,
+        transport_id="spatial_axes_only",
+    )
+    values = function_map(
+        state,
+        frame_transports={("RADIATION_TETRAD_AXES", BASIS): transport},
+    )
+    assert values["BETA_RM"].status == "AVAILABLE"
+    assert values["SIGMA_CONTRACT_BETA"].status == "RELATIVISTIC_FRAME_BRIDGE_REQUIRED"
+    assert values["BETA_RO_FIRST_ORDER_VIEW"].status == "RELATIVISTIC_FRAME_BRIDGE_REQUIRED"
