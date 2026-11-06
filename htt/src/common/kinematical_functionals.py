@@ -564,6 +564,7 @@ class LocalOpticalPrediction:
     """Leading local radial-rate and angular-drift predictions for one state."""
 
     state_id: str
+    direction_basis_id: str
     directions: np.ndarray
     radial_rate_s_inv: np.ndarray | None
     fermi_walker_drift_s_inv: np.ndarray | None
@@ -576,6 +577,7 @@ class LocalOpticalPrediction:
     scope: str = "LOCAL_C3_COMMON_CONGRUENCE_BEFORE_CAUSTICS"
 
     def __post_init__(self) -> None:
+        _nonempty(self.direction_basis_id, "direction_basis_id")
         object.__setattr__(self, "directions", finite_array(self.directions, ndim=2, name="directions"))
         if self.radial_rate_s_inv is not None:
             object.__setattr__(self, "radial_rate_s_inv", finite_array(self.radial_rate_s_inv, shape=(len(self.directions),)))
@@ -591,7 +593,10 @@ def local_optical_response(
     state: KinematicalState,
     directions: Sequence[Sequence[float]],
     *,
+    direction_basis_id: str,
     triad_rotation: Sequence[float] | None,
+    triad_rotation_basis_id: str | None,
+    basis_transport: FrameTransport | None = None,
     clock_scale: float = 1.0,
     speed_of_light: float = _C0,
 ) -> LocalOpticalPrediction:
@@ -612,35 +617,62 @@ def local_optical_response(
     norms = np.linalg.norm(n, axis=1)
     if np.max(np.abs(norms - 1.0)) > 1e-10:
         raise KinematicalStateError("all source directions must be unit vectors")
+    _nonempty(direction_basis_id, "direction_basis_id")
     c = _finite_scalar(speed_of_light, "speed_of_light")
     k = _finite_scalar(clock_scale, "clock_scale")
     if c <= 0.0 or k <= 0.0:
         raise KinematicalStateError("c and clock_scale must be positive")
 
+    sigma = state.sigma
+    omega = state.omega
+    acceleration = state.acceleration
+    if state.basis_id != direction_basis_id:
+        if basis_transport is None:
+            raise KinematicalStateError("explicit state-to-direction basis transport is required")
+        if (basis_transport.source_basis_id, basis_transport.target_basis_id) != (state.basis_id, direction_basis_id):
+            raise KinematicalStateError("basis_transport does not map the state basis to the direction basis")
+        if sigma is not None:
+            sigma = basis_transport.matrix @ sigma @ basis_transport.matrix.T
+        if omega is not None:
+            omega = basis_transport.axial(omega)
+        if acceleration is not None:
+            acceleration = basis_transport.polar(acceleration)
+    elif basis_transport is not None:
+        raise KinematicalStateError("basis_transport supplied although state and direction bases already match")
+
+    if triad_rotation is None:
+        if triad_rotation_basis_id is not None:
+            raise KinematicalStateError("triad_rotation_basis_id supplied without triad_rotation")
+        rotation = None
+    else:
+        _nonempty(triad_rotation_basis_id, "triad_rotation_basis_id")
+        if triad_rotation_basis_id != direction_basis_id:
+            raise KinematicalStateError("triad rotation must be expressed in the direction basis")
+        rotation = finite_array(triad_rotation, shape=(3,), name="triad_rotation")
+
     radial = None
-    if state.H is not None and state.sigma is not None and state.acceleration is not None:
-        radial = state.H + np.einsum("ni,ij,nj->n", n, state.sigma, n) - (n @ state.acceleration) / c
+    if state.H is not None and sigma is not None and acceleration is not None:
+        radial = state.H + np.einsum("ni,ij,nj->n", n, sigma, n) - (n @ acceleration) / c
         radial_status = "AVAILABLE_LOCAL_OPTICAL_RATE"
     else:
         radial_status = "UNAVAILABLE_REQUIRED_H_SIGMA_OR_ACCELERATION"
 
     fermi = None
     catalogue = None
-    rotation = None if triad_rotation is None else finite_array(triad_rotation, shape=(3,), name="triad_rotation")
-    if state.sigma is None or state.omega is None:
+    if sigma is None or omega is None:
         transverse_status = "UNAVAILABLE_REQUIRED_SIGMA_OR_VORTICITY"
     else:
-        projected = state.sigma[None, :, :] @ n[:, :, None]
-        sigma_n = projected[:, :, 0]
+        sigma_n = np.einsum("ij,nj->ni", sigma, n)
         sigma_n = sigma_n - n * np.einsum("ni,ni->n", n, sigma_n)[:, None]
-        fermi = sigma_n + np.cross(n, state.omega[None, :])
+        fermi = sigma_n + np.cross(n, omega[None, :])
         if rotation is None:
             transverse_status = "TRIAD_ROTATION_UNAVAILABLE_CATALOGUE_B1_UNRESOLVED"
         else:
-            catalogue = k * (sigma_n + np.cross(n, (state.omega + rotation)[None, :]))
+            catalogue = k * (sigma_n + np.cross(n, (omega + rotation)[None, :]))
             transverse_status = "AVAILABLE_WITH_EXPLICIT_TRIAD_ROTATION_AND_CLOCK"
     return LocalOpticalPrediction(
         state_id=state.state_id,
+        direction_basis_id=direction_basis_id,
         directions=n,
         radial_rate_s_inv=radial,
         fermi_walker_drift_s_inv=fermi,
@@ -658,6 +690,9 @@ class OpticalJacobian:
     """Unwhitened source-level derivative of the ideal local optical map."""
 
     matrix: np.ndarray
+    frame_id: str
+    congruence_id: str
+    basis_id: str
     parameter_names: tuple[str, ...]
     parameter_units: tuple[str, ...]
     row_labels: tuple[str, ...]
@@ -665,6 +700,9 @@ class OpticalJacobian:
     scope: str = "IDEAL_LOCAL_OPTICAL_MAP_PRE_SELECTION_PRE_WHITENING"
 
     def __post_init__(self) -> None:
+        _nonempty(self.frame_id, "frame_id")
+        _nonempty(self.congruence_id, "congruence_id")
+        _nonempty(self.basis_id, "basis_id")
         object.__setattr__(self, "matrix", finite_array(self.matrix, ndim=2, name="optical Jacobian"))
         object.__setattr__(self, "parameter_names", tuple(self.parameter_names))
         object.__setattr__(self, "parameter_units", tuple(self.parameter_units))
@@ -682,6 +720,9 @@ def local_optical_jacobian(
     directions: Sequence[Sequence[float]],
     tangent_basis: Sequence[Sequence[Sequence[float]]],
     *,
+    frame_id: str,
+    congruence_id: str,
+    basis_id: str,
     clock_scale: float = 1.0,
     include_triad_rotation: bool = True,
 ) -> OpticalJacobian:
@@ -750,6 +791,9 @@ def local_optical_jacobian(
 
     return OpticalJacobian(
         matrix=matrix,
+        frame_id=frame_id,
+        congruence_id=congruence_id,
+        basis_id=basis_id,
         parameter_names=parameter_names,
         parameter_units=parameter_units,
         row_labels=tuple(rows),
