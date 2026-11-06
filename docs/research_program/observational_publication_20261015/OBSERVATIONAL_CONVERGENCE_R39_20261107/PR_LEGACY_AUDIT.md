@@ -94,6 +94,10 @@ Depth of review in this R39 turn:
 | #552/#553 (open drafts) | Planck T-mask finite operator and CF4 coherent-transfer bounds; #553 explicitly uses a scalar temperature mask with manufactured spin-2 coefficients rather than native PR3 polarization PMASK/observed E/B. | No physical Planck B leakage or E2E polarization result; CF4 transfer bounds are conditional on externally assumed hard bounds. |
 | #558/#559 (open drafts) | Same-sky Planck mask/beam/covariance adapter, checked SMICA source fetch, overlap-aware split covariance and local checkout recovery. | Native full SMICA Q/U/beam/FFP10 end-to-end and full 1.9-GiB transfer were not complete; six-paper DAG remained 14/42 completed-scoped, READY L01/S02, all papers NOT_READY_TO_SUBMIT in those records. |
 
+### Additional internal optical-kinematics predecessor
+
+R39 also reuses docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_C_KINEMATICS.md. Its C3/C4/C9 construction derives the same-congruence radial and transverse optical map, including the cancellation of the common acceleration term from leading angular drift, the B1 combination of physical vorticity and catalogue-triad rotation, and the ideal full-sphere moment inverse. This is an existing internal mathematical result and is not claimed as a new R39 theorem. The R39 source module reuses relativistic_kinematics.kinematics_from_velocity_jet for pointwise extraction and implements a typed functional/local-response adapter around it.
+
 ### Consequence for R39 novelty
 
 The repository already contains:
