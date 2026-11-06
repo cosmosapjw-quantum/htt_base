@@ -141,7 +141,8 @@
       "matrix_map": "[[s1,s3,s4],[s3,s2,s5],[s4,s5,-s1-s2]]",
       "metric": "tr(S^2)=2(s1^2+s2^2+s1*s2+s3^2+s4^2+s5^2)",
       "note": "This is not an orthonormal STF basis. Any flattened SVD/covariance must use the induced Gram metric or a declared orthonormal transform."
-    }
+    },
+    "canonical_ssot": "exact JointAnisotropyState; R39 KinematicalState is derived physical-SI view only"
   },
   "functionals": [
     {
@@ -494,11 +495,28 @@
   "implementation": {
     "module": "htt/src/common/kinematical_functionals.py",
     "tests": "htt/src/common/test_kinematical_functionals.py",
-    "reused_modules": [
-      "htt/src/common/relativistic_kinematics.py",
-      "htt/src/common/kinematic_response.py"
-    ],
-    "scope": "typed pointwise kinematical state, direct/mixed functionals, O(3) action, local radial/transverse optical response, ideal local Jacobian",
-    "verification": "GITHUB_READBACK_ONLY; local pytest NOT_RUN"
+    "canonical_state_authority": "common.joint_anisotropy_state_v1.JointAnisotropyState",
+    "canonical_functional_authority": "common.tensor_functionals_v1.TensorFunctionalSpec/TensorFunctionalResult",
+    "x_builder": "build_kinematical_x_bundle",
+    "source_identity": "canonical JointAnisotropyState.content_id shared by both normalized canonical results and physical-SI functional views",
+    "normalization_adapter": {
+      "input": "Theta=nabla_a U^a, explicit c, EXPLICIT_C_THETA_NORMALIZED",
+      "physical": "sigma=Theta*sigma_hat; omega=Theta*omega_hat; A=c*Theta*A_hat; H=Theta/3",
+      "natural_units": "fail closed pending explicit unit conversion"
+    },
+    "stf5_chart": {
+      "id": "STF5_CARTESIAN_XX_YY_XY_XZ_YZ_V1",
+      "order": [
+        "Sxx",
+        "Syy",
+        "Sxy",
+        "Sxz",
+        "Syz"
+      ],
+      "constraint": "Szz=-Sxx-Syy",
+      "induced_metric": "tr(S^2)=2(s1^2+s2^2+s1*s2+s3^2+s4^2+s5^2)",
+      "caution": "not orthonormal; use induced Gram metric or a declared orthonormal transform for SVD/covariance"
+    },
+    "runtime_status": "SOURCE_AND_TEST_FILES_READBACK_VERIFIED; PYTEST_NOT_RUN"
   }
 }
