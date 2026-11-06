@@ -39,6 +39,20 @@ Additional predecessor bodies reviewed: #7 (identifiability-aware low-ell pole k
 This prior art narrows the novelty candidate: tensor x, observable-irrep state, local full-sky Lorentz pullback, STF2→STF3 harmonic coupling, low-ell pole statistics and generic tensor MES are already project predecessors. A remaining candidate is a validated, source-conditioned, processed multi-probe observation operator for the same typed physical state, with justified cross-covariance and a data-supported functional-identifiable quotient across CMB harmonics, selected source counts, Gaia VSH and finite-z distance carriers. It must be compared directly against the existing PR-442/443/444 and six-paper branches, not implemented as a parallel duplicate.
 
 
+## LOOP C radial–transverse optical response integration
+
+R39 re-read the existing LOOP C kinematics research source and reused its local optical inverse. The finite-source ideal response is now represented as radial \(d(n)=H+\sigma:nn-A\cdot n/c\) plus Fermi-Walker angular drift \(P\sigma n+n\times\omega\). The catalogue drift includes the explicit triad-spin nuisance \(\Omega\), so B1 measures \(\omega+\Omega\) and cannot separate these without an external frame calibration. This also makes clear why the leading radial distance likelihood is blind to vorticity while transverse astrometry may reopen that direction.
+
+Added htt/src/common/kinematical_functionals.py and htt/src/common/test_kinematical_functionals.py. The source contains:
+- direct physical theta state and velocity-jet projection adapter;
+- direct/normalized/mixed tensor-functional values;
+- O(3) transformation and basis-transport contracts;
+- local radial/transverse prediction and unwhitened finite-source Jacobian.
+
+The legacy R38 directional_hubble_variation was corrected so physical acceleration cannot be subtracted from a dimensionless Delta H/H: it now requires explicit \(A/(cH_0)\), or physical A together with H0 and c. Its regression test was added. Existing KinematicResponseModel.from_parameters is documented as first-order beta closure only.
+
+The ideal local operator has analytic/symbolic structure inherited from LOOP C; finite-source numerical rank is checked by a new test fixture, but that test has not been run in this environment. No observed Gaia or CF4 likelihood, source selection, covariance or frame-spin calibration was executed.
+
 ## Kinematical theta and joint likelihood extension
 
 The user clarified that x must include direct components of the physical congruence kinematics, not only a_lm and other observer-space data carriers. R39 now specifies the field-valued/basis-truncated state theta_K={sigma_AB, omega_A, A_A, beta_RM_A, beta_MO_A}, with beta_RO retained as a derived first-order closure view (exact ordered tetrad composition beyond first order). The pointwise independent core is 17 real components; optional DeltaOmega_k makes 18. These counts are coordinate dimensions, not data rank.
