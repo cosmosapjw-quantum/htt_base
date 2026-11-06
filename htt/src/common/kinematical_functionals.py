@@ -14,7 +14,14 @@ from typing import Mapping, Sequence
 
 import numpy as np
 
+from .joint_anisotropy_state import (
+    AccelerationNormalization,
+    JointAnisotropyState,
+    MissingComponent,
+    UnitsConvention,
+)
 from .kinematic_response import STF_BASIS
+from .orbit_nonlinearity import stf5_to_matrix
 from .r7_contracts import content_id, finite_array
 from .relativistic_kinematics import (
     METRIC,
@@ -143,6 +150,18 @@ class KinematicalState:
     beta_MO_basis_id: str | None = None
     beta_RM_frame_id: str | None = None
     beta_MO_frame_id: str | None = None
+    beta_RO: np.ndarray | None = None
+    beta_RO_basis_id: str | None = None
+    beta_RO_frame_id: str | None = None
+    beta_semantic_role: str | None = None
+    velocity_frame_ids: tuple[str, ...] = ()
+    velocity_closure_status: str | None = None
+    velocity_closure_residual: np.ndarray | None = None
+    velocity_truncation_remainder_bound: float | None = None
+    canonical_state_id: str | None = None
+    canonical_geometry_id: str | None = None
+    delta_omega_k: float | None = None
+    canonical_units_convention: str | None = None
     H: float | None = None
     perturbative_order: str = "DECLARED_KINEMATICAL_STATE"
     units_convention: str = "PHYSICAL_SI_EXPLICIT_C_V1"
@@ -185,6 +204,44 @@ class KinematicalState:
                 raise KinematicalStateError(f"{name} must be strictly subluminal")
             object.__setattr__(self, name, vector)
 
+        if self.beta_RO is not None:
+            if self.beta_RO_basis_id is None or self.beta_RO_frame_id is None:
+                raise KinematicalStateError("beta_RO requires component basis and coordinate-frame identity")
+            _nonempty(self.beta_RO_basis_id, "beta_RO_basis_id")
+            _nonempty(self.beta_RO_frame_id, "beta_RO_frame_id")
+            beta_ro = finite_array(self.beta_RO, shape=(3,), name="beta_RO")
+            if float(beta_ro @ beta_ro) >= 1.0:
+                raise KinematicalStateError("beta_RO must be strictly subluminal")
+            object.__setattr__(self, "beta_RO", beta_ro)
+        elif self.beta_RO_basis_id is not None or self.beta_RO_frame_id is not None:
+            raise KinematicalStateError("beta_RO metadata supplied without beta_RO")
+        object.__setattr__(self, "velocity_frame_ids", tuple(self.velocity_frame_ids))
+        if self.velocity_frame_ids and (
+            len(self.velocity_frame_ids) != 3
+            or len(set(self.velocity_frame_ids)) != 3
+            or not all(isinstance(x, str) and x for x in self.velocity_frame_ids)
+        ):
+            raise KinematicalStateError("velocity_frame_ids must be three distinct frame identities")
+        if self.beta_semantic_role is not None:
+            _nonempty(self.beta_semantic_role, "beta_semantic_role")
+        if self.velocity_closure_status is not None:
+            _nonempty(self.velocity_closure_status, "velocity_closure_status")
+        if self.velocity_closure_residual is not None:
+            object.__setattr__(self, "velocity_closure_residual",
+                               finite_array(self.velocity_closure_residual, shape=(3,)))
+        if self.velocity_truncation_remainder_bound is not None:
+            bound = _finite_scalar(self.velocity_truncation_remainder_bound, "velocity_truncation_remainder_bound")
+            if bound < 0.0:
+                raise KinematicalStateError("velocity truncation remainder bound must be nonnegative")
+            object.__setattr__(self, "velocity_truncation_remainder_bound", bound)
+        for name in ("canonical_state_id", "canonical_geometry_id"):
+            value = getattr(self, name)
+            if value is not None:
+                _nonempty(value, name)
+        if self.delta_omega_k is not None:
+            object.__setattr__(self, "delta_omega_k", _finite_scalar(self.delta_omega_k, "delta_omega_k"))
+        if self.canonical_units_convention is not None:
+            _nonempty(self.canonical_units_convention, "canonical_units_convention")
         if self.H is not None:
             object.__setattr__(self, "H", _finite_scalar(self.H, "H"))
 
@@ -192,6 +249,111 @@ class KinematicalState:
     def state_id(self) -> str:
         """Content identity of the whole typed sample, including missingness."""
         return content_id(self)
+
+
+    @classmethod
+    def from_joint_anisotropy_state(
+        cls,
+        joint_state: JointAnisotropyState,
+        *,
+        expansion_scalar: float,
+        speed_of_light: float = _C0,
+        sample_id: str | None = None,
+    ) -> "KinematicalState":
+        """Create a physical-SI optical evaluation view of the canonical state.
+
+        The input JointAnisotropyState remains the SSOT. Its registered
+        congruence coordinates are normalized by Theta=nabla_a U^a:
+            sigma_hat = sigma/Theta,
+            omega_hat = omega/Theta,
+            A_hat = A/(c Theta)  [explicit-c branch].
+        This adapter requires EXPLICIT_C_THETA_NORMALIZED and converts back
+        to raw SI values for local_optical_response. In particular, an
+        acceleration normalized in the c=1 convention is rejected until a
+        separately justified unit conversion is supplied.
+
+        VelocityFrameBundle stores beta_RO/RM/MO components in one common
+        coordinate_frame and basis; radiation/matter/observer IDs describe
+        the relative-frame roles, not separate component coordinate systems.
+        The first-order closure status/residual and all three frame identities
+        are preserved as view metadata. Geometry stays attached to the
+        canonical_state_id and its own geometry content identity.
+        """
+        if type(joint_state) is not JointAnisotropyState:
+            raise TypeError("joint_state must be an exact canonical JointAnisotropyState")
+        theta = _finite_scalar(expansion_scalar, "expansion_scalar")
+        c = _finite_scalar(speed_of_light, "speed_of_light")
+        if theta == 0.0 or c <= 0.0:
+            raise KinematicalStateError("expansion_scalar must be nonzero and c positive")
+        if joint_state.units_convention is not UnitsConvention.EXPLICIT_C_THETA_NORMALIZED:
+            raise KinematicalStateError(
+                "only EXPLICIT_C_THETA_NORMALIZED can be converted to physical SI by this adapter"
+            )
+
+        kin = joint_state.congruence_kinematics
+        velocity = joint_state.velocity_frames
+        geometry = joint_state.geometry_state
+        if kin.acceleration_polar3 is not None and type(kin.acceleration_polar3) is MissingComponent:
+            acceleration = None
+        elif kin.acceleration_polar3 is None:
+            acceleration = None
+        else:
+            if kin.acceleration_normalization is not AccelerationNormalization.A_OVER_C_THETA:
+                raise KinematicalStateError(
+                    "canonical acceleration must declare A_OVER_C_THETA in explicit-c units"
+                )
+            acceleration = c * theta * finite_array(
+                kin.acceleration_polar3, shape=(3,), name="canonical A/(c Theta)"
+            )
+
+        def component(value: object, name: str) -> np.ndarray | None:
+            if type(value) is MissingComponent:
+                return None
+            return finite_array(value, shape=(3,), name=name)
+
+        beta_rm = component(velocity.beta_RM, "canonical beta_RM")
+        beta_mo = component(velocity.beta_MO, "canonical beta_MO")
+        beta_ro = component(velocity.beta_RO, "canonical beta_RO")
+        closure_residual = component(velocity.closure_residual, "canonical beta closure residual")
+        sample = sample_id or f"canonical:{joint_state.content_id}"
+        return cls(
+            sample_id=sample,
+            frame_id=joint_state.frame,
+            congruence_id=joint_state.congruence,
+            epoch_window_id=joint_state.epoch_window,
+            basis_id=joint_state.basis,
+            source_identity=joint_state.source_identity,
+            sigma=theta * stf5_to_matrix(kin.sigma_stf5),
+            omega=theta * finite_array(kin.omega_axial3, shape=(3,)),
+            acceleration=acceleration,
+            beta_RM=beta_rm,
+            beta_MO=beta_mo,
+            beta_RM_basis_id=None if beta_rm is None else velocity.basis,
+            beta_MO_basis_id=None if beta_mo is None else velocity.basis,
+            beta_RM_frame_id=None if beta_rm is None else velocity.coordinate_frame,
+            beta_MO_frame_id=None if beta_mo is None else velocity.coordinate_frame,
+            beta_RO=beta_ro,
+            beta_RO_basis_id=None if beta_ro is None else velocity.basis,
+            beta_RO_frame_id=None if beta_ro is None else velocity.coordinate_frame,
+            beta_semantic_role=joint_state.beta_semantic_role.value,
+            velocity_frame_ids=(
+                velocity.radiation_frame_id,
+                velocity.matter_frame_id,
+                velocity.observer_frame_id,
+            ),
+            velocity_closure_status=velocity.status.value,
+            velocity_closure_residual=closure_residual,
+            velocity_truncation_remainder_bound=(
+                None if type(velocity.truncation_remainder_bound) is MissingComponent
+                else float(velocity.truncation_remainder_bound)
+            ),
+            canonical_state_id=joint_state.content_id,
+            canonical_geometry_id=geometry.content_id,
+            delta_omega_k=float(geometry.delta_omega_k),
+            canonical_units_convention=joint_state.units_convention.value,
+            H=theta / 3.0,
+            perturbative_order=joint_state.perturbative_order,
+        )
 
     @classmethod
     def from_velocity_jet(
