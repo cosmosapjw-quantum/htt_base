@@ -787,14 +787,14 @@ def evaluate_kinematical_functionals(
     elif H is None:
         status, reason = "UNAVAILABLE", "Hubble normalization not admitted"
     elif H == 0.0:
-        status, reason = "UNDEFINED", "H=0; vorticity stress normalization is undefined"
+        status, reason = "UNDEFINED", "H=0; H-normalized axial-vector norm is undefined"
     else:
         status, reason = "AVAILABLE", ""
-    out.append(_value(state, "OMEGA_STRESS",
+    out.append(_value(state, "OMEGA_VECTOR_NORM2_H",
                       None if status != "AVAILABLE" else np.array([omega @ omega / (6.0 * H**2)]),
                       representation="NONNEGATIVE_SCALAR", units="1", parity="EVEN",
                       basis_id=state.basis_id, inputs=("omega_A", "H"),
-                      normalization_id="OMEGA_SQUARED_OVER_6H2", status=status, reason=reason))
+                      normalization_id="OMEGA_VECTOR_NORM_SQUARED_OVER_H2", status=status, reason=reason))
 
     return tuple(out)
 
