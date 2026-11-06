@@ -1,0 +1,413 @@
+{
+  "schema": "htt.r39.kinematical_functional_registry/1",
+  "status": "DESIGN_ONLY_NOT_PRODUCTION_SCHEMA",
+  "authority": "KINEMATICAL_LIKELIHOOD_MODEL.md",
+  "conventions": {
+    "metric_signature": "(-,+,+,+)",
+    "physical_four_velocity": "U^a U_a = -c^2",
+    "spatial_projector": "h_ab = g_ab + U_a U_b/c^2",
+    "expansion": "vartheta = nabla_a U^a; H = vartheta/3",
+    "acceleration": "A_a = U^b nabla_b U_a; physical units m s^-2",
+    "shear": "sigma_ab = projected symmetric tracefree part of nabla_b U_a; units s^-1",
+    "vorticity": "omega_ab = projected antisymmetric part; omega_A = (1/2) epsilon_ABC omega^BC; units s^-1",
+    "beta": "dimensionless relative three-velocity in named tetrad/frame convention",
+    "normalized_acceleration": "A_A/(c H)",
+    "sample_semantics": "posterior_draw | confidence_witness | null_realization | injection | observed_carrier; do not mix under one axis"
+  },
+  "state": {
+    "name": "JointAnisotropyState_R39",
+    "common_state": "Z=(theta_K, psi, eta, xi)",
+    "kinematic_blocks": [
+      {
+        "id": "sigma_AB",
+        "symbol": "sigma_AB",
+        "independent_dimension": 5,
+        "representation": "STF2_POLAR",
+        "O3_parity": "EVEN",
+        "units": "s^-1",
+        "role": "DIRECT_PHYSICAL_KINEMATICS"
+      },
+      {
+        "id": "omega_A",
+        "symbol": "omega_A",
+        "independent_dimension": 3,
+        "representation": "VECTOR_AXIAL",
+        "O3_parity": "PSEUDO",
+        "units": "s^-1",
+        "role": "DIRECT_PHYSICAL_KINEMATICS"
+      },
+      {
+        "id": "A_A",
+        "symbol": "A_A",
+        "independent_dimension": 3,
+        "representation": "VECTOR_POLAR",
+        "O3_parity": "EVEN",
+        "units": "m s^-2",
+        "role": "DIRECT_PHYSICAL_KINEMATICS"
+      },
+      {
+        "id": "beta_RM_A",
+        "symbol": "beta_RM,A",
+        "independent_dimension": 3,
+        "representation": "VECTOR_POLAR",
+        "O3_parity": "EVEN",
+        "units": "1",
+        "role": "RADIATION_MATTER_RELATIVE_VELOCITY"
+      },
+      {
+        "id": "beta_MO_A",
+        "symbol": "beta_MO,A",
+        "independent_dimension": 3,
+        "representation": "VECTOR_POLAR",
+        "O3_parity": "EVEN",
+        "units": "1",
+        "role": "MATTER_OBSERVER_RELATIVE_VELOCITY"
+      }
+    ],
+    "derived_blocks": [
+      {
+        "id": "beta_RO_A",
+        "symbol": "beta_RO,A",
+        "representation": "VECTOR_POLAR",
+        "O3_parity": "EVEN",
+        "units": "1",
+        "role": "RADIATION_OBSERVER_VIEW",
+        "rule": "first order beta_RO=beta_RM+beta_MO+O(beta^2); exact ordered tetrad composition required beyond first order",
+        "independent": false
+      }
+    ],
+    "optional_blocks": [
+      {
+        "id": "delta_Omega_k",
+        "symbol": "DeltaOmega_k",
+        "independent_dimension": 1,
+        "representation": "SCALAR",
+        "O3_parity": "EVEN",
+        "units": "1",
+        "role": "SIGNED_CURVATURE_BUDGET_DEPARTURE"
+      },
+      {
+        "id": "spatial_Ricci_STF",
+        "symbol": "3R_<AB>",
+        "representation": "STF2_POLAR",
+        "O3_parity": "EVEN",
+        "units": "m^-2",
+        "role": "ANISOTROPIC_GEOMETRY"
+      },
+      {
+        "id": "electric_Weyl",
+        "symbol": "E_AB",
+        "representation": "STF2_POLAR",
+        "O3_parity": "EVEN",
+        "units": "s^-2",
+        "role": "ANISOTROPIC_GEOMETRY"
+      },
+      {
+        "id": "magnetic_Weyl",
+        "symbol": "H_AB",
+        "representation": "STF2_AXIAL",
+        "O3_parity": "ODD",
+        "units": "s^-2",
+        "role": "ANISOTROPIC_GEOMETRY"
+      }
+    ],
+    "dimension_note": "17 core independent components at one fixed point/epoch when beta_RM and beta_MO are both present; 18 with scalar DeltaOmega_k. For a single beta only, sigma+omega+A+beta has 14 components. These are coordinate counts, not observational rank."
+  },
+  "functionals": [
+    {
+      "id": "SIGMA_RAW",
+      "inputs": [
+        "sigma_AB"
+      ],
+      "formula": "sigma_AB",
+      "output_representation": "STF2_POLAR",
+      "dimension": 5,
+      "units": "s^-1",
+      "normalization": "RAW",
+      "anchor": "MATCHED_SHEAR_ANCHOR_IF_ADMITTED"
+    },
+    {
+      "id": "OMEGA_RAW",
+      "inputs": [
+        "omega_A"
+      ],
+      "formula": "omega_A",
+      "output_representation": "VECTOR_AXIAL",
+      "dimension": 3,
+      "units": "s^-1",
+      "normalization": "RAW",
+      "anchor": "MATCHED_VORTICITY_ANCHOR_IF_ADMITTED"
+    },
+    {
+      "id": "ACCEL_RAW",
+      "inputs": [
+        "A_A"
+      ],
+      "formula": "A_A",
+      "output_representation": "VECTOR_POLAR",
+      "dimension": 3,
+      "units": "m s^-2",
+      "normalization": "RAW",
+      "anchor": "NO_ACTIVE_NUMERICAL_MES_ANCHOR"
+    },
+    {
+      "id": "BETA_RM",
+      "inputs": [
+        "beta_RM_A"
+      ],
+      "formula": "beta_RM,A",
+      "output_representation": "VECTOR_POLAR",
+      "dimension": 3,
+      "units": "1",
+      "normalization": "RAW",
+      "anchor": "NO_ACTIVE_MES_ANCHOR"
+    },
+    {
+      "id": "BETA_MO",
+      "inputs": [
+        "beta_MO_A"
+      ],
+      "formula": "beta_MO,A",
+      "output_representation": "VECTOR_POLAR",
+      "dimension": 3,
+      "units": "1",
+      "normalization": "RAW",
+      "anchor": "NO_ACTIVE_MES_ANCHOR"
+    },
+    {
+      "id": "SIGMA_H",
+      "inputs": [
+        "sigma_AB",
+        "H"
+      ],
+      "formula": "sigma_AB/H",
+      "output_representation": "STF2_POLAR",
+      "dimension": 5,
+      "units": "1",
+      "normalization": "HUBBLE_NORMALIZED",
+      "anchor": "MATCHED_SHEAR_ANCHOR_IF_ADMITTED"
+    },
+    {
+      "id": "OMEGA_H",
+      "inputs": [
+        "omega_A",
+        "H"
+      ],
+      "formula": "omega_A/H",
+      "output_representation": "VECTOR_AXIAL",
+      "dimension": 3,
+      "units": "1",
+      "normalization": "HUBBLE_NORMALIZED",
+      "anchor": "MATCHED_VORTICITY_ANCHOR_IF_ADMITTED"
+    },
+    {
+      "id": "ACCEL_C_H",
+      "inputs": [
+        "A_A",
+        "H"
+      ],
+      "formula": "A_A/(c H)",
+      "output_representation": "VECTOR_POLAR",
+      "dimension": 3,
+      "units": "1",
+      "normalization": "HUBBLE_NORMALIZED",
+      "anchor": "UNAVAILABLE_UNLESS_EULER_GRADIENT_PROVIDER"
+    },
+    {
+      "id": "SIGMA_CONTRACT_BETA",
+      "inputs": [
+        "sigma_AB",
+        "beta_RM_A",
+        "H"
+      ],
+      "formula": "sigma_AB beta_RM^A beta_RM^B/H",
+      "output_representation": "SCALAR",
+      "dimension": 1,
+      "units": "1",
+      "O3_parity": "EVEN",
+      "anchor": "FUNCTIONAL_SPECIFIC"
+    },
+    {
+      "id": "BETA_DOT_OMEGA",
+      "inputs": [
+        "beta_RM_A",
+        "omega_A",
+        "H"
+      ],
+      "formula": "beta_RM^A omega_A/H",
+      "output_representation": "PSEUDOSCALAR",
+      "dimension": 1,
+      "units": "1",
+      "O3_parity": "ODD",
+      "anchor": "NO_OCCUPANCY_WITHOUT_REFLECTION_NULL"
+    },
+    {
+      "id": "SIGMA_BETA_VECTOR",
+      "inputs": [
+        "sigma_AB",
+        "beta_RM_A",
+        "H"
+      ],
+      "formula": "sigma^A_B beta_RM^B/H",
+      "output_representation": "VECTOR_POLAR",
+      "dimension": 3,
+      "units": "1",
+      "O3_parity": "EVEN",
+      "anchor": "FUNCTIONAL_SPECIFIC"
+    },
+    {
+      "id": "BETA_CROSS_OMEGA",
+      "inputs": [
+        "beta_RM_A",
+        "omega_A",
+        "H"
+      ],
+      "formula": "epsilon^A_BC beta_RM^B omega^C/H",
+      "output_representation": "VECTOR_POLAR",
+      "dimension": 3,
+      "units": "1",
+      "O3_parity": "EVEN",
+      "anchor": "FUNCTIONAL_SPECIFIC"
+    },
+    {
+      "id": "BETA_DOT_ACCEL",
+      "inputs": [
+        "beta_MO_A",
+        "A_A",
+        "H"
+      ],
+      "formula": "beta_MO^A A_A/(c H)",
+      "output_representation": "SCALAR",
+      "dimension": 1,
+      "units": "1",
+      "O3_parity": "EVEN",
+      "anchor": "FUNCTIONAL_SPECIFIC"
+    },
+    {
+      "id": "SIGMA_CUBIC",
+      "inputs": [
+        "sigma_AB",
+        "H"
+      ],
+      "formula": "tr(sigma^3)/H^3",
+      "output_representation": "SCALAR",
+      "dimension": 1,
+      "units": "1",
+      "O3_parity": "EVEN",
+      "anchor": "SHAPE_OR_ACCEPTANCE_BODY_ONLY"
+    },
+    {
+      "id": "OMEGA_STRESS",
+      "inputs": [
+        "omega_A",
+        "H"
+      ],
+      "formula": "omega_A omega^A/(6 H^2)",
+      "output_representation": "NONNEGATIVE_SCALAR",
+      "dimension": 1,
+      "units": "1",
+      "O3_parity": "EVEN",
+      "anchor": "MATCHED_VORTICITY_ANCHOR_IF_ADMITTED"
+    }
+  ],
+  "observed_carriers": [
+    {
+      "id": "CMB_T_E_B",
+      "fields": [
+        "a_lm^T",
+        "a_lm^E",
+        "a_lm^B"
+      ],
+      "representation": "SPIN_HARMONIC",
+      "role": "OBSERVED_OR_PREDICTED_CARRIER",
+      "note": "Retain reality, polarization parity, frequency/split, mask/beam/window and full covariance."
+    },
+    {
+      "id": "CMB_BIPOSH",
+      "fields": [
+        "A_LM,ell,ell_prime,XY"
+      ],
+      "representation": "BIPOSH_IRREP",
+      "role": "DERIVED_COVARIANCE_CARRIER",
+      "note": "Not an additional independent dataset when estimated from the same a_lm."
+    },
+    {
+      "id": "SOURCE_COUNTS",
+      "fields": [
+        "z_i",
+        "n_hat_i",
+        "flux_i",
+        "colour_i"
+      ],
+      "representation": "POINT_PROCESS_AND_SPHERICAL_MULTIPOLES",
+      "role": "OBSERVED_CATALOGUE"
+    },
+    {
+      "id": "GAIA_PROPER_MOTION",
+      "fields": [
+        "mu_alpha_star_i",
+        "mu_delta_i",
+        "full_astrometric_covariance"
+      ],
+      "representation": "SPIN1_VSH_E_B",
+      "role": "OBSERVED_CARRIER"
+    },
+    {
+      "id": "DISTANCE",
+      "fields": [
+        "z_i",
+        "n_hat_i",
+        "mu_i_or_distance_i"
+      ],
+      "representation": "DIRECTIONAL_DISTANCE_MULTIPOLES",
+      "role": "OBSERVED_CARRIER"
+    }
+  ],
+  "likelihood_contract": {
+    "expression": "p(D|theta,psi,eta)=integral dxi p(xi|theta,psi) p(D|xi,theta,psi,eta,W,S)",
+    "latent_shared_fields": [
+      "primordial perturbations",
+      "large-scale structure",
+      "foreground/shared sky",
+      "overlapping catalogue/source identity"
+    ],
+    "required_probe_blocks": [
+      "CMB_T_E_B",
+      "SOURCE_COUNTS",
+      "SN_CF4_DISTANCE",
+      "GAIA_PROPER_MOTION"
+    ],
+    "required_covariance": "full within-probe and cross-probe covariance or explicit conditional-independence model; never default missing blocks to zero",
+    "inference_outputs": [
+      "joint likelihood",
+      "joint posterior or compatibility/confidence region",
+      "functional-specific score/Fisher quotient",
+      "joint functional images"
+    ]
+  },
+  "htt_five_outputs": {
+    "x": "direct kinematical components + predicted observable carriers + mixed functionals; observed carriers kept fixed and role-tagged",
+    "Q": "matching anchor/acceptance body and gauge; unavailable anchors remain unavailable",
+    "F": "directional support, sample pushforward and measure-defined occupancy are distinct",
+    "Pi": "law-conditional exceedance surface; likelihood/profile likelihood is not a probability law",
+    "G_F": "full-covariance functional depth path preserving initial level and paired cross-window covariance"
+  },
+  "local_optical_limit": {
+    "convention": "n points from observer towards source",
+    "directional_H": "H_u(n)=vartheta/3 - A_a n^a/c + sigma_ab n^a n^b",
+    "luminosity_distance": "d_L(z,n)=c z/H_u(n)+O(z^2)",
+    "response_blindness": "omega_ab n^a n^b=0 at this order because omega_ab is antisymmetric",
+    "warning": "local z->0 response is not a finite-redshift light-cone transfer; beta_MO Doppler response is distinct from intrinsic A_a"
+  },
+  "acceptance": [
+    "state identity and congruence/frame/epoch/basis metadata are common across each sample's functionals",
+    "direct tensor components and mixed functionals preserve rank/parity/units",
+    "O(3) improper transformations correctly distinguish polar and axial vectors",
+    "observed carriers and predicted carriers are not conflated or double counted",
+    "likelihood providers are source/row/selection/covariance/operator bound and fail closed",
+    "shared sky/LSS/catalogue/calibration dependencies are modeled jointly",
+    "functional local and global identifiability are assessed separately",
+    "five HTT outputs are derived from one joint posterior/compatibility object",
+    "x_C remains one optional legacy scalar projection"
+  ]
+}
