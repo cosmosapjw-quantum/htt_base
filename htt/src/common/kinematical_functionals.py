@@ -20,6 +20,12 @@ from .joint_anisotropy_state import (
     MissingComponent,
     UnitsConvention,
 )
+from .tensor_functionals_v1 import (
+    TensorFunctionalOperator,
+    TensorFunctionalResult,
+    build_tensor_functional_spec,
+    evaluate_tensor_functional,
+)
 from .kinematic_response import STF_BASIS
 from .orbit_nonlinearity import stf5_to_matrix
 from .r7_contracts import content_id, finite_array
@@ -131,8 +137,12 @@ class KinematicalState:
     m s^-2; beta_RM and beta_MO are dimensionless polar relative velocities.
     Missing blocks remain None and are never replaced by zeros.
 
-    The beta components carry their own basis IDs. They may be contracted
-    with congruence tensors only after an explicit FrameTransport to basis_id.
+    beta_RM_frame_id and beta_MO_frame_id denote component coordinate frames,
+    not the physical endpoint frame of each relative motion. In a canonical
+    JointAnisotropyState, both are the common VelocityFrameBundle coordinate
+    frame and basis. radiation/matter/observer endpoint IDs are separately
+    retained in velocity_frame_ids. A 3D FrameTransport only changes spatial
+    basis axes; it is not a Lorentz frame transformation.
     """
 
     sample_id: str
@@ -1088,14 +1098,172 @@ def transform_state_o3(
     )
 
 
+
+_CANONICAL_OPERATOR_IDENTITIES = (
+    (TensorFunctionalOperator.SIGMA_STF5, "SIGMA_THETA_STF5", "SIGMA_OVER_THETA_STF5"),
+    (TensorFunctionalOperator.OMEGA_AXIAL3, "OMEGA_THETA_AXIAL3", "OMEGA_OVER_THETA_AXIAL3"),
+    (TensorFunctionalOperator.ACCELERATION_POLAR3, "ACCELERATION_C_THETA_POLAR3", "A_OVER_C_THETA"),
+    (TensorFunctionalOperator.BETA_RM_POLAR3, "BETA_RM_POLAR3", "BETA_EQUALS_V_OVER_C"),
+    (TensorFunctionalOperator.BETA_MO_POLAR3, "BETA_MO_POLAR3", "BETA_EQUALS_V_OVER_C"),
+    (TensorFunctionalOperator.BETA_RO_POLAR3, "BETA_RO_POLAR3", "BETA_EQUALS_V_OVER_C"),
+    (TensorFunctionalOperator.DELTA_OMEGA_K, "DELTA_OMEGA_K", "DIMENSIONLESS_SIGNED_BUDGET"),
+    (TensorFunctionalOperator.TR_SIGMA2, "SIGMA_NORM2_THETA", "SIGMA_OVER_THETA_STF5"),
+    (TensorFunctionalOperator.TR_SIGMA3, "SIGMA_CUBIC_THETA", "SIGMA_OVER_THETA_STF5"),
+    (TensorFunctionalOperator.OMEGA2, "OMEGA_NORM2_THETA", "OMEGA_OVER_THETA_AXIAL3"),
+    (TensorFunctionalOperator.BETA_RM2, "BETA_RM_NORM2", "BETA_EQUALS_V_OVER_C"),
+    (TensorFunctionalOperator.BETA_RM_DOT_OMEGA, "BETA_RM_DOT_OMEGA_THETA", "BETA_EQUALS_V_OVER_C_X_OMEGA_OVER_THETA"),
+    (TensorFunctionalOperator.BETA_RM_SIGMA_BETA_RM, "BETA_RM_SIGMA_BETA_RM_THETA", "BETA_EQUALS_V_OVER_C_X_SIGMA_OVER_THETA"),
+)
+
+
+def evaluate_canonical_tensor_functionals(
+    joint_state: JointAnisotropyState,
+    *,
+    branch: str = "R39_CANONICAL_TENSOR_FUNCTIONAL_ADAPTER_V1",
+    anchor_ids: Mapping[str, str] | None = None,
+    anchors: Mapping[str, object] | None = None,
+) -> tuple[TensorFunctionalResult, ...]:
+    """Evaluate the existing HTT TensorFunctionalSpec/Result registry.
+
+    The canonical JointAnisotropyState remains the sole source state. This
+    adapter only declares/evaluates already registered v1 operators. New R39
+    mixed functionals that are not in that closed operator vocabulary remain
+    in the typed R39 functional registry and are not smuggled into v1.
+    """
+    if type(joint_state) is not JointAnisotropyState:
+        raise TypeError("joint_state must be an exact canonical JointAnisotropyState")
+    anchor_id_map = {} if anchor_ids is None else dict(anchor_ids)
+    anchor_map = {} if anchors is None else dict(anchors)
+    unknown_anchor_keys = set(anchor_map) - set(anchor_id_map.values())
+    if unknown_anchor_keys:
+        raise KinematicalStateError(
+            "every supplied anchor must be named by one declared anchor_id"
+        )
+    results: list[TensorFunctionalResult] = []
+    for operator, functional_id, normalization in _CANONICAL_OPERATOR_IDENTITIES:
+        anchor_id = anchor_id_map.get(functional_id)
+        spec = build_tensor_functional_spec(
+            functional_id=functional_id,
+            operator=operator,
+            frame=joint_state.frame,
+            congruence=joint_state.congruence,
+            epoch_window=joint_state.epoch_window,
+            averaging_scale=joint_state.averaging_scale,
+            normalization=normalization,
+            perturbative_order=joint_state.perturbative_order,
+            branch=branch,
+            anchor_id=anchor_id,
+        )
+        result = evaluate_tensor_functional(
+            joint_state,
+            spec,
+            anchor=anchor_map.get(anchor_id) if anchor_id is not None else None,
+        )
+        if result.source_state_id != joint_state.content_id:
+            raise KinematicalStateError(
+                "canonical TensorFunctionalResult lost the source JointAnisotropyState identity"
+            )
+        results.append(result)
+    return tuple(results)
+
+
+@dataclass(frozen=True)
+class KinematicalXBundle:
+    """One x bundle combining canonical tensor results and physical-SI views."""
+
+    canonical_state_id: str
+    physical_view_state_id: str
+    expansion_scalar: float
+    speed_of_light: float
+    canonical_functionals: tuple[TensorFunctionalResult, ...]
+    physical_functionals: tuple[FunctionalValue, ...]
+
+    def __post_init__(self) -> None:
+        _nonempty(self.canonical_state_id, "canonical_state_id")
+        _nonempty(self.physical_view_state_id, "physical_view_state_id")
+        theta = _finite_scalar(self.expansion_scalar, "expansion_scalar")
+        c = _finite_scalar(self.speed_of_light, "speed_of_light")
+        if theta == 0.0 or c <= 0.0:
+            raise KinematicalStateError("expansion_scalar must be nonzero and c positive")
+        canonical = tuple(self.canonical_functionals)
+        physical = tuple(self.physical_functionals)
+        if any(type(value) is not TensorFunctionalResult for value in canonical):
+            raise KinematicalStateError("canonical_functionals must be TensorFunctionalResult objects")
+        if any(type(value) is not FunctionalValue for value in physical):
+            raise KinematicalStateError("physical_functionals must be FunctionalValue objects")
+        if any(value.source_state_id != self.canonical_state_id for value in canonical):
+            raise KinematicalStateError("canonical functional escaped its JointAnisotropyState identity")
+        if any(value.state_id != self.canonical_state_id for value in physical):
+            raise KinematicalStateError("physical functional escaped its JointAnisotropyState identity")
+        identifiers = [value.spec.functional_id for value in canonical]
+        identifiers.extend(value.functional_id for value in physical)
+        if len(identifiers) != len(set(identifiers)):
+            raise KinematicalStateError("x functional IDs must be unique across both representations")
+        object.__setattr__(self, "expansion_scalar", theta)
+        object.__setattr__(self, "speed_of_light", c)
+        object.__setattr__(self, "canonical_functionals", canonical)
+        object.__setattr__(self, "physical_functionals", physical)
+
+
+def build_kinematical_x_bundle(
+    joint_state: JointAnisotropyState,
+    *,
+    expansion_scalar: float,
+    speed_of_light: float = _C0,
+    sample_id: str | None = None,
+    frame_transports: Mapping[tuple[str, str], FrameTransport] | None = None,
+    anchor_ids: Mapping[str, str] | None = None,
+    anchors: Mapping[str, object] | None = None,
+) -> KinematicalXBundle:
+    """Build x from one canonical state, never from parallel parameter copies.
+
+    canonical_functionals retain the registered theta-normalized HTT
+    operators and their TensorFunctionalSpec/Result authority. The physical
+    functionals are explicit-SI direct/mixed views derived from the same
+    canonical_state_id after supplying Theta=3H and c. No likelihood term is
+    formed here; this is the typed x construction stage.
+    """
+    if type(joint_state) is not JointAnisotropyState:
+        raise TypeError("joint_state must be an exact canonical JointAnisotropyState")
+    theta = _finite_scalar(expansion_scalar, "expansion_scalar")
+    c = _finite_scalar(speed_of_light, "speed_of_light")
+    view = KinematicalState.from_joint_anisotropy_state(
+        joint_state,
+        expansion_scalar=theta,
+        speed_of_light=c,
+        sample_id=sample_id,
+    )
+    physical_values = evaluate_kinematical_functionals(
+        view,
+        speed_of_light=c,
+        frame_transports=frame_transports,
+    )
+    canonical_values = evaluate_canonical_tensor_functionals(
+        joint_state,
+        anchor_ids=anchor_ids,
+        anchors=anchors,
+    )
+    return KinematicalXBundle(
+        canonical_state_id=joint_state.content_id,
+        physical_view_state_id=view.state_id,
+        expansion_scalar=theta,
+        speed_of_light=c,
+        canonical_functionals=canonical_values,
+        physical_functionals=physical_values,
+    )
+
+
 __all__ = [
     "FrameTransport",
     "FunctionalValue",
     "KinematicalState",
     "KinematicalStateError",
+    "KinematicalXBundle",
     "LocalOpticalPrediction",
     "OpticalJacobian",
+    "evaluate_canonical_tensor_functionals",
     "evaluate_kinematical_functionals",
+    "build_kinematical_x_bundle",
     "local_optical_jacobian",
     "local_optical_response",
     "stf2_components",
