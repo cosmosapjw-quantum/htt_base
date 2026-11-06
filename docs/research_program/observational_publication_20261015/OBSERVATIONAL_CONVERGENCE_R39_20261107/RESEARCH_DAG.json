@@ -11,7 +11,7 @@
     "base_commit": "cab89d25af52a1b978a4da8c11eecdc25bb22759"
   },
   "working_branch": "research/r39-observational-identifiability-20261107",
-  "current_code_checkpoint": "9e666b1d2d8e2a11f1c790b2823005e47acd7dd9",
+  "current_code_checkpoint": "9e666b1d2d8e2a11f1c790b2823005e47acd7dd",
   "claim_ceiling": "C0_DESIGN_AND_CODE_CONTRACT_ONLY",
   "novelty_status": "CONDITIONAL_CANDIDATE_NOT_ESTABLISHED",
   "execution_boundary": {
@@ -32,7 +32,8 @@
     "r39_code_change": "GITHUB_COMMITTED_WITH_WOLFRAM_FORMULA_CHECK",
     "r39_small_beta_stability_test": "AUTHORED_NOT_RUN",
     "legacy_audit_scope": "561_PR_METADATA_CENSUS_32_SELECTED_BODIES_17_FULL_DIFFS_NOT_ALL_DIFFS",
-    "local_agent_predecessor_reuse": "EXPLICITLY_BOUND_TO_PR7_13_419_442_444_449_533_540_544_545_552_553_557_558_559"
+    "local_agent_predecessor_reuse": "EXPLICITLY_BOUND_TO_PR7_13_419_442_444_449_533_540_544_545_552_553_557_558_559",
+    "kinematical_likelihood_contract": "DOCUMENTED_DERIVED_DESIGN_NOT_IMPLEMENTED"
   },
   "authority": {
     "tensor_semantics": "docs/research_program/observational_publication_20261015/METHOD_REBOOT_20261023/THEOREMS.md at dfaf171c37f2636c942a99bf2b9803b57295ac14",
@@ -43,7 +44,9 @@
       "htt/src/common/tensor_functionals.py",
       "htt/src/common/depth_path.py"
     ],
-    "legacy_xC_novelty_guard": "docs/generated/claim_adjudication/literature_verdicts.json"
+    "legacy_xC_novelty_guard": "docs/generated/claim_adjudication/literature_verdicts.json",
+    "kinematical_likelihood": "KINEMATICAL_LIKELIHOOD_MODEL.md",
+    "kinematical_functional_registry": "KINEMATICAL_FUNCTIONAL_REGISTRY.json"
   },
   "convergence_question": "Can a source-conditioned frame-covariant observation map identify vector/tensor functionals of a common physical state across CMB, source counts, Gaia astrometry and distance probes while preserving joint identified sets, anchors, support, exceedance and full-covariance depth paths?",
   "six_theory_loops": [
@@ -272,6 +275,11 @@
       "id": "R39-16-PAPER-GATE",
       "status": "NOT_RUN",
       "deliverable": "Falsifiable claim gate and independent review"
+    },
+    {
+      "id": "R39-17-KIN-LIKELIHOOD",
+      "status": "DESIGN_CONTRACT_COMMITTED_NOT_IMPLEMENTED",
+      "deliverable": "Direct field-valued theta_K, mixed x functionals and shared multi-probe likelihood/HTT five-output contract"
     }
   ],
   "dependencies": [
@@ -358,6 +366,22 @@
     [
       "R39-14-COBAYA",
       "R39-16-PAPER-GATE"
+    ],
+    [
+      "R39-03-THEORY",
+      "R39-17-KIN-LIKELIHOOD"
+    ],
+    [
+      "R39-04-TENSOR-X",
+      "R39-17-KIN-LIKELIHOOD"
+    ],
+    [
+      "R39-05-LORENTZ-FIX",
+      "R39-17-KIN-LIKELIHOOD"
+    ],
+    [
+      "R39-17-KIN-LIKELIHOOD",
+      "R39-06-OBSERVATION-CODE"
     ]
   ],
   "paper_scope": {
@@ -377,7 +401,7 @@
       "arbitrary vorticity/rotation absent an E/B response",
       "Bianchi family label absent family-specific native transfer"
     ],
-    "principal_estimand": "typed x[s,alpha]=phi_alpha(Z_s), with tensor/set-valued images K_alpha(D); x_C is an optional scalar ablation only",
+    "principal_estimand": "theta_K field/coefficient state {sigma_AB, omega_A, A_A, beta_RM_A, beta_MO_A}; x[s,alpha]=phi_alpha(theta_K,psi,eta,xi) includes direct kinematical components, normalized copies, mixed functionals and predicted observable carriers. x_C is an optional legacy scalar ablation only.",
     "prior_work_reuse": [
       "PR-251 identifiability-aware low-ell pole kernel (#7)",
       "PR-252 correlated real-sky shell alm generator (#13)",
@@ -385,8 +409,10 @@
       "PMG-WU-010 full-sky local boost pullback and STF2-to-STF3 response (#442)",
       "PMG-WU-011 processed cut-sky design and source-equivalent diagnostics (#443/#444)",
       "Report A observable tensors and typed kinematical MES (#449)",
-      "Planck/CF4 six-paper conditional source/window sequence (#533-559)"
-    ]
+      "Planck/CF4 six-paper conditional source/window sequence (#533-559)",
+      "HTT vector/tensor MES two-pillar plan and K0/K3 typed kinematical contracts: CongruenceKinematics, VelocityFrameBundle, GeometryState, JointAnisotropyState"
+    ],
+    "likelihood_target": "one source-conditioned L(theta,psi,eta;D)=p(D|theta,psi,eta) over CMB a_lm, selected source counts, redshift/direction distances, Gaia proper motions and their shared latent fields/cross-covariance; derive x,Q,Pi,F,G_F from one joint posterior/compatibility region"
   },
   "claim_gates": {
     "exact_boost_kernel": "REQUIRED",
@@ -417,7 +443,7 @@
     "Do not assume block-diagonal cross-probe covariance without evidence.",
     "Do not report local tests/Cobaya runs unless executed with receipts."
   ],
-  "latest_document_checkpoint": "6afaa3a254ccd008ac7fe1bfbf8edc58b62fbfb3",
+  "latest_document_checkpoint": "823df234239f8b4aa99c2b1b36374f1ba54e775b",
   "legacy_audit": {
     "total_pr_metadata": 561,
     "number_range": [
@@ -454,5 +480,65 @@
     ],
     "novelty_consequence": "Existing observable-irrep, local full-sky boost/STF2-to-STF3, processed cut-sky boost design, shell-correlated a_lm covariance and Planck/CF4 source-window work narrow the remaining candidate to validated source-conditioned cross-probe tensor-functional identification."
   },
-  "test_checkpoint": "28e6fdcb123bfb014e0f87fa9859cd3b35855d8d"
+  "test_checkpoint": "28e6fdcb123bfb014e0f87fa9859cd3b35855d8d",
+  "kinematical_state": {
+    "canonical": "JointAnisotropyState with field-valued or declared basis-truncated theta_K",
+    "raw_independent_blocks": [
+      {
+        "name": "sigma_AB",
+        "dimension": 5,
+        "representation": "STF2_POLAR",
+        "units": "s^-1"
+      },
+      {
+        "name": "omega_A",
+        "dimension": 3,
+        "representation": "VECTOR_AXIAL",
+        "units": "s^-1"
+      },
+      {
+        "name": "A_A",
+        "dimension": 3,
+        "representation": "VECTOR_POLAR",
+        "units": "m s^-2"
+      },
+      {
+        "name": "beta_RM_A",
+        "dimension": 3,
+        "representation": "VECTOR_POLAR",
+        "units": "1"
+      },
+      {
+        "name": "beta_MO_A",
+        "dimension": 3,
+        "representation": "VECTOR_POLAR",
+        "units": "1"
+      }
+    ],
+    "independent_dimension": 17,
+    "optional_deltaOmega_k_dimension": 1,
+    "beta_RO": "derived closure view; first-order additive only; exact ordered tetrad composition/Wigner rotation beyond first order",
+    "x_roles": [
+      "direct kinematical coordinates",
+      "normalized tensor/vector copies",
+      "mixed kinematic functionals",
+      "predicted observable carriers"
+    ],
+    "observed_carrier_policy": "observed a_lm and catalogue data are fixed source-bound evidence, not posterior samples or extra likelihood factors",
+    "likelihood": "p(D|theta,psi,eta)=integral dxi p(xi|theta,psi)p(D|xi,theta,psi,eta,W,S)",
+    "five_outputs": "x,Q,Pi,F,G_F derived from one common likelihood/posterior/compatibility region; never independent likelihood factors"
+  },
+  "likelihood_contract": {
+    "document": "KINEMATICAL_LIKELIHOOD_MODEL.md",
+    "registry": "KINEMATICAL_FUNCTIONAL_REGISTRY.json",
+    "probes": [
+      "CMB T/E/B harmonic covariance",
+      "selection-aware source-count point process",
+      "SN/CF4 directional distance",
+      "Gaia proper-motion spin-1 E/B",
+      "cross-probe shared latent fields/covariance"
+    ],
+    "identifiability": "functional local criterion ker(J_eff) subset ker(Dphi); global criterion phi constant on exact observation fibres",
+    "scope": "DESIGN_ONLY; no observed likelihood/posterior executed"
+  }
 }
