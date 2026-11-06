@@ -40,13 +40,17 @@ Likelihood는 CMB T/E/B full covariance, selection-aware source-count point proc
 - KINEMATICAL_LIKELIHOOD_MODEL.md
 - KINEMATICAL_FUNCTIONAL_REGISTRY.json
 
+## Canonical STF5 chart
+
+Shear 5-vector는 정규직교 기저가 아니라 `(Sxx,Syy,Sxy,Sxz,Syz)` 순서의 `STF5_CARTESIAN_XX_YY_XY_XZ_YZ_V1`이며 `Szz=-Sxx-Syy`다. 따라서 평탄화한 covariance/SVD에는 유도 Gram metric을 쓰거나 명시적으로 orthonormal basis로 변환해야 한다. R39 optical kernel은 이 canonical chart를 사용한다.
+
 ## Radial–transverse 광학 응답
 
 선도 국소 radial rate는 \(d(\hat n)=H+\sigma_{ij}n^in^j-A_i n^i/c\)이고, Fermi–Walker triad의 angular drift는 \(\mu=P(\hat n)\sigma\hat n+\hat n\times\omega\)다. Catalogue triad 회전 \(\Omega\)가 있으면 B1은 \(\omega+\Omega\)를 측정한다. 따라서 vorticity 추론에는 독립적인 frame-spin calibration이 필요하다. 이 기존 LOOP C 유도를 R39 코드의 local optical submodule로 재사용했다. 실제 Gaia/CF4 분석 결과는 아니며, local operator의 source-level Jacobian만 설계·구현했다.
 
 ## Kinematical frame and functional identity
 
-각 β 벡터는 spatial basis ID와 physical frame ID를 따로 보존한다. 같은 physical frame에서 축만 다르면 3D orthogonal basis transport를 적용할 수 있지만, 서로 다른 rest frame 사이의 변환은 Lorentz/tetrad bridge가 필요하다. 두 경우를 섞지 않으며, physical frame bridge가 없으면 direct vector 값은 유지하고 mixed functional과 β_RO closure는 RELATIVISTIC_FRAME_BRIDGE_REQUIRED로 둔다.
+canonical VelocityFrameBundle의 β_RO, β_RM, β_MO는 모두 하나의 common coordinate_frame과 basis에서 성분이 표현된다. radiation/matter/observer frame ID는 상대운동의 endpoint role이지 각 벡터별 좌표계가 아니다. spatial basis가 다르면 같은 coordinate frame 안에서만 FrameTransport를 적용하며, 외부 자료가 실제로 다른 좌표 tetrad에서 온 경우에만 ordered Lorentz/tetrad bridge가 필요하다. β_RO의 canonical residual/status/remainder와 1차 합산 diagnostic은 구분한다.
 
 기존 Cobaya joint adapter는 실제 관측 likelihood로 admission되지 않았다. zero/identity fallback과 hard-coded dipole, independent marginal log-likelihood 합산이 남아 있어 R39 production inference로 사용할 수 없다. provider 재사용 범위는 DATA_AND_COBAYA_PLAN.md에 기록했다.
 
