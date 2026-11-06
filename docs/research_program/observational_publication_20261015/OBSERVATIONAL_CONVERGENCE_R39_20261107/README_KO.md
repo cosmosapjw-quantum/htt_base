@@ -40,6 +40,10 @@ Likelihood는 CMB T/E/B full covariance, selection-aware source-count point proc
 - KINEMATICAL_LIKELIHOOD_MODEL.md
 - KINEMATICAL_FUNCTIONAL_REGISTRY.json
 
+## Radial–transverse 광학 응답
+
+선도 국소 radial rate는 \(d(\hat n)=H+\sigma_{ij}n^in^j-A_i n^i/c\)이고, Fermi–Walker triad의 angular drift는 \(\mu=P(\hat n)\sigma\hat n+\hat n\times\omega\)다. Catalogue triad 회전 \(\Omega\)가 있으면 B1은 \(\omega+\Omega\)를 측정한다. 따라서 vorticity 추론에는 독립적인 frame-spin calibration이 필요하다. 이 기존 LOOP C 유도를 R39 코드의 local optical submodule로 재사용했다. 실제 Gaia/CF4 분석 결과는 아니며, local operator의 source-level Jacobian만 설계·구현했다.
+
 ## HTT five-variable semantics
 
 - x: heterogeneous sample × functional vector/tensor bundle.
