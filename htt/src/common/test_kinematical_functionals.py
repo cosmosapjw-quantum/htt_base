@@ -145,7 +145,8 @@ def test_local_optical_acceleration_is_radial_not_leading_transverse():
                            [-1.0, 0.0, 0.0],
                            [0.0, 1.0, 0.0]])
     prediction = local_optical_response(
-        state, directions, triad_rotation=np.zeros(3), clock_scale=1.0, speed_of_light=10.0
+        state, directions, direction_basis_id=BASIS, triad_rotation=np.zeros(3),
+        triad_rotation_basis_id=BASIS, clock_scale=1.0, speed_of_light=10.0
     )
     np.testing.assert_allclose(prediction.radial_rate_s_inv, [0.3, 0.7, 0.5])
     np.testing.assert_allclose(prediction.fermi_walker_drift_s_inv, np.zeros((3, 3)))
@@ -163,12 +164,15 @@ def test_vorticity_and_catalogue_rotation_are_the_same_leading_b1_column():
             basis_id=state.basis_id, source_identity=state.source_identity,
             sigma=np.zeros((3, 3)), omega=omega, acceleration=np.zeros(3), H=0.5,
         ),
-        n, triad_rotation=np.array([0.0, 0.0, 0.2]), speed_of_light=10.0
+        n, direction_basis_id=BASIS,
+        triad_rotation=np.array([0.0, 0.0, 0.2]),
+        triad_rotation_basis_id=BASIS, speed_of_light=10.0
     )
     expected = np.cross(n, np.array([0.0, 0.0, 0.3]))
     np.testing.assert_allclose(pred.catalogue_drift_s_inv, expected)
     unresolved = local_optical_response(
-        state, n, triad_rotation=None, speed_of_light=10.0
+        state, n, direction_basis_id=BASIS,
+        triad_rotation=None, triad_rotation_basis_id=None, speed_of_light=10.0
     )
     assert unresolved.fermi_walker_drift_s_inv is not None
     assert unresolved.catalogue_drift_s_inv is None
@@ -196,10 +200,14 @@ def test_local_optical_joint_jacobian_identifies_12_kinematical_components_but_n
     tangents = _tangent_basis(directions)
 
     physical = local_optical_jacobian(
-        directions, tangents, include_triad_rotation=False
+        directions, tangents, frame_id="observer-frame",
+        congruence_id="test-congruence", basis_id=BASIS,
+        include_triad_rotation=False
     )
     with_spin = local_optical_jacobian(
-        directions, tangents, include_triad_rotation=True
+        directions, tangents, frame_id="observer-frame",
+        congruence_id="test-congruence", basis_id=BASIS,
+        include_triad_rotation=True
     )
     assert physical.matrix.shape == (36, 12)
     assert np.linalg.matrix_rank(physical.matrix) == 12
