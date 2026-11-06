@@ -94,7 +94,7 @@ In Unit \texttt{R37-02} (Papers P1 and P4), extragalactic proper motions from Ga
 \subsection{Astrometric Sandwich Repair}
 Profiling arbitrary bin intercepts in the Gaia DR3 24-vector isolates six signed slope coordinates. A naive diagonal-bin model yields empirical coverage of $1.0000$ and zero power. In contrast, joint GLS with sandwich covariance repair restores nominal $0.94927$ empirical coverage and $0.42130$ power at a Mahalanobis injection of $2.5$.
 
-\subsection{Fixed-$Q$ Sign Stability Theorem}
+\subsection{Fixed-\texorpdfstring{$Q$}{Q} Sign Stability Theorem}
 For a fixed STF-2 quadrupole tensor $Q$ with simple spectrum, the ambient STF-3 Frobenius distance to the zero-chirality boundary $\chi(Q, O) = 0$ is:
 \begin{equation}
 \rho_{\mathrm{sign}} = \min_{i \in \{1, 2, 3\}} \frac{|v_i|}{\sqrt{(M_Q)_{ii}}}, \qquad M_Q = \frac{\|Q\|_F^2}{3}\boldsymbol{I}_3 + \frac{2}{5}Q^2.
@@ -150,6 +150,7 @@ Unit \texttt{R36-06} provides the observational qualification milestone. We inge
 \small
 \caption{Planck PR4 Commander low-$\ell$ polarisation morphology statistics ($N=100$ MC ensemble).}
 \vspace{2mm}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Observable Metric} & \textbf{Observed Value} & \textbf{Null Mean $\pm$ Std} & \textbf{Rank $k/100$} & \textbf{Exact Empirical $p$-Value} \\
@@ -161,7 +162,8 @@ Power $C_2\ (\mathrm{K}_{\mathrm{CMB}}^2)$ & $1.175 \times 10^{-14}$ & $(5.183 \
 Power $C_3\ (\mathrm{K}_{\mathrm{CMB}}^2)$ & $1.158 \times 10^{-15}$ & $(3.043 \pm 1.777) \times 10^{-15}$ & $11 / 100$ & $0.8812$ \\
 Power $C_4\ (\mathrm{K}_{\mathrm{CMB}}^2)$ & $3.450 \times 10^{-15}$ & $(3.224 \pm 1.739) \times 10^{-15}$ & $58 / 100$ & $0.4158$ \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \label{tab:pr4}
 \end{table}
 
