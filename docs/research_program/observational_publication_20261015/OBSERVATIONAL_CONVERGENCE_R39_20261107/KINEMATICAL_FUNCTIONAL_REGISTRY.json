@@ -142,7 +142,13 @@
       "metric": "tr(S^2)=2(s1^2+s2^2+s1*s2+s3^2+s4^2+s5^2)",
       "note": "This is not an orthonormal STF basis. Any flattened SVD/covariance must use the induced Gram metric or a declared orthonormal transform."
     },
-    "canonical_ssot": "exact JointAnisotropyState; R39 KinematicalState is derived physical-SI view only"
+    "canonical_ssot": "exact JointAnisotropyState; R39 KinematicalState is derived physical-SI view only",
+    "vorticity_dual_convention": {
+      "R39": "omega_A=(1/2) epsilon_ABC omega^BC",
+      "identity": "omega_AB omega^AB=2 omega_A omega^A",
+      "implication": "omega_AB omega^AB/(6H^2)=omega_A omega^A/(3H^2)",
+      "anchor_boundary": "The canonical crosswalk W2 anchor is not bound to an R39 vector-norm functional until the canonical omega_axial3 metric/normalization is confirmed."
+    }
   },
   "functionals": [
     {
@@ -328,17 +334,18 @@
       "anchor": "SHAPE_OR_ACCEPTANCE_BODY_ONLY"
     },
     {
-      "id": "OMEGA_STRESS",
+      "id": "OMEGA_VECTOR_NORM2_H",
       "inputs": [
         "omega_A",
         "H"
       ],
-      "formula": "omega_A omega^A/(6 H^2)",
+      "formula": "omega_A omega^A/H^2",
       "output_representation": "NONNEGATIVE_SCALAR",
       "dimension": 1,
       "units": "1",
       "O3_parity": "EVEN",
-      "anchor": "MATCHED_VORTICITY_ANCHOR_IF_ADMITTED"
+      "anchor": "NO_AUTOMATIC_MES_W2_BINDING_UNTIL_DUAL_NORMALIZATION_VERIFIED",
+      "interpretation": "dimensionless axial-vector norm; not automatically canonical omega_ab omega^ab/(6H^2) MES W2 invariant"
     }
   ],
   "observed_carriers": [
