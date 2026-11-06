@@ -48,7 +48,7 @@ Do not create a parallel local-boost, low-ell pole or observable-irrep implement
 - PR #443 / PMG-WU-011 design and PR #444 source-equivalent synthetic execution: processed cut-sky response design, beam/pixel/window and nuisance structure. They do not establish an observed Planck response.
 - PR #449: observable tensors, typed kinematical MES and response-limited identification report.
 - PR #533 and #540/#544/#545: selection-law, CF4 source-window and finite-boost/radial identifiability work.
-- PR #552/#553 and #557/#559: Planck T/POL mask distinctions, same-sky covariance, beam adapter and local data recovery boundaries.
+- PR #552/#553 and #557/#559: Planck T/POL mask distinctions, same-sky covariance, beam adapter and local data recovery boundaries; PR #558 is the immediate R9 same-sky/beam/covariance predecessor between #557 and #559.
 
 Read the exact branch/head and current file contents of each relevant predecessor before importing or extending code. Separate direct reuse, required transform, conditional reuse and unverified predecessor claims. The novelty target is only the integrated source-conditioned multi-probe operator, cross-probe dependence model and identifiable vector/tensor functional quotient. Do not re-implement a full-sky boost kernel or pole tensor under a new name.
 
