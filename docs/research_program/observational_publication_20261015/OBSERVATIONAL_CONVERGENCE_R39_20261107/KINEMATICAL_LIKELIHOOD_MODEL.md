@@ -48,7 +48,7 @@ The raw kinematical coordinates are therefore:
 | \(\beta_{\rm RM,A}\) | 3 | polar vector, even | dimensionless |
 | \(\beta_{\rm MO,A}\) | 3 | polar vector, even | dimensionless |
 
-Here \(\beta_{\rm RM}\) is the radiation–matter relative velocity and \(\beta_{\rm MO}\) is the matter–observer relative velocity. Each vector carries both a physical frame ID and a spatial basis ID. An orthogonal 3D basis transport only aligns axes inside the same physical frame; it is not a Lorentz boost and cannot convert components between distinct physical rest frames. Mixed functionals and the first-order closure require both vectors to be represented in one common physical tetrad. A different physical frame ID therefore requires an explicit Lorentz/tetrad bridge; without it, preserve the direct vectors but mark mixed contractions and the derived closure as `RELATIVISTIC_FRAME_BRIDGE_REQUIRED`. Each vector carries both a physical frame ID and a spatial basis ID. An orthogonal 3D basis transport only aligns axes inside the same physical frame; it is not a Lorentz boost and cannot convert components between distinct physical rest frames. Mixed functionals and the first-order closure require both vectors to be represented in one common physical tetrad. A different physical frame ID therefore requires an explicit Lorentz/tetrad bridge; without it, preserve the direct vectors but mark mixed contractions and the derived closure as RELATIVISTIC_FRAME_BRIDGE_REQUIRED. The radiation–observer velocity \(\beta_{\rm RO}\) is retained as a derived/closure view, not added as a third independent three-vector. At first order,
+Here \\(\\beta_{\\rm RM}\\) is the radiation–matter relative velocity and \\(\\beta_{\\rm MO}\\) is the matter–observer relative velocity. In the canonical `VelocityFrameBundle`, all three beta vectors \\((\\beta_{\\rm RO},\\beta_{\\rm RM},\\beta_{\\rm MO})\\) are represented in one common `coordinate_frame` and `basis`; the separate radiation, matter and observer frame IDs identify the endpoints/roles of the relative motions, not three distinct component coordinate systems. A spatial `FrameTransport` may align different triad bases within that common coordinate frame, but it is not a Lorentz boost. If externally supplied vectors genuinely use different component coordinate frames, they require an explicit ordered Lorentz/tetrad bridge before being mixed. The canonical first-order closure residual/status and truncation remainder are preserved; missing velocity components are never inferred by subtraction. The radiation–observer velocity \\(\\beta_{\\rm RO}\\) remains a recorded closure view, not a third independent three-vector. At first order,
 
 \[
 \beta_{\rm RO}=\beta_{\rm RM}+\beta_{\rm MO}+O(\beta^2).
@@ -79,6 +79,32 @@ and analogously for the other blocks. Then \(\theta\) denotes the coefficient se
 Store the frame, congruence, epoch/redshift window, averaging scale, triad, units, parity, spatial transport rule, perturbative order and source/provider identity with every block. A missing component is not a zero component.
 
 The isotropic expansion \(H=\vartheta/3\) and other background/matter parameters can be included in a larger joint state \((\theta,\psi)\), or held in a declared background sector \(\psi\). They must not be silently absorbed into a dimensionless kinematical ratio.
+
+### 1.3 Canonical STF5 component chart
+
+The canonical `JointAnisotropyState` uses the fixed Cartesian STF5 chart `STF5_CARTESIAN_XX_YY_XY_XZ_YZ_V1`, not an orthonormal STF basis. For a symmetric trace-free spatial tensor,
+
+\\[
+\\sigma_{AB}\\longleftrightarrow
+(\\sigma_{xx},\\sigma_{yy},\\sigma_{xy},\\sigma_{xz},\\sigma_{yz}),
+\\qquad
+\\sigma_{zz}=-\\sigma_{xx}-\\sigma_{yy}.
+\\]
+
+The inverse map is therefore
+
+\\[
+[\\sigma_{AB}]=
+\\begin{pmatrix}
+s_1&s_3&s_4\\\\
+s_3&s_2&s_5\\\\
+s_4&s_5&-s_1-s_2
+\\end{pmatrix}.
+\\]
+
+These five stored coordinates are not an orthonormal coordinate basis under the Frobenius metric: in particular
+\\(\\operatorname{tr}\\sigma^2=2(s_1^2+s_2^2+s_1s_2+s_3^2+s_4^2+s_5^2)\\).
+Any Euclidean SVD, whitening or covariance operation in flattened STF5 coordinates must use the induced Gram metric (or an explicit orthonormal transform) and must record that transform. The R39 physical view and local optical Jacobian now use this exact canonical chart so their component identities match the existing state and tensor-functional contracts.
 
 ### 1.2 Physical realizability is a separate layer
 
