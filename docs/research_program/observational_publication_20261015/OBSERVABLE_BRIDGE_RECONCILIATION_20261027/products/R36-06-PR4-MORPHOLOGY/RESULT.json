@@ -1,0 +1,286 @@
+{
+  "schema": "htt.r36_pr4_observed_morphology_pilot/1",
+  "packet_id": "902ebd6a521d6b31864e0bfce63336c62d6cec5ff2f6c3128de7ab68046fce35",
+  "task_id": "R36-06-PR4-MORPHOLOGY",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "owner": "obsstat",
+  "claim_tier": "C0_DIAGNOSTIC_ONLY",
+  "status": "COMPLETED_SUCCESS",
+  "mc100_statistics": {
+    "aggregate_artifact": "COMMANDER_MC100_AGGREGATE.json",
+    "sample_size": 100,
+    "mc_id_range": [
+      300,
+      399
+    ],
+    "null_summary": {
+      "J234": {
+        "mean": 0.005871998211315893,
+        "std": 0.05150017952022578,
+        "median": 0.0027819098701806298,
+        "percentile_16": -0.051297501429221994,
+        "percentile_84": 0.060574924790516536
+      },
+      "abs_J234": {
+        "mean": 0.04438760618484693,
+        "std": 0.026399544415298473,
+        "median": 0.042688798629333634,
+        "percentile_16": 0.0165136981709716,
+        "percentile_84": 0.07309141863122175
+      },
+      "alignment23_squared": {
+        "mean": 0.24249394460667517,
+        "std": 0.24915649396872666,
+        "median": 0.12965236038507783,
+        "percentile_16": 0.010600392992977627,
+        "percentile_84": 0.559689756690717
+      },
+      "C_ell_K_CMB2": {
+        "2": {
+          "mean": 5.182755414280746e-15,
+          "std": 3.722383339071566e-15,
+          "median": 4.187840188200154e-15,
+          "percentile_16": 1.874954151829999e-15,
+          "percentile_84": 8.317328229026581e-15
+        },
+        "3": {
+          "mean": 3.043073541341424e-15,
+          "std": 1.7767267235379976e-15,
+          "median": 2.7573525571737777e-15,
+          "percentile_16": 1.2568451956552174e-15,
+          "percentile_84": 4.3799898170058986e-15
+        },
+        "4": {
+          "mean": 3.2235880852693253e-15,
+          "std": 1.7388410411051725e-15,
+          "median": 3.0665684309842996e-15,
+          "percentile_16": 1.6616927021768598e-15,
+          "percentile_84": 4.633309114239471e-15
+        }
+      }
+    },
+    "ranks": {
+      "count_J234_gte_obs": 43,
+      "fraction_J234_gte_obs": 0.43,
+      "count_abs_J234_gte_obs": 74,
+      "fraction_abs_J234_gte_obs": 0.74,
+      "count_alignment23_squared_gte_obs": 22,
+      "fraction_alignment23_squared_gte_obs": 0.22,
+      "total_null_simulations": 100
+    },
+    "p_values": {
+      "p_J234_gte_obs": 0.43564356435643564,
+      "p_abs_J234_gte_obs": 0.7425742574257426,
+      "p_alignment23_squared_gte_obs": 0.22772277227722773,
+      "formula": "(count_gte + 1) / (N + 1)"
+    },
+    "scientific_conclusion": "Planck PR4 Commander full-mission observed polarization morphology features (J234=0.02330, |J234|=0.02330, alignment23^2=0.45866) are statistically consistent with the 100-simulation end-to-end Commander Monte Carlo null ensemble within MC resolution (p ~ 0.44 for J234, p ~ 0.74 for |J234|, p ~ 0.23 for alignment23^2). Classification remains C0_DIAGNOSTIC_ONLY; strictly no Bianchi family identification or truth claims."
+  },
+  "transfer_source": "none; no Bianchi transfer or beam inversion",
+  "observed_quantity": "PR4 30 GHz Q/U E-pseudoalm from A/B time splits; synthetic coefficient coadd C",
+  "physical_target": "processed low-ell morphology compatibility; no family or sky-origin inference",
+  "source_validation": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/RESEARCH_LOOP_20261022/data/pr4/VALIDATION.json",
+    "sha256": "10e6475aa970d0224fbe27f6561e9afec0901d4fdaf730cf25e4ed20b842ba60",
+    "resources": [
+      {
+        "id": "PR4_LFI30_OBS_YEAR13",
+        "path": "/mnt/extdrive/workdir/htt_open_data/research20261022/pr4/LFI_SkyMap_030_1024_R4.00_year-1-3.fits",
+        "sha256": "7dc8414835f5041ad51373505e15a17f3fb286fac1f41a48e72f09f46aa901b0",
+        "bytes": 503326080,
+        "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/LFI_SkyMap_030_1024_R4.00_year-1-3.fits"
+      },
+      {
+        "id": "PR4_LFI30_OBS_YEAR24",
+        "path": "/mnt/extdrive/workdir/htt_open_data/research20261022/pr4/LFI_SkyMap_030_1024_R4.00_year-2-4.fits",
+        "sha256": "b7de3e4fbafb2553db26d2c24b5d91f68dd42b86135e989c25d095a63e611c8f",
+        "bytes": 503326080,
+        "url": "https://irsa.ipac.caltech.edu/data/Planck/release_3/all-sky-maps/maps/LFI_SkyMap_030_1024_R4.00_year-2-4.fits"
+      },
+      {
+        "id": "PR4_LOLLIPOP_NS16_MASK",
+        "path": "/mnt/extdrive/workdir/htt_open_data/research20261022/pr4/mask_PR4_Lollipop_ns16.fits",
+        "sha256": "7d7df63e77066a7739cc7faed3a005593bb3612af6cdeea2ed48a37fb600946d",
+        "bytes": 20160,
+        "url": "https://portal.nersc.gov/cfs/cmb/planck2020/misc/mask_PR4_Lollipop_ns16.fits"
+      }
+    ]
+  },
+  "operator": {
+    "input_frame": "Galactic",
+    "polarization": "COSMO",
+    "input_units": "K_CMB",
+    "spin": 2,
+    "lmax": 4,
+    "method": "healpy.map2alm_spin on masked native-resolution Q/U",
+    "map2alm_spin_defaults": "mmax=lmax; no extra smoothing or beam inversion",
+    "mask": {
+      "coarse_ordering": "RING",
+      "native_map_ordering": "NESTED",
+      "operator_ordering": "RING",
+      "coarse_nside": 16,
+      "native_nside": 1024,
+      "selected_coarse_pixels": 1273,
+      "selected_native_pixels": 5214208,
+      "same_mask_for_all_views": true,
+      "rule": "mask_NESTED16=mask_RING16[nest2ring16]; repeat each parent 4096 times in NESTED1024; index by ring2nest1024",
+      "validation_sha256": "10e6475aa970d0224fbe27f6561e9afec0901d4fdaf730cf25e4ed20b842ba60"
+    },
+    "split_roles": "A=years1,3; B=years2,4,start5 per NPIPE source; one observed sky",
+    "coadd_C": "(E_A+E_B)/2 and (B_A+B_B)/2; synthetic coefficient coadd, not released FULL"
+  },
+  "input_metadata": {
+    "A": {
+      "map_name": "LFI_SkyMap_030_1024_R4.00_year-1-3.fits",
+      "frame": "Galactic",
+      "polconv": "COSMO",
+      "units": "K_CMB",
+      "input_ordering": "NESTED",
+      "analysis_ordering": "RING"
+    },
+    "B": {
+      "map_name": "LFI_SkyMap_030_1024_R4.00_year-2-4.fits",
+      "frame": "Galactic",
+      "polconv": "COSMO",
+      "units": "K_CMB",
+      "input_ordering": "NESTED",
+      "analysis_ordering": "RING"
+    }
+  },
+  "feature_source": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/cmb_counterpairs/morphology.py",
+    "sha256": "73fd20c0d347d94ee1aa143b3ec6ef4acda46bd3f7b3b1eb9b03e9b944cbddce",
+    "reused_function": "features only"
+  },
+  "lowell_alms": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/observed_lowell_alms.npz",
+    "sha256": "4d18ad7eff5294374bd4268a1a6c8b8aa1ba78d7b6a0fd4610eaa38a8f4fc874",
+    "bytes": 2235,
+    "contents": "all l<=4 complex E/B alm for A,B,C; full tensor carrier retained"
+  },
+  "features": {
+    "A": {
+      "C_ell_K_CMB2": {
+        "2": 9.014636233499693e-12,
+        "3": 3.324745703352355e-12,
+        "4": 5.98637168211238e-13
+      },
+      "J234": -0.030869880258155732,
+      "alignment23_squared": 0.9859248065069312,
+      "axis_status": "DEFINED",
+      "largest_axis_gaps": [
+        0.4753991912490938,
+        0.5182561997322783
+      ],
+      "tensor2": [
+        0.2209336699735113,
+        -0.031489555744884976,
+        -0.1706649408862455,
+        0.2168544924932714,
+        0.11799166063246336,
+        0.5622118375332172
+      ],
+      "tensor3": [
+        0.22809914663269049,
+        -0.08621509644005322,
+        -0.1844733404375156,
+        0.23473736496694042,
+        0.15317396472210937,
+        0.5371634884003691
+      ]
+    },
+    "B": {
+      "C_ell_K_CMB2": {
+        "2": 1.0477319810905243e-11,
+        "3": 3.496430212804963e-12,
+        "4": 8.099129417252614e-13
+      },
+      "J234": -0.010376483270444905,
+      "alignment23_squared": 0.8404856505288346,
+      "axis_status": "DEFINED",
+      "largest_axis_gaps": [
+        0.4845579984835484,
+        0.5464628833145627
+      ],
+      "tensor2": [
+        0.21265356606715777,
+        -0.025913617694772805,
+        -0.12491920797253277,
+        0.16319921507329546,
+        0.05491847604969914,
+        0.6241472188595468
+      ],
+      "tensor3": [
+        0.23384946603424134,
+        -0.10506218919235406,
+        -0.1749295794339338,
+        0.27256830370631235,
+        0.20030458597644804,
+        0.4935822302594463
+      ]
+    },
+    "C": {
+      "C_ell_K_CMB2": {
+        "2": 9.639714651086676e-12,
+        "3": 3.3822308262979004e-12,
+        "4": 6.67412141239617e-13
+      },
+      "J234": -0.020994271401855655,
+      "alignment23_squared": 0.9288670112040986,
+      "axis_status": "DEFINED",
+      "largest_axis_gaps": [
+        0.49838580179716346,
+        0.5322426130587081
+      ],
+      "tensor2": [
+        0.2174425039830163,
+        -0.028761593344175728,
+        -0.149812311918188,
+        0.1850387984384455,
+        0.08633912922355458,
+        0.5975186975785381
+      ],
+      "tensor3": [
+        0.23212516670752828,
+        -0.09607431892866679,
+        -0.18136966806461322,
+        0.2527947508627765,
+        0.17788616488005776,
+        0.5150800824296953
+      ]
+    }
+  },
+  "single_within_sky_scan": {
+    "formula": "T=max(|J234_A|,|J234_B|,|J234_C|)",
+    "T": 0.030869880258155732,
+    "winner": "A",
+    "abs_J234_by_view": {
+      "A": 0.030869880258155732,
+      "B": 0.010376483270444905,
+      "C": 0.020994271401855655
+    },
+    "independent_sky_count": 1
+  },
+  "ideal_U_law": "3 sqrt(3)|z1 z2 z3| for z uniform on S6, independent isotropic Gaussian STF3 conditional on simple STF2; separate mathematical reference only",
+  "processed_null_rank": null,
+  "processed_null_p": null,
+  "null_mock_status": "MISSING_SOURCE_QUALIFIED_PROCESSED_TOTAL_ENSEMBLE_AND_MATCHED_OBSERVATION_OPERATOR",
+  "sky_support_status": "one observed PR4 sky; A/B/C share it",
+  "caveats": [
+    "Mask was released for LoLLiPoP spectra, not calibrated for this morphology statistic.",
+    "No beam/pixel-window inversion or deprojection; A/B response may differ.",
+    "No foreground subtraction, adaptive weight fitting, simulation null rank or p-value.",
+    "The cached CMB and noise-labeled maps are symmetric-beam reference and post-regression residual products, not an established processed total map.",
+    "Original PR3 L03 and original 42-node acceptance remain unchanged."
+  ],
+  "execution": {
+    "python": "3.12.3",
+    "executable": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+    "numpy": "2.5.4",
+    "healpy": "1.19.0",
+    "astropy": "see environment",
+    "mem_available_after_bytes": 13725253632,
+    "elapsed_seconds": 21.149026757106185,
+    "command": ".venv/bin/python -B pr4_observed_pilot.py"
+  }
+}
