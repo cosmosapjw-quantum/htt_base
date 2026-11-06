@@ -132,6 +132,25 @@
       "claim": "All 561 historical PR diffs were re-audited line-by-line.",
       "status": "NOT_CLAIMED",
       "tier": "BOUNDED_HIGH_RELEVANCE_REAUDIT_ONLY"
+    },
+    {
+      "id": "R39-C16",
+      "claim": "The current accessible GitHub PR metadata census contains 561 PR records (#2-#564; 430 closed, 131 open); 32 selected high-relevance bodies were read and 17 selected full diffs retrieved.",
+      "status": "GITHUB_METADATA_CENSUS_AND_BOUNDED_DEEP_READ",
+      "evidence": [
+        "GitHub get_users_recent_prs_in_repo limit=561",
+        "PR metadata/body records listed in PR_LEGACY_AUDIT.md"
+      ],
+      "prohibited": "Do not claim all 561 diffs were read line by line."
+    },
+    {
+      "id": "R39-C17",
+      "claim": "Existing PRs #7, #13, #419, #442-444 and #449 contain directly overlapping observable-irrep, low-ell, shell covariance, local-boost and tensor-MES predecessor work.",
+      "status": "GITHUB_PR_BODY_VERIFIED",
+      "evidence": [
+        "PR_LEGACY_AUDIT.md Additional R39 PR metadata census and tensor/observable overlap audit"
+      ],
+      "prohibited": "Do not present these existing components as newly invented or as new R39 observational results."
     }
   ]
 }
