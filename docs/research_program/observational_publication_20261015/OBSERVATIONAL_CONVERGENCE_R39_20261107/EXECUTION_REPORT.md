@@ -82,3 +82,10 @@ A separate random improper O(3) matrix numerically checked: beta·omega flips si
 
 Desktop Commander reported that its monthly usage limit had been reached when the local runtime configuration was queried; its response instructed not to retry/reconnect. Therefore local checkout inspection, import/compile and pytest are BLOCKED/NOT_RUN in this turn. No local test or CI pass is claimed.
 
+
+
+## Canonical state/x integration hardening
+
+The R39 physical-SI `KinematicalState` is an explicitly derived view of the exact canonical `JointAnisotropyState`, not a competing source state. `build_kinematical_x_bundle` evaluates the existing v1 `TensorFunctionalSpec/Result` operators on the canonical normalized state and the direct/mixed physical-SI functional family on the converted view. Both result lanes carry the same canonical `JointAnisotropyState.content_id`; the expansion scalar `Theta` and explicit `c` are recorded as view conversion inputs. The canonical beta_RO carrier/closure residual remain separate from the conditional first-order beta_RM+beta_MO sum.
+
+The five shear components use the canonical Cartesian STF5 ordering `(Sxx,Syy,Sxy,Sxz,Syz)`, `Szz=-Sxx-Syy`. The ideal optical Jacobian basis derivatives are generated from this exact map. This basis is not orthonormal, so any numerical covariance/SVD downstream must use the induced Gram metric or an explicit orthonormal transform. Source code and new manufactured tests are committed/readback verified; runtime import/pytest remains NOT_RUN.
