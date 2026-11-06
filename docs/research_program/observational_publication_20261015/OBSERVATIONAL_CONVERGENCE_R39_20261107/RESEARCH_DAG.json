@@ -1,0 +1,407 @@
+{
+  "schema": "htt.r39_observational_identifiability_dag/1",
+  "program": "HTT R39 observational identifiability convergence",
+  "date_local": "2026-11-07",
+  "timezone": "Asia/Seoul",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "parent": {
+    "branch": "research/observational-convergence-r38-20261107",
+    "commit": "05e9d53449bd02973848da3306f72f63edd7fc54",
+    "base_branch": "research/htt-adaptive-methods-20261023",
+    "base_commit": "cab89d25af52a1b978a4da8c11eecdc25bb22759"
+  },
+  "working_branch": "research/r39-observational-identifiability-20261107",
+  "current_code_checkpoint": "cfa86228daa09530b2061a7fca1553afbc2fa76f",
+  "claim_ceiling": "C0_DESIGN_AND_CODE_CONTRACT_ONLY",
+  "novelty_status": "CONDITIONAL_CANDIDATE_NOT_ESTABLISHED",
+  "execution_boundary": {
+    "github_ref_audit": "EXECUTED",
+    "legacy_audit": "BOUNDED_HIGH_RELEVANCE_PR_REAUDIT_NOT_ALL_561_DIFFS",
+    "literature_review": "EXECUTED_WITH_PRIMARY_SOURCE_CHECKS",
+    "six_theory_loops": "SYNTHESIS_AND_FALSIFIABLE_DESIGN_COMPLETE",
+    "vector_tensor_x_application": "APPLIED_TO_RESEARCH_DAG_AND_OBSERVABLE_FUNCTIONAL_REGISTRY",
+    "exact_lorentz_formula": "WOLFRAM_SYMBOLIC_CHECK_AND_GITHUB_SOURCE_CHANGE",
+    "local_pytest": "NOT_RUN",
+    "local_data_files": "NOT_ACCESSED_GITHUB_ONLY",
+    "observed_map_catalog_analysis": "NOT_RUN",
+    "cobaya_sampler": "NOT_RUN",
+    "new_posterior_or_evidence": "NOT_GENERATED",
+    "native_bianchi_transfer": "NOT_IMPLEMENTED_OR_RUN",
+    "remote_desktop": "NOT_USED",
+    "native_subagents": "NOT_RUN"
+  },
+  "authority": {
+    "tensor_semantics": "docs/research_program/observational_publication_20261015/METHOD_REBOOT_20261023/THEOREMS.md at dfaf171c37f2636c942a99bf2b9803b57295ac14",
+    "tensor_model_to_data": "docs/research_program/tensor_joint_r9/revision2/MODEL_TO_DATA.md at dfaf171c37f2636c942a99bf2b9803b57295ac14",
+    "tensor_theory_extension": "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md at dfaf171c37f2636c942a99bf2b9803b57295ac14",
+    "current_tensor_code": [
+      "htt/src/common/r9_product.py",
+      "htt/src/common/tensor_functionals.py",
+      "htt/src/common/depth_path.py"
+    ],
+    "legacy_xC_novelty_guard": "docs/generated/claim_adjudication/literature_verdicts.json"
+  },
+  "convergence_question": "Can a source-conditioned frame-covariant observation map identify vector/tensor functionals of a common physical state across CMB, source counts, Gaia astrometry and distance probes while preserving joint identified sets, anchors, support, exceedance and full-covariance depth paths?",
+  "six_theory_loops": [
+    {
+      "id": "R39-T1-LOWELL",
+      "question": "Which phase-sensitive low-ell morphology carriers map to calibrated radiation observables after bandpass, beam, mask, foreground and split transfer?",
+      "status": "THEORY_SYNTHESIS_COMPLETE_DESIGN_ONLY",
+      "functionals": [
+        "T_lm",
+        "E_lm",
+        "B_lm",
+        "STF T2/T3",
+        "BipoSH A_LM,ell,ell'",
+        "phase/planarity/parity"
+      ],
+      "claim_gate": [
+        "same-sky matched covariance",
+        "mask/frequency/split stability",
+        "intensity-temperature conversion",
+        "matched-null calibration"
+      ]
+    },
+    {
+      "id": "R39-T2-DIPOLE",
+      "question": "Can observer boost, residual radiation dipole, matter-radiation drift and tracer selection dipoles be independently identified?",
+      "status": "THEORY_SYNTHESIS_COMPLETE_DESIGN_ONLY",
+      "functionals": [
+        "beta_RO",
+        "beta_RM",
+        "beta_MO",
+        "d_int",
+        "catalogue count dipoles"
+      ],
+      "claim_gate": [
+        "independent CMB boost estimator",
+        "multiple tracer response slopes",
+        "local clustering and calibration nuisance",
+        "supported nullspace"
+      ]
+    },
+    {
+      "id": "R39-T3-KINEMATICS",
+      "question": "Which 1+3 congruence quantities map to local optical, astrometric and radiation observables?",
+      "status": "THEORY_SYNTHESIS_COMPLETE_DESIGN_ONLY",
+      "functionals": [
+        "H",
+        "A/(cH)",
+        "sigma_ij/H",
+        "omega_i/H",
+        "E_ij/H^2",
+        "H_ij/H^2"
+      ],
+      "claim_gate": [
+        "same congruence or explicit bridge",
+        "z-window and tetrad stability",
+        "finite-z transfer validation",
+        "Gaia systematics"
+      ]
+    },
+    {
+      "id": "R39-T4-BIANCHI",
+      "question": "What geometry and transfer information is required to classify a Bianchi family rather than fit an STF2 axis?",
+      "status": "THEORY_SYNTHESIS_COMPLETE_DESIGN_ONLY",
+      "functionals": [
+        "spatial Ricci STF",
+        "electric/magnetic Weyl",
+        "structure constants",
+        "shear/tilt/rotation dynamics",
+        "family-specific T/E/B transfer"
+      ],
+      "claim_gate": [
+        "native family forward solver",
+        "two independent observable sectors",
+        "family recovery/false-positive injections"
+      ]
+    },
+    {
+      "id": "R39-T5-DIRECTIONAL-H",
+      "question": "How should local directional Hubble coefficients be separated from finite-z distance-redshift anisotropy?",
+      "status": "THEORY_SYNTHESIS_COMPLETE_DESIGN_ONLY",
+      "functionals": [
+        "H_u(n)",
+        "D_i(z)",
+        "Q_ij(z)",
+        "directional distance multipoles"
+      ],
+      "claim_gate": [
+        "calibration and peculiar-velocity correction",
+        "angular-window response",
+        "redshift-cut stability",
+        "cross-probe prediction"
+      ]
+    },
+    {
+      "id": "R39-T6-BOOST-TILT",
+      "question": "Which combinations of local boost and global matter-radiation tilt remain identifiable after tetrad mapping and nuisance projection?",
+      "status": "THEORY_SYNTHESIS_COMPLETE_DESIGN_ONLY",
+      "functionals": [
+        "ordered frame-relative beta vectors",
+        "source-conditioned response",
+        "nuisance-projected quotient",
+        "tensor-x functional images"
+      ],
+      "claim_gate": [
+        "data-derived Jacobian",
+        "stable singular subspace",
+        "leave-one-probe-out",
+        "prior-free rank accounting"
+      ]
+    }
+  ],
+  "vector_tensor_x": {
+    "authority": "pinned METHOD_REBOOT_20261023 THEOREMS.md T7 + R9 revision2 MODEL_TO_DATA.md / THEORY_EXTENSION.md",
+    "canonical_definition": "x[s,alpha]=phi_alpha(Z_s), heterogeneous typed output V_alpha retaining tensor rank, parity, units, frame, epoch, support and provenance",
+    "common_state": "Z=(Z_phys,Z_obs,eta,A,R)",
+    "set_image": "K_alpha(D)=phi_alpha(C(D))",
+    "forbidden": "Do not substitute scalar x_C for x; do not flatten without declared basis/metric/inverse; do not zero-fill absent physical coordinates; do not combine incompatible sample axes.",
+    "functionals": [
+      "polar V1 beta frame variables and d_int",
+      "axial V1 vorticity",
+      "STF2 even shear and electric Weyl",
+      "STF2 odd magnetic Weyl",
+      "CMB T/E/B spin harmonic and BipoSH carriers",
+      "source-count multipoles",
+      "Gaia E/B VSH",
+      "directional distance V1/STF2 multipoles"
+    ],
+    "ablation": [
+      "scalar x_C-only",
+      "typed tensor x",
+      "O(3) quotient",
+      "SO(3) quotient preserving chirality",
+      "channel ablations"
+    ],
+    "acceptance": [
+      "equivariant O(3)/SO(3) action",
+      "sample/state identity shared across functionals",
+      "physical versus observed carriers distinguished",
+      "joint covariance and nuisance-projected data Jacobian",
+      "set-valued image with unresolved states preserved",
+      "injection coverage and leave-one-probe-out validation"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "R39-00-ANCHOR",
+      "status": "COMPLETE_GITHUB_VERIFIED",
+      "deliverable": "R38 immutable parent and R39 working branch identified"
+    },
+    {
+      "id": "R39-01-PR-LEGACY",
+      "status": "COMPLETE_BOUNDED_SCOPE",
+      "deliverable": "High-leverage PR and tensor-statistical legacy audit; not all 561 diffs"
+    },
+    {
+      "id": "R39-02-LITERATURE",
+      "status": "COMPLETE_CONDITIONAL_NOVELTY_GATE",
+      "deliverable": "Prior-art map and falsifiable methods-paper scope"
+    },
+    {
+      "id": "R39-03-THEORY",
+      "status": "COMPLETE_DESIGN_ONLY",
+      "deliverable": "Six independent theoretical loops and common response contract"
+    },
+    {
+      "id": "R39-04-TENSOR-X",
+      "status": "APPLIED_DOCUMENTED_DESIGN_ONLY",
+      "deliverable": "Typed x functional registry, group action, joint set images and scalar ablation"
+    },
+    {
+      "id": "R39-05-LORENTZ-FIX",
+      "status": "GITHUB_COMMITTED_TEST_NOT_RUN",
+      "deliverable": "Corrected generic two-frame non-collinear transform and regression tests"
+    },
+    {
+      "id": "R39-06-OBSERVATION-CODE",
+      "status": "BLOCKED_LOCAL_IMPLEMENTATION",
+      "deliverable": "Fail-closed source-bound likelihoods and observed-operator Jacobians"
+    },
+    {
+      "id": "R39-07-DATA-INTAKE",
+      "status": "BLOCKED_LOCAL_DATA_ACCESS",
+      "deliverable": "Source/row/covariance/selection rehash"
+    },
+    {
+      "id": "R39-08-PLANCK",
+      "status": "NOT_RUN",
+      "deliverable": "Observed T/E BipoSH and same-sky matched null"
+    },
+    {
+      "id": "R39-09-COUNTS",
+      "status": "NOT_RUN",
+      "deliverable": "Quaia/NVSS/RACS source-count selection and dispersion likelihood"
+    },
+    {
+      "id": "R39-10-GAIA",
+      "status": "NOT_RUN",
+      "deliverable": "Full-covariance E/B VSH and scan systematic projection"
+    },
+    {
+      "id": "R39-11-DISTANCE",
+      "status": "NOT_RUN",
+      "deliverable": "Pantheon+/CF4 finite-z directional distance validation"
+    },
+    {
+      "id": "R39-12-CROSS-COV",
+      "status": "NOT_RUN",
+      "deliverable": "Shared-object/sky/calibration cross-covariance or conditional independence"
+    },
+    {
+      "id": "R39-13-IDENTIFIABILITY",
+      "status": "NOT_RUN",
+      "deliverable": "Observed-operator nuisance-projected quotient and tensor functional images"
+    },
+    {
+      "id": "R39-14-COBAYA",
+      "status": "NOT_RUN",
+      "deliverable": "Observed-data Cobaya inference and complete sampler receipts"
+    },
+    {
+      "id": "R39-15-BIANCHI",
+      "status": "BLOCKED_NATIVE_TRANSFER",
+      "deliverable": "Family-specific dynamical and polarized transfer"
+    },
+    {
+      "id": "R39-16-PAPER-GATE",
+      "status": "NOT_RUN",
+      "deliverable": "Falsifiable claim gate and independent review"
+    }
+  ],
+  "dependencies": [
+    [
+      "R39-00-ANCHOR",
+      "R39-01-PR-LEGACY"
+    ],
+    [
+      "R39-00-ANCHOR",
+      "R39-02-LITERATURE"
+    ],
+    [
+      "R39-01-PR-LEGACY",
+      "R39-03-THEORY"
+    ],
+    [
+      "R39-02-LITERATURE",
+      "R39-03-THEORY"
+    ],
+    [
+      "R39-03-THEORY",
+      "R39-04-TENSOR-X"
+    ],
+    [
+      "R39-03-THEORY",
+      "R39-05-LORENTZ-FIX"
+    ],
+    [
+      "R39-04-TENSOR-X",
+      "R39-06-OBSERVATION-CODE"
+    ],
+    [
+      "R39-05-LORENTZ-FIX",
+      "R39-06-OBSERVATION-CODE"
+    ],
+    [
+      "R39-06-OBSERVATION-CODE",
+      "R39-07-DATA-INTAKE"
+    ],
+    [
+      "R39-07-DATA-INTAKE",
+      "R39-08-PLANCK"
+    ],
+    [
+      "R39-07-DATA-INTAKE",
+      "R39-09-COUNTS"
+    ],
+    [
+      "R39-07-DATA-INTAKE",
+      "R39-10-GAIA"
+    ],
+    [
+      "R39-07-DATA-INTAKE",
+      "R39-11-DISTANCE"
+    ],
+    [
+      "R39-08-PLANCK",
+      "R39-12-CROSS-COV"
+    ],
+    [
+      "R39-09-COUNTS",
+      "R39-12-CROSS-COV"
+    ],
+    [
+      "R39-10-GAIA",
+      "R39-12-CROSS-COV"
+    ],
+    [
+      "R39-11-DISTANCE",
+      "R39-12-CROSS-COV"
+    ],
+    [
+      "R39-12-CROSS-COV",
+      "R39-13-IDENTIFIABILITY"
+    ],
+    [
+      "R39-13-IDENTIFIABILITY",
+      "R39-14-COBAYA"
+    ],
+    [
+      "R39-14-COBAYA",
+      "R39-15-BIANCHI"
+    ],
+    [
+      "R39-14-COBAYA",
+      "R39-16-PAPER-GATE"
+    ]
+  ],
+  "paper_scope": {
+    "working_title": "Frame-covariant identifiability of vector/tensor cosmological functionals across CMB, source-count and astrometric multipoles",
+    "primary_blocks": [
+      "Planck T/E boost/BipoSH",
+      "Quaia/NVSS/RACS source counts",
+      "Gaia DR3 E/B VSH"
+    ],
+    "validation_blocks": [
+      "Pantheon+ directional distance",
+      "CF4 distance/peculiar-flow",
+      "DESI anisotropic clustering only if full angular products admitted"
+    ],
+    "deferred": [
+      "matter-radiation tilt absent an independent likelihood mode",
+      "arbitrary vorticity/rotation absent an E/B response",
+      "Bianchi family label absent family-specific native transfer"
+    ],
+    "principal_estimand": "typed x[s,alpha]=phi_alpha(Z_s), with tensor/set-valued images K_alpha(D); x_C is an optional scalar ablation only"
+  },
+  "claim_gates": {
+    "exact_boost_kernel": "REQUIRED",
+    "Ellis_Baldwin_selection_response": "REQUIRED",
+    "local_optical_limit": "REQUIRED",
+    "Gaia_E1_B1_E2_separation": "REQUIRED",
+    "vector_tensor_x_equivariance": "REQUIRED",
+    "scalar_xC_ablation": "REQUIRED",
+    "injection_bias_sigma_max": 0.25,
+    "coverage": [
+      0.68,
+      0.95
+    ],
+    "false_positive_control": "PREREGISTERED",
+    "leave_one_probe_out": "REQUIRED",
+    "cross_covariance_or_conditional_independence": "REQUIRED",
+    "stable_identifiable_subspace": "REQUIRED",
+    "native_bianchi_transfer": "REQUIRED_BEFORE_FAMILY_CLAIM"
+  },
+  "stop_rules": [
+    "Do not promote R38 joint posterior/PPC/p-values/BIC without exact raw-source replay.",
+    "Do not identify x with scalar x_C; retain x as heterogeneous sample-by-functional vector/tensor bundle.",
+    "Do not use x_C as a novelty claim; it is a standard 1+3 constraint projection.",
+    "Do not claim tensor x improves science unless a preregistered ablation shows calibrated prediction/identification gain.",
+    "Do not infer global tilt from one source-count dipole.",
+    "Do not identify a Bianchi family from STF2 alone.",
+    "Do not derive sky-axis anisotropy from isotropically compressed DESI BAO.",
+    "Do not assume block-diagonal cross-probe covariance without evidence.",
+    "Do not report local tests/Cobaya runs unless executed with receipts."
+  ]
+}
