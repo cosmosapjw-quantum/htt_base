@@ -21,6 +21,20 @@ The beta_b=0 limit is handled separately. Shape, finite-value and subluminal che
 
 This is a specified standard-boost coordinate convention. Non-collinear frame chains may carry Wigner rotation. It does not make the current three-frame beta_MO=beta_RO-beta_RM assignment exact; that remains a first-order closure and must be explicitly tagged.
 
+## R39 direct kinematical state and optical-response implementation
+
+New source: htt/src/common/kinematical_functionals.py; targeted tests: htt/src/common/test_kinematical_functionals.py.
+
+The module:
+- declares a physical-SI KinematicalState with STF2 sigma, axial-dual omega, physical acceleration, independent beta_RM/beta_MO and per-vector basis identities; missing blocks remain unavailable;
+- adapts the existing relativistic_kinematics.kinematics_from_velocity_jet into the spatial triad, extracting H, sigma_AB, omega_A and A_A;
+- evaluates direct, H-normalized and mixed scalar/vector/pseudoscalar/STF functional values with content-based state identity;
+- applies O(3) actions with polar versus axial transformation rules and requires explicit frame transports for mixed contractions;
+- evaluates the LOOP C leading local radial rate and Fermi-Walker/catalogue angular drift, with explicit triad rotation and source-direction basis;
+- builds an unwhitened source-level local optical Jacobian. Its triad-spin nuisance columns duplicate the physical vorticity B1 columns, preserving the exact leading-order degeneracy.
+
+The module is source-posted and readback verified; local pytest/import/compile was NOT_RUN. The ideal Jacobian is not a source-selected Gaia or CF4 estimator.
+
 ## Remaining code defects
 
 1. KinematicResponseModel.from_parameters still sets beta_MO=beta_RO-beta_RM. Keep it first-order with declared error/range or replace it with an ordered tetrad-composition object that records axis rotations.
