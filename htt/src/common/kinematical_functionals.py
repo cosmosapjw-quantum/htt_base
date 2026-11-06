@@ -26,8 +26,7 @@ from .tensor_functionals_v1 import (
     build_tensor_functional_spec,
     evaluate_tensor_functional,
 )
-from .kinematic_response import STF_BASIS
-from .orbit_nonlinearity import stf5_to_matrix
+from .orbit_nonlinearity import matrix_to_stf5, stf5_to_matrix
 from .r7_contracts import content_id, finite_array
 from .relativistic_kinematics import (
     METRIC,
@@ -37,7 +36,10 @@ from .relativistic_kinematics import (
 
 
 _C0 = 299_792_458.0
-_STF2_BASIS = np.array(STF_BASIS, dtype=np.float64, copy=True)
+_STF2_BASIS = np.stack(
+    [stf5_to_matrix(np.eye(5, dtype=np.float64)[i]) for i in range(5)],
+    axis=0,
+)
 _STF2_BASIS.setflags(write=False)
 _EPSILON = np.zeros((3, 3, 3), dtype=np.float64)
 _EPSILON[0, 1, 2] = _EPSILON[1, 2, 0] = _EPSILON[2, 0, 1] = 1.0
@@ -76,15 +78,15 @@ def _validate_stf2(value: np.ndarray, name: str = "sigma") -> np.ndarray:
 
 
 def stf2_components(tensor: np.ndarray) -> np.ndarray:
-    """Return orthonormal real STF2 coordinates in the shared R38/R39 basis."""
+    """Return the canonical (Sxx,Syy,Sxy,Sxz,Syz) STF5 Cartesian coordinates."""
     sigma = _validate_stf2(tensor)
-    return finite_array(np.einsum("aij,ij->a", _STF2_BASIS, sigma), shape=(5,))
+    return finite_array(matrix_to_stf5(sigma), shape=(5,))
 
 
 def stf2_from_components(components: np.ndarray) -> np.ndarray:
-    """Reconstruct the STF2 tensor from the registered orthonormal five-vector."""
-    values = finite_array(components, shape=(5,), name="STF2 components")
-    return finite_array(np.einsum("a,aij->ij", values, _STF2_BASIS), shape=(3, 3))
+    """Reconstruct an STF tensor from canonical STF5 Cartesian components."""
+    values = finite_array(components, shape=(5,), name="STF5 Cartesian components")
+    return finite_array(stf5_to_matrix(values), shape=(3, 3))
 
 
 @dataclass(frozen=True)
