@@ -417,7 +417,11 @@ def test_canonical_joint_state_is_the_only_x_source_and_units_round_trip():
     )
     np.testing.assert_allclose(
         physical["SIGMA_H"].components,
-        3.0 * stf2_components(view.sigma),
+        3.0 * np.asarray(joint.congruence_kinematics.sigma_stf5),
+    )
+    np.testing.assert_allclose(
+        stf2_from_components(stf2_components(view.sigma)),
+        view.sigma,
     )
     np.testing.assert_allclose(
         physical["BETA_RO_CANONICAL_VIEW"].components,
