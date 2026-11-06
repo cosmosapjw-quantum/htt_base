@@ -88,7 +88,8 @@ def compose_velocities(v_a: np.ndarray, v_b: np.ndarray) -> np.ndarray:
     dot = float(np.dot(va, vb))
     gamma_b = 1.0 / math.sqrt(1.0 - beta_b2)
     denominator = gamma_b * (1.0 - dot)
-    parallel_coefficient = ((gamma_b - 1.0) * dot / beta_b2) - gamma_b
+    # Stable identity: (gamma - 1)/beta^2 = gamma^2/(gamma + 1).
+    parallel_coefficient = (gamma_b * gamma_b / (gamma_b + 1.0)) * dot - gamma_b
     return (va + parallel_coefficient * vb) / denominator
 
 @dataclass(frozen=True)
