@@ -36,6 +36,7 @@ theta_K={sigma_AB, omega_A, A_A, beta_RM_A, beta_MO_A}.
 - beta_RO_A: derived radiation-observer view; first-order beta_RO=beta_RM+beta_MO+O(beta^2), exact composition requires ordered tetrads/Wigner rotation.
 - optional DeltaOmega_k adds a distinct scalar geometry block; it is not the anisotropic spatial Ricci tensor.
 
+Every beta vector must carry both physical_frame_id and spatial_basis_id. The spatial FrameTransport is only an orthogonal triad-axis change inside the same physical frame. It is not a Lorentz boost. Mixed beta functionals and beta_RO first-order closure require the two velocities to have been represented in a common physical tetrad; otherwise preserve their direct values and return RELATIVISTIC_FRAME_BRIDGE_REQUIRED. Exact relative-frame composition requires ordered tetrads and Wigner-rotation handling.
 The 17-dimensional pointwise core count is a representation count only. If theta is field-valued, declare its space/time basis, truncation, initial/boundary data and prior/regularization. Arbitrary kinematic tuples are not automatically Einstein-matter solutions; impose the relevant 1+3 Ricci identities, constraints, matter conservation and dynamics before GR/Bianchi attribution.
 
 The x functional registry must include all three roles:
