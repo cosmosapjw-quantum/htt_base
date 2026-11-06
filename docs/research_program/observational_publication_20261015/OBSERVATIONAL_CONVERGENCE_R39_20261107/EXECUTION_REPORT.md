@@ -73,3 +73,12 @@ No production TensorFunctionalBundle, CMB/count/SN/Gaia joint likelihood, source
 ### Relative-velocity physical-frame safeguard
 
 The typed state now records physical frame IDs separately from spatial basis IDs for beta_RM and beta_MO. Axis rotation alone does not convert a vector between distinct physical rest frames. Mixed functionals and beta_RO closure are withheld with RELATIVISTIC_FRAME_BRIDGE_REQUIRED until an ordered Lorentz/tetrad bridge is admitted. This prevents a 3D basis adapter from masquerading as relativistic velocity composition.
+
+## Independent numerical and runtime-boundary checks
+
+Using a separate NumPy calculation of the declared source-level optical design (not executing the committed module), the 36×12 radial+transverse Jacobian had rank 12; the radial nine-column sub-block had rank 9; the transverse shear+vorticity eight-column block had rank 8. Adding three catalogue triad-spin columns produced a 36×15 matrix still of rank 12, with the vorticity and triad-spin columns exactly duplicated. The minimum singular value of the 36×12 test design was 1.6379206921081482 in the declared mixed s^-1 parameterization. This is a manufactured finite-direction algebra fixture, not an observed Gaia/source response.
+
+A separate random improper O(3) matrix numerically checked: beta·omega flips sign; beta^T sigma beta remains even; sigma beta and beta×omega transform as polar vectors. This checks the declared representation formulas on one finite fixture, not a formal proof or production runtime test.
+
+Desktop Commander reported that its monthly usage limit had been reached when the local runtime configuration was queried; its response instructed not to retry/reconnect. Therefore local checkout inspection, import/compile and pytest are BLOCKED/NOT_RUN in this turn. No local test or CI pass is claimed.
+
