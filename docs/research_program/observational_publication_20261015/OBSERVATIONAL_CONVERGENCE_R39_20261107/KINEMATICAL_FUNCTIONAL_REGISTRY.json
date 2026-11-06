@@ -54,10 +54,9 @@
         "units": "1",
         "role": "RADIATION_MATTER_RELATIVE_VELOCITY",
         "required_metadata": [
-          "physical_frame_id",
+          "common_coordinate_frame_id",
           "spatial_basis_id",
-          "velocity_definition",
-          "boost_convention"
+          "velocity_endpoint_role"
         ]
       },
       {
@@ -69,10 +68,9 @@
         "units": "1",
         "role": "MATTER_OBSERVER_RELATIVE_VELOCITY",
         "required_metadata": [
-          "physical_frame_id",
+          "common_coordinate_frame_id",
           "spatial_basis_id",
-          "velocity_definition",
-          "boost_convention"
+          "velocity_endpoint_role"
         ]
       }
     ],
@@ -125,13 +123,24 @@
     ],
     "dimension_note": "17 core independent components at one fixed point/epoch when beta_RM and beta_MO are both present; 18 with scalar DeltaOmega_k. For a single beta only, sigma+omega+A+beta has 14 components. These are coordinate counts, not observational rank.",
     "frame_transport_policy": {
-      "spatial_basis_transport": "An orthogonal 3x3 FrameTransport changes only triad axes inside the same physical frame.",
-      "relativistic_frame_bridge": "Different beta_RM/beta_MO physical_frame_id values require an explicit ordered Lorentz/tetrad bridge; an SO(3)/O(3) spatial rotation is insufficient.",
-      "mixed_functional_statuses": [
-        "FRAME_TRANSPORT_REQUIRED",
-        "RELATIVISTIC_FRAME_BRIDGE_REQUIRED",
-        "UNAVAILABLE"
-      ]
+      "canonical_velocity_bundle": "beta_RO, beta_RM and beta_MO are all stored in one common VelocityFrameBundle.coordinate_frame and basis. radiation_frame_id, matter_frame_id and observer_frame_id describe the physical endpoints/roles of relative motions, not the coordinate frame in which each vector's components are stored.",
+      "spatial_basis_transport": "An orthogonal 3x3 FrameTransport changes only triad axes within the same component coordinate frame and transforms axial vectors with det(R)R.",
+      "relativistic_frame_bridge": "A vector arriving from a genuinely different component coordinate frame requires an explicit ordered Lorentz/tetrad bridge into the canonical coordinate frame before mixed contractions. A spatial 3x3 rotation is not such a bridge.",
+      "beta_RO": "canonical beta_RO and its closure residual/status/remainder are preserved; the first-order beta_RM+beta_MO sum is a separately labelled conditional diagnostic view, not an exact velocity composition and not an independent coordinate."
+    },
+    "sigma_coordinate_chart": {
+      "id": "STF5_CARTESIAN_XX_YY_XY_XZ_YZ_V1",
+      "ordering": [
+        "Sxx",
+        "Syy",
+        "Sxy",
+        "Sxz",
+        "Syz"
+      ],
+      "constraint": "Szz=-Sxx-Syy",
+      "matrix_map": "[[s1,s3,s4],[s3,s2,s5],[s4,s5,-s1-s2]]",
+      "metric": "tr(S^2)=2(s1^2+s2^2+s1*s2+s3^2+s4^2+s5^2)",
+      "note": "This is not an orthonormal STF basis. Any flattened SVD/covariance must use the induced Gram metric or a declared orthonormal transform."
     }
   },
   "functionals": [
@@ -477,7 +486,10 @@
     "local radial and transverse optical response is jointly tested in the ideal common-congruence limit",
     "catalogue angular B1 is not promoted to physical vorticity without independent triad-spin calibration",
     "finite-survey optical response uses source-level selection, tangent-basis transformation, covariance support and finite-distance remainder",
-    "beta_RM and beta_MO mixed functionals are evaluated only after both vectors share one physical tetrad; a spatial rotation is never treated as a Lorentz boost"
+    "beta_RM and beta_MO mixed functionals are evaluated only after both vectors share one physical tetrad; a spatial rotation is never treated as a Lorentz boost",
+    "the sigma five-vector uses canonical STF5 Cartesian coordinate order and its induced Gram metric, not an undocumented orthonormal basis",
+    "all beta_RO/RM/MO components retain the common VelocityFrameBundle coordinate_frame/basis and distinct endpoint frame IDs",
+    "a spatial FrameTransport is not used as a Lorentz transformation"
   ],
   "implementation": {
     "module": "htt/src/common/kinematical_functionals.py",
