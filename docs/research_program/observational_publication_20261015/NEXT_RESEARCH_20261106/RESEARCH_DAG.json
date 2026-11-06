@@ -1,0 +1,38 @@
+{
+  "schema": "htt.six_loop_observable_identifiability_dag.v1",
+  "program_id": "HTT-SIX-LOOP-IDENTIFIABILITY-20261106",
+  "baseline": {
+    "repository": "cosmosapjw-quantum/htt_base",
+    "branch": "research/htt-adaptive-methods-20261023",
+    "commit": "d7d5ce2a107b25479b8276f9fd4b5d69dbf53ad9",
+    "base_tree": "fc7e0f113fd7683260e9d62c38cdc82198d39570",
+    "date_kst": "2026-11-06"
+  },
+  "authority": "append_only_new_program; original42, canonical_273_PR_cards and R37_frozen_release unchanged",
+  "conventions": {
+    "signature": "(-,+,+,+)",
+    "physical_four_velocity_norm": "-c^2",
+    "retain_c": true,
+    "frame_pairs": ["O/U", "U/N", "O/R", "U/R"],
+    "independent_sky": "physical sky realization; processing splits/coadds are not independent skies",
+    "covariance": "one shared joint covariance event; shared sky/catalogue/calibration terms counted once"
+  },
+  "nodes": [
+    {"id":"S00-SOURCE-FRAME-LOCK","kind":"shared_contract","state":"completed_chat_audit","deliverable":"DATA_ANALYSIS_PLAN.md","acceptance":["frame pairs O/U and U/N separately named","direction/redshift/distance conventions fixed","source identity and covariance reuse rules recorded"],"not_claimed":["raw data schema verified locally","new likelihood run"]},
+    {"id":"L1-LOWELL-PHYSICAL","kind":"independent_theory_loop","depends_on":["S00-SOURCE-FRAME-LOCK"],"state":"conditional_derivation_and_prior_art_review_complete","deliverable":"SIX_THEORY_LOOPS.md#L1","legacy":["PR-365","PR-251","PR-180","R36-06","PR-162","PR-163","PR-202"],"local_next":["PR4 source reconciliation","independent processed pipeline/null","T/E/B and boost transfer closure"],"stop":["no matched processed null","unverified mask/beam/transfer","native Bianchi T/E/B absent"]},
+    {"id":"L2-DIPOLE-TOMOGRAPHY","kind":"independent_theory_loop","depends_on":["S00-SOURCE-FRAME-LOCK"],"state":"conditional_derivation_and_prior_art_review_complete","deliverable":"SIX_THEORY_LOOPS.md#L2","legacy":["PR-151","PR-155","PR-178","PR-203","PR-206"],"local_next":["exact-selection DR1 mocks","observed-z bin migration","tracer/redshift holdout"],"stop":["PR151 covariance invalidation unresolved","random/completeness mismatch","selection/migration law missing"]},
+    {"id":"L3-KINEMATICS-1P3","kind":"independent_theory_loop","depends_on":["S00-SOURCE-FRAME-LOCK"],"state":"conditional_derivation_complete","deliverable":"SIX_THEORY_LOOPS.md#L3","legacy":["PR-179","R36-01","R36-02","R36-03","R36-04","PR-193"],"local_next":["radial/PM typed response","common source and covariance","finite-z remainder"],"stop":["common-congruence source law missing","frame calibration unavailable","remainder UNKNOWN"]},
+    {"id":"L4-BIANCHI-CLASSIFICATION","kind":"independent_theory_loop","depends_on":["S00-SOURCE-FRAME-LOCK"],"state":"conditional_geometry_derivation_complete","deliverable":"SIX_THEORY_LOOPS.md#L4","legacy":["PR-175","PR-281","R36-09","R36-10","PR-229","PR-230","PR-237"],"local_next":["family constraint/image registry","out-of-family adequacy","native T/E/B transfer gate"],"stop":["native validated solver absent","history/IC not closed","out-of-family residual omitted"]},
+    {"id":"L5-DIRECTIONAL-H","kind":"independent_theory_loop","depends_on":["S00-SOURCE-FRAME-LOCK"],"state":"conditional_cosmography_derivation_complete","deliverable":"SIX_THEORY_LOOPS.md#L5","legacy":["PR-179","R36-01","R36-02","R36-04","R36-08"],"local_next":["CF4/SN frame-correct windows","finite-z remainder","selection/calibration"],"stop":["independent distance/frame missing","CBL redshift windows do not overlap","unknown opacity/remainder zero-filled"]},
+    {"id":"L6-BOOST-TILT","kind":"independent_theory_loop","depends_on":["S00-SOURCE-FRAME-LOCK"],"state":"conditional_exact_theory_and_rank_criterion_complete","deliverable":"SIX_THEORY_LOOPS.md#L6","legacy":["TILT_BOOST_20260930","PR-194","PR-195","PR-156","PR-206","PR-199","PR-155"],"local_next":["physical response quotient","model image/abstention","finite-volume stochastic bridge","held-out injected nulls"],"stop":["normal N not independently defined","selection/covariance invalid","rank-deficient target forced to point estimate","bulk flow relabelled homogeneous tilt"]},
+    {"id":"F00-COMMON-SYNTHESIS","kind":"nonlinear_joint_synthesis","depends_on":["L1-LOWELL-PHYSICAL","L2-DIPOLE-TOMOGRAPHY","L3-KINEMATICS-1P3","L4-BIANCHI-CLASSIFICATION","L5-DIRECTIONAL-H","L6-BOOST-TILT"],"state":"pending_local_outputs","deliverable":"common multi-probe response image + claim/evidence map","acceptance":["all six loop results independently recorded","shared covariance consumed once","held-out calibration and adequacy pass","out-of-family residual retained","novelty tribunal complete"],"stop":["any required source identity/matched null invalid","joint covariance missing","native transfer needed but absent"]}
+  ],
+  "execution_policy": "six theory loops run independently after common S00; data branches begin only after their source-specific gates; final synthesis consumes qualified products only",
+  "claims": {
+    "current": "conditional theory plus source-bound C0 only",
+    "observational_detection": "not established",
+    "global_material_tilt": "not established",
+    "Bianchi_sky_family": "not established",
+    "publication": "not submitted"
+  }
+}
