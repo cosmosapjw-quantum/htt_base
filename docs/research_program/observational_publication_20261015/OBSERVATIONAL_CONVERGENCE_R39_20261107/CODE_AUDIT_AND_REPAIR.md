@@ -86,7 +86,7 @@ Reuse decisions:
 
 Therefore none of these current adapters should be passed as the completed R39 multi-probe likelihood. Reuse their scoped components and contracts, but create a new observed-data path that preflights exact source/row/selection/covariance/operator identity, admits shared latent fields/cross-covariance, and fails closed when those inputs are missing.
 
-### Relative-velocity frame identity safeguard
+### Relative-velocity component-coordinate frame safeguard
 
 The canonical adapter copies all beta_RO/RM/MO components into the physical view using the shared VelocityFrameBundle.coordinate_frame and basis, while retaining the radiation/matter/observer endpoint IDs in velocity_frame_ids. The beta_RM_frame_id/beta_MO_frame_id fields in the derived view denote component coordinate_frame, not endpoint rest-frame identity. A spatial FrameTransport only changes axes in that common frame. An external vector from a genuinely different component coordinate frame needs a Lorentz/tetrad bridge before mixing. The closure residual/status/remainder remain bound to the canonical state.
 
