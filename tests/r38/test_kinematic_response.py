@@ -50,7 +50,7 @@ def test_velocity_composition_non_collinear_exact():
     # the velocity of A as measured in B's standard-boost axes.
     v_a = np.array([0.3, 0.0, 0.0])
     v_b = np.array([0.0, 0.4, 0.0])
-    expected = np.array([0.275, -0.4, 0.0])
+    expected = np.array([0.3 * math.sqrt(1.0 - 0.4**2), -0.4, 0.0])
     actual = compose_velocities(v_a, v_b)
     assert np.allclose(actual, expected, rtol=1e-13, atol=1e-14)
     assert float(np.linalg.norm(actual)) < 1.0
