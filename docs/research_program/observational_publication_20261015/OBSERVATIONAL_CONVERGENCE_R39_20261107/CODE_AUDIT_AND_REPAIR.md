@@ -101,3 +101,8 @@ Desktop Commander was online but its first read-only configuration call returned
 ### Canonical STF5 chart and x-bundle ownership
 
 The R39 optical view uses the canonical STF5 Cartesian representation exactly as defined by `orbit_nonlinearity.stf5_to_matrix` / `matrix_to_stf5`: `(Sxx,Syy,Sxy,Sxz,Syz)` and `Szz=-Sxx-Syy`. This is not an orthonormal STF basis. Its induced Gram metric must accompany any flattened SVD/covariance operation. `build_kinematical_x_bundle` binds existing `TensorFunctionalSpec/Result` objects and physical-SI mixed views to one canonical JointAnisotropyState.content_id; the physical view is derived and does not create a competing state authority.
+
+
+### Vorticity invariant normalization boundary
+
+The local optical response defines omega_A=(1/2)epsilon_ABC omega^BC. Therefore the two-form invariant omega_ab omega^ab/(6H^2) equals omega_A omega^A/(3H^2), not omega_A omega^A/(6H^2). The R39 registered `OMEGA_VECTOR_NORM2_H` is simply omega_A omega^A/H^2 and is not auto-bound to the canonical MES W2 anchor. Exact mapping from canonical omega_axial3 to the MES anchor metric remains an explicit open source-contract check; do not silently identify the vector norm with the two-form W2 quantity.
