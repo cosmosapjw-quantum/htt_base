@@ -55,29 +55,41 @@ class CarrierConflationError(KinematicsError):
 
 
 def compose_velocities(v_a: np.ndarray, v_b: np.ndarray) -> np.ndarray:
-    """Relativistic velocity subtraction v_diff = (v_a - v_b) / (1 - v_a . v_b) + O(beta^2) corrections.
-    
-    In units where c = 1.
+    """Return the velocity of frame A as measured in frame B.
+
+    v_a and v_b are dimensionless three-velocities (beta vectors) of A and
+    B measured in one common inertial frame S. Returned components use B's
+    axes obtained by the standard rotation-free Lorentz boost from S; no
+    additional spatial/Wigner rotation is applied.
+
+    For signature (-,+,+,+):
+      beta_(A|B) = [beta_a - gamma_b beta_b
+        + ((gamma_b - 1) (beta_a . beta_b) / beta_b^2) beta_b]
+        / [gamma_b (1 - beta_a . beta_b)].
+
+    The beta_b=0 limit is handled separately. Collinear velocities reduce
+    to (beta_a - beta_b)/(1 - beta_a beta_b); non-collinear velocities
+    require the transverse gamma factor.
     """
     va = np.asarray(v_a, dtype=np.float64)
     vb = np.asarray(v_b, dtype=np.float64)
     if va.shape != (3,) or vb.shape != (3,):
         raise KinematicsError("Velocities must be 3-vectors")
-    
-    beta_a2 = float(np.sum(va ** 2))
-    beta_b2 = float(np.sum(vb ** 2))
+    if not np.all(np.isfinite(va)) or not np.all(np.isfinite(vb)):
+        raise KinematicsError("Velocities must contain only finite values")
+
+    beta_a2 = float(np.dot(va, va))
+    beta_b2 = float(np.dot(vb, vb))
     if beta_a2 >= 1.0 or beta_b2 >= 1.0:
         raise BetaTruncationError("Velocities must be strictly subluminal (|beta| < 1)")
-        
-    dot = float(np.dot(va, vb))
-    denom = 1.0 - dot
-    gamma_b = 1.0 / math.sqrt(1.0 - beta_b2)
-    
-    # Standard Lorentz composition for relative velocity:
-    v_diff = (va - vb + (gamma_b / (gamma_b + 1.0)) * dot * vb - vb) / (gamma_b * denom)
-    # Return first-order with exact relativistic check
-    return (va - vb) / denom
+    if beta_b2 == 0.0:
+        return va.copy()
 
+    dot = float(np.dot(va, vb))
+    gamma_b = 1.0 / math.sqrt(1.0 - beta_b2)
+    denominator = gamma_b * (1.0 - dot)
+    parallel_coefficient = ((gamma_b - 1.0) * dot / beta_b2) - gamma_b
+    return (va + parallel_coefficient * vb) / denominator
 
 @dataclass(frozen=True)
 class KinematicFrameState:
