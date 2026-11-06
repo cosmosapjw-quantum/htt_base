@@ -89,3 +89,10 @@ Therefore none of these current adapters should be passed as the completed R39 m
 ### Relative-velocity frame identity safeguard
 
 The kinematical functional kernel now stores beta_RM_frame_id and beta_MO_frame_id in addition to their spatial basis IDs. It distinguishes an axis-only FrameTransport from a physical Lorentz/tetrad bridge. If the relative-velocity vector belongs to a different physical frame, its direct value remains available, but mixed functionals and beta_RO first-order closure return RELATIVISTIC_FRAME_BRIDGE_REQUIRED. A spatial 3x3 rotation cannot satisfy this requirement. A new regression test checks this boundary. Local pytest remains NOT_RUN.
+
+### Independent numerical design check and runtime limit
+
+A separate NumPy construction of the declared ideal local optical source-level Jacobian gave radial rank 9, transverse rank 8, joint 36x12 rank 12, and rank 12 after adding three duplicate triad-spin columns (36x15). A random improper O(3) fixture also checked the mixed-functional parity transformations. These are independent algebra fixtures, not executions of the posted Python module.
+
+Desktop Commander was online but its first read-only configuration call returned the monthly usage-limit blocker and instructed no retry/reconnect. The committed module and tests therefore remain source/readback verified only; local import/compile/pytest are NOT_RUN.
+
