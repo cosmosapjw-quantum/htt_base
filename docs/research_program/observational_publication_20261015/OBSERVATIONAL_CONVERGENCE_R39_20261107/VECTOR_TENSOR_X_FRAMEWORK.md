@@ -202,3 +202,21 @@ A tensor-x implementation is accepted only when:
 9. scalar x_C ablation demonstrates what information it loses and whether tensor x restores any data-supported, predictive information.
 
 No novelty claim is made from the existence of vector/tensor x, identified-set images, support functions, SO(3)/O(3) actions or depth covariance alone. Those are already part of the repository's prior research. A possible publishable contribution is the validated cosmological source-conditioned operator and a demonstrably useful identifiable tensor-functional quotient built on top of that prior framework.
+
+
+## 10. Direct physical kinematical theta and likelihood integration
+
+The functional domain is now explicitly enlarged to include the physical kinematical state itself, not only observer-space harmonic carriers. The primary field/coefficient state is
+
+\[
+\theta_K=\{\sigma_{ab},\omega_a,A_a,
+\beta_{\rm RM}^a,\beta_{\rm MO}^a\},
+\]
+
+with the congruence/frame/epoch/triad/units metadata and O(3) representation types defined in KINEMATICAL_LIKELIHOOD_MODEL.md. The observer-frame velocity \(\beta_{\rm RO}\) remains a derived closure view rather than an extra independent three-vector. The optional signed \(\Delta\Omega_k\) and further geometry/matter tensors are distinct extension blocks.
+
+The x registry therefore contains (i) direct identity functionals of every component, (ii) dimensionless copies with declared normalization, (iii) mixed scalar/vector/pseudoscalar/STF functionals of \(\theta_K\), and (iv) predicted observable carriers such as T/E/B harmonics, BipoSH, source-count multipoles, Gaia VSH and distance multipoles. The measured carriers \(d^{\rm obs}\) are fixed source-bound evidence; predicted carriers \(\mathcal O_\alpha(\theta)\) vary over posterior draws or identified-set witnesses. Keep those roles separate to avoid treating derived summaries as independent data.
+
+The end target is the single source-conditioned likelihood \(\mathcal L(\theta,\psi,\eta;D)=p(D\mid\theta,\psi,\eta)\) for \(D=\{a_{\ell m}^{T,E,B},z_i,\hat n_i,F_i,\mu_i,\boldsymbol\mu_i^{\rm Gaia},\ldots\}\), with actual masks/windows/selections and cross-probe dependence. Build one joint posterior or compatibility region; then derive the five HTT outputs x,Q,Pi,F,G_F from that common object. Q is the matching anchor/acceptance body, Pi is a law-conditional exceedance surface, F keeps support/pushforward/occupancy distinct, and G_F is the full-covariance functional depth path. The five outputs are not independent likelihood terms.
+
+See KINEMATICAL_LIKELIHOOD_MODEL.md for the kinematic decomposition, direct and mixed functional examples, CMB/count/SN/Gaia likelihood blocks, covariance treatment, functional-identifiability condition, and falsification/ablation plan. This is a derived design contract; no multi-probe observed likelihood or posterior has yet been produced.
