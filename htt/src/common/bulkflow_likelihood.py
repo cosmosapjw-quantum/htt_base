@@ -6,22 +6,12 @@ posterior over the bulk-flow vector :math:`\\mathbf V \\in \\mathbb R^3`
 
 Model
 -----
-For a catalogue with per-source unit vectors :math:`\\hat n_i`, radial
-velocities :math:`u_i`, total uncertainties :math:`\\sigma_{i,\\rm eff}
-= \\sqrt{\\sigma_i^2 + \\sigma_\\ast^2}`, and selection-adjusted weights
-:math:`w_i = w_{\\rm native,i}\\,w_{\\rm selection,i}`, the likelihood is a
-weighted Gaussian
-
-.. math::
-   \\ln\\mathcal L(\\mathbf V) = -\\tfrac12 \\sum_i
-     \\Bigl[ \\frac{w_i\\,(u_i - \\hat n_i\\cdot\\mathbf V)^2}
-                  {\\sigma_{i,\\rm eff}^2}
-            + \\ln\\bigl(2\\pi\\sigma_{i,\\rm eff}^2 / w_i\\bigr) \\Bigr].
-
-The selection weights enter as effective multiplicity — a pixel with
-:math:`w_{\\rm selection,i} = 2` counts as two independent measurements
-with the same :math:`\\sigma_{i,\\rm eff}`. Sources with zero weight are
-dropped from both the chi-squared and the normalization.
+The default survey likelihood is the normalized Gaussian ``u ~ N(X V, C)``.
+``C`` is supplied explicitly or built as ``diag(sigma**2 + sigma_star**2)``.
+Native/selection factors select rows when their product is zero; positive
+factors do not manufacture precision or shrink the Gaussian normalization.
+The explicit ``'precision'`` legacy mode uses
+``diag((sigma**2 + sigma_star**2)/(native * selection))`` instead.
 
 Priors
 ------
@@ -42,6 +32,7 @@ from typing import Any, Callable, Mapping
 
 import numpy as np
 
+from common.bulkflow_covariance import SamplingCovariance, as_sampling_covariance
 from common.contracts import DynestyResult
 
 __all__ = [
@@ -120,9 +111,10 @@ class BulkFlowLikelihood:
     w_native: np.ndarray
     w_selection: np.ndarray
     sigma_star_kmps: float = 0.0
+    sampling_covariance: SamplingCovariance | np.ndarray | None = None
+    weight_semantics: str = "survey"
     _active: np.ndarray = field(init=False, repr=False)
-    _w: np.ndarray = field(init=False, repr=False)
-    _sigma_eff2: np.ndarray = field(init=False, repr=False)
+    _C: SamplingCovariance = field(init=False, repr=False)
     _const: float = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
@@ -151,6 +143,8 @@ class BulkFlowLikelihood:
             raise ValueError(
                 f"sigma_star_kmps must be ≥ 0; got {self.sigma_star_kmps}"
             )
+        if self.weight_semantics not in {"survey", "precision"}:
+            raise ValueError("weight_semantics must be 'survey' or 'precision'")
         w = w_native * w_selection
         active = w > 0.0
         if int(active.sum()) < 4:
@@ -158,13 +152,22 @@ class BulkFlowLikelihood:
                 f"only {int(active.sum())} active sources — need ≥ 4 for a "
                 "non-degenerate 3-D bulk-flow posterior"
             )
-        sigma_eff2 = sigma ** 2 + float(self.sigma_star_kmps) ** 2
-        # Gaussian normalization term (constant in V):
-        # - 0.5 * sum_i [ log(2π σ_eff² / w_i) ] — only over active sources.
-        log_term = np.log(
-            2.0 * np.pi * sigma_eff2[active] / w[active]
-        )
-        const = -0.5 * float(log_term.sum())
+        if self.sampling_covariance is not None:
+            if self.weight_semantics == "precision":
+                raise ValueError("explicit sampling_covariance is incompatible with legacy precision weights")
+            C_full = as_sampling_covariance(self.sampling_covariance)
+            if C_full.size != N:
+                raise ValueError("sampling_covariance size must equal the catalogue size")
+            C = C_full.subset(active)
+        else:
+            sigma_eff2 = sigma ** 2 + float(self.sigma_star_kmps) ** 2
+            diagonal = sigma_eff2[active]
+            if self.weight_semantics == "precision":
+                diagonal = diagonal / w[active]
+            C = SamplingCovariance(diagonal=diagonal)
+        # Selection/native factors only choose rows in survey mode.  They do
+        # not shrink the normalized Gaussian variance or normalization.
+        const = -0.5 * (C.size * np.log(2.0 * np.pi) + C.logdet())
         # Re-store the exact ndarrays (so frozen dataclass doesn't convert view).
         object.__setattr__(self, "n_hat", n_hat)
         object.__setattr__(self, "u", u)
@@ -172,8 +175,7 @@ class BulkFlowLikelihood:
         object.__setattr__(self, "w_native", w_native)
         object.__setattr__(self, "w_selection", w_selection)
         object.__setattr__(self, "_active", active)
-        object.__setattr__(self, "_w", w)
-        object.__setattr__(self, "_sigma_eff2", sigma_eff2)
+        object.__setattr__(self, "_C", C)
         object.__setattr__(self, "_const", const)
 
     @property
@@ -187,7 +189,7 @@ class BulkFlowLikelihood:
             raise ValueError(f"theta must be shape (3,); got {theta.shape}")
         a = self._active
         resid = self.u[a] - self.n_hat[a] @ theta
-        chi2 = float((self._w[a] * resid * resid / self._sigma_eff2[a]).sum())
+        chi2 = float(resid @ self._C.solve(resid))
         return self._const - 0.5 * chi2
 
     def __call__(self, theta: np.ndarray) -> float:   # dynesty convenience

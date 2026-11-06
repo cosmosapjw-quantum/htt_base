@@ -9,10 +9,12 @@ import pytest
 from common.bulkflow_estimator import (
     BulkFlowCatalogue,
     BulkFlowFit,
+    SamplingCovariance,
     ZoAResponseResult,
     baseline_selection_aware_artifact,
     bootstrap_covariance,
     bulk_flow_mask_ladder,
+    gls_bulk_flow,
     diagnostic_plane_alignment_artifact,
     diagnostic_zoa_ladder_artifact,
     retention_vs_posterior_artifact,
@@ -145,13 +147,16 @@ class TestWLSRecovery:
 
     def test_requires_decomposition_when_w_absent(self):
         cat = _injected_catalogue(np.array([100.0, 0.0, 0.0]), n=20)
-        with pytest.raises(ValueError, match="decomposition"):
+        with pytest.raises(ValueError, match="survey weights require"):
             wls_bulk_flow(cat.n_hat, cat.u)
 
     def test_rejects_zero_weight_sum(self):
         cat = _injected_catalogue(np.array([100.0, 0.0, 0.0]), n=20)
-        with pytest.raises(ValueError, match="sum to zero"):
-            wls_bulk_flow(cat.n_hat, cat.u, w=np.zeros(cat.n_sources))
+        with pytest.raises(ValueError, match="fewer than three active"):
+            wls_bulk_flow(
+                cat.n_hat, cat.u, w=np.zeros(cat.n_sources),
+                weight_semantics="precision",
+            )
 
 
 # ---------------------------------------------------------------------------
@@ -216,15 +221,148 @@ class TestWeightsDecompositionLogged:
             fit.weight_decomposition["w_measurement"], expected, rtol=1e-12
         )
 
-    def test_decomposition_fallback_fills_ones_when_only_w_given(self):
-        """When only a pre-combined ``w`` is supplied, the decomposition still
-        exposes all three keys (native=1, selection=1, measurement=w)."""
+    def test_bare_w_requires_explicit_legacy_precision_interpretation(self):
         cat = _injected_catalogue(np.array([100.0, 0.0, 0.0]), n=20, seed=3)
         w = np.linspace(0.1, 1.0, cat.n_sources)
-        fit = wls_bulk_flow(cat.n_hat, cat.u, w=w)
+        with pytest.raises(ValueError, match="bare w"):
+            wls_bulk_flow(cat.n_hat, cat.u, w=w)
+        fit = wls_bulk_flow(
+            cat.n_hat, cat.u, w=w, weight_semantics="precision",
+        )
         decomp = fit.weight_decomposition
         for key in ("w_native", "w_selection", "w_measurement"):
             assert key in decomp
+
+
+class TestCovarianceSemantics:
+    def test_woodbury_retains_extreme_low_rank_mode(self):
+        diagonal = np.ones(6)
+        factor = 1.0e8 * np.ones((6, 1))
+        rhs = 1.0e8 * np.ones(6)
+        actual = SamplingCovariance(diagonal=diagonal, low_rank=factor).solve(rhs)
+        expected = rhs / (1.0 + 6.0e16)
+        np.testing.assert_allclose(actual, expected, rtol=1e-10, atol=0.0)
+
+    def test_woodbury_handles_well_conditioned_original_covariance_with_scaled_diagonal(self):
+        diagonal = np.array([1.0, 1.0e16, 1.0e16, 1.0e16, 1.0e16, 1.0e16])
+        factor = np.array([[1.0e8], [0.0], [0.0], [0.0], [0.0], [0.0]])
+        rhs = np.array([1.0e8, 0.0, 0.0, 0.0, 0.0, 0.0])
+        actual = SamplingCovariance(diagonal=diagonal, low_rank=factor).solve(rhs)
+        np.testing.assert_allclose(actual, [1.0e8 / (1.0 + 1.0e16), 0, 0, 0, 0, 0], rtol=1e-10, atol=0.0)
+
+    def test_logdet_accepts_redundant_extreme_low_rank_factor(self):
+        diagonal = np.array([1.0, 2.0e16, 2.0e16, 2.0e16, 2.0e16, 2.0e16])
+        factor = np.zeros((6, 2))
+        factor[0, :] = 1.0e8
+        covariance = SamplingCovariance(diagonal=diagonal, low_rank=factor)
+        np.testing.assert_allclose(covariance.logdet(), 225.20705201078803, rtol=1e-14)
+        rhs = np.array([1.0e8, 0.0, 0.0, 0.0, 0.0, 0.0])
+        np.testing.assert_allclose(rhs @ covariance.solve(rhs), 0.5, rtol=1e-12)
+
+    def test_arbitrary_objective_scale_leaves_estimate_and_sampling_covariance_invariant(self):
+        cat = _injected_catalogue(np.array([80.0, -20.0, 40.0]), n=60, seed=13)
+        q = np.linspace(0.3, 2.1, cat.n_sources)
+        reference = wls_bulk_flow(
+            cat.n_hat, cat.u, sigma=cat.sigma, w_native=cat.w_native,
+            w_selection=cat.w_selection, objective_weights=q,
+        )
+        for scale in (0.1, 7.0, 1.0e6):
+            scaled = wls_bulk_flow(
+                cat.n_hat, cat.u, sigma=cat.sigma, w_native=cat.w_native,
+                w_selection=cat.w_selection, objective_weights=scale * q,
+            )
+            np.testing.assert_allclose(scaled.V_hat, reference.V_hat, rtol=1e-10)
+            np.testing.assert_allclose(scaled.cov, reference.cov, rtol=1e-10)
+
+    def test_dense_and_low_rank_covariance_match_small_reference(self):
+        cat = _injected_catalogue(np.array([80.0, -20.0, 40.0]), n=30, seed=15)
+        rng = np.random.default_rng(4)
+        diagonal = np.linspace(400.0, 900.0, cat.n_sources)
+        factor = rng.normal(scale=2.0, size=(cat.n_sources, 3))
+        dense = np.diag(diagonal) + factor @ factor.T
+        dense_fit = wls_bulk_flow(cat.n_hat, cat.u, sampling_covariance=dense)
+        low_rank_fit = wls_bulk_flow(
+            cat.n_hat, cat.u,
+            sampling_covariance=SamplingCovariance(diagonal=diagonal, low_rank=factor),
+        )
+        np.testing.assert_allclose(low_rank_fit.V_hat, dense_fit.V_hat, rtol=1e-10)
+        np.testing.assert_allclose(low_rank_fit.cov, dense_fit.cov, rtol=1e-10)
+
+    def test_explicit_gls_entrypoint_uses_sampling_precision(self):
+        cat = _injected_catalogue(np.array([80.0, -20.0, 40.0]), n=20, seed=16)
+        diagonal = np.linspace(400.0, 900.0, cat.n_sources)
+        fit = gls_bulk_flow(cat.n_hat, cat.u, sampling_covariance=diagonal)
+        precision = 1.0 / diagonal
+        A = np.einsum("i,ij,ik->jk", precision, cat.n_hat, cat.n_hat)
+        expected = np.linalg.solve(A, (precision[:, None] * cat.n_hat).T @ cat.u)
+        np.testing.assert_allclose(fit.V_hat, expected, rtol=1e-10)
+        np.testing.assert_allclose(fit.cov, np.linalg.inv(A), rtol=1e-10)
+
+    def test_gls_extreme_low_rank_matches_dense_reference(self):
+        X = np.vstack((np.eye(3), -np.eye(3)))
+        true = np.array([2.0, -3.0, 5.0])
+        factor = 1.0e7 * X
+        diagonal = np.full(6, 1.0e16)
+        structured = gls_bulk_flow(X, X @ true, sampling_covariance=SamplingCovariance(diagonal=diagonal, low_rank=factor))
+        dense = gls_bulk_flow(X, X @ true, sampling_covariance=np.diag(diagonal) + factor @ factor.T)
+        np.testing.assert_allclose(structured.V_hat, dense.V_hat, rtol=1e-10)
+        np.testing.assert_allclose(structured.cov, dense.cov, rtol=1e-10)
+
+    def test_legacy_precision_reduces_exactly_to_inverse_normal_covariance(self):
+        cat = _injected_catalogue(np.array([80.0, -20.0, 40.0]), n=40, seed=20)
+        w = np.linspace(0.3, 1.7, cat.n_sources)
+        fit = wls_bulk_flow(cat.n_hat, cat.u, w=w, weight_semantics="precision")
+        A = np.einsum("i,ij,ik->jk", w, cat.n_hat, cat.n_hat)
+        np.testing.assert_allclose(fit.cov, np.linalg.inv(A), rtol=1e-10)
+
+    def test_precision_zero_weight_is_a_fixed_exclusion(self):
+        n_hat = np.vstack((np.eye(3), np.array([[1.0, 0.0, 0.0]])))
+        fit = wls_bulk_flow(n_hat, n_hat @ np.array([1.0, 2.0, 3.0]), w=np.array([1.0, 1.0, 1.0, 0.0]), weight_semantics="precision")
+        np.testing.assert_allclose(fit.V_hat, [1.0, 2.0, 3.0])
+
+    @pytest.mark.parametrize("kwargs", [
+        {"w_native": np.array([1.0, np.nan, 1.0])},
+        {"w_selection": np.array([1.0, np.inf, 1.0])},
+    ])
+    def test_nonfinite_source_weights_are_rejected(self, kwargs):
+        with pytest.raises(ValueError, match="finite"):
+            wls_bulk_flow(np.eye(3), np.ones(3), sigma=np.ones(3), **kwargs)
+
+    def test_rank_deficient_design_is_rejected_before_sandwich_covariance(self):
+        n_hat = np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [1.0, 0.0, 0.0]])
+        with pytest.raises(ValueError, match="rank below 3"):
+            wls_bulk_flow(n_hat, np.ones(3), sigma=np.ones(3))
+
+    def test_dense_covariance_requires_scale_aware_symmetry(self):
+        covariance = np.eye(6) * 1.0e-13
+        covariance[0, 1] = 8.0e-13
+        with pytest.raises(ValueError, match="symmetric"):
+            SamplingCovariance(dense=covariance)
+
+    def test_survey_weights_change_q_but_not_sampling_covariance(self):
+        cat = _injected_catalogue(np.array([90.0, 10.0, -30.0]), n=50, seed=21)
+        weights = np.linspace(0.2, 3.0, cat.n_sources)
+        weighted = wls_bulk_flow(cat.n_hat, cat.u, sigma=cat.sigma, w_native=weights, w_selection=np.ones(cat.n_sources))
+        unweighted = wls_bulk_flow(cat.n_hat, cat.u, sigma=cat.sigma)
+        assert not np.allclose(weighted.V_hat, unweighted.V_hat)
+        assert not np.allclose(weighted.cov, unweighted.cov)
+        selection = np.ones(cat.n_sources)
+        selection[:5] = 0.0
+        excluded = wls_bulk_flow(cat.n_hat, cat.u, sigma=cat.sigma, w_selection=selection)
+        assert excluded.diagnostics["n_active"] == cat.n_sources - 5
+
+    def test_catalogue_scale_operator_smoke(self):
+        rng = np.random.default_rng(9)
+        n = 38_053
+        directions = rng.normal(size=(n, 3))
+        directions /= np.linalg.norm(directions, axis=1)[:, None]
+        diagonal = np.full(n, 900.0)
+        factor = rng.normal(scale=0.1, size=(n, 4))
+        fit = wls_bulk_flow(
+            directions, directions @ np.array([40.0, -10.0, 5.0]),
+            sampling_covariance=SamplingCovariance(diagonal=diagonal, low_rank=factor),
+        )
+        np.testing.assert_allclose(fit.V_hat, [40.0, -10.0, 5.0], rtol=1e-10)
 
     def test_decomposition_entries_are_independent_copies(self):
         cat = _injected_catalogue(np.array([100.0, 0.0, 0.0]), n=15, seed=4)

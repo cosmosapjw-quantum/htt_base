@@ -15,6 +15,7 @@ from common.bulkflow_likelihood import (
     run_dynesty,
 )
 from common.bulkflow_estimator import wls_bulk_flow
+from common.bulkflow_covariance import SamplingCovariance
 from common.contracts import DynestyResult
 from common.sky_geometry import lb_to_unitvec
 
@@ -226,6 +227,56 @@ class TestBulkFlowLikelihood:
         like, *_ = _injected_likelihood(V_true, n=60)
         with pytest.raises(ValueError, match="shape"):
             like(np.array([1.0, 2.0]))
+
+    def test_survey_weights_do_not_change_normalized_likelihood_for_positive_rows(self):
+        V_true = np.array([120.0, -20.0, 50.0])
+        like, n_hat, u = _injected_likelihood(V_true, n=80, seed=18)
+        survey = BulkFlowLikelihood(
+            n_hat=n_hat, u=u, sigma=like.sigma,
+            w_native=np.linspace(0.1, 3.0, u.size),
+            w_selection=np.ones(u.size),
+        )
+        np.testing.assert_allclose(survey(V_true), like(V_true), rtol=1e-12)
+
+    def test_likelihood_matches_normalized_dense_gaussian(self):
+        V_true = np.array([120.0, -20.0, 50.0])
+        like, n_hat, u = _injected_likelihood(V_true, n=12, seed=19)
+        factor = np.arange(24.0).reshape(12, 2) / 100.0
+        C = np.diag(np.linspace(500.0, 900.0, 12)) + factor @ factor.T
+        dense = BulkFlowLikelihood(
+            n_hat=n_hat, u=u, sigma=like.sigma,
+            w_native=np.ones(12), w_selection=np.ones(12),
+            sampling_covariance=C,
+        )
+        residual = u - n_hat @ V_true
+        expected = -0.5 * (
+            12 * np.log(2.0 * np.pi) + np.linalg.slogdet(C)[1]
+            + residual @ np.linalg.solve(C, residual)
+        )
+        np.testing.assert_allclose(dense(V_true), expected, rtol=1e-12)
+
+    def test_low_rank_likelihood_matches_dense_covariance(self):
+        V_true = np.array([120.0, -20.0, 50.0])
+        like, n_hat, u = _injected_likelihood(V_true, n=12, seed=20)
+        diagonal = np.linspace(500.0, 900.0, 12)
+        factor = np.arange(24.0).reshape(12, 2) / 100.0
+        dense = BulkFlowLikelihood(n_hat, u, like.sigma, np.ones(12), np.ones(12), sampling_covariance=np.diag(diagonal) + factor @ factor.T)
+        structured = BulkFlowLikelihood(n_hat, u, like.sigma, np.ones(12), np.ones(12), sampling_covariance=SamplingCovariance(diagonal=diagonal, low_rank=factor))
+        np.testing.assert_allclose(structured(V_true), dense(V_true), rtol=1e-12)
+
+    def test_precision_mode_has_distinct_noise_model_and_rejects_explicit_covariance(self):
+        V_true = np.array([120.0, -20.0, 50.0])
+        like, n_hat, u = _injected_likelihood(V_true, n=12, seed=21)
+        precision = BulkFlowLikelihood(
+            n_hat, u, like.sigma, np.linspace(0.2, 2.0, 12), np.ones(12),
+            weight_semantics="precision",
+        )
+        assert precision(V_true) != like(V_true)
+        with pytest.raises(ValueError, match="incompatible"):
+            BulkFlowLikelihood(
+                n_hat, u, like.sigma, np.ones(12), np.ones(12),
+                sampling_covariance=np.eye(12), weight_semantics="precision",
+            )
 
 
 # ---------------------------------------------------------------------------
