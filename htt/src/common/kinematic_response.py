@@ -207,15 +207,45 @@ class KinematicResponseModel:
         directions: np.ndarray,
         redshift: float = 0.0,
         acceleration_vector: np.ndarray | None = None,
+        *,
+        acceleration_over_cH: np.ndarray | None = None,
+        H0: float | None = None,
+        speed_of_light: float | None = None,
     ) -> np.ndarray:
         """Local optical directional Hubble variation Delta H(n) / H_0.
-        
-        Delta H / H_0 = - n . a_acc + n^T sigma n
+
+        The shear amplitudes in this legacy response model are already
+        dimensionless (sigma/H0). Supply either the dimensionless vector
+        A/(c H0), or a physical acceleration A in m s^-2 together with
+        explicit nonzero H0 in s^-1 and c in m s^-1. A physical acceleration
+        is never subtracted directly from a dimensionless response.
         """
         n = np.asarray(directions, dtype=np.float64)
+        if n.ndim != 2 or n.shape[1] != 3:
+            raise KinematicsError("directions must be N x 3")
+        if not np.all(np.isfinite(n)):
+            raise KinematicsError("directions must be finite")
         response = self.optical_shear_quadrupole(n)
-        if acceleration_vector is not None:
-            a_acc = np.asarray(acceleration_vector, dtype=np.float64)
-            response -= n @ a_acc
+        if acceleration_vector is not None and acceleration_over_cH is not None:
+            raise KinematicsError("supply physical acceleration or A/(cH), not both")
+        if acceleration_over_cH is not None:
+            a_over_cH = np.asarray(acceleration_over_cH, dtype=np.float64)
+        elif acceleration_vector is not None:
+            if H0 is None or speed_of_light is None:
+                raise KinematicsError("physical acceleration requires explicit H0 and speed_of_light")
+            h0 = float(H0)
+            c = float(speed_of_light)
+            if not np.isfinite([h0, c]).all() or h0 == 0.0 or c <= 0.0:
+                raise KinematicsError("require finite nonzero H0 and positive speed_of_light")
+            physical_acceleration = np.asarray(acceleration_vector, dtype=np.float64)
+            if physical_acceleration.shape != (3,) or not np.all(np.isfinite(physical_acceleration)):
+                raise KinematicsError("physical acceleration must be a finite 3-vector")
+            a_over_cH = physical_acceleration / (c * h0)
+        else:
+            a_over_cH = None
+        if a_over_cH is not None:
+            if a_over_cH.shape != (3,) or not np.all(np.isfinite(a_over_cH)):
+                raise KinematicsError("A/(cH) must be a finite 3-vector")
+            response -= n @ a_over_cH
         return response
 
