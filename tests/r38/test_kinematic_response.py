@@ -60,6 +60,13 @@ def test_velocity_composition_non_collinear_exact():
     assert np.allclose(compose_velocities(np.zeros(3), v_b), -v_b)
 
 
+def test_velocity_composition_small_beta_limit_is_stable():
+    # The gamma-1 cancellation must not erase the transverse correction.
+    v_a = np.array([0.0, 0.3, 0.0])
+    v_b = np.array([1.0e-8, 0.0, 0.0])
+    actual = compose_velocities(v_a, v_b)
+    assert np.allclose(actual, [-1.0e-8, 0.3, 0.0], rtol=0.0, atol=1.0e-15)
+
 def test_velocity_composition_rejects_nonfinite_inputs():
     with pytest.raises(KinematicsError, match="finite"):
         compose_velocities(np.array([np.nan, 0.0, 0.0]), np.zeros(3))
