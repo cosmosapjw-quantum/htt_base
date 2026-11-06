@@ -203,6 +203,43 @@
         "tests/r38/test_kinematic_response.py"
       ],
       "boundary": "Regression tests were added but not run in this environment."
+    },
+    {
+      "id": "R39-C23",
+      "claim": "The R39 KinematicalXBundle is derived from one exact canonical JointAnisotropyState and combines existing v1 TensorFunctionalSpec/Result outputs with explicit-SI direct/mixed functional views, all bound to the same canonical state content identity.",
+      "status": "GITHUB_SOURCE_AND_TESTS_COMMITTED_NOT_RUNTIME_VERIFIED",
+      "evidence": [
+        "htt/src/common/kinematical_functionals.py",
+        "htt/src/common/test_kinematical_functionals.py",
+        "htt/src/common/joint_anisotropy_state_v1.py",
+        "htt/src/common/tensor_functionals_v1.py"
+      ],
+      "boundary": "Requires a supplied nonzero expansion scalar Theta and explicit c; no sampler, observed likelihood or posterior is included. Local pytest/import/compile remain NOT_RUN."
+    },
+    {
+      "id": "R39-C24",
+      "claim": "The R39 state adapter and local optical Jacobian use the canonical STF5 Cartesian coordinate chart (Sxx,Syy,Sxy,Sxz,Syz) with Szz=-Sxx-Syy, rather than an orthonormal STF basis.",
+      "status": "GITHUB_SOURCE_VERIFIED_AND_INDEPENDENT_ALGEBRA_CHECKED_NOT_RUNTIME_VERIFIED",
+      "evidence": [
+        "htt/src/common/orbit_nonlinearity.py",
+        "htt/src/common/kinematical_functionals.py",
+        "htt/src/common/test_kinematical_functionals.py",
+        "KINEMATICAL_LIKELIHOOD_MODEL.md",
+        "KINEMATICAL_FUNCTIONAL_REGISTRY.json"
+      ],
+      "boundary": "The coordinate chart is non-orthonormal under the Frobenius metric; downstream SVD/covariance must use its induced Gram metric or a declared orthonormal transform. Tests are authored, not run."
+    },
+    {
+      "id": "R39-C25",
+      "claim": "The canonical VelocityFrameBundle stores beta_RO/RM/MO in a common coordinate_frame and basis; radiation/matter/observer frame IDs encode relative-motion endpoints, not per-vector coordinate systems.",
+      "status": "CANONICAL_SOURCE_CONTRACT_VERIFIED_AND_R39_ADAPTER_ALIGNED",
+      "evidence": [
+        "htt/src/common/joint_anisotropy_state_v1.py",
+        "htt/src/common/kinematical_functionals.py",
+        "KINEMATICAL_LIKELIHOOD_MODEL.md",
+        "KINEMATICAL_FUNCTIONAL_REGISTRY.json"
+      ],
+      "boundary": "External components from a different coordinate tetrad still require an explicit ordered Lorentz/tetrad bridge. The first-order beta_RO closure is diagnostic and not exact velocity composition."
     }
   ]
 }
