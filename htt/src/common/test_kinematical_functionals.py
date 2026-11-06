@@ -87,6 +87,9 @@ def test_direct_and_mixed_kinematical_x_functionals():
     )
     assert values["BETA_DOT_OMEGA"].parity == "ODD"
     assert values["BETA_CROSS_OMEGA"].parity == "EVEN"
+    assert values["OMEGA_VECTOR_NORM2_H"].components[0] == pytest.approx(
+        state.omega @ state.omega / state.H**2
+    )
 
 
 def test_missing_components_and_zero_h_are_not_zero_filled():
