@@ -501,7 +501,7 @@
     "Do not assume block-diagonal cross-probe covariance without evidence.",
     "Do not report local tests/Cobaya runs unless executed with receipts."
   ],
-  "latest_document_checkpoint": "80216d9911e6c3d75c310ad6da4b59f07f2762f5",
+  "latest_document_checkpoint": "6995a4b3280360b67d585791ee7024d4aeb73c87",
   "legacy_audit": {
     "total_pr_metadata": 561,
     "number_range": [
@@ -538,7 +538,7 @@
     ],
     "novelty_consequence": "Existing observable-irrep, local full-sky boost/STF2-to-STF3, processed cut-sky boost design, shell-correlated a_lm covariance and Planck/CF4 source-window work narrow the remaining candidate to validated source-conditioned cross-probe tensor-functional identification."
   },
-  "test_checkpoint": "af3d17f477bc031156ebd3420e5621b613917081",
+  "test_checkpoint": "c6eaef250709786c06565a6c3d58f16d14c3566b",
   "kinematical_state": {
     "canonical": "JointAnisotropyState with field-valued or declared basis-truncated theta_K",
     "raw_independent_blocks": [
@@ -602,7 +602,7 @@
         "explicit_axial_vector_norm_functional_separate_from_two_form_MES_W2_anchor"
       ],
       "verification": "GITHUB_SOURCE_AND_TEST_READBACK_ONLY; PYTEST_NOT_RUN",
-      "scope": "KINEMATICAL_FUNCTIONAL_SUBBUNDLE_ONLY; observer-space carriers await source-bound providers"
+      "scope": "KINEMATICAL_FUNCTIONAL_SUBBUNDLE_ONLY"
     },
     "local_optical": {
       "radial": "d(n)=H+sigma_ij n^i n^j-A_i n^i/c",
@@ -663,5 +663,6 @@
     ],
     "identifiability": "functional local criterion ker(J_eff) subset ker(Dphi); global criterion phi constant on exact observation fibres",
     "scope": "DESIGN_ONLY; no observed likelihood/posterior executed"
-  }
+  },
+  "vorticity_anchor_boundary": "OMEGA_VECTOR_NORM2_H is an R39 axial-vector norm only; canonical W2 two-form anchor mapping remains unresolved and is not auto-bound."
 }
