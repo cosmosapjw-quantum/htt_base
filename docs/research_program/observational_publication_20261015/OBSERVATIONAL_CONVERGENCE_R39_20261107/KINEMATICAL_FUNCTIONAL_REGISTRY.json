@@ -361,6 +361,19 @@
       ],
       "representation": "DIRECTIONAL_DISTANCE_MULTIPOLES",
       "role": "OBSERVED_CARRIER"
+    },
+    {
+      "id": "LOCAL_OPTICAL_RADIAL_AND_TRANSVERSE",
+      "fields": [
+        "z_i",
+        "r_i_or_dL_i",
+        "n_hat_i",
+        "proper_motion_tangent_i",
+        "tangent_basis_i"
+      ],
+      "representation": "RADIAL_SCALAR_PLUS_TANGENT_VECTOR",
+      "role": "OBSERVED_LOCAL_OPTICAL_CARRIER",
+      "note": "Use the LOOP C common-congruence optical response; radial d contains H/shear/acceleration; transverse drift contains shear/vorticity plus explicit catalogue triad rotation. Local limit only."
     }
   ],
   "likelihood_contract": {
@@ -375,7 +388,8 @@
       "CMB_T_E_B",
       "SOURCE_COUNTS",
       "SN_CF4_DISTANCE",
-      "GAIA_PROPER_MOTION"
+      "GAIA_PROPER_MOTION",
+      "local optical radial-rate and angular-drift joint response"
     ],
     "required_covariance": "full within-probe and cross-probe covariance or explicit conditional-independence model; never default missing blocks to zero",
     "inference_outputs": [
@@ -383,7 +397,37 @@
       "joint posterior or compatibility/confidence region",
       "functional-specific score/Fisher quotient",
       "joint functional images"
-    ]
+    ],
+    "local_optical_response": {
+      "radial": "d(n)=H+sigma_ij n^i n^j-A_i n^i/c",
+      "transverse_fermi_walker": "mu_FW=P(n) sigma n+n cross omega",
+      "transverse_catalogue": "mu_cat=k[P(n) sigma n+n cross (omega+Omega)]",
+      "triad_spin": "Omega is an explicit axial nuisance; without independent calibration B1 measures omega+Omega",
+      "acceleration_endpoint": "common observer/emitter acceleration cancels from the leading angular-drift term; do not append an extra c P A",
+      "ideal_full_sphere_inverse": [
+        "H=<d>",
+        "A/c=-3<d n>",
+        "sigma_ij=(15/2)<d(n_i n_j-delta_ij/3)>=5<mu_(i n_j)>",
+        "omega=-(3/2)<n cross mu> in calibrated Fermi-Walker triad"
+      ],
+      "ideal_rank": {
+        "radial": 9,
+        "transverse": 8,
+        "joint_kinematics": 12,
+        "with_unknown_triad_spin_columns": 15,
+        "with_unknown_triad_spin_rank": 12
+      },
+      "limitations": [
+        "convex normal neighbourhood",
+        "C3 common congruence",
+        "before caustics",
+        "geometric optics",
+        "differentiable source tracking",
+        "locally calibrated optical distance",
+        "finite catalogue requires its actual selection/window/covariance and source-slip model"
+      ],
+      "source": "OBSERVABLE_BRIDGE_RECONCILIATION_20261027/imports/five_loops/research/LOOP_C_KINEMATICS.md"
+    }
   },
   "htt_five_outputs": {
     "x": "direct kinematical components + predicted observable carriers + mixed functionals; observed carriers kept fixed and role-tagged",
@@ -408,6 +452,19 @@
     "shared sky/LSS/catalogue/calibration dependencies are modeled jointly",
     "functional local and global identifiability are assessed separately",
     "five HTT outputs are derived from one joint posterior/compatibility object",
-    "x_C remains one optional legacy scalar projection"
-  ]
+    "x_C remains one optional legacy scalar projection",
+    "local radial and transverse optical response is jointly tested in the ideal common-congruence limit",
+    "catalogue angular B1 is not promoted to physical vorticity without independent triad-spin calibration",
+    "finite-survey optical response uses source-level selection, tangent-basis transformation, covariance support and finite-distance remainder"
+  ],
+  "implementation": {
+    "module": "htt/src/common/kinematical_functionals.py",
+    "tests": "htt/src/common/test_kinematical_functionals.py",
+    "reused_modules": [
+      "htt/src/common/relativistic_kinematics.py",
+      "htt/src/common/kinematic_response.py"
+    ],
+    "scope": "typed pointwise kinematical state, direct/mixed functionals, O(3) action, local radial/transverse optical response, ideal local Jacobian",
+    "verification": "GITHUB_READBACK_ONLY; local pytest NOT_RUN"
+  }
 }
