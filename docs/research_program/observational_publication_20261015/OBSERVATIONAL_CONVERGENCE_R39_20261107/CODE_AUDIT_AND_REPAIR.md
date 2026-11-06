@@ -17,7 +17,7 @@ For dimensionless velocities beta_a and beta_b in one common inertial frame, the
 {\gamma_b(1-\beta_a\cdot\beta_b)}.
 \]
 
-The beta_b=0 limit is handled separately. Shape, finite-value and subluminal checks are explicit. A non-collinear regression example beta_a=(0.3,0,0), beta_b=(0,0.4,0) yields (0.3 sqrt(1-0.4^2),-0.4,0). Wolfram returned the exact first component 3 sqrt(21)/50. The collinear limit was independently reduced to (a-b)/(1-ab).
+The beta_b=0 limit is handled separately. Shape, finite-value and subluminal checks are explicit. The transverse coefficient is evaluated using the cancellation-stable identity (gamma-1)/beta_b^2 = gamma^2/(gamma+1). A small-beta regression test checks continuity. A non-collinear regression example beta_a=(0.3,0,0), beta_b=(0,0.4,0) yields (0.3 sqrt(1-0.4^2),-0.4,0). Wolfram returned the exact first component 3 sqrt(21)/50. The collinear limit was independently reduced to (a-b)/(1-ab).
 
 This is a specified standard-boost coordinate convention. Non-collinear frame chains may carry Wigner rotation. It does not make the current three-frame beta_MO=beta_RO-beta_RM assignment exact; that remains a first-order closure and must be explicitly tagged.
 
