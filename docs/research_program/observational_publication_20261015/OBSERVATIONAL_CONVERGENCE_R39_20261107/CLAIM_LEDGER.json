@@ -206,7 +206,7 @@
     },
     {
       "id": "R39-C23",
-      "claim": "The R39 KinematicalXBundle is derived from one exact canonical JointAnisotropyState and combines existing v1 TensorFunctionalSpec/Result outputs with explicit-SI direct/mixed functional views, all bound to the same canonical state content identity.",
+      "claim": "The R39 KinematicalXBundle is the kinematical functional sub-bundle derived from one exact canonical JointAnisotropyState. It combines existing v1 TensorFunctionalSpec/Result outputs with explicit-SI direct/mixed kinematical views, all bound to the same canonical state content identity.",
       "status": "GITHUB_SOURCE_AND_TESTS_COMMITTED_NOT_RUNTIME_VERIFIED",
       "evidence": [
         "htt/src/common/kinematical_functionals.py",
@@ -214,7 +214,7 @@
         "htt/src/common/joint_anisotropy_state_v1.py",
         "htt/src/common/tensor_functionals_v1.py"
       ],
-      "boundary": "Requires a supplied nonzero expansion scalar Theta and explicit c; no sampler, observed likelihood or posterior is included. Local pytest/import/compile remain NOT_RUN."
+      "boundary": "Scope is KINEMATICAL_FUNCTIONAL_SUBBUNDLE_ONLY; observed/predicted CMB, count, Gaia and distance carriers are not yet included. Requires a supplied nonzero expansion scalar Theta and explicit c. No sampler, observed likelihood or posterior is included. Local pytest/import/compile remain NOT_RUN."
     },
     {
       "id": "R39-C24",
