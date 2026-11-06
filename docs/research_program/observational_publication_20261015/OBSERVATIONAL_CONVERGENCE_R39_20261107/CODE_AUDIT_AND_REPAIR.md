@@ -85,3 +85,7 @@ Reuse decisions:
 - DipoleVectorLikelihood is a directional amplitude/axis projection, not the joint physical theta likelihood.
 
 Therefore none of these current adapters should be passed as the completed R39 multi-probe likelihood. Reuse their scoped components and contracts, but create a new observed-data path that preflights exact source/row/selection/covariance/operator identity, admits shared latent fields/cross-covariance, and fails closed when those inputs are missing.
+
+### Relative-velocity frame identity safeguard
+
+The kinematical functional kernel now stores beta_RM_frame_id and beta_MO_frame_id in addition to their spatial basis IDs. It distinguishes an axis-only FrameTransport from a physical Lorentz/tetrad bridge. If the relative-velocity vector belongs to a different physical frame, its direct value remains available, but mixed functionals and beta_RO first-order closure return RELATIVISTIC_FRAME_BRIDGE_REQUIRED. A spatial 3x3 rotation cannot satisfy this requirement. A new regression test checks this boundary. Local pytest remains NOT_RUN.
