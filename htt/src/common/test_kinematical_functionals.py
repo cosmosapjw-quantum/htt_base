@@ -9,6 +9,8 @@ from common.kinematical_functionals import (
     local_optical_jacobian,
     local_optical_response,
     transform_state_o3,
+    stf2_components,
+    stf2_from_components,
 )
 from common.relativistic_kinematics import METRIC
 from common.joint_anisotropy_state import (
