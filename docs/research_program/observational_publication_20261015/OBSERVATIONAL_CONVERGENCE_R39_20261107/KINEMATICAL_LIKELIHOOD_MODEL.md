@@ -149,7 +149,7 @@ The initial registry should include at least the following examples. \(H\ne0\) i
 | BETA_CROSS_OMEGA | \(\epsilon^A{}_{BC}\beta_{\rm RM}^B\omega^C/H\) | polar vector | Mixed polar/axial coupling |
 | BETA_DOT_ACCEL | \(\beta_{\rm MO}^A A_A/(cH)\) | scalar, even | Observer-frame acceleration coupling |
 | SIGMA_CUBIC | \(\mathrm{tr}(\sigma^3)/H^3\) | scalar, even | Shear-shape invariant |
-| OMEGA_VECTOR_NORM2_H | \\(\\omega_A\\omega^A/H^2\\) | nonnegative scalar | Norm of the registered axial-vector view; not automatically the canonical two-form MES W2 invariant |
+| OMEGA_VECTOR_NORM2_H | omega_A omega^A/H^2 | nonnegative scalar | H-normalized axial-vector norm; not automatically the canonical two-form MES W2 invariant |
 
 These are not all equivalent targets. A scalar contraction is one additional registered functional and never replaces its vector/tensor source. For an orthogonal transformation \(R\in O(3)\),
 
