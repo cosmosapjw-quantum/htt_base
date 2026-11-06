@@ -502,14 +502,14 @@ def _value(
     resolved_status = ("UNAVAILABLE" if value is None else "AVAILABLE") if status is None else status
     if value is None:
         return FunctionalValue(
-            functional_id, state.sample_id, state.state_id, representation,
+            functional_id, state.sample_id, state.canonical_state_id or state.state_id, representation,
             _REPRESENTATION_DIMENSIONS[representation], units, parity, basis_id,
             resolved_status, None, inputs, normalization_id,
             reason or "required component unavailable",
         )
     components = np.atleast_1d(np.asarray(value, dtype=float))
     return FunctionalValue(
-        functional_id, state.sample_id, state.state_id, representation,
+        functional_id, state.sample_id, state.canonical_state_id or state.state_id, representation,
         int(components.size), units, parity, basis_id, resolved_status, components,
         inputs, normalization_id, reason,
     )
@@ -638,7 +638,7 @@ def evaluate_kinematical_functionals(
                       normalization_id="FIRST_ORDER_CLOSURE_DIAGNOSTIC",
                       status=None if state.velocity_closure_residual is not None else "UNAVAILABLE",
                       reason="" if state.velocity_closure_residual is not None else "canonical closure residual unavailable"))
-    out.append(_value(state, "DELTA_OMEGA_K",
+    out.append(_value(state, "DELTA_OMEGA_K_PHYSICAL_VIEW",
                       None if state.delta_omega_k is None else np.array([state.delta_omega_k]),
                       representation="SCALAR", units="1", parity="EVEN",
                       basis_id=state.basis_id,
