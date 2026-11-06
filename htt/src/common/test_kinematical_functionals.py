@@ -91,7 +91,7 @@ def test_mixed_functional_requires_explicit_frame_transport():
     state = make_state(beta_RM_basis_id="RADIATION_TETRAD")
     missing_transport = function_map(state)
     assert missing_transport["BETA_RM"].status == "AVAILABLE"
-    assert missing_transport["SIGMA_CONTRACT_BETA"].status == "UNAVAILABLE"
+    assert missing_transport["SIGMA_CONTRACT_BETA"].status == "FRAME_TRANSPORT_REQUIRED"
     assert "frame transport" in missing_transport["SIGMA_CONTRACT_BETA"].reason
 
     matrix = np.array([[0.0, -1.0, 0.0],
