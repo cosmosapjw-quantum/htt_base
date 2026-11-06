@@ -40,7 +40,7 @@ Likelihood는 CMB T/E/B full covariance, selection-aware source-count point proc
 - KINEMATICAL_LIKELIHOOD_MODEL.md
 - KINEMATICAL_FUNCTIONAL_REGISTRY.json
 
-`build_kinematical_x_bundle`는 canonical JointAnisotropyState를 단일 SSOT로 사용하며, 기존 TensorFunctionalSpec/Result 결과와 explicit-SI direct/mixed functional view를 동일한 content ID에 묶는다. 이는 sampler나 likelihood 실행을 뜻하지 않고 x construction 단계다.
+`build_kinematical_x_bundle`는 canonical JointAnisotropyState를 단일 SSOT로 사용하며, 기존 TensorFunctionalSpec/Result 결과와 explicit-SI direct/mixed functional view를 동일한 content ID에 묶는 x의 kinematics sub-bundle을 만든다. 관측/예측 CMB·count·Gaia·distance carrier는 source-bound provider가 별도로 공급해야 한다. 이는 full x나 likelihood 실행을 뜻하지 않는다.
 
 ## Canonical STF5 chart
 
