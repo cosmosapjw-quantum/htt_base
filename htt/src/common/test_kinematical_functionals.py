@@ -410,6 +410,7 @@ def test_canonical_joint_state_is_the_only_x_source_and_units_round_trip():
         joint, expansion_scalar=theta, speed_of_light=c
     )
     assert bundle.canonical_state_id == joint.content_id
+    assert bundle.scope == "KINEMATICAL_FUNCTIONAL_SUBBUNDLE_ONLY"
     assert all(v.state_id == joint.content_id for v in bundle.physical_functionals)
     assert all(v.source_state_id == joint.content_id for v in bundle.canonical_functionals)
 
