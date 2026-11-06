@@ -576,7 +576,22 @@ def evaluate_kinematical_functionals(
                           units="1", parity="EVEN", basis_id=basis_id or "UNAVAILABLE",
                           inputs=(name,)))
 
-    # beta_RO is only a first-order closure view of the two independent relative velocities.
+    def _beta_reason(name: str, status: str) -> str:
+        if status == "AVAILABLE":
+            return ""
+        if status == "UNAVAILABLE":
+            return f"{name} unavailable"
+        if status == "FRAME_TRANSPORT_REQUIRED":
+            return f"explicit spatial basis transport for {name} is required"
+        if status == "RELATIVISTIC_FRAME_BRIDGE_REQUIRED":
+            return f"{name} uses a different component coordinate frame; a declared tetrad bridge is required"
+        return f"{name} status is {status}"
+
+    mixed_reason = _beta_reason("beta_RM", beta_rm_status)
+    mixed_reason_mo = _beta_reason("beta_MO", beta_mo_status)
+
+    # beta_RO is a derived first-order closure view. Preserve a separate
+    # canonical beta_RO carrier and closure residual below.
     if beta_rm is None or beta_mo is None:
         closure_status = beta_rm_status if beta_rm is None else beta_mo_status
         closure_reason = mixed_reason or mixed_reason_mo or "both independent frame velocities are required"
@@ -585,19 +600,19 @@ def evaluate_kinematical_functionals(
                           basis_id=state.basis_id, inputs=("beta_RM", "beta_MO"),
                           status=closure_status, reason=closure_reason))
     else:
-        beta_ro = beta_rm + beta_mo
-        if float(beta_ro @ beta_ro) >= 1.0:
+        beta_ro_first_order = beta_rm + beta_mo
+        if float(beta_ro_first_order @ beta_ro_first_order) >= 1.0:
             out.append(_value(state, "BETA_RO_FIRST_ORDER_VIEW", None,
                               representation="VECTOR_POLAR", units="1", parity="EVEN",
                               basis_id=state.basis_id, inputs=("beta_RM", "beta_MO"),
                               status="UNRESOLVED", reason="first-order sum reaches/exceeds the subluminal boundary"))
         else:
-            out.append(_value(state, "BETA_RO_FIRST_ORDER_VIEW", beta_ro,
+            out.append(_value(state, "BETA_RO_FIRST_ORDER_VIEW", beta_ro_first_order,
                               representation="VECTOR_POLAR", units="1", parity="EVEN",
                               basis_id=state.basis_id, inputs=("beta_RM", "beta_MO"),
                               normalization_id="FIRST_ORDER_CLOSURE_ONLY",
                               status="CONDITIONAL_FIRST_ORDER",
-                              reason="not an exact relativistic velocity composition"))
+                              reason="first-order closure view only; not exact relativistic velocity composition"))
 
     if state.beta_RO is None:
         out.append(_value(state, "BETA_RO_CANONICAL_VIEW", None,
@@ -672,19 +687,6 @@ def evaluate_kinematical_functionals(
                       basis_id=state.basis_id, inputs=("A_A", "H", "c"),
                       normalization_id="DIVIDE_BY_cH", status=status_acc, reason=reason_acc))
 
-    def _beta_reason(name: str, status: str) -> str:
-        if status == "AVAILABLE":
-            return ""
-        if status == "UNAVAILABLE":
-            return f"{name} unavailable"
-        if status == "FRAME_TRANSPORT_REQUIRED":
-            return f"explicit spatial basis transport for {name} is required"
-        if status == "RELATIVISTIC_FRAME_BRIDGE_REQUIRED":
-            return f"{name} belongs to another physical frame; a Lorentz/tetrad bridge is required"
-        return f"{name} status is {status}"
-
-    mixed_reason = _beta_reason("beta_RM", beta_rm_status)
-    mixed_reason_mo = _beta_reason("beta_MO", beta_mo_status)
     if sigma is None:
         mixed_status, mixed_reason2 = "UNAVAILABLE", "sigma_AB unavailable"
     elif beta_rm is None:
