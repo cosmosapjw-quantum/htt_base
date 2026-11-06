@@ -9,7 +9,7 @@ R38 parent: research/observational-convergence-r38-20261107 @ 05e9d53449bd029738
 
 Do not merge main. Do not use Remote Desktop. Use the user's existing local checkout and actual local data cache. The purpose is to convert the R39 tensor-x theory/operator contract into a reproducible observed-data analysis.
 
-The primary estimand is not x_C. It is the typed sample × functional bundle x[s,alpha]=phi_alpha(Z_s), with heterogeneous scalar/vector/STF/spin outputs preserving rank, parity, frame, epoch, units and support. x_C remains an optional scalar ablation only.
+The primary state is field-valued or explicitly basis-truncated theta_K={sigma_AB, omega_A, A_A, beta_RM_A, beta_MO_A}, with congruence/frame/epoch/triad metadata; beta_RO is a derived closure view, not a third independent velocity vector. The primary x[s,alpha]=phi_alpha(Z_s) bundle contains direct kinematical components, normalized copies, mixed kinematic functionals and predicted observable carriers. The ultimate target is one source-conditioned multi-probe L(theta,psi,eta;D)=p(D|theta,psi,eta) for D={a_lm,z_i,n_hat_i,fluxes,distance moduli,proper motions,...}; derive x,Q,Pi,F,G_F from one joint posterior/compatibility object. x_C remains an optional scalar ablation only.
 
 ## Non-destructive startup
 
@@ -20,23 +20,35 @@ The primary estimand is not x_C. It is the typed sample × functional bundle x[s
 5. Read R38 adapters/scripts/results and pinned METHOD_REBOOT_20261023/THEOREMS.md T1–T7, tensor_joint_r9/revision2/MODEL_TO_DATA.md and THEORY_EXTENSION.md.
 6. Preserve R38 source/result files immutably. Corrected products receive new IDs and provenance.
 
-## Work package A: implement vector/tensor x without scalar collapse
+## Work package A: implement direct kinematical theta and vector/tensor x
 
-Build or extend the existing typed structures; do not create a wrapper that simply stores flattened scalar x_C.
+Read KINEMATICAL_LIKELIHOOD_MODEL.md and KINEMATICAL_FUNCTIONAL_REGISTRY.json first. Implement or extend the existing typed structures; do not build a scalar x_C wrapper.
 
-The common state is Z=(Z_phys,Z_obs,eta,A,R). The output x is a heterogeneous collection:
-- each functional has a stable functional_id;
-- declared input domain and output representation (polar V1, axial V1, STF2 even/odd, spin/harmonic irrep, scalar);
-- rank, parity, units, frame, congruence, epoch/redshift window, basis, perturbative order, provider/operator version;
-- one common state_id/region_id across functionals for each posterior draw or confidence-set witness;
-- explicit status for unavailable, undefined, empty, unbounded and numerically unresolved outputs;
-- sample-axis semantics and source provenance, preventing catalogue rows, mocks, map splits and posterior draws from being conflated.
+The common latent state is Z=(theta_K,psi,eta,xi). The primary kinematical block at one point/epoch is
 
-Candidate physical functionals: beta_RO, beta_RM, beta_MO, gauge-invariant d_int, A/(cH), sigma_ij/H, omega_i/H, E_ij/H^2, H_ij/H^2, spatial Ricci STF and Bianchi structure/dynamics variables.
+theta_K={sigma_AB, omega_A, A_A, beta_RM_A, beta_MO_A}.
 
-Candidate observable carriers: CMB T/E/B a_lm, STF T2/T3, BipoSH A_LM,ell,ell', phase/planarity/parity functionals; source-count multipoles; Gaia E/B VSH; directional-distance D_i(z), Q_ij(z) and higher registered multipoles. Keep observed carriers distinct from metric components; connect them through each probe's forward operator.
+- sigma_AB: five STF2 polar components, s^-1.
+- omega_A: three axial-vector components obtained by dualizing the spatial vorticity two-form, s^-1.
+- A_A: three polar acceleration components, m s^-2.
+- beta_RM_A: radiation-matter relative velocity, dimensionless.
+- beta_MO_A: matter-observer relative velocity, dimensionless.
+- beta_RO_A: derived radiation-observer view; first-order beta_RO=beta_RM+beta_MO+O(beta^2), exact composition requires ordered tetrads/Wigner rotation.
+- optional DeltaOmega_k adds a distinct scalar geometry block; it is not the anisotropic spatial Ricci tensor.
 
-Implement representation actions and parity tests for O(3)/SO(3). An improper transformation must not silently identify polar and axial vectors or even/odd STF2 carriers. Preserve chirality under SO(3); O(3) quotient is a separate declared view. Any flattening for SVD/storage must declare the orthonormal basis, metric, units, parity transform and inverse map.
+The 17-dimensional pointwise core count is a representation count only. If theta is field-valued, declare its space/time basis, truncation, initial/boundary data and prior/regularization. Arbitrary kinematic tuples are not automatically Einstein-matter solutions; impose the relevant 1+3 Ricci identities, constraints, matter conservation and dynamics before GR/Bianchi attribution.
+
+The x functional registry must include all three roles:
+1. direct identity functionals of sigma, omega, A, beta_RM and beta_MO;
+2. normalized direct copies sigma/H, omega/H and A/(cH);
+3. mixed functionals such as sigma_AB beta_RM^A beta_RM^B/H (even scalar), beta_RM^A omega_A/H (pseudoscalar), sigma^A_B beta_RM^B/H (polar vector), beta_RM cross omega/H (polar vector), beta_MO dot A/(cH), and tr(sigma^3)/H^3;
+4. predicted observer-space carriers: CMB T/E/B a_lm, BipoSH, selected source-count multipoles, Gaia VSH and directional-distance multipoles.
+
+Do not conflate observed a_lm with predicted a_lm(theta). Observed maps/catalogue rows are fixed data with source identity; predicted carriers vary across posterior draws or identified-set witnesses. BipoSH computed from the same a_lm are derived summaries, not extra independent data. The current ObservableIrrepState is observer/data-space only and does not represent physical sigma, omega or A.
+
+Every functional has a stable ID, input state identity, output rank/representation/parity, units, frame, congruence, epoch/window, basis, normalization, anchor, response/provider, perturbative order, sample semantics and availability status. Preserve unavailable, undefined, empty, unbounded, disconnected and numerically unresolved cases separately.
+
+For O(3), sigma' = R sigma R^T, A'=R A, beta'=R beta, omega'=(det R)R omega. Test all proper and improper transformations. SO(3) orbit views retain chirality; O(3) reflection quotient is a separate declared output. Any flattening for storage/SVD must declare its orthonormal basis, metric, units, parity transform and inverse reconstruction.
 
 ## Mandatory reuse check before implementing new observables
 
@@ -84,11 +96,28 @@ Probe order:
 
 Each observed data likelihood must fail closed if any required source/covariance/selection/operator identity is missing. Synthetic fixtures must live in a separate mode and directory and cannot emit observed claims.
 
+Build one joint likelihood, not a post-hoc product of independent probe posteriors:
+
+p(D|theta,psi,eta)=integral dxi p(xi|theta,psi) p(D|xi,theta,psi,eta,W,S).
+
+Here xi carries shared primordial/LSS/foreground/overlapping-source fields. Factor probe likelihoods only conditionally on the shared latent state or after an admitted joint cross-covariance/conditional-independence proof. Missing covariance blocks do not default to zero.
+
+Required likelihood lanes:
+- CMB: latent full-sky real nonredundant T/E/B harmonic vector; actual component/frequency/split/beam/pixel/mask/filter operator; anisotropic mean and full off-diagonal covariance; matched mean-field/null simulations.
+- Counts: selection-normalized point-process intensity over n_hat,z,flux/colour; local structure, randoms, component grouping, overlap and overdispersion.
+- SN/CF4: mu_th=5 log10[d_L(z,n;theta,psi)/10pc], full covariance, calibration and peculiar-velocity terms; local z->0 law is not a finite-z provider.
+- Gaia: source proper-motion tangent vectors with full astrometric covariance, E1/B1/E2 VSH and scan/reference-frame systematics.
+
+The local sourceward Hubble expansion is H_u(n)=vartheta/3 - A.n/c + sigma_ab n^a n^b, so d_L=cz/H_u(n)+O(z^2) only in its local optical domain. Vorticity is absent from this leading radial contraction; it requires a separately specified higher-order/other response. The observer-MO Doppler term is distinct from intrinsic congruence acceleration.
+
+
+
 ## Work package E: response rank and vector/tensor functional identification
 
 For each probe derive the actual estimator/forward response J_p=∂O_p/∂Z. Construct the full covariance including cross-probe terms where known. Whiten on the positive covariance support, project shared and product-specific nuisance directions in the same metric, and compute the quotient singular spectrum.
 
-For functional phi_alpha, test local identification using ker(J_eff) subset ker(D phi_alpha). For nonlinear targets, test whether phi_alpha is constant on each observation fibre. Otherwise retain the full image K_alpha(D)=phi_alpha(C(D)). Report functional-specific rank, null/weak directions, condition on the supported quotient and sensitivity to masks/cuts/nuisance bases. Prior regularization cannot create data rank.
+For functional phi_alpha, test local identification using ker(J_eff) subset ker(D phi_alpha). For nonlinear targets, test whether phi_alpha is constant on each observation fibre. Otherwise retain the full image K_alpha(D)=phi_alpha(C(D)). Report functional-specific rank, null/weak directions, condition on the supported quotient and sensitivity to masks/cuts/nuisance bases. Prior regularization cannot create data rank. For Gaussian summaries with parameter-dependent covariance, the Fisher diagnostic includes both mean and covariance derivatives:
+F_ij=(d_i m)^T C^-1(d_j m)+(1/2)Tr[C^-1(d_i C)C^-1(d_j C)]. For Poisson counts use the point-process score/Fisher, not the Gaussian mean-Jacobian alone. Assess functional-specific identification from the full likelihood score/Fisher tangent; ker(J_eff) subset ker(Dphi) is the local mean-response criterion where that reduction is justified.
 
 Run preregistered x ablations on identical observations/mocks:
 - scalar x_C only;
@@ -107,6 +136,8 @@ Construct the joint posterior or simultaneous confidence/identified region first
 - F: directional support, sample pushforward and measure-defined occupancy kept distinct;
 - Pi: strict exceedance surface under a named law; not generically a p-value;
 - G_F: full-covariance tensor functional depth path preserving initial level and all cross-shell blocks.
+
+The five outputs are not independent parameters or likelihood factors. Q must use a matching admitted anchor; missing acceleration/velocity anchors remain unavailable. Pi requires a named null/posterior/predictive law and is not the likelihood. F separates directional support, sample pushforward and measure-defined occupancy. G_F retains the full field/function covariance and common-depth level.
 
 No independent marginal recombination. No zero filling. Unknown physical mass remains unknown. Separate posterior pushforwards from confidence-set images and null p-values.
 
