@@ -174,3 +174,22 @@ Similarly, Planck-era work already independently estimates Doppler modulation an
 - https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.127.101301
 
 There is also pre-existing anisotropic Boltzmann machinery: ABSolve computes deterministic Bianchi-induced CMB temperature and polarization signals for several near-isotropic families (including I, V, VII_0 and VII_h). The R41 distinction is not that polarized Bianchi transfer has never been implemented; rather, the repository must not call an external solver native, and it must compare any external transfer against a future independently validated native implementation: https://academic.oup.com/mnras/article/462/2/1802/2589609
+
+
+## Identifiability when the covariance itself depends on the physical state
+
+The displayed (J_{\rm eff}) condition is the fixed-covariance, mean-response form. That form is appropriate only when (C) is independent of the parameters being tested (or when covariance dependence has been shown negligible over the declared domain). It is not sufficient for the stochastic low-\ell/BipoSH branch, or for any model in which shot/clustering/noise covariance depends on the physical state.
+
+For a Gaussian model (d\sim\mathcal N(\mu(q),C(q))), with parameter vector (q=(\vartheta,\eta)), use the full Fisher metric
+[
+F_{ij}=\mu_{,i}^{\mathsf T}C^{-1}\mu_{,j}
++\frac12\mathrm{Tr}\!\left(C^{-1}C_{,i}C^{-1}C_{,j}\right),
+]
+and the Gaussian log-likelihood including both the quadratic form and (\log\det C). After partitioning physical and nuisance coordinates, the nuisance-profiled local information is the Schur complement
+[
+F_{\vartheta\mid\eta}=F_{\vartheta\vartheta}
+-F_{\vartheta\eta}F_{\eta\eta}^{+}F_{\eta\vartheta},
+]
+with a declared parameter metric and a justified treatment of any singular nuisance block. The locally identifiable physical tangent directions are the non-null directions of this efficient information metric; a target functional must be constant along its null directions. For non-Gaussian point-process/Cox likelihoods, compute this from the actual score/Hessian or use simulation-based identifiability checks rather than forcing a Gaussian approximation.
+
+Therefore, R41 must keep deterministic mean/template and stochastic covariance responses as distinct branches, then combine them only through a properly defined joint likelihood. A rank from the mean Jacobian alone is not evidence that a covariance-only signal identifies the same physical state.
