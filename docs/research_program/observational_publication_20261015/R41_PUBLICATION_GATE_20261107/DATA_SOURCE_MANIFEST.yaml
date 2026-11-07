@@ -1,0 +1,161 @@
+schema: htt.r41_data_source_manifest/1
+as_of: 2026-11-07
+authority: "Official release portals and primary data papers; repository-local path/hash claims are unverified until checked on the local machine."
+download_policy:
+  mode: staged
+  do_not_download_everything: true
+  inspect_local_candidate_before_download: true
+  raw_sources_read_only: true
+  derived_cache_must_record_parent_source_ids: true
+  keep_large_data_out_of_git: true
+  exact_sha256: "Compute locally from actual downloaded bytes; never copy hashes from EXTENDED_DATA_INVENTORY as proof."
+  row_order: "Preserve source row identifiers and exact order used by covariance matrices."
+  licence: "Record source-specific licence, citation and archive terms."
+datasets:
+  planck_pr4:
+    priority: P0
+    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    official_source: "https://data.cmb-s4.org/planck_pr4.html"
+    primary_archive: "https://pla.esac.esa.int/pla/"
+    requested_products:
+      - "NPIPE PR4 frequency maps: T and Q/U; select only the channels and splits used by the registered estimator."
+      - "Half-ring or detector-set split maps and noise products needed for nulls."
+      - "Low-resolution maps and full/temperature/polarization masks."
+      - "Effective beams, pixel windows, bandpass/calibration metadata and mapmaking/processing documentation."
+      - "Matched end-to-end simulations/FFP products and component-separation controls."
+      - "Commander and/or other component maps only as one control, not as substitutes for frequency-level foreground testing."
+    notes:
+      - "The official portal advertises full-sky, half-ring, low-resolution, effective-beam and single-channel products; download only the products required by the map/harmonic likelihood."
+      - "The R39 cached 10-component EB feature vector is not a Planck T/E/B map-level likelihood."
+      - "Keep PR3 SMICA/Commander as independent component-separation/version controls where scientifically matched."
+    outputs: [map_manifest.json, mask_window_manifest.json, harmonic_features.npz, matched_mc_covariance.npz]
+  quaia:
+    priority: P0
+    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    official_source: "https://irsa.ipac.caltech.edu/data/Quaia/overview.html"
+    data_doi: "https://doi.org/10.26131/IRSA640"
+    requested_products:
+      - "Full Quaia DR1 quasar catalogue."
+      - "Selection/completeness functions and random catalogues or angular completeness maps."
+      - "Redshift, flux, colour and quality columns required by the selection model."
+      - "Published G<20.0 clean and G<20.5 parent selections, reconstructed from the same release."
+    notes:
+      - "Catalogue overview reports 1,295,502 sources at G<20.5 and 755,850 at G<20.0; use source-derived values and record exact cuts."
+      - "Never insert a fixed G<20.5 amplitude/direction or approximate cross-covariance by scaling the G<20 covariance."
+      - "Model flux/redshift selection and clustering coupling; retain mask and redshift-bin response."
+    outputs: [quaia_source_catalogue.parquet, quaia_randoms_or_completeness.*, quaia_selection.yaml, quaia_dipole_bins.npz]
+  nvss:
+    priority: P0
+    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    official_catalogue: "https://www.cv.nrao.edu/nvss/NVSSlist.shtml"
+    official_downloads: "https://www.cv.nrao.edu/nvss/anonftp.shtml"
+    products:
+      - "NVSS 1.4 GHz source catalogue (CATALOG.FIT) with flux, position, fit/quality flags."
+      - "Relevant maps and mask/coverage products for independent completeness checks."
+    selection_requirements:
+      - "Document declination coverage, flux threshold, completeness, Galactic mask, source blending and flux calibration."
+      - "Derive dipole in preregistered flux and redshift/spectral subsets."
+    notes:
+      - "NVSS covers declinations above about -40 degrees; avoid pretending it is full sky."
+    outputs: [nvss_catalogue.parquet, nvss_selection.yaml, nvss_dipole_bins.npz]
+  racs_low_dr1:
+    priority: P0
+    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    catalogue_and_mosaics: "https://www2.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/racs/"
+    original_archive: "https://data.csiro.au/"
+    primary_publications:
+      - "https://doi.org/10.1017/pasa.2020.41"
+      - "https://doi.org/10.1017/pasa.2021.47"
+    products:
+      - "RACS-low DR1 convolved/mosaicked source catalogue at common 25-arcsec resolution."
+      - "Mosaicked images, tile footprints, local rms/noise and completeness products."
+      - "Original per-tile images/catalogues from CASDA only if required to resolve mosaic/selection biases."
+    notes:
+      - "The release describes 903 tiles, with 799 common-resolution mosaicked tiles and median rms around 300 microJy/beam."
+      - "Do not use hardcoded amplitude 0.018, direction (245,35) or error 0.004."
+      - "Correct frequency differences/spectral-index selection when comparing RACS-low 887.5 MHz with NVSS 1.4 GHz."
+    outputs: [racs_low_dr1_catalogue.parquet, racs_footprint_noise_completeness.*, racs_dipole_bins.npz]
+  gaia_dr3_crf3:
+    priority: P0
+    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    official_archive: "https://gea.esac.esa.int/archive/"
+    official_documentation: "https://gea.esac.esa.int/archive/documentation/GDR3/"
+    auxiliary_tables:
+      - "gaiadr3.agn_cross_id"
+      - "gaiadr3.gaia_crf3_xm"
+      - "gaiadr3.frame_rotator_source"
+      - "gaiadr3.commanded_scan_law"
+    main_table: "gaiadr3.gaia_source"
+    requested_columns:
+      - "source_id, ra, dec, pmra, pmdec, pmra_error, pmdec_error"
+      - "position/proper-motion covariance and correlation columns"
+      - "photometric/astrometric quality, visibility periods, excess noise and relevant flags"
+      - "cross-match catalogue provenance and frame-rotator membership"
+    notes:
+      - "Gaia DR3 reference epoch is J2016.0 and astrometric coordinates/proper motions are in the Gaia-CRF3-aligned ICRS frame using TCB."
+      - "Gaia-CRF3 has known large-angular-scale proper-motion systematics; include calibration uncertainty, reference-frame spin and scan-law controls."
+      - "A VSH coefficient JSON is a derived product, not a source-level likelihood."
+    outputs: [gaia_crf3_rows.parquet, gaia_covariance_or_estimator_manifest.json, gaia_vsh_coefficients.npz]
+  pantheon_plus:
+    priority: P0
+    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    official_release: "https://github.com/PantheonPlusSH0ES/DataRelease"
+    products:
+      - "Full Pantheon+SH0ES sample data table."
+      - "Full STAT+SYS covariance and exact covariance ordering metadata."
+      - "Calibrator, Cepheid/SH0ES anchors, redshift-frame corrections, peculiar-velocity corrections and selection documentation."
+    notes:
+      - "Do not silently switch between a 490-object selected cache and the full sample."
+      - "Absolute magnitude/calibrator nuisance treatment must follow the sample and covariance construction."
+      - "Use exact FLRW distance integrals for baseline distances; local anisotropic series only where its expansion is valid."
+    outputs: [pantheon_plus_rows.parquet, pantheon_plus_covariance.npy, pantheon_plus_selection.yaml]
+  des_sn5yr:
+    priority: P1
+    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    official_release: "https://github.com/des-science/DES-SN5YR"
+    products:
+      - "DES-SN5YR Dovekie data release tables and full covariance."
+      - "Calibration/selection/host/peculiar-velocity metadata and public mocks."
+    notes:
+      - "Use as an independent replication/cross-validation sample only after checking sky/redshift overlap and shared calibration/cosmological covariance with Pantheon+."
+      - "Do not simply concatenate two SN samples and assume independent covariance."
+    outputs: [des_sn5yr_rows.parquet, des_sn5yr_covariance.npy, des_sn5yr_selection.yaml]
+  cosmicflows4:
+    priority: P0
+    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    official_catalogue: "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJ/944/94"
+    mirror: "https://vizier.cfa.harvard.edu/viz-bin/VizieR?-source=J/ApJ/944/94"
+    products:
+      - "Individual galaxy distances/velocities and metadata (not only the pooled preselected cache)."
+      - "Group catalogue and all method/calibrator/zero-point metadata."
+      - "Published error/covariance information and survey selection/sky coverage."
+    notes:
+      - "The release reports about 55,877 galaxies and about 38,065 groups; reconcile table counts and row definitions directly from the catalogue."
+      - "Do not use deterministic stride thinning or diagonal-only errors as a production inference."
+      - "Establish whether the current selected_source_observables.dmzp is distance modulus, a distance-modulus zero-point residual, or another quantity before writing its prediction."
+    outputs: [cf4_individual_rows.parquet, cf4_group_rows.parquet, cf4_covariance_and_method_manifest.json]
+  desi_dr2_bao:
+    priority: P1
+    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    official_release: "https://data.desi.lbl.gov/doc/papers/dr2/"
+    likelihood_data: "https://github.com/CobayaSampler/bao_data/tree/master/desi_bao_dr2"
+    products:
+      - "Official BAO mean vector, covariance and observable/redshift metadata."
+      - "DR2 chains/best-fit and likelihood version information for baseline reproduction."
+    notes:
+      - "Use as an isotropic background expansion anchor only. The compressed BAO vector is not a sky-direction-dependent H(z,n) measurement."
+      - "Do not infer directional anisotropy from isotropic D_M/r_d, D_H/r_d or D_V/r_d points."
+    outputs: [desi_dr2_bao_mean.txt, desi_dr2_bao_cov.txt, desi_dr2_likelihood.yaml]
+software:
+  cobaya:
+    priority: P0
+    official_docs:
+      - "https://github.com/CobayaSampler/cobaya/blob/master/docs/likelihoods.rst"
+      - "https://github.com/CobayaSampler/cobaya/blob/master/docs/cosmo_external_likelihood_class.rst"
+      - "https://github.com/CobayaSampler/cobaya/blob/master/docs/sampler_mcmc.rst"
+    implementation: "External Likelihood class with explicit input parameters, initialize(), logp(), and provider requirements where standard cosmological theory is requested."
+    requirement: "Record installed Cobaya version, Python environment, sampler configuration, random seeds, chain identities and convergence diagnostics."
+  bianchi_transfer:
+    priority: P2
+    status: BLOCKED_NATIVE_SOLVER
+    policy: "Do not fabricate a native transfer. External code may be wrapped only with exact version/config/units and TransferFunctionSpec; output remains external-transfer-conditional."
