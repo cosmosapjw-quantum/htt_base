@@ -50,9 +50,9 @@ def vsh_basis_functions(ra_deg: np.ndarray, dec_deg: np.ndarray) -> Dict[str, li
 
     # 1. Spin (B1 axial magnetic dipole modes - rigid frame rotation)
     R_cols = [
-        np.column_stack([cos_t * cos_p, sin_p]),
-        np.column_stack([cos_t * sin_p, -cos_p]),
-        np.column_stack([-sin_t, np.zeros_like(phi)]),
+        np.column_stack([-cos_t * cos_p, sin_p]),
+        np.column_stack([-cos_t * sin_p, -cos_p]),
+        np.column_stack([sin_t, np.zeros_like(phi)]),
     ]
 
     # 2. Glide (E1 polar electric dipole modes - acceleration drift)
@@ -222,11 +222,11 @@ class SourceBoundGaiaVSHOperator:
         Sxx, Syy, Sxy, Sxz, Syz = sigma_5
         Szz = -Sxx - Syy
 
-        E2_0 = (1.0 / 6.0) * (2.0 * Szz - Sxx - Syy) * H0_MAS_YR
-        E2_1c = Sxz * H0_MAS_YR
-        E2_1s = Syz * H0_MAS_YR
-        E2_2c = 0.5 * (Sxx - Syy) * H0_MAS_YR
-        E2_2s = Sxy * H0_MAS_YR
+        E2_0 = 0.25 * Szz * H0_MAS_YR
+        E2_1c = 0.5 * Sxz * H0_MAS_YR
+        E2_1s = 0.5 * Syz * H0_MAS_YR
+        E2_2c = 0.25 * (Sxx - Syy) * H0_MAS_YR
+        E2_2s = 0.5 * Sxy * H0_MAS_YR
 
         c_pred = np.array([
             G_pred[0], G_pred[1], G_pred[2],

@@ -43,6 +43,22 @@ class SourceBoundNVSSOperator:
         if not os.path.exists(self.cat_path):
             raise FileNotFoundError(f"NVSS catalog not found at {self.cat_path}")
 
+        cache_path = os.path.join(
+            os.path.dirname(self.cat_path),
+            f"nvss_processed_s{int(self.s_min_mjy)}_b{int(self.b_cut_deg)}.npz"
+        )
+        if os.path.exists(cache_path):
+            data = np.load(cache_path)
+            self.n_sources = int(data["n_sources"])
+            self.n_selected = int(data["n_selected"])
+            self.D_obs = data["D_obs"]
+            self.amp_obs = float(data["amp_obs"])
+            self.cov_D = data["cov_D"]
+            self.inv_cov_D = data["inv_cov_D"]
+            self.cho_cov_D = data["cho_cov_D"]
+            self.C_EB = float(data["C_EB"])
+            return
+
         ra_list = []
         dec_list = []
 
@@ -138,6 +154,21 @@ class SourceBoundNVSSOperator:
 
         # NVSS Ellis-Baldwin coefficient: C_EB ~ 3.75
         self.C_EB = 3.75
+
+        try:
+            np.savez_compressed(
+                cache_path,
+                n_sources=self.n_sources,
+                n_selected=self.n_selected,
+                D_obs=self.D_obs,
+                amp_obs=self.amp_obs,
+                cov_D=self.cov_D,
+                inv_cov_D=self.inv_cov_D,
+                cho_cov_D=self.cho_cov_D,
+                C_EB=self.C_EB,
+            )
+        except Exception:
+            pass
 
     def evaluate_model(self, beta_MO: np.ndarray) -> Tuple[float, float]:
         """Compute chi2 and log-likelihood under matter-observer boost beta_MO."""

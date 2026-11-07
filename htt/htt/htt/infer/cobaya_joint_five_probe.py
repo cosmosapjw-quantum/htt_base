@@ -42,6 +42,7 @@ from common.source_bound_planck_lowell_operator import (
     PLANCK_OBS_PATH,
     PLANCK_ANALYSIS_DIR,
 )
+from common.relativistic_velocity_closure import compose_velocities_sr
 
 
 class JointFiveProbeLikelihood(Likelihood):
@@ -165,14 +166,19 @@ class JointFiveProbeLikelihood(Likelihood):
         ], dtype=np.float64)
         theta_K[14:17] = beta_MO
 
+        # High-z cosmological dipoles (Quaia and NVSS) respond to the effective boost
+        # composed of local observer boost beta_MO and radiation-matter cosmic tilt beta_RM
+        beta_RM = theta_K[11:14]
+        beta_highz = compose_velocities_sr(beta_RM, beta_MO)
+
         # 1. Pantheon+ log-likelihood
         _, _, log_like_pantheon = self.op_pantheon.evaluate_model(theta_K, psi)
 
         # 2. Quaia count dipole log-likelihood
-        _, log_like_quaia = self.op_quaia.evaluate_model(beta_MO)
+        _, log_like_quaia = self.op_quaia.evaluate_model(beta_highz)
 
         # 3. NVSS count dipole log-likelihood
-        _, log_like_nvss = self.op_nvss.evaluate_model(beta_MO)
+        _, log_like_nvss = self.op_nvss.evaluate_model(beta_highz)
 
         # 4. Gaia proper motion VSH log-likelihood
         _, log_like_gaia = self.op_gaia.evaluate_model(theta_K)

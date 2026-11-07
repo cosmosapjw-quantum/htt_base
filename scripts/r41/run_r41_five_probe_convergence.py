@@ -396,9 +396,9 @@ def main():
     print("  Hessian computed and verified positive definite.")
 
     # 8. Production MCMC Sampling
-    # 4 independent chains in parallel, 18,000 steps per chain = 72,000 steps
+    # 4 independent chains in parallel, 22,000 steps per chain = 88,000 steps
     n_chains = 4
-    n_steps = 18000
+    n_steps = 22000
     n_burnin = 3000
     print(f"\n[Step 7] Running {n_chains} independent MCMC chains in parallel ({n_steps} steps/chain, burnin={n_burnin})...")
 
@@ -459,7 +459,8 @@ def main():
         ],
         "total_astronomical_objects": total_data_objects,
         "sampler": {
-            "name": "Metropolis-Cobaya-Standard",
+            "name": "Parallel-MH-Hessian-Calibrated",
+            "cobaya_interface": "htt.infer.cobaya_joint_five_probe.JointFiveProbeLikelihood",
             "n_chains": n_chains,
             "steps_per_chain": n_steps,
             "burnin": n_burnin,
@@ -582,8 +583,8 @@ def main():
             "status": "SOURCE_BOUND_FIVE_PROBE_VALIDATED",
         },
         "sampler": {
-            "name": "Metropolis-Cobaya-Standard",
-            "version": "3.6.2",
+            "name": "Parallel-MH-Hessian-Calibrated",
+            "cobaya_interface": "htt.infer.cobaya_joint_five_probe.JointFiveProbeLikelihood",
             "chains": n_chains,
             "steps_per_chain": n_steps,
             "rhat_max": max_rhat,

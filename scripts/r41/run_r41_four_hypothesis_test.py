@@ -42,6 +42,7 @@ from common.source_bound_pantheon_operator import (
 )
 from common.source_bound_quaia_operator import SourceBoundQuaiaDipoleOperator
 from common.source_bound_nvss_operator import SourceBoundNVSSOperator
+from common.relativistic_velocity_closure import compose_velocities_sr
 
 C_LIGHT_KMS = 299792.458
 
@@ -178,7 +179,7 @@ class FourHypothesisDiscriminator:
         def objective(params: np.ndarray) -> float:
             beta_loc = params[:3]
             beta_tilt = params[3:6]
-            beta_highz = beta_loc + beta_tilt
+            beta_highz = compose_velocities_sr(beta_tilt, beta_loc)
             c_pan, _ = self._pan_eval(beta_loc)
             c_qua, _ = self.qua.evaluate_model(beta_highz)
             c_nvs, _ = self.nvs.evaluate_model(beta_highz)
@@ -189,7 +190,7 @@ class FourHypothesisDiscriminator:
         best_params = res.x
         beta_loc_best = best_params[:3]
         beta_tilt_best = best_params[3:6]
-        beta_highz_best = beta_loc_best + beta_tilt_best
+        beta_highz_best = compose_velocities_sr(beta_tilt_best, beta_loc_best)
 
         v_loc = float(np.linalg.norm(beta_loc_best) * C_LIGHT_KMS)
         v_tilt = float(np.linalg.norm(beta_tilt_best) * C_LIGHT_KMS)

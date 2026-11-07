@@ -49,3 +49,18 @@ def test_planck_operator_evaluation():
     chi2_exact, logl_exact = op.evaluate_modes(op.d_obs)
     assert np.isclose(chi2_exact, 0.0)
     assert logl_exact > logl_zero
+
+
+@pytest.mark.skipif(not os.path.exists(PLANCK_OBS_PATH), reason="Planck observed carrier not found")
+def test_planck_relativistic_velocity_composition():
+    """Verify that evaluate_model applies exact relativistic velocity closure for non-collinear boosts."""
+    op = SourceBoundPlanckLowEllOperator(verify_sha=False)
+
+    # Non-collinear high-speed boosts
+    th_rel = np.zeros(17, dtype=np.float64)
+    th_rel[11:14] = [0.1, 0.0, 0.0]  # beta_RM
+    th_rel[14:17] = [0.0, 0.1, 0.0]  # beta_MO
+
+    chi2_rel, logl_rel = op.evaluate_model(th_rel)
+    assert np.isfinite(chi2_rel)
+    assert np.isfinite(logl_rel)

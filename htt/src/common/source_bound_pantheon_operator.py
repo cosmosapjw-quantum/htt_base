@@ -178,6 +178,21 @@ class SourceBoundPantheonOperator:
         self.inv_cov_one = self.inv_cov @ self.one_vec
         self.var_delta_M0 = 1.0 / np.dot(self.one_vec, self.inv_cov_one)
 
+        # Precompute STF basis for vectorized directional projections
+        nx = self.n_hat_sel[:, 0]
+        ny = self.n_hat_sel[:, 1]
+        nz = self.n_hat_sel[:, 2]
+        self.sn_stf_basis = np.column_stack([
+            nx**2 - nz**2,
+            ny**2 - nz**2,
+            2.0 * nx * ny,
+            2.0 * nx * nz,
+            2.0 * ny * nz,
+        ])
+        self.log_det_cov = float(2.0 * np.sum(np.log(np.diag(self.cho_cov))))
+        self.log_prior_M0 = float(np.log(self.var_delta_M0))
+        self.const_log_norm = self.log_det_cov + self.log_prior_M0 + (self.n_selected - 1) * np.log(2.0 * np.pi)
+
     def evaluate_model(
         self,
         theta_K: np.ndarray,  # 17-vector: [sigma_5, omega_3, A_3, beta_RM_3, beta_MO_3]
@@ -209,20 +224,10 @@ class SourceBoundPantheonOperator:
         # mu = mu_iso - (5 / ln 10) * [ n^T S n - n . beta_MO - n . A ]
         factor = 5.0 / np.log(10.0)
 
-        # Shear tensor in 3x3 Cartesian STF
-        Sxx, Syy, Sxy, Sxz, Syz = sigma_5
-        Szz = -Sxx - Syy
-        S_mat = np.array([
-            [Sxx, Sxy, Sxz],
-            [Sxy, Syy, Syz],
-            [Sxz, Syz, Szz]
-        ], dtype=np.float64)
-
-        # Vectorized directional projections
-        # n^T S n = sum_i sum_j n_i S_ij n_j
-        shear_proj = np.einsum("ni,ij,nj->n", self.n_hat_sel, S_mat, self.n_hat_sel)
-        boost_proj = np.dot(self.n_hat_sel, beta_MO_3)
-        accel_proj = np.dot(self.n_hat_sel, A_3)
+        # Vectorized directional projections via precomputed basis
+        shear_proj = self.sn_stf_basis @ sigma_5
+        boost_proj = self.n_hat_sel @ beta_MO_3
+        accel_proj = self.n_hat_sel @ A_3
 
         delta_mu_aniso = -factor * (shear_proj - boost_proj - accel_proj)
         mu_pred_no_offset = mu_iso + delta_mu_aniso
@@ -231,15 +236,11 @@ class SourceBoundPantheonOperator:
         res_raw = self.m_b_corr_sel - mu_pred_no_offset
 
         # 4. Analytic Schur marginalization for Delta M_0
-        # best_fit_delta_M0 = (1^T C^-1 res) / (1^T C^-1 1)
         best_fit_M0 = float(np.dot(self.inv_cov_one, res_raw) * self.var_delta_M0)
         res_eff = res_raw - best_fit_M0
 
         # Effective chi2
         chi2 = float(np.dot(res_eff, self.inv_cov @ res_eff))
-        log_det_cov = float(2.0 * np.sum(np.log(np.diag(self.cho_cov))))
-        log_prior_M0 = float(np.log(self.var_delta_M0))
-
-        log_like = -0.5 * (chi2 + log_det_cov + log_prior_M0 + (self.n_selected - 1) * np.log(2.0 * np.pi))
+        log_like = -0.5 * (chi2 + self.const_log_norm)
 
         return chi2, best_fit_M0, log_like

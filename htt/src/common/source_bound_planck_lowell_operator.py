@@ -21,6 +21,7 @@ from typing import Tuple, Dict, Any, Optional
 import numpy as np
 
 from common.source_bound_pantheon_operator import verify_file_sha256
+from common.relativistic_velocity_closure import compose_velocities_sr
 
 PLANCK_ANALYSIS_DIR = "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis"
 PLANCK_OBS_PATH = os.path.join(PLANCK_ANALYSIS_DIR, "observed_lowell_EB.npz")
@@ -126,8 +127,8 @@ class SourceBoundPlanckLowEllOperator:
         beta_RM_3 = theta_K[11:14] # Radiation-to-matter velocity
         beta_MO_3 = theta_K[14:17] # Matter-to-observer velocity
 
-        # 1. Total observer velocity relative to radiation: beta_RO = beta_RM + beta_MO (first order)
-        beta_RO = beta_RM_3 + beta_MO_3
+        # 1. Total observer velocity relative to radiation: exact special relativistic velocity composition
+        beta_RO = compose_velocities_sr(beta_RM_3, beta_MO_3)
 
         # 2. Kinematic Doppler quadrupole Q_ij = T_0 (beta_i beta_j - 1/3 beta^2 delta_ij)
         # in Kelvin
