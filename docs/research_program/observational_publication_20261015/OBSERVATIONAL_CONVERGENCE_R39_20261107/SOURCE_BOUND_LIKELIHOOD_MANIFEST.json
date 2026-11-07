@@ -1,0 +1,49 @@
+{
+  "schema": "htt.r39_source_bound_likelihood_manifest/1",
+  "program": "HTT-R39",
+  "date_local": "2026-11-07",
+  "status": "QUALIFIED_FAIL_CLOSED",
+  "probes": {
+    "CMB": {
+      "dataset": "Planck PR4 Commander",
+      "map_path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/COM_CMB_IQU-commander_4096_R4.00_full.fits",
+      "sha256": "4be7054dff31d5aa11df83e58c9b32115169a910ec3f631ff3d85d77ce0970a0",
+      "mc_count": 100,
+      "covariance_identity": "EMPIRICAL_FFP_NOISE_FOREGROUND_RESIDUAL",
+      "modes": "ell=2,3 (quadrupole, octopole) T/E carriers"
+    },
+    "COUNTS": {
+      "dataset": "Quaia G<20.0 + NVSS Radio",
+      "quaia_path": "/mnt/extdrive/workdir/htt_open_data/quaia/quaia_G20.0.fits",
+      "quaia_sha256": "ab186fa5b2f9fa2a0614068593a20728cbe9b736b42b6a67f0f6bbbe812d8a5c",
+      "randoms_path": "/mnt/extdrive/workdir/htt_open_data/quaia/quaia_G20.0_randoms_10x.fits",
+      "selection_map": "/mnt/extdrive/workdir/htt_open_data/quaia/quaia_G20.0_selection_nside64.fits",
+      "nvss_path": "/mnt/extdrive/workdir/htt_open_data/radio/nvss.dat.gz",
+      "tracer_kinematic_factor": "2 + x*(1 + alpha)"
+    },
+    "ASTROMETRY": {
+      "dataset": "Gaia DR3 CRF3 Quasars",
+      "path": "/mnt/extdrive/workdir/htt_open_data/gaia/quaia_crf3_join.npz",
+      "sha256": "aa3346d0e653fbb8b8bb13b3d1b82fa7bba9b51fa16d1df3ddf4d6d62372d8a9",
+      "source_count": 692154,
+      "covariance_identity": "FULL_SOURCE_ASTROMETRIC_PMRA_PMDEC",
+      "modes": "E1 glide, B1 spin, E2 shear"
+    },
+    "DISTANCE": {
+      "pantheon_data": "/mnt/extdrive/workdir/htt_open_data/pantheonplus/Pantheon+SH0ES.dat",
+      "pantheon_cov": "/mnt/extdrive/workdir/htt_open_data/pantheonplus/Pantheon+SH0ES_STAT+SYS.cov",
+      "pantheon_sha256": "3cb611ec5a285d82fe6c3d5e23737b6a48f7f2b1d3dca4aa3bb519e49a888c03",
+      "selected_block": "490 rows (z in [0.0233, 0.15]) 2-axis sliced",
+      "cf4_operator": "/mnt/extdrive/workdir/htt_open_data/cf4/selected_source_observables.npz",
+      "cf4_selected_groups": 35970
+    },
+    "DESI": {
+      "dataset": "DESI DR2 BAO ALL_GCcomb",
+      "mean_path": "/mnt/extdrive/workdir/htt_open_data/desi/desi_dr2_mean.txt",
+      "cov_path": "/mnt/extdrive/workdir/htt_open_data/desi/desi_dr2_cov.txt",
+      "role": "ISOTROPIC_BACKGROUND_EXPANSION_ONLY",
+      "sky_axis_leverage": "NONE_ISOTROPIC_COMPRESSION"
+    }
+  },
+  "joint_likelihood_model": "p(D|theta_K, psi, eta) with conditional independence across disparate observable channels and shared latent parameters (theta_K, H0, M_abs, Omega_triad)"
+}

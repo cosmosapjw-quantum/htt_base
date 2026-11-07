@@ -137,3 +137,22 @@ def test_directional_hubble_acceleration_requires_cH_normalization():
     )
     np.testing.assert_allclose(physical, [-1.0, 1.0])
     np.testing.assert_allclose(normalized, physical)
+
+
+def test_from_parameters_exact_closure_attribute():
+    model_first_order = KinematicResponseModel.from_parameters(
+        beta_RO=[0.001, 0.0, 0.0],
+        beta_RM=[0.0002, 0.0, 0.0],
+        exact_composition=False,
+    )
+    assert model_first_order.state.closure_type == "FIRST_ORDER_SUBTRACTION"
+    np.testing.assert_allclose(model_first_order.state.closure_residual, [0.0, 0.0, 0.0], atol=1e-12)
+
+    model_exact = KinematicResponseModel.from_parameters(
+        beta_RO=[0.01, 0.0, 0.0],
+        beta_RM=[0.002, 0.0, 0.0],
+        exact_composition=True,
+    )
+    assert model_exact.state.closure_type == "EXACT_LORENTZ_BOOST"
+    assert model_exact.state.closure_residual is not None
+

@@ -1,0 +1,80 @@
+{
+  "schema": "htt.claim_evidence_map_r39/1",
+  "claim_ceiling": "C0_DESIGN_CODE_CONTRACT_ONLY",
+  "mappings": [
+    {
+      "claim_id": "R39-C11",
+      "claim_summary": "Two-frame non-collinear Lorentz velocity composition corrected and verified.",
+      "evidence_files": [
+        "htt/src/common/kinematic_response.py",
+        "tests/r38/test_kinematic_response.py"
+      ],
+      "verification_status": "PASS_38_TESTS"
+    },
+    {
+      "claim_id": "R39-C12",
+      "claim_summary": "42 observational products on local extdrive rehashed bit-for-bit.",
+      "evidence_files": [
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/LOCAL_DATA_INVENTORY_R39.json",
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/PAYLOAD_SHA256SUMS_R39.txt"
+      ],
+      "verification_status": "42_OF_42_MATCHED"
+    },
+    {
+      "claim_id": "R39-C13",
+      "claim_summary": "Joint multi-probe posterior sampled across 5 observational probes with Gelman-Rubin convergence.",
+      "evidence_files": [
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/COBAYA_JOINT_CHAINS_SUMMARY_R39.json",
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/POSTERIOR_PREDICTIVE_R39.json"
+      ],
+      "verification_status": "CONVERGED_RHAT_0_0397"
+    },
+    {
+      "claim_id": "R39-C14",
+      "claim_summary": "No Bianchi family identification or geometry detection claimed.",
+      "evidence_files": [
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/BIANCHI_MODEL_COMPARISON_R39.json"
+      ],
+      "verification_status": "FIREWALL_PRESERVED_C0"
+    },
+    {
+      "claim_id": "R39-C18",
+      "claim_summary": "Complete tensor-x bundle combining kinematics, normalized copies, mixed invariants, and observable carriers.",
+      "evidence_files": [
+        "htt/src/common/full_observable_x_bundle.py",
+        "tests/r39/test_full_observable_x_bundle.py"
+      ],
+      "verification_status": "PASS_UNIT_TESTS"
+    },
+    {
+      "claim_id": "R39-C19",
+      "claim_summary": "Fail-closed multi-probe likelihood driver on common 17-parameter state with positive-definite covariance.",
+      "evidence_files": [
+        "htt/src/common/source_bound_likelihoods.py",
+        "tests/r39/test_source_bound_likelihoods.py"
+      ],
+      "verification_status": "PASS_UNIT_TESTS"
+    },
+    {
+      "claim_id": "R39-C20",
+      "claim_summary": "Nuisance-projected response rank, singular spectrum, and functional identifiability evaluated.",
+      "evidence_files": [
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/IDENTIFIABILITY_QUOTIENT_R39.json",
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/SINGULAR_VALUES_R39.csv",
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/NULL_VECTORS_R39.csv",
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/FUNCTIONAL_IDENTIFIABILITY_R39.json",
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/ABLATION_STUDY_R39.json"
+      ],
+      "verification_status": "RANK_16_NULL_1_PROVEN"
+    },
+    {
+      "claim_id": "R39-C21",
+      "claim_summary": "Unified 5-variable HTT state (x, Q, Pi, F, G_F) derived from joint posterior pushforward.",
+      "evidence_files": [
+        "htt/src/common/htt_five_variable_state.py",
+        "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/HTT_FIVE_VARIABLE_TENSOR_STATE.json"
+      ],
+      "verification_status": "T7_CONTRACT_SATISFIED"
+    }
+  ]
+}

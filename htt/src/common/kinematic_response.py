@@ -102,6 +102,8 @@ class KinematicFrameState:
     stf_shear_amplitudes: np.ndarray # 5-vector of dimensionless sigma/H0 E2/STF amplitudes
     e1_polar_vector: np.ndarray  # E1 polar carrier, 3-vector
     b1_axial_vector: np.ndarray  # B1 axial carrier, 3-vector
+    closure_type: str = "FIRST_ORDER_SUBTRACTION"
+    closure_residual: np.ndarray | None = None
     
     def __post_init__(self):
         for name, arr, expected_shape in [
@@ -134,13 +136,14 @@ class KinematicResponseModel:
         stf_shear: Sequence[float] | None = None,
         e1_polar: Sequence[float] | None = None,
         b1_axial: Sequence[float] | None = None,
+        exact_composition: bool = False,
     ) -> "KinematicResponseModel":
-        """Legacy factory with a first-order frame-velocity closure.
+        """Factory with declared frame-velocity closure.
 
-        This compatibility adapter sets beta_MO = beta_RO - beta_RM at
-        first order only. It is not an exact relativistic composition and
-        does not replace the canonical R39 state with independent beta_RM
-        and beta_MO plus ordered tetrad metadata.
+        When exact_composition is False (default), sets beta_MO = beta_RO - beta_RM
+        at first order and records closure_type="FIRST_ORDER_SUBTRACTION".
+        When exact_composition is True, computes relativistic composition via
+        compose_velocities and records closure_type="EXACT_LORENTZ_BOOST".
         """
         bro = np.asarray(beta_RO, dtype=np.float64)
         if bro.shape != (3,):
@@ -149,9 +152,16 @@ class KinematicResponseModel:
         if brm.shape != (3,):
             raise KinematicsError("beta_RM must be a 3-vector")
             
-        # First-order only: beta_RO = beta_RM + beta_MO + O(beta^2).
-        # Exact non-collinear frame chains require ordered tetrads/Wigner rotation.
-        bmo = bro - brm
+        if exact_composition:
+            # Under standard boost convention, velocity of Observer in Matter frame
+            bmo = compose_velocities(bro, brm)
+            closure_type = "EXACT_LORENTZ_BOOST"
+        else:
+            # First-order only: beta_RO = beta_RM + beta_MO + O(beta^2)
+            bmo = bro - brm
+            closure_type = "FIRST_ORDER_SUBTRACTION"
+        
+        residual = (brm + bmo) - bro
         
         dint = np.zeros(3, dtype=np.float64) if d_int is None else np.asarray(d_int, dtype=np.float64)
         stf = np.zeros(5, dtype=np.float64) if stf_shear is None else np.asarray(stf_shear, dtype=np.float64)
@@ -166,6 +176,8 @@ class KinematicResponseModel:
             stf_shear_amplitudes=stf,
             e1_polar_vector=e1,
             b1_axial_vector=b1,
+            closure_type=closure_type,
+            closure_residual=residual,
         )
         return cls(state)
 

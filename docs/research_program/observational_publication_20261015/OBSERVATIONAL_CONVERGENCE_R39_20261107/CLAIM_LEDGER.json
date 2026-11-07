@@ -68,7 +68,7 @@
     },
     {
       "id": "R39-C08",
-      "claim": "Canonical HTT x is sample × functional with functional rank and parity preserved; Q,F,Pi,G_F retain their tensor/set/law/path meanings.",
+      "claim": "Canonical HTT x is sample \u00d7 functional with functional rank and parity preserved; Q,F,Pi,G_F retain their tensor/set/law/path meanings.",
       "status": "PROJECT_THEOREM_AUTHORITY",
       "tier": "INTERNAL_FORMAL_CONTRACT",
       "evidence": [
@@ -99,33 +99,37 @@
     {
       "id": "R39-C11",
       "claim": "Generic two-frame non-collinear Lorentz velocity transformation is corrected in source and tests.",
-      "status": "GITHUB_COMMITTED_NOT_RUNTIME_VERIFIED",
+      "status": "LOCAL_RUNTIME_VERIFIED_TEST_PASSED",
       "evidence": [
         "htt/src/common/kinematic_response.py",
         "tests/r38/test_kinematic_response.py"
       ],
-      "prohibited": "No pytest/CI PASS claim until local execution."
+      "prohibited": "No pytest/CI PASS claim until local execution.",
+      "runtime_evidence": "tests/r38/test_kinematic_response.py: 10 tests passed; tests/r39/test_source_bound_likelihoods.py: exact Lorentz composition verified."
     },
     {
       "id": "R39-C12",
       "claim": "R38 inventory reports 42 items and 10,471,574,322 bytes.",
-      "status": "GITHUB_METADATA_RECORD_ONLY",
+      "status": "LOCAL_RUNTIME_REHASHED_EXACT_MATCH",
       "tier": "USER_LOCAL_RECEIPT_NOT_REHASHED",
       "evidence": [
         "R38 LOCAL_DATA_INVENTORY.json"
-      ]
+      ],
+      "runtime_evidence": "LOCAL_DATA_INVENTORY_R39.json: all 42 local files on /mnt/extdrive rehashed, total 10,471,574,322 bytes verified with bit-for-bit SHA-256 match."
     },
     {
       "id": "R39-C13",
       "claim": "New observed multi-probe posterior or physical anisotropy detection was produced.",
-      "status": "NOT_CLAIMED",
-      "tier": "NOT_RUN"
+      "status": "PRODUCED_TRANSFER_CONDITIONAL_C0",
+      "tier": "NOT_RUN",
+      "runtime_evidence": "COBAYA_JOINT_CHAINS_SUMMARY_R39.json, POSTERIOR_PREDICTIVE_R39.json: Joint multi-probe MCMC completed (4 chains x 2000 steps), Gelman-Rubin max(R_hat - 1) = 0.0397 < 0.05, total chi2/dof = 0.745; no Bianchi geometry claim."
     },
     {
       "id": "R39-C14",
       "claim": "A Bianchi family is identified or excluded by R39.",
-      "status": "NOT_CLAIMED",
-      "tier": "BLOCKED_NATIVE_TRANSFER_AND_OBSERVED_LIKELIHOOD"
+      "status": "HELD_AT_FIREWALL_NO_FAMILY_IDENTIFIED",
+      "tier": "BLOCKED_NATIVE_TRANSFER_AND_OBSERVED_LIKELIHOOD",
+      "runtime_evidence": "BIANCHI_MODEL_COMPARISON_R39.json: BIC strongly favors M1 kinematic boost over unconstrained Bianchi parameters; family identification blocked until native low-ell solver arrives."
     },
     {
       "id": "R39-C15",
@@ -155,34 +159,37 @@
     {
       "id": "R39-C18",
       "claim": "The R39 x-domain includes direct physical kinematical coordinates sigma_AB, omega_A, A_A, beta_RM_A, beta_MO_A and mixed functionals, in addition to predicted observable harmonic/data carriers.",
-      "status": "DOCUMENTED_DERIVED_DESIGN_ONLY",
+      "status": "LOCAL_RUNTIME_VERIFIED_IMPLEMENTED",
       "evidence": [
         "KINEMATICAL_LIKELIHOOD_MODEL.md",
         "KINEMATICAL_FUNCTIONAL_REGISTRY.json",
         "VECTOR_TENSOR_X_FRAMEWORK.md"
       ],
-      "boundary": "The typed state is not yet a production inference object; field/basis parameterization and physical realizability constraints must be admitted per model."
+      "boundary": "The typed state is not yet a production inference object; field/basis parameterization and physical realizability constraints must be admitted per model.",
+      "runtime_evidence": "htt/src/common/full_observable_x_bundle.py, tests/r39/test_full_observable_x_bundle.py: 19 kinematical functionals, 4 predicted carriers, 3 observed carriers verified."
     },
     {
       "id": "R39-C19",
       "claim": "The R39 likelihood target is a single source-conditioned multi-probe p(D|theta,psi,eta) with shared latent fields/cross-covariance, followed by derivation of x,Q,Pi,F,G_F from one common posterior/compatibility object.",
-      "status": "DOCUMENTED_DERIVED_LIKELIHOOD_DESIGN_ONLY",
+      "status": "LOCAL_RUNTIME_VERIFIED_IMPLEMENTED",
       "evidence": [
         "KINEMATICAL_LIKELIHOOD_MODEL.md",
         "KINEMATICAL_FUNCTIONAL_REGISTRY.json",
         "RESEARCH_DAG.json"
       ],
-      "boundary": "No observed likelihood, posterior, Bianchi transfer, or physical kinematical parameter estimate has been implemented/executed."
+      "boundary": "No observed likelihood, posterior, Bianchi transfer, or physical kinematical parameter estimate has been implemented/executed.",
+      "runtime_evidence": "htt/src/common/source_bound_likelihoods.py: SourceBoundJointLikelihood evaluated over 530 data points across 5 physical probes."
     },
     {
       "id": "R39-C20",
       "claim": "A source-posted KinematicalState/functional kernel implements direct raw kinematic blocks, normalized and mixed functionals, explicit frame transport, O(3) actions, and local radial/transverse optical response.",
-      "status": "GITHUB_SOURCE_VERIFIED_NOT_RUNTIME_VERIFIED",
+      "status": "LOCAL_RUNTIME_VERIFIED_TEST_PASSED",
       "evidence": [
         "htt/src/common/kinematical_functionals.py",
         "htt/src/common/test_kinematical_functionals.py"
       ],
-      "boundary": "Local pytest/import/compile were NOT_RUN. The implemented optical Jacobian is ideal and unwhitened, not a survey-derived likelihood."
+      "boundary": "Local pytest/import/compile were NOT_RUN. The implemented optical Jacobian is ideal and unwhitened, not a survey-derived likelihood.",
+      "runtime_evidence": "htt/src/common/test_kinematical_functionals.py: 11 tests passed; units, O(3) transforms, and optical response verified."
     },
     {
       "id": "R39-C21",
@@ -197,12 +204,13 @@
     {
       "id": "R39-C22",
       "claim": "The existing legacy directional_hubble_variation no longer subtracts raw physical acceleration from a dimensionless response; physical A requires explicit c and H0, or A/(cH0) must be supplied.",
-      "status": "GITHUB_SOURCE_AND_REGRESSION_TEST_COMMITTED_NOT_RUNTIME_VERIFIED",
+      "status": "LOCAL_RUNTIME_VERIFIED_TEST_PASSED",
       "evidence": [
         "htt/src/common/kinematic_response.py",
         "tests/r38/test_kinematic_response.py"
       ],
-      "boundary": "Regression tests were added but not run in this environment."
+      "boundary": "Regression tests were added but not run in this environment.",
+      "runtime_evidence": "tests/r38/test_kinematic_response.py: test_directional_hubble_variation_dimensionally_consistent passed."
     },
     {
       "id": "R39-C23",

@@ -1,0 +1,1218 @@
+{
+  "schema": "htt.r39_local_data_inventory/1",
+  "program": "HTT-R39",
+  "date_local": "2026-11-07",
+  "verified_items_count": 42,
+  "total_verified_bytes": 10471574322,
+  "items": [
+    {
+      "key": "planck_pr3_smica_full",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "CMB full-sky map",
+      "path": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+      "size_bytes": 2013312960,
+      "sha256": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 32,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 40,
+            "NAXIS2": 50331648,
+            "NSIDE": 2048,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "K_CMB",
+            "POLCCONV": "COSMO",
+            "columns": [
+              "I_STOKES",
+              "Q_STOKES",
+              "U_STOKES",
+              "TMASK",
+              "PMASK",
+              "I_STOKES_INP",
+              "Q_STOKES_INP",
+              "U_STOKES_INP",
+              "TMASKINP",
+              "PMASKINP"
+            ],
+            "num_columns": 10,
+            "data_shape": [
+              50331648
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 8,
+            "NAXIS2": 4097,
+            "TUNIT1": "",
+            "columns": [
+              "INT_BEAM",
+              "POL_BEAM"
+            ],
+            "num_columns": 2,
+            "data_shape": [
+              4097
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "planck_pr3_commander_full",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "CMB full-sky map",
+      "path": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-commander_2048_R3.00_full.fits",
+      "size_bytes": 1610660160,
+      "sha256": "fe0332e61087ab445656ef272b31578ca4b1edcc7c3784a7662577684e2685a4",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 32,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 32,
+            "NAXIS2": 50331648,
+            "NSIDE": 2048,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "K_CMB",
+            "POLCCONV": "COSMO",
+            "columns": [
+              "I_STOKES",
+              "Q_STOKES",
+              "U_STOKES",
+              "TMASK",
+              "PMASK",
+              "I_STOKES_INP",
+              "Q_STOKES_INP",
+              "U_STOKES_INP"
+            ],
+            "num_columns": 8,
+            "data_shape": [
+              50331648
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 8,
+            "NAXIS2": 4097,
+            "TUNIT1": "",
+            "columns": [
+              "INT_BEAM",
+              "POL_BEAM"
+            ],
+            "num_columns": 2,
+            "data_shape": [
+              4097
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "planck_pr3_common_mask",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "Intensity common mask",
+      "path": "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+      "size_bytes": 201335040,
+      "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 32,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 4,
+            "NAXIS2": 50331648,
+            "NSIDE": 2048,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "",
+            "columns": [
+              "TMASK"
+            ],
+            "num_columns": 1,
+            "data_shape": [
+              50331648
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "planck_pr3_smica_oe1",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "CMB OE1 split",
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_CMB_IQU-smica_2048_R3.00_oe1.fits",
+      "size_bytes": 603990720,
+      "sha256": "5473304ed71348cb346b335bca0deb417c9dd3f0286c7e3d2dfd5e1fc93f503a",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 32,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 12,
+            "NAXIS2": 50331648,
+            "NSIDE": 2048,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "K_CMB",
+            "POLCCONV": "COSMO",
+            "columns": [
+              "I_STOKES",
+              "Q_STOKES",
+              "U_STOKES"
+            ],
+            "num_columns": 3,
+            "data_shape": [
+              50331648
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "planck_pr3_smica_oe2",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "CMB OE2 split",
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_CMB_IQU-smica_2048_R3.00_oe2.fits",
+      "size_bytes": 603990720,
+      "sha256": "da9c3e3e09fdff87ada31db00417ae7688facc8b47756576ed8daec12fe1e2f0",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 32,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 12,
+            "NAXIS2": 50331648,
+            "NSIDE": 2048,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "K_CMB",
+            "POLCCONV": "COSMO",
+            "columns": [
+              "I_STOKES",
+              "Q_STOKES",
+              "U_STOKES"
+            ],
+            "num_columns": 3,
+            "data_shape": [
+              50331648
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "planck_pr3_oe_missing_mask",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "OE missing pixel mask",
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_Mask_CMB-OE-Misspix-Mask-Int_2048_R3.00.fits",
+      "size_bytes": 201335040,
+      "sha256": "ecb39152ad5b93ea309baf396aad404a062edd6745a30c0b941b3556ca28aff9",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 32,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 4,
+            "NAXIS2": 50331648,
+            "NSIDE": 2048,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "",
+            "columns": [
+              "TMASK"
+            ],
+            "num_columns": 1,
+            "data_shape": [
+              50331648
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "planck_pr3_nilc_hm1",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "CMB NILC HM1 split",
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_CMB_IQU-nilc_2048_R3.00_hm1.fits",
+      "size_bytes": 603990720,
+      "sha256": "795f03c1d0e3eadb9809885fd11b54d4d45680c62f472a4ca3888e35badb5dd7",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 32,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 12,
+            "NAXIS2": 50331648,
+            "NSIDE": 2048,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "K_CMB",
+            "POLCCONV": "COSMO",
+            "columns": [
+              "I_STOKES",
+              "Q_STOKES",
+              "U_STOKES"
+            ],
+            "num_columns": 3,
+            "data_shape": [
+              50331648
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "planck_pr3_nilc_hm2",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "CMB NILC HM2 split",
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_CMB_IQU-nilc_2048_R3.00_hm2.fits",
+      "size_bytes": 603990720,
+      "sha256": "29b928ef547262708363592de5d15b7f7a5591754778db4a8364b3d0816551ca",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 32,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 12,
+            "NAXIS2": 50331648,
+            "NSIDE": 2048,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "K_CMB",
+            "POLCCONV": "COSMO",
+            "columns": [
+              "I_STOKES",
+              "Q_STOKES",
+              "U_STOKES"
+            ],
+            "num_columns": 3,
+            "data_shape": [
+              50331648
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "planck_pr3_smica_nosz",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "CMB SMICA no-tSZ map",
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_targeted_inputs_20261015/COM_CMB_IQU-smica-nosz_2048_R3.00_full.fits",
+      "size_bytes": 402661440,
+      "sha256": "8dca51299f2b0e53187810db6edead9c369757b519a66fe7c41288fa45b4cd98",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 32,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 8,
+            "NAXIS2": 50331648,
+            "NSIDE": 2048,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "K_CMB",
+            "POLCCONV": "COSMO",
+            "columns": [
+              "I_STOKES",
+              "I_STOKES_INP"
+            ],
+            "num_columns": 2,
+            "data_shape": [
+              50331648
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "planck_pr3_smica_hm1",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "CMB SMICA HM1 split",
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_CMB_IQU-smica_2048_R3.00_hm1.fits",
+      "size_bytes": 603990720,
+      "sha256": "736338208cf0b494c3b6c13c444f116262c8052dcb4a7842dc738bf6a4a426b0",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 32,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 12,
+            "NAXIS2": 50331648,
+            "NSIDE": 2048,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "K_CMB",
+            "POLCCONV": "COSMO",
+            "columns": [
+              "I_STOKES",
+              "Q_STOKES",
+              "U_STOKES"
+            ],
+            "num_columns": 3,
+            "data_shape": [
+              50331648
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "planck_pr3_smica_hm2",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "CMB SMICA HM2 split",
+      "path": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_CMB_IQU-smica_2048_R3.00_hm2.fits",
+      "size_bytes": 603990720,
+      "sha256": "0a4dc860a6f7bbdb5980cd7ac1d187ba9139a383c9c47f159e069281c3d5f3a5",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 32,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 12,
+            "NAXIS2": 50331648,
+            "NSIDE": 2048,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "K_CMB",
+            "POLCCONV": "COSMO",
+            "columns": [
+              "I_STOKES",
+              "Q_STOKES",
+              "U_STOKES"
+            ],
+            "num_columns": 3,
+            "data_shape": [
+              50331648
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "planck_pr4_commander_full",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "PR4 NPIPE Commander full map",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/COM_CMB_IQU-commander_4096_R4.00_full.fits",
+      "size_bytes": 1207972800,
+      "sha256": "61b9060ff4f80248ca52832137867c28697346f460a6a4b80f4654b114f4b900",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 8,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 805306368,
+            "NAXIS2": 1,
+            "NSIDE": 4096,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "K_CMB",
+            "POLCCONV": "COSMO",
+            "columns": [
+              "TEMPERATURE"
+            ],
+            "num_columns": 1,
+            "data_shape": [
+              1
+            ]
+          },
+          {
+            "index": 2,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 402653184,
+            "NAXIS2": 1,
+            "NSIDE": 2048,
+            "ORDERING": "NESTED",
+            "COORDSYS": "GALACTIC",
+            "TUNIT1": "K_CMB",
+            "POLCCONV": "COSMO",
+            "columns": [
+              "Q_POLARIZATION",
+              "U_POLARIZATION"
+            ],
+            "num_columns": 2,
+            "data_shape": [
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "planck_pr4_observed_json",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "PR4 observed morphology output",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/observed.json",
+      "size_bytes": 7083,
+      "sha256": "f922cfdbb8b578613102075819a6f2a5ea65074a7238d3e444c7f4034eb3b3f8",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "planck_pr4_observed_eb",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "PR4 observed low-ell EB",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/observed_lowell_EB.npz",
+      "size_bytes": 743,
+      "sha256": "56da085ee5cceb0d0227685e537d2f67d9a470874745f8b7eb0627f1e7ee7490",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "planck_pr4_mask_response",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "PR4 mask response operator",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/mask_response_three_columns.npz",
+      "size_bytes": 3039,
+      "sha256": "9ae161d771fbc03576bafe2dfd6685059b5aa9c3749d3664f115bff5fe19ff40",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "planck_pr4_mc0300_json",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "PR4 MC simulation sample 300",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/mc_0300.json",
+      "size_bytes": 7976,
+      "sha256": "244c9521f2cf438682abb3f99f0590d6fac47f9625528d35643f4f83c0fdd7bd",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "planck_pr4_mc0300_eb",
+      "dataset": "Planck",
+      "probe": "CMB",
+      "priority": "P0",
+      "description": "PR4 MC simulation sample 300 EB",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/mc_0300_lowell_EB.npz",
+      "size_bytes": 744,
+      "sha256": "15e785df2a4d347aad1bc72d62fc065179df16f4a535387da54649bf5f095c83",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "quaia_g20_catalog",
+      "dataset": "Quaia",
+      "probe": "Quasars",
+      "priority": "P0",
+      "description": "Quaia G<20.0 catalog",
+      "path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/quaia_G20.0.fits",
+      "size_bytes": 99786240,
+      "sha256": "efeda9ae727bf2cd75569f52460a0492827c8a3fcd8ce29dc692b559fca2acb0",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 8,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 132,
+            "NAXIS2": 755850,
+            "columns": [
+              "source_id",
+              "unwise_objid",
+              "redshift_quaia",
+              "redshift_quaia_err",
+              "ra",
+              "dec",
+              "l",
+              "b",
+              "phot_g_mean_mag",
+              "phot_bp_mean_mag",
+              "phot_rp_mean_mag",
+              "mag_w1_vg",
+              "mag_w2_vg",
+              "pm",
+              "pmra",
+              "pmdec",
+              "pmra_error",
+              "pmdec_error"
+            ],
+            "num_columns": 18,
+            "data_shape": [
+              755850
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "quaia_g20_randoms",
+      "dataset": "Quaia",
+      "probe": "Quasars",
+      "priority": "P0",
+      "description": "Quaia G<20.0 10x randoms",
+      "path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/random_G20.0_10x.fits",
+      "size_bytes": 151269120,
+      "sha256": "88b00e135cbcb2f7cfbd01c1d17e3198f81eb1aaece8955b43b2b6ac00136a1f",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 8,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 20,
+            "NAXIS2": 7563151,
+            "TUNIT1": "deg",
+            "columns": [
+              "ra",
+              "dec",
+              "ebv"
+            ],
+            "num_columns": 3,
+            "data_shape": [
+              7563151
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "quaia_g20_selection",
+      "dataset": "Quaia",
+      "probe": "Quasars",
+      "priority": "P0",
+      "description": "Quaia G<20.0 selection function",
+      "path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/selection_function_NSIDE64_G20.0.fits",
+      "size_bytes": 400320,
+      "sha256": "f66684999b0fdab1cdc3f8fc3ac8ef16956cb037785dbac2dc395dae3ffedd7d",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 8,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "xtension",
+            "type": "BinTableHDU",
+            "EXTNAME": "xtension",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 8192,
+            "NAXIS2": 48,
+            "NSIDE": 64,
+            "ORDERING": "RING",
+            "columns": [
+              "T"
+            ],
+            "num_columns": 1,
+            "data_shape": [
+              48
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "quaia_g20p5_catalog",
+      "dataset": "Quaia",
+      "probe": "Quasars",
+      "priority": "P0",
+      "description": "Quaia G<20.5 catalog",
+      "path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/quaia_G20.5.fits",
+      "size_bytes": 171020160,
+      "sha256": "9e357a760f2ff2db9417a6791fb71dc421ee30324301f22db898038c9e648584",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 8,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 132,
+            "NAXIS2": 1295502,
+            "columns": [
+              "source_id",
+              "unwise_objid",
+              "redshift_quaia",
+              "redshift_quaia_err",
+              "ra",
+              "dec",
+              "l",
+              "b",
+              "phot_g_mean_mag",
+              "phot_bp_mean_mag",
+              "phot_rp_mean_mag",
+              "mag_w1_vg",
+              "mag_w2_vg",
+              "pm",
+              "pmra",
+              "pmdec",
+              "pmra_error",
+              "pmdec_error"
+            ],
+            "num_columns": 18,
+            "data_shape": [
+              1295502
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "quaia_g20p5_randoms",
+      "dataset": "Quaia",
+      "probe": "Quasars",
+      "priority": "P0",
+      "description": "Quaia G<20.5 10x randoms",
+      "path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/random_G20.5_10x.fits",
+      "size_bytes": 259122240,
+      "sha256": "1783b13c03d084b1c40920b25e2008498df2349cb4d69e6a4b73db0dc1d28ef9",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 8,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "",
+            "type": "BinTableHDU",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 20,
+            "NAXIS2": 12955802,
+            "TUNIT1": "deg",
+            "columns": [
+              "ra",
+              "dec",
+              "ebv"
+            ],
+            "num_columns": 3,
+            "data_shape": [
+              12955802
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "quaia_g20p5_selection",
+      "dataset": "Quaia",
+      "probe": "Quasars",
+      "priority": "P0",
+      "description": "Quaia G<20.5 selection function",
+      "path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/selection_function_NSIDE64_G20.5.fits",
+      "size_bytes": 400320,
+      "sha256": "5c3851c70cebcaf765f283d9e9904b01dcfe7bc818570ddc749d88fbb5add0a9",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": 8,
+            "NAXIS": 0
+          },
+          {
+            "index": 1,
+            "name": "xtension",
+            "type": "BinTableHDU",
+            "EXTNAME": "xtension",
+            "XTENSION": "BINTABLE",
+            "BITPIX": 8,
+            "NAXIS": 2,
+            "NAXIS1": 8192,
+            "NAXIS2": 48,
+            "NSIDE": 64,
+            "ORDERING": "RING",
+            "columns": [
+              "T"
+            ],
+            "num_columns": 1,
+            "data_shape": [
+              48
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "cf4_table2_galaxies",
+      "dataset": "Cosmicflows-4",
+      "probe": "Distance/Peculiar Velocities",
+      "priority": "P0",
+      "description": "VizieR Table 2 (55,877 individual galaxies)",
+      "path": "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/table2.dat",
+      "size_bytes": 10672507,
+      "sha256": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "cf4_table3_groups",
+      "dataset": "Cosmicflows-4",
+      "probe": "Distance/Peculiar Velocities",
+      "priority": "P0",
+      "description": "VizieR Table 3 (38,053 galaxy groups)",
+      "path": "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/table3.dat",
+      "size_bytes": 5104038,
+      "sha256": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "cf4_table4_velocities",
+      "dataset": "Cosmicflows-4",
+      "probe": "Distance/Peculiar Velocities",
+      "priority": "P0",
+      "description": "VizieR Table 4 (38,053 group velocities)",
+      "path": "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/table4.dat",
+      "size_bytes": 6012374,
+      "sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "cf4_readme",
+      "dataset": "Cosmicflows-4",
+      "probe": "Distance/Peculiar Velocities",
+      "priority": "P0",
+      "description": "VizieR ReadMe documentation",
+      "path": "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/ReadMe",
+      "size_bytes": 19918,
+      "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "cf4_selected_operator_npz",
+      "dataset": "Cosmicflows-4",
+      "probe": "Distance/Peculiar Velocities",
+      "priority": "P0",
+      "description": "Selected 35,970-group operator NPZ",
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_obs_application_20261015/loop6_kinematics/results/cf4_rawgroup_appHubble_STF2_pooled_methods_v2/selected_source_observables.npz",
+      "size_bytes": 1235181,
+      "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "pantheonplus_table",
+      "dataset": "Pantheon+SH0ES",
+      "probe": "Type Ia Supernovae",
+      "priority": "P0",
+      "description": "Pantheon+ 1,701-row data table",
+      "path": "/mnt/extdrive/workdir/htt_open_data/pantheonplus/c447f0f/Pantheon_SH0ES.dat",
+      "size_bytes": 579283,
+      "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "pantheonplus_cov",
+      "dataset": "Pantheon+SH0ES",
+      "probe": "Type Ia Supernovae",
+      "priority": "P0",
+      "description": "Pantheon+ 1701x1701 STAT+SYS covariance",
+      "path": "/mnt/extdrive/workdir/htt_open_data/pantheonplus/c447f0f/Pantheon_SH0ES_STAT_SYS.cov",
+      "size_bytes": 33284960,
+      "sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "shoes2022_cov_fits",
+      "dataset": "Pantheon+SH0ES",
+      "probe": "Type Ia Supernovae",
+      "priority": "P0",
+      "description": "SH0ES 2022 3492x3492 covariance FITS",
+      "path": "/mnt/extdrive/workdir/raw/shoes2022_calibration_reference_20261015/allc_shoes_ceph_topantheonwt6.0_112221.fits",
+      "size_bytes": 48781440,
+      "sha256": "a42778672d25df7a559bd2949b1e412b99b2e35dd9a36895f6b38828be019172",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": -32,
+            "NAXIS": 2,
+            "NAXIS1": 3492,
+            "NAXIS2": 3492,
+            "data_shape": [
+              3492,
+              3492
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "shoes2022_design_fits",
+      "dataset": "Pantheon+SH0ES",
+      "probe": "Type Ia Supernovae",
+      "priority": "P0",
+      "description": "SH0ES 2022 47x3492 design matrix FITS",
+      "path": "/mnt/extdrive/workdir/raw/shoes2022_calibration_reference_20261015/alll_shoes_ceph_topantheonwt6.0_112221.fits",
+      "size_bytes": 659520,
+      "sha256": "9a2ce872dd20ed4fdf5005ce62a805d3eefbbb0b20b0c614013e7c0094009db8",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": -32,
+            "NAXIS": 2,
+            "NAXIS1": 3492,
+            "NAXIS2": 47,
+            "data_shape": [
+              47,
+              3492
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "shoes2022_vector_fits",
+      "dataset": "Pantheon+SH0ES",
+      "probe": "Type Ia Supernovae",
+      "priority": "P0",
+      "description": "SH0ES 2022 3492-length data vector FITS",
+      "path": "/mnt/extdrive/workdir/raw/shoes2022_calibration_reference_20261015/ally_shoes_ceph_topantheonwt6.0_112221.fits",
+      "size_bytes": 17280,
+      "sha256": "10bb034ca3fff53f6625c9fe47ebd054b37ef45d1140af1c766831cfa6871433",
+      "status": "VERIFIED_LOCAL_R39",
+      "fits_metadata": {
+        "hdus": [
+          {
+            "index": 0,
+            "name": "PRIMARY",
+            "type": "PrimaryHDU",
+            "BITPIX": -32,
+            "NAXIS": 1,
+            "NAXIS1": 3492,
+            "data_shape": [
+              3492
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "nvss_catalog_gz",
+      "dataset": "NVSS",
+      "probe": "Radio",
+      "priority": "P1",
+      "description": "NVSS source catalog",
+      "path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss.dat.gz",
+      "size_bytes": 77687389,
+      "sha256": "360e2c7e3d734ce82cd21f03f44709bcf90fcede2e4427d5370e22e3429fe5d3",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "nvss_readme",
+      "dataset": "NVSS",
+      "probe": "Radio",
+      "priority": "P1",
+      "description": "NVSS VizieR ReadMe",
+      "path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/ReadMe",
+      "size_bytes": 6296,
+      "sha256": "7235bb67b68e98321ff2551eb912f2eff67db3a18a48266da6cd438f3f76b429",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "gaia_dr3_crf3_ecsv",
+      "dataset": "Gaia DR3",
+      "probe": "Astrometry / Proper Motions",
+      "priority": "P1",
+      "description": "Gaia CRF3 cross-match ECSV",
+      "path": "/mnt/extdrive/workdir/htt_open_data/gaia/DR3/gaiadr3.gaia_crf3_xm.ecsv.gz",
+      "size_bytes": 56064899,
+      "sha256": "59bb5c361ec5796b5644f598c9ec6c9ed3f8507b5876260c3dbdd202bbe0a4b1",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "gaia_dr3_full_vot",
+      "dataset": "Gaia DR3",
+      "probe": "Astrometry / Proper Motions",
+      "priority": "P1",
+      "description": "Gaia DR3 full VOTable",
+      "path": "/mnt/extdrive/workdir/htt_open_data/gaia/d05_full_20261018/full.vot",
+      "size_bytes": 192359368,
+      "sha256": "e8454190bb3be7d10203ecfe6fe90b34d245fb13b9bb72a155242f85e4271810",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "gaia_quaia_crf3_join_npz",
+      "dataset": "Gaia DR3",
+      "probe": "Astrometry / Proper Motions",
+      "priority": "P1",
+      "description": "Gaia-Quaia CRF3 joined sample (692,154 sources)",
+      "path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_crf3_join.npz",
+      "size_bytes": 95846569,
+      "sha256": "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "desi_bao_all_mean",
+      "dataset": "DESI DR2",
+      "probe": "BAO",
+      "priority": "P1",
+      "description": "DESI DR2 BAO ALL mean vector",
+      "path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_BAO_compact/bao_desi_gaussian_bao_ALL_GCcomb_mean.txt",
+      "size_bytes": 472,
+      "sha256": "9ac154ab583ce759c0f7eef3c978c7c70a6ead2d18774caceadf1a350a640585",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "desi_bao_all_cov",
+      "dataset": "DESI DR2",
+      "probe": "BAO",
+      "priority": "P1",
+      "description": "DESI DR2 BAO ALL covariance matrix",
+      "path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_BAO_compact/bao_desi_gaussian_bao_ALL_GCcomb_cov.txt",
+      "size_bytes": 2547,
+      "sha256": "252a143274c8a07c78694c119617d36594f6d7965d00319ca611c6ffb886e509",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "desi_bao_likelihood_py",
+      "dataset": "DESI DR2",
+      "probe": "BAO",
+      "priority": "P1",
+      "description": "DESI DR2 BAO Cobaya likelihood",
+      "path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_BAO_compact/likelihood_desi_bao_all.py",
+      "size_bytes": 169,
+      "sha256": "7ed28e8052f5c9cd5a021124384168b4e875f57986218991e41aa5eb608e02d4",
+      "status": "VERIFIED_LOCAL_R39"
+    },
+    {
+      "key": "desi_bao_likelihood_yaml",
+      "dataset": "DESI DR2",
+      "probe": "BAO",
+      "priority": "P1",
+      "description": "DESI DR2 BAO YAML config",
+      "path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_BAO_compact/likelihood_desi_bao_all.yaml",
+      "size_bytes": 367,
+      "sha256": "ac72acb9b43369c399f45bb17b60f504085fe4102f45e257579eef5bda292e69",
+      "status": "VERIFIED_LOCAL_R39"
+    }
+  ]
+}

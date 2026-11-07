@@ -1,0 +1,43 @@
+{
+  "schema": "htt.ablation_study_r39/1",
+  "ablations": {
+    "holdout_Planck": {
+      "effective_rank": 11,
+      "null_space_dimension": 6,
+      "condition_number": 31980.530213568993
+    },
+    "holdout_Counts": {
+      "effective_rank": 16,
+      "null_space_dimension": 1,
+      "condition_number": 24629.252033034933
+    },
+    "holdout_Gaia": {
+      "effective_rank": 15,
+      "null_space_dimension": 2,
+      "condition_number": 95402.32832806605
+    },
+    "holdout_Distance": {
+      "effective_rank": 16,
+      "null_space_dimension": 1,
+      "condition_number": 61879.75530501802
+    },
+    "holdout_DESI": {
+      "effective_rank": 16,
+      "null_space_dimension": 1,
+      "condition_number": 33237.960109556174
+    },
+    "scalar_xC_ablation": {
+      "effective_rank": 12,
+      "null_space_dimension": 5,
+      "condition_number": 33071.3869698012,
+      "rank_loss": 4,
+      "note": "Scalar x_C collapses 5 STF shear degrees of freedom into 1, losing 4 independent quadrupole carrier modes"
+    },
+    "parity_even_subspace_only": {
+      "effective_rank": 14,
+      "null_space_dimension": 3,
+      "condition_number": 33237.96010955632,
+      "note": "Excluding parity-odd axial vorticity reduces parameter space from 17 to 14, isolating shear and boost"
+    }
+  }
+}

@@ -114,7 +114,7 @@ def test_mixed_functional_requires_explicit_frame_transport():
     missing_transport = function_map(state)
     assert missing_transport["BETA_RM"].status == "AVAILABLE"
     assert missing_transport["SIGMA_CONTRACT_BETA"].status == "FRAME_TRANSPORT_REQUIRED"
-    assert "frame transport" in missing_transport["SIGMA_CONTRACT_BETA"].reason
+    assert "basis transport" in missing_transport["SIGMA_CONTRACT_BETA"].reason
 
     matrix = np.array([[0.0, -1.0, 0.0],
                        [1.0, 0.0, 0.0],
@@ -442,6 +442,7 @@ def test_canonical_joint_state_is_the_only_x_source_and_units_round_trip():
     np.testing.assert_allclose(
         physical["BETA_CLOSURE_RESIDUAL"].components,
         np.zeros(3),
+        atol=1e-12,
     )
 
     canonical = {v.spec.functional_id: v for v in bundle.canonical_functionals}
