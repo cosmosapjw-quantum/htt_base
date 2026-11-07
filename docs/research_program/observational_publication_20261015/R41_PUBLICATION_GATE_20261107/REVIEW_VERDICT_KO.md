@@ -156,3 +156,21 @@ This is a candidate method, not a claim of priority. Closest competitors include
 - Local agent may inspect the primary checkout and retrieve official data in bounded stages.
 - Production code edits, actual Cobaya sampling, model-comparison claims, data-derived numerical results, manuscript promotion and Bianchi family claims remain blocked until their relevant gates pass.
 - No historical R38/R39/R40 document is deleted or silently rewritten.
+
+
+## Recent competing evidence that narrows the novelty claim
+
+The local directional-expansion branch has direct, recent competing results that must be treated as primary baselines rather than generic background:
+
+- Heinesen's general luminosity-distance multipole expansion already gives a model-independent expansion through third order in redshift, with 9, 25 and 61 degrees of freedom at successive orders. It establishes that a direction-dependent Hubble/cosmographic expansion is not a novelty by itself: https://arxiv.org/abs/2010.06534
+- Kalbouneh et al. (2025/2026) analyse Cosmicflows-4 and Pantheon+ over 0.01<z<0.1, reconstruct a local expansion-rate fluctuation field and its redshift evolution, and report few-percent anisotropic fluctuations: https://arxiv.org/abs/2510.02510
+- A separate 2026 analysis of CF4 Tully-Fisher and Pantheon+ with joint distance-relation calibration, distance marginalization and linear-theory peculiar velocities reports a non-zero CF4 zero-point dipole but explicitly compares evidence: https://academic.oup.com/mnras/article/546/2/staf2048/8436862
+- Conversely, a 2025 Pantheon+ analysis reports frame-dependent low-z dipolar variation: https://link.springer.com/article/10.1140/epjc/s10052-025-14222-w
+
+These studies do not settle the physical interpretation; their differing samples, frames, calibrations and velocity treatments make a controlled same-source forward-model comparison more important. The HTT contribution must therefore be a reproducible **identifiable tensor-functional and cross-probe discrimination** result, not simply another dipole fit or a claim that the Hubble law is direction dependent.
+
+Similarly, Planck-era work already independently estimates Doppler modulation and aberration, accounting for beaming/noise/masks and intensity-to-temperature conversion systematics, and used these to constrain an intrinsic CMB dipole. This is an essential baseline for R41 Loop 2:
+- https://journals.aps.org/prd/abstract/10.1103/PhysRevD.104.063503
+- https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.127.101301
+
+There is also pre-existing anisotropic Boltzmann machinery: ABSolve computes deterministic Bianchi-induced CMB temperature and polarization signals for several near-isotropic families (including I, V, VII_0 and VII_h). The R41 distinction is not that polarized Bianchi transfer has never been implemented; rather, the repository must not call an external solver native, and it must compare any external transfer against a future independently validated native implementation: https://academic.oup.com/mnras/article/462/2/1802/2589609
