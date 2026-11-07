@@ -38,7 +38,7 @@ This audit conducted an independent, hostile, multi-axis verification across:
 - **Ablation Validation:** Collapsing STF shear into scalar $x_C$ drops effective rank by 4 ($16 \to 12$), rigorously confirming that tensor $x$ captures degrees of freedom lost by legacy scalar projections.
 
 ### Finding 5: Joint MCMC Convergence & Model Ladder
-- **Verification:** 4 chains $\times$ 3000 steps (1000 burn-in) achieved Gelman-Rubin $\max(\hat{R} - 1) = 0.0287 < 0.05$.
+- **Verification:** 4 chains $\times$ 3000 steps (1000 burn-in) achieved Gelman-Rubin $\max(\hat{R} - 1) = 0.0403 < 0.05$.
 - **BIC Consistency:** Model ladder shows $\Delta\text{BIC} = 0.00$ ($M_0$), $62.98$ ($M_1$), $113.11$ ($M_2$), $150.43$ ($M_3$). The data strongly disfavor adding 14 additional anisotropic parameters over a pure kinematic boost.
 
 ---

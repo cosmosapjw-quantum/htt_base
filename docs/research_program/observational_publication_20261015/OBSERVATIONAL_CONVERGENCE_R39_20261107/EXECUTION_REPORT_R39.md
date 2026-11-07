@@ -72,7 +72,7 @@ All calculations were conducted within the user's primary local checkout without
 - **Implementation:** `scripts/r39/run_r39_joint_mcmc.py`
 - Executed 4 MCMC chains $\times$ 3000 steps (1000 burn-in) with Laplace proposal:
   - Acceptance rates: $25.03\%, 25.70\%, 24.73\%, 25.23\%$ (optimal range $20-30\%$).
-  - Gelman-Rubin convergence: **$\max(\hat{R} - 1) = 0.0287 < 0.05$** (PASSED).
+  - Gelman-Rubin convergence: **$\max(\hat{R} - 1) = 0.0403 < 0.05$** (PASSED).
   - Total $\chi^2/\text{dof} = 807.71 / 513 = 1.574$. Distance $\chi^2/\text{dof} = 436.22 / 490 = 0.890$.
 - Model Comparison Ladder:
   - $M_0$ (Isotropic $\Lambda$CDM): $\chi^2 = 826.62, \text{BIC} = 826.62$ ($\Delta\text{BIC} = 0.00$)

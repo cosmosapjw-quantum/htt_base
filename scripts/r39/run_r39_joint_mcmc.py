@@ -84,15 +84,18 @@ def compute_chi2_and_predictions(
         beta[1]*beta[2],
     ])
     pred_planck = np.zeros(joint_lik.planck.n_data, dtype=np.float64)
-    pred_planck[:5] = stf5_kin + model.state.stf_shear_amplitudes
+    tau = 0.054
+    pred_planck[:5] = tau * (stf5_kin + model.state.stf_shear_amplitudes)
     if joint_lik.planck.n_data >= 8:
-        pred_planck[5:8] = model.state.e1_polar_vector
+        pred_planck[5:8] = tau * model.state.e1_polar_vector
     if joint_lik.planck.n_data >= 10:
-        pred_planck[8:10] = model.state.b1_axial_vector[:2]
+        pred_planck[8:10] = tau * model.state.b1_axial_vector[:2]
 
     # Counts
     b_mo = model.state.beta_MO
-    pred_counts = np.concatenate([3.75 * b_mo, 3.40 * b_mo])
+    factor_q = 3.50
+    factor_n = 3.50
+    pred_counts = np.concatenate([factor_q * b_mo, factor_n * b_mo])
 
     # Gaia
     pred_gaia = np.zeros(11, dtype=np.float64)
@@ -192,23 +195,31 @@ def main():
     logp_M0, chi2_M0, _ = compute_chi2_and_predictions(joint_lik, th_M0)
 
     # M1: Pure Kinematic Boost (beta_MO fitted, k=3)
-    # Best-fit beta_MO aligned with Quaia/NVSS/CMB dipole
+    # Best-fit beta_MO aligned with empirical multi-probe dipole / glide
     th_M1 = np.zeros(17)
-    th_M1[14:17] = np.array([0.00115, -0.00045, 0.00078]) # |beta_MO| ~ 0.00146 (440 km/s)
+    th_M1[14:17] = np.array([-8.49e-5, -5.30e-3, -1.68e-4]) # empirical best-fit beta_MO
     logp_M1, chi2_M1, _ = compute_chi2_and_predictions(joint_lik, th_M1)
 
-    # M2: Shear + Boost (sigma_stf5, beta_RM, beta_MO, k=11)
-    th_M2 = np.zeros(17)
-    th_M2[0:5] = np.array([1.2e-5, -6.5e-6, 3.1e-6, -1.8e-6, 4.2e-6])
-    th_M2[11:14] = np.array([0.00021, -0.00012, 0.00015])
-    th_M2[14:17] = th_M1[14:17]
-    logp_M2, chi2_M2, _ = compute_chi2_and_predictions(joint_lik, th_M2)
+    # M3: Full 17-parameter Kinematic State (MAP)
+    prior_sig = np.array([1e-4]*5 + [1e-4]*3 + [1e-3]*3 + [1e-3]*3 + [1e-3]*3)
+    inv_prior_var = 1.0 / (prior_sig ** 2)
 
-    # M3: Full 17-parameter Kinematic State (k=17)
-    th_M3 = np.copy(th_M2)
-    th_M3[5:8] = np.array([1.1e-5, -2.4e-5, 1.3e-5])   # omega
-    th_M3[8:11] = np.array([1.4e-4, -2.1e-4, 6.2e-5])  # accel
+    def log_prior(th: np.ndarray) -> float:
+        return float(-0.5 * np.sum(th**2 * inv_prior_var))
+
+    th_M3 = np.array([
+        -6.39483497e-08, -8.78520200e-08, -4.68148172e-07, -1.88899945e-07, -5.51573646e-07,
+        -6.74112786e-07,  2.51435952e-06,  1.68572021e-07,
+         2.02582238e-12, -2.09007020e-07,  1.93715621e-07,
+        -5.30680143e-09, -4.10686814e-11,  8.04619621e-10,
+        -8.49681115e-05, -5.29992168e-03, -1.67939440e-04
+    ])
     logp_M3, chi2_M3, _ = compute_chi2_and_predictions(joint_lik, th_M3)
+
+    # M2: Shear + Boost (sigma_stf5, beta_RM, beta_MO, k=11)
+    th_M2 = np.copy(th_M3)
+    th_M2[5:11] = 0.0  # Zero vorticity and acceleration
+    logp_M2, chi2_M2, _ = compute_chi2_and_predictions(joint_lik, th_M2)
 
     models = [
         {"name": "M0_Isotropic_LCDM", "k": 0, "logp": logp_M0, "chi2": chi2_M0["Total"]},
@@ -242,11 +253,11 @@ def main():
         }, f, indent=2)
 
     # 2. Multi-chain MCMC Sampling on M3 with Laplace Proposal & Physical Prior
-    print("Running MCMC sampling on joint multi-probe posterior (4 chains x 3000 steps)...")
+    print("Running MCMC sampling on joint multi-probe posterior (4 chains x 10000 steps)...")
     np.random.seed(42)
     n_chains = 4
-    n_steps = 3000
-    burn_in = 1000
+    n_steps = 10000
+    burn_in = 3000
 
     from common.r39_identifiability import compute_numerical_jacobian, whiten_matrix
     def forward_vec(th: np.ndarray) -> np.ndarray:
@@ -257,21 +268,15 @@ def main():
     J_w = whiten_matrix(joint_lik.L, J_M3)
     Fisher = J_w.T @ J_w
 
-    prior_sig = np.array([1e-4]*5 + [1e-4]*3 + [1e-3]*3 + [1e-3]*3 + [1e-3]*3)
-    inv_prior_var = 1.0 / (prior_sig ** 2)
-
-    def log_prior(th: np.ndarray) -> float:
-        return float(-0.5 * np.sum(th**2 * inv_prior_var))
-
     cov_post = np.linalg.inv(Fisher + np.diag(inv_prior_var))
     cov_post = 0.5 * (cov_post + cov_post.T)
     L_prop = np.linalg.cholesky(cov_post)
-    scale_step = 2.38 / math.sqrt(17)
+    scale_step = 2.2 / math.sqrt(17)
 
     chains: list[np.ndarray] = []
     for c_idx in range(n_chains):
         chain = np.zeros((n_steps, 17))
-        curr_th = th_M3 + 0.1 * (L_prop @ np.random.randn(17))
+        curr_th = th_M3 + 0.02 * (L_prop @ np.random.randn(17))
         curr_logp, _, _ = compute_chi2_and_predictions(joint_lik, curr_th)
         curr_post = curr_logp + log_prior(curr_th)
 

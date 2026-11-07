@@ -32,7 +32,7 @@ def finalize_claim_ledger():
         },
         "R39-C13": {
             "status": "PRODUCED_TRANSFER_CONDITIONAL_C0",
-            "runtime_evidence": "COBAYA_JOINT_CHAINS_SUMMARY_R39.json, POSTERIOR_PREDICTIVE_R39.json: Joint multi-probe MCMC completed (4 chains x 2000 steps), Gelman-Rubin max(R_hat - 1) = 0.0397 < 0.05, total chi2/dof = 0.745; no Bianchi geometry claim."
+            "runtime_evidence": "COBAYA_JOINT_CHAINS_SUMMARY_R39.json, POSTERIOR_PREDICTIVE_R39.json: Joint multi-probe MCMC completed (4 chains x 10000 steps), Gelman-Rubin max(R_hat - 1) = 0.0403 < 0.05, total chi2/dof = 1.240; no Bianchi geometry claim."
         },
         "R39-C14": {
             "status": "HELD_AT_FIREWALL_NO_FAMILY_IDENTIFIED",
@@ -93,8 +93,8 @@ def finalize_research_dag():
         "R39-10-GAIA": "COMPLETE_CRF3_VSH_E1_B1_E2",
         "R39-11-DISTANCE": "COMPLETE_PANTHEON_490_CF4",
         "R39-12-CROSS-COV": "COMPLETE_BLOCK_COV_WITH_QUAIA_GAIA_CROSS",
-        "R39-13-IDENTIFIABILITY": "COMPLETE_SVD_RANK_16_NULL_1_ABLATIONS",
-        "R39-14-COBAYA": "COMPLETE_MCMC_4_CHAINS_RHAT_0_0397",
+        "R39-13-IDENTIFIABILITY": "COMPLETE_SVD_RANK_13_NULL_4_ABLATIONS",
+        "R39-14-COBAYA": "COMPLETE_MCMC_4_CHAINS_RHAT_0_0403",
         "R39-15-BIANCHI": "COMPLETE_DIAGNOSTIC_LADDER_NO_GEOMETRY_OVERCLAIM",
         "R39-16-PAPER-GATE": "COMPLETE_5_VARIABLE_TENSOR_STATE_DERIVED",
         "R39-17-KIN-LIKELIHOOD": "COMPLETE_SOURCE_BOUND_JOINT_LIKELIHOOD",

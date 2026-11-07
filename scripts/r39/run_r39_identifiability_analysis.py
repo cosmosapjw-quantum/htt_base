@@ -94,15 +94,18 @@ def main():
             beta[1]*beta[2],
         ])
         pred_planck = np.zeros(joint_lik.planck.n_data, dtype=np.float64)
-        pred_planck[:5] = stf5_kin + model.state.stf_shear_amplitudes
+        tau = 0.054
+        pred_planck[:5] = tau * (stf5_kin + model.state.stf_shear_amplitudes)
         if joint_lik.planck.n_data >= 8:
-            pred_planck[5:8] = model.state.e1_polar_vector
+            pred_planck[5:8] = tau * model.state.e1_polar_vector
         if joint_lik.planck.n_data >= 10:
-            pred_planck[8:10] = model.state.b1_axial_vector[:2]
+            pred_planck[8:10] = tau * model.state.b1_axial_vector[:2]
 
         # 2. Counts
         b_mo = model.state.beta_MO
-        pred_counts = np.concatenate([3.75 * b_mo, 3.40 * b_mo])
+        factor_q = 3.50
+        factor_n = 3.50
+        pred_counts = np.concatenate([factor_q * b_mo, factor_n * b_mo])
 
         # 3. Gaia
         pred_gaia = np.zeros(11, dtype=np.float64)

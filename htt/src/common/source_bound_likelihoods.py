@@ -86,41 +86,43 @@ class SourceBoundPlanckLikelihood(BaseSourceBoundLikelihood):
     """Planck PR4 Commander observed low-ell T/E/B carriers and MC covariance."""
 
     def initialize(self):
-        # Path to PR4 Commander observed low-ell EB carriers
+        # 100% empirical PR4 Commander observed low-ell EB carriers and 100 MC sample covariance
+        cache_path_r39 = Path("docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/planck_pr4_mc100_empirical_cov.npz")
+        cache_path_r38 = Path("docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/planck_pr4_mc100_empirical_cov.npz")
+        cache_path = cache_path_r39 if cache_path_r39.exists() else cache_path_r38
         base_dir = Path("/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis")
         obs_path = base_dir / "observed_lowell_EB.npz"
-        mc_path = base_dir / "mc_0300_lowell_EB.npz"
 
-        if not obs_path.exists():
-            raise DataIntegrityError(f"Planck observed carrier file missing: {obs_path}")
-
-        try:
+        if cache_path.exists():
+            cache = np.load(cache_path)
+            d = cache["d_planck"]
+            cov = cache["cov_planck"]
+        elif obs_path.exists():
             obs_data = np.load(obs_path)
-            # Observed modes for ell=2,3 (real and imaginary parts)
-            # Keys typically contain 'carrier' or array entries
             for key in ["carrier", "eb_modes", "data", "arr_0"]:
                 if key in obs_data:
                     raw_data = obs_data[key].flatten()
                     break
             else:
                 raw_data = obs_data[list(obs_data.keys())[0]].flatten()
-
-            # Take first 10 modes (quadrupole + octopole carriers)
             d = np.real(raw_data[:10]).astype(np.float64)
-            n_modes = len(d)
+            mc_files = sorted(base_dir.glob("mc_*_lowell_EB.npz"))[:100]
+            if not mc_files:
+                raise DataIntegrityError(f"No Planck PR4 MC realizations found in {base_dir}")
+            mc_list = []
+            for mf in mc_files:
+                mcd = np.load(mf)
+                k = list(mcd.keys())[0]
+                mc_list.append(np.real(mcd[k].flatten()[:10]).astype(np.float64))
+            mc_mat = np.array(mc_list)
+            cov = np.cov(mc_mat.T)
+            # Inactive modes (0, 1, 5) have zero spin-2 dipole/monopole; apply regularized uninformative floor
+            for idx in [0, 1, 5]:
+                cov[idx, idx] = 1e-10
+        else:
+            raise DataIntegrityError(f"Planck observed carrier file missing: {obs_path} and {cache_path}")
 
-            # Build empirical covariance across available MC realizations
-            cov = np.eye(n_modes, dtype=np.float64) * 1.5e-4
-            if mc_path.exists():
-                mc_data = np.load(mc_path)
-                key = list(mc_data.keys())[0]
-                mc_modes = np.real(mc_data[key].flatten()[:n_modes]).astype(np.float64)
-                diff = mc_modes - d
-                cov = np.outer(diff, diff) * 0.1 + np.eye(n_modes) * 1e-4
-
-            self.initialize_covariance(d, cov, "PlanckPR4LowEll")
-        except Exception as e:
-            raise DataIntegrityError(f"Failed to load Planck PR4 low-ell carrier: {e}")
+        self.initialize_covariance(d, cov, "PlanckPR4LowEll")
 
     def logp(self, **params_values):
         model: KinematicResponseModel = self.provider.get_result("kinematic_model")
@@ -137,12 +139,13 @@ class SourceBoundPlanckLikelihood(BaseSourceBoundLikelihood):
         ])
         # Add shear contribution sigma/H
         stf5_total = stf5_kin + model.state.stf_shear_amplitudes
-        pred[:5] = stf5_total
+        tau = 0.054  # Reionization optical depth polarization transfer factor
+        pred[:5] = tau * stf5_total
         # Octopole / higher terms (E1/B1 carriers)
         if self.n_data >= 8:
-            pred[5:8] = model.state.e1_polar_vector
+            pred[5:8] = tau * model.state.e1_polar_vector
         if self.n_data >= 10:
-            pred[8:10] = model.state.b1_axial_vector[:2]
+            pred[8:10] = tau * model.state.b1_axial_vector[:2]
 
         residual = self.data_vector - pred
         return self.compute_logp(residual)
@@ -154,51 +157,64 @@ class SourceBoundCountsLikelihood(BaseSourceBoundLikelihood):
     def initialize(self):
         quaia_path = Path("/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/quaia_G20.0.fits")
         nvss_path = Path("/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss.dat.gz")
+        res_json = Path("docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/COUNT_DIPOLE_RESULT.json")
+        cov_json = Path("docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/COUNT_SELECTION_DIAGNOSTICS/count_dipole_summary.json")
 
-        if not quaia_path.exists():
+        if not quaia_path.exists() and not res_json.exists():
             raise DataIntegrityError(f"Quaia G<20.0 catalog missing: {quaia_path}")
-        if not nvss_path.exists():
+        if not nvss_path.exists() and not res_json.exists():
             raise DataIntegrityError(f"NVSS catalog missing: {nvss_path}")
 
-        # Measured Quaia G<20.0 dipole (D = 0.0245, (l, b) = (260 deg, 36.3 deg))
-        # Cartesian components in Galactic frame:
-        l_q = math.radians(260.0)
-        b_q = math.radians(36.3)
-        amp_q = 0.0245
-        sig_q = 0.0020
-        d_quaia = np.array([
-            amp_q * math.cos(b_q) * math.cos(l_q),
-            amp_q * math.cos(b_q) * math.sin(l_q),
-            amp_q * math.sin(b_q),
-        ])
+        # Load exact empirical dipole parameters and covariance
+        if res_json.exists() and cov_json.exists():
+            import json
+            with open(res_json) as f:
+                res_data = json.load(f)
+            with open(cov_json) as f:
+                cov_data = json.load(f)
 
-        # Measured NVSS dipole (D = 0.0150, (l, b) = (251 deg, 38 deg))
-        l_n = math.radians(251.0)
-        b_n = math.radians(38.0)
-        amp_n = 0.0150
-        sig_n = 0.0030
-        d_nvss = np.array([
-            amp_n * math.cos(b_n) * math.cos(l_n),
-            amp_n * math.cos(b_n) * math.sin(l_n),
-            amp_n * math.sin(b_n),
-        ])
+            q_info = res_data["quaia_g20"]
+            n_info = res_data["nvss_radio"]
 
-        # Combined 6-element count dipole vector
-        data = np.concatenate([d_quaia, d_nvss])
-        cov = np.diag([
-            sig_q**2, sig_q**2, sig_q**2,
-            sig_n**2, sig_n**2, sig_n**2
-        ])
+            # Quaia empirical dipole vector (755,850 quasars)
+            l_q = math.radians(q_info["galactic_direction_deg"][0])
+            b_q = math.radians(q_info["galactic_direction_deg"][1])
+            amp_q = q_info["measured_dipole_amplitude"]
+            d_quaia = np.array([
+                amp_q * math.cos(b_q) * math.cos(l_q),
+                amp_q * math.cos(b_q) * math.sin(l_q),
+                amp_q * math.sin(b_q),
+            ], dtype=np.float64)
+            cov_quaia = np.array(cov_data["quaia_covariance"], dtype=np.float64)
+
+            # NVSS empirical dipole vector
+            l_n = math.radians(n_info["galactic_direction_deg"][0])
+            b_n = math.radians(n_info["galactic_direction_deg"][1])
+            amp_n = n_info["measured_dipole_amplitude"]
+            sig_n = n_info["measured_dipole_sigma"]
+            d_nvss = np.array([
+                amp_n * math.cos(b_n) * math.cos(l_n),
+                amp_n * math.cos(b_n) * math.sin(l_n),
+                amp_n * math.sin(b_n),
+            ], dtype=np.float64)
+            cov_nvss = np.eye(3, dtype=np.float64) * (sig_n ** 2)
+
+            data = np.concatenate([d_quaia, d_nvss])
+            cov = np.zeros((6, 6), dtype=np.float64)
+            cov[0:3, 0:3] = 0.5 * (cov_quaia + cov_quaia.T)
+            cov[3:6, 3:6] = cov_nvss
+        else:
+            raise DataIntegrityError(f"Missing count dipole results: {res_json}")
+
         self.initialize_covariance(data, cov, "QuaiaNVSSCountDipole")
 
     def logp(self, **params_values):
         model: KinematicResponseModel = self.provider.get_result("kinematic_model")
         # Count dipole prediction: [2 + x*(1 + alpha)] * beta_MO
-        # Quaia: alpha ~ 0.75, x ~ 1.0 -> factor ~ 3.75
-        # NVSS: alpha ~ 0.75, x ~ 0.8 -> factor ~ 3.40
+        # From COUNT_DIPOLE_RESULT.json: effective_kinematic_factor = 3.5
         b_mo = model.state.beta_MO
-        factor_q = 3.75
-        factor_n = 3.40
+        factor_q = 3.50
+        factor_n = 3.50
         pred = np.concatenate([factor_q * b_mo, factor_n * b_mo])
         residual = self.data_vector - pred
         return self.compute_logp(residual)
@@ -209,29 +225,24 @@ class SourceBoundGaiaLikelihood(BaseSourceBoundLikelihood):
 
     def initialize(self):
         gaia_join_path = Path("/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_crf3_join.npz")
-        if not gaia_join_path.exists():
+        gaia_empirical_r39 = Path("docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/GAIA_VSH_11MODES_EMPIRICAL.json")
+        gaia_empirical_r38 = Path("docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/GAIA_VSH_11MODES_EMPIRICAL.json")
+        gaia_empirical_json = gaia_empirical_r39 if gaia_empirical_r39.exists() else gaia_empirical_r38
+
+        if not gaia_join_path.exists() and not gaia_empirical_json.exists():
             raise DataIntegrityError(f"Gaia CRF3 join missing: {gaia_join_path}")
 
         try:
-            # Measured VSH components from 634k clean quasars
-            # E1 glide: (Gx, Gy, Gz) in mas/yr (consistent with Solar acceleration)
-            # B1 spin: (Omega_x, Omega_y, Omega_z) in mas/yr
-            # E2 shear: 5 STF components in mas/yr
-            data = np.array([
-                -0.0012, 0.0048, -0.0021,  # E1 glide (amplitude ~ 0.0054 mas/yr)
-                0.0003, -0.0002, 0.0005,   # B1 spin (triad rotation nuisance)
-                0.0008, -0.0006, 0.0004, 0.0002, -0.0003 # E2 shear (amplitude ~ 0.0018 mas/yr)
-            ], dtype=np.float64)
+            if gaia_empirical_json.exists():
+                import json
+                with open(gaia_empirical_json) as f:
+                    g_data = json.load(f)
+                data = np.array(g_data["coefficients_mas_yr"], dtype=np.float64)
+                cov = np.array(g_data["parameter_covariance"], dtype=np.float64)
+                cov = 0.5 * (cov + cov.T)
+            else:
+                raise DataIntegrityError(f"Empirical Gaia VSH file missing: {gaia_empirical_json}")
 
-            # Diagonal + block astrometric error covariance
-            sig_e1 = 0.0004
-            sig_b1 = 0.0003
-            sig_e2 = 0.0003
-            cov = np.diag([
-                sig_e1**2, sig_e1**2, sig_e1**2,
-                sig_b1**2, sig_b1**2, sig_b1**2,
-                sig_e2**2, sig_e2**2, sig_e2**2, sig_e2**2, sig_e2**2
-            ])
             self.initialize_covariance(data, cov, "GaiaDR3CRF3VSH")
         except Exception as e:
             raise DataIntegrityError(f"Failed to load Gaia DR3 CRF3 VSH data: {e}")
@@ -255,21 +266,18 @@ class SourceBoundGaiaLikelihood(BaseSourceBoundLikelihood):
 
 
 class SourceBoundDistanceLikelihood(BaseSourceBoundLikelihood):
-    """Pantheon+ 490 rows (z in [0.0233, 0.15]) 2-axis sliced + CF4 35,970 groups."""
+    """Pantheon+ 490 rows (z in [0.0233, 0.15]) with exact sliced STAT+SYS covariance."""
 
     def initialize(self):
         pantheon_dat = Path("/mnt/extdrive/workdir/htt_open_data/pantheonplus/c447f0f/Pantheon_SH0ES.dat")
         pantheon_cov = Path("/mnt/extdrive/workdir/htt_open_data/pantheonplus/c447f0f/Pantheon_SH0ES_STAT_SYS.cov")
-        cf4_op = Path("/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_obs_application_20261015/loop6_kinematics/results/cf4_rawgroup_appHubble_STF2_pooled_methods_v2/selected_source_observables.npz")
+        cache_file = Path("docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/pantheon_sliced_490_cache.npz")
 
-        if not pantheon_dat.exists() or not pantheon_cov.exists():
+        if not cache_file.exists() and (not pantheon_dat.exists() or not pantheon_cov.exists()):
             raise DataIntegrityError("Pantheon+ data or covariance file missing.")
-        if not cf4_op.exists():
-            raise DataIntegrityError(f"CF4 operator missing: {cf4_op}")
 
         # Load Pantheon+ 490 selected row vector and covariance
         try:
-            cache_file = Path("docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/pantheon_sliced_490_cache.npz")
             if cache_file.exists():
                 cache_data = np.load(cache_file)
                 d_490 = cache_data["d_490"]
@@ -411,7 +419,7 @@ class SourceBoundJointLikelihood(BaseSourceBoundLikelihood):
         total_data = np.concatenate(data_blocks)
         total_len = len(total_data)
 
-        # Build block-structured joint covariance
+        # Build block-diagonal joint covariance (exact conditional independence baseline)
         cov_joint = np.zeros((total_len, total_len), dtype=np.float64)
         offset = 0
         for block_cov in [
@@ -424,15 +432,6 @@ class SourceBoundJointLikelihood(BaseSourceBoundLikelihood):
             dim = block_cov.shape[0]
             cov_joint[offset:offset+dim, offset:offset+dim] = block_cov
             offset += dim
-
-        # Add shared Quasar cross-covariance between Quaia and Gaia CRF3 (indices 10 to 27)
-        # quaia block is offset 10 to 13; gaia block is offset 16 to 19 (glide)
-        # Shared tracer correlation ~ 0.05
-        quaia_slice = slice(10, 13)
-        gaia_glide_slice = slice(16, 19)
-        cross_block = np.eye(3) * (0.05 * 0.0020 * 0.0004)
-        cov_joint[quaia_slice, gaia_glide_slice] = cross_block
-        cov_joint[gaia_glide_slice, quaia_slice] = cross_block.T
 
         self.initialize_covariance(total_data, cov_joint, "HTTSourceBoundJointMultiProbe")
 
@@ -449,15 +448,18 @@ class SourceBoundJointLikelihood(BaseSourceBoundLikelihood):
             beta[1]*beta[2],
         ])
         pred_planck = np.zeros(self.planck.n_data, dtype=np.float64)
-        pred_planck[:5] = stf5_kin + model.state.stf_shear_amplitudes
+        tau = 0.054
+        pred_planck[:5] = tau * (stf5_kin + model.state.stf_shear_amplitudes)
         if self.planck.n_data >= 8:
-            pred_planck[5:8] = model.state.e1_polar_vector
+            pred_planck[5:8] = tau * model.state.e1_polar_vector
         if self.planck.n_data >= 10:
-            pred_planck[8:10] = model.state.b1_axial_vector[:2]
+            pred_planck[8:10] = tau * model.state.b1_axial_vector[:2]
 
         # 2. Counts
         b_mo = model.state.beta_MO
-        pred_counts = np.concatenate([3.75 * b_mo, 3.40 * b_mo])
+        factor_q = 3.50
+        factor_n = 3.50
+        pred_counts = np.concatenate([factor_q * b_mo, factor_n * b_mo])
 
         # 3. Gaia
         pred_gaia = np.zeros(11, dtype=np.float64)
