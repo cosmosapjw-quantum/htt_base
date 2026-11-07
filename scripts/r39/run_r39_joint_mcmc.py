@@ -242,11 +242,11 @@ def main():
         }, f, indent=2)
 
     # 2. Multi-chain MCMC Sampling on M3 with Laplace Proposal & Physical Prior
-    print("Running MCMC sampling on joint multi-probe posterior (4 chains x 2000 steps)...")
+    print("Running MCMC sampling on joint multi-probe posterior (4 chains x 3000 steps)...")
     np.random.seed(42)
     n_chains = 4
-    n_steps = 2000
-    burn_in = 500
+    n_steps = 3000
+    burn_in = 1000
 
     from common.r39_identifiability import compute_numerical_jacobian, whiten_matrix
     def forward_vec(th: np.ndarray) -> np.ndarray:

@@ -70,15 +70,15 @@ All calculations were conducted within the user's primary local checkout without
 
 ### Work Package G: Joint MCMC Sampling & Model Ladder
 - **Implementation:** `scripts/r39/run_r39_joint_mcmc.py`
-- Executed 4 MCMC chains $\times$ 2000 steps with Laplace proposal:
-  - Acceptance rates: $27.65\%, 24.05\%, 25.00\%, 26.05\%$ (optimal range).
-  - Gelman-Rubin convergence: **$\max(\hat{R} - 1) = 0.0397 < 0.05$** (PASSED).
-  - Total $\chi^2/\text{dof} = 382.14 / 513 = 0.745$.
+- Executed 4 MCMC chains $\times$ 3000 steps (1000 burn-in) with Laplace proposal:
+  - Acceptance rates: $25.03\%, 25.70\%, 24.73\%, 25.23\%$ (optimal range $20-30\%$).
+  - Gelman-Rubin convergence: **$\max(\hat{R} - 1) = 0.0287 < 0.05$** (PASSED).
+  - Total $\chi^2/\text{dof} = 807.71 / 513 = 1.574$. Distance $\chi^2/\text{dof} = 436.22 / 490 = 0.890$.
 - Model Comparison Ladder:
-  - $M_0$ (Isotropic $\Lambda$CDM): $\chi^2 = 401.59, \text{BIC} = 401.59$ ($\Delta\text{BIC} = 0.00$)
-  - $M_1$ (Kinematic Boost): $\chi^2 = 447.09, \text{BIC} = 465.91$ ($\Delta\text{BIC} = 64.33$)
-  - $M_2$ (Shear + Boost): $\chi^2 = 447.04, \text{BIC} = 516.04$ ($\Delta\text{BIC} = 114.46$)
-  - $M_3$ (Full 17-parameter Kinematics): $\chi^2 = 446.73, \text{BIC} = 553.37$ ($\Delta\text{BIC} = 151.78$)
+  - $M_0$ (Isotropic $\Lambda$CDM): $\chi^2 = 826.62, \text{BIC} = 826.62$ ($\Delta\text{BIC} = 0.00$)
+  - $M_1$ (Kinematic Boost): $\chi^2 = 870.79, \text{BIC} = 889.61$ ($\Delta\text{BIC} = 62.98$)
+  - $M_2$ (Shear + Boost): $\chi^2 = 870.73, \text{BIC} = 939.73$ ($\Delta\text{BIC} = 113.11$)
+  - $M_3$ (Full 17-parameter Kinematics): $\chi^2 = 870.42, \text{BIC} = 977.05$ ($\Delta\text{BIC} = 150.43$)
 - **Scientific Conclusion:** Bayesian Information Criterion strongly penalizes the unconstrained anisotropic parameters, confirming that kinematic boost accounts for the large-scale dipole without justifying a claim of Bianchi geometry detection.
 
 ---
@@ -91,9 +91,9 @@ All calculations were conducted within the user's primary local checkout without
 | R39 Kinematical Functionals | `htt/src/common/test_kinematical_functionals.py` | 11 | PASS | 1.8s |
 | R39 Full Observable x Bundle | `tests/r39/test_full_observable_x_bundle.py` | 1 | PASS | 0.8s |
 | R39 Identifiability & SVD | `tests/r39/test_r39_identifiability.py` | 3 | PASS | 0.9s |
-| R39 Source-Bound Likelihoods | `tests/r39/test_source_bound_likelihoods.py` | 7 | PASS | 36.2s |
+| R39 Source-Bound Likelihoods | `tests/r39/test_source_bound_likelihoods.py` | 7 | PASS | 12.2s |
 | R39 HTT Five-Variable State | `tests/r39/test_htt_five_variable_state.py` | 1 | PASS | 1.4s |
-| **Total** | | **33** | **ALL PASS** | **42.2s** |
+| **Total** | | **33** | **ALL PASS** | **18.2s** |
 
 ---
 

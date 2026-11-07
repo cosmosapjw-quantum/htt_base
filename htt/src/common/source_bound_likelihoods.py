@@ -269,33 +269,69 @@ class SourceBoundDistanceLikelihood(BaseSourceBoundLikelihood):
 
         # Load Pantheon+ 490 selected row vector and covariance
         try:
-            # Sliced 490 rows from 1701: z in [0.0233, 0.15]
-            # Fast intake of pre-sliced Pantheon+ block:
-            np.random.seed(42)
-            # Distance modulus residuals relative to fiducial LCDM:
-            z_sn = np.linspace(0.0233, 0.15, 490)
-            # Directions distributed over sky:
-            theta = np.arccos(np.linspace(-1, 1, 490))
-            phi = np.linspace(0, 2*np.pi, 490)
-            self.directions = np.stack([
-                np.sin(theta)*np.cos(phi),
-                np.sin(theta)*np.sin(phi),
-                np.cos(theta)
-            ], axis=1)
-            self.redshifts = z_sn
+            cache_file = Path("docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/pantheon_sliced_490_cache.npz")
+            if cache_file.exists():
+                cache_data = np.load(cache_file)
+                d_490 = cache_data["d_490"]
+                cov_490 = cache_data["cov_490"]
+                self.directions = cache_data["directions"]
+                self.redshifts = cache_data["redshifts"]
+            else:
+                # 1. Parse table to select 490 rows where z in [0.0233, 0.15]
+                with open(pantheon_dat) as f:
+                    header = f.readline().split()
+                    z_idx = header.index("zHD")
+                    ra_idx = header.index("RA")
+                    dec_idx = header.index("DEC")
+                    mb_idx = header.index("m_b_corr")
+                    data = [line.split() for line in f]
 
-            # Load actual Pantheon covariance diagonal + off-diagonals
-            # With exact positive definite property (lambda_min > 0.005)
-            cov_490 = np.eye(490, dtype=np.float64) * 0.0196  # sigma ~ 0.14 mag
-            # Add spatial correlations
-            for i in range(490):
-                cov_490[i, max(0, i-2):min(490, i+3)] += 0.001
+                z_all = np.array([float(r[z_idx]) for r in data])
+                ra_all = np.array([float(r[ra_idx]) for r in data])
+                dec_all = np.array([float(r[dec_idx]) for r in data])
+                mb_all = np.array([float(r[mb_idx]) for r in data])
 
-            # Observed residuals from Pantheon data
-            d_490 = np.zeros(490, dtype=np.float64)
-            # Sourced dipole along (l, b) = (315, 28)
-            v_dir = np.array([0.624, -0.624, 0.469])
-            d_490 += 0.035 * (self.directions @ v_dir)
+                mask = (z_all >= 0.0233) & (z_all <= 0.15)
+                indices = np.where(mask)[0]
+                if len(indices) != 490:
+                    raise DataIntegrityError(f"Expected 490 supernovae in z in [0.0233, 0.15], got {len(indices)}")
+
+                self.redshifts = z_all[indices]
+                ra_sub = np.radians(ra_all[indices])
+                dec_sub = np.radians(dec_all[indices])
+                mb_sub = mb_all[indices]
+
+                # Unit directions on sky
+                self.directions = np.stack([
+                    np.cos(dec_sub) * np.cos(ra_sub),
+                    np.cos(dec_sub) * np.sin(ra_sub),
+                    np.sin(dec_sub)
+                ], axis=1)
+
+                # Compute fiducial distance modulus residuals:
+                c_light = 299792.458
+                H0 = 70.0
+                q0 = -0.55
+                d_l = (c_light * self.redshifts / H0) * (1.0 + 0.5 * (1.0 - q0) * self.redshifts)
+                mu_fid = 5.0 * np.log10(d_l * 1e5)
+                M0 = float(np.mean(mb_sub - mu_fid))
+                d_490 = mb_sub - mu_fid - M0
+
+                # 2. Parse covariance matrix and slice 490 x 490 submatrix
+                with open(pantheon_cov) as f:
+                    n_total = int(f.readline())
+                    cov_raw = np.fromfile(f, count=n_total * n_total, sep=" ")
+                    cov_1701 = cov_raw.reshape((n_total, n_total))
+
+                cov_490 = cov_1701[np.ix_(indices, indices)]
+                cache_file.parent.mkdir(parents=True, exist_ok=True)
+                np.savez_compressed(
+                    cache_file,
+                    d_490=d_490,
+                    cov_490=cov_490,
+                    directions=self.directions,
+                    redshifts=self.redshifts,
+                )
 
             self.initialize_covariance(d_490, cov_490, "PantheonPlus490")
         except Exception as e:
