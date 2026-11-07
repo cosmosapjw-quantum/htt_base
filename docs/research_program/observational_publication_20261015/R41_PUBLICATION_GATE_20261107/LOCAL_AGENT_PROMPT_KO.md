@@ -257,3 +257,16 @@ One meaningful scientific capability per commit. Preserve raw logs. Don't make p
 Classify failures precisely: theory, statistical/model specification, numerical, implementation, runtime/environment, missing input/provenance, or authorization.
 
 Stop after the first complete source-bound probe has reproduced a published/official baseline and passed calibrated null tests: report measured result and one next dependency. Do not extend the DAG only to make it longer. Correct non-detection is a valid result.
+
+
+### Covariance-dependent identifiability
+
+The J_eff formula above is the fixed-C, mean-response case only. For a Gaussian model d~Normal(mu(q),C(q)), q=(theta,eta), use the full log likelihood including logdet(C) and
+[
+F_{ij}=\mu_{,i}^{T}C^{-1}\mu_{,j}+\frac12\operatorname{Tr}(C^{-1}C_{,i}C^{-1}C_{,j}).
+]
+Nuisance-profile with the Fisher Schur complement
+[
+F_{\theta|\eta}=F_{\theta\theta}-F_{\theta\eta}F_{\eta\eta}^{+}F_{\eta\theta},
+]
+using a declared parameter metric and reporting nuisance rank/regularization. For Poisson/Cox or other non-Gaussian probes use the actual likelihood score/Hessian or simulation-based identifiability checks. Mean-template and stochastic covariance/BipoSH responses must remain distinct branches until a correctly specified joint likelihood combines them.
