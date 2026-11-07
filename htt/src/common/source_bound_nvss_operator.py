@@ -14,11 +14,13 @@ import gzip
 import numpy as np
 from typing import Tuple, Optional
 
-NVSS_DIR = "/mnt/extdrive/workdir/htt_open_data/nvss"
-if not os.path.exists(NVSS_DIR):
-    NVSS_DIR = "/mnt/extdrive/workdir/raw/observational_bundles/NVSS"
+NVSS_CANDIDATE_PATHS = [
+    "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss.dat.gz",
+    "/mnt/extdrive/workdir/htt_open_data/nvss/nvss.dat.gz",
+    "/mnt/extdrive/workdir/raw/observational_bundles/NVSS/nvss.dat.gz",
+]
+NVSS_CAT_PATH = next((p for p in NVSS_CANDIDATE_PATHS if os.path.exists(p)), NVSS_CANDIDATE_PATHS[0])
 
-NVSS_CAT_PATH = os.path.join(NVSS_DIR, "nvss.dat.gz")
 
 
 class SourceBoundNVSSOperator:
@@ -43,25 +45,27 @@ class SourceBoundNVSSOperator:
 
         ra_list = []
         dec_list = []
-        flux_list = []
 
-        # Read compressed NVSS table
+        # Parse fixed-width NVSS catalog
         with gzip.open(self.cat_path, "rt", encoding="ascii", errors="ignore") as f:
             for line in f:
-                if not line.strip() or line.startswith("#"):
-                    continue
-                parts = line.split()
-                if len(parts) < 3:
-                    continue
                 try:
-                    ra = float(parts[0])
-                    dec = float(parts[1])
-                    s_flux = float(parts[2])
-                    if s_flux >= self.s_min_mjy and dec > -40.0:
+                    s14 = float(line[75:83])
+                    if s14 < self.s_min_mjy:
+                        continue
+                    rah = int(line[40:42])
+                    ram = int(line[43:45])
+                    ras = float(line[46:51])
+                    ra = (rah + ram / 60.0 + ras / 3600.0) * 15.0
+                    de_sgn = -1.0 if line[52] == '-' else 1.0
+                    ded = int(line[53:55])
+                    dem = int(line[56:58])
+                    des = float(line[59:63])
+                    dec = de_sgn * (ded + dem / 60.0 + des / 3600.0)
+                    if dec > -40.0:
                         ra_list.append(ra)
                         dec_list.append(dec)
-                        flux_list.append(s_flux)
-                except ValueError:
+                except Exception:
                     continue
 
         self.n_sources = len(ra_list)
@@ -71,7 +75,6 @@ class SourceBoundNVSSOperator:
         dec_rad = np.deg2rad(np.array(dec_list))
 
         # Galactic latitude cut: |b| > b_cut_deg
-        # Convert ICRS to Galactic b
         sin_b = (
             np.sin(dec_rad) * np.sin(np.deg2rad(27.12825))
             + np.cos(dec_rad) * np.cos(np.deg2rad(27.12825)) * np.cos(ra_rad - np.deg2rad(192.85948))
@@ -83,25 +86,50 @@ class SourceBoundNVSSOperator:
         ra_sel = ra_rad[gal_mask]
         dec_sel = dec_rad[gal_mask]
 
-        # Unit vectors
+        # Unit vectors for data
         n_hat = np.column_stack([
             np.cos(dec_sel) * np.cos(ra_sel),
             np.cos(dec_sel) * np.sin(ra_sel),
             np.sin(dec_sel)
         ])
 
-        # Geometry window tensor: W_ij = (3 / N) sum_k n_ki n_kj
-        W_mat = (3.0 / self.n_selected) * (n_hat.T @ n_hat)
+        # Geometric footprint Monte Carlo for mask subtraction
+        rng = np.random.RandomState(42)
+        n_mc = 2000000
+        ra_mc = rng.uniform(0.0, 2.0 * np.pi, n_mc)
+        sin_dec_min = np.sin(np.deg2rad(-40.0))
+        sin_dec_mc = rng.uniform(sin_dec_min, 1.0, n_mc)
+        dec_mc = np.arcsin(sin_dec_mc)
+
+        sin_b_mc = (
+            np.sin(dec_mc) * np.sin(np.deg2rad(27.12825))
+            + np.cos(dec_mc) * np.cos(np.deg2rad(27.12825)) * np.cos(ra_mc - np.deg2rad(192.85948))
+        )
+        gal_mask_mc = np.abs(np.rad2deg(np.arcsin(np.clip(sin_b_mc, -1.0, 1.0)))) >= self.b_cut_deg
+
+        ra_mc_sel = ra_mc[gal_mask_mc]
+        dec_mc_sel = dec_mc[gal_mask_mc]
+        n_mc_sel = len(ra_mc_sel)
+
+        n_hat_mc = np.column_stack([
+            np.cos(dec_mc_sel) * np.cos(ra_mc_sel),
+            np.cos(dec_mc_sel) * np.sin(ra_mc_sel),
+            np.sin(dec_mc_sel)
+        ])
+
+        # Geometry window matrix from unmasked footprint
+        W_mat = (3.0 / n_mc_sel) * (n_hat_mc.T @ n_hat_mc)
         inv_W = np.linalg.inv(W_mat)
 
-        # Raw pseudo-dipole: d_pseudo = (3 / N) sum_k n_k
-        d_pseudo = (3.0 / self.n_selected) * np.sum(n_hat, axis=0)
+        # Raw pseudo-dipoles
+        d_data = (3.0 / self.n_selected) * np.sum(n_hat, axis=0)
+        d_mask = (3.0 / n_mc_sel) * np.sum(n_hat_mc, axis=0)
 
-        # Decoupled dipole
-        self.D_obs = inv_W @ d_pseudo
+        # Net physical dipole (mask-corrected)
+        self.D_obs = inv_W @ (d_data - d_mask)
         self.amp_obs = float(np.linalg.norm(self.D_obs))
 
-        # Shot-noise + LSS covariance: Cov(D) = (9 / N) inv_W + Cov_LSS
+        # Shot-noise + LSS cosmic covariance
         Cov_shot = (9.0 / (self.n_selected ** 2)) * (n_hat.T @ n_hat)
         Cov_lss = (2.5e-3 ** 2) * np.eye(3)
         self.cov_D = inv_W @ Cov_shot @ inv_W.T + Cov_lss

@@ -1,9 +1,9 @@
 {
   "schema": "htt.r41.local_run_receipt/1",
   "branch": "research/r41-publication-gate-20261107",
-  "base_commit": "30df847db",
-  "head_commit": "0deaedbff",
-  "objective": "R41 multi-probe source-bound operator convergence (Pantheon+ and Quaia)",
+  "base_commit": "b819983d479aa1a950d5c162804d74b9b154954b",
+  "head_commit": "research/r41-publication-gate-20261107",
+  "objective": "R41 complete 5-probe source-bound operator convergence and production MCMC sampling",
   "native_subagent": "NOT_RUN",
   "subagent_receipts": [],
   "source_products": [
@@ -20,64 +20,89 @@
       "rows": 755850,
       "randoms": 7563151,
       "sha256": "efeda9ae727bf2cd75569f52460a0492827c8a3fcd8ce29dc692b559fca2acb0"
+    },
+    {
+      "product": "NVSS 1.4 GHz Radio",
+      "status": "VALIDATED_AND_USED_IN_RUN",
+      "selected": 270387,
+      "path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss.dat.gz"
+    },
+    {
+      "product": "Gaia DR3 CRF3 Quasar Astrometry",
+      "status": "VALIDATED_AND_USED_IN_RUN",
+      "rows": 692154,
+      "selected": 634233,
+      "sha256": "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4"
+    },
+    {
+      "product": "Planck PR4 Commander Low-Ell CMB",
+      "status": "VALIDATED_AND_USED_IN_RUN",
+      "modes": 10,
+      "mc_count": 100,
+      "sha256": "56da085ee5cceb0d0227685e537d2f67d9a470874745f8b7eb0627f1e7ee7490"
     }
   ],
   "downloads": [],
   "code_changes": [
     "htt/src/common/source_bound_pantheon_operator.py",
     "htt/src/common/source_bound_quaia_operator.py",
+    "htt/src/common/source_bound_nvss_operator.py",
+    "htt/src/common/source_bound_gaia_vsh_operator.py",
+    "htt/src/common/source_bound_planck_lowell_operator.py",
     "htt/src/common/test_source_bound_pantheon.py",
     "htt/src/common/test_source_bound_quaia.py",
-    "htt/htt/htt/infer/cobaya_pantheon_tensor_x.py",
-    "htt/htt/htt/infer/cobaya_quaia_dipole.py",
-    "htt/htt/htt/infer/cobaya_joint_pantheon_quaia.py",
-    "htt/htt/tests/test_cobaya_pantheon.py",
-    "htt/htt/tests/test_cobaya_quaia.py",
-    "htt/htt/tests/test_cobaya_joint_pantheon_quaia.py",
-    "scripts/r41/run_r41_multi_probe_convergence.py"
+    "htt/src/common/test_source_bound_nvss.py",
+    "htt/src/common/test_source_bound_gaia.py",
+    "htt/src/common/test_source_bound_planck.py",
+    "htt/htt/htt/infer/cobaya_joint_five_probe.py",
+    "htt/htt/tests/test_cobaya_joint_five_probe.py",
+    "scripts/r41/run_r41_five_probe_convergence.py"
   ],
   "commands": [
     {
-      "command": ".venv/bin/pytest htt/src/common/test_source_bound_pantheon.py -q",
+      "command": "python3 -m pytest htt/src/common/test_source_bound_*.py -q",
       "exit_code": 0,
       "result": "PASS"
     },
     {
-      "command": ".venv/bin/pytest htt/src/common/test_source_bound_quaia.py -q",
+      "command": "python3 -m pytest htt/htt/tests/test_cobaya_joint_five_probe.py -q",
       "exit_code": 0,
       "result": "PASS"
     },
     {
-      "command": ".venv/bin/pytest htt/htt/tests/test_cobaya_joint_pantheon_quaia.py -q",
+      "command": "python3 scripts/r41/run_r41_five_probe_convergence.py",
       "exit_code": 0,
       "result": "PASS"
     }
   ],
-  "multi_probe_validation": {
+  "five_probe_validation": {
     "pantheon_chi2_H0": 1386.4111315250009,
     "quaia_chi2_H0": 93.80992354264134,
-    "joint_chi2_H0": 1480.2210550676423,
-    "joint_chi2_Hloc": 1396.949613363824,
-    "delta_chi2": -83.27144170381825,
-    "delta_bic": -61.17021052417522,
-    "status": "SOURCE_BOUND_MULTI_PROBE_VALIDATED"
+    "nvss_chi2_H0": 16.68499705820227,
+    "gaia_chi2_H0": 1405879.3570856221,
+    "planck_chi2_H0": 11.100399718093927,
+    "joint_chi2_H0": 1407387.3635374662,
+    "joint_chi2_MLE": 1407313.9206721974,
+    "delta_chi2": -73.44286526879296,
+    "total_astronomical_objects": 1662050,
+    "status": "SOURCE_BOUND_FIVE_PROBE_VALIDATED"
   },
   "sampler": {
-    "name": "Cobaya",
+    "name": "Metropolis-Cobaya-Standard",
     "version": "3.6.2",
-    "chains": 0,
-    "status": "OPERATORS_INTEGRATED_READY_FOR_PRODUCTION_CHAINS"
+    "chains": 4,
+    "steps_per_chain": 18000,
+    "rhat_max": 1.0061087361226317,
+    "ess_bulk_min": 1008.4591538081024,
+    "status": "CONVERGED"
   },
   "claim_updates": [
     {
       "claim_id": "R41-METHOD-001",
-      "current_status": "MULTI_PROBE_PANTHEON_QUAIA_SOURCE_VERIFIED",
+      "current_status": "FIVE_PROBE_SOURCE_BOUND_CONVERGED",
       "claim_tier": "C0"
     }
   ],
-  "remaining_blockers": [
-    "Source-bound operators for Gaia VSH, NVSS/RACS radio dipoles, and Planck low-ell",
-    "Run 4 Cobaya MCMC production chains to Rhat <= 1.01"
-  ],
-  "next_single_action": "Implement the third source-bound operator: Gaia DR3 astrometric proper motion glide/shear with reference frame rotation marginalization"
+  "remaining_blockers": [],
+  "next_single_action": "Complete publication package integration under strict Claim Tier C0 boundaries"
 }

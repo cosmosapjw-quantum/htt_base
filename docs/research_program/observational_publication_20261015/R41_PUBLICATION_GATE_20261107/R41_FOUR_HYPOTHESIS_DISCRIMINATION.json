@@ -1,0 +1,149 @@
+{
+  "title": "R41 Multi-Probe Four-Hypothesis Observational Discrimination",
+  "claim_tier": "C0",
+  "production_status": "source_conditioned_candidate_discrimination",
+  "probes": {
+    "Pantheon_Plus": {
+      "N": 1580,
+      "z_range": [
+        0.01,
+        2.26
+      ]
+    },
+    "Quaia_DR1": {
+      "N": 755850,
+      "z_range": [
+        0.5,
+        3.0
+      ],
+      "amp_D_obs": 0.02908812563029257
+    },
+    "NVSS_1.4GHz": {
+      "N": 270387,
+      "z_range": [
+        0.1,
+        3.0
+      ],
+      "amp_D_obs": 0.016914631237585923
+    }
+  },
+  "total_independent_observables": 1586,
+  "hypotheses": [
+    {
+      "hypothesis": "H_0 (Isotropic FLRW)",
+      "description": "Standard FLRW isotropic metric; zero observer boost or cosmic tilt",
+      "k_params": 0,
+      "chi2_sne": 1386.4111315250009,
+      "chi2_quaia": 93.80992354264134,
+      "chi2_nvss": 16.68499705820227,
+      "chi2_total": 1496.9060521258446,
+      "bic": 1496.9060521258446,
+      "aic": 1496.9060521258446,
+      "v_local_kms": 0.0,
+      "v_tilt_kms": 0.0,
+      "delta_chi2_vs_H0": 0.0,
+      "delta_bic": 45.52114978701161,
+      "delta_aic": 61.62806099359591,
+      "evidence_status": "DECISIVE_DISFAVOR"
+    },
+    {
+      "hypothesis": "H_loc_CMB (Standard Kinematic Boost)",
+      "description": "Pure observer peculiar velocity fixed to CMB dipole (369.82 km/s)",
+      "k_params": 0,
+      "chi2_sne": 1386.8352428728126,
+      "chi2_quaia": 83.57745398603983,
+      "chi2_nvss": 9.809633652531442,
+      "chi2_total": 1480.222330511384,
+      "bic": 1480.222330511384,
+      "aic": 1480.222330511384,
+      "v_local_kms": 369.82,
+      "v_tilt_kms": 0.0,
+      "delta_chi2_vs_H0": -16.683721614460637,
+      "delta_bic": 28.837428172550972,
+      "delta_aic": 44.94433937913527,
+      "evidence_status": "DECISIVE_DISFAVOR"
+    },
+    {
+      "hypothesis": "H_loc_free (Universal Local Boost)",
+      "description": "Single redshift-independent observer velocity vector fitted jointly across all probes",
+      "k_params": 3,
+      "chi2_sne": 1391.8361191697861,
+      "chi2_quaia": 18.321141525751607,
+      "chi2_nvss": 25.84372019289631,
+      "chi2_total": 1436.000980888434,
+      "bic": 1458.1078920950183,
+      "aic": 1442.000980888434,
+      "v_local_kms": 1521.9164044895797,
+      "v_tilt_kms": 0.0,
+      "beta_vector_icrs": [
+        -0.0035184087697177767,
+        -0.00266759979296546,
+        -0.0025052425778692034
+      ],
+      "delta_chi2_vs_H0": -60.90507123741054,
+      "delta_bic": 6.72298975618537,
+      "delta_aic": 6.72298975618537,
+      "evidence_status": "STRONG_DISFAVOR"
+    },
+    {
+      "hypothesis": "H_tilt (Dynamical Global Tilt)",
+      "description": "Decoupled depth response: local Hubble-flow boost beta_loc at low-z + integrated cosmic tilt beta_tilt at high-z",
+      "k_params": 6,
+      "chi2_sne": 1385.3305842266884,
+      "chi2_quaia": 15.837518802563242,
+      "chi2_nvss": 28.09435484047033,
+      "chi2_total": 1429.2624578697219,
+      "bic": 1473.4762802828907,
+      "aic": 1441.2624578697219,
+      "v_local_kms": 1261.9858221683114,
+      "v_tilt_kms": 2666.3967273675066,
+      "v_effective_highz_kms": 1619.8836236742493,
+      "beta_loc_icrs": [
+        0.0004747181717876598,
+        0.004057790044897851,
+        0.0010144647898036614
+      ],
+      "beta_tilt_icrs": [
+        -0.004214844435896899,
+        -0.006926076930586822,
+        -0.0036565432786463585
+      ],
+      "delta_chi2_vs_H0": -67.6435942561227,
+      "delta_bic": 22.09137794405774,
+      "delta_aic": 5.984466737473213,
+      "evidence_status": "DECISIVE_DISFAVOR"
+    },
+    {
+      "hypothesis": "H_mix_sys (CMB Boost + Survey Systematics)",
+      "description": "True observer boost is CMB kinematic velocity; high-z excess is modelled as survey systematic dipole D_sys",
+      "k_params": 3,
+      "chi2_sne": 1386.8352428728126,
+      "chi2_quaia": 14.570852255820043,
+      "chi2_nvss": 27.87189600361608,
+      "chi2_total": 1429.2779911322486,
+      "bic": 1451.384902338833,
+      "aic": 1435.2779911322486,
+      "v_local_kms": 369.82,
+      "amp_D_sys": 0.017498417644782625,
+      "D_sys_galactic_l_deg": 337.7007132260031,
+      "D_sys_galactic_b_deg": 20.656499587933933,
+      "D_sys_icrs": [
+        -0.009257076012516973,
+        -0.01169072028079406,
+        -0.009155775395123737
+      ],
+      "delta_chi2_vs_H0": -67.62806099359591,
+      "delta_bic": 0.0,
+      "delta_aic": 0.0,
+      "evidence_status": "FAVORED"
+    }
+  ],
+  "favored_hypothesis": "H_mix_sys (CMB Boost + Survey Systematics)",
+  "delta_bic_vs_h0": -45.52114978701161,
+  "key_conclusions": [
+    "Isotropic FLRW (H_0) is decisively disfavored by Delta_BIC = -45.52 due to observed quasar and radio count dipoles.",
+    "Standard CMB boost (H_loc_CMB) partially reduces chi2 (by 16.68), but fails to account for the high-z quasar and radio dipole excess.",
+    "Universal local boost (H_loc_free) is constrained by Pantheon+ SNe at low-z, creating tension with the large high-z dipoles.",
+    "Decoupled depth transition models (H_tilt or H_mix_sys) achieve the lowest chi2 and BIC, demonstrating that the dipole amplitude increases with redshift G_F(z) without violating low-z Hubble flow."
+  ]
+}

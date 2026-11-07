@@ -14,7 +14,10 @@ download_policy:
 datasets:
   planck_pr4:
     priority: P0
-    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    status: VALIDATED_AND_USED_IN_RUN
+    local_path: "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/observed_lowell_EB.npz"
+    local_sha256: "56da085ee5cceb0d0227685e537d2f67d9a470874745f8b7eb0627f1e7ee7490"
+    local_mc_covariance_path: "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/mc_cov/"
     official_source: "https://data.cmb-s4.org/planck_pr4.html"
     primary_archive: "https://pla.esac.esa.int/pla/"
     requested_products:
@@ -31,7 +34,9 @@ datasets:
     outputs: [map_manifest.json, mask_window_manifest.json, harmonic_features.npz, matched_mc_covariance.npz]
   quaia:
     priority: P0
-    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    status: VALIDATED_AND_USED_IN_RUN
+    local_path: "/mnt/extdrive/workdir/htt_open_data/quaia/quaia_G20.0.fits"
+    local_sha256: "8c8bfaef5f187ee0ca58bb9b1f7bb6ecfecfd1d35ae67246533038676d914d7a"
     official_source: "https://irsa.ipac.caltech.edu/data/Quaia/overview.html"
     data_doi: "https://doi.org/10.26131/IRSA640"
     requested_products:
@@ -46,7 +51,9 @@ datasets:
     outputs: [quaia_source_catalogue.parquet, quaia_randoms_or_completeness.*, quaia_selection.yaml, quaia_dipole_bins.npz]
   nvss:
     priority: P0
-    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    status: VALIDATED_AND_USED_IN_RUN
+    local_path: "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss.dat.gz"
+    local_sha256: "fcf6ee04958df4a61358ec1ee05928d1575ca8f27003ff56d44ef4a6c8b72450"
     official_catalogue: "https://www.cv.nrao.edu/nvss/NVSSlist.shtml"
     official_downloads: "https://www.cv.nrao.edu/nvss/anonftp.shtml"
     products:
@@ -77,7 +84,9 @@ datasets:
     outputs: [racs_low_dr1_catalogue.parquet, racs_footprint_noise_completeness.*, racs_dipole_bins.npz]
   gaia_dr3_crf3:
     priority: P0
-    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    status: VALIDATED_AND_USED_IN_RUN
+    local_path: "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_crf3_join.npz"
+    local_sha256: "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4"
     official_archive: "https://gea.esac.esa.int/archive/"
     official_documentation: "https://gea.esac.esa.int/archive/documentation/GDR3/"
     auxiliary_tables:
@@ -98,7 +107,11 @@ datasets:
     outputs: [gaia_crf3_rows.parquet, gaia_covariance_or_estimator_manifest.json, gaia_vsh_coefficients.npz]
   pantheon_plus:
     priority: P0
-    status: NOT_DOWNLOADED_OR_REHASHED_IN_THIS_SESSION
+    status: VALIDATED_AND_USED_IN_RUN
+    local_data_path: "/mnt/extdrive/workdir/htt_open_data/pantheon_plus/Pantheon+SH0ES.dat"
+    local_data_sha256: "942aa3760a92f03f7e6f88ec30aa49339e924eaef3ff2f3493776ffcbb18a004"
+    local_cov_path: "/mnt/extdrive/workdir/htt_open_data/pantheon_plus/Pantheon+SH0ES_STAT+SYS.cov"
+    local_cov_sha256: "841eef1ab05ecb72a44040db38e55e396bb21e9c20a442e2a04870f44ec8ba79"
     official_release: "https://github.com/PantheonPlusSH0ES/DataRelease"
     products:
       - "Full Pantheon+SH0ES sample data table."

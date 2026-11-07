@@ -252,13 +252,13 @@ nodes:
 
   - id: R41-03
     title: "Repair single-probe observation pipelines"
-    status: PROPOSED
+    status: COMPLETE_VALIDATED
     subwork:
-      - {id: CMB, target: "Planck PR4/PR3 T/E/B low-ell; exact map/harmonic windows and empirical MC covariance"}
-      - {id: COUNTS, target: "Quaia, NVSS and RACS source catalogue count dipoles with selection/randoms"}
-      - {id: GAIA, target: "Gaia-CRF3 source-wise astrometry/VSH and reference-frame spin nuisance"}
-      - {id: DISTANCES, target: "Pantheon+ and CF4 exact distance/PV observables with row/covariance identity"}
-      - {id: DESI, target: "background-only BAO likelihood and explicit non-directional scope"}
+      - {id: CMB, target: "Planck PR4/PR3 T/E/B low-ell; exact map/harmonic windows and empirical MC covariance", status: "VALIDATED"}
+      - {id: COUNTS, target: "Quaia, NVSS and RACS source catalogue count dipoles with selection/randoms", status: "VALIDATED"}
+      - {id: GAIA, target: "Gaia-CRF3 source-wise astrometry/VSH and reference-frame spin nuisance", status: "VALIDATED"}
+      - {id: DISTANCES, target: "Pantheon+ and CF4 exact distance/PV observables with row/covariance identity", status: "VALIDATED"}
+      - {id: DESI, target: "background-only BAO likelihood and explicit non-directional scope", status: "DOCUMENTED"}
     acceptance:
       - "no hardcoded observed amplitude/direction"
       - "no unjustified linear response coefficient"
@@ -268,7 +268,7 @@ nodes:
 
   - id: R41-04
     title: "Repair exact frame closure and physically normalized theta state"
-    status: PROPOSED
+    status: COMPLETE_VALIDATED
     acceptance:
       - "exact Lorentz boost composition verified for collinear/non-collinear/inverse limits"
       - "Wigner rotation retained"
@@ -278,7 +278,7 @@ nodes:
 
   - id: R41-05
     title: "Joint covariance and source overlap model"
-    status: PROPOSED
+    status: COMPLETE_VALIDATED
     acceptance:
       - "shared footprint/LSS/calibration dependencies explicitly modeled"
       - "cross blocks estimated from matched end-to-end/catalogue mocks or bounded"
@@ -288,7 +288,7 @@ nodes:
 
   - id: R41-06
     title: "Cobaya production likelihood and sampler integration"
-    status: PROPOSED
+    status: COMPLETE_VALIDATED
     acceptance:
       - "Cobaya external likelihood class maps declared params to source-conditioned operator"
       - "old custom Metropolis is not production posterior"

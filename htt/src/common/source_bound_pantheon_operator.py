@@ -193,9 +193,16 @@ class SourceBoundPantheonOperator:
         A_3 = theta_K[8:11]         # Polar acceleration / curvature gradient A/(c*H)
         beta_MO_3 = theta_K[14:17]   # Matter-to-observer velocity beta_MO (dimensionless)
 
-        # 1. Background isotropic luminosity distance in Mpc
-        dL_iso = psi.luminosity_distance_mpc(self.z_hd_sel, self.z_hel_sel)
-        mu_iso = 5.0 * np.log10(dL_iso * 1e5)  # dL in Mpc -> pc is 1e6 pc, 5*log10(dL*1e5) = 5*log10(dL) + 25
+        # 1. Background isotropic luminosity distance in Mpc (with cosmology caching)
+        if hasattr(self, "_last_psi") and self._last_psi == psi:
+            dL_iso = self._last_dL_iso
+            mu_iso = self._last_mu_iso
+        else:
+            dL_iso = psi.luminosity_distance_mpc(self.z_hd_sel, self.z_hel_sel)
+            mu_iso = 5.0 * np.log10(dL_iso * 1e5)
+            self._last_psi = psi
+            self._last_dL_iso = dL_iso
+            self._last_mu_iso = mu_iso
 
         # 2. Covariant anisotropic departure delta_mu(n_hat)
         # Leading directional Hubble modulation: H_loc(n) = H0 [ 1 + n^T S n - n . beta_MO - n . A / (c H0) ]
