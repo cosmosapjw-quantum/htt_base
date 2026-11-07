@@ -1,0 +1,111 @@
+{
+  "schema": "htt.r41.local_run_receipt/1",
+  "branch": "research/r41-publication-gate-20261107",
+  "base_commit": "b819983d479aa1a950d5c162804d74b9b154954b",
+  "head_commit": "b819983d479aa1a950d5c162804d74b9b154954b",
+  "objective": "R41 source-bound single-probe operator (Pantheon+) and Cobaya integration",
+  "native_subagent": "NOT_RUN",
+  "subagent_receipts": [],
+  "source_products": [
+    {
+      "product": "Pantheon+SH0ES",
+      "files": [
+        {
+          "path": "/mnt/extdrive/workdir/raw/observational_bundles/PantheonPlus_SH0ES/Pantheon+SH0ES.dat",
+          "bytes": 579283,
+          "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+          "rows": 1701,
+          "status": "VALIDATED_AND_USED_IN_RUN"
+        },
+        {
+          "path": "/mnt/extdrive/workdir/raw/observational_bundles/PantheonPlus_SH0ES/Pantheon+SH0ES_STAT+SYS.cov",
+          "bytes": 33284960,
+          "sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+          "dimension": [
+            1701,
+            1701
+          ],
+          "status": "VALIDATED_AND_USED_IN_RUN"
+        }
+      ],
+      "selection": {
+        "z_min": 0.01,
+        "z_max": 2.5,
+        "is_calibrator": 0,
+        "selected_count": 1580
+      }
+    }
+  ],
+  "downloads": [],
+  "code_changes": [
+    "htt/src/common/source_bound_pantheon_operator.py",
+    "htt/src/common/test_source_bound_pantheon.py",
+    "htt/htt/htt/infer/cobaya_pantheon_tensor_x.py",
+    "htt/htt/tests/test_cobaya_pantheon.py",
+    "scripts/r41/run_r41_single_probe_convergence.py"
+  ],
+  "commands": [
+    {
+      "command": ".venv/bin/pytest htt/src/common/test_source_bound_pantheon.py -q",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": ".venv/bin/pytest htt/htt/tests/test_cobaya_pantheon.py -q",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  ],
+  "single_probe_validation": {
+    "probe": "Pantheon+ SNe Ia",
+    "dof": 1580,
+    "fiducial_chi2": 1386.4111315250009,
+    "reduced_chi2": 0.8774753996993676,
+    "marginalized_delta_M0": -19.247968669300864,
+    "status": "SOURCE_BOUND_VERIFIED_PASS"
+  },
+  "sampler": {
+    "name": "Cobaya",
+    "version": "3.6.2",
+    "chains": 0,
+    "rhat_max": null,
+    "ess_bulk_min": null,
+    "ess_tail_min": null,
+    "status": "OPERATOR_INTEGRATED_READY_FOR_PRODUCTION_CHAINS"
+  },
+  "identified_functionals": [
+    "dL_isotropic_background",
+    "leading_directional_shear_projection",
+    "matter_observer_boost_dipole",
+    "analytic_delta_M0_marginalization"
+  ],
+  "model_comparison": {
+    "models": [
+      "H0_FLRW_fiducial",
+      "H_shear_test"
+    ],
+    "method": "delta_chi2",
+    "scores": {
+      "chi2_FLRW": 1386.4111315250009,
+      "chi2_shear_1pct": 1399.7807005585337,
+      "delta_chi2": 13.369569033532798
+    },
+    "status": "EVALUATED_SOURCE_BOUND"
+  },
+  "adversarial_nulls": [],
+  "claim_updates": [
+    {
+      "claim_id": "R41-METHOD-001",
+      "current_status": "FIRST_PROBE_IMPLEMENTED_AND_SOURCE_VERIFIED",
+      "claim_tier": "C0"
+    }
+  ],
+  "remaining_blockers": [
+    "Execute remaining single-probe source operators (Quaia, Gaia, NVSS, RACS, Planck low-ell)",
+    "Cross-probe covariance matrix estimation before joint MCMC",
+    "Run 4 Cobaya MCMC production chains with split-Rhat <= 1.01"
+  ],
+  "next_single_action": "Implement the second source-bound single probe: Quaia G<20.0 quasar count dipole with source randoms and selection function"
+}
