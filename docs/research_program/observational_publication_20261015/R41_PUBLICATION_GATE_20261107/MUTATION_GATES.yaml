@@ -1,0 +1,158 @@
+schema: htt.r41_mutation_gates/1
+branch_policy:
+  allowed_branch: research/r41-publication-gate-20261107
+  parent_commit: b819983d479aa1a950d5c162804d74b9b154954b
+  allowed_base: research/r39-observational-identifiability-20261107
+  forbidden:
+    - "push directly to main"
+    - "push directly to R38/R39 historical branches"
+    - "force-push or rewrite existing refs"
+    - "merge the R41 draft PR without explicit review/acceptance"
+    - "delete or rewrite historical R38/R39/R40 reports, manifests or logs"
+    - "commit large observational data, credentials or private local paths"
+    - "claim local source files exist because the GitHub inventory lists them"
+  allowed:
+    - "commit documentation and machine-readable plans to the R41 branch"
+    - "commit tested source changes to the R41 branch"
+    - "download public source data to the existing external data directory, outside Git"
+    - "create small non-private metadata manifests and reproducible scripts"
+pre_mutation:
+  required:
+    - "record git status --short --branch"
+    - "record current branch and HEAD SHA"
+    - "record staged and unstaged diff; preserve all pre-existing edits"
+    - "confirm origin URL is cosmosapjw-quantum/htt_base"
+    - "confirm R41 branch ancestry includes parent b819983d479aa1a950d5c162804d74b9b154954b"
+    - "read applicable root and package AGENTS.md and repo-local skill files"
+  stop_if:
+    - "unexpected dirty changes overlap target files"
+    - "the checkout is not the intended primary checkout"
+    - "R41 branch ancestry or remote identity differs"
+    - "a required historical input or test is missing and cannot be resolved"
+data_mutation_gate:
+  permitted_targets:
+    - "/mnt/extdrive/workdir/htt_open_data/"
+    - "/mnt/extdrive/workdir/raw/observational_bundles/"
+  rules:
+    - "Inspect existing candidate files and provenance before downloading."
+    - "Download only the products required by the next DAG node."
+    - "Use official source portals and record access date, release, product, URL/DOI and licence."
+    - "Compute SHA-256 from actual local bytes; record size, FITS/CSV metadata and row counts."
+    - "Retain upstream immutable raw files; derived products go into a separate versioned output directory."
+    - "Do not put source files, credentials, tokens or machine-specific absolute paths in Git."
+    - "Never label a product VERIFIED solely because a filename exists or a prior inventory says so."
+  required_manifest_fields:
+    - source_id
+    - official_release
+    - product_name
+    - source_url_or_doi
+    - access_date
+    - local_path
+    - byte_size
+    - sha256_actual
+    - row_count_or_map_nside
+    - schema_columns
+    - units
+    - coordinate_frame
+    - epoch_or_redshift_support
+    - selection_and_mask
+    - covariance_identity_and_row_order
+    - transformation_script_commit
+    - status
+code_mutation_gate:
+  target_scope:
+    - "htt/htt/htt/infer/tensor_joint_multiprobe_likelihood.py"
+    - "htt/htt/htt/infer/tensor_five_variable_inference.py"
+    - "htt/src/common/relativistic_velocity_closure.py"
+    - "htt/src/common/kinematic_response.py"
+    - "htt/src/common/stf_metric_bridge.py"
+    - "htt/src/common/full_observable_x_bundle.py"
+    - "tests/ for the exact changed owners"
+    - "new Cobaya likelihood package and YAML under an explicit HTT-owned namespace"
+  requirements:
+    - "Create a bounded PR-sized patch with one scientific capability per commit."
+    - "Each response coefficient must be derived or calibrated from a versioned transfer/selection operator; no hardcoded proxy factors."
+    - "Separate observed catalogue/map data from synthetic/null/mock data at type and path level."
+    - "Bind data rows, covariance order, sky/frame, units, selection and transformation identity."
+    - "Treat missing source/covariance/transfer as NOT_AVAILABLE or NOT_IMPLEMENTED; fail closed rather than insert a proxy."
+    - "Use exact Lorentz transformations for non-collinear multi-frame composition, retaining Wigner rotation."
+    - "No first-order boost sum in any function advertised as exact closure."
+    - "Use a sourced physical distance-redshift model over the broad-z sample; restrict Taylor expansions to a demonstrated domain."
+    - "Keep the DESI compressed BAO channel isotropic/background-only."
+    - "Keep HTT likelihood/posterior ownership separate from MIO diagnostics and BASS transfer ownership."
+    - "External Bianchi transfer must carry its external software/version/config identity and never be relabelled native."
+  mandatory_fixes_before_production:
+    - "Replace fixed-point BIC comparison with fitted model likelihoods and declared parameter/prior dimensions."
+    - "Replace full-MAP held-out evaluation with exact fold refit or validated PSIS-LOO."
+    - "Remove clipped hand-built Pareto-k estimator."
+    - "Replace non-converged hand-written MCMC posterior with production Cobaya sampling."
+    - "Replace the CMB tau=0.054 pseudo-response with a source-bound transfer/map/harmonic response."
+    - "Remove hardcoded Quaia G<20.5 carrier/covariance approximation."
+    - "Remove hardcoded RACS carrier/covariance."
+    - "Derive Gaia VSH response and frame-spin nuisance design from the source-level estimator."
+    - "Correct SN distance model, q0/background dependence and acceleration normalization."
+    - "Determine exact CF4 observable semantics; replace stride thinning and diagonal-only covariance."
+    - "Estimate or sensitivity-bound cross-probe covariance blocks."
+    - "Replace arbitrary tensor/scalar Fisher pseudodeterminant with common parameter/prior metric comparison."
+    - "Propagate exact beta_RO and sampled background geometry into the five-variable state."
+  tests:
+    pre_patch:
+      - "Save exact baseline source SHA and current relevant test results, if available."
+    post_patch:
+      - "Run syntax/import and targeted unit/contract tests."
+      - "Run exact Lorentz collinear/non-collinear/inverse/Wigner tests."
+      - "Run FLRW, local-boost-only, global-tilt-only and zero-anisotropy limits."
+      - "Run finite-difference step-size stability and analytic-vs-numeric Jacobian tests."
+      - "Run covariance symmetry, positive-definiteness, conditioning and row-order tests."
+      - "Run source-selection and mask injection/recovery tests."
+      - "Run full targeted test set for touched packages."
+    evidence_record:
+      - command
+      - working_directory
+      - interpreter_and_dependency_versions
+      - source_commit
+      - exact_input_identity
+      - exit_code
+      - log_path
+      - output_artifact_identity
+      - status
+      - skipped_or_unavailable_reason
+sampler_gate:
+  requirements:
+    - "Every hypothesis is optimized/fitted under its own declared parameter set and priors."
+    - "No BIC or Bayes factor computed from hardcoded parameter points."
+    - "Use proper priors if evidence is compared; flat Schur nuisance marginalization is not silently reused across models with different nuisance dimension."
+    - "At least four independent chains or justified nested-sampling procedure."
+    - "rank-normalized split-Rhat <= 1.01 and bulk/tail ESS >= 1000 for parameters supporting the claim."
+    - "Trace/stationarity and posterior-predictive checks pass; report multimodality or sampler pathologies."
+    - "Fold-specific nuisance parameters are refit/marginalized in predictive validation."
+    - "Prior and covariance sensitivity are reported."
+  fail_closed:
+    - "Non-converged means posterior status NOT_CONVERGED."
+    - "Failed posterior predictive checks block model-selection interpretation."
+    - "A rank-deficient response blocks the affected parameter claim but not identifiable functionals."
+claim_promotion_gate:
+  requirements:
+    - "Numerical result is linked to exact source release, local bytes, catalogue/map rows, masks/windows, covariance, code commit, config and sampler receipt."
+    - "The result reproduces a published/official reference estimator where applicable."
+    - "Tensor-x vs scalar-x_C uses same observations, response, nuisance model, prior measure, parameter scaling and validation folds."
+    - "Adversarial null families include footprint, dust/foreground, selection, shot noise, LSS/bulk flow, frame spin, calibration and transfer mismatch."
+    - "Pre-registered FPR <= 0.05 for a detection claim after relevant multiplicity correction."
+    - "Predictive or identifiable-functional improvement survives held-out probe/redshift splits and reasonable prior/mask variants."
+    - "An independent reviewer has not authored the patch and checks equations, statistics, code and claim language in one bounded pass."
+  forbidden_promotion:
+    - "MIO certificate alone"
+    - "synthetic-only experiment"
+    - "hash inventory without source replay"
+    - "smoke test or import success"
+    - "rank increase without a shared metric and physical-functional interpretation"
+    - "Bianchi shape/axis compatibility without native family transfer and equivalence-class breaking"
+release_gate:
+  required:
+    - "draft manuscript source built successfully"
+    - "tables/figures generated from exact run artifacts"
+    - "all central claims in CLAIM_LEDGER.json promoted independently"
+    - "remaining blockers and limitations explicit"
+  forbidden:
+    - "merge R41 into R39 or main before local execution and review"
+    - "announce empirical detection or Bianchi family identification before release gate"
