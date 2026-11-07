@@ -336,3 +336,18 @@ stopping_rules:
   - "If tensor-x does not improve stable identifiable functionals or predictive calibration over x_C and established baselines, do not claim tensorization as a novel advantage."
   - "If no native Bianchi transfer atlas exists, stop at morphology compatibility / transfer-conditional bounds."
 release_rule: "R41 research-only draft. No manuscript or empirical detection promotion before R41-09."
+
+
+covariance_identifiability_extension:
+  scope: "Applies whenever C depends on theta/eta or the data likelihood is non-Gaussian."
+  gaussian_model:
+    distribution: "d ~ Normal(mu(q), C(q)), q=(theta,eta)"
+    log_likelihood: "-0.5 * [(d-mu)^T C^-1 (d-mu) + logdet(C) + n log(2 pi)]"
+    fisher: "F_ij = mu_,i^T C^-1 mu_,j + 0.5 Tr(C^-1 C_,i C^-1 C_,j)"
+    nuisance_profile: "F_theta_given_eta = F_tt - F_te * pinv(F_ee) * F_et"
+  requirements:
+    - "The J_eff mean-response criterion is used only for parameter-independent covariance or explicitly negligible covariance derivatives."
+    - "The BipoSH/stochastic covariance branch includes C_,i and logdet(C)."
+    - "Use the score/Hessian of the actual likelihood for Poisson/Cox or other non-Gaussian data."
+    - "Mean-template and covariance responses remain separately reportable."
+    - "Any nuisance Schur complement reports the nuisance-block rank, metric and prior/regularization."
