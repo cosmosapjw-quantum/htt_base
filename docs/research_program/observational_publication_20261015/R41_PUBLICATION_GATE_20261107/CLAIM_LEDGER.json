@@ -1,0 +1,216 @@
+{
+  "schema": "htt.claim_ledger.r41/1",
+  "as_of": "2026-11-07",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "basis_commit": "b819983d479aa1a950d5c162804d74b9b154954b",
+  "default_claim_ceiling": "C0",
+  "note": "Historical R38/R39/R40 artifacts are preserved. Claims with contradictory local execution provenance are quarantined, not erased.",
+  "claims": [
+    {
+      "claim_id": "R41-METHOD-001",
+      "text": "A source-conditioned multi-probe observation-operator pipeline can map tensor-valued physical functionals to CMB, number-count, astrometric and distance observables while retaining their source, selection, transfer, frame and covariance lineage.",
+      "owner": "htt",
+      "status": "PROPOSED",
+      "evidence_type": "none",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Design candidate only; no empirical performance or novelty priority established.",
+        "Requires actual source-bound observation operators and matched benchmarking."
+      ]
+    },
+    {
+      "claim_id": "R41-IDENT-002",
+      "text": "For a local linearized observation model with nuisance-projected whitened Jacobian J_eff, a differentiable target functional phi(theta) is locally identifiable only if ker(J_eff) is a subset of ker(D phi).",
+      "owner": "htt",
+      "status": "DERIVED_CONDITIONAL",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Local condition only; does not establish global identifiability.",
+        "Requires differentiability, correct source-conditioned likelihood, nuisance tangent space and covariance.",
+        "Parameter metric and whitening convention must be declared."
+      ]
+    },
+    {
+      "claim_id": "R41-OPT-003",
+      "text": "For a specified observer congruence and local direction convention, the leading directional expansion scalar contains an STF shear quadrupole and acceleration dipole: H_loc(n)=H+sigma_ab n^a n^b-A_a n^a/c.",
+      "owner": "htt",
+      "status": "DERIVED_CONDITIONAL",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Leading local coefficient only; A sign depends on photon/direction convention.",
+        "Requires explicit observer/source congruence, units and tetrad.",
+        "Higher-redshift distance terms need separate derivation."
+      ]
+    },
+    {
+      "claim_id": "R41-OPT-004",
+      "text": "The direct scalar contraction n^a n^b omega_ab vanishes when omega_ab is antisymmetric.",
+      "owner": "htt",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "This does not prove vorticity is absent from all higher-order distance/redshift coefficients, their derivatives or propagation terms."
+      ]
+    },
+    {
+      "claim_id": "R41-BUCHERT-005",
+      "text": "With sigma^2=(1/2)sigma_ab sigma^ab and theta=3H, Buchert Q_D equals 6 Var_D(H)-<sigma_ab sigma^ab>_D.",
+      "owner": "htt",
+      "status": "DERIVED_CAS_SPOTCHECKED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "A separate x_D definition using sigma^2 rather than sigma_ab sigma^ab changes the coefficient.",
+        "Wolfram symbolic spot-check was run; repository tests were not."
+      ]
+    },
+    {
+      "claim_id": "R41-STF5-006",
+      "text": "For the coordinate chart (Sxx,Syy,Sxy,Sxz,Syz) with Szz=-Sxx-Syy, the Frobenius norm has Gram matrix [[2,1,0,0,0],[1,2,0,0,0],[0,0,2,0,0],[0,0,0,2,0],[0,0,0,0,2]].",
+      "owner": "common",
+      "status": "DERIVED_CAS_SPOTCHECKED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Wolfram symbolic spot-check was run; repository implementation/tests were not.",
+        "Use this metric or an orthonormal STF chart for flattening, rank and Fisher calculations."
+      ]
+    },
+    {
+      "claim_id": "R41-VEL-007",
+      "text": "The current source implements an exact two-frame SR velocity-composition function, but the five-variable state builder also uses a first-order beta_RM+beta_MO sum.",
+      "owner": "common",
+      "status": "IMPLEMENTED_WITH_INCONSISTENT_CALL_SITE",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Static source review only; numerical tests not run.",
+        "Exact multi-frame composition must declare order and include Wigner rotation."
+      ]
+    },
+    {
+      "claim_id": "R41-DATA-008",
+      "text": "R38/R39/R40 reported multi-probe posterior, model-selection and empirical data-verification outputs are publication-valid.",
+      "owner": "htt",
+      "status": "QUARANTINED",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "R39 scope docs conflict with execution reports about whether local data and Cobaya runs occurred.",
+        "Current code contains hard-coded Quaia G<20.5 and RACS carriers, a fixed CMB response, and unexplained Gaia coefficients.",
+        "Local data files/hashes were not rechecked in this GitHub-only session."
+      ]
+    },
+    {
+      "claim_id": "R41-BIC-009",
+      "text": "The existing H_loc model is decisively favored over H0 by the reported Delta-BIC=-602.8.",
+      "owner": "htt",
+      "status": "REJECTED_FOR_CURRENT_EVIDENCE",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Hypotheses are evaluated at zero or hard-coded parameter points, not separately optimized/fitted maxima; BIC comparison is invalid."
+      ]
+    },
+    {
+      "claim_id": "R41-LOOCV-010",
+      "text": "The current five-probe LOOCV establishes predictive adequacy.",
+      "owner": "htt",
+      "status": "REJECTED_FOR_CURRENT_EVIDENCE",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Held-out data are scored at full-data fiducial parameters; training folds are not refitted.",
+        "The hand-built Pareto tail statistic is not validated PSIS-LOO."
+      ]
+    },
+    {
+      "claim_id": "R41-MCMC-011",
+      "text": "The existing R40 17-parameter posterior has converged.",
+      "owner": "htt",
+      "status": "REJECTED_FOR_CURRENT_EVIDENCE",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "R40 audit records max(Rhat)-1=0.1593 and posterior converged=false; this fails the code's own 0.05 condition."
+      ]
+    },
+    {
+      "claim_id": "R41-TENSOR-012",
+      "text": "Tensor-valued x has a demonstrated information or predictive advantage over scalar x_C.",
+      "owner": "htt",
+      "status": "PROPOSED_NOT_DEMONSTRATED",
+      "evidence_type": "none",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Existing local Fisher ablation uses one arbitrary fiducial shear direction, a shared finite-difference step across mixed units, arbitrary nuisance row indices and a thresholded pseudodeterminant.",
+        "Needs matched prior-whitened and out-of-sample comparison."
+      ]
+    },
+    {
+      "claim_id": "R41-LOWELL-013",
+      "text": "Low-ell morphology, preferred axes or BipoSH compatibility identify a Bianchi family.",
+      "owner": "BASS_native",
+      "status": "FORBIDDEN_PRE_NATIVE_ATLAS",
+      "evidence_type": "none",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Requires native low-ell family-specific polarized transfer atlas, masks/beams/covariance and equivalence-class separation."
+      ]
+    },
+    {
+      "claim_id": "R41-GAIA-014",
+      "text": "The Gaia B_1 VSH spin mode directly measures cosmological vorticity.",
+      "owner": "htt",
+      "status": "UNRESOLVED_DEGENERACY",
+      "evidence_type": "none",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Catalogue reference-frame triad spin is degenerate with an astrometric B_1 component; E_1 glide also contains secular-aberration/acceleration response.",
+        "Needs source-level estimator and independent frame calibration."
+      ]
+    },
+    {
+      "claim_id": "R41-H0-015",
+      "text": "A direction-dependent local Hubble coefficient is a new result by itself.",
+      "owner": "htt",
+      "status": "NOT_NOVEL_BY_ITSELF",
+      "evidence_type": "citation",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "General covariant luminosity-distance multipoles through O(z^3) and later snap/O(z^4) expansions are prior art.",
+        "Novelty candidate is the source-conditioned, nuisance-projected identifiable tensor-functional synthesis, if demonstrated."
+      ]
+    },
+    {
+      "claim_id": "R41-DESI-016",
+      "text": "The current compressed DESI DR2 BAO vector provides direction-dependent sky H(z,n).",
+      "owner": "htt",
+      "status": "OUT_OF_SCOPE_FOR_THIS_DATA_PRODUCT",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "The compressed BAO data constrain background distance observables, not a per-sky-direction expansion field."
+      ]
+    }
+  ]
+}
