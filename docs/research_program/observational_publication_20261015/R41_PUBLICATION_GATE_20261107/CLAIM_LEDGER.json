@@ -211,6 +211,20 @@
       "caveats": [
         "The compressed BAO data constrain background distance observables, not a per-sky-direction expansion field."
       ]
+    },
+    {
+      "claim_id": "R41-COV-017",
+      "text": "For Gaussian data with parameter-dependent mean and covariance, local information must include both mean and covariance derivatives; nuisance projection uses the full Fisher Schur complement. The simpler nuisance-projected Jacobian criterion is the fixed-covariance mean-response case.",
+      "owner": "htt",
+      "status": "DERIVED_CONDITIONAL",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "For q=(theta,eta), F_ij=mu_,i^T C^-1 mu_,j + 1/2 Tr(C^-1 C_,i C^-1 C_,j).",
+        "For Poisson/Cox or other non-Gaussian data, use the actual likelihood score/Hessian or simulation-based identifiability checks.",
+        "Mean-template and stochastic covariance/BipoSH responses remain distinct branches until the joint likelihood is specified."
+      ]
     }
   ]
 }
