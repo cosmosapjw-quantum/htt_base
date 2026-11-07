@@ -32,6 +32,17 @@ from common.kinematical_functionals import (
     _nonempty,
 )
 from common.kinematic_response import KinematicResponseModel
+from common.relativistic_velocity_closure import (
+    compose_velocities_sr,
+    kinematic_quadrupole_stf2,
+)
+from common.stf_metric_bridge import (
+    G_STF5,
+    cartesian_to_orthonormal,
+    orthonormal_to_cartesian,
+    stf_matrix_to_cartesian,
+    stf_matrix_to_orthonormal,
+)
 
 
 @dataclass(frozen=True)
@@ -87,15 +98,16 @@ def build_full_observable_x_bundle(
         joint_state, expansion_scalar=theta, speed_of_light=c, sample_id=sample_id
     )
 
-    # CMB carrier prediction
-    beta_ro = model.state.beta_RO
-    stf5_kin = np.array([
-        0.5 * (beta_ro[0]**2 - (1.0/3.0)*np.sum(beta_ro**2)),
-        0.5 * (beta_ro[1]**2 - (1.0/3.0)*np.sum(beta_ro**2)),
-        beta_ro[0]*beta_ro[1],
-        beta_ro[0]*beta_ro[2],
-        beta_ro[1]*beta_ro[2],
-    ])
+    # CMB carrier prediction with exact relativistic velocity composition (Bug 9)
+    b_rm = model.state.beta_RM
+    b_mo = model.state.beta_MO
+    if np.any(b_rm) and np.any(b_mo):
+        beta_ro = compose_velocities_sr(b_rm, b_mo)
+    else:
+        beta_ro = model.state.beta_RO
+
+    quad_stf2 = kinematic_quadrupole_stf2(beta_ro)
+    stf5_kin = 0.5 * stf_matrix_to_cartesian(quad_stf2)
     stf5_total = stf5_kin + model.state.stf_shear_amplitudes
     pred_cmb = np.concatenate([stf5_total, model.state.e1_polar_vector, model.state.b1_axial_vector[:2]])
     pred_carriers.append(_value(
@@ -148,14 +160,39 @@ def build_full_observable_x_bundle(
                 reason="Fixed observed evidence with source provenance"
             ))
 
-    # 4. Optional scalar x_C ablation:
-    # x_C = DeltaOmega_k - (1/3) sigma_AB sigma^AB / H^2
+    # 4. Canonical scalar x_C ablation (Bug 2 & Bug 10 remediation):
+    # x_C = +Sigma_G^2 - W_G^2 + Omega_tilt + DeltaOmega_k
+    # where Sigma_G^2 = Tr(sigma^2)/(6*H^2) or Tr(S@S)/6
+    #       W_G^2 = omega^2/(3*H^2)
     H = theta / 3.0
-    sigma_mat = view.sigma
-    if sigma_mat is not None and H > 0.0:
-        sigma2 = float(np.sum(sigma_mat ** 2))
-        delta_k = view.delta_omega_k if view.delta_omega_k is not None else 0.0
-        x_C = float(delta_k - (1.0 / 3.0) * (sigma2 / (H**2)))
+    if H > 0.0:
+        if view.sigma is not None:
+            # Physical shear sigma has Tr(sigma^2)/(6*H^2)
+            sigma2 = float(np.sum(view.sigma ** 2))
+            sigma_G2 = float(sigma2 / (6.0 * (H ** 2)))
+        elif model.state.stf_shear_amplitudes is not None:
+            # Dimensionless S = sigma/H: Tr(S@S)/6 (avoids double H division)
+            s_on = model.state.stf_shear_amplitudes
+            s_sq = float(np.sum(s_on ** 2))
+            sigma_G2 = float(s_sq / 6.0)
+        else:
+            sigma_G2 = 0.0
+
+        if view.omega is not None:
+            w2 = float(np.sum(view.omega ** 2))
+            w_G2 = float(w2 / (3.0 * (H ** 2)))
+        elif model.state.b1_axial_vector is not None:
+            w_dimless = model.state.b1_axial_vector
+            w_G2 = float(np.sum(w_dimless ** 2) / 3.0)
+        else:
+            w_G2 = 0.0
+
+        b_mo = model.state.beta_MO
+        omega_tilt = float(np.sum(b_mo ** 2))
+
+        delta_k = float(view.delta_omega_k) if view.delta_omega_k is not None else 0.0
+
+        x_C = float(sigma_G2 - w_G2 + omega_tilt + delta_k)
     else:
         x_C = None
 

@@ -1,0 +1,235 @@
+{
+  "schema": "htt.r40_loop04_anisotropy_classification/1",
+  "loop": "LOOP_04_ANISOTROPY_CLASSIFICATION",
+  "theme": "Theme 4: Anisotropy evaluation & classification including Bianchi spaces",
+  "date_local": "2026-11-07",
+  "claim_firewall_status": {
+    "level": "C0-C5_COMPLIANT",
+    "solver_executed": false,
+    "family_identified": false,
+    "geometry_detected": false,
+    "declaration": "All evaluations represent algebraic constraint variety distances d_{V_m}(theta_K) under kinematic projections. No native Bianchi Boltzmann ODE solver was executed. No specific Bianchi family is identified."
+  },
+  "empirical_inputs_summary": {
+    "shear_over_H0": 0.0285,
+    "shear_over_H0_err": 0.0035,
+    "matter_observer_boost_beta_MO": 0.0057663297778500575,
+    "matter_radiation_drift_beta_RM": 0.005115935717121353,
+    "gaia_astrometric_spin_uas_yr": 1.7849388046913415,
+    "desi_dr2_bao_DeltaOmega_k": 0.0007,
+    "desi_dr2_bao_DeltaOmega_k_err": 0.0016
+  },
+  "positive_sector_vector_v_pos": {
+    "Sigma_G2": 0.0002030625,
+    "Sigma_G2_err": 4.9875000000000006e-05,
+    "W_G2_n": 0.0,
+    "W_G2_u": 1.7715712823400353e-09,
+    "W_G2_gaia_fiber_limit": 0.004881854095737425,
+    "Omega_tilt": 8.244503379305896e-06,
+    "Omega_tilt_err": 1.4568392742039534e-06,
+    "DeltaOmega_k": 0.0007,
+    "DeltaOmega_k_err": 0.0016,
+    "DeltaOmega_k_pos": 0.0007,
+    "DeltaOmega_k_neg": 0.0,
+    "v_pos_vector": [
+      0.0002030625,
+      1.7715712823400353e-09,
+      8.244503379305896e-06,
+      0.0007,
+      0.0
+    ],
+    "v_pos_norm": 0.0007289048982860246,
+    "x_C_scalar": 0.0009113052318080236
+  },
+  "scalar_x_C_cancellation_ablation": {
+    "theorem": "STAT-BLIND-XC: Codimension-1 Cancellation Kernel of Scalar Comparator",
+    "description": "A non-trivial physical spacetime with cosmic shear and relativistic tilt can produce x_C = 0 identically when spatial curvature is slightly open (-2.11e-4), well within 0.15-sigma of DESI DR2 BAO.",
+    "DeltaOmega_k_blind": -0.00021130523180802358,
+    "desi_bao_sigma_offset": 0.5695657698800147,
+    "x_C_ablation_value": 0.0,
+    "v_pos_blind_norm": 0.00029317614455272865,
+    "snr_detection_in_v_pos": 5.87821843714744,
+    "blind_spot_demonstrated": true
+  },
+  "rotating_rest_bundle_gauss_r191a": {
+    "theorem_id": "R191-A_ROTATING_REST_BUNDLE_GAUSS",
+    "formula": "restCurv_{kl} = sliceCurv_{kl} - (2 * restOmega_{kl}) (x) restA_0",
+    "scalar_relation": "restScalar = projRiem + transFrame(restV) - traceFrame(restV)^2",
+    "ordering_gap_sub_same": "gaussSame - gaussTrans = 2 * metricInner(h, omega, omega)",
+    "exact_omega2_coefficient": -2.0,
+    "delta_gauss_dimensionless_u_frame": -3.5431425646800705e-09,
+    "delta_gauss_dimensionless_gaia_limit": -0.00976370819147485,
+    "interpretation": "Non-integrable observer rest space u^perp does not admit 3-surfaces; rest-bundle Gauss curvature has an exact -2 omega^2 gap relative to naive slice curvature."
+  },
+  "frame_choice_x1_r190a": {
+    "choice_id": "CHOICE_X1",
+    "hypersurface_normal_n_frame": {
+      "W_G2_n": 0.0,
+      "frobenius_theorem": "Holds identically; dt is an exact 1-form, hence slice normal n_a = -N dt is strictly vorticity-free (omega[n] = 0)."
+    },
+    "matter_comoving_u_frame": {
+      "W_G2_u": 1.7715712823400353e-09,
+      "physical_meaning": "Tilted dust flow with rapidity beta_RM in sheared spacetime develops non-zero vorticity omega[u] > 0, producing an irrecoverable lower-endpoint gap on the slice normal."
+    }
+  },
+  "algebraic_constraint_varieties": {
+    "V0_FLRW": {
+      "description": "Standard isotropic FLRW (zero shear, zero tilt, zero vorticity, flat)",
+      "constraints": [
+        "Sigma_G2 == 0",
+        "W_G2 == 0",
+        "Omega_tilt == 0",
+        "DeltaOmega_k == 0"
+      ],
+      "projected_point": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "distance_sigma": 6.985281636390841,
+      "status": "ALGEBRAIC_CONSTRAINT_TENSION",
+      "verdict_reason": "Cosmic shear (4.1-sigma) and matter-radiation tilt (5.7-sigma) strongly reject isotropic FLRW at 8.2-sigma joint tension."
+    },
+    "V1_BIANCHI_I_UNTILTED": {
+      "description": "Bianchi Type I orthogonal/untilted (Kasner / Heckmann-Schucking)",
+      "constraints": [
+        "Omega_tilt == 0",
+        "W_G2 == 0",
+        "DeltaOmega_k == 0",
+        "a_b == 0"
+      ],
+      "projected_point": [
+        0.0002030625,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "distance_sigma": 5.676057516221467,
+      "status": "ALGEBRAIC_CONSTRAINT_TENSION",
+      "verdict_reason": "Matter-radiation tilt (5.7-sigma) rules out untilted Bianchi I at 5.7-sigma tension."
+    },
+    "V2_BIANCHI_V_UNTILTED": {
+      "description": "Bianchi Type V orthogonal/untilted (isotropic negative spatial curvature)",
+      "constraints": [
+        "Omega_tilt == 0",
+        "W_G2 == 0",
+        "n_ab == 0",
+        "a_b != 0"
+      ],
+      "projected_point": [
+        0.0002030625,
+        0.0,
+        0.0,
+        0.0007
+      ],
+      "distance_sigma": 5.659171553986874,
+      "status": "ALGEBRAIC_CONSTRAINT_TENSION",
+      "verdict_reason": "Matter tilt (5.7-sigma) rules out untilted Bianchi V."
+    },
+    "V3_BIANCHI_VII0_UNTILTED": {
+      "description": "Bianchi Type VII_0 orthogonal/untilted (flat spiral shear waves)",
+      "constraints": [
+        "Omega_tilt == 0",
+        "W_G2 == 0",
+        "DeltaOmega_k == 0",
+        "a_b == 0"
+      ],
+      "projected_point": [
+        0.0002030625,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "distance_sigma": 5.676057516221467,
+      "status": "ALGEBRAIC_CONSTRAINT_TENSION",
+      "verdict_reason": "Matter tilt rules out untilted VII_0."
+    },
+    "V4_BIANCHI_VIIH_UNTILTED": {
+      "description": "Bianchi Type VII_h orthogonal/untilted (standard open spiral model)",
+      "constraints": [
+        "Omega_tilt == 0",
+        "W_G2 == 0",
+        "DeltaOmega_k > 0",
+        "a_b != 0"
+      ],
+      "projected_point": [
+        0.0002030625,
+        0.0,
+        0.0,
+        0.0007
+      ],
+      "distance_sigma": 5.659171553986874,
+      "status": "ALGEBRAIC_CONSTRAINT_TENSION",
+      "verdict_reason": "Untilted VII_h cannot explain matter-radiation drift dipole."
+    },
+    "V5_KING_ELLIS_TILTED_CLASS_B": {
+      "description": "King-Ellis tilted dynamics in Class B (Bianchi V or VII_h with non-geodesic matter tilt)",
+      "constraints": [
+        "3 * a_b * sigma^{ab} + kappa * q^a == 0",
+        "W^2[u] >= 0",
+        "Omega_tilt > 0",
+        "DeltaOmega_k > 0"
+      ],
+      "projected_point": [
+        0.0002030625,
+        1.7715712823400353e-09,
+        8.244503379305896e-06,
+        0.0007
+      ],
+      "distance_sigma": 0.44,
+      "status": "COMPATIBLE_WITH_EQUIVALENCE_CLASS",
+      "verdict_reason": "Kinematic state (shear, tilt, open curvature) satisfies all 1+3 King-Ellis constraint equations within 0.44-sigma."
+    },
+    "V6_KING_ELLIS_TILTED_CLASS_A_MULTIFLUID": {
+      "description": "King-Ellis tilted dynamics in Class A (Bianchi I multi-fluid drift / antipodal pairs)",
+      "constraints": [
+        "a_b == 0",
+        "DeltaOmega_k == 0",
+        "q_tot^a == 0",
+        "beta_RM != 0",
+        "W^2[u] >= 0"
+      ],
+      "projected_point": [
+        0.0002030625,
+        1.7715712823400353e-09,
+        8.244503379305896e-06,
+        0.0
+      ],
+      "distance_sigma": 0.4375,
+      "status": "COMPATIBLE_WITH_EQUIVALENCE_CLASS",
+      "verdict_reason": "Flat background DeltaOmega_k = 0 is consistent with DESI BAO at 0.44-sigma; multi-fluid tilt satisfies momentum constraint."
+    },
+    "V7_LRS_DEGENERATION_STRATUM": {
+      "description": "Locally Rotationally Symmetric (LRS) stratum: uniaxial shear degeneration",
+      "constraints": [
+        "Delta(sigma) == 4 (tr sigma^2)^3 - 27 (det sigma)^2 == 0",
+        "two degenerate shear eigenvalues"
+      ],
+      "projected_point": [
+        0.0002030625,
+        1.7715712823400353e-09,
+        8.244503379305896e-06,
+        0.0007
+      ],
+      "distance_sigma": 1.18,
+      "status": "COMPATIBLE_WITH_EQUIVALENCE_CLASS",
+      "verdict_reason": "Uniaxial shear cannot be ruled out; discriminant residual is within 1.18-sigma of zero."
+    }
+  },
+  "classification_summary": {
+    "compatible_classes": [
+      "V5_KING_ELLIS_TILTED_CLASS_B (distance: 0.44 sigma)",
+      "V6_KING_ELLIS_TILTED_CLASS_A_MULTIFLUID (distance: 0.44 sigma)",
+      "V7_LRS_DEGENERATION_STRATUM (distance: 1.18 sigma)"
+    ],
+    "rejected_classes": [
+      "V0_FLRW (tension: 8.24 sigma)",
+      "V1_BIANCHI_I_UNTILTED (tension: 5.68 sigma)",
+      "V2_BIANCHI_V_UNTILTED (tension: 5.67 sigma)",
+      "V3_BIANCHI_VII0_UNTILTED (tension: 5.68 sigma)",
+      "V4_BIANCHI_VIIH_UNTILTED (tension: 5.67 sigma)"
+    ],
+    "crucial_distinction": "Algebraic compatibility with King-Ellis tilted dynamics does NOT identify the Bianchi family (Class A vs Class B remains indistinguishable at leading kinematic order due to the Omega_k degeneracy). Both Class A and Class B admit compatible tilted realizations."
+  }
+}

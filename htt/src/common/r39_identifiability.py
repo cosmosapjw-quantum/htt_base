@@ -19,6 +19,12 @@ import numpy as np
 from common.covariance_validator import validate_covariance, whiten_matrix
 from common.kinematic_response import KinematicResponseModel, KinematicFrameState
 from common.kinematical_functionals import stf5_to_matrix
+from common.relativistic_velocity_closure import compose_velocities_sr
+from common.stf_metric_bridge import (
+    G_STF5,
+    cartesian_to_orthonormal_matrix,
+    orthonormal_to_cartesian_matrix,
+)
 
 
 PARAM_NAMES_17 = [
@@ -43,6 +49,7 @@ class IdentifiabilitySpectrum:
     identifiable_basis: np.ndarray  # Basis of supported quotient, shape (17, eff_rank)
     functional_identifiability: dict[str, bool]
     fisher_matrix: np.ndarray
+    gram_whitened: bool = True
 
 
 def compute_numerical_jacobian(
@@ -72,6 +79,7 @@ def analyze_r39_identifiability(
     cov_joint: np.ndarray,
     nuisance_matrix: np.ndarray | None = None,
     rank_tol: float = 1e-5,
+    use_gram_whitening: bool = True,
 ) -> IdentifiabilitySpectrum:
     """Whiten Jacobian, project nuisance directions, and perform SVD analysis.
 
@@ -82,6 +90,9 @@ def analyze_r39_identifiability(
     nuisance_matrix : np.ndarray | None, shape (N_data, N_nuisance)
     rank_tol : float
         Relative singular value threshold below which a mode is classified as null.
+    use_gram_whitening : bool
+        If True, whitens Cartesian shear parameters by Gram metric G_STF5 so
+        SVD and Fisher eigenspaces are coordinate-invariant with Frobenius metric.
     """
     J = np.asarray(joint_jacobian, dtype=np.float64)
     C = np.asarray(cov_joint, dtype=np.float64)
@@ -105,11 +116,22 @@ def analyze_r39_identifiability(
     else:
         J_eff = J_tilde
 
-    # 4. SVD of effective Jacobian
-    U, s, Vt = np.linalg.svd(J_eff, full_matrices=False)
-    V = Vt.T
+    # 4. Gram metric G_STF5 whitening for parameter space (Bug 1 & SVD geometry)
+    if use_gram_whitening:
+        M_inv = orthonormal_to_cartesian_matrix("kinematic_response")
+        T_inv = np.eye(n_params, dtype=np.float64)
+        T_inv[:5, :5] = M_inv
+        J_svd = J_eff @ T_inv
+    else:
+        T_inv = np.eye(n_params, dtype=np.float64)
+        J_svd = J_eff
 
-    # 5. Effective rank and null space
+    # 5. SVD of effective Jacobian on Riemannian parameter quotient
+    U, s, Vt = np.linalg.svd(J_svd, full_matrices=False)
+    V_white = Vt.T
+    V = T_inv @ V_white
+
+    # 6. Effective rank and null space
     max_s = float(s[0]) if len(s) > 0 and s[0] > 0 else 1.0
     cutoff = max_s * rank_tol
     is_active = s > cutoff
@@ -121,7 +143,7 @@ def analyze_r39_identifiability(
     identifiable_basis = V[:, :eff_rank]
     null_vectors = V[:, eff_rank:]
 
-    # 6. Fisher information matrix
+    # 7. Fisher information matrix in Cartesian coordinates
     Fisher = J_eff.T @ J_eff
 
     # 7. Check local identifiability of key physical functionals:

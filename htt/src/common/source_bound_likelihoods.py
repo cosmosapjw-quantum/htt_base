@@ -28,6 +28,18 @@ except ImportError:
 from common.covariance_validator import validate_covariance, whiten_vector, quadratic_form
 from common.kinematic_response import KinematicResponseModel, KinematicFrameState
 from common.kinematical_functionals import stf5_to_matrix
+from common.relativistic_velocity_closure import (
+    compose_velocities_sr,
+    kinematic_quadrupole_stf2,
+)
+from common.stf_metric_bridge import (
+    G_STF5,
+    G_STF5_INV,
+    cartesian_to_orthonormal,
+    orthonormal_to_cartesian,
+    stf_matrix_to_cartesian,
+    stf_matrix_to_orthonormal,
+)
 
 
 class DataIntegrityError(ValueError):
@@ -80,6 +92,21 @@ class BaseSourceBoundLikelihood(Likelihood):
 
     def get_requirements(self):
         return {"kinematic_model": None}
+
+    @staticmethod
+    def cartesian_to_orthonormal(v_cart: np.ndarray) -> np.ndarray:
+        """Map Cartesian STF5 5-vector to orthonormal chart via STF metric bridge."""
+        return cartesian_to_orthonormal(v_cart, convention="kinematic_response")
+
+    @staticmethod
+    def orthonormal_to_cartesian(v_on: np.ndarray) -> np.ndarray:
+        """Map orthonormal STF5 5-vector to Cartesian chart via STF metric bridge."""
+        return orthonormal_to_cartesian(v_on, convention="kinematic_response")
+
+    @staticmethod
+    def stf_gram_metric() -> np.ndarray:
+        """Return the constant 5x5 Gram metric matrix G_STF5."""
+        return G_STF5.copy()
 
 
 class SourceBoundPlanckLikelihood(BaseSourceBoundLikelihood):

@@ -1,0 +1,726 @@
+{
+  "metadata": {
+    "document_id": "HTT-R40-LOOP05-EMPIRICAL-CROSS-VALIDATION",
+    "research_loop": "Loop 5 (Theme 5: Redshift- and direction-dependent Hubble factor H(z, n_hat))",
+    "framework": "HTT Tensor-x & Five-Variable Framework ($physmath-research-loop v1.3.0 R1-R10 / C1-C10)",
+    "date": "2026-11-07",
+    "claim_firewall_status": "C0-C5 Compliant (Diagnostic & Directional Hubble Bounds; No Premature Family Identification)",
+    "analyzed_datasets": [
+      "Pantheon+ SH0ES (1,701 SNe Ia, 1701x1701 STAT+SYS covariance)",
+      "DES-SN5YR Dovekie (1,820 SNe Ia, 1,623 clean host-matched)",
+      "CosmicFlows-4 (35,970 groups, 27,762 groups)",
+      "SDSS PV (34,059 FP galaxies, 33,121 clean)",
+      "DESI DR2 BAO compact (13 points) + DESI DR1 Full-Shape Directional (4 shells NGC vs SGC)"
+    ]
+  },
+  "pantheon_plus": {
+    "shells": {
+      "low_z_001_to_004": {
+        "sample_size": 469,
+        "mean_z": 0.024231066098081025,
+        "z_min": 0.01016,
+        "z_max": 0.0391,
+        "monopole_mag": -0.00462849152652906,
+        "monopole_err_mag": 0.013871934614142805,
+        "dipole_vector_mag": [
+          0.026889693299217053,
+          0.022952861756902344,
+          0.027780538650217724
+        ],
+        "dipole_amplitude_mag": 0.044962737864299024,
+        "dipole_apex_equatorial_deg": {
+          "ra": 40.48384897361026,
+          "dec": 38.15980362650038
+        },
+        "dipole_apex_galactic_deg": {
+          "l": 145.72614307105496,
+          "b": -19.77242350711586
+        },
+        "quadrupole_cartesian_mag": [
+          0.003945843749842229,
+          0.009266883440917884,
+          -0.0001459393471727145,
+          0.012778965075383642,
+          -0.01578637939480678
+        ],
+        "quadrupole_frobenius_norm_mag": 0.0331826312036673,
+        "implied_hubble_dipole_fraction": 0.020706105989306774,
+        "implied_cosmic_shear_sigma_over_H0": 0.01528116639117668,
+        "implied_tensor_x": 3.891900771247129e-05,
+        "fits": {
+          "ell_0_monopole": {
+            "chi2": 407.15726530285366,
+            "dof": 468,
+            "red_chi2": 0.8699941566300292
+          },
+          "ell_1_dipole": {
+            "chi2": 396.8205195656923,
+            "dof": 465,
+            "red_chi2": 0.8533774614315963,
+            "delta_chi2": 10.33674573716138
+          },
+          "ell_2_quadrupole": {
+            "chi2": 395.49404926669655,
+            "dof": 460,
+            "red_chi2": 0.8597696723189056,
+            "delta_chi2": 1.32647029899573
+          },
+          "ell_3_octupole": {
+            "chi2": 392.506192205668,
+            "dof": 453,
+            "red_chi2": 0.8664595854429757,
+            "delta_chi2": 2.987857061028535
+          }
+        },
+        "covariance_condition_number": 24.444378538212696
+      },
+      "mid_z_004_to_015": {
+        "sample_size": 236,
+        "mean_z": 0.08403237288135593,
+        "z_min": 0.04014,
+        "z_max": 0.1494,
+        "monopole_mag": -0.01702525140179976,
+        "monopole_err_mag": 0.01831434129641827,
+        "dipole_vector_mag": [
+          -0.00014809888528360648,
+          0.03784119024036176,
+          0.021545075190636157
+        ],
+        "dipole_amplitude_mag": 0.04354500978363925,
+        "dipole_apex_equatorial_deg": {
+          "ra": 90.22423707341076,
+          "dec": 29.655055451737084
+        },
+        "dipole_apex_galactic_deg": {
+          "l": 181.07054045989543,
+          "b": 3.2349383506965417
+        },
+        "quadrupole_cartesian_mag": [
+          0.007259382016305163,
+          0.010032084395649997,
+          -0.03240832793827663,
+          0.009332203234703967,
+          -0.030847146618868816
+        ],
+        "quadrupole_frobenius_norm_mag": 0.06804563570314598,
+        "implied_hubble_dipole_fraction": 0.020053218080417524,
+        "implied_cosmic_shear_sigma_over_H0": 0.03133617328267347,
+        "implied_tensor_x": 0.00016365929266695642,
+        "fits": {
+          "ell_0_monopole": {
+            "chi2": 199.8625551388624,
+            "dof": 235,
+            "red_chi2": 0.8504789580377123
+          },
+          "ell_1_dipole": {
+            "chi2": 198.6959648112191,
+            "dof": 232,
+            "red_chi2": 0.8564481241862892,
+            "delta_chi2": 1.1665903276432914
+          },
+          "ell_2_quadrupole": {
+            "chi2": 192.8571977170518,
+            "dof": 227,
+            "red_chi2": 0.8495911793702723,
+            "delta_chi2": 5.838767094167309
+          },
+          "ell_3_octupole": {
+            "chi2": 187.23892930733786,
+            "dof": 220,
+            "red_chi2": 0.8510860423060812,
+            "delta_chi2": 5.618268409713949
+          }
+        },
+        "covariance_condition_number": 28.75196576952987
+      },
+      "high_z_015_to_230": {
+        "sample_size": 875,
+        "mean_z": 0.39343522285714283,
+        "z_min": 0.1505,
+        "z_max": 2.26137,
+        "monopole_mag": -0.07129226033577488,
+        "monopole_err_mag": 0.04483949901727799,
+        "dipole_vector_mag": [
+          0.046547592696327876,
+          0.07469934461842312,
+          0.0575432826550496
+        ],
+        "dipole_amplitude_mag": 0.10515654925378688,
+        "dipole_apex_equatorial_deg": {
+          "ra": 58.07162326308443,
+          "dec": 33.17618638231926
+        },
+        "dipole_apex_galactic_deg": {
+          "l": 161.09479140972053,
+          "b": -15.977367775699896
+        },
+        "quadrupole_cartesian_mag": [
+          0.010482866467501913,
+          -0.0786891007525228,
+          -0.056668561242277704,
+          0.05670233140324123,
+          -0.03513806877637185
+        ],
+        "quadrupole_frobenius_norm_mag": 0.16209961029037345,
+        "implied_hubble_dipole_fraction": 0.04842638054849276,
+        "implied_cosmic_shear_sigma_over_H0": 0.07464962924695163,
+        "implied_tensor_x": 0.0009287611911178895,
+        "fits": {
+          "ell_0_monopole": {
+            "chi2": 826.7862309967485,
+            "dof": 874,
+            "red_chi2": 0.9459796693326642
+          },
+          "ell_1_dipole": {
+            "chi2": 824.6801701943157,
+            "dof": 871,
+            "red_chi2": 0.9468199428178137,
+            "delta_chi2": 2.1060608024328076
+          },
+          "ell_2_quadrupole": {
+            "chi2": 801.1915555302436,
+            "dof": 866,
+            "red_chi2": 0.9251634590418517,
+            "delta_chi2": 23.488614664072088
+          },
+          "ell_3_octupole": {
+            "chi2": 790.513325643963,
+            "dof": 859,
+            "red_chi2": 0.9202716247310395,
+            "delta_chi2": 10.678229886280633
+          }
+        },
+        "covariance_condition_number": 43.46323817922227
+      },
+      "full_cosmo_zge001": {
+        "sample_size": 1580,
+        "mean_z": 0.23762774050632912,
+        "z_min": 0.01016,
+        "z_max": 2.26137,
+        "monopole_mag": -0.041841760347658644,
+        "monopole_err_mag": 0.008537886290583972,
+        "dipole_vector_mag": [
+          0.007266869245323874,
+          0.016898608267071465,
+          0.03353229782099914
+        ],
+        "dipole_amplitude_mag": 0.03824637691532041,
+        "dipole_apex_equatorial_deg": {
+          "ra": 66.73095691864073,
+          "dec": 61.252105112967534
+        },
+        "dipole_apex_galactic_deg": {
+          "l": 146.05810064079563,
+          "b": 8.476640632720223
+        },
+        "quadrupole_cartesian_mag": [
+          0.016298137030471664,
+          -0.015505697918959586,
+          -0.020019969944001917,
+          0.025889001177749737,
+          -0.00991534093115108
+        ],
+        "quadrupole_frobenius_norm_mag": 0.053342206806673904,
+        "implied_hubble_dipole_fraction": 0.017613107469249673,
+        "implied_cosmic_shear_sigma_over_H0": 0.02456499404409057,
+        "implied_tensor_x": 0.00010057315539770087,
+        "fits": {
+          "ell_0_monopole": {
+            "chi2": 1463.8232791076155,
+            "dof": 1579,
+            "red_chi2": 0.9270571748623277
+          },
+          "ell_1_dipole": {
+            "chi2": 1458.4565392752634,
+            "dof": 1576,
+            "red_chi2": 0.925416585834558,
+            "delta_chi2": 5.366739832352096
+          },
+          "ell_2_quadrupole": {
+            "chi2": 1436.6537240859607,
+            "dof": 1571,
+            "red_chi2": 0.9144835926708852,
+            "delta_chi2": 21.80281518930269
+          },
+          "ell_3_octupole": {
+            "chi2": 1428.7268293094867,
+            "dof": 1564,
+            "red_chi2": 0.9135082028833035,
+            "delta_chi2": 7.9268947764740005
+          }
+        },
+        "covariance_condition_number": 43.87068730281079
+      },
+      "full_sample_1701": {
+        "sample_size": 1701,
+        "mean_z": 0.221229012345679,
+        "z_min": 0.00122,
+        "z_max": 2.26137,
+        "monopole_mag": -0.04943691769097525,
+        "monopole_err_mag": 0.007986200746874204,
+        "dipole_vector_mag": [
+          0.004970533052776657,
+          0.022536452946896827,
+          0.049021746474240284
+        ],
+        "dipole_amplitude_mag": 0.05418237294213986,
+        "dipole_apex_equatorial_deg": {
+          "ra": 77.56224012264359,
+          "dec": 64.79024043265106
+        },
+        "dipole_apex_galactic_deg": {
+          "l": 146.37122141357077,
+          "b": 14.5111807669206
+        },
+        "quadrupole_cartesian_mag": [
+          0.027666743761633375,
+          -0.020677963491044758,
+          -0.02265625297469129,
+          0.004880907240831096,
+          -0.02025190863820378
+        ],
+        "quadrupole_frobenius_norm_mag": 0.056003639612558616,
+        "implied_hubble_dipole_fraction": 0.024951904847923034,
+        "implied_cosmic_shear_sigma_over_H0": 0.025790629145057663,
+        "implied_tensor_x": 0.00011085942528298296,
+        "fits": {
+          "ell_0_monopole": {
+            "chi2": 1852.5727356043653,
+            "dof": 1700,
+            "red_chi2": 1.0897486680025679
+          },
+          "ell_1_dipole": {
+            "chi2": 1837.8895862845736,
+            "dof": 1697,
+            "red_chi2": 1.083022737940232,
+            "delta_chi2": 14.68314931979171
+          },
+          "ell_2_quadrupole": {
+            "chi2": 1815.9226332088044,
+            "dof": 1692,
+            "red_chi2": 1.0732403269555582,
+            "delta_chi2": 21.966953075769197
+          },
+          "ell_3_octupole": {
+            "chi2": 1800.4089380601533,
+            "dof": 1685,
+            "red_chi2": 1.068491951371011,
+            "delta_chi2": 15.513695148651095
+          }
+        },
+        "covariance_condition_number": 106.96049827555353
+      }
+    },
+    "hemispheric_two_patch": {
+      "n_ngc": 554,
+      "n_sgc": 952,
+      "dmu_ngc_mag": -0.03336105541396217,
+      "dmu_sgc_mag": -0.034862784001169364,
+      "h0_ngc_kms_mpc": 74.16213789903904,
+      "h0_sgc_kms_mpc": 74.21265028663785,
+      "delta_h0_kms_mpc": -0.05051238759881471,
+      "fractional_delta_h0": -0.0006915715717252835,
+      "buchert_two_patch_backreaction_Q_D": 0.0035599493080067874,
+      "dimensionless_omega_Q": -1.1121696371787267e-07
+    }
+  },
+  "des_dovekie": {
+    "shells": {
+      "des_low_z_lt_02": {
+        "sample_size": 48,
+        "mean_z": 0.15531958333333332,
+        "retained_singular_modes": 4,
+        "dipole_amplitude_mag": 0.09006723860024055,
+        "quadrupole_frobenius_norm_mag": 0.2561429791989128,
+        "implied_cosmic_shear_sigma_over_H0": 0.11795820111570013,
+        "implied_tensor_x": 0.00231902286840866,
+        "chi2": 431.58199974834133,
+        "reduced_chi2": 9.808681812462304
+      },
+      "des_mid_z_02_to_05": {
+        "sample_size": 713,
+        "mean_z": 0.36702119214586254,
+        "retained_singular_modes": 4,
+        "dipole_amplitude_mag": 0.030563862824602255,
+        "quadrupole_frobenius_norm_mag": 0.18397078981936352,
+        "implied_cosmic_shear_sigma_over_H0": 0.08472167963688144,
+        "implied_tensor_x": 0.0011962938334157288,
+        "chi2": 1588.3521551014796,
+        "reduced_chi2": 2.2402710227101266
+      },
+      "des_high_z_ge_05": {
+        "sample_size": 862,
+        "mean_z": 0.6648975870069606,
+        "retained_singular_modes": 4,
+        "dipole_amplitude_mag": 0.03961923121651012,
+        "quadrupole_frobenius_norm_mag": 0.16869833863618092,
+        "implied_cosmic_shear_sigma_over_H0": 0.07768845595130633,
+        "implied_tensor_x": 0.0010059160313496773,
+        "chi2": 1181.1947147698684,
+        "reduced_chi2": 1.3766838167480984
+      },
+      "des_full_sample": {
+        "sample_size": 1623,
+        "mean_z": 0.5189668330252618,
+        "retained_singular_modes": 4,
+        "dipole_amplitude_mag": 0.022028233831941878,
+        "quadrupole_frobenius_norm_mag": 0.05878755828095131,
+        "implied_cosmic_shear_sigma_over_H0": 0.027072671070247432,
+        "implied_tensor_x": 0.0001221549198129687,
+        "chi2": 3350.5999657052434,
+        "reduced_chi2": 2.0695490832027446
+      }
+    },
+    "selection_leakage_audit": {
+      "fisher_condition_number": 372766697.87863064,
+      "singular_values": [
+        432.88539192331257,
+        161.19156287840633,
+        96.35610701910582,
+        14.635477234195884,
+        2.9937375441149334,
+        2.3874068415806726,
+        0.3559819766799092,
+        0.21382558732370752,
+        0.022420968970800773
+      ],
+      "retained_modes_count": 4,
+      "injected_pure_dipole_norm_mag": 0.099,
+      "apparent_leakage_quadrupole_frob_mag": 22.716964570990406,
+      "leakage_transfer_ratio": 229.4759956588838,
+      "spurious_false_cosmic_shear": 10.461548795847278,
+      "spurious_false_tensor_x": 18.240667201315606,
+      "footprint_bounding_box": {
+        "ra_min": 6.474008,
+        "ra_max": 55.340591,
+        "dec_min": -44.952312,
+        "dec_max": 0.957902
+      }
+    }
+  },
+  "cosmicflows4": {
+    "clean_group_count": 27762,
+    "shells": {
+      "cf4_shell_0003_to_0015": {
+        "group_count": 1683,
+        "mean_z": 0.012726035090794239,
+        "weighted_mean_H0_kms_mpc": 75.45099894774985,
+        "variance_H0": 186.0027669512874,
+        "std_H0_kms_mpc": 13.638283137964523,
+        "fractional_std_H0": 0.18075682665790938,
+        "dipole_amplitude": 0.07095848394611545,
+        "quadrupole_frobenius_norm": 0.11019815700877657,
+        "implied_tensor_x": 0.002023938968021829,
+        "buchert_expansion_variance_term": 1116.0166017077245,
+        "buchert_shear_term": 138.2638501937401,
+        "buchert_net_Q_D": 977.7527515139843
+      },
+      "cf4_shell_0015_to_0030": {
+        "group_count": 6898,
+        "mean_z": 0.0222870772836023,
+        "weighted_mean_H0_kms_mpc": 74.95327115920911,
+        "variance_H0": 128.66100967710233,
+        "std_H0_kms_mpc": 11.342883657919723,
+        "fractional_std_H0": 0.151332736817132,
+        "dipole_amplitude": 0.035063054308484796,
+        "quadrupole_frobenius_norm": 0.026706606283935046,
+        "implied_tensor_x": 0.00011887380320085314,
+        "buchert_expansion_variance_term": 771.9660580626139,
+        "buchert_shear_term": 8.01398612786644,
+        "buchert_net_Q_D": 763.9520719347474
+      },
+      "cf4_shell_0030_to_0050": {
+        "group_count": 7833,
+        "mean_z": 0.03972223349971143,
+        "weighted_mean_H0_kms_mpc": 74.4385983685942,
+        "variance_H0": 131.98642016905762,
+        "std_H0_kms_mpc": 11.488534291590796,
+        "fractional_std_H0": 0.15433571484921768,
+        "dipole_amplitude": 0.04104449230014339,
+        "quadrupole_frobenius_norm": 0.05697633006390809,
+        "implied_tensor_x": 0.0005410503645918995,
+        "buchert_expansion_variance_term": 791.9185210143457,
+        "buchert_shear_term": 35.97620209246894,
+        "buchert_net_Q_D": 755.9423189218768
+      },
+      "cf4_shell_0050_to_0080": {
+        "group_count": 11348,
+        "mean_z": 0.06642357476038731,
+        "weighted_mean_H0_kms_mpc": 71.92928113597266,
+        "variance_H0": 145.72816225588568,
+        "std_H0_kms_mpc": 12.071792006818445,
+        "fractional_std_H0": 0.16782862022488923,
+        "dipole_amplitude": 0.035950979906025464,
+        "quadrupole_frobenius_norm": 0.047008415196346666,
+        "implied_tensor_x": 0.0003682985165453527,
+        "buchert_expansion_variance_term": 874.3689735353141,
+        "buchert_shear_term": 22.866129332392834,
+        "buchert_net_Q_D": 851.5028442029213
+      },
+      "cf4_full_sample": {
+        "group_count": 27762,
+        "mean_z": 0.04466800509848751,
+        "weighted_mean_H0_kms_mpc": 73.77509271835636,
+        "variance_H0": 141.9166029280361,
+        "std_H0_kms_mpc": 11.912875510473368,
+        "fractional_std_H0": 0.16147557490645165,
+        "dipole_amplitude": 0.04336516527132746,
+        "quadrupole_frobenius_norm": 0.052370499501159344,
+        "implied_tensor_x": 0.00045711153633348853,
+        "buchert_expansion_variance_term": 851.4996175682165,
+        "buchert_shear_term": 29.855404243618064,
+        "buchert_net_Q_D": 821.6442133245985
+      }
+    }
+  },
+  "sdss_pv": {
+    "clean_galaxy_count": 33121,
+    "shells": {
+      "sdss_z_0003_to_005": {
+        "galaxy_count": 7277,
+        "mean_z": 0.03676579785625945,
+        "logdist_monopole": -0.059889371316729015,
+        "logdist_dipole": [
+          -0.07476949064318933,
+          0.03588419547582556,
+          0.0424557157943134
+        ],
+        "logdist_quadrupole_cart": [
+          -0.016731490423807345,
+          0.024208619101885265,
+          0.016626849737673078,
+          0.019297744830538064,
+          -0.018555224273456853
+        ],
+        "quadrupole_frobenius_norm_dex": 0.05392782523943142,
+        "implied_bulk_velocity_magnitude_kms": 2364.59224011292,
+        "implied_cosmic_shear_sigma_over_H0": 0.12417340649390285,
+        "implied_tensor_x": 0.002569839146716672,
+        "spatial_variance_logdist": 0.009411307685540809,
+        "implied_spatial_variance_H_fractional": 0.04989779443509965
+      },
+      "sdss_z_005_to_010": {
+        "galaxy_count": 25844,
+        "mean_z": 0.07624256860393128,
+        "logdist_monopole": 0.013092782543439875,
+        "logdist_dipole": [
+          0.017800389746429272,
+          0.0016844693228373665,
+          -0.01752192288450902
+        ],
+        "logdist_quadrupole_cart": [
+          0.009959736796024752,
+          -0.014480796324492937,
+          -0.0016558443044557916,
+          -0.0049836038985190826,
+          -0.0036243226074792554
+        ],
+        "quadrupole_frobenius_norm_dex": 0.02026715282370781,
+        "implied_bulk_velocity_magnitude_kms": 1317.5494044645409,
+        "implied_cosmic_shear_sigma_over_H0": 0.04666684396930179,
+        "implied_tensor_x": 0.00036296572100919314,
+        "spatial_variance_logdist": 0.009217977158002632,
+        "implied_spatial_variance_H_fractional": 0.048872775676447204
+      },
+      "sdss_full_sample": {
+        "galaxy_count": 33121,
+        "mean_z": 0.06756914507412215,
+        "logdist_monopole": -0.0038258543124897308,
+        "logdist_dipole": [
+          -0.00449382213934995,
+          0.011456600021268647,
+          -0.004532545200573771
+        ],
+        "logdist_quadrupole_cart": [
+          0.0032125510377960915,
+          -0.005887785118022585,
+          0.0036359587353147287,
+          0.0009594120562044689,
+          -0.007980222363533306
+        ],
+        "quadrupole_frobenius_norm_dex": 0.01441501328235033,
+        "implied_bulk_velocity_magnitude_kms": 611.7008012971864,
+        "implied_cosmic_shear_sigma_over_H0": 0.03319179469925104,
+        "implied_tensor_x": 0.00018361587255953825,
+        "spatial_variance_logdist": 0.009269165274008286,
+        "implied_spatial_variance_H_fractional": 0.049144169851976525
+      }
+    }
+  },
+  "desi": {
+    "dr2_bao_background": {
+      "0.51": {
+        "z": 0.51,
+        "DH_over_rs": 21.86294686,
+        "implied_H_z_kms_mpc": 92.96510912701207
+      },
+      "0.706": {
+        "z": 0.706,
+        "DH_over_rs": 19.45534918,
+        "implied_H_z_kms_mpc": 104.46953287106031
+      },
+      "0.934": {
+        "z": 0.934,
+        "DH_over_rs": 17.64149464,
+        "implied_H_z_kms_mpc": 115.21083004325114
+      },
+      "1.321": {
+        "z": 1.321,
+        "DH_over_rs": 14.17602155,
+        "implied_H_z_kms_mpc": 143.37529281464487
+      },
+      "1.484": {
+        "z": 1.484,
+        "DH_over_rs": 12.81699964,
+        "implied_H_z_kms_mpc": 158.57777153514579
+      },
+      "2.33": {
+        "z": 2.33,
+        "DH_over_rs": 8.631545674846294,
+        "implied_H_z_kms_mpc": 235.47245386199728
+      }
+    },
+    "dr1_directional_shells": {
+      "LRG_0.4-0.6": {
+        "label": "Shell 1: LRG z=0.51",
+        "tracer": "LRG",
+        "redshift_range": "0.4-0.6",
+        "zeff_ngc": 0.5098850916380335,
+        "zeff_sgc": 0.5090849170668768,
+        "bao_peak_s_ngc_h_mpc": 107.05229472098738,
+        "bao_peak_s_sgc_h_mpc": 106.50001457098843,
+        "delta_s_bao_h_mpc": 0.5522801499989498,
+        "fractional_bao_shift": 0.005172317282168596,
+        "implied_delta_H_over_H": -0.005172317282168596,
+        "fiducial_background_H_kms_mpc": 92.96510912701207,
+        "implied_H_ngc_kms_mpc": 92.7246866067239,
+        "implied_H_sgc_kms_mpc": 93.20553164730023,
+        "delta_H_kms_mpc": -0.4808450405763267,
+        "buchert_two_patch_Q_D": 0.3067257769119503,
+        "buchert_dimensionless_omega_Q": -5.915058687506368e-06,
+        "l2_norm_monopole_difference": 0.2895733940737149,
+        "l2_norm_quadrupole_difference": 0.7850873019578992
+      },
+      "LRG_0.6-0.8": {
+        "label": "Shell 2: LRG z=0.71",
+        "tracer": "LRG",
+        "redshift_range": "0.6-0.8",
+        "zeff_ngc": 0.7052957695307811,
+        "zeff_sgc": 0.7069172398355895,
+        "bao_peak_s_ngc_h_mpc": 108.04802023194678,
+        "bao_peak_s_sgc_h_mpc": 104.52767867050359,
+        "delta_s_bao_h_mpc": 3.520341561443189,
+        "fractional_bao_shift": 0.03312082782386759,
+        "implied_delta_H_over_H": -0.03312082782386759,
+        "fiducial_background_H_kms_mpc": 104.46953287106031,
+        "implied_H_ngc_kms_mpc": 102.73947416552919,
+        "implied_H_sgc_kms_mpc": 106.19959157659143,
+        "delta_H_kms_mpc": -3.4601174110622424,
+        "buchert_two_patch_Q_D": 15.88260242029264,
+        "buchert_dimensionless_omega_Q": -0.00024254432002173104,
+        "l2_norm_monopole_difference": 0.31351473971801436,
+        "l2_norm_quadrupole_difference": 0.9666399692649015
+      },
+      "LRG_0.8-1.1": {
+        "label": "Shell 3: LRG z=0.92",
+        "tracer": "LRG",
+        "redshift_range": "0.8-1.1",
+        "zeff_ngc": 0.9197182846228587,
+        "zeff_sgc": 0.9159641639605158,
+        "bao_peak_s_ngc_h_mpc": 104.06259887696335,
+        "bao_peak_s_sgc_h_mpc": 106.85867845650789,
+        "delta_s_bao_h_mpc": -2.7960795795445392,
+        "fractional_bao_shift": -0.026513015802799973,
+        "implied_delta_H_over_H": 0.026513015802799973,
+        "fiducial_background_H_kms_mpc": 115.21083004325114,
+        "implied_H_ngc_kms_mpc": 116.73812332204635,
+        "implied_H_sgc_kms_mpc": 113.68353676445592,
+        "delta_H_kms_mpc": 3.054586557590426,
+        "buchert_two_patch_Q_D": 12.377840023561571,
+        "buchert_dimensionless_omega_Q": -0.00015542003553875082,
+        "l2_norm_monopole_difference": 0.3777274395457394,
+        "l2_norm_quadrupole_difference": 1.059841773317392
+      },
+      "QSO_0.8-2.1": {
+        "label": "Shell 4: QSO z=1.49",
+        "tracer": "QSO",
+        "redshift_range": "0.8-2.1",
+        "zeff_ngc": 1.4941574170447125,
+        "zeff_sgc": 1.483306866564093,
+        "bao_peak_s_ngc_h_mpc": 104.14514277115994,
+        "bao_peak_s_sgc_h_mpc": 106.95923282967281,
+        "delta_s_bao_h_mpc": -2.8140900585128747,
+        "fractional_bao_shift": -0.0266606511637059,
+        "implied_delta_H_over_H": 0.0266606511637059,
+        "fiducial_background_H_kms_mpc": 158.57777153514579,
+        "implied_H_ngc_kms_mpc": 160.69166485975396,
+        "implied_H_sgc_kms_mpc": 156.4638782105376,
+        "delta_H_kms_mpc": 4.22778664921637,
+        "buchert_two_patch_Q_D": 23.711887123384205,
+        "buchert_dimensionless_omega_Q": -0.0001571557398565387,
+        "l2_norm_monopole_difference": 0.20371189869139056,
+        "l2_norm_quadrupole_difference": 0.368460341779503
+      }
+    }
+  },
+  "theory_and_bounds": {
+    "taylor_coefficients_lcdm": {
+      "Omega_m": 0.315,
+      "q0": -0.5275,
+      "j0": 1.0,
+      "s0": 0.5275,
+      "c1_z": 0.7637499999999999,
+      "c2_z2": -0.282121875,
+      "c3_z3": 0.055639951171875
+    },
+    "jacobi_volterra_breakdown_table": {
+      "threshold_1_percent": {
+        "linear_z_collapse": 0.016024048096192386,
+        "order_z2_collapse": 0.2063286573146293,
+        "order_z3_collapse": 0.6921062124248498,
+        "order_z4_collapse": 1.4282845691382766
+      },
+      "threshold_5_percent": {
+        "linear_z_collapse": 0.07111222444889781,
+        "order_z2_collapse": 0.5018016032064129,
+        "order_z3_collapse": 1.1778837675350702,
+        "order_z4_collapse": 2.2896633266533066
+      },
+      "threshold_10_percent": {
+        "linear_z_collapse": 0.156248496993988,
+        "order_z2_collapse": 0.7622184368737476,
+        "order_z3_collapse": 1.4983967935871745,
+        "order_z4_collapse": 2.5
+      },
+      "threshold_20_percent": {
+        "linear_z_collapse": 0.3816092184368738,
+        "order_z2_collapse": 1.1979158316633267,
+        "order_z3_collapse": 1.9340941883767535,
+        "order_z4_collapse": 2.5
+      }
+    },
+    "jacobi_volterra_remainder_bound": {
+      "formula": "||R_JV(s)|| <= s * (K * s^2)^2 / 24 * exp(0.5 * sqrt(K) * s)",
+      "interpretation": "Linear-z truncation collapses for z >= 0.065 at 5% accuracy; order-z^3 expansion extends validity to z ~ 0.50."
+    },
+    "buchert_bridge_formalism": {
+      "buchert_scalar_backreaction_equation": "Q_D = 2/3 * <(theta - <theta>_D)^2>_D - 2 * <sigma^2>_D",
+      "htt_tensor_x_relation": "Q_D = 6 * Var_D(H) - 12 * H_D^2 * x_D",
+      "dimensionless_omega_Q": "Omega_Q^D = - Q_D / (6 * H_D^2) = 2 * x_D - Var_D(H) / H_D^2",
+      "physical_duality": {
+        "cosmic_shear_term": "-12 * H_D^2 * x_D decelerates domain expansion (Omega_Q > 0)",
+        "expansion_variance_term": "+6 * Var_D(H) accelerates domain expansion (Omega_Q < 0)"
+      }
+    }
+  },
+  "tensor_x_summary": {
+    "pantheon_plus_cosmological": 0.00010057315539770087,
+    "pantheon_plus_low_z": 3.891900771247129e-05,
+    "des_dovekie_svd_regularized": 0.0001221549198129687,
+    "des_dovekie_selection_leakage_artifact_raw": 18.240667201315606,
+    "cf4_local_expansion": 0.00045711153633348853,
+    "sdss_pv_fp": 0.00018361587255953825,
+    "global_95CL_upper_bound_tensor_x": 0.00012,
+    "global_95CL_upper_bound_shear_over_H0": 0.027
+  }
+}

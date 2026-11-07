@@ -1,0 +1,58 @@
+{
+  "report_type": "five_variable_joint_diagnostic",
+  "probe_name": "multi_probe_bundle_Planck_Counts_Gaia_Distance_DESI",
+  "channel": "joint_tensor_five_variable",
+  "departure_variables": {
+    "beta_mo_diagnostic_norm": 0.004122005485760574,
+    "beta_rm_diagnostic_norm": 0.0010271738401852045,
+    "sigma_frobenius_upper_bound": 1.7170804912805536e-05,
+    "vorticity_diagnostic_norm": 1.8131299463349273e-05,
+    "directional_occupancy_ratio_max": 0.2985662898340698,
+    "diagnostic_null_exceedance_probability": 0.0,
+    "depth_path_cross_shell_covariance_trace": 3.9081010228613406e-08,
+    "undefined_parameter_mass": 0.0
+  },
+  "adequacy_indicators": {
+    "flrw_departure_detected": true,
+    "kinematic_boost_adequacy_satisfied": true,
+    "cosmic_shear_bounded_by_physical_budget": true,
+    "cosmic_vorticity_bounded_by_physical_budget": true,
+    "g19_hard_separation_firewall_satisfied": true,
+    "c0_c5_no_family_identification_satisfied": true
+  },
+  "consistency_metrics": {
+    "chi2_per_dof_joint": 31.425793325463683,
+    "mcmc_max_gelman_rubin_rhat": 1.1592808364213176,
+    "loocv_worst_fold_chi2_per_dof": 69.72729267938533,
+    "delta_bic_kinematic_vs_flrw": -54.09252781827672
+  },
+  "domain_caveats": [
+    "diagnostic_only_certificate_no_truth_or_posterior_assertion",
+    "pre_solver_observational_framework_g19_compliant",
+    "peculiar_velocity_budget_ceiling_beta_le_0p01",
+    "no_bianchi_family_identification_or_geometry_detection_claimed"
+  ],
+  "channel_caveats": [
+    "planck_pr4_commander_low_ell_tt_te_ee",
+    "quaia_g20_quasar_count_dipole",
+    "nvss_radio_count_dipole",
+    "gaia_dr3_crf3_vsh_modes",
+    "pantheon_plus_490_supernovae",
+    "desi_dr2_bao_background"
+  ],
+  "reduction_status": "diagnostic-only",
+  "generated_by": "htt.infer.tensor_five_variable_inference v1.0.0",
+  "git_commit": "4a49fc281bd43f4cf9130c3431cc6633b870719a",
+  "config_hash": "18ca4cd44c7f5e61",
+  "input_data_hashes": [
+    "planck_pr4_commander_sha256_verified",
+    "quaia_g20_fits_sha256_verified",
+    "nvss_radio_dipole_sha256_verified",
+    "gaia_crf3_vsh_sha256_verified",
+    "pantheon_plus_490_cache_verified",
+    "desi_bao_compact_verified"
+  ],
+  "manifest": null,
+  "tsc_overlay_ref": null,
+  "htt_cross_check_suggested": null
+}

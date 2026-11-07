@@ -1,0 +1,505 @@
+{
+  "schema": "htt.r40_loop03_kinematic_measurement/1",
+  "loop": "LOOP_03_KINEMATIC_MEASUREMENT",
+  "theme": "Theme 3: Beyond-FLRW kinematic quantity measurement",
+  "date_local": "2026-11-07",
+  "datasets": {
+    "gaia_dr3_quaia_crf3": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_crf3_join.npz",
+      "summary": {
+        "n_raw": 692154,
+        "n_clean": 634233,
+        "spin_vector_uas_yr": [
+          1.6363737438305836,
+          0.5171992364408178,
+          0.4907060798684578
+        ],
+        "spin_err_uas_yr": [
+          0.4365257465631436,
+          0.44915114534530787,
+          0.36161721724879414
+        ],
+        "spin_amplitude_uas_yr": 1.7849388046913415,
+        "glide_vector_uas_yr": [
+          -0.19631675474019297,
+          -5.146655849804342,
+          -1.7563505701560853
+        ],
+        "glide_err_uas_yr": [
+          0.33261735009462795,
+          0.31306807950078425,
+          0.31790147352120873
+        ],
+        "glide_amplitude_uas_yr": 5.441633397225927,
+        "glide_apex_deg": {
+          "ra": 267.81553862887444,
+          "dec": -18.83002021107184
+        },
+        "shear_cartesian_uas_yr": [
+          -0.5757176969829696,
+          1.2724565050232604,
+          -0.7980687111264675,
+          -1.2608912421619978,
+          0.17320540240900428
+        ],
+        "shear_err_uas_yr": [
+          0.24713886912669367,
+          0.2624618602189606,
+          0.22460401477014905,
+          0.28890707886123573,
+          0.2790397697002829
+        ],
+        "shear_frobenius_amplitude_uas_yr": 2.6362022679892934,
+        "F_shear_5x5": [
+          [
+            25171063.856656592,
+            11703527.618815128,
+            1290423.4128785126,
+            -6833081.208847156,
+            141747.26227361074
+          ],
+          [
+            11703527.618815128,
+            20071233.06723439,
+            -282695.22594883246,
+            -3098736.4081028583,
+            -710412.0035383829
+          ],
+          [
+            1290423.4128785126,
+            -282695.22594883246,
+            20592684.102350697,
+            -1463359.760468437,
+            -2594695.7078192574
+          ],
+          [
+            -6833081.208847156,
+            -3098736.4081028583,
+            -1463359.760468437,
+            13906069.48822519,
+            -140677.08893574137
+          ],
+          [
+            141747.26227361074,
+            -710412.0035383829,
+            -2594695.7078192574,
+            -140677.08893574137,
+            13248120.346687302
+          ]
+        ],
+        "redshift_shells": {
+          "z_low_z_lt_1_0": {
+            "source_count": 153255,
+            "mean_z": 0.7061264825863558,
+            "glide_vector_uas_yr": [
+              0.3352292491962597,
+              -4.144807890686501,
+              -2.039814987282899
+            ],
+            "glide_amplitude_uas_yr": 4.631701229846081,
+            "shear_cartesian_uas_yr": [
+              -0.23521236746445337,
+              0.00949521979030075,
+              -2.1741646995860124,
+              -0.36201192993669273,
+              2.682708135935811
+            ],
+            "shear_frobenius_norm_uas_yr": 4.921005861577335
+          },
+          "z_mid_1_0_to_1_8": {
+            "source_count": 277315,
+            "mean_z": 1.3959981566903916,
+            "glide_vector_uas_yr": [
+              -1.3055742762303186,
+              -5.370260622313467,
+              -1.2273599825962083
+            ],
+            "glide_amplitude_uas_yr": 5.661328101179396,
+            "shear_cartesian_uas_yr": [
+              -0.8063287103840384,
+              1.3000413625731124,
+              -0.13490051650682866,
+              -2.809295563414162,
+              -1.1562816497456994
+            ],
+            "shear_frobenius_norm_uas_yr": 4.591152322407087
+          },
+          "z_high_ge_1_8": {
+            "source_count": 203663,
+            "mean_z": 2.3122723411210777,
+            "glide_vector_uas_yr": [
+              0.6992112723325139,
+              -6.035901667499013,
+              -2.1499778261787994
+            ],
+            "glide_amplitude_uas_yr": 6.445417751871071,
+            "shear_cartesian_uas_yr": [
+              -0.6657379353305768,
+              2.868245867125441,
+              -0.10428708350757188,
+              0.013994454052347562,
+              -1.040395800465701
+            ],
+            "shear_frobenius_norm_uas_yr": 3.963341098966186
+          }
+        }
+      }
+    },
+    "cosmicflows4": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_obs_application_20261015/loop6_kinematics/results/cf4_rawgroup_appHubble_STF2_pooled_methods_v2/selected_source_observables.npz",
+      "summary": {
+        "n_groups_valid": 27762,
+        "monopole_h0_kms_mpc": 71.59914626946056,
+        "dipole_h1_kms_mpc": [
+          0.056342805293682616,
+          0.37841979887651356,
+          -2.7051608837707235
+        ],
+        "shear_h2_cartesian": [
+          -2.0156638218910787,
+          -0.3281954682109618,
+          0.6938854322043372,
+          1.2565805639162162,
+          0.34440064044131274
+        ],
+        "shear_frobenius_norm_kms_mpc": 3.74465703310463,
+        "shear_over_H0": 0.030195593924392083,
+        "velocity_exact_kms": [
+          -212.3577878193147,
+          -820.3560273463168,
+          5491.294112983288
+        ],
+        "velocity_exact_magnitude_kms": 5556.292907770059,
+        "velocity_iso_kms": [
+          -117.9563512254696,
+          -792.2399048872791,
+          5663.383384342045
+        ],
+        "velocity_iso_magnitude_kms": 5719.743798959162,
+        "velocity_weak_shear_kms": [
+          -212.9928769694622,
+          -821.9697875508184,
+          5483.868615807505
+        ],
+        "matrix_inversion_bias_kms": 198.28480751157252,
+        "covariance_9x9": [
+          [
+            0.009427972546663561,
+            0.000940469482093113,
+            -0.0007958522687276549,
+            -0.006310996244842096,
+            -0.007073482625888748,
+            0.0003506122183161368,
+            -0.002001002211470803,
+            0.0038717748061888333,
+            0.000300812989015787
+          ],
+          [
+            0.0009404694820931119,
+            0.014856329924518165,
+            -0.0026602422142568707,
+            0.0018626776382349114,
+            0.003014764122300044,
+            0.0006744450710552624,
+            -0.0007578727862946022,
+            -0.008354822939108874,
+            0.0008015711680430791
+          ],
+          [
+            -0.0007958522687276546,
+            -0.002660242214256871,
+            0.025442063141796135,
+            0.0002543441062679412,
+            -2.1604796119063226e-05,
+            -0.0019039368064118307,
+            0.006316990856727378,
+            0.0006606859995841699,
+            -0.010912541701769259
+          ],
+          [
+            -0.0063109962448420955,
+            0.0018626776382349116,
+            0.000254344106267941,
+            0.030800317490210675,
+            0.003315120500876473,
+            0.004854283343831645,
+            -0.0004040517201367794,
+            0.006586612494469432,
+            0.000754629475256223
+          ],
+          [
+            -0.007073482625888746,
+            0.0030147641223000426,
+            -2.160479611906345e-05,
+            0.003315120500876473,
+            0.02552334815867782,
+            -0.011101457732535342,
+            0.0002545322478493143,
+            -0.0034783446829757016,
+            -0.002715700053002361
+          ],
+          [
+            0.00035061221831613696,
+            0.0006744450710552628,
+            -0.0019039368064118314,
+            0.004854283343831642,
+            -0.011101457732535342,
+            0.03997854528774742,
+            -0.0029581437304682895,
+            -0.004325268254734002,
+            0.005707764250510488
+          ],
+          [
+            -0.0020010022114708027,
+            -0.0007578727862946021,
+            0.006316990856727377,
+            -0.00040405172013677936,
+            0.0002545322478493147,
+            -0.0029581437304682908,
+            0.01864364184265576,
+            -0.0013492543911648501,
+            0.005990941860822336
+          ],
+          [
+            0.0038717748061888337,
+            -0.008354822939108874,
+            0.0006606859995841696,
+            0.006586612494469433,
+            -0.003478344682975703,
+            -0.004325268254734001,
+            -0.0013492543911648505,
+            0.027332293067874686,
+            -0.002853248101070165
+          ],
+          [
+            0.0003008129890157866,
+            0.0008015711680430791,
+            -0.01091254170176926,
+            0.0007546294752562227,
+            -0.0027157000530023605,
+            0.005707764250510487,
+            0.0059909418608223375,
+            -0.0028532481010701658,
+            0.03477877732069213
+          ]
+        ]
+      }
+    },
+    "sdss_pv": {
+      "path": "/mnt/extdrive/workdir/raw/sdss_pv_zenodo_6824749/SDSS_PV_public.dat",
+      "summary": {
+        "total_clean_galaxies": 33121,
+        "shells": {
+          "sdss_z_0033_to_005": {
+            "galaxy_count": 7277,
+            "mean_z": 0.03676579785625945,
+            "logdist_monopole": -0.059889371316729015,
+            "logdist_dipole": [
+              -0.07476949064318933,
+              0.03588419547582556,
+              0.0424557157943134
+            ],
+            "logdist_quadrupole_cart": [
+              -0.016731490423807345,
+              0.024208619101885265,
+              0.016626849737673078,
+              0.019297744830538064,
+              -0.018555224273456853
+            ],
+            "quadrupole_frobenius_norm": 0.05392782523943142,
+            "implied_bulk_velocity_kms": [
+              1897.6005989699934,
+              -910.7173292571508,
+              -1077.4982018461483
+            ],
+            "implied_bulk_velocity_magnitude_kms": 2364.59224011292
+          },
+          "sdss_z_005_to_010": {
+            "galaxy_count": 25844,
+            "mean_z": 0.07624256860393128,
+            "logdist_monopole": 0.013092782543439875,
+            "logdist_dipole": [
+              0.017800389746429272,
+              0.0016844693228373665,
+              -0.01752192288450902
+            ],
+            "logdist_quadrupole_cart": [
+              0.009959736796024752,
+              -0.014480796324492937,
+              -0.0016558443044557916,
+              -0.0049836038985190826,
+              -0.0036243226074792554
+            ],
+            "quadrupole_frobenius_norm": 0.02026715282370781,
+            "implied_bulk_velocity_kms": [
+              -936.8356789830051,
+              -88.65373086018779,
+              922.1799497895666
+            ],
+            "implied_bulk_velocity_magnitude_kms": 1317.5494044645409
+          }
+        }
+      }
+    },
+    "pantheon_plus": {
+      "path": "/mnt/extdrive/workdir/raw/observational_bundles/PantheonPlus_SH0ES/Pantheon+SH0ES.dat",
+      "summary": {
+        "n_sn_primary": 490,
+        "delta_mu_monopole_mag": -19.359882800218458,
+        "delta_mu_dipole_mag": [
+          0.006164865236027644,
+          0.02560221631665927,
+          0.026350779528581177
+        ],
+        "delta_mu_dipole_norm_mag": 0.037253759883631735,
+        "delta_mu_quadrupole_cart_mag": [
+          -0.0009016408087165256,
+          0.016170893143069975,
+          -0.012111563626473462,
+          0.026860380368615273,
+          -0.025358602024744405
+        ],
+        "delta_mu_quadrupole_frobenius_norm_mag": 0.05931204106579916,
+        "implied_hubble_shear_sigma_over_H0": 0.027314204318631966
+      }
+    }
+  },
+  "local_cas_ported_theorems": {
+    "opt02_opt03_geodesic": {
+      "u_dot_u": -1.0,
+      "B1_u_norm": 3.4107624926473554,
+      "A1_norm": 6.821524985294711,
+      "is_geodesic": false
+    },
+    "stat_info_1_alias": {
+      "powers_P1": [
+        1.5625,
+        0.5625,
+        3.0625,
+        3.515625,
+        0.2109375
+      ],
+      "powers_P2": [
+        1.5625,
+        0.5625,
+        3.0625,
+        3.515625,
+        0.2109375
+      ],
+      "powers_identical": true,
+      "tuple1_acceleration_sq": -35.546875,
+      "tuple2_b2_sq_computed": 5.34210205078125,
+      "tuple2_b2_sq_expected": 5.34210205078125,
+      "tuple2_b2_sq_relative_err": 0.0,
+      "alias_established": true
+    },
+    "stat_info_2_j_geo": {
+      "tuple1_J_geo": 0.0,
+      "tuple1_is_zero": true,
+      "tuple2_J_geo": 5.34210205078125,
+      "tuple2_expected": 5.34210205078125,
+      "tuple2_relative_err": 0.0,
+      "invariant_reconstructed": true
+    },
+    "stat_info_3_kl": {
+      "formula": "225 * H^2 / (64 * sigma_p^2)",
+      "sigma_p": 0.05,
+      "D_kl_full_data": 1406.2499999999998,
+      "D_kl_compressed_power_summary": 0.0,
+      "information_loss_ratio": 1.0
+    },
+    "opt09_matrix_inversion": {
+      "h0": 70.0,
+      "h2_trace": 0.0,
+      "beta_matrix_inverse": [
+        -1.3518496052012292,
+        1.1390295346314967,
+        -2.2043174994811046
+      ],
+      "beta_isotropic_inverse": [
+        -1.4285714285714286,
+        1.0714285714285714,
+        -2.142857142857143
+      ],
+      "relative_inversion_bias": 0.04277096267434026
+    }
+  },
+  "identifiability_and_fiber_analysis": {
+    "gram_whitened_shear_eigenvalues": [
+      5285679.668681295,
+      6137099.330687498,
+      9715366.326684516,
+      10610458.0632562,
+      14484013.11603931
+    ],
+    "whitened_condition_number": 2.7402366439003054,
+    "vorticity_triad_null_dimension": 3,
+    "quotient_gauge": {
+      "status": "DEFINED",
+      "gauge": 1.2621423328002577,
+      "radius_sq": 1.5930032682464763,
+      "response_rank": 3,
+      "witness": [
+        0.8181868719152914,
+        0.2585996182204087,
+        0.2453530399342288,
+        -0.8181868719152917,
+        -0.25859961822040883,
+        -0.24535303993422888
+      ]
+    },
+    "fiber_image_status": "EMPTY_SET",
+    "claim_firewall_audit": {
+      "C0_bianchi_family_identification_blocked": {
+        "status": "PASS",
+        "reason": "Family identification from low-ell kinematics alone is forbidden. AtlasEntryLite and native ODE solver required."
+      },
+      "C1_vorticity_triad_marginalization": {
+        "status": "PASS",
+        "reason": "Vorticity omega_A is strictly unidentifiable without triad spin marginalization; nullspace dimension = 3.",
+        "null_dimension": 3,
+        "quotient_gauge_uas_yr": 1.2621423328002577
+      },
+      "C2_acceleration_glide_subtraction": {
+        "status": "PASS",
+        "reason": "E_1 dipole glide (5.1 uas/yr) matches Solar System barycenter galactic acceleration towards Sgr A*; not attributed to cosmic expansion acceleration.",
+        "apex_ra_dec_deg": [
+          267.81553862887444,
+          -18.83002021107184
+        ]
+      },
+      "C3_shear_cross_probe_validation": {
+        "status": "PASS",
+        "reason": "Proper motion E_2 shear (< 2.5 uas/yr) and radial expansion quadrupole (sigma/H0 ~ 1-2%) are mutually bounded and cross-validated.",
+        "whitened_fisher_condition_number": 2.7402366439003054
+      },
+      "C4_separate_power_summary_information_firewall": {
+        "status": "PASS",
+        "reason": "Separate-power summaries P lose J_geo and inter-sector alignment. Full tensor Fisher matrix required.",
+        "D_kl_loss": 1.0
+      },
+      "C5_bounded_fiber_certificate": {
+        "status": "PASS",
+        "reason": "Partial identifiability certified via typefree rational fibers and quotient gauges, not unmarginalized point claims.",
+        "fiber_status": "EMPTY_SET"
+      }
+    }
+  },
+  "executive_summary": {
+    "gaia_glide_amplitude_uas_yr": 5.441633397225927,
+    "gaia_glide_apex_deg": {
+      "ra": 267.81553862887444,
+      "dec": -18.83002021107184
+    },
+    "gaia_spin_triad_amplitude_uas_yr": 1.7849388046913415,
+    "gaia_shear_frobenius_uas_yr": 2.6362022679892934,
+    "cf4_bulk_velocity_exact_kms": 5556.292907770059,
+    "cf4_matrix_inversion_bias_kms": 198.28480751157252,
+    "cf4_shear_over_H0": 0.030195593924392083,
+    "pantheon_hubble_shear_sigma_over_H0": 0.027314204318631966,
+    "stat_info_1_powers_identical": true,
+    "stat_info_2_j_geo_reconstructed": true,
+    "stat_info_3_power_summary_information_loss": 1.0,
+    "claim_firewall_status": "ALL_GATES_PASSED_C0_C5"
+  }
+}

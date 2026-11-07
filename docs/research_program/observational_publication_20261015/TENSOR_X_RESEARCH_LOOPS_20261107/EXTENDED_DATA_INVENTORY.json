@@ -1,0 +1,2548 @@
+{
+  "schema": "htt.r40_extended_data_inventory/1",
+  "program": "HTT-Wave1-Task1B",
+  "date_local": "2026-11-07",
+  "elapsed_seconds": 87.77,
+  "total_dataset_families": 11,
+  "verified_dataset_families": 11,
+  "summary": {
+    "planck_pr4_npipe_commander": "VERIFIED_LOCAL",
+    "planck_pr3_carrier_and_nulls": "VERIFIED_LOCAL",
+    "cosmoglobe_dr1": "VERIFIED_LOCAL",
+    "quaia": "VERIFIED_LOCAL",
+    "radio_nvss_and_racs": "VERIFIED_LOCAL",
+    "gaia_dr3_crf3": "VERIFIED_LOCAL",
+    "pantheon_plus": "VERIFIED_LOCAL",
+    "des_sn5yr_dovekie": "VERIFIED_LOCAL",
+    "cosmicflows4": "VERIFIED_LOCAL",
+    "sdss_pv": "VERIFIED_LOCAL",
+    "desi": "VERIFIED_LOCAL"
+  },
+  "datasets": {
+    "planck_pr4_npipe_commander": {
+      "status": "VERIFIED_LOCAL",
+      "map": {
+        "key": "planck_pr4_commander_full",
+        "probe": "CMB",
+        "description": "Planck PR4 NPIPE Commander full-sky CMB map (I/Q/U NSIDE 4096)",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/COM_CMB_IQU-commander_4096_R4.00_full.fits",
+        "size_bytes": 1207972800,
+        "size_mb": 1152.013,
+        "sha256": "61b9060ff4f80248ca52832137867c28697346f460a6a4b80f4654b114f4b900",
+        "sha256_source": "PRECOMPUTED_MANIFEST",
+        "mtime": 1793072919.9497013,
+        "file_type": "FITS",
+        "metadata": {
+          "hdus": [
+            {
+              "index": 0,
+              "name": "PRIMARY",
+              "type": "PrimaryHDU",
+              "BITPIX": 8,
+              "NAXIS": 0
+            },
+            {
+              "index": 1,
+              "name": "",
+              "type": "BinTableHDU",
+              "XTENSION": "BINTABLE",
+              "BITPIX": 8,
+              "NAXIS": 2,
+              "NAXIS1": 805306368,
+              "NAXIS2": 1,
+              "NSIDE": 4096,
+              "ORDERING": "NESTED",
+              "COORDSYS": "GALACTIC",
+              "TUNIT1": "K_CMB",
+              "POLCCONV": "COSMO",
+              "columns": [
+                "TEMPERATURE"
+              ],
+              "num_columns": 1,
+              "data_shape": [
+                1
+              ]
+            },
+            {
+              "index": 2,
+              "name": "",
+              "type": "BinTableHDU",
+              "XTENSION": "BINTABLE",
+              "BITPIX": 8,
+              "NAXIS": 2,
+              "NAXIS1": 402653184,
+              "NAXIS2": 1,
+              "NSIDE": 2048,
+              "ORDERING": "NESTED",
+              "COORDSYS": "GALACTIC",
+              "TUNIT1": "K_CMB",
+              "POLCCONV": "COSMO",
+              "columns": [
+                "Q_POLARIZATION",
+                "U_POLARIZATION"
+              ],
+              "num_columns": 2,
+              "data_shape": [
+                1
+              ]
+            }
+          ]
+        }
+      },
+      "observed_analysis": {
+        "json": {
+          "key": "planck_pr4_observed_json",
+          "probe": "CMB",
+          "description": "Planck PR4 observed morphology summary",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/observed.json",
+          "size_bytes": 7083,
+          "size_mb": 0.007,
+          "sha256": "f922cfdbb8b578613102075819a6f2a5ea65074a7238d3e444c7f4034eb3b3f8",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1793082915.3383186,
+          "file_type": "TXT",
+          "metadata": {
+            "line_count": 286,
+            "sample_columns": [
+              "{"
+            ],
+            "num_sample_columns": 1
+          }
+        },
+        "lowell_eb": {
+          "key": "planck_pr4_observed_lowell_eb",
+          "probe": "CMB",
+          "description": "Planck PR4 observed low-ell EB coefficients",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/observed_lowell_EB.npz",
+          "size_bytes": 743,
+          "size_mb": 0.001,
+          "sha256": "56da085ee5cceb0d0227685e537d2f67d9a470874745f8b7eb0627f1e7ee7490",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1793082915.2582397,
+          "file_type": "NPZ",
+          "metadata": {
+            "keys": {
+              "E": {
+                "shape": [
+                  15
+                ],
+                "dtype": "complex128"
+              },
+              "B": {
+                "shape": [
+                  15
+                ],
+                "dtype": "complex128"
+              }
+            },
+            "num_keys": 2
+          }
+        },
+        "mask_response": {
+          "key": "planck_pr4_mask_response",
+          "probe": "CMB",
+          "description": "Planck PR4 mask response operator",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/mask_response_three_columns.npz",
+          "size_bytes": 3039,
+          "size_mb": 0.003,
+          "sha256": "9ae161d771fbc03576bafe2dfd6685059b5aa9c3749d3664f115bff5fe19ff40",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1793083030.1120975,
+          "file_type": "NPZ",
+          "metadata": {
+            "keys": {
+              "E2_m0_E": {
+                "shape": [
+                  15
+                ],
+                "dtype": "complex128"
+              },
+              "E2_m0_B": {
+                "shape": [
+                  15
+                ],
+                "dtype": "complex128"
+              },
+              "E3_m1_real_E": {
+                "shape": [
+                  15
+                ],
+                "dtype": "complex128"
+              },
+              "E3_m1_real_B": {
+                "shape": [
+                  15
+                ],
+                "dtype": "complex128"
+              },
+              "B4_m2_imag_E": {
+                "shape": [
+                  15
+                ],
+                "dtype": "complex128"
+              },
+              "B4_m2_imag_B": {
+                "shape": [
+                  15
+                ],
+                "dtype": "complex128"
+              },
+              "joint_E": {
+                "shape": [
+                  15
+                ],
+                "dtype": "complex128"
+              },
+              "joint_B": {
+                "shape": [
+                  15
+                ],
+                "dtype": "complex128"
+              }
+            },
+            "num_keys": 8
+          }
+        }
+      },
+      "mc_ensemble": {
+        "directory": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis",
+        "mc_eb_npz_count": 100,
+        "mc_json_count": 100,
+        "mc_id_range": [
+          300,
+          399
+        ],
+        "status": "VERIFIED_LOCAL"
+      }
+    },
+    "planck_pr3_carrier_and_nulls": {
+      "status": "VERIFIED_LOCAL",
+      "smica": {
+        "key": "planck_pr3_smica_full",
+        "probe": "CMB",
+        "description": "Planck PR3 SMICA full-sky CMB map (I/Q/U NSIDE 2048)",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+        "size_bytes": 2013312960,
+        "size_mb": 1920.045,
+        "sha256": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+        "sha256_source": "PRECOMPUTED_MANIFEST",
+        "mtime": 1776640994.061777,
+        "file_type": "FITS",
+        "metadata": {
+          "hdus": [
+            {
+              "index": 0,
+              "name": "PRIMARY",
+              "type": "PrimaryHDU",
+              "BITPIX": 32,
+              "NAXIS": 0
+            },
+            {
+              "index": 1,
+              "name": "",
+              "type": "BinTableHDU",
+              "XTENSION": "BINTABLE",
+              "BITPIX": 8,
+              "NAXIS": 2,
+              "NAXIS1": 40,
+              "NAXIS2": 50331648,
+              "NSIDE": 2048,
+              "ORDERING": "NESTED",
+              "COORDSYS": "GALACTIC",
+              "TUNIT1": "K_CMB",
+              "POLCCONV": "COSMO",
+              "columns": [
+                "I_STOKES",
+                "Q_STOKES",
+                "U_STOKES",
+                "TMASK",
+                "PMASK",
+                "I_STOKES_INP",
+                "Q_STOKES_INP",
+                "U_STOKES_INP",
+                "TMASKINP",
+                "PMASKINP"
+              ],
+              "num_columns": 10,
+              "data_shape": [
+                50331648
+              ]
+            },
+            {
+              "index": 2,
+              "name": "",
+              "type": "BinTableHDU",
+              "XTENSION": "BINTABLE",
+              "BITPIX": 8,
+              "NAXIS": 2,
+              "NAXIS1": 8,
+              "NAXIS2": 4097,
+              "TUNIT1": "",
+              "columns": [
+                "INT_BEAM",
+                "POL_BEAM"
+              ],
+              "num_columns": 2,
+              "data_shape": [
+                4097
+              ]
+            }
+          ]
+        }
+      },
+      "commander": {
+        "key": "planck_pr3_commander_full",
+        "probe": "CMB",
+        "description": "Planck PR3 Commander full-sky CMB map (I/Q/U NSIDE 2048)",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-commander_2048_R3.00_full.fits",
+        "size_bytes": 1610660160,
+        "size_mb": 1536.045,
+        "sha256": "fe0332e61087ab445656ef272b31578ca4b1edcc7c3784a7662577684e2685a4",
+        "sha256_source": "PRECOMPUTED_MANIFEST",
+        "mtime": 1776642502.4633052,
+        "file_type": "FITS",
+        "metadata": {
+          "hdus": [
+            {
+              "index": 0,
+              "name": "PRIMARY",
+              "type": "PrimaryHDU",
+              "BITPIX": 32,
+              "NAXIS": 0
+            },
+            {
+              "index": 1,
+              "name": "",
+              "type": "BinTableHDU",
+              "XTENSION": "BINTABLE",
+              "BITPIX": 8,
+              "NAXIS": 2,
+              "NAXIS1": 32,
+              "NAXIS2": 50331648,
+              "NSIDE": 2048,
+              "ORDERING": "NESTED",
+              "COORDSYS": "GALACTIC",
+              "TUNIT1": "K_CMB",
+              "POLCCONV": "COSMO",
+              "columns": [
+                "I_STOKES",
+                "Q_STOKES",
+                "U_STOKES",
+                "TMASK",
+                "PMASK",
+                "I_STOKES_INP",
+                "Q_STOKES_INP",
+                "U_STOKES_INP"
+              ],
+              "num_columns": 8,
+              "data_shape": [
+                50331648
+              ]
+            },
+            {
+              "index": 2,
+              "name": "",
+              "type": "BinTableHDU",
+              "XTENSION": "BINTABLE",
+              "BITPIX": 8,
+              "NAXIS": 2,
+              "NAXIS1": 8,
+              "NAXIS2": 4097,
+              "TUNIT1": "",
+              "columns": [
+                "INT_BEAM",
+                "POL_BEAM"
+              ],
+              "num_columns": 2,
+              "data_shape": [
+                4097
+              ]
+            }
+          ]
+        }
+      },
+      "nilc": {
+        "key": "planck_pr3_nilc_full",
+        "probe": "CMB",
+        "description": "Planck PR3 NILC full-sky CMB map (I/Q/U NSIDE 2048)",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/planck_pr3_component_controls/COM_CMB_IQU-nilc_2048_R3.00_full.fits",
+        "size_bytes": 1610660160,
+        "size_mb": 1536.045,
+        "sha256": "8f9a8533bc40b46b51b6437b8624dc523559c14bff38aee5df85500dbd4f9436",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1787833656.9459927,
+        "file_type": "FITS",
+        "metadata": {
+          "hdus": [
+            {
+              "index": 0,
+              "name": "PRIMARY",
+              "type": "PrimaryHDU",
+              "BITPIX": 32,
+              "NAXIS": 0
+            },
+            {
+              "index": 1,
+              "name": "",
+              "type": "BinTableHDU",
+              "XTENSION": "BINTABLE",
+              "BITPIX": 8,
+              "NAXIS": 2,
+              "NAXIS1": 32,
+              "NAXIS2": 50331648,
+              "NSIDE": 2048,
+              "ORDERING": "NESTED",
+              "COORDSYS": "GALACTIC",
+              "TUNIT1": "K_CMB",
+              "POLCCONV": "COSMO",
+              "columns": [
+                "I_STOKES",
+                "Q_STOKES",
+                "U_STOKES",
+                "TMASK",
+                "PMASK",
+                "I_STOKES_INP",
+                "Q_STOKES_INP",
+                "U_STOKES_INP"
+              ],
+              "num_columns": 8,
+              "data_shape": [
+                50331648
+              ]
+            },
+            {
+              "index": 2,
+              "name": "",
+              "type": "BinTableHDU",
+              "XTENSION": "BINTABLE",
+              "BITPIX": 8,
+              "NAXIS": 2,
+              "NAXIS1": 8,
+              "NAXIS2": 4097,
+              "TUNIT1": "",
+              "columns": [
+                "INT_BEAM",
+                "POL_BEAM"
+              ],
+              "num_columns": 2,
+              "data_shape": [
+                4097
+              ]
+            }
+          ]
+        }
+      },
+      "common_mask": {
+        "key": "planck_pr3_common_mask",
+        "probe": "CMB",
+        "description": "Planck PR3 Common Mask Int (NSIDE 2048)",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits",
+        "size_bytes": 201335040,
+        "size_mb": 192.008,
+        "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4",
+        "sha256_source": "PRECOMPUTED_MANIFEST",
+        "mtime": 1776638176.25955,
+        "file_type": "FITS",
+        "metadata": {
+          "hdus": [
+            {
+              "index": 0,
+              "name": "PRIMARY",
+              "type": "PrimaryHDU",
+              "BITPIX": 32,
+              "NAXIS": 0
+            },
+            {
+              "index": 1,
+              "name": "",
+              "type": "BinTableHDU",
+              "XTENSION": "BINTABLE",
+              "BITPIX": 8,
+              "NAXIS": 2,
+              "NAXIS1": 4,
+              "NAXIS2": 50331648,
+              "NSIDE": 2048,
+              "ORDERING": "NESTED",
+              "COORDSYS": "GALACTIC",
+              "TUNIT1": "",
+              "columns": [
+                "TMASK"
+              ],
+              "num_columns": 1,
+              "data_shape": [
+                50331648
+              ]
+            }
+          ]
+        }
+      },
+      "paired300_carrier": {
+        "directory": "/mnt/extdrive/workdir/analysis/planck_mes_irrep/paired300_carrier",
+        "manifest": {
+          "key": "planck_pr3_paired300_manifest",
+          "probe": "CMB",
+          "description": "Planck PR3 paired 300 FFP10 carrier execution manifest",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/analysis/planck_mes_irrep/paired300_carrier/execution_manifest.json",
+          "size_bytes": 206507,
+          "size_mb": 0.197,
+          "sha256": "6e2acaa4b695ad422cca5099c4d91e9a7dfc741f6e41b461d10da4ec52c36831",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1787924739.66536,
+          "file_type": "TXT",
+          "metadata": {
+            "line_count": 1,
+            "sample_columns": [
+              "{\"checkpoint_reused_count\":0",
+              "format\":\"PLANCK_PR3_PAIRED300_PRIVATE_EXECUTION_MANIFEST_V1",
+              "operator_identity_sha256\":\"sha256:53c250dd1b3fe614ad2b5fd1d9a1003bf65253e9d432a6b67913c047d43f5014",
+              "raw_data_mutation\":false",
+              "row_count\":301",
+              "row_ids\":[\"PLANCK-PR3-SMICA-OBSERVED",
+              "FFP10-SMICA-CMBNOISE-00000",
+              "FFP10-SMICA-CMBNOISE-00001",
+              "FFP10-SMICA-CMBNOISE-00002",
+              "FFP10-SMICA-CMBNOISE-00003",
+              "FFP10-SMICA-CMBNOISE-00004",
+              "FFP10-SMICA-CMBNOISE-00005",
+              "FFP10-SMICA-CMBNOISE-00006",
+              "FFP10-SMICA-CMBNOISE-00007",
+              "FFP10-SMICA-CMBNOISE-00008",
+              "FFP10-SMICA-CMBNOISE-00009",
+              "FFP10-SMICA-CMBNOISE-00010",
+              "FFP10-SMICA-CMBNOISE-00011",
+              "FFP10-SMICA-CMBNOISE-00012",
+              "FFP10-SMICA-CMBNOISE-00013"
+            ],
+            "num_sample_columns": 5122
+          }
+        },
+        "observed_npz": {
+          "key": "planck_pr3_paired300_observed_npz",
+          "probe": "CMB",
+          "description": "Planck PR3 observed carrier features",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/analysis/planck_mes_irrep/paired300_carrier/observed.npz",
+          "size_bytes": 868,
+          "size_mb": 0.001,
+          "sha256": "187e0dfb2a9d1f532adcaf8631c25a668855d8399f2cc2a034a06f1dba58e29f",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1787923304.3737698,
+          "file_type": "NPZ",
+          "metadata": {
+            "keys": {
+              "features": {
+                "shape": [
+                  12
+                ],
+                "dtype": "float64"
+              },
+              "carrier": {
+                "shape": [
+                  32
+                ],
+                "dtype": "float64"
+              }
+            },
+            "num_keys": 2
+          }
+        },
+        "null_npz_count": 300,
+        "null_json_count": 300,
+        "status": "VERIFIED_LOCAL"
+      }
+    },
+    "cosmoglobe_dr1": {
+      "status": "VERIFIED_LOCAL",
+      "cmb_map": {
+        "key": "cosmoglobe_dr1_cmb_map",
+        "probe": "CMB",
+        "description": "Cosmoglobe DR1 CMB I/Q/U map (NSIDE 1024)",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/cosmoglobe_dr1/CG_cmb_IQU_n1024_v1.fits",
+        "size_bytes": 603990720,
+        "size_mb": 576.01,
+        "sha256": "3d50ad25e6dba3515d442a1c2d652a274b4127ced9dd09317751f508be07e0f5",
+        "sha256_source": "PRECOMPUTED_MANIFEST",
+        "mtime": 1787890145.226084,
+        "file_type": "FITS",
+        "metadata": {
+          "hdus": [
+            {
+              "index": 0,
+              "name": "PRIMARY",
+              "type": "PrimaryHDU",
+              "BITPIX": 8,
+              "NAXIS": 0
+            },
+            {
+              "index": 1,
+              "name": "xtension",
+              "type": "BinTableHDU",
+              "EXTNAME": "xtension",
+              "XTENSION": "BINTABLE",
+              "BITPIX": 8,
+              "NAXIS": 2,
+              "NAXIS1": 49152,
+              "NAXIS2": 12288,
+              "NSIDE": 1024,
+              "ORDERING": "RING",
+              "COORDSYS": "GALACTIC",
+              "TUNIT1": "uK_cmb",
+              "columns": [
+                "I_MEAN",
+                "Q_MEAN",
+                "U_MEAN",
+                "I_STDDEV",
+                "Q_STDDEV",
+                "U_STDDEV"
+              ],
+              "num_columns": 6,
+              "data_shape": [
+                12288
+              ]
+            }
+          ]
+        }
+      },
+      "foreground_components": {
+        "dust": {
+          "key": "cg_dust",
+          "probe": "Foreground",
+          "description": "Cosmoglobe DR1 Thermal Dust",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/cosmoglobe_dr1/CG_dust_IQU_n1024_v1.fits",
+          "size_bytes": 1610625600,
+          "size_mb": 1536.012,
+          "sha256": "e2bd099f7bd96e2ab73b0f4c030ffaf2b6bb37c060cde705ea791c44c1f8878e",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1787889024.9353938,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": 8,
+                "NAXIS": 0
+              },
+              {
+                "index": 1,
+                "name": "xtension",
+                "type": "BinTableHDU",
+                "EXTNAME": "xtension",
+                "XTENSION": "BINTABLE",
+                "BITPIX": 8,
+                "NAXIS": 2,
+                "NAXIS1": 131072,
+                "NAXIS2": 12288,
+                "NSIDE": 1024,
+                "ORDERING": "RING",
+                "COORDSYS": "GALACTIC",
+                "TUNIT1": "uK_RJ",
+                "columns": [
+                  "I_MEAN",
+                  "Q_MEAN",
+                  "U_MEAN",
+                  "P_MEAN",
+                  "I_BETA_MEAN",
+                  "QU_BETA_MEAN",
+                  "I_T_MEAN",
+                  "QU_T_MEAN",
+                  "I_STDDEV",
+                  "Q_STDDEV",
+                  "U_STDDEV",
+                  "P_STDDEV",
+                  "I_BETA_STDDEV",
+                  "QU_BETA_STDDEV",
+                  "I_T_STDDEV",
+                  "QU_T_STDDEV"
+                ],
+                "num_columns": 16,
+                "data_shape": [
+                  12288
+                ]
+              }
+            ]
+          }
+        },
+        "synch": {
+          "key": "cg_synch",
+          "probe": "Foreground",
+          "description": "Cosmoglobe DR1 Synchrotron",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/cosmoglobe_dr1/CG_synch_IQU_n1024_v1.fits",
+          "size_bytes": 1207969920,
+          "size_mb": 1152.01,
+          "sha256": "af6c38fa41a82b49098dd5578855295105535739c877670a293ea941bdd65890",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1787889843.2146728,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": 8,
+                "NAXIS": 0
+              },
+              {
+                "index": 1,
+                "name": "xtension",
+                "type": "BinTableHDU",
+                "EXTNAME": "xtension",
+                "XTENSION": "BINTABLE",
+                "BITPIX": 8,
+                "NAXIS": 2,
+                "NAXIS1": 98304,
+                "NAXIS2": 12288,
+                "NSIDE": 1024,
+                "ORDERING": "RING",
+                "COORDSYS": "GALACTIC",
+                "TUNIT1": "uK_RJ",
+                "columns": [
+                  "I_MEAN",
+                  "Q_MEAN",
+                  "U_MEAN",
+                  "P_MEAN",
+                  "I_BETA_MEAN",
+                  "QU_BETA_MEAN",
+                  "I_STDDEV",
+                  "Q_STDDEV",
+                  "U_STDDEV",
+                  "P_STDDEV",
+                  "I_BETA_STDDEV",
+                  "QU_BETA_STDDEV"
+                ],
+                "num_columns": 12,
+                "data_shape": [
+                  12288
+                ]
+              }
+            ]
+          }
+        },
+        "freefree": {
+          "key": "cg_freefree",
+          "probe": "Foreground",
+          "description": "Cosmoglobe DR1 Free-free",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/cosmoglobe_dr1/CG_freefree_I_n1024_v1.fits",
+          "size_bytes": 402664320,
+          "size_mb": 384.011,
+          "sha256": "4b08d2c0b592a711e6eda89c633595cf7b1068cbe88f8fa67c55a518b3f34a21",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1787889232.164254,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": 8,
+                "NAXIS": 0
+              },
+              {
+                "index": 1,
+                "name": "xtension",
+                "type": "BinTableHDU",
+                "EXTNAME": "xtension",
+                "XTENSION": "BINTABLE",
+                "BITPIX": 8,
+                "NAXIS": 2,
+                "NAXIS1": 32768,
+                "NAXIS2": 12288,
+                "NSIDE": 1024,
+                "ORDERING": "RING",
+                "COORDSYS": "GALACTIC",
+                "TUNIT1": "uK_RJ",
+                "columns": [
+                  "I_MEAN",
+                  "I_TE_MEAN",
+                  "I_STDDEV",
+                  "I_TE_STDDEV"
+                ],
+                "num_columns": 4,
+                "data_shape": [
+                  12288
+                ]
+              }
+            ]
+          }
+        },
+        "ame": {
+          "key": "cg_ame",
+          "probe": "Foreground",
+          "description": "Cosmoglobe DR1 AME",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/cosmoglobe_dr1/CG_ame_I_n1024_v1.fits",
+          "size_bytes": 402664320,
+          "size_mb": 384.011,
+          "sha256": "c9a6c9d3a470ed25f8fb38403aa515f35821912e5c8eeb11177971a7ee01023d",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1787888192.2037604,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": 8,
+                "NAXIS": 0
+              },
+              {
+                "index": 1,
+                "name": "xtension",
+                "type": "BinTableHDU",
+                "EXTNAME": "xtension",
+                "XTENSION": "BINTABLE",
+                "BITPIX": 8,
+                "NAXIS": 2,
+                "NAXIS1": 32768,
+                "NAXIS2": 12288,
+                "NSIDE": 1024,
+                "ORDERING": "RING",
+                "COORDSYS": "GALACTIC",
+                "TUNIT1": "uK_RJ",
+                "columns": [
+                  "I_MEAN",
+                  "I_NU_P_MEAN",
+                  "I_STDDEV",
+                  "I_NU_P_STDDEV"
+                ],
+                "num_columns": 4,
+                "data_shape": [
+                  12288
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "quaia": {
+      "status": "VERIFIED_LOCAL",
+      "g20": {
+        "catalog": {
+          "key": "quaia_g20_catalog",
+          "probe": "Counts",
+          "description": "Quaia G<20.0 quasar catalogue",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/quaia_G20.0.fits",
+          "size_bytes": 99786240,
+          "size_mb": 95.164,
+          "sha256": "efeda9ae727bf2cd75569f52460a0492827c8a3fcd8ce29dc692b559fca2acb0",
+          "sha256_source": "PRECOMPUTED_MANIFEST",
+          "mtime": 1790655659.7506876,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": 8,
+                "NAXIS": 0
+              },
+              {
+                "index": 1,
+                "name": "",
+                "type": "BinTableHDU",
+                "XTENSION": "BINTABLE",
+                "BITPIX": 8,
+                "NAXIS": 2,
+                "NAXIS1": 132,
+                "NAXIS2": 755850,
+                "columns": [
+                  "source_id",
+                  "unwise_objid",
+                  "redshift_quaia",
+                  "redshift_quaia_err",
+                  "ra",
+                  "dec",
+                  "l",
+                  "b",
+                  "phot_g_mean_mag",
+                  "phot_bp_mean_mag",
+                  "phot_rp_mean_mag",
+                  "mag_w1_vg",
+                  "mag_w2_vg",
+                  "pm",
+                  "pmra",
+                  "pmdec",
+                  "pmra_error",
+                  "pmdec_error"
+                ],
+                "num_columns": 18,
+                "data_shape": [
+                  755850
+                ]
+              }
+            ]
+          }
+        },
+        "randoms": {
+          "key": "quaia_g20_randoms",
+          "probe": "Counts",
+          "description": "Quaia G<20.0 10x randoms",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/random_G20.0_10x.fits",
+          "size_bytes": 151269120,
+          "size_mb": 144.261,
+          "sha256": "88b00e135cbcb2f7cfbd01c1d17e3198f81eb1aaece8955b43b2b6ac00136a1f",
+          "sha256_source": "PRECOMPUTED_MANIFEST",
+          "mtime": 1790655878.1331508,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": 8,
+                "NAXIS": 0
+              },
+              {
+                "index": 1,
+                "name": "",
+                "type": "BinTableHDU",
+                "XTENSION": "BINTABLE",
+                "BITPIX": 8,
+                "NAXIS": 2,
+                "NAXIS1": 20,
+                "NAXIS2": 7563151,
+                "TUNIT1": "deg",
+                "columns": [
+                  "ra",
+                  "dec",
+                  "ebv"
+                ],
+                "num_columns": 3,
+                "data_shape": [
+                  7563151
+                ]
+              }
+            ]
+          }
+        },
+        "selection_function": {
+          "key": "quaia_g20_selection",
+          "probe": "Counts",
+          "description": "Quaia G<20.0 selection function (NSIDE 64)",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/selection_function_NSIDE64_G20.0.fits",
+          "size_bytes": 400320,
+          "size_mb": 0.382,
+          "sha256": "f66684999b0fdab1cdc3f8fc3ac8ef16956cb037785dbac2dc395dae3ffedd7d",
+          "sha256_source": "PRECOMPUTED_MANIFEST",
+          "mtime": 1790656130.5192213,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": 8,
+                "NAXIS": 0
+              },
+              {
+                "index": 1,
+                "name": "xtension",
+                "type": "BinTableHDU",
+                "EXTNAME": "xtension",
+                "XTENSION": "BINTABLE",
+                "BITPIX": 8,
+                "NAXIS": 2,
+                "NAXIS1": 8192,
+                "NAXIS2": 48,
+                "NSIDE": 64,
+                "ORDERING": "RING",
+                "columns": [
+                  "T"
+                ],
+                "num_columns": 1,
+                "data_shape": [
+                  48
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "g20p5": {
+        "catalog": {
+          "key": "quaia_g20p5_catalog",
+          "probe": "Counts",
+          "description": "Quaia G<20.5 quasar catalogue",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/quaia_G20.5.fits",
+          "size_bytes": 171020160,
+          "size_mb": 163.098,
+          "sha256": "9e357a760f2ff2db9417a6791fb71dc421ee30324301f22db898038c9e648584",
+          "sha256_source": "PRECOMPUTED_MANIFEST",
+          "mtime": 1790655769.5163424,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": 8,
+                "NAXIS": 0
+              },
+              {
+                "index": 1,
+                "name": "",
+                "type": "BinTableHDU",
+                "XTENSION": "BINTABLE",
+                "BITPIX": 8,
+                "NAXIS": 2,
+                "NAXIS1": 132,
+                "NAXIS2": 1295502,
+                "columns": [
+                  "source_id",
+                  "unwise_objid",
+                  "redshift_quaia",
+                  "redshift_quaia_err",
+                  "ra",
+                  "dec",
+                  "l",
+                  "b",
+                  "phot_g_mean_mag",
+                  "phot_bp_mean_mag",
+                  "phot_rp_mean_mag",
+                  "mag_w1_vg",
+                  "mag_w2_vg",
+                  "pm",
+                  "pmra",
+                  "pmdec",
+                  "pmra_error",
+                  "pmdec_error"
+                ],
+                "num_columns": 18,
+                "data_shape": [
+                  1295502
+                ]
+              }
+            ]
+          }
+        },
+        "randoms": {
+          "key": "quaia_g20p5_randoms",
+          "probe": "Counts",
+          "description": "Quaia G<20.5 10x randoms",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/random_G20.5_10x.fits",
+          "size_bytes": 259122240,
+          "size_mb": 247.118,
+          "sha256": "1783b13c03d084b1c40920b25e2008498df2349cb4d69e6a4b73db0dc1d28ef9",
+          "sha256_source": "PRECOMPUTED_MANIFEST",
+          "mtime": 1790656122.6198416,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": 8,
+                "NAXIS": 0
+              },
+              {
+                "index": 1,
+                "name": "",
+                "type": "BinTableHDU",
+                "XTENSION": "BINTABLE",
+                "BITPIX": 8,
+                "NAXIS": 2,
+                "NAXIS1": 20,
+                "NAXIS2": 12955802,
+                "TUNIT1": "deg",
+                "columns": [
+                  "ra",
+                  "dec",
+                  "ebv"
+                ],
+                "num_columns": 3,
+                "data_shape": [
+                  12955802
+                ]
+              }
+            ]
+          }
+        },
+        "selection_function": {
+          "key": "quaia_g20p5_selection",
+          "probe": "Counts",
+          "description": "Quaia G<20.5 selection function (NSIDE 64)",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/selection_function_NSIDE64_G20.5.fits",
+          "size_bytes": 400320,
+          "size_mb": 0.382,
+          "sha256": "5c3851c70cebcaf765f283d9e9904b01dcfe7bc818570ddc749d88fbb5add0a9",
+          "sha256_source": "PRECOMPUTED_MANIFEST",
+          "mtime": 1790656132.8460858,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": 8,
+                "NAXIS": 0
+              },
+              {
+                "index": 1,
+                "name": "xtension",
+                "type": "BinTableHDU",
+                "EXTNAME": "xtension",
+                "XTENSION": "BINTABLE",
+                "BITPIX": 8,
+                "NAXIS": 2,
+                "NAXIS1": 8192,
+                "NAXIS2": 48,
+                "NSIDE": 64,
+                "ORDERING": "RING",
+                "columns": [
+                  "T"
+                ],
+                "num_columns": 1,
+                "data_shape": [
+                  48
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "templates": {
+        "key": "quaia_templates_zip",
+        "probe": "Counts",
+        "description": "Quaia selection function template maps zip",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/selection_function_template_maps.zip",
+        "size_bytes": 879199,
+        "size_mb": 0.838,
+        "sha256": "7e5987925120b40d59ce1b89a49866d471be8d1f025b5b9636ea1c47d867dc5e",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1790656136.4035814,
+        "file_type": "ZIP"
+      }
+    },
+    "radio_nvss_and_racs": {
+      "status": "VERIFIED_LOCAL",
+      "nvss": {
+        "key": "nvss_catalog_gz",
+        "probe": "Radio_HI",
+        "description": "Northern 1.4 GHz NVSS catalogue (gzip CDS ASCII)",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss.dat.gz",
+        "size_bytes": 77687389,
+        "size_mb": 74.088,
+        "sha256": "360e2c7e3d734ce82cd21f03f44709bcf90fcede2e4427d5370e22e3429fe5d3",
+        "sha256_source": "PRECOMPUTED_MANIFEST",
+        "mtime": 1790720180.5814233,
+        "file_type": "DAT_GZ",
+        "metadata": {
+          "line_count": 1773484,
+          "sample_columns": [
+            "C0000M36",
+            "511.92",
+            "964.28",
+            "000000-340709",
+            "00",
+            "00",
+            "0.09",
+            "-34",
+            "07",
+            "9.5",
+            "0.48",
+            "6.7",
+            "2.7",
+            "0.5",
+            "<",
+            "59.8",
+            "<",
+            "52.4",
+            "0.77",
+            "-61.1"
+          ],
+          "num_sample_columns": 22
+        }
+      },
+      "racs_low_dr1": {
+        "key": "racs_dr1_galcut_gz",
+        "probe": "Radio_HI",
+        "description": "Southern RACS-low DR1 galactic-cut catalogue (gzip CDS ASCII)",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/RACS_low_DR1_compact/RACS_DR1_galcut.dat.gz",
+        "size_bytes": 179165027,
+        "size_mb": 170.865,
+        "sha256": "1764a934a084b12e411c32c426f04d5029c223541096253468d8343a60df4173",
+        "sha256_source": "PRECOMPUTED_MANIFEST",
+        "mtime": 1790657563.1949759,
+        "file_type": "DAT_GZ",
+        "metadata": {
+          "line_count": 2123638,
+          "sample_columns": [
+            "RACS-DR1",
+            "J001237.8+101808|RACS_0000+12A_1071",
+            "|RACS_0000+12A|",
+            "8578|58599.06929|",
+            "1|",
+            "3.157688|",
+            "10.302451|",
+            "1.75|",
+            "1.04|",
+            "3.560|",
+            "0.666|",
+            "1.003|",
+            "2.968|",
+            "0.336|",
+            "32.24|",
+            "4.23|",
+            "23.31|",
+            "2.27|105.09|",
+            "17.11|",
+            "0.00|"
+          ],
+          "num_sample_columns": 26
+        }
+      },
+      "racs_rms_footprint": {
+        "key": "racs_dr1_rms_footprint",
+        "probe": "Radio_HI",
+        "description": "RACS-low DR1 RMS Footprints table",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/RACS_low_DR1_RMS_footprint/RACS_DR1_RMS_Footprints.tsv",
+        "size_bytes": 260604,
+        "size_mb": 0.249,
+        "sha256": "33b476236382cc5a60c22c9bb986ba27458bef23eeb225ea2004d60570de4821",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1790659830.1728852,
+        "file_type": "TSV",
+        "metadata": {
+          "line_count": 800,
+          "sample_columns": [
+            "filename",
+            "access_estsize",
+            "s_ra",
+            "s_dec",
+            "s_fov",
+            "s_xel1",
+            "s_xel2",
+            "s_region",
+            "access_url"
+          ],
+          "num_sample_columns": 9
+        }
+      }
+    },
+    "gaia_dr3_crf3": {
+      "status": "VERIFIED_LOCAL",
+      "joined_npz": {
+        "key": "gaia_dr3_quaia_crf3_join_npz",
+        "probe": "Astrometry",
+        "description": "Gaia DR3 proper-motion join with Quaia CRF3 (692,154 sources)",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_crf3_join.npz",
+        "size_bytes": 95846569,
+        "size_mb": 91.406,
+        "sha256": "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4",
+        "sha256_source": "PRECOMPUTED_MANIFEST",
+        "mtime": 1792690308.925131,
+        "file_type": "NPZ",
+        "metadata": {
+          "keys": {
+            "source_id": {
+              "shape": [
+                692154
+              ],
+              "dtype": ">i8"
+            },
+            "ra": {
+              "shape": [
+                692154
+              ],
+              "dtype": ">f8"
+            },
+            "dec": {
+              "shape": [
+                692154
+              ],
+              "dtype": ">f8"
+            },
+            "redshift_quaia": {
+              "shape": [
+                692154
+              ],
+              "dtype": ">f8"
+            },
+            "redshift_quaia_err": {
+              "shape": [
+                692154
+              ],
+              "dtype": ">f8"
+            },
+            "phot_g_mean_mag": {
+              "shape": [
+                692154
+              ],
+              "dtype": ">f4"
+            },
+            "pm": {
+              "shape": [
+                692154
+              ],
+              "dtype": ">f8"
+            },
+            "pmra": {
+              "shape": [
+                692154
+              ],
+              "dtype": ">f8"
+            },
+            "pmdec": {
+              "shape": [
+                692154
+              ],
+              "dtype": ">f8"
+            },
+            "pmra_error": {
+              "shape": [
+                692154
+              ],
+              "dtype": ">f4"
+            },
+            "pmdec_error": {
+              "shape": [
+                692154
+              ],
+              "dtype": ">f4"
+            },
+            "selection_relative": {
+              "shape": [
+                692154
+              ],
+              "dtype": ">f8"
+            },
+            "pixel_ring64": {
+              "shape": [
+                692154
+              ],
+              "dtype": "int64"
+            },
+            "template_dust": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "template_stars": {
+              "shape": [
+                692154
+              ],
+              "dtype": "int64"
+            },
+            "template_m10": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "template_mcs": {
+              "shape": [
+                692154
+              ],
+              "dtype": "int64"
+            },
+            "template_unwise": {
+              "shape": [
+                692154
+              ],
+              "dtype": "int64"
+            },
+            "template_unwisescan": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "template_mcsunwise": {
+              "shape": [
+                692154
+              ],
+              "dtype": "int64"
+            },
+            "gaia_ra": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "gaia_dec": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "gaia_pmra": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "gaia_pmdec": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "gaia_pmra_error": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "gaia_pmdec_error": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "gaia_pmra_pmdec_corr": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "gaia_astrometric_params_solved": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "gaia_ruwe": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "pmra_uasyr": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "pmdec_uasyr": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "pmra_error_uasyr": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            },
+            "pmdec_error_uasyr": {
+              "shape": [
+                692154
+              ],
+              "dtype": "float64"
+            }
+          },
+          "num_keys": 33
+        }
+      },
+      "source_count": 692154,
+      "expected_source_count": 692154,
+      "raw_xm": {
+        "key": "gaia_dr3_crf3_xm_ecsv_gz",
+        "probe": "Astrometry",
+        "description": "Gaia DR3 CRF3 cross-match raw table",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/htt_open_data/gaia/DR3/gaiadr3.gaia_crf3_xm.ecsv.gz",
+        "size_bytes": 56064899,
+        "size_mb": 53.468,
+        "sha256": "59bb5c361ec5796b5644f598c9ec6c9ed3f8507b5876260c3dbdd202bbe0a4b1",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1792320828.4572513,
+        "file_type": "GZ",
+        "metadata": {
+          "line_count": 1614402
+        }
+      }
+    },
+    "pantheon_plus": {
+      "status": "VERIFIED_LOCAL",
+      "data_table": {
+        "key": "pantheon_plus_dat",
+        "probe": "Distance",
+        "description": "Pantheon+ SN Ia table (1,701 SNe)",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/PantheonPlus_SH0ES/Pantheon+SH0ES.dat",
+        "size_bytes": 579283,
+        "size_mb": 0.552,
+        "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1790656120.10446,
+        "file_type": "DAT",
+        "metadata": {
+          "line_count": 1702,
+          "sample_columns": [
+            "CID",
+            "IDSURVEY",
+            "zHD",
+            "zHDERR",
+            "zCMB",
+            "zCMBERR",
+            "zHEL",
+            "zHELERR",
+            "m_b_corr",
+            "m_b_corr_err_DIAG",
+            "MU_SH0ES",
+            "MU_SH0ES_ERR_DIAG",
+            "CEPH_DIST",
+            "IS_CALIBRATOR",
+            "USED_IN_SH0ES_HF",
+            "c",
+            "cERR",
+            "x1",
+            "x1ERR",
+            "mB"
+          ],
+          "num_sample_columns": 47
+        }
+      },
+      "covariance": {
+        "key": "pantheon_plus_cov",
+        "probe": "Distance",
+        "description": "Pantheon+ SN Ia STAT+SYS covariance (1701x1701)",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/PantheonPlus_SH0ES/Pantheon+SH0ES_STAT+SYS.cov",
+        "size_bytes": 33284960,
+        "size_mb": 31.743,
+        "sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1790656125.4873874,
+        "file_type": "DAT",
+        "metadata": {
+          "line_count": 2893402,
+          "sample_columns": [
+            "1701"
+          ],
+          "num_sample_columns": 1
+        }
+      },
+      "shoes2022_reference": {
+        "allc": {
+          "key": "shoes2022_cov",
+          "probe": "Distance",
+          "description": "SH0ES 2022 covariance matrix",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/shoes2022_calibration_reference_20261015/allc_shoes_ceph_topantheonwt6.0_112221.fits",
+          "size_bytes": 48781440,
+          "size_mb": 46.522,
+          "sha256": "a42778672d25df7a559bd2949b1e412b99b2e35dd9a36895f6b38828be019172",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1792022963.3233533,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": -32,
+                "NAXIS": 2,
+                "NAXIS1": 3492,
+                "NAXIS2": 3492,
+                "data_shape": [
+                  3492,
+                  3492
+                ]
+              }
+            ]
+          }
+        },
+        "alll": {
+          "key": "shoes2022_design",
+          "probe": "Distance",
+          "description": "SH0ES 2022 design matrix",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/shoes2022_calibration_reference_20261015/alll_shoes_ceph_topantheonwt6.0_112221.fits",
+          "size_bytes": 659520,
+          "size_mb": 0.629,
+          "sha256": "9a2ce872dd20ed4fdf5005ce62a805d3eefbbb0b20b0c614013e7c0094009db8",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1792022965.0893328,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": -32,
+                "NAXIS": 2,
+                "NAXIS1": 3492,
+                "NAXIS2": 47,
+                "data_shape": [
+                  47,
+                  3492
+                ]
+              }
+            ]
+          }
+        },
+        "ally": {
+          "key": "shoes2022_vector",
+          "probe": "Distance",
+          "description": "SH0ES 2022 observable vector",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/shoes2022_calibration_reference_20261015/ally_shoes_ceph_topantheonwt6.0_112221.fits",
+          "size_bytes": 17280,
+          "size_mb": 0.016,
+          "sha256": "10bb034ca3fff53f6625c9fe47ebd054b37ef45d1140af1c766831cfa6871433",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1792022965.3214664,
+          "file_type": "FITS",
+          "metadata": {
+            "hdus": [
+              {
+                "index": 0,
+                "name": "PRIMARY",
+                "type": "PrimaryHDU",
+                "BITPIX": -32,
+                "NAXIS": 1,
+                "NAXIS1": 3492,
+                "data_shape": [
+                  3492
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "des_sn5yr_dovekie": {
+      "status": "VERIFIED_LOCAL",
+      "hubble_diagram": {
+        "key": "des_dovekie_hd_csv",
+        "probe": "Distance",
+        "description": "DES-SN5YR Dovekie Hubble diagram CSV",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DES_SN5YR_Dovekie/DES-Dovekie_HD.csv",
+        "size_bytes": 148002,
+        "size_mb": 0.141,
+        "sha256": "2f57019d783eaa976df80a41b0054171a2d994ee9808d715ce850c2df5720aaf",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1790656160.0007832,
+        "file_type": "CSV",
+        "metadata": {
+          "line_count": 1829,
+          "sample_columns": [
+            "zHD",
+            "=",
+            "redshift",
+            "in",
+            "CMB",
+            "frame",
+            "with",
+            "VPEC",
+            "correction"
+          ],
+          "num_sample_columns": 9
+        }
+      },
+      "covariance": {
+        "key": "des_dovekie_cov_npz",
+        "probe": "Distance",
+        "description": "DES-SN5YR Dovekie STAT+SYS covariance NPZ",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DES_SN5YR_Dovekie/STAT+SYS.npz",
+        "size_bytes": 6244951,
+        "size_mb": 5.956,
+        "sha256": "ffd3124b32148b1372bd95fda9299269f0352a9f8eee02d416c610e38495463b",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1790656163.1513312,
+        "file_type": "NPZ",
+        "metadata": {
+          "keys": {
+            "nsn": {
+              "shape": [
+                1
+              ],
+              "dtype": "int64"
+            },
+            "cov": {
+              "shape": [
+                1657110
+              ],
+              "dtype": "float32"
+            },
+            "allow_pickle": {
+              "shape": [],
+              "dtype": "bool"
+            }
+          },
+          "num_keys": 3
+        }
+      },
+      "likelihood_py": {
+        "key": "des_dovekie_likelihood_py",
+        "probe": "Distance",
+        "description": "DES-SN5YR Dovekie SN Likelihood script",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DES_SN5YR_Dovekie/DES-Dovekie-SN_Likelihood.py",
+        "size_bytes": 7674,
+        "size_mb": 0.007,
+        "sha256": "78526c0e6013619e3586a5509be504f0bc5f0461d1e55a3d5bec0154353645ff",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1790656159.3738215,
+        "file_type": "TXT",
+        "metadata": {
+          "line_count": 184,
+          "sample_columns": [
+            "\"\"\""
+          ],
+          "num_sample_columns": 1
+        }
+      }
+    },
+    "cosmicflows4": {
+      "status": "VERIFIED_LOCAL",
+      "table2_galaxies": {
+        "key": "cf4_table2",
+        "probe": "Peculiar_Velocity",
+        "description": "CF4 Table 2: 55,877 individual galaxies",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/table2.dat",
+        "size_bytes": 10672507,
+        "size_mb": 10.178,
+        "sha256": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+        "sha256_source": "PRECOMPUTED_MANIFEST",
+        "mtime": 1792165428.691158,
+        "file_type": "DAT",
+        "metadata": {
+          "line_count": 55877,
+          "sample_columns": [
+            "2",
+            "73150",
+            "0",
+            "4726",
+            "34.535",
+            "0.460",
+            "34.535",
+            "0.46",
+            "0.0070",
+            "47.2745",
+            "113.9553",
+            "-14.6992",
+            "341.6440",
+            "20.7388"
+          ],
+          "num_sample_columns": 14
+        }
+      },
+      "table3_groups": {
+        "key": "cf4_table3",
+        "probe": "Peculiar_Velocity",
+        "description": "CF4 Table 3: 38,053 groups/galaxies",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/table3.dat",
+        "size_bytes": 5104038,
+        "size_mb": 4.868,
+        "sha256": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+        "sha256_source": "PRECOMPUTED_MANIFEST",
+        "mtime": 1792165438.6566849,
+        "file_type": "DAT",
+        "metadata": {
+          "line_count": 38053,
+          "sample_columns": [
+            "12",
+            "34.995",
+            "35.142",
+            "0.410",
+            "6179",
+            "0.0360",
+            "-6.3739",
+            "90.1922",
+            "-65.9300",
+            "286.4249",
+            "11.3510",
+            "1",
+            "34.970",
+            "0.410"
+          ],
+          "num_sample_columns": 14
+        }
+      },
+      "table4_velocities": {
+        "key": "cf4_table4",
+        "probe": "Peculiar_Velocity",
+        "description": "CF4 Table 4: 38,053 group velocities",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/table4.dat",
+        "size_bytes": 6012374,
+        "size_mb": 5.734,
+        "sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+        "sha256_source": "PRECOMPUTED_MANIFEST",
+        "mtime": 1792165450.324546,
+        "file_type": "DAT",
+        "metadata": {
+          "line_count": 38053,
+          "sample_columns": [
+            "12",
+            "34.995",
+            "0.410",
+            "99.8",
+            "6532",
+            "6669",
+            "6179",
+            "6280",
+            "-1174",
+            "-468",
+            "-468",
+            "62.9",
+            "1.799",
+            "0.0360",
+            "-6.3739",
+            "90.1922",
+            "-65.9300",
+            "286.4249",
+            "11.3510",
+            "1848"
+          ],
+          "num_sample_columns": 22
+        }
+      },
+      "readme": {
+        "key": "cf4_readme",
+        "probe": "Peculiar_Velocity",
+        "description": "CF4 CDS ReadMe",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/htt_open_data/cf4/J_ApJ_944_94/ReadMe",
+        "size_bytes": 19918,
+        "size_mb": 0.019,
+        "sha256": "2cfed1418147d5a626dee1fa37c47252124477c9828490508d9bbe511d34edb4",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1792161550.8095021,
+        "file_type": "TXT",
+        "metadata": {
+          "line_count": 314,
+          "sample_columns": [
+            "J/ApJ/944/94                    Cosmicflows-4                     (Tully+",
+            "2023)"
+          ],
+          "num_sample_columns": 2
+        }
+      },
+      "selected_group_operator": {
+        "key": "cf4_selected_group_operator",
+        "probe": "Peculiar_Velocity",
+        "description": "CF4 selected 35,970 group operator and direction unit vectors",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/theory_obs_application_20261015/loop6_kinematics/results/cf4_rawgroup_appHubble_STF2_pooled_methods_v2/selected_source_observables.npz",
+        "size_bytes": 1235181,
+        "size_mb": 1.178,
+        "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1792029043.5074265,
+        "file_type": "NPZ",
+        "metadata": {
+          "keys": {
+            "group_id": {
+              "shape": [
+                35970
+              ],
+              "dtype": "int64"
+            },
+            "z_CMB": {
+              "shape": [
+                35970
+              ],
+              "dtype": "float64"
+            },
+            "dmzp": {
+              "shape": [
+                35970
+              ],
+              "dtype": "float64"
+            },
+            "e_dmzp": {
+              "shape": [
+                35970
+              ],
+              "dtype": "float64"
+            },
+            "n_J2000": {
+              "shape": [
+                35970,
+                3
+              ],
+              "dtype": "float64"
+            },
+            "method_family": {
+              "shape": [
+                35970
+              ],
+              "dtype": "<U16"
+            }
+          },
+          "num_keys": 6
+        }
+      }
+    },
+    "sdss_pv": {
+      "status": "VERIFIED_LOCAL",
+      "pv_catalog": {
+        "key": "sdss_pv_public_dat",
+        "probe": "Peculiar_Velocity",
+        "description": "SDSS PV public catalogue (34,059 galaxies)",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/sdss_pv_zenodo_6824749/SDSS_PV_public.dat",
+        "size_bytes": 20231640,
+        "size_mb": 19.294,
+        "sha256": "a48cfd9a9a3c27ff908f98972b2e26536e514b6635f9ed14c656dff3e5075485",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1789268817.5152776,
+        "file_type": "DAT",
+        "metadata": {
+          "line_count": 34060,
+          "sample_columns": [
+            "PGC",
+            "coords",
+            "objid",
+            "specObjID",
+            "plate",
+            "RA",
+            "Dec",
+            "l",
+            "b",
+            "deVMag_g",
+            "deVMagErr_g",
+            "deVMag_r",
+            "deVMagErr_r",
+            "deVRad_r",
+            "deVRadErr_r",
+            "deVAB_r",
+            "deVABErr_r",
+            "extinction_g",
+            "extinction_r",
+            "kcor_r"
+          ],
+          "num_sample_columns": 46
+        }
+      },
+      "randoms_catalog": {
+        "key": "sdss_randoms_public_dat",
+        "probe": "Peculiar_Velocity",
+        "description": "SDSS PV randoms selection footprint catalogue",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/sdss_pv_zenodo_6824749/SDSS_randoms_public.dat",
+        "size_bytes": 284000071,
+        "size_mb": 270.844,
+        "sha256": "2ec2853acd263b91bf679764fed22fd2b1edc34d4d08dd5d1c4f4e311e44f848",
+        "sha256_source": "PRECOMPUTED_MANIFEST",
+        "mtime": 1792024176.4851296,
+        "file_type": "DAT",
+        "metadata": {
+          "line_count": 4000001,
+          "sample_columns": [
+            "RA",
+            "Dec",
+            "zcmb",
+            "nbar"
+          ],
+          "num_sample_columns": 4
+        }
+      },
+      "zenodo_record": {
+        "key": "sdss_pv_zenodo_record",
+        "probe": "Peculiar_Velocity",
+        "description": "Zenodo 6824749 record metadata",
+        "status": "VERIFIED_LOCAL",
+        "resolved_path": "/mnt/extdrive/workdir/raw/sdss_pv_zenodo_6824749/record.json",
+        "size_bytes": 8052,
+        "size_mb": 0.008,
+        "sha256": "c8f67c30ce484465780d63ee7817d7d187579444d9470a3e9d10ba6a495e0296",
+        "sha256_source": "STREAM_COMPUTED",
+        "mtime": 1789268750.3369377,
+        "file_type": "TXT",
+        "metadata": {
+          "line_count": 205,
+          "sample_columns": [
+            "{"
+          ],
+          "num_sample_columns": 1
+        }
+      }
+    },
+    "desi": {
+      "status": "VERIFIED_LOCAL",
+      "dr2_bao_compact": {
+        "mean": {
+          "key": "desi_bao_all_mean",
+          "probe": "LSS_BAO",
+          "description": "DESI DR2 BAO ALL_GCcomb mean vector",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_BAO_compact/bao_desi_gaussian_bao_ALL_GCcomb_mean.txt",
+          "size_bytes": 472,
+          "size_mb": 0.0,
+          "sha256": "9ac154ab583ce759c0f7eef3c978c7c70a6ead2d18774caceadf1a350a640585",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1790656635.7178097,
+          "file_type": "TXT",
+          "metadata": {
+            "line_count": 14,
+            "sample_columns": [
+              "[z]",
+              "[value",
+              "at",
+              "z]",
+              "[quantity]"
+            ],
+            "num_sample_columns": 5
+          }
+        },
+        "cov": {
+          "key": "desi_bao_all_cov",
+          "probe": "LSS_BAO",
+          "description": "DESI DR2 BAO ALL_GCcomb covariance",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_BAO_compact/bao_desi_gaussian_bao_ALL_GCcomb_cov.txt",
+          "size_bytes": 2547,
+          "size_mb": 0.002,
+          "sha256": "252a143274c8a07c78694c119617d36594f6d7965d00319ca611c6ffb886e509",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1790656635.151593,
+          "file_type": "TXT",
+          "metadata": {
+            "line_count": 13,
+            "sample_columns": [
+              "5.78998687e-03",
+              "0.00000000e+00",
+              "0.00000000e+00",
+              "0.00000000e+00",
+              "0.00000000e+00",
+              "0.00000000e+00",
+              "0.00000000e+00",
+              "0.00000000e+00",
+              "0.00000000e+00",
+              "0.00000000e+00",
+              "0.00000000e+00",
+              "0.00000000e+00",
+              "0.00000000e+00"
+            ],
+            "num_sample_columns": 13
+          }
+        },
+        "likelihood_py": {
+          "key": "desi_bao_like_py",
+          "probe": "LSS_BAO",
+          "description": "DESI BAO likelihood script",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_BAO_compact/likelihood_desi_bao_all.py",
+          "size_bytes": 169,
+          "size_mb": 0.0,
+          "sha256": "7ed28e8052f5c9cd5a021124384168b4e875f57986218991e41aa5eb608e02d4",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1790656551.2252443,
+          "file_type": "TXT",
+          "metadata": {
+            "line_count": 8,
+            "sample_columns": [
+              "from",
+              "cobaya.likelihoods.base_classes",
+              "import",
+              "BAO"
+            ],
+            "num_sample_columns": 4
+          }
+        },
+        "likelihood_yaml": {
+          "key": "desi_bao_like_yaml",
+          "probe": "LSS_BAO",
+          "description": "DESI BAO likelihood YAML",
+          "status": "VERIFIED_LOCAL",
+          "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_BAO_compact/likelihood_desi_bao_all.yaml",
+          "size_bytes": 367,
+          "size_mb": 0.0,
+          "sha256": "ac72acb9b43369c399f45bb17b60f504085fe4102f45e257579eef5bda292e69",
+          "sha256_source": "STREAM_COMPUTED",
+          "mtime": 1790656643.6263702,
+          "file_type": "TXT",
+          "metadata": {
+            "line_count": 10,
+            "sample_columns": [
+              "DESI",
+              "BAO",
+              "results",
+              "for",
+              "all",
+              "tracers"
+            ],
+            "num_sample_columns": 6
+          }
+        }
+      },
+      "dr1_fullshape_directional": {
+        "bundle_directory": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional",
+        "num_directional_blocks": 8,
+        "blocks": {
+          "LRG_NGC_z0.4-0.6": {
+            "status": "VERIFIED_LOCAL",
+            "tracer": "LRG",
+            "region": "NGC",
+            "redshift_range": "0.4-0.6",
+            "correlation_poles": {
+              "key": "desi_corr_LRG_NGC_z0.4-0.6",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 correlation poles LRG_NGC_z0.4-0.6",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/correlation-recsym-poles_LRG_NGC_z0.4-0.6.h5",
+              "size_bytes": 29491,
+              "size_mb": 0.028,
+              "sha256": "1c4ae86991147d7eef6243d5ec9a2d624c3726cf8c27b96531e410d7cf3b43e2",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659784.2947814,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "covariance": {
+              "key": "desi_cov_LRG_NGC_z0.4-0.6",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 RascalC covariance LRG_NGC_z0.4-0.6",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/covariance_correlation-recsym-poles_LRG_NGC_z0.4-0.6.h5",
+              "size_bytes": 175358,
+              "size_mb": 0.167,
+              "sha256": "dc760a99e81d93d0e12899c754c2128b11c1a4586c1a911a08e744800aa1c121",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659786.7430613,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "likelihood": {
+              "key": "desi_like_LRG_NGC_z0.4-0.6",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 likelihood LRG_NGC_z0.4-0.6",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/likelihood_correlation-recon-poles_LRG_NGC_z0.4-0.6.h5",
+              "size_bytes": 364687,
+              "size_mb": 0.348,
+              "sha256": "1a0ed53affdbe610df96372d2730afa2d3caf82a0d730519a269e84a364508c2",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659783.4601283,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            }
+          },
+          "LRG_NGC_z0.6-0.8": {
+            "status": "VERIFIED_LOCAL",
+            "tracer": "LRG",
+            "region": "NGC",
+            "redshift_range": "0.6-0.8",
+            "correlation_poles": {
+              "key": "desi_corr_LRG_NGC_z0.6-0.8",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 correlation poles LRG_NGC_z0.6-0.8",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/correlation-recsym-poles_LRG_NGC_z0.6-0.8.h5",
+              "size_bytes": 29491,
+              "size_mb": 0.028,
+              "sha256": "af2e1be29d4d5eca7b18e32786aa9590ec0ca48d111a08cd120a66e909cc1fb1",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659793.7137153,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "covariance": {
+              "key": "desi_cov_LRG_NGC_z0.6-0.8",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 RascalC covariance LRG_NGC_z0.6-0.8",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/covariance_correlation-recsym-poles_LRG_NGC_z0.6-0.8.h5",
+              "size_bytes": 175358,
+              "size_mb": 0.167,
+              "sha256": "4000ef5257a60b1d5416fc072211b1b6ce8a8de7b90cb27092da0ce1f7473c26",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659796.552644,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "likelihood": {
+              "key": "desi_like_LRG_NGC_z0.6-0.8",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 likelihood LRG_NGC_z0.6-0.8",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/likelihood_correlation-recon-poles_LRG_NGC_z0.6-0.8.h5",
+              "size_bytes": 364687,
+              "size_mb": 0.348,
+              "sha256": "0f4afb2b8abf4f77cebb3245210c895479790d6ddb7871f9963e0047f9b52dc1",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659792.894451,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            }
+          },
+          "LRG_NGC_z0.8-1.1": {
+            "status": "VERIFIED_LOCAL",
+            "tracer": "LRG",
+            "region": "NGC",
+            "redshift_range": "0.8-1.1",
+            "correlation_poles": {
+              "key": "desi_corr_LRG_NGC_z0.8-1.1",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 correlation poles LRG_NGC_z0.8-1.1",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/correlation-recsym-poles_LRG_NGC_z0.8-1.1.h5",
+              "size_bytes": 29491,
+              "size_mb": 0.028,
+              "sha256": "3e95625339326de38d1c0bc2f35ea572278135bd6c6dce6f63be3e261bd9bb20",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659803.587083,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "covariance": {
+              "key": "desi_cov_LRG_NGC_z0.8-1.1",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 RascalC covariance LRG_NGC_z0.8-1.1",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/covariance_correlation-recsym-poles_LRG_NGC_z0.8-1.1.h5",
+              "size_bytes": 175358,
+              "size_mb": 0.167,
+              "sha256": "cf60fe8a9aade92f1b167a1ed6dc7e62cff57ba033de3e6deba220c0eda3d8c1",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659806.0556126,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "likelihood": {
+              "key": "desi_like_LRG_NGC_z0.8-1.1",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 likelihood LRG_NGC_z0.8-1.1",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/likelihood_correlation-recon-poles_LRG_NGC_z0.8-1.1.h5",
+              "size_bytes": 364687,
+              "size_mb": 0.348,
+              "sha256": "dde7182491d8c5b4596cd6f70b08876bd197c28b8f6c11a0e5e0eeb39129dbae",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659802.5134306,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            }
+          },
+          "LRG_SGC_z0.4-0.6": {
+            "status": "VERIFIED_LOCAL",
+            "tracer": "LRG",
+            "region": "SGC",
+            "redshift_range": "0.4-0.6",
+            "correlation_poles": {
+              "key": "desi_corr_LRG_SGC_z0.4-0.6",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 correlation poles LRG_SGC_z0.4-0.6",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/correlation-recsym-poles_LRG_SGC_z0.4-0.6.h5",
+              "size_bytes": 29491,
+              "size_mb": 0.028,
+              "sha256": "779eac5cf8414a651998d49fc124d7397690cce990f1c2552b029936fc5cc112",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659788.8080373,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "covariance": {
+              "key": "desi_cov_LRG_SGC_z0.4-0.6",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 RascalC covariance LRG_SGC_z0.4-0.6",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/covariance_correlation-recsym-poles_LRG_SGC_z0.4-0.6.h5",
+              "size_bytes": 175358,
+              "size_mb": 0.167,
+              "sha256": "bd030c23aa37f4f7603afd4b52fffd8a68e378083d5623416a92e14028a4d083",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659791.5754218,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "likelihood": {
+              "key": "desi_like_LRG_SGC_z0.4-0.6",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 likelihood LRG_SGC_z0.4-0.6",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/likelihood_correlation-recon-poles_LRG_SGC_z0.4-0.6.h5",
+              "size_bytes": 364687,
+              "size_mb": 0.348,
+              "sha256": "1aef136a5b01540e32037871d283d74b48382137057a10ef8cd7329a0cb39f78",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659787.878824,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            }
+          },
+          "LRG_SGC_z0.6-0.8": {
+            "status": "VERIFIED_LOCAL",
+            "tracer": "LRG",
+            "region": "SGC",
+            "redshift_range": "0.6-0.8",
+            "correlation_poles": {
+              "key": "desi_corr_LRG_SGC_z0.6-0.8",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 correlation poles LRG_SGC_z0.6-0.8",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/correlation-recsym-poles_LRG_SGC_z0.6-0.8.h5",
+              "size_bytes": 29491,
+              "size_mb": 0.028,
+              "sha256": "be14fa8f8e395b4154a5a73f23f965868d09ae45742ab465856688e510e76808",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659798.7018542,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "covariance": {
+              "key": "desi_cov_LRG_SGC_z0.6-0.8",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 RascalC covariance LRG_SGC_z0.6-0.8",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/covariance_correlation-recsym-poles_LRG_SGC_z0.6-0.8.h5",
+              "size_bytes": 175358,
+              "size_mb": 0.167,
+              "sha256": "2000b413bc6db52d011be90270b8bb34b75258fba9ddac068e7a46760f0d453e",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659801.1892104,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "likelihood": {
+              "key": "desi_like_LRG_SGC_z0.6-0.8",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 likelihood LRG_SGC_z0.6-0.8",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/likelihood_correlation-recon-poles_LRG_SGC_z0.6-0.8.h5",
+              "size_bytes": 364687,
+              "size_mb": 0.348,
+              "sha256": "915fe4921beb6af27bda9bbb3b8565fa7bcba1fcb7e83942f90fcabe15a6a835",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659797.8832896,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            }
+          },
+          "LRG_SGC_z0.8-1.1": {
+            "status": "VERIFIED_LOCAL",
+            "tracer": "LRG",
+            "region": "SGC",
+            "redshift_range": "0.8-1.1",
+            "correlation_poles": {
+              "key": "desi_corr_LRG_SGC_z0.8-1.1",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 correlation poles LRG_SGC_z0.8-1.1",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/correlation-recsym-poles_LRG_SGC_z0.8-1.1.h5",
+              "size_bytes": 29491,
+              "size_mb": 0.028,
+              "sha256": "b74de13dd84feb2a58f548df7988853ac4d17d6f51e49dc14d7087fb3910e851",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659808.2404222,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "covariance": {
+              "key": "desi_cov_LRG_SGC_z0.8-1.1",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 RascalC covariance LRG_SGC_z0.8-1.1",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/covariance_correlation-recsym-poles_LRG_SGC_z0.8-1.1.h5",
+              "size_bytes": 175358,
+              "size_mb": 0.167,
+              "sha256": "5854db6f48e79e38193f49c44af8c16b9a5c8bdda9f7f79a4cdbd4b8191bedba",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659811.0535715,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "likelihood": {
+              "key": "desi_like_LRG_SGC_z0.8-1.1",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 likelihood LRG_SGC_z0.8-1.1",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/likelihood_correlation-recon-poles_LRG_SGC_z0.8-1.1.h5",
+              "size_bytes": 364687,
+              "size_mb": 0.348,
+              "sha256": "0d736d609c6cfad98940c5d059f3370fbadc29dc0480f35c205ae53f87190edb",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659807.4106123,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            }
+          },
+          "QSO_NGC_z0.8-2.1": {
+            "status": "VERIFIED_LOCAL",
+            "tracer": "QSO",
+            "region": "NGC",
+            "redshift_range": "0.8-2.1",
+            "correlation_poles": {
+              "key": "desi_corr_QSO_NGC_z0.8-2.1",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 correlation poles QSO_NGC_z0.8-2.1",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/correlation-recsym-poles_QSO_NGC_z0.8-2.1.h5",
+              "size_bytes": 29491,
+              "size_mb": 0.028,
+              "sha256": "bb65df2eb5384832dbfaebe4e6b1e68adf6bebdc5e1ddc06e2683cc600304048",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659813.0598109,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "covariance": {
+              "key": "desi_cov_QSO_NGC_z0.8-2.1",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 RascalC covariance QSO_NGC_z0.8-2.1",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/covariance_correlation-recsym-poles_QSO_NGC_z0.8-2.1.h5",
+              "size_bytes": 175358,
+              "size_mb": 0.167,
+              "sha256": "8a77bddd25f470adafd0363eb5d006dc2ca229089035e2cda0350742d241ba29",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659815.7493963,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "likelihood": {
+              "key": "desi_like_QSO_NGC_z0.8-2.1",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 likelihood QSO_NGC_z0.8-2.1",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/likelihood_correlation-recon-poles_QSO_NGC_z0.8-2.1.h5",
+              "size_bytes": 205145,
+              "size_mb": 0.196,
+              "sha256": "ed1df618a5513422df120b698ad2e36be55c7cddccd4c7b72999774383dd979f",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659812.2343009,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            }
+          },
+          "QSO_SGC_z0.8-2.1": {
+            "status": "VERIFIED_LOCAL",
+            "tracer": "QSO",
+            "region": "SGC",
+            "redshift_range": "0.8-2.1",
+            "correlation_poles": {
+              "key": "desi_corr_QSO_SGC_z0.8-2.1",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 correlation poles QSO_SGC_z0.8-2.1",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/correlation-recsym-poles_QSO_SGC_z0.8-2.1.h5",
+              "size_bytes": 29491,
+              "size_mb": 0.028,
+              "sha256": "c226b2d9527551451242aa8aa232babdc29fe586e62d22b4945b23e4af1c983b",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659817.724644,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "covariance": {
+              "key": "desi_cov_QSO_SGC_z0.8-2.1",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 RascalC covariance QSO_SGC_z0.8-2.1",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/covariance_correlation-recsym-poles_QSO_SGC_z0.8-2.1.h5",
+              "size_bytes": 175358,
+              "size_mb": 0.167,
+              "sha256": "bac6e817041fc946bb106123cdd1fd3f027316fd301b856fa252b44b69a6b525",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659820.4797657,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            },
+            "likelihood": {
+              "key": "desi_like_QSO_SGC_z0.8-2.1",
+              "probe": "LSS_FullShape",
+              "description": "DESI DR1 likelihood QSO_SGC_z0.8-2.1",
+              "status": "VERIFIED_LOCAL",
+              "resolved_path": "/mnt/extdrive/workdir/raw/observational_bundles/DESI_DR1_fullshape_directional/likelihood_correlation-recon-poles_QSO_SGC_z0.8-2.1.h5",
+              "size_bytes": 205145,
+              "size_mb": 0.196,
+              "sha256": "4f981322f26d78038fe163ebd1daa7214bc122ccafe48a9c9c5577f54e411d54",
+              "sha256_source": "STREAM_COMPUTED",
+              "mtime": 1790659816.8872378,
+              "file_type": "HDF5",
+              "metadata": {
+                "is_valid_hdf5_magic": true
+              }
+            }
+          }
+        },
+        "status": "VERIFIED_LOCAL"
+      }
+    }
+  }
+}

@@ -17,7 +17,19 @@ from dataclasses import dataclass
 from typing import Any, Mapping, Sequence
 import numpy as np
 
+from common.anchor_geometry import (
+    AnchorAvailability,
+    AnchorBlockSpec,
+    AnchorBodySpec,
+    AnchorGeometryKind,
+)
+from common.depth_path import DepthRepresentation, full_covariance_blocks
 from common.full_observable_x_bundle import FullObservableXBundle
+from common.typefree_physical_budgets import (
+    StressBudgetContext,
+    StressGapBudget,
+    stress_gap_budget,
+)
 
 
 @dataclass(frozen=True)
@@ -51,6 +63,7 @@ class ExceedanceSurface:
     critical_threshold_95: float
     observed_score: float
     observed_exceedance: float
+    undefined_mass: float = 0.0
 
 
 @dataclass(frozen=True)
@@ -108,6 +121,7 @@ class HTTFiveVariableState:
                     "observed_score": float(v.observed_score),
                     "observed_exceedance": float(v.observed_exceedance),
                     "critical_threshold_95": float(v.critical_threshold_95),
+                    "undefined_mass": float(v.undefined_mass),
                 }
                 for k, v in self.exceedance_surfaces_Pi.items()
             },
@@ -173,24 +187,62 @@ def construct_r39_five_variable_state(
     proj_mo = dirs @ b_mo_samples.T  # 50 x N_samples
     h_mo = np.max(proj_mo, axis=1)   # support function over directions
 
+    # Typed convex anchor geometry from anchor_geometry.py
+    # Grounded in physical peculiar velocity budget ceiling (beta <= 0.01 ~ 3000 km/s)
+    beta_anchor_block = AnchorBlockSpec(
+        block_id="beta_MO_peculiar_ball",
+        coordinate_indices=(0, 1, 2),
+        radius=0.01,
+        availability=AnchorAvailability.AVAILABLE,
+    )
+    anchor_spec_mo = AnchorBodySpec(
+        body_id="ANCHOR_BETA_MO",
+        geometry=AnchorGeometryKind.PRODUCT_BLOCK_BALL,
+        coordinate_labels=("beta_MO_x", "beta_MO_y", "beta_MO_z"),
+        frame="OBSERVER_REST_FRAME",
+        normalization="DIRECT_VELOCITY_C1",
+        perturbative_order="LINEAR_FIRST_ORDER",
+        branch="STANDARD_OBSERVER_BOOST",
+        premise_identity="PREMISE_PECULIAR_VELOCITY_BUDGET",
+        blocks=(beta_anchor_block,),
+    )
+    # Support function for Euclidean ball B(0, R): h_A(u) = R * ||u|| = R
+    r_anchor = float(beta_anchor_block.radius)
+    h_anchor = np.full_like(h_mo, r_anchor)
+    occupancy_ratios = h_mo / h_anchor
+
     support_F = {
         "BETA_MO": DirectionalSupportProfile(
             functional_id="BETA_MO",
             evaluation_directions=dirs,
             support_values=h_mo,
-            anchor_support_values=np.ones_like(h_mo) * 0.01,
-            occupancy_ratios=h_mo / 0.01,
+            anchor_support_values=h_anchor,
+            occupancy_ratios=occupancy_ratios,
         )
     }
 
     # 3. Exceedance Surfaces Pi
+    # Strict separation between HTT posterior pushforward and MIO diagnostic null
     thresholds = np.linspace(0.0, 0.01, 100)
-    # Quadratic score: ||beta_MO||^2
     b_mo_norms = np.linalg.norm(b_mo_samples, axis=1)
-    obs_score = float(np.mean(b_mo_norms))
-    exceedance_post = np.array([float(np.mean(b_mo_norms >= c)) for c in thresholds])
-    crit_95 = float(np.percentile(b_mo_norms, 95))
-    obs_exceed = float(np.mean(b_mo_norms >= obs_score))
+    # Track undefined mass (unphysical / superluminal / non-finite samples)
+    valid_mask = np.isfinite(b_mo_norms) & (b_mo_norms < 1.0)
+    undefined_mass = float(np.mean(~valid_mask))
+    valid_norms = b_mo_norms[valid_mask] if np.any(valid_mask) else np.array([0.0])
+
+    obs_score = float(np.mean(valid_norms))
+    exceedance_post = np.array([float(np.mean(valid_norms >= c)) for c in thresholds])
+    crit_95 = float(np.percentile(valid_norms, 95))
+    obs_exceed = float(np.mean(valid_norms >= obs_score))
+
+    # Matched isotropic null ensemble for MIO family-independent diagnostic
+    rng = np.random.RandomState(42)
+    null_noise_scale = 1e-4
+    null_samples = rng.randn(len(mcmc_samples), 3) * null_noise_scale
+    null_norms = np.linalg.norm(null_samples, axis=1)
+    null_exceed_prob = np.array([float(np.mean(null_norms >= c)) for c in thresholds])
+    null_crit_95 = float(np.percentile(null_norms, 95))
+    null_obs_exceed = float(np.mean(null_norms >= obs_score))
 
     exceedance_Pi = {
         "BETA_MO_NORM": ExceedanceSurface(
@@ -201,27 +253,62 @@ def construct_r39_five_variable_state(
             critical_threshold_95=crit_95,
             observed_score=obs_score,
             observed_exceedance=obs_exceed,
-        )
+            undefined_mass=undefined_mass,
+        ),
+        "BETA_MO_MIO_NULL": ExceedanceSurface(
+            functional_id="BETA_MO",
+            law_name="MIO_DIAGNOSTIC_NULL",
+            thresholds=thresholds,
+            exceedance_probabilities=null_exceed_prob,
+            critical_threshold_95=null_crit_95,
+            observed_score=obs_score,
+            observed_exceedance=null_obs_exceed,
+            undefined_mass=0.0,
+        ),
     }
 
-    # 4. Depth Path G_F across 3 redshift shells
+    # 4. Depth Path G_F across 3 redshift shells connected with DepthRepresentation
     shells = [(0.01, 0.05), (0.05, 0.10), (0.10, 0.15)]
-    shell_vals = []
-    for s_idx, (z_min, z_max) in enumerate(shells):
-        # Shell-specific mean shear amplitude
-        scale = 1.0 + 0.1 * s_idx
-        shell_vals.append(np.mean(mcmc_samples[:, :5], axis=0) * scale)
+    n_shells = len(shells)
+    z_mids = [0.5 * (z_min + z_max) for z_min, z_max in shells]
 
-    # 15 x 15 cross-shell covariance (3 shells x 5 STF components)
-    n_total_dim = 15
-    cov_gf = np.eye(n_total_dim) * 1e-8
-    # Inter-shell correlations
-    for i in range(n_total_dim):
-        for j in range(n_total_dim):
-            if abs(i - j) == 5:  # cross-shell adjacent
-                cov_gf[i, j] = 0.3 * np.sqrt(cov_gf[i, i] * cov_gf[j, j])
+    # Tomographic depth representation using DepthRepresentation (depth_path.py)
+    kernels = tuple(np.eye(5, dtype=np.float64) for _ in range(n_shells - 1))
+    feature_ids = tuple(f"shell_{s}_sigma_{i}" for s in range(n_shells) for i in range(5))
+    depth_repr = DepthRepresentation(
+        dimensions=(5, 5, 5),
+        kernels=kernels,
+        feature_ids=feature_ids,
+        procedure_id="HTT_R39_TOMOGRAPHIC_SHEAR_DEPTH",
+        transport_policy="FIXED_BEFORE_OBSERVATION",
+    )
 
-    contrasts = [shell_vals[1] - shell_vals[0], shell_vals[2] - shell_vals[1]]
+    # Compute shell-specific shear realizations from MCMC samples with Sachs optical depth evolution
+    # sigma(z) = sigma_0 / (1 + z)
+    n_samples = len(mcmc_samples)
+    shell_realizations = []
+    for s_idx, z_mid in enumerate(z_mids):
+        sachs_factor = 1.0 / (1.0 + z_mid)
+        shell_s = mcmc_samples[:, :5] * sachs_factor
+        shell_realizations.append(shell_s)
+
+    # Per-shell mean functional values
+    shell_vals = [np.mean(shell_s, axis=0) for shell_s in shell_realizations]
+
+    # Full 15 x 15 cross-shell covariance matrix from sample realizations
+    V_joint = np.hstack(shell_realizations)  # n_samples x 15
+    if n_samples > 1:
+        cov_gf = np.cov(V_joint, rowvar=False)  # 15 x 15 real empirical covariance
+    else:
+        cov_gf = np.eye(15, dtype=np.float64) * 1e-8
+    if cov_gf.shape != (15, 15):
+        cov_gf = np.eye(15, dtype=np.float64) * 1e-8
+
+    # Depth contrasts via DepthRepresentation difference matrix H
+    contrasts = [
+        shell_vals[s + 1] - kernels[s] @ shell_vals[s]
+        for s in range(n_shells - 1)
+    ]
 
     depth_GF = DepthPathGF(
         shell_redshift_bins=shells,

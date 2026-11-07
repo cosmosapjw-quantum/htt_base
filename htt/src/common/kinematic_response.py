@@ -17,28 +17,22 @@ from dataclasses import dataclass
 from typing import Sequence
 import numpy as np
 
-# Orthonormal STF basis for symmetric traceless 3x3 tensors
-# Normalization: Tr(E_a E_b) = delta_ab
-_SQRT2 = math.sqrt(2.0)
-_SQRT6 = math.sqrt(6.0)
+from common.stf_metric_bridge import (
+    G_STF5,
+    G_STF5_INV,
+    STF_BASIS_KINEMATIC_RESPONSE,
+    cartesian_to_orthonormal,
+    orthonormal_to_cartesian,
+    cartesian_to_stf_matrix,
+    stf_matrix_to_cartesian,
+    stf_matrix_to_orthonormal,
+    cartesian_to_orthonormal_matrix,
+    orthonormal_to_cartesian_matrix,
+)
 
-STF_BASIS = np.array([
-    [[1.0 / _SQRT2, 0.0, 0.0],
-     [0.0, -1.0 / _SQRT2, 0.0],
-     [0.0, 0.0, 0.0]],
-    [[1.0 / _SQRT6, 0.0, 0.0],
-     [0.0, 1.0 / _SQRT6, 0.0],
-     [0.0, 0.0, -2.0 / _SQRT6]],
-    [[0.0, 1.0 / _SQRT2, 0.0],
-     [1.0 / _SQRT2, 0.0, 0.0],
-     [0.0, 0.0, 0.0]],
-    [[0.0, 0.0, 1.0 / _SQRT2],
-     [0.0, 0.0, 0.0],
-     [1.0 / _SQRT2, 0.0, 0.0]],
-    [[0.0, 0.0, 0.0],
-     [0.0, 0.0, 1.0 / _SQRT2],
-     [0.0, 1.0 / _SQRT2, 0.0]],
-], dtype=np.float64)
+# Orthonormal STF basis for symmetric traceless 3x3 tensors
+# Normalization: Tr(E_a E_b) = delta_ab; connected from common.stf_metric_bridge
+STF_BASIS: np.ndarray = STF_BASIS_KINEMATIC_RESPONSE
 
 
 class KinematicsError(ValueError):
@@ -120,6 +114,21 @@ class KinematicFrameState:
             if not np.all(np.isfinite(arr)):
                 raise KinematicsError(f"{name} contains non-finite values")
 
+    @property
+    def stf_shear_cartesian(self) -> np.ndarray:
+        """Return 5-vector Cartesian chart (S_xx, S_yy, S_xy, S_xz, S_yz)."""
+        return orthonormal_to_cartesian(self.stf_shear_amplitudes, convention="kinematic_response")
+
+    @property
+    def stf_shear_orthonormal(self) -> np.ndarray:
+        """Return 5-vector Frobenius-orthonormal chart."""
+        return self.stf_shear_amplitudes.copy()
+
+    @property
+    def stf_shear_matrix(self) -> np.ndarray:
+        """Return 3x3 symmetric trace-free tensor matrix."""
+        return cartesian_to_stf_matrix(self.stf_shear_cartesian)
+
 
 class KinematicResponseModel:
     """Computes observable signatures for CMB, counts, and distance probes."""
@@ -137,6 +146,7 @@ class KinematicResponseModel:
         e1_polar: Sequence[float] | None = None,
         b1_axial: Sequence[float] | None = None,
         exact_composition: bool = False,
+        shear_chart: str = "orthonormal",
     ) -> "KinematicResponseModel":
         """Factory with declared frame-velocity closure.
 
@@ -164,7 +174,14 @@ class KinematicResponseModel:
         residual = (brm + bmo) - bro
         
         dint = np.zeros(3, dtype=np.float64) if d_int is None else np.asarray(d_int, dtype=np.float64)
-        stf = np.zeros(5, dtype=np.float64) if stf_shear is None else np.asarray(stf_shear, dtype=np.float64)
+        if stf_shear is None:
+            stf = np.zeros(5, dtype=np.float64)
+        else:
+            stf_arr = np.asarray(stf_shear, dtype=np.float64)
+            if shear_chart == "cartesian":
+                stf = cartesian_to_orthonormal(stf_arr, convention="kinematic_response")
+            else:
+                stf = stf_arr
         e1 = np.zeros(3, dtype=np.float64) if e1_polar is None else np.asarray(e1_polar, dtype=np.float64)
         b1 = np.zeros(3, dtype=np.float64) if b1_axial is None else np.asarray(b1_axial, dtype=np.float64)
         
@@ -177,6 +194,47 @@ class KinematicResponseModel:
             e1_polar_vector=e1,
             b1_axial_vector=b1,
             closure_type=closure_type,
+            closure_residual=residual,
+        )
+        return cls(state)
+
+    @classmethod
+    def from_composition(
+        cls,
+        beta_RM: Sequence[float],
+        beta_MO: Sequence[float],
+        d_int: Sequence[float] | None = None,
+        stf_shear: Sequence[float] | None = None,
+        e1_polar: Sequence[float] | None = None,
+        b1_axial: Sequence[float] | None = None,
+        shear_chart: str = "orthonormal",
+    ) -> "KinematicResponseModel":
+        """Factory from independent velocities beta_RM and beta_MO via exact relativistic closure."""
+        from common.relativistic_velocity_closure import compose_velocities_sr
+        brm = np.asarray(beta_RM, dtype=np.float64)
+        bmo = np.asarray(beta_MO, dtype=np.float64)
+        bro = compose_velocities_sr(brm, bmo)
+        residual = bro - (brm + bmo)
+        dint = np.zeros(3, dtype=np.float64) if d_int is None else np.asarray(d_int, dtype=np.float64)
+        if stf_shear is None:
+            stf = np.zeros(5, dtype=np.float64)
+        else:
+            stf_arr = np.asarray(stf_shear, dtype=np.float64)
+            if shear_chart == "cartesian":
+                stf = cartesian_to_orthonormal(stf_arr, convention="kinematic_response")
+            else:
+                stf = stf_arr
+        e1 = np.zeros(3, dtype=np.float64) if e1_polar is None else np.asarray(e1_polar, dtype=np.float64)
+        b1 = np.zeros(3, dtype=np.float64) if b1_axial is None else np.asarray(b1_axial, dtype=np.float64)
+        state = KinematicFrameState(
+            beta_RO=bro,
+            beta_RM=brm,
+            beta_MO=bmo,
+            d_int=dint,
+            stf_shear_amplitudes=stf,
+            e1_polar_vector=e1,
+            b1_axial_vector=b1,
+            closure_type="EXACT_RELATIVISTIC_CLOSURE",
             closure_residual=residual,
         )
         return cls(state)

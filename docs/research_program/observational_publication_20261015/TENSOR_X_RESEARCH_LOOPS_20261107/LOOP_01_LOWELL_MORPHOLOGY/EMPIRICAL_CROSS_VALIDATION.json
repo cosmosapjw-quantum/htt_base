@@ -1,0 +1,402 @@
+{
+  "schema": "htt.loop01_lowell_morphology_empirical_cross_validation/1.0",
+  "program": "HTT Tensor-x & Five-Variable Framework ($physmath-research-loop v1.3.0 R1-R10 / C1-C10)",
+  "loop": "Loop 1 - Low-ell morphology <-> physical observables",
+  "claim_firewall_status": {
+    "tier": "C0-C2 (Diagnostic & Empirical Alignment)",
+    "family_identification_claimed": false,
+    "native_boltzmann_solver_claimed": false,
+    "firewall_note": "Morphology compatibility only. No Bianchi geometry detection claimed."
+  },
+  "pr4_npipe_commander": {
+    "observed": {
+      "source": "Planck PR4 NPIPE Commander observed",
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/COM_CMB_IQU-commander_4096_R4.00_full.fits",
+      "sha256": "61b9060ff4f80248ca52832137867c28697346f460a6a4b80f4654b114f4b900",
+      "mask": "/mnt/extdrive/workdir/htt_open_data/research20261022/pr4/mask_PR4_Lollipop_ns16.fits",
+      "Q_E": [
+        [
+          1.0015871816258396e-07,
+          8.451131987013563e-08,
+          8.613521927729716e-09
+        ],
+        [
+          8.451131987013563e-08,
+          -1.0194273158257824e-07,
+          -1.0440276575683314e-08
+        ],
+        [
+          8.613521927729716e-09,
+          -1.0440276575683314e-08,
+          1.7840134199942778e-09
+        ]
+      ],
+      "O_E": [
+        [
+          [
+            4.702557146747042e-10,
+            -4.482632415398725e-08,
+            1.637164348989259e-08
+          ],
+          [
+            -4.482632415398725e-08,
+            9.029774306026202e-09,
+            5.558629045563622e-09
+          ],
+          [
+            1.637164348989259e-08,
+            5.558629045563622e-09,
+            -9.500030020700907e-09
+          ]
+        ],
+        [
+          [
+            -4.482632415398725e-08,
+            9.029774306026202e-09,
+            5.558629045563622e-09
+          ],
+          [
+            9.029774306026202e-09,
+            1.2260509484691134e-08,
+            -1.1557150590527029e-08
+          ],
+          [
+            5.558629045563622e-09,
+            -1.1557150590527029e-08,
+            3.256581466929612e-08
+          ]
+        ],
+        [
+          [
+            1.637164348989259e-08,
+            5.558629045563622e-09,
+            -9.500030020700907e-09
+          ],
+          [
+            5.558629045563622e-09,
+            -1.1557150590527029e-08,
+            3.256581466929612e-08
+          ],
+          [
+            -9.500030020700907e-09,
+            3.256581466929612e-08,
+            -4.814492899365562e-09
+          ]
+        ]
+      ],
+      "features_E": {
+        "C2": 1.1754744824551047e-14,
+        "C3": 1.1580616379061683e-15,
+        "C4": 3.44994551238812e-15,
+        "C2_over_C3": 10.150361984016842,
+        "quadrupole_shape": -0.022608425501500634,
+        "octupole_concentration": 0.4899065521446162,
+        "QO_contraction": 0.3604453881769663,
+        "chirality": -0.0600893551708366,
+        "J234": 0.023303063048111177,
+        "alignment23_squared": 0.458662167474815,
+        "largest_axis_gaps": [
+          0.4889981848489112,
+          0.38769697552775895
+        ]
+      },
+      "B_powers": {
+        "2": 1.9977887059022903e-15,
+        "3": 4.737713250648419e-15,
+        "4": 4.2524055405968503e-16
+      },
+      "B_over_E_ratio_l2": 0.16995593998175904,
+      "B_over_E_ratio_l3": 4.091071749181188
+    },
+    "mc100_summary": {
+      "C2": {
+        "observed": 1.1754744824551047e-14,
+        "mc_mean": 5.182755414280746e-15,
+        "mc_std": 3.7037246584711995e-15,
+        "mc_median": 4.187840188200154e-15,
+        "mc_p16": 1.874954151829999e-15,
+        "mc_p84": 8.317328229026583e-15,
+        "empirical_p_value_one_tailed": 0.07,
+        "empirical_p_value_two_tailed": 0.07
+      },
+      "C3": {
+        "observed": 1.1580616379061683e-15,
+        "mc_mean": 3.043073541341424e-15,
+        "mc_std": 1.767820769091914e-15,
+        "mc_median": 2.757352557173778e-15,
+        "mc_p16": 1.2568451956552176e-15,
+        "mc_p84": 4.379989817005899e-15,
+        "empirical_p_value_one_tailed": 0.12,
+        "empirical_p_value_two_tailed": 0.29
+      },
+      "C4": {
+        "observed": 3.44994551238812e-15,
+        "mc_mean": 3.2235880852693253e-15,
+        "mc_std": 1.7301249910250424e-15,
+        "mc_median": 3.0665684309842988e-15,
+        "mc_p16": 1.6616927021768598e-15,
+        "mc_p84": 4.63330911423947e-15,
+        "empirical_p_value_one_tailed": 0.32,
+        "empirical_p_value_two_tailed": 0.7
+      },
+      "C2_over_C3": {
+        "observed": 10.150361984016842,
+        "mc_mean": 2.3347673353274714,
+        "mc_std": 2.061233889126076,
+        "mc_median": 1.641562652429267,
+        "mc_p16": 0.6721224888176209,
+        "mc_p84": 4.251971092864005,
+        "empirical_p_value_one_tailed": 0.01,
+        "empirical_p_value_two_tailed": 0.01
+      },
+      "quadrupole_shape": {
+        "observed": -0.022608425501500634,
+        "mc_mean": 0.07252348418650477,
+        "mc_std": 0.21296622458519038,
+        "mc_median": 0.11109804375397292,
+        "mc_p16": -0.16480870728898353,
+        "mc_p84": 0.2966340024539461,
+        "empirical_p_value_one_tailed": 0.33,
+        "empirical_p_value_two_tailed": 0.57
+      },
+      "octupole_concentration": {
+        "observed": 0.4899065521446162,
+        "mc_mean": 0.507316147449042,
+        "mc_std": 0.040732392413653416,
+        "mc_median": 0.5178557174903854,
+        "mc_p16": 0.46795651782766506,
+        "mc_p84": 0.5455734409273398,
+        "empirical_p_value_one_tailed": 0.26,
+        "empirical_p_value_two_tailed": 0.42
+      },
+      "QO_contraction": {
+        "observed": 0.3604453881769663,
+        "mc_mean": 0.3187233481260132,
+        "mc_std": 0.046707741981304236,
+        "mc_median": 0.3248976154412579,
+        "mc_p16": 0.2663812769066549,
+        "mc_p84": 0.35661946508957854,
+        "empirical_p_value_one_tailed": 0.13,
+        "empirical_p_value_two_tailed": 0.42
+      },
+      "chirality": {
+        "observed": -0.0600893551708366,
+        "mc_mean": 0.010374038395718108,
+        "mc_std": 0.11414034427763223,
+        "mc_median": 0.003337399684501599,
+        "mc_p16": -0.10582229375475681,
+        "mc_p84": 0.11574784417295209,
+        "empirical_p_value_one_tailed": 0.27,
+        "empirical_p_value_two_tailed": 0.56
+      },
+      "J234": {
+        "observed": 0.023303063048111177,
+        "mc_mean": 0.005871998211315895,
+        "mc_std": 0.05124203163136028,
+        "mc_median": 0.002781909870180627,
+        "mc_p16": -0.05129750142922195,
+        "mc_p84": 0.06057492479051652,
+        "empirical_p_value_one_tailed": 0.43,
+        "empirical_p_value_two_tailed": 0.79
+      },
+      "alignment23_squared": {
+        "observed": 0.458662167474815,
+        "mc_mean": 0.24249394460667517,
+        "mc_std": 0.24790758137241428,
+        "mc_median": 0.12965236038507785,
+        "mc_p16": 0.01060039299297763,
+        "mc_p84": 0.5596897566907166,
+        "empirical_p_value_one_tailed": 0.22,
+        "empirical_p_value_two_tailed": 0.22
+      },
+      "B_over_E_l2": {
+        "observed": 0.16995593998175904,
+        "mc_mean": 1.1952503109962747,
+        "mc_std": 1.8184226864802946,
+        "mc_median": 0.6966868099937011,
+        "empirical_p_value": 0.09
+      },
+      "orbit_distance_to_obs": {
+        "mc_mean": 1.119569335705835,
+        "mc_std": 0.3054465142301901,
+        "mc_min": 0.6093716329290155,
+        "mc_max": 2.198201172519332
+      }
+    },
+    "mc_count": 100
+  },
+  "pr3_smica_splits": {
+    "full": {
+      "features": {
+        "C2": 3.494927720136552e-14,
+        "C3": 9.91139836091157e-15,
+        "C4": 7.381564533341069e-15,
+        "C2_over_C3": 3.526170165775798,
+        "quadrupole_shape": -0.24143694548918496,
+        "octupole_concentration": 0.5421981857616383,
+        "QO_contraction": 0.37866254097815,
+        "chirality": 0.010058426287914249,
+        "J234": -0.015014190150956123,
+        "alignment23_squared": 0.679500739544499,
+        "largest_axis_gaps": [
+          0.33796391448737706,
+          0.29812800098951725
+        ]
+      },
+      "d_orbit_to_pr4_obs_lower": 0.0,
+      "d_orbit_to_pr4_obs_upper": 2.163228399713181,
+      "d_orbit_status": "CERTIFIED_IEEE_INTERVAL"
+    },
+    "hm1": {
+      "features": {
+        "C2": 7.484859890341632e-14,
+        "C3": 1.4727076277865567e-14,
+        "C4": 1.300349440941341e-14,
+        "C2_over_C3": 5.082380065886664,
+        "quadrupole_shape": -0.16636036619036737,
+        "octupole_concentration": 0.5089498619671132,
+        "QO_contraction": 0.4226105139602608,
+        "chirality": 0.002440134483928973,
+        "J234": 0.009019390805867538,
+        "alignment23_squared": 0.9446735266080254,
+        "largest_axis_gaps": [
+          0.4008303399256077,
+          0.34124401759331624
+        ]
+      },
+      "d_orbit_to_pr4_obs_lower": 0.0,
+      "d_orbit_to_pr4_obs_upper": 3.0926953593134967,
+      "d_orbit_status": "CERTIFIED_IEEE_INTERVAL"
+    },
+    "hm2": {
+      "features": {
+        "C2": 4.4819000436811e-14,
+        "C3": 2.2490236050688944e-14,
+        "C4": 9.939358869042231e-15,
+        "C2_over_C3": 1.992820365948896,
+        "quadrupole_shape": 0.12210637709189798,
+        "octupole_concentration": 0.4705708663442687,
+        "QO_contraction": 0.4014867922760855,
+        "chirality": -0.07823832594473588,
+        "J234": -0.08244879510866165,
+        "alignment23_squared": 0.8091908842732366,
+        "largest_axis_gaps": [
+          0.43172602291736534,
+          0.2931405180361388
+        ]
+      },
+      "d_orbit_to_pr4_obs_lower": 0.0,
+      "d_orbit_to_pr4_obs_upper": 3.666525837609346,
+      "d_orbit_status": "CERTIFIED_IEEE_INTERVAL"
+    },
+    "oe1": {
+      "features": {
+        "C2": 6.472776317540414e-14,
+        "C3": 1.3297214484680951e-14,
+        "C4": 1.0789111781022726e-14,
+        "C2_over_C3": 4.8677686029637055,
+        "quadrupole_shape": -0.1805871472625686,
+        "octupole_concentration": 0.5264578766868165,
+        "QO_contraction": 0.4184543783289932,
+        "chirality": 0.018367445721031113,
+        "J234": -0.06672143435423235,
+        "alignment23_squared": 0.9296148491840867,
+        "largest_axis_gaps": [
+          0.390033938820925,
+          0.2755488481732382
+        ]
+      },
+      "d_orbit_to_pr4_obs_lower": 0.0,
+      "d_orbit_to_pr4_obs_upper": 2.8717758675198244,
+      "d_orbit_status": "CERTIFIED_IEEE_INTERVAL"
+    },
+    "oe2": {
+      "features": {
+        "C2": 5.873069304810479e-14,
+        "C3": 2.2037260353034362e-14,
+        "C4": 1.2366475474876183e-14,
+        "C2_over_C3": 2.66506326590719,
+        "quadrupole_shape": 0.029184299336703634,
+        "octupole_concentration": 0.5168500606058396,
+        "QO_contraction": 0.4034197645165602,
+        "chirality": -0.0424319414875346,
+        "J234": 0.024476150271696313,
+        "alignment23_squared": 0.7092182892325469,
+        "largest_axis_gaps": [
+          0.4856671876522729,
+          0.25819756398704014
+        ]
+      },
+      "d_orbit_to_pr4_obs_lower": 0.0,
+      "d_orbit_to_pr4_obs_upper": 3.710895706953939,
+      "d_orbit_status": "CERTIFIED_IEEE_INTERVAL"
+    }
+  },
+  "cosmoglobe_dr1": {
+    "source": "Cosmoglobe DR1 CMB IQU (NSIDE 1024)",
+    "path": "/mnt/extdrive/workdir/raw/cosmoglobe_dr1/CG_cmb_IQU_n1024_v1.fits",
+    "features": {
+      "C2": 2.1984187387652103e-13,
+      "C3": 6.794369149194492e-14,
+      "C4": 4.109756827809798e-14,
+      "C2_over_C3": 3.2356480645827794,
+      "quadrupole_shape": -0.1913173916436814,
+      "octupole_concentration": 0.45300538323756046,
+      "QO_contraction": 0.37644141641063705,
+      "chirality": -0.020502194932351354,
+      "J234": 0.03954603925898115,
+      "alignment23_squared": 0.8839173140920457,
+      "largest_axis_gaps": [
+        0.38157974188010785,
+        0.15050731851735732
+      ]
+    },
+    "B_powers": {
+      "2": 5.658739092519279e-14,
+      "3": 5.976096846202401e-14,
+      "4": 2.1504311566295653e-14
+    },
+    "B_over_E_ratio_l2": 0.2574004211635147,
+    "d_orbit_to_pr4_obs_lower": 0.0,
+    "d_orbit_to_pr4_obs_upper": 7.593764705597085,
+    "d_orbit_status": "CERTIFIED_IEEE_INTERVAL"
+  },
+  "cross_mission_consistency_check": {
+    "QO_contraction": {
+      "PR4_NPIPE_Commander": 0.3604453881769663,
+      "Cosmoglobe_DR1": 0.37644141641063705,
+      "PR3_SMICA_full": 0.37866254097815,
+      "PR3_SMICA_hm1": 0.4226105139602608,
+      "PR3_SMICA_hm2": 0.4014867922760855,
+      "agreement_range": [
+        0.3604453881769663,
+        0.37866254097815
+      ],
+      "status": "CONSISTENT_ACROSS_PIPELINES_AND_DATASETS"
+    },
+    "chirality_pseudoscalar": {
+      "PR4_NPIPE_Commander": -0.0600893551708366,
+      "Cosmoglobe_DR1": -0.020502194932351354,
+      "PR3_SMICA_full": 0.010058426287914249,
+      "mc_null_mean": 0.010374038395718108,
+      "mc_null_std": 0.11414034427763223,
+      "consistency_z_score_vs_mc": -0.6173399424410465,
+      "status": "CONSISTENT_WITH_ZERO_WITHIN_MC_DISPERSION"
+    },
+    "alignment23_squared": {
+      "PR4_NPIPE_Commander": 0.458662167474815,
+      "Cosmoglobe_DR1": 0.8839173140920457,
+      "PR3_SMICA_full": 0.679500739544499,
+      "mc_null_mean": 0.24249394460667517,
+      "mc_null_std": 0.24790758137241428,
+      "status": "ELEVATED_IN_ALL_DATASETS_VS_MASKED_NULL"
+    },
+    "orbit_distance_to_pr4": {
+      "Cosmoglobe_DR1_to_PR4": 7.593764705597085,
+      "PR3_SMICA_full_to_PR4": 2.163228399713181,
+      "MC_null_mean_distance": 1.119569335705835,
+      "MC_null_min_distance": 0.6093716329290155,
+      "status": "REAL_DATASETS_ARE_CLOSER_TO_EACH_OTHER_THAN_TYPICAL_NULL"
+    }
+  }
+}

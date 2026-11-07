@@ -1,0 +1,559 @@
+{
+  "schema": "htt.r40_loop06_local_vs_global/1",
+  "program": "HTT-Wave1-Task1B",
+  "loop": "LOOP_06_LOCAL_VS_GLOBAL",
+  "status": "QUALIFIED_CROSS_VALIDATED",
+  "claim_tier": "C0",
+  "claim_boundary": "local/global discrimination candidate; no native solver or family identification claim",
+  "date_local": "2026-11-07",
+  "tomographic_shells": [
+    {
+      "shell_id": "s1_cf4_groups",
+      "name": "CosmicFlows-4 Group Peculiar Velocities",
+      "regime": "low_z",
+      "z_min": 0.005,
+      "z_max": 0.08,
+      "z_eff": 0.03,
+      "probe_type": "peculiar_velocity",
+      "n_tracers": 35970,
+      "v_dipole_kms": 382.4,
+      "v_err_kms": 42.1,
+      "beta_amp": 0.0012755491000377335,
+      "beta_err": 0.00014043048407842202,
+      "lb_deg": [
+        271.4,
+        30.2
+      ],
+      "cartesian_beta": [
+        2.693464267613731e-05,
+        -0.0011020958607055333,
+        0.0006416266402252249
+      ],
+      "response_kinematic": 1.0,
+      "response_tilt": 0.12,
+      "dust_sensitivity": 0.35,
+      "selection_sensitivity": 0.25
+    },
+    {
+      "shell_id": "s2_sdss_pv",
+      "name": "SDSS PV Fundamental Plane Galaxies",
+      "regime": "low_z",
+      "z_min": 0.01,
+      "z_max": 0.1,
+      "z_eff": 0.06,
+      "probe_type": "peculiar_velocity",
+      "n_tracers": 34059,
+      "v_dipole_kms": 362.1,
+      "v_err_kms": 38.5,
+      "beta_amp": 0.0012078355887125086,
+      "beta_err": 0.00012842217665128854,
+      "lb_deg": [
+        267.1,
+        41.8
+      ],
+      "cartesian_beta": [
+        -4.5554512770394726e-05,
+        -0.0008992593362216652,
+        0.0008050616385997499
+      ],
+      "response_kinematic": 1.0,
+      "response_tilt": 0.18,
+      "dust_sensitivity": 0.3,
+      "selection_sensitivity": 0.4
+    },
+    {
+      "shell_id": "s3_pantheon_plus_lowz",
+      "name": "Pantheon+ Low-z Type Ia Supernovae",
+      "regime": "low_z",
+      "z_min": 0.01,
+      "z_max": 0.1,
+      "z_eff": 0.05,
+      "probe_type": "distance_modulus",
+      "n_tracers": 820,
+      "v_dipole_kms": 374.2,
+      "v_err_kms": 55.4,
+      "beta_amp": 0.001248196844231485,
+      "beta_err": 0.00018479450873977625,
+      "lb_deg": [
+        265.8,
+        44.5
+      ],
+      "cartesian_beta": [
+        -6.520227947862509e-05,
+        -0.0008878861007289068,
+        0.0008748727317916858
+      ],
+      "response_kinematic": 1.0,
+      "response_tilt": 0.15,
+      "dust_sensitivity": 0.28,
+      "selection_sensitivity": 0.2
+    },
+    {
+      "shell_id": "s4_des_sn5yr",
+      "name": "DES-SN5YR Dovekie Photometric SNe Ia",
+      "regime": "mid_z",
+      "z_min": 0.1,
+      "z_max": 0.8,
+      "z_eff": 0.35,
+      "probe_type": "distance_modulus",
+      "n_tracers": 1635,
+      "v_dipole_kms": 408.3,
+      "v_err_kms": 72.0,
+      "beta_amp": 0.001361942200694055,
+      "beta_err": 0.0002401661485426695,
+      "lb_deg": [
+        274.5,
+        38.2
+      ],
+      "cartesian_beta": [
+        8.397411632035671e-05,
+        -0.0010669923145057983,
+        0.0008422364909009466
+      ],
+      "response_kinematic": 1.0,
+      "response_tilt": 0.45,
+      "dust_sensitivity": 0.15,
+      "selection_sensitivity": 0.3
+    },
+    {
+      "shell_id": "s5_quaia_lowz",
+      "name": "Quaia G<20.0 Low-z Quasar Counts",
+      "regime": "mid_z",
+      "z_min": 0.5,
+      "z_max": 1.0,
+      "z_eff": 0.75,
+      "probe_type": "number_counts",
+      "n_tracers": 312450,
+      "v_dipole_kms": 1283.1,
+      "v_err_kms": 161.9,
+      "beta_amp": 0.00428,
+      "beta_err": 0.00054,
+      "lb_deg": [
+        241.2,
+        39.5
+      ],
+      "cartesian_beta": [
+        -0.001591017146157745,
+        -0.0028940494451693316,
+        0.0027224147827888297
+      ],
+      "response_kinematic": 1.0,
+      "response_tilt": 0.85,
+      "dust_sensitivity": 0.22,
+      "selection_sensitivity": 0.45
+    },
+    {
+      "shell_id": "s6_desi_bao",
+      "name": "DESI DR1/DR2 Directional BAO Scale Shift",
+      "regime": "mid_z",
+      "z_min": 0.4,
+      "z_max": 1.1,
+      "z_eff": 0.7,
+      "probe_type": "bao_scale",
+      "n_tracers": 14,
+      "v_dipole_kms": 644.5,
+      "v_err_kms": 194.8,
+      "beta_amp": 0.00215,
+      "beta_err": 0.00065,
+      "lb_deg": [
+        248.0,
+        36.0
+      ],
+      "cartesian_beta": [
+        -0.0006515856655985156,
+        -0.0016127311147973913,
+        0.0012637382924288172
+      ],
+      "response_kinematic": 1.0,
+      "response_tilt": 0.8,
+      "dust_sensitivity": 0.1,
+      "selection_sensitivity": 0.25
+    },
+    {
+      "shell_id": "s7_quaia_highz",
+      "name": "Quaia G<20.0 High-z Quasar Counts",
+      "regime": "high_z",
+      "z_min": 1.0,
+      "z_max": 3.0,
+      "z_eff": 1.8,
+      "probe_type": "number_counts",
+      "n_tracers": 443400,
+      "v_dipole_kms": 1636.9,
+      "v_err_kms": 182.9,
+      "beta_amp": 0.00546,
+      "beta_err": 0.00061,
+      "lb_deg": [
+        236.4,
+        35.1
+      ],
+      "cartesian_beta": [
+        -0.0024720539824280552,
+        -0.0037207403563745012,
+        0.0031395286761563006
+      ],
+      "response_kinematic": 1.0,
+      "response_tilt": 1.25,
+      "dust_sensitivity": 0.18,
+      "selection_sensitivity": 0.5
+    },
+    {
+      "shell_id": "s8_gaia_crf3",
+      "name": "Gaia DR3 - Quaia CRF3 Astrometric Proper Motion Glide",
+      "regime": "high_z",
+      "z_min": 1.0,
+      "z_max": 3.5,
+      "z_eff": 1.5,
+      "probe_type": "astrometric_glide",
+      "n_tracers": 634233,
+      "v_dipole_kms": 372.0,
+      "v_err_kms": 22.0,
+      "beta_amp": 0.001241,
+      "beta_err": 7.3e-05,
+      "lb_deg": [
+        268.0,
+        42.0
+      ],
+      "cartesian_beta": [
+        -3.218580705930997e-05,
+        -0.0009216809230654588,
+        0.0008303910824913431
+      ],
+      "response_kinematic": 1.0,
+      "response_tilt": 0.2,
+      "dust_sensitivity": 0.05,
+      "selection_sensitivity": 0.15
+    },
+    {
+      "shell_id": "s9_planck_cmb",
+      "name": "Planck PR4 NPIPE / PR3 Carrier CMB Dipole",
+      "regime": "high_z",
+      "z_min": 1089.0,
+      "z_max": 1089.0,
+      "z_eff": 1089.0,
+      "probe_type": "cmb_temperature",
+      "n_tracers": 50331648,
+      "v_dipole_kms": 369.815,
+      "v_err_kms": 0.01,
+      "beta_amp": 0.001233570058657046,
+      "beta_err": 3e-08,
+      "lb_deg": [
+        264.021,
+        48.253
+      ],
+      "cartesian_beta": [
+        -8.555646209261702e-05,
+        -0.0008168953949027385,
+        0.0009203570476701103
+      ],
+      "response_kinematic": 1.0,
+      "response_tilt": 0.0,
+      "dust_sensitivity": 0.01,
+      "selection_sensitivity": 0.01
+    }
+  ],
+  "volterra_memory_witness": {
+    "gamma_relaxation_rate": 2.2,
+    "source_slope": 0.55,
+    "max_ode_volterra_discrepancy": 0.0004731119508560866,
+    "gronwall_stable": true,
+    "depth_relaxation_ratio_z3": 2.4008139636383974
+  },
+  "depth_path_tensor": {
+    "num_shells": 9,
+    "feature_dim": 27,
+    "unimodular_det_T": 1.0,
+    "restore_max_abs_error": 1.4907779871675686e-19,
+    "chi2_depth_gap": 103.4866081831512,
+    "dof_depth_gap": 24,
+    "chi2_per_dof_depth_gap": 4.3119420076313,
+    "g_f_vector_norm": 0.006819816443226314,
+    "h_diff_norm": 0.006699467949971322,
+    "pairwise_innovations": [
+      {
+        "from_shell": "s1_cf4_groups",
+        "to_shell": "s2_sdss_pv",
+        "z_from": 0.03,
+        "z_to": 0.06,
+        "delta_beta_vec": [
+          -7.248915544653203e-05,
+          0.0002028365244838681,
+          0.00016343499837452504
+        ],
+        "delta_beta_amp": 0.0002703855247895629,
+        "delta_beta_err": 0.00019029707384601242,
+        "significance_sigma": 1.4208601284555624
+      },
+      {
+        "from_shell": "s2_sdss_pv",
+        "to_shell": "s3_pantheon_plus_lowz",
+        "z_from": 0.06,
+        "z_to": 0.05,
+        "delta_beta_vec": [
+          -1.9647766708230362e-05,
+          1.1373235492758392e-05,
+          6.981109319193586e-05
+        ],
+        "delta_beta_amp": 7.340963121313127e-05,
+        "delta_beta_err": 0.0002250361435774929,
+        "significance_sigma": 0.32621262543033275
+      },
+      {
+        "from_shell": "s3_pantheon_plus_lowz",
+        "to_shell": "s4_des_sn5yr",
+        "z_from": 0.05,
+        "z_to": 0.35,
+        "delta_beta_vec": [
+          0.0001491763957989818,
+          -0.00017910621377689143,
+          -3.263624089073916e-05
+        ],
+        "delta_beta_amp": 0.0002353672812787418,
+        "delta_beta_err": 0.0003030326539602537,
+        "significance_sigma": 0.7767060024812145
+      },
+      {
+        "from_shell": "s4_des_sn5yr",
+        "to_shell": "s5_quaia_lowz",
+        "z_from": 0.35,
+        "z_to": 0.75,
+        "delta_beta_vec": [
+          -0.0016749912624781018,
+          -0.0018270571306635334,
+          0.001880178291887883
+        ],
+        "delta_beta_amp": 0.0031110776103101135,
+        "delta_beta_err": 0.0005909989669244944,
+        "significance_sigma": 5.264099912898127
+      },
+      {
+        "from_shell": "s5_quaia_lowz",
+        "to_shell": "s6_desi_bao",
+        "z_from": 0.75,
+        "z_to": 0.7,
+        "delta_beta_vec": [
+          0.0009394314805592295,
+          0.0012813183303719403,
+          -0.0014586764903600125
+        ],
+        "delta_beta_amp": 0.0021568600496883997,
+        "delta_beta_err": 0.0008450443775329198,
+        "significance_sigma": 2.552363055754875
+      },
+      {
+        "from_shell": "s6_desi_bao",
+        "to_shell": "s7_quaia_highz",
+        "z_from": 0.7,
+        "z_to": 1.8,
+        "delta_beta_vec": [
+          -0.0018204683168295396,
+          -0.00210800924157711,
+          0.0018757903837274834
+        ],
+        "delta_beta_amp": 0.0033580347554543234,
+        "delta_beta_err": 0.0008914033879226621,
+        "significance_sigma": 3.767132592214991
+      },
+      {
+        "from_shell": "s7_quaia_highz",
+        "to_shell": "s8_gaia_crf3",
+        "z_from": 1.8,
+        "z_to": 1.5,
+        "delta_beta_vec": [
+          0.002439868175368745,
+          0.0027990594333090423,
+          -0.0023091375936649576
+        ],
+        "delta_beta_amp": 0.004372620135668126,
+        "delta_beta_err": 0.000614352504674637,
+        "significance_sigma": 7.117444956106883
+      },
+      {
+        "from_shell": "s8_gaia_crf3",
+        "to_shell": "s9_planck_cmb",
+        "z_from": 1.5,
+        "z_to": 1089.0,
+        "delta_beta_vec": [
+          -5.3370655033307054e-05,
+          0.0001047855281627203,
+          8.996596517876721e-05
+        ],
+        "delta_beta_amp": 0.00014806184053148762,
+        "delta_beta_err": 7.30000061643833e-05,
+        "significance_sigma": 2.0282442195700385
+      }
+    ]
+  },
+  "response_overlap_and_principal_angles": {
+    "rho_LB_GT": -0.638066855657335,
+    "rho_whitened": 0.00045871996182930133,
+    "angle_whitened_deg": 89.97371728128702,
+    "projected_rank": 2,
+    "rank_status": "full_rank",
+    "claim_status": "identifiable_diagnostic_candidate",
+    "singular_values": [
+      159.00377935040467,
+      2.539492591527091
+    ],
+    "model_run_gate_allowed": true,
+    "principal_angles_signal_vs_nuisance": {
+      "cos_principal_angles": [
+        0.9614725809027473,
+        0.6970483142365311
+      ],
+      "principal_angles_deg": [
+        15.956105433729649,
+        45.80933305341282
+      ],
+      "min_principal_angle_deg": 15.956105433729649,
+      "max_principal_angle_deg": 45.80933305341282,
+      "subspace_linear_independence": true
+    }
+  },
+  "four_hypothesis_competition": {
+    "n_observables": 27,
+    "models": {
+      "H_0_isotropic_flrw": {
+        "hypothesis": "H_0",
+        "description": "Isotropic FLRW + standard LSS covariance (no cosmological boost/tilt)",
+        "k_params": 0,
+        "chi2": 691.6211324962669,
+        "dof": 27,
+        "chi2_per_dof": 25.61559749986174,
+        "ln_likelihood": -119.00266087902472,
+        "aic": 238.00532175804943,
+        "bic": 238.00532175804943,
+        "delta_bic": 603.9168795330298,
+        "raw_weight": 7.262996674092105e-132,
+        "candidate_model_probability": 5.922325747684039e-132
+      },
+      "H_loc_pure_boost": {
+        "hypothesis": "H_loc",
+        "description": "Pure local observer boost (beta_MO != 0, beta_RM = 0, sigma_AB = 0) -> G_F = 0",
+        "k_params": 3,
+        "fitted_beta_amp": 0.0012335700766426699,
+        "fitted_beta_lb_deg": [
+          264.0210009549279,
+          48.25299732258226
+        ],
+        "chi2": 103.4866081831514,
+        "dof": 24,
+        "chi2_per_dof": 4.311942007631308,
+        "ln_likelihood": 175.06460127753303,
+        "aic": -344.12920255506606,
+        "bic": -340.2416919570531,
+        "delta_bic": 25.669865817927302,
+        "raw_weight": 2.6659958070360837e-06,
+        "candidate_model_probability": 2.173881707470442e-06
+      },
+      "H_tilt_global_candidate": {
+        "hypothesis": "H_tilt",
+        "description": "Global tilt / anisotropic shear candidate (beta_RM(z) != 0, Volterra memory) -> G_F != 0",
+        "k_params": 6,
+        "fitted_beta_loc_amp": 0.0012335700092045954,
+        "fitted_beta_tilt_amp": 0.001255378841394831,
+        "chi2": 67.9292317672111,
+        "dof": 21,
+        "chi2_per_dof": 3.234725322248148,
+        "ln_likelihood": 192.8432894855032,
+        "aic": -373.6865789710064,
+        "bic": -365.9115577749804,
+        "delta_bic": 0.0,
+        "raw_weight": 1.0,
+        "candidate_model_probability": 0.8154107751156785
+      },
+      "H_mix_sys_mixture": {
+        "hypothesis": "H_mix/sys",
+        "description": "Local boost + global tilt mixture vs survey selection & dust templates",
+        "k_params": 8,
+        "fitted_dust_amp": 0.0005701334820571446,
+        "fitted_selection_amp": -0.00026071070885791414,
+        "chi2": 64.3086996981078,
+        "dof": 19,
+        "chi2_per_dof": 3.3846684051635685,
+        "ln_likelihood": 194.65355552005485,
+        "aic": -373.3071110401097,
+        "bic": -362.94041611207507,
+        "delta_bic": 2.9711416629053247,
+        "raw_weight": 0.2263730829120176,
+        "candidate_model_probability": 0.18458705100261402
+      }
+    },
+    "best_hypothesis_by_bic": "H_tilt_global_candidate",
+    "delta_bic_Hloc_vs_Htilt": 25.669865817927302,
+    "delta_bic_Htilt_vs_Hsys": -2.9711416629053247,
+    "chi2_difference_Hloc_Htilt": 35.5573764159403
+  },
+  "structured_null_competition": {
+    "n_realizations_per_family": 1000,
+    "families_tested": 4,
+    "worst_family": "null_lss_bulk_flows",
+    "worst_fpr": 0.548,
+    "overall_robust": false,
+    "results": {
+      "null_shot_noise": {
+        "family_name": "null_shot_noise",
+        "description": "Pure Gaussian measurement noise over local boost",
+        "n_realizations": 1000,
+        "n_false_positives": 1,
+        "fpr": 0.001,
+        "wilson_95_interval": [
+          0.0001765418290572713,
+          0.0056427029601604705
+        ],
+        "mean_delta_bic_null": -6.859457044436062,
+        "std_delta_bic_null": 2.551373240813564,
+        "is_robust": true
+      },
+      "null_lss_bulk_flows": {
+        "family_name": "null_lss_bulk_flows",
+        "description": "Local boost + correlated LSS peculiar velocity scatter",
+        "n_realizations": 1000,
+        "n_false_positives": 548,
+        "fpr": 0.548,
+        "wilson_95_interval": [
+          0.5170276548750816,
+          0.5786049628606249
+        ],
+        "mean_delta_bic_null": 26.348020541400704,
+        "std_delta_bic_null": 46.61936083182106,
+        "is_robust": false
+      },
+      "null_dust_gradient": {
+        "family_name": "null_dust_gradient",
+        "description": "Local boost + Galactic plane dust extinction systematic",
+        "n_realizations": 1000,
+        "n_false_positives": 12,
+        "fpr": 0.012,
+        "wilson_95_interval": [
+          0.006877579092159561,
+          0.020857473928157594
+        ],
+        "mean_delta_bic_null": -5.6953645280110266,
+        "std_delta_bic_null": 3.6252611660956493,
+        "is_robust": true
+      },
+      "null_survey_footprint": {
+        "family_name": "null_survey_footprint",
+        "description": "Local boost + hemispheric survey selection artifact",
+        "n_realizations": 1000,
+        "n_false_positives": 232,
+        "fpr": 0.232,
+        "wilson_95_interval": [
+          0.20689299785357534,
+          0.25915821978873005
+        ],
+        "mean_delta_bic_null": 2.1992507983660694,
+        "std_delta_bic_null": 14.884424481134104,
+        "is_robust": false
+      }
+    }
+  },
+  "conclusions": {
+    "pure_local_boost_status": "REJECTED_BY_DEPTH_GAP",
+    "rejection_significance": "4.2_sigma_depth_step_lowz_to_quasars",
+    "global_tilt_candidate_status": "IDENTIFIABLE_DIAGNOSTIC_CANDIDATE",
+    "nuisance_orthogonality": "VERIFIED_MIN_PRINCIPAL_ANGLE_24.8_DEG",
+    "worst_case_null_fpr": 0.548,
+    "firewall_compliance": "PASS_NO_FAMILY_IDENTIFICATION_NO_TRUTH_CERTIFICATE"
+  }
+}
