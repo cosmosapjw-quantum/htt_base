@@ -1,0 +1,33 @@
+{
+  "task_id": "R37-03-HUBBLE",
+  "owner": "HTT inference / obsstat retained features",
+  "claim_tier": "conditional released-observable sensitivity and finite synthetic method control",
+  "artifact_mode": "diagnostic results for P3/P4",
+  "transfer_source": "none",
+  "source_scope": {
+    "primary_rows": 490,
+    "primary_low_high": [342, 148],
+    "primary_duplicate_CID_rows": 62,
+    "sensitivity_rows": 705,
+    "sensitivity_low_high": [557, 148],
+    "sensitivity_duplicate_CID_rows": 114,
+    "full_1701_covariance": "UNVALIDATED",
+    "selected_total_covariance": "validated, consumed once"
+  },
+  "result": {
+    "primary_low_x_vs_z_apparent_H_ratio_95sim": [0.9222232676935436, 1.1073616559728363],
+    "primary_low_x_vs_z_physical_ratio_95sim_if_delta_rg_le_0p01_and_delta_tau_le_0p02": [0.9039620234858321, 1.129731845317735],
+    "primary_high_minus_low_x_vs_z_magnitude_mag": 0.09713942144681144,
+    "joint_depth_se_mag": 0.07737715494933327,
+    "synthetic_CBL_common_zero_at_opacity_slope": 0.2,
+    "synthetic_transmission_distance_interval_at_tmin_0p1_length_units": [1.5811388300841898, 3.0]
+  },
+  "null_status": "conditional Gaussian coefficient event, empirical coverage unknown",
+  "covariance_status": "selected released total STAT+SYS once; cross-bin block retained",
+  "allowed_use": "source-qualified angular sensitivity and finite optical/CBL control",
+  "forbidden_uses": ["absolute H0", "empirical curvature", "physical shear", "Bianchi family", "native solver validation"],
+  "empirical_CBL_gate": "HOLD: overlapping radial distance derivative, independent H(z), opacity and joint covariance absent",
+  "physical_source_response": "UNKNOWN",
+  "original42_completed": "17/42",
+  "analytic_alternate_completed": "18/42"
+}

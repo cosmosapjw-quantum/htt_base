@@ -1,0 +1,62 @@
+{
+  "schema": "htt.r37_native_raw_receipt/1",
+  "packet_id": "e519d7b4b6696b6c7bfe75e6a566cc5d6c0d78de1f9900facec42bb1f1995e11",
+  "task_id": "R37-01-RADIATION",
+  "input_identity": "sha256:7503451fc55c359618c388655a85851dd61f784140a7bd457d715ccd870ee134",
+  "agent_id": "/root/rc_e519d7b4b6696b6c",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "base_branch": "research/htt-adaptive-methods-20261023",
+  "base_head": "5029f20af96c1fdf20c4ac864135a7d9ba8a76a5",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "matplotlib": "3.10.8",
+    "pytest": "9.1.1"
+  },
+  "commands": [
+    {
+      "cmd": "python docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/radiation_image.py",
+      "exit": 0,
+      "outcome": "final run: case a0.02_b0.3; 300 support rows, 20 coverage rows; full/common max 8.88e-16; gain bias 4.757663895070362e-05; omission 0.008503770713235631 <= bound 0.008782441325531753; elapsed 2.15 s"
+    },
+    {
+      "cmd": "python -m pytest -q docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/test_radiation_image.py",
+      "exit": 1,
+      "outcome": "first failure in FIRST_FAILURE.txt; exact float equality test assertion"
+    },
+    {
+      "cmd": "python -m pytest -q docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/test_radiation_image.py",
+      "exit": 0,
+      "outcome": "2 passed, 1 Matplotlib optional 3D warning"
+    },
+    {
+      "cmd": "python -m pytest -q docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/test_radiation_core.py",
+      "exit": 0,
+      "outcome": "4 passed"
+    },
+    {
+      "cmd": "python -m pytest -q docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/test_radiation_image.py",
+      "exit": 0,
+      "outcome": "final source-bound candidate: 2 passed, 1 Matplotlib optional 3D warning"
+    },
+    {
+      "cmd": "python -m pytest -q docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/test_radiation_core.py",
+      "exit": 0,
+      "outcome": "final source-bound candidate: 4 passed"
+    },
+    {
+      "cmd": "pdfinfo docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/radiation_response_spectrum.pdf",
+      "exit": 0,
+      "outcome": "1 page, vector PDF 1.4"
+    }
+  ],
+  "first_failure_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/FIRST_FAILURE.txt",
+  "no_old_producer_invocation": true,
+  "no_native_solver_or_ode": true,
+  "scientific_claim": "conditional synthetic methods image; no empirical shear or original42 promotion"
+}

@@ -1,0 +1,111 @@
+{
+  "schema": "htt.r37_kinematic_candidate_manifest/2",
+  "task_id": "R37-02-KINEMATICS",
+  "packet_id": "faed5e1a112ffc7da8b40fe2e7d92406e834971a8cd6389b48cb689e21c4164d",
+  "input_identity": "sha256:75b19b84b100ed65977868dc1c4634a2b1f7f56b42c4f0989d7065d61b386d67",
+  "metadata_for_all_tables_and_figures": {
+    "owner": "htt/obsstat",
+    "claim_tier": "C0_CONDITIONAL_METHOD",
+    "artifact_mode": "saved-law finite response and inverse image",
+    "allowed_use": "conditional same-input comparison, PM history quotient, optical synthetic compatibility and fixed-Q theorem",
+    "transfer_source": "none",
+    "null_status": "saved Gaussian working-law MC for E1/B1; optical Gaussian event newly stipulated from saved covariance; no empirical spatial or physical null",
+    "covariance_status": "full 24x24 Gaia working law; separate E2 profiled Gram; full 10x10 synthetic optical law; no E1/B1-E2 cross-covariance",
+    "sky_support_status": "Gaia reported-z bins and separate 96-direction synthetic optical design",
+    "forbidden_uses": [
+      "empirical matter shear or geometric vorticity",
+      "Bianchi family identification",
+      "native solver validation",
+      "original-42 acceptance promotion"
+    ],
+    "assumed_physical_remainder": "STF5 coefficient-level Frobenius ball ||e||<=r in microarcsec/year, stipulated sensitivity only",
+    "pm_quotient": "q=(B_o-B_s)/T_ref, s=dot B_o, u=kq-s, k=2cT_ref/D; five unbounded null directions",
+    "optical_numerical_domain": "exact zero by maxabs; representable small nonzero inverse by scaled S; reject nonrepresentable inverse arithmetic"
+  },
+  "artifacts": [
+    {
+      "path": "kinematic_image.py",
+      "sha256": "6d056f224a495d4e1ea9b5046d90247c751f9b1ded47ad7ccda1146eb034b8b9",
+      "size_bytes": 23109
+    },
+    {
+      "path": "test_kinematic_image.py",
+      "sha256": "09105972ecdc1637d6178b3550380de8341ad74a8d25e95dea8e048b178efe70",
+      "size_bytes": 4619
+    },
+    {
+      "path": "KINEMATIC_IMAGE_RESULT.json",
+      "sha256": "344d1c1e08ad842d39fc8cc9f8bf51556acdc1a9e299f7a26d0ec069a44de69b",
+      "size_bytes": 37053
+    },
+    {
+      "path": "OPTICAL_COMPATIBILITY.json",
+      "sha256": "708a5e1c3b1048669d9275b8927f73d953870212ad852bd30d5b78f27e6d20af",
+      "size_bytes": 13473
+    },
+    {
+      "path": "COMPRESSION_COMPARISON.json",
+      "sha256": "f738acff6970c3ba17801eb336707223ae7b4b891624edf877b884a9fed3cd7e",
+      "size_bytes": 15497
+    },
+    {
+      "path": "information_comparison.csv",
+      "sha256": "abe6e23f9fb657de3a0f9818375e07f21be4a357feab6ef300db2910beeff472",
+      "size_bytes": 232
+    },
+    {
+      "path": "E2_identified_combinations.csv",
+      "sha256": "880a71b609e23836d97cf180c061cc4775eadba4f4ca9716bc7abf125a4a8b2e",
+      "size_bytes": 573
+    },
+    {
+      "path": "optical_joint_budget.csv",
+      "sha256": "02cf994d3e3655adb2bdfc83127fe6515d3b5c227931e7809c023a85a459c1c9",
+      "size_bytes": 668
+    },
+    {
+      "path": "nullspaces.json",
+      "sha256": "6217c5bde30a9201112ece2b05da346a0f91295adf83f072d4493ecc7089c872",
+      "size_bytes": 663
+    },
+    {
+      "path": "optical_joint_compatibility.pdf",
+      "sha256": "1006b870d744e09d3391477c7ca51b159a9d1347472da176953d1db102591a4c",
+      "size_bytes": 18311
+    },
+    {
+      "path": "physical_region_vs_remainder.pdf",
+      "sha256": "ad345d6e9b4888d3cabd8558b1bd89f7ef5619f542bc1afd04a3cfb7a38a1c30",
+      "size_bytes": 22831
+    },
+    {
+      "path": "GLS_tensor_scalar_comparison.pdf",
+      "sha256": "67c7045ac385d9598166268f4c9f843b3dc04163a794e91b9b30503249e24bcc",
+      "size_bytes": 18352
+    },
+    {
+      "path": "chirality_radius.pdf",
+      "sha256": "fcb63d0e2ee678fe8bd41f185322c08fa75337cf3e76ca07f51db65e8cc9935e",
+      "size_bytes": 15170
+    },
+    {
+      "path": "REPORT_DELTA.md",
+      "sha256": "1477e299da3a4f4c86ac452e00a8e9349c7749676b9eb732c05713990c656800",
+      "size_bytes": 8962
+    },
+    {
+      "path": "SCIENCE_AUDIT.md",
+      "sha256": "06a8e55782608e23686342dfe32e06da5cfe40fc5e229a64193b2695345651e4",
+      "size_bytes": 3800
+    },
+    {
+      "path": "FIRST_FAILURE.txt",
+      "sha256": "67ea900b18b39700f6b44b5b491f1c8722becd5f64e979568e286c6c83adb6c9",
+      "size_bytes": 1230
+    }
+  ],
+  "repair_of_candidate_identity": "sha256:0ccd0c62ce9d76420258fc96f0bb164931100d7a8a138d293617ee8c85e1e73d",
+  "failed_candidate_backup": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_02_PRE_REPAIR_BACKUP_20261029T014710068987Z",
+  "recorded_original_receipt_sha256": "88aea924ac224d5f1f0fe2290042c7ebc9939b78cbb6338d1bba222170d5d46f",
+  "separate_environment_correction_receipt_sha256": "7ed3fe5474c749da2d919973537a1fc38938d778d7530c44fb002d6aa6d30e83"
+}

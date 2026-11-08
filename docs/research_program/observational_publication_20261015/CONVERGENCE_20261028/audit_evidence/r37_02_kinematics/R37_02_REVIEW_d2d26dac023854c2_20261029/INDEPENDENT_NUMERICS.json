@@ -1,0 +1,91 @@
+{
+  "gaia": {
+    "free_slope_max_difference": 2.7533531010703882e-14,
+    "free_slope_covariance_max_difference": 1.5987211554602254e-13,
+    "bin_projection_lost_slopes_residual": 0.0,
+    "g_slope_max_difference": 2.850697455869522e-11,
+    "profile_deviance_difference_independent": -67.77514656711816,
+    "profile_deviance_error": 5.0533799367258325e-11,
+    "union_rank": 12,
+    "additional_deterministic_9vector_carrier_max_error": 2.7755575615628914e-16,
+    "nominal_covariance_trace": 296.86857445476346,
+    "sandwich_covariance_trace": 25.96398809680048,
+    "joint_covariance_trace": 24.835357945095655,
+    "scalar_energy_exact_power_max_error": 2.220446049250313e-16,
+    "stored_MC_rates_copied_exactly": true
+  },
+  "pm": {
+    "information_units": "(microarcsec/year)^-2",
+    "history_checks": [
+      {
+        "k": 0,
+        "response_rank": 5,
+        "information_rank": 5,
+        "null_residual": 0.0,
+        "saved_info_max_difference": 0.0
+      },
+      {
+        "k": 0.1,
+        "response_rank": 5,
+        "information_rank": 5,
+        "null_residual": 0.0,
+        "saved_info_max_difference": 0.0
+      },
+      {
+        "k": 1,
+        "response_rank": 5,
+        "information_rank": 5,
+        "null_residual": 0.0,
+        "saved_info_max_difference": 0.0
+      },
+      {
+        "k": 2,
+        "response_rank": 5,
+        "information_rank": 5,
+        "null_residual": 0.0,
+        "saved_info_max_difference": 0.0
+      },
+      {
+        "k": 10,
+        "response_rank": 5,
+        "information_rank": 5,
+        "null_residual": 0.0,
+        "saved_info_max_difference": 0.0
+      }
+    ],
+    "unit_counterexample": {
+      "same_physical_remainder_uasyr": 1.0,
+      "same_physical_remainder_masyr": 0.001,
+      "candidate_radius_from_uas_convention": 0.6405874815284968,
+      "expected_conversion_of_candidate_radius_to_masyr": 0.0006405874815284967,
+      "candidate_formula_after_converting_inputs_to_masyr": 6.405874815284965e-07,
+      "equivariance_ratio": 0.0009999999999999996
+    },
+    "interpretation": "r/sqrt(lambda(F)) is valid for dimensionless whitened residual radius r; with a rate-valued r it is dimensionally wrong. A coefficient-space physical remainder ball of radius r adds r in the identified combination, independent of F; any other remainder norm requires its explicit response metric."
+  },
+  "optical": {
+    "joint_chi2_10_quantile": 18.307038053275146,
+    "direct_outer_radius": 9.561846732216712e-05,
+    "octupole_outer_radius": 0.00018702734968356496,
+    "physical_cap_inactive_for_entire_direct_ball": true,
+    "independent_lagrange_profile_residual": 9.194001647971212e-05,
+    "recorded_profile_residual": 9.194001820158881e-05,
+    "profile_residual_abs_difference": 1.7218766966723906e-12,
+    "independent_shared_budget": 0.0018721604870877494,
+    "shared_budget_abs_difference": 0.0,
+    "residual_covariance_max_difference": 0.0,
+    "lift_rank": 3,
+    "perpendicular_subspace_dimension": 4,
+    "lift_M_identity_error": 1.5415999640028266e-19,
+    "S_zero_saved_inverse": null,
+    "small_S_inverse_max_abs": 1327797.5722476498
+  },
+  "chirality": {
+    "Cq_CqT_identity_error": 3.3306690738754696e-16,
+    "exact_distance_numeric": 0.5773502691896255,
+    "delta_norm": 0.5773502691896257,
+    "initial_chirality_determinant": 0.04190262407031389,
+    "boundary_chirality_determinant": -2.4671622769447986e-18,
+    "scope": "fixed simple Q, nonzero initial chirality, ambient STF3 Frobenius ball; no joint-Q assertion"
+  }
+}

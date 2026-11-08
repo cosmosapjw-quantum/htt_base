@@ -1,0 +1,180 @@
+{
+  "packet_id": "56f59a96f87af3c10ea198af5c1fa6e131956aa89f457e4b8a1a39af1a6a5447",
+  "task_id": "R37-01-RADIATION",
+  "input_identity": "sha256:7503451fc55c359618c388655a85851dd61f784140a7bd457d715ccd870ee134",
+  "candidate_identity": "sha256:4a62eba6dfa08099b7e440474820bcc753bdcdeabf4e1188dbd8190bfaaf0dd0",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "aedeab19939b6f375e5276b6e185e4e934f6d0f3e0f1ad672fde70530d31b4cb",
+  "schema": "htt.r37.independent_review_raw/2",
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "attempt": 4,
+  "agent_id": "/root/rc_56f59a96f87af3c1",
+  "phase": "review",
+  "outcome": "success",
+  "verdict": "PASS_SCOPED_CONDITIONAL_FINITE_RESULT",
+  "acceptance_met": true,
+  "qualified_products": [
+    "joint_radiation_shear_image"
+  ],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "transport_selected": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "timestamp_utc": "2026-10-29T00:54:41.561894+00:00",
+  "packet_path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_NEXT_012_20261029.json",
+  "packet_sha256": "c8b9af2910809ba85c11b30bee2b8c5a76df16bec9767c3e82fa84cf8757a5e1",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "base_head": "5029f20af96c1fdf20c4ac864135a7d9ba8a76a5",
+  "base_branch": "research/htt-adaptive-methods-20261023",
+  "origin": "https://github.com/cosmosapjw-quantum/htt_base.git",
+  "candidate_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/ARTIFACT_MANIFEST.json",
+  "review_independent_of_authors": [
+    "/root/rc_e519d7b4b6696b6c",
+    "/root/rc_2f6838f317ed915d"
+  ],
+  "review_independent_of_contributors": [
+    "/root/rc_e519d7b4b6696b6c",
+    "/root/rc_d6018c48885802ea",
+    "/root/rc_2f6838f317ed915d"
+  ],
+  "repo_write_count": 0,
+  "STATE_write_count": 0,
+  "git_mutations": 0,
+  "children_spawned": 0,
+  "old_producer_invocations": 0,
+  "new_draw_generation": false,
+  "source_downloads": 0,
+  "native_solver_or_ODE_invocations": 0,
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2",
+    "pytest": "9.1.1"
+  },
+  "findings": [],
+  "prior_findings_closeout": [
+    {
+      "id": "R37-RAD-REVIEW-01",
+      "status": "CLOSED_SCOPED",
+      "evidence": "One common maximum event, all saved-draw operator variations, independently reproduced centered/target coverage, and explicit fixed-operator physical-layer limitation."
+    },
+    {
+      "id": "R37-RAD-REVIEW-02",
+      "status": "CLOSED_SCOPED",
+      "evidence": "H4-dropped carrier accurately labelled rank 11; actual M rank 6 and positive same-M true-shear ambiguity computed; no invalid gain-only point estimate remains."
+    }
+  ],
+  "validation_evidence": [
+    "Candidate manifest matches sha256:4a62eba6dfa08099b7e440474820bcc753bdcdeabf4e1188dbd8190bfaaf0dd0; all 14 candidate artifacts, seven frozen inputs, two history receipts, retained arrays and source publication status verify. Prior 13-artifact candidate and first failure remain preserved.",
+    "Independent angular-kernel and rank-0/2/4 moment constructions evaluated all 8191 calibration plus 4096 test draws without generating RNG or invoking any old producer. Full/common all-draw matrix difference 3.3306690738754696e-16; shear difference 8.673617379884035e-18, below 2e-10.",
+    "Independent explicit order statistics reproduce the shared maximum over 20 mode-coordinate deviations: threshold 1.2708886309993337, 3888/4096 centered joint hits, and 3389/4096 old marginal full-response joint hits. Common/full simultaneous physical-target hits are 3904/4096; H4-dropped and unpolarized simultaneous target hits are both zero, as correctly reported.",
+    "All 20 coverage rows reproduce with maximum numeric difference 5.759569931445066e-17. All 300 physical support rows reproduce within 2.7755575615628914e-17. Derivative and polarization errors use the same two-coordinate disk and are summed before one inverse; independent separate bounds would differ by as much as 0.0061869411864086885.",
+    "Independent angular-kernel SVD confirms ranks 15 full fixed profile, 11 H4-dropped retaining rho/pi/P_star, and 6 actual V=0 Thomson gain. A separately reconstructed QR-nullspace pair has minimum brightness 0.2895947795833415, M difference 2.220446049250313e-16 and true shear separation norm 0.00011802799239330833. All 75 inner-witness support rows reproduce within 1.734723475976807e-16.",
+    "Positive saved temperatures and coercive responses are retained: minimum temperature 0.7356810199682031; minimum saved response eigenvalue 0.539456306788622. Polarization omission sign matches -gamma L_inverse P_star/5 within 7.37257477290143e-18 and its norm satisfies the stated coercive bound.",
+    "Eight focused R37/R36 tests passed in 3.96 seconds with bytecode/cache writes disabled. Four one-page PDF 1.4 figures parsed, rendered and were visually inspected; labels distinguish the H4-dropped closure, fixed-operator physical sensitivity, coordinate target coverage, and joint-event width.",
+    "No scalar replacement, posterior/MIO conflation, native solver/ODE, empirical shear or Bianchi-family claim is admitted. R_tau remains constructed and its residual a sensitivity axis. Original PUBLICATION_DAG.json equals HEAD with SHA256 e59da3e51c5bd2069a4c424ebecced89025885a6c4843f59c0042a668a63b6c9. Final Git status, branch, HEAD and all candidate artifacts are unchanged."
+  ],
+  "qualifications": [
+    "Acceptance is only for joint_radiation_shear_image under the new conditional R37-01 contract. It is not observational shear, a calibrated joint physical/statistical coverage claim, four-axis CAS admission, or original42 acceptance.",
+    "The 3888/4096 result is simultaneous coverage of mode-centered output deviations under the retained oracle law. It must not be reported as 95% simultaneous coverage of the same physical target by all reduced methods; those biased target coverages are separately reported and can be zero.",
+    "Calibration and test samples are reused saved preselection draws. The 95% higher empirical quantile and descriptive test frequency are finite conditional evidence, not a distribution-free or prospective nominal-coverage theorem. The event has 20 entries with duplicate full/common information; it does not claim 20 independent coordinates.",
+    "The deterministic derivative/polarization disk is one shared source, not a stochastic covariance. Its propagation uses the central operator; combined physical/statistical half-widths remain an explicitly uncalibrated sensitivity layer.",
+    "The true gain-only comparison is a positive two-member identified-set witness on the declared fixed-profile finite angular domain, separate from the retained stochastic law. It is neither an M-only point estimator nor an outer bound for the entire positive fibre.",
+    "Generic ranks 23/20 and fixed-profile ranks 15/11/6 concern different domains. Timing is inference-only on precomputed carriers and does not measure acquisition, extraction cost or a speed advantage over correct joint GLS."
+  ],
+  "assumptions_and_conventions": {
+    "metric": "(-,+,+,+)",
+    "frame": "same R36 local observer; e=-n",
+    "energy": "rho_ref normalized",
+    "time": "declared toy time unit",
+    "STF": "five Frobenius-orthonormal rank-two coordinates",
+    "temperature_law": "same saved eight-coordinate correlated Gaussian perturbations; all cal/test draws consumed without rejection or selection",
+    "polarization": "fixed positive screen profile amplitude 0.12; V=0",
+    "transport_derivative": "constructed R_tau center; supplied physical remainder grid"
+  },
+  "commands": [
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLCONFIGDIR=/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/mpl .venv/bin/python /mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/check.py",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/check_stdout.txt"
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MPLCONFIGDIR=/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/test_mpl .venv/bin/python -m pytest -q -p no:cacheprovider docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/test_radiation_image.py docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/test_radiation_core.py",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/pytest.txt"
+    },
+    {
+      "cmd": "pdfinfo; pdftotext -layout; pdftoppm -singlefile -scale-to 1200 -png for each of four candidate PDFs",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/figure_checks.json"
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/check.py",
+      "sha256": "93d7f71b19ac87d5ab2d6edafe518ab6d7676d4bc2b598485fbb385564aa8ee3",
+      "size_bytes": 12942
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/check_stdout.txt",
+      "sha256": "bd9947fc517449d5d89f6ad204c65c065bf07383ed96f277253f691b3c7aca59",
+      "size_bytes": 2099
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/checks.json",
+      "sha256": "6933ccff476de8ace2fa9f4bbb4b43ab975ccc68a2a9d3b52b451197b5f67d55",
+      "size_bytes": 7490
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/figure_checks.json",
+      "sha256": "a9734eaed5765a8ea262e718e171d5afd8d35a724759696fe2dcdbbdb33b9fdb",
+      "size_bytes": 6712
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/final_state.json",
+      "sha256": "1b2be599a590b95f1cf23cf0de0f60cf555260b7eeffec850c2943af457c1f13",
+      "size_bytes": 215
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/initial_state.json",
+      "sha256": "616ed1646b98d238b245c405e4754618c858cbc622fa29fdf62108c570aaf23a",
+      "size_bytes": 181755
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/matched_coverage_width.png",
+      "sha256": "dd25618eccf3225c3b5e648107fbbd452484a296a70af9fc5f05700847999cb9",
+      "size_bytes": 55303
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/polarization_omission_bias.png",
+      "sha256": "3f0467f4ef2b1a22ff2fe05be39055228b132af068047cac80b26f0b6d0d5ccf",
+      "size_bytes": 30999
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/pytest.txt",
+      "sha256": "071092c2ead8cb4feb3fb48e4a03284e6eff790ca1a31effab620853b4d0e2c4",
+      "size_bytes": 98
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/radiation_response_spectrum.png",
+      "sha256": "6f49651ea2fb6ea2addfef6746d1014ccfe55b778297b333426b7f3acf39aea7",
+      "size_bytes": 49270
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_56f59a96f87af3c1/shear_support_vs_transport_budget.png",
+      "sha256": "aa159b6eabac23e9f55f7972cb95eaf55035ec3aed2594716ca0624155d69e74",
+      "size_bytes": 47924
+    }
+  ],
+  "original42_acceptance_effect": "none",
+  "original42_completed": "17/42",
+  "analytic_alternate_completed": "18/42",
+  "candidate_unchanged": true,
+  "memory_used": false,
+  "next_executable_checkpoint": "Host records this exact packet/candidate-bound independent success, then requests the next dependency-safe authorized READY packet under unchanged cumulative campaign accounting."
+}

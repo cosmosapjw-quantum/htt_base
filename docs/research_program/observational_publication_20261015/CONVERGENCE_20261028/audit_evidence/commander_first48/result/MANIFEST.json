@@ -1,0 +1,188 @@
+{
+  "created_utc": "2026-10-28T11:16:00.167369+00:00",
+  "owner": "obsstat",
+  "scope": "fixed first48 conditional processed-map ensemble location",
+  "status": "OUTPUT_SEALED_PENDING_FRESH_INDEPENDENT_ASTRA_REVIEW",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "reasoning_effort": "UNKNOWN"
+  },
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "interpreter": "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+  "thread_environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1"
+  },
+  "commands": [
+    {
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python /mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/compute.py",
+      "stdout": "compute.stdout",
+      "stderr": "compute.stderr",
+      "exit": "compute.exit",
+      "status": 0
+    },
+    {
+      "command": "env OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python /mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/test_compute.py",
+      "stdout": "test.stdout",
+      "stderr": "test.stderr",
+      "exit": "test.exit",
+      "status": 0
+    }
+  ],
+  "retained_first_failures": [
+    {
+      "stage": "initial syntax error",
+      "stdout": "first_failure.stdout",
+      "stderr": "first_failure.stderr",
+      "exit": "first_failure.exit"
+    },
+    {
+      "stage": "manifest key mismatch",
+      "stdout": "attempt2.stdout",
+      "stderr": "attempt2.stderr",
+      "exit": "attempt2.exit"
+    },
+    {
+      "stage": "initial passing test with ResourceWarning; fixed file-close hygiene",
+      "stdout": "test_initial.stdout",
+      "stderr": "test_initial.stderr",
+      "exit": "test_initial.exit"
+    }
+  ],
+  "source_contracts": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_response_source_research/foreground_input_followup/IMPLEMENTATION_CONTRACT.json",
+      "sha256": "03976934ccfa65fcb9917830b4ea6fa77892db61ba4d564e3726200b9dfb1bfd"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_response_source_research/foreground_input_followup/INPUTS_FIRST48.json",
+      "sha256": "04ddfc0c2bf908b87af7005585051fc4c3bdcd10641eecf68a1b756e84066079"
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_response_source_research/foreground_input_followup/RETURN.json",
+      "sha256": "6f00db77c0256715ddbc043ee074441528dabc481254ac718f2139d5d773f5a0"
+    }
+  ],
+  "files": [
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/compute.py",
+      "sha256": "2add114018de7cc7e5b61f1de060b97fa79aaadfc3bce0bc5dd1146797ba9e2a",
+      "bytes": 22190
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/test_compute.py",
+      "sha256": "c3b4f87b8f9677a05fbf442b90a4044b7259a3deb8d4653e83ac5cdf625b48ed",
+      "bytes": 4779
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/RESULT.json",
+      "sha256": "e41912a312620b2b0ff198e689445f960374ca09476377371079fdca2e54694d",
+      "bytes": 87520
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/COORDINATES.csv",
+      "sha256": "d1112faca790d69caa5d76eb4182bdbf5d6a7d42a549127c199680a3df0ec15b",
+      "bytes": 8760
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/FIGURE.png",
+      "sha256": "112dafdceda53221102d50914310db9bdd310e52c2159a19ac8acc719ce2ade2",
+      "bytes": 250834
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/FIGURE.pdf",
+      "sha256": "bd9417cff9494659d066997b31c8ce5b59d293deae64be117c958ea5742898ba",
+      "bytes": 30804
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/FIGURE_CAPTION.md",
+      "sha256": "83a1d2d23733f720a6d2f82312f8ca0b773793ba259c410c3568e120aab3daff",
+      "bytes": 2012
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/MANUSCRIPT_PARAGRAPH.txt",
+      "sha256": "de2f1cb4f678d91c44582316cc1dac8ed98ad1792158e2aa1df405779fbb0a83",
+      "bytes": 1050
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/compute.stdout",
+      "sha256": "84d219bb8a35394ed63d87fcd2d60cd02af29050cd649835f20ad7b0fbe040fc",
+      "bytes": 620
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/compute.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/compute.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/test.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/test.stderr",
+      "sha256": "20926532728f9d4c05f423cfb0a4f6b0f1938e246ea00c9920849024f6d92955",
+      "bytes": 677
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/test.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/first_failure.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/first_failure.stderr",
+      "sha256": "6b68854ec54f4a621709456ad9f4d4be7e6835bfde3d284a2543bcf8ade99d94",
+      "bytes": 594
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/first_failure.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/attempt2.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/attempt2.stderr",
+      "sha256": "2f2defd8dfe7623396c5cf7c70a68c1229b4f67b1deb78ecc6fd8be08e97f5d0",
+      "bytes": 556
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/attempt2.exit",
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "bytes": 2
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/test_initial.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/test_initial.stderr",
+      "sha256": "89a2605121e1d1a1612b5470b5d44170ae3be8fde4a1f50e5ca51299ea2fdfd9",
+      "bytes": 18786
+    },
+    {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/test_initial.exit",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    }
+  ]
+}

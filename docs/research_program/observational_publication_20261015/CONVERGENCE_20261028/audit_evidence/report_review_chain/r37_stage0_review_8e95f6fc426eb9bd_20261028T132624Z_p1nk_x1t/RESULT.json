@@ -1,0 +1,57 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "packet_id": "8e95f6fc426eb9bdc66f1a347b94f652102f92236f31c1a29b37cbd3267efb65",
+  "task_id": "R37-00-FIRST-REPORT",
+  "attempt": 5,
+  "phase": "review",
+  "input_identity": "sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba",
+  "candidate_identity": "sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "b1e51d6e2d7d97855a13014087cf34b9f729b0478c12a78c0a7accf96bf12932",
+  "agent_id": "/root/rc_8e95f6fc426eb9bd",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "review_verdict": "HOLD_CONTROLLER_PRODUCT_BINDING",
+  "F1_status": "CLOSED",
+  "source_bound_report_checks": "PASS_SCOPED_F1_REPAIR_AND_PRESERVATION",
+  "report_qualification": "PENDING_CONTROLLER_PRODUCT_BINDING",
+  "scientific_admission": "UNCHANGED; no new scientific admission",
+  "original42_effect": "none",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "transport_selected": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "schema": "htt.r37_stage0_controller_review_result/1",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "8f2f4aebc9d2f2f1e63ee24ed76df904266c3a8f56ee8fdc858e832f50c1bf77",
+  "review_artifact": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/REVIEW.json",
+  "review_artifact_sha256": "9e6f3320951400886dcd6685556f028f8d6adeea59778cca7924e80a02c8f43e",
+  "validation_evidence": [
+    "Fresh independent literal comparison closed F1: E3/E5/E7/E10 claim_tier and transfer_source exactly match their unchanged bound source RESULT.json fields; both semicolon-containing transfer strings retained.",
+    "Structural comparison found exactly the eight authorized claim-map leaf changes. All remaining claim fields, numerical selectors, sources and qualifications are unchanged.",
+    "43 focused validation checks passed; 151 source/input/candidate/artifact/history SHA-256 and available-size checks had zero mismatches. Eight sealed prior-review evidence artifacts also match their historical receipt.",
+    "Current manifest hashes to sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee; preserved base manifest hashes to sha256:676298caadd2a7c4267f47c188ad54299f9f11da6932e5847bca2b45377f5208. Actual repair packet/result/raw receipt and prior identities agree.",
+    "Report Markdown/TeX/PDF, six vector figures, six-paper crosswalk, BUILD_VALIDATION and frozen 109 legacy task IDs are unchanged. The historical independent successful build applies to the exact retained source/PDF; no rebuild or scientific producer was run.",
+    "Current source qualifications retain synthetic, C0 response/design, finite algebraic, analytic-transfer covariance and first48 diagnostic limits. Original42 remains 17/42 external-output and 18/42 separate analytic alternate, with no effect.",
+    "Read-only live controller excerpt reproduces the independent envelope blocker candidate_products=[] against required convergence_baseline_report. Report qualification withheld; F1 closure preserved."
+  ],
+  "issue": {
+    "class": "code",
+    "question": "How can the source-bound report receive its declared controller product binding when the recorded repair envelope proposed no products?",
+    "exact_missing_or_defect": "The recorded R37 repair envelope CONTROLLER_RESULT_VALIDATED_cull00vg.json omits qualified_products. research_controller.py lines 2607-2611 defaults that field to [] and stores candidate_products=[]. Live R37-00-FIRST-REPORT therefore has candidate_products=[] for candidate sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee despite spec.qualified_product_expected=convergence_baseline_report. The review gate at lines 2594-2599 requires reviewed qualified_products to be a subset of candidate_products. Returning the report product would be rejected; recording success with no product would leave the declared downstream product dependency unavailable.",
+    "input_identity": "sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba",
+    "substantive": false,
+    "high_consequence": false,
+    "true_external": false,
+    "risk": "Controller result-envelope/product binding omission only. F1 is closed; no new numerical, physical, source-identity, or report-content failure is demonstrated.",
+    "minimal_fix": "Use one bounded supported controller transition under the same task, frozen input and candidate history to bind convergence_baseline_report as the proposed report product. Preserve the repaired source-bound candidate, earlier failed review, exact report/source bytes and cumulative accounting; do not directly edit STATE or mark empty-product success as report qualification. No scientific producer, report rebuild or source change is required.",
+    "minimal_validation": "The actual recorded candidate_products contains convergence_baseline_report, bound to the unchanged reviewed candidate (or an explicitly reviewed packaging-only successor), and the review product-subset gate succeeds for that exact product without original42 promotion."
+  },
+  "next_executable_checkpoint": "Host completes actual ACK, records this exact controller-binding blocker, and requests next packet; same task/candidate history retained."
+}

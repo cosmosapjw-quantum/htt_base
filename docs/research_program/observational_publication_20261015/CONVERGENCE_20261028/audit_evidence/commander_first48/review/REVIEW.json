@@ -1,0 +1,114 @@
+{
+  "created_utc": "2026-10-28T11:25:37.168584+00:00",
+  "reviewer_task": "/root/conditional_ensemble_blind_review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "reasoning_effort": "UNKNOWN",
+    "status": "NOT_INDEPENDENTLY_OBSERVED"
+  },
+  "independence": {
+    "did_not_frame_contract": true,
+    "did_not_author_candidate": true,
+    "did_not_read_prior_independent_verdict": true,
+    "read_only_candidate": true,
+    "writes_only_review_directory": "/mnt/extdrive/workdir/htt_open_data/r36_conditional_first48_independent_review_20261028T112537Z_88c96c58"
+  },
+  "verdict": "SCOPED_PASS_CONDITIONAL_EXPLORATORY_RESULT",
+  "scientific_admission": "HOLD_FOR_ORIGINAL_R36_07_AND_ORIGINAL42; no source-established physical or selective coverage",
+  "scope": "Admissible as a fixed first48 descriptive processed-map ensemble mean/covariance and nominal Hotelling construction conditional on explicitly assumed iid multivariate Gaussian law. No general reusable-library acceptance, physical attribution, source-established coverage, publication or original task promotion.",
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "MEDIUM",
+      "blocking_for_frozen_candidate": false,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/compute.py",
+      "lines": [
+        163,
+        170
+      ],
+      "title": "Exact zero displacement is incorrectly treated as an unstable solve",
+      "evidence": "When mu0 equals the sample mean, delta, z and solution are zero. The normalized residual is then 0/(0+0), hence NaN; the function returns NOT_EVALUABLE even with positive definite covariance. A centered scalar sample [-1,1] is a static minimal witness. No witness was executed because reanalysis was prohibited.",
+      "consequence": "The generic routine mishandles a valid centered mean or a null set to the sample mean; this is false abstention rather than false detection. Current sealed invocation has nonzero mean and finite residual 8.795923874997615e-17, so the saved result is unaffected.",
+      "minimal_fix": "Before wider reuse, define normalized residual as 0 when finite delta and finite solution are both exactly zero after valid full-rank Cholesky; add one zero-displacement synthetic test expecting T2=0 and F-tail=1. Preserve the sealed current candidate."
+    },
+    {
+      "id": "F2",
+      "severity": "LOW",
+      "blocking_for_frozen_candidate": false,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/test_compute.py",
+      "lines": [
+        19,
+        34
+      ],
+      "title": "Basis validation lacks an independently specified positive complex fixture",
+      "evidence": "The positive check compares rows loaded using signed_alm_to_real with the same converter called again. Negative-m and m=0 corruption witnesses exist, and production norm preservation is independently compared to signed-m power, but no hand-built complex row is compared to a known ordered 42-vector.",
+      "consequence": "A convention/sign/order error could evade the positive test. Static inspection currently matches the frozen negative sqrt(2) imaginary convention and E/B, ell, m ordering. This does not invalidate the fixed candidate.",
+      "minimal_fix": "At the next authorized code change, add one hand-built valid signed-m fixture with independently specified expected coordinate positions and signs; do not claim that this stronger fixture already ran."
+    }
+  ],
+  "blocking_findings_for_frozen_candidate": [],
+  "identities": {
+    "RETURN.json": "60ec42d746770f6c50fc06d38f22222216ce602caa1c633aecdbc48173d116a7",
+    "MANIFEST.json": "d7f27da58ad888b7f8f236b6d18cd28ba6b2639ff3e398d0473399c9842e7442",
+    "RESULT.json": "e41912a312620b2b0ff198e689445f960374ca09476377371079fdca2e54694d",
+    "compute.py": "2add114018de7cc7e5b61f1de060b97fa79aaadfc3bce0bc5dd1146797ba9e2a",
+    "test_compute.py": "c3b4f87b8f9677a05fbf442b90a4044b7259a3deb8d4653e83ac5cdf625b48ed",
+    "IMPLEMENTATION_CONTRACT.json": "03976934ccfa65fcb9917830b4ea6fa77892db61ba4d564e3726200b9dfb1bfd",
+    "INPUTS_FIRST48.json": "04ddfc0c2bf908b87af7005585051fc4c3bdcd10641eecf68a1b756e84066079"
+  },
+  "numerical_evidence_from_sealed_candidate": {
+    "n": 48,
+    "p": 42,
+    "rank": 42,
+    "condition": 58283.90902009615,
+    "T2": 3877.4728610810052,
+    "critical_c": 1240.1317051427611,
+    "F0": 11.7856317965988,
+    "zero_mean_nominal_F_tail": 0.0025424677607337525,
+    "total_mean_norm_microK": 0.07020268582105542,
+    "conservative_total_mean_norm_bounds_microK": [
+      0.0,
+      0.8283228083190148
+    ],
+    "gaussian_control_covered": 1886,
+    "gaussian_control_reps": 2000
+  },
+  "controls": {
+    "tests": "Saved 5/5 pass; reviewer did not rerun",
+    "coverage": "1886/2000=0.943 within frozen [0.925,0.975]; sole prescribed batch recorded",
+    "identity": "28 artifact/source/RETURN checks and all 48 source row checks pass",
+    "first_failures": "Syntax and manifest-key failures preserved, plus passing test ResourceWarning history. Failures occur before Gaussian coverage generation.",
+    "basis_and_units": "All 42 real coordinates and full 42x42 covariance retained; basis norm matches signed-m norm; MC input 1e-6 to K is explicitly checked despite shared observed operator recording 1.0."
+  },
+  "claim_limits": [
+    "Gaussian iid is an assumption; primary release construction and finite skewness/kurtosis do not establish it.",
+    "The after-exposure availability selection has no selective or confirmatory coverage guarantee.",
+    "95% region coverage is nominal under the fixed-sample Gaussian law; calibration of the real processing pipeline is not shown.",
+    "Observed/MC conditional exchangeability is UNKNOWN; observed contrast is appropriately omitted.",
+    "Total conditional mean is not foreground-only contamination, CMB parent truth, physical nine-moment radius, original MC100 rank, native solver result or family identification.",
+    "The complete 42-vector and covariance retain this selected band-limited carrier, not the full physical radiation tensor or an inverse response.",
+    "A zero lower conservative norm bound and all coordinate bars containing zero do not imply the joint ellipsoid contains zero.",
+    "x,F,Pi,Q,G_F remain UNKNOWN."
+  ],
+  "original_R36_07": "UNCHANGED_HOLD",
+  "original_42_acceptances": "UNCHANGED",
+  "recommended_next_action": "Controller may consume this review as auxiliary first48 conditional result only, preserving all assumptions and original holds; continue already-authorized independent scientific/acquisition work. No repeat first48 or 2000-batch rerun required by this review. Before promoting the routine for general use, make F1/F2 a separate bounded implementation change with targeted validation.",
+  "sources": [
+    {
+      "url": "https://www.itl.nist.gov/div898/handbook/pmc/section5/pmc543.htm",
+      "supports": "One-sample T2 and exact F scaling; web open succeeded."
+    },
+    {
+      "url": "https://doi.org/10.1051/0004-6361/202038073",
+      "supports": "NPIPE nonlinear reprocessing and observation-derived fixed mixing matrices, Sections 5 and 7.7. Search excerpt and saved source HTML inspected; current DOI/A&A page fetch returned 403."
+    }
+  ],
+  "checks_artifact": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_conditional_first48_independent_review_20261028T112537Z_88c96c58/IDENTITY_AND_SAVED_EVIDENCE_CHECKS.json",
+    "sha256": "44176c3aee55c0a0b8a21355be9581ff0e8f37684819906a95d6e1d2c329f69c"
+  }
+}

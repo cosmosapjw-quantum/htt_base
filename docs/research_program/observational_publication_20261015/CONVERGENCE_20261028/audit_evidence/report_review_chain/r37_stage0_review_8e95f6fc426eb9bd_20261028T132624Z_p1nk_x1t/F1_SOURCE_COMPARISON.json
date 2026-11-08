@@ -1,0 +1,103 @@
+[
+  {
+    "claim_id": "E3",
+    "source": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/RESULT.json",
+      "sha256": "074b49cc8ce3edcfb8dc106a83858ecf5bb5c08c824952d748377b911879529d",
+      "selectors": [
+        "rng.calibration_per_case",
+        "rng.test_per_case",
+        "methods[0:4].D_physical_target_coverage.fraction",
+        "methods[0:4].A_physical_target_coverage.fraction",
+        "response_compression.L2_L4[0:2].operator_error_over_rho0"
+      ]
+    },
+    "before": {
+      "claim_tier": "C1",
+      "transfer_source": "empirical_proxy"
+    },
+    "after": {
+      "claim_tier": "conditional_synthetic_method_experiment",
+      "transfer_source": "none"
+    },
+    "source_values": {
+      "claim_tier": "conditional_synthetic_method_experiment",
+      "transfer_source": "none"
+    },
+    "literal_match": true
+  },
+  {
+    "claim_id": "E5",
+    "source": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/RESULT.json",
+      "sha256": "9bd8bee99c3584dbf09a535f93d8eda53a00ef02571a0f8b761d6017467b92a2",
+      "selectors": [
+        "counterexample"
+      ]
+    },
+    "before": {
+      "claim_tier": "C1",
+      "transfer_source": "none"
+    },
+    "after": {
+      "claim_tier": "C0_CONDITIONAL_METHOD",
+      "transfer_source": "none; saved apparent CF4 proxy is not native transfer"
+    },
+    "source_values": {
+      "claim_tier": "C0_CONDITIONAL_METHOD",
+      "transfer_source": "none; saved apparent CF4 proxy is not native transfer"
+    },
+    "literal_match": true
+  },
+  {
+    "claim_id": "E7",
+    "source": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/RESULT.json",
+      "sha256": "c20cacc0cd64c6349051b5c090d65d1083aea47961ffc446019739386d6adc93",
+      "selectors": [
+        "source.selected_rows",
+        "gram.primary_spin_glide6.joint.selected_sample_full5_coefficients_uasyr",
+        "gram.all97_sensitivity.joint.selected_sample_full5_coefficients_uasyr",
+        "power_frontier",
+        "history_images"
+      ]
+    },
+    "before": {
+      "claim_tier": "C1",
+      "transfer_source": "empirical_proxy"
+    },
+    "after": {
+      "claim_tier": "C0 conditional response/design",
+      "transfer_source": "none; first-order kinematic response"
+    },
+    "source_values": {
+      "claim_tier": "C0 conditional response/design",
+      "transfer_source": "none; first-order kinematic response"
+    },
+    "literal_match": true
+  },
+  {
+    "claim_id": "E10",
+    "source": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/RESULT.json",
+      "sha256": "a7458dbd0d8fad934b968733562125acf2a50881bddbf483dfb9fa8084137523",
+      "selectors": [
+        "source_rows",
+        "conditional_R5_diagnostics.trace"
+      ]
+    },
+    "before": {
+      "claim_tier": "C1",
+      "transfer_source": "empirical_proxy"
+    },
+    "after": {
+      "claim_tier": "CONDITIONAL_MODEL_COVARIANCE",
+      "transfer_source": "EH98_NO_WIGGLE_APPROXIMATION"
+    },
+    "source_values": {
+      "claim_tier": "CONDITIONAL_MODEL_COVARIANCE",
+      "transfer_source": "EH98_NO_WIGGLE_APPROXIMATION"
+    },
+    "literal_match": true
+  }
+]

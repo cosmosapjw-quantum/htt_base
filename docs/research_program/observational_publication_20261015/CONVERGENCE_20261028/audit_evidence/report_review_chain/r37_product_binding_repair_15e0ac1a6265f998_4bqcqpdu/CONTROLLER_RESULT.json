@@ -1,0 +1,56 @@
+{
+  "schema": "htt.r37_controller_product_binding_repair_result/1",
+  "packet_id": "15e0ac1a6265f998a9f8814aca007dfbf5c7817885872f4e2d787322fe0ae8ce",
+  "task_id": "R37-00-FIRST-REPORT",
+  "attempt": 7,
+  "phase": "repair",
+  "agent_id": "/root/rc_15e0ac1a6265f998",
+  "input_identity": "sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "b1e51d6e2d7d97855a13014087cf34b9f729b0478c12a78c0a7accf96bf12932",
+  "outcome": "success",
+  "candidate_identity": "sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee",
+  "base_candidate_identity": "sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee",
+  "producer_packet_id": "a21f9000155d921999f51dcff003c2233922f4ce75b1fe2b0aeb82092282bd16",
+  "research_packet_id": "dc129b9607d7267e948f3c8a72d08146109b7001429a1b9b2f297d686011d585",
+  "qualified_products": [
+    "convergence_baseline_report"
+  ],
+  "acceptance_met": false,
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r37_product_binding_repair_15e0ac1a6265f998_4bqcqpdu/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "3b13eca4c411ad008ca6706a5bd846e154930ba7b6368288faf1f9f39ac5f011",
+  "preserved_author_result": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/RESULT.json",
+    "sha256": "3f117e5ae60fbefe81b2806f519ebd6b7fb144417e7bdb2723013bcc8e40dfbe",
+    "packet_id": "a21f9000155d921999f51dcff003c2233922f4ce75b1fe2b0aeb82092282bd16",
+    "agent_id": "/root/rc_a21f9000155d9219"
+  },
+  "previous_blocker_review": {
+    "packet_id": "8e95f6fc426eb9bdc66f1a347b94f652102f92236f31c1a29b37cbd3267efb65",
+    "receipt_path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/RAW_RECEIPT.json",
+    "receipt_sha256": "8f2f4aebc9d2f2f1e63ee24ed76df904266c3a8f56ee8fdc858e832f50c1bf77",
+    "F1_status": "CLOSED",
+    "outcome": "blocker",
+    "reason": "controller product binding omitted"
+  },
+  "validation_evidence": [
+    "Current ARTIFACT_MANIFEST.json SHA-256 equals unchanged candidate sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee; producer_packet_id remains a21f9000155d921999f51dcff003c2233922f4ce75b1fe2b0aeb82092282bd16.",
+    "Read-only SHA-256 and available-size checks passed for all seven manifest artifacts, six retained vector figures, and six frozen input sources; no report/source bytes changed.",
+    "Preserved author RESULT.json identity matches the retained producer/candidate. Prior independent review receipt and its eleven sealed evidence artifacts match their expected SHA-256; that review closed F1 and held only the controller product binding.",
+    "Previously recorded controller envelope lacks qualified_products and live candidate_products remains []; this new repair envelope proposes only convergence_baseline_report for the unchanged candidate.",
+    "Retained BUILD_VALIDATION.json records a successful 12-page PDF/source build and six figures for byte-identical artifacts; no build or scientific producer was rerun."
+  ],
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "transport_selected": {
+    "model": "gpt-6-sol",
+    "effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "scientific_admission": "PENDING_FRESH_INDEPENDENT_SCOPED_REVIEW",
+  "report_qualification": "PENDING_FRESH_INDEPENDENT_SCOPED_REVIEW",
+  "original42_effect": "none",
+  "next_executable_phase": "review"
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "R37-03-v1",
+  "task_id": "R37-03-HUBBLE",
+  "owner": "HTT inference / obsstat retained features",
+  "claim_tier": "conditional observational apparent contrast plus finite synthetic method control",
+  "scope": "490 selected released SN covariance; overlapping 705-row sensitivity; separate CF4 operator",
+  "input_sha256": {
+    "R36-08_RESULT": "f1a9246b7e1ab216fd6fb927a3fc2e28360cf2e5626aba5d7a88f2af05f7e82b",
+    "R36-01_RESULT": "31f31c79c0fb1d11724dcb9da1373dcd3421c7fc8717eeecd4c54cc1237c5b62"
+  },
+  "basis": "released RA/DEC Cartesian signed dipole plus normalized Frobenius STF5",
+  "reference_direction": [
+    0,
+    0,
+    1
+  ],
+  "simultaneous_event": "one chi-square_16 radius 26.296227604864242 under conditional fixed-design Gaussian law",
+  "physical_relation": "Delta ln H_u = -(ln 10)/5 Delta m + Delta r_g + Delta tau/2",
+  "physical_budget": "declared absolute difference bounds, not measured confidence intervals",
+  "same_input_scalar_comparator": "scalar opacity-aware linear contrast from same 16D event equals tensor-coordinate contrast; no extra information",
+  "cbl_synthetic": {
+    "family": "tau(z)=a*z, a in [0,0.25] on a 0.001 grid",
+    "generating_a": 0.2,
+    "common_constant_zero_at_a": 0.2,
+    "max_cross_window_spread_at_zero_opacity_invMpc2": 5.997144030085368e-07,
+    "spread_at_generating_opacity_invMpc2": 2.6778599416281933e-20,
+    "status": "exact finite synthetic control only; no empirical CBL derivative"
+  },
+  "empirical_CBL": "HOLD: no overlapping independently qualified H(z), radial distance derivative and joint law",
+  "grey_vs_dichroic": "traceless log fixes only relative transmission; grey scale needs external bound",
+  "covariance": "selected released total STAT+SYS consumed once; full 1701 covariance not certified",
+  "source_chart": "released RA/DEC physical frame unknown; zHD integral, zHEL luminosity factor; no physical boost conversion",
+  "absolute_H0": "not identified after intercept profiling",
+  "transfer_source": "none/native solver absent",
+  "null_status": "conditional Gaussian event only; empirical null coverage unknown",
+  "original42_completed": "17/42",
+  "analytic_alternate_completed": "18/42",
+  "files": [
+    "LOCAL_H_IDENTIFIED_REGION.csv",
+    "joint_depth_contrasts.csv",
+    "signed_tensor_matrices.csv",
+    "same_input_scalar_comparator.csv",
+    "CF4_retained_H_windows.csv",
+    "synthetic_CBL_first_derivative.csv",
+    "distance_transmission_interval.csv",
+    "local_H_region_vs_opacity.pdf",
+    "distance_transmission_identified_interval.pdf"
+  ]
+}

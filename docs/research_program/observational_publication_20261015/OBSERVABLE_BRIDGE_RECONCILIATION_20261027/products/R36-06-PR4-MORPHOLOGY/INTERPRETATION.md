@@ -1,0 +1,11 @@
+# PR4 30 GHz observed morphology pilot
+
+Owner: `obsstat`. Scope: one observed PR4/NPIPE sky, using the public 30 GHz A and B temporal splits and a synthetic coefficient coadd. Claim tier: C0, diagnostic only. No Bianchi transfer is used.
+
+The source-bound operator lifts the binary LoLLiPoP NSIDE 16 mask to the native NSIDE 1024 NESTED pixels, converts each observed COSMO-convention Q/U field to RING order, applies the same mask, and extracts spin-2 E and B coefficients through ell 4. The coadd C is the average of the A/B coefficients, so C is another view of the same sky. The [result](RESULT.json) retains all low-ell coefficients in the external NPZ and reports the full E feature response. The [figure](MORPHOLOGY.pdf) shows the signed normalized Wigner contraction J234 and the descriptive quadrupole/octupole axis alignment.
+
+For the fixed within-sky scan T = max(|J234_A|, |J234_B|, |J234_C|), the observed value is 0.030869880258155732, attained by A. The signed A/B/C values are -0.030869880258155732, -0.010376483270444905 and -0.020994271401855655. These three views count as **one sky**, and the values are not a processed-null rank or p-value. The ideal full-sky independent Gaussian U law belongs to a separate mathematical reference; it does not calibrate this masked processed observation.
+
+The cached NPIPE `cmb_030_{A,B}_mc_00200` maps are symmetric-beam CMB reference products, while the `noise_030_{A,B}_mc_00200` maps are post-regression residual products. Their sum is not established as a processed total map. A source-qualified processed IQU simulation, matched observed product, complete response/foreground assumptions, and an identically repeated within-sky scan are required before a null rank. The LoLLiPoP mask's suitability for this morphology statistic and the A/B beam response remain uncalibrated. Original PR3 L03 and original 42-node acceptance remain unchanged.
+
+The current source survey found a distinct Commander IQU branch. Its observed polarization HDU and 0300-series simulation are being acquired/validated under the same packet. Until that branch passes exact frame, unit, mask, beam and total-product role checks, it has no numerical morphology outcome.

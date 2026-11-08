@@ -1,0 +1,36 @@
+{
+  "schema": "R37-03-native-raw-receipt-v1",
+  "packet_id": "becce6ed05449910bc5856e2b921b28f1d47ececaa646d18196768eb20936d94",
+  "task_id": "R37-03-HUBBLE",
+  "agent_id": "/root/rc_becce6ed05449910",
+  "input_identity": "sha256:15d9b17d0852724f6774adf53e09a32627ead44ead7d7b5c705e7a26254df47f",
+  "candidate_identity": "sha256:a9cec4e49645247b15a8ccebb3cee992db04f9526882291dc886e06a081ded77",
+  "candidate_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE/ARTIFACT_MANIFEST.json",
+  "source_result_sha256": {
+    "R36-08-PUBLIC-SN": "f1a9246b7e1ab216fd6fb927a3fc2e28360cf2e5626aba5d7a88f2af05f7e82b",
+    "R36-01-CF4-OPERATOR": "31f31c79c0fb1d11724dcb9da1373dcd3421c7fc8717eeecd4c54cc1237c5b62"
+  },
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE/compute_hubble.py",
+      "exit_code": 0
+    },
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE/test_compute_hubble.py",
+      "exit_code": 0,
+      "result": "3 passed"
+    }
+  ],
+  "validation_evidence": [
+    "Seven packet source SHA256 identities matched",
+    "R36-08 selected 490 and 705 covariance validation reused, full1701 remains unvalidated",
+    "Signed16 covariance positive definite and cross-bin blocks retained",
+    "Same-input scalar and tensor contrast agrees within 1e-14 mag",
+    "Synthetic common CBL zero recovered across four windows within 1e-12 inverse Mpc squared",
+    "Two one-page vector PDFs rendered and inspected; focused pytest 3 passed"
+  ],
+  "mutation_scope": "owned R37-03 product only; external unique receipt; no STATE/Git writes",
+  "independent_review": "PENDING",
+  "observed_runtime": "UNKNOWN",
+  "timestamp_utc": "20261029T022711886820Z"
+}

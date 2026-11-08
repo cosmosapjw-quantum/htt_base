@@ -1,0 +1,122 @@
+{
+  "schema": "htt.research_controller.review_result/1",
+  "packet_id": "e68ab79db8725ce2f5b70749e597de0d10d4ffa686105345f6c175803c762d2d",
+  "task_id": "R37-00-FIRST-REPORT",
+  "agent_id": "/root/rc_e68ab79db8725ce2",
+  "input_identity": "sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba",
+  "candidate_identity": "sha256:676298caadd2a7c4267f47c188ad54299f9f11da6932e5847bca2b45377f5208",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "fa8c4983a24a7b20e30bddd0173b940bd554b7572a0cfb75196190f4872f15d1",
+  "review": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/REVIEW.json",
+  "review_sha256": "e49fa064301c8931c650063e984cc9022f320d42b88cbcb7c409b05a5b01b143",
+  "verdict": "HOLD_TARGETED_REPORT_METADATA_REPAIR",
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "MEDIUM",
+      "blocking_for_candidate": true,
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/CLAIM_EVIDENCE_MAP.json",
+      "lines": [
+        67,
+        73
+      ],
+      "additional_locations": [
+        {
+          "lines": [
+            130,
+            136
+          ],
+          "claim": "E5"
+        },
+        {
+          "lines": [
+            182,
+            188
+          ],
+          "claim": "E7"
+        },
+        {
+          "lines": [
+            292,
+            298
+          ],
+          "claim": "E10"
+        }
+      ],
+      "title": "Claim map rewrites source-specific ceilings and transfer provenance",
+      "evidence": "E3 is labeled transfer_source=empirical_proxy, but its bound R36-05 RESULT has transfer_source=none and claim_tier=conditional_synthetic_method_experiment; current PUBLICATION_STATUS admits only the frozen synthetic experiment. E5 is recoded C1 although its RESULT/INTERPRETATION are C0_CONDITIONAL_METHOD. E7 is C1/empirical_proxy although its RESULT has C0 conditional response/design and none; first-order kinematic response, and its current PUBLICATION_STATUS explicitly qualifies C0. E10 is empirical_proxy although its RESULT specifies EH98_NO_WIGGLE_APPROXIMATION and CONDITIONAL_MODEL_COVARIANCE. No mapping or new tier decision supports these changes.",
+      "consequence": "The required machine-readable claim/evidence product misclassifies a synthetic result as empirical and drops the actual external analytic transfer approximation. Downstream tier/provenance consumers cannot recover the preserved source ceilings from these fields alone; cautious report prose does not repair their contradictory metadata. This is a report transcription defect, not a failure of the underlying calculations.",
+      "minimal_fix": "Preserve the source-specific claim_tier and transfer_source strings for E3/E5/E7/E10, or use an explicitly conservative existing canonical equivalent while retaining the original source ceiling/provenance. In particular E3 transfer is none, E5/E7 remain C0 conditional, and E10 identifies EH98_NO_WIGGLE_APPROXIMATION. Audit the other existing claim rows for the same template substitution. Update candidate manifest/result identities after the bounded metadata repair; retain all original source files, qualifications, numerical results and historical receipts. No scientific rerun is needed.",
+      "minimal_validation": "Compare every revised claim row with its immutable RESULT plus later scoped PUBLICATION_STATUS; verify the new manifest/output hashes and that scientific source hashes and report numerical content did not change."
+    },
+    {
+      "id": "N1",
+      "severity": "LOW",
+      "blocking_for_candidate": false,
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/REPORT_STAGE0.md",
+      "lines": [
+        27,
+        27
+      ],
+      "title": "Distinguish raw support from the normalized framework support quantity",
+      "evidence": "The report explicitly defines F(W)=sup<x,W>. The imported FOUNDATION_REPORT.md lines 183-203 distinguishes its constructive namespace and defines directional support utilization h_Theta(v)/h_K0(v); LOOP_C_KINEMATICS.md lines 154-156 also separates support and occupancy namespaces. The baseline report inherited the raw-support abbreviation.",
+      "consequence": "The displayed formula is a valid support function, but readers can confuse it with normalized F or legacy occupancy and lose the declared denominator. No displayed numerical result uses this ambiguous notation.",
+      "minimal_fix": "Call the displayed raw support h_C(W), or state that F here is an explicitly unnormalized support quantity distinct from normalized utilization and occupancy; preserve any source reference body/denominator when the normalized quantity is used."
+    },
+    {
+      "id": "N2",
+      "severity": "LOW",
+      "blocking_for_candidate": false,
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/RAW_RECEIPT.json",
+      "lines": [
+        20,
+        22
+      ],
+      "title": "Recorded Markdown-to-TeX command omits font variables",
+      "evidence": "Running the recorded pandoc command externally produced TeX differing only by the three DejaVu font statements. Adding -V mainfont=\"DejaVu Serif\" -V sansfont=\"DejaVu Sans\" -V monofont=\"DejaVu Sans Mono\" reproduced the delivered TeX byte-for-byte. Independent latexmk build of the delivered TeX succeeded and its extracted PDF text matches exactly.",
+      "consequence": "The source is buildable; the recorded generation command alone does not exactly recreate its font configuration.",
+      "minimal_fix": "In the successor receipt record the font variables or the actual documented font-injection step. Preserve the historical raw receipt as evidence."
+    }
+  ],
+  "issue": {
+    "class": "code",
+    "substantive": true,
+    "question": "Can the source-bound report be qualified while its claim map contradicts the retained source tiers and transfer provenance?",
+    "exact_missing_or_defect": "F1: E3 synthetic none transfer is recoded empirical_proxy; E5/E7 C0 source ceilings recoded C1; E10 EH98_NO_WIGGLE_APPROXIMATION replaced by empirical_proxy. Repair existing claim-map fields and refresh candidate binding. No new scientific input is missing.",
+    "input_identity": "sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba",
+    "true_external": false
+  },
+  "repair_plan": {
+    "scope": "One bounded claim-map transcription repair for F1 under unchanged R37-00 contract",
+    "allowed_paths": [
+      "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/CLAIM_EVIDENCE_MAP.json",
+      "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/ARTIFACT_MANIFEST.json",
+      "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/RESULT.json"
+    ],
+    "required_changes": [
+      "Preserve the source-specific claim_tier and transfer_source strings for E3/E5/E7/E10, or use an explicitly conservative existing canonical equivalent while retaining the original source ceiling/provenance. In particular E3 transfer is none, E5/E7 remain C0 conditional, and E10 identifies EH98_NO_WIGGLE_APPROXIMATION. Audit the other existing claim rows for the same template substitution. Update candidate manifest/result identities after the bounded metadata repair; retain all original source files, qualifications, numerical results and historical receipts. No scientific rerun is needed."
+    ],
+    "validation": [
+      "Compare every revised claim row with its immutable RESULT plus later scoped PUBLICATION_STATUS; verify the new manifest/output hashes and that scientific source hashes and report numerical content did not change."
+    ],
+    "prohibited": "No new fit, MC, solver, ODE, tolerance/acceptance change, source-result rewrite, original task promotion or STATE/Git mutation by reviewer",
+    "optional_notes": "N1/N2 are nonblocking. If the author elects to clarify report notation, regenerate only report sources/PDF and refresh their bindings; no new science."
+  },
+  "validation_evidence": [
+    "61 bound identities match and remain unchanged; candidate manifest equals exact packet SHA256.",
+    "109 unique legacy IDs exactly match preappend inventory.",
+    "Displayed numeric claims and six vector-figure bindings match retained source products.",
+    "Independent latexmk source build exit 0; 12-page PDF extracted text matches candidate; exact font-enabled pandoc reconstruction matches TeX.",
+    "Original17/42, alternate18/42, first48 Gaussian/selection caveats and PR4 pending qualification preserved.",
+    "All 12 fresh-build pages pixel-identical to candidate at scale-to 1300; 13 additional current qualification/upstream reference comparisons pass."
+  ],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "scientific_admission": "No new scientific acceptance; original42 and all original HOLD states unchanged."
+}
