@@ -1,0 +1,231 @@
+schema: htt.r42_research_dag/1
+program: HTT_R42_TENSOR_FIVE_VARIABLE_COMPETITIVE_CONVERGENCE
+as_of: 2026-11-08
+timezone: Asia/Seoul
+repository: cosmosapjw-quantum/htt_base
+parent_branch: research/r41-publication-gate-20261107
+parent_commit: 0439ae8e4870b23abfcdb9499c4c214daf12314b
+branch: research/r42-fivevar-competitive-benchmark-20261108
+stacked_pr_base: research/r41-publication-gate-20261107
+authority:
+  project_state: "GitHub branch, commits and PRs"
+  local_data_and_runtime: "must be verified by local agent; GitHub manifests are not proof of local bytes"
+execution_policy:
+  mode: convergent
+  remote_desktop: forbidden
+  no_remote_desktop_or_host_control: true
+  local_agent_may:
+    - "read/write authorized local checkout"
+    - "download public scientific datasets from official portals"
+    - "run tests, data pipelines and Cobaya on the local machine"
+  git:
+    no_direct_main_push: true
+    no_force_push: true
+    no_historical_rewrite: true
+    no_delete_legacy_artifacts: true
+    use_child_feature_branches_and_reviewed_prs: true
+  process:
+    production_writer_count: 1
+    reviewers_read_only: true
+    one_primary_review_plus_one_adversarial_pass_per_bounded_objective: true
+    stop_meta_cycles_after_two_no_progress_iterations: true
+    never_claim_agent_execution_without_actual_agent_receipt: true
+  source_scope:
+    enumerate_all_pr_metadata: true
+    classify_all_prs_by_changed_paths_and_topics: true
+    full_diff_review_for_all_science_or_harness_relevant_prs: true
+    legacy_document_index_with_identity_and_disposition: true
+    preserve_unrelated_history: true
+claim_policy:
+  initial_ceiling: C0_DIAGNOSTIC_NOT_REPLAYED
+  per_claim_promotion: true
+  permitted_if_evidence_supports:
+    - "source-conditioned tensor-functional inference"
+    - "locally identifiable physical functional under declared operator"
+    - "morphology compatibility conditional on named transfer"
+    - "local boost/global tilt discrimination within validated redshift and selection domain"
+    - "Bianchi family identification only if a genuinely discriminating family likelihood is validated"
+  forbidden_without_specific_evidence:
+    - "validated empirical detection"
+    - "global geometry inferred from local kinematics alone"
+    - "native solver attribution for an external solver"
+  quarantine:
+    R39_R40_R41_unreplayed_posteriors: QUARANTINED_NOT_REPRODUCED
+    R41_bic_loocv_fisher_sbc: QUARANTINED_NOT_REPRODUCED
+    repository_data_hash_manifest_as_local_proof: FORBIDDEN
+scientific_contract:
+  metric_signature: "(-,+,+,+)"
+  c_units: "retain c explicitly; dimensionless helper functions must identify normalization"
+  kinematic_state:
+    symbol: theta_K
+    dimension: 17
+    components:
+      - {name: sigma_ab_over_H, representation: STF2, dimension: 5, parity: even}
+      - {name: omega_a_over_H, representation: axial_vector, dimension: 3, parity: odd}
+      - {name: A_a_over_cH, representation: polar_vector, dimension: 3, parity: even}
+      - {name: beta_RM, representation: polar_vector, dimension: 3, parity: even}
+      - {name: beta_MO, representation: polar_vector, dimension: 3, parity: even}
+    chart: "STF5 chart (Sxx,Syy,Sxy,Sxz,Syz), Szz=-Sxx-Syy; use declared Gram metric or orthonormal STF basis"
+    frames: [radiation, matter, observer, source, catalogue, CMB_map]
+    boosts: "exact ordered Lorentz transformations; retain Wigner rotation for non-collinear chains"
+  five_variable_output:
+    symbol: "T=(x,Q,Pi,F,G_F)"
+    relation: "posterior/compatibility push-forward of a common source-conditioned inference result"
+    independent_likelihood_parameters: false
+    independent_likelihood_factors: false
+    definitions:
+      x: "sample-wise/set-valued tensor physical functional and observed/predicted carrier bundle"
+      Q: "anchor/gauge/margin/availability uncertainty bodies"
+      Pi: "law-conditional exceedance surfaces for posterior, matched null and predictive laws"
+      F: "directional support functions and anchor occupancy profiles"
+      G_F: "redshift/distance-shell tensor functional depth path with full cross-shell covariance"
+  generative_likelihood:
+    equation: "p(d|theta_K,psi,eta,M,S,W); data vectors are source-conditioned by exact source selection S and observation window/transfer W"
+    posterior: "p(theta_K,psi,eta|d,M,S,W)"
+    pushforward: "T=(x,Q,Pi,F,G_F)=T_# posterior/compatibility law"
+    cross_probe_covariance: "estimate shared-sky/source/LSS/calibration/processing blocks, or document justified conditional independence and sensitivity"
+    gaussian_covariance_dependence: "include logdet(C(theta)) and 0.5 Tr(C^-1 C_,i C^-1 C_,j) in Fisher when covariance depends on parameters"
+    non_gaussian: "use actual Poisson/Cox/hierarchical likelihood or validated score/simulation calibration; do not force Gaussianity"
+  identifiability:
+    efficient_information: "Schur complement/profile or nuisance-orthogonal score under declared physical parameter metric"
+    target_functional_condition: "ker(J_eff) subset ker(D phi)"
+    report: [identifiable_functional_image, null_fibres, weak_directions, prior_dominated_modes, mask_sensitivity]
+  approximation_contract:
+    low_z_optical: "state observer/emitter congruence, photon/direction convention and order; do not extend local series outside convergence range"
+    vorticity: "n^a n^b omega_ab=0 establishes only the direct antisymmetric contraction at the stated order; higher-order scalar-distance terms require separate derivation"
+    bianchi: "algebraic class compatibility != dynamical solution != transfer compatibility != family identification"
+    directional_H: "not a standalone novelty; Heinesen/general covariant multipole cosmography is prior art"
+nodes:
+  - id: R42-00
+    title: "R41/R40/R39 evidence reconciliation and publication claim quarantine"
+    status: COMPLETE_GITHUB_STATIC
+    outputs: [PUBLICATION_REASSESSMENT_KO.md]
+    acceptance: ["R41 current head frozen", "reproducibility boundary explicit", "old empirical claims quarantined without deleting history"]
+  - id: R42-01
+    title: "Authoritative semantics of the current tensor five-variable state"
+    status: COMPLETE_GITHUB_STATIC
+    outputs: [PUBLICATION_REASSESSMENT_KO.md]
+    acceptance: ["x,Q,Pi,F,G_F correctly distinguished from theta_K", "five outputs are not independent likelihood factors"]
+  - id: R42-02
+    title: "Literature map and two-layer competitor architecture"
+    status: COMPLETE_LITERATURE_TRIAGE
+    outputs: [FIVEVAR_COMPETITOR_BENCHMARK.yaml, PUBLICATION_REASSESSMENT_KO.md]
+    acceptance: ["physical generative theories separated from inference/readout methods", "prior art boundaries recorded"]
+  - id: R42-03
+    title: "Full source/history audit and legacy disposition"
+    status: PENDING_LOCAL
+    owner: local_agent
+    acceptance:
+      - "Enumerate and classify all PR metadata and changed paths"
+      - "Read all science/harness-relevant PR bodies/comments/reviews/full diffs"
+      - "Index legacy research documents and assign KEEP/REUSE/CONDITIONAL/QUARANTINE/RETIRED"
+      - "Resolve conflicting SSOT claims and preserve exact commit/file identities"
+  - id: R42-04
+    title: "Repair x functional/carrier observation operators"
+    status: PENDING_LOCAL
+    depends_on: [R42-01, R42-03]
+    acceptance:
+      - "No unexplained hardcoded production responses (3.75, 3.40, 0.92, 0.18, arbitrary shear scale, fixed B=0)"
+      - "Every predicted carrier comes from a dimensional, source-specific forward operator or is explicitly unavailable"
+      - "observed carriers are immutable and distinct from predictions"
+      - "rotation/parity/frame/unit tests pass"
+  - id: R42-05
+    title: "Repair Q anchor/gauge/margin geometry"
+    status: PENDING_LOCAL
+    depends_on: [R42-01, R42-03]
+    acceptance:
+      - "All anchor bounds/margins trace to theorem, calibration or explicit prior"
+      - "Unavailable and premise-only anchors remain distinct"
+      - "gauge fibres are not collapsed into a point estimate"
+  - id: R42-06
+    title: "Calibrate Pi conditional exceedance laws"
+    status: PENDING_LOCAL
+    depends_on: [R42-01, R42-04]
+    acceptance:
+      - "Remove arbitrary Gaussian pseudo-null from all empirical claims"
+      - "Use source-matched observed-data simulations/nulls"
+      - "FPR, power and coverage include finite simulation uncertainty"
+  - id: R42-07
+    title: "Validate F directional support and occupancy"
+    status: PENDING_LOCAL
+    depends_on: [R42-01, R42-05]
+    acceptance:
+      - "Use equal-area or converged spherical quadrature, not paired latitude/longitude linspace"
+      - "Prove numerical convergence under direction refinement"
+      - "Define the support set and denominator-zero semantics"
+      - "Rotation-equivariance and parity tests pass"
+  - id: R42-08
+    title: "Derive/calibrate G_F depth transport and cross-shell covariance"
+    status: PENDING_LOCAL
+    depends_on: [R42-01, R42-04]
+    acceptance:
+      - "No unlabelled sigma(z)=sigma0/(1+z) assumption"
+      - "No identity shell transport unless physically justified and tested"
+      - "Use shell-specific source selection and full cross-shell covariance"
+      - "Separate posterior-induced covariance from data covariance"
+  - id: R42-09
+    title: "Build competing model and inference-method registry"
+    status: PENDING_LOCAL
+    depends_on: [R42-02, R42-03]
+    acceptance:
+      - "At least M0-M8 and I0-I8 competitor classes in benchmark spec are adjudicated"
+      - "Every comparison states common data subset and model-specific missing channels"
+      - "No strawman competitors or forced parameter mapping"
+  - id: R42-10
+    title: "Official data intake and immutable source locks"
+    status: PENDING_LOCAL
+    depends_on: [R42-03]
+    acceptance:
+      - "All P0 datasets retrieved or existing candidate validated on actual bytes"
+      - "Each source has release, licence, citation, retrieval recipe, row keys/order, SHA256, units/frame, selection, window and covariance"
+      - "Raw data stay outside git"
+  - id: R42-11
+    title: "Cobaya source-bound likelihood and posterior sampling"
+    status: PENDING_LOCAL
+    depends_on: [R42-04, R42-05, R42-06, R42-08, R42-10]
+    acceptance:
+      - "Cobaya likelihood is the production inference path; direct MH may remain only as test/reference"
+      - "Sampler chains, priors, seed, code/input hashes, logs, rank-normalized split-Rhat, bulk/tail ESS and trace diagnostics saved"
+      - "All sampled nuisance/background parameters are explicit; no hidden fiducials"
+      - "A small real-data pilot runs before production chains"
+  - id: R42-12
+    title: "Six independent scientific theory loops"
+    status: PENDING_LOCAL
+    depends_on: [R42-03, R42-10, R42-11]
+    loops: [L1_LOWELL_MORPHOLOGY, L2_DIPOLE_ANOMALY, L3_KINEMATICS, L4_BIANCHI_CLASSIFICATION, L5_DIRECTIONAL_H, L6_LOCAL_BOOST_VS_GLOBAL_TILT]
+    acceptance:
+      - "Each loop has own assumptions, generative equations, observable mapping, competing hypotheses, nulls, source manifest and conclusion"
+      - "Each loop can close as unresolved/negative if data do not identify its target"
+  - id: R42-13
+    title: "Adversarial cross-theory benchmark"
+    status: PENDING_LOCAL
+    depends_on: [R42-09, R42-11, R42-12]
+    outputs: [competitor_registry.json, identifiability_functional_report.json, sbc_coverage_fpr_power.json, heldout_predictive_scores.json, five_variable_readout_comparison.json]
+    acceptance:
+      - "Benchmark latest tensor five-variable state against competing theories/methods, not scalar five-variable surrogate"
+      - "Same observed inputs, selection, covariance and nuisance conditions wherever applicable"
+      - "Refit all held-out folds"
+      - "HTT is allowed to lose"
+  - id: R42-14
+    title: "Scientific claim and manuscript gate"
+    status: PENDING
+    depends_on: [R42-12, R42-13]
+    acceptance:
+      - "Novelty statement supported by a measured, named advantage"
+      - "Claims are per-observable/per-domain and tied to exact evidence"
+      - "Methods paper and empirical paper readiness decided separately"
+execution_order:
+  - [R42-00, R42-01, R42-02]
+  - [R42-03]
+  - [R42-04, R42-05]
+  - [R42-06, R42-07, R42-08]
+  - [R42-09, R42-10]
+  - [R42-11]
+  - [R42-12]
+  - [R42-13]
+  - [R42-14]
+stop_conditions:
+  - "If actual source data are unavailable, complete theory/operator work and mark only affected likelihood blocked; continue independent probes."
+  - "If a parameter is not identifiable, report its quotient/fibre or bound rather than force a detection."
+  - "If HTT underperforms a competitor on calibrated held-out metrics, preserve that result and narrow the novelty claim."
+  - "If the harness blocks a scientifically supported claim for a non-scientific reason, execute the harness correction workflow in HARNESS_REPAIR_AND_MUTATION_GATES.yaml."
