@@ -19,6 +19,12 @@ import numpy as np
 from scipy import integrate
 
 from common.stf_metric_bridge import cartesian_to_orthonormal, G_STF5
+from common.observation_operator_contract import (
+    ObservationSourceMetadata,
+    PhysicalFunctionalSpec,
+    CoordinateFrame,
+    EstimatorType,
+)
 
 
 PANTHEON_DATA_PATH = "/mnt/extdrive/workdir/raw/observational_bundles/PantheonPlus_SH0ES/Pantheon+SH0ES.dat"
@@ -244,3 +250,49 @@ class SourceBoundPantheonOperator:
         log_like = -0.5 * (chi2 + self.const_log_norm)
 
         return chi2, best_fit_M0, log_like
+
+    @property
+    def metadata(self) -> ObservationSourceMetadata:
+        return ObservationSourceMetadata(
+            source_id="Pantheon_Plus_SH0ES",
+            product_name="Pantheon+SH0ES Supernovae Ia",
+            catalog_or_data_path=self.data_path,
+            covariance_path=self.cov_path,
+            n_total_objects=self.full_n,
+            n_selected_objects=self.n_selected,
+            selection_rule="IS_CALIBRATOR == 0 and z_min <= z_hd <= z_max",
+            coordinate_frame=CoordinateFrame.ICRS,
+            units="mag",
+            estimator_type=EstimatorType.ANALYTIC_MARGINALIZED_DISTANCE,
+            window_or_mask_id="PantheonPlus_z0.01_2.5_cut",
+            covariance_id="Pantheon+SH0ES_STAT+SYS",
+            verified_sha256=EXPECTED_DATA_SHA256,
+            is_synthetic=False,
+        )
+
+    @property
+    def functional_spec(self) -> PhysicalFunctionalSpec:
+        return PhysicalFunctionalSpec(
+            name="distance_modulus_quadrupole_dipole",
+            tensor_rank=2,
+            parity="even",
+            so3_representation="2+ direct sum 1-",
+            units="mag",
+            parameter_dependence=("sigma_ab", "beta_MO", "A", "psi"),
+        )
+
+    def evaluate_likelihood(
+        self,
+        theta_K: np.ndarray,
+        psi: Optional[BackgroundCosmology] = None,
+    ) -> Tuple[float, float]:
+        if psi is None:
+            psi = BackgroundCosmology()
+        chi2, _, log_like = self.evaluate_model(theta_K, psi)
+        return chi2, log_like
+
+    def get_data_vector(self) -> np.ndarray:
+        return self.m_b_corr_sel
+
+    def get_covariance_matrix(self) -> np.ndarray:
+        return self.cov_sel

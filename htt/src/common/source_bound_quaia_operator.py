@@ -21,6 +21,12 @@ from astropy.io import fits
 import healpy as hp
 
 from common.source_bound_pantheon_operator import verify_file_sha256
+from common.observation_operator_contract import (
+    ObservationSourceMetadata,
+    PhysicalFunctionalSpec,
+    CoordinateFrame,
+    EstimatorType,
+)
 
 
 QUAIA_DIR = "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0"
@@ -159,14 +165,22 @@ class SourceBoundQuaiaDipoleOperator:
 
     def evaluate_model(
         self,
-        beta_MO: np.ndarray,  # 3-vector (dimensionless)
+        beta_or_theta: np.ndarray,
+        psi: Optional[Any] = None,
     ) -> Tuple[float, float]:
-        """Compute chi2 and log-likelihood under matter-to-observer velocity beta_MO.
+        """Compute chi2 and log-likelihood under matter-to-observer velocity or full 17-vector state.
         
-        Model predicted dipole: D_model = C_EB * beta_MO
+        Model predicted dipole: D_model = C_EB * beta_eff
         """
-        assert len(beta_MO) == 3, f"Expected 3-vector for beta_MO, got {len(beta_MO)}"
-        D_pred = self.C_EB * beta_MO
+        arr = np.asarray(beta_or_theta, dtype=np.float64)
+        if len(arr) == 17:
+            beta_eff = arr[14:17]
+        elif len(arr) == 3:
+            beta_eff = arr
+        else:
+            raise ValueError(f"Expected 3-vector or 17-vector, got shape {arr.shape}")
+
+        D_pred = self.C_EB * beta_eff
         res = self.D_obs - D_pred
 
         chi2 = float(res.T @ self.inv_cov_D @ res)
@@ -174,4 +188,47 @@ class SourceBoundQuaiaDipoleOperator:
         log_like = -0.5 * (chi2 + log_det + 3.0 * np.log(2.0 * np.pi))
 
         return chi2, log_like
+
+    def evaluate_likelihood(
+        self,
+        theta_K: np.ndarray,
+        psi: Optional[Any] = None,
+    ) -> Tuple[float, float]:
+        return self.evaluate_model(theta_K, psi)
+
+    @property
+    def metadata(self) -> ObservationSourceMetadata:
+        return ObservationSourceMetadata(
+            source_id="Quaia_DR1_G20.0",
+            product_name="Quaia DR1 G<20.0 Quasar Overdensity Catalog",
+            catalog_or_data_path=self.cat_path,
+            covariance_path=None,
+            n_total_objects=self.n_sources,
+            n_selected_objects=self.n_sources,
+            selection_rule="G < 20.0 and unmasked selection function pixels",
+            coordinate_frame=CoordinateFrame.ICRS,
+            units="dimensionless count overdensity",
+            estimator_type=EstimatorType.COUNT_DIPOLE_ELLIS_BALDWIN,
+            window_or_mask_id="selection_function_NSIDE64_G20.0",
+            covariance_id="Poisson_Shot_Plus_Limber_LSS_C1",
+            verified_sha256=EXPECTED_CAT_SHA256,
+            is_synthetic=False,
+        )
+
+    @property
+    def functional_spec(self) -> PhysicalFunctionalSpec:
+        return PhysicalFunctionalSpec(
+            name="quasar_count_dipole",
+            tensor_rank=1,
+            parity="odd",
+            so3_representation="1-",
+            units="dimensionless",
+            parameter_dependence=("beta_MO", "beta_RM"),
+        )
+
+    def get_data_vector(self) -> np.ndarray:
+        return self.D_obs
+
+    def get_covariance_matrix(self) -> np.ndarray:
+        return self.cov_D
 

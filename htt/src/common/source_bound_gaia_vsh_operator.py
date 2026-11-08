@@ -23,6 +23,12 @@ from typing import Tuple, Dict, Any, Optional
 import numpy as np
 
 from common.source_bound_pantheon_operator import verify_file_sha256
+from common.observation_operator_contract import (
+    ObservationSourceMetadata,
+    PhysicalFunctionalSpec,
+    CoordinateFrame,
+    EstimatorType,
+)
 
 GAIA_NPZ_PATH = "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_crf3_join.npz"
 EXPECTED_GAIA_SHA256 = "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4"
@@ -234,3 +240,46 @@ class SourceBoundGaiaVSHOperator:
         ], dtype=np.float64)
 
         return self.evaluate_modes(c_pred)
+
+    def evaluate_likelihood(
+        self,
+        theta_K: np.ndarray,
+        psi: Optional[Any] = None,
+    ) -> Tuple[float, float]:
+        return self.evaluate_model(theta_K)
+
+    @property
+    def metadata(self) -> ObservationSourceMetadata:
+        return ObservationSourceMetadata(
+            source_id="Gaia_DR3_CRF3_Astrometry",
+            product_name="Gaia DR3 CRF3 Quasar Proper Motion Astrometry",
+            catalog_or_data_path=self.npz_path,
+            covariance_path=None,
+            n_total_objects=self.n_raw,
+            n_selected_objects=self.n_selected,
+            selection_rule="RUWE < 1.4, 5-param astrometry, |pm| < 100 mas/yr",
+            coordinate_frame=CoordinateFrame.ICRS,
+            units="mas / yr",
+            estimator_type=EstimatorType.ASTROMETRIC_VSH,
+            window_or_mask_id="Gaia_CRF3_RUWE1.4_clean",
+            covariance_id="Astrometric_Schur_Marginalized_Fisher",
+            verified_sha256=EXPECTED_GAIA_SHA256,
+            is_synthetic=False,
+        )
+
+    @property
+    def functional_spec(self) -> PhysicalFunctionalSpec:
+        return PhysicalFunctionalSpec(
+            name="astrometric_glide_shear_vsh",
+            tensor_rank=2,
+            parity="even",
+            so3_representation="1- direct sum 2+",
+            units="mas / yr",
+            parameter_dependence=("A", "sigma_ab"),
+        )
+
+    def get_data_vector(self) -> np.ndarray:
+        return self.c_mle
+
+    def get_covariance_matrix(self) -> np.ndarray:
+        return self.cov_c

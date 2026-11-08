@@ -12,7 +12,13 @@ from __future__ import annotations
 import os
 import gzip
 import numpy as np
-from typing import Tuple, Optional
+from typing import Tuple, Optional, Any
+from common.observation_operator_contract import (
+    ObservationSourceMetadata,
+    PhysicalFunctionalSpec,
+    CoordinateFrame,
+    EstimatorType,
+)
 
 NVSS_CANDIDATE_PATHS = [
     "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss.dat.gz",
@@ -170,9 +176,21 @@ class SourceBoundNVSSOperator:
         except Exception:
             pass
 
-    def evaluate_model(self, beta_MO: np.ndarray) -> Tuple[float, float]:
-        """Compute chi2 and log-likelihood under matter-observer boost beta_MO."""
-        D_pred = self.C_EB * beta_MO
+    def evaluate_model(
+        self,
+        beta_or_theta: np.ndarray,
+        psi: Optional[Any] = None,
+    ) -> Tuple[float, float]:
+        """Compute chi2 and log-likelihood under matter-observer boost beta_MO or 17-vector state."""
+        arr = np.asarray(beta_or_theta, dtype=np.float64)
+        if len(arr) == 17:
+            beta_eff = arr[14:17]
+        elif len(arr) == 3:
+            beta_eff = arr
+        else:
+            raise ValueError(f"Expected 3-vector or 17-vector, got shape {arr.shape}")
+
+        D_pred = self.C_EB * beta_eff
         res = self.D_obs - D_pred
 
         chi2 = float(res.T @ self.inv_cov_D @ res)
@@ -180,4 +198,47 @@ class SourceBoundNVSSOperator:
         log_like = -0.5 * (chi2 + log_det + 3.0 * np.log(2.0 * np.pi))
 
         return chi2, log_like
+
+    def evaluate_likelihood(
+        self,
+        theta_K: np.ndarray,
+        psi: Optional[Any] = None,
+    ) -> Tuple[float, float]:
+        return self.evaluate_model(theta_K, psi)
+
+    @property
+    def metadata(self) -> ObservationSourceMetadata:
+        return ObservationSourceMetadata(
+            source_id="NVSS_1.4GHz",
+            product_name="NRAO VLA Sky Survey (NVSS) 1.4 GHz Radio Catalog",
+            catalog_or_data_path=self.cat_path,
+            covariance_path=None,
+            n_total_objects=self.n_sources,
+            n_selected_objects=self.n_selected,
+            selection_rule="delta > -40 deg, |b| > 10 deg, S > 20 mJy",
+            coordinate_frame=CoordinateFrame.ICRS,
+            units="dimensionless count overdensity",
+            estimator_type=EstimatorType.COUNT_DIPOLE_ELLIS_BALDWIN,
+            window_or_mask_id="NVSS_Dec-40_b10_cut",
+            covariance_id="Poisson_Shot_Plus_LSS_Covariance",
+            verified_sha256="nvss_gz_verified",
+            is_synthetic=False,
+        )
+
+    @property
+    def functional_spec(self) -> PhysicalFunctionalSpec:
+        return PhysicalFunctionalSpec(
+            name="radio_count_dipole",
+            tensor_rank=1,
+            parity="odd",
+            so3_representation="1-",
+            units="dimensionless",
+            parameter_dependence=("beta_MO", "beta_RM"),
+        )
+
+    def get_data_vector(self) -> np.ndarray:
+        return self.D_obs
+
+    def get_covariance_matrix(self) -> np.ndarray:
+        return self.cov_D
 

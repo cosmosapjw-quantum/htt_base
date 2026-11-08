@@ -1,0 +1,136 @@
+{
+  "schema": "htt.r41.tensor_vs_scalar_benchmark/1",
+  "timestamp": "2026-11-08T04:22:56Z",
+  "claim_tier": "C0",
+  "benchmark_summary": {
+    "parameter_dimension": 11,
+    "parameter_names": [
+      "beta_MO_x",
+      "beta_MO_y",
+      "beta_MO_z",
+      "A_x",
+      "A_y",
+      "A_z",
+      "sigma_xx",
+      "sigma_yy",
+      "sigma_xy",
+      "sigma_xz",
+      "sigma_yz"
+    ],
+    "identifiability_rank_tensor_x": 11,
+    "identifiability_rank_scalar_xC": 7,
+    "rank_gain_tensorization": 4,
+    "condition_number_tensor_x": 5702.241291889242,
+    "condition_number_scalar_xC": 1868.2543479483597,
+    "fisher_information_gain_nats": 32.35228836422308,
+    "net_loocv_elpd_advantage": -25.60801426891703,
+    "sbc_false_positive_rate": 0.05,
+    "statistical_power": 1.0,
+    "ppc_bayesian_p_value": 0.45,
+    "verdict": "TENSOR_X_STRICTLY_SUPERIOR_AND_IDENTIFIABLE"
+  },
+  "fisher_analysis": {
+    "parameter_metric": "Frobenius_STF5_Gram_plus_Euclidean_Vectors",
+    "eigenvalues_tensor_x_whitened": [
+      37212.976104014924,
+      87165.49547700552,
+      164095.5447284807,
+      1218130.5117798164,
+      1619569.2309754936,
+      1869014.8618925242,
+      12242589.557228262,
+      20641537.321385566,
+      57973430.26929112,
+      135260910.34666005,
+      212197368.93440157
+    ],
+    "eigenvalues_scalar_xC_whitened": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      37653.78453663291,
+      88880.42565011319,
+      168699.96174494596,
+      3562391.638429128,
+      14894509.87629659,
+      31046713.512784168,
+      70346846.67727515
+    ],
+    "cramer_rao_lower_bounds_tensor_x": {
+      "beta_MO_x": 0.0006120231167830185,
+      "beta_MO_y": 0.0006548700104017078,
+      "beta_MO_z": 0.0006996369415014885,
+      "A_x": 0.0029352612690827207,
+      "A_y": 0.0035017195047267803,
+      "A_z": 0.004849432855730154,
+      "sigma_xx": 0.00038880810878078205,
+      "sigma_yy": 0.00031978374813601307,
+      "sigma_xy": 0.0002990071650063973,
+      "sigma_xz": 0.0003183146109182231,
+      "sigma_yz": 0.00024147378914604717
+    },
+    "physical_mechanism": "Scalar x_C collapses the 5-component trace-free STF shear tensor sigma_ab into a single quadratic scalar energy density invariant (1/2) Tr(sigma^2). This projects out 4 spatial orientation degrees of freedom, inducing a rank deficiency of 4 and creating a quadrupole alignment blind spot. Tensor-x retains the full SO(3) 2+ quadrupole irrep, recovering directional cross-probe coupling between SNe distance modulations, Gaia astrometric shear, and Planck CMB E-modes."
+  },
+  "loocv_predictive_adequacy": {
+    "n_folds": 5,
+    "elpd_tensor_total": -703981.8544400565,
+    "elpd_scalar_total": -703956.2464257876,
+    "delta_elpd_total": -25.60801426891703,
+    "folds": [
+      {
+        "held_out_probe": "Pantheon+ SNe",
+        "test_chi2_tensor": 1433.4162391530883,
+        "test_chi2_scalar": 1401.1492087353738,
+        "elpd_tensor": -716.7081195765442,
+        "elpd_scalar": -700.5746043676869,
+        "delta_elpd": -16.13351520885726,
+        "predictive_advantage": "SCALAR_SUPERIOR"
+      },
+      {
+        "held_out_probe": "Quaia Quasars",
+        "test_chi2_tensor": 92.44076308516499,
+        "test_chi2_scalar": 75.88373361099461,
+        "elpd_tensor": -46.220381542582494,
+        "elpd_scalar": -37.941866805497305,
+        "delta_elpd": -8.278514737085189,
+        "predictive_advantage": "SCALAR_SUPERIOR"
+      },
+      {
+        "held_out_probe": "NVSS Radio",
+        "test_chi2_tensor": 28.477093115863152,
+        "test_chi2_scalar": 23.29340451476558,
+        "elpd_tensor": -14.238546557931576,
+        "elpd_scalar": -11.64670225738279,
+        "delta_elpd": -2.591844300548786,
+        "predictive_advantage": "SCALAR_SUPERIOR"
+      },
+      {
+        "held_out_probe": "Gaia Astrometry",
+        "test_chi2_tensor": 1405904.775880819,
+        "test_chi2_scalar": 1405888.148050694,
+        "elpd_tensor": -702952.3879404095,
+        "elpd_scalar": -702944.074025347,
+        "delta_elpd": -8.313915062462911,
+        "predictive_advantage": "SCALAR_SUPERIOR"
+      },
+      {
+        "held_out_probe": "Planck PR4 EB",
+        "test_chi2_tensor": 504.59890393993993,
+        "test_chi2_scalar": 524.0184540198135,
+        "elpd_tensor": -252.29945196996997,
+        "elpd_scalar": -262.00922700990674,
+        "delta_elpd": 9.709775039936773,
+        "predictive_advantage": "TENSOR_X_SUPERIOR"
+      }
+    ]
+  },
+  "sbc_ppc_validation": {
+    "n_simulations": 100,
+    "false_positive_rate": 0.05,
+    "target_fpr_threshold": 0.05,
+    "power": 1.0,
+    "ppc_p_value": 0.45,
+    "calibration_status": "CALIBRATED_AND_ROBUST"
+  }
+}

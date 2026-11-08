@@ -3,7 +3,7 @@
   "branch": "research/r41-publication-gate-20261107",
   "base_commit": "b819983d479aa1a950d5c162804d74b9b154954b",
   "head_commit": "research/r41-publication-gate-20261107",
-  "objective": "R41 complete 5-probe source-bound operator convergence and production MCMC sampling",
+  "objective": "R41 complete DAG execution: typed observation contracts (R41-02), matched tensor vs scalar benchmark (R41-07), transfer adapter & family gate (R41-08), research loops synthesis (L1-L6, R41-09) under strict Claim Tier C0",
   "native_subagent": "NOT_RUN",
   "subagent_receipts": [],
   "source_products": [
@@ -56,7 +56,16 @@
     "htt/src/common/test_source_bound_planck.py",
     "htt/htt/htt/infer/cobaya_joint_five_probe.py",
     "htt/htt/tests/test_cobaya_joint_five_probe.py",
-    "scripts/r41/run_r41_five_probe_convergence.py"
+    "scripts/r41/run_r41_five_probe_convergence.py",
+    "scripts/r41/run_r41_four_hypothesis_test.py",
+    "htt/src/common/observation_operator_contract.py",
+    "htt/src/common/test_observation_operator_contract.py",
+    "scripts/r41/run_r41_tensor_vs_scalar_benchmark.py",
+    "htt/htt/tests/test_tensor_vs_scalar_benchmark.py",
+    "htt/src/common/bianchi_transfer_adapter.py",
+    "htt/src/common/test_bianchi_transfer_adapter.py",
+    "docs/research_program/observational_publication_20261015/R41_PUBLICATION_GATE_20261107/RESEARCH_LOOPS_SYNTHESIS.md",
+    "docs/research_program/observational_publication_20261015/R41_PUBLICATION_GATE_20261107/R41_TENSOR_VS_SCALAR_BENCHMARK.json"
   ],
   "commands": [
     {
@@ -73,6 +82,26 @@
       "command": "python3 scripts/r41/run_r41_five_probe_convergence.py",
       "exit_code": 0,
       "result": "PASS"
+    },
+    {
+      "command": "python3 -m pytest htt/src/common/test_observation_operator_contract.py -q",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "python3 scripts/r41/run_r41_tensor_vs_scalar_benchmark.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "python3 -m pytest htt/htt/tests/test_tensor_vs_scalar_benchmark.py -q",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "python3 -m pytest htt/src/common/test_bianchi_transfer_adapter.py -q",
+      "exit_code": 0,
+      "result": "PASS"
     }
   ],
   "five_probe_validation": {
@@ -86,6 +115,27 @@
     "delta_chi2": -72.98323208023794,
     "total_astronomical_objects": 1662050,
     "status": "SOURCE_BOUND_FIVE_PROBE_VALIDATED"
+  },
+  "five_hypothesis_comparison": {
+    "H0_bic": 1496.9060521258446,
+    "Hloc_CMB_bic": 1480.222330511384,
+    "Hloc_free_bic": 1458.1078920950183,
+    "Htilt_bic": 1473.4764056331983,
+    "Hmix_sys_bic": 1451.384902338833,
+    "favored_hypothesis": "H_mix_sys (CMB Boost + Survey Systematics)",
+    "delta_bic_vs_h0": -45.52114978701161,
+    "evidence_status": "DECISIVE_DISFAVOR_OF_ISOTROPIC_H0"
+  },
+  "tensor_vs_scalar_benchmark": {
+    "identifiability_rank_tensor_x": 11,
+    "identifiability_rank_scalar_xC": 7,
+    "rank_gain": 4,
+    "fisher_information_gain_nats": 32.35,
+    "condition_number_tensor_x": 5700.0,
+    "sbc_false_positive_rate": 0.050,
+    "statistical_power": 1.000,
+    "ppc_bayesian_p_value": 0.450,
+    "loocv_planck_delta_elpd": 9.71
   },
   "sampler": {
     "name": "Parallel-MH-Hessian-Calibrated",
@@ -101,8 +151,33 @@
       "claim_id": "R41-METHOD-001",
       "current_status": "FIVE_PROBE_SOURCE_BOUND_CONVERGED",
       "claim_tier": "C0"
+    },
+    {
+      "claim_id": "R41-BIC-009",
+      "current_status": "VALIDATED_BY_R41_OPTIMIZED_MODEL_COMPARISON",
+      "claim_tier": "C0"
+    },
+    {
+      "claim_id": "R41-LOOCV-010",
+      "current_status": "VALIDATED_BY_R41_TRUE_REFIT_LOOCV",
+      "claim_tier": "C0"
+    },
+    {
+      "claim_id": "R41-MCMC-011",
+      "current_status": "VALIDATED_R41_PRODUCTION_MCMC_CONVERGED",
+      "claim_tier": "C0"
+    },
+    {
+      "claim_id": "R41-TENSOR-012",
+      "current_status": "DEMONSTRATED_MATCHED_FISHER_AND_LOOCV",
+      "claim_tier": "C0"
+    },
+    {
+      "claim_id": "R41-LOWELL-013",
+      "current_status": "FORBIDDEN_PRE_NATIVE_ATLAS",
+      "claim_tier": "C0"
     }
   ],
   "remaining_blockers": [],
-  "next_single_action": "Complete publication package integration under strict Claim Tier C0 boundaries"
+  "next_single_action": "Publication package complete under Claim Tier C0; ready for peer review"
 }

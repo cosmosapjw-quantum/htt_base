@@ -22,6 +22,12 @@ import numpy as np
 
 from common.source_bound_pantheon_operator import verify_file_sha256
 from common.relativistic_velocity_closure import compose_velocities_sr
+from common.observation_operator_contract import (
+    ObservationSourceMetadata,
+    PhysicalFunctionalSpec,
+    CoordinateFrame,
+    EstimatorType,
+)
 
 PLANCK_ANALYSIS_DIR = "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis"
 PLANCK_OBS_PATH = os.path.join(PLANCK_ANALYSIS_DIR, "observed_lowell_EB.npz")
@@ -178,3 +184,46 @@ class SourceBoundPlanckLowEllOperator:
 
         pred_10 = np.concatenate([E_pred, B_pred])
         return self.evaluate_modes(pred_10)
+
+    def evaluate_likelihood(
+        self,
+        theta_K: np.ndarray,
+        psi: Optional[Any] = None,
+    ) -> Tuple[float, float]:
+        return self.evaluate_model(theta_K)
+
+    @property
+    def metadata(self) -> ObservationSourceMetadata:
+        return ObservationSourceMetadata(
+            source_id="Planck_PR4_LowEll_EB",
+            product_name="Planck PR4 Commander Low-Ell Polarized Multipoles",
+            catalog_or_data_path=self.obs_path,
+            covariance_path=None,
+            n_total_objects=10,
+            n_selected_objects=10,
+            selection_rule="ell=2 E and B mode multipoles from 100 PR4 MCs",
+            coordinate_frame=CoordinateFrame.GALACTIC,
+            units="uK",
+            estimator_type=EstimatorType.HARMONIC_LOWELL_CARRIER,
+            window_or_mask_id="Planck_PR4_Commander_Gal78",
+            covariance_id="PR4_100_Realization_Empirical_MC_Covariance",
+            verified_sha256=EXPECTED_PLANCK_OBS_SHA256,
+            is_synthetic=False,
+        )
+
+    @property
+    def functional_spec(self) -> PhysicalFunctionalSpec:
+        return PhysicalFunctionalSpec(
+            name="harmonic_lowell_EB_modes",
+            tensor_rank=2,
+            parity="odd and even",
+            so3_representation="2+ direct sum 2-",
+            units="uK",
+            parameter_dependence=("beta_MO", "beta_RM", "sigma_ab"),
+        )
+
+    def get_data_vector(self) -> np.ndarray:
+        return self.d_obs
+
+    def get_covariance_matrix(self) -> np.ndarray:
+        return self.cov

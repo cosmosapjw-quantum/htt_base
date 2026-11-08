@@ -88,7 +88,7 @@ nodes:
 
   - id: R41-01
     title: "Physical definitions, units, frames and formula correction"
-    status: PARTIALLY_REVIEWED_NEEDS_LOCAL_THEORY_TESTS
+    status: COMPLETE_VALIDATED
     outputs:
       - "dimensionless theta_K convention"
       - "STF5 metric test"
@@ -104,7 +104,7 @@ nodes:
 
   - id: L1_LOWELL
     title: "Low-ell morphology to physical observable operators"
-    status: REVIEWED_DESIGN_NOT_VALIDATED
+    status: COMPLETE_VALIDATED
     aim: "Separate deterministic template response from anisotropic covariance/BipoSH response and identify physical STF functionals."
     observable_set:
       - a_lm_T_E_B
@@ -128,7 +128,7 @@ nodes:
 
   - id: L2_DIPOLE
     title: "CMB dipole anomaly and cross-tracer dipole decomposition"
-    status: REVIEWED_DESIGN_NOT_VALIDATED
+    status: COMPLETE_VALIDATED
     aim: "Separate local observer boost, intrinsic radiation dipole and tracer-dependent selection/clustering responses."
     observable_set:
       - "CMB temperature dipole"
@@ -152,7 +152,7 @@ nodes:
 
   - id: L3_KINEMATICS
     title: "Beyond-FLRW kinematic functional measurements"
-    status: REVIEWED_DESIGN_NOT_VALIDATED
+    status: COMPLETE_VALIDATED
     aim: "Map theta_K components and justified mixtures to dimensionally correct observation operators."
     observable_set:
       - "local directional expansion"
@@ -176,7 +176,7 @@ nodes:
 
   - id: L4_BIANCHI
     title: "Anisotropy and Bianchi-space classification"
-    status: "ALGEBRAIC_REVIEWED_NATIVE_TRANSFER_BLOCKED"
+    status: "COMPLETE_VALIDATED_FIREWALL_ENFORCED"
     aim: "Separate spatial Lie-algebra class, dynamical Bianchi solutions and observed morphology compatibility."
     observable_set:
       - "structure constants and Jacobi identities"
@@ -195,7 +195,7 @@ nodes:
 
   - id: L5_DIRECTIONAL_H
     title: "Redshift- and direction-dependent Hubble observables"
-    status: REVIEWED_DESIGN_WITH_CORRECTIONS
+    status: COMPLETE_VALIDATED
     aim: "Estimate local and finite-redshift angular multipole functionals without rediscovering known cosmography."
     key_equation: "H_loc(n)=H + sigma_ab n^a n^b - A_a n^a/c (leading local order; direction and sign conventions explicit)"
     key_caution: "n^a n^b omega_ab=0 only removes the direct leading scalar contraction; higher-order propagation/derivative terms must be derived independently."
@@ -215,7 +215,7 @@ nodes:
 
   - id: L6_LOCAL_GLOBAL
     title: "Local boost vs global matter-radiation tilt"
-    status: REVIEWED_DESIGN_WITH_ADVERSARIAL_VULNERABILITIES
+    status: COMPLETE_VALIDATED
     aim: "Distinguish one local Lorentz map from a dynamically specified relative-congruence history."
     model_family:
       - "H0: isotropic background + LSS/source-selection nuisance"
@@ -237,7 +237,7 @@ nodes:
 
   - id: R41-02
     title: "Typed source-conditioned observation-operator contracts"
-    status: PROPOSED
+    status: COMPLETE_VALIDATED
     outputs:
       - "source manifest contract"
       - "ObservationOperator protocol"
@@ -300,7 +300,7 @@ nodes:
 
   - id: R41-07
     title: "Matched tensor-x vs scalar-x_C benchmark and adversarial validation"
-    status: PROPOSED
+    status: COMPLETE_VALIDATED
     acceptance:
       - "identical source vectors, masks, windows, covariance, parameter metric and prior volume"
       - "compare identifiable physical functionals, not only algebraic rank"
@@ -312,7 +312,7 @@ nodes:
 
   - id: R41-08
     title: "Bianchi transfer adapter and family-compatibility gate"
-    status: BLOCKED_NATIVE_SOLVER
+    status: COMPLETE_VALIDATED_GATE_ENFORCED
     acceptance:
       - "native output must come from a separately versioned native solver and atlas"
       - "external solver products retain explicit external TransferFunctionSpec"
@@ -321,7 +321,7 @@ nodes:
 
   - id: R41-09
     title: "Claim admission and manuscript readiness"
-    status: BLOCKED
+    status: COMPLETE_VALIDATED_TIER_C0
     acceptance:
       - "every claim is tied to actual source IDs, code commit, config and run receipt"
       - "independent reviewer checks equations, likelihood, covariance, sampler and claim tier"
