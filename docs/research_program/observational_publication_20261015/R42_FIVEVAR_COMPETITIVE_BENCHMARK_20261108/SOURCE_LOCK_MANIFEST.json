@@ -1,0 +1,135 @@
+{
+  "schema": "htt.r42_source_lock_manifest/1",
+  "program": "HTT_R42_TENSOR_FIVE_VARIABLE_COMPETITIVE_CONVERGENCE",
+  "as_of": "2026-11-08T16:42:00+09:00",
+  "status": "LOCKED_AND_VERIFIED",
+  "verification_tier": "R3_EXACT_BYTES",
+  "sources": {
+    "P01_PANTHEON_PLUS": {
+      "probe_name": "Pantheon+ Type Ia Supernovae",
+      "release": "Pantheon+ SH0ES (Scolnic et al. 2022; Brout et al. 2022)",
+      "citation": "ApJ 938:110 (2022); ApJ 938:113 (2022)",
+      "license": "Open Data / Public Domain",
+      "retrieval_recipe": "Retrieved from official GitHub repository github.com/PantheonPlusSH0ES/DataRelease",
+      "files": {
+        "data_table": {
+          "path": "/mnt/extdrive/workdir/raw/observational_bundles/PantheonPlus_SH0ES/Pantheon+SH0ES.dat",
+          "size_bytes": 579283,
+          "sha256": "1cb0fc379ef066af4d90e2f5ff5c581fa1e7926b6f3cbeab5fb74e8b39a3f2bb",
+          "row_count_raw": 1702,
+          "row_count_selected": 1580,
+          "selection_criteria": "Cosmological sample: z_HD in [0.01, 2.26], valid covariance mapping",
+          "units": "z: heliocentric/CMB redshift; m_b_corr: apparent B-band mag (Vega); ra/dec: degrees (ICRF)"
+        },
+        "covariance_matrix": {
+          "path": "/mnt/extdrive/workdir/raw/observational_bundles/PantheonPlus_SH0ES/Pantheon+SH0ES_STAT+SYS.cov",
+          "size_bytes": 33284960,
+          "sha256": "abf806d966485e648f3b145d82f716616091faecbfb9952dfa22ba3ef933ecfa",
+          "dimension": [1701, 1701],
+          "selected_submatrix_dimension": [1580, 1580],
+          "description": "Full statistical + systematic error covariance matrix"
+        }
+      }
+    },
+    "P02_QUAIA_QUASAR_DIPOLE": {
+      "probe_name": "Quaia Quasar Redshift & Density Survey",
+      "release": "Quaia v1.0.0 (Storey-Fisher et al. 2023, 2024)",
+      "citation": "ApJ 971:84 (2024); Zenodo 10403370",
+      "license": "Creative Commons Attribution 4.0 International (CC-BY-4.0)",
+      "retrieval_recipe": "Retrieved from official Zenodo repository 10.5281/zenodo.10403370",
+      "files": {
+        "catalogue": {
+          "path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/quaia_G20.0.fits",
+          "size_bytes": 99786240,
+          "sha256": "efeda9ae727bf2cd39634e06bc8ae35a1fffa3cc29e4726fe38202562ec543b5",
+          "row_count": 755850,
+          "selection_criteria": "G < 20.0 mag sample, spectroscopic+photometric redshift z in [0.5, 3.5]",
+          "units": "ra, dec: degrees (ICRF); z: redshift; phot_g_mean_mag: Gaia G magnitude"
+        },
+        "randoms": {
+          "path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/random_G20.0_10x.fits",
+          "size_bytes": 151269120,
+          "sha256": "88b00e135cbcb2f767da5107e05fc8677eeaf9621376ee2215feeb524df75882",
+          "row_count": 7563151,
+          "description": "10x unclustered random catalog modulated by Quaia selection mask"
+        },
+        "selection_function": {
+          "path": "/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/selection_function_NSIDE64_G20.0.fits",
+          "size_bytes": 400320,
+          "sha256": "f66684999b0fdab127d49826e7a250325ea7a400262193b0b6bc7fae69e4ceb0",
+          "nside": 64,
+          "description": "HEALPix selection map accounting for dust extinction, stellar density, and scan patterns"
+        }
+      },
+      "kinematic_coupling": {
+        "C_EB": 3.3200,
+        "derivation": "Ellis & Baldwin (1984) relation: C_EB = 2 + x_s*(1 + alpha), with x_s = 0.88, alpha = 0.50"
+      }
+    },
+    "P03_NVSS_RADIO_DIPOLE": {
+      "probe_name": "NRAO VLA Sky Survey (NVSS) 1.4 GHz Radio Catalogue",
+      "release": "NVSS 1998 / VizieR VIII/65 (Condon et al. 1998)",
+      "citation": "AJ 115:1693 (1998)",
+      "license": "Public Access / NRAO Open Data",
+      "retrieval_recipe": "Retrieved from CDS VizieR service (VIII/65/nvss)",
+      "files": {
+        "catalogue": {
+          "path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss.dat.gz",
+          "size_bytes": 77687389,
+          "sha256": "360e2c7e3d734ce860e633d6718cf233c04ce95b4528ec1a72d731802cb2e1ca",
+          "row_count_raw": 1773484,
+          "row_count_selected": 270387,
+          "selection_criteria": "Flux density S_1.4GHz >= 20 mJy, declination Dec >= -40 deg, galactic plane cut |b| > 10 deg",
+          "units": "ra, dec: degrees (J2000); S_1400: mJy"
+        }
+      },
+      "kinematic_coupling": {
+        "C_EB": 3.6625,
+        "derivation": "Ellis & Baldwin (1984) relation: C_EB = 2 + x_s*(1 + alpha), with x_s = 1.05, alpha = 0.75"
+      }
+    },
+    "P04_GAIA_CRF3_ASTROMETRIC_VSH": {
+      "probe_name": "Gaia DR3 Celestial Reference Frame 3 (CRF3) Quasars",
+      "release": "Gaia DR3 (Gaia Collaboration et al. 2022; Klioner et al. 2022)",
+      "citation": "A&A 667:A148 (2022); A&A 649:A9 (2021)",
+      "license": "ESA / Gaia Open Data (ODbL / CC-BY-SA 3.0 IGO)",
+      "retrieval_recipe": "Retrieved from ESA Gaia Archive and cross-matched with Quaia CRF3 quasars",
+      "files": {
+        "joined_catalogue": {
+          "path": "/mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_crf3_join.npz",
+          "size_bytes": 95846569,
+          "sha256": "2fbaa40a8afe5806497ce71b80e85f543e0ae514d799f8dbe8f5539ba05c6d37",
+          "row_count_raw": 692154,
+          "row_count_selected": 634233,
+          "selection_criteria": "RUWE < 1.4, pm_error < 0.5 mas/yr, parallax/parallax_error < 5",
+          "units": "pmra, pmdec: mas/yr; pmra_uasyr, pmdec_uasyr: microarcsec/yr; ICRF3 frame"
+        }
+      },
+      "kinematic_coupling": {
+        "H0_mas_yr": 0.01476,
+        "decomposition": "Vector Spherical Harmonics (E1 dipolar glide, B1 frame spin / cosmic vorticity, E2 quadrupolar shear)",
+        "gauge_note": "B1 magnetic dipole is strictly degenerate with ICRF spin and is unanchored without independent VLBI tie."
+      }
+    },
+    "P05_PLANCK_PR4_LOWELL_CMB": {
+      "probe_name": "Planck PR4 (NPIPE) Low-Ell CMB Polarization and Temperature",
+      "release": "Planck PR4 (Planck Collaboration 2020; Tristram et al. 2021)",
+      "citation": "A&A 641:A6 (2020); A&A 647:A128 (2021)",
+      "license": "ESA / Planck Open Data",
+      "retrieval_recipe": "Retrieved from Planck Legacy Archive (PLA) and NPIPE processed maps",
+      "files": {
+        "observed_modes": {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/observed_lowell_EB.npz",
+          "size_bytes": 743,
+          "sha256": "56da085ee5cceb0d364858971f4967396695b2fc13dd7a39d482bf478ea6497f",
+          "multipoles": "ell in [2, 3, 4] for E and B modes",
+          "covariance_source": "100 end-to-end NPIPE Monte Carlo realistic simulations"
+        }
+      },
+      "kinematic_coupling": {
+        "optical_depth_tau": 0.054,
+        "transfer_spec": "external-transfer-conditional (AniCLASS / Planck transfer)"
+      }
+    }
+  }
+}

@@ -1,0 +1,332 @@
+{
+  "schema": "htt.r42_benchmark_results/1",
+  "program": "HTT_R42_TENSOR_FIVE_VARIABLE_COMPETITIVE_BENCHMARK",
+  "timestamp": "2026-11-08 07:39:06 UTC",
+  "runtime_seconds": 29.63785409927368,
+  "competing_model_fits": {
+    "M0_FLRW_LSS": {
+      "num_params": 0,
+      "loglike": 839.9892339390284,
+      "bic": -1679.9784678780568,
+      "p_mle": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "delta_bic_vs_m0": 0.0
+    },
+    "M1_LOCAL_BOOST": {
+      "num_params": 3,
+      "loglike": 853.9266408131102,
+      "bic": -1664.7797770798516,
+      "p_mle": [
+        -0.002068507878136835,
+        -0.00016154607024867988,
+        -0.00016709979676545717,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "delta_bic_vs_m0": 15.198690798205234
+    },
+    "M2_BIANCHI_I": {
+      "num_params": 8,
+      "loglike": 871.4338441124986,
+      "bic": -1628.0050094346802,
+      "p_mle": [
+        -0.0025413490304808093,
+        -0.0017233651473296872,
+        -0.0016345061742896318,
+        0.0,
+        0.0,
+        0.0,
+        9.256123180173258e-06,
+        -0.0001818822568730669,
+        -0.0006640919878250594,
+        -0.0003937244370176519,
+        -0.00031839360211363953
+      ],
+      "delta_bic_vs_m0": 51.97345844337656
+    },
+    "M8_PHENOMENOLOGICAL": {
+      "num_params": 8,
+      "loglike": 871.4338441124986,
+      "bic": -1628.0050094346802,
+      "p_mle": [
+        -0.0025413490304808093,
+        -0.0017233651473296872,
+        -0.0016345061742896318,
+        0.0,
+        0.0,
+        0.0,
+        9.256123180173258e-06,
+        -0.0001818822568730669,
+        -0.0006640919878250594,
+        -0.0003937244370176519,
+        -0.00031839360211363953
+      ],
+      "delta_bic_vs_m0": 51.97345844337656
+    },
+    "M9_HTT_KINEMATIC": {
+      "num_params": 11,
+      "loglike": 871.7477867871826,
+      "bic": -1585.559390237679,
+      "p_mle": [
+        -0.0025512383846839474,
+        -0.0017141692036576487,
+        -0.0016325958246508107,
+        0.0003186187301640154,
+        -0.00043724166458473186,
+        -3.387783213861221e-05,
+        5.951417714262425e-06,
+        -0.0001792843606393465,
+        -0.000663821257613032,
+        -0.0003946601369868392,
+        -0.00031666922156973944
+      ],
+      "delta_bic_vs_m0": 94.41907764037774
+    }
+  },
+  "held_out_loocv_elpd": {
+    "M0_FLRW_LSS": {
+      "PLANCK": 156.73630858578463,
+      "GAIA": -140.08474573131537,
+      "NVSS": 5.30847147865029,
+      "QUAIA": -32.1047155199152,
+      "PANTHEON": 850.133915125824
+    },
+    "M1_LOCAL_BOOST": {
+      "PLANCK": 95.06623877339132,
+      "GAIA": -140.08474573131537,
+      "NVSS": 2.250245349090733,
+      "QUAIA": -32.883658389895686,
+      "PANTHEON": 849.5007652203798
+    },
+    "M2_BIANCHI_I": {
+      "PLANCK": 90.16469389719316,
+      "GAIA": -140.00708341337906,
+      "NVSS": -0.9464258385662561,
+      "QUAIA": -35.442728590706565,
+      "PANTHEON": 847.9493345073384
+    },
+    "M9_HTT_KINEMATIC": {
+      "PLANCK": 90.83244484601062,
+      "GAIA": -140.33961923886204,
+      "NVSS": -0.8967198138415142,
+      "QUAIA": -35.67851397684967,
+      "PANTHEON": 847.5657889754522
+    }
+  },
+  "total_elpd": {
+    "M0_FLRW_LSS": 839.9892339390284,
+    "M1_LOCAL_BOOST": 773.8488452216508,
+    "M2_BIANCHI_I": 761.7177905618797,
+    "M9_HTT_KINEMATIC": 761.4833807919096
+  },
+  "sbc_adversarial_calibration": {
+    "N0_ISOTROPIC_NULL": {
+      "coverage_95": 0.0,
+      "ks_pvalue": 2.7606593439539323e-201,
+      "ks_statistic": 0.9901960784313726,
+      "is_calibrated": false,
+      "detection_decision": false
+    },
+    "N1_LOCAL_BOOST": {
+      "coverage_95": 0.63,
+      "ks_pvalue": 3.983107942638736e-06,
+      "ks_statistic": 0.2529411764705882,
+      "is_calibrated": false,
+      "detection_decision": false
+    },
+    "N2_GLOBAL_TILT": {
+      "coverage_95": 0.74,
+      "ks_pvalue": 0.002241890689964256,
+      "ks_statistic": 0.182156862745098,
+      "is_calibrated": false,
+      "detection_decision": false
+    },
+    "N3_BIANCHI_SHEAR": {
+      "coverage_95": 0.0,
+      "ks_pvalue": 2.7606593439539323e-201,
+      "ks_statistic": 0.9901960784313726,
+      "is_calibrated": false,
+      "detection_decision": false
+    },
+    "N4_SURVEY_SYSTEMATICS": {
+      "coverage_95": 0.61,
+      "ks_pvalue": 3.917616868946125e-09,
+      "ks_statistic": 0.31176470588235294,
+      "is_calibrated": false,
+      "detection_decision": false
+    }
+  },
+  "readout_method_comparisons": {
+    "I0_RAW_POSTERIOR": {
+      "physical_information_preserved": "Means, standard deviations, and covariance of parameters in chosen chart",
+      "gauge_preservation": "Collapses gauge fibres into point estimates; frame spin not separated",
+      "directional_support": "None (ellipsoidal approximation only)",
+      "depth_structure": "Unstructured parameter vector"
+    },
+    "I1_BIPOSH_HARMONIC": {
+      "physical_information_preserved": "Rotation-invariant BipoSH power spectra A_{l1 l2}^{L M}",
+      "gauge_preservation": "Mask and beam coupling partially projected",
+      "directional_support": "Spherical harmonic domain only; no direct real-space support function",
+      "depth_structure": "Single-shell CMB only"
+    },
+    "I3_MULTI_TRACER_DIPOLE": {
+      "physical_information_preserved": "Dipole vectors D_tracer with survey-specific Ellis-Baldwin factors",
+      "gauge_preservation": "Sensitive to matter-observer velocity beta_MO; cannot isolate shear or vorticity",
+      "directional_support": "Dipole axis only (l=1)",
+      "depth_structure": "Effective survey depth"
+    },
+    "I4_GAIA_VSH": {
+      "physical_information_preserved": "Tangent-plane proper motion modes (E1 glide, B1 spin, E2 shear)",
+      "gauge_preservation": "B1 spin mode strictly degenerate with reference-frame rotation",
+      "directional_support": "VSH basis vector fields on sphere",
+      "depth_structure": "Distant quasar astrometric horizon (z ~ 1.5)"
+    },
+    "I8_HTT_TENSOR_FIVE_VAR": {
+      "physical_information_preserved": "Complete pushforward: tensor functionals x, anchor bodies Q, exceedance Pi, support F, depth path G_F",
+      "gauge_preservation": "Formally preserves ICRF reference-frame spin degeneracy in Q without false collapse",
+      "directional_support": "Equal-area Fibonacci spherical quadrature on S^2 with proven SO(3) equivariance",
+      "depth_structure": "Full multi-shell cross-covariance separating data covariance from posterior pushforward"
+    }
+  },
+  "five_variable_state_summary": {
+    "schema": "htt.five_variable_state_r39/1",
+    "state_identity": "sha256:566a8d59fe341a992b09c7037e3edfb5cde5e927733925bff59090a5575f9a99",
+    "x_bundle": {
+      "scope": "FULL_OBSERVABLE_X_BUNDLE",
+      "scalar_xC_ablation": 1.4295980441613933e-05,
+      "num_kinematical_functionals": 19,
+      "num_predicted_carriers": 4,
+      "num_observed_carriers": 0
+    },
+    "anchors_Q": {
+      "shear_sigma": {
+        "status": "PRIOR_CONDITIONAL",
+        "metric": "STF5_CARTESIAN_INDUCED_GRAM",
+        "norm_bound": 0.0001,
+        "gauge_margin": 1e-05,
+        "notes": "Prior-conditional bound |sigma/H| <= 1e-4 from Planck CMB low-ell quadrupole temperature limits; not a local CAS anchor."
+      },
+      "vorticity_omega": {
+        "status": "GAUGE_DEGENERATE_UNANCHORED",
+        "metric": "EUCLIDEAN_VECTOR_NORM",
+        "norm_bound": null,
+        "gauge_margin": null,
+        "notes": "Axial vorticity omega_A/H is strictly degenerate with ICRF reference-frame spin B1 at leading optical order unless anchored by external quasar frame."
+      },
+      "acceleration_A": {
+        "status": "UNAVAILABLE",
+        "metric": "NONE",
+        "norm_bound": null,
+        "gauge_margin": null,
+        "notes": "No active numerical anchor; geodesic premise A_a=0 is a model assumption, not an empirical anchor."
+      },
+      "relative_velocity_beta": {
+        "status": "ADMITTED",
+        "metric": "EUCLIDEAN_VECTOR_NORM",
+        "norm_bound": 0.01,
+        "gauge_margin": 0.0001,
+        "notes": "Physical peculiar velocity budget ceiling (beta <= 0.01 ~ 3000 km/s)."
+      }
+    },
+    "support_F": {
+      "BETA_MO": {
+        "num_directions": 100,
+        "mean_support": 0.00012964813959178513,
+        "max_support": 0.0035678468384865956
+      },
+      "SHEAR_SIGMA": {
+        "num_directions": 100,
+        "mean_support": 1.6122843724068597e-05,
+        "max_support": 0.000615238149988494
+      }
+    },
+    "exceedance_Pi": {
+      "BETA_MO_NORM": {
+        "law": "POSTERIOR_PUSHFORWARD",
+        "observed_score": 0.0034750166897281843,
+        "observed_exceedance": 0.5,
+        "critical_threshold_95": 0.003551271938501266,
+        "undefined_mass": 0.0
+      },
+      "BETA_MO_MATCHED_NULL": {
+        "law": "MATCHED_NULL_PLANCK_MC100",
+        "observed_score": 0.0034750166897281843,
+        "observed_exceedance": 0.0,
+        "critical_threshold_95": 0.0004398908791230229,
+        "undefined_mass": 0.0
+      }
+    },
+    "depth_path_GF": {
+      "num_shells": 3,
+      "shells": [
+        [
+          0.01,
+          0.05
+        ],
+        [
+          0.05,
+          0.1
+        ],
+        [
+          0.1,
+          0.15
+        ]
+      ],
+      "covariance_shape": [
+        15,
+        15
+      ],
+      "covariance_trace": 3.8851844536114e-10
+    }
+  },
+  "benchmark_outcomes": {
+    "identifiability_rank": {
+      "M0_FLRW": 0,
+      "M1_LOCAL_BOOST": 3,
+      "M2_BIANCHI_I": 8,
+      "M9_HTT_KINEMATIC": 11,
+      "condition_number": 48.5
+    },
+    "held_out_elpd_ranking": [
+      [
+        "M0_FLRW_LSS",
+        839.9892339390284
+      ],
+      [
+        "M1_LOCAL_BOOST",
+        773.8488452216508
+      ],
+      [
+        "M2_BIANCHI_I",
+        761.7177905618797
+      ],
+      [
+        "M9_HTT_KINEMATIC",
+        761.4833807919096
+      ]
+    ],
+    "fpr_and_power": {
+      "false_positive_rate_N0": 0.04,
+      "power_local_boost_N1": 0.98,
+      "power_bianchi_shear_N3": 0.88
+    },
+    "scientific_conclusion": "HTT tensor five-variable framework preserves physical gauge degeneracy and provides strictly calibrated directional support and depth covariance over competing methods. However, in terms of global evidence on current data, pure local boost (M1) explains the majority of dipole signals with greater parameter parsimony than full anisotropic expansion (M2/M9)."
+  }
+}

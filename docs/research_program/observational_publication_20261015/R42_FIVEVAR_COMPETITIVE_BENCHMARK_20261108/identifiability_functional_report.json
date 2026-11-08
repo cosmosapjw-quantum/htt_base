@@ -1,0 +1,49 @@
+{
+  "schema": "htt.r42_identifiability_functional_report/1",
+  "timestamp": "2026-11-08 07:39:06 UTC",
+  "kinematic_state_dimension": 17,
+  "identifiable_functionals": {
+    "beta_MO_peculiar_velocity": {
+      "status": "IDENTIFIABLE",
+      "dominant_probes": [
+        "Pantheon+",
+        "Quaia",
+        "NVSS"
+      ],
+      "null_fibre_dimension": 0
+    },
+    "sigma_ab_shear_tensor": {
+      "status": "IDENTIFIABLE_BOUNDED",
+      "dominant_probes": [
+        "Planck PR4 low-ell",
+        "Pantheon+",
+        "Gaia CRF3"
+      ],
+      "null_fibre_dimension": 0
+    },
+    "beta_RM_cosmic_tilt": {
+      "status": "CONDITIONALLY_IDENTIFIABLE",
+      "dominant_probes": [
+        "Quaia",
+        "NVSS",
+        "Pantheon+"
+      ],
+      "degeneracy": "Degenerate with unmodelled large-scale clustering dipole"
+    },
+    "omega_a_cosmic_vorticity": {
+      "status": "UNANCHORED_GAUGE_FIBRE",
+      "dominant_probes": [
+        "Gaia CRF3 B1"
+      ],
+      "gauge_degeneracy": "Strictly degenerate with celestial reference frame rotation ICRF3"
+    },
+    "A_a_acceleration": {
+      "status": "UNAVAILABLE_WITHOUT_TIMEDELAYS",
+      "dominant_probes": [
+        "None currently verified"
+      ],
+      "gauge_degeneracy": "Unanchored"
+    }
+  },
+  "fisher_effective_rank": 8
+}

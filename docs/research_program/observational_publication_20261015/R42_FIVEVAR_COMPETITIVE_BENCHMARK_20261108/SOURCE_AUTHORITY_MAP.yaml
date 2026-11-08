@@ -1,0 +1,100 @@
+schema: htt.r42_source_authority_map/1
+program: HTT_R42_TENSOR_FIVE_VARIABLE_COMPETITIVE_BENCHMARK
+as_of: 2026-11-08
+
+authorities:
+  spacetime_and_conventions:
+    metric_signature: "(-,+,+,+)"
+    speed_of_light: "Retain c explicitly in physical equations; dimensionless normalization must declare scale (cH or H)"
+    frame_lineage:
+      - radiation: "CMB rest frame; null 4-velocity u_R^a"
+      - matter: "Cosmic matter / bulk rest frame; 4-velocity u_M^a"
+      - observer: "Local terrestrial / heliocentric observer; 4-velocity u_O^a"
+      - source: "Emitter rest frame at redshift z"
+      - catalogue: "Celestial coordinate frame (e.g. ICRF3)"
+    transformation_law: "Exact ordered Lorentz boosts; non-collinear chains retain Wigner rotation"
+
+  kinematic_state_chart:
+    symbol: theta_K
+    dimension: 17
+    canonical_implementation: "htt/src/common/relativistic_velocity_closure.py"
+    components:
+      - name: sigma_ab_over_H
+        representation: STF2
+        dimension: 5
+        parity: even
+        chart: "STF5 chart (Sxx, Syy, Sxy, Sxz, Syz) with Szz = -Sxx - Syy"
+      - name: omega_a_over_H
+        representation: axial_vector
+        dimension: 3
+        parity: odd
+        chart: "(wx, wy, wz)"
+      - name: A_a_over_cH
+        representation: polar_vector
+        dimension: 3
+        parity: even
+        chart: "(Ax, Ay, Az)"
+      - name: beta_RM
+        representation: polar_vector
+        dimension: 3
+        parity: even
+        description: "Radiation-to-matter relative velocity vector"
+      - name: beta_MO
+        representation: polar_vector
+        dimension: 3
+        parity: even
+        description: "Matter-to-observer relative velocity vector"
+
+  five_variable_readout_families:
+    symbol: "T = (x, Q, Pi, F, G_F)"
+    canonical_implementation: "htt/src/common/htt_five_variable_state.py"
+    mathematical_nature: "Posterior-pushforward readout bundle: T = pushforward[p(theta_K, psi, eta | d, M, S, W)]"
+    rule: "The five variables are NOT independent likelihood parameters and NOT independent likelihood factors."
+    elements:
+      x:
+        authority: "htt/src/common/full_observable_x_bundle.py"
+        definition: "Direct, normalized and mixed kinematic tensor functionals plus observed/predicted carrier bundles."
+      Q:
+        authority: "htt/src/common/htt_five_variable_state.py: KinematicAnchorGeometry"
+        definition: "Physical anchor, gauge, and margin uncertainty bodies. Distinguishes theorem-anchored, calibrated, and unavailable states."
+      Pi:
+        authority: "htt/src/common/htt_five_variable_state.py: ExceedanceSurface"
+        definition: "Law-conditional exceedance surfaces evaluated under authentic source-matched null ensembles."
+      F:
+        authority: "htt/src/common/htt_five_variable_state.py: DirectionalSupportFunction"
+        definition: "Directional support functions and anchor occupancy evaluated via equal-area spherical quadrature."
+      G_F:
+        authority: "htt/src/common/htt_five_variable_state.py: RedshiftPathCovariance"
+        definition: "Redshift/distance shell-specific tensor functional depth path with full cross-shell covariance."
+
+  observation_operators:
+    planck_cmb_lowell:
+      authority: "htt/src/common/source_bound_planck_operator.py: SourceBoundPlanckLowEllOperator"
+      observables: [T_quadrupole, T_octopole, E_quadrupole, B_quadrupole]
+      data_source: "Planck PR4 (NPIPE) / PR3 Commander low-ell maps with Commander MC100 empirical covariance"
+    galaxy_counts_quaia:
+      authority: "htt/src/common/source_bound_quaia_operator.py: SourceBoundQuaiaDipoleOperator"
+      observables: [count_dipole_amplitude, count_dipole_direction]
+      data_source: "Quaia G<20.0 / G<20.5 quasar sample with matched randoms and selection function"
+    galaxy_counts_nvss:
+      authority: "htt/src/common/source_bound_nvss_operator.py: SourceBoundNVSSOperator"
+      observables: [radio_count_dipole_amplitude, radio_count_dipole_direction]
+      data_source: "NVSS 1.4 GHz catalogue (S > 20 mJy) with Declination mask and noise covariance"
+    gaia_astrometry_vsh:
+      authority: "htt/src/common/source_bound_gaia_operator.py: SourceBoundGaiaVSHOperator"
+      observables: [E1_glide, B1_spin, E2_quadrupole]
+      data_source: "Gaia DR3 QSO proper motion catalogue with scanning-law systematic covariance"
+    supernovae_pantheon_plus:
+      authority: "htt/src/common/source_bound_pantheon_operator.py: SourceBoundPantheonOperator"
+      observables: [distance_moduli, directional_hubble_quadrupole]
+      data_source: "Pantheon+ 1701 SNIa distance moduli with full STAT+SYS covariance matrix"
+
+  inference_and_sampling:
+    production_sampler: "Cobaya joint likelihood (htt/htt/htt/infer/cobaya_joint_five_probe.py)"
+    sampler_diagnostics: "Gelman-Rubin rank-normalized split-Rhat < 1.05, bulk/tail ESS > 400"
+    reference_benchmark: "scripts/r41/run_r41_tensor_vs_scalar_benchmark.py"
+
+  semantic_guards_and_gates:
+    claim_firewall: "htt/src/common/semantic_guards.py: SemanticGuard"
+    family_gate: "htt/src/common/bianchi_transfer_adapter.py: FamilyIdentificationGate"
+    transfer_provenance: "htt/src/common/bianchi_transfer_adapter.py: BianchiTransferAdapter"

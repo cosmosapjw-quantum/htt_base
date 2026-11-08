@@ -1,0 +1,96 @@
+schema: htt.r42_legacy_disposition/1
+program: HTT_R42_TENSOR_FIVE_VARIABLE_COMPETITIVE_BENCHMARK
+as_of: 2026-11-08
+governing_rule: "Never delete historical artifacts; classify all historical packages and dossiers into KEEP, REUSE, TRANSFORM, CONDITIONAL, QUARANTINE, or RETIRED."
+
+dispositions:
+  # R38-R41 Observational Packages
+  - package_id: R38_OBSERVATIONAL_CONVERGENCE
+    path: "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107"
+    category: OBSERVATIONAL_PACKAGE
+    disposition: QUARANTINE
+    authority_boundary: "R38 reported rank 13 with condition ~2.5e17 and Delta BIC=17.2, but code inspection revealed empty adapter dictionaries and diagonal fallbacks."
+    current_verdict: QUARANTINED_NOT_REPRODUCED
+    replacement_or_successor: "Replaced by R41 source-bound forward operators and R42 Cobaya joint likelihood with genuine data bytes."
+
+  - package_id: R39_FIVEVAR_OBSERVATIONAL_IDENTIFIABILITY
+    path: "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107"
+    category: FIVE_VARIABLE_FRAMEWORK
+    disposition: TRANSFORM
+    authority_boundary: "Provides formal definitions for (x,Q,Pi,F,G_F) and kinematics theorems, but includes hardcoded response factors, arbitrary Gaussian null (1e-4), uncalibrated Q bounds, and unphysical depth scaling sigma0/(1+z)."
+    current_verdict: PARTIALLY_VALID_NEEDS_REPAIR
+    replacement_or_successor: "Transformed in R42 Stage B: source-specific forward operators for x, physical anchor priors for Q, empirical matched nulls for Pi, spherical quadrature for F, and shell-specific cross-covariance for G_F."
+
+  - package_id: R40_TENSOR_X_RESEARCH_LOOPS
+    path: "docs/research_program/observational_publication_20261015/TENSOR_X_RESEARCH_LOOPS_20261107"
+    category: THEORY_LOOPS
+    disposition: REUSE
+    authority_boundary: "Defines the 6 independent theory research loops (L1..L6). Provides sound mathematical definitions of kinematic charts, STF tensors, and BipoSH."
+    current_verdict: VALID_METHODOLOGICAL_SPECIFICATION
+    replacement_or_successor: "Directly executed in R42 Stage D under genuine data and adversarial benchmarks."
+
+  - package_id: R41_PUBLICATION_GATE_CONVERGENCE
+    path: "docs/research_program/observational_publication_20261015/R41_PUBLICATION_GATE_20261107"
+    category: OBSERVATIONAL_OPERATORS
+    disposition: REUSE
+    authority_boundary: "Built the 5 source-bound operators in htt/src/common/source_bound_*.py and Cobaya joint likelihood. Numerical claims (R-hat, ESS, SBC/PPC) are quarantined pending local data replay."
+    current_verdict: OPERATORS_VALID_NUMERICAL_CLAIMS_QUARANTINED
+    replacement_or_successor: "Operators reused and extended in R42; joint sampling replayed with locked data bytes in Stage E."
+
+  # Foundational Theory & CAS Packages
+  - package_id: METHOD_REBOOT_20261023
+    path: "docs/research_program/observational_publication_20261015/METHOD_REBOOT_20261023"
+    category: THEOREM_REGISTRY
+    disposition: REUSE
+    authority_boundary: "Theorems T1-T7 define common typed state, sample x functional tensor bundle, and pushforward geometry. Does not provide native Boltzmann transfer."
+    current_verdict: VALID_MATHEMATICAL_FOUNDATION
+    replacement_or_successor: "Canonical foundation for R42 tensor functional definitions."
+
+  - package_id: TENSOR_JOINT_R9
+    path: "docs/research_program/tensor_joint_r9"
+    category: JOINT_TENSOR_SPEC
+    disposition: REUSE
+    authority_boundary: "Defines ProductIntake, SharedStateEmbedding, exact row ordering, and full cross-covariance blocks. Diagnostic enabling state only."
+    current_verdict: VALID_PRODUCT_SPECIFICATION
+    replacement_or_successor: "Reused for immutable source and carrier handling."
+
+  - package_id: PORT_CAS_AND_GRSTAT_CAS
+    path: "docs/research_program/gr_statistics_loops_20260930/local_cas"
+    category: CAS_LEAN_PROOFS
+    disposition: KEEP
+    authority_boundary: "Formally verified Lean and SymPy/Wolfram proofs of optical velocity-jet decomposition, Codazzi constraints, and 1+3 kinematic projections. Premise-specific, not universal Bianchi proof."
+    current_verdict: PRESERVED_UNTOUCHED
+    replacement_or_successor: "Strictly preserved as read-only CAS evidence; untracked local files remain untouched."
+
+  - package_id: TSC_TEFF_LEGACY
+    path: "htt/tsc"
+    category: LEGACY_FRAMEWORK
+    disposition: RETIRED
+    authority_boundary: "TSC/Teff full polarization closure is legacy. Must not own any active scientific artifacts or claims."
+    current_verdict: RETIRED_FROM_ACTIVE_SCIENCE
+    replacement_or_successor: "Semantic guards moved to common.semantic_guards; HTT owns model inference; MIO owns diagnostics."
+
+  # Observational Data Packages & Dossiers
+  - package_id: CF4_POSTRECOVERY_20261017
+    path: "docs/research_program/observational_publication_20261015/CF4_POSTRECOVERY_20261017"
+    category: OBSERVATIONAL_DOSSIER
+    disposition: CONDITIONAL
+    authority_boundary: "CF4 raw distance records and group calibrations. Cannot be used to claim global cosmic shear without verified selection and cross-shell covariance."
+    current_verdict: CONDITIONAL_ON_VALIDATED_SELECTION
+    replacement_or_successor: "Reused in R42 via SourceBoundCF4GroupOperator with local flow/bulk flow nuisance model."
+
+  - package_id: PLANCK_CMB_SPECTRAL_IDENTIFIABILITY
+    path: "docs/research_program/observational_publication_20261015/CMB_SPECTRAL_IDENTIFIABILITY_20261025"
+    category: OBSERVATIONAL_DOSSIER
+    disposition: REUSE
+    authority_boundary: "Planck PR3/PR4 same-sky mask and beam accounting, SMICA/Commander bandpass separation."
+    current_verdict: VALID_CMB_INFRASTRUCTURE
+    replacement_or_successor: "Reused in R42 SourceBoundPlanckLowEllOperator with matched MC100 empirical covariance."
+
+  - package_id: OPEN_INPUTS_20261018
+    path: "docs/research_program/observational_publication_20261015/OPEN_INPUTS_20261018"
+    category: DATA_ACQUISITION
+    disposition: REUSE
+    authority_boundary: "Specifications for official data intake from public archives (Planck, DESI, Gaia, Quaia, NVSS, Pantheon+)."
+    current_verdict: VALID_INTAKE_SPECIFICATION
+    replacement_or_successor: "Reused in R42 Stage E for immutable source manifest and data lock."

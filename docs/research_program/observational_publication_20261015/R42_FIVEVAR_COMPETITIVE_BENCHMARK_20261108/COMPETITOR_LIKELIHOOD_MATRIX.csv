@@ -1,0 +1,51 @@
+model_id,probe_id,probe_name,applicability,likelihood_form,predicted_carrier,parameter_dim,nuisance_dim,common_data_subset,boundary_notes
+M0_FLRW_LSS,PLANCK_LOWELL,Planck PR4 CMB,APPLICABLE,GAUSSIAN,isotropic_Cl_lowell,2,1,PR4_COMMANDER_L2_3,Predicts zero anisotropic quadrupole; only background Cl
+M0_FLRW_LSS,QUAIA_DIPOLE,Quaia G<20 Quasars,APPLICABLE,GAUSSIAN,lss_clustering_dipole,3,1,QUAIA_755K_CATALOGUE,Predicts zero kinematic dipole; only Limber LSS clustering dipole
+M0_FLRW_LSS,NVSS_DIPOLE,NVSS 1.4 GHz,APPLICABLE,GAUSSIAN,lss_clustering_dipole,3,1,NVSS_CATALOGUE_S20,Predicts zero kinematic dipole; only LSS clustering dipole
+M0_FLRW_LSS,GAIA_VSH,Gaia DR3 CRF3,NOT_APPLICABLE,NONE,none,0,3,GAIA_634K_CLEAN,Cannot predict secular glide or shear without observer velocity/kinematics
+M0_FLRW_LSS,PANTHEON_SN,Pantheon+ SNe,APPLICABLE,GAUSSIAN,isotropic_mu_z,2,1,PANTHEON_1701_SNE,Isotropic distance modulus mu(z) with Malmquist nuisance
+M1_LOCAL_BOOST,PLANCK_LOWELL,Planck PR4 CMB,APPLICABLE,GAUSSIAN,kinematic_quadrupole_beta2,3,0,PR4_COMMANDER_L2_3,Predicts 0.5 * beta_MO^2 kinematic quadrupole; zero shear
+M1_LOCAL_BOOST,QUAIA_DIPOLE,Quaia G<20 Quasars,APPLICABLE,GAUSSIAN,ellis_baldwin_dipole,3,1,QUAIA_755K_CATALOGUE,Predicts C_EB(Quaia) * beta_MO with C_EB ~ 3.32
+M1_LOCAL_BOOST,NVSS_DIPOLE,NVSS 1.4 GHz,APPLICABLE,GAUSSIAN,ellis_baldwin_dipole,3,1,NVSS_CATALOGUE_S20,Predicts C_EB(NVSS) * beta_MO with C_EB ~ 3.66
+M1_LOCAL_BOOST,GAIA_VSH,Gaia DR3 CRF3,APPLICABLE,GAUSSIAN_SCHUR,secular_aberration_glide,3,3,GAIA_634K_CLEAN,Predicts E1 glide ~ beta_MO; Schur-marginalizes B1 frame spin
+M1_LOCAL_BOOST,PANTHEON_SN,Pantheon+ SNe,APPLICABLE,GAUSSIAN,dipole_distance_modulation,3,1,PANTHEON_1701_SNE,Leading dipole modulation in apparent luminosity distance
+M2_BIANCHI_I,PLANCK_LOWELL,Planck PR4 CMB,APPLICABLE,GAUSSIAN,stf_shear_plus_kinematic,8,0,PR4_COMMANDER_L2_3,Full STF2 shear + kinetic quadrupole beta_MO^2
+M2_BIANCHI_I,QUAIA_DIPOLE,Quaia G<20 Quasars,APPLICABLE,GAUSSIAN,count_dipole,3,1,QUAIA_755K_CATALOGUE,Count dipole response to beta_MO
+M2_BIANCHI_I,NVSS_DIPOLE,NVSS 1.4 GHz,APPLICABLE,GAUSSIAN,count_dipole,3,1,NVSS_CATALOGUE_S20,Count dipole response to beta_MO
+M2_BIANCHI_I,GAIA_VSH,Gaia DR3 CRF3,APPLICABLE,GAUSSIAN_SCHUR,vsh_glide_and_shear,8,3,GAIA_634K_CLEAN,E1 glide (beta_MO) and E2 shear (sigma_ab/H)
+M2_BIANCHI_I,PANTHEON_SN,Pantheon+ SNe,APPLICABLE,GAUSSIAN,directional_H_quadrupole,8,1,PANTHEON_1701_SNE,Directional Hubble parameter H(n) with quadrupole sigma_ab
+M3_BIANCHI_V_VIIH,PLANCK_LOWELL,Planck PR4 CMB,CONDITIONAL_EXTERNAL_TRANSFER,GAUSSIAN,spiral_morphology_transfer,10,0,PR4_COMMANDER_L2_3,Requires external numerical Boltzmann transfer; transfer-conditional
+M3_BIANCHI_V_VIIH,QUAIA_DIPOLE,Quaia G<20 Quasars,APPLICABLE,GAUSSIAN,count_dipole,3,1,QUAIA_755K_CATALOGUE,Matter count dipole response
+M3_BIANCHI_V_VIIH,NVSS_DIPOLE,NVSS 1.4 GHz,APPLICABLE,GAUSSIAN,count_dipole,3,1,NVSS_CATALOGUE_S20,Matter count dipole response
+M3_BIANCHI_V_VIIH,GAIA_VSH,Gaia DR3 CRF3,APPLICABLE,GAUSSIAN_SCHUR,vsh_glide_and_shear,8,3,GAIA_634K_CLEAN,VSH glide and shear
+M3_BIANCHI_V_VIIH,PANTHEON_SN,Pantheon+ SNe,APPLICABLE,GAUSSIAN,curved_directional_distance,10,1,PANTHEON_1701_SNE,Non-zero spatial curvature distance modification
+M4_TILTED_MULTIFLUID,PLANCK_LOWELL,Planck PR4 CMB,APPLICABLE,GAUSSIAN,composed_boost_quadrupole,11,0,PR4_COMMANDER_L2_3,Exact relativistic velocity composition beta_RO = beta_RM (+) beta_MO
+M4_TILTED_MULTIFLUID,QUAIA_DIPOLE,Quaia G<20 Quasars,APPLICABLE,GAUSSIAN,matter_count_dipole,3,1,QUAIA_755K_CATALOGUE,Responds strictly to matter-observer velocity beta_MO
+M4_TILTED_MULTIFLUID,NVSS_DIPOLE,NVSS 1.4 GHz,APPLICABLE,GAUSSIAN,matter_count_dipole,3,1,NVSS_CATALOGUE_S20,Responds strictly to matter-observer velocity beta_MO
+M4_TILTED_MULTIFLUID,GAIA_VSH,Gaia DR3 CRF3,APPLICABLE,GAUSSIAN_SCHUR,vsh_proper_motions,8,3,GAIA_634K_CLEAN,Glide responds to beta_MO; shear responds to sigma_ab
+M4_TILTED_MULTIFLUID,PANTHEON_SN,Pantheon+ SNe,APPLICABLE,GAUSSIAN,matter_frame_distance,8,1,PANTHEON_1701_SNE,Distance multipoles in matter rest frame
+M5_DIPOLE_COSMOLOGY,PLANCK_LOWELL,Planck PR4 CMB,APPLICABLE,GAUSSIAN,intrinsic_radiation_dipole,3,0,PR4_COMMANDER_L2_3,Independent radiation dipole vector
+M5_DIPOLE_COSMOLOGY,QUAIA_DIPOLE,Quaia G<20 Quasars,APPLICABLE,GAUSSIAN,evolving_matter_dipole,4,1,QUAIA_755K_CATALOGUE,Matter dipole with power-law redshift evolution (1+z)^alpha
+M5_DIPOLE_COSMOLOGY,NVSS_DIPOLE,NVSS 1.4 GHz,APPLICABLE,GAUSSIAN,evolving_matter_dipole,4,1,NVSS_CATALOGUE_S20,Matter dipole with power-law redshift evolution (1+z)^alpha
+M5_DIPOLE_COSMOLOGY,GAIA_VSH,Gaia DR3 CRF3,NOT_APPLICABLE,NONE,none,0,3,GAIA_634K_CLEAN,No forward operator for VSH astrometric shear
+M5_DIPOLE_COSMOLOGY,PANTHEON_SN,Pantheon+ SNe,APPLICABLE,GAUSSIAN,dipole_distance_anomaly,4,1,PANTHEON_1701_SNE,Redshift-dependent dipole in distance moduli
+M6_COVARIANT_COSMOGRAPHY,PLANCK_LOWELL,Planck PR4 CMB,NOT_APPLICABLE,NONE,none,0,0,PR4_COMMANDER_L2_3,Cosmography does not model early-universe CMB polarization/transfer
+M6_COVARIANT_COSMOGRAPHY,QUAIA_DIPOLE,Quaia G<20 Quasars,NOT_APPLICABLE,NONE,none,0,1,QUAIA_755K_CATALOGUE,No number-count selection model in pure cosmography
+M6_COVARIANT_COSMOGRAPHY,NVSS_DIPOLE,NVSS 1.4 GHz,NOT_APPLICABLE,NONE,none,0,1,NVSS_CATALOGUE_S20,No number-count selection model in pure cosmography
+M6_COVARIANT_COSMOGRAPHY,GAIA_VSH,Gaia DR3 CRF3,APPLICABLE,GAUSSIAN_SCHUR,shear_and_drift,8,3,GAIA_634K_CLEAN,Kinematic shear and drift multipoles
+M6_COVARIANT_COSMOGRAPHY,PANTHEON_SN,Pantheon+ SNe,APPLICABLE,GAUSSIAN,heinesen_distance_multipoles,10,1,PANTHEON_1701_SNE,Observer-dependent covariant Hubble and deceleration multipoles
+M7_LOCAL_INHOMOGENEITY,PLANCK_LOWELL,Planck PR4 CMB,NOT_APPLICABLE,NONE,none,0,0,PR4_COMMANDER_L2_3,Local structure does not explain CMB acoustic peaks or primary polarization
+M7_LOCAL_INHOMOGENEITY,QUAIA_DIPOLE,Quaia G<20 Quasars,APPLICABLE,GAUSSIAN,local_tracer_dipole,3,1,QUAIA_755K_CATALOGUE,Local structure contribution to low-z quasar density
+M7_LOCAL_INHOMOGENEITY,NVSS_DIPOLE,NVSS 1.4 GHz,APPLICABLE,GAUSSIAN,local_tracer_dipole,3,1,NVSS_CATALOGUE_S20,Local structure contribution to radio density
+M7_LOCAL_INHOMOGENEITY,GAIA_VSH,Gaia DR3 CRF3,NOT_APPLICABLE,NONE,none,0,3,GAIA_634K_CLEAN,Cannot predict distant quasar proper motion field from local void
+M7_LOCAL_INHOMOGENEITY,PANTHEON_SN,Pantheon+ SNe,APPLICABLE,GAUSSIAN,void_distance_profile,5,1,PANTHEON_1701_SNE,Local void radial profile delta(r) modifying distance-redshift
+M8_PHENOMENOLOGICAL_MULTIPOLE_SYSTEMATICS,PLANCK_LOWELL,Planck PR4 CMB,APPLICABLE,GAUSSIAN,harmonic_templates,5,2,PR4_COMMANDER_L2_3,Dipole/quadrupole harmonics + dust template
+M8_PHENOMENOLOGICAL_MULTIPOLE_SYSTEMATICS,QUAIA_DIPOLE,Quaia G<20 Quasars,APPLICABLE,GAUSSIAN,harmonic_templates,3,2,QUAIA_755K_CATALOGUE,Dipole + extinction/selection gradient templates
+M8_PHENOMENOLOGICAL_MULTIPOLE_SYSTEMATICS,NVSS_DIPOLE,NVSS 1.4 GHz,APPLICABLE,GAUSSIAN,harmonic_templates,3,2,NVSS_CATALOGUE_S20,Dipole + declination/zenith scan templates
+M8_PHENOMENOLOGICAL_MULTIPOLE_SYSTEMATICS,GAIA_VSH,Gaia DR3 CRF3,APPLICABLE,GAUSSIAN_SCHUR,harmonic_templates,6,3,GAIA_634K_CLEAN,VSH modes + scanning law systematic templates
+M8_PHENOMENOLOGICAL_MULTIPOLE_SYSTEMATICS,PANTHEON_SN,Pantheon+ SNe,APPLICABLE,GAUSSIAN,harmonic_templates,8,2,PANTHEON_1701_SNE,Multipoles + survey calibrator offset nuisance
+M9_HTT_KINEMATICAL_STATE,PLANCK_LOWELL,Planck PR4 CMB,APPLICABLE,GAUSSIAN,composed_boost_and_stf_shear,8,0,PR4_COMMANDER_L2_3,Exact relativistic composition beta_RO = beta_RM (+) beta_MO and STF2 shear
+M9_HTT_KINEMATICAL_STATE,QUAIA_DIPOLE,Quaia G<20 Quasars,APPLICABLE,GAUSSIAN,ellis_baldwin_quaia_dipole,3,1,QUAIA_755K_CATALOGUE,C_EB(Quaia) = 2 + x*(1+alpha) ~ 3.32 with selection function
+M9_HTT_KINEMATICAL_STATE,NVSS_DIPOLE,NVSS 1.4 GHz,APPLICABLE,GAUSSIAN,ellis_baldwin_nvss_dipole,3,1,NVSS_CATALOGUE_S20,C_EB(NVSS) = 2 + x*(1+alpha) ~ 3.66 with declination mask
+M9_HTT_KINEMATICAL_STATE,GAIA_VSH,Gaia DR3 CRF3,APPLICABLE,GAUSSIAN_SCHUR,vsh_glide_spin_shear,8,3,GAIA_634K_CLEAN,Glide E1 (beta_MO), Frame Spin B1 (gauge degenerate), Shear E2 (sigma_ab/H)
+M9_HTT_KINEMATICAL_STATE,PANTHEON_SN,Pantheon+ SNe,APPLICABLE,GAUSSIAN,directional_distance_multipoles,8,1,PANTHEON_1701_SNE,Dipole beta_MO, Acceleration A/(cH), Shear sigma_ab/H

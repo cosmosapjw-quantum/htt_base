@@ -1,0 +1,140 @@
+schema: htt.r42_competitor_registry/1
+program: HTT_R42_TENSOR_FIVE_VARIABLE_COMPETITIVE_BENCHMARK
+as_of: 2026-11-08
+
+generative_models:
+  - id: M0_FLRW_LSS
+    label: "FLRW / LambdaCDM + linear LSS peculiar velocities"
+    parameters: [H0, Omega_m, sigma_8, b_tracer, v_pec_rms]
+    dimension: 5
+    supported_observables: [CMB_TT_TE_EE, SN_distance, galaxy_counts, astrometry_E1]
+    missing_channels: [CMB_BB_anisotropic, VSH_B1_spin, VSH_E2_shear, directional_H_quadrupole]
+    physical_assumptions: "Exact spatial isotropy in background; scalar perturbations generate dipole via Doppler modulation."
+    priors: "Uniform H0 in [60, 80], Omega_m in [0.2, 0.4], proper flat priors."
+
+  - id: M1_LOCAL_BOOST
+    label: "Pure local observer Lorentz boost"
+    parameters: [beta_MO_x, beta_MO_y, beta_MO_z]
+    dimension: 3
+    supported_observables: [CMB_dipole_and_quadrupole, galaxy_counts_dipole, astrometry_glide_E1, SN_dipole]
+    missing_channels: [CMB_BB_anisotropic, VSH_B1_spin, VSH_E2_shear, directional_H_quadrupole]
+    physical_assumptions: "Single observer 4-velocity relative to cosmic matter and radiation frames (beta_RM = 0); all dipoles share one boost."
+    priors: "beta_MO in [-0.01, 0.01]^3 with Euclidean norm <= 0.01."
+
+  - id: M2_BIANCHI_I
+    label: "Homogeneous anisotropic Bianchi I expansion"
+    parameters: [sigma_xx, sigma_yy, sigma_xy, sigma_xz, sigma_yz, beta_MO_x, beta_MO_y, beta_MO_z]
+    dimension: 8
+    supported_observables: [CMB_lowell_T_E, SN_distance, directional_H_quadrupole, astrometry_E2_shear]
+    missing_channels: [VSH_B1_spin, CMB_BB_parity_odd]
+    physical_assumptions: "Homogeneous triaxial expansion; zero vorticity (omega = 0) and zero spatial curvature."
+    priors: "sigma_ab/H in [-1e-4, 1e-4]^5 under Frobenius Gram metric; beta_MO in [-0.01, 0.01]^3."
+
+  - id: M3_BIANCHI_V_VIIH
+    label: "Bianchi V / VII_h / LRS curved anisotropic geometry"
+    parameters: [sigma_xx, sigma_yy, sigma_xy, sigma_xz, sigma_yz, h_parameter, Omega_k, beta_MO_x, beta_MO_y, beta_MO_z]
+    dimension: 10
+    supported_observables: [CMB_lowell_T_E_B, SN_distance, directional_H]
+    missing_channels: [VSH_B1_spin_if_zero_vorticity]
+    physical_assumptions: "Non-zero spatial curvature; spiral geodesic focusing; requires Boltzmann transfer (external/AniCLASS)."
+    priors: "sigma_ab/H in [-1e-4, 1e-4]^5; h in [0.01, 1.0]; Omega_k in [-0.1, 0.0]."
+
+  - id: M4_TILTED_MULTIFLUID
+    label: "Dynamical tilted multi-fluid (matter-radiation relative velocity)"
+    parameters: [beta_RM_x, beta_RM_y, beta_RM_z, beta_MO_x, beta_MO_y, beta_MO_z, sigma_ab]
+    dimension: 11
+    supported_observables: [CMB_dipole, galaxy_counts_dipole, redshift_tomography, astrometry_E1]
+    missing_channels: [VSH_B1_spin]
+    physical_assumptions: "Radiation and matter frames have non-zero relative drift velocity beta_RM; non-collinear boost composition."
+    priors: "beta_RM in [-0.01, 0.01]^3; beta_MO in [-0.01, 0.01]^3; sigma_ab in [-1e-4, 1e-4]^5."
+
+  - id: M5_DIPOLE_COSMOLOGY
+    label: "Dipole cosmology / phenomenological cosmic drift"
+    parameters: [D_rad_x, D_rad_y, D_rad_z, D_mat_x, D_mat_y, D_mat_z, alpha_drift]
+    dimension: 7
+    supported_observables: [CMB_dipole, galaxy_counts_dipole, SN_dipole]
+    missing_channels: [astrometry_shear_E2, CMB_polarization_B]
+    physical_assumptions: "Independent intrinsic dipole vectors in radiation and matter sectors with power-law redshift evolution."
+    priors: "D_rad, D_mat in [-0.02, 0.02]^3; alpha_drift in [-2.0, 2.0]."
+
+  - id: M6_COVARIANT_COSMOGRAPHY
+    label: "Kristian-Sachs / Heinesen covariant multipole cosmography"
+    parameters: [H0, q0, dH_dipole_3, dH_quadrupole_5]
+    dimension: 10
+    supported_observables: [SN_distance, CF4_peculiar_velocity, directional_H]
+    missing_channels: [CMB_polarization, VSH_B1_spin]
+    physical_assumptions: "Model-independent kinematic expansion of null geodesics in general spacetime; no global metric assumed."
+    priors: "H0 in [60, 80]; q0 in [-1.0, 0.0]; multipoles bounded by convergence."
+
+  - id: M7_LOCAL_INHOMOGENEITY
+    label: "Local bulk flow / void / LTB-like radial structure"
+    parameters: [v_bulk_x, v_bulk_y, v_bulk_z, R_void, delta_void]
+    dimension: 5
+    supported_observables: [SN_distance, CF4_peculiar_velocity, low_z_counts]
+    missing_channels: [CMB_polarization, astrometry_E2_shear]
+    physical_assumptions: "Local density dip or coherent flow within z < 0.1 explaining apparent low-z anisotropy."
+    priors: "v_bulk in [-1000, 1000] km/s; R_void in [50, 300] Mpc; delta_void in [-0.5, 0.0]."
+
+  - id: M8_PHENOMENOLOGICAL_MULTIPOLE_SYSTEMATICS
+    label: "Phenomenological multipoles + survey systematics templates"
+    parameters: [A_dipole_3, A_quadrupole_5, dust_coeff, scan_coeff, calib_offset]
+    dimension: 11
+    supported_observables: [all_probes]
+    missing_channels: []
+    physical_assumptions: "Unconstrained directional spherical harmonics fitted alongside instrumental and foreground templates."
+    priors: "Amplitudes bounded by data RMS; proper Gaussian nuisance priors."
+
+  - id: M9_HTT_KINEMATICAL_STATE
+    label: "HTT 1+3 physical kinematic state chart (theta_K)"
+    parameters: [sigma_ab_5, omega_a_3, A_a_3, beta_RM_3, beta_MO_3]
+    dimension: 17
+    supported_observables: [CMB_lowell_T_E_B, Quaia_counts, NVSS_counts, Gaia_VSH_E1_B1_E2, Pantheon_SN]
+    missing_channels: []
+    physical_assumptions: "General 1+3 relativistic kinematic decomposition with exact ordered Lorentz boosts and physical observation operators."
+    priors: "sigma in [-1e-4, 1e-4]^5 (Gram); omega in [-1e-4, 1e-4]^3; A in [-1e-4, 1e-4]^3; beta_RM, beta_MO in [-0.01, 0.01]^3."
+
+inference_methods:
+  - id: I0_RAW_POSTERIOR
+    label: "Conventional posterior means, covariance, and credible intervals"
+    summary_representation: "Parametric mean vector mu_theta, posterior covariance Sigma_theta, marginal 68%/95% intervals."
+    nuisance_handling: "Marginalization over calibration and foreground parameters."
+
+  - id: I1_BIPOSH_FULL_HARMONIC
+    label: "Bipolar Spherical Harmonic (BipoSH) full harmonic covariance"
+    summary_representation: "BipoSH multipoles A_{l1 l2}^{L M} tracking statistical anisotropy on the 2-sphere."
+    nuisance_handling: "Mask deconvolution and isotropic noise subtraction."
+
+  - id: I2_MULTIPOLE_VECTOR_POWER_TENSOR
+    label: "Low-ell multipole vectors and power/alignment tensors"
+    summary_representation: "Planarity, alignment dot-products, and Maxwell multipole unit vectors for l=2, 3."
+    nuisance_handling: "Evaluated on masked split-maps with Monte Carlo nulls."
+
+  - id: I3_MULTI_TRACER_DIPOLE
+    label: "Multi-tracer count dipole and spectral/flux response"
+    summary_representation: "Ellis-Baldwin dipole vectors D_tracer with survey-specific C_EB factors."
+    nuisance_handling: "Poisson shot noise and Limber angular clustering covariance C_1."
+
+  - id: I4_VSH_ASTROMETRY
+    label: "Gaia VSH proper motion tangent-plane likelihood"
+    summary_representation: "Vector Spherical Harmonics (E1 glide, B1 spin, E2 shear) with Schur-marginalized frame spin."
+    nuisance_handling: "Schur complement of ICRF reference frame rotation."
+
+  - id: I5_HIERARCHICAL_PV_FIELD
+    label: "Hierarchical peculiar velocity and local flow reconstruction"
+    summary_representation: "Gaussian Process / field-level velocity field v(r) across redshift shells."
+    nuisance_handling: "Distance indicator zero-point calibration and Malmquist bias."
+
+  - id: I6_SCORE_COMPRESSION
+    label: "Score compression / nuisance-hardened compression"
+    summary_representation: "Compressed 1D/2D summary statistic t = F^-1/2 (d ln L / d theta) at fiducial."
+    nuisance_handling: "Nuisance-orthogonal projection (Alsing & Wandelt 2019)."
+
+  - id: I7_CONVEX_SET_DEPTH
+    label: "Convex credible sets and multivariate depth summaries"
+    summary_representation: "Convex hull of posterior samples, Tukey halfspace depth, and support function h(u)."
+    nuisance_handling: "Projection onto identifiable subspace."
+
+  - id: I8_HTT_TENSOR_FIVE_VARIABLE
+    label: "HTT tensor five-variable state (x, Q, Pi, F, G_F)"
+    summary_representation: "Unified pushforward bundle: physical functionals x, anchor geometry Q, exceedance surfaces Pi, directional support F, cross-shell depth path G_F."
+    nuisance_handling: "Exact gauge degeneracy preservation (B1 frame spin) and full block cross-shell covariance."
