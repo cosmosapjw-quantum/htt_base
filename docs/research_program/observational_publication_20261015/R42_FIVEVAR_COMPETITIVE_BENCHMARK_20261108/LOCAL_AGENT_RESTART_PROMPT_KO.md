@@ -18,7 +18,7 @@ R42 package: `docs/research_program/observational_publication_20261015/R42_FIVEV
 ## 1. 연구 목표와 5변수 의미
 
 혼동 금지:
-- `theta_K`: 물리적 local kinematic state ((sigma_{ab}/H,omega_a/H,A_a/(cH),eta_{RM},eta_{MO})), 17차원 chart.
+- `theta_K`: 물리적 local kinematic state ((sigma_{ab}/H,omega_a/H,A_a/(cH),beta_RM,beta_MO)), 17차원 chart.
 - `T=(x,Q,Pi,F,G_F)`: 이 common posterior/compatibility result에 적용되는 다섯 output/readout family.
 - `T`의 다섯 항목은 독립 likelihood parameter나 독립 확률인자가 아니다. `p(x)p(Q)p(Pi)p(F)p(G_F)`를 곱해 likelihood를 만들지 말 것.
 
@@ -128,7 +128,7 @@ Report where HTT wins, ties and loses. Never design the benchmark to guarantee a
 Run the six loops separately, retaining separate claim/evidence records:
 - L1 low-ell morphology -> (a_{ell m}^{T,E,B}), STF multipoles, multipole vectors, power tensors, BipoSH, mask/beam/foreground likelihood. Separate deterministic template from stochastic anisotropic covariance.
 - L2 dipole anomaly -> thermodynamic CMB dipole, Doppler modulation/aberration, intrinsic radiation dipole, matter-count dipoles, Gaia glide, spectral/flux/redshift/size selection.
-- L3 kinematics -> (sigma_{ab}, omega_a, A_a, eta_{RM}, eta_{MO}), exact boosts/Wigner rotations, source-level observational Jacobian, nuisance quotient.
+- L3 kinematics -> (sigma_{ab}, omega_a, A_a, beta_RM, beta_MO), exact boosts/Wigner rotations, source-level observational Jacobian, nuisance quotient.
 - L4 Bianchi classification -> structure constants, Jacobi constraints, Class A/B, tilted dynamics, Bianchi I/V/VIIh; distinguish algebraic compatibility, dynamical solution, transfer and family identification.
 - L5 (H(z,hat n)) -> general covariant multipoles, exact distances/low-z expansion domains, observer-vs-matter frame, local-flow and footprint controls.
 - L6 local boost vs global tilt -> redshift tomography, flux/size response, local structure, source evolution and physical tilt dynamics.
