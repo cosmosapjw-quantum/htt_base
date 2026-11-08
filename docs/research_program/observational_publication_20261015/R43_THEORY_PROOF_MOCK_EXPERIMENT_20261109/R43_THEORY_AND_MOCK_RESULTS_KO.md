@@ -164,7 +164,7 @@ python scripts/r43/run_identifiability_mock.py --seed 20261109 --sbc 1000 --outp
 pytest -q tests/r43
 python -m compileall -q scripts/r43 tests/r43
 ```
-Verified in the authoring environment: **9 tests passed**, compileall passed, same-seed output byte-identical, JSON/YAML parsed, all reported numerical invariants finite. This is a local synthetic-code verification receipt, not GitHub CI or an observational validation.
+Verified in the authoring environment: the full experiment package first passed **9 tests**; after adding the compact structural verifier and three targeted regressions, the combined suite passed **12 tests**. Compileall passed, same-seed output was byte-identical, JSON/YAML parsed, and reported numerical invariants were finite. The additional verifier is a compact structural-rank check with diagonal covariance, not a rerun of the full correlated-noise mock. This is a local synthetic-code verification receipt, not GitHub CI or an observational validation.
 
 ## 8. Claim ledger
 
