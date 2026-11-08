@@ -1,0 +1,36 @@
+schema: htt.r42_harness_gate_adjudication/1
+program: HTT_R42_TENSOR_FIVE_VARIABLE_COMPETITIVE_BENCHMARK
+as_of: 2026-11-08
+
+adjudications:
+  - adjudication_id: ADJ-GATE-01
+    gate_id: GATE_FAMILY_IDENTIFICATION_SUBSTRING_LINT
+    blocked_claim_id: CLAIM_BIANCHI_NEGATION_AND_AUDIT_TEXT
+    gate_source: "htt/src/common/bianchi_transfer_adapter.py: FamilyIdentificationGate.audit_claim_text"
+    observed_trigger: "Substring check 'phrase.lower() in text_lower' triggered false-positive FamilyIdentificationBlockedError on explicitly negated statements ('no Bianchi geometry detected'), quoted prior art, and audit policy warnings."
+    claim_statement_as_asserted: "Scientific text evaluating, refuting, or citing prior literature on Bianchi models without asserting an unproven Bianchi family detection."
+    classification: REPRESENTATION_OR_WORDING_FALSE_POSITIVE
+    scientific_adjudication: "A scientific harness must distinguish assertive claims from explicit negations, quotations, and audit warnings. Rejection of skeptical or cautionary text impedes honest reporting."
+    smallest_correction: "Replaced naive global substring search with context-aware assertion linting that inspects quotation boundaries and sentence-level negation and audit markers, while preserving strict fail-closed rejection of positive assertive claims."
+    regression_tests:
+      - "htt/src/common/test_bianchi_transfer_adapter.py::test_family_identification_claim_audit"
+      - "tests/r42/test_family_identification_gate_repair.py::test_positive_assertive_claims_blocked"
+      - "tests/r42/test_family_identification_gate_repair.py::test_negated_statements_permitted"
+      - "tests/r42/test_family_identification_gate_repair.py::test_quoted_and_citation_text_permitted"
+    final_claim_status: REPAIRED_AND_VERIFIED
+    mutation_authority: "HARNESS_REPAIR_AND_MUTATION_GATES.yaml Step 4"
+
+  - adjudication_id: ADJ-GATE-02
+    gate_id: GATE_NATIVE_SOLVER_UNIVERSAL_PREREQUISITE
+    blocked_claim_id: CLAIM_EXTERNAL_TRANSFER_CONDITIONAL_EVALUATION
+    gate_source: "htt/src/common/bianchi_transfer_adapter.py: FamilyIdentificationGate.evaluate_gate"
+    observed_trigger: "Universal block on all family-related hypothesis testing in the absence of a project-local native BASS solver."
+    claim_statement_as_asserted: "Morphology compatibility and hypothesis testing evaluated conditional on validated external Boltzmann solvers (AniCLASS / ABSolve)."
+    classification: POTENTIALLY_OVERRESTRICTIVE_UNIVERSAL_POLICY
+    scientific_adjudication: "A native solver is an implementation provenance boundary, not a universal physics prerequisite. Validated external numerical solvers provide legitimate transfer if labeled EXTERNAL_TRANSFER_CONDITIONAL and never relabeled as native BASS."
+    smallest_correction: "Updated FamilyIdentificationGate.evaluate_gate to distinguish external transfer conditional status with explicit label 'external-transfer-conditional'. Native solver remains strictly mandatory for native BASS attribution."
+    regression_tests:
+      - "htt/src/common/test_bianchi_transfer_adapter.py::test_family_identification_gate_evaluation"
+      - "tests/r42/test_family_identification_gate_repair.py::test_gate_evaluation_external_transfer"
+    final_claim_status: REPAIRED_AND_VERIFIED
+    mutation_authority: "HARNESS_REPAIR_AND_MUTATION_GATES.yaml Step 4"

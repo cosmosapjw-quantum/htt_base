@@ -1,0 +1,154 @@
+# Cobaya configuration for Joint Five-Probe Cosmological Likelihood
+# Coupling: Pantheon+ (SNe Ia), Quaia (Quasars), NVSS (Radio), Gaia CRF3 (VSH), Planck PR4 (Low-Ell CMB)
+likelihood:
+  htt.infer.cobaya_joint_five_probe.JointFiveProbeLikelihood:
+    pantheon_data: /mnt/extdrive/workdir/raw/observational_bundles/PantheonPlus_SH0ES/Pantheon+SH0ES.dat
+    pantheon_cov: /mnt/extdrive/workdir/raw/observational_bundles/PantheonPlus_SH0ES/Pantheon+SH0ES_STAT+SYS.cov
+    quaia_cat: /mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/quaia_G20.0.fits
+    quaia_rnd: /mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/random_G20.0_10x.fits
+    quaia_sel: /mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/selection_function_NSIDE64_G20.0.fits
+    nvss_cat: /mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss.dat.gz
+    gaia_npz: /mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_crf3_join.npz
+    planck_obs: /mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/observed_lowell_EB.npz
+    planck_analysis: /mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis
+    verify_sha: false
+
+params:
+  # Background FLRW parameters
+  H0:
+    prior:
+      min: 60.0
+      max: 85.0
+    ref: 73.4
+    proposal: 0.5
+    latex: H_0
+  Omega_m:
+    prior:
+      min: 0.1
+      max: 0.5
+    ref: 0.334
+    proposal: 0.01
+    latex: \Omega_m
+  DeltaOmega_k:
+    value: 0.0
+    latex: \Delta\Omega_k
+
+  # Observer kinematic boost beta_MO (peculiar velocity relative to matter)
+  beta_MO_x:
+    prior:
+      min: -0.005
+      max: 0.005
+    ref: -0.0012
+    proposal: 0.0001
+    latex: \beta_{MO,x}
+  beta_MO_y:
+    prior:
+      min: -0.005
+      max: 0.005
+    ref: 0.00025
+    proposal: 0.0001
+    latex: \beta_{MO,y}
+  beta_MO_z:
+    prior:
+      min: -0.005
+      max: 0.005
+    ref: 0.0008
+    proposal: 0.0001
+    latex: \beta_{MO,z}
+
+  # Cosmic radiation-matter tilt beta_RM
+  beta_RM_x:
+    prior:
+      min: -0.005
+      max: 0.005
+    ref: 0.0
+    proposal: 0.0001
+    latex: \beta_{RM,x}
+  beta_RM_y:
+    prior:
+      min: -0.005
+      max: 0.005
+    ref: 0.0
+    proposal: 0.0001
+    latex: \beta_{RM,y}
+  beta_RM_z:
+    prior:
+      min: -0.005
+      max: 0.005
+    ref: 0.0
+    proposal: 0.0001
+    latex: \beta_{RM,z}
+
+  # Cosmic shear tensor sigma_ab / H (STF 5-parameter representation)
+  sigma_xx:
+    prior:
+      min: -0.001
+      max: 0.001
+    ref: 0.0
+    proposal: 0.00005
+    latex: (\sigma_{xx}/H)
+  sigma_yy:
+    prior:
+      min: -0.001
+      max: 0.001
+    ref: 0.0
+    proposal: 0.00005
+    latex: (\sigma_{yy}/H)
+  sigma_xy:
+    prior:
+      min: -0.001
+      max: 0.001
+    ref: 0.0
+    proposal: 0.00005
+    latex: (\sigma_{xy}/H)
+  sigma_xz:
+    prior:
+      min: -0.001
+      max: 0.001
+    ref: 0.0
+    proposal: 0.00005
+    latex: (\sigma_{xz}/H)
+  sigma_yz:
+    prior:
+      min: -0.001
+      max: 0.001
+    ref: 0.0
+    proposal: 0.00005
+    latex: (\sigma_{yz}/H)
+
+  # Cosmic vorticity omega_a / H (axial vector, unanchored gauge fibre)
+  omega_x:
+    value: 0.0
+    latex: (\omega_x/H)
+  omega_y:
+    value: 0.0
+    latex: (\omega_y/H)
+  omega_z:
+    value: 0.0
+    latex: (\omega_z/H)
+
+  # Cosmic acceleration A_a / (cH) (polar vector)
+  A_x:
+    value: 0.0
+    latex: (A_x/cH)
+  A_y:
+    value: 0.0
+    latex: (A_y/cH)
+  A_z:
+    value: 0.0
+    latex: (A_z/cH)
+
+sampler:
+  mcmc:
+    max_samples: 2000
+    Rminus1_stop: 0.05
+    Rminus1_cl_stop: 0.2
+    burn_in: 300
+    oversample_power: 0.4
+    drag: false
+    blocking:
+      - [1, [H0, Omega_m]]
+      - [2, [beta_MO_x, beta_MO_y, beta_MO_z, beta_RM_x, beta_RM_y, beta_RM_z]]
+      - [3, [sigma_xx, sigma_yy, sigma_xy, sigma_xz, sigma_yz]]
+
+output: chains/joint_five_probe

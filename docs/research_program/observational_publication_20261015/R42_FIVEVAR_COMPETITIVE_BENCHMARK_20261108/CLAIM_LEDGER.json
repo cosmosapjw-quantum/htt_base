@@ -1,0 +1,112 @@
+{
+  "schema": "htt.r42_claim_ledger/1",
+  "as_of": "2026-11-08T16:44:00+09:00",
+  "program": "HTT_R42_TENSOR_FIVE_VARIABLE_COMPETITIVE_CONVERGENCE",
+  "claims": [
+    {
+      "id": "R42-SEM-001",
+      "claim": "The latest (x,Q,Pi,F,G_F) state is a posterior/compatibility push-forward, not five independent likelihood parameters.",
+      "status": "VERIFIED_OBSERVATIONAL_AND_CODE",
+      "evidence": [
+        "htt/src/common/htt_five_variable_state.py",
+        "htt/src/common/full_observable_x_bundle.py",
+        "tests/r42/test_five_variable_repair.py"
+      ],
+      "limitations": ["Requires explicit physical generative likelihood p(d|theta_K, psi) rather than independent product over T."]
+    },
+    {
+      "id": "R42-METHOD-001",
+      "claim": "A source-conditioned tensor five-variable readout preserves decision-relevant physical functional information beyond conventional scalar summaries and prevents false attribution of gauge modes.",
+      "status": "BENCHMARK_VALIDATED_METHODOLOGY",
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/FIVE_VARIABLE_BENCHMARK_RESULTS.json",
+        "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/heldout_predictive_scores.json",
+        "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/five_variable_readout_comparison.json"
+      ],
+      "limitations": ["In raw held-out predictive parsimony, pure kinematic local boost M1 outperforms full anisotropic HTT M9; the advantage of T lies in identifiability diagnostics, gauge preservation, and structural consistency rather than higher ELPD on isotropic-consistent data."]
+    },
+    {
+      "id": "R42-X-002",
+      "claim": "Current full_observable_x_bundle production carrier responses are physically calibrated.",
+      "status": "REPAIRED_AND_VERIFIED",
+      "evidence": [
+        "htt/src/common/full_observable_x_bundle.py",
+        "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/FIVEVAR_IMPLEMENTATION_AUDIT.md",
+        "tests/r42/test_five_variable_repair.py"
+      ],
+      "limitations": ["Removed hardcoded factors 3.75, 3.40, 0.92, 0.18; grounded in Ellis-Baldwin relativistic relation and physical proper motion units."]
+    },
+    {
+      "id": "R42-Q-003",
+      "claim": "Current Q anchor bounds and gauge margins are physically anchored.",
+      "status": "REPAIRED_AND_VERIFIED",
+      "evidence": [
+        "htt/src/common/htt_five_variable_state.py",
+        "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/FIVEVAR_IMPLEMENTATION_AUDIT.md",
+        "tests/r42/test_five_variable_repair.py"
+      ],
+      "limitations": ["Gaia B1 frame spin is catalogued as GAUGE_DEGENERATE_UNANCHORED; four-acceleration A_a is marked UNAVAILABLE pending time-delay observables."]
+    },
+    {
+      "id": "R42-PI-004",
+      "claim": "Current Pi diagnostic null is calibrated to actual observations.",
+      "status": "REPAIRED_AND_VERIFIED",
+      "evidence": [
+        "htt/src/common/htt_five_variable_state.py",
+        "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/FIVEVAR_IMPLEMENTATION_AUDIT.md",
+        "tests/r42/test_five_variable_repair.py"
+      ],
+      "limitations": ["Arbitrary Gaussian pseudo-null replaced with 100 Planck PR4 NPIPE realistic MC simulations, Quaia 10x randoms, and NVSS mocks; finite-sample quantile uncertainty reported."]
+    },
+    {
+      "id": "R42-F-005",
+      "claim": "Current F directional support uses a converged uniform spherical quadrature.",
+      "status": "REPAIRED_AND_VERIFIED",
+      "evidence": [
+        "htt/src/common/htt_five_variable_state.py",
+        "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/FIVEVAR_IMPLEMENTATION_AUDIT.md",
+        "tests/r42/test_five_variable_repair.py"
+      ],
+      "limitations": ["Implemented Fibonacci equal-area quadrature on S^2; verified numerical convergence and rotation equivariance."]
+    },
+    {
+      "id": "R42-GF-006",
+      "claim": "Current G_F depth path is derived from physical evolution and observed shell covariance.",
+      "status": "REPAIRED_AND_VERIFIED",
+      "evidence": [
+        "htt/src/common/htt_five_variable_state.py",
+        "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/FIVEVAR_IMPLEMENTATION_AUDIT.md",
+        "tests/r42/test_five_variable_repair.py"
+      ],
+      "limitations": ["Explicitly separates observational data covariance from posterior-induced parameter covariance across discrete redshift shells."]
+    },
+    {
+      "id": "R42-EMP-007",
+      "claim": "R41 reported five-probe posterior/BIC/LOOCV/Fisher/SBC numerical results are publication-grade.",
+      "status": "SUPERSEDED_AND_CORRECTED_BY_R42",
+      "evidence": [
+        "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/SOURCE_LOCK_MANIFEST.json",
+        "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/FIVE_VARIABLE_BENCHMARK_RESULTS.json",
+        "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/COBAYA_RESULTS/COBAYA_EXECUTION_RECEIPT.json"
+      ],
+      "limitations": ["All 5 probes executed from locked raw files; Cobaya MCMC used as production inference path."]
+    },
+    {
+      "id": "R42-HARNESS-008",
+      "claim": "The current Bianchi claim text gate can falsely block a correct negated or cited statement.",
+      "status": "REPAIRED_AND_VERIFIED",
+      "evidence": [
+        "htt/src/common/bianchi_transfer_adapter.py",
+        "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/HARNESS_GATE_ADJUDICATION.yaml",
+        "tests/r42/test_family_identification_gate_repair.py"
+      ],
+      "limitations": ["Context-aware assertion linting and external-transfer-conditional allowance implemented and tested under ADJ-GATE-01 and ADJ-GATE-02."]
+    }
+  ],
+  "publication": {
+    "empirical_detection_paper": "HOLD",
+    "methods_paper": "CONDITIONALLY_VIABLE",
+    "bianchi_family_identification": "FORBIDDEN_C0_UNIDENTIFIABLE",
+    "allowed_novelty_candidate": "Source-conditioned tensor-functional posterior-pushforward architecture T=(x,Q,Pi,F,G_F) with physical anchor bodies Q, law-conditional exceedance Pi, equal-area spherical directional support F, and full cross-shell depth path G_F, demonstrated on joint multi-probe cosmological inference."
+  }
+}

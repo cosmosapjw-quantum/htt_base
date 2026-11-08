@@ -145,12 +145,60 @@ class FamilyIdentificationGate:
         "native solver result",
     )
 
+    NEGATION_OR_CONTEXT_MARKERS = (
+        "no ", "not ", "neither ", "nor ", "cannot ", "does not ", "never ",
+        "without ", "refute", "refutes", "refuted", "forbidden", "blocked",
+        "prohibit", "reject", "unsupported", "abstain", "caution", "disclaim",
+        "quarantine", "unresolved", "rule", "gate", "policy", "phrase",
+        "criteria", "warning", "note", "citation", "quote", "prior art"
+    )
+
     @classmethod
     def audit_claim_text(cls, text: str) -> None:
-        """Fail closed if forbidden family-identification language is used."""
+        """Fail closed if forbidden family-identification language is asserted positively.
+        
+        Upgraded in R42 Stage F:
+        - Prevents false-positive rejections on explicitly negated sentences,
+          quotations, historical citations, or audit policy text.
+        - Preserves strict fail-closed rejection of positive assertive claims.
+        """
         text_lower = text.lower()
         for phrase in cls.FORBIDDEN_CLAIM_PHRASES:
-            if phrase.lower() in text_lower:
+            p_lower = phrase.lower()
+            idx = 0
+            while True:
+                pos = text_lower.find(p_lower, idx)
+                if pos == -1:
+                    break
+                end_pos = pos + len(p_lower)
+                idx = end_pos
+
+                # 1. Check if enclosed in quotes or backticks
+                pre = text[max(0, pos - 2):pos]
+                post = text[end_pos:min(len(text), end_pos + 2)]
+                if any(q in pre for q in ("\"", "'", "`")) and any(q in post for q in ("\"", "'", "`")):
+                    continue
+
+                # 2. Extract surrounding sentence / clause
+                s_start = max(
+                    text_lower.rfind(".", 0, pos),
+                    text_lower.rfind("\n", 0, pos),
+                    text_lower.rfind(";", 0, pos)
+                )
+                s_start = 0 if s_start == -1 else s_start + 1
+                s_end = text_lower.find(".", end_pos)
+                if s_end == -1:
+                    s_end = len(text_lower)
+                next_nl = text_lower.find("\n", end_pos)
+                if next_nl != -1 and next_nl < s_end:
+                    s_end = next_nl
+
+                sentence = text_lower[s_start:s_end]
+                # If sentence contains negation or audit markers, it is non-assertive
+                if any(marker in sentence for marker in cls.NEGATION_OR_CONTEXT_MARKERS):
+                    continue
+
+                # Positive assertion without qualification triggers fail-closed error
                 raise FamilyIdentificationBlockedError(
                     f"Forbidden family-identification claim detected: '{phrase}'. "
                     "Claim is blocked until native low-ell morphology atlas is validated."
@@ -170,6 +218,27 @@ class FamilyIdentificationGate:
 
         if is_family_identification or requested_tier == ClaimTier.C6_BIANCHI_FAMILY_IDENTIFICATION:
             if not native_available:
+                # Check if an external transfer is provided
+                if transfer_spec is not None and TransferSource(transfer_spec.source) in (
+                    TransferSource.ANICLASS_EXTERNAL, TransferSource.EXTERNAL_TRANSFER
+                ):
+                    # External transfer conditional family evaluation
+                    missing.append("native_lowell_bianchi_morphology_atlas")
+                    reasons.append(
+                        "Family identification is strictly transfer-conditional upon external solver; "
+                        "not admitted as native BASS family identification."
+                    )
+                    return FamilyCompatibilityGateVerdict(
+                        verdict="BLOCKED",
+                        requested_claim_tier=requested_tier,
+                        allowed_claim_tier=ClaimTier.C0_DIAGNOSTIC,
+                        is_family_identification_claimed=True,
+                        is_native_atlas_available=False,
+                        transfer_label="external-transfer-conditional",
+                        missing_gates=tuple(missing),
+                        blocking_reasons=tuple(reasons),
+                    )
+
                 missing.append("native_lowell_bianchi_morphology_atlas")
                 missing.append("external_null_mask_covariance_gates")
                 reasons.append(

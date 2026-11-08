@@ -1,0 +1,126 @@
+likelihood:
+  htt.infer.cobaya_joint_five_probe.JointFiveProbeLikelihood:
+    verify_sha: false
+params:
+  H0:
+    prior:
+      min: 65.0
+      max: 80.0
+    ref: 73.4
+    proposal: 0.3
+    latex: H_0
+  Omega_m:
+    prior:
+      min: 0.2
+      max: 0.45
+    ref: 0.334
+    proposal: 0.01
+    latex: \Omega_m
+  DeltaOmega_k:
+    value: 0.0
+    latex: \Delta\Omega_k
+  beta_MO_x:
+    prior:
+      min: -0.003
+      max: 0.003
+    ref: -0.0012
+    proposal: 0.0001
+    latex: \beta_{MO,x}
+  beta_MO_y:
+    prior:
+      min: -0.003
+      max: 0.003
+    ref: 0.00025
+    proposal: 0.0001
+    latex: \beta_{MO,y}
+  beta_MO_z:
+    prior:
+      min: -0.003
+      max: 0.003
+    ref: 0.0008
+    proposal: 0.0001
+    latex: \beta_{MO,z}
+  beta_RM_x:
+    prior:
+      min: -0.003
+      max: 0.003
+    ref: 0.0
+    proposal: 0.0001
+    latex: \beta_{RM,x}
+  beta_RM_y:
+    prior:
+      min: -0.003
+      max: 0.003
+    ref: 0.0
+    proposal: 0.0001
+    latex: \beta_{RM,y}
+  beta_RM_z:
+    prior:
+      min: -0.003
+      max: 0.003
+    ref: 0.0
+    proposal: 0.0001
+    latex: \beta_{RM,z}
+  sigma_xx:
+    prior:
+      min: -0.0005
+      max: 0.0005
+    ref: 0.0
+    proposal: 3.0e-05
+    latex: (\sigma_{xx}/H)
+  sigma_yy:
+    prior:
+      min: -0.0005
+      max: 0.0005
+    ref: 0.0
+    proposal: 3.0e-05
+    latex: (\sigma_{yy}/H)
+  sigma_xy:
+    prior:
+      min: -0.0005
+      max: 0.0005
+    ref: 0.0
+    proposal: 3.0e-05
+    latex: (\sigma_{xy}/H)
+  sigma_xz:
+    prior:
+      min: -0.0005
+      max: 0.0005
+    ref: 0.0
+    proposal: 3.0e-05
+    latex: (\sigma_{xz}/H)
+  sigma_yz:
+    prior:
+      min: -0.0005
+      max: 0.0005
+    ref: 0.0
+    proposal: 3.0e-05
+    latex: (\sigma_{yz}/H)
+  omega_x:
+    value: 0.0
+    latex: (\omega_x/H)
+  omega_y:
+    value: 0.0
+    latex: (\omega_y/H)
+  omega_z:
+    value: 0.0
+    latex: (\omega_z/H)
+  A_x:
+    value: 0.0
+    latex: (A_x/cH)
+  A_y:
+    value: 0.0
+    latex: (A_y/cH)
+  A_z:
+    value: 0.0
+    latex: (A_z/cH)
+sampler:
+  mcmc:
+    max_samples: 2500
+    Rminus1_stop: 0.05
+    Rminus1_cl_stop: 0.2
+    burn_in: 250
+    oversample_power: 0.4
+    drag: false
+    seed: 424242
+output: joint_five_probe

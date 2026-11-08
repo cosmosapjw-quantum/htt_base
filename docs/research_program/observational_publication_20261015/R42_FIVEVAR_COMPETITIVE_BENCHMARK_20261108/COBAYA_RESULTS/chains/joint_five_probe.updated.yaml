@@ -1,0 +1,207 @@
+theory: null
+likelihood:
+  htt.infer.cobaya_joint_five_probe.JointFiveProbeLikelihood:
+    pantheon_data: /mnt/extdrive/workdir/raw/observational_bundles/PantheonPlus_SH0ES/Pantheon+SH0ES.dat
+    pantheon_cov: /mnt/extdrive/workdir/raw/observational_bundles/PantheonPlus_SH0ES/Pantheon+SH0ES_STAT+SYS.cov
+    quaia_cat: /mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/quaia_G20.0.fits
+    quaia_rnd: /mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/random_G20.0_10x.fits
+    quaia_sel: /mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/selection_function_NSIDE64_G20.0.fits
+    nvss_cat: /mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss.dat.gz
+    gaia_npz: /mnt/extdrive/workdir/htt_open_data/a22_20261023/quaia_join/quaia_crf3_join.npz
+    planck_obs: /mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/observed_lowell_EB.npz
+    planck_analysis: /mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis
+    verify_sha: false
+    op_pantheon: null
+    op_quaia: null
+    op_nvss: null
+    op_gaia: null
+    op_planck: null
+    type: []
+    speed: -1
+    stop_at_error: false
+    version: null
+    input_params:
+    - H0
+    - Omega_m
+    - DeltaOmega_k
+    - beta_MO_x
+    - beta_MO_y
+    - beta_MO_z
+    - beta_RM_x
+    - beta_RM_y
+    - beta_RM_z
+    - sigma_xx
+    - sigma_yy
+    - sigma_xy
+    - sigma_xz
+    - sigma_yz
+    - omega_x
+    - omega_y
+    - omega_z
+    - A_x
+    - A_y
+    - A_z
+    output_params: []
+params:
+  H0:
+    prior:
+      min: 65.0
+      max: 80.0
+    ref: 73.4
+    proposal: 0.3
+    latex: H_0
+  Omega_m:
+    prior:
+      min: 0.2
+      max: 0.45
+    ref: 0.334
+    proposal: 0.01
+    latex: \Omega_m
+  DeltaOmega_k:
+    value: 0.0
+    latex: \Delta\Omega_k
+  beta_MO_x:
+    prior:
+      min: -0.003
+      max: 0.003
+    ref: -0.0012
+    proposal: 0.0001
+    latex: \beta_{MO,x}
+  beta_MO_y:
+    prior:
+      min: -0.003
+      max: 0.003
+    ref: 0.00025
+    proposal: 0.0001
+    latex: \beta_{MO,y}
+  beta_MO_z:
+    prior:
+      min: -0.003
+      max: 0.003
+    ref: 0.0008
+    proposal: 0.0001
+    latex: \beta_{MO,z}
+  beta_RM_x:
+    prior:
+      min: -0.003
+      max: 0.003
+    ref: 0.0
+    proposal: 0.0001
+    latex: \beta_{RM,x}
+  beta_RM_y:
+    prior:
+      min: -0.003
+      max: 0.003
+    ref: 0.0
+    proposal: 0.0001
+    latex: \beta_{RM,y}
+  beta_RM_z:
+    prior:
+      min: -0.003
+      max: 0.003
+    ref: 0.0
+    proposal: 0.0001
+    latex: \beta_{RM,z}
+  sigma_xx:
+    prior:
+      min: -0.0005
+      max: 0.0005
+    ref: 0.0
+    proposal: 3.0e-05
+    latex: (\sigma_{xx}/H)
+  sigma_yy:
+    prior:
+      min: -0.0005
+      max: 0.0005
+    ref: 0.0
+    proposal: 3.0e-05
+    latex: (\sigma_{yy}/H)
+  sigma_xy:
+    prior:
+      min: -0.0005
+      max: 0.0005
+    ref: 0.0
+    proposal: 3.0e-05
+    latex: (\sigma_{xy}/H)
+  sigma_xz:
+    prior:
+      min: -0.0005
+      max: 0.0005
+    ref: 0.0
+    proposal: 3.0e-05
+    latex: (\sigma_{xz}/H)
+  sigma_yz:
+    prior:
+      min: -0.0005
+      max: 0.0005
+    ref: 0.0
+    proposal: 3.0e-05
+    latex: (\sigma_{yz}/H)
+  omega_x:
+    value: 0.0
+    latex: (\omega_x/H)
+  omega_y:
+    value: 0.0
+    latex: (\omega_y/H)
+  omega_z:
+    value: 0.0
+    latex: (\omega_z/H)
+  A_x:
+    value: 0.0
+    latex: (A_x/cH)
+  A_y:
+    value: 0.0
+    latex: (A_y/cH)
+  A_z:
+    value: 0.0
+    latex: (A_z/cH)
+sampler:
+  mcmc:
+    sampler_type: mcmc
+    supports_periodic_params: true
+    burn_in: 250
+    max_tries: 40d
+    covmat: null
+    covmat_params: null
+    proposal_scale: 2.4
+    output_every: 60s
+    learn_every: 40d
+    temperature: 1
+    learn_proposal: true
+    learn_proposal_Rminus1_max: 2.0
+    learn_proposal_Rminus1_max_early: 30.0
+    learn_proposal_Rminus1_min: 0.0
+    max_samples: 2500
+    Rminus1_stop: 0.05
+    Rminus1_cl_stop: 0.2
+    Rminus1_cl_level: 0.95
+    Rminus1_single_split: 4
+    measure_speeds: true
+    oversample_power: 0.4
+    oversample_thin: true
+    drag: false
+    blocking:
+    - - 1
+      - - H0
+        - Omega_m
+        - beta_MO_x
+        - beta_MO_y
+        - beta_MO_z
+        - beta_RM_x
+        - beta_RM_y
+        - beta_RM_z
+        - sigma_xx
+        - sigma_yy
+        - sigma_xy
+        - sigma_xz
+        - sigma_yz
+    callback_function: null
+    callback_every: null
+    seed: 424242
+    check_every: null
+    oversample: null
+    drag_limits: null
+    fallback_covmat_scale: 4
+    version: 3.6.2
+output: joint_five_probe
+version: 3.6.2

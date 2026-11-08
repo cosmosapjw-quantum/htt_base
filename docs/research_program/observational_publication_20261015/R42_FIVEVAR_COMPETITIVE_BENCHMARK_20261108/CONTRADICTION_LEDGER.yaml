@@ -1,0 +1,60 @@
+schema: htt.r42_contradiction_ledger/1
+program: HTT_R42_TENSOR_FIVE_VARIABLE_COMPETITIVE_BENCHMARK
+as_of: 2026-11-08
+
+contradictions:
+  - id: CONTRADICTION-01
+    title: "R38 Joint Posterior and Rank Claims vs Code Reality"
+    historical_claim: "R38 reported full joint identifiability rank 13, condition number ~2.5e17, Delta BIC=17.2, and valid multi-probe posteriors."
+    observed_code_reality: "run_joint_cobaya.py instantiated likelihood adapters with empty dictionaries; NVSS/Quaia dipoles were hardcoded; Pantheon+ and DESI had random/zero fallbacks; chain parameter summary was empty; Delta BIC table (+40.08) contradicted text (17.2)."
+    disposition: QUARANTINE
+    severity: HIGH
+    remediation: "Quarantine all R38 numerical posteriors. Build authentic source-bound forward operators with genuine data bytes and execute verified Cobaya MCMC sampling."
+
+  - id: CONTRADICTION-02
+    title: "Hardcoded Multipliers in Observable x Bundle"
+    historical_claim: "full_observable_x_bundle.py claimed to provide physically derived observable carriers for CMB, galaxy counts, and astrometry."
+    observed_code_reality: "Count dipole had arbitrary multipliers (3.75, 3.40); Gaia VSH response had fixed (0.92, 0.18); CMB quadrupole had fixed tau and shear scale; B-mode was hardcoded to zero."
+    disposition: REPAIR_IN_STAGE_B
+    severity: HIGH
+    remediation: "Eliminate all hardcoded response factors in Stage B. Every predicted carrier must originate from a dimensional, source-specific forward operator or return UNAVAILABLE / EXTERNAL_TRANSFER_CONDITIONAL."
+
+  - id: CONTRADICTION-03
+    title: "Arbitrary Gaussian Null Law in MIO Diagnostics (Pi)"
+    historical_claim: "htt_five_variable_state.py claimed to provide calibrated empirical exceedance surfaces and diagnostic p-values."
+    observed_code_reality: "MIO_DIAGNOSTIC_NULL was generated from an arbitrary Gaussian pseudo-random vector with standard deviation 1e-4, bearing no relation to real survey noise, masks, or selection."
+    disposition: REPAIR_IN_STAGE_B
+    severity: HIGH
+    remediation: "Replace arbitrary Gaussian null with source-matched null ensembles: Planck Commander MC100, catalogue randoms, Gaia scanning-law permutations, and SN covariance mocks."
+
+  - id: CONTRADICTION-04
+    title: "Gaia B1 Catalogue Spin Confused with Cosmic Vorticity"
+    historical_claim: "Historical kinematic extraction treated Gaia B1 VSH dipole as a direct empirical measurement of cosmic vorticity omega_a."
+    observed_code_reality: "At leading optical order, catalogue spin B1 is strictly degenerate with rigid reference-frame rotation (ICRF3 triad spin) unless externally anchored by quasar frames."
+    disposition: REPAIR_IN_STAGE_B
+    severity: CRITICAL_PHYSICS
+    remediation: "Preserve exact gauge degeneracy in Q. Declare reference-frame margin as unavailable/gauge-dependent; report identifiable quotient rather than collapsing to a vorticity detection."
+
+  - id: CONTRADICTION-05
+    title: "Unphysical Phenomenological Depth Scaling (G_F)"
+    historical_claim: "htt_five_variable_state.py claimed to model depth tomography and cross-shell covariance."
+    observed_code_reality: "Code hardcoded sigma(z) = sigma_0 / (1+z) across three bins and used an identity transport kernel without physical derivation from Einstein/Bianchi field equations."
+    disposition: REPAIR_IN_STAGE_B
+    severity: MEDIUM_PHYSICS
+    remediation: "Eliminate unlabelled 1/(1+z) scaling. Require shell-specific source data vectors and full cross-shell covariance; separate data covariance from posterior-induced covariance."
+
+  - id: CONTRADICTION-06
+    title: "FamilyIdentificationGate Substring Scanning False Positives"
+    historical_claim: "FamilyIdentificationGate in bianchi_transfer_adapter.py claimed to prevent unwarranted Bianchi family identification claims."
+    observed_code_reality: "The gate performed a naive substring scan of text, causing false-positive rejections on explicitly negated sentences, literature citations, and audit notes."
+    disposition: REPAIR_IN_STAGE_F
+    severity: HIGH_HARNESS
+    remediation: "Implement structured claim record checks and conservative assertion-context linting in Stage F. Ensure negative and audit text passes while unsupported positive claims fail."
+
+  - id: CONTRADICTION-07
+    title: "Native Solver as Universal Prerequisite for Family Claims"
+    historical_claim: "Historical policy blocked any family-conditional analysis unless an internal native BASS solver was implemented in htt_base."
+    observed_code_reality: "Native solver implementation in htt_base is forbidden by project rules (non-negotiable boundary). Validated external solvers (e.g. ABSolve, AniCLASS) can provide legitimate physical transfer functions if labeled EXTERNAL_TRANSFER_CONDITIONAL."
+    disposition: REPAIR_IN_STAGE_F
+    severity: MEDIUM_POLICY
+    remediation: "Clarify policy: external transfer is permitted under Claim Tier C0/C1 with strict provenance labeling EXTERNAL_TRANSFER_CONDITIONAL; never relabel external transfer as native BASS."

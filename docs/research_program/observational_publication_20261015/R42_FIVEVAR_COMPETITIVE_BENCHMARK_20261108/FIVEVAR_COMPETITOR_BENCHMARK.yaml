@@ -1,0 +1,189 @@
+schema: htt.r42.competitor_benchmark/1
+program: HTT_R42_TENSOR_FIVE_VARIABLE_COMPETITIVE_BENCHMARK
+as_of: 2026-11-08
+primary_question: "Does the latest HTT tensor five-variable posterior-pushforward method yield a measurable, calibrated and physically interpretable advantage over established competing theories and inference methods?"
+scope:
+  primary_comparison: "HTT latest tensorized (x,Q,Pi,F,G_F) vs other physical models and statistical/observable methods"
+  scalar_xC:
+    role: "optional secondary ablation only"
+    must_not_be: "primary competitor, main novelty claim, or substitute for the five-variable tensor state"
+  terminology:
+    theta_K: "17-component local kinematic state chart: (sigma_ab, omega_a, A_a, beta_RM, beta_MO)"
+    tensor_five_variable_state: "(x,Q,Pi,F,G_F), five output/readout families"
+    rule: "Never confuse theta_K with the five output variables; the five outputs are not five independent sampled likelihood parameters."
+  inference_semantics:
+    generative_posterior: "p(theta_K, psi, eta | d, M, S, W)"
+    output_map: "T = (x,Q,Pi,F,G_F) = T_# p(theta_K,psi,eta | d,M,S,W)"
+    prohibition:
+      - "Do not multiply p(x)p(Q)p(Pi)p(F)p(G_F) as if the five outputs were independent likelihood factors."
+      - "Do not compute model evidence from output summaries alone."
+      - "Do not treat a diagnostic null as an observed-data likelihood."
+  scientific_question:
+    - "Which tensor-valued physical functionals remain identifiable after source selection, transfer, covariance and nuisance projection?"
+    - "Does the five-variable readout preserve useful physical information better than conventional posterior and established observable summaries?"
+    - "Does it improve calibrated out-of-sample predictions or decision-relevant coverage, not merely dimensionality or in-sample rank?"
+    - "Which probes distinguish local boost, global tilt, anisotropic expansion, local LSS and survey systematics?"
+    - "Which Bianchi algebraic/dynamical families remain observationally compatible, and are any uniquely identifiable?"
+layers:
+  generative_models:
+    - id: M0_FLRW_LSS
+      label: "FLRW/LambdaCDM + local structure and linear-theory peculiar velocities"
+      observables: [CMB, SN_distance, galaxy_counts, redshift_dipoles, astrometry, BAO]
+      purpose: "strong physical baseline; distinguish global anisotropy from local structure"
+    - id: M1_LOCAL_BOOST
+      label: "pure local observer Lorentz boost"
+      observables: [CMB_dipole, Doppler_modulation, aberration, flux_counts, observed_redshift, angular_size]
+      purpose: "common observer-frame map with probe-specific response"
+    - id: M2_BIANCHI_I
+      label: "Bianchi I anisotropic expansion"
+      observables: [CMB_T_E_B, SN_distance, directional_H, astrometry]
+      purpose: "homogeneous shear baseline"
+    - id: M3_BIANCHI_V_VIIH
+      label: "Bianchi V and VII_h / relevant LRS or Class A/B family alternatives"
+      observables: [CMB_T_E_B, lowell_morphology, anisotropic_transfer]
+      purpose: "family-specific geometry and physical radiation transfer"
+    - id: M4_TILTED_MULTIFLUID
+      label: "dynamical matter-radiation relative tilt and stress"
+      observables: [redshift_tomographic_counts, CMB, distance, astrometry]
+      purpose: "global relative congruence with derived dynamical depth evolution"
+    - id: M5_DIPOLE_COSMOLOGY
+      label: "dipole cosmology / Copernican generalization beyond FLRW"
+      observables: [CMB_dipole, matter_dipole, redshift_dependence, directional_H]
+      purpose: "direct published alternative to a global tilt interpretation"
+    - id: M6_COVARIANT_COSMOGRAPHY
+      label: "Kristian-Sachs / Heinesen general-spacetime luminosity-distance and Hubble multipoles"
+      observables: [SN_distance, H_z_n, observer_frame_multipoles]
+      purpose: "model-independent kinematical competitor; avoid claiming directional Hubble multipoles as new"
+    - id: M7_LOCAL_INHOMOGENEITY
+      label: "local bulk flow, density/tidal field, LTB-like radial inhomogeneity"
+      observables: [SN_distance, CF4_PV, redshift_dipoles]
+      purpose: "adversarial alternative for low-z anisotropy"
+    - id: M8_PHENOMENOLOGICAL_MULTIPOLE_SYSTEMATICS
+      label: "dipole/quadrupole phenomenology plus dust, calibration and selection templates"
+      observables: [all_applicable]
+      purpose: "flexible nuisance baseline; test whether HTT claims merely restate a flexible fit"
+    - id: M9_HTT_KINEMATICAL_STATE
+      label: "HTT 1+3 local physical kinematic state with explicitly derived probe observation operators"
+      observables: [all_supported_by_validated_operators]
+      purpose: "physical input to the tensor five-variable readout; not identified with a Bianchi metric without dynamics"
+  inference_methods:
+    - id: I0_RAW_POSTERIOR
+      label: "conventional full posterior with means, covariance, credible intervals and posterior predictive checks"
+    - id: I1_BIPOSH_FULL_HARMONIC
+      label: "full harmonic covariance / bipolar spherical harmonic representation"
+    - id: I2_MULTIPOLE_VECTOR_POWER_TENSOR
+      label: "low-ell multipole vectors, planarity/alignment and power/alignment tensors"
+    - id: I3_MULTI_TRACER_DIPOLE
+      label: "source-dependent count dipole, redshift/flux/angular-size response and intrinsic/kinematic decomposition"
+    - id: I4_VSH_ASTROMETRY
+      label: "source-level Gaia tangent-plane likelihood with E1/B1/E2 and reference-frame nuisance"
+    - id: I5_HIERARCHICAL_PV_FIELD
+      label: "hierarchical peculiar-velocity / local-flow / Gaussian-process or field-level reconstruction"
+    - id: I6_SCORE_COMPRESSION
+      label: "score compression / nuisance-hardened compression with declared fiducial and local validity"
+    - id: I7_CONVEX_SET_DEPTH
+      label: "conventional credible sets, support functions, multivariate depth and functional-data summaries"
+    - id: I8_HTT_TENSOR_FIVE_VARIABLE
+      label: "latest tensor five-variable push-forward (x,Q,Pi,F,G_F)"
+      status: "candidate method; implementation must pass R42 repair and validation"
+benchmark_design:
+  fairness:
+    common_data:
+      - "Use the same immutable observed source release, exact row keys/order, selection, mask/window, beam, calibration, noise and covariance wherever two methods use that source."
+      - "If a competitor has no forward prediction for a probe, mark NOT_APPLICABLE and compare on the preregistered common data subset; do not fabricate a carrier or silently omit the channel."
+      - "Where map-level and catalogue-level data are not commensurable, maintain separate benchmark strata and compare only validated shared likelihood terms."
+    nuisance:
+      - "Use equivalent nuisance freedoms and proper priors where scientifically comparable."
+      - "If nuisance spaces differ by construction, document them and compare predictive performance and posterior functionals; do not force identical parameter counts."
+      - "Include cross-probe covariance from shared sky, overlapping sources, LSS, calibration and map processing, or demonstrate a conditional-independence approximation."
+    priors:
+      - "Publish prior distributions and units for every model."
+      - "Perform prior-sensitivity checks for non-nested model evidence."
+      - "Improper nuisance priors prohibit Bayes factors unless normalized by a defensible common construction."
+    fitting:
+      - "Fit each generative hypothesis independently to its own maximum/posterior/evidence."
+      - "BIC only from a valid maximized likelihood and appropriate asymptotic regime."
+      - "Bayes factors require a converged normalized evidence calculation."
+      - "Cobaya MCMC posterior runs do not by themselves produce model evidence."
+    heldout:
+      - "For leave-one-probe-out, refit the model on all training probes in every fold, then evaluate held-out predictive density."
+      - "Also perform leave-one-redshift-shell-out and predeclared sky-region/mission-split validation."
+      - "Never evaluate held-out data at full-data MAP or full-data posterior without a valid PSIS-LOO implementation."
+  common_physical_targets:
+    - "observer boost beta_MO and radiation-matter relative velocity beta_RM"
+    - "STF shear sigma_ab/H and its rotation-invariant norms plus orientation"
+    - "axial vorticity omega_a/H, keeping it distinct from catalogue frame spin"
+    - "polar acceleration A_a/(cH), with source/observer convention"
+    - "directional Hubble/deceleration multipoles H_l(z), q_l(z)"
+    - "CMB low-ell T/E/B harmonic and BipoSH carriers"
+    - "redshift-dependent matter dipole and intrinsic/kinematic decomposition"
+    - "Bianchi algebraic compatibility and family-conditional morphology"
+  scores:
+    identifiability:
+      - "full physical Jacobian/score after selection/transfer and nuisance projection"
+      - "parameter and functional-space metric declared before rank threshold"
+      - "report identifiable quotient and target functionals, not raw rank alone"
+      - "for Gaussian d~N(mu(q),C(q)), include covariance Fisher term and logdet(C)"
+    calibration:
+      - "SBC rank uniformity under the exact generative and inference pipeline"
+      - "90/95 percent interval/set coverage with Monte Carlo confidence intervals"
+      - "FPR under matched nulls and power under preregistered effect sizes"
+      - "posterior predictive checks are diagnostic, not proof of calibration on their own"
+    prediction:
+      - "per-probe and total ELPD with uncertainty; appropriate multivariate energy/variogram score for vector/tensor outputs"
+      - "held-out shell and sky-region predictive coverage"
+      - "posterior contraction of physical functionals under increasing data, not just raw parameter count"
+    robustness:
+      - "mask/beam/foreground/noise and split-map stability"
+      - "flux/redshift/size selection and source-evolution stability"
+      - "local-flow/void/LSS injections"
+      - "Gaia scanning-law, reference-frame spin/glide and astrometric systematics"
+      - "cross-probe covariance and overlap sensitivity"
+      - "prior and parameterization sensitivity"
+    efficiency:
+      - "wall time, peak memory and effective samples / validated prediction"
+      - "measure only on identical hardware, datasets and precision targets"
+  injections:
+    - id: N0_ISOTROPIC
+      description: "FLRW isotropic sky with realistic LSS, cosmic variance, map noise and survey selection"
+    - id: N1_LOCAL_BOOST
+      description: "known observer boost with Doppler, aberration, flux, redshift and angular-size transformations"
+    - id: N2_GLOBAL_TILT
+      description: "physically evolved radiation-matter tilt, not an arbitrary linear depth trend"
+    - id: N3_BIANCHI_I
+      description: "Bianchi I shear with exact background and CMB transfer over a declared perturbative/full regime"
+    - id: N4_BIANCHI_V_VIIH
+      description: "family-specific Bianchi transfer; native/external provenance separately tagged"
+    - id: N5_LOCAL_FLOW
+      description: "local inhomogeneity, tidal flow or void without global geometry anisotropy"
+    - id: N6_SURVEY_SYSTEMATIC
+      description: "dust/extinction, flux calibration, declination/footprint, scanning-law and redshift-selection artefacts"
+    - id: N7_MIXED_ADVERSARIAL
+      description: "boost + local flow + global anisotropy + nuisance, including partially aligned and misaligned axes"
+  outputs:
+    required:
+      - "competitor_registry.json"
+      - "source_lock_manifest.json"
+      - "likelihood_operator_matrix.csv"
+      - "claim_to_observable_map.yaml"
+      - "injection_campaign_manifest.yaml"
+      - "per_model_parameter_prior_registry.yaml"
+      - "identifiability_functional_report.json"
+      - "sbc_coverage_fpr_power.json"
+      - "heldout_predictive_scores.json"
+      - "robustness_surface.json"
+      - "five_variable_readout_comparison.json"
+      - "adversarial_review.md"
+      - "benchmark_summary.md"
+claim_rules:
+  - "HTT can claim superiority only on a named observable/probe/domain and metric where a reproducible advantage is demonstrated."
+  - "A tensor representation is not automatically more identifiable or predictive; greater dimension can increase variance and nuisance sensitivity."
+  - "A full-rank Fisher matrix is not sufficient if it is prior-dominated, coordinate-dependent, misspecified or fails coverage."
+  - "Bianchi compatibility is not Bianchi family identification."
+  - "A local boost vs global tilt conclusion requires physically distinct redshift/frame response and local-LSS/systematics controls."
+  - "The benchmark is allowed to show HTT loses; preserve negative and mixed outcomes."
+scalar_ablation:
+  enabled: true
+  role: "secondary sanity diagnostic"
+  outputs: ["x_C"]
+  limitations: "Do not use a deliberately lossy scalar construction as the principal scientific competitor."

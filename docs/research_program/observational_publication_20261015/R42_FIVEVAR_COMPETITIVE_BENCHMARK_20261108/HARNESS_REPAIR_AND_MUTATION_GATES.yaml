@@ -1,0 +1,106 @@
+schema: htt.r42_harness_repair_gates/1
+purpose: "Ensure the scientific harness does not suppress a valid result merely because of an overbroad policy, stale status or implementation-specific preference."
+governing_rule:
+  - "A gate failure is not automatically a scientific refutation."
+  - "A gate pass is not scientific evidence."
+  - "Keep claim support, test verdict, work decision, failure kind and execution permission as separate axes."
+classification:
+  claim_support: [established, literature_supported, derived, numerically_checked, implementation_verified, conjectural, unresolved, refuted]
+  test_verdict: [PASS, CONCERN, FAIL, NOT_RUN, NOT_APPLICABLE]
+  gate_disposition:
+    - SCIENTIFICALLY_JUSTIFIED_BLOCK
+    - HARNESS_LOGIC_DEFECT
+    - IMPLEMENTATION_DEFECT
+    - INPUT_OR_PROVENANCE_INCOMPLETE
+    - RUNTIME_OR_ENVIRONMENT_BLOCK
+    - AUTHORIZATION_BLOCK
+    - REPRESENTATION_OR_WORDING_FALSE_POSITIVE
+  required_record:
+    fields:
+      - gate_id
+      - blocked_claim_id
+      - gate_rule_and_version
+      - observed_trigger
+      - claim_statement_as_asserted
+      - scientific_evidence_refs
+      - independent_check
+      - classification
+      - smallest_correction
+      - regression_test
+      - final_claim_status
+      - exact_commit_and_artifact_identity
+workflow:
+  - step: 1
+    name: "Reproduce the block"
+    action: "Capture exact gate, input, rule version, error and branch/commit. Do not bypass or edit before the trigger is understood."
+  - step: 2
+    name: "Adjudicate science independently"
+    action: "Re-evaluate the underlying derivation, source rows, units, assumptions, covariance, likelihood and competing explanations. A harness error is not proof of the scientific statement."
+  - step: 3
+    name: "Classify"
+    action: "Use the gate_disposition classes above. Separate a correct scientific claim from missing execution/provenance."
+  - step: 4
+    name: "Repair the minimum surface"
+    when: "HARNESS_LOGIC_DEFECT or REPRESENTATION_OR_WORDING_FALSE_POSITIVE"
+    action: "Patch the specific gate and add positive and negative regression tests; retain all real scientific invariants."
+  - step: 5
+    name: "Repair the scientific claim"
+    when: "IMPLEMENTATION_DEFECT or SCIENTIFICALLY_JUSTIFIED_BLOCK or INPUT_OR_PROVENANCE_INCOMPLETE"
+    action: "Fix the source/operator/model or lower/qualify the claim. Do not turn a failed evidence gate into a policy bypass."
+  - step: 6
+    name: "Verify"
+    action: "Run targeted regressions plus one independent adversarial pass. Record test command, environment, return code, source identities and artifacts."
+  - step: 7
+    name: "Adjudicate again"
+    action: "If science passes and the old gate was overbroad, update harness/policy docs/tests. If science does not pass, update claim ledger and report. If unresolved, preserve unresolved status."
+observed_harness_risks:
+  substring_claim_gate:
+    source: "htt/src/common/bianchi_transfer_adapter.py: FamilyIdentificationGate.audit_claim_text"
+    current_behavior: "Rejects any text containing forbidden substrings even when negated, quoted, discussed as prior art, or used to explain why a claim is forbidden."
+    classification: REPRESENTATION_OR_WORDING_FALSE_POSITIVE
+    correction:
+      - "Prefer structured claim records (claim_id, assertion_type, scope, evidence_refs, requested_tier, transfer_provenance) over scanning arbitrary prose."
+      - "If prose lint remains, parse assertion context conservatively and report suspected phrasing; do not block negative/quoted/audit text."
+      - "Add tests: positive assertive forbidden claim is rejected; explicit negation, quotation, source excerpt, audit warning, and historical text are not treated as assertion."
+  native_solver_as_universal_prerequisite:
+    source: "htt/src/common/bianchi_transfer_adapter.py: FamilyIdentificationGate.evaluate_gate / BianchiTransferAdapter"
+    observed_rule: "C6/family identification is categorically blocked when a project-local native atlas is absent."
+    status: "POTENTIALLY_OVERRESTRICTIVE_UNIVERSAL_POLICY"
+    correction:
+      - "Separate implementation provenance (native vs external) from scientific validity/claim admissibility."
+      - "An authentic external solver may support a clearly transfer-conditional family likelihood if independently validated, physically coupled and benchmarked. Never relabel it native."
+      - "Family identification may be admitted only if posterior predictive/model comparison distinguishes family alternatives from FLRW, local-flow, tilt, other Bianchi families and systematics under source-bound data and proper priors."
+      - "Native BASS is required only for claims about the native BASS implementation or when no validated external/analytic transfer exists; it is not an automatic universal physics requirement."
+      - "If the transfer is external, preserve label EXTERNAL_TRANSFER_CONDITIONAL in every artifact."
+  global_claim_tier:
+    risk: "A single global C0 ceiling may hide that analytic claims, local observables and Bianchi-family claims have different evidence and transfer dependencies."
+    correction: "Promote/downgrade per claim and observable; keep global program status as a summary, not an override."
+  local_data_preflight:
+    rule: "Missing local source files block a local execution, not the theoretical possibility or independent status of other claims."
+    correction: "Use INPUT_OR_PROVENANCE_INCOMPLETE and continue independent theory/probe work."
+  external_solver:
+    rule: "Never claim native provenance for AniCLASS/ABSolve/other external solver output."
+    correction: "Keep external/native distinction strict; allow validated external results at transfer-conditional status."
+mutation_gates:
+  allowed_on_r42:
+    - "documentation/DAG/schema/claim-ledger changes"
+    - "targeted harness rule and regression tests after a demonstrated false-positive or overrestriction"
+    - "source-bound likelihood/operator/sampler implementation in a child coding branch with tests"
+  forbidden:
+    - "direct push to main"
+    - "force push or history rewrite"
+    - "delete/overwrite R38-R41 historical artifacts"
+    - "commit raw survey/CMB datasets, credentials or unredacted private local paths"
+    - "claim local SHA verified from GitHub metadata only"
+    - "silently lower scientific thresholds or widen tolerances to pass tests"
+    - "call a simulated agent receipt a real native-subagent execution"
+  change_record:
+    mandatory: [before_rule, observed_failure, scientific_adjudication, minimal_diff, tests, after_rule, residual_scope]
+  claim_gate:
+    - "A scientifically established claim cannot be blocked solely by a text substring, stale tier or solver branding."
+    - "A scientifically unsupported claim cannot be promoted by editing the gate."
+    - "If a strict gate is retained, document the exact scientific or provenance failure it prevents."
+  review:
+    primary: "one implementation/physics review"
+    adversarial: "one fresh-context adversarial pass"
+    no_recursive_review: true
