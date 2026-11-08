@@ -1,0 +1,76 @@
+{
+  "schema": "htt.r42_claim_ledger/1",
+  "as_of": "2026-11-08",
+  "program": "HTT_R42_TENSOR_FIVE_VARIABLE_COMPETITIVE_CONVERGENCE",
+  "claims": [
+    {
+      "id": "R42-SEM-001",
+      "claim": "The latest (x,Q,Pi,F,G_F) state is a posterior/compatibility push-forward, not five independent likelihood parameters.",
+      "status": "IMPLEMENTATION_VERIFIED_STATIC",
+      "evidence": ["htt/src/common/htt_five_variable_state.py", "htt/src/common/full_observable_x_bundle.py"],
+      "limitations": ["Local tests not run in this session."]
+    },
+    {
+      "id": "R42-METHOD-001",
+      "claim": "A source-conditioned tensor five-variable readout may preserve decision-relevant physical functional information beyond conventional posterior summaries and established observable summaries.",
+      "status": "CONJECTURAL_CANDIDATE",
+      "evidence": ["FIVEVAR_COMPETITOR_BENCHMARK.yaml"],
+      "promotion_required": ["Matched source-bound benchmark", "SBC/coverage", "true held-out refit", "competitor analysis", "independent adversarial review"]
+    },
+    {
+      "id": "R42-X-002",
+      "claim": "Current full_observable_x_bundle production carrier responses are physically calibrated.",
+      "status": "UNRESOLVED_QUARANTINED",
+      "evidence": ["htt/src/common/full_observable_x_bundle.py"],
+      "limitations": ["Contains hardcoded response coefficients/scales requiring source-specific derivation or removal."]
+    },
+    {
+      "id": "R42-Q-003",
+      "claim": "Current Q anchor bounds and gauge margins are physically anchored.",
+      "status": "UNRESOLVED_QUARANTINED",
+      "evidence": ["htt/src/common/htt_five_variable_state.py"],
+      "limitations": ["Some fixed bounds/margins have no provenance in the inspected function."]
+    },
+    {
+      "id": "R42-PI-004",
+      "claim": "Current Pi diagnostic null is calibrated to actual observations.",
+      "status": "REFUTED_FOR_CURRENT_IMPLEMENTATION",
+      "evidence": ["htt/src/common/htt_five_variable_state.py"],
+      "limitations": ["Current MIO diagnostic null uses arbitrary Gaussian noise scale and fixed RNG; empirical null calibration is absent."]
+    },
+    {
+      "id": "R42-F-005",
+      "claim": "Current F directional support uses a converged uniform spherical quadrature.",
+      "status": "NOT_ESTABLISHED",
+      "evidence": ["htt/src/common/htt_five_variable_state.py"],
+      "limitations": ["The paired theta/phi linspace does not establish equal-area quadrature or convergence."]
+    },
+    {
+      "id": "R42-GF-006",
+      "claim": "Current G_F depth path is derived from physical evolution and observed shell covariance.",
+      "status": "REFUTED_FOR_CURRENT_IMPLEMENTATION",
+      "evidence": ["htt/src/common/htt_five_variable_state.py"],
+      "limitations": ["Uses sigma(z)=sigma0/(1+z), identity transport and posterior-induced covariance without a validated observational depth operator."]
+    },
+    {
+      "id": "R42-EMP-007",
+      "claim": "R41 reported five-probe posterior/BIC/LOOCV/Fisher/SBC numerical results are publication-grade.",
+      "status": "QUARANTINED_NOT_REPRODUCED",
+      "evidence": ["docs/research_program/observational_publication_20261015/R41_PUBLICATION_GATE_20261107/REVIEW_VERDICT_KO.md", "scripts/r41/run_r41_five_probe_convergence.py", "scripts/r41/run_r41_tensor_vs_scalar_benchmark.py"],
+      "limitations": ["Cobaya interface exists but the advertised production run is custom MH; several likelihood responses/covariances and benchmark claims require repair/replay."]
+    },
+    {
+      "id": "R42-HARNESS-008",
+      "claim": "The current Bianchi claim text gate can falsely block a correct negated or cited statement.",
+      "status": "IMPLEMENTATION_VERIFIED_STATIC",
+      "evidence": ["htt/src/common/bianchi_transfer_adapter.py"],
+      "limitations": ["The exact parser/policy correction must be implemented and regression-tested locally."]
+    }
+  ],
+  "publication": {
+    "empirical_detection_paper": "HOLD",
+    "methods_paper": "CONDITIONALLY_VIABLE_NOT_YET_DEMONSTRATED",
+    "bianchi_family_identification": "UNRESOLVED_TRANSFER_AND_MODEL_COMPARISON_DEPENDENT",
+    "allowed_novelty_candidate": "Source-conditioned tensor-functional posterior-pushforward architecture with anchor/gauge, law-conditional exceedance, directional support and full-covariance depth outputs, if it demonstrates a reproducible calibrated or predictive advantage over existing physical/inference competitors."
+  }
+}
