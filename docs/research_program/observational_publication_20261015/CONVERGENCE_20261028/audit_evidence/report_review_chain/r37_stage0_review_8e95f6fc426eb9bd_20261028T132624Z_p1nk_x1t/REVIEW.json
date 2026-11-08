@@ -1,0 +1,265 @@
+{
+  "campaign": "2b9c0b11dab33758e0ad8c7711376ae29949a345e111df7820fcc8c7cac75ea4",
+  "packet_id": "8e95f6fc426eb9bdc66f1a347b94f652102f92236f31c1a29b37cbd3267efb65",
+  "task_id": "R37-00-FIRST-REPORT",
+  "attempt": 5,
+  "phase": "review",
+  "input_identity": "sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba",
+  "candidate_identity": "sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "b1e51d6e2d7d97855a13014087cf34b9f729b0478c12a78c0a7accf96bf12932",
+  "agent_id": "/root/rc_8e95f6fc426eb9bd",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "review_verdict": "HOLD_CONTROLLER_PRODUCT_BINDING",
+  "F1_status": "CLOSED",
+  "source_bound_report_checks": "PASS_SCOPED_F1_REPAIR_AND_PRESERVATION",
+  "report_qualification": "PENDING_CONTROLLER_PRODUCT_BINDING",
+  "scientific_admission": "UNCHANGED; no new scientific admission",
+  "original42_effect": "none",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "transport_selected": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "schema": "htt.r37_stage0_scoped_repair_review/1",
+  "created_utc": "2026-10-28T13:32:38.285911+00:00",
+  "issue": {
+    "class": "code",
+    "question": "How can the source-bound report receive its declared controller product binding when the recorded repair envelope proposed no products?",
+    "exact_missing_or_defect": "The recorded R37 repair envelope CONTROLLER_RESULT_VALIDATED_cull00vg.json omits qualified_products. research_controller.py lines 2607-2611 defaults that field to [] and stores candidate_products=[]. Live R37-00-FIRST-REPORT therefore has candidate_products=[] for candidate sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee despite spec.qualified_product_expected=convergence_baseline_report. The review gate at lines 2594-2599 requires reviewed qualified_products to be a subset of candidate_products. Returning the report product would be rejected; recording success with no product would leave the declared downstream product dependency unavailable.",
+    "input_identity": "sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba",
+    "substantive": false,
+    "high_consequence": false,
+    "true_external": false,
+    "risk": "Controller result-envelope/product binding omission only. F1 is closed; no new numerical, physical, source-identity, or report-content failure is demonstrated.",
+    "minimal_fix": "Use one bounded supported controller transition under the same task, frozen input and candidate history to bind convergence_baseline_report as the proposed report product. Preserve the repaired source-bound candidate, earlier failed review, exact report/source bytes and cumulative accounting; do not directly edit STATE or mark empty-product success as report qualification. No scientific producer, report rebuild or source change is required.",
+    "minimal_validation": "The actual recorded candidate_products contains convergence_baseline_report, bound to the unchanged reviewed candidate (or an explicitly reviewed packaging-only successor), and the review product-subset gate succeeds for that exact product without original42 promotion."
+  },
+  "validation_evidence": [
+    "Fresh independent literal comparison closed F1: E3/E5/E7/E10 claim_tier and transfer_source exactly match their unchanged bound source RESULT.json fields; both semicolon-containing transfer strings retained.",
+    "Structural comparison found exactly the eight authorized claim-map leaf changes. All remaining claim fields, numerical selectors, sources and qualifications are unchanged.",
+    "43 focused validation checks passed; 151 source/input/candidate/artifact/history SHA-256 and available-size checks had zero mismatches. Eight sealed prior-review evidence artifacts also match their historical receipt.",
+    "Current manifest hashes to sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee; preserved base manifest hashes to sha256:676298caadd2a7c4267f47c188ad54299f9f11da6932e5847bca2b45377f5208. Actual repair packet/result/raw receipt and prior identities agree.",
+    "Report Markdown/TeX/PDF, six vector figures, six-paper crosswalk, BUILD_VALIDATION and frozen 109 legacy task IDs are unchanged. The historical independent successful build applies to the exact retained source/PDF; no rebuild or scientific producer was run.",
+    "Current source qualifications retain synthetic, C0 response/design, finite algebraic, analytic-transfer covariance and first48 diagnostic limits. Original42 remains 17/42 external-output and 18/42 separate analytic alternate, with no effect.",
+    "Read-only live controller excerpt reproduces the independent envelope blocker candidate_products=[] against required convergence_baseline_report. Report qualification withheld; F1 closure preserved."
+  ],
+  "findings": [
+    {
+      "id": "F2",
+      "severity": "MEDIUM",
+      "blocking_for_controller_qualification": true,
+      "scientific_defect": false,
+      "path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_repair_a21f9000155d9219_3o0ik77x/CONTROLLER_RESULT_VALIDATED_cull00vg.json",
+      "field": "qualified_products (missing)",
+      "title": "Recorded repair omitted the declared report-product binding",
+      "evidence_path": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/CONTROLLER_PRODUCT_BINDING.json",
+      "minimal_fix": "Use one bounded supported controller transition under the same task, frozen input and candidate history to bind convergence_baseline_report as the proposed report product. Preserve the repaired source-bound candidate, earlier failed review, exact report/source bytes and cumulative accounting; do not directly edit STATE or mark empty-product success as report qualification. No scientific producer, report rebuild or source change is required."
+    }
+  ],
+  "closed_findings": [
+    {
+      "id": "F1",
+      "status": "CLOSED",
+      "evidence": "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_8e95f6fc426eb9bd_20261028T132624Z_p1nk_x1t/F1_SOURCE_COMPARISON.json"
+    }
+  ],
+  "nonblocking_notes": [
+    {
+      "id": "N1",
+      "status": "DEFERRED_AS_AUTHORIZED",
+      "scope": "Raw support notation remains unchanged; no equation edit or PDF rebuild prescribed."
+    },
+    {
+      "id": "N2",
+      "status": "CLOSED_BY_SUCCESSOR_ERRATUM",
+      "scope": "Successor repair receipt accurately preserves the previously verified DejaVu font-variable correction and states no pandoc rerun."
+    }
+  ],
+  "claim_audit": [
+    {
+      "claim_id": "E1",
+      "owner": "manuscript",
+      "status": "DERIVED",
+      "claim_tier": "C1",
+      "transfer_source": "none",
+      "evidence_paths": [
+        "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/foundations/RESULT_SUMMARY.json"
+      ],
+      "review_scope": "Unchanged row inspected against retained source scopes; no additional demonstrated F1-type contradiction",
+      "required_fix": null
+    },
+    {
+      "claim_id": "E2",
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "transfer_source": "none",
+      "evidence_paths": [
+        "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/JOINT_REMAINDER.json",
+        "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/code/joint_remainder.py"
+      ],
+      "review_scope": "Unchanged row inspected against retained source scopes; no additional demonstrated F1-type contradiction",
+      "required_fix": null
+    },
+    {
+      "claim_id": "E3",
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "conditional_synthetic_method_experiment",
+      "transfer_source": "none",
+      "evidence_paths": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/RESULT.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/radiation_core.py"
+      ],
+      "review_scope": "Literal source metadata repaired and checked",
+      "required_fix": null
+    },
+    {
+      "claim_id": "E4",
+      "owner": "manuscript",
+      "status": "DERIVED",
+      "claim_tier": "C1",
+      "transfer_source": "none",
+      "evidence_paths": [
+        "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL1_NUMERICS.json",
+        "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/INDEPENDENT_REVIEW.json"
+      ],
+      "review_scope": "Unchanged row inspected against retained source scopes; no additional demonstrated F1-type contradiction",
+      "required_fix": null
+    },
+    {
+      "claim_id": "E5",
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C0_CONDITIONAL_METHOD",
+      "transfer_source": "none; saved apparent CF4 proxy is not native transfer",
+      "evidence_paths": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/RESULT.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/INTERPRETATION.md"
+      ],
+      "review_scope": "Literal source metadata repaired and checked",
+      "required_fix": null
+    },
+    {
+      "claim_id": "E6",
+      "owner": "manuscript",
+      "status": "DERIVED",
+      "claim_tier": "C1",
+      "transfer_source": "none",
+      "evidence_paths": [
+        "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL2_KINEMATICS.json"
+      ],
+      "review_scope": "Unchanged row inspected against retained source scopes; no additional demonstrated F1-type contradiction",
+      "required_fix": null
+    },
+    {
+      "claim_id": "E7",
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C0 conditional response/design",
+      "transfer_source": "none; first-order kinematic response",
+      "evidence_paths": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/RESULT.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/INTERPRETATION.md"
+      ],
+      "review_scope": "Literal source metadata repaired and checked",
+      "required_fix": null
+    },
+    {
+      "claim_id": "E8",
+      "owner": "manuscript",
+      "status": "DERIVED",
+      "claim_tier": "C1",
+      "transfer_source": "none",
+      "evidence_paths": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/TABLE.json",
+        "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL3_CLASSIFICATION.json",
+        "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/INDEPENDENT_REVIEW.json"
+      ],
+      "review_scope": "Unchanged row inspected against retained source scopes; no additional demonstrated F1-type contradiction",
+      "required_fix": null
+    },
+    {
+      "claim_id": "E9",
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "transfer_source": "empirical_proxy",
+      "evidence_paths": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/RESULT.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/RESEARCH_NOTE.md"
+      ],
+      "review_scope": "Unchanged row inspected against retained source scopes; no additional demonstrated F1-type contradiction",
+      "required_fix": null
+    },
+    {
+      "claim_id": "E10",
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "CONDITIONAL_MODEL_COVARIANCE",
+      "transfer_source": "EH98_NO_WIGGLE_APPROXIMATION",
+      "evidence_paths": [
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/RESULT.json",
+        "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/INTERPRETATION.md"
+      ],
+      "review_scope": "Literal source metadata repaired and checked",
+      "required_fix": null
+    },
+    {
+      "claim_id": "E11",
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "transfer_source": "none",
+      "evidence_paths": [
+        "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL4_CHECKS.json",
+        "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL4_HUBBLE_CBL.md"
+      ],
+      "review_scope": "Unchanged row inspected against retained source scopes; no additional demonstrated F1-type contradiction",
+      "required_fix": null
+    },
+    {
+      "claim_id": "E12",
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "transfer_source": "none",
+      "evidence_paths": [
+        "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/FIBRE_INFO.json"
+      ],
+      "review_scope": "Unchanged row inspected against retained source scopes; no additional demonstrated F1-type contradiction",
+      "required_fix": null
+    },
+    {
+      "claim_id": "A1",
+      "owner": "obsstat",
+      "status": "CONDITIONAL",
+      "claim_tier": "C0",
+      "transfer_source": "external NPIPE Commander FULL005a processed-map path",
+      "evidence_paths": [
+        "/mnt/extdrive/workdir/htt_open_data/r36_conditional_first48_independent_review_20261028T112537Z_88c96c58/REVIEW.json",
+        "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/RESULT.json"
+      ],
+      "review_scope": "Unchanged row inspected against retained source scopes; no additional demonstrated F1-type contradiction",
+      "required_fix": null
+    }
+  ],
+  "upgraded_scientific_claims": [],
+  "downgraded_scientific_claims": [],
+  "forbidden_claim_drift": [],
+  "proposed_repository_changes": [],
+  "tests_to_run": "No additional scientific or build reruns needed for this unchanged report; validate the controller product binding under its supported transition.",
+  "risks_and_kill_switches": [
+    "Do not qualify an empty product list to bypass the missing report dependency.",
+    "Any source/candidate identity drift invalidates reuse and requires exact classification.",
+    "Retain synthetic/conditional/first48 and original42 ceilings."
+  ],
+  "artifacts_status_updates_needed": "Parent records this blocker after actual ACK, then requests the next supported controller packet for the report-product binding; no repository report/source repair is requested."
+}

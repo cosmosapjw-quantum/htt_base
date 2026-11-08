@@ -1,0 +1,192 @@
+{
+  "packet_id": "e8c3d4289604b043c45614479fde9c41d5033c85ab23862b27c549461b76db0b",
+  "task_id": "R37-04-CLASSIFICATION",
+  "input_identity": "sha256:68bbd1814f6d7e761290fcb54632240fd952d4a15f96e929762f8697c0072656",
+  "candidate_identity": "sha256:c1efab3e58510a0aa1dd8a9d286540381bf55993e54d2ddcb0558fbb951e1da3",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "a6ced0f72920821bfd119b1394f276a10343282c0acb0c09ed09ce9a78bf6518",
+  "agent_id": "/root/rc_e8c3d4289604b043",
+  "reviewer": "/root/rc_e8c3d4289604b043",
+  "phase": "review",
+  "attempt": 2,
+  "outcome": "blocker",
+  "verdict": "SCOPED_HOLD_TARGETED_REPAIR",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "issue": {
+    "class": "code",
+    "substantive": true,
+    "high_consequence": false,
+    "input_identity": "sha256:68bbd1814f6d7e761290fcb54632240fd952d4a15f96e929762f8697c0072656",
+    "question": "Does the required adequacy figure preserve the same nuisance-projected residual and rejection threshold as the declared joint law?",
+    "exact_missing_or_defect": "classification.py lines 281-286 and sealed adequacy_residual.pdf plot y=s against an axis labelled Raw trace-only shift s. The projected adequacy is abs(s)/sqrt(2), and the raw-unit witness marker is (1,1/sqrt(2)), not (1/sqrt(2),1/sqrt(2)). At s=0.6 the plot shows rejection although exact_compatibility retains II.",
+    "file": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/classification.py",
+    "line_start": 281,
+    "line_end": 286,
+    "artifact": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/adequacy_residual.pdf",
+    "severity": "P2",
+    "risk": "The required scientific plot gives a false rejection threshold on its labelled input axis. Its correct raw-shift threshold is 0.7436154384232991, whereas the sealed plot displays 0.5258155191041224.",
+    "true_external": false
+  },
+  "counterexample": {
+    "x_axis_label": "Raw trace-only shift",
+    "probe_raw_trace_shift": 0.6,
+    "actual_plotted_adequacy": 0.6,
+    "expected_adequacy": 0.42426406871192845,
+    "tube": 0.5258155191041224,
+    "compatible_set": [
+      "II"
+    ],
+    "actual_marker": [
+      0.7071067811865475,
+      0.7071067811865475
+    ],
+    "expected_marker": [
+      1.0,
+      0.7071067811865475
+    ],
+    "pdf_files_written": 0
+  },
+  "repair_plan": "Within the existing R37-04 owned product directory, correct the adequacy curve for a raw trace-coordinate shift s to abs(s)/sqrt(2), with the raw-shift witness marker at (1,1/sqrt(2)). Add a focused regression that checks actual plotted curve/marker coordinates and the s=0.6 compatibility counterexample. Regenerate the affected adequacy PDF, update the script identity in the result and seal a new artifact manifest plus actual repair receipt. Preserve the original candidate/raw receipts, unchanged 135-row numerical result and original42 ceilings. Do not change confidence quantiles, physical inputs, model domains or validators, and do not replay old producers or MC. Return the new candidate for independent targeted closeout.",
+  "validation_evidence": [
+    "All 9 candidate artifact hashes and byte counts, all 6 frozen assignment input hashes, and original execution raw receipt SHA256 74fc4e1dbf8b8b1cedcea64c3d9664655033045d1ba0819ec6bcd61da5841c6c match. Candidate identity remains c1efab3e58510a0aa1dd8a9d286540381bf55993e54d2ddcb0558fbb951e1da3.",
+    "Independent direct Koszul/Riemann contraction of saved structure constants exactly recovers I, II, VII0matched and flatVII0 Ricci matrices; amplitude-squared homogeneity checked at 0, 0.125, 0.5, 1.",
+    "For symmetric-tensor SO(3) orbits the sorted-spectrum Frobenius minimum is attained; independent eigenvalue-permutation minimization gives sqrt(2) at amplitude 1, hence sqrt(2)*a^2 at common fixed a.",
+    "All 135 CSV rows independently checked for tube quantiles, orbit and strong-scalar gaps, margins, three compatible-set columns, and R36 radius applicability/source memberships; zero discrepancies.",
+    "100 random rotation/nuisance trials at 3 tube radii each preserve membership; 300 comparisons, zero discrepancies.",
+    "One common nuisance direction (trace+calibration) projects N(0,sigma^2 I7) to six orthonormal coordinates; sqrt(chi2_6(.95))*sigma+epsilon gives at least 95 percent true-family retention by one joint event and deterministic triangle bound. Fixed-amplitude trace terms cancel from every pairwise family LR; trace adequacy remains available to reject all listed families.",
+    "Source-qualified R36 bounds 0.14710349531620642 and 0.269872692360631 are used only at a=1; rotations preserve their conservative Frobenius bounds, and projection cannot enlarge error. The positive source-plus-noise margin at sigma=.12 is 0.1456063364880129.",
+    "Strong scalar STF-norm comparator has squared norms 2/3 and 14/3 and radial gap 1.3437503185; candidate correctly says it also separates this witness under the displayed budget and does not infer extra information over the common full law.",
+    "Fixed-Q simple-spectrum ambient STF-octupole sign radius and attaining perturbation agree with saved independent evidence and candidate test; this does not cover uncertain Q or a fixed-norm O sphere.",
+    "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -B -m pytest -p no:cacheprovider -q <product>/test_classification.py: 3 passed, one nonfatal Matplotlib Axes3D warning, exit 0. All 4 PDFs are valid one-page artifacts.",
+    "Actual candidate plot() was called with Figure.savefig intercepted, so no candidate files were written. External plot_falsifier.py fails with exit 1 and preserves stdout/stderr: plotted adequacy 0.6 versus correct 0.42426406871192845, tube 0.5258155191041224, correct compatible set [II]. Rendered sealed PDF visually confirms the same incorrect slope/marker."
+  ],
+  "original42_acceptance_effect": "none",
+  "schema": "htt.r37.independent_review_raw_receipt/1",
+  "timestamp_utc": "2026-10-29T03:25:04.941284+00:00",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "base_head_observed": "8ab3b72ffaae5e21baaa53d6cc969434c10b1c1f",
+  "review_independence": {
+    "fresh_agent": true,
+    "not_in_authors_or_contributors": true,
+    "recorded_author": "/root/rc_05d056d4e58335c3",
+    "repo_or_candidate_edits": 0
+  },
+  "candidate_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/ARTIFACT_MANIFEST.json",
+  "producer_raw_receipt": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/RAW_RECEIPT_05d056d4e58335c3_20261029T030652434145Z.json",
+    "sha256": "74fc4e1dbf8b8b1cedcea64c3d9664655033045d1ba0819ec6bcd61da5841c6c"
+  },
+  "transport_classification": "Worker final response Selected model is at capacity is transport failure after a real sealed result/receipt. It is not a scientific failure. This review blocker is independently reproduced plot mathematics.",
+  "source_status": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/PUBLICATION_STATUS.json",
+    "sha256": "a7b15db7743b3d745bf6b065b0a5622b9fe72f348949febfcbd3f2e3e4a6e592",
+    "status": "FORMALLY_QUALIFIED_SCOPED_CONDITIONAL_PRODUCT",
+    "earlier_candidate_pending_preserved": true
+  },
+  "commands": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -B -m pytest -p no:cacheprovider -q /home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/test_classification.py",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "3 passed, 1 warning in 0.98s",
+      "warning": "Matplotlib Axes3D unavailable; 2D plots and tests executed"
+    },
+    {
+      "command": "python -B independent inline Koszul/135-row/rotation-nuisance checks",
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "result": {
+        "source_Ricci_max_error": 0,
+        "csv_rows": 135,
+        "csv_discrepancies": 0,
+        "rotation_nuisance_membership_comparisons": 300,
+        "membership_discrepancies": 0
+      }
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_REVIEW_e8c3d4289604b043_20261029T032119Z/plot_falsifier.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 1,
+      "stdout": "{\n  \"x_axis_label\": \"Raw trace-only shift\",\n  \"probe_raw_trace_shift\": 0.6,\n  \"actual_plotted_adequacy\": 0.6,\n  \"expected_adequacy\": 0.42426406871192845,\n  \"tube\": 0.5258155191041224,\n  \"compatible_set\": [\n    \"II\"\n  ],\n  \"actual_marker\": [\n    0.7071067811865475,\n    0.7071067811865475\n  ],\n  \"expected_marker\": [\n    1.0,\n    0.7071067811865475\n  ],\n  \"pdf_files_written\": 0\n}\n",
+      "stderr": "/home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.\n  warnings.warn(\"Unable to import Axes3D. This may be due to multiple versions of \"\nTraceback (most recent call last):\n  File \"/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_REVIEW_e8c3d4289604b043_20261029T032119Z/plot_falsifier.py\", line 22, in <module>\n    assert np.allclose(y,np.asarray(x)/np.sqrt(2),rtol=0,atol=1e-14), 'Raw trace-shift plot overstates profiled adequacy by sqrt(2) and changes rejection decisions'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Raw trace-shift plot overstates profiled adequacy by sqrt(2) and changes rejection decisions\n",
+      "script_sha256": "d0ed99f78de9c46a52fa2ac4374e9849dce2967a905729a8288cf51ec9247625",
+      "purpose": "Expected failing review falsifier; all Figure.savefig calls intercepted; no candidate producer/main call or repo write"
+    }
+  ],
+  "physics_math_audit": {
+    "controlling_assumptions": "Two declared instantaneous source Ricci paths at one common fixed amplitude a in [0,1]; independent SO(3) orientation; isotropic Frobenius error; common Gaussian noise/calibration nuisance; bounded joint deterministic error. No histories or observed curvature law.",
+    "conventions": "Oriented orthonormal hypersurface-normal frame; signature (-,+,+,+), epsilon123=+1. Structure scale u_star=1e-26 m^-1, Ricci/noise/error in u_star^2; amplitude dimensionless.",
+    "independent_amplitude_audit": {
+      "u": "a_II^2",
+      "v": "a_VII0^2",
+      "full_orbit_distance_squared": "(3*u^2+19*v^2-14*u*v)/4",
+      "profile_orbit_distance_squared": "(17*u^2+113*v^2-82*u*v)/24",
+      "at_u1_best_v": 0.36283185840707965,
+      "at_u1_profile_gap": 0.2974820586543648,
+      "interpretation": "No positive-amplitude exact crossing; only the common origin. If amplitudes are fitted independently the separation can be much smaller, so sqrt(2)*a^2 certificates must remain explicitly common-fixed-amplitude. Candidate states that restriction."
+    },
+    "origin_and_equivalence": "I/equal-VII0 have identical local flat Ricci presentations, and the two scaled paths coincide at the Ricci origin. Source extrinsic shear diag(.1,-.05,-.05) is nonzero: vanishing Ricci alone does not prove an FLRW spacetime. Interpret flrw_origin as a local curvature-origin overlap only, as the detailed report does.",
+    "trace_vs_invariants": "The retained trace-calibration residual is necessary to this particular STF5 LR compression for out-of-family adequacy; this is not a theorem that every scalar representation loses adequacy. For one symmetric tensor under this rotation-profile law, its full eigenvalue spectrum/scalar characteristic invariants plus calibration can encode orbit distances.",
+    "safe_claim": "Conditional finite supplied-family compatibility and a fixed-Q optical sign-radius example, not universal Bianchi type, empirical CMB family classification or native transfer evidence.",
+    "fatal_blockers": [
+      {
+        "class": "code",
+        "substantive": true,
+        "high_consequence": false,
+        "input_identity": "sha256:68bbd1814f6d7e761290fcb54632240fd952d4a15f96e929762f8697c0072656",
+        "question": "Does the required adequacy figure preserve the same nuisance-projected residual and rejection threshold as the declared joint law?",
+        "exact_missing_or_defect": "classification.py lines 281-286 and sealed adequacy_residual.pdf plot y=s against an axis labelled Raw trace-only shift s. The projected adequacy is abs(s)/sqrt(2), and the raw-unit witness marker is (1,1/sqrt(2)), not (1/sqrt(2),1/sqrt(2)). At s=0.6 the plot shows rejection although exact_compatibility retains II.",
+        "file": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/classification.py",
+        "line_start": 281,
+        "line_end": 286,
+        "artifact": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/adequacy_residual.pdf",
+        "severity": "P2",
+        "risk": "The required scientific plot gives a false rejection threshold on its labelled input axis. Its correct raw-shift threshold is 0.7436154384232991, whereas the sealed plot displays 0.5258155191041224.",
+        "true_external": false
+      }
+    ],
+    "claim_tier_recommendation": "Keep this exact candidate unqualified pending the bounded required-figure correction; no other substantive blocking finding."
+  },
+  "scope_controls": {
+    "source_producer_reruns": 0,
+    "Monte_Carlo_reruns": 0,
+    "solver_runs": 0,
+    "ODE_runs": 0,
+    "STATE_writes": 0,
+    "Git_writes": 0,
+    "repo_writes": 0,
+    "children_spawned": 0
+  },
+  "external_evidence": {
+    "adequacy_residual.png": {
+      "sha256": "8822d8d4398a4c773a0b2afee4a97f1be3dc4c24c9ece4ecf6d5e8537b4b6606",
+      "bytes": 37303
+    },
+    "plot_falsifier.py": {
+      "sha256": "d0ed99f78de9c46a52fa2ac4374e9849dce2967a905729a8288cf51ec9247625",
+      "bytes": 1629
+    },
+    "plot_falsifier.stderr.txt": {
+      "sha256": "d33b860ecf50ed5b81ad96fe08c1ba11413843f9d69b0469bccd30db095f7716",
+      "bytes": 905
+    },
+    "plot_falsifier.stdout.txt": {
+      "sha256": "e591336a45b33f51a27884a7bd2829bb06717c1bc7eaa14001d5fb91ab4bd7a4",
+      "bytes": 380
+    },
+    "plot_falsifier_execution.json": {
+      "sha256": "e1cacf624394cd02463d47485cc9f1123fc6134eaba54b2882ae14708467b207",
+      "bytes": 1833
+    }
+  }
+}

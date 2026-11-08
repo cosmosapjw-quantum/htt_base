@@ -1,0 +1,116 @@
+{
+  "packet_id": "d6018c48885802ea3d7e85fdb025495aee70130f08422e4b869a27c17f7e176f",
+  "task_id": "R37-01-RADIATION",
+  "input_identity": "sha256:7503451fc55c359618c388655a85851dd61f784140a7bd457d715ccd870ee134",
+  "candidate_identity": "sha256:d35cc0bfb10bd3fbd6de53d957ff4ff794fac96624a1cf4592332432d80ef602",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "aedeab19939b6f375e5276b6e185e4e934f6d0f3e0f1ad672fde70530d31b4cb",
+  "agent_id": "/root/rc_d6018c48885802ea",
+  "phase": "review",
+  "outcome": "blocker",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "schema": "htt.r37.controller_independent_review/1",
+  "issue": {
+    "class": "numeric",
+    "substantive": true,
+    "true_external": false,
+    "question": "Repair the joint confidence-event construction and the actual gain-only carrier comparison under the unchanged R37-01 contract.",
+    "exact_missing_or_defect": "The five marginal 95% intervals jointly cover only 3389/4096=0.827392578125; no shared joint confidence event is constructed. The gain_only path retains rank-11 rho/pi/P_star data while claiming 9 components; the true V=0 gain has rank 6, and positive same-gain inputs produce a 0.00016330462473551906 difference in its reported shear.",
+    "input_identity": "sha256:7503451fc55c359618c388655a85851dd61f784140a7bd457d715ccd870ee134"
+  },
+  "findings": [
+    {
+      "id": "R37-RAD-REVIEW-01",
+      "severity": "P1",
+      "class": "numeric",
+      "title": "The required joint statistical confidence event is replaced by five marginal events",
+      "locations": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/radiation_image.py",
+          "line": 210
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/radiation_image.py",
+          "line": 213
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/radiation_image.py",
+          "line": 227
+        }
+      ],
+      "contract": "DATA_ANALYSIS_CONTRACTS.md: Push the same joint statistical event and deterministic error body through full and reduced adapters; task target is a joint radiation/shear confidence image.",
+      "defect": "Each STF coordinate receives its own 0.95 quantile, and the output adds that marginal radius to deterministic support. There is no common calibrated vector event or joint coverage result. Reusing the same draws preserves correlations in the samples but does not make five separate 95% intervals a 95% joint event.",
+      "counterexample": {
+        "method": "full and independently reconstructed common carrier",
+        "joint_hits": 3389,
+        "test_N": 4096,
+        "joint_coverage": 0.827392578125,
+        "marginal_coverage": [
+          0.9443359375,
+          0.95166015625,
+          0.953369140625,
+          0.94921875,
+          0.957275390625
+        ]
+      },
+      "risk": "The exported 300-row total-width table cannot serve as the contracted simultaneous shear confidence image. Directionwise marginal diagnostics remain valid at their stated finite oracle scope.",
+      "minimal_fix": "Define one calibrated vector/input-law event under the retained correlated R36 law, propagate that same event and shared physical disk through the compared adapters, report its actual simultaneous coverage and directional widths, and distinguish it from the existing marginal diagnostics. Account for operator variation on that event or explicitly retain a fixed-operator sensitivity layer separately. Add a regression that detects the 3389/4096 joint-coverage counterexample."
+    },
+    {
+      "id": "R37-RAD-REVIEW-02",
+      "severity": "P1",
+      "class": "numeric",
+      "title": "The gain-only baseline is an eleven-component H4-dropped closure, not the Thomson gain carrier",
+      "locations": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/radiation_image.py",
+          "line": 112
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/radiation_image.py",
+          "line": 177
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-01-RADIATION/radiation_image.py",
+          "line": 262
+        }
+      ],
+      "contract": "The required comparison includes the MF02 cold-electron Thomson gain and actual compression/cost ranks under the same physical target; GOAL1_MORPHOLOGY.md defines M=rho I/3-pi/2+P_star+i A_star.",
+      "defect": "The code keeps rho, all five pi coordinates and all five P_star coordinates separately, while dropping H4 only from L. At V=0 the actual Thomson gain contains rho and -pi/2+P_star, with rank 6. Independent angular-kernel SVD gives rank 11 for the implemented reduction, while output reports 9 components. Generic 23/20 source ranks do not describe the actual fixed-polarization experiment, whose full angular kernel has rank 15.",
+      "counterexample": {
+        "minimum_brightness": 0.2895947795833415,
+        "gain_max_difference": 4.7775569900898726e-17,
+        "reported_gain_only_shear_difference_norm": 0.00016330462473551906
+      },
+      "actual_linear_kernel_ranks": {
+        "full_fixed_profile": 15,
+        "H4_dropped_retaining_rho_pi_Pstar": 11,
+        "true_thomson_gain_at_V_zero": 6
+      },
+      "risk": "The stated gain-only bias and cost comparison attributes results to a compression that the implementation does not perform. The same-gain counterexample proves the reported adapter depends on information outside the gain.",
+      "minimal_fix": "Retain the current calculation under its accurate H4-dropped rho/pi/P_star label and cost, and supply the required true gain-only comparison using only M with an explicit closure or an identified-set/nullspace response for the missing target information. Record generic source rank, actual fixed-profile angular-kernel rank and measured storage/cost separately. Add the positive same-M pair as a regression; a genuinely M-only estimator must be invariant on that fibre, or expose the ambiguity in its identified set."
+    }
+  ],
+  "repair_plan": "Under the existing R37-01 task/input identity and acceptance, preserve the first candidate and all original R36 sources/draws. Repair only the R37-01 consumer/tests/tables/figures/prose/manifest: (1) construct and report one common joint statistical event under the retained law, propagate it with the shared physical disk, and check simultaneous coverage on the same saved test draws; preserve marginal controls as labelled diagnostics; (2) distinguish the current H4-dropped closure from actual Thomson gain-only information, compute actual carrier ranks/cost, and add a true M-only comparison or its finite identified-set/nullspace consequence with declared closure assumptions. No new raw downloads, RNG campaign, old producer rerun, solver/ODE, STATE or original42 modification. Preserve exact source hashes, target, covariance and noise draws; rerun only affected consumer and focused tests, then return a new candidate for targeted independent closeout. A gain-only point estimate must not silently use separate pi and P_star values absent from M.",
+  "validation_evidence": [
+    "Candidate manifest SHA matches the review packet; all 13 manifest artifacts and all 7 frozen input hashes match; saved arrays and R36 qualification metadata hashes match.",
+    "All 8191 calibration plus 4096 test draws reused without RNG or old producer invocation; independently assembled rho/pi/H4 common response agrees with direct response to 4.440892098500626e-16 and shear to 7.806255641895632e-17.",
+    "Source positivity and coercivity retained; minimum response eigenvalue over saved draws 0.5394563067886219. Central full matrix condition 1.2316785354127273.",
+    "All 300 support rows reproduce within 1.3877787807814457e-17; shared derivative and polarization contributions are summed once before inverse. The 20 marginal coverage rows reproduce exactly in coverage and to 2.1250362580715887e-17 in radius.",
+    "Polarization omission sign checked to 3.903127820947816e-18; norm 0.008503770713235631 is below coercive bound 0.008782441325531753. Units and frame are explicitly normalized rho_ref and toy inverse-time in e=-n convention.",
+    "Six focused R37/R36 tests passed in 0.70 s with bytecode/cache writes disabled. Existing first assertion failure is retained in the candidate.",
+    "All four PDFs parse as one-page PDF 1.4; matched-coverage panel rendered and visually inspected. It displays marginal coverage only and has no width panel; widths are in CSV/JSON.",
+    "No scalarized shear substitution, native solver, ODE, empirical shear or family-identification claim found. The proper-time derivative is explicitly constructed/unmeasured. Original PUBLICATION_DAG.json is byte-identical to current HEAD (SHA256 e59da3e51c5bd2069a4c424ebecced89025885a6c4843f59c0042a668a63b6c9)."
+  ],
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_REVIEW_d6018c48_RAW_RECEIPT.json",
+  "raw_receipt_sha256": "2dcdc28285538632a6f4600cd7be943611b396e7b2e420077ed5d5992f445cde",
+  "original42_acceptance_effect": "none",
+  "scientific_admission": "HOLD_REPAIR_REQUIRED",
+  "independence": "Fresh read-only reviewer; no implementation or children."
+}

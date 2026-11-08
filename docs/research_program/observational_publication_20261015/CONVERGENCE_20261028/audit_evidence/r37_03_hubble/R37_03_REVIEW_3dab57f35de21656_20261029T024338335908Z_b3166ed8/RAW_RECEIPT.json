@@ -1,0 +1,183 @@
+{
+  "packet_id": "3dab57f35de216561506e56a9b5a018e4683c2a883c0931d10da5d3b17c33830",
+  "task_id": "R37-03-HUBBLE",
+  "input_identity": "sha256:15d9b17d0852724f6774adf53e09a32627ead44ead7d7b5c705e7a26254df47f",
+  "candidate_identity": "sha256:a9cec4e49645247b15a8ccebb3cee992db04f9526882291dc886e06a081ded77",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "1a905cd2261cbfeb497cc95fc16cacc9019450baf9b74198aaa57299a3de4f1a",
+  "attempt": 2,
+  "agent_id": "/root/rc_3dab57f35de21656",
+  "phase": "review",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "schema": "R37-03-independent-native-raw-receipt-v1",
+  "timestamp_utc": "2026-10-29T02:48:46.845910+00:00",
+  "packet_path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_NEXT_018_20261029.json",
+  "packet_file_sha256": "d9864c0cce70a36fb286fe3c6268732b352403c54d34a7a74bb182baf2d40217",
+  "candidate_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE/ARTIFACT_MANIFEST.json",
+  "candidate_unchanged_after_review": true,
+  "independence": {
+    "reviewer_is_author": false,
+    "recorded_authors": [
+      "/root/rc_becce6ed05449910"
+    ],
+    "children_spawned": 0
+  },
+  "commands": [
+    {
+      "name": "independent_checks",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/independent_checks.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/independent_checks.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/independent_checks.stderr"
+    },
+    {
+      "name": "candidate_tests",
+      "argv": [
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--confcutdir",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE/test_compute_hubble.py"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/candidate_tests.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/candidate_tests.stderr"
+    },
+    {
+      "name": "render_local_H_region_vs_opacity",
+      "argv": [
+        "pdftoppm",
+        "-png",
+        "-singlefile",
+        "-scale-to",
+        "1400",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE/local_H_region_vs_opacity.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/local_H_region_vs_opacity"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/render_local_H_region_vs_opacity.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/render_local_H_region_vs_opacity.stderr"
+    },
+    {
+      "name": "render_distance_transmission_identified_interval",
+      "argv": [
+        "pdftoppm",
+        "-png",
+        "-singlefile",
+        "-scale-to",
+        "1400",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE/distance_transmission_identified_interval.pdf",
+        "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/distance_transmission_identified_interval"
+      ],
+      "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+      "exit_code": 0,
+      "stdout": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/render_distance_transmission_identified_interval.stdout",
+      "stderr": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/render_distance_transmission_identified_interval.stderr"
+    }
+  ],
+  "independent_checks_passed": 343,
+  "focused_tests": {
+    "passed": 3,
+    "failed": 0
+  },
+  "findings": [],
+  "figures_visually_inspected": [
+    "local_H_region_vs_opacity.pdf",
+    "distance_transmission_identified_interval.pdf"
+  ],
+  "external_primary_reference": {
+    "url": "https://arxiv.org/pdf/0712.3457",
+    "identity": "Clarkson Bassett Lu arXiv:0712.3457v2",
+    "used_for": "first-derivative curvature identity and separate H(z) requirement"
+  },
+  "mutation_scope": "external unique review directory only; no repository/STATE/Git writes",
+  "producer_reruns": 0,
+  "native_solver_runs": 0,
+  "ode_runs": 0,
+  "evidence_files": {
+    "COMMANDS.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/COMMANDS.json",
+      "sha256": "e8995043582d8fa66f8b8fa3c227c690e18507d4a15f8a6ee1b9745b72364b86",
+      "bytes": 3508
+    },
+    "INDEPENDENT_CHECKS.json": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/INDEPENDENT_CHECKS.json",
+      "sha256": "7a4064bc8e7dfa01f713592819dcad5da6f3d9a8e19f4d36b5006db6362dbba1",
+      "bytes": 39142
+    },
+    "REVIEW.md": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/REVIEW.md",
+      "sha256": "c7da80a619818b0db015019e6354bf0d5885abffce9a796fb6a730ee59c6dfbf",
+      "bytes": 8235
+    },
+    "candidate_tests.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/candidate_tests.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "candidate_tests.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/candidate_tests.stdout",
+      "sha256": "9bcc887f925e6e3b6eddbd3e1c7fcd9c80fff6aa9c37f4c4c4cda5e55493d5e7",
+      "bytes": 98
+    },
+    "distance_transmission_identified_interval.png": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/distance_transmission_identified_interval.png",
+      "sha256": "59113e1fef7236459fca88e9429db64cb6cf7f2a1a3ef16e4a46fa7a2d6791ae",
+      "bytes": 50102
+    },
+    "independent_checks.py": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/independent_checks.py",
+      "sha256": "d2346350ef8eff80b31b5c36c5995b01b4c8d4d46ce92545512d19ad19c77b17",
+      "bytes": 9808
+    },
+    "independent_checks.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/independent_checks.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "independent_checks.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/independent_checks.stdout",
+      "sha256": "8b61bd0bc1ca4fda0736f87c4ff09e0fd3135a29d2b89a1c36b73c89bdede5d3",
+      "bytes": 1544
+    },
+    "local_H_region_vs_opacity.png": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/local_H_region_vs_opacity.png",
+      "sha256": "954eb9706544658a8f0c47563a946c7fc28d035d41716d9c5b77b959a2ce8542",
+      "bytes": 56569
+    },
+    "render_distance_transmission_identified_interval.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/render_distance_transmission_identified_interval.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "render_distance_transmission_identified_interval.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/render_distance_transmission_identified_interval.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "render_local_H_region_vs_opacity.stderr": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/render_local_H_region_vs_opacity.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "render_local_H_region_vs_opacity.stdout": {
+      "path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_03_REVIEW_3dab57f35de21656_20261029T024338335908Z_b3166ed8/render_local_H_region_vs_opacity.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  }
+}

@@ -1,0 +1,116 @@
+--- prior/classification.py
++++ candidate/classification.py
+@@ -219,7 +219,7 @@
+             "sum": sum(source_radii.values()), "no_noise_center_set": ["II"],
+             "margin_at_sigma_0p12": orbit_distance(ii,vii)-sum(source_radii.values())-2*r95*.12,
+             "scope": "Conservative R36 deterministic ellipsoid-image bounds; only bound at supplied a=1. Added synthetic Gaussian noise is a declared sensitivity, not measured noise."},
+-        "flrw_origin": "Both scaled families meet at Ricci=0 for a=0; I and flatVII0 are equivalent local flat presentations at all source control values",
++        "flrw_origin": "Both scaled families meet at the spatial-Ricci origin for a=0; this local curvature overlap does not establish a full FLRW spacetime. I and flatVII0 are equivalent local flat presentations at all source control values",
+         "witness": {"II_eigenvalues": np.linalg.eigvalsh(ii).tolist(), "VII0_eigenvalues": np.linalg.eigvalsh(vii).tolist(),
+                     "trace_each": float(np.trace(ii)), "tr_R2": [float(np.trace(ii@ii)), float(np.trace(vii@vii))],
+                     "STF_norms": [float(np.linalg.norm(stf(ii))), float(np.linalg.norm(stf(vii)))],
+@@ -280,9 +280,9 @@
+     fig, ax = plt.subplots(figsize=(6.4, 4.2), layout="constrained")
+     residual = np.linspace(0, 1, 200)
+     tau = r95*.12+.1
+-    ax.plot(residual, residual, label="Profiled discarded-space residual")
++    ax.plot(residual, np.abs(residual)/np.sqrt(2), label="Profiled discarded-space residual")
+     ax.axhline(tau, color="firebrick", label=f"Joint tube at sigma=.12, eps=.1: {tau:.3f}")
+-    ax.scatter([1/np.sqrt(2)], [1/np.sqrt(2)], color="black", label="Out-of-family trace shift")
++    ax.scatter([1], [1/np.sqrt(2)], color="black", label="Out-of-family trace shift")
+     ax.set(xlabel="Raw trace-only shift", ylabel="Adequacy norm (u_*^2)",
+            title="Five STF LR coordinates miss an out-of-family trace")
+     ax.legend(fontsize=8); fig.savefig(OUT/"adequacy_residual.pdf"); plt.close(fig)
+--- prior/test_classification.py
++++ candidate/test_classification.py
+@@ -3,6 +3,7 @@
+ from pathlib import Path
+ 
+ import numpy as np
++from matplotlib.figure import Figure
+ from scipy.spatial.transform import Rotation
+ 
+ P = Path(__file__).with_name("classification.py")
+@@ -49,3 +50,29 @@
+     r = c.fixed_q_radius()
+     assert abs(r["radius"]-1/np.sqrt(3)) < 1e-14
+     assert abs(r["boundary_chirality"]) < 1e-14
++
++
++def test_adequacy_plot_uses_raw_trace_shift_coordinates(monkeypatch):
++    saved = {}
++
++    def inspect_savefig(fig, path, *args, **kwargs):
++        saved[Path(path).name] = fig
++
++    monkeypatch.setattr(Figure, "savefig", inspect_savefig)
++    r95 = float(np.sqrt(c.chi2.ppf(.95, 6)))
++    c.plot(np.array([0., 1.]), np.array([.12]), np.array([.1]), r95, [])
++    ax = saved["adequacy_residual.pdf"].axes[0]
++    curve = next(line for line in ax.lines if line.get_label() == "Profiled discarded-space residual")
++    x = np.asarray(curve.get_xdata())
++    y = np.asarray(curve.get_ydata())
++    np.testing.assert_allclose(y, np.abs(x)/np.sqrt(2), rtol=0, atol=1e-14)
++    marker = ax.collections[0].get_offsets()
++    np.testing.assert_allclose(marker, [[1, 1/np.sqrt(2)]], rtol=0, atol=1e-14)
++
++    ii = np.diag([.5, -.5, -.5])
++    vii = np.diag([-.5, 1.5, -1.5])
++    shifted = c.raw_mean(ii)
++    shifted[0] += .6
++    tube = r95*.12+.1
++    assert .6/np.sqrt(2) < tube < .6
++    assert c.exact_compatibility(shifted, {"II": ii, "VII0matched": vii}, tube) == ["II"]
+--- prior/REPORT_DELTA.md
++++ candidate/REPORT_DELTA.md
+@@ -39,7 +39,9 @@
+ flat-VII0 controls also give identical flat local geometry through distinct
+ simply transitive presentations. We preserve both labels as equivalent
+ presentations; the compatible output can contain both. Local Ricci spectra
+-alone cannot label a universal Bianchi presentation.
++alone cannot label a universal Bianchi presentation. The `a=0` statement is
++only a spatial-Ricci origin overlap; it does not establish a full FLRW
++spacetime, including its extrinsic geometry.
+ 
+ The Gauss bridge used by the imported goal-3 analysis requires the electric
+ Weyl tensor, anisotropic stress, normal-frame `h` and `Sigma`, density, and
+@@ -114,7 +116,9 @@
+ `1` from the II center, leaving the five STF likelihood-ratio coordinates
+ unchanged. Its profiled adequacy residual is `1/sqrt(2)=0.707107`, above
+ the `0.525816` tube at `sigma=0.12, epsilon=0.1`; both listed candidates
+-are rejected. Reusing the imported 50,000-draw synthetic Monte Carlo at
++are rejected. On the adequacy figure's raw-shift axis, the rejection
++threshold is `sqrt(2)*tau=0.7436154384`; a shift of `0.6` retains II.
++Reusing the imported 50,000-draw synthetic Monte Carlo at
+ `a=1, epsilon=0.1`, the saved `sigma=0.12` row retained the true family in
+ 49,960 draws and the wrong family in zero draws. These are frequencies from
+ the old declared Gaussian experiment, with finite binomial uncertainty;
+@@ -147,7 +151,7 @@
+ pure response functions and writes only this product directory. It imports
+ no old producer. Rotation checks give maximum gap drift below `2e-15` over
+ 200 random rotations, and direct full-profile versus common-carrier
+-squared-distance differences below `8e-15`. Three targeted local tests pass.
++squared-distance differences below `8e-15`. Four targeted local tests pass.
+ 
+ Each table and vector figure inherits the owner, conditional claim tier,
+ synthetic/null and covariance status, transfer source, allowed use, and
+--- prior/FAMILY_COMPATIBILITY_RESULT.json
++++ candidate/FAMILY_COMPATIBILITY_RESULT.json
+@@ -19,7 +19,7 @@
+     "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL3_CLASSIFICATION.json": "51d18036b5b56bf359a7e0dce1e8ce811e0f88e19ec15991559ef871048e3dd8",
+     "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/INDEPENDENT_REVIEW.json": "c4fb380e87eb51482c7fd8178a17386b666bac541c5e6594ec3bf16af72846a2"
+   },
+-  "script_sha256": "519b48384d7ff4b72fdfeadaa61ff8776fb3ce515c6d5f15165fb3aa896043aa",
++  "script_sha256": "d47f329baea5e2cbfac8c89ea6be009b1679f20cdb0339eb23b5e2a7b0eef865",
+   "source_publication_status": "FORMALLY_QUALIFIED_SCOPED_CONDITIONAL_PRODUCT",
+   "family_domain": "For each fixed a in [0,1], structure coefficients are multiplied by a, Ricci by a^2; SO(3) orientations independent per family; no physical history or sky transfer assumed",
+   "amplitude_grid": [
+@@ -59,7 +59,7 @@
+     "margin_at_sigma_0p12": 0.1456063364880129,
+     "scope": "Conservative R36 deterministic ellipsoid-image bounds; only bound at supplied a=1. Added synthetic Gaussian noise is a declared sensitivity, not measured noise."
+   },
+-  "flrw_origin": "Both scaled families meet at Ricci=0 for a=0; I and flatVII0 are equivalent local flat presentations at all source control values",
++  "flrw_origin": "Both scaled families meet at the spatial-Ricci origin for a=0; this local curvature overlap does not establish a full FLRW spacetime. I and flatVII0 are equivalent local flat presentations at all source control values",
+   "witness": {
+     "II_eigenvalues": [
+       -0.5,

@@ -1,0 +1,605 @@
+{
+  "schema": "htt.r37_stage0_claim_evidence/1",
+  "owner": "manuscript",
+  "scope": "Stage 0 source-bound report",
+  "source_baseline": {
+    "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/baseline/BASELINE_REPORT.json",
+    "sha256": "5bf9787b48381a74e39a23d6150dbff27bed517e3805c177a01ba2fd260c34c8"
+  },
+  "claims": [
+    {
+      "claim_id": "E1",
+      "goal": 0,
+      "owner": "manuscript",
+      "status": "DERIVED",
+      "claim_tier": "C1",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "evidence": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/foundations/RESULT_SUMMARY.json",
+          "sha256": "ecfec13eab8cd014c4ebc9db109dc5b3296be42994d3390eb449255b87d4801f",
+          "selectors": [
+            "newly_executed.tensor_GLS_max_estimate_difference",
+            "newly_executed.tensor_GLS_max_information_difference",
+            "newly_executed.common_family_rank",
+            "newly_executed.single_family_rank"
+          ]
+        }
+      ],
+      "caveats": [
+        "Only the declared source law, target and qualified product; no original42 or native-solver promotion"
+      ]
+    },
+    {
+      "claim_id": "E2",
+      "goal": 0,
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "evidence": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/JOINT_REMAINDER.json",
+          "sha256": "cc9f7c92b73f2193b018e438fea5851a24d6a0d8ca3b0d493af9ecf0892373a6",
+          "selectors": [
+            "draws",
+            "coverage[3].bias_bound",
+            "coverage[3].central_coverage_exact",
+            "coverage[3].robust_coverage_exact",
+            "coverage[3].robust_coverage_MC"
+          ]
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/code/joint_remainder.py",
+          "sha256": "9262779c78439beeae05e9fb2b3de65a89b1900c74f58e778a6cb87bf44d2a6a",
+          "selectors": [
+            "df=5"
+          ]
+        }
+      ],
+      "caveats": [
+        "Only the declared source law, target and qualified product; no original42 or native-solver promotion"
+      ]
+    },
+    {
+      "claim_id": "E3",
+      "goal": 1,
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "evidence_type": "artifact",
+      "transfer_source": "empirical_proxy",
+      "evidence": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/RESULT.json",
+          "sha256": "074b49cc8ce3edcfb8dc106a83858ecf5bb5c08c824952d748377b911879529d",
+          "selectors": [
+            "rng.calibration_per_case",
+            "rng.test_per_case",
+            "methods[0:4].D_physical_target_coverage.fraction",
+            "methods[0:4].A_physical_target_coverage.fraction",
+            "response_compression.L2_L4[0:2].operator_error_over_rho0"
+          ]
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/radiation_core.py",
+          "sha256": "a1eca64b2964529872faf9da5089074e68215f13432079287a364bbc631d844d",
+          "selectors": [
+            "stress_readout",
+            "response_from_moments"
+          ]
+        }
+      ],
+      "caveats": [
+        "Only the declared source law, target and qualified product; no original42 or native-solver promotion"
+      ]
+    },
+    {
+      "claim_id": "E4",
+      "goal": 1,
+      "owner": "manuscript",
+      "status": "DERIVED",
+      "claim_tier": "C1",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "evidence": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL1_NUMERICS.json",
+          "sha256": "c500fd2dbdd11f3ff7d331abf90a69189e56d738ae8984f8b6816364aaf3ce7b",
+          "selectors": [
+            "equal_gain_different_shear",
+            "joint_response",
+            "polarized_collision"
+          ]
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/INDEPENDENT_REVIEW.json",
+          "sha256": "c4fb380e87eb51482c7fd8178a17386b666bac541c5e6594ec3bf16af72846a2",
+          "selectors": [
+            "exact_carrier"
+          ]
+        }
+      ],
+      "caveats": [
+        "Only the declared source law, target and qualified product; no original42 or native-solver promotion"
+      ]
+    },
+    {
+      "claim_id": "E5",
+      "goal": 2,
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "evidence": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/RESULT.json",
+          "sha256": "9bd8bee99c3584dbf09a535f93d8eda53a00ef02571a0f8b761d6017467b92a2",
+          "selectors": [
+            "counterexample"
+          ]
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/INTERPRETATION.md",
+          "sha256": "e9312ce1017787dc485fe92769babadd53f48a95d6a8b279fcd3186ad4839679",
+          "selectors": [
+            "The observable and its response",
+            "One budget for all seven coordinates"
+          ]
+        }
+      ],
+      "caveats": [
+        "Only the declared source law, target and qualified product; no original42 or native-solver promotion"
+      ]
+    },
+    {
+      "claim_id": "E6",
+      "goal": 2,
+      "owner": "manuscript",
+      "status": "DERIVED",
+      "claim_tier": "C1",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "evidence": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL2_KINEMATICS.json",
+          "sha256": "29f5306a907a5d48a81fb573c79f668f1ba295428c8c6d9927b34ec91360fbb1",
+          "selectors": [
+            "matrix_parameter_count",
+            "profile_information_rank",
+            "rank_cases"
+          ]
+        }
+      ],
+      "caveats": [
+        "Only the declared source law, target and qualified product; no original42 or native-solver promotion"
+      ]
+    },
+    {
+      "claim_id": "E7",
+      "goal": 2,
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "evidence_type": "artifact",
+      "transfer_source": "empirical_proxy",
+      "evidence": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/RESULT.json",
+          "sha256": "c20cacc0cd64c6349051b5c090d65d1083aea47961ffc446019739386d6adc93",
+          "selectors": [
+            "source.selected_rows",
+            "gram.primary_spin_glide6.joint.selected_sample_full5_coefficients_uasyr",
+            "gram.all97_sensitivity.joint.selected_sample_full5_coefficients_uasyr",
+            "power_frontier",
+            "history_images"
+          ]
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/INTERPRETATION.md",
+          "sha256": "5dd262bdd94a639104d0ee179a50c192378c53fd7953a99e7b827064e3ea8814",
+          "selectors": [
+            "Physical assumptions and result",
+            "What the cached data support"
+          ]
+        }
+      ],
+      "caveats": [
+        "Only the declared source law, target and qualified product; no original42 or native-solver promotion"
+      ]
+    },
+    {
+      "claim_id": "E8",
+      "goal": 3,
+      "owner": "manuscript",
+      "status": "DERIVED",
+      "claim_tier": "C1",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "evidence": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/TABLE.json",
+          "sha256": "eaf4e567f856a8d01e40f6721613239b8f64e6dc0fbe7d5b35070bfc9faeb363",
+          "selectors": [
+            "mixed",
+            "matched_orbit_separation"
+          ]
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL3_CLASSIFICATION.json",
+          "sha256": "51d18036b5b56bf359a7e0dce1e8ce811e0f88e19ec15991559ef871048e3dd8",
+          "selectors": [
+            "witness_spectra",
+            "scalar_curvatures",
+            "quadratic_invariants",
+            "rotation_orbit_gap",
+            "common_LR_carrier_dimension"
+          ]
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/INDEPENDENT_REVIEW.json",
+          "sha256": "c4fb380e87eb51482c7fd8178a17386b666bac541c5e6594ec3bf16af72846a2",
+          "selectors": [
+            "fixed_Q_chirality_radius"
+          ]
+        }
+      ],
+      "caveats": [
+        "Only the declared source law, target and qualified product; no original42 or native-solver promotion"
+      ]
+    },
+    {
+      "claim_id": "E9",
+      "goal": 4,
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "evidence_type": "artifact",
+      "transfer_source": "empirical_proxy",
+      "evidence": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/RESULT.json",
+          "sha256": "f1a9246b7e1ab216fd6fb927a3fc2e28360cf2e5626aba5d7a88f2af05f7e82b",
+          "selectors": [
+            "source.full_source_symmetry",
+            "primary.n_low",
+            "primary.n_high",
+            "primary.fits.full",
+            "primary.low_8_mag",
+            "primary.high_8_mag",
+            "primary.covariance",
+            "lower_z_sensitivity.n_low",
+            "lower_z_sensitivity.n_high",
+            "lower_z_sensitivity.fits.full"
+          ]
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/RESEARCH_NOTE.md",
+          "sha256": "12f22b43c8969f9faedb5a84d67577fe89aaf94835b80cf1bf23e673a837ed69",
+          "selectors": [
+            "Frozen estimator and covariance scope"
+          ]
+        }
+      ],
+      "caveats": [
+        "Only the declared source law, target and qualified product; no original42 or native-solver promotion"
+      ]
+    },
+    {
+      "claim_id": "E10",
+      "goal": 4,
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "evidence_type": "artifact",
+      "transfer_source": "empirical_proxy",
+      "evidence": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/RESULT.json",
+          "sha256": "a7458dbd0d8fad934b968733562125acf2a50881bddbf483dfb9fa8084137523",
+          "selectors": [
+            "source_rows",
+            "conditional_R5_diagnostics.trace"
+          ]
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/INTERPRETATION.md",
+          "sha256": "b6beacb146a760a16dcf82ce36533bf709144a215fc078b2176b7475afe47fcb",
+          "selectors": [
+            "finite Fourier bands and stipulated covariance terms"
+          ]
+        }
+      ],
+      "caveats": [
+        "Only the declared source law, target and qualified product; no original42 or native-solver promotion"
+      ]
+    },
+    {
+      "claim_id": "E11",
+      "goal": 4,
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "evidence": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL4_CHECKS.json",
+          "sha256": "7ea0e7cd8d3779b39ff1e8e02aaf843b3dd97839716ea4832679b7774dc8c0e5",
+          "selectors": [
+            "naive_CBL_at_z1p5",
+            "corrected_CBL_max_residual",
+            "opacity_outer_interval_at_z1p5"
+          ]
+        },
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/GOAL4_HUBBLE_CBL.md",
+          "sha256": "2e47fc7ae0230f07e7689c3f04f3811617645a85f0f0514c8a7ee4c4ad7cfe34",
+          "selectors": [
+            "opacity class",
+            "local-H and transmission-distance bounds"
+          ]
+        }
+      ],
+      "caveats": [
+        "Only the declared source law, target and qualified product; no original42 or native-solver promotion"
+      ]
+    },
+    {
+      "claim_id": "E12",
+      "goal": 1,
+      "owner": "manuscript",
+      "status": "CONDITIONAL",
+      "claim_tier": "C1",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "evidence": [
+        {
+          "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/lanes/FIBRE_INFO.json",
+          "sha256": "ba898e364ab52481e84768b0df7c16854f0a80c0f4bfa61b1f910c56134be7d6",
+          "selectors": [
+            "equal_prior_sign_accuracy",
+            "trace_or_sorted_state_spectrum_sign_accuracy",
+            "exact_binomial_natural_span"
+          ]
+        }
+      ],
+      "caveats": [
+        "Only the declared source law, target and qualified product; no original42 or native-solver promotion"
+      ]
+    },
+    {
+      "claim_id": "A1",
+      "goal": 1,
+      "owner": "obsstat",
+      "status": "CONDITIONAL",
+      "claim_tier": "C0",
+      "evidence_type": "artifact",
+      "transfer_source": "external NPIPE Commander FULL005a processed-map path",
+      "evidence": [
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r36_conditional_first48_independent_review_20261028T112537Z_88c96c58/REVIEW.json",
+          "sha256": "3d1d173fc8ea8e2ea2d7ae958ee134a7731be28c3cfa26cb3cbdcf9dc7d9b6a7",
+          "selectors": [
+            "verdict",
+            "scope",
+            "numerical_evidence_from_sealed_candidate",
+            "original_R36_07"
+          ]
+        },
+        {
+          "path": "/mnt/extdrive/workdir/htt_open_data/r36_commander_conditional_location_first48/RESULT.json",
+          "sha256": "e41912a312620b2b0ff198e689445f960374ca09476377371079fdca2e54694d",
+          "selectors": [
+            "selection",
+            "working_law",
+            "caveats"
+          ]
+        }
+      ],
+      "caveats": [
+        "Auxiliary first48 total-map result only",
+        "iid Gaussian assumed; no selective or physical coverage",
+        "R36-07 original HOLD"
+      ]
+    }
+  ],
+  "figure_bindings": {
+    "FIGURE_JOINT_REMAINDER": {
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/figures/joint_remainder.pdf",
+      "sha256": "d894cc270bfb632f478db4eece3d102bb97ca434e6a56868bd00af06bb0432aa",
+      "selectors": [
+        "existing figure unchanged"
+      ]
+    },
+    "FIGURE_RADIATION_COMPARISON": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/comparison.pdf",
+      "sha256": "af3f67cccc7ecd57b4bd9cf2d2385820eb7f9f8043fa865087ca91adfcd256e6",
+      "selectors": [
+        "existing figure unchanged"
+      ]
+    },
+    "FIGURE_PM_INFORMATION": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/INFORMATION.pdf",
+      "sha256": "0008d0890a6a693e829401d1be33d4861be9c1a89f60b1361c7c29c87379b888",
+      "selectors": [
+        "existing figure unchanged"
+      ]
+    },
+    "FIGURE_FAMILY_COMPATIBILITY": {
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/figures/goal3_classification.pdf",
+      "sha256": "a16b466a735a992bbd72f6d7655f405bd31208446c7378eae0a52449f80d6cda",
+      "selectors": [
+        "existing figure unchanged"
+      ]
+    },
+    "FIGURE_PUBLIC_SN": {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/PUBLIC_SN_SIGNED_COORDINATES.pdf",
+      "sha256": "0f2018b4bb4d1589e45a3e8dfba7634094e460c73a0ca2e600d3a637785ae23d",
+      "selectors": [
+        "existing figure unchanged"
+      ]
+    },
+    "FIGURE_OPACITY_CBL": {
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/imports/four_goals/figures/goal4_cbl_opacity.pdf",
+      "sha256": "1077268975a04c6e99fba277b513ac4c7a886d501405d538994413bb3be9348d",
+      "selectors": [
+        "existing figure unchanged"
+      ]
+    }
+  },
+  "current_qualifications": [
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-02-CF4-CORRELATED/PUBLICATION_STATUS.json",
+      "sha256": "fa3169a268fa1fcb273d4edaa63a166e3b3043477c5141517eac58f8452f4634",
+      "selectors": [
+        "status",
+        "qualification_scope or scope",
+        "acceptance_met"
+      ],
+      "status": "FORMALLY_QUALIFIED_SCOPED_CONDITIONAL_PRODUCT"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/PUBLICATION_STATUS.json",
+      "sha256": "0cc79baffcbb4e3db3957b5ea54ba363cc8b9a4530941f20a7552e113d3cb17c",
+      "selectors": [
+        "status",
+        "qualification_scope or scope",
+        "acceptance_met"
+      ],
+      "status": "FORMALLY_QUALIFIED_CONDITIONAL_PM_HISTORY_RESPONSE"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-04-OPTICAL-JOINT/PUBLICATION_STATUS.json",
+      "sha256": "f3ba7ad782fe708b9c3e483dacd5114e3c1282a39e73271537d91a3dba9c1214",
+      "selectors": [
+        "status",
+        "qualification_scope or scope",
+        "acceptance_met"
+      ],
+      "status": "FORMALLY_QUALIFIED_SCOPED_CONDITIONAL_PRODUCT"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-05-RADIATION-RESPONSE/PUBLICATION_STATUS.json",
+      "sha256": "a9776c2b0c2fc09af4222ab05a7337d35d9551d236597824bd395d5516cb2b03",
+      "selectors": [
+        "status",
+        "qualification_scope or scope",
+        "acceptance_met"
+      ],
+      "status": "FORMALLY_QUALIFIED_COMMON_INPUT_RADIATION_RESPONSE_COMPARISON"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/PUBLICATION_STATUS.json",
+      "sha256": "bb4062b13afc91a59d777fdc4d088211a36ec1b4b7722d757f2ed316c2e23e35",
+      "selectors": [
+        "status",
+        "qualification_scope or scope",
+        "acceptance_met"
+      ],
+      "status": "FORMALLY_QUALIFIED_RELEASED_MAGNITUDE_CONDITIONAL_COMPARATOR"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-10-GEOMETRY-IMAGE/PUBLICATION_STATUS.json",
+      "sha256": "a7b15db7743b3d745bf6b065b0a5622b9fe72f348949febfcbd3f2e3e4a6e592",
+      "selectors": [
+        "status",
+        "qualification_scope or scope",
+        "acceptance_met"
+      ],
+      "status": "FORMALLY_QUALIFIED_SCOPED_CONDITIONAL_PRODUCT"
+    }
+  ],
+  "upstream_delta": {
+    "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/UPSTREAM_DELTA.json",
+    "sha256": "497afa7316fdc1d8a6d1f6d674cf50e1bb002c126a2d196c4d040fbda127af31",
+    "status": "PREPARED_PENDING_SOURCE_QUALIFICATION"
+  },
+  "original42": {
+    "external_output_acceptances": 17,
+    "analytic_alternate_ledger": 18,
+    "denominator": 42,
+    "effect": "none"
+  },
+  "r32_status_sources": [
+    {
+      "task_id": "R32-02-P1-SELECTED",
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-02-P1-SELECTED/independent_assessment/PUBLICATION_STATUS.json",
+      "sha256": "2d656338f449cd619599f4af28187e176c1a50a69a26b8e9400959280726e0db",
+      "qualified_products": [
+        "selected_cohort_manuscript"
+      ],
+      "scope": "See exact status source"
+    },
+    {
+      "task_id": "R32-03-H03-STRUCTURED",
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/PUBLICATION_STATUS.json",
+      "sha256": "b312c5639ac3e43f53b53584b3f06b98ab17696a272e0d4ea6ebb98cd5a32293",
+      "qualified_products": [
+        "structured_frontier"
+      ],
+      "scope": "See exact status source"
+    },
+    {
+      "task_id": "R32-04-BANDPASS-BOUNDS",
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-04-BANDPASS-BOUNDS/PUBLICATION_STATUS.json",
+      "sha256": "0f0f02061463fdee154eb8b4adf416667ef11674a1478ee0659ade379754b976",
+      "qualified_products": [
+        "bounded_moment_frontier"
+      ],
+      "scope": "Conditional free-nine nuisance M class, full24 coordinates; range HOLDs are representation safeguards, not a new physical amplitude floor."
+    },
+    {
+      "task_id": "R32-05-P6-OPTICAL",
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-05-P6-OPTICAL/PUBLICATION_STATUS.json",
+      "sha256": "09bca20e2fbd7c5a57d642bba942afe6b1ce0771f24b207778e7c35a9f5cab3c",
+      "qualified_products": [
+        "optical_inverse_note"
+      ],
+      "scope": "Conditional finite inverse/error-region methods note; retained apparent dimensionless CF4 tensor, common-event/congruence/frame and radii remain assumptions."
+    },
+    {
+      "task_id": "R32-06-P4-DESIGN",
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-06-P4-DESIGN/independent_review/PUBLICATION_STATUS.json",
+      "sha256": "97d9a3a7c368dcbb4b3de8ec40de3f6a2cf8dc762e0d05d32a0534c55daa8a8b",
+      "qualified_products": [
+        "response_design_note"
+      ],
+      "scope": "See exact status source"
+    },
+    {
+      "task_id": "R32-07-P5-ALGEBRA",
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-07-P5-ALGEBRA/PUBLICATION_STATUS.json",
+      "sha256": "8d6e0e5112a71a2436e34b834801f0ba4d6e4e92a94a25ff3dccd88bd53cee59",
+      "qualified_products": [
+        "bianchi_algebra_note"
+      ],
+      "scope": "Reviewed finite algebraic-region note; kinematic Bianchi I counterexample. No stronger Bianchi V dynamical history-pair admission."
+    },
+    {
+      "task_id": "R32-08-H03-PAPER",
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/PUBLICATION_STATUS.json",
+      "sha256": "56861fbce87301cb679a6260fd30c2cc9f1b6b094a6f9e2221c84be0d9bb7f97",
+      "qualified_products": [
+        "h03_manuscript"
+      ],
+      "scope": "See exact status source"
+    },
+    {
+      "task_id": "R32-09-BANDPASS-PAPER",
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-09-BANDPASS-PAPER/PUBLICATION_STATUS.json",
+      "sha256": "a08fde5f92daab9c0ecf677ff54a5078dee5eae36f4cc799a2d74f069b64032c",
+      "qualified_products": [
+        "bandpass_manuscript"
+      ],
+      "scope": "Conditional bandpass methods paper; no original42 or physical map/noise/transfer admission."
+    }
+  ],
+  "source_reuse": {
+    "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/SOURCE_REUSE.json",
+    "sha256": "f3a79443086652a4e2eb53a9cb3030db18f16a38568f4a13bc062174bc653616"
+  }
+}

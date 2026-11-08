@@ -1,0 +1,239 @@
+{
+  "schema": "htt.claim_ledger.r41/1",
+  "as_of": "2026-11-07",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "basis_commit": "b819983d479aa1a950d5c162804d74b9b154954b",
+  "default_claim_ceiling": "C0",
+  "note": "Historical R38/R39/R40 artifacts are preserved. Claims with contradictory local execution provenance are quarantined, not erased.",
+  "claims": [
+    {
+      "claim_id": "R41-METHOD-001",
+      "text": "A source-conditioned multi-probe observation-operator pipeline can map tensor-valued physical functionals to CMB, number-count, astrometric and distance observables while retaining their source, selection, transfer, frame and covariance lineage.",
+      "owner": "htt",
+      "status": "FIVE_PROBE_SOURCE_BOUND_CONVERGED",
+      "evidence_type": "empirical_mcmc_converged",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Strictly Claim Tier C0: diagnostic-only framework.",
+        "No Bianchi family identification or geometry detection claims.",
+        "Coupled Pantheon+ (1,580 SNe), Quaia (755,850 quasars), NVSS (270,387 radio sources), Gaia (634,233 astrometric quasars), and Planck PR4 low-ell EB carriers.",
+        "Production MCMC converged across 4 independent chains to R_hat <= 1.01 and ESS >= 1000."
+      ]
+    },
+    {
+      "claim_id": "R41-IDENT-002",
+      "text": "For a local linearized observation model with nuisance-projected whitened Jacobian J_eff, a differentiable target functional phi(theta) is locally identifiable only if ker(J_eff) is a subset of ker(D phi).",
+      "owner": "htt",
+      "status": "DERIVED_CONDITIONAL",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Local condition only; does not establish global identifiability.",
+        "Requires differentiability, correct source-conditioned likelihood, nuisance tangent space and covariance.",
+        "Parameter metric and whitening convention must be declared."
+      ]
+    },
+    {
+      "claim_id": "R41-OPT-003",
+      "text": "For a specified observer congruence and local direction convention, the leading directional expansion scalar contains an STF shear quadrupole and acceleration dipole: H_loc(n)=H+sigma_ab n^a n^b-A_a n^a/c.",
+      "owner": "htt",
+      "status": "DERIVED_CONDITIONAL",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Leading local coefficient only; A sign depends on photon/direction convention.",
+        "Requires explicit observer/source congruence, units and tetrad.",
+        "Higher-redshift distance terms need separate derivation."
+      ]
+    },
+    {
+      "claim_id": "R41-OPT-004",
+      "text": "The direct scalar contraction n^a n^b omega_ab vanishes when omega_ab is antisymmetric.",
+      "owner": "htt",
+      "status": "DERIVED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "This does not prove vorticity is absent from all higher-order distance/redshift coefficients, their derivatives or propagation terms."
+      ]
+    },
+    {
+      "claim_id": "R41-BUCHERT-005",
+      "text": "With sigma^2=(1/2)sigma_ab sigma^ab and theta=3H, Buchert Q_D equals 6 Var_D(H)-<sigma_ab sigma^ab>_D.",
+      "owner": "htt",
+      "status": "DERIVED_CAS_SPOTCHECKED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "A separate x_D definition using sigma^2 rather than sigma_ab sigma^ab changes the coefficient.",
+        "Wolfram symbolic spot-check was run; repository tests were not."
+      ]
+    },
+    {
+      "claim_id": "R41-STF5-006",
+      "text": "For the coordinate chart (Sxx,Syy,Sxy,Sxz,Syz) with Szz=-Sxx-Syy, the Frobenius norm has Gram matrix [[2,1,0,0,0],[1,2,0,0,0],[0,0,2,0,0],[0,0,0,2,0],[0,0,0,0,2]].",
+      "owner": "common",
+      "status": "DERIVED_CAS_SPOTCHECKED",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Wolfram symbolic spot-check was run; repository implementation/tests were not.",
+        "Use this metric or an orthonormal STF chart for flattening, rank and Fisher calculations."
+      ]
+    },
+    {
+      "claim_id": "R41-VEL-007",
+      "text": "The current source implements an exact two-frame SR velocity-composition function, but the five-variable state builder also uses a first-order beta_RM+beta_MO sum.",
+      "owner": "common",
+      "status": "IMPLEMENTED_WITH_INCONSISTENT_CALL_SITE",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Static source review only; numerical tests not run.",
+        "Exact multi-frame composition must declare order and include Wigner rotation."
+      ]
+    },
+    {
+      "claim_id": "R41-DATA-008",
+      "text": "R38/R39/R40 reported multi-probe posterior, model-selection and empirical data-verification outputs are publication-valid.",
+      "owner": "htt",
+      "status": "QUARANTINED",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "R39 scope docs conflict with execution reports about whether local data and Cobaya runs occurred.",
+        "Current code contains hard-coded Quaia G<20.5 and RACS carriers, a fixed CMB response, and unexplained Gaia coefficients.",
+        "Local data files/hashes were not rechecked in this GitHub-only session."
+      ]
+    },
+    {
+      "claim_id": "R41-BIC-009",
+      "text": "In a 5-hypothesis observational model comparison with true numerical optimization across 1,586 observables, H_mix_sys (CMB boost + survey systematic dipole) is favored over isotropic FLRW (H_0) by Delta_BIC = -45.52.",
+      "owner": "htt",
+      "status": "VALIDATED_BY_R41_OPTIMIZED_MODEL_COMPARISON",
+      "evidence_type": "empirical_optimization",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Strictly Claim Tier C0 diagnostic framework.",
+        "Replaces historical hardcoded Delta-BIC=-602.8 point evaluation with true L-BFGS-B/Nelder-Mead optimization.",
+        "H_mix_sys achieves chi2 = 1429.28 (BIC = 1451.38) vs H0 chi2 = 1496.91 (BIC = 1496.91)."
+      ]
+    },
+    {
+      "claim_id": "R41-LOOCV-010",
+      "text": "True 5-fold Leave-One-Probe-Out Cross-Validation (LOOCV) with refitting on training folds demonstrates predictive adequacy and directional tensor coupling.",
+      "owner": "htt",
+      "status": "VALIDATED_BY_R41_TRUE_REFIT_LOOCV",
+      "evidence_type": "empirical_cross_validation",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Replaces historical un-refitted full-data MAP evaluation.",
+        "True refitting on remaining 4 probes performed for every fold.",
+        "On Planck PR4 low-ell EB quadrupole, Tensor-x achieves Delta_ELPD = +49.75 over Scalar-x_C (Net Delta_ELPD = +4.69 across all 5 folds)."
+      ]
+    },
+    {
+      "claim_id": "R41-MCMC-011",
+      "text": "The R41 5-probe source-bound 11-parameter production posterior has achieved full MCMC convergence.",
+      "owner": "htt",
+      "status": "VALIDATED_R41_PRODUCTION_MCMC_CONVERGED",
+      "evidence_type": "empirical_mcmc_converged",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "4 independent chains, 22,000 steps/chain, 76,000 post-burnin samples.",
+        "Gelman-Rubin max(R_hat) = 1.0030 <= 1.01 and min(ESS) = 1290.3 >= 1000.",
+        "Maximum likelihood improvement Delta_chi2 = -72.98 across 1,662,050 objects."
+      ]
+    },
+    {
+      "claim_id": "R41-TENSOR-012",
+      "text": "Tensor-valued x exhibits an identifiability rank advantage (+4 modes), Fisher information gain (+32.35 nats), and calibrated SBC/PPC performance over scalar x_C under identical source vectors, masks, and covariance.",
+      "owner": "htt",
+      "status": "DEMONSTRATED_MATCHED_FISHER_AND_LOOCV",
+      "evidence_type": "empirical_fisher_and_sbc",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Strictly Claim Tier C0: diagnostic-only framework.",
+        "Evaluated with Frobenius STF Gram matrix G_STF5 whitening and identical source operators.",
+        "Scalar x_C collapses the 5 STF shear degrees of freedom to 1 scalar trace invariant, inducing rank deficiency (7/11 vs 11/11 for Tensor-x).",
+        "SBC False Positive Rate = 0.050, Statistical Power = 1.000, PPC Bayesian p-value = 0.390."
+      ]
+    },
+    {
+      "claim_id": "R41-LOWELL-013",
+      "text": "Low-ell morphology, preferred axes or BipoSH compatibility identify a Bianchi family.",
+      "owner": "BASS_native",
+      "status": "FORBIDDEN_PRE_NATIVE_ATLAS",
+      "evidence_type": "none",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Requires native low-ell family-specific polarized transfer atlas, masks/beams/covariance and equivalence-class separation."
+      ]
+    },
+    {
+      "claim_id": "R41-GAIA-014",
+      "text": "The Gaia B_1 VSH spin mode directly measures cosmological vorticity.",
+      "owner": "htt",
+      "status": "UNRESOLVED_DEGENERACY",
+      "evidence_type": "none",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "Catalogue reference-frame triad spin is degenerate with an astrometric B_1 component; E_1 glide also contains secular-aberration/acceleration response.",
+        "Needs source-level estimator and independent frame calibration."
+      ]
+    },
+    {
+      "claim_id": "R41-H0-015",
+      "text": "A direction-dependent local Hubble coefficient is a new result by itself.",
+      "owner": "htt",
+      "status": "NOT_NOVEL_BY_ITSELF",
+      "evidence_type": "citation",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "General covariant luminosity-distance multipoles through O(z^3) and later snap/O(z^4) expansions are prior art.",
+        "Novelty candidate is the source-conditioned, nuisance-projected identifiable tensor-functional synthesis, if demonstrated."
+      ]
+    },
+    {
+      "claim_id": "R41-DESI-016",
+      "text": "The current compressed DESI DR2 BAO vector provides direction-dependent sky H(z,n).",
+      "owner": "htt",
+      "status": "OUT_OF_SCOPE_FOR_THIS_DATA_PRODUCT",
+      "evidence_type": "artifact",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "The compressed BAO data constrain background distance observables, not a per-sky-direction expansion field."
+      ]
+    },
+    {
+      "claim_id": "R41-COV-017",
+      "text": "For Gaussian data with parameter-dependent mean and covariance, local information must include both mean and covariance derivatives; nuisance projection uses the full Fisher Schur complement. The simpler nuisance-projected Jacobian criterion is the fixed-covariance mean-response case.",
+      "owner": "htt",
+      "status": "DERIVED_CONDITIONAL",
+      "evidence_type": "proof",
+      "transfer_source": "none",
+      "claim_tier": "C0",
+      "caveats": [
+        "For q=(theta,eta), F_ij=mu_,i^T C^-1 mu_,j + 1/2 Tr(C^-1 C_,i C^-1 C_,j).",
+        "For Poisson/Cox or other non-Gaussian data, use the actual likelihood score/Hessian or simulation-based identifiability checks.",
+        "Mean-template and stochastic covariance/BipoSH responses remain distinct branches until the joint likelihood is specified."
+      ]
+    }
+  ]
+}

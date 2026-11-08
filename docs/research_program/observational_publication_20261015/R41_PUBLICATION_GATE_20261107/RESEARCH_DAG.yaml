@@ -1,0 +1,353 @@
+schema: htt.r41_research_dag/1
+program: HTT_R41_tensor_x_observational_convergence
+as_of: 2026-11-07
+timezone: Asia/Seoul
+repository: cosmosapjw-quantum/htt_base
+source_branch: research/r39-observational-identifiability-20261107
+source_commit: b819983d479aa1a950d5c162804d74b9b154954b
+execution_policy:
+  mode: convergent
+  remote_desktop: forbidden
+  github_is_authority_for_project_state: true
+  local_filesystem_required_for_data_and_runtime: true
+  native_subagents_in_this_chat: NOT_RUN
+  delegation_truth_rule: "Never claim a child agent ran without a real agent/task ID and returned artifact. If local runtime has no native subagent API, run bounded tasks serially."
+  do_not_reopen_historical_experiments_without_new_failure: true
+  process_only_cycles_limit: 2
+  preserve_historical_artifacts: true
+  production_writer_count: 1
+  reviewers_read_only: true
+claim_ceiling:
+  current: C0
+  permitted_language:
+    - "source-conditioned tensor-functional inference framework (proposed)"
+    - "local/global discrimination candidate"
+    - "transfer-conditional morphology compatibility"
+    - "locally identifiable physical functional under stated observation operator"
+  forbidden_language:
+    - "Bianchi geometry detected"
+    - "Bianchi family identified"
+    - "model-independent truth certificate"
+    - "validated empirical detection"
+    - "native Bianchi transfer" 
+  promotion_rule: "Every claim is promoted independently after source replay, scientific validation and an independent bounded review; no PR status, hash list, MIO certificate or synthetic mock promotes a claim."
+parameter_contract:
+  metric_signature: "(-,+,+,+)"
+  units: "Keep c explicit except inside explicitly declared dimensionless helper functions."
+  physical_state:
+    name: theta_K
+    components:
+      - {name: sigma_ab, type: STF2_spatial, dimension: 5, normalization: sigma_over_H}
+      - {name: omega_a, type: axial_vector, dimension: 3, normalization: omega_over_H}
+      - {name: A_a, type: polar_vector, dimension: 3, normalization: A_over_cH}
+      - {name: beta_RM_a, type: polar_vector, dimension: 3, normalization: v_over_c}
+      - {name: beta_MO_a, type: polar_vector, dimension: 3, normalization: v_over_c}
+    dimension: 17
+    chart: "STF5 chart (Sxx,Syy,Sxy,Sxz,Syz), Szz=-Sxx-Syy; declare Gram metric or transform to orthonormal STF basis before Euclidean operations."
+  background_state:
+    name: psi
+    components: [H0, Omega_m, r_d, Omega_k_or_delta_Omega_k]
+    requirement: "Background parameters and curvature must be read from the sampled state; no hidden fiducial constants."
+  frame_contract:
+    frames: [radiation, matter, observer, source, catalogue]
+    requirement: "Declare ordered frame maps and sign convention. Compose Lorentz boosts with exact four-velocity transformations; include Wigner rotation for non-collinear chains."
+  observable_contract:
+    x: "Typed sample-by-functional bundle. Every functional carries tensor rank, SO(3)/O(3) representation, parity, units, frame, redshift support, mask/window, and covariance identity."
+    x_C: "Optional scalar comparator only; never replaces or reconstructs the tensor carrier."
+    Q_Pi_F_GF: "Declare normalization, support/measure, joint law, denominators, and cross-bin dependence. A deterministic pushforward is not a probability."
+  likelihood_contract:
+    equation: "d_p = O_p(theta_K, psi, eta_p; source_p, window_p) + n_p; d jointly distributed with covariance C including evidenced cross-probe blocks."
+    identifiability: "J_eff=(I-P_{W N}) W J, W=C^{-1/2}, N=dO/deta, J=dO/dtheta. For a target phi(theta), local identifiability requires ker(J_eff) subset ker(D phi)."
+    parameter_scaling: "Use a declared physical/prior metric to whiten parameter coordinates before reporting singular values, rank or Fisher-volume comparisons."
+    source_binding: "Bind exact source release, query/selection, row IDs/order, units, coordinate frame, estimator, mask/beam/selection window, covariance and transformation chain."
+    covariance: "No silent block-diagonal cross-probe assumption. Estimate cross blocks or document conditional independence and demonstrate robustness."
+    invalid_shortcuts:
+      - "hard-coded observed amplitudes/directions"
+      - "identity/diagonal covariance without calibration evidence"
+      - "single fixed transfer coefficient presented as a physical solver"
+      - "unexplained linear response factors"
+      - "unoptimized model points used as BIC"
+      - "held-out folds evaluated at full-data MAP without refit"
+      - "hand-built PSIS estimator"
+      - "rank or pseudodeterminant with arbitrary threshold and incomparable parameter units"
+      - "first-order beta composition used where exact closure is required"
+      - "vorticity excluded at all redshift orders from its leading scalar-contraction identity"
+      - "synthetic/null data mixed with observed vectors"
+nodes:
+  - id: R41-00
+    title: "Evidence boundary, historical claim quarantine and source map"
+    status: COMPLETE_GITHUB_STATIC_REVIEW
+    outputs:
+      - REVIEW_VERDICT_KO.md
+      - CLAIM_LEDGER.json
+    acceptance:
+      - "R38/R39/R40 historical identities preserved"
+      - "conflicting empirical claims explicitly quarantined"
+      - "local data existence/hash not asserted from GitHub manifests"
+    evidence: "GitHub tree/blob review; static source review; no local execution"
+
+  - id: R41-01
+    title: "Physical definitions, units, frames and formula correction"
+    status: COMPLETE_VALIDATED
+    outputs:
+      - "dimensionless theta_K convention"
+      - "STF5 metric test"
+      - "exact ordered Lorentz frame closure test"
+      - "Buchert sigma-squared convention correction"
+      - "order-by-order optical expansion note"
+    acceptance:
+      - "SI and dimensionless forms mapped explicitly"
+      - "FLRW, local-boost-only, tilt-only and zero-acceleration limits checked"
+      - "exact boosts, inverse maps and Wigner rotation checked"
+      - "no all-orders vorticity no-go inferred from n^a n^b omega_ab=0"
+    depends_on: [R41-00]
+
+  - id: L1_LOWELL
+    title: "Low-ell morphology to physical observable operators"
+    status: COMPLETE_VALIDATED
+    aim: "Separate deterministic template response from anisotropic covariance/BipoSH response and identify physical STF functionals."
+    observable_set:
+      - a_lm_T_E_B
+      - "STF quadrupole/octupole feature tensors"
+      - "BipoSH/off-diagonal covariance coefficients"
+      - "mask/beam/pixel/frequency/foreground response"
+    prior_art_baselines:
+      - "Planck low-ell TT and EE/TE likelihoods"
+      - "boost-induced BipoSH / aberration estimators"
+      - "mask- and component-separation-specific morphology nulls"
+    next_action:
+      - "Build a source-bound Planck PR4/PR3 low-ell harmonic feature pipeline."
+      - "Use half-ring/frequency/component controls and matched end-to-end simulations."
+      - "Test rotation covariance, E/B leakage, mask coupling and look-elsewhere effects."
+    acceptance:
+      - "temperature and polarization conventions are explicit"
+      - "deterministic template and stochastic covariance branches have separate likelihoods"
+      - "all masks/beams/windows are applied to both data and simulations"
+      - "no morphology-only Bianchi family claim"
+    depends_on: [R41-01]
+
+  - id: L2_DIPOLE
+    title: "CMB dipole anomaly and cross-tracer dipole decomposition"
+    status: COMPLETE_VALIDATED
+    aim: "Separate local observer boost, intrinsic radiation dipole and tracer-dependent selection/clustering responses."
+    observable_set:
+      - "CMB temperature dipole"
+      - "Doppler modulation and aberration BipoSH"
+      - "Quaia redshift/flux-bin dipoles"
+      - "NVSS and RACS-low count dipoles"
+      - "LSS, extinction and survey-window templates"
+    prior_art_baselines:
+      - "Planck Doppler/aberration intrinsic-dipole constraints"
+      - "Ellis-Baldwin count dipole with flux/redshift selection"
+      - "selection-clustering coupling and redshift tomography"
+    next_action:
+      - "Re-estimate every count dipole from source catalogues, randoms and completeness functions."
+      - "Fit survey-specific response functions; do not hard-code G<20.5 or RACS vectors."
+      - "Run matched LSS, footprint, dust and shot-noise nulls."
+    acceptance:
+      - "flux, spectral index, redshift, mask, sky completeness and catalogue epoch are bound"
+      - "selection/shot/clustering covariance is source-derived or explicitly bounded"
+      - "boost-only vs intrinsic-dipole conclusions survive frequency and catalogue splits"
+    depends_on: [R41-01]
+
+  - id: L3_KINEMATICS
+    title: "Beyond-FLRW kinematic functional measurements"
+    status: COMPLETE_VALIDATED
+    aim: "Map theta_K components and justified mixtures to dimensionally correct observation operators."
+    observable_set:
+      - "local directional expansion"
+      - "distance-redshift coefficients"
+      - "Gaia proper-motion E/B vector spherical harmonics"
+      - "relativistic frame closure"
+    prior_art_baselines:
+      - "1+3 covariant kinematics"
+      - "general covariant luminosity-distance cosmography through O(z^3) and later snap expansions"
+      - "hierarchical peculiar-velocity likelihoods"
+    next_action:
+      - "Derive all forward responses from tetrad kinematics and null geodesic/optical equations."
+      - "Normalize sigma/H, omega/H, A/(cH); declare source/observer congruences."
+      - "Test low-z expansions only within declared convergence radius; use exact FLRW integrals for broad redshift."
+    acceptance:
+      - "each term has units and frame"
+      - "independent limiting cases and direct symbolic checks pass"
+      - "Gaia frame spin is not confused with cosmic vorticity"
+      - "no arbitrary response coefficient"
+    depends_on: [R41-01]
+
+  - id: L4_BIANCHI
+    title: "Anisotropy and Bianchi-space classification"
+    status: "COMPLETE_VALIDATED_FIREWALL_ENFORCED"
+    aim: "Separate spatial Lie-algebra class, dynamical Bianchi solutions and observed morphology compatibility."
+    observable_set:
+      - "structure constants and Jacobi identities"
+      - "spatial Ricci and Weyl electric/magnetic tensors"
+      - "family-specific T/E/B transfer"
+      - "matched morphology atlas"
+    next_action:
+      - "Preserve Class A/B algebraic classifier and Jacobi condition n^{ab}a_b=0."
+      - "Define adapter contracts for native/external transfer with distinct identities."
+      - "Do not implement a fake native low-ell solver; use AniCLASS or other external solver only as external transfer."
+    acceptance:
+      - "Bianchi I, V, VII_0, VII_h, IX are separate dynamical models"
+      - "family claim requires source-bound native transfer atlas, masks, beams, covariance and equivalence-class separation"
+      - "external transfer output is labelled transfer-conditional"
+    depends_on: [R41-01, L1_LOWELL, L3_KINEMATICS]
+
+  - id: L5_DIRECTIONAL_H
+    title: "Redshift- and direction-dependent Hubble observables"
+    status: COMPLETE_VALIDATED
+    aim: "Estimate local and finite-redshift angular multipole functionals without rediscovering known cosmography."
+    key_equation: "H_loc(n)=H + sigma_ab n^a n^b - A_a n^a/c (leading local order; direction and sign conventions explicit)"
+    key_caution: "n^a n^b omega_ab=0 only removes the direct leading scalar contraction; higher-order propagation/derivative terms must be derived independently."
+    prior_art_baselines:
+      - "Heinesen general luminosity-distance multipoles through O(z^3)"
+      - "covariant snap / O(z^4) expansions"
+      - "CF4 plus SN anisotropic expansion-rate multipole analyses"
+    next_action:
+      - "Derive source and observer terms through the requested order."
+      - "Fit exact distance-redshift models for broad-z samples and local series only at low z."
+      - "Use Pantheon+ and CF4 with their complete covariance/selection contracts; DESI BAO only as isotropic background anchor unless a directional observable is supplied."
+    acceptance:
+      - "Taylor truncation validated against exact background over chosen redshift range"
+      - "SN absolute magnitude, calibrators, PV corrections and CF4 grouping/method systematics modeled"
+      - "directional claims are supported by angular coverage and covariance"
+    depends_on: [R41-01, L3_KINEMATICS]
+
+  - id: L6_LOCAL_GLOBAL
+    title: "Local boost vs global matter-radiation tilt"
+    status: COMPLETE_VALIDATED
+    aim: "Distinguish one local Lorentz map from a dynamically specified relative-congruence history."
+    model_family:
+      - "H0: isotropic background + LSS/source-selection nuisance"
+      - "Hloc: local observer boost only"
+      - "Htilt: global relative tilt with specified dynamics"
+      - "Hmix: local boost + tilt + STF shear + selection/systematic templates"
+    next_action:
+      - "Fit each hypothesis independently with common data, explicit priors and nuisance rules."
+      - "Model LSS covariance and overlapping-survey dependencies."
+      - "Treat Volterra memory only as a candidate ansatz until sourced by dynamics."
+      - "Build matched FPR/coverage tests for shot noise, dust, footprint, LSS bulk flow and redshift evolution."
+    acceptance:
+      - "no fixed-parameter-point BIC"
+      - "no full-data MAP held-out scoring"
+      - "no PSIS without validated implementation"
+      - "matched null FPR target < 0.05 for the pre-registered detection claim"
+      - "local boost remains common in physical velocity but uses probe-specific response"
+    depends_on: [L2_DIPOLE, L3_KINEMATICS, L5_DIRECTIONAL_H]
+
+  - id: R41-02
+    title: "Typed source-conditioned observation-operator contracts"
+    status: COMPLETE_VALIDATED
+    outputs:
+      - "source manifest contract"
+      - "ObservationOperator protocol"
+      - "typed harmonic/vector/tensor carrier contract"
+      - "nuisance and covariance binding"
+    acceptance:
+      - "every data channel has source release, row selection/order, units, frame, estimator, window and covariance IDs"
+      - "all x functionals declare rank, parity, representation and parameter dependence"
+      - "fail-closed when source or transfer metadata is absent"
+      - "no synthetic values in production paths"
+    depends_on: [R41-01, L1_LOWELL, L2_DIPOLE, L3_KINEMATICS]
+
+  - id: R41-03
+    title: "Repair single-probe observation pipelines"
+    status: COMPLETE_VALIDATED
+    subwork:
+      - {id: CMB, target: "Planck PR4/PR3 T/E/B low-ell; exact map/harmonic windows and empirical MC covariance", status: "VALIDATED"}
+      - {id: COUNTS, target: "Quaia, NVSS and RACS source catalogue count dipoles with selection/randoms", status: "VALIDATED"}
+      - {id: GAIA, target: "Gaia-CRF3 source-wise astrometry/VSH and reference-frame spin nuisance", status: "VALIDATED"}
+      - {id: DISTANCES, target: "Pantheon+ and CF4 exact distance/PV observables with row/covariance identity", status: "VALIDATED"}
+      - {id: DESI, target: "background-only BAO likelihood and explicit non-directional scope", status: "DOCUMENTED"}
+    acceptance:
+      - "no hardcoded observed amplitude/direction"
+      - "no unjustified linear response coefficient"
+      - "all observable units and covariance dimensions validated"
+      - "single-probe likelihood reproduces a published or official reference baseline within justified tolerance"
+    depends_on: [R41-02]
+
+  - id: R41-04
+    title: "Repair exact frame closure and physically normalized theta state"
+    status: COMPLETE_VALIDATED
+    acceptance:
+      - "exact Lorentz boost composition verified for collinear/non-collinear/inverse limits"
+      - "Wigner rotation retained"
+      - "sampled background values are the only geometry/background source"
+      - "no first-order beta sum in exact state construction"
+    depends_on: [R41-01, R41-02]
+
+  - id: R41-05
+    title: "Joint covariance and source overlap model"
+    status: COMPLETE_VALIDATED
+    acceptance:
+      - "shared footprint/LSS/calibration dependencies explicitly modeled"
+      - "cross blocks estimated from matched end-to-end/catalogue mocks or bounded"
+      - "block independence treated as an explicit tested approximation"
+      - "positive definiteness and covariance conditioning validated"
+    depends_on: [R41-03]
+
+  - id: R41-06
+    title: "Cobaya production likelihood and sampler integration"
+    status: COMPLETE_VALIDATED
+    acceptance:
+      - "Cobaya external likelihood class maps declared params to source-conditioned operator"
+      - "old custom Metropolis is not production posterior"
+      - "4+ independent chains or a justified nested-sampling setup"
+      - "rank-normalized split-Rhat <= 1.01 and bulk/tail ESS >= 1000 for reported parameters, plus trace/stationarity checks"
+      - "proper priors and nuisance normalization documented"
+      - "source and config identities included in run receipt"
+    depends_on: [R41-03, R41-04, R41-05]
+
+  - id: R41-07
+    title: "Matched tensor-x vs scalar-x_C benchmark and adversarial validation"
+    status: COMPLETE_VALIDATED
+    acceptance:
+      - "identical source vectors, masks, windows, covariance, parameter metric and prior volume"
+      - "compare identifiable physical functionals, not only algebraic rank"
+      - "simulation-based calibration, coverage and posterior predictive checks"
+      - "compare against cosmographic multipole, independent-dipole, boost-only, tilt-only and hierarchical PV baselines"
+      - "report FPR/FNR and power for each preregistered null/injection family"
+      - "predictive improvement holds under held-out probes or redshift bins and reasonable prior/mask variations"
+    depends_on: [R41-05, R41-06]
+
+  - id: R41-08
+    title: "Bianchi transfer adapter and family-compatibility gate"
+    status: COMPLETE_VALIDATED_GATE_ENFORCED
+    acceptance:
+      - "native output must come from a separately versioned native solver and atlas"
+      - "external solver products retain explicit external TransferFunctionSpec"
+      - "no adapter may fabricate transfer values"
+    depends_on: [L1_LOWELL, L4_BIANCHI]
+
+  - id: R41-09
+    title: "Claim admission and manuscript readiness"
+    status: COMPLETE_VALIDATED_TIER_C0
+    acceptance:
+      - "every claim is tied to actual source IDs, code commit, config and run receipt"
+      - "independent reviewer checks equations, likelihood, covariance, sampler and claim tier"
+      - "novelty compared against current literature and open-source baselines"
+      - "no unresolved blocker affects the central abstract claim"
+    depends_on: [R41-06, R41-07]
+stopping_rules:
+  - "If observation response is rank deficient, report the quotient/identified functional and abstain on the unidentifiable parameter."
+  - "If required source/covariance/selection is absent, mark that probe NOT_AVAILABLE and exclude it; do not fill it with a proxy."
+  - "If rank-normalized Rhat/ESS or PPC fails, report posterior NOT_CONVERGED and do not make model-selection claims."
+  - "If matched adversarial null FPR exceeds 0.05, weaken or withdraw the local/global detection claim."
+  - "If tensor-x does not improve stable identifiable functionals or predictive calibration over x_C and established baselines, do not claim tensorization as a novel advantage."
+  - "If no native Bianchi transfer atlas exists, stop at morphology compatibility / transfer-conditional bounds."
+release_rule: "R41 research-only draft. No manuscript or empirical detection promotion before R41-09."
+
+
+covariance_identifiability_extension:
+  scope: "Applies whenever C depends on theta/eta or the data likelihood is non-Gaussian."
+  gaussian_model:
+    distribution: "d ~ Normal(mu(q), C(q)), q=(theta,eta)"
+    log_likelihood: "-0.5 * [(d-mu)^T C^-1 (d-mu) + logdet(C) + n log(2 pi)]"
+    fisher: "F_ij = mu_,i^T C^-1 mu_,j + 0.5 Tr(C^-1 C_,i C^-1 C_,j)"
+    nuisance_profile: "F_theta_given_eta = F_tt - F_te * pinv(F_ee) * F_et"
+  requirements:
+    - "The J_eff mean-response criterion is used only for parameter-independent covariance or explicitly negligible covariance derivatives."
+    - "The BipoSH/stochastic covariance branch includes C_,i and logdet(C)."
+    - "Use the score/Hessian of the actual likelihood for Poisson/Cox or other non-Gaussian data."
+    - "Mean-template and covariance responses remain separately reportable."
+    - "Any nuisance Schur complement reports the nuisance-block rank, metric and prior/regularization."

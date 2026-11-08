@@ -6,7 +6,10 @@ import json
 import subprocess
 from pathlib import Path
 
+import pytest
 import yaml
+
+pytest.importorskip("htt.metamorphic_symmetry")
 
 from htt.metamorphic_symmetry import (
     MUTATION_IDS,

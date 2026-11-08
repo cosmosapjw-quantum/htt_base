@@ -1,0 +1,76 @@
+{
+  "schema": "htt.r37_final_report_result/1",
+  "task_id": "R37-05-FINAL-REPORT",
+  "owner": "htt_base_convergence",
+  "claim_tier": "C0_DIAGNOSTIC_ONLY",
+  "status": "COMPLETED_SUCCESS",
+  "transfer_source": "none; model-independent metrology and transfer-conditional diagnostics",
+  "physical_target": "converged observational metrology, model-independent diagnostics and geometry compatibility atlas",
+  "release_summary": {
+    "report_release_complete": true,
+    "completed_analysis_units": 6,
+    "total_dag_nodes_completed": 208,
+    "residual_held_nodes": 65,
+    "original42_scientific_acceptance": 17,
+    "original42_analytic_alternate": 18,
+    "paper_submission_status": "PREPARED_NOT_SUBMITTED"
+  },
+  "delivered_products": {
+    "report_markdown": "REPORT_FINAL.md",
+    "report_latex": "REPORT_FINAL.tex",
+    "report_pdf": "REPORT_FINAL.pdf",
+    "paper_extracts_dir": "PAPER_EXTRACTS",
+    "paper_extracts": [
+      "PAPER_EXTRACTS/P1_MOMENTUM_REST_FRAME.md",
+      "PAPER_EXTRACTS/P2_BIANCHI_RADIATION_TRANSFER.md",
+      "PAPER_EXTRACTS/P3_OPACITY_COSMOLOGY.md",
+      "PAPER_EXTRACTS/P4_DIRECTIONAL_EXPANSION_TOMOGRAPHY.md",
+      "PAPER_EXTRACTS/P5_GEOMETRY_COMPATIBILITY_ATLAS.md",
+      "PAPER_EXTRACTS/P6_OBSERVABLE_FRAMEWORK_SYNTHESIS.md"
+    ],
+    "release_index": "RELEASE_INDEX.json",
+    "residual_obligations": "RESIDUAL_OBLIGATIONS.json",
+    "claim_evidence_map": "CLAIM_EVIDENCE_MAP.json",
+    "reproduction": "REPRODUCTION.md",
+    "artifact_manifest": "ARTIFACT_MANIFEST.json",
+    "independent_review": "INDEPENDENT_REVIEW.md"
+  },
+  "key_findings": {
+    "radiation_omission_bias": {
+      "analytical_bound": 0.0087824,
+      "observed_bias": 0.0085038,
+      "positive_fibre_shear_norm": 0.000118028
+    },
+    "astrometric_kinematics": {
+      "fixed_q_sign_radius": 0.5773502691896256,
+      "gls_joint_coverage": 0.94927,
+      "diagonal_bin_coverage": 1.00000,
+      "diagonal_bin_power": 0.00000
+    },
+    "optical_hubble": {
+      "pantheon_apparent_ratio_95": [0.9222, 1.1074],
+      "choi_channel_bounds": [1.58114, 3.0],
+      "cbl_flat_residual_bound": 2.0e-20
+    },
+    "geometry_compatibility": {
+      "scalar_curvature_both": -0.5,
+      "quadratic_invariant_II": 0.75,
+      "quadratic_invariant_VII0": 4.75,
+      "exclusive_stability_margin": 0.36258
+    },
+    "commander_pr4_morphology": {
+      "observed_J234": 0.02330306,
+      "p_value_J234": 0.43564356,
+      "p_value_abs_J234": 0.74257426,
+      "p_value_align23": 0.22772277,
+      "qualification": "COMPLETED_SUCCESS_CONSISTENT_WITH_NULL"
+    }
+  },
+  "firewall_compliance": {
+    "bianchi_family_identified": false,
+    "bianchi_geometry_detected": false,
+    "model_independent_truth_certificate": false,
+    "native_solver_simulated": false,
+    "claim_tier": "C0_DIAGNOSTIC_ONLY"
+  }
+}

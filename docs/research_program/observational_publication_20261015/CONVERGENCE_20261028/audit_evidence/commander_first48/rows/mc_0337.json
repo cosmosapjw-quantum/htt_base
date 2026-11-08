@@ -1,0 +1,301 @@
+{
+  "schema": "htt.r36_pr4_commander_map_morphology/1",
+  "task_id": "R36-06-PR4-MORPHOLOGY",
+  "packet_id": "902ebd6a521d6b31864e0bfce63336c62d6cec5ff2f6c3128de7ab68046fce35",
+  "input_identity": "sha256:83ebf1cd2ce7ae18a486506219c0a93ec939a74cfa06c21a1316c938678f1c43",
+  "contract_sha256": "fa08a55ccbf7a5e488cfc2866f0138d0682d3732fe01a785870f8adf9fc677d4",
+  "kind": "mc",
+  "mc_id": 337,
+  "source": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/cache/npipe6v20_commander_cmb_2048_mc_0337_005a.fits",
+    "sha256": "c4b66c33137f77938cd131d0f1f576804e7ac0cfa6ac06af9a6426a9e3af277b",
+    "size_bytes": 603990720,
+    "receipt": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/cache/npipe6v20_commander_cmb_2048_mc_0337_005a.fits.verified.json",
+    "role": "processed Commander FULL MC sky",
+    "mc_id": 337,
+    "hdu": 1
+  },
+  "mask": {
+    "source": "/mnt/extdrive/workdir/htt_open_data/research20261022/pr4/mask_PR4_Lollipop_ns16.fits",
+    "sha256": "7d7df63e77066a7739cc7faed3a005593bb3612af6cdeea2ed48a37fb600946d",
+    "coarse_nside": 16,
+    "coarse_ordering": "RING",
+    "retained_coarse_pixels": 1273,
+    "native_nside": 2048,
+    "native_ordering": "NESTED",
+    "child_count_per_parent": 16384,
+    "retained_native_pixels": 20856832,
+    "operator_ordering": "RING",
+    "rule": "RING16 to NESTED16, exact parent child repetition, then RING2048 indexing; same scalar binary mask for Q and U"
+  },
+  "consumer_source_sha256": "dc609faf425190441160cfc3caffe92e8a11ed35bb6aa992aaebe5e2f9741324",
+  "feature_source": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/ADVERSARIAL_AUDIT_20261022/continuation/cmb_counterpairs/morphology.py",
+    "sha256": "73fd20c0d347d94ee1aa143b3ec6ef4acda46bd3f7b3b1eb9b03e9b944cbddce",
+    "reused_functions": [
+      "features",
+      "intervention"
+    ],
+    "power_tensor_kernel": {
+      "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/obsstat/lowell_poles.py",
+      "sha256": "2defab06372951fc5c072f29924f17e8ecce5d85f657182f102c74a0469bbb7a"
+    }
+  },
+  "operator": {
+    "frame": "GALACTIC",
+    "polconv": "COSMO",
+    "units": "K_CMB",
+    "native_nside": 2048,
+    "native_ordering": "NESTED",
+    "analysis_ordering": "RING",
+    "spin": 2,
+    "lmax": 4,
+    "mask_order": "native QU before spin2",
+    "additional_smoothing": false,
+    "beam_inversion": false,
+    "noise_subtraction": false,
+    "nominal_release_resolution": "5 arcmin descriptor; no FITS FWHM card or measured beam claimed",
+    "response": "delivered NPIPE/Commander processing plus exact stated mask/spin operator; no all-m upstream transfer reconstruction",
+    "input_conversion_to_K_CMB": 1e-06
+  },
+  "E_l2_l3_l4_full_signed_m": {
+    "2,0": [
+      -1.629859295270115e-08,
+      0.0
+    ],
+    "2,1": [
+      -4.219524074660921e-08,
+      -5.125756870166852e-08
+    ],
+    "2,-1": [
+      4.219524074660921e-08,
+      -5.125756870166852e-08
+    ],
+    "2,2": [
+      -9.682145007632526e-08,
+      6.8194388580844e-08
+    ],
+    "2,-2": [
+      -9.682145007632526e-08,
+      -6.8194388580844e-08
+    ],
+    "3,0": [
+      -1.1730735110005263e-08,
+      0.0
+    ],
+    "3,1": [
+      -4.864800222285883e-08,
+      -9.646603962938387e-08
+    ],
+    "3,-1": [
+      4.864800222285883e-08,
+      -9.646603962938387e-08
+    ],
+    "3,2": [
+      -6.836635041566435e-08,
+      -6.270790650729491e-08
+    ],
+    "3,-2": [
+      -6.836635041566435e-08,
+      6.270790650729491e-08
+    ],
+    "3,3": [
+      8.207686086703959e-10,
+      -2.180643399170465e-09
+    ],
+    "3,-3": [
+      -8.207686086703959e-10,
+      -2.180643399170465e-09
+    ],
+    "4,0": [
+      4.24192074313265e-08,
+      0.0
+    ],
+    "4,1": [
+      -9.394726690789446e-08,
+      -5.955519479321079e-10
+    ],
+    "4,-1": [
+      9.394726690789446e-08,
+      -5.955519479321079e-10
+    ],
+    "4,2": [
+      -5.744757599812586e-08,
+      1.2390876155909738e-08
+    ],
+    "4,-2": [
+      -5.744757599812586e-08,
+      -1.2390876155909738e-08
+    ],
+    "4,3": [
+      -6.988704822126286e-08,
+      -2.6258437940026795e-08
+    ],
+    "4,-3": [
+      6.988704822126286e-08,
+      -2.6258437940026795e-08
+    ],
+    "4,4": [
+      4.784808409483384e-08,
+      -6.833060810355821e-09
+    ],
+    "4,-4": [
+      4.784808409483384e-08,
+      6.833060810355821e-09
+    ]
+  },
+  "B_l2_l3_l4_full_signed_m": {
+    "2,0": [
+      -4.113136915509767e-08,
+      0.0
+    ],
+    "2,1": [
+      9.596897254666561e-08,
+      4.836126296783349e-09
+    ],
+    "2,-1": [
+      -9.596897254666561e-08,
+      4.836126296783349e-09
+    ],
+    "2,2": [
+      3.5241298028617855e-08,
+      -1.2306975494819275e-07
+    ],
+    "2,-2": [
+      3.5241298028617855e-08,
+      1.2306975494819275e-07
+    ],
+    "3,0": [
+      -8.581790691760905e-08,
+      0.0
+    ],
+    "3,1": [
+      3.19630068117175e-08,
+      -2.939399400548908e-08
+    ],
+    "3,-1": [
+      -3.19630068117175e-08,
+      -2.939399400548908e-08
+    ],
+    "3,2": [
+      -2.017549323413704e-08,
+      -6.669644066848631e-08
+    ],
+    "3,-2": [
+      -2.017549323413704e-08,
+      6.669644066848631e-08
+    ],
+    "3,3": [
+      5.690027855020642e-11,
+      -3.71340387985481e-08
+    ],
+    "3,-3": [
+      -5.690027855020642e-11,
+      -3.71340387985481e-08
+    ],
+    "4,0": [
+      -6.129185695274811e-08,
+      0.0
+    ],
+    "4,1": [
+      4.8094541111359015e-08,
+      1.3500526135731153e-08
+    ],
+    "4,-1": [
+      -4.8094541111359015e-08,
+      1.3500526135731153e-08
+    ],
+    "4,2": [
+      3.407035298152993e-08,
+      1.4422370825206674e-08
+    ],
+    "4,-2": [
+      3.407035298152993e-08,
+      -1.4422370825206674e-08
+    ],
+    "4,3": [
+      1.626953687709592e-08,
+      -1.2675439331028073e-08
+    ],
+    "4,-3": [
+      -1.626953687709592e-08,
+      -1.2675439331028073e-08
+    ],
+    "4,4": [
+      -3.386731271475804e-08,
+      2.682128744599027e-08
+    ],
+    "4,-4": [
+      -3.386731271475804e-08,
+      -2.682128744599027e-08
+    ]
+  },
+  "features": {
+    "C_ell_K_CMB2": {
+      "2": 7.426186634314793e-15,
+      "3": 5.815085219883447e-15,
+      "4": 4.686606881072003e-15
+    },
+    "J234": 0.049799125113740336,
+    "alignment23_squared": 0.38714575892292813,
+    "axis_status": "DEFINED",
+    "largest_axis_gaps": [
+      0.35418192645313423,
+      0.3705810008666529
+    ],
+    "tensor2": [
+      0.27451102338065375,
+      0.08268951926306521,
+      0.02344911706161553,
+      0.1823008327747007,
+      0.20196770710303302,
+      0.5431881438446456
+    ],
+    "tensor3": [
+      0.5114516248821749,
+      0.09585360813677195,
+      0.1881480083446978,
+      0.29960571417003645,
+      0.055784731056803434,
+      0.18894266094778853
+    ]
+  },
+  "T_abs_J234": 0.049799125113740336,
+  "controls": {
+    "errors": {
+      "parity_J_sign": 0.0,
+      "z_rotation_J": 1.3877787807814457e-17,
+      "positive_unit_rescale_J": 6.938893903907228e-18,
+      "rotation_C2_relative": 0.0,
+      "rescale_C2_relative": 2.220446049250313e-16,
+      "rotation_C3_relative": 0.0,
+      "rescale_C3_relative": 2.220446049250313e-16,
+      "rotation_C4_relative": 2.220446049250313e-16,
+      "rescale_C4_relative": 0.0
+    },
+    "limit": 1e-12,
+    "parity": "a_lm -> (-1)^ell a_lm",
+    "z_rotation_radians": 0.41,
+    "positive_rescaling": 1000000.0,
+    "stage": "post-extraction algebra; not a rotated sky through fixed mask"
+  },
+  "stability": {
+    "relative_joint_EB_norm_residual": 0.0,
+    "limit": 1e-10
+  },
+  "alms": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r36_pr4_actual/analysis/mc_0337_lowell_EB.npz",
+    "sha256": "32ba36827c6e17fa3108aa7d47d283a1280cc3e871870380322a2dc3451509cd",
+    "size_bytes": 744
+  },
+  "execution": {
+    "utc": "2026-10-28T09:55:28.522300+00:00",
+    "elapsed_seconds": 10.243396206991747,
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "healpy": "1.19.0",
+    "astropy": "8.0.2",
+    "pid": 181351
+  },
+  "status": "PROCESSED_ONE_SKY_ROW; NO_P_VALUE"
+}

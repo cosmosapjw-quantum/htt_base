@@ -1,0 +1,207 @@
+{
+  "schema": "htt.r37_stage0_independent_review/1",
+  "created_utc": "2026-10-28T12:35:12.375529+00:00",
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "MEDIUM",
+      "blocking_for_candidate": true,
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/CLAIM_EVIDENCE_MAP.json",
+      "lines": [
+        67,
+        73
+      ],
+      "additional_locations": [
+        {
+          "lines": [
+            130,
+            136
+          ],
+          "claim": "E5"
+        },
+        {
+          "lines": [
+            182,
+            188
+          ],
+          "claim": "E7"
+        },
+        {
+          "lines": [
+            292,
+            298
+          ],
+          "claim": "E10"
+        }
+      ],
+      "title": "Claim map rewrites source-specific ceilings and transfer provenance",
+      "evidence": "E3 is labeled transfer_source=empirical_proxy, but its bound R36-05 RESULT has transfer_source=none and claim_tier=conditional_synthetic_method_experiment; current PUBLICATION_STATUS admits only the frozen synthetic experiment. E5 is recoded C1 although its RESULT/INTERPRETATION are C0_CONDITIONAL_METHOD. E7 is C1/empirical_proxy although its RESULT has C0 conditional response/design and none; first-order kinematic response, and its current PUBLICATION_STATUS explicitly qualifies C0. E10 is empirical_proxy although its RESULT specifies EH98_NO_WIGGLE_APPROXIMATION and CONDITIONAL_MODEL_COVARIANCE. No mapping or new tier decision supports these changes.",
+      "consequence": "The required machine-readable claim/evidence product misclassifies a synthetic result as empirical and drops the actual external analytic transfer approximation. Downstream tier/provenance consumers cannot recover the preserved source ceilings from these fields alone; cautious report prose does not repair their contradictory metadata. This is a report transcription defect, not a failure of the underlying calculations.",
+      "minimal_fix": "Preserve the source-specific claim_tier and transfer_source strings for E3/E5/E7/E10, or use an explicitly conservative existing canonical equivalent while retaining the original source ceiling/provenance. In particular E3 transfer is none, E5/E7 remain C0 conditional, and E10 identifies EH98_NO_WIGGLE_APPROXIMATION. Audit the other existing claim rows for the same template substitution. Update candidate manifest/result identities after the bounded metadata repair; retain all original source files, qualifications, numerical results and historical receipts. No scientific rerun is needed.",
+      "minimal_validation": "Compare every revised claim row with its immutable RESULT plus later scoped PUBLICATION_STATUS; verify the new manifest/output hashes and that scientific source hashes and report numerical content did not change."
+    },
+    {
+      "id": "N1",
+      "severity": "LOW",
+      "blocking_for_candidate": false,
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/REPORT_STAGE0.md",
+      "lines": [
+        27,
+        27
+      ],
+      "title": "Distinguish raw support from the normalized framework support quantity",
+      "evidence": "The report explicitly defines F(W)=sup<x,W>. The imported FOUNDATION_REPORT.md lines 183-203 distinguishes its constructive namespace and defines directional support utilization h_Theta(v)/h_K0(v); LOOP_C_KINEMATICS.md lines 154-156 also separates support and occupancy namespaces. The baseline report inherited the raw-support abbreviation.",
+      "consequence": "The displayed formula is a valid support function, but readers can confuse it with normalized F or legacy occupancy and lose the declared denominator. No displayed numerical result uses this ambiguous notation.",
+      "minimal_fix": "Call the displayed raw support h_C(W), or state that F here is an explicitly unnormalized support quantity distinct from normalized utilization and occupancy; preserve any source reference body/denominator when the normalized quantity is used."
+    },
+    {
+      "id": "N2",
+      "severity": "LOW",
+      "blocking_for_candidate": false,
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/RAW_RECEIPT.json",
+      "lines": [
+        20,
+        22
+      ],
+      "title": "Recorded Markdown-to-TeX command omits font variables",
+      "evidence": "Running the recorded pandoc command externally produced TeX differing only by the three DejaVu font statements. Adding -V mainfont=\"DejaVu Serif\" -V sansfont=\"DejaVu Sans\" -V monofont=\"DejaVu Sans Mono\" reproduced the delivered TeX byte-for-byte. Independent latexmk build of the delivered TeX succeeded and its extracted PDF text matches exactly.",
+      "consequence": "The source is buildable; the recorded generation command alone does not exactly recreate its font configuration.",
+      "minimal_fix": "In the successor receipt record the font variables or the actual documented font-injection step. Preserve the historical raw receipt as evidence."
+    }
+  ],
+  "verdict": "HOLD_TARGETED_REPORT_METADATA_REPAIR",
+  "acceptance_met": false,
+  "minimal_publishable_claim": "The source-bound four-goal/six-paper synthesis is supported at retained finite, synthetic, selected-law and conditional scopes; the required claim map needs F1 correction before qualifying this exact report candidate.",
+  "strengths": [
+    "All displayed scientific numbers retain source agreement.",
+    "Full carriers/covariances and major physical claim ceilings are explicit.",
+    "Independent successful source/PDF rebuild and complete figure lineage."
+  ],
+  "fatal_scientific_blockers": [],
+  "blocking_report_findings": [
+    "F1"
+  ],
+  "major_concerns": [
+    "Claim-map source ceilings and transfer provenance must not be replaced by generic defaults."
+  ],
+  "minor_concerns": [
+    "N1",
+    "N2"
+  ],
+  "novelty_and_scope": "Report production and source reconciliation only; no new theorem, scientific acceptance, native atlas, physical detection or submission decision.",
+  "required_validation": [
+    "Compare every revised claim row with its immutable RESULT plus later scoped PUBLICATION_STATUS; verify the new manifest/output hashes and that scientific source hashes and report numerical content did not change."
+  ],
+  "downclaims_required": [
+    "Restore original source claim tiers/provenance in metadata; no numerical downclaim is needed."
+  ],
+  "stronger_claims_allowed": [],
+  "merge_release_decision": "Not ready to qualify this exact candidate until F1 is closed; no Git/publication authority exercised.",
+  "checks": {
+    "candidate_manifest_identity": "PASS_EXACT",
+    "bound_reference_checks": 61,
+    "bound_reference_mismatches": 0,
+    "final_candidate_and_reference_freshness": "PASS_ALL_UNCHANGED",
+    "legacy_scope": {
+      "count": 109,
+      "unique": 109,
+      "matches_preappend_inventory": true
+    },
+    "numeric_claims": "E1-E12 and A1 displayed numeric values agree with retained evidence at displayed precision; no raw catalogue fitting or scientific producer replay",
+    "figures": "All six PDF assets match their bindings; producer paths/data selectors inspected; SN figure raw coefficients and full covariance equal the retained report RESULT",
+    "tensor_and_law": "Signed STF/42-vector/16-vector carriers and full covariance dependence preserved. E1 GLS equivalence and common-versus-single-family carrier dimensions retained. Framework physical completion is not claimed; raw-support notation note N1 remains.",
+    "current_qualification": "R32-02..09 records read; R36-01/02/03/04/05/07/08/09/10/11 current-use records reconciled with SOURCE_REUSE and UPSTREAM_DELTA. Later scoped admission does not validate a physical upgrade.",
+    "original_acceptance": "17/42 original external-output and 18/42 V03 analytic alternate match retained original ledger semantics; no original42 promotion.",
+    "first48": "All displayed statistics match sealed result/review; iid Gaussian assumed, selection after exposure, exchangeability/selective coverage unestablished, no foreground attribution, no R36-07 or original42 promotion.",
+    "pr4": "PREPARED_PENDING_SOURCE_QUALIFICATION explicitly separated from MC100 scientific qualification and streaming helper lifecycle evidence.",
+    "build": {
+      "pandoc_exit": 0,
+      "tex_bytes_equal": false,
+      "pdf_extracted_text_equal": true,
+      "rebuilt_pdf_sha256": "74625bba18500151180d8ed79da21d082d201a99defad3ab86dfe845583a7567",
+      "candidate_pdf_sha256": "290bce07cb184864388758ffecdedb01ed9b5d043bf2fef45dba5ca5828badd7",
+      "source_unchanged": true,
+      "overfull_hbox_count": 2,
+      "underfull_hbox_count": 1,
+      "latex_undefined": false,
+      "latex_errors": false,
+      "exact_pandoc_command": [
+        "pandoc",
+        "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/REPORT_STAGE0.md",
+        "--from=markdown+tex_math_single_backslash",
+        "--standalone",
+        "-t",
+        "latex",
+        "-V",
+        "mainfont=DejaVu Serif",
+        "-V",
+        "sansfont=DejaVu Sans",
+        "-V",
+        "monofont=DejaVu Sans Mono",
+        "-o",
+        "/mnt/extdrive/workdir/htt_open_data/r37_stage0_review_e68ab79db8725ce2_20261028T122745Z_1d9f1e5a/REPORT_STAGE0.regenerated_with_fonts.tex"
+      ],
+      "tex_bytes_equal_with_font_variables": true,
+      "tex_difference_class": "three font-selection statements only; recorded author pandoc command omitted font variables",
+      "pdf_byte_difference_class": "packaging metadata on fresh build; extracted layout text identical, no exact byte replay required"
+    },
+    "visual_pdf": "All 12 candidate PDF pages independently rendered and contact-sheet inspected; six figures and six-paper table visible; no missing glyph/formula/figure identified. Two overfull boxes and one underfull line are nonblocking.",
+    "primary_citation_metadata": "Four arXiv primary pages opened; titles/authors/journal references match report. Detailed response claims assessed against retained source derivations and qualification, not new CAS proof.",
+    "pdf_render_parity": "All 12 independently rebuilt pages are pixel-identical to the delivered candidate at scale-to 1300; only PDF container metadata differs.",
+    "qualified_source_identity_checks": 13,
+    "qualified_source_identity_mismatches": 0
+  },
+  "repair_plan": {
+    "scope": "One bounded claim-map transcription repair for F1 under unchanged R37-00 contract",
+    "allowed_paths": [
+      "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/CLAIM_EVIDENCE_MAP.json",
+      "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/ARTIFACT_MANIFEST.json",
+      "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-00-FIRST-REPORT/RESULT.json"
+    ],
+    "required_changes": [
+      "Preserve the source-specific claim_tier and transfer_source strings for E3/E5/E7/E10, or use an explicitly conservative existing canonical equivalent while retaining the original source ceiling/provenance. In particular E3 transfer is none, E5/E7 remain C0 conditional, and E10 identifies EH98_NO_WIGGLE_APPROXIMATION. Audit the other existing claim rows for the same template substitution. Update candidate manifest/result identities after the bounded metadata repair; retain all original source files, qualifications, numerical results and historical receipts. No scientific rerun is needed."
+    ],
+    "validation": [
+      "Compare every revised claim row with its immutable RESULT plus later scoped PUBLICATION_STATUS; verify the new manifest/output hashes and that scientific source hashes and report numerical content did not change."
+    ],
+    "prohibited": "No new fit, MC, solver, ODE, tolerance/acceptance change, source-result rewrite, original task promotion or STATE/Git mutation by reviewer",
+    "optional_notes": "N1/N2 are nonblocking. If the author elects to clarify report notation, regenerate only report sources/PDF and refresh their bindings; no new science."
+  },
+  "packet_id": "e68ab79db8725ce2f5b70749e597de0d10d4ffa686105345f6c175803c762d2d",
+  "task_id": "R37-00-FIRST-REPORT",
+  "input_identity": "sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba",
+  "candidate_identity": "sha256:676298caadd2a7c4267f47c188ad54299f9f11da6932e5847bca2b45377f5208",
+  "agent_id": "/root/rc_e68ab79db8725ce2",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "independence": {
+    "candidate_author": false,
+    "candidate_editing": false,
+    "prior_verdict_for_this_candidate_read": false,
+    "children_spawned": false,
+    "repository_writes": false,
+    "STATE_writes": false,
+    "Git_mutations": false
+  },
+  "sources_web": [
+    {
+      "url": "https://arxiv.org/abs/astro-ph/9911481",
+      "scope": "primary bibliographic identity verified"
+    },
+    {
+      "url": "https://arxiv.org/abs/1805.12121",
+      "scope": "primary bibliographic identity verified"
+    },
+    {
+      "url": "https://arxiv.org/abs/0705.4397",
+      "scope": "primary bibliographic identity verified"
+    },
+    {
+      "url": "https://arxiv.org/abs/0712.3457",
+      "scope": "primary bibliographic identity verified"
+    }
+  ]
+}

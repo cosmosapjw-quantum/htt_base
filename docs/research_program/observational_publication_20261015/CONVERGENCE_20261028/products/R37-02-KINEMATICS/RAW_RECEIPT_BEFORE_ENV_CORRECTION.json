@@ -1,0 +1,70 @@
+{
+  "schema": "htt.r37_native_execute_raw_receipt/1",
+  "packet_id": "9535a7db8b3da42d9777de1f7c6713d1041a25085688d762d2522b76dc8bc827",
+  "packet_path": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_NEXT_013_20261029.json",
+  "task_id": "R37-02-KINEMATICS",
+  "attempt": 1,
+  "phase": "execute",
+  "input_identity": "sha256:75b19b84b100ed65977868dc1c4634a2b1f7f56b42c4f0989d7065d61b386d67",
+  "agent_id": "/root/rc_9535a7db8b3da42d",
+  "requested_runtime": {
+    "model": "gpt-6-sol",
+    "reasoning_effort": "high"
+  },
+  "observed_runtime": "UNKNOWN",
+  "timestamp_utc": "2026-10-29T01:14:07.203937+00:00",
+  "cwd": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "base_branch": "research/htt-adaptive-methods-20261023",
+  "base_head": "a08e630e796ce6a398bd9880fa40f6329ad78bdd",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8",
+    "pytest": "9.1.1"
+  },
+  "candidate_identity": "sha256:0ccd0c62ce9d76420258fc96f0bb164931100d7a8a138d293617ee8c85e1e73d",
+  "candidate_path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-02-KINEMATICS/ARTIFACT_MANIFEST.json",
+  "commands": [
+    {
+      "cmd": "OPENBLAS_NUM_THREADS=1 .venv/bin/python docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-02-KINEMATICS/kinematic_image.py",
+      "exit_code": 1,
+      "raw_failure": "FIRST_FAILURE.txt",
+      "classification": "saved dictionary coverage/power key mismatch; consumer-only mapping repaired"
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-02-KINEMATICS/kinematic_image.py",
+      "exit_code": 0,
+      "outcome": "all requested numeric JSON/CSV/PDF products generated"
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m pytest -q -p no:cacheprovider docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-02-KINEMATICS/test_kinematic_image.py",
+      "exit_code": 0,
+      "outcome": "3 passed in 0.96s"
+    },
+    {
+      "cmd": "pdfinfo docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-02-KINEMATICS/optical_joint_compatibility.pdf",
+      "exit_code": 0,
+      "outcome": "one-page Matplotlib vector PDF"
+    }
+  ],
+  "validation_evidence": [
+    "All seven frozen input SHA256 identities match the assignment packet.",
+    "Gaia 24D full versus 12D common-carrier g/g2 profile difference 5.684341886080802e-14; 6D selected-family score loses LR.",
+    "Separate R36 E2/STF5 profile information rank five with five endpoint/history null directions; free E2 nuisance rank zero.",
+    "One 10D synthetic optical event and one shared seven-component budget retain full cross-covariance; S=0 and 1e-8 S controls executed.",
+    "Fixed-Q STF3 sign radius 0.5773502691896256 attained; physical claim gaps and original acceptance retained.",
+    "Focused tests 3 passed in 0.82s; four vector one-page PDF plots generated; physical region panel visually inspected.",
+    "R36 optical source supplies covariance only; 10D Gaussian event is a newly stipulated conditional synthetic law, never source/empirical calibration."
+  ],
+  "source_reruns": 0,
+  "new_draw_generation": false,
+  "solver_runs": 0,
+  "ODE_runs": 0,
+  "STATE_writes": 0,
+  "Git_writes": 0,
+  "children_spawned": 0,
+  "scientific_admission": "PENDING_INDEPENDENT_REVIEW",
+  "original42_acceptance_effect": "none",
+  "repo_write_scope": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-02-KINEMATICS"
+}

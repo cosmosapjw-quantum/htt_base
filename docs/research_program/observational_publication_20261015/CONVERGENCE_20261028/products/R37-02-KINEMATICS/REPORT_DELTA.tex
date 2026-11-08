@@ -1,0 +1,230 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{DejaVu Serif}
+  \setsansfont[]{DejaVu Sans}
+  \setmonofont[]{DejaVu Sans Mono}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\hypertarget{r37-02-kinematic-image-conditional-result-for-p1-p4-and-p6}{%
+\section{R37-02 kinematic image: conditional result for P1, P4 and
+P6}\label{r37-02-kinematic-image-conditional-result-for-p1-p4-and-p6}}
+
+Owner: HTT inference / obsstat feature extraction. Claim tier: C0
+conditional methods. Transfer source: none. The Gaia E1/B1 and R36
+E2/STF5 laws are separate; their covariance is unknown. No native
+solver, observational geometric vorticity, matter shear, or original-42
+admission is inferred. Original acceptance remains 17/42 (analytic
+alternate 18/42). Full signed tensors, matrices and source hashes are in
+\texttt{KINEMATIC\_IMAGE\_RESULT.json}.
+
+\hypertarget{same-input-gaia-e1b1-comparison}{%
+\subsection{Same-input Gaia E1/B1
+comparison}\label{same-input-gaia-e1b1-comparison}}
+
+The saved 24-vector is three reported-redshift-bin E1 polar/B1 axial
+six-vectors followed by six within-bin \(g(z)=z/(1+z)\) slopes. It is a
+755,850-row producer's Gaussian \emph{working summary}, not a new
+catalogue fit or spatial-covariance validation. Profiling the 18
+arbitrary bin intercepts leaves the original six signed slope
+coordinates
+\((6.60158047,\allowbreak{}0.29169945,\allowbreak{}-1.50131566,\allowbreak{}-10.18496521,\allowbreak{}-7.64665391,\allowbreak{}0.48156053)\)
+microarcsec/year and exactly the saved \(6\times6\) covariance. Their
+scalar Mahalanobis power is retained in the JSON. The \(24\to18\)
+bin-centre map loses all six of these slopes under free-bin nuisance; it
+must not be interpreted as zero physical depth slope.
+
+A \emph{different}, explicitly constrained bin family assumes one common
+six-vector intercept and either \(g\) or \(g^2\) depth response. On the
+same saved \(18\times18\) covariance, the signed \(g\) slope is
+\((0.78422940,\allowbreak{}-1.57176426,\allowbreak{}0.56325278,\allowbreak{}21.94228237,\allowbreak{}-10.02218535,\allowbreak{}-6.28569937)\)
+microarcsec/year. The three isolated-bin scalar powers are 48.19295,
+59.98241, 52.96719; those powers alone lose signs and are not an
+independent joint test. The previous saved 100,000-draw matched
+working-law experiment gives joint GLS/tensorized coverage 0.94927 and
+power 0.42130 at the stated Mahalanobis 2.5 injection. Diagonal-bin
+nominal errors give coverage 1.00000 and power 0; the joint-sandwich
+repair gives coverage 0.94976 and power 0.40135. These are Monte Carlo
+diagnostics under the producer's fixed Gaussian law;
+\texttt{COMPRESSION\_COMPARISON.json} retains MCSE, exact trial counts,
+power MCSE and binomial intervals. \texttt{information\_comparison.csv}
+is a compact rate table.
+
+For \(g\) versus \(g^2\), the nuisance-profiled union response has rank
+12. Full-data and 12D-common-carrier profiled deviance differences are
+equal to \(5.7\times10^{-14}\) in this run (both approximately
+\(-67.77514657\)); a six-coordinate score optimized only for \(g\) gives
+zero difference. The discarded-space adequacy difference is therefore
+the full \(-67.77514657\) for this particular comparison. An invertible
+tensor-coordinate change retains the same GLS information. A scalar
+energy test has exactly the same omnibus statistic as joint GLS, while a
+signed predeclared-direction test can be more powerful for its different
+target. Neither the common carrier nor five-factor bookkeeping creates
+information beyond correct joint GLS.
+
+\hypertarget{separate-pm-history-and-nullspace}{%
+\subsection{Separate PM history and
+nullspace}\label{separate-pm-history-and-nullspace}}
+
+R36-03 supplies an independent E2/STF5 first-order selected-design Gram
+law. In the fixed common-distance image let \(q=(B_o-B_s)/T_{ref}\) and
+\(s=\dot B_o\), both in the saved microarcsec/year coefficient units,
+with dimensionless endpoint tensors \(B_o,B_s\) and \(k=2cT_{ref}/D\).
+The five identified rate coefficients are \(u=kq-s\); \(k=0\) is the
+distant fixed-endpoint limit. After spin/glide-six nuisance the five
+information eigenvalues are
+\((2.43693,2.65563,3.17145,3.67145,4.95102)\) in inverse squared rate
+units. For each supplied \(k\in\{0,0.1,1,2,10\}\), the ten-coordinate
+\((q,s)\) inverse fibre is \(\{(q,s):s=kq-u\}\): five unbounded null
+directions \(\delta s=k\delta q\). If separate \(B_o,B_s\) coordinates
+are introduced, their common shift adds five more null directions. A
+free E2 nuisance removes all five identified coefficients.
+
+For a \textbf{stipulated sensitivity}, write the fitted rate vector
+\(a=u+e\) with coefficient-level STF5 Frobenius error \(\|e\|_F\le r\)
+microarcsec/year. This is an assumed body, not a measured physical
+remainder bound. Reusing the primary saved selected-sample
+five-coefficient estimate \(\hat a\), Fisher matrix \(F\), and
+\(\chi^2_5(0.95)=11.070497693516351\), the identified quotient image is
+\(E_{95}(\hat a,F)+B_5(r)\). Its directional interval is
+\(v^T\hat a\pm[\sqrt{11.070497693516351\,v^TF^{-1}v}+r\|v\|]\), and an
+eigenmode halfwidth is \(\sqrt{11.070497693516351/\lambda_i}+r\),
+entirely in microarcsec/year. At \(r=0\) the usual conditional Gaussian
+ellipsoid remains; each unit of assumed rate remainder adds one unit to
+each unit-eigenvector halfwidth.
+\texttt{physical\_\allowbreak{}region\_\allowbreak{}vs\_\allowbreak{}remainder.pdf} plots this support, while
+\texttt{KINEMATIC\_IMAGE\_RESULT.json} retains the centre, basis, widths
+and full unbounded fibre. The original R36 power-80 best/worst radii
+remain 1.60963/2.29431 microarcsec/year under its fixed design. Unknown
+catalogue frame spin and centroid-to-matter/history response preclude
+geometric-vorticity and matter-history claims.
+
+\hypertarget{two-optical-bridge-paragraphs-for-the-current-p6-supplement}{%
+\subsection{Two optical bridge paragraphs for the current P6
+supplement}\label{two-optical-bridge-paragraphs-for-the-current-p6-supplement}}
+
+The qualified R32-05 optical inverse and R36-04 joint response can be
+composed on the retained selected-source mathematical control. In one
+observer rest frame with signature \((-+++)\), outward direction,
+\(H>0\), \(d=-A/(cH)\) and \(S=\sigma/H\), the signed magnitude octupole
+obeys \(O=\kappa L_Sd+R_3\), \(\kappa=5/\ln10\), and
+\(L_Sd=\operatorname{STF}(d\otimes S)\). Here \(d,S\) are dimensionless
+and the 96-direction saved fit provides ten signed
+direct-dipole/octupole coordinates with their complete \(10\times10\)
+covariance. The P6 apparent tensor has \(\|S\|_F=0.03265680189321492\);
+using it as a response coefficient does not establish a common emitting
+congruence. A physical acceleration or shear image additionally needs
+the same-congruence source law, finite-distance and selection bounds,
+and an \(H\) normalization. The seven-component perpendicular residual
+lies in a four-dimensional out-of-response subspace for fixed nonzero
+\(S\); at \(S=0\) all seven directions are perpendicular. It cannot be
+assigned to a kinematic parameter.
+
+For this \emph{newly stipulated} synthetic Gaussian control, a single
+95\% ten-coordinate ellipsoid supplies outer direct and octupole radii
+of the same event. R36 supplied the covariance and deterministic
+response, not a calibrated probability law; the 95\% interpretation
+holds only under this added Gaussian assumption. Profiling the direct
+radius once over \(\mathcal D=\{\|d-d_{obs}\|\le r_d,\|d\|\le0.03\}\)
+and using \(\epsilon=0.08\) gives one STF3 residual budget
+\(B=E_3+e_O+B_z+B_{sel}+|\kappa|\sqrt{3/5}e_S D_{max}=0.00187216048709\)
+mag with \(B_z=B_{sel}=e_S=0\) only for this declared mathematical
+control. The profiled residual is \(9.194\times10^{-5}\) mag, so this
+control is compatible; the earlier R36 unit-budget counterexample
+remains incompatible. Direct uncertainty is not added again to \(B\). At
+fixed nonzero \(S\), the inverse-image ellipsoid is centred at
+\(\widehat d=(\kappa L_S)^+O\); its simple outer radius is
+\(\sqrt{\max(B^2-\|O_\perp\|^2,0)}/s_{\min}(\kappa L_S)\), intersected
+with both direct and physical balls. This radius exceeds the declared
+physical cap in the baseline control, so the control does not tightly
+identify \(d\). The full direct/octupole covariance cross-block has
+Frobenius norm \(1.7820478375\times10^{-12}\) in mixed units, and the
+complete residual covariance is retained. The plotted extra-error axis
+is an assumed sensitivity, not a measured CF4 error. At \(S=0\) the
+inverse is undefined and only \(\|O\|\le B\) plus direct-region
+nonemptiness is tested; the owned consumer distinguishes exact zero by
+maximum absolute entry, so \(10^{-8}S\) and representable \(10^{-200}S\)
+retain the scaled inverse; it explicitly rejects nonrepresentable
+inverse arithmetic. This is a numerical-domain statement, not a physical
+identification.
+
+\hypertarget{fixed-q-exact-sign-radius-supplement}{%
+\subsection{Fixed-Q exact sign-radius
+supplement}\label{fixed-q-exact-sign-radius-supplement}}
+
+For a fixed simple-spectrum STF2 tensor \(Q\), a nonzero chirality
+\(\chi(Q,O)\), and an ambient STF3 Frobenius error ball in \(O\), let
+\(v=C_QO\) and \(M_Q=\|Q\|_F^2I/3+2Q^2/5\). In the oriented eigenframe
+of \(Q\), the exact distance to zero chirality is
+\(\rho_{sign}=\min_i |v_i|/\sqrt{(M_Q)_{ii}}\): the zero set is the
+union of three hyperplanes and orthogonal projection attains each
+distance. Reusing the executed sharp witness
+\(Q=\operatorname{diag}(-1/\sqrt2,0,1/\sqrt2)\) gives
+\(\rho_{sign}=1/\sqrt3=0.5773502691896256\) and an attaining STF3
+perturbation, checked numerically. This fixed-Q result does not cover
+uncertain \(Q\), a fixed-norm \(O\) sphere, or a physical parity
+inference without a qualified source response.
+
+Figures \texttt{optical\_\allowbreak{}joint\_\allowbreak{}compatibility.pdf},
+\texttt{physical\_\allowbreak{}region\_\allowbreak{}vs\_\allowbreak{}remainder.pdf},
+\texttt{GLS\_\allowbreak{}tensor\_\allowbreak{}scalar\_\allowbreak{}comparison.pdf}, and
+\texttt{chirality\_radius.pdf} are vector PDFs. Their
+source/status/allowed-use records are in
+\texttt{ARTIFACT\_MANIFEST.json}; numeric tables are the three CSV files
+and \texttt{nullspaces.json}. The two optical paragraphs here are an
+integration-ready delta; the current P6 paper source itself has not been
+edited by this assigned writer.
+
+\end{document}

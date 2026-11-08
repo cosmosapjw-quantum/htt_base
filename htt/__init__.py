@@ -17,6 +17,12 @@ from pathlib import Path
 _ROOT = Path(__file__).resolve().parent
 _NESTED_HTT = _ROOT / "htt" / "htt"
 
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
+_SRC = _ROOT / "src"
+if _SRC.is_dir() and str(_SRC) not in sys.path:
+    sys.path.insert(0, str(_SRC))
+
 if _NESTED_HTT.is_dir():
     _nested_str = str(_NESTED_HTT)
     if _nested_str not in __path__:

@@ -1,0 +1,559 @@
+{
+  "schema": "htt.r37_final_residual_obligations/1",
+  "task_id": "R37-05-FINAL-REPORT",
+  "status": "FROZEN_CONVERGENCE_RELEASE",
+  "summary": {
+    "total_dag_nodes": 273,
+    "completed_nodes": 208,
+    "residual_held_nodes": 65,
+    "unblocked_executable_remaining": 0
+  },
+  "categories": {
+    "background_in_progress": {
+      "count": 1,
+      "reason": "DESI mock covariance invalidated (2026-08-21) pending external pipeline updates and successor formalism",
+      "tasks": [
+        "PR-151"
+      ]
+    },
+    "dormant_external_needs_native": {
+      "count": 28,
+      "reason": "Requires external native low-ell Bianchi Boltzmann solver and validated 1+3 PSTF transfer atlas",
+      "tasks": [
+        "PR-159",
+        "PR-160",
+        "PR-161",
+        "PR-162",
+        "PR-163",
+        "PR-164",
+        "PR-165",
+        "PR-166",
+        "PR-183",
+        "PR-196",
+        "PR-229",
+        "PR-230",
+        "PR-231",
+        "PR-232",
+        "PR-233",
+        "PR-234",
+        "PR-235",
+        "PR-236",
+        "PR-237",
+        "PR-238",
+        "PR-239",
+        "PR-240",
+        "PR-241",
+        "PR-242",
+        "PR-243",
+        "PR-244",
+        "PR-245",
+        "PR-246"
+      ]
+    },
+    "blocked": {
+      "count": 16,
+      "reason": "Held by frozen upstream CAS/input/specification gates (e.g. PR-190 input/spec hold)",
+      "tasks": [
+        "PR-R36-09-ATLAS-INTAKE",
+        "PR-R36-07-FOREGROUND-BUDGET",
+        "PR-REBOOT-16",
+        "PR-REBOOT-14",
+        "PR-REBOOT-13",
+        "PR-REBOOT-15",
+        "PR-REBOOT-12",
+        "PR-REBOOT-11",
+        "PR-REBOOT-10",
+        "PR-REBOOT-08",
+        "PR-REBOOT-09",
+        "PR-MES-R7-SOURCE-IMAGE",
+        "PR-R9-DEPTH-MATHLIB",
+        "PR-172",
+        "PR-247",
+        "PR-190"
+      ]
+    },
+    "pending_held_upstream": {
+      "count": 20,
+      "reason": "Held upstream by invalid mocks (PR-151) or native Boltzmann solver dependencies",
+      "tasks": [
+        "PR-155",
+        "PR-156",
+        "PR-157",
+        "PR-158",
+        "PR-178",
+        "PR-181",
+        "PR-191",
+        "PR-192",
+        "PR-193",
+        "PR-194",
+        "PR-195",
+        "PR-198",
+        "PR-199",
+        "PR-201",
+        "PR-202",
+        "PR-203",
+        "PR-205",
+        "PR-206",
+        "PR-207",
+        "PR-208"
+      ]
+    }
+  },
+  "obligations": [
+    {
+      "id": "PR-151",
+      "title": "DESI exact-selection mock\uc640 per-mock refit",
+      "category": "background_in_progress",
+      "dependencies": [],
+      "resolution_condition": "Mock covariance update"
+    },
+    {
+      "id": "PR-155",
+      "title": "Cross-survey direction negative controls\uc640 joint covariance",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-156",
+      "title": "Multi-probe response-rank\uc640 held-out local/global/systematics injection",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-157",
+      "title": "Pre-solver independent finding adjudication",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-158",
+      "title": "\uac80\uc99d\ub41c claim\ub9cc \uc0ac\uc6a9\ud558\ub294 methods/negative-audit manuscript rebuild",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-159",
+      "title": "Authenticated native-delivery intake",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-160",
+      "title": "Producer/consumer transport conformance\uc640 closure rejection challenge",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-161",
+      "title": "Atlas convergence, interpolation, versioning\uc640 held-out samples",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-162",
+      "title": "Matched-mask/null/covariance native morphology features",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-163",
+      "title": "Blinded morphology-equivalence challenge",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-164",
+      "title": "HTT set-valued equivalence inference\uc640 mandatory abstention",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-165",
+      "title": "\uc678\ubd80 \ub3c5\ub9bd validation\uacfc family-identification gate \uc2ec\uc0ac",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-166",
+      "title": "Post-native publication adjudication",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-172",
+      "title": "Physics-invariant symmetry-transform metamorphic battery + B-parity MR",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-178",
+      "title": "DESI number-count dipole redshift tomography",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-181",
+      "title": "Systematics-as-hypotheses normalized model competition (FPR calibration)",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-183",
+      "title": "Native-dependent low-ell T/E coherence hypothesis-test interface",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-190",
+      "title": "Comparator endpoint\uc758 full physical attainability\uc640 dynamical sharpness programme",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-191",
+      "title": "Rotating-congruence Gauss object\uc758 canonicalization\uacfc KE obstruction\uc758 maximal-class theorem",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-192",
+      "title": "OMK all-order invariant-manifold recurrence, resonance\uc640 validated non-LRS extension",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-193",
+      "title": "MES full covariant hierarchy \uc7ac\uc720\ub3c4, intrinsic-dipole surface\uc640 non-geodesic branch closure",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-194",
+      "title": "Exact observer-boost / matter-tilt / fingerprint bridge\uc640 order-correct deprojection",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-195",
+      "title": "Finite-volume bulk flow\uc5d0\uc11c homogeneous tilt\ub85c\uc758 stochastic bridge theorem",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-196",
+      "title": "Native/semi-native physical response Jacobian\uacfc robust identifiability-rank theorem",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-198",
+      "title": "Even-L BiPoSH cross-fit, covariance uncertainty\uc640 map-product replication",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-199",
+      "title": "Load-bearing zero-parameter boost residual: paired E2E difference test",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-201",
+      "title": "CF4 structural identified set, pipeline robustness set\uc640 full E2E vector coverage",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-202",
+      "title": "Planck multi-pipeline E2E replication, noise-cluster closure\uc640 low-ell anomaly decomposition",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-203",
+      "title": "DESI DR1 complete official-mock exact-selection causal decomposition",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-205",
+      "title": "Common-model full four-component comparator joint identified region",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-206",
+      "title": "Multi-probe systematics-as-hypotheses\uc640 local/global/geometry discrimination",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-207",
+      "title": "Independent external reproduction, blind hostile challenge\uc640 novelty tribunal",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-208",
+      "title": "Full-program promotion, v11 synthesis report\uc640 publication suite",
+      "category": "pending_held_upstream",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-229",
+      "title": "Native Bianchi Boltzmann solver delivery and authenticity gate",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-230",
+      "title": "FLRW null, Bianchi-I and analytic ray benchmark suite",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-231",
+      "title": "Exact Bianchi family background and constraint atlas",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-232",
+      "title": "Photon geodesic and temperature hierarchy",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-233",
+      "title": "Thomson collision, recombination and reionization physics",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-234",
+      "title": "Temperature-polarization E/B hierarchy and parity oracle",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-235",
+      "title": "Tilted and multi-fluid species dynamics",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-236",
+      "title": "Native observable response Jacobian and numerical error model",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-237",
+      "title": "Native morphology atlas across Bianchi families",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-238",
+      "title": "Native response quotient and family-identifiability lattice",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-239",
+      "title": "Native calibration of Teff and legacy BASS surrogates",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-240",
+      "title": "Common latent cosmology multi-probe forward model",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-241",
+      "title": "Planck temperature/polarization native likelihood and null validation",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-242",
+      "title": "Track-II external solver adjudication and v11-II report",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-243",
+      "title": "Cross-track common-model comparator and source-discrimination synthesis",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-244",
+      "title": "Hostile external replication and red-team challenge",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-245",
+      "title": "Publication suite: methods/data, solver/theory, joint cosmology",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-246",
+      "title": "Final programme synthesis and long-horizon release",
+      "category": "dormant_external_needs_native",
+      "dependencies": [],
+      "resolution_condition": "External Boltzmann solver delivery"
+    },
+    {
+      "id": "PR-247",
+      "title": "R8 full execution: orbit continuation, restricted optics and scoped synthesis",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-MES-R7-SOURCE-IMAGE",
+      "title": "Implement the conditional four-parameter frozen source image",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-R36-07-FOREGROUND-BUDGET",
+      "title": "Calibrate a dimensional complex polarization-moment budget",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-R36-09-ATLAS-INTAKE",
+      "title": "Qualify an existing external numeric polarized atlas in its actual family/mode domain",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-R9-DEPTH-MATHLIB",
+      "title": "Formalize general Lean depth components using installed mathlib",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-REBOOT-08",
+      "title": "Specify physical global-tilt response and external/native alternatives",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-REBOOT-09",
+      "title": "Measure local/global identifiability with real responses",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-REBOOT-10",
+      "title": "Assemble one joint physical likelihood with correct dependence",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-REBOOT-11",
+      "title": "Run posterior, model competition and predictive checks",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-REBOOT-12",
+      "title": "Generate paired tensor/MES/legacy posterior images",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-REBOOT-13",
+      "title": "Intake native morphology atlas and equivalence classes",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-REBOOT-14",
+      "title": "Test Bianchi morphology compatibility and family distinguishability",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-REBOOT-15",
+      "title": "Publish the solver-independent scientific report and plots",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    },
+    {
+      "id": "PR-REBOOT-16",
+      "title": "Add the native-family result to the final report",
+      "category": "blocked",
+      "dependencies": [],
+      "resolution_condition": "Upstream gate unblock"
+    }
+  ]
+}

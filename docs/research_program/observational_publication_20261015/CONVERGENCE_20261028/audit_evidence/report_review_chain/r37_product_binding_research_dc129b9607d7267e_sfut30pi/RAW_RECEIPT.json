@@ -1,0 +1,64 @@
+{
+  "schema": "htt.r37_controller_product_binding_raw_receipt/1",
+  "created_utc": "2026-10-28T13:50:04.433998+00:00",
+  "packet_id": "dc129b9607d7267e948f3c8a72d08146109b7001429a1b9b2f297d686011d585",
+  "task_id": "R37-00-FIRST-REPORT",
+  "agent_id": "/root/rc_dc129b9607d7267e",
+  "phase": "research",
+  "attempt": 6,
+  "input_identity": "sha256:5b0d3648a9282e0e7ba2a043805d3b73dc86104b70e5abbc03baa7635db371ba",
+  "candidate_identity": "sha256:d6d466298749d7ee4c3683305c7315b845aacef0c6b9bbc37085d67c1b6c87ee",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "b1e51d6e2d7d97855a13014087cf34b9f729b0478c12a78c0a7accf96bf12932",
+  "outcome": "success",
+  "report_path": "/mnt/extdrive/workdir/htt_open_data/r37_product_binding_research_dc129b9607d7267e_sfut30pi/RESEARCH.json",
+  "report_sha256": "75d2286a445a2f4598543d54ce89557130519d0e5e67ed3a8b7dc7c5c7886a3e",
+  "transition_proof_path": "/mnt/extdrive/workdir/htt_open_data/r37_product_binding_research_dc129b9607d7267e_sfut30pi/TRANSITION_PROOF.json",
+  "transition_proof_sha256": "9affb2232c974e20a152963885adb13f76af72d0ac0406dfe51f552cbd7517fd",
+  "validation": {
+    "omitted_products_rejects_review_product": "review cannot invent candidate scientific products",
+    "reject_is_atomic": true,
+    "empty_product_success_does_not_satisfy_report_dependency": true,
+    "explicit_product_repair_accepts_unchanged_candidate": true,
+    "explicit_product_fresh_review_satisfies_typed_dependency": true,
+    "same_task_input_spec_candidate_preserved": true,
+    "all_prior_task_history_failures_preserved": true,
+    "all_other_tasks_campaign_frontiers_ultra_acquisition_preserved": true,
+    "reused_author_without_followup_rejected": "fresh native launch required; agent ID already used"
+  },
+  "checked_file_count": 31,
+  "transition_test_scope": "Only in-memory controller transition/product gates tested; unrelated released-acquisition file rehash excluded in fixture and ledger checked unchanged. Not end-to-end host ACK verification. Actual controller unmodified.",
+  "first_probe": "FIRST_PROBE_INTERRUPTION.json; interrupted owned read-only probe while unrelated PR4 map was being hashed; no state or science failure",
+  "state_observation": {
+    "path": "/mnt/extdrive/workdir/htt_open_data/r25_root_space_recovery/LIVE_STATE.json",
+    "before_sha256": "692f1363033e0b98cf21a50f8be7a2bbe84435bf9f4ccb987b61fb5c97ae7ee8",
+    "after_sha256": "692f1363033e0b98cf21a50f8be7a2bbe84435bf9f4ccb987b61fb5c97ae7ee8",
+    "bytes_unchanged_during_probe": true,
+    "research_state_at_start": "planned",
+    "research_state_at_end": "planned",
+    "packet_agent_at_start": null,
+    "packet_agent_at_end": null,
+    "no_state_write_performed_by_research": true
+  },
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "transport_selected": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "scope": "read-only controller diagnosis and in-memory transition tests; external evidence writes only",
+  "actual_execution": {
+    "tool": "functions.exec -> exec_command python3 -B",
+    "controller_state_saved": false,
+    "scientific_runs": 0,
+    "native_dispatches": 0,
+    "git_commands": 0,
+    "repository_writes": 0
+  },
+  "original42_effect": "none",
+  "scientific_admission": "UNCHANGED",
+  "report_qualification": "PENDING_ACTUAL_ENVELOPE_REPAIR_AND_INDEPENDENT_REVIEW"
+}

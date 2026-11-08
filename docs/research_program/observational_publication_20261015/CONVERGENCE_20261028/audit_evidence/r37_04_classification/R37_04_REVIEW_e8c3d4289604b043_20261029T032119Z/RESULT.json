@@ -1,0 +1,72 @@
+{
+  "packet_id": "e8c3d4289604b043c45614479fde9c41d5033c85ab23862b27c549461b76db0b",
+  "task_id": "R37-04-CLASSIFICATION",
+  "input_identity": "sha256:68bbd1814f6d7e761290fcb54632240fd952d4a15f96e929762f8697c0072656",
+  "candidate_identity": "sha256:c1efab3e58510a0aa1dd8a9d286540381bf55993e54d2ddcb0558fbb951e1da3",
+  "frontier_identity": "2b9a365613be381e1a30da8c842a15b9ffb742e9ceb1899364724fc59b293fd3",
+  "task_spec_identity": "a6ced0f72920821bfd119b1394f276a10343282c0acb0c09ed09ce9a78bf6518",
+  "agent_id": "/root/rc_e8c3d4289604b043",
+  "reviewer": "/root/rc_e8c3d4289604b043",
+  "phase": "review",
+  "attempt": 2,
+  "outcome": "blocker",
+  "verdict": "SCOPED_HOLD_TARGETED_REPAIR",
+  "acceptance_met": false,
+  "qualified_products": [],
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_runtime": "UNKNOWN",
+  "issue": {
+    "class": "code",
+    "substantive": true,
+    "high_consequence": false,
+    "input_identity": "sha256:68bbd1814f6d7e761290fcb54632240fd952d4a15f96e929762f8697c0072656",
+    "question": "Does the required adequacy figure preserve the same nuisance-projected residual and rejection threshold as the declared joint law?",
+    "exact_missing_or_defect": "classification.py lines 281-286 and sealed adequacy_residual.pdf plot y=s against an axis labelled Raw trace-only shift s. The projected adequacy is abs(s)/sqrt(2), and the raw-unit witness marker is (1,1/sqrt(2)), not (1/sqrt(2),1/sqrt(2)). At s=0.6 the plot shows rejection although exact_compatibility retains II.",
+    "file": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/classification.py",
+    "line_start": 281,
+    "line_end": 286,
+    "artifact": "/home/cosmosapjw/Dropbox/bianchi/htt_base/docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-04-CLASSIFICATION/adequacy_residual.pdf",
+    "severity": "P2",
+    "risk": "The required scientific plot gives a false rejection threshold on its labelled input axis. Its correct raw-shift threshold is 0.7436154384232991, whereas the sealed plot displays 0.5258155191041224.",
+    "true_external": false
+  },
+  "counterexample": {
+    "x_axis_label": "Raw trace-only shift",
+    "probe_raw_trace_shift": 0.6,
+    "actual_plotted_adequacy": 0.6,
+    "expected_adequacy": 0.42426406871192845,
+    "tube": 0.5258155191041224,
+    "compatible_set": [
+      "II"
+    ],
+    "actual_marker": [
+      0.7071067811865475,
+      0.7071067811865475
+    ],
+    "expected_marker": [
+      1.0,
+      0.7071067811865475
+    ],
+    "pdf_files_written": 0
+  },
+  "repair_plan": "Within the existing R37-04 owned product directory, correct the adequacy curve for a raw trace-coordinate shift s to abs(s)/sqrt(2), with the raw-shift witness marker at (1,1/sqrt(2)). Add a focused regression that checks actual plotted curve/marker coordinates and the s=0.6 compatibility counterexample. Regenerate the affected adequacy PDF, update the script identity in the result and seal a new artifact manifest plus actual repair receipt. Preserve the original candidate/raw receipts, unchanged 135-row numerical result and original42 ceilings. Do not change confidence quantiles, physical inputs, model domains or validators, and do not replay old producers or MC. Return the new candidate for independent targeted closeout.",
+  "validation_evidence": [
+    "All 9 candidate artifact hashes and byte counts, all 6 frozen assignment input hashes, and original execution raw receipt SHA256 74fc4e1dbf8b8b1cedcea64c3d9664655033045d1ba0819ec6bcd61da5841c6c match. Candidate identity remains c1efab3e58510a0aa1dd8a9d286540381bf55993e54d2ddcb0558fbb951e1da3.",
+    "Independent direct Koszul/Riemann contraction of saved structure constants exactly recovers I, II, VII0matched and flatVII0 Ricci matrices; amplitude-squared homogeneity checked at 0, 0.125, 0.5, 1.",
+    "For symmetric-tensor SO(3) orbits the sorted-spectrum Frobenius minimum is attained; independent eigenvalue-permutation minimization gives sqrt(2) at amplitude 1, hence sqrt(2)*a^2 at common fixed a.",
+    "All 135 CSV rows independently checked for tube quantiles, orbit and strong-scalar gaps, margins, three compatible-set columns, and R36 radius applicability/source memberships; zero discrepancies.",
+    "100 random rotation/nuisance trials at 3 tube radii each preserve membership; 300 comparisons, zero discrepancies.",
+    "One common nuisance direction (trace+calibration) projects N(0,sigma^2 I7) to six orthonormal coordinates; sqrt(chi2_6(.95))*sigma+epsilon gives at least 95 percent true-family retention by one joint event and deterministic triangle bound. Fixed-amplitude trace terms cancel from every pairwise family LR; trace adequacy remains available to reject all listed families.",
+    "Source-qualified R36 bounds 0.14710349531620642 and 0.269872692360631 are used only at a=1; rotations preserve their conservative Frobenius bounds, and projection cannot enlarge error. The positive source-plus-noise margin at sigma=.12 is 0.1456063364880129.",
+    "Strong scalar STF-norm comparator has squared norms 2/3 and 14/3 and radial gap 1.3437503185; candidate correctly says it also separates this witness under the displayed budget and does not infer extra information over the common full law.",
+    "Fixed-Q simple-spectrum ambient STF-octupole sign radius and attaining perturbation agree with saved independent evidence and candidate test; this does not cover uncertain Q or a fixed-norm O sphere.",
+    "OPENBLAS_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 python -B -m pytest -p no:cacheprovider -q <product>/test_classification.py: 3 passed, one nonfatal Matplotlib Axes3D warning, exit 0. All 4 PDFs are valid one-page artifacts.",
+    "Actual candidate plot() was called with Figure.savefig intercepted, so no candidate files were written. External plot_falsifier.py fails with exit 1 and preserves stdout/stderr: plotted adequacy 0.6 versus correct 0.42426406871192845, tube 0.5258155191041224, correct compatible set [II]. Rendered sealed PDF visually confirms the same incorrect slope/marker."
+  ],
+  "original42_acceptance_effect": "none",
+  "raw_receipt": "/mnt/extdrive/workdir/htt_open_data/r36_controller/R37_04_REVIEW_e8c3d4289604b043_20261029T032119Z/RAW_RECEIPT.json",
+  "raw_receipt_sha256": "7b0c1e69394befb7c0d6dfde3bd10e4ba4290c589980dfe00634d1f3c128c88a"
+}

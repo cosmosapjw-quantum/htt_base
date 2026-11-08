@@ -1,0 +1,24 @@
+{
+  "schema": "htt.r37_read_only_review_gate_validation/1",
+  "controller_source": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/codex_harness/research_controller.py",
+    "sha256": "8ebfd714959e0cbbebbd2cf43a1ec0afc5cb3fe99d3ca2fe1751f7a6c438dd5e"
+  },
+  "executed_source_lines": {
+    "start": 2590,
+    "end": 2611
+  },
+  "exact_source": "elif phase == \"review\":\n            require(result.get(\"candidate_identity\") == t.get(\"candidate_identity\"), \"stale reviewed candidate\")\n            require(result.get(\"acceptance_met\") is True and result.get(\"validation_evidence\"),\n                    \"review requires unchanged acceptance and validation evidence\")\n            products = result.get(\"qualified_products\", [])\n            require(isinstance(products, list) and all(isinstance(v, str) and v.strip() for v in products),\n                    \"qualified products must be exact product names\")\n            proposed = t.get(\"candidate_products\", [])\n            require(set(products) <= set(proposed), \"review cannot invent candidate scientific products\")\n            t.update(state=\"completed\", qualified_products=products)\n        else:\n            require(result.get(\"candidate_identity\") and result.get(\"validation_evidence\"),\n                    \"implementation/acquisition needs candidate identity and meaningful validation\")\n            targeted = t.get(\"targeted_repairs\", [])\n            if phase == \"repair\" and targeted:\n                require(result[\"candidate_identity\"] != targeted[-1][\"candidate_identity\"],\n                        \"targeted repair must produce a new candidate identity\")\n            products = result.get(\"qualified_products\", [])\n            require(isinstance(products, list) and all(isinstance(v, str) and v.strip() for v in products),\n                    \"qualified products must be exact product names\")\n            t.update(phase=\"review\", state=\"ready\", candidate_identity=result[\"candidate_identity\"],\n                     candidate_products=products)",
+  "scope": "Exact controller success/review branch executed against an in-memory copy of the actually acknowledged task. No persistent record.",
+  "product_subset_gate_passed": true,
+  "in_memory_state": "completed",
+  "in_memory_qualified_products": [
+    "convergence_baseline_report"
+  ],
+  "only_changed_fields": [
+    "state",
+    "qualified_products"
+  ],
+  "history_failures_spec_preserved": true,
+  "live_STATE_written": false
+}

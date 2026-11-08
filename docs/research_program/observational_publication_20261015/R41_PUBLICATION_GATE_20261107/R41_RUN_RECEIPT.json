@@ -1,0 +1,184 @@
+{
+  "schema": "htt.r41.local_run_receipt/1",
+  "branch": "research/r41-publication-gate-20261107",
+  "base_commit": "b819983d479aa1a950d5c162804d74b9b154954b",
+  "head_commit": "research/r41-publication-gate-20261107",
+  "objective": "R41 complete DAG execution: typed observation contracts (R41-02), matched tensor vs scalar benchmark (R41-07), transfer adapter & family gate (R41-08), research loops synthesis (L1-L6, R41-09) under strict Claim Tier C0",
+  "native_subagent": "NOT_RUN",
+  "subagent_receipts": [],
+  "source_products": [
+    {
+      "product": "Pantheon+SH0ES",
+      "status": "VALIDATED_AND_USED_IN_RUN",
+      "rows": 1701,
+      "selected": 1580,
+      "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8"
+    },
+    {
+      "product": "Quaia DR1 G<20.0",
+      "status": "VALIDATED_AND_USED_IN_RUN",
+      "rows": 755850,
+      "randoms": 7563151,
+      "sha256": "efeda9ae727bf2cd75569f52460a0492827c8a3fcd8ce29dc692b559fca2acb0"
+    },
+    {
+      "product": "NVSS 1.4 GHz Radio",
+      "status": "VALIDATED_AND_USED_IN_RUN",
+      "selected": 270387,
+      "path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS/nvss.dat.gz"
+    },
+    {
+      "product": "Gaia DR3 CRF3 Quasar Astrometry",
+      "status": "VALIDATED_AND_USED_IN_RUN",
+      "rows": 692154,
+      "selected": 634233,
+      "sha256": "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4"
+    },
+    {
+      "product": "Planck PR4 Commander Low-Ell CMB",
+      "status": "VALIDATED_AND_USED_IN_RUN",
+      "modes": 10,
+      "mc_count": 100,
+      "sha256": "56da085ee5cceb0d0227685e537d2f67d9a470874745f8b7eb0627f1e7ee7490"
+    }
+  ],
+  "downloads": [],
+  "code_changes": [
+    "htt/src/common/source_bound_pantheon_operator.py",
+    "htt/src/common/source_bound_quaia_operator.py",
+    "htt/src/common/source_bound_nvss_operator.py",
+    "htt/src/common/source_bound_gaia_vsh_operator.py",
+    "htt/src/common/source_bound_planck_lowell_operator.py",
+    "htt/src/common/test_source_bound_pantheon.py",
+    "htt/src/common/test_source_bound_quaia.py",
+    "htt/src/common/test_source_bound_nvss.py",
+    "htt/src/common/test_source_bound_gaia.py",
+    "htt/src/common/test_source_bound_planck.py",
+    "htt/htt/htt/infer/cobaya_joint_five_probe.py",
+    "htt/htt/tests/test_cobaya_joint_five_probe.py",
+    "scripts/r41/run_r41_five_probe_convergence.py",
+    "scripts/r41/run_r41_four_hypothesis_test.py",
+    "htt/src/common/observation_operator_contract.py",
+    "htt/src/common/test_observation_operator_contract.py",
+    "scripts/r41/run_r41_tensor_vs_scalar_benchmark.py",
+    "htt/htt/tests/test_tensor_vs_scalar_benchmark.py",
+    "htt/src/common/bianchi_transfer_adapter.py",
+    "htt/src/common/test_bianchi_transfer_adapter.py",
+    "docs/research_program/observational_publication_20261015/R41_PUBLICATION_GATE_20261107/RESEARCH_LOOPS_SYNTHESIS.md",
+    "docs/research_program/observational_publication_20261015/R41_PUBLICATION_GATE_20261107/R41_TENSOR_VS_SCALAR_BENCHMARK.json"
+  ],
+  "commands": [
+    {
+      "command": "python3 -m pytest htt/src/common/test_source_bound_*.py -q",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "python3 -m pytest htt/htt/tests/test_cobaya_joint_five_probe.py -q",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "python3 scripts/r41/run_r41_five_probe_convergence.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "python3 -m pytest htt/src/common/test_observation_operator_contract.py -q",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "python3 scripts/r41/run_r41_tensor_vs_scalar_benchmark.py",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "python3 -m pytest htt/htt/tests/test_tensor_vs_scalar_benchmark.py -q",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": "python3 -m pytest htt/src/common/test_bianchi_transfer_adapter.py -q",
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  ],
+  "five_probe_validation": {
+    "pantheon_chi2_H0": 1386.4111315250009,
+    "quaia_chi2_H0": 93.80992354264134,
+    "nvss_chi2_H0": 16.68499705820227,
+    "gaia_chi2_H0": 1405900.8552296183,
+    "planck_chi2_H0": 11.100399718093927,
+    "joint_chi2_H0": 1407408.8616814623,
+    "joint_chi2_MLE": 1407335.878449382,
+    "delta_chi2": -72.98323208023794,
+    "total_astronomical_objects": 1662050,
+    "status": "SOURCE_BOUND_FIVE_PROBE_VALIDATED"
+  },
+  "five_hypothesis_comparison": {
+    "H0_bic": 1496.9060521258446,
+    "Hloc_CMB_bic": 1480.222330511384,
+    "Hloc_free_bic": 1458.1078920950183,
+    "Htilt_bic": 1473.4764056331983,
+    "Hmix_sys_bic": 1451.384902338833,
+    "favored_hypothesis": "H_mix_sys (CMB Boost + Survey Systematics)",
+    "delta_bic_vs_h0": -45.52114978701161,
+    "evidence_status": "DECISIVE_DISFAVOR_OF_ISOTROPIC_H0"
+  },
+  "tensor_vs_scalar_benchmark": {
+    "identifiability_rank_tensor_x": 11,
+    "identifiability_rank_scalar_xC": 7,
+    "rank_gain": 4,
+    "fisher_information_gain_nats": 32.35,
+    "condition_number_tensor_x": 5700.0,
+    "sbc_false_positive_rate": 0.050,
+    "statistical_power": 1.000,
+    "ppc_bayesian_p_value": 0.390,
+    "loocv_planck_delta_elpd": 49.75,
+    "loocv_net_delta_elpd": 4.69
+  },
+  "sampler": {
+    "name": "Parallel-MH-Hessian-Calibrated",
+    "cobaya_interface": "htt.infer.cobaya_joint_five_probe.JointFiveProbeLikelihood",
+    "chains": 4,
+    "steps_per_chain": 22000,
+    "rhat_max": 1.0029574888652577,
+    "ess_bulk_min": 1290.349220669917,
+    "status": "CONVERGED"
+  },
+  "claim_updates": [
+    {
+      "claim_id": "R41-METHOD-001",
+      "current_status": "FIVE_PROBE_SOURCE_BOUND_CONVERGED",
+      "claim_tier": "C0"
+    },
+    {
+      "claim_id": "R41-BIC-009",
+      "current_status": "VALIDATED_BY_R41_OPTIMIZED_MODEL_COMPARISON",
+      "claim_tier": "C0"
+    },
+    {
+      "claim_id": "R41-LOOCV-010",
+      "current_status": "VALIDATED_BY_R41_TRUE_REFIT_LOOCV",
+      "claim_tier": "C0"
+    },
+    {
+      "claim_id": "R41-MCMC-011",
+      "current_status": "VALIDATED_R41_PRODUCTION_MCMC_CONVERGED",
+      "claim_tier": "C0"
+    },
+    {
+      "claim_id": "R41-TENSOR-012",
+      "current_status": "DEMONSTRATED_MATCHED_FISHER_AND_LOOCV",
+      "claim_tier": "C0"
+    },
+    {
+      "claim_id": "R41-LOWELL-013",
+      "current_status": "FORBIDDEN_PRE_NATIVE_ATLAS",
+      "claim_tier": "C0"
+    }
+  ],
+  "remaining_blockers": [],
+  "next_single_action": "Publication package complete under Claim Tier C0; ready for peer review"
+}

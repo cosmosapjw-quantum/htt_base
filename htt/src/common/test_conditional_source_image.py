@@ -13,6 +13,8 @@ from obsstat.mes_r7_source_image import load_frozen, conditional_report, write_r
 
 @pytest.fixture(scope='module')
 def source():
+    if 'MES_R7_SOURCE' not in os.environ:
+        pytest.skip("MES_R7_SOURCE environment variable not set")
     return Path(os.environ['MES_R7_SOURCE'])
 
 
