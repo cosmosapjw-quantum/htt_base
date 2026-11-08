@@ -1,0 +1,175 @@
+{
+  "schema": "htt.r43_identifiability_mock_summary/1",
+  "seed": 20261109,
+  "experiment_class": "SYNTHETIC_LINEAR_GAUSSIAN_ONLY_NOT_OBSERVATIONAL",
+  "model_comparison_scope": "tensorized posterior-pushforward (x,Q,Pi,F,G_F) as a derived readout versus competing physical generative models and inference/readout methods; scalar x_C only a secondary ablation",
+  "design": {
+    "n_physical_parameters": 17,
+    "n_nuisance_parameters": 14,
+    "redshift_shells": [
+      0.02,
+      0.05,
+      0.1,
+      0.2,
+      0.35
+    ],
+    "anchors": [
+      "independent synthetic beta_MO vector proxy",
+      "independent synthetic frame-spin vector proxy"
+    ],
+    "noise": "AR(1) correlated covariance within shell channels",
+    "response_functions": "synthetic design functions only"
+  },
+  "theorem_checks": {
+    "unanchored_data_only": {
+      "rank": 11,
+      "nullity": 6
+    },
+    "anchored_data_only": {
+      "rank": 17,
+      "nullity": 0
+    },
+    "unanchored_without_redshift_tomography": {
+      "rank": 8,
+      "nullity": 9
+    },
+    "expected_null_fibres": {
+      "beta_MO_minus_intrinsic_dipole": 3,
+      "omega_minus_frame_spin": 3
+    },
+    "functional_identifiability": {
+      "beta_RM_with_varying_redshift_response": true,
+      "beta_RM_without_redshift_tomography": false,
+      "STF_shear": true,
+      "beta_MO_without_independent_anchor": false,
+      "omega_without_frame_anchor": false
+    }
+  },
+  "directional_hubble_geometry": {
+    "law": "H(e)/Hstar = (Theta/Hstar)/3 - e.A/(c Hstar) + e_i e_j sigma_ij/Hstar",
+    "basis": "orthonormal STF5",
+    "full_sky": {
+      "directions": 256,
+      "rank": 9,
+      "condition_number": 1.7323473101006148
+    },
+    "hemisphere": {
+      "directions": 128,
+      "rank": 9,
+      "condition_number": 18.280259149072897
+    },
+    "normalized_dipole_quadrupole_gram_cross_block_max": 0.0002666359038495208,
+    "vorticity_direct_contraction": "e^a e^b omega_ab = 0 at direct leading contraction only"
+  },
+  "readout_information": {
+    "raw_fisher_rank": 17,
+    "scalar_beta_MO_norm_projection_rank": 1,
+    "trace_fraction_retained": 0.017578561215539946,
+    "minimum_eigenvalue_raw_minus_compressed": 0.5785429964357083,
+    "gaussian_posterior_score_reconstruction_relative_residual": 1.5728966035351214e-15,
+    "interpretation": "I_T <= I_Y for every deterministic readout; equality requires raw score measurable from T. Full (m,V) recovers score only in the fixed Gaussian family."
+  },
+  "Pi_mock_null_calibration": {
+    "local_beta_MO": {
+      "null_calibration_draws": 1000,
+      "null_evaluation_draws": 2000,
+      "fpr": 0.0415,
+      "power": 0.905,
+      "pi_observed_mock": 0.001999000499750125,
+      "fpr_binomial_mcse": 0.004459694496263169,
+      "power_binomial_mcse": 0.009272270487857868
+    },
+    "global_beta_RM": {
+      "null_calibration_draws": 1000,
+      "null_evaluation_draws": 2000,
+      "fpr": 0.0545,
+      "power": 0.157,
+      "pi_observed_mock": 0.11394302848575712,
+      "fpr_binomial_mcse": 0.005075911248239078,
+      "power_binomial_mcse": 0.01150439046625244
+    },
+    "shear_STF5": {
+      "null_calibration_draws": 1000,
+      "null_evaluation_draws": 2000,
+      "fpr": 0.0565,
+      "power": 0.108,
+      "pi_observed_mock": 0.10744627686156921,
+      "fpr_binomial_mcse": 0.005162739098579358,
+      "power_binomial_mcse": 0.009815090422405696
+    }
+  },
+  "simulation_based_calibration": {
+    "prior_predictive_replications": 1000,
+    "mean_95pct_coverage_over_17_coordinates": 0.9483529411764706,
+    "min_coverage": 0.94,
+    "max_coverage": 0.959,
+    "aggregate_pit_ks_pvalue_descriptive_only": 0.5122482346369118,
+    "scope": "exact linear-Gaussian mock only; coordinate ranks are dependent within each mock"
+  },
+  "model_comparison_one_seed": {
+    "holdout": "last redshift shell conditional predictive log density; common Gaussian nuisance priors integrated",
+    "models": {
+      "M0_isotropic_plus_nuisance": {
+        "log_marginal_likelihood": 522.5046969408331,
+        "heldout_log_predictive_density": 96.51463309901332,
+        "physical_parameters": 0
+      },
+      "M1_local_observer_boost": {
+        "log_marginal_likelihood": 524.5235229685954,
+        "heldout_log_predictive_density": 96.28456869900396,
+        "physical_parameters": 3
+      },
+      "M2_two_fluid_tilt_plus_boost": {
+        "log_marginal_likelihood": 526.0220113845812,
+        "heldout_log_predictive_density": 97.03363840870843,
+        "physical_parameters": 6
+      },
+      "M3_shear_tensor_proxy_not_Bianchi_transfer": {
+        "log_marginal_likelihood": 524.61697406745,
+        "heldout_log_predictive_density": 96.78408269436738,
+        "physical_parameters": 8
+      },
+      "M4_full_17D_kinematic_model": {
+        "log_marginal_likelihood": 525.081798502218,
+        "heldout_log_predictive_density": 98.06386500354976,
+        "physical_parameters": 17
+      }
+    },
+    "warning": "single seeded mock realization; conditional on declared priors/design/truth; M3 is not a physical Bianchi solution"
+  },
+  "directional_support_F": {
+    "directions": 512,
+    "rotation_equivariance_max_abs_error": 4.336808689942018e-19,
+    "spectral_upper_bound_gap_at_64": 0.00001716019781853456,
+    "spectral_upper_bound_gap_at_2048": 2.705077879810655e-7,
+    "anchor": "declared synthetic Gaussian 95%-ellipsoid, not empirical physical bound"
+  },
+  "depth_path_GF": {
+    "shells": 5,
+    "data_covariance_trace": 0.00000390734375,
+    "posterior_covariance_trace": 0.0000059856768694716745,
+    "depth_values": [
+      0.4114644996060645,
+      0.1652450934396666,
+      0.05494363905409474,
+      0.040105791270971955,
+      0.03318537697268339
+    ],
+    "definition": "D_s = 1/(1 + delta^T (C_data + H V H^T)^-1 delta)",
+    "warning": "synthetic in-sample inverse-covariance surrogate, not empirical halfspace depth or physical growth law"
+  },
+  "validation": {
+    "pytest": "9 passed",
+    "compileall": "passed",
+    "same_seed_byte_identical": true,
+    "json_yaml_parse": "passed",
+    "environment": "Python 3.13.5, NumPy 2.3.5, SciPy 1.17.0, pytest 9.0.2"
+  },
+  "limitations": [
+    "No observational catalogues, masks, source selection functions, survey/instrument transfer functions, or physical Bianchi radiative-transfer kernels.",
+    "No Cobaya sampler was run by this R43 experiment.",
+    "Structural identifiability does not imply detection power or practical constraints.",
+    "Posterior push-forward is prior/model conditional and cannot be treated as five independent likelihood factors.",
+    "The R42 runner did not pass matched-null or shell-data covariance inputs to its state builder; its receipt reports has_data_covariance=false and ESS=53 with ess_passed=false."
+  ]
+}
