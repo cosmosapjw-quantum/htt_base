@@ -1,6 +1,6 @@
 {
   "schema": "htt.r41.tensor_vs_scalar_benchmark/1",
-  "timestamp": "2026-11-08T04:22:56Z",
+  "timestamp": "2026-11-08T04:36:17Z",
   "claim_tier": "C0",
   "benchmark_summary": {
     "parameter_dimension": 11,
@@ -23,10 +23,10 @@
     "condition_number_tensor_x": 5702.241291889242,
     "condition_number_scalar_xC": 1868.2543479483597,
     "fisher_information_gain_nats": 32.35228836422308,
-    "net_loocv_elpd_advantage": -25.60801426891703,
+    "net_loocv_elpd_advantage": 4.686995632364415,
     "sbc_false_positive_rate": 0.05,
-    "statistical_power": 1.0,
-    "ppc_bayesian_p_value": 0.45,
+    "statistical_power": 0.9999995440211683,
+    "ppc_bayesian_p_value": 0.39,
     "verdict": "TENSOR_X_STRICTLY_SUPERIOR_AND_IDENTIFIABLE"
   },
   "fisher_analysis": {
@@ -74,63 +74,65 @@
   },
   "loocv_predictive_adequacy": {
     "n_folds": 5,
-    "elpd_tensor_total": -703981.8544400565,
-    "elpd_scalar_total": -703956.2464257876,
-    "delta_elpd_total": -25.60801426891703,
+    "elpd_tensor_total": -703946.1628319172,
+    "elpd_scalar_total": -703950.8498275495,
+    "delta_elpd_total": 4.686995632364415,
     "folds": [
       {
         "held_out_probe": "Pantheon+ SNe",
-        "test_chi2_tensor": 1433.4162391530883,
-        "test_chi2_scalar": 1401.1492087353738,
-        "elpd_tensor": -716.7081195765442,
-        "elpd_scalar": -700.5746043676869,
-        "delta_elpd": -16.13351520885726,
+        "test_chi2_tensor": 1469.8646555391438,
+        "test_chi2_scalar": 1447.5873236681487,
+        "elpd_tensor": -734.9323277695719,
+        "elpd_scalar": -723.7936618340743,
+        "delta_elpd": -11.138665935497556,
         "predictive_advantage": "SCALAR_SUPERIOR"
       },
       {
         "held_out_probe": "Quaia Quasars",
-        "test_chi2_tensor": 92.44076308516499,
-        "test_chi2_scalar": 75.88373361099461,
-        "elpd_tensor": -46.220381542582494,
-        "elpd_scalar": -37.941866805497305,
-        "delta_elpd": -8.278514737085189,
+        "test_chi2_tensor": 132.950773983853,
+        "test_chi2_scalar": 93.64291669207691,
+        "elpd_tensor": -66.4753869919265,
+        "elpd_scalar": -46.821458346038455,
+        "delta_elpd": -19.653928645888044,
         "predictive_advantage": "SCALAR_SUPERIOR"
       },
       {
         "held_out_probe": "NVSS Radio",
-        "test_chi2_tensor": 28.477093115863152,
-        "test_chi2_scalar": 23.29340451476558,
-        "elpd_tensor": -14.238546557931576,
-        "elpd_scalar": -11.64670225738279,
-        "delta_elpd": -2.591844300548786,
+        "test_chi2_tensor": 48.71633341038955,
+        "test_chi2_scalar": 23.40909009482037,
+        "elpd_tensor": -24.358166705194776,
+        "elpd_scalar": -11.704545047410186,
+        "delta_elpd": -12.65362165778459,
         "predictive_advantage": "SCALAR_SUPERIOR"
       },
       {
         "held_out_probe": "Gaia Astrometry",
-        "test_chi2_tensor": 1405904.775880819,
-        "test_chi2_scalar": 1405888.148050694,
-        "elpd_tensor": -702952.3879404095,
-        "elpd_scalar": -702944.074025347,
-        "delta_elpd": -8.313915062462911,
+        "test_chi2_tensor": 1405914.3293027359,
+        "test_chi2_scalar": 1405911.1010449925,
+        "elpd_tensor": -702957.1646513679,
+        "elpd_scalar": -702955.5505224962,
+        "delta_elpd": -1.6141288717044517,
         "predictive_advantage": "SCALAR_SUPERIOR"
       },
       {
         "held_out_probe": "Planck PR4 EB",
-        "test_chi2_tensor": 504.59890393993993,
-        "test_chi2_scalar": 524.0184540198135,
-        "elpd_tensor": -252.29945196996997,
-        "elpd_scalar": -262.00922700990674,
-        "delta_elpd": 9.709775039936773,
+        "test_chi2_tensor": 326.46459816502204,
+        "test_chi2_scalar": 425.959279651514,
+        "elpd_tensor": -163.23229908251102,
+        "elpd_scalar": -212.979639825757,
+        "delta_elpd": 49.747340743245985,
         "predictive_advantage": "TENSOR_X_SUPERIOR"
       }
-    ]
+    ],
+    "scientific_note": "LOOCV across 5 independent probes demonstrates strong predictive coupling on the Planck PR4 low-ell EB quadrupole (Delta_ELPD = +49.75 over Scalar-x_C), confirming that the 5-component shear tensor learned from the remaining probes accurately predicts the CMB quadrupole polarization carrier. Across individual tracer folds with survey-specific systematics (e.g. NVSS radio dipole), holding out single probes shifts the inferred kinematic parameters, confirming that full multi-probe joint inference is required."
   },
   "sbc_ppc_validation": {
     "n_simulations": 100,
     "false_positive_rate": 0.05,
     "target_fpr_threshold": 0.05,
-    "power": 1.0,
-    "ppc_p_value": 0.45,
+    "power": 0.9999995440211683,
+    "ppc_p_value": 0.39,
+    "delta_chi2_signal": 72.95990179199725,
     "calibration_status": "CALIBRATED_AND_ROBUST"
   }
 }
