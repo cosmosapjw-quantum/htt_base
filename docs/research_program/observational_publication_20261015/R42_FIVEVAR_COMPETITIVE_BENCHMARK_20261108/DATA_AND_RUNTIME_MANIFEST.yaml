@@ -1,0 +1,150 @@
+schema: htt.r42_data_runtime_manifest/1
+as_of: 2026-11-08
+authority: "Official release portal/paper; local paths and hashes must be freshly validated from bytes by local agent."
+policy:
+  staged_download: true
+  inspect_existing_candidates_before_download: true
+  raw_data_in_git: false
+  preserve_original_archives: true
+  derived_products_record_parent_source_ids: true
+  source_hash_rule: "Compute SHA256 locally from downloaded bytes; never copy hashes from previous inventory as proof."
+  covariance_order_rule: "Record exact row IDs/order and covariance row/column mapping."
+  no_overwrite: "Never silently replace a previously source-locked dataset; new release gets a new immutable source_id."
+datasets:
+  planck_pr4_npipe:
+    priority: P0
+    role: "observed CMB T/Q/U maps and transfer/mask/noise controls"
+    official_portal: "https://pla.esac.esa.int/pla/"
+    npipe_portal: "https://data.cmb-s4.org/planck_pr4.html"
+    required:
+      - "frequency maps T,Q,U for predeclared channels and splits"
+      - "half-ring/half-mission/detector-set splits as available"
+      - "temperature and polarization masks, apodization and point-source masks"
+      - "effective beams, pixel windows, bandpasses, calibration and monopole/dipole documentation"
+      - "matched end-to-end FFP/noise simulations"
+      - "component-separation products (Commander/SMICA/SEVEM) as robustness views, not independent skies"
+    analysis_note: "Use observed maps as data. MCs calibrate estimator response/covariance/null only. A 10-vector EB template is not a map-level anisotropic likelihood. Include polarization transfer and foreground leakage; do not force B_lm=0."
+  pantheon_plus:
+    priority: P0
+    role: "full SN distance-redshift and sky-direction data"
+    official_release: "https://github.com/PantheonPlusSH0ES/DataRelease"
+    required:
+      - "full release table and exact 1701-row covariance matching it"
+      - "STAT+SYS covariance and covariance order"
+      - "calibrator flags, redshift frames, peculiar-velocity corrections, selection and survey identifiers"
+    note: "Do not silently substitute selected 490/1580 caches for full raw release. Re-evaluate covariance slicing by stable row IDs."
+  quaia_dr1:
+    priority: P0
+    role: "quasar count dipole, redshift/flux/color/depth tomography, optional size observables"
+    official_release: "https://irsa.ipac.caltech.edu/data/Quaia/overview.html"
+    doi: "https://doi.org/10.26131/IRSA640"
+    required:
+      - "full catalogue and all quality/selection columns"
+      - "random catalogues or angular completeness/selection maps"
+      - "redshift, flux/magnitude, color, quality and morphology/size columns if present"
+      - "reconstruct every predeclared magnitude cut from the same parent release"
+    note: "Do not infer G<20.5 dipole from G<20.0 by a fixed scale factor."
+  nvss:
+    priority: P0
+    role: "1.4 GHz radio counts and flux tomography"
+    official_catalogue: "https://www.cv.nrao.edu/nvss/NVSSlist.shtml"
+    official_download: "https://www.cv.nrao.edu/nvss/anonftp.shtml"
+    required:
+      - "original catalogue with flux, position, quality/blend flags"
+      - "coverage, declination and Galactic mask, completeness and map controls"
+      - "flux-threshold and spectral-subset response"
+    note: "NVSS footprint is not full sky; model north/south/declination response and multi-component source effects."
+  racs_low_dr1:
+    priority: P0
+    role: "independent low-frequency radio tracer and frequency/spectral-index cross-check"
+    official_catalogue: "https://www2.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/racs/"
+    archive: "https://data.csiro.au/"
+    required:
+      - "RACS-low DR1 common-resolution mosaicked source catalogue"
+      - "tile footprints, local rms/noise, completeness and source flags"
+      - "per-tile products only if required to calibrate mosaic selection"
+    note: "887.5 MHz RACS-low vs 1.4 GHz NVSS requires spectral-index/flux-selection modeling. Never use a hardcoded dipole amplitude/direction."
+  gaia_dr3_crf3:
+    priority: P0
+    role: "source-level astrometry and VSH with frame/systematic nuisance"
+    official_archive: "https://gea.esac.esa.int/archive/"
+    documentation: "https://gea.esac.esa.int/archive/documentation/GDR3/"
+    required:
+      - "source_id, ra, dec, pmra, pmdec, full 2x2 proper-motion covariance/correlations"
+      - "astrometric solution and quality flags, magnitude/color, visibility periods"
+      - "crossmatch IDs, scan-law/systematic templates and CRF3 auxiliary tables"
+      - "redshift/morphology where cross-matched"
+    note: "Do not treat the precomputed VSH coefficients or diagonal errors as a source-level likelihood. B1 frame spin and physical vorticity need external frame anchoring."
+  cosmicflows4:
+    priority: P0
+    role: "local Hubble flow, velocity/distance, local structure nuisance"
+    official_catalogue: "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJ/944/94"
+    mirror: "https://vizier.cfa.harvard.edu/viz-bin/VizieR?-source=J/ApJ/944/94"
+    required:
+      - "individual galaxy distance rows, group catalogue, calibrator and method metadata"
+      - "distance/velocity error and covariance provenance"
+      - "flow model, sky selection and group membership"
+    note: "Do not use deterministic stride thinning or diagonal errors as production inference."
+  des_sn5yr:
+    priority: P1
+    role: "independent supernova replication; not naively concatenated with Pantheon+"
+    official_release: "https://github.com/des-science/DES-SN5YR"
+    required:
+      - "Dovekie tables, full covariance and calibration/selection metadata"
+      - "survey footprint and public simulations/mocks"
+    note: "Use as external replication or a separate likelihood stratum; investigate overlap/shared calibration."
+  sdss_spectroscopic_velocity_dipole:
+    priority: P1
+    role: "spectroscopic redshift dipole as complementary observer-velocity observable"
+    official_portal: "https://www.sdss.org/"
+    required:
+      - "spectroscopic redshifts, sky positions, magnitude/size selection, completeness and randoms"
+    note: "Use a named release and exact data model; redshift-selected samples require redshift-boost selection terms."
+  desi_dr2:
+    priority: P1
+    role: "background expansion and, if raw angular data are available, directional BAO/LSS"
+    official_portal: "https://data.desi.lbl.gov/"
+    required:
+      - "public DR2 BAO vector/covariance for isotropic background checks"
+      - "raw clustering catalogues, randoms, angular/redshift windows and covariance for directional claims"
+    note: "Compressed isotropic BAO cannot on its own identify a preferred axis."
+  local_structure_reconstruction:
+    priority: P1
+    role: "local density/tidal-flow confounder"
+    sources:
+      - "https://www.sdss.org/"
+      - "https://vizier.cfa.harvard.edu/"
+    required:
+      - "2M++/2MRS or named public density/velocity reconstruction with selection and reconstruction covariance"
+    note: "Declare exact release and avoid treating a reconstructed flow map as independent from catalogues used to build it."
+derived_products:
+  mandatory:
+    - "source_lock_manifest.json"
+    - "raw_row_identity_manifest.json"
+    - "selection_window_manifest.yaml"
+    - "covariance_manifest.json"
+    - "map_transfer_manifest.yaml"
+    - "cross_probe_overlap_report.json"
+    - "derived_data_lineage.json"
+  staged_order:
+    - "P0: Planck/Quaia/NVSS/RACS/Gaia/Pantheon+/CF4 candidate validation"
+    - "P1: independent DES-SN5YR, SDSS redshift, DESI and local-density controls"
+    - "P2: optional future survey products only after core likelihood passes"
+runtime:
+  sampler:
+    primary: "Cobaya"
+    posterior: "Cobaya MCMC or another supported sampler with saved config/chain/logs"
+    evidence: "separately execute a supported converged nested sampler with proper normalized priors"
+    diagnostics:
+      - "rank-normalized split-Rhat"
+      - "bulk and tail ESS"
+      - "trace/rank plots"
+      - "autocorrelation and acceptance"
+      - "multimodal/mode occupancy checks"
+      - "prior and proposal sensitivity"
+    minimum_rule: "Never label a sampler CONVERGED from a custom lag cutoff or acceptance rate alone."
+  resource_policy:
+    - "run preflight and one-probe pilot before full joint sampling"
+    - "profile memory/time from actual data sizes"
+    - "use chunked or sufficient-statistic implementations only after numerical equivalence validation"
+    - "checkpoint chains and persist exact resume metadata"
