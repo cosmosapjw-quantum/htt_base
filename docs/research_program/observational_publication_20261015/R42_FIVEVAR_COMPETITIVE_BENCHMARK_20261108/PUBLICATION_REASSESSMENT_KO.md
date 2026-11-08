@@ -27,19 +27,19 @@ R39 `htt/src/common/htt_five_variable_state.py`와 `full_observable_x_bundle.py`
 
 | 요소 | 의미 | 필요한 과학적 보증 |
 |---|---|---|
-| (x) | 직접·정규화·혼합된 kinematical functionals와 관측 carrier를 담는 sample-wise/set-valued tensor bundle. (sigma_{ab},omega_a,A_a,eta_{RM},eta_{MO}), (a_{ell m}^{T,E,B}), STF multipoles, VSH, count/distance multipoles 등의 typed observable space | 각 functional의 rank, parity, (SO(3)/O(3)) representation, units, frame, source/window/transfer, covariance와 estimator lineage |
+| (x) | 직접·정규화·혼합된 kinematical functionals와 관측 carrier를 담는 sample-wise/set-valued tensor bundle. (sigma_{ab},omega_a,A_a,beta_RM,beta_MO), (a_{ell m}^{T,E,B}), STF multipoles, VSH, count/distance multipoles 등의 typed observable space | 각 functional의 rank, parity, (SO(3)/O(3)) representation, units, frame, source/window/transfer, covariance와 estimator lineage |
 | (Q) | anchor, gauge, margin, availability를 표현하는 물리적 anchor/uncertainty bodies | bound와 gauge margin은 CAS/정리/관측 calibration/명시적 prior 중 출처가 있어야 함. 미확인 anchor는 UNAVAILABLE로 보존 |
 | (Pi) | posterior 또는 matched null law에 조건부인 exceedance/tail surface | null은 관측별 noise, mask, selection, covariance, foreground 및 nuisance를 반영한 matched ensemble이어야 함 |
 | (F) | 물리적 uncertainty/compatibility image의 directional support (h_I(u)), anchor support (h_A(u)), occupancy (F(u)) | 방향 구면 quadrature의 균일성·수렴성, anchor의 의미, 분모 0 처리, 표본/credible-set 정의 |
 | (G_F) | redshift/distance shell별 tensor-functional path와 full cross-shell covariance/depth contrast | 물리적으로 유도되거나 data-calibrated된 transport/kernel, 실제 shell selection, 전체 cross-shell covariance |
 
-다섯 요소는 (mathfrak T=mathcal{T}_{#}pi(	heta,psi,etamid d,mathcal M))와 같은 공통 추론 결과의 push-forward/readout로 정의한다. 여기서 (	heta_K)는 17차원 kinematic state chart이고, (mathfrak T)는 서로 다른 다섯 출력 기능이다. 두 종류의 “five variables”를 혼동하지 않는다.
+다섯 요소는 (T = pushforward[posterior(theta_K, psi, eta | d, model_M)])와 같은 공통 추론 결과의 push-forward/readout로 정의한다. 여기서 (theta_K)는 17차원 kinematic state chart이고, (mathfrak T)는 서로 다른 다섯 출력 기능이다. 두 종류의 “five variables”를 혼동하지 않는다.
 
 ## 3. 최신 코드에서 확인한 실질적 결함: 프레임워크 전체의 반증과 구분
 
 ### 3.1 (x): 관측 carrier 생성 경로
 
-`full_observable_x_bundle.py`에는 count dipole의 (3.75,3.40), Gaia VSH response의 (0.92,0.18), CMB quadrupole의 고정 (	au) 계수 및 (sigma/H) scale, (B)-mode zero prediction 등 출처·적분·선택함수로부터 유도되지 않은 수치가 있다. 이들은 생산 likelihood의 물리적 forward response로 사용하면 안 된다. 각각 source-specific observation operator에서 유도·계산하거나 `UNAVAILABLE/TRANSFER_CONDITIONAL`로 유지해야 한다. 고정 숫자 사용의 발견은 tensorized state 전체가 잘못됐다는 반증이 아니라 현재 해당 carrier adapter가 물리적으로 닫히지 않았다는 구현/이론 연결 결함이다.
+`full_observable_x_bundle.py`에는 count dipole의 (3.75,3.40), Gaia VSH response의 (0.92,0.18), CMB quadrupole의 고정 (tau) 계수 및 (sigma/H) scale, (B)-mode zero prediction 등 출처·적분·선택함수로부터 유도되지 않은 수치가 있다. 이들은 생산 likelihood의 물리적 forward response로 사용하면 안 된다. 각각 source-specific observation operator에서 유도·계산하거나 `UNAVAILABLE/TRANSFER_CONDITIONAL`로 유지해야 한다. 고정 숫자 사용의 발견은 tensorized state 전체가 잘못됐다는 반증이 아니라 현재 해당 carrier adapter가 물리적으로 닫히지 않았다는 구현/이론 연결 결함이다.
 
 ### 3.2 (Q): anchor/gauge
 
@@ -51,7 +51,7 @@ R39 `htt/src/common/htt_five_variable_state.py`와 `full_observable_x_bundle.py`
 
 ### 3.4 (F): directional support
 
-현재 50개 방향은 (phi,	heta)를 같은 길이로 단순 대응해 생성하므로 구면 균일 quadrature가 보장되지 않는다. 결정론적 equal-area/Fibonacci 또는 HEALPix 방향 집합, 회전-equivariance test, 방향 수 증가에 따른 support convergence, (h_A(u)=0) 처리, MCMC tail/credible-set sampling uncertainty를 구현한다.
+현재 50개 방향은 (phi,theta)를 같은 길이로 단순 대응해 생성하므로 구면 균일 quadrature가 보장되지 않는다. 결정론적 equal-area/Fibonacci 또는 HEALPix 방향 집합, 회전-equivariance test, 방향 수 증가에 따른 support convergence, (h_A(u)=0) 처리, MCMC tail/credible-set sampling uncertainty를 구현한다.
 
 ### 3.5 (G_F): depth path
 
@@ -114,7 +114,7 @@ HTT five-variable는 1차적으로 generative theory가 아니라 inference/read
 |---|---|---|---|
 | L1 low-(ell) morphology | Which (T/E/B), (a_{ell m}), STF multipoles, multipole-vector/BipoSH functionals map to a physical source-conditioned observable? | Morphology statistics and mask sensitivity are established; deterministic templates and stochastic covariance must remain separate | Real frequency/split/map likelihood, mask/beam/bandpass, matched MC and physical transfer |
 | L2 dipole anomaly | Can radiation dipole, observer boost, intrinsic radiation dipole and matter-count dipoles be separated? | Boost/aberration, multi-tracer and redshift tomography are established methods | Source-specific redshift/flux/size/spectral responses, local LSS and cross-catalogue covariance |
-| L3 kinematic measurement | Which components of (	heta_K=(sigma_{ab},omega_a,A_a,eta_{RM},eta_{MO})) are identifiable? | 1+3 irreducible sectors and leading local optical map; Gaia spin/glide/shear are distinct observables | Source-level operator Jacobians, external frame-spin anchors, exact boosts/Wigner rotation, finite-(z) transport |
+| L3 kinematic measurement | Which components of (	heta_K=(sigma_{ab},omega_a,A_a,beta_RM,beta_MO)) are identifiable? | 1+3 irreducible sectors and leading local optical map; Gaia spin/glide/shear are distinct observables | Source-level operator Jacobians, external frame-spin anchors, exact boosts/Wigner rotation, finite-(z) transport |
 | L4 anisotropy classification | Which kinematical equivalence classes are compatible with Class A/B and Bianchi families? | Lie-algebra/Jacobi and tilted-frame constraints can classify compatibility | Integrate dynamics and transfer; compare all relevant family alternatives; compatibility is not family identification |
 | L5 directional Hubble | What is (H(z,hat n)) and what is due to observer boost, shear, acceleration, LSS? | Local leading term and general multipole cosmography are prior art | Redshift-domain validity, observer/matter-frame transformation, exact distance likelihood and local-flow controls |
 | L6 local boost vs global tilt | Is a common local Lorentz map sufficient, or is a dynamical relative congruence needed? | Nadolny multi-observable separation and 2025 redshift tomography are strong baselines | Actual redshift tomography with selection, angular size/flux/spectra, LSS covariance and physical tilt evolution |
@@ -123,7 +123,7 @@ HTT five-variable는 1차적으로 generative theory가 아니라 inference/read
 
 At leading local optical order, the sourceward-direction convention may give
 [
-H_{mathrm{loc}}(hat n)=H+sigma_{ab}n^a n^b-rac{A_a n^a}{c},
+H_{mathrm{loc}}(hat n)=H+sigma_{ab}n^a n^b-(A_a n^a)/c,
 ]
 with sign depending on photon/direction convention. The antisymmetric contraction (n^a n^bomega_{ab}=0) vanishes at this order. This does **not** prove vorticity is absent from all higher-order scalar distance coefficients. Derivatives, congruence transport and null propagation must be derived order by order. Gaia (B_1) catalogue spin is degenerate with rigid reference-frame rotation unless externally anchored; it is not automatically a direct measurement of cosmic vorticity.
 
