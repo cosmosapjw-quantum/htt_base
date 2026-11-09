@@ -1,0 +1,482 @@
+{
+  "schema": "htt.r48_research_dag/1",
+  "program": "R48_TENSORIZED_OBSERVATIONAL_CONVERGENCE",
+  "created_at": "2026-11-09",
+  "timezone": "Asia/Seoul",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "parent": {
+    "branch": "research/r47-solverfree-morphology-likelihood-20261109",
+    "commit": "aae07cb83b8899dd7495d550722068d8bcbf3bcb",
+    "pr": 571
+  },
+  "branch": "research/r48-tensorized-observational-convergence-20261109",
+  "execution_policy": {
+    "turn_boundary": "One R48 task per work session. Each physical question is an independent loop.",
+    "convergence": "One bounded derivation, one implementation pass, one adversarial review and at most one repair pass, then decide PASS_SCOPED, FAIL or BLOCKED.",
+    "mutation": "Branch-only under R48. No merge or protected-branch mutation without separate authorization.",
+    "data": "Raw maps, catalogues and chains remain outside Git.",
+    "agents": "Subagent/native delegation is NOT_RUN unless an execution tool actually launches and returns a receipt.",
+    "claims": "No observed discovery, calibrated significance, Bianchi family identification or global-tilt claim before relevant gates pass."
+  },
+  "current_session": {
+    "id": "R48-T0",
+    "status": "COMPLETE_SCOPED",
+    "accomplishments": [
+      "568 accessible PR metadata records paginated",
+      "307 branch metadata records paginated",
+      "R41-R47 parent/head chain reconciled",
+      "R42 key code/receipt contradictions inspected",
+      "Oct-26 theory loops A-E and independent review read",
+      "prior-art search across five topic families",
+      "Wolfram small-B sky-monopole check"
+    ],
+    "limitations": [
+      "Not every historical PR diff was read; inventory is complete at metadata level and content audit is relevance-indexed",
+      "No local checkout, raw data, production source test or Cobaya chain in this session",
+      "No native subagents launched"
+    ]
+  },
+  "physical_state": {
+    "chart": "theta_K with 17 local coordinates: sigma_STF2[5], omega[3], acceleration[3], beta_RM[3], beta_MO[3]",
+    "normalization": "A dimensionless chart may use sigma/H_ref, omega/H_ref, A/(c H_ref), beta=v/c. Record H_ref, event, epoch, units and tetrad.",
+    "frames": [
+      "radiation frame R",
+      "matter/source congruence frame M",
+      "observer/instrument frame O"
+    ],
+    "boost_composition": "Use ordered Lorentz matrices with explicit frame arrows. Never set beta_RO=beta_RM+beta_MO as an exact relation.",
+    "epoch_rule": "Map state at a common reference event to each probe epoch with declared dynamics/transport. Present sigma is not integrated B_*."
+  },
+  "output_contract": {
+    "five_variable_output": "T=(x,Q,Pi,F,G_F)=Phi_HTT# p(theta,psi,eta | D,M,S,W)",
+    "statistical_status": "One correlated joint posterior push-forward; never five independent likelihood factors or free parameters.",
+    "semantics": {
+      "x": "typed physical state/identifiable functional carrier",
+      "Q": "anchor-body gauge or normalized departure score with explicit anchor",
+      "Pi": "law- and threshold-conditional exceedance object",
+      "F": "declared directional support/occupancy object; not automatically material-volume fraction",
+      "G_F": "cross-depth or transport functional with joint covariance"
+    },
+    "mandatory": "Persist full covariance/cross-covariance, frame, epoch, units, source IDs, selection and kernel directions."
+  },
+  "tasks": [
+    {
+      "id": "R48-T1",
+      "title": "Close source-indexed historical audit and physical-state contract",
+      "status": "PENDING",
+      "loop": "foundation",
+      "depends_on": [
+        "R48-T0"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "HISTORICAL_SOURCE_MATRIX.json",
+        "PHYSICAL_STATE_FRAME_EPOCH_CONTRACT.md",
+        "R42_CONTRADICTION_REPLAY_PLAN.md"
+      ],
+      "acceptance": [
+        "Every reused formula points to exact commit/blob or Library source",
+        "Hard-coded response coefficients and cached-chain fallback paths enumerated",
+        "17D chart units, tetrad, frame arrows, epochs and gauge quotient explicit",
+        "Previous claims retain status and provenance"
+      ]
+    },
+    {
+      "id": "R48-T2",
+      "title": "Low-ell morphology to physical-response theory loop",
+      "status": "PENDING",
+      "loop": "L1_lowell_morphology",
+      "depends_on": [
+        "R48-T1"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "L1_MORPHOLOGY_RESPONSE.md",
+        "L1_HARMONIC_OPERATOR_SPEC.json",
+        "L1_MOCK_ORACLE_REPORT.json"
+      ],
+      "observables": [
+        "a_lm_T",
+        "a_lm_E",
+        "a_lm_B_if_transfer_validated",
+        "BipoSH_A_L_l1_l2",
+        "multipole_vectors",
+        "power_tensor",
+        "parity_and_phase"
+      ],
+      "acceptance": [
+        "Mask/beam/pixel/noise/foreground transfer in source-matched forward operator",
+        "Low-ell phase and off-diagonal covariance retained",
+        "BI template even under n->-n and restricted to temperature geodesic response",
+        "Temperature quadrupole not equated to sigma without transport closure",
+        "Direct pixel/harmonic oracle, rotation/parity and quadrature tests pass"
+      ]
+    },
+    {
+      "id": "R48-T3",
+      "title": "Redshift-resolved source dipole theory loop",
+      "status": "PENDING",
+      "loop": "L2_dipole_anomaly",
+      "depends_on": [
+        "R48-T1"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "L2_DIPOLE_POINT_PROCESS.md",
+        "L2_SELECTION_NULL_REPORT.json",
+        "L2_TRACER_HELDOUT_REPORT.json"
+      ],
+      "observables": [
+        "N(n,z,flux,size)",
+        "radio/quasar_dipole",
+        "redshift_shell_dipole",
+        "CMB_observer_dipole"
+      ],
+      "acceptance": [
+        "Nadolny-style flux/size/redshift response and intrinsic/LSS alternative included",
+        "Point-process likelihood has mask, selection, randoms, evolution and flux slope",
+        "NVSS and Quaia remain separate tracers; RACS replication only",
+        "No fixed catalogue rescaling constants",
+        "Held-out tracer/cut and local-structure mocks evaluated"
+      ]
+    },
+    {
+      "id": "R48-T4",
+      "title": "Beyond-FLRW kinematical inverse theory loop",
+      "status": "PENDING",
+      "loop": "L3_kinematical_measurement",
+      "depends_on": [
+        "R48-T1"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "L3_KINEMATIC_RESPONSE.md",
+        "L3_IDENTIFIABLE_SUBSPACE.json",
+        "L3_FRAME_SPIN_AUDIT.json"
+      ],
+      "observables": [
+        "radial_redshift_gradient",
+        "transverse_proper_motion",
+        "VSH_E1_B1_E2",
+        "STF_shear",
+        "vorticity_frame_spin",
+        "acceleration_dipole"
+      ],
+      "acceptance": [
+        "Source and observer congruence typed separately",
+        "Full Gaia source-level covariance and reference-frame tie included",
+        "B1 not called cosmic vorticity until ICRF spin degeneracy is broken",
+        "Only l with ker(J_eff) subset ker(l^T) reported as point-identifiable"
+      ]
+    },
+    {
+      "id": "R48-T5",
+      "title": "Anisotropy and Bianchi geometry classification loop",
+      "status": "PENDING",
+      "loop": "L4_anisotropy_bianchi_classification",
+      "depends_on": [
+        "R48-T1",
+        "R48-T2",
+        "R48-T4"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "L4_BIANCHI_EQUIVALENCE_ATLAS.json",
+        "L4_GAUSS_CODAZZI_COMPATIBILITY.md",
+        "L4_MODEL_SELECTION_BENCHMARK.json"
+      ],
+      "observables": [
+        "STF_spatial_Ricci",
+        "Weyl_and_derivative_functionals",
+        "Gauss_Codazzi_constraints",
+        "BipoSH_and_polarization_if_available"
+      ],
+      "acceptance": [
+        "Jacobi and Gauss-Codazzi constraints imposed",
+        "Geometry compared modulo rotations and local equivalence",
+        "I,V,VII_h transfers kept distinct",
+        "Equal scalar curvature/shear image never identifies family",
+        "Family claim requires calibrated posterior predictive separation"
+      ]
+    },
+    {
+      "id": "R48-T6",
+      "title": "Directional-Hubble optical-jet loop",
+      "status": "PENDING",
+      "loop": "L5_directional_Hubble",
+      "depends_on": [
+        "R48-T1"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "L5_OPTICAL_JET_LIKELIHOOD.md",
+        "L5_REDSHIFT_WINDOW_REPORT.json",
+        "L5_REMAINDER_SENSITIVITY.json"
+      ],
+      "observables": [
+        "h0(n)",
+        "h1(n)",
+        "d1_d2_d3_if_supported",
+        "D_L(z,n)",
+        "H_ratio(z,n)",
+        "H_diff(z,n)"
+      ],
+      "acceptance": [
+        "Convention for h=Theta/3+sigma_nn-A.n and c factors explicit",
+        "Hratio and Hdiff distinct",
+        "Pantheon+ full covariance and calibration nuisance",
+        "CF4 original distance data only",
+        "Cubic coefficient only when finite-z remainder supported"
+      ]
+    },
+    {
+      "id": "R48-T7",
+      "title": "Local observer boost versus global tilt loop",
+      "status": "PENDING",
+      "loop": "L6_local_boost_global_tilt",
+      "depends_on": [
+        "R48-T2",
+        "R48-T3",
+        "R48-T4"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "L6_ORDERED_LORENTZ_RESPONSE.md",
+        "L6_LOCAL_GLOBAL_IDENTIFIABILITY.json",
+        "L6_DEPTH_COHERENCE_REPORT.md"
+      ],
+      "acceptance": [
+        "Radiation, matter/source and observer frames fixed",
+        "Exact ordered Lorentz composition tested against first-order limits",
+        "CMB, counts, angular size, redshift and astrometry have separate response operators",
+        "Local flow, intrinsic clustering, selection and frame spin nuisance-projected",
+        "Single dipole not proof of global tilt"
+      ]
+    },
+    {
+      "id": "R48-T8",
+      "title": "Joint likelihood, five-variable push-forward and information-loss loop",
+      "status": "PENDING",
+      "loop": "L7_tensorized_inference_and_compression",
+      "depends_on": [
+        "R48-T2",
+        "R48-T3",
+        "R48-T4",
+        "R48-T5",
+        "R48-T6",
+        "R48-T7"
+      ],
+      "stages": [
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "JOINT_LIKELIHOOD_IMPLEMENTATION_SPEC.json",
+        "HTT_PUSHFORWARD_VALIDATION.json",
+        "TARGET_KL_INFORMATION_LOSS.json"
+      ],
+      "acceptance": [
+        "Cross-probe covariance accounted for or independence justified",
+        "Full physical posterior sampled before T is derived",
+        "Target-specific posterior KL computed for predeclared estimands",
+        "Parameter-dependent covariance score terms retained",
+        "Prior, chart and model-misspecification sensitivity reported"
+      ]
+    },
+    {
+      "id": "R48-T9",
+      "title": "Code repair and executable oracle tests",
+      "status": "PENDING",
+      "loop": "implementation",
+      "depends_on": [
+        "R48-T1",
+        "R48-T8"
+      ],
+      "stages": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8",
+        "C9",
+        "C10"
+      ],
+      "outputs": [
+        "production_likelihood_modules",
+        "test_report.json",
+        "synthetic_cobaya_receipt.json"
+      ],
+      "acceptance": [
+        "Hard-coded coefficients removed or calibrated nuisance",
+        "No cached-chain diagnostic fabrication",
+        "Direct oracle, gradients, positive covariance and frame transforms tested",
+        "Synthetic injection/recovery and SBC pass",
+        "Independent review receipt genuine or NOT_RUN"
+      ]
+    },
+    {
+      "id": "R48-T10",
+      "title": "Observed-data acquisition and staged Cobaya inference",
+      "status": "PENDING",
+      "loop": "observational_analysis",
+      "depends_on": [
+        "R48-T9"
+      ],
+      "stages": [
+        "C5",
+        "C6",
+        "C7",
+        "C8",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "raw_data_manifest.json",
+        "source_hashes.sha256",
+        "cobaya_config.yaml",
+        "chains_manifest.json",
+        "convergence_report.json",
+        "SBC_PPC_FPR_power.json",
+        "observed_results.json"
+      ],
+      "acceptance": [
+        "Official files locally downloaded and SHA256 verified",
+        "Row/mask/beam/transfer/covariance identities fixed",
+        "First run: Planck temperature-only conditional likelihood plus one independent tracer",
+        "Independent chains and convergence/multimodal checks pass",
+        "Matched E2E null and selection mocks calibrate FPR/coverage",
+        "No result without raw data and execution receipt"
+      ]
+    },
+    {
+      "id": "R48-T11",
+      "title": "Adversarial competitor benchmark and review",
+      "status": "PENDING",
+      "loop": "adversarial_benchmark",
+      "depends_on": [
+        "R48-T8",
+        "R48-T10"
+      ],
+      "stages": [
+        "R2",
+        "R7",
+        "R8",
+        "C7",
+        "C8",
+        "C9",
+        "R10"
+      ],
+      "outputs": [
+        "COMPETITOR_BENCHMARK.json",
+        "ADVERSARIAL_FAILURE_REPORT.md",
+        "INDEPENDENT_REVIEW.md"
+      ],
+      "acceptance": [
+        "Generative models and inference methods benchmarked as separate axes",
+        "Blinded matched-pipeline train/validation/test mocks",
+        "Coverage, SBC, FPR, power, posterior KL, predictive score and false-family rate evaluated",
+        "Ablations show incremental HTT value vs raw and standard compressions",
+        "All failures retained"
+      ]
+    },
+    {
+      "id": "R48-T12",
+      "title": "Publication gate and paper-scope decision",
+      "status": "PENDING",
+      "loop": "publication_decision",
+      "depends_on": [
+        "R48-T11"
+      ],
+      "stages": [
+        "R8",
+        "R9",
+        "R10"
+      ],
+      "outputs": [
+        "PUBLICATION_DECISION.md",
+        "CLAIM_LEDGER_FINAL.json",
+        "PAPER_OUTLINE.md"
+      ],
+      "acceptance": [
+        "Select methods paper, observational paper, split papers or no-go on evidence",
+        "Every claim tagged with evidence status",
+        "No Bianchi V/VII_h, global tilt or vorticity claim beyond identifiability"
+      ]
+    }
+  ],
+  "stop_rules": [
+    "Stop or narrow a target whose nuisance-projected Jacobian has unresolved kernel.",
+    "Stop production sampling if hashes, row order, transfer or likelihood oracle fail.",
+    "If PR4/NPIPE matched E2E unavailable, conditional parameter fit may proceed but anomaly FPR/evidence calibration remains BLOCKED.",
+    "Never mix PR3/FFP10 simulations as matched null for PR4/NPIPE.",
+    "Failed SBC or low ESS is not a scientific bound.",
+    "Do not identify Bianchi family from shear-only or temperature-only BI response."
+  ]
+}

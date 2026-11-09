@@ -1,0 +1,202 @@
+{
+  "schema": "htt.r48_dataset_intake/1",
+  "as_of": "2026-11-09",
+  "policy": {
+    "raw_data_in_git": false,
+    "local_root": "workdir/raw/observational/<release>/<dataset>/",
+    "immutable_raw_bytes": true,
+    "sha256_from_downloaded_bytes": true,
+    "preserve_url_and_access_timestamp": true,
+    "row_and_covariance_order_mandatory": true,
+    "new_release_new_source_id": true,
+    "no_independence_assumption_for_same_sky_reprocessings": true,
+    "no_mix": "PR3/FFP10 simulations are never a matched null for PR4/NPIPE observations."
+  },
+  "datasets": [
+    {
+      "id": "planck_pr4_npipe",
+      "priority": "P0",
+      "authority": [
+        "https://data.cmb-s4.org/planck_pr4.html",
+        "https://wiki.cosmos.esa.int/planck-legacy-archive/index.php/NPIPE_Introduction",
+        "https://portal.nersc.gov/project/cmb/planck2020/"
+      ],
+      "required": [
+        "frequency T/Q/U maps",
+        "half-ring or supported splits",
+        "low-resolution map/covariance",
+        "effective beams/QuickPol",
+        "hit/noise products",
+        "temperature/polarization/point-source masks",
+        "E-mode low-ell transfer and calibration metadata",
+        "matched PR4/NPIPE E2E ensemble or explicit blocked state"
+      ],
+      "channels": [
+        "030",
+        "044",
+        "070",
+        "100",
+        "143",
+        "217",
+        "353"
+      ],
+      "warning": "NPIPE large-scale polarization transfer is nontrivial. Frequency maps share one sky and are not independent skies.",
+      "actions": [
+        "Download official product index first",
+        "Select minimal map/split/mask/beam products",
+        "Save filenames, bytes, SHA256, FITS headers, units, nside, ordering, frame, calibration and beam",
+        "Do not start production until transfer characterized"
+      ]
+    },
+    {
+      "id": "planck_pr3_ffp10_smica_control",
+      "priority": "P1_SEPARATE_RELEASE",
+      "authority": [
+        "https://pla.esac.esa.int/pla/",
+        "https://irsa.ipac.caltech.edu/data/Planck/release_3/"
+      ],
+      "required": [
+        "matching observed PR3 SMICA map/mask/beam",
+        "FFP10 component-separated CMB MC",
+        "FFP10 noise MC",
+        "matched config/simulation manifest"
+      ],
+      "warning": "Only a matched PR3/SMICA robustness lane, never a PR4/NPIPE null."
+    },
+    {
+      "id": "quaia_dr1",
+      "priority": "P0",
+      "authority": [
+        "https://irsa.ipac.caltech.edu/data/Quaia/overview.html",
+        "https://zenodo.org/records/10403370",
+        "https://arxiv.org/abs/2306.17749"
+      ],
+      "primary": "G<20.0 cleaner release; G<20.5 sensitivity",
+      "required": [
+        "quaia_G20.0.fits",
+        "random_G20.0_10x.fits",
+        "selection_function_NSIDE64_G20.0.fits",
+        "selection_function_template_maps.zip",
+        "redshift/magnitude/proper-motion/quality fields"
+      ],
+      "note": "Zenodo release documents 755,850 G<20.0 sources and 1,295,502 G<20.5 sources. Selection map is relative, not absolute probability.",
+      "actions": [
+        "Verify DOI/version/md5 and compute SHA256",
+        "Verify columns and row count",
+        "Use random catalogue and templates in point-process/window model",
+        "Recompute each cut response; no fixed rescaling"
+      ]
+    },
+    {
+      "id": "nvss",
+      "priority": "P0",
+      "authority": [
+        "https://www.cv.nrao.edu/nvss/NVSSlist.shtml",
+        "https://www.cv.nrao.edu/nvss/anonftp.shtml",
+        "https://cdsarc.cds.unistra.fr/viz-bin/cat/VIII/65"
+      ],
+      "required": [
+        "original catalogue",
+        "component/group policy",
+        "declination coverage/completeness",
+        "flux/spectral metadata",
+        "mask and selection model"
+      ],
+      "actions": [
+        "Reproduce flux cuts",
+        "Model declination/Galactic effects",
+        "Keep separate from Quaia/RACS until overlap/cross covariance assessed"
+      ]
+    },
+    {
+      "id": "racs_low_dr1",
+      "priority": "P1_REPLICATION",
+      "authority": [
+        "https://www2.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/racs/",
+        "https://data.csiro.au/"
+      ],
+      "required": [
+        "catalogue",
+        "tile footprint/local RMS",
+        "flags/completeness",
+        "flux/spectral response"
+      ],
+      "role": "Independent replication; no naive concatenation with NVSS."
+    },
+    {
+      "id": "pantheon_plus",
+      "priority": "P0",
+      "authority": "https://github.com/PantheonPlusSH0ES/DataRelease",
+      "observed_tree": "main tree contains Pantheon+_Data/1_DATA/all_redshifts_PVs.csv, header_overrides and calibration source material; identify exact analysis-ready vector/full covariance in current release tree before use.",
+      "required": [
+        "analysis-ready data vector",
+        "full covariance and construction note",
+        "row IDs and covariance index order",
+        "redshift-frame and peculiar-velocity metadata",
+        "calibrator/host/calibration/selection information"
+      ],
+      "actions": [
+        "Inspect README and all non-photometry analysis folders",
+        "Verify dimensions/order against release documentation",
+        "Fit observed magnitude/distance modulus with official covariance",
+        "Treat Pantheon+ and SH0ES calibration overlap explicitly"
+      ]
+    },
+    {
+      "id": "gaia_dr3_crf3",
+      "priority": "P0",
+      "authority": [
+        "https://gea.esac.esa.int/archive/",
+        "https://www.cosmos.esa.int/web/gaia/data-release-3",
+        "https://gea.esac.esa.int/archive/documentation/GDR3/"
+      ],
+      "required": [
+        "quasar subset with astrometric solution",
+        "ra/dec/ref_epoch/pmra/pmdec",
+        "full proper-motion covariance/correlation",
+        "quality/colour/magnitude/visibility periods",
+        "CRF3/ICRF tie and spin uncertainty",
+        "scan-law/source-selection systematics"
+      ],
+      "actions": [
+        "Query source-level records",
+        "Preserve covariance and quality cuts",
+        "Include frame-spin nuisance and external ICRF tie",
+        "Report E1/B1/E2 estimable combinations only"
+      ]
+    },
+    {
+      "id": "cosmicflows4",
+      "priority": "P0_CONDITIONAL_QUARANTINED",
+      "authority": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJ/944/94",
+      "required": [
+        "original distances",
+        "group/calibrator IDs",
+        "actual joint covariance if supplied",
+        "selection and redshift-frame documentation"
+      ],
+      "warning": "Reconstructed velocities are derived products, not independent observations. If source likelihood/covariance is not established, CF4 remains conditional sensitivity study."
+    },
+    {
+      "id": "desi_bao_control",
+      "priority": "P1_BACKGROUND_CONTROL",
+      "authority": "https://data.desi.lbl.gov/",
+      "required": [
+        "named BAO release vector/covariance",
+        "fiducial conventions and redshift bins"
+      ],
+      "role": "Isotropic background control only unless angular clustering and randoms are acquired."
+    }
+  ],
+  "receipts": [
+    "raw_data_manifest.json",
+    "sha256_manifest.txt",
+    "release_query_manifest.json",
+    "row_identity_manifest.json",
+    "covariance_order_manifest.json",
+    "mask_beam_transfer_manifest.json",
+    "download_log.json",
+    "local_environment_lock.json"
+  ],
+  "storage": "Only compact manifests, hashes, code, summaries and diagnostics are committed. Raw inputs and chains remain under workdir."
+}
