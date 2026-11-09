@@ -116,40 +116,30 @@ Stage data by small manifests first, then exact channels/splits. The portal inde
 
 A separately labelled FFP10/PR3 SMICA validation lane may use the historical K1 guide, but it is never combined with PR4/NPIPE as a matched simulation set.
 
-## 6. Six independent observable loops (R47-T6)
+## 6. Six independent observable loops, each on its own turn
 
-Execute independently; one lane's missing provider does not block the others.
+The theory loops are independent research units. Do not combine them into one omnibus fit.
 
-### L1 — Low-ell morphology to physical observables
-Inputs: Planck PR4 observed low-ell T and, where properly calibrated, E/B.  
-Methods: complete harmonic/STF representation, signed Krylov packet, multipole vectors/power tensors, BipoSH, solver-free Bianchi-I mean template.  
-Target: morphology compatibility and posterior on (B_*), plus target-specific HTT readout.  
-Block: no causal attribution from morphology alone.
+### L1 — Low-ell morphology to physical observables (R47-T2 through R47-T5)
+Execute in stages: derive the solver-free Bianchi-I geodesic temperature map (T2), implement the harmonic/map likelihood (T3), acquire and verify Planck PR4/NPIPE (T4), then run the observed CMB likelihood and calibration (T5). Target (B_*) first; present (sigma_{ab}(t_0)) only after an admitted history model.
 
-### L2 — Dipole anomaly
-Inputs: Quaia DR1 parent catalogue/randoms/selection, NVSS source catalogue/coverage, RACS-low replication, CMB dipole/aberration.  
-Target: count dipole versus kinematic expectation as a function of redshift/flux/spectral subset.  
-Nuisance: source evolution, flux threshold, local structure, footprint and cross-catalogue covariance.
+### L2 — Dipole anomaly (R47-T6)
+Use Quaia DR1 parent catalogue/randoms/selection, NVSS flux/coverage and RACS-low replication. Estimate count dipoles by redshift/flux/spectral subset. Model source evolution, local structure, masks and cross-catalogue dependence. No fixed magnitude-cut rescaling.
 
-### L3 — Beyond-FLRW kinematics
-Inputs: Gaia DR3 source-level proper motions/full covariance, CRF3 spin tie, selected radial distance/redshift/flow observables.  
-Target: identifiable subspace of (	heta=(sigma_{ab},omega_a,A_a,eta_{RM},eta_{MO})), not a forced 17-parameter point estimate.  
-Nuisance: frame spin, source motions, scan law, selection and common-congruence assumptions.
+### L3 — Beyond-FLRW kinematics (R47-T7)
+Use Gaia DR3 source-level proper motions/full covariance, CRF3/VLBI tie and qualified radial observables. Estimate the nuisance-projected identifiable subspace of (	heta=(sigma_{ab},omega_a,A_a,eta_{RM},eta_{MO})). Preserve the B1 frame-spin kernel.
 
-### L4 — Anisotropy and Bianchi classification
-Inputs: the exact Loop-D structure-constant/Ricci/Gauss-Codazzi image; L1 (B_*); L3 kinematic region; external family transfer only if validated.  
-Target: geometry compatibility and the quotient of Bianchi families still equivalent.  
-Stop: do not infer VIIh/V/Class A/B from STF shear alone; distinguish flat/open FLRW presentation equivalences.
+### L5 — Directional Hubble expansion (R47-T8)
+Use Pantheon+ full distance-modulus likelihood and CF4 only if the original distance likelihood, covariance, group/selection model and row identity are qualified. Estimate (h_0(hat n)), (h_1(hat n)), and higher distance-jet coefficients only where finite-redshift remainders are controlled.
 
-### L5 — Direction-dependent Hubble law
-Inputs: full Pantheon+ table/covariance, qualified CF4 original distance likelihood, optional DESI isotropic background control.  
-Target: (h_0(n)), (h_1(n)), and supported finite-distance coefficients; use Loop-E distance-jet equations.  
-Nuisance: redshift frame, peculiar velocities, selection/Malmquist, calibration and finite-distance remainder.
+### L6 — Local boost versus global tilt (R47-T9)
+Combine CMB aberration/modulation, redshift/flux/size tracer response, Gaia E1 and directional distances with one shared frame/state model. Determine (eta_{MO}) and (eta_{RM}) identifiability after nuisance projection; one dipole is not a decomposition.
 
-### L6 — Local boost versus global tilt
-Inputs: CMB aberration/modulation, redshift/flux/size-dependent Quaia/NVSS/RACS dipoles, Pantheon+ directional distances, Gaia E1 with reference-frame calibration.  
-Target: (eta_{MO}) and (eta_{RM}) as separate physical frame variables.  
-Nuisance: exact ordered boosts, Wigner rotation, LSS, source selection, common calibration and cross-probe covariance. A single observed dipole is insufficient.
+### L4 — Bianchi anisotropy classification (R47-T10)
+Combine the Bianchi-I geodesic template, R47-T7 kinematic region, R47-T8 optical coefficients, and existing Loop-D structure-constant/Ricci/Gauss-Codazzi compatibility. Use Bianchi V/VIIh transfer only from a validated external provider. Distinguish geometry equivalence from different simply transitive presentations.
+
+### Integration (R47-T11 and R47-T12)
+Only after the independent loops close, run the two-layer generative-model × readout benchmark, target-posterior information-loss analysis, matched SBC/PPC/FPR/power and held-out predictions; then perform one bounded independent review and make separate empirical/methods publication decisions.
 
 ## 7. R47-T5 sampler and inference controls
 
