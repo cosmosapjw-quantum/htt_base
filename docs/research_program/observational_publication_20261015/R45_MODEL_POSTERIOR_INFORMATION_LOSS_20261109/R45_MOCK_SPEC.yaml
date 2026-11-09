@@ -1,0 +1,48 @@
+schema: htt.r45_mock_spec/1
+program: HTT_R45_MODEL_POSTERIOR_INFORMATION_LOSS
+classification: SYNTHETIC_STATISTICAL_THEORY_EXPERIMENT_NOT_OBSERVATIONAL
+seed: 20261109
+replications_per_experiment: 60000
+logarithm: natural
+posterior_loss:
+  definition: E_barP[KL(p(M|Y) || p(M|S))]
+  equivalent_forms:
+    - I(M;Y|S)
+    - I(M;Y)-I(M;S)
+    - weighted_difference_of_model_to_mixture_KLs
+  total_variation_convention: 0.5_L1
+  diagnostics:
+    - expected_posterior_KL_direct
+    - expected_posterior_KL_MI_difference
+    - expected_posterior_TV
+    - raw_and_summary_model_information
+    - raw_and_summary_Bayes_0_1_risk
+    - Pinsker_upper_bound
+experiments:
+  common_covariance_multi_model:
+    models: 4
+    raw_dimension: 8
+    exact_summary: K_minus_1_common_covariance_discriminant_scores
+    lossy_summary: first_discriminant_score_only
+  model_dependent_covariance:
+    models: 3
+    raw_dimension: 6
+    lossy_summary: first_two_mean_coordinates
+    exact_summary: K_minus_1_exact_log_likelihood_ratios
+  radial_vs_directional:
+    directional_case: equal_prior_sign_reflected_means_norm_summary
+    radial_control: zero_mean_isotropic_scale_models_squared_norm_summary
+  parameter_vs_model:
+    case_A: model_index_preserved_but_continuous_parameter_posterior_lost
+    case_B: within_model_parameter_sufficient_but_model_index_posterior_lost
+verification:
+  python_compileall: "python -m compileall -q scripts/r45 tests/r45"
+  pytest: "pytest -q tests/r45"
+  expected_test_count: 5
+  same_seed_byte_reproducibility: required
+limits:
+  - no_real_survey_data
+  - no_physical_Bianchi_transfer
+  - no_Cobaya_production_sampling
+  - no_observational_claim
+  - no_full_HTT_five_variable_empirical_sufficiency_claim
