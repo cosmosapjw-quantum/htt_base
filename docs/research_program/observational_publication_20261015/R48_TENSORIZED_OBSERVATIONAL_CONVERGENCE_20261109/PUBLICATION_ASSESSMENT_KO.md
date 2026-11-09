@@ -81,3 +81,14 @@
 - Planck PR4/NPIPE, Quaia, Pantheon+, Gaia 및 관련 선행논문 원 배포처를 확인.
 
 **미완료:** local source test, 실제 raw data download/hash, Cobaya production chain, matched E2E/SBC, observed anomaly estimate, native Bianchi-V/VIIh transfer. 이번 R48 문서는 위 항목을 local agent가 수행할 명확한 계약이다.
+
+
+## R48-T1 정적 소스 감사 후 판정 (2026-11-09)
+
+**경험적 발견: HOLD 유지.** R42 기존 posterior/receipt는 수렴 및 provenance를 입증하지 못한다. 현재 runner는 cache hit 시 sampler 없이 고정 runtime과 diagnostic fallback을 만들 수 있고, null law는 합성 Gaussian fallback과 MATCHED_NULL_PLANCK_MC100 이름이 충돌한다. Observable bundle에는 고정 응답계수가 남아 있으며, Gaia E1/E2 physical operator와 selection calibration, five-probe cross-covariance, G_F transport 및 Bianchi transfer는 닫히지 않았다.
+
+**Cobaya 이외의 연구 가능성은 확인됨.** R46 target posterior compression은 NumPy/SciPy 기반 synthetic analysis로 40,000 draws 재현했다. R42 two-layer competitor optimizer도 Cobaya import 없이 SciPy로 구동 가능하지만 source SHA 검증을 끄고 probe likelihood를 단순 합산하므로 관측 결과 경로로는 아직 inadmissible하다. R42 unit tests와 exact SR kernel도 Cobaya-independent이나 fixture/경계 테스트의 결함이 남는다.
+
+**재사용할 기존 이론축:** WU-009 ideal Bianchi-I positive-quadratic temperature map과 exact observer boost, WU-010/011 processed local-observer response. 후자는 intrinsic Bianchi geometry/global matter tilt와 별개다. WU-011 continuum wide-mask 결과와 finite-HEALPix certification을 혼동하지 않는다.
+
+R48-T1 remote static audit는 PASS_SCOPED, local checkout/tests는 NOT_RUN. R48-T2는 R47 solver-free Bianchi-I map의 harmonic oracle로 진행하되 observer-boost operator와 분리한다. Bianchi V/VII_h, polarization, global tilt, vorticity 및 empirical anomaly claim은 현재 허용되지 않는다.

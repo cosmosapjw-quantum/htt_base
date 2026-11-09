@@ -250,5 +250,234 @@
       "url": "https://arxiv.org/abs/1903.01473",
       "status": "established"
     }
-  ]
+  ],
+  "r48_t1_addendum": {
+    "status": "PASS_SCOPED_REMOTE_STATIC_AUDIT",
+    "audited_head": "afb3ab9406cf13874e2e49e40d09f3b639b01c20",
+    "created_at": "2026-11-09",
+    "source_matrix": "HISTORICAL_SOURCE_MATRIX.json",
+    "replay_plan": "R42_CONTRADICTION_REPLAY_PLAN.md",
+    "frame_contract": "PHYSICAL_STATE_FRAME_EPOCH_CONTRACT.md",
+    "cobaya_free_paths": "COBAYA_FREE_ANALYSIS_PATHS.md",
+    "source_identities": [
+      {
+        "path": "htt/src/common/full_observable_x_bundle.py",
+        "blob": "d8a0fe86f0bf4c8790c635fd35d86b2987ca2280",
+        "findings": [
+          "response defaults remain at lines 143-144 and 163-164",
+          "source_operators appears in signature but is never consumed",
+          "exact velocity composition is conditional on both boosts being nonzero"
+        ]
+      },
+      {
+        "path": "htt/src/common/htt_five_variable_state.py",
+        "blob": "ceaec18ab630ee3f8ecad35c962257bf8257740",
+        "findings": [
+          "R42 Pi fallback generates seeded Gaussian samples but retains caller/default null_law_name",
+          "G_F default PHYSICAL_EXPANSION_TRANSPORT yields a constant transport factor",
+          "prior/gauge anchors remain fixed constants requiring source/assumption separation"
+        ]
+      },
+      {
+        "path": "htt/src/common/bianchi_transfer_adapter.py",
+        "blob": "f3c578283b24dec3909378135e7f926f26bc3d59",
+        "findings": [
+          "native atlas reader and external transfer wrapper fail closed with unavailable errors/NotImplementedError; no Bianchi V/VII_h observed transfer inference"
+        ]
+      },
+      {
+        "path": "htt/htt/htt/infer/cobaya_joint_five_probe.py",
+        "blob": "2d0a1a7c1a96774cc3f49ed1fd9f8d97b49c4f79",
+        "findings": [
+          "five per-probe log-likelihoods are added without demonstrated joint cross-probe covariance or conditional-independence proof"
+        ]
+      },
+      {
+        "path": "scripts/r42/run_cobaya_joint_inference.py",
+        "blob": "983e289e93db302ec829f15695eee021bfeb6811",
+        "findings": [
+          "verify_sha=False at line 47",
+          "cached-chain branch sets wall time to 553.24 and sampler=None at lines 155-159",
+          "Rminus1 falls back to 0.02 and ESS to 20 percent of rows at lines 219-224",
+          "beta_RO is vector-added at line 268",
+          "omega and A coordinates fixed to zero at lines 133-138"
+        ]
+      },
+      {
+        "path": "scripts/r42/run_r42_two_layer_benchmark.py",
+        "blob": "73d9cd0349f5880cc162fd8d93503449ecf1bc7c",
+        "findings": [
+          "uses scipy.optimize.minimize and scipy.stats without Cobaya/GetDist imports",
+          "instantiates five source-bound operators with SHA verification disabled",
+          "directly sums probe log-likelihoods; optimizer/competitor benchmark, not posterior sampling"
+        ]
+      },
+      {
+        "path": "htt/src/common/relativistic_velocity_closure.py",
+        "blob": "88da58bb0e94440f7ecf6d0fe62bd6de2f8f9d18",
+        "findings": [
+          "exact ordered SR velocity composition, first-order residual and Wigner rotation implemented in common NumPy code path"
+        ]
+      },
+      {
+        "path": "tests/r42/test_five_variable_repair.py",
+        "blob": "af173d5f4a8f662ea154979523ce31bb798a6644",
+        "findings": [
+          "test fixture uses beta vector addition",
+          "test creates Gaussian pseudo-null samples but labels them MATCHED_NULL_PLANCK_MC100",
+          "count-calibration test passes coefficients explicitly and does not exercise default coefficient provenance"
+        ]
+      }
+    ],
+    "additional_contradictions": [
+      {
+        "id": "C11",
+        "severity": "BLOCKER",
+        "title": "Synthetic Pi null mislabeled as matched Planck MC100",
+        "path": "htt/src/common/htt_five_variable_state.py",
+        "lines": "364,487-496,518",
+        "disposition": "REPLAY_REQUIRED"
+      },
+      {
+        "id": "C12",
+        "severity": "BLOCKER_FOR_PHYSICAL_DEPTH",
+        "title": "G_F default physical transport name selects identity factor",
+        "path": "htt/src/common/htt_five_variable_state.py",
+        "lines": "370,551",
+        "disposition": "REPLAY_REQUIRED"
+      },
+      {
+        "id": "C13",
+        "severity": "HIGH",
+        "title": "source_operators interface declared but unused",
+        "path": "htt/src/common/full_observable_x_bundle.py",
+        "lines": "84; no use in file",
+        "disposition": "REPLAY_REQUIRED"
+      },
+      {
+        "id": "C14",
+        "severity": "HIGH",
+        "title": "17D chart but six physical coordinates and curvature fixed in Cobaya config",
+        "path": "scripts/r42/run_cobaya_joint_inference.py",
+        "lines": "63,133-138",
+        "disposition": "RECEIPT_AND_CLAIM_RECLASSIFICATION"
+      },
+      {
+        "id": "C15",
+        "severity": "HIGH",
+        "title": "R42 test fixtures mask default-path defects",
+        "path": "tests/r42/test_five_variable_repair.py",
+        "lines": "60,184,191,269",
+        "disposition": "ADVERSARIAL_TESTS_REQUIRED"
+      },
+      {
+        "id": "C16",
+        "severity": "BLOCKER_FOR_OBSERVED_RUN",
+        "title": "Source SHA verification disabled in current R42 runners",
+        "path": "scripts/r42/run_cobaya_joint_inference.py",
+        "lines": "47",
+        "disposition": "ENABLE_SOURCE_HASH_GATES"
+      }
+    ],
+    "cobaya_independent_reproduction": {
+      "R46": {
+        "replications": 40000,
+        "seed": 20261109,
+        "latent_dimension": 17,
+        "target_score_rank": 2,
+        "expected_target_kl_exact_nats": 1.1102230246251565e-16,
+        "expected_target_kl_one_direction_dropped_nats": 0.680592646465519,
+        "mcse_nats": 0.0026134536647435536,
+        "full_latent_information_loss_exact_nats": 6.620396334915887,
+        "full_latent_information_loss_lossy_nats": 7.52622604833453,
+        "status": "NUMERICALLY_CHECKED_SYNTHETIC"
+      },
+      "SR": {
+        "delta_beta_norm": 1.604400373191457e-9,
+        "relative_correction": 8.329638265479058e-7,
+        "status": "NUMERICALLY_CHECKED_FORMULA_ORACLE"
+      },
+      "BianchiI": {
+        "quadrature": "500 Gauss-Legendre polar nodes x 1000 uniform azimuth nodes",
+        "analytic_coefficient": -0.104,
+        "numeric_coefficients": [
+          -0.103972368038,
+          -0.103986425284,
+          -0.103993272962
+        ],
+        "status": "NUMERICALLY_CHECKED_SMALL_B_LIMIT"
+      }
+    },
+    "capability_disposition": {
+      "R46": "Cobaya-free synthetic target compression; safe to reproduce locally.",
+      "R42_two_layer": "Cobaya-free SciPy optimizer, but not observed-data admissible until source SHA, response calibration and cross-probe dependence are repaired.",
+      "R42_unit_tests": "Cobaya-free synthetic tests; fixture blind spots documented.",
+      "SR_kernel": "Cobaya-free numerical kernel; integration edge cases remain.",
+      "BianchiI": "Solver-free analytical map exists; production operator still to be implemented in R48-T2."
+    },
+    "historical_reuse": [
+      {
+        "source": "Dropbox HTT_TENSORIZED_MES_RESPONSE_SYNTHESIS_20260903.md",
+        "id": "id:BSpOijBcT10AAAAAADtiaA",
+        "reuse": "PMG-WU-010 exact local-observer Lorentz pullback and PMG-WU-011 processed cut-sky response; local boost lineage, not intrinsic Bianchi geometry or observed Planck result"
+      },
+      {
+        "source": "Dropbox htt_base_WU009_theory_dossier_20260831.md",
+        "id": "id:BSpOijBcT10AAAAAADkn8g",
+        "reuse": "P16 exact Lorentz pullback; P18 ideal Bianchi-I positive-quadratic temperature inverse; P20 direct-temperature likelihood, with theorem assumptions retained"
+      },
+      {
+        "source": "Dropbox WU009 theory blocker ledger",
+        "id": "id:BSpOijBcT10AAAAAADkn8w",
+        "reuse": "preserve open source-equation normalization and Planck input blockers"
+      },
+      {
+        "source": "Dropbox WU011 Task 5A independent audit",
+        "id": "id:BSpOijBcT10AAAAAADlQgQ",
+        "reuse": "metric whitening, physical monopole versus a00, ell=6 source block, complete finite-difference columns and source-coordinate typing"
+      },
+      {
+        "source": "Dropbox WU011 Task 5B repair contract",
+        "id": "id:BSpOijBcT10AAAAAADlQgg",
+        "reuse": "finite-HEALPix response certification remains a bounded follow-up; synthetic local-observer boost only"
+      },
+      {
+        "source": "Dropbox HTT R7 readiness",
+        "id": "id:BSpOijBcT10AAAAAADs16Q",
+        "reuse": "conditional source-image calculations require matching frame/congruence/normalization; missing source/target bridge remains unresolved"
+      },
+      {
+        "source": "Dropbox HTT R7 Local Codex handoff",
+        "id": "id:BSpOijBcT10AAAAAADs15g",
+        "reuse": "proxy support/scenario intervals are not observational likelihood or posterior"
+      },
+      {
+        "source": "Dropbox HTT harness gate retrotrace",
+        "id": "id:BSpOijBcT10AAAAAADhGVA",
+        "reuse": "MIO diagnostic versus HTT posterior separation and no-fallback policy"
+      },
+      {
+        "source": "Dropbox code-capability audit prompt",
+        "id": "id:BSpOijBcT10AAAAAACk1hA",
+        "reuse": "capability statements need source-backed executable evidence"
+      },
+      {
+        "source": "ChatGPT Library search HTT_FIVE_THEORY_LOOPS.pdf",
+        "ref": "turn82file3",
+        "reuse": "identified as 2026-10-26 scoped theory-loop record; not re-parsed in this turn"
+      },
+      {
+        "source": "ChatGPT Library search HTT_GITHUB_PR_PUBLICATION_INDEX_20260802.csv",
+        "ref": "turn82file4",
+        "reuse": "historical navigation index only; R48 chain remains controlling authority"
+      }
+    ],
+    "not_run": [
+      "local checkout/git status/pytest",
+      "observed-data source operator run",
+      "Cobaya MCMC/SBC/PPC/FPR",
+      "native or external Bianchi transfer",
+      "independent human/native-subagent review"
+    ]
+  }
 }

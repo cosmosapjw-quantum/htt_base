@@ -31,3 +31,12 @@ This is a hypothesis, not a first-ever claim. BipoSH, multipole vectors, covaria
 ## Resume
 
 Start with R48-T1 only. Each later loop is a separate bounded work session. Do not launch production sampling before the physical response, observation operator, source-byte identity, likelihood oracle and synthetic calibration gates pass.
+
+
+## R48-T1 result (2026-11-09)
+
+R48-T1 is PASS_SCOPED for remote static source reconciliation. The current R42 implementation still contains response defaults, cached-chain diagnostic fallbacks, a synthetic-null/matched-null naming conflict, an unverified G_F transport placeholder, and cross-probe covariance/parameter-dimension limitations. The earlier "R42 Stage B repaired" status is not accepted as a blanket implementation or empirical pass.
+
+Cobaya-independent paths and numerical evidence are documented in HISTORICAL_SOURCE_MATRIX.json, PHYSICAL_STATE_FRAME_EPOCH_CONTRACT.md, R42_CONTRADICTION_REPLAY_PLAN.md, COBAYA_FREE_ANALYSIS_PATHS.md and R48_T1_SOURCE_AUDIT_REPORT.md.
+
+The 40,000-draw R46 target-compression replication and independent Bianchi-I small-amplitude quadrature are synthetic/theory checks only. Empirical discovery remains HOLD. Local tests, observed-data inference, native transfer and independent review were not run. The next DAG task is R48-T2 after exact-head local validation.

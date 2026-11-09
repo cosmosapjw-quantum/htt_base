@@ -1,3 +1,43 @@
+# R48 local agent restart: T1 remote audit closed, local replay then T2
+
+> This addendum supersedes the older instruction below that says to begin R48-T1 from scratch. R48-T1 is now PASS_SCOPED for remote static source reconciliation and bounded analytic/toy oracles. Local runtime verification remains NOT_RUN.
+
+## Identity and boundaries
+
+Repository: cosmosapjw-quantum/htt_base  
+Branch: research/r48-tensorized-observational-convergence-20261109  
+Audited parent/head before this addendum: afb3ab9406cf13874e2e49e40d09f3b639b01c20  
+PR: https://github.com/cosmosapjw-quantum/htt_base/pull/572, keep OPEN/DRAFT.  
+Do not merge, force-push, alter main, upload raw observations or delete caches. The registered remote desktop device was offline during the ChatGPT-side audit. No local working-tree state has been inspected.
+
+## First action: exact-head local verification
+
+1. Inspect git status --short --branch, branch name, HEAD, remotes and uncommitted work. Do not reset, stash, clean or overwrite user changes.
+2. Fetch the existing R48 branch normally and compare its HEAD with the current remote head. Preserve local changes and report exact commit/tree identity.
+3. Read HISTORICAL_SOURCE_MATRIX.json, PHYSICAL_STATE_FRAME_EPOCH_CONTRACT.md, R42_CONTRADICTION_REPLAY_PLAN.md, COBAYA_FREE_ANALYSIS_PATHS.md and R48_T1_SOURCE_AUDIT_REPORT.md.
+4. Run only the bounded commands in COBAYA_FREE_ANALYSIS_PATHS.md: R46 target compression and R42 pure numerical/unit tests. Save command, exit code, Python/NumPy/SciPy versions, stdout/stderr, Git SHA and output hash. Do not present synthetic fixtures as source-matched evidence.
+5. Add an exact-closure integration test for non-collinear boosts and both zero-boost limits. Verify the bundle branch agrees with compose_velocities_sr; keep the current fixture's first-order vector sum labelled as first-order approximation.
+6. Record C01–C16 dispositions individually. Do not silently repair unrelated code or turn missing input into zero/identity/Gaussian placeholders.
+
+## Cobaya-independent route
+
+The R46 compression experiment is NumPy/SciPy-only and has an independently reproduced 40,000-draw reference in COBAYA_FREE_ANALYSIS_PATHS.md. The R42 two-layer benchmark is also Cobaya-free at Python import level, but not an admissible observed-data pipeline: it disables source SHA checks and sums probe likelihoods without a joint covariance/independence proof. Do not run it for observed claims before C01, C07 and C16 are discharged.
+
+## Next scientific work: R48-T2 only
+
+After local identity and bounded tests are recorded, proceed with R48-T2, not T3–T12:
+
+- Reuse R47's ideal Bianchi-I geodesic temperature map and WU-009 P18 conditions.
+- Keep intrinsic Bianchi-I anisotropy distinct from WU-010/011 local-observer Lorentz pullback. They are separate physical operators and may only be composed after frame arrows/epoch are explicit.
+- Reuse WU-011 Task-5A/5B audit requirements: metric whitening; physical T0 coordinate versus harmonic a00; complete ell=6 source block; rotation-complete finite-difference columns; positive source skies.
+- Produce L1_MORPHOLOGY_RESPONSE.md, L1_HARMONIC_OPERATOR_SPEC.json and L1_MOCK_ORACLE_REPORT.json.
+- Include mask, beam, pixel, noise, foreground and transfer only when source identities/response are available. Otherwise return typed UNAVAILABLE and keep empirical claim HOLD.
+- Do not infer B_star from sigma(t0), Bianchi V/VII_h, polarization, global tilt or vorticity from this temperature-only operator.
+
+One bounded theory derivation, one implementation pass, one adversarial review and at most one repair pass. If local execution or exact source inputs are missing, record the narrow blocker and stop. native_subagent=NOT_RUN unless a real agent launch returns a receipt.
+
+---
+
 # Local coding agent 재개 프롬프트 — R48
 
 아래 내용을 복사해 local coding agent에 전달해.
