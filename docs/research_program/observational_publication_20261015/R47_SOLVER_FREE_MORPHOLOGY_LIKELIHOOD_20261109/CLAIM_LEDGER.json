@@ -1,0 +1,75 @@
+{
+  "schema": "htt.r47_claim_ledger/1",
+  "as_of": "2026-11-09",
+  "claims": [
+    {
+      "id": "R47-C01",
+      "claim": "The full stored-real harmonic/STF representation preserves the retained band-limited map and, on the declared nondegenerate chart, the signed Krylov packet separates the relevant SO(3) orbit.",
+      "status": "DERIVED_WITH_SCOPED_CHECKS",
+      "evidence": ["R42 theory manuscript", "mes_tensor_research_integration", "Wolfram checks in inherited report"],
+      "limits": ["Not global separation on singular strata", "SO(3) quotient erases absolute orientation unless frame tensors are retained"]
+    },
+    {
+      "id": "R47-C02",
+      "claim": "Tensor morphology alone cannot uniquely attribute an observed sky to a Bianchi family.",
+      "status": "CONDITIONALLY_SUPPORTED",
+      "meaning": "Morphology can identify/prefer a specified family under a validated forward model and a separating competitor set; the representation alone has no causal/geometric source label.",
+      "limits": ["A complete Bianchi forward map and global nuisance-projected separation may enable conditional family identification within a declared model class"]
+    },
+    {
+      "id": "R47-C03",
+      "claim": "The Bianchi-I collisionless geodesic temperature map can be written algebraically from the endpoint spatial metric without a photon Boltzmann hierarchy.",
+      "status": "DERIVED_AT_DESIGN_LEVEL_NOT_INDEPENDENTLY_VERIFIED",
+      "limits": ["Thin isotropic last-scattering surface", "Collisionless propagation thereafter", "Bianchi-I spatial translation Killing fields", "No self-consistent E/B or perturbation covariance"]
+    },
+    {
+      "id": "R47-C04",
+      "claim": "The solver-free temperature map can constrain present-day shear sigma_ab(t0).",
+      "status": "UNRESOLVED",
+      "limits": ["Map depends on integrated/endpoint anisotropy B_*; multiple histories can yield the same B_*", "Needs admitted dynamical closure/priors"]
+    },
+    {
+      "id": "R47-C05",
+      "claim": "An anisotropic Gaussian/BipoSH likelihood can test morphology and statistical anisotropy without a Bianchi solver.",
+      "status": "LITERATURE_SUPPORTED",
+      "limits": ["BipoSH covariance parameters are phenomenological until a physical Bianchi response maps geometry into them", "Mask/noise covariance must be modeled"]
+    },
+    {
+      "id": "R47-C06",
+      "claim": "The R42 Cobaya production result and shear/dipole conclusions are publication-grade.",
+      "status": "QUARANTINED_NOT_REPRODUCED",
+      "evidence": ["R42 ESS=53 with ESS gate false", "R42 Planck input is a 743-byte E/B summary NPZ rather than a raw map-level T/Q/U input", "R42 SBC rows marked uncalibrated", "R42 config verify_sha=false"],
+      "limits": ["Reassess only after exact source hash/replay, correct likelihood, convergence, matched null calibration and adversarial comparison"]
+    },
+    {
+      "id": "R47-C07",
+      "claim": "The latest HTT five-variable readout is a demonstrated improvement over established inference methods.",
+      "status": "CANDIDATE_NOT_ESTABLISHED",
+      "limits": ["R43-R46 are synthetic", "Must demonstrate target-posterior information preservation, calibration, predictive performance and robustness on source-bound observations"]
+    },
+    {
+      "id": "R47-C08",
+      "claim": "Bianchi V/VIIh family identification is achievable by the Bianchi-I solver-free temperature map.",
+      "status": "NOT_SUPPORTED",
+      "limits": ["Different structure constants and curved-space geodesic/perturbation transfer are not represented by the Bianchi-I map"]
+    },
+    {
+      "id": "R47-C09",
+      "claim": "Gaia B1 directly measures cosmic vorticity.",
+      "status": "BLOCKED",
+      "limits": ["B1 is degenerate with ICRF reference-frame spin unless externally tied"]
+    },
+    {
+      "id": "R47-C10",
+      "claim": "Local observer boost and global radiation-matter tilt are separable from one observed dipole.",
+      "status": "REFUTED_IN_GENERAL",
+      "limits": ["Need independent aberration/modulation, source flux/redshift/size tomography, local LSS control and common covariance"]
+    }
+  ],
+  "publication_decision": {
+    "empirical_discovery": "HOLD",
+    "methods_paper": "CONDITIONAL_CANDIDATE",
+    "solver_free_bianchi_I_temperature": "BUILD_AND_TEST",
+    "Bianchi_V_VIIh_family": "TRANSFER_CONDITIONAL_UNRESOLVED"
+  }
+}

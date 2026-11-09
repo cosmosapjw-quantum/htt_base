@@ -1,0 +1,484 @@
+{
+  "schema": "htt.r47_short_term_dag/1",
+  "program": "R47_SOLVER_FREE_MORPHOLOGY_LIKELIHOOD",
+  "created_at": "2026-11-09",
+  "timezone": "Asia/Seoul",
+  "repo": "cosmosapjw-quantum/htt_base",
+  "branch": "research/r47-solverfree-morphology-likelihood-20261109",
+  "parent_commit": "66b4bce6151a5fc19f317b02221b724223354fd6",
+  "execution_policy": {
+    "turn_splitting": "Each R47-T1…T12 is a separate conversation/work session with one bounded objective. Do not bundle L2/L3/L4/L5/L6 into one turn. The user can resume by naming the exact turn id.",
+    "mutation": "Branch-only; never merge to main without explicit separate instruction.",
+    "raw_data": "Never commit raw maps, catalogues, chains or large proprietary/third-party inputs.",
+    "claim_firewall": "No observed-data or Bianchi-family claim before source-byte, likelihood, convergence, matched-null and adversarial gates pass.",
+    "native_subagents": "NOT_RUN in authoring host: no native spawn/wait tools were exposed. The local agent may execute the work packet on the user's workstation."
+  },
+  "turns": [
+    {
+      "id": "R47-T0",
+      "title": "Research checkpoint and solver-free route selection",
+      "status": "COMPLETE_DESIGN_ONLY",
+      "scope": [
+        "GitHub state",
+        "PR #565-#570 metadata and selected source documents",
+        "R2 literature review",
+        "R4 solver-free route exploration",
+        "DAG and local-agent handoff"
+      ],
+      "outputs": [
+        "README.md",
+        "METHODS_NO_BOLTZMANN.md",
+        "SHORT_TERM_DAG.json",
+        "DATA_INTAKE_MANIFEST.json",
+        "CLAIM_LEDGER.json",
+        "LOCAL_AGENT_IO_CONTRACT.json",
+        "LOCAL_AGENT_RESTART_PROMPT_KO.md",
+        "PR #571"
+      ],
+      "acceptance": [
+        "Current parent SHA recorded",
+        "Claims separated from execution state",
+        "No observed-data result invented"
+      ],
+      "not_done": [
+        "Full per-PR diff audit",
+        "Local raw-data hashing",
+        "CAS/code verification",
+        "Cobaya sampling"
+      ]
+    },
+    {
+      "id": "R47-T1",
+      "title": "Relevance-indexed historical PR and legacy source audit",
+      "status": "PENDING",
+      "owner": "LOCAL_AGENT",
+      "depends_on": [
+        "R47-T0"
+      ],
+      "scope": [
+        "PR #565-#570 complete changed-file manifests/diffs",
+        "R41/R42 prior publication packages",
+        "R32-R39 low-ell, CMB, dipole and five-variable source records",
+        "2026-10-26 five internal theory loops",
+        "K1 FFP10/NPIPE blocker and download guide"
+      ],
+      "method": "Audit PRs by relevance and dependency, not by blind enumeration of unrelated history; record every source path, blob SHA, reused claim and disposition.",
+      "outputs": [
+        "PR_LEGACY_COVERAGE.csv",
+        "SOURCE_REUSE_LEDGER.json",
+        "CONTRADICTION_LEDGER.yaml",
+        "R47_T1_AUDIT.md"
+      ],
+      "acceptance": [
+        "Every reused claim links to exact source commit/blob",
+        "Superseded and quarantined results remain labelled",
+        "No duplicate likelihood contribution from repeated derived summaries",
+        "R42/R46 parent chain reconciled"
+      ],
+      "stop_conditions": [
+        "Stop a source lane if its blob cannot be fetched; mark BLOCKED and continue independent lanes",
+        "Do not infer a PR is merged from its branch existence"
+      ]
+    },
+    {
+      "id": "R47-T2",
+      "title": "Constructive derivation and adversarial check of Bianchi-I geodesic temperature map",
+      "status": "PENDING",
+      "owner": "LOCAL_AGENT",
+      "depends_on": [
+        "R47-T1"
+      ],
+      "scope": [
+        "Metric-to-photon-energy derivation",
+        "Emission surface and observer frame",
+        "Small-anisotropy STF limit",
+        "Exact harmonic projection",
+        "Degeneracies and limits"
+      ],
+      "outputs": [
+        "BIANCHI_I_GEODESIC_DERIVATION.md",
+        "derivation_receipt.json",
+        "test_bianchi_i_geodesic_map.py",
+        "CAS or exact symbolic receipt if available"
+      ],
+      "acceptance": [
+        "Derive E^2=g^{ij}p_i p_j from conserved covariant spatial momenta",
+        "Verify equation (2.1) in METHODS_NO_BOLTZMANN.md",
+        "Check B=0, small-B, parity, rotation and positive definiteness",
+        "Separate integrated B_* from present shear sigma(t0)",
+        "Independent derivation or risk-bounded adversarial review"
+      ],
+      "stop_conditions": [
+        "If the last-scattering surface cannot be treated as isotropic under declared assumptions, report the precise missing source term; do not patch with an arbitrary transfer factor"
+      ]
+    },
+    {
+      "id": "R47-T3",
+      "title": "Implement map/harmonic response and low-ell Gaussian likelihood",
+      "status": "PENDING",
+      "owner": "LOCAL_AGENT",
+      "depends_on": [
+        "R47-T2"
+      ],
+      "scope": [
+        "STF2/log-metric parameterization",
+        "real harmonic convention",
+        "angular quadrature",
+        "beam/mask/pixel observation operator",
+        "full covariance likelihood",
+        "local boost composition"
+      ],
+      "outputs": [
+        "solver_free_bianchi_i.py",
+        "lowell_map_likelihood.py",
+        "Cobaya plugin or likelihood adapter",
+        "unit and regression tests",
+        "synthetic run receipt"
+      ],
+      "acceptance": [
+        "No production hardcoded response coefficients",
+        "No fake T/E/B transfer",
+        "Input/output units and frame metadata explicit",
+        "Masked harmonic covariance not treated as diagonal",
+        "Small fixture likelihood matches direct Gaussian/pixel oracle",
+        "R42 source adapters read before extending; no duplicate wrapper API"
+      ],
+      "stop_conditions": [
+        "Keep E/B as unavailable in the Bianchi-I geodesic-only model",
+        "No Bianchi-V/VIIh extrapolation from the Bianchi-I map"
+      ]
+    },
+    {
+      "id": "R47-T4",
+      "title": "Acquire and verify Planck PR4/NPIPE plus matched controls",
+      "status": "PENDING",
+      "owner": "LOCAL_AGENT",
+      "depends_on": [
+        "R47-T3"
+      ],
+      "scope": [
+        "Official NPIPE full-sky frequency maps",
+        "half-ring/detector or other supported splits",
+        "masks",
+        "QuickPol effective beams",
+        "noise covariance",
+        "low-resolution products",
+        "end-to-end simulations"
+      ],
+      "outputs": [
+        "raw_data_manifest.json",
+        "map_transfer_manifest.yaml",
+        "frequency_split_identity.json",
+        "storage_and_hash_receipt.json"
+      ],
+      "acceptance": [
+        "Exact source URLs/release/filenames/bytes/SHA256",
+        "Map units, nside, ordering, frame, calibration and beam convention checked",
+        "Masks and effective transfer matched",
+        "Frequency split independence and shared-sky dependence documented",
+        "E-mode low-ell transfer suppression calibrated"
+      ],
+      "stop_conditions": [
+        "If full matched E2E simulations are unavailable, keep empirical null/FPR calibration BLOCKED while allowing a clearly labelled conditional map likelihood",
+        "Never mix PR3/FFP10 and PR4/NPIPE as one matched ensemble"
+      ]
+    },
+    {
+      "id": "R47-T5",
+      "title": "Observed CMB likelihood, Cobaya sampling and calibration",
+      "status": "PENDING",
+      "owner": "LOCAL_AGENT",
+      "depends_on": [
+        "R47-T4"
+      ],
+      "scope": [
+        "Observed map likelihood",
+        "predeclared low-ell range",
+        "background/foreground/boost nuisance",
+        "Cobaya sampling",
+        "matched null simulations",
+        "posterior predictive checks"
+      ],
+      "outputs": [
+        "cobaya_r47.yaml",
+        "chains_manifest.json",
+        "convergence_report.json",
+        "SBC_PPC_FPR_power.json",
+        "observed_CMB_result.json"
+      ],
+      "acceptance": [
+        "Raw input hashes and source ids match manifest",
+        "rank-normalized split-Rhat and bulk/tail ESS thresholds predeclared and passed",
+        "trace/rank/multimodal diagnostics archived",
+        "SBC and coverage pass under model-matched prior predictive draws",
+        "PPC and frequency/split robustness executed",
+        "No likelihood factor double-counts the same map or derived summaries"
+      ],
+      "stop_conditions": [
+        "Do not call an underpowered chain converged",
+        "Do not use C_ell-only Blackwell-Rao likelihood to claim phase/morphology inference",
+        "If a simulation family is missing, do not publish a calibrated anomaly probability"
+      ]
+    },
+    {
+      "id": "R47-T6",
+      "title": "L2 — Quasar and radio-source dipole anomaly",
+      "status": "PENDING",
+      "owner": "LOCAL_AGENT",
+      "depends_on": [
+        "R47-T1",
+        "R47-T4"
+      ],
+      "scope": [
+        "Quaia DR1 counts/redshift/flux bins",
+        "NVSS flux/declination response",
+        "RACS-low independent radio replication",
+        "CMB kinematic expectation"
+      ],
+      "target": "Separate kinematic observer contribution from intrinsic clustering/selection dipoles as a function of redshift, flux and tracer.",
+      "nuisance": [
+        "source evolution",
+        "flux slope and spectral index",
+        "mask/completeness/randoms",
+        "local structure",
+        "catalogue overlap and cross-covariance"
+      ],
+      "outputs": [
+        "L2_DIPOLE_RESULT.json",
+        "L2_SELECTION_NULLS.json",
+        "L2_SOURCE_RESPONSE_REPORT.md"
+      ],
+      "acceptance": [
+        "Source-level selection response derived from parent catalogues",
+        "Matched random/Poisson and local-structure mocks",
+        "No fixed rescaling between magnitude/flux cuts",
+        "Held-out tracer or cut predictive check",
+        "No intrinsic/global interpretation from a dipole alone"
+      ]
+    },
+    {
+      "id": "R47-T7",
+      "title": "L3 — Beyond-FLRW kinematical tensor measurement",
+      "status": "PENDING",
+      "owner": "LOCAL_AGENT",
+      "depends_on": [
+        "R47-T1",
+        "R47-T4"
+      ],
+      "scope": [
+        "Gaia DR3 source-level proper-motion likelihood",
+        "ICRF3/VLBI frame-spin anchor",
+        "Gaia VSH E1/B1/E2",
+        "CF4 only if original distance law is qualified",
+        "17D physical state chart"
+      ],
+      "target": "Estimate only nuisance-projected identifiable functionals of theta=(sigma_ab, omega_a, A_a, beta_RM, beta_MO).",
+      "nuisance": [
+        "reference-frame spin",
+        "scan law",
+        "source proper motions",
+        "source-selection",
+        "source/observer congruence",
+        "distance and finite-redshift remainder"
+      ],
+      "outputs": [
+        "L3_KINEMATIC_RESULT.json",
+        "L3_IDENTIFIABLE_SUBSPACE.json",
+        "L3_FRAME_GAUGE_REPORT.md"
+      ],
+      "acceptance": [
+        "Full source-level covariance, not only precomputed VSH coefficients",
+        "External spin-tie availability recorded",
+        "Jacobian/Fisher evaluated after shared nuisance projection",
+        "Null/kernel directions preserved",
+        "No Gaia B1-to-vorticity promotion without frame anchor"
+      ]
+    },
+    {
+      "id": "R47-T8",
+      "title": "L5 — Direction-dependent Hubble expansion and distance jets",
+      "status": "PENDING",
+      "owner": "LOCAL_AGENT",
+      "depends_on": [
+        "R47-T1",
+        "R47-T4"
+      ],
+      "scope": [
+        "Pantheon+ full distance-modulus likelihood",
+        "CF4 original distance data if qualified",
+        "DESI BAO only as isotropic background control",
+        "Loop-E local optical coefficients and finite-z remainder"
+      ],
+      "target": "Estimate h0(n), h1(n), and only the higher distance coefficients supported by the data.",
+      "nuisance": [
+        "redshift frame",
+        "peculiar velocities and local flow",
+        "Malmquist/selection",
+        "shared calibration",
+        "finite-distance remainder",
+        "angular survey window"
+      ],
+      "outputs": [
+        "L5_DIRECTIONAL_H_RESULT.json",
+        "L5_DISTANCE_JET_REGION.json",
+        "L5_REMAINDER_AND_SELECTION_REPORT.md"
+      ],
+      "acceptance": [
+        "Full covariance and stable row identity",
+        "Magnitude likelihood used without unjustified Gaussian distance transform",
+        "Finite-redshift validity domain and remainder declared",
+        "Expansion monopole/dipole/STF quadrupole separated",
+        "No use of isotropic compressed BAO to claim a preferred axis"
+      ]
+    },
+    {
+      "id": "R47-T9",
+      "title": "L6 — Local observer boost versus global radiation-matter tilt",
+      "status": "PENDING",
+      "owner": "LOCAL_AGENT",
+      "depends_on": [
+        "R47-T5",
+        "R47-T6",
+        "R47-T7",
+        "R47-T8"
+      ],
+      "scope": [
+        "CMB dipole plus aberration/modulation response",
+        "L2 redshift/flux/depth tracer measurements",
+        "L3 Gaia E1 with frame calibration",
+        "L5 directional distance products",
+        "exact ordered Lorentz boosts"
+      ],
+      "target": "Determine whether beta_MO and beta_RM are separately identifiable or only a quotient/combination is supported.",
+      "nuisance": [
+        "Wigner rotation",
+        "local LSS",
+        "survey selection and source evolution",
+        "shared calibration anchors",
+        "cross-probe covariance",
+        "frame conventions"
+      ],
+      "outputs": [
+        "L6_LOCAL_GLOBAL_RESULT.json",
+        "L6_RESPONSE_RANK.json",
+        "L6_HELDOUT_PREDICTION.json"
+      ],
+      "acceptance": [
+        "Same-state physical frame chain documented",
+        "Shared response evaluated at actual source redshift windows",
+        "Nuisance-projected rank and singular values reported",
+        "Held-out probe/depth prediction and matched mocks",
+        "No global-tilt claim from single dipole alignment"
+      ]
+    },
+    {
+      "id": "R47-T10",
+      "title": "L4 — Anisotropy classification and Bianchi geometry compatibility",
+      "status": "PENDING",
+      "owner": "LOCAL_AGENT",
+      "depends_on": [
+        "R47-T2",
+        "R47-T5",
+        "R47-T7",
+        "R47-T8"
+      ],
+      "scope": [
+        "Bianchi structure constants/Jacobi classes",
+        "spatial Ricci and Gauss-Codazzi constraints",
+        "Bianchi-I geodesic morphology",
+        "external Bianchi V/VIIh transfer only if verified",
+        "geometry/orbit equivalence classes"
+      ],
+      "target": "Classify which geometric families are compatible with the common kinematic/optical/CMB identified set and determine whether any family response is globally separating.",
+      "nuisance": [
+        "triad rotations and presentation equivalence",
+        "matter/anisotropic stress assumptions",
+        "frame changes",
+        "transfer provider uncertainty",
+        "foreground and map covariance"
+      ],
+      "outputs": [
+        "L4_BIANCHI_COMPATIBILITY.json",
+        "L4_FAMILY_EQUIVALENCE_CLASSES.json",
+        "L4_TRANSFER_PROVENANCE.json"
+      ],
+      "acceptance": [
+        "Jacobi and Hamiltonian/momentum constraints enforced",
+        "Spatial Ricci distinguished from temperature quadrupole and optical shear",
+        "Bianchi-I template not promoted to VIIh/V",
+        "Any external provider pinned and independently benchmarked",
+        "Family ID only after global nuisance-projected image separation"
+      ]
+    },
+    {
+      "id": "R47-T11",
+      "title": "Two-layer model × readout adversarial benchmark",
+      "status": "PENDING",
+      "owner": "LOCAL_AGENT",
+      "depends_on": [
+        "R47-T5",
+        "R47-T6",
+        "R47-T7",
+        "R47-T8",
+        "R47-T9",
+        "R47-T10"
+      ],
+      "scope": [
+        "Generative model competition",
+        "Inference/readout competition",
+        "R46 target-specific posterior information loss",
+        "SBC/FPR/power/coverage/PPC",
+        "held-out frequency/split/probe/depth"
+      ],
+      "outputs": [
+        "COMPETITOR_REGISTRY.yaml",
+        "MODEL_LIKELIHOOD_MATRIX.csv",
+        "TARGET_POSTERIOR_LOSS.json",
+        "SBC_PPC_FPR_POWER.json",
+        "HELDOUT_PREDICTIVE_SCORES.json"
+      ],
+      "acceptance": [
+        "All models use same data and applicable common subset",
+        "Generative model and readout method are separate axes",
+        "Proper likelihood/prior/evidence requirements met",
+        "The five-variable bundle remains one joint push-forward",
+        "HTT is allowed to lose on calibration or prediction"
+      ]
+    },
+    {
+      "id": "R47-T12",
+      "title": "Bounded independent review, publication decision and handoff",
+      "status": "PENDING",
+      "owner": "LOCAL_AGENT",
+      "depends_on": [
+        "R47-T11"
+      ],
+      "outputs": [
+        "R47_FINAL_REVIEW.md",
+        "PUBLICATION_DECISION.md",
+        "MANUSCRIPT_DRAFT.md",
+        "FINAL_HANDOFF.json"
+      ],
+      "acceptance": [
+        "One bounded independent review pass",
+        "Empirical and methods tracks adjudicated separately",
+        "All claims linked to source/code/data/run identities",
+        "NOT_RUN and failed gates explicit",
+        "Next continuation point and exact commands preserved"
+      ]
+    }
+  ],
+  "global_stop_conditions": [
+    "Never claim a physical parameter is identified from a rank result before nuisance projection and global response-equivalence checks.",
+    "Never call the full pipeline calibrated without the exact end-to-end null and held-out injections.",
+    "Never replace a missing source with fabricated constants, synthetic observations or hardcoded response factors.",
+    "Never infer current sigma(t0) from the integrated metric B_* without an admitted dynamical history.",
+    "Never count T/Q/U maps, component maps, split maps, a_lm and their deterministic summaries as independent sky realizations.",
+    "Never change source release, mask, multipole set, prior, data row order, target estimand or alpha after observing results without a new versioned analysis."
+  ],
+  "acceptance_policy": {
+    "empirical_claim": "Requires raw-source byte lock, exact forward/observation operator, admitted likelihood law, converged sampler, matched calibration and adversarial model comparison.",
+    "method_claim": "Requires complete mathematical contract, demonstrated implementation, comparative information/calibration results, and independent review.",
+    "family_identification": "Requires global family separation on the physical/observable quotient plus validated geometry-specific forward map, nuisance control and held-out calibration."
+  }
+}
