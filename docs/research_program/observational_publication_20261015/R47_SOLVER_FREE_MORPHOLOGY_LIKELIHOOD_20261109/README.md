@@ -91,7 +91,7 @@ This is only a **candidate**. R44–R46 already teach that information preservat
 
 ## 5. Short-term DAG and turn boundary
 
-The next work is intentionally split into distinct turns. Do not execute every future node during one turn.
+The next work is split into **13 bounded turns (R47-T0…R47-T12)**. L2 dipole, L3 kinematics, L5 directional Hubble, L6 local/global and L4 Bianchi classification each have their own turn; do not bundle them into one omnibus fit.
 
 1. **R47-T0 (this checkpoint):** source/status audit, literature synthesis, solver-free construction choice, branch and handoff docs. Complete when the branch and draft PR are readback-verified.
 2. **R47-T1:** relevance-indexed PR/legacy audit. Reconcile #565–#570 and older low-ell, FFP10/NPIPE, Bianchi/MES, EGS3, optical and five-variable source records. Do not reread unrelated PR diffs.
