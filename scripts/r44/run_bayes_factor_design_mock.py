@@ -423,3 +423,151 @@ def optimize_shell_design(seed: int = SEED, n_total_cost: int = 6000) -> dict[st
     constraint = {"type": "eq", "fun": lambda x: float(np.sum(x[:nbin]) + anchor_cost * x[-1] - n_total_cost)}
     bounds = [(min_shell, n_total_cost) for _ in range(nbin)] + [(min_anchor, n_total_cost / anchor_cost)]
     x0 = np.array([(n_total_cost - anchor_cost * 100.0) / nbin] * nbin + [100.0])
+    bounds = [(min_shell, n_total_cost) for _ in range(nbin)] + [(min_anchor, n_total_cost / anchor_cost)]
+    x0 = np.array([(n_total_cost - anchor_cost * 100.0) / nbin] * nbin + [100.0])
+    uniform = x0.copy()
+    # Multi-start SLSQP; use deterministic starting points, record optimizer state.
+    starts = [x0]
+    for weights in (np.array([.04,.06,.10,.14,.18,.18,.16,.14]),
+                    np.array([.14,.14,.14,.14,.12,.12,.10,.10])):
+        na = 120.0
+        counts = weights / weights.sum() * (n_total_cost - anchor_cost * na)
+        starts.append(np.r_[counts, na])
+    def multi_start(fun: Any) -> Any:
+        sols = []
+        for start in starts:
+            res = minimize(fun, start, method="SLSQP", bounds=bounds, constraints=[constraint],
+                           options={"maxiter": 1200, "ftol": 1e-10})
+            if res.success and np.isfinite(res.fun):
+                sols.append(res)
+        if not sols:
+            raise RuntimeError("optimal-design solver did not converge from any deterministic start")
+        return min(sols, key=lambda r: r.fun)
+    res_c = multi_start(objective_c)
+    res_d = multi_start(objective_d)
+    # Baselines: uniform with anchor, and no anchor (unidentifiable contrast).
+    c0, a0 = unpack(uniform)
+    md0 = _design_metrics(z, c0, a0)
+    cm, am = unpack(res_c.x)
+    dm = _design_metrics(z, cm, am)
+    cd, ad = unpack(res_d.x)
+    dd = _design_metrics(z, cd, ad)
+    no_anchor = _design_metrics(z, np.full(nbin, n_total_cost / nbin), 1e-20)
+    return {
+        "redshift_shells": z.tolist(),
+        "response": "g(z)=z/(z+0.12), synthetic only",
+        "mean_model": "g(z) beta_RM + beta_MO + d_intrinsic + c_z*z; independent low-z anchor measures beta_MO",
+        "covariance": "diag(sigma_stat^2/n_s) + sigma_cv^2 exp(-|z_s-z_s'|/L_corr), plus independent anchor variance sigma_anchor^2/n_anchor",
+        "resource_budget": {"total_cost": n_total_cost, "anchor_cost_multiplier": anchor_cost,
+                            "minimum_per_shell": min_shell, "minimum_anchor_count": min_anchor},
+        "target": "delta = beta_RM - beta_MO",
+        "allocations": {
+            "uniform": {"shell_counts": c0.tolist(), "anchor_count": a0,
+                        "target_variance": md0["c_variance"], "target_sigma": md0.get("c_sigma"), "logdet_Ieff": md0["logdet"]},
+            "c_optimal": {"shell_counts": cm.tolist(), "anchor_count": am,
+                          "target_variance": dm["c_variance"], "target_sigma": dm.get("c_sigma"), "logdet_Ieff": dm["logdet"],
+                          "optimizer_success": bool(res_c.success), "optimizer_message": str(res_c.message)},
+            "d_optimal": {"shell_counts": cd.tolist(), "anchor_count": ad,
+                          "target_variance": dd["c_variance"], "target_sigma": dd.get("c_sigma"), "logdet_Ieff": dd["logdet"],
+                          "optimizer_success": bool(res_d.success), "optimizer_message": str(res_d.message)},
+            "no_independent_beta_MO_anchor": {"rank": no_anchor["rank"], "target_variance": None,
+                                               "target_status": "UNIDENTIFIABLE",
+                                               "interpretation": "beta_MO shares a constant-redshift direction with intrinsic dipole; beta_RM-beta_MO is not data-identifiable"}
+        },
+        "relative_c_variance_reduction_c_optimal_vs_uniform": float(1.0 - dm["c_variance"] / md0["c_variance"]),
+        "relative_c_variance_reduction_c_optimal_vs_d_optimal": float(1.0 - dm["c_variance"] / dd["c_variance"]),
+        "scope": "one-dimensional dipole contrast design; response and covariance are synthetic; it is a method-design experiment, not an actual survey forecast"
+    }
+
+
+def run_design_calibration(design: dict[str, Any], seed: int = SEED, n_rep: int = 400) -> dict[str, Any]:
+    z = np.asarray(design["redshift_shells"], float)
+    rng = np.random.default_rng(seed)
+    truth = np.array([6.0e-4, -3.5e-4])
+    nuisance_truth = np.array([2.0e-4, -1.0e-4])
+    out = {}
+    for name in ("uniform", "c_optimal", "d_optimal"):
+        alloc = design["allocations"][name]
+        counts = np.asarray(alloc["shell_counts"], float)
+        na = float(alloc["anchor_count"])
+        D, N, C = _dipole_design(z, counts, na)
+        J = np.column_stack([D, N])
+        CiJ = _solve_cov(C, J)
+        F = J.T @ CiJ
+        V = np.linalg.inv(F)
+        V = 0.5 * (V + V.T)
+        A = V @ CiJ.T
+        mu = J @ np.r_[truth, nuisance_truth]
+        L = cholesky(C, lower=True)
+        estimates = np.empty((n_rep, 2))
+        for i in range(n_rep):
+            y = mu + L @ rng.normal(size=len(mu))
+            estimates[i] = (A @ y)[:2]
+        contrast = estimates[:, 0] - estimates[:, 1]
+        truth_c = truth[0] - truth[1]
+        c = np.array([1.0, -1.0])
+        sd = float(np.sqrt(c @ V[:2, :2] @ c))
+        cover = float(np.mean(np.abs(contrast - truth_c) <= norm.ppf(0.975) * sd))
+        out[name] = {"replications": n_rep, "truth_delta": float(truth_c),
+                     "analytic_sd_delta": sd, "empirical_rmse_delta": float(np.sqrt(np.mean((contrast - truth_c)**2))),
+                     "empirical_bias_delta": float(np.mean(contrast - truth_c)),
+                     "coverage_95": cover, "coverage_mcse": float(np.sqrt(0.95 * 0.05 / n_rep))}
+    return out
+
+
+def run_experiment(seed: int = SEED, n_rep: int = 250, n_design_rep: int = 400) -> dict[str, Any]:
+    common = common_covariance_model_experiment(seed, n_rep)
+    norm_demo = norm_sufficiency_counterexample()
+    beta_mo_only = beta_mo_readout_counterexample(seed)
+    dpi = binary_gaussian_data_processing()
+    design = optimize_shell_design(seed)
+    design_cal = run_design_calibration(design, seed + 1, n_design_rep)
+    return {
+        "schema": "htt.r44_bayes_factor_and_design_mock/1",
+        "seed": seed,
+        "classification": "SYNTHETIC_STATISTICAL_THEORY_EXPERIMENT_NOT_OBSERVATIONAL",
+        "research_scope": "tensorized posterior-pushforward T=(x,Q,Pi,F,G_F) versus physical generative theories/readout methods; no scalar-versus-tensor five-variable benchmark",
+        "exact_common_covariance_bayes_factor_sufficiency": common,
+        "scalar_norm_sufficiency_scope_test": norm_demo,
+        "beta_MO_only_readout_counterexample": beta_mo_only,
+        "binary_gaussian_data_processing": dpi,
+        "c_optimal_redshift_shell_design": design,
+        "design_mock_calibration": design_cal,
+        "main_conclusions": [
+            "For a common known covariance and candidates nested in one fixed linear chart, q=X^T C^-1(y-mu) is a common sufficient statistic for all candidate-model Bayes factors.",
+            "The complete Gaussian reference posterior mean/covariance recovers q exactly; when V is fixed, its mean alone is an invertible encoding of q.",
+            "This exact result does not extend automatically to model-dependent covariance, selection, window functions, or model-dependent summary maps.",
+            "A scalar norm is sufficient only under additional rotational symmetry of the prior and observation metric; anisotropic geometry can make direction essential.",
+            "The c-optimal redshift/anchor allocation for beta_RM-beta_MO need not coincide with a D-optimal allocation maximizing total information volume."
+        ],
+        "limitations": [
+            "No Planck, Gaia, Quaia, NVSS, Pantheon, DESI or other real survey data are used.",
+            "The redshift response g(z)=z/(z+0.12) is a synthetic design function, not a derived physical transfer kernel.",
+            "The mock is linear-Gaussian and local; it does not establish global identifiability or Bianchi family identification.",
+            "The five readout families remain a joint posterior push-forward and must not be multiplied as independent likelihood factors.",
+            "For actual model comparison, all competitors must use the same raw observation contract or the exact model-dependent covariance/selection likelihood; source-specific transfers remain unimplemented here."
+        ]
+    }
+
+
+def main() -> None:
+    p = argparse.ArgumentParser()
+    p.add_argument("--seed", type=int, default=SEED)
+    p.add_argument("--replications", type=int, default=250)
+    p.add_argument("--design-replications", type=int, default=400)
+    p.add_argument("--output", type=Path, default=Path("R44_MOCK_RESULTS.json"))
+    args = p.parse_args()
+    result = run_experiment(args.seed, args.replications, args.design_replications)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
+    print(json.dumps({
+        "output": str(args.output),
+        "max_logbf_error": result["exact_common_covariance_bayes_factor_sufficiency"]["max_abs_log_bf_error_raw_vs_complete_posterior_mV"],
+        "covariance_counterexample_delta": result["exact_common_covariance_bayes_factor_sufficiency"]["model_dependent_covariance_counterexample"]["log_bf_difference_despite_same_q"],
+        "c_optimal_variance_reduction_vs_uniform": result["c_optimal_redshift_shell_design"]["relative_c_variance_reduction_c_optimal_vs_uniform"],
+        "c_optimal_variance_reduction_vs_d_optimal": result["c_optimal_redshift_shell_design"]["relative_c_variance_reduction_c_optimal_vs_d_optimal"],
+    }, indent=2))
+
+
+if __name__ == "__main__":
+    main()
