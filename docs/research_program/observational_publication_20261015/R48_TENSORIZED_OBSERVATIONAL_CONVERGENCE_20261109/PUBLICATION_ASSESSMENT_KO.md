@@ -92,3 +92,16 @@
 **재사용할 기존 이론축:** WU-009 ideal Bianchi-I positive-quadratic temperature map과 exact observer boost, WU-010/011 processed local-observer response. 후자는 intrinsic Bianchi geometry/global matter tilt와 별개다. WU-011 continuum wide-mask 결과와 finite-HEALPix certification을 혼동하지 않는다.
 
 R48-T1 remote static audit는 PASS_SCOPED, local checkout/tests는 NOT_RUN. R48-T2는 R47 solver-free Bianchi-I map의 harmonic oracle로 진행하되 observer-boost operator와 분리한다. Bianchi V/VII_h, polarization, global tilt, vorticity 및 empirical anomaly claim은 현재 허용되지 않는다.
+
+
+## R48-T2 이론·수치 oracle 상태 (2026-11-09)
+
+Bianchi-I의 충돌 없는 온도 응답을 보존된 공간 운동량으로부터 유도했고, c를 유지하기 위해 에너지 차원의 보존량 \(\Pi_i=cp_i\)를 정의했다. 정확한 온도 지도는
+\[
+T_0(n)/\bar T_0=[n^T e^{-2B_\star}n]^{-1/2}
+\]
+이며, \(B_\star\)는 endpoint/integrated anisotropy다. 현재 shear \(\sigma_{ab}(t_0)\)와 동일시하지 않는다.
+
+독립 Python oracle에서 \(B=0\), 양의 정부호성, antipodal parity, SO(3) 회전 등변성, 고유값 순열, 저장실수 조화계수와 STF 적분의 일치, quadrature 수렴, \(Q(B_\star)=B_\star+O(B_\star^2)\), monopole의 cubic 보정 \(4\,\mathrm{tr}(B_\star^3)/315\)을 수치 확인했다. 유한 진폭에서는 \(\ell=4,6,\ldots\) 짝수 모드가 생기지만 이상적인 map의 홀수 모드는 0이다.
+
+이는 이론·합성 oracle 결과다. 정확한 repo 코드의 import/pytest, Planck source-matched mask/beam/pixel/noise/foreground transfer 및 전체 공분산은 미실행/미확보다. 따라서 R48-T2는 부분 진행 상태로 유지하고 관측 우도와 경험적 발견은 HOLD한다. Cobaya는 이 단계에 필요하지 않다.

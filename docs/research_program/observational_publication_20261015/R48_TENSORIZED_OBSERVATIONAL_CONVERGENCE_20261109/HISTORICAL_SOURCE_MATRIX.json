@@ -191,6 +191,36 @@
       "source": "ChatGPT Library search HTT_GITHUB_PR_PUBLICATION_INDEX_20260802.csv",
       "ref": "turn82file4",
       "reuse": "historical navigation index only; R48 chain remains controlling authority"
+    },
+    {
+      "source": "GitHub T1 stored-real STF theorem pack",
+      "path": "docs/research_reports/theory_packs/T1_STORED_REAL_STF_THEOREM_PACK.md",
+      "blob": "6c2480c3d1adc9e76344994dcf1fc2d5c11365f4",
+      "reuse": "Exact Condon-Shortley stored-real basis, signs, STF2 basis and Frobenius metric; pins R48 harmonic adapter."
+    },
+    {
+      "source": "GitHub low-ell irrep projection implementation",
+      "path": "htt/obsstat/planck_lowell_irrep_projection.py",
+      "blob": "35be2de9114a928c485cf76b3fb679cac8ed4bd7",
+      "reuse": "Existing stored-real-to-Cartesian STF2 bridge; raw alm API requires explicit sqrt(2) and sine-slot sign adapter."
+    },
+    {
+      "source": "GitHub notation and convention registry v3",
+      "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml",
+      "blob": "2245e291e0b03c65f1a789df8649a194c43fe8fd",
+      "reuse": "Frozen metric signature, observer/frame arrows, local boost convention, harmonic reality and covariance/domain rules."
+    },
+    {
+      "source": "GitHub T1 Wolfram exact receipt",
+      "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/T1_WOLFRAM_EXACT_RECEIPT.json",
+      "blob": "1a76f4e210c6ccaee4f477b4ae31667536f3ca6c",
+      "reuse": "Historical exact symbolic validation of STF2/STF3 basis and norm identities; not current R48 runtime evidence."
+    },
+    {
+      "source": "GitHub R47 methods",
+      "path": "docs/research_program/observational_publication_20261015/R47_SOLVER_FREE_MORPHOLOGY_LIKELIHOOD_20261109/METHODS_NO_BOLTZMANN.md",
+      "blob": "f5b5e4b966f6775ca5340da1cb4c66c501ed00a0",
+      "reuse": "Bianchi-I geodesic temperature map and map-level likelihood contract; R48 adds c bookkeeping, higher-order monopole and independent numeric oracle."
     }
   ],
   "cobaya_independent_capabilities": [
@@ -245,6 +275,15 @@
       "path": "R47 Bianchi-I temperature response",
       "status": "ANALYTIC_SOLVER_FREE_SPECIFICATION_ONLY",
       "scope": "geodesic temperature map and low-amplitude harmonic/quadrature oracles can proceed without Boltzmann transfer/Cobaya; production module not yet present"
+    },
+    {
+      "path": "L1_MORPHOLOGY_RESPONSE.md + L1_HARMONIC_OPERATOR_SPEC.json",
+      "status": "ANALYTIC_AND_NUMERICALLY_CHECKED_WITHOUT_COBAYA",
+      "dependencies": [
+        "NumPy",
+        "SciPy"
+      ],
+      "scope": "Exact Bianchi-I collisionless temperature map and harmonic/quadrature oracle; source-matched observation operator remains blocked."
     }
   ],
   "key_dispositions": {
@@ -260,5 +299,10 @@
     "No raw Planck maps/alms, full covariance, source catalogues or chain files were mounted in this session.",
     "Inherited PR/branch inventory is metadata-complete as recorded by R48-T0; content review remains relevance-indexed.",
     "No Cobaya sampler, observational likelihood or native subagent was executed in this turn."
-  ]
+  ],
+  "latest_scoped_research": {
+    "R48_T1": "PASS_SCOPED_REMOTE_STATIC_AUDIT",
+    "R48_T2": "DERIVATION_AND_MOCK_ORACLE_COMPLETE_SOURCE_OPERATOR_BLOCKED",
+    "status_basis": "Python 3.13.5 / NumPy 2.3.5 / SciPy 1.17.0 independent deterministic oracle; exact repository test execution NOT_RUN."
+  }
 }

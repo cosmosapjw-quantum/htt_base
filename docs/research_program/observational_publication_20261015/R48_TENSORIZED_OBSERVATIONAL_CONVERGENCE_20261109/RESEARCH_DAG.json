@@ -146,7 +146,46 @@
         "R47 solver-free Bianchi-I map; B_star is integrated history, not present sigma",
         "WU-010/011 local-observer Lorentz pullback as a separate operator, never identified with intrinsic Bianchi-I anisotropy",
         "WU-011 Task-5A/5B metric whitening, physical monopole/a00 typing, complete ell=6 block and rotation-complete derivative gates"
-      ]
+      ],
+      "progress_status": "DERIVATION_AND_MOCK_ORACLE_COMPLETE_SOURCE_OPERATOR_BLOCKED",
+      "partial_completion_record": {
+        "completed_at": "2026-11-09",
+        "completed_scope": [
+          "Conserved spatial momentum derivation with c retained via Pi_i=c p_i",
+          "Exact positive-definite Bianchi-I collisionless temperature map",
+          "Small-B STF quadrupole and quadratic+cubic angular-monopole expansions",
+          "Stored-real Condon-Shortley harmonic convention locked to existing T1 theorem and STF bridge",
+          "Independent deterministic map, parity, rotation, eigenvalue-permutation, quadrature and STF projection oracle"
+        ],
+        "acceptance_evidence": {
+          "mask_beam_pixel_noise_foreground_transfer": "BLOCKED_MISSING_SOURCE_MATCHED_INPUT",
+          "lowell_phase": "PRESERVED_IN_FULL_REAL_HARMONIC_COEFFICIENT_VECTOR",
+          "off_diagonal_covariance": "SPECIFIED_BUT_NOT_IMPLEMENTED_WITHOUT_OBSERVATION_OPERATOR",
+          "bianchi_template_parity": "PASS_EXACT_EVEN_MAP_ODD_ELL_ZERO",
+          "temperature_quadrupole_vs_present_shear": "PASS_B_STAR_DISTINCT_FROM_SIGMA_T0",
+          "direct_pixel_harmonic_oracle": "PASS_NUMERICALLY_CHECKED_INDEPENDENT",
+          "intrinsic_vs_local_observer_operator": "PASS_TYPED_SEPARATION_IN_SPEC",
+          "wu011_metric_whitening": "NOT_EXERCISED_ON_UNPROCESSED_MEAN; REQUIRED_FOR_COVARIANCE_OPERATOR",
+          "wu011_T0_a00_ell6_derivative_gates": "SEPARATE_LOCAL_OBSERVER_OPERATOR_OBLIGATION; NOT_CLAIMED_AS_PASSED_HERE"
+        },
+        "repository_runtime": "NOT_RUN",
+        "empirical_claim_effect": "NONE; empirical discovery remains HOLD"
+      },
+      "remaining_work": [
+        "Implement the map and harmonic projection using the frozen operator spec and existing T1 STF bridge; do not duplicate basis APIs.",
+        "Run exact-head repository unit tests and record environment/command/exit/output hashes.",
+        "Source-bind mask, beam, pixel, frequency, filtering, noise and foreground transfer/covariance or keep the observation operator typed UNAVAILABLE.",
+        "Do not begin observed likelihood or infer present shear until the required transfer/dynamical closure is admitted."
+      ],
+      "acceptance_status": {
+        "Mask/beam/pixel/noise/foreground transfer in source-matched forward operator": "BLOCKED_MISSING_INPUT",
+        "Low-ell phase and off-diagonal covariance retained": "PHASE_SPECIFIED; COVARIANCE_OPERATOR_NOT_IMPLEMENTED",
+        "BI template even under n->-n and restricted to temperature geodesic response": "PASS_NUMERICALLY_CHECKED",
+        "Temperature quadrupole not equated to sigma without transport closure": "PASS",
+        "Direct pixel/harmonic oracle, rotation/parity and quadrature tests pass": "PASS_INDEPENDENT_ORACLE; REPOSITORY_TESTS_NOT_RUN",
+        "Intrinsic Bianchi-I source response and local-observer Lorentz pullback remain typed as separate operators": "PASS_SPEC",
+        "WU-011 metric whitening, physical T0 versus harmonic a00, complete ell=6 response block and rotation-complete derivative checks": "SEPARATE_OPERATOR; NOT_CLAIMED_FOR_BI_MAP"
+      }
     },
     {
       "id": "R48-T3",
@@ -519,9 +558,9 @@
   ],
   "restart_pointer": {
     "next_task": "R48-T2",
-    "precondition": "Local agent first verifies exact updated R48 head and executes bounded R46/R42 tests; no local changes are overwritten.",
-    "next_work": "Solver-free Bianchi-I low-ell temperature morphology oracle, separately typed from local-observer boost.",
-    "cobaya_policy": "No Cobaya production before direct likelihood/source/covariance/injection gates.",
+    "precondition": "First verify exact remote branch and run the bounded T1/R46/R42 local replay. Then implement/replay the prepared L1 map and harmonic oracle.",
+    "next_work": "R48-T2 local repository integration plus source-matched observation-operator intake; no re-derivation needed.",
+    "cobaya_policy": "No Cobaya production or observed-data inference until source, transfer, covariance, direct likelihood and calibration gates pass.",
     "local_agent_prompt": "LOCAL_AGENT_RESTART_PROMPT_KO.md"
   }
 }

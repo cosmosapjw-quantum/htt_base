@@ -40,3 +40,14 @@ R48-T1 is PASS_SCOPED for remote static source reconciliation. The current R42 i
 Cobaya-independent paths and numerical evidence are documented in HISTORICAL_SOURCE_MATRIX.json, PHYSICAL_STATE_FRAME_EPOCH_CONTRACT.md, R42_CONTRADICTION_REPLAY_PLAN.md, COBAYA_FREE_ANALYSIS_PATHS.md and R48_T1_SOURCE_AUDIT_REPORT.md.
 
 The 40,000-draw R46 target-compression replication and independent Bianchi-I small-amplitude quadrature are synthetic/theory checks only. Empirical discovery remains HOLD. Local tests, observed-data inference, native transfer and independent review were not run. The next DAG task is R48-T2 after exact-head local validation.
+
+
+## R48-T2 scoped theory/oracle result (2026-11-09)
+
+The Bianchi-I collisionless temperature map is now derived with explicit c bookkeeping from conserved spatial momenta. An independent deterministic oracle checked the exact positive map, antipodal parity, SO(3) covariance, eigenvalue permutation, stored-real harmonic/STF consistency, quadrature convergence, the \(Q(B_\star)=B_\star+O(B_\star^2)\) limit, and the angular monopole through cubic order:
+\[
+\langle T_0/\bar T_0-1\rangle=-2\,\mathrm{tr}(B_\star^2)/15+4\,\mathrm{tr}(B_\star^3)/315+O(\|B_\star\|^4).
+\]
+The finite-amplitude map generates higher even multipoles but no odd ones. The target remains \(B_\star\), not \(\sigma(t_0)\).
+
+R48-T2 remains PENDING: repository implementation/tests and the source-matched beam/mask/pixel/noise/foreground/transfer covariance are not yet available. This theory/oracle work is Cobaya-independent and does not create an observational likelihood.

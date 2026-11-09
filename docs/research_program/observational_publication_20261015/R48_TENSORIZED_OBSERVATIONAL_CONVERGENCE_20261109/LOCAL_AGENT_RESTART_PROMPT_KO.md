@@ -1,3 +1,51 @@
+# R48 local continuation: T1 audit closed, T2 theory/oracle prepared
+
+> This continuation supersedes the older instruction to begin R48-T2 derivation from scratch. T1 is PASS_SCOPED at the remote static-audit level. T2 now has a derived Bianchi-I geodesic temperature map and an independently numerically checked harmonic/quadrature oracle. T2 itself remains PENDING until the exact repository implementation/tests and source-matched observation operator are addressed.
+
+## Live authority and safety
+
+- Repository: cosmosapjw-quantum/htt_base
+- Branch: research/r48-tensorized-observational-convergence-20261109
+- PR #572 remains OPEN/DRAFT and must not be merged or retargeted.
+- Resolve the live branch HEAD from GitHub before work. Do not assume a hash embedded in an earlier prompt is current.
+- Inspect git status, branch, HEAD, remotes and all uncommitted work. Never reset, clean, stash or overwrite user changes.
+- No raw maps, catalogues, chains or large external data belong in Git.
+
+## First: local replay of T1
+
+Read HISTORICAL_SOURCE_MATRIX.json, PHYSICAL_STATE_FRAME_EPOCH_CONTRACT.md, R42_CONTRADICTION_REPLAY_PLAN.md, COBAYA_FREE_ANALYSIS_PATHS.md and R48_T1_SOURCE_AUDIT_REPORT.md. Run the bounded R46 compression and R42 unit tests listed in COBAYA_FREE_ANALYSIS_PATHS.md. Capture command, environment, exit code, stdout/stderr, Git SHA and output hashes. Do not interpret pseudo-null fixtures as Planck MC100, and do not treat a historical CI receipt as a current exact-head run.
+
+## Continue R48-T2 without repeating the derivation
+
+Read L1_MORPHOLOGY_RESPONSE.md, L1_HARMONIC_OPERATOR_SPEC.json and L1_MOCK_ORACLE_REPORT.json. The analytical object is already fixed:
+\[
+T_0(n)/\bar T_0=[n^T e^{-2B_\star}n]^{-1/2}.
+\]
+The map follows from conserved spatial momenta in Bianchi I, an isotropic sharp Planck emission surface and collisionless propagation. Its target is B_star, not present sigma(t0). It is positive and even under n -> -n; it generates only even ell in this ideal temperature channel. The independent oracle has already checked parity, rotation, eigenvalue permutation, positivity, the small-B STF limit, the cubic monopole expansion and quadrature refinement.
+
+### Required local implementation pass
+
+1. Implement the deterministic map and harmonic projection using the current repository architecture. Reuse htt/obsstat/planck_lowell_irrep_projection.py and the frozen T1 stored-real convention. Do not introduce a second STF2 basis or duplicate bridge.
+2. Convert stored-real coefficients to the existing raw-alm bridge API explicitly:
+   \[
+   (a_{20},\Re a_{21},\Im a_{21},\Re a_{22},\Im a_{22})
+   =(c_{20},c_{21c}/\sqrt2,-c_{21s}/\sqrt2,c_{22c}/\sqrt2,-c_{22s}/\sqrt2).
+   \]
+3. Add tests for B=0, finite SPD, unit-direction validation, antipodal parity, arbitrary SO(3) rotation, cyclic eigenvalue permutation, first-order Q(B)=B+O(B^2), direct quadrature versus harmonic/STF projection, the monopole expansion through cubic order, odd-ell null and generic finite-amplitude even ell>=4.
+4. Keep reference-monopole and angular-mean-subtracted maps distinct. Record which one the observed product uses; never silently set a00 to zero.
+5. Keep the intrinsic Bianchi-I map separate from WU-010/011 local-observer Lorentz pullback. Only compose after R/M/O frame arrows, epoch, tetrad/basis, direction sign and processing order are explicit.
+6. Keep the beam/mask/pixel/frequency/filter/noise/foreground/transfer operator typed UNAVAILABLE unless exact source identities and response/covariance are present. A Gaussian diagonal covariance is not a substitute for masked mode coupling.
+7. Keep E/B polarization, recombination/visibility, anisotropic perturbation covariance, Bianchi V/VII_h, present-shear identification and empirical anomaly claims outside this map-only implementation.
+
+### Stop rule / exit state
+
+- If local code and oracle tests pass but raw observation transfer is missing, return MAP_AND_HARMONIC_OPERATOR_IMPLEMENTED / OBSERVATIONAL_OPERATOR_BLOCKED, not overall observational PASS.
+- Do not start Cobaya. No MCMC is needed for the geometric map or deterministic harmonic projection.
+- Do not advance to T5/T7/T8 until relevant T2/T3/T4 dependencies are actually satisfied.
+- One implementation pass, one bounded adversarial review, at most one repair pass. Preserve failed tests and exact logs; do not expand into another generic audit loop.
+
+---
+
 # R48 local agent restart: T1 remote audit closed, local replay then T2
 
 > This addendum supersedes the older instruction below that says to begin R48-T1 from scratch. R48-T1 is now PASS_SCOPED for remote static source reconciliation and bounded analytic/toy oracles. Local runtime verification remains NOT_RUN.
