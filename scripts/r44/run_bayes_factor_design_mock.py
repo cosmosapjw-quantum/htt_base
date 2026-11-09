@@ -278,17 +278,9 @@ def norm_sufficiency_counterexample() -> dict[str, Any]:
             "posterior_mean_norms": aniso_norms,
             "log_bfs": aniso_bfs,
             "absolute_log_bf_difference": abs(aniso_bfs[0] - aniso_bfs[1]),
-            "interpretation": "The scalar norm discards orientation that matters to an anisotropic likelihood."
-        }
-    }
-            "posterior_mean_norms": aniso_norms,
-            "log_bfs": aniso_bfs,
-            "absolute_log_bf_difference": abs(aniso_bfs[0] - aniso_bfs[1]),
         },
         "interpretation": "A scalar vector norm can be sufficient only under a symmetry-compatible model/prior/metric. Anisotropic survey geometry generally makes direction decision-relevant."
     }
-
-
 
 def beta_mo_readout_counterexample(seed: int = SEED) -> dict[str, Any]:
     """Same beta_MO vector readout, different M1-vs-M2 evidence due to beta_RM."""
@@ -421,8 +413,6 @@ def optimize_shell_design(seed: int = SEED, n_total_cost: int = 6000) -> dict[st
         ld = _design_metrics(z, counts, na)["logdet"]
         return -ld if np.isfinite(ld) else 1e12
     constraint = {"type": "eq", "fun": lambda x: float(np.sum(x[:nbin]) + anchor_cost * x[-1] - n_total_cost)}
-    bounds = [(min_shell, n_total_cost) for _ in range(nbin)] + [(min_anchor, n_total_cost / anchor_cost)]
-    x0 = np.array([(n_total_cost - anchor_cost * 100.0) / nbin] * nbin + [100.0])
     bounds = [(min_shell, n_total_cost) for _ in range(nbin)] + [(min_anchor, n_total_cost / anchor_cost)]
     x0 = np.array([(n_total_cost - anchor_cost * 100.0) / nbin] * nbin + [100.0])
     uniform = x0.copy()
