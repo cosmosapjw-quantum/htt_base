@@ -163,3 +163,69 @@ w_c^*=\arg\min_{w\in\mathcal W}c^TI_{eff}(w)^{-1}c,
 \]
 이고 D-optimal allocation은 \`log det I_eff\`를 최대화한다. singular nuisance block에서는 projection/generalized inverse를 사용하고 target이 \`range(I_eff)\`에 속하는지 검사한다. cross-shell covariance를 독립 shell sum으로 대체하지 않는다.
 
+### 7.1 Seeded design 결과
+
+고정 비용 6000, 8개 shell \`z=[0.015,0.035,0.07,0.13,0.24,0.42,0.72,1.10]\`, shell 최소 40, independent anchor 비용 4배, anchor 최소 25로 두었다.
+
+| Allocation | anchor count | target variance \`Var(beta_RM-beta_MO)\` | target sigma |
+|---|---:|---:|---:|
+| Uniform | 100.0 | \`1.67156e-7\` | \`4.08847e-4\` |
+| c-optimal | 120.0 | \`1.66040e-7\` | \`4.07481e-4\` |
+| D-optimal | 1239.5 | \`1.93283e-7\` | \`4.39640e-4\` |
+
+- c-optimal는 D-optimal보다 목표 contrast variance를 **14.09% 낮췄다**.
+- c-optimal와 uniform의 차이는 **0.67%**뿐이다. 이 toy response/noise에서는 uniform allocation도 이미 target에 가깝다.
+- D-optimal는 전체 information volume을 크게 하기 위해 independent anchor에 비용을 더 투입했지만, 그 선택은 beta_RM-beta_MO contrast의 최소 variance와 일치하지 않는다.
+- beta_MO anchor가 없으면 2차원 물리 parameter 중 efficient rank는 1로 떨어지고 beta_RM-beta_MO는 \`UNIDENTIFIABLE\`이다. intrinsic dipole와 beta_MO가 동일한 constant-redshift mode이기 때문이다.
+
+동일한 3000회 independent Gaussian mock calibration에서 delta 95% interval coverage는 c-optimal 0.9503, D-optimal 0.9480, uniform 0.9490이었고 binomial MCSE는 0.00398이다. 이는 명시된 toy linear-Gaussian model의 calibration이지 실제 survey forecast가 아니다.
+
+## 8. 전체 실험 요약
+
+| Check | Result | Evidence status |
+|---|---:|---|
+| 5 competitor log-BF raw vs score max abs error | \`1.39e-13\` | numerically checked |
+| log-BF raw vs full reference posterior max abs error | \`1.39e-13\` | numerically checked |
+| model-dependent covariance, same q but different log BF | \`0.2222222\` | constructed counterexample |
+| same beta_MO posterior vector, M2 BF changes | \`0.1270692\` | constructed counterexample |
+| equal scalar norm, anisotropic geometry BF difference | \`0.3555556\` | constructed counterexample |
+| compressed/raw KL ratio | \`0.56889\` | exact Gaussian calculation |
+| compressed/raw TV ratio | \`0.76919\` | exact Gaussian calculation |
+| c-optimal vs D-optimal target variance reduction | \`14.09%\` | numerically checked design mock |
+| calibration replications | \`3000\` per allocation | synthetic-only |
+
+The fixed-covariance Gaussian evidence identity was independently checked with Wolfram Language in a scalar conjugate case; the symbolic difference reduced to exactly zero. Local R44 tests: **7 passed**; \`compileall\` passed; same-seed full results were byte-identical (SHA-256 \`a4a05155b9101a189181f2874f5bae08d3ef35f577f7cdf2e572dc4a39c4412f\`).
+
+## 9. Prior art and contribution boundary
+
+The mathematical basis is established statistical theory, not a new information-theory theorem:
+
+- Blackwell, “Comparison of Experiments” (1951) and “Equivalent Comparisons of Experiments” (1953): comparison/sufficiency of statistical experiments. [Project Euclid 1951](https://projecteuclid.org/ebooks/berkeley-symposium-on-mathematical-statistics-and-probability/Comparison-of-Experiments/chapter/Comparison-of-Experiments/bsmsp/1200500222), [Annals of Mathematical Statistics 1953](https://doi.org/10.1214/aoms/1177729032).
+- Neyman & Pearson (1933): likelihood-ratio most-powerful testing. [Royal Society](https://doi.org/10.1098/rsta.1933.0009).
+- Csiszár (1967) and Liese & Vajda: f-divergence data processing, sufficiency and hypothesis testing. Equality needs its convexity/dominance conditions and should not be stated as an unrestricted iff for every divergence generator. [Csiszár original journal scan](https://adt.arcanum.com/en/view/MTA_StudScientMath_02?pg=314), [Liese–Vajda treatment](https://library.utia.cas.cz/separaty/2009/SI/vajda-fdivergences%20sufficiency%20deficiency%20and%20testing%20of%20hypotheses.pdf).
+- Robert et al. (2011) warn that summary-statistic ABC model choice can be unreliable when summaries discard model information. [PNAS](https://www.pnas.org/doi/10.1073/pnas.1102900108).
+- Marin et al. (2014) give asymptotic consistency conditions for relevant summary statistics in Bayesian model choice. This is not a general exact full-data Bayes-factor identity. [JRSS B](https://doi.org/10.1111/rssb.12056).
+- Elfving (1952) develops scalar-optimal allocation in linear regression. [Project Euclid](https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-23/issue-2/Optimum-Allocation-in-Linear-Regression-Theory/10.1214/aoms/1177729442.full).
+- Ruggeri et al. (2017) derive optimal redshift weighting for RSD evolution. [MNRAS](https://doi.org/10.1093/mnras/stw2422).
+- Bailoni, Spurio Mancini & Amendola (2017) include survey windows and redshift-bin cross-correlations in galaxy-survey Fisher forecasts. [MNRAS](https://academic.oup.com/mnras/article/470/1/688/3833246).
+
+**Potential HTT contribution is not these classical results.** It is to specify a physically typed posterior-pushforward \`T\`, expose its null/gauge/anchor structure, and test which parts of its \`x,Q,Pi,F,G_F\` representation preserve decision-relevant quantities for a declared family of cosmological generators. To claim a methods-paper contribution, actual source-conditioned operators must show that the implemented readout has the required common-statistic/evidence-preservation properties or quantify the information it loses, and that its diagnostics improve a predeclared task beyond established BipoSH, multipole-vector, multi-tracer, VSH, score-compression and covariant Hubble-multipole methods.
+
+## 10. Limitations / promotion gate
+
+- No observed catalogues, masks, selection functions, physical Bianchi transfer kernels, Planck MC products, Gaia scan-law simulations, Cobaya sampling or empirical evidence are used.
+- The Gaussian theorem presumes a common known base covariance and shared linear chart. Actual source-level covariance/selection differences can invalidate its premise.
+- The redshift response \`g(z)=z/(z+0.12)\` is an experimental design function only.
+- Model M3 in R43 is a shear tensor kinematic proxy, not a physical Bianchi I/V/VII_h solution.
+- The theorem says when a statistic preserves model evidence; it does not prove the current HTT \`x\` implementation is that statistic.
+- Do not promote empirical detection, family identification or publication readiness from R44 results.
+
+## 11. Reproduction
+
+\`\`\`bash
+python scripts/r44/run_bayes_factor_design_mock.py \\
+  --seed 20261109 --replications 500 --design-replications 3000 \\
+  --output docs/research_program/observational_publication_20261015/R44_BAYES_FACTOR_DESIGN_20261109/R44_MOCK_RESULTS.json
+pytest -q tests/r44
+python -m compileall -q scripts/r44 tests/r44
+\`\`\`
