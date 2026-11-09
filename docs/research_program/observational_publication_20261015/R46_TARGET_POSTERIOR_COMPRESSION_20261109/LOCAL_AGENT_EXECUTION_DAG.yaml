@@ -1,0 +1,73 @@
+schema: htt.r46_local_agent_execution_dag/1
+program: HTT_R46_TARGET_POSTERIOR_COMPRESSION_TO_PHYSICAL_ESTIMANDS
+parent_branch: research/r45-model-posterior-information-loss-20261109
+parent_commit: 3a6d76a884214e309b69d6b548bc2277b25bbe88
+branch: research/r46-target-posterior-compression-20261109
+nodes:
+  - id: R46-LA-00
+    title: Clean checkout and replay R46
+    status: READY
+    outputs: [head_receipt, source_test_identity, pytest_compileall_receipts, replay_receipt]
+    acceptance: [exact_remote_head, compileall_pass, pytest_r46_pass, same_seed_replay_classified]
+  - id: R46-LA-01
+    title: Derive physical target maps
+    status: PENDING
+    outputs: [PHYSICAL_TARGET_REGISTRY.yaml, STF_BASIS_GRAM_RECEIPT.json]
+    acceptance:
+      - read authoritative tensor and basis definitions
+      - derive shear, vorticity and acceleration invariants by metric contraction
+      - record units, frame, gauge, normalization and tensor symmetries
+      - no Euclidean norm on STF coordinates without Gram matrix
+  - id: R46-LA-02
+    title: Build common raw observation and likelihood contract
+    status: PENDING
+    outputs: [COMMON_RAW_OBSERVATION_CONTRACT.yaml, MODEL_LIKELIHOOD_REGISTRY.yaml]
+    acceptance:
+      - common Y space, releases, masks/windows, selection and likelihood normalization
+      - retain model-dependent covariance and transfer terms
+      - record prior and nuisance parameterization per competitor
+  - id: R46-LA-03
+    title: Map HTT joint summary to physical estimands
+    status: PENDING
+    outputs: [HTT_PHYSICAL_TARGET_MAP.yaml, TARGET_POSTERIOR_ESTIMATOR.py]
+    acceptance:
+      - T=(x,Q,Pi,F,G_F) remains one joint posterior push-forward
+      - no independent likelihood multiplication of T components
+      - estimate I(Psi;Y|T) and I(Lambda;Y|T) separately
+  - id: R46-LA-04
+    title: Validate nonlinear target estimators
+    status: PENDING
+    outputs: [TARGET_ESTIMATOR_CALIBRATION.json, SBC_REPORT.json]
+    acceptance:
+      - prior-predictive simulation and posterior reference samples
+      - calibration and tail/multimodality tests
+      - MCSE and finite-simulation bias
+  - id: R46-LA-05
+    title: Repair source-bound Pi and G_F flows
+    status: PENDING
+    outputs: [MATCHED_NULL_SOURCE_RECEIPT.json, SHELL_COVARIANCE_RECEIPT.json]
+    acceptance:
+      - authentic matched-null samples for Pi
+      - actual shell vectors and full cross-shell covariance for G_F
+      - distinguish observation covariance from posterior-pushforward covariance
+  - id: R46-LA-06
+    title: Cobaya production and model comparison
+    status: PENDING
+    outputs: [COBAYA_CONFIG.yaml, CHAIN_RECEIPT.json, EVIDENCE_REPORT.json]
+    acceptance:
+      - exact source/config/likelihood hashes for chain reuse
+      - real Cobaya sampling, not a relabelled optimizer
+      - split-Rhat, bulk/tail ESS, prior-predictive SBC and posterior predictive checks
+  - id: R46-LA-07
+    title: Empirical claim adjudication
+    status: PENDING
+    outputs: [CLAIM_LEDGER_UPDATE.json, PUBLICATION_DECISION.md]
+    acceptance:
+      - distinguish estimand, full-parameter, model-index and evidence claims
+      - empirical detection and Bianchi identity remain HOLD until source-bound gates pass
+stop_conditions:
+  - no observational/Bianchi claim from synthetic mocks
+  - no physical invariant before basis and metric contraction are verified
+  - no promotion of target sufficiency to full-latent or Bayes-factor sufficiency
+  - preserve R44/R45 Pi and G_F source requirements
+  - classify failure: theory, numerical, implementation, runtime, input, provenance or authorization
