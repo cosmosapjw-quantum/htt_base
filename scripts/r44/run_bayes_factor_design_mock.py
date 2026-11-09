@@ -281,3 +281,145 @@ def norm_sufficiency_counterexample() -> dict[str, Any]:
             "interpretation": "The scalar norm discards orientation that matters to an anisotropic likelihood."
         }
     }
+            "posterior_mean_norms": aniso_norms,
+            "log_bfs": aniso_bfs,
+            "absolute_log_bf_difference": abs(aniso_bfs[0] - aniso_bfs[1]),
+        },
+        "interpretation": "A scalar vector norm can be sufficient only under a symmetry-compatible model/prior/metric. Anisotropic survey geometry generally makes direction decision-relevant."
+    }
+
+
+
+def beta_mo_readout_counterexample(seed: int = SEED) -> dict[str, Any]:
+    """Same beta_MO vector readout, different M1-vs-M2 evidence due to beta_RM."""
+    X, Z, C, *_ = build_design(anchors=True, tomography=True)
+    Cbar = nuisance_integrated_covariance(Z, C)
+    CinvX = _solve_cov(Cbar, X)
+    G = X.T @ CinvX
+    V = np.linalg.inv(np.diag(1.0 / THETA_STD**2) + G)
+    # Preserve only the beta_MO posterior mean vector, while changing beta_RM score.
+    rows = V[14:17, :] @ X.T @ _solve_cov(Cbar, np.eye(len(Cbar)))
+    N = null_space(rows)
+    if N.shape[1] == 0:
+        raise RuntimeError("no null direction for beta_MO-only readout counterexample")
+    # Choose the null-space direction most visible to the beta_RM score.
+    target = _solve_cov(Cbar, X[:, 11:14])
+    coeff = N.T @ target
+    h = N @ coeff[:, int(np.argmax(np.linalg.norm(coeff, axis=0)))]
+    h /= np.sqrt(h @ _solve_cov(Cbar, h))
+    y0 = np.zeros(len(Cbar))
+    y1 = h
+    m0, V0, q0, G0 = reference_posterior(y0, X, Cbar)
+    m1, V1, q1, G1 = reference_posterior(y1, X, Cbar)
+    mo_mean_gap = float(np.linalg.norm(m0[14:17] - m1[14:17]))
+    mo_score_gap = float(np.linalg.norm(q0[14:17] - q1[14:17]))
+    rm_score_gap = float(np.linalg.norm(q0[11:14] - q1[11:14]))
+    bf_m1_gap = abs(log_bf_from_score(q0, G0, MODEL_COLUMNS["M1_LOCAL_BOOST"]) -
+                    log_bf_from_score(q1, G1, MODEL_COLUMNS["M1_LOCAL_BOOST"]))
+    bf_m2_gap = abs(log_bf_from_score(q0, G0, MODEL_COLUMNS["M2_GLOBAL_TILT_PLUS_BOOST"]) -
+                    log_bf_from_score(q1, G1, MODEL_COLUMNS["M2_GLOBAL_TILT_PLUS_BOOST"]))
+    return {
+        "beta_MO_posterior_mean_vector_gap": mo_mean_gap,
+        "beta_MO_score_gap": mo_score_gap,
+        "beta_RM_score_gap": rm_score_gap,
+        "local_boost_M1_log_bf_gap": bf_m1_gap,
+        "global_tilt_plus_boost_M2_log_bf_gap": bf_m2_gap,
+        "interpretation": "The beta_MO-only posterior mean vector (and its norm) is identical in two data sets, but the Bayes factor for a model that also includes beta_RM changes. It is not sufficient for M1-vs-M2 model comparison."
+    }
+
+def binary_gaussian_data_processing() -> dict[str, Any]:
+    """Exact Gaussian KL/TV contraction for a common deterministic linear map."""
+    from scipy.stats import norm as normal_dist
+    delta = np.array([0.8, -0.6, 0.4, 0.3])
+    C = np.diag([1.0, 1.5, 0.8, 2.0])
+    # Retain only the first coordinate, a strict lossy compression.
+    A = np.array([[1.0], [0.0], [0.0], [0.0]])
+    d2_raw = float(delta @ np.linalg.solve(C, delta))
+    Cr = A.T @ C @ A
+    dr = A.T @ delta
+    d2_comp = float(dr @ np.linalg.solve(Cr, dr))
+    tv_raw = float(2.0 * normal_dist.cdf(np.sqrt(d2_raw) / 2.0) - 1.0)
+    tv_comp = float(2.0 * normal_dist.cdf(np.sqrt(d2_comp) / 2.0) - 1.0)
+    return {
+        "family": "P0=N(0,C), P1=N(delta,C), T(y)=A^T y",
+        "raw_kl_P1_P0": 0.5 * d2_raw,
+        "compressed_kl_P1T_P0T": 0.5 * d2_comp,
+        "raw_total_variation": tv_raw,
+        "compressed_total_variation": tv_comp,
+        "kl_contraction_ratio": (0.5 * d2_comp) / (0.5 * d2_raw),
+        "tv_contraction_ratio": tv_comp / tv_raw,
+        "scope": "exact equal-covariance Gaussian binary experiment; for general deterministic T, the KL and TV inequalities follow from data processing"
+    }
+
+
+def _dipole_design(z: np.ndarray, counts: np.ndarray, n_anchor: float,
+                   sigma_stat: float = 1.0e-3, sigma_cv: float = 1.8e-4,
+                   corr_length: float = 0.22, anchor_sigma: float = 3.5e-4) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """One-component redshift tomography with beta_RM, beta_MO and nuisance modes.
+
+    Mean: g(z) beta_RM + beta_MO + d_intrinsic + c_z z.
+    Independent low-z anchor: beta_MO + noise.
+    Response g(z)=z/(z+0.12) is deliberately synthetic, not a physical transfer.
+    """
+    z = np.asarray(z, float)
+    counts = np.asarray(counts, float)
+    if np.any(counts <= 0) or n_anchor <= 0:
+        raise ValueError("all shell and anchor allocations must be positive")
+    g = z / (z + 0.12)
+    D = np.column_stack([g, np.ones_like(z)])
+    N = np.column_stack([np.ones_like(z), z])
+    R = np.exp(-np.abs(z[:, None] - z[None, :]) / corr_length)
+    Cshell = np.diag(sigma_stat**2 / counts) + sigma_cv**2 * R
+    # Anchor contributes to beta_MO and has no intrinsic-dipole or calibration response.
+    D = np.vstack([D, [0.0, 1.0]])
+    N = np.vstack([N, [0.0, 0.0]])
+    C = np.zeros((len(z) + 1, len(z) + 1))
+    C[:-1, :-1] = Cshell
+    C[-1, -1] = anchor_sigma**2 / n_anchor
+    return D, N, C
+
+
+def _efficient_information(D: np.ndarray, N: np.ndarray, C: np.ndarray) -> tuple[np.ndarray, int]:
+    CiD = _solve_cov(C, D)
+    CiN = _solve_cov(C, N)
+    Ftt = D.T @ CiD
+    Ftn = D.T @ CiN
+    Fnn = N.T @ CiN
+    Ieff = Ftt - Ftn @ np.linalg.pinv(Fnn, rcond=1e-12) @ Ftn.T
+    Ieff = 0.5 * (Ieff + Ieff.T)
+    rank = int(np.linalg.matrix_rank(Ieff, tol=max(1.0, np.linalg.norm(Ieff, 2)) * 1e-10))
+    return Ieff, rank
+
+
+def _design_metrics(z: np.ndarray, counts: np.ndarray, n_anchor: float) -> dict[str, Any]:
+    D, N, C = _dipole_design(z, counts, n_anchor)
+    Ieff, rank = _efficient_information(D, N, C)
+    c = np.array([1.0, -1.0])  # target beta_RM - beta_MO
+    if rank < 2:
+        return {"rank": rank, "c_variance": float("inf"), "logdet": float("-inf"), "I_eff": Ieff}
+    cvar = float(c @ np.linalg.solve(Ieff, c))
+    sign, ld = np.linalg.slogdet(Ieff)
+    return {"rank": rank, "c_variance": cvar, "c_sigma": float(np.sqrt(cvar)),
+            "logdet": float(ld if sign > 0 else -np.inf), "I_eff": Ieff}
+
+
+def optimize_shell_design(seed: int = SEED, n_total_cost: int = 6000) -> dict[str, Any]:
+    """Compare uniform, D-optimal and c-optimal allocations with correlated shells."""
+    z = np.array([0.015, 0.035, 0.07, 0.13, 0.24, 0.42, 0.72, 1.10])
+    nbin = len(z)
+    anchor_cost = 4.0
+    min_shell = 40.0
+    min_anchor = 25.0
+    # x = [8 shell counts, n_anchor], with weighted survey cost fixed.
+    def unpack(x: np.ndarray) -> tuple[np.ndarray, float]:
+        return x[:nbin], float(x[-1])
+    def objective_c(x: np.ndarray) -> float:
+        counts, na = unpack(x)
+        return _design_metrics(z, counts, na)["c_variance"]
+    def objective_d(x: np.ndarray) -> float:
+        counts, na = unpack(x)
+        ld = _design_metrics(z, counts, na)["logdet"]
+        return -ld if np.isfinite(ld) else 1e12
+    constraint = {"type": "eq", "fun": lambda x: float(np.sum(x[:nbin]) + anchor_cost * x[-1] - n_total_cost)}
+    bounds = [(min_shell, n_total_cost) for _ in range(nbin)] + [(min_anchor, n_total_cost / anchor_cost)]
+    x0 = np.array([(n_total_cost - anchor_cost * 100.0) / nbin] * nbin + [100.0])
