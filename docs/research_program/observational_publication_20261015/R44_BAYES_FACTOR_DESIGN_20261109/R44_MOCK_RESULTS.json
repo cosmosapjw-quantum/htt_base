@@ -1,0 +1,218 @@
+{
+  "beta_MO_only_readout_counterexample": {
+    "beta_MO_posterior_mean_vector_gap": 2.371692252312041e-20,
+    "beta_MO_score_gap": 404.5434238395224,
+    "beta_RM_score_gap": 1107.212962420887,
+    "global_tilt_plus_boost_M2_log_bf_gap": 0.12706916670762425,
+    "interpretation": "The beta_MO-only posterior mean vector (and its norm) is identical in two data sets, but the Bayes factor for a model that also includes beta_RM changes. It is not sufficient for M1-vs-M2 model comparison.",
+    "local_boost_M1_log_bf_gap": 0.0029278758908741764
+  },
+  "binary_gaussian_data_processing": {
+    "compressed_kl_P1T_P0T": 0.32000000000000006,
+    "compressed_total_variation": 0.31084348322064836,
+    "family": "P0=N(0,C), P1=N(delta,C), T(y)=A^T y",
+    "kl_contraction_ratio": 0.568888888888889,
+    "raw_kl_P1_P0": 0.5625,
+    "raw_total_variation": 0.40411690943482226,
+    "scope": "exact equal-covariance Gaussian binary experiment; for general deterministic T, the KL and TV inequalities follow from data processing",
+    "tv_contraction_ratio": 0.7691919738161379
+  },
+  "c_optimal_redshift_shell_design": {
+    "allocations": {
+      "c_optimal": {
+        "anchor_count": 120,
+        "logdet_Ieff": 36.31984845497898,
+        "optimizer_message": "Optimization terminated successfully",
+        "optimizer_success": true,
+        "shell_counts": [
+          772.8000000000001,
+          772.8000000000001,
+          772.8000000000001,
+          772.8000000000001,
+          662.4,
+          662.4,
+          552,
+          552
+        ],
+        "target_sigma": 0.00040748052717863326,
+        "target_variance": 1.6604038002977689e-7
+      },
+      "d_optimal": {
+        "anchor_count": 1239.51764744881,
+        "logdet_Ieff": 38.49725305843786,
+        "optimizer_message": "Optimization terminated successfully",
+        "optimizer_success": true,
+        "shell_counts": [
+          399.8436465039853,
+          40,
+          94.89145335772491,
+          141.9616277775565,
+          124.3275363526715,
+          98.71528819235614,
+          40,
+          102.18985802046596
+        ],
+        "target_sigma": 0.0004396398855909464,
+        "target_variance": 1.9328322900242046e-7
+      },
+      "no_independent_beta_MO_anchor": {
+        "interpretation": "beta_MO shares a constant-redshift direction with intrinsic dipole; beta_RM-beta_MO is not data-identifiable",
+        "rank": 1,
+        "target_status": "UNIDENTIFIABLE",
+        "target_variance": null
+      },
+      "uniform": {
+        "anchor_count": 100,
+        "logdet_Ieff": 36.13201742352419,
+        "shell_counts": [
+          700,
+          700,
+          700,
+          700,
+          700,
+          700,
+          700,
+          700
+        ],
+        "target_sigma": 0.00040884743712137875,
+        "target_variance": 1.6715622684071974e-7
+      }
+    },
+    "covariance": "diag(sigma_stat^2/n_s) + sigma_cv^2 exp(-|z_s-z_s'|/L_corr), plus independent anchor variance sigma_anchor^2/n_anchor",
+    "mean_model": "g(z) beta_RM + beta_MO + d_intrinsic + c_z*z; independent low-z anchor measures beta_MO",
+    "redshift_shells": [
+      0.015,
+      0.035,
+      0.07,
+      0.13,
+      0.24,
+      0.42,
+      0.72,
+      1.1
+    ],
+    "relative_c_variance_reduction_c_optimal_vs_d_optimal": 0.1409478158723353,
+    "relative_c_variance_reduction_c_optimal_vs_uniform": 0.006675472592511444,
+    "resource_budget": {
+      "anchor_cost_multiplier": 4,
+      "minimum_anchor_count": 25,
+      "minimum_per_shell": 40,
+      "total_cost": 6000
+    },
+    "response": "g(z)=z/(z+0.12), synthetic only",
+    "scope": "one-dimensional dipole contrast design; response and covariance are synthetic; it is a method-design experiment, not an actual survey forecast",
+    "target": "delta = beta_RM - beta_MO"
+  },
+  "classification": "SYNTHETIC_STATISTICAL_THEORY_EXPERIMENT_NOT_OBSERVATIONAL",
+  "design_mock_calibration": {
+    "c_optimal": {
+      "analytic_sd_delta": 0.00040748052717863364,
+      "coverage_95": 0.9503333333333334,
+      "coverage_mcse": 0.003979112128771107,
+      "empirical_bias_delta": -0.000003054099572366614,
+      "empirical_rmse_delta": 0.000411540282286883,
+      "replications": 3000,
+      "truth_delta": 0.0009499999999999999
+    },
+    "d_optimal": {
+      "analytic_sd_delta": 0.00043963988559094587,
+      "coverage_95": 0.948,
+      "coverage_mcse": 0.003979112128771107,
+      "empirical_bias_delta": -0.000006740363783681922,
+      "empirical_rmse_delta": 0.00043511027787405645,
+      "replications": 3000,
+      "truth_delta": 0.0009499999999999999
+    },
+    "uniform": {
+      "analytic_sd_delta": 0.0004088474371213788,
+      "coverage_95": 0.949,
+      "coverage_mcse": 0.003979112128771107,
+      "empirical_bias_delta": -7.589208877954491e-8,
+      "empirical_rmse_delta": 0.00041125604587861474,
+      "replications": 3000,
+      "truth_delta": 0.0009499999999999999
+    }
+  },
+  "exact_common_covariance_bayes_factor_sufficiency": {
+    "common_covariance_model_family": "same nuisance-integrated Cbar; all alternatives are submodels of the fixed 17D chart X; independent zero-mean Gaussian coefficient priors with fixed known variances",
+    "max_abs_log_bf_error_raw_vs_complete_posterior_mV": 1.3944401189291966e-13,
+    "max_abs_log_bf_error_raw_vs_score": 1.3944401189291966e-13,
+    "mean_abs_log_bf_error_by_model": {
+      "M0_NULL": 0,
+      "M1_LOCAL_BOOST": 3.729550002162796e-14,
+      "M2_GLOBAL_TILT_PLUS_BOOST": 9.420286772865438e-14,
+      "M3_SHEAR_PROXY_PLUS_BOOST": 6.260503226940272e-14,
+      "M4_FULL_KINEMATIC": 1.696243145943299e-14
+    },
+    "mean_only_is_also_exact_when_reference_V_is_fixed": true,
+    "proof_identity": "q = V^{-1} m - B^{-1} b; here b=0, B=diag(THETA_STD^2), V is fixed by X,Cbar,B and independent of y",
+    "model_dependent_covariance_counterexample": {
+      "alternative_covariance_log_bf_at_score_null_vector": -0.07167111022892575,
+      "alternative_covariance_log_bf_at_zero": -0.2938933324511481,
+      "common_score_norm": 0,
+      "interpretation": "A mean-score summary for fixed Cbar is not sufficient when a competitor changes covariance; the residual quadratic form carries model-discriminating information.",
+      "log_bf_difference_despite_same_q": 0.22222222222222238,
+      "same_common_score_max_abs_difference": 9.094947017729282e-13
+    },
+    "n_data": 76,
+    "n_physical_chart": 17,
+    "n_replications": 500
+  },
+  "limitations": [
+    "No Planck, Gaia, Quaia, NVSS, Pantheon, DESI or other real survey data are used.",
+    "The redshift response g(z)=z/(z+0.12) is a synthetic design function, not a derived physical transfer kernel.",
+    "The mock is linear-Gaussian and local; it does not establish global identifiability or Bianchi family identification.",
+    "The five readout families remain a joint posterior push-forward and must not be multiplied as independent likelihood factors.",
+    "For actual model comparison, all competitors must use the same raw observation contract or the exact model-dependent covariance/selection likelihood; source-specific transfers remain unimplemented here."
+  ],
+  "main_conclusions": [
+    "For a common known covariance and candidates nested in one fixed linear chart, q=X^T C^-1(y-mu) is a common sufficient statistic for all candidate-model Bayes factors.",
+    "The complete Gaussian reference posterior mean/covariance recovers q exactly; when V is fixed, its mean alone is an invertible encoding of q.",
+    "This exact result does not extend automatically to model-dependent covariance, selection, window functions, or model-dependent summary maps.",
+    "A scalar norm is sufficient only under additional rotational symmetry of the prior and observation metric; anisotropic geometry can make direction essential.",
+    "The c-optimal redshift/anchor allocation for beta_RM-beta_MO need not coincide with a D-optimal allocation maximizing total information volume."
+  ],
+  "research_scope": "tensorized posterior-pushforward T=(x,Q,Pi,F,G_F) versus physical generative theories/readout methods; no scalar-versus-tensor five-variable benchmark",
+  "scalar_norm_sufficiency_scope_test": {
+    "anisotropic_equal_norm_pair": {
+      "absolute_log_bf_difference": 0.3555555555555556,
+      "data_vectors": [
+        [
+          0.72,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2.026666666666667
+        ]
+      ],
+      "log_bfs": [
+        -0.625656344958643,
+        -0.9812119005141986
+      ],
+      "noise_variances": [
+        0.35,
+        1,
+        2.8
+      ],
+      "posterior_mean_norms": [
+        0.5333333333333333,
+        0.5333333333333333
+      ]
+    },
+    "interpretation": "A scalar vector norm can be sufficient only under a symmetry-compatible model/prior/metric. Anisotropic survey geometry generally makes direction decision-relevant.",
+    "isotropic_control": {
+      "log_bfs": [
+        -0.6797207708399179,
+        -0.6797207708399179
+      ],
+      "posterior_mean_norms": [
+        0.6,
+        0.6
+      ]
+    }
+  },
+  "schema": "htt.r44_bayes_factor_and_design_mock/1",
+  "seed": 20261109
+}

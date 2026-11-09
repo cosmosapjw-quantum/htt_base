@@ -1,0 +1,92 @@
+schema: htt.local_agent_io_contract/1
+project: cosmosapjw-quantum/htt_base
+branch_policy:
+  base: research/r43-theory-identifiability-mock-20261109
+  proposed_branch: research/r44-bayes-factor-design-20261109
+  never_push_or_merge_to: [main]
+  no_remote_desktop: true
+  do_not_upload_raw_data_or_chains_to_git: true
+science_contract:
+  theta_K_dimension: 17
+  theta_K_order: [sigma_STF5, omega_axial3, A_polar3, beta_RM3, beta_MO3]
+  T_order: [x, Q, Pi, F, G_F]
+  T_semantics: joint_posterior_or_compatibility_pushforward_not_independent_likelihood_factors
+  model_comparison_rule: common_observation_likelihood_when_possible; otherwise_model_specific_likelihoods_with_explicit_covariance_and_selection_terms
+  common_covariance_BF_sufficiency_premise:
+    - common_base_mean
+    - common_known_covariance_after_nuisance_integration
+    - common_fixed_linear_chart_spanning_each_candidate_model
+    - common_deterministic_readout_across_model_labels
+    - fixed_design_and_priors
+source_manifest_required_fields:
+  - source_id
+  - survey_or_experiment
+  - release_and_version
+  - official_source_url
+  - retrieval_timestamp_utc
+  - exact_local_path
+  - byte_size
+  - sha256_actual_bytes
+  - file_format_and_schema
+  - row_count_and_column_count
+  - coordinate_frame_and_units
+  - mask_or_window_identity
+  - selection_function_identity
+  - random_or_null_ensemble_identity
+  - statistical_and_systematic_covariance_identity
+  - calibration_and_foreground_model
+  - transfer_solver_identity_and_version
+  - parser_code_commit
+  - validation_receipt
+chain_receipt_required_fields:
+  - cobaya_config_sha256
+  - likelihood_code_commit
+  - source_manifest_sha256
+  - source_file_sha256_list
+  - chain_file_sha256_list
+  - exact_command_and_environment
+  - sampler_name_and_version
+  - random_seed
+  - burn_in_and_sample_count
+  - rank_normalized_split_rhat_by_parameter
+  - bulk_ess_by_parameter
+  - tail_ess_by_parameter
+  - acceptance_and_autocorrelation_diagnostics
+  - prior_definition_and_bounds
+  - likelihood_and_covariance_contract
+  - stale_chain_reuse_decision
+  - posterior_predictive_and_sbc_receipts
+five_variable_inputs:
+  Pi:
+    required: authentic_matched_null_samples_with_source_manifest
+    missing_behavior: SYNTHETIC_ONLY_OR_UNAVAILABLE_NO_RANDOM_GAUSSIAN_EMPIRICAL_FALLBACK
+  G_F:
+    required: shell_data_vectors_and_full_cross_shell_data_covariance
+    missing_behavior: "DATA_COVARIANCE_UNAVAILABLE; DO NOT LABEL PHYSICAL DEPTH CALIBRATED"
+  Q:
+    required: source_provenance_for_every_anchor_or_gauge_status
+  F:
+    required: equal_area_spherical_quadrature_resolution_and_rotation_convergence_receipt
+  x:
+    required: physical_forward_operator_provenance_and_samplewise_chart_mapping
+local_outputs:
+  - DATA_BYTES_MANIFEST.json
+  - retrieval_and_parser_logs/
+  - MODEL_LIKELIHOOD_REGISTRY.yaml
+  - COBAYA_CONFIG.yaml
+  - CHAIN_RECEIPT.json
+  - SBC_REPORT.json
+  - REAL_C_OPTIMAL_DESIGN.json
+  - adversarial_benchmark.json
+  - UPDATED_CLAIM_LEDGER.json
+  - PUBLICATION_DECISION.md
+handoff_return:
+  - repository_branch_and_commit_sha
+  - source_data_checksums_and_retrieval_times
+  - exact_commands_exit_codes_and_test_logs
+  - sampler_chain_hashes_and_diagnostics
+  - per_model_log_evidence_and_heldout_scores
+  - matched_null_and_cross_shell_covariance_receipts
+  - c_optimal_vs_D_optimal_design_metrics
+  - passed_failed_not_run_gates
+  - exact_unfinished_task_and_resume_command

@@ -1,0 +1,76 @@
+schema: htt.r44_bayes_factor_mock_spec/1
+date: 2026-11-09
+seed: 20261109
+classification: synthetic_statistical_theory_experiment_not_observational
+scope:
+  framework: "tensorized posterior-pushforward T=(x,Q,Pi,F,G_F)"
+  comparison: "physical generative competitors and inference/readout methods"
+  excluded_primary_comparison: "scalar x_C versus tensor five-variable scheme"
+  five_variable_semantics: "joint posterior/compatibility push-forward, not independent likelihood factors"
+physical_chart:
+  dimension: 17
+  blocks:
+    sigma_STF: 5
+    omega_axial: 3
+    acceleration_polar: 3
+    beta_RM: 3
+    beta_MO: 3
+nuisance_chart:
+  dimension: 14
+  blocks:
+    intrinsic_dipole: 3
+    shear_calibration: 5
+    frame_spin: 3
+    acceleration_calibration: 3
+synthetic_observation:
+  redshift_shells: [0.02, 0.05, 0.10, 0.20, 0.35]
+  covariance: "channel-block AR(1) shell correlation plus common shell component"
+  independent_anchors: [beta_MO_vector_proxy, frame_spin_proxy]
+  covariance_parameters:
+    dipole_sigma: 4.5e-4
+    dipole_rho: 0.35
+    shear_sigma: 1.6e-4
+    shear_rho: 0.30
+    curl_sigma: 1.2e-4
+    curl_rho: 0.40
+    acceleration_sigma: 1.8e-4
+    acceleration_rho: 0.30
+generative_competitors:
+  M0_NULL: []
+  M1_LOCAL_BOOST: [14, 15, 16]
+  M2_GLOBAL_TILT_PLUS_BOOST: [11, 12, 13, 14, 15, 16]
+  M3_SHEAR_PROXY_PLUS_BOOST: [0, 1, 2, 3, 4, 14, 15, 16]
+  M4_FULL_KINEMATIC: all_17
+  caveat: "M3 is a shear-tensor kinematic proxy, not a Bianchi I/V/VII_h radiative-transfer solver."
+theory_contracts:
+  exact_binary_BF_preservation: "common deterministic T preserves BF iff dP1/dP0 is sigma(T)-measurable P0-a.s."
+  common_covariance_gaussian_sufficiency: "q=X^T C^-1(y-mu) suffices for competitors nested in one fixed linear chart with common known C and common nuisance integration."
+  reference_posterior_identity: "q=V^-1 m-B^-1 b; if V is fixed then m alone is invertible encoding of q."
+  data_processing: "KL(P1^T||P0^T)<=KL(P1||P0), TV(P1^T,P0^T)<=TV(P1,P0)."
+design:
+  objective: "minimize c^T I_eff(w)^+ c for c=(1,-1) targeting beta_RM-beta_MO"
+  comparator: "D-optimal maximize logdet(I_eff)"
+  shells: [0.015, 0.035, 0.07, 0.13, 0.24, 0.42, 0.72, 1.10]
+  synthetic_response: "g(z)=z/(z+0.12)"
+  cross_shell_covariance: "diag(sigma_stat^2/n_s)+sigma_cv^2 exp(-|z_s-z_s'|/L_corr)"
+  total_cost: 6000
+  anchor_cost_multiplier: 4
+  min_shell_count: 40
+  min_anchor_count: 25
+replications:
+  common_covariance_BF: 500
+  design_calibration_per_allocation: 3000
+  rng: PCG64
+outputs:
+  result_file: R44_MOCK_RESULTS.json
+  report: R44_THEORY_AND_MOCK_RESULTS_KO.md
+  run_record: R44_RUN_RECORD.json
+  local_agent_prompt: LOCAL_AGENT_RESTART_PROMPT_KO.md
+  local_agent_dag: LOCAL_AGENT_EXECUTION_DAG.yaml
+  local_agent_io_contract: LOCAL_AGENT_IO_CONTRACT.yaml
+limitations:
+  - no_real_observational_data
+  - no_physical_Bianchi_transfer
+  - no_Planck_Gaia_end_to_end_MC
+  - no_Cobaya_production_chains
+  - no_empirical_claim_promotion

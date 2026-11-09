@@ -1,0 +1,89 @@
+schema: htt.r44_local_agent_execution_dag/1
+program: HTT_R44_TO_SOURCE_BOUND_OBSERVATIONAL_VALIDATION
+parent_branch: research/r43-theory-identifiability-mock-20261109
+parent_commit: 8e70c15da595ecfcd25e097e44fbd13f3aa59903
+local_agent_branch_target: research/r44-bayes-factor-design-20261109
+nodes:
+  - id: R44-LA-00
+    title: Restore and verify R44 state
+    status: READY
+    outputs: [exact_branch_commit_tree_identity, pytest_and_compileall_receipt]
+    acceptance:
+      - checkout exact R44 branch after push
+      - verify R44 spec/results/code paths
+      - do not mutate main
+  - id: R44-LA-01
+    title: Reconcile current R42 runner invocation with R44 theorem
+    status: PENDING
+    outputs: [runner_callsite_receipt, model_family_covariance_contract]
+    acceptance:
+      - distinguish common-covariance submodels from model-dependent covariance/selection models
+      - never infer exact BF preservation from full posterior unless the common-chart assumptions are met
+      - record all model-specific covariance quadratic terms
+  - id: R44-LA-02
+    title: Repair empirical Pi and G_F data-flow
+    status: PENDING
+    outputs: [matched_null_source_receipt, shell_covariance_receipt]
+    acceptance:
+      - pass authentic source-matched null samples into construct_r42_five_variable_state
+      - no random Gaussian fallback for empirical claim; use UNAVAILABLE or SYNTHETIC_ONLY if absent
+      - pass actual shell vectors and full cross-shell covariance
+      - separate data covariance from posterior-pushforward covariance
+  - id: R44-LA-03
+    title: Verify source locks and download official data locally
+    status: PENDING
+    outputs: [DATA_BYTES_MANIFEST.json, retrieval_logs, source_lock_validation.json]
+    acceptance:
+      - use official endpoints/recipes in R42 SOURCE_LOCK_MANIFEST.json
+      - hash actual downloaded bytes, record size, release, retrieval date, schema and row counts
+      - preserve masks, selection, random catalogues, covariance, units and systematics
+      - never place raw survey data or MCMC chains in Git
+  - id: R44-LA-04
+    title: Build common raw-observation likelihood contracts for competitors
+    status: PENDING
+    outputs: [MODEL_LIKELIHOOD_REGISTRY.yaml, common_observation_contract.yaml]
+    acceptance:
+      - compare FLRW+LSS, local boost, tilted multi-fluid, physical Bianchi transfer family, and HTT kinematic model
+      - use common T only when all models share the same observation mapping; otherwise retain model-specific likelihoods
+      - include selection, masks/windows, cross-probe/cross-shell covariance, calibration and foreground nuisance
+      - M3 shear proxy is never labelled Bianchi
+  - id: R44-LA-05
+    title: Optimize real shell and anchor design
+    status: PENDING
+    outputs: [REAL_C_OPTIMAL_DESIGN.json, design_validation_report.md]
+    acceptance:
+      - replace synthetic g(z) with source/physics-derived responses
+      - use actual full covariance and survey cost/selection constraints
+      - compare c-optimal target beta_RM-beta_MO with D-optimal and standard uniform weighting
+      - publish rank, condition, target variance, sensitivity to priors/anchor quality
+  - id: R44-LA-06
+    title: Execute real Cobaya inference and calibration
+    status: PENDING
+    outputs: [COBAYA_CONFIG.yaml, CHAIN_RECEIPT.json, SBC_REPORT.json, MODEL_EVIDENCE.json]
+    acceptance:
+      - do not reuse a chain unless config, likelihood, source bytes and code hashes match exactly
+      - run real likelihood through Cobaya; do not label a hand-coded optimiser/random walk as Cobaya
+      - report rank-normalized split-Rhat and bulk/tail ESS per parameter
+      - use true prior-predictive generated data and full posterior sampling for SBC
+      - do not hard-code FPR, power, BIC sample counts or timestamps
+  - id: R44-LA-07
+    title: Physical transfer and adversarial competitor validation
+    status: PENDING
+    outputs: [TRANSFER_PROVENANCE.yaml, adversarial_benchmark.json]
+    acceptance:
+      - use verified external/native physical Bianchi transfer including temperature and polarization when claimed
+      - compare boost vs intrinsic dipole, global tilt, shear and survey systematics under matched likelihoods
+      - validate covariance/selection-misspecification and independent holdout prediction
+  - id: R44-LA-08
+    title: Claim-level publication adjudication
+    status: PENDING
+    outputs: [UPDATED_CLAIM_LEDGER.json, PUBLICATION_DECISION.md]
+    acceptance:
+      - promote only per claim with source, exact code/data identity and run evidence
+      - keep empirical detection and Bianchi family claims on HOLD until all gates pass
+      - methods claim must show calibrated utility beyond established summaries, not information creation
+stop_conditions:
+  - Do not elevate R44 synthetic results into observational claims.
+  - Do not relax scientific gates to pass an implementation or source-provenance failure.
+  - If valid science is blocked by harness logic, repair only the minimal defective logic and add regressions.
+  - Classify failures as theory, numerical, implementation, runtime_environment, input_missing, provenance or authorization.
