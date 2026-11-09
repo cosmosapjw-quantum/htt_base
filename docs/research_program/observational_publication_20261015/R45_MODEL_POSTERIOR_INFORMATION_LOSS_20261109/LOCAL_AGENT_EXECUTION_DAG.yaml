@@ -1,0 +1,83 @@
+schema: htt.r45_local_agent_execution_dag/1
+program: HTT_R45_TO_HTT_POSTERIOR_INFORMATION_LOSS_VALIDATION
+parent_branch: research/r44-bayes-factor-design-20261109
+parent_commit: 98f7dc75f7eba287bd566bddc17920ba8ae45925
+local_agent_branch_target: research/r45-model-posterior-information-loss-20261109
+nodes:
+  - id: R45-LA-00
+    title: Clean checkout and replay exact R45 artifacts
+    status: READY
+    outputs: [remote_head_receipt, source_and_test_identity, pytest_compileall_receipts, deterministic_replay]
+    acceptance:
+      - checkout exact pushed R45 head, do not mutate main
+      - compileall and pytest tests/r45
+      - rerun fixed seed and distinguish byte reproducibility from numerical parity
+  - id: R45-LA-01
+    title: Bind finite model label and parameter spaces to HTT competitor registry
+    status: PENDING
+    outputs: [MODEL_INDEX_REGISTRY.yaml, MODEL_PARAMETER_SPACE.yaml]
+    acceptance:
+      - model index M maps to explicit physical generative model families
+      - Theta_M retains model-specific continuous parameters and priors
+      - distinguish model-index posterior from joint model-plus-parameter posterior
+  - id: R45-LA-02
+    title: Define one common raw-observation experiment and HTT summary channel
+    status: PENDING
+    outputs: [COMMON_RAW_OBSERVATION_CONTRACT.yaml, HTT_SUMMARY_MAP.yaml]
+    acceptance:
+      - common Y, masks/windows, likelihood, selection and covariance contract across models
+      - map T=(x,Q,Pi,F,G_F) jointly; never multiply its components as independent likelihoods
+      - retain physical 17D chart ordering and units from R44 contract
+  - id: R45-LA-03
+    title: Implement model and parameter posterior information-loss estimators
+    status: PENDING
+    outputs: [POSTERIOR_INFORMATION_LOSS_ESTIMATOR.py, ESTIMATOR_VALIDATION.json]
+    acceptance:
+      - estimate I(M;Y|T) and I(Theta_M;Y|M,T) separately
+      - exact log-likelihood-ratio and common-covariance Gaussian controls
+      - report uncertainty, finite-MC bias, support and prior sensitivity
+  - id: R45-LA-04
+    title: Repair empirical Pi and G_F data flows under source locks
+    status: PENDING
+    outputs: [MATCHED_NULL_SOURCE_RECEIPT.json, SHELL_COVARIANCE_RECEIPT.json]
+    acceptance:
+      - authentic source-matched null ensemble for Pi; otherwise SYNTHETIC_ONLY/UNAVAILABLE
+      - real shell data vectors and full cross-shell data covariance for G_F
+      - distinguish observation covariance from posterior-pushforward covariance
+  - id: R45-LA-05
+    title: Run model-comparison compression benchmarks
+    status: PENDING
+    outputs: [MODEL_POSTERIOR_LOSS_BENCHMARK.json, PARAMETER_POSTERIOR_LOSS_BENCHMARK.json]
+    acceptance:
+      - compare established summaries, T components, and joint T against one raw Y experiment
+      - assess exact/approximate posterior preservation, KL/TV, Bayes risk and decision metrics
+      - model-dependent covariance/selection must retain quadratic/selection information
+  - id: R45-LA-06
+    title: Connect validated likelihood to Cobaya and calibration
+    status: PENDING
+    outputs: [COBAYA_CONFIG.yaml, CHAIN_RECEIPT.json, SBC_REPORT.json, MODEL_EVIDENCE.json]
+    acceptance:
+      - no stale chain reuse unless config, likelihood, source bytes and code hashes match
+      - real likelihood/sampler; no hand-coded optimizer relabelled as Cobaya
+      - rank-normalized split-Rhat, bulk/tail ESS, prior predictive SBC, posterior predictive checks
+  - id: R45-LA-07
+    title: Physical transfer and adversarial competitor checks
+    status: PENDING
+    outputs: [TRANSFER_PROVENANCE.yaml, ADVERSARIAL_MODEL_RESULTS.json]
+    acceptance:
+      - verified physical Bianchi transfer where claimed; M3 shear proxy is not Bianchi
+      - matched covariance/selection, held-out prediction, systematics and intrinsic-dipole competitors
+  - id: R45-LA-08
+    title: Claim-level adjudication
+    status: PENDING
+    outputs: [UPDATED_CLAIM_LEDGER.json, PUBLICATION_DECISION.md]
+    acceptance:
+      - separate model-index and parameter-posterior claims
+      - empirical detection and Bianchi family claims remain HOLD until source-bound gates pass
+      - no observational claims from R45 synthetic mocks
+stop_conditions:
+  - do not promote finite Gaussian mock results into observational evidence
+  - do not equate model-index posterior sufficiency with full parameter-posterior sufficiency
+  - do not accept model-dependent summary maps as a common statistic without a joint observation contract
+  - preserve Pi and G_F source requirements from R44
+  - classify failure kind as theory, numerical, implementation, runtime_environment, input_missing, provenance or authorization

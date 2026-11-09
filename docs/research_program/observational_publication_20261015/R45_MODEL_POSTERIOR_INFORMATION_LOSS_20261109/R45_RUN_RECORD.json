@@ -1,0 +1,72 @@
+{
+  "schema": "htt.r45_run_record/1",
+  "program": "HTT_R45_MODEL_POSTERIOR_INFORMATION_LOSS",
+  "date": "2026-11-09",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "parent_branch": "research/r44-bayes-factor-design-20261109",
+  "parent_commit": "98f7dc75f7eba287bd566bddc17920ba8ae45925",
+  "branch": "research/r45-model-posterior-information-loss-20261109",
+  "local_environment": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "pytest": "9.0.2",
+    "platform": "Linux x86_64"
+  },
+  "commands": [
+    {
+      "command": "python -m compileall -q scripts/r45 tests/r45",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "command": "pytest -q tests/r45",
+      "exit_code": 0,
+      "status": "PASS",
+      "summary": "5 passed"
+    },
+    {
+      "command": "python scripts/r45/run_model_posterior_information_loss.py --seed 20261109 --replications 60000 --output docs/R45_MOCK_RESULTS.json",
+      "exit_code": 0,
+      "status": "PASS"
+    },
+    {
+      "command": "repeat same-seed execution and cmp JSON",
+      "exit_code": 0,
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "command": "strict JSON and YAML parse for result/spec/DAG/I-O",
+      "exit_code": 0,
+      "status": "PASS"
+    }
+  ],
+  "exact_source_identity": {
+    "driver_local_git_blob": "a2d7afbce97cfcc04fb6d5543537a916c3ae8bab",
+    "driver_remote_github_git_blob": "a2d7afbce97cfcc04fb6d5543537a916c3ae8bab",
+    "test_local_git_blob": "9564482e47e4d13a7a6826ff2be6d6d233b75bf3",
+    "test_remote_github_git_blob": "9564482e47e4d13a7a6826ff2be6d6d233b75bf3",
+    "code_and_test_identity": "VERIFIED"
+  },
+  "repository_upload_provenance": {
+    "code_and_tests": "Exact Git blob identity verified",
+    "documentation": "Uploaded as repository artifacts; each remote blob should be read back and compared before claiming byte identity",
+    "remote_commit": "PENDING",
+    "github_ci": "NOT_YET_INSPECTED",
+    "local_agent_device": "OFFLINE; direct local disk update NOT_PERFORMED; handoff files stored in Git branch"
+  },
+  "skill_execution": {
+    "physmath_research_loop": "R2 literature; R5 derivation; R7 CAS/numerical; C5-C6 mock implementation and tests",
+    "exa": "SEARCH_AND_FETCH",
+    "scispace": "SEARCH_FETCH_AND_ONE_TABLE",
+    "wolfram": "CONTEXT_AND_LANGUAGE_EVALUATION",
+    "parallel": "HIGH_EFFORT_DEEP_RESEARCH",
+    "native_subagent": "NOT_RUN: no native spawn/wait/collect tools exposed"
+  },
+  "limitations": [
+    "Synthetic Gaussian experiments only.",
+    "No real survey data, physical Bianchi transfer, Cobaya production sampling, or empirical calibration.",
+    "Finite model-index posterior preservation does not imply continuous within-model parameter posterior preservation.",
+    "No claim of novelty for conditional mutual information chain-rule identity."
+  ]
+}

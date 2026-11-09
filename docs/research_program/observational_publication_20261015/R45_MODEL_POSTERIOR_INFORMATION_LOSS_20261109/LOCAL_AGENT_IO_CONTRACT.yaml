@@ -1,0 +1,78 @@
+schema: htt.r45_local_agent_io_contract/1
+project: cosmosapjw-quantum/htt_base
+branch_policy:
+  base: research/r44-bayes-factor-design-20261109
+  base_commit: 98f7dc75f7eba287bd566bddc17920ba8ae45925
+  proposed_branch: research/r45-model-posterior-information-loss-20261109
+  never_push_or_merge_to: [main]
+  raw_data_or_chains_in_git: false
+science_contract:
+  finite_model_index: M
+  model_prior: positive_pi_m_on_active_model_support
+  raw_observation: Y_common_across_competing_models
+  summary: S=T(Y)_common_deterministic_channel
+  model_index_loss: I(M;Y_given_S)
+  within_model_parameter_loss: I(Theta_M;Y_given_M_and_S)
+  joint_loss_decomposition: I((M,Theta_M);Y_given_S)=I(M;Y_given_S)+I(Theta_M;Y_given_M_and_S)
+  zero_loss_condition: M_independent_of_Y_given_S
+  posterior_TV_convention: 0.5_L1
+  natural_log_units: nats
+htt_contract:
+  physical_chart_dimension: 17
+  physical_chart_order: [sigma_STF5, omega_axial3, A_polar3, beta_RM3, beta_MO3]
+  summary_order: [x, Q, Pi, F, G_F]
+  semantics: joint_posterior_or_compatibility_pushforward_not_independent_likelihood_factors
+  common_observation_required: true
+  model_dependent_covariance_requires_quadratic_residual_information: true
+source_manifest_required_fields:
+  - source_id
+  - release_and_version
+  - official_source_url
+  - retrieval_timestamp_utc
+  - exact_local_path
+  - byte_size
+  - sha256_actual_bytes
+  - schema_and_row_count
+  - coordinate_frame_and_units
+  - mask_window_selection_identity
+  - random_or_null_ensemble_identity
+  - statistical_and_systematic_covariance_identity
+  - calibration_foreground_model
+  - transfer_solver_identity_and_version
+  - parser_code_commit
+  - validation_receipt
+empirical_requirements:
+  Pi:
+    required: authentic_matched_null_samples_with_source_manifest
+    missing_behavior: SYNTHETIC_ONLY_OR_UNAVAILABLE_NO_RANDOM_GAUSSIAN_EMPIRICAL_FALLBACK
+  G_F:
+    required: shell_data_vectors_and_full_cross_shell_data_covariance
+    missing_behavior: DATA_COVARIANCE_UNAVAILABLE_NO_PHYSICAL_DEPTH_CALIBRATION_CLAIM
+  Cobaya:
+    required: exact_config_likelihood_source_hashes_and_chain_diagnostics
+    stale_chain_reuse: prohibited_without_exact_identity_match
+  SBC:
+    required: prior_predictive_data_and_full_posterior_sampling
+local_outputs:
+  - MODEL_INDEX_REGISTRY.yaml
+  - MODEL_PARAMETER_SPACE.yaml
+  - COMMON_RAW_OBSERVATION_CONTRACT.yaml
+  - HTT_SUMMARY_MAP.yaml
+  - POSTERIOR_INFORMATION_LOSS_ESTIMATOR.py
+  - ESTIMATOR_VALIDATION.json
+  - MODEL_POSTERIOR_LOSS_BENCHMARK.json
+  - PARAMETER_POSTERIOR_LOSS_BENCHMARK.json
+  - COBAYA_CONFIG.yaml
+  - CHAIN_RECEIPT.json
+  - SBC_REPORT.json
+  - UPDATED_CLAIM_LEDGER.json
+handoff_return:
+  - repository_branch_and_commit_sha
+  - source_data_checksums_and_retrieval_timestamps
+  - exact_commands_exit_codes_and_test_logs
+  - deterministic_replay_and_numerical_parity
+  - model_index_and_parameter_posterior_loss_estimates
+  - Monte_Carlo_uncertainty_and_calibration
+  - per_model_likelihood_covariance_selection_contracts
+  - passed_failed_not_run_gates
+  - exact_unfinished_task_and_resume_command

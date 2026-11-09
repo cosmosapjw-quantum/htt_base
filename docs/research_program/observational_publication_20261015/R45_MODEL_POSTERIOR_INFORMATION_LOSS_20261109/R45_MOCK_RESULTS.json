@@ -1,0 +1,78 @@
+{
+  "schema": "htt.r45_model_posterior_information_loss/1",
+  "seed": 20261109,
+  "classification": "SYNTHETIC_STATISTICAL_THEORY_EXPERIMENT_NOT_OBSERVATIONAL",
+  "replications_per_experiment": 60000,
+  "metrics": {
+    "common_covariance_K4_exact_score": {
+      "expected_posterior_kl_nats": 2.4090701883628925e-16,
+      "expected_posterior_tv": 3.6332947284459237e-16,
+      "raw_model_information_nats": 0.21418155286240584,
+      "summary_model_information_nats": 0.2141815528624059
+    },
+    "common_covariance_K4_one_score_projection": {
+      "expected_posterior_kl_nats": 0.1437636211725597,
+      "mi_difference_nats": 0.14352191460635158,
+      "chain_identity_discrepancy_nats": 0.00024170656620811637,
+      "combined_mcse_nats": 0.0008104101543771045,
+      "expected_posterior_tv": 0.20869807778659033,
+      "pinsker_bound": 0.2681078338771172,
+      "bayes_risk_raw": 0.51797398,
+      "bayes_risk_summary": 0.645762675696698
+    },
+    "model_covariance_K3_mean_only": {
+      "expected_posterior_kl_nats": 0.07764190777742724,
+      "mi_difference_nats": 0.07741907490991358,
+      "chain_identity_discrepancy_nats": 0.00022283286751366427,
+      "expected_posterior_tv": 0.13395232808079682,
+      "bayes_risk_raw": 0.4651201415,
+      "bayes_risk_summary": 0.5249266257
+    },
+    "model_covariance_K3_exact_log_lr": {
+      "expected_posterior_kl_nats": 1.8761325843731485e-16,
+      "expected_posterior_tv": 2.6286427102695753e-16
+    },
+    "sign_reflected_directional_norm": {
+      "expected_posterior_kl_nats": 0.2687329275079602,
+      "expected_posterior_tv": 0.3030714615071329,
+      "bayes_risk_raw": 0.1969285385,
+      "bayes_risk_summary": 0.5,
+      "summary_model_information_nats": 0
+    },
+    "radial_scale_squared_norm": {
+      "expected_posterior_kl_nats": 1.569055111167733e-16,
+      "expected_posterior_tv": 1.907677921329009e-16,
+      "raw_model_information_nats": 0.4200676305677738,
+      "summary_model_information_nats": 0.4200676305677738
+    },
+    "parameter_vs_model_case_A": {
+      "model_index_loss_nats": 0,
+      "parameter_loss_mc_nats": 0.3476611716931846,
+      "parameter_loss_mcse_nats": 0.001443186832970232,
+      "parameter_loss_exact_nats": 0.34657359027997264
+    },
+    "parameter_vs_model_case_B": {
+      "model_index_loss_nats": 0.2902600596978027,
+      "within_model_parameter_loss_nats": 0
+    }
+  },
+  "wolfram_language_checks": {
+    "case_A_parameter_information_loss": "Log[2]/2",
+    "unequal_variance_gaussian_log_lr": "quadratic y^2 term present",
+    "common_variance_gaussian_log_lr": "linear discriminant score plus constant"
+  },
+  "verification": {
+    "compileall": "PASS",
+    "pytest_tests_r45": "5 passed",
+    "same_seed_json_replay": "BYTE_IDENTICAL",
+    "strict_json_yaml_parse": "PASS",
+    "local_code_and_test_blob_identity": "MATCHED_REMOTE_GITHUB_BLOBS"
+  },
+  "scope": {
+    "real_observational_data": "NOT_RUN",
+    "physical_bianchi_transfer": "NOT_RUN",
+    "cobaya_production_sampling": "NOT_RUN",
+    "observational_claim": "PROHIBITED_BY_SCOPE",
+    "htt_summary_semantics": "T=(x,Q,Pi,F,G_F) is one joint posterior/compatibility push-forward"
+  }
+}
