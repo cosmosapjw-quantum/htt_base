@@ -171,3 +171,12 @@ moment matrix의 조건수는 eigenvalue 충돌에 가까워질수록 커진다.
 - curvature fingerprint가 일반 local-isometry classifier다.
 - 모든 Bianchi type의 CMB pattern, Cℓ, 편광 또는 likelihood를 재현했다.
 - local observer boost, global fluid tilt, fluid vorticity가 동일하다.
+
+
+## 8. 독립 문헌 대조에 따른 해석 제한
+
+본 절의 (a,n) 표현과 Bianchi rank/inertia/h 분류는 Ellis–MacCallum 및 Schücking–Kundt–Behr 계열의 표준 결과다. Ferrando–Sáez (2020)는 구조 텐서를 N,a로 표현하고 Ricci tensor 및 그 공변미분으로 homogeneous 3D Riemannian metric의 transitive actions를 intrinsic하게 구별한다 ([arXiv:2004.01877](https://arxiv.org/abs/2004.01877)). 2024년 후속 연구는 spatially homogeneous cosmology에 이 분류를 적용한다 ([arXiv:2409.15854](https://arxiv.org/abs/2409.15854)). 2026년 Clifford framework 저자 프리프린트도 N,q, Jacobi Nq=0, curvature와 tilted fluid를 하나의 좌표독립 체계에서 다룬다고 보고한다 ([Zenodo](https://doi.org/10.5281/zenodo.21432742); peer review 전, full text restricted). 그러므로 본 구현의 기여는 새로운 Bianchi formalism이 아니라 **기존 BASS canonical input을 소비하는 제한된 geometry-only diagnostic 및 회귀 가능한 tilt-orbit identifiability audit**로 한정한다.
+
+### Orientation convention
+
+현재 quotient는 오른손 triad의 SO(3) 작용만 취한다. n은 bracket index pair의 Levi-Civita dualization으로 정의되므로 orientation-reversing O(3) 변환에서 일반 대칭 2-tensor와 동일하게 변환한다고 가정하지 않는다. 이 작업은 parity-related frame의 동치/비동치를 물리적 명제로 주장하지 않는다. 해당 변환을 다루려면 a, n, tilt pseudoscalar의 유도 변환법칙을 별도로 제시해야 한다.

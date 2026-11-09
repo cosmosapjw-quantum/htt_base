@@ -131,7 +131,12 @@
       "line-of-sight modules",
       "samplers"
     ],
-    "exact_repo_tests": "NOT_RUN"
+    "exact_repo_tests": "NOT_RUN",
+    "validation": [
+      "structure_tensor_from_an enforces symmetric n and Jacobi n@a=0",
+      "spatial_ricci_from_structure_tensor verifies the full bracket Jacobi identity",
+      "recover_tilt_squared_components enforces valid (a,n) Jacobi data and 0 <= speed_squared < 1"
+    ]
   },
   "acceptance": {
     "prior_standalone_oracle": "35 PASS in isolated canonical fixture package",
@@ -140,7 +145,21 @@
     "exact_curvature_degeneracies": "2 PASS",
     "class_a_tilt_inverse": "PASS for rank-3 VI_0 representative",
     "repo_checkout_import_pytest": "NOT_RUN",
-    "boltzmann_solver": "OUT_OF_SCOPE"
+    "boltzmann_solver": "OUT_OF_SCOPE",
+    "targeted_ci": {
+      "status": "PENDING",
+      "workflow": ".github/workflows/bianchi-similarity.yml",
+      "commands": [
+        "PYTHONPATH=htt pytest -q htt/bass/diagnostics/test_bianchi_similarity.py",
+        "PYTHONPATH=htt python -m compileall -q htt/bass/diagnostics"
+      ],
+      "python_matrix": [
+        "3.10",
+        "3.11",
+        "3.12",
+        "3.13"
+      ]
+    }
   },
   "claim_firewall": [
     "No observational Bianchi type identification",
@@ -148,5 +167,27 @@
     "No identification of global fluid tilt with observer boost",
     "No CMB transfer, polarization, Cl or Bayesian evidence claims",
     "Curvature-only similarity is not sufficient to identify the Bianchi group action"
-  ]
+  ],
+  "literature_review": {
+    "novelty_decision": "MAJOR_REVISION_NOVELTY_HOLD",
+    "prior_art": [
+      {
+        "work": "Ferrando & Saez 2020, Homogeneous three-dimensional Riemannian spaces",
+        "url": "https://arxiv.org/abs/2004.01877",
+        "implication": "intrinsic algorithmic classification of homogeneous 3D Riemannian spaces using Ricci structure and derivatives; structure tensor decomposed through N and a"
+      },
+      {
+        "work": "Saez, Mengual & Ferrando 2024, Spatially-homogeneous cosmologies",
+        "url": "https://arxiv.org/abs/2409.15854",
+        "implication": "applies intrinsic classification to spatially homogeneous cosmologies"
+      },
+      {
+        "work": "Jakub 2026, A Clifford-algebraic framework for Bianchi cosmologies",
+        "url": "https://doi.org/10.5281/zenodo.21432742",
+        "implication": "high overlap in coordinate-free N,q Jacobi classification, curvature and tilted-fluid framework; author preprint, not peer-reviewed, full text restricted"
+      }
+    ],
+    "orientation_note": "SO(3) quotient is explicitly oriented. Do not claim physical parity-odd invariants until the O(3) pseudotensor transformation of n and all tilt pseudoscalars is derived.",
+    "novelty_boundary": "reproducible BASS geometry-only diagnostics, rank-stratified normal-frame tilt identifiability and regression no-go examples; not a new Bianchi classification or coordinate-free formalism"
+  }
 }

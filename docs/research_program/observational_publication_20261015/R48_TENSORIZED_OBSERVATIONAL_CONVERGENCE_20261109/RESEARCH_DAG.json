@@ -19,8 +19,8 @@
     "claims": "No observed discovery, calibrated significance, Bianchi family identification or global-tilt claim before relevant gates pass."
   },
   "current_session": {
-    "id": "R48-T13_TO_T16",
-    "status": "COMPLETE_SCOPED_GEOMETRY_ONLY",
+    "id": "R48-T17_TO_T20_REFEREE_AND_INPUT_GUARD_REPAIR",
+    "status": "REFEREE_REVIEW_COMPLETE_TARGETED_CI_PENDING",
     "scope_lock": "All 11 Bianchi algebra types plus normal-frame matter-tilt orbit identifiability; no Boltzmann/LOS/CMB transfer/Cobaya.",
     "accomplishments": [
       "Reused BASS Ellis-MacCallum (a,n,C) canonical source and Class-A/Class-B registry.",
@@ -29,13 +29,22 @@
       "Derived exact curvature-only degeneracies: flat I/VII_0 and constant-negative-curvature V/special VII_h.",
       "Derived Class-A/B tilt-orbit invariants, Vandermonde moment rank, handedness information and repeated-eigenvalue azimuth degeneracies.",
       "Added geometry-only diagnostic module and test suite.",
-      "Standalone canonical-fixture oracle: 35 tests passed; 1,100 randomized rotation/homothety cases passed."
+      "Standalone canonical-fixture oracle: 35 tests passed; 1,100 randomized rotation/homothety cases passed.",
+      "Completed hypothetical independent referee literature audit; added report and claim-by-claim ledger.",
+      "Compared Ferrando-Saez 2020/2024 intrinsic homogeneous-geometry classification and 2026 Clifford Bianchi author preprint; downgraded novelty to HOLD.",
+      "Symbolically rechecked exact Ricci degeneracies with Wolfram Language under the declared Koszul convention.",
+      "Added Jacobi guards at structure/Ricci ingress and subluminal-domain validation for tilt recovery.",
+      "Added all-eleven proper-rotation/common-positive-homothety regressions and a dedicated Python 3.10-3.13 Bianchi workflow."
     ],
     "limitations": [
       "Exact repository import/pytest NOT_RUN; standalone tests used source-derived canonical fixtures.",
       "No tilted Einstein-fluid evolution or momentum/Hamiltonian constraint solve.",
       "No all-type observed family identification, CMB transfer, likelihood or posterior.",
-      "Novelty priority is provisional pending independent metric-Lie-algebra equivalence and invariant-theory review."
+      "Novelty priority is provisional pending independent metric-Lie-algebra equivalence and invariant-theory review.",
+      "New targeted GitHub Actions workflow is pending; no local exact-head runtime was available.",
+      "Existing PR04 full fast-regression tier fails at collection because optional cobaya and astropy dependencies are absent; this is not a Bianchi test assertion failure, but the global gate is not PASS.",
+      "2026 Clifford preprint full-text files are restricted; overlap assessment uses official DOI metadata and abstract only.",
+      "Orientation-reversing O(3) transformation of n and tilt pseudoscalars remains an explicit proof obligation."
     ]
   },
   "physical_state": {
@@ -696,12 +705,32 @@
         "Check exact curvature no-go examples against local-isometry claims",
         "Return bounded novelty decision; no first-ever claim without priority evidence"
       ],
-      "hold_reason": "Candidate methods novelty is promising but priority against broader invariant/equivalence literature is not established."
+      "hold_reason": "Independent review completed; high prior-art overlap in general Bianchi geometry formalism, so only a bounded software/methods contribution remains viable. Tilt-orbit completeness proof and O(3) convention remain open.",
+      "completion_record": {
+        "completed_at": "2026-11-09",
+        "deliverables": [
+          "INDEPENDENT_GEOMETRY_REVIEW_KO.md",
+          "GEOMETRY_CLAIM_LEDGER.json",
+          "BIANCHI_NOVELTY_AND_SIGNIFICANCE_ASSESSMENT_KO.md"
+        ],
+        "outcome": "MAJOR_REVISION_NOVELTY_HOLD",
+        "evidence": [
+          "Ferrando & Saez 2020",
+          "Saez, Mengual & Ferrando 2024",
+          "Jakub 2026 author preprint metadata/abstract",
+          "King & Ellis 1973"
+        ],
+        "limitations": [
+          "2026 preprint full text restricted",
+          "no priority claim",
+          "parity transformation proof pending"
+        ]
+      }
     },
     {
       "id": "R48-T18",
       "title": "Exact-head repository integration and regression verification",
-      "status": "PENDING",
+      "status": "BLOCKED",
       "loop": "implementation_verification",
       "depends_on": [
         "R48-T13",
@@ -725,7 +754,53 @@
         "At most one bounded repair pass; preserve failures",
         "Confirm no Boltzmann/LOS/Cobaya dependency was added"
       ],
-      "evidence": "NOT_RUN; requires local agent checkout"
+      "evidence": "Python 3.10-3.13: compile, import compatibility, theorem/property and architecture gates pass; pytest collection then fails with 7 ModuleNotFoundError errors (4 cobaya test modules, 3 astropy test modules). A dedicated Bianchi-only workflow was added separately.",
+      "blocker": "The existing PR04 fast-regression matrix collected unrelated tests that fail import because optional cobaya and astropy dependencies are not installed. The Bianchi-specific target test and exact local checkout have not yet been run."
+    },
+    {
+      "id": "R48-T19",
+      "title": "Independent referee literature and claim-boundary audit",
+      "status": "PASS_SCOPED",
+      "loop": "G5_novelty_significance_review",
+      "depends_on": [
+        "R48-T14",
+        "R48-T15",
+        "R48-T16"
+      ],
+      "outputs": [
+        "INDEPENDENT_GEOMETRY_REVIEW_KO.md",
+        "GEOMETRY_CLAIM_LEDGER.json",
+        "BIANCHI_NOVELTY_AND_SIGNIFICANCE_ASSESSMENT_KO.md"
+      ],
+      "acceptance": [
+        "Distinguish Lie-algebra label, metric Lie-algebra orbit, local-isometry class and transitive group action",
+        "Compare Ferrando-Saez 2020/2024 and 2026 Clifford preprint with source-status limitations",
+        "Make no first-ever/observational claims"
+      ],
+      "evidence": "Hypothetical referee recommends MAJOR REVISION; novelty held; defensible contribution limited to source-backed executable diagnostics."
+    },
+    {
+      "id": "R48-T20",
+      "title": "Jacobi/domain guards and isolated all-type CI regression",
+      "status": "PENDING_CI",
+      "loop": "implementation_verification",
+      "depends_on": [
+        "R48-T18",
+        "R48-T19"
+      ],
+      "outputs": [
+        "htt/bass/diagnostics/bianchi_similarity.py",
+        "htt/bass/diagnostics/test_bianchi_similarity.py",
+        ".github/workflows/bianchi-similarity.yml"
+      ],
+      "acceptance": [
+        "Builder rejects (a,n) violating n@a=0",
+        "Ricci ingress rejects antisymmetric non-Lie brackets violating Jacobi",
+        "Tilt recovery rejects invalid algebra and speed_squared outside [0,1)",
+        "All 11 canonical Bianchi types pass proper SO(3) plus common positive homothety regression",
+        "Python 3.10-3.13 targeted pytest and compileall pass"
+      ],
+      "evidence": "Code and tests submitted on R48 branch; GitHub Actions result pending. No local runtime execution claimed."
     }
   ],
   "stop_rules": [
@@ -738,13 +813,16 @@
     "Do not build or extend a Boltzmann solver, hierarchy, LOS, CMB transfer, polarization or Cobaya pipeline within this scope.",
     "Do not identify a Bianchi group action from curvature-only invariants when exact cross-type degeneracies are present.",
     "Do not label arbitrary (a,n,v) as a constraint-satisfying tilted Einstein-fluid solution.",
-    "Do not report tilt components as identifiable outside the orbit-map rank and conditioning gates."
+    "Do not report tilt components as identifiable outside the orbit-map rank and conditioning gates.",
+    "Do not call the SO(3) plus positive-homothety fingerprint a full automorphism or local-isometry classification.",
+    "Do not interpret tilt pseudoscalar signs as physical parity observables until the O(3) pseudotensor transformation of n is derived.",
+    "Do not claim novelty for general coordinate-free Bianchi classification in light of Ferrando-Saez 2020/2024 and the 2026 Clifford author preprint."
   ],
   "restart_pointer": {
-    "next_task": "R48-T18",
-    "precondition": "Local agent resolves live R48 branch head, inspects worktree and runs exact-head new geometry tests; standalone receipt is not a substitute.",
-    "next_work": "Exact repository import/pytest, then one adversarial mathematical review of the geometry-only quotient and tilt rank strata.",
-    "scope_lock": "No Boltzmann, LOS, CMB transfer, polarization, Cobaya or observational inference.",
+    "next_task": "R48-T20",
+    "precondition": "Resolve live R48 branch head after referee/guard patch; inspect worktree; wait for the dedicated Bianchi workflow result and reproduce exact-head targeted tests locally if available.",
+    "next_work": "Verify Jacobi guards and all-11 proper-rotation tests. Then complete the stabilizer-by-stabilizer tilt-orbit proof and derive the O(3) transformation of n and each pseudoscalar before any stronger novelty claim.",
+    "scope_lock": "No Boltzmann, LOS, CMB transfer, polarization, Cobaya, observational inference or tilted Einstein-fluid evolution.",
     "local_agent_prompt": "LOCAL_AGENT_RESTART_PROMPT_KO.md"
   },
   "active_scope": {
@@ -754,7 +832,9 @@
       "SO(3) and common positive homothety quotient",
       "left-invariant spatial Ricci curvature",
       "normal-frame matter-tilt orbit moments",
-      "rank/condition/degeneracy analysis"
+      "rank/condition/degeneracy analysis",
+      "Jacobi identity validation for C and (a,n) ingress",
+      "targeted all-type geometry regression"
     ],
     "prohibited": [
       "Boltzmann solver",
@@ -762,7 +842,8 @@
       "CMB spectrum or polarization transfer",
       "Cobaya/MCMC",
       "observational family claims",
-      "tilted Einstein-fluid evolution/constraint completion"
+      "tilted Einstein-fluid evolution/constraint completion",
+      "physical parity-odd observable claims without O(3) derivation"
     ]
   }
 }

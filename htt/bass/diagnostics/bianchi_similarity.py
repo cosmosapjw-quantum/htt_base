@@ -121,6 +121,8 @@ def structure_tensor_from_an(a: np.ndarray, n: np.ndarray) -> np.ndarray:
     n_scale = max(float(np.linalg.norm(nmat)), np.finfo(float).tiny)
     if not np.allclose(nmat, nmat.T, rtol=0.0, atol=1e-10 * n_scale):
         raise ValueError("n must be symmetric")
+    # C is a Lie bracket only when the Ellis--MacCallum Jacobi constraint holds.
+    classify_bianchi_type(avec, nmat)
     eps = np.zeros((3, 3, 3), dtype=np.float64)
     eps[0, 1, 2] = eps[1, 2, 0] = eps[2, 0, 1] = 1.0
     eps[0, 2, 1] = eps[2, 1, 0] = eps[1, 0, 2] = -1.0
@@ -143,6 +145,27 @@ def spatial_ricci_from_structure_tensor(C: np.ndarray, *, atol: float = 1e-9) ->
     c_scale = max(float(np.linalg.norm(c)), np.finfo(float).tiny)
     if not np.allclose(c + np.swapaxes(c, 1, 2), 0.0, rtol=0.0, atol=atol * c_scale):
         raise ValueError("C must be antisymmetric in its lower indices")
+    # A skew bilinear map need not be a Lie bracket. Verify Jacobi before
+    # interpreting the Koszul contractions as homogeneous-manifold curvature.
+    jacobi = np.zeros((3, 3, 3, 3), dtype=np.float64)
+    for k in range(3):
+        for i in range(3):
+            for j in range(3):
+                for ell in range(3):
+                    for m in range(3):
+                        jacobi[k, i, j, ell] += (
+                            c[m, j, ell] * c[k, i, m]
+                            + c[m, ell, i] * c[k, j, m]
+                            + c[m, i, j] * c[k, ell, m]
+                        )
+    jacobi_residual = float(np.linalg.norm(jacobi))
+    jacobi_scale = max(c_scale * c_scale, np.finfo(float).tiny)
+    jacobi_tol = max(100.0 * atol, 100.0 * np.finfo(float).eps) * jacobi_scale
+    if jacobi_residual > jacobi_tol:
+        raise ValueError(
+            "C violates the Jacobi identity: "
+            f"residual={jacobi_residual:.3e}, tolerance={jacobi_tol:.3e}"
+        )
     gamma = np.zeros((3, 3, 3), dtype=np.float64)
     for i in range(3):
         for j in range(3):
@@ -273,6 +296,10 @@ def recover_tilt_squared_components(a: np.ndarray, n: np.ndarray,
                                     *, atol: float = 1e-10) -> tuple[np.ndarray, int, float]:
     """Recover squared tilt components in an eigenframe; fail closed if rank<3."""
     avec, nmat = _as_vector3(a, "a"), _as_matrix3(n, "n")
+    classify_bianchi_type(avec, nmat, atol=atol)
+    speed_squared = float(speed_squared)
+    if not np.isfinite(speed_squared) or speed_squared < 0.0 or speed_squared >= 1.0:
+        raise ValueError("speed_squared must be finite and satisfy 0 <= speed_squared < 1")
     kappa = float(np.sqrt(np.dot(avec, avec) + np.sum(nmat * nmat)))
     nhat = nmat / kappa if kappa > 0.0 else np.zeros((3, 3))
     eig = np.linalg.eigvalsh(nhat)

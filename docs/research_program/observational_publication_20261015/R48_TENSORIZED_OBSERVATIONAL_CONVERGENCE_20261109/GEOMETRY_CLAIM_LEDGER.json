@@ -1,0 +1,191 @@
+{
+  "schema": "htt.bianchi_geometry_claim_ledger/1",
+  "created_at": "2026-11-09",
+  "review_type": "hypothetical_independent_referee_simulation",
+  "recommendation": "MAJOR_REVISION",
+  "novelty_status": "HOLD_HIGH_OVERLAP",
+  "scope": {
+    "included": [
+      "Bianchi (a,n,C) algebra",
+      "restricted SO(3) x positive homothety quotient",
+      "left-invariant 3D Ricci screening",
+      "normal-frame matter tilt orbit"
+    ],
+    "excluded": [
+      "Einstein tilted-fluid evolution",
+      "Hamiltonian/momentum constraint completion",
+      "Boltzmann hierarchy",
+      "line-of-sight transfer",
+      "CMB Cl/polarization",
+      "Cobaya/MCMC",
+      "observational family identification"
+    ]
+  },
+  "claims": [
+    {
+      "id": "BCL-01",
+      "claim": "Ellis-MacCallum (a,n) decomposition, Class A/B, rank/inertia/h classification",
+      "status": "ESTABLISHED_PRIOR_ART",
+      "evidence": [
+        "Ellis & MacCallum 1969",
+        "Ferrando & Saez 2020"
+      ],
+      "novelty": "none"
+    },
+    {
+      "id": "BCL-02",
+      "claim": "Normalized structural fingerprint for the declared oriented orthonormal-frame SO(3) and common positive homothety quotient",
+      "status": "DERIVED_NARROW_QUOTIENT",
+      "evidence": [
+        "spectral theorem plus Jacobi n a=0"
+      ],
+      "novelty": "limited; does not classify arbitrary automorphism or local-isometry classes"
+    },
+    {
+      "id": "BCL-03",
+      "claim": "Ricci-screening degeneracies I/VII_0 and V/special VII_h",
+      "status": "DERIVED_SYMBOLICALLY_CHECKED",
+      "evidence": [
+        "Wolfram exact symbolic Ricci contractions under stated Koszul convention"
+      ],
+      "novelty": "no-go regression examples, not a new geometry equivalence theorem"
+    },
+    {
+      "id": "BCL-04",
+      "claim": "Moment map rank equals the number of distinct eigenvalues of symmetric N",
+      "status": "DERIVED",
+      "evidence": [
+        "Vandermonde rank argument"
+      ],
+      "novelty": "standard linear algebra"
+    },
+    {
+      "id": "BCL-05",
+      "claim": "Class-A/B additional pseudoscalars yield complete fixed-(N,a) SO(3) tilt orbit invariants on all strata",
+      "status": "PLAUSIBLE_PROOF_REQUIRED",
+      "evidence": [
+        "analytic derivation sketch and current synthetic tests"
+      ],
+      "novelty": "not established; require stabilizer-by-stabilizer necessity/sufficiency and orientation convention"
+    },
+    {
+      "id": "BCL-06",
+      "claim": "The 2026 Clifford-algebraic Bianchi preprint overlaps the coordinate-free (N,q), Jacobi, curvature, tilted-fluid framework",
+      "status": "HIGH_OVERLAP_SOURCE_METADATA_AND_ABSTRACT_ONLY",
+      "evidence": [
+        "Zenodo/DataCite DOI 10.5281/zenodo.21432742, published 2026-07-18"
+      ],
+      "limitations": [
+        "preprint explicitly not peer reviewed",
+        "Zenodo full-text files restricted",
+        "line-by-line comparison not possible"
+      ],
+      "novelty": "do not claim priority"
+    },
+    {
+      "id": "BCL-07",
+      "claim": "Ferrando-Saez intrinsic Bianchi geometry classification is prior art",
+      "status": "ESTABLISHED_PRIOR_ART",
+      "evidence": [
+        "necessary and sufficient intrinsic criteria for homogeneous 3D Riemannian spaces; Ricci and derivatives; structure tensor decomposed through N,a",
+        "Saez et al. 2024 applies classification to spatially homogeneous cosmologies"
+      ],
+      "novelty": "new general Ricci-based Bianchi geometry classification is preempted"
+    },
+    {
+      "id": "BCL-08",
+      "claim": "BASS integration and new input guards",
+      "status": "PATCH_SUBMITTED_CI_PENDING",
+      "evidence": [
+        "Jacobi check at (a,n)->C builder",
+        "Jacobi check at C->Ricci ingress",
+        "0<=speed_squared<1 at tilt squared-component recovery",
+        "all-11 proper rotation/homothety regression"
+      ],
+      "limitations": [
+        "exact repository pytest not run in this environment",
+        "new dedicated GitHub Actions workflow pending"
+      ]
+    }
+  ],
+  "implementation_gates": {
+    "previous_pr04_matrix": {
+      "status": "FAIL_OPTIONAL_DEPENDENCY_COLLECTION",
+      "python_versions": [
+        "3.10",
+        "3.11",
+        "3.12",
+        "3.13"
+      ],
+      "cause": [
+        "cobaya missing in four tests",
+        "astropy missing in three tests"
+      ],
+      "interpretation": "not a Bianchi assertion failure; full regression gate is not PASS"
+    },
+    "new_targeted_workflow": {
+      "status": "PENDING",
+      "path": ".github/workflows/bianchi-similarity.yml",
+      "checks": [
+        "PYTHONPATH=htt pytest -q htt/bass/diagnostics/test_bianchi_similarity.py",
+        "PYTHONPATH=htt python -m compileall -q htt/bass/diagnostics"
+      ],
+      "python_matrix": [
+        "3.10",
+        "3.11",
+        "3.12",
+        "3.13"
+      ]
+    },
+    "no_local_runtime_execution": true
+  },
+  "novelty_boundary": {
+    "defensible_candidate": "reproducible geometry-only BASS diagnostic, rank-stratified tilt-orbit audit and explicit curvature-only regression no-go cases",
+    "indefensible_claims": [
+      "new Bianchi classification",
+      "new coordinate-free Bianchi formalism",
+      "Ricci spectrum is a complete local-isometry classifier",
+      "physical tilted Einstein-fluid solution for arbitrary (a,n,v)",
+      "observational Bianchi identification"
+    ]
+  },
+  "sources": [
+    {
+      "key": "EllisMacCallum1969",
+      "url": "https://doi.org/10.1007/BF01645908"
+    },
+    {
+      "key": "KingEllis1973",
+      "url": "https://doi.org/10.1007/BF01646266"
+    },
+    {
+      "key": "WainwrightEllis1997",
+      "url": "https://doi.org/10.1017/CBO9780511524660"
+    },
+    {
+      "key": "FerrandoSaez2020",
+      "url": "https://arxiv.org/abs/2004.01877"
+    },
+    {
+      "key": "SaezMengualFerrando2024",
+      "url": "https://arxiv.org/abs/2409.15854"
+    },
+    {
+      "key": "ChristodoulakisEtAl2002",
+      "url": "https://scispace.com/papers/automorphism-inducing-diffeomorphisms-invariant-26u04ayuwj"
+    },
+    {
+      "key": "RainerSchmidt1995",
+      "url": "https://arxiv.org/abs/gr-qc/9508053"
+    },
+    {
+      "key": "Jakub2026Preprint",
+      "url": "https://doi.org/10.5281/zenodo.21432742"
+    },
+    {
+      "key": "Luminet2026",
+      "url": "https://arxiv.org/abs/2609.25112"
+    }
+  ],
+  "next_task": "R48-T20"
+}

@@ -28,6 +28,16 @@ This is a hypothesis, not a first-ever claim. BipoSH, multipole vectors, covaria
 - Mutation and anti-drift gates: MUTATION_GATE_CONTRACT.json
 - Local-agent restart prompt: LOCAL_AGENT_RESTART_PROMPT_KO.md
 
+
+## Bianchi geometry-only review follow-up (2026-11-09)
+
+A bounded geometry-only branch extension is recorded in:
+- Hypothetical independent referee report: INDEPENDENT_GEOMETRY_REVIEW_KO.md
+- Claim-by-claim evidence ledger: GEOMETRY_CLAIM_LEDGER.json
+- Updated novelty assessment: BIANCHI_NOVELTY_AND_SIGNIFICANCE_ASSESSMENT_KO.md
+
+The referee verdict is **MAJOR REVISION / NOVELTY HOLD**. Ferrando–Sáez (2020, 2024) and a 2026 unreviewed Clifford-algebraic author preprint create substantial overlap risk for broad Bianchi-geometry novelty. The defensible scope is restricted to a reproducible BASS geometry-only diagnostic and rank-stratified normal-frame tilt identifiability. Jacobi/domain guards and a dedicated Python 3.10–3.13 test workflow have been added; targeted CI is pending. The previous broad PR04 gate still has an unrelated optional-dependency collection failure (Cobaya/Astropy), so it is not reported as PASS.
+
 ## Resume
 
 Start with R48-T1 only. Each later loop is a separate bounded work session. Do not launch production sampling before the physical response, observation operator, source-byte identity, likelihood oracle and synthetic calibration gates pass.

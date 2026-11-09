@@ -1,7 +1,7 @@
 # Novelty / scientific significance assessment — geometry-only tilted Bianchi atlas
 
 Date: 2026-11-09  
-Decision: **PROMISING METHODS CONTRIBUTION; NOVELTY PRIORITY NOT YET ESTABLISHED**
+Decision: **MAJOR REVISION; NOVELTY HOLD AFTER LITERATURE REVIEW**
 
 ## 1. Established prior art, not novelty
 
@@ -74,3 +74,18 @@ Proceed with a bounded methods-note candidate titled “A rotation-invariant sim
 ## 8. Stop rule
 
 No Boltzmann solver, hierarchy completion, LOS, CMB transfer, polarization, Cobaya or observational Bayes factor is authorised. Exit after exact-head tests, one independent mathematical review and at most one bounded repair.
+
+## 9. 독립 referee 문헌 대조 업데이트 (2026-11-09)
+
+**결정 수정: MAJOR REVISION / NOVELTY HOLD.** 선행문헌 재검토 결과, 기존의 promising methods 표현은 지나치게 낙관적이므로 범위를 낮춘다.
+
+- Ferrando & Sáez (2020), *Homogeneous three-dimensional Riemannian spaces* (Class. Quantum Grav. 37, 185011; [arXiv:2004.01877](https://arxiv.org/abs/2004.01877); [DOI](https://doi.org/10.1088/1361-6382/ab9880))는 3D homogeneous Riemannian metric의 transitive isometry actions에 대한 필요충분 intrinsic/algorithmic criteria를 제공한다. Ricci tensor의 eigenstructure와 공변미분을 사용하고, 구조 텐서를 대칭 텐서 N 및 벡터 a로 나타내어 Bianchi–Behr 작용을 구별한다. 따라서 일반적인 Ricci 기반 Bianchi geometry 분류의 신규성은 선행문헌에 의해 선점되어 있다.
+- Sáez, Mengual & Ferrando (2024), *Spatially-homogeneous cosmologies* ([arXiv:2409.15854](https://arxiv.org/abs/2409.15854); [DOI](https://doi.org/10.1088/1361-6382/ad7664))는 이 intrinsic classification을 spatially homogeneous perfect-fluid cosmologies에 적용한다.
+- Jakub (2026-07-18), *A Clifford-algebraic framework for Bianchi cosmologies* ([Zenodo DOI](https://doi.org/10.5281/zenodo.21432742))는 저자 프리프린트이며 DataCite/Zenodo metadata상 peer review를 거치지 않았다. 초록은 3D skew bracket를 self-adjoint N와 vector q로 encode하고 Jacobi Nq=0, Bianchi classification, invariant coframes, spatial/spacetime curvature 및 tilted perfect fluid까지 다룬다고 명시한다. 파일은 restricted되어 완전한 본문 대조는 하지 못했으므로 우선권의 최종 판정은 unresolved지만, broad coordinate-free formalism claim에는 높은 overlap risk가 있다.
+- Tilted-fluid의 normal-to-homogeneity-surface 정의와 kinematics는 King & Ellis (1973)의 표준 범위다. 본 연구는 이를 새 물리 이론으로 주장하지 않는다.
+- Automorphism/similarity quotient 및 locally-isometric homogeneous-space 분류는 Christodoulakis et al. (2002), Schücking et al. (2003), Rainer & Schmidt (1995)와 대조해야 한다. 현재 quotient는 오직 선언된 oriented orthonormal SO(3) frame과 common positive homothety에 한정한다.
+
+**허용 가능한 기여 표현:** “BASS canonical (a,n,C) 입력에서 Bianchi label, intrinsic Ricci screening, normal-frame tilt orbit rank/degeneracy를 분리해 출력하고, curvature-only no-go cases와 all-type proper-rotation regression을 제공하는 재현 가능한 geometry-only diagnostic.”
+
+**금지할 표현:** “새로운 Bianchi 분류”, “최초의 좌표독립 Bianchi 형식”, “Ricci spectrum만으로 local-isometry 분류”, “모든 Bianchi 유형에서 물리적으로 실현 가능한 tilted solution”.
+자세한 가상 심사는 INDEPENDENT_GEOMETRY_REVIEW_KO.md, claim별 상태는 GEOMETRY_CLAIM_LEDGER.json을 따른다.

@@ -4,7 +4,7 @@ import pytest
 from bass.background.bianchi_types import ALL_BIANCHI_TYPES, all_bianchi_algebras, build_bianchi_algebra
 from bass.diagnostics.bianchi_similarity import (
     classify_bianchi_type, geometry_fingerprint, recover_tilt_squared_components,
-    spatial_ricci_from_structure_tensor, tilt_orbit_fingerprint
+    spatial_ricci_from_structure_tensor, structure_tensor_from_an, tilt_orbit_fingerprint
 )
 
 def _rotation(seed=7):
@@ -122,3 +122,67 @@ def test_supplied_C_must_match_a_n():
     algebra=build_bianchi_algebra("V")
     wrong=algebra.C.copy(); wrong[0,1,2]+=.2
     with pytest.raises(ValueError): geometry_fingerprint(algebra.a,algebra.n,wrong)
+
+
+def test_structure_builder_rejects_jacobi_violating_a_n():
+    bad_a = np.array([0.4, 0.0, 0.0])
+    bad_n = np.diag([1.0, 0.0, 0.0])
+    with pytest.raises(ValueError, match="Jacobi"):
+        structure_tensor_from_an(bad_a, bad_n)
+
+
+def test_ricci_ingress_rejects_skew_non_lie_bracket():
+    # [e0,e1]=e0 and [e1,e2]=e1 violate Jacobi for (e0,e1,e2).
+    C = np.zeros((3, 3, 3), dtype=np.float64)
+    C[0, 0, 1] = 1.0
+    C[0, 1, 0] = -1.0
+    C[1, 1, 2] = 1.0
+    C[1, 2, 1] = -1.0
+    with pytest.raises(ValueError, match="Jacobi"):
+        spatial_ricci_from_structure_tensor(C)
+
+
+def test_tilt_recovery_rejects_invalid_algebra_and_superluminal_speed():
+    algebra = build_bianchi_algebra("III")
+    with pytest.raises(ValueError, match="speed_squared"):
+        recover_tilt_squared_components(algebra.a, algebra.n, 1.0, 0.0, 0.0)
+    with pytest.raises(ValueError, match="Jacobi"):
+        recover_tilt_squared_components(
+            np.array([0.4, 0.0, 0.0]), np.diag([1.0, 0.0, 0.0]),
+            0.2, 0.0, 0.0
+        )
+
+
+@pytest.mark.parametrize("label", ALL_BIANCHI_TYPES)
+def test_all_eleven_proper_rotation_and_homothety_invariance(label):
+    algebra = all_bianchi_algebras()[label]
+    index = list(ALL_BIANCHI_TYPES).index(label)
+    R = _rotation(seed=100 + index)
+    scale = 2.7
+    v = np.array([0.11, -0.17, 0.23])
+    base_g = geometry_fingerprint(algebra.a, algebra.n, algebra.C)
+    base_t = tilt_orbit_fingerprint(algebra.a, algebra.n, v)
+    aa = scale * (R @ algebra.a)
+    nn = scale * (R @ algebra.n @ R.T)
+    CC = scale * np.einsum("kp,pqr,qi,rj->kij", R, algebra.C, R.T, R.T)
+    transformed_g = geometry_fingerprint(aa, nn, CC)
+    transformed_t = tilt_orbit_fingerprint(aa, nn, R @ v)
+    np.testing.assert_allclose(
+        [base_g.normalized_a_norm, *base_g.normalized_n_eigenvalues,
+         *base_g.normalized_ricci_eigenvalues],
+        [transformed_g.normalized_a_norm, *transformed_g.normalized_n_eigenvalues,
+         *transformed_g.normalized_ricci_eigenvalues],
+        rtol=0.0, atol=3e-11
+    )
+    assert transformed_g.type_signature.label == base_g.type_signature.label
+    for field in (
+        "speed_squared", "p1", "p2", "class_b_a_dot_v",
+        "class_b_a_dot_v_cross_nv", "class_a_v_nv_n2v_determinant"
+    ):
+        x, y = getattr(base_t, field), getattr(transformed_t, field)
+        if x is None:
+            assert y is None
+        else:
+            assert y == pytest.approx(x, abs=3e-11)
+    assert transformed_t.moment_jacobian_rank == base_t.moment_jacobian_rank
+    assert transformed_t.continuous_azimuth_degeneracy_dof == base_t.continuous_azimuth_degeneracy_dof

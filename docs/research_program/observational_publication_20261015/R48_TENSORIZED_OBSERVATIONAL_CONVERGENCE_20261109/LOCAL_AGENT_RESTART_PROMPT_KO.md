@@ -72,3 +72,41 @@ Stop if:
 - a tilt component is asserted identifiable outside the orbit-map rank;
 - a physical tilted solution is claimed without Einstein constraints;
 - the task expands toward Boltzmann, LOS, CMB transfer or Bayesian inference.
+
+
+## Independent referee findings and bounded follow-up (2026-11-09)
+
+Read before making any novelty claim:
+- INDEPENDENT_GEOMETRY_REVIEW_KO.md
+- GEOMETRY_CLAIM_LEDGER.json
+- Updated BIANCHI_NOVELTY_AND_SIGNIFICANCE_ASSESSMENT_KO.md
+
+Literature boundary:
+- Ferrando & Saez 2020 (arXiv:2004.01877) already gives intrinsic/algorithmic classification of homogeneous 3D Riemannian spaces using Ricci structure/derivatives and the (N,a) structure tensor.
+- Saez, Mengual & Ferrando 2024 (arXiv:2409.15854) applies the framework to spatially homogeneous cosmology.
+- Jakub 2026 Clifford Bianchi framework (Zenodo DOI 10.5281/zenodo.21432742) is an author preprint, not peer reviewed, with restricted files; its abstract overlaps broadly with coordinate-free Bianchi classification, curvature and tilted fluids. Do not infer priority from the abstract alone.
+- Consequently, novelty remains HOLD. Only a source-backed geometry-only executable diagnostic / rank-stratified tilt identifiability contribution is currently defensible.
+
+## New code contract and CI
+
+The current branch adds:
+- Jacobi validation in structure_tensor_from_an.
+- Full bracket Jacobi validation before Ricci computation.
+- Validation of 0 <= speed_squared < 1 and valid (a,n) at tilt recovery.
+- All-11 proper-SO(3)/common-positive-homothety parameterized regression tests.
+- Dedicated .github/workflows/bianchi-similarity.yml, isolated from unrelated optional Cobaya/Astropy collection.
+
+Run the two commands below and record exact branch/HEAD, Python/NumPy/pytest versions, output, exit status and hashes:
+    PYTHONPATH=htt pytest -q htt/bass/diagnostics/test_bianchi_similarity.py
+    PYTHONPATH=htt python -m compileall -q htt/bass/diagnostics
+
+Do not report PASS until the new dedicated workflow or exact local run actually succeeds.
+
+## Remaining mathematical proof obligation
+
+Before treating the tilt fingerprint as a complete invariant, write an explicit stabilizer/orbit proof for:
+- Class A: three distinct eigenvalues, one repeated pair, triple eigenvalue, and the zero tensor; show exactly what chi_A adds after the moments.
+- Class B: rank 0, rank 1, rank 2 with distinct nonzero eigenvalues, and rank 2 with equal nonzero eigenvalues; show exactly how q0 and q1 reduce the remaining discrete ambiguity.
+- Derive the transformation of n under orientation-reversing O(3) frame changes, then transform every pseudoscalar. Until then, call the quotient oriented SO(3) only and make no physical parity claim.
+
+Do not expand to Einstein-fluid evolution, Boltzmann/LOS/CMB transfer, Cobaya or observational inference.
