@@ -106,11 +106,24 @@
         "exact repository pytest not run in this environment",
         "new dedicated GitHub Actions workflow pending"
       ]
+    },
+    {
+      "id": "BCL-09",
+      "claim": "Moment/pseudoscalar tilt descriptors are a new general SO(3) tensor-vector invariant basis",
+      "status": "NOT_NOVEL_AS_GENERAL_INVARIANT_THEORY",
+      "evidence": [
+        "Yehorchenko 2018 arXiv:1812.02918: functional bases for rotational invariants of vector and rank-2 tensor sets",
+        "Shariff 2019/2021 arXiv:1907.09941: independent invariants for symmetric tensors and unit vectors",
+        "Shariff 2023 QJMAM DOI 10.1093/qjmam/hbac022: irreducible isotropic scalar/vector/tensor functions"
+      ],
+      "caveat": "These sources are related general invariant-theory prior art; a direct theorem-by-theorem comparison for the constrained Bianchi (a,n,v) strata has not been completed.",
+      "novelty": "only a constrained Bianchi-specific executable application may remain; complete orbit separation requires proof"
     }
   ],
   "implementation_gates": {
     "previous_pr04_matrix": {
       "status": "FAIL_OPTIONAL_DEPENDENCY_COLLECTION",
+      "run_id": 42599885977,
       "python_versions": [
         "3.10",
         "3.11",
@@ -118,24 +131,51 @@
         "3.13"
       ],
       "cause": [
-        "cobaya missing in four tests",
-        "astropy missing in three tests"
+        "4 Cobaya test modules fail import because cobaya is not installed",
+        "3 Astropy test modules fail import because astropy is not installed"
       ],
-      "interpretation": "not a Bianchi assertion failure; full regression gate is not PASS"
+      "interpretation": "Compile, import compatibility, PR04 theorem/property and architecture checks pass on all four matrix jobs; broad pytest collection stops on seven unrelated missing optional dependencies."
     },
     "new_targeted_workflow": {
-      "status": "PENDING",
-      "path": ".github/workflows/bianchi-similarity.yml",
-      "checks": [
-        "PYTHONPATH=htt pytest -q htt/bass/diagnostics/test_bianchi_similarity.py",
-        "PYTHONPATH=htt python -m compileall -q htt/bass/diagnostics"
-      ],
+      "status": "PASS_MATRIX",
+      "workflow": ".github/workflows/bianchi-similarity.yml",
+      "run_id": 42599886057,
+      "commit_sha": "effb46279cbc69138c9e72503a1a86a35013ed4e",
       "python_matrix": [
-        "3.10",
-        "3.11",
-        "3.12",
-        "3.13"
-      ]
+        {
+          "version": "3.10",
+          "status": "PASS",
+          "pytest": "49 passed",
+          "compileall": "PASS",
+          "numpy": "2.2.6",
+          "pytest_version": "9.2.0"
+        },
+        {
+          "version": "3.11",
+          "status": "PASS",
+          "pytest": "49 passed",
+          "compileall": "PASS",
+          "numpy": "2.4.6",
+          "pytest_version": "9.2.0"
+        },
+        {
+          "version": "3.12",
+          "status": "PASS",
+          "pytest": "49 passed",
+          "compileall": "PASS",
+          "numpy": "2.5.4",
+          "pytest_version": "9.2.0"
+        },
+        {
+          "version": "3.13",
+          "status": "PASS",
+          "pytest": "49 passed",
+          "compileall": "PASS",
+          "numpy": "2.5.4",
+          "pytest_version": "9.2.0"
+        }
+      ],
+      "interpretation": "Dedicated Bianchi diagnostics and compileall pass on all four Python versions at exact HEAD. Does not convert the separate broad PR04 fast-regression gate into PASS."
     },
     "no_local_runtime_execution": true
   },
@@ -187,5 +227,5 @@
       "url": "https://arxiv.org/abs/2609.25112"
     }
   ],
-  "next_task": "R48-T20"
+  "next_task": "R48-T21"
 }

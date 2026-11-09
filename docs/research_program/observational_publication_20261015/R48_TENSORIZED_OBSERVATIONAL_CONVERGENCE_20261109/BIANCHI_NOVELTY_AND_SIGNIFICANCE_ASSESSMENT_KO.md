@@ -89,3 +89,10 @@ No Boltzmann solver, hierarchy completion, LOS, CMB transfer, polarization, Coba
 
 **금지할 표현:** “새로운 Bianchi 분류”, “최초의 좌표독립 Bianchi 형식”, “Ricci spectrum만으로 local-isometry 분류”, “모든 Bianchi 유형에서 물리적으로 실현 가능한 tilted solution”.
 자세한 가상 심사는 INDEPENDENT_GEOMETRY_REVIEW_KO.md, claim별 상태는 GEOMETRY_CLAIM_LEDGER.json을 따른다.
+
+
+## 10. 회전 불변량 이론 선행문헌 추가 (2026-11-09)
+
+일반적인 tensor/vector rotational invariants 자체도 신규 기여로 볼 수 없다. Yehorchenko (2018, [arXiv:1812.02918](https://arxiv.org/abs/1812.02918))는 회전군 아래 벡터 및 rank-2 tensor 집합의 functional invariant basis 구성 알고리즘을 제시한다. Shariff (2019/2021, [arXiv:1907.09941](https://arxiv.org/abs/1907.09941))는 대칭 2계 텐서 및 단위벡터 집합의 독립 불변량 수와 classical integrity basis의 관계를 다루며, Shariff (2023, [QJMAM DOI](https://doi.org/10.1093/qjmam/hbac022))는 scalar/vector/tensor-valued isotropic function의 irreducible representation을 일반화한다.
+
+이 문헌들이 본 연구의 constrained Bianchi data \\(na=0\\)와 Class-A/B stabilizer strata에 대한 정확한 동일 정리를 제공한다고 단정하지는 않는다. 그러나 현재 moment/pseudoscalar 조합만으로 독창적 invariant theory를 주장할 수 없다는 점은 분명하다. 따라서 모든 stratum에 대한 필요충분 orbit-separation 증명 전까지 complete invariant-basis 주장을 보류한다.

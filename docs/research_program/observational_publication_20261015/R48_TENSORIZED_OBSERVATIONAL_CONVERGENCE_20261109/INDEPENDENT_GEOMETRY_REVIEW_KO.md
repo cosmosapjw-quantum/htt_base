@@ -129,3 +129,16 @@ Class B의 Jacobi 조건은 \(a\in\ker N\)를 주므로, \(\hat a\cdot v\)와 \(
 ## 7. 최종 판정
 
 **MAJOR REVISION / NOVELTY HOLD / BOUNDED SOFTWARE-METHODS CANDIDATE.** 수학적 핵심 계산은 정당한 표준 도구 위에 세워져 있고 일부 exact no-go 결과는 재현되었다. 그러나 일반적인 Bianchi 분류·intrinsic geometry·tilted-fluid formalism의 신규성은 선행문헌에 의해 강하게 제한된다. 차별성은 orbit-stratified executable diagnostics, 엄격한 입력/Jacobi 검증, 재현 가능한 all-type regression evidence로 한정해야 한다. 실제 CI와 orbit completeness proof 전에는 구현/정리 완결을 주장하지 않는다.
+
+
+### M8. 일반 회전 불변량 이론과의 관계
+
+이번 문헌 확장에서는 Bianchi 특화 문헌 외에 tensor/vector invariant theory도 확인했다.
+
+- Yehorchenko (2018), *Invariants for sets of vectors and rank 2 tensors, and differential invariants for vector functions* (arXiv:1812.02918)는 임의 차원 Euclidean 공간에서 회전군 아래 벡터와 rank-2 tensor 집합에 대한 functional basis 구성 알고리즘을 다룬다. [원문](https://arxiv.org/abs/1812.02918).
+- Shariff (2019 preprint; 2021 Engineering Letters), *The number of independent invariants for m unit vectors and n symmetric second order tensors is 2m+6n−3* (arXiv:1907.09941)는 대칭 2계 텐서와 단위벡터 집합의 독립 회전 불변량 수 및 classical integrity basis 사이의 관계를 다룬다. [arXiv](https://arxiv.org/abs/1907.09941), [published record](https://khazna.ku.ac.ae/en/publications/on-the-number-of-independent-invariants-for-m-unit-vectors-and-n-/).
+- Shariff (2023), *On the Smallest Number of Functions Representing Isotropic Functions of Scalars, Vectors and Tensors*, QJMAM 76, 143–161, DOI 10.1093/qjmam/hbac022는 scalar/vector/tensor-valued isotropic functions의 irreducible representation 개수를 더 일반적으로 다룬다. [원문](https://academic.oup.com/qjmam/article/76/2/143/6986233).
+
+따라서 “대칭 텐서와 벡터의 회전 불변량을 구성한다”는 추상적 발상은 신규하지 않다. 다만 이들 자료가 현재의 특정 제약계 (n a=0), Bianchi class/rank strata, normal-frame tilt, Class-A/B 별 stabilizer와 handedness 데이터의 필요충분 orbit separation까지 동일하게 제공하는지는 별도 비교가 필요하다. 이번 심사는 그 정리를 직접 대조·증명하지 못했으므로, 이 차이는 잠정적 연구 질문이지 선점되지 않은 신규성의 증거가 아니다.
+
+**M5 보강 판정:** moments와 pseudoscalars의 조합을 완전한 invariant basis라고 부르지 않는다. 현재 입증된 것은 Vandermonde moment map의 rank statement와 일부 canonical/synthetic tests다. 모든 strata에서의 (SO(3))-orbit completeness는 명시적 stabilizer 분석 및 invariant-theory 선행결과와의 직접 비교가 끝날 때까지 **PROOF REQUIRED**로 남긴다.

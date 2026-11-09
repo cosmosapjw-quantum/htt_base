@@ -19,8 +19,8 @@
     "claims": "No observed discovery, calibrated significance, Bianchi family identification or global-tilt claim before relevant gates pass."
   },
   "current_session": {
-    "id": "R48-T17_TO_T20_REFEREE_AND_INPUT_GUARD_REPAIR",
-    "status": "REFEREE_REVIEW_COMPLETE_TARGETED_CI_PENDING",
+    "id": "R48-T17_TO_T21_REFEREE_AND_VERIFIED_DIAGNOSTICS",
+    "status": "REFEREE_REVIEW_COMPLETE_TARGETED_CI_PASS_BROAD_GATE_BLOCKED",
     "scope_lock": "All 11 Bianchi algebra types plus normal-frame matter-tilt orbit identifiability; no Boltzmann/LOS/CMB transfer/Cobaya.",
     "accomplishments": [
       "Reused BASS Ellis-MacCallum (a,n,C) canonical source and Class-A/Class-B registry.",
@@ -34,7 +34,9 @@
       "Compared Ferrando-Saez 2020/2024 intrinsic homogeneous-geometry classification and 2026 Clifford Bianchi author preprint; downgraded novelty to HOLD.",
       "Symbolically rechecked exact Ricci degeneracies with Wolfram Language under the declared Koszul convention.",
       "Added Jacobi guards at structure/Ricci ingress and subluminal-domain validation for tilt recovery.",
-      "Added all-eleven proper-rotation/common-positive-homothety regressions and a dedicated Python 3.10-3.13 Bianchi workflow."
+      "Added all-eleven proper-rotation/common-positive-homothety regressions and a dedicated Python 3.10-3.13 Bianchi workflow.",
+      "Dedicated Bianchi workflow passed on Python 3.10, 3.11, 3.12 and 3.13 at exact HEAD effb46279cbc69138c9e72503a1a86a35013ed4e; 49 tests and compileall passed on each.",
+      "Added general vector/tensor rotational invariant theory literature (Yehorchenko 2018; Shariff 2019/2021/2023) and further downgraded generic invariant novelty."
     ],
     "limitations": [
       "Exact repository import/pytest NOT_RUN; standalone tests used source-derived canonical fixtures.",
@@ -44,7 +46,9 @@
       "New targeted GitHub Actions workflow is pending; no local exact-head runtime was available.",
       "Existing PR04 full fast-regression tier fails at collection because optional cobaya and astropy dependencies are absent; this is not a Bianchi test assertion failure, but the global gate is not PASS.",
       "2026 Clifford preprint full-text files are restricted; overlap assessment uses official DOI metadata and abstract only.",
-      "Orientation-reversing O(3) transformation of n and tilt pseudoscalars remains an explicit proof obligation."
+      "Orientation-reversing O(3) transformation of n and tilt pseudoscalars remains an explicit proof obligation.",
+      "The broad PR04 fast-regression matrix still fails at pytest collection on four missing Cobaya and three missing Astropy test modules; the theory/property and architecture gates pass.",
+      "Complete orbit separation for constrained Bianchi (a,n,v) data and O(3) orientation transformations remain unproved."
     ]
   },
   "physical_state": {
@@ -782,10 +786,12 @@
     {
       "id": "R48-T20",
       "title": "Jacobi/domain guards and isolated all-type CI regression",
-      "status": "PENDING_CI",
+      "status": "PASS_SCOPED",
       "loop": "implementation_verification",
       "depends_on": [
-        "R48-T18",
+        "R48-T13",
+        "R48-T14",
+        "R48-T15",
         "R48-T19"
       ],
       "outputs": [
@@ -800,7 +806,58 @@
         "All 11 canonical Bianchi types pass proper SO(3) plus common positive homothety regression",
         "Python 3.10-3.13 targeted pytest and compileall pass"
       ],
-      "evidence": "Code and tests submitted on R48 branch; GitHub Actions result pending. No local runtime execution claimed."
+      "evidence": "Code and tests submitted on R48 branch; GitHub Actions result pending. No local runtime execution claimed.",
+      "completion_record": {
+        "completed_at": "2026-11-09",
+        "commit_sha": "effb46279cbc69138c9e72503a1a86a35013ed4e",
+        "workflow_run_id": 42599886057,
+        "matrix": {
+          "3.10": {
+            "status": "success",
+            "tests": "49 passed",
+            "compileall": "success"
+          },
+          "3.11": {
+            "status": "success",
+            "tests": "49 passed",
+            "compileall": "success"
+          },
+          "3.12": {
+            "status": "success",
+            "tests": "49 passed",
+            "compileall": "success"
+          },
+          "3.13": {
+            "status": "success",
+            "tests": "49 passed",
+            "compileall": "success"
+          }
+        },
+        "scope": "Jacobi/domain guards and targeted Bianchi geometry suite only; broad PR04 remains separately blocked"
+      }
+    },
+    {
+      "id": "R48-T21",
+      "title": "Stratum-wise tilt-orbit completeness and O(3) transformation proof",
+      "status": "PENDING",
+      "loop": "G6_orbit_invariant_proof",
+      "depends_on": [
+        "R48-T15",
+        "R48-T19",
+        "R48-T20"
+      ],
+      "outputs": [
+        "TILT_ORBIT_STABILIZER_PROOF_KO.md",
+        "O3_ORIENTATION_TRANSFORMATION_SPEC.json",
+        "TILT_INVARIANT_PRIOR_ART_MATRIX.json"
+      ],
+      "acceptance": [
+        "Prove necessary and sufficient SO(3)-orbit separation for Class A distinct/double/triple/zero-N strata",
+        "Prove necessary and sufficient SO(3)-orbit separation for Class B rank 0, rank 1, rank 2 distinct and rank 2 repeated eigenvalue strata",
+        "Derive n and all pseudoscalar transformations under improper O(3), respecting epsilon dualization",
+        "Compare constrained (a,n,v) orbit problem with Yehorchenko 2018 and Shariff 2019/2021/2023; do not claim generic invariant-theory novelty"
+      ],
+      "evidence": "Analytic proof obligation; no physical parity claim or complete invariant-basis claim before passing."
     }
   ],
   "stop_rules": [
@@ -816,13 +873,15 @@
     "Do not report tilt components as identifiable outside the orbit-map rank and conditioning gates.",
     "Do not call the SO(3) plus positive-homothety fingerprint a full automorphism or local-isometry classification.",
     "Do not interpret tilt pseudoscalar signs as physical parity observables until the O(3) pseudotensor transformation of n is derived.",
-    "Do not claim novelty for general coordinate-free Bianchi classification in light of Ferrando-Saez 2020/2024 and the 2026 Clifford author preprint."
+    "Do not claim novelty for general coordinate-free Bianchi classification in light of Ferrando-Saez 2020/2024 and the 2026 Clifford author preprint.",
+    "General rotational invariant bases for vectors and rank-2 tensors are prior art; claim only a Bianchi-constrained, explicitly proven specialization if the stabilizer proof succeeds.",
+    "Do not merge while broad PR04 fast-regression remains failed or while PR is Draft unless separately authorized."
   ],
   "restart_pointer": {
-    "next_task": "R48-T20",
-    "precondition": "Resolve live R48 branch head after referee/guard patch; inspect worktree; wait for the dedicated Bianchi workflow result and reproduce exact-head targeted tests locally if available.",
-    "next_work": "Verify Jacobi guards and all-11 proper-rotation tests. Then complete the stabilizer-by-stabilizer tilt-orbit proof and derive the O(3) transformation of n and each pseudoscalar before any stronger novelty claim.",
-    "scope_lock": "No Boltzmann, LOS, CMB transfer, polarization, Cobaya, observational inference or tilted Einstein-fluid evolution.",
+    "next_task": "R48-T21",
+    "precondition": "Use verified R48 HEAD effb46279cbc69138c9e72503a1a86a35013ed4e; targeted Bianchi CI run 42599886057 passed all four Python versions. Broad PR04 fast regression remains blocked by optional dependency collection.",
+    "next_work": "Derive the constrained Bianchi tilt-orbit stabilizer classification and the induced O(3) transformation laws; compare with general tensor/vector invariant bases.",
+    "scope_lock": "No Einstein-fluid evolution, Boltzmann/LOS/CMB transfer, Cobaya or observational inference.",
     "local_agent_prompt": "LOCAL_AGENT_RESTART_PROMPT_KO.md"
   },
   "active_scope": {

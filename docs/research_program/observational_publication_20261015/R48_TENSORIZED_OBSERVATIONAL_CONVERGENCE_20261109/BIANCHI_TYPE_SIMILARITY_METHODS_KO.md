@@ -180,3 +180,8 @@ moment matrix의 조건수는 eigenvalue 충돌에 가까워질수록 커진다.
 ### Orientation convention
 
 현재 quotient는 오른손 triad의 SO(3) 작용만 취한다. n은 bracket index pair의 Levi-Civita dualization으로 정의되므로 orientation-reversing O(3) 변환에서 일반 대칭 2-tensor와 동일하게 변환한다고 가정하지 않는다. 이 작업은 parity-related frame의 동치/비동치를 물리적 명제로 주장하지 않는다. 해당 변환을 다루려면 a, n, tilt pseudoscalar의 유도 변환법칙을 별도로 제시해야 한다.
+
+
+## 9. 회전 불변량 이론과의 경계
+
+회전군 아래 벡터와 rank-2 tensor들의 invariant basis 구성은 일반 불변량 이론의 선행 주제다. Yehorchenko (2018, [arXiv:1812.02918](https://arxiv.org/abs/1812.02918))는 vector/rank-2 tensor sets의 functional basis를, Shariff (2019/2021, [arXiv:1907.09941](https://arxiv.org/abs/1907.09941))는 symmetric tensors/unit vectors의 independent invariant count를, Shariff (2023, [DOI](https://doi.org/10.1093/qjmam/hbac022))는 isotropic scalar/vector/tensor functions의 최소 표현을 다룬다. 본 연구는 이를 새로 제안한다고 주장하지 않는다. Bianchi Jacobi constraint와 각 rank/eigenvalue-multiplicity stratum에 특화된 필요충분 orbit separation은 별도 정리와 선행 invariant-basis의 직접 비교가 필요하다.

@@ -147,7 +147,7 @@
     "repo_checkout_import_pytest": "NOT_RUN",
     "boltzmann_solver": "OUT_OF_SCOPE",
     "targeted_ci": {
-      "status": "PENDING",
+      "status": "PASS_MATRIX",
       "workflow": ".github/workflows/bianchi-similarity.yml",
       "commands": [
         "PYTHONPATH=htt pytest -q htt/bass/diagnostics/test_bianchi_similarity.py",
@@ -158,7 +158,11 @@
         "3.11",
         "3.12",
         "3.13"
-      ]
+      ],
+      "run_id": 42599886057,
+      "commit_sha": "effb46279cbc69138c9e72503a1a86a35013ed4e",
+      "result": "Python 3.10–3.13: 49 tests passed per version; compileall passed per version.",
+      "separate_broad_gate": "PR04 broad fast regression remains blocked at collection by missing cobaya (4 modules) and astropy (3 modules)."
     }
   },
   "claim_firewall": [
@@ -188,6 +192,26 @@
       }
     ],
     "orientation_note": "SO(3) quotient is explicitly oriented. Do not claim physical parity-odd invariants until the O(3) pseudotensor transformation of n and all tilt pseudoscalars is derived.",
-    "novelty_boundary": "reproducible BASS geometry-only diagnostics, rank-stratified normal-frame tilt identifiability and regression no-go examples; not a new Bianchi classification or coordinate-free formalism"
+    "novelty_boundary": "reproducible BASS geometry-only diagnostics, rank-stratified normal-frame tilt identifiability and regression no-go examples; not a new Bianchi classification or coordinate-free formalism",
+    "invariant_theory": [
+      {
+        "work": "Yehorchenko 2018, Invariants for sets of vectors and rank 2 tensors",
+        "url": "https://arxiv.org/abs/1812.02918",
+        "implication": "functional bases for rotational invariants of vector and rank-2 tensor sets"
+      },
+      {
+        "work": "Shariff 2019/2021, The number of independent invariants for m unit vectors and n symmetric second order tensors",
+        "url": "https://arxiv.org/abs/1907.09941",
+        "implication": "independent invariant count for sets of symmetric tensors and unit vectors"
+      },
+      {
+        "work": "Shariff 2023, On the Smallest Number of Functions Representing Isotropic Functions of Scalars, Vectors and Tensors",
+        "url": "https://doi.org/10.1093/qjmam/hbac022",
+        "implication": "irreducible isotropic representations for scalar/vector/tensor-valued functions"
+      }
+    ]
+  },
+  "novelty_boundary": {
+    "general_invariant_theory": "Vector and rank-2 tensor rotational invariants are established prior art; Bianchi-constrained strata-specific completeness is unresolved."
   }
 }

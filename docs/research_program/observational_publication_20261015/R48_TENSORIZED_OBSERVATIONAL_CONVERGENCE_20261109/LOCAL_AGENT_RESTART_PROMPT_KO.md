@@ -110,3 +110,16 @@ Before treating the tilt fingerprint as a complete invariant, write an explicit 
 - Derive the transformation of n under orientation-reversing O(3) frame changes, then transform every pseudoscalar. Until then, call the quotient oriented SO(3) only and make no physical parity claim.
 
 Do not expand to Einstein-fluid evolution, Boltzmann/LOS/CMB transfer, Cobaya or observational inference.
+
+
+## Verified CI and next bounded research task (2026-11-09)
+
+The dedicated Bianchi similarity workflow passed at exact HEAD `effb46279cbc69138c9e72503a1a86a35013ed4e`:
+- Python 3.10, 3.11, 3.12, 3.13
+- 49 tests passed on each interpreter
+- BASS diagnostics compileall passed on each interpreter
+- Receipt: `BIANCHI_TARGETED_CI_REPORT.json`, workflow run 42599886057
+
+The broad PR04 fast-regression is still not PASS: all four Python jobs stop during pytest collection because four Cobaya modules and three Astropy modules import missing optional packages. Compilation, import compatibility, theorem/property, and architecture gates pass. Do not mix this broad-suite blocker with the dedicated Bianchi result.
+
+Next task: R48-T21, stratum-wise proof of constrained Bianchi tilt-orbit completeness plus induced O(3) transformation of n and pseudoscalars. General vector/tensor rotational invariant bases are prior art (Yehorchenko 2018; Shariff 2019/2021/2023). No generic invariant-theory novelty or physical parity claim before the proof.

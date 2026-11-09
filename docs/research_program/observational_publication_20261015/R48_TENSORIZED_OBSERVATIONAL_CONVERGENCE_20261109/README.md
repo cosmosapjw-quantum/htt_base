@@ -72,3 +72,8 @@ A pure-NumPy diagnostic module and tests have been added under htt/bass/diagnost
 A standalone canonical-fixture oracle passed 35 tests and 1,100 randomized SO(3)/positive-homothety cases. Exact repository import/pytest remains NOT_RUN and is the next local-agent task. Novelty priority is provisional pending an adversarial review of metric-Lie-algebra equivalence and invariant theory.
 
 Scope firewall: no Boltzmann solver, LOS, CMB Cl/polarization, Cobaya/MCMC, observational family claim, or all-type constraint-satisfying tilted-fluid claim.
+
+
+## Targeted Bianchi CI receipt and next task (2026-11-09)
+
+The dedicated Bianchi workflow passed all four Python interpreters at exact HEAD effb46279cbc69138c9e72503a1a86a35013ed4e: 49 tests per version plus compileall. See `BIANCHI_TARGETED_CI_REPORT.json`. The separate PR04 broad fast-regression remains failed at collection because optional Cobaya (four modules) and Astropy (three modules) dependencies are unavailable. DAG next task is R48-T21: prove the constrained tilt-orbit stabilizers and O(3) transformations.
