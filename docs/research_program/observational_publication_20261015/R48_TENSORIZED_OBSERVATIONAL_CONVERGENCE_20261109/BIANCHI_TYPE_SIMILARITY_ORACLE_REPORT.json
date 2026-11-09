@@ -1,0 +1,228 @@
+{
+  "schema": "htt.bianchi_similarity_oracle/1",
+  "date": "2026-11-09",
+  "status": "NUMERICALLY_CHECKED_STANDALONE_ORACLE",
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "pytest": "35 passed in 0.15 s"
+  },
+  "provenance": {
+    "fixtures": "isolated canonical (a,n,C) fixtures matching repository BASS Ellis--MacCallum conventions",
+    "exact_repository_import_tests": "NOT_RUN",
+    "raw_observational_data": "NOT_USED",
+    "note": "The repository test module is added, but only the standalone source-derived test package was executed."
+  },
+  "type_table": [
+    {
+      "type": "I",
+      "class": "A",
+      "rank_n": 0,
+      "h": null,
+      "ricci_shape": [
+        0,
+        0,
+        0
+      ],
+      "flat": true,
+      "moment_rank": 1,
+      "tilt_azimuth_dof": 2
+    },
+    {
+      "type": "II",
+      "class": "A",
+      "rank_n": 1,
+      "h": null,
+      "ricci_shape": [
+        -0.5773502692,
+        -0.5773502692,
+        0.5773502692
+      ],
+      "flat": false,
+      "moment_rank": 2,
+      "tilt_azimuth_dof": 1
+    },
+    {
+      "type": "III",
+      "class": "B",
+      "rank_n": 2,
+      "h": -1,
+      "ricci_shape": [
+        -0.7071067812,
+        -0.7071067812,
+        0
+      ],
+      "flat": false,
+      "moment_rank": 3,
+      "tilt_azimuth_dof": 0
+    },
+    {
+      "type": "IV",
+      "class": "B",
+      "rank_n": 1,
+      "h": null,
+      "ricci_shape": [
+        -0.7618569598,
+        -0.6108472218,
+        -0.2154985951
+      ],
+      "flat": false,
+      "moment_rank": 2,
+      "tilt_azimuth_dof": 0
+    },
+    {
+      "type": "V",
+      "class": "B",
+      "rank_n": 0,
+      "h": null,
+      "ricci_shape": [
+        -0.5773502692,
+        -0.5773502692,
+        -0.5773502692
+      ],
+      "flat": false,
+      "moment_rank": 1,
+      "tilt_azimuth_dof": 1
+    },
+    {
+      "type": "VI_0",
+      "class": "A",
+      "rank_n": 2,
+      "h": null,
+      "ricci_shape": [
+        -1,
+        0,
+        0
+      ],
+      "flat": false,
+      "moment_rank": 3,
+      "tilt_azimuth_dof": 0
+    },
+    {
+      "type": "VI_h",
+      "class": "B",
+      "rank_n": 2,
+      "h": -1.25,
+      "ricci_shape": [
+        -0.7124802307,
+        -0.6853067462,
+        0.1507533896
+      ],
+      "flat": false,
+      "moment_rank": 3,
+      "tilt_azimuth_dof": 0
+    },
+    {
+      "type": "VII_0",
+      "class": "A",
+      "rank_n": 2,
+      "h": null,
+      "ricci_shape": [
+        0,
+        0,
+        0
+      ],
+      "flat": true,
+      "moment_rank": 2,
+      "tilt_azimuth_dof": 1
+    },
+    {
+      "type": "VII_h",
+      "class": "B",
+      "rank_n": 2,
+      "h": 0.1680555556,
+      "ricci_shape": [
+        -0.8540048094,
+        -0.4368422851,
+        0.2825678743
+      ],
+      "flat": false,
+      "moment_rank": 3,
+      "tilt_azimuth_dof": 0
+    },
+    {
+      "type": "VIII",
+      "class": "A",
+      "rank_n": 3,
+      "h": null,
+      "ricci_shape": [
+        -0.6882472016,
+        -0.6882472016,
+        0.2294157339
+      ],
+      "flat": false,
+      "moment_rank": 2,
+      "tilt_azimuth_dof": 1
+    },
+    {
+      "type": "IX",
+      "class": "A",
+      "rank_n": 3,
+      "h": null,
+      "ricci_shape": [
+        0.5773502692,
+        0.5773502692,
+        0.5773502692
+      ],
+      "flat": false,
+      "moment_rank": 1,
+      "tilt_azimuth_dof": 2
+    }
+  ],
+  "randomized_invariance": {
+    "rotations_per_type": 100,
+    "number_of_types": 11,
+    "total_cases": 1100,
+    "positive_scale_log_range": [
+      -5,
+      5
+    ],
+    "max_geometry_fingerprint_residual": 8.881784197001252e-16,
+    "max_tilt_fingerprint_residual": 2.7755575615628914e-16,
+    "status": "PASS"
+  },
+  "exact_curvature_degeneracies": {
+    "I_vs_VII_0": {
+      "ricci_tensor_norm_difference": 0,
+      "classification_distinct": true,
+      "spatial_metric": "flat"
+    },
+    "V_vs_VII_h_equal_nonzero_eigenvalues": {
+      "ricci_tensor_norm_difference": 0,
+      "parameter_h": 7.1111111111111125,
+      "ricci_eigenvalues": [
+        -1.28,
+        -1.28,
+        -1.28
+      ],
+      "sectional_curvature": -0.64,
+      "classification_distinct": true,
+      "spatial_metric": "constant negative curvature"
+    }
+  },
+  "tilt_inverse": {
+    "representative_type": "VI_0",
+    "moment_rank": 3,
+    "condition_number": 4.738720018687269,
+    "true_squared_components_eigenframe": [
+      0.16,
+      0.09,
+      0.04
+    ],
+    "recovered_squared_components": [
+      0.16,
+      0.09000000000000005,
+      0.03999999999999999
+    ],
+    "max_abs_error": 5.551115123125783e-17,
+    "status": "PASS"
+  },
+  "limitations": [
+    "No exact repository import/pytest execution",
+    "No Einstein constraint or tilted-fluid evolution equation solved",
+    "No observation data, Boltzmann hierarchy, transfer, CMB spectrum, polarization or likelihood",
+    "Algebraic orbit quotient is restricted to proper SO(3) and common positive scaling",
+    "Ricci spectrum is a curvature screening invariant, not a general complete local-isometry invariant",
+    "Novelty priority remains provisional pending an independent focused literature audit"
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema": "htt.six_loop_integrated_claim_ledger/1",
+  "as_of": "2026-11-09",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES",
+  "entries": [
+    {
+      "id": "CL-001",
+      "claim": "R43 nuisance-projected target identifiability condition",
+      "state": "PASS_SCOPED_DERIVED_SYNTHETIC",
+      "evidence": "R43 report/results",
+      "limit": "local first-order; parameter-dependent covariance requires full Fisher"
+    },
+    {
+      "id": "CL-002",
+      "claim": "Common deterministic statistic preserves binary BF iff raw likelihood ratio is measurable w.r.t. T",
+      "state": "PASS_SCOPED_STANDARD_THEOREM_SYNTHETIC",
+      "evidence": "R44 theory/results",
+      "limit": "common observation map and model assumptions; not generic under model-dependent covariance or selection"
+    },
+    {
+      "id": "CL-003",
+      "claim": "Finite model-index posterior expected KL loss equals I(M;Y|T)",
+      "state": "PASS_SCOPED_STANDARD_IDENTITY_SYNTHETIC",
+      "evidence": "R45 theory/results",
+      "limit": "does not equal continuous within-model parameter loss"
+    },
+    {
+      "id": "CL-004",
+      "claim": "Target posterior expected KL loss equals I(Psi;Y|T); exact Gaussian row-space condition",
+      "state": "PASS_SCOPED_STANDARD_IDENTITY_SYNTHETIC",
+      "evidence": "R46 theory/results",
+      "limit": "fixed Gaussian family; physical target maps still require basis/metric/operator"
+    },
+    {
+      "id": "CL-005",
+      "claim": "Bianchi-I collisionless endpoint temperature map",
+      "state": "DERIVED_AT_DESIGN_LEVEL_NOT_INDEPENDENTLY_VERIFIED",
+      "evidence": "R47 METHODS_NO_BOLTZMANN.md",
+      "limit": "isotropic sharp last scattering, homogeneous Bianchi I, collisionless; endpoint B_* not current shear; T-only"
+    },
+    {
+      "id": "CL-006",
+      "claim": "R48 all-11 Bianchi geometry and intrinsic Ricci no-go diagnostics",
+      "state": "PASS_SCOPED_WITH_NOVELTY_HOLD",
+      "evidence": "R48 independent review and geometry code/test/CI receipts",
+      "limit": "geometry-only diagnostic; local isometry/group presentation distinctions; broad PR04 optional-dependency collection previously blocked"
+    },
+    {
+      "id": "CL-007",
+      "claim": "R48 T22 Class-A trace kernel/Class-B generic rank and II/IX kinematic no-go",
+      "state": "PASS_SCOPED_SYNTHETIC_ORACLE_ONLY",
+      "evidence": "R48 T22 methods/mock report",
+      "limit": "idealized curvature channel, mock response scales, identity G_F transport; no exact local checkout receipt"
+    },
+    {
+      "id": "CL-008",
+      "claim": "R41 historic empirical five-probe/MCMC/BIC/SBC outputs are publication-valid",
+      "state": "QUARANTINED_CONTRADICTED_BY_LATER_AUDIT",
+      "evidence": [
+        "R41 historical claims",
+        "R42/R47/R48 contradiction reports"
+      ],
+      "limit": "ESS=53/false gate, uncalibrated SBC, tiny Planck summary input, hardcoded responses, incomplete Bianchi transfer"
+    },
+    {
+      "id": "CL-009",
+      "claim": "HTT T=(x,Q,Pi,F,G_F) is a new general sufficiency theorem or more informative than raw data",
+      "state": "FORBIDDEN",
+      "evidence": "R43 data processing argument; R44-R46 conditional MI",
+      "limit": "deterministic readout cannot create raw-data Fisher/MI; value must be demonstrated as a typed, calibrated decision/readout"
+    },
+    {
+      "id": "CL-010",
+      "claim": "Observed Bianchi family identification",
+      "state": "HOLD",
+      "evidence": "R47/R48 claim ledgers and publication assessment",
+      "limit": "requires validated family-specific transfer and nuisance-projected global competitor separation"
+    },
+    {
+      "id": "CL-011",
+      "claim": "Gaia B1 directly measures cosmological vorticity",
+      "state": "BLOCKED",
+      "evidence": "R41/R47/R48 reviews",
+      "limit": "ICRF reference-frame spin degeneracy"
+    },
+    {
+      "id": "CL-012",
+      "claim": "DESI compressed BAO vector provides direction-dependent H(z,n)",
+      "state": "OUT_OF_SCOPE_FOR_DATA_PRODUCT",
+      "evidence": "R48 source manifest",
+      "limit": "background BAO vector not an angular estimator"
+    }
+  ]
+}

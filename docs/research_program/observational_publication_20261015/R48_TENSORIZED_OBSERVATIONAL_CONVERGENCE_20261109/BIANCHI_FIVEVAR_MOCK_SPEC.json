@@ -1,0 +1,82 @@
+{
+  "schema": "htt.r48_bianchi_fivevar_mock/1",
+  "task": "R48-T22",
+  "status": "SYNTHETIC_ORACLE_ONLY_NOT_OBSERVATIONAL_EVIDENCE",
+  "conventions": {
+    "metric_signature": "(-,+,+,+)",
+    "epsilon_123": 1,
+    "kappa": "absorbed into w=kappa*(rho+p)",
+    "frame_assignment": "R=O=N; M=tilted perfect fluid",
+    "velocity_closure": "beta_RM=beta_NM; beta_MO=-beta_NM; beta_RO=0 for collinear inverse boosts"
+  },
+  "algebra": {
+    "momentum_constraint": "M_i=kappa*q_i; q_i=(rho+p)*Gamma^2*beta_i",
+    "class_A_map": [
+      "(n2-n3)*S23",
+      "(n3-n1)*S13",
+      "(n1-n2)*S12"
+    ],
+    "class_A_generic_rank": 2,
+    "class_A_kernel": "delta_n=c*(1,1,1)",
+    "class_B_map": [
+      "3*a*S11+(n2-n3)*S23",
+      "3*a*S12+n3*S13",
+      "3*a*S13-n2*S12"
+    ],
+    "class_B_det": "3*(S11*S12*S13+S23*(S12^2+S13^2))",
+    "class_B_generic_rank": 3,
+    "tilt_inversion": "r=|M|/w=beta/(1-beta^2); beta=2*r/(1+sqrt(1+4*r^2))"
+  },
+  "mock": {
+    "seed": 20261109,
+    "replications": 30000,
+    "posterior_draws": 12000,
+    "matched_null_data_realizations": 512,
+    "matched_null_draws_per_realization": 32,
+    "latent_prior": "Normal(1,0.25^2) truncated to [0,1.75]",
+    "kinematic_dimension": 21,
+    "channels": [
+      "count dipole 3",
+      "Gaia-E1-like 3",
+      "three STF5 windows"
+    ],
+    "full_kinematic_covariance": true,
+    "count_scale": 1.25,
+    "gaia_E1_scale": 0.8,
+    "scale_status": "synthetic only",
+    "curvature_oracle": {
+      "dimension": 3,
+      "measurement": "sorted eigenvalues of intrinsic 3-Ricci",
+      "noise_covariance": "(3/8)*I",
+      "status": "IDEALIZED_ORACLE_ONLY"
+    }
+  },
+  "five_views": {
+    "shared_sample_identity": true,
+    "x": "sample-wise shear/tilt/mixed functionals and mock carriers including geometry LLR",
+    "Q": "typed constraint/frame/calibration/anchor status",
+    "Pi": "posterior and same-pipeline zero-tilt matched-null exceedance",
+    "F": "centered posterior-deviation support versus declared mock anchors",
+    "G_F": "three abstract windows, full 15x15 covariance, identity mock transport only",
+    "factorization": "the five views are not independent likelihood factors"
+  },
+  "identifiability": {
+    "kinematic_only_label_information_nats": 0,
+    "curvature_oracle_label_information_nats": 0.47891895825987596,
+    "expected_target_kl_full_nats": 0.47891895825987596,
+    "target_kl_with_geometry_score_nats": 0,
+    "target_kl_without_geometry_carrier_nats": 0.47891895825987596,
+    "map_accuracy": 0.9122,
+    "brier": 0.06399512463447277,
+    "sbc_chi2_9": 8.757333333333333,
+    "sbc_p": 0.45996942277997255,
+    "nuisance_parallel_rank": "1 -> 0"
+  },
+  "claim_ceiling": [
+    "Class-A exact common-trace kernel",
+    "Class-B fixed-S map generically rank 3 away from det=0",
+    "selected II/IX pair equal instantaneous flux/tilt but different intrinsic 3-Ricci spectra",
+    "only idealized curvature oracle separates this selected pair",
+    "no observational detection, physical transfer, all-type solution, or global HTT sufficiency"
+  ]
+}

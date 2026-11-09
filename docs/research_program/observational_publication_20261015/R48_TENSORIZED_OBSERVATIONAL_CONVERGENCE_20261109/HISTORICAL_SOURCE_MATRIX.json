@@ -1,0 +1,460 @@
+{
+  "schema": "htt.r48_historical_source_matrix/1",
+  "created_at": "2026-11-09",
+  "timezone": "Asia/Seoul",
+  "purpose": "R48-T1 source-indexed historical reconciliation and Cobaya-independent capability inventory",
+  "repository": {
+    "full_name": "cosmosapjw-quantum/htt_base",
+    "branch": "research/r48-tensorized-observational-convergence-20261109",
+    "audited_head": "afb3ab9406cf13874e2e49e40d09f3b639b01c20",
+    "parent_commit": "aae07cb83b8899dd7495d550722068d8bcbf3bcb",
+    "pull_request": 572,
+    "pr_state": "OPEN_DRAFT_NOT_MERGED",
+    "mutation_boundary": "R48 branch only; no merge, no force push, no raw data"
+  },
+  "history_coverage": {
+    "inherited_R48_T0_inventory": {
+      "pull_request_metadata_records": 568,
+      "branch_metadata_records": 307,
+      "status": "REUSED_FROM_R48_T0_LEDGER"
+    },
+    "R41_R47_chain_reconciled": true,
+    "content_review": "relevance-indexed; not every historical PR diff was read",
+    "conversation_and_memory_review": "semantic search over conversation and library surfaces plus current project memory/context; not an exhaustive export of every past chat",
+    "local_runtime": "NOT_AVAILABLE_REMOTE_DESKTOP_DEVICE_OFFLINE",
+    "native_subagents": "NOT_RUN"
+  },
+  "active_research_chain": [
+    {
+      "pr": 565,
+      "stage": "R41 publication gate",
+      "head": "0439ae8e4870b23abfcdb9499c4c214daf12314b"
+    },
+    {
+      "pr": 566,
+      "stage": "R42 five-variable benchmark",
+      "head": "b8c2d851b4db59d43cf5c0044c42a041b97c44c6"
+    },
+    {
+      "pr": 567,
+      "stage": "R43 functional identifiability",
+      "head": "8e70c15da595ecfcd25e097e44fbd13f3aa59903"
+    },
+    {
+      "pr": 568,
+      "stage": "R44 Bayes-factor sufficiency/design",
+      "head": "98f7dc75f7eba287bd566bddc17920ba8ae45925"
+    },
+    {
+      "pr": 569,
+      "stage": "R45 finite-model information loss",
+      "head": "3a6d76a884214e309b69d6b548bc2277b25bbe88"
+    },
+    {
+      "pr": 570,
+      "stage": "R46 target posterior compression",
+      "head": "66b4bce6151a5fc19f317b02221b724223354fd6"
+    },
+    {
+      "pr": 571,
+      "stage": "R47 solver-free Bianchi-I morphology",
+      "head": "aae07cb83b8899dd7495d550722068d8bcbf3bcb"
+    },
+    {
+      "pr": 572,
+      "stage": "R48 tensorized observational convergence",
+      "head": "afb3ab9406cf13874e2e49e40d09f3b639b01c20"
+    }
+  ],
+  "source_code_identities": [
+    {
+      "path": "htt/src/common/full_observable_x_bundle.py",
+      "blob": "d8a0fe86f0bf4c8790c635fd35d86b2987ca2280",
+      "findings": [
+        "response defaults remain at lines 143-144 and 163-164",
+        "source_operators appears in signature but is never consumed",
+        "exact velocity composition is conditional on both boosts being nonzero"
+      ]
+    },
+    {
+      "path": "htt/src/common/htt_five_variable_state.py",
+      "blob": "ceaec18ab630ee3f8ecad35c962257bf8257740",
+      "findings": [
+        "R42 Pi fallback generates seeded Gaussian samples but retains caller/default null_law_name",
+        "G_F default PHYSICAL_EXPANSION_TRANSPORT yields a constant transport factor",
+        "prior/gauge anchors remain fixed constants requiring source/assumption separation"
+      ]
+    },
+    {
+      "path": "htt/src/common/bianchi_transfer_adapter.py",
+      "blob": "f3c578283b24dec3909378135e7f926f26bc3d59",
+      "findings": [
+        "native atlas reader and external transfer wrapper fail closed with unavailable errors/NotImplementedError; no Bianchi V/VII_h observed transfer inference"
+      ]
+    },
+    {
+      "path": "htt/htt/htt/infer/cobaya_joint_five_probe.py",
+      "blob": "2d0a1a7c1a96774cc3f49ed1fd9f8d97b49c4f79",
+      "findings": [
+        "five per-probe log-likelihoods are added without demonstrated joint cross-probe covariance or conditional-independence proof"
+      ]
+    },
+    {
+      "path": "scripts/r42/run_cobaya_joint_inference.py",
+      "blob": "983e289e93db302ec829f15695eee021bfeb6811",
+      "findings": [
+        "verify_sha=False at line 47",
+        "cached-chain branch sets wall time to 553.24 and sampler=None at lines 155-159",
+        "Rminus1 falls back to 0.02 and ESS to 20 percent of rows at lines 219-224",
+        "beta_RO is vector-added at line 268",
+        "omega and A coordinates fixed to zero at lines 133-138"
+      ]
+    },
+    {
+      "path": "scripts/r42/run_r42_two_layer_benchmark.py",
+      "blob": "73d9cd0349f5880cc162fd8d93503449ecf1bc7c",
+      "findings": [
+        "uses scipy.optimize.minimize and scipy.stats without Cobaya/GetDist imports",
+        "instantiates five source-bound operators with SHA verification disabled",
+        "directly sums probe log-likelihoods; optimizer/competitor benchmark, not posterior sampling"
+      ]
+    },
+    {
+      "path": "htt/src/common/relativistic_velocity_closure.py",
+      "blob": "88da58bb0e94440f7ecf6d0fe62bd6de2f8f9d18",
+      "findings": [
+        "exact ordered SR velocity composition, first-order residual and Wigner rotation implemented in common NumPy code path"
+      ]
+    },
+    {
+      "path": "tests/r42/test_five_variable_repair.py",
+      "blob": "af173d5f4a8f662ea154979523ce31bb798a6644",
+      "findings": [
+        "test fixture uses beta vector addition",
+        "test creates Gaussian pseudo-null samples but labels them MATCHED_NULL_PLANCK_MC100",
+        "count-calibration test passes coefficients explicitly and does not exercise default coefficient provenance"
+      ]
+    },
+    {
+      "path": "htt/bass/diagnostics/bianchi_similarity.py",
+      "status": "ADDED_IN_CURRENT_COMMIT",
+      "scope": "(a,n) classifier; SO(3)/homothety fingerprint; Ricci and tilt-orbit invariants."
+    },
+    {
+      "path": "htt/bass/diagnostics/test_bianchi_similarity.py",
+      "status": "ADDED_IN_CURRENT_COMMIT",
+      "scope": "All-11 classification, rotation/scale invariance, exact degeneracies, rank and fail-closed tests."
+    }
+  ],
+  "prior_art_and_library_sources": [
+    {
+      "source": "Dropbox HTT_TENSORIZED_MES_RESPONSE_SYNTHESIS_20260903.md",
+      "id": "id:BSpOijBcT10AAAAAADtiaA",
+      "reuse": "PMG-WU-010 exact local-observer Lorentz pullback and PMG-WU-011 processed cut-sky response; local boost lineage, not intrinsic Bianchi geometry or observed Planck result"
+    },
+    {
+      "source": "Dropbox htt_base_WU009_theory_dossier_20260831.md",
+      "id": "id:BSpOijBcT10AAAAAADkn8g",
+      "reuse": "P16 exact Lorentz pullback; P18 ideal Bianchi-I positive-quadratic temperature inverse; P20 direct-temperature likelihood, with theorem assumptions retained"
+    },
+    {
+      "source": "Dropbox WU009 theory blocker ledger",
+      "id": "id:BSpOijBcT10AAAAAADkn8w",
+      "reuse": "preserve open source-equation normalization and Planck input blockers"
+    },
+    {
+      "source": "Dropbox WU011 Task 5A independent audit",
+      "id": "id:BSpOijBcT10AAAAAADlQgQ",
+      "reuse": "metric whitening, physical monopole versus a00, ell=6 source block, complete finite-difference columns and source-coordinate typing"
+    },
+    {
+      "source": "Dropbox WU011 Task 5B repair contract",
+      "id": "id:BSpOijBcT10AAAAAADlQgg",
+      "reuse": "finite-HEALPix response certification remains a bounded follow-up; synthetic local-observer boost only"
+    },
+    {
+      "source": "Dropbox HTT R7 readiness",
+      "id": "id:BSpOijBcT10AAAAAADs16Q",
+      "reuse": "conditional source-image calculations require matching frame/congruence/normalization; missing source/target bridge remains unresolved"
+    },
+    {
+      "source": "Dropbox HTT R7 Local Codex handoff",
+      "id": "id:BSpOijBcT10AAAAAADs15g",
+      "reuse": "proxy support/scenario intervals are not observational likelihood or posterior"
+    },
+    {
+      "source": "Dropbox HTT harness gate retrotrace",
+      "id": "id:BSpOijBcT10AAAAAADhGVA",
+      "reuse": "MIO diagnostic versus HTT posterior separation and no-fallback policy"
+    },
+    {
+      "source": "Dropbox code-capability audit prompt",
+      "id": "id:BSpOijBcT10AAAAAACk1hA",
+      "reuse": "capability statements need source-backed executable evidence"
+    },
+    {
+      "source": "ChatGPT Library search HTT_FIVE_THEORY_LOOPS.pdf",
+      "ref": "turn82file3",
+      "reuse": "identified as 2026-10-26 scoped theory-loop record; not re-parsed in this turn"
+    },
+    {
+      "source": "ChatGPT Library search HTT_GITHUB_PR_PUBLICATION_INDEX_20260802.csv",
+      "ref": "turn82file4",
+      "reuse": "historical navigation index only; R48 chain remains controlling authority"
+    },
+    {
+      "source": "GitHub T1 stored-real STF theorem pack",
+      "path": "docs/research_reports/theory_packs/T1_STORED_REAL_STF_THEOREM_PACK.md",
+      "blob": "6c2480c3d1adc9e76344994dcf1fc2d5c11365f4",
+      "reuse": "Exact Condon-Shortley stored-real basis, signs, STF2 basis and Frobenius metric; pins R48 harmonic adapter."
+    },
+    {
+      "source": "GitHub low-ell irrep projection implementation",
+      "path": "htt/obsstat/planck_lowell_irrep_projection.py",
+      "blob": "35be2de9114a928c485cf76b3fb679cac8ed4bd7",
+      "reuse": "Existing stored-real-to-Cartesian STF2 bridge; raw alm API requires explicit sqrt(2) and sine-slot sign adapter."
+    },
+    {
+      "source": "GitHub notation and convention registry v3",
+      "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/NOTATION_AND_CONVENTION_REGISTRY.yaml",
+      "blob": "2245e291e0b03c65f1a789df8649a194c43fe8fd",
+      "reuse": "Frozen metric signature, observer/frame arrows, local boost convention, harmonic reality and covariance/domain rules."
+    },
+    {
+      "source": "GitHub T1 Wolfram exact receipt",
+      "path": "docs/codex_handoff/htt_tensorized_report_first_20260903/T1_WOLFRAM_EXACT_RECEIPT.json",
+      "blob": "1a76f4e210c6ccaee4f477b4ae31667536f3ca6c",
+      "reuse": "Historical exact symbolic validation of STF2/STF3 basis and norm identities; not current R48 runtime evidence."
+    },
+    {
+      "source": "GitHub R47 methods",
+      "path": "docs/research_program/observational_publication_20261015/R47_SOLVER_FREE_MORPHOLOGY_LIKELIHOOD_20261109/METHODS_NO_BOLTZMANN.md",
+      "blob": "f5b5e4b966f6775ca5340da1cb4c66c501ed00a0",
+      "reuse": "Bianchi-I geodesic temperature map and map-level likelihood contract; R48 adds c bookkeeping, higher-order monopole and independent numeric oracle."
+    },
+    {
+      "source": "BASS canonical all-11 Bianchi algebra registry",
+      "path": "htt/bass/background/bianchi_types.py",
+      "blob": "edb802cddfb74fc811da15ef4feb4181f9cc0adb",
+      "reuse": "Authoritative (a,n,C) builder, Class-A/Class-B split, Jacobi n@a=0, h parameter and canonical class-B axis."
+    },
+    {
+      "source": "BASS partial tilt kinematic adapters",
+      "path": "htt/bass/hierarchy/tilt_kinematics.py",
+      "blob": "eaa857a04ff41ed9f9d2cea059053a5f537f1249",
+      "reuse": "Current adapters carry partial acceleration/vorticity terms only; not a complete all-type tilted-fluid solution."
+    },
+    {
+      "source": "BASS FB-6 all-type coverage test",
+      "path": "htt/bass/integration/test_full_bianchi_coverage.py",
+      "blob": "9ef57c2b418eb6cf83d4424ec7667ef3decc23e9",
+      "reuse": "22 type/tilt fixtures; beta=.1 and aligned tilt direction; D_ellTT includes a regression proxy rather than full LOS."
+    },
+    {
+      "source": "BASS tilt adapter tests",
+      "path": "htt/bass/hierarchy/test_tilt_kinematics.py",
+      "blob": "fbffd2bf95705c256eba26f4e0483afb6ad16e80",
+      "reuse": "Adapter test contract; not proof of full tilted Einstein-fluid solutions."
+    },
+    {
+      "source": "Full Bianchi coverage roadmap",
+      "path": "docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md",
+      "blob": "38849049c31989a84648c8635c847d9b589b5442",
+      "reuse": "Explicit gaps in nonperturbative tilt, per-type source validation, Thomson, perturbations, LOS and likelihood."
+    },
+    {
+      "source": "FB-8 local observer/global tilt discriminator SDD",
+      "path": "docs/lowell_bianchi/extended_coverage/FB8_DISCRIMINATOR_SDD.md",
+      "blob": "464600a53f5e1063da6325e9332238572059e12e",
+      "reuse": "GlobalTilt and ObserverBoost remain distinct; current project does not reproduce observer aberration."
+    },
+    {
+      "source": "Extended coverage scope decisions",
+      "path": "docs/lowell_bianchi/extended_coverage/SCOPE_DECISIONS.md",
+      "blob": "e752c44b361e422e89e570a983a6076b9d72a9d5",
+      "reuse": "Previously discarded FB-10 survey, FB-12 nonlinear lensing/ISW and FB-13 second-order tilt are not reopened."
+    },
+    {
+      "source": "King-Ellis rotating congruence seal",
+      "path": "docs/generated/king_ellis_frame_seal.json",
+      "blob": "20d2606fbb9e8e2d3f21843c5c96d5ddcb34ef2f",
+      "reuse": "LRS Bianchi I/V exact kinematics; oblique Type-I vorticity has no constraint-compatible witness in current seal."
+    },
+    {
+      "source": "R10 first-jet to ray-generator map",
+      "path": "docs/research_program/mes_verified_checkpoints_20260928/I1/recovery/research/github_r10_52ab95f2/docs/research_program/optical_mapping_r10_20260919/source_addition/02_FIRST_JET_TO_RAY_GENERATOR.md",
+      "blob": "11dd22f9ff7798103085ab9ded9c3028041d04a4",
+      "reuse": "General observer first-jet inverse retained as prior, deliberately outside current geometry-only scope."
+    },
+    {
+      "source": "Positive extension decision",
+      "path": "docs/research_program/gr_statistics_loops_20260930/reviews/POSITIVE_EXTENSION_DECISION.md",
+      "blob": "1dabb3597abfdcf158082af12ae1d4eb879c246f",
+      "reuse": "Accepted optical derivative/vorticity recovery conditions; not conflated with Bianchi algebra/tilt orbit."
+    },
+    {
+      "source": "Ellis & MacCallum 1969",
+      "title": "A class of homogeneous cosmological models",
+      "doi": "10.1007/BF01645908",
+      "url": "https://doi.org/10.1007/BF01645908",
+      "relevance": "foundational homogeneous Bianchi algebra classification"
+    },
+    {
+      "source": "King & Ellis 1973",
+      "title": "Tilted homogeneous cosmological models",
+      "doi": "10.1007/BF01646266",
+      "url": "https://doi.org/10.1007/BF01646266",
+      "relevance": "tilted fluid congruence and relation to Bianchi symmetry"
+    },
+    {
+      "source": "Wainwright & Ellis 1997",
+      "title": "Dynamical Systems in Cosmology",
+      "doi": "10.1017/CBO9780511524660",
+      "url": "https://doi.org/10.1017/CBO9780511524660",
+      "relevance": "Class A/B homogeneous dynamics and tilted models"
+    },
+    {
+      "source": "Coley & Hervik 2005",
+      "title": "A dynamical systems approach to the tilted Bianchi models of solvable type",
+      "doi": null,
+      "url": "https://arxiv.org/abs/gr-qc/0409100",
+      "relevance": "tilted VI_h/VII_h and related solvable-type dynamics"
+    },
+    {
+      "source": "Hervik, van den Hoogen & Coley 2005",
+      "title": "Future asymptotic behaviour of tilted Bianchi models of type IV and VII_h",
+      "doi": "10.1088/0264-9381/22/3/010",
+      "url": "https://doi.org/10.1088/0264-9381/22/3/010",
+      "relevance": "tilted IV/VII_h dynamics"
+    },
+    {
+      "source": "Marcori et al. 2018",
+      "title": "Direction and redshift drifts for general observers and their applications in cosmology",
+      "doi": null,
+      "url": "https://arxiv.org/abs/1805.12121",
+      "relevance": "general observer direction/redshift drift; Bianchi I application"
+    },
+    {
+      "source": "Fleury, Pitrou & Uzan 2015",
+      "title": "Light propagation in a homogeneous and anisotropic universe",
+      "doi": "10.1103/PhysRevD.91.043511",
+      "url": "https://doi.org/10.1103/PhysRevD.91.043511",
+      "relevance": "Bianchi I null propagation, direction drift and Jacobi matrix"
+    },
+    {
+      "source": "Korzyński & Kopiński 2018",
+      "title": "Optical drift effects in general relativity",
+      "doi": "10.1088/1475-7516/2018/03/012",
+      "url": "https://doi.org/10.1088/1475-7516/2018/03/012",
+      "relevance": "general-spacetime optical drift hierarchy"
+    },
+    {
+      "source": "Pontzen 2009",
+      "title": "Rogues’ gallery: The full freedom of the Bianchi CMB anomalies",
+      "doi": "10.1103/PhysRevD.79.103518",
+      "url": "https://doi.org/10.1103/PhysRevD.79.103518",
+      "relevance": "Bianchi CMB temperature/polarization patterns; excluded from current scope"
+    }
+  ],
+  "cobaya_independent_capabilities": [
+    {
+      "path": "scripts/r46/run_target_posterior_compression.py",
+      "blob": "f519e2cab14305c298fcd004583f15e0c0abdf06",
+      "status": "NUMERICALLY_REPRODUCED_INDEPENDENTLY",
+      "dependencies": [
+        "NumPy",
+        "SciPy"
+      ],
+      "scope": "17D synthetic Gaussian target-posterior compression; not observational inference"
+    },
+    {
+      "path": "tests/r46/test_target_posterior_compression.py",
+      "blob": "0dbfb405e1d8012aa93e4bd63a7df4f42788308c",
+      "status": "HISTORICAL_PR570_RECEIPT_REPORTS_4_PASS_NOT_RERUN_HERE",
+      "scope": "analytic KL/MMSE, target-aligned versus lossy score, radial/isotropy controls"
+    },
+    {
+      "path": "scripts/r42/run_r42_two_layer_benchmark.py",
+      "blob": "73d9cd0349f5880cc162fd8d93503449ecf1bc7c",
+      "status": "COBAYA_FREE_BUT_NOT_EMPIRICALLY_ADMISSIBLE",
+      "dependencies": [
+        "NumPy",
+        "SciPy",
+        "source datasets"
+      ],
+      "scope": "direct source-operator likelihood optimization; SHA verification disabled and covariance/response issues remain"
+    },
+    {
+      "path": "tests/r42/test_five_variable_repair.py",
+      "blob": "af173d5f4a8f662ea154979523ce31bb798a6644",
+      "status": "COBAYA_FREE_SYNTHETIC_UNIT_TESTS_NOT_RERUN_HERE",
+      "dependencies": [
+        "NumPy",
+        "pytest"
+      ],
+      "scope": "support quadrature and push-forward geometry; fixtures do not represent authentic survey nulls"
+    },
+    {
+      "path": "htt/src/common/relativistic_velocity_closure.py",
+      "blob": "88da58bb0e94440f7ecf6d0fe62bd6de2f8f9d18",
+      "status": "COBAYA_FREE_NUMERICAL_KERNEL_AVAILABLE",
+      "dependencies": [
+        "NumPy",
+        "htt common modules"
+      ],
+      "scope": "ordered exact SR composition, Wigner rotation and STF2; frame/epoch contract still required"
+    },
+    {
+      "path": "R47 Bianchi-I temperature response",
+      "status": "ANALYTIC_SOLVER_FREE_SPECIFICATION_ONLY",
+      "scope": "geodesic temperature map and low-amplitude harmonic/quadrature oracles can proceed without Boltzmann transfer/Cobaya; production module not yet present"
+    },
+    {
+      "path": "L1_MORPHOLOGY_RESPONSE.md + L1_HARMONIC_OPERATOR_SPEC.json",
+      "status": "ANALYTIC_AND_NUMERICALLY_CHECKED_WITHOUT_COBAYA",
+      "dependencies": [
+        "NumPy",
+        "SciPy"
+      ],
+      "scope": "Exact Bianchi-I collisionless temperature map and harmonic/quadrature oracle; source-matched observation operator remains blocked."
+    },
+    {
+      "path": "htt/bass/diagnostics/bianchi_similarity.py",
+      "status": "PURE_NUMPY_GEOMETRY_ONLY",
+      "dependencies": [
+        "NumPy"
+      ],
+      "scope": "All-11 algebraic type classification, intrinsic Ricci fingerprint and normal-frame tilt orbit; no cosmological transfer or sampling."
+    }
+  ],
+  "key_dispositions": {
+    "empirical_discovery": "HOLD",
+    "R42_posterior": "QUARANTINE_FOR_INFERENCE; ESS receipt is 53 and runner has fallback paths",
+    "R46": "METHODS_ONLY_SYNTHETIC_RESULT_REUSABLE_CONDITIONALLY",
+    "WU010_WU011": "LOCAL_OBSERVER_RESPONSE_LINE; DO_NOT_IDENTIFY_WITH_GLOBAL_TILT",
+    "Bianchi_I": "ANALYTIC_CONDITIONAL_TEMPERATURE_RESPONSE_ONLY",
+    "Bianchi_V_or_VII_h": "BLOCKED_NO_VALIDATED_TRANSFER"
+  },
+  "coverage_limits": [
+    "No local checkout, git status, import test, pytest run or production binary was available because the registered remote desktop device was offline.",
+    "No raw Planck maps/alms, full covariance, source catalogues or chain files were mounted in this session.",
+    "Inherited PR/branch inventory is metadata-complete as recorded by R48-T0; content review remains relevance-indexed.",
+    "No Cobaya sampler, observational likelihood or native subagent was executed in this turn."
+  ],
+  "latest_scoped_research": {
+    "R48_T1": "PASS_SCOPED_REMOTE_STATIC_AUDIT",
+    "R48_T2": "DEFERRED_SCOPE_HISTORICAL_BIANCHI_I_THEORY",
+    "R48_T13_TO_T16": "PASS_SCOPED_GEOMETRY_ONLY_STANDALONE_ORACLE",
+    "R48_T17": "HOLD_NOVELTY_PRIORITY_UNRESOLVED",
+    "R48_T18": "PENDING_EXACT_HEAD_REPOSITORY_TESTS"
+  },
+  "current_scope_lock": {
+    "title": "Tilt-aware geometry-only Bianchi type similarity and identifiability atlas",
+    "no_boltzmann_solver": true,
+    "no_line_of_sight": true,
+    "no_cmb_spectrum_or_polarization": true,
+    "no_cobaya_or_mcmc": true,
+    "no_observed_family_identification": true,
+    "no_claim_of_all_type_tilted_einstein_solutions": true
+  }
+}

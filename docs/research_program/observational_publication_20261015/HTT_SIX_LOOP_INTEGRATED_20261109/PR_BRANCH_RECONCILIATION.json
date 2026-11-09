@@ -1,0 +1,178 @@
+{
+  "schema": "htt.six_loop_pr_branch_reconciliation/1",
+  "as_of": "2026-11-09",
+  "repo": "cosmosapjw-quantum/htt_base",
+  "audit_scope": "PR metadata and research-relevant files/DAG/handoff/claim summaries from #565-#572; PR #565 has 425 files and was not fully semantically reviewed, so the coverage is selected/relevance-indexed rather than falsely exhaustive.",
+  "lineage": [
+    {
+      "id": 565,
+      "tag": "R41",
+      "title": "publication gate and source-bound tensor-x observational convergence",
+      "branch": "research/r41-publication-gate-20261107",
+      "head": "0439ae8e4870b23abfcdb9499c4c214daf12314b",
+      "base": "research/r39-observational-identifiability-20261107",
+      "base_sha": "b819983d479aa1a950d5c162804d74b9b154954b",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 425,
+      "scope": "six-loop theory/design gate; historic R38-R40 claim quarantine; source-bound architecture",
+      "audit": "metadata and selected documentation reviewed; full 425-file diff not fully audited"
+    },
+    {
+      "id": 566,
+      "tag": "R42",
+      "title": "benchmark latest tensor five-variable framework against competing cosmological theories",
+      "branch": "research/r42-fivevar-competitive-benchmark-20261108",
+      "head": "b8c2d851b4db59d43cf5c0044c42a041b97c44c6",
+      "base": "research/r41-publication-gate-20261107",
+      "base_sha": "0439ae8e4870b23abfcdb9499c4c214daf12314b",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 41,
+      "scope": "five-variable meaning; competitor registry; source and harness gates; six loop plans",
+      "audit": "PR body, DAG, selected claims and handoff reviewed"
+    },
+    {
+      "id": 567,
+      "tag": "R43",
+      "title": "functional identifiability proofs and reproducible mock study",
+      "branch": "research/r43-theory-identifiability-mock-20261109",
+      "head": "8e70c15da595ecfcd25e097e44fbd13f3aa59903",
+      "base": "research/r42-fivevar-competitive-benchmark-20261108",
+      "base_sha": "b8c2d851b4db59d43cf5c0044c42a041b97c44c6",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 4,
+      "scope": "nuisance-projected local identifiability; 17+14 dimensional synthetic mock",
+      "audit": "report and results reviewed"
+    },
+    {
+      "id": 568,
+      "tag": "R44",
+      "title": "exact Bayes-factor sufficiency and c-optimal redshift design",
+      "branch": "research/r44-bayes-factor-design-20261109",
+      "head": "98f7dc75f7eba287bd566bddc17920ba8ae45925",
+      "base": "research/r43-theory-identifiability-mock-20261109",
+      "base_sha": "8e70c15da595ecfcd25e097e44fbd13f3aa59903",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 12,
+      "scope": "common deterministic statistic BF sufficiency; Gaussian score; c-optimal design",
+      "audit": "DAG, IO contract, theory report and mock outputs reviewed"
+    },
+    {
+      "id": 569,
+      "tag": "R45",
+      "title": "finite-model posterior information loss and Gaussian mocks",
+      "branch": "research/r45-model-posterior-information-loss-20261109",
+      "head": "3a6d76a884214e309b69d6b548bc2277b25bbe88",
+      "base": "research/r44-bayes-factor-design-20261109",
+      "base_sha": "98f7dc75f7eba287bd566bddc17920ba8ae45925",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 12,
+      "scope": "finite model-index posterior KL/MI; parameter posterior separated",
+      "audit": "DAG, IO contract, report and mock results reviewed"
+    },
+    {
+      "id": 570,
+      "tag": "R46",
+      "title": "target-specific posterior compression and Gaussian mock experiments",
+      "branch": "research/r46-target-posterior-compression-20261109",
+      "head": "66b4bce6151a5fc19f317b02221b724223354fd6",
+      "base": "research/r45-model-posterior-information-loss-20261109",
+      "base_sha": "3a6d76a884214e309b69d6b548bc2277b25bbe88",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 12,
+      "scope": "target posterior KL/conditional MI; fixed Gaussian row-space criterion",
+      "audit": "DAG, IO contract, report and mock results reviewed"
+    },
+    {
+      "id": 571,
+      "tag": "R47",
+      "title": "solver-free Bianchi-I morphology likelihood and six-loop convergence DAG",
+      "branch": "research/r47-solverfree-morphology-likelihood-20261109",
+      "head": "aae07cb83b8899dd7495d550722068d8bcbf3bcb",
+      "base": "research/r46-target-posterior-compression-20261109",
+      "base_sha": "66b4bce6151a5fc19f317b02221b724223354fd6",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 7,
+      "scope": "restricted collisionless Bianchi-I endpoint temperature map; source plan for six loops",
+      "audit": "DAG, method, claims reviewed; R47-T1 and physical execution still pending"
+    },
+    {
+      "id": 572,
+      "tag": "R48",
+      "title": "tensorized physical-state likelihood and observational convergence",
+      "branch": "research/r48-tensorized-observational-convergence-20261109",
+      "head": "7ea9826cf62988dc5405e9a88e905619071ae0f6",
+      "base": "research/r47-solverfree-morphology-likelihood-20261109",
+      "base_sha": "aae07cb83b8899dd7495d550722068d8bcbf3bcb",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 35,
+      "scope": "17D state/frame/epoch contract, source manifests, six loop DAG, Bianchi geometry diagnostics and T22 mock",
+      "audit": "R48 DAG/spec/manifest/mutation gate/claim sources and T22 docs reviewed; exact local checkout remains not run"
+    }
+  ],
+  "disposition": [
+    {
+      "tag": "R41",
+      "role": "initial publication gate / six-loop architecture",
+      "status": "HISTORICAL_BASELINE_RETAINED",
+      "note": "R41 COMPLETE_VALIDATED means design/static/theory gate only; it is not proof of all local empirical execution."
+    },
+    {
+      "tag": "R42",
+      "role": "competitor architecture and six-loop execution plan",
+      "status": "AUTHORITATIVE_DESIGN_INPUT",
+      "note": "R42 local source acquisition, operator repair and production sampling remain pending or quarantined; audit exact reports, don't accept stale claims."
+    },
+    {
+      "tag": "R43",
+      "role": "nuisance-projected functional identifiability",
+      "status": "PASS_SCOPED_SYNTHETIC"
+    },
+    {
+      "tag": "R44",
+      "role": "exact Bayes-factor sufficiency and c-optimal design",
+      "status": "PASS_SCOPED_SYNTHETIC"
+    },
+    {
+      "tag": "R45",
+      "role": "finite-model posterior information loss",
+      "status": "PASS_SCOPED_SYNTHETIC"
+    },
+    {
+      "tag": "R46",
+      "role": "target-specific posterior compression",
+      "status": "PASS_SCOPED_SYNTHETIC"
+    },
+    {
+      "tag": "R47",
+      "role": "restricted solver-free Bianchi-I temperature response",
+      "status": "DERIVED_DESIGN_ONLY_LOCAL_VERIFICATION_REQUIRED"
+    },
+    {
+      "tag": "R48",
+      "role": "source/frame/epoch architecture, Bianchi diagnostics, observability mock",
+      "status": "MIXED_SCOPED; REAL OBSERVATION PATH DEFERRED"
+    }
+  ],
+  "supersession_rules": [
+    "The integrated DAG supersedes fragmented local-agent execution order, not historical source evidence.",
+    "Never delete or rewrite source PR docs; keep exact PR and blob/commit evidence.",
+    "Use R48-T22 as synthetic algebra-to-observable design only; never promote its idealized curvature oracle to observation.",
+    "Keep R41 claim statuses as historical statuses; newer contradiction evidence quarantines claims where necessary."
+  ],
+  "unreviewed_or_not_established": [
+    "Full 425-file semantic diff audit of PR #565",
+    "Full local checkout verification on user's workstation",
+    "Current raw data bytes and SHA-256 for all official releases",
+    "All six source-bound operator implementations and calibrations",
+    "Real Cobaya production chain and matched null SBC/PPC"
+  ],
+  "audit_snapshot": {
+    "captured_before_integrated_package": true,
+    "branch_head_at_snapshot": "7ea9826cf62988dc5405e9a88e905619071ae0f6",
+    "integrated_package_commits": [
+      "50160cbb1c0b33bd2704dfba9eaafad25cfcfcaf",
+      "a303e7082359e8cc4bc854f93e4ffb2098a9d526"
+    ],
+    "live_ref_rule": "PR/branch heads in this file describe the audit snapshot. Always query live branch and PR before further mutation."
+  }
+}

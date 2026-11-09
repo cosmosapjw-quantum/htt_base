@@ -1,0 +1,214 @@
+{
+  "schema": "htt.r48_joint_observation_likelihood/1",
+  "status": "SPECIFICATION_NOT_IMPLEMENTED",
+  "conventions": {
+    "metric_signature": "(-,+,+,+)",
+    "c": "retained explicitly",
+    "frames": [
+      "R radiation/CMB rest frame",
+      "M matter/source-congruence frame",
+      "O observer/instrument frame"
+    ],
+    "state_event": "One declared reference event plus explicit evolution/transport map to each probe epoch",
+    "tetrad": "Orthonormal spatial triad; axis orientation and handedness saved with every tensor"
+  },
+  "parameters": {
+    "chart": "theta_K",
+    "dimension": 17,
+    "components": [
+      {
+        "name": "sigma_STF2",
+        "dimension": 5,
+        "unit": "H_ref-normalized or inverse-time with explicit convention",
+        "meaning": "symmetric trace-free expansion/shear"
+      },
+      {
+        "name": "omega",
+        "dimension": 3,
+        "unit": "same rate convention as sigma",
+        "meaning": "vorticity pseudovector with orientation convention"
+      },
+      {
+        "name": "A",
+        "dimension": 3,
+        "unit": "A/(c H_ref) or declared geometric acceleration",
+        "meaning": "four-acceleration"
+      },
+      {
+        "name": "beta_RM",
+        "dimension": 3,
+        "unit": "dimensionless",
+        "meaning": "matter congruence velocity relative to radiation frame"
+      },
+      {
+        "name": "beta_MO",
+        "dimension": 3,
+        "unit": "dimensionless",
+        "meaning": "observer velocity relative to matter frame"
+      }
+    ],
+    "additional": [
+      "background psi",
+      "source-evolution nuisance",
+      "foreground/calibration eta",
+      "selection and frame nuisance"
+    ],
+    "rule": "17 coordinates are a local chart, not a promise of 17 identifiable observables."
+  },
+  "frame_composition": {
+    "contract": "Define Lorentz matrices by explicit frame arrows; compose in that arrow order and derive beta_RO from the composed matrix.",
+    "forbidden": "beta_RO=beta_RM+beta_MO as an exact relation",
+    "tests": [
+      "identity",
+      "collinear exact velocity addition",
+      "non-collinear Wigner rotation",
+      "small-beta limit",
+      "inverse transform"
+    ]
+  },
+  "likelihood": {
+    "data": "D=(D_CMB,D_count,D_astrometry,D_distance,D_aux)",
+    "gaussian": "log L=-1/2(D-mu)^T C^-1(D-mu)-1/2 logdet C+const",
+    "covariance": "C contains statistical noise, shared calibration, foreground, survey window, common LSS and cross-probe terms.",
+    "posterior": "p(theta,psi,eta|D,M,S,W) proportional to L(D|theta,psi,eta,M,S,W) p(theta,psi,eta|M,S,W)",
+    "rule": "Do not add a summary likelihood to the raw likelihood for the same data unless a valid conditional factorization is proved."
+  },
+  "cmb": {
+    "data": "Observed PR4/NPIPE frequency maps and supported splits/low-resolution covariance. Component-separated products are alternate estimators of one sky.",
+    "forward": "d_CMB=R_map a(theta,psi)+n+f+s_sys",
+    "response": [
+      "beam/effective transfer",
+      "pixel window",
+      "coordinate transform",
+      "mask/apodization",
+      "filter/component separation",
+      "frequency bandpass",
+      "calibration/monopole/dipole"
+    ],
+    "gaussian": "-0.5 r^T C_map^-1 r -0.5 logdet C_map",
+    "harmonic": [
+      "full a_lm vector",
+      "BipoSH covariance response",
+      "registered morphology summaries with matched simulation covariance"
+    ],
+    "BI": {
+      "assumptions": [
+        "homogeneous Bianchi I",
+        "positive-definite spatial metric",
+        "isotropic Planck last-scattering surface",
+        "collisionless propagation after emission"
+      ],
+      "metric": "g_ij(t)=a(t)^2 [exp(2B(t))]_ij, tr B=0, B(t0)=0",
+      "map": "T0(n)/Tbar0=[n^T exp(-2B_*) n]^(-1/2)",
+      "small_B": "deltaT/T=n^T B_* n+O(B_*^2); separate second-order sky monopole by monopole normalization",
+      "wolfram_check": "For B*=epsilon diag(b1,b2,-b1-b2), O(epsilon^2) sky-mean coefficient = -2 tr(B^2)/15; symbolic residual checked zero.",
+      "limits": [
+        "B_* is integrated anisotropy, not sigma(t0)",
+        "map even under n->-n",
+        "temperature only, no E/B transfer",
+        "no Bianchi V or VII_h inference",
+        "noncommuting histories require ordered matrix evolution"
+      ]
+    },
+    "rule": "C_ell-only likelihood cannot infer a_lm phase or morphology."
+  },
+  "source_count": {
+    "likelihood": "inhomogeneous Poisson point process",
+    "intensity": "lambda_r(n,z,F,size)=nbar_r(z,F,size|psi) S_r(n,z,F,size|eta) [1+Delta_r(n,z,F,size|theta,psi)]",
+    "loglike": "sum_i log lambda_r(x_i)-integral lambda_r(x)dOmega dz dF dsize",
+    "nuisance": [
+      "mask/completeness",
+      "redshift distribution",
+      "flux slope and K-correction",
+      "source evolution/bias",
+      "angular-size response",
+      "dust/star/crowding/scan law",
+      "local LSS and observer boost"
+    ],
+    "rule": "Use official random catalogues and selection templates; relative selection values are not absolute per-object probabilities."
+  },
+  "astrometry": {
+    "observable": "source-level proper motions with full covariance",
+    "model": "mu_i=VSH_E1(beta/glide)+VSH_B1(frame spin plus physical rotation)+VSH_E2(STF shear)+source motion+systematics",
+    "rule": "B1 equals physical vorticity only after external inertial-frame spin tie and common source-congruence model."
+  },
+  "distances": {
+    "pantheon": "Fit observed magnitude/distance modulus with full official covariance, row identity, calibration and selection.",
+    "CF4": "Use original individual distance measurements; reconstructed peculiar velocities are derived data, not independent observations.",
+    "optical": "h(n)=Theta/3+sigma_ab n^a n^b-A_a n^a; H_dir(0,n)=c h(n) under declared past-ray/sign convention.",
+    "finite_z": "H_ratio=cz/D_L and H_diff=c/[d_z(D_L/(1+z))] are distinct estimands."
+  },
+  "identifiability": {
+    "jacobian": "J=dmu/dtheta, whiten with full covariance and project shared nuisance directions.",
+    "effective": "J_eff=(I-P_eta)C^(-1/2)dmu/dtheta",
+    "target": "l^T theta is point-identifiable only if ker(J_eff) subset ker(l^T)",
+    "outputs": [
+      "rank/singular values",
+      "kernel basis",
+      "prior-to-posterior sensitivity",
+      "frame/gauge quotient",
+      "estimable functionals and units"
+    ]
+  },
+  "compression": {
+    "identity": "For regular dominated models, score after deterministic T is E[score(D)|T] and I_D-I_T=E[Cov(score(D)|T)] is positive semidefinite.",
+    "fixed_cov": "At a fiducial point t=J^T C^-1(D-mu0) is locally Fisher-preserving for mean parameters if its span includes J.",
+    "parameter_cov": "If C depends on theta, include 1/2 r^T C^-1 C_,a C^-1 r - 1/2 tr(C^-1 C_,a) in score.",
+    "nuisance_hardening": "t_theta_NH=t_theta-F_theta_eta F_eta_eta^-1 t_eta, with local-fiducial and rank limitations.",
+    "HTT": "T=(x,Q,Pi,F,G_F) is computed from joint posterior samples, retaining shared sample identity and full covariance.",
+    "target_loss": "For predeclared estimand Psi and deterministic T(D), report E_D[KL(p(Psi|D)||p(Psi|T))]=I(Psi;D|T), with coverage and PPC.",
+    "claim": "No global sufficiency claim from local Fisher preservation or Gaussian mocks."
+  },
+  "cobaya": {
+    "stages": [
+      "direct likelihood oracle",
+      "synthetic injection/recovery",
+      "SBC/coverage under exact generating model",
+      "pilot with independent chains",
+      "production after ESS/Rhat/trace/mode checks",
+      "matched-null FPR/power and PPC"
+    ],
+    "receipt": [
+      "actual sampler/version",
+      "actual chain hashes",
+      "current git commit",
+      "config hash",
+      "raw data hashes",
+      "seeds",
+      "per-chain diagnostics",
+      "measured walltime",
+      "environment lockfile"
+    ],
+    "fail_closed": [
+      "No diagnostics if sampler did not execute",
+      "No ESS inferred from row count",
+      "No stale chain without exact config/source/data identity",
+      "No calibrated evidence if matched simulations missing"
+    ]
+  },
+  "bianchi_observability": {
+    "status": "SYNTHETIC_ORACLE_ONLY_NOT_OBSERVATIONAL_EVIDENCE",
+    "momentum_constraint": {
+      "variable": "M_i=kappa*q_i; q_i=(rho+p)*Gamma^2*beta_i",
+      "class_A": "M=((n2-n3)S23,(n3-n1)S13,(n1-n2)S12); fixed-S Jacobian has common-trace kernel and generic rank 2",
+      "class_B": "M=(3aS11+(n2-n3)S23,3aS12+n3S13,3aS13-n2S12); determinant of fixed-S Jacobian is 3*(S11*S12*S13+S23*(S12^2+S13^2))",
+      "exact_tilt": "r=|M|/[kappa*(rho+p)]=beta/(1-beta^2); beta=2r/(1+sqrt(1+4r^2))"
+    },
+    "observability": {
+      "local_normal_hubble": "H_N(n)=Theta_N/3+sigma_N:nn-A_N.n",
+      "curvature_warning": "intrinsic 3-R_ij is not the spacetime Ricci focusing contraction R_ab k^a k^b",
+      "exact_pair": "Bianchi II and IX representatives n=(1,0,0),(2,1,1) have equal instantaneous flux/tilt at fixed S but unequal intrinsic 3-Ricci spectra",
+      "presentation_no_go": "flat I/special VII0 and open V/special VIIh share local spatial geometry in isotropic FLRW limits"
+    },
+    "mock": {
+      "channels": "21D correlated kinematic vector plus idealized 3D sorted-3-Ricci eigenvalue oracle",
+      "replications": 30000,
+      "posterior_draws": 12000,
+      "matched_null": "512 zero-tilt data injections, 32 posterior draws each",
+      "response_scales": "synthetic only",
+      "result": "I(H;D_kin)=0; I(H;D_curvature)=0.47891896 nat; full x score target loss=0; geometry-carrier ablation loss=0.47891896 nat"
+    },
+    "five_variable_contract": "x,Q,Pi,F,G_F are derived from one posterior sample identity and are not independent likelihood factors",
+    "claim_ceiling": "No global HTT sufficiency, real Bianchi detection, physical transfer or solver validation."
+  }
+}

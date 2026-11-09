@@ -1,0 +1,960 @@
+{
+  "schema": "htt.r48_research_dag/1",
+  "program": "R48_TENSORIZED_OBSERVATIONAL_CONVERGENCE",
+  "created_at": "2026-11-09",
+  "timezone": "Asia/Seoul",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "parent": {
+    "branch": "research/r47-solverfree-morphology-likelihood-20261109",
+    "commit": "aae07cb83b8899dd7495d550722068d8bcbf3bcb",
+    "pr": 571
+  },
+  "branch": "research/r48-tensorized-observational-convergence-20261109",
+  "execution_policy": {
+    "turn_boundary": "One R48 task per work session. Each physical question is an independent loop.",
+    "convergence": "One bounded derivation, one implementation pass, one adversarial review and at most one repair pass, then decide PASS_SCOPED, FAIL or BLOCKED.",
+    "mutation": "Branch-only under R48. No merge or protected-branch mutation without separate authorization.",
+    "data": "Raw maps, catalogues and chains remain outside Git.",
+    "agents": "Subagent/native delegation is NOT_RUN unless an execution tool actually launches and returns a receipt.",
+    "claims": "No observed discovery, calibrated significance, Bianchi family identification or global-tilt claim before relevant gates pass."
+  },
+  "current_session": {
+    "id": "R48-T22_BIANCHI_ALGEBRA_TO_HTT_OBSERVABILITY_MOCK",
+    "status": "PASS_SCOPED_ANALYTIC_AND_SYNTHETIC_ORACLE_HOSTED_CI_PENDING",
+    "scope_lock": "Momentum-constraint rank, local kinematic observability and one shared-posterior HTT five-view mock only. No BASS solver, Einstein-fluid evolution, Boltzmann/LOS/CMB transfer, Cobaya or real-data inference.",
+    "accomplishments": [
+      "Derived the Class-A fixed-S momentum map and exact common-trace n -> n+cI kernel; generic Jacobian rank 2.",
+      "Derived the canonical Class-B fixed-S momentum map and determinant; generic rank 3 away from the determinant-zero stratum.",
+      "Derived exact tilt inversion from the normal-frame momentum constraint and perfect-fluid enthalpy.",
+      "Constructed a Bianchi II/IX instantaneous matched pair with equal momentum flux and normal-frame tilt but different intrinsic 3-Ricci spectra.",
+      "Reused Loop D ADM momentum constraint, Loop C local optical response, R48 frame/epoch contract and existing HTT five-output semantics.",
+      "Separated intrinsic 3-Ricci from spacetime Ricci focusing and recorded the local optical-order caveat.",
+      "Retained flat I/special VII0 and open V/special VIIh controls only at their isotropic FLRW local-metric embeddings.",
+      "Executed a 21D correlated kinematic mock plus idealized 3D curvature oracle: 30,000 label/prior-predictive replications and 12,000 shared posterior draws.",
+      "Derived x,Q,Pi,F,G_F from one sample-identified posterior with cross-window covariance and same-pipeline matched zero-tilt null.",
+      "Verified binary Gaussian LLR target preservation, randomized-rank SBC and nuisance projection.",
+      "Added mock runner and targeted unit tests."
+    ],
+    "limitations": [
+      "The curvature-eigenvalue sensor is idealized; no source-bound real observation operator exists.",
+      "Count and Gaia-E1-like response coefficients are mock calibrations, not survey calibrations.",
+      "G_F uses identity mock transport, not physical redshift evolution.",
+      "Exact repository checkout tests were NOT_RUN because the connected local developer device is offline; hosted CI remains the gate.",
+      "The selected II/IX pair and binary Gaussian oracle do not establish all-type identifiability or observed Bianchi detection.",
+      "Prior art prevents broad novelty or first-ever claims."
+    ]
+  },
+  "physical_state": {
+    "chart": "theta_K with 17 local coordinates: sigma_STF2[5], omega[3], acceleration[3], beta_RM[3], beta_MO[3]",
+    "normalization": "A dimensionless chart may use sigma/H_ref, omega/H_ref, A/(c H_ref), beta=v/c. Record H_ref, event, epoch, units and tetrad.",
+    "frames": [
+      "radiation frame R",
+      "matter/source congruence frame M",
+      "observer/instrument frame O"
+    ],
+    "boost_composition": "Use ordered Lorentz matrices with explicit frame arrows. Never set beta_RO=beta_RM+beta_MO as an exact relation.",
+    "epoch_rule": "Map state at a common reference event to each probe epoch with declared dynamics/transport. Present sigma is not integrated B_*."
+  },
+  "output_contract": {
+    "five_variable_output": "T=(x,Q,Pi,F,G_F)=Phi_HTT# p(theta,psi,eta | D,M,S,W)",
+    "statistical_status": "One correlated joint posterior push-forward; never five independent likelihood factors or free parameters.",
+    "semantics": {
+      "x": "typed physical state/identifiable functional carrier",
+      "Q": "anchor-body gauge or normalized departure score with explicit anchor",
+      "Pi": "law- and threshold-conditional exceedance object",
+      "F": "declared directional support/occupancy object; not automatically material-volume fraction",
+      "G_F": "cross-depth or transport functional with joint covariance"
+    },
+    "mandatory": "Persist full covariance/cross-covariance, frame, epoch, units, source IDs, selection and kernel directions."
+  },
+  "tasks": [
+    {
+      "id": "R48-T1",
+      "title": "Close source-indexed historical audit and physical-state contract",
+      "status": "PASS_SCOPED",
+      "loop": "foundation",
+      "depends_on": [
+        "R48-T0"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "HISTORICAL_SOURCE_MATRIX.json",
+        "PHYSICAL_STATE_FRAME_EPOCH_CONTRACT.md",
+        "R42_CONTRADICTION_REPLAY_PLAN.md"
+      ],
+      "acceptance": [
+        "Every reused formula points to exact commit/blob or Library source",
+        "Hard-coded response coefficients and cached-chain fallback paths enumerated",
+        "17D chart units, tetrad, frame arrows, epochs and gauge quotient explicit",
+        "Previous claims retain status and provenance"
+      ],
+      "completion_record": {
+        "completed_at": "2026-11-09",
+        "evidence": [
+          "HISTORICAL_SOURCE_MATRIX.json",
+          "PHYSICAL_STATE_FRAME_EPOCH_CONTRACT.md",
+          "R42_CONTRADICTION_REPLAY_PLAN.md",
+          "COBAYA_FREE_ANALYSIS_PATHS.md",
+          "R48_T1_SOURCE_AUDIT_REPORT.md"
+        ],
+        "scope": "Remote source/line/blob audit plus bounded independent analytic and synthetic numerical oracles.",
+        "local_runtime_tests": "NOT_RUN",
+        "empirical_claim_effect": "NONE; empirical discovery remains HOLD"
+      }
+    },
+    {
+      "id": "R48-T2",
+      "title": "Low-ell morphology to physical-response theory loop",
+      "status": "DEFERRED_SCOPE",
+      "loop": "L1_lowell_morphology",
+      "depends_on": [
+        "R48-T1"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "L1_MORPHOLOGY_RESPONSE.md",
+        "L1_HARMONIC_OPERATOR_SPEC.json",
+        "L1_MOCK_ORACLE_REPORT.json"
+      ],
+      "observables": [
+        "a_lm_T",
+        "a_lm_E",
+        "a_lm_B_if_transfer_validated",
+        "BipoSH_A_L_l1_l2",
+        "multipole_vectors",
+        "power_tensor",
+        "parity_and_phase"
+      ],
+      "acceptance": [
+        "Mask/beam/pixel/noise/foreground transfer in source-matched forward operator",
+        "Low-ell phase and off-diagonal covariance retained",
+        "BI template even under n->-n and restricted to temperature geodesic response",
+        "Temperature quadrupole not equated to sigma without transport closure",
+        "Direct pixel/harmonic oracle, rotation/parity and quadrature tests pass",
+        "Intrinsic Bianchi-I source response and local-observer Lorentz pullback remain typed as separate operators.",
+        "WU-011 metric whitening, physical T0 versus harmonic a00, complete ell=6 response block and rotation-complete derivative checks are handled or typed NOT_APPLICABLE."
+      ],
+      "reuse_from_prior_work": [
+        "WU-009 P18 ideal Bianchi-I positive-quadratic temperature inverse, conditional on blackbody/geodesic assumptions",
+        "R47 solver-free Bianchi-I map; B_star is integrated history, not present sigma",
+        "WU-010/011 local-observer Lorentz pullback as a separate operator, never identified with intrinsic Bianchi-I anisotropy",
+        "WU-011 Task-5A/5B metric whitening, physical monopole/a00 typing, complete ell=6 block and rotation-complete derivative gates"
+      ],
+      "progress_status": "DERIVATION_AND_MOCK_ORACLE_COMPLETE_SOURCE_OPERATOR_BLOCKED",
+      "partial_completion_record": {
+        "completed_at": "2026-11-09",
+        "completed_scope": [
+          "Conserved spatial momentum derivation with c retained via Pi_i=c p_i",
+          "Exact positive-definite Bianchi-I collisionless temperature map",
+          "Small-B STF quadrupole and quadratic+cubic angular-monopole expansions",
+          "Stored-real Condon-Shortley harmonic convention locked to existing T1 theorem and STF bridge",
+          "Independent deterministic map, parity, rotation, eigenvalue-permutation, quadrature and STF projection oracle"
+        ],
+        "acceptance_evidence": {
+          "mask_beam_pixel_noise_foreground_transfer": "BLOCKED_MISSING_SOURCE_MATCHED_INPUT",
+          "lowell_phase": "PRESERVED_IN_FULL_REAL_HARMONIC_COEFFICIENT_VECTOR",
+          "off_diagonal_covariance": "SPECIFIED_BUT_NOT_IMPLEMENTED_WITHOUT_OBSERVATION_OPERATOR",
+          "bianchi_template_parity": "PASS_EXACT_EVEN_MAP_ODD_ELL_ZERO",
+          "temperature_quadrupole_vs_present_shear": "PASS_B_STAR_DISTINCT_FROM_SIGMA_T0",
+          "direct_pixel_harmonic_oracle": "PASS_NUMERICALLY_CHECKED_INDEPENDENT",
+          "intrinsic_vs_local_observer_operator": "PASS_TYPED_SEPARATION_IN_SPEC",
+          "wu011_metric_whitening": "NOT_EXERCISED_ON_UNPROCESSED_MEAN; REQUIRED_FOR_COVARIANCE_OPERATOR",
+          "wu011_T0_a00_ell6_derivative_gates": "SEPARATE_LOCAL_OBSERVER_OPERATOR_OBLIGATION; NOT_CLAIMED_AS_PASSED_HERE"
+        },
+        "repository_runtime": "NOT_RUN",
+        "empirical_claim_effect": "NONE; empirical discovery remains HOLD"
+      },
+      "remaining_work": [
+        "Implement the map and harmonic projection using the frozen operator spec and existing T1 STF bridge; do not duplicate basis APIs.",
+        "Run exact-head repository unit tests and record environment/command/exit/output hashes.",
+        "Source-bind mask, beam, pixel, frequency, filtering, noise and foreground transfer/covariance or keep the observation operator typed UNAVAILABLE.",
+        "Do not begin observed likelihood or infer present shear until the required transfer/dynamical closure is admitted."
+      ],
+      "acceptance_status": {
+        "Mask/beam/pixel/noise/foreground transfer in source-matched forward operator": "BLOCKED_MISSING_INPUT",
+        "Low-ell phase and off-diagonal covariance retained": "PHASE_SPECIFIED; COVARIANCE_OPERATOR_NOT_IMPLEMENTED",
+        "BI template even under n->-n and restricted to temperature geodesic response": "PASS_NUMERICALLY_CHECKED",
+        "Temperature quadrupole not equated to sigma without transport closure": "PASS",
+        "Direct pixel/harmonic oracle, rotation/parity and quadrature tests pass": "PASS_INDEPENDENT_ORACLE; REPOSITORY_TESTS_NOT_RUN",
+        "Intrinsic Bianchi-I source response and local-observer Lorentz pullback remain typed as separate operators": "PASS_SPEC",
+        "WU-011 metric whitening, physical T0 versus harmonic a00, complete ell=6 response block and rotation-complete derivative checks": "SEPARATE_OPERATOR; NOT_CLAIMED_FOR_BI_MAP"
+      },
+      "scope_disposition": "RETAINED_AS_HISTORICAL_BIANCHI_I_PRIOR; all-type Boltzmann/transfer extension is not part of the current study."
+    },
+    {
+      "id": "R48-T3",
+      "title": "Redshift-resolved source dipole theory loop",
+      "status": "DEFERRED_SCOPE",
+      "loop": "L2_dipole_anomaly",
+      "depends_on": [
+        "R48-T1"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "L2_DIPOLE_POINT_PROCESS.md",
+        "L2_SELECTION_NULL_REPORT.json",
+        "L2_TRACER_HELDOUT_REPORT.json"
+      ],
+      "observables": [
+        "N(n,z,flux,size)",
+        "radio/quasar_dipole",
+        "redshift_shell_dipole",
+        "CMB_observer_dipole"
+      ],
+      "acceptance": [
+        "Nadolny-style flux/size/redshift response and intrinsic/LSS alternative included",
+        "Point-process likelihood has mask, selection, randoms, evolution and flux slope",
+        "NVSS and Quaia remain separate tracers; RACS replication only",
+        "No fixed catalogue rescaling constants",
+        "Held-out tracer/cut and local-structure mocks evaluated",
+        "No fixed survey rescaling constants: flux/size/redshift selection and spectral/number-count response must be source-bound or returned UNAVAILABLE."
+      ],
+      "scope_disposition": "Out of current geometry-only study; retained in DAG history, not deleted."
+    },
+    {
+      "id": "R48-T4",
+      "title": "Beyond-FLRW kinematical inverse theory loop",
+      "status": "DEFERRED_SCOPE",
+      "loop": "L3_kinematical_measurement",
+      "depends_on": [
+        "R48-T1"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "L3_KINEMATIC_RESPONSE.md",
+        "L3_IDENTIFIABLE_SUBSPACE.json",
+        "L3_FRAME_SPIN_AUDIT.json"
+      ],
+      "observables": [
+        "radial_redshift_gradient",
+        "transverse_proper_motion",
+        "VSH_E1_B1_E2",
+        "STF_shear",
+        "vorticity_frame_spin",
+        "acceleration_dipole"
+      ],
+      "acceptance": [
+        "Source and observer congruence typed separately",
+        "Full Gaia source-level covariance and reference-frame tie included",
+        "B1 not called cosmic vorticity until ICRF spin degeneracy is broken",
+        "Only l with ker(J_eff) subset ker(l^T) reported as point-identifiable"
+      ],
+      "reuse_from_prior_work": [
+        "WU-010/011 exact local-observer response and processed cut-sky operator",
+        "WU-011 metric whitening and source/output coordinate typing",
+        "R42 Gaia B1 versus vorticity frame-spin gauge-degeneracy ledger"
+      ],
+      "scope_disposition": "Out of current geometry-only study; retained in DAG history, not deleted."
+    },
+    {
+      "id": "R48-T5",
+      "title": "Anisotropy and Bianchi geometry classification loop",
+      "status": "SUPERSEDED_SCOPE",
+      "loop": "L4_anisotropy_bianchi_classification",
+      "depends_on": [
+        "R48-T1",
+        "R48-T2",
+        "R48-T4"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "L4_BIANCHI_EQUIVALENCE_ATLAS.json",
+        "L4_GAUSS_CODAZZI_COMPATIBILITY.md",
+        "L4_MODEL_SELECTION_BENCHMARK.json"
+      ],
+      "observables": [
+        "STF_spatial_Ricci",
+        "Weyl_and_derivative_functionals",
+        "Gauss_Codazzi_constraints",
+        "BipoSH_and_polarization_if_available"
+      ],
+      "acceptance": [
+        "Jacobi and Gauss-Codazzi constraints imposed",
+        "Geometry compared modulo rotations and local equivalence",
+        "I,V,VII_h transfers kept distinct",
+        "Equal scalar curvature/shear image never identifies family",
+        "Family claim requires calibrated posterior predictive separation"
+      ],
+      "scope_disposition": "The geometry-only classification question is replaced by R48-T13 through R48-T16; observational/transfer/likelihood components remain deferred."
+    },
+    {
+      "id": "R48-T6",
+      "title": "Directional-Hubble optical-jet loop",
+      "status": "DEFERRED_SCOPE",
+      "loop": "L5_directional_Hubble",
+      "depends_on": [
+        "R48-T1"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "L5_OPTICAL_JET_LIKELIHOOD.md",
+        "L5_REDSHIFT_WINDOW_REPORT.json",
+        "L5_REMAINDER_SENSITIVITY.json"
+      ],
+      "observables": [
+        "h0(n)",
+        "h1(n)",
+        "d1_d2_d3_if_supported",
+        "D_L(z,n)",
+        "H_ratio(z,n)",
+        "H_diff(z,n)"
+      ],
+      "acceptance": [
+        "Convention for h=Theta/3+sigma_nn-A.n and c factors explicit",
+        "Hratio and Hdiff distinct",
+        "Pantheon+ full covariance and calibration nuisance",
+        "CF4 original distance data only",
+        "Cubic coefficient only when finite-z remainder supported"
+      ],
+      "scope_disposition": "Out of current geometry-only study; retained in DAG history, not deleted."
+    },
+    {
+      "id": "R48-T7",
+      "title": "Local observer boost versus global tilt loop",
+      "status": "DEFERRED_SCOPE",
+      "loop": "L6_local_boost_global_tilt",
+      "depends_on": [
+        "R48-T2",
+        "R48-T3",
+        "R48-T4"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "L6_ORDERED_LORENTZ_RESPONSE.md",
+        "L6_LOCAL_GLOBAL_IDENTIFIABILITY.json",
+        "L6_DEPTH_COHERENCE_REPORT.md"
+      ],
+      "acceptance": [
+        "Radiation, matter/source and observer frames fixed",
+        "Exact ordered Lorentz composition tested against first-order limits",
+        "CMB, counts, angular size, redshift and astrometry have separate response operators",
+        "Local flow, intrinsic clustering, selection and frame spin nuisance-projected",
+        "Single dipole not proof of global tilt"
+      ],
+      "reuse_from_prior_work": [
+        "Exact ordered SR composition and Wigner rotation in relativistic_velocity_closure.py",
+        "WU-010/011 local-observer boost is distinct from global matter-frame tilt",
+        "Explicit R/M/O frame arrows and epoch transport from PHYSICAL_STATE_FRAME_EPOCH_CONTRACT.md"
+      ],
+      "scope_disposition": "Out of current geometry-only study; retained in DAG history, not deleted."
+    },
+    {
+      "id": "R48-T8",
+      "title": "Joint likelihood, five-variable push-forward and information-loss loop",
+      "status": "DEFERRED_SCOPE",
+      "loop": "L7_tensorized_inference_and_compression",
+      "depends_on": [
+        "R48-T2",
+        "R48-T3",
+        "R48-T4",
+        "R48-T5",
+        "R48-T6",
+        "R48-T7"
+      ],
+      "stages": [
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "JOINT_LIKELIHOOD_IMPLEMENTATION_SPEC.json",
+        "HTT_PUSHFORWARD_VALIDATION.json",
+        "TARGET_KL_INFORMATION_LOSS.json"
+      ],
+      "acceptance": [
+        "Cross-probe covariance accounted for or independence justified",
+        "Full physical posterior sampled before T is derived",
+        "Target-specific posterior KL computed for predeclared estimands",
+        "Parameter-dependent covariance score terms retained",
+        "Prior, chart and model-misspecification sensitivity reported"
+      ],
+      "scope_disposition": "Out of current geometry-only study; retained in DAG history, not deleted."
+    },
+    {
+      "id": "R48-T9",
+      "title": "Code repair and executable oracle tests",
+      "status": "DEFERRED_SCOPE",
+      "loop": "implementation",
+      "depends_on": [
+        "R48-T1",
+        "R48-T8"
+      ],
+      "stages": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8",
+        "C9",
+        "C10"
+      ],
+      "outputs": [
+        "production_likelihood_modules",
+        "test_report.json",
+        "synthetic_cobaya_receipt.json"
+      ],
+      "acceptance": [
+        "Hard-coded coefficients removed or calibrated nuisance",
+        "No cached-chain diagnostic fabrication",
+        "Direct oracle, gradients, positive covariance and frame transforms tested",
+        "Synthetic injection/recovery and SBC pass",
+        "Independent review receipt genuine or NOT_RUN",
+        "No pseudo-Gaussian null may retain a matched Planck MC label; missing null input must fail closed.",
+        "G_F physical transport must be derived from field/optical equations or marked unavailable; constant/heuristic scaling cannot be labelled physical.",
+        "All source SHA checks are enabled and receipts bind sampler-executed flag, config, data, code and chain identities.",
+        "Zero-boost and non-collinear exact SR cases are checked through the observable bundle."
+      ],
+      "scope_disposition": "Out of current geometry-only study; retained in DAG history, not deleted."
+    },
+    {
+      "id": "R48-T10",
+      "title": "Observed-data acquisition and staged Cobaya inference",
+      "status": "DEFERRED_SCOPE",
+      "loop": "observational_analysis",
+      "depends_on": [
+        "R48-T9"
+      ],
+      "stages": [
+        "C5",
+        "C6",
+        "C7",
+        "C8",
+        "R7",
+        "R8",
+        "R10"
+      ],
+      "outputs": [
+        "raw_data_manifest.json",
+        "source_hashes.sha256",
+        "cobaya_config.yaml",
+        "chains_manifest.json",
+        "convergence_report.json",
+        "SBC_PPC_FPR_power.json",
+        "observed_results.json"
+      ],
+      "acceptance": [
+        "Official files locally downloaded and SHA256 verified",
+        "Row/mask/beam/transfer/covariance identities fixed",
+        "First run: Planck temperature-only conditional likelihood plus one independent tracer",
+        "Independent chains and convergence/multimodal checks pass",
+        "Matched E2E null and selection mocks calibrate FPR/coverage",
+        "No result without raw data and execution receipt"
+      ],
+      "scope_disposition": "Out of current geometry-only study; retained in DAG history, not deleted."
+    },
+    {
+      "id": "R48-T11",
+      "title": "Adversarial competitor benchmark and review",
+      "status": "DEFERRED_SCOPE",
+      "loop": "adversarial_benchmark",
+      "depends_on": [
+        "R48-T8",
+        "R48-T10"
+      ],
+      "stages": [
+        "R2",
+        "R7",
+        "R8",
+        "C7",
+        "C8",
+        "C9",
+        "R10"
+      ],
+      "outputs": [
+        "COMPETITOR_BENCHMARK.json",
+        "ADVERSARIAL_FAILURE_REPORT.md",
+        "INDEPENDENT_REVIEW.md"
+      ],
+      "acceptance": [
+        "Generative models and inference methods benchmarked as separate axes",
+        "Blinded matched-pipeline train/validation/test mocks",
+        "Coverage, SBC, FPR, power, posterior KL, predictive score and false-family rate evaluated",
+        "Ablations show incremental HTT value vs raw and standard compressions",
+        "All failures retained"
+      ],
+      "scope_disposition": "Out of current geometry-only study; retained in DAG history, not deleted."
+    },
+    {
+      "id": "R48-T12",
+      "title": "Publication gate and paper-scope decision",
+      "status": "DEFERRED_SCOPE",
+      "loop": "publication_decision",
+      "depends_on": [
+        "R48-T11"
+      ],
+      "stages": [
+        "R8",
+        "R9",
+        "R10"
+      ],
+      "outputs": [
+        "PUBLICATION_DECISION.md",
+        "CLAIM_LEDGER_FINAL.json",
+        "PAPER_OUTLINE.md"
+      ],
+      "acceptance": [
+        "Select methods paper, observational paper, split papers or no-go on evidence",
+        "Every claim tagged with evidence status",
+        "No Bianchi V/VII_h, global tilt or vorticity claim beyond identifiability"
+      ],
+      "scope_disposition": "Out of current geometry-only study; retained in DAG history, not deleted."
+    },
+    {
+      "id": "R48-T13",
+      "title": "All-11 Bianchi algebraic type signature classifier",
+      "status": "PASS_SCOPED",
+      "loop": "G1_algebraic_type_orbit",
+      "depends_on": [
+        "R48-T1"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R8"
+      ],
+      "outputs": [
+        "htt/bass/diagnostics/bianchi_similarity.py",
+        "BIANCHI_TYPE_SIMILARITY_SPEC.json"
+      ],
+      "acceptance": [
+        "Consume repository BASS canonical a,n,C convention",
+        "Enforce symmetry of n and Jacobi n@a=0",
+        "Classify eleven types by Class A/B, rank/inertia and h=-1 special case",
+        "Separate algebraic type from intrinsic curvature label"
+      ],
+      "evidence": "Standalone source-derived canonical-fixture tests PASS; exact repository import/pytest NOT_RUN"
+    },
+    {
+      "id": "R48-T14",
+      "title": "Intrinsic Ricci geometry and curvature-only no-go degeneracies",
+      "status": "PASS_SCOPED",
+      "loop": "G2_curvature_similarity",
+      "depends_on": [
+        "R48-T13"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R8"
+      ],
+      "outputs": [
+        "BIANCHI_TYPE_SIMILARITY_METHODS_KO.md",
+        "BIANCHI_TYPE_SIMILARITY_ORACLE_REPORT.json"
+      ],
+      "acceptance": [
+        "Compute left-invariant 3D Ricci tensor directly from C^k_ij using Koszul connection",
+        "Record rotation-invariant Ricci spectrum separately from full algebra fingerprint",
+        "Verify flat I/VII_0 and constant-curvature V/special-VII_h exact degeneracies",
+        "Do not claim Ricci spectrum is a general complete local-isometry classifier"
+      ],
+      "evidence": "Independent deterministic oracle: both exact Ricci tensor residuals are zero"
+    },
+    {
+      "id": "R48-T15",
+      "title": "Tilt-orbit invariants and rank-stratified identifiability",
+      "status": "PASS_SCOPED",
+      "loop": "G3_tilt_orbit_identifiability",
+      "depends_on": [
+        "R48-T13"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R8"
+      ],
+      "outputs": [
+        "htt/bass/diagnostics/bianchi_similarity.py",
+        "htt/bass/diagnostics/test_bianchi_similarity.py",
+        "BIANCHI_TYPE_SIMILARITY_ORACLE_REPORT.json"
+      ],
+      "acceptance": [
+        "Define Class-A p0,p1,p2 and chi_A invariants under proper SO(3)",
+        "Define Class-B p0,p1,p2,q0,q1 with a-axis fixed by Jacobi",
+        "Report moment Jacobian rank, condition number and specific-tilt continuous azimuth degeneracy",
+        "Fail closed for rank-deficient full component inverse; no pseudoinverse point estimate"
+      ],
+      "evidence": "VI_0 rank-three moment inverse recovers squared eigenframe components to 5.6e-17; standalone tests PASS"
+    },
+    {
+      "id": "R48-T16",
+      "title": "All-11 geometry/tilt similarity atlas and boundary tests",
+      "status": "PASS_SCOPED",
+      "loop": "G4_similarity_atlas",
+      "depends_on": [
+        "R48-T13",
+        "R48-T14",
+        "R48-T15"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R8"
+      ],
+      "outputs": [
+        "BIANCHI_TYPE_SIMILARITY_ORACLE_REPORT.json",
+        "BIANCHI_NOVELTY_AND_SIGNIFICANCE_ASSESSMENT_KO.md"
+      ],
+      "acceptance": [
+        "Report canonical all-11 representatives and type-dependent generic tilt strata",
+        "Preserve exact repeated-eigenvalue boundary degeneracies",
+        "Verify 100 proper rotations and common positive scales per type",
+        "Keep curvature-only equivalence distinct from simply-transitive group-action labels"
+      ],
+      "evidence": "1,100 randomized cases PASS; max geometry residual 8.9e-16 and max tilt residual 2.8e-16"
+    },
+    {
+      "id": "R48-T17",
+      "title": "Hostile novelty review of the geometry/tilt quotient",
+      "status": "HOLD",
+      "loop": "G5_novelty_significance_review",
+      "depends_on": [
+        "R48-T14",
+        "R48-T15",
+        "R48-T16"
+      ],
+      "stages": [
+        "R2",
+        "R3",
+        "R7",
+        "R8"
+      ],
+      "outputs": [
+        "BIANCHI_NOVELTY_AND_SIGNIFICANCE_ASSESSMENT_KO.md",
+        "INDEPENDENT_GEOMETRY_REVIEW_KO.md",
+        "GEOMETRY_CLAIM_LEDGER.json"
+      ],
+      "acceptance": [
+        "Review invariant theory and metric-Lie-algebra equivalence literature beyond standard Bianchi dynamics",
+        "Challenge completeness of SO(3) plus homothety quotient and all tilt pseudoscalars",
+        "Check exact curvature no-go examples against local-isometry claims",
+        "Return bounded novelty decision; no first-ever claim without priority evidence"
+      ],
+      "hold_reason": "Independent review completed; high prior-art overlap in general Bianchi geometry formalism, so only a bounded software/methods contribution remains viable. Tilt-orbit completeness proof and O(3) convention remain open.",
+      "completion_record": {
+        "completed_at": "2026-11-09",
+        "deliverables": [
+          "INDEPENDENT_GEOMETRY_REVIEW_KO.md",
+          "GEOMETRY_CLAIM_LEDGER.json",
+          "BIANCHI_NOVELTY_AND_SIGNIFICANCE_ASSESSMENT_KO.md"
+        ],
+        "outcome": "MAJOR_REVISION_NOVELTY_HOLD",
+        "evidence": [
+          "Ferrando & Saez 2020",
+          "Saez, Mengual & Ferrando 2024",
+          "Jakub 2026 author preprint metadata/abstract",
+          "King & Ellis 1973"
+        ],
+        "limitations": [
+          "2026 preprint full text restricted",
+          "no priority claim",
+          "parity transformation proof pending"
+        ]
+      }
+    },
+    {
+      "id": "R48-T18",
+      "title": "Exact-head repository integration and regression verification",
+      "status": "BLOCKED",
+      "loop": "implementation_verification",
+      "depends_on": [
+        "R48-T13",
+        "R48-T14",
+        "R48-T15",
+        "R48-T16"
+      ],
+      "stages": [
+        "C1",
+        "C2",
+        "C3",
+        "C8"
+      ],
+      "outputs": [
+        "REPOSITORY_GEOMETRY_TEST_REPORT.json",
+        "INDEPENDENT_GEOMETRY_REVIEW_KO.md"
+      ],
+      "acceptance": [
+        "Run exact-head imports, compileall and pytest against real BASS registry, not a stub package",
+        "Record Python/NumPy/pytest, command, exit code, stdout/stderr and file hashes",
+        "At most one bounded repair pass; preserve failures",
+        "Confirm no Boltzmann/LOS/Cobaya dependency was added"
+      ],
+      "evidence": "Python 3.10-3.13: compile, import compatibility, theorem/property and architecture gates pass; pytest collection then fails with 7 ModuleNotFoundError errors (4 cobaya test modules, 3 astropy test modules). A dedicated Bianchi-only workflow was added separately.",
+      "blocker": "The existing PR04 fast-regression matrix collected unrelated tests that fail import because optional cobaya and astropy dependencies are not installed. The Bianchi-specific target test and exact local checkout have not yet been run."
+    },
+    {
+      "id": "R48-T19",
+      "title": "Independent referee literature and claim-boundary audit",
+      "status": "PASS_SCOPED",
+      "loop": "G5_novelty_significance_review",
+      "depends_on": [
+        "R48-T14",
+        "R48-T15",
+        "R48-T16"
+      ],
+      "outputs": [
+        "INDEPENDENT_GEOMETRY_REVIEW_KO.md",
+        "GEOMETRY_CLAIM_LEDGER.json",
+        "BIANCHI_NOVELTY_AND_SIGNIFICANCE_ASSESSMENT_KO.md"
+      ],
+      "acceptance": [
+        "Distinguish Lie-algebra label, metric Lie-algebra orbit, local-isometry class and transitive group action",
+        "Compare Ferrando-Saez 2020/2024 and 2026 Clifford preprint with source-status limitations",
+        "Make no first-ever/observational claims"
+      ],
+      "evidence": "Hypothetical referee recommends MAJOR REVISION; novelty held; defensible contribution limited to source-backed executable diagnostics."
+    },
+    {
+      "id": "R48-T20",
+      "title": "Jacobi/domain guards and isolated all-type CI regression",
+      "status": "PASS_SCOPED",
+      "loop": "implementation_verification",
+      "depends_on": [
+        "R48-T13",
+        "R48-T14",
+        "R48-T15",
+        "R48-T19"
+      ],
+      "outputs": [
+        "htt/bass/diagnostics/bianchi_similarity.py",
+        "htt/bass/diagnostics/test_bianchi_similarity.py",
+        ".github/workflows/bianchi-similarity.yml"
+      ],
+      "acceptance": [
+        "Builder rejects (a,n) violating n@a=0",
+        "Ricci ingress rejects antisymmetric non-Lie brackets violating Jacobi",
+        "Tilt recovery rejects invalid algebra and speed_squared outside [0,1)",
+        "All 11 canonical Bianchi types pass proper SO(3) plus common positive homothety regression",
+        "Python 3.10-3.13 targeted pytest and compileall pass"
+      ],
+      "evidence": "Code and tests submitted on R48 branch; GitHub Actions result pending. No local runtime execution claimed.",
+      "completion_record": {
+        "completed_at": "2026-11-09",
+        "commit_sha": "effb46279cbc69138c9e72503a1a86a35013ed4e",
+        "workflow_run_id": 42599886057,
+        "matrix": {
+          "3.10": {
+            "status": "success",
+            "tests": "49 passed",
+            "compileall": "success"
+          },
+          "3.11": {
+            "status": "success",
+            "tests": "49 passed",
+            "compileall": "success"
+          },
+          "3.12": {
+            "status": "success",
+            "tests": "49 passed",
+            "compileall": "success"
+          },
+          "3.13": {
+            "status": "success",
+            "tests": "49 passed",
+            "compileall": "success"
+          }
+        },
+        "scope": "Jacobi/domain guards and targeted Bianchi geometry suite only; broad PR04 remains separately blocked"
+      }
+    },
+    {
+      "id": "R48-T21",
+      "title": "Stratum-wise tilt-orbit completeness and O(3) transformation proof",
+      "status": "DEFERRED_SCOPE",
+      "loop": "G6_orbit_invariant_proof",
+      "depends_on": [
+        "R48-T15",
+        "R48-T19",
+        "R48-T20"
+      ],
+      "outputs": [
+        "TILT_ORBIT_STABILIZER_PROOF_KO.md",
+        "O3_ORIENTATION_TRANSFORMATION_SPEC.json",
+        "TILT_INVARIANT_PRIOR_ART_MATRIX.json"
+      ],
+      "acceptance": [
+        "Prove necessary and sufficient SO(3)-orbit separation for Class A distinct/double/triple/zero-N strata",
+        "Prove necessary and sufficient SO(3)-orbit separation for Class B rank 0, rank 1, rank 2 distinct and rank 2 repeated eigenvalue strata",
+        "Derive n and all pseudoscalar transformations under improper O(3), respecting epsilon dualization",
+        "Compare constrained (a,n,v) orbit problem with Yehorchenko 2018 and Shariff 2019/2021/2023; do not claim generic invariant-theory novelty"
+      ],
+      "evidence": "Analytic proof obligation; no physical parity claim or complete invariant-basis claim before passing.",
+      "hold_reason": " Deferred: complete SO(3)/O(3) orbit classification is a separate proof, not needed for the current constraint-to-observable identifiability question."
+    },
+    {
+      "id": "R48-T22",
+      "title": "Bianchi constraint-to-observable identifiability and HTT five-view mock",
+      "status": "PASS_SCOPED",
+      "loop": "G7_algebra_to_observation_identifiability",
+      "depends_on": [
+        "R48-T13",
+        "R48-T14",
+        "R48-T15",
+        "R48-T20"
+      ],
+      "outputs": [
+        "BIANCHI_OBSERVABILITY_FIVEVAR_METHODS_KO.md",
+        "BIANCHI_FIVEVAR_MOCK_SPEC.json",
+        "BIANCHI_FIVEVAR_MOCK_REPORT.json",
+        "BIANCHI_FIVEVAR_CLAIM_LEDGER.json",
+        "scripts/r48/bianchi_fivevar_identifiability_mock.py",
+        "tests/r48/test_bianchi_fivevar_identifiability_mock.py"
+      ],
+      "acceptance": [
+        "Derive Class-A/B momentum-flux maps and rank strata at fixed normal-frame STF shear.",
+        "Show an exact cross-label pair with equal kinematic response and separate idealized curvature oracle.",
+        "Keep intrinsic 3-Ricci distinct from spacetime optical focusing.",
+        "Generate x,Q,Pi,F,G_F from one shared posterior identity with full covariance and matched null.",
+        "Report target-specific posterior KL and calibrated randomized-rank SBC.",
+        "No real-data, physical-transfer or global-sufficiency claim."
+      ],
+      "completion_record": {
+        "completed_at": "2026-11-09",
+        "disposition": "PASS_SCOPED_SYNTHETIC_ORACLE_ONLY",
+        "local_validation": {
+          "environment": "Python 3.13.5 / NumPy 2.3.5 scratch package",
+          "tests": 5,
+          "status": "PASS",
+          "compileall": "PASS",
+          "exact_repository_checkout": "NOT_RUN"
+        },
+        "experiment": {
+          "seed": 20261109,
+          "replications": 30000,
+          "posterior_draws": 12000,
+          "matched_null_data_realizations": 512,
+          "mean_mutual_information_label_nats": 0.47891895825987596,
+          "map_accuracy": 0.9122,
+          "randomized_rank_sbc_chi2": 8.757333333333333,
+          "randomized_rank_sbc_p": 0.45996942277997255,
+          "target_kl_full": 0,
+          "target_kl_no_geometry": 0.47891895825987596
+        },
+        "limitations": [
+          "idealized curvature oracle",
+          "synthetic response scales",
+          "identity mock G_F transport",
+          "real observation operator unavailable"
+        ]
+      }
+    },
+    {
+      "id": "R48-T23",
+      "title": "Independent adversarial review and exact-head validation of the Bianchi-to-HTT observability mock",
+      "status": "PENDING",
+      "loop": "G8_independent_observability_review",
+      "depends_on": [
+        "R48-T22"
+      ],
+      "outputs": [
+        "INDEPENDENT_BIANCHI_HTT_OBSERVABILITY_REVIEW_KO.md",
+        "BIANCHI_OBSERVABILITY_SENSITIVITY_REPORT.json",
+        "REPOSITORY_BIANCHI_FIVEVAR_TEST_RECEIPT.json"
+      ],
+      "acceptance": [
+        "Run exact-head pytest and compileall with versions, hashes and receipts.",
+        "Review Class-A/B maps, tilt inversion, frame arrows, optical order, LLR sufficiency and target KL.",
+        "Run bounded sensitivity sweep over noise, enthalpy, shear, covariance, prior and nuisance alignment.",
+        "Verify shared sample identity and no pseudo-likelihood multiplication.",
+        "No physical Bianchi transfer, solver or observed-data inference."
+      ]
+    }
+  ],
+  "stop_rules": [
+    "Stop or narrow a target whose nuisance-projected Jacobian has unresolved kernel.",
+    "Stop production sampling if hashes, row order, transfer or likelihood oracle fail.",
+    "If PR4/NPIPE matched E2E unavailable, conditional parameter fit may proceed but anomaly FPR/evidence calibration remains BLOCKED.",
+    "Never mix PR3/FFP10 simulations as matched null for PR4/NPIPE.",
+    "Failed SBC or low ESS is not a scientific bound.",
+    "Do not identify Bianchi family from shear-only or temperature-only BI response.",
+    "Do not build or extend a Boltzmann solver, hierarchy, LOS, CMB transfer, polarization or Cobaya pipeline within this scope.",
+    "Do not identify a Bianchi group action from curvature-only invariants when exact cross-type degeneracies are present.",
+    "Do not label arbitrary (a,n,v) as a constraint-satisfying tilted Einstein-fluid solution.",
+    "Do not report tilt components as identifiable outside the orbit-map rank and conditioning gates.",
+    "Do not call the SO(3) plus positive-homothety fingerprint a full automorphism or local-isometry classification.",
+    "Do not interpret tilt pseudoscalar signs as physical parity observables until the O(3) pseudotensor transformation of n is derived.",
+    "Do not claim novelty for general coordinate-free Bianchi classification in light of Ferrando-Saez 2020/2024 and the 2026 Clifford author preprint.",
+    "General rotational invariant bases for vectors and rank-2 tensors are prior art; claim only a Bianchi-constrained, explicitly proven specialization if the stabilizer proof succeeds.",
+    "Do not merge while broad PR04 fast-regression remains failed or while PR is Draft unless separately authorized."
+  ],
+  "restart_pointer": {
+    "next_task": "R48-T23",
+    "precondition": "Use latest branch HEAD after R48-T22. Exact local checkout validation is NOT_RUN because the connected developer device was offline. Hosted GitHub Actions is the repository gate.",
+    "next_work": "Run exact-head pytest and compileall, independent adversarial math review, and one bounded nuisance/noise/enthalpy sensitivity sweep.",
+    "scope_lock": "Algebraic Bianchi constraint-to-observable identifiability and HTT five-view posterior only; no solver, Boltzmann/LOS/CMB transfer, Cobaya or real-data inference.",
+    "local_agent_prompt": "LOCAL_AGENT_RESTART_PROMPT_R48_T23_KO.md"
+  },
+  "active_scope": "R48-T22/T23: algebraic Bianchi constraint-to-observable identifiability and HTT five-view posterior compression. Solver and real-observation work remain out of scope."
+}

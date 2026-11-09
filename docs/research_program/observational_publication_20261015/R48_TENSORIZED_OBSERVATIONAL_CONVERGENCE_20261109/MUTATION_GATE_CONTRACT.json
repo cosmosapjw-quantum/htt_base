@@ -1,0 +1,132 @@
+{
+  "schema": "htt.r48_mutation_and_antidrift/1",
+  "authority": {
+    "parent": "aae07cb83b8899dd7495d550722068d8bcbf3bcb",
+    "branch": "research/r48-tensorized-observational-convergence-20261109",
+    "protected": [
+      "main",
+      "research/r47-solverfree-morphology-likelihood-20261109"
+    ],
+    "policy": "Only mutate R48. No merge, force-push, release, raw-data upload or destructive cache removal."
+  },
+  "gates": [
+    {
+      "id": "G0",
+      "name": "source-lock",
+      "required": [
+        "git status/current branch",
+        "base and head SHA",
+        "file path/blob SHA",
+        "PR merge state"
+      ],
+      "deny": [
+        "unknown branch head",
+        "overwrite uncommitted user edits"
+      ]
+    },
+    {
+      "id": "G1",
+      "name": "theory-contract",
+      "required": [
+        "definitions/conventions/assumptions/units/frame/epoch",
+        "derivation or primary source for each model response"
+      ],
+      "deny": [
+        "magic constants",
+        "silent state reinterpretation",
+        "BI map promoted to general Bianchi"
+      ]
+    },
+    {
+      "id": "G2",
+      "name": "likelihood-contract",
+      "required": [
+        "normalized generative likelihood",
+        "selection/window model",
+        "full covariance and cross-probe treatment",
+        "same-data duplicate-factor audit"
+      ],
+      "deny": [
+        "unjustified block independence",
+        "C_ell likelihood as phase likelihood",
+        "summary added to raw likelihood without conditional factorization"
+      ]
+    },
+    {
+      "id": "G3",
+      "name": "code-change",
+      "required": [
+        "small targeted diff",
+        "API compatibility",
+        "minimal failing tests before repair",
+        "exact data/config binding"
+      ],
+      "deny": [
+        "large refactor before failing test",
+        "changing theory only to match code"
+      ]
+    },
+    {
+      "id": "G4",
+      "name": "numerical-verification",
+      "required": [
+        "direct oracle",
+        "injection/recovery",
+        "rank/conditioning",
+        "SBC/coverage and actual convergence receipts"
+      ],
+      "deny": [
+        "synthetic fallback metrics",
+        "ESS inferred from sample count",
+        "unverified cached chain"
+      ]
+    },
+    {
+      "id": "G5",
+      "name": "publication-claim",
+      "required": [
+        "claim ledger",
+        "independent adversarial review",
+        "raw source manifest",
+        "calibrated null and held-out prediction"
+      ],
+      "deny": [
+        "discovery significance without matched null",
+        "Bianchi family/global tilt/vorticity without identification"
+      ]
+    }
+  ],
+  "antidrift": {
+    "precedence": [
+      "actual code and tests",
+      "raw source bytes and release docs",
+      "peer-reviewed derivation/equations",
+      "current source-bound result",
+      "project prose summary",
+      "unverified memory or prior assistant statement"
+    ],
+    "self_audit": [
+      "Every numerical constant has source/derivation/calibration or is an explicit nuisance.",
+      "Every tensor has type, units, tetrad, frame, epoch and rotation law.",
+      "Every dataset has overlap, mask, selection, shared calibration and covariance audit.",
+      "Every novelty statement names the closest prior art and exact difference.",
+      "Every success status has a current execution receipt.",
+      "Keep established/literature-supported/derived/numerically-checked/implementation-verified/observed/conjectural/unresolved/blocked distinct."
+    ],
+    "forbidden": [
+      "No raw data or chains in Git",
+      "No remote desktop",
+      "No exact beta vector addition",
+      "No five independent x,Q,Pi,F,G_F likelihood terms",
+      "No diagonal cut-sky harmonic covariance without derivation",
+      "No BI substitution for Bianchi V/VII_h",
+      "No stale receipt without exact identities"
+    ]
+  },
+  "stops": [
+    "Stop only the affected claim when its data/transfer is missing; continue independent theory work.",
+    "After one adversarial review and one repair pass decide PASS_SCOPED, FAIL or BLOCKED.",
+    "Never erase previous failures from ledger."
+  ],
+  "agent_dispatch": "NOT_RUN in ChatGPT authoring session. Local agent execution is delegated by restart prompt."
+}

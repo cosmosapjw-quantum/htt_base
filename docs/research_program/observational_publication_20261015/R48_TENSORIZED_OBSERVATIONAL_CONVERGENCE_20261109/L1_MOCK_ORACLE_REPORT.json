@@ -1,0 +1,177 @@
+{
+  "schema": "htt.r48_bianchi_i_mock_oracle/1",
+  "date": "2026-11-09",
+  "environment": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "harmonic_evaluator": "scipy.special.sph_harm_y"
+  },
+  "execution_status": "NUMERICALLY_CHECKED_INDEPENDENT_PYTHON_ORACLE",
+  "repository_module_execution": "NOT_RUN",
+  "raw_observational_data": "NOT_USED",
+  "model_fixture": {
+    "eigenvalues_of_B0": [
+      0.7,
+      -0.2,
+      -0.5
+    ],
+    "B0_construction": "R diag(0.7,-0.2,-0.5) R^T",
+    "rotation_seed": 42,
+    "test_epsilon": 0.01,
+    "harmonic_spectrum_epsilon": 0.05,
+    "direction_rotation_test_samples": 10000
+  },
+  "checks": [
+    {
+      "id": "ZERO_ANISOTROPY",
+      "status": "PASS_NUMERIC",
+      "metric": "max |T/Tbar-1| at B=0",
+      "value": 2.220446049250313e-16
+    },
+    {
+      "id": "POSITIVE_DEFINITE_EXP_MINUS_2B",
+      "status": "PASS_NUMERIC",
+      "metric": "minimum eigenvalue of exp(-2B) at epsilon=0.01",
+      "value": 0.9860975442628621
+    },
+    {
+      "id": "ANTIPODAL_PARITY",
+      "status": "PASS_NUMERIC",
+      "metric": "max |f(n)-f(-n)|",
+      "value": 0
+    },
+    {
+      "id": "ROTATION_EQUIVARIANCE_MAP",
+      "status": "PASS_NUMERIC",
+      "metric": "max pointwise residual f_(RBR^T)(n)-f_B(R^T n)",
+      "value": 6.661338147750939e-16
+    },
+    {
+      "id": "ROTATION_EQUIVARIANCE_STF_QUADRUPOLE",
+      "status": "PASS_NUMERIC",
+      "metric": "Frobenius norm of Q(RBR^T)-R Q(B) R^T",
+      "value": 3.8869738497059e-16
+    },
+    {
+      "id": "EIGENVALUE_PERMUTATION",
+      "status": "PASS_NUMERIC",
+      "metric": "max map residual under cyclic eigenvalue permutation and corresponding rotation",
+      "value": 2.220446049250313e-16
+    },
+    {
+      "id": "ODD_MULTIPOLE_NULL",
+      "status": "PASS_NUMERIC",
+      "metric": "maximum Euclidean norm of odd-ell stored-real coefficients through ell=9",
+      "value": 1.1107692432597262e-17
+    },
+    {
+      "id": "HARMONIC_TO_STF_QUADRUPOLE",
+      "status": "PASS_NUMERIC",
+      "metric": "Frobenius norm Q_from_stored_real_harmonics minus direct sphere-moment Q",
+      "value": 7.056565467363207e-17
+    },
+    {
+      "id": "QUADRATURE_REFINEMENT",
+      "status": "PASS_NUMERIC",
+      "metric": "maximum absolute coefficient change across ell=0..10",
+      "coarse_to_mid": 6.301539727580994e-16,
+      "mid_to_fine": 1.260900392123244e-16
+    }
+  ],
+  "small_B_checks": {
+    "quadrupole_linearization": {
+      "status": "PASS_SCALING_NUMERIC",
+      "quantity": "||Q(epsilon B0)-epsilon B0||_F / epsilon^2",
+      "values": [
+        {
+          "epsilon": 0.02,
+          "error_norm": 0.00001919424808135818,
+          "error_over_epsilon2": 0.047985620203395446
+        },
+        {
+          "epsilon": 0.01,
+          "error_norm": 0.000004672702377681779,
+          "error_over_epsilon2": 0.04672702377681779
+        },
+        {
+          "epsilon": 0.005,
+          "error_norm": 0.00000115264701367785,
+          "error_over_epsilon2": 0.046105880547113995
+        },
+        {
+          "epsilon": 0.0025,
+          "error_norm": 2.862341366562364e-7,
+          "error_over_epsilon2": 0.04579746186499782
+        }
+      ]
+    },
+    "angular_mean": {
+      "status": "PASS_THIRD_ORDER_NUMERIC",
+      "expansion": "-2 tr(B^2)/15 + 4 tr(B^3)/315 + O(||B||^4)",
+      "values": [
+        {
+          "epsilon": 0.02,
+          "mean": -0.00004157712289671054,
+          "quadratic_prediction": -0.00004160000000000001,
+          "quadratic_plus_cubic_prediction": -4.157866666666668,
+          "residual_after_cubic": 1.5437699561347742e-9
+        },
+        {
+          "epsilon": 0.01,
+          "mean": -0.000010397236803980247,
+          "quadratic_prediction": -0.000010400000000000002,
+          "quadratic_plus_cubic_prediction": -0.000010397333333333335,
+          "residual_after_cubic": 9.652935308718247e-11
+        },
+        {
+          "epsilon": 0.005,
+          "mean": -0.000002599660632418991,
+          "quadratic_prediction": -0.0000026000000000000005,
+          "quadratic_plus_cubic_prediction": -0.0000025996666666666673,
+          "residual_after_cubic": 6.034247676322624e-12
+        },
+        {
+          "epsilon": 0.0025,
+          "mean": -6.499579562659906e-7,
+          "quadratic_prediction": -6.500000000000001e-7,
+          "quadratic_plus_cubic_prediction": -6.499583333333335e-7,
+          "residual_after_cubic": 3.770673429220916e-13
+        }
+      ]
+    }
+  },
+  "even_multipole_coefficient_norms_at_epsilon_0_05": {
+    "ell0": 0.0009202809132309066,
+    "ell2": 0.057023621998527334,
+    "ell4": 0.0011812712627920533,
+    "ell6": 0.000027358629700650115,
+    "ell8": 6.725253094464526e-7,
+    "ell10": 1.7173683154632853e-8,
+    "ell12": 4.5039097428252136e-10
+  },
+  "interpretation": [
+    "The exact map is positive and antipodally even for finite real symmetric trace-free B.",
+    "The first-order STF quadrupole equals B; the exact finite-amplitude quadrupole is a nonlinear projection Q(B), not B.",
+    "Higher even multipoles are nonzero at finite anisotropy and decrease rapidly in the small-amplitude fixture.",
+    "The cubic monopole correction 4 tr(B^3)/315 explains the angular-mean convergence beyond quadratic order.",
+    "The stored-real harmonic vector and direct STF moment projection agree to roundoff under the locked T1 convention."
+  ],
+  "not_run": [
+    "Exact-head repository module import/compile/tests",
+    "HEALPix finite-map response and pixel-window replay",
+    "Mask/beam/filter transfer and full observational covariance",
+    "Planck PR4/NPIPE map likelihood or matched null calibration",
+    "Bianchi-I perturbation, recombination/visibility or polarization transfer",
+    "WU-011 processed local-observer Jacobian and finite-HEALPix uncertainty gates",
+    "Cobaya posterior sampling"
+  ],
+  "disposition": {
+    "analytic_temperature_map": "DERIVED",
+    "small_B_series": "DERIVED_AND_NUMERICALLY_CHECKED",
+    "harmonic_projection": "NUMERICALLY_CHECKED_INDEPENDENT_ORACLE",
+    "production_code": "NOT_RUN",
+    "observational_forward_operator": "BLOCKED_MISSING_INPUT",
+    "empirical_inference": "HOLD"
+  }
+}

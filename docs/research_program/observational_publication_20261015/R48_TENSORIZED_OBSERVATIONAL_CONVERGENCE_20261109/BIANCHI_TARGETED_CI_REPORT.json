@@ -1,0 +1,71 @@
+{
+  "schema": "htt.bianchi_targeted_ci_receipt/1",
+  "workflow": "Bianchi similarity targeted regression",
+  "run_id": 42599886057,
+  "run_url": "https://github.com/cosmosapjw-quantum/htt_base/actions/runs/42599886057",
+  "commit_sha": "effb46279cbc69138c9e72503a1a86a35013ed4e",
+  "branch": "research/r48-tensorized-observational-convergence-20261109",
+  "recorded_at": "2026-11-09",
+  "matrix": [
+    {
+      "python": "3.10",
+      "job_id": 129101445953,
+      "conclusion": "success",
+      "tests": 49,
+      "pytest": "9.2.0",
+      "numpy": "2.2.6",
+      "compileall": "success"
+    },
+    {
+      "python": "3.11",
+      "job_id": 129101445747,
+      "conclusion": "success",
+      "tests": 49,
+      "pytest": "9.2.0",
+      "numpy": "2.4.6",
+      "compileall": "success"
+    },
+    {
+      "python": "3.12",
+      "job_id": 129101445813,
+      "conclusion": "success",
+      "tests": 49,
+      "pytest": "9.2.0",
+      "numpy": "2.5.4",
+      "compileall": "success"
+    },
+    {
+      "python": "3.13",
+      "job_id": 129101445919,
+      "conclusion": "success",
+      "tests": 49,
+      "pytest": "9.2.0",
+      "numpy": "2.5.4",
+      "compileall": "success"
+    }
+  ],
+  "total_test_executions": 196,
+  "broad_pr04": {
+    "run_id": 42599885977,
+    "conclusion": "failure",
+    "matrix": [
+      "3.10",
+      "3.11",
+      "3.12",
+      "3.13"
+    ],
+    "prior_gates": [
+      "source compilation",
+      "import compatibility",
+      "PR04 theorem/property",
+      "architecture boundary"
+    ],
+    "failing_step": "existing fast regression tier, pytest collection",
+    "missing_optional_dependencies": {
+      "cobaya": 4,
+      "astropy": 3
+    },
+    "classification": "environment/test-collection blocker, not a Bianchi targeted-suite assertion failure"
+  },
+  "note": "This receipt records GitHub Actions execution at the exact commit. No local runtime execution is claimed."
+}

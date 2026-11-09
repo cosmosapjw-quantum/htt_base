@@ -1,0 +1,124 @@
+{
+  "schema": "htt.r48_bianchi_i_harmonic_operator/1",
+  "created_at": "2026-11-09",
+  "operator_id": "R48_BIANCHI_I_COLLISIONLESS_TEMPERATURE_GEODESIC",
+  "evidence_status": "DERIVED_NUMERICALLY_CHECKED_INDEPENDENT_ORACLE",
+  "repository_runtime": "NOT_RUN",
+  "claim_ceiling": "B0_GEOMETRIC_TEMPERATURE_TEMPLATE_ONLY",
+  "conventions": {
+    "metric_signature": "(-,+,+,+)",
+    "speed_of_light": "c retained; Pi_i := c p_i energy-valued conserved covector",
+    "scale_factor": "a(t0)=1",
+    "observer_metric": "g_ij(t0)=delta_ij",
+    "anisotropy": "B^T=B; tr(B)=0; B(t0)=0",
+    "direction": "unit covariant-momentum direction in observer orthonormal triad; antipodal sign irrelevant to this even temperature map",
+    "harmonic_basis": "orthonormal Condon-Shortley complex Y_lm with a_l,-m=(-1)^m conjugate(a_lm)",
+    "stored_real": {
+      "order": "m0, then m=1 cosine/sine, m=2 cosine/sine, ...",
+      "c_l0": "a_l0",
+      "c_lmc": "sqrt(2) Re(a_lm)",
+      "c_lms": "-sqrt(2) Im(a_lm)",
+      "basis_cosine": "sqrt(2) Re(Y_lm)",
+      "basis_sine": "sqrt(2) Im(Y_lm)",
+      "coefficient_metric": "EUCLIDEAN"
+    },
+    "stf2_adapter": {
+      "existing_authority": "htt/obsstat/planck_lowell_irrep_projection.py::real_harmonic_l2_to_stf",
+      "input_semantics": "raw (a20, Re a21, Im a21, Re a22, Im a22), not stored-real c vector",
+      "conversion_from_stored_real": [
+        "a20=c20",
+        "Re a21=c21c/sqrt(2)",
+        "Im a21=-c21s/sqrt(2)",
+        "Re a22=c22c/sqrt(2)",
+        "Im a22=-c22s/sqrt(2)"
+      ],
+      "exact_theorem": "T1_STORED_REAL_STF_THEOREM_PACK.md",
+      "layout": "(Qxx,Qyy,Qxy,Qxz,Qyz)"
+    }
+  },
+  "physical_model": {
+    "metric": "ds^2=-c^2 dt^2 + a(t)^2 [exp(2 B(t))]_ij dx^i dx^j",
+    "assumptions": [
+      "Bianchi-I spatial translation Killing fields",
+      "sharp isotropic Planck last-scattering hypersurface",
+      "collisionless propagation after emission",
+      "comoving geodesic observer",
+      "no perturbation, reionization, foreground, beam or polarization transfer in the geometric map"
+    ],
+    "conserved_quantity": "Pi_i=c p_i",
+    "energy": "E(t)^2 = a(t)^(-2) Pi^T exp(-2 B(t)) Pi",
+    "exact_temperature_ratio": "T0(n)/Tbar0 = [n^T exp(-2 B_star) n]^(-1/2)",
+    "estimand": "B_star or equivalent endpoint spatial metric, not sigma(t0)",
+    "endpoint_history": "B_star=-integral_{t_star}^{t0} sigma dt only for fixed commuting principal-axis history with Bdot=sigma and B(t0)=0; otherwise use endpoint metric/path-ordered history",
+    "parity": "T(n)=T(-n); exact odd-ell coefficients vanish"
+  },
+  "small_amplitude": {
+    "u_k": "u_k(n)=n^T B_star^k n",
+    "temperature_expansion": "DeltaT/Tbar = u1-u2+(3/2)u1^2+(2/3)u3-3u1*u2+(5/2)u1^3+O(||B||^4)",
+    "first_order": "DeltaT/Tbar = n^T B_star n + O(||B||^2)",
+    "effective_quadrupole": "Q_ij(B)=(15/(8 pi)) integral [T/Tbar-1] n_<i n_j> dOmega = B_ij+O(||B||^2)",
+    "mean_expansion": "<T/Tbar-1>=-(2/15) tr(B_star^2)+(4/315) tr(B_star^3)+O(||B_star||^4)",
+    "multipole_order": "At order k the angular polynomial has degree <=2k; only even ell occur and generically ell=2k first appears at order B^k."
+  },
+  "numerical_operator": {
+    "matrix_exponential": "For symmetric B, use eigendecomposition B=U diag(lambda) U^T and exp(-2B)=U diag(exp(-2lambda)) U^T; validate finite positive quadratic forms.",
+    "direction_validation": "Require finite (...,3) directions with unit norm within declared tolerance; do not silently renormalize inputs.",
+    "projection": "c_lA = integral f_B(n) Y^R_lA(n) dOmega",
+    "reference_quadrature": {
+      "type": "Gauss-Legendre in mu=cos(theta) x uniform azimuth",
+      "n_mu": 160,
+      "n_phi": 320,
+      "lmax": 12,
+      "independent_refinements": [
+        "80x160",
+        "120x240",
+        "160x320"
+      ],
+      "angular_measure": "dOmega=dmu dphi"
+    },
+    "monopole_policy": {
+      "preserve_reference_monopole": "a00_ref = sqrt(4 pi) <f_B>",
+      "anisotropy_only": "subtract exact angular mean before harmonic projection and record removed mean separately",
+      "forbid": "do not silently set a00 to zero or mix physical monopole with harmonic replay leakage"
+    },
+    "transfer_status": "UNAVAILABLE",
+    "observation_operator": {
+      "status": "BLOCKED_MISSING_INPUT",
+      "components": [
+        "frequency/component-separation",
+        "beam",
+        "pixel window",
+        "mask",
+        "map filtering",
+        "harmonic projection",
+        "instrument noise",
+        "foreground residuals",
+        "systematics"
+      ],
+      "covariance": "C_d=R_obs C_stoch R_obs^T + N_inst + C_fg + C_sys; preserve full off-diagonal mode coupling",
+      "likelihood": "NOT_CONSTRUCTED",
+      "raw_data_required": true
+    }
+  },
+  "operator_separation": {
+    "intrinsic_bianchi_i": "R48_BIANCHI_I_COLLISIONLESS_TEMPERATURE_GEODESIC",
+    "local_observer_boost": "PMG_WU_010_011_PROCESSED_LORENTZ_RESPONSE",
+    "composition": "Only after frame arrows, direction sign, epoch, tetrad/basis, masks and processing order are frozen.",
+    "global_matter_tilt": "NOT_EQUIVALENT_TO_LOCAL_OBSERVER_BOOST"
+  },
+  "wuo11": {
+    "disposition": "SEPARATE_OPERATOR_OBLIGATION",
+    "metric_whitening": "Required in covariance-supported processed-response analysis; not exercised by unprocessed deterministic mean map.",
+    "physical_T0_vs_a00": "Typed separately; monopole/replay leakage cannot be conflated.",
+    "ell6_source_block": "Local-observer response source-block obligation, not part of intrinsic Bianchi-I mean map.",
+    "rotation_complete_derivatives": "Remain required for WU-011 local-observer processed operator."
+  },
+  "claim_firewall": [
+    "No E/B polarization prediction",
+    "No recombination or visibility transfer",
+    "No Bianchi V/VII_h extrapolation",
+    "No identification of sigma(t0) without dynamical transport",
+    "No empirical anomaly, likelihood, posterior or evidence claim without source-matched observation operator and covariance",
+    "No local boost/global tilt equivalence"
+  ]
+}
