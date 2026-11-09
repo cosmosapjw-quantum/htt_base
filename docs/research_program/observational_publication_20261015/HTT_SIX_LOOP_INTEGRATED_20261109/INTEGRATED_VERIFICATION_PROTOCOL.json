@@ -1,0 +1,233 @@
+{
+  "schema": "htt.six_loop_integrated_verification_protocol/1",
+  "statuses": [
+    "NOT_STARTED",
+    "READY",
+    "IN_PROGRESS",
+    "PASS_SCOPED",
+    "PASS_SOURCE_BOUND",
+    "BLOCKED",
+    "HOLD",
+    "DEFERRED_SCOPE",
+    "SUPERSEDED",
+    "QUARANTINED",
+    "NOT_RUN",
+    "FAILED"
+  ],
+  "evidence_states": [
+    "ESTABLISHED",
+    "LITERATURE_SUPPORTED",
+    "DERIVED",
+    "CAS_CHECKED",
+    "NUMERICALLY_CHECKED",
+    "IMPLEMENTATION_VERIFIED",
+    "SOURCE_VERIFIED",
+    "CALIBRATED",
+    "EMPIRICAL_VALIDATED",
+    "QUARANTINED",
+    "BLOCKED",
+    "NOT_RUN",
+    "CONJECTURAL"
+  ],
+  "failure_taxonomy": [
+    "THEORY",
+    "NUMERICAL",
+    "IMPLEMENTATION",
+    "RUNTIME_ENVIRONMENT",
+    "INPUT_MISSING",
+    "PROVENANCE",
+    "AUTHORIZATION",
+    "EXTERNAL_SERVICE"
+  ],
+  "preflight": [
+    "git fetch origin",
+    "git status --short --branch",
+    "git branch --show-current",
+    "git rev-parse HEAD",
+    "git rev-parse HEAD^{tree}",
+    "git diff --stat; git diff --cached --stat",
+    "verify exact PR #572 head/base and expected commit before any write"
+  ],
+  "dirty_tree_policy": "If worktree is dirty or branch/head differs, do not reset/clean/stash/checkout over it. Capture status and stop write operations. Create an isolated child worktree only after confirming no collision and preserving user changes.",
+  "branch_policy": {
+    "allowed_current_branch": "research/r48-tensorized-observational-convergence-20261109",
+    "expected_head": "7ea9826cf62988dc5405e9a88e905619071ae0f6",
+    "allowed_child_branch_pattern": "research/htt-six-loop-<task>-20261109",
+    "forbidden": [
+      "main",
+      "R47 parent",
+      "force-push",
+      "merge without explicit user instruction",
+      "release/tag",
+      "rewrite historical PR contents",
+      "raw data/chains/credentials in Git"
+    ]
+  },
+  "gates": [
+    {
+      "id": "G0",
+      "name": "identity and worktree lock",
+      "require": [
+        "repo remote",
+        "branch",
+        "HEAD/tree SHA",
+        "clean status",
+        "PR state/base/head",
+        "file identity/blob SHA"
+      ],
+      "deny": [
+        "dirty overwrite",
+        "unknown head",
+        "stale checkout"
+      ]
+    },
+    {
+      "id": "G1",
+      "name": "physics/theory contract",
+      "require": [
+        "definitions",
+        "assumptions",
+        "units",
+        "conventions",
+        "boundary/initial conditions",
+        "frame/epoch",
+        "derivation or primary source"
+      ],
+      "deny": [
+        "magic constants",
+        "silent chart change",
+        "claim from code comment only"
+      ]
+    },
+    {
+      "id": "G2",
+      "name": "operator/likelihood contract",
+      "require": [
+        "raw-data domain",
+        "selection/window",
+        "normalized likelihood",
+        "noise/covariance including cross blocks",
+        "systematics/calibration",
+        "source binding"
+      ],
+      "deny": [
+        "unjustified independent probes",
+        "duplicate summary likelihood",
+        "C_ell substituted for phase data",
+        "hardcoded responses"
+      ]
+    },
+    {
+      "id": "G3",
+      "name": "minimal code mutation",
+      "require": [
+        "small diff",
+        "failing test first",
+        "direct oracle",
+        "API compatibility",
+        "rollback path"
+      ],
+      "deny": [
+        "large refactor before test",
+        "suppress/xfail existing fail without proof",
+        "change theory only to pass tests"
+      ]
+    },
+    {
+      "id": "G4",
+      "name": "numerical and statistical verification",
+      "require": [
+        "unit/dimension/frame/limit tests",
+        "convergence/resolution",
+        "deterministic replay",
+        "MCSE",
+        "SBC/PPC/coverage and actual chain diagnostics as applicable"
+      ],
+      "deny": [
+        "sample count as ESS",
+        "synthetic metrics as empirical",
+        "stale chain"
+      ]
+    },
+    {
+      "id": "G5",
+      "name": "independent/claim gate",
+      "require": [
+        "claim ledger update",
+        "read-only adversarial review",
+        "source/calibration and heldout receipt"
+      ],
+      "deny": [
+        "observed/Bianchi discovery from mock",
+        "family claim without transfer",
+        "novelty claim without prior-art audit"
+      ]
+    }
+  ],
+  "task_receipt_schema": {
+    "required": [
+      "task_id",
+      "repo",
+      "branch",
+      "head_sha",
+      "tree_sha",
+      "working_tree_status",
+      "input_paths_and_blob_shas",
+      "code_sha256",
+      "data_byte_sha256",
+      "software_versions",
+      "exact_commands",
+      "exit_codes",
+      "stdout_path",
+      "stderr_path",
+      "test_counts",
+      "numerical_metrics_and_MCSE",
+      "passed_failed_not_run",
+      "failure_class",
+      "claim_ids_touched",
+      "output_paths_and_hashes",
+      "next_task_id"
+    ],
+    "rules": [
+      "Do not include secrets/raw data; use local references and hash manifests.",
+      "NOT_RUN must be explicit, never null or silently omitted.",
+      "A pass receipt binds exact branch/commit and inputs."
+    ]
+  },
+  "self_audit": [
+    "Every numerical coefficient has a derivation, source, calibration receipt or is typed as a free nuisance; otherwise remove it or mark UNAVAILABLE.",
+    "Every tensor carries rank, symmetry, units, basis, parity, tetrad/frame, epoch and rotation law.",
+    "Every datum has official release URL, retrieval time, actual byte size/SHA256, parser identity, row IDs/order, units, coordinate frame, mask/window/selection and covariance identity.",
+    "Every claimed independent probe has an overlap/shared-calibration/common-LSS/cross-covariance analysis.",
+    "Every mock is labelled SYNTHETIC_ONLY and has fixed seed, spec, covariance, generator, metrics and MC uncertainty.",
+    "Every claimed execution has an exact command and exit code. A source file, workflow definition or PR state does not mean runtime success.",
+    "Every claim is checked against its closest prior art and contradictory/negative evidence.",
+    "Five outputs x,Q,Pi,F,G_F come from one posterior; never multiply marginals as independent likelihood.",
+    "Bianchi-I endpoint template never silently becomes Bianchi V/VIIh transfer or present-shear inference.",
+    "A single dipole never proves global tilt; Gaia B1 never proves vorticity without frame-spin tie.",
+    "If data/transfer missing, mark only dependent operator/claim BLOCKED or UNAVAILABLE and continue independent theory lanes.",
+    "Preserve failed attempts and previous claims as superseded/quarantined; never rewrite evidence history."
+  ],
+  "execution_sequence": [
+    "CORE-00 exact checkout and clean worktree preflight",
+    "CORE-03 physical-state/frame/epoch/code contract audit",
+    "CORE-01 PR/branch/source-history coverage reconciliation",
+    "CORE-02 contradiction/claim authority update",
+    "STAT-43 through STAT-46 exact mock/theorem replay if source identity differs",
+    "L1 then L2 then L3 then L4 then L5 then L6, one task per context",
+    "CORE-04 source acquisition and single-observable operator validation",
+    "CORE-05 joint likelihood and five-view posterior push-forward",
+    "CORE-06 generative-model x readout-method benchmark registry",
+    "CORE-07 Cobaya production and calibration",
+    "CORE-08 independent heldout/competitor benchmark",
+    "CORE-09 independent review and per-claim publication decision"
+  ],
+  "commands": {
+    "preflight": "git fetch origin && git status --short --branch && git branch --show-current && git rev-parse HEAD && git rev-parse HEAD^{tree}",
+    "minimal_compile": "python -m compileall -q htt scripts tests",
+    "targeted_tests": "pytest -q tests/r43 tests/r44 tests/r45 tests/r46 tests/r48 htt/bass/diagnostics",
+    "dag_validate": "python scripts/codex_harness/validate_pr_dag.py",
+    "dag_contract_tests": "pytest -q tests/contracts/test_research_program_dag.py tests/contracts/test_revision_research_program.py",
+    "note": "Run only paths existing on the exact checkout. Record missing paths rather than inventing them. Run targeted suites before broad PR04; classify optional-dependency collection failures separately."
+  }
+}

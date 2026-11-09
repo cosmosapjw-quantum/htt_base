@@ -1,0 +1,922 @@
+{
+  "schema": "htt.six_loop_integrated_dag/1.0.0",
+  "program": "HTT_SIX_LOOP_SOURCE_BOUND_OBSERVATIONAL_CONVERGENCE",
+  "as_of": "2026-11-09",
+  "timezone": "Asia/Seoul",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "canonical_package": "docs/research_program/observational_publication_20261015/HTT_SIX_LOOP_INTEGRATED_20261109/",
+  "current_authority": {
+    "branch": "research/r48-tensorized-observational-convergence-20261109",
+    "head": "7ea9826cf62988dc5405e9a88e905619071ae0f6",
+    "tree": "2618c50377e5db28bff6788d9f58b7264523d627",
+    "pr": 572,
+    "pr_state": "OPEN_DRAFT_UNMERGED",
+    "base_branch": "research/r47-solverfree-morphology-likelihood-20261109",
+    "base_sha": "aae07cb83b8899dd7495d550722068d8bcbf3bcb"
+  },
+  "authority_policy": {
+    "ssot": "This integrated DAG is the execution SSOT for the six-loop local-agent campaign. Existing R41-R48 DAGs remain immutable historical inputs; do not edit them to simulate synchronization.",
+    "precedence": [
+      "live Git branch/ref and exact source files",
+      "current integrated DAG and claim ledger at that branch head",
+      "actual local source bytes and execution receipts",
+      "official release documentation and peer-reviewed/original derivations",
+      "older PR reports and DAGs as historical evidence",
+      "chat summaries or model memory as discovery hints only"
+    ],
+    "branch_mutation": "Only the current R48 integration branch or an explicitly approved child branch/PR may be mutated. Never mutate main or the R47 parent branch.",
+    "merge_policy": "No merge, release, publish, or PR ready-for-review transition without a separate explicit instruction.",
+    "concurrency": "One writer at a time. Independent reviewers are read-only."
+  },
+  "historical_pr_chain": [
+    {
+      "id": 565,
+      "tag": "R41",
+      "title": "publication gate and source-bound tensor-x observational convergence",
+      "branch": "research/r41-publication-gate-20261107",
+      "head": "0439ae8e4870b23abfcdb9499c4c214daf12314b",
+      "base": "research/r39-observational-identifiability-20261107",
+      "base_sha": "b819983d479aa1a950d5c162804d74b9b154954b",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 425,
+      "scope": "six-loop theory/design gate; historic R38-R40 claim quarantine; source-bound architecture",
+      "audit": "metadata and selected documentation reviewed; full 425-file diff not fully audited"
+    },
+    {
+      "id": 566,
+      "tag": "R42",
+      "title": "benchmark latest tensor five-variable framework against competing cosmological theories",
+      "branch": "research/r42-fivevar-competitive-benchmark-20261108",
+      "head": "b8c2d851b4db59d43cf5c0044c42a041b97c44c6",
+      "base": "research/r41-publication-gate-20261107",
+      "base_sha": "0439ae8e4870b23abfcdb9499c4c214daf12314b",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 41,
+      "scope": "five-variable meaning; competitor registry; source and harness gates; six loop plans",
+      "audit": "PR body, DAG, selected claims and handoff reviewed"
+    },
+    {
+      "id": 567,
+      "tag": "R43",
+      "title": "functional identifiability proofs and reproducible mock study",
+      "branch": "research/r43-theory-identifiability-mock-20261109",
+      "head": "8e70c15da595ecfcd25e097e44fbd13f3aa59903",
+      "base": "research/r42-fivevar-competitive-benchmark-20261108",
+      "base_sha": "b8c2d851b4db59d43cf5c0044c42a041b97c44c6",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 4,
+      "scope": "nuisance-projected local identifiability; 17+14 dimensional synthetic mock",
+      "audit": "report and results reviewed"
+    },
+    {
+      "id": 568,
+      "tag": "R44",
+      "title": "exact Bayes-factor sufficiency and c-optimal redshift design",
+      "branch": "research/r44-bayes-factor-design-20261109",
+      "head": "98f7dc75f7eba287bd566bddc17920ba8ae45925",
+      "base": "research/r43-theory-identifiability-mock-20261109",
+      "base_sha": "8e70c15da595ecfcd25e097e44fbd13f3aa59903",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 12,
+      "scope": "common deterministic statistic BF sufficiency; Gaussian score; c-optimal design",
+      "audit": "DAG, IO contract, theory report and mock outputs reviewed"
+    },
+    {
+      "id": 569,
+      "tag": "R45",
+      "title": "finite-model posterior information loss and Gaussian mocks",
+      "branch": "research/r45-model-posterior-information-loss-20261109",
+      "head": "3a6d76a884214e309b69d6b548bc2277b25bbe88",
+      "base": "research/r44-bayes-factor-design-20261109",
+      "base_sha": "98f7dc75f7eba287bd566bddc17920ba8ae45925",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 12,
+      "scope": "finite model-index posterior KL/MI; parameter posterior separated",
+      "audit": "DAG, IO contract, report and mock results reviewed"
+    },
+    {
+      "id": 570,
+      "tag": "R46",
+      "title": "target-specific posterior compression and Gaussian mock experiments",
+      "branch": "research/r46-target-posterior-compression-20261109",
+      "head": "66b4bce6151a5fc19f317b02221b724223354fd6",
+      "base": "research/r45-model-posterior-information-loss-20261109",
+      "base_sha": "3a6d76a884214e309b69d6b548bc2277b25bbe88",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 12,
+      "scope": "target posterior KL/conditional MI; fixed Gaussian row-space criterion",
+      "audit": "DAG, IO contract, report and mock results reviewed"
+    },
+    {
+      "id": 571,
+      "tag": "R47",
+      "title": "solver-free Bianchi-I morphology likelihood and six-loop convergence DAG",
+      "branch": "research/r47-solverfree-morphology-likelihood-20261109",
+      "head": "aae07cb83b8899dd7495d550722068d8bcbf3bcb",
+      "base": "research/r46-target-posterior-compression-20261109",
+      "base_sha": "66b4bce6151a5fc19f317b02221b724223354fd6",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 7,
+      "scope": "restricted collisionless Bianchi-I endpoint temperature map; source plan for six loops",
+      "audit": "DAG, method, claims reviewed; R47-T1 and physical execution still pending"
+    },
+    {
+      "id": 572,
+      "tag": "R48",
+      "title": "tensorized physical-state likelihood and observational convergence",
+      "branch": "research/r48-tensorized-observational-convergence-20261109",
+      "head": "7ea9826cf62988dc5405e9a88e905619071ae0f6",
+      "base": "research/r47-solverfree-morphology-likelihood-20261109",
+      "base_sha": "aae07cb83b8899dd7495d550722068d8bcbf3bcb",
+      "state": "OPEN_DRAFT_UNMERGED",
+      "changed_files": 35,
+      "scope": "17D state/frame/epoch contract, source manifests, six loop DAG, Bianchi geometry diagnostics and T22 mock",
+      "audit": "R48 DAG/spec/manifest/mutation gate/claim sources and T22 docs reviewed; exact local checkout remains not run"
+    }
+  ],
+  "original_six_topics": [
+    {
+      "id": "L1",
+      "tag": "L1_LOWELL_MORPHOLOGY",
+      "title": "Low-ell morphology to physical observable operators",
+      "question": "Which low-ell phase, STF morphology and covariance/BipoSH features are actually predicted by a specified physical response and survive the real Planck observation operator?",
+      "primary_outputs": [
+        "a_lm_T_E_B",
+        "stored-real STF harmonic tensors",
+        "BipoSH/off-diagonal covariance",
+        "mask/beam/pixel/frequency/foreground transformed data vector"
+      ],
+      "competitors": [
+        "Planck low-ell TT/EE/TE and pixel likelihoods",
+        "BipoSH estimators",
+        "multipole vectors/power tensors",
+        "boost/aberration templates",
+        "phenomenological anisotropic covariance"
+      ],
+      "limits": [
+        "Bianchi-I collisionless template is temperature-only and conditional on isotropic last-scattering and collisionless propagation",
+        "integrated endpoint B_* is not present-day shear without dynamics",
+        "no Bianchi-V/VIIh extrapolation from Bianchi-I"
+      ]
+    },
+    {
+      "id": "L2",
+      "tag": "L2_DIPOLE_ANOMALY",
+      "title": "CMB dipole anomaly and cross-tracer source dipole decomposition",
+      "question": "Can observer boost, radiation/matter frame drift, source evolution, intrinsic clustering and survey selection be separated using redshift-, flux-, size- and tracer-resolved data?",
+      "primary_outputs": [
+        "CMB dipole and modulation",
+        "Quaia/NVSS/RACS distinct count point processes",
+        "redshift/flux/size dipole response",
+        "matched random/source-null and held-out tracer predictions"
+      ],
+      "competitors": [
+        "kinematic dipole",
+        "intrinsic LSS dipole",
+        "multi-fluid/tilted cosmologies",
+        "survey calibration/selection",
+        "local structure"
+      ],
+      "limits": [
+        "Quaia and NVSS stay separate; RACS is replication, not naive concatenation",
+        "no fixed source-count response coefficient",
+        "same sky reprocessings are not independent observations"
+      ]
+    },
+    {
+      "id": "L3",
+      "tag": "L3_KINEMATICS",
+      "title": "Beyond-FLRW kinematical tensor functional measurements",
+      "question": "Which STF shear, vorticity, acceleration and relative-velocity functionals are estimable after frame/gauge/covariance nuisance projection?",
+      "primary_outputs": [
+        "17D physical chart",
+        "Gaia E1/B1/E2 VSH carriers with full covariance",
+        "normal/matter/observer congruence map",
+        "nuisance-projected identifiable target subspace"
+      ],
+      "competitors": [
+        "local boost",
+        "matter-flow shear",
+        "frame-spin nuisance",
+        "LSS/astrometric systematics",
+        "covariant cosmography"
+      ],
+      "limits": [
+        "Gaia B1 is not cosmic vorticity until reference-frame spin is separated",
+        "E1 includes secular-aberration/acceleration response",
+        "report only target functionals satisfying the declared kernel condition"
+      ]
+    },
+    {
+      "id": "L4",
+      "tag": "L4_BIANCHI_CLASSIFICATION",
+      "title": "Anisotropy and Bianchi-space geometry classification",
+      "question": "Which algebraic Bianchi structures are distinguishable at the level of metric/isometry class, normal-frame constraints, and calibrated observable image?",
+      "primary_outputs": [
+        "(a,n,C) and Jacobi/Gauss-Codazzi constraints",
+        "intrinsic Ricci/local-isometry and group-presentation equivalence atlas",
+        "tilt-orbit stabilizer and degeneracy diagnostics",
+        "physical family-to-observable response only when a verified transfer exists"
+      ],
+      "competitors": [
+        "FLRW plus perturbations",
+        "Bianchi I/V/VII_h native transfer",
+        "local inhomogeneity",
+        "phenomenological anisotropic metric",
+        "same local metric with distinct simply-transitive presentations"
+      ],
+      "limits": [
+        "geometry classifier is not a BASS solver",
+        "I/VII0 and V/VIIh equivalence only in the specified isotropic FLRW embedding",
+        "R48-T22 curvature channel is an idealized synthetic oracle",
+        "no global family ID without a validated family-specific transfer and separated competitors"
+      ]
+    },
+    {
+      "id": "L5",
+      "tag": "L5_DIRECTIONAL_H",
+      "title": "Redshift- and direction-dependent Hubble observables / optical jet",
+      "question": "Which directional expansion/distance-jet functionals are identifiable over finite redshift windows with source-frame, PV, calibration and optical remainder uncertainty?",
+      "primary_outputs": [
+        "H_loc(n) monopole/dipole/quadrupole",
+        "distance-redshift multipole coefficients",
+        "Pantheon+ full covariance estimands",
+        "CF4 conditional distance-level comparison",
+        "redshift-window and truncation remainder tests"
+      ],
+      "competitors": [
+        "FLRW cosmography",
+        "Kristian-Sachs/Heinesen covariant cosmography",
+        "local structure/PV models",
+        "phenomenological multipole+systematics"
+      ],
+      "limits": [
+        "DESI compressed BAO is background control, not directional H(z,n)",
+        "CF4 velocities are derived data and stay conditional without source covariance",
+        "finite-z cubic claims need remainder evidence"
+      ]
+    },
+    {
+      "id": "L6",
+      "tag": "L6_LOCAL_GLOBAL_TILT",
+      "title": "Local observer boost versus global matter-radiation tilt",
+      "question": "Can local observer motion be separated from global frame-relative fluid tilt using multiple physical response channels rather than one dipole?",
+      "primary_outputs": [
+        "ordered radiation->matter->observer Lorentz maps",
+        "exact velocity closure and Wigner rotation",
+        "independent CMB/count/size/redshift/astrometric operators",
+        "cross-probe nuisance-projected local/global estimands"
+      ],
+      "competitors": [
+        "observer boost",
+        "global radiation-matter tilt",
+        "intrinsic source dipole",
+        "local flow and frame spin",
+        "multi-fluid models"
+      ],
+      "limits": [
+        "one observed dipole cannot establish global tilt",
+        "exact Lorentz composition required; no first-order vector sum outside a stated small-beta limit",
+        "frame conventions and epochs must be explicit"
+      ]
+    }
+  ],
+  "common_physical_contract": {
+    "metric_signature": "(-,+,+,+)",
+    "keep_c_explicit": true,
+    "theta_K": {
+      "dimension": 17,
+      "ordered_blocks": [
+        {
+          "name": "sigma_STF2_over_H",
+          "dimension": 5
+        },
+        {
+          "name": "omega_axial_over_H",
+          "dimension": 3
+        },
+        {
+          "name": "A_polar_over_cH",
+          "dimension": 3
+        },
+        {
+          "name": "beta_RM_radiation_to_matter",
+          "dimension": 3
+        },
+        {
+          "name": "beta_MO_matter_to_observer",
+          "dimension": 3
+        }
+      ]
+    },
+    "stf5": {
+      "chart": [
+        "Sxx",
+        "Syy",
+        "Sxy",
+        "Sxz",
+        "Syz"
+      ],
+      "constraint": "Szz=-Sxx-Syy",
+      "gram": [
+        [
+          2,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          2,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          2
+        ]
+      ],
+      "rule": "Never use a Euclidean component norm/rank/Fisher operation without the Gram matrix or an orthonormal STF basis."
+    },
+    "frames": [
+      "radiation R",
+      "matter M",
+      "observer O",
+      "source S",
+      "catalogue/instrument C"
+    ],
+    "rule": "Declare each ordered map, source event/epoch and tetrad orientation. Compose exact Lorentz boosts in order and carry Wigner rotation for non-collinear chains.",
+    "five_variable": {
+      "order": [
+        "x",
+        "Q",
+        "Pi",
+        "F",
+        "G_F"
+      ],
+      "semantics": "one joint posterior/compatibility push-forward; not five independent parameters or likelihood factors",
+      "rule": "Never multiply marginal densities p(x)p(Q)p(Pi)p(F)p(G_F) as a substitute for a joint raw-data likelihood."
+    },
+    "likelihood": "d_p = O_p(theta_K,psi,eta_p; release,selection,window,frame,epoch) + noise; joint covariance includes evidenced cross-probe blocks.",
+    "local_identifiability": "For fixed covariance mean-response models J_eff=(I-P_eta) C^(-1/2) J; target l^T theta is locally point-identifiable only if ker(J_eff) is subset ker(l^T). For C(theta,eta), include covariance derivatives in the Fisher/score.",
+    "covariance": "Separate data covariance, latent/posterior covariance, common-parameter covariance, transport uncertainty and calibration covariance. No unexplained block diagonal assumption."
+  },
+  "cross_cutting_statistical_foundations": [
+    {
+      "id": "STAT-43",
+      "source_pr": 567,
+      "topic": "nuisance-projected local functional identifiability",
+      "status": "PASS_SCOPED_SYNTHETIC",
+      "theory": "ker(I_eff) subset ker(D phi); local and first-order only",
+      "limits": "not global identification; fixed covariance simplification needs covariance derivative term when C depends on parameters"
+    },
+    {
+      "id": "STAT-44",
+      "source_pr": 568,
+      "topic": "common deterministic statistic and exact Bayes-factor sufficiency",
+      "status": "PASS_SCOPED_SYNTHETIC",
+      "theory": "common T preserves binary BF iff raw LR is sigma(T)-measurable; common known-covariance Gaussian fixed chart score",
+      "limits": "not valid automatically under model-dependent covariance, selection, transfer or model-dependent T"
+    },
+    {
+      "id": "STAT-45",
+      "source_pr": 569,
+      "topic": "finite model-index posterior information loss",
+      "status": "PASS_SCOPED_SYNTHETIC",
+      "theory": "E KL[p(M|Y)||p(M|T)] = I(M;Y|T); distinct from within-model parameter loss",
+      "limits": "standard identity and synthetic Gaussian tests; no empirical likelihood"
+    },
+    {
+      "id": "STAT-46",
+      "source_pr": 570,
+      "topic": "target-specific posterior compression",
+      "status": "PASS_SCOPED_SYNTHETIC",
+      "theory": "E KL[p(Psi|Y)||p(Psi|T)] = I(Psi;Y|T); fixed Gaussian linear row-space criterion",
+      "limits": "physical Psi requires metric/basis and source-bound operator; target sufficiency is not full parameter or model evidence sufficiency"
+    }
+  ],
+  "inherited_specialized_work": [
+    {
+      "id": "R47-BI",
+      "source_pr": 571,
+      "topic": "Bianchi-I endpoint geodesic temperature map",
+      "status": "DERIVED_AT_DESIGN_LEVEL_NOT_INDEPENDENTLY_VERIFIED",
+      "conditions": [
+        "spatially homogeneous Bianchi I",
+        "isotropic sharp last-scattering surface",
+        "collisionless propagation"
+      ],
+      "output": "T0(n)/Tbar=[n^T exp(-2 B_*) n]^(-1/2)",
+      "limits": [
+        "temperature only; no self-consistent E/B or perturbation covariance",
+        "B_* is integrated endpoint anisotropy, not present shear",
+        "no Bianchi V/VII_h extrapolation"
+      ]
+    },
+    {
+      "id": "R48-GEOMETRY",
+      "source_pr": "R48-T13_to_T20",
+      "topic": "geometry-only Bianchi algebra/Ricci/tilt diagnostics",
+      "status": "PASS_SCOPED_WITH_HOLD_AND_BLOCKERS",
+      "limitations": [
+        "novelty HOLD / major revision",
+        "broad PR04 gate previously failed at collection due optional Cobaya/Astropy",
+        "SO(3)/O(3) full tilt-orbit proof deferred"
+      ]
+    },
+    {
+      "id": "R48-T22",
+      "source_pr": 572,
+      "topic": "Bianchi momentum-constraint to HTT observability mock",
+      "status": "PASS_SCOPED_SYNTHETIC_ORACLE_ONLY",
+      "result": "Class-A common trace kernel; Class-B generic rank 3; II/IX same kinematic response but distinct intrinsic 3-Ricci; idealized curvature oracle yields 0.478919 nat",
+      "limitations": [
+        "idealized oracle not observed geometry",
+        "count/Gaia scales synthetic",
+        "G_F identity transport",
+        "exact repo local test not run; hosted CI pending/unknown"
+      ]
+    }
+  ],
+  "current_global_claim_ceiling": {
+    "empirical_discovery": "HOLD",
+    "observed_Bianchi_family_identification": "HOLD",
+    "general_physical_Bianchi_transfer": "NOT_IMPLEMENTED_OR_NOT_VERIFIED",
+    "HTT_methodology": "CONDITIONAL_METHODS_CANDIDATE",
+    "theory_and_synthetic_results": "PASS_SCOPED_ONLY_AS_LISTED",
+    "rule": "No claim promotion from branch/PR status, synthetic mock, static source read, metadata manifest or hash list alone."
+  },
+  "tasks": [
+    {
+      "id": "CORE-00",
+      "title": "Exact checkout and mutation safety preflight",
+      "status": "READY",
+      "depends_on": [],
+      "outputs": [
+        "CHECKOUT_PREFLIGHT.json"
+      ],
+      "acceptance": [
+        "verify repository remote, branch, HEAD and tree SHA",
+        "verify clean worktree and untracked files",
+        "verify PR #572 still open/draft and head/base identity",
+        "if dirty or branch mismatch: stop all writes and report; never reset/clean/stash"
+      ]
+    },
+    {
+      "id": "CORE-01",
+      "title": "Relevance-indexed PR/branch/source audit",
+      "status": "PASS_SCOPED",
+      "depends_on": [
+        "CORE-00"
+      ],
+      "outputs": [
+        "PR_BRANCH_RECONCILIATION.json"
+      ],
+      "acceptance": [
+        "record PR #565-#572 lineage and exact SHA",
+        "preserve #565 large carryover diff as not fully audited",
+        "classify changed files by research relevance; do not assert exhaustive semantic review of every file",
+        "record older handoff differences and supersession"
+      ]
+    },
+    {
+      "id": "CORE-02",
+      "title": "Contradiction and historical claim authority reconciliation",
+      "status": "PASS_SCOPED",
+      "depends_on": [
+        "CORE-01"
+      ],
+      "outputs": [
+        "INTEGRATED_CLAIM_EVIDENCE_LEDGER.json"
+      ],
+      "acceptance": [
+        "R41 COMPLETE states are scoped to that gate/design stage",
+        "R42/R47/R48 later blockers quarantine unsupported old empirical claims",
+        "record contradiction with exact source path/commit/evidence",
+        "never erase historical report or rewrite failed receipt"
+      ]
+    },
+    {
+      "id": "CORE-03",
+      "title": "Read-only physical-state/frame/epoch/code contract audit",
+      "status": "READY",
+      "depends_on": [
+        "CORE-02"
+      ],
+      "outputs": [
+        "PHYSICAL_STATE_CONTRACT_AUDIT.json"
+      ],
+      "acceptance": [
+        "confirm current production 17D chart and STF Gram use",
+        "audit exact velocity closure call sites and no first-order sum leakage",
+        "trace every response constant to derivation/calibration or mark UNAVAILABLE",
+        "no production changes during audit"
+      ]
+    },
+    {
+      "id": "STAT-43",
+      "title": "Local functional identifiability theorem/mock foundation",
+      "status": "PASS_SCOPED_SYNTHETIC",
+      "depends_on": [
+        "CORE-03"
+      ],
+      "outputs": [
+        "R43_THEORY_AND_MOCK_RESULTS_KO.md",
+        "MOCK_EXPERIMENT_RESULTS_SUMMARY.json"
+      ]
+    },
+    {
+      "id": "STAT-44",
+      "title": "Common-statistic Bayes-factor sufficiency theorem/mock",
+      "status": "PASS_SCOPED_SYNTHETIC",
+      "depends_on": [
+        "STAT-43"
+      ],
+      "outputs": [
+        "R44_THEORY_AND_MOCK_RESULTS_KO.md",
+        "R44_MOCK_RESULTS.json"
+      ]
+    },
+    {
+      "id": "STAT-45",
+      "title": "Finite-model posterior loss theorem/mock",
+      "status": "PASS_SCOPED_SYNTHETIC",
+      "depends_on": [
+        "STAT-44"
+      ],
+      "outputs": [
+        "R45_THEORY_AND_MOCK_RESULTS_KO.md",
+        "R45_MOCK_RESULTS.json"
+      ]
+    },
+    {
+      "id": "STAT-46",
+      "title": "Target-posterior compression theorem/mock",
+      "status": "PASS_SCOPED_SYNTHETIC",
+      "depends_on": [
+        "STAT-45"
+      ],
+      "outputs": [
+        "R46_THEORY_AND_MOCK_RESULTS_KO.md",
+        "R46_MOCK_RESULTS.json"
+      ]
+    },
+    {
+      "id": "L1",
+      "title": "Low-ell morphology and physical CMB operator",
+      "status": "READY",
+      "depends_on": [
+        "CORE-03",
+        "STAT-43",
+        "STAT-44"
+      ],
+      "outputs": [
+        "L1_SOURCE_OPERATOR_SPEC.json",
+        "L1_DERIVATION_AND_TESTS.md",
+        "L1_SOURCE_RECEIPT.json",
+        "L1_CLAIM_LEDGER.json"
+      ],
+      "acceptance": [
+        "complete exact Bianchi-I endpoint-map derivation and adversarial limits",
+        "separate deterministic template and stochastic covariance/BipoSH likelihoods",
+        "source-bind frequency maps/splits/masks/beam/pixel/noise/foreground and matched same-release simulations",
+        "run rotation/parity/quadrature convergence and pixel-vs-harmonic oracle",
+        "keep E/B or non-BI transfer UNAVAILABLE if not implemented"
+      ]
+    },
+    {
+      "id": "L2",
+      "title": "Redshift-resolved CMB/source-count dipole and cross-tracer selection",
+      "status": "READY",
+      "depends_on": [
+        "CORE-03",
+        "STAT-43",
+        "STAT-44"
+      ],
+      "outputs": [
+        "L2_POINT_PROCESS_SPEC.json",
+        "L2_SOURCE_RECEIPT.json",
+        "L2_MATCHED_NULL_REPORT.json",
+        "L2_HELDOUT_TRACER_REPORT.json"
+      ],
+      "acceptance": [
+        "NVSS and Quaia separate point processes",
+        "RACS is a replication lane",
+        "use authentic random catalogues and selection/evolution/flux/size/redshift response",
+        "separate local structure/intrinsic dipole and kinematic hypotheses",
+        "held-out tracer/cut prediction and matched null; no magic scale constants"
+      ]
+    },
+    {
+      "id": "L3",
+      "title": "Beyond-FLRW kinematical functional measurement and inverse problem",
+      "status": "READY",
+      "depends_on": [
+        "CORE-03",
+        "STAT-43",
+        "STAT-46"
+      ],
+      "outputs": [
+        "L3_KINEMATIC_OPERATOR_SPEC.json",
+        "L3_IDENTIFIABLE_SUBSPACE.json",
+        "L3_FRAME_SPIN_AUDIT.json"
+      ],
+      "acceptance": [
+        "bind normal/matter/source/observer frame and epochs",
+        "source-level Gaia astrometry, full proper-motion covariance, scan law and CRF3/ICRF tie",
+        "nuisance-project each target; distinguish structural rank from weak identification",
+        "do not identify B1 with vorticity without frame spin anchor"
+      ]
+    },
+    {
+      "id": "L4",
+      "title": "Anisotropy/Bianchi algebra, local geometry and family-identifiability loop",
+      "status": "PASS_SCOPED_GEOMETRY_ONLY_PENDING_PHYSICAL_TRANSFER",
+      "depends_on": [
+        "CORE-03",
+        "L1",
+        "L3"
+      ],
+      "outputs": [
+        "L4_BIANCHI_EQUIVALENCE_ATLAS.json",
+        "L4_CONSTRAINT_COMPATIBILITY.md",
+        "L4_PHYSICAL_TRANSFER_STATUS.json",
+        "L4_MODEL_SELECTION_BENCHMARK.json"
+      ],
+      "acceptance": [
+        "retain all 11 algebraic types and canonical (a,n,C)",
+        "enforce Jacobi/Gauss-Codazzi and metric/local-isometry equivalence distinctions",
+        "separate group presentation from local metric observables",
+        "retain R48 Class-A/B kernels and II/IX exact no-go",
+        "do not claim family identification without native/validated family-specific transfer and separated competitors"
+      ]
+    },
+    {
+      "id": "L5",
+      "title": "Directional Hubble optical jet and distance-redshift likelihood",
+      "status": "READY",
+      "depends_on": [
+        "CORE-03",
+        "STAT-43",
+        "STAT-46"
+      ],
+      "outputs": [
+        "L5_OPTICAL_JET_DERIVATION.md",
+        "L5_DISTANCE_OPERATOR_SPEC.json",
+        "L5_REMAINDER_AND_WINDOW_REPORT.json"
+      ],
+      "acceptance": [
+        "derive observer/source congruence coefficient and sign convention",
+        "distinguish H_ratio/H_difference and local vs finite-z coefficient",
+        "Pantheon+ full covariance/calibration row identity; CF4 source data conditional",
+        "curvature terms, vorticity order and truncation remainder justified",
+        "DESI BAO only background control unless angular estimator data exist"
+      ]
+    },
+    {
+      "id": "L6",
+      "title": "Local observer boost versus global matter-radiation tilt",
+      "status": "READY",
+      "depends_on": [
+        "L1",
+        "L2",
+        "L3"
+      ],
+      "outputs": [
+        "L6_ORDERED_LORENTZ_RESPONSE.md",
+        "L6_LOCAL_GLOBAL_IDENTIFIABILITY.json",
+        "L6_DEPTH_COHERENCE_REPORT.md"
+      ],
+      "acceptance": [
+        "exact ordered Lorentz composition and Wigner rotation",
+        "model CMB/count/size/redshift/astrometric response separately",
+        "nuisance-project local/global estimands with independent anchors",
+        "a single dipole never proves global tilt"
+      ]
+    },
+    {
+      "id": "CORE-04",
+      "title": "Source-locked data intake and independent observable operator validation",
+      "status": "PENDING",
+      "depends_on": [
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6"
+      ],
+      "outputs": [
+        "RAW_DATA_MANIFEST.json",
+        "SOURCE_OPERATOR_RECEIPTS/",
+        "COVARIANCE_AND_SELECTION_AUDIT.json"
+      ],
+      "acceptance": [
+        "source official release bytes downloaded locally, exact SHA256 and size recorded",
+        "row order, units, frames, masks, windows, selection, transfer and covariance identities verified",
+        "no raw data or chains committed",
+        "missing source/transfer is explicitly BLOCKED/UNAVAILABLE while other work continues"
+      ]
+    },
+    {
+      "id": "CORE-05",
+      "title": "Repair/validate common raw-data likelihood and HTT five-view push-forward",
+      "status": "PENDING",
+      "depends_on": [
+        "CORE-04",
+        "STAT-45",
+        "STAT-46"
+      ],
+      "outputs": [
+        "COMMON_RAW_OBSERVATION_CONTRACT.json",
+        "FIVE_VIEW_JOINT_PUSHFORWARD_SPEC.json",
+        "PI_MATCHED_NULL_RECEIPT.json",
+        "GF_CROSS_SHELL_COVARIANCE_RECEIPT.json"
+      ],
+      "acceptance": [
+        "x,Q,Pi,F,G_F computed from one common posterior/compatibility law",
+        "authentic matched null for Pi; if absent SYNTHETIC_ONLY/UNAVAILABLE",
+        "real shell data vectors and full cross-shell data covariance for G_F; separate posterior covariance",
+        "F uses declared set/anchor and equal-area sphere convergence",
+        "Q bounds have source/theorem/calibration/prior provenance",
+        "no independent factorization of five outputs"
+      ]
+    },
+    {
+      "id": "CORE-06",
+      "title": "Competing generative-model and inference/readout registry",
+      "status": "PENDING",
+      "depends_on": [
+        "CORE-05"
+      ],
+      "outputs": [
+        "GENERATIVE_MODEL_REGISTRY.json",
+        "READOUT_METHOD_REGISTRY.json",
+        "COMPARABILITY_MATRIX.csv"
+      ],
+      "acceptance": [
+        "separate physical generative theories from inference/readout methods",
+        "compare only shared raw-observation contracts or explicit model-specific likelihoods",
+        "retain covariance/selection/transfer-specific terms",
+        "do not map shear proxy M3 to Bianchi"
+      ]
+    },
+    {
+      "id": "CORE-07",
+      "title": "Production inference and calibration",
+      "status": "NOT_RUN",
+      "depends_on": [
+        "CORE-06"
+      ],
+      "outputs": [
+        "COBAYA_CONFIG.yaml",
+        "CHAIN_RECEIPT.json",
+        "SBC_REPORT.json",
+        "PPC_REPORT.json",
+        "MODEL_EVIDENCE.json"
+      ],
+      "acceptance": [
+        "actual Cobaya sampler execution only",
+        "fresh chains tied to exact code/config/source hashes",
+        "split-Rhat and bulk/tail ESS per parameter",
+        "prior predictive SBC and posterior predictive checks from generated data",
+        "matched null calibrated per actual release; no cached chain fallback"
+      ]
+    },
+    {
+      "id": "CORE-08",
+      "title": "Adversarial benchmark and independent held-out prediction",
+      "status": "NOT_RUN",
+      "depends_on": [
+        "CORE-07"
+      ],
+      "outputs": [
+        "FIVEVAR_BENCHMARK.json",
+        "HELDOUT_PREDICTIVE_REPORT.json",
+        "ADVERSARIAL_REVIEW_KO.md"
+      ],
+      "acceptance": [
+        "benchmark tensorized T against physical competitor theories and established readout methods, not scalar-vs-tensor as main benchmark",
+        "report where HTT wins/ties/loses with calibrated utility",
+        "independent held-out probes/cuts and covariance/selection misspecification stress",
+        "no post-hoc threshold/tuning on holdout"
+      ]
+    },
+    {
+      "id": "CORE-09",
+      "title": "Claim-level scientific and publication adjudication",
+      "status": "HOLD",
+      "depends_on": [
+        "CORE-08"
+      ],
+      "outputs": [
+        "FINAL_CLAIM_LEDGER.json",
+        "PUBLICATION_DECISION.md"
+      ],
+      "acceptance": [
+        "claim promoted individually with source/data/operator/code/run identities",
+        "CMB morphology compatibility is not Bianchi family detection",
+        "only Bianchi family-specific transfer plus global model separation supports family ID",
+        "independent review read-only; all blockers/failures preserved"
+      ]
+    },
+    {
+      "id": "R48-T21",
+      "title": "Class-wise tilt-orbit stabilizer and O(3) transformation proof",
+      "status": "DEFERRED_SCOPE",
+      "depends_on": [
+        "L4"
+      ],
+      "outputs": [
+        "TILT_ORBIT_STABILIZER_PROOF_KO.md",
+        "O3_ORIENTATION_TRANSFORMATION_SPEC.json"
+      ],
+      "acceptance": [
+        "necessary/sufficient orbit separation by spectral/rank strata",
+        "derive epsilon-dual transformation of a,n and pseudoscalars",
+        "compare to tensor invariant basis literature"
+      ]
+    },
+    {
+      "id": "R48-T23",
+      "title": "Independent review and exact-head verification of Bianchi-to-HTT mock",
+      "status": "PENDING",
+      "depends_on": [
+        "L4"
+      ],
+      "outputs": [
+        "INDEPENDENT_BIANCHI_HTT_OBSERVABILITY_REVIEW_KO.md",
+        "BIANCHI_OBSERVABILITY_SENSITIVITY_REPORT.json",
+        "REPOSITORY_BIANCHI_FIVEVAR_TEST_RECEIPT.json"
+      ],
+      "acceptance": [
+        "run exact-head repository pytest/compileall",
+        "verify formula/rank/frame/LLR identities",
+        "bounded noise/enthalpy/shear/correlation/prior/nuisance sweep",
+        "keep idealized curvature sensor synthetic only"
+      ]
+    }
+  ],
+  "recommended_execution_order": [
+    "CORE-00",
+    "CORE-03",
+    "CORE-01",
+    "CORE-02",
+    "STAT-43",
+    "STAT-44",
+    "STAT-45",
+    "STAT-46",
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5",
+    "L6",
+    "CORE-04",
+    "CORE-05",
+    "CORE-06",
+    "CORE-07",
+    "CORE-08",
+    "CORE-09"
+  ],
+  "execution_policy": {
+    "one_task_per_session": true,
+    "turn_splitting": "One task ID at a time; never try to complete all six loops in one low-capacity context.",
+    "read_before_write": true,
+    "write_small_diffs": true,
+    "one_bounded_repair_pass": true,
+    "failure_taxonomy": [
+      "THEORY",
+      "NUMERICAL",
+      "IMPLEMENTATION",
+      "RUNTIME_ENVIRONMENT",
+      "INPUT_MISSING",
+      "PROVENANCE",
+      "AUTHORIZATION",
+      "EXTERNAL_SERVICE"
+    ],
+    "missing_input": "Mark only the dependent source/operator claim BLOCKED or UNAVAILABLE; continue independent theory/mock tasks.",
+    "preserve_failures": true,
+    "no_phantom_completion": true,
+    "no_agent_spawn_claim_without_real_id": true
+  }
+}
