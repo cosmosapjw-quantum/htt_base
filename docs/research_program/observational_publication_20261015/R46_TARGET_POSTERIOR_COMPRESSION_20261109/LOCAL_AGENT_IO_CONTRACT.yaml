@@ -1,0 +1,52 @@
+schema: htt.r46_local_agent_io_contract/1
+project: cosmosapjw-quantum/htt_base
+branch:
+  base: research/r45-model-posterior-information-loss-20261109
+  base_commit: 3a6d76a884214e309b69d6b548bc2277b25bbe88
+  target: research/r46-target-posterior-compression-20261109
+raw_data_or_chains_in_git: false
+science_contract:
+  raw_observation: common_Y_across_competing_models
+  common_summary: S=T(Y)
+  estimand: Psi=g(Lambda)
+  target_posterior_loss: I(Psi;Y|S)
+  full_latent_loss: I(Lambda;Y|S)
+  data_processing: target_loss_le_full_latent_loss
+  zero_target_loss: Psi_independent_of_Y_given_S
+  square_loss_risk_gap: E[Var(E(Psi|Y)|S)]
+  gaussian_score_map: A^T Sigma H^T (H Sigma H^T+R)^(-1)
+  exact_linear_summary: row(K)_subset_row(B^T)
+  minimal_linear_rank: rank(K)
+HTT_contract:
+  physical_chart_dimension: 17
+  chart_order: [sigma_STF5, omega_axial3, A_polar3, beta_RM3, beta_MO3]
+  summary_order: [x,Q,Pi,F,G_F]
+  summary_semantics: joint_posterior_or_compatibility_pushforward
+  independent_likelihood_product: prohibited
+  physical_invariant_registry: derive_from_authoritative_basis_and_metric
+  STF_component_norm_without_Gram_matrix: prohibited
+source_manifest_required:
+  - source_id_and_release
+  - official_url_and_retrieval_timestamp
+  - exact_path_size_sha256
+  - coordinate_frame_units_mask_window_selection
+  - covariance_and_calibration_identity
+  - transfer_solver_identity_and_version
+  - parser_commit_and_validation_receipt
+empirical_requirements:
+  Pi: authentic_matched_null_samples
+  G_F: shell_data_vectors_and_full_cross_shell_data_covariance
+  Cobaya: exact_config_likelihood_source_hashes_and_chain_diagnostics
+  SBC: prior_predictive_data_and_full_posterior_samples
+missing_data_behavior:
+  Pi: SYNTHETIC_ONLY_OR_UNAVAILABLE
+  G_F: DATA_COVARIANCE_UNAVAILABLE_NO_PHYSICAL_DEPTH_CLAIM
+  survey_or_transfer: NO_EMPIRICAL_OR_BIANCHI_IDENTIFICATION_CLAIM
+local_agent_return:
+  - exact_remote_head_and_source_blob_ids
+  - compileall_pytest_and_replay_receipts
+  - physical_target_definitions_and_STF_Gram_matrix
+  - target_vs_full_latent_information_loss
+  - covariance_selection_transfer_and_source_manifest
+  - uncertainty_and_calibration_diagnostics
+  - gates_status_and_exact_next_action
