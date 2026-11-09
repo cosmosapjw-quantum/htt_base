@@ -6,7 +6,7 @@ likelihood and sampler modules.
 
 C[k,i,j] represents [e_i,e_j] = C[k,i,j] e_k in a right-handed
 orthonormal invariant triad. Similarity quotients use SO(3) and one
-common positive homothety; parity-reflected tilt orbits remain distinct.
+common positive homothety; orientation-reversing O(3) identification is not defined.
 """
 from __future__ import annotations
 from dataclasses import dataclass
@@ -268,7 +268,7 @@ def tilt_orbit_fingerprint(a: np.ndarray, n: np.ndarray, tilt_velocity: np.ndarr
                 i = j
         return TiltOrbitFingerprint(
             speed2, p1, p2, None, None, chi, rank, rank, condition,
-            degeneracy, "SO(3); parity-reflected orbits remain distinct"
+            degeneracy, "oriented SO(3) quotient; O(3) identification not defined"
         )
 
     ahat = avec / float(np.linalg.norm(avec))
@@ -288,7 +288,7 @@ def tilt_orbit_fingerprint(a: np.ndarray, n: np.ndarray, tilt_velocity: np.ndarr
         degeneracy = 0
     return TiltOrbitFingerprint(
         speed2, p1, p2, q0, q1, None, rank, rank, condition,
-        degeneracy, "SO(3); parity-reflected orbits remain distinct"
+        degeneracy, "oriented SO(3) quotient; O(3) identification not defined"
     )
 
 def recover_tilt_squared_components(a: np.ndarray, n: np.ndarray,

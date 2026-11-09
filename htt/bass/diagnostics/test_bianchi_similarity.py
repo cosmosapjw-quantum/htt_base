@@ -186,3 +186,10 @@ def test_all_eleven_proper_rotation_and_homothety_invariance(label):
             assert y == pytest.approx(x, abs=3e-11)
     assert transformed_t.moment_jacobian_rank == base_t.moment_jacobian_rank
     assert transformed_t.continuous_azimuth_degeneracy_dof == base_t.continuous_azimuth_degeneracy_dof
+
+
+def test_tilt_orbit_metadata_does_not_overclaim_parity_behavior():
+    algebra = build_bianchi_algebra("VI_0")
+    fingerprint = tilt_orbit_fingerprint(algebra.a, algebra.n, np.array([0.1, 0.2, -0.1]))
+    assert "SO(3)" in fingerprint.orientation_quotient
+    assert "O(3) identification not defined" in fingerprint.orientation_quotient

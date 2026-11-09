@@ -76,7 +76,7 @@ h=\frac{a_i a^i}{\lambda_1(n)\lambda_2(n)},
 \]
 로 둔다. Jacobi 조건 n a=0 아래에서 (a,n)의 SO(3) orbit은 이 정규화된 고유값 정보로 고정된다. κ는 similarity quotient에서 제거하지만 물리적 곡률 scale 복원을 위해 별도 저장한다.
 
-본 quotient는 **orthonormal-frame metric Lie-algebra data modulo SO(3) × common positive scale**다. 임의의 좌표변환이나 일반적인 local isometry 분류를 대체한다고 주장하지 않는다. Parity 반전은 SO(3) quotient에 넣지 않으므로 handedness 관련 pseudoscalar를 보존한다.
+본 quotient는 **orthonormal-frame metric Lie-algebra data modulo SO(3) × common positive scale**다. 임의의 좌표변환이나 일반적인 local isometry 분류를 대체한다고 주장하지 않는다. Parity/O(3) 변환은 현재 quotient에서 정의하지 않는다. 따라서 handedness 관련 pseudoscalar의 부호를 물리적 parity 정보로 해석하지 않는다.
 
 ## 4. 공간곡률 fingerprint와 정확한 비식별성
 

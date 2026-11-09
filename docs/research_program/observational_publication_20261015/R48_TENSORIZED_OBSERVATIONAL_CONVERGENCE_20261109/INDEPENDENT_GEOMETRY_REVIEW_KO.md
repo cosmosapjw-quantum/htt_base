@@ -122,7 +122,7 @@ Class B의 Jacobi 조건은 \(a\in\ker N\)를 주므로, \(\hat a\cdot v\)와 \(
 4. Ferrando & Sáez (2020), *Homogeneous three-dimensional Riemannian spaces*, Class. Quantum Grav. 37 185011, arXiv: https://arxiv.org/abs/2004.01877, DOI: https://doi.org/10.1088/1361-6382/ab9880.
 5. Sáez, Mengual & Ferrando (2024), *Spatially-homogeneous cosmologies*, Class. Quantum Grav. 41, arXiv: https://arxiv.org/abs/2409.15854, DOI: https://doi.org/10.1088/1361-6382/ad7664.
 6. Christodoulakis, Korfiatis & Papadopoulos (2002), *Automorphism Inducing Diffeomorphisms, Invariant Characterization of Homogeneous 3-Spaces and Hamiltonian Dynamics of Bianchi Cosmologies*: https://scispace.com/papers/automorphism-inducing-diffeomorphisms-invariant-26u04ayuwj.
-7. Rainer & Schmidt (1995), *Inhomogeneous Cosmological Models with Homogeneous Inner Hypersurface Geometry*: https://arxiv.org/abs/gr-qc/9508053.
+7. Rainer & Schmidt (1995), *Inhomogeneous Cosmological Models with Homogeneous Inner Hypersurface Geometry*: https://arxiv.org/abs/gr-qc/9507013.
 8. Jakub (2026-07-18), *A Clifford-algebraic framework for Bianchi cosmologies*, author preprint (not peer-reviewed; files restricted): https://doi.org/10.5281/zenodo.21432742.
 9. Luminet (2026), *A Primer on Spacetime Singularities II: Spatially Homogeneous Cosmologies*, arXiv: https://arxiv.org/abs/2609.25112.
 
