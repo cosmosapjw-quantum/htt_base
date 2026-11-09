@@ -1,0 +1,72 @@
+{
+  "schema": "htt.r47_local_agent_io_contract/1",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "expected_branch": "research/r47-solverfree-morphology-likelihood-20261109",
+  "expected_parent_sha": "66b4bce6151a5fc19f317b02221b724223354fd6",
+  "input_contract": {
+    "required_checkout": "Clean GitHub checkout of exact R47 PR head; preserve uncommitted user files and do not reset/destructively clean them.",
+    "read_authority": [
+      "This R47 folder",
+      "R42/R41 source/data/implementation audit records",
+      "R43-R46 theory/mocks and exact head commits",
+      "HTT_FIVE_THEORY_LOOPS.pdf from project library",
+      "Current production source paths before any patch"
+    ],
+    "source_hashing": "Recompute SHA256 from local bytes; compare against immutable source manifest. Never copy a hash into a receipt without reading the bytes."
+  },
+  "output_contract": {
+    "per_turn": [
+      "turn_id",
+      "git_commit",
+      "git_tree",
+      "changed_paths",
+      "input_manifest",
+      "equation_to_code_trace",
+      "tests_command_and_exit",
+      "science_validation",
+      "numerical_validation",
+      "claim_status_changes",
+      "blocking_findings",
+      "next_turn"
+    ],
+    "artifact_directory": "docs/research_program/observational_publication_20261015/R47_SOLVER_FREE_MORPHOLOGY_LIKELIHOOD_20261109/agent_returns/",
+    "raw_data_directory": "workdir/raw/r47/",
+    "derived_data_directory": "workdir/derived/r47/",
+    "chains_directory": "workdir/chains/r47/"
+  },
+  "mutation_gates": {
+    "G0": "Confirm exact branch/head and working-tree state; no mutation before clean identity receipt.",
+    "G1": "Read target modules and their callers/tests; no speculative wrappers or guessed APIs.",
+    "G2": "Write a failing minimal test for each intended behavior before implementation where feasible.",
+    "G3": "Only mutate files listed in the active turn's write_set. Keep source inputs immutable and outside Git.",
+    "G4": "Run unit and negative tests; record stdout/stderr/exit code; never record PASS without execution.",
+    "G5": "Run physical/mathematical checks independently of software unit tests.",
+    "G6": "Run source/byte/semantic identity checks on outputs and configs.",
+    "G7": "Update the claim ledger only for claims whose specific gates passed.",
+    "G8": "Push only the active feature branch; never merge, force push or rewrite history.",
+    "G9": "Create a draft PR/update existing R47 PR only after readback and test receipts are saved."
+  },
+  "anti_drift_audit": [
+    "Do not reinterpret x,Q,Pi,F,G_F as independent likelihood factors.",
+    "Do not replace the current exact physical target with scalar x_C.",
+    "Do not infer sigma_ab(t0) from integrated B_* without a physical history map.",
+    "Do not claim E/B prediction from equation (2.1).",
+    "Do not call Bianchi-I an all-Bianchi template.",
+    "Do not assign Bianchi V/VIIh parameters without their own curvature/transfer response.",
+    "Do not call a BipoSH anomaly a Bianchi signal without a physical kernel mapping.",
+    "Do not mix Planck PR3/FFP10 and PR4/NPIPE maps or mocks under one source ID.",
+    "Do not count split maps, frequencies, component-separation products or tensor summaries as independent skies.",
+    "Do not use an isotropic C_ell-only likelihood to claim full phase-sensitive low-ell morphology.",
+    "Do not re-use R42 posterior values until raw bytes, source operators, covariance and chain convergence are reproduced.",
+    "Do not hardcode Ellis-Baldwin coefficients, Gaia scales, shear transfer, optical depth or E/B zeros in production operators.",
+    "Do not infer Gaia B1 cosmic vorticity without VLBI/ICRF frame spin tie.",
+    "Do not claim local boost/global tilt discrimination from a single dipole vector.",
+    "Do not change data cuts, masks, priors, parameter transforms, alpha, target estimands or feature definitions after looking at results without a new analysis version."
+  ],
+  "resource_policy": {
+    "download": "Stage manifests and small files before maps/simulation sets; estimate storage and keep raw inputs immutable.",
+    "sampling": "Run a one-probe likelihood fixture and short pilot first; use checkpointed chains and predeclared Rhat/ESS limits.",
+    "parallelism": "Parallelize independent map transforms/injection batches only after preserving deterministic seeds, source identity and bounded memory.",
+    "stop": "If a required simulation/covariance/transfer provider is absent, stop only the affected claim lane and continue independent theory/observables."
+  }
+}
