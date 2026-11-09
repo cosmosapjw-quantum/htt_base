@@ -1,0 +1,63 @@
+{
+  "schema": "htt.r44_run_record/1",
+  "date": "2026-11-09",
+  "program": "HTT_R44_EXACT_MODEL_EVIDENCE_AND_C_OPTIMAL_REDSHIFT_DESIGN",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "parent_branch": "research/r43-theory-identifiability-mock-20261109",
+  "parent_commit": "8e70c15da595ecfcd25e097e44fbd13f3aa59903",
+  "intended_branch": "research/r44-bayes-factor-design-20261109",
+  "execution_environment": {
+    "python": "3.13.5",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "pytest": "9.0.2",
+    "thread_limits": {"OPENBLAS_NUM_THREADS": 1, "OMP_NUM_THREADS": 1}
+  },
+  "commands": [
+    {"command": "python scripts/r44/run_bayes_factor_design_mock.py --seed 20261109 --replications 500 --design-replications 3000 --output R44_MOCK_RESULTS.json", "exit_code": 0},
+    {"command": "python -m compileall -q scripts/r44 tests/r44", "exit_code": 0},
+    {"command": "pytest -q tests/r44", "exit_code": 0, "summary": "7 passed"},
+    {"command": "repeat same-seed execution and cmp output", "exit_code": 0}
+  ],
+  "numerical_receipts": {
+    "max_abs_log_bf_error_raw_vs_score": 1.3944401189291966e-13,
+    "max_abs_log_bf_error_raw_vs_reference_posterior": 1.3944401189291966e-13,
+    "covariance_counterexample_same_q_log_bf_gap": 0.22222222222222238,
+    "beta_mo_only_readout_m2_log_bf_gap": 0.12706916670762425,
+    "anisotropic_equal_norm_log_bf_gap": 0.3555555555555556,
+    "c_optimal_target_variance_reduction_vs_d_optimal": 0.1409478158723353,
+    "c_optimal_target_variance_reduction_vs_uniform": 0.006675472592511444,
+    "design_coverage_95": {
+      "c_optimal": 0.9503333333333334,
+      "d_optimal": 0.948,
+      "uniform": 0.949
+    }
+  },
+  "identity": {
+    "R44_MOCK_RESULTS.json_sha256": "a4a05155b9101a189181f2874f5bae08d3ef35f577f7cdf2e572dc4a39c4412f",
+    "same_seed_byte_identical": true,
+    "strict_json_allow_nan_false": true,
+    "standalone_mock_driver_sha256": "0d9585e72f40e4d388a6c522f61ce3cac1ea5106616a500419909024748d63cd",
+    "wolfram_scalar_gaussian_log_bf_identity": "exactly zero"
+  },
+  "skill_execution": {
+    "physmath_research_loop": "loaded theory and coding loop policies; completed constructive proof and mock experiment sub-scope",
+    "exa": "used for literature search",
+    "scispace": "searched and showed an 8-paper table; extracted contributions/methods/limitations",
+    "parallel": "completed independent deep research; response id resp_aa44786a-932d-49e9-bc05-4bc5d8521d57",
+    "wolfram": "symbolically verified scalar Gaussian evidence identity"
+  },
+  "native_subagent": "NOT_RUN: no native delegation/dispatch capability exposed in the current tool inventory",
+  "observational_data": "NOT_RUN",
+  "cobaya_production": "NOT_RUN",
+  "physical_bianchi_transfer": "NOT_RUN",
+  "claims": {
+    "exact_likelihood_ratio_sufficiency_condition": "DERIVED_STANDARD_THEORY",
+    "common_covariance_gaussian_submodel_score_sufficiency": "DERIVED_AND_NUMERICALLY_CHECKED",
+    "model_dependent_covariance_counterexample": "NUMERICALLY_CHECKED_SYNTHETIC",
+    "anisotropic_norm_counterexample": "NUMERICALLY_CHECKED_SYNTHETIC",
+    "c_optimal_design_advantage": "NUMERICALLY_CHECKED_SYNTHETIC",
+    "observational_model_identification": "UNRESOLVED_NOT_RUN"
+  }
+}
