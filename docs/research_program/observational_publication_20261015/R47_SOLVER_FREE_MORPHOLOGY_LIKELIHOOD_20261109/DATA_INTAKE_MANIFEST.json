@@ -1,0 +1,165 @@
+{
+  "schema": "htt.r47_data_intake_manifest/1",
+  "as_of": "2026-11-09",
+  "policy": {
+    "raw_data_in_git": false,
+    "new_release_new_source_id": true,
+    "compute_hash_from_bytes": true,
+    "preserve_raw_archive": true,
+    "record_exact_row_and_covariance_order": true,
+    "do_not_treat_reprocessed_views_as_independent_skies": true
+  },
+  "datasets": {
+    "planck_pr4_npipe": {
+      "priority": "P0",
+      "authority": [
+        "https://pla.esac.esa.int/pla/",
+        "https://lambda.gsfc.nasa.gov/product/planck/curr/planck_prod_irsa.html",
+        "https://data.cmb-s4.org/planck_pr4.html"
+      ],
+      "required_products": [
+        "Frequency maps T/Q/U for predeclared channels",
+        "Half-ring maps or the finest available split products",
+        "Hit maps and noise covariance/inverse covariance",
+        "Masks: temperature, polarization, point-source and Galactic masks, with apodization recipe",
+        "QuickPol effective beam windows and pixel windows",
+        "Calibration/monopole/dipole/bandpass metadata",
+        "Matched end-to-end simulations or an explicitly justified, separately labelled null route"
+      ],
+      "initial_channels_to_screen": ["030", "044", "070", "100", "143", "217", "353"],
+      "notes": [
+        "Use 030/353 foreground-sensitive channels and 070/100/143 CMB-dominant channels as complementary inputs only after foreground and bandpass model is specified.",
+        "The 100/143/217 GHz E-mode low-ell transfer response must be checked against the NPIPE calibration/processing transfer; never assume unity.",
+        "Do not combine component-separated methods as independent likelihood factors for one sky.",
+        "CMB-S4 portal reports full-sky, half-ring, low-resolution and QuickPol product families; use its per-dataset JSON manifest for filenames, byte sizes and checksums.",
+        "NPIPE/PR4 observed maps and FFP10/PR3 simulations are not one matched end-to-end ensemble."
+      ],
+      "local_agent_tasks": [
+        "Inspect current raw candidate directories before downloading.",
+        "Download manifest first; select exact required files and preserve official names.",
+        "Save source URL, release, portal manifest, file bytes, SHA256, FITS headers, units, nside, ordering, coordinate frame, beam and calibration metadata.",
+        "Build a map/mask/beam/transfer identity tuple and ensure the observed map and every mock use the same processing."
+      ]
+    },
+    "planck_ffp10_pr3_robustness": {
+      "priority": "P1",
+      "authority": [
+        "https://pla.esac.esa.int/pla/",
+        "https://irsa.ipac.caltech.edu/data/Planck/release_3/"
+      ],
+      "optional_files": [
+        "dx12_v3_smica_cmb_mc_<ID>_raw.fits",
+        "dx12_v3_smica_noise_mc_<ID>_raw.fits"
+      ],
+      "notes": [
+        "This is a PR3/FFP10 robustness lane, not a matched replacement for PR4/NPIPE.",
+        "Only use if the observed data are exactly the corresponding SMICA PR3 product, mask and pipeline.",
+        "Prior K1 guide identifies PLA simulation query as interactive; local agent must verify current access and not assume static URLs."
+      ]
+    },
+    "pantheon_plus": {
+      "priority": "P0",
+      "authority": "https://github.com/PantheonPlusSH0ES/DataRelease",
+      "required": [
+        "Complete Pantheon+ data table",
+        "Full STAT+SYS covariance",
+        "Stable row IDs, full 1701-row ordering and exact selected covariance mapping",
+        "Redshift frame, calibrator and host metadata, selection and peculiar-velocity correction history"
+      ],
+      "prohibition": "Do not use selected caches or treat magnitudes transformed into distances as independent homoscedastic Gaussian data without deriving the transformation law."
+    },
+    "quaia_dr1": {
+      "priority": "P0",
+      "authority": [
+        "https://irsa.ipac.caltech.edu/data/Quaia/overview.html",
+        "https://doi.org/10.26131/IRSA640",
+        "https://doi.org/10.5281/zenodo.10403370"
+      ],
+      "required": [
+        "Parent catalogue",
+        "10x random catalogue(s)",
+        "Selection/completeness map",
+        "Redshift, flux/magnitude, colour, quality and morphology/size columns",
+        "Source evolution and flux-threshold response"
+      ],
+      "prohibition": "No fixed rescaling between magnitude cuts; recompute response from the selected parent release."
+    },
+    "nvss": {
+      "priority": "P0",
+      "authority": [
+        "https://www.cv.nrao.edu/nvss/NVSSlist.shtml",
+        "https://www.cv.nrao.edu/nvss/anonftp.shtml",
+        "https://cdsarc.cds.unistra.fr/viz-bin/cat/VIII/65"
+      ],
+      "required": [
+        "Original source catalogue and component/group handling",
+        "Declination/coverage map, Galactic mask and completeness",
+        "Flux and spectral-subset metadata",
+        "Random catalogues or empirically calibrated selection response"
+      ]
+    },
+    "racs_low_dr1": {
+      "priority": "P1",
+      "authority": [
+        "https://www2.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/racs/",
+        "https://data.csiro.au/"
+      ],
+      "required": ["RACS-low DR1 catalogue", "Tile footprints/local RMS", "Completeness and source flags", "Flux/spectral-index response"],
+      "role": "Independent radio-frequency replication, not naive pooling with NVSS."
+    },
+    "gaia_dr3_crf3": {
+      "priority": "P0",
+      "authority": [
+        "https://gea.esac.esa.int/archive/",
+        "https://gea.esac.esa.int/archive/documentation/GDR3/"
+      ],
+      "required": [
+        "source_id, ra, dec, ref_epoch, pmra, pmdec",
+        "Full 2x2 proper-motion covariance/correlation fields",
+        "Astrometric quality/solution, magnitude/colour, visibility periods",
+        "CRF3 tie/auxiliary tables, frame spin and scan-law/systematic models",
+        "Source crossmatch/selection lineage"
+      ],
+      "prohibition": "Do not identify Gaia B1 spin with cosmic vorticity without an external inertial-frame tie; use source-level likelihood, not only precomputed VSH coefficients."
+    },
+    "cosmicflows4": {
+      "priority": "P0_BUT_QUARANTINED",
+      "authority": "https://cdsarc.cds.unistra.fr/viz-bin/cat/J/ApJ/944/94",
+      "required": [
+        "Original individual distance measurements",
+        "Group membership and calibrator identity",
+        "Full distance/velocity error and covariance provenance",
+        "Selection, flow model and redshift frame"
+      ],
+      "prohibition": "Do not use reconstructed velocities as independent observations or revive quarantined headlines before the original distance likelihood is reproduced."
+    },
+    "des_sn5yr": {
+      "priority": "P1",
+      "authority": "https://github.com/des-science/DES-SN5YR",
+      "required": ["Named release, full covariance, calibration and selection", "Overlap/shared-calibration report with Pantheon+"],
+      "role": "Independent replication or separate stratum, not naive concatenation."
+    },
+    "desi_dr2": {
+      "priority": "P1",
+      "authority": "https://data.desi.lbl.gov/",
+      "required": ["Official BAO vector/covariance", "Release/fiducial convention", "Raw angular clustering and randoms only if directional claim is attempted"],
+      "role": "Compressed isotropic BAO provides background control, not a preferred-axis measurement."
+    },
+    "sdss_spectroscopic": {
+      "priority": "P1",
+      "authority": "https://www.sdss.org/",
+      "required": ["Exact release", "Spectroscopic redshifts", "Angular/magnitude/size selection", "Completeness and randoms"],
+      "role": "Redshift/selection response for local-versus-global dipole discrimination."
+    }
+  },
+  "required_receipts": [
+    "raw_data_manifest.json",
+    "sha256_manifest.txt",
+    "row_identity_manifest.json",
+    "covariance_order_manifest.json",
+    "mask_beam_transfer_manifest.yaml",
+    "selection_window_manifest.yaml",
+    "cross_probe_overlap_report.json",
+    "download_log.txt"
+  ]
+}
