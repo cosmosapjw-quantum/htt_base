@@ -142,3 +142,142 @@ def reference_posterior(y: np.ndarray, X: np.ndarray, Cbar: np.ndarray,
     V = 0.5 * (V + V.T)
     m = V @ q
     return m, V, q, G
+
+def log_bf_raw(y: np.ndarray, Cbar: np.ndarray, X: np.ndarray,
+               cols: list[int], prior_std: np.ndarray = THETA_STD) -> float:
+    """Exact log BF against the common zero-mean base model."""
+    if not cols:
+        return 0.0
+    Xm = X[:, cols]
+    lm = prior_std[cols]
+    Sm = Cbar + (Xm * lm[None, :] ** 2) @ Xm.T
+    return float(-0.5 * (_logdet_spd(Sm) - _logdet_spd(Cbar))
+                 + 0.5 * (y @ (_solve_cov(Cbar, y) - _solve_cov(Sm, y))))
+
+
+def log_bf_from_score(q: np.ndarray, G: np.ndarray, cols: list[int],
+                      prior_std: np.ndarray = THETA_STD) -> float:
+    """Exact same BF using q=X' C^-1 y and fixed design Gram matrix G."""
+    if not cols:
+        return 0.0
+    Gm = G[np.ix_(cols, cols)]
+    qm = q[cols]
+    lm = prior_std[cols]
+    A = np.diag(1.0 / lm**2) + Gm
+    sign, logdet_ratio = np.linalg.slogdet(np.eye(len(cols)) + np.diag(lm**2) @ Gm)
+    if sign <= 0:
+        raise np.linalg.LinAlgError("non-positive model evidence determinant")
+    return float(-0.5 * logdet_ratio + 0.5 * qm @ np.linalg.solve(A, qm))
+
+
+def log_bf_from_reference_posterior(m: np.ndarray, V: np.ndarray, G: np.ndarray,
+                                    cols: list[int], prior_std: np.ndarray = THETA_STD,
+                                    prior_mean: np.ndarray | None = None) -> float:
+    """Reconstruct q from the complete fixed Gaussian posterior, then the BF."""
+    b = np.zeros_like(m) if prior_mean is None else np.asarray(prior_mean, float)
+    q = np.linalg.solve(V, m) - np.linalg.solve(np.diag(prior_std**2), b)
+    return log_bf_from_score(q, G, cols, prior_std)
+
+
+def common_covariance_model_experiment(seed: int = SEED, n_rep: int = 250) -> dict[str, Any]:
+    """Compare raw, score and posterior evidence, then falsify q under covariance shift."""
+    X, Z, C, *_ = build_design(anchors=True, tomography=True)
+    Cbar = nuisance_integrated_covariance(Z, C)
+    rng = np.random.default_rng(seed)
+    theta_true = np.zeros(17)
+    theta_true[0:5] = np.array([0.8, -0.5, 0.35, 0.2, -0.15]) * 1.4e-4
+    theta_true[11:14] = np.array([0.7, -0.4, 0.25]) * 6.5e-4
+    theta_true[14:17] = np.array([-0.8, 0.45, 0.2]) * 7.0e-4
+    m_abs = {k: [] for k in MODEL_COLUMNS}
+    max_score_error = 0.0
+    max_posterior_error = 0.0
+    for _ in range(n_rep):
+        y = X @ theta_true + rng.multivariate_normal(np.zeros(len(Cbar)), Cbar)
+        m, V, q, G = reference_posterior(y, X, Cbar)
+        for name, cols in MODEL_COLUMNS.items():
+            raw = log_bf_raw(y, Cbar, X, cols)
+            from_q = log_bf_from_score(q, G, cols)
+            from_post = log_bf_from_reference_posterior(m, V, G, cols)
+            max_score_error = max(max_score_error, abs(raw - from_q))
+            max_posterior_error = max(max_posterior_error, abs(raw - from_post))
+            m_abs[name].append(abs(raw - from_post))
+
+    # Two observations with the same common-covariance score q but different
+    # likelihood under a competing model that changes covariance.
+    A = X.T @ _solve_cov(Cbar, np.eye(len(Cbar)))
+    N = null_space(A)
+    if N.shape[1] == 0:
+        raise RuntimeError("mock design unexpectedly has no score-null data direction")
+    h = N[:, 0]
+    h = h / np.sqrt(h @ _solve_cov(Cbar, h))
+    # Align the alternative covariance mode with a data direction invisible to q.
+    v = h.copy()
+    tau2 = 0.8
+    C_alt = Cbar + tau2 * np.outer(v, v)
+    def covariance_log_bf(y: np.ndarray) -> float:
+        return float(-0.5 * (_logdet_spd(C_alt) - _logdet_spd(Cbar))
+                     + 0.5 * y @ (_solve_cov(Cbar, y) - _solve_cov(C_alt, y)))
+    y_zero = np.zeros(len(Cbar))
+    y_null = h
+    q_zero = X.T @ _solve_cov(Cbar, y_zero)
+    q_null = X.T @ _solve_cov(Cbar, y_null)
+    cov_bf_zero = covariance_log_bf(y_zero)
+    cov_bf_null = covariance_log_bf(y_null)
+
+    return {
+        "n_replications": n_rep,
+        "n_data": int(len(Cbar)),
+        "n_physical_chart": int(X.shape[1]),
+        "common_covariance_model_family": "same nuisance-integrated Cbar; all alternatives are submodels of the fixed 17D chart X; independent zero-mean Gaussian coefficient priors with fixed known variances",
+        "max_abs_log_bf_error_raw_vs_score": max_score_error,
+        "max_abs_log_bf_error_raw_vs_complete_posterior_mV": max_posterior_error,
+        "mean_abs_log_bf_error_by_model": {k: float(np.mean(v)) for k, v in m_abs.items()},
+        "mean_only_is_also_exact_when_reference_V_is_fixed": True,
+        "proof_identity": "q = V^{-1} m - B^{-1} b; here b=0, B=diag(THETA_STD^2), V is fixed by X,Cbar,B and independent of y",
+        "model_dependent_covariance_counterexample": {
+            "same_common_score_max_abs_difference": float(np.max(np.abs(q_zero - q_null))),
+            "common_score_norm": float(np.linalg.norm(q_zero)),
+            "alternative_covariance_log_bf_at_zero": cov_bf_zero,
+            "alternative_covariance_log_bf_at_score_null_vector": cov_bf_null,
+            "log_bf_difference_despite_same_q": abs(cov_bf_zero - cov_bf_null),
+            "interpretation": "A mean-score summary for fixed Cbar is not sufficient when a competitor changes covariance; the residual quadratic form carries model-discriminating information."
+        }
+    }
+
+
+def norm_sufficiency_counterexample() -> dict[str, Any]:
+    """Equal posterior-mean norms can have different BFs under anisotropic geometry."""
+    tau2 = 1.0
+    def logbf(y: np.ndarray, sig2: np.ndarray) -> float:
+        C = np.diag(sig2)
+        S = C + tau2 * np.eye(3)
+        return float(-0.5 * (np.linalg.slogdet(S)[1] - np.linalg.slogdet(C)[1])
+                     + 0.5 * y @ (np.linalg.solve(C, y) - np.linalg.solve(S, y)))
+    def posterior_mean(y: np.ndarray, sig2: np.ndarray) -> np.ndarray:
+        return tau2 / (tau2 + sig2) * y
+    # Isotropic case: rotational invariance makes the norm sufficient for this
+    # particular spherical-prior, common-covariance binary comparison.
+    sig_iso = np.array([1.0, 1.0, 1.0])
+    yx, yz = np.array([1.2, 0.0, 0.0]), np.array([0.0, 0.0, 1.2])
+    iso = {"posterior_mean_norms": [float(np.linalg.norm(posterior_mean(y, sig_iso))) for y in (yx, yz)],
+           "log_bfs": [logbf(y, sig_iso) for y in (yx, yz)]}
+    # An anisotropic response/noise geometry breaks rotational invariance.
+    sig_aniso = np.array([0.35, 1.0, 2.8])
+    yx_a = np.array([0.72, 0.0, 0.0])
+    # Choose z amplitude so the posterior mean norm is the same.
+    amp_z = float(np.linalg.norm(posterior_mean(yx_a, sig_aniso)) /
+                  (tau2 / (tau2 + sig_aniso[2])))
+    yz_a = np.array([0.0, 0.0, amp_z])
+    aniso_norms = [float(np.linalg.norm(posterior_mean(y, sig_aniso))) for y in (yx_a, yz_a)]
+    aniso_bfs = [logbf(y, sig_aniso) for y in (yx_a, yz_a)]
+    return {
+        "isotropic_control": iso,
+        "anisotropic_equal_norm_pair": {
+            "noise_variances": sig_aniso.tolist(),
+            "data_vectors": [yx_a.tolist(), yz_a.tolist()],
+            "posterior_mean_norms": aniso_norms,
+            "log_bfs": aniso_bfs,
+            "absolute_log_bf_difference": abs(aniso_bfs[0] - aniso_bfs[1]),
+            "interpretation": "The scalar norm discards orientation that matters to an anisotropic likelihood."
+        }
+    }
