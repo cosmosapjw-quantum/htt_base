@@ -1,0 +1,41 @@
+schema: htt.r46_target_posterior_compression_spec/1
+program: HTT_R46_TARGET_POSTERIOR_COMPRESSION
+seed: 20261109
+replications_per_monte_carlo_experiment: 40000
+logarithm: natural
+target:
+  latent: Lambda
+  estimand: Psi = g(Lambda)
+  common_summary: S = T(Y)
+  primary_loss: E[KL(P(Psi|Y) || P(Psi|S))]
+  equivalent_quantity: I(Psi;Y|S)
+  full_latent_upper_bound: I(Psi;Y|S) <= I(Lambda;Y|S)
+  squared_error_risk_gap: E[Var(E(Psi|Y)|S)]
+gaussian_linear_model:
+  prior: Lambda ~ N(mu, Sigma)
+  observation: Y|Lambda ~ N(H Lambda, R)
+  assumptions: [Sigma_positive_definite, R_positive_definite, fixed_known_H_Sigma_R]
+  target: Psi = A^T Lambda
+  score_map: K = A^T Sigma H^T (H Sigma H^T + R)^(-1)
+  exact_linear_summary_condition: row(K) subset row(B^T), S = B^T(Y-H mu)
+  minimal_linear_summary_rank: rank(K)
+experiments:
+  - name: 17D_chart_2D_target
+    latent_dimension: 17
+    observation_dimension: 23
+    target_dimension: 2
+    compare: [target_aligned_rank_2, rank_1_direction_dropped]
+  - name: 2D_analytic_controls
+    compare: [aligned_sum_target, misaligned_first_component_target]
+  - name: radial_symmetry
+    compare: [isotropic_prior_norm_target, anisotropic_same_norm_counterexample]
+verification:
+  compileall: "python -m compileall -q scripts/r46 tests/r46"
+  tests: "pytest -q tests/r46"
+  replay: "same seed and replications; compare JSON bytes"
+  strict_parse: [R46_MOCK_RESULTS.json, R46_RUN_RECORD.json, R46_MOCK_SPEC.yaml]
+scope:
+  observational_data: NOT_RUN
+  physical_Bianchi_transfer: NOT_RUN
+  Cobaya_production_sampling: NOT_RUN
+  physical_target_invariants: NOT_YET_DERIVED_FROM_TENSOR_BASIS
