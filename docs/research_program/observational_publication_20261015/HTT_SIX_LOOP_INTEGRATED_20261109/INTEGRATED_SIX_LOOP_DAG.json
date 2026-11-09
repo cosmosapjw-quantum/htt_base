@@ -7,10 +7,11 @@
   "canonical_package": "docs/research_program/observational_publication_20261015/HTT_SIX_LOOP_INTEGRATED_20261109/",
   "current_authority": {
     "branch": "research/r48-tensorized-observational-convergence-20261109",
-    "head": "7ea9826cf62988dc5405e9a88e905619071ae0f6",
-    "tree": "2618c50377e5db28bff6788d9f58b7264523d627",
+    "integration_base_head_before_unified_package": "7ea9826cf62988dc5405e9a88e905619071ae0f6",
+    "last_verified_integration_dag_commit": "a303e7082359e8cc4bc854f93e4ffb2098a9d526",
+    "live_head_rule": "This static SHA is historical. Always fetch the live remote branch ref and verify PR #572 head equals it before work; confirm the integrated package files are present at that exact head.",
     "pr": 572,
-    "pr_state": "OPEN_DRAFT_UNMERGED",
+    "pr_state_at_audit": "OPEN_DRAFT_UNMERGED",
     "base_branch": "research/r47-solverfree-morphology-likelihood-20261109",
     "base_sha": "aae07cb83b8899dd7495d550722068d8bcbf3bcb"
   },
@@ -927,6 +928,6 @@
     "preserve_failures": true,
     "no_phantom_completion": true,
     "no_agent_spawn_claim_without_real_id": true,
-    "next_action": "Run CORE-00 read-only preflight. Do not perform a write or switch branches unless the live R48 branch/head/clean-worktree receipt matches. After preflight, continue with CORE-03 because CORE-01 and CORE-02 are already PASS_SCOPED at the documented GitHub metadata/selected-source scope."
+    "next_action": "First perform CORE-00 read-only preflight against the LIVE branch head. Verify the seven integrated package files at that live head. Then retain CORE-01 and CORE-02 as PASS_SCOPED historical GitHub metadata/selected-source audits (do not falsely claim full 425-file PR #565 semantic review), and proceed to CORE-03. Never require the live HEAD to equal a static SHA recorded in this file."
   }
 }

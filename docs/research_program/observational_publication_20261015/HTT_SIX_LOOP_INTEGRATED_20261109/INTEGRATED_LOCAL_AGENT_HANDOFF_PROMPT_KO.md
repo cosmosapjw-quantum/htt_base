@@ -10,8 +10,8 @@ Claims: INTEGRATED_CLAIM_EVIDENCE_LEDGER.json
 Verification: INTEGRATED_VERIFICATION_PROTOCOL.json
 
 기준 branch: research/r48-tensorized-observational-convergence-20261109  
-기준 HEAD at handoff: 7ea9826cf62988dc5405e9a88e905619071ae0f6  
-기준 PR #572: open/draft/unmerged. 작업 시 live ref를 다시 조회한다. main과 R47 parent는 수정하지 않는다.
+통합 패키지 작성 직전 baseline HEAD: 7ea9826cf62988dc5405e9a88e905619071ae0f6 (historical anchor only; this is not promised to remain the live head).  
+PR #572 was open/draft/unmerged at the integration snapshot. Always query current PR/branch state. The live branch head may be newer than the historical anchor above. Confirm PR head SHA equals the live branch ref and verify this folder exists at that exact head. main과 R47 parent는 수정하지 않는다.
 
 최종 연구 목표:
 - L1 low-ell morphology and physical observable operators
@@ -36,7 +36,7 @@ git rev-parse HEAD^{tree}
 git remote -v
 ~~~
 
-GitHub에서 PR #572의 live state/head/base와 branch ref를 확인한다.
+GitHub에서 PR #572의 live state/head/base와 branch ref를 확인한다. 정적 문서에 적힌 historical anchor SHA와 live HEAD가 다른 것은 정상일 수 있다. PR head와 live branch ref가 일치하고, 통합 package commit들이 live head의 ancestor이며, 문서 7개가 해당 tree에 존재하는지 확인한다.
 
 STOP: dirty tree, untracked user files, branch/head mismatch, remote failure, identity mismatch가 있으면 reset/clean/stash/checkout/overwrite 하지 않는다. 상태를 기록하고 write operation을 중지한다. 로컬 device가 offline이면 exact local test를 했다고 말하지 않는다.
 
@@ -69,7 +69,7 @@ STOP: dirty tree, untracked user files, branch/head mismatch, remote failure, id
 ## E. 한 세션에 한 task
 
 Earliest READY task in INTEGRATED_SIX_LOOP_DAG whose dependencies pass. Recommended order:
-CORE-00 -> CORE-03 -> CORE-01 -> CORE-02 -> STAT-43 -> STAT-44 -> STAT-45 -> STAT-46 -> L1 -> L2 -> L3 -> L4 -> L5 -> L6 -> CORE-04 -> CORE-05 -> CORE-06 -> CORE-07 -> CORE-08 -> CORE-09.
+CORE-00 -> CORE-01(기존 PASS_SCOPED evidence 확인) -> CORE-02(기존 PASS_SCOPED contradiction ledger 확인) -> CORE-03 -> STAT-43 -> STAT-44 -> STAT-45 -> STAT-46 -> L1 -> L2 -> L3 -> L4 -> L5 -> L6 -> CORE-04 -> CORE-05 -> CORE-06 -> CORE-07 -> CORE-08 -> CORE-09. CORE-01/02는 이미 수행된 GitHub metadata/selected-source audit 범위만 확인하고, PR #565의 425개 파일을 모두 semantic review했다고 주장하지 않는다.
 
 한 session에서 여러 loop를 묶지 않는다. 각 세션:
 1. exact source/tests 읽기

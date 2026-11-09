@@ -11,4 +11,4 @@ PR #565–#572의 분산 DAG, 결과, IO contract 및 local handoff를 하나의
 
 Six topics remain independent scientific loops and share the same 17D state, frame/epoch, source, likelihood, covariance and joint HTT-pushforward contract. Statistical theorems/mocks do not prove physical observables; a Bianchi geometry classifier is not a family transfer; no historical "complete" status is promoted automatically.
 
-Integration base: branch research/r48-tensorized-observational-convergence-20261109 @ 7ea9826cf62988dc5405e9a88e905619071ae0f6. PR #572 remains open/draft/unmerged. First local-agent action is read-only checkout preflight. Raw data/chains are never stored in Git.
+Integration source baseline: branch research/r48-tensorized-observational-convergence-20261109 @ 7ea9826cf62988dc5405e9a88e905619071ae0f6. Unified package was added in descendant commits 50160cbb1c0b33bd2704dfba9eaafad25cfcfcaf and a303e7082359e8cc4bc854f93e4ffb2098a9d526; this list is a historical anchor, not a live-head lock. PR #572 remains open/draft/unmerged at last verified readback. First local-agent action is read-only checkout preflight and live ref verification. Raw data/chains are never stored in Git.
