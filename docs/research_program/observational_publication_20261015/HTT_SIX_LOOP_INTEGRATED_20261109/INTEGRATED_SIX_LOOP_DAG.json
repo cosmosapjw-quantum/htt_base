@@ -583,7 +583,7 @@
     {
       "id": "L1",
       "title": "Low-ell morphology and physical CMB operator",
-      "status": "READY",
+      "status": "PENDING",
       "depends_on": [
         "CORE-03",
         "STAT-43",
@@ -606,7 +606,7 @@
     {
       "id": "L2",
       "title": "Redshift-resolved CMB/source-count dipole and cross-tracer selection",
-      "status": "READY",
+      "status": "PENDING",
       "depends_on": [
         "CORE-03",
         "STAT-43",
@@ -629,7 +629,7 @@
     {
       "id": "L3",
       "title": "Beyond-FLRW kinematical functional measurement and inverse problem",
-      "status": "READY",
+      "status": "PENDING",
       "depends_on": [
         "CORE-03",
         "STAT-43",
@@ -650,11 +650,9 @@
     {
       "id": "L4",
       "title": "Anisotropy/Bianchi algebra, local geometry and family-identifiability loop",
-      "status": "PASS_SCOPED_GEOMETRY_ONLY_PENDING_PHYSICAL_TRANSFER",
+      "status": "PASS_SCOPED",
       "depends_on": [
-        "CORE-03",
-        "L1",
-        "L3"
+        "CORE-03"
       ],
       "outputs": [
         "L4_BIANCHI_EQUIVALENCE_ATLAS.json",
@@ -668,12 +666,23 @@
         "separate group presentation from local metric observables",
         "retain R48 Class-A/B kernels and II/IX exact no-go",
         "do not claim family identification without native/validated family-specific transfer and separated competitors"
-      ]
+      ],
+      "phase_status": {
+        "design_review": "PASS_SCOPED",
+        "algebraic_geometry_diagnostics": "PASS_SCOPED",
+        "physical_family_observation_operator": "BLOCKED",
+        "calibrated_family_identification": "HOLD"
+      },
+      "extension_depends_on": [
+        "L1",
+        "L3"
+      ],
+      "status_note": "Previously completed geometry-only diagnostics are retained; extending to physical family/observable identification requires L1 and L3 source-bound operators and a validated family-specific transfer."
     },
     {
       "id": "L5",
       "title": "Directional Hubble optical jet and distance-redshift likelihood",
-      "status": "READY",
+      "status": "PENDING",
       "depends_on": [
         "CORE-03",
         "STAT-43",
@@ -695,7 +704,7 @@
     {
       "id": "L6",
       "title": "Local observer boost versus global matter-radiation tilt",
-      "status": "READY",
+      "status": "PENDING",
       "depends_on": [
         "L1",
         "L2",
@@ -878,9 +887,9 @@
   ],
   "recommended_execution_order": [
     "CORE-00",
-    "CORE-03",
     "CORE-01",
     "CORE-02",
+    "CORE-03",
     "STAT-43",
     "STAT-44",
     "STAT-45",
@@ -917,6 +926,7 @@
     "missing_input": "Mark only the dependent source/operator claim BLOCKED or UNAVAILABLE; continue independent theory/mock tasks.",
     "preserve_failures": true,
     "no_phantom_completion": true,
-    "no_agent_spawn_claim_without_real_id": true
+    "no_agent_spawn_claim_without_real_id": true,
+    "next_action": "Run CORE-00 read-only preflight. Do not perform a write or switch branches unless the live R48 branch/head/clean-worktree receipt matches. After preflight, continue with CORE-03 because CORE-01 and CORE-02 are already PASS_SCOPED at the documented GitHub metadata/selected-source scope."
   }
 }
