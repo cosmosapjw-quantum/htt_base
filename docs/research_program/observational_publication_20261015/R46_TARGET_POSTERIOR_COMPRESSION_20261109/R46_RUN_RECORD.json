@@ -1,0 +1,86 @@
+{
+  "schema": "htt.r46_run_record/1",
+  "program": "HTT_R46_TARGET_POSTERIOR_COMPRESSION",
+  "date": "2026-11-09",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "branch": "research/r46-target-posterior-compression-20261109",
+  "parent_branch": "research/r45-model-posterior-information-loss-20261109",
+  "parent_commit": "3a6d76a884214e309b69d6b548bc2277b25bbe88",
+  "local_environment": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "pytest": "9.0.2",
+    "platform": "Linux x86_64"
+  },
+  "verification": [
+    {
+      "command": "python -m compileall -q scripts/r46 tests/r46",
+      "status": "PASS",
+      "exit_code": 0
+    },
+    {
+      "command": "pytest -q tests/r46",
+      "status": "PASS",
+      "exit_code": 0,
+      "summary": "4 passed"
+    },
+    {
+      "command": "same-seed 40000 replication replay + cmp",
+      "status": "BYTE_IDENTICAL",
+      "exit_code": 0
+    },
+    {
+      "command": "strict JSON/YAML parsing",
+      "status": "PASS",
+      "exit_code": 0
+    }
+  ],
+  "local_git_blob_identity": {
+    "driver": "f519e2cab14305c298fcd004583f15e0c0abdf06",
+    "test": "0dbfb405e1d8012aa93e4bd63a7df4f42788308c"
+  },
+  "remote_identity": {
+    "driver": "VERIFIED exact Git blob match",
+    "test": "VERIFIED exact Git blob match",
+    "documents": "Not all individually read back; no byte-identity claim"
+  },
+  "test_development": {
+    "red": "4 focused tests failed with NotImplementedError before implementation",
+    "green": "same 4 tests passed after implementation"
+  },
+  "wolfram_checks": {
+    "aligned_rowspace": "True",
+    "misaligned_rowspace": "False",
+    "misaligned_expected_KL": "Log[3/2]/2",
+    "misaligned_MMSE_gap": "1/4",
+    "anisotropic_gap": "39/100"
+  },
+  "literature": [
+    "Fraser 1956 DOI 10.1214/aoms/1177728191",
+    "Furman czyk & Niemiro 1998 DOI 10.4064/am-25-1-113-120",
+    "Giraldi et al. 2018 DOI 10.1016/j.csda.2018.03.002",
+    "Heavens et al. 2000 arXiv:astro-ph/9911102",
+    "Alsing & Wandelt 2018 DOI 10.1093/mnrasl/sly029"
+  ],
+  "statuses": {
+    "remote_commit": "PENDING",
+    "r46_ci": "NOT_YET_TRIGGERED",
+    "local_agent_device": "OFFLINE at last check; handoff stored in branch only",
+    "native_subagent": "NOT_RUN"
+  },
+  "limitations": [
+    "Fixed known Gaussian prior, design and noise covariance for exact row-space criterion.",
+    "Model-dependent covariance, selection and nonlinear targets require separate treatment.",
+    "Target-posterior preservation does not preserve the full latent posterior or model evidence.",
+    "No observed cosmological data or observational claim."
+  ],
+  "scope": {
+    "real_survey_data": "NOT_RUN",
+    "physical_Bianchi_transfer": "NOT_RUN",
+    "Cobaya_production_sampling": "NOT_RUN",
+    "empirical_calibration": "NOT_RUN",
+    "physical_invariants": "NOT_YET_DERIVED_FROM_AUTHORITATIVE_BASIS",
+    "HTT_T": "joint posterior/compatibility push-forward, not independent likelihood factors"
+  }
+}
