@@ -134,6 +134,16 @@
         "test creates Gaussian pseudo-null samples but labels them MATCHED_NULL_PLANCK_MC100",
         "count-calibration test passes coefficients explicitly and does not exercise default coefficient provenance"
       ]
+    },
+    {
+      "path": "htt/bass/diagnostics/bianchi_similarity.py",
+      "status": "ADDED_IN_CURRENT_COMMIT",
+      "scope": "(a,n) classifier; SO(3)/homothety fingerprint; Ricci and tilt-orbit invariants."
+    },
+    {
+      "path": "htt/bass/diagnostics/test_bianchi_similarity.py",
+      "status": "ADDED_IN_CURRENT_COMMIT",
+      "scope": "All-11 classification, rotation/scale invariance, exact degeneracies, rank and fail-closed tests."
     }
   ],
   "prior_art_and_library_sources": [
@@ -221,6 +231,129 @@
       "path": "docs/research_program/observational_publication_20261015/R47_SOLVER_FREE_MORPHOLOGY_LIKELIHOOD_20261109/METHODS_NO_BOLTZMANN.md",
       "blob": "f5b5e4b966f6775ca5340da1cb4c66c501ed00a0",
       "reuse": "Bianchi-I geodesic temperature map and map-level likelihood contract; R48 adds c bookkeeping, higher-order monopole and independent numeric oracle."
+    },
+    {
+      "source": "BASS canonical all-11 Bianchi algebra registry",
+      "path": "htt/bass/background/bianchi_types.py",
+      "blob": "edb802cddfb74fc811da15ef4feb4181f9cc0adb",
+      "reuse": "Authoritative (a,n,C) builder, Class-A/Class-B split, Jacobi n@a=0, h parameter and canonical class-B axis."
+    },
+    {
+      "source": "BASS partial tilt kinematic adapters",
+      "path": "htt/bass/hierarchy/tilt_kinematics.py",
+      "blob": "eaa857a04ff41ed9f9d2cea059053a5f537f1249",
+      "reuse": "Current adapters carry partial acceleration/vorticity terms only; not a complete all-type tilted-fluid solution."
+    },
+    {
+      "source": "BASS FB-6 all-type coverage test",
+      "path": "htt/bass/integration/test_full_bianchi_coverage.py",
+      "blob": "9ef57c2b418eb6cf83d4424ec7667ef3decc23e9",
+      "reuse": "22 type/tilt fixtures; beta=.1 and aligned tilt direction; D_ellTT includes a regression proxy rather than full LOS."
+    },
+    {
+      "source": "BASS tilt adapter tests",
+      "path": "htt/bass/hierarchy/test_tilt_kinematics.py",
+      "blob": "fbffd2bf95705c256eba26f4e0483afb6ad16e80",
+      "reuse": "Adapter test contract; not proof of full tilted Einstein-fluid solutions."
+    },
+    {
+      "source": "Full Bianchi coverage roadmap",
+      "path": "docs/lowell_bianchi/FULL_BIANCHI_COVERAGE_PLAN.md",
+      "blob": "38849049c31989a84648c8635c847d9b589b5442",
+      "reuse": "Explicit gaps in nonperturbative tilt, per-type source validation, Thomson, perturbations, LOS and likelihood."
+    },
+    {
+      "source": "FB-8 local observer/global tilt discriminator SDD",
+      "path": "docs/lowell_bianchi/extended_coverage/FB8_DISCRIMINATOR_SDD.md",
+      "blob": "464600a53f5e1063da6325e9332238572059e12e",
+      "reuse": "GlobalTilt and ObserverBoost remain distinct; current project does not reproduce observer aberration."
+    },
+    {
+      "source": "Extended coverage scope decisions",
+      "path": "docs/lowell_bianchi/extended_coverage/SCOPE_DECISIONS.md",
+      "blob": "e752c44b361e422e89e570a983a6076b9d72a9d5",
+      "reuse": "Previously discarded FB-10 survey, FB-12 nonlinear lensing/ISW and FB-13 second-order tilt are not reopened."
+    },
+    {
+      "source": "King-Ellis rotating congruence seal",
+      "path": "docs/generated/king_ellis_frame_seal.json",
+      "blob": "20d2606fbb9e8e2d3f21843c5c96d5ddcb34ef2f",
+      "reuse": "LRS Bianchi I/V exact kinematics; oblique Type-I vorticity has no constraint-compatible witness in current seal."
+    },
+    {
+      "source": "R10 first-jet to ray-generator map",
+      "path": "docs/research_program/mes_verified_checkpoints_20260928/I1/recovery/research/github_r10_52ab95f2/docs/research_program/optical_mapping_r10_20260919/source_addition/02_FIRST_JET_TO_RAY_GENERATOR.md",
+      "blob": "11dd22f9ff7798103085ab9ded9c3028041d04a4",
+      "reuse": "General observer first-jet inverse retained as prior, deliberately outside current geometry-only scope."
+    },
+    {
+      "source": "Positive extension decision",
+      "path": "docs/research_program/gr_statistics_loops_20260930/reviews/POSITIVE_EXTENSION_DECISION.md",
+      "blob": "1dabb3597abfdcf158082af12ae1d4eb879c246f",
+      "reuse": "Accepted optical derivative/vorticity recovery conditions; not conflated with Bianchi algebra/tilt orbit."
+    },
+    {
+      "source": "Ellis & MacCallum 1969",
+      "title": "A class of homogeneous cosmological models",
+      "doi": "10.1007/BF01645908",
+      "url": "https://doi.org/10.1007/BF01645908",
+      "relevance": "foundational homogeneous Bianchi algebra classification"
+    },
+    {
+      "source": "King & Ellis 1973",
+      "title": "Tilted homogeneous cosmological models",
+      "doi": "10.1007/BF01646266",
+      "url": "https://doi.org/10.1007/BF01646266",
+      "relevance": "tilted fluid congruence and relation to Bianchi symmetry"
+    },
+    {
+      "source": "Wainwright & Ellis 1997",
+      "title": "Dynamical Systems in Cosmology",
+      "doi": "10.1017/CBO9780511524660",
+      "url": "https://doi.org/10.1017/CBO9780511524660",
+      "relevance": "Class A/B homogeneous dynamics and tilted models"
+    },
+    {
+      "source": "Coley & Hervik 2005",
+      "title": "A dynamical systems approach to the tilted Bianchi models of solvable type",
+      "doi": null,
+      "url": "https://arxiv.org/abs/gr-qc/0409100",
+      "relevance": "tilted VI_h/VII_h and related solvable-type dynamics"
+    },
+    {
+      "source": "Hervik, van den Hoogen & Coley 2005",
+      "title": "Future asymptotic behaviour of tilted Bianchi models of type IV and VII_h",
+      "doi": "10.1088/0264-9381/22/3/010",
+      "url": "https://doi.org/10.1088/0264-9381/22/3/010",
+      "relevance": "tilted IV/VII_h dynamics"
+    },
+    {
+      "source": "Marcori et al. 2018",
+      "title": "Direction and redshift drifts for general observers and their applications in cosmology",
+      "doi": null,
+      "url": "https://arxiv.org/abs/1805.12121",
+      "relevance": "general observer direction/redshift drift; Bianchi I application"
+    },
+    {
+      "source": "Fleury, Pitrou & Uzan 2015",
+      "title": "Light propagation in a homogeneous and anisotropic universe",
+      "doi": "10.1103/PhysRevD.91.043511",
+      "url": "https://doi.org/10.1103/PhysRevD.91.043511",
+      "relevance": "Bianchi I null propagation, direction drift and Jacobi matrix"
+    },
+    {
+      "source": "Korzyński & Kopiński 2018",
+      "title": "Optical drift effects in general relativity",
+      "doi": "10.1088/1475-7516/2018/03/012",
+      "url": "https://doi.org/10.1088/1475-7516/2018/03/012",
+      "relevance": "general-spacetime optical drift hierarchy"
+    },
+    {
+      "source": "Pontzen 2009",
+      "title": "Rogues’ gallery: The full freedom of the Bianchi CMB anomalies",
+      "doi": "10.1103/PhysRevD.79.103518",
+      "url": "https://doi.org/10.1103/PhysRevD.79.103518",
+      "relevance": "Bianchi CMB temperature/polarization patterns; excluded from current scope"
     }
   ],
   "cobaya_independent_capabilities": [
@@ -284,6 +417,14 @@
         "SciPy"
       ],
       "scope": "Exact Bianchi-I collisionless temperature map and harmonic/quadrature oracle; source-matched observation operator remains blocked."
+    },
+    {
+      "path": "htt/bass/diagnostics/bianchi_similarity.py",
+      "status": "PURE_NUMPY_GEOMETRY_ONLY",
+      "dependencies": [
+        "NumPy"
+      ],
+      "scope": "All-11 algebraic type classification, intrinsic Ricci fingerprint and normal-frame tilt orbit; no cosmological transfer or sampling."
     }
   ],
   "key_dispositions": {
@@ -302,7 +443,18 @@
   ],
   "latest_scoped_research": {
     "R48_T1": "PASS_SCOPED_REMOTE_STATIC_AUDIT",
-    "R48_T2": "DERIVATION_AND_MOCK_ORACLE_COMPLETE_SOURCE_OPERATOR_BLOCKED",
-    "status_basis": "Python 3.13.5 / NumPy 2.3.5 / SciPy 1.17.0 independent deterministic oracle; exact repository test execution NOT_RUN."
+    "R48_T2": "DEFERRED_SCOPE_HISTORICAL_BIANCHI_I_THEORY",
+    "R48_T13_TO_T16": "PASS_SCOPED_GEOMETRY_ONLY_STANDALONE_ORACLE",
+    "R48_T17": "HOLD_NOVELTY_PRIORITY_UNRESOLVED",
+    "R48_T18": "PENDING_EXACT_HEAD_REPOSITORY_TESTS"
+  },
+  "current_scope_lock": {
+    "title": "Tilt-aware geometry-only Bianchi type similarity and identifiability atlas",
+    "no_boltzmann_solver": true,
+    "no_line_of_sight": true,
+    "no_cmb_spectrum_or_polarization": true,
+    "no_cobaya_or_mcmc": true,
+    "no_observed_family_identification": true,
+    "no_claim_of_all_type_tilted_einstein_solutions": true
   }
 }

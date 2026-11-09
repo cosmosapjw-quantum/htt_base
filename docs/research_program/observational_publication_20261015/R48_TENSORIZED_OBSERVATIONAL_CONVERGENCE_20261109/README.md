@@ -51,3 +51,14 @@ The Bianchi-I collisionless temperature map is now derived with explicit c bookk
 The finite-amplitude map generates higher even multipoles but no odd ones. The target remains \(B_\star\), not \(\sigma(t_0)\).
 
 R48-T2 remains PENDING: repository implementation/tests and the source-matched beam/mask/pixel/noise/foreground/transfer covariance are not yet available. This theory/oracle work is Cobaya-independent and does not create an observational likelihood.
+
+
+## R48 geometry-only all-Bianchi tilt similarity extension (2026-11-09)
+
+The active scope is now limited to all eleven Bianchi algebra types and the relative tilt orbit of a matter congruence with respect to the homogeneous-slice normal. It does not extend the Bianchi-I temperature map into an all-type Boltzmann program.
+
+A pure-NumPy diagnostic module and tests have been added under htt/bass/diagnostics. The method separates (i) the Bianchi group-action label from (a,n), (ii) intrinsic 3D Ricci curvature, and (iii) the SO(3)-orbit of normal-frame matter tilt. Two exact curvature-only no-go examples are encoded: the flat I/VII_0 representative pair and the constant-negative-curvature V/special-VII_h pair. The Class-A/B tilt invariants expose rank and repeated-eigenvalue azimuth degeneracies.
+
+A standalone canonical-fixture oracle passed 35 tests and 1,100 randomized SO(3)/positive-homothety cases. Exact repository import/pytest remains NOT_RUN and is the next local-agent task. Novelty priority is provisional pending an adversarial review of metric-Lie-algebra equivalence and invariant theory.
+
+Scope firewall: no Boltzmann solver, LOS, CMB Cl/polarization, Cobaya/MCMC, observational family claim, or all-type constraint-satisfying tilted-fluid claim.

@@ -105,3 +105,23 @@ T_0(n)/\bar T_0=[n^T e^{-2B_\star}n]^{-1/2}
 독립 Python oracle에서 \(B=0\), 양의 정부호성, antipodal parity, SO(3) 회전 등변성, 고유값 순열, 저장실수 조화계수와 STF 적분의 일치, quadrature 수렴, \(Q(B_\star)=B_\star+O(B_\star^2)\), monopole의 cubic 보정 \(4\,\mathrm{tr}(B_\star^3)/315\)을 수치 확인했다. 유한 진폭에서는 \(\ell=4,6,\ldots\) 짝수 모드가 생기지만 이상적인 map의 홀수 모드는 0이다.
 
 이는 이론·합성 oracle 결과다. 정확한 repo 코드의 import/pytest, Planck source-matched mask/beam/pixel/noise/foreground transfer 및 전체 공분산은 미실행/미확보다. 따라서 R48-T2는 부분 진행 상태로 유지하고 관측 우도와 경험적 발견은 HOLD한다. Cobaya는 이 단계에 필요하지 않다.
+
+
+## 일반 Bianchi + tilt 기하학적 유사성 연구 (2026-11-09)
+
+**현재 연구 질문:** 11개 Bianchi 유형의 대수적 group-action label, 주어진 불변 공간계량의 intrinsic curvature, normal congruence에 대한 matter tilt orbit를 분리해 표현하고, 각 단계의 식별 불가능성을 정량화한다.
+
+### 후보 novelty / significance
+
+Bianchi 분류나 tilted-fluid dynamics 자체는 기존 연구다. 본 연구의 후보 기여는 all-11 Bianchi의 (a,n) 구조 orbit, 3D Ricci curvature fingerprint 및 Class-A/B tilt-orbit invariant를 하나의 계산 가능한 atlas로 결합하고, curvature-only false-family assignment의 정확한 no-go 예시와 tilt Jacobian rank/conditioning을 함께 제공하는 데 있다. 이는 관측 신호를 Bianchi type으로 과잉 해석하는 것을 막고, 고비용 physical forward calculation 전에 geometry-only screening을 수행할 수 있게 한다.
+
+정확한 반례 두 개가 확인됐다. (i) Type I와 대표 VII_0 (n=diag(p,0,p))는 모두 flat spatial metric을 만들지만 group-action label은 다르다. (ii) Type V와 n=diag(0,p,p), a=(a,0,0)인 특별 VII_h (h=a²/p²>0)는 Ric=-2a² g를 공유해 3차원 constant negative curvature를 만들지만 group label은 다르다. 이 예시의 존재 자체를 새로운 발견이라고 주장하지 않는다. 알려진 flat/open-FLRW 경계와 정합되며, 연구 기여는 이를 all-type discriminator의 exact no-go gate로 고정하고 tilt orbit 추가 정보의 효과를 계량화하는 데 있다.
+
+독립 canonical-fixture oracle에서 all 11 type classifier가 기대 label을 반환했고, 1,100개 randomized SO(3)/positive-homothety 사례의 최대 residual은 geometry 8.9×10⁻¹⁶, tilt 2.8×10⁻¹⁶이었다. VI_0 대표의 rank-three tilt moment inverse는 squared eigenframe components를 5.6×10⁻¹⁷ 오차로 복원했다. 35개 standalone test는 통과했으나 exact repository import/pytest는 아직 실행하지 않았다.
+
+**Evidence status:** derived + standalone numerically checked.  
+**Novelty status:** PROMISING_METHODS_CANDIDATE / PRIORITY_UNRESOLVED.  
+**Empirical significance:** NOT TESTED.  
+**Boltzmann/Cobaya:** OUT OF SCOPE.
+
+현재 BASS tilt adapters는 완전한 fluid acceleration/vorticity가 아니라 부분적인 kinematic terms를 제공한다. 임의의 (a,n,v)가 Einstein constraint를 만족한다고 가정하지 않는다. FB-8의 GlobalTilt와 ObserverBoost도 별개로 유지한다.

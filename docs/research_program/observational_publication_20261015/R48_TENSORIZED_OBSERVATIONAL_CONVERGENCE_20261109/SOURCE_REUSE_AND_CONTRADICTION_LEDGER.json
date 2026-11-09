@@ -683,5 +683,73 @@
       "Observed likelihood and matched null calibration"
     ],
     "separation": "Intrinsic Bianchi-I temperature map is separate from WU-010/011 local-observer Lorentz response."
+  },
+  "r48_geometry_similarity": {
+    "date": "2026-11-09",
+    "status": "PASS_SCOPED_GEOMETRY_ONLY_STANDALONE_ORACLE",
+    "source_inputs": {
+      "bianchi_types_blob": "edb802cddfb74fc811da15ef4feb4181f9cc0adb",
+      "tilt_kinematics_blob": "eaa857a04ff41ed9f9d2cea059053a5f537f1249",
+      "fb6_22_case_test_blob": "9ef57c2b418eb6cf83d4424ec7667ef3decc23e9",
+      "king_ellis_seal_blob": "20d2606fbb9e8e2d3f21843c5c96d5ddcb34ef2f",
+      "r10_first_jet_blob": "11dd22f9ff7798103085ab9ded9c3028041d04a4"
+    },
+    "core_results": {
+      "all_11_type_classifier": "PASS_STANDALONE_ORACLE",
+      "so3_positive_homothety_invariance": {
+        "cases": 1100,
+        "max_geometry_residual": 8.881784197001252e-16,
+        "max_tilt_residual": 2.7755575615628914e-16
+      },
+      "curvature_only_no_go": {
+        "I_vs_VII_0": "Ricci tensor exactly zero for both representative strata; flat intrinsic geometry but different group labels.",
+        "V_vs_VII_h": "At n1=n3=p>0 and matched a, Ric=-2 a^2 I; 3D constant negative curvature; different Bianchi group labels."
+      },
+      "tilt_moment_identifiability": {
+        "class_a": [
+          "v^2",
+          "v.Nhat.v",
+          "v.Nhat^2.v",
+          "det[v,Nhat.v,Nhat^2.v]"
+        ],
+        "class_b": [
+          "v^2",
+          "v.Nhat.v",
+          "v.Nhat^2.v",
+          "ahat.v",
+          "ahat.(v x Nhat.v)"
+        ],
+        "jacobian_rank": "number of distinct eigenvalues of Nhat",
+        "repeated_eigenvalues": "continuous azimuth remains when v projects into a repeated eigenspace",
+        "inverse_example": "VI_0 rank-three moment inverse recovered squared eigenframe components with max error 5.55e-17"
+      }
+    },
+    "tests": {
+      "standalone_tests": 35,
+      "result": "PASS",
+      "environment": "Python 3.13.5; NumPy 2.3.5",
+      "exact_repository_import_pytest": "NOT_RUN"
+    },
+    "reuse_and_boundaries": {
+      "bianchi_type_registry": "source-backed SSOT",
+      "current_tilt_adapters": "partial leading kinematic terms; not full fluid acceleration/vorticity",
+      "fb6_22_cases": "regression fixtures, not 22 complete physical tilted solutions; D_ellTT uses proxy",
+      "fb8": "GlobalTilt distinct from ObserverBoost",
+      "ke_obs": "LRS I/V kinematic seal; no constraint-compatible oblique Type-I solution claimed",
+      "r10_first_jet": "prior result retained; out of current scope"
+    },
+    "novelty_assessment": {
+      "status": "PROMISING_METHODS_CANDIDATE_PRIORITY_UNRESOLVED",
+      "claim": "all-11 algebraic group orbit + intrinsic curvature no-go + tilt-orbit rank/degeneracy atlas"
+    },
+    "prohibited_work": [
+      "Boltzmann solver/hierarchy",
+      "line-of-sight transfer",
+      "CMB Cl/polarization",
+      "Cobaya/MCMC/likelihood",
+      "observed Bianchi model selection",
+      "all-type Einstein-fluid tilted evolution"
+    ],
+    "next": "R48-T18 exact-head repository import/pytest followed by one adversarial mathematical novelty review"
   }
 }

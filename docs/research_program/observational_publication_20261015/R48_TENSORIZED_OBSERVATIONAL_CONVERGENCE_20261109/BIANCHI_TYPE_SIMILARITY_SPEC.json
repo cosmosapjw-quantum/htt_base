@@ -1,0 +1,152 @@
+{
+  "schema": "htt.bianchi_type_similarity_spec/1",
+  "created_at": "2026-11-09",
+  "scope": {
+    "title": "Tilt-aware geometry-only Bianchi type similarity and identifiability atlas",
+    "included": [
+      "11 Bianchi algebra types",
+      "Class A/B split",
+      "orthonormal-frame (a,n,C) signatures",
+      "SO(3) plus common positive homothety",
+      "3D left-invariant Ricci curvature fingerprint",
+      "normal-frame matter tilt orbit invariants",
+      "rank and continuous degeneracy strata"
+    ],
+    "excluded": [
+      "Boltzmann hierarchy",
+      "line-of-sight transfer",
+      "CMB Cl and polarization prediction",
+      "recombination and Thomson kernel",
+      "Einstein-fluid tilted background evolution",
+      "Cobaya/MCMC/likelihood",
+      "local observer aberration/boost",
+      "optical first-jet or Sachs/Jacobi solver"
+    ],
+    "tilt_definition": "Dimensionless matter 3-velocity v relative to the normal congruence n^a of homogeneous slices; not an observer peculiar velocity."
+  },
+  "conventions": {
+    "metric_signature": "(-,+,+,+)",
+    "triad": "right-handed orthonormal invariant spatial frame",
+    "structure_constants": "C^k_ij = a_i delta^k_j - a_j delta^k_i + epsilon_ijm n^mk",
+    "constraints": [
+      "n_ij=n_ji",
+      "n^ij a_j=0"
+    ],
+    "class_a": "a=0",
+    "class_b": "a!=0",
+    "homothety": "(a,n,C) -> s(a,n,C), s>0",
+    "frame_quotient": "proper SO(3); parity-reflected configurations remain distinct in pseudoscalar tilt invariants",
+    "speed_domain": "v.v<1"
+  },
+  "type_classifier": {
+    "class_a": {
+      "rank_0": "I",
+      "rank_1": "II",
+      "rank_2_mixed_sign": "VI_0",
+      "rank_2_same_sign": "VII_0",
+      "rank_3_definite": "IX",
+      "rank_3_indefinite": "VIII"
+    },
+    "class_b": {
+      "rank_0": "V",
+      "rank_1": "IV",
+      "rank_2_h": "h=|a|^2/product(two nonzero eigenvalues of n)",
+      "h_minus_1": "III",
+      "h_negative_other": "VI_h",
+      "h_positive": "VII_h",
+      "rank_3": "forbidden by Jacobi n@a=0"
+    }
+  },
+  "algebra_fingerprint": {
+    "kappa": "sqrt(|a|^2 + ||n||_F^2)",
+    "normalized_a": "ahat=a/kappa",
+    "normalized_n": "nhat=n/kappa",
+    "outputs": [
+      "type label",
+      "|ahat|",
+      "sorted eigenvalues(nhat)",
+      "h parameter when defined",
+      "kappa retained as dimensional scale"
+    ],
+    "interpretation": "complete for the restricted orthonormal metric Lie-algebra orbit under SO(3) and common positive scaling; not a general local-isometry classifier"
+  },
+  "curvature_fingerprint": {
+    "connection": "Gamma[i,j,k]=1/2(C[k,i,j]-C[i,j,k]+C[j,k,i])",
+    "output": [
+      "sorted eigenvalues(Ric)/||Ric||_F",
+      "sign(trace(Ric))",
+      "flat flag",
+      "isotropic-Ricci flag"
+    ],
+    "interpretation": "rotation-invariant curvature screening; not a complete local-isometry invariant for general homogeneous metrics",
+    "exact_degeneracies": [
+      {
+        "pair": [
+          "I",
+          "VII_0"
+        ],
+        "condition": "VII_0 representative n=diag(p,0,p), a=0",
+        "result": "Ric=0 for both; flat intrinsic geometry but different simply-transitive Bianchi group labels"
+      },
+      {
+        "pair": [
+          "V",
+          "VII_h"
+        ],
+        "condition": "V: a=(a,0,0), n=0; VII_h: a=(a,0,0), n=diag(0,p,p), p>0",
+        "result": "Ric=-2 a^2 I for both; constant negative sectional curvature K=-a^2; h=a^2/p^2>0"
+      }
+    ]
+  },
+  "tilt_orbit": {
+    "normalized_tensor": "Nhat=n/kappa",
+    "moments": [
+      "p0=v^2",
+      "p1=v^T Nhat v",
+      "p2=v^T Nhat^2 v"
+    ],
+    "class_a_extra": "chi_A=det[v,Nhat v,Nhat^2 v]",
+    "class_b_extra": [
+      "q0=ahat.v",
+      "q1=ahat.(v x Nhat v)"
+    ],
+    "moment_jacobian": "M=[[1,1,1],[lambda1,lambda2,lambda3],[lambda1^2,lambda2^2,lambda3^2]]",
+    "moment_rank": "number of distinct eigenvalues of Nhat",
+    "discrete_orientation": "Class-A chi_A and Class-B q0/q1 preserve remaining SO(3) orientation information",
+    "degeneracy": "Repeated eigenspaces retain a continuous azimuth only when v projects into that eigenspace; moment condition number grows as eigenvalues coalesce.",
+    "fail_closed": "Do not use a pseudoinverse to emit a unique tilt vector when the moment matrix is rank deficient."
+  },
+  "code_contract": {
+    "module": "htt/bass/diagnostics/bianchi_similarity.py",
+    "tests": "htt/bass/diagnostics/test_bianchi_similarity.py",
+    "inputs": "BASS canonical BianchiAlgebra.a, .n, .C; finite v with |v|<1",
+    "imports": [
+      "numpy"
+    ],
+    "no_imports": [
+      "cobaya",
+      "class",
+      "camb",
+      "boltzmann hierarchy",
+      "line-of-sight modules",
+      "samplers"
+    ],
+    "exact_repo_tests": "NOT_RUN"
+  },
+  "acceptance": {
+    "prior_standalone_oracle": "35 PASS in isolated canonical fixture package",
+    "all_11_classifier": "PASS_STANDALONE",
+    "rotation_homothety_randomized": "1100 cases PASS",
+    "exact_curvature_degeneracies": "2 PASS",
+    "class_a_tilt_inverse": "PASS for rank-3 VI_0 representative",
+    "repo_checkout_import_pytest": "NOT_RUN",
+    "boltzmann_solver": "OUT_OF_SCOPE"
+  },
+  "claim_firewall": [
+    "No observational Bianchi type identification",
+    "No claim that all 11 tilted states solve Einstein-fluid constraints",
+    "No identification of global fluid tilt with observer boost",
+    "No CMB transfer, polarization, Cl or Bayesian evidence claims",
+    "Curvature-only similarity is not sufficient to identify the Bianchi group action"
+  ]
+}
