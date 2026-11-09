@@ -1,0 +1,32 @@
+{
+  "schema": "htt.r46_target_posterior_compression/1",
+  "seed": 20261109,
+  "classification": "SYNTHETIC_BAYESIAN_TARGET_COMPRESSION_NOT_OBSERVATIONAL",
+  "replications_per_monte_carlo_experiment": 40000,
+  "headline": {
+    "target_aligned_summary_rank": 2,
+    "exact_target_posterior_KL_nats": 1.1102230246251565e-16,
+    "full_latent_posterior_KL_exact_target_summary_nats": 6.620396334915887,
+    "dropped_direction_target_KL_nats": 0.680592646465519,
+    "full_latent_posterior_KL_lossy_summary_nats": 7.5262260483345305,
+    "two_dimensional_misaligned_target_KL_nats": 0.20169122350224988,
+    "two_dimensional_misaligned_target_KL_MCSE_nats": 0.0011619165641772581,
+    "two_dimensional_analytic_KL_nats": 0.2027325540540822,
+    "two_dimensional_MMSE_gap_MC": 0.2484380041722514,
+    "two_dimensional_analytic_MMSE_gap": 0.25,
+    "anisotropic_same_norm_target_posterior_mean_gap": 0.39
+  },
+  "interpretation": {
+    "exact_target_KL": "roundoff-level zero; exact theorem predicts zero",
+    "radial_isotropic": "norm exactly preserves posterior of squared radius under isotropic Gaussian prior and noise",
+    "radial_anisotropic": "same-norm observations give distinct target posterior means",
+    "HTT_chart_targets": "synthetic chart-space functionals only, not calibrated physical invariants"
+  },
+  "scope": {
+    "real_survey_data": "NOT_RUN",
+    "physical_Bianchi_transfer": "NOT_RUN",
+    "Cobaya_production_sampling": "NOT_RUN",
+    "empirical_calibration": "NOT_RUN",
+    "HTT_summary_semantics": "T=(x,Q,Pi,F,G_F) is one joint posterior/compatibility push-forward"
+  }
+}
