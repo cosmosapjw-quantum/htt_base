@@ -1,0 +1,125 @@
+{
+  "schema": "htt.r48_bianchi_fivevar_mock_report/1",
+  "status": "SYNTHETIC_ORACLE_ONLY_NOT_OBSERVATIONAL_EVIDENCE",
+  "seed": 20261109,
+  "replications": 30000,
+  "posterior_draws": 12000,
+  "matched_null_data_realizations": 512,
+  "matched_null_posterior_draws": 16384,
+  "algebra": {
+    "n_II": [
+      1,
+      0,
+      0
+    ],
+    "n_IX": [
+      2,
+      1,
+      1
+    ],
+    "delta_n": [
+      1,
+      1,
+      1
+    ],
+    "shear_STF5": [
+      0.2,
+      -0.05,
+      0.1,
+      0.08,
+      0.06
+    ],
+    "M_kappa_q": [
+      0,
+      -0.08,
+      0.1
+    ],
+    "beta_NM": [
+      0,
+      -0.07872934645150054,
+      0.09841168306437567
+    ],
+    "beta_norm": 0.12602844661521273,
+    "ricci_eigenvalues": {
+      "II": [
+        -0.5,
+        -0.5,
+        0.5
+      ],
+      "IX": [
+        0,
+        0,
+        2
+      ]
+    },
+    "momentum_residual": 0,
+    "class_A_rank": 2,
+    "class_A_kernel_residual": 0,
+    "class_B_rank": 3,
+    "class_B_det": 0.007752
+  },
+  "likelihood": {
+    "kinematic_dimension": 21,
+    "curvature_dimension": 3,
+    "kinematic_covariance_min_eigenvalue": 0.0014183316589061916,
+    "kinematic_cross_covariance_frobenius": 0.0065796958292072385,
+    "curvature_noise_sigma": 0.6123724356957945,
+    "curvature_mahalanobis_separation": 7.333333333333333,
+    "kinematic_only_label_MI_nats": 0,
+    "curvature_oracle_MI_nats": 0.47891895825987596,
+    "expected_target_posterior_KL_nats": 0.47891895825987596,
+    "target_KL_full_x_score_nats": 0,
+    "target_KL_geometry_ablation_nats": 0.47891895825987596,
+    "MAP_accuracy": 0.9122,
+    "Brier": 0.06399512463447277,
+    "SBC": {
+      "chi2_dof9": 8.757333333333333,
+      "p": 0.45996942277997255
+    },
+    "nuisance_projection": {
+      "rank_before": 1,
+      "rank_after_parallel_unbounded_nuisance": 0,
+      "residual_norm": 1.8334729819819328e-16
+    }
+  },
+  "HTT": {
+    "shared_sample_ids": 12000,
+    "x_curvature_carrier": "IDEALIZED_ORACLE_ONLY",
+    "Q_real_anchor": "UNAVAILABLE",
+    "Pi": "posterior beta norm + matched zero-tilt posterior push-forward",
+    "F": "centered posterior-deviation support / mock anchors",
+    "G_F": {
+      "windows": 3,
+      "transport": "IDENTITY_MOCK_NO_EVOLUTION",
+      "posterior_covariance_shape": [
+        15,
+        15
+      ],
+      "data_covariance_shape": [
+        15,
+        15
+      ],
+      "data_crossblock_norm": 0.0012133515418520562
+    }
+  },
+  "geometry_controls": {
+    "I_vs_special_VII0_Ricci": [
+      0,
+      0,
+      0
+    ],
+    "V_vs_special_VIIh": {
+      "h": 0.25,
+      "Ricci": "-2 I for a=1",
+      "sectional_curvature": -1
+    }
+  },
+  "verification": {
+    "python": "3.13.5",
+    "numpy": "2.3.5",
+    "scratch_pytest": "5 passed",
+    "compileall": "PASS",
+    "exact_repo_checkout": "NOT_RUN_LOCAL_DEVICE_OFFLINE",
+    "hosted_CI": "PENDING"
+  }
+}

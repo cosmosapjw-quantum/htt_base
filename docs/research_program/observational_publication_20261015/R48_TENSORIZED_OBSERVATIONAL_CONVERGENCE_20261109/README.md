@@ -77,3 +77,16 @@ Scope firewall: no Boltzmann solver, LOS, CMB Cl/polarization, Cobaya/MCMC, obse
 ## Targeted Bianchi CI receipt and next task (2026-11-09)
 
 The dedicated Bianchi workflow passed all four Python interpreters at exact HEAD effb46279cbc69138c9e72503a1a86a35013ed4e: 49 tests per version plus compileall. See `BIANCHI_TARGETED_CI_REPORT.json`. The separate PR04 broad fast-regression remains failed at collection because optional Cobaya (four modules) and Astropy (three modules) dependencies are unavailable. DAG next task is R48-T21: prove the constrained tilt-orbit stabilizers and O(3) transformations.
+
+
+## R48-T22: Bianchi algebra-to-observation identifiability
+
+A solver-free derivation and mock connect the ADM momentum constraint to normal-frame matter tilt, local kinematic carriers and the shared-posterior HTT five-view mapping. The principal result is an exact Class-A common-trace kernel and a generic Class-B rank-three map; a matched II/IX pair shows why kinematic channels alone may fail to identify the algebraic label.
+
+- [Methods](BIANCHI_OBSERVABILITY_FIVEVAR_METHODS_KO.md)
+- [Mock contract](BIANCHI_FIVEVAR_MOCK_SPEC.json)
+- [Numerical receipt](BIANCHI_FIVEVAR_MOCK_REPORT.json)
+- [Claim ledger](BIANCHI_FIVEVAR_CLAIM_LEDGER.json)
+- [Local-agent restart](LOCAL_AGENT_RESTART_PROMPT_R48_T23_KO.md)
+
+The curvature sensor and count/Gaia-like response are synthetic oracles, not source-calibrated observables. No BASS solver, Einstein-fluid evolution, Boltzmann/LOS transfer, CMB prediction or real-data family identification was added. Scratch tests passed; exact repository checkout validation is pending hosted CI.

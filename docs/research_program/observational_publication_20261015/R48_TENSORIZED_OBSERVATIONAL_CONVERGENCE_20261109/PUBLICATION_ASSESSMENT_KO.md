@@ -125,3 +125,14 @@ Bianchi 분류나 tilted-fluid dynamics 자체는 기존 연구다. 본 연구�
 **Boltzmann/Cobaya:** OUT OF SCOPE.
 
 현재 BASS tilt adapters는 완전한 fluid acceleration/vorticity가 아니라 부분적인 kinematic terms를 제공한다. 임의의 (a,n,v)가 Einstein constraint를 만족한다고 가정하지 않는다. FB-8의 GlobalTilt와 ObserverBoost도 별개로 유지한다.
+
+
+## 7. R48-T22: 대수적 constraint와 관측 식별가능성 연결
+
+**내부 이론/mock 판정: PASS_SCOPED. 관측 발견 논문: HOLD 유지.**
+
+이번 노드는 normal-frame momentum constraint를 통해 Bianchi (a,n), shear S, matter tilt의 instantaneous algebraic map을 분석한다. Class A는 fixed-S momentum map에서 n -> n+cI가 정확한 kernel이고 generic rank가 2다. Canonical Class B는 det(J_B)=3[S11*S12*S13+S23*(S12^2+S13^2)]이며 generic rank 3이지만 determinant-zero stratum, enthalpy와 frame nuisance는 남는다.
+
+선택한 Bianchi II/IX pair는 같은 instantaneous normal-frame flux와 tilt를 가지지만 intrinsic 3-R_ij eigenvalues가 다르다. 21D correlated kinematic-only mock의 label information은 정확히 0이고, 명시적으로 이상화한 3D curvature eigenvalue oracle은 equal-covariance binary model에서 0.478919 nat을 제공한다. HTT x에 정확한 binary LLR를 보존하면 target-specific loss가 0이고 geometry carrier를 제거하면 0.478919 nat을 잃는다. Q/Pi/F/G_F는 같은 posterior의 coordinated views이며 별도의 likelihood factor가 아니다.
+
+**Claim boundary:** curvature sensor와 count/Gaia-like response는 synthetic oracle이며 실제 관측 operator가 아니다. Intrinsic 3-Ricci와 spacetime optical Ricci focusing은 구분한다. 이 결과로 real Bianchi detection, all-type tilted solution, physical transfer 또는 global HTT sufficiency를 주장하지 않는다. Ellis–MacCallum, King–Ellis, Kristian–Sachs, Heinesen, Kalbouneh–Marinoni–Maartens 및 2026 Clifford-algebraic Bianchi preprint의 선행연구 때문에 broad novelty/first-ever claim은 보류한다.

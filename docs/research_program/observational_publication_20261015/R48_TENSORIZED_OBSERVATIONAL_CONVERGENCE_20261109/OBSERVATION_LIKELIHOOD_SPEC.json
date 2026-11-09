@@ -185,5 +185,30 @@
       "No stale chain without exact config/source/data identity",
       "No calibrated evidence if matched simulations missing"
     ]
+  },
+  "bianchi_observability": {
+    "status": "SYNTHETIC_ORACLE_ONLY_NOT_OBSERVATIONAL_EVIDENCE",
+    "momentum_constraint": {
+      "variable": "M_i=kappa*q_i; q_i=(rho+p)*Gamma^2*beta_i",
+      "class_A": "M=((n2-n3)S23,(n3-n1)S13,(n1-n2)S12); fixed-S Jacobian has common-trace kernel and generic rank 2",
+      "class_B": "M=(3aS11+(n2-n3)S23,3aS12+n3S13,3aS13-n2S12); determinant of fixed-S Jacobian is 3*(S11*S12*S13+S23*(S12^2+S13^2))",
+      "exact_tilt": "r=|M|/[kappa*(rho+p)]=beta/(1-beta^2); beta=2r/(1+sqrt(1+4r^2))"
+    },
+    "observability": {
+      "local_normal_hubble": "H_N(n)=Theta_N/3+sigma_N:nn-A_N.n",
+      "curvature_warning": "intrinsic 3-R_ij is not the spacetime Ricci focusing contraction R_ab k^a k^b",
+      "exact_pair": "Bianchi II and IX representatives n=(1,0,0),(2,1,1) have equal instantaneous flux/tilt at fixed S but unequal intrinsic 3-Ricci spectra",
+      "presentation_no_go": "flat I/special VII0 and open V/special VIIh share local spatial geometry in isotropic FLRW limits"
+    },
+    "mock": {
+      "channels": "21D correlated kinematic vector plus idealized 3D sorted-3-Ricci eigenvalue oracle",
+      "replications": 30000,
+      "posterior_draws": 12000,
+      "matched_null": "512 zero-tilt data injections, 32 posterior draws each",
+      "response_scales": "synthetic only",
+      "result": "I(H;D_kin)=0; I(H;D_curvature)=0.47891896 nat; full x score target loss=0; geometry-carrier ablation loss=0.47891896 nat"
+    },
+    "five_variable_contract": "x,Q,Pi,F,G_F are derived from one posterior sample identity and are not independent likelihood factors",
+    "claim_ceiling": "No global HTT sufficiency, real Bianchi detection, physical transfer or solver validation."
   }
 }

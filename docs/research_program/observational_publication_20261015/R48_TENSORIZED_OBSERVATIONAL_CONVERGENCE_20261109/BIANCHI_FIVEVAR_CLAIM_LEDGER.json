@@ -1,0 +1,53 @@
+{
+  "schema": "htt.r48_bianchi_fivevar_claim_ledger/1",
+  "task": "R48-T22",
+  "claims": [
+    {
+      "id": "B5-01",
+      "claim": "Class-A fixed-S momentum map has the exact n->n+cI kernel and generic rank 2.",
+      "status": "DERIVED_AND_NUMERICALLY_CHECKED",
+      "limit": "instantaneous, fixed triad and shear"
+    },
+    {
+      "id": "B5-02",
+      "claim": "Canonical Class-B fixed-S flux map is locally invertible away from det(J_B)=0.",
+      "status": "DERIVED_AND_NUMERICALLY_CHECKED",
+      "limit": "known enthalpy/frame; local only"
+    },
+    {
+      "id": "B5-03",
+      "claim": "Selected II/IX pair has equal instantaneous flux/tilt but different intrinsic 3-Ricci spectra.",
+      "status": "DERIVED_AND_NUMERICALLY_CHECKED",
+      "limit": "not equality of spacetime geometry"
+    },
+    {
+      "id": "B5-04",
+      "claim": "The binary equal-covariance Gaussian curvature score has zero target KL loss when stored in x.",
+      "status": "EXACT_WITHIN_DECLARED_MOCK",
+      "limit": "two-label synthetic curvature oracle"
+    },
+    {
+      "id": "B5-05",
+      "claim": "Kinematic-only channel has zero information about this selected II/IX label.",
+      "status": "EXACT_WITHIN_DECLARED_MOCK",
+      "limit": "not all Bianchi pairs"
+    },
+    {
+      "id": "B5-06",
+      "claim": "An unrestricted nuisance parallel to geometry contrast removes remaining label rank.",
+      "status": "EXACT_LINEAR_ALGEBRA_CHECK",
+      "limit": "source-bound nuisance priors not modeled"
+    },
+    {
+      "id": "B5-07",
+      "claim": "x,Q,Pi,F,G_F share sample identity and covariance in the oracle mock.",
+      "status": "IMPLEMENTED_IN_SYNTHETIC_ORACLE",
+      "limit": "identity GF transport, no physical evolution"
+    },
+    {
+      "id": "B5-08",
+      "claim": "No real-data family detection or physical transfer is established.",
+      "status": "EXPLICITLY_BLOCKED"
+    }
+  ]
+}

@@ -123,3 +123,10 @@ The dedicated Bianchi similarity workflow passed at exact HEAD `effb46279cbc6913
 The broad PR04 fast-regression is still not PASS: all four Python jobs stop during pytest collection because four Cobaya modules and three Astropy modules import missing optional packages. Compilation, import compatibility, theorem/property, and architecture gates pass. Do not mix this broad-suite blocker with the dedicated Bianchi result.
 
 Next task: R48-T21, stratum-wise proof of constrained Bianchi tilt-orbit completeness plus induced O(3) transformation of n and pseudoscalars. General vector/tensor rotational invariant bases are prior art (Yehorchenko 2018; Shariff 2019/2021/2023). No generic invariant-theory novelty or physical parity claim before the proof.
+
+
+## 12. R48-T22 authoritative update (2026-11-09)
+
+현재 재개 목표는 R48-T23이다. LOCAL_AGENT_RESTART_PROMPT_R48_T23_KO.md를 authoritative handoff로 읽는다. R48-T22는 Bianchi momentum-constraint -> normal-frame tilt -> local mock carrier -> shared-posterior HTT five-view mapping을 연결한다. Class A fixed-S map은 n->n+cI kernel/generic rank 2이고 canonical Class B map은 det(J_B)!=0에서 generic rank 3이다. II/IX matched pair의 kinematic signal은 동일하지만 intrinsic 3-Ricci spectrum은 다르다.
+
+Curvature channel은 IDEALIZED_ORACLE_ONLY, count/Gaia-E1-like responses는 synthetic calibration, G_F identity transport는 mock-only다. Python 3.13.5 / NumPy 2.3.5 scratch package의 5개 테스트는 통과했지만 exact checkout test는 local device offline 때문에 NOT_RUN이다. Hosted CI를 확인한다. 관측 발견 또는 물리 Bianchi transfer claim으로 승격하지 않는다.

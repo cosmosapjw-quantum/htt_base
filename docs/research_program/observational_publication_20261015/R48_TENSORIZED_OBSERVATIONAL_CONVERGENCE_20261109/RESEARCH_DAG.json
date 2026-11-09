@@ -19,36 +19,29 @@
     "claims": "No observed discovery, calibrated significance, Bianchi family identification or global-tilt claim before relevant gates pass."
   },
   "current_session": {
-    "id": "R48-T17_TO_T21_REFEREE_AND_VERIFIED_DIAGNOSTICS",
-    "status": "REFEREE_REVIEW_COMPLETE_TARGETED_CI_PASS_BROAD_GATE_BLOCKED",
-    "scope_lock": "All 11 Bianchi algebra types plus normal-frame matter-tilt orbit identifiability; no Boltzmann/LOS/CMB transfer/Cobaya.",
+    "id": "R48-T22_BIANCHI_ALGEBRA_TO_HTT_OBSERVABILITY_MOCK",
+    "status": "PASS_SCOPED_ANALYTIC_AND_SYNTHETIC_ORACLE_HOSTED_CI_PENDING",
+    "scope_lock": "Momentum-constraint rank, local kinematic observability and one shared-posterior HTT five-view mock only. No BASS solver, Einstein-fluid evolution, Boltzmann/LOS/CMB transfer, Cobaya or real-data inference.",
     "accomplishments": [
-      "Reused BASS Ellis-MacCallum (a,n,C) canonical source and Class-A/Class-B registry.",
-      "Implemented algebraic 11-type classifier based on rank/inertia and Class-B h.",
-      "Implemented SO(3) plus common-positive-homothety structural fingerprint and separate left-invariant spatial Ricci fingerprint.",
-      "Derived exact curvature-only degeneracies: flat I/VII_0 and constant-negative-curvature V/special VII_h.",
-      "Derived Class-A/B tilt-orbit invariants, Vandermonde moment rank, handedness information and repeated-eigenvalue azimuth degeneracies.",
-      "Added geometry-only diagnostic module and test suite.",
-      "Standalone canonical-fixture oracle: 35 tests passed; 1,100 randomized rotation/homothety cases passed.",
-      "Completed hypothetical independent referee literature audit; added report and claim-by-claim ledger.",
-      "Compared Ferrando-Saez 2020/2024 intrinsic homogeneous-geometry classification and 2026 Clifford Bianchi author preprint; downgraded novelty to HOLD.",
-      "Symbolically rechecked exact Ricci degeneracies with Wolfram Language under the declared Koszul convention.",
-      "Added Jacobi guards at structure/Ricci ingress and subluminal-domain validation for tilt recovery.",
-      "Added all-eleven proper-rotation/common-positive-homothety regressions and a dedicated Python 3.10-3.13 Bianchi workflow.",
-      "Dedicated Bianchi workflow passed on Python 3.10, 3.11, 3.12 and 3.13 at exact HEAD effb46279cbc69138c9e72503a1a86a35013ed4e; 49 tests and compileall passed on each.",
-      "Added general vector/tensor rotational invariant theory literature (Yehorchenko 2018; Shariff 2019/2021/2023) and further downgraded generic invariant novelty."
+      "Derived the Class-A fixed-S momentum map and exact common-trace n -> n+cI kernel; generic Jacobian rank 2.",
+      "Derived the canonical Class-B fixed-S momentum map and determinant; generic rank 3 away from the determinant-zero stratum.",
+      "Derived exact tilt inversion from the normal-frame momentum constraint and perfect-fluid enthalpy.",
+      "Constructed a Bianchi II/IX instantaneous matched pair with equal momentum flux and normal-frame tilt but different intrinsic 3-Ricci spectra.",
+      "Reused Loop D ADM momentum constraint, Loop C local optical response, R48 frame/epoch contract and existing HTT five-output semantics.",
+      "Separated intrinsic 3-Ricci from spacetime Ricci focusing and recorded the local optical-order caveat.",
+      "Retained flat I/special VII0 and open V/special VIIh controls only at their isotropic FLRW local-metric embeddings.",
+      "Executed a 21D correlated kinematic mock plus idealized 3D curvature oracle: 30,000 label/prior-predictive replications and 12,000 shared posterior draws.",
+      "Derived x,Q,Pi,F,G_F from one sample-identified posterior with cross-window covariance and same-pipeline matched zero-tilt null.",
+      "Verified binary Gaussian LLR target preservation, randomized-rank SBC and nuisance projection.",
+      "Added mock runner and targeted unit tests."
     ],
     "limitations": [
-      "Exact repository import/pytest NOT_RUN; standalone tests used source-derived canonical fixtures.",
-      "No tilted Einstein-fluid evolution or momentum/Hamiltonian constraint solve.",
-      "No all-type observed family identification, CMB transfer, likelihood or posterior.",
-      "Novelty priority is provisional pending independent metric-Lie-algebra equivalence and invariant-theory review.",
-      "New targeted GitHub Actions workflow is pending; no local exact-head runtime was available.",
-      "Existing PR04 full fast-regression tier fails at collection because optional cobaya and astropy dependencies are absent; this is not a Bianchi test assertion failure, but the global gate is not PASS.",
-      "2026 Clifford preprint full-text files are restricted; overlap assessment uses official DOI metadata and abstract only.",
-      "Orientation-reversing O(3) transformation of n and tilt pseudoscalars remains an explicit proof obligation.",
-      "The broad PR04 fast-regression matrix still fails at pytest collection on four missing Cobaya and three missing Astropy test modules; the theory/property and architecture gates pass.",
-      "Complete orbit separation for constrained Bianchi (a,n,v) data and O(3) orientation transformations remain unproved."
+      "The curvature-eigenvalue sensor is idealized; no source-bound real observation operator exists.",
+      "Count and Gaia-E1-like response coefficients are mock calibrations, not survey calibrations.",
+      "G_F uses identity mock transport, not physical redshift evolution.",
+      "Exact repository checkout tests were NOT_RUN because the connected local developer device is offline; hosted CI remains the gate.",
+      "The selected II/IX pair and binary Gaussian oracle do not establish all-type identifiability or observed Bianchi detection.",
+      "Prior art prevents broad novelty or first-ever claims."
     ]
   },
   "physical_state": {
@@ -839,7 +832,7 @@
     {
       "id": "R48-T21",
       "title": "Stratum-wise tilt-orbit completeness and O(3) transformation proof",
-      "status": "PENDING",
+      "status": "DEFERRED_SCOPE",
       "loop": "G6_orbit_invariant_proof",
       "depends_on": [
         "R48-T15",
@@ -857,7 +850,86 @@
         "Derive n and all pseudoscalar transformations under improper O(3), respecting epsilon dualization",
         "Compare constrained (a,n,v) orbit problem with Yehorchenko 2018 and Shariff 2019/2021/2023; do not claim generic invariant-theory novelty"
       ],
-      "evidence": "Analytic proof obligation; no physical parity claim or complete invariant-basis claim before passing."
+      "evidence": "Analytic proof obligation; no physical parity claim or complete invariant-basis claim before passing.",
+      "hold_reason": " Deferred: complete SO(3)/O(3) orbit classification is a separate proof, not needed for the current constraint-to-observable identifiability question."
+    },
+    {
+      "id": "R48-T22",
+      "title": "Bianchi constraint-to-observable identifiability and HTT five-view mock",
+      "status": "PASS_SCOPED",
+      "loop": "G7_algebra_to_observation_identifiability",
+      "depends_on": [
+        "R48-T13",
+        "R48-T14",
+        "R48-T15",
+        "R48-T20"
+      ],
+      "outputs": [
+        "BIANCHI_OBSERVABILITY_FIVEVAR_METHODS_KO.md",
+        "BIANCHI_FIVEVAR_MOCK_SPEC.json",
+        "BIANCHI_FIVEVAR_MOCK_REPORT.json",
+        "BIANCHI_FIVEVAR_CLAIM_LEDGER.json",
+        "scripts/r48/bianchi_fivevar_identifiability_mock.py",
+        "tests/r48/test_bianchi_fivevar_identifiability_mock.py"
+      ],
+      "acceptance": [
+        "Derive Class-A/B momentum-flux maps and rank strata at fixed normal-frame STF shear.",
+        "Show an exact cross-label pair with equal kinematic response and separate idealized curvature oracle.",
+        "Keep intrinsic 3-Ricci distinct from spacetime optical focusing.",
+        "Generate x,Q,Pi,F,G_F from one shared posterior identity with full covariance and matched null.",
+        "Report target-specific posterior KL and calibrated randomized-rank SBC.",
+        "No real-data, physical-transfer or global-sufficiency claim."
+      ],
+      "completion_record": {
+        "completed_at": "2026-11-09",
+        "disposition": "PASS_SCOPED_SYNTHETIC_ORACLE_ONLY",
+        "local_validation": {
+          "environment": "Python 3.13.5 / NumPy 2.3.5 scratch package",
+          "tests": 5,
+          "status": "PASS",
+          "compileall": "PASS",
+          "exact_repository_checkout": "NOT_RUN"
+        },
+        "experiment": {
+          "seed": 20261109,
+          "replications": 30000,
+          "posterior_draws": 12000,
+          "matched_null_data_realizations": 512,
+          "mean_mutual_information_label_nats": 0.47891895825987596,
+          "map_accuracy": 0.9122,
+          "randomized_rank_sbc_chi2": 8.757333333333333,
+          "randomized_rank_sbc_p": 0.45996942277997255,
+          "target_kl_full": 0,
+          "target_kl_no_geometry": 0.47891895825987596
+        },
+        "limitations": [
+          "idealized curvature oracle",
+          "synthetic response scales",
+          "identity mock G_F transport",
+          "real observation operator unavailable"
+        ]
+      }
+    },
+    {
+      "id": "R48-T23",
+      "title": "Independent adversarial review and exact-head validation of the Bianchi-to-HTT observability mock",
+      "status": "PENDING",
+      "loop": "G8_independent_observability_review",
+      "depends_on": [
+        "R48-T22"
+      ],
+      "outputs": [
+        "INDEPENDENT_BIANCHI_HTT_OBSERVABILITY_REVIEW_KO.md",
+        "BIANCHI_OBSERVABILITY_SENSITIVITY_REPORT.json",
+        "REPOSITORY_BIANCHI_FIVEVAR_TEST_RECEIPT.json"
+      ],
+      "acceptance": [
+        "Run exact-head pytest and compileall with versions, hashes and receipts.",
+        "Review Class-A/B maps, tilt inversion, frame arrows, optical order, LLR sufficiency and target KL.",
+        "Run bounded sensitivity sweep over noise, enthalpy, shear, covariance, prior and nuisance alignment.",
+        "Verify shared sample identity and no pseudo-likelihood multiplication.",
+        "No physical Bianchi transfer, solver or observed-data inference."
+      ]
     }
   ],
   "stop_rules": [
@@ -878,31 +950,11 @@
     "Do not merge while broad PR04 fast-regression remains failed or while PR is Draft unless separately authorized."
   ],
   "restart_pointer": {
-    "next_task": "R48-T21",
-    "precondition": "Use verified R48 HEAD effb46279cbc69138c9e72503a1a86a35013ed4e; targeted Bianchi CI run 42599886057 passed all four Python versions. Broad PR04 fast regression remains blocked by optional dependency collection.",
-    "next_work": "Derive the constrained Bianchi tilt-orbit stabilizer classification and the induced O(3) transformation laws; compare with general tensor/vector invariant bases.",
-    "scope_lock": "No Einstein-fluid evolution, Boltzmann/LOS/CMB transfer, Cobaya or observational inference.",
-    "local_agent_prompt": "LOCAL_AGENT_RESTART_PROMPT_KO.md"
+    "next_task": "R48-T23",
+    "precondition": "Use latest branch HEAD after R48-T22. Exact local checkout validation is NOT_RUN because the connected developer device was offline. Hosted GitHub Actions is the repository gate.",
+    "next_work": "Run exact-head pytest and compileall, independent adversarial math review, and one bounded nuisance/noise/enthalpy sensitivity sweep.",
+    "scope_lock": "Algebraic Bianchi constraint-to-observable identifiability and HTT five-view posterior only; no solver, Boltzmann/LOS/CMB transfer, Cobaya or real-data inference.",
+    "local_agent_prompt": "LOCAL_AGENT_RESTART_PROMPT_R48_T23_KO.md"
   },
-  "active_scope": {
-    "title": "Tilt-aware geometry-only Bianchi type similarity and identifiability atlas",
-    "allowed": [
-      "11-type (a,n,C) algebra classification",
-      "SO(3) and common positive homothety quotient",
-      "left-invariant spatial Ricci curvature",
-      "normal-frame matter-tilt orbit moments",
-      "rank/condition/degeneracy analysis",
-      "Jacobi identity validation for C and (a,n) ingress",
-      "targeted all-type geometry regression"
-    ],
-    "prohibited": [
-      "Boltzmann solver",
-      "line-of-sight",
-      "CMB spectrum or polarization transfer",
-      "Cobaya/MCMC",
-      "observational family claims",
-      "tilted Einstein-fluid evolution/constraint completion",
-      "physical parity-odd observable claims without O(3) derivation"
-    ]
-  }
+  "active_scope": "R48-T22/T23: algebraic Bianchi constraint-to-observable identifiability and HTT five-view posterior compression. Solver and real-observation work remain out of scope."
 }

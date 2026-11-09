@@ -1,4 +1,4 @@
-name: Bianchi similarity targeted regression
+name: Bianchi geometry and observability targeted regression
 
 on:
   pull_request:
@@ -7,6 +7,8 @@ on:
       - "htt/bass/background/bianchi_types.py"
       - "htt/bass/diagnostics/**"
       - "htt/pyproject.toml"
+      - "scripts/r48/**"
+      - "tests/r48/**"
   push:
     branches:
       - research/r48-tensorized-observational-convergence-20261109
@@ -34,7 +36,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e "./htt[dev]"
-      - name: Run targeted Bianchi geometry tests
-        run: PYTHONPATH=htt pytest -q htt/bass/diagnostics/test_bianchi_similarity.py
+      - name: Run targeted Bianchi geometry and observability tests
+        run: PYTHONPATH=htt:. pytest -q htt/bass/diagnostics/test_bianchi_similarity.py tests/r48/test_bianchi_fivevar_identifiability_mock.py
       - name: Compile BASS diagnostics
-        run: PYTHONPATH=htt python -m compileall -q htt/bass/diagnostics
+        run: PYTHONPATH=htt:. python -m compileall -q htt/bass/diagnostics scripts/r48 tests/r48
