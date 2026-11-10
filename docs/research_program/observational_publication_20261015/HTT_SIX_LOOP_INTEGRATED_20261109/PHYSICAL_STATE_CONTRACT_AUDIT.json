@@ -1,0 +1,190 @@
+{
+  "schema": "htt.six_loop_task_receipt/1",
+  "task_id": "CORE-03",
+  "status": "PASS_SCOPED",
+  "status_scope": "Read-only static audit of source at one exact head plus synthetic numerical oracle of repository closure/Gram functions. NO production change. Findings are open defects/UNAVAILABLE items, not repairs. Not an observational or calibration result.",
+  "as_of_date": "2026-11-10",
+  "repo": "cosmosapjw-quantum/htt_base",
+  "audited_head_sha": "514637354e08350f540180ce9d94e5c616498526",
+  "audited_tree_note": "audited source files are byte-identical to R48 head 0052c10a5fa7a1fa1fb757bc82547879fdc6d5fc (only the CORE-00 receipt and one DAG status line differ)",
+  "branch": "research/htt-six-loop-core00-20261109",
+  "tests_run": "NONE (pytest/compile are not part of CORE-03); pass criterion = acceptance items answered from source + oracle",
+  "acceptance": {
+    "A1_17D_chart_and_STF_Gram": {
+      "chart_layout": "CONFIRMED_BY_SOURCE_READ",
+      "layout": "[0:5]=STF5 Cartesian (Sxx,Syy,Sxy,Sxz,Syz), Szz=-Sxx-Syy; [5:8]=omega/H; [8:11]=A/(cH); [11:14]=beta_RM; [14:17]=beta_MO",
+      "sites": [
+        "htt/htt/htt/infer/tensor_joint_multiprobe_likelihood.py:params_to_kinematic_model (th[0:5],[5:8],[8:11],[11:14],[14:17])",
+        "htt/htt/htt/infer/cobaya_joint_five_probe.py:logp (theta_K[0..16] from named params, same order)",
+        "htt/src/common/source_bound_planck_lowell_operator.py:evaluate_model (docstring + slices 0:5, 5:8, 11:14, 14:17)"
+      ],
+      "G_STF5_definition": "htt/src/common/stf_metric_bridge.py:50-56 equals the contract matrix",
+      "G_STF5_numerical_check": "NUMERICALLY_CHECKED: max |v^T G v - tr(S^2)| = 1.07e-14 over 1000 random 5-vectors",
+      "gram_whitening_in_identifiability": "r39_identifiability.analyze_r39_identifiability has use_gram_whitening (default True); called with True at tensor_five_variable_inference.py:563,578. Whitening body NOT read => NOT_VERIFIED",
+      "violations_found": [
+        {
+          "id": "GRAM-1",
+          "where": "htt/htt/htt/infer/tensor_five_variable_inference.py:628",
+          "what": "sigma_frobenius = np.linalg.norm(mcmc_result.mean[0:5]) is the component-Euclidean norm of the STF5 chart, labeled frobenius. For v=(1,1,0,0,0): Euclidean 1.4142 vs Gram 2.4495. Contract forbids component Euclidean norm.",
+          "downstream": "line 645 key sigma_frobenius_upper_bound; line 657 compares with literal 1e-4 (no derivation)",
+          "class": "IMPLEMENTATION"
+        },
+        {
+          "id": "GRAM-2",
+          "where": "htt/htt/htt/infer/tensor_five_variable_inference.py:569",
+          "what": "shear_direction = th_fid[:5]/np.linalg.norm(th_fid[:5]) (Euclidean) builds the scalar x_C ablation; direction is not Gram-unit",
+          "class": "IMPLEMENTATION"
+        },
+        {
+          "id": "GRAM-3",
+          "where": "htt/src/common/cobaya_adapters/theory.py:83",
+          "what": "sigma_shear_amp = np.linalg.norm(stf); chart of stf NOT checked => UNRESOLVED",
+          "class": "UNKNOWN"
+        }
+      ]
+    },
+    "A2_velocity_closure_call_sites_and_first_order_leakage": {
+      "kernel": "htt/src/common/relativistic_velocity_closure.py:225 compose_velocities_sr",
+      "kernel_numerical_check": {
+        "evidence_tag": "NUMERICALLY_CHECKED",
+        "vs_independent_4x4_Lorentz_boost_oracle_2000_random_pairs_beta_up_to_0.9": "max abs err 5.55e-16",
+        "cosmological_scale_pair": "||exact - (beta_RM+beta_MO)|| = 1.6044e-9, relative 8.33e-7 (matches R48-T1 audit)",
+        "zero_limits": "compose(0,b)==b and compose(a,0)==a exactly",
+        "threshold_|beta_RM|^2=1e-15": "no discontinuity beyond the true change in beta_RM; oracle error below threshold 1.7e-16",
+        "exact_branch_round_trip": "compose_sr(beta_RM, compose_velocities(beta_RO,beta_RM)) == beta_RO, max abs err 8.9e-16"
+      },
+      "exact_call_sites": [
+        "tensor_joint_multiprobe_likelihood.py:133 and :895",
+        "cobaya_joint_five_probe.py:172 (beta_highz = compose_sr(beta_RM, beta_MO))",
+        "full_observable_x_bundle.py:120 (only when BOTH boosts non-zero)",
+        "source_bound_planck_lowell_operator.py:137",
+        "kinematic_response.py:216 (factory) and exact branch :165-167 (opt-in)"
+      ],
+      "not_traced": [
+        "source_bound_likelihoods.py: import at line 32, call sites not read",
+        "r39_identifiability.py: import at line 22, usage not read"
+      ],
+      "first_order_leakage_findings": [
+        {
+          "id": "FO-1",
+          "where": "htt/src/common/kinematic_response.py:148,165-171",
+          "what": "from_parameters defaults exact_composition=False => beta_MO = beta_RO - beta_RM (first order). Residual 1.6044e-9 at tilt scale. Non-test callers: none found outside tests/r38 (latent default).",
+          "class": "IMPLEMENTATION",
+          "severity": "LATENT"
+        },
+        {
+          "id": "FO-2",
+          "where": "htt/src/common/r39_identifiability.py:185-188",
+          "what": "functional beta_RO_i gradient g[11+i]=g[14+i]=1 (first-order linear closure) in functional identifiability; exact composition Jacobian differs at O(beta)~1e-3 relative. Valid only as first order about theta=0.",
+          "class": "THEORY/IMPLEMENTATION",
+          "severity": "SCOPE-LIMIT"
+        },
+        {
+          "id": "FO-3",
+          "where": "scripts/r39/run_r39_identifiability_analysis.py:53; scripts/r39/run_r39_joint_mcmc.py:47",
+          "what": "b_ro = b_rm + b_mo (vector addition) in historical R39 scripts",
+          "class": "IMPLEMENTATION",
+          "severity": "HISTORICAL"
+        },
+        {
+          "id": "FO-4",
+          "where": "scripts/r43/verify_core_theorems.py:51; scripts/r44/run_bayes_factor_design_mock.py:352",
+          "what": "linear beta_RM+beta_MO in synthetic theorem mocks; acceptable only as labelled SYNTHETIC first-order models (not read in full)",
+          "class": "SCOPE-LIMIT",
+          "severity": "INFO"
+        },
+        {
+          "id": "FO-5",
+          "where": "htt/src/common/kinematical_functionals.py:612; joint_anisotropy_state_v1.py:132",
+          "what": "first-order view explicitly typed CONDITIONAL_FIRST_ORDER with forbidden-use list; no leakage",
+          "class": "NONE",
+          "severity": "OK"
+        },
+        {
+          "id": "FO-6",
+          "where": "htt/src/common/full_observable_x_bundle.py:117-122",
+          "what": "if either boost is exactly zero the code uses model.state.beta_RO instead of compose_sr. params_to_kinematic_model builds beta_RO via compose_sr and compose_sr(0,b)==b exactly, so values agree there; no assertion guards a model built another way",
+          "class": "IMPLEMENTATION",
+          "severity": "LATENT"
+        }
+      ],
+      "wigner_rotation": {
+        "finding": "NOT_IMPLEMENTED_IN_PRODUCTION_PATH",
+        "detail": "compose_velocities docstring (kinematic_response.py:51) says no spatial/Wigner rotation is applied; git grep for wigner in production htt/ python found no rotation of vector/tensor components or covariance after composition. Contract section 2 requires it.",
+        "magnitude": "NOT computed here",
+        "class": "THEORY/IMPLEMENTATION"
+      },
+      "frame_arrow_conflict_between_likelihood_paths": {
+        "finding": "UNRESOLVED_CONFLICT_PRESERVED",
+        "detail": "cobaya_joint_five_probe.py:172-176 feeds high-z count dipoles with compose(beta_RM,beta_MO); tensor_joint_multiprobe_likelihood.py predict (Quaia ~569, NVSS ~629) and full_observable_x_bundle.py count carriers use beta_MO only. The paths disagree on which congruence the count dipoles respond to.",
+        "class": "THEORY"
+      }
+    },
+    "A3_response_constants_trace": {
+      "rule": "Every constant must be derived, calibrated, or typed nuisance/mock; otherwise UNAVAILABLE.",
+      "table": [
+        {"const": "NVSS EB factor 3.6625", "where": "full_observable_x_bundle.py:~150", "trace": "arithmetic 2+0.95*1.75 correct; x=0.95, alpha=0.75 have no source in repo", "status": "UNAVAILABLE"},
+        {"const": "Quaia EB factor 3.3200", "where": "full_observable_x_bundle.py:~151", "trace": "arithmetic 2+0.88*1.5 correct; x, alpha unsourced here", "status": "UNAVAILABLE"},
+        {"const": "NVSS C_EB 3.75", "where": "source_bound_nvss_operator.py:162 (overridable at :65 from data C_EB)", "trace": "comment x~1.0, alpha~0.75; unsourced", "status": "UNAVAILABLE"},
+        {"const": "Quaia C_EB (x from histogram slope, alpha=0.50)", "where": "source_bound_quaia_operator.py:~95-104", "trace": "x measured by log10-count slope over G in [19,20] using end bins only; alpha assumed; no completeness/selection validation", "status": "PARTIAL_SOURCE_DERIVED_UNVALIDATED"},
+        {"const": "count factors 3.50 / 3.30 / 3.50 / 3.50", "where": "tensor_joint_multiprobe_likelihood.py:569,570,629,630; source_bound_likelihoods.py:243,244,487,488", "trace": "source_bound_likelihoods.py:241 cites COUNT_DIPOLE_RESULT.json effective_kinematic_factor; JSON exists in tree (lines 17,27 = 3.5), provenance not read; 3.30 has no stated origin", "status": "UNAVAILABLE (3.5: file present, provenance unread)"},
+        {"const": "EB factor inconsistency", "where": "NVSS 3.6625 vs 3.50 vs 3.75; Quaia 3.32 vs 3.50 vs 3.30", "trace": "three code paths use different factors for one observable", "status": "CONFLICT_PRESERVED"},
+        {"const": "Gaia glide scale 0.92", "where": "full_observable_x_bundle.py:~160; tensor_joint:680; source_bound_likelihoods.py:285,493", "trace": "no derivation found; H0_MAS_YR=0.01476 is derived for H0=70 while the Cobaya default is H0=73.4", "status": "UNAVAILABLE"},
+        {"const": "Gaia shear scale 0.18", "where": "same files; tensor_joint:682; source_bound_likelihoods.py:289,495", "trace": "no derivation found", "status": "UNAVAILABLE"},
+        {"const": "Gaia B1 prediction", "where": "tensor_joint:681 pred[3:6]=omega_A; full_observable_x_bundle.py:~164 uses b1_axial_vector", "trace": "tensor_joint maps B1=omega with unit scale and no ICRF-spin nuisance; ledger CL-011: B1 is not vorticity without an ICRF spin tie", "status": "CONFLICT_WITH_CONTRACT"},
+        {"const": "tau 0.054 as low-ell multiplier", "where": "tensor_joint_multiprobe_likelihood.py:491-495", "trace": "reionization optical depth used as a transfer factor for STF5/A/omega; no derivation", "status": "UNAVAILABLE"},
+        {"const": "pol_factor=(TAU_REIO/10)*sqrt(4pi/15); shear_scale=TAU_REIO*T_CMB*1e-3", "where": "source_bound_planck_lowell_operator.py:~150-165", "trace": "comment-only motivation; no transfer-function source; 1e-3 unexplained", "status": "UNAVAILABLE"},
+        {"const": "A-term factor 1e-3", "where": "tensor_joint_multiprobe_likelihood.py:760,818", "trace": "dipole_acc=(n.A)*1e-3, no derivation", "status": "UNAVAILABLE"},
+        {"const": "q0 = 0.5*Omega_m - 0.7", "where": "tensor_joint_multiprobe_likelihood.py:752", "trace": "flat LCDM gives q0=1.5*Omega_m-1; written form unexplained", "status": "UNAVAILABLE (suspect)"},
+        {"const": "Quaia LSS cov fraction 0.35*min-eig; ratio 755850/1295502", "where": "tensor_joint_multiprobe_likelihood.py:550-552", "trace": "ad-hoc shot-noise/LSS split that builds the cross block", "status": "UNAVAILABLE"},
+        {"const": "dipole data literals amp_20p5=0.0212 (l,b)=(255.4,37.1); RACS amp_r=0.018 sig_r=0.004 (245,35)", "where": "tensor_joint_multiprobe_likelihood.py:540-542,609-614", "trace": "data typed into code, not read from a hashed source file", "status": "SOURCE_UNBOUND"},
+        {"const": "G_F transport factor", "where": "htt/src/common/htt_five_variable_state.py:77,345,551", "trace": "default PHYSICAL_EXPANSION_TRANSPORT -> 1.0; LINEAR_OPTICAL_EXPANSION -> 1/(1+z_mid); neither tied to a Jacobi/optical derivation", "status": "UNAVAILABLE as physical transport"},
+        {"const": "shear budget threshold 1e-4", "where": "tensor_five_variable_inference.py:657", "trace": "literal, no derivation", "status": "UNAVAILABLE"},
+        {"const": "H0_MAS_YR 0.01476", "where": "source_bound_gaia_vsh_operator.py:36-40", "trace": "arithmetic consistent with H0=70 km/s/Mpc", "status": "DERIVED_FOR_FIXED_H0"}
+      ],
+      "doc_claim_contradiction": "full_observable_x_bundle.py docstring says it eliminates ad-hoc uncalibrated response factors; the same function contains literal 3.6625/3.3200/0.92/0.18 with no source. A docstring is not evidence."
+    },
+    "A4_no_production_changes": {
+      "result": "PASS",
+      "evidence": "files added/edited by this task are only in HTT_SIX_LOOP_INTEGRATED_20261109/ (this JSON, CORE03_closure_gram_oracle.py, one DAG status line)"
+    }
+  },
+  "parallel_implementation_note": "Two likelihood stacks exist: (a) htt/htt/htt/infer/tensor_joint_multiprobe_likelihood.py (inline operators, typed-in data) and (b) cobaya_joint_five_probe.py + htt/src/common/source_bound_*_operator.py (file-bound operators). They differ in constants and frame arrows. CORE-05 must not assume they are equivalent.",
+  "oracle": {
+    "file": "docs/research_program/observational_publication_20261015/HTT_SIX_LOOP_INTEGRATED_20261109/CORE03_closure_gram_oracle.py",
+    "sha256": "53cb66d8cb51b359a83b514d36f0c1a22357ebdcfb9642c59aff5655313ffcf2",
+    "command": "python3 -I CORE03_closure_gram_oracle.py",
+    "exit_code": 0,
+    "seed": 20261110,
+    "evidence_state": "NUMERICALLY_CHECKED_SYNTHETIC",
+    "software": {"python": "3.12.3", "numpy": "host-installed; version not recorded"},
+    "results": {
+      "sr_vs_lorentz_oracle_max_abs_err_2000_random": 5.551115123125783e-16,
+      "first_order_gap_norm_cosmo": 1.604400373191457e-09,
+      "rel_gap": 8.329631705724797e-07,
+      "oracle_err_cosmo": 4.336808689942018e-19,
+      "zero_rm_exact": true,
+      "zero_mo_exact": true,
+      "threshold_oracle_err_below": 1.6653345369377348e-16,
+      "roundtrip_exact_branch_max_abs_err": 8.881784197001252e-16,
+      "first_order_branch_closure_resid_norm": 1.6044003729716341e-09,
+      "gram_vs_trace_S2_max_err": 1.0658141036401503e-14,
+      "example_norm_euclid_vs_gram": [1.4142135623730951, 2.449489742783178]
+    },
+    "scope_note": "Checks repository functions against independent formulas. Says nothing about physical response constants or likelihood calibration."
+  },
+  "passed_failed_not_run": {
+    "passed": ["17D index layout consistent across three read sites", "G_STF5 equals tr(S^2) numerically", "compose_velocities_sr matches Lorentz-boost oracle", "no production edits"],
+    "failed": ["Gram-norm rule violated at tensor_five_variable_inference.py:628 and :569", "Wigner rotation absent from production path", "most response constants untraced (UNAVAILABLE)", "frame-arrow disagreement between two likelihood stacks"],
+    "not_run": ["pytest, compileall, DAG validators", "full read of source_bound_likelihoods.py and r39_identifiability.py bodies", "chart of stf at cobaya_adapters/theory.py:83", "provenance of COUNT_DIPOLE_RESULT.json factor 3.5", "independent read-only reviewer (no agent id)"],
+    "blocked": []
+  },
+  "failure_classes_present": ["IMPLEMENTATION", "THEORY", "PROVENANCE"],
+  "claim_ids_touched": ["CL-008", "CL-011"],
+  "claim_effect": "None promoted. Evidence supports keeping CL-008 QUARANTINED and CL-011 BLOCKED; ledger text not edited in this task.",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES",
+  "native_subagents": "NOT_RUN",
+  "independent_review": "NOT_RUN",
+  "next_task_id": "STAT-43",
+  "next_task_note": "DAG marks STAT-43..46 PASS_SCOPED_SYNTHETIC; the protocol calls for replay only if source identity differs. A decision on replay vs advancing to L1 is needed. GRAM-1/2 and the constants table feed the L1/L2/L3 operator specs."
+}
