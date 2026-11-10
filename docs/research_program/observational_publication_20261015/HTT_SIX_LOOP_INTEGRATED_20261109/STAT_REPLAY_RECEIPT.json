@@ -1,0 +1,94 @@
+{
+  "schema": "htt.six_loop_task_receipt/1",
+  "task_ids": ["STAT-43", "STAT-44", "STAT-45", "STAT-46"],
+  "status": "REPLAY_PARTIAL",
+  "status_scope": "Exact-head replay of the R43-R46 SYNTHETIC mocks. DAG statuses (PASS_SCOPED_SYNTHETIC) are NOT changed by this receipt. Nothing here is empirical.",
+  "as_of_date": "2026-11-10",
+  "repo": "cosmosapjw-quantum/htt_base",
+  "replayed_at_head_sha": "5c2d61f0c893a71227c6fbe7b68d06aa20c2a70c",
+  "source_files_identical_to_R48_head": "0052c10a5fa7a1fa1fb757bc82547879fdc6d5fc (no scripts/ or tests/ file touched by CORE-00/03)",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "pytest": "9.1.1",
+    "threads": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 for R44-R46 reruns",
+    "recorded_original_environment": "python 3.13.5, numpy 2.3.5, scipy 1.17.0, pytest 9.0.2 (from R44/R45/R46 run records). Environments differ."
+  },
+  "blob_identity": {
+    "scripts/r45/run_model_posterior_information_loss.py": "a2d7afbce97cfcc04fb6d5543537a916c3ae8bab == recorded driver blob",
+    "tests/r45/test_model_posterior_information_loss.py": "9564482e47e4d13a7a6826ff2be6d6d233b75bf3 == recorded test blob",
+    "scripts/r46/run_target_posterior_compression.py": "f519e2cab14305c298fcd004583f15e0c0abdf06 == recorded driver blob",
+    "tests/r46/test_target_posterior_compression.py": "0dbfb405e1d8012aa93e4bd63a7df4f42788308c == recorded test blob",
+    "scripts/r44/run_bayes_factor_design_mock.py": "76046b16060c2199f45b8f82a35e92980137e5c2 (recorded blob not found in the R44 run record; identity NOT_COMPARED)",
+    "scripts/r43/verify_core_theorems.py": "d4879097e08db7224edc93aaa3e0d7aee52ad602",
+    "tests/r43/test_core_theorems.py": "87d8bd26f21304caaef2bbb151de4a1645efb9fb"
+  },
+  "commands_and_exit_codes": [
+    {"cmd": "pytest -q -p no:cacheprovider tests/r43 tests/r44 tests/r45 tests/r46", "exit": 0, "result": "19 passed (R43:3, R44:7, R45:5, R46:4)"},
+    {"cmd": "python -I scripts/r43/verify_core_theorems.py", "exit": 0},
+    {"cmd": "scripts/r44/run_bayes_factor_design_mock.py --seed 20261109 --replications 500 --design-replications 3000 (exact args from R44 run record)", "exit": 0},
+    {"cmd": "scripts/r45/run_model_posterior_information_loss.py --seed 20261109 --replications 60000 (exact args from R45 run record)", "exit": 0},
+    {"cmd": "scripts/r46/run_target_posterior_compression.py --seed 20261109 --replications 40000 (exact args from R46 run record)", "exit": 0},
+    {"cmd": "R44 repeated with identical args and compared with cmp", "exit": 0, "result": "byte identical within this environment"}
+  ],
+  "first_attempt_note": "A first R44-R46 run used the script default seed/replication arguments and produced non-comparable output; it was discarded and the exact recorded arguments were used. Recorded for transparency.",
+  "output_sha256": {
+    "r43_verifier_stdout.json": "6341536d00b3945b3176968424fe84779449e8672ea98ed3255a88c6ab6e291e",
+    "r44_replay.json": "04897e8139142af30c65fe395c2713a08e048880fda998bcd78cc7ad4d7b262b",
+    "r45_replay.json": "548eda37c428a3777b2f8c36d723846430854ec69ef78172c599ad5388842656",
+    "r46_replay.json": "79bf9818f6aedfe17f11e63c0aef86361ab388027e8ad87c2bb0990cab6cb67a"
+  },
+  "raw_replay_outputs": "kept in a local scratch directory, not committed; hashes above bind them",
+  "per_task": {
+    "STAT-43_R43": {
+      "replay": "PARTIAL",
+      "matched": "Compact verifier reproduces committed structural numbers: ranks/nullities 11/6, 17/0, 8/9; directional-Hubble full-sky rank 9 cond 1.7323473101006144 (committed ...148), hemisphere rank 9 cond 18.28025914907 (committed ...897): agreement ~4e-16 relative.",
+      "not_matched": "min eigenvalue (raw - scalar-compressed) is 134.466 in the verifier vs 0.5786 in the committed summary: different normalisation/noise setup; the verifier states it is not a full benchmark rerun.",
+      "not_replayable": [
+        "The committed MOCK_EXPERIMENT_RESULTS_SUMMARY.json (Pi null calibration, SBC, model comparison one-seed, F support, G_F depth path) was produced by scripts/r43/run_identifiability_mock.py (named in the R43 report). That script does not exist at this head, on the R43 branch ref, or in any commit found by git log --all --diff-filter=A.",
+        "The summary records pytest '9 passed'; only 3 R43 tests exist at this head."
+      ],
+      "failure_class": "PROVENANCE / INPUT_MISSING",
+      "claim": "R43 structural rank/nullity numbers replay; the committed SBC/Pi/F/G_F numbers are UNREPLAYED and have no generator in the tree."
+    },
+    "STAT-44_R44": {
+      "replay": "PASS_WITH_NUMERICAL_DEVIATION",
+      "matched": "117 numeric leaves compared; 102 equal to 1e-12 relative, including the exact-BF-sufficiency and counterexample fields.",
+      "deviation": "15 leaves differ, all in the D-optimal comparison design (shell_counts, anchor_count, logdet_Ieff, target_variance/sigma, analytic_sd_delta) and the derived relative c-variance reduction: max relative change 3.2e-2 in a shell count; target variance changed 7.4e-4 relative; c-vs-D variance reduction 0.14095 (committed) vs 0.14158 (replay).",
+      "interpretation": "Same-seed repeat is byte-identical here, so the deviation is environment-dependent (optimizer/library version: python 3.12.3/numpy 2.4.2 vs recorded 3.13.5/2.3.5), not randomness. This attribution is inferred, not isolated by testing the recorded environment. No tolerance for the optimizer output was declared by R44.",
+      "failure_class": "RUNTIME_ENVIRONMENT / NUMERICAL",
+      "claim": "R44 theorem-level results replay; the D-optimal allocation numbers are environment-sensitive at the percent level and must not be quoted to more than that."
+    },
+    "STAT-45_R45": {
+      "replay": "PASS_SEMANTIC_SCHEMA_MISMATCH",
+      "matched": "25 of 26 committed float metrics (>1e-6) found with identical value (1e-9 relative) in the replay output.",
+      "unmatched": "common_covariance_K4_one_score_projection/combined_mcse_nats = 0.0008104101543771045 (not found in replay output).",
+      "schema_mismatch": "Driver at this head (blob identical to the recorded blob) emits a nested {experiments,...} JSON; the committed R45_MOCK_RESULTS.json has a different {metrics,wolfram_language_checks,verification,...} layout. The committed file is therefore not the raw driver output; a transformation/summary step is undocumented. wolfram_language_checks are not replayed.",
+      "failure_class": "PROVENANCE",
+      "claim": "R45 headline numbers replay from the recorded driver; the committed file's derivation chain is incomplete."
+    },
+    "STAT-46_R46": {
+      "replay": "PASS_SEMANTIC_SCHEMA_MISMATCH",
+      "matched": "10 of 11 numeric headline values found with matching values in the replay (rank 2; full-latent KL 6.6204; dropped-direction KL 0.680593; lossy-summary KL 7.52623; 2-D misaligned KL 0.201691 and its MCSE 0.00116192; analytic 0.202733; MMSE gaps 0.248438/0.25; anisotropic mean gap 0.39).",
+      "unverified": "exact_target_posterior_KL_nats 1.11e-16: the value-match hit was a coincidental leaf; the replay's own exact-target KL leaf was not individually compared. It is a floating-point-zero quantity.",
+      "schema_mismatch": "Same pattern as R45: committed R46_MOCK_RESULTS.json (headline/interpretation) vs driver output (experiments); transformation step undocumented. Wolfram checks not replayed.",
+      "failure_class": "PROVENANCE",
+      "claim": "R46 headline numbers replay from the recorded driver; derivation chain from driver output to the committed file is incomplete."
+    }
+  },
+  "not_run": [
+    "Wolfram Language checks cited by R45/R46 run records",
+    "compileall for scripts/r43-r46",
+    "SBC / Pi null calibration / F / G_F parts of the R43 committed summary (no generator)",
+    "Recorded-environment (python 3.13.5/numpy 2.3.5) rerun to isolate the R44 deviation",
+    "Independent read-only reviewer (no agent id)"
+  ],
+  "claims_touched": ["CL-001", "CL-002", "CL-003", "CL-004"],
+  "claim_effect": "No state change. CL-001..CL-004 remain PASS_SCOPED synthetic. Add caveats: CL-001 summary numbers beyond rank/nullity/Hubble geometry lack a generator at this head; CL-002 D-optimal design numbers are environment-sensitive.",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES",
+  "native_subagents": "NOT_RUN",
+  "independent_review": "NOT_RUN",
+  "next_task_id": "L1",
+  "next_task_note": "L1 depends on CORE-03, STAT-43, STAT-44 (all addressed). Carry-forward for L1: Gram/Wigner/constants findings from CORE-03; R47 Bianchi-I map is a conditional T-only response; Planck data/mask/beam sources not yet bound."
+}
