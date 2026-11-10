@@ -1,0 +1,22 @@
+{
+  "schema": "htt.l1_claim_ledger/1",
+  "task_id": "L1",
+  "as_of_date": "2026-11-10",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES",
+  "entries": [
+    {"id": "L1-C1", "claim": "Under homogeneous Bianchi I, comoving untilted emitters/observer, sharp isotropic last scattering and collisionless propagation, T(n)=a*T*[n^T exp(-2B*) n]^(-1/2) (g=a^2 exp(2B)).", "state": "DERIVED", "evidence": ["DERIVED", "NUMERICALLY_CHECKED"], "evidence_ref": "L1_DERIVATION_AND_TESTS.md sections 2,4", "limit": "synthetic checks restate the algebra; no observation involved; independent peer/CAS derivation of the geodesic step was not run (conserved p_i is a standard Killing-vector argument)"},
+    {"id": "L1-C2", "claim": "Small-B expansion T/Tbar-1 = u1-u2+3/2 u1^2+2/3 u3-3u1u2+5/2 u1^3+O(B^4); monopole -(2/15)trB^2+(4/315)trB^3.", "state": "CAS_CHECKED", "evidence": ["CAS_CHECKED", "NUMERICALLY_CHECKED"], "evidence_ref": "oracle: sympy series match; monopole residual scales eps^4", "limit": "trace-free B; temperature only"},
+    {"id": "L1-C3", "claim": "Map is even in n; at order k only even ell<=2k; rotation covariant.", "state": "NUMERICALLY_CHECKED", "evidence": ["NUMERICALLY_CHECKED"], "evidence_ref": "oracle parity/ell-scaling/rotation rows", "limit": "full-sky noiseless synthetic"},
+    {"id": "L1-C4", "claim": "HEALPix pixel-map C_l agrees with harmonic quadrature C_l, error falling as nside^-2.", "state": "NUMERICALLY_CHECKED", "evidence": ["NUMERICALLY_CHECKED"], "evidence_ref": "oracle pixel-vs-harmonic row", "limit": "no mask, beam, pixel window, noise"},
+    {"id": "L1-C5", "claim": "Bianchi I yields a physical E/B or T-E prediction.", "state": "UNAVAILABLE", "evidence": ["BLOCKED"], "limit": "no polarization transfer implemented; zero-filled E/B must not be used as a prediction"},
+    {"id": "L1-C6", "claim": "Source-bound Planck PR4/NPIPE operator exists.", "state": "BLOCKED", "evidence": ["BLOCKED"], "evidence_ref": "L1_SOURCE_RECEIPT.json absent.planck_npipe_pr4", "limit": "0 files; INPUT_MISSING"},
+    {"id": "L1-C7", "claim": "Six PR3 files (SMICA full/hm1/hm2, three masks) are byte-identified by SHA256.", "state": "SOURCE_BOUND_PARTIAL", "evidence": ["SOURCE_VERIFIED"], "evidence_ref": "L1_SOURCE_RECEIPT.json files", "limit": "hash from local bytes only; URL/retrieval time/FITS schema/beam not recorded; PR3 is a control lane, not PR4"},
+    {"id": "L1-C8", "claim": "Deterministic template likelihood and stochastic covariance/BipoSH likelihood are separate components that must not be summed without a single joint generative model.", "state": "DESIGN_SPEC", "evidence": ["CONJECTURAL"], "evidence_ref": "L1_SOURCE_OPERATOR_SPEC.json separation_rule", "limit": "design rule; no implementation or test"},
+    {"id": "L1-C9", "claim": "Existing repository low-ell CMB predictors (tau-based transfer factors) are physical Bianchi/boost operators.", "state": "UNAVAILABLE", "evidence": ["NOT_RUN"], "evidence_ref": "PHYSICAL_STATE_CONTRACT_AUDIT.json A3", "limit": "constants untraced; not derived from L1-C1"},
+    {"id": "L1-C10", "claim": "Bianchi-I morphology detected / family identified in Planck.", "state": "FORBIDDEN", "evidence": ["NOT_RUN"], "limit": "no data analysis, no calibrated null, no family-specific transfer"}
+  ],
+  "contradictions_preserved": [
+    "single free-model leads that the formula breaks under n->-n or non-commuting B were checked and rejected (see L1_DERIVATION_AND_TESTS.md section 5); the three-provider consensus did not complete"
+  ],
+  "next_gate": "bind PR4 NPIPE inputs or approve a PR3-only control lane; implement and test masked/beamed operator with injection-recovery"
+}
