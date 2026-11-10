@@ -1,0 +1,98 @@
+{
+  "schema": "htt.six_loop_task_receipt/1",
+  "task_id": "CORE-00",
+  "status": "PASS_SCOPED",
+  "status_scope": "Identity/worktree/PR-state preflight only. No scientific claim touched.",
+  "as_of_date": "2026-11-10",
+  "repo": "cosmosapjw-quantum/htt_base",
+  "remote_fetch": "https://github.com/cosmosapjw-quantum/htt_base.git",
+  "base_branch": "research/r48-tensorized-observational-convergence-20261109",
+  "base_head_sha": "0052c10a5fa7a1fa1fb757bc82547879fdc6d5fc",
+  "base_tree_sha": "7e347f992c7f76a02862a0b33cfd47e9e6db8f8a",
+  "child_branch": "research/htt-six-loop-core00-20261109",
+  "worktree": {
+    "kind": "isolated git worktree outside the Dropbox tree; detached at base_head_sha, then child branch created",
+    "status_at_check": "clean (0 tracked diffs, 0 staged, 0 untracked)"
+  },
+  "original_worktree_observation": {
+    "branch": "research/r42-fivevar-competitive-benchmark-20261108",
+    "head_sha": "b8c2d851b4db59d43cf5c0044c42a041b97c44c6",
+    "tree_sha": "65cd28e37774ebaa97aeee09290a8fc4db164193",
+    "tracked_changes": 0,
+    "untracked_entries": 317,
+    "action_taken": "none (no reset/clean/stash/checkout/stage); left untouched per dirty-tree policy",
+    "disposition": "branch mismatch + untracked user files => writes performed only in the isolated worktree, with user approval"
+  },
+  "pr_572": {
+    "state": "OPEN",
+    "isDraft": true,
+    "mergedAt": null,
+    "head_sha": "0052c10a5fa7a1fa1fb757bc82547879fdc6d5fc",
+    "base_ref": "research/r47-solverfree-morphology-likelihood-20261109",
+    "live_branch_ref_sha": "0052c10a5fa7a1fa1fb757bc82547879fdc6d5fc",
+    "pr_head_equals_live_branch_ref": true,
+    "r47_live_ref_sha": "aae07cb83b8899dd7495d550722068d8bcbf3bcb",
+    "r47_matches_reconciliation_snapshot": true,
+    "pr_updated_at": "2026-11-09T11:44:01Z"
+  },
+  "ancestry": {
+    "historical_anchor_7ea9826cf62988dc5405e9a88e905619071ae0f6_is_ancestor_of_head": true,
+    "package_commit_50160cbb1c0b33bd2704dfba9eaafad25cfcfcaf_is_ancestor_of_head": true,
+    "package_commit_a303e7082359e8cc4bc854f93e4ffb2098a9d526_is_ancestor_of_head": true
+  },
+  "package_files_blob_sha": {
+    "README.md": "b9ef8106473d4719b6b40c73c35caa7af05d4df9",
+    "INTEGRATED_SIX_LOOP_DAG.json": "635535c8a0a3d4378e2a189d4688ff3dec112c98",
+    "INTEGRATED_DEVELOPMENT_AND_VERIFICATION_SPEC_KO.md": "9208db065e2c48efb1304ad8898780d188c7e038",
+    "INTEGRATED_CLAIM_EVIDENCE_LEDGER.json": "dff20e897a6c2acd0a12e65f01ae7dd4fd5238aa",
+    "INTEGRATED_VERIFICATION_PROTOCOL.json": "fa4133a77bea54366a63d216a3d944312151d5ff",
+    "PR_BRANCH_RECONCILIATION.json": "4c6ef94bab3f4a8b7aa6e9add327b0b3993a3cac",
+    "INTEGRATED_LOCAL_AGENT_HANDOFF_PROMPT_KO.md": "ce0326c29a36851d7740142a11e523cfeb41abd5"
+  },
+  "exact_commands": [
+    "git fetch origin  (exit 0)",
+    "git status --short --branch; git branch --show-current; git rev-parse HEAD; git rev-parse HEAD^{tree}; git remote -v  (exit 0)",
+    "git ls-remote origin refs/heads/research/r48-tensorized-observational-convergence-20261109 refs/heads/research/r47-solverfree-morphology-likelihood-20261109  (exit 0)",
+    "gh pr view 572 --json state,isDraft,headRefOid,baseRefName,mergedAt,updatedAt  (exit 0)",
+    "git merge-base --is-ancestor <anchor | each package commit> HEAD  (exit 0 each)",
+    "git worktree add --detach <path> 0052c10a5fa7a1fa1fb757bc82547879fdc6d5fc  (exit 0)",
+    "git switch -c research/htt-six-loop-core00-20261109  (exit 0)"
+  ],
+  "software_versions": { "git": "2.43.0", "python": "3.12.3" },
+  "passed_failed_not_run": {
+    "passed": [
+      "remote identity",
+      "PR head equals live branch ref",
+      "PR open, draft, unmerged",
+      "7 package files present at head",
+      "package commits are ancestors of head",
+      "isolated worktree clean"
+    ],
+    "failed": [],
+    "not_run": [
+      "tests, compile and DAG validators (not part of CORE-00)",
+      "CI status readback",
+      "semantic review of the 425 files of PR #565 (out of scope)"
+    ],
+    "blocked": []
+  },
+  "failures_and_anomalies_preserved": [
+    {
+      "class": "RUNTIME_ENVIRONMENT",
+      "item": "post-checkout hook in the new worktree printed: python3 cannot open <external>/lean-shared/htt-lean-shared.py (ENOENT); 'HTT shared Lean: links were not updated'",
+      "impact": "none for CORE-00; shared Lean links absent in the isolated worktree"
+    },
+    {
+      "class": "AUTHORIZATION",
+      "item": "original worktree was on the r42 branch with untracked files at session start",
+      "impact": "writes redirected to an isolated worktree after explicit user approval"
+    }
+  ],
+  "unrelated_remote_branch_noted": "research/htt-six-loop-identifiability-20261106 exists on origin; no name collision with the child branch",
+  "claim_ids_touched": [],
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES",
+  "native_subagents": "NOT_RUN",
+  "independent_review": "NOT_RUN",
+  "next_task_id": "CORE-03",
+  "next_task_note": "CORE-01 and CORE-02 are retained as PASS_SCOPED historical metadata/selected-source audits per the DAG; not re-verified here."
+}
