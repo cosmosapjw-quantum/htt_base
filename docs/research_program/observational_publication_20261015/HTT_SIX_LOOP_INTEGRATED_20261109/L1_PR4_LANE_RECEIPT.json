@@ -1,0 +1,45 @@
+{
+  "schema": "htt.l1_pr4_lane_receipt/1",
+  "task_id": "L1",
+  "lane": "PR4_NPIPE_HALF_RING_NOISE_PROBE",
+  "as_of_date": "2026-11-11",
+  "status": "PROBE_DONE_NOISE_ONLY; PR4_NULL_NOT_FORMABLE",
+  "why_not_a_null": "Matched NPIPE simulations are on the NERSC global filesystem (account needed) and are UNAVAILABLE. The half-ring difference contains noise only and gives ONE realisation per frequency, so no distribution, no signal (CMB cosmic variance) and no coverage can be formed from it.",
+  "inputs": {
+    "maps": "NPIPE R4.00 HFI Single-frequency full-ringhalf-1/-2 at 100, 143, 217 GHz (nside 2048, NESTED, Galactic, K_CMB, PROCVER npipe6v20); hashes in DOWNLOAD_MANIFEST_20261110.json (group planck_npipe_pr4)",
+    "mask": "PR3 common Int TMASK applied to PR4 maps so the operator matches the PR3 lane; this is NOT the PR4/Hillipop mask (those masks are local but not used)",
+    "bad_pixels": "none flagged (fraction 0.0 at all three frequencies)"
+  },
+  "operator": {
+    "script": "L1_pr4_halfring_noise_probe.py",
+    "script_sha256": "f21ca1c86f9b33bfd680546eb1d3c6d4315af12d2fec04cda8f03700aeed0704",
+    "command": "python3 L1_pr4_halfring_noise_probe.py --raw <workdir/raw> --out L1_PR4_HALFRING_PROBE_RESULT.json",
+    "exit_code": 0,
+    "result_file": "L1_PR4_HALFRING_PROBE_RESULT.json",
+    "result_sha256": "8ea56613aaf842cd7bde5cc9a9891db5db663bf334e259f0c0cce54490ecbd21",
+    "elapsed_s": 180,
+    "versions": {"python": "3.12.3", "numpy": "2.4.2", "healpy": "1.19.0"},
+    "operator_steps": "D=(HR1-HR2)/2; nside 2048->16 mean-degrade over valid children; same f_sky 0.716 mask; monopole+dipole nuisance; OLS on 5 STF basis maps; B* in the Gram metric",
+    "not_in_operator": ["beam/transfer function", "foregrounds (D has none)", "signal", "PR4 mask"]
+  },
+  "results_noise_only": {
+    "pixel_rms_uK_at_nside16": {"100": 0.27, "143": 0.177, "217": 0.28},
+    "b_hat_gram_norm_single_realisation": {"100": 4.64e-08, "143": 1.83e-08, "217": 4.40e-08},
+    "white_noise_chi2_5dof": {"100": 71.9, "143": 20.5, "217": 56.8},
+    "interpretation": [
+      "Noise-only B* estimates are ~2e-8..5e-8 (Gram norm), about 3 orders of magnitude below the PR3 simulation null scatter (2.2e-5, dominated by CMB cosmic variance). At this resolution and mask the instrument noise is negligible next to the CMB signal variance.",
+      "The white-noise assumption fails: chi2 for 5 dof is 20-72 (expected ~5), i.e. chi2/5 = 4.1 (143), 11.4 (217), 14.4 (100): variance 4-14x and rms 2.0-3.8x larger than white-noise predictions. Any white-noise error bar would be too small by that factor; the noise in the fitted coefficients is correlated/scan-structured.",
+      "One realisation per frequency: these chi2 values are single draws and carry no uncertainty estimate here."
+    ],
+    "comparison_caveat": "PR3 (SMICA, FFP10 CMB+noise) and PR4 (HFI frequency maps, noise only) differ in release, processing and content; the comparison is only a magnitude check, not a consistency test."
+  },
+  "claims": [
+    {"id": "L1-PR4-1", "claim": "NPIPE R4.00 half-ring noise propagates to B* at the 1e-8 level (Gram norm) under the PR3-lane operator; negligible vs CMB cosmic variance at nside 16.", "state": "DATA_DRIVEN_NOISE_ONLY_SINGLE_REALISATION", "limit": "one draw per frequency; PR3 mask; no beam"},
+    {"id": "L1-PR4-2", "claim": "White-noise error bars are invalid for the 5 Bianchi coefficients on this operator.", "state": "NUMERICALLY_CHECKED_SINGLE_REALISATION", "limit": "chi2 5 dof 20-72; needs more realisations to quantify"},
+    {"id": "L1-PR4-3", "claim": "A calibrated PR4 null, coverage or detection statement can be made.", "state": "UNAVAILABLE", "limit": "no matched NPIPE simulations"}
+  ],
+  "next_gate": "Either obtain NERSC access for the NPIPE simulations, or define a declared hybrid null (synthetic Gaussian CMB from a stated C_ell + noise realisations from a validated noise model) and label it SYNTHETIC; read the NPIPE beam/transfer-function documentation before any beam-bound claim.",
+  "not_run": ["beam/transfer function", "PR4 mask", "multiple noise realisations", "foreground cleaning", "independent reviewer"],
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}
