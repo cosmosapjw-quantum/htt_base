@@ -1,0 +1,47 @@
+{
+  "schema": "htt.l3_scan_law_receipt/1",
+  "task_id": "L3",
+  "slice": "SCAN_LAW_PATTERN_TEMPLATE_AND_CATALOGUE_ELLIPSE_VALIDATION",
+  "as_of_date": "2026-11-12",
+  "task_status_unchanged": "PENDING (third slice; L3 acceptance not met)",
+  "status": "SLICE_DONE_STRUCTURAL",
+  "blinding_note": "No proper-motion values were read. Catalogue columns used: ra, dec, pmra_error, pmdec_error, pmra_pmdec_corr. Scan law: ra/dec/scan_angle of FOV1 and FOV2 and jd_time.",
+  "inputs": {
+    "scan_law": {
+      "file": "workdir/raw/gaia_scanning_law_20261110/FullGaiaMissionScanningLaw.zip", "bytes": 2490558311,
+      "sha256": "bff8ea8952b67f59bd3283b93131c918f6645411623761c0b4d45173a3c926e2", "retrieved_utc": "2026-11-10T12:39:07Z",
+      "url": "https://anonftp.cosmos.esa.int/pub/GAIA_PUBLIC_DATA/Gaia_General/GaiaScanningLaw/FullGaiaMissionScanningLaw.zip",
+      "content": "commanded_scan_law.csv.gz (2.49 GB), 10 s sampling, 34,504,372 rows, 2014-07-25 to 2025-06-30 (jd_time - 2455197.5 = 1666.4 .. 5660.0); the commanded attitude can differ from the realised one by up to ~30 arcsec (per the data description)"
+    },
+    "catalogue": {"file": "workdir/raw/observational_bundles/Gaia_CRF3_astrometry/gaia_crf3_astrometry_full.fits", "claimed_sha256_from_earlier_manifest": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0 (NOT recomputed)", "rows": 1614173}
+  },
+  "operator": {
+    "script": "L3_scan_law_template.py", "script_sha256": "c81f31f462d831e8fb35e5ca03673d45ea904c375079748e130933ba7bd1789e",
+    "commands": ["python3 L3_scan_law_template.py --zip <zip> --fits <fits> --out L3_SCAN_LAW_RESULT_FULLMISSION.json (run with the script version before the --jdmax option was added; the option does not change the unrestricted path)", "python3 L3_scan_law_template.py --zip <zip> --fits <fits> --jdmax 2704.0 --out L3_SCAN_LAW_RESULT_DR3WINDOW.json"],
+    "exit_codes": [0, 0], "elapsed_s": [60, 19], "versions": {"python": "3.12.3", "numpy": "2.4.2", "healpy": "1.19.0", "pandas": "host-installed; version not recorded"},
+    "results": {"full_mission": "L3_SCAN_LAW_RESULT_FULLMISSION.json sha256 edfd7fe0072f88b1603fa43a9ad9cc49f0ae15d57587b2f746a94c362a211115", "dr3_window": "L3_SCAN_LAW_RESULT_DR3WINDOW.json sha256 52ed3708bd3b733e3ed4ce94c8a6ff0b4079b055752ba5c93dfcded8baa761ba", "dr3_window_maps_npz_sha256_not_committed": "2d20756c88b35b22e04b9aef11dbbd4486cb00befe539aaa10eded3e464aeea5"},
+    "model": "per HEALPix pixel (nside 16) information tensor M = <u u^T>, u=(sin theta, cos theta) in (east,north) over FOV1+FOV2 transits; predicted sigma_alpha*/sigma_delta = sqrt(<cos^2>/<sin^2>), corr = -<sin cos>/sqrt(<sin^2><cos^2>)"
+  },
+  "results_structural": {
+    "dr3_window_jd_le_2704_8964532_rows": {
+      "axis_ratio_sigma_alpha_over_sigma_delta": {"pearson_pred_vs_catalogue": 0.872, "slope": 0.665, "pred_range": [0.570, 2.070], "catalogue_median_range": [0.610, 1.815]},
+      "correlation_pmra_pmdec": {"pearson_pred_vs_catalogue": 0.815, "slope": 0.795, "pred_range": [-0.604, 0.605], "catalogue_median_range": [-0.544, 0.558]},
+      "pixels_compared": 2761, "transits_per_pixel_median": 5741
+    },
+    "full_mission_34504372_rows": {"axis_ratio": {"pearson": 0.791, "slope": 0.688}, "correlation": {"pearson": 0.812, "slope": 0.871}},
+    "interpretation": [
+      "Sign and orientation conventions of the scan angle (0 = North, 90 = East) are confirmed: predictions correlate positively with the catalogue's own per-pixel error ellipses (r = 0.87 for the axis ratio and 0.81 for the pmra-pmdec correlation in the DR3 window).",
+      "Restricting the scan law to the DR3 interval improves the axis-ratio agreement (r 0.79 -> 0.87), consistent with the catalogue being built from the first 34 months; the full-mission law is therefore not the right template for DR3 quantities.",
+      "The slopes are below 1 (0.67 axis ratio, 0.80 correlation): the catalogue's ellipses are less anisotropic than the pure along-scan prediction. Not explained here (candidates: isotropic noise floor/excess noise, across-scan information, per-source scatter around the pixel median). The template therefore explains direction and sign of the error anisotropy (r^2 ~0.76 and ~0.66) but not its amplitude."
+    ]
+  },
+  "claims": [
+    {"id": "L3-S6", "claim": "The commanded scan law reproduces the sign and orientation of Gaia DR3 per-pixel proper-motion error ellipses for CRF3 sources.", "state": "NUMERICALLY_CHECKED_STRUCTURAL", "limit": "r=0.87/0.81; amplitude not reproduced (slopes 0.67/0.80); commanded not realised attitude"},
+    {"id": "L3-S7", "claim": "A scan-pattern systematics template for mode fitting is available.", "state": "PARTIAL", "limit": "per-pixel information tensor only; the mapping from scan-pattern anisotropy to correlated systematic vector-field errors is NOT built"},
+    {"id": "L3-S3", "claim": "A frame-spin tie is available.", "state": "BLOCKED", "limit": "unchanged"}
+  ],
+  "not_run": ["systematic-error mode template (scan-correlated spurious VSH power)", "ICRF3 frame-spin anchor", "SHA256 of the Gaia catalogue file", "magnitude/colour-dependent systematics", "proper-motion fit", "independent reviewer"],
+  "next_gate": "Hash the Gaia catalogue; derive how scan-angle-anisotropic noise projects onto the E/B modes (a scan-aware Fisher with the information tensor, cross-checked against the catalogue ellipse); bind a frame-spin anchor with provenance.",
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}
