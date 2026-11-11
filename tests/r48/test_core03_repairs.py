@@ -126,6 +126,19 @@ def test_cmb_carrier_ignores_stale_state_beta_ro_when_one_boost_is_zero():
     assert np.allclose(np.asarray(stale.components), np.asarray(ok.components), rtol=0, atol=1e-18)
 
 
+# ---- R7 (R48-T23 defect T23-D1)
+def test_mock_verification_block_asserts_nothing_it_did_not_check():
+    import json as _json
+    import platform
+    spec = importlib.util.spec_from_file_location("mock48_t23", ROOT / "scripts" / "r48" / "bianchi_fivevar_identifiability_mock.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    ver = mod.run_experiment(seed=1, n_rep=200, n_post=50, n_null=4)["verification"]
+    assert ver["python"] == platform.python_version()
+    assert "PASS" not in _json.dumps(ver), ver
+    assert ver["local_pytest"] == "NOT_RUN_BY_SCRIPT"
+
+
 # ---- R6
 def test_deceleration_parameter_matches_friedmann_derivative():
     from htt.htt.infer.tensor_joint_multiprobe_likelihood import deceleration_parameter
