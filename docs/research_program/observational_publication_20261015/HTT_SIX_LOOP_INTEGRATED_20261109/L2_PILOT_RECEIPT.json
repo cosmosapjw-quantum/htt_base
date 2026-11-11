@@ -1,0 +1,56 @@
+{
+  "schema": "htt.l2_pilot_receipt/1",
+  "task_id": "L2",
+  "slice": "QUAIA_G20.0_DIPOLE_ESTIMATOR_VALIDATION_ON_AUTHENTIC_RANDOMS",
+  "as_of_date": "2026-11-11",
+  "task_status_unchanged": "PENDING (this is one validated estimator slice, not L2 acceptance)",
+  "status": "PILOT_DONE_SYNTHETIC",
+  "blinding_note": "The real Quaia catalogue rows were NOT read; only the catalogue row count (FITS header NAXIS2 = 755850) was used. No observed dipole was computed.",
+  "inputs": {
+    "release": "Quaia Zenodo 10403370 v1.0.0, G<20.0",
+    "files": ["random_G20.0_10x.fits (7,563,151 randoms: ra, dec, ebv)", "selection_function_NSIDE64_G20.0.fits (T, RING, nside 64)", "quaia_G20.0.fits (header only)"],
+    "provenance_state": "bundle README records upstream byte sizes and MD5 (not SHA256); SHA256 of these files NOT recomputed in this pass => SOURCE_BOUND_PARTIAL",
+    "frame_finding": "random-density map vs T correlation: celestial 0.989, galactic -0.093 => selection function is in the celestial (ICRS equatorial) pixelisation",
+    "t_zero_fraction": 0.137
+  },
+  "operator": {
+    "script": "L2_quaia_estimator_pilot.py",
+    "script_sha256": "a3b1ef8cbc44bc418e608fb23ae92d6dce2add7bf45442296950c272c1f4561a",
+    "command": "python3 L2_quaia_estimator_pilot.py --dir <Quaia bundle dir> --gal G20.0 --nmock 120 --out L2_PILOT_RESULT_N120.json",
+    "exit_code": 0,
+    "result_file": "L2_PILOT_RESULT_N120.json",
+    "result_sha256": "d4ee247d819a5fa96ab7a884a4419fc806d0338f1d7f8dde23554dcd3cc268dc",
+    "seed": 20261111,
+    "elapsed_s": 160,
+    "versions": {"python": "3.12.3", "numpy": "2.4.2", "healpy": "1.19.0"},
+    "mock_model": "N0=755850 points drawn from the randoms; dipole injected by thinning with acceptance (1+D.n)/(1+|D|)",
+    "estimator": "nside 64 pixel counts; Poisson-weighted least squares on E_p (m + d.n_p); D_hat=d/m; pixels with E<5% of mean non-zero E dropped (~42,400 pixels kept)",
+    "expectation_maps_compared": ["official selection function T", "random-catalogue density"],
+    "n_mocks": {"null": 120, "each_injection": 40}
+  },
+  "results_synthetic": {
+    "fullsky_poisson_sd_per_axis_sqrt3_over_N": 1.99e-03,
+    "null_sd_per_axis": {"expect_T": [1.6e-03, 2.3e-03, 2.1e-03], "expect_randoms": [1.9e-03, 2.0e-03, 1.7e-03]},
+    "null_bias_vector": {"expect_T": [3.2e-04, -5.7e-05, 1.2e-05], "expect_randoms": [2.9e-04, -1.4e-04, 2.4e-04]},
+    "null_bias_over_standard_error": {"expect_T": [2.1, -0.3, 0.1], "expect_randoms": [1.7, -0.8, 1.5]},
+    "injection_bias_over_standard_error_range_all_cases": [-1.1, 2.3],
+    "injection_bias_max_abs": 6.7e-04,
+    "interpretation": [
+      "Across 18 bias components (2 estimators x 3 cases x 3 axes) the largest is 2.3 standard errors; about one such value is expected by chance. No significant bias in recovering injected dipoles of 0.005 and ~0.02 is seen at this precision.",
+      "The standard error of a mean bias is sd/sqrt(n) = 1.7e-4 (null, n=120) to ~3.7e-4 (injections, n=40); biases below ~4e-4 are not excluded.",
+      "Mask/selection inflates the per-axis scatter by at most ~1.3x over the full-sky Poisson value; the estimator is close to Poisson-limited.",
+      "Using the official selection function T versus the randoms' own density as the expectation gives no significant difference in bias, despite the 0.989 correlation between them.",
+      "Mocks are drawn from the randoms themselves, so this cannot detect any difference between the real catalogue's density and the randoms/selection function (systematics, magnitude/colour/redshift-dependent selection, dust, stellar contamination)."
+    ]
+  },
+  "claims": [
+    {"id": "L2-P1", "claim": "The pixel Poisson-WLS dipole estimator on the Quaia G20.0 footprint recovers injected dipoles without significant bias and with near-Poisson scatter (mock-from-randoms test).", "state": "NUMERICALLY_CHECKED_SYNTHETIC", "limit": "mocks from randoms; one tracer cut; nside 64; bias resolution ~2e-4..4e-4"},
+    {"id": "L2-P2", "claim": "Quaia selection function T is in celestial pixelisation.", "state": "NUMERICALLY_CHECKED", "limit": "frame inferred by correlation with the random density; no documentation read"},
+    {"id": "L2-P3", "claim": "A kinematic (Ellis-Baldwin) response scale for Quaia is established.", "state": "UNAVAILABLE", "limit": "no magnitude-slope/spectral/evolution derivation done; no magic constant adopted"},
+    {"id": "L2-P4", "claim": "Real Quaia or NVSS/RACS dipole measured.", "state": "NOT_RUN", "limit": "deliberately not computed (blinding); NVSS needs a SYNTHETIC_RANDOM_CATALOGUE"}
+  ],
+  "not_run": ["SHA256 of Quaia files", "real-catalogue estimator", "NVSS randoms/footprint and estimator", "RACS replication", "redshift-split/held-out tracer", "local-structure and intrinsic-dipole separation", "response (flux slope, spectral index, evolution) derivation", "systematics templates", "independent reviewer"],
+  "next_gate": "Hash the Quaia files; derive the Quaia count-dipole response from measured flux/magnitude slope with declared spectral index and evolution (no hard-coded 3.3/3.5); build NVSS SYNTHETIC_RANDOM_CATALOGUE; extend the same mock pipeline to NVSS (nside 64) and RACS.",
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}
