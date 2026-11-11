@@ -76,10 +76,11 @@ def test_kinematic_response_model():
     bro = [0.00123, 0.0, 0.0]
     brm = [0.00020, 0.0, 0.0]
     dint = [0.00005, 0.0, 0.0]
+    # This test encodes FIRST-ORDER arithmetic (beta_MO = beta_RO - beta_RM exactly); the default closure is now exact.
     model = KinematicResponseModel.from_parameters(
-        beta_RO=bro, beta_RM=brm, d_int=dint
+        beta_RO=bro, beta_RM=brm, d_int=dint, exact_composition=False
     )
-    
+
     # Matter-observer velocity: 0.00123 - 0.00020 = 0.00103
     assert np.allclose(model.state.beta_MO, [0.00103, 0.0, 0.0])
     

@@ -116,10 +116,9 @@ def build_full_observable_x_bundle(
     # CMB carrier prediction with exact relativistic velocity composition
     b_rm = model.state.beta_RM
     b_mo = model.state.beta_MO
-    if np.any(b_rm) and np.any(b_mo):
-        beta_ro = compose_velocities_sr(b_rm, b_mo)
-    else:
-        beta_ro = model.state.beta_RO
+    # Always the exact ordered composition: compose_velocities_sr(0, b) == b and (a, 0) == a exactly, so no
+    # zero-boost shortcut to state.beta_RO is needed (and a stale state.beta_RO must never leak into the carrier).
+    beta_ro = compose_velocities_sr(b_rm, b_mo)
 
     quad_stf2 = kinematic_quadrupole_stf2(beta_ro)
     stf5_kin = 0.5 * stf_matrix_to_cartesian(quad_stf2)

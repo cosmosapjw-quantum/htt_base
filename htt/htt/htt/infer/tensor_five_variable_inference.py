@@ -93,6 +93,15 @@ from htt.htt.infer.tensor_joint_multiprobe_likelihood import (
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 
 
+def stf5_gram_unit_direction(v5: np.ndarray) -> np.ndarray:
+    """Direction of a Cartesian-STF5 vector normalised to unit Frobenius norm (v^T G_STF5 v = 1)."""
+    v = np.asarray(v5, dtype=np.float64)
+    n2 = float(v @ G_STF5 @ v)
+    if not np.isfinite(n2) or n2 <= 0.0:
+        raise ValueError("STF5 direction undefined for a zero or non-finite vector")
+    return v / np.sqrt(n2)
+
+
 @dataclass(frozen=True)
 class MCMCConfig:
     """Configuration for joint multi-probe MCMC sampling."""
@@ -566,7 +575,7 @@ class TensorFiveVariableEngine:
         # Scalar x_C ablation:
         # Collapses 5 STF shear degrees of freedom into 1 scalar quadrupole invariant
         J_scalar = J_tensor.copy()
-        shear_direction = th_fid[:5] / np.linalg.norm(th_fid[:5])
+        shear_direction = stf5_gram_unit_direction(th_fid[:5])
         J_scalar[:, 0] = J_tensor[:, :5] @ shear_direction
         J_scalar[:, 1:5] = 0.0  # Zero out 4 orthogonal shear orientations
 
@@ -620,8 +629,14 @@ class TensorFiveVariableEngine:
         mcmc_result: MCMCResult,
         loocv_dict: Dict[str, Any],
         comp_dict: Dict[str, Any],
+        input_hashes: Optional[Dict[str, str]] = None,
     ) -> Dict[str, Any]:
-        """Generate family-independent MIO diagnostic certificate strictly meeting G19 firewall."""
+        """Generate family-independent MIO diagnostic certificate strictly meeting G19 firewall.
+
+        ``input_hashes`` maps a data-channel name to the 64-hex SHA-256 of the exact input bytes. Channels without a
+        supplied hash are recorded as ``<name>:UNVERIFIED_NO_HASH_SUPPLIED``; no hash is ever asserted without bytes.
+        """
+        import re
         # Extract model-independent diagnostic quantities (NO POSTERIOR KEYWORDS)
         b_mo_norm = float(np.linalg.norm(mcmc_result.mean[14:17]))
         b_rm_norm = float(np.linalg.norm(mcmc_result.mean[11:14]))
@@ -632,7 +647,7 @@ class TensorFiveVariableEngine:
 
         # Maximum directional occupancy ratio
         sup_F = five_var_state.support_profiles_F["BETA_MO"]
-        max_occupancy = float(np.max(sup_F.occupancy_ratios)) if sup_F.occupancy_ratios is not None else 0.53
+        max_occupancy = float(np.max(sup_F.occupancy_ratios)) if sup_F.occupancy_ratios is not None else None
 
         # Exceedance observed under diagnostic null
         exceed_null = five_var_state.exceedance_surfaces_Pi["BETA_MO_MIO_NULL"]
@@ -651,6 +666,9 @@ class TensorFiveVariableEngine:
             "depth_path_cross_shell_covariance_trace": gf_trace,
             "undefined_parameter_mass": float(exceed_null.undefined_mass),
         }
+        occupancy_unavailable = max_occupancy is None
+        if occupancy_unavailable:
+            del departure_vars["directional_occupancy_ratio_max"]      # never invent a number for a missing quantity
 
         # Adequacy indicators
         adequacy: Dict[str, bool] = {
@@ -677,6 +695,8 @@ class TensorFiveVariableEngine:
             "peculiar_velocity_budget_ceiling_beta_le_0p01",
             "no_bianchi_family_identification_or_geometry_detection_claimed",
         ]
+        if occupancy_unavailable:
+            domain_caveats.append("directional_occupancy_unavailable")
 
         channel_caveats = [
             "planck_pr4_commander_low_ell_tt_te_ee",
@@ -687,14 +707,21 @@ class TensorFiveVariableEngine:
             "desi_dr2_bao_background",
         ]
 
-        input_hashes = [
-            "planck_pr4_commander_sha256_verified",
-            "quaia_g20_fits_sha256_verified",
-            "nvss_radio_dipole_sha256_verified",
-            "gaia_crf3_vsh_sha256_verified",
-            "pantheon_plus_490_cache_verified",
-            "desi_bao_compact_verified",
+        channel_names = [
+            "planck_pr4_commander",
+            "quaia_g20_fits",
+            "nvss_radio_dipole",
+            "gaia_crf3_vsh",
+            "pantheon_plus_490_cache",
+            "desi_bao_compact",
         ]
+        supplied = dict(input_hashes or {})
+        for name, digest in supplied.items():
+            if not re.fullmatch(r"[0-9a-f]{64}", str(digest)):
+                raise ValueError(f"input hash for {name!r} is not a 64-hex SHA-256 digest")
+        hash_entries = [f"{n}:sha256:{supplied[n]}" if n in supplied else f"{n}:UNVERIFIED_NO_HASH_SUPPLIED"
+                        for n in channel_names]
+        hash_entries += [f"{n}:sha256:{d}" for n, d in supplied.items() if n not in channel_names]
 
         cert = build_mio_certificate(
             report_type="five_variable_joint_diagnostic",
@@ -707,7 +734,7 @@ class TensorFiveVariableEngine:
             channel_caveats=channel_caveats,
             reduction_status="diagnostic-only",
             generated_by="htt.infer.tensor_five_variable_inference v1.0.0",
-            input_data_hashes=input_hashes,
+            input_data_hashes=hash_entries,
         )
 
         return certificate_to_payload(cert)

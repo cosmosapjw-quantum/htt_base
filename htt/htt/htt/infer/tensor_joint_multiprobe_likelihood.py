@@ -202,6 +202,14 @@ class ThetaKinematic:
         )
 
 
+def deceleration_parameter(omega_m: float, omega_k: float = 0.0) -> float:
+    """q0 = Omega_m/2 - Omega_Lambda for matter + curvature + Lambda, Omega_Lambda = 1 - Omega_m - Omega_k.
+
+    Equivalent to (1+z) E'(z)/E(z) - 1 at z=0 with E^2 = Om(1+z)^3 + Ok(1+z)^2 + OL.
+    """
+    return 0.5 * omega_m - (1.0 - omega_m - omega_k)
+
+
 @dataclass(frozen=True)
 class PsiCosmology:
     """Cosmological background parameter vector psi (4 components).
@@ -749,7 +757,7 @@ class SupernovaIaJointLikelihood(BaseProbeLikelihood):
     def predict(self, theta: ThetaKinematic, psi: PsiCosmology) -> np.ndarray:
         c_km_s = 299792.458
         H0 = psi.H_0
-        q0 = 0.5 * psi.Omega_m - 0.7
+        q0 = deceleration_parameter(psi.Omega_m, psi.DeltaOmega_k)
         dl = (c_km_s * self.redshifts / H0) * (1.0 + 0.5 * (1.0 - q0) * self.redshifts)
         mu_fid = 5.0 * np.log10(np.maximum(dl * 1e5, 1e-5))
 
