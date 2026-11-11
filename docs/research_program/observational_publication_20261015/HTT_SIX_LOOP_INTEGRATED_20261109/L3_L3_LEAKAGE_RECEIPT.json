@@ -1,0 +1,34 @@
+{
+  "schema": "htt.l3_leakage_receipt/1",
+  "task_id": "L3",
+  "slice": "L3_MODE_LEAKAGE_INTO_LE2_ON_GAIA_SKY",
+  "as_of_date": "2026-11-12",
+  "task_status_unchanged": "PENDING (second structural slice; L3 acceptance not met)",
+  "status": "SLICE_DONE_STRUCTURAL",
+  "blinding_note": "No proper-motion values were read; columns: ra, dec, pmra_error, pmdec_error, pmra_pmdec_corr, phot_g_mean_mag.",
+  "inputs": {"file": "workdir/raw/observational_bundles/Gaia_CRF3_astrometry/gaia_crf3_astrometry_full.fits", "claimed_sha256_from_earlier_manifest": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0 (NOT recomputed)", "rows": 1614173},
+  "operator": {
+    "script": "L3_l3_leakage.py", "script_sha256": "4c47b8f5ce968de6140530ec45bd59cdd5a2a699a915d591f42eb80233d6015a",
+    "result_file": "L3_L3_LEAKAGE_RESULT.json", "result_sha256": "adc3b817061f1ffd7c15c84df60547a17ee0ea56be61cce404afc9a8b4b0740b",
+    "command": "python3 L3_l3_leakage.py --fits <gaia_crf3_astrometry_full.fits> --out L3_L3_LEAKAGE_RESULT.json", "exit_code": 0, "elapsed_s": 18,
+    "versions": {"python": "3.12.3", "numpy": "2.4.2"},
+    "model": "30 modes: E1,B1 (3 each), E2,B2 (5 each), E3,B3 (7 each; Frobenius-orthonormal rank-3 STF); E3 v = P(T:nn), B3 v = n x (T:nn); Fisher from per-source 2x2 covariance"
+  },
+  "results_structural": {
+    "full_sample_1614173": {"rank": "30 of 30", "cond": 23.7, "max_abs_normalised_correlation_low_vs_l3": {"E1-E3": 0.329, "B1-B3": 0.385, "E2-B3": 0.372, "B2-E3": 0.265, "E1-B3": 0.029, "B1-E3": 0.019, "B2-B3": 0.039, "E2-E3": 0.039}, "sd_inflation_when_l3_marginalised": {"E1": [1.10, 1.02, 1.06], "B1": [1.13, 1.03, 1.14], "E2": [1.10, 1.07, 1.11, 1.03, 1.08], "B2": [1.04, 1.05, 1.04, 1.02, 1.05]}},
+    "bright_G_lt_19_189202": {"rank": "30 of 30", "cond": 23.4, "max_abs_normalised_correlation_low_vs_l3": {"E1-E3": 0.332, "B1-B3": 0.387, "E2-B3": 0.377, "B2-E3": 0.268}, "sd_inflation_range": [1.02, 1.14]},
+    "interpretation": [
+      "The l=3 modes are structurally separable from l<=2 on this sky (rank 30/30, condition 23.7), but non-uniform coverage couples them: up to 0.39 normalised correlation (B1-B3, E1-E3 same-type pairs; E2-B3 and B2-E3 cross-type pairs).",
+      "Marginalising the 14 l=3 modes inflates the formal sd of the 16 low-order modes by at most 14% (largest for B1, E1 and E2).",
+      "Modes l>=4 are not included, so these numbers are lower bounds on leakage/inflation. Statistical errors only; scan-law and magnitude-dependent systematics are not in this model."
+    ]
+  },
+  "claims": [
+    {"id": "L3-S5", "claim": "l=3 vector modes couple to l<=2 modes through Gaia sky coverage with normalised correlation up to ~0.39 and inflate low-order formal errors by <=14%.", "state": "NUMERICALLY_CHECKED_STRUCTURAL", "limit": "positions/errors only; l>=4 not included; stat-only"},
+    {"id": "L3-S3", "claim": "A frame-spin tie is available.", "state": "BLOCKED", "limit": "unchanged: no confirmed ICRF3 frame-spin tie file"}
+  ],
+  "not_run": ["scan-law systematics (the ESA scanning-law zip is downloaded but unread)", "SHA256 of the Gaia file", "modes l>=4", "magnitude/colour-dependent systematics", "proper-motion fit", "independent reviewer"],
+  "next_gate": "Read the scanning law and build the scan-pattern systematics template; hash the Gaia file; then bind a frame-spin anchor with provenance.",
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

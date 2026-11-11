@@ -1,0 +1,47 @@
+{
+  "schema": "htt.l2_nvss_slice_receipt/1",
+  "task_id": "L2",
+  "slice": "NVSS_SLOPE_SYNTHETIC_RANDOMS_ESTIMATOR_VALIDATION",
+  "as_of_date": "2026-11-12",
+  "task_status_unchanged": "PENDING (second validated slice; L2 acceptance not met)",
+  "status": "SLICE_DONE_SYNTHETIC",
+  "blinding_note": "The real NVSS dipole was NOT computed. Columns read: RA(2000), DEC(2000), PEAK INT. The catalogue's integral-count slope and a pixel-scatter comparison were computed.",
+  "inputs": {
+    "file": "workdir/raw/new_acquisitions/radio_hi/NVSS_nrao_20261110/CATALOG.FIT",
+    "bytes": 152121600, "sha256": "see DOWNLOAD_MANIFEST_20261110.json (group nvss_nrao)",
+    "source": "NRAO anonymous FTP pub/nvss/CATALOG/CATALOG.FIT (official), retrieved 2026-11-10",
+    "rows": 1810672,
+    "flux_column_caveat": "no integrated-flux column in this FITS; PEAK INT (Jy/beam) is used as a flux proxy for the count slope"
+  },
+  "operator": {
+    "script": "L2_nvss_synthetic_random_and_slope.py",
+    "script_sha256": "5ed3db860fe388af35fdd5d3d821b3468200db8cb84702f7e6df9ec31933f5fb",
+    "command": "python3 L2_nvss_synthetic_random_and_slope.py --fits CATALOG.FIT --out L2_NVSS_RESULT.json",
+    "exit_code": 0, "result_file": "L2_NVSS_RESULT.json",
+    "result_sha256": "968d4f1acc401eefae2a6d5ae0f52b9e2f1b4b34b22cc9103418ed05c8a54f59",
+    "seed": 20261112, "elapsed_s": 24, "versions": {"python": "3.12.3", "numpy": "2.4.2", "healpy": "1.19.0"},
+    "cuts": {"S_peak_min_Jy": 0.020, "dec_min_deg": -37.0, "abs_b_min_deg": 10.0}, "n_selected": 237218
+  },
+  "results": {
+    "integral_count_slope_x": {"value": 1.0431, "bootstrap_sd": 0.0028, "fit_range_Jy": [0.02, 0.08], "meaning": "x = -d ln N(>S)/d ln S for the footprint-cut catalogue (peak-flux proxy); bootstrap sd is statistical only, systematic from peak-vs-integrated flux not estimated"},
+    "Ellis_Baldwin_amplitude_over_beta": {"alpha_0.50": 3.565, "alpha_0.75": 3.825, "alpha_1.00": 4.086, "note": "D = [2 + x(1+alpha)] beta; alpha is NOT measurable from NVSS alone, so the response is a range over a declared alpha grid; the repository's hard-coded NVSS factors 3.50, 3.6625 and 3.75 correspond to alpha ~0.44, ~0.59 and ~0.68 for this x, i.e. they sit near the range but carry no derivation"},
+    "synthetic_randoms": {"label": "SYNTHETIC_RANDOM_CATALOGUE", "n": 2372180, "geometry": "uniform inside dec>-37 deg and |b|>10 deg; no completeness, rms or blank-region modelling"},
+    "catalogue_vs_synthetic_footprint": {"pixel_ratio_sd": 0.2193, "poisson_expected_sd": 0.1972, "interpretation": "modest excess over Poisson (about 1.1x): real structure and unmodelled footprint/rms variation; not a dipole and not separable here"},
+    "estimator_validation_nside32_60_mocks": {
+      "fullsky_poisson_sd_per_axis": 3.56e-03,
+      "null_bias": [-4.3e-05, 3.6e-04, 7.6e-04], "null_sd": [3.0e-03, 3.3e-03, 4.4e-03], "null_bias_over_se": [-0.1, 0.8, 1.4],
+      "injection_D0.01_bias_over_se": [0.9, -0.0, 0.6], "injection_oblique_bias_over_se": [0.3, 0.2, 1.8],
+      "interpretation": "no significant bias (max 1.8 standard errors in 9 components); scatter 2.4-4.5e-3 per axis, 0.7-1.3x the full-sky Poisson value; the standard error of a mean bias is ~4e-4 to 6e-4"
+    }
+  },
+  "claims": [
+    {"id": "L2-N1", "claim": "NVSS integral count slope at 20-80 mJy (peak flux) is x = 1.043 +- 0.003 (stat).", "state": "SOURCE_MEASURED_PROXY", "limit": "peak flux proxy; footprint cut dec>-37, |b|>10; no completeness correction"},
+    {"id": "L2-N2", "claim": "Count-dipole kinematic response for NVSS is 3.56-4.09 beta over alpha 0.5-1.0.", "state": "DERIVED_RANGE", "limit": "alpha assumed on a grid; evolution/size/selection effects not included; replaces any point value"},
+    {"id": "L2-N3", "claim": "The Poisson-WLS estimator is unbiased on synthetic NVSS-footprint mocks at the ~5e-4 level.", "state": "NUMERICALLY_CHECKED_SYNTHETIC", "limit": "mocks drawn from synthetic randoms with the same footprint; cannot test real-catalogue systematics"},
+    {"id": "L2-N4", "claim": "Real NVSS or RACS dipole measured.", "state": "NOT_RUN", "limit": "deliberately not computed"}
+  ],
+  "not_run": ["real-catalogue dipole", "authentic NVSS footprint/rms-based randoms (none exist as an official product)", "RACS replication", "flux calibration and declination-dependent systematics", "Quaia/NVSS cross-tracer covariance", "held-out tracer", "independent reviewer"],
+  "next_gate": "Combine tracers: define the joint kinematic estimand with Quaia and NVSS responses over the declared alpha grid, add declination-dependent NVSS systematics templates, then the RACS replication lane.",
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}
