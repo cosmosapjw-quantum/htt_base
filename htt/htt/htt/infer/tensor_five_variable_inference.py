@@ -625,7 +625,9 @@ class TensorFiveVariableEngine:
         # Extract model-independent diagnostic quantities (NO POSTERIOR KEYWORDS)
         b_mo_norm = float(np.linalg.norm(mcmc_result.mean[14:17]))
         b_rm_norm = float(np.linalg.norm(mcmc_result.mean[11:14]))
-        sigma_frobenius = float(np.linalg.norm(mcmc_result.mean[0:5]))
+        # STF5 Cartesian chart (Sxx,Syy,Sxy,Sxz,Syz): Frobenius norm needs the Gram metric, not the component norm.
+        sigma5 = np.asarray(mcmc_result.mean[0:5], dtype=np.float64)
+        sigma_frobenius = float(np.sqrt(sigma5 @ G_STF5 @ sigma5))
         vorticity_norm = float(np.linalg.norm(mcmc_result.mean[5:8]))
 
         # Maximum directional occupancy ratio
