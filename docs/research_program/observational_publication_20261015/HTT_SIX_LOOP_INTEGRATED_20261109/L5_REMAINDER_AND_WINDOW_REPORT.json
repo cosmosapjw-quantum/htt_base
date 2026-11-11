@@ -1,0 +1,56 @@
+{
+  "schema": "htt.l5_remainder_window_report/1",
+  "task_id": "L5",
+  "as_of_date": "2026-11-11",
+  "status": "PASS_SCOPED_SYNTHETIC_BIANCHI_I",
+  "scope": "Exact Bianchi I (a_i = t^p_i), comoving observer and sources; area distance by geodesic deviation. No data.",
+  "oracle": {
+    "script": "L5_bianchi_I_optical_jet_oracle.py",
+    "script_sha256": "02758f9eb50933173238e3dac27b85a691c4b99a3bb30d70b35a6b71a5c5ed67",
+    "result": "L5_ORACLE_RESULT.json",
+    "result_sha256": "82cd294a0335834576bcb34ab3ab1beacec5f1964878a5469e344daf27129d16",
+    "command": "python3 L5_bianchi_I_optical_jet_oracle.py", "exit_code": 0, "seed": 20261111,
+    "versions": {"python": "3.12.3", "numpy": "2.4.2", "scipy": "1.17.0"},
+    "development_notes_preserved": ["first sky-average line had an off-by-80 normalisation bug (summed over phi twice); fixed", "c0 and c0*H have non-terminating harmonic content (division by H(n)); c0*H^2 is the polynomial quantity; first attempt analysed c0 and c0*H and showed spurious l>=6 content"]
+  },
+  "checks": {
+    "A_contraction_identity_max_abs_err": 3.55e-15,
+    "B_first_order_z_over_lookback_vs_H_n_max_rel_dev_at_z1e-4": 1.65e-04,
+    "B_sky_average_H_minus_Theta_over_3": -6.7e-16,
+    "C_flrw_limit_exact_formula_max_rel_err": 5.0e-09,
+    "D_c0_times_H2_harmonic_amplitudes": {"l0": 1.9e-01, "l2": 2.6e-01, "l4": 6.5e-02, "l5": 2.2e-08, "l6": 4.6e-08, "l7": 2.6e-08, "l8": 1.2e-07, "odd_l_max": 2.6e-08, "fit_residual_rms": 7.0e-09},
+    "E_quadrupole_ratio_second_over_first_per_unit_z": [
+      {"p_bar": 0.5, "q0": 1.0, "H_spread": 0.020, "ratio": 1.0001},
+      {"p_bar": 0.6667, "q0": 0.5, "H_spread": 0.045, "ratio": 1.0006},
+      {"p_bar": 0.6667, "q0": 0.5, "H_spread": 0.015, "ratio": 1.0001},
+      {"p_bar": 0.9, "q0": 0.111, "H_spread": 0.011, "ratio": 1.0000},
+      {"p_bar": 0.6, "q0": 0.667, "H_spread": 0.167, "ratio": 1.0087},
+      {"p_bar": 0.6, "q0": 0.667, "H_spread": 0.050, "ratio": 1.0008},
+      {"p_bar": 0.6, "q0": 0.667, "H_spread": 0.017, "ratio": 1.0001}
+    ]
+  },
+  "truncation_remainder_pbar_0.6667_spread_0.045": [
+    {"z": 0.01, "first_order_max_rel_err": 2.74e-03, "second_order_max_rel_err": 1.27e-05, "first_order_aniso_part": 5.89e-04},
+    {"z": 0.03, "first_order_max_rel_err": 8.16e-03, "second_order_max_rel_err": 1.12e-04, "first_order_aniso_part": 1.76e-03},
+    {"z": 0.10, "first_order_max_rel_err": 2.64e-02, "second_order_max_rel_err": 1.18e-03, "first_order_aniso_part": 5.80e-03},
+    {"z": 0.20, "first_order_max_rel_err": 5.06e-02, "second_order_max_rel_err": 4.35e-03, "first_order_aniso_part": 1.14e-02},
+    {"z": 0.30, "first_order_max_rel_err": 7.29e-02, "second_order_max_rel_err": 9.05e-03, "first_order_aniso_part": 1.68e-02}
+  ],
+  "scalings": {"first_order_relative_error": "~0.27 z", "second_order_relative_error": "~0.12 z^2 (third-order term of d_L)", "first_order_anisotropic_part": "~0.06 z"},
+  "window": {
+    "first_order_directional_law": "relative quadrupole/dipole bias ~ z; usable only if z * (true amplitude) << formal statistical sd (0.5-1% of Hbar for Q with Pantheon+ cuts), i.e. z <~ 0.05-0.1 for amplitudes of a few percent; the monopole needs free z-dependence at every z",
+    "second_order_with_declared_nuisance": "d_L = (z/H(n))[1 + c0(n) z]; c0 H^2 is a degree<=4 polynomial in n (l=0,2,4) => free l<=4 nuisance; remaining error ~0.12 z^2 (0.9% at z=0.3)",
+    "caveat": "numbers are for one anisotropic power-law family; other histories (tilt, non-flat Bianchi types, rotation) are not covered"
+  },
+  "claims": [
+    {"id": "L5-1", "claim": "H(n) = Theta/3 + sigma_nn - A.n/c at first order; vorticity and curvature do not enter.", "state": "DERIVED_AND_NUMERICALLY_CHECKED", "limit": "comoving observer=source congruence; Bianchi I check"},
+    {"id": "L5-2", "claim": "The second-order jet coefficient c0*H^2 has only even l<=4 content.", "state": "NUMERICALLY_CHECKED_SYNTHETIC", "limit": "power-law Bianchi I; analytic proof not written out"},
+    {"id": "L5-3", "claim": "Quadrupole of z/d_L is H2 (1 - z + ...) independent of q0.", "state": "NUMERICAL_FINDING_UNPROVEN", "limit": "one anisotropic family, p_bar in {0.5,0.6,0.667,0.9}"},
+    {"id": "L5-4", "claim": "Observer boost and local bulk flow are structurally degenerate in Pantheon+ d_L.", "state": "DERIVED_AND_NUMERICALLY_CHECKED", "limit": "identical 1/z shape; nullity 3"},
+    {"id": "L5-5", "claim": "Second-order vorticity/curvature terms are justified.", "state": "UNAVAILABLE", "limit": "not derivable in Bianchi I (omega=0, flat sections)"},
+    {"id": "L5-6", "claim": "Directional Hubble anisotropy measured in Pantheon+.", "state": "NOT_RUN", "limit": "deliberately no distance read"}
+  ],
+  "native_subagents": "NOT_RUN",
+  "independent_review": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

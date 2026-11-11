@@ -1,0 +1,49 @@
+{
+  "schema": "htt.l5_distance_operator_spec/1",
+  "task_id": "L5",
+  "as_of_date": "2026-11-11",
+  "status": "OPERATOR_SPEC_DONE_STRUCTURAL; NO_DATA_FIT_RUN",
+  "observable": {
+    "name": "Pantheon+ distance-modulus anisotropy in first-order directional Hubble modes",
+    "law": "delta ln d_L = -[sigma_nn - A.n/c]/Hbar (z-independent) + Doppler/bulk-flow term ~ beta.n/z; delta mu = (5/ln10) delta ln d_L",
+    "sign_convention": "n = line of sight observer->source; acceleration enters with +A.n/c in delta ln d_L (H(n) = Theta/3 + sigma_nn - A.n/c)",
+    "congruence": "observer congruence = source congruence (comoving) at this order; differences carried as the Doppler/flow term",
+    "stf_chart": "Frobenius-orthonormal STF basis (declared); Cartesian-5 results must use G_STF5",
+    "ratio_vs_difference": "amplitudes are R = DeltaH/Hbar (dimensionless); Hbar is a free monopole because partial-sky mean != Theta/3"
+  },
+  "parameters": ["M0 (offset, degenerate with M/H0)", "Q_1..Q_5 (sigma_STF/Hbar)", "Adip_1..3 (A/(c Hbar))", "Dop_1..3 (beta_MO)", "optional Flow_1..3 (bulk flow, same 1/z shape as Dop => degenerate)", "isotropic z-dependence (q0-like, j0-like) as free monopole nuisance"],
+  "data_binding": {
+    "release": "Pantheon+SH0ES DataRelease commit c447f0fe, 4_DISTANCES_AND_COVAR",
+    "files": [
+      {"name": "Pantheon+SH0ES.dat", "bytes": 579283, "sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8", "state": "byte-identical to the official file at the pinned commit (re-downloaded 2026-11-10)"},
+      {"name": "Pantheon+SH0ES_STAT+SYS.cov", "bytes": 33284960, "sha256": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc", "state": "byte-identical to the official file at the pinned commit"}
+    ],
+    "rows": 1701, "covariance_dimension": 1701,
+    "row_identity": "COUNT ONLY: dat rows == cov dimension; the files carry no per-row ID in the covariance, so the row-to-row mapping is assumed from release convention and NOT independently verified",
+    "covariance_checks": {"symmetry_max_abs": 3.0e-08, "spd": "Cholesky succeeded for every subsample used"},
+    "selection": "Hubble-flow subsample IS_CALIBRATOR == 0 with a stated zHD cut (0.010 / 0.023 / 0.050); calibrators are excluded from any anisotropy fit",
+    "columns_read_in_this_task": ["zHD", "RA", "DEC", "IS_CALIBRATOR", "covariance"],
+    "columns_not_read": ["MU_SH0ES", "m_b_corr", "all magnitude/distance columns"],
+    "cf4": "conditional; not used",
+    "desi": "compressed BAO vector = background control only; no angular estimator"
+  },
+  "structural_identifiability_formal_sd": {
+    "units": "sigma_STF/Hbar and A/(c Hbar) dimensionless; Dop in units of beta; statistical + Pantheon+ systematic covariance only, first-order model, no second-order or peculiar-velocity-covariance terms",
+    "cases": {
+      "hubble_flow_z>=0.023 (N=1371)": {"Q": [0.0074, 0.011, 0.0056, 0.0094, 0.0094], "Adip": [0.0057, 0.0074, 0.009], "Dop": [2.7e-04, 3.5e-04, 3.9e-04], "M0": 0.0101, "cond": 1.06e4, "max_corr_Adip_Dop": 0.77},
+      "hubble_flow_z>=0.010 (N=1580)": {"Q": [0.0067, 0.0093, 0.0049, 0.0082, 0.0085], "Adip": [0.0048, 0.0061, 0.0079], "Dop": [1.7e-04, 2.0e-04, 2.4e-04], "M0": 0.0086, "cond": 1.58e4, "max_corr_Adip_Dop": 0.72},
+      "hubble_flow_z>=0.050 (N=1056)": {"Q": [0.0093, 0.0189, 0.0084, 0.0183, 0.0132], "Adip": [0.0086, 0.0121, 0.014], "Dop": [7.8e-04, 1.2e-03, 1.4e-03], "M0": 0.0195, "cond": 6.25e3, "max_corr_Adip_Dop": 0.76},
+      "all_rows (N=1701)": {"Q": [0.0066, 0.0086, 0.0046, 0.008, 0.0082], "Adip": [0.0038, 0.0053, 0.0065], "Dop": [8.3e-05, 1.1e-04, 7.6e-05], "M0": 0.0083, "cond": 7.57e4, "max_corr_Adip_Dop": 0.58}
+    },
+    "rank_with_bulk_flow_nuisance": "12 of 15 in every case; null space exactly the Dop/Flow pair (nullity 3)",
+    "quadrupole_acceleration_leakage": "max posterior correlation Adip-Q 0.54-0.74; dropping the acceleration dipole shrinks Q sd by 5-25%"
+  },
+  "result_files": {
+    "script": "L5_pantheon_structural_identifiability.py", "script_sha256": "2d487065d3a002ebe9a2821952e334b7f39fd3984331224cf41f33a97e9bded5",
+    "result": "L5_PANTHEON_STRUCTURAL_RESULT.json", "result_sha256": "38430165c844a1ee3a2f833781563c4014eca77257b1184e2f3e104cf6312435",
+    "command": "python3 L5_pantheon_structural_identifiability.py --dat <Pantheon+SH0ES.dat> --cov <Pantheon+SH0ES_STAT+SYS.cov> --out L5_PANTHEON_STRUCTURAL_RESULT.json", "exit_code": 0, "versions": {"python": "3.12.3", "numpy": "2.4.2"}
+  },
+  "unavailable": ["second-order vorticity and curvature terms", "per-row ID verification of the covariance order", "peculiar-velocity covariance model", "calibration/M-H0 treatment beyond a free offset", "fit to real distances (deliberately not run)"],
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}
