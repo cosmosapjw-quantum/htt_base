@@ -1,21 +1,24 @@
 {
- "schema": "htt.refit_receipt/2",
+ "schema": "htt.refit_receipt/3",
  "as_of_date": "2026-11-12",
- "status": "REFIT_V2_DONE_PV_CHANNEL_UNDERDISPERSED",
- "supersedes": "REFIT_HYPOTHESES_NO_CMB_RESULT_V1_SUPERSEDED.json (v1 used SupernovaIaJointLikelihood.predict returning an absolute distance modulus against residual data; SNe chi2 ~34000 was a bug, not model mismatch; fixed test-first)",
+ "status": "REFIT_V3_DONE_ALL_BLOCKS_ADEQUATE_EXCEPT_COUNT_DIPOLES_AND_GAIA_NULL",
+ "supersedes": [
+  "REFIT_HYPOTHESES_NO_CMB_RESULT_V1_SUPERSEDED.json (SNe predict returned absolute mu against residual data)",
+  "REFIT_HYPOTHESES_NO_CMB_RESULT_V2_SUPERSEDED.json (PV predict lacked mu_model(z): CF4 'dmzp' is a distance modulus, slope ~5.2 per dex in z; PV chi2 13745 was this bug, NOT missing peculiar-velocity scatter as suggested earlier)"
+ ],
  "authorisation": "User decisions 2026-11-12: NPIPE/PR4 excluded; re-fit approved on remaining channels; then 'record input hashes' and 'add nuisance + free psi' approved. Unblinded run on those channels; NOT the CORE-07 production inference.",
  "operator": {
-  "script": "scripts/r48/refit_hypotheses_no_cmb.py (PR #574 head a33057cf653098ff3d3ea20d1a67c780f60c2041)",
+  "script": "scripts/r48/refit_hypotheses_no_cmb.py (unchanged since v2; PR #574 head 1b135e202f9f4a315f3bd49dac1017548fe083d4)",
   "script_sha256": "602ef80e225cc57a3096a8c7654f8a46dc27c2ce388a63d9b8dd44cba8c0e3cf",
-  "result_sha256": "86d53036f2abee9ac2a61c12e40bdbb197a2af7b3ee17a3373506278189ec34b",
+  "result_sha256": "d95c3910c0378226e8fe83d5ad29a7b24804fbd295f7efb51f550a18c640b785",
   "seed": 20261112,
-  "elapsed_s": 17.2,
+  "elapsed_s": 19.7,
   "exit_code": 0,
   "versions": {
    "python": "3.12.3",
    "numpy": "2.4.2"
   },
-  "optimizer": "L-BFGS-B, 3 starts per hypothesis; all hypotheses reported success=True"
+  "optimizer": "L-BFGS-B, 3 starts per hypothesis; success=True for all"
  },
  "inputs": {
   "channels": [
@@ -69,85 +72,92 @@
   "free_psi": "H_0 in [50,90], Omega_m in [0.05,0.60], DeltaOmega_k in [-0.30,0.30] free (declared bounds); r_d fixed (BAO degenerate with H_0); SNe/PV absolute offsets analytically marginalised"
  },
  "results": {
-  "fixed_psi": {
-   "chi2": {
-    "H_0": 14491.1,
-    "H_loc": 14324.1,
-    "H_tilt": 14491.1,
-    "H_mix": 14292.1
-   },
-   "Delta_BIC": {
-    "H_0": 145.0,
-    "H_loc": 0.0,
-    "H_tilt": 167.0,
-    "H_mix": 26.7
-   },
-   "best_by_BIC": "H_loc"
+  "chi2_fixed_psi": {
+   "H_0": 1648.7,
+   "H_loc": 1436.7,
+   "H_tilt": 1648.7,
+   "H_mix": 1380.1
   },
-  "free_psi": {
-   "chi2": {
-    "H_0": 14472.1,
-    "H_loc": 14305.1,
-    "H_tilt": 14472.1,
-    "H_mix": 14273.2
-   },
-   "Delta_BIC": {
-    "H_0": 145.0,
-    "H_loc": 0.0,
-    "H_tilt": 167.0,
-    "H_mix": 26.7
-   },
-   "best_by_BIC": "H_loc",
-   "psi_hat_H_loc": [
-    68.799,
-    0.293,
-    147.09,
-    0.025
-   ]
+  "Delta_BIC_fixed_psi": {
+   "H_0": 190.0,
+   "H_loc": 0.0,
+   "H_tilt": 212.0,
+   "H_mix": 2.1
   },
-  "beta_MO_hat_H_loc": [
-   -0.00029,
-   -0.00421,
-   0.00285
-  ],
-  "per_probe_chi2_null": {
-   "Quasars": 178.89814801709434,
-   "Radio": 45.249999999999986,
-   "Gaia": 58.556281532170736,
-   "SNe": 434.45937662931357,
-   "PV": 13744.966487097132,
-   "DESI": 28.965919531348614,
-   "Total": 14491.096212807059
+  "Delta_AIC_fixed_psi": {
+   "H_0": 246.6,
+   "H_loc": 40.6,
+   "H_tilt": 252.6,
+   "H_mix": 0.0
+  },
+  "chi2_free_psi": {
+   "H_0": 1629.6,
+   "H_loc": 1417.7,
+   "H_tilt": 1629.6,
+   "H_mix": 1361.1
+  },
+  "Delta_BIC_free_psi": {
+   "H_0": 190.0,
+   "H_loc": 0.0,
+   "H_tilt": 212.0,
+   "H_mix": 2.1
+  },
+  "best_by_BIC": "H_loc",
+  "best_by_AIC": "H_mix",
+  "per_probe_chi2_over_dof_null": {
+   "Quasars": "178.9/6",
+   "Radio": "45.2/6",
+   "Gaia": "58.6/11",
+   "SNe": "434.5/490",
+   "PV": "902.6/1000",
+   "DESI": "29.0/13"
   },
   "per_probe_chi2_H_loc": {
-   "Quasars": 15.708241445973945,
-   "Radio": 4.168572739400954,
-   "Gaia": 58.556281532170736,
-   "SNe": 433.30119564298093,
-   "PV": 13783.410444604866,
+   "Quasars": 8.476528239767722,
+   "Radio": 4.249109881831025,
+   "Gaia": 58.55628153217073,
+   "SNe": 432.83147013626353,
+   "PV": 903.609679510536,
    "DESI": 28.965919531348614,
-   "Total": 14324.110655496741
-  }
+   "Total": 1436.6889888319176
+  },
+  "beta_MO_hat_H_loc": [
+   -0.00122,
+   -0.00454,
+   0.00346
+  ],
+  "beta_MO_norm_H_loc": 0.00584,
+  "psi_hat_free_H_loc": [
+   68.853,
+   0.293,
+   147.09,
+   0.021
+  ]
  },
  "caveats": [
-  "SNe is now adequate under the corrected convention (chi2 ~434 for 490 points).",
-  "PV is NOT adequate: chi2 ~13745 for 1000 points at the null and it RISES slightly under H_loc (13783). The PV likelihood uses catalogue errors only (no peculiar-velocity scatter term); this is an unmodelled dispersion, not diagnosed further. Any BIC difference involving the PV block is unreliable.",
-  "The preference for H_loc comes from the Quasars and Radio count-dipole blocks (chi2 179->16 and 45->4): beta_MO absorbs an amplitude excess of the count dipoles over the model. |beta_MO| ~ 5.1e-3 is about 4x the CMB-dipole speed; no CMB channel constrains it here; this is NOT an observer-velocity estimate.",
-  "H_tilt chi2 equals the null exactly: beta_RM does not enter any enabled channel.",
-  "H_mix: chi2 gain over H_loc ~32 for 8 extra parameters, mostly in the Gaia block (58.6 -> 25.8); Delta_BIC +26.7. The fitted shear (~2-3e-3) is not a shear measurement: Gaia is a derived 11-coefficient vector with a fixed response model.",
-  "Free psi moves Omega_m to 0.293, H_0 to 68.8, DeltaOmega_k to +0.025 and lowers only the DESI block (29 -> 10); SNe is insensitive at z<0.15. These psi values are not cosmological estimates (psi is partly degenerate, bounded, r_d fixed).",
-  "Point estimates only: no uncertainties, no posterior sampling, no matched-null calibration."
+  "SNe (433/490) and PV (903/1000) are now adequate; DESI 29/13 at fiducial psi, 10/13 with free psi.",
+  "TENSION, not a measurement: the whole H_loc improvement (chi2 -212) comes from the two count-dipole blocks (Quasars 179 -> 8.5, Radio 45 -> 4.2). The kinematic channels do not improve: PV 902.6 -> 903.6 (slightly worse), SNe 434.5 -> 432.8. So beta_MO ~5.8e-3 (about 4.7x the CMB-dipole speed) is demanded only by the count-dipole amplitude excess and is not supported by SN/PV; it is NOT an observer-velocity estimate.",
+  "H_mix Gaia block 58.6 -> 0.4 with 5 shear parameters: the Gaia input is an 11-coefficient vector with 6 nuisance modes marginalised, so ~5 effective data are fitted by 5 shear parameters (exactly identified): chi2 ~ 0 is saturation, not evidence for shear. The fitted shear (|sigma5| ~ 1e-2) is not a measurement. Delta_BIC(H_mix)=+2.1 but Delta_AIC(H_mix)=0.0 (H_loc +40.6): ranking depends on the penalty, and is not evidence.",
+  "H_tilt chi2 equals the null exactly: beta_RM does not enter any enabled channel (structural non-identification).",
+  "Free psi: Omega_m 0.293, H_0 68.8, DeltaOmega_k +0.021; only the DESI block improves (29 -> 10); r_d fixed, parameters bounded, not cosmological estimates.",
+  "Quasars/Radio/Gaia inputs are earlier DERIVED result files; point estimates only; no uncertainties, no posterior sampling, no matched-null calibration; not the CORE-07 production inference."
  ],
  "claims": [
   {
-   "id": "RF2-1",
-   "claim": "Reproducible maximum-likelihood point estimates for four hypotheses on six real-data channels (CMB/PR4 excluded) with hashed inputs.",
+   "id": "RF3-1",
+   "claim": "Reproducible ML point estimates for four hypotheses on six real-data channels (CMB/PR4 excluded), hashed inputs, adequate SNe/PV blocks.",
    "state": "NUMERICALLY_COMPUTED_REAL_DATA_POINT_ESTIMATE",
-   "limit": "PV channel under-dispersed; derived inputs; no uncertainties"
+   "limit": "derived inputs for three blocks; no uncertainties"
   },
   {
-   "id": "RF2-2",
-   "claim": "Departure from FLRW detected, observer velocity measured, or tilt preferred.",
+   "id": "RF3-2",
+   "claim": "Count-dipole amplitude excess is in tension with SN/PV dipole constraints under a pure observer-boost model.",
+   "state": "OBSERVED_IN_POINT_ESTIMATE_NOT_QUANTIFIED",
+   "limit": "no uncertainties; count-dipole response model fixed; derived inputs"
+  },
+  {
+   "id": "RF3-3",
+   "claim": "Departure from FLRW detected, observer velocity measured, or shear/tilt preferred.",
    "state": "NOT_CLAIMED"
   }
  ],
