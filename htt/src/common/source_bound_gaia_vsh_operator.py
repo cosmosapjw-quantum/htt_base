@@ -84,6 +84,35 @@ def vsh_basis_functions(ra_deg: np.ndarray, dec_deg: np.ndarray) -> Dict[str, li
     }
 
 
+def _fibonacci_radec(n: int = 20000):
+    """Deterministic equal-area grid on S^2 as (ra_deg, dec_deg)."""
+    i = np.arange(n) + 0.5
+    z = 1.0 - 2.0 * i / n
+    phi = (np.pi * (1.0 + 5.0 ** 0.5) * i) % (2.0 * np.pi)
+    return np.rad2deg(phi), np.rad2deg(np.arcsin(z))
+
+
+def vsh_shear_gram(n: int = 20000) -> np.ndarray:
+    """Sphere-averaged Gram matrix G_ij = <E_i . E_j> of the five E2 basis fields (mas/yr per unit coefficient squared).
+
+    The E2 basis is not orthonormal (and is not the Cartesian STF5 chart), so the Euclidean norm of the coefficient vector is chart
+    dependent. The invariant field amplitude is sqrt(c^T G c).
+    """
+    ra, dec = _fibonacci_radec(n)
+    E = vsh_basis_functions(ra, dec)["shear"]
+    G = np.empty((5, 5))
+    for i in range(5):
+        for j in range(5):
+            G[i, j] = float(np.mean(np.sum(E[i] * E[j], axis=1)))
+    return 0.5 * (G + G.T)
+
+
+def vsh_shear_l2_amplitude(c: np.ndarray, n: int = 20000) -> float:
+    """Sphere-averaged rms amplitude of the E2 field sum_k c_k E_k (mas/yr)."""
+    c = np.asarray(c, dtype=np.float64)
+    return float(np.sqrt(c @ vsh_shear_gram(n) @ c))
+
+
 class SourceBoundGaiaVSHOperator:
     """Source-bound observation operator for Gaia DR3 CRF3 quasar VSH proper motions."""
 
@@ -196,7 +225,10 @@ class SourceBoundGaiaVSHOperator:
         self.glide_mle = self.c_mle[:3]
         self.shear_mle = self.c_mle[3:]
         self.amp_glide = float(np.linalg.norm(self.glide_mle))
+        # chart-dependent Euclidean norm of the E2 coefficients (kept for continuity; NOT an invariant amplitude)
         self.amp_shear = float(np.linalg.norm(self.shear_mle))
+        # invariant sphere-averaged rms amplitude of the fitted E2 field
+        self.amp_shear_l2 = vsh_shear_l2_amplitude(self.shear_mle)
 
     def evaluate_modes(self, c_model: np.ndarray) -> Tuple[float, float]:
         """Evaluate chi2 and log-likelihood for an 8-vector of VSH modes (mas/yr).

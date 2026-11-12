@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Solver-free Bianchi momentum/HTT observability mock; no physical transfer claim."""
 from __future__ import annotations
-import argparse,json,math
+import argparse,json,math,platform
 from pathlib import Path
 import numpy as np
 SEED=20261109; COUNT_RESPONSE_MOCK=1.25; GAIA_E1_RESPONSE_MOCK=.80; KAPPA_ENTHALPY_MOCK=1.0
@@ -101,7 +101,7 @@ def run_experiment(seed=SEED,n_rep=30000,n_post=12000,n_null=512):
  'claim_ceiling':['Class-A momentum map has an exact common-trace kernel.','Class-B map is generically rank 3 at fixed shear, outside det(J_B)=0.',
  'Selected II/IX pair has equal instantaneous normal-frame flux/tilt but different intrinsic 3-Ricci spectra.','Only an idealized curvature oracle separates the selected pair in this mock.',
  'No real data, Bianchi transfer, evolution solver, or global HTT sufficiency is established.'],
- 'verification':{'python':'3.13.5','numpy':np.__version__,'local_pytest':5,'local_pytest_status':'PASS','exact_repo_checkout':'NOT_RUN_LOCAL_DEVICE_OFFLINE','github_actions':'PENDING'}}
+ 'verification':{'python':platform.python_version(),'numpy':np.__version__,'local_pytest':'NOT_RUN_BY_SCRIPT','exact_repo_checkout':'NOT_RECORDED_BY_SCRIPT','github_actions':'NOT_RECORDED_BY_SCRIPT'}}
 def main():
  ap=argparse.ArgumentParser();ap.add_argument('--seed',type=int,default=SEED);ap.add_argument('--replications',type=int,default=30000)
  ap.add_argument('--posterior-draws',type=int,default=12000);ap.add_argument('--null-draws',type=int,default=512)

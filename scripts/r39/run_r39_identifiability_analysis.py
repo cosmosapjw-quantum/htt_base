@@ -43,6 +43,19 @@ class DummyProvider:
         raise KeyError(name)
 
 
+
+def scalar_xc_shear_direction(theta5: np.ndarray) -> np.ndarray:
+    """Unit direction of the STF5 shear block in the Gram (Frobenius) metric, v^T G v = 1 (GRAM-2).
+
+    The Euclidean norm of the Cartesian STF5 components is NOT the tensor Frobenius norm.
+    """
+    G = np.array([[2, 1, 0, 0, 0], [1, 2, 0, 0, 0], [0, 0, 2, 0, 0], [0, 0, 0, 2, 0], [0, 0, 0, 0, 2]], dtype=float)
+    v = np.asarray(theta5, dtype=float)
+    n2 = float(v @ G @ v)
+    if not n2 > 0.0:
+        raise ValueError("zero STF5 vector has no direction")
+    return v / np.sqrt(n2)
+
 def params_to_model(th: np.ndarray) -> KinematicResponseModel:
     """Convert 17 parameters to KinematicResponseModel."""
     stf5 = th[0:5]
@@ -236,7 +249,7 @@ def main():
     # Scalar x_C ablation:
     # Replace shear columns 0..4 with their single scalar projection
     J_xC = J.copy()
-    shear_grad = theta_0[:5] / np.linalg.norm(theta_0[:5])
+    shear_grad = scalar_xc_shear_direction(theta_0[:5])
     J_xC[:, 0] = J[:, :5] @ shear_grad
     J_xC[:, 1:5] = 0.0  # zero out 4 redundant shear dimensions
     # Re-evaluate SVD
