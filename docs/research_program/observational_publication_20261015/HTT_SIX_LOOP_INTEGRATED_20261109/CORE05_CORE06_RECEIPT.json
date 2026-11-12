@@ -1,7 +1,7 @@
 {
  "schema": "htt.core05_core06_receipt/1",
  "as_of_date": "2026-11-12",
- "status": "SPEC_ONLY_NO_CODE_REPAIR",
+ "status": "SPEC_PLUS_PARTIAL_CODE_REPAIR_ON_PR574",
  "statement": "CORE-05 outputs are design specifications with explicit UNAVAILABLE/SYNTHETIC_ONLY items; no likelihood or push-forward code was repaired or executed. CORE-06 registries are design registries derived from the DAG and CLAUDE.md coverage envelope, not from an executed comparison.",
  "acceptance_state": {
   "CORE-05": {
@@ -17,5 +17,27 @@
   }
  },
  "native_subagents": "NOT_RUN",
- "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+ "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES",
+ "independent_review": {
+  "performed": true,
+  "reviewer": "subagent physmath-coding-harness:scientific-diff-reviewer (real agent run 2026-11-12)",
+  "target": "PR #574 commits e10910359, 2599ac065, e5226fb69",
+  "verdict": "five stated repairs correct and tests discriminate (11 fail before, 104 pass after); one MAJOR miss (Euclidean norm in scripts/r39 scalar x_C ablation) fixed in aa35faa44; two shear-amplitude norms (htt/src/common/source_bound_gaia_vsh_operator.py:199, scripts/r38/run_gaia_vsh.py:191) need an owner decision on the VSH coefficient chart (orthonormal vs Cartesian STF5) and were NOT changed",
+  "not_reviewed": [
+   "end-to-end MCMC-to-certificate path with real posterior",
+   "Pantheon likelihood numerics with the new q0",
+   "downstream consumers of changed mock JSON keys"
+  ]
+ },
+ "code_repairs_pr574_head": "61754d1c3a060c9ad04082a4faa09c794555e239",
+ "repairs_in_core05_followup": [
+  "compute_five_variable_state: beta_RO = exact ordered SR composition (was linear sum); regression test written first and failed before the fix",
+  "expansion_scalar=0.21 and delta_omega_k=0.005 exposed as declared inputs (defaults kept; NOT derived from data or a source)"
+ ],
+ "found_not_repaired": [
+  "htt/src/common/htt_five_variable_state.py: Q anchors hard-coded (shear norm_bound 1e-4, gauge_margin 1e-5, vorticity 1e-4, beta_MO ball radius 0.01) with status ADMITTED and no source/theorem/calibration provenance -> violates CORE-05 Q acceptance; needs an owner decision, not a code guess",
+  "five outputs are built from one sample array for F and Pi, but x/bundle comes from the posterior MEAN point, not per-draw push-forward",
+  "run_hypothesis_competition returns a hard-coded interpretation string citing Delta_BIC = -602.8 and '100% empirical detection' regardless of inputs: claim-language/forbidden-word violation, not part of the reviewed diff",
+  "field name sigma_frobenius_upper_bound is computed from the posterior mean (label overreach, pre-existing)"
+ ]
 }
