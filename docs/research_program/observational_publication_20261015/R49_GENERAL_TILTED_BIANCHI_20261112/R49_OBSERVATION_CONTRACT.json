@@ -1,0 +1,352 @@
+{
+  "schema": "htt.r49.observation_contract/1",
+  "as_of": "2026-11-12",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "authority": {
+    "parent_r48_branch": "research/htt-six-loop-core00-20261109",
+    "parent_r48_head": "1b8abb1399f9f80b8e69bd57c2cc1592e2d1bcd4",
+    "parent_pr": 573,
+    "companion_code_repair_pr": 574,
+    "companion_code_repair_head": "8a6ae269751a8a6878eaf9e1192c28fe1c067523",
+    "policy": "R48 artefacts are immutable historical evidence; R49 is a successor contract."
+  },
+  "conventions": {
+    "metric_signature": "(-,+,+,+)",
+    "speed_of_light": "explicit",
+    "normal_norm": "N_a N^a = -c^2",
+    "triad": "orthonormal invariant spatial triad unless otherwise stated",
+    "structure_constants": "C^alpha_(beta gamma) = epsilon_(beta gamma delta) n^(delta alpha) + a_beta delta^alpha_gamma - a_gamma delta^alpha_beta",
+    "jacobi": "n^(alpha beta) a_beta = 0",
+    "class_A": "a_alpha = 0",
+    "class_B": "a_alpha != 0",
+    "warning": "Legacy StructureConstants and BianchiAlgebra representations must be bridged explicitly; do not assume identical axis, epsilon or sign conventions."
+  },
+  "bianchi_families": [
+    {
+      "id": "I",
+      "class": "A",
+      "h": null,
+      "status": "algebra_present",
+      "single_perfect_fluid_genuine_tilt": "forbidden_under_standard_homogeneous_momentum_constraint_and_positive_enthalpy_assumptions",
+      "other_tilt_interpretations": [
+        "multi_fluid_counter_streaming_with_total_momentum_constraint",
+        "relative_species_frame",
+        "local_observer_boost"
+      ]
+    },
+    {
+      "id": "II",
+      "class": "A",
+      "h": null,
+      "status": "algebra_present",
+      "tilt_admissibility": "constraint_restricted; classical irrotational tilted branches exist"
+    },
+    {
+      "id": "VI_0",
+      "class": "A",
+      "h": null,
+      "status": "algebra_present",
+      "tilt_admissibility": "restricted tilted self-similar branches; validate full general time-dependent state"
+    },
+    {
+      "id": "VII_0",
+      "class": "A",
+      "h": null,
+      "status": "algebra_present",
+      "tilt_admissibility": "constraint/model dependent; do not infer absence from a self-similar no-go"
+    },
+    {
+      "id": "VIII",
+      "class": "A",
+      "h": null,
+      "status": "algebra_present",
+      "tilt_admissibility": "genuinely tilted perfect-fluid branches may require fluid vorticity"
+    },
+    {
+      "id": "IX",
+      "class": "A",
+      "h": null,
+      "status": "algebra_present",
+      "tilt_admissibility": "constraint/model dependent; closed-curvature and fluid-vorticity sectors required"
+    },
+    {
+      "id": "III",
+      "class": "B",
+      "h": -1,
+      "status": "algebra_present",
+      "tilt_admissibility": "VI_h boundary; special restrictions; preserve exact h=-1 bridge"
+    },
+    {
+      "id": "IV",
+      "class": "B",
+      "h": null,
+      "status": "algebra_present",
+      "tilt_admissibility": "family-specific Class-B constraints; unresolved general branch registry"
+    },
+    {
+      "id": "V",
+      "class": "B",
+      "h": null,
+      "status": "algebra_present",
+      "tilt_admissibility": "tilted dynamical systems and irrotational subclasses exist"
+    },
+    {
+      "id": "VI_h",
+      "class": "B",
+      "h": "continuous_except_boundary",
+      "status": "algebra_present",
+      "tilt_admissibility": "h-dependent branches; h=-1/9 exceptional self-similar solution; do not extrapolate to all h"
+    },
+    {
+      "id": "VII_h",
+      "class": "B",
+      "h": "positive",
+      "status": "algebra_present",
+      "tilt_admissibility": "tilted dynamics and CMB transfer prior art; full source-conditioned vector path not implemented"
+    }
+  ],
+  "physical_state": {
+    "geometry": {
+      "fields": [
+        "a_alpha",
+        "n_alpha_beta symmetric",
+        "C^alpha_(beta gamma)",
+        "h_parameter",
+        "family_label",
+        "algebra_convention_id"
+      ],
+      "constraints": [
+        "Jacobi n^(alpha beta) a_beta = 0",
+        "metric compatibility",
+        "torsion-free invariant-frame connection",
+        "family stratum and h-domain"
+      ]
+    },
+    "normal_congruence": {
+      "frame_id": "homogeneous_orbit_normal_N",
+      "fields": [
+        "H_N",
+        "Theta_N",
+        "Sigma_N_STF5",
+        "A_N_if_lapse_requires"
+      ],
+      "rule": "Do not identify normal kinematics with matter-fluid kinematics."
+    },
+    "fluid_congruences": {
+      "parameterization": "u_s^a = Gamma_s (N^a + c V_s^alpha e_alpha^a)",
+      "fields_per_species": [
+        "epsilon_s",
+        "p_s",
+        "EOS_s",
+        "V_s^alpha",
+        "Gamma_s",
+        "source_frame_id",
+        "epoch_id"
+      ],
+      "constraints": [
+        "V_s^2 < 1",
+        "species conservation",
+        "Euler equation",
+        "total normal-frame momentum constraint"
+      ],
+      "derived_kinematics_per_species": [
+        "theta_s",
+        "sigma_s_ab",
+        "omega_s_ab",
+        "A_s_a"
+      ],
+      "derived_stress": {
+        "epsilon_N": "(epsilon_s + p_s) Gamma_s^2 - p_s",
+        "J_a": "c (epsilon_s + p_s) Gamma_s^2 V_s_a",
+        "S_ab": "p_s h_ab + (epsilon_s + p_s) Gamma_s^2 V_s_a V_s_b",
+        "pi_ab": "(epsilon_s + p_s) Gamma_s^2 V_s_<a V_s_b>"
+      }
+    },
+    "observer_frames": {
+      "roles": [
+        "radiation",
+        "matter",
+        "observer",
+        "catalogue_reference_frame"
+      ],
+      "each_relative_velocity_requires": [
+        "source_frame_id",
+        "target_frame_id",
+        "epoch_id",
+        "triad_basis_id",
+        "handedness",
+        "boost_convention"
+      ],
+      "composition": "exact ordered Lorentz composition; propagate Wigner rotation to tensors, polarization bases and covariance"
+    }
+  },
+  "observables": {
+    "cmb": {
+      "data_vector": [
+        "a_lm_T",
+        "a_lm_E",
+        "a_lm_B",
+        "or map-space IQU"
+      ],
+      "model_mean": "isotropic realization plus deterministic Bianchi mean template plus exact observer remapping",
+      "covariance": "full anisotropic harmonic covariance including stochastic mode coupling, beam, mask, foreground and noise",
+      "rule": "Mean-template and BipoSH/covariance readouts of the same a_lm are one generative likelihood, not independent factors.",
+      "primary_lane": "Planck_PR3_SMICA_HM_plus_FFP10_matched_same_release"
+    },
+    "counts": {
+      "surveys": [
+        "Quaia",
+        "NVSS",
+        "RACS"
+      ],
+      "likelihood": "survey-specific marked point processes with selection, redshift, flux/size response, completeness, shot noise and clustering covariance",
+      "rule": "No hard-coded dipole, selection coefficient, inferred random catalogue or default diagonal covariance."
+    },
+    "astrometry": {
+      "survey": "Gaia_DR3_CRF3",
+      "requirements": [
+        "source level proper motions",
+        "full covariance",
+        "scanning law",
+        "ICRF/CRF spin tie",
+        "source velocity nuisance"
+      ],
+      "rule": "B1 VSH is not vorticity absent independently calibrated frame-spin anchor."
+    },
+    "distances": {
+      "surveys": [
+        "PantheonPlus",
+        "Cosmicflows4"
+      ],
+      "requirements": [
+        "exact row order",
+        "full covariance two-axis slicing",
+        "selection",
+        "group/method covariance",
+        "source congruence"
+      ],
+      "local_law": "H_u(e) = theta_u/3 - A_u.e/c + sigma_u_ab e^a e^b",
+      "finite_redshift": "integrated optical/redshift map with truncation remainder"
+    },
+    "expansion_control": {
+      "surveys": [
+        "DESI"
+      ],
+      "rule": "Use only angularly resolved estimators for directional anisotropy; isotropic BAO is a background control."
+    }
+  },
+  "htt_five_views": {
+    "common_law": "P(Theta,nuisance | D, M_B)",
+    "x": "sample x functional; preserve tensor rank, parity, units, frame, epoch, source operator, state identity",
+    "Q": "anchor/gauge/margin bodies from source or theorem; unavailable stays unavailable",
+    "Pi": "law-conditional exceedance under explicitly named posterior or matched-null law",
+    "F": "directional support and occupancy relative to admitted anchor body",
+    "G_F": "depth path across redshift shells using full data and cross-shell covariance",
+    "invariant": "x,Q,Pi,F,G_F are derived views of one common posterior/compatibility law, never independent likelihood factors"
+  },
+  "planck_lanes": {
+    "primary": {
+      "release": "Planck_PR3",
+      "products": [
+        "SMICA observed map",
+        "available HM/split maps",
+        "common mask",
+        "FFP10 same-release simulations",
+        "RIMO/beam transfer"
+      ],
+      "purpose": "calibrated primary low-ell likelihood",
+      "minimum_gates": [
+        "source hashes",
+        "FITS headers",
+        "ordering/frame/unit",
+        "mask/beam/transfer",
+        "FFP10 pipeline match",
+        "template injection and coverage"
+      ]
+    },
+    "pr4_npipe": {
+      "catalogued": true,
+      "inventory_files": 22,
+      "inventory_bytes": 19776459729,
+      "matched_official_mc": "UNAVAILABLE_IN_PRIOR_RECEIPT",
+      "role": [
+        "observed map robustness after transfer harmonization",
+        "half-ring noise-only diagnostic"
+      ],
+      "prohibited": [
+        "PR3 FFP10 treated as PR4 matched null",
+        "half-ring difference treated as full CMB+noise ensemble",
+        "PR3 and PR4 samples mixed into one matched-null distribution"
+      ],
+      "optional_synthetic_null": "declared C_l plus validated NPIPE noise model; SYNTHETIC/TRANSFER_CONDITIONAL only"
+    }
+  },
+  "code_status_at_r48": {
+    "all_type_algebra": "PRESENT",
+    "all_type_shear_background": "PRESENT_WITH_SCOPE_LIMITS",
+    "scalar_beta_fixed_direction_background": "PRESENT",
+    "exact_reduced_tilt_rhs_families": [
+      "FLRW",
+      "I",
+      "V",
+      "VII_0",
+      "VII_h"
+    ],
+    "bianchi_i_photon_hierarchy": "PRESENT",
+    "general_class_A_class_B_vector_tilt_rhs": "NOT_PRESENT_AS_A_SINGLE_VALIDATED_PRODUCTION_PATH",
+    "native_all_family_polarized_cmb_transfer": "NOT_PRESENT_AS_A_SINGLE_VALIDATED_PRODUCTION_PATH",
+    "source_bound_all_family_common_cobaya_likelihood": "NOT_RUN"
+  },
+  "fail_closed_rules": [
+    "Missing sources, covariance, selection, frame, beam, transfer or response calibration must raise/mark UNAVAILABLE; never substitute zeros, identity covariance, random directions or hard-coded observed carriers.",
+    "A mock cannot enter a real-data likelihood.",
+    "A type label cannot be promoted from curvature-only fingerprints where group actions are degenerate.",
+    "No Bianchi family identification without family-specific physical transfer and separated competitors.",
+    "No local-boost/global-tilt equivalence.",
+    "No independent factorization of five HTT views.",
+    "No full-sky or finite-redshift approximation is silently extrapolated beyond its derived domain."
+  ],
+  "acceptance_tests": {
+    "algebra": [
+      "Jacobi residual for all family fixtures",
+      "legacy-to-canonical convention round-trip",
+      "h=-1 and h=-1/9 boundary handling",
+      "SO(3) triad covariance and parity tests"
+    ],
+    "physical": [
+      "stress projection analytic oracle",
+      "normal-frame momentum constraint",
+      "Bianchi-I single-fluid no-tilt negative test",
+      "multi-fluid total-flux cancellation fixture",
+      "fluid kinematics versus normal kinematics",
+      "sub/superluminal rejection",
+      "known exact/self-similar branch recovery"
+    ],
+    "evolution": [
+      "Hamiltonian/momentum/Codazzi residuals at every output",
+      "FLRW and untilted limits",
+      "adaptive tolerance convergence",
+      "class-A and class-B separately"
+    ],
+    "cmb": [
+      "Bianchi-I endpoint regression",
+      "V/VII_h polarized transfer regression",
+      "mask/beam injection",
+      "T/E/B or IQU covariance",
+      "no double counting of template and covariance"
+    ],
+    "inference": [
+      "source-bound preflight",
+      "full covariance",
+      "split-Rhat and bulk/tail ESS",
+      "SBC and coverage",
+      "PPC",
+      "leave-one-probe-out heldout scores"
+    ],
+    "htt": [
+      "one common posterior for x,Q,Pi,F,G_F",
+      "typed functional validation",
+      "full cross-shell covariance"
+    ]
+  }
+}
