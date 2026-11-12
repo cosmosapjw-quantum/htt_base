@@ -80,6 +80,17 @@ def vsh_vector_fields(ra_deg: np.ndarray, dec_deg: np.ndarray):
         "shear_2": [E2_0, E2_1c, E2_1s, E2_2c, E2_2s],
     }
 
+def shear_e2_gram(n: int = 20000) -> np.ndarray:
+    """Sphere-averaged Gram matrix <E_i . E_j> of the five E2 fields; the E2 basis is not orthonormal, so
+    the invariant rms amplitude of a coefficient vector c is sqrt(c^T G c), not the Euclidean norm of c."""
+    i = np.arange(n) + 0.5
+    z = 1.0 - 2.0 * i / n
+    phi = (np.pi * (1.0 + 5.0 ** 0.5) * i) % (2.0 * np.pi)
+    E = vsh_vector_fields(np.rad2deg(phi), np.rad2deg(np.arcsin(z)))["shear_2"]
+    G = np.array([[float(np.mean(np.sum(E[a] * E[b], axis=1))) for b in range(5)] for a in range(5)])
+    return 0.5 * (G + G.T)
+
+
 def main():
     print("Executing Gaia DR3 VSH Analysis (R38-08)...")
     if not GAIA_NPZ.exists():
@@ -188,7 +199,8 @@ def main():
     glide_coeff = coeff[:3]
     shear_coeff = coeff[3:]
     glide_amp = float(np.linalg.norm(glide_coeff))
-    shear_amp = float(np.linalg.norm(shear_coeff))
+    shear_amp = float(np.linalg.norm(shear_coeff))                      # chart-dependent Euclidean norm of E2 coefficients
+    shear_amp_l2 = float(np.sqrt(shear_coeff @ shear_e2_gram() @ shear_coeff))   # invariant sphere-averaged rms amplitude
     
     print(f"  Gaia VSH Fit: chi2_null={chi2_null:.1f}, chi2_full={chi2_full:.1f}, delta_chi2={delta_chi2:.2f}")
     print(f"  Fitted Glide amplitude: {glide_amp:.4f} mas/yr")
@@ -227,6 +239,7 @@ def main():
             "glide_total_amp_mas_yr": glide_amp,
             "shear_e2_amplitudes_mas_yr": shear_coeff.tolist(),
             "shear_total_amp_mas_yr": shear_amp,
+            "shear_total_amp_l2_rms_mas_yr": shear_amp_l2,
             "parameter_covariance": cov_coeff.tolist(),
             "singular_values": s.tolist(),
             "chi2_null": chi2_null,

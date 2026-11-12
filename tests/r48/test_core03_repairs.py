@@ -275,3 +275,43 @@ def test_sne_prediction_is_residual_against_cache_fiducial():
     # shifting H0 only changes a z-independent constant (absorbed by the analytic M0 marginalisation)
     shifted = sn.predict(theta, tm.PsiCosmology(H_0=67.4, Omega_m=0.3))
     assert np.allclose(shifted, shifted[0], atol=1e-9) and abs(shifted[0] - 5 * np.log10(70 / 67.4)) < 1e-9
+
+
+# ---- PV data (CF4 dmzp) is a distance modulus mu(z), not a residual: the prediction must carry mu_model(z)
+def test_pv_prediction_carries_distance_modulus_trend():
+    from htt.htt.infer import tensor_joint_multiprobe_likelihood as tm
+
+    pv = tm.PeculiarVelocityLikelihood.__new__(tm.PeculiarVelocityLikelihood)
+    z = np.geomspace(0.01, 0.1, 40)
+    pv.redshifts = z
+    pv.directions = np.tile([0.0, 0.0, 1.0], (40, 1))
+    theta = tm.ThetaKinematic.from_vector(np.zeros(17))
+    psi = tm.PsiCosmology(H_0=70.0, Omega_m=0.3)
+    pred = pv.predict(theta, psi)
+    q0 = -0.55
+    want = 5 * np.log10(299792.458 * z / 70.0 * (1 + 0.5 * (1 - q0) * z) * 1e5)
+    assert np.allclose(pred, want, atol=1e-9)
+    assert abs(np.polyfit(np.log10(z), pred, 1)[0] - 5.0) < 0.3
+
+
+# ---- VSH shear coefficient amplitude: the E2 basis is not orthonormal, so the Euclidean coefficient norm is chart dependent;
+#      the invariant amplitude is the sphere-averaged L2 norm sqrt(c^T G c) with G_ij = <E_i . E_j>
+def test_vsh_shear_l2_amplitude_uses_basis_gram():
+    from common import source_bound_gaia_vsh_operator as op
+
+    G = op.vsh_shear_gram()
+    assert G.shape == (5, 5) and np.allclose(G, G.T) and np.all(np.linalg.eigvalsh(G) > 0)
+    assert np.max(np.abs(np.diag(G) - 1.0)) > 0.5          # basis is far from unit-normalised: Euclidean norm is not invariant
+    for k in range(5):
+        c = np.zeros(5); c[k] = 1.0
+        assert abs(op.vsh_shear_l2_amplitude(c) - np.sqrt(G[k, k])) < 1e-12
+    c = np.array([1.0, -0.5, 0.2, 0.3, -0.7])
+    assert abs(op.vsh_shear_l2_amplitude(c) - np.sqrt(c @ G @ c)) < 1e-12
+
+
+def test_gaia_script_shear_l2_helper_matches_operator():
+    from common import source_bound_gaia_vsh_operator as op
+    spec = importlib.util.spec_from_file_location("gaia_vsh_script", ROOT / "scripts" / "r38" / "run_gaia_vsh.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    assert np.allclose(mod.shear_e2_gram(), op.vsh_shear_gram(), rtol=1e-9, atol=1e-9)

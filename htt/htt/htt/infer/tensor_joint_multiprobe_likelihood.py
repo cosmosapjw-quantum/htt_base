@@ -824,13 +824,19 @@ class PeculiarVelocityLikelihood(BaseProbeLikelihood):
         self.init_covariance_and_schur(data, cov, design_matrix=H, source_path=source)
 
     def predict(self, theta: ThetaKinematic, psi: PsiCosmology) -> np.ndarray:
+        # CF4 'dmzp' is a distance modulus mu(z) (slope ~5 per dex in z), not a residual: the model must carry mu_model(z);
+        # the z-independent offset is absorbed by the analytic marginalisation.
+        c_km_s = 299792.458
+        q0 = deceleration_parameter(psi.Omega_m, psi.DeltaOmega_k)
+        dl = (c_km_s * self.redshifts / psi.H_0) * (1.0 + 0.5 * (1.0 - q0) * self.redshifts)
+        mu_model = 5.0 * np.log10(np.maximum(dl * 1e5, 1e-5))
         n = self.directions
         S = theta.sigma_matrix
         quad = np.sum(n * (n @ S), axis=1)
         doppler = n @ theta.beta_MO_A
         dipole_acc = (n @ theta.A_A) * 1e-3
         delta_h = doppler + quad - dipole_acc
-        return - (5.0 / math.log(10.0)) * delta_h
+        return mu_model - (5.0 / math.log(10.0)) * delta_h
 
     def compute(self, theta: ThetaKinematic, psi: PsiCosmology) -> Tuple[float, float]:
         pred = self.predict(theta, psi)
