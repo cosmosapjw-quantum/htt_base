@@ -92,6 +92,8 @@ from htt.htt.infer.tensor_joint_multiprobe_likelihood import (
 )
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 
+from common.relativistic_velocity_closure import compose_velocities_sr  # noqa: E402
+
 
 def stf5_gram_unit_direction(v5: np.ndarray) -> np.ndarray:
     """Direction of a Cartesian-STF5 vector normalised to unit Frobenius norm (v^T G_STF5 v = 1)."""
@@ -269,8 +271,14 @@ class TensorFiveVariableEngine:
         self,
         mcmc_samples: np.ndarray,
         post_mean: np.ndarray,
+        expansion_scalar: float = 0.21,
+        delta_omega_k: float = 0.005,
     ) -> HTTFiveVariableState:
-        """Derive full Five-Variable state (x, Q, Pi, F, G_F) from posterior samples."""
+        """Derive full Five-Variable state (x, Q, Pi, F, G_F) from posterior samples.
+
+        expansion_scalar and delta_omega_k are DECLARED inputs (defaults retained from the earlier code, not derived
+        from data or a source); callers must record them as such.
+        """
         frame = "CMB_CONGRUENCE_FRAME"
         congruence = "CMB_REST_FRAME"
         epoch = "Z_RECOMBINATION"
@@ -296,7 +304,7 @@ class TensorFiveVariableEngine:
 
         b_rm = tuple(float(x) for x in post_mean[11:14])
         b_mo = tuple(float(x) for x in post_mean[14:17])
-        b_ro = tuple(b_rm[i] + b_mo[i] for i in range(3))
+        b_ro = tuple(float(x) for x in compose_velocities_sr(b_rm, b_mo))   # exact ordered SR composition (not a linear sum)
 
         velocities = build_velocity_frame_bundle(
             beta_RO=b_ro,
@@ -314,7 +322,7 @@ class TensorFiveVariableEngine:
         )
 
         geometry = GeometryState(
-            delta_omega_k=0.005,
+            delta_omega_k=delta_omega_k,
             frame=frame,
             congruence_id=congruence,
             epoch_window=epoch,
@@ -346,7 +354,7 @@ class TensorFiveVariableEngine:
         bundle_x = build_full_observable_x_bundle(
             joint_state,
             model_post,
-            expansion_scalar=0.21,
+            expansion_scalar=expansion_scalar,
             observed_carriers_dict={
                 "PLANCK_LOWELL": self.lik.data_vector[self.lik.probe_slices["CMB"]],
                 "QUAIA_QUASAR_DIPOLE": self.lik.data_vector[self.lik.probe_slices["Quasars"]],

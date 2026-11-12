@@ -182,3 +182,28 @@ def test_fisher_gain_ablation_calls_gram_direction_helper(monkeypatch):
     engine.lik = SimpleNamespace(predict_total=lambda th: A @ th, cov_matrix=np.eye(25))
     engine.compute_fisher_information_gain()
     assert len(calls) == 1 and calls[0].shape == (5,)
+
+
+# ---- CORE-05 follow-up: five-variable state must use exact ordered composition for beta_RO
+class _Stop(Exception):
+    pass
+
+
+def test_five_variable_state_beta_ro_uses_exact_ordered_composition(monkeypatch):
+    seen = {}
+
+    def spy(**kw):
+        seen.update(kw)
+        raise _Stop
+
+    monkeypatch.setattr(tfi, "build_velocity_frame_bundle", spy)
+    post = np.zeros(17)
+    post[11:14] = [2.0e-3, 0.0, 0.0]      # beta_RM
+    post[14:17] = [0.0, 3.0e-3, 0.0]      # beta_MO
+    engine = TensorFiveVariableEngine.__new__(TensorFiveVariableEngine)
+    with pytest.raises(_Stop):
+        engine.compute_five_variable_state(np.zeros((4, 17)), post)
+    want = compose_velocities_sr(post[11:14], post[14:17])
+    got = np.array(seen["beta_RO"], float)
+    assert np.allclose(got, want, rtol=0, atol=1e-18)
+    assert not np.allclose(got, post[11:14] + post[14:17], rtol=0, atol=1e-18)
