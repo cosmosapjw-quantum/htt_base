@@ -988,23 +988,28 @@ class TensorJointMultiprobeLikelihood:
     ):
         self.repo_root = repo_root or Path.cwd()
         
-        self.planck = PlanckLowEllCarrierLikelihood(repo_root=self.repo_root)
-        self.quaia = QuaiaCountsDipoleLikelihood(repo_root=self.repo_root)
-        self.radio = RadioCountDipoleLikelihood(repo_root=self.repo_root)
-        self.gaia = GaiaProperMotionVSHLikelihood(repo_root=self.repo_root)
-        self.sne = SupernovaIaJointLikelihood(repo_root=self.repo_root)
-        self.pv = PeculiarVelocityLikelihood(repo_root=self.repo_root)
-        self.desi = DESIDR2BAOLikelihood(repo_root=self.repo_root)
-
-        self.all_probes: Dict[str, BaseProbeLikelihood] = {
-            "CMB": self.planck,
-            "Quasars": self.quaia,
-            "Radio": self.radio,
-            "Gaia": self.gaia,
-            "SNe": self.sne,
-            "PV": self.pv,
-            "DESI": self.desi,
+        factories = {
+            "CMB": lambda: PlanckLowEllCarrierLikelihood(repo_root=self.repo_root),
+            "Quasars": lambda: QuaiaCountsDipoleLikelihood(repo_root=self.repo_root),
+            "Radio": lambda: RadioCountDipoleLikelihood(repo_root=self.repo_root),
+            "Gaia": lambda: GaiaProperMotionVSHLikelihood(repo_root=self.repo_root),
+            "SNe": lambda: SupernovaIaJointLikelihood(repo_root=self.repo_root),
+            "PV": lambda: PeculiarVelocityLikelihood(repo_root=self.repo_root),
+            "DESI": lambda: DESIDR2BAOLikelihood(repo_root=self.repo_root),
         }
+        wanted = list(factories) if enabled_probes is None else list(enabled_probes)
+        unknown = [p for p in wanted if p not in factories]
+        if unknown:
+            raise ValueError(f"unknown probes: {unknown}")
+        # Only enabled probes are constructed: a disabled probe's data files are never read.
+        self.all_probes: Dict[str, BaseProbeLikelihood] = {p: factories[p]() for p in wanted}
+        self.planck = self.all_probes.get("CMB")
+        self.quaia = self.all_probes.get("Quasars")
+        self.radio = self.all_probes.get("Radio")
+        self.gaia = self.all_probes.get("Gaia")
+        self.sne = self.all_probes.get("SNe")
+        self.pv = self.all_probes.get("PV")
+        self.desi = self.all_probes.get("DESI")
 
         if enabled_probes is None:
             self.enabled_probes = list(self.all_probes.keys())

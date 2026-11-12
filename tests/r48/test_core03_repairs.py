@@ -234,3 +234,28 @@ def test_hypothesis_competition_text_and_best_model_are_computed():
     dbic = {h["hypothesis_id"]: h["Delta_BIC"] for h in out["hypotheses"]}
     assert f"{dbic['H_loc']:.1f}" in txt
     assert out["fixed_hypothesis_points"]["status"] == "FIXED_POINTS_NOT_REFIT"
+
+
+# ---- probe construction is lazy: a disabled probe's data files are never loaded (NPIPE/PR4 exclusion)
+def test_disabled_probe_is_never_constructed(monkeypatch):
+    from htt.htt.infer import tensor_joint_multiprobe_likelihood as tm
+
+    class Boom:
+        def __init__(self, *a, **k):
+            raise AssertionError("disabled probe was constructed")
+
+    class Stub:
+        def __init__(self, *a, **k):
+            self.n_data = 2
+            self.data_vector = np.zeros(2)
+            self.cov_matrix = np.eye(2)
+
+        def assert_zero_stub(self):
+            pass
+
+    monkeypatch.setattr(tm, "PlanckLowEllCarrierLikelihood", Boom)
+    for name in ("QuaiaCountsDipoleLikelihood", "RadioCountDipoleLikelihood", "GaiaProperMotionVSHLikelihood",
+                 "SupernovaIaJointLikelihood", "PeculiarVelocityLikelihood", "DESIDR2BAOLikelihood"):
+        monkeypatch.setattr(tm, name, Stub)
+    lik = tm.TensorJointMultiprobeLikelihood(enabled_probes=["Quasars", "Radio"])
+    assert lik.enabled_probes == ["Quasars", "Radio"] and lik.n_data == 4 and "CMB" not in lik.probe_slices
