@@ -1,0 +1,16 @@
+{
+  "schema": "htt.l2_quaia_slope_receipt/1",
+  "task_id": "L2",
+  "slice": "QUAIA_COUNT_SLOPE_MAGNITUDE_ONLY",
+  "as_of_date": "2026-11-12",
+  "task_status_unchanged": "PENDING (fourth slice; L2 acceptance not met)",
+  "status": "SLICE_DONE_PROXY",
+  "blinding_note": "Only phot_g_mean_mag read; no positions, no dipole.",
+  "operator": {"script": "L2_quaia_count_slope.py", "script_sha256": "ad6816b8a6bb6e4acdfd2eb0e3f8077510dc4cc8fa6860127a7c656843a918cb", "result_sha256": "98a6b025188fd63a65bac80e829a8de719690495aaca980eb5accc3077518059", "seed": 20261112, "exit_code": 0, "bootstrap": 30, "versions": {"python": "3.12.3", "numpy": "2.4.2"}, "input": "quaia_G20.0.fits (SHA256 not recomputed; 755850 rows)"},
+  "results": {"x_by_G_window": {"17.5-18.5": 2.170, "18.0-19.0": 1.975, "18.5-19.5": 1.758, "19.0-19.8": 1.569, "17.0-19.0": 2.148}, "bootstrap_sd": "0.003-0.009 (statistical only)",
+              "interpretation": "x_Q is not a single number: it falls from ~2.2 to ~1.6 toward the G=20 limit (count-curve curvature and/or incompleteness). The statistical error is far smaller than the window dependence; adopt a range x_Q in [1.6, 2.2] (within the earlier declared grid 1.5-2.5), not a point value. Slope of the Gaia-G counts is not the slope of the redshift-resolved quasar flux distribution used in the kinematic response."},
+  "claims": [{"id": "L2-Q1", "claim": "Quaia G<20 magnitude-count slope window-dependent, 1.6-2.2.", "state": "SOURCE_MEASURED_PROXY", "limit": "G-band magnitude counts, no completeness/selection-function correction; dipole response needs the slope at the flux limit with the selection function"}],
+  "not_run": ["selection-function-corrected slope", "RACS lane", "LSS cross-covariance", "independent reviewer"],
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}
