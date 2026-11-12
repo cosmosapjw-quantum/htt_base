@@ -46,3 +46,7 @@ Official release bytes only, hashed where stated; no credentials, cookies or cha
 
 ## 8. Reproduce
 Each receipt names its script, SHA256, command, seed and library versions. Package scripts take explicit input paths (raw root is local-only). `python3 data_inventory_scan.py --raw <RAW_ROOT> --out DATA_INVENTORY.json` regenerates the inventory.
+
+## 9. Re-fit (added after the user's re-fit decision, 2026-11-12)
+Hypotheses H_0, H_loc, H_tilt, H_mix were re-fitted on six real-data channels (Quasars, Radio, Gaia, SNe, PV, DESI; n=1526) **without** the Planck PR4 CMB channel (NPIPE exclusion honoured; the likelihood now constructs only enabled probes, test-first). See `REFIT_RECEIPT.json` and `REFIT_HYPOTHESES_NO_CMB_RESULT.json`.
+Point estimates only. Fit adequacy is poor (SNe chi2 ~34000/490, PV ~13700/1000), beta_RM does not enter any enabled channel, and the fitted |beta_MO| (4.9e-3) is not an observer-velocity estimate. The BIC ranking is not evidence for any hypothesis. No claim of departure from FLRW is made. This run is not the CORE-07 production inference; input-file hashes for the loaded data are not recorded in the receipt (open item).

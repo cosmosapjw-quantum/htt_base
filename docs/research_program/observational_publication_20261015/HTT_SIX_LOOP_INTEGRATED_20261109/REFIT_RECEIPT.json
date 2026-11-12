@@ -1,0 +1,79 @@
+{
+ "schema": "htt.refit_receipt/1",
+ "task_id": "CORE-05/07-precursor",
+ "as_of_date": "2026-11-12",
+ "status": "REFIT_DONE_MODEL_MISMATCH_FLAGGED",
+ "authorisation": "User decisions 2026-11-12: (a) NPIPE/PR4 path excluded; (b) re-fit approved on remaining real-data channels (answer 'Re-fit without CMB/PR4'). This is an unblinded run on those channels; it is NOT the CORE-07 production inference.",
+ "operator": {
+  "script": "scripts/r48/refit_hypotheses_no_cmb.py (PR #574 head e99757fd8f14033d796e47c8ee03d7026c94a7d8)",
+  "script_sha256": "b9323fb38d470d9571ac12973bb9f05c77daad041d7004e22a1184bd219b8d46",
+  "command": "PYTHONPATH=htt/src:htt:. python3 scripts/r48/refit_hypotheses_no_cmb.py --repo-root <checkout with data files> --out result.json",
+  "exit_code": 0,
+  "elapsed_s": 8,
+  "seed": 20261112,
+  "result_sha256": "1696517e607d3b2772ba427e07befa20f0ecf218432771ec45c270cecf00f384",
+  "versions": {
+   "python": "3.12.3",
+   "numpy": "2.4.2"
+  },
+  "code_change_enabling_run": "TensorJointMultiprobeLikelihood now constructs only enabled probes (test-first); the PR4 CMB carrier/covariance was never loaded in this run",
+  "data_files": "loaded by the likelihood from the main checkout; per-file hashes of these inputs NOT recorded in this receipt (open item)"
+ },
+ "channels": {
+  "used": [
+   "Quasars (6)",
+   "Radio (6)",
+   "Gaia (11)",
+   "SNe (490)",
+   "PV (1000)",
+   "DESI (13)"
+  ],
+  "n_data": 1526,
+  "excluded": "CMB (Planck PR4 carrier and MC100 covariance)"
+ },
+ "method": "maximum-likelihood chi2 minimisation (BFGS in scaled variables, two starts), no prior, psi fixed at likelihood fiducial; theta_K free subsets per hypothesis",
+ "results": {
+  "chi2_total": {
+   "H_0": 48216.85,
+   "H_loc": 48060.46,
+   "H_tilt": 48216.85,
+   "H_mix": 48057.03
+  },
+  "Delta_BIC": {
+   "H_0": 134.4,
+   "H_loc": 0.0,
+   "H_tilt": 156.4,
+   "H_mix": 55.2
+  },
+  "best_by_BIC": "H_loc",
+  "beta_MO_hat": [
+   0.00231867,
+   -0.00383965,
+   0.00180135
+  ],
+  "beta_MO_norm": 0.0049,
+  "optimizer": "H_loc and H_mix returned 'precision loss' (success=False); two starts agree to ~1e-6 in chi2 for H_loc and to ~2e-5 for H_mix; H_tilt/H_0 trivial"
+ },
+ "caveats": [
+  "Fit adequacy is poor: SNe chi2 ~34129 for 490 points and PV ~13749 for 1000 even at best fit (the fixed-psi model with no absolute-magnitude/offset nuisance is mismatched); the BIC ranking among hypotheses is therefore NOT evidence for any hypothesis.",
+  "beta_RM does not enter any enabled channel: H_tilt chi2 equals the null exactly (structural non-identification in this data set).",
+  "H_mix improves chi2 over H_loc by 3.4 with 8 more parameters; fitted shear sigma5 ~ 1e-3 is 10x the model prior scale and is driven by SNe/PV mismatch, not a shear measurement.",
+  "|beta_MO| = 4.9e-3 is about 4x the CMB-dipole speed (1.23e-3); no CMB channel constrains it here; it reflects the count-dipole and SN/PV channels under the fixed-psi model, not an observer velocity estimate.",
+  "No posterior sampling, no uncertainties, no calibration against matched nulls."
+ ],
+ "claims": [
+  {
+   "id": "RF-1",
+   "claim": "Maximum-likelihood point estimates for the four hypotheses on six real-data channels exist and are reproducible from the script.",
+   "state": "NUMERICALLY_COMPUTED_REAL_DATA_POINT_ESTIMATE",
+   "limit": "model mismatch; no uncertainties"
+  },
+  {
+   "id": "RF-2",
+   "claim": "A physical departure from FLRW is detected or preferred.",
+   "state": "NOT_CLAIMED"
+  }
+ ],
+ "native_subagents": "NOT_RUN",
+ "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}
