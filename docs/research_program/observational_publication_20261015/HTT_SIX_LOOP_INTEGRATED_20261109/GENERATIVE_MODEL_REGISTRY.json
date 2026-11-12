@@ -1,0 +1,46 @@
+{
+ "schema": "htt.generative_model_registry/1",
+ "as_of_date": "2026-11-12",
+ "status": "DESIGN_REGISTRY",
+ "note": "Physical generative theories only; inference/readout methods are in READOUT_METHOD_REGISTRY.json.",
+ "models": [
+  {
+   "id": "G0_FLRW",
+   "description": "isotropic FLRW null",
+   "params": 0,
+   "scope": "all channels"
+  },
+  {
+   "id": "G1_FLRW_tilt",
+   "description": "FLRW + global matter-radiation tilt tau(z)",
+   "scope": "count dipoles, CMB dipole, Pantheon boost",
+   "note": "tilt vs boost identifiability: L6"
+  },
+  {
+   "id": "G2_Bianchi_I",
+   "description": "Bianchi-I anisotropic expansion, exact endpoint map",
+   "scope": "low-ell CMB (even ell), directional Hubble, Gaia VSH E2",
+   "note": "full-mode closure families: FLRW, I, V, IX (CLAUDE.md s1)"
+  },
+  {
+   "id": "G3_Bianchi_family",
+   "description": "other Bianchi classes",
+   "scope": "axis-aligned subsets only; off-axis must fail closed"
+  },
+  {
+   "id": "G4_vorticity_rotation",
+   "description": "rotation/vorticity (B1 mode) ",
+   "scope": "Gaia B1; NOT separable from ICRF frame spin without a tie"
+  },
+  {
+   "id": "G5_acceleration_glide",
+   "description": "observer acceleration (E1 glide)",
+   "scope": "Gaia E1"
+  }
+ ],
+ "excluded_mappings": [
+  "shear proxy M3 is NOT mapped to Bianchi"
+ ],
+ "native_subagents": "NOT_RUN",
+ "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

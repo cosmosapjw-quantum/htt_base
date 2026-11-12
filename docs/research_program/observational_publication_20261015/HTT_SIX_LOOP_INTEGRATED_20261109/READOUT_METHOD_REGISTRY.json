@@ -1,0 +1,40 @@
+{
+ "schema": "htt.readout_method_registry/1",
+ "as_of_date": "2026-11-12",
+ "status": "DESIGN_REGISTRY",
+ "methods": [
+  {
+   "id": "R_HTT_five_view",
+   "type": "push-forward readout (x,Q,Pi,F,G_F)",
+   "requires": "common posterior (CORE-05)",
+   "status": "NOT_IMPLEMENTED_JOINTLY"
+  },
+  {
+   "id": "R_bayes_factor",
+   "type": "model-comparison readout",
+   "requires": "model-specific likelihoods or shared raw-observation contract; sufficiency conditions STAT-44"
+  },
+  {
+   "id": "R_posterior_loss",
+   "type": "finite-model posterior loss (STAT-45)",
+   "status": "PASS_SCOPED_SYNTHETIC"
+  },
+  {
+   "id": "R_fisher_vsh",
+   "type": "Fisher/structural identifiability",
+   "status": "used in L3/L5/L6"
+  },
+  {
+   "id": "R_pixel_poisson_wls",
+   "type": "count-dipole estimator",
+   "status": "validated on synthetic mocks"
+  },
+  {
+   "id": "R_biposh_template",
+   "type": "low-ell template/covariance readout (L1)",
+   "status": "PR3 lane only"
+  }
+ ],
+ "native_subagents": "NOT_RUN",
+ "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

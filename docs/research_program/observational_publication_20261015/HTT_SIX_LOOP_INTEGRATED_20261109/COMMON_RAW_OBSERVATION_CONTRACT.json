@@ -1,0 +1,51 @@
+{
+ "schema": "htt.common_raw_observation_contract/1",
+ "as_of_date": "2026-11-12",
+ "status": "DESIGN_SPEC_ONLY",
+ "principle": "x,Q,Pi,F,G_F are push-forwards of ONE posterior/compatibility law p(theta|d) over the 17D kinematic-tensor state theta_K=(sigma5,omega3,A3,beta_RM3,beta_MO3) (+ nuisance); no output may be computed from an independent factorisation.",
+ "raw_observation_channels": [
+  {
+   "channel": "cmb_low_ell_pr3",
+   "status": "SOURCE_BOUND_PR3_ONLY",
+   "likelihood": "deterministic Bianchi-I template + stochastic covariance (L1); FFP10 matched sims",
+   "blocked": "NPIPE excluded"
+  },
+  {
+   "channel": "count_dipole_quaia",
+   "status": "ESTIMATOR_VALIDATED_SYNTHETIC",
+   "likelihood": "Poisson-WLS pixel dipole; response [2+x(1+alpha)]beta; alpha NOT identified"
+  },
+  {
+   "channel": "count_dipole_nvss",
+   "status": "ESTIMATOR_VALIDATED_SYNTHETIC",
+   "likelihood": "as above; synthetic randoms"
+  },
+  {
+   "channel": "count_dipole_racs",
+   "status": "ESTIMATOR_VALIDATED_SYNTHETIC",
+   "likelihood": "as above; flux column inferred"
+  },
+  {
+   "channel": "gaia_pm_vsh",
+   "status": "STRUCTURAL_ONLY",
+   "likelihood": "per-source 2x2 Gaussian on VSH modes; no pm values read; frame-spin tie BLOCKED"
+  },
+  {
+   "channel": "pantheon_directional_hubble",
+   "status": "STRUCTURAL_ONLY",
+   "likelihood": "full STAT+SYS covariance, c0*H^2 polynomial response (L5); rank 12/15"
+  }
+ ],
+ "shared_requirements": [
+  "same theta_K and nuisance definitions across channels",
+  "Gram/orthonormal STF5 chart for all norms (never component-Euclidean)",
+  "frame arrows and composition order declared once (exact ordered SR composition)",
+  "per-channel selection/covariance retained (see COVARIANCE_AND_SELECTION_AUDIT.json)"
+ ],
+ "known_defects_not_repaired_here": [
+  "two likelihood stacks with different frame arrows (CORE-03 open item)",
+  "untraced response constants (0.92, 0.18, 3.5, tau=0.054, 1e-3 A-term)",
+  "Wigner rotation not carried (<=7.2e-7 rad)"
+ ],
+ "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

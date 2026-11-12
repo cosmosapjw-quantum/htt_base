@@ -708,7 +708,7 @@
     {
       "id": "L6",
       "title": "Local observer boost versus global matter-radiation tilt",
-      "status": "PENDING",
+      "status": "PASS_SCOPED_THEORY",
       "depends_on": [
         "L1",
         "L2",
@@ -724,12 +724,13 @@
         "model CMB/count/size/redshift/astrometric response separately",
         "nuisance-project local/global estimands with independent anchors",
         "a single dipole never proves global tilt"
-      ]
+      ],
+      "status_note": "Theory/structural only: ordered composition + Wigner bound, per-observable response table, nullity>0 in all scenarios with declared (not measured) nuisance priors. Size/flux-boost and redshift responses UNAVAILABLE; vector case not run."
     },
     {
       "id": "CORE-04",
       "title": "Source-locked data intake and independent observable operator validation",
-      "status": "PENDING",
+      "status": "PASS_SCOPED",
       "depends_on": [
         "L1",
         "L2",
@@ -748,12 +749,13 @@
         "row order, units, frames, masks, windows, selection, transfer and covariance identities verified",
         "no raw data or chains committed",
         "missing source/transfer is explicitly BLOCKED/UNAVAILABLE while other work continues"
-      ]
+      ],
+      "status_note": "Manifest of locally held bytes with hashes (recomputed for Quaia/RACS/Gaia 2026-11-12; others recorded at download). BLOCKED/UNAVAILABLE: NPIPE (excluded by user), ICRF3 tie, official NVSS randoms, numeric completeness masks. Cross-tracer covariance not built."
     },
     {
       "id": "CORE-05",
       "title": "Repair/validate common raw-data likelihood and HTT five-view push-forward",
-      "status": "PENDING",
+      "status": "SPEC_ONLY_PARTIAL",
       "depends_on": [
         "CORE-04",
         "STAT-45",
@@ -772,12 +774,13 @@
         "F uses declared set/anchor and equal-area sphere convergence",
         "Q bounds have source/theorem/calibration/prior provenance",
         "no independent factorization of five outputs"
-      ]
+      ],
+      "status_note": "Design specs written; no likelihood/push-forward code repaired or run. Pi null SYNTHETIC_ONLY, G_F cross-shell covariance UNAVAILABLE, Q provenance OPEN."
     },
     {
       "id": "CORE-06",
       "title": "Competing generative-model and inference/readout registry",
-      "status": "PENDING",
+      "status": "PASS_SCOPED_DESIGN",
       "depends_on": [
         "CORE-05"
       ],
@@ -791,7 +794,8 @@
         "compare only shared raw-observation contracts or explicit model-specific likelihoods",
         "retain covariance/selection/transfer-specific terms",
         "do not map shear proxy M3 to Bianchi"
-      ]
+      ],
+      "status_note": "Design registries and comparability matrix; no executed model comparison; M3 not mapped to Bianchi."
     },
     {
       "id": "CORE-07",
@@ -813,7 +817,8 @@
         "split-Rhat and bulk/tail ESS per parameter",
         "prior predictive SBC and posterior predictive checks from generated data",
         "matched null calibrated per actual release; no cached chain fallback"
-      ]
+      ],
+      "status_note": "Not started: requires production inference on real data (unblinding gate) and external held-out data; outside the no-external-data scope requested 2026-11-12."
     },
     {
       "id": "CORE-08",
@@ -832,7 +837,8 @@
         "report where HTT wins/ties/loses with calibrated utility",
         "independent held-out probes/cuts and covariance/selection misspecification stress",
         "no post-hoc threshold/tuning on holdout"
-      ]
+      ],
+      "status_note": "Not started: requires production inference on real data (unblinding gate) and external held-out data; outside the no-external-data scope requested 2026-11-12."
     },
     {
       "id": "CORE-09",
@@ -850,7 +856,8 @@
         "CMB morphology compatibility is not Bianchi family detection",
         "only Bianchi family-specific transfer plus global model separation supports family ID",
         "independent review read-only; all blockers/failures preserved"
-      ]
+      ],
+      "status_note": "Not started: requires production inference on real data (unblinding gate) and external held-out data; outside the no-external-data scope requested 2026-11-12."
     },
     {
       "id": "R48-T21",

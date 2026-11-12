@@ -1,0 +1,16 @@
+{
+ "schema": "htt.five_view_joint_pushforward_spec/1",
+ "as_of_date": "2026-11-12",
+ "status": "DESIGN_SPEC_ONLY",
+ "views": {
+  "x": "x_C = Sigma^2_std - W^2_std + Omega_tilt + Omega_k,aniso (scalar functional of theta_K)",
+  "Q": "bound/ceiling functional; source/theorem/calibration/prior provenance REQUIRED and not yet established (FROZEN_W2_MAX 3.3789e-13 rests on unsupported MESa(52) 6/5; owner decision pending)",
+  "Pi": "Pi_BASS = Theta2+E0+E2 transport quantity; needs matched null",
+  "F": "declared set/anchor functional; equal-area sphere convergence test required",
+  "G_F": "cross-shell functional; requires real shell data vectors and full cross-shell data covariance, separate from posterior covariance"
+ },
+ "joint_pushforward": "draws theta^(s) ~ p(theta|d) -> (x,Q,Pi,F,G_F)^(s) from the SAME draws; report joint, never marginal-by-marginal",
+ "implemented": false,
+ "executable_gate": "none run in this pass",
+ "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}
