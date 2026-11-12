@@ -207,3 +207,30 @@ def test_five_variable_state_beta_ro_uses_exact_ordered_composition(monkeypatch)
     got = np.array(seen["beta_RO"], float)
     assert np.allclose(got, want, rtol=0, atol=1e-18)
     assert not np.allclose(got, post[11:14] + post[14:17], rtol=0, atol=1e-18)
+
+
+# ---- hypothesis competition: text and best model are computed from the table, not fixed strings
+def _engine_with_chi2(chi2_by_k):
+    engine = TensorFiveVariableEngine.__new__(TensorFiveVariableEngine)
+    engine.n_data = 100
+
+    def chi2_breakdown(th):
+        nz = int(np.count_nonzero(th))
+        key = nz if nz in chi2_by_k else max(chi2_by_k)
+        return -0.5 * chi2_by_k[key], {"Total": chi2_by_k[key]}, None
+
+    engine.lik = SimpleNamespace(compute_chi2_breakdown=chi2_breakdown)
+    return engine
+
+
+def test_hypothesis_competition_text_and_best_model_are_computed():
+    # make H_0 (zero vector -> nz=0) the best: lowest chi2 and fewest parameters
+    eng = _engine_with_chi2({0: 100.0, 3: 120.0, 8: 125.0, 11: 130.0})
+    out = eng.run_hypothesis_competition()
+    assert out["best_model_by_bic"] == "H_0"
+    txt = out["interpretation"]
+    for banned in ("100%", "decisively", "detection", "-602.8"):
+        assert banned not in txt
+    dbic = {h["hypothesis_id"]: h["Delta_BIC"] for h in out["hypotheses"]}
+    assert f"{dbic['H_loc']:.1f}" in txt
+    assert out["fixed_hypothesis_points"]["status"] == "FIXED_POINTS_NOT_REFIT"

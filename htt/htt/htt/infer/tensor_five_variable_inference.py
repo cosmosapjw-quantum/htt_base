@@ -537,17 +537,24 @@ class TensorFiveVariableEngine:
             # Bayes factor bounds relative to H_loc
             h["ln_Bayes_factor_vs_Hloc"] = float(-0.5 * (h["BIC"] - bic_Hloc))
 
+        best = min(hypotheses, key=lambda h: h["BIC"])
+        ordered = sorted(hypotheses, key=lambda h: h["BIC"])
+        interp = (
+            f"Computed from this table (n_data={self.n_data}): lowest BIC = {best['hypothesis_id']}. "
+            + "; ".join(f"{h['hypothesis_id']}: k={h['k']}, chi2={h['chi2']:.2f}, Delta_BIC={h['Delta_BIC']:.1f}" for h in ordered)
+            + ". The parameter points are fixed inputs (not re-fitted here); the table is a likelihood comparison at those points, "
+            "not an estimate of any departure amplitude and not a claim about geometry."
+        )
         return {
             "schema": "htt.hypothesis_competition_r40/1",
             "n_data": self.n_data,
             "hypotheses": hypotheses,
-            "best_model_by_bic": "H_loc",
-            "interpretation": (
-                "H_loc (Pure Local Boost) is decisively favored over H_0 by Delta_BIC = -602.8, "
-                "demonstrating a decisive 100% empirical detection of observer peculiar motion. "
-                "H_tilt and H_mix incur complexity penalties (Delta_BIC > 0 relative to H_loc) "
-                "confirming that current data bound cosmic frame tilt and shear without identifying geometry."
-            ),
+            "best_model_by_bic": best["hypothesis_id"],
+            "fixed_hypothesis_points": {
+                "status": "FIXED_POINTS_NOT_REFIT",
+                "note": "H_loc/H_tilt/H_mix parameter vectors are hard-coded inputs carried from earlier runs; re-fitting requires the unblinded production-inference gate (CORE-07).",
+            },
+            "interpretation": interp,
         }
 
     def compute_fisher_information_gain(self) -> Dict[str, Any]:
