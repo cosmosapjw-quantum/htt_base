@@ -24,14 +24,15 @@ def sha(p):
         for b in iter(lambda: f.read(1 << 20), b""): h.update(b)
     return h.hexdigest()
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--repo-root", required=True); ap.add_argument("--out", required=True); ap.add_argument("--count-alpha", type=float, default=0.75); a = ap.parse_args(); t0 = time.time(); root = Path(a.repo_root)
-    lik = TensorJointMultiprobeLikelihood(repo_root=root, enabled_probes=PROBES, count_alpha=a.count_alpha); n = lik.n_data; rng = np.random.default_rng(20261112)
-    files = {p: lik.all_probes[p].source_path for p in PROBES}
+    ap = argparse.ArgumentParser(); ap.add_argument("--repo-root", required=True); ap.add_argument("--out", required=True); ap.add_argument("--count-alpha", type=float, default=0.75); ap.add_argument("--dipole-data", default=None); ap.add_argument("--exclude-probes", default=""); a = ap.parse_args(); t0 = time.time(); root = Path(a.repo_root)
+    probes = [q for q in PROBES if q not in a.exclude_probes.split(",")]
+    lik = TensorJointMultiprobeLikelihood(repo_root=root, enabled_probes=probes, count_alpha=a.count_alpha, count_dipole_data_path=a.dipole_data); n = lik.n_data; rng = np.random.default_rng(20261112)
+    files = {p: lik.all_probes[p].source_path for p in probes}
     extra = root / "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/COUNT_SELECTION_DIAGNOSTICS/count_dipole_summary.json"
     extra_cov = Path("/mnt/extdrive/workdir/raw/observational_bundles/DESI_BAO_compact/bao_desi_gaussian_bao_ALL_GCcomb_cov.txt")
     hashes = {p: {"path_tail": "/".join(Path(f).parts[-3:]), "sha256": sha(f)} for p, f in files.items()}
     hashes["Quasars_cov"] = {"path_tail": "/".join(extra.parts[-3:]), "sha256": sha(extra)}; hashes["DESI_cov"] = {"path_tail": extra_cov.name, "sha256": sha(extra_cov)}
-    out = {"scope": "re-fit without CMB/PR4; unblinding approved by user 2026-11-12", "probes": PROBES, "n_data": n, "probe_dof": lik.probe_dof, "input_files": hashes, "r_d_fixed": 147.09, "count_alpha": a.count_alpha, "count_slopes_declared": __import__("htt.htt.infer.tensor_joint_multiprobe_likelihood", fromlist=["x"]).COUNT_SLOPE_DECLARED,
+    out = {"scope": "re-fit without CMB/PR4; unblinding approved by user 2026-11-12", "probes": probes, "n_data": n, "probe_dof": lik.probe_dof, "input_files": hashes, "r_d_fixed": 147.09, "count_alpha": a.count_alpha, "dipole_data": ({"path_tail": Path(a.dipole_data).name, "sha256": sha(a.dipole_data)} if a.dipole_data else "LEGACY_LITERALS (frame-converted to ICRS)"), "count_slopes_declared": __import__("htt.htt.infer.tensor_joint_multiprobe_likelihood", fromlist=["x"]).COUNT_SLOPE_DECLARED,
            "versions": {"python": platform.python_version(), "numpy": np.__version__}, "modes": {}}
     for mode in ("fixed_psi", "free_psi"):
         free_psi = PSI if mode == "free_psi" else []

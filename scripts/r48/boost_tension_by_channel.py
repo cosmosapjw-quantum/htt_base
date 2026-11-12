@@ -20,8 +20,8 @@ def quad(f, h=1e-3):
             H[i, j] = H[j, i] = (f(E[i] + E[j]) - f(E[i] - E[j]) - f(-E[i] + E[j]) + f(-E[i] - E[j])) / (4 * h * h)
     return f0, g, H
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("--repo-root", required=True); ap.add_argument("--out", required=True); ap.add_argument("--count-alpha", type=float, default=0.75); a = ap.parse_args()
-    lik = TensorJointMultiprobeLikelihood(repo_root=Path(a.repo_root), enabled_probes=PROBES, count_alpha=a.count_alpha); out = {"versions": {"python": platform.python_version(), "numpy": np.__version__}, "channels": {}, "count_blocks": {}}
+    ap = argparse.ArgumentParser(); ap.add_argument("--repo-root", required=True); ap.add_argument("--out", required=True); ap.add_argument("--count-alpha", type=float, default=0.75); ap.add_argument("--dipole-data", default=None); a = ap.parse_args()
+    lik = TensorJointMultiprobeLikelihood(repo_root=Path(a.repo_root), enabled_probes=PROBES, count_alpha=a.count_alpha, count_dipole_data_path=a.dipole_data); out = {"versions": {"python": platform.python_version(), "numpy": np.__version__}, "channels": {}, "count_blocks": {}}
     fits = {}
     for p in PROBES:
         f0, g, H = quad(lambda b: chi2_p(lik, p, b)); Hi = np.linalg.inv(H); bh = -Hi @ g; cov = 2 * Hi
@@ -37,14 +37,13 @@ def main():
     for p in ("Gaia", "SNe", "PV"):
         bh, cov, fmin, H_, f0p, gp = fits[p]; fb = chi2_p(lik, p, bc)
         out["cost_of_count_best_fit_in_other_channels"][p] = {"chi2_at_count_best": fb, "chi2_at_own_best": fmin, "delta_chi2_vs_own_best_3dof": fb - fmin, "chi2_at_null": f0p}
-    # individual count blocks
-    lit = {"Quasars_G20": ("sourced result file", 0), "Quasars_G20p5": ("HARD-CODED LITERAL in likelihood module (no source file)", 3), "NVSS": ("sourced result file", 0), "RACS": ("HARD-CODED LITERAL in likelihood module (no source file)", 3)}
-    for name, (p, sl, f, note) in {"Quasars_G20": ("Quasars", slice(0, 3), lik.all_probes["Quasars"].predict(ThetaKinematic.from_vector(np.r_[np.zeros(14), 1, 0, 0]), PsiCosmology())[0], lit["Quasars_G20"][0]),
-                                    "Quasars_G20p5": ("Quasars", slice(3, 6), lik.all_probes["Quasars"].predict(ThetaKinematic.from_vector(np.r_[np.zeros(14), 1, 0, 0]), PsiCosmology())[3], lit["Quasars_G20p5"][0]),
-                                    "NVSS": ("Radio", slice(0, 3), lik.all_probes["Radio"].predict(ThetaKinematic.from_vector(np.r_[np.zeros(14), 1, 0, 0]), PsiCosmology())[0], lit["NVSS"][0]),
-                                    "RACS": ("Radio", slice(3, 6), lik.all_probes["Radio"].predict(ThetaKinematic.from_vector(np.r_[np.zeros(14), 1, 0, 0]), PsiCosmology())[3], lit["RACS"][0])}.items():
-        pr = lik.all_probes[p]; d = pr.data_vector[sl]; c = pr.cov_matrix[sl, sl]
-        out["count_blocks"][name] = {"data_provenance": note, "response_factor_used": float(f), "dipole_vector": d.tolist(), "dipole_amplitude": float(np.linalg.norm(d)), "beta_equiv": (d / f).tolist(), "beta_equiv_norm": float(np.linalg.norm(d / f)), "sd_axes": (np.sqrt(np.diag(c)) / f).tolist()}
+    # individual count blocks (layout follows the probes' block lists)
+    e1 = ThetaKinematic.from_vector(np.r_[np.zeros(14), 1, 0, 0]); psi = PsiCosmology()
+    layout = [("Quasars", "Quaia_G20", 0), ("Quasars", "Quaia_G20p5", 1)] + [("Radio", nm, i) for i, nm in enumerate(lik.all_probes["Radio"].block_names)]
+    for p_, name, i in layout:
+        pr = lik.all_probes[p_]; sl = slice(3 * i, 3 * i + 3); f = pr.predict(e1, psi)[3 * i]; d = pr.data_vector[sl]; c = pr.cov_matrix[sl, sl]
+        out["count_blocks"][name] = {"data_provenance": pr.data_provenance, "response_factor_used": float(f), "dipole_vector": d.tolist(), "dipole_amplitude": float(np.linalg.norm(d)), "beta_equiv": (d / f).tolist(),
+                                     "beta_equiv_norm": float(np.linalg.norm(d / f)), "sd_axes": (np.sqrt(np.diag(c)) / f).tolist()}
     json.dump(out, open(a.out, "w"), indent=1)
     for p, v in out["channels"].items(): print(p, "beta_hat", np.round(v["beta_hat"], 5), "sd", np.round(v["sd_axes"], 5), "dchi2(null->best)", round(v["delta_chi2_null_vs_best_3dof"], 1))
     print("count joint", np.round(out["count_joint"]["beta_hat"], 5), "|b|", round(out["count_joint"]["norm"], 5))

@@ -332,3 +332,37 @@ def test_count_dipole_responses_are_derived_from_slope_and_alpha():
         assert abs(pq[3] - (2 + tm.COUNT_SLOPE_DECLARED["Quaia_G20p5"] * (1 + alpha))) < 1e-12
         assert abs(pr[0] - (2 + tm.COUNT_SLOPE_DECLARED["NVSS"] * (1 + alpha))) < 1e-12
         assert abs(pr[3] - (2 + tm.COUNT_SLOPE_DECLARED["RACS"] * (1 + alpha))) < 1e-12
+
+
+# ---- count-dipole data: frame fix (galactic -> ICRS) and sourced-data path with per-block use flags
+def test_galactic_direction_is_converted_to_icrs_cartesian():
+    from htt.htt.infer import tensor_joint_multiprobe_likelihood as tm
+
+    v = tm.galactic_direction_to_icrs_unit(0.0, 0.0)           # Galactic centre: RA 266.405, Dec -28.936
+    ra, dec = np.deg2rad(266.405), np.deg2rad(-28.936)
+    want = np.array([np.cos(dec) * np.cos(ra), np.cos(dec) * np.sin(ra), np.sin(dec)])
+    assert np.allclose(v, want, atol=2e-4) and abs(np.linalg.norm(v) - 1.0) < 1e-12
+
+
+def _write_real_dipoles(tmp_path, use_racs):
+    import json as _json
+    blk = lambda D, s: {"D_icrs": D, "cov_icrs": (np.eye(3) * s ** 2).tolist(), "cov_icrs_stat_only": (np.eye(3) * (0.5 * s) ** 2).tolist()}
+    d = {"blocks": {"Quaia_G20": blk([0.01, 0.0, 0.0], 0.004), "Quaia_G20p5": blk([0.012, 0.0, 0.0], 0.003), "NVSS": blk([0.0, 0.01, 0.0], 0.005), "RACS": blk([0.0, 0.0, 0.05], 0.004)},
+         "likelihood_inputs": {"Quasars": ["Quaia_G20", "Quaia_G20p5"], "Radio": ["NVSS"] + (["RACS"] if use_racs else [])}}
+    p = tmp_path / "real.json"; p.write_text(_json.dumps(d)); return p
+
+
+def test_sourced_count_data_path_respects_use_flags(tmp_path):
+    from htt.htt.infer import tensor_joint_multiprobe_likelihood as tm
+
+    for use_racs, n_radio in ((False, 3), (True, 6)):
+        p = _write_real_dipoles(tmp_path, use_racs)
+        q = tm.QuaiaCountsDipoleLikelihood(repo_root=tmp_path, alpha=0.75, dipole_data_path=p)
+        r = tm.RadioCountDipoleLikelihood(repo_root=tmp_path, alpha=0.75, dipole_data_path=p)
+        assert q.n_data == 6 and r.n_data == n_radio
+        assert np.allclose(q.data_vector[:3], [0.01, 0, 0]) and np.allclose(r.data_vector[:3], [0, 0.01, 0])
+        th = tm.ThetaKinematic.from_vector(np.r_[np.zeros(14), 1.0, 0.0, 0.0])
+        assert r.predict(th, tm.PsiCosmology()).shape == (n_radio,)
+        assert q.data_provenance.startswith("REAL_DIPOLES_JSON") and r.data_provenance.startswith("REAL_DIPOLES_JSON")
+        nested = q.cov_matrix[0:3, 3:6]                       # nested samples: shot-noise cross-covariance = stat cov of the larger sample
+        assert np.allclose(nested, np.eye(3) * (0.5 * 0.003) ** 2)
