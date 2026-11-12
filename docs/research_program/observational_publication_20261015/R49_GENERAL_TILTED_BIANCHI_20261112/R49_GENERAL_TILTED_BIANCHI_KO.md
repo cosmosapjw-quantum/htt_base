@@ -11,7 +11,7 @@ The Bianchi-I restriction is not forced by the existing project theory. The repo
 
 The next programme must therefore generalize the physical state and its constraint equations, not merely replace the string BI_tilt with arbitrary type labels. A single beta scalar is insufficient for a general tilted homogeneous fluid: the tilt is a spatial three-vector in the invariant triad, and each matter/radiation species may have its own congruence. The fluid congruence can have vorticity even though the homogeneous hypersurface normal is hypersurface-orthogonal.
 
-The strongest immediate scientific correction is that a genuinely tilted single perfect fluid in Bianchi I is not generically admissible under the standard homogeneous momentum constraint and positive enthalpy assumptions. The Bianchi-I tilt used in legacy code may instead represent a relative species tilt, a radiation-to-matter frame relation, or an observer boost. These interpretations must be distinguished and tested. They are not interchangeable.
+The strongest immediate scientific correction is that a genuinely tilted single perfect fluid in Bianchi I is not admissible under the standard homogeneous momentum constraint and positive enthalpy assumptions. This is not a blanket prohibition on Bianchi-I tilt: two or more fluids can carry nonzero individual tilts whose total normal-frame momentum obeys the constraint, and a 2026 nonlinear future-stability theorem establishes a two-fluid tilted Bianchi-I branch for 1/3 < K_(1) <= K_(2) < 5/7 with positive cosmological constant. The Bianchi-I tilt used in legacy code must therefore be classified as a single-fluid tilt, multi-fluid relative flow, radiation-to-matter frame relation, or observer boost before it is interpreted. These are not interchangeable.
 
 ## 2. What already exists, and why it stopped at Bianchi I
 
@@ -242,7 +242,7 @@ The following are not new contributions:
 - Generic vector/tensor rotational invariants.
 
 Key primary sources:
-1. King & Ellis (1973), “Tilted homogeneous cosmological models”, Communications in Mathematical Physics 31, 209–242. The fluid flow need not be normal to homogeneous surfaces and can carry expansion, rotation and shear. DOI: 10.1007/BF01646493.
+1. King & Ellis (1973), “Tilted homogeneous cosmological models”, Communications in Mathematical Physics 31, 209–242. The fluid flow need not be normal to homogeneous surfaces and can carry expansion, rotation and shear. DOI: 10.1007/BF01646266.
 2. Hewitt (1991), “An exact tilted Bianchi II cosmology”, Classical and Quantum Gravity 8, L109–L114. DOI: 10.1088/0264-9381/8/5/004.
 3. Hewitt & Wainwright (1992), “Dynamical systems approach to tilted Bianchi cosmologies: Irrotational models of type V”, Physical Review D 46, 4242. DOI: 10.1103/PhysRevD.46.4242.
 4. Barrow & Hervik (2003), “The future of tilted Bianchi universes”, Classical and Quantum Gravity 20. arXiv:gr-qc/0304050. Their analysis covers all Class-B models and VI_0 stability against tilted-fluid perturbations.
@@ -252,6 +252,7 @@ Key primary sources:
 8. Pontzen & Challinor (2007), “Bianchi model CMB polarization and its implications for CMB anomalies”, MNRAS 380, 1387–1398. DOI: 10.1111/j.1365-2966.2007.12221.x. It derives a polarized multipole hierarchy in the nearly-FLRW limit for Bianchi-classified models.
 9. Sung & Coles (2011), “Temperature and polarization patterns in anisotropic cosmologies”, JCAP 06 (2011) 036. DOI: 10.1088/1475-7516/2011/06/036. It explicitly studies the FLRW-limit families I, V, VII_0, VII_h and IX.
 10. Planck Collaboration (2016), “Planck 2015 results XVIII: Background geometry and topology of the Universe”, A&A 594, A18. DOI: 10.1051/0004-6361/201525829. The physically coupled Bianchi VII_h analysis found no evidence and quoted a model-specific 95% upper bound (omega/H)_0 < 7.6e-10. This is a competitor/baseline, not a constraint to copy into a different model.
+11. Fournodavlos, Marshall & Oliynyk (2026), “Future Stability of Tilted Two-Fluid Bianchi I Spacetimes”, Annales Henri Poincare, published 7 July 2026. DOI: 10.1007/s00023-026-01727-7. They prove future nonlinear stability for tilted two-fluid Bianchi-I Einstein-Euler solutions with positive cosmological constant and linear equations of state in the range 1/3 < K_(1) <= K_(2) < 5/7. Their introduction explicitly notes that the Bianchi-I momentum constraint requires two or more fluids for tilt. This is a direct prior-art boundary: do not claim the two-fluid Bianchi-I solution itself as new; use it as a required benchmark and derive any new contribution from the general-family, cross-probe, source-conditioned tensor inference.
 
 ### 6.2 Candidate project-specific contribution
 
