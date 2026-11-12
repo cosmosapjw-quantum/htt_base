@@ -1,0 +1,117 @@
+{
+  "schema": "htt.r49.claim_ledger/1",
+  "as_of": "2026-11-12",
+  "overall_claim_ceiling": "C0_DESIGN_ONLY_UNTIL_SOURCE_BOUND_PRODUCTION_INFERENCE",
+  "claims": [
+    {
+      "id": "R49-C01",
+      "claim": "Repository has an all-eleven-type Bianchi algebra registry with Class-A/Class-B metadata.",
+      "status": "GITHUB_SOURCE_VERIFIED",
+      "evidence": [
+        "htt/bass/background/bianchi_types.py at R48 head 1b8abb1399f9f80b8e69bd57c2cc1592e2d1bcd4"
+      ],
+      "limit": "Algebra catalogue does not establish all-type tilted Einstein evolution."
+    },
+    {
+      "id": "R49-C02",
+      "claim": "Existing BianchiCosmology exposes a scalar beta and fixed v_hat_e while the general shear background holds beta fixed.",
+      "status": "GITHUB_SOURCE_VERIFIED",
+      "evidence": [
+        "htt/bass/background/einstein_bianchi.py"
+      ],
+      "limit": "Field exposure is not a full vector-tilted multi-fluid solver."
+    },
+    {
+      "id": "R49-C03",
+      "claim": "Reduced non-perturbative tilt RHS supports only FLRW, I, V, VII_0 and VII_h families.",
+      "status": "GITHUB_SOURCE_VERIFIED",
+      "evidence": [
+        "htt/bass/background/nonperturbative_tilt.py",
+        "htt/bass/background/codazzi_tilt_rhs.py"
+      ],
+      "limit": "Other families need separate equations/constraints; they are not thereby mathematically forbidden."
+    },
+    {
+      "id": "R49-C04",
+      "claim": "The current Bianchi photon hierarchy is Bianchi-I-specific.",
+      "status": "GITHUB_SOURCE_VERIFIED",
+      "evidence": [
+        "htt/bass/transport/bianchi_i_hierarchy.py"
+      ],
+      "limit": "General Bianchi transfer exists in prior literature and external solvers; native project production path still incomplete."
+    },
+    {
+      "id": "R49-C05",
+      "claim": "General tilted homogeneous Bianchi models and type-specific Class-A/Class-B dynamics are established literature.",
+      "status": "LITERATURE_SUPPORTED",
+      "evidence": [
+        "King & Ellis 1973 DOI 10.1007/BF01646493",
+        "Barrow & Hervik 2003 arXiv:gr-qc/0304050",
+        "Apostolopoulos 2004 arXiv:gr-qc/0407040",
+        "Apostolopoulos 2004/2005 arXiv:gr-qc/0411102",
+        "Shogin & Hervik 2015 arXiv:1402.2785"
+      ],
+      "limit": "Not every type/equation-of-state/anisotropic-stress case is interchangeable."
+    },
+    {
+      "id": "R49-C06",
+      "claim": "CMB temperature/polarization transfer in Bianchi models beyond type I is established in the nearly-FLRW domain and for the FLRW-limit families.",
+      "status": "LITERATURE_SUPPORTED",
+      "evidence": [
+        "Pontzen & Challinor 2007 DOI 10.1111/j.1365-2966.2007.12221.x",
+        "Sung & Coles 2011 DOI 10.1088/1475-7516/2011/06/036"
+      ],
+      "limit": "This does not constitute a validated all-eleven-type fully tilted production solver."
+    },
+    {
+      "id": "R49-C07",
+      "claim": "For a single homogeneous perfect fluid in Bianchi I with positive enthalpy, the standard momentum constraint forbids genuine fluid tilt under the stated assumptions.",
+      "status": "LITERATURE_SUPPORTED_REQUIRES_LOCAL_CONSTRAINT_ORACLE",
+      "evidence": [
+        "King & Ellis 1973",
+        "Wainwright & Ellis 1997; see project historical Bianchi report"
+      ],
+      "limit": "Multi-fluid counter-streaming and relative species/observer boosts are distinct cases."
+    },
+    {
+      "id": "R49-C08",
+      "claim": "The R49 source-conditioned common tensor posterior can be a publishable contribution beyond the Bianchi-I baseline.",
+      "status": "CONJECTURAL_NOVELTY_CANDIDATE",
+      "evidence": [
+        "R48 CORE-05 specification",
+        "R48 physical contract audit",
+        "prior-art comparison in R49 scientific report"
+      ],
+      "limit": "Requires prior-art audit expansion, implementation, calibrated benchmarks and independent review."
+    },
+    {
+      "id": "R49-C09",
+      "claim": "The historical R38/R39 joint observational posterior is production-grade evidence.",
+      "status": "QUARANTINED_NOT_ADMISSIBLE",
+      "evidence": [
+        "R39 CODE_AUDIT_AND_REPAIR.md",
+        "R39 CLAIM_LEDGER.json"
+      ],
+      "limit": "Old adapters used zero/default data, hard-coded dipoles and unsupported covariance/fallbacks. Reuse only individually source-bound single-probe results after replay."
+    },
+    {
+      "id": "R49-C10",
+      "claim": "Planck NPIPE PR4 is a blocker to proceeding with CMB inference.",
+      "status": "REFUTED_BY_AVAILABLE_BYPASS",
+      "evidence": [
+        "R48 DATA_INVENTORY.json",
+        "R48 DOWNLOAD_MANIFEST_20261110.json",
+        "L1_PR4_LANE_RECEIPT.json",
+        "L1_PR3_LANE_RECEIPT.json"
+      ],
+      "limit": "PR3+FFP10 is the calibrated primary lane; PR4 NPIPE is a separate map-robustness/noise lane until matched PR4 simulations are available."
+    },
+    {
+      "id": "R49-C11",
+      "claim": "Current R49 turn executed local code tests, raw-data rehash, map analysis or Cobaya production chains.",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "limit": "These remain local-agent tasks."
+    }
+  ]
+}
