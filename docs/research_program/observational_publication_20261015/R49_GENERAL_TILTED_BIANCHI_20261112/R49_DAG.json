@@ -1,0 +1,379 @@
+{
+  "schema": "htt.r49.short_horizon_dag/1",
+  "program": "General tilted-Bianchi extension and observational convergence of HTT tensorized five-view inference",
+  "as_of": "2026-11-12",
+  "timezone": "Asia/Seoul",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "branch": "research/r49-general-tilted-bianchi-20261112",
+  "parent": {
+    "branch": "research/htt-six-loop-core00-20261109",
+    "head_sha": "1b8abb1399f9f80b8e69bd57c2cc1592e2d1bcd4",
+    "pr": 573,
+    "r48_dag": "docs/research_program/observational_publication_20261015/HTT_SIX_LOOP_INTEGRATED_20261109/INTEGRATED_SIX_LOOP_DAG.json"
+  },
+  "companion_code_repair": {
+    "branch": "research/htt-six-loop-core03-repair-20261109",
+    "head_sha": "8a6ae269751a8a6878eaf9e1192c28fe1c067523",
+    "pr": 574,
+    "state": "OPEN_DRAFT_NOT_MERGED",
+    "required_local_action": "Review and integrate this code-repair branch in a dedicated local worktree before modifying consumers; resolve conflicts and rerun affected tests."
+  },
+  "objective": "Move the programme from Bianchi-I-centred transfer to general Class-A/Class-B tilted Bianchi dynamics and a common source-bound tensor likelihood, then analyze existing real data without requiring new acquisitions or NPIPE matched simulations.",
+  "claim_ceiling": "C0_DESIGN_AND_REUSABLE_HISTORICAL_EVIDENCE_ONLY_UNTIL_SOURCE_BOUND_PRODUCTION_INFERENCE",
+  "execution_scope": {
+    "mode": "CONVERGENCE",
+    "no_new_data_download": true,
+    "github_only_for_this_turn": true,
+    "remote_desktop": false,
+    "local_agent_owns": [
+      "local checkout",
+      "code mutation",
+      "unit/integration tests",
+      "data hashes",
+      "map processing",
+      "Cobaya production chains",
+      "posterior diagnostics",
+      "local result receipts"
+    ],
+    "assistant_completed": [
+      "GitHub source audit",
+      "prior-art comparison",
+      "mathematical state contract",
+      "successor DAG",
+      "local restart prompt"
+    ]
+  },
+  "research_loop_selection": {
+    "theory": [
+      "R2",
+      "R3",
+      "R4",
+      "R9"
+    ],
+    "coding_design": [
+      "C2",
+      "C3",
+      "C4",
+      "C10"
+    ],
+    "reason": "The interrupted work needed literature/reuse, claim alignment, constructive model design, computational formalization and handoff. Production C5-C9 remain local tasks, not falsely marked complete."
+  },
+  "global_invariants": [
+    "normal N, every fluid u_s, radiation frame, observer O and catalogue frame remain distinct",
+    "dimensionless tilt V_s is a 3-vector; scalar beta and vhat are derived coordinates only",
+    "family/type admissibility is derived from complete constraints and matter content",
+    "single perfect-fluid Bianchi-I genuine tilt is forbidden under declared standard assumptions; re-interpret legacy beta or prove a multi-fluid exception",
+    "all Class-A and Class-B types remain in the candidate family registry",
+    "exact Lorentz composition and Wigner rotation are propagated to tensors, polarization and covariance",
+    "all HTT five views are pushed from one common law",
+    "no zeros, fake maps, random directions, identity covariance or hard-coded data as observed inputs",
+    "no PR3 FFP10 treated as PR4 matched null",
+    "no claim of Bianchi family detection without family-specific physical transfer and calibrated competition",
+    "retain source hashes, code SHA, configs, row IDs, masks, beam, selection and covariance provenance",
+    "never force-push, reset, clean or stash a dirty user workspace"
+  ],
+  "workstreams": [
+    {
+      "id": "GBI-00",
+      "title": "R48 and legacy source/claim reconciliation",
+      "stages": [
+        "R2",
+        "R3",
+        "C2"
+      ],
+      "status": "PASS_SCOPED_GITHUB_AUDIT",
+      "dependencies": [],
+      "outputs": [
+        "R49 claim ledger",
+        "general tilted-Bianchi scientific report"
+      ],
+      "acceptance": [
+        "all facts tied to exact source path/ref",
+        "historical claims retained but empirical unsupported claims quarantined",
+        "Bianchi-I restriction traced to hierarchy/RHS coverage, not to the type registry"
+      ]
+    },
+    {
+      "id": "GBI-01",
+      "title": "All-family geometry and convention bridge",
+      "stages": [
+        "R3",
+        "C2",
+        "C6"
+      ],
+      "status": "DESIGN_ONLY_LOCAL_REVIEW_REQUIRED",
+      "dependencies": [
+        "GBI-00"
+      ],
+      "outputs": [
+        "canonical (a,n,C) bridge",
+        "family-stratified admissibility registry",
+        "legacy StructureConstants/BianchiAlgebra conversion receipt"
+      ],
+      "acceptance": [
+        "Jacobi and type classification for all 11 types",
+        "Class-A/Class-B axis and sign convention round-trip",
+        "h=-1 and h=-1/9 boundary handling",
+        "SO(3) and handedness transformations verified"
+      ]
+    },
+    {
+      "id": "GBI-02",
+      "title": "Vector-tilt physical state and type-specific constraint fibres",
+      "stages": [
+        "R5",
+        "R6",
+        "C3",
+        "C5",
+        "C7"
+      ],
+      "status": "THEORY_CONTRACT_DEFINED_CODE_NOT_RUN",
+      "dependencies": [
+        "GBI-01"
+      ],
+      "outputs": [
+        "TiltedBianchiState",
+        "per-species normal-frame stress projection",
+        "Hamiltonian/momentum/Codazzi constraint solver",
+        "family admissibility tests"
+      ],
+      "acceptance": [
+        "V_s^alpha is a true vector per species",
+        "normal-fluid kinematics are separately computed",
+        "Bianchi I single-fluid invalid branch is rejected under stated assumptions",
+        "known tilted II/VI0/VIh/III-IV-V-VIIh branches are regression fixtures",
+        "VIII/IX vorticity branches are not forced to zero"
+      ]
+    },
+    {
+      "id": "GBI-03",
+      "title": "General Class-A/Class-B tilted Einstein evolution",
+      "stages": [
+        "R5",
+        "R7",
+        "R9",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8"
+      ],
+      "status": "NOT_RUN",
+      "dependencies": [
+        "GBI-02"
+      ],
+      "outputs": [
+        "general expansion-normalized Einstein-tetrad RHS",
+        "metric/coframe curvature oracle",
+        "class-wise convergence report"
+      ],
+      "acceptance": [
+        "all constraints satisfied at IC and every accepted time step",
+        "full STF shear and one V_s vector per species",
+        "FLRW/untilted/known exact limits recovered",
+        "adaptive convergence and independent geometric oracle agree",
+        "no reduced family code is silently promoted to generic all-type support"
+      ]
+    },
+    {
+      "id": "GBI-04",
+      "title": "General-family null propagation and polarized CMB transfer",
+      "stages": [
+        "R5",
+        "R9",
+        "C3",
+        "C5",
+        "C6",
+        "C7",
+        "C8"
+      ],
+      "status": "NOT_RUN",
+      "dependencies": [
+        "GBI-03"
+      ],
+      "outputs": [
+        "family-dispatched geodesic/screen propagator",
+        "IQU or TEB polarized hierarchy",
+        "transfer registry by type and validity domain"
+      ],
+      "acceptance": [
+        "Bianchi-I endpoint reproduced",
+        "V/VIIh and other available literature-compatible templates reproduced",
+        "polarization basis and Wigner rotations tracked",
+        "curvature/handedness and class-B terms tested",
+        "non-FLRW-limit families use a non-perturbative branch or remain unavailable"
+      ]
+    },
+    {
+      "id": "GBI-05",
+      "title": "Common source-bound tensor likelihood and HTT five-view",
+      "stages": [
+        "R9",
+        "C3",
+        "C5",
+        "C6",
+        "C7"
+      ],
+      "status": "SPECIFICATION_PARTIAL_CODE_NOT_RUN",
+      "dependencies": [
+        "GBI-02",
+        "GBI-04"
+      ],
+      "outputs": [
+        "common raw observation contract",
+        "Cobaya Theory/Likelihood adapters",
+        "common posterior-to-(x,Q,Pi,F,G_F) push-forward"
+      ],
+      "acceptance": [
+        "no default zero/diagonal fallback",
+        "CMB mean and covariance use one generative law",
+        "count/astrometry/distance source and selection operators bound",
+        "cross-probe covariance or explicit conditional dependence model",
+        "all five views derived from the same posterior"
+      ]
+    },
+    {
+      "id": "GBI-06",
+      "title": "Existing-data intake and Planck calibrated bypass",
+      "stages": [
+        "C2",
+        "C4",
+        "C5",
+        "C6",
+        "C8"
+      ],
+      "status": "CATALOG_PRESENT_LOCAL_REHASH_NOT_RUN",
+      "dependencies": [
+        "GBI-00",
+        "GBI-05"
+      ],
+      "outputs": [
+        "local exact inventory receipt",
+        "PR3+FFP10 calibrated pilot/production lane",
+        "NPIPE map-only robustness/noise lane receipt"
+      ],
+      "acceptance": [
+        "local files rehashed and headers inspected",
+        "PR3 observed maps and FFP10 same-release simulations matched",
+        "mask/beam/transfer resolved",
+        "injection and coverage calibrated",
+        "NPIPE never uses PR3 simulations as its matched null",
+        "no new download required for the minimum viable result"
+      ]
+    },
+    {
+      "id": "GBI-07",
+      "title": "Adversarial benchmark versus established methods",
+      "stages": [
+        "R6",
+        "R7",
+        "R8",
+        "C7",
+        "C8",
+        "C9"
+      ],
+      "status": "DESIGN_ONLY",
+      "dependencies": [
+        "GBI-05",
+        "GBI-06"
+      ],
+      "outputs": [
+        "competitor matrix",
+        "synthetic injection suite",
+        "held-out predictive comparison"
+      ],
+      "acceptance": [
+        "same data/operators/priors where possible",
+        "false family identification under action-equivalent metrics measured",
+        "SBC/coverage/PPC and leave-one-probe-out scores",
+        "document where HTT wins, ties, loses or is not comparable"
+      ]
+    },
+    {
+      "id": "GBI-08",
+      "title": "Production inference and scientific adjudication",
+      "stages": [
+        "R8",
+        "R10",
+        "C8",
+        "C9",
+        "C10"
+      ],
+      "status": "NOT_RUN",
+      "dependencies": [
+        "GBI-03",
+        "GBI-04",
+        "GBI-05",
+        "GBI-06",
+        "GBI-07"
+      ],
+      "outputs": [
+        "fresh Cobaya chains",
+        "claim evidence receipts",
+        "publication decision and manuscript-ready result"
+      ],
+      "acceptance": [
+        "code/config/data hashes recorded",
+        "split-Rhat, ESS, SBC, PPC and coverage pass",
+        "held-out predictions and adversarial benchmark pass",
+        "each promoted claim independently evidence-bound",
+        "unresolved type labels reported as admissible/action-equivalence sets"
+      ]
+    }
+  ],
+  "data_lanes": {
+    "cmb_primary": "Planck PR3 SMICA/HM plus same-release FFP10; matched null and coverage lane",
+    "cmb_robustness": "NPIPE PR4 observed maps after transfer harmonization; half-ring noise-only diagnostic",
+    "cmb_synthetic_optional": "NPIPE synthetic C_l plus validated noise model; explicitly SYNTHETIC/TRANSFER_CONDITIONAL",
+    "other_existing": [
+      "Quaia",
+      "NVSS",
+      "RACS",
+      "Gaia DR3/CRF3",
+      "Gaia scanning law",
+      "Pantheon+",
+      "CF4",
+      "DESI directional/full-shape products"
+    ]
+  },
+  "mutation_gate": {
+    "allowed": [
+      "new files under R49 package",
+      "local code changes on a dedicated branch/worktree",
+      "updates to the R49 branch after tests"
+    ],
+    "forbidden": [
+      "main mutation",
+      "force push",
+      "reset/clean/stash of dirty workspace",
+      "raw data or chains in Git",
+      "invented source hashes",
+      "automatic merge of PR #573/#574",
+      "new external data downloads without separate need"
+    ],
+    "pre_write": [
+      "record branch/head/tree/worktree state",
+      "verify no dirty/untracked source files will be overwritten",
+      "use dedicated worktree",
+      "review exact diff"
+    ],
+    "push": [
+      "push only to research/r49-general-tilted-bianchi-20261112",
+      "never force push",
+      "attach test/run receipts",
+      "update the existing R49 draft PR only"
+    ]
+  },
+  "execution_receipt": {
+    "github_read_audit": "PASS_SCOPED",
+    "literature_comparison": "PASS_SCOPED_PRIMARY_SOURCES",
+    "general_tilt_state_and_equations": "DERIVED_DESIGN",
+    "repository_code_mutation": "NOT_RUN",
+    "local_pytest": "NOT_RUN",
+    "local_data_rehash": "NOT_RUN",
+    "map_analysis": "NOT_RUN",
+    "cobaya_sampler": "NOT_RUN",
+    "native_subagent": "NOT_RUN_TOOL_UNAVAILABLE"
+  }
+}
