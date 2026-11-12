@@ -98,7 +98,7 @@ Implement constraint residuals and family admissibility:
 - Gauss-Codazzi and propagation residuals;
 - energy/Euler equations for every fluid.
 Build type-specific admissibility from the actual equations and cited literature. Do not hard-code a universal prior box.
-Fixtures must include Bianchi-I single-fluid forbidden tilt; allowed multi-fluid total-momentum cancellation; tilted II; VI_0; VI_h at h=-1/9 and generic h; Class-B III/IV/V/VII_h; vortical tilted VIII/IX cases where admissible. A fixture is not an observed solution.
+Fixtures must include Bianchi-I single-fluid forbidden tilt; the published two-fluid Bianchi-I future-stability branch for positive Lambda and 1/3 < K_1 <= K_2 < 5/7 (Fournodavlos, Marshall & Oliynyk 2026, DOI 10.1007/s00023-026-01727-7); allowed multi-fluid total-momentum cancellation; tilted II; VI_0; VI_h at h=-1/9 and generic h; Class-B III/IV/V/VII_h; vortical tilted VIII/IX cases where admissible. The two-fluid Bianchi-I result is prior art and a benchmark, not a novelty claim. A fixture is not an observed solution.
 
 ### Task 3 — general dynamical system
 - Build an expansion-normalized invariant-frame RHS covering full STF shear and vector tilt.
