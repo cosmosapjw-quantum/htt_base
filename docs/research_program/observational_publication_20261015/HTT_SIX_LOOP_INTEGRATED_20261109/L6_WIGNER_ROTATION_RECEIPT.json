@@ -1,0 +1,17 @@
+{
+  "schema": "htt.l6_wigner_rotation_receipt/1",
+  "task_id": "L6",
+  "slice": "THEORY_ONLY_WIGNER_ROTATION_BOUND",
+  "as_of_date": "2026-11-12",
+  "task_status_unchanged": "BLOCKED_BY_DEPENDENCIES (L1-L3 pending); user approved theory-only slice 2026-11-12 (reply '1~3 순차적으로 승인')",
+  "status": "SLICE_DONE_THEORY",
+  "operator": {"script": "L6_wigner_rotation_bound.py", "script_sha256": "bc70f2791f24b278bcd268bd714f00580d1aa99dcae35b35a8fca717d0557659", "exit_code": 0, "result_sha256": "779de6b978d4d0400702426356c982bb8f361bfab7a6a9e2ae23c8ad9730b370", "versions": {"python": "3.12.3", "numpy": "2.4.2"},
+               "first_run_defect": "composite velocity sign error (exact rotation 0.0); fixed to v=-L[1:,0]/L[0,0] and angle from antisymmetric part; the second run is the reported one"},
+  "results": {"statement": "Exact Thomas-Wigner rotation from the Lorentz-matrix product equals 0.5|b1 x b2| to relative 1e-6 at beta 1.2e-3 (rel diff <=9e-7) and to 6e-3 at beta 0.1.",
+              "max_angle_beta_1.2e-3_pair_rad": 7.2e-7,
+              "implication": "Omitting the Wigner rotation in the ordered SR composition changes the frame orientation by <=7.2e-7 rad (~0.15 arcsec) for two boosts of beta~1.2e-3; negligible against dipole-direction uncertainties but non-zero; the repository composition returns only the velocity, so the rotation is still not carried explicitly."},
+  "claims": [{"id": "L6-W1", "claim": "Wigner rotation for beta~1.2e-3 pairs is <=7.2e-7 rad.", "state": "DERIVED_NUMERICALLY_CHECKED", "limit": "pure boosts, no acceleration; ordering/frame conventions of the repository not re-derived"}],
+  "not_run": ["repository composition rotation output", "L6 boost-vs-tilt discrimination", "independent reviewer"],
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}
