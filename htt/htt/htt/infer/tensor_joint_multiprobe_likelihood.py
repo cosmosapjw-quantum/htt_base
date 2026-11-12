@@ -759,7 +759,12 @@ class SupernovaIaJointLikelihood(BaseProbeLikelihood):
         H0 = psi.H_0
         q0 = deceleration_parameter(psi.Omega_m, psi.DeltaOmega_k)
         dl = (c_km_s * self.redshifts / H0) * (1.0 + 0.5 * (1.0 - q0) * self.redshifts)
-        mu_fid = 5.0 * np.log10(np.maximum(dl * 1e5, 1e-5))
+        mu_model = 5.0 * np.log10(np.maximum(dl * 1e5, 1e-5))
+        # The Pantheon+ 490 cache stores RESIDUALS d = m_b - mu_fid - M0 with the cache fiducial H0=70, q0=-0.55
+        # (htt/src/common/source_bound_likelihoods.py). The prediction must be in the same convention; the
+        # z-independent offset (M0, H0) is absorbed by the analytic marginalisation.
+        dl_cache = (c_km_s * self.redshifts / 70.0) * (1.0 + 0.5 * (1.0 - (-0.55)) * self.redshifts)
+        mu_cache_fid = 5.0 * np.log10(np.maximum(dl_cache * 1e5, 1e-5))
 
         n = self.directions
         S = theta.sigma_matrix
@@ -768,7 +773,7 @@ class SupernovaIaJointLikelihood(BaseProbeLikelihood):
         dipole_acc = (n @ theta.A_A) * 1e-3
         delta_h = doppler + quad - dipole_acc
         delta_mu = - (5.0 / math.log(10.0)) * delta_h
-        return mu_fid + delta_mu
+        return (mu_model - mu_cache_fid) + delta_mu
 
     def compute(self, theta: ThetaKinematic, psi: PsiCosmology) -> Tuple[float, float]:
         pred = self.predict(theta, psi)

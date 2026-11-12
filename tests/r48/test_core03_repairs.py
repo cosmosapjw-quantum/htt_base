@@ -259,3 +259,19 @@ def test_disabled_probe_is_never_constructed(monkeypatch):
         monkeypatch.setattr(tm, name, Stub)
     lik = tm.TensorJointMultiprobeLikelihood(enabled_probes=["Quasars", "Radio"])
     assert lik.enabled_probes == ["Quasars", "Radio"] and lik.n_data == 4 and "CMB" not in lik.probe_slices
+
+
+# ---- SNe predict must match the data convention: the Pantheon+ 490 cache holds residuals d = m_b - mu_fid - M0 (H0=70, q0=-0.55)
+def test_sne_prediction_is_residual_against_cache_fiducial():
+    from htt.htt.infer import tensor_joint_multiprobe_likelihood as tm
+
+    sn = tm.SupernovaIaJointLikelihood.__new__(tm.SupernovaIaJointLikelihood)
+    z = np.linspace(0.03, 0.15, 7)
+    sn.redshifts = z
+    n = np.random.default_rng(1).normal(size=(7, 3)); sn.directions = n / np.linalg.norm(n, axis=1)[:, None]
+    theta = tm.ThetaKinematic.from_vector(np.zeros(17))
+    psi_cache = tm.PsiCosmology(H_0=70.0, Omega_m=0.3, DeltaOmega_k=0.0)   # q0 = 0.5*0.3 - 0.7 = -0.55
+    assert np.allclose(sn.predict(theta, psi_cache), 0.0, atol=1e-9)
+    # shifting H0 only changes a z-independent constant (absorbed by the analytic M0 marginalisation)
+    shifted = sn.predict(theta, tm.PsiCosmology(H_0=67.4, Omega_m=0.3))
+    assert np.allclose(shifted, shifted[0], atol=1e-9) and abs(shifted[0] - 5 * np.log10(70 / 67.4)) < 1e-9
