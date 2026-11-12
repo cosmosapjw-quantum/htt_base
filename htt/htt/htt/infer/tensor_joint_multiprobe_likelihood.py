@@ -513,12 +513,25 @@ class PlanckLowEllCarrierLikelihood(BaseProbeLikelihood):
         return chi2, logp
 
 
+# Count-dipole kinematic response (Ellis-Baldwin): D = [2 + x (1 + alpha)] beta, x = -d ln N(>S)/d ln S, alpha = spectral index.
+# Slopes are DECLARED from source-measured proxies (R48 receipts): NVSS 1.043 (peak-flux proxy), RACS 0.948 (inferred flux column),
+# Quaia 1.9 = midpoint of the window-dependent magnitude-count slope 1.6-2.2 (not selection-corrected; G<20.5 slope not measured, same value).
+# alpha is NOT identifiable from the count dipoles (R48 L2 joint-estimand nullity 1): it is a declared nuisance, default 0.75, range 0.5-1.0.
+COUNT_SLOPE_DECLARED = {"Quaia_G20": 1.9, "Quaia_G20p5": 1.9, "NVSS": 1.043, "RACS": 0.948}
+
+
+def count_dipole_response(x: float, alpha: float) -> float:
+    return 2.0 + float(x) * (1.0 + float(alpha))
+
+
+
 class QuaiaCountsDipoleLikelihood(BaseProbeLikelihood):
     """Channel 2: Quaia quasar counts (G<20.0 and G<20.5) with Limber LSS cross-covariance C_1^{pq}."""
 
-    def __init__(self, repo_root: Optional[Path] = None):
+    def __init__(self, repo_root: Optional[Path] = None, alpha: float = 0.75):
         super().__init__("QuaiaCountsDipole")
         self.repo_root = repo_root or Path.cwd()
+        self.alpha = float(alpha)   # declared spectral-index nuisance for the count-dipole response
         self.load_data()
 
     def load_data(self) -> None:
@@ -574,8 +587,9 @@ class QuaiaCountsDipoleLikelihood(BaseProbeLikelihood):
 
     def predict(self, theta: ThetaKinematic, psi: PsiCosmology) -> np.ndarray:
         b_mo = theta.beta_MO_A
-        f20 = 3.50
-        f20p5 = 3.30
+        alpha = getattr(self, "alpha", 0.75)
+        f20 = count_dipole_response(COUNT_SLOPE_DECLARED["Quaia_G20"], alpha)
+        f20p5 = count_dipole_response(COUNT_SLOPE_DECLARED["Quaia_G20p5"], alpha)
         return np.concatenate([f20 * b_mo, f20p5 * b_mo])
 
     def compute(self, theta: ThetaKinematic, psi: PsiCosmology) -> Tuple[float, float]:
@@ -589,9 +603,10 @@ class QuaiaCountsDipoleLikelihood(BaseProbeLikelihood):
 class RadioCountDipoleLikelihood(BaseProbeLikelihood):
     """Channel 3: Radio NVSS (North) & RACS-low (South) count dipoles."""
 
-    def __init__(self, repo_root: Optional[Path] = None):
+    def __init__(self, repo_root: Optional[Path] = None, alpha: float = 0.75):
         super().__init__("RadioCountDipole")
         self.repo_root = repo_root or Path.cwd()
+        self.alpha = float(alpha)   # declared spectral-index nuisance for the count-dipole response
         self.load_data()
 
     def load_data(self) -> None:
@@ -634,8 +649,9 @@ class RadioCountDipoleLikelihood(BaseProbeLikelihood):
 
     def predict(self, theta: ThetaKinematic, psi: PsiCosmology) -> np.ndarray:
         b_mo = theta.beta_MO_A
-        f_nvss = 3.50
-        f_racs = 3.50
+        alpha = getattr(self, "alpha", 0.75)
+        f_nvss = count_dipole_response(COUNT_SLOPE_DECLARED["NVSS"], alpha)
+        f_racs = count_dipole_response(COUNT_SLOPE_DECLARED["RACS"], alpha)
         return np.concatenate([f_nvss * b_mo, f_racs * b_mo])
 
     def compute(self, theta: ThetaKinematic, psi: PsiCosmology) -> Tuple[float, float]:
@@ -996,13 +1012,14 @@ class TensorJointMultiprobeLikelihood:
         self,
         repo_root: Optional[Path] = None,
         enabled_probes: Optional[Sequence[str]] = None,
+        count_alpha: float = 0.75,
     ):
         self.repo_root = repo_root or Path.cwd()
         
         factories = {
             "CMB": lambda: PlanckLowEllCarrierLikelihood(repo_root=self.repo_root),
-            "Quasars": lambda: QuaiaCountsDipoleLikelihood(repo_root=self.repo_root),
-            "Radio": lambda: RadioCountDipoleLikelihood(repo_root=self.repo_root),
+            "Quasars": lambda: QuaiaCountsDipoleLikelihood(repo_root=self.repo_root, alpha=count_alpha),
+            "Radio": lambda: RadioCountDipoleLikelihood(repo_root=self.repo_root, alpha=count_alpha),
             "Gaia": lambda: GaiaProperMotionVSHLikelihood(repo_root=self.repo_root),
             "SNe": lambda: SupernovaIaJointLikelihood(repo_root=self.repo_root),
             "PV": lambda: PeculiarVelocityLikelihood(repo_root=self.repo_root),

@@ -315,3 +315,20 @@ def test_gaia_script_shear_l2_helper_matches_operator():
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     assert np.allclose(mod.shear_e2_gram(), op.vsh_shear_gram(), rtol=1e-9, atol=1e-9)
+
+
+# ---- count-dipole responses are derived: R = 2 + x(1+alpha) with measured count slopes x (no untraced 3.5/3.3 constants)
+def test_count_dipole_responses_are_derived_from_slope_and_alpha():
+    from htt.htt.infer import tensor_joint_multiprobe_likelihood as tm
+
+    assert abs(tm.count_dipole_response(1.043, 0.75) - (2 + 1.043 * 1.75)) < 1e-12
+    th = tm.ThetaKinematic.from_vector(np.r_[np.zeros(14), 1.0, 0.0, 0.0])
+    psi = tm.PsiCosmology()
+    for alpha in (0.5, 1.0):
+        q = tm.QuaiaCountsDipoleLikelihood.__new__(tm.QuaiaCountsDipoleLikelihood); q.alpha = alpha
+        r = tm.RadioCountDipoleLikelihood.__new__(tm.RadioCountDipoleLikelihood); r.alpha = alpha
+        pq, pr = q.predict(th, psi), r.predict(th, psi)
+        assert abs(pq[0] - (2 + tm.COUNT_SLOPE_DECLARED["Quaia_G20"] * (1 + alpha))) < 1e-12
+        assert abs(pq[3] - (2 + tm.COUNT_SLOPE_DECLARED["Quaia_G20p5"] * (1 + alpha))) < 1e-12
+        assert abs(pr[0] - (2 + tm.COUNT_SLOPE_DECLARED["NVSS"] * (1 + alpha))) < 1e-12
+        assert abs(pr[3] - (2 + tm.COUNT_SLOPE_DECLARED["RACS"] * (1 + alpha))) < 1e-12
