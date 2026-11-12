@@ -1,76 +1,153 @@
 {
- "schema": "htt.refit_receipt/1",
- "task_id": "CORE-05/07-precursor",
+ "schema": "htt.refit_receipt/2",
  "as_of_date": "2026-11-12",
- "status": "REFIT_DONE_MODEL_MISMATCH_FLAGGED",
- "authorisation": "User decisions 2026-11-12: (a) NPIPE/PR4 path excluded; (b) re-fit approved on remaining real-data channels (answer 'Re-fit without CMB/PR4'). This is an unblinded run on those channels; it is NOT the CORE-07 production inference.",
+ "status": "REFIT_V2_DONE_PV_CHANNEL_UNDERDISPERSED",
+ "supersedes": "REFIT_HYPOTHESES_NO_CMB_RESULT_V1_SUPERSEDED.json (v1 used SupernovaIaJointLikelihood.predict returning an absolute distance modulus against residual data; SNe chi2 ~34000 was a bug, not model mismatch; fixed test-first)",
+ "authorisation": "User decisions 2026-11-12: NPIPE/PR4 excluded; re-fit approved on remaining channels; then 'record input hashes' and 'add nuisance + free psi' approved. Unblinded run on those channels; NOT the CORE-07 production inference.",
  "operator": {
-  "script": "scripts/r48/refit_hypotheses_no_cmb.py (PR #574 head e99757fd8f14033d796e47c8ee03d7026c94a7d8)",
-  "script_sha256": "b9323fb38d470d9571ac12973bb9f05c77daad041d7004e22a1184bd219b8d46",
-  "command": "PYTHONPATH=htt/src:htt:. python3 scripts/r48/refit_hypotheses_no_cmb.py --repo-root <checkout with data files> --out result.json",
-  "exit_code": 0,
-  "elapsed_s": 8,
+  "script": "scripts/r48/refit_hypotheses_no_cmb.py (PR #574 head a33057cf653098ff3d3ea20d1a67c780f60c2041)",
+  "script_sha256": "602ef80e225cc57a3096a8c7654f8a46dc27c2ce388a63d9b8dd44cba8c0e3cf",
+  "result_sha256": "86d53036f2abee9ac2a61c12e40bdbb197a2af7b3ee17a3373506278189ec34b",
   "seed": 20261112,
-  "result_sha256": "1696517e607d3b2772ba427e07befa20f0ecf218432771ec45c270cecf00f384",
+  "elapsed_s": 17.2,
+  "exit_code": 0,
   "versions": {
    "python": "3.12.3",
    "numpy": "2.4.2"
   },
-  "code_change_enabling_run": "TensorJointMultiprobeLikelihood now constructs only enabled probes (test-first); the PR4 CMB carrier/covariance was never loaded in this run",
-  "data_files": "loaded by the likelihood from the main checkout; per-file hashes of these inputs NOT recorded in this receipt (open item)"
+  "optimizer": "L-BFGS-B, 3 starts per hypothesis; all hypotheses reported success=True"
  },
- "channels": {
-  "used": [
-   "Quasars (6)",
-   "Radio (6)",
-   "Gaia (11)",
-   "SNe (490)",
-   "PV (1000)",
-   "DESI (13)"
+ "inputs": {
+  "channels": [
+   "Quasars",
+   "Radio",
+   "Gaia",
+   "SNe",
+   "PV",
+   "DESI"
   ],
   "n_data": 1526,
-  "excluded": "CMB (Planck PR4 carrier and MC100 covariance)"
+  "excluded": "CMB (Planck PR4 carrier and MC100 covariance) never loaded",
+  "input_files_sha256": {
+   "Quasars": {
+    "path_tail": "observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/COUNT_DIPOLE_RESULT.json",
+    "sha256": "c50146c6c7b3e6057d8988138e7a59e76e51295bb446aac0cb39b67e55a63b96"
+   },
+   "Radio": {
+    "path_tail": "observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/COUNT_DIPOLE_RESULT.json",
+    "sha256": "c50146c6c7b3e6057d8988138e7a59e76e51295bb446aac0cb39b67e55a63b96"
+   },
+   "Gaia": {
+    "path_tail": "observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/GAIA_VSH_11MODES_EMPIRICAL.json",
+    "sha256": "64b3e079a31c030e7039ee6bb6518cb7146451704244abe24688da8f2c180396"
+   },
+   "SNe": {
+    "path_tail": "observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/pantheon_sliced_490_cache.npz",
+    "sha256": "b57f0433afeb22fc06d998a9cfa894e213d01a26a631d188fc8effcd4e48aa43"
+   },
+   "PV": {
+    "path_tail": "results/cf4_rawgroup_appHubble_STF2_pooled_methods_v2/selected_source_observables.npz",
+    "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c"
+   },
+   "DESI": {
+    "path_tail": "observational_bundles/DESI_BAO_compact/bao_desi_gaussian_bao_ALL_GCcomb_mean.txt",
+    "sha256": "9ac154ab583ce759c0f7eef3c978c7c70a6ead2d18774caceadf1a350a640585"
+   },
+   "Quasars_cov": {
+    "path_tail": "OBSERVATIONAL_CONVERGENCE_20261107/COUNT_SELECTION_DIAGNOSTICS/count_dipole_summary.json",
+    "sha256": "bd9725c3c569653143ded60990e8d1e90ad91975d0c294f3ad435ae90e08286a"
+   },
+   "DESI_cov": {
+    "path_tail": "bao_desi_gaussian_bao_ALL_GCcomb_cov.txt",
+    "sha256": "252a143274c8a07c78694c119617d36594f6d7965d00319ca611c6ffb886e509"
+   }
+  },
+  "provenance_note": "Quasars, Radio and Gaia inputs are earlier DERIVED result files (measured count dipoles with covariance; Gaia VSH coefficients), not raw catalogues; Quasars and Radio share one JSON (same hash). SNe is the 490-object Pantheon+ residual cache; PV is the CF4 operator file (1000 of 35970 groups subsampled by stride); DESI is the DR2 BAO mean/cov text."
  },
- "method": "maximum-likelihood chi2 minimisation (BFGS in scaled variables, two starts), no prior, psi fixed at likelihood fiducial; theta_K free subsets per hypothesis",
+ "modes": {
+  "fixed_psi": "psi at fiducial (H0 67.4, Om 0.315, r_d 147.09, DeltaOmega_k 0)",
+  "free_psi": "H_0 in [50,90], Omega_m in [0.05,0.60], DeltaOmega_k in [-0.30,0.30] free (declared bounds); r_d fixed (BAO degenerate with H_0); SNe/PV absolute offsets analytically marginalised"
+ },
  "results": {
-  "chi2_total": {
-   "H_0": 48216.85,
-   "H_loc": 48060.46,
-   "H_tilt": 48216.85,
-   "H_mix": 48057.03
+  "fixed_psi": {
+   "chi2": {
+    "H_0": 14491.1,
+    "H_loc": 14324.1,
+    "H_tilt": 14491.1,
+    "H_mix": 14292.1
+   },
+   "Delta_BIC": {
+    "H_0": 145.0,
+    "H_loc": 0.0,
+    "H_tilt": 167.0,
+    "H_mix": 26.7
+   },
+   "best_by_BIC": "H_loc"
   },
-  "Delta_BIC": {
-   "H_0": 134.4,
-   "H_loc": 0.0,
-   "H_tilt": 156.4,
-   "H_mix": 55.2
+  "free_psi": {
+   "chi2": {
+    "H_0": 14472.1,
+    "H_loc": 14305.1,
+    "H_tilt": 14472.1,
+    "H_mix": 14273.2
+   },
+   "Delta_BIC": {
+    "H_0": 145.0,
+    "H_loc": 0.0,
+    "H_tilt": 167.0,
+    "H_mix": 26.7
+   },
+   "best_by_BIC": "H_loc",
+   "psi_hat_H_loc": [
+    68.799,
+    0.293,
+    147.09,
+    0.025
+   ]
   },
-  "best_by_BIC": "H_loc",
-  "beta_MO_hat": [
-   0.00231867,
-   -0.00383965,
-   0.00180135
+  "beta_MO_hat_H_loc": [
+   -0.00029,
+   -0.00421,
+   0.00285
   ],
-  "beta_MO_norm": 0.0049,
-  "optimizer": "H_loc and H_mix returned 'precision loss' (success=False); two starts agree to ~1e-6 in chi2 for H_loc and to ~2e-5 for H_mix; H_tilt/H_0 trivial"
+  "per_probe_chi2_null": {
+   "Quasars": 178.89814801709434,
+   "Radio": 45.249999999999986,
+   "Gaia": 58.556281532170736,
+   "SNe": 434.45937662931357,
+   "PV": 13744.966487097132,
+   "DESI": 28.965919531348614,
+   "Total": 14491.096212807059
+  },
+  "per_probe_chi2_H_loc": {
+   "Quasars": 15.708241445973945,
+   "Radio": 4.168572739400954,
+   "Gaia": 58.556281532170736,
+   "SNe": 433.30119564298093,
+   "PV": 13783.410444604866,
+   "DESI": 28.965919531348614,
+   "Total": 14324.110655496741
+  }
  },
  "caveats": [
-  "Fit adequacy is poor: SNe chi2 ~34129 for 490 points and PV ~13749 for 1000 even at best fit (the fixed-psi model with no absolute-magnitude/offset nuisance is mismatched); the BIC ranking among hypotheses is therefore NOT evidence for any hypothesis.",
-  "beta_RM does not enter any enabled channel: H_tilt chi2 equals the null exactly (structural non-identification in this data set).",
-  "H_mix improves chi2 over H_loc by 3.4 with 8 more parameters; fitted shear sigma5 ~ 1e-3 is 10x the model prior scale and is driven by SNe/PV mismatch, not a shear measurement.",
-  "|beta_MO| = 4.9e-3 is about 4x the CMB-dipole speed (1.23e-3); no CMB channel constrains it here; it reflects the count-dipole and SN/PV channels under the fixed-psi model, not an observer velocity estimate.",
-  "No posterior sampling, no uncertainties, no calibration against matched nulls."
+  "SNe is now adequate under the corrected convention (chi2 ~434 for 490 points).",
+  "PV is NOT adequate: chi2 ~13745 for 1000 points at the null and it RISES slightly under H_loc (13783). The PV likelihood uses catalogue errors only (no peculiar-velocity scatter term); this is an unmodelled dispersion, not diagnosed further. Any BIC difference involving the PV block is unreliable.",
+  "The preference for H_loc comes from the Quasars and Radio count-dipole blocks (chi2 179->16 and 45->4): beta_MO absorbs an amplitude excess of the count dipoles over the model. |beta_MO| ~ 5.1e-3 is about 4x the CMB-dipole speed; no CMB channel constrains it here; this is NOT an observer-velocity estimate.",
+  "H_tilt chi2 equals the null exactly: beta_RM does not enter any enabled channel.",
+  "H_mix: chi2 gain over H_loc ~32 for 8 extra parameters, mostly in the Gaia block (58.6 -> 25.8); Delta_BIC +26.7. The fitted shear (~2-3e-3) is not a shear measurement: Gaia is a derived 11-coefficient vector with a fixed response model.",
+  "Free psi moves Omega_m to 0.293, H_0 to 68.8, DeltaOmega_k to +0.025 and lowers only the DESI block (29 -> 10); SNe is insensitive at z<0.15. These psi values are not cosmological estimates (psi is partly degenerate, bounded, r_d fixed).",
+  "Point estimates only: no uncertainties, no posterior sampling, no matched-null calibration."
  ],
  "claims": [
   {
-   "id": "RF-1",
-   "claim": "Maximum-likelihood point estimates for the four hypotheses on six real-data channels exist and are reproducible from the script.",
+   "id": "RF2-1",
+   "claim": "Reproducible maximum-likelihood point estimates for four hypotheses on six real-data channels (CMB/PR4 excluded) with hashed inputs.",
    "state": "NUMERICALLY_COMPUTED_REAL_DATA_POINT_ESTIMATE",
-   "limit": "model mismatch; no uncertainties"
+   "limit": "PV channel under-dispersed; derived inputs; no uncertainties"
   },
   {
-   "id": "RF-2",
-   "claim": "A physical departure from FLRW is detected or preferred.",
+   "id": "RF2-2",
+   "claim": "Departure from FLRW detected, observer velocity measured, or tilt preferred.",
    "state": "NOT_CLAIMED"
   }
  ],
