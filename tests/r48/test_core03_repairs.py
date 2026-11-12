@@ -149,3 +149,36 @@ def test_deceleration_parameter_matches_friedmann_derivative():
         dE = (E(h) - E(-h)) / (2 * h)
         q0_num = dE / E(0.0) - 1.0                                # q0 = (1+z) E'/E - 1 at z=0
         assert abs(deceleration_parameter(om, ok_) - q0_num) < 1e-8
+
+
+# ---- review follow-up (independent review of PR #574)
+def test_r39_scalar_xc_direction_is_gram_unit_and_euclid_norm_is_gone():
+    path = ROOT / "scripts" / "r39" / "run_r39_identifiability_analysis.py"
+    src = path.read_text()
+    assert "np.linalg.norm(theta_0[:5])" not in src
+    spec = importlib.util.spec_from_file_location("r39_script", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    v = np.array([3.0e-5, -1.0e-5, 2.0e-5, 0.5e-5, -4.0e-5])
+    d = mod.scalar_xc_shear_direction(v)
+    assert abs(d @ G @ d - 1.0) < 1e-12
+    with pytest.raises(ValueError):
+        mod.scalar_xc_shear_direction(np.zeros(5))
+
+
+def test_fisher_gain_ablation_calls_gram_direction_helper(monkeypatch):
+    calls = []
+    orig = tfi.stf5_gram_unit_direction
+
+    def spy(v):
+        calls.append(np.array(v, float))
+        return orig(v)
+
+    monkeypatch.setattr(tfi, "stf5_gram_unit_direction", spy)
+    rng = np.random.default_rng(0)
+    A = rng.normal(size=(25, 17))
+    engine = TensorFiveVariableEngine.__new__(TensorFiveVariableEngine)
+    engine.n_data = 25
+    engine.lik = SimpleNamespace(predict_total=lambda th: A @ th, cov_matrix=np.eye(25))
+    engine.compute_fisher_information_gain()
+    assert len(calls) == 1 and calls[0].shape == (5,)
