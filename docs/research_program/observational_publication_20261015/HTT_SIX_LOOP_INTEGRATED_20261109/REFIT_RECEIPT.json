@@ -1,16 +1,17 @@
 {
- "schema": "htt.refit_receipt/3",
+ "schema": "htt.refit_receipt/4",
  "as_of_date": "2026-11-12",
- "status": "REFIT_V3_DONE_ALL_BLOCKS_ADEQUATE_EXCEPT_COUNT_DIPOLES_AND_GAIA_NULL",
+ "status": "REFIT_V4_COUNT_RESPONSES_DERIVED_ALPHA_GRID",
  "supersedes": [
   "REFIT_HYPOTHESES_NO_CMB_RESULT_V1_SUPERSEDED.json (SNe predict returned absolute mu against residual data)",
-  "REFIT_HYPOTHESES_NO_CMB_RESULT_V2_SUPERSEDED.json (PV predict lacked mu_model(z): CF4 'dmzp' is a distance modulus, slope ~5.2 per dex in z; PV chi2 13745 was this bug, NOT missing peculiar-velocity scatter as suggested earlier)"
+  "REFIT_HYPOTHESES_NO_CMB_RESULT_V2_SUPERSEDED.json (PV predict lacked mu_model(z): CF4 'dmzp' is a distance modulus, slope ~5.2 per dex in z; PV chi2 13745 was this bug, NOT missing peculiar-velocity scatter as suggested earlier)",
+  "REFIT_HYPOTHESES_NO_CMB_RESULT_V3_SUPERSEDED.json (used the untraced count responses 3.50/3.30/3.50)"
  ],
  "authorisation": "User decisions 2026-11-12: NPIPE/PR4 excluded; re-fit approved on remaining channels; then 'record input hashes' and 'add nuisance + free psi' approved. Unblinded run on those channels; NOT the CORE-07 production inference.",
  "operator": {
-  "script": "scripts/r48/refit_hypotheses_no_cmb.py (unchanged since v2; PR #574 head 1b135e202f9f4a315f3bd49dac1017548fe083d4)",
-  "script_sha256": "602ef80e225cc57a3096a8c7654f8a46dc27c2ce388a63d9b8dd44cba8c0e3cf",
-  "result_sha256": "d95c3910c0378226e8fe83d5ad29a7b24804fbd295f7efb51f550a18c640b785",
+  "script": "scripts/r48/refit_hypotheses_no_cmb.py (PR #574 head 451df914fd3c3bb9eb6b92940be81ebdafbfef7a)",
+  "script_sha256": "16828c0a76019580dc6adc4c55de4bfd2e87df352ee8ee452addba4250edc06c",
+  "result_sha256": "20b2b923538d2f7ff94e5fbf4ffd8e3683ca5139b8402569b34bffffa4f04471",
   "seed": 20261112,
   "elapsed_s": 19.7,
   "exit_code": 0,
@@ -72,75 +73,56 @@
   "free_psi": "H_0 in [50,90], Omega_m in [0.05,0.60], DeltaOmega_k in [-0.30,0.30] free (declared bounds); r_d fixed (BAO degenerate with H_0); SNe/PV absolute offsets analytically marginalised"
  },
  "results": {
-  "chi2_fixed_psi": {
-   "H_0": 1648.7,
-   "H_loc": 1436.7,
-   "H_tilt": 1648.7,
-   "H_mix": 1380.1
+  "alpha_grid_chi2_fixed_psi": {
+   "0.5": {
+    "H_0": 1648.7,
+    "H_loc": 1438.1,
+    "H_tilt": 1648.7,
+    "H_mix": 1381.1
+   },
+   "0.75": {
+    "H_0": 1648.7,
+    "H_loc": 1438.2,
+    "H_tilt": 1648.7,
+    "H_mix": 1381.1
+   },
+   "1.0": {
+    "H_0": 1648.7,
+    "H_loc": 1438.3,
+    "H_tilt": 1648.7,
+    "H_mix": 1381.1
+   }
   },
-  "Delta_BIC_fixed_psi": {
-   "H_0": 190.0,
-   "H_loc": 0.0,
-   "H_tilt": 212.0,
-   "H_mix": 2.1
+  "alpha_grid_Delta_BIC_fixed_psi": {
+   "0.5": {
+    "H_0": 188.6,
+    "H_loc": 0.0,
+    "H_tilt": 210.6,
+    "H_mix": 1.6
+   },
+   "0.75": {
+    "H_0": 188.5,
+    "H_loc": 0.0,
+    "H_tilt": 210.5,
+    "H_mix": 1.5
+   },
+   "1.0": {
+    "H_0": 188.4,
+    "H_loc": 0.0,
+    "H_tilt": 210.4,
+    "H_mix": 1.4
+   }
   },
-  "Delta_AIC_fixed_psi": {
-   "H_0": 246.6,
-   "H_loc": 40.6,
-   "H_tilt": 252.6,
-   "H_mix": 0.0
-  },
-  "chi2_free_psi": {
-   "H_0": 1629.6,
-   "H_loc": 1417.7,
-   "H_tilt": 1629.6,
-   "H_mix": 1361.1
-  },
-  "Delta_BIC_free_psi": {
-   "H_0": 190.0,
-   "H_loc": 0.0,
-   "H_tilt": 212.0,
-   "H_mix": 2.1
-  },
-  "best_by_BIC": "H_loc",
-  "best_by_AIC": "H_mix",
-  "per_probe_chi2_over_dof_null": {
-   "Quasars": "178.9/6",
-   "Radio": "45.2/6",
-   "Gaia": "58.6/11",
-   "SNe": "434.5/490",
-   "PV": "902.6/1000",
-   "DESI": "29.0/13"
-  },
-  "per_probe_chi2_H_loc": {
-   "Quasars": 8.476528239767722,
-   "Radio": 4.249109881831025,
-   "Gaia": 58.55628153217073,
-   "SNe": 432.83147013626353,
-   "PV": 903.609679510536,
-   "DESI": 28.965919531348614,
-   "Total": 1436.6889888319176
-  },
-  "beta_MO_hat_H_loc": [
-   -0.00122,
-   -0.00454,
-   0.00346
-  ],
-  "beta_MO_norm_H_loc": 0.00584,
-  "psi_hat_free_H_loc": [
-   68.853,
-   0.293,
-   147.09,
-   0.021
-  ]
+  "note": "default file is alpha 0.75; alpha 0.5 and 1.0 in *_ALPHA0.5/1.0.json; see BOOST_TENSION_RECEIPT.json for beta estimates and the tension analysis"
  },
  "caveats": [
   "SNe (433/490) and PV (903/1000) are now adequate; DESI 29/13 at fiducial psi, 10/13 with free psi.",
-  "TENSION, not a measurement: the whole H_loc improvement (chi2 -212) comes from the two count-dipole blocks (Quasars 179 -> 8.5, Radio 45 -> 4.2). The kinematic channels do not improve: PV 902.6 -> 903.6 (slightly worse), SNe 434.5 -> 432.8. So beta_MO ~5.8e-3 (about 4.7x the CMB-dipole speed) is demanded only by the count-dipole amplitude excess and is not supported by SN/PV; it is NOT an observer-velocity estimate.",
   "H_mix Gaia block 58.6 -> 0.4 with 5 shear parameters: the Gaia input is an 11-coefficient vector with 6 nuisance modes marginalised, so ~5 effective data are fitted by 5 shear parameters (exactly identified): chi2 ~ 0 is saturation, not evidence for shear. The fitted shear (|sigma5| ~ 1e-2) is not a measurement. Delta_BIC(H_mix)=+2.1 but Delta_AIC(H_mix)=0.0 (H_loc +40.6): ranking depends on the penalty, and is not evidence.",
   "H_tilt chi2 equals the null exactly: beta_RM does not enter any enabled channel (structural non-identification).",
   "Free psi: Omega_m 0.293, H_0 68.8, DeltaOmega_k +0.021; only the DESI block improves (29 -> 10); r_d fixed, parameters bounded, not cosmological estimates.",
-  "Quasars/Radio/Gaia inputs are earlier DERIVED result files; point estimates only; no uncertainties, no posterior sampling, no matched-null calibration; not the CORE-07 production inference."
+  "Quasars/Radio/Gaia inputs are earlier DERIVED result files; point estimates only; no uncertainties, no posterior sampling, no matched-null calibration; not the CORE-07 production inference.",
+  "Count responses now derived (see BOOST_TENSION_RECEIPT.json); the 'tension with SN/PV' statement of v3 is WITHDRAWN (SN/PV uninformative, dchi2 ~4-6.5/3 dof).",
+  "Two of four count blocks are hard-coded literals without a source file (provenance defect)."
  ],
  "claims": [
   {
