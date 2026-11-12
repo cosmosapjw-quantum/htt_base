@@ -1,0 +1,79 @@
+{
+ "scope": "RACS lane: slope, footprint scatter, estimator validation on synthetic randoms; no real dipole",
+ "rows_all": 2123638,
+ "cuts": {
+  "S_min_mJy": 20.0,
+  "dec": [
+   -50.0,
+   30
+  ],
+  "abs_b_min": 10
+ },
+ "n_selected": 296156,
+ "count_slope_x": {
+  "value": 0.9479148222589018,
+  "boot_sd": 0.002055390222347275,
+  "fit_S_range_mJy": [
+   20.0,
+   80.0
+  ]
+ },
+ "EB_amplitude_over_beta": {
+  "alpha0.5": 3.4218722333883527,
+  "alpha0.75": 3.658850938953078,
+  "alpha1.0": 3.8958296445178036
+ },
+ "catalogue_vs_synthetic_pixel_ratio_sd": 0.21112006843408515,
+ "poisson_expected_sd": 0.15775508545826,
+ "fullsky_poisson_sd_per_axis": 0.0031827341168597727,
+ "null": {
+  "bias_over_se": [
+   -0.3980162795649723,
+   0.10524264280473485,
+   1.2034212610850308
+  ],
+  "sd": [
+   0.0023695860340589366,
+   0.00283506709469673,
+   0.005944757273152074
+  ],
+  "n": 60
+ },
+ "injection": {
+  "D0.01_z": {
+   "bias_over_se": [
+    -0.4388300605873164,
+    0.01784887223884649,
+    -1.3379002621946428
+   ],
+   "sd": [
+    0.002775425352956247,
+    0.003353285947983746,
+    0.004247914340252804
+   ]
+  },
+  "oblique": {
+   "bias_over_se": [
+    -2.1248872083720705,
+    -0.14173146775926596,
+    -0.9314498879807692
+   ],
+   "sd": [
+    0.0026149329104961003,
+    0.0030639066959762774,
+    0.005750899127730054
+   ]
+  }
+ },
+ "synthetic_randoms": {
+  "label": "SYNTHETIC_RANDOM_CATALOGUE",
+  "n": 2961560
+ },
+ "elapsed_s": 17.809589862823486,
+ "seed": 20261112,
+ "versions": {
+  "numpy": "2.4.2",
+  "pandas": "3.0.0",
+  "healpy": "1.19.0"
+ }
+}

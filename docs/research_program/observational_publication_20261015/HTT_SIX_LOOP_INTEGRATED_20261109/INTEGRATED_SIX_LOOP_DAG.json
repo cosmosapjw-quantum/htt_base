@@ -584,7 +584,7 @@
     {
       "id": "L1",
       "title": "Low-ell morphology and physical CMB operator",
-      "status": "BLOCKED",
+      "status": "PASS_SCOPED_PR3_ONLY",
       "depends_on": [
         "CORE-03",
         "STAT-43",
@@ -602,12 +602,13 @@
         "source-bind frequency maps/splits/masks/beam/pixel/noise/foreground and matched same-release simulations",
         "run rotation/parity/quadrature convergence and pixel-vs-harmonic oracle",
         "keep E/B or non-BI transfer UNAVAILABLE if not implemented"
-      ]
+      ],
+      "status_note": "User decision 2026-11-12: NPIPE path excluded entirely; L1 closed on the PR3 lane (FFP10 matched sims) only. Limits: no NPIPE lane, no E/B or non-BI transfer, injection pilot N=60, claims C0 synthetic."
     },
     {
       "id": "L2",
       "title": "Redshift-resolved CMB/source-count dipole and cross-tracer selection",
-      "status": "PENDING",
+      "status": "PASS_SCOPED",
       "depends_on": [
         "CORE-03",
         "STAT-43",
@@ -625,12 +626,13 @@
         "use authentic random catalogues and selection/evolution/flux/size/redshift response",
         "separate local structure/intrinsic dipole and kinematic hypotheses",
         "held-out tracer/cut prediction and matched null; no magic scale constants"
-      ]
+      ],
+      "status_note": "User decision 2026-11-12: closed with slices (Quaia estimator, NVSS, RACS, joint-estimand identifiability, Quaia slope proxy). Limits: no real dipole computed, no completeness masks, no LSS cross-covariance, alpha unidentified (nullity 1), RACS flux column inferred, SHA256 of Quaia/RACS not recomputed."
     },
     {
       "id": "L3",
       "title": "Beyond-FLRW kinematical functional measurement and inverse problem",
-      "status": "PENDING",
+      "status": "PASS_SCOPED",
       "depends_on": [
         "CORE-03",
         "STAT-43",
@@ -646,7 +648,8 @@
         "source-level Gaia astrometry, full proper-motion covariance, scan law and CRF3/ICRF tie",
         "nuisance-project each target; distinguish structural rank from weak identification",
         "do not identify B1 with vorticity without frame spin anchor"
-      ]
+      ],
+      "status_note": "User decision 2026-11-12: closed with structural slices (VSH identifiability, l=3 leakage, scan-law template, scan-aware Fisher). Limits: no proper-motion fit, frame-spin tie BLOCKED (ICRF3 tie file not obtained), scan amplitude not reproduced (slopes 0.67/0.80), systematic amplitude unconstrained."
     },
     {
       "id": "L4",
