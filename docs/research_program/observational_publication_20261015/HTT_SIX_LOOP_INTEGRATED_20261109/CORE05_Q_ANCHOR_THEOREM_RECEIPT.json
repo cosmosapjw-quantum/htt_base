@@ -1,0 +1,35 @@
+{
+ "schema": "htt.q_anchor_theorem_receipt/1",
+ "task_id": "CORE-05",
+ "as_of_date": "2026-11-12",
+ "status": "THEOREM_CHECKED_NO_ANCHOR_VALUE_DERIVED",
+ "candidates": {
+  "T1_hamiltonian_constraint": {
+   "statement": "Sigma^2 - W^2 <= b implies Sigma^2 <= b + w only given an independent ceiling W^2 <= w; without it no bound on Sigma^2 (or W^2) alone exists.",
+   "proof": "Lean 4 + Mathlib (linarith + explicit witnesses), file CORE05_Q_ANCHOR_T1.lean sha256 fd30f3ef00a2e4ac1b54040c7eab673e578659d90464e1ccc531dd54792b118c",
+   "lean_axioms": "propext, Classical.choice, Quot.sound only (#print axioms)",
+   "lean_warnings": "unused hypotheses hS,hW in T1_difference_bound (harmless)",
+   "measured_input": "Planck 2018 VI + BAO: Omega_K = 0.0007 +- 0.0019 (confirmed via secondary sources: CosmoVerse white paper arXiv:2504.01669 and arXiv:2002.06892; primary table not opened); Omega_m/Omega_Lambda column values NOT confirmed and not used",
+   "limit": "bounds only the combination Sigma^2 - W^2 (an effective-curvature-like term, assumes the x_C degeneracy); Omega_K itself is inferred under an FLRW model (circularity)"
+  },
+  "T2_quadrupole_variance_identity": {
+   "statement": "For symmetric trace-free B and unit n: <(n^T B n)^2>_sphere = (2/15) tr(B^2).",
+   "proof": "sympy exact symbolic integration returned 0 residual; Wolfram Language evaluator returned HTTP 502 (not run)",
+   "measured_input": "needs a sourced observed low-ell quadrupole variance: NOT obtained",
+   "limit": "constrains the integrated endpoint shear B*, not sigma/H today; the history map is not derived"
+  }
+ },
+ "selection": "T1 applied: it is the only candidate with a proved statement and a sourced measured input, and its result is that per-component Q bounds for shear and vorticity are not derivable. T2 not applied (no sourced measurement, wrong quantity).",
+ "applied_change": {
+  "repo": "PR #574 head 46056b6efc1775f510bf4706f94a9936acb8e38f",
+  "file": "htt/src/common/htt_five_variable_state.py",
+  "change": "shear_sigma and vorticity_omega anchors (r39 constructor) and shear_sigma (r42 constructor): hard-coded 1e-4 / 1e-5 removed, status UNAVAILABLE, notes cite T1; tests updated first and failed before the change"
+ },
+ "not_derived": [
+  "a numerical shear anchor",
+  "a numerical vorticity anchor",
+  "provenance for the beta ball radius 0.01 (left as is, flagged declared)"
+ ],
+ "native_subagents": "NOT_RUN",
+ "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

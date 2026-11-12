@@ -1,0 +1,38 @@
+{
+  "schema": "htt.r48_t23_sensitivity_report/1",
+  "task_id": "R48-T23",
+  "part": "identity verification and bounded sensitivity sweep",
+  "as_of_date": "2026-11-11",
+  "status": "SYNTHETIC_ORACLE_ONLY_NOT_OBSERVATIONAL_EVIDENCE",
+  "script": {"file": "R48_T23_identity_check_and_sweep.py", "sha256": "1463e600f9dc8461837a3aab9ae60ee2677e2546c6decda86b201c5625f4db4d", "result": "R48_T23_IDENTITY_AND_SWEEP_RESULT.json", "result_sha256": "05b6a9f22a2e683a29836e658630a1d0cf564b9ab51fc0121ec07fdf56370fd3",
+             "command": "python3 R48_T23_identity_check_and_sweep.py --repo <repo root> --out R48_T23_IDENTITY_AND_SWEEP_RESULT.json", "exit_code": 0, "seed": 20261111, "versions": {"python": "3.12.3", "numpy": "2.4.2", "sympy": "1.14.0"}},
+  "identities_derived_independently": {
+    "method": "structure constants C^c_ab = eps_abd n^dc (class A, orthonormal frame) -> Koszul connection (metric-compatible and torsion-free asserted) -> D_b sigma^b_a and 3-Ricci",
+    "I1_momentum_constraint": {"result": "mock momentum_A(n,S) = -D_b sigma^b_a to 8.9e-16 over 50 random (n,S)", "meaning": "AGREES UP TO AN OVERALL SIGN fixed only by orientation/sign conventions of the structure constants and of K_ab; the kernel/rank statements are sign-independent. The mock must declare its convention before any signed quantity (the sign of M and hence of beta_NM) is compared with literature.", "state": "VERIFIED_UP_TO_SIGN_CONVENTION"},
+    "I2_ricci_spectra": {"result": "mock ricci_A eigenvalues equal the connection-derived ones exactly for types I, II, VI0/VII0-like, VIII-like, IX (1,1,1) and IX (2,1,1); antisymmetric part 0", "spectra": {"I": [0, 0, 0], "II": [-0.5, -0.5, 0.5], "IX_(1,1,1)": [0.5, 0.5, 0.5], "IX_(2,1,1)": [0, 0, 2], "VIII_like": [-1.5, -1.5, 0.5]}, "state": "VERIFIED"},
+    "I3_flux_jacobians": {"det_J_B_closed_form_symbolic": true, "J_A_kernel_(1,1,1)_symbolic": true, "generic_rank_J_A": 2, "generic_rank_J_B": 3, "state": "VERIFIED"},
+    "I4_tilt_inversion": {"max_rel_err_gamma2_beta_equals_M_over_w": 1.7e-14, "state": "VERIFIED"},
+    "I5_curvature_oracle": {"mahalanobis_sq": 7.3333, "MI_nats_quadrature": 0.47976, "MI_nats_monte_carlo": 0.47993, "MAP_accuracy_closed_form": 0.91213, "mock_report_values": {"MI_nats": 0.47892, "MAP_accuracy": 0.9122}, "state": "VERIFIED_WITHIN_MC_ERROR"},
+    "frame_closure": "beta_RM=beta_NM, beta_MO=-beta_NM, beta_RO=0 holds only for collinear inverse boosts; not re-derived here"
+  },
+  "bounded_sweep_posterior_width": {
+    "definition": "noise-free data at lambda=1 (tilt amplitude); posterior sd of lambda and of |beta_NM| over the lambda grid; synthetic count/Gaia response scales 1.25/0.8 kept as declared mock constants",
+    "base": {"noise": 1.0, "enthalpy_w": 1.0, "shear": 1.0, "corr_mix": 0.45, "prior_sd": 0.25},
+    "noise": [{"x": 0.5, "sd_lambda": 0.0486, "sd_beta": 0.00593}, {"x": 1.0, "sd_lambda": 0.0921, "sd_beta": 0.01124}, {"x": 2.0, "sd_lambda": 0.1553, "sd_beta": 0.01895}, {"x": 4.0, "sd_lambda": 0.2112, "sd_beta": 0.02575}],
+    "enthalpy_w": [{"x": 0.25, "sd_lambda": 0.0781, "sd_beta": 0.02297, "beta_at_lambda1": 0.4213}, {"x": 1.0, "sd_lambda": 0.0921, "sd_beta": 0.01124, "beta_at_lambda1": 0.126}, {"x": 4.0, "sd_lambda": 0.0975, "sd_beta": 0.00311, "beta_at_lambda1": 0.032}],
+    "shear_amplitude": [{"x": 0.25, "sd_lambda": 0.2109, "sd_beta": 0.00673, "beta_at_lambda1": 0.032}, {"x": 1.0, "sd_lambda": 0.0921, "sd_beta": 0.01124, "beta_at_lambda1": 0.126}, {"x": 2.0, "sd_lambda": 0.0492, "sd_beta": 0.01056, "beta_at_lambda1": 0.2412}],
+    "kinematic_correlation_mix": [{"x": 0.0, "sd_lambda": 0.1013, "sd_beta": 0.01237}, {"x": 0.45, "sd_lambda": 0.0921, "sd_beta": 0.01124}, {"x": 0.9, "sd_lambda": 0.0692, "sd_beta": 0.00845}],
+    "prior_sd": [{"x": 0.1, "sd_lambda": 0.0704, "sd_beta": 0.00859}, {"x": 0.25, "sd_lambda": 0.0921, "sd_beta": 0.01124}, {"x": 0.5, "sd_lambda": 0.0972, "sd_beta": 0.01186}],
+    "curvature_sensor_noise_scale": {"0.25": {"mahalanobis_sq": 117.3, "MAP_accuracy": 1.0000}, "0.5": {"mahalanobis_sq": 29.3, "MAP_accuracy": 0.9966}, "1.0": {"mahalanobis_sq": 7.33, "MAP_accuracy": 0.9121}, "2.0": {"mahalanobis_sq": 1.83, "MAP_accuracy": 0.7508}, "4.0": {"mahalanobis_sq": 0.458, "MAP_accuracy": 0.6325}},
+    "nuisance_projection": {"parallel_unbounded_calibration_nuisance_residual_norm": 1.9e-16, "meaning": "a single unbounded nuisance aligned with the label direction removes all label information (rank 1 -> 0)"}
+  },
+  "interpretation": [
+    "Posterior sd of the tilt amplitude grows roughly with the noise scale and saturates toward the prior width (sd_lambda 0.049 at 0.5x noise, 0.21 at 4x).",
+    "Because beta_NM saturates as M/w grows (beta = 2r/(1+sqrt(1+4r^2))), the enthalpy scale w changes the observable beta amplitude 0.42 -> 0.032 over a 16x range, i.e. w is a first-order nuisance for converting momentum to velocity.",
+    "Stronger kinematic correlation (mix 0.9) *reduces* the posterior sd here because the mock's mean channels are strongly aligned; this is a property of the chosen correlation structure, not a general statement.",
+    "The curvature oracle separates the selected II/IX pair only because its noise is declared idealised (sigma^2 = 0.375): at 2x sigma the MAP accuracy falls to 0.75 and at 4x to 0.63. Nothing here is a physical curvature measurement."
+  ],
+  "limits": ["synthetic response scales 1.25 and 0.80 are mock constants, not calibrations", "noise-free-data posterior widths, not full SBC", "one tilt direction and one shear tensor", "class A only; class B (V/VII_h) not swept"],
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

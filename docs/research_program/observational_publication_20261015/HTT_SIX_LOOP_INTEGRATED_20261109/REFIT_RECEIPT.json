@@ -1,0 +1,386 @@
+{
+ "schema": "htt.refit_receipt/5",
+ "as_of_date": "2026-11-12",
+ "status": "REFIT_V5_SOURCED_COUNT_DIPOLES_FRAME_FIXED",
+ "supersedes": [
+  "v1-v4 result files (kept; see *_SUPERSEDED.json). v4 used hard-coded literals for Quaia G<20.5 and RACS, round-number NVSS values and a galactic/ICRS frame mismatch for all count vectors."
+ ],
+ "authorisation": "User decisions 2026-11-12: NPIPE/PR4 excluded; re-fit approved; unblinded count-dipole computation on Quaia, NVSS and RACS-low approved ('both steps', after the offer 'if you approve the unblinding').",
+ "operator": {
+  "scripts": {
+   "scripts/r48/refit_hypotheses_no_cmb.py": "b518644d57966fc2be29e7287a76d2321174ddbea796a6f6fb2eb0da3567de66",
+   "scripts/r48/boost_tension_by_channel.py": "1f2857c12f55eb5c1a8a82abce3283b310d0907318421a23d5c4ca4c8bb02b87"
+  },
+  "pr574_head": "8a6ae269751a8a6878eaf9e1192c28fe1c067523",
+  "seed": 20261112,
+  "exit_code": 0,
+  "versions": {
+   "python": "3.12.3",
+   "numpy": "2.4.2"
+  },
+  "result_sha256": {
+   "REFIT_HYPOTHESES_NO_CMB_RESULT.json": "92a1f063505b1d93d63e73fcf18d82a29f6af4fcd9b4767cbc2e45521d06230e"
+  }
+ },
+ "inputs": {
+  "channels_default": [
+   "Quasars",
+   "Radio",
+   "Gaia",
+   "SNe",
+   "PV",
+   "DESI"
+  ],
+  "n_data": 1523,
+  "excluded": "CMB (Planck PR4) never loaded; RACS excluded from default (post-hoc judgement, sensitivity provided)",
+  "count_dipole_data": {
+   "path_tail": "L2_REAL_DIPOLES_RESULT.json",
+   "sha256": "01b48d1742c37b64a493e012664bd689411aeea6056159c16b6392a9cc87ccfa"
+  },
+  "input_files_sha256": {
+   "Quasars": {
+    "path_tail": "observational_publication_20261015/HTT_SIX_LOOP_INTEGRATED_20261109/L2_REAL_DIPOLES_RESULT.json",
+    "sha256": "01b48d1742c37b64a493e012664bd689411aeea6056159c16b6392a9cc87ccfa"
+   },
+   "Radio": {
+    "path_tail": "observational_publication_20261015/HTT_SIX_LOOP_INTEGRATED_20261109/L2_REAL_DIPOLES_RESULT.json",
+    "sha256": "01b48d1742c37b64a493e012664bd689411aeea6056159c16b6392a9cc87ccfa"
+   },
+   "Gaia": {
+    "path_tail": "observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/GAIA_VSH_11MODES_EMPIRICAL.json",
+    "sha256": "64b3e079a31c030e7039ee6bb6518cb7146451704244abe24688da8f2c180396"
+   },
+   "SNe": {
+    "path_tail": "observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/pantheon_sliced_490_cache.npz",
+    "sha256": "b57f0433afeb22fc06d998a9cfa894e213d01a26a631d188fc8effcd4e48aa43"
+   },
+   "PV": {
+    "path_tail": "results/cf4_rawgroup_appHubble_STF2_pooled_methods_v2/selected_source_observables.npz",
+    "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c"
+   },
+   "DESI": {
+    "path_tail": "observational_bundles/DESI_BAO_compact/bao_desi_gaussian_bao_ALL_GCcomb_mean.txt",
+    "sha256": "9ac154ab583ce759c0f7eef3c978c7c70a6ead2d18774caceadf1a350a640585"
+   },
+   "Quasars_cov": {
+    "path_tail": "OBSERVATIONAL_CONVERGENCE_20261107/COUNT_SELECTION_DIAGNOSTICS/count_dipole_summary.json",
+    "sha256": "bd9725c3c569653143ded60990e8d1e90ad91975d0c294f3ad435ae90e08286a"
+   },
+   "DESI_cov": {
+    "path_tail": "bao_desi_gaussian_bao_ALL_GCcomb_cov.txt",
+    "sha256": "252a143274c8a07c78694c119617d36594f6d7965d00319ca611c6ffb886e509"
+   }
+  }
+ },
+ "fixes_enabling": [
+  "count-dipole vectors now in ICRS (were galactic (l,b) used as equatorial axes); test-first, matrix checked against astropy to 1e-7",
+  "count blocks from L2_REAL_DIPOLES_RESULT.json with per-block use flags; legacy literals remain only as a flagged fallback"
+ ],
+ "results": {
+  "chi2_fixed_psi": {
+   "legacyICRS_a0.75": {
+    "H_0": 1644.5,
+    "H_loc": 1438.5,
+    "H_tilt": 1644.5,
+    "H_mix": 1380.6
+   },
+   "sourced_a0.5": {
+    "H_0": 1449.4,
+    "H_loc": 1425.4,
+    "H_tilt": 1449.4,
+    "H_mix": 1367.1
+   },
+   "sourced_a0.75": {
+    "H_0": 1449.4,
+    "H_loc": 1425.5,
+    "H_tilt": 1449.4,
+    "H_mix": 1367.2
+   },
+   "sourced_a1.0": {
+    "H_0": 1449.4,
+    "H_loc": 1425.5,
+    "H_tilt": 1449.4,
+    "H_mix": 1367.3
+   },
+   "sourcedRACS_a0.75": {
+    "H_0": 1481.9,
+    "H_loc": 1438.4,
+    "H_tilt": 1481.9,
+    "H_mix": 1380.4
+   },
+   "sourced_noGaia_a0.75": {
+    "H_0": 1390.9,
+    "H_loc": 1366.9,
+    "H_tilt": 1390.9,
+    "H_mix": 1360.9
+   }
+  },
+  "Delta_BIC_fixed_psi": {
+   "legacyICRS_a0.75": {
+    "H_0": 184.0,
+    "H_loc": 0.0,
+    "H_tilt": 206.0,
+    "H_mix": 0.8
+   },
+   "sourced_a0.5": {
+    "H_0": 2.0,
+    "H_loc": 0.0,
+    "H_tilt": 24.0,
+    "H_mix": 0.4
+   },
+   "sourced_a0.75": {
+    "H_0": 2.0,
+    "H_loc": 0.0,
+    "H_tilt": 24.0,
+    "H_mix": 0.3
+   },
+   "sourced_a1.0": {
+    "H_0": 1.9,
+    "H_loc": 0.0,
+    "H_tilt": 23.9,
+    "H_mix": 0.3
+   },
+   "sourcedRACS_a0.75": {
+    "H_0": 21.5,
+    "H_loc": 0.0,
+    "H_tilt": 43.5,
+    "H_mix": 0.6
+   },
+   "sourced_noGaia_a0.75": {
+    "H_0": 2.0,
+    "H_loc": 0.0,
+    "H_tilt": 24.0,
+    "H_mix": 52.6
+   }
+  },
+  "boost_tension": {
+   "sourced_a0.5": {
+    "count_joint_beta_hat": [
+     -0.00241,
+     0.00083,
+     -0.00164
+    ],
+    "count_joint_norm": 0.00303,
+    "ratio_to_CMB_speed_1.23e-3": 2.46,
+    "Quasars": {
+     "beta_hat": [
+      -0.00237,
+      -0.00187,
+      -0.00164
+     ],
+     "sd_axes": [
+      0.00059,
+      0.00246,
+      0.00094
+     ],
+     "dchi2_null_vs_best_3dof": 18.4
+    },
+    "Radio": {
+     "beta_hat": [
+      -0.00255,
+      0.00154,
+      -0.00129
+     ],
+     "sd_axes": [
+      0.00112,
+      0.00125,
+      0.01403
+     ],
+     "dchi2_null_vs_best_3dof": 6.4
+    },
+    "cost_of_count_best_fit_dchi2_3dof": {
+     "Gaia": -0.0,
+     "SNe": 4.1,
+     "PV": 6.6
+    }
+   },
+   "sourced_a0.75": {
+    "count_joint_beta_hat": [
+     -0.0022,
+     0.00076,
+     -0.00149
+    ],
+    "count_joint_norm": 0.00277,
+    "ratio_to_CMB_speed_1.23e-3": 2.25,
+    "Quasars": {
+     "beta_hat": [
+      -0.00216,
+      -0.0017,
+      -0.0015
+     ],
+     "sd_axes": [
+      0.00054,
+      0.00224,
+      0.00086
+     ],
+     "dchi2_null_vs_best_3dof": 18.4
+    },
+    "Radio": {
+     "beta_hat": [
+      -0.00238,
+      0.00144,
+      -0.0012
+     ],
+     "sd_axes": [
+      0.00104,
+      0.00117,
+      0.01307
+     ],
+     "dchi2_null_vs_best_3dof": 6.4
+    },
+    "cost_of_count_best_fit_dchi2_3dof": {
+     "Gaia": -0.0,
+     "SNe": 4.2,
+     "PV": 6.6
+    }
+   },
+   "sourced_a1.0": {
+    "count_joint_beta_hat": [
+     -0.00203,
+     0.0007,
+     -0.00137
+    ],
+    "count_joint_norm": 0.00255,
+    "ratio_to_CMB_speed_1.23e-3": 2.07,
+    "Quasars": {
+     "beta_hat": [
+      -0.00198,
+      -0.00157,
+      -0.00137
+     ],
+     "sd_axes": [
+      0.00049,
+      0.00205,
+      0.00079
+     ],
+     "dchi2_null_vs_best_3dof": 18.4
+    },
+    "Radio": {
+     "beta_hat": [
+      -0.00223,
+      0.00135,
+      -0.00112
+     ],
+     "sd_axes": [
+      0.00098,
+      0.00109,
+      0.01224
+     ],
+     "dchi2_null_vs_best_3dof": 6.4
+    },
+    "cost_of_count_best_fit_dchi2_3dof": {
+     "Gaia": -0.0,
+     "SNe": 4.3,
+     "PV": 6.5
+    }
+   },
+   "legacyICRS_a0.75": {
+    "count_joint_beta_hat": [
+     -0.0036,
+     0.00165,
+     -0.00077
+    ],
+    "count_joint_norm": 0.00403,
+    "ratio_to_CMB_speed_1.23e-3": 3.28,
+    "Quasars": {
+     "beta_hat": [
+      -0.00356,
+      0.00159,
+      -0.00081
+     ],
+     "sd_axes": [
+      0.00034,
+      0.00029,
+      0.0003
+     ],
+     "dchi2_null_vs_best_3dof": 162.1
+    },
+    "Radio": {
+     "beta_hat": [
+      -0.00371,
+      0.00199,
+      -0.0006
+     ],
+     "sd_axes": [
+      0.00064,
+      0.00064,
+      0.00064
+     ],
+     "dchi2_null_vs_best_3dof": 44.6
+    },
+    "cost_of_count_best_fit_dchi2_3dof": {
+     "Gaia": -0.0,
+     "SNe": 4.1,
+     "PV": 7.5
+    }
+   },
+   "sourcedRACS_a0.75": {
+    "count_joint_beta_hat": [
+     -0.00279,
+     -0.00012,
+     -0.00169
+    ],
+    "count_joint_norm": 0.00327,
+    "ratio_to_CMB_speed_1.23e-3": 2.66,
+    "Quasars": {
+     "beta_hat": [
+      -0.00216,
+      -0.0017,
+      -0.0015
+     ],
+     "sd_axes": [
+      0.00054,
+      0.00224,
+      0.00086
+     ],
+     "dchi2_null_vs_best_3dof": 18.4
+    },
+    "Radio": {
+     "beta_hat": [
+      -0.0041,
+      0.0002,
+      -0.00894
+     ],
+     "sd_axes": [
+      0.00077,
+      0.00087,
+      0.00945
+     ],
+     "dchi2_null_vs_best_3dof": 29.2
+    },
+    "cost_of_count_best_fit_dchi2_3dof": {
+     "Gaia": -0.0,
+     "SNe": 3.4,
+     "PV": 6.7
+    }
+   }
+  }
+ },
+ "findings": [
+  "With sourced, masked count dipoles the count-implied boost is |beta_MO| ~2.6e-3 (alpha 1.0) to 3.0e-3 (alpha 0.5), 2.1-2.5x the CMB-dipole speed, but poorly constrained: per-axis sd 5e-4 (x), ~2e-3 (y), ~8e-4 (z) for Quaia, 1e-3..1.4e-2 for NVSS; chi2 improvement over the null is only 18.4 (Quaia) + 6.4 (NVSS) for 3 dof each (H_0 vs H_loc: Delta_BIC 2.0 in favour of H_loc, i.e. weak). The legacy 'excess' (|beta| 4-6e-3, chi2 improvement ~210) is not reproduced.",
+  "Including the systematics-dominated RACS block restores a larger preference (Delta_BIC(H_0)=21.5) and moves beta_MO (RACS-only beta_eq 1.9e-2); that block is not trusted.",
+  "SNe and PV remain uninformative at this level (cost of the count best fit dchi2 ~3.4-4.2 and ~6.5 for 3 dof).",
+  "Gaia block: the nuisance design marginalises data entries 0-5 (glide AND spin) with flat priors, so Gaia carries no glide information; the response constants pred[:3]=0.92*beta_MO and pred[6:11]=0.18*sigma compare dimensionless quantities with mas/yr data and have no derivation (a proper-motion transfer needs the H0[mas/yr] scale, the E2-basis projection with the Gram diag 4.8/1.6 and a validated sign convention). NOT fixed: no physical transfer was invented. Without Gaia, H_mix gains only 6 chi2 for 8 parameters (Delta_BIC +52.6): the earlier H_mix gain was Gaia saturation.",
+  "H_loc is best by BIC in all runs; H_tilt equals the null (beta_RM enters no channel); SNe ~433/490 and PV ~903/1000 remain adequate."
+ ],
+ "caveats": [
+  "Point estimates; no sampling; no matched-null calibration; synthetic randoms for NVSS; mask systematic enters only as a covariance term; response slopes x are declared proxies; alpha is a declared nuisance (grid 0.5-1.0)",
+  "Not the CORE-07 production inference; no claim of departure from FLRW or of a detected excess."
+ ],
+ "claims": [
+  {
+   "id": "RF5-1",
+   "claim": "Reproducible ML point estimates for four hypotheses on six real-data channels (CMB/PR4 excluded) with sourced, frame-consistent count dipoles.",
+   "state": "NUMERICALLY_COMPUTED_REAL_DATA_POINT_ESTIMATE",
+   "limit": "mask-systematic dominated; Gaia transfer unjustified"
+  },
+  {
+   "id": "RF5-2",
+   "claim": "Count-dipole excess over the CMB-dipole kinematic expectation.",
+   "state": "NOT_SUPPORTED_AT_SOURCED_VALUES",
+   "limit": "weakly constrained"
+  }
+ ],
+ "native_subagents": "NOT_RUN",
+ "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

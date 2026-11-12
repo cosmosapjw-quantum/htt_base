@@ -1,0 +1,181 @@
+{
+ "schema": "htt.count_dipoles_real_receipt/1",
+ "task_id": "L2",
+ "as_of_date": "2026-11-12",
+ "status": "DONE_UNBLINDED_POINT_ESTIMATES_MASK_SYSTEMATIC_DOMINATED",
+ "authorisation": "User decisions 2026-11-12: NPIPE/PR4 excluded; re-fit approved; unblinded count-dipole computation on Quaia, NVSS and RACS-low approved ('both steps', after the offer 'if you approve the unblinding').",
+ "operator": {
+  "script": "L2_real_dipoles.py",
+  "script_sha256": "56e21e3260481548b016db25033aaa0dba6921e2721a686c2aa560c37fde3d73",
+  "command": "python3 L2_real_dipoles.py --raw <RAW_ROOT> --out L2_REAL_DIPOLES_RESULT.json",
+  "exit_code": 0,
+  "seed": 20261112,
+  "result_sha256": "01b48d1742c37b64a493e012664bd689411aeea6056159c16b6392a9cc87ccfa",
+  "versions": {
+   "python": "3.12.3",
+   "numpy": "2.4.2",
+   "healpy": "1.19.0"
+  },
+  "note": "system numexpr/bottleneck emitted NumPy-ABI warnings on import; the run completed and the numbers were identical across executions"
+ },
+ "inputs_sha256": {
+  "quaia_G20.0.fits": "efeda9ae727bf2cd75569f52460a0492827c8a3fcd8ce29dc692b559fca2acb0",
+  "random_G20.0_10x.fits": "88b00e135cbcb2f7cfbd01c1d17e3198f81eb1aaece8955b43b2b6ac00136a1f",
+  "selection_function_NSIDE64_G20.0.fits": "f66684999b0fdab1cdc3f8fc3ac8ef16956cb037785dbac2dc395dae3ffedd7d",
+  "quaia_G20.5.fits": "9e357a760f2ff2db9417a6791fb71dc421ee30324301f22db898038c9e648584",
+  "random_G20.5_10x.fits": "1783b13c03d084b1c40920b25e2008498df2349cb4d69e6a4b73db0dc1d28ef9",
+  "selection_function_NSIDE64_G20.5.fits": "5c3851c70cebcaf765f283d9e9904b01dcfe7bc818570ddc749d88fbb5add0a9",
+  "NVSS_CATALOG.FIT": "a357a688dc7e43ae81ecbe465fdce216dfed678aee977780a626841eceb5bde4",
+  "RACS_DR1_galcut.dat.gz": "1764a934a084b12e411c32c426f04d5029c223541096253468d8343a60df4173"
+ },
+ "estimator": "Poisson-WLS pixel dipole validated on mocks (L2 pilot/NVSS/RACS slices); ICRS frame; Quaia expectation = official selection function T (variant: random density); NVSS/RACS expectation = SYNTHETIC uniform randoms in the cuts",
+ "preregistered_rule": "Quaia baseline |b|>30 deg declared BEFORE the sweep was inspected (the first run, without latitude cuts, had been seen); per-axis max deviation across |b| cuts {0,10,20,30} and both expectations added in quadrature to the covariance. NVSS/RACS z-variance set to the declared (0.05)^2 because n_z = sin(dec) is degenerate with declination-dependent completeness.",
+ "posthoc_judgement": "RACS excluded from the primary likelihood after seeing amplitude 0.068 (~4.5x other tracers); a sensitivity run with RACS included is provided.",
+ "results": {
+  "Quaia_G20": {
+   "D_icrs": [
+    -0.0113,
+    -0.006,
+    -0.0075
+   ],
+   "amplitude": 0.0148,
+   "direction_l_b_deg": [
+    318.3,
+    30.6
+   ],
+   "sd_axes": [
+    0.0046,
+    0.0161,
+    0.0056
+   ],
+   "overdispersion": 1.05,
+   "n_sources": 755850
+  },
+  "Quaia_G20p5": {
+   "D_icrs": [
+    -0.0116,
+    -0.0126,
+    -0.0086
+   ],
+   "amplitude": 0.0191,
+   "direction_l_b_deg": [
+    337.4,
+    26.7
+   ],
+   "sd_axes": [
+    0.0032,
+    0.0173,
+    0.0067
+   ],
+   "overdispersion": 1.08,
+   "n_sources": 1295502
+  },
+  "NVSS": {
+   "D_icrs": [
+    -0.0091,
+    0.0055,
+    -0.0046
+   ],
+   "amplitude": 0.0116,
+   "direction_l_b_deg": [
+    258.6,
+    24.0
+   ],
+   "sd_axes": [
+    0.004,
+    0.0045,
+    0.05
+   ],
+   "overdispersion": 1.26,
+   "n_sources": 237218
+  },
+  "RACS": {
+   "D_icrs": [
+    -0.0225,
+    -0.0048,
+    -0.0637
+   ],
+   "amplitude": 0.0677,
+   "direction_l_b_deg": [
+    302.7,
+    -7.2
+   ],
+   "sd_axes": [
+    0.0042,
+    0.0047,
+    0.05
+   ],
+   "overdispersion": 1.56,
+   "n_sources": 296156
+  }
+ },
+ "quaia_amplitude_vs_latitude_cut_expect_T": {
+  "Quaia_G20": {
+   "b>0.0": 0.029,
+   "b>10.0": 0.0266,
+   "b>20.0": 0.0212,
+   "b>30.0": 0.0148
+  },
+  "Quaia_G20p5": {
+   "b>0.0": 0.0359,
+   "b>10.0": 0.033,
+   "b>20.0": 0.0262,
+   "b>30.0": 0.0191
+  }
+ },
+ "legacy_values_for_comparison": {
+  "note": "legacy values in the likelihood module/COUNT_DIPOLE_RESULT.json, interpreted in their own galactic (l,b)",
+  "Quaia_G20": {
+   "amp": 0.02448523764160455,
+   "lb": [
+    260.02365576915645,
+    36.283918848660626
+   ]
+  },
+  "Quaia_G20p5": {
+   "amp": 0.0212,
+   "lb": [
+    255.4,
+    37.1
+   ],
+   "status": "hard-coded literal"
+  },
+  "NVSS": {
+   "amp": 0.015,
+   "lb": [
+    251.0,
+    38.0
+   ],
+   "status": "round numbers in result file"
+  },
+  "RACS": {
+   "amp": 0.018,
+   "lb": [
+    245.0,
+    35.0
+   ],
+   "status": "hard-coded literal"
+  }
+ },
+ "findings": [
+  "Quaia amplitude depends strongly on the Galactic-latitude mask: G<20: 0.029 (no cut) -> 0.0148 (|b|>30); G<20.5: 0.036 -> 0.019. The legacy values (G20 0.0245, G20.5 0.0212, both unverified) do not correspond to the baseline rule.",
+  "Per-axis uncertainty at the baseline is dominated by the mask/expectation systematic (y-axis ~0.016-0.017), far above the Poisson error (~0.002).",
+  "NVSS amplitude 0.0116 (legacy 0.015 round numbers); RACS amplitude 0.068 is systematics-dominated (unmodelled tile rms/declination completeness).",
+  "The count-dipole excess seen with the legacy blocks is NOT reproduced with sourced, masked values: see REFIT_RECEIPT.json (v5)."
+ ],
+ "claims": [
+  {
+   "id": "CD-1",
+   "claim": "Count dipoles for Quaia G<20, G<20.5 and NVSS were computed on the real catalogues with one estimator; RACS computed but not used.",
+   "state": "NUMERICALLY_COMPUTED_REAL_DATA_POINT_ESTIMATE",
+   "limit": "mask systematics dominate; synthetic randoms for radio; no extinction/rms systematics model; selection-function T trusted"
+  },
+  {
+   "id": "CD-2",
+   "claim": "Kinematic dipole detected or excess over kinematic expectation established.",
+   "state": "NOT_CLAIMED"
+  }
+ ],
+ "native_subagents": "NOT_RUN",
+ "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

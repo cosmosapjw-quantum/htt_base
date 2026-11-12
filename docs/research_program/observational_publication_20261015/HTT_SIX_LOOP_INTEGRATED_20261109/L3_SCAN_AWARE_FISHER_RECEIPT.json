@@ -1,0 +1,47 @@
+{
+  "schema": "htt.l3_scan_aware_fisher_receipt/1",
+  "task_id": "L3",
+  "slice": "SCAN_AWARE_FISHER_AND_SPURIOUS_RESPONSE",
+  "as_of_date": "2026-11-12",
+  "task_status_unchanged": "PENDING (fourth slice; L3 acceptance not met)",
+  "status": "SLICE_DONE_STRUCTURAL",
+  "blinding_note": "No proper-motion values read.",
+  "inputs": {
+    "catalogue_sha256_recomputed": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0 (recomputed 2026-11-12; equals the earlier manifest value)",
+    "scan_template": "L3_scan_law_template.py --jdmax 2704.0 (regenerated maps npz, not committed)"
+  },
+  "operator": {
+    "script": "L3_scan_aware_fisher.py", "script_sha256": "34d2d5c5cad75b36e255052596ab2019044431917637432f9b2e7381632cbec5",
+    "command": "python3 L3_scan_aware_fisher.py --fits <gaia_crf3_astrometry_full.fits> --maps <dr3_maps.npz> --out L3_SCAN_AWARE_FISHER_RESULT.json --ndraw 100",
+    "seed": 20261112, "exit_code": 0, "elapsed_s": 34.8, "result_sha256": "14a8edcc98266067f6be29daf9d2c8748ef231864a0fe49b092a39e34d7a859d",
+    "versions": {"python": "3.12.3", "numpy": "2.4.2", "healpy": "1.19.0"},
+    "model": "16 low-order modes (E1,B1,E2,B2; Frobenius-orthonormal STF chart); CAT = catalogue covariance, TMPL = scan-law ellipse M^-1 det-matched to catalogue; spurious response from a unit-amplitude per-pixel (nside16) white systematic vector along the major-information scan axis vs isotropic-direction control"
+  },
+  "results_structural": {
+    "n_sources": 1614173,
+    "formal_sd_CAT_masyr_range": [2.81e-4, 5.65e-4],
+    "cond_fisher": {"CAT": 7.73, "TMPL": 8.01},
+    "sd_ratio_TMPL_over_CAT": [0.974, 1.039],
+    "spurious_rms_bias_over_formal_sd_unit_amplitude": {
+      "CAT_scan_aligned": {"E1": 73.1, "B1": 74.1, "E2": 79.2, "B2": 73.8, "max": 93.7},
+      "CAT_isotropic_control": {"E1": 66.9, "B1": 65.7, "E2": 67.8, "B2": 66.0, "max": 73.5},
+      "TMPL_scan_aligned": {"E1": 76.5, "B1": 77.1, "E2": 87.3, "B2": 78.5, "max": 100.1},
+      "TMPL_isotropic_control": {"E1": 65.7, "B1": 66.5, "E2": 66.9, "B2": 69.8, "max": 80.4}
+    },
+    "interpretation": [
+      "Formal mode errors are insensitive to the covariance orientation model: replacing the catalogue ellipse by the det-matched scan-law ellipse changes mode sd by -2.6% to +3.9%.",
+      "A pixel-scale white systematic of 1 mas/yr per pixel moves the low-order modes by ~65-100 formal sd; aligning it with the scan axis raises this by only ~10-25% over an isotropic control. Pixel-scale systematic amplitude, not scan orientation, dominates; a systematic floor on E/B l<=2 modes is set by the (unknown) amplitude of correlated pixel-scale errors, not by statistics.",
+      "The bias is a model response, not an estimate of the real DR3 systematic amplitude, which is not constrained here."
+    ]
+  },
+  "claims": [
+    {"id": "L3-S8", "claim": "Scan-aware and catalogue covariances give the same formal low-order mode errors to within ~4%.", "state": "NUMERICALLY_CHECKED_STRUCTURAL", "limit": "dispersion of the catalogue per-source ellipse around the pixel median not modelled; l>=3 excluded"},
+    {"id": "L3-S9", "claim": "Scan-aligned pixel-scale systematics project onto l<=2 E/B modes ~10-25% more strongly than isotropic ones.", "state": "NUMERICALLY_CHECKED_STRUCTURAL", "limit": "white per-pixel toy systematic; no correlation length; real DR3 systematic amplitude not determined; 100 draws"},
+    {"id": "L3-S10", "claim": "Gaia catalogue file hash verified.", "state": "SOURCE_HASH_RECOMPUTED", "limit": "file-level only"},
+    {"id": "L3-S3", "claim": "A frame-spin tie is available.", "state": "BLOCKED", "limit": "unchanged"}
+  ],
+  "not_run": ["ICRF3 frame-spin anchor", "magnitude/colour-dependent systematics", "correlated-noise (finite correlation length) systematics", "proper-motion fit", "independent reviewer"],
+  "next_gate": "Bind a frame-spin anchor with provenance; add systematic floor with an externally sourced amplitude (not assumed).",
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "htt.l2_joint_estimand_receipt/1",
+  "task_id": "L2",
+  "slice": "JOINT_QUAIA_NVSS_ESTIMAND_STRUCTURAL",
+  "as_of_date": "2026-11-12",
+  "task_status_unchanged": "PENDING (third slice; L2 acceptance not met)",
+  "status": "SLICE_DONE_STRUCTURAL",
+  "blinding_note": "No dipole values read. Quaia count slope x_Q was NOT measured; it is a declared grid {1.0,1.5,2.0,2.5}. beta=1.23e-3 (CMB-dipole-scale) used only as a Jacobian evaluation point.",
+  "operator": {"script": "L2_joint_estimand.py", "script_sha256": "fff17593f73aac130d23cd19e654247c5c87e3502be6207dbd0d95e5693f1797", "command": "python3 L2_joint_estimand.py --out L2_JOINT_ESTIMAND_RESULT.json", "exit_code": 0, "result_sha256": "22210ed8df379175eb4a0885dfa515d5517f7e61d531a6e783e030a33ce9c72a", "versions": {"python": "3.12.3", "numpy": "2.4.2"},
+               "model": "D_i=[2+x_i(1+alpha_i)] beta, common direction, Poisson-only noise, no cross-tracer covariance (distinct sources); sd per axis NVSS 3.56e-3, Quaia 1.99e-3 from the validated pilots"},
+  "results_structural": {
+    "identifiability": "Unknowns (beta, alpha_NVSS, alpha_Quaia) vs observables (D_N, D_Q): Jacobian rank 2 at all 36 grid points, nullity 1 -> alpha_N, alpha_Q and beta are NOT jointly identifiable from two count dipoles; alpha must be supplied by an independent spectral-index measurement or declared as a nuisance range.",
+    "joint_sd_beta_Poisson_only_range": [2.3e-4, 4.9e-4],
+    "R_N_over_R_Q_range": [0.43, 1.17],
+    "alpha_misassumption_relative_beta_bias": "NVSS-only: assuming alpha=0.75 when true alpha is 0.5 or 1.0 shifts beta-hat by -6.8% / +6.8%; assuming 1.0 when 0.5 is true: -12.8%; assuming 0.5 when 1.0 is true: +14.6%"
+  },
+  "claims": [
+    {"id": "L2-J1", "claim": "Two count dipoles cannot identify beta and both alphas.", "state": "DERIVED_NUMERICALLY_CHECKED", "limit": "assumes x_i known; evolution/size terms absent"},
+    {"id": "L2-J2", "claim": "Poisson-only joint sd(beta) lies in 2.3e-4..4.9e-4 over the declared grid.", "state": "DERIVED_RANGE", "limit": "Quaia x is a declared grid; effective-footprint inflation and cosmic-variance covariance not included"}
+  ],
+  "not_run": ["Quaia x measurement from catalogue magnitudes", "RACS replication lane", "cross-tracer covariance from large-scale structure", "declination systematics", "held-out tracer", "independent reviewer"],
+  "next_gate": "Measure Quaia x (magnitude counts only), add LSS cross-covariance from mocks, RACS lane.",
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

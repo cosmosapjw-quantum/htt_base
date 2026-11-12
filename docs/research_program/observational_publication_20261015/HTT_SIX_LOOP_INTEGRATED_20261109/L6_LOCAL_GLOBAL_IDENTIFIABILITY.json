@@ -1,0 +1,59 @@
+{
+ "declared_nuisance_and_noise_NOT_MEASURED": {
+  "prior_sd_alpha": 0.25,
+  "prior_sd_s": 0.0003,
+  "prior_sd_ic": 0.0001,
+  "noise_count": 0.0025,
+  "noise_cmb_dipole": 1e-05,
+  "noise_cmb_aberration": 0.0004,
+  "prior_sd_tau_shared": 0.1
+ },
+ "scenarios": {
+  "S1_CMB+1count_sharedTau": {
+   "n_unknowns": 5,
+   "n_observables": 2,
+   "jacobian_rank": 2,
+   "nullity": 3,
+   "sd_tau_over_beta_cmb_with_declared_priors": {
+    "tau": 0.5424163263150218
+   },
+   "sd_beta_over_beta_cmb": 0.08170626460291185
+  },
+  "S2_CMB+aberration+1count_sharedTau": {
+   "n_unknowns": 5,
+   "n_observables": 3,
+   "jacobian_rank": 3,
+   "nullity": 2,
+   "sd_tau_over_beta_cmb_with_declared_priors": {
+    "tau": 0.5420508382777288
+   },
+   "sd_beta_over_beta_cmb": 0.079243418734749
+  },
+  "S3_CMB+aberration+3count_sharedTau": {
+   "n_unknowns": 9,
+   "n_observables": 5,
+   "jacobian_rank": 5,
+   "nullity": 4,
+   "sd_tau_over_beta_cmb_with_declared_priors": {
+    "tau": 0.2850444950806949
+   },
+   "sd_beta_over_beta_cmb": 0.07924341873353881
+  },
+  "S4_CMB+aberration+3count_perShellTau": {
+   "n_unknowns": 11,
+   "n_observables": 5,
+   "jacobian_rank": 5,
+   "nullity": 6,
+   "sd_tau_over_beta_cmb_with_declared_priors": {
+    "tau_NVSS": 0.5420508272732578,
+    "tau_RACS": 0.5659681577377191,
+    "tau_Quaia": 0.39503580877156563
+   },
+   "sd_beta_over_beta_cmb": 0.0792433434539924
+  }
+ },
+ "interpretation": [
+  "Without independent anchors the unknown count exceeds the observable count in every scenario (nullity>0): a single dipole, or CMB+count dipoles, cannot separate observer boost from global tilt.",
+  "Posterior sd(tau) is dominated by the declared nuisance priors (alpha, intrinsic dipole s); these magnitudes are declared, not measured."
+ ]
+}

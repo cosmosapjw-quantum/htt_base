@@ -1,0 +1,503 @@
+{
+ "scope": "re-fit without CMB/PR4; unblinding approved by user 2026-11-12",
+ "probes": [
+  "Quasars",
+  "Radio",
+  "Gaia",
+  "SNe",
+  "PV",
+  "DESI"
+ ],
+ "n_data": 1523,
+ "probe_dof": {
+  "Quasars": 6,
+  "Radio": 3,
+  "Gaia": 11,
+  "SNe": 490,
+  "PV": 1000,
+  "DESI": 13
+ },
+ "input_files": {
+  "Quasars": {
+   "path_tail": "observational_publication_20261015/HTT_SIX_LOOP_INTEGRATED_20261109/L2_REAL_DIPOLES_RESULT.json",
+   "sha256": "01b48d1742c37b64a493e012664bd689411aeea6056159c16b6392a9cc87ccfa"
+  },
+  "Radio": {
+   "path_tail": "observational_publication_20261015/HTT_SIX_LOOP_INTEGRATED_20261109/L2_REAL_DIPOLES_RESULT.json",
+   "sha256": "01b48d1742c37b64a493e012664bd689411aeea6056159c16b6392a9cc87ccfa"
+  },
+  "Gaia": {
+   "path_tail": "observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/GAIA_VSH_11MODES_EMPIRICAL.json",
+   "sha256": "64b3e079a31c030e7039ee6bb6518cb7146451704244abe24688da8f2c180396"
+  },
+  "SNe": {
+   "path_tail": "observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/pantheon_sliced_490_cache.npz",
+   "sha256": "b57f0433afeb22fc06d998a9cfa894e213d01a26a631d188fc8effcd4e48aa43"
+  },
+  "PV": {
+   "path_tail": "results/cf4_rawgroup_appHubble_STF2_pooled_methods_v2/selected_source_observables.npz",
+   "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c"
+  },
+  "DESI": {
+   "path_tail": "observational_bundles/DESI_BAO_compact/bao_desi_gaussian_bao_ALL_GCcomb_mean.txt",
+   "sha256": "9ac154ab583ce759c0f7eef3c978c7c70a6ead2d18774caceadf1a350a640585"
+  },
+  "Quasars_cov": {
+   "path_tail": "OBSERVATIONAL_CONVERGENCE_20261107/COUNT_SELECTION_DIAGNOSTICS/count_dipole_summary.json",
+   "sha256": "bd9725c3c569653143ded60990e8d1e90ad91975d0c294f3ad435ae90e08286a"
+  },
+  "DESI_cov": {
+   "path_tail": "bao_desi_gaussian_bao_ALL_GCcomb_cov.txt",
+   "sha256": "252a143274c8a07c78694c119617d36594f6d7965d00319ca611c6ffb886e509"
+  }
+ },
+ "r_d_fixed": 147.09,
+ "count_alpha": 1.0,
+ "dipole_data": {
+  "path_tail": "L2_REAL_DIPOLES_RESULT.json",
+  "sha256": "01b48d1742c37b64a493e012664bd689411aeea6056159c16b6392a9cc87ccfa"
+ },
+ "count_slopes_declared": {
+  "Quaia_G20": 1.9,
+  "Quaia_G20p5": 1.9,
+  "NVSS": 1.043,
+  "RACS": 0.948
+ },
+ "versions": {
+  "python": "3.12.3",
+  "numpy": "2.4.2"
+ },
+ "modes": {
+  "fixed_psi": {
+   "hypotheses": {
+    "H_0": {
+     "k": 0,
+     "theta_hat": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "psi_hat": [
+      67.4,
+      0.315,
+      147.09,
+      0.0
+     ],
+     "chi2_total": 1449.4359928478125,
+     "chi2_by_probe": {
+      "Quasars": 18.45346406535926,
+      "Radio": 6.449095637591781,
+      "Gaia": 58.556281532170736,
+      "SNe": 434.45937662931357,
+      "PV": 902.5518554520285,
+      "DESI": 28.965919531348614,
+      "Total": 1449.4359928478125
+     },
+     "optimizer": {
+      "message": "no free parameters",
+      "success": true,
+      "nit": 0,
+      "nfev": 1,
+      "fun_by_start": []
+     },
+     "AIC": 1449.4359928478125,
+     "BIC": 1449.4359928478125,
+     "Delta_BIC": 1.9020991171041715,
+     "Delta_AIC": 60.17374959676613
+    },
+    "H_loc": {
+     "k": 3,
+     "theta_hat": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.002048769016585822,
+      0.0004051650842712885,
+      -0.0014741818145140562
+     ],
+     "psi_hat": [
+      67.4,
+      0.315,
+      147.09,
+      0.0
+     ],
+     "chi2_total": 1425.548581672023,
+     "chi2_by_probe": {
+      "Quasars": 1.047918641793677,
+      "Radio": 0.7609240783003046,
+      "Gaia": 58.55628153217073,
+      "SNe": 433.07066498830466,
+      "PV": 903.1468729001049,
+      "DESI": 28.965919531348614,
+      "Total": 1425.548581672023
+     },
+     "optimizer": {
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "success": true,
+      "nit": 8,
+      "nfev": 56,
+      "fun_by_start": [
+       1425.548581672023,
+       1425.548581674498,
+       1425.5485816724904
+      ]
+     },
+     "AIC": 1431.548581672023,
+     "BIC": 1447.5338937307083,
+     "Delta_BIC": 0.0,
+     "Delta_AIC": 42.28633842097656
+    },
+    "H_tilt": {
+     "k": 3,
+     "theta_hat": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "psi_hat": [
+      67.4,
+      0.315,
+      147.09,
+      0.0
+     ],
+     "chi2_total": 1449.4359928478125,
+     "chi2_by_probe": {
+      "Quasars": 18.45346406535926,
+      "Radio": 6.449095637591781,
+      "Gaia": 58.556281532170736,
+      "SNe": 434.45937662931357,
+      "PV": 902.5518554520285,
+      "DESI": 28.965919531348614,
+      "Total": 1449.4359928478125
+     },
+     "optimizer": {
+      "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+      "success": true,
+      "nit": 0,
+      "nfev": 4,
+      "fun_by_start": [
+       1449.4359928478125,
+       1449.4359928478125,
+       1449.4359928478125
+      ]
+     },
+     "AIC": 1455.4359928478125,
+     "BIC": 1471.4213049064979,
+     "Delta_BIC": 23.887411175789566,
+     "Delta_AIC": 66.17374959676613
+    },
+    "H_mix": {
+     "k": 11,
+     "theta_hat": [
+      -0.0018836381670854316,
+      -0.007002169775884233,
+      0.0015824339486673574,
+      -0.004885818892853159,
+      -0.004001435766630035,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.0020303736124981002,
+      0.00046485098391976245,
+      -0.0015445077154231047
+     ],
+     "psi_hat": [
+      67.4,
+      0.315,
+      147.09,
+      0.0
+     ],
+     "chi2_total": 1367.2622432510464,
+     "chi2_by_probe": {
+      "Quasars": 1.129139562641933,
+      "Radio": 0.6764660381050331,
+      "Gaia": 0.3087016944454229,
+      "SNe": 432.0219059528722,
+      "PV": 904.1601104716331,
+      "DESI": 28.965919531348614,
+      "Total": 1367.2622432510464
+     },
+     "optimizer": {
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "success": true,
+      "nit": 54,
+      "nfev": 816,
+      "fun_by_start": [
+       1367.2622432510464,
+       1367.2622433434108,
+       1367.2622434357206
+      ]
+     },
+     "AIC": 1389.2622432510464,
+     "BIC": 1447.8750541328932,
+     "Delta_BIC": 0.34116040218486887,
+     "Delta_AIC": 0.0
+    }
+   },
+   "best_by_BIC": "H_loc"
+  },
+  "free_psi": {
+   "hypotheses": {
+    "H_0": {
+     "k": 3,
+     "theta_hat": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "psi_hat": [
+      68.8653329567882,
+      0.2933220251679587,
+      147.09,
+      0.020618281049436058
+     ],
+     "chi2_total": 1430.3830073226643,
+     "chi2_by_probe": {
+      "Quasars": 18.45346406535926,
+      "Radio": 6.449095637591781,
+      "Gaia": 58.556281532170736,
+      "SNe": 434.49904505710856,
+      "PV": 902.4687751593863,
+      "DESI": 9.956345871047601,
+      "Total": 1430.3830073226643
+     },
+     "optimizer": {
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "success": true,
+      "nit": 16,
+      "nfev": 72,
+      "fun_by_start": [
+       1430.3830073226643,
+       1430.3830073230097,
+       1430.3830073229572
+      ]
+     },
+     "AIC": 1436.3830073226643,
+     "BIC": 1452.3683193813497,
+     "Delta_BIC": 1.889651469838327,
+     "Delta_AIC": 60.14460737842478
+    },
+    "H_loc": {
+     "k": 6,
+     "theta_hat": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.0020481019630061268,
+      0.00040532828664664993,
+      -0.0014746004903428635
+     ],
+     "psi_hat": [
+      68.85708661913498,
+      0.29326592471008806,
+      147.09,
+      0.021217775831782224
+     ],
+     "chi2_total": 1406.5080437941403,
+     "chi2_by_probe": {
+      "Quasars": 1.0479205279171853,
+      "Radio": 0.7608561424654428,
+      "Gaia": 58.55628153217073,
+      "SNe": 433.1230109578554,
+      "PV": 903.0650482366584,
+      "DESI": 9.954926397073242,
+      "Total": 1406.5080437941403
+     },
+     "optimizer": {
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "success": true,
+      "nit": 31,
+      "nfev": 266,
+      "fun_by_start": [
+       1406.5080438037728,
+       1406.5080437949805,
+       1406.5080437941403
+      ]
+     },
+     "AIC": 1418.5080437941403,
+     "BIC": 1450.4786679115114,
+     "Delta_BIC": 0.0,
+     "Delta_AIC": 42.26964384990083
+    },
+    "H_tilt": {
+     "k": 6,
+     "theta_hat": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "psi_hat": [
+      68.86532136579069,
+      0.2933219975877043,
+      147.09,
+      0.020618859683082264
+     ],
+     "chi2_total": 1430.3830073234406,
+     "chi2_by_probe": {
+      "Quasars": 18.45346406535926,
+      "Radio": 6.449095637591781,
+      "Gaia": 58.556281532170736,
+      "SNe": 434.49904309432276,
+      "PV": 902.4687788803451,
+      "DESI": 9.956344113650916,
+      "Total": 1430.3830073234406
+     },
+     "optimizer": {
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "success": true,
+      "nit": 12,
+      "nfev": 112,
+      "fun_by_start": [
+       1430.3830073234406,
+       1430.3830073251927,
+       1430.3830073260515
+      ]
+     },
+     "AIC": 1442.3830073234406,
+     "BIC": 1474.3536314408116,
+     "Delta_BIC": 23.874963529300203,
+     "Delta_AIC": 66.14460737920103
+    },
+    "H_mix": {
+     "k": 14,
+     "theta_hat": [
+      -0.0018827752140436332,
+      -0.007002160301819551,
+      0.0015792345075718189,
+      -0.004886954157336155,
+      -0.004001002047486668,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -0.000154430339219609,
+      0.0005656002018641396,
+      0.00035026052957262796,
+      -0.0020296691123420597,
+      0.00046489480472304697,
+      -0.0015450537544368585
+     ],
+     "psi_hat": [
+      68.84544158384159,
+      0.2931853842584321,
+      147.09,
+      0.022068829003758297
+     ],
+     "chi2_total": 1348.2383999442395,
+     "chi2_by_probe": {
+      "Quasars": 1.1293359538375323,
+      "Radio": 0.676632482184201,
+      "Gaia": 0.30706130544997,
+      "SNe": 432.09595390199695,
+      "PV": 904.0755888352004,
+      "DESI": 9.953827465570452,
+      "Total": 1348.2383999442395
+     },
+     "optimizer": {
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "success": true,
+      "nit": 369,
+      "nfev": 7155,
+      "fun_by_start": [
+       1348.2384029149243,
+       1348.2383999442395,
+       1348.2384271674032
+      ]
+     },
+     "AIC": 1376.2383999442395,
+     "BIC": 1450.8365228847717,
+     "Delta_BIC": 0.3578549732603733,
+     "Delta_AIC": 0.0
+    }
+   },
+   "best_by_BIC": "H_loc"
+  }
+ },
+ "elapsed_s": 29.52072811126709
+}

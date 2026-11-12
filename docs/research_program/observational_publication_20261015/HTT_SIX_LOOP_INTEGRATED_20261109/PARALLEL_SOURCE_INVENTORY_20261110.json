@@ -1,0 +1,69 @@
+{
+  "schema": "htt.six_loop_source_inventory/1",
+  "as_of_date": "2026-11-10",
+  "purpose": "Read-only inventory of locally present inputs for L2, L3, L5 so later sessions start source-bound. NO task status changes; no file was hashed in this pass (disk reserved for the PR4 download); sha256 values quoted below are claims copied from earlier manifests and are NOT re-verified.",
+  "raw_root_convention": "workdir/raw or workdir/htt_open_data on the local external drive; raw bytes are not in Git",
+  "L2_point_process": {
+    "task_status_unchanged": "PENDING",
+    "quaia": {
+      "dir": "raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0",
+      "present": [
+        {"file": "quaia_G20.0.fits", "bytes": 99786240},
+        {"file": "quaia_G20.5.fits", "bytes": 171020160},
+        {"file": "random_G20.0_10x.fits", "bytes": 151269120},
+        {"file": "random_G20.5_10x.fits", "bytes": 259122240},
+        {"file": "selection_function_NSIDE64_G20.0.fits", "bytes": 400320},
+        {"file": "selection_function_NSIDE64_G20.5.fits", "bytes": 400320},
+        {"file": "selection_function_template_maps.zip", "bytes": 879199},
+        {"file": "MANIFEST_MD5.csv", "bytes": 828, "note": "MD5 only; SHA256 not recorded"}
+      ],
+      "also": "raw/new_acquisitions/transient_cmb/quaia_zsplit: z-split selection functions (2 bins, G20.5) and cls_quaia_planckPR4_s8.fits with manifests; .part.json/.lock leftovers present",
+      "assessment": "authentic random catalogues (10x) and selection functions are present locally; redshift split present; response/evolution model NOT built"
+    },
+    "nvss": {
+      "dir": "raw/new_acquisitions/radio_hi/NVSS",
+      "present": [{"file": "nvss.dat.gz", "bytes": 77687389}, {"file": "nvss_processed_s20_b10.npz", "bytes": 1737, "note": "tiny summary, not a catalogue substitute"}, {"file": "ReadMe", "bytes": 6296}],
+      "missing": ["authentic random catalogue / footprint+completeness mask for NVSS", "flux-calibration and size products for selection response", "redshifts (NVSS has none; cross-match to redshift tracers not present)"],
+      "assessment": "catalogue present; random/selection products MISSING -> NVSS operator BLOCKED until a documented footprint/selection is bound"
+    },
+    "racs_replication": {
+      "dirs": ["raw/observational_bundles/RACS_low_DR1_compact", "raw/observational_bundles/RACS_low_DR1_RMS_footprint", "raw/new_acquisitions/radio_hi/RACS_low_DR1_RMS_maps"],
+      "present": [{"file": "RACS_DR1_galcut.dat.gz", "bytes": 179165027}, {"file": "RACS_DR1_RMS_Footprints.tsv", "bytes": 260604}, {"file": "MANIFEST_SHA256.csv", "bytes": 712, "note": "contains SHA256 claims, not re-verified"}],
+      "assessment": "replication lane catalogue + RMS footprint present; random catalogue/completeness not verified"
+    }
+  },
+  "L3_gaia_kinematics": {
+    "task_status_unchanged": "PENDING",
+    "present": [
+      {"file": "raw/observational_bundles/Gaia_CRF3_astrometry/gaia_crf3_astrometry_full.fits", "bytes": 143677440, "claimed_sha256_from_manifest": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0", "claimed_rows": 1614173, "claimed_columns_prefix": ["source_id", "ref_epoch", "ra", "dec", "pmra", "pmdec", "pmra_error", "pmdec_error", "pmra_pmdec_corr", "parallax", "parallax_error"], "claimed_origin": "gaia.aip.de TAP job on 2026-09-29 (query table gaiadr3.gaia_crf3_xm); manifest records a Windows output path, i.e. produced on another machine"},
+      {"file": "raw/observational_bundles/Gaia_CRF3_astrometry/gaia_crf3_astrometry_aip.fits", "bytes": 143501760},
+      {"file": "raw/new_acquisitions/optical/Gaia_CRF3_flags/gaia_crf3_xm_icrf_flags.fits", "bytes": 844225920, "note": "ICRF cross-match flags; manifest not read"},
+      {"file": "raw/new_acquisitions/optical/Gaia_CRF3_flags/frame_rotator_source.fits", "bytes": 5140800, "note": "manifest not read"}
+    ],
+    "missing_or_unverified": ["Gaia scanning law / source-level scan coverage", "full cross-source covariance (per-source 2x2 proper-motion covariance via pmra_pmdec_corr only)", "ICRF3 reference-frame spin tie table (flags file present, tie value not bound)", "SHA256 re-verification on this machine"],
+    "assessment": "source-level proper motions with per-source errors/correlation are present; scan law and frame-spin tie are not bound -> L3 operator spec can proceed, B1-vs-vorticity must stay blocked"
+  },
+  "L5_directional_hubble": {
+    "task_status_unchanged": "PENDING",
+    "pantheon_plus": {
+      "dir": "htt_open_data/pantheonplus/c447f0f",
+      "present": [
+        {"file": "Pantheon_SH0ES.dat", "bytes": 579283, "receipt_sha256": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8", "receipt_retrieved_utc_date": "2026-10-18", "receipt_qualification": "TRANSPORT_FORMAT_ONLY", "source": "PantheonPlusSH0ES/DataRelease commit c447f0fe (4_DISTANCES_AND_COVAR)"},
+        {"file": "Pantheon_SH0ES_STAT_SYS.cov", "bytes": 33284960, "note": "receipt present, hash not copied here"},
+        {"file": "SIM_0001.FITRES.gz", "bytes": 514308}
+      ],
+      "update_2026-11-10_byte_identity": "RESOLVED: official files re-downloaded from raw.githubusercontent.com at commit c447f0fe (workdir/raw/pantheonplus_release_c447f0f_20261110). Pantheon+SH0ES.dat sha256 1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8 (579283 B) and Pantheon+SH0ES_STAT+SYS.cov sha256 abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc (33284960 B) are byte-identical to the local copies. Row identity/order between .dat and .cov is still NOT checked.",
+      "to_verify": ["row-identity and ordering between .dat and .cov","whether the local .dat is the published 4_DISTANCES file under the exact URL/commit (receipt says TRANSPORT_FORMAT_ONLY, i.e. byte identity vs release not asserted)"]
+    },
+    "cf4": {"dirs": ["htt_open_data/cf4/d06_flow_20261018", "htt_open_data/cf4/D02_HI_CF4_20261018"], "note": "flow grids and join tables present with receipts; conditional use only"},
+    "desi": "not inventoried here; compressed BAO vectors are background-only control regardless"
+  },
+  "cross_cutting_observations": [
+    "The repository's inline likelihood stack types dipole amplitudes/directions into code (tensor_joint_multiprobe_likelihood.py:540-542,609-614) while the Quaia catalogue, 10x randoms and selection functions exist locally: the data can be source-bound rather than hard-coded.",
+    "Existing manifests come from earlier sessions (some on another OS); under the contract they count as claims until hashed here.",
+    "PR4 NPIPE download is running separately; this inventory does not depend on it."
+  ],
+  "not_done": ["hashing", "FITS header/schema inspection", "row-identity checks", "any scientific computation"],
+  "native_subagents": "NOT_RUN",
+  "independent_review": "NOT_RUN"
+}

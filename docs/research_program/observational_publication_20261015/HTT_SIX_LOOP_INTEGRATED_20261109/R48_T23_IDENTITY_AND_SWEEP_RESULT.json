@@ -1,0 +1,248 @@
+{
+ "I1_momentum_constraint": {
+  "max_abs_diff_mock_minus_derived": 13.255722669041308,
+  "max_abs_diff_mock_plus_derived": 8.881784197001252e-16,
+  "note": "agreement up to an overall sign (structure-constant orientation convention) if only the second is small"
+ },
+ "I2_ricci_spectra": {
+  "I": {
+   "antisymmetric_part_norm": 0.0,
+   "derived": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max_abs_diff": 0.0,
+   "mock": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "II": {
+   "antisymmetric_part_norm": 0.0,
+   "derived": [
+    -0.5,
+    -0.5,
+    0.5
+   ],
+   "max_abs_diff": 0.0,
+   "mock": [
+    -0.5,
+    -0.5,
+    0.5
+   ]
+  },
+  "IX": {
+   "antisymmetric_part_norm": 0.0,
+   "derived": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "max_abs_diff": 0.0,
+   "mock": [
+    0.5,
+    0.5,
+    0.5
+   ]
+  },
+  "IX_aniso": {
+   "antisymmetric_part_norm": 0.0,
+   "derived": [
+    0.0,
+    0.0,
+    2.0
+   ],
+   "max_abs_diff": 0.0,
+   "mock": [
+    0.0,
+    0.0,
+    2.0
+   ]
+  },
+  "VI0/VII0_like": {
+   "antisymmetric_part_norm": 0.0,
+   "derived": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max_abs_diff": 0.0,
+   "mock": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "VIII_like": {
+   "antisymmetric_part_norm": 0.0,
+   "derived": [
+    -1.5,
+    -1.5,
+    0.5
+   ],
+   "max_abs_diff": 0.0,
+   "mock": [
+    -1.5,
+    -1.5,
+    0.5
+   ]
+  }
+ },
+ "I3_JA_generic_rank": 2,
+ "I3_JA_kernel_contains_(1,1,1)": true,
+ "I3_JB_det_symbolic": "3*S11*S12*S13 + 3*S12**2*S23 + 3*S13**2*S23",
+ "I3_JB_determinant_matches_closed_form": true,
+ "I3_JB_generic_rank": 3,
+ "I4_tilt_inversion_max_rel_err": 1.6882881047329895e-14,
+ "I5_curvature_oracle": {
+  "MAP_accuracy_closed_form": 0.9121328321778874,
+  "MI_nats_monte_carlo_h1_only": 0.47992507508415716,
+  "MI_nats_quadrature": 0.4797566104301254,
+  "mahalanobis_sq_separation": 7.333333333333334
+ },
+ "elapsed_s": 1.7865715026855469,
+ "nuisance_projection_residual_norm_parallel_unbounded": 1.935790995231906e-16,
+ "sweep_base": {
+  "corr_mix": 0.45,
+  "noise": 1.0,
+  "prior_sd": 0.25,
+  "shear": 1.0,
+  "w": 1.0
+ },
+ "sweep_curvature_noise_scale": {
+  "0.25": {
+   "MAP_accuracy": 0.9999999695308106,
+   "mahalanobis_sq": 117.33333333333334
+  },
+  "0.5": {
+   "MAP_accuracy": 0.9966156294265422,
+   "mahalanobis_sq": 29.333333333333336
+  },
+  "1.0": {
+   "MAP_accuracy": 0.9121328321778874,
+   "mahalanobis_sq": 7.333333333333334
+  },
+  "2.0": {
+   "MAP_accuracy": 0.7507980380997674,
+   "mahalanobis_sq": 1.8333333333333335
+  },
+  "4.0": {
+   "MAP_accuracy": 0.6325073892939306,
+   "mahalanobis_sq": 0.45833333333333337
+  }
+ },
+ "sweep_posterior_width_at_lambda1": {
+  "corr_mix": [
+   {
+    "beta_norm_at_lambda1": 0.12602844661521273,
+    "posterior_sd_beta_norm": 0.012366708130142975,
+    "posterior_sd_lambda": 0.10133159336911418,
+    "value": 0.0
+   },
+   {
+    "beta_norm_at_lambda1": 0.12602844661521273,
+    "posterior_sd_beta_norm": 0.01124481317001484,
+    "posterior_sd_lambda": 0.09213352065395801,
+    "value": 0.45
+   },
+   {
+    "beta_norm_at_lambda1": 0.12602844661521273,
+    "posterior_sd_beta_norm": 0.008447676744608574,
+    "posterior_sd_lambda": 0.069206020425959,
+    "value": 0.9
+   }
+  ],
+  "noise": [
+   {
+    "beta_norm_at_lambda1": 0.12602844661521273,
+    "posterior_sd_beta_norm": 0.005933746338979657,
+    "posterior_sd_lambda": 0.04860667422636126,
+    "value": 0.5
+   },
+   {
+    "beta_norm_at_lambda1": 0.12602844661521273,
+    "posterior_sd_beta_norm": 0.01124481317001484,
+    "posterior_sd_lambda": 0.09213352065395801,
+    "value": 1.0
+   },
+   {
+    "beta_norm_at_lambda1": 0.12602844661521273,
+    "posterior_sd_beta_norm": 0.018947424916334,
+    "posterior_sd_lambda": 0.15533155826809453,
+    "value": 2.0
+   },
+   {
+    "beta_norm_at_lambda1": 0.12602844661521273,
+    "posterior_sd_beta_norm": 0.025746965484660298,
+    "posterior_sd_lambda": 0.2112001724196059,
+    "value": 4.0
+   }
+  ],
+  "prior_sd": [
+   {
+    "beta_norm_at_lambda1": 0.12602844661521273,
+    "posterior_sd_beta_norm": 0.00859253097976958,
+    "posterior_sd_lambda": 0.07039266029561837,
+    "value": 0.1
+   },
+   {
+    "beta_norm_at_lambda1": 0.12602844661521273,
+    "posterior_sd_beta_norm": 0.01124481317001484,
+    "posterior_sd_lambda": 0.09213352065395801,
+    "value": 0.25
+   },
+   {
+    "beta_norm_at_lambda1": 0.12602844661521273,
+    "posterior_sd_beta_norm": 0.011864999020638638,
+    "posterior_sd_lambda": 0.0972186936668301,
+    "value": 0.5
+   }
+  ],
+  "shear": [
+   {
+    "beta_norm_at_lambda1": 0.03198287227637804,
+    "posterior_sd_beta_norm": 0.006730095100718452,
+    "posterior_sd_lambda": 0.21088576563900946,
+    "value": 0.25
+   },
+   {
+    "beta_norm_at_lambda1": 0.12602844661521273,
+    "posterior_sd_beta_norm": 0.01124481317001484,
+    "posterior_sd_lambda": 0.09213352065395801,
+    "value": 1.0
+   },
+   {
+    "beta_norm_at_lambda1": 0.24122160494068304,
+    "posterior_sd_beta_norm": 0.010564406268113292,
+    "posterior_sd_lambda": 0.04921291166542096,
+    "value": 2.0
+   }
+  ],
+  "w": [
+   {
+    "beta_norm_at_lambda1": 0.4213201218735423,
+    "posterior_sd_beta_norm": 0.022974697452588115,
+    "posterior_sd_lambda": 0.07813907097604868,
+    "value": 0.25
+   },
+   {
+    "beta_norm_at_lambda1": 0.12602844661521273,
+    "posterior_sd_beta_norm": 0.01124481317001484,
+    "posterior_sd_lambda": 0.09213352065395801,
+    "value": 1.0
+   },
+   {
+    "beta_norm_at_lambda1": 0.03198287227637804,
+    "posterior_sd_beta_norm": 0.0031106639381370156,
+    "posterior_sd_lambda": 0.09746227553439335,
+    "value": 4.0
+   }
+  ]
+ },
+ "versions": {
+  "numpy": "2.4.2",
+  "sympy": "1.14.0"
+ }
+}

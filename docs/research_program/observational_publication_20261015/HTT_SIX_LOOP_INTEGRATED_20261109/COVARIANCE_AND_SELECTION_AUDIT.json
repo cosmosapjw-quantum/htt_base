@@ -1,0 +1,43 @@
+{
+ "schema": "htt.covariance_and_selection_audit/1",
+ "as_of_date": "2026-11-12",
+ "items": [
+  {
+   "tracer": "Quaia G<20",
+   "selection": "official NSIDE64 selection function (celestial frame, 0.989 corr with randoms; 13.7% zero pixels) + 10x randoms",
+   "covariance": "Poisson only; LSS cross-covariance NOT built",
+   "state": "PARTIAL"
+  },
+  {
+   "tracer": "NVSS",
+   "selection": "none official; synthetic uniform randoms in dec>-37,|b|>10",
+   "covariance": "Poisson only",
+   "state": "PARTIAL_SYNTHETIC"
+  },
+  {
+   "tracer": "RACS-low",
+   "selection": "RMS footprint tsv context only; synthetic uniform randoms",
+   "covariance": "Poisson only; flux column inferred",
+   "state": "PARTIAL_SYNTHETIC"
+  },
+  {
+   "tracer": "Gaia CRF3 proper motions",
+   "selection": "scan-law template r=0.87/0.81 vs catalogue ellipses (amplitude not reproduced)",
+   "covariance": "per-source 2x2 only; no correlated-systematic covariance",
+   "state": "PARTIAL"
+  },
+  {
+   "tracer": "Pantheon+",
+   "selection": "release .dat/.cov byte-identical to repo commit",
+   "covariance": "full STAT+SYS matrix used in rank test (12/15)",
+   "state": "SOURCE_BOUND_STRUCTURAL"
+  },
+  {
+   "tracer": "Planck PR3 SEVEM/NILC + FFP10",
+   "selection": "PR3 masks/beams/RIMO downloaded",
+   "covariance": "FFP10 matched sims (PR3 lane) ",
+   "state": "PR3_LANE_ONLY"
+  }
+ ],
+ "cross_tracer_covariance": "NOT BUILT (UNAVAILABLE)"
+}

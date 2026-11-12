@@ -1,0 +1,61 @@
+{
+  "schema": "htt.l3_structural_slice_receipt/1",
+  "task_id": "L3",
+  "slice": "VSH_STRUCTURAL_IDENTIFIABILITY_ON_GAIA_CRF3_SKY",
+  "as_of_date": "2026-11-11",
+  "task_status_unchanged": "PENDING (one structural slice; L3 acceptance not met)",
+  "status": "SLICE_DONE_STRUCTURAL_ONLY",
+  "blinding_note": "No proper-motion VALUES (pmra, pmdec, parallax) were read. Columns used: ra, dec, pmra_error, pmdec_error, pmra_pmdec_corr, phot_g_mean_mag.",
+  "inputs": {
+    "file": "workdir/raw/observational_bundles/Gaia_CRF3_astrometry/gaia_crf3_astrometry_full.fits",
+    "bytes": 143677440,
+    "claimed_sha256_from_earlier_manifest": "e69cfff82f762c00d1d6a259c6d003fd20f805f3b1fcd4acc81d847c485120c0 (NOT recomputed here)",
+    "rows": 1614173,
+    "query": "gaiadr3.gaia_crf3_xm JOIN gaia_source with pmra/pmdec not null and astrometric_params_solved in (31,95); no ICRF-membership, RUWE, magnitude or frame-rotator selection",
+    "provenance_state": "SOURCE_BOUND_PARTIAL (hash unverified; manifest from another machine)"
+  },
+  "model": {
+    "modes": "E1 (glide-like, 3), B1 (rotation, 3), E2 (spheroidal l=2, 5), B2 (toroidal l=2, 5) as closed-form real tangential vector fields; B1(w)=w x n is the same field for cosmic vorticity and for ICRF frame spin",
+    "chart": "E2/B2 in a Frobenius-orthonormal STF basis (declared); amplitudes in mas/yr",
+    "fisher": "sum_i J_i^T C_i^-1 J_i with the per-source 2x2 covariance from pmra_error, pmdec_error, pmra_pmdec_corr (statistical errors only)"
+  },
+  "operator": {
+    "script": "L3_vsh_structural_identifiability.py",
+    "script_sha256": "d47de13e00fd5fc5a641e8e7b21059d07f67c7da1e61071c479f28cab25c7b5d",
+    "command": "python3 L3_vsh_structural_identifiability.py --fits <gaia_crf3_astrometry_full.fits> --out L3_STRUCTURAL_RESULT.json",
+    "exit_code": 0,
+    "result_file": "L3_STRUCTURAL_RESULT.json",
+    "result_sha256": "75ace4cb2c17eb599de30dbc034ae411a1cf93b69fdcb047472d37ef7f680c5b",
+    "elapsed_s": 14,
+    "versions": {"python": "3.12.3", "numpy": "2.4.2"}
+  },
+  "results_structural": {
+    "full_sample_1614173_sources": {
+      "rank_16_modes": "16 of 16 (nullity 0); condition number 7.73",
+      "cross_block_max_abs_normalised_correlation": {"B2-E1": 0.418, "B1-E2": 0.271, "B1-B2": 0.053, "B1-E1": 0.048, "E1-E2": 0.040, "B2-E2": 0.040},
+      "formal_sd_uas_per_yr": {"E1": [0.319, 0.299, 0.287], "B1": [0.294, 0.281, 0.314], "E2": [0.548, 0.508, 0.555, 0.497, 0.533], "B2": [0.512, 0.541, 0.526, 0.565, 0.560]},
+      "with_frame_spin_nuisance": {"params": 19, "rank": 16, "nullity": 3, "null_space_params": ["B1_0", "B1_1", "B1_2", "B1spin_0", "B1spin_1", "B1spin_2"], "null_space_confined_to_B1_and_spin": true}
+    },
+    "bright_G_lt_19_189202_sources": {
+      "rank_16_modes": "16 of 16; condition number 7.64",
+      "cross_block_max_abs_normalised_correlation": {"B2-E1": 0.423, "B1-E2": 0.276},
+      "formal_sd_uas_per_yr_range": [0.37, 0.73],
+      "with_frame_spin_nuisance": {"rank": 16, "nullity": 3, "confined_to_B1_and_spin": true}
+    },
+    "interpretation": [
+      "STRUCTURAL: cosmological vorticity (B1) and ICRF frame spin produce the identical vector field; with both present the Fisher matrix has an exact 3-dimensional null space (ker J_eff not contained in ker D phi_vorticity). Vorticity is NOT identifiable without an independent frame-spin anchor, as the contract and ledger CL-011 state.",
+      "Without the spin nuisance the 16 low-order modes are well conditioned on this sky (cond ~7.7), so a glide/shear estimate is structurally possible; the largest leakages are toroidal-quadrupole vs glide (0.42) and rotation vs spheroidal-quadrupole (0.27) from non-uniform sky coverage.",
+      "The formal uncertainties (0.3-0.7 uas/yr) are statistical only, assume independent sources and ignore scan-law/magnitude-dependent systematics, ICRF-realisation errors and modes above l=2; they are NOT a forecast of achievable precision."
+    ]
+  },
+  "claims": [
+    {"id": "L3-S1", "claim": "B1 cosmological vorticity is structurally degenerate with ICRF frame spin on any sky.", "state": "NUMERICALLY_CHECKED_AND_DERIVED", "limit": "identity of the vector field w x n; exact null space of dimension 3 found numerically"},
+    {"id": "L3-S2", "claim": "The 16 modes E1,B1,E2,B2 (l<=2) are structurally full-rank on the Gaia CRF3 xm sample sky.", "state": "NUMERICALLY_CHECKED_STRUCTURAL", "limit": "positions/errors only; no l>=3 modes; no systematics"},
+    {"id": "L3-S3", "claim": "A frame-spin tie is available.", "state": "BLOCKED", "limit": "no confirmed official ICRF3 frame-spin tie file; Gaia frame_rotator_source is not one"},
+    {"id": "L3-S4", "claim": "Gaia proper-motion kinematic modes measured.", "state": "NOT_RUN", "limit": "deliberately not computed"}
+  ],
+  "not_run": ["SHA256 of the Gaia file", "scan-law application (the ESA scanning-law zip is downloaded, unread)", "modes l>=3 and leakage", "systematics model", "ICRF membership / frame-rotator-source selection", "proper-motion fit", "independent reviewer"],
+  "next_gate": "Hash the Gaia file; read the scanning law and build the scan-pattern systematics template; include l=3 modes to quantify leakage into l<=2; bind a frame-spin anchor (ICRF3-Gaia tie from the literature with provenance) before any B1 interpretation.",
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

@@ -1,0 +1,111 @@
+{
+ "EB_amplitude_over_beta_grid": {
+  "0.5": 3.564653097065521,
+  "0.75": 3.8254286132431075,
+  "1.0": 4.086204129420695
+ },
+ "EB_note": "alpha is not measurable from NVSS alone; the response is a range over a declared alpha grid, not a point value",
+ "catalogue_vs_synthetic_footprint": {
+  "note": "excess over Poisson = real-sky structure + unmodelled footprint/rms variation; NOT a dipole measurement",
+  "pixel_ratio_sd": 0.21934640881129328,
+  "poisson_expected_sd": 0.19722244302315003
+ },
+ "cuts": {
+  "S_peak_min_Jy": 0.02,
+  "abs_b_min_deg": 10.0,
+  "dec_min_deg": -37.0
+ },
+ "elapsed_s": 24.217337131500244,
+ "estimator_validation": {
+  "D=0.01": {
+   "bias": [
+    0.00032099538365839946,
+    -1.56463625306474e-05,
+    0.0003588099085874776
+   ],
+   "bias_over_se": [
+    0.9107807336319311,
+    -0.03563896095134322,
+    0.6268424678428083
+   ],
+   "n_mocks": 60,
+   "sd": [
+    0.002729986986353739,
+    0.0034006660066579304,
+    0.004433856580253235
+   ]
+  },
+  "D=0.02_oblique": {
+   "bias": [
+    8.962721471100603e-05,
+    6.635599665655995e-05,
+    0.001056049733478769
+   ],
+   "bias_over_se": [
+    0.2913148012323604,
+    0.16150866649814585,
+    1.8045915240082324
+   ],
+   "n_mocks": 60,
+   "sd": [
+    0.0023831587579774697,
+    0.0031824381383868594,
+    0.004532951613831691
+   ]
+  },
+  "null": {
+   "bias": [
+    -4.3061704037773894e-05,
+    0.0003560085201350966,
+    0.0007645074889382794
+   ],
+   "bias_over_se": [
+    -0.11050679908916133,
+    0.847167790474795,
+    1.3510429640694674
+   ],
+   "n_mocks": 60,
+   "sd": [
+    0.003018407264933054,
+    0.0032551168377598977,
+    0.004383168931638155
+   ]
+  }
+ },
+ "fullsky_poisson_sd_sqrt3_over_N": 0.003556205156489409,
+ "n_rows": 1810672,
+ "n_selected": 237218,
+ "scope": "slope + synthetic randoms + estimator validation; real dipole NOT computed",
+ "synthetic_randoms": {
+  "geometry": "uniform on sphere inside footprint cuts; no completeness/rms modulation",
+  "label": "SYNTHETIC_RANDOM_CATALOGUE",
+  "n": 2372180
+ },
+ "versions": {
+  "healpy": "1.19.0",
+  "numpy": "2.4.2"
+ },
+ "x_integral_slope": {
+  "N_gt_grid": [
+   237218.0,
+   211261.0,
+   187790.0,
+   166247.0,
+   146812.0,
+   129172.0,
+   113450.0,
+   99260.0,
+   86299.0,
+   74871.0,
+   64779.0,
+   55700.0
+  ],
+  "bootstrap_sd": 0.0028160522319821495,
+  "fit_range_Jy": [
+   0.02,
+   0.08
+  ],
+  "flux_proxy": "PEAK INT (not integrated flux)",
+  "value": 1.0431020647103473
+ }
+}

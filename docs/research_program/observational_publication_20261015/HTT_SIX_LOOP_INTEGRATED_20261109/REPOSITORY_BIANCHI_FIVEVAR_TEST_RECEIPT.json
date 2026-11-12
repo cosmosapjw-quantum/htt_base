@@ -1,0 +1,43 @@
+{
+  "schema": "htt.six_loop_task_receipt/1",
+  "task_id": "R48-T23",
+  "part": "exact-head repository verification",
+  "as_of_date": "2026-11-11",
+  "repo": "cosmosapjw-quantum/htt_base",
+  "branch": "research/htt-six-loop-core00-20261109",
+  "head_sha": "707f01bcab002a66c94ba07421a3fe331932492d",
+  "tree_sha": "79ffc82aaeff11b17eedd7efcd8ea90485e5cde5",
+  "base_r48_head_sha": "0052c10a5fa7a1fa1fb757bc82547879fdc6d5fc",
+  "code_unchanged_vs_r48_head": "scripts/r48, tests/r48, htt/bass/diagnostics are untouched by the six-loop package commits",
+  "blobs": {
+    "scripts/r48/bianchi_fivevar_identifiability_mock.py": "ce3b60b0d791497ea94a4aea30f0f1645636618d",
+    "htt/bass/diagnostics/bianchi_similarity.py": "8017eb4baa42e4553b24ef99e4accbe5b76b947a"
+  },
+  "worktree": "isolated git worktree; only the new T23 script was untracked at run time",
+  "environment": {"python": "3.12.3", "pytest": "9.1.1", "numpy": "2.4.2", "sympy": "1.14.0"},
+  "commands": [
+    {"cmd": "python3 -m compileall -q htt/bass/diagnostics scripts/r48 tests/r48", "exit": 0},
+    {"cmd": "python3 -m pytest -q -p no:cacheprovider tests/r48 htt/bass/diagnostics", "exit": 0, "result": "54 passed (tests/r48: 5; htt/bass/diagnostics: 49)"},
+    {"cmd": "python3 scripts/r48/bianchi_fivevar_identifiability_mock.py --output <scratch>", "exit": 0, "elapsed_s": 13.7, "note": "default args = recorded seed 20261109, 30000 replications, 12000 posterior draws, 512 null draws"}
+  ],
+  "replay_vs_committed_report": {
+    "committed": "R48_TENSORIZED_OBSERVATIONAL_CONVERGENCE_20261109/BIANCHI_FIVEVAR_MOCK_REPORT.json",
+    "value_match": "27 of 27 committed floating-point values (>1e-9) found in the replay output to 1e-9 relative",
+    "schema_difference": "committed file uses a different key layout (HTT/..., likelihood/MAP_accuracy) than the script output (HTT_five_views/..., likelihood/map_accuracy); the conversion step is undocumented (same pattern as R45/R46)",
+    "replay_output_sha256": "75e21c605c4d5a21fb82e1dc1e6718b7425b3ed2325d8de20e3c2e4f4837f588"
+  },
+  "ci_cross_check": "committed BIANCHI_TARGETED_CI_REPORT.json records 49 tests x 4 Python versions at commit effb46279 for bianchi_similarity; this run reproduces 49 for that suite on Python 3.12.3. CI status for this head was NOT read.",
+  "defect_found": {
+    "id": "T23-D1",
+    "where": "scripts/r48/bianchi_fivevar_identifiability_mock.py, 'verification' block of the output",
+    "what": "hard-coded verification fields: python '3.13.5' (this run used 3.12.3), local_pytest 5, local_pytest_status 'PASS', exact_repo_checkout 'NOT_RUN_LOCAL_DEVICE_OFFLINE', github_actions 'PENDING'. The script asserts a test pass and an interpreter version it never checked.",
+    "class": "PROVENANCE",
+    "status": "reported here; repair prepared on branch research/htt-six-loop-core03-repair-20261109 (PR #574)"
+  },
+  "passed_failed_not_run": {
+    "passed": ["compileall", "54 pytest tests", "mock replay value match 27/27"],
+    "failed": [],
+    "not_run": ["broad PR04 test suite (known optional-dependency collection failures)", "GitHub Actions status readback for this head", "independent agent review"]
+  },
+  "native_subagents": "NOT_RUN"
+}

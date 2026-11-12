@@ -1,0 +1,70 @@
+{
+  "schema": "htt.l1_source_operator_spec/1",
+  "task_id": "L1",
+  "as_of_date": "2026-11-10",
+  "stage_status": {
+    "theory": "PASS_SCOPED",
+    "operator": "PARTIAL_TEMPLATE_ONLY",
+    "source_binding": "BLOCKED_PR4_NPIPE_ABSENT; PR3_CONTROL_FILES_HASHED_ONLY",
+    "calibration": "NOT_RUN",
+    "inference": "NOT_RUN",
+    "claim": "HOLD"
+  },
+  "scope": "Temperature low-ell morphology under homogeneous Bianchi I, isotropic sharp last scattering, collisionless propagation, comoving (untilted) emitters and observer. No E/B, no V/VIIh.",
+  "parameters": {
+    "B_star_STF5": {
+      "meaning": "endpoint metric anisotropy B* at t*, symmetric trace-free, g_ij = a^2 [exp(2B)]_ij",
+      "chart": "Cartesian STF5 (Bxx,Byy,Bxy,Bxz,Byz), Bzz=-Bxx-Byy",
+      "metric": "Gram matrix G_STF5 = [[2,1,0,0,0],[1,2,0,0,0],[0,0,2,0,0],[0,0,0,2,0],[0,0,0,0,2]]",
+      "relation_to_sigma_over_H": "NOT identified here. B* is a history integral (-int sigma dt only for commuting fixed-axis history); it must not be placed in the 17D sigma/H slots without an explicit map.",
+      "sign_convention": "g = a^2 exp(+2B); opposite convention requires B -> -B"
+    },
+    "T_bar": "a* T*; degenerate with the observed monopole; treated as nuisance, NOT as a prediction"
+  },
+  "deterministic_template": {
+    "id": "L1.T",
+    "map": "T(n)/T_bar = [n^T exp(-2 B*) n]^(-1/2)",
+    "even_multipoles_only": true,
+    "ell_content": "even ell <= 2k at order k in B*",
+    "harmonic_coefficients": "a_lm by exact quadrature (GL x uniform phi); validated against HEALPix anafast C_l",
+    "status": "DERIVED_AND_NUMERICALLY_CHECKED_SYNTHETIC",
+    "monopole": "physical monopole shift -(2/15) tr B*^2 + (4/315) tr B*^3 is absorbed by T_bar; a_00 versus physical monopole bookkeeping is a replay obligation from WU-011 Task 5A, NOT_RUN here"
+  },
+  "stochastic_covariance": {
+    "id": "L1.C",
+    "reference": "statistically isotropic Gaussian C_M(psi), declared phenomenological/background-only approximation",
+    "anisotropic_extension": "BipoSH A^{LM}_{ll'} with X,Y in {T,E,B} only where data and transfer support those channels",
+    "bianchi_derived_covariance": "UNAVAILABLE (no Bianchi-evolved perturbation transfer implemented)",
+    "status": "UNAVAILABLE_AS_BIANCHI_DERIVED; model-agnostic BipoSH only"
+  },
+  "separation_rule": {
+    "rule": "L1.T (mean) and L1.C (covariance) are separate likelihood components. They may be combined only inside ONE generative model whose mean and covariance derive from the same parameters; otherwise the two readouts use the same data twice and their log-likelihoods must not be added.",
+    "current_joint_model": "UNAVAILABLE"
+  },
+  "data_model": {
+    "equation": "d = R a + n_inst + f_res",
+    "covariance": "Sigma_d = R C_M R^T + N_inst + C_fg + C_sys",
+    "likelihood": "Gaussian with full Sigma_d; log|Sigma_d| retained when parameters enter Sigma_d",
+    "R_factors": ["sky mask / inpainting", "effective beam window", "pixel window", "component-separation or frequency weights", "units/calibration"],
+    "same_operator_for_data_and_simulations": true,
+    "phase_data_required": "C_ell summaries cannot substitute for phase-sensitive a_lm data"
+  },
+  "required_sources": {
+    "P0_planck_pr4_npipe": {"items": ["frequency T maps", "half-ring/supported splits", "masks", "effective beams/QuickPol", "hit/noise products", "matched NPIPE simulations", "foreground model"], "local_status": "ABSENT: workdir/raw/planck_npipe_pr4 contains 0 files at check time", "state": "BLOCKED/INPUT_MISSING"},
+    "P1_planck_pr3_smica_control": {"items": ["SMICA R3.00 maps (full, hm1, hm2, oe1/oe2)", "common and HM-misspix masks", "FFP10 SMICA CMB and noise MC", "beam/transfer window"], "local_status": "maps and masks present and hashed (see L1_SOURCE_RECEIPT.json); FFP10 SMICA MC present (999 CMB + 300 noise raw FITS) but NOT hashed or validated; beam/window files NOT found", "state": "PARTIAL; separate release, never a PR4 null"}
+  },
+  "unavailable": [
+    "E/B and T-E physical transfer from Bianchi I",
+    "Bianchi V / VIIh transfer",
+    "Bianchi-evolved perturbation covariance",
+    "mapping B* <-> present-day sigma/H",
+    "tilted-fluid Doppler term",
+    "mask / beam / noise / foreground injection tests"
+  ],
+  "acceptance_evidence": {
+    "derivation_and_oracle": "L1_DERIVATION_AND_TESTS.md; L1_bianchi_I_endpoint_oracle.py",
+    "rotation_parity_quadrature_pixel_vs_harmonic": "NUMERICALLY_CHECKED_SYNTHETIC full-sky noiseless",
+    "mask_injection": "NOT_RUN"
+  },
+  "next_gate": "Obtain/bind PR4 NPIPE maps, splits, masks, beams, noise and matched simulations (or declare a PR3-only control lane), then implement masked/beamed operator R with injection-recovery tests."
+}

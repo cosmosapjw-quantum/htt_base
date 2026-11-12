@@ -1,0 +1,65 @@
+{
+ "elapsed_s": 799.6263728141785,
+ "fsky_kept": 0.7158203125,
+ "fullsky_reference_1e-2": {
+  "relative_error": 0.0005714450047475839
+ },
+ "gram_sd_scale_sqrt_trace_G_cov": 2.199184468303705e-05,
+ "injection_recovery_no_noise": [
+  {
+   "b_rec_gram_norm": 0.00010995955641534839,
+   "b_true_gram_norm": 0.00010995922341518525,
+   "error_over_null_sigma_gram": 8.234374392642355e-05,
+   "label": "5sigma_small",
+   "recovery_error_gram_norm": 1.8108908270496822e-09,
+   "relative_error": 1.646874878528471e-05
+  },
+  {
+   "b_rec_gram_norm": 0.001000275470653725,
+   "b_true_gram_norm": 0.001,
+   "error_over_null_sigma_gram": 0.014640431962065912,
+   "label": "1e-3_nonlinear_stress",
+   "recovery_error_gram_norm": 3.2197010580232493e-07,
+   "relative_error": 0.00032197010580232495
+  },
+  {
+   "b_rec_gram_norm": 0.009996094817624762,
+   "b_true_gram_norm": 0.01,
+   "error_over_null_sigma_gram": 0.7741724717260581,
+   "label": "1e-2_nonlinear_stress",
+   "recovery_error_gram_norm": 1.702548075608236e-05,
+   "relative_error": 0.0017025480756082362
+  }
+ ],
+ "mask": "PR3 common Int TMASK; kept pixels with >=0.9 unmasked children",
+ "n_pairs": 60,
+ "nside_out": 16,
+ "null_b_hat_gram_norm_rms": 2.2099150008590798e-05,
+ "null_b_hat_mean_over_sims": [
+  1.2069637137032424e-06,
+  1.3768887657208372e-06,
+  9.438702885143931e-07,
+  5.413207622872798e-07,
+  -4.4450503681998024e-07
+ ],
+ "null_b_hat_sd_over_sims": [
+  8.306842231134288e-06,
+  8.102190368268681e-06,
+  7.655311179865864e-06,
+  7.0460851185302365e-06,
+  6.740906514967531e-06
+ ],
+ "null_mean_over_sd_x_sqrt_n": [
+  1.1254698795479618,
+  1.3163520028119016,
+  0.9550477629206676,
+  0.5950896879691,
+  -0.5107801453963319
+ ],
+ "scope": "SYNTHETIC pilot on PR3 FFP10 SMICA simulations; no observed map",
+ "sim_frame_assumption": "FFP10 files carry no COORDSYS; assumed Galactic like the PR3 maps/mask",
+ "versions": {
+  "healpy": "1.19.0",
+  "numpy": "2.4.2"
+ }
+}

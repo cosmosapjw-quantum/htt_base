@@ -1,0 +1,60 @@
+{
+  "schema": "htt.l1_source_receipt/1",
+  "task_id": "L1",
+  "as_of_date": "2026-11-10",
+  "status": "PASS_SCOPED_THEORY; SOURCE_BINDING_PARTIAL_PR3_ONLY; PR4_BLOCKED",
+  "raw_root_convention": "workdir/raw (local external drive); raw bytes are NOT in Git",
+  "hash_method": "sha256sum over actual local file bytes, 2026-11-10",
+  "files": [
+    {"path": "planck_pr3_smica_hm_20261015/COM_CMB_IQU-smica_2048_R3.00_hm1.fits", "bytes": 603990720, "sha256": "736338208cf0b494c3b6c13c444f116262c8052dcb4a7842dc738bf6a4a426b0", "release": "Planck PR3 (filename R3.00); SMICA half-mission 1", "local_mtime": "2026-10-15"},
+    {"path": "planck_pr3_smica_hm_20261015/COM_CMB_IQU-smica_2048_R3.00_hm2.fits", "bytes": 603990720, "sha256": "0a4dc860a6f7bbdb5980cd7ac1d187ba9139a383c9c47f159e069281c3d5f3a5", "release": "Planck PR3; SMICA half-mission 2", "local_mtime": "2026-10-15"},
+    {"path": "planck_pr3_smica_hm_20261015/COM_Mask_CMB-HM-Misspix-Mask-Int_2048_R3.00.fits", "bytes": 201335040, "sha256": "f4fd909734d80fb80214018b3ef9b44a378a4d04418337786c48f6d388dfb2a0", "release": "Planck PR3; HM missing-pixel intensity mask", "local_mtime": "2026-10-15"},
+    {"path": "planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits", "bytes": 201335040, "sha256": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4", "release": "Planck PR3; common intensity mask", "local_mtime": "2026-04-20"},
+    {"path": "planck_data/COM_Mask_CMB-common-Mask-Pol_2048_R3.00.fits", "bytes": 201335040, "sha256": "c967e45449596c561c940d7ca0d494f1a26d947e6b5a9ef44185fdbf93b036d4", "release": "Planck PR3; common polarization mask", "local_mtime": "2026-04-20"},
+    {"path": "planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits", "bytes": 2013312960, "sha256": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac", "release": "Planck PR3; SMICA full mission", "local_mtime": "2026-04-20"}
+  ],
+  "not_recorded_for_hashed_files": [
+    "official URL and retrieval UTC (only filesystem mtimes are known; some sibling files have .sha256 sidecars that were not compared)",
+    "FITS header schema, HEALPix ordering, units, coordinate frame, mask definition (headers NOT inspected)",
+    "parser commit",
+    "whether the SMICA map is already beam-deconvolved/what effective beam applies (no beam file found)"
+  ],
+  "inventory_not_hashed": {
+    "ffp10_smica_cmb_mc_raw_fits": 999,
+    "ffp10_smica_noise_mc_raw_fits": 300,
+    "ffp10_total_size_note": "about 736 GB under workdir/raw/planck_ffp10 (all components); only listed, not read",
+    "release": "PR3 FFP10 (dx12_v3); matches PR3 SMICA only, never PR4"
+  },
+  "update_2026-11-11": "The two absences below were true at the 2026-11-10 check and are SUPERSEDED by downloads completed 2026-11-10/11 (see DOWNLOAD_MANIFEST_20261110.json): PR4/NPIPE HFI 100/143/217 GHz full and ring-half maps (9 files) plus PR4 masks and RIMO transfer-function tarball are now local and hashed; PR3 HFI beam-window archive, HFI/LFI RIMO, SEVEM and NILC maps are local and hashed. NPIPE matched simulations remain UNAVAILABLE. Lane beam-binding is still not claimed: the mapping from these beams to the SMICA/NPIPE products has not been read.",
+  "absent": {
+    "planck_npipe_pr4": "0 files at check time (commander/ and sevem/ subdirectories empty)",
+    "beam_or_window_files": "none found by name search (beam/bl_/window) in the PR3/FFP10/data directories",
+    "pr4_matched_simulations": "absent"
+  },
+  "oracle_run": {
+    "script": "L1_bianchi_I_endpoint_oracle.py",
+    "script_sha256": "c3c03a9c514ed37133021aaa188082644acba019b318cdd33440430904205fe3",
+    "command": "python3 L1_bianchi_I_endpoint_oracle.py",
+    "exit_code": 0,
+    "seed": 20261110,
+    "output_sha256": "d3fe3bc09b77c3d0aa26c7a9c97df9baf2283c73cba9a739a4ded8db819bdb4b",
+    "versions": {"python": "3.12.3", "numpy": "2.4.2", "scipy": "1.17.0", "sympy": "1.14.0", "healpy": "1.19.0"},
+    "first_attempt_failures_preserved": [
+      "python -I run: ImportError sph_harm_y (system scipy older than user-site scipy); RUNTIME_ENVIRONMENT; rerun without -I",
+      "first CAS comparison returned False because the leading 1 was not subtracted (IMPLEMENTATION error in my check); fixed and rerun"
+    ],
+    "results": "see L1_DERIVATION_AND_TESTS.md section 4"
+  },
+  "offload_use": [
+    {"call": "offload digest (R47 methods + R48 L1 response)", "providers_tried": "google 503, nvidia timeout, then openrouter answered", "used_for": "equation/assumption extraction with line cites; every equation was then re-derived/checked by CAS and numerics"},
+    {"call": "offload consensus (adversarial limits)", "result": "only 1 of 3 requested providers answered (groq); consensus NOT achieved; two leads adopted as scope notes, others rejected with reasons in L1_DERIVATION_AND_TESTS.md"}
+  ],
+  "passed_failed_not_run": {
+    "passed": ["derivation algebra", "CAS series", "sphere moments", "parity", "ell-scaling", "rotation", "quadrature convergence", "pixel vs harmonic C_l (synthetic)"],
+    "failed": [],
+    "not_run": ["mask injection", "beam/pixel-window operator", "noise/foreground", "matched-simulation calibration", "FITS header inspection", "hashing of FFP10 files", "independent read-only reviewer"],
+    "blocked": ["PR4 NPIPE source binding (files absent)", "beam/transfer binding (files not found)"]
+  },
+  "failure_classes": ["INPUT_MISSING", "PROVENANCE"],
+  "native_subagents": "NOT_RUN"
+}

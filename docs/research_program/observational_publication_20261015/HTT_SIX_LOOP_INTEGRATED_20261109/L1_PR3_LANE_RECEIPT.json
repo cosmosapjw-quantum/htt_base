@@ -1,0 +1,45 @@
+{
+  "schema": "htt.l1_pr3_lane_receipt/1",
+  "task_id": "L1",
+  "lane": "PR3_LOCAL_CONTROL",
+  "as_of_date": "2026-11-10",
+  "status": "PILOT_DONE_SYNTHETIC; LANE_NOT_CALIBRATED",
+  "lane_definition": "Same-release Planck PR3 control: SMICA R3.00 maps + PR3 common masks + FFP10 (dx12_v3) SMICA CMB and noise simulations. It is a separate release from PR4/NPIPE and is never a PR4 null. No observed map was analysed.",
+  "inputs_source_bound": {
+    "ffp10_smica_pairs_used": 60,
+    "input_hash_manifest": "L1_PR3_PILOT_INPUT_HASHES.json",
+    "input_hash_result": "120 of 120 files: sha256 computed from local bytes in this session and equal to the earlier session's SHA256SUMS entry",
+    "ffp10_random_sample_check": "24 of 24 randomly drawn files (seed 20261110, 12 cmb + 12 noise, outside indices 0-59) also matched the earlier list; the remaining 1155 files of the 1299 are not re-hashed",
+    "mask": "workdir/raw/planck_data/COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits sha256 23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4 (see L1_SOURCE_RECEIPT.json)",
+    "fits_header_facts": "PR3 maps/masks: nside 2048, NESTED, Galactic, K_CMB. FFP10 sims: nside 2048, RING, K_CMB, no COORDSYS keyword."
+  },
+  "operator": {
+    "script": "L1_pr3_lane_injection_pilot.py",
+    "script_sha256": "68cae45e6ae223cd0a3c1baf3bba2ad9815fd6540c0c9f3c38f52d117d9de0a4",
+    "command": "python3 L1_pr3_lane_injection_pilot.py --raw <workdir/raw> --n 60 --out L1_PR3_PILOT_RESULT_N60.json",
+    "exit_code": 0,
+    "result_file": "L1_PR3_PILOT_RESULT_N60.json",
+    "result_sha256": "a693ea0ff5ff918b55e635edefdc54448b8219f6c802e274cf62576f77e96e60",
+    "elapsed_s": 799.6,
+    "versions": {"python": "3.12.3", "numpy": "2.4.2", "healpy": "1.19.0"},
+    "steps": "nside 2048 -> 16 mean-degrade; mask keeps pixels with >=90% unmasked children (f_sky 0.716); monopole+dipole fitted as nuisance; ordinary least squares on 5 Cartesian-STF Bianchi-I basis maps; B* reported in the Gram metric",
+    "not_in_operator": ["beam / pixel window", "foreground residuals", "covariance-weighted likelihood", "polarization", "frequency maps"],
+    "frame_assumption": "FFP10 simulations assumed Galactic (no header keyword); a wrong assumption would misalign the mask relative to scan-pattern-correlated noise"
+  },
+  "results_synthetic": {
+    "null_sd_of_B_hat_per_component": [8.31e-06, 8.10e-06, 7.66e-06, 7.05e-06, 6.74e-06],
+    "null_gram_norm_scale_sqrt_trace_G_cov": 2.20e-05,
+    "null_means_over_sd_times_sqrt_n": [1.13, 1.32, 0.96, 0.60, -0.51],
+    "null_interpretation": "all five component means within 1.32 standard errors of zero for 60 sims; consistent with no estimator bias at this precision. The sample sd itself carries about 9% uncertainty (N=60). No coverage/SBC was run.",
+    "injection_noiseless_response_relative_error": {"B_gram_1.1e-4 (5 sigma_null)": 1.6e-05, "B_gram_1e-3": 3.2e-04, "B_gram_1e-2": 1.7e-03, "fullsky_reference_1e-2": 5.7e-04},
+    "injection_interpretation": "Noise-free: measures response/leakage only. Linear-template recovery of the exact nonlinear map has relative error 1.7e-3 at B~1e-2 and 1e-5..3e-4 for B~1e-4..1e-3. The mask roughly triples the nonlinear leakage versus full sky at 1e-2. Nothing here is a detection or a sensitivity forecast."
+  },
+  "claims": [
+    {"id": "L1-PR3-1", "claim": "A masked-sky linear-template Bianchi-I pipeline runs end to end on same-release PR3 simulations and recovers an injected exact-map signal with the response errors above.", "state": "NUMERICALLY_CHECKED_SYNTHETIC", "limit": "noiseless injection; no beam/foreground/covariance weighting"},
+    {"id": "L1-PR3-2", "claim": "Null estimator scatter for B* in the Gram norm is about 2.2e-5 at nside 16, f_sky 0.716.", "state": "SYNTHETIC_ESTIMATE", "limit": "N=60; OLS not optimal; no beam"},
+    {"id": "L1-PR3-3", "claim": "The lane is beam-bound.", "state": "UNAVAILABLE", "limit": "PR3 beam/RIMO files were queued 2026-11-10 but their mapping to the SMICA product was not read"}
+  ],
+  "not_run": ["coverage / SBC", "covariance-weighted likelihood", "beam/pixel window", "real SMICA map analysis (deliberately not done)", "independent reviewer"],
+  "native_subagents": "NOT_RUN",
+  "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES"
+}

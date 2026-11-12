@@ -1,0 +1,249 @@
+{
+ "schema": "htt.boost_tension_and_response_receipt/1",
+ "as_of_date": "2026-11-12",
+ "status": "SUPERSEDED_BY_REFIT_V5",
+ "authorisation": "User decisions 2026-11-12: NPIPE/PR4 excluded; re-fit approved on remaining channels; then 'record input hashes' and 'add nuisance + free psi' approved. Unblinded run on those channels; NOT the CORE-07 production inference.",
+ "operator": {
+  "scripts": {
+   "scripts/r48/boost_tension_by_channel.py": "7213914f9db766e4d2964c26417ff979faa2c53caa8a579b9ee696a845d5c404",
+   "scripts/r48/refit_hypotheses_no_cmb.py": "16828c0a76019580dc6adc4c55de4bfd2e87df352ee8ee452addba4250edc06c"
+  },
+  "pr574_head": "451df914fd3c3bb9eb6b92940be81ebdafbfef7a",
+  "seed": 20261112,
+  "exit_code": 0,
+  "versions": {
+   "python": "3.12.3",
+   "numpy": "2.4.2"
+  },
+  "results": {
+   "BOOST_TENSION_BY_CHANNEL_ALPHA0.5.json": "d9bd9ef7b3d04036d8039c56cb6056595cb2f25ed695516b44c33bfa0ca752a5",
+   "BOOST_TENSION_BY_CHANNEL_ALPHA0.75.json": "b189dbc2c8709e870ef570f6456119bfa93575cc8b1138f1ac1eb16b1514c565",
+   "BOOST_TENSION_BY_CHANNEL_ALPHA1.0.json": "6bc8144e6de7c19a559cc4bf6d924b492952b5132284eb2d04536c87f37ec50a",
+   "REFIT_HYPOTHESES_NO_CMB_RESULT_ALPHA0.5.json": "8d68b7b1706047f429fed2771d49796847bc956a10f88a810ef411de29360ebf",
+   "REFIT_HYPOTHESES_NO_CMB_RESULT.json": "20b2b923538d2f7ff94e5fbf4ffd8e3683ca5139b8402569b34bffffa4f04471",
+   "REFIT_HYPOTHESES_NO_CMB_RESULT_ALPHA1.0.json": "ce2a0a35e271faccc2476d47071140e4ba1d9e52d4f33f21a7c87fffd9b88531"
+  }
+ },
+ "changes_enabling": [
+  "count-dipole responses replaced by R = 2 + x(1+alpha): slopes declared from source-measured proxies (NVSS 1.043, RACS 0.948, Quaia 1.9 = midpoint of 1.6-2.2; G<20.5 slope unmeasured, same value); alpha declared nuisance in [0.5,1.0], default 0.75 (not identifiable: L2 nullity 1). The old untraced 3.50/3.30/3.50 are gone. The Gaia glide response 0.92 is still untraced."
+ ],
+ "results": {
+  "count_joint_beta_norm": {
+   "0.5": 0.00442,
+   "0.75": 0.00404,
+   "1.0": 0.00373
+  },
+  "count_joint_beta_hat": {
+   "0.5": [
+    -0.00099,
+    -0.00338,
+    0.00267
+   ],
+   "0.75": [
+    -0.0009,
+    -0.00309,
+    0.00244
+   ],
+   "1.0": [
+    -0.00083,
+    -0.00285,
+    0.00225
+   ]
+  },
+  "count_joint_sd_axes": {
+   "0.5": [
+    0.00033,
+    0.00028,
+    0.0003
+   ],
+   "0.75": [
+    0.0003,
+    0.00026,
+    0.00027
+   ],
+   "1.0": [
+    0.00028,
+    0.00024,
+    0.00025
+   ]
+  },
+  "ratio_to_CMB_dipole_speed_1.23e-3": {
+   "0.5": 3.59,
+   "0.75": 3.29,
+   "1.0": 3.03
+  },
+  "per_channel_beta_hat_alpha0.75": {
+   "Quasars": {
+    "beta_hat": [
+     -0.0008,
+     -0.00307,
+     0.0024
+    ],
+    "sd_axes": [
+     0.00034,
+     0.00029,
+     0.0003
+    ],
+    "dchi2_null_vs_best_3dof": 165.6
+   },
+   "Radio": {
+    "beta_hat": [
+     -0.00124,
+     -0.00317,
+     0.00255
+    ],
+    "sd_axes": [
+     0.00064,
+     0.00064,
+     0.00064
+    ],
+    "dchi2_null_vs_best_3dof": 44.6
+   },
+   "Gaia": {
+    "beta_hat": [
+     -0.00167,
+     0.00067,
+     -0.00233
+    ],
+    "sd_axes": [
+     9686.33017,
+     19372.66035,
+     9686.33017
+    ],
+    "dchi2_null_vs_best_3dof": -0.0
+   },
+   "SNe": {
+    "beta_hat": [
+     -0.00737,
+     -0.00791,
+     -0.00947
+    ],
+    "sd_axes": [
+     0.00427,
+     0.00577,
+     0.00825
+    ],
+    "dchi2_null_vs_best_3dof": 5.5
+   },
+   "PV": {
+    "beta_hat": [
+     0.01835,
+     -0.01191,
+     -0.01332
+    ],
+    "sd_axes": [
+     0.01005,
+     0.01068,
+     0.013
+    ],
+    "dchi2_null_vs_best_3dof": 5.9
+   }
+  },
+  "cost_of_count_best_fit_in_other_channels_dchi2_3dof": {
+   "0.5": {
+    "Gaia": -0.0,
+    "SNe": 4.0,
+    "PV": 6.6
+   },
+   "0.75": {
+    "Gaia": -0.0,
+    "SNe": 4.1,
+    "PV": 6.5
+   },
+   "1.0": {
+    "Gaia": -0.0,
+    "SNe": 4.2,
+    "PV": 6.5
+   }
+  },
+  "count_blocks_beta_equiv_norm": {
+   "0.5": {
+    "Quasars_G20": 0.00505,
+    "Quasars_G20p5": 0.00437,
+    "NVSS": 0.00421,
+    "RACS": 0.00526
+   },
+   "0.75": {
+    "Quasars_G20": 0.0046,
+    "Quasars_G20p5": 0.00398,
+    "NVSS": 0.00392,
+    "RACS": 0.00492
+   },
+   "1.0": {
+    "Quasars_G20": 0.00422,
+    "Quasars_G20p5": 0.00366,
+    "NVSS": 0.00367,
+    "RACS": 0.00462
+   }
+  },
+  "refit_chi2_fixed_psi": {
+   "0.5": {
+    "H_0": 1648.7,
+    "H_loc": 1438.1,
+    "H_tilt": 1648.7,
+    "H_mix": 1381.1
+   },
+   "0.75": {
+    "H_0": 1648.7,
+    "H_loc": 1438.2,
+    "H_tilt": 1648.7,
+    "H_mix": 1381.1
+   },
+   "1.0": {
+    "H_0": 1648.7,
+    "H_loc": 1438.3,
+    "H_tilt": 1648.7,
+    "H_mix": 1381.1
+   }
+  },
+  "refit_Delta_BIC_fixed_psi": {
+   "0.5": {
+    "H_0": 188.6,
+    "H_loc": 0.0,
+    "H_tilt": 210.6,
+    "H_mix": 1.6
+   },
+   "0.75": {
+    "H_0": 188.5,
+    "H_loc": 0.0,
+    "H_tilt": 210.5,
+    "H_mix": 1.5
+   },
+   "1.0": {
+    "H_0": 188.4,
+    "H_loc": 0.0,
+    "H_tilt": 210.4,
+    "H_mix": 1.4
+   }
+  }
+ },
+ "findings": [
+  "Count dipoles imply |beta_MO| = 3.7e-3 (alpha 1.0) to 4.4e-3 (alpha 0.5), i.e. 3.0-3.6x the CMB-dipole speed (previous untraced constants gave 5.8e-3, 4.7x). An excess over the CMB-dipole kinematic expectation persists for every alpha in the grid; per-axis statistical sd ~3e-4 to 7e-4.",
+  "SNe and PV cannot test it: per-axis sd 4e-3 to 1.3e-2 (>= the count-implied boost). Cost of the count best fit in those channels: dchi2 ~4 (SNe) and ~6.5 (PV) for 3 dof, not significant. The earlier 'tension' wording is withdrawn: SN/PV are uninformative at this level, not in conflict.",
+  "Gaia does not constrain beta_MO at all (sd ~1e4): the glide response is absorbed by the 3 marginalised nuisance modes in the likelihood design matrix (H[0:3,0:3]); design question, unresolved.",
+  "H_loc remains best by BIC for all alpha; H_mix Delta_BIC 1.4-1.6 (Gaia block saturated); H_tilt equals the null (beta_RM not in any channel).",
+  "DATA PROVENANCE DEFECT: two of the four count blocks are hard-coded literals in the likelihood module with no source file (Quaia G<20.5: amplitude 0.0212 at l=255.4, b=37.1; RACS: amplitude 0.018 +- 0.004 at l=245, b=35). The sourced blocks alone (Quaia G<20, NVSS) imply beta 3.9e-3 to 5.1e-3 (alpha grid), the literal blocks 3.7e-3 to 5.3e-3. These literals must be replaced by sourced values (e.g. RACS from the validated estimator on RACS-low, which has not been run unblinded) before any physical reading."
+ ],
+ "claims": [
+  {
+   "id": "BT-1",
+   "claim": "Count-dipole amplitudes exceed the kinematic expectation for the CMB-dipole speed by 3.0-3.6x under the derived response over alpha 0.5-1.0.",
+   "state": "NUMERICALLY_COMPUTED_POINT_ESTIMATE",
+   "limit": "two of four blocks are unsourced literals; derived inputs; response model first-order; no systematics"
+  },
+  {
+   "id": "BT-2",
+   "claim": "SN/PV contradict the count-dipole boost.",
+   "state": "NOT_SUPPORTED",
+   "limit": "dchi2 ~4-6.5 for 3 dof"
+  },
+  {
+   "id": "BT-3",
+   "claim": "Physical boost, tilt or anisotropy detected.",
+   "state": "NOT_CLAIMED"
+  }
+ ],
+ "native_subagents": "NOT_RUN",
+ "claim_ceiling": "C0_DESIGN_THEORY_SYNTHETIC_ONLY_UNTIL_SOURCE_AND_PRODUCTION_GATES",
+ "superseded_note": "Its '3.0-3.6x CMB speed' finding rested on hard-coded literals and round-number values in the count blocks, no latitude mask and a galactic/ICRS frame mismatch. Current analysis: REFIT_RECEIPT.json (v5) and COUNT_DIPOLES_REAL_RECEIPT.json."
+}
