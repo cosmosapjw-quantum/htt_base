@@ -894,6 +894,11 @@ def _evaluate_linearized_near_flrw_sky(
         )
 
     a_v, n_m = _resolve_background_structure(params)
+    # At the exact abelian zero-curvature boundary the geometry is type I,
+    # regardless of the requested family label. Do not inject label-only floors.
+    # This boundary repair does not validate finite-curvature transfer formulas.
+    if not np.any(a_v) and not np.any(n_m) and params.omega_k == 0.0:
+        fam = "I"
     sig = params.sigma_N
     pi_emit = _derive_emission_photon_quadrupole(params)
     e_th, e_ph = _spherical_screen_basis(n_hat_grid)

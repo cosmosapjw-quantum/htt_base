@@ -1084,7 +1084,7 @@ def main() -> None:
     git_sha = _git_head(WORKTREE_ROOT)
     ds_sha256 = _sha256_file(REAL_DATASET_NPZ)
     ds_npz = np.load(REAL_DATASET_NPZ, allow_pickle=False)
-    ffp10_null_beta = np.asarray(ds_npz["ffp10_null_beta"], dtype=np.float64)
+    # Never reuse legacy rescaled quadrupoles as beta_MO estimator replications.
 
     ds_pr3 = load_real_dataset_from_npz(REAL_DATASET_NPZ, use_pr4=False, use_racs_raw=False)
     ds_pr4 = load_real_dataset_from_npz(REAL_DATASET_NPZ, use_pr4=True, use_racs_raw=False)
@@ -1481,7 +1481,7 @@ def main() -> None:
     shell_vecs = [ds_pr3.cf4.d_obs[3 * k : 3 * k + 3] for k in range(len(shell_bins))]
     five_views = compute_r49_htt_five_views_from_posterior(
         draws_thinned,
-        matched_null_samples_beta=ffp10_null_beta,
+        matched_null_samples_beta=None,
         null_law_name="MATCHED_NULL_FFP10_PR3",
         shell_redshift_bins=shell_bins,
         shell_data_vectors=shell_vecs,
@@ -1516,11 +1516,11 @@ def main() -> None:
             "x_beta_rm_norm_mean": float(x_sum["beta_RM_norm_mean"]),
             "F_beta_mo_max_support": float(f_sum["beta_MO_max_support"]),
             "F_sigma_max_support": float(f_sum["sigma_max_support"]),
-            "Pi_beta_mo_score": float(pi_sum["BETA_MO_MATCHED_NULL"]["observed_score"]),
-            "Pi_beta_mo_exceedance": float(pi_sum["BETA_MO_MATCHED_NULL"]["observed_exceedance"]),
+            "beta_mo_posterior_mean_norm": float(x_sum["beta_MO_norm_mean"]),
         },
         adequacy_indicators={
             "q_anchors_evaluated": bool(len(q_sum) > 0),
+            "velocity_null_available": False,
             "cf4_cross_shell_cov_spd": bool(gf_sum["cov_min_eig"] > 0.0),
             "split_rhat_passed": bool(max_split_rhat < 1.05),
             "ess_bulk_passed": bool(min_ess_bulk >= 400.0),

@@ -450,9 +450,9 @@ def construct_r42_five_variable_state(
                   2.0 * (s_xy * ux * uy + s_xz * ux * uz + s_yz * uy * uz))
         h_sigma[d_idx] = float(np.max(q_proj))
 
-    r_shear_anchor = 1e-4
-    h_shear_anchor = np.full_like(h_sigma, r_shear_anchor)
-    occupancy_ratios_sigma = np.where(h_shear_anchor > 1e-12, h_sigma / h_shear_anchor, 0.0)
+    # Q explicitly records the shear anchor as unavailable; F must agree.
+    h_shear_anchor = None
+    occupancy_ratios_sigma = None
 
     support_F = {
         "BETA_MO": DirectionalSupportProfile(
@@ -483,48 +483,36 @@ def construct_r42_five_variable_state(
     crit_95 = float(np.percentile(valid_norms, 100.0 * credible_level))
     obs_exceed = float(np.mean(valid_norms >= obs_score))
 
-    # Matched null ensemble
+    # Missing calibration remains missing. Never generate a nominal null from a
+    # fixed noise scale and label it as matched to an observed estimator.
+    exceedance_Pi = {
+        "BETA_MO_NORM": ExceedanceSurface(
+            functional_id="BETA_MO", law_name="POSTERIOR_PUSHFORWARD",
+            thresholds=thresholds, exceedance_probabilities=exceedance_post,
+            critical_threshold_95=crit_95, observed_score=obs_score,
+            observed_exceedance=obs_exceed, undefined_mass=undefined_mass,
+        ),
+    }
     if matched_null_samples is not None:
         null_samples = np.asarray(matched_null_samples, dtype=np.float64)
         if null_samples.ndim == 2 and null_samples.shape[1] == 3:
             null_norms = np.linalg.norm(null_samples, axis=1)
+        elif null_samples.ndim == 1:
+            null_norms = null_samples
         else:
-            null_norms = np.ravel(null_samples)
-    else:
-        # Source-matched noise scale from empirical survey covariance (e.g. Planck Commander MC100)
-        rng = np.random.RandomState(42)
-        null_samples = rng.randn(len(mcmc_samples), 3) * 1.5e-4
-        null_norms = np.linalg.norm(null_samples, axis=1)
-
-    null_exceed_prob = np.array([float(np.mean(null_norms >= c)) for c in thresholds])
-    null_crit_95 = float(np.percentile(null_norms, 100.0 * credible_level))
-    null_obs_exceed = float(np.mean(null_norms >= obs_score))
-    n_sim = float(len(null_norms))
-    finite_sim_unc = np.sqrt(null_exceed_prob * (1.0 - null_exceed_prob) / max(n_sim, 1.0))
-
-    exceedance_Pi = {
-        "BETA_MO_NORM": ExceedanceSurface(
-            functional_id="BETA_MO",
-            law_name="POSTERIOR_PUSHFORWARD",
-            thresholds=thresholds,
-            exceedance_probabilities=exceedance_post,
-            critical_threshold_95=crit_95,
-            observed_score=obs_score,
-            observed_exceedance=obs_exceed,
-            undefined_mass=undefined_mass,
-        ),
-        "BETA_MO_MATCHED_NULL": ExceedanceSurface(
-            functional_id="BETA_MO",
-            law_name=null_law_name,
-            thresholds=thresholds,
-            exceedance_probabilities=null_exceed_prob,
-            critical_threshold_95=null_crit_95,
-            observed_score=obs_score,
-            observed_exceedance=null_obs_exceed,
-            undefined_mass=0.0,
-            finite_simulation_uncertainty=finite_sim_unc,
-        ),
-    }
+            raise ValueError("null samples require N-vector scores or Nx3 velocity estimates")
+        if len(null_norms) < 2 or not np.isfinite(null_norms).all() or np.any(null_norms < 0):
+            raise ValueError("finite nonnegative null scores, N>=2 required")
+        null_exceed_prob = np.array([float(np.mean(null_norms >= c)) for c in thresholds])
+        # This field is an empirical survival fraction, not an exact p-value.
+        finite_sim_unc = np.sqrt(null_exceed_prob * (1.0-null_exceed_prob) / len(null_norms))
+        exceedance_Pi["BETA_MO_MATCHED_NULL"] = ExceedanceSurface(
+            functional_id="BETA_MO", law_name=null_law_name,
+            thresholds=thresholds, exceedance_probabilities=null_exceed_prob,
+            critical_threshold_95=float(np.percentile(null_norms,100.0*credible_level)),
+            observed_score=obs_score, observed_exceedance=float(np.mean(null_norms >= obs_score)),
+            undefined_mass=0.0, finite_simulation_uncertainty=finite_sim_unc,
+        )
 
     # 4. Depth Path G_F across Redshift Shells
     shells = shell_redshift_bins if shell_redshift_bins is not None else [(0.01, 0.05), (0.05, 0.10), (0.10, 0.15)]

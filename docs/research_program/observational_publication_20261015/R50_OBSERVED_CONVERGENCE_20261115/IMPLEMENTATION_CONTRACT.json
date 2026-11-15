@@ -1,0 +1,129 @@
+{
+  "schema_version": "htt.r50.local-implementation-contract/1",
+  "units": {
+    "metric": "(-,+,+,+)",
+    "physical_constants": "retain c; velocities beta=v/c",
+    "sigma_omega": "always label s^-1, normalized by H, or normalized by Theta; never mix",
+    "acceleration": "A physical acceleration; A/c contributes inverse time",
+    "gaia": "microarcsecond/year response coefficients; not direct sigma/H"
+  },
+  "component_contract": {
+    "theta": [
+      "sigma_STF5",
+      "omega_axial3",
+      "A_polar3",
+      "beta_RM3"
+    ],
+    "observer_nuisance": [
+      "beta_MO3",
+      "frame_spin3"
+    ],
+    "component_metadata": [
+      "basis",
+      "metric_or_Gram",
+      "congruence",
+      "triad",
+      "epoch",
+      "normalization",
+      "physical_response_equation",
+      "source_release"
+    ],
+    "operator": "Every model has a finite predict(theta,nu) -> same ordered carrier shape (p,). Response must be from stated physical derivation or labeled working-model only."
+  },
+  "gaussian_law": {
+    "formula": "logL=-0.5*(r^T C(theta,nu)^-1 r + logdet C(theta,nu)+p log(2pi))",
+    "validity": "One shared carrier may have both mean and covariance dependence. No second independent factor for the same data.",
+    "implementation": "Cholesky solve and log diagonals. Finite symmetric SPD validation; no automatic epsilon jitter, pseudoinverse, or covariance discard. If singular by construction, explicitly use a fixed support with its induced measure.",
+    "mode_order": "Match standard_lowell_mode_labels or explicit alternative release contract, including real/imag and E/B convention."
+  },
+  "finite_mc_law": {
+    "when": "Only iid Gaussian, same observable process, sample covariance S with N independent realizations, and compatible covariance prior; N>p. No automatic use with rescaled, shrunk, correlated or fitted residual mocks.",
+    "formula": "logL=lgamma(N/2)-lgamma((N-p)/2)-p/2*log(pi*(N-1))-0.5*logdet(S)-N/2*log1p(Q/(N-1))",
+    "Q": "r.T solve(S,r)",
+    "alternate": "If assumptions fail, preregister shrinkage/hierarchical model and heldout calibration; do not merely relabel as calibrated.",
+    "rank_and_precision": "Record N, p, effective ensemble dependence, eigenvalues, regularization and coverage. Hartlap factor alone is not a posterior covariance model."
+  },
+  "compression": {
+    "baseline": "Raw normal equation or full harmonic likelihood with identical selection, prior, nuisance and stochastic law.",
+    "target": "Specify estimand or competing model before selecting compression.",
+    "exact_fixed_gaussian": "F,t under nuisance projection. Signed x=(F,t) retains specified likelihood ratios. Invertible tensor chart ties correct GLS/score.",
+    "scalar": "Report target-specific score/Fisher/likelihood loss; dimension ratios and posterior covariance ranks are not information loss.",
+    "nonlinear": "Use validation grid and heldout parameter injections; do not extrapolate local score equality to global posterior/model evidence.",
+    "tolerances": {
+      "exact_logL_difference": 1e-8,
+      "linear_algebra_relative": 1e-10
+    },
+    "monte_carlo": "Choose coverage precision from binomial uncertainty and available heldout N before inspection; report interval even when all replicates pass."
+  },
+  "null_contract": {
+    "statistic": "Same observed and simulated estimator, parameter definition, nuisance fit, masks, selection, scale, source combination and posterior/MAP summary.",
+    "forbidden": "a_lm slices times empirical constants; Gaussian draws from arbitrary widths; prior draws renamed matched null",
+    "finite_tail": "For exchangeable fixed statistic use (k+1)/(N+1) with binomial/MC uncertainty; record raw k,N. Posterior exceedance and frequentist calibrated tail are separate.",
+    "unavailable": "No BETA_MO_MATCHED_NULL output until actual same-estimator replicated joint datasets are available."
+  },
+  "local_input_access": {
+    "source": "Existing owned-data inventory + exact local path inspection",
+    "here_available": "Git-tracked Gaia R36 102D carrier",
+    "local_only": [
+      "Raw PR3 maps/FFP10 files",
+      "R49 /mnt/extdrive/workdir/r49_chains/*.npz",
+      "full catalogue source rows and pipeline caches"
+    ],
+    "no_download": true,
+    "no_remote_desktop": true,
+    "avoid_rehash": "Reuse accepted source identities; rehash only new/changed exact frozen files or provenance conflicts."
+  },
+  "output_contract": {
+    "required": [
+      "node_id",
+      "source_git_sha",
+      "dirty_patch_sha256",
+      "source_ids",
+      "equations",
+      "parameter_names_units_frames_epochs",
+      "law_and_nuisance_spec",
+      "actual_commands",
+      "exit_codes",
+      "results",
+      "checks",
+      "claims",
+      "unresolved"
+    ],
+    "claim_values": [
+      "established",
+      "literature-supported",
+      "derived",
+      "numerically checked",
+      "implementation-verified",
+      "conjectural",
+      "unresolved",
+      "blocked"
+    ],
+    "arrays": "npz allow_pickle=False, finite numerical arrays, explicit axis labels and shapes, no object arrays",
+    "json": "strict JSON: null for unavailable scalars, never NaN/Infinity; no fabricated evidence",
+    "large_products": "Store data/chains locally and commit compact summary and manifest. Do not upload catalogues or maps."
+  },
+  "review_sequence": [
+    "Read current code and tests",
+    "Demonstrate existing concrete defect",
+    "Implement source-derived repair in assigned paths",
+    "Run focused invariant/edge/negative tests",
+    "Run owned observed data branch",
+    "One independent scoped review and targeted fixes",
+    "Update DAG + concise scientific report",
+    "Non-force push and verify exact remote commit"
+  ],
+  "scientific_quarantine": {
+    "historical_R49": "Preserve receipt bytes but do not use invalid beta-null Pi, 13/14 information-loss or physical 24D posterior as science evidence.",
+    "still_open": [
+      "finite-curvature transfer/source",
+      "DESI directional response calibration",
+      "0.1/0.5 A coefficients",
+      "mean/covariance overlap rule",
+      "finite MC covariance",
+      "Gaia spatial/selection systematics",
+      "R49 five-view frame/epoch tag and assumed depth transport"
+    ],
+    "not_required": "PR4 NPIPE, new catalogues, a native full Bianchi solver before publishing scoped observed-methods results."
+  }
+}

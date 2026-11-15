@@ -1,0 +1,24 @@
+htt_base 연구를 R50 다음 R51부터 이어서 실행하라. 새 연구 주제나 감사 루프를 만들지 말고 한 턴에 RESEARCH_DAG.json의 노드 하나를 완결하라.
+
+저장소: https://github.com/cosmosapjw-quantum/htt_base
+이어받을 브랜치: research/r50-observed-convergence-20261115
+원본 심사 기준 SHA: 36bd9030a0759c5563e273dd83836b40034dcda3
+계획 경로: docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/
+
+1. 사용자의 기존 primary checkout에서 git status와 HEAD를 확인한다. dirty 변경은 보존한다. 다른 작업자가 쓰는 파일/branch를 바꾸지 않는다. git fetch origin 후 위 브랜치를 확인하고 안전한 branch 전환/fast-forward만 한다. 새 clone/worktree, force-push, main merge는 하지 않는다.
+2. AGENTS.md와 계획 경로의 SCIENTIFIC_REPORT_KO.md, RESEARCH_DAG.json, IMPLEMENTATION_CONTRACT.json, INDEPENDENT_R49_AUDIT.json, OBSERVED_GAIA_BENCHMARK.json을 읽는다. R49 PR 설명문보다 실제 HEAD가 최신이다. PR574 수리는 이미 R49에 통합됐으므로 중복 cherry-pick하지 않는다.
+3. R50은 실제 Gaia 755850-source compact carrier 분석과 구체 코드 수리를 완료했다. 새 24D cosmological posterior를 검증한 것은 아니다. 기존 R49 receipt는 역사적 실행 기록으로 보존하되 invalid beta-null Pi, 13/14를 정보손실로 표현한 값, 미유도 응답을 통한 물리 제약은 채택하지 않는다.
+4. 먼저 다음 검사를 실행하고 실제 stdout/exit code를 저장한다:
+   PYTHONPATH=htt/src:htt:. python -m pytest tests/r50 htt/src/common/test_r50_optional_calibration.py tests/r42/test_five_variable_repair.py tests/r48/test_core03_repairs.py -q
+   PYTHONPATH=htt/src:htt:. python scripts/r50/benchmark_owned_gaia_carrier.py
+   기존 결과를 그대로 재현하면 baseline reuse로 기록하고 새 과학성과로 중복 집계하지 않는다.
+5. R51의 첫 작업은 source-bound physical response다. general_bianchi_transfer.py의 finite-curvature focusing/twist/polarization gain, r49_general_bianchi_likelihood.py의 0.1*A/0.5*A 및 DESI cap contrast*0.02를 원전 식으로 유도하거나 명시적 phenomenological working model로 격리한다. 물리와 연결되지 않은 coefficient를 고정한 채 장시간 MCMC를 반복하지 않는다.
+6. CMB는 이미 가진 PR3 데이터를 사용한다. Commander primary 정책과 정확한 map/MC/mask/beam/removed-mode 일치를 확인한다. 기존 SMICA 결과는 별도 SMICA diagnostic으로 유지한다. PR4 NPIPE·SEVEM·새 다운로드를 critical path에 추가하지 않는다. Commander matching MC가 없으면 그 calibration만 unavailable로 표시하고 Gaia/CF4 독립 작업을 계속한다.
+7. 하나의 Gaussian에는 mu(theta)와 C(theta)가 같은 모드에서 함께 나타날 수 있다. 현재 disjoint-ell 금지 규칙을 고치고, 같은 원자료를 두 likelihood에 독립으로 넣는 중복만 차단한다. 300 mocks/135 carrier covariance는 알려진 C가 아니다. IMPLEMENTATION_CONTRACT의 finite-MC law 또는 실제 검증된 대안을 구현한다.
+8. x는 scalar x_c가 아닌 signed joint carrier다. STF5 metric, 각 성분의 unit/frame/congruence/epoch 및 nuisance를 유지한다. theta의 sigma, omega, A, beta_RM와 observer beta_MO를 구분한다. F,t로부터 target likelihood를 구성하고 (x,Q,Pi,F,G_F)는 같은 공동분포에서 계산한다. unavailable anchor/null/history를 숫자·Gaussian fallback으로 채우지 않는다.
+9. velocity null은 같은 joint 데이터 생성·선택·nuisance 적합·추정량을 반복한 결과여야 한다. 옛 ffp10_null_beta/null_beta 키는 rescaled quadrupole이므로 사용하지 않는다. null 재구성이 끝나기 전 BETA_MO_MATCHED_NULL은 출력하지 않는다.
+10. Cobaya는 Likelihood/Theory provider를 확장하고 검증된 sampler kernel은 유지한다. raw/full Gaussian, optimal score, tensor x, signed scalar, amplitude/power-only 대안을 동일 data/prior/law에서 비교한다. 정확한 GLS/score와는 동률이어야 하며 우월성을 꾸며내지 않는다.
+11. 관측값, 입력·응답·분포 가정, 이론 유도, 구현검증, calibrated 통계를 구별한다. Gaia E2를 sigma/H로 바로 변환하지 않는다. CF4 reconstruction query를 독립 galaxy 데이터처럼 넣지 않는다. Bianchi family 비교는 constraint+transfer가 유효한 범위 및 observational equivalence set으로 보고한다.
+12. 매 변경은 구체 실패→최소 수정→회귀/물리극한 검증→실자료 실행→한 번의 독립 심사 순서로 한다. tolerance·source hash·claim 상태를 통과시키려고 바꾸지 않는다. active R9/CAS 역사와 one-use 기록을 재개하거나 덮어쓰지 않는다.
+13. raw maps/catalogues/chains는 로컬에 남긴다. R51_RESULT.json, response/selection/covariance 계약, compact observed carrier, 테스트 로그, 정확한 source/config/commit ID를 커밋한다. canonical DAG/status 및 machine_readable mirror와 이 재개 프롬프트를 갱신하고 non-force push한다.
+14. 완료 보고는 물리적 observable 결과, 비교방법 대비 wins/ties/losses, 검증한 범위, 미완료 입력/이론 의무, 다음 R52 노드를 제시한다. 데이터가 없는 실행을 PASS로 표기하지 않는다. R53의 판정까지 끝나면 추가 메타 감사를 만들지 말고 논문용 결과표/그림 또는 명시적 범위 축소 결정을 산출한다.

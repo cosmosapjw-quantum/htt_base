@@ -1,0 +1,45 @@
+{
+  "pass_id": "r50_scoped_repair_review",
+  "base_commit": "36bd9030a0759c5563e273dd83836b40034dcda3",
+  "scope": "Exact-zero structure label repair, velocity-null removal, coordinate-count calibration, new observed Gaussian carrier benchmark",
+  "initial_verdict": "one_blocking_finding",
+  "issues": [
+    {
+      "id": "R50-R1",
+      "severity": "critical",
+      "confidence": 1.0,
+      "location": "htt/src/common/htt_five_variable_state.py:494-500 and r49_general_bianchi_likelihood.py:1008",
+      "quote": "null_samples = rng.randn(len(mcmc_samples), 3) * 1.5e-4",
+      "analysis": "New R49 None path still invokes existing common-helper fabricated velocity null. A real execution with ten beta_MO draws from0.001 to0.003 returned velocity_null_status UNAVAILABLE yet BETA_MO_MATCHED_NULL with law_name MATCHED_NULL_FFP10_PR3, critical threshold0.00036389799346150486 and observed_exceedance0.0. Thus legacy null reading was removed but bogus null generation/consumption survived.",
+      "requested_fix": "If no qualified null supplied, create posterior-only Pi surface; do not generate random null. Add absence regression for BETA_MO_MATCHED_NULL through public R49 call.",
+      "status": "resolved_verified"
+    }
+  ],
+  "verified": [
+    "10 new R50 tests passed in2.10s; exact-zero I/V/VII0/VIIh/IX geometry invariance covered",
+    "Legacy cached quadrupole null keys are no longer read by GBI06/GBI08 or written by GBI06",
+    "Rank-one input now returns measured rank1 and information_loss_ratio_dof null",
+    "Independent all97 observed carrier Schur mean vs direct joint least-squares maxerr2.007283228522283e-13",
+    "Independent all97 covariance vs full joint inverse maxerr7.327471962526033e-15",
+    "Optimal linear score compression FI agreement maxerr6.661338147750939e-16",
+    "Fixed STF axes/inherited nuisance choices with explicit conditional saved-law caveats; no data-selected inferential significance claim found"
+  ],
+  "deferred_to_R51": [
+    "finite-curvature general transfer physics",
+    "probe physical-response mapping",
+    "finite-N covariance law",
+    "full real-data raw chain rerun"
+  ],
+  "repo_files_modified_by_reviewer": [],
+  "final_verdict": "pass_scoped",
+  "targeted_closeout": {
+    "changes_verified": [
+      "common helper no longer generates a matched null when no null supplied",
+      "R49 public path returns only BETA_MO_NORM and unavailable null status",
+      "unavailable shear anchor remains None in F",
+      "serializable R49 summary and saved R50 JSON pass allow_nan=False"
+    ],
+    "actual_execution": "11 R50 tests passed,1 warning in2.00s; independent public call and strict JSON check passed",
+    "scope": "bounded R50 repairs; remaining R49 physical transfer/inference defects remain deferred to R51"
+  }
+}

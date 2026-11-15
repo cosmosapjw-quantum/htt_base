@@ -909,6 +909,13 @@ def compute_r49_htt_five_views_from_posterior(
             "All five HTT variables (x, Q, Pi, F, G_F) MUST be derived from one common joint posterior."
         )
 
+    if matched_null_samples_beta is not None:
+        raise ValueError(
+            "Unqualified beta null rejected: R49 cached quadrupole coordinates are not "
+            "replications of the joint beta_MO estimator. Refit the same estimator "
+            "under the same joint null and bind its source/selection contract first."
+        )
+
     draws = np.asarray(posterior_draws24, dtype=np.float64)
     if draws.ndim != 2 or draws.shape[1] != 24 or draws.shape[0] < 4:
         raise ValueError(f"posterior_draws24 must have shape (N>=4, 24), got {draws.shape}")
@@ -1019,6 +1026,7 @@ def compute_r49_htt_five_views_from_posterior(
     return {
         "schema_version": "r49_single_posterior_five_view_v1",
         "single_posterior_verified": True,
+        "velocity_null_status": "UNAVAILABLE_SAME_ESTIMATOR_JOINT_NULL_REQUIRED",
         "shared_posterior_id": str(state_five.bundle_x.canonical_state_id),
         "n_draws": int(len(draws)),
         "source_posterior_shape": list(draws.shape),
@@ -1069,14 +1077,18 @@ def compute_r49_htt_five_views_from_posterior(
 def compute_scalar_xc_ablation_comparison(posterior_draws24: np.ndarray) -> dict[str, Any]:
     """Compare full vector/tensor R49 state against collapsed scalar-speed `x_C` ablation.
 
-    Proves scalar `x_C` collapses directional & polarization/depth rank while leaving
-    the full vector/tensor parameterization strict rank-preserving.
+    Reports coordinate reduction only. Posterior covariance rank is not Fisher
+    information, and dimension counts do not measure target information loss.
     """
     draws = np.asarray(posterior_draws24, dtype=np.float64)
+    if draws.ndim != 2 or draws.shape[1] != 24 or draws.shape[0] < 4 or not np.isfinite(draws).all():
+        raise ValueError("finite posterior_draws24 with shape (N>=4,24) required")
     # Full tensor covariance matrix over 14 anisotropic DOFs (sigma_5, omega_3, v_matter_3, beta_MO_3)
     X_full = np.hstack([draws[:, 0:5], draws[:, 5:8], draws[:, 11:14], draws[:, 17:20]])
-    cov_full = np.cov(X_full, rowvar=False) + 1.0e-18 * np.eye(X_full.shape[1])
-    rank_full = int(np.linalg.matrix_rank(cov_full, tol=1.0e-15))
+    centered = X_full - np.mean(X_full, axis=0)
+    scales = np.std(centered, axis=0)
+    active = scales > 0
+    rank_full = int(np.linalg.matrix_rank(centered[:, active] / scales[active])) if active.any() else 0
     # Scalar x_C collapse: replace vector velocities & shear with single scalar RSS speed amplitude
     x_C = np.sqrt(
         np.sum(draws[:, 17:20] ** 2, axis=1)
@@ -1091,7 +1103,10 @@ def compute_scalar_xc_ablation_comparison(posterior_draws24: np.ndarray) -> dict
         "scalar_x_C_mean": float(np.mean(x_C)),
         "scalar_xc_std": float(np.std(x_C)),
         "vector_beta_MO_mean_norm": float(np.linalg.norm(np.mean(draws[:, 17:20], axis=0))),
-        "information_loss_ratio_dof": float(X_full.shape[1] - 1) / float(X_full.shape[1]),
+        "coordinate_reduction_fraction": float(X_full.shape[1] - 1) / float(X_full.shape[1]),
+        "information_loss_ratio_dof": None,
+        "information_loss_status": "NOT_EVALUATED_REQUIRES_TARGET_AND_LIKELIHOOD",
+        "rank_method": "centered_column_scaled_SVD_no_jitter",
     }
 
 

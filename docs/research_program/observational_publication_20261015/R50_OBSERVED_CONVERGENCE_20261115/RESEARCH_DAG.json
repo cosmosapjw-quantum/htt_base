@@ -1,0 +1,258 @@
+{
+  "schema_version": "htt.r50.convergent-research/1",
+  "baseline_commit": "36bd9030a0759c5563e273dd83836b40034dcda3",
+  "mode": "convergent",
+  "current_unit": "R50",
+  "overall_status": "in_progress",
+  "publication_status": "major_revision_required",
+  "max_planned_turns": 4,
+  "constraints": {
+    "no_remote_desktop": true,
+    "no_new_downloads": true,
+    "pr4_on_critical_path": false,
+    "raw_data_in_git": false,
+    "force_push": false,
+    "auto_merge": false,
+    "one_primary_checkout": true,
+    "claim_ceiling": "C0 until response and empirical calibration admitted",
+    "existing_data_inventory": "../HTT_SIX_LOOP_INTEGRATED_20261109/DATA_INVENTORY.json"
+  },
+  "nodes": [
+    {
+      "id": "R50",
+      "depends": [],
+      "status": "complete_scoped",
+      "executor": "current_host",
+      "deliverables": [
+        "SCIENTIFIC_REPORT_KO.md",
+        "OBSERVED_GAIA_BENCHMARK.json",
+        "INDEPENDENT_R49_AUDIT.json"
+      ],
+      "science": "Measured nuisance sensitivity and signed compression loss on retained actual Gaia carrier; repaired invalid null, anchor mismatch, exact degenerate geometry and false information-loss count.",
+      "remaining": "Full R49 cosmological posterior not admitted."
+    },
+    {
+      "id": "R51",
+      "depends": [
+        "R50"
+      ],
+      "status": "ready",
+      "executor": "local_for_owned_raw_data",
+      "goal": "Source-derived response repair + PR3 observed low-ell likelihood",
+      "tasks": [
+        "Replace or quarantine un-derived transfer gains/twists and 0.1/0.5 A coefficients with equation-labelled source-bound operators. Preserve working-model results without physical names.",
+        "Replace false mean/covariance disjoint-mode prohibition with one normalized joint Gaussian. Use unique data-block identity to prevent independent duplication.",
+        "Rebuild existing-data Commander lane if its matching MC/mask/beam contract is present; maintain SMICA historical diagnostic lane by name. Never silently interchange pipelines.",
+        "Estimate covariance uncertainty from existing MC. If iid Gaussian/Wishart assumptions hold, implement normalized multivariate-t; otherwise preregister shrinkage plus heldout coverage. No NPIPE dependency.",
+        "Retain T/E/B full signed components and mask leakage; start with T-only if polarization adequacy fails, recording exclusion as model choice before target fitting.",
+        "Bind removed monopole/dipole/kinematic-quadrupole metadata; do not reconstruct full dipole from residual l=1.",
+        "Publish observed carrier, covariance, response design, estimator config and source IDs as compact products; raw maps stay local."
+      ],
+      "acceptance": [
+        "Forward response independent check against source equations and at least one reference/exact limit.",
+        "Full vs tensor logL differences <1e-8 on declared parameter domain when algebra predicts exactness.",
+        "Existing MC split used for covariance/heldout tests with disjoint IDs; coverage interval and multiple-test policy declared before inspection.",
+        "No arbitrary a_lm-to-beta null or hidden Gaussian fallback; report unavailable if same-estimator joint null not produced."
+      ],
+      "commands": [
+        "PYTHONPATH=htt/src:htt:. python -m pytest tests/r50 tests/r49/test_gbi01_convention_bridge.py tests/r49/test_gbi02_tilted_state_and_constraints.py tests/r49/test_gbi03_general_tilted_evolution.py -q"
+      ],
+      "return": [
+        "R51_RESULT.json",
+        "R51_SOURCE_OPERATOR_CONTRACT.json",
+        "observed_carrier.npz",
+        "source_operator.patch",
+        "test_log.txt"
+      ]
+    },
+    {
+      "id": "R52",
+      "depends": [
+        "R51"
+      ],
+      "status": "pending",
+      "executor": "local_for_owned_catalogues",
+      "goal": "Direction/redshift-dependent observables and boost/tilt partial identification",
+      "tasks": [
+        "Use existing CF4 grouped distance/selection likelihood; reconstruction grids are not independent galaxies. Fit directional monopole/dipole/STF quadrupole with shared calibration nuisances.",
+        "Use saved Gaia E1/B1/E2 joint covariance; map E2 to endpoint-history response, marginalize frame spin and spatial systematics; do not label it instantaneous sigma/H.",
+        "Derive separate beta_MO and beta_RM history response; include independent measured dipole or validated aberration product only if already owned.",
+        "Compute nuisance-projected response singular values and estimand kernels per depth and in joint probes; add proper priors only after recording likelihood rank.",
+        "Build Cobaya Likelihood/Theory provider for exact same likelihood with normalized covariance. Preserve built-in sampler and transforms. Export all five views from one posterior; unavailable functions remain absent."
+      ],
+      "acceptance": [
+        "Source/frame/epoch/unit conventions are explicit per component.",
+        "Report identified combinations and null directions; no prior-only vorticity/global tilt measurement.",
+        "Cross-probe covariance or conditional-independence assumption explicitly tested/sensitized.",
+        "Posterior predictive adequacy by probe and leave-one-probe/selection sensitivity recorded; convergence diagnostics alone not acceptance."
+      ],
+      "return": [
+        "R52_RESULT.json",
+        "identified_combinations.npz",
+        "joint_posterior_summary.json",
+        "cobaya_config.yaml",
+        "chain_manifest.json",
+        "test_log.txt"
+      ]
+    },
+    {
+      "id": "R53",
+      "depends": [
+        "R52"
+      ],
+      "status": "pending",
+      "executor": "current_host_analysis_of_local_returns",
+      "goal": "Adversarial methods comparison and finite manuscript decision",
+      "tasks": [
+        "Compare same law/prior/selection/nuisance using raw carrier, optimal linear/score, signed tensor carrier, scalar signed projection, even amplitude/power-only ablations.",
+        "For parameter-dependent covariance use local score only with explicit domain; measure nonlinear posterior/model-loss on heldout alternatives.",
+        "Report logL/logBF error, estimand bias/coverage, worst-direction generalized Fisher retention, target-posterior discrepancy, runtime and failure cases.",
+        "Classify Bianchi observational equivalence sets; require physical constraint + source-derived transfer for family comparison, including multi-fluid tilt and exceptional VI_h=-1/9 branch.",
+        "Select methods+observational paper only if added scientific consequence survives empirical systematics; otherwise publish bounded diagnostic/negative result with unchanged uncertainty."
+      ],
+      "acceptance": [
+        "HTT must tie exact sufficient GLS/score where theorem predicts; no false gain claim.",
+        "New novelty claim includes nearest primary prior art and actual data comparison.",
+        "All six lane claims classified derived / checked / unresolved with precise remaining obligations.",
+        "No new audit-only successor loop; produce manuscript-ready tables/figures or a bounded no-publication decision."
+      ],
+      "return": [
+        "R53_BENCHMARK.json",
+        "FIGURES",
+        "MANUSCRIPT_CLAIM_TABLE.md",
+        "FINAL_DECISION.md"
+      ]
+    }
+  ],
+  "independent_theory_lanes": [
+    {
+      "id": "L1",
+      "topic": "low-ell morphology to observables",
+      "reuse": [
+        "R47/R48 L1 harmonic response",
+        "R36 radiation rank0/2/4 response"
+      ],
+      "next_derivation": "d=R_mask,beam[T(theta)+s]+noise; use one law with mean m(theta) and covariance C(theta). Derive tensor/alm chart and STF metric; identify unmodeled leakage.",
+      "observable": "Signed T/E/B a_lm, intrinsic quadrupole and response-sufficient tensors",
+      "closure": "Source-bound finite-dimensional transfer; cosmological shear requires a justified history operator",
+      "target_nodes": [
+        "R51",
+        "R53"
+      ]
+    },
+    {
+      "id": "L2",
+      "topic": "dipole anomaly",
+      "reuse": [
+        "HTT_FIVE_THEORY_LOOPS Loop B",
+        "R48 boost closure"
+      ],
+      "next_derivation": "Separate measured total dipole, removed release-map dipole, observer beta_MO, intrinsic radiation-matter dipole and survey count response. Derive same-estimator null, never rescale quadrupoles.",
+      "observable": "CMB dipole/aberration if owned, Quaia/NVSS/RACS count dipoles with selection nuisances",
+      "closure": "Intrinsic pattern and survey response nuisance explicit",
+      "target_nodes": [
+        "R51",
+        "R52",
+        "R53"
+      ]
+    },
+    {
+      "id": "L3",
+      "topic": "beyond-FLRW kinematic quantity measurement",
+      "reuse": [
+        "R36-03 PM history",
+        "R50 observed Gaia carrier"
+      ],
+      "next_derivation": "Use A_PM=2c(B_o-B_s)/D-dot B_o with STF5 basis; form combined radial/PM response and kernel. Distinguish photon direction kinematics from matter-congruence parameters.",
+      "observable": "Five PM endpoint-history combinations, acceleration/spin response with nuisance",
+      "closure": "Explicit depth/history and source-motion assumptions; omega degenerate with frame spin unless separately calibrated",
+      "target_nodes": [
+        "R52",
+        "R53"
+      ]
+    },
+    {
+      "id": "L4",
+      "topic": "anisotropy evaluation/classification including Bianchi",
+      "reuse": [
+        "R49 constraint state and convention bridge",
+        "R48 geometry methods",
+        "R50 exact zero-structure regression"
+      ],
+      "next_derivation": "Apply homogeneous-frame momentum/Jacobi/Hamiltonian constraints per type and fluid; classify equivalent observable laws and Ricci/shear invariants rather than family labels alone.",
+      "observable": "Model-conditioned morphology and invariants; equivalence set if indistinguishable",
+      "closure": "Type-dependent evolution/transfer source, tilt admissibility, exceptional strata specified",
+      "target_nodes": [
+        "R51",
+        "R53"
+      ]
+    },
+    {
+      "id": "L5",
+      "topic": "redshift/direction-dependent Hubble factor",
+      "reuse": [
+        "Heinesen cosmography",
+        "R36/R37 CF4 correlated operator",
+        "R48 H(z,n)"
+      ],
+      "next_derivation": "Use H_dir=Theta/3-a.e+sigma:ee for the stated photon e convention. Restore c via a=A/c. At finite z derive distance-jet/remainder and source selection, not pointwise H by substitution.",
+      "observable": "Redshift-window monopole/dipole/STF quadrupole of distance-redshift response",
+      "closure": "Vorticity has no linear symmetric nn contraction; higher-order/depth terms require separate response",
+      "target_nodes": [
+        "R52",
+        "R53"
+      ]
+    },
+    {
+      "id": "L6",
+      "topic": "local boost versus global tilt",
+      "reuse": [
+        "N/U/O/R frame separation",
+        "R43–46 identifiability and posterior-loss results"
+      ],
+      "next_derivation": "Build joint observer-local and radiation/matter-history response blocks in common triad, compute nuisance-projected rank and null space; compare exact boost transport and truncated alternatives.",
+      "observable": "Identified boost/relative-tilt combinations, cross-depth coherence under a common law",
+      "closure": "Do not equate recombination and local-epoch velocities without an evolution map",
+      "target_nodes": [
+        "R52",
+        "R53"
+      ]
+    }
+  ],
+  "mutation_contract": {
+    "read_first": [
+      "AGENTS.md",
+      "SCIENTIFIC_REPORT_KO.md",
+      "INDEPENDENT_R49_AUDIT.json",
+      "OBSERVED_GAIA_BENCHMARK.json"
+    ],
+    "allowed": [
+      "task-scoped code/test changes",
+      "derived compact data products",
+      "DAG and restart prompt updates",
+      "non-force branch push"
+    ],
+    "forbidden": [
+      "fabricated nulls/errors/hashes/occupancy/measurements",
+      "scalar x replacing signed state",
+      "arbitrary response constants promoted to physics",
+      "download as default",
+      "PR4 blocking dependency",
+      "automatic main merge",
+      "overwriting historical receipts",
+      "editing test tolerance to pass",
+      "claiming CAS/production PASS from metadata"
+    ],
+    "on_failure": "Classify theory/numerics/implementation/environment/input/permission; keep failing command and minimal diagnosis. Continue independent available lanes.",
+    "on_drift": "Inspect actual HEAD and dirty state before each mutation; preserve user edits; one writer; use exact relative paths; stop only dependent work on source/semantics mismatch.",
+    "stop_rule": "Finish one node per turn. Stop new exploration after R53 decision unless the owner requests it. When local raw data absent, return exact missing input and continue other lanes.",
+    "audit_output": [
+      "observed source identity",
+      "equation/operator mapping",
+      "changed file list",
+      "actual commands and exit codes",
+      "claims with evidence status",
+      "remaining unresolved tasks"
+    ]
+  }
+}

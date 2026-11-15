@@ -1,0 +1,59 @@
+{
+  "schema_version": "htt.r50.validation/1",
+  "source_base_commit": "36bd9030a0759c5563e273dd83836b40034dcda3",
+  "execution": "completed",
+  "scientific_status": "conditional_saved_observed_law_and_scoped_repairs",
+  "tests": {
+    "command": "PYTHONPATH=htt/src:htt:. python -m pytest tests/r50 htt/src/common/test_r50_optional_calibration.py tests/r42/test_five_variable_repair.py tests/r48/test_core03_repairs.py tests/r49/test_gbi01_convention_bridge.py tests/r49/test_gbi02_tilted_state_and_constraints.py tests/r49/test_gbi03_general_tilted_evolution.py tests/r49/test_gbi04_general_bianchi_transfer.py -q",
+    "exit_code": 0,
+    "passed": 52,
+    "elapsed_seconds": 14.08,
+    "warning": "AnyIO pytest plugin deprecation, not a scientific failure",
+    "stdout": "TEST_LOG.txt"
+  },
+  "observed_run": {
+    "command": "PYTHONPATH=htt/src:htt:. python scripts/r50/benchmark_owned_gaia_carrier.py",
+    "exit_code": 0,
+    "result": "OBSERVED_GAIA_BENCHMARK.json",
+    "raw_rows_read": false
+  },
+  "independent_review": {
+    "path": "INDEPENDENT_REPAIR_REVIEW.json",
+    "status": "pass_scoped",
+    "finding": "Missing-null call initially triggered legacy synthetic common fallback; found independently, removed and regression-tested.",
+    "independent_r50_tests": 11
+  },
+  "structure": {
+    "canonical_dag": "277 PR cards; DAG valid",
+    "mirrors": "synchronized"
+  },
+  "tools": {
+    "WolframContext": "internal error, no result used",
+    "WolframLanguageEvaluator": {
+      "status": "evaluated_with_global_symbol_warnings",
+      "result": "Fscalar=diag(668/191,0,0), rank1, blind-direction check True, full-information positive True, Gaussian +/-a logLR=2*a*y/s^2",
+      "scope": "finite algebra cross-check; not four-axis theorem certification"
+    }
+  },
+  "failures": [
+    {
+      "class": "environment",
+      "command": "initial benchmark import of legacy model",
+      "reason": "healpy unavailable",
+      "resolution": "Reuse existing verified R36 VSH/STF chart with explicit metric checks and independent Schur/QR computation; raw map model not executed."
+    }
+  ],
+  "not_run": [
+    "R49 raw-map/source catalogue ingestion and full chains on /mnt/extdrive",
+    "GBI05 healpy-dependent suite and GBI06 external raw-data tests",
+    "General finite-curvature transfer/source validation",
+    "Calibrated physical cosmological posterior",
+    "Full PR diff and all archived file deep-reading"
+  ],
+  "scope_limits": [
+    "No native general Bianchi solver admission",
+    "No full NPIPE lane",
+    "No independent calibrated velocity null",
+    "No novelty certification"
+  ]
+}

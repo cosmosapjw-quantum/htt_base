@@ -275,7 +275,11 @@
       "PR-R37-02-KINEMATICS",
       "PR-R37-03-HUBBLE",
       "PR-R37-04-CLASSIFICATION",
-      "PR-R37-05-FINAL-REPORT"
+      "PR-R37-05-FINAL-REPORT",
+      "PR-R50-OBSERVED-CONVERGENCE",
+      "PR-R51-OBSERVED-CONVERGENCE",
+      "PR-R52-OBSERVED-CONVERGENCE",
+      "PR-R53-OBSERVED-CONVERGENCE"
     ],
     "strict_extension_cards": [
       "PR-SOLVER-FREE-DOSSIER",
@@ -14541,6 +14545,129 @@
         ]
       },
       "qualified_product_expected": "converged_research_reports"
+    },
+    {
+      "id": "PR-R50-OBSERVED-CONVERGENCE",
+      "wave": 0,
+      "title": "Measured nuisance sensitivity and signed compression loss on retained actual Gaia carrier; repaired invalid null, anchor mismatch, exact degenerate geometry and false information-loss count.",
+      "owner": "HTT",
+      "depends": [],
+      "files": [
+        "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115",
+        "htt/htt/htt/infer",
+        "scripts/r50",
+        "tests/r50"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt:. python -m pytest tests/r50 -q"
+      ],
+      "dod": [
+        "Observed Gaia benchmark, scoped repairs, independent review and precise handoff"
+      ],
+      "notes": "Consumes R49 PR575 36bd9030 and inherited history without promoting historical PASS to physical validity. Node scope/details: docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/RESEARCH_DAG.json#R50",
+      "kill": "No fake nulls, arbitrary physical response, PR4 dependency, new downloads, scalar substitution, force push or main merge",
+      "level": "L0",
+      "scope": "science",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-11-15: GitHub-only multi-turn convergent research, actual owned-data analysis, scoped code repairs and non-force push."
+    },
+    {
+      "id": "PR-R51-OBSERVED-CONVERGENCE",
+      "wave": 0,
+      "title": "Source-derived response repair + PR3 observed low-ell likelihood",
+      "owner": "HTT",
+      "depends": [
+        "PR-R50-OBSERVED-CONVERGENCE"
+      ],
+      "files": [
+        "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115",
+        "htt/htt/htt/infer",
+        "scripts/r50",
+        "tests/r50"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt:. python -m pytest tests/r50 -q"
+      ],
+      "dod": [
+        "Forward response independent check against source equations and at least one reference/exact limit.",
+        "Full vs tensor logL differences <1e-8 on declared parameter domain when algebra predicts exactness.",
+        "Existing MC split used for covariance/heldout tests with disjoint IDs; coverage interval and multiple-test policy declared before inspection.",
+        "No arbitrary a_lm-to-beta null or hidden Gaussian fallback; report unavailable if same-estimator joint null not produced."
+      ],
+      "notes": "Consumes R49 PR575 36bd9030 and inherited history without promoting historical PASS to physical validity. Node scope/details: docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/RESEARCH_DAG.json#R51",
+      "kill": "No fake nulls, arbitrary physical response, PR4 dependency, new downloads, scalar substitution, force push or main merge",
+      "level": "L0",
+      "scope": "science",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-11-15: GitHub-only multi-turn convergent research, actual owned-data analysis, scoped code repairs and non-force push."
+    },
+    {
+      "id": "PR-R52-OBSERVED-CONVERGENCE",
+      "wave": 0,
+      "title": "Direction/redshift-dependent observables and boost/tilt partial identification",
+      "owner": "HTT",
+      "depends": [
+        "PR-R51-OBSERVED-CONVERGENCE"
+      ],
+      "files": [
+        "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115",
+        "htt/htt/htt/infer",
+        "scripts/r50",
+        "tests/r50"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt:. python -m pytest tests/r50 -q"
+      ],
+      "dod": [
+        "Source/frame/epoch/unit conventions are explicit per component.",
+        "Report identified combinations and null directions; no prior-only vorticity/global tilt measurement.",
+        "Cross-probe covariance or conditional-independence assumption explicitly tested/sensitized.",
+        "Posterior predictive adequacy by probe and leave-one-probe/selection sensitivity recorded; convergence diagnostics alone not acceptance."
+      ],
+      "notes": "Consumes R49 PR575 36bd9030 and inherited history without promoting historical PASS to physical validity. Node scope/details: docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/RESEARCH_DAG.json#R52",
+      "kill": "No fake nulls, arbitrary physical response, PR4 dependency, new downloads, scalar substitution, force push or main merge",
+      "level": "L0",
+      "scope": "science",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-11-15: GitHub-only multi-turn convergent research, actual owned-data analysis, scoped code repairs and non-force push."
+    },
+    {
+      "id": "PR-R53-OBSERVED-CONVERGENCE",
+      "wave": 0,
+      "title": "Adversarial methods comparison and finite manuscript decision",
+      "owner": "HTT",
+      "depends": [
+        "PR-R52-OBSERVED-CONVERGENCE"
+      ],
+      "files": [
+        "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115",
+        "htt/htt/htt/infer",
+        "scripts/r50",
+        "tests/r50"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt:. python -m pytest tests/r50 -q"
+      ],
+      "dod": [
+        "HTT must tie exact sufficient GLS/score where theorem predicts; no false gain claim.",
+        "New novelty claim includes nearest primary prior art and actual data comparison.",
+        "All six lane claims classified derived / checked / unresolved with precise remaining obligations.",
+        "No new audit-only successor loop; produce manuscript-ready tables/figures or a bounded no-publication decision."
+      ],
+      "notes": "Consumes R49 PR575 36bd9030 and inherited history without promoting historical PASS to physical validity. Node scope/details: docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/RESEARCH_DAG.json#R53",
+      "kill": "No fake nulls, arbitrary physical response, PR4 dependency, new downloads, scalar substitution, force push or main merge",
+      "level": "L0",
+      "scope": "science",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-11-15: GitHub-only multi-turn convergent research, actual owned-data analysis, scoped code repairs and non-force push."
     }
   ]
 }

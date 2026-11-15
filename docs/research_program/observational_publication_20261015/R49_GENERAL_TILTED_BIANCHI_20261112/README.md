@@ -2,10 +2,21 @@
 
 Date: 2026-11-12 (Asia/Seoul)  
 Repository: cosmosapjw-quantum/htt_base  
-Status: design and source audit posted; local implementation and observed-data sampling not run  
+Status: historical design text below; current 2026-11-15 assessment is R50 (see note)
 Claim ceiling: C0 / conditional design
 
 This R49 continuation extends the R48 six-loop observational programme from a Bianchi-I-centred physical transfer path to a general tilted-Bianchi programme. It is a successor package; R48 artefacts remain immutable historical inputs.
+
+## Current assessment (2026-11-15)
+
+Commit 36bd9030 added GBI00–08 code and observed execution receipts, including
+the PR574 repairs. The original text below describes the earlier design state.
+R50 identified and repaired invalid beta-null construction, the exact abelian
+family-label defect, a dimension-count information-loss claim and an unavailable
+shear-anchor fallback. Physical 24D posterior interpretation remains under major
+revision: see [R50 report](../R50_OBSERVED_CONVERGENCE_20261115/SCIENTIFIC_REPORT_KO.md)
+and [next DAG](../R50_OBSERVED_CONVERGENCE_20261115/RESEARCH_DAG.json).
+Historical receipts are retained, not retroactively rewritten.
 
 ## Read in this order
 

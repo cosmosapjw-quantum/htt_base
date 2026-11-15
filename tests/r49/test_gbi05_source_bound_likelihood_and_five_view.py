@@ -401,7 +401,7 @@ def test_acceptance_11_and_12_five_view_single_posterior_and_xc_ablation() -> No
 
     views = compute_r49_htt_five_views_from_posterior(
         draws,
-        matched_null_samples_beta=null_samples,
+        matched_null_samples_beta=None,
         null_law_name="MATCHED_NULL_FFP10_PR3",
         shell_redshift_bins=shell_bins,
         shell_data_vectors=shell_vecs,
@@ -421,7 +421,8 @@ def test_acceptance_11_and_12_five_view_single_posterior_and_xc_ablation() -> No
     assert ablation["scalar_xc_dof"] == 1
     assert ablation["full_tensor_dof"] == 14
     assert ablation["full_covariance_rank"] == 14
-    assert ablation["information_loss_ratio_dof"] == pytest.approx(13.0 / 14.0, rel=1e-9)
+    assert ablation["information_loss_ratio_dof"] is None
+    assert ablation["coordinate_reduction_fraction"] == pytest.approx(13.0 / 14.0)
 
     receipt = {
         "schema_version": "r49_gbi05_likelihood_and_five_view_v1",
