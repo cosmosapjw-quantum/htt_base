@@ -1,0 +1,562 @@
+{
+  "schema_version": "r49_convention_bridge_receipt_v1",
+  "proper_rotation_pc_to_ver2": [
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      -1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "verification": {
+    "all_passed": true,
+    "families_tested": [
+      "FLRW",
+      "I",
+      "II",
+      "III",
+      "IV",
+      "V",
+      "VI_0",
+      "VI_h",
+      "VII_0",
+      "VII_h",
+      "VIII",
+      "IX",
+      "VI_minus_1_equals_III",
+      "VI_minus_1_over_9"
+    ],
+    "equivalence_classes": {
+      "FLAT_K0_FLRW_LIMIT": {
+        "equivalence_id": "FLAT_K0_FLRW_LIMIT",
+        "member_families": [
+          "FLRW",
+          "I",
+          "VII_0"
+        ],
+        "spatial_curvature_sign": "flat_k0",
+        "has_flrw_limit": true
+      },
+      "OPEN_KNEG_FLRW_LIMIT": {
+        "equivalence_id": "OPEN_KNEG_FLRW_LIMIT",
+        "member_families": [
+          "V",
+          "VII_h"
+        ],
+        "spatial_curvature_sign": "negative_k",
+        "has_flrw_limit": true
+      },
+      "CLOSED_KPOS_FLRW_LIMIT": {
+        "equivalence_id": "CLOSED_KPOS_FLRW_LIMIT",
+        "member_families": [
+          "IX"
+        ],
+        "spatial_curvature_sign": "positive_k",
+        "has_flrw_limit": true
+      },
+      "TYPE_III_VI_MINUS_ONE": {
+        "equivalence_id": "TYPE_III_VI_MINUS_ONE",
+        "member_families": [
+          "III",
+          "VI_h(h=-1)"
+        ],
+        "spatial_curvature_sign": "anisotropic_marginal",
+        "has_flrw_limit": false
+      },
+      "MARGINAL_CLASS_A_II": {
+        "equivalence_id": "MARGINAL_CLASS_A_II",
+        "member_families": [
+          "II"
+        ],
+        "spatial_curvature_sign": "anisotropic_marginal",
+        "has_flrw_limit": false
+      },
+      "MARGINAL_CLASS_A_VI0": {
+        "equivalence_id": "MARGINAL_CLASS_A_VI0",
+        "member_families": [
+          "VI_0"
+        ],
+        "spatial_curvature_sign": "anisotropic_marginal",
+        "has_flrw_limit": false
+      },
+      "MARGINAL_CLASS_A_VIII": {
+        "equivalence_id": "MARGINAL_CLASS_A_VIII",
+        "member_families": [
+          "VIII"
+        ],
+        "spatial_curvature_sign": "anisotropic_marginal",
+        "has_flrw_limit": false
+      },
+      "MARGINAL_CLASS_B_IV": {
+        "equivalence_id": "MARGINAL_CLASS_B_IV",
+        "member_families": [
+          "IV"
+        ],
+        "spatial_curvature_sign": "anisotropic_marginal",
+        "has_flrw_limit": false
+      },
+      "MARGINAL_CLASS_B_VIH": {
+        "equivalence_id": "MARGINAL_CLASS_B_VIH",
+        "member_families": [
+          "VI_h"
+        ],
+        "spatial_curvature_sign": "anisotropic_marginal",
+        "has_flrw_limit": false
+      }
+    },
+    "reports": {
+      "FLRW": {
+        "family": "FLRW",
+        "class_label": "A",
+        "has_flrw_limit": true,
+        "equivalence_id": "FLAT_K0_FLRW_LIMIT",
+        "a_ver2_proper": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "h_parameter": null,
+        "special_locus": null,
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 0.0,
+        "dual_route_ricci_error_random_so3": 0.0,
+        "dual_route_ricci_error_improper_o3": 0.0,
+        "momentum_divergence_identity_error": 0.0,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "I": {
+        "family": "I",
+        "class_label": "A",
+        "has_flrw_limit": true,
+        "equivalence_id": "FLAT_K0_FLRW_LIMIT",
+        "a_ver2_proper": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "h_parameter": null,
+        "special_locus": null,
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 0.0,
+        "dual_route_ricci_error_random_so3": 0.0,
+        "dual_route_ricci_error_improper_o3": 0.0,
+        "momentum_divergence_identity_error": 0.0,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "II": {
+        "family": "II",
+        "class_label": "A",
+        "has_flrw_limit": false,
+        "equivalence_id": "MARGINAL_CLASS_A_II",
+        "a_ver2_proper": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.0,
+          0.01,
+          0.0
+        ],
+        "h_parameter": null,
+        "special_locus": null,
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 6.776263578034403e-21,
+        "dual_route_ricci_error_random_so3": 2.0328790734103208e-20,
+        "dual_route_ricci_error_improper_o3": 2.0328790734103208e-20,
+        "momentum_divergence_identity_error": 1.734723475976807e-18,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "III": {
+        "family": "III",
+        "class_label": "B",
+        "has_flrw_limit": false,
+        "equivalence_id": "TYPE_III_VI_MINUS_ONE",
+        "a_ver2_proper": [
+          0.01,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.0,
+          0.01,
+          -0.01
+        ],
+        "h_parameter": -1.0,
+        "special_locus": "h_equals_minus_1_Type_III_equivalent",
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 0.0,
+        "dual_route_ricci_error_random_so3": 5.421010862427522e-20,
+        "dual_route_ricci_error_improper_o3": 5.421010862427522e-20,
+        "momentum_divergence_identity_error": 5.204170427930421e-18,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "IV": {
+        "family": "IV",
+        "class_label": "B",
+        "has_flrw_limit": false,
+        "equivalence_id": "MARGINAL_CLASS_B_IV",
+        "a_ver2_proper": [
+          0.01,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.0,
+          0.0,
+          0.01
+        ],
+        "h_parameter": null,
+        "special_locus": "h_denominator_zero_Type_IV_or_V",
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 0.0,
+        "dual_route_ricci_error_random_so3": 5.421010862427522e-20,
+        "dual_route_ricci_error_improper_o3": 5.421010862427522e-20,
+        "momentum_divergence_identity_error": 5.204170427930421e-18,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "V": {
+        "family": "V",
+        "class_label": "B",
+        "has_flrw_limit": true,
+        "equivalence_id": "OPEN_KNEG_FLRW_LIMIT",
+        "a_ver2_proper": [
+          0.01,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "h_parameter": null,
+        "special_locus": "h_denominator_zero_Type_IV_or_V",
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 0.0,
+        "dual_route_ricci_error_random_so3": 0.0,
+        "dual_route_ricci_error_improper_o3": 0.0,
+        "momentum_divergence_identity_error": 3.469446951953614e-18,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "VI_0": {
+        "family": "VI_0",
+        "class_label": "A",
+        "has_flrw_limit": false,
+        "equivalence_id": "MARGINAL_CLASS_A_VI0",
+        "a_ver2_proper": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.0,
+          0.01,
+          -0.01
+        ],
+        "h_parameter": null,
+        "special_locus": null,
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 0.0,
+        "dual_route_ricci_error_random_so3": 2.710505431213761e-20,
+        "dual_route_ricci_error_improper_o3": 2.710505431213761e-20,
+        "momentum_divergence_identity_error": 3.469446951953614e-18,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "VI_h": {
+        "family": "VI_h",
+        "class_label": "B",
+        "has_flrw_limit": false,
+        "equivalence_id": "MARGINAL_CLASS_B_VIH",
+        "a_ver2_proper": [
+          0.005,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.0,
+          0.01,
+          -0.002
+        ],
+        "h_parameter": -1.2499999999999998,
+        "special_locus": null,
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 6.776263578034403e-21,
+        "dual_route_ricci_error_random_so3": 1.3552527156068805e-20,
+        "dual_route_ricci_error_improper_o3": 1.3552527156068805e-20,
+        "momentum_divergence_identity_error": 8.673617379884035e-19,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "VII_0": {
+        "family": "VII_0",
+        "class_label": "A",
+        "has_flrw_limit": true,
+        "equivalence_id": "FLAT_K0_FLRW_LIMIT",
+        "a_ver2_proper": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.0,
+          0.01,
+          0.01
+        ],
+        "h_parameter": null,
+        "special_locus": null,
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 0.0,
+        "dual_route_ricci_error_random_so3": 5.003780961455775e-20,
+        "dual_route_ricci_error_improper_o3": 5.003780961455775e-20,
+        "momentum_divergence_identity_error": 2.6020852139652106e-18,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "VII_h": {
+        "family": "VII_h",
+        "class_label": "B",
+        "has_flrw_limit": true,
+        "equivalence_id": "OPEN_KNEG_FLRW_LIMIT",
+        "a_ver2_proper": [
+          0.0055,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.0,
+          0.018,
+          0.01
+        ],
+        "h_parameter": 0.16805555555555557,
+        "special_locus": null,
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 4.0657581468206416e-20,
+        "dual_route_ricci_error_random_so3": 1.2197274440461925e-19,
+        "dual_route_ricci_error_improper_o3": 1.2197274440461925e-19,
+        "momentum_divergence_identity_error": 8.673617379884035e-19,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "VIII": {
+        "family": "VIII",
+        "class_label": "A",
+        "has_flrw_limit": false,
+        "equivalence_id": "MARGINAL_CLASS_A_VIII",
+        "a_ver2_proper": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.01,
+          -0.01,
+          0.01
+        ],
+        "h_parameter": null,
+        "special_locus": null,
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 4.0657581468206416e-20,
+        "dual_route_ricci_error_random_so3": 4.0657581468206416e-20,
+        "dual_route_ricci_error_improper_o3": 4.0657581468206416e-20,
+        "momentum_divergence_identity_error": 8.673617379884035e-19,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "IX": {
+        "family": "IX",
+        "class_label": "A",
+        "has_flrw_limit": true,
+        "equivalence_id": "CLOSED_KPOS_FLRW_LIMIT",
+        "a_ver2_proper": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.01,
+          0.01,
+          0.01
+        ],
+        "h_parameter": null,
+        "special_locus": null,
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 6.776263578034403e-21,
+        "dual_route_ricci_error_random_so3": 4.0657581468206416e-20,
+        "dual_route_ricci_error_improper_o3": 4.0657581468206416e-20,
+        "momentum_divergence_identity_error": 7.164533809558053e-19,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "VI_minus_1_equals_III": {
+        "family": "VI_h",
+        "class_label": "B",
+        "has_flrw_limit": false,
+        "equivalence_id": "MARGINAL_CLASS_B_VIH",
+        "a_ver2_proper": [
+          0.005,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.0,
+          0.01,
+          -0.0025
+        ],
+        "h_parameter": -0.9999999999999999,
+        "special_locus": "h_equals_minus_1_Type_III_equivalent",
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 2.710505431213761e-20,
+        "dual_route_ricci_error_random_so3": 2.710505431213761e-20,
+        "dual_route_ricci_error_improper_o3": 2.710505431213761e-20,
+        "momentum_divergence_identity_error": 2.6020852139652106e-18,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      },
+      "VI_minus_1_over_9": {
+        "family": "VI_h",
+        "class_label": "B",
+        "has_flrw_limit": false,
+        "equivalence_id": "MARGINAL_CLASS_B_VIH",
+        "a_ver2_proper": [
+          0.005,
+          0.0,
+          0.0
+        ],
+        "n_diag_ver2_proper": [
+          0.0,
+          0.01,
+          -0.022500000000000003
+        ],
+        "h_parameter": -0.11111111111111109,
+        "special_locus": "h_equals_minus_one_ninth_exceptional_VI_h",
+        "jacobi_residual": 0.0,
+        "dual_route_ricci_error_ver2": 5.421010862427522e-20,
+        "dual_route_ricci_error_random_so3": 1.4230153513872246e-19,
+        "dual_route_ricci_error_improper_o3": 1.4230153513872246e-19,
+        "momentum_divergence_identity_error": 6.938893903907228e-18,
+        "lie_bracket_roundtrip_error": 0.0,
+        "pc_vs_ver2_proper_ricci_diff_after_rotation": 0.0,
+        "passed": true
+      }
+    }
+  },
+  "legacy_geometry_compact_bug_comparison": {
+    "I": {
+      "class_label": "A",
+      "legacy_compact_vs_connection_max_abs": 0.0,
+      "r49_exact_compact_vs_connection_max_abs": 0.0,
+      "r49_exact_ricci_scalar": 0.0,
+      "legacy_omitted_class_b_axn_offdiag": false
+    },
+    "II": {
+      "class_label": "A",
+      "legacy_compact_vs_connection_max_abs": 6.776263578034403e-21,
+      "r49_exact_compact_vs_connection_max_abs": 6.776263578034403e-21,
+      "r49_exact_ricci_scalar": -5e-05,
+      "legacy_omitted_class_b_axn_offdiag": false
+    },
+    "III": {
+      "class_label": "B",
+      "legacy_compact_vs_connection_max_abs": 0.0002,
+      "r49_exact_compact_vs_connection_max_abs": 0.0,
+      "r49_exact_ricci_scalar": -0.0008,
+      "legacy_omitted_class_b_axn_offdiag": true
+    },
+    "IV": {
+      "class_label": "B",
+      "legacy_compact_vs_connection_max_abs": 0.0001,
+      "r49_exact_compact_vs_connection_max_abs": 0.0,
+      "r49_exact_ricci_scalar": -0.00065,
+      "legacy_omitted_class_b_axn_offdiag": true
+    },
+    "V": {
+      "class_label": "B",
+      "legacy_compact_vs_connection_max_abs": 0.0,
+      "r49_exact_compact_vs_connection_max_abs": 0.0,
+      "r49_exact_ricci_scalar": -0.0006000000000000001,
+      "legacy_omitted_class_b_axn_offdiag": false
+    },
+    "VI_0": {
+      "class_label": "A",
+      "legacy_compact_vs_connection_max_abs": 0.0,
+      "r49_exact_compact_vs_connection_max_abs": 0.0,
+      "r49_exact_ricci_scalar": -0.0002,
+      "legacy_omitted_class_b_axn_offdiag": false
+    },
+    "VI_h": {
+      "class_label": "B",
+      "legacy_compact_vs_connection_max_abs": 6e-05,
+      "r49_exact_compact_vs_connection_max_abs": 6.776263578034403e-21,
+      "r49_exact_ricci_scalar": -0.00022200000000000003,
+      "legacy_omitted_class_b_axn_offdiag": true
+    },
+    "VII_0": {
+      "class_label": "A",
+      "legacy_compact_vs_connection_max_abs": 0.0,
+      "r49_exact_compact_vs_connection_max_abs": 0.0,
+      "r49_exact_ricci_scalar": 0.0,
+      "legacy_omitted_class_b_axn_offdiag": false
+    },
+    "VII_h": {
+      "class_label": "B",
+      "legacy_compact_vs_connection_max_abs": 4.3999999999999985e-05,
+      "r49_exact_compact_vs_connection_max_abs": 4.0657581468206416e-20,
+      "r49_exact_ricci_scalar": -0.0002135,
+      "legacy_omitted_class_b_axn_offdiag": true
+    },
+    "VIII": {
+      "class_label": "A",
+      "legacy_compact_vs_connection_max_abs": 2.0328790734103208e-20,
+      "r49_exact_compact_vs_connection_max_abs": 4.0657581468206416e-20,
+      "r49_exact_ricci_scalar": -0.00025,
+      "legacy_omitted_class_b_axn_offdiag": false
+    },
+    "IX": {
+      "class_label": "A",
+      "legacy_compact_vs_connection_max_abs": 0.0,
+      "r49_exact_compact_vs_connection_max_abs": 6.776263578034403e-21,
+      "r49_exact_ricci_scalar": 0.00015,
+      "legacy_omitted_class_b_axn_offdiag": false
+    }
+  }
+}

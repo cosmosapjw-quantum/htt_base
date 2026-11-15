@@ -1,0 +1,28 @@
+{
+  "task_id": "TASK-0",
+  "title": "Dedicated R49 worktree creation and PR #574 integration",
+  "status": "PASS",
+  "repository": "cosmosapjw-quantum/htt_base",
+  "branch": "research/r49-general-tilted-bianchi-20261112",
+  "worktree_path": "/home/cosmosapjw/htt_worktrees/r49-general-tilted-bianchi",
+  "primary_checkout": {
+    "path": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "branch": "research/r42-fivevar-competitive-benchmark-20261108",
+    "head_commit": "b8c2d851b4db59d43cf5c0044c42a041b97c44c6",
+    "status": "clean_and_untouched"
+  },
+  "git_integration": {
+    "r49_base_commit": "2a4c441f8d0947a599e3bf2ee78adf3cfa3d9a22",
+    "pr574_head_commit": "8a6ae269751a8a6878eaf9e1192c28fe1c067523",
+    "merged_commit": "448a9c9e36be3ed67330b7a02aebb78337bb6bb1",
+    "merged_tree": "4eb63680da69f91e130f911b63e23dfd1be80b97",
+    "merge_conflicts": 0,
+    "diff_stat_summary": "16 files changed, 839 insertions(+), 110 deletions(-)",
+    "auto_merged_to_main": false
+  },
+  "verification": {
+    "command": "PYTHONPATH=/home/cosmosapjw/htt_worktrees/r49-general-tilted-bianchi:/home/cosmosapjw/htt_worktrees/r49-general-tilted-bianchi/htt/src:/home/cosmosapjw/htt_worktrees/r49-general-tilted-bianchi/htt/htt pytest /home/cosmosapjw/htt_worktrees/r49-general-tilted-bianchi/tests/r48/test_core03_repairs.py /home/cosmosapjw/htt_worktrees/r49-general-tilted-bianchi/tests/r48/test_mio_certificate_stf5_gram_norm.py -q",
+    "exit_code": 0,
+    "result": "23 passed in 14.98s"
+  }
+}
