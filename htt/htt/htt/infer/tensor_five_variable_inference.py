@@ -92,6 +92,17 @@ from htt.htt.infer.tensor_joint_multiprobe_likelihood import (
 )
 from mio.interface.mio_certificate import build_mio_certificate, certificate_to_payload
 
+from common.relativistic_velocity_closure import compose_velocities_sr  # noqa: E402
+
+
+def stf5_gram_unit_direction(v5: np.ndarray) -> np.ndarray:
+    """Direction of a Cartesian-STF5 vector normalised to unit Frobenius norm (v^T G_STF5 v = 1)."""
+    v = np.asarray(v5, dtype=np.float64)
+    n2 = float(v @ G_STF5 @ v)
+    if not np.isfinite(n2) or n2 <= 0.0:
+        raise ValueError("STF5 direction undefined for a zero or non-finite vector")
+    return v / np.sqrt(n2)
+
 
 @dataclass(frozen=True)
 class MCMCConfig:
@@ -260,8 +271,14 @@ class TensorFiveVariableEngine:
         self,
         mcmc_samples: np.ndarray,
         post_mean: np.ndarray,
+        expansion_scalar: float = 0.21,
+        delta_omega_k: float = 0.005,
     ) -> HTTFiveVariableState:
-        """Derive full Five-Variable state (x, Q, Pi, F, G_F) from posterior samples."""
+        """Derive full Five-Variable state (x, Q, Pi, F, G_F) from posterior samples.
+
+        expansion_scalar and delta_omega_k are DECLARED inputs (defaults retained from the earlier code, not derived
+        from data or a source); callers must record them as such.
+        """
         frame = "CMB_CONGRUENCE_FRAME"
         congruence = "CMB_REST_FRAME"
         epoch = "Z_RECOMBINATION"
@@ -287,7 +304,7 @@ class TensorFiveVariableEngine:
 
         b_rm = tuple(float(x) for x in post_mean[11:14])
         b_mo = tuple(float(x) for x in post_mean[14:17])
-        b_ro = tuple(b_rm[i] + b_mo[i] for i in range(3))
+        b_ro = tuple(float(x) for x in compose_velocities_sr(b_rm, b_mo))   # exact ordered SR composition (not a linear sum)
 
         velocities = build_velocity_frame_bundle(
             beta_RO=b_ro,
@@ -305,7 +322,7 @@ class TensorFiveVariableEngine:
         )
 
         geometry = GeometryState(
-            delta_omega_k=0.005,
+            delta_omega_k=delta_omega_k,
             frame=frame,
             congruence_id=congruence,
             epoch_window=epoch,
@@ -337,7 +354,7 @@ class TensorFiveVariableEngine:
         bundle_x = build_full_observable_x_bundle(
             joint_state,
             model_post,
-            expansion_scalar=0.21,
+            expansion_scalar=expansion_scalar,
             observed_carriers_dict={
                 "PLANCK_LOWELL": self.lik.data_vector[self.lik.probe_slices["CMB"]],
                 "QUAIA_QUASAR_DIPOLE": self.lik.data_vector[self.lik.probe_slices["Quasars"]],
@@ -520,17 +537,24 @@ class TensorFiveVariableEngine:
             # Bayes factor bounds relative to H_loc
             h["ln_Bayes_factor_vs_Hloc"] = float(-0.5 * (h["BIC"] - bic_Hloc))
 
+        best = min(hypotheses, key=lambda h: h["BIC"])
+        ordered = sorted(hypotheses, key=lambda h: h["BIC"])
+        interp = (
+            f"Computed from this table (n_data={self.n_data}): lowest BIC = {best['hypothesis_id']}. "
+            + "; ".join(f"{h['hypothesis_id']}: k={h['k']}, chi2={h['chi2']:.2f}, Delta_BIC={h['Delta_BIC']:.1f}" for h in ordered)
+            + ". The parameter points are fixed inputs (not re-fitted here); the table is a likelihood comparison at those points, "
+            "not an estimate of any departure amplitude and not a claim about geometry."
+        )
         return {
             "schema": "htt.hypothesis_competition_r40/1",
             "n_data": self.n_data,
             "hypotheses": hypotheses,
-            "best_model_by_bic": "H_loc",
-            "interpretation": (
-                "H_loc (Pure Local Boost) is decisively favored over H_0 by Delta_BIC = -602.8, "
-                "demonstrating a decisive 100% empirical detection of observer peculiar motion. "
-                "H_tilt and H_mix incur complexity penalties (Delta_BIC > 0 relative to H_loc) "
-                "confirming that current data bound cosmic frame tilt and shear without identifying geometry."
-            ),
+            "best_model_by_bic": best["hypothesis_id"],
+            "fixed_hypothesis_points": {
+                "status": "FIXED_POINTS_NOT_REFIT",
+                "note": "H_loc/H_tilt/H_mix parameter vectors are hard-coded inputs carried from earlier runs; re-fitting requires the unblinded production-inference gate (CORE-07).",
+            },
+            "interpretation": interp,
         }
 
     def compute_fisher_information_gain(self) -> Dict[str, Any]:
@@ -566,7 +590,7 @@ class TensorFiveVariableEngine:
         # Scalar x_C ablation:
         # Collapses 5 STF shear degrees of freedom into 1 scalar quadrupole invariant
         J_scalar = J_tensor.copy()
-        shear_direction = th_fid[:5] / np.linalg.norm(th_fid[:5])
+        shear_direction = stf5_gram_unit_direction(th_fid[:5])
         J_scalar[:, 0] = J_tensor[:, :5] @ shear_direction
         J_scalar[:, 1:5] = 0.0  # Zero out 4 orthogonal shear orientations
 
@@ -620,17 +644,25 @@ class TensorFiveVariableEngine:
         mcmc_result: MCMCResult,
         loocv_dict: Dict[str, Any],
         comp_dict: Dict[str, Any],
+        input_hashes: Optional[Dict[str, str]] = None,
     ) -> Dict[str, Any]:
-        """Generate family-independent MIO diagnostic certificate strictly meeting G19 firewall."""
+        """Generate family-independent MIO diagnostic certificate strictly meeting G19 firewall.
+
+        ``input_hashes`` maps a data-channel name to the 64-hex SHA-256 of the exact input bytes. Channels without a
+        supplied hash are recorded as ``<name>:UNVERIFIED_NO_HASH_SUPPLIED``; no hash is ever asserted without bytes.
+        """
+        import re
         # Extract model-independent diagnostic quantities (NO POSTERIOR KEYWORDS)
         b_mo_norm = float(np.linalg.norm(mcmc_result.mean[14:17]))
         b_rm_norm = float(np.linalg.norm(mcmc_result.mean[11:14]))
-        sigma_frobenius = float(np.linalg.norm(mcmc_result.mean[0:5]))
+        # STF5 Cartesian chart (Sxx,Syy,Sxy,Sxz,Syz): Frobenius norm needs the Gram metric, not the component norm.
+        sigma5 = np.asarray(mcmc_result.mean[0:5], dtype=np.float64)
+        sigma_frobenius = float(np.sqrt(sigma5 @ G_STF5 @ sigma5))
         vorticity_norm = float(np.linalg.norm(mcmc_result.mean[5:8]))
 
         # Maximum directional occupancy ratio
         sup_F = five_var_state.support_profiles_F["BETA_MO"]
-        max_occupancy = float(np.max(sup_F.occupancy_ratios)) if sup_F.occupancy_ratios is not None else 0.53
+        max_occupancy = float(np.max(sup_F.occupancy_ratios)) if sup_F.occupancy_ratios is not None else None
 
         # Exceedance observed under diagnostic null
         exceed_null = five_var_state.exceedance_surfaces_Pi["BETA_MO_MIO_NULL"]
@@ -649,6 +681,9 @@ class TensorFiveVariableEngine:
             "depth_path_cross_shell_covariance_trace": gf_trace,
             "undefined_parameter_mass": float(exceed_null.undefined_mass),
         }
+        occupancy_unavailable = max_occupancy is None
+        if occupancy_unavailable:
+            del departure_vars["directional_occupancy_ratio_max"]      # never invent a number for a missing quantity
 
         # Adequacy indicators
         adequacy: Dict[str, bool] = {
@@ -675,6 +710,8 @@ class TensorFiveVariableEngine:
             "peculiar_velocity_budget_ceiling_beta_le_0p01",
             "no_bianchi_family_identification_or_geometry_detection_claimed",
         ]
+        if occupancy_unavailable:
+            domain_caveats.append("directional_occupancy_unavailable")
 
         channel_caveats = [
             "planck_pr4_commander_low_ell_tt_te_ee",
@@ -685,14 +722,21 @@ class TensorFiveVariableEngine:
             "desi_dr2_bao_background",
         ]
 
-        input_hashes = [
-            "planck_pr4_commander_sha256_verified",
-            "quaia_g20_fits_sha256_verified",
-            "nvss_radio_dipole_sha256_verified",
-            "gaia_crf3_vsh_sha256_verified",
-            "pantheon_plus_490_cache_verified",
-            "desi_bao_compact_verified",
+        channel_names = [
+            "planck_pr4_commander",
+            "quaia_g20_fits",
+            "nvss_radio_dipole",
+            "gaia_crf3_vsh",
+            "pantheon_plus_490_cache",
+            "desi_bao_compact",
         ]
+        supplied = dict(input_hashes or {})
+        for name, digest in supplied.items():
+            if not re.fullmatch(r"[0-9a-f]{64}", str(digest)):
+                raise ValueError(f"input hash for {name!r} is not a 64-hex SHA-256 digest")
+        hash_entries = [f"{n}:sha256:{supplied[n]}" if n in supplied else f"{n}:UNVERIFIED_NO_HASH_SUPPLIED"
+                        for n in channel_names]
+        hash_entries += [f"{n}:sha256:{d}" for n, d in supplied.items() if n not in channel_names]
 
         cert = build_mio_certificate(
             report_type="five_variable_joint_diagnostic",
@@ -705,7 +749,7 @@ class TensorFiveVariableEngine:
             channel_caveats=channel_caveats,
             reduction_status="diagnostic-only",
             generated_by="htt.infer.tensor_five_variable_inference v1.0.0",
-            input_data_hashes=input_hashes,
+            input_data_hashes=hash_entries,
         )
 
         return certificate_to_payload(cert)

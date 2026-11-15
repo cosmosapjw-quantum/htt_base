@@ -145,15 +145,16 @@ class KinematicResponseModel:
         stf_shear: Sequence[float] | None = None,
         e1_polar: Sequence[float] | None = None,
         b1_axial: Sequence[float] | None = None,
-        exact_composition: bool = False,
+        exact_composition: bool = True,
         shear_chart: str = "orthonormal",
     ) -> "KinematicResponseModel":
         """Factory with declared frame-velocity closure.
 
-        When exact_composition is False (default), sets beta_MO = beta_RO - beta_RM
-        at first order and records closure_type="FIRST_ORDER_SUBTRACTION".
-        When exact_composition is True, computes relativistic composition via
+        When exact_composition is True (default), computes relativistic composition via
         compose_velocities and records closure_type="EXACT_LORENTZ_BOOST".
+        When exact_composition is False, sets beta_MO = beta_RO - beta_RM
+        at first order and records closure_type="FIRST_ORDER_SUBTRACTION"
+        (opt-in only; residual is O(beta^2)).
         """
         bro = np.asarray(beta_RO, dtype=np.float64)
         if bro.shape != (3,):
