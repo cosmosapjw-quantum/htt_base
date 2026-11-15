@@ -128,8 +128,12 @@ def test_construct_htt_five_variable_state():
 
     # 2. Anchors Q
     assert "shear_sigma" in state.anchors_Q
-    assert state.anchors_Q["shear_sigma"].status == "ADMITTED"
-    assert state.anchors_Q["vorticity_omega"].status == "ADMITTED"
+    # No theorem/source supports a per-component numerical bound: the Hamiltonian constraint bounds only
+    # Sigma^2 - W^2 (see tests/r48 and the Lean proof receipt); hard-coded 1e-4 anchors were removed.
+    for key in ("shear_sigma", "vorticity_omega"):
+        a = state.anchors_Q[key]
+        assert a.status == "UNAVAILABLE" and a.norm_bound is None and a.gauge_margin is None
+        assert "Sigma^2 - W^2" in a.notes
     assert state.anchors_Q["acceleration_A"].status == "UNAVAILABLE"
     assert state.anchors_Q["relative_velocity_beta"].status == "UNAVAILABLE"
 

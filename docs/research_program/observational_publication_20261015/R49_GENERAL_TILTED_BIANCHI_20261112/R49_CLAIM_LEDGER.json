@@ -1,0 +1,157 @@
+{
+  "schema": "htt.r49.claim_ledger/1",
+  "as_of": "2026-11-15",
+  "overall_claim_ceiling": "TRANSFER_CONDITIONAL_OBSERVATIONAL_FRAMEWORK_EQUIVALENCE_SET_ONLY",
+  "family_level_discrimination_claimed": false,
+  "claims": [
+    {
+      "id": "R49-C01",
+      "claim": "Repository has an all-eleven-type Bianchi algebra registry with Class-A/Class-B metadata and a verified canonical (a,n,C) convention bridge.",
+      "status": "LOCAL_VERIFIED",
+      "evidence": [
+        "htt/bass/background/bianchi_types.py",
+        "htt/bass/background/convention_bridge.py",
+        "BIANCHI_CONVENTION_BRIDGE.json",
+        "tests/r49/test_gbi01_convention_bridge.py"
+      ],
+      "limit": "Convention bridge establishes algebra, Jacobi, h=-1 boundary, and h=-1/9 exceptional stratum consistency across all 11 types + FLRW."
+    },
+    {
+      "id": "R49-C02",
+      "claim": "Legacy BianchiCosmology scalar-beta paths are isolated while R49 introduces true per-species 3-vector tilt V_s with distinct normal, radiation, and observer frames.",
+      "status": "LOCAL_VERIFIED",
+      "evidence": [
+        "htt/bass/background/einstein_bianchi.py",
+        "htt/bass/background/tilted_bianchi_state.py",
+        "TILT_CALLSITE_MAP.json",
+        "tests/r49/test_gbi02_tilted_state_and_constraints.py"
+      ],
+      "limit": "Scalar beta and v_hat are kept only as derived coordinates; legacy scalar-tilt modules remain quarantined for reproducibility."
+    },
+    {
+      "id": "R49-C03",
+      "claim": "Reduced non-perturbative tilt RHS covered only FLRW/I/V/VII_0/VII_h; R49 adds constraint-conserving general Class-A/Class-B tilted Einstein-tetrad evolution across all 11 Bianchi types + FLRW.",
+      "status": "LOCAL_VERIFIED",
+      "evidence": [
+        "htt/bass/background/nonperturbative_tilt.py",
+        "htt/bass/background/codazzi_tilt_rhs.py",
+        "htt/bass/background/general_tilted_evolution.py",
+        "GBI03_EVOLUTION_CONVERGENCE_RECEIPT.json",
+        "tests/r49/test_gbi03_general_tilted_evolution.py"
+      ],
+      "limit": "Validates expansion-normalized ODE dynamics and Hamiltonian/momentum/Codazzi constraints to <=2.8e-11 relative residual, without replacing an external full-Boltzmann linear perturbation solver."
+    },
+    {
+      "id": "R49-C04",
+      "claim": "R49 extends the Bianchi-I photon hierarchy to a family-dispatched polarized transfer operator preserving Bianchi-I parity while adding linearized V/VII_h/IX and exact geodesic II/III/IV/VI_0/VI_h/VIII propagation.",
+      "status": "LOCAL_VERIFIED_TRANSFER_CONDITIONAL",
+      "evidence": [
+        "htt/bass/transport/bianchi_i_hierarchy.py",
+        "htt/bass/transport/general_bianchi_transfer.py",
+        "GBI04_POLARIZED_TRANSFER_RECEIPT.json",
+        "tests/r49/test_gbi04_general_bianchi_transfer.py"
+      ],
+      "limit": "Transfer outputs remain transfer-conditional pre-solver diagnostics (Bianchi I max cl_BB=4.44e-41; non-FLRW families blocked from linearized_near_flrw); native Boltzmann transfer atlas remains future external integration."
+    },
+    {
+      "id": "R49-C05",
+      "claim": "General tilted homogeneous Bianchi models and type-specific Class-A/Class-B dynamics match cited literature and pass constraint/curvature oracle checks.",
+      "status": "LITERATURE_AND_CODE_VERIFIED",
+      "evidence": [
+        "King & Ellis 1973 DOI 10.1007/BF01646493",
+        "Barrow & Hervik 2003 arXiv:gr-qc/0304050",
+        "Apostolopoulos 2004 arXiv:gr-qc/0407040",
+        "Apostolopoulos 2004/2005 arXiv:gr-qc/0411102",
+        "Shogin & Hervik 2015 arXiv:1402.2785",
+        "GBI03_EVOLUTION_CONVERGENCE_RECEIPT.json"
+      ],
+      "limit": "Not every type/equation-of-state/anisotropic-stress case is interchangeable."
+    },
+    {
+      "id": "R49-C06",
+      "claim": "CMB temperature/polarization transfer in Bianchi models beyond type I is established in the nearly-FLRW domain for FLRW-limit families and via synchronous geodesic transport for marginal families.",
+      "status": "LITERATURE_SUPPORTED_TRANSFER_CONDITIONAL",
+      "evidence": [
+        "Pontzen & Challinor 2007 DOI 10.1111/j.1365-2966.2007.12221.x",
+        "Sung & Coles 2011 DOI 10.1088/1475-7516/2011/06/036",
+        "GBI04_POLARIZED_TRANSFER_RECEIPT.json"
+      ],
+      "limit": "Does not constitute a validated native all-eleven-type Boltzmann solver; native Bianchi family identification remains blocked."
+    },
+    {
+      "id": "R49-C07",
+      "claim": "For a single homogeneous perfect fluid in Bianchi I with positive enthalpy, the momentum constraint forbids genuine fluid tilt under the stated assumptions, whereas multi-fluid counter-streaming tilt is admissible.",
+      "status": "LOCAL_CONSTRAINT_ORACLE_VERIFIED",
+      "evidence": [
+        "King & Ellis 1973",
+        "Fournodavlos, Marshall & Oliynyk 2026 DOI 10.1007/s00023-026-01727-7",
+        "htt/bass/background/tilted_bianchi_state.py",
+        "tests/r49/test_gbi02_tilted_state_and_constraints.py"
+      ],
+      "limit": "Single-fluid Bianchi-I tilt is rejected fail-closed; multi-fluid counter-streaming is admitted when total momentum and Codazzi constraints hold."
+    },
+    {
+      "id": "R49-C08",
+      "claim": "R49 source-bound 8-probe tensor likelihood and single-posterior HTT (x,Q,Pi,F,G_F) push-forward executed across owned PR3+FFP10, Quaia, NVSS, RACS, Gaia+ICRF3, Pantheon+, CF4, and DESI data.",
+      "status": "LOCAL_EXECUTED_TRANSFER_CONDITIONAL",
+      "evidence": [
+        "htt/htt/htt/infer/r49_general_bianchi_likelihood.py",
+        "GBI05_LIKELIHOOD_AND_FIVE_VIEW_RECEIPT.json",
+        "GBI07_ADVERSARIAL_BENCHMARK_RECEIPT.json",
+        "GBI08_PRODUCTION_INFERENCE_RECEIPT.json",
+        "tests/r49/test_gbi05_source_bound_likelihood_and_five_view.py",
+        "tests/r49/test_gbi07_gbi08_benchmark_and_adjudication.py"
+      ],
+      "limit": "4-chain MCMC converged (60000 prod draws, max_split_rhat=1.0109, min_ess_bulk=474.45, min_ess_tail=1102.44), MIO remains diagnostic-only, highest evidence equivalence class on current data is FLAT_K0_FLRW_LIMIT, and family_level_discrimination_claimed=false."
+    },
+    {
+      "id": "R49-C09",
+      "claim": "The historical R38/R39 joint observational posterior is production-grade evidence.",
+      "status": "QUARANTINED_NOT_ADMISSIBLE",
+      "evidence": [
+        "R39 CODE_AUDIT_AND_REPAIR.md",
+        "R39 CLAIM_LEDGER.json"
+      ],
+      "limit": "Old adapters used zero/default data, hard-coded dipoles and unsupported covariance/fallbacks; superseded by R49 source-bound ingestion and fail-closed guards."
+    },
+    {
+      "id": "R49-C10",
+      "claim": "Planck NPIPE PR4 is a blocker to proceeding with CMB inference.",
+      "status": "REFUTED_BY_AVAILABLE_BYPASS",
+      "evidence": [
+        "DATA_REHASH_RECEIPT.json",
+        "GBI06_CMB_PR3_CALIBRATION_RECEIPT.json",
+        "GBI06_NPIPE_ROBUSTNESS_RECEIPT.json",
+        "GBI08_PRODUCTION_INFERENCE_RECEIPT.json",
+        "tests/r49/test_gbi06_planck_lanes_and_data_contract.py"
+      ],
+      "limit": "PR3 SMICA + 300 FFP10 pairs calibrated as primary lane (coupling_cond_T=9.9173, coupling_cond_EB=6.2066, hmhd_dof=135); NPIPE PR4 remains isolated with PR4_NULL_NOT_FORMABLE (never uses PR3 sims; max_shift_sigma_24d=24.68 reported as sensitivity check)."
+    },
+    {
+      "id": "R49-C11",
+      "claim": "Current R49 workstream executed local tests, raw-data rehash, map analysis, Matrix A..I benchmark, and 4-chain production inference at equivalence-set adjudication level without claiming individual Bianchi family identification.",
+      "status": "LOCAL_EXECUTED_EQUIVALENCE_SET_ONLY",
+      "evidence": [
+        "R49_DAG.json",
+        "DATA_REHASH_RECEIPT.json",
+        "GBI06_CMB_PR3_CALIBRATION_RECEIPT.json",
+        "GBI07_ADVERSARIAL_BENCHMARK_RECEIPT.json",
+        "GBI08_PRODUCTION_INFERENCE_RECEIPT.json",
+        "tests/r49/test_gbi07_gbi08_benchmark_and_adjudication.py"
+      ],
+      "limit": "family_level_discrimination_claimed=false; continuous degeneracy limits (VII_0->I 3.27e-16, IX->I 2.20e-17, VII_h->V 8.84e-10) restrict current inference to FLAT_K0_FLRW_LIMIT vs OPEN_KNEG_FLRW_LIMIT vs CLOSED_KPOS_FLRW_LIMIT vs NON_FLRW_LIMIT_GEODESIC equivalence classes."
+    },
+    {
+      "id": "R49-C12",
+      "claim": "Tilted two-fluid Bianchi-I Einstein-Euler solutions with positive cosmological constant are future nonlinearly stable for 1/3 < K_(1) <= K_(2) < 5/7, and scalar x_C ablation collapses rank compared to full tensor R49 state.",
+      "status": "LITERATURE_AND_CODE_VERIFIED",
+      "evidence": [
+        "Fournodavlos, Marshall & Oliynyk 2026, Annales Henri Poincare, DOI 10.1007/s00023-026-01727-7, published 2026-07-07",
+        "GBI03_EVOLUTION_CONVERGENCE_RECEIPT.json",
+        "GBI05_LIKELIHOOD_AND_FIVE_VIEW_RECEIPT.json",
+        "GBI08_PRODUCTION_INFERENCE_RECEIPT.json"
+      ],
+      "limit": "Two-fluid Bianchi-I branch (K_1=0.42, K_2=0.58, Lambda=1.8, shear_decay_ratio=1.15e-6, max_hamiltonian_residual_rel=2.37e-12) reproduces prior theorem regime (not novelty); scalar x_C ablation is marked ABLATION_ONLY_FORBIDDEN_IN_PRODUCTION (13/14 DOF loss vs rank-14 tensor)."
+    }
+  ]
+}

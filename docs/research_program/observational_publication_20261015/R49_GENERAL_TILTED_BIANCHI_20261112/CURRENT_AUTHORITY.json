@@ -1,0 +1,62 @@
+{
+  "schema_version": "r49_current_authority_v1",
+  "worktree_path": "/home/cosmosapjw/htt_worktrees/r49-general-tilted-bianchi",
+  "branch": "research/r49-general-tilted-bianchi-20261112",
+  "head_commit": "448a9c9e36be3ed67330b7a02aebb78337bb6bb1",
+  "primary_checkout_policy": {
+    "primary_checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "must_remain_untouched": true,
+    "auto_merge_to_main": false
+  },
+  "python_environment": {
+    "executable": "/usr/bin/python3",
+    "version": "3.12.3",
+    "packages": {
+      "numpy": "2.4.2",
+      "scipy": "1.17.0",
+      "healpy": "1.19.0",
+      "astropy": "7.2.0",
+      "emcee": "3.1.4",
+      "camb": "1.6.6",
+      "cobaya": "3.6.2",
+      "sympy": "1.14.0"
+    }
+  },
+  "physics_and_inference_authorities": {
+    "algebra_and_types": "htt/bass/background/bianchi_types.py",
+    "convention_bridge": "htt/bass/background/convention_bridge.py",
+    "geometry_connection_route": "htt/bass/background/geometry.py",
+    "r49_tilted_state": "htt/bass/background/tilted_bianchi_state.py",
+    "r49_tilted_evolution": "htt/bass/background/general_tilted_evolution.py",
+    "r49_polarized_transfer": "htt/bass/transport/general_bianchi_transfer.py",
+    "r49_source_bound_likelihood_and_five_view": "htt/htt/htt/infer/r49_general_bianchi_likelihood.py",
+    "legacy_scalar_tilt_quarantined": [
+      "htt/bass/background/nonperturbative_tilt.py",
+      "htt/bass/background/codazzi_tilt_rhs.py",
+      "htt/bass/background/einstein_bianchi.py"
+    ]
+  },
+  "cmb_lane_separation_policy": {
+    "primary_calibrated_lane": {
+      "observed_map": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+      "half_mission_splits": [
+        "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_CMB_IQU-smica_2048_R3.00_hm1.fits",
+        "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm_20261015/COM_CMB_IQU-smica_2048_R3.00_hm2.fits"
+      ],
+      "matched_simulations": "/mnt/extdrive/workdir/raw/planck_ffp10/smica/",
+      "calibration_grade": "CALIBRATED_PR3_FFP10"
+    },
+    "secondary_robustness_lane": {
+      "observed_maps": "/mnt/extdrive/workdir/raw/planck_npipe_pr4/frequency_maps/Single-frequency/",
+      "npipe_smica_present": false,
+      "npipe_mc_ensemble_present": false,
+      "calibration_grade": "PR4_NULL_NOT_FORMABLE",
+      "forbid_pr3_sims_for_pr4": true
+    }
+  },
+  "claim_guardrails": {
+    "transfer_status": "transfer_conditional_pre_native_boltzmann_solver",
+    "no_new_downloads": true,
+    "chains_stored_outside_git_under": "/mnt/extdrive/workdir/r49_chains"
+  }
+}

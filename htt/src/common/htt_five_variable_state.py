@@ -168,19 +168,19 @@ def construct_r39_five_variable_state(
     anchors_Q = {
         "shear_sigma": AnchorBody(
             functional_family="STF2_POLAR_SHEAR",
-            status="ADMITTED",
+            status="UNAVAILABLE",
             metric="STF5_CARTESIAN_INDUCED_GRAM",
-            norm_bound=1e-4,
-            gauge_margin=1e-5,
-            notes="Symmetric trace-free Frobenius norm bound on sigma/H",
+            norm_bound=None,
+            gauge_margin=None,
+            notes="No theorem or sourced measurement supports a per-component bound on the shear block. The Hamiltonian constraint bounds only the difference Sigma^2 - W^2 (Lean: T1_difference_bound; T1_no_standalone_shear_bound shows no bound on Sigma^2 alone without an independent W^2 ceiling). Published Planck 2018+BAO curvature Omega_K = 0.0007 +- 0.0019 constrains that difference (an effective-curvature-like combination), not sigma/H. The former hard-coded 1e-4 had no provenance and was removed.",
         ),
         "vorticity_omega": AnchorBody(
             functional_family="VECTOR_AXIAL_VORTICITY",
-            status="ADMITTED",
+            status="UNAVAILABLE",
             metric="EUCLIDEAN_VECTOR_NORM",
-            norm_bound=1e-4,
-            gauge_margin=1e-5,
-            notes="Axial vector norm omega_A/H; distinct from two-form MES W2 invariant",
+            norm_bound=None,
+            gauge_margin=None,
+            notes="No theorem or sourced measurement supports a per-component bound on vorticity (Lean: T1_no_standalone_vorticity_bound); Sigma^2 - W^2 is the only constrained combination. Axial vorticity is also degenerate with ICRF frame spin B1 at leading optical order. The former hard-coded 1e-4 had no provenance and was removed.",
         ),
         "acceleration_A": AnchorBody(
             functional_family="VECTOR_POLAR_ACCELERATION",
@@ -373,7 +373,7 @@ def construct_r42_five_variable_state(
     
     1. x: Sample-wise tensor bundle with verified source-specific operators.
     2. Q: Physical anchors with explicit prior/gauge distinctions.
-          - shear_sigma: PRIOR_CONDITIONAL from CMB Planck quadrupole
+          - shear_sigma: UNAVAILABLE (no theorem/source for a per-component bound; see anchor notes)
           - vorticity_omega: GAUGE_DEGENERATE_UNANCHORED (degenerate with ICRF reference-frame spin)
           - acceleration_A: UNAVAILABLE (geodesic assumption is not an empirical anchor)
           - relative_velocity_beta: ADMITTED under physical peculiar velocity budget (beta <= 0.01)
@@ -385,11 +385,11 @@ def construct_r42_five_variable_state(
     anchors_Q = {
         "shear_sigma": AnchorBody(
             functional_family="STF2_POLAR_SHEAR",
-            status="PRIOR_CONDITIONAL",
+            status="UNAVAILABLE",
             metric="STF5_CARTESIAN_INDUCED_GRAM",
-            norm_bound=1e-4,
-            gauge_margin=1e-5,
-            notes="Prior-conditional bound |sigma/H| <= 1e-4 from Planck CMB low-ell quadrupole temperature limits; not a local CAS anchor.",
+            norm_bound=None,
+            gauge_margin=None,
+            notes="No theorem or sourced measurement supports a per-component bound on the shear block. The Hamiltonian constraint bounds only the difference Sigma^2 - W^2 (Lean: T1_difference_bound; T1_no_standalone_shear_bound shows no bound on Sigma^2 alone without an independent W^2 ceiling). Published Planck 2018+BAO curvature Omega_K = 0.0007 +- 0.0019 constrains that difference (an effective-curvature-like combination), not sigma/H. The former hard-coded 1e-4 had no provenance and was removed.",
         ),
         "vorticity_omega": AnchorBody(
             functional_family="VECTOR_AXIAL_VORTICITY",

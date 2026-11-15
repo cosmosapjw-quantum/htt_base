@@ -1,0 +1,152 @@
+{
+  "schema_version": "r49_gbi06_owned_data_reconciliation_v1",
+  "no_new_data_downloaded": true,
+  "probes_reconciled": [
+    "Quaia",
+    "NVSS",
+    "RACS",
+    "Gaia+ICRF3",
+    "Pantheon+",
+    "CF4",
+    "DESI"
+  ],
+  "quaia_g205": {
+    "n_sources": 1295502,
+    "d_icrs": [
+      -0.011569208768724665,
+      -0.012559680291949689,
+      -0.008612431046106787
+    ],
+    "amplitude": 0.0191250131789306,
+    "overdispersion": 1.0833181770973765,
+    "sha256": "9e357a760f2ff2db9417a6791fb71dc421ee30324301f22db898038c9e648584"
+  },
+  "quaia_g200_crosscheck": {
+    "n_sources": 755850,
+    "amplitude": 0.014839308288134644,
+    "overdispersion": 1.0522887586872036
+  },
+  "nvss": {
+    "n_sources_cut": 237218,
+    "d_icrs": [
+      -0.009093460766624381,
+      0.005497452360087053,
+      -0.0045880437972056565
+    ],
+    "amplitude": 0.01157424542035639,
+    "z_var_declared": 0.0025000000000000005,
+    "sha256": "a357a688dc7e43ae81ecbe465fdce216dfed678aee977780a626841eceb5bde4"
+  },
+  "racs": {
+    "n_sources_cut": 296156,
+    "d_icrs": [
+      -0.022549772918759738,
+      -0.004825072973019943,
+      -0.0636779495375248
+    ],
+    "amplitude": 0.06772484658665645,
+    "systematics_flagged": true,
+    "note": "Primary baseline uses systematics-regularized RACS covariance; sensitivity tests raw variance.",
+    "sha256": "1764a934a084b12e411c32c426f04d5029c223541096253468d8343a60df4173"
+  },
+  "gaia_icrf3": {
+    "n_quasars_joined": 692154,
+    "n_gaia_crf3_full": 1614173,
+    "n_icrf3_sx_sources": 4537,
+    "e1_uasyr_icrs": [
+      -0.13398465120637693,
+      -5.251856653541809,
+      -2.0559541802991927
+    ],
+    "b1_uasyr_icrs": [
+      1.890979430593168,
+      1.3026234303095094,
+      -1.117442319774871
+    ],
+    "e2_uasyr_icrs": [
+      -0.6399729985680634,
+      1.9939602854565082,
+      -1.5254792822837189,
+      -2.6288263920363573,
+      1.7844021535831776
+    ],
+    "overdispersion": 1.1060287670578641,
+    "sha256_join": "2fbaa40a8afe58066064efa8a7784ac508c5b2c67b41c779676eab7df8cf9ef4"
+  },
+  "pantheon_plus": {
+    "n_sne_total": 1701,
+    "n_sne_hubble_flow_z_gt_0p01": 1590,
+    "z_min": 0.01016,
+    "z_max": 2.26137,
+    "sha256_dat": "1cb0fc379ef066afdc2ffd1857681cc478024570d8a3eba284fb645775198cf8",
+    "sha256_cov": "abf806d966485e64afdb359c87bffc0ecc00d05eff0a31ced66f247385df0fdc"
+  },
+  "cf4": {
+    "shells": [
+      [
+        0.0,
+        0.02
+      ],
+      [
+        0.02,
+        0.04
+      ],
+      [
+        0.04,
+        0.06
+      ],
+      [
+        0.06,
+        0.08
+      ]
+    ],
+    "group_counts_per_shell": [
+      6106,
+      8582,
+      6875,
+      8079
+    ],
+    "bulk_v_kms_gal": [
+      [
+        90.63674546176212,
+        -162.8311919096654,
+        38.18921940306913
+      ],
+      [
+        44.20272874526965,
+        -124.05180311904465,
+        3.9951437917594137
+      ],
+      [
+        96.59828973212346,
+        -97.29898854628759,
+        5.291742228925862
+      ],
+      [
+        -119.9095685994621,
+        232.53470049017477,
+        -153.1072056371167
+      ]
+    ],
+    "cf4pp_grid_rms_kms": 256.7916503934456,
+    "sha256_table4": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+  },
+  "desi": {
+    "bao_points": 13,
+    "dr1_ngc_sgc_tracers": [
+      "LRG_z0.4-0.6",
+      "LRG_z0.6-0.8",
+      "LRG_z0.8-1.1",
+      "QSO_z0.8-2.1"
+    ],
+    "directional_quad_obs_gal": [
+      5.922901128827416e-07,
+      1.2470845127869891e-06,
+      -9.565254668656674e-07,
+      2.745739322376229e-06,
+      -2.3518515141196904e-06
+    ],
+    "directional_quad_amplitude": -5.767129984034948e-06
+  },
+  "elapsed_s": 28.51
+}

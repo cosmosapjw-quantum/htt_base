@@ -32,6 +32,7 @@ Analytic Schur Marginalization:
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import os
@@ -200,6 +201,14 @@ class ThetaKinematic:
             beta_MO_A=b_mo_rot,
             chart=self.chart,
         )
+
+
+def deceleration_parameter(omega_m: float, omega_k: float = 0.0) -> float:
+    """q0 = Omega_m/2 - Omega_Lambda for matter + curvature + Lambda, Omega_Lambda = 1 - Omega_m - Omega_k.
+
+    Equivalent to (1+z) E'(z)/E(z) - 1 at z=0 with E^2 = Om(1+z)^3 + Ok(1+z)^2 + OL.
+    """
+    return 0.5 * omega_m - (1.0 - omega_m - omega_k)
 
 
 @dataclass(frozen=True)
@@ -505,15 +514,59 @@ class PlanckLowEllCarrierLikelihood(BaseProbeLikelihood):
         return chi2, logp
 
 
+# Galactic -> ICRS rotation (IAU 1958 galactic system defined w.r.t. J2000; standard matrix, as used by astropy).
+_GAL_TO_ICRS = np.array([[-0.0548755604162154, 0.4941094278755837, -0.8676661490190047],
+                         [-0.8734370902348850, -0.4448296299600112, -0.1980763734312015],
+                         [-0.4838350155487132, 0.7469822444972189, 0.4559837761750669]])
+
+
+def galactic_direction_to_icrs_unit(l_deg: float, b_deg: float) -> np.ndarray:
+    """Unit vector in the ICRS (equatorial J2000) frame of a direction given in Galactic (l, b) degrees.
+
+    The count-dipole result files store Galactic (l, b); the other channels (SNe, PV, Gaia) use ICRS directions. The earlier code built the
+    count-dipole vectors from (l, b) as if they were equatorial axes, i.e. in a different frame from the rest of the likelihood.
+    """
+    l, b = math.radians(l_deg), math.radians(b_deg)
+    return _GAL_TO_ICRS @ np.array([math.cos(b) * math.cos(l), math.cos(b) * math.sin(l), math.sin(b)])
+
+
+# Count-dipole kinematic response (Ellis-Baldwin): D = [2 + x (1 + alpha)] beta, x = -d ln N(>S)/d ln S, alpha = spectral index.
+# Slopes are DECLARED from source-measured proxies (R48 receipts): NVSS 1.043 (peak-flux proxy), RACS 0.948 (inferred flux column),
+# Quaia 1.9 = midpoint of the window-dependent magnitude-count slope 1.6-2.2 (not selection-corrected; G<20.5 slope not measured, same value).
+# alpha is NOT identifiable from the count dipoles (R48 L2 joint-estimand nullity 1): it is a declared nuisance, default 0.75, range 0.5-1.0.
+COUNT_SLOPE_DECLARED = {"Quaia_G20": 1.9, "Quaia_G20p5": 1.9, "NVSS": 1.043, "RACS": 0.948}
+
+
+def count_dipole_response(x: float, alpha: float) -> float:
+    return 2.0 + float(x) * (1.0 + float(alpha))
+
+
+
 class QuaiaCountsDipoleLikelihood(BaseProbeLikelihood):
     """Channel 2: Quaia quasar counts (G<20.0 and G<20.5) with Limber LSS cross-covariance C_1^{pq}."""
 
-    def __init__(self, repo_root: Optional[Path] = None):
+    def __init__(self, repo_root: Optional[Path] = None, alpha: float = 0.75, dipole_data_path: Optional[Path] = None):
         super().__init__("QuaiaCountsDipole")
         self.repo_root = repo_root or Path.cwd()
+        self.alpha = float(alpha)   # declared spectral-index nuisance for the count-dipole response
+        self.dipole_data_path = Path(dipole_data_path) if dipole_data_path else None
+        self.data_provenance = "LEGACY_LITERALS_AND_UNVERIFIED_RESULT_FILE"
         self.load_data()
 
+    def _load_sourced(self) -> None:
+        """Real-catalogue dipoles from one estimator (ICRS frame): blocks listed in likelihood_inputs['Quasars'] = [G<20, G<20.5]."""
+        d = json.load(open(self.dipole_data_path)); names = d["likelihood_inputs"]["Quasars"]
+        b20, b205 = d["blocks"][names[0]], d["blocks"][names[1]]
+        data = np.concatenate([np.array(b20["D_icrs"], float), np.array(b205["D_icrs"], float)])
+        cov = np.zeros((6, 6)); cov[0:3, 0:3] = np.array(b20["cov_icrs"], float); cov[3:6, 3:6] = np.array(b205["cov_icrs"], float)
+        cross = np.array(b205.get("cov_icrs_stat_only", b205["cov_icrs"]), float)   # nested samples: shot-noise cross-cov = stat cov of the larger sample
+        cov[0:3, 3:6] = cross; cov[3:6, 0:3] = cross.T
+        self.data_provenance = "REAL_DIPOLES_JSON:" + hashlib.sha256(open(self.dipole_data_path, "rb").read()).hexdigest()[:16]
+        self.init_covariance_and_schur(data, cov, design_matrix=None, source_path=str(self.dipole_data_path))
+
     def load_data(self) -> None:
+        if self.dipole_data_path is not None:
+            return self._load_sourced()
         res_json = self.repo_root / "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/COUNT_DIPOLE_RESULT.json"
         cov_json = self.repo_root / "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/COUNT_SELECTION_DIAGNOSTICS/count_dipole_summary.json"
 
@@ -526,25 +579,13 @@ class QuaiaCountsDipoleLikelihood(BaseProbeLikelihood):
             cov_data = json.load(f)
 
         q20 = res_data["quaia_g20"]
-        l_q = math.radians(q20["galactic_direction_deg"][0])
-        b_q = math.radians(q20["galactic_direction_deg"][1])
         amp_q = q20["measured_dipole_amplitude"]
-        d20 = np.array([
-            amp_q * math.cos(b_q) * math.cos(l_q),
-            amp_q * math.cos(b_q) * math.sin(l_q),
-            amp_q * math.sin(b_q),
-        ], dtype=np.float64)
+        d20 = amp_q * galactic_direction_to_icrs_unit(*q20["galactic_direction_deg"])
         c20 = np.array(cov_data["quaia_covariance"], dtype=np.float64)
 
         # Quaia G<20.5 dipole (1.295M quasars) from empirical catalog analysis
-        amp_20p5 = 0.0212
-        l_20p5 = math.radians(255.4)
-        b_20p5 = math.radians(37.1)
-        d20p5 = np.array([
-            amp_20p5 * math.cos(b_20p5) * math.cos(l_20p5),
-            amp_20p5 * math.cos(b_20p5) * math.sin(l_20p5),
-            amp_20p5 * math.sin(b_20p5),
-        ], dtype=np.float64)
+        amp_20p5 = 0.0212   # LEGACY HARD-CODED LITERAL (no source file); use dipole_data_path for sourced values
+        d20p5 = amp_20p5 * galactic_direction_to_icrs_unit(255.4, 37.1)
 
         # Decompose into shot noise and shared Limber cosmic variance
         ratio = 755850.0 / 1295502.0  # 0.583427
@@ -566,8 +607,9 @@ class QuaiaCountsDipoleLikelihood(BaseProbeLikelihood):
 
     def predict(self, theta: ThetaKinematic, psi: PsiCosmology) -> np.ndarray:
         b_mo = theta.beta_MO_A
-        f20 = 3.50
-        f20p5 = 3.30
+        alpha = getattr(self, "alpha", 0.75)
+        f20 = count_dipole_response(COUNT_SLOPE_DECLARED["Quaia_G20"], alpha)
+        f20p5 = count_dipole_response(COUNT_SLOPE_DECLARED["Quaia_G20p5"], alpha)
         return np.concatenate([f20 * b_mo, f20p5 * b_mo])
 
     def compute(self, theta: ThetaKinematic, psi: PsiCosmology) -> Tuple[float, float]:
@@ -581,12 +623,25 @@ class QuaiaCountsDipoleLikelihood(BaseProbeLikelihood):
 class RadioCountDipoleLikelihood(BaseProbeLikelihood):
     """Channel 3: Radio NVSS (North) & RACS-low (South) count dipoles."""
 
-    def __init__(self, repo_root: Optional[Path] = None):
+    def __init__(self, repo_root: Optional[Path] = None, alpha: float = 0.75, dipole_data_path: Optional[Path] = None):
         super().__init__("RadioCountDipole")
         self.repo_root = repo_root or Path.cwd()
+        self.alpha = float(alpha)   # declared spectral-index nuisance for the count-dipole response
+        self.dipole_data_path = Path(dipole_data_path) if dipole_data_path else None
+        self.data_provenance = "LEGACY_LITERALS_AND_UNVERIFIED_RESULT_FILE"
+        self.block_names = ["NVSS", "RACS"]
         self.load_data()
 
+    def _load_sourced(self) -> None:
+        d = json.load(open(self.dipole_data_path)); self.block_names = list(d["likelihood_inputs"]["Radio"]); n = len(self.block_names)
+        data = np.concatenate([np.array(d["blocks"][b]["D_icrs"], float) for b in self.block_names]); cov = np.zeros((3 * n, 3 * n))
+        for i, b in enumerate(self.block_names): cov[3 * i:3 * i + 3, 3 * i:3 * i + 3] = np.array(d["blocks"][b]["cov_icrs"], float)
+        self.data_provenance = "REAL_DIPOLES_JSON:" + hashlib.sha256(open(self.dipole_data_path, "rb").read()).hexdigest()[:16]
+        self.init_covariance_and_schur(data, cov, design_matrix=None, source_path=str(self.dipole_data_path))
+
     def load_data(self) -> None:
+        if self.dipole_data_path is not None:
+            return self._load_sourced()
         res_json = self.repo_root / "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_20261107/COUNT_DIPOLE_RESULT.json"
         if not res_json.exists():
             raise DataIntegrityError(f"Radio count dipole result missing: {res_json}")
@@ -595,26 +650,14 @@ class RadioCountDipoleLikelihood(BaseProbeLikelihood):
             res_data = json.load(f)
 
         n_info = res_data["nvss_radio"]
-        l_n = math.radians(n_info["galactic_direction_deg"][0])
-        b_n = math.radians(n_info["galactic_direction_deg"][1])
         amp_n = n_info["measured_dipole_amplitude"]
         sig_n = n_info["measured_dipole_sigma"]
-        d_nvss = np.array([
-            amp_n * math.cos(b_n) * math.cos(l_n),
-            amp_n * math.cos(b_n) * math.sin(l_n),
-            amp_n * math.sin(b_n),
-        ], dtype=np.float64)
+        d_nvss = amp_n * galactic_direction_to_icrs_unit(*n_info["galactic_direction_deg"])
         c_nvss = np.eye(3, dtype=np.float64) * (sig_n ** 2)
 
-        amp_r = 0.018
+        amp_r = 0.018   # LEGACY HARD-CODED LITERAL (no source file); use dipole_data_path for sourced values
         sig_r = 0.004
-        l_r = math.radians(245.0)
-        b_r = math.radians(35.0)
-        d_racs = np.array([
-            amp_r * math.cos(b_r) * math.cos(l_r),
-            amp_r * math.cos(b_r) * math.sin(l_r),
-            amp_r * math.sin(b_r),
-        ], dtype=np.float64)
+        d_racs = amp_r * galactic_direction_to_icrs_unit(245.0, 35.0)
         c_racs = np.eye(3, dtype=np.float64) * (sig_r ** 2)
 
         data = np.concatenate([d_nvss, d_racs])
@@ -626,9 +669,9 @@ class RadioCountDipoleLikelihood(BaseProbeLikelihood):
 
     def predict(self, theta: ThetaKinematic, psi: PsiCosmology) -> np.ndarray:
         b_mo = theta.beta_MO_A
-        f_nvss = 3.50
-        f_racs = 3.50
-        return np.concatenate([f_nvss * b_mo, f_racs * b_mo])
+        alpha = getattr(self, "alpha", 0.75)
+        names = getattr(self, "block_names", ["NVSS", "RACS"])
+        return np.concatenate([count_dipole_response(COUNT_SLOPE_DECLARED[nm], alpha) * b_mo for nm in names])
 
     def compute(self, theta: ThetaKinematic, psi: PsiCosmology) -> Tuple[float, float]:
         pred = self.predict(theta, psi)
@@ -749,9 +792,14 @@ class SupernovaIaJointLikelihood(BaseProbeLikelihood):
     def predict(self, theta: ThetaKinematic, psi: PsiCosmology) -> np.ndarray:
         c_km_s = 299792.458
         H0 = psi.H_0
-        q0 = 0.5 * psi.Omega_m - 0.7
+        q0 = deceleration_parameter(psi.Omega_m, psi.DeltaOmega_k)
         dl = (c_km_s * self.redshifts / H0) * (1.0 + 0.5 * (1.0 - q0) * self.redshifts)
-        mu_fid = 5.0 * np.log10(np.maximum(dl * 1e5, 1e-5))
+        mu_model = 5.0 * np.log10(np.maximum(dl * 1e5, 1e-5))
+        # The Pantheon+ 490 cache stores RESIDUALS d = m_b - mu_fid - M0 with the cache fiducial H0=70, q0=-0.55
+        # (htt/src/common/source_bound_likelihoods.py). The prediction must be in the same convention; the
+        # z-independent offset (M0, H0) is absorbed by the analytic marginalisation.
+        dl_cache = (c_km_s * self.redshifts / 70.0) * (1.0 + 0.5 * (1.0 - (-0.55)) * self.redshifts)
+        mu_cache_fid = 5.0 * np.log10(np.maximum(dl_cache * 1e5, 1e-5))
 
         n = self.directions
         S = theta.sigma_matrix
@@ -760,7 +808,7 @@ class SupernovaIaJointLikelihood(BaseProbeLikelihood):
         dipole_acc = (n @ theta.A_A) * 1e-3
         delta_h = doppler + quad - dipole_acc
         delta_mu = - (5.0 / math.log(10.0)) * delta_h
-        return mu_fid + delta_mu
+        return (mu_model - mu_cache_fid) + delta_mu
 
     def compute(self, theta: ThetaKinematic, psi: PsiCosmology) -> Tuple[float, float]:
         pred = self.predict(theta, psi)
@@ -811,13 +859,19 @@ class PeculiarVelocityLikelihood(BaseProbeLikelihood):
         self.init_covariance_and_schur(data, cov, design_matrix=H, source_path=source)
 
     def predict(self, theta: ThetaKinematic, psi: PsiCosmology) -> np.ndarray:
+        # CF4 'dmzp' is a distance modulus mu(z) (slope ~5 per dex in z), not a residual: the model must carry mu_model(z);
+        # the z-independent offset is absorbed by the analytic marginalisation.
+        c_km_s = 299792.458
+        q0 = deceleration_parameter(psi.Omega_m, psi.DeltaOmega_k)
+        dl = (c_km_s * self.redshifts / psi.H_0) * (1.0 + 0.5 * (1.0 - q0) * self.redshifts)
+        mu_model = 5.0 * np.log10(np.maximum(dl * 1e5, 1e-5))
         n = self.directions
         S = theta.sigma_matrix
         quad = np.sum(n * (n @ S), axis=1)
         doppler = n @ theta.beta_MO_A
         dipole_acc = (n @ theta.A_A) * 1e-3
         delta_h = doppler + quad - dipole_acc
-        return - (5.0 / math.log(10.0)) * delta_h
+        return mu_model - (5.0 / math.log(10.0)) * delta_h
 
     def compute(self, theta: ThetaKinematic, psi: PsiCosmology) -> Tuple[float, float]:
         pred = self.predict(theta, psi)
@@ -977,26 +1031,33 @@ class TensorJointMultiprobeLikelihood:
         self,
         repo_root: Optional[Path] = None,
         enabled_probes: Optional[Sequence[str]] = None,
+        count_alpha: float = 0.75,
+        count_dipole_data_path: Optional[Path] = None,
     ):
         self.repo_root = repo_root or Path.cwd()
         
-        self.planck = PlanckLowEllCarrierLikelihood(repo_root=self.repo_root)
-        self.quaia = QuaiaCountsDipoleLikelihood(repo_root=self.repo_root)
-        self.radio = RadioCountDipoleLikelihood(repo_root=self.repo_root)
-        self.gaia = GaiaProperMotionVSHLikelihood(repo_root=self.repo_root)
-        self.sne = SupernovaIaJointLikelihood(repo_root=self.repo_root)
-        self.pv = PeculiarVelocityLikelihood(repo_root=self.repo_root)
-        self.desi = DESIDR2BAOLikelihood(repo_root=self.repo_root)
-
-        self.all_probes: Dict[str, BaseProbeLikelihood] = {
-            "CMB": self.planck,
-            "Quasars": self.quaia,
-            "Radio": self.radio,
-            "Gaia": self.gaia,
-            "SNe": self.sne,
-            "PV": self.pv,
-            "DESI": self.desi,
+        factories = {
+            "CMB": lambda: PlanckLowEllCarrierLikelihood(repo_root=self.repo_root),
+            "Quasars": lambda: QuaiaCountsDipoleLikelihood(repo_root=self.repo_root, alpha=count_alpha, dipole_data_path=count_dipole_data_path),
+            "Radio": lambda: RadioCountDipoleLikelihood(repo_root=self.repo_root, alpha=count_alpha, dipole_data_path=count_dipole_data_path),
+            "Gaia": lambda: GaiaProperMotionVSHLikelihood(repo_root=self.repo_root),
+            "SNe": lambda: SupernovaIaJointLikelihood(repo_root=self.repo_root),
+            "PV": lambda: PeculiarVelocityLikelihood(repo_root=self.repo_root),
+            "DESI": lambda: DESIDR2BAOLikelihood(repo_root=self.repo_root),
         }
+        wanted = list(factories) if enabled_probes is None else list(enabled_probes)
+        unknown = [p for p in wanted if p not in factories]
+        if unknown:
+            raise ValueError(f"unknown probes: {unknown}")
+        # Only enabled probes are constructed: a disabled probe's data files are never read.
+        self.all_probes: Dict[str, BaseProbeLikelihood] = {p: factories[p]() for p in wanted}
+        self.planck = self.all_probes.get("CMB")
+        self.quaia = self.all_probes.get("Quasars")
+        self.radio = self.all_probes.get("Radio")
+        self.gaia = self.all_probes.get("Gaia")
+        self.sne = self.all_probes.get("SNe")
+        self.pv = self.all_probes.get("PV")
+        self.desi = self.all_probes.get("DESI")
 
         if enabled_probes is None:
             self.enabled_probes = list(self.all_probes.keys())

@@ -1,0 +1,76 @@
+{
+  "schema_version": "r49_gbi06_pr3_calibration_v1",
+  "lane": "PR3_CALIBRATED",
+  "mc_source": "FFP10_PR3",
+  "primary_observed_map": "/mnt/extdrive/workdir/raw/planck_data/COM_CMB_IQU-smica_2048_R3.00_full.fits",
+  "primary_observed_sha256": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+  "hm1_sha256": "736338208cf0b494c3b6c13c444f116262c8052dcb4a7842dc738bf6a4a426b0",
+  "hm2_sha256": "0a4dc860a6f7bbdb5980cd7ac1d187ba9139a383c9c47f159e069281c3d5f3a5",
+  "mask_int_fsky": 0.7794118722279867,
+  "mask_pol_fsky": 0.7814398805300394,
+  "coupling_cond_T": 9.917312560546915,
+  "coupling_cond_EB": 6.206569989949884,
+  "n_ffp10_pairs": 300,
+  "stratified_ffp10_convergence": {
+    "N60_smoke": {
+      "n_pairs": 60,
+      "mean_abs_uK": 0.7968174027716024,
+      "rms_T_ell2_uK": 34.14229687348676,
+      "rms_E_ell2_uK": 0.21571532317226558,
+      "rms_B_ell2_uK": 0.11375174616067392
+    },
+    "N200_pilot": {
+      "n_pairs": 200,
+      "mean_abs_uK": 0.38653341848092515,
+      "rms_T_ell2_uK": 33.03182109062467,
+      "rms_E_ell2_uK": 0.21975067718322183,
+      "rms_B_ell2_uK": 0.10916694172562591
+    },
+    "N300_production": {
+      "n_pairs": 300,
+      "mean_abs_uK": 0.34831051189875334,
+      "rms_T_ell2_uK": 33.07643719906487,
+      "rms_E_ell2_uK": 0.21548990858868664,
+      "rms_B_ell2_uK": 0.10912186406569306
+    }
+  },
+  "hmhd_empirical_noise_chi2_vs_ffp10": 274.9453480479954,
+  "hmhd_dof": 135,
+  "ffp10_null_gram_sd": 4.831080270158386e-07,
+  "observed_ell2_T_rms_uK": 14.455222071453896,
+  "observed_ell2_E_rms_uK": 0.2591872446409296,
+  "observed_ell2_B_rms_uK": 0.2986514566542682,
+  "injection_recovery_across_families": {
+    "I": {
+      "injected_gram": 1.4493240810475158e-06,
+      "recovered_gram": 1.6009415111981095e-06,
+      "bias_z_sigma": 1.2638719903861053,
+      "cos_alignment": 0.9246151730551385
+    },
+    "V": {
+      "injected_gram": 1.4493240810475156e-06,
+      "recovered_gram": 1.2725567752534175e-06,
+      "bias_z_sigma": 1.2087972587406313,
+      "cos_alignment": 0.9160175576042019
+    },
+    "VII_0": {
+      "injected_gram": 1.449324081047516e-06,
+      "recovered_gram": 1.6135090009789015e-06,
+      "bias_z_sigma": 0.7665380103760657,
+      "cos_alignment": 0.9764419867980753
+    },
+    "VII_h": {
+      "injected_gram": 1.4493240810475158e-06,
+      "recovered_gram": 1.6297017218082554e-06,
+      "bias_z_sigma": 0.8516188847802507,
+      "cos_alignment": 0.9710551398973147
+    },
+    "IX": {
+      "injected_gram": 1.4493240810475156e-06,
+      "recovered_gram": 1.199553534000556e-06,
+      "bias_z_sigma": 0.9513210095445628,
+      "cos_alignment": 0.957194474713436
+    }
+  },
+  "elapsed_s": 3264.76
+}

@@ -1,0 +1,134 @@
+{
+  "schema_version": "r49_gbi05_likelihood_and_five_view_v1",
+  "status": "PASS",
+  "active_probes": [
+    "CMB",
+    "Quaia",
+    "NVSS",
+    "RACS",
+    "Gaia",
+    "PantheonPlus",
+    "CF4",
+    "DESI"
+  ],
+  "g_stf5_diag": [
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0
+  ],
+  "acceptance_tests_verified": [
+    "Test_9_fail_closed_guards",
+    "Test_11_scalar_xc_ablation",
+    "Test_12_single_posterior_five_views"
+  ],
+  "so3_triad_invariance_verified": true,
+  "healpy_real_alm_parity_verified": true,
+  "five_view_summary": {
+    "schema_version": "r49_single_posterior_five_view_v1",
+    "single_posterior_verified": true,
+    "shared_posterior_id": "sha256:2c6c92a90b43c99a557efeb454b9b8e8590ad2eaba285d6990c2e3499cb322af",
+    "n_draws": 128,
+    "source_posterior_shape": [
+      128,
+      24
+    ],
+    "x_summary": {
+      "sigma_gram_norm_mean": 0.0001732247454197058,
+      "sigma_gram_norm_std": 3.768190883879408e-05,
+      "beta_MO_norm_mean": 0.0013200907219316424,
+      "beta_MO_norm_std": 8.17161260818806e-05,
+      "beta_RM_norm_mean": 0.0003121199361470688,
+      "stf5_gram_metric_diag": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ]
+    },
+    "Q_anchors": {
+      "shear_sigma": {
+        "status": "UNAVAILABLE",
+        "metric": "STF5_CARTESIAN_INDUCED_GRAM",
+        "norm_bound": null,
+        "gauge_margin": null
+      },
+      "vorticity_omega": {
+        "status": "GAUGE_DEGENERATE_UNANCHORED",
+        "metric": "EUCLIDEAN_VECTOR_NORM",
+        "norm_bound": null,
+        "gauge_margin": null
+      },
+      "acceleration_A": {
+        "status": "UNAVAILABLE",
+        "metric": "NONE",
+        "norm_bound": null,
+        "gauge_margin": null
+      },
+      "relative_velocity_beta": {
+        "status": "ADMITTED",
+        "metric": "EUCLIDEAN_VECTOR_NORM",
+        "norm_bound": 0.01,
+        "gauge_margin": 0.0001
+      }
+    },
+    "Pi_exceedance": {
+      "BETA_MO_NORM": {
+        "law_name": "POSTERIOR_PUSHFORWARD",
+        "critical_threshold_95": 0.001463107185110122,
+        "observed_score": 0.0013200907219316424,
+        "observed_exceedance": 0.484375,
+        "undefined_mass": 0.0
+      },
+      "BETA_MO_MATCHED_NULL": {
+        "law_name": "MATCHED_NULL_FFP10_PR3",
+        "critical_threshold_95": 0.0010349942841600557,
+        "observed_score": 0.0013200907219316424,
+        "observed_exceedance": 0.015,
+        "undefined_mass": 0.0
+      }
+    },
+    "F_directional": {
+      "n_directions": 100,
+      "beta_MO_max_support": 0.0014910232025526907,
+      "beta_MO_max_occupancy": 0.14910232025526907,
+      "sigma_max_support": 0.00023832927855591072
+    },
+    "G_F_depth": {
+      "shells": [
+        [
+          0.0,
+          0.02
+        ],
+        [
+          0.02,
+          0.04
+        ],
+        [
+          0.04,
+          0.06
+        ]
+      ],
+      "n_contrasts": 2,
+      "cov_shape": [
+        9,
+        9
+      ],
+      "cov_min_eig": 2025.0,
+      "transport_model": "PHYSICAL_EXPANSION_TRANSPORT"
+    }
+  },
+  "scalar_xc_ablation": {
+    "ablation_role": "ABLATION_ONLY_FORBIDDEN_IN_PRODUCTION",
+    "full_tensor_dof": 14,
+    "full_covariance_rank": 14,
+    "scalar_xc_dof": 1,
+    "scalar_xc_mean": 0.001332010991431317,
+    "scalar_x_C_mean": 0.001332010991431317,
+    "scalar_xc_std": 8.056361944110493e-05,
+    "vector_beta_MO_mean_norm": 0.0013153253963204656,
+    "information_loss_ratio_dof": 0.9285714285714286
+  }
+}

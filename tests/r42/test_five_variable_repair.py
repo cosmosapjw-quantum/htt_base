@@ -194,7 +194,9 @@ def test_r42_calibrated_five_variable_state():
 
     # 1. Check Q anchors
     q = state.anchors_Q
-    assert q["shear_sigma"].status == "PRIOR_CONDITIONAL"
+    assert q["shear_sigma"].status == "UNAVAILABLE"
+    assert q["shear_sigma"].norm_bound is None and q["shear_sigma"].gauge_margin is None
+    assert "Sigma^2 - W^2" in q["shear_sigma"].notes
     assert q["vorticity_omega"].status == "GAUGE_DEGENERATE_UNANCHORED"
     assert "ICRF" in q["vorticity_omega"].notes
     assert q["acceleration_A"].status == "UNAVAILABLE"
