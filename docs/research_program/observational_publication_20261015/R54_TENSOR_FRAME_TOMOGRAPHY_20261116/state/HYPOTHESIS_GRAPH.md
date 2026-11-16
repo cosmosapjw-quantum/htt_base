@@ -55,8 +55,8 @@ Re-derivation: the T and E quadrupoles measure two ionization-fixed linear funct
 - robustness: kernel exact; history-model free
 - risk: none at this order
 - kill criterion: an order-unity term missing from the k = 0 Thomson system
-- executed result: r_E(perfect fluid)=0.0711; reionization share 18%
-- next action: R54-L01 masked E response
+- executed result: r_E(perfect fluid)=0.0711; reionization share 19%; R54-L01: masked E response e_dev = 0.0003 (IDEAL_E_RESPONSE_KEPT)
+- next action: R54-L07 literature check (B09)
 
 ### H-L1b (L1) - PROMOTE
 
@@ -64,12 +64,12 @@ The conversion of (Sigma_T, Sigma_E) to a present-day shear is not robust: it de
 
 - evidence: ODE with photon and neutrino stress (massless and minimal normal ordering with the exact collisionless stress weight R54-EQ-06); analytic radiation-era oscillator test
 - validity: linear; the statement is qualitative and every number is an illustration
-- novelty: LOW, partly checked: E05 shows that free-streaming neutrinos invalidate CMB temperature limits in the magnetic Bianchi I case and E06, E07 give the modified shear decay under collisionless stresses; full check in R54-L07
+- novelty: LOW-MODERATE (searched): no prior T+E limit with a radiation-stress history map was found; the kernels are a re-derivation and the present-shear numbers are model illustrations; nearest prior art: E01/E02 Saadeh et al. 2016 (perfect-fluid Bianchi limits from Planck T+pol); E03 Pontzen & Challinor 2007; arXiv:1102.5235 (free-streaming neutrino stress back-reacts on a Bianchi-I anisotropy; temperature only); E46 Basko & Polnarev 1980 (kernels)
 - testability: HIGH
 - robustness: s0/Sigma_T changes sign with photon stress (-0.000244); (c_T, c_E) = (0.00166, -0.0254) massless and (0.000858, -0.0147) for minimal normal ordering; Sigma_T per unit initial shear changes sign between an assumed free-streaming onset at z_i = 1.5e+10 (T_nu = 2.5 MeV) and 2e+10 (3.4 MeV), an interval that contains the decoupling estimate of 3.12 MeV for muon and tau neutrinos (E49; 1.87 MeV for electron neutrinos) (r_E from 0.050 to 0.109 before the sign change, -1.057 to 0.109 over all 8 points)
 - risk: quoting an illustration number as a limit
 - kill criterion: a prior paper that already gives stress-corrected Bianchi-I shear limits from CMB T+E
-- executed result: 95% illustration values of |s0|: 1.42e-10 (perfect fluid, T+E), 6.65e-08 (massless two-mode family), 3.43e-08 (minimal normal ordering)
+- executed result: 95% illustration values of |s0|: 1.42e-10 (perfect fluid, T+E), 6.66e-08 (massless two-mode family), 3.43e-08 (minimal normal ordering)
 - next action: R54-L07 literature check
 
 ### H-L1c (L1) - REJECT
@@ -83,8 +83,8 @@ PR3 component-separated ell = 2 polarization can be used at face value.
 - robustness: holds for SMICA and Commander
 - risk: E-lane overclaim
 - kill criterion: n/a
-- executed result: B ell=2 tail p=9.54e-06 (SMICA), 3.96e-07 (Commander); observed rms 0.30 vs FFP10 0.11 uK
-- next action: E lane stays DIAGNOSTIC until R54-L01/L02
+- executed result: B ell=2 tail p=9.54e-06 (SMICA), 3.96e-07 (Commander); observed rms 0.30 vs FFP10 0.11 uK; R54-L01 empirical LOO B ell=2 tail 0.00664 (SMICA), 0.00332 (Commander); E lane DIAGNOSTIC; R54-L02 adopted-covariance B ell=2 null passes in: Cosmoglobe_BeyondPlanck, Planck_PR3, WMAP9; E lane CLAIMABLE
+- next action: R54-L06 (T lane; E lane as recorded)
 
 ### H-L1d (L1) - REJECT
 
@@ -111,8 +111,8 @@ The owned count dipoles (Quaia G<20, NVSS; receipt estimator) exceed the kinemat
 - robustness: power against a dipole twice the kinematic one: 0.20 at the 5% level
 - risk: reading a non-detection as evidence against the published anomaly
 - kill criterion: the calibrated estimators of R54-L03, with power of at least 0.8 against the published excess, give p >= 0.01
-- executed result: excess tails p=0.27 (Quaia), 0.46 (NVSS); common excess p=0.12; no decision at this power
-- next action: R54-L03: clustering body, same-estimator null, competitor estimators
+- executed result: excess tails p=0.27 (Quaia), 0.46 (NVSS); common excess p=0.12; no decision at this power; R54-L03 calibrated excess tails 0.309 (Quaia), 0.421 (NVSS); H-L2a stays REJECTED for the owned estimators; R54-L08 decision-gate review: HOLD (see R57_DECISION_REVIEW.json)
+- next action: none: programme stopped at R54-L08
 
 ### H-L2b (L2) - HOLD
 
@@ -181,7 +181,7 @@ Any type-I shear compatible with the CMB functionals is far below low-redshift s
 - robustness: n/a
 - risk: a family restriction read as a general statement
 - kill criterion: n/a
-- executed result: for a shear confined to z < 0.2 the T functional bounds a constant-sign history at 0.000225 and is blind to a sign-changing one; the E functional bounds its rms at 0.0729 (diagnostic lane; 0.0972 with the B-null floor), above the CF4 quadrupole of 2.5% of H
+- executed result: for a shear confined to z < 0.2 the T functional bounds a constant-sign history at 0.000227 and is blind to a sign-changing one; the E functional bounds its rms at 0.0735 (diagnostic lane; 0.0972 with the B-null floor), above the CF4 quadrupole of 2.5% of H
 - next action: replaced by H-L3d
 
 ### H-L3d (L3) - PROMOTE
@@ -192,10 +192,10 @@ Without late-time anisotropic stress (perfect fluid or radiation-sourced stress 
 - validity: type I; the three computed histories are not a class theorem; the E lane is diagnostic
 - novelty: LOW (E44 treats late-time anisotropic stress in Bianchi I)
 - testability: HIGH
-- robustness: |s0| <= 6.65e-08 (massless two-mode) and 3.43e-08 (minimal normal ordering) against a CF4 quadrupole of 2.5% of H
+- robustness: |s0| <= 6.66e-08 (massless two-mode) and 3.43e-08 (minimal normal ordering) against a CF4 quadrupole of 2.5% of H
 - risk: dropping the condition
 - kill criterion: a radiation-sourced history whose present shear reaches the percent level under the measured functionals
-- executed result: late-time rms bound from E: 0.0729 (z < 0.2), 0.0112 (z < 0.5), 0.000692 (z < 2)
+- executed result: late-time rms bound from E: 0.0735 (z < 0.2), 0.0113 (z < 0.5), 0.000697 (z < 2)
 - next action: R54-L06 quotes the condition with every use
 
 ### H-L4a (L4) - HOLD
@@ -212,7 +212,7 @@ Classification at carrier level is the orbit type of the measured tensor (isotro
 - executed result: CF4 constant quadrupole 2.5% of H, principal axis 9.5 deg from the equatorial pole (log estimator, exact body); family identification blocked
 - next action: R54-L04, R54-L06
 
-### H-L5a (L5) - HOLD
+### H-L5a (L5) - REJECT
 
 Conditional on linear theory without a selection model or a calibration covariance, the pooled CF4 window multipoles exceed the LCDM body.
 
@@ -223,8 +223,8 @@ Conditional on linear theory without a selection model or a calibration covarian
 - robustness: joint null p: pooled 0.000344, method monopoles 0.00277, method x hemisphere steps 0.112; damped body 0.000155; body x2 0.188
 - risk: the excess is strongest in the two outer windows, where the sample is northern FP
 - kill criterion: survey-resolved zero points, a radial slope or a distance-error term bring the joint null above 0.01 (R54-L04)
-- executed result: inner windows joint p=0.00558 (dipole 0.0375), outer windows joint p=3.89e-06 (dipole 0.000123); FP is 98% of the groups at z >= 0.055 and 95% of that FP sample is northern
-- next action: R54-L04
+- executed result: inner windows joint p=0.00558 (dipole 0.0375), outer windows joint p=3.89e-06 (dipole 0.000123); FP is 98% of the groups at z >= 0.055 and 95% of that FP sample is northern; R54-L04 decision check: REJECT (step class UNRESOLVED; robust class DEPENDS_ON_ZERO_POINT_NUISANCE_MODEL)
+- next action: none (rejected by the R54-L04 decision check)
 
 ### H-L5f (L5) - PROMOTE
 
@@ -232,7 +232,7 @@ The R36/H03 linear-in-distance estimator carries a deterministic same-estimator 
 
 - evidence: same-estimator mock with the operator rebuilt per draw; analytic exp(+s^2/2) check in the unit test
 - validity: exact for Gaussian distance-modulus errors
-- novelty: LOW (the log-normal distance bias is known, E41; E43 uses a log-distance estimator on CF4); new for this project's R36, H03 and R52 products
+- novelty: LOW (searched): the estimator is E41-type and the pair-sum body is the standard velocity correlation tensor; the contribution is their application to the CF4 window multipoles; nearest prior art: E41 Watkins & Feldman 2015 (log-distance estimator avoiding the log-normal bias); E37 Strauss & Willick 1995 (Malmquist and estimator biases); E36 Gorski 1988 velocity correlation tensor (identifier NOT_FOUND; the tensor is re-derived and tested in R54-EQ-30/31)
 - testability: done
 - robustness: bias carries 14-40% of the pole dipole; quadrupole null p 0.00343 -> 0.129; sky fraction 0 -> 0.0755
 - risk: none
@@ -246,13 +246,13 @@ The CF4 dipole excess is a hemisphere step of equal size in all four indicator f
 
 - evidence: per-method hemisphere steps with the exact cross-covariance; hemisphere-split axis scan with the exact body
 - validity: linear body; hemisphere is a proxy for survey labels; the sign(dec) axis was chosen after the first pass
-- novelty: LOW, pending R54-L07: E43 fits per-catalogue dipoles with a log-distance estimator and finds larger dipoles for TFR and 6dFGS than for SDSS and SN; E09 and E33 find the TF dipole compatible with LCDM flows; specific here is the exact cross-covariance between families
+- novelty: LOW (searched): E43 already compares constituent catalogues with a log-distance estimator; the exact pair-sum cross-covariance between indicators is the only addition, and the step is UNRESOLVED (R54-L04); nearest prior art: E43 Nusser & Tully 2026 (per-catalogue log-distance dipoles; 6dFGS removal); E09 Stiskalek et al. 2026 (TF zero-point dipole); E33 Boubel et al. 2024 (TF H0 dipole)
 - testability: HIGH
 - robustness: consistency p=0.867; single-axis tail 0.0017; tail of the scan maximum over 151 split axes 0.0339; the pole ranks 1 of 151; jackknife pole dipole -3.6% to -3.1%
 - risk: equal steps can have different causes (a 6dFGS versus SDSS zero point inside FP, local flows in the shallow TF and SN samples); the four estimates share the body (variance of the best single family / variance of the common step = 1.15); the step (z < 0.055) and the window excess (outer windows) are different measurements
 - kill criterion: survey-resolved zero points absorb the step (R54-L04)
-- executed result: common step -1.66 +- 0.53% of H; common-dipole Wald p=0.43
-- next action: R54-L04
+- executed result: common step -1.66 +- 0.53% of H; common-dipole Wald p=0.43; R54-L04 decision check: HOLD (step class UNRESOLVED; robust class DEPENDS_ON_ZERO_POINT_NUISANCE_MODEL)
+- next action: R54-L06 joint tomography
 
 ### H-L5c (L5) - HOLD
 
@@ -265,8 +265,8 @@ The CF4 dipole-plus-quadrupole pattern is locked to the equatorial pole.
 - robustness: calibrated sky-fraction tail: pooled 0.0242, method monopoles 0.0085, method x hemisphere steps 0.147
 - risk: the pole_locked flag fires in 17% of draws for an injected hemisphere step of the observed size (1% without injection), so a tail above 0.01 does not exclude locking
 - kill criterion: survey-resolved zero points (R54-L04) put the tail on one side of 0.01 for every nuisance model
-- executed result: first pass (ideal-sky body, linear estimator): 2.8 deg, sky fraction 0.0005; after the estimator bias is subtracted the sky fraction is 0.0755; class by nuisance model: EXCESS_NOT_POLE_LOCKED / UNRESOLVED_POLE_LOCKED / LCDM_BODY_COMPATIBLE
-- next action: R54-L04
+- executed result: first pass (ideal-sky body, linear estimator): 2.8 deg, sky fraction 0.0005; after the estimator bias is subtracted the sky fraction is 0.0755; class by nuisance model: EXCESS_NOT_POLE_LOCKED / UNRESOLVED_POLE_LOCKED / LCDM_BODY_COMPATIBLE; R54-L04 decision check: HOLD (step class UNRESOLVED; robust class DEPENDS_ON_ZERO_POINT_NUISANCE_MODEL)
+- next action: R54-L06 joint tomography
 
 ### H-L5h (L5) - HOLD
 
@@ -279,8 +279,8 @@ A depth-independent fractional quadrupole remains after the method/hemisphere sp
 - robustness: Wald p=0.000146 pooled and 0.000489 after the split, but the 20-dof null has p=0.017
 - risk: reading a footprint systematic as shear
 - kill criterion: survey-resolved monopoles remove it (R54-L04)
-- executed result: 2.5% of H
-- next action: R54-L04
+- executed result: 2.5% of H; R54-L04 decision check: HOLD (step class UNRESOLVED; robust class DEPENDS_ON_ZERO_POINT_NUISANCE_MODEL)
+- next action: R54-L06 joint tomography
 
 ### H-L5e (L5) - REJECT
 
@@ -358,13 +358,13 @@ Selection rule: under O(3) equivariance the first-order response is block diagon
 
 - evidence: proof (Schur's lemma) + independent numerical count of the equivariant responses
 - validity: variables entering as tensors at the observer or as homogeneous histories; fails for finite-wavelength modes and parity-violating measurement chains
-- novelty: LOW, pending R54-L07: every pattern is published (E18, E25, E50, E51); the block rank criterion and the null channels as one statement were not found in the searches run
+- novelty: LOW, UNVERIFIED (addendum task R54-A2; R54-L07 was closed before this node existed): every pattern is published (E18, E25, E50, E51); the block rank criterion and the null channels as one statement were not found in the searches run
 - testability: HIGH
 - robustness: exact inside its scope
 - risk: quoting it for finite-wavelength modes (Bianchi families with structure)
 - kill criterion: an equivariant first-order response that mixes blocks
 - executed result: the numerical count reproduces the table with reflections and loses it with rotations only
-- next action: R54-L06 builds its identification table with block_identification; R54-L07 checks priority
+- next action: addendum tasks R54-A2 (priority check) and R54-A3 (consistency with the executed identification table)
 
 ### H-T7 (THM) - PROMOTE
 
@@ -386,13 +386,13 @@ The T and E quadrupole kernels form a Chebyshev system: a shear history invisibl
 
 - evidence: proof + checks on the committed ionization history
 - validity: type I, first order, positive scattering rate on the support
-- novelty: LOW to MEDIUM, UNVERIFIED pending R54-L07: the kernels are classical (E46) and the sign-change argument is standard (E68); the statement for this pair was not found in the searches run
+- novelty: LOW to MEDIUM, UNVERIFIED (addendum task R54-A2): the kernels are classical (E46) and the sign-change argument is standard (E68); the statement for this pair was not found in the searches run
 - testability: HIGH
 - robustness: exact
 - risk: quoting an upper limit on a shear amplitude without naming the family or the sign restriction
 - kill criterion: a non-zero history with fewer sign changes in the common kernel
 - executed result: one-sign-change identity and two-sign-change kernel elements verified numerically
-- next action: R54-L06 and the manuscript quote shear limits only with their family; R54-L07 checks priority
+- next action: the manuscript quotes shear limits only with their family (theorem_usage); addendum task R54-A2 checks priority
 
 ### H-T9 (THM) - PROMOTE
 
@@ -406,7 +406,7 @@ Frame algebra: count-dipole excess plus bulk flow of the same shell vanishes ide
 - risk: reading the same-shell identity as a physical test
 - kill criterion: n/a
 - executed result: identity verified to machine precision
-- next action: R54-L06 applies the closure only across different shells
+- next action: the manuscript reads the closure of R54-EQ-38 as a physical test only across different shells (theorem_usage)
 
 ### H-L6c (L6) - HOLD
 

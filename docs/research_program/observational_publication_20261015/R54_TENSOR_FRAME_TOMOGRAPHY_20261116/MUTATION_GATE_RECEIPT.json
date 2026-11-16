@@ -155,8 +155,80 @@
    "test": "tests/r54/test_r54_modules.py::test_eq06_massive_neutrino_stress_weight"
   },
   {
-   "file": "htt/htt/htt/infer/r54_identifiability.py",
+   "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
+   "id": "MG-29",
+   "meaning": "support interval computed in unscaled coordinates (R54-IR-08)",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_modules.py::test_eq21_support_interval_in_scaled_coordinates"
+  },
+  {
+   "file": "scripts/r54/run_r54_cf4_exact.py",
    "id": "MG-21",
+   "meaning": "sign of the global-tilt closure (R54-EQ-38)",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_conventions.py::test_mg21_eq38_tilt_closure_vanishes_for_one_frame_offset"
+  },
+  {
+   "file": "scripts/r54/run_r54_cf4_exact.py",
+   "id": "MG-22",
+   "meaning": "sign of the hemisphere-step magnitude (R54-EQ-36)",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_conventions.py::test_mg22_eq36_north_modulus_offset_gives_negative_step_and_positive_delta_mu"
+  },
+  {
+   "file": "scripts/r54/run_r54_lowz_frames.py",
+   "id": "MG-23",
+   "meaning": "ICRS to Galactic rotation transposed",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_conventions.py::test_mg23_icrs_to_galactic_rotation"
+  },
+  {
+   "file": "scripts/r54/run_r54_cf4_exact.py",
+   "id": "MG-24",
+   "meaning": "direction of the axis-locking tail",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_conventions.py::test_mg24_axis_locking_tail_is_small_for_a_pole_aligned_signal"
+  },
+  {
+   "file": "scripts/r54/run_r54_cmb_type1.py",
+   "id": "MG-25",
+   "meaning": "sign of the ideal E response (R54-EQ-04)",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_conventions.py::test_mg25_eq04_ideal_e_response_has_the_sign_of_the_t_response"
+  },
+  {
+   "file": "scripts/r54/run_r54_cf4_exact.py",
+   "id": "MG-26",
+   "meaning": "pair-sum cache key blind to a row permutation",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_conventions.py::test_mg26_pair_sum_cache_key_changes_under_row_permutation_and_positions"
+  },
+  {
+   "file": "scripts/r54/run_r54_cmb_type1.py",
+   "id": "MG-27",
+   "meaning": "reionization quadrupole attenuated to today instead of to z = 50",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_conventions.py::test_mg27_reionization_only_e_equals_the_propagated_quadrupole"
+  },
+  {
+   "file": "scripts/r54/run_r54_lowz_frames.py",
+   "id": "MG-28",
+   "meaning": "linear-estimator magnitude map applied to the log estimator",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_conventions.py::test_mg28_eq36_log_estimator_magnitude_map"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_identifiability.py",
+   "id": "MG-30",
    "meaning": "axial vectors treated as polar (parity dropped from the selection rule)",
    "pytest_exit_code": 1,
    "status": "KILLED",
@@ -164,7 +236,7 @@
   },
   {
    "file": "htt/htt/htt/infer/r54_identifiability.py",
-   "id": "MG-22",
+   "id": "MG-31",
    "meaning": "wrong kernel ratio of the shear-history moment problem",
    "pytest_exit_code": 1,
    "status": "KILLED",
@@ -172,7 +244,7 @@
   },
   {
    "file": "htt/htt/htt/infer/r54_identifiability.py",
-   "id": "MG-23",
+   "id": "MG-32",
    "meaning": "wrong Wishart factor of the estimator covariance",
    "pytest_exit_code": 1,
    "status": "KILLED",
@@ -180,7 +252,7 @@
   },
   {
    "file": "htt/htt/htt/infer/r54_identifiability.py",
-   "id": "MG-24",
+   "id": "MG-33",
    "meaning": "zero-point dipole columns dropped from the gauge design",
    "pytest_exit_code": 1,
    "status": "KILLED",
@@ -188,21 +260,101 @@
   },
   {
    "file": "htt/htt/htt/infer/r54_identifiability.py",
-   "id": "MG-25",
+   "id": "MG-34",
    "meaning": "constant law not profiled out of the depth-law test",
    "pytest_exit_code": 1,
    "status": "KILLED",
    "test": "tests/r54/test_r54_theorems.py::test_t7c_depth_law_noncentrality_is_a_design_quantity"
+  },
+  {
+   "file": "scripts/r54/handoff_merge.py",
+   "id": "MG-35",
+   "meaning": "merge helper treats the hand-written builder as a generated file and overwrites local work",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_handoff.py::test_merge_helper_never_resolves_a_hand_written_file"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_calibration.py",
+   "id": "MG-L01",
+   "meaning": "permute the 300 simulation rows relative to nothing (control) and permute the 135 columns of the simulations only",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_calibration.py::test_mg_l01_covariance_identity_detects_column_but_not_row_permutation"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_calibration.py",
+   "id": "MG-L02",
+   "meaning": "use sims[i] inside its own covariance (no leave-one-out)",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_calibration.py::test_mg_l02_leave_one_out_obeys_the_hotelling_law_and_self_inclusion_does_not"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_calibration.py",
+   "id": "MG-L03",
+   "meaning": "use a single split-difference vector as the null distribution",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_calibration.py::test_mg_l03_empirical_null_refuses_a_single_split_difference"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_counts.py",
+   "id": "MG-L04",
+   "meaning": "run the mock null with a different latitude cut than the data",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_counts.py::test_mg_l04_mask_hash_distinguishes_latitude_cuts"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_survey.py",
+   "id": "MG-L05",
+   "meaning": "join the survey labels by row order after shuffling the raw table",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_survey.py::test_mg_l05_labels_are_joined_on_identifiers_not_on_row_order"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_survey.py",
+   "id": "MG-L06",
+   "meaning": "fit the survey step without the redshift-bin monopoles",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_survey.py::test_mg_l06_survey_step_needs_the_redshift_monopoles"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_joint.py",
+   "id": "MG-L07",
+   "meaning": "add 1e-6 * I to a singular block before inversion",
+   "pytest_exit_code": 1,
+   "status": "KILLED",
+   "test": "tests/r54/test_r54_joint.py::test_mg_l07_singular_block_keeps_its_null_direction"
   }
  ],
  "schema": "htt.r54.mutation_receipt/1",
  "sources_sha256": {
+  "htt/htt/htt/infer/r54_calibration.py": "bf2b458033ed4c63c6126e359e3736cfd94a2584dbb3b0808ba8c15ce2d04ae2",
+  "htt/htt/htt/infer/r54_counts.py": "5af9e9f817d4ae1b2fdff64bad6bf87767862175596493ad830fb46a546691f1",
   "htt/htt/htt/infer/r54_distance_estimators.py": "9640b9785d2c4a5164e75018c2bfd2d0c8f6eb8072cb1a445e4f7589f9876d50",
   "htt/htt/htt/infer/r54_identifiability.py": "bba3f26d1c1c1dff93adb0f4953ef69e3ddc88a4a846157659dfcef16db44f3e",
+  "htt/htt/htt/infer/r54_joint.py": "900016d855f4cd825681a0c51a656d3cca76425f77ec77692a5c558c4cb3b9ee",
   "htt/htt/htt/infer/r54_lcdm_body.py": "a61e88bb012fedeff78e57a31278f1e62e9225c03cca5f10c29c23cf996b3085",
-  "htt/htt/htt/infer/r54_tensor_five_view.py": "78699eb595c61f31f358fa860d89a30e64bd7975ed5f4b9d6d45085c7b5bd08f",
+  "htt/htt/htt/infer/r54_pr4_bypass.py": "a23de9a134f30f2685bfd26bde8b6d9e03f17996e3e73366c474735b79aa04fd",
+  "htt/htt/htt/infer/r54_survey.py": "57aa6a3834d4c9cb8c04c9ac5d15044135eaea37e6e9d9bcfe9f9ee51237485a",
+  "htt/htt/htt/infer/r54_tensor_five_view.py": "4811340d211f2c4d2fa330bd5d6cf160fc83a04458b5eb9c3a259fd1cb731b6d",
   "htt/htt/htt/infer/r54_type1_thomson.py": "607a6e268ba98bc49466f8ac903b6e55b2d4a802bea9003589dc4544b66be433",
-  "tests/r54/test_r54_modules.py": "c79f5e3adebe62b6b7f383a576857824def420cac23577c02be6078607d6dc5b",
+  "scripts/r54/handoff_merge.py": "3036cd20ffb7262d266849a495f0fe39b3f19be3be03f2f0a199553278c274da",
+  "scripts/r54/run_r54_cf4_exact.py": "0d84ec958dfc964d28f39ac2edc506dd5c8ed8009ad1c12019cb425b15418300",
+  "scripts/r54/run_r54_cmb_type1.py": "582f088808dc0f3ce0c1c08eda9ff92004a6afabd8c0a04254e68c3ba7d710d1",
+  "scripts/r54/run_r54_lowz_frames.py": "030ff65972be94b1f7a1d7f00b2c7f4e2b45592286dc1aae3c0af5eb2fa9a0c5",
+  "tests/r54/test_r54_calibration.py": "48dcaf8105eb5a74c4ce2de05e1d7d33fbdd4758ea796cabf2936f8b9d1f9d39",
+  "tests/r54/test_r54_conventions.py": "1310ccf1892afd77fc64b8b54b884666bf2b07fc398cc0ea7a576b9b8e84de3f",
+  "tests/r54/test_r54_counts.py": "0d83345548cc11e68a49ceba1a31361bec367e1cf70116d82c6da033d8b1f6dd",
+  "tests/r54/test_r54_handoff.py": "7baf8931b1305cb2caf80c24497f275309dbb05778b3aa8797df1855424e460b",
+  "tests/r54/test_r54_joint.py": "57401fab9cce1961018890638910633abfa398fcf94fb059d8ec04e95cbd62d5",
+  "tests/r54/test_r54_modules.py": "1b46750b929b4c439166d2e3eb8d54c2bf8328b58e75bd1d01de2e6022b7965c",
+  "tests/r54/test_r54_pr4_bypass.py": "c03b390fde00e2fdaefee6fb0817e4dd7a4ebe347b8fbf30d8afc55c4f97e93f",
+  "tests/r54/test_r54_survey.py": "25b70f9bccbb9c1578a077036e07f1bd318997a0790be2672d75084a398e7638",
   "tests/r54/test_r54_theorems.py": "da9cea78f4f02dfb1b986f66cf893ef17de0afc5f05aab2e930cf0451cd1b8a3"
  },
  "unmutated_suite_exit_code": 0

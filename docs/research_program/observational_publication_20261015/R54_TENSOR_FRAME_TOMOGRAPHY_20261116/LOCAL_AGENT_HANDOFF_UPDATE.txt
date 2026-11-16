@@ -1,0 +1,81 @@
+R54 HANDOFF UPDATE (2026-11-16) - theorem addendum for the local session, after the programme stop
+
+FROM  the cloud research session
+TO    the local coding agent on research/r54-tensor-frame-tomography-20261116 of cosmosapjw-quantum/htt_base
+State when this was written: your pushed head 0c17f30d closes the programme (R54-L01 DONE_SCOPED_C0, R54-L04 DONE_SCOPED_C0, R54-L02 DONE_SCOPED_C0, R54-L03 DONE_SCOPED_C0, R54-L06 DONE_SCOPED_C0, R54-L07 DONE_SCOPED_C0, R54-L08 DONE_SCOPED_C0).
+While you worked, the cloud session proved statements that need no data (node R54-THM). This update is your head merged with that node.
+It does not reopen the programme. It changes no executed result, no node step, no decision and no threshold, and it asks for no new analysis.
+Machine-readable version: docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/HANDOFF_UPDATE.json
+
+1. WHAT ARRIVES
+Branch research/r54-theorems-20261116 (draft PR #578, stacked on PR #577) = your head 0c17f30d plus:
+- node R54-THM: THEOREMS.md (T1 to T9, L1, L2), htt/htt/htt/infer/r54_identifiability.py, tests/r54/test_r54_theorems.py, evidence rows E50 to E69,
+  hypotheses H-T1, H-T2, H-T6, H-T7, H-T8, H-T9, gates MG-30 to MG-34 (renumbered; MG-21 to MG-29 stay yours);
+- scripts/r54/handoff_merge.py and tests/r54/test_r54_handoff.py (gate MG-35): the merge helper used below and its tests;
+- contract key theorem_usage (wording rules for manuscript statements), review tracking per file, a mutation receipt that runs the unmutated
+  suite first and repairs a run that was killed.
+Untouched: every file under RESULTS/, every run script, every r54 module of yours and of the start commit, your test files, INDEPENDENT_REVIEW.json,
+R57_DECISION_REVIEW.json, DEVIATIONS.json, pr_backlog.yaml. Merged in the cloud, your side kept: build_r54_contract.py,
+tests/r54/test_r54_results_binding.py, pr_status.yaml, the generated documents.
+Not verifiable on the cloud machine: tests/r54/test_r54_results_binding.py::test_committed_numbers_are_reproduced_by_the_run_scripts
+stops there with "pair-sum cache ... does not match the operator or model in read-only mode", on your own head as well. Step 3c on your machine is
+the verification that counts.
+
+2. WHEN TO APPLY
+At a safe checkpoint: all work committed (git status --short shows no tracked change), no process of yours running or queued (step 3c rewrites
+source files in place, one at a time, and restores them), and PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q passes.
+
+3. HOW TO APPLY (repository root, your working branch, the interpreter with which you run the tests)
+  a. git fetch origin +refs/heads/research/r54-theorems-20261116:refs/remotes/origin/research/r54-theorems-20261116
+  b. git show origin/research/r54-theorems-20261116:scripts/r54/handoff_merge.py | python - apply
+     Its last line is one of:
+       RESULT: ALREADY_APPLIED  nothing to merge; go to section 4.
+       RESULT: FAST_FORWARDED   expected when your branch has no commit after the head named above; go to c.
+       RESULT: MERGE_READY      you have later commits and they merge without a conflict in a hand-written file; nothing is committed yet; go to c.
+       RESULT: MERGE_CONFLICTS  it lists each conflicted hand-written file with its rule; resolve exactly those files, git add them, go to c.
+       RESULT: BLOCKED          it states the reason; remove that reason and run b again. A reason you cannot remove: stop and report.
+  c. python scripts/r54/handoff_merge.py finish
+     It runs the mirror sync, the mutation receipt, the builder, the DAG validator and tests/r54. It must end with HANDOFF OK.
+     On HANDOFF FAILED fix the named cause and run c again. After three failures: write BLOCKER_HANDOFF.md in the R54 directory, run
+     git merge --abort if a merge is open, and report.
+  d. Only if step c printed a commit command: git commit -m "PR-R54-TENSOR-FRAME-TOMOGRAPHY: merge R54-THM addendum and handoff update"
+     Then: git push origin HEAD      (no force; never to main)
+Conflict rules, needed only if you have commits after 0c17f30d (the helper prints the rule for each file):
+  - Generated documents, the mutation receipt and the machine_readable mirrors are never merged by hand. The helper takes one side; step c rebuilds them.
+  - scripts/r54/build_r54_contract.py and tests/r54/*.py: keep both sides. Reserved by this update: evidence E50-E69, gates MG-30..MG-35, hypotheses H-T1 H-T2 H-T6 H-T7 H-T8 H-T9, cloud node R54-THM.
+  - Never delete or weaken a test or a gate to finish the merge. Never resolve a file that the helper did not list.
+
+4. ADDENDUM TASKS (ask the user which to do; default R54-A1 and R54-A2)
+No addendum task reopens the programme. The decision of PR-R57 stands. Until R54-A1 is recorded, cite no theorem in the note.
+  R54-A1 (needed before a theorem is used): independent review of the addendum files.
+      Do: a reviewer that did not write them reads the files of LOCAL_AGENT_CONTRACT.json:pending_independent_review.uncovered and the review is recorded as that entry prescribes.
+      Done when: pending_independent_review.uncovered is empty and THEOREMS.md carries the line 'Independent review:' in place of its status sentence.
+  R54-A2 (needed before a theorem is used): priority and attribution check of the theorems.
+      Do: search the primary literature for (a) an identifiability or selection-rule statement for the kinematic variables by irreducible block and parity, including null channels, and (b) a statement on the number of sign changes of a shear history hidden from the temperature and E quadrupoles; read the primary sources of the evidence rows E54 and E63 to E69, which are recorded from memory, and the passage of E51 on the B-mode proper-motion dipole, which was seen only in part; write docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_A2_ATTRIBUTION.json with novelty_checks for H-T6 and H-T8 and evidence_verification for those rows, in the formats of RESULTS/R54_L07_BENCHMARK.json; then set the novelty fields of H-T6 and H-T8 and the verification status of those rows in the builder to what the file records.
+      Done when: the file exists and tests/r54 passes; if prior art is found the theorems stay as attributed re-derivations.
+  R54-A3 (optional): consistency record between the theorems and the executed results.
+      Do: from stored quantities only, without a new run: one report table through the builder with the rows T1 and the benchmark ties, T6 and the unidentified vorticity, T7 and the rank deficit of the polar block and the class of the survey zero point, T8 and the model label of the present-day shear, T9 and the shells and degrees of freedom of the tilt closure; each row states agreement or the discrepancy; a discrepancy is reported and nothing is tuned.
+      Done when: the table is generated and bound by a test.
+  R54-A4 (optional, after R54-A1): wording check of the claim table against theorem_usage.
+      Do: for each row of MANUSCRIPT_CLAIM_TABLE_R54.md record whether a rule of theorem_usage applies and whether the row complies; change wording through the builder only; change no decision and no number.
+      Done when: every row carries the record.
+
+5. REVIEW STATUS
+Not covered by a recorded review: 5 of 15 files of the scope (r54_identifiability.py, THEOREMS.md, test_r54_theorems.py, handoff_merge.py, test_r54_handoff.py).
+Your diff review covers the code of the start commit. A file of node R54-THM or of this update counts as reviewed only if a recorded reviewer lists
+it in `files`. A review without a finding records `checks_performed`; never invent a finding.
+
+6. RULES
+No downloads. PR4 is never a dependency. Code only in htt/htt/htt/infer/r54_*.py, scripts/r54 and tests/r54. Numbers reach documents only through the builder.
+No force push, no rebase of pushed commits, never merge to main. Claim ceiling C0. Do not open a research loop. Never run the mutation receipt or
+step 3c while another process of yours is running or queued.
+
+7. REPORT AFTER APPLYING (one line per field)
+  1. result line of step b
+  2. conflicted files and how each was resolved
+  3. last line of step c
+  4. gates KILLED / gates declared
+  5. commit hash after step d
+  6. pushed (yes or no)
+  7. addendum tasks done, with the files written
+  8. anything you could not do

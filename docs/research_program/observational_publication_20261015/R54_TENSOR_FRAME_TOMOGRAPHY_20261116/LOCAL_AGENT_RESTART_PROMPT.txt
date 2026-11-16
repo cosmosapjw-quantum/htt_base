@@ -2,6 +2,7 @@ ROLE
 You are the local coding agent for repository cosmosapjw-quantum/htt_base. Work only on branch
 research/r54-tensor-frame-tomography-20261116 (base research/r50-observed-convergence-20261115). Follow AGENTS.md. Claim ceiling is C0.
 Setup: git fetch origin && git checkout research/r54-tensor-frame-tomography-20261116 && git pull --ff-only
+Theorem addendum (node R54-THM) and how to bring it into this branch: LOCAL_AGENT_HANDOFF_UPDATE.txt.
 
 READ FIRST (in this order, all under docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/)
 1. LOCAL_AGENT_CONTRACT.json   conventions, equations, module API, node specifications
@@ -16,11 +17,12 @@ BEFORE ANY EDIT
 - Run: PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q
   Expected: all pass. Then run: python scripts/r54/build_r54_contract.py mutation-receipt   (every gate must report KILLED).
 - Confirm committed_inputs_sha256 of the contract against the working tree.
-- Independent diff review: one review of the cloud code was interrupted before it reported. Before the first edit, have a reviewer that did not write the code review the files of LOCAL_AGENT_CONTRACT.json:pending_independent_review.scope, record every finding as specified there, and fix critical findings first.
+- Independent diff review: complete for the code of the start commit. The files of node R54-THM and of the handoff update are not covered yet: addendum task R54-A1
+  (LOCAL_AGENT_CONTRACT.json:pending_independent_review.uncovered; record the review with its `files` list).
 
 WHAT IS ALREADY DONE (do not redo)
 - CMB lane: closed-form T and E history kernels (re-derivation of E46, no novelty claim); r_E(perfect fluid) = 0.0711; the present-shear
-  map is model-labelled (1.42e-10 perfect fluid T+E; 6.65e-08 massless stress family; 3.43e-08 minimal normal ordering) and its
+  map is model-labelled (1.42e-10 perfect fluid T+E; 6.66e-08 massless stress family; 3.43e-08 minimal normal ordering) and its
   numbers are illustrations; the T functional does not bound a late-time shear whose sign changes; PR3 B ell=2 null fails
   (p = 9.54e-06), so the E lane is DIAGNOSTIC.
 - CF4 lane (catalogue level, 35970 committed groups; scripts/r54/run_r54_cf4_exact.py): the R36 linear estimator is biased and is
@@ -33,14 +35,20 @@ WHAT IS ALREADY DONE (do not redo)
   Hemisphere step (z < 0.055), consistent between FP, TF, SN, OTHER: -1.66 +- 0.53% of H; single-axis tail 0.0017,
   scan-corrected tail 0.0339; never quote the single-axis tail alone. Its reading as a common mode is on HOLD.
 - Counts: the receipt estimator has power 0.20 against a doubled dipole; its non-detection decides nothing.
-- Theorems (THEOREMS.md, tests/r54/test_r54_theorems.py, htt/htt/htt/infer/r54_identifiability.py): statements proved without data.
-  Use block_identification for the identification table of R54-L06. Quote a shear limit only with its history family or sign
-  restriction (T8), a bound on a constant Hubble multipole only with its calibration body (T7), and the tie with the exact
-  likelihood as a theorem (T1). The proofs have not been read by an independent reviewer; they are in the pending review scope.
+- Theorems (THEOREMS.md, tests/r54/test_r54_theorems.py, htt/htt/htt/infer/r54_identifiability.py): statements proved without data (node R54-THM). They change
+  no executed node. Rules for manuscript statements that rest on them: LOCAL_AGENT_CONTRACT.json:theorem_usage. Open addendum tasks R54-A1 to R54-A4:
+  HANDOFF_UPDATE.json. The proofs have not been read by an independent reviewer: cite no theorem before R54-A1.
 - Independent review: INDEPENDENT_REVIEW.json lists every finding and its resolution. Do not re-promote a hypothesis that the review moved to HOLD
   unless the decision_checks of the node that owns it say so.
 
-YOUR TASKS (execute in this order; one node = one commit series)
+YOUR TASKS (execute in this order; one node = one commit series; status from the committed outputs)
+  [DONE_SCOPED_C0] R54-L01
+  [DONE_SCOPED_C0] R54-L04
+  [DONE_SCOPED_C0] R54-L02
+  [DONE_SCOPED_C0] R54-L03
+  [DONE_SCOPED_C0] R54-L06
+  [DONE_SCOPED_C0] R54-L07
+  [DONE_SCOPED_C0] R54-L08
   R54-L01  calibrate the T+E estimator on the 300 FFP10 vectors; masked E response
   R54-L04  CF4 survey-resolved zero points from the raw CF4 tables: is the common hemisphere step a survey calibration term?
   R54-L02  PR4 bypass: analytic T covariance, cross-pipeline and cross-experiment E lane

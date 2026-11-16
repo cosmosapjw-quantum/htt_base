@@ -62,7 +62,7 @@ def _module(rel: str, name: str):
 
 
 def _generated_text_files() -> list[Path]:
-    return sorted(R54.glob("*.md")) + sorted((R54 / "state").glob("*.md")) + [R54 / "LOCAL_AGENT_RESTART_PROMPT.txt"]
+    return sorted(R54.glob("*.md")) + sorted((R54 / "state").glob("*.md")) + [R54 / "LOCAL_AGENT_RESTART_PROMPT.txt", R54 / "LOCAL_AGENT_HANDOFF_UPDATE.txt"]
 
 
 @pytest.fixture(scope="module")
@@ -104,6 +104,26 @@ def test_inputs_are_the_committed_ones(results):                                
         assert res["claim_tier"].startswith("C0")
     for rel, digest in _json(R54 / "LOCAL_AGENT_CONTRACT.json")["committed_inputs_sha256"].items():
         assert _sha(ROOT / rel) == digest, f"contract input drift: {rel}"
+
+
+def test_local_results_bind_their_scripts_and_inputs():
+    """R54 local node results: script hash, repository inputs, and absolute data-drive inputs when the drive is mounted; acceptance recorded."""
+    local = ("R54_L01_RESULT.json", "R54_L02_RESULT.json", "R54_L03_RESULT.json", "R54_L04_RESULT.json", "R54_L06_JOINT.json", "R54_L07_BENCHMARK.json")
+    for path in [R54 / "RESULTS" / name for name in local if (R54 / "RESULTS" / name).is_file()]:
+        res = _json(path)
+        if "provenance" not in res:
+            continue
+        prov = res["provenance"]
+        assert _sha(ROOT / prov["script"]) == prov["script_sha256"], f"{prov['script']} changed after {path.name}: re-run the node"
+        for key, digest in prov["inputs_sha256"].items():
+            p = Path(key) if key.startswith("/") else ROOT / key
+            if key.startswith("/") and not p.exists():
+                continue                                          # data drive not mounted: checked where it is
+            if p.exists():
+                assert _sha(p) == digest, f"input drift for {path.name}: {key}"
+        assert res["claim_tier"].startswith("C0") and res["status"] in ("DONE_SCOPED_C0", "BLOCKED_MISSING_INPUT")
+        if res["status"] == "DONE_SCOPED_C0":
+            assert res["acceptance"] and all(set(v) >= {"value", "op", "threshold", "pass"} for v in res["acceptance"].values())
 
 
 # ----------------------------------------------------------------- (b) plain-numpy recomputation
@@ -240,7 +260,7 @@ def test_l05_statistics_recomputed_with_plain_numpy(results, cf4):
         scan_body, axes = z["body"], z["axes_icrs"]
     m0 = rows["method_step"][0]
     assert scan_body.shape == (4 * scan["n_axes"],) * 2 and np.allclose(axes[0], [0.0, 0.0, 1.0], atol=1e-12)
-    assert np.allclose(scan_body[:4, :4], body[m0:m0 + 4, m0:m0 + 4], rtol=1e-8, atol=0.0)      # two independent pair-sum executions agree
+    assert np.allclose(scan_body[:4, :4], body[m0:m0 + 4, m0:m0 + 4], rtol=1e-8, atol=0.0)      # two separate pair-sum runs (same kernel and positions; not an independent check) agree
     tails = scan["tails"]
     assert tails["pole_single_axis_two_sided"] < tails["scan_max_at_least_pole_value"] <= 1.0
     assert tails["scan_max_at_least_observed_max"] <= tails["scan_max_at_least_pole_value"] + 1e-12
@@ -271,6 +291,7 @@ def test_committed_numbers_are_reproduced_by_the_run_scripts(builder, results):
     cmb = _module("scripts/r54/run_r54_cmb_type1.py", "r54_run_cmb")
     low = _module("scripts/r54/run_r54_lowz_frames.py", "r54_run_lowz")
     exact = _module("scripts/r54/run_r54_cf4_exact.py", "r54_run_cf4")
+    exact.CACHE_WRITE = False                                    # a stale or missing pair-sum cache fails here; it is never rewritten by pytest
     tab = np.loadtxt(low.PK, delimiter=",", skiprows=1)
     got = builder.numbers({"history": l1["history"], "data": cmb.clean(cmb.data_block(l1["history"]))},
                           {"cf4": low.clean(low.cf4_block(tab[:, 0], tab[:, 1])), "count_dipoles": low.clean(low.counts_block())},
@@ -332,13 +353,14 @@ def test_generated_documents_match_the_builder(builder):
     n = builder.numbers()
     hyps = builder.hypotheses(n)
     texts = {"R54_REPORT_KO.md": builder.report_ko(n), "THEORY_LOOPS.md": builder.theory_md(n),
-             "LOCAL_AGENT_RESTART_PROMPT.txt": builder.prompt_txt(n), "README.md": builder.readme_md()}
+             "LOCAL_AGENT_RESTART_PROMPT.txt": builder.prompt_txt(n), "README.md": builder.readme_md(),
+             "LOCAL_AGENT_HANDOFF_UPDATE.txt": builder.handoff_txt(n)}
     texts.update({f"state/{name}": text for name, text in builder.state_files(n, hyps).items()})
     for rel, text in texts.items():
         assert (R54 / rel).read_text(encoding="utf-8") == text, f"{rel} is stale or hand-edited: run scripts/r54/build_r54_contract.py build"
     docs = {"RESEARCH_DAG.json": builder.dag_doc(n), "LOCAL_AGENT_CONTRACT.json": builder.contract_doc(n), "MUTATION_GATES.json": builder.gates_doc(),
             "SELF_AUDIT_PROTOCOL.json": builder.self_audit_doc(), "ADVERSARIAL_BENCHMARK_SPEC.json": builder.benchmark_doc(n),
-            "PR4_BYPASS_CONTRACT.json": builder.pr4_doc(n), "HISTORY_AUDIT.json": builder.history_doc()}
+            "PR4_BYPASS_CONTRACT.json": builder.pr4_doc(n), "HISTORY_AUDIT.json": builder.history_doc(), "HANDOFF_UPDATE.json": builder.handoff_doc(n)}
     for rel, doc in docs.items():
         assert _json(R54 / rel) == json.loads(json.dumps(doc)), f"{rel} is stale or hand-edited: run scripts/r54/build_r54_contract.py build"
 
@@ -418,7 +440,7 @@ def test_canonical_cards_are_registered_and_mirrored():
 # ----------------------------------------------------------------- (d, e) receipts, language, evidence
 def test_mutation_receipt_is_current_and_complete(builder):
     gates, receipt = _json(R54 / "MUTATION_GATES.json"), _json(R54 / "MUTATION_GATE_RECEIPT.json")
-    implemented = {g["id"] for g in gates["cloud_gates"] if g["id"] != "MG-13"}
+    implemented = {g["id"] for g in gates["cloud_gates"] if g["id"] != "MG-13"} | {g["id"] for g in gates["local_gates"] if g["status"] == "IMPLEMENTED"}
     assert receipt["all_killed"] is True and receipt["unmutated_suite_exit_code"] == 0
     assert {r["id"] for r in receipt["gates"]} == implemented and all(r["status"] == "KILLED" for r in receipt["gates"])
     assert set(receipt["sources_sha256"]) == set(builder.RECEIPT_SOURCES)
@@ -446,26 +468,39 @@ def test_evidence_ids_resolve_and_keep_their_verification_status(builder):
     for token in set(re.findall(r"\bE\d{2}\b", text)):
         assert token in known, f"evidence id {token} is cited but not in the ledger"
     hyps = {h["id"]: h for h in _json(R54 / "state/HYPOTHESES.json")["hypotheses"]}
-    for hid in ("H-L1b", "H-L5g"):                               # novelty stays flagged until the literature check of R54-L07
-        assert "UNVERIFIED" in hyps[hid]["dimensions"]["novelty"] or "R54-L07" in hyps[hid]["dimensions"]["novelty"]
+    l07 = R54 / "RESULTS/R54_L07_BENCHMARK.json"
+    for hid in ("H-L1b", "H-L5g"):                               # novelty stays flagged until the literature check of R54-L07, then comes from it
+        if l07.is_file():
+            assert hyps[hid]["dimensions"]["novelty"].startswith(_json(l07)["novelty_checks"][hid]["novelty"])
+        else:
+            assert "UNVERIFIED" in hyps[hid]["dimensions"]["novelty"] or "R54-L07" in hyps[hid]["dimensions"]["novelty"]
     assert {h["decision"] for h in hyps.values()} <= {"PROMOTE", "HOLD", "REJECT", "REOPEN"}
     # decisions fixed by the independent review: no claim in either direction on pole locking, excess or common mode
+    local = builder.local_hypothesis_decisions()               # decisions fixed by the decision checks of executed local nodes
     for hid in ("H-L5c", "H-L5a", "H-L5g", "H-L2a", "H-L4a", "H-L6b"):
-        assert hyps[hid]["decision"] == "HOLD", hid
+        assert hyps[hid]["decision"] == local.get(hid, {"decision": "HOLD"})["decision"], hid
     for hid in ("H-C2", "H-L3c", "H-L5e", "H-L1c", "H-L1d"):
         assert hyps[hid]["decision"] == "REJECT", hid
     for hid in ("H-C1", "H-L1a", "H-L3a", "H-L3b"):               # promoted without a novelty claim
         assert hyps[hid]["decision"] == "PROMOTE" and hyps[hid]["dimensions"]["novelty"].startswith("NONE claimed"), hid
 
 
-def test_independent_review_record_is_complete_and_resolved():
+def test_independent_review_record_is_complete_and_resolved(builder):
     rec = _json(R54 / "INDEPENDENT_REVIEW.json")
     nodes = {n["id"] for n in _json(R54 / "LOCAL_AGENT_CONTRACT.json")["nodes"]}
     contract = _json(R54 / "LOCAL_AGENT_CONTRACT.json")
     assert len(rec["reviewers"]) >= 1 and {r["independent_of_author"] for r in rec["reviewers"]} == {True}
     # a review that did not report is never counted as a review: it must be handed over explicitly
     pending = contract["pending_independent_review"]
-    assert pending["status"] == ("PENDING_LOCAL" if rec["incomplete_reviews"] else "NONE")
+    read = {rel for reviewer in rec["reviewers"] for rel in reviewer.get("files", [])}
+    assert all((ROOT / rel).is_file() for rel in read), "a reviewer lists a file that does not exist"
+    assert pending["scope"] == builder.REVIEW_SCOPE and all((ROOT / rel).is_file() for rel in pending["scope"])
+    assert not set(pending["uncovered"]) & read                          # a file that a recorded reviewer lists is covered
+    for rel in builder.REVIEW_SCOPE_ADDED:                               # a file added after the diff review counts only if a reviewer lists it
+        assert (rel in pending["uncovered"]) is (rel not in read), rel
+    if not rec["incomplete_reviews"]:                                    # the recorded diff review covers the scope of the start commit as a whole
+        assert set(pending["uncovered"]) <= set(builder.REVIEW_SCOPE_ADDED)
+    assert pending["status"] == ("PENDING_LOCAL" if rec["incomplete_reviews"] or pending["uncovered"] else "NONE")
     for item in rec["incomplete_reviews"]:
         assert item["status"] == "INTERRUPTED" and item["reason"] and "findings" not in item and "verdict" not in item
     if rec["incomplete_reviews"]:
@@ -473,7 +508,8 @@ def test_independent_review_record_is_complete_and_resolved():
         assert "interrupted" in (R54 / "LOCAL_AGENT_RESTART_PROMPT.txt").read_text(encoding="utf-8")
     seen = set()
     for reviewer in rec["reviewers"]:
-        assert reviewer["verdict"] in ("ACCEPT", "ACCEPT_WITH_REQUIRED_CHANGES", "REJECT") and reviewer["findings"]
+        assert reviewer["verdict"] in ("ACCEPT", "ACCEPT_WITH_REQUIRED_CHANGES", "REJECT")
+        assert reviewer["findings"] or reviewer.get("checks_performed"), "a review records its findings or, when it has none, the checks it ran; never an invented finding"
         for f in reviewer["findings"]:
             assert f["id"] not in seen and f["severity"] in ("critical", "major", "minor") and f["summary"] and f["resolution"]
             seen.add(f["id"])
@@ -501,12 +537,69 @@ def test_theorems_document_is_bound_to_checks_and_claims_no_unverified_novelty()
     for tid, prefix in (("T1", "test_t1_"), ("T2", "test_t2_"), ("T3", "test_t3_"), ("T4", "test_eq20_"), ("T5", "test_t5_"), ("T6", "test_t6_"),
                         ("T7", "test_t7"), ("T8", "test_t8_"), ("T9", "test_t9_"), ("L1", "test_l1_"), ("L2", "test_eq06_")):
         assert f"### {tid}." in text and f"def {prefix}" in checks, f"{tid} lacks a statement or an executable check"
-    assert "not yet read by an independent" in text                      # the proofs are flagged as unreviewed until the record says otherwise
+    pending = _json(R54 / "LOCAL_AGENT_CONTRACT.json")["pending_independent_review"]
+    if any(rel.endswith("THEOREMS.md") for rel in pending["uncovered"]):  # flagged as unreviewed until a recorded review lists the file (R54-A1)
+        assert "not yet read by an independent" in text
+    else:
+        assert "not yet read by an independent" not in text and re.search(r"^Independent review: .*\d{4}-\d{2}-\d{2}", text, re.M)
     assert not re.search(r"\b\d+\.\d+e[-+]\d+\b", text), "THEOREMS.md must not carry result numbers"
     hyps = {h["id"]: h for h in _json(R54 / "state/HYPOTHESES.json")["hypotheses"]}
     for hid in ("H-T1", "H-T2", "H-T7", "H-T9"):
         assert hyps[hid]["decision"] == "PROMOTE" and ("NONE claimed" in hyps[hid]["dimensions"]["novelty"] or hyps[hid]["dimensions"]["novelty"].startswith("LOW"))
-    for hid in ("H-T6", "H-T8"):                                         # the two statements with a possible claim stay flagged until R54-L07
-        assert hyps[hid]["decision"] == "PROMOTE" and "R54-L07" in hyps[hid]["dimensions"]["novelty"]
-    scope = _json(R54 / "LOCAL_AGENT_CONTRACT.json")["pending_independent_review"]["scope"]
+    attribution = R54 / "RESULTS/R54_A2_ATTRIBUTION.json"                  # written by addendum task R54-A2
+    for hid in ("H-T6", "H-T8"):                                         # the two statements with a possible claim stay flagged until that task
+        novelty = hyps[hid]["dimensions"]["novelty"]
+        if attribution.is_file():
+            assert novelty.startswith(_json(attribution)["novelty_checks"][hid]["novelty"]), f"{hid}: the novelty field is the text recorded by R54-A2"
+        else:
+            assert hyps[hid]["decision"] == "PROMOTE" and "UNVERIFIED" in novelty, hid
+    if attribution.is_file():
+        rows = {row["id"]: row for row in _json(R54 / "state/HYPOTHESES.json")["evidence"]}
+        for eid, check in _json(attribution)["evidence_verification"].items():
+            assert (rows[eid]["verification"].startswith("VERIFIED")) is (check["status"] == "VERIFIED"), f"{eid}: the ledger status differs from the R54-A2 record"
+    scope = pending["scope"]
     assert any(rel.endswith("THEOREMS.md") for rel in scope) and any(rel.endswith("r54_identifiability.py") for rel in scope)
+
+
+# ----------------------------------------------------------------- theorem addendum after the programme stop
+def test_handoff_update_states_only_facts(builder):
+    doc, contract = _json(R54 / "HANDOFF_UPDATE.json"), _json(R54 / "LOCAL_AGENT_CONTRACT.json")
+    text = (R54 / "LOCAL_AGENT_HANDOFF_UPDATE.txt").read_text(encoding="utf-8")
+    assert all((ROOT / rel).is_file() for rel in doc["delta"]["added"]) and all((ROOT / rel).exists() for rel in doc["delta"]["untouched"])
+    assert doc["delta"]["executed_results_changed"] == doc["delta"]["node_steps_changed"] == doc["delta"]["decisions_changed"] == []
+    assert not set(doc["delta"]["added"]) & set(doc["delta"]["untouched"])
+    present = {"evidence": [row["id"] for row in builder.EVIDENCE_ROWS], "gates": [g[0] for g in builder.implemented_gates()] + ["MG-13"],
+               "hypotheses": [h["id"] for h in _json(R54 / "state/HYPOTHESES.json")["hypotheses"]],
+               "cloud_nodes": [node["id"] for node in _json(R54 / "RESEARCH_DAG.json")["cloud_nodes"]]}
+    for kind, ids in present.items():
+        assert len(ids) == len(set(ids)), f"duplicate {kind} id: {sorted(i for i in set(ids) if ids.count(i) > 1)}"
+        assert set(doc["delta"]["reserved_ids"][kind]) <= set(ids), f"{kind} ids of the update are missing: {sorted(set(doc['delta']['reserved_ids'][kind]) - set(ids))}"
+    for token in (builder.HANDOFF_FETCH, builder.HANDOFF_APPLY, builder.HANDOFF_FINISH, builder.HANDOFF_COMMIT, builder.HANDOFF_PUSH, builder.RESERVED_TEXT, builder.LOCAL_HEAD[:8],
+                  builder.CLOUD_UNVERIFIED, "HANDOFF OK", "never to main", "No downloads", "no force", "does not reopen the programme", "theorem_usage"):
+        assert token in text, f"the handoff text lost: {token}"
+    assert all(f"RESULT: {name}" in text for name in builder.HANDOFF_RESULTS) and all(task["id"] in text for task in doc["addendum_tasks"])
+    assert doc["local_nodes"] == {node["id"]: builder.node_status(node["id"]) for node in contract["nodes"]}     # the state of the local nodes is read, not typed
+    assert {row["kind"] for row in doc["VALIDATION_MATRIX"]} >= {"software", "scientific", "numerical", "reproducibility"}
+    for case in doc["SCIENTIFIC_CONTRACT"]["reference_cases"] + doc["cloud_verification"]["not_verifiable_on_the_cloud_machine"]:
+        rel, name = case.split("::")
+        assert f"def {name}(" in (ROOT / rel).read_text(encoding="utf-8"), f"named test does not exist: {case}"
+    assert doc["review"]["uncovered"] == contract["pending_independent_review"]["uncovered"]
+    assert all(q["owner"] and q["default_if_unanswered"] for q in doc["open_questions"])
+    assert all(set(task["needs"]) <= {t["id"] for t in doc["addendum_tasks"]} for task in doc["addendum_tasks"])
+    assert not re.search(r"\b\d+ (passed|skipped|failed)\b", text + json.dumps(doc)), "test counts are never typed into the handoff"
+    final = (R54 / "FINAL_DECISION_R57.md").read_text(encoding="utf-8")
+    assert "The programme stops here" in final and "R54-THM" not in final                 # the update leaves the manuscript decision as the local session wrote it
+
+
+def test_theorem_usage_is_bound_to_the_theorems_and_changes_no_node(builder):
+    contract = _json(R54 / "LOCAL_AGENT_CONTRACT.json")
+    theorems = (R54 / "THEOREMS.md").read_text(encoding="utf-8")
+    usage = contract["theorem_usage"]
+    assert usage["proofs_independently_reviewed"] is (not any(rel.endswith("THEOREMS.md") for rel in contract["pending_independent_review"]["uncovered"]))
+    assert all(f"### {rule['theorem']}." in theorems and rule["rule"] for rule in usage["rules"])
+    for node in contract["nodes"]:                                                       # executed nodes carry no step that was added after they ran
+        assert "THEOREMS.md" not in " ".join(node["steps"]) and "H-T" not in " ".join(node["steps"]), node["id"]
+    prompt = (R54 / "LOCAL_AGENT_RESTART_PROMPT.txt").read_text(encoding="utf-8")
+    for token in ("theorem_usage", "LOCAL_AGENT_HANDOFF_UPDATE.txt", "R54-A1"):
+        assert token in prompt, f"prompt lost: {token}"
+

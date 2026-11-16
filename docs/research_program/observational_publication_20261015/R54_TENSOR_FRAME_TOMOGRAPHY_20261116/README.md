@@ -22,6 +22,8 @@ Branch `research/r54-tensor-frame-tomography-20261116` on `research/r50-observed
 | `HISTORY_AUDIT.json`, `HISTORY_PR_INDEX.json` | inventory, read coverage, reinterpretations |
 | `state/` | research state, evidence ledger, hypothesis graph, decision log, negative results |
 | `LOCAL_AGENT_RESTART_PROMPT.txt` | prompt for the local agent |
+| `LOCAL_AGENT_HANDOFF_UPDATE.txt`, `HANDOFF_UPDATE.json` | theorem addendum after the programme stop: what arrived, how to bring it into the working branch, addendum tasks R54-A1 to R54-A4 |
+| `scripts/r54/handoff_merge.py` (repository root) | merge helper of the update: preflight, apply, finish; never resolves a hand-written file |
 | `INDEPENDENT_REVIEW.json` | independent review record |
 
 Rebuild: `python scripts/r54/run_r54_cmb_type1.py && python scripts/r54/run_r54_lowz_frames.py && python scripts/r54/run_r54_cf4_exact.py && python scripts/r54/build_r54_contract.py build`

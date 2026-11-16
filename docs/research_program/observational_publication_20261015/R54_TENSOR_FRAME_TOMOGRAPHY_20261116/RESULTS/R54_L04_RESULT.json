@@ -1,0 +1,1785 @@
+{
+ "acceptance": {
+  "cloud_json_reproduced": {
+   "note": "compute() re-executed with read-only pair-sum caches; every key except provenance compared exactly",
+   "op": "==",
+   "pass": true,
+   "threshold": true,
+   "value": true
+  },
+  "label_join_coverage": {
+   "op": ">=",
+   "pass": true,
+   "threshold": 0.99,
+   "value": 1.0
+  }
+ },
+ "claim_tier": "C0",
+ "decision": {
+  "checks": [
+   {
+    "branch": "go to the next check",
+    "check": "common step after survey monopoles has |z| < 2 (white + exact body)",
+    "result": false,
+    "value": -2.9808036802230338
+   },
+   {
+    "branch": "class UNRESOLVED",
+    "check": "single-survey all-sky samples (TF_ALL, SN_ALL) each keep a step with |z| >= 2 and agree in sign",
+    "result": false,
+    "value": {
+     "SN_ALL": -2.5467039384574783,
+     "TF_ALL": -1.8773137958550596
+    }
+   },
+   {
+    "branch": "H-L5h stays HOLD",
+    "check": "constant quadrupole of log_survey has Wald p >= 0.01",
+    "result": false,
+    "value": 0.0006379758327650477
+   },
+   {
+    "branch": "H-L5a REJECTED as an excess over the body",
+    "check": "joint null of log_survey has p >= 0.01",
+    "result": true,
+    "value": 0.05954017584091073
+   },
+   {
+    "branch": "robust class stays DEPENDS_ON_ZERO_POINT_NUISANCE_MODEL; the table is quoted; H-L5c stays HOLD",
+    "check": "class identical for pooled, log_mono, log_survey, log_mono_radial, log_mono_galactic, log_mono_error",
+    "result": false,
+    "value": {
+     "log_mono": "UNRESOLVED_POLE_LOCKED",
+     "log_mono_error": "EXCESS_NOT_POLE_LOCKED",
+     "log_mono_galactic": "LCDM_BODY_COMPATIBLE",
+     "log_mono_radial": "LCDM_BODY_COMPATIBLE",
+     "log_survey": "LCDM_BODY_COMPATIBLE",
+     "pooled": "EXCESS_NOT_POLE_LOCKED"
+    }
+   }
+  ],
+  "cloud_robust_class_unchanged": "DEPENDS_ON_ZERO_POINT_NUISANCE_MODEL",
+  "hypotheses": {
+   "H-L5a": "REJECT",
+   "H-L5c": "HOLD",
+   "H-L5g": "HOLD",
+   "H-L5h": "HOLD"
+  },
+  "note": "decision checks evaluated once with the contract thresholds; the R54-L05 decision block is not edited",
+  "robust_class": "DEPENDS_ON_ZERO_POINT_NUISANCE_MODEL",
+  "step_class": "UNRESOLVED"
+ },
+ "label_join": {
+  "coverage_table2_group_ids": 0.9998887962190715,
+  "group_table_identity": {
+   "table3": true,
+   "table4": true
+  },
+  "label_join_coverage": 1.0,
+  "rule": "FP_SDSS / FP_NOT_SDSS / FP_MIXED by galaxy PGC in the SDSS FP catalogue; TF_ALL, SN_ALL, OTHER_ALL",
+  "sdss_fp_galaxies": 34059
+ },
+ "leave_6dfgs_proxy_out": {
+  "headline": {
+   "A_angle_to_pole_deg": 5.480183131789243,
+   "A_equivalent_mag": 0.05323626618114497,
+   "A_only": [
+    0.0023331571798272544,
+    -0.0001955027596203334,
+    -0.024404150087006464
+   ],
+   "A_percent": 2.4516206583073497,
+   "A_wald_after_V": 1.441182751874185,
+   "A_wald_p": 0.0452357853958262,
+   "V_only_angle_to_watkins_deg": 18.64458242430526,
+   "V_only_km_s": 299.6869919915424,
+   "V_only_l_b_deg": [
+    301.5971238618382,
+    -26.328622181444043
+   ],
+   "V_wald_after_A": 1.7306004562087827,
+   "best_axis_angle_to_pole_deg": 80.1165541637826,
+   "best_axis_gain": 17.183303590344632,
+   "best_axis_l_b_deg": [
+    89.33429711375722,
+    -69.77851263571175
+   ],
+   "chi2_A": 8.749031362212143,
+   "chi2_V": 8.459613657877549,
+   "chi2_V_plus_A": 7.01843090600336,
+   "dipole_null_chi2": 16.786887141603597,
+   "dipole_null_p": 0.15779128267906048,
+   "joint_null_chi2": 49.40850176105405,
+   "joint_null_p": 0.025397196443060436,
+   "pole_fit_residual_p": 0.2380032049292123,
+   "pole_gain": 14.280235096268612,
+   "quadrupole_axis_angle_to_pole_deg": 85.88817804905224,
+   "quadrupole_constant_percent": 2.563319985810894,
+   "quadrupole_constant_wald_5dof": 21.97180895767961,
+   "quadrupole_constant_wald_p": 0.00053009872369859,
+   "quadrupole_null_chi2": 39.401228032758404,
+   "quadrupole_null_p": 0.005941523309085495,
+   "reference_axis_gains": {
+    "cmb_dipole_axis": 12.070503951816516,
+    "ecliptic_pole": 12.589483408769835,
+    "equatorial_pole": 14.280235096268612,
+    "galactic_pole": 10.586894372401105,
+    "supergalactic_pole": 4.611758807388371
+   },
+   "sky_fraction": 0.03125
+  },
+  "n_groups_with_weight": 31355,
+  "selection": "log_mono window fit without FP_NOT_SDSS and FP_MIXED (6dFGSv is not separable from them)",
+  "window_subsets": {
+   "dipole_chi2_per_window_3dof": [
+    4.478268441248809,
+    10.306651448697421,
+    7.093370858212363,
+    0.786819355222593
+   ],
+   "inner_windows_z0.025_z0.04": {
+    "dipole": {
+     "chi2": 12.803377042081525,
+     "dof": 6,
+     "p_value": 0.04626679195086722
+    },
+    "joint": {
+     "chi2": 28.659248146334637,
+     "dof": 16,
+     "p_value": 0.026337652820187997
+    },
+    "quadrupole": {
+     "chi2": 19.940054109072168,
+     "dof": 10,
+     "p_value": 0.02982480095528234
+    }
+   },
+   "outer_windows_z0.06_z0.08": {
+    "dipole": {
+     "chi2": 8.634483467165326,
+     "dof": 6,
+     "p_value": 0.19520181891326077
+    },
+    "joint": {
+     "chi2": 29.42755599986084,
+     "dof": 16,
+     "p_value": 0.021207504113683138
+    },
+    "quadrupole": {
+     "chi2": 26.470171955248745,
+     "dof": 10,
+     "p_value": 0.0031567291220086845
+    }
+   }
+  }
+ },
+ "limitations": [
+  "Survey labels resolve only SDSS vs non-SDSS FP; 6dFGSv, TF samples or bands and SN compilations are not separable with owned files (DV-L04-1, DV-L04-2).",
+  "Same body assumptions as R54-L05 (linear theory, redshift-space positions, no selection or calibration covariance between objects).",
+  "SDSS FP is a northern sample and non-SDSS FP is mostly southern, so an FP survey offset and an FP hemisphere step are close to degenerate."
+ ],
+ "log_survey_headline": {
+  "A_angle_to_pole_deg": 9.17570208689279,
+  "A_equivalent_mag": 0.03834856806498264,
+  "A_only": [
+   0.000996238267643122,
+   -0.002634032695305795,
+   -0.017434188340316386
+  ],
+  "A_percent": 1.7660168232819309,
+  "A_wald_after_V": 1.2171981353678352,
+  "A_wald_p": 0.17165771045636571,
+  "V_only_angle_to_watkins_deg": 15.169082497171106,
+  "V_only_km_s": 242.55835540458102,
+  "V_only_l_b_deg": [
+   307.5696406268928,
+   -20.011417777081796
+  ],
+  "V_wald_after_A": 2.3166779086791385,
+  "best_axis_angle_to_pole_deg": 76.13107268216709,
+  "best_axis_gain": 18.563600729325657,
+  "best_axis_l_b_deg": [
+   271.2861518725382,
+   74.68677403618044
+  ],
+  "chi2_A": 7.543796934779262,
+  "chi2_V": 6.444317161467952,
+  "chi2_V_plus_A": 5.2271190261001195,
+  "dipole_null_chi2": 12.545701846171708,
+  "dipole_null_p": 0.4029063125180695,
+  "joint_null_chi2": 45.32049041969101,
+  "joint_null_p": 0.05954017584091073,
+  "pole_fit_residual_p": 0.3378612391757275,
+  "pole_gain": 12.66892899506536,
+  "quadrupole_axis_angle_to_pole_deg": 80.88130738872667,
+  "quadrupole_constant_percent": 2.4297865604249647,
+  "quadrupole_constant_wald_5dof": 21.5480047888645,
+  "quadrupole_constant_wald_p": 0.0006379758327650477,
+  "quadrupole_null_chi2": 33.84010362279358,
+  "quadrupole_null_p": 0.02722688676700293,
+  "reference_axis_gains": {
+   "cmb_dipole_axis": 10.255351592954694,
+   "ecliptic_pole": 9.46799577009375,
+   "equatorial_pole": 12.66892899506536,
+   "galactic_pole": 13.874068863716179,
+   "supergalactic_pole": 4.050995578005039
+  },
+  "sky_fraction": 0.0695
+ },
+ "node": "R54-L04",
+ "nuisance_variants": {
+  "classes": {
+   "log_mono": "UNRESOLVED_POLE_LOCKED",
+   "log_mono_error": "EXCESS_NOT_POLE_LOCKED",
+   "log_mono_galactic": "LCDM_BODY_COMPATIBLE",
+   "log_mono_radial": "LCDM_BODY_COMPATIBLE",
+   "log_survey": "LCDM_BODY_COMPATIBLE",
+   "pooled": "EXCESS_NOT_POLE_LOCKED"
+  },
+  "cloud": {
+   "log_mono": {
+    "class": "UNRESOLVED_POLE_LOCKED",
+    "joint_null_p": 0.0027723171615290413,
+    "locking_tail": 0.00849787553111722
+   },
+   "log_split": {
+    "class": "LCDM_BODY_COMPATIBLE",
+    "joint_null_p": 0.11221289218462596,
+    "locking_tail": 0.1467133216695826
+   },
+   "pooled": {
+    "class": "EXCESS_NOT_POLE_LOCKED",
+    "joint_null_p": 0.0003438161216684438,
+    "locking_tail": 0.02424393901524619
+   }
+  },
+  "local": {
+   "log_mono_error": {
+    "axis_locking_null": {
+     "law": "Gaussian draws from white + exact linear LCDM body (dipole and quadrupole rows, 32)",
+     "n_null_draws": 4000,
+     "null_summary": {
+      "fraction_best_axis_within_10deg_of_pole": 0.01675,
+      "isotropic_fraction_within_10deg": 0.01519224698779198,
+      "mean_gain_pole": 1.9580593676851288,
+      "median_best_axis_angle_deg": 55.70180486971052,
+      "median_sky_fraction": 0.512375,
+      "sky_fraction_quantile_0p01": 0.008747500000000002
+     },
+     "observed": {
+      "best_angle": 6.147235790531465,
+      "best_gain": 24.44289969371317,
+      "gain_pole": 23.424973889881088,
+      "sky_fraction": 0.009
+     },
+     "statistic": "grid of 4000 axes; identical statistic for data and null draws",
+     "tails": {
+      "best_axis_angle_at_most_observed": 0.007248187953011747,
+      "best_gain_at_least_observed": 0.00024993751562109475,
+      "gain_pole_chi2_2dof": 8.190898616445193e-06,
+      "gain_pole_empirical": 0.00024993751562109475,
+      "sky_fraction_at_most_observed": 0.010497375656085979
+     }
+    },
+    "class": "EXCESS_NOT_POLE_LOCKED",
+    "headline": {
+     "A_angle_to_pole_deg": 7.3491379767158085,
+     "A_equivalent_mag": 0.05271161077905273,
+     "A_only": [
+      0.0018859352609783462,
+      -0.0024667455572134327,
+      -0.024075180595743245
+     ],
+     "A_percent": 2.4274593841510215,
+     "A_wald_after_V": 1.6623994281790258,
+     "A_wald_p": 0.010309746320813615,
+     "V_only_angle_to_watkins_deg": 19.241477234053008,
+     "V_only_km_s": 317.3150233340354,
+     "V_only_l_b_deg": [
+      306.59423346771695,
+      -25.411254704234825
+     ],
+     "V_wald_after_A": 1.7282739288374962,
+     "best_axis_angle_to_pole_deg": 6.209040387183962,
+     "best_axis_gain": 24.445009909157164,
+     "best_axis_l_b_deg": [
+      302.1535943421577,
+      -20.95996512086516
+     ],
+     "chi2_A": 6.946901487969043,
+     "chi2_V": 6.881026987310581,
+     "chi2_V_plus_A": 5.218627559131545,
+     "dipole_null_chi2": 18.22575180845945,
+     "dipole_null_p": 0.10900587744298243,
+     "joint_null_chi2": 56.68450657453613,
+     "joint_null_p": 0.0045730978035226294,
+     "pole_fit_residual_p": 0.3113902860393418,
+     "pole_gain": 23.424973889881073,
+     "quadrupole_axis_angle_to_pole_deg": 80.58180585601666,
+     "quadrupole_constant_percent": 2.594024279842694,
+     "quadrupole_constant_wald_5dof": 26.485851342212726,
+     "quadrupole_constant_wald_p": 7.181551917479288e-05,
+     "quadrupole_null_chi2": 40.30260834807202,
+     "quadrupole_null_p": 0.004573242930968138,
+     "reference_axis_gains": {
+      "cmb_dipole_axis": 12.370745634830913,
+      "ecliptic_pole": 18.248682246398474,
+      "equatorial_pole": 23.424973889881073,
+      "galactic_pole": 16.85008656416805,
+      "supergalactic_pole": 3.3729068253130374
+     },
+     "sky_fraction": 0.009
+    },
+    "locking_tail": 0.010497375656085979,
+    "stream": [
+     20261116,
+     14
+    ],
+    "window_subsets": {
+     "dipole_chi2_per_window_3dof": [
+      5.0186906523810055,
+      11.810828284736951,
+      12.023722149773993,
+      1.4590041648623626
+     ],
+     "inner_windows_z0.025_z0.04": {
+      "dipole": {
+       "chi2": 13.636642211216039,
+       "dof": 6,
+       "p_value": 0.03396918894297602
+      },
+      "joint": {
+       "chi2": 35.150790089769984,
+       "dof": 16,
+       "p_value": 0.003789697603639925
+      },
+      "quadrupole": {
+       "chi2": 19.170956495191263,
+       "dof": 10,
+       "p_value": 0.038144241081301454
+      }
+     },
+     "outer_windows_z0.06_z0.08": {
+      "dipole": {
+       "chi2": 12.773007299898143,
+       "dof": 6,
+       "p_value": 0.046785616538913305
+      },
+      "joint": {
+       "chi2": 42.49916252844555,
+       "dof": 16,
+       "p_value": 0.0003323056486970501
+      },
+      "quadrupole": {
+       "chi2": 32.45863526444875,
+       "dof": 10,
+       "p_value": 0.0003357045842351317
+      }
+     }
+    }
+   },
+   "log_mono_galactic": {
+    "axis_locking_null": {
+     "law": "Gaussian draws from white + exact linear LCDM body (dipole and quadrupole rows, 32)",
+     "n_null_draws": 4000,
+     "null_summary": {
+      "fraction_best_axis_within_10deg_of_pole": 0.01375,
+      "isotropic_fraction_within_10deg": 0.01519224698779198,
+      "mean_gain_pole": 1.9745900102908753,
+      "median_best_axis_angle_deg": 59.7847477810905,
+      "median_sky_fraction": 0.509,
+      "sky_fraction_quantile_0p01": 0.0094975
+     },
+     "observed": {
+      "best_angle": 7.137881976745759,
+      "best_gain": 20.06850603417447,
+      "gain_pole": 19.61841544851456,
+      "sky_fraction": 0.00525
+     },
+     "statistic": "grid of 4000 axes; identical statistic for data and null draws",
+     "tails": {
+      "best_axis_angle_at_most_observed": 0.007748062984253936,
+      "best_gain_at_least_observed": 0.0017495626093476631,
+      "gain_pole_chi2_2dof": 5.494335985074172e-05,
+      "gain_pole_empirical": 0.00024993751562109475,
+      "sky_fraction_at_most_observed": 0.006748312921769558
+     }
+    },
+    "class": "LCDM_BODY_COMPATIBLE",
+    "headline": {
+     "A_angle_to_pole_deg": 8.878239869607158,
+     "A_equivalent_mag": 0.05808554989316855,
+     "A_only": [
+      0.002495626139129758,
+      -0.003288661365544868,
+      -0.026428887886382556
+     ],
+     "A_percent": 2.6749384260474365,
+     "A_wald_after_V": 2.345960715225399,
+     "A_wald_p": 0.0033000407147781388,
+     "V_only_angle_to_watkins_deg": 20.824448463946034,
+     "V_only_km_s": 339.2588860371595,
+     "V_only_l_b_deg": [
+      307.73539913729434,
+      -26.662789704470068
+     ],
+     "V_wald_after_A": 1.6098667520620464,
+     "best_axis_angle_to_pole_deg": 6.121943284214933,
+     "best_axis_gain": 20.079791080365915,
+     "best_axis_l_b_deg": [
+      301.99600423303355,
+      -33.196579778943374
+     ],
+     "chi2_A": 6.528307360090275,
+     "chi2_V": 7.264401323253636,
+     "chi2_V_plus_A": 4.918440608028239,
+     "dipole_null_chi2": 20.256133525691013,
+     "dipole_null_p": 0.06239327301610421,
+     "joint_null_chi2": 44.84999575684148,
+     "joint_null_p": 0.06529507594605319,
+     "pole_fit_residual_p": 0.7137011954910388,
+     "pole_gain": 19.6184154485146,
+     "quadrupole_axis_angle_to_pole_deg": 84.50230511470033,
+     "quadrupole_constant_percent": 2.2265323973443745,
+     "quadrupole_constant_wald_5dof": 13.418928468182076,
+     "quadrupole_constant_wald_p": 0.019753796520552,
+     "quadrupole_null_chi2": 30.384180621896952,
+     "quadrupole_null_p": 0.06386314111686352,
+     "reference_axis_gains": {
+      "cmb_dipole_axis": 5.538465166960528,
+      "ecliptic_pole": 14.490050446576657,
+      "equatorial_pole": 19.6184154485146,
+      "galactic_pole": 3.185484285025167,
+      "supergalactic_pole": 0.6292718692417698
+     },
+     "sky_fraction": 0.00525
+    },
+    "locking_tail": 0.006748312921769558,
+    "stream": [
+     20261116,
+     13
+    ],
+    "window_subsets": {
+     "dipole_chi2_per_window_3dof": [
+      4.961069994155866,
+      11.325535705039613,
+      14.543208148012756,
+      2.1908806096343874
+     ],
+     "inner_windows_z0.025_z0.04": {
+      "dipole": {
+       "chi2": 12.725179339443027,
+       "dof": 6,
+       "p_value": 0.04761373869484901
+      },
+      "joint": {
+       "chi2": 28.278709848961356,
+       "dof": 16,
+       "p_value": 0.029278804566732545
+      },
+      "quadrupole": {
+       "chi2": 16.767306237458726,
+       "dof": 10,
+       "p_value": 0.07967410274835429
+      }
+     },
+     "outer_windows_z0.06_z0.08": {
+      "dipole": {
+       "chi2": 14.90339099883991,
+       "dof": 6,
+       "p_value": 0.021021571999996335
+      },
+      "joint": {
+       "chi2": 31.071809931007476,
+       "dof": 16,
+       "p_value": 0.013174922951101163
+      },
+      "quadrupole": {
+       "chi2": 21.743072082911443,
+       "dof": 10,
+       "p_value": 0.01646834710118553
+      }
+     }
+    }
+   },
+   "log_mono_radial": {
+    "axis_locking_null": {
+     "law": "Gaussian draws from white + exact linear LCDM body (dipole and quadrupole rows, 32)",
+     "n_null_draws": 4000,
+     "null_summary": {
+      "fraction_best_axis_within_10deg_of_pole": 0.01825,
+      "isotropic_fraction_within_10deg": 0.01519224698779198,
+      "mean_gain_pole": 2.012433665050032,
+      "median_best_axis_angle_deg": 56.323715349612826,
+      "median_sky_fraction": 0.5013749999999999,
+      "sky_fraction_quantile_0p01": 0.0077475
+     },
+     "observed": {
+      "best_angle": 73.33651706788446,
+      "best_gain": 21.941270685396272,
+      "gain_pole": 18.805538267088,
+      "sky_fraction": 0.034
+     },
+     "statistic": "grid of 4000 axes; identical statistic for data and null draws",
+     "tails": {
+      "best_axis_angle_at_most_observed": 0.7525618595351162,
+      "best_gain_at_least_observed": 0.0017495626093476631,
+      "gain_pole_chi2_2dof": 8.249530844747321e-05,
+      "gain_pole_empirical": 0.0004998750312421895,
+      "sky_fraction_at_most_observed": 0.04223944013996501
+     }
+    },
+    "class": "LCDM_BODY_COMPATIBLE",
+    "headline": {
+     "A_angle_to_pole_deg": 7.934706140855169,
+     "A_equivalent_mag": 0.05079325271044846,
+     "A_only": [
+      0.0019420829686511351,
+      -0.002579707182437303,
+      -0.023167210979669936
+     ],
+     "A_percent": 2.339115730315161,
+     "A_wald_after_V": 1.5134910449621186,
+     "A_wald_p": 0.019788522903479003,
+     "V_only_angle_to_watkins_deg": 18.779624092997555,
+     "V_only_km_s": 302.56588102540127,
+     "V_only_l_b_deg": [
+      306.89085966714043,
+      -24.75040123902866
+     ],
+     "V_wald_after_A": 1.8478888884701343,
+     "best_axis_angle_to_pole_deg": 73.29646409397522,
+     "best_axis_gain": 21.95320296538606,
+     "best_axis_l_b_deg": [
+      84.4374351619971,
+      -76.9864906653595
+     ],
+     "chi2_A": 6.464747845960721,
+     "chi2_V": 6.130350002452704,
+     "chi2_V_plus_A": 4.616858957490588,
+     "dipole_null_chi2": 16.325402970346463,
+     "dipole_null_p": 0.17678243068463848,
+     "joint_null_chi2": 50.73621232458278,
+     "joint_null_p": 0.018909215495923216,
+     "pole_fit_residual_p": 0.37075854552416415,
+     "pole_gain": 18.805538267087996,
+     "quadrupole_axis_angle_to_pole_deg": 80.03769374875554,
+     "quadrupole_constant_percent": 2.6129921759836696,
+     "quadrupole_constant_wald_5dof": 25.82206756213374,
+     "quadrupole_constant_wald_p": 9.661285537864583e-05,
+     "quadrupole_null_chi2": 38.22478642904007,
+     "quadrupole_null_p": 0.008311882970716064,
+     "reference_axis_gains": {
+      "cmb_dipole_axis": 10.617677022251769,
+      "ecliptic_pole": 14.172429178573015,
+      "equatorial_pole": 18.805538267087996,
+      "galactic_pole": 17.777231577778004,
+      "supergalactic_pole": 4.341567393759352
+     },
+     "sky_fraction": 0.034
+    },
+    "locking_tail": 0.04223944013996501,
+    "stream": [
+     20261116,
+     12
+    ],
+    "window_subsets": {
+     "dipole_chi2_per_window_3dof": [
+      4.956105459723271,
+      10.544741598499298,
+      10.584136314814089,
+      1.2298345360734395
+     ],
+     "inner_windows_z0.025_z0.04": {
+      "dipole": {
+       "chi2": 11.917143375054112,
+       "dof": 6,
+       "p_value": 0.06384296607685831
+      },
+      "joint": {
+       "chi2": 31.269437188387357,
+       "dof": 16,
+       "p_value": 0.01242876908996482
+      },
+      "quadrupole": {
+       "chi2": 17.71434241869234,
+       "dof": 10,
+       "p_value": 0.059977749368674275
+      }
+     },
+     "outer_windows_z0.06_z0.08": {
+      "dipole": {
+       "chi2": 11.387496522969776,
+       "dof": 6,
+       "p_value": 0.07711368227983131
+      },
+      "joint": {
+       "chi2": 38.594151653612975,
+       "dof": 16,
+       "p_value": 0.001244254912536444
+      },
+      "quadrupole": {
+       "chi2": 31.198014863746,
+       "dof": 10,
+       "p_value": 0.000544130941145595
+      }
+     }
+    }
+   },
+   "log_survey": {
+    "axis_locking_null": {
+     "law": "Gaussian draws from white + exact linear LCDM body (dipole and quadrupole rows, 32)",
+     "n_null_draws": 4000,
+     "null_summary": {
+      "fraction_best_axis_within_10deg_of_pole": 0.018,
+      "isotropic_fraction_within_10deg": 0.01519224698779198,
+      "mean_gain_pole": 2.021903041219099,
+      "median_best_axis_angle_deg": 55.45870772502863,
+      "median_sky_fraction": 0.5018750000000001,
+      "sky_fraction_quantile_0p01": 0.0077475
+     },
+     "observed": {
+      "best_angle": 75.95109538173932,
+      "best_gain": 18.562410849796887,
+      "gain_pole": 12.668928995065361,
+      "sky_fraction": 0.0695
+     },
+     "statistic": "grid of 4000 axes; identical statistic for data and null draws",
+     "tails": {
+      "best_axis_angle_at_most_observed": 0.8002999250187454,
+      "best_gain_at_least_observed": 0.0034991252186953262,
+      "gain_pole_chi2_2dof": 0.0017740956168518444,
+      "gain_pole_empirical": 0.0014996250937265683,
+      "sky_fraction_at_most_observed": 0.0804798800299925
+     }
+    },
+    "class": "LCDM_BODY_COMPATIBLE",
+    "headline": {
+     "A_angle_to_pole_deg": 9.17570208689279,
+     "A_equivalent_mag": 0.03834856806498264,
+     "A_only": [
+      0.000996238267643122,
+      -0.002634032695305795,
+      -0.017434188340316386
+     ],
+     "A_percent": 1.7660168232819309,
+     "A_wald_after_V": 1.2171981353678352,
+     "A_wald_p": 0.17165771045636571,
+     "V_only_angle_to_watkins_deg": 15.169082497171106,
+     "V_only_km_s": 242.55835540458102,
+     "V_only_l_b_deg": [
+      307.5696406268928,
+      -20.011417777081796
+     ],
+     "V_wald_after_A": 2.3166779086791385,
+     "best_axis_angle_to_pole_deg": 76.13107268216709,
+     "best_axis_gain": 18.563600729325657,
+     "best_axis_l_b_deg": [
+      271.2861518725382,
+      74.68677403618044
+     ],
+     "chi2_A": 7.543796934779262,
+     "chi2_V": 6.444317161467952,
+     "chi2_V_plus_A": 5.2271190261001195,
+     "dipole_null_chi2": 12.545701846171708,
+     "dipole_null_p": 0.4029063125180695,
+     "joint_null_chi2": 45.32049041969101,
+     "joint_null_p": 0.05954017584091073,
+     "pole_fit_residual_p": 0.3378612391757275,
+     "pole_gain": 12.66892899506536,
+     "quadrupole_axis_angle_to_pole_deg": 80.88130738872667,
+     "quadrupole_constant_percent": 2.4297865604249647,
+     "quadrupole_constant_wald_5dof": 21.5480047888645,
+     "quadrupole_constant_wald_p": 0.0006379758327650477,
+     "quadrupole_null_chi2": 33.84010362279358,
+     "quadrupole_null_p": 0.02722688676700293,
+     "reference_axis_gains": {
+      "cmb_dipole_axis": 10.255351592954694,
+      "ecliptic_pole": 9.46799577009375,
+      "equatorial_pole": 12.66892899506536,
+      "galactic_pole": 13.874068863716179,
+      "supergalactic_pole": 4.050995578005039
+     },
+     "sky_fraction": 0.0695
+    },
+    "locking_tail": 0.0804798800299925,
+    "stream": [
+     20261116,
+     11
+    ],
+    "window_subsets": {
+     "dipole_chi2_per_window_3dof": [
+      4.529315504024636,
+      8.462138032125015,
+      4.21487866626591,
+      0.5467830903106339
+     ],
+     "inner_windows_z0.025_z0.04": {
+      "dipole": {
+       "chi2": 9.63768870753983,
+       "dof": 6,
+       "p_value": 0.1407624408368356
+      },
+      "joint": {
+       "chi2": 26.38602731675109,
+       "dof": 16,
+       "p_value": 0.04883279176210247
+      },
+      "quadrupole": {
+       "chi2": 16.542458421030467,
+       "dof": 10,
+       "p_value": 0.0851213934060748
+      }
+     },
+     "outer_windows_z0.06_z0.08": {
+      "dipole": {
+       "chi2": 5.065573983617011,
+       "dof": 6,
+       "p_value": 0.5354307319237153
+      },
+      "joint": {
+       "chi2": 27.3878905153437,
+       "dof": 16,
+       "p_value": 0.03736797673402017
+      },
+      "quadrupole": {
+       "chi2": 25.093994809126507,
+       "dof": 10,
+       "p_value": 0.0051701592512287614
+      }
+     }
+    }
+   }
+  }
+ },
+ "operator_layout": {
+  "survey_offsets": [
+   "FP_NOT_SDSS-FP_SDSS",
+   "FP_REST-FP_SDSS"
+  ],
+  "survey_offsets_e_tercile_1": [
+   "FP_NOT_SDSS-FP_SDSS",
+   "FP_REST-FP_SDSS"
+  ],
+  "survey_offsets_e_tercile_2": [
+   "FP_NOT_SDSS-FP_SDSS"
+  ],
+  "survey_offsets_e_tercile_3": [
+   "FP_SDSS-FP_NOT_SDSS"
+  ],
+  "survey_offsets_z_high_half": [
+   "FP_NOT_SDSS-FP_SDSS",
+   "FP_REST-FP_SDSS"
+  ],
+  "survey_offsets_z_low_half": [
+   "FP_REST-FP_NOT_SDSS",
+   "FP_SDSS-FP_NOT_SDSS"
+  ],
+  "survey_step": [
+   "FP_SDSS",
+   "OTHER_ALL",
+   "SN_ALL",
+   "TF_ALL"
+  ],
+  "survey_step_e_tercile_1": [
+   "OTHER_ALL",
+   "SN_ALL",
+   "TF_ALL"
+  ],
+  "survey_step_e_tercile_2": [
+   "FP_SDSS",
+   "TF_ALL"
+  ],
+  "survey_step_e_tercile_3": [
+   "TF_ALL"
+  ],
+  "survey_step_z_high_half": [
+   "FP_SDSS",
+   "TF_ALL"
+  ],
+  "survey_step_z_low_half": [
+   "OTHER_ALL",
+   "SN_ALL",
+   "TF_ALL"
+  ]
+ },
+ "operators": {
+  "log_mono_error": [
+   133,
+   169
+  ],
+  "log_mono_galactic": [
+   97,
+   133
+  ],
+  "log_mono_no_6dfgs_proxy": [
+   169,
+   205
+  ],
+  "log_mono_radial": [
+   61,
+   97
+  ],
+  "log_survey": [
+   25,
+   61
+  ],
+  "survey_offsets": [
+   4,
+   6
+  ],
+  "survey_offsets_e_tercile_1": [
+   9,
+   11
+  ],
+  "survey_offsets_e_tercile_2": [
+   13,
+   14
+  ],
+  "survey_offsets_e_tercile_3": [
+   15,
+   16
+  ],
+  "survey_offsets_z_high_half": [
+   23,
+   25
+  ],
+  "survey_offsets_z_low_half": [
+   19,
+   21
+  ],
+  "survey_step": [
+   0,
+   4
+  ],
+  "survey_step_e_tercile_1": [
+   6,
+   9
+  ],
+  "survey_step_e_tercile_2": [
+   11,
+   13
+  ],
+  "survey_step_e_tercile_3": [
+   14,
+   15
+  ],
+  "survey_step_z_high_half": [
+   21,
+   23
+  ],
+  "survey_step_z_low_half": [
+   16,
+   19
+  ]
+ },
+ "pair_sum": {
+  "cached": true,
+  "file": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L04_COSMIC_COV.npz",
+  "rows": 205,
+  "seconds": 0.0
+ },
+ "provenance": {
+  "inputs_sha256": {
+   "/mnt/extdrive/workdir/raw/cf4_full/table2.dat": "8e908928e68352b59292cf67020a4d70aaa6d30f278dfa6aa3e41a9df808332f",
+   "/mnt/extdrive/workdir/raw/cf4_full/table3.dat": "c2351c52de3e38a7fd80256b6f0818c550dd9f105b91e84fbcc1eb7234160b4d",
+   "/mnt/extdrive/workdir/raw/cf4_full/table4.dat": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94",
+   "/mnt/extdrive/workdir/raw/sdss_pv_zenodo_6824749/SDSS_PV_public.dat": "a48cfd9a9a3c27ff908f98972b2e26536e514b6635f9ed14c656dff3e5075485",
+   "docs/research_program/cf4_schur_loop8_20261015/inputs/loop6_result.json": "9764f6e865832e921bd9801e45790f378fa306931e7d4db41a3f4fa38352d254",
+   "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+   "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/audit_backup/derived/A_RAW_36x35970.npz": "e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L05_CF4_EXACT.json": "8f9535fa126164f72d5aaa4820283c228b4181b180feb54ce14df5a715d9beb8",
+   "tests/fixtures/r54/planck18_linear_pk_z0.csv": "f4f99b2817ee0ade6b4b4cba107843d95f46c13e82293fb3def061bc56d0a45d"
+  },
+  "numpy": "2.4.2",
+  "python": "3.12.3",
+  "scipy": "1.17.0",
+  "script": "scripts/r54/run_r54_l04_cf4_survey.py",
+  "script_sha256": "2d62f325d29362008b96727bb43c9706e9e49d979b747f173bb79e6c5da4b1f4",
+  "seed": 20261116
+ },
+ "runtime_s": 16.61920428799931,
+ "schema": "htt.r54.l04_cf4_survey_split/1",
+ "stability": {
+  "e_dmzp_terciles": [
+   0.41,
+   0.51
+  ],
+  "splits": {
+   "e_tercile_1": {
+    "common_step": -0.017044175410937227,
+    "common_step_sd": 0.0063589704009036265,
+    "common_z": -2.680335704741636,
+    "n_groups": 5221,
+    "offsets": {
+     "offsets": [
+      "FP_NOT_SDSS-FP_SDSS",
+      "FP_REST-FP_SDSS"
+     ],
+     "units": "Delta mu in mag of the survey relative to the reference survey of its family (R54-EQ-36)",
+     "white": {
+      "FP_NOT_SDSS-FP_SDSS": {
+       "delta_eta": 0.04050729536777721,
+       "delta_mu_mag": -0.08796047427525397,
+       "delta_mu_sd_mag": 0.01603836138025081,
+       "z_score": 5.484380367159331
+      },
+      "FP_REST-FP_SDSS": {
+       "delta_eta": 0.018757251057533796,
+       "delta_mu_mag": -0.04073085314980431,
+       "delta_mu_sd_mag": 0.01976710291849714,
+       "z_score": 2.060537313826108
+      }
+     },
+     "white_plus_exact_body": {
+      "FP_NOT_SDSS-FP_SDSS": {
+       "delta_eta": 0.04050729536777721,
+       "delta_mu_mag": -0.08796047427525397,
+       "delta_mu_sd_mag": 0.029445733746715275,
+       "z_score": 2.987206059521819
+      },
+      "FP_REST-FP_SDSS": {
+       "delta_eta": 0.018757251057533796,
+       "delta_mu_mag": -0.04073085314980431,
+       "delta_mu_sd_mag": 0.02796369764878211,
+       "z_score": 1.456561777393493
+      }
+     }
+    },
+    "steps": {
+     "convention": "s > 0: higher apparent Hubble rate in the north; Delta mu (N - S) = -(5/ln10) 2 s",
+     "surveys": [
+      "OTHER_ALL",
+      "SN_ALL",
+      "TF_ALL"
+     ],
+     "white": {
+      "common_delta_mu_north_minus_south_mag": 0.08550990976556963,
+      "common_step": -0.019689384352946662,
+      "common_step_sd": 0.002029150846415194,
+      "common_wald_p_value": 2.920074765741655e-22,
+      "common_z": -9.703263011584859,
+      "consistency_chi2": 1.4488065740904414,
+      "consistency_dof": 2,
+      "consistency_p_value": 0.4846136579429702,
+      "correlation": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        0.9999999999999999
+       ]
+      ],
+      "per_survey": {
+       "OTHER_ALL": {
+        "delta_mu_north_minus_south_mag": 0.09623126189446415,
+        "sd": 0.003959046589087441,
+        "step": -0.022158066911819912,
+        "z_score": -5.596818934360492
+       },
+       "SN_ALL": {
+        "delta_mu_north_minus_south_mag": 0.07145332601527889,
+        "sd": 0.0034079185358086256,
+        "step": -0.01645273633276248,
+        "z_score": -4.827796251549364
+       },
+       "TF_ALL": {
+        "delta_mu_north_minus_south_mag": 0.09117121054991414,
+        "sd": 0.003279742802622728,
+        "step": -0.020992947032245378,
+        "z_score": -6.400790639881227
+       }
+      }
+     },
+     "white_plus_exact_body": {
+      "common_delta_mu_north_minus_south_mag": 0.07402191329561127,
+      "common_step": -0.017044175410937227,
+      "common_step_sd": 0.0063589704009036265,
+      "common_wald_p_value": 0.007354835891354956,
+      "common_z": -2.680335704741636,
+      "consistency_chi2": 0.6268318111083955,
+      "consistency_dof": 2,
+      "consistency_p_value": 0.7309458449048363,
+      "correlation": [
+       [
+        1.0000000000000002,
+        0.6194364917961565,
+        0.781064005507849
+       ],
+       [
+        0.6194364917961565,
+        1.0000000000000002,
+        0.6001930793551817
+       ],
+       [
+        0.781064005507849,
+        0.6001930793551817,
+        1.0
+       ]
+      ],
+      "per_survey": {
+       "OTHER_ALL": {
+        "delta_mu_north_minus_south_mag": 0.09623126189446415,
+        "sd": 0.00912084285370035,
+        "step": -0.022158066911819912,
+        "z_score": -2.4293880803823216
+       },
+       "SN_ALL": {
+        "delta_mu_north_minus_south_mag": 0.07145332601527889,
+        "sd": 0.006467915312109592,
+        "step": -0.01645273633276248,
+        "z_score": -2.5437464065057793
+       },
+       "TF_ALL": {
+        "delta_mu_north_minus_south_mag": 0.09117121054991414,
+        "sd": 0.011331110079074419,
+        "step": -0.020992947032245378,
+        "z_score": -1.8526822955337652
+       }
+      }
+     }
+    }
+   },
+   "e_tercile_2": {
+    "common_step": -0.011635844193960757,
+    "common_step_sd": 0.008664749428155418,
+    "common_z": -1.3428944818820727,
+    "n_groups": 6979,
+    "offsets": {
+     "offsets": [
+      "FP_NOT_SDSS-FP_SDSS"
+     ],
+     "units": "Delta mu in mag of the survey relative to the reference survey of its family (R54-EQ-36)",
+     "white": {
+      "FP_NOT_SDSS-FP_SDSS": {
+       "delta_eta": 0.07197750693243285,
+       "delta_mu_mag": -0.1562971704095432,
+       "delta_mu_sd_mag": 0.029736355697798447,
+       "z_score": 5.256097014642409
+      }
+     },
+     "white_plus_exact_body": {
+      "FP_NOT_SDSS-FP_SDSS": {
+       "delta_eta": 0.07197750693243285,
+       "delta_mu_mag": -0.1562971704095432,
+       "delta_mu_sd_mag": 0.03912560165865211,
+       "z_score": 3.9947544263509145
+      }
+     }
+    },
+    "steps": {
+     "convention": "s > 0: higher apparent Hubble rate in the north; Delta mu (N - S) = -(5/ln10) 2 s",
+     "surveys": [
+      "FP_SDSS",
+      "TF_ALL"
+     ],
+     "white": {
+      "common_delta_mu_north_minus_south_mag": 0.07366194424596478,
+      "common_step": -0.016961289474171703,
+      "common_step_sd": 0.004372455328190155,
+      "common_wald_p_value": 0.00010483399104873366,
+      "common_z": -3.879122415458116,
+      "consistency_chi2": 2.1475865695966467,
+      "consistency_dof": 1,
+      "consistency_p_value": 0.1427941967017767,
+      "correlation": [
+       [
+        1.0000000000000002,
+        0.0
+       ],
+       [
+        0.0,
+        0.9999999999999999
+       ]
+      ],
+      "per_survey": {
+       "FP_SDSS": {
+        "delta_mu_north_minus_south_mag": 0.009800770861735657,
+        "sd": 0.010945363420959643,
+        "step": -0.002256710888608293,
+        "z_score": -0.20617962161830478
+       },
+       "TF_ALL": {
+        "delta_mu_north_minus_south_mag": 0.08578838000052576,
+        "sd": 0.004769560084970994,
+        "step": -0.019753504494131914,
+        "z_score": -4.141577869283105
+       }
+      }
+     },
+     "white_plus_exact_body": {
+      "common_delta_mu_north_minus_south_mag": 0.050533829257231475,
+      "common_step": -0.011635844193960757,
+      "common_step_sd": 0.008664749428155418,
+      "common_wald_p_value": 0.1793061434906839,
+      "common_z": -1.3428944818820727,
+      "consistency_chi2": 1.3380669588541794,
+      "consistency_dof": 1,
+      "consistency_p_value": 0.24737515176937794,
+      "correlation": [
+       [
+        1.0000000000000002,
+        0.13737873585137889
+       ],
+       [
+        0.13737873585137889,
+        1.0
+       ]
+      ],
+      "per_survey": {
+       "FP_SDSS": {
+        "delta_mu_north_minus_south_mag": 0.009800770861735657,
+        "sd": 0.011866785066402116,
+        "step": -0.002256710888608293,
+        "z_score": -0.19017036846800361
+       },
+       "TF_ALL": {
+        "delta_mu_north_minus_south_mag": 0.08578838000052576,
+        "sd": 0.011150127798081673,
+        "step": -0.019753504494131914,
+        "z_score": -1.7715944473327392
+       }
+      }
+     }
+    }
+   },
+   "e_tercile_3": {
+    "common_step": -0.024320375816927753,
+    "common_step_sd": 0.015896441121735733,
+    "common_z": -1.5299258262073323,
+    "n_groups": 6151,
+    "offsets": {
+     "offsets": [
+      "FP_SDSS-FP_NOT_SDSS"
+     ],
+     "units": "Delta mu in mag of the survey relative to the reference survey of its family (R54-EQ-36)",
+     "white": {
+      "FP_SDSS-FP_NOT_SDSS": {
+       "delta_eta": 0.16896584149318422,
+       "delta_mu_mag": -0.36690466295314705,
+       "delta_mu_sd_mag": 0.021681065694151742,
+       "z_score": 16.922814963478295
+      }
+     },
+     "white_plus_exact_body": {
+      "FP_SDSS-FP_NOT_SDSS": {
+       "delta_eta": 0.16896584149318422,
+       "delta_mu_mag": -0.36690466295314705,
+       "delta_mu_sd_mag": 0.029718188872248436,
+       "z_score": 12.346131338298731
+      }
+     }
+    },
+    "steps": {
+     "convention": "s > 0: higher apparent Hubble rate in the north; Delta mu (N - S) = -(5/ln10) 2 s",
+     "surveys": [
+      "TF_ALL"
+     ],
+     "white": {
+      "common_delta_mu_north_minus_south_mag": 0.10562205015105013,
+      "common_step": -0.024320375816927753,
+      "common_step_sd": 0.010588358902103419,
+      "common_wald_p_value": 0.02162461373606587,
+      "common_z": -2.2968975685265463,
+      "consistency_chi2": 0.0,
+      "consistency_dof": 0,
+      "consistency_p_value": null,
+      "correlation": [
+       [
+        1.0000000000000002
+       ]
+      ],
+      "per_survey": {
+       "TF_ALL": {
+        "delta_mu_north_minus_south_mag": 0.10562205015105013,
+        "sd": 0.010588358902103419,
+        "step": -0.024320375816927753,
+        "z_score": -2.2968975685265463
+       }
+      }
+     },
+     "white_plus_exact_body": {
+      "common_delta_mu_north_minus_south_mag": 0.10562205015105013,
+      "common_step": -0.024320375816927753,
+      "common_step_sd": 0.015896441121735733,
+      "common_wald_p_value": 0.12603508988075435,
+      "common_z": -1.5299258262073323,
+      "consistency_chi2": 0.0,
+      "consistency_dof": 0,
+      "consistency_p_value": null,
+      "correlation": [
+       [
+        1.0
+       ]
+      ],
+      "per_survey": {
+       "TF_ALL": {
+        "delta_mu_north_minus_south_mag": 0.10562205015105013,
+        "sd": 0.015896441121735733,
+        "step": -0.024320375816927753,
+        "z_score": -1.5299258262073323
+       }
+      }
+     }
+    }
+   },
+   "z_high_half": {
+    "common_step": -0.03340206810599279,
+    "common_step_sd": 0.006707136260012789,
+    "common_z": -4.980078950405743,
+    "n_groups": 8639,
+    "offsets": {
+     "offsets": [
+      "FP_NOT_SDSS-FP_SDSS",
+      "FP_REST-FP_SDSS"
+     ],
+     "units": "Delta mu in mag of the survey relative to the reference survey of its family (R54-EQ-36)",
+     "white": {
+      "FP_NOT_SDSS-FP_SDSS": {
+       "delta_eta": 0.04222700304591184,
+       "delta_mu_mag": -0.0916947720507566,
+       "delta_mu_sd_mag": 0.011647913745372674,
+       "z_score": 7.872205620271172
+      },
+      "FP_REST-FP_SDSS": {
+       "delta_eta": 0.010111138353040047,
+       "delta_mu_mag": -0.02195605796242813,
+       "delta_mu_sd_mag": 0.02173426496632081,
+       "z_score": 1.010204761764477
+      }
+     },
+     "white_plus_exact_body": {
+      "FP_NOT_SDSS-FP_SDSS": {
+       "delta_eta": 0.04222700304591184,
+       "delta_mu_mag": -0.0916947720507566,
+       "delta_mu_sd_mag": 0.024998000147914045,
+       "z_score": 3.668084307072382
+      },
+      "FP_REST-FP_SDSS": {
+       "delta_eta": 0.010111138353040047,
+       "delta_mu_mag": -0.02195605796242813,
+       "delta_mu_sd_mag": 0.031004122541851045,
+       "z_score": 0.7081657586919499
+      }
+     }
+    },
+    "steps": {
+     "convention": "s > 0: higher apparent Hubble rate in the north; Delta mu (N - S) = -(5/ln10) 2 s",
+     "surveys": [
+      "FP_SDSS",
+      "TF_ALL"
+     ],
+     "white": {
+      "common_delta_mu_north_minus_south_mag": 0.15382074501159312,
+      "common_step": -0.035418535445693254,
+      "common_step_sd": 0.0053610186122909215,
+      "common_wald_p_value": 3.930338273728047e-11,
+      "common_z": -6.606680186577056,
+      "consistency_chi2": 8.09879900346738,
+      "consistency_dof": 1,
+      "consistency_p_value": 0.004429459878542865,
+      "correlation": [
+       [
+        1.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0
+       ]
+      ],
+      "per_survey": {
+       "FP_SDSS": {
+        "delta_mu_north_minus_south_mag": 0.0725989594553273,
+        "sd": 0.008481025736138946,
+        "step": -0.016716528180871576,
+        "z_score": -1.9710502834155892
+       },
+       "TF_ALL": {
+        "delta_mu_north_minus_south_mag": 0.20787269181805812,
+        "sd": 0.006918593031862985,
+        "step": -0.0478644561420806,
+        "z_score": -6.91823553165289
+       }
+      }
+     },
+     "white_plus_exact_body": {
+      "common_delta_mu_north_minus_south_mag": 0.1450633386258927,
+      "common_step": -0.03340206810599279,
+      "common_step_sd": 0.006707136260012789,
+      "common_wald_p_value": 6.355833917061289e-07,
+      "common_z": -4.980078950405743,
+      "consistency_chi2": 6.104690981654304,
+      "consistency_dof": 1,
+      "consistency_p_value": 0.013482352303712777,
+      "correlation": [
+       [
+        1.0,
+        0.06439999091504893
+       ],
+       [
+        0.06439999091504893,
+        1.0000000000000002
+       ]
+      ],
+      "per_survey": {
+       "FP_SDSS": {
+        "delta_mu_north_minus_south_mag": 0.0725989594553273,
+        "sd": 0.009517937653372137,
+        "step": -0.016716528180871576,
+        "z_score": -1.7563183107160858
+       },
+       "TF_ALL": {
+        "delta_mu_north_minus_south_mag": 0.20787269181805812,
+        "sd": 0.008902132480710354,
+        "step": -0.0478644561420806,
+        "z_score": -5.376740488393766
+       }
+      }
+     }
+    }
+   },
+   "z_low_half": {
+    "common_step": -0.014021813422237739,
+    "common_step_sd": 0.009463994850127142,
+    "common_z": -1.4815956310510212,
+    "n_groups": 9712,
+    "offsets": {
+     "offsets": [
+      "FP_REST-FP_NOT_SDSS",
+      "FP_SDSS-FP_NOT_SDSS"
+     ],
+     "units": "Delta mu in mag of the survey relative to the reference survey of its family (R54-EQ-36)",
+     "white": {
+      "FP_REST-FP_NOT_SDSS": {
+       "delta_eta": -0.0001755501535376791,
+       "delta_mu_mag": 0.0003812023148934133,
+       "delta_mu_sd_mag": 0.03805747626315383,
+       "z_score": -0.010016489592150978
+      },
+      "FP_SDSS-FP_NOT_SDSS": {
+       "delta_eta": -0.013725375046721972,
+       "delta_mu_mag": 0.029804273224219694,
+       "delta_mu_sd_mag": 0.018440979607305417,
+       "z_score": -1.6161979384442622
+      }
+     },
+     "white_plus_exact_body": {
+      "FP_REST-FP_NOT_SDSS": {
+       "delta_eta": -0.0001755501535376791,
+       "delta_mu_mag": 0.0003812023148934133,
+       "delta_mu_sd_mag": 0.06596122729368588,
+       "z_score": -0.005779187721843735
+      },
+      "FP_SDSS-FP_NOT_SDSS": {
+       "delta_eta": -0.013725375046721972,
+       "delta_mu_mag": 0.029804273224219694,
+       "delta_mu_sd_mag": 0.047415000789177465,
+       "z_score": -0.6285832063304017
+      }
+     }
+    },
+    "steps": {
+     "convention": "s > 0: higher apparent Hubble rate in the north; Delta mu (N - S) = -(5/ln10) 2 s",
+     "surveys": [
+      "OTHER_ALL",
+      "SN_ALL",
+      "TF_ALL"
+     ],
+     "white": {
+      "common_delta_mu_north_minus_south_mag": 0.06845364555886996,
+      "common_step": -0.015762034382495203,
+      "common_step_sd": 0.0020965474414279795,
+      "common_wald_p_value": 5.558182622734355e-14,
+      "common_z": -7.518090967576447,
+      "consistency_chi2": 0.6331767334392044,
+      "consistency_dof": 2,
+      "consistency_p_value": 0.7286306220170107,
+      "correlation": [
+       [
+        1.0,
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        1.0000000000000002,
+        0.0
+       ],
+       [
+        0.0,
+        0.0,
+        1.0
+       ]
+      ],
+      "per_survey": {
+       "OTHER_ALL": {
+        "delta_mu_north_minus_south_mag": 0.08320436797249971,
+        "sd": 0.004952151921985258,
+        "step": -0.019158513736546905,
+        "z_score": -3.868724958031273
+       },
+       "SN_ALL": {
+        "delta_mu_north_minus_south_mag": 0.06109365325353662,
+        "sd": 0.004525432318988961,
+        "step": -0.01406733352581406,
+        "z_score": -3.1085060021308375
+       },
+       "TF_ALL": {
+        "delta_mu_north_minus_south_mag": 0.06669798936866032,
+        "sd": 0.002692896138596262,
+        "step": -0.01535777960529526,
+        "z_score": -5.703071642897034
+       }
+      }
+     },
+     "white_plus_exact_body": {
+      "common_delta_mu_north_minus_south_mag": 0.06089596195554801,
+      "common_step": -0.014021813422237739,
+      "common_step_sd": 0.009463994850127142,
+      "common_wald_p_value": 0.13844792222539345,
+      "common_z": -1.4815956310510212,
+      "consistency_chi2": 0.37637743912528043,
+      "consistency_dof": 2,
+      "consistency_p_value": 0.828458346182193,
+      "correlation": [
+       [
+        1.0,
+        0.6743432971604209,
+        0.8560313833011637
+       ],
+       [
+        0.6743432971604209,
+        1.0,
+        0.7155668119577604
+       ],
+       [
+        0.8560313833011637,
+        0.7155668119577604,
+        1.0
+       ]
+      ],
+      "per_survey": {
+       "OTHER_ALL": {
+        "delta_mu_north_minus_south_mag": 0.08320436797249971,
+        "sd": 0.013194968170802544,
+        "step": -0.019158513736546905,
+        "z_score": -1.4519560402533087
+       },
+       "SN_ALL": {
+        "delta_mu_north_minus_south_mag": 0.06109365325353662,
+        "sd": 0.00955992139500631,
+        "step": -0.01406733352581406,
+        "z_score": -1.4714905012882458
+       },
+       "TF_ALL": {
+        "delta_mu_north_minus_south_mag": 0.06669798936866032,
+        "sd": 0.011796353050076631,
+        "step": -0.01535777960529526,
+        "z_score": -1.3019091188691994
+       }
+      }
+     }
+    }
+   }
+  },
+  "z_halves": [
+   0.01,
+   0.0325,
+   0.055
+  ]
+ },
+ "status": "DONE_SCOPED_C0",
+ "survey_offsets": {
+  "offsets": [
+   "FP_NOT_SDSS-FP_SDSS",
+   "FP_REST-FP_SDSS"
+  ],
+  "units": "Delta mu in mag of the survey relative to the reference survey of its family (R54-EQ-36)",
+  "white": {
+   "FP_NOT_SDSS-FP_SDSS": {
+    "delta_eta": 0.03396072885892494,
+    "delta_mu_mag": -0.0737447857242181,
+    "delta_mu_sd_mag": 0.009845254564126162,
+    "z_score": 7.490388922286184
+   },
+   "FP_REST-FP_SDSS": {
+    "delta_eta": 0.010607301128162105,
+    "delta_mu_mag": -0.0230334617392347,
+    "delta_mu_sd_mag": 0.018709288860920693,
+    "z_score": 1.2311243848154052
+   }
+  },
+  "white_plus_exact_body": {
+   "FP_NOT_SDSS-FP_SDSS": {
+    "delta_eta": 0.03396072885892494,
+    "delta_mu_mag": -0.0737447857242181,
+    "delta_mu_sd_mag": 0.025657113482183903,
+    "z_score": 2.8742432688472883
+   },
+   "FP_REST-FP_SDSS": {
+    "delta_eta": 0.010607301128162105,
+    "delta_mu_mag": -0.0230334617392347,
+    "delta_mu_sd_mag": 0.027674347536612517,
+    "z_score": 0.8323036960044665
+   }
+  }
+ },
+ "survey_steps": {
+  "convention": "s > 0: higher apparent Hubble rate in the north; Delta mu (N - S) = -(5/ln10) 2 s",
+  "surveys": [
+   "FP_SDSS",
+   "OTHER_ALL",
+   "SN_ALL",
+   "TF_ALL"
+  ],
+  "white": {
+   "common_delta_mu_north_minus_south_mag": 0.08282261384395728,
+   "common_step": -0.019070611599989833,
+   "common_step_sd": 0.001746644674391864,
+   "common_wald_p_value": 9.411202689972262e-28,
+   "common_z": -10.918426557839945,
+   "consistency_chi2": 1.5739983807435893,
+   "consistency_dof": 3,
+   "consistency_p_value": 0.6652997765213029,
+   "correlation": [
+    [
+     1.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0000000000000002,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     1.0000000000000002,
+     0.0
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     0.9999999999999999
+    ]
+   ],
+   "per_survey": {
+    "FP_SDSS": {
+     "delta_mu_north_minus_south_mag": 0.06487557863704446,
+     "sd": 0.007609169583415536,
+     "step": -0.014938154026902156,
+     "z_score": -1.9631779608987043
+    },
+    "OTHER_ALL": {
+     "delta_mu_north_minus_south_mag": 0.09644363241823499,
+     "sd": 0.003906823908424663,
+     "step": -0.02220696703204252,
+     "z_score": -5.68414844194935
+    },
+    "SN_ALL": {
+     "delta_mu_north_minus_south_mag": 0.07152464147130205,
+     "sd": 0.0034059003795110804,
+     "step": -0.01646915732335638,
+     "z_score": -4.83547828422408
+    },
+    "TF_ALL": {
+     "delta_mu_north_minus_south_mag": 0.08528818294147997,
+     "sd": 0.0025094868208316774,
+     "step": -0.019638329864960086,
+     "z_score": -7.825635784152746
+    }
+   }
+  },
+  "white_plus_exact_body": {
+   "common_delta_mu_north_minus_south_mag": 0.07147087598184286,
+   "common_step": -0.016456777361901757,
+   "common_step_sd": 0.005520919566454107,
+   "common_wald_p_value": 0.0028749303216823556,
+   "common_z": -2.9808036802230338,
+   "consistency_chi2": 0.7580701373409965,
+   "consistency_dof": 3,
+   "consistency_p_value": 0.8594675196880333,
+   "correlation": [
+    [
+     0.9999999999999998,
+     0.14634027818686657,
+     0.17062797393177734,
+     0.12420220737800747
+    ],
+    [
+     0.14634027818686657,
+     1.0,
+     0.6228373123765653,
+     0.8167915957878076
+    ],
+    [
+     0.17062797393177734,
+     0.6228373123765653,
+     1.0,
+     0.6437524295312755
+    ],
+    [
+     0.12420220737800747,
+     0.8167915957878076,
+     0.6437524295312755,
+     1.0
+    ]
+   ],
+   "per_survey": {
+    "FP_SDSS": {
+     "delta_mu_north_minus_south_mag": 0.06487557863704446,
+     "sd": 0.008636443078031405,
+     "step": -0.014938154026902156,
+     "z_score": -1.7296650822490185
+    },
+    "OTHER_ALL": {
+     "delta_mu_north_minus_south_mag": 0.09644363241823499,
+     "sd": 0.009073928184232916,
+     "step": -0.02220696703204252,
+     "z_score": -2.447337755067304
+    },
+    "SN_ALL": {
+     "delta_mu_north_minus_south_mag": 0.07152464147130205,
+     "sd": 0.006466851947200286,
+     "step": -0.01646915732335638,
+     "z_score": -2.5467039384574783
+    },
+    "TF_ALL": {
+     "delta_mu_north_minus_south_mag": 0.08528818294147997,
+     "sd": 0.010460866962315919,
+     "step": -0.019638329864960086,
+     "z_score": -1.8773137958550596
+    }
+   }
+  }
+ },
+ "survey_table": {
+  "pool_rule": "surveys with fewer than 200 groups in [0.01, 0.055] pooled into '<family>_REST'",
+  "pooled": {
+   "FP_NOT_SDSS": {
+    "fraction_north": 0.010719754977029096,
+    "median_e_dmzp": 0.63,
+    "median_z": 0.03924715144101457,
+    "n": 4571,
+    "n_in_common_range": 4542,
+    "n_north_in_common_range": 44,
+    "n_south_in_common_range": 4498
+   },
+   "FP_REST": {
+    "fraction_north": 0.7727272727272727,
+    "median_e_dmzp": 0.126,
+    "median_z": 0.03757933096502381,
+    "n": 44,
+    "n_in_common_range": 38,
+    "n_north_in_common_range": 28,
+    "n_south_in_common_range": 10
+   },
+   "FP_SDSS": {
+    "fraction_north": 0.9579391058696919,
+    "median_e_dmzp": 0.51,
+    "median_z": 0.0740445578520858,
+    "n": 22301,
+    "n_in_common_range": 5012,
+    "n_north_in_common_range": 4832,
+    "n_south_in_common_range": 180
+   },
+   "OTHER_ALL": {
+    "fraction_north": 0.5635135135135135,
+    "median_e_dmzp": 0.305,
+    "median_z": 0.024733777658942975,
+    "n": 740,
+    "n_in_common_range": 715,
+    "n_north_in_common_range": 395,
+    "n_south_in_common_range": 320
+   },
+   "SN_ALL": {
+    "fraction_north": 0.6371428571428571,
+    "median_e_dmzp": 0.14,
+    "median_z": 0.03318962747221613,
+    "n": 700,
+    "n_in_common_range": 506,
+    "n_north_in_common_range": 336,
+    "n_south_in_common_range": 170
+   },
+   "TF_ALL": {
+    "fraction_north": 0.7211715261360652,
+    "median_e_dmzp": 0.41,
+    "median_z": 0.021843444774050987,
+    "n": 7614,
+    "n_in_common_range": 7538,
+    "n_north_in_common_range": 5439,
+    "n_south_in_common_range": 2099
+   }
+  },
+  "unpooled": {
+   "FP_MIXED": {
+    "fraction_north": 0.7727272727272727,
+    "median_e_dmzp": 0.126,
+    "median_z": 0.03757933096502381,
+    "n": 44,
+    "n_in_common_range": 38,
+    "n_north_in_common_range": 28,
+    "n_south_in_common_range": 10
+   },
+   "FP_NOT_SDSS": {
+    "fraction_north": 0.010719754977029096,
+    "median_e_dmzp": 0.63,
+    "median_z": 0.03924715144101457,
+    "n": 4571,
+    "n_in_common_range": 4542,
+    "n_north_in_common_range": 44,
+    "n_south_in_common_range": 4498
+   },
+   "FP_SDSS": {
+    "fraction_north": 0.9579391058696919,
+    "median_e_dmzp": 0.51,
+    "median_z": 0.0740445578520858,
+    "n": 22301,
+    "n_in_common_range": 5012,
+    "n_north_in_common_range": 4832,
+    "n_south_in_common_range": 180
+   },
+   "OTHER_ALL": {
+    "fraction_north": 0.5635135135135135,
+    "median_e_dmzp": 0.305,
+    "median_z": 0.024733777658942975,
+    "n": 740,
+    "n_in_common_range": 715,
+    "n_north_in_common_range": 395,
+    "n_south_in_common_range": 320
+   },
+   "SN_ALL": {
+    "fraction_north": 0.6371428571428571,
+    "median_e_dmzp": 0.14,
+    "median_z": 0.03318962747221613,
+    "n": 700,
+    "n_in_common_range": 506,
+    "n_north_in_common_range": 336,
+    "n_south_in_common_range": 170
+   },
+   "TF_ALL": {
+    "fraction_north": 0.7211715261360652,
+    "median_e_dmzp": 0.41,
+    "median_z": 0.021843444774050987,
+    "n": 7614,
+    "n_in_common_range": 7538,
+    "n_north_in_common_range": 5439,
+    "n_south_in_common_range": 2099
+   }
+  }
+ }
+}

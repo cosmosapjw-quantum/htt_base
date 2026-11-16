@@ -6,7 +6,8 @@
   "Every script writes one JSON under RESULTS/ with schema, node, claim_tier, provenance and limitations, then calls no plotting unless asked.",
   "Every new function gets a test that names the equation or gate it protects.",
   "Fail closed: raise on shape, unit, frame or identity mismatch. Never catch an exception to continue.",
-  "After each node: run the tests, run the node's mutation gates, run `python scripts/r54/build_r54_contract.py build`, commit with the card id as prefix, push without force."
+  "After each node: run the tests, run the node's mutation gates, run `python scripts/r54/build_r54_contract.py build`, commit with the card id as prefix, push without force.",
+  "The mutation receipt rewrites one source file at a time in place and restores it. Never run it while another process of yours is running or queued; a run that was killed is repaired by running it again."
  ],
  "committed_inputs_sha256": {
   "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
@@ -102,6 +103,51 @@
   "R54-EQ-38": "global-tilt closure across depths: V_CF4 + c beta_excess(counts) = 0 with beta_excess = D/c_EB - beta_CMB"
  },
  "module_api": {
+  "htt/htt/htt/infer/r54_calibration.py": [
+   "covariance_identity_rel(sims, s_ref)",
+   "loo_replicates(sims, j, blocks, leave_one_out)",
+   "coverage(theta, sd, inflation, level)",
+   "wald_coverage(rep, level)",
+   "hotelling_quantile(level, p_dim, n_dof)",
+   "binomial_band(level, n, n_sd)",
+   "empirical_quantile_inflation(theta, sd, level)",
+   "EmpiricalNull(values, law)"
+  ],
+  "htt/htt/htt/infer/r54_counts.py": [
+   "growth_factor(z, omega_m)",
+   "ho_nz(z, z_star, alpha)",
+   "comoving_distance(z, omega_m, h0)",
+   "dipole_clustering_cl1(k, pk, z, dndz, bias, omega_m, h0, z_min)",
+   "dipole_axis_variance(cl1)",
+   "poisson_dipole_fit(counts, expect, nvec)",
+   "mask_hash(used)"
+  ],
+  "htt/htt/htt/infer/r54_joint.py": [
+   "linear_probe(y, cov, design, name)",
+   "add_probes(probes)",
+   "block_identification(f, scale, names)",
+   "constrained_chi2(block, link, label, scale)"
+  ],
+  "htt/htt/htt/infer/r54_pr4_bypass.py": [
+   "mode_tuples(lmax, lmin)",
+   "pack(alm, lmax_alm, modes)",
+   "unit_alm(lmax_alm, ell, m, tag)",
+   "t_response_matrix(mask, nside, ell_cut, k_inv, out_modes)",
+   "analytic_covariance(r, ells, cl, noise)",
+   "wishart_lrt(c_model, s_sample, n_dof)",
+   "eb_operator(mask_pol, nside, lmax)",
+   "extract_eb(q, u, mask_pol, k_inv)",
+   "quadratic_form(x, cov)",
+   "posterior_zero_tail(samples)"
+  ],
+  "htt/htt/htt/infer/r54_survey.py": [
+   "galaxy_table(lines)",
+   "survey_labels(group_id, family, gal, sdss_pgc)",
+   "join_coverage(group_id, table_group_ids)",
+   "pool_small(labels, family, in_range, min_count)",
+   "survey_step_operator(z, nvec, tau2, select, z_bins)",
+   "survey_offset_operator(z, tau2, labels, family_sel, reference, others, z_bins)"
+  ],
   "r54_distance_estimators": [
    "multipole_basis(nhat)",
    "wls_operator(design, weights)",
@@ -163,7 +209,10 @@
   ],
   "scripts/r54/run_r54_cf4_exact.py": [
    "compute()",
-   "build_operators(cat, a_raw, tau2)",
+   "build_operators(cat, a_raw, tau2, survey)",
+   "survey_operators(cat, tau2, survey, mono_nuisance, dec, in_range)",
+   "classify(joint_p, removed, tail)",
+   "tilt_closure(v, cv, b, sb)",
    "cosmic_covariances(stack, labels, n, r)",
    "common_mode(theta, white, body)",
    "hemisphere_steps(theta, white, body)",
@@ -172,6 +221,34 @@
    "step_scan(cat, eta, g, tau2, r, rng, reference)",
    "injections(...)",
    "tilt_transport(theta, cov, an)"
+  ],
+  "scripts/r54/run_r54_l01_te_calibration.py": [
+   "run(sims_path)",
+   "masked_e_response(r51, lanes, op, beam_pixwin, j_ideal)"
+  ],
+  "scripts/r54/run_r54_l02_pr4_bypass.py": [
+   "compute()",
+   "floor_null(vec_obs, null_vecs, cov, floor, rng, law)"
+  ],
+  "scripts/r54/run_r54_l03_counts.py": [
+   "compute()",
+   "clustering_body(q)",
+   "mocks(l2, data, body_sd, d_kin, hashes_data, rng)",
+   "competitor_wagenveld(nv)",
+   "competitor_mittal(q)"
+  ],
+  "scripts/r54/run_r54_l04_cf4_survey.py": [
+   "compute()",
+   "step_summary(theta, white, body, names)",
+   "offset_summary(theta, white, body, names)",
+   "decide(st, hls, classes)"
+  ],
+  "scripts/r54/run_r54_l06_joint.py": [
+   "compute()",
+   "stf5_rotation(r)"
+  ],
+  "scripts/r54/run_r54_l07_benchmark.py": [
+   "compute()"
   ]
  },
  "nodes": [
@@ -646,8 +723,7 @@
     "1. For each target with owned-data overlap reproduce the published headline number under the published assumptions; record REPRODUCED, NOT_REPRODUCED or NOT_REPRODUCIBLE_FROM_TEXT with the measured value.",
     "2. Re-run under the common R54 assumptions (declared body, named law, typed frame) and fill the scoring fields of the spec.",
     "3. Resolve every evidence row whose verification is not VERIFIED by reading the primary source; correct identifiers in state/EVIDENCE_LEDGER.md through the builder.",
-    "4. Novelty check for H-L1b and H-L5g: search the primary literature for prior stress-corrected Bianchi-I CMB shear limits and for a cross-indicator common-mode test of the CF4 hemisphere asymmetry with a catalogue-level LCDM covariance; record the nearest prior art and set the novelty field of both hypotheses.",
-    "5. Priority check for H-T6 and H-T8 (THEOREMS.md): search for (a) an identifiability or selection-rule statement for the kinematic variables by irreducible block and parity, including null channels, and (b) a statement on the number of sign changes of a shear history hidden from the temperature and E quadrupoles. Read the primary sources of the evidence rows E54 and E63 to E69, which are recorded from memory, and the passage of E51 on the B-mode proper-motion dipole, which was seen only in part. Set the novelty fields; if prior art is found, the theorems stay as attributed re-derivations."
+    "4. Novelty check for H-L1b and H-L5g: search the primary literature for prior stress-corrected Bianchi-I CMB shear limits and for a cross-indicator common-mode test of the CF4 hemisphere asymmetry with a catalogue-level LCDM covariance; record the nearest prior art and set the novelty field of both hypotheses."
    ],
    "title": "Adversarial benchmark against published methods"
   },
@@ -697,41 +773,42 @@
  ],
  "pending_independent_review": {
   "checks": [
-   "each function against the equation it names (R54-EQ ids) and against conventions (signs, units, frames, row order)",
-   "silent failure paths, caught exceptions, and stale caches (model_key and operator fingerprint of both pair-sum caches)",
-   "random streams: one stream per block, seed 20261116, no draw reused between data and null",
-   "tests that would still pass if the function under test were wrong (compare with MUTATION_GATES.json and propose a gate for each gap)",
-   "numbers in generated documents that are typed instead of read from RESULTS/*.json",
-   "statements in generated documents that are stronger than the decision recorded in state/HYPOTHESES.json",
-   "every proof of THEOREMS.md line by line: hypotheses used, measurability and rank conditions, the scope clause C6.6 of the selection rule, and each attribution against its primary source"
+   "every proof of THEOREMS.md line by line: hypotheses used, measurability and rank conditions, the scope clause C6.6 of the selection rule, and each attribution against its primary source",
+   "each function of r54_identifiability.py against the statement it checks, and each test of test_r54_theorems.py for a way to pass while the statement is false",
+   "scripts/r54/handoff_merge.py: a path on which it would resolve a hand-written file, discard local work, or report HANDOFF OK after a failed step",
+   "statements in generated documents that are stronger than the decision recorded in state/HYPOTHESES.json"
   ],
-  "interrupted": [
-   {
-    "reason": "the reviewing agent stopped on an account usage limit before it returned a report; no finding was delivered",
-    "role": "scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer)"
-   }
-  ],
-  "record": "append the reviewer with every finding and its resolution to INDEPENDENT_REVIEW.json:reviewers, delete the matching entry of incomplete_reviews, then run the tests and the builder",
+  "interrupted": [],
+  "record": "append the reviewer to INDEPENDENT_REVIEW.json:reviewers with role, independent_of_author, status COMPLETE, verdict, `files` (exactly the repository paths that this reviewer read line by line) and every finding with its resolution; a review without a finding records `checks_performed` (the commands run and what was compared) and never an invented finding; when THEOREMS.md is in `files`, replace the status sentence at the top of THEOREMS.md by one line that starts with 'Independent review:' and names the reviewer role and the date (YYYY-MM-DD); then run the tests and the builder",
   "report_format": "one line per finding: id | severity (critical, major, minor) | file:line | defect | concrete failure scenario | suggested fix; then one verdict",
-  "reviewer": "an agent or a person that did not write the R54 code; read and run only, no edits",
-  "rule": "a critical finding blocks every node until it is FIXED; a finding is never resolved by weakening a test",
+  "reviewer": "an agent or a person that did not write the files under review; read and run only, no edits",
+  "rule": "a critical finding blocks every citation of the theorem it concerns until it is FIXED; a finding is never resolved by weakening a test; a file of the added scope counts as reviewed only if a recorded reviewer lists it in `files`",
   "scope": [
    "htt/htt/htt/infer/r54_tensor_five_view.py",
    "htt/htt/htt/infer/r54_type1_thomson.py",
    "htt/htt/htt/infer/r54_lcdm_body.py",
    "htt/htt/htt/infer/r54_distance_estimators.py",
-   "htt/htt/htt/infer/r54_identifiability.py",
-   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
-   "tests/r54/test_r54_theorems.py",
    "scripts/r54/run_r54_cmb_type1.py",
    "scripts/r54/run_r54_lowz_frames.py",
    "scripts/r54/run_r54_cf4_exact.py",
    "scripts/r54/build_r54_contract.py",
    "tests/r54/test_r54_modules.py",
-   "tests/r54/test_r54_results_binding.py"
+   "tests/r54/test_r54_results_binding.py",
+   "htt/htt/htt/infer/r54_identifiability.py",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+   "tests/r54/test_r54_theorems.py",
+   "scripts/r54/handoff_merge.py",
+   "tests/r54/test_r54_handoff.py"
   ],
   "status": "PENDING_LOCAL",
-  "when": "before the first edit of any node"
+  "uncovered": [
+   "htt/htt/htt/infer/r54_identifiability.py",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+   "tests/r54/test_r54_theorems.py",
+   "scripts/r54/handoff_merge.py",
+   "tests/r54/test_r54_handoff.py"
+  ],
+  "when": "before a statement of THEOREMS.md is cited in the note or outside this directory (addendum task R54-A1); the programme stop of PR-R57 is not affected"
  },
  "read_order": [
   "LOCAL_AGENT_RESTART_PROMPT.txt",
@@ -745,5 +822,44 @@
   "state/"
  ],
  "schema": "htt.r54.local_agent_contract/1",
- "tests": "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q"
+ "tests": "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q",
+ "theorem_usage": {
+  "proofs_independently_reviewed": false,
+  "rules": [
+   {
+    "rule": "At a fixed carrier and covariance the comparison of any view, compression or re-coordinatization with the exact likelihood is a tie by theorem. Report it as a theorem. A measured power ratio different from one is a defect to locate, never a result. A different nuisance model or covariance is a different analysis and is labelled as such.",
+    "theorem": "T1"
+   },
+   {
+    "rule": "Views, bodies and directions read from one cylinder of R54-EQ-20 are valid simultaneously when c^2 is the chi-square quantile with rank(F) degrees of freedom. State rank(F); do not split the level between views.",
+    "theorem": "T2"
+   },
+   {
+    "rule": "Along a direction outside row(F) the interval is reported as unbounded. A finite number there is quoted only together with the named body or prior that produces it.",
+    "theorem": "T3"
+   },
+   {
+    "rule": "Where a covariance estimated from n simulations enters a GLS fit with p - k > 0, the second moments carry the factors of wishart_gls_factors(n, p, k). Leave-one-out calibration (R54-L01) remains the test of the intervals; this rule adds no obligation to an executed node.",
+    "theorem": "T5"
+   },
+   {
+    "rule": "Identification is stated per irreducible block (l, parity) as the rank of a multiplicity matrix. Vorticity has no column in any scalar observable at first order; say so together with the scope clause C6.6 (tensors at the observer or homogeneous histories, isotropic and parity-symmetric sources and measurement, first order). B_2 and the toroidal proper-motion quadrupole are null channels: a signal there is a gate failure, not a parameter estimate.",
+    "theorem": "T6"
+   },
+   {
+    "rule": "Relative distances identify only the sums of a depth-independent Hubble multipole and the zero-point pattern of each sample. Equality of zero points between samples is testable; a vanishing constant multipole is not. A bound on a constant Hubble multipole is quoted only with its calibration body.",
+    "theorem": "T7"
+   },
+   {
+    "rule": "A limit on a shear amplitude is quoted only with its history family (at most two parameters per tensor component with T and E, one with T alone) or with its sign restriction. A ratio Sigma_E/Sigma_T outside [rho_min, rho_max] is reported as a sign change of the history.",
+    "theorem": "T8"
+   },
+   {
+    "rule": "The closure of R54-EQ-38 between a count population and a distance window of the same shell is an identity and tests only the measurement chain. A global tilt is tested across different shells; its residual degrees of freedom are 3 (n_c + n_d - 1) at full rank.",
+    "theorem": "T9"
+   }
+  ],
+  "source": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+  "status": "rules for manuscript statements; no executed node is changed by them; a theorem is cited only after addendum task R54-A1"
+ }
 }
