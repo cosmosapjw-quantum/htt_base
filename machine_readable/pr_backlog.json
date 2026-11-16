@@ -279,7 +279,11 @@
       "PR-R50-OBSERVED-CONVERGENCE",
       "PR-R51-OBSERVED-CONVERGENCE",
       "PR-R52-OBSERVED-CONVERGENCE",
-      "PR-R53-OBSERVED-CONVERGENCE"
+      "PR-R53-OBSERVED-CONVERGENCE",
+      "PR-R54-TENSOR-FRAME-TOMOGRAPHY",
+      "PR-R55-LOCAL-CALIBRATION",
+      "PR-R56-JOINT-BENCHMARK",
+      "PR-R57-MANUSCRIPT-DECISION"
     ],
     "strict_extension_cards": [
       "PR-SOLVER-FREE-DOSSIER",
@@ -361,7 +365,15 @@
       "PR-R37-02-KINEMATICS",
       "PR-R37-03-HUBBLE",
       "PR-R37-04-CLASSIFICATION",
-      "PR-R37-05-FINAL-REPORT"
+      "PR-R37-05-FINAL-REPORT",
+      "PR-R50-OBSERVED-CONVERGENCE",
+      "PR-R51-OBSERVED-CONVERGENCE",
+      "PR-R52-OBSERVED-CONVERGENCE",
+      "PR-R53-OBSERVED-CONVERGENCE",
+      "PR-R54-TENSOR-FRAME-TOMOGRAPHY",
+      "PR-R55-LOCAL-CALIBRATION",
+      "PR-R56-JOINT-BENCHMARK",
+      "PR-R57-MANUSCRIPT-DECISION"
     ],
     "checkpoint_every_completed_prs": 5,
     "no_native_lowell_solver_implementation": true,
@@ -14676,6 +14688,132 @@
       "claim_tier_ceiling": "C0",
       "user_authorized": true,
       "authorization": "Owner 2026-11-15: GitHub-only multi-turn convergent research, actual owned-data analysis, scoped code repairs and non-force push."
+    },
+    {
+      "id": "PR-R54-TENSOR-FRAME-TOMOGRAPHY",
+      "wave": 0,
+      "title": "Tensor five-view frame tomography on owned carriers; T+E shear-history functionals, CF4 catalogue-level log-distance estimator with the exact LCDM body and common-mode test, machine-readable local contract",
+      "owner": "HTT",
+      "depends": [
+        "PR-R53-OBSERVED-CONVERGENCE"
+      ],
+      "files": [
+        "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116",
+        "htt/htt/htt/infer",
+        "scripts/r54",
+        "tests/r54",
+        "tests/fixtures/r54"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q"
+      ],
+      "dod": [
+        "Five views are AVAILABLE on real carriers with a declared body and a named law, or UNAVAILABLE with a reason; a singular precision is reported, never regularized.",
+        "Every number in a report is generated from RESULTS/*.json; the mutation receipt shows every cloud gate killed.",
+        "Each of the six lanes carries promote/hold/reject/reopen decisions with separate review dimensions and kill criteria.",
+        "Local-only work is specified as node contracts with acceptance predicates; PR4 is not a dependency."
+      ],
+      "notes": "Owner-authorized successor to the R53 bounded-note decision; it adds executed analyses and is not an audit-only loop. Node scope/details: docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESEARCH_DAG.json",
+      "kill": "No native Bianchi solver, no new downloads, no PR4 dependency, no regularized singular precision, no unnamed tail law, no claim above C0, no force push or main merge",
+      "level": "L0",
+      "scope": "science",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-11-16: convergent research loop on six lanes with the tensorized five-variable framework, owned data only, PR4 bypass, machine-readable local-agent contract and non-force push."
+    },
+    {
+      "id": "PR-R55-LOCAL-CALIBRATION",
+      "wave": 0,
+      "title": "Local calibration; FFP10 leave-one-out law for the T+E estimator, PR4 bypass triangulation, count-dipole body and same-estimator null, CF4 survey-resolved zero points",
+      "owner": "HTT",
+      "depends": [
+        "PR-R54-TENSOR-FRAME-TOMOGRAPHY"
+      ],
+      "files": [
+        "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116",
+        "htt/htt/htt/infer",
+        "scripts/r54",
+        "tests/r54",
+        "tests/fixtures/r54"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q"
+      ],
+      "dod": [
+        "Nodes R54-L01, R54-L02, R54-L03 and R54-L04 meet the acceptance predicates of LOCAL_AGENT_CONTRACT.json or stop with a BLOCKER note; decision checks are evaluated once and thresholds are not tuned.",
+        "Each node implements its local mutation gates and records the self-audit table.",
+        "The independent diff review of the R54 cloud code that was interrupted in the cloud session is carried out before the first node edit and recorded in INDEPENDENT_REVIEW.json; critical findings are fixed first."
+      ],
+      "notes": "Local data drive required; no downloads. Node scope/details: docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/LOCAL_AGENT_CONTRACT.json",
+      "kill": "No native Bianchi solver, no new downloads, no PR4 dependency, no regularized singular precision, no unnamed tail law, no claim above C0, no force push or main merge",
+      "level": "L0",
+      "scope": "science",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-11-16: convergent research loop on six lanes with the tensorized five-variable framework, owned data only, PR4 bypass, machine-readable local-agent contract and non-force push."
+    },
+    {
+      "id": "PR-R56-JOINT-BENCHMARK",
+      "wave": 0,
+      "title": "Joint frame tomography likelihood in precision form and adversarial benchmark against published methods",
+      "owner": "HTT",
+      "depends": [
+        "PR-R55-LOCAL-CALIBRATION"
+      ],
+      "files": [
+        "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116",
+        "htt/htt/htt/infer",
+        "scripts/r54",
+        "tests/r54",
+        "tests/fixtures/r54"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q"
+      ],
+      "dod": [
+        "Nodes R54-L06 and R54-L07 complete; every benchmark target has a status and a score; a tie is never scored as a win.",
+        "Every evidence row not marked VERIFIED is resolved from its primary source."
+      ],
+      "notes": "Node scope/details: docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/ADVERSARIAL_BENCHMARK_SPEC.json",
+      "kill": "No native Bianchi solver, no new downloads, no PR4 dependency, no regularized singular precision, no unnamed tail law, no claim above C0, no force push or main merge",
+      "level": "L0",
+      "scope": "science",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-11-16: convergent research loop on six lanes with the tensorized five-variable framework, owned data only, PR4 bypass, machine-readable local-agent contract and non-force push."
+    },
+    {
+      "id": "PR-R57-MANUSCRIPT-DECISION",
+      "wave": 0,
+      "title": "Manuscript decision with an independent decision-gate reviewer; programme stop",
+      "owner": "HTT",
+      "depends": [
+        "PR-R56-JOINT-BENCHMARK"
+      ],
+      "files": [
+        "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116",
+        "htt/htt/htt/infer",
+        "scripts/r54",
+        "tests/r54",
+        "tests/fixtures/r54"
+      ],
+      "tests": [
+        "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q"
+      ],
+      "dod": [
+        "One of BOUNDED_NOTE_EXTENDED or NO_PAPER is recorded with per-dimension review decisions; no audit-only successor loop is opened."
+      ],
+      "notes": "Node scope/details: docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESEARCH_DAG.json#R54-L08",
+      "kill": "No native Bianchi solver, no new downloads, no PR4 dependency, no regularized singular precision, no unnamed tail law, no claim above C0, no force push or main merge",
+      "level": "L0",
+      "scope": "science",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "Owner 2026-11-16: convergent research loop on six lanes with the tensorized five-variable framework, owned data only, PR4 bypass, machine-readable local-agent contract and non-force push."
     }
   ]
 }

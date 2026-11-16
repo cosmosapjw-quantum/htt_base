@@ -1,0 +1,732 @@
+{
+ "base": "research/r50-observed-convergence-20261115",
+ "branch": "research/r54-tensor-frame-tomography-20261116",
+ "coding_rules": [
+  "Add code only in htt/htt/htt/infer/r54_*.py, scripts/r54 and tests/r54. Reuse the listed API; do not re-implement it.",
+  "Every script writes one JSON under RESULTS/ with schema, node, claim_tier, provenance and limitations, then calls no plotting unless asked.",
+  "Every new function gets a test that names the equation or gate it protects.",
+  "Fail closed: raise on shape, unit, frame or identity mismatch. Never catch an exception to continue.",
+  "After each node: run the tests, run the node's mutation gates, run `python scripts/r54/build_r54_contract.py build`, commit with the card id as prefix, push without force."
+ ],
+ "committed_inputs_sha256": {
+  "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+  "docs/research_program/observational_publication_20261015/HTT_SIX_LOOP_INTEGRATED_20261109/COUNT_DIPOLES_REAL_RECEIPT.json": "fd212d96f582787983f26b25cc0ebe93648ac22056478761cb15d252ca0b62e7",
+  "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/RESULT.json": "31f31c79c0fb1d11724dcb9da1373dcd3421c7fc8717eeecd4c54cc1237c5b62",
+  "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/audit_backup/derived/A_RAW_36x35970.npz": "e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e",
+  "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/R51/observed_carrier.npz": "f0c08a115854a6f287d39eddf984291f676e6f7bb79bb2324eb92cd6eb2c0dca",
+  "tests/fixtures/r54/planck18_linear_pk_z0.csv": "f4f99b2817ee0ade6b4b4cba107843d95f46c13e82293fb3def061bc56d0a45d",
+  "tests/fixtures/r54/planck18_tau_history.csv": "239f6f32857d9799be818072dd3385d02a2f5eed0c5a5eacf4cbebb9076e6231"
+ },
+ "conventions": {
+  "cf4_catalogue": "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz: z_CMB, dmzp, e_dmzp, n_J2000 (N,3), method_family in {FP, OTHER, SN, TF}, group_id; N = 35970; 0.01 <= z <= 0.1",
+  "cf4_log_vector": "36 = 4 windows x [h, delta_x, delta_y, delta_z, kappa_1..5]; h = ln H; delta and kappa are fractions of the apparent Hubble rate; stored with its white and exact-body covariance in RESULTS/R54_L05_CF4_EXACT.json:log_distance.carrier",
+  "cf4_sign": "delta points toward higher apparent Hubble rate; Delta mu = -(5/ln10) delta.n; hemisphere step s > 0 means a higher rate in the north",
+  "cf4_vector": "36 = 4 windows x [H, D_x, D_y, D_z, STF5]; km/s/Mpc; ICRS J2000; redshift z_CMB; windows z = 0.025, 0.04, 0.06, 0.08 (R36 linear estimator; superseded for inference by cf4_log_vector)",
+  "claim_tier": "C0 for every R54/R55/R56 output; promotion only through PR-R57 with an independent decision-gate reviewer",
+  "cmb_sign": "dT/T(n) = -n.Sigma_T.n ; healpy E coefficients carry -T0 n.Sigma_E.n with the same packing as T (R54-EQ-04)",
+  "cmb_vector": "135 = T45 | E45 | B45; ell = 2..6 inside each field; labels in observed_carrier.npz:mode_labels; index of T_2_0 is 0, E_2_0 is 45, B_2_0 is 90",
+  "confidence_level": 0.95,
+  "data_policy": "no downloads; inputs are resolved from HTT_SIX_LOOP_INTEGRATED_20261109/DATA_INVENTORY.json; a missing input sets BLOCKED_MISSING_INPUT",
+  "forbidden_phrases_in_reports": [
+   "we detect",
+   "evidence for anisotropy",
+   "rules out FLRW",
+   "discovery",
+   "confirms the dipole anomaly"
+  ],
+  "json": "UTF-8, indent=1, sort_keys=True; +-inf as strings 'inf'/'-inf'; NaN as null",
+  "metric_signature": "(-,+,+,+)",
+  "paths": {
+   "local_root": "/mnt/extdrive/workdir",
+   "modules": "htt/htt/htt/infer",
+   "r54_dir": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116",
+   "raw_root": "/mnt/extdrive/workdir/raw",
+   "results_dir": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS",
+   "tests": "tests/r54"
+  },
+  "precision_form": "-2 ln L = theta^T F theta - 2 t^T theta + const; a singular F is reported, never regularized; no unstated prior",
+  "provenance_keys": [
+   "script",
+   "script_sha256",
+   "inputs_sha256",
+   "python",
+   "numpy",
+   "scipy"
+  ],
+  "rotation": "x_gal = R_I2G @ x_icrs with R_I2G defined once in scripts/r54/run_r54_lowz_frames.py; never retype the matrix",
+  "seed": 20261116,
+  "sky_direction": "n = unit vector from observer to source; photon propagation direction is -n",
+  "status_vocabulary": [
+   "DONE_SCOPED_C0",
+   "PENDING_LOCAL",
+   "BLOCKED_MISSING_INPUT",
+   "FAILED_ACCEPTANCE",
+   "SKIPPED_OPTIONAL"
+  ],
+  "stf5_basis": "htt/htt/htt/infer/r54_tensor_five_view.py::STF5_BASIS, order [(xx-yy)/sqrt2, (xx+yy-2zz)/sqrt6, xy, xz, yz], Frobenius norm 1 each",
+  "time_variable": "N = ln a, a = 1 today; s = sigma/H is dimensionless",
+  "units": {
+   "P": "Mpc^3",
+   "Sigma": "dimensionless",
+   "apparent_H": "km/s/Mpc",
+   "cmb_modes": "uK_CMB",
+   "count_dipole": "dimensionless amplitude of delta(n) = d.n",
+   "distance": "Mpc (no h)",
+   "k": "1/Mpc",
+   "velocity": "km/s"
+  }
+ },
+ "date": "2026-11-16",
+ "equations": {
+  "R54-EQ-01": "dTheta/dN = -s - kappa[(9/10)Theta + (sqrt6/10)Ecal]",
+  "R54-EQ-02": "dEcal/dN = -kappa[(sqrt6/10)Theta + (4/10)Ecal]; kappa = n_e sigma_T c/H = dtau/dln(1+z)",
+  "R54-EQ-03": "K_T(tau) = (6 e^-tau + e^(-3tau/10))/7 ; K_E(tau) = (sqrt6/7)(e^(-3tau/10) - e^-tau)",
+  "R54-EQ-04": "Sigma_T = -Theta(0) = int K_T(tau(N)) s(N) dN ; Sigma_E = +Ecal(0) = int K_E(tau(N)) s(N) dN ; a^T_2m <-> -T0 n.Sigma_T.n ; a^E_2m <-> -T0 n.Sigma_E.n",
+  "R54-EQ-05": "ds/dN = -(3 + dlnH/dN) s + (8/5)[Omega_gamma(N) Theta + Omega_nu(N) Ncal] ; dNcal/dN = -s",
+  "R54-EQ-06": "massive collisionless species, k = 0, first order: pi_ij = -(2/15) beta_ij Kcal, beta_ij = int s_ij dN, Kcal = 4 pi int dp f0 p^4 (4p^2 + 5m^2)/E^3 ; W(mu) = Kcal/(4 rho_massless), mu = m a/T_nu0, W(0) = 1 ; the neutrino term of R54-EQ-05 is multiplied by the species mean of W",
+  "R54-EQ-10": "u_lm(r) = 4 pi f H0 i^l int d^3k/(2pi)^3 (delta_k/k) j_l'(kr) Y*_lm(k)",
+  "R54-EQ-11": "C_l^{ww'} = (2/pi)(f H0)^2 int dk P(k) I_l^w(k) I_l^{w'}(k) ; I_l^w(k) = int dr Wcal_w(r) j_l'(kr)",
+  "R54-EQ-12": "Var(H) = C_0/(4pi) ; Cov(D_i) = (3/(4pi)) C_1 ; Cov(q_a) = (15/(8pi)) C_2",
+  "R54-EQ-20": "Theta_c = {theta: (theta-m)^T F (theta-m) <= c^2}, F m = t ; Q_min/max = min/max of p_K0 over Theta_c ; Q_max = inf if F singular",
+  "R54-EQ-21": "Q_min = sup_v [-h_Theta(-v)]_+/h_K0(v) ; Q_max = sup_v h_Theta(v)/h_K0(v) ; h_K0(v) = sqrt(v^T B v)",
+  "R54-EQ-22": "Pi = P[stat >= stat_obs | named law]",
+  "R54-EQ-23": "chi2_transport = min_x (y - (tau (x) I)x)^T C^-1 (y - (tau (x) I)x), dof = d(K-1)",
+  "R54-EQ-30": "Psi_perp(r) = (f H0)^2/(2 pi^2) int dk P(k) j_1(kr)/(kr) ; Psi_par(r) = (f H0)^2/(2 pi^2) int dk P(k) [j_0(kr) - 2 j_1(kr)/(kr)]",
+  "R54-EQ-31": "C_uu(i,j) = Psi_perp(r_ij)(n_i.n_j) + [Psi_par(r_ij) - Psi_perp(r_ij)](n_i.rhat_ij)(n_j.rhat_ij) ; r_ij = |d_i n_i - d_j n_j|",
+  "R54-EQ-32": "C_1 = (2/pi) int dk k^2 P(k) [int dchi W(chi) b(z) D(z) j_1(k chi)]^2 ; Var(d_i) = (3/(4pi)) C_1 for delta(n) = d.n",
+  "R54-EQ-33": "flat LCDM: chi_hat(z) = int_0^z dz'/E ; y(z) = c (1+z) chi_hat = H0 d_L(z) [km/s] ; g(z) = [(1+z)/(E chi_hat) - 1]/c = d ln(y/d_L,obs)/du",
+  "R54-EQ-34": "eta_i = ln[y(z_i)/d_i] = h + delta.n_i + n_i.kappa.n_i + g(z_i) u_i - s_i eps_i ; s_i = (ln10/5) e_mu,i ; weights W(z_i)/tau_i^2, tau_i^2 = s_i^2 + (sigma_* g_i)^2",
+  "R54-EQ-35": "R36 linear estimator: c z_i = d_i (H + D.n_i + n_i.q.n_i), weights W(z_i)/hypot(250, 70 (ln10/5) d_i e_mu,i)^2 ; biased by errors in d_i (exp(+s^2/2) for homogeneous errors)",
+  "R54-EQ-36": "Delta mu = -(5/ln10) Delta eta ; hemisphere step s: Delta mu(north - south) = -(5/ln10) 2 s",
+  "R54-EQ-37": "exact body of an operator O acting on eta: O diag(g) C_uu diag(g) O^T with C_uu of R54-EQ-31 at redshift-space positions r_i = (c/H_fid) chi_hat(z_i)",
+  "R54-EQ-38": "global-tilt closure across depths: V_CF4 + c beta_excess(counts) = 0 with beta_excess = D/c_EB - beta_CMB"
+ },
+ "module_api": {
+  "r54_distance_estimators": [
+   "multipole_basis(nhat)",
+   "wls_operator(design, weights)",
+   "gaussian_window_weights(z, centers, width)",
+   "distance_mpc(mu)",
+   "r36_linear_window_operator(mu, e_mu, z, nhat, centers)",
+   "log_distance_ratio(mu, z, omega_m)",
+   "log_noise_variance(e_mu, g, sigma_star)",
+   "log_window_operator(tau2, z, nhat, centers, width, nuisance, select)",
+   "white_covariance(op, variance)",
+   "magnitude_equivalent(delta_eta)"
+  ],
+  "r54_lcdm_body": [
+   "gaussian_window(r_center, sigma_r, norm)",
+   "harmonic_cosmic_cov(ell, k, pk, windows, f, h0)",
+   "stacked_window_body(k, pk, windows, f, h0)",
+   "point_velocity_dispersion_1d(k, pk, f, h0)",
+   "velocity_correlation(k, pk, f, h0, r, n_k, damping_mpc)",
+   "radial_velocity_covariance_product(op, nhat, r, r_grid, tables, chunk)",
+   "flat_lcdm_distance_factors(z, omega_m)"
+  ],
+  "r54_tensor_five_view": [
+   "identify(F, scale)",
+   "profiled_precision(F, keep)",
+   "EllipsoidBody(name, shape_matrix)",
+   "gauge_range(F, t, body, c2)",
+   "support_interval(F, t, v, c)",
+   "support_utilization(F, t, body, v, c)",
+   "hotelling_null_tail",
+   "empirical_upper_tail",
+   "gls_fit",
+   "transport_design",
+   "compare_transport_models",
+   "stf2_invariants",
+   "axisymmetry_statistic",
+   "five_view_record"
+  ],
+  "r54_type1_thomson": [
+   "thomson_kernels(tau)",
+   "thomson_propagator(tau)",
+   "planck18_background()",
+   "OpticalDepthHistory(z, tau, e2_of_n)",
+   "history_functionals(s_of_n, hist, n_start, n_end)",
+   "solve_type1_history(bg, hist, stress, z_init, ...)",
+   "massive_stress_weight(mu)",
+   "neutrino_stress_scale(masses_ev, t_cmb_k)"
+  ],
+  "scripts/r54/run_r54_cf4_exact.py": [
+   "compute()",
+   "build_operators(cat, a_raw, tau2)",
+   "cosmic_covariances(stack, labels, n, r)",
+   "common_mode(theta, white, body)",
+   "hemisphere_steps(theta, white, body)",
+   "locking_null(theta, cov, rng, n_draw)",
+   "window_subset_nulls(theta, cov)",
+   "step_scan(cat, eta, g, tau2, r, rng, reference)",
+   "injections(...)",
+   "tilt_transport(theta, cov, an)"
+  ]
+ },
+ "nodes": [
+  {
+   "acceptance": [
+    {
+     "metric": "covariance_identity_rel",
+     "op": "<=",
+     "value": 1e-10
+    },
+    {
+     "metric": "t_only_pi_loo",
+     "op": "within",
+     "value": [
+      0.8797209302325582,
+      0.8877209302325582
+     ]
+    }
+   ],
+   "card": "PR-R55-LOCAL-CALIBRATION",
+   "decision_checks": [
+    {
+     "check": "LOO coverage of the nominal 95% interval lies in [0.912, 0.988] and of the 68% interval in [0.60, 0.76] (binomial 3 sigma, N = 300)",
+     "if_false": "replace the analytic inflation by the empirical LOO quantiles and mark the R54-L1 intervals SUPERSEDED; the carrier is not changed",
+     "if_true": "the T+E intervals of R54-L1 are CALIBRATED"
+    },
+    {
+     "check": "e_dev < 2e-3",
+     "if_false": "use the masked response J_E; if e_dev >= 0.05 mark every E-lane number of R54-L1 INVALID",
+     "if_true": "keep the ideal E response"
+    },
+    {
+     "check": "empirical B ell=2 null tail >= 0.01",
+     "if_false": "the E lane stays DIAGNOSTIC",
+     "if_true": "the E lane may become CLAIMABLE subject to R54-L02"
+    }
+   ],
+   "depends": [
+    "R54-L1"
+   ],
+   "id": "R54-L01",
+   "inputs": [
+    {
+     "identity_check": "sample covariance (ddof=1) equals observed_carrier.npz:S_ffp10_300_135x135_uK2 to rtol 1e-10; reuse the loader of scripts/r53/run_r53_benchmark.py, do not guess key names",
+     "path": "/mnt/extdrive/workdir/r49_chains/ffp10_300_debiased_135.npz",
+     "role": "300 FFP10 SMICA debiased 135-vectors"
+    },
+    {
+     "path": "maps and mask exactly as read by scripts/r51/run_r51_pr3_lowell.py",
+     "role": "masked estimator for the E response"
+    },
+    {
+     "path": "/mnt/extdrive/workdir/raw/planck_pr3_smica_hm",
+     "role": "half-mission SMICA maps (optional leg)"
+    },
+    {
+     "path": "/mnt/extdrive/workdir/raw/planck_pr3_component_maps*",
+     "role": "Commander / NILC / SEVEM maps (optional leg)"
+    }
+   ],
+   "kill": [
+    "tuning the carrier or a threshold after seeing the coverage",
+    "using sims[i] inside its own covariance"
+   ],
+   "mutation_gates": [
+    "MG-L01",
+    "MG-L02"
+   ],
+   "outputs": [
+    {
+     "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L01_RESULT.json",
+     "required_keys": [
+      "e_response",
+      "loo_calibration",
+      "b_null_empirical",
+      "results_calibrated",
+      "provenance"
+     ],
+     "schema": "htt.r54.l01_te_calibration/1"
+    }
+   ],
+   "priority": 1,
+   "runtime_budget": "30 min CPU",
+   "steps": [
+    "1. Load the cache; assert shape (300,135) and the covariance identity. On failure stop with BLOCKED_MISSING_INPUT.",
+    "2. Masked E response. For k = 0..4 build a_lm with a^E_2m equal to the ideal T pattern of STF basis k (invert the real packing used for response_J_ideal_135x5_uK[0:5,k]), a^T = a^B = 0; synthesize Q,U at the NSIDE and beam of the R51 script; run the same masked debiased estimator; stack J_E (135x5).",
+    "3. Compute e_dev = max|J_E[45:50] - J_ideal[0:5]| / max|J_ideal[0:5]| and the norms of J_E in T and B rows. If e_dev < 2e-3 keep the ideal response, else use J_E and set flag E_RESPONSE_MASKED_USED.",
+    "4. Leave-one-out calibration on carrier TE_l2 (rows 0:5 and 45:50). For i in 0..299: S_i = covariance of the other 299; theta_i = (J^T S_i^-1 J)^-1 J^T S_i^-1 sims[i]; W_i = theta_i^T (J^T S_i^-1 J) theta_i. Record sd(theta_i)/mean plug-in sd per parameter, coverage of plug-in sd x finite_mc_sd_inflation(299,10,10) at 68% and 95%, and the empirical tails of the observed W_all, W_T, W_E.",
+    "5. B-null with an empirical law: T2_B(ell=2) of every LOO realisation against S_i; empirical tail of the observed value.",
+    "6. Optional legs (skip with SKIPPED_OPTIONAL if inputs are absent): half-mission difference vector (HM1-HM2)/2 and its E2/B2 rms; Commander/NILC/SEVEM E2/B2 dispersion.",
+    "7. Re-run scripts/r54/run_r54_cmb_type1.py logic with the calibrated law (add a CLI flag --sims PATH; default behaviour unchanged) and write RESULTS/R54_L01_RESULT.json."
+   ],
+   "title": "Calibrate the T+E type-I estimator on the 300 FFP10 realisations"
+  },
+  {
+   "acceptance": [
+    {
+     "metric": "e_lane_status",
+     "op": "in",
+     "value": [
+      "CLAIMABLE",
+      "DIAGNOSTIC"
+     ]
+    },
+    {
+     "metric": "pr4_simulations_used",
+     "op": "==",
+     "value": false
+    }
+   ],
+   "card": "PR-R55-LOCAL-CALIBRATION",
+   "decision_checks": [
+    {
+     "check": "the analytic T covariance passes the LRT at p >= 0.01 and its diagonal ratios lie within 0.25 of 1",
+     "if_false": "keep FFP10 with the calibrated inflation and record the reason",
+     "if_true": "adopt C_th for the T lane (no finite-MC inflation)"
+    },
+    {
+     "check": "max |Sigma_T shift| between SMICA and every other experiment <= 0.5 sd",
+     "if_false": "the T lane is PIPELINE_DEPENDENT; quote the envelope over experiments",
+     "if_true": "the T lane is PIPELINE_STABLE"
+    },
+    {
+     "check": "the B ell=2 null passes (p >= 0.01) with the adopted covariance on at least two independent pipelines or experiments",
+     "if_false": "E lane DIAGNOSTIC; the manuscript quotes the T lane only",
+     "if_true": "E lane CLAIMABLE"
+    }
+   ],
+   "depends": [
+    "R54-L01"
+   ],
+   "id": "R54-L02",
+   "inputs": [
+    {
+     "path": "/mnt/extdrive/workdir/raw/wmap_9yr",
+     "role": "WMAP9 maps"
+    },
+    {
+     "path": "/mnt/extdrive/workdir/raw/cosmoglobe_dr1",
+     "role": "Cosmoglobe DR1"
+    },
+    {
+     "path": "/mnt/extdrive/workdir/raw/beyondplanck_v2",
+     "role": "BeyondPlanck v2"
+    },
+    {
+     "path": "/mnt/extdrive/workdir/raw/planck_npipe_pr4",
+     "role": "PR4 maps (no simulations held)"
+    }
+   ],
+   "kill": [
+    "PR4 simulations requested or downloaded: forbidden",
+    "a single split difference used as a null law: invalid"
+   ],
+   "mutation_gates": [
+    "MG-L03"
+   ],
+   "outputs": [
+    {
+     "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L02_RESULT.json",
+     "required_keys": [
+      "t_analytic_covariance_test",
+      "cross_experiment_T",
+      "e_lane_table",
+      "adopted_e_covariance",
+      "e_lane_status",
+      "provenance"
+     ],
+     "schema": "htt.r54.l02_pr4_bypass/1"
+    }
+   ],
+   "priority": 2,
+   "runtime_budget": "2 h CPU",
+   "steps": [
+    "1. T-lane analytic covariance. Push unit harmonic maps a_lm (ell = 2..ell_cut of the R51 working resolution) through the R51 estimator to get R (45 x n_modes); C_th = R diag(C_ell^TT b_ell^2 p_ell^2) R^T with C_ell from data/camb_ref_planck2018.npz. Add the FFP10 noise-only covariance if available, else state that noise is neglected.",
+    "2. Test C_th against the FFP10 sample covariance S_T45: M = C_th^-1 S; LRT = 299 [tr M - ln det M - 45] against chi2 with 45*46/2 dof; also report max|diag(S)/diag(C_th) - 1|.",
+    "3. If p >= 0.01 and the diagonal ratio is within 0.25, adopt C_th for the T lane (no finite-MC inflation) and recompute Sigma_T; otherwise keep FFP10 and record the reason.",
+    "4. Cross-experiment T: same estimator on WMAP9 ILC, Cosmoglobe DR1 and BeyondPlanck CMB maps (union mask); report Sigma_T differences from SMICA in units of the T sd.",
+    "5. E-lane alternatives: Sigma_E and the B ell=2 null from (a) Cosmoglobe/BeyondPlanck products with their own uncertainty products, (b) WMAP9 low-resolution Q,U with its noise covariance, (c) PR4 maps with a split-difference noise estimate. A split difference is one realisation: use it for difference tests only, never as a null distribution.",
+    "6. Adopted E covariance: S_FFP10 + diag(floor), floor = max(B-null floor of R54-L1, half-mission floor, pipeline-dispersion variance, cross-experiment dispersion variance).",
+    "7. E-lane status: CLAIMABLE only if the B ell=2 null passes (p >= 0.01) with the adopted covariance on at least two independent pipelines or experiments; else DIAGNOSTIC. Write RESULTS/R54_L02_RESULT.json."
+   ],
+   "title": "PR4 bypass: covariance triangulation without NPIPE simulations"
+  },
+  {
+   "acceptance": [
+    {
+     "metric": "receipt_reproduction_max_abs",
+     "op": "<=",
+     "value": 0.0001
+    },
+    {
+     "metric": "mask_hash_of_mocks_equals_mask_hash_of_data",
+     "op": "==",
+     "value": true
+    }
+   ],
+   "card": "PR-R55-LOCAL-CALIBRATION",
+   "decision_checks": [
+    {
+     "check": "mock-recovered kinematic amplitude bias <= 0.2 sd",
+     "if_false": "subtract the mock bias, inflate the covariance by the mock scatter and state both",
+     "if_true": "the estimator is used as is"
+    },
+    {
+     "check": "the excess test with the calibrated covariance has p >= 0.01 for every owned catalogue",
+     "if_false": "report the excess with its law; H-L2a is REOPENED",
+     "if_true": "H-L2a stays REJECTED for the owned estimators"
+    },
+    {
+     "check": "at least one competitor estimator is REPRODUCED on an owned catalogue",
+     "if_false": "B05 is NOT_REPRODUCIBLE_FROM_TEXT; no comparison claim",
+     "if_true": "score benchmark target B05"
+    }
+   ],
+   "depends": [
+    "R54-L5"
+   ],
+   "id": "R54-L03",
+   "inputs": [
+    {
+     "path": "/mnt/extdrive/workdir/raw/Quaia",
+     "role": "Quaia G20.0/G20.5 catalogues, randoms, selection maps"
+    },
+    {
+     "path": "/mnt/extdrive/workdir/raw (NVSS, RACS)",
+     "role": "radio catalogues as in the L2 receipt"
+    },
+    {
+     "path": "/mnt/extdrive/workdir/raw/1075476.csv.gz and 27936.parquet",
+     "role": "identify content first; if CatWISE2020 AGN enable the Secrest replication, else record the identity"
+    }
+   ],
+   "kill": [
+    "bias parameters taken from memory without a cited primary source: mark UNVERIFIED and use the two-model bracket",
+    "mock null built with a different mask or estimator than the data: invalid"
+   ],
+   "mutation_gates": [
+    "MG-L04"
+   ],
+   "outputs": [
+    {
+     "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L03_RESULT.json",
+     "required_keys": [
+      "receipt_reproduction",
+      "clustering_body",
+      "velocity_null",
+      "excess_tests",
+      "five_views",
+      "provenance"
+     ],
+     "schema": "htt.r54.l03_count_dipoles/1"
+    }
+   ],
+   "priority": 3,
+   "runtime_budget": "3 h CPU",
+   "steps": [
+    "1. Re-run HTT_SIX_LOOP_INTEGRATED_20261109/L2_real_dipoles.py and confirm the receipt numbers (D_icrs to 1e-4).",
+    "2. Clustering body (R54-EQ-32) per catalogue: Quaia N(z) from catalogue redshifts and a published quasar bias model cited from its primary source; NVSS with two bracketing N(z) models cited from primary sources, constant bias 1.6 and 2.0; z_min cuts 0, 0.01, 0.03. Full j_1 integral, no Limber. Report Var(d_i) = (3/(4 pi)) C_1 next to the shot term.",
+    "3. Same-estimator velocity null: 500 Poisson mocks on the expectation map times (1 + d_kin.n + d_clust.n), d_clust ~ N(0, body); run the identical estimator and latitude-cut sweep; store bias and covariance of the estimate.",
+    "4. Excess test per catalogue and for the common excess with the calibrated covariance; five views (Q with the body, Pi with the mock law).",
+    "5. Competitor estimators on the owned catalogues (R54-L07 targets): quasar and radio estimators as specified in ADVERSARIAL_BENCHMARK_SPEC.json; if a mask or cut is not reproducible from the paper text set NOT_REPRODUCIBLE_FROM_TEXT with the reason."
+   ],
+   "title": "Count-dipole body, same-estimator velocity null and competitor estimators"
+  },
+  {
+   "acceptance": [
+    {
+     "metric": "cloud_json_reproduced",
+     "op": "==",
+     "value": true
+    },
+    {
+     "metric": "label_join_coverage",
+     "note": "fraction of the 35970 group_id values found in the raw table",
+     "op": ">=",
+     "value": 0.99
+    }
+   ],
+   "card": "PR-R55-LOCAL-CALIBRATION",
+   "decision_checks": [
+    {
+     "check": "common step after survey monopoles has |z| < 2 (white + exact body)",
+     "if_false": "go to the next check",
+     "if_true": "class SURVEY_ZERO_POINT: the common step of H-L5g is an inter-survey calibration term; H-L5g is REJECTED as a common-mode statement"
+    },
+    {
+     "check": "single-survey all-sky samples (largest TF survey, SN) each keep a step with |z| >= 2 and agree in sign",
+     "if_false": "class UNRESOLVED",
+     "if_true": "class COMMON_MODE_NOT_SURVEY_SPECIFIC: quote the LCDM-body tail of the common step; no physical interpretation"
+    },
+    {
+     "check": "the constant quadrupole of 'log_survey' has Wald p >= 0.01",
+     "if_false": "H-L5h stays HOLD",
+     "if_true": "H-L5h is REJECTED (survey monopoles remove it)"
+    },
+    {
+     "check": "the joint null of 'log_survey' has p >= 0.01",
+     "if_false": "H-L5a stays HOLD; quote the conditional statement together with the nuisance table",
+     "if_true": "H-L5a is REJECTED as an excess over the body (survey zero points remove it)"
+    },
+    {
+     "check": "the class is identical for pooled, log_mono, log_survey, log_mono_radial, log_mono_galactic and log_mono_error",
+     "if_false": "the robust class stays DEPENDS_ON_ZERO_POINT_NUISANCE_MODEL; the manuscript quotes the table and no class; H-L5c stays HOLD",
+     "if_true": "quote that class as robust to the listed nuisance models"
+    }
+   ],
+   "depends": [
+    "R54-L05"
+   ],
+   "id": "R54-L04",
+   "inputs": [
+    {
+     "path": "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz",
+     "role": "35970 groups (committed)",
+     "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c"
+    },
+    {
+     "identity_check": "sha256 of the group table equals source_table3_sha256 or source_table4_sha256 of loop6_result.json; if no file matches stop with BLOCKED_MISSING_INPUT",
+     "path": "/mnt/extdrive/workdir/raw/cf4 and /mnt/extdrive/workdir/raw/cf4_full",
+     "role": "raw CF4 tables; Table 3 and Table 4 hashes are in docs/research_program/cf4_schur_loop8_20261015/inputs/loop6_result.json"
+    },
+    {
+     "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L05_CF4_EXACT.json and R54_L05_COSMIC_COV.npz",
+     "role": "exact-body results and cached covariance of the cloud run"
+    }
+   ],
+   "kill": [
+    "survey labels joined by row order",
+    "a survey pooled or split after looking at its step",
+    "a nuisance column added or dropped after looking at its effect"
+   ],
+   "mutation_gates": [
+    "MG-L05",
+    "MG-L06"
+   ],
+   "outputs": [
+    {
+     "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L04_RESULT.json",
+     "required_keys": [
+      "survey_table",
+      "survey_offsets",
+      "survey_steps",
+      "log_survey_headline",
+      "nuisance_variants",
+      "stability",
+      "decision",
+      "provenance"
+     ],
+     "schema": "htt.r54.l04_cf4_survey_split/1"
+    }
+   ],
+   "priority": 1,
+   "runtime_budget": "2 h CPU",
+   "steps": [
+    "1. Re-run scripts/r54/run_r54_cf4_exact.py; it must reproduce the committed JSON (tests/r54/test_r54_results_binding.py). Do not change its constants.",
+    "2. From the raw CF4 tables build one survey label per group, joined on group_id (never on row order): for FP the source sample (6dFGSv, SDSS, other), for TF the source sample or band, for SN the compilation. Write the label array next to the catalogue as RESULTS/R54_L04_SURVEY_LABELS.npz with keys group_id, survey. Groups without a unique label get the label of their family plus '_MIXED'.",
+    "3. Tabulate per survey: count, fraction north, median z, median e_dmzp. Surveys with fewer than 200 groups in 0.01 <= z < 0.055 are pooled into '<family>_REST'.",
+    "4. Add to run_r54_cf4_exact.build_operators (new operator names, existing ones unchanged) the rows: (a) 'survey_step': model eta = redshift-bin monopoles + s * sign(dec) fitted per survey that has at least 100 groups in each hemisphere; (b) 'log_survey': the four-window fit with one monopole column per survey as nuisance; (c) 'survey_offsets': model eta = redshift-bin monopoles of the family + one offset per survey of that family (reference = largest survey), rows = the offsets.",
+    "5. Add three more window-fit operators, each equal to 'log_mono' (monopole offsets of FP, SN, TF) plus one nuisance column: 'log_mono_radial' with column z_i (a radial slope of eta inside each window); 'log_mono_galactic' with column |sin b_i|, b from lz.R_I2G (never retype the matrix); 'log_mono_error' with column s_i^2 = ((ln10/5) e_dmzp,i)^2 (homogeneous Malmquist-type term). Fix this list before any of them is run.",
+    "6. Recompute the pair sum (the cache key changes; about 12 minutes on 2 cores) and report, with white and with white + exact body errors: every survey offset in mag (R54-EQ-36), every survey step, the consistency chi2 of the steps. Add the leave-6dFGS-out version of the window fit (benchmark target B08).",
+    "7. For each of 'log_survey', 'log_mono_radial', 'log_mono_galactic', 'log_mono_error': the headline block of the cloud run, window_subset_nulls, locking_null with 4000 draws (random streams np.random.default_rng([20261116, 11]) to [20261116, 14] in this order) and the class from the classify function of the cloud script. Store them as nuisance_variants next to the three cloud variants.",
+    "8. Stability: repeat step 6 for e_dmzp terciles and for the two halves of the redshift range 0.01-0.055; report the common step in each.",
+    "9. Write RESULTS/R54_L04_RESULT.json and evaluate decision_checks. Do not edit the decision of the cloud run; append the L04 decision."
+   ],
+   "title": "CF4 survey-resolved zero points: is the common hemisphere step a survey calibration term?"
+  },
+  {
+   "acceptance": [
+    {
+     "metric": "all_views_validated_by_five_view_record",
+     "op": "==",
+     "value": true
+    },
+    {
+     "metric": "unidentified_directions_reported",
+     "op": "==",
+     "value": true
+    }
+   ],
+   "card": "PR-R56-JOINT-BENCHMARK",
+   "depends": [
+    "R54-L01",
+    "R54-L02",
+    "R54-L03",
+    "R54-L04"
+   ],
+   "id": "R54-L06",
+   "inputs": [
+    {
+     "path": "RESULTS of R54-L01, L02, L03, L04",
+     "role": "calibrated carriers"
+    },
+    {
+     "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L05_CF4_EXACT.json:log_distance.carrier",
+     "role": "CF4 log-distance carrier: theta (36), white and exact-body covariance, velocity response (36x3)"
+    },
+    {
+     "path": "/mnt/extdrive/workdir/raw/PantheonPlus",
+     "role": "SN distances and covariance (optional leg)"
+    }
+   ],
+   "kill": [
+    "a prior added to make a block invertible without being named as a body"
+   ],
+   "mutation_gates": [
+    "MG-L07"
+   ],
+   "outputs": [
+    {
+     "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L06_JOINT.json",
+     "required_keys": [
+      "blocks",
+      "identification",
+      "transport_table",
+      "five_views",
+      "provenance"
+     ],
+     "schema": "htt.r54.l06_joint/1"
+    }
+   ],
+   "priority": 4,
+   "runtime_budget": "1 h CPU",
+   "steps": [
+    "1. Assemble one precision-form carrier per irreducible block with typed coordinates. Polar vector: beta_RO, V_w per depth, A_cal,p per distance sample. STF2: Sigma_T, Sigma_E, q_w per depth, q_cal,p per sample. Axial vector: omega has no column and is reported as unidentified.",
+    "2. Add probes by adding (F, t); profile nuisance with r54_tensor_five_view.profiled_precision; never invert a singular block.",
+    "3. Transport hypotheses on the same data and covariance: LCDM body only; one global tilt V_w = V for all depths; type-I shear with perfect-fluid and with stress histories; zero-point terms. Report residual chi2, dof and delta chi2 for each. Repeat the tilt closure of R54-EQ-38 with the count covariance of R54-L03 in place of the receipt errors.",
+    "4. Five views per block with fv.five_view_record; identification table from fv.identify with the scale vector stated.",
+    "5. Write RESULTS/R54_L06_JOINT.json and one table for the manuscript."
+   ],
+   "title": "Joint frame tomography L(theta | a_lm, z, n, counts)"
+  },
+  {
+   "acceptance": [
+    {
+     "metric": "targets_with_status",
+     "op": "==",
+     "value": "all"
+    }
+   ],
+   "card": "PR-R56-JOINT-BENCHMARK",
+   "depends": [
+    "R54-L03",
+    "R54-L04"
+   ],
+   "id": "R54-L07",
+   "inputs": [
+    {
+     "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/ADVERSARIAL_BENCHMARK_SPEC.json",
+     "role": "targets, tolerances and scoring"
+    }
+   ],
+   "kill": [
+    "scoring a tie as a win"
+   ],
+   "mutation_gates": [],
+   "outputs": [
+    {
+     "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L07_BENCHMARK.json",
+     "required_keys": [
+      "targets",
+      "scores",
+      "novelty_checks",
+      "provenance"
+     ],
+     "schema": "htt.r54.l07_benchmark/1"
+    }
+   ],
+   "priority": 4,
+   "runtime_budget": "1 day",
+   "steps": [
+    "1. For each target with owned-data overlap reproduce the published headline number under the published assumptions; record REPRODUCED, NOT_REPRODUCED or NOT_REPRODUCIBLE_FROM_TEXT with the measured value.",
+    "2. Re-run under the common R54 assumptions (declared body, named law, typed frame) and fill the scoring fields of the spec.",
+    "3. Resolve every evidence row whose verification is not VERIFIED by reading the primary source; correct identifiers in state/EVIDENCE_LEDGER.md through the builder.",
+    "4. Novelty check for H-L1b and H-L5g: search the primary literature for prior stress-corrected Bianchi-I CMB shear limits and for a cross-indicator common-mode test of the CF4 hemisphere asymmetry with a catalogue-level LCDM covariance; record the nearest prior art and set the novelty field of both hypotheses."
+   ],
+   "title": "Adversarial benchmark against published methods"
+  },
+  {
+   "acceptance": [
+    {
+     "metric": "decision",
+     "op": "in",
+     "value": [
+      "BOUNDED_NOTE_EXTENDED",
+      "NO_PAPER"
+     ]
+    }
+   ],
+   "card": "PR-R57-MANUSCRIPT-DECISION",
+   "depends": [
+    "R54-L06",
+    "R54-L07"
+   ],
+   "id": "R54-L08",
+   "inputs": [
+    {
+     "path": "all R54 results",
+     "role": "claim table"
+    }
+   ],
+   "kill": [
+    "opening another research loop instead of deciding"
+   ],
+   "mutation_gates": [],
+   "outputs": [
+    {
+     "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/FINAL_DECISION_R57.md",
+     "required_keys": [],
+     "schema": "markdown"
+    }
+   ],
+   "priority": 5,
+   "runtime_budget": "half day",
+   "steps": [
+    "1. Update R53/MANUSCRIPT_CLAIM_TABLE.md with rows for the R54 statements that survived calibration.",
+    "2. Ask an independent reviewer for promote/hold/reject on evidence, validity, novelty, testability, robustness and risk separately.",
+    "3. Choose one: bounded note extended by the T+E functionals and the CF4 catalogue-level diagnostics (estimator bias, exact body, cross-indicator common mode), or no paper. No further audit-only loop."
+   ],
+   "title": "Manuscript decision with an independent decision-gate reviewer"
+  }
+ ],
+ "pending_independent_review": {
+  "checks": [
+   "each function against the equation it names (R54-EQ ids) and against conventions (signs, units, frames, row order)",
+   "silent failure paths, caught exceptions, and stale caches (model_key and operator fingerprint of both pair-sum caches)",
+   "random streams: one stream per block, seed 20261116, no draw reused between data and null",
+   "tests that would still pass if the function under test were wrong (compare with MUTATION_GATES.json and propose a gate for each gap)",
+   "numbers in generated documents that are typed instead of read from RESULTS/*.json",
+   "statements in generated documents that are stronger than the decision recorded in state/HYPOTHESES.json"
+  ],
+  "interrupted": [
+   {
+    "reason": "the reviewing agent stopped on an account usage limit before it returned a report; no finding was delivered",
+    "role": "scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer)"
+   }
+  ],
+  "record": "append the reviewer with every finding and its resolution to INDEPENDENT_REVIEW.json:reviewers, delete the matching entry of incomplete_reviews, then run the tests and the builder",
+  "report_format": "one line per finding: id | severity (critical, major, minor) | file:line | defect | concrete failure scenario | suggested fix; then one verdict",
+  "reviewer": "an agent or a person that did not write the R54 code; read and run only, no edits",
+  "rule": "a critical finding blocks every node until it is FIXED; a finding is never resolved by weakening a test",
+  "scope": [
+   "htt/htt/htt/infer/r54_tensor_five_view.py",
+   "htt/htt/htt/infer/r54_type1_thomson.py",
+   "htt/htt/htt/infer/r54_lcdm_body.py",
+   "htt/htt/htt/infer/r54_distance_estimators.py",
+   "scripts/r54/run_r54_cmb_type1.py",
+   "scripts/r54/run_r54_lowz_frames.py",
+   "scripts/r54/run_r54_cf4_exact.py",
+   "scripts/r54/build_r54_contract.py",
+   "tests/r54/test_r54_modules.py",
+   "tests/r54/test_r54_results_binding.py"
+  ],
+  "status": "PENDING_LOCAL",
+  "when": "before the first edit of any node"
+ },
+ "read_order": [
+  "LOCAL_AGENT_RESTART_PROMPT.txt",
+  "LOCAL_AGENT_CONTRACT.json",
+  "RESEARCH_DAG.json",
+  "SELF_AUDIT_PROTOCOL.json",
+  "MUTATION_GATES.json",
+  "PR4_BYPASS_CONTRACT.json",
+  "ADVERSARIAL_BENCHMARK_SPEC.json",
+  "THEORY_LOOPS.md",
+  "state/"
+ ],
+ "schema": "htt.r54.local_agent_contract/1",
+ "tests": "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q"
+}

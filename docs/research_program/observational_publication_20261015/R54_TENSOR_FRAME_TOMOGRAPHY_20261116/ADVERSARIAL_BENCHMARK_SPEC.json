@@ -1,0 +1,171 @@
+{
+ "method_baselines": [
+  "exact Gaussian likelihood / GLS (tie by sufficiency, R53)",
+  "Sellentin-Heavens t-law (E29)",
+  "Percival matching (E30)",
+  "eigenstructure LRT for symmetric matrices (E26)",
+  "support-function partial-identification intervals"
+ ],
+ "schema": "htt.r54.adversarial_benchmark/1",
+ "scoring": {
+  "LOSS": "competitor is tighter or better calibrated on the same data",
+  "NOT_COMPARABLE": "different data or model class; say so",
+  "TIE": "same information; differences within stated uncertainty (expected for any sufficient-statistic comparison)",
+  "WIN": "HTT statement is calibrated where the competitor's is not, or reaches a tighter calibrated bound on the same data and assumptions",
+  "rule": "a TIE is never reported as a WIN; a WIN needs the competitor replicated first"
+ },
+ "targets": [
+  {
+   "evidence": [
+    "E01",
+    "E02",
+    "E03"
+   ],
+   "expected_outcome_before_running": "HTT weaker than E01 on the perfect-fluid model (less data); HTT adds the stress-model dependence",
+   "htt_counterpart": "perfect-fluid T+E |sigma/H|_0 <= 1.42e-10; stress family 6.65e-08",
+   "id": "B01",
+   "node": "R54-L07",
+   "owned_data_overlap": "PR3 low-ell carrier (ell = 2 of T,E)",
+   "published_claim": "perfect-fluid Bianchi shear limits from Planck T+pol",
+   "replication_target": "order of magnitude of the decaying-mode limit",
+   "score": null,
+   "status": "PENDING_LOCAL",
+   "tolerance": "factor 10"
+  },
+  {
+   "evidence": [
+    "E09",
+    "E33",
+    "E34"
+   ],
+   "expected_outcome_before_running": "TIE on amplitude; HTT adds the exact body, the per-family comparison and the estimator-bias statement",
+   "htt_counterpart": "all families, exact body: 3.1% (0.065 mag), Wald p=5.12e-05; the TF family alone has p=0.19 once the LCDM body is included",
+   "id": "B02",
+   "node": "R54-L04",
+   "owned_data_overlap": "CF4 groups (four method families; no band label in the committed file)",
+   "published_claim": "CF4 zero-point dipole 4.1 +- 0.9 % (TF W1)",
+   "replication_target": "constant-dipole amplitude on the TF family",
+   "score": null,
+   "status": "PENDING_LOCAL",
+   "tolerance": "2 published sd"
+  },
+  {
+   "evidence": [
+    "E10",
+    "E11",
+    "E12",
+    "E13",
+    "E35"
+   ],
+   "expected_outcome_before_running": "direction reproduced with white errors; with the exact body the fitted hemisphere step has a single-axis tail of 0.0017 and a scan-corrected tail of 0.0339",
+   "htt_counterpart": "bulk-only law with white errors: 283 km/s, 11 deg from E10; with the exact body 371 km/s toward (310,-44)",
+   "id": "B03",
+   "node": "R54-L04",
+   "owned_data_overlap": "CF4 groups",
+   "published_claim": "CF4 bulk flow 419 +- 36 km/s at 200 h^-1 Mpc toward (298,-8)",
+   "replication_target": "bulk-only direction and amplitude",
+   "score": null,
+   "status": "PENDING_LOCAL",
+   "tolerance": "direction 20 deg; amplitude 2 sd"
+  },
+  {
+   "evidence": [
+    "E16",
+    "E17",
+    "E18"
+   ],
+   "expected_outcome_before_running": "HTT assigns no physical direction: the answer depends on the zero-point nuisance model",
+   "htt_counterpart": "best template axis (252,79); calibrated locking tail by zero-point nuisance model: pooled 0.0242, method monopoles 0.0085, method x hemisphere steps 0.147",
+   "id": "B04",
+   "node": "R54-L07",
+   "owned_data_overlap": "CF4 groups",
+   "published_claim": "CF4 expansion-rate multipoles with a common axis read as covariant cosmography",
+   "replication_target": "their dipole/quadrupole axis",
+   "score": null,
+   "status": "PENDING_LOCAL",
+   "tolerance": "20 deg"
+  },
+  {
+   "evidence": [
+    "E19",
+    "E20",
+    "E23",
+    "E24"
+   ],
+   "expected_outcome_before_running": "HTT estimator weaker; competitor estimators decide",
+   "htt_counterpart": "receipt estimator: no excess at its systematics budget (p=0.27, 0.46)",
+   "id": "B05",
+   "node": "R54-L03",
+   "owned_data_overlap": "Quaia, NVSS, RACS (CatWISE only if the unidentified file is that catalogue)",
+   "published_claim": "count-dipole excess above 5 sigma",
+   "replication_target": "published amplitude per catalogue",
+   "score": null,
+   "status": "PENDING_LOCAL",
+   "tolerance": "1.5 published sd"
+  },
+  {
+   "evidence": [
+    "E21",
+    "E22"
+   ],
+   "expected_outcome_before_running": "NOT_COMPARABLE",
+   "htt_counterpart": "enter R54-L06 as anchors with their published covariance",
+   "id": "B06",
+   "node": "R54-L06",
+   "owned_data_overlap": "none owned at map level for aberration",
+   "published_claim": "kinematic velocity from redshift tomography and from aberration",
+   "replication_target": "use as published anchors only",
+   "score": null,
+   "status": "PENDING_LOCAL",
+   "tolerance": "n/a"
+  },
+  {
+   "evidence": [
+    "E25"
+   ],
+   "expected_outcome_before_running": "NOT_COMPARABLE without a systematics model",
+   "htt_counterpart": "L3 conditional statement H-L3d",
+   "id": "B07",
+   "node": "R54-L06",
+   "owned_data_overlap": "Gaia CRF3 Gram matrix",
+   "published_claim": "proper-motion signatures of anisotropic expansion",
+   "replication_target": "none",
+   "score": null,
+   "status": "PENDING_LOCAL",
+   "tolerance": "n/a"
+  },
+  {
+   "evidence": [
+    "E46",
+    "E47",
+    "E48",
+    "E03"
+   ],
+   "expected_outcome_before_running": "TIE (re-derivation); H-L1a claims no novelty",
+   "htt_counterpart": "r_E(perfect fluid) = 0.0711; kernels SymPy-sealed",
+   "id": "B09",
+   "node": "R54-L07",
+   "owned_data_overlap": "none needed (analytic)",
+   "published_claim": "first-order polarized transfer in a flat anisotropic universe (temperature and polarization quadrupoles)",
+   "replication_target": "the two kernels of R54-EQ-03 and r_E for the same ionization history",
+   "score": null,
+   "status": "PENDING_LOCAL",
+   "tolerance": "kernel identity; r_E within 5%"
+  },
+  {
+   "evidence": [
+    "E43"
+   ],
+   "expected_outcome_before_running": "TIE expected (same estimator class); HTT adds the pair-sum cross-covariance between catalogues",
+   "htt_counterpart": "family level: steps mutually consistent (p=0.867), -1.66 +- 0.53% of H (scan-corrected tail 0.0339); the survey level is not resolved in the committed file",
+   "id": "B08",
+   "node": "R54-L04",
+   "owned_data_overlap": "CF4 groups plus the raw tables for survey labels",
+   "published_claim": "CF4 dipoles per constituent catalogue with a log-distance estimator: TFR and 6dFGS larger than SDSS and SN; removing 6dFGS lowers the upper-bin deviation to 1.56 sigma",
+   "replication_target": "per-survey hemisphere step or dipole and the leave-6dFGS-out result",
+   "score": null,
+   "status": "PENDING_LOCAL",
+   "tolerance": "2 published sd"
+  }
+ ]
+}

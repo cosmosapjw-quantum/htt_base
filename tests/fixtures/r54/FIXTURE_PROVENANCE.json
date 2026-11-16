@@ -1,0 +1,43 @@
+{
+ "schema": "htt.r54.theory_fixture_provenance/1",
+ "generator": "scripts/r54/build_r54_fixtures.py",
+ "camb_version": "2.0.5",
+ "parameters_source": "data/camb_ref_planck2018.npz",
+ "parameters": {
+  "H0": 67.36,
+  "ombh2": 0.02237,
+  "omch2": 0.12,
+  "mnu": 0.06,
+  "omk": 0.0,
+  "tau": 0.0544,
+  "As": 2.1e-09,
+  "ns": 0.9649,
+  "YHe": 0.2456560393606866
+ },
+ "derived": {
+  "tau_at_z50": 0.054555095315914695,
+  "z_star_camb": 1089.9066660268757,
+  "sigma8": 0.8109534685821471,
+  "tau_at_zstar": 1.0547356311856575
+ },
+ "files": {
+  "planck18_tau_history.csv": {
+   "sha256": "239f6f32857d9799be818072dd3385d02a2f5eed0c5a5eacf4cbebb9076e6231",
+   "rows": 1102,
+   "columns": [
+    "z",
+    "tau",
+    "x_e"
+   ]
+  },
+  "planck18_linear_pk_z0.csv": {
+   "sha256": "f4f99b2817ee0ade6b4b4cba107843d95f46c13e82293fb3def061bc56d0a45d",
+   "rows": 260,
+   "columns": [
+    "k_per_Mpc",
+    "P_Mpc3"
+   ]
+  }
+ },
+ "claim_tier": "THEORY_FIXTURE_NOT_OBSERVATIONAL_DATA"
+}

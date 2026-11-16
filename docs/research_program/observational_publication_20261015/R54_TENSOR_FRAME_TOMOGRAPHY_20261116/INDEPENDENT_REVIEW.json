@@ -1,0 +1,212 @@
+{
+ "date": "2026-11-16",
+ "incomplete_reviews": [
+  {
+   "agent": "a82647252ca61587e",
+   "handed_to": "local session, before the first edit of any node (LOCAL_AGENT_CONTRACT.json:pending_independent_review)",
+   "independent_of_author": true,
+   "reason": "the reviewing agent stopped on an account usage limit before it returned a report; no finding was delivered",
+   "role": "scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer)",
+   "status": "INTERRUPTED"
+  }
+ ],
+ "reviewers": [
+  {
+   "agent": "ae6b17c200d7dfa14",
+   "findings": [
+    {
+     "evidence": [
+      "RESULTS/R54_L05_CF4_EXACT.json:decision.class_by_nuisance_variant",
+      "RESULTS/R54_L05_CF4_EXACT.json:decision.locking_tail_by_nuisance_variant",
+      "RESULTS/R54_L05_CF4_EXACT.json:injections.*.cases.*.fraction_pole_locked_flag",
+      "state/HYPOTHESES.json:H-L5c"
+     ],
+     "id": "AR-01",
+     "resolution": "Locking null repeated for three nuisance models with 4000 draws each; class reported per model with a robust class; power of the pole_locked flag measured by injection; H-L5c moved to HOLD and both directional statements withdrawn.",
+     "resolution_status": "FIXED",
+     "severity": "critical",
+     "summary": "The rejection of pole locking (H-L5c) rested on the pooled nuisance model only; the calibrated tail changes with the zero-point model and the flag has low power."
+    },
+    {
+     "evidence": [
+      "RESULTS/R54_L1_TYPE1_TE.json:history.late_time_sensitivity",
+      "RESULTS/R54_L1_TYPE1_TE.json:data.late_time_shear_bounds",
+      "state/HYPOTHESES.json:H-L3c,H-L3d"
+     ],
+     "id": "AR-02",
+     "resolution": "Late-time kernel sensitivities and bounds computed; H-L3c rejected as stated and replaced by the conditional statement H-L3d.",
+     "resolution_status": "FIXED",
+     "severity": "critical",
+     "summary": "H-L3c was promoted although late-time anisotropic stress with a sign-changing shear cancels the temperature functional."
+    },
+    {
+     "evidence": [
+      "RESULTS/R54_L05_CF4_EXACT.json:log_distance.window_subsets",
+      "RESULTS/R54_L05_CF4_EXACT.json:zero_point_split.method_monopoles_only.window_subsets",
+      "RESULTS/R54_L05_CF4_EXACT.json:setup.composition_north_south"
+     ],
+     "id": "AR-03",
+     "resolution": "Inner and outer window nulls added for the pooled and method-monopole models together with the sample composition; H-L5a moved to HOLD as a conditional statement quoted with all three nuisance models. The inner windows are reported as computed.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "The excess over the body (H-L5a) is dominated by the outer windows, where the sample is northern FP; only a conditional statement is supported."
+    },
+    {
+     "evidence": [
+      "RESULTS/R54_L05_CF4_EXACT.json:zero_point_split.hemisphere_step_scan",
+      "tests/r54/test_r54_results_binding.py::test_l05_statistics_recomputed_with_plain_numpy"
+     ],
+     "id": "AR-04",
+     "resolution": "Hemisphere-split axis scan with the exact body and a restricted pair sum; scan-corrected tail, rank of the pole and the variance ratio of the best single family to the common step are reported next to the single-axis tail; the common-dipole Wald tail is quoted.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "The tail of the common hemisphere step used an axis chosen after the first pass; the four family estimates are not independent."
+    },
+    {
+     "evidence": [
+      "R54_REPORT_KO.md section 2.3",
+      "state/NEGATIVE_RESULTS.md",
+      "tests/r54/test_r54_results_binding.py::test_withdrawn_statements_do_not_reappear"
+     ],
+     "id": "AR-05",
+     "resolution": "The contradictory sentences were removed, the two measurements are separated in the report, the split result is labelled as not being evidence, and a test blocks the withdrawn phrases.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "The report stated both a hemisphere step and that no axis is singled out; the step and the window excess are different measurements; 'absorbed by the split' is near-automatic."
+    },
+    {
+     "evidence": [
+      "THEORY_LOOPS.md:Forking-path register",
+      "RESULTS/R54_L05_CF4_EXACT.json:decision.rule_status",
+      "SELF_AUDIT_PROTOCOL.json:A14,A15"
+     ],
+     "id": "AR-06",
+     "resolution": "Forking-path register FP-01 to FP-12 added to THEORY_LOOPS.md; the rule status is recorded in the result file; the wording 'pre-specified' was dropped; self-audit items A14 and A15 added.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "Several analysis choices were made after looking at data and the decision rule was described as pre-specified."
+    },
+    {
+     "evidence": [
+      "htt/htt/htt/infer/r54_type1_thomson.py:massive_stress_weight",
+      "tests/r54/test_r54_modules.py::test_eq06_massive_neutrino_stress_weight",
+      "RESULTS/R54_L1_TYPE1_TE.json:history.photon_neutrino_stress"
+     ],
+     "id": "AR-07",
+     "resolution": "Exact collisionless stress weight for massive species implemented and tested (R54-EQ-06, MG-20); minimal-normal-ordering variant run; full onset sweep with the neutrino temperature at each onset; H-L1b kept as a qualitative statement with illustration numbers.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "The present-shear numbers of H-L1b were quoted from a cut sweep with massless neutrinos only."
+    },
+    {
+     "evidence": [
+      "state/EVIDENCE_LEDGER.md:E46-E48",
+      "state/HYPOTHESES.json:H-L1a",
+      "ADVERSARIAL_BENCHMARK_SPEC.json:B09"
+     ],
+     "id": "AR-08",
+     "resolution": "Evidence rows E46, E47 and E48 added (E46 and E47 checked by search in this session; the author list of E47 was corrected against the arXiv record); H-L1a is recorded as a re-derivation without a novelty claim; benchmark target B09 added.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "The kernel result has prior art that was not cited."
+    },
+    {
+     "evidence": [
+      "RESULTS/R54_L05_CF4_EXACT.json:injections",
+      "state/HYPOTHESES.json:H-C3"
+     ],
+     "id": "AR-09",
+     "resolution": "Injections at the observed sizes on the pooled and method-monopole operators; the decision of H-C3 follows a threshold written before that run was read and is HOLD.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "H-C3 said the depth laws are separated although the injected amplitudes exceeded the observed ones."
+    },
+    {
+     "evidence": [
+      "RESULTS/R54_L05_CF4_EXACT.json:five_views.F",
+      "RESULTS/R54_L5_LOWZ_FRAMES.json:five_views.F",
+      "state/HYPOTHESES.json:H-C1"
+     ],
+     "id": "AR-10",
+     "resolution": "H-C1 is recorded as a reporting convention without a novelty claim; the F view is UNAVAILABLE on both low-redshift lanes and the axis scan is filed under Pi.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "The five views were presented with a novelty flavour and the F slot of the low-redshift lanes held an axis scan."
+    },
+    {
+     "deferred_to": "R54-L04",
+     "evidence": [
+      "LOCAL_AGENT_CONTRACT.json:nodes[R54-L04].steps",
+      "RESULTS/R54_L05_CF4_EXACT.json:limitations"
+     ],
+     "id": "AR-11",
+     "resolution": "Wording bounded to the stated conditions and listed under limitations. Survey monopoles, a radial slope and a distance-error term are specified as fixed nuisance variants of R54-L04, which needs the raw CF4 tables on the local drive; a calibration covariance and a selection model are not built.",
+     "resolution_status": "DEFERRED",
+     "severity": "major",
+     "summary": "The CF4 null has no calibration covariance, no selection model and no survey labels."
+    },
+    {
+     "deferred_to": "R54-L04",
+     "evidence": [
+      "LOCAL_AGENT_CONTRACT.json:nodes[R54-L04].steps"
+     ],
+     "id": "AR-12",
+     "resolution": "Specified as the operator log_mono_galactic of R54-L04.",
+     "resolution_status": "DEFERRED",
+     "severity": "minor",
+     "summary": "A Galactic-latitude nuisance was not tested."
+    },
+    {
+     "evidence": [
+      "htt/htt/htt/infer/r54_tensor_five_view.py:finite_mc_sd_inflation",
+      "tests/r54/test_r54_modules.py::test_eq22_named_laws_and_calibration"
+     ],
+     "id": "AR-13",
+     "resolution": "Replaced by the exact Wishart ratio with a Monte Carlo unit test; Hotelling tails for the square primary carrier; MG-12 updated; the R53 code is not edited and the difference is recorded as conservative.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "The finite-MC inflation formula inherited from R53 is not exact."
+    },
+    {
+     "evidence": [
+      "state/HYPOTHESES.json:H-L4a"
+     ],
+     "id": "AR-14",
+     "resolution": "H-L4a moved to HOLD; the family-identification block is kept in the statement.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "H-L4a was promoted without a null calibration of the invariants."
+    },
+    {
+     "evidence": [
+      "RESULTS/R54_L5_LOWZ_FRAMES.json:count_dipoles.power_against_doubled_dipole",
+      "state/HYPOTHESES.json:H-L2a,H-L6b,H-L3a,H-L3b"
+     ],
+     "id": "AR-15",
+     "resolution": "H-L3a and H-L3b carry 'NONE claimed' novelty and the inherited label; the power of the count estimator against a doubled dipole is computed; H-L2a and H-L6b moved to HOLD.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "H-L3a and H-L3b are inherited structural statements; H-L2a and H-L6b were rejected on an underpowered count estimator."
+    },
+    {
+     "evidence": [
+      "state/HYPOTHESES.json",
+      "THEORY_LOOPS.md"
+     ],
+     "id": "AR-16",
+     "resolution": "Novelty of H-C3, H-L5a and H-L5g set to LOW pending R54-L07; the ODE agreement is described as inside the unit-test tolerance; the '(met)' clause was removed.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "Novelty fields and several small wordings were too strong (tolerance quoted as agreement, a kill criterion marked as met)."
+    }
+   ],
+   "independent_of_author": true,
+   "role": "adversarial reviewer (physmath-research-harness:adversarial-reviewer)",
+   "scope": "hypotheses, decisions, statistics and wording of the R54 cloud nodes before the review-driven re-run",
+   "status": "COMPLETE",
+   "verdict": "ACCEPT_WITH_REQUIRED_CHANGES"
+  }
+ ],
+ "rule": "Reviewer output is information, not authority. No number proposed by a reviewer entered a document without being re-executed by the run scripts.",
+ "schema": "htt.r54.independent_review/1"
+}

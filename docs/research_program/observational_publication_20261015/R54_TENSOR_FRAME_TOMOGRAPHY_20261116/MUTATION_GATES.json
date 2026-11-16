@@ -1,0 +1,237 @@
+{
+ "cloud_gates": [
+  {
+   "file": "htt/htt/htt/infer/r54_type1_thomson.py",
+   "id": "MG-01",
+   "meaning": "E kernel sign flipped",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq03_kernel_shape",
+   "replace": "return (6.0 * e1 + e2) / 7.0, SQRT6 * (e2 - e1) / 7.0",
+   "status": "IMPLEMENTED",
+   "with": "return (6.0 * e1 + e2) / 7.0, SQRT6 * (e1 - e2) / 7.0"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_type1_thomson.py",
+   "id": "MG-02",
+   "meaning": "sharp last scattering instead of the T kernel",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq04_kernel_form_equals_ode_form_for_perfect_fluid",
+   "replace": "            kt, ke = thomson_kernels(hist.tau(n))",
+   "status": "IMPLEMENTED",
+   "with": "            kt, ke = (1.0 if n > -math.log(1090.94) else 0.0), thomson_kernels(hist.tau(n))[1]"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
+   "id": "MG-03",
+   "meaning": "tail accepted without a law name",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq22_named_laws_and_calibration",
+   "replace": "def chi2_null_tail(stat: float, dof: int, law: str) -> dict:\n    if not law.strip():",
+   "status": "IMPLEMENTED",
+   "with": "def chi2_null_tail(stat: float, dof: int, law: str) -> dict:\n    if False:"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
+   "id": "MG-04",
+   "meaning": "unidentified direction silently bounded",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq20_singular_precision_and_hard_case",
+   "replace": "    if not is_identified(f, v, scale):\n        return (-math.inf, math.inf)",
+   "status": "IMPLEMENTED",
+   "with": "    if False:\n        return (-math.inf, math.inf)"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_type1_thomson.py",
+   "id": "MG-05",
+   "meaning": "neutrino anisotropic stress dropped",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq05_radiation_era_oscillator_matches_analytic_solution",
+   "replace": "    use_nu = stress == STRESS_PHOTON_NEUTRINO",
+   "status": "IMPLEMENTED",
+   "with": "    use_nu = False"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_lcdm_body.py",
+   "id": "MG-06",
+   "meaning": "wrong dipole Cartesian factor",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq11_point_window_recovers_velocity_dispersion",
+   "replace": "1: 3.0 / (4.0 * math.pi)",
+   "status": "IMPLEMENTED",
+   "with": "1: 1.0 / (4.0 * math.pi)"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_lcdm_body.py",
+   "id": "MG-07",
+   "meaning": "cross-depth covariance dropped",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq11_eq12_stacked_body_structure",
+   "replace": "                    out[9 * a + j, 9 * b + j] = c[a, b]",
+   "status": "IMPLEMENTED",
+   "with": "                    out[9 * a + j, 9 * b + j] = c[a, b] if a == b else 0.0"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
+   "id": "MG-08",
+   "meaning": "Q or F accepted without a declared body",
+   "must_fail": "tests/r54/test_r54_modules.py::test_five_view_record_fails_closed",
+   "replace": "        if status == AVAILABLE and name in (\"Q\", \"F\") and not str(v.get(\"body\", \"\")).strip():",
+   "status": "IMPLEMENTED",
+   "with": "        if False:"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
+   "id": "MG-09",
+   "meaning": "transport design mis-ordered",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq23_transport_recovers_law",
+   "replace": "    return np.kron(tau[:, None], np.eye(dim))",
+   "status": "IMPLEMENTED",
+   "with": "    return np.kron(np.eye(dim), tau[:, None])"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_type1_thomson.py",
+   "id": "MG-10",
+   "meaning": "wrong E self-coupling in the ODE",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq04_kernel_form_equals_ode_form_for_perfect_fluid",
+   "replace": "-k * (SQRT6 / 10.0 * th + 0.4 * ec), -s]",
+   "status": "IMPLEMENTED",
+   "with": "-k * (SQRT6 / 10.0 * th + 1.0 * ec), -s]"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
+   "id": "MG-11",
+   "meaning": "Q_min replaced by the centre gauge",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq20_gauge_range_exact_in_two_dimensions",
+   "replace": "        w_min = lam * ap * nu / (1.0 + lam * ap)",
+   "status": "IMPLEMENTED",
+   "with": "        w_min = nu"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
+   "id": "MG-12",
+   "meaning": "finite-MC inflation truncated",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq22_named_laws_and_calibration",
+   "replace": "return math.sqrt(n * (n - 1.0) / (m * (m - 1.0)))",
+   "status": "IMPLEMENTED",
+   "with": "return math.sqrt(n * (n - 1.0) / (m * m))"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_lcdm_body.py",
+   "id": "MG-14",
+   "meaning": "anisotropic term of the velocity correlation tensor dropped",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq31_pair_sum_equals_dense_and_harmonic_forms",
+   "replace": "mm = (ri - rj * cos) * (ri * cos - rj) / safe**2",
+   "status": "IMPLEMENTED",
+   "with": "mm = 0.0 * cos"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_lcdm_body.py",
+   "id": "MG-15",
+   "meaning": "wrong Psi_par kernel",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq30_velocity_correlation_limits_and_identity",
+   "replace": "par[a:a + 64] = norm * ((j0 - 2.0 * j1x) @ weight)",
+   "status": "IMPLEMENTED",
+   "with": "par[a:a + 64] = norm * ((j0 - 1.0 * j1x) @ weight)"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_lcdm_body.py",
+   "id": "MG-16",
+   "meaning": "sign of the luminosity-distance velocity term",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq33_distance_factors_low_redshift_limits",
+   "replace": "\"g_per_km_s\": ((1.0 + z) / (e_z * chi_hat) - 1.0) / c}",
+   "status": "IMPLEMENTED",
+   "with": "\"g_per_km_s\": ((1.0 + z) / (e_z * chi_hat) + 1.0) / c}"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_distance_estimators.py",
+   "id": "MG-17",
+   "meaning": "cosmographic factor dropped (c z instead of H0 d_L)",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq34_log_estimator_is_unbiased_and_eq35_linear_estimator_is_not",
+   "replace": "return {\"eta\": np.log(fac[\"y_km_s\"] / distance_mpc(mu)), \"g_per_km_s\": fac[\"g_per_km_s\"],",
+   "status": "IMPLEMENTED",
+   "with": "return {\"eta\": np.log(C_KM_S * np.asarray(z, float) / distance_mpc(mu)), \"g_per_km_s\": fac[\"g_per_km_s\"],"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_distance_estimators.py",
+   "id": "MG-18",
+   "meaning": "R36 weight law altered",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq35_r36_operator_is_reproduced_from_the_committed_source",
+   "replace": "sigma = np.hypot(sigma_star, h_sigma * LN10_OVER_5 * d * np.asarray(e_mu, float))",
+   "status": "IMPLEMENTED",
+   "with": "sigma = np.hypot(sigma_star, h_sigma * LN10_OVER_5 * np.asarray(e_mu, float))"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_distance_estimators.py",
+   "id": "MG-19",
+   "meaning": "rank-deficient design accepted",
+   "must_fail": "tests/r54/test_r54_modules.py::test_wls_operator_identity_and_fail_closed",
+   "replace": "    if diag.min() <= 0 or np.linalg.cond(r) > cond_limit:",
+   "status": "IMPLEMENTED",
+   "with": "    if False:"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_type1_thomson.py",
+   "id": "MG-20",
+   "meaning": "wrong non-relativistic limit of the collisionless stress weight",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq06_massive_neutrino_stress_weight",
+   "replace": "(4.0 * xx * xx + 5.0 * mm * mm)",
+   "status": "IMPLEMENTED",
+   "with": "(4.0 * xx * xx + 4.0 * mm * mm)"
+  },
+  {
+   "file": "any committed input of RESULTS/*.json",
+   "id": "MG-13",
+   "meaning": "result/input drift",
+   "must_fail": "tests/r54/test_r54_results_binding.py::test_inputs_are_the_committed_ones",
+   "replace": "one byte",
+   "status": "IMPLEMENTED",
+   "with": "another byte"
+  }
+ ],
+ "local_gates": [
+  {
+   "detection_to_implement": "covariance identity check of step 1 must fail for the column permutation and pass for the row permutation",
+   "id": "MG-L01",
+   "mutation": "permute the 300 simulation rows relative to nothing (control) and permute the 135 columns of the simulations only",
+   "node": "R54-L01",
+   "status": "TO_IMPLEMENT_WITH_NODE"
+  },
+  {
+   "detection_to_implement": "coverage_95 test must leave the acceptance band on a synthetic Gaussian set with N = 60, p = 10",
+   "id": "MG-L02",
+   "mutation": "use sims[i] inside its own covariance (no leave-one-out)",
+   "node": "R54-L01",
+   "status": "TO_IMPLEMENT_WITH_NODE"
+  },
+  {
+   "detection_to_implement": "unit test asserting that the E-lane null object refuses n_realisations < 30",
+   "id": "MG-L03",
+   "mutation": "use a single split-difference vector as the null distribution",
+   "node": "R54-L02",
+   "status": "TO_IMPLEMENT_WITH_NODE"
+  },
+  {
+   "detection_to_implement": "test comparing the mask hash of data and mocks must fail",
+   "id": "MG-L04",
+   "mutation": "run the mock null with a different latitude cut than the data",
+   "node": "R54-L03",
+   "status": "TO_IMPLEMENT_WITH_NODE"
+  },
+  {
+   "detection_to_implement": "test asserting that label[group_id] is invariant under a permutation of the raw rows must fail",
+   "id": "MG-L05",
+   "mutation": "join the survey labels by row order after shuffling the raw table",
+   "node": "R54-L04",
+   "status": "TO_IMPLEMENT_WITH_NODE"
+  },
+  {
+   "detection_to_implement": "synthetic catalogue with a monopole trend and unequal hemisphere depths: the test detects the spurious step",
+   "id": "MG-L06",
+   "mutation": "fit the survey step without the redshift-bin monopoles",
+   "node": "R54-L04",
+   "status": "TO_IMPLEMENT_WITH_NODE"
+  },
+  {
+   "detection_to_implement": "identification table must still report the null directions; test compares rank before and after",
+   "id": "MG-L07",
+   "mutation": "add 1e-6 * I to a singular block before inversion",
+   "node": "R54-L06",
+   "status": "TO_IMPLEMENT_WITH_NODE"
+  }
+ ],
+ "rule": "a gate is valid only if the named test fails under the mutation and passes without it; receipts are in MUTATION_GATE_RECEIPT.json",
+ "schema": "htt.r54.mutation_gates/1"
+}

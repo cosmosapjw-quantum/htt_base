@@ -1,0 +1,408 @@
+#!/usr/bin/env python3
+"""R54 loop L1: type-I shear history from the committed PR3 low-ell T+E carrier.
+
+Executable without the local data drive. Inputs are committed files only:
+  R50/R51/observed_carrier.npz           SMICA/Commander 135-vector, FFP10 covariance (N=300), T response
+  tests/fixtures/r54/planck18_tau_history.csv   Thomson optical depth history (theory fixture)
+
+Part A (theory): closed-form Thomson kernels, perfect-fluid history functionals,
+radiation anisotropic-stress histories and the map (Sigma_T, Sigma_E) -> present shear.
+Part B (data): GLS estimate of the two STF history tensors Sigma_T, Sigma_E on
+pre-declared carriers, B-mode null gate, systematics-floor and Commander variants,
+transport (T -> E) tests and the five views.
+
+Claim ceiling C0. The E response is the ideal in-basis response of the debiased
+estimator; the masked-estimator E response and leave-one-out calibration with the
+300 FFP10 realisations are local obligations (R54-L01).
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import math
+import platform
+import sys
+from pathlib import Path
+
+import numpy as np
+import scipy
+from scipy import stats
+
+ROOT = Path(__file__).resolve().parents[2]
+for _p in (ROOT / "htt", ROOT / "htt/src", ROOT):
+    sys.path.insert(0, str(_p))
+
+from htt.htt.infer import r54_tensor_five_view as fv  # noqa: E402
+from htt.htt.infer import r54_type1_thomson as th  # noqa: E402
+from htt.htt.infer.r51_source_bound_response import bianchi_i_shear_history_integral  # noqa: E402
+
+PUB = ROOT / "docs/research_program/observational_publication_20261015"
+NPZ = PUB / "R50_OBSERVED_CONVERGENCE_20261115/R51/observed_carrier.npz"
+TAU = ROOT / "tests/fixtures/r54/planck18_tau_history.csv"
+OUT = PUB / "R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L1_TYPE1_TE.json"
+Z_STAR, Z_REF = 1089.94, 1.0e5
+NU_DECOUPLING_Z = (1.0e9, 2.0e9, 3.0e9, 6.0e9, 1.0e10, 1.5e10, 2.0e10, 3.0e10)
+NU_MASSES_EV = (0.0, 0.00868, 0.0503)      # minimal normal ordering: sqrt of the oscillation splittings 7.53e-5 and 2.53e-3 eV^2
+LATE_Z = (0.1, 0.2, 0.5, 2.0)
+T_CMB_K = 2.72548                         # docs/SSOT_POLICY.md value (CLAUDE.md compatibility anchor)
+LEVEL = 0.95
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def clean(obj):
+    if isinstance(obj, dict):
+        return {str(k): clean(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [clean(v) for v in obj]
+    if isinstance(obj, np.ndarray):
+        return clean(obj.tolist())
+    if isinstance(obj, (np.floating, float)):
+        f = float(obj)
+        return f if math.isfinite(f) else (None if math.isnan(f) else ("inf" if f > 0 else "-inf"))
+    if isinstance(obj, (np.integer,)):
+        return int(obj)
+    if isinstance(obj, np.bool_):
+        return bool(obj)
+    return obj
+
+
+# ----------------------------------------------------------------- Part A
+def history_block() -> dict:
+    tab = np.loadtxt(TAU, delimiter=",", skiprows=1)
+    bg = th.planck18_background()
+    hist = th.OpticalDepthHistory(tab[:, 0], tab[:, 1], bg.e2)
+    n_hi, n_re = -math.log1p(1.0e4), -math.log1p(50.0)
+
+    def pf(n: float) -> float:
+        return float(th.perfect_fluid_shear(bg, n)[0])
+
+    f_all = th.history_functionals(pf, hist, n_hi)
+    f_rec = th.history_functionals(pf, hist, n_hi, n_re)
+    f_rei = th.history_functionals(pf, hist, n_re, 0.0)
+
+    # E produced by reionization scattering alone: the quadrupole built at z > 50 (after the
+    # last-scattering cut-off, i.e. the T functional) rescattered through the reionization depth
+    k_e_reion = float(th.thomson_kernels(hist.tau(n_re))[1])
+    r_e_reion = k_e_reion * f_rec["Sigma_T"] / f_all["Sigma_T"]
+    ode_pf = th.solve_type1_history(bg, hist, th.STRESS_NONE, z_init=1.0e4, s_init=pf(n_hi))
+    i_sharp = bianchi_i_shear_history_integral(bg.omega_m, bg.omega_gamma + bg.omega_nu, bg.omega_lambda, Z_STAR)
+    photon = th.solve_type1_history(bg, hist, th.STRESS_PHOTON, z_init=Z_REF)
+
+    def basis(scale=None) -> dict:
+        a = th.solve_type1_history(bg, hist, th.STRESS_PHOTON_NEUTRINO, z_init=Z_REF, s_init=1.0, ncal_init=0.0,
+                                   neutrino_stress_scale=scale)
+        b = th.solve_type1_history(bg, hist, th.STRESS_PHOTON_NEUTRINO, z_init=Z_REF, s_init=0.0, ncal_init=1.0,
+                                   neutrino_stress_scale=scale)
+        m = np.array([[a["Sigma_T"], b["Sigma_T"]], [a["Sigma_E"], b["Sigma_E"]]])
+        minv = np.linalg.inv(m)
+        c_s = np.array([a["s_today"], b["s_today"]]) @ minv
+        c_n = np.array([a["Ncal_today"], b["Ncal_today"]]) @ minv
+        return {"mode_A": {k: a[k] for k in ("Sigma_T", "Sigma_E", "s_today", "Ncal_today")},
+                "mode_B": {k: b[k] for k in ("Sigma_T", "Sigma_E", "s_today", "Ncal_today")},
+                "determinant_T_E": float(np.linalg.det(m)), "condition_number": float(np.linalg.cond(m)),
+                "s_today_coefficients": {"c_T": float(c_s[0]), "c_E": float(c_s[1])},
+                "neutrino_quadrupole_today_coefficients": {"n_T": float(c_n[0]), "n_E": float(c_n[1])}}
+
+    massless = basis()
+    massive = basis(th.neutrino_stress_scale(NU_MASSES_EV))        # exact k = 0 stress of massive collisionless species (R54-EQ-06)
+
+    def late(z_max: float) -> dict:
+        """Response of the two functionals to a shear that acts only at z < z_max (late-time anisotropic stress sector)."""
+        n1 = -math.log1p(z_max)
+        nm = 0.5 * n1
+
+        def one(_n: float) -> float:
+            return 1.0
+
+        full = th.history_functionals(one, hist, n1, 0.0)
+        far, near = th.history_functionals(one, hist, n1, nm), th.history_functionals(one, hist, nm, 0.0)
+        ratio = far["Sigma_T"] / near["Sigma_T"]
+        return {"z_max": z_max, "tau_at_z_max": hist.tau(n1), "I_T_constant": full["Sigma_T"], "I_E_constant": full["Sigma_E"],
+                "sign_changing": {"construction": "s = +1 on the far half of the N interval and -ratio on the near half; ratio fixed by Sigma_T = 0",
+                                  "ratio": ratio, "Sigma_T_per_unit": far["Sigma_T"] - ratio * near["Sigma_T"],
+                                  "Sigma_E_per_unit": far["Sigma_E"] - ratio * near["Sigma_E"],
+                                  "rms_shear_per_unit": math.sqrt(((nm - n1) + ratio**2 * (0.0 - nm)) / (0.0 - n1))}}
+
+    sweep = []
+    for zi in NU_DECOUPLING_Z:
+        r = th.solve_type1_history(bg, hist, th.STRESS_PHOTON_NEUTRINO, z_init=zi)
+        sweep.append({"z_init": zi, "r_E": th.e_to_t_ratio(r), "s_today_over_Sigma_T": r["s_today"] / r["Sigma_T"],
+                      "Sigma_T_per_unit_initial_shear": r["Sigma_T"],
+                      # neutrino temperature at the assumed onset of free streaming, T_nu = (4/11)^(1/3) T_CMB (1 + z)
+                      "T_nu_MeV": (4.0 / 11.0) ** (1.0 / 3.0) * T_CMB_K * th.K_B_EV_PER_K * (1.0 + zi) / 1.0e6})
+    return {
+        "background": {"omega_m": bg.omega_m, "omega_gamma": bg.omega_gamma, "omega_nu": bg.omega_nu,
+                       "omega_lambda": bg.omega_lambda, "neutrinos": "massless, N_eff = 3.044"},
+        "optical_depth": {"tau_z50": hist.tau(n_re), "tau_zstar": hist.tau(-math.log1p(Z_STAR)), "z_table_max": hist.z_max},
+        "kernel_extrema": {"K_E_max": float(math.sqrt(6) / 7 * (0.3 ** (3 / 7) - 0.3 ** (10 / 7))),
+                           "tau_at_K_E_max": float(math.log(10 / 3) / 0.7)},
+        "perfect_fluid": {
+            "Sigma_T_over_s0": f_all["Sigma_T"], "Sigma_E_over_s0": f_all["Sigma_E"], "r_E": f_all["Sigma_E"] / f_all["Sigma_T"],
+            # split by the epoch at which the shear acts (source epoch), not by where photons scatter
+            "Sigma_E_fraction_from_shear_at_z_above_50": f_rec["Sigma_E"] / f_all["Sigma_E"],
+            "Sigma_E_fraction_from_shear_at_z_below_50": f_rei["Sigma_E"] / f_all["Sigma_E"],
+            # E generated if only reionization scattered (optical depth capped at tau(z=50))
+            "r_E_reionization_scattering_only": r_e_reion, "K_E_at_reionization_depth": k_e_reion,
+            "reionization_share_of_r_E": r_e_reion / (f_all["Sigma_E"] / f_all["Sigma_T"]),
+            "r51_sharp_last_scattering_I_hist": i_sharp, "Sigma_T_over_I_hist": f_all["Sigma_T"] / i_sharp,
+            "ode_vs_kernel_rel_diff_T": abs(ode_pf["Sigma_T"] / f_all["Sigma_T"] - 1.0),
+            "ode_vs_kernel_rel_diff_E": abs(ode_pf["Sigma_E"] / f_all["Sigma_E"] - 1.0)},
+        "photon_stress": {"r_E": th.e_to_t_ratio(photon), "s_today_over_Sigma_T": photon["s_today"] / photon["Sigma_T"]},
+        "late_time_sensitivity": [late(z) for z in LATE_Z],
+        "photon_neutrino_stress": {"z_ref": Z_REF, "massless": massless, "normal_ordering_minimal_masses": massive,
+                                   "neutrino_masses_eV": list(NU_MASSES_EV),
+                                   "neutrino_decoupling_initial_condition_sweep": sweep,
+                                   "r_E_range_over_sweep": [min(x["r_E"] for x in sweep), max(x["r_E"] for x in sweep)],
+                                   "s_today_over_Sigma_T_range_over_sweep":
+                                       [min(x["s_today_over_Sigma_T"] for x in sweep), max(x["s_today_over_Sigma_T"] for x in sweep)]},
+    }
+
+
+# ----------------------------------------------------------------- Part B
+def rows(labels: list[str], field: str, ells: tuple[int, ...]) -> list[int]:
+    return [i for i, s in enumerate(labels) if s.split("_")[0] == field and int(s.split("_")[1]) in ells]
+
+
+def fit(d: np.ndarray, s: np.ndarray, j: np.ndarray, n_sims: int) -> dict:
+    si = np.linalg.inv(s)
+    f = j.T @ si @ j
+    t = j.T @ si @ d
+    cov = np.linalg.inv(f)
+    est = cov @ t
+    p, k = j.shape
+    infl = fv.finite_mc_sd_inflation(n_sims, p, k)
+    return {"F": f, "t": t, "est": est, "cov_plugin": cov, "inflation_sd": infl, "cov_cal": cov * infl**2,
+            "q0": float(d @ si @ d), "p_data": p, "k_par": k}
+
+
+def frobenius_range(est: np.ndarray, cov: np.ndarray, level: float = LEVEL) -> dict:
+    body = fv.EllipsoidBody("unit Frobenius ball in STF5 coordinates", np.eye(est.size))
+    f = np.linalg.inv(cov)
+    out = fv.gauge_range(f, f @ est, body, float(stats.chi2.ppf(level, est.size)))
+    return {"body": out["body"], "norm_estimate": float(np.linalg.norm(est)), "norm_min": out["Q_min"], "norm_max": out["Q_max"],
+            "level": level, "law": "gaussian_carrier_with_analytic_finite_mc_inflation"}
+
+
+def data_block(hist: dict) -> dict:
+    with np.load(NPZ, allow_pickle=False) as z:
+        labels = [str(x) for x in z["mode_labels"]]
+        d_s, d_c = z["d_smica_135_uK"], z["d_commander_135_uK"]
+        s_full, j_t, j_ideal = z["S_ffp10_300_135x135_uK2"], z["response_J_135x5_uK"], z["response_J_ideal_135x5_uK"]
+        n_sims = int(z["n_mc"])
+        loo_shat, loo_wald = z["null_loo_shat_300x5"], z["null_loo_wald_300"]
+        f_t45_ref, t_t45_ref = z["F_T45"], z["t_T45"]
+        basis_npz = z["stf_basis_5x3x3"]
+    if not np.allclose(basis_npz, fv.STF5_BASIS, atol=1e-12):
+        raise SystemExit("STF5 basis of the carrier differs from r54_tensor_five_view.STF5_BASIS")
+    t2, e2 = rows(labels, "T", (2,)), rows(labels, "E", (2,))
+    j_e = np.zeros_like(j_t)
+    j_e[e2, :] = j_ideal[t2, :]                       # ideal in-basis E response (local obligation: masked response)
+    leak = float(np.abs(j_t[rows(labels, "E", (2, 3, 4, 5, 6)) + rows(labels, "B", (2, 3, 4, 5, 6))]).max())
+
+    carriers = {
+        "TE_l2": rows(labels, "T", (2,)) + rows(labels, "E", (2,)),
+        "TE_l23": rows(labels, "T", (2, 3)) + rows(labels, "E", (2, 3)),
+        "TE_l26": rows(labels, "T", (2, 3, 4, 5, 6)) + rows(labels, "E", (2, 3, 4, 5, 6)),
+        "TEB_l26": list(range(135)),
+    }
+    j_te = np.hstack([j_t, j_e])
+    fits = {name: fit(d_s[idx], s_full[np.ix_(idx, idx)], j_te[idx], n_sims) for name, idx in carriers.items()}
+    # data-independent primary rule: smallest mean log calibrated variance (uses S and J only)
+    score = {n: float(np.mean(np.log(np.diag(f["cov_cal"])))) for n, f in fits.items() if n != "TEB_l26"}
+    primary = min(score, key=score.get)
+    pr, idx = fits[primary], carriers[primary]
+
+    # --- T-only reproduction of R51 and validation of the analytic inflation against its LOO replicates
+    t45 = rows(labels, "T", (2, 3, 4, 5, 6))
+    ft = fit(d_s[t45], s_full[np.ix_(t45, t45)], j_t[t45], n_sims)
+    wald_t = float(ft["t"] @ ft["est"])
+    t_only = {
+        "F_rebuild_rel_diff": float(np.abs(ft["F"] - f_t45_ref).max() / np.abs(f_t45_ref).max()),
+        "t_rebuild_rel_diff": float(np.abs(ft["t"] - t_t45_ref).max() / np.abs(t_t45_ref).max()),
+        "Sigma_T_hat": ft["est"], "sd_plugin": np.sqrt(np.diag(ft["cov_plugin"])), "inflation_sd_analytic": ft["inflation_sd"],
+        "loo_null_sd": loo_shat.std(axis=0, ddof=1),
+        "loo_sd_over_plugin_sd": loo_shat.std(axis=0, ddof=1) / np.sqrt(np.diag(ft["cov_plugin"])),
+        "wald_plugin": wald_t,
+        "Pi_loo": fv.empirical_upper_tail(wald_t, loo_wald, "FFP10 leave-one-out same-estimator null (R51, N=300)"),
+        "frobenius_range_95": frobenius_range(ft["est"], ft["cov_cal"]),
+    }
+
+    # --- null gates per field
+    def block_tail(vec: np.ndarray, r: list[int]) -> dict:
+        q = float(vec[r] @ np.linalg.solve(s_full[np.ix_(r, r)], vec[r]))
+        out = fv.hotelling_null_tail(q, len(r), n_sims)
+        out["observed_rms_uK"] = float(np.sqrt(np.mean(vec[r] ** 2)))
+        out["ffp10_rms_uK"] = float(np.sqrt(np.mean(np.diag(s_full)[r])))
+        return out
+
+    gates = {f"{fld}_l{tag}": block_tail(d_s, rows(labels, fld, ells))
+             for fld in ("E", "B") for tag, ells in (("2", (2,)), ("26", (2, 3, 4, 5, 6)))}
+    gates["commander_B_l2"] = block_tail(d_c, rows(labels, "B", (2,)))
+    gates["commander_E_l2"] = block_tail(d_c, rows(labels, "E", (2,)))
+    b_gate_pass = gates["B_l2"]["p_value"] >= 0.01
+    # systematics floor per ell from the B excess (type I and LCDM predict B = 0 at these ell)
+    s_rob = s_full.copy()
+    floors = {}
+    for ell in (2, 3, 4, 5, 6):
+        rb, re_ = rows(labels, "B", (ell,)), rows(labels, "E", (ell,))
+        fl = max(0.0, float(np.mean(d_s[rb] ** 2) - np.mean(np.diag(s_full)[rb])))
+        floors[str(ell)] = fl
+        for i in rb + re_:
+            s_rob[i, i] += fl
+    rob = fit(d_s[idx], s_rob[np.ix_(idx, idx)], j_te[idx], n_sims)
+    com = fit(d_c[idx], s_full[np.ix_(idx, idx)], j_te[idx], n_sims)
+
+    def summarise(f: dict, tag: str) -> dict:
+        est, cov = f["est"], f["cov_cal"]
+        wt = float(est[:5] @ np.linalg.solve(cov[:5, :5], est[:5]))
+        we = float(est[5:] @ np.linalg.solve(cov[5:, 5:], est[5:]))
+        wall = float(est @ np.linalg.solve(cov, est))
+        if f["p_data"] == f["k_par"]:          # square response: every Wald statistic is a Hotelling T^2 with the sample covariance
+            tails = [fv.hotelling_null_tail(wt, 5, n_sims), fv.hotelling_null_tail(we, 5, n_sims), fv.hotelling_null_tail(wall, 10, n_sims)]
+        else:
+            law = "gaussian_carrier_with_analytic_finite_mc_inflation"
+            tails = [fv.chi2_null_tail(wt, 5, law), fv.chi2_null_tail(we, 5, law), fv.chi2_null_tail(wall, 10, law)]
+        return {"variant": tag, "Sigma_T_hat": est[:5], "Sigma_E_hat": est[5:], "sd_T": np.sqrt(np.diag(cov))[:5],
+                "sd_E": np.sqrt(np.diag(cov))[5:], "inflation_sd": f["inflation_sd"],
+                "wald_T": tails[0], "wald_E": tails[1], "wald_all": tails[2],
+                "Sigma_T_frobenius_range_95": frobenius_range(est[:5], cov[:5, :5]),
+                "Sigma_E_frobenius_range_95": frobenius_range(est[5:], cov[5:, 5:])}
+
+    # --- transport between the two history functionals and maps to present-day shear
+    pf_h = hist["perfect_fluid"]
+    r_pf, r_ph = pf_h["r_E"], hist["photon_stress"]["r_E"]
+    coef = hist["photon_neutrino_stress"]["massless"]["s_today_coefficients"]
+    coef_m = hist["photon_neutrino_stress"]["normal_ordering_minimal_masses"]["s_today_coefficients"]
+
+    def physics(f: dict) -> dict:
+        est, cov = f["est"], f["cov_cal"]
+        out = {}
+        for name, r in (("perfect_fluid", r_pf), ("photon_stress", r_ph)):
+            g = fv.gls_fit(est, cov, np.vstack([np.eye(5), r * np.eye(5)]))
+            out[f"transport_{name}"] = {"r_E": r, "chi2": g["chi2"], "dof": g["dof"], "p_value": g["p_value"],
+                                        "Sigma_hat": g["theta"], "sd": np.sqrt(np.diag(g["cov"])),
+                                        "frobenius_range_95": frobenius_range(g["theta"], g["cov"])}
+        grid = np.linspace(-0.5, 0.5, 2001)
+        prof = np.array([fv.gls_fit(est, cov, np.vstack([np.eye(5), r * np.eye(5)]))["chi2"] for r in grid])
+        k = int(np.argmin(prof))
+        out["transport_free_ratio"] = {"r_hat": float(grid[k]), "chi2_min": float(prof[k]), "dof": 4,
+                                       "interval_delta_chi2_1": [float(grid[prof <= prof[k] + 1].min()), float(grid[prof <= prof[k] + 1].max())],
+                                       "note": "uninformative while Sigma_T is undetected"}
+        g_pf = out["transport_perfect_fluid"]
+        s0_pf = np.asarray(g_pf["Sigma_hat"]) / pf_h["Sigma_T_over_s0"]
+        cov_pf = fv.gls_fit(est, cov, np.vstack([np.eye(5), r_pf * np.eye(5)]))["cov"] / pf_h["Sigma_T_over_s0"] ** 2
+        kmat = np.hstack([coef["c_T"] * np.eye(5), coef["c_E"] * np.eye(5)])
+        s0_as, cov_as = kmat @ est, kmat @ cov @ kmat.T
+        kmat_m = np.hstack([coef_m["c_T"] * np.eye(5), coef_m["c_E"] * np.eye(5)])
+        s0_no, cov_no = kmat_m @ est, kmat_m @ cov @ kmat_m.T
+        s0_t = est[:5] / pf_h["Sigma_T_over_s0"]
+        cov_t = cov[:5, :5] / pf_h["Sigma_T_over_s0"] ** 2
+        out["present_shear_over_H"] = {
+            "perfect_fluid_T_only": {"estimate": s0_t, "frobenius_range_95": frobenius_range(s0_t, cov_t)},
+            "perfect_fluid_T_plus_E": {"estimate": s0_pf, "frobenius_range_95": frobenius_range(s0_pf, cov_pf)},
+            "photon_neutrino_stress_two_mode": {"estimate": s0_as, "sd": np.sqrt(np.diag(cov_as)),
+                                                "frobenius_range_95": frobenius_range(s0_as, cov_as),
+                                                "coefficients": coef},
+            "photon_neutrino_stress_two_mode_normal_ordering": {"estimate": s0_no, "sd": np.sqrt(np.diag(cov_no)),
+                                                                "frobenius_range_95": frobenius_range(s0_no, cov_no),
+                                                                "coefficients": coef_m},
+        }
+        return out
+
+    def late_bounds(res: dict) -> list[dict]:
+        """95% Frobenius bounds on a shear confined to z < z_max; a sign-changing history with Sigma_T = 0 is invisible to T."""
+        t_max, e_max = res["Sigma_T_frobenius_range_95"]["norm_max"], res["Sigma_E_frobenius_range_95"]["norm_max"]
+        out = []
+        for row in hist["late_time_sensitivity"]:
+            sc = row["sign_changing"]
+            out.append({"z_max": row["z_max"], "constant_sign_bound_from_T": t_max / row["I_T_constant"],
+                        "constant_sign_bound_from_E": e_max / row["I_E_constant"],
+                        "sign_changing_rms_bound_from_T": math.inf,
+                        "sign_changing_rms_bound_from_E": e_max * sc["rms_shear_per_unit"] / abs(sc["Sigma_E_per_unit"])})
+        return out
+
+    # --- F view: directional support of n.Sigma_T.n (integrated expansion asymmetry since decoupling)
+    def directional(est: np.ndarray, cov: np.ndarray) -> dict:
+        c = math.sqrt(stats.chi2.ppf(LEVEL, 5))
+        f = np.linalg.inv(cov)
+        lo, hi = [], []
+        for n in fv.fibonacci_sphere(600):
+            a, b = fv.support_interval(f, f @ est, fv.quadratic_direction(n), c)
+            lo.append(a)
+            hi.append(b)
+        return {"simultaneous_level": LEVEL, "c": c, "sup_upper": float(max(hi)), "inf_lower": float(min(lo)),
+                "max_abs_directional_bound": float(max(max(hi), -min(lo))), "n_directions": 600}
+
+    main = summarise(pr, f"SMICA_{primary}_FFP10")
+    wald_all = main["wald_all"]["statistic"]
+    views = fv.five_view_record({
+        "x": {"status": fv.AVAILABLE, "coordinates": ["Sigma_T(STF5)", "Sigma_E(STF5)"], "F": pr["F"], "t": pr["t"],
+              "epoch_type": "kernel-weighted history functionals K_T, K_E (R54-EQ-04)", "frame": "matter frame, HEALPix Galactic"},
+        "Q": {"status": fv.AVAILABLE, "body": "null-law 95% ellipsoid of the calibrated carrier (LCDM + noise, FFP10)",
+              "Q_center": math.sqrt(wald_all / stats.chi2.ppf(LEVEL, 10)),
+              "frobenius_T": main["Sigma_T_frobenius_range_95"], "frobenius_E": main["Sigma_E_frobenius_range_95"]},
+        "F": {"status": fv.AVAILABLE, "body": "unit quadratic form n.Sigma.n (absolute units)",
+              "Sigma_T_directional": directional(pr["est"][:5], pr["cov_cal"][:5, :5]),
+              "Sigma_E_directional": directional(pr["est"][5:], pr["cov_cal"][5:, 5:])},
+        "Pi": {"status": fv.AVAILABLE, "law": "T: FFP10 LOO empirical (R51); T+E: gaussian with analytic finite-MC inflation",
+               "T45_loo": t_only["Pi_loo"], "TE_primary": main["wald_all"]},
+        "G_F": {"status": fv.AVAILABLE, "transport": "Sigma_E = r_E Sigma_T between the two history kernels",
+                "tests": physics(pr)},
+    })
+    return {
+        "inputs": {"n_sims": n_sims, "t_template_leak_into_EB_rows_uK": leak,
+                   "E_response": "ideal in-basis response copied from the T block (R54-EQ-04); masked E response is local obligation R54-L01"},
+        "carriers": {n: {"p_data": f["p_data"], "inflation_sd": f["inflation_sd"], "mean_log_cal_variance": score.get(n),
+                         "sd_T": np.sqrt(np.diag(f["cov_cal"]))[:5], "sd_E": np.sqrt(np.diag(f["cov_cal"]))[5:],
+                         "q0_hotelling": fv.hotelling_null_tail(f["q0"], f["p_data"], n_sims)} for n, f in fits.items()},
+        "primary_rule": "minimum mean log calibrated variance over the ten parameters, computed from S and J only",
+        "primary_carrier": primary,
+        "t_only_r51_reproduction": t_only,
+        "null_gates": gates,
+        "B_null_gate": {"rule": "Hotelling tail of the observed B ell=2 block >= 0.01", "pass": bool(b_gate_pass)},
+        "systematics_floor_uK2_per_ell": floors,
+        "results": {"primary": main, "B_null_floor": summarise(rob, f"SMICA_{primary}_FFP10_plus_B_floor"),
+                    "commander_cross_pipeline": summarise(com, f"COMMANDER_{primary}_SMICA_covariance_uncalibrated")},
+        "physics_primary": views["G_F"]["tests"],
+        "physics_B_null_floor": physics(rob),
+        "late_time_shear_bounds": {"note": "E-lane entries are DIAGNOSTIC while the B ell=2 null gate fails; shear = Frobenius norm of sigma_ab/H",
+                                   "primary": late_bounds(main), "B_null_floor": late_bounds(summarise(rob, "floor"))},
+        "five_views": views,
+    }
+
+
+def main() -> None:
+    hist = history_block()
+    data = data_block(hist)
+    out = {
+        "schema": "htt.r54.l1_type1_te/1", "node": "R54-L1", "claim_tier": "C0_CONDITIONAL_TYPE_I_HOMOGENEOUS_MODE",
+        "transfer_source": "first_order_homogeneous_mode_thomson_system_R54-EQ-01..05 (not a native solver)",
+        "provenance": {"script": "scripts/r54/run_r54_cmb_type1.py", "script_sha256": sha256(Path(__file__)),
+                       "inputs_sha256": {str(NPZ.relative_to(ROOT)): sha256(NPZ), str(TAU.relative_to(ROOT)): sha256(TAU)},
+                       "python": platform.python_version(), "numpy": np.__version__, "scipy": scipy.__version__},
+        "history": hist, "data": data,
+        "limitations": [
+            "E response is the ideal in-basis response; the masked-estimator E response is not yet computed (R54-L01).",
+            "T+E intervals use the exact Wishart finite-MC ratio (1 for the square primary carrier) and Hotelling tails; FFP10 leave-one-out calibration of the T+E estimator is local (R54-L01).",
+            "Present-day shear numbers are illustrations of the stress dependence: the map depends on the neutrino masses (factor 2 between massless and minimal normal ordering) and on the neutrino-decoupling initial state (Sigma_T changes sign in the sweep).",
+            "Late-time bounds assume a shear confined to z < z_max; the sign-changing construction is one member of the Sigma_T = 0 family.",
+            "PR3 SMICA low-ell polarization fails the B ell=2 null gate when it fails; E-lane numbers are then diagnostic only.",
+            "Type I only: no curvature, vorticity or tilt; second-order terms and the kinematic quadrupole are not modelled; the data interval uses the massless stress map and the normal-ordering map is a variant.",
+            "Present-day shear is a model-conditional derived quantity; the measured quantities are Sigma_T and Sigma_E.",
+        ],
+    }
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(clean(out), indent=1, sort_keys=True) + "\n")
+    pfh, d = hist["perfect_fluid"], data
+    print(json.dumps(clean({
+        "r_E_pf": pfh["r_E"], "Sigma_T_over_s0": pfh["Sigma_T_over_s0"], "c": hist["photon_neutrino_stress"]["massless"]["s_today_coefficients"],
+        "primary": d["primary_carrier"], "B_gate": d["B_null_gate"], "B_l2": d["null_gates"]["B_l2"],
+        "main_sd_T": d["results"]["primary"]["sd_T"], "main_sd_E": d["results"]["primary"]["sd_E"],
+        "wald_all": d["results"]["primary"]["wald_all"]}), indent=1))
+
+
+if __name__ == "__main__":
+    main()
