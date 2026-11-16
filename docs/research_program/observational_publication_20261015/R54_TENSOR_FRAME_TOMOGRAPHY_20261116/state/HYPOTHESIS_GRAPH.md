@@ -100,7 +100,7 @@ Octupole or higher morphology constrains type-I parameters.
 - executed result: ell >= 3 modes enter only through covariance
 - next action: family comparison beyond type I remains blocked on a source-bound transfer
 
-### H-L2a (L2) - HOLD
+### H-L2a (L2) - REJECT
 
 The owned count dipoles (Quaia G<20, NVSS; receipt estimator) exceed the kinematic expectation.
 
@@ -111,8 +111,8 @@ The owned count dipoles (Quaia G<20, NVSS; receipt estimator) exceed the kinemat
 - robustness: power against a dipole twice the kinematic one: 0.20 at the 5% level
 - risk: reading a non-detection as evidence against the published anomaly
 - kill criterion: the calibrated estimators of R54-L03, with power of at least 0.8 against the published excess, give p >= 0.01
-- executed result: excess tails p=0.27 (Quaia), 0.46 (NVSS); common excess p=0.12; no decision at this power
-- next action: R54-L03: clustering body, same-estimator null, competitor estimators
+- executed result: excess tails p=0.27 (Quaia), 0.46 (NVSS); common excess p=0.12; no decision at this power; R54-L03 calibrated excess tails 0.309 (Quaia), 0.421 (NVSS); H-L2a stays REJECTED for the owned estimators; R54-L03 decision check: H-L2a stays REJECTED for the owned estimators (calibrated covariance; REJECT holds for the owned estimators only)
+- next action: none for the owned estimators; R54-L06 tilt closure uses the calibrated count covariance
 
 ### H-L2b (L2) - HOLD
 

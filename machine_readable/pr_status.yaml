@@ -1,5 +1,6 @@
 generated_on: '2026-09-27'
 completed:
+- PR-R55-LOCAL-CALIBRATION
 - PR-R54-TENSOR-FRAME-TOMOGRAPHY
 - PR-R53-OBSERVED-CONVERGENCE
 - PR-R52-OBSERVED-CONVERGENCE
@@ -231,7 +232,6 @@ blocked:
 - PR-247
 - PR-190
 pending:
-- PR-R55-LOCAL-CALIBRATION
 - PR-R56-JOINT-BENCHMARK
 - PR-R57-MANUSCRIPT-DECISION
 - PR-155
@@ -2338,4 +2338,5 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
 # PR-R52-OBSERVED-CONVERGENCE: complete_scoped (C0). Joint frame/tilt/shear identification; no global-tilt evidence; counts vs CF4 frame inconsistent. Details: R50_OBSERVED_CONVERGENCE_20261115/R52/R52_RESULT.json
 # PR-R53-OBSERVED-CONVERGENCE: complete_scoped (C0). Methods benchmark and final decision: bounded note, no methods-plus-discovery paper. R50-R53 DAG complete. Details: R50_OBSERVED_CONVERGENCE_20261115/R53/FINAL_DECISION.md
 # PR-R54-TENSOR-FRAME-TOMOGRAPHY: complete_scoped (C0). Five views on the CMB carrier (F unavailable on the low-redshift carriers); T+E shear-history functionals (a re-derivation) with model-labelled present-shear illustrations and a late-time blind spot of the T functional; PR3 B ell=2 null fails (E lane diagnostic); CF4 re-analysed at catalogue level (log-distance estimator, exact LCDM pair-sum body): R36 linear estimator biased; the excess over the body, pole locking and the hemisphere step are on HOLD because the class depends on the zero-point nuisance model (robust class DEPENDS_ON_ZERO_POINT_NUISANCE_MODEL); the count-dipole receipt estimator is underpowered. Independent adversarial review resolved (two findings deferred to R54-L04); the independent diff review was interrupted and is handed to the local session (PR-R55 definition of done). Details: R54_TENSOR_FRAME_TOMOGRAPHY_20261116/R54_REPORT_KO.md
-# PR-R55-LOCAL-CALIBRATION, PR-R56-JOINT-BENCHMARK, PR-R57-MANUSCRIPT-DECISION: pending local execution under R54_TENSOR_FRAME_TOMOGRAPHY_20261116/LOCAL_AGENT_CONTRACT.json; PR4 is not a dependency; PR-R57 is the programme stop.
+# PR-R55-LOCAL-CALIBRATION: complete_scoped (C0). Independent diff review of the cloud code resolved (8 findings fixed, gates MG-21..29); R54-L01 T+E calibration (LOO intervals SUPERSEDED, ideal E response kept, E lane diagnostic under the FFP10 law); R54-L04 CF4 survey zero points (step UNRESOLVED, H-L5a rejected by its decision check, robust class still depends on the zero-point nuisance model); R54-L02 PR4 bypass (FFP10 kept for T, T lane pipeline-stable, E lane CLAIMABLE only with a large adopted floor); R54-L03 count dipoles (clustering body bracket, same-estimator mocks, excess tests pass, two competitor estimators reproduced). Details: R54_TENSOR_FRAME_TOMOGRAPHY_20261116/R54_REPORT_KO.md section 7
+# PR-R56-JOINT-BENCHMARK, PR-R57-MANUSCRIPT-DECISION: pending local execution under R54_TENSOR_FRAME_TOMOGRAPHY_20261116/LOCAL_AGENT_CONTRACT.json; PR4 is not a dependency; PR-R57 is the programme stop.

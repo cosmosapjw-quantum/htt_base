@@ -527,6 +527,12 @@ def hypotheses(n: dict) -> list[dict]:
 def local_hypothesis_decisions() -> dict:
     """Decisions fixed by the decision checks of executed local nodes (R54-L04 onwards)."""
     out = {}
+    x = local_result("R54-L03")
+    if x is not None and x.get("status") == "DONE_SCOPED_C0":
+        ok = x["decision"]["excess_all_pass"]
+        out["H-L2a"] = {"decision": "REJECT" if ok else "REOPEN",
+                        "result": f"R54-L03 decision check: {x['decision']['excess']} (calibrated covariance; REJECT holds for the owned estimators only)",
+                        "next": "none for the owned estimators; R54-L06 tilt closure uses the calibrated count covariance" if ok else "R54-L06"}
     x = local_result("R54-L04")
     if x is not None and x.get("status") == "DONE_SCOPED_C0":
         dec = x["decision"]

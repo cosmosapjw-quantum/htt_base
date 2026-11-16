@@ -130,7 +130,7 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
 | R54-L01 | DONE_SCOPED_C0 |
 | R54-L04 | DONE_SCOPED_C0 |
 | R54-L02 | DONE_SCOPED_C0 |
-| R54-L03 | PENDING_LOCAL |
+| R54-L03 | DONE_SCOPED_C0 |
 | R54-L06 | PENDING_LOCAL |
 | R54-L07 | PENDING_LOCAL |
 | R54-L08 | PENDING_LOCAL |
@@ -179,3 +179,13 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
 - 채택 공분산의 B ell=2 null 꼬리: BeyondPlanck_v2_mean 0.158, BeyondPlanck_v2_posterior 0.945, Cosmoglobe_DR1 0.871, PR3_Commander 0.651, PR3_NILC 0.827, PR3_SEVEM 0.581, PR3_SMICA 0.694, WMAP9_V 0.743. 통과한 자료 계열: Cosmoglobe_BeyondPlanck, Planck_PR3, WMAP9 → E lane CLAIMABLE (규칙: 서로 다른 두 계열 이상, DV-L02-9).
 - 주의: floor는 FFP10 B2 분산의 10.6배이고, 가장 큰 성분(실험 간 분산)은 같은 E2/B2 자료에서 계산된다. 통과는 오차 확대의 결과이며
   채택 공분산에서 E lane 한계는 그만큼 약하다(R54-L08 심사에 넘기는 위험).
+
+### 7.4 R54-L03 계수 쌍극: 군집 본체, 같은 추정량 속도 null, 경쟁 추정량
+
+- receipt 재현: D_icrs 최대 차 4.98e-05 (receipt는 1e-4 단위 반올림).
+- 군집 본체(R54-EQ-32, 정확한 j_1; 편향·N(z) 매개변수는 UNVERIFIED 괄호): 축당 sd Quaia 0.000248, NVSS 0.00211 (괄호 최대, z_min = 0).
+- 같은 추정량 mock (Poisson + 군집, 각 500개, 데이터와 같은 마스크): 최대 |편향|/sd Quaia 0.029, NVSS 0.014 → 추정량을 그대로 사용; 축당 최대 sd Quaia 0.00306, NVSS 0.00479.
+- 초과 검정(보정 공분산 = mock 공분산 + receipt 계통): Quaia p = 0.309, NVSS p = 0.421; 계통 항이 없는 mock 경험적 꼬리는 Quaia 0.00599, NVSS 0.329.
+  공통 초과 Wald p = 0.12, 두 목록의 일관성 p = 0.902. 결정: H-L2a stays REJECTED for the owned estimators.
+- 경쟁 추정량(보유 목록에서 재현): Wagenveld et al. 2023 NVSS Poisson D = 0.014 (공개 0.014; 차이 0.01 공개 sd; 사용 원천 325752 대 공개 345803) → REPRODUCED;
+  Mittal et al. 2024 Quaia Poisson (|b| > 40) D = 0.00842 (공개 0.011; 차이 -0.92 공개 sd) → REPRODUCED.
