@@ -101,11 +101,11 @@ Zero-point nuisance 모형별 요약. 세 모형 중 어느 것도 선험적으�
 - T1 (검정력): 충분통계량 논리로, carrier의 어떤 함수·압축·재좌표화도 exact likelihood의 검정력 한계를 넘지 못한다. R53에서 잰 tie는 정리다.
 - T2, T3, T4 (타당성): 특이 precision의 신뢰 원통은 rank(F) 자유도로 정확한 coverage를 가지며 거기서 읽는 모든 뷰가 동시에 유효하다. 비식별 방향에서는 유효한 신뢰집합이 비유계이고, 유계 구간의 균등 coverage는 0이며, posterior는 조건부 prior와 같다. 고전 결과이고(E53, E55, E64) 우주론은 같은 목적에 profile likelihood를 이미 쓴다(E57, E58).
 - T5 (유한 시뮬레이션 공분산): GLS 추정의 정확한 2차 모멘트 계수.
-- T6 (선택 규칙): O(3) 등변성 아래 1차 응답은 (다중극, parity) 블록으로 대각이고 식별성은 블록별 rank 진술이 된다. vorticity는 어떤 스칼라 관측량에도 열이 없고 toroidal 고유운동 dipole에만 나타난다. B_2는 null 채널이다. 유한 파장 모드와 parity를 깨는 측정 사슬에는 적용되지 않는다.
+- T6 (선택 규칙): O(3) 등변성 아래 1차 응답은 (다중극, parity) 블록으로 대각이고 식별성은 블록별 rank 진술이 된다. vorticity는 어떤 스칼라 관측량에도 열이 없고 (1,+) 형 관측량(toroidal 고유운동 dipole과 편광각 회전 같은 pseudo-scalar dipole)에만 나타난다. B_2는 null 채널이다. 유한 파장 모드와 parity를 깨는 측정 사슬에는 적용되지 않는다.
 - T7 (gauge 궤도): 깊이와 무관한 Hubble 다중극은 거리 표본들의 zero-point 패턴 공통 부분과 분리되지 않고, vorticity는 기준 좌표계의 spin과 분리되지 않는다. "물리적 dipole 없음" 가설은 상대 거리만으로는 검정할 수 없다.
 - T8 (shear history 모멘트 문제): T와 E의 kernel은 Chebyshev 계를 이룬다. T에 보이지 않는 history는 부호가 한 번 이상, T와 E 모두에 보이지 않는 history는 두 번 이상 바뀐다. 부호나 family 제한이 없으면 shear 진폭의 상한은 없다.
 - T9 (프레임 대수): 같은 shell의 count 초과와 bulk flow의 합은 항등적으로 0이다. Global tilt는 shell 사이의 선형 가설이다.
-- 신규성: 통계 부분은 주장하지 않는다. T6과 T8은 구성 요소가 모두 문헌에 있고(E18, E25, E46, E50, E51) 하나의 진술로 묶은 형태는 이번 검색에서 찾지 못했다. 검색에 걸리지 않았다는 뜻일 뿐이며 R54-L07이 확인한다.
+- 신규성: 통계 부분은 주장하지 않는다. T6과 T8은 구성 요소가 모두 문헌에 있고(E18, E25, E46, E50, E51) 하나의 진술로 묶은 형태는 이번 검색에서 찾지 못했다. 검색에 걸리지 않았다는 뜻일 뿐이다. 부록 작업 R54-A2의 우선권 확인 결과: T6 LOW (searched), T8 LOW-MODERATE (searched); 둘 다 출처를 밝힌 재유도로 인용한다.
 
 ## 3. 주제별 결정
 
@@ -132,11 +132,12 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
 
 ## 6. 독립 심사
 
-작성자와 분리된 심사 중 보고서를 받은 것 2건, 중단된 것 0건. 상세는 `INDEPENDENT_REVIEW.json`.
+작성자와 분리된 심사 중 보고서를 받은 것 3건, 중단된 것 0건. 상세는 `INDEPENDENT_REVIEW.json`.
 
 - adversarial reviewer (physmath-research-harness:adversarial-reviewer): 판정 ACCEPT_WITH_REQUIRED_CHANGES; critical 2, major 7, minor 7; 수정 14건, 로컬 노드로 이관 2건 (R54-L04).
 - scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer): 판정 ACCEPT_WITH_REQUIRED_CHANGES; critical 2, major 2, minor 4; 수정 8건, 로컬 노드로 이관 0건.
-- 파일 단위 추적: 심사 범위 15개 파일 가운데 기록된 심사가 다룬 파일 10개. 남은 파일 목록은 계약의 pending_independent_review.uncovered (부록 작업 R54-A1). 정리 증명(`THEOREMS.md`) 심사 상태: 미완료.
+- scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer), addendum task R54-A1: 판정 ACCEPT_WITH_REQUIRED_CHANGES; critical 0, major 5, minor 7; 수정 12건, 로컬 노드로 이관 0건.
+- 파일 단위 추적: 심사 범위 15개 파일 가운데 기록된 심사가 다룬 파일 15개. 남은 파일 목록은 계약의 pending_independent_review.uncovered (부록 작업 R54-A1). 정리 증명(`THEOREMS.md`) 심사 상태: 완료.
 
 ## 7. 로컬 노드 (R54-L01..L08)
 
@@ -247,7 +248,7 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
 
 - 실행 결과, 노드 단계, 판정, 임계값은 바뀌지 않았다. PR-R57의 결정과 종료 규칙은 그대로다.
 - 정리는 note가 말할 수 있는 범위를 제한하는 용도다(계약의 theorem_usage). 독립 심사 기록 전에는 note에서 정리를 인용하지 않는다.
-- 독립 심사가 기록되지 않은 파일 수: 5 (부록 작업 R54-A1).
+- 독립 심사가 기록되지 않은 파일 수: 0 (부록 작업 R54-A1).
 - 부록 작업 수: 4 (필수 2, 선택 2). 어느 것도 연구 루프를 다시 열지 않는다.
 - 클라우드 장비에서 검증하지 못한 시험: `test_committed_numbers_are_reproduced_by_the_run_scripts` (pair-sum cache 키가 장비에 의존; 로컬 head에서도 같은 실패).
 - 사용자에게 남긴 질문 수: 4 (`HANDOFF_UPDATE.json`의 open_questions).

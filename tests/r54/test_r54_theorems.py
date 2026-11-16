@@ -136,6 +136,31 @@ def test_t5_exact_second_moments_with_a_simulated_covariance():
         idn.wishart_gls_factors(5, 8, 3)
 
 
+
+def test_t5_covariance_factor_discriminates_neighbouring_laws():
+    """Review finding R54-A1-02: at q/n = 1/2 the stated factor (n-1)/(n-q-1) is separated from its neighbours by the tolerance."""
+    rng = np.random.default_rng(SEED + 51)
+    n, p, k, n_draw = 20, 12, 2, 40000
+    q = p - k
+    fac = idn.wishart_gls_factors(n, p, k)["cov_factor"]
+    assert math.isclose(fac, (n - 1) / (n - q - 1), rel_tol=1e-12)
+    tol = 0.025                                                                      # about 4.7 Monte Carlo standard errors
+    for wrong in ((n - 1) / (n - q), n / (n - q - 1), n / (n - q), (n - 2) / (n - q - 2), (n - 1) / (n - q - 2)):
+        assert abs(wrong - fac) > 2.0 * tol * fac, wrong                             # every neighbour lies outside twice the tolerance
+    j = rng.standard_normal((p, k))
+    sigma = _spd(rng, p)
+    chol = np.linalg.cholesky(sigma)
+    v_true = np.linalg.inv(j.T @ np.linalg.solve(sigma, j))
+    x = rng.standard_normal((n_draw, n, p)) @ chol.T
+    s = np.einsum("dni,dnj->dij", x, x) / n                                          # n S ~ W_p(n, Sigma)
+    y = rng.standard_normal((n_draw, p)) @ chol.T                                    # theta = 0
+    sj = np.linalg.solve(s, np.broadcast_to(j, (n_draw, p, k)))
+    v_hat = np.linalg.inv(np.einsum("pk,dpl->dkl", j, sj))
+    est = np.einsum("dkl,dpl,dp->dk", v_hat, sj, y)
+    w = np.linalg.inv(np.linalg.cholesky(v_true))
+    emp = float(np.trace(w @ np.cov(est, rowvar=False) @ w.T) / k)
+    assert abs(emp - fac) < tol * fac, (emp, fac)
+
 # ------------------------------------------------------------------ T6
 EXPECTED_O3 = {("polar", "scalar"): 1, ("axial", "scalar"): 0, ("stf2", "scalar"): 1, ("pseudo_stf2", "scalar"): 0,
                ("polar", "pseudoscalar"): 0, ("axial", "pseudoscalar"): 1, ("stf2", "pseudoscalar"): 0, ("pseudo_stf2", "pseudoscalar"): 1,
@@ -219,11 +244,32 @@ def test_t7a_zero_point_gauge_orbit_and_testable_combinations():
     v = np.zeros(res["n_parameters"])
     v[0] = 1.0                                                         # delta alone is not
     assert np.abs(res["null_basis"] @ v).max() > 0.1
-    # a velocity law is identified next to the constant terms iff its response varies with depth
+    # a velocity law is identified next to the constant terms if its response varies with depth (generic g; T7a iii gives the sufficient condition)
     g_var = [rng.uniform(0.5, 3.0, size=d.shape[0]) for d in dirs]
     g_const = [np.full(d.shape[0], 1.7) for d in dirs]
     assert idn.zero_point_gauge(dirs, g_var)["nullity"] == 3
     assert idn.zero_point_gauge(dirs, g_const)["nullity"] == 6
+
+
+def test_t7a_monopoles_need_the_vectors_one_n_to_span_r4():
+    """Review finding R54-A1-01: with a free monopole h_p per sample the orbit is three-dimensional only if (1, n_i) spans R^4."""
+    rng = np.random.default_rng(SEED + 71)
+    full = idn._unit(rng.standard_normal((80, 3)))
+    phi = rng.uniform(0.0, 2.0 * np.pi, 80)
+    ring = np.column_stack([math.sqrt(0.75) * np.cos(phi), math.sqrt(0.75) * np.sin(phi), np.full(80, 0.5)])   # n_z = 0.5: spans R^3
+    assert np.linalg.matrix_rank(ring) == 3 and np.linalg.matrix_rank(np.column_stack([np.ones(80), ring])) == 3
+    assert idn.zero_point_gauge([full, ring])["nullity"] == 3                       # without monopoles: the orbit only
+    res = idn.zero_point_gauge([full, ring], monopoles=True)
+    assert res["n_parameters"] == 11 and res["nullity"] == 4                         # the extra null vector h_2 = -u/2, delta + d_2 = u e_z
+    extra = np.zeros(11)
+    extra[3 * 2 + 2], extra[10] = 1.0, -0.5
+    assert np.abs(res["design"] @ extra).max() < 1e-12
+    south = idn._unit(rng.standard_normal((400, 3)))
+    cap = south[south[:, 2] < -0.2][:80]                                            # a cap: (1, n_i) spans R^4
+    assert np.linalg.matrix_rank(np.column_stack([np.ones(cap.shape[0]), cap])) == 4
+    assert idn.zero_point_gauge([full, cap], monopoles=True)["nullity"] == 3
+    g = [rng.uniform(0.5, 3.0, size=d.shape[0]) for d in (full, cap)]
+    assert idn.zero_point_gauge([full, cap], g, monopoles=True)["nullity"] == 3
 
 
 def test_t7c_depth_law_noncentrality_is_a_design_quantity():

@@ -340,7 +340,7 @@ No function, compression or re-coordinatization of the carrier exceeds the power
 
 ### H-T2 (THM) - PROMOTE
 
-The views read from one confidence cylinder are simultaneously valid with rank(F) degrees of freedom; along unidentified directions valid sets are unbounded and a posterior equals the conditional prior (T2, T3, T4).
+The views read from one confidence cylinder are simultaneously valid with rank(F) degrees of freedom; along unidentified directions valid sets are unbounded with probability at least 1 - alpha and a posterior equals the conditional prior (T2, T3, T4).
 
 - evidence: proofs + Monte Carlo and algebraic checks
 - validity: linear Gaussian carrier; second-moment law T5 for a simulated covariance
@@ -358,7 +358,7 @@ Selection rule: under O(3) equivariance the first-order response is block diagon
 
 - evidence: proof (Schur's lemma) + independent numerical count of the equivariant responses
 - validity: variables entering as tensors at the observer or as homogeneous histories; fails for finite-wavelength modes and parity-violating measurement chains
-- novelty: LOW, UNVERIFIED (addendum task R54-A2; R54-L07 was closed before this node existed): every pattern is published (E18, E25, E50, E51); the block rank criterion and the null channels as one statement were not found in the searches run
+- novelty: LOW (searched): every per-observable pattern is published (E-mode quadrupole for shear, B-mode dipole for rotation, finite multipole content of the Hubble law); the block-diagonal rank criterion per (multipole, parity) with the null channels stated as one theorem was not found in the searches run; it is Schur's lemma applied to known patterns and is cited as an attributed synthesis, not as a new result; nearest prior art: arXiv:2010.06534 Heinesen 2020 (multipole decomposition of the general luminosity-distance Hubble law into a finite set of multipole coefficients; abstract read, no statement on vorticity seen); E50 Darling 2014 (anisotropic expansion as a curl-free E-mode proper-motion quadrupole); E51 Darling, Truebenbach, Paine 2018, sections 2.3 and 2.4 (a rotating universe appears as a B-mode proper-motion dipole; anisotropic expansion as an E-mode quadrupole); Mignard & Klioner 2012 vector spherical harmonics as used in E51 and Gaia frame papers (rotation = toroidal l=1, glide = spheroidal l=1); E18, E25 (patterns already published per observable)
 - testability: HIGH
 - robustness: exact inside its scope
 - risk: quoting it for finite-wavelength modes (Bianchi families with structure)
@@ -386,7 +386,7 @@ The T and E quadrupole kernels form a Chebyshev system: a shear history invisibl
 
 - evidence: proof + checks on the committed ionization history
 - validity: type I, first order, positive scattering rate on the support
-- novelty: LOW to MEDIUM, UNVERIFIED (addendum task R54-A2): the kernels are classical (E46) and the sign-change argument is standard (E68); the statement for this pair was not found in the searches run
+- novelty: LOW-MODERATE (searched): that a sign-changing shear can hide from the temperature quadrupole is published (Battye & Moss 2026); the lower bounds of one sign change (T alone) and two (T and E) and the absence of an upper bound on any norm without a sign or family restriction were not found in the searches run; the argument is the standard Chebyshev-system count (E68) on the classical kernels (E46) and is cited as an attributed re-derivation; nearest prior art: arXiv:2601.22351 Battye & Moss 2026, How isotropic is dark energy? (a Bianchi I shear history with a vanishing line-of-sight integral meets the temperature quadrupole bound by construction; per the search summary, sign-changing shear cancels the temperature integral while the polarization condition is visibility weighted and left to future work; no count of sign changes; only the abstract was read on the page); E03 Pontzen & Challinor 2007 (Bianchi CMB polarization; the quadrupole gives the tightest bound and some anisotropic models avoid it); E46 Basko & Polnarev 1980 (T and E quadrupole kernels); E68 Karlin & Studden 1966 (sign changes of functions annihilated by a Chebyshev system; textbook, not read)
 - testability: HIGH
 - robustness: exact
 - risk: quoting an upper limit on a shear amplitude without naming the family or the sign restriction

@@ -86,7 +86,10 @@ def git(root: Path, *args: str) -> subprocess.CompletedProcess:
 
 
 def lines(root: Path, *args: str) -> list[str]:
-    return [ln for ln in git(root, *args).stdout.splitlines() if ln.strip()]
+    res = git(root, *args)
+    if res.returncode != 0:                                  # never read a failed query as "clean" (review finding R54-A1-11)
+        raise SystemExit(f"BLOCKED: git {' '.join(args)} failed: {res.stderr.strip()[:300]}")
+    return [ln for ln in res.stdout.splitlines() if ln.strip()]
 
 
 def classify(path: str) -> str:
@@ -123,13 +126,16 @@ def preflight(root: Path, start: str = START_COMMIT, source: str = SOURCE_REF) -
     """State of the working branch relative to the update and the reasons; read-only."""
     if git(root, "rev-parse", "--verify", "--quiet", source + "^{commit}").returncode != 0:
         return "BLOCKED", [f"the update is not fetched; run: {FETCH}"]
-    if merging(root):
-        return "MERGE_IN_PROGRESS", ["a merge is open; continue with `status` and `finish`, or `git merge --abort` to start again"]
     branch = git(root, "rev-parse", "--abbrev-ref", "HEAD").stdout.strip()
-    if branch in PROTECTED_BRANCHES:
+    if branch in PROTECTED_BRANCHES:                         # the guards run before the open-merge state (review finding R54-A1-03)
         return "BLOCKED", [f"current branch is '{branch}'; check out your working branch (the update is never merged into this one)"]
     if not is_ancestor(root, start, "HEAD"):
         return "BLOCKED", [f"your branch does not contain the R54 start commit {start[:8]}; stop and report"]
+    if merging(root):
+        merge_head = git(root, "rev-parse", "MERGE_HEAD").stdout.strip()
+        if merge_head != git(root, "rev-parse", source + "^{commit}").stdout.strip():
+            return "BLOCKED", ["a merge of another commit is open; finish or abort it (`git merge --abort`) before applying the update"]
+        return "MERGE_IN_PROGRESS", ["a merge is open; continue with `status` and `finish`, or `git merge --abort` to start again"]
     if is_ancestor(root, source, "HEAD"):
         return "ALREADY_APPLIED", ["your branch already contains the update"]
     dirty = lines(root, "status", "--porcelain", "--untracked-files=no")
@@ -195,6 +201,8 @@ def finish_blockers(root: Path) -> list[str]:
     """Reasons why the verification must not start; empty when the tree is ready."""
     out = [f"unmerged: {p} ({rule_for(p)})" for p in unmerged(root)]
     marks = git(root, "grep", "-n", "-E", "^(<<<<<<<|>>>>>>>) ", "--", "scripts/r54", "tests/r54", "htt/htt/htt/infer", REL, "docs/codex_handoff", "machine_readable")
+    if marks.returncode > 1:                                 # 1 means no match; above 1 is an error (review finding R54-A1-11)
+        out.append(f"git grep for conflict markers failed: {marks.stderr.strip()[:200]}")
     out += [f"conflict marker left in {ln}" for ln in marks.stdout.splitlines()[:20]]
     out += [f"interrupted mutation receipt: {p} (run the receipt once; it restores the source)" for p in backups(root)]
     return out
@@ -223,7 +231,11 @@ def finish(root: Path) -> int:
             return 1
     for path in (*GENERATED, RECEIPT, *MIRRORS):                      # stage what the steps above rewrote, nothing else
         if (root / path).is_file():
-            git(root, "add", "--", path)
+            res = git(root, "add", "--", path)
+            if res.returncode != 0:                                   # review finding R54-A1-04: never report OK over a failed stage
+                print(f"[stage] exit {res.returncode}: {res.stderr.strip()[:160]}")
+                print(f"HANDOFF FAILED at step 'stage' ({path}). Fix the cause (for example a stale .git/index.lock), then run `finish` again.")
+                return 1
     open_merge, staged = merging(root), lines(root, "diff", "--cached", "--name-only")
     print("HANDOFF OK")
     unstaged = lines(root, "diff", "--name-only")

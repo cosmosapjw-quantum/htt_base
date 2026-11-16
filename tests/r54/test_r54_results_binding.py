@@ -603,3 +603,18 @@ def test_theorem_usage_is_bound_to_the_theorems_and_changes_no_node(builder):
     for token in ("theorem_usage", "LOCAL_AGENT_HANDOFF_UPDATE.txt", "R54-A1"):
         assert token in prompt, f"prompt lost: {token}"
 
+
+
+def test_a2_attribution_is_bound_to_its_script_and_covers_the_rows_of_the_task():
+    """Addendum task R54-A2: the record is written by its script and checks exactly the rows and hypotheses that the task names."""
+    path = R54 / "RESULTS/R54_A2_ATTRIBUTION.json"
+    if not path.is_file():
+        pytest.skip("R54-A2 not executed")
+    rec = _json(path)
+    script = ROOT / rec["provenance"]["script"]
+    assert hashlib.sha256(script.read_bytes()).hexdigest() == rec["provenance"]["script_sha256"], "R54-A2 record is stale; re-run its script"
+    assert set(rec["novelty_checks"]) == {"H-T6", "H-T8"}
+    assert set(rec["evidence_verification"]) == {"E51", "E54", "E63", "E64", "E65", "E66", "E67", "E68", "E69"} == set(rec["rows_checked"])
+    for hid, chk in rec["novelty_checks"].items():
+        assert chk["searches"] and chk["nearest_prior_art"] and "searched" in chk["novelty"], hid
+    assert {c["status"] for c in rec["evidence_verification"].values()} <= {"VERIFIED", "IDENTIFIER_ONLY", "NOT_FOUND"}

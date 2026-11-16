@@ -294,6 +294,157 @@
    "scope": "LOCAL_AGENT_CONTRACT.json:pending_independent_review.scope (10 files), read and run only, before the first edit of any local node",
    "status": "COMPLETE",
    "verdict": "ACCEPT_WITH_REQUIRED_CHANGES"
+  },
+  {
+   "agent": "adbc43b828f0873d1",
+   "role": "scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer), addendum task R54-A1",
+   "independent_of_author": true,
+   "status": "COMPLETE",
+   "date": "2026-11-17",
+   "scope": "LOCAL_AGENT_CONTRACT.json:pending_independent_review.uncovered (5 files of node R54-THM and of the handoff update), read and run only",
+   "files": [
+    "htt/htt/htt/infer/r54_identifiability.py",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+    "tests/r54/test_r54_theorems.py",
+    "scripts/r54/handoff_merge.py",
+    "tests/r54/test_r54_handoff.py"
+   ],
+   "verdict": "ACCEPT_WITH_REQUIRED_CHANGES",
+   "checks_performed": [
+    "pytest tests/r54/test_r54_theorems.py tests/r54/test_r54_handoff.py: 19 passed (before the fixes)",
+    "proofs re-derived by hand: T1 (b, c), T2, T3 (i-iii), T4 (bipolar theorem and Sion), T5 (Wishart Schur complement, E W^-1 = I/(n-q-1), Hotelling case), T6 (Schur for real-type O(3) irreps, parity labels, C6.1-C6.5), T7b, T7c, T8 (kernel ratio, derivative, tangent bound, concavity threshold, Chebyshev factorisation, three-bump construction), T9, L1, L2",
+    "scratch rank computation of the T7a design with monopole columns on a ring sample (finding R54-A1-01)",
+    "seeded re-run of the T5 Monte Carlo against five alternative factors (finding R54-A1-02)",
+    "scratch git repository with an open unrelated merge on main (finding R54-A1-03)",
+    "attributions compared with the EVIDENCE rows E01-E69 of the builder",
+    "generated documents grepped for theorem, novelty and H-T statements against state/HYPOTHESES.json"
+   ],
+   "checked_without_defect": "T1-T6, T7b, T7c, T8, T9, L1 and L2 proofs; equivariant_response_rank, rep_matrix and block_identification against their docstrings; FAST_FORWARD and MERGE paths keep local commits; no hand-written file is resolved by the helper; attributions E09, E18, E25, E46, E50-E53, E55, E59-E62, E64-E69",
+   "findings": [
+    {
+     "id": "R54-A1-01",
+     "severity": "major",
+     "summary": "T7a(ii)/(iii) carry a free monopole h_p but assume only that the directions span R^3; zero_point_gauge and its test omitted h_p. A ring sample n_z = 1/2 spans R^3 but gives nullity 4 with monopole columns.",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md:T7a",
+      "htt/htt/htt/infer/r54_identifiability.py:zero_point_gauge",
+      "tests/r54/test_r54_theorems.py::test_t7a_zero_point_gauge_orbit_and_testable_combinations"
+     ],
+     "resolution": "T7a (ii)/(iii) now require that (1, n_i) spans R^4 per sample (directions spanning R^3 suffice when h_p is known and removed); the proof carries c_p; zero_point_gauge gains monopoles=True; new test test_t7a_monopoles_need_the_vectors_one_n_to_span_r4 reproduces the ring counterexample and the cap case.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-02",
+     "severity": "major",
+     "summary": "The 5% tolerance of the Monte Carlo covariance factor in test_t5 accepts neighbouring wrong laws ((n-1)/(n-q), n/(n-q-1), n/(n-q), (n-2)/(n-q-2)).",
+     "evidence": [
+      "tests/r54/test_r54_theorems.py::test_t5_exact_second_moments_with_a_simulated_covariance"
+     ],
+     "resolution": "new test test_t5_covariance_factor_discriminates_neighbouring_laws at n = 20, q = 10 with 40000 draws and a 2.5% tolerance; it asserts that every neighbouring law lies outside twice the tolerance. The original test is kept unchanged.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-03",
+     "severity": "major",
+     "summary": "preflight returned MERGE_IN_PROGRESS for any open merge before checking the protected branch, the start commit and that MERGE_HEAD is the update; apply then took one side of generated files of an unrelated merge.",
+     "evidence": [
+      "scripts/r54/handoff_merge.py:preflight"
+     ],
+     "resolution": "preflight checks the protected branch and the start commit first and returns BLOCKED unless MERGE_HEAD equals the update ref; new test test_merge_helper_blocks_an_open_merge_of_another_commit (unrelated merge and protected branch).",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-04",
+     "severity": "major",
+     "summary": "finish ignored the return code of git add for the rebuilt documents and printed HANDOFF OK.",
+     "evidence": [
+      "scripts/r54/handoff_merge.py:finish"
+     ],
+     "resolution": "a failed git add prints HANDOFF FAILED at step 'stage' and returns 1 (code reading; no locked-index test).",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-05",
+     "severity": "major",
+     "summary": "T8 attribution 'Late-time anisotropic stress evading the temperature quadrupole is discussed in E44' is not supported by the E44 ledger row.",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md:T8 attribution"
+     ],
+     "resolution": "reworded to what E44 records (temperature quadrupole as a line-of-sight integral of the shear, visibility-weighted polarization); the evasion statement stays in the R54-A2 novelty record only.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-06",
+     "severity": "minor",
+     "summary": "T3(iv) 'its width is a property of the conditional prior' holds only asymptotically; at finite F the posterior of iota contributes.",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md:T3"
+     ],
+     "resolution": "reworded: the width does not shrink with data and is fixed by the conditional prior of nu given iota together with the posterior of iota.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-07",
+     "severity": "minor",
+     "summary": "T3(i) assumes measurability without saying so, and the event {C(Y) unbounded} need not be measurable; (i) has no executable check.",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md:T3"
+     ],
+     "resolution": "statement now assumes a measurable set-valued map and asserts an event of probability >= 1 - alpha on which C(Y) is unbounded; the proof notes that (i) is proof-only.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-08",
+     "severity": "minor",
+     "summary": "C6.6 says vorticity modes of E01-E04 reach the temperature; the rows record vector-mode shear (sigma_V), not vorticity.",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md:C6.6"
+     ],
+     "resolution": "reworded to 'the vector modes ..., sigma_V in E01'.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-09",
+     "severity": "minor",
+     "summary": "R54_REPORT_KO.md says vorticity appears only in the toroidal proper-motion dipole; THEOREMS C6.4 also lists pseudo-scalar dipoles.",
+     "evidence": [
+      "scripts/r54/build_r54_contract.py (R54_REPORT_KO.md T6 line)"
+     ],
+     "resolution": "builder text now names observables of type (1,+): the toroidal proper-motion dipole and pseudo-scalar dipoles.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-10",
+     "severity": "minor",
+     "summary": "H-T2 statement drops the qualifier 'with probability at least 1 - alpha' of T3(i).",
+     "evidence": [
+      "scripts/r54/build_r54_contract.py (H-T2)"
+     ],
+     "resolution": "qualifier added in the builder; documents regenerated.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-11",
+     "severity": "minor",
+     "summary": "git queries of handoff_merge.py read a failed command as an empty (clean) answer.",
+     "evidence": [
+      "scripts/r54/handoff_merge.py:lines, finish_blockers"
+     ],
+     "resolution": "lines() raises BLOCKED on a non-zero exit; git grep exit codes above 1 become a finish blocker.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-12",
+     "severity": "minor",
+     "summary": "test comment 'identified iff its response varies with depth' is stronger than T7a(iii).",
+     "evidence": [
+      "tests/r54/test_r54_theorems.py::test_t7a_zero_point_gauge_orbit_and_testable_combinations"
+     ],
+     "resolution": "comment changed to 'if ... (generic g; T7a iii gives the sufficient condition)'.",
+     "resolution_status": "FIXED"
+    }
+   ],
+   "verdict_as_reported": "PASS_WITH_FINDINGS (no critical finding; five major and seven minor findings, all fixed); mapped to the vocabulary of this record"
   }
  ],
  "rule": "Reviewer output is information, not authority. No number proposed by a reviewer entered a document without being re-executed by the run scripts.",

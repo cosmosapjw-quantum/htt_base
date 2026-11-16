@@ -524,9 +524,9 @@ EVIDENCE = [
 EVIDENCE_ROWS = [dict(zip(("id", "source", "identifier", "verification", "claim_used"), e)) for e in EVIDENCE]
 
 
-def _apply_l07_evidence(rows: list[dict]) -> list[dict]:
-    """R54-L07 step 3: rows verified from the primary source become VERIFIED; the others keep their status and gain the check note."""
-    path = RES / "R54_L07_BENCHMARK.json"
+def _apply_evidence_checks(rows: list[dict], name: str, label: str) -> list[dict]:
+    """Rows verified from the primary source become VERIFIED; the others keep their status and gain the check note (R54-L07 step 3, R54-A2)."""
+    path = RES / name
     if not path.is_file():
         return rows
     checks = json.loads(path.read_text(encoding="utf-8")).get("evidence_verification", {})
@@ -536,13 +536,46 @@ def _apply_l07_evidence(rows: list[dict]) -> list[dict]:
         if c is None:
             out.append(r)
         elif c["status"] == "VERIFIED":
-            out.append({**r, "verification": V, "claim_used": r["claim_used"] + f" [R54-L07: {c['note']}]"})
+            out.append({**r, "verification": V, "claim_used": r["claim_used"] + f" [{label}: {c['note']}]"})
         else:
-            out.append({**r, "claim_used": r["claim_used"] + f" [R54-L07 {c['status']}: {c['note']}]"})
+            out.append({**r, "claim_used": r["claim_used"] + f" [{label} {c['status']}: {c['note']}]"})
     return out
 
 
-EVIDENCE_ROWS = _apply_l07_evidence(EVIDENCE_ROWS)
+def a2_record() -> dict | None:
+    path = RES / A2_FILE
+    return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else None
+
+
+def _novelty_head(text: str) -> str:
+    return text.split(":", 1)[0]
+
+
+def a2_novelty_en() -> str:
+    a2 = a2_record()
+    if a2 is None:
+        return "the selection rule and the sign-change theorem carry an unverified LOW to MEDIUM novelty flag (addendum task R54-A2)."
+    nc = a2["novelty_checks"]
+    return (f"after the priority check R54-A2 the selection rule ({_novelty_head(nc['H-T6']['novelty'])}) and the sign-change theorem "
+            f"({_novelty_head(nc['H-T8']['novelty'])}) are cited as attributed re-derivations of published ingredients.")
+
+
+def a2_novelty_ko() -> str:
+    a2 = a2_record()
+    if a2 is None:
+        return "우선권 확인은 부록 작업 R54-A2가 한다."
+    nc = a2["novelty_checks"]
+    return (f"부록 작업 R54-A2의 우선권 확인 결과: T6 {_novelty_head(nc['H-T6']['novelty'])}, T8 {_novelty_head(nc['H-T8']['novelty'])}; "
+            "둘 다 출처를 밝힌 재유도로 인용한다.")
+
+
+def _apply_l07_evidence(rows: list[dict]) -> list[dict]:
+    return _apply_evidence_checks(rows, "R54_L07_BENCHMARK.json", "R54-L07")
+
+
+#: addendum task R54-A2 (priority and attribution check of the theorems); written by scripts/r54/run_r54_a2_attribution.py
+A2_FILE = "R54_A2_ATTRIBUTION.json"
+EVIDENCE_ROWS = _apply_evidence_checks(_apply_l07_evidence(EVIDENCE_ROWS), A2_FILE, "R54-A2")
 
 
 def sweep_text(n: dict) -> str:
@@ -581,6 +614,9 @@ def hypotheses(n: dict) -> list[dict]:
     l07 = local_result("R54-L07")
     if l07 is not None:
         for hid, chk in l07["novelty_checks"].items():
+            by[hid]["dimensions"]["novelty"] = chk["novelty"] + "; nearest prior art: " + "; ".join(chk["nearest_prior_art"])
+    if (RES / A2_FILE).is_file():                                  # addendum task R54-A2 sets the novelty of H-T6 and H-T8
+        for hid, chk in json.loads((RES / A2_FILE).read_text(encoding="utf-8"))["novelty_checks"].items():
             by[hid]["dimensions"]["novelty"] = chk["novelty"] + "; nearest prior art: " + "; ".join(chk["nearest_prior_art"])
     for hid, d in local_hypothesis_decisions().items():
         add(hid, d["result"], d["next"], d["decision"])
@@ -740,7 +776,7 @@ def hypotheses_cloud(n: dict) -> list[dict]:
           "PROMOTE", "proof (sufficiency) + executable check", "exact for the linear Gaussian carrier with known covariance", "NONE claimed (textbook, E65)", "done", "exact",
           "reading the tie as a property of the data instead of a theorem", "a counterexample inside the stated model", "R53 measured the tie numerically; T1 proves it",
           "cite T1 wherever the tie is stated"),
-        h("H-T2", "THM", "The views read from one confidence cylinder are simultaneously valid with rank(F) degrees of freedom; along unidentified directions valid sets are unbounded and a posterior equals the conditional prior (T2, T3, T4).",
+        h("H-T2", "THM", "The views read from one confidence cylinder are simultaneously valid with rank(F) degrees of freedom; along unidentified directions valid sets are unbounded with probability at least 1 - alpha and a posterior equals the conditional prior (T2, T3, T4).",
           "PROMOTE", "proofs + Monte Carlo and algebraic checks", "linear Gaussian carrier; second-moment law T5 for a simulated covariance",
           "NONE claimed (E64, E53, E55, E67); cosmology already uses profile likelihoods against prior-volume effects (E57, E58)", "done", "exact",
           "presenting classical results as new statistics", "a view with coverage below the stated level",
@@ -1410,7 +1446,7 @@ nearest published method gives?
 - Counts: the receipt estimator has power {n['count_power']:.2f} against a doubled dipole, so its non-detection decides nothing; tilt closure with CF4 is preliminary (p = {g3(n['tt_close_p'])}).
 - Theory (R54-THM, THEOREMS.md): the tie with the exact likelihood, the simultaneous validity of the views, the selection rule by multipole and parity,
   the zero-point and frame-spin gauge orbits, the sign-change theorem for shear histories and the frame closure identity are proved and machine-checked.
-  No novelty is claimed for the statistics; the selection rule and the sign-change theorem carry an unverified LOW to MEDIUM novelty flag.
+  No novelty is claimed for the statistics; {a2_novelty_en()}
 
 ## Blockers
 
@@ -1760,11 +1796,11 @@ Zero-point nuisance 모형별 요약. 세 모형 중 어느 것도 선험적으�
 - T1 (검정력): 충분통계량 논리로, carrier의 어떤 함수·압축·재좌표화도 exact likelihood의 검정력 한계를 넘지 못한다. R53에서 잰 tie는 정리다.
 - T2, T3, T4 (타당성): 특이 precision의 신뢰 원통은 rank(F) 자유도로 정확한 coverage를 가지며 거기서 읽는 모든 뷰가 동시에 유효하다. 비식별 방향에서는 유효한 신뢰집합이 비유계이고, 유계 구간의 균등 coverage는 0이며, posterior는 조건부 prior와 같다. 고전 결과이고(E53, E55, E64) 우주론은 같은 목적에 profile likelihood를 이미 쓴다(E57, E58).
 - T5 (유한 시뮬레이션 공분산): GLS 추정의 정확한 2차 모멘트 계수.
-- T6 (선택 규칙): O(3) 등변성 아래 1차 응답은 (다중극, parity) 블록으로 대각이고 식별성은 블록별 rank 진술이 된다. vorticity는 어떤 스칼라 관측량에도 열이 없고 toroidal 고유운동 dipole에만 나타난다. B_2는 null 채널이다. 유한 파장 모드와 parity를 깨는 측정 사슬에는 적용되지 않는다.
+- T6 (선택 규칙): O(3) 등변성 아래 1차 응답은 (다중극, parity) 블록으로 대각이고 식별성은 블록별 rank 진술이 된다. vorticity는 어떤 스칼라 관측량에도 열이 없고 (1,+) 형 관측량(toroidal 고유운동 dipole과 편광각 회전 같은 pseudo-scalar dipole)에만 나타난다. B_2는 null 채널이다. 유한 파장 모드와 parity를 깨는 측정 사슬에는 적용되지 않는다.
 - T7 (gauge 궤도): 깊이와 무관한 Hubble 다중극은 거리 표본들의 zero-point 패턴 공통 부분과 분리되지 않고, vorticity는 기준 좌표계의 spin과 분리되지 않는다. "물리적 dipole 없음" 가설은 상대 거리만으로는 검정할 수 없다.
 - T8 (shear history 모멘트 문제): T와 E의 kernel은 Chebyshev 계를 이룬다. T에 보이지 않는 history는 부호가 한 번 이상, T와 E 모두에 보이지 않는 history는 두 번 이상 바뀐다. 부호나 family 제한이 없으면 shear 진폭의 상한은 없다.
 - T9 (프레임 대수): 같은 shell의 count 초과와 bulk flow의 합은 항등적으로 0이다. Global tilt는 shell 사이의 선형 가설이다.
-- 신규성: 통계 부분은 주장하지 않는다. T6과 T8은 구성 요소가 모두 문헌에 있고(E18, E25, E46, E50, E51) 하나의 진술로 묶은 형태는 이번 검색에서 찾지 못했다. 검색에 걸리지 않았다는 뜻일 뿐이며 R54-L07이 확인한다.
+- 신규성: 통계 부분은 주장하지 않는다. T6과 T8은 구성 요소가 모두 문헌에 있고(E18, E25, E46, E50, E51) 하나의 진술로 묶은 형태는 이번 검색에서 찾지 못했다. 검색에 걸리지 않았다는 뜻일 뿐이다. {a2_novelty_ko()}
 
 ## 3. 주제별 결정
 

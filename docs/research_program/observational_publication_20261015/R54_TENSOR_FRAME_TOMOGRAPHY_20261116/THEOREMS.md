@@ -5,8 +5,7 @@ mathematical physics alone. Nothing here uses an observation; no result number o
 Each statement has a proof, an attribution, and an executable check in `tests/r54/test_r54_theorems.py`
 (tools in `htt/htt/htt/infer/r54_identifiability.py`). Evidence ids (E..) refer to `state/EVIDENCE_LEDGER.md`.
 
-Status of this file: written and machine-checked in the cloud session; **not yet read by an independent
-reviewer** (it is in the scope of `LOCAL_AGENT_CONTRACT.json:pending_independent_review`).
+Independent review: scientific-diff-reviewer agent of the local session (read and run only, not an author of this file), 2026-11-17; findings R54-A1-01 to R54-A1-12 and their resolutions are recorded in `INDEPENDENT_REVIEW.json`.
 
 ## 0. Overview
 
@@ -73,17 +72,19 @@ scripts use). The degrees of freedom are rank(F), not the number of parameters.
 
 ### T3. Unidentified directions
 
-**Statement.** Let v be outside row(F). (i) Any confidence procedure C(y) for v.theta with coverage at least
-1 - alpha for all theta is unbounded with probability at least 1 - alpha under every theta. (ii) If C(y) is
+**Statement.** Let v be outside row(F). (i) Let C be a measurable set-valued map (every {a in C(y)} is an event).
+Any confidence procedure C(y) for v.theta with coverage at least 1 - alpha for all theta contains, under every theta,
+an event of probability at least 1 - alpha on which C(Y) is unbounded. (ii) If C(y) is
 bounded for every y, then inf over theta of P_theta(v.theta in C(Y)) = 0. (iii) Split theta into its component
 iota in row(F) and nu in ker F. For every prior, the posterior of nu given iota equals the prior of nu given
 iota. (iv) Hence a credible interval for v.theta under a proper prior is bounded, has zero uniform coverage,
-and its width is a property of the conditional prior.
+and its width does not shrink with data: it is fixed by the conditional prior of nu given iota together with the
+posterior of iota.
 
 **Proof.** Choose k in ker F with v.k != 0. The law of Y is the same under theta and theta + s k.
 (i) For s_j -> infinity let A_j = {v.theta + s_j v.k in C(Y)}. Validity at theta + s_j k gives
 P_theta(A_j) >= 1 - alpha, and the reverse Fatou lemma gives P_theta(limsup A_j) >= 1 - alpha; on that event
-C(Y) contains an unbounded sequence. (ii) For fixed y the indicator of {v.theta + s v.k in C(y)} tends to zero
+C(Y) contains an unbounded sequence. Part (i) has no executable check; the tests cover (ii) in a Gaussian instance and (iii). (ii) For fixed y the indicator of {v.theta + s v.k in C(y)} tends to zero
 as s grows; dominated convergence gives coverage tending to zero along theta + s k. (iii) The likelihood
 depends on iota only, so pi(iota, nu | y) is proportional to L(iota; y) pi(iota) pi(nu | iota). (iv) follows
 from (ii) and (iii). QED
@@ -160,7 +161,8 @@ to every pair of summands. QED
   only, shear the spheroidal quadrupole only. The dipole of the observer velocity and the quadrupole of the
   shear are the published patterns (E25); astrometry uses the aberration-drift and parallax dipoles and the
   curl-free quadrupole of anisotropic expansion (E50, E51). The toroidal dipole of a rigid rotation is elementary;
-  E51 names a B-mode dipole for an isotropy-violating effect, in a passage that was seen only in part.
+  E51 (section 2.3, read in full by addendum task R54-A2) states that a rotation of the universe would manifest
+  as a B-mode dipole of the proper-motion field.
 - C6.3 (null channels). B_2 and the toroidal proper-motion quadrupole are of type (2,-), for which the list of
   first-order variables has no member. Their first-order response is zero: a signal there contradicts either
   the model class or the equivariance of the measurement chain. This is the formal basis of the B-null gate.
@@ -171,8 +173,8 @@ to every pair of summands. QED
   conditioning of F but not ker R.
 - C6.6 (scope). Equivariance requires that the variables enter as tensors at the observer or as homogeneous
   histories, and that the source population and the measurement are isotropic and parity-symmetric. It fails
-  for finite-wavelength modes (a wave vector supplies an extra polar vector, so that vorticity modes of the
-  Bianchi families with structure, E01 to E04, do reach the temperature), for a parity-violating measurement
+  for finite-wavelength modes (a wave vector supplies an extra polar vector, so that the vector modes of the
+  Bianchi families with structure, sigma_V in E01, do reach the temperature), for a parity-violating measurement
   chain, and at second order (products such as acceleration times vorticity).
 
 **Check that does not use the proof.** `equivariant_response_rank` counts the equivariant responses by
@@ -190,17 +192,21 @@ searches of 2026-11-16; this is an absence of a search hit, not a claim of prior
 object i in sample p be h_p + (delta + d_p).n_i + g_i V.n_i, where delta is a depth-independent fractional
 Hubble dipole, d_p a zero-point dipole of sample p and V a velocity with response g. Then
 (i) the mean is invariant under (delta, d_p) -> (delta + eps, d_p - eps), a three-dimensional gauge orbit;
-(ii) if the directions of every sample span R^3, the null space of the design for (delta, d_1..d_K) is exactly
-this orbit, so the identified functions are delta + d_p (equivalently the differences d_p - d_q and one sum);
-(iii) V is identified next to them if some sample contains two groups with different g whose directions each
-span R^3, and is not identified if g is constant within every sample; (iv) the hypothesis delta = 0 cannot be tested: every
+(ii) if the vectors (1, n_i) of every sample span R^4 (the directions of a sample do not all lie on one plane
+section of the sphere), the null space of the design for (h_p, delta, d_1..d_K) is exactly this orbit, so the
+identified functions are h_p and delta + d_p (equivalently the differences d_p - d_q and one sum); if h_p is known
+and removed, directions spanning R^3 suffice; (iii) V is identified next to them if some sample contains two
+groups with different g whose vectors (1, n_i) each span R^4, and is not identified if g is constant within
+every sample; (iv) the hypothesis delta = 0 cannot be tested: every
 level-alpha test has power at most alpha against every alternative; (v) the hypothesis d_p = d_q for all p, q
 is testable, and its acceptance does not separate delta from a common zero-point dipole. The same holds
 multipole by multipole for any depth-independent fractional Hubble anisotropy against a zero-point pattern.
 
-**Proof.** (i) is immediate. (ii) A null vector satisfies (a + b_p).n_i = 0 on sample p, hence a + b_p = 0.
-(iii) A null vector with V-component b satisfies (a_p + g_i b).n_i = 0; two values of g on spanning sets give
-b = 0; for constant g the choice a_p = -g b is a null vector. (iv) For every parameter point there is a point
+**Proof.** (i) is immediate. (ii) A null vector satisfies c_p + (a + b_p).n_i = 0 on sample p; since the
+(1, n_i) span R^4, c_p = 0 and a + b_p = 0. Without that condition the ring n_z = 1/2 gives the extra null
+vector c_p = -u/2, a + b_p = u e_z (independent review, finding R54-A1-01).
+(iii) A null vector with V-component b satisfies c_p + (a_p + g_i b).n_i = 0; two values of g on sets whose
+(1, n_i) span R^4 give c_p = 0 and b = 0; for constant g the choice a_p = -g b is a null vector. (iv) For every parameter point there is a point
 with delta = 0 and the same mean, so a test of level alpha on {delta = 0} rejects with probability at most
 alpha everywhere. (v) The hypothesis restricts the identified functions delta + d_p to be equal. QED
 
@@ -265,8 +271,9 @@ blind spot quantified numerically in `RESULTS/R54_L1_TYPE1_TE.json:data.late_tim
 
 **Attribution.** The kernels are those of the classical transfer problem (E46). The sign-change statement is
 the standard property of Chebyshev systems (E68) applied to this pair; it was not found in the searches of
-2026-11-16 for this problem. Late-time anisotropic stress evading the temperature quadrupole is discussed
-in E44.
+2026-11-16 for this problem. E44 writes the temperature quadrupole as a line-of-sight integral of the shear
+and weights the polarization by the visibility; a history with vanishing temperature integral is the case
+that T8 counts.
 
 ### T9. Frame algebra and closure
 

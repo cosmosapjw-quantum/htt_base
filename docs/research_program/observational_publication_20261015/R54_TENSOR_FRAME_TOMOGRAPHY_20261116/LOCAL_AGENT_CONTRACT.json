@@ -772,17 +772,7 @@
   }
  ],
  "pending_independent_review": {
-  "checks": [
-   "every proof of THEOREMS.md line by line: hypotheses used, measurability and rank conditions, the scope clause C6.6 of the selection rule, and each attribution against its primary source",
-   "each function of r54_identifiability.py against the statement it checks, and each test of test_r54_theorems.py for a way to pass while the statement is false",
-   "scripts/r54/handoff_merge.py: a path on which it would resolve a hand-written file, discard local work, or report HANDOFF OK after a failed step",
-   "statements in generated documents that are stronger than the decision recorded in state/HYPOTHESES.json"
-  ],
   "interrupted": [],
-  "record": "append the reviewer to INDEPENDENT_REVIEW.json:reviewers with role, independent_of_author, status COMPLETE, verdict, `files` (exactly the repository paths that this reviewer read line by line) and every finding with its resolution; a review without a finding records `checks_performed` (the commands run and what was compared) and never an invented finding; when THEOREMS.md is in `files`, replace the status sentence at the top of THEOREMS.md by one line that starts with 'Independent review:' and names the reviewer role and the date (YYYY-MM-DD); then run the tests and the builder",
-  "report_format": "one line per finding: id | severity (critical, major, minor) | file:line | defect | concrete failure scenario | suggested fix; then one verdict",
-  "reviewer": "an agent or a person that did not write the files under review; read and run only, no edits",
-  "rule": "a critical finding blocks every citation of the theorem it concerns until it is FIXED; a finding is never resolved by weakening a test; a file of the added scope counts as reviewed only if a recorded reviewer lists it in `files`",
   "scope": [
    "htt/htt/htt/infer/r54_tensor_five_view.py",
    "htt/htt/htt/infer/r54_type1_thomson.py",
@@ -800,15 +790,8 @@
    "scripts/r54/handoff_merge.py",
    "tests/r54/test_r54_handoff.py"
   ],
-  "status": "PENDING_LOCAL",
-  "uncovered": [
-   "htt/htt/htt/infer/r54_identifiability.py",
-   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
-   "tests/r54/test_r54_theorems.py",
-   "scripts/r54/handoff_merge.py",
-   "tests/r54/test_r54_handoff.py"
-  ],
-  "when": "before a statement of THEOREMS.md is cited in the note or outside this directory (addendum task R54-A1); the programme stop of PR-R57 is not affected"
+  "status": "NONE",
+  "uncovered": []
  },
  "read_order": [
   "LOCAL_AGENT_RESTART_PROMPT.txt",
@@ -824,7 +807,7 @@
  "schema": "htt.r54.local_agent_contract/1",
  "tests": "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q",
  "theorem_usage": {
-  "proofs_independently_reviewed": false,
+  "proofs_independently_reviewed": true,
   "rules": [
    {
     "rule": "At a fixed carrier and covariance the comparison of any view, compression or re-coordinatization with the exact likelihood is a tie by theorem. Report it as a theorem. A measured power ratio different from one is a defect to locate, never a result. A different nuisance model or covariance is a different analysis and is labelled as such.",

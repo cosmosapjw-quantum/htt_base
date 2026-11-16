@@ -136,15 +136,19 @@ def block_identification(blocks: Mapping[tuple[int, str], np.ndarray], rtol: flo
 
 
 # --------------------------------------------------------------------------- T7
-def zero_point_gauge(directions: Sequence[np.ndarray], responses: Sequence[np.ndarray] | None = None, rtol: float = 1e-10) -> dict:
-    """Dipole design of K distance-indicator samples: mean_i = (delta + d_p).n_i [+ g_i V.n_i] for object i of sample p.
+def zero_point_gauge(directions: Sequence[np.ndarray], responses: Sequence[np.ndarray] | None = None, rtol: float = 1e-10,
+                     monopoles: bool = False) -> dict:
+    """Dipole design of K distance-indicator samples: mean_i = [h_p +] (delta + d_p).n_i [+ g_i V.n_i] for object i of sample p.
 
-    Parameter order: delta (3), d_1 .. d_K (3 each), then V (3) when ``responses`` (one array g per sample) is given.
+    Parameter order: delta (3), d_1 .. d_K (3 each), then V (3) when ``responses`` (one array g per sample) is given, then the
+    per-sample monopoles h_1 .. h_K when ``monopoles`` is true (the design of T7a; its orbit is three-dimensional only when the
+    vectors (1, n_i) of every sample span R^4, see the review finding R54-A1-01).
     Returns the rank, the nullity and an orthonormal basis of the null space (the gauge orbit of T7a)."""
     k = len(directions)
     if k == 0 or (responses is not None and len(responses) != k):
         raise ValueError("need at least one sample and one response array per sample")
-    n_par = 3 * (k + 1) + (3 if responses is not None else 0)
+    n_dip = 3 * (k + 1) + (3 if responses is not None else 0)
+    n_par = n_dip + (k if monopoles else 0)
     rows = []
     for p, nhat in enumerate(directions):
         nhat = np.asarray(nhat, float)
@@ -154,7 +158,9 @@ def zero_point_gauge(directions: Sequence[np.ndarray], responses: Sequence[np.nd
         block[:, 0:3] = nhat
         block[:, 3 * (p + 1):3 * (p + 2)] = nhat
         if responses is not None:
-            block[:, -3:] = np.asarray(responses[p], float)[:, None] * nhat
+            block[:, n_dip - 3:n_dip] = np.asarray(responses[p], float)[:, None] * nhat
+        if monopoles:
+            block[:, n_dip + p] = 1.0
         rows.append(block)
     design = np.vstack(rows)
     _, s, vt = np.linalg.svd(design, full_matrices=True)
