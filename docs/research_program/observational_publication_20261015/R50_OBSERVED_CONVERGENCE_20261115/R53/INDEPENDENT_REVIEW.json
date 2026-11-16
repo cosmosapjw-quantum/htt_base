@@ -1,0 +1,69 @@
+{
+ "schema_version": "htt.r53.independent-review/1",
+ "reviewer": "one fresh-context scientific-diff-reviewer subagent (read-and-run; reproduced benchmark in scratch)",
+ "candidate": "b81364984 + R53 working tree before review fixes",
+ "verdict_before_fixes": "Decision (bounded note, no methods-plus-discovery paper) supported; claim table not manuscript-ready until findings 1-4 fixed",
+ "findings": [
+  {
+   "id": "R53-RV01",
+   "severity": "major",
+   "summary": "coverage CIs pseudo-replicated (truth-independent coverage counted 21x)",
+   "disposition": "fixed: 3-fold held-out, 300 independent noise draws, per-component Clopper-Pearson; F5 redrawn"
+  },
+  {
+   "id": "R53-RV02",
+   "severity": "major",
+   "summary": "power-only logLR error defined, not computed",
+   "disposition": "fixed: noncentral-chi2 law of s_hat^T F s_hat (max |dlogLR| 6.9); +-s indistinguishable stated"
+  },
+  {
+   "id": "R53-RV03",
+   "severity": "major",
+   "summary": "frame-inconsistency claim lacked bulk-variance/CF4-misfit robustness",
+   "disposition": "fixed: tension table chi2_3 16.7->7.3 (p 8e-4 -> 0.06); L2 downgraded to working-law only; CF4 misfit stated"
+  },
+  {
+   "id": "R53-RV04",
+   "severity": "major",
+   "summary": "missing prior art for covariance-noise inflation",
+   "disposition": "fixed: Hartlap 2007, Dodelson & Schneider 2013, Percival 2022 cited; analytic factor 1.27 vs LOO 1.25 reported"
+  },
+  {
+   "id": "R53-RV05",
+   "severity": "minor",
+   "summary": "tensor rows identities; retention hardcoded; logBF naming",
+   "disposition": "fixed: labelled algebraic identity / analytic; renamed logLR"
+  },
+  {
+   "id": "R53-RV06",
+   "severity": "minor",
+   "summary": "bias SE and component-3 bias",
+   "disposition": "resolved by 300-draw design: bias within SE 0.072"
+  },
+  {
+   "id": "R53-RV07",
+   "severity": "minor",
+   "summary": "joint-lane coverage circular",
+   "disposition": "labelled code-consistency check; retention clipped at 0"
+  },
+  {
+   "id": "R53-RV08",
+   "severity": "minor",
+   "summary": "untraceable numbers (remainder ratio, KQ status, window centres, F3 labels)",
+   "disposition": "fixed: test reference, KQ UNBOUND, centres read from R36-01 RESULT.json, F3 labels list Gaia/CMB Sigma"
+  },
+  {
+   "id": "R53-RV09",
+   "severity": "minor",
+   "summary": "citations",
+   "disposition": "Saadeh PRL arXiv:1605.07178 added; Kalbouneh/Maartens identifiers marked not re-verified"
+  },
+  {
+   "id": "R53-RV10",
+   "severity": "minor",
+   "summary": "no tests for benchmark helpers",
+   "disposition": "fixed: tests/r53 (3 tests)"
+  }
+ ],
+ "closeout": "All findings addressed and rerun (logs/run_r53_benchmark.log exit 0). Fix closeout not re-reviewed (one-review policy)."
+}

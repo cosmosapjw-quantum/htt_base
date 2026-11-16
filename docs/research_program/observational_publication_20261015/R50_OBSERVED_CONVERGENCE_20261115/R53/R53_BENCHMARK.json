@@ -1,0 +1,276 @@
+{
+ "node_id": "R53",
+ "source_git_sha": "b813649840ed917b431e42afe6c6d368cc8029ac",
+ "claim_tier": "C0",
+ "seed": 53053,
+ "cmb_lane": {
+  "design": "3-fold held-out over FFP10 ids (100 each); S and LOO calibration from the other 200; coverage over 300 independent noise draws (truth-independent for this linear model)",
+  "N_train": 200,
+  "p": 45,
+  "k": 5,
+  "coverage_nominal95": {
+   "full_t_law": {
+    "per_component_rate": [
+     0.9233333333333333,
+     0.9366666666666666,
+     0.92,
+     0.9366666666666666,
+     0.9266666666666666
+    ],
+    "per_component_CI95": [
+     [
+      0.8871818846395176,
+      0.9507812161243255
+     ],
+     [
+      0.9028618033928799,
+      0.961441980171624
+     ],
+     [
+      0.8833040835150876,
+      0.948071360663393
+     ],
+     [
+      0.9028618033928799,
+      0.961441980171624
+     ],
+     [
+      0.8910755354831041,
+      0.953474335615215
+     ]
+    ],
+    "pooled_rate": 0.9286666666666666,
+    "n_independent_draws": 300,
+    "note": "components within a draw are correlated; CIs are per component over independent draws"
+   },
+   "gaussian_score_plugin": {
+    "per_component_rate": [
+     0.8733333333333333,
+     0.88,
+     0.9033333333333333,
+     0.8933333333333333,
+     0.8933333333333333
+    ],
+    "per_component_CI95": [
+     [
+      0.8303070926415046,
+      0.9087815762542462
+     ],
+     [
+      0.8377560576697571,
+      0.9145211977082804
+     ],
+     [
+      0.864125090171869,
+      0.934301425384413
+     ],
+     [
+      0.8527629835794566,
+      0.9258876405267118
+     ],
+     [
+      0.8527629835794566,
+      0.9258876405267118
+     ]
+    ],
+    "pooled_rate": 0.8886666666666667,
+    "n_independent_draws": 300,
+    "note": "components within a draw are correlated; CIs are per component over independent draws"
+   },
+   "loo_calibrated_gaussian": {
+    "per_component_rate": [
+     0.9466666666666667,
+     0.97,
+     0.96,
+     0.9533333333333334,
+     0.94
+    ],
+    "per_component_CI95": [
+     [
+      0.9148332350904858,
+      0.9692116802265219
+     ],
+     [
+      0.9438164517583842,
+      0.986192180444474
+     ],
+     [
+      0.9311710118105039,
+      0.9791634236935863
+     ],
+     [
+      0.9229401618936413,
+      0.974255350532769
+     ],
+     [
+      0.9068297039280113,
+      0.9640561255848612
+     ]
+    ],
+    "pooled_rate": 0.954,
+    "n_independent_draws": 300,
+    "note": "components within a draw are correlated; CIs are per component over independent draws"
+   },
+   "tensor_F_t_Q0": "identical to full_t_law by algebraic identity (same posterior)"
+  },
+  "loo_sd_over_fisher_sd": [
+   1.2582737942765634,
+   1.2479171815191663,
+   1.256868019630373,
+   1.2539925029676855,
+   1.2442960529697589
+  ],
+  "analytic_sd_inflation_N200": 1.2726672129815202,
+  "analytic_sd_inflation_N300": 1.1660940612898085,
+  "bias_mean_in_fisher_sd": [
+   0.002013066441319192,
+   -0.06986181642499188,
+   -0.14324324345828787,
+   0.07358984882003974,
+   -0.001196921945687058
+  ],
+  "bias_SE_in_fisher_sd": 0.07229981388539095,
+  "logLR_error_vs_full_t_law": {
+   "gaussian_score_plugin": {
+    "max": 4.174754054042571,
+    "median": 0.39699211591122974
+   },
+   "scalar_e1": {
+    "max": 9.778845368699768,
+    "median": 1.2045069770009265
+   },
+   "power_only_vs_zero": {
+    "max": 6.904958621214969,
+    "median": 0.949995532814806
+   }
+  },
+  "tensor_F_t_Q0_logLR_identity_max_abs": 2.7755575615628914e-14,
+  "logLR_note": "point-vs-point logLR(s_true vs 0) per truth x draw; power-only uses the noncentral-chi2 law of s_hat^T F s_hat; power-only logLR(+s vs -s) = 0 identically",
+  "signed_direction_recovery_rate_full": 0.9076666666666666,
+  "fisher_retention_analytic": {
+   "tensor": 1.0,
+   "optimal_score": 1.0,
+   "scalar_e1_worst_direction": 0.0,
+   "power_only_local_at_zero": 0.0,
+   "note": "analytic: rank-one projection keeps 1 of 5 directions; a sign-even statistic has zero local Fisher at s=0"
+  },
+  "runtime_s_per_eval": {
+   "full_t_law": 1.9696841998666058e-05,
+   "tensor_F_t_Q0": 3.004826001415495e-06
+  }
+ },
+ "joint_lane": {
+  "frame_consistency_counts_vs_cf4": {
+   "measurement_cov": {
+    "chi2_3": 16.697159234661648,
+    "working_tail": 0.0008156724145087009
+   },
+   "bulk_150kms": {
+    "chi2_3": 12.892497028921255,
+    "working_tail": 0.004874949452260091
+   },
+   "bulk_250kms": {
+    "chi2_3": 9.442123837765706,
+    "working_tail": 0.023955103810450178
+   },
+   "cf4_cov_ppc_scaled": {
+    "chi2_3": 10.549479266518414,
+    "working_tail": 0.014428979990849236
+   },
+   "bulk_250kms_plus_cf4_ppc": {
+    "chi2_3": 7.344438184575508,
+    "working_tail": 0.06169314756193797
+   }
+  },
+  "estimand": "beta_RM(0), Galactic, v/c",
+  "n_replications": 2000,
+  "coverage_check_type": "code-consistency check: replications drawn from the model's own Gaussian law",
+  "coverage_per_component_nominal95": {
+   "k": 5722,
+   "n": 6000,
+   "rate": 0.9536666666666667,
+   "CI95": [
+    0.9480396237343471,
+    0.958847114898367
+   ],
+   "note": "replications at truth = posterior mean; prior shrinkage is negligible for beta_RM"
+  },
+  "coverage_scalar_axis_nominal95": {
+   "k": 1894,
+   "n": 2000,
+   "rate": 0.947,
+   "CI95": [
+    0.9362572070012273,
+    0.9564069564074236
+   ]
+  },
+  "replication_bias_kms": [
+   -1.8004760169538783,
+   -3.278500400000225,
+   2.30410950094051
+  ],
+  "fisher_retention_analytic": {
+   "tensor": 1.0,
+   "scalar_cmb_axis_worst": 0.0,
+   "power_only_local": 0.0,
+   "scalar_eigs": [
+    0.0,
+    7.373458704679389e-17,
+    1.0
+   ]
+  },
+  "signed_logLR_plus_vs_minus_posterior_mean": {
+   "full_tensor": 11.668654592146996,
+   "power_only": 0.0
+  },
+  "beta_RM0_along_cmb_axis_kms": -86.25392788501809,
+  "beta_RM0_perp_norm_kms": 338.42148334236987,
+  "tie_tensor_vs_raw": "exact by linear-Gaussian algebra ((F,t) sufficient); Cobaya chain ties analytic (R52)"
+ },
+ "bianchi_observational_equivalence": [
+  {
+   "family": "FLRW",
+   "constraint": "valid",
+   "source_bound_transfer": "yes (trivial)",
+   "lowell_T_class": "Sigma=0"
+  },
+  {
+   "family": "I",
+   "constraint": "valid (no tilt)",
+   "source_bound_transfer": "yes: first-order integrated shear",
+   "lowell_T_class": "Sigma (ell=2 only)"
+  },
+  {
+   "family": "V / VII_0 / VII_h / IX",
+   "constraint": "R49 GBI-02 scoped",
+   "source_bound_transfer": "no: finite-curvature focus/twist is a working model",
+   "lowell_T_class": "equals I only at the exact abelian zero-curvature boundary; otherwise NOT EVALUABLE"
+  },
+  {
+   "family": "II / III / IV / VI_0 / VI_h / VIII",
+   "constraint": "R49 GBI-02 scoped",
+   "source_bound_transfer": "no FLRW limit; geodesic transfer conditional on trajectory",
+   "lowell_T_class": "NOT EVALUABLE"
+  },
+  {
+   "family": "VI_h, h=-1/9 exceptional stratum",
+   "constraint": "special tilted solutions",
+   "source_bound_transfer": "none",
+   "lowell_T_class": "NOT EVALUABLE"
+  },
+  {
+   "family": "multi-fluid tilt history",
+   "constraint": "per-fluid momentum constraints",
+   "source_bound_transfer": "no evolution map beta_RM(z*) -> beta_RM(0)",
+   "lowell_T_class": "only beta_RM(0) enters R52; z* tilt NOT EVALUABLE"
+  }
+ ],
+ "figures": [
+  "F1_heldout_pit.png",
+  "F2_integrated_shear.png",
+  "F3_beta_RM0_subsets.png",
+  "F4_cf4_window_dipoles.png",
+  "F5_method_coverage.png"
+ ],
+ "elapsed_s": 7.198477010002534
+}

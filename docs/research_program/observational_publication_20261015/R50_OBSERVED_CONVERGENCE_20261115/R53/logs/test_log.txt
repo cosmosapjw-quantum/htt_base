@@ -1,0 +1,11 @@
+cmd: PYTHONPATH=htt/src:htt:. python -m pytest tests/r49 tests/r50 tests/r51 tests/r52 tests/r53 -q -p no:cacheprovider
+head: b813649840ed917b431e42afe6c6d368cc8029ac + R53 working tree
+..........................................................               [100%]
+=============================== warnings summary ===============================
+../../../.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63
+  /home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+    warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+58 passed, 1 warning in 20.91s
+exit=0

@@ -14655,10 +14655,12 @@
         "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115",
         "htt/htt/htt/infer",
         "scripts/r50",
-        "tests/r50"
+        "tests/r50",
+        "scripts/r53",
+        "tests/r53"
       ],
       "tests": [
-        "PYTHONPATH=htt/src:htt:. python -m pytest tests/r50 -q"
+        "PYTHONPATH=htt/src:htt:. python -m pytest tests/r49 tests/r50 tests/r51 tests/r52 tests/r53 -q"
       ],
       "dod": [
         "HTT must tie exact sufficient GLS/score where theorem predicts; no false gain claim.",
