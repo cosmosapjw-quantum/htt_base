@@ -143,7 +143,7 @@ def preflight(root: Path, start: str = START_COMMIT, source: str = SOURCE_REF) -
     if touched:
         return "BLOCKED", ["unexpected: the update changes files that it declares untouched; stop and report:"] + touched
     if is_ancestor(root, "HEAD", source):
-        return "FAST_FORWARD", ["you have no commit of your own on this branch; the update can be fast-forwarded"]
+        return "FAST_FORWARD", ["the update already contains every commit of your branch; it can be fast-forwarded"]
     both = sorted(set(lines(root, "diff", "--name-only", base, "HEAD")) & set(lines(root, "diff", "--name-only", base, source)))
     return "MERGE", ["files changed on both sides (a conflict is possible only in these):"] + [f"  [{classify(p)}] {p}" for p in both]
 
