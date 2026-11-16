@@ -7,7 +7,7 @@
 | H-C3 | CORE | HOLD | pooled chi2(A)=10.4/9 vs chi2(V)=16.2/9; after method monopoles 6.67 vs 7.26 | R54-L04 |
 | H-L1a | L1 | PROMOTE | r_E(perfect fluid)=0.0711; reionization share 19%; R54-L01: masked E response e_dev = 0.0003 (IDEAL_E_RESPONSE_KEPT) | R54-L07 literature check (B09) |
 | H-L1b | L1 | PROMOTE | 95% illustration values of |s0|: 1.42e-10 (perfect fluid, T+E), 6.66e-08 (massless two-mode family), 3.43e-08 (minimal normal ordering) | R54-L07 literature check |
-| H-L1c | L1 | REJECT | B ell=2 tail p=9.54e-06 (SMICA), 3.96e-07 (Commander); observed rms 0.30 vs FFP10 0.11 uK; R54-L01 empirical LOO B ell=2 tail 0.00664 (SMICA), 0.00332 (Commander); E lane DIAGNOSTIC | R54-L02 cross-experiment E lane |
+| H-L1c | L1 | REJECT | B ell=2 tail p=9.54e-06 (SMICA), 3.96e-07 (Commander); observed rms 0.30 vs FFP10 0.11 uK; R54-L01 empirical LOO B ell=2 tail 0.00664 (SMICA), 0.00332 (Commander); E lane DIAGNOSTIC; R54-L02 adopted-covariance B ell=2 null passes in: Cosmoglobe_BeyondPlanck, Planck_PR3, WMAP9; E lane CLAIMABLE | R54-L06 (T lane; E lane as recorded) |
 | H-L1d | L1 | REJECT | ell >= 3 modes enter only through covariance | family comparison beyond type I remains blocked on a source-bound transfer |
 | H-L2a | L2 | HOLD | excess tails p=0.27 (Quaia), 0.46 (NVSS); common excess p=0.12; no decision at this power | R54-L03: clustering body, same-estimator null, competitor estimators |
 | H-L2b | L2 | HOLD | no number yet | R54-L03 |

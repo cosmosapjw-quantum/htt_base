@@ -354,6 +354,26 @@ def numbers_local() -> dict:
             "l03_m_D": cp["Mittal2024_Quaia_Poisson"]["owned"]["D"], "l03_m_pub": cp["Mittal2024_Quaia_Poisson"]["published"]["D"],
             "l03_m_status": cp["Mittal2024_Quaia_Poisson"]["status"], "l03_m_dz": cp["Mittal2024_Quaia_Poisson"]["amplitude_difference_in_published_sd"],
             "l03_excess_decision": x["decision"]["excess"]})
+    x = local_result("R54-L06")
+    if x is not None and x.get("status") == "DONE_SCOPED_C0":
+        tp, ts, cl, idn = x["transport_table"]["polar_vector"], x["transport_table"]["stf2"], x["transport_table"]["tilt_closure"], x["identification"]
+        for i, h in enumerate(tp):
+            out.update({f"l06_p{i}_chi2": h["chi2"], f"l06_p{i}_dof": h["dof"], f"l06_p{i}_p": h["p_value"], f"l06_p{i}_name": h["hypothesis"]})
+        for i, h in enumerate(ts):
+            out.update({f"l06_s{i}_chi2": h["chi2"], f"l06_s{i}_dof": h["dof"], f"l06_s{i}_p": h["p_value"], f"l06_s{i}_name": h["hypothesis"]})
+        out.update({"l06_np": len(tp), "l06_ns": len(ts), "l06_closure_p": cl["tail"]["p_value"], "l06_closure_chi2": cl["tail"]["statistic"],
+                    "l06_closure_prelim_p": cl["preliminary_receipt_closure_p_R54_L05"],
+                    "l06_rank_p": idn["polar_vector_V_w_free"]["rank"], "l06_dim_p": idn["polar_vector_V_w_free"]["dim"],
+                    "l06_rank_s": idn["stf2_perfect_fluid"]["rank"], "l06_rank_s_stress": idn["stf2_with_radiation_stress"]["rank"],
+                    "l06_dim_s": idn["stf2_perfect_fluid"]["dim"], "l06_s0_max": x["blocks"]["stf2"]["s0_frobenius_range_95"][1]})
+    x = local_result("R54-L07")
+    if x is not None and x.get("status") == "DONE_SCOPED_C0":
+        out.update({f"l07_n_{k.lower()}": v for k, v in x["score_counts"].items()})
+        out.update({f"l07_{k}_status": v["status"] for k, v in x["targets"].items()})
+        out.update({f"l07_{k}_score": v["score"] for k, v in x["targets"].items()})
+        ev = x["evidence_verification"]
+        out.update({"l07_ev_verified": sum(1 for v in ev.values() if v["status"] == "VERIFIED"), "l07_ev_checked": len(ev),
+                    "l07_ev_open": ", ".join(k for k, v in ev.items() if v["status"] != "VERIFIED")})
     return out
 
 
@@ -441,6 +461,27 @@ EVIDENCE = [
 EVIDENCE_ROWS = [dict(zip(("id", "source", "identifier", "verification", "claim_used"), e)) for e in EVIDENCE]
 
 
+def _apply_l07_evidence(rows: list[dict]) -> list[dict]:
+    """R54-L07 step 3: rows verified from the primary source become VERIFIED; the others keep their status and gain the check note."""
+    path = RES / "R54_L07_BENCHMARK.json"
+    if not path.is_file():
+        return rows
+    checks = json.loads(path.read_text(encoding="utf-8")).get("evidence_verification", {})
+    out = []
+    for r in rows:
+        c = checks.get(r["id"])
+        if c is None:
+            out.append(r)
+        elif c["status"] == "VERIFIED":
+            out.append({**r, "verification": V, "claim_used": r["claim_used"] + f" [R54-L07: {c['note']}]"})
+        else:
+            out.append({**r, "claim_used": r["claim_used"] + f" [R54-L07 {c['status']}: {c['note']}]"})
+    return out
+
+
+EVIDENCE_ROWS = _apply_l07_evidence(EVIDENCE_ROWS)
+
+
 def sweep_text(n: dict) -> str:
     if n["sweep_flips"]:
         return (f"Sigma_T per unit initial shear changes sign between an assumed free-streaming onset at z_i = {g3(n['sweep_z_pre'])} (T_nu = {n['sweep_T_pre']:.1f} MeV) "
@@ -474,6 +515,10 @@ def hypotheses(n: dict) -> list[dict]:
             "R54-L06 tilt closure with the R54-L03 count covariance")
     if "l02_e_status" in n:
         add("H-L1c", f"R54-L02 adopted-covariance B ell=2 null passes in: {n['l02_families']}; E lane {n['l02_e_status']}", "R54-L06 (T lane; E lane as recorded)")
+    l07 = local_result("R54-L07")
+    if l07 is not None:
+        for hid, chk in l07["novelty_checks"].items():
+            by[hid]["dimensions"]["novelty"] = chk["novelty"] + "; nearest prior art: " + "; ".join(chk["nearest_prior_art"])
     for hid, d in local_hypothesis_decisions().items():
         add(hid, d["result"], d["next"], d["decision"])
     return hyps
@@ -975,10 +1020,16 @@ def self_audit_doc() -> dict:
             "end_of_node_report": ["node id and status", "commands run with exit codes", "result file path and sha256", "acceptance table", "mutation receipts", "deviations", "open risks"]}
 
 
+def _l07_target(tid: str) -> dict:
+    x = local_result("R54-L07")
+    return {} if x is None else x["targets"].get(tid, {})
+
+
 def benchmark_doc(n: dict) -> dict:
     def t(i, ev, claim, overlap, target, tol, htt, expected, node):
         return {"id": i, "evidence": ev, "published_claim": claim, "owned_data_overlap": overlap, "replication_target": target, "tolerance": tol,
-                "htt_counterpart": htt, "expected_outcome_before_running": expected, "node": node, "status": "PENDING_LOCAL", "score": None}
+                "htt_counterpart": htt, "expected_outcome_before_running": expected, "node": node,
+                "status": _l07_target(i).get("status", "PENDING_LOCAL"), "score": _l07_target(i).get("score")}
     return {"schema": "htt.r54.adversarial_benchmark/1",
             "scoring": {"WIN": "HTT statement is calibrated where the competitor's is not, or reaches a tighter calibrated bound on the same data and assumptions",
                         "TIE": "same information; differences within stated uncertainty (expected for any sufficient-statistic comparison)",
@@ -1352,6 +1403,8 @@ def local_section_ko(n: dict) -> str:
 - 채택 E 공분산: FFP10 + ell = 2 E/B 대각 floor {g3(n['l02_floor'])} uK^2 (R54-L1 B-null {g3(n['l02_floor_R54-L1_B_null_floor_ell2'])}, half-mission {g3(n['l02_floor_half_mission'])},
   파이프라인 분산 {g3(n['l02_floor_pipeline_dispersion'])}, 실험 간 분산 {g3(n['l02_floor_cross_experiment_dispersion'])} 중 최대).
 - 채택 공분산의 B ell=2 null 꼬리: {bn}. 통과한 자료 계열: {n['l02_families']} → E lane {n['l02_e_status']} (규칙: 서로 다른 두 계열 이상, DV-L02-9).
+- 주의: floor는 FFP10 B2 분산의 {n['l02_floor'] / n['B_rms_ffp'] ** 2:.1f}배이고, 가장 큰 성분(실험 간 분산)은 같은 E2/B2 자료에서 계산된다. 통과는 오차 확대의 결과이며
+  채택 공분산에서 E lane 한계는 그만큼 약하다(R54-L08 심사에 넘기는 위험).
 """
     if "l03_repro" in n:
         text += f"""
@@ -1364,6 +1417,35 @@ def local_section_ko(n: dict) -> str:
   공통 초과 Wald p = {g3(n['l03_common_p'])}, 두 목록의 일관성 p = {g3(n['l03_common_cons_p'])}. 결정: {n['l03_excess_decision']}.
 - 경쟁 추정량(보유 목록에서 재현): Wagenveld et al. 2023 NVSS Poisson D = {g3(n['l03_w_D'])} (공개 {g3(n['l03_w_pub'])}; 차이 {n['l03_w_dz']:.2f} 공개 sd; 사용 원천 {n['l03_w_N']:.0f} 대 공개 {n['l03_w_Npub']}) → {n['l03_w_status']};
   Mittal et al. 2024 Quaia Poisson (|b| > 40) D = {g3(n['l03_m_D'])} (공개 {g3(n['l03_m_pub'])}; 차이 {n['l03_m_dz']:.2f} 공개 sd) → {n['l03_m_status']}.
+"""
+    if "l06_np" in n:
+        rows_p = "\n".join(f"| {n[f'l06_p{i}_name']} | {n[f'l06_p{i}_chi2']:.1f} | {n[f'l06_p{i}_dof']} | {g3(n[f'l06_p{i}_p'])} |" for i in range(n["l06_np"]))
+        rows_s = "\n".join(f"| {n[f'l06_s{i}_name']} | {n[f'l06_s{i}_chi2']:.1f} | {n[f'l06_s{i}_dof']} | {g3(n[f'l06_s{i}_p'])} |" for i in range(n["l06_ns"]))
+        text += f"""
+### 7.5 R54-L06 결합 frame tomography (정밀도 형태)
+
+- 식별: polar 블록(V_w 4깊이, A_cal, beta_ex) rank {n['l06_rank_p']} / {n['l06_dim_p']} (깊이별 V_w와 A_cal이 퇴화); STF2 블록 rank {n['l06_rank_s']} / {n['l06_dim_s']} (완전유체 지도),
+  복사 응력 가설에서는 rank {n['l06_rank_s_stress']} / {n['l06_dim_s']} (E lane 없이 CMB가 s0를 고정하지 않음); 축 벡터 omega는 열이 없어 미식별.
+- 전역 tilt 폐합(R54-EQ-38, R54-L03 계수 공분산): chi2 {n['l06_closure_chi2']:.2f} / 3, p = {g3(n['l06_closure_p'])} (R54-L05의 예비값 {g3(n['l06_closure_prelim_p'])}).
+- 완전유체 s0의 Frobenius 95% 상한 {g3(n['l06_s0_max'])} (CMB T + CF4 사중극, 보정 사중극 q_cal 자유).
+
+| polar 블록 수송 가설 | chi2 | dof | p |
+|---|---|---|---|
+{rows_p}
+
+| STF2 블록 수송 가설 | chi2 | dof | p |
+|---|---|---|---|
+{rows_s}
+"""
+    if "l07_n_tie" in n:
+        tg = ", ".join(f"{t} {n[f'l07_{t}_status']}/{n[f'l07_{t}_score']}" for t in ("B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09"))
+        text += f"""
+### 7.6 R54-L07 적대적 벤치마크
+
+- 목표별 상태/점수: {tg}.
+- 점수 합계: WIN {n['l07_n_win']}, TIE {n['l07_n_tie']}, LOSS {n['l07_n_loss']}, NOT_COMPARABLE {n['l07_n_not_comparable']}. TIE를 WIN으로 세지 않는다.
+- 증거 검증: 미검증 {n['l07_ev_checked']}행 중 {n['l07_ev_verified']}행을 일차 자료로 확인; 남은 행 {n['l07_ev_open']} (상태를 달고 인용).
+- 신규성(H-L1b, H-L5g): state/HYPOTHESIS_GRAPH.md의 novelty 항목(가장 가까운 선행연구 포함).
 """
     return text
 

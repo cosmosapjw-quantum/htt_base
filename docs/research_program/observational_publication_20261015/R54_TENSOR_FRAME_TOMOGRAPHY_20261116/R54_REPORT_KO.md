@@ -129,7 +129,7 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
 |---|---|
 | R54-L01 | DONE_SCOPED_C0 |
 | R54-L04 | DONE_SCOPED_C0 |
-| R54-L02 | PENDING_LOCAL |
+| R54-L02 | DONE_SCOPED_C0 |
 | R54-L03 | PENDING_LOCAL |
 | R54-L06 | PENDING_LOCAL |
 | R54-L07 | PENDING_LOCAL |
@@ -166,3 +166,16 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
 - 6dFGS 대리 제외(FP_NOT_SDSS, FP_MIXED 제거, method monopole): 결합 null p = 0.0254, 쌍극 p = 0.158, 바깥 창 결합 p = 0.0212.
 - 안정성(공통 계단, % of H / z): e_dmzp 3분위 -1.70 / -2.68, -1.16 / -1.34, -2.43 / -1.53;
   적색편이 반쪽 -1.40 / -1.48, -3.34 / -4.98. 분할마다 계단에 들어간 측량이 다르다(R54_L04_RESULT.json:stability).
+
+### 7.3 R54-L02 PR4 우회 (NPIPE 시뮬레이션 미사용)
+
+- 해석적 T 공분산(ell' <= 30, R51 마스크 결합 + FFP10 잡음): FFP10 표본 공분산에 대한 Wishart LRT 1071.9 / 1035 dof, p = 0.207;
+  최대 |diag 비 - 1| = 0.291; ell' <= 20 절단과의 최대 상대 차 0.00119. 판정 NOT_ADOPTED: FFP10 kept with the calibrated inflation: the analytic covariance fails the rule.
+- 실험 간 T (합집합 마스크, f_sky 0.608): SMICA 대비 Sigma_T 최대 이동(T sd 단위) WMAP9 ILC 0.10, Cosmoglobe 0.34, BeyondPlanck 0.09 → PIPELINE_STABLE.
+- E lane 대안: |Sigma_E|_F (ideal 응답 기준) Cosmoglobe 3.46e-07, BeyondPlanck 사후 평균 2.84e-07 (1804 표본), WMAP9 V 3.07e-07;
+  PR4 주파수 캐시와 SMICA의 차이 검정 p = 0.531 (분할 차 하나는 null 법칙이 아니므로 차이 검정에만 쓴다).
+- 채택 E 공분산: FFP10 + ell = 2 E/B 대각 floor 0.127 uK^2 (R54-L1 B-null 0.0773, half-mission 0.00524,
+  파이프라인 분산 0.0124, 실험 간 분산 0.127 중 최대).
+- 채택 공분산의 B ell=2 null 꼬리: BeyondPlanck_v2_mean 0.158, BeyondPlanck_v2_posterior 0.945, Cosmoglobe_DR1 0.871, PR3_Commander 0.651, PR3_NILC 0.827, PR3_SEVEM 0.581, PR3_SMICA 0.694, WMAP9_V 0.743. 통과한 자료 계열: Cosmoglobe_BeyondPlanck, Planck_PR3, WMAP9 → E lane CLAIMABLE (규칙: 서로 다른 두 계열 이상, DV-L02-9).
+- 주의: floor는 FFP10 B2 분산의 10.6배이고, 가장 큰 성분(실험 간 분산)은 같은 E2/B2 자료에서 계산된다. 통과는 오차 확대의 결과이며
+  채택 공분산에서 E lane 한계는 그만큼 약하다(R54-L08 심사에 넘기는 위험).

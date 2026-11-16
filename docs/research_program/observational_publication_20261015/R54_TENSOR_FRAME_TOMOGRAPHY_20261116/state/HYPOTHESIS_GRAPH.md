@@ -83,8 +83,8 @@ PR3 component-separated ell = 2 polarization can be used at face value.
 - robustness: holds for SMICA and Commander
 - risk: E-lane overclaim
 - kill criterion: n/a
-- executed result: B ell=2 tail p=9.54e-06 (SMICA), 3.96e-07 (Commander); observed rms 0.30 vs FFP10 0.11 uK; R54-L01 empirical LOO B ell=2 tail 0.00664 (SMICA), 0.00332 (Commander); E lane DIAGNOSTIC
-- next action: R54-L02 cross-experiment E lane
+- executed result: B ell=2 tail p=9.54e-06 (SMICA), 3.96e-07 (Commander); observed rms 0.30 vs FFP10 0.11 uK; R54-L01 empirical LOO B ell=2 tail 0.00664 (SMICA), 0.00332 (Commander); E lane DIAGNOSTIC; R54-L02 adopted-covariance B ell=2 null passes in: Cosmoglobe_BeyondPlanck, Planck_PR3, WMAP9; E lane CLAIMABLE
+- next action: R54-L06 (T lane; E lane as recorded)
 
 ### H-L1d (L1) - REJECT
 

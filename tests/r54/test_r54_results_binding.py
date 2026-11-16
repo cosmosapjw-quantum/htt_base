@@ -466,8 +466,12 @@ def test_evidence_ids_resolve_and_keep_their_verification_status(builder):
     for token in set(re.findall(r"\bE\d{2}\b", text)):
         assert token in known, f"evidence id {token} is cited but not in the ledger"
     hyps = {h["id"]: h for h in _json(R54 / "state/HYPOTHESES.json")["hypotheses"]}
-    for hid in ("H-L1b", "H-L5g"):                               # novelty stays flagged until the literature check of R54-L07
-        assert "UNVERIFIED" in hyps[hid]["dimensions"]["novelty"] or "R54-L07" in hyps[hid]["dimensions"]["novelty"]
+    l07 = R54 / "RESULTS/R54_L07_BENCHMARK.json"
+    for hid in ("H-L1b", "H-L5g"):                               # novelty stays flagged until the literature check of R54-L07, then comes from it
+        if l07.is_file():
+            assert hyps[hid]["dimensions"]["novelty"].startswith(_json(l07)["novelty_checks"][hid]["novelty"])
+        else:
+            assert "UNVERIFIED" in hyps[hid]["dimensions"]["novelty"] or "R54-L07" in hyps[hid]["dimensions"]["novelty"]
     assert {h["decision"] for h in hyps.values()} <= {"PROMOTE", "HOLD", "REJECT", "REOPEN"}
     # decisions fixed by the independent review: no claim in either direction on pole locking, excess or common mode
     local = builder.local_hypothesis_decisions()               # decisions fixed by the decision checks of executed local nodes
