@@ -12620,8 +12620,12 @@ prs:
   - htt/htt/htt/infer
   - scripts/r50
   - tests/r50
+  - htt/bass/transport/general_bianchi_transfer.py
+  - scripts/r51
+  - tests/r51
+  - tests/r49/test_gbi05_source_bound_likelihood_and_five_view.py
   tests:
-  - PYTHONPATH=htt/src:htt:. python -m pytest tests/r50 -q
+  - PYTHONPATH=htt/src:htt:. python -m pytest tests/r49 tests/r50 tests/r51 -q
   dod:
   - Forward response independent check against source equations and at least one reference/exact
     limit.
@@ -12632,7 +12636,8 @@ prs:
   - No arbitrary a_lm-to-beta null or hidden Gaussian fallback; report unavailable
     if same-estimator joint null not produced.
   notes: 'Consumes R49 PR575 36bd9030 and inherited history without promoting historical
-    PASS to physical validity. Node scope/details: docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/RESEARCH_DAG.json#R51'
+    PASS to physical validity. Node scope/details: docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/RESEARCH_DAG.json#R51.
+    R51 outputs: R50_OBSERVED_CONVERGENCE_20261115/R51/R51_RESULT.json'
   kill: No fake nulls, arbitrary physical response, PR4 dependency, new downloads,
     scalar substitution, force push or main merge
   level: L0

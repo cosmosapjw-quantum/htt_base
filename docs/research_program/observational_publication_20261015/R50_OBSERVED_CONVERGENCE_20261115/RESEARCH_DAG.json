@@ -2,7 +2,7 @@
   "schema_version": "htt.r50.convergent-research/1",
   "baseline_commit": "36bd9030a0759c5563e273dd83836b40034dcda3",
   "mode": "convergent",
-  "current_unit": "R50",
+  "current_unit": "R51",
   "overall_status": "in_progress",
   "publication_status": "major_revision_required",
   "max_planned_turns": 4,
@@ -36,7 +36,7 @@
       "depends": [
         "R50"
       ],
-      "status": "ready",
+      "status": "complete_scoped",
       "executor": "local_for_owned_raw_data",
       "goal": "Source-derived response repair + PR3 observed low-ell likelihood",
       "tasks": [
@@ -63,14 +63,17 @@
         "observed_carrier.npz",
         "source_operator.patch",
         "test_log.txt"
-      ]
+      ],
+      "outputs": "R51/",
+      "science": "Source-bound type-I integrated-shear CMB response (exact Bianchi-I limit); working-model quarantine of 0.18/focus/twist/0.1A/0.5A/DESI*0.02/Gaia H0 terms; finite-MC (Sellentin-Heavens) law calibrated for the predictive data law on preregistered heldout FFP10 (plug-in Gaussian rejected); SMICA PR3 T45 Sigma consistent with zero (LOO p_MC=0.884), |Sigma|_F<3.74e-5 (95%, LOO-calibrated); CONDITIONAL |sigma/H|_0<9.5e-10 via I_hist=3.927e4 (no anisotropic stress; unquantified systematic). One independent review: 0 critical, 2 major fixed.",
+      "remaining": "Commander primary calibration unavailable (no matched MC); kinematic-quadrupole removal unbound (<=0.25 sd); polarization response unsourced; history operator ignores neutrino anisotropic stress; Gaia/Pantheon/CF4 responses and beta_MO same-estimator null deferred to R52."
     },
     {
       "id": "R52",
       "depends": [
         "R51"
       ],
-      "status": "pending",
+      "status": "ready",
       "executor": "local_for_owned_catalogues",
       "goal": "Direction/redshift-dependent observables and boost/tilt partial identification",
       "tasks": [
@@ -93,6 +96,12 @@
         "cobaya_config.yaml",
         "chain_manifest.json",
         "test_log.txt"
+      ],
+      "inherits_from_R51": [
+        "Use R49GeneralBianchiLikelihood(response_policy='source_bound') or a successor; never the r49_working_model policy for physics.",
+        "Sigma (CMB, integrated) and sigma/H0 (today) are different epochs; link only through an explicit history operator.",
+        "Finite-MC law for MC-estimated covariances; tensor carrier needs (F,t,Q0) under that law.",
+        "SMICA PR3 T45 carrier: R51/observed_carrier.npz."
       ]
     },
     {

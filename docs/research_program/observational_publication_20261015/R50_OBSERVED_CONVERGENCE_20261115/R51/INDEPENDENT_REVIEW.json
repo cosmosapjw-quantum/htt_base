@@ -1,0 +1,40 @@
+{
+ "schema_version": "htt.r51.independent-review/1",
+ "reviewer": "one fresh-context scientific-diff-reviewer subagent (read-and-run only)",
+ "requested_runtime": "single scoped review",
+ "observed_runtime": "interrupted once by account rate limit, resumed in same agent context; 46 tests rerun by reviewer (r49+r50+r51), exit 0",
+ "candidate": "base 82360535 + R51 working tree before post-review fixes",
+ "independent_checks_by_reviewer": [
+  "exact Bianchi-I redshift formula vs direct conserved-momentum geodesic: machine precision",
+  "linear sign dT/T = -n Sigma n: correct",
+  "I_hist quadrature in a: 39266.9267 (matches)",
+  "Sigma_KQ = -b beta^2 (bb - I/3): sign correct",
+  "Sellentin-Heavens normalization p=2,N=6 grid: 0.99999",
+  "Hotelling heldout PIT incl. training-mean case: correct",
+  "importance-sampling proposal density: correct",
+  "(F,t) insufficient under finite-MC law without Q0: correct",
+  "R49 uses sigma/H0 as Sigma (history := 1) at likelihood:765 with x_curvature=1; Gaia uses H0*sigma: confirmed"
+ ],
+ "findings": [
+  {"id": "R51-RV01", "severity": "major", "summary": "finite-MC posterior intervals under-cover parameters (reviewer sim 93.2% for nominal 95%; LOO spread 1.15x Fisher vs posterior 1.07x)",
+   "disposition": "fixed: script now reports LOO same-estimator coverage and an LOO-calibrated N(Sigma_hat, C_emp) limit as primary; posterior limit renamed NOT_coverage_calibrated; 'calibrated' restricted to predictive data law"},
+  {"id": "R51-RV02", "severity": "major", "summary": "silent Gaussian fallback when 0 < n_mc <= p (likelihood:981)",
+   "disposition": "fixed: n_mc==0 -> declared known covariance; 0<n_mc<=p raises; regression test added"},
+  {"id": "R51-RV03", "severity": "minor", "summary": "dropping E/B equals free-mean marginalization only under Gaussian law",
+   "disposition": "fixed in docstring and result prereg_erratum; frozen PREREGISTRATION.json left unchanged"},
+  {"id": "R51-RV04", "severity": "minor", "summary": "history operator dominated by z>500 where neutrino anisotropic stress acts; registry said ~1e4; DAG quoted bound without CONDITIONAL",
+   "disposition": "fixed: registry value 3.93e4 + systematics note; every sigma/H0 quote labelled conditional with unquantified systematic"},
+  {"id": "R51-RV05", "severity": "minor", "summary": "data-block registry: DESI unregistered/no hash field; empty hash silently skipped; derived overlap undetectable",
+   "disposition": "fixed: DESI provenance_sha256 field + registration; source_bound requires non-empty identity per active probe; derived-overlap limit documented"},
+  {"id": "R51-RV06", "severity": "minor", "summary": "emission Doppler v_rel enters source-bound CMB at ell>=2 unregistered, inconsistent with excluded observer KQ",
+   "disposition": "fixed: v_matter=v_rad=0 in source-bound CMB; term registered with R51 exclusion"},
+  {"id": "R51-RV07", "severity": "minor", "summary": "T_CMB_K 2.7255 vs SSOT 2.72548", "disposition": "fixed for source-bound path via T_CMB_K_SSOT; historical working-model path unchanged"},
+  {"id": "R51-RV08", "severity": "minor", "summary": "LOO null only approximately exchangeable", "disposition": "labelled approximate in result"},
+  {"id": "R51-RV09", "severity": "minor", "summary": "gbi05 test overwrote tracked R49 receipt", "disposition": "fixed: receipt restored; write gated by HTT_WRITE_R49_RECEIPTS=1"},
+  {"id": "R51-RV10", "severity": "minor", "summary": "references to not-yet-existing R51_RESULT.json/INDEPENDENT_REVIEW.json; DAG complete before review; prereg not verifiably blind",
+   "disposition": "fixed: files created after fixes; prereg_erratum states non-blind status"},
+  {"id": "R51-RV11", "severity": "minor", "summary": "stale docstrings (transfer sigma_N, 'disjoint' comment); DeltaOmega_k entered I_hist with flat transfer",
+   "disposition": "fixed: docstrings corrected; source-bound CMB raises for DeltaOmega_k != 0"}
+ ],
+ "verdict": "No critical findings. Physics operators and laws correct; majors RV01/RV02 fixed and re-verified by rerun (logs/run_r51_pr3_lowell.log, logs/test_log.txt). Fix closeout not re-reviewed by a second agent (one-review policy)."
+}

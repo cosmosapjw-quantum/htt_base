@@ -147,7 +147,10 @@ class TiltedTransferParameters:
     """Configuration for general tilted Bianchi polarized low-ell CMB transfer.
 
     Notice the strict non-conflation of anisotropy channels:
-      * `sigma_N`: 3x3 trace-free normal-frame shear-to-Hubble tensor `sigma_ab / H_0`.
+      * `sigma_N`: 3x3 trace-free normal-frame shear. In ``linearized_near_flrw`` mode the
+        temperature uses it as the line-of-sight integrated shear Sigma_ab = int sigma_ab dt
+        (dT/T = -x_curvature * linear_sw_gain * n.sigma_N.n), NOT (sigma/H)_0; see
+        ``transfer_response_provenance`` and the R51 history operator.
       * `v_matter`: 3-vector baryon/CDM congruence velocity in normal frame (recombination & present).
       * `v_rad`: 3-vector radiation fluid velocity in normal frame at emission (`|v| < 1`).
       * `v_obs`: 3-vector observer boost wrt matter frame `beta_MO`.
@@ -1033,6 +1036,32 @@ def _evaluate_linearized_near_flrw_sky(
     return cosmo_T, cosmo_Q, cosmo_U, max_psi_prime, rms_dpsi
 
 
+def transfer_response_provenance(params: TiltedTransferParameters) -> dict[str, str]:
+    """R51 classification of the response actually used for ``params``.
+
+    Temperature at the exact abelian zero-curvature boundary is the first-order
+    Bianchi-I integrated-shear term dT/T = -x_curvature * linear_sw_gain * n.sigma_N.n,
+    i.e. ``sigma_N`` acts as Sigma = int sigma dt (NOT (sigma/H)_0) and is
+    source-bound only when x_curvature = linear_sw_gain = 1. Finite-curvature
+    focusing/twist profiles and the default polarization gain are working
+    models. See htt.htt.infer.r51_source_bound_response.RESPONSE_TERM_REGISTRY.
+    """
+    if params.transfer_mode == TRANSFER_MODE_GEODESIC:
+        temp = "NUMERICAL_GEODESIC_CONDITIONAL_ON_TRAJECTORY"
+    else:
+        a_v, n_m = _resolve_background_structure(params)
+        boundary = not np.any(a_v) and not np.any(n_m) and params.omega_k == 0.0
+        unit_gain = float(params.x_curvature) == 1.0 and float(params.linear_sw_gain) == 1.0
+        if boundary and unit_gain:
+            temp = "SOURCE_BOUND_TYPE_I_INTEGRATED_SHEAR"
+        elif boundary:
+            temp = "WORKING_MODEL_RESCALED_TYPE_I"
+        else:
+            temp = "WORKING_MODEL_FINITE_CURVATURE_FOCUS_TWIST"
+    pol = "EXPLICIT_PI_GAMMA_EMIT_INPUT" if params.pi_gamma_emit is not None else "WORKING_MODEL_POLARIZATION_GAIN"
+    return {"temperature": temp, "polarization": pol, "sigma_N_semantics": "integrated_shear_Sigma_in_linearized_mode"}
+
+
 def compute_general_bianchi_transfer(params: TiltedTransferParameters) -> PolarizedTransferOutput:
     """Dispatch GBI-04 general tilted Bianchi polarized CMB transfer computation."""
     meta = FAMILY_TRANSFER_METADATA[params.family]
@@ -1119,6 +1148,7 @@ def compute_general_bianchi_transfer(params: TiltedTransferParameters) -> Polari
         "rms_cosmo_T": float(np.sqrt(np.sum(cosmo_T * cosmo_T * weights) / (4.0 * math.pi))),
         "rms_obs_T": float(np.sqrt(np.sum(obs_T * obs_T * weights) / (4.0 * math.pi))),
         "observer_boost_summary": obs_info,
+        "response_provenance": transfer_response_provenance(params),
     }
 
     return PolarizedTransferOutput(

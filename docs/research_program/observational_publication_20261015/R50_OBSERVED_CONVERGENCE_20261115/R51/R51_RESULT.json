@@ -1,0 +1,218 @@
+{
+ "node_id": "R51",
+ "status": "complete_scoped",
+ "claim_tier": "C0",
+ "owner": "htt",
+ "transfer_source": "first-order Bianchi-I integrated-shear ISW (source-bound); no native solver",
+ "source_git_sha": "82360535625cde7113c42ad1c9d448df002170f2",
+ "dirty_patch_sha256_at_assembly": "9db9342a14b287f03f7610acfd6d341e376d8f724947d0f0beee8ebbb0e6eb04",
+ "source_ids": {
+  "COM_CMB_IQU-smica_2048_R3.00_full.fits": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+  "COM_CMB_IQU-commander_2048_R3.00_full.fits": "fe0332e61087ab445656ef272b31578ca4b1edcc7c3784a7662577684e2685a4",
+  "COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4",
+  "COM_Mask_CMB-common-Mask-Pol_2048_R3.00.fits": "c967e45449596c561c940d7ca0d494f1a26d947e6b5a9ef44185fdbf93b036d4"
+ },
+ "lane": "SMICA_PR3_DIAGNOSTIC_T_ONLY",
+ "commander_primary_calibration": "UNAVAILABLE: Commander FFP10 MC incomplete (2 complete cmb_mc files, partials, no noise_mc)",
+ "equations": {
+  "cmb_response": "dT/T(n) = -n^a n^b Sigma_ab, Sigma_ab = int_{t_*}^{t_0} sigma_ab dt",
+  "exact_reference": "T(n)/T_bar = (n^T exp(2 Sigma) n)^{-1/2}",
+  "history_operator_conditional": "Sigma = I_hist (sigma/H)_0, I_hist = int_{a_*}^1 a^-4/E(a) da",
+  "finite_mc_law": "Sellentin & Heavens 2016",
+  "carrier": "(F, t, Q0); Q(s) = Q0 - 2 s.t + s.F.s"
+ },
+ "parameter_names_units_frames_epochs": "R51_SOURCE_OPERATOR_CONTRACT.json#components",
+ "law_and_nuisance_spec": {
+  "law": "finite-MC on T45; E/B dropped (no source-bound polarization response)",
+  "covariance": "300 SMICA FFP10 CMB+noise pairs, same masked estimator",
+  "prior": "flat box |s_k|<=1e-3"
+ },
+ "actual_commands": {
+  "baseline_pytest": [
+   "PYTHONPATH=htt/src:htt:. python -m pytest tests/r50 htt/src/common/test_r50_optional_calibration.py tests/r42/test_five_variable_repair.py tests/r48/test_core03_repairs.py -q",
+   0
+  ],
+  "baseline_gaia_benchmark": [
+   "PYTHONPATH=htt/src:htt:. python scripts/r50/benchmark_owned_gaia_carrier.py",
+   0
+  ],
+  "tests": [
+   "PYTHONPATH=htt/src:htt:. python -m pytest tests/r49 tests/r50 tests/r51 htt/src/common/test_r50_optional_calibration.py tests/r42/test_five_variable_repair.py tests/r48/test_core03_repairs.py -q",
+   0
+  ],
+  "observed_run": [
+   "PYTHONPATH=htt/src:htt:. python scripts/r51/run_r51_pr3_lowell.py",
+   0
+  ],
+  "observed_run_prereview": [
+   "same",
+   0
+  ],
+  "contract": [
+   "PYTHONPATH=htt/src:htt:. python scripts/r51/build_r51_contract.py",
+   0
+  ]
+ },
+ "baseline_reuse": "R50 tests and Gaia benchmark reproduced (max abs diff 3.9e-12); not counted as new results",
+ "results": {
+  "Sigma_hat": [
+   2.1602294236820906e-07,
+   6.641797248832747e-06,
+   -9.730895566327746e-06,
+   -2.0365736036533552e-06,
+   -2.063419592005624e-06
+  ],
+  "Sigma_sd_fisher": [
+   8.624728092155428e-06,
+   8.269636363651317e-06,
+   9.14077625576729e-06,
+   8.293189223391317e-06,
+   8.662595949357818e-06
+  ],
+  "Sigma_sd_loo_calibrated": [
+   9.989436885328736e-06,
+   9.527908872803197e-06,
+   1.0569334748818784e-05,
+   9.588883958690098e-06,
+   9.961281255156287e-06
+  ],
+  "zero_shear_mc_p": 0.8837209302325582,
+  "Sigma_frobenius_95pct_upper_loo_calibrated": 3.74009729241826e-05,
+  "conditional_sigma_over_H0_frobenius_95pct_upper": 9.524802694044907e-10,
+  "I_hist": 39266.92670239397,
+  "heldout_calibration": {
+   "T45/finite_mc": {
+    "cov68": 0.67,
+    "cov95": 0.96,
+    "rejected": false
+   },
+   "T45/plugin_gaussian": {
+    "cov68": 0.36,
+    "cov95": 0.68,
+    "rejected": true
+   },
+   "TEB135/finite_mc": {
+    "cov68": 0.69,
+    "cov95": 0.95,
+    "rejected": false
+   },
+   "TEB135/plugin_gaussian": {
+    "cov68": 0.0,
+    "cov95": 0.0,
+    "rejected": true
+   }
+  },
+  "parameter_coverage_nominal95": {
+   "finite_mc_posterior_width": [
+    0.93,
+    0.92,
+    0.94,
+    0.94,
+    0.9333333333333333
+   ],
+   "fisher_width": [
+    0.9166666666666666,
+    0.9,
+    0.9133333333333333,
+    0.9166666666666666,
+    0.9166666666666666
+   ],
+   "loo_empirical_sampling_width": [
+    0.9533333333333334,
+    0.9466666666666667,
+    0.96,
+    0.95,
+    0.94
+   ],
+   "n_replicates": 300
+  },
+  "adequacy": {
+   "Q0_T45_obs": 40.77665081611482,
+   "Q0_T45_mc_loo": {
+    "k": 257,
+    "N": 300,
+    "p_mc": 0.8571428571428571
+   },
+   "Q0_TEB135_obs": 296.2364697675127,
+   "Q0_TEB135_mc_loo": {
+    "k": 112,
+    "N": 300,
+    "p_mc": 0.3754152823920266
+   }
+  }
+ },
+ "comparisons_wins_ties_losses": {
+  "tensor (F,t,Q0) vs raw 45D finite-MC": "TIE (max |dlogLR| 9.9e-14)",
+  "tensor vs optimal linear score": "TIE",
+  "(F,t) without Q0 under finite-MC law": "LOSS for (F,t)-only (max |dlogLR| 104.4)",
+  "tensor vs scalar fixed axis e1": "tensor WIN for 5D target; TIE for e1 marginal",
+  "tensor vs power-only": "tensor WIN (power-only sign-blind)",
+  "finite-MC law vs plug-in Gaussian covariance": "finite-MC WIN on heldout predictive calibration"
+ },
+ "checks": {
+  "template_alm_reconstruction_rel": 2.235275160559744e-15,
+  "estimator_vs_ideal_T_rel": 0.00029445152540913877,
+  "estimator_T_to_EB_leak_rel": 0.0,
+  "transfer_route_vs_healpy_T_rel": 1.7159166445415447e-15,
+  "observed_vs_R49_cached_d_max_abs_uK": 0.0,
+  "ffp10_cache_spot_recompute_rel": {
+   "0": 5.265529112297748e-11,
+   "299": 8.68869877013454e-11
+  },
+  "input_identity_matches_R49_rehash": {
+   "smica": true,
+   "mask_int": true,
+   "mask_pol": true
+  },
+  "beam_x_pixwin_ell2_6": [
+   1.0002755725124808,
+   1.000295560179487,
+   1.0003112400914027,
+   1.000323089976736,
+   1.0003393321814738
+  ]
+ },
+ "claims": [
+  {
+   "claim": "R49 CMB path used (sigma/H)_0 as integrated shear (history operator := 1)",
+   "status": "implementation-verified"
+  },
+  {
+   "claim": "type-I linear ISW is the first-order term of the exact Bianchi-I redshift",
+   "status": "derived; numerically checked"
+  },
+  {
+   "claim": "unsourced R49 coefficients quarantined from physical likelihood",
+   "status": "implementation-verified"
+  },
+  {
+   "claim": "finite-MC law calibrated for the FFP10 predictive data law; plug-in Gaussian rejected",
+   "status": "numerically checked (preregistered heldout; not blind to R49 data analysis)"
+  },
+  {
+   "claim": "SMICA PR3 T45 integrated shear consistent with zero",
+   "status": "numerically checked (SMICA diagnostic lane; Commander unavailable; KQ unbound <=0.25 sd)"
+  },
+  {
+   "claim": "conditional (sigma/H)_0 bound",
+   "status": "conditional; unquantified neutrino anisotropic-stress systematic"
+  },
+  {
+   "claim": "HTT tensor carrier superiority over GLS/score",
+   "status": "not claimed; tie"
+  }
+ ],
+ "unresolved": [
+  "Commander matched MC absent -> primary calibration unavailable",
+  "kinematic-quadrupole removal contract unbound",
+  "no source-bound polarization response",
+  "history operator excludes neutrino anisotropic stress; finite-curvature families remain working models",
+  "Gaia E2 history operator, Pantheon low-z jet, CF4 grouped likelihood, beta_MO/beta_RM separation and same-estimator velocity null -> R52",
+  "Cobaya Likelihood/Theory provider extension -> R52"
+ ],
+ "independent_review": {
+  "path": "INDEPENDENT_REVIEW.json",
+  "verdict": "No critical findings. Physics operators and laws correct; majors RV01/RV02 fixed and re-verified by rerun (logs/run_r51_pr3_lowell.log, logs/test_log.txt). Fix closeout not re-reviewed by a second agent (one-review policy)."
+ },
+ "next_node": "R52"
+}

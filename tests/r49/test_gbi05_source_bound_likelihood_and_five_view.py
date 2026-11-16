@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 from pathlib import Path
 
 import healpy as hp
@@ -357,8 +358,11 @@ def test_acceptance_9_fail_closed_guards() -> None:
             v_rad=np.zeros(3),
             beta_MO=np.zeros(3),
         )
-    with pytest.raises(DoubleCountedLowEllError):
-        CMBModeBudgetSpec(deterministic_ells=(2, 3, 4), covariance_ells=(4, 5, 6))
+    # R51 (audit R49-A05): one Gaussian may carry mu(theta) and C(theta) on the
+    # same modes; duplication is blocked by data-block identity (tests/r51).
+    assert issubclass(DoubleCountedLowEllError, ValueError)
+    overlap = CMBModeBudgetSpec(deterministic_ells=(2, 3, 4), covariance_ells=(4, 5, 6))
+    assert set(overlap.deterministic_ells) & set(overlap.covariance_ells) == {4}
     with pytest.raises(LaneContaminationError):
         CMBModeBudgetSpec(lane="NPIPE_PR4_ROBUSTNESS", mc_source="FFP10_PR3")
 
@@ -435,4 +439,6 @@ def test_acceptance_11_and_12_five_view_single_posterior_and_xc_ablation() -> No
         "five_view_summary": {k: v for k, v in views.items() if k != "five_variable_state"},
         "scalar_xc_ablation": ablation,
     }
-    RECEIPT_PATH.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+    # R51: historical receipt bytes are preserved; regenerate only on explicit request.
+    if os.environ.get("HTT_WRITE_R49_RECEIPTS") == "1":
+        RECEIPT_PATH.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")

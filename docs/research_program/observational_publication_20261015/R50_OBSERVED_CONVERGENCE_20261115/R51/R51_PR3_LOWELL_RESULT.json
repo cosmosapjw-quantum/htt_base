@@ -1,0 +1,500 @@
+{
+ "node_id": "R51",
+ "lane": "SMICA_PR3_DIAGNOSTIC_T_ONLY",
+ "commander_primary_calibration": "UNAVAILABLE: Commander FFP10 MC incomplete (2 complete cmb_mc files, partials, no noise_mc)",
+ "source_git_sha": "82360535625cde7113c42ad1c9d448df002170f2",
+ "input_sha256": {
+  "COM_CMB_IQU-smica_2048_R3.00_full.fits": "60952c645eb33d151905ddf5837477e15ca02a3261feca4ceca3c3feece4f9ac",
+  "COM_CMB_IQU-commander_2048_R3.00_full.fits": "fe0332e61087ab445656ef272b31578ca4b1edcc7c3784a7662577684e2685a4",
+  "COM_Mask_CMB-common-Mask-Int_2048_R3.00.fits": "23f49a3479073408b83a7f1bb2cca490d9be7f934b2e0e891524b6a1d06a5fc4",
+  "COM_Mask_CMB-common-Mask-Pol_2048_R3.00.fits": "c967e45449596c561c940d7ca0d494f1a26d947e6b5a9ef44185fdbf93b036d4"
+ },
+ "n_mc": 300,
+ "p_target": 45,
+ "estimand": "Sigma_ab = int_{t_*}^{t_0} sigma_ab dt, 5 orthonormal STF components, Galactic frame, dimensionless",
+ "stf_basis": [
+  [
+   [
+    0.7071067811865475,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    -0.7071067811865475,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  [
+   [
+    0.4082482904638631,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.4082482904638631,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    -0.8164965809277261
+   ]
+  ],
+  [
+   [
+    0.0,
+    0.7071067811865475,
+    0.0
+   ],
+   [
+    0.7071067811865475,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  [
+   [
+    0.0,
+    0.0,
+    0.7071067811865475
+   ],
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.7071067811865475,
+    0.0,
+    0.0
+   ]
+  ],
+  [
+   [
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.0,
+    0.7071067811865475
+   ],
+   [
+    0.0,
+    0.7071067811865475,
+    0.0
+   ]
+  ]
+ ],
+ "checks": {
+  "template_alm_reconstruction_rel": 2.235275160559744e-15,
+  "estimator_vs_ideal_T_rel": 0.00029445152540913877,
+  "estimator_T_to_EB_leak_rel": 0.0,
+  "transfer_route_vs_healpy_T_rel": 1.7159166445415447e-15,
+  "observed_vs_R49_cached_d_max_abs_uK": 0.0,
+  "ffp10_cache_spot_recompute_rel": {
+   "0": 5.265529112297748e-11,
+   "299": 8.68869877013454e-11
+  },
+  "input_identity_matches_R49_rehash": {
+   "smica": true,
+   "mask_int": true,
+   "mask_pol": true
+  },
+  "beam_x_pixwin_ell2_6": [
+   1.0002755725124808,
+   1.000295560179487,
+   1.0003112400914027,
+   1.000323089976736,
+   1.0003393321814738
+  ]
+ },
+ "calibration": {
+  "T45/finite_mc": {
+   "n_heldout": 100,
+   "cov68": 0.67,
+   "cov68_CI95": [
+    0.5688272492224368,
+    0.7608014653773982
+   ],
+   "cov95": 0.96,
+   "cov95_CI95": [
+    0.9007428432873401,
+    0.9889955060138118
+   ],
+   "ks_p": 0.7609404569085341,
+   "binom68_p": 0.8307023813317571,
+   "binom95_p": 0.8199821727295707,
+   "rejected_at_bonferroni": false
+  },
+  "T45/plugin_gaussian": {
+   "n_heldout": 100,
+   "cov68": 0.36,
+   "cov68_CI95": [
+    0.2664084227332345,
+    0.46212189332742326
+   ],
+   "cov95": 0.68,
+   "cov95_CI95": [
+    0.5792331383683775,
+    0.769780083238423
+   ],
+   "ks_p": 8.731371265849642e-21,
+   "binom68_p": 8.778848865271524e-11,
+   "binom95_p": 1.1407734874850553e-17,
+   "rejected_at_bonferroni": true
+  },
+  "TEB135/finite_mc": {
+   "n_heldout": 100,
+   "cov68": 0.69,
+   "cov68_CI95": [
+    0.5896854458398009,
+    0.778711207869329
+   ],
+   "cov95": 0.95,
+   "cov95_CI95": [
+    0.8871650888945373,
+    0.9835681208179479
+   ],
+   "ks_p": 0.733978155185367,
+   "binom68_p": 0.9147333161451907,
+   "binom95_p": 1.0,
+   "rejected_at_bonferroni": false
+  },
+  "TEB135/plugin_gaussian": {
+   "n_heldout": 100,
+   "cov68": 0.0,
+   "cov68_CI95": [
+    0.0,
+    0.03621669264517641
+   ],
+   "cov95": 0.0,
+   "cov95_CI95": [
+    0.0,
+    0.03621669264517641
+   ],
+   "ks_p": 0.0,
+   "binom68_p": 3.273390607896092e-50,
+   "binom95_p": 7.888609052210819e-131,
+   "rejected_at_bonferroni": true
+  }
+ },
+ "carrier": {
+  "F": [
+   [
+    13748734614.45202,
+    1243852348.0824416,
+    -1178711906.9099352,
+    269813138.01321447,
+    873770365.8456893
+   ],
+   [
+    1243852348.0824416,
+    15094317986.77706,
+    -320043127.0523581,
+    -2071898803.0175257,
+    -766142766.8103622
+   ],
+   [
+    -1178711906.9099352,
+    -320043127.0523581,
+    12142719243.000795,
+    838965045.8047955,
+    449669330.83923614
+   ],
+   [
+    269813138.01321447,
+    -2071898803.0175257,
+    838965045.8047955,
+    14939505646.409813,
+    -592608642.3296525
+   ],
+   [
+    873770365.8456893,
+    -766142766.8103622,
+    449669330.83923614,
+    -592608642.3296525,
+    13491125440.287369
+   ]
+  ],
+  "t": [
+   20348.93047103278,
+   109436.85497473071,
+   -123176.29379382994,
+   -51069.329754437895,
+   -35906.45720663616
+  ],
+  "Q0": 40.77665081611482
+ },
+ "Sigma_hat": [
+  2.1602294236820906e-07,
+  6.641797248832747e-06,
+  -9.730895566327746e-06,
+  -2.0365736036533552e-06,
+  -2.063419592005624e-06
+ ],
+ "Sigma_sd_gaussian": [
+  8.624728092155428e-06,
+  8.269636363651317e-06,
+  9.14077625576729e-06,
+  8.293189223391317e-06,
+  8.662595949357818e-06
+ ],
+ "finite_mc_posterior": {
+  "mean": [
+   2.1572710316774528e-07,
+   6.654384237453353e-06,
+   -9.736042795886148e-06,
+   -2.0091743187266924e-06,
+   -2.038244947870568e-06
+  ],
+  "sd": [
+   9.245298826086956e-06,
+   8.880384402268139e-06,
+   9.81681264526701e-06,
+   8.885434734813195e-06,
+   9.300370589859588e-06
+  ],
+  "sd_ratio_to_gaussian": [
+   1.0719524983629298,
+   1.0738542798932886,
+   1.0739583127935313,
+   1.0714134810467635,
+   1.0736239626354789
+  ],
+  "ess": 117499.5412378657,
+  "n_draws": 200000,
+  "Sigma_frobenius_95pct_upper_NOT_coverage_calibrated": 3.542737782363758e-05
+ },
+ "history_operator": {
+  "I_hist": 39266.92670239397,
+  "Omega_r": 9.217146801291467e-05,
+  "z_star": 1089.94,
+  "assumptions": "sigma a^3 const (no anisotropic stress), Planck18 LCDM background, fixed eigenframe",
+  "H0": 67.36,
+  "Omega_m": 0.3153
+ },
+ "interval_calibration": {
+  "status": "finite-MC law calibrates the predictive data law (heldout PIT), NOT parameter intervals",
+  "sigma0_loo_component_coverage_nominal95": {
+   "finite_mc_posterior_width": [
+    0.93,
+    0.92,
+    0.94,
+    0.94,
+    0.9333333333333333
+   ],
+   "fisher_width": [
+    0.9166666666666666,
+    0.9,
+    0.9133333333333333,
+    0.9166666666666666,
+    0.9166666666666666
+   ],
+   "loo_empirical_sampling_width": [
+    0.9533333333333334,
+    0.9466666666666667,
+    0.96,
+    0.95,
+    0.94
+   ],
+   "n_replicates": 300
+  },
+  "loo_sampling_sd_over_fisher_sd": [
+   1.1582320948082492,
+   1.1521557241238007,
+   1.1562841549863074,
+   1.1562360028689826,
+   1.149918721061294
+  ],
+  "Sigma_frobenius_95pct_upper_loo_calibrated": 3.74009729241826e-05,
+  "method": "flat-box Gaussian N(Sigma_hat, C_emp), C_emp = covariance of same-estimator LOO Sigma_hat over 300 FFP10 replicates"
+ },
+ "conditional_sigma_over_H0_today": {
+  "mean": [
+   5.4938626799788014e-12,
+   1.6946536936509622e-10,
+   -2.479451185389707e-10,
+   -5.11670886279012e-11,
+   -5.1907422328172763e-11
+  ],
+  "sd_loo_calibrated": [
+   2.5439823597703955e-10,
+   2.4264462928346043e-10,
+   2.6916633504130105e-10,
+   2.441974649904419e-10,
+   2.536812043033911e-10
+  ],
+  "frobenius_norm_95pct_upper_loo_calibrated": 9.524802694044907e-10,
+  "status": "CONDITIONAL on history operator assumptions (no anisotropic stress; 67% of I_hist from z>500); unquantified systematic"
+ },
+ "zero_shear_test": {
+  "wald_obs": 2.1079654254953786,
+  "working_chi2_5_tail": 0.8340133195624773,
+  "mc_same_estimator_loo": {
+   "k": 265,
+   "N": 300,
+   "p_mc": 0.8837209302325582
+  },
+  "exchangeability": "approximate: observed uses S from 300 sims, replicate i uses the other 299"
+ },
+ "adequacy_ppc": {
+  "Q0_T45_obs": 40.77665081611482,
+  "Q0_T45_mc_loo": {
+   "k": 257,
+   "N": 300,
+   "p_mc": 0.8571428571428571
+  },
+  "Q0_TEB135_obs": 296.2364697675127,
+  "Q0_TEB135_mc_loo": {
+   "k": 112,
+   "N": 300,
+   "p_mc": 0.3754152823920266
+  }
+ },
+ "null_shat_sd_over_fisher_sd": [
+  1.158232094808249,
+  1.1521557241238003,
+  1.1562841549863079,
+  1.1562360028689824,
+  1.1499187210612938
+ ],
+ "comparisons": {
+  "law": "finite_mc (Sellentin-Heavens) on T45; same data, prior box, N",
+  "tensor_carrier_F_t_Q0_finite_mc_max_abs_logLR_err": 9.947598300641403e-14,
+  "tensor_carrier_F_t_gaussian_max_abs_logLR_err": 1.7053025658242404e-13,
+  "tensor_F_t_without_Q0_under_finite_mc_max_abs_logLR_err": 104.41322361117633,
+  "optimal_linear_score": "TIE with tensor carrier: identical (F,t); finite-MC law additionally needs scalar Q0",
+  "scalar_fixed_axis_e1_generalized_Fisher_retention": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.9999999999999997
+  ],
+  "scalar_e1_marginal": "TIE for the e1 marginal only (Gaussian, flat prior); LOSS for 5D target",
+  "power_only": "LOSS: sign-blind, logLR(+a vs -a)=0 identically",
+  "signed_alternatives": [
+   {
+    "axis": 0,
+    "full_logLR_plus_vs_minus": 0.3578868392972083,
+    "tensor_logLR_plus_vs_minus": 0.3578868392972119,
+    "power_only_logLR_plus_vs_minus": 0.0
+   },
+   {
+    "axis": 1,
+    "full_logLR_plus_vs_minus": 1.9239874276024693,
+    "tensor_logLR_plus_vs_minus": 1.923987427602487,
+    "power_only_logLR_plus_vs_minus": 0.0
+   },
+   {
+    "axis": 2,
+    "full_logLR_plus_vs_minus": -2.1674202221895484,
+    "tensor_logLR_plus_vs_minus": -2.1674202221895555,
+    "power_only_logLR_plus_vs_minus": 0.0
+   },
+   {
+    "axis": 3,
+    "full_logLR_plus_vs_minus": -0.8978707576622753,
+    "tensor_logLR_plus_vs_minus": -0.897870757662286,
+    "power_only_logLR_plus_vs_minus": 0.0
+   },
+   {
+    "axis": 4,
+    "full_logLR_plus_vs_minus": -0.6315531825448488,
+    "tensor_logLR_plus_vs_minus": -0.6315531825448488,
+    "power_only_logLR_plus_vs_minus": 0.0
+   }
+  ],
+  "domain": "500 draws from N(s_hat, 25 F^-1)"
+ },
+ "removed_mode_sensitivity_kinematic_quadrupole": {
+  "status": "UNBOUND: KQ removal in PR3 SMICA map and FFP10 MC not verified from file metadata or local docs",
+  "solar_dipole": {
+   "amp_uK": 3362.08,
+   "l_deg": 264.021,
+   "b_deg": 48.253
+  },
+  "cases": {
+   "b_nu=1.0": {
+    "s_equiv": [
+     4.6669181811922236e-07,
+     4.162017604265869e-07,
+     -9.884090457587892e-08,
+     1.1135932910397908e-07,
+     1.0632618612258983e-06
+    ],
+    "shift_in_gaussian_sd": [
+     0.05411090217947847,
+     0.05032890711567154,
+     -0.010813184986725404,
+     0.013427805166905518,
+     0.12274171246607904
+    ]
+   },
+   "b_nu=1.5": {
+    "s_equiv": [
+     7.000377271788337e-07,
+     6.243026406398804e-07,
+     -1.482613568638184e-07,
+     1.6703899365596862e-07,
+     1.5948927918388476e-06
+    ],
+    "shift_in_gaussian_sd": [
+     0.08116635326921771,
+     0.07549336067350731,
+     -0.016219777480088106,
+     0.020141707750358277,
+     0.1841125686991186
+    ]
+   },
+   "b_nu=2.0": {
+    "s_equiv": [
+     9.333836362384447e-07,
+     8.324035208531738e-07,
+     -1.9768180915175784e-07,
+     2.2271865820795816e-07,
+     2.1265237224517965e-06
+    ],
+    "shift_in_gaussian_sd": [
+     0.10822180435895694,
+     0.10065781423134308,
+     -0.02162636997345081,
+     0.026855610333811036,
+     0.24548342493215808
+    ]
+   }
+  }
+ },
+ "commander_cross_pipeline_uncalibrated": {
+  "T45_diff_rms_uK": 0.6264837113860618,
+  "T45_diff_rms_in_smica_ffp10_noise_sd": 7.278558426394045,
+  "Sigma_hat_commander_minus_smica_in_sd": [
+   -0.054697180606479864,
+   0.023121028134573084,
+   -0.004100600922675629,
+   -0.026394919823483923,
+   0.021405293046473928
+  ],
+  "status": "UNCALIBRATED_DIAGNOSTIC (SMICA covariance; not a Commander likelihood)"
+ },
+ "prereg_erratum": [
+  "polarization_policy: dropping E/B equals free-mean marginalization only under a Gaussian law; under the finite-MC law the T45 likelihood is the T-only law, not that marginal",
+  "written_before_inspection is asserted by this script at first run; the SMICA vector was already analysed in R49, so the analysis is not blind"
+ ],
+ "velocity_null": "UNAVAILABLE: no same-estimator joint beta_MO replicates; BETA_MO_MATCHED_NULL not output",
+ "elapsed_s": 145.33030071699613
+}

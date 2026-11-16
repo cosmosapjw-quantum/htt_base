@@ -1,0 +1,430 @@
+{
+  "schema_version": "htt.r50.observed_carrier_benchmark/1",
+  "status": "completed_conditional_saved_observed_law",
+  "owner": "htt",
+  "claim_tier": "C0",
+  "transfer_source": "none",
+  "assertion_tested": "Observed normal-equation carrier yields lossless five-component Gaussian target ratios; scalar linear/even summaries lose specified targets; nuisance model materially changes target inference.",
+  "input": {
+    "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/audit_backup/derived_inputs/full_stats.npz",
+    "sha256_before": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+    "sha256_after": "4d9406de69546e72dff79d4fc611703e8eb450944c4dcc254f8484c98a22d5da",
+    "source_rows": 755850,
+    "raw_catalogue_reread": false,
+    "working_law": "reported marginal 2x2 PM blocks; stipulated cross-source independence; spatial covariance UNKNOWN"
+  },
+  "basis": [
+    [
+      [
+        0.7071067811865475,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -0.7071067811865475,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.4082482904638631,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.4082482904638631,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -0.8164965809277261
+      ]
+    ],
+    [
+      [
+        0.0,
+        0.7071067811865475,
+        0.0
+      ],
+      [
+        0.7071067811865475,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.0,
+        0.0,
+        0.7071067811865475
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.7071067811865475,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.7071067811865475
+      ],
+      [
+        0.0,
+        0.7071067811865475,
+        0.0
+      ]
+    ]
+  ],
+  "units": "E2 STF tangent proper-motion coefficients in microarcsecond/year; not sigma/H",
+  "physical_response": "A_PM=2*c*(B_o-B_s)/D-dot(B_o), conditional first-order endpoint history",
+  "embedding_checks": {
+    "reused_R36_chart": true,
+    "chart_metric_error": 3.3306690738754696e-16,
+    "stf_basis_metric_error": 2.220446049250313e-16
+  },
+  "nuisance_models": {
+    "primary_spin_glide6": {
+      "nuisance_columns": 6,
+      "information": [
+        [
+          3.215377550034607,
+          -0.1205313907669674,
+          0.27077657735090777,
+          -1.0003284282201355,
+          0.17417179265166166
+        ],
+        [
+          -0.1205313907669674,
+          3.47209679754714,
+          -0.19639286405146922,
+          0.0036945947083172684,
+          0.24629882748318593
+        ],
+        [
+          0.27077657735090777,
+          -0.19639286405146922,
+          2.998599653758671,
+          -0.6182110584114818,
+          -0.25676113738261264
+        ],
+        [
+          -1.0003284282201355,
+          0.0036945947083172684,
+          -0.6182110584114818,
+          4.030790199086153,
+          0.12121262759944249
+        ],
+        [
+          0.17417179265166166,
+          0.24629882748318593,
+          -0.25676113738261264,
+          0.12121262759944249,
+          3.1696161461367143
+        ]
+      ],
+      "score": [
+        -5.400752602035393,
+        9.457831727508335,
+        -10.947020368209216,
+        -6.138229782537288,
+        8.365865913829827
+      ],
+      "mean_stf5_uasyr": [
+        -2.262422167565571,
+        2.271771853006874,
+        -3.6530287045413323,
+        -2.7186885922985047,
+        2.395231639284117
+      ],
+      "covariance_stf5_uasyr2": [
+        [
+          0.3397741063974222,
+          0.012570364412360825,
+          -0.014853738839120745,
+          0.08275486334746222,
+          -0.024015503778945173
+        ],
+        [
+          0.012570364412360827,
+          0.2909890801820039,
+          0.017300095136325282,
+          0.006171941274564358,
+          -0.022137001467510357
+        ],
+        [
+          -0.014853738839120745,
+          0.017300095136325286,
+          0.3482624447117115,
+          0.0489354160368888,
+          0.025812204523506667
+        ],
+        [
+          0.08275486334746227,
+          0.00617194127456436,
+          0.04893541603688883,
+          0.2764773221723244,
+          -0.011635962435478578
+        ],
+        [
+          -0.024015503778945176,
+          -0.022137001467510364,
+          0.02581220452350667,
+          -0.011635962435478578,
+          0.3210714138567549
+        ]
+      ],
+      "information_eigenvalues": [
+        2.4369302855811386,
+        2.6556292655656386,
+        3.17145155962481,
+        3.671454012723532,
+        4.951015223068163
+      ],
+      "zero_E2_chi2": 110.42071996518281,
+      "zero_E2_df": 5,
+      "zero_E2_working_law_tail": 3.338757760736508e-22,
+      "tensor_vs_optimal_linear_score": "TIE: both retain the same F and t",
+      "scalar_fixed_axis_generalized_Fisher_retention": [
+        -1.5949021895004486e-17,
+        -2.0951746473270128e-19,
+        2.068081402450609e-19,
+        5.334245798961863e-18,
+        1.0
+      ],
+      "signed_alternative_results": [
+        {
+          "axis": 0,
+          "amplitude_uasyr": 1.0,
+          "full_tensor_logLR_plus_vs_minus": -10.801505204070786,
+          "even_norm_summary_logLR_plus_vs_minus": 0.0
+        },
+        {
+          "axis": 1,
+          "amplitude_uasyr": 1.0,
+          "full_tensor_logLR_plus_vs_minus": 18.91566345501667,
+          "even_norm_summary_logLR_plus_vs_minus": 0.0
+        },
+        {
+          "axis": 2,
+          "amplitude_uasyr": 1.0,
+          "full_tensor_logLR_plus_vs_minus": -21.894040736418432,
+          "even_norm_summary_logLR_plus_vs_minus": 0.0
+        },
+        {
+          "axis": 3,
+          "amplitude_uasyr": 1.0,
+          "full_tensor_logLR_plus_vs_minus": -12.276459565074576,
+          "even_norm_summary_logLR_plus_vs_minus": 0.0
+        },
+        {
+          "axis": 4,
+          "amplitude_uasyr": 1.0,
+          "full_tensor_logLR_plus_vs_minus": 16.731731827659654,
+          "even_norm_summary_logLR_plus_vs_minus": 0.0
+        }
+      ],
+      "checks": {
+        "schur_vs_whitened_F_max_abs": 8.881784197001252e-16,
+        "schur_vs_whitened_t_max_abs": 5.329070518200751e-15,
+        "archived_F_max_abs": 3.552713678800501e-15,
+        "full_vs_tensor_logLR_max_abs": 6.075140390748857e-13
+      }
+    },
+    "all97_sensitivity": {
+      "nuisance_columns": 97,
+      "information": [
+        [
+          1.6105238044095584,
+          0.14213797538210693,
+          0.2289645214428957,
+          -0.7091870817117172,
+          -0.09394161050817598
+        ],
+        [
+          0.14213797538210693,
+          1.131821557359928,
+          -0.03815447688921636,
+          -0.4890413894447716,
+          0.18379886672985046
+        ],
+        [
+          0.2289645214428957,
+          -0.03815447688921636,
+          0.8603319202808142,
+          -0.20785736821736786,
+          0.27016857347704937
+        ],
+        [
+          -0.7091870817117172,
+          -0.4890413894447716,
+          -0.20785736821736786,
+          1.2576884861103061,
+          -0.13572597691375013
+        ],
+        [
+          -0.09394161050817598,
+          0.18379886672985046,
+          0.27016857347704937,
+          -0.13572597691375013,
+          1.255813326443155
+        ]
+      ],
+      "score": [
+        -7.395957443458602,
+        4.633704768934133,
+        -4.920694536589307,
+        -2.7934613665139625,
+        7.255923822006492
+      ],
+      "mean_stf5_uasyr": [
+        -5.727188546138893,
+        1.156648523628869,
+        -7.427496238970645,
+        -5.561747492164894,
+        6.176964447485328
+      ],
+      "covariance_stf5_uasyr2": [
+        [
+          0.8686814112337865,
+          0.08523835005080763,
+          -0.14715395825410274,
+          0.5137320967018092,
+          0.1396877868984067
+        ],
+        [
+          0.08523835005080761,
+          1.1186035808036046,
+          0.19305965167825598,
+          0.49929211039386534,
+          -0.14491197059327854
+        ],
+        [
+          -0.1471539582541027,
+          0.19305965167825598,
+          1.3514869739730746,
+          0.18195964386709632,
+          -0.31034921689596223
+        ],
+        [
+          0.5137320967018091,
+          0.49929211039386534,
+          0.18195964386709632,
+          1.316401669177485,
+          0.06848280696780382
+        ],
+        [
+          0.13968778689840672,
+          -0.14491197059327854,
+          -0.31034921689596223,
+          0.06848280696780383,
+          0.9021234516876079
+        ]
+      ],
+      "information_eigenvalues": [
+        0.5030147059832487,
+        0.6299272120117889,
+        1.1394596339498562,
+        1.4608335280432787,
+        2.382944014615588
+      ],
+      "zero_E2_chi2": 144.62216093333151,
+      "zero_E2_df": 5,
+      "zero_E2_working_law_tail": 1.861423403994935e-29,
+      "tensor_vs_optimal_linear_score": "TIE: both retain the same F and t",
+      "scalar_fixed_axis_generalized_Fisher_retention": [
+        -5.898098260428197e-17,
+        -2.5065876895472735e-18,
+        -1.0008642746569728e-18,
+        1.6970171342763598e-18,
+        0.9999999999999996
+      ],
+      "signed_alternative_results": [
+        {
+          "axis": 0,
+          "amplitude_uasyr": 1.0,
+          "full_tensor_logLR_plus_vs_minus": -14.791914886917205,
+          "even_norm_summary_logLR_plus_vs_minus": 0.0
+        },
+        {
+          "axis": 1,
+          "amplitude_uasyr": 1.0,
+          "full_tensor_logLR_plus_vs_minus": 9.267409537868266,
+          "even_norm_summary_logLR_plus_vs_minus": 0.0
+        },
+        {
+          "axis": 2,
+          "amplitude_uasyr": 1.0,
+          "full_tensor_logLR_plus_vs_minus": -9.841389073178615,
+          "even_norm_summary_logLR_plus_vs_minus": 0.0
+        },
+        {
+          "axis": 3,
+          "amplitude_uasyr": 1.0,
+          "full_tensor_logLR_plus_vs_minus": -5.586922733027925,
+          "even_norm_summary_logLR_plus_vs_minus": 0.0
+        },
+        {
+          "axis": 4,
+          "amplitude_uasyr": 1.0,
+          "full_tensor_logLR_plus_vs_minus": 14.511847644012985,
+          "even_norm_summary_logLR_plus_vs_minus": 0.0
+        }
+      ],
+      "checks": {
+        "schur_vs_whitened_F_max_abs": 5.384581669432009e-15,
+        "schur_vs_whitened_t_max_abs": 2.0605739337042905e-13,
+        "archived_F_max_abs": 4.8627768478581856e-14,
+        "full_vs_tensor_logLR_max_abs": 7.65609797781508e-13
+      }
+    }
+  },
+  "nuisance_mean_shift_norm_uasyr": 7.062520669492654,
+  "limitations": [
+    "No physical source depth law or arbitrary depth-weighted E2 cross moments",
+    "No optical-centroid-to-matter calibration",
+    "No NNR likelihood, empirical cross-source covariance, or selection coverage",
+    "No native solver or family identification",
+    "Conditional Gaussian working-law tails are not calibrated discovery probabilities.",
+    "No proper-prior evidence comparison between the two nuisance models.",
+    "Scalarization result is a target-specific benchmark, not generic 92.9 percent information loss.",
+    "No new cosmological posterior or new general compression theorem is claimed."
+  ],
+  "execution": {
+    "command": "PYTHONPATH=htt/src:htt:. python scripts/r50/benchmark_owned_gaia_carrier.py",
+    "source_base_commit": "82360535625cde7113c42ad1c9d448df002170f2",
+    "numpy": "2.4.2",
+    "scipy": "1.17.0",
+    "dependency_sha256": {
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/RESULT.json": "c20cacc0cd64c6349051b5c090d65d1083aea47961ffc446019739386d6adc93",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-03-PM-HISTORY/pm_history.py": "0fe914612c1ac8c1d6dfe578b0efe3f243bb154509a9d0d5cb360a9fad35a6e0",
+      "htt/htt/htt/infer/gaussian_carrier_benchmark.py": "c275bfaf9e653ea5d49fd1c166f24a1a54601160a2376677b52059f83e50fff1"
+    },
+    "code_sha256": "951c0a3f55a8b715cd969ba166711eff485fbb54bcc1b3c8cf30dcc6b9da82ce",
+    "elapsed_seconds": 0.023287730000447482
+  }
+}

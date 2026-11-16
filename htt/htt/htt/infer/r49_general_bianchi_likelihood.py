@@ -85,6 +85,22 @@ from htt.htt.infer.tensor_joint_multiprobe_likelihood import (
     PsiCosmology,
     SchurMarginalizer,
 )
+from htt.htt.infer.r51_source_bound_response import (
+    DEFERRED_PROBES,
+    SOURCE_BOUND_PROBES,
+    DataBlockRegistry,
+    WorkingModelResponseError,
+    bianchi_i_shear_history_integral,
+    gaussian_loglike,
+    radiation_density_parameter,
+)
+from htt.htt.infer.r51_source_bound_response import T_CMB_K_SSOT
+
+#: Response policies. ``r49_working_model`` reproduces historical R49 receipts and
+#: is NOT admissible as physical inference. ``source_bound`` keeps only the
+#: registry SOURCE_BOUND / CONDITIONAL terms (see r51_source_bound_response).
+RESPONSE_POLICIES = ("r49_working_model", "source_bound")
+Z_STAR_SSOT: float = 1089.94
 
 try:
     from cobaya.likelihood import Likelihood as _CobayaLikelihood
@@ -163,12 +179,11 @@ class CMBModeBudgetSpec:
     def __post_init__(self) -> None:
         if int(self.ell_min) < 2 or int(self.ell_max) < int(self.ell_min):
             raise ValueError(f"Invalid ell range [{self.ell_min}, {self.ell_max}]")
-        overlap = set(self.deterministic_ells).intersection(set(self.covariance_ells))
-        if overlap:
-            raise DoubleCountedLowEllError(
-                f"Low-ell double-counting detected on multipoles {sorted(overlap)}: "
-                f"modes cannot enter both deterministic template mu(theta) and excess covariance Sigma(theta)."
-            )
+        # R51 (audit R49-A05): one normalized Gaussian N(mu(theta), C(theta)) may
+        # carry mean and covariance dependence on the SAME modes with a single
+        # logdet. Double counting means one data block entering two independent
+        # likelihood factors; that is blocked by data-block identity in
+        # R49GeneralBianchiLikelihood._run_preflight_checks, not by ell overlap.
         for ell in (*self.deterministic_ells, *self.covariance_ells):
             if ell < int(self.ell_min) or ell > int(self.ell_max):
                 raise ValueError(f"Declared multipole {ell} outside budget [{self.ell_min}, {self.ell_max}]")
@@ -484,6 +499,7 @@ class DESIBAOAndDirectionalCarrierData:
     directional_quad_cov: np.ndarray     # (5, 5)
     coordinate_frame: Literal["galactic", "icrs"] = "galactic"
     provenance_path: str = ""
+    provenance_sha256: str = ""
 
 
 @dataclass(frozen=True)
@@ -568,6 +584,7 @@ class R49GeneralBianchiLikelihood:
         alignment: FrameEpochAlignmentSpec | None = None,
         active_probes: Sequence[str] = DEFAULT_PROBES,
         validate_preflight: bool = True,
+        response_policy: Literal["r49_working_model", "source_bound"] = "r49_working_model",
     ) -> None:
         self.dataset = dataset
         self.mode_budget = CMBModeBudgetSpec(use_polarized_eb=True) if mode_budget is None else mode_budget
@@ -577,6 +594,18 @@ class R49GeneralBianchiLikelihood:
             else alignment
         )
         self.active_probes = tuple(active_probes)
+        if response_policy not in RESPONSE_POLICIES:
+            raise ValueError(f"response_policy must be one of {RESPONSE_POLICIES}, got {response_policy!r}")
+        self.response_policy = response_policy
+        #: Only the source-bound policy may feed a physical posterior.
+        self.physical_inference_admissible = response_policy == "source_bound"
+        if response_policy == "source_bound":
+            deferred = [p for p in self.active_probes if p not in SOURCE_BOUND_PROBES]
+            if deferred:
+                raise WorkingModelResponseError(
+                    "source_bound policy has no derived response for probes "
+                    + ", ".join(f"{p} ({DEFERRED_PROBES.get(p, 'unregistered')})" for p in deferred)
+                )
 
         if validate_preflight:
             self._run_preflight_checks()
@@ -604,6 +633,29 @@ class R49GeneralBianchiLikelihood:
         ):
             if cr.coordinate_frame not in valid_frames:
                 raise MissingTriadError(f"Probe {nm} has invalid coordinate_frame {cr.coordinate_frame!r}")
+        # 3. Unique data-block identity: a declared byte identity may feed only one
+        #    independent likelihood factor (R51 replacement of the ell-overlap rule).
+        registry = DataBlockRegistry()
+        for factor, car in (
+            ("CMB", self.dataset.cmb),
+            ("Quaia", self.dataset.quaia),
+            ("NVSS", self.dataset.nvss),
+            ("RACS", self.dataset.racs),
+            ("Gaia", self.dataset.gaia),
+            ("PantheonPlus", self.dataset.pantheon),
+            ("CF4", self.dataset.cf4),
+            ("DESI", self.dataset.desi),
+        ):
+            if factor not in self.active_probes:
+                continue
+            ident = getattr(car, "provenance_sha256", "")
+            if not ident:
+                if self.response_policy == "source_bound":
+                    raise ValueError(f"source_bound policy requires a data-block identity for active probe {factor!r}")
+                continue
+            registry.register(ident, factor)
+        # Byte identity cannot detect derived overlap (e.g. Quaia from Gaia DR3,
+        # NVSS/RACS sky overlap); those dependencies need explicit cross-covariance.
 
     def _frame_rot_to_triad(self, probe_frame: str) -> np.ndarray:
         R_user = np.asarray(self.alignment.triad_rotation, dtype=np.float64)
@@ -754,7 +806,7 @@ class R49GeneralBianchiLikelihood:
             self.dataset.cmb.mode_labels,
         )
         mu = np.where(self._cmb_det_mask, full_pred, 0.0)
-        # On covariance-budget modes ONLY (`_cmb_cov_mask`, disjoint from `_cmb_det_mask`),
+        # WORKING MODEL (R51 registry CMB_COVARIANCE_EXCESS_1e-8): on `_cmb_cov_mask` modes,
         # allow variance contribution scaled by ell=5..6 transfer power attenuation (1e-8) * |Sigma|^2.
         sig_amp2 = float(state.sigma_AB_stf5 @ G_STF5 @ state.sigma_AB_stf5)
         cov_excess = np.where(self._cmb_cov_mask, 1.0e-8 * (1.0e6 * T_CMB_K) ** 2 * sig_amp2, 0.0)
@@ -764,6 +816,9 @@ class R49GeneralBianchiLikelihood:
         """Evaluate log-likelihood breakdown per probe under one common state."""
         if not isinstance(state, R49JointState):
             raise ScalarSpeedError("logp_by_probe requires a vector-valued R49JointState instance.")
+
+        if self.response_policy == "source_bound":
+            return self._logp_by_probe_source_bound(state)
 
         scores: dict[str, float] = {}
 
@@ -871,6 +926,101 @@ class R49GeneralBianchiLikelihood:
             logp_dq = -0.5 * (float(w_dq @ w_dq) + self._desi_dq_logdet + 5.0 * math.log(2.0 * math.pi))
             scores["DESI"] = logp_bao + logp_dq
 
+        return scores
+
+    # ------------------------------------------------------------------
+    # R51 source-bound policy
+    # ------------------------------------------------------------------
+
+    def shear_history_operator(self, state: R49JointState) -> float:
+        """Conditional Bianchi-I map Sigma_ab = I_hist (sigma_ab/H)_0 (no anisotropic stress)."""
+        psi = state.psi
+        h = psi.H_0 / 100.0
+        om_r = radiation_density_parameter(h, T_CMB_K)
+        om_k = float(psi.DeltaOmega_k)
+        om_l = 1.0 - psi.Omega_m - om_r - om_k
+        return bianchi_i_shear_history_integral(psi.Omega_m, om_r, om_l, Z_STAR_SSOT, omega_k=om_k)
+
+    def predict_cmb_temperature_source_bound(self, state: R49JointState) -> tuple[np.ndarray, np.ndarray]:
+        """Return (T-row mask, mu_T in uK) for the source-bound type-I response.
+
+        dT/T = -n Sigma n with Sigma = I_hist (sigma/H)_0 (conditional history
+        operator). Polarization rows carry no source-bound response (gain 0.18
+        is a working model) and are dropped; this equals free-mean
+        marginalization only under a Gaussian law, and under the finite-MC law
+        it is the T-only law, not that marginal. Emission (v_rad - v_matter)
+        and observer-boost ell>=2 kinematic terms are excluded (v set to 0)
+        until the removed kinematic-quadrupole contract is bound.
+        """
+        if state.family not in {"FLRW", "I"}:
+            raise WorkingModelResponseError(
+                f"family {state.family!r}: finite-curvature focusing/twist transfer is a working model; "
+                "no source-bound CMB response in R51"
+            )
+        if float(state.psi.DeltaOmega_k) != 0.0:
+            raise WorkingModelResponseError("type-I source-bound transfer is spatially flat; DeltaOmega_k must be 0")
+        R_to_cmb = self._cmb_R_to_triad.T
+        sigma_int = self.shear_history_operator(state) * (R_to_cmb @ state.sigma_matrix @ R_to_cmb.T)
+        lmax_need = max(int(self.mode_budget.ell_max), 2)
+        out = compute_general_bianchi_transfer(
+            TiltedTransferParameters(
+                family="I",
+                sigma_N=sigma_int,
+                v_matter=np.zeros(3),
+                v_rad=np.zeros(3),
+                v_obs=np.zeros(3),
+                ell_max=lmax_need,
+                n_gl_theta=max(12, lmax_need + 4),
+                transfer_mode=TRANSFER_MODE_LINEARIZED,
+                x_curvature=1.0,
+                linear_sw_gain=1.0,
+            )
+        )
+        labels = self.dataset.cmb.mode_labels
+        t_rows = np.array([lbl.startswith("T_") for lbl in labels], dtype=bool)
+        full = 1.0e6 * T_CMB_K_SSOT * _pack_transfer_modes(out.alm_T, out.alm_E, out.alm_B, labels)
+        return t_rows, full[t_rows]
+
+    def _logp_by_probe_source_bound(self, state: R49JointState) -> dict[str, float]:
+        from htt.htt.infer.r51_source_bound_response import finite_mc_t_loglike
+
+        scores: dict[str, float] = {}
+        if "CMB" in self.active_probes:
+            t_rows, mu_t = self.predict_cmb_temperature_source_bound(state)
+            r = np.asarray(self.dataset.cmb.d_obs, float)[t_rows] - mu_t
+            C = np.asarray(self.dataset.cmb.cov, float)[np.ix_(t_rows, t_rows)]
+            n_mc = int(self.dataset.cmb.n_mc)
+            # n_mc == 0: declared analytic/known covariance. n_mc > 0: unjittered
+            # sample covariance from n_mc iid realizations -> finite-MC law, which
+            # needs n_mc > p. No Gaussian fallback in between.
+            if n_mc == 0:
+                scores["CMB"] = gaussian_loglike(r, C)
+            elif n_mc > len(r):
+                scores["CMB"] = finite_mc_t_loglike(r, C, n_mc)
+            else:
+                raise ValueError(f"finite-MC covariance with n_mc={n_mc} <= p={len(r)}: no admissible law")
+        for key in ("Quaia", "NVSS", "RACS"):
+            if key in self.active_probes:
+                op = self._dipole_ops[key]
+                # Ellis & Baldwin (1984): d = [2 + x(1+alpha)] beta_MO; no A_A response.
+                r = op["d"] - op["c_eb"] * state.beta_MO
+                w = scipy.linalg.solve_triangular(op["L"], r, lower=True)
+                scores[key] = -0.5 * (float(w @ w) + op["logdet"] + 3.0 * math.log(2.0 * math.pi))
+        if "DESI" in self.active_probes:
+            ds = self.dataset.desi
+            bao_pred = np.empty(len(ds.bao_mean), dtype=np.float64)
+            for idx, (zv, qty) in enumerate(zip(ds.bao_z, ds.bao_quantities)):
+                if qty == "DM_over_rs":
+                    bao_pred[idx] = state.psi.transverse_comoving_distance_Mpc(float(zv)) / state.psi.r_d
+                elif qty == "DH_over_rs":
+                    bao_pred[idx] = state.psi.hubble_distance_Mpc(float(zv)) / state.psi.r_d
+                elif qty == "DV_over_rs":
+                    bao_pred[idx] = state.psi.volume_distance_Mpc(float(zv)) / state.psi.r_d
+                else:
+                    raise ValueError(f"Unknown DESI BAO quantity {qty!r}")
+            # BAO only: the NGC-SGC directional contrast has no derived shear response.
+            w_bao = scipy.linalg.solve_triangular(self._desi_bao_L, ds.bao_mean - bao_pred, lower=True)
+            scores["DESI_BAO"] = -0.5 * (float(w_bao @ w_bao) + self._desi_bao_logdet + len(bao_pred) * math.log(2.0 * math.pi))
         return scores
 
     def logp(self, state: R49JointState) -> float:
