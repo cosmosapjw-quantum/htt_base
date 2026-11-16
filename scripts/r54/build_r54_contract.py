@@ -938,7 +938,7 @@ RECEIPT_SOURCES = (MOD + "/r54_type1_thomson.py", MOD + "/r54_lcdm_body.py", MOD
                    "scripts/r54/run_r54_cf4_exact.py", "scripts/r54/run_r54_lowz_frames.py", "scripts/r54/run_r54_cmb_type1.py",
                    "tests/r54/test_r54_conventions.py", MOD + "/r54_calibration.py", "tests/r54/test_r54_calibration.py",
                    MOD + "/r54_survey.py", "tests/r54/test_r54_survey.py", MOD + "/r54_counts.py", "tests/r54/test_r54_counts.py",
-                   MOD + "/r54_pr4_bypass.py", "tests/r54/test_r54_pr4_bypass.py")
+                   MOD + "/r54_pr4_bypass.py", "tests/r54/test_r54_pr4_bypass.py", MOD + "/r54_joint.py", "tests/r54/test_r54_joint.py")
 LOCAL_GATES = [
     ("MG-L01", "R54-L01", "permute the 300 simulation rows relative to nothing (control) and permute the 135 columns of the simulations only", "covariance identity check of step 1 must fail for the column permutation and pass for the row permutation"),
     ("MG-L02", "R54-L01", "use sims[i] inside its own covariance (no leave-one-out)", "coverage_95 test must leave the acceptance band on a synthetic Gaussian set with N = 60, p = 10"),
@@ -963,6 +963,8 @@ LOCAL_GATE_MUTATIONS = {
     "MG-L04": (MOD + "/r54_counts.py", "    return hashlib.sha256(np.packbits(np.asarray(used, bool)).tobytes()).hexdigest()",
                "    return hashlib.sha256(np.packbits(np.ones_like(np.asarray(used, bool))).tobytes()).hexdigest()",
                "tests/r54/test_r54_counts.py::test_mg_l04_mask_hash_distinguishes_latitude_cuts"),
+    "MG-L07": (MOD + "/r54_joint.py", "    fs = np.asarray(f, float)\n", "    fs = np.asarray(f, float) + 1e-6 * np.eye(np.asarray(f).shape[0])\n",
+               "tests/r54/test_r54_joint.py::test_mg_l07_singular_block_keeps_its_null_direction"),
     "MG-L05": (MOD + "/r54_survey.py", '    for pgc, grp, fp in zip(gal["pgc"].tolist(), gal["group"].tolist(), gal["has_fp"].tolist()):',
                '    for pgc, grp, fp in zip(gal["pgc"].tolist(), sorted(gal["group"].tolist()), gal["has_fp"].tolist()):',
                "tests/r54/test_r54_survey.py::test_mg_l05_labels_are_joined_on_identifiers_not_on_row_order"),
@@ -1194,6 +1196,10 @@ def contract_doc(n: dict) -> dict:
                                              "t_response_matrix(mask, nside, ell_cut, k_inv, out_modes)", "analytic_covariance(r, ells, cl, noise)",
                                              "wishart_lrt(c_model, s_sample, n_dof)", "eb_operator(mask_pol, nside, lmax)", "extract_eb(q, u, mask_pol, k_inv)",
                                              "quadratic_form(x, cov)", "posterior_zero_tail(samples)"],
+                MOD + "/r54_joint.py": ["linear_probe(y, cov, design, name)", "add_probes(probes)", "block_identification(f, scale, names)",
+                                        "constrained_chi2(block, link, label, scale)"],
+                "scripts/r54/run_r54_l06_joint.py": ["compute()", "stf5_rotation(r)"],
+                "scripts/r54/run_r54_l07_benchmark.py": ["compute()"],
                 "scripts/r54/run_r54_l02_pr4_bypass.py": ["compute()", "floor_null(vec_obs, null_vecs, cov, floor, rng, law)"],
                 "scripts/r54/run_r54_l03_counts.py": ["compute()", "clustering_body(q)", "mocks(l2, data, body_sd, d_kin, hashes_data, rng)",
                                                       "competitor_wagenveld(nv)", "competitor_mittal(q)"],
@@ -1920,7 +1926,7 @@ def mutation_receipt() -> None:
         print(gid, rows[-1]["status"])
     clean = subprocess.run([sys.executable, "-m", "pytest", "tests/r54/test_r54_modules.py", "tests/r54/test_r54_conventions.py", "tests/r54/test_r54_calibration.py",
                             "tests/r54/test_r54_survey.py", "tests/r54/test_r54_counts.py", "tests/r54/test_r54_pr4_bypass.py",
-                            "-q", "-p", "no:cacheprovider"],
+                            "tests/r54/test_r54_joint.py", "-q", "-p", "no:cacheprovider"],
                            cwd=ROOT, env=env, capture_output=True, text=True)
     jdump(R54 / "MUTATION_GATE_RECEIPT.json", {"schema": "htt.r54.mutation_receipt/1", "date": DATE, "unmutated_suite_exit_code": clean.returncode,
                                                "sources_sha256": {rel: sha(ROOT / rel) for rel in RECEIPT_SOURCES},

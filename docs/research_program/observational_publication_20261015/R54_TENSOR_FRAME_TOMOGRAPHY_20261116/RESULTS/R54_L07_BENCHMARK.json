@@ -1,0 +1,325 @@
+{
+ "acceptance": {
+  "targets_with_status": {
+   "op": "==",
+   "pass": true,
+   "threshold": "all",
+   "value": "all"
+  }
+ },
+ "claim_tier": "C0",
+ "evidence_verification": {
+  "E08": {
+   "note": "arXiv astro-ph/9702170: Hu & White, PRD 56, 596 (1997), total angular momentum method",
+   "source": "https://arxiv.org/abs/astro-ph/9702170",
+   "status": "VERIFIED"
+  },
+  "E18": {
+   "note": "arXiv 2010.06534: Heinesen, JCAP 05 (2021) 008, multipole decomposition of the luminosity-distance Hubble law",
+   "source": "https://arxiv.org/abs/2010.06534",
+   "status": "VERIFIED"
+  },
+  "E23": {
+   "note": "arXiv 2311.14938: Mittal, Oayda & Lewis, MNRAS 527, 8497; Quaia dipole consistent with the CMB dipole for |b| > 40 deg",
+   "source": "https://arxiv.org/html/2311.14938v2",
+   "status": "VERIFIED"
+  },
+  "E24": {
+   "note": "arXiv 2305.15335: Wagenveld, Kloeckner & Schwarz, A&A 675, A72; NVSS+RACS amplitude about three times the CMB expectation",
+   "source": "https://arxiv.org/pdf/2305.15335",
+   "status": "VERIFIED"
+  },
+  "E29": {
+   "note": "arXiv 1511.05969: Sellentin & Heavens, MNRAS 456, L132; t-type likelihood with an estimated covariance",
+   "source": "https://arxiv.org/abs/1511.05969",
+   "status": "VERIFIED"
+  },
+  "E30": {
+   "note": "arXiv 2108.10402: Percival, Friedrich, Sellentin & Heavens, MNRAS 510, 3207; frequentist-matching prior",
+   "source": "https://arxiv.org/abs/2108.10402",
+   "status": "VERIFIED"
+  },
+  "E31": {
+   "note": "arXiv astro-ph/9501016: Maartens, Ellis & Stoeger, PRD 51, 1525; quadrupole and octopole limits on shear and vorticity",
+   "source": "https://arxiv.org/abs/astro-ph/9501016",
+   "status": "VERIFIED"
+  },
+  "E32": {
+   "note": "arXiv 1906.02552: Planck 2018 VII (A&A 641, A7); residual systematics limit polarization tests",
+   "source": "https://arxiv.org/abs/1906.02552",
+   "status": "VERIFIED"
+  },
+  "E35": {
+   "note": "no record of doi:10.1093/mnras/stag677 found; nearest: arXiv 2604.08314 (CF4 peculiar-velocity correlation function), authors not seen",
+   "source": "https://arxiv.org/abs/2604.08314",
+   "status": "NOT_FOUND"
+  },
+  "E36": {
+   "note": "ApJ 332, L7 not confirmed by a search; the velocity correlation tensor is re-derived and tested (R54-EQ-30/31)",
+   "source": "",
+   "status": "NOT_FOUND"
+  },
+  "E37": {
+   "note": "arXiv astro-ph/9502079: Strauss & Willick, Phys. Rep. 261, 271",
+   "source": "https://arxiv.org/abs/astro-ph/9502079",
+   "status": "VERIFIED"
+  },
+  "E38": {
+   "note": "arXiv 1012.2912: Davis et al., ApJ 741, 67 (identifier seen; the (1 + u/c)^2 factor was not seen in the search result)",
+   "source": "https://arxiv.org/abs/1012.2912",
+   "status": "IDENTIFIER_ONLY"
+  },
+  "E39": {
+   "note": "arXiv astro-ph/0512159: Hui & Greene, PRD 73, 123526; correlated luminosity-distance fluctuations from peculiar motion",
+   "source": "https://arxiv.org/abs/astro-ph/0512159",
+   "status": "VERIFIED"
+  },
+  "E40": {
+   "note": "arXiv 1312.1022: Koda et al. (identifier seen; the sinc damping form is attributed to it by later papers)",
+   "source": "https://arxiv.org/abs/1312.1022",
+   "status": "IDENTIFIER_ONLY"
+  },
+  "E41": {
+   "note": "arXiv 1411.6665: Watkins & Feldman, MNRAS 450, 1868; unbiased estimator with Gaussian errors",
+   "source": "https://arxiv.org/abs/1411.6665",
+   "status": "VERIFIED"
+  },
+  "E42": {
+   "note": "arXiv 2212.10328: Sorrenti, Durrer & Kunz; Pantheon+ dipole, direction differing from the CMB dipole (as summarised in arXiv 2403.17741)",
+   "source": "https://arxiv.org/abs/2212.10328",
+   "status": "VERIFIED"
+  },
+  "E48": {
+   "note": "Negroponte & Silk, PRL 44, 1433 (1980), doi:10.1103/PhysRevLett.44.1433, polarization in anisotropic universes",
+   "source": "https://doi.org/10.1103/PhysRevLett.44.1433",
+   "status": "VERIFIED"
+  }
+ },
+ "limitations": [
+  "Published numbers come from the benchmark spec and from the paper text read in R54-L03; literature checks are web searches of 2026-11-16.",
+  "A TIE is never scored as a WIN; NOT_COMPARABLE is used whenever data or model class differ."
+ ],
+ "node": "R54-L07",
+ "novelty_checks": {
+  "H-L1b": {
+   "nearest_prior_art": [
+    "E01/E02 Saadeh et al. 2016 (perfect-fluid Bianchi limits from Planck T+pol)",
+    "E03 Pontzen & Challinor 2007",
+    "arXiv:1102.5235 (free-streaming neutrino stress back-reacts on a Bianchi-I anisotropy; temperature only)",
+    "E46 Basko & Polnarev 1980 (kernels)"
+   ],
+   "novelty": "LOW-MODERATE (searched): no prior T+E limit with a radiation-stress history map was found; the kernels are a re-derivation and the present-shear numbers are model illustrations",
+   "question": "prior stress-corrected Bianchi-I CMB shear limits",
+   "searches": [
+    "Bianchi I shear CMB limit neutrino anisotropic stress free-streaming shear decay constraint quadrupole polarization (extended search)"
+   ]
+  },
+  "H-L5g": {
+   "nearest_prior_art": [
+    "E43 Nusser & Tully 2026 (per-catalogue log-distance dipoles; 6dFGS removal)",
+    "E09 Stiskalek et al. 2026 (TF zero-point dipole)",
+    "E33 Boubel et al. 2024 (TF H0 dipole)"
+   ],
+   "novelty": "LOW (searched): E43 already compares constituent catalogues with a log-distance estimator; the exact pair-sum cross-covariance between indicators is the only addition, and the step is UNRESOLVED (R54-L04)",
+   "question": "cross-indicator common-mode test of the CF4 hemisphere asymmetry with a catalogue-level LCDM covariance",
+   "searches": [
+    "Cosmicflows-4 hemisphere asymmetry zero point distance indicators Tully-Fisher fundamental plane supernova north south calibration offset (extended search)"
+   ]
+  }
+ },
+ "provenance": {
+  "inputs_sha256": {
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L01_RESULT.json": "14db3f303fbd4d4e03eb290bcdfbcd3ca4e03d40d032fbd10e2684f66124602e",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L02_RESULT.json": "0c3b18b2cab564a8f72d1c001229d834af72aa4161b5b78c619bf2621488a15c",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L03_RESULT.json": "0df35f1d30505cea66a6087d341904fdcb2be07787ec413288b59a3a60fa0125",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L04_RESULT.json": "1c057c92471b5ed0e9f5b58b07cd7f08cd340277938169c6d0db75d59f82b94c",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L05_CF4_EXACT.json": "8f9535fa126164f72d5aaa4820283c228b4181b180feb54ce14df5a715d9beb8",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L06_JOINT.json": "f82a5728631a57adf7737cf2ba2af81c79e4c0b06f0fcdca3e45e28665fce846",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L1_TYPE1_TE.json": "0f490ccbdfc300dbaf1841460e5eeabe43fd3dd0d3b9a39d8518212037b8aa3c",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L5_LOWZ_FRAMES.json": "1a027ea681268ef920ee64abf1854152d0b12017d7b7fb4dc1c72d21b6cb35e5"
+  },
+  "numpy": "2.4.2",
+  "python": "3.12.3",
+  "scipy": "1.17.0",
+  "script": "scripts/r54/run_r54_l07_benchmark.py",
+  "script_sha256": "ddf17d60f7d92045f81abf7ae14d24fab03eff4d0e156ff8614d9f8ed1a4e714",
+  "spec_note": "ADVERSARIAL_BENCHMARK_SPEC.json is generated from this result (status, score), so only its target list is bound",
+  "spec_targets_read": [
+   "B01",
+   "B02",
+   "B03",
+   "B04",
+   "B05",
+   "B06",
+   "B07",
+   "B09",
+   "B08"
+  ]
+ },
+ "schema": "htt.r54.l07_benchmark/1",
+ "score_counts": {
+  "LOSS": 0,
+  "NOT_COMPARABLE": 6,
+  "TIE": 3,
+  "WIN": 0
+ },
+ "scores": {
+  "B01": "NOT_COMPARABLE",
+  "B02": "TIE",
+  "B03": "NOT_COMPARABLE",
+  "B04": "NOT_COMPARABLE",
+  "B05": "TIE",
+  "B06": "NOT_COMPARABLE",
+  "B07": "NOT_COMPARABLE",
+  "B08": "NOT_COMPARABLE",
+  "B09": "TIE"
+ },
+ "status": "DONE_SCOPED_C0",
+ "targets": {
+  "B01": {
+   "measured": {
+    "perfect_fluid_T_only_95": 1.1406779486038333e-09,
+    "perfect_fluid_T_plus_E_95": 1.4211001657147685e-10
+   },
+   "node": "R54-L07",
+   "published": 4.7e-11,
+   "published_claim": "perfect-fluid Bianchi shear limits from Planck T+pol",
+   "ratio_to_published": 3.0236173738612098,
+   "reason": "different data (all-ell T + polarization against the ell = 2 carrier); the T+E bound uses the E lane, which is CLAIMABLE; R54 adds the radiation-stress model label",
+   "score": "NOT_COMPARABLE",
+   "status": "REPRODUCED"
+  },
+  "B02": {
+   "difference_in_published_sd": 1.4165647876722935,
+   "measured": {
+    "TF_dipole_percent": 5.374908308905064,
+    "TF_wald_p_with_body": 0.1899502402640926,
+    "direction_l_b_deg": [
+     286.88295582316186,
+     -2.390730662043524
+    ]
+   },
+   "node": "R54-L04",
+   "published": {
+    "percent": 4.1,
+    "sd": 0.9
+   },
+   "published_claim": "CF4 zero-point dipole 4.1 +- 0.9 % (TF W1)",
+   "reason": "same amplitude class on different selections (all TF groups against TF W1); with the exact LCDM body the TF dipole is not significant",
+   "score": "TIE",
+   "status": "REPRODUCED"
+  },
+  "B03": {
+   "amplitude_reproduced": false,
+   "direction_reproduced": true,
+   "measured": {
+    "V_body_angle_deg": 37.79023487199596,
+    "V_body_km_s": 370.87833055230124,
+    "V_white_angle_deg": 10.909785727832208,
+    "V_white_km_s": 282.75826781343113
+   },
+   "node": "R54-L04",
+   "published": {
+    "km_s": 419.0,
+    "l_b_deg": [
+     298.0,
+     -8.0
+    ],
+    "sd": 36.0
+   },
+   "published_claim": "CF4 bulk flow 419 +- 36 km/s at 200 h^-1 Mpc toward (298,-8)",
+   "reason": "the published bulk flow is a 200 h^-1 Mpc volume moment; the R54 V is a window-fit velocity of the log-distance estimator",
+   "score": "NOT_COMPARABLE",
+   "status": "NOT_REPRODUCED"
+  },
+  "B04": {
+   "measured": {
+    "angle_to_published_axis_deg": 77.1151723066324,
+    "best_template_axis_l_b_deg": [
+     252.185160630466,
+     79.1633412593184
+    ],
+    "robust_class": "DEPENDS_ON_ZERO_POINT_NUISANCE_MODEL"
+   },
+   "node": "R54-L07",
+   "published": {
+    "l_b_deg": [
+     295.0,
+     5.0
+    ]
+   },
+   "published_claim": "CF4 expansion-rate multipoles with a common axis read as covariant cosmography",
+   "reason": "R54 assigns no physical axis: the class depends on the zero-point nuisance model (R54-L04)",
+   "score": "NOT_COMPARABLE",
+   "status": "NOT_REPRODUCED"
+  },
+  "B05": {
+   "R54_excess_tails": {
+    "NVSS": 0.42116777851279785,
+    "Quaia_G20": 0.309208812103659
+   },
+   "measured": {
+    "Mittal2024_Quaia_Poisson": {
+     "difference_in_published_sd": -0.9190470241826617,
+     "owned_D": 0.008421041513773143,
+     "published_D": 0.011,
+     "status": "REPRODUCED"
+    },
+    "Wagenveld2023_NVSS_Poisson": {
+     "difference_in_published_sd": 0.006190777924745242,
+     "owned_D": 0.014017953255981761,
+     "published_D": 0.014,
+     "status": "REPRODUCED"
+    }
+   },
+   "node": "R54-L03",
+   "published_claim": "count-dipole excess above 5 sigma",
+   "reason": "the amplitudes agree; the R54 tails differ because the receipt covariance carries declared declination and mask systematics, an error-model choice that is not shown to be better calibrated (no WIN)",
+   "score": "TIE",
+   "status": "REPRODUCED"
+  },
+  "B06": {
+   "measured": {
+    "E21_redshift_tomography": -2.032982456140351,
+    "E22_aberration_doppler": -0.6845098039215686
+   },
+   "node": "R54-L06",
+   "published_claim": "kinematic velocity from redshift tomography and from aberration",
+   "reason": "no owned map-level aberration or redshift-tomography data; published anchors only",
+   "score": "NOT_COMPARABLE",
+   "status": "NOT_REPRODUCIBLE_FROM_TEXT"
+  },
+  "B07": {
+   "measured": null,
+   "node": "R54-L06",
+   "published_claim": "proper-motion signatures of anisotropic expansion",
+   "reason": "Gaia CRF3 systematics model not opened (RESEARCH_DAG not_opened)",
+   "score": "NOT_COMPARABLE",
+   "status": "NOT_REPRODUCIBLE_FROM_TEXT"
+  },
+  "B08": {
+   "direction_of_change_reproduced": true,
+   "measured": {
+    "FP_NOT_SDSS_minus_FP_SDSS_mag": -0.0737447857242181,
+    "outer_windows_joint_p_method_monopoles": 6.640983941597589e-05,
+    "outer_windows_joint_p_without_6dFGS_proxy": 0.021207504113683138
+   },
+   "node": "R54-L04",
+   "published": "removing 6dFGS lowers the upper-bin deviation",
+   "published_claim": "CF4 dipoles per constituent catalogue with a log-distance estimator: TFR and 6dFGS larger than SDSS and SN; removing 6dFGS lowers the upper-bin deviation to 1.56 sigma",
+   "reason": "6dFGSv is not separable from other non-SDSS FP in owned files and the radial bins differ; only the direction of the change is compared",
+   "score": "NOT_COMPARABLE",
+   "status": "NOT_REPRODUCIBLE_FROM_TEXT"
+  },
+  "B09": {
+   "measured": {
+    "r_E_perfect_fluid": 0.07110146579877807
+   },
+   "node": "R54-L07",
+   "published_claim": "first-order polarized transfer in a flat anisotropic universe (temperature and polarization quadrupoles)",
+   "reason": "kernel identity (tests/r54/test_r54_modules.py::test_eq03_sympy_seal_of_kernels); a re-derivation, no novelty",
+   "score": "TIE",
+   "status": "REPRODUCED"
+  }
+ }
+}

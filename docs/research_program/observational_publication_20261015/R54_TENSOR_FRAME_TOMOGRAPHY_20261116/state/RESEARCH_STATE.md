@@ -46,10 +46,10 @@ None for the cloud nodes. Local nodes need the data drive; PR4 simulations are n
 - R54-L04: DONE_SCOPED_C0
 - R54-L02: DONE_SCOPED_C0
 - R54-L03: DONE_SCOPED_C0
-- R54-L06: PENDING_LOCAL
-- R54-L07: PENDING_LOCAL
+- R54-L06: DONE_SCOPED_C0
+- R54-L07: DONE_SCOPED_C0
 - R54-L08: PENDING_LOCAL
 
 ## Next minimal action
 
-R54-L06, then the remaining nodes in the order above.
+R54-L08, then the remaining nodes in the order above.

@@ -64,7 +64,7 @@ The conversion of (Sigma_T, Sigma_E) to a present-day shear is not robust: it de
 
 - evidence: ODE with photon and neutrino stress (massless and minimal normal ordering with the exact collisionless stress weight R54-EQ-06); analytic radiation-era oscillator test
 - validity: linear; the statement is qualitative and every number is an illustration
-- novelty: LOW, partly checked: E05 shows that free-streaming neutrinos invalidate CMB temperature limits in the magnetic Bianchi I case and E06, E07 give the modified shear decay under collisionless stresses; full check in R54-L07
+- novelty: LOW-MODERATE (searched): no prior T+E limit with a radiation-stress history map was found; the kernels are a re-derivation and the present-shear numbers are model illustrations; nearest prior art: E01/E02 Saadeh et al. 2016 (perfect-fluid Bianchi limits from Planck T+pol); E03 Pontzen & Challinor 2007; arXiv:1102.5235 (free-streaming neutrino stress back-reacts on a Bianchi-I anisotropy; temperature only); E46 Basko & Polnarev 1980 (kernels)
 - testability: HIGH
 - robustness: s0/Sigma_T changes sign with photon stress (-0.000244); (c_T, c_E) = (0.00166, -0.0254) massless and (0.000858, -0.0147) for minimal normal ordering; Sigma_T per unit initial shear changes sign between an assumed free-streaming onset at z_i = 1.5e+10 (T_nu = 2.5 MeV) and 2e+10 (3.4 MeV), an interval that contains the decoupling estimate of 3.12 MeV for muon and tau neutrinos (E49; 1.87 MeV for electron neutrinos) (r_E from 0.050 to 0.109 before the sign change, -1.057 to 0.109 over all 8 points)
 - risk: quoting an illustration number as a limit
@@ -246,7 +246,7 @@ The CF4 dipole excess is a hemisphere step of equal size in all four indicator f
 
 - evidence: per-method hemisphere steps with the exact cross-covariance; hemisphere-split axis scan with the exact body
 - validity: linear body; hemisphere is a proxy for survey labels; the sign(dec) axis was chosen after the first pass
-- novelty: LOW, pending R54-L07: E43 fits per-catalogue dipoles with a log-distance estimator and finds larger dipoles for TFR and 6dFGS than for SDSS and SN; E09 and E33 find the TF dipole compatible with LCDM flows; specific here is the exact cross-covariance between families
+- novelty: LOW (searched): E43 already compares constituent catalogues with a log-distance estimator; the exact pair-sum cross-covariance between indicators is the only addition, and the step is UNRESOLVED (R54-L04); nearest prior art: E43 Nusser & Tully 2026 (per-catalogue log-distance dipoles; 6dFGS removal); E09 Stiskalek et al. 2026 (TF zero-point dipole); E33 Boubel et al. 2024 (TF H0 dipole)
 - testability: HIGH
 - robustness: consistency p=0.867; single-axis tail 0.0017; tail of the scan maximum over 151 split axes 0.0339; the pole ranks 1 of 151; jackknife pole dipole -3.6% to -3.1%
 - risk: equal steps can have different causes (a 6dFGS versus SDSS zero point inside FP, local flows in the shallow TF and SN samples); the four estimates share the body (variance of the best single family / variance of the common step = 1.15); the step (z < 0.055) and the window excess (outer windows) are different measurements

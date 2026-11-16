@@ -131,8 +131,8 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
 | R54-L04 | DONE_SCOPED_C0 |
 | R54-L02 | DONE_SCOPED_C0 |
 | R54-L03 | DONE_SCOPED_C0 |
-| R54-L06 | PENDING_LOCAL |
-| R54-L07 | PENDING_LOCAL |
+| R54-L06 | DONE_SCOPED_C0 |
+| R54-L07 | DONE_SCOPED_C0 |
 | R54-L08 | PENDING_LOCAL |
 
 ### 7.1 R54-L01 T+E 추정량 보정 (FFP10 300개)
@@ -189,3 +189,32 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
   공통 초과 Wald p = 0.12, 두 목록의 일관성 p = 0.902. 결정: H-L2a stays REJECTED for the owned estimators.
 - 경쟁 추정량(보유 목록에서 재현): Wagenveld et al. 2023 NVSS Poisson D = 0.014 (공개 0.014; 차이 0.01 공개 sd; 사용 원천 325752 대 공개 345803) → REPRODUCED;
   Mittal et al. 2024 Quaia Poisson (|b| > 40) D = 0.00842 (공개 0.011; 차이 -0.92 공개 sd) → REPRODUCED.
+
+### 7.5 R54-L06 결합 frame tomography (정밀도 형태)
+
+- 식별: polar 블록(V_w 4깊이, A_cal, beta_ex) rank 15 / 18 (깊이별 V_w와 A_cal이 퇴화); STF2 블록 rank 10 / 10 (완전유체 지도),
+  복사 응력 가설에서는 rank 5 / 10 (E lane 없이 CMB가 s0를 고정하지 않음); 축 벡터 omega는 열이 없어 미식별.
+- 전역 tilt 폐합(R54-EQ-38, R54-L03 계수 공분산): chi2 6.58 / 3, p = 0.0865 (R54-L05의 예비값 0.0895).
+- 완전유체 s0의 Frobenius 95% 상한 1.3e-09 (CMB T + CF4 사중극, 보정 사중극 q_cal 자유).
+
+| polar 블록 수송 가설 | chi2 | dof | p |
+|---|---|---|---|
+| LCDM body only (V = A_cal = beta_ex = 0) | 39.3 | 18 | 0.00259 |
+| global tilt: V_w = V at all depths, c beta_ex = -V, A_cal = 0 | 23.0 | 15 | 0.0832 |
+| bulk flow V and an independent count frame offset, A_cal = 0 | 16.8 | 12 | 0.158 |
+| zero point A_cal and a count frame offset, V = 0 | 11.0 | 12 | 0.531 |
+| V + A_cal + count frame offset | 5.6 | 9 | 0.783 |
+
+| STF2 블록 수송 가설 | chi2 | dof | p |
+|---|---|---|---|
+| LCDM (s0 = q_cal = 0) | 66.2 | 65 | 0.435 |
+| type I, perfect fluid: s0 common to CMB and CF4, q_cal = 0 | 64.6 | 60 | 0.318 |
+| zero point only: q_cal free, s0 = 0 | 41.3 | 60 | 0.969 |
+| type I perfect fluid + zero point | 39.7 | 55 | 0.94 |
+
+### 7.6 R54-L07 적대적 벤치마크
+
+- 목표별 상태/점수: B01 REPRODUCED/NOT_COMPARABLE, B02 REPRODUCED/TIE, B03 NOT_REPRODUCED/NOT_COMPARABLE, B04 NOT_REPRODUCED/NOT_COMPARABLE, B05 REPRODUCED/TIE, B06 NOT_REPRODUCIBLE_FROM_TEXT/NOT_COMPARABLE, B07 NOT_REPRODUCIBLE_FROM_TEXT/NOT_COMPARABLE, B08 NOT_REPRODUCIBLE_FROM_TEXT/NOT_COMPARABLE, B09 REPRODUCED/TIE.
+- 점수 합계: WIN 0, TIE 3, LOSS 0, NOT_COMPARABLE 6. TIE를 WIN으로 세지 않는다.
+- 증거 검증: 미검증 17행 중 13행을 일차 자료로 확인; 남은 행 E35, E36, E38, E40 (상태를 달고 인용).
+- 신규성(H-L1b, H-L5g): state/HYPOTHESIS_GRAPH.md의 novelty 항목(가장 가까운 선행연구 포함).

@@ -330,11 +330,15 @@
    "with": "    mono = np.ones((z.size, 1))\n    step = "
   },
   {
-   "detection_to_implement": "identification table must still report the null directions; test compares rank before and after",
+   "detection": "identification table must still report the null directions; test compares rank before and after",
+   "file": "htt/htt/htt/infer/r54_joint.py",
    "id": "MG-L07",
+   "must_fail": "tests/r54/test_r54_joint.py::test_mg_l07_singular_block_keeps_its_null_direction",
    "mutation": "add 1e-6 * I to a singular block before inversion",
    "node": "R54-L06",
-   "status": "TO_IMPLEMENT_WITH_NODE"
+   "replace": "    fs = np.asarray(f, float)\n",
+   "status": "IMPLEMENTED",
+   "with": "    fs = np.asarray(f, float) + 1e-6 * np.eye(np.asarray(f).shape[0])\n"
   }
  ],
  "rule": "a gate is valid only if the named test fails under the mutation and passes without it; receipts are in MUTATION_GATE_RECEIPT.json",
