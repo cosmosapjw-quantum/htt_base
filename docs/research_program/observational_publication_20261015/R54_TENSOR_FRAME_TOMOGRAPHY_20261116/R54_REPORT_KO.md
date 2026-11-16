@@ -133,7 +133,7 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
 | R54-L03 | DONE_SCOPED_C0 |
 | R54-L06 | DONE_SCOPED_C0 |
 | R54-L07 | DONE_SCOPED_C0 |
-| R54-L08 | PENDING_LOCAL |
+| R54-L08 | DONE_SCOPED_C0 |
 
 ### 7.1 R54-L01 T+E 추정량 보정 (FFP10 300개)
 
@@ -177,6 +177,7 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
 - 채택 E 공분산: FFP10 + ell = 2 E/B 대각 floor 0.127 uK^2 (R54-L1 B-null 0.0773, half-mission 0.00524,
   파이프라인 분산 0.0124, 실험 간 분산 0.127 중 최대).
 - 채택 공분산의 B ell=2 null 꼬리: BeyondPlanck_v2_mean 0.158, BeyondPlanck_v2_posterior 0.945, Cosmoglobe_DR1 0.871, PR3_Commander 0.651, PR3_NILC 0.827, PR3_SEVEM 0.581, PR3_SMICA 0.694, WMAP9_V 0.743. 통과한 자료 계열: Cosmoglobe_BeyondPlanck, Planck_PR3, WMAP9 → E lane CLAIMABLE (규칙: 서로 다른 두 계열 이상, DV-L02-9).
+- 원고 상태(R54-L08 심사 RC-01): E lane은 DIAGNOSTIC으로 다룬다. 아래 floor가 순환적이기 때문이다.
 - 주의: floor는 FFP10 B2 분산의 10.6배이고, 가장 큰 성분(실험 간 분산)은 같은 E2/B2 자료에서 계산된다. 통과는 오차 확대의 결과이며
   채택 공분산에서 E lane 한계는 그만큼 약하다(R54-L08 심사에 넘기는 위험).
 
@@ -214,7 +215,13 @@ F 뷰는 매개변수 공간에 선언된 볼록 body가 있어야 한다. CMB l
 
 ### 7.6 R54-L07 적대적 벤치마크
 
-- 목표별 상태/점수: B01 REPRODUCED/NOT_COMPARABLE, B02 REPRODUCED/TIE, B03 NOT_REPRODUCED/NOT_COMPARABLE, B04 NOT_REPRODUCED/NOT_COMPARABLE, B05 REPRODUCED/TIE, B06 NOT_REPRODUCIBLE_FROM_TEXT/NOT_COMPARABLE, B07 NOT_REPRODUCIBLE_FROM_TEXT/NOT_COMPARABLE, B08 NOT_REPRODUCIBLE_FROM_TEXT/NOT_COMPARABLE, B09 REPRODUCED/TIE.
-- 점수 합계: WIN 0, TIE 3, LOSS 0, NOT_COMPARABLE 6. TIE를 WIN으로 세지 않는다.
+- 목표별 상태/점수: B01 REPRODUCED/NOT_COMPARABLE, B02 REPRODUCED/NOT_COMPARABLE, B03 NOT_REPRODUCED/NOT_COMPARABLE, B04 NOT_REPRODUCED/NOT_COMPARABLE, B05 REPRODUCED/TIE, B06 NOT_REPRODUCIBLE_FROM_TEXT/NOT_COMPARABLE, B07 NOT_REPRODUCIBLE_FROM_TEXT/NOT_COMPARABLE, B08 NOT_REPRODUCIBLE_FROM_TEXT/NOT_COMPARABLE, B09 REPRODUCED/TIE.
+- 점수 합계: WIN 0, TIE 2, LOSS 0, NOT_COMPARABLE 7. TIE를 WIN으로 세지 않는다.
 - 증거 검증: 미검증 17행 중 13행을 일차 자료로 확인; 남은 행 E35, E36, E38, E40 (상태를 달고 인용).
 - 신규성(H-L1b, H-L5g): state/HYPOTHESIS_GRAPH.md의 novelty 항목(가장 가까운 선행연구 포함).
+
+### 7.7 R54-L08 원고 결정
+
+- 결정: **BOUNDED_NOTE_EXTENDED** (독립 decision-gate 심사 권고: BOUNDED_NOTE_EXTENDED (conditional on RC-01 to RC-03)). 근거와 심사 표는 FINAL_DECISION_R57.md, 주장 행은 MANUSCRIPT_CLAIM_TABLE_R54.md.
+- 심사에 따른 상태 조정: E lane은 원고에서 DIAGNOSTIC; H-L2a는 HOLD(검정력 0.20, kill 기준 미평가); R53의 CF4 기반 행은 대체됨으로 표시.
+- 프로그램은 여기서 멈춘다. 새 연구 루프나 감사 전용 노드는 열지 않는다.

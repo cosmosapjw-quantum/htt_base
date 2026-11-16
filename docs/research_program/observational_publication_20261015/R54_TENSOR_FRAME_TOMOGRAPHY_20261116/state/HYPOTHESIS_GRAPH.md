@@ -100,7 +100,7 @@ Octupole or higher morphology constrains type-I parameters.
 - executed result: ell >= 3 modes enter only through covariance
 - next action: family comparison beyond type I remains blocked on a source-bound transfer
 
-### H-L2a (L2) - REJECT
+### H-L2a (L2) - HOLD
 
 The owned count dipoles (Quaia G<20, NVSS; receipt estimator) exceed the kinematic expectation.
 
@@ -111,8 +111,8 @@ The owned count dipoles (Quaia G<20, NVSS; receipt estimator) exceed the kinemat
 - robustness: power against a dipole twice the kinematic one: 0.20 at the 5% level
 - risk: reading a non-detection as evidence against the published anomaly
 - kill criterion: the calibrated estimators of R54-L03, with power of at least 0.8 against the published excess, give p >= 0.01
-- executed result: excess tails p=0.27 (Quaia), 0.46 (NVSS); common excess p=0.12; no decision at this power; R54-L03 calibrated excess tails 0.309 (Quaia), 0.421 (NVSS); H-L2a stays REJECTED for the owned estimators; R54-L03 decision check: H-L2a stays REJECTED for the owned estimators (calibrated covariance; REJECT holds for the owned estimators only)
-- next action: none for the owned estimators; R54-L06 tilt closure uses the calibrated count covariance
+- executed result: excess tails p=0.27 (Quaia), 0.46 (NVSS); common excess p=0.12; no decision at this power; R54-L03 calibrated excess tails 0.309 (Quaia), 0.421 (NVSS); H-L2a stays REJECTED for the owned estimators; R54-L08 decision-gate review: HOLD (see R57_DECISION_REVIEW.json)
+- next action: none: programme stopped at R54-L08
 
 ### H-L2b (L2) - HOLD
 
@@ -232,7 +232,7 @@ The R36/H03 linear-in-distance estimator carries a deterministic same-estimator 
 
 - evidence: same-estimator mock with the operator rebuilt per draw; analytic exp(+s^2/2) check in the unit test
 - validity: exact for Gaussian distance-modulus errors
-- novelty: LOW (the log-normal distance bias is known, E41; E43 uses a log-distance estimator on CF4); new for this project's R36, H03 and R52 products
+- novelty: LOW (searched): the estimator is E41-type and the pair-sum body is the standard velocity correlation tensor; the contribution is their application to the CF4 window multipoles; nearest prior art: E41 Watkins & Feldman 2015 (log-distance estimator avoiding the log-normal bias); E37 Strauss & Willick 1995 (Malmquist and estimator biases); E36 Gorski 1988 velocity correlation tensor (identifier NOT_FOUND; the tensor is re-derived and tested in R54-EQ-30/31)
 - testability: done
 - robustness: bias carries 14-40% of the pole dipole; quadrupole null p 0.00343 -> 0.129; sky fraction 0 -> 0.0755
 - risk: none

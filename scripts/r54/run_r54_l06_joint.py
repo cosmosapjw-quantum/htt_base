@@ -190,7 +190,8 @@ def compute() -> dict:
                                     "estimate_V_A_beta": est_p, "covariance_V_A_beta": cov_p},
                    "stf2": {"coordinates": names_s, "probes": [probe_cmb["name"], probe_cf["name"]], "n_data": blk_s["n"], "estimate": est_s,
                             "covariance": cov_s, "s0_frobenius_range_95": [gr["Q_min"], gr["Q_max"]],
-                            "E_lane": f"Sigma_E not used: E lane {l02['e_lane_status']} (R54-L02)"},
+                            "E_lane": f"Sigma_E not used: the R54-L02 rule status is {l02['e_lane_status']} only through an adopted floor partly computed from the tested maps; "
+                                      "the E lane is treated as DIAGNOSTIC (DV-L06-2)"},
                    "axial_vector": {"status": "UNIDENTIFIED", "reason": "no owned probe has a source-bound response to omega (no column)"}},
         "identification": {"polar_vector_V_w_free": ident_p, "stf2_perfect_fluid": ident_s,
                            "stf2_with_radiation_stress": {**ident_s_stress, "note": "with anisotropic stress the CMB T functional does not fix s0 (E lane diagnostic): only CF4 informs s0 + q_cal"},

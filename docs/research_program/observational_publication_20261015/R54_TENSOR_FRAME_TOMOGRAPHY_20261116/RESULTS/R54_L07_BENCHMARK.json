@@ -114,6 +114,19 @@
     "Bianchi I shear CMB limit neutrino anisotropic stress free-streaming shear decay constraint quadrupole polarization (extended search)"
    ]
   },
+  "H-L5f": {
+   "nearest_prior_art": [
+    "E41 Watkins & Feldman 2015 (log-distance estimator avoiding the log-normal bias)",
+    "E37 Strauss & Willick 1995 (Malmquist and estimator biases)",
+    "E36 Gorski 1988 velocity correlation tensor (identifier NOT_FOUND; the tensor is re-derived and tested in R54-EQ-30/31)"
+   ],
+   "novelty": "LOW (searched): the estimator is E41-type and the pair-sum body is the standard velocity correlation tensor; the contribution is their application to the CF4 window multipoles",
+   "question": "log-distance CF4 estimator replacing the biased linear-in-distance estimator, with an exact pair-sum LCDM body",
+   "searches": [
+    "arXiv 1411.6665 Watkins Feldman unbiased estimator peculiar velocities Gaussian distribution",
+    "Gorski 1988 ApJ 332 L7 velocity correlation (not confirmed)"
+   ]
+  },
   "H-L5g": {
    "nearest_prior_art": [
     "E43 Nusser & Tully 2026 (per-catalogue log-distance dipoles; 6dFGS removal)",
@@ -134,7 +147,7 @@
    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L03_RESULT.json": "0df35f1d30505cea66a6087d341904fdcb2be07787ec413288b59a3a60fa0125",
    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L04_RESULT.json": "1c057c92471b5ed0e9f5b58b07cd7f08cd340277938169c6d0db75d59f82b94c",
    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L05_CF4_EXACT.json": "8f9535fa126164f72d5aaa4820283c228b4181b180feb54ce14df5a715d9beb8",
-   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L06_JOINT.json": "f82a5728631a57adf7737cf2ba2af81c79e4c0b06f0fcdca3e45e28665fce846",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L06_JOINT.json": "8d5f6bdf0998b0bba29b50981e73f4b36845f6601d31d68115a1e46fa35a1196",
    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L1_TYPE1_TE.json": "0f490ccbdfc300dbaf1841460e5eeabe43fd3dd0d3b9a39d8518212037b8aa3c",
    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L5_LOWZ_FRAMES.json": "1a027ea681268ef920ee64abf1854152d0b12017d7b7fb4dc1c72d21b6cb35e5"
   },
@@ -142,7 +155,7 @@
   "python": "3.12.3",
   "scipy": "1.17.0",
   "script": "scripts/r54/run_r54_l07_benchmark.py",
-  "script_sha256": "ddf17d60f7d92045f81abf7ae14d24fab03eff4d0e156ff8614d9f8ed1a4e714",
+  "script_sha256": "a60ad909a0bd6cf30f241503171ba272dc786ac42843b5615d5653efe51cf36c",
   "spec_note": "ADVERSARIAL_BENCHMARK_SPEC.json is generated from this result (status, score), so only its target list is bound",
   "spec_targets_read": [
    "B01",
@@ -159,13 +172,13 @@
  "schema": "htt.r54.l07_benchmark/1",
  "score_counts": {
   "LOSS": 0,
-  "NOT_COMPARABLE": 6,
-  "TIE": 3,
+  "NOT_COMPARABLE": 7,
+  "TIE": 2,
   "WIN": 0
  },
  "scores": {
   "B01": "NOT_COMPARABLE",
-  "B02": "TIE",
+  "B02": "NOT_COMPARABLE",
   "B03": "NOT_COMPARABLE",
   "B04": "NOT_COMPARABLE",
   "B05": "TIE",
@@ -185,7 +198,7 @@
    "published": 4.7e-11,
    "published_claim": "perfect-fluid Bianchi shear limits from Planck T+pol",
    "ratio_to_published": 3.0236173738612098,
-   "reason": "different data (all-ell T + polarization against the ell = 2 carrier); the T+E bound uses the E lane, which is CLAIMABLE; R54 adds the radiation-stress model label",
+   "reason": "within the factor-10 tolerance of the spec (the tolerance is not changed after the result); the T+E bound is weaker than the published limit and uses the FFP10-only E covariance of a DIAGNOSTIC E lane; different data (all-ell T + polarization against the ell = 2 carrier); R54 adds the radiation-stress model label",
    "score": "NOT_COMPARABLE",
    "status": "REPRODUCED"
   },
@@ -205,8 +218,8 @@
     "sd": 0.9
    },
    "published_claim": "CF4 zero-point dipole 4.1 +- 0.9 % (TF W1)",
-   "reason": "same amplitude class on different selections (all TF groups against TF W1); with the exact LCDM body the TF dipole is not significant",
-   "score": "TIE",
+   "reason": "different selections (all TF groups against TF W1), so the scoring rule gives NOT_COMPARABLE; the amplitude agrees within the tolerance and with the exact LCDM body the TF dipole is not significant (R57 review RC-07)",
+   "score": "NOT_COMPARABLE",
    "status": "REPRODUCED"
   },
   "B03": {
@@ -312,12 +325,13 @@
    "status": "NOT_REPRODUCIBLE_FROM_TEXT"
   },
   "B09": {
+   "label": "re-derivation (identity)",
    "measured": {
     "r_E_perfect_fluid": 0.07110146579877807
    },
    "node": "R54-L07",
    "published_claim": "first-order polarized transfer in a flat anisotropic universe (temperature and polarization quadrupoles)",
-   "reason": "kernel identity (tests/r54/test_r54_modules.py::test_eq03_sympy_seal_of_kernels); a re-derivation, no novelty",
+   "reason": "kernel identity (tests/r54/test_r54_modules.py::test_eq03_sympy_seal_of_kernels); a re-derivation, not a methods comparison, no novelty",
    "score": "TIE",
    "status": "REPRODUCED"
   }

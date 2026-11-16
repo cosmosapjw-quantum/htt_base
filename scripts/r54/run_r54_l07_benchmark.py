@@ -62,6 +62,12 @@ NOVELTY = {
                                     "arXiv:1102.5235 (free-streaming neutrino stress back-reacts on a Bianchi-I anisotropy; temperature only)",
                                     "E46 Basko & Polnarev 1980 (kernels)"],
               "novelty": "LOW-MODERATE (searched): no prior T+E limit with a radiation-stress history map was found; the kernels are a re-derivation and the present-shear numbers are model illustrations"},
+    "H-L5f": {"question": "log-distance CF4 estimator replacing the biased linear-in-distance estimator, with an exact pair-sum LCDM body",
+              "searches": ["arXiv 1411.6665 Watkins Feldman unbiased estimator peculiar velocities Gaussian distribution",
+                           "Gorski 1988 ApJ 332 L7 velocity correlation (not confirmed)"],
+              "nearest_prior_art": ["E41 Watkins & Feldman 2015 (log-distance estimator avoiding the log-normal bias)", "E37 Strauss & Willick 1995 (Malmquist and estimator biases)",
+                                    "E36 Gorski 1988 velocity correlation tensor (identifier NOT_FOUND; the tensor is re-derived and tested in R54-EQ-30/31)"],
+              "novelty": "LOW (searched): the estimator is E41-type and the pair-sum body is the standard velocity correlation tensor; the contribution is their application to the CF4 window multipoles"},
     "H-L5g": {"question": "cross-indicator common-mode test of the CF4 hemisphere asymmetry with a catalogue-level LCDM covariance",
               "searches": ["Cosmicflows-4 hemisphere asymmetry zero point distance indicators Tully-Fisher fundamental plane supernova north south calibration offset (extended search)"],
               "nearest_prior_art": ["E43 Nusser & Tully 2026 (per-catalogue log-distance dipoles; 6dFGS removal)", "E09 Stiskalek et al. 2026 (TF zero-point dipole)",
@@ -85,14 +91,16 @@ def compute() -> dict:
     pf, pft, pub01 = ps["perfect_fluid_T_plus_E"]["frobenius_range_95"]["norm_max"], ps["perfect_fluid_T_only"]["frobenius_range_95"]["norm_max"], 4.7e-11
     t["B01"] = {"measured": {"perfect_fluid_T_plus_E_95": pf, "perfect_fluid_T_only_95": pft}, "published": pub01, "ratio_to_published": pf / pub01,
                 "status": "REPRODUCED" if 0.1 <= pf / pub01 <= 10.0 else "NOT_REPRODUCED", "score": "NOT_COMPARABLE",
-                "reason": f"different data (all-ell T + polarization against the ell = 2 carrier); the T+E bound uses the E lane, which is {d['l02']['e_lane_status']}; "
+                "reason": "within the factor-10 tolerance of the spec (the tolerance is not changed after the result); the T+E bound is weaker than the published "
+                          "limit and uses the FFP10-only E covariance of a DIAGNOSTIC E lane; different data (all-ell T + polarization against the ell = 2 carrier); "
                           "R54 adds the radiation-stress model label"}
     tf = d["l05"]["common_mode"]["white_plus_exact_body"]["per_method"]["TF"]
     pub02, sd02 = 4.1, 0.9
     t["B02"] = {"measured": {"TF_dipole_percent": tf["amplitude_percent"], "TF_wald_p_with_body": tf["p_value"], "direction_l_b_deg": tf["direction_l_b_deg"]},
                 "published": {"percent": pub02, "sd": sd02}, "difference_in_published_sd": (tf["amplitude_percent"] - pub02) / sd02,
-                "status": "REPRODUCED" if abs(tf["amplitude_percent"] - pub02) <= 2.0 * sd02 else "NOT_REPRODUCED", "score": "TIE",
-                "reason": "same amplitude class on different selections (all TF groups against TF W1); with the exact LCDM body the TF dipole is not significant"}
+                "status": "REPRODUCED" if abs(tf["amplitude_percent"] - pub02) <= 2.0 * sd02 else "NOT_REPRODUCED", "score": "NOT_COMPARABLE",
+                "reason": "different selections (all TF groups against TF W1), so the scoring rule gives NOT_COMPARABLE; the amplitude agrees within the tolerance "
+                          "and with the exact LCDM body the TF dipole is not significant (R57 review RC-07)"}
     hw, hg = d["l05"]["log_distance"]["headline_white_only"], d["l05"]["log_distance"]["headline"]
     pub03, sd03 = 419.0, 36.0
     dir_ok, amp_ok = hw["V_only_angle_to_watkins_deg"] <= 20.0, abs(hw["V_only_km_s"] - pub03) <= 2.0 * sd03
@@ -124,7 +132,8 @@ def compute() -> dict:
                 "status": "NOT_REPRODUCIBLE_FROM_TEXT", "score": "NOT_COMPARABLE",
                 "reason": "6dFGSv is not separable from other non-SDSS FP in owned files and the radial bins differ; only the direction of the change is compared"}
     t["B09"] = {"measured": {"r_E_perfect_fluid": d["l1"]["history"]["perfect_fluid"]["r_E"]}, "status": "REPRODUCED", "score": "TIE",
-                "reason": "kernel identity (tests/r54/test_r54_modules.py::test_eq03_sympy_seal_of_kernels); a re-derivation, no novelty"}
+                "label": "re-derivation (identity)",
+                "reason": "kernel identity (tests/r54/test_r54_modules.py::test_eq03_sympy_seal_of_kernels); a re-derivation, not a methods comparison, no novelty"}
     for b in spec["targets"]:
         t[b["id"]]["node"] = b["node"]
         t[b["id"]]["published_claim"] = b["published_claim"]

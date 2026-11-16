@@ -284,7 +284,9 @@ def numbers_local() -> dict:
             "l01_B_pass": bool(b["pass"]), "l01_pi_t": x["t_only"]["Pi_loo"]["p_value"],
             "l01_hm_status": hm["status"], "l01_pd_status": pd["status"],
             "l01_E_status": rc["E_lane_status"], "l01_primary": rc["primary_carrier"],
-            "l01_sdT": sum(rc["primary"]["sd_T"]) / 5, "l01_sdE": sum(rc["primary"]["sd_E"]) / 5})
+            "l01_sdT": sum(rc["primary"]["sd_T"]) / 5, "l01_sdE": sum(rc["primary"]["sd_E"]) / 5,
+            "l01_s0_T": rc["physics_primary"]["present_shear_over_H"]["perfect_fluid_T_only"]["frobenius_range_95"]["norm_max"],
+            "l01_s0_TE": rc["physics_primary"]["present_shear_over_H"]["perfect_fluid_T_plus_E"]["frobenius_range_95"]["norm_max"]})
         if hm["status"] == "DONE_SCOPED_C0":
             out.update({"l01_hm_E2": hm["E2_rms_uK"], "l01_hm_B2": hm["B2_rms_uK"], "l01_noise_E2": hm["ffp10_noise_E2_rms_uK"],
                         "l01_noise_B2": hm["ffp10_noise_B2_rms_uK"]})
@@ -318,6 +320,16 @@ def numbers_local() -> dict:
             "l04_cls_error": cl["log_mono_error"], "l04_robust": dec["robust_class"], "l04_step_class": dec["step_class"],
             "l04_no6_joint_p": no6["headline"]["joint_null_p"], "l04_no6_dip_p": no6["headline"]["dipole_null_p"],
             "l04_no6_outer_p": no6["window_subsets"]["outer_windows_z0.06_z0.08"]["joint"]["p_value"],
+            "l04_q_wald_lo": min([v["headline"]["quadrupole_constant_wald_p"] for v in lv.values()] + [no6["headline"]["quadrupole_constant_wald_p"]]),
+            "l04_q_wald_hi": max([v["headline"]["quadrupole_constant_wald_p"] for v in lv.values()] + [no6["headline"]["quadrupole_constant_wald_p"]]),
+            "l04_q_null_lo": min(v["headline"]["quadrupole_null_p"] for v in lv.values()), "l04_q_null_hi": max(v["headline"]["quadrupole_null_p"] for v in lv.values()),
+            "l04_q_pct_lo": min(v["headline"]["quadrupole_constant_percent"] for v in lv.values()),
+            "l04_q_pct_hi": max(v["headline"]["quadrupole_constant_percent"] for v in lv.values()),
+            "l04_q_ax_lo": min(v["headline"]["quadrupole_axis_angle_to_pole_deg"] for v in lv.values()),
+            "l04_q_ax_hi": max(v["headline"]["quadrupole_axis_angle_to_pole_deg"] for v in lv.values()),
+            "l04_off_z_white": x["survey_offsets"]["white"]["FP_NOT_SDSS-FP_SDSS"]["z_score"],
+            "l04_sdss_south": x["survey_table"]["pooled"]["FP_SDSS"]["n_south_in_common_range"],
+            "l04_err_p_joint": lv["log_mono_error"]["headline"]["joint_null_p"],
             **{f"l04_stab_{k}": v["common_step"] for k, v in x["stability"]["splits"].items()},
             **{f"l04_stab_z_{k}": v["common_z"] for k, v in x["stability"]["splits"].items()}})
     x = local_result("R54-L02")
@@ -365,7 +377,8 @@ def numbers_local() -> dict:
                     "l06_closure_prelim_p": cl["preliminary_receipt_closure_p_R54_L05"],
                     "l06_rank_p": idn["polar_vector_V_w_free"]["rank"], "l06_dim_p": idn["polar_vector_V_w_free"]["dim"],
                     "l06_rank_s": idn["stf2_perfect_fluid"]["rank"], "l06_rank_s_stress": idn["stf2_with_radiation_stress"]["rank"],
-                    "l06_dim_s": idn["stf2_perfect_fluid"]["dim"], "l06_s0_max": x["blocks"]["stf2"]["s0_frobenius_range_95"][1]})
+                    "l06_dim_s": idn["stf2_perfect_fluid"]["dim"], "l06_s0_max": x["blocks"]["stf2"]["s0_frobenius_range_95"][1],
+                    "l06_pi_polar": x["five_views"]["polar_vector"]["Pi"]["null"]["p_value"], "l06_pi_stf2": x["five_views"]["stf2"]["Pi"]["null"]["p_value"]})
     x = local_result("R54-L07")
     if x is not None and x.get("status") == "DONE_SCOPED_C0":
         out.update({f"l07_n_{k.lower()}": v for k, v in x["score_counts"].items()})
@@ -533,6 +546,11 @@ def local_hypothesis_decisions() -> dict:
         out["H-L2a"] = {"decision": "REJECT" if ok else "REOPEN",
                         "result": f"R54-L03 decision check: {x['decision']['excess']} (calibrated covariance; REJECT holds for the owned estimators only)",
                         "next": "none for the owned estimators; R54-L06 tilt closure uses the calibrated count covariance" if ok else "R54-L06"}
+    if DECISION_REVIEW.is_file():                                  # R54-L08 independent decision-gate review overrides
+        rv = json.loads(DECISION_REVIEW.read_text(encoding="utf-8"))
+        for hid, dval in rv.get("hypothesis_overrides", {}).items():
+            out[hid] = {"decision": dval, "result": f"R54-L08 decision-gate review: {dval} (see R57_DECISION_REVIEW.json)",
+                        "next": "none: programme stopped at R54-L08"}
     x = local_result("R54-L04")
     if x is not None and x.get("status") == "DONE_SCOPED_C0":
         dec = x["decision"]
@@ -1415,6 +1433,7 @@ def local_section_ko(n: dict) -> str:
 - 채택 E 공분산: FFP10 + ell = 2 E/B 대각 floor {g3(n['l02_floor'])} uK^2 (R54-L1 B-null {g3(n['l02_floor_R54-L1_B_null_floor_ell2'])}, half-mission {g3(n['l02_floor_half_mission'])},
   파이프라인 분산 {g3(n['l02_floor_pipeline_dispersion'])}, 실험 간 분산 {g3(n['l02_floor_cross_experiment_dispersion'])} 중 최대).
 - 채택 공분산의 B ell=2 null 꼬리: {bn}. 통과한 자료 계열: {n['l02_families']} → E lane {n['l02_e_status']} (규칙: 서로 다른 두 계열 이상, DV-L02-9).
+- 원고 상태(R54-L08 심사 RC-01): E lane은 DIAGNOSTIC으로 다룬다. 아래 floor가 순환적이기 때문이다.
 - 주의: floor는 FFP10 B2 분산의 {n['l02_floor'] / n['B_rms_ffp'] ** 2:.1f}배이고, 가장 큰 성분(실험 간 분산)은 같은 E2/B2 자료에서 계산된다. 통과는 오차 확대의 결과이며
   채택 공분산에서 E lane 한계는 그만큼 약하다(R54-L08 심사에 넘기는 위험).
 """
@@ -1458,6 +1477,15 @@ def local_section_ko(n: dict) -> str:
 - 점수 합계: WIN {n['l07_n_win']}, TIE {n['l07_n_tie']}, LOSS {n['l07_n_loss']}, NOT_COMPARABLE {n['l07_n_not_comparable']}. TIE를 WIN으로 세지 않는다.
 - 증거 검증: 미검증 {n['l07_ev_checked']}행 중 {n['l07_ev_verified']}행을 일차 자료로 확인; 남은 행 {n['l07_ev_open']} (상태를 달고 인용).
 - 신규성(H-L1b, H-L5g): state/HYPOTHESIS_GRAPH.md의 novelty 항목(가장 가까운 선행연구 포함).
+"""
+    if DECISION_REVIEW.is_file() and "l07_n_tie" in n:
+        rv = json.loads(DECISION_REVIEW.read_text(encoding="utf-8"))
+        text += f"""
+### 7.7 R54-L08 원고 결정
+
+- 결정: **{rv['decision']}** (독립 decision-gate 심사 권고: {rv['reviewer']['recommended_decision']}). 근거와 심사 표는 FINAL_DECISION_R57.md, 주장 행은 MANUSCRIPT_CLAIM_TABLE_R54.md.
+- 심사에 따른 상태 조정: E lane은 원고에서 DIAGNOSTIC; H-L2a는 HOLD(검정력 {n['count_power']:.2f}, kill 기준 미평가); R53의 CF4 기반 행은 대체됨으로 표시.
+- 프로그램은 여기서 멈춘다. 새 연구 루프나 감사 전용 노드는 열지 않는다.
 """
     return text
 
@@ -1887,6 +1915,120 @@ Tests: `{TESTS}`.
 """
 
 
+def claim_table_md(n: dict) -> str:
+    """R54 extension of R53/MANUSCRIPT_CLAIM_TABLE.md (DV-L08-1): one row per R54 statement that survived calibration; numbers from RESULTS."""
+    if "l06_np" not in n or "l07_n_tie" not in n:
+        return ""
+    rows = [
+        ("L1 history functionals", "T and E quadrupoles measure two Thomson-kernel functionals of the shear history (R54-EQ-03/04; re-derivation of E46)",
+         "derived; checked", f"r_E(perfect fluid) = {n['r_E_pf']:.4f}; reionization share {100 * n['reion_share']:.0f}%", "R54_L1_TYPE1_TE.json; tests MG-01, MG-02, MG-27"),
+        ("L1 calibration", "The T+E estimator on the 300 FFP10 realisations: plug-in intervals under-cover on the E components; empirical LOO inflation replaces them",
+         "checked", f"95% coverage {n['l01_cov95_lo']:.3f}-{n['l01_cov95_hi']:.3f}; inflation {n['l01_q95_lo']:.2f}-{n['l01_q95_hi']:.2f}; R54-L1 intervals {n['l01_calibrated']}",
+         "R54_L01_RESULT.json"),
+        ("L1 present shear", "Present-day shear is model-labelled: perfect fluid against radiation-stress families", "derived (conditional; illustrations, not limits)",
+         f"perfect fluid, T only, calibrated law {g3(n['l01_s0_T'])} (T+E {g3(n['l01_s0_TE'])} only with the DIAGNOSTIC E lane); joint with CF4 {g3(n['l06_s0_max'])}; "
+         f"under radiation stress s0 is not identified without the E lane (rank {n['l06_rank_s_stress']}/{n['l06_dim_s']})", "R54_L01_RESULT.json; R54_L06_JOINT.json"),
+        ("L1 E lane", "E lane for the manuscript", "diagnostic; passes the B-null only with a circular floor",
+         f"FFP10-only empirical B ell=2 tails {g3(n['l01_B_p'])} (SMICA), {g3(n['l01_B_p_comm'])} (Commander); the R54-L02 rule reaches {n['l02_e_status']} only with a floor "
+         f"{n['l02_floor'] / n['B_rms_ffp'] ** 2:.1f}x the FFP10 B2 variance whose largest component is computed from the tested maps; no Sigma_E or T+E number is quoted as a limit; "
+         f"per-experiment |Sigma_E| norms {g3(n['l02_cg_E'])}, {g3(n['l02_bp_E'])}, {g3(n['l02_wm_E'])} are consistency diagnostics", "R54_L01_RESULT.json; R54_L02_RESULT.json"),
+        ("L1 T lane", "Integrated-shear temperature estimate agrees across experiments", "checked",
+         f"max shift from SMICA {max(n['l02_shift_wmap'], n['l02_shift_cg'], n['l02_shift_bp']):.2f} sd ({n['l02_t_lane']}); analytic T covariance {n['l02_adopt']}",
+         "R54_L02_RESULT.json"),
+        ("L5 CF4 estimator", "The R36 linear-in-distance estimator is biased; the log-distance estimator with an exact LCDM pair-sum body replaces it", "derived; checked (novelty LOW: E41)",
+         f"bias {100 * n['eiv_frac_lo']:.0f}-{100 * n['eiv_frac_hi']:.0f}% of the pole dipole; exact/ideal body sd up to {n['x_ratio_dip_hi']:.2f}", "R54_L05_CF4_EXACT.json"),
+        ("L5 CF4 survey zero point", "FP survey offset between SDSS and non-SDSS samples", "checked; degenerate with the FP hemisphere step",
+         f"{n['l04_off_mag']:.3f} +- {n['l04_off_sd']:.3f} mag with the exact body (z {n['l04_off_z']:.2f}; white errors only z {n['l04_off_z_white']:.2f}); "
+         f"north fractions {n['l04_fn_sdss']:.2f} (SDSS) and {n['l04_fn_notsdss']:.2f} (non-SDSS); 6dFGSv not separable", "R54_L04_RESULT.json"),
+        ("L5 CF4 hemisphere step", "A common hemisphere step across surveys", "unresolved",
+         f"common step {100 * n['l04_common']:.2f} +- {100 * n['l04_common_sd']:.2f}% of H (single axis); the scan-corrected tail {g3(n['sc_tail_scan'])} belongs to the R54-L05 "
+         f"method-level step; the FP_SDSS step rests on {n['l04_sdss_south']} southern groups; z halves {100 * n['l04_stab_z_low_half']:.2f}% (z {n['l04_stab_z_z_low_half']:.2f}) "
+         f"and {100 * n['l04_stab_z_high_half']:.2f}% (z {n['l04_stab_z_z_high_half']:.2f}); class {n['l04_step_class']}", "R54_L04_RESULT.json"),
+        ("L5 CF4 excess over the body", "Window multipoles exceed the LCDM body", "not supported by the decision check; nuisance-model dependent",
+         f"log_survey joint p = {g3(n['l04_ls_joint_p'])}; log_mono_error {g3(n['l04_err_p_joint'])}; robust class {n['l04_robust']}", "R54_L04_RESULT.json"),
+        ("L5 CF4 constant quadrupole (H-L5h)", "A depth-constant fractional quadrupole after the zero-point models", "unresolved; HOLD; statistic chosen after the first pass",
+         f"Wald p {g3(n['l04_q_wald_lo'])}-{g3(n['l04_q_wald_hi'])} across the R54-L04 variants; 20-dof quadrupole null {g3(n['l04_q_null_lo'])}-{g3(n['l04_q_null_hi'])}; "
+         f"{n['l04_q_pct_lo']:.1f}-{n['l04_q_pct_hi']:.1f}% of H; axis {n['l04_q_ax_lo']:.0f}-{n['l04_q_ax_hi']:.0f} deg from the pole; not for the abstract", "R54_L04_RESULT.json"),
+        ("L2 counts", "Owned count-dipole excess over the kinematic expectation", "not established; HOLD (underpowered)",
+         f"tails with receipt systematics Quaia {g3(n['l03_p_q'])}, NVSS {g3(n['l03_p_n'])}; mock-only tails {g3(n['l03_pi_q'])}, {g3(n['l03_pi_n'])}; power {n['count_power']:.2f} "
+         f"against a doubled dipole (kill criterion power >= 0.8 not met); the published amplitudes are reproduced on owned data ({n['l03_w_status']}, {n['l03_m_status']})",
+         "R54_L03_RESULT.json"),
+        ("L6 frames", "One global tilt across depths and probes (R54-EQ-38)", "undecided at this precision",
+         f"closure p = {g3(n['l06_closure_p'])}; global-tilt hypothesis p = {g3(n['l06_p1_p'])} against independent frames p = {g3(n['l06_p2_p'])}", "R54_L06_JOINT.json"),
+        ("L6 pooled polar tail", "Polar block against the LCDM body only", "HOLD; not for the abstract",
+         f"p = {g3(n['l06_p0_p'])} on the pooled zero-point carrier; a calibration dipole with a count offset fits with p = {g3(n['l06_p3_p'])}; the log_survey CF4 dipole null is "
+         f"p = {g3(n['l04_ls_dip_p'])}; the count covariance carries the receipt systematics; five-view Pi (polar {g3(n['l06_pi_polar'])}, STF2 {g3(n['l06_pi_stf2'])}) under the same restriction; forking paths apply",
+         "R54_L06_JOINT.json; R54_L04_RESULT.json"),
+        ("L6 identification", "Unidentified directions", "derived",
+         f"polar rank {n['l06_rank_p']}/{n['l06_dim_p']} (depth velocities vs calibration dipole); omega has no column", "R54_L06_JOINT.json"),
+        ("methods benchmark", "Against published methods on owned data", "checked; no method advantage",
+         f"WIN {n['l07_n_win']}, TIE {n['l07_n_tie']} (B05 reproduction; B09 re-derivation identity), LOSS {n['l07_n_loss']}, NOT_COMPARABLE {n['l07_n_not_comparable']}",
+         "R54_L07_BENCHMARK.json"),
+        ("supersedes R53 Table 4", "R53 rows built on the R36/H03/R52 CF4 operator: beta_RM(0), the counts-vs-CF4 frame chi2 sequence and the CF4 adequacy chi2", "superseded (H-L5f)",
+         "replaced by the log-distance estimator with the exact body (R54-L05/L04) and the joint block of R54-L06; the R53 numbers are not quoted", "R54_L05_CF4_EXACT.json; R54_L06_JOINT.json"),
+        ("supersedes R53 L5 row", "R53 'CF4 apparent-H dipole/STF responses' checked on the R36 operator", "superseded (H-L5f)",
+         "the responses are re-derived for the log estimator (R54-EQ-34) and checked on the committed catalogue", "R54_L05_CF4_EXACT.json"),
+        ("supersedes R53 Table 1 shear row", "R53 '|sigma/H|_0 < 9.5e-10' (no anisotropic stress)", "model-labelled",
+         f"perfect-fluid label required; calibrated T-only value {g3(n['l01_s0_T'])}; not identified under radiation stress", "R54_L01_RESULT.json; R54_L06_JOINT.json"),
+    ]
+    body = "\n".join(f"| {a} | {b} | {c} | {d} | {e} |" for a, b, c, d, e in rows)
+    return f"""# R54 manuscript claim table (extension of R53/MANUSCRIPT_CLAIM_TABLE.md)
+
+Generated by `scripts/r54/build_r54_contract.py` from `RESULTS/*.json`; claim tier C0. Status vocabulary as in R53 (derived, checked, unresolved) plus HOLD,
+diagnostic, "not supported by the decision check" (failing to detect is not a rejection) and superseded. The R53 table is not edited (DV-L08-1); the "supersedes"
+rows below mark the R53 numbers that the extended note must not print. Rows marked HOLD or "not for the abstract" stay out of the abstract.
+
+| lane | statement | status | numbers | source |
+|---|---|---|---|---|
+{body}
+"""
+
+
+DECISION_REVIEW = R54 / "R57_DECISION_REVIEW.json"
+
+
+def final_decision_md(n: dict) -> str:
+    """FINAL_DECISION_R57.md from R57_DECISION_REVIEW.json (independent decision-gate reviewer) and the bound numbers."""
+    if not DECISION_REVIEW.is_file():
+        return ""
+    rv = json.loads(DECISION_REVIEW.read_text(encoding="utf-8"))
+    if rv["decision"] not in ("BOUNDED_NOTE_EXTENDED", "NO_PAPER"):
+        raise SystemExit("R57 decision must be BOUNDED_NOTE_EXTENDED or NO_PAPER")
+    dims = ("evidence", "validity", "novelty", "testability", "robustness", "risk")
+    table = "\n".join(f"| {g} | " + " | ".join(v[d] for d in dims) + " |" for g, v in rv["verdicts"].items())
+    changes = "\n".join(f"- {c['id']} ({c['severity']}): {c['change']} Resolution: {c['resolution']}" for c in rv["required_changes"])
+    basis = "\n".join(f"- {b}" for b in rv["basis"])
+    return f"""# R54 final decision (PR-R57, {DATE})
+
+**Decision: {rv['decision']}.** Claim tier C0. The programme stops here; no further research or audit-only loop is opened.
+
+## Independent decision-gate review
+
+Reviewer: {rv['reviewer']['role']} (independent of the author). Recommended decision: {rv['reviewer']['recommended_decision']}.
+
+| row group | {' | '.join(dims)} |
+|---|{'---|' * len(dims)}
+{table}
+
+Required changes and their resolution:
+{changes}
+
+## Basis
+
+{basis}
+
+## Bound numbers
+
+- Benchmark: WIN {n['l07_n_win']}, TIE {n['l07_n_tie']}, LOSS {n['l07_n_loss']}, NOT_COMPARABLE {n['l07_n_not_comparable']}.
+- CF4: robust class {n['l04_robust']}; hemisphere step class {n['l04_step_class']}; FP survey offset {n['l04_off_mag']:.3f} +- {n['l04_off_sd']:.3f} mag.
+- Counts: calibrated excess tails {g3(n['l03_p_q'])} (Quaia), {g3(n['l03_p_n'])} (NVSS).
+- CMB: T lane {n['l02_t_lane']}; E lane {n['l02_e_status']} only with a floor {n['l02_floor'] / n['B_rms_ffp'] ** 2:.1f}x the FFP10 B2 variance; LOO intervals {n['l01_calibrated']}.
+- Joint frames: tilt closure p = {g3(n['l06_closure_p'])}; omega unidentified.
+
+Claim rows: MANUSCRIPT_CLAIM_TABLE_R54.md. Every number above is generated from RESULTS/*.json.
+"""
+
+
 def build() -> None:
     n = numbers()
     hyps = hypotheses(n)
@@ -1904,6 +2046,12 @@ def build() -> None:
     (R54 / "THEORY_LOOPS.md").write_text(theory_md(n), encoding="utf-8")
     (R54 / "LOCAL_AGENT_RESTART_PROMPT.txt").write_text(prompt_txt(n), encoding="utf-8")
     (R54 / "README.md").write_text(readme_md(), encoding="utf-8")
+    table = claim_table_md(n)
+    if table:
+        (R54 / "MANUSCRIPT_CLAIM_TABLE_R54.md").write_text(table, encoding="utf-8")
+    final = final_decision_md(n)
+    if final:
+        (R54 / "FINAL_DECISION_R57.md").write_text(final, encoding="utf-8")
     print(f"built {REL}: {len(hyps)} hypotheses, {len(local_nodes(n))} local nodes, {len(CLOUD_GATES) + 1} cloud gates")
 
 
