@@ -1,0 +1,521 @@
+{
+ "acceptance": {
+  "e_lane_status": {
+   "op": "in",
+   "pass": true,
+   "threshold": [
+    "CLAIMABLE",
+    "DIAGNOSTIC"
+   ],
+   "value": "CLAIMABLE"
+  },
+  "pr4_simulations_used": {
+   "op": "==",
+   "pass": true,
+   "threshold": false,
+   "value": false
+  }
+ },
+ "adopted_e_covariance": {
+  "components_uK2": {
+   "R54-L1_B_null_floor_ell2": 0.07728511134454463,
+   "cross_experiment_dispersion": 0.12673480583725133,
+   "half_mission": 0.005243444576868836,
+   "pipeline_dispersion": 0.012416511414427924
+  },
+  "cross_experiment_members": [
+   "SMICA",
+   "Cosmoglobe_DR1",
+   "BeyondPlanck_v2_posterior_mean",
+   "WMAP9_V"
+  ],
+  "definition": "S_FFP10 + diag(floor) on the ell = 2 E and B rows",
+  "floor_uK2": 0.12673480583725133,
+  "rows": "E and B, ell = 2"
+ },
+ "b_null_adopted": {
+  "BeyondPlanck_v2_mean": {
+   "clopper_pearson_95": [
+    0.08645438564164859,
+    0.23530750014895488
+   ],
+   "family": "Cosmoglobe_BeyondPlanck",
+   "law": "white-noise Monte Carlo from the Q/U STDDEV maps (N=100; pixel correlations not modelled) + Gaussian floor draws",
+   "n_exceed": 15,
+   "n_null": 100,
+   "p_value": 0.15841584158415842,
+   "pass": true,
+   "statistic": 7.1898119153450395
+  },
+  "BeyondPlanck_v2_posterior": {
+   "family": "Cosmoglobe_BeyondPlanck",
+   "law": "posterior sample ensemble (N=1804), Mahalanobis about the sample mean",
+   "n_exceed": 1705,
+   "n_samples": 1804,
+   "p_value": 0.9451523545706371,
+   "pass": true,
+   "statistic": 1.2182685254234276
+  },
+  "Cosmoglobe_DR1": {
+   "clopper_pearson_95": [
+    0.7879593229125502,
+    0.9289269538145705
+   ],
+   "family": "Cosmoglobe_BeyondPlanck",
+   "law": "white-noise Monte Carlo from the Q/U STDDEV maps (N=100; pixel correlations not modelled) + Gaussian floor draws",
+   "n_exceed": 87,
+   "n_null": 100,
+   "p_value": 0.8712871287128713,
+   "pass": true,
+   "statistic": 2.135196151807687
+  },
+  "PR3_Commander": {
+   "clopper_pearson_95": [
+    0.5930837679216902,
+    0.7039200340006996
+   ],
+   "family": "Planck_PR3",
+   "law": "FFP10 B ell=2 realisations + Gaussian floor draws (N=300)",
+   "n_exceed": 195,
+   "n_null": 300,
+   "p_value": 0.6511627906976745,
+   "pass": true,
+   "statistic": 3.7511235704338657
+  },
+  "PR3_NILC": {
+   "clopper_pearson_95": [
+    0.7789911475525246,
+    0.8677535180962954
+   ],
+   "family": "Planck_PR3",
+   "law": "FFP10 B ell=2 realisations + Gaussian floor draws (N=300)",
+   "n_exceed": 248,
+   "n_null": 300,
+   "p_value": 0.8272425249169435,
+   "pass": true,
+   "statistic": 2.417011023979017
+  },
+  "PR3_SEVEM": {
+   "clopper_pearson_95": [
+    0.5219225771139786,
+    0.6364814792982396
+   ],
+   "family": "Planck_PR3",
+   "law": "FFP10 B ell=2 realisations + Gaussian floor draws (N=300)",
+   "n_exceed": 174,
+   "n_null": 300,
+   "p_value": 0.5813953488372093,
+   "pass": true,
+   "statistic": 4.381221073698859
+  },
+  "PR3_SMICA": {
+   "clopper_pearson_95": [
+    0.637761040611536,
+    0.7450388510010119
+   ],
+   "family": "Planck_PR3",
+   "law": "FFP10 B ell=2 realisations + Gaussian floor draws (N=300)",
+   "n_exceed": 208,
+   "n_null": 300,
+   "p_value": 0.6943521594684385,
+   "pass": true,
+   "statistic": 3.1683847846172495
+  },
+  "WMAP9_V": {
+   "clopper_pearson_95": [
+    0.701288087489448,
+    0.7798231457044343
+   ],
+   "family": "WMAP9",
+   "law": "WMAP9 V-band inverse-noise-matrix draws (N=500) through the NSIDE 16 P06 estimator + Gaussian floor draws",
+   "n_exceed": 371,
+   "n_null": 500,
+   "p_value": 0.7425149700598802,
+   "pass": true,
+   "statistic": 2.6938536444867385
+  }
+ },
+ "claim_tier": "C0",
+ "cross_experiment_T": {
+  "beam_fwhm_arcmin": {
+   "BeyondPlanck_v2": 14.0,
+   "Cosmoglobe_DR1": 14.0,
+   "WMAP9_ILC": 60.0
+  },
+  "envelope_Sigma_T": {
+   "max": [
+    2.7428728385296933e-06,
+    1.0229581350766448e-05,
+    -8.99551638634645e-06,
+    6.649905660642848e-07,
+    -9.419588824358315e-07
+   ],
+   "min": [
+    1.7683524398913332e-06,
+    6.966639361255196e-06,
+    -9.163684559010172e-06,
+    1.1503767529351248e-07,
+    -2.1935564221825756e-06
+   ]
+  },
+  "experiments": {
+   "BeyondPlanck_v2": {
+    "Sigma_T": [
+     1.7683524398913332e-06,
+     7.804435015161707e-06,
+     -8.99551638634645e-06,
+     1.1503767529351248e-07,
+     -1.6631998976954722e-06
+    ],
+    "max_abs_shift_sd": 0.08773395326284282,
+    "shift_from_SMICA_in_sd": [
+     -0.07084015652592271,
+     0.08773395326284282,
+     0.015932236163980165,
+     -0.012807403955386942,
+     0.02929459349767343
+    ]
+   },
+   "Cosmoglobe_DR1": {
+    "Sigma_T": [
+     2.21459990417409e-06,
+     1.0229581350766448e-05,
+     -9.003562381424604e-06,
+     1.1838478754384137e-07,
+     -2.1935564221825756e-06
+    ],
+    "max_abs_shift_sd": 0.34169525548659907,
+    "shift_from_SMICA_in_sd": [
+     -0.02603310589074751,
+     0.34169525548659907,
+     0.01516995938039576,
+     -0.012457889846667573,
+     -0.023724935673389822
+    ]
+   },
+   "SMICA": {
+    "Sigma_T": [
+     2.473871767116808e-06,
+     6.966639361255196e-06,
+     -9.163684559010172e-06,
+     2.376874270619189e-07,
+     -1.956234917745557e-06
+    ],
+    "max_abs_shift_sd": 0.0,
+    "shift_from_SMICA_in_sd": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "WMAP9_ILC": {
+    "Sigma_T": [
+     2.7428728385296933e-06,
+     7.28551157935108e-06,
+     -9.03361566292388e-06,
+     6.649905660642848e-07,
+     -9.419588824358315e-07
+    ],
+    "max_abs_shift_sd": 0.1013967686993583,
+    "shift_from_SMICA_in_sd": [
+     0.027010001383618577,
+     0.03339229578095315,
+     0.012322714442398365,
+     0.044620097747461285,
+     0.1013967686993583
+    ]
+   }
+  },
+  "f_sky": {
+   "R51_P": 0.7814398805300394,
+   "R51_T": 0.7794118722279867,
+   "bp_pol_mask_column": "Q_POLARISATION",
+   "union_P": 0.6537341872851054,
+   "union_T": 0.6083965301513672
+  },
+  "mask": "R51 TMASK x WMAP9 KQ85 x BeyondPlanck intensity analysis mask",
+  "max_abs_shift_sd": 0.34169525548659907,
+  "rule": "max |shift| <= 0.5 sd",
+  "sd_used": [
+   9.95931349992574e-06,
+   9.549275083918222e-06,
+   1.0555214656177386e-05,
+   9.576472499473129e-06,
+   1.0003041007322992e-05
+  ],
+  "status": "PIPELINE_STABLE"
+ },
+ "decision": {
+  "E_lane": "CLAIMABLE",
+  "T_covariance": "FFP10 kept with the calibrated inflation: the analytic covariance fails the rule",
+  "T_lane": "PIPELINE_STABLE"
+ },
+ "e_lane_rule": "CLAIMABLE if the B ell=2 null passes (p >= 0.01) with the adopted covariance in at least two data families (DV-L02-9)",
+ "e_lane_status": "CLAIMABLE",
+ "e_lane_table": {
+  "BeyondPlanck_v2_mean": {
+   "B2_rms_uK": 0.4447826733009234,
+   "E2_rms_uK": 0.7035025495488396,
+   "Sigma_E_frobenius": 4.458957963501703e-07,
+   "law": "white-noise Monte Carlo from the Q/U STDDEV maps (N=100; pixel correlations not modelled)",
+   "noise_B2_rms_uK": 0.07922799517854105,
+   "vector_B2": [
+    0.7061533402698401,
+    0.05857471588254462,
+    -0.506680523707209,
+    0.2982577339506406,
+    0.37602096492486153
+   ],
+   "vector_E2": [
+    0.3820037765295807,
+    0.5431033501125936,
+    1.4028317879085155,
+    0.050833041523154376,
+    0.2513364849064025
+   ]
+  },
+  "BeyondPlanck_v2_posterior": {
+   "B2_rms_uK_posterior_mean": 0.21370261089801343,
+   "B2_zero_tail": {
+    "law": "posterior sample ensemble (N=1804), Mahalanobis about the sample mean",
+    "n_exceed": 862,
+    "n_samples": 1804,
+    "p_value": 0.4781163434903047,
+    "statistic": 4.467946989093649
+   },
+   "E2_rms_uK_posterior_mean": 0.4479131488505606,
+   "E2_zero_tail": {
+    "law": "posterior sample ensemble (N=1804), Mahalanobis about the sample mean",
+    "n_exceed": 5,
+    "n_samples": 1804,
+    "p_value": 0.0033240997229916896,
+    "statistic": 21.844239179548048
+   },
+   "Sigma_E_frobenius_posterior_16_84": [
+    2.4816976649480613e-07,
+    3.792596829085732e-07
+   ],
+   "Sigma_E_frobenius_posterior_mean": 2.838974646652189e-07,
+   "index_convention": "l^2 + l + m (Commander real a_lm); the B null statistic is invariant to the real basis",
+   "n_samples": 1804,
+   "thin": 100
+  },
+  "Cosmoglobe_DR1": {
+   "B2_rms_uK": 0.23987366596562804,
+   "E2_rms_uK": 0.5464498722739963,
+   "Sigma_E_frobenius": 3.46352264280098e-07,
+   "law": "white-noise Monte Carlo from the Q/U STDDEV maps (N=100; pixel correlations not modelled)",
+   "noise_B2_rms_uK": 0.07911462059554437,
+   "vector_B2": [
+    0.2988432423016843,
+    -0.0013502901722556842,
+    -0.32142353378656746,
+    -0.00042820338769995747,
+    -0.30834153131881237
+   ],
+   "vector_E2": [
+    0.11923256651291393,
+    0.008467451630921913,
+    0.4493968401300983,
+    1.036355210167792,
+    0.45028831910911343
+   ]
+  },
+  "PR4_frequency_cache": {
+   "B2_rms_uK": 2.5970500915813823,
+   "E2_rms_uK": 3.6838905727902493,
+   "difference_test": {
+    "dof": 10,
+    "law": "gaussian difference test: PR4 ring-half split covariance + FFP10 SMICA noise",
+    "p_value": 0.5312106213209007,
+    "statistic": 9.009411520660734
+   },
+   "role": "difference test against SMICA only (one split difference is not a null law)"
+  },
+  "WMAP9_V": {
+   "B2_rms_uK": 0.3802752216609625,
+   "E2_rms_uK": 0.48475821373025346,
+   "Sigma_E_frobenius": 3.072506985044429e-07,
+   "f_sky_P06": 0.7340494791666666,
+   "law": "WMAP9 V-band inverse-noise-matrix draws (N=500) through the NSIDE 16 P06 estimator",
+   "noise_B2_rms_uK": 0.7190645104617029,
+   "vector_B2": [
+    0.20952431095386345,
+    -0.6152502414275823,
+    -0.05202261607738787,
+    -0.21285698763458902,
+    0.502591757613149
+   ],
+   "vector_E2": [
+    -0.34233095242466305,
+    -0.97374677997588,
+    -0.2694825690528598,
+    0.1850404550730347,
+    -0.052139537362672204
+   ]
+  }
+ },
+ "limitations": [
+  "Analytic T covariance truncated at ell' <= 30 (range of the C_ell file); the coupling uses the NSIDE 128 mask of the R51 operator.",
+  "Cosmoglobe and the BeyondPlanck mean map use a white-noise model of their posterior STDDEV maps; the BeyondPlanck posterior leg uses thinned samples (a posterior tail of the zero vector).",
+  "WMAP9 V uses an N_obs-weighted degrade of the NSIDE 512 map with the NSIDE 16 noise matrix; E-to-B leakage from ell > 6 is not modelled.",
+  "PR4 enters only as a difference test (one ring-half split, frequency-map cache of R49); no NPIPE simulation is used."
+ ],
+ "node": "R54-L02",
+ "passing_families": [
+  "Cosmoglobe_BeyondPlanck",
+  "Planck_PR3",
+  "WMAP9"
+ ],
+ "passing_pipelines_or_experiments_contract_literal": [
+  "BeyondPlanck_v2_mean",
+  "BeyondPlanck_v2_posterior",
+  "Cosmoglobe_DR1",
+  "PR3_Commander",
+  "PR3_NILC",
+  "PR3_SEVEM",
+  "PR3_SMICA",
+  "WMAP9_V"
+ ],
+ "pr4_simulations_used": false,
+ "provenance": {
+  "bp_chains": [
+   "/mnt/extdrive/workdir/raw/beyondplanck_v2/BP_c0001_Presamp_v2.h5",
+   "/mnt/extdrive/workdir/raw/beyondplanck_v2/BP_c0002_Presamp_v2.h5",
+   "/mnt/extdrive/workdir/raw/beyondplanck_v2/BP_c0003_Presamp_v2.h5",
+   "/mnt/extdrive/workdir/raw/beyondplanck_v2/BP_c0004_Presamp_v2.h5"
+  ],
+  "inputs_sha256": {
+   "/home/cosmosapjw/Dropbox/bianchi/htt_base/data/camb_ref_planck2018.npz": "6a51719d224dad50a3e85aa79ec126dab03ea4fbb8996699b11a8d8d4c91c942",
+   "/mnt/extdrive/workdir/r49_chains/ffp10_300_debiased_135.npz": "2383484551b6621d934c3df27a47f8fbbe34c50c4404f2a34d7bed311184d3eb",
+   "/mnt/extdrive/workdir/r49_chains/npipe_pr4_cache.npz": "81ca190ba144766e2fef06e1f7c42239cbf3c5826f95c0a183dd318fcbfa35e1",
+   "/mnt/extdrive/workdir/raw/beyondplanck_v2/BP_CMB_IQU_analysis_mask_n8_v2.fits": "d62ab3d3ae3ac6ebd49590a0743b45bbcb9b3994e7fc1825ba9258a5a89a2945",
+   "/mnt/extdrive/workdir/raw/beyondplanck_v2/BP_CMB_I_analysis_mask_n1024_v2.fits": "79fb04169124ce835ad7efad56d8bb422272c9d287a67341d87c17e4c994236e",
+   "/mnt/extdrive/workdir/raw/beyondplanck_v2/BP_cmb_IQU_n1024_v2.fits": "dfd7989192e4034b4489d2d48020a1e2b0229701dc1e887d2263aa8aae9351df",
+   "/mnt/extdrive/workdir/raw/cosmoglobe_dr1/CG_cmb_IQU_n1024_v1.fits": "3d50ad25e6dba3515d442a1c2d652a274b4127ced9dd09317751f508be07e0f5",
+   "/mnt/extdrive/workdir/raw/wmap_9yr/core/wmap_analysis_masks_9yr_v5.tar.gz": "0c9fc38e22c06533c3a3b5c1c40c12e33ccf95a29e6668911e77a1b758845fe5",
+   "/mnt/extdrive/workdir/raw/wmap_9yr/core/wmap_band_forered_iqumap_r9_nineyear_v5.tar.gz": "b9f99cd0f6615f6b5dd1748a87e4af50645be6b830f722600f549cbb09142db4",
+   "/mnt/extdrive/workdir/raw/wmap_9yr/core/wmap_ilc_9yr_v5.fits": "4501090f824f9140e916339f9e8e490333f6ffe4257a6ee6a02526c8640099a9",
+   "/mnt/extdrive/workdir/raw/wmap_9yr/morphology_subset/wmap_band_forered_quninv_r4_nineyear_v5.tar.gz": "3264d3548441696eb21b887d0c34c56954f0aeb7bcdb29cf9517dda24224f799",
+   "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/R51/observed_carrier.npz": "f0c08a115854a6f287d39eddf984291f676e6f7bb79bb2324eb92cd6eb2c0dca",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L01_RESULT.json": "14db3f303fbd4d4e03eb290bcdfbcd3ca4e03d40d032fbd10e2684f66124602e",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L1_TYPE1_TE.json": "0f490ccbdfc300dbaf1841460e5eeabe43fd3dd0d3b9a39d8518212037b8aa3c"
+  },
+  "numpy": "2.4.2",
+  "python": "3.12.3",
+  "scipy": "1.17.0",
+  "script": "scripts/r54/run_r54_l02_pr4_bypass.py",
+  "script_sha256": "a9e692638dd00bc7d686dbc03ff2f54bf36691e55655244f92b387d6248005ac",
+  "seed": 20261116
+ },
+ "runtime_s": 529.7268307299964,
+ "schema": "htt.r54.l02_pr4_bypass/1",
+ "status": "DONE_SCOPED_C0",
+ "t_analytic_covariance_test": {
+  "Sigma_T_with_C_th": {
+   "est": [
+    3.0329381480124362e-06,
+    2.7199091259894695e-06,
+    -6.989383853344069e-06,
+    -1.3782931187736443e-06,
+    -3.8220056029019704e-06
+   ],
+   "sd": [
+    9.48938634019928e-06,
+    9.400899327429423e-06,
+    9.443138511173015e-06,
+    9.291177251324029e-06,
+    9.278189005260917e-06
+   ],
+   "wald": 0.9260460162512207,
+   "wald_tail": {
+    "dof": 5,
+    "law": "gaussian with the analytic covariance",
+    "p_value": 0.9683074432235831,
+    "statistic": 0.9260460162512207
+   }
+  },
+  "Sigma_T_with_FFP10": {
+   "est": [
+    2.1602294236821076e-07,
+    6.6417972488327425e-06,
+    -9.730895566327735e-06,
+    -2.036573603653355e-06,
+    -2.063419592005622e-06
+   ],
+   "inflation": 1.1547394182761748,
+   "sd_inflated": [
+    9.95931349992574e-06,
+    9.549275083918222e-06,
+    1.0555214656177386e-05,
+    9.576472499473129e-06,
+    1.0003041007322992e-05
+   ]
+  },
+  "adopt_rule": "p >= 0.01 and max |diag(S)/diag(C_th) - 1| <= 0.25",
+  "adopted": false,
+  "beam": "SMICA INT_BEAM x pixwin(2048)",
+  "ell_cut": 30,
+  "lrt": {
+   "diag_ratio_sample_over_model": [
+    0.9604383680459335,
+    0.8742200739578314,
+    0.9912018102238526,
+    1.0114053458624563,
+    1.081371586503434,
+    1.1363773527545487,
+    0.9082879300235426,
+    1.103490046256386,
+    1.0112674121310294,
+    1.0826222808037578,
+    0.9937649292539908,
+    1.0133938088690937,
+    1.0156334113981524,
+    1.005968347613256,
+    1.139048759559829,
+    1.0430625952540205,
+    0.9758531425557747,
+    0.9481299595164667,
+    0.862191886913051,
+    1.2914006234891282,
+    1.1896977106711217,
+    1.0519140225034522,
+    0.957512936282548,
+    0.9812052094378393,
+    0.8792928767092107,
+    1.0067615859844161,
+    0.9665247307785861,
+    1.0547863667317796,
+    0.9578677955956909,
+    0.9527483469904913,
+    0.9977541036014862,
+    1.0958429278480328,
+    1.0056574797878828,
+    0.968880741398569,
+    1.061477211601899,
+    0.9128180156374691,
+    1.0675659454515385,
+    1.0027672966639594,
+    1.067134014782565,
+    1.042184953394928,
+    1.032472829043115,
+    1.0609573135986514,
+    0.8878427248014956,
+    1.141182647051449,
+    1.1517226688154472
+   ],
+   "dof": 1035,
+   "law": "wishart_lrt_asymptotic_chi2(dof=1035)",
+   "max_abs_diag_ratio_minus_1": 0.2914006234891282,
+   "p_value": 0.20715354557215404,
+   "statistic": 1071.9061415138463
+  },
+  "n_modes": 957,
+  "noise": "FFP10 noise-only sample covariance (sim_noise, 300)",
+  "nside_coupling": 128,
+  "reason": "FFP10 kept with the calibrated inflation: the analytic covariance fails the rule",
+  "truncation_check_ell_le_20_max_rel_diff": 0.0011945021056259002
+ }
+}

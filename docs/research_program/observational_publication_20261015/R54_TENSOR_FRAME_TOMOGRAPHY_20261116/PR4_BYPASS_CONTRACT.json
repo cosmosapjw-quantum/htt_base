@@ -1,0 +1,45 @@
+{
+ "decision_rule": "E-lane covariance = FFP10 + max floor over B2, B4, B5 and B3 dispersion. E-lane statements are CLAIMABLE only if the B ell=2 null passes at p >= 0.01 on two independent pipelines or experiments; otherwise DIAGNOSTIC and the manuscript quotes the T lane.",
+ "legs": [
+  {
+   "id": "B1",
+   "name": "analytic signal covariance for the T lane",
+   "node": "R54-L02",
+   "status": "PENDING_LOCAL",
+   "why": "ell <= 6 temperature is signal dominated; its covariance is a known linear image of C_ell"
+  },
+  {
+   "cloud_evidence": "Commander E-lane bound 3.44e-07 vs SMICA 3.79e-07",
+   "id": "B2",
+   "name": "cross-pipeline dispersion (SMICA, Commander, NILC, SEVEM)",
+   "node": "R54-L01",
+   "status": "PENDING_LOCAL"
+  },
+  {
+   "id": "B3",
+   "name": "cross-experiment products (WMAP9, Cosmoglobe DR1, BeyondPlanck v2)",
+   "node": "R54-L02",
+   "status": "PENDING_LOCAL"
+  },
+  {
+   "id": "B4",
+   "name": "split differences (PR3 half-mission; PR4 detector splits) as noise realisations for difference tests",
+   "node": "R54-L01/L02",
+   "status": "PENDING_LOCAL"
+  },
+  {
+   "cloud_evidence": "B ell=2 null p=9.54e-06; with the floor the E-lane bound is 5.01e-07",
+   "id": "B5",
+   "name": "B-null-calibrated systematics floor",
+   "node": "R54-L1",
+   "status": "DONE_SCOPED_C0"
+  }
+ ],
+ "not_bypassed": "any statement that needs the NPIPE end-to-end simulation law is out of scope and is not made",
+ "rule": "PR4/NPIPE is never a blocker. Its 600 simulations are not owned and must not be requested.",
+ "schema": "htt.r54.pr4_bypass/1",
+ "what_pr4_would_add": [
+  "lower large-scale polarization systematics",
+  "an independent simulated null"
+ ]
+}

@@ -1,0 +1,409 @@
+{
+ "CODE_TASK": {
+  "acceptance": [
+   "step c ends with HANDOFF OK on the local machine",
+   "every declared gate is KILLED and the unmutated suite passes",
+   "tests/r54 passes without a deleted or weakened test",
+   "the update changes no file under RESULTS/",
+   "the working branch is pushed without force"
+  ],
+  "approval_boundary": {
+   "allowed_without_asking": [
+    "fetch",
+    "fast-forward or merge into the working branch",
+    "run the helper",
+    "commit",
+    "push the working branch"
+   ],
+   "ask_the_user": [
+    "which addendum tasks to do",
+    "a BLOCKED reason that cannot be removed",
+    "three failures of step c"
+   ],
+   "never": [
+    "force push",
+    "rebase of pushed commits",
+    "merge into main or into research/r50-observed-convergence-20261115",
+    "download",
+    "delete or weaken a test or a gate",
+    "open a research loop"
+   ]
+  },
+  "in_scope": [
+   "bring the update into the working branch",
+   "verify it on the local machine",
+   "addendum tasks that the user selects"
+  ],
+  "out_of_scope": [
+   "reopening a node or the programme",
+   "repeating a computation",
+   "changing an executed result, a node step, a decision, a threshold, a carrier, a redshift range or a sample definition",
+   "new analyses",
+   "any download"
+  ],
+  "outcome": "the working branch contains node R54-THM merged with the closed local work, step c of the procedure prints HANDOFF OK on the local machine, and the branch is pushed",
+  "scientific_purpose": "statements that need no data (identification by irreducible block, gauge orbits, the moment problem of the shear history, frame closure, validity of the views) exist as theorems with executable checks; they bound what the note may say and add no claim of their own"
+ },
+ "SCIENTIFIC_CONTRACT": {
+  "conventions": [
+   "LOCAL_AGENT_CONTRACT.json:conventions is unchanged",
+   "n is the unit vector from the observer to the source",
+   "O(3) acts on a polar vector by g, on an axial vector by det(g) g, on a symmetric trace-free tensor S by g S g^T (components in STF5_BASIS); a pseudo tensor carries an extra det(g)",
+   "a scalar field transforms as f(g^-1 n), a pseudo-scalar field with an extra det(g), a tangent vector field as g V(g^-1 n)",
+   "block keys of block_identification are '<l><parity>': '1-' polar vector, '1+' vorticity, '2+' shear, '2-' pseudo tensor (no first-order variable)"
+  ],
+  "failure_semantics": [
+   "the helper prints RESULT: BLOCKED with the reason and changes nothing",
+   "step c prints HANDOFF FAILED with the failing step and stages nothing",
+   "the mutation receipt stops before any mutation when the unmutated suite fails",
+   "block_identification raises ValueError on a malformed block"
+  ],
+  "invariants": [
+   "the update changes no file under RESULTS/ relative to the pushed local head",
+   "no executed node step, acceptance predicate, decision check or decision is changed",
+   "per block: numeric null dimension of fv.identify >= structural unidentified dimension of block_identification",
+   "at a fixed carrier and covariance the power ratio against the exact likelihood is one",
+   "evidence, gate and hypothesis ids are unique"
+  ],
+  "known_limits": [
+   "first order in the kinematic variables",
+   "T6 needs tensors at the observer or homogeneous histories and an isotropic, parity-symmetric source population and measurement (C6.6)",
+   "T5 gives second moments only",
+   "T8 needs an interval on which the scattering rate is positive almost everywhere",
+   "T1 does not cover a misspecified covariance, a non-Gaussian law or nuisance models that differ between analyses",
+   "the proofs were read by an independent reviewer"
+  ],
+  "reference_cases": [
+   "tests/r54/test_r54_theorems.py::test_t6_selection_rule_counted_without_schur",
+   "tests/r54/test_r54_theorems.py::test_t7a_zero_point_gauge_orbit_and_testable_combinations",
+   "tests/r54/test_r54_theorems.py::test_t9_frame_closure_identity_and_degrees_of_freedom",
+   "tests/r54/test_r54_handoff.py::test_structural_and_numeric_identification_layers_agree"
+  ],
+  "tolerances": "none introduced by this update; the numerical tolerances of the executable checks are those written in tests/r54/test_r54_theorems.py"
+ },
+ "VALIDATION_MATRIX": [
+  {
+   "check": "merge helper end to end",
+   "command": "python scripts/r54/handoff_merge.py finish",
+   "expected": "last status line HANDOFF OK, exit code 0",
+   "id": "V01",
+   "kind": "software",
+   "where": "local machine"
+  },
+  {
+   "check": "R54 test suite",
+   "command": "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q",
+   "expected": "exit code 0; skipped tests are reported, not hidden",
+   "id": "V02",
+   "kind": "software",
+   "where": "local machine; on the cloud machine all but tests/r54/test_r54_results_binding.py::test_committed_numbers_are_reproduced_by_the_run_scripts"
+  },
+  {
+   "check": "mutation gates bite",
+   "command": "python scripts/r54/build_r54_contract.py mutation-receipt",
+   "expected": "41 gates KILLED, unmutated suite exit code 0",
+   "id": "V03",
+   "kind": "software",
+   "where": "both"
+  },
+  {
+   "check": "the update leaves executed results alone",
+   "command": "git diff --name-only 0c17f30d origin/research/r54-theorems-20261116 -- docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS",
+   "expected": "no output",
+   "id": "V04",
+   "kind": "reproducibility",
+   "where": "both"
+  },
+  {
+   "check": "generated documents are current",
+   "command": "python scripts/r54/build_r54_contract.py build && git status --short",
+   "expected": "no output after the commit",
+   "id": "V05",
+   "kind": "reproducibility",
+   "where": "both"
+  },
+  {
+   "check": "selection rule counted without the proof (T6)",
+   "command": "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54/test_r54_theorems.py -q -k t6",
+   "expected": "exit code 0",
+   "id": "V06",
+   "kind": "scientific",
+   "where": "both"
+  },
+  {
+   "check": "gauge orbits and frame closure (T7, T9)",
+   "command": "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54/test_r54_theorems.py -q -k 't7 or t9'",
+   "expected": "exit code 0",
+   "id": "V07",
+   "kind": "scientific",
+   "where": "both"
+  },
+  {
+   "check": "Wishart factors against simulation and kernel properties (T5, T8), seeded",
+   "command": "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54/test_r54_theorems.py -q -k 't5 or t8'",
+   "expected": "exit code 0",
+   "id": "V08",
+   "kind": "numerical",
+   "where": "both"
+  },
+  {
+   "check": "structural and numeric identification layers on the zero-point gauge (T6, T7)",
+   "command": "PYTHONPATH=htt/src:htt:. python -m pytest tests/r54/test_r54_handoff.py -q -k layers",
+   "expected": "exit code 0",
+   "id": "V09",
+   "kind": "scientific",
+   "where": "both"
+  },
+  {
+   "check": "files of the review scope without a recorded review",
+   "command": "read LOCAL_AGENT_CONTRACT.json:pending_independent_review.uncovered",
+   "expected": "empty after addendum task R54-A1",
+   "id": "V10",
+   "kind": "review",
+   "where": "local"
+  }
+ ],
+ "addendum_rule": "no addendum task reopens the programme; the decision of PR-R57 stands; until R54-A1 is recorded the note cites no theorem",
+ "addendum_tasks": [
+  {
+   "do": "a reviewer that did not write them reads the files of LOCAL_AGENT_CONTRACT.json:pending_independent_review.uncovered and the review is recorded as that entry prescribes",
+   "done_when": "pending_independent_review.uncovered is empty and THEOREMS.md carries the line 'Independent review:' in place of its status sentence",
+   "id": "R54-A1",
+   "needs": [],
+   "optional": false,
+   "required_for": "any citation of a theorem in the note or outside the R54 directory",
+   "title": "independent review of the addendum files"
+  },
+  {
+   "do": "search the primary literature for (a) an identifiability or selection-rule statement for the kinematic variables by irreducible block and parity, including null channels, and (b) a statement on the number of sign changes of a shear history hidden from the temperature and E quadrupoles; read the primary sources of the evidence rows E54 and E63 to E69, which are recorded from memory, and the passage of E51 on the B-mode proper-motion dipole, which was seen only in part; write docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_A2_ATTRIBUTION.json with novelty_checks for H-T6 and H-T8 and evidence_verification for those rows, in the formats of RESULTS/R54_L07_BENCHMARK.json; then set the novelty fields of H-T6 and H-T8 and the verification status of those rows in the builder to what the file records",
+   "done_when": "the file exists and tests/r54 passes; if prior art is found the theorems stay as attributed re-derivations",
+   "id": "R54-A2",
+   "needs": [],
+   "optional": false,
+   "required_for": "any novelty wording for H-T6 or H-T8 and any use of the evidence rows recorded from memory",
+   "title": "priority and attribution check of the theorems"
+  },
+  {
+   "do": "from stored quantities only, without a new run: one report table through the builder with the rows T1 and the benchmark ties, T6 and the unidentified vorticity, T7 and the rank deficit of the polar block and the class of the survey zero point, T8 and the model label of the present-day shear, T9 and the shells and degrees of freedom of the tilt closure; each row states agreement or the discrepancy; a discrepancy is reported and nothing is tuned",
+   "done_when": "the table is generated and bound by a test",
+   "id": "R54-A3",
+   "needs": [],
+   "optional": true,
+   "required_for": "nothing; it documents whether the executed identification and benchmark agree with the theorems",
+   "title": "consistency record between the theorems and the executed results"
+  },
+  {
+   "do": "for each row of MANUSCRIPT_CLAIM_TABLE_R54.md record whether a rule of theorem_usage applies and whether the row complies; change wording through the builder only; change no decision and no number",
+   "done_when": "every row carries the record",
+   "id": "R54-A4",
+   "needs": [
+    "R54-A1"
+   ],
+   "optional": true,
+   "required_for": "manuscript text that cites a theorem",
+   "title": "wording check of the claim table against theorem_usage"
+  }
+ ],
+ "cloud_verification": {
+  "not_verifiable_on_the_cloud_machine": [
+   "tests/r54/test_r54_results_binding.py::test_committed_numbers_are_reproduced_by_the_run_scripts"
+  ],
+  "reason": "the test stops with a pair-sum cache that does not match the operator or model in read-only mode; it does so on the pushed local head as well, so the cache key depends on the machine"
+ },
+ "conflict_rules": {
+  "any other file": "the update does not touch it: stop and report",
+  "generated documents, mutation receipt, machine_readable mirrors": "never merged by hand; the helper takes one side and step c rebuilds them",
+  "scripts/r54/build_r54_contract.py and tests/r54/*.py": "keep both sides; ids reserved by the update: evidence E50-E69, gates MG-30..MG-35, hypotheses H-T1 H-T2 H-T6 H-T7 H-T8 H-T9, cloud node R54-THM"
+ },
+ "date": "2026-11-16",
+ "delta": {
+  "added": [
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+   "htt/htt/htt/infer/r54_identifiability.py",
+   "tests/r54/test_r54_theorems.py",
+   "scripts/r54/handoff_merge.py",
+   "tests/r54/test_r54_handoff.py",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/HANDOFF_UPDATE.json",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/LOCAL_AGENT_HANDOFF_UPDATE.txt"
+  ],
+  "decisions_changed": [],
+  "executed_results_changed": [],
+  "gates_renumbered": "the gates of node R54-THM are MG-30 to MG-34 (they were MG-21 to MG-25 on the stacked branch before the merge); MG-21 to MG-29 are the gates of the local diff review",
+  "merged_in_the_cloud": [
+   "scripts/r54/build_r54_contract.py",
+   "tests/r54/test_r54_results_binding.py",
+   "docs/codex_handoff/pr_status.yaml",
+   "generated documents, mutation receipt and mirrors"
+  ],
+  "new_contract_keys": [
+   "theorem_usage",
+   "pending_independent_review.uncovered"
+  ],
+  "node_steps_changed": [],
+  "reserved_ids": {
+   "cloud_nodes": [
+    "R54-THM"
+   ],
+   "evidence": [
+    "E50",
+    "E51",
+    "E52",
+    "E53",
+    "E54",
+    "E55",
+    "E56",
+    "E57",
+    "E58",
+    "E59",
+    "E60",
+    "E61",
+    "E62",
+    "E63",
+    "E64",
+    "E65",
+    "E66",
+    "E67",
+    "E68",
+    "E69"
+   ],
+   "gates": [
+    "MG-30",
+    "MG-31",
+    "MG-32",
+    "MG-33",
+    "MG-34",
+    "MG-35"
+   ],
+   "hypotheses": [
+    "H-T1",
+    "H-T2",
+    "H-T6",
+    "H-T7",
+    "H-T8",
+    "H-T9"
+   ]
+  },
+  "untouched": [
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/INDEPENDENT_REVIEW.json",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/R57_DECISION_REVIEW.json",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/DEVIATIONS.json",
+   "scripts/r54/run_r54_cmb_type1.py",
+   "scripts/r54/run_r54_lowz_frames.py",
+   "scripts/r54/run_r54_cf4_exact.py",
+   "scripts/r54/run_r54_l01_te_calibration.py",
+   "scripts/r54/run_r54_l02_pr4_bypass.py",
+   "scripts/r54/run_r54_l03_counts.py",
+   "scripts/r54/run_r54_l04_cf4_survey.py",
+   "scripts/r54/run_r54_l06_joint.py",
+   "scripts/r54/run_r54_l07_benchmark.py",
+   "htt/htt/htt/infer/r54_tensor_five_view.py",
+   "htt/htt/htt/infer/r54_type1_thomson.py",
+   "htt/htt/htt/infer/r54_lcdm_body.py",
+   "htt/htt/htt/infer/r54_distance_estimators.py",
+   "htt/htt/htt/infer/r54_calibration.py",
+   "htt/htt/htt/infer/r54_counts.py",
+   "htt/htt/htt/infer/r54_joint.py",
+   "htt/htt/htt/infer/r54_pr4_bypass.py",
+   "htt/htt/htt/infer/r54_survey.py",
+   "tests/r54/test_r54_modules.py",
+   "tests/r54/test_r54_conventions.py",
+   "tests/r54/test_r54_calibration.py",
+   "tests/r54/test_r54_survey.py",
+   "tests/r54/test_r54_counts.py",
+   "tests/r54/test_r54_pr4_bypass.py",
+   "tests/r54/test_r54_joint.py",
+   "docs/codex_handoff/pr_backlog.yaml",
+   "docs/codex_handoff/pr_backlog.json"
+  ]
+ },
+ "direction": "cloud research session to the local session, after the programme stop of PR-R57",
+ "helper": "scripts/r54/handoff_merge.py",
+ "local_head_merged": "0c17f30d3d50a96f661f85b24a1066240de4d476",
+ "local_nodes": {
+  "R54-L01": "DONE_SCOPED_C0",
+  "R54-L02": "DONE_SCOPED_C0",
+  "R54-L03": "DONE_SCOPED_C0",
+  "R54-L04": "DONE_SCOPED_C0",
+  "R54-L06": "DONE_SCOPED_C0",
+  "R54-L07": "DONE_SCOPED_C0",
+  "R54-L08": "DONE_SCOPED_C0"
+ },
+ "open_questions": [
+  {
+   "default_if_unanswered": "R54-A1 and R54-A2 only; until R54-A1 is recorded the note cites no theorem",
+   "id": "Q1",
+   "owner": "user",
+   "question": "The programme stopped at PR-R57. Tasks R54-A1 to R54-A4 are addendum tasks for node R54-THM, not a research loop. Which of them should be done?"
+  },
+  {
+   "default_if_unanswered": "fast-forward the working branch",
+   "id": "Q2",
+   "owner": "user",
+   "question": "After the working branch is fast-forwarded and pushed, GitHub shows PR #578 as merged into the R54 branch. Nothing reaches main. If the branches must stay apart, say so before the update is applied."
+  },
+  {
+   "default_if_unanswered": "not done; stated as a limitation",
+   "id": "Q3",
+   "owner": "user",
+   "question": "The code written by the local session (five modules, six run scripts, six test files) has mutation gates and a decision-gate review of the claims, but no independent diff review; the recorded diff review covered the code of the start commit. Should one be commissioned?"
+  },
+  {
+   "default_if_unanswered": "left as it is; verified on the local machine only",
+   "id": "Q4",
+   "owner": "user",
+   "question": "tests/r54/test_r54_results_binding.py::test_committed_numbers_are_reproduced_by_the_run_scripts stops on the cloud machine with a pair-sum cache that does not match in read-only mode, on the pushed local head as well. Is a reproduction test that passes only on the machine that wrote the cache acceptable?"
+  }
+ ],
+ "procedure": {
+  "after_three_failures_of_step_c": [
+   "write BLOCKER_HANDOFF.md",
+   "git merge --abort if a merge is open",
+   "report"
+  ],
+  "result_lines_of_step_b": {
+   "ALREADY_APPLIED": "nothing to merge; go to section 4.",
+   "BLOCKED": "it states the reason; remove that reason and run b again. A reason you cannot remove: stop and report.",
+   "FAST_FORWARDED": "expected when your branch has no commit after the head named above; go to c.",
+   "MERGE_CONFLICTS": "it lists each conflicted hand-written file with its rule; resolve exactly those files, git add them, go to c.",
+   "MERGE_READY": "you have later commits and they merge without a conflict in a hand-written file; nothing is committed yet; go to c."
+  },
+  "safe_checkpoint": [
+   "all work is committed",
+   "no process started by the session is running or queued",
+   "tests/r54 passes"
+  ],
+  "steps": {
+   "a": "git fetch origin +refs/heads/research/r54-theorems-20261116:refs/remotes/origin/research/r54-theorems-20261116",
+   "b": "git show origin/research/r54-theorems-20261116:scripts/r54/handoff_merge.py | python - apply",
+   "c": "python scripts/r54/handoff_merge.py finish",
+   "d": [
+    "git commit -m \"PR-R54-TENSOR-FRAME-TOMOGRAPHY: merge R54-THM addendum and handoff update\" (only if step c printed it)",
+    "git push origin HEAD"
+   ]
+  }
+ },
+ "pull_requests": {
+  "source": 578,
+  "target": 577
+ },
+ "report_fields": [
+  "result line of step b",
+  "conflicted files and how each was resolved",
+  "last line of step c",
+  "gates KILLED / gates declared",
+  "commit hash after step d",
+  "pushed (yes or no)",
+  "addendum tasks done, with the files written",
+  "anything you could not do"
+ ],
+ "review": {
+  "status": "NONE",
+  "uncovered": []
+ },
+ "schema": "htt.r54.handoff_update/2",
+ "source_branch": "research/r54-theorems-20261116",
+ "start_commit": "35a28e20cb66096c358296755c04db9cfa4a7ca6",
+ "target_branch": "research/r54-tensor-frame-tomography-20261116",
+ "text_version": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/LOCAL_AGENT_HANDOFF_UPDATE.txt"
+}

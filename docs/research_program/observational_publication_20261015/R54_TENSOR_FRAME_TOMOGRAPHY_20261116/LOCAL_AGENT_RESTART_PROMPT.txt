@@ -1,0 +1,90 @@
+ROLE
+You are the local coding agent for repository cosmosapjw-quantum/htt_base. Work only on branch
+research/r54-tensor-frame-tomography-20261116 (base research/r50-observed-convergence-20261115). Follow AGENTS.md. Claim ceiling is C0.
+Setup: git fetch origin && git checkout research/r54-tensor-frame-tomography-20261116 && git pull --ff-only
+Theorem addendum (node R54-THM) and how to bring it into this branch: LOCAL_AGENT_HANDOFF_UPDATE.txt.
+
+READ FIRST (in this order, all under docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/)
+1. LOCAL_AGENT_CONTRACT.json   conventions, equations, module API, node specifications
+2. RESEARCH_DAG.json           node order, cards, file allowlist, stop rule
+3. SELF_AUDIT_PROTOCOL.json    control questions and the audit you run before every commit
+4. MUTATION_GATES.json         gates you must keep green and the local gates you must implement
+5. PR4_BYPASS_CONTRACT.json    PR4 is never a blocker
+6. ADVERSARIAL_BENCHMARK_SPEC.json, THEORY_LOOPS.md, state/*.md, R54_REPORT_KO.md
+
+BEFORE ANY EDIT
+- Answer every control question of SELF_AUDIT_PROTOCOL.json from the files. If an answer differs, re-read; do not proceed.
+- Run: PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q
+  Expected: all pass. Then run: python scripts/r54/build_r54_contract.py mutation-receipt   (every gate must report KILLED).
+- Confirm committed_inputs_sha256 of the contract against the working tree.
+- Independent diff review: complete for every file of the review scope (INDEPENDENT_REVIEW.json).
+
+WHAT IS ALREADY DONE (do not redo)
+- CMB lane: closed-form T and E history kernels (re-derivation of E46, no novelty claim); r_E(perfect fluid) = 0.0711; the present-shear
+  map is model-labelled (1.42e-10 perfect fluid T+E; 6.66e-08 massless stress family; 3.43e-08 minimal normal ordering) and its
+  numbers are illustrations; the T functional does not bound a late-time shear whose sign changes; PR3 B ell=2 null fails
+  (p = 9.54e-06), so the E lane is DIAGNOSTIC.
+- CF4 lane (catalogue level, 35970 committed groups; scripts/r54/run_r54_cf4_exact.py): the R36 linear estimator is biased and is
+  replaced by the log-distance estimator (R54-EQ-34); the exact LCDM pair-sum body is cached in RESULTS/R54_L05_COSMIC_COV.npz.
+  By zero-point nuisance model (pooled / method monopoles / method x hemisphere steps):
+    joint null p   0.000344 / 0.00277 / 0.112
+    locking tail   0.0242 / 0.0085 / 0.147
+    class          EXCESS_NOT_POLE_LOCKED / UNRESOLVED_POLE_LOCKED / LCDM_BODY_COMPATIBLE
+  Robust class: DEPENDS_ON_ZERO_POINT_NUISANCE_MODEL. State neither "locked to the equatorial pole" nor "not locked"; both were withdrawn.
+  Hemisphere step (z < 0.055), consistent between FP, TF, SN, OTHER: -1.66 +- 0.53% of H; single-axis tail 0.0017,
+  scan-corrected tail 0.0339; never quote the single-axis tail alone. Its reading as a common mode is on HOLD.
+- Counts: the receipt estimator has power 0.20 against a doubled dipole; its non-detection decides nothing.
+- Theorems (THEOREMS.md, tests/r54/test_r54_theorems.py, htt/htt/htt/infer/r54_identifiability.py): statements proved without data (node R54-THM). They change
+  no executed node. Rules for manuscript statements that rest on them: LOCAL_AGENT_CONTRACT.json:theorem_usage. Open addendum tasks R54-A1 to R54-A4:
+  HANDOFF_UPDATE.json. The proofs were read by an independent reviewer.
+- Independent review: INDEPENDENT_REVIEW.json lists every finding and its resolution. Do not re-promote a hypothesis that the review moved to HOLD
+  unless the decision_checks of the node that owns it say so.
+
+YOUR TASKS (execute in this order; one node = one commit series; status from the committed outputs)
+  [DONE_SCOPED_C0] R54-L01
+  [DONE_SCOPED_C0] R54-L04
+  [DONE_SCOPED_C0] R54-L02
+  [DONE_SCOPED_C0] R54-L03
+  [DONE_SCOPED_C0] R54-L06
+  [DONE_SCOPED_C0] R54-L07
+  [DONE_SCOPED_C0] R54-L08
+  R54-L01  calibrate the T+E estimator on the 300 FFP10 vectors; masked E response
+  R54-L04  CF4 survey-resolved zero points from the raw CF4 tables: is the common hemisphere step a survey calibration term?
+  R54-L02  PR4 bypass: analytic T covariance, cross-pipeline and cross-experiment E lane
+  R54-L03  count-dipole clustering body, same-estimator velocity null, competitor estimators
+  R54-L06  joint frame tomography in precision form with five views per irreducible block
+  R54-L07  adversarial benchmark, evidence verification, novelty checks
+  R54-L08  manuscript decision with an independent reviewer; then stop
+Each node's inputs, numbered steps, output schema, acceptance predicates, decision checks, kill criteria and mutation gates are in
+LOCAL_AGENT_CONTRACT.json under nodes[]. Implement exactly those steps. Do not add analyses.
+"acceptance" entries must hold or the node stops. "decision_checks" entries are data-dependent: evaluate them once, record the
+branch taken, and never change a threshold, a carrier, a redshift range or a sample definition after seeing the outcome.
+
+HARD RULES
+- Data: use only committed files and files already on /mnt/extdrive/workdir. No downloads. A missing input sets the node to BLOCKED_MISSING_INPUT.
+- PR4: no simulations, no dependency. Use the bypass legs.
+- Code: only htt/htt/htt/infer/r54_*.py, scripts/r54, tests/r54. Reuse the module API; do not re-implement it.
+- Linear algebra: precision form; never regularize a singular matrix; never add a prior that is not a named body.
+- Statistics: every tail names its law; no sigma conversions; a single split difference is never a null distribution.
+- Forking paths: an axis, a redshift range, a nuisance column or a threshold chosen after looking at data goes into the forking-path register of
+  THEORY_LOOPS.md (through the builder) and its tail is reported with the scan or variant correction. A decision that depends on a nuisance model is
+  reported per model.
+- Frames and units: as in conventions; never retype the rotation matrix; distances in Mpc without h.
+- Reports: numbers come only from RESULTS/*.json through `python scripts/r54/build_r54_contract.py build`. Never type a number into a document.
+- Language: no phrase from conventions.forbidden_phrases_in_reports.
+- Failure: if an acceptance predicate fails twice, write docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/BLOCKER_<node>.md with the evidence and stop that node. Do not tune thresholds or carriers.
+- Git: commit prefix = card id (PR-R55-LOCAL-CALIBRATION, PR-R56-JOINT-BENCHMARK, PR-R57-MANUSCRIPT-DECISION); push without force; never merge to main.
+
+AFTER EACH NODE
+1. PYTHONPATH=htt/src:htt:. python -m pytest tests/r54 -q
+2. implement and run the node's local mutation gates; each named test must fail under its mutation
+3. python scripts/r54/build_r54_contract.py build
+4. run the SELF_AUDIT_PROTOCOL items A01-A15 and paste the PASS/FAIL table in the commit body
+5. move the card in docs/codex_handoff/pr_status.yaml only when every node of the card is complete; then
+   python scripts/codex_harness/sync_pr_dag_mirrors.py --write
+
+END-OF-NODE REPORT (exact fields)
+node id and status | commands with exit codes | result file and sha256 | acceptance table | mutation receipts | deviations | open risks
+
+STOP CONDITION
+R54-L08 ends the programme with BOUNDED_NOTE_EXTENDED or NO_PAPER. Do not open another research loop.

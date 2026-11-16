@@ -1,0 +1,209 @@
+{
+ "base": "research/r50-observed-convergence-20261115",
+ "branch": "research/r54-tensor-frame-tomography-20261116",
+ "canonical_cards": {
+  "PR-R54-TENSOR-FRAME-TOMOGRAPHY": [
+   "R54-00",
+   "R54-CORE",
+   "R54-L1",
+   "R54-L5",
+   "R54-L05",
+   "R54-THM",
+   "R54-REVIEW"
+  ],
+  "PR-R55-LOCAL-CALIBRATION": [
+   "R54-L01",
+   "R54-L02",
+   "R54-L03",
+   "R54-L04"
+  ],
+  "PR-R56-JOINT-BENCHMARK": [
+   "R54-L06",
+   "R54-L07"
+  ],
+  "PR-R57-MANUSCRIPT-DECISION": [
+   "R54-L08"
+  ]
+ },
+ "claim_tier_ceiling": "C0",
+ "cloud_nodes": [
+  {
+   "id": "R54-00",
+   "outputs": [
+    "HISTORY_AUDIT.json",
+    "HISTORY_PR_INDEX.json",
+    "R54_REPORT_KO.md"
+   ],
+   "status": "DONE_SCOPED_C0",
+   "title": "History audit and referee verdict"
+  },
+  {
+   "id": "R54-CORE",
+   "outputs": [
+    "htt/htt/htt/infer/r54_tensor_five_view.py",
+    "tests/r54/test_r54_modules.py"
+   ],
+   "status": "DONE_SCOPED_C0",
+   "title": "Tensor five-view calculus in precision form"
+  },
+  {
+   "id": "R54-L1",
+   "outputs": [
+    "htt/htt/htt/infer/r54_type1_thomson.py",
+    "scripts/r54/run_r54_cmb_type1.py",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L1_TYPE1_TE.json"
+   ],
+   "status": "DONE_SCOPED_C0",
+   "title": "Type-I shear-history functionals from T+E (covers L1 and the CMB side of L3, L4)"
+  },
+  {
+   "id": "R54-L5",
+   "outputs": [
+    "htt/htt/htt/infer/r54_lcdm_body.py",
+    "scripts/r54/run_r54_lowz_frames.py",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L5_LOWZ_FRAMES.json"
+   ],
+   "status": "DONE_SCOPED_C0",
+   "title": "Low-redshift frames on committed multipoles: ideal-sky body, count-dipole excess (its CF4 statements are superseded by R54-L05)"
+  },
+  {
+   "id": "R54-L05",
+   "outputs": [
+    "htt/htt/htt/infer/r54_distance_estimators.py",
+    "scripts/r54/run_r54_cf4_exact.py",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L05_CF4_EXACT.json",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L05_COSMIC_COV.npz",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L05_STEP_SCAN_COV.npz"
+   ],
+   "status": "DONE_SCOPED_C0",
+   "title": "CF4 at catalogue level: unbiased log-distance estimator, exact LCDM pair-sum body, axis-locking and hemisphere-step nulls under three zero-point nuisance models (covers L2, L3, L5, L6 at low z)"
+  },
+  {
+   "id": "R54-THM",
+   "outputs": [
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+    "htt/htt/htt/infer/r54_identifiability.py",
+    "tests/r54/test_r54_theorems.py"
+   ],
+   "status": "DONE_SCOPED_C0",
+   "title": "Statements proved without data: sufficiency tie, validity of the views, selection rule, gauge orbits, shear-history moment problem, frame closure"
+  },
+  {
+   "id": "R54-REVIEW",
+   "outputs": [
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/INDEPENDENT_REVIEW.json"
+   ],
+   "status": "DONE_SCOPED_C0",
+   "title": "Independent adversarial review (complete, findings resolved or deferred); the diff review was interrupted and is handed to the local session"
+  }
+ ],
+ "date": "2026-11-16",
+ "execution_order_local": [
+  "R54-L01",
+  "R54-L04",
+  "R54-L02",
+  "R54-L03",
+  "R54-L06",
+  "R54-L07",
+  "R54-L08"
+ ],
+ "file_allowlist_local": [
+  "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116",
+  "htt/htt/htt/infer/r54_*.py",
+  "scripts/r54",
+  "tests/r54",
+  "docs/codex_handoff/pr_status.yaml",
+  "machine_readable/pr_status.yaml"
+ ],
+ "local_file_allowlist_note": "R54-L04 may add operator names to scripts/r54/run_r54_cf4_exact.py; existing operators, constants and the decision block stay unchanged",
+ "local_nodes": [
+  {
+   "card": "PR-R55-LOCAL-CALIBRATION",
+   "depends": [
+    "R54-L1"
+   ],
+   "id": "R54-L01",
+   "priority": 1,
+   "runtime_budget": "30 min CPU",
+   "status": "DONE_SCOPED_C0",
+   "title": "Calibrate the T+E type-I estimator on the 300 FFP10 realisations"
+  },
+  {
+   "card": "PR-R55-LOCAL-CALIBRATION",
+   "depends": [
+    "R54-L01"
+   ],
+   "id": "R54-L02",
+   "priority": 2,
+   "runtime_budget": "2 h CPU",
+   "status": "DONE_SCOPED_C0",
+   "title": "PR4 bypass: covariance triangulation without NPIPE simulations"
+  },
+  {
+   "card": "PR-R55-LOCAL-CALIBRATION",
+   "depends": [
+    "R54-L5"
+   ],
+   "id": "R54-L03",
+   "priority": 3,
+   "runtime_budget": "3 h CPU",
+   "status": "DONE_SCOPED_C0",
+   "title": "Count-dipole body, same-estimator velocity null and competitor estimators"
+  },
+  {
+   "card": "PR-R55-LOCAL-CALIBRATION",
+   "depends": [
+    "R54-L05"
+   ],
+   "id": "R54-L04",
+   "priority": 1,
+   "runtime_budget": "2 h CPU",
+   "status": "DONE_SCOPED_C0",
+   "title": "CF4 survey-resolved zero points: is the common hemisphere step a survey calibration term?"
+  },
+  {
+   "card": "PR-R56-JOINT-BENCHMARK",
+   "depends": [
+    "R54-L01",
+    "R54-L02",
+    "R54-L03",
+    "R54-L04"
+   ],
+   "id": "R54-L06",
+   "priority": 4,
+   "runtime_budget": "1 h CPU",
+   "status": "DONE_SCOPED_C0",
+   "title": "Joint frame tomography L(theta | a_lm, z, n, counts)"
+  },
+  {
+   "card": "PR-R56-JOINT-BENCHMARK",
+   "depends": [
+    "R54-L03",
+    "R54-L04"
+   ],
+   "id": "R54-L07",
+   "priority": 4,
+   "runtime_budget": "1 day",
+   "status": "DONE_SCOPED_C0",
+   "title": "Adversarial benchmark against published methods"
+  },
+  {
+   "card": "PR-R57-MANUSCRIPT-DECISION",
+   "depends": [
+    "R54-L06",
+    "R54-L07"
+   ],
+   "id": "R54-L08",
+   "priority": 5,
+   "runtime_budget": "half day",
+   "status": "DONE_SCOPED_C0",
+   "title": "Manuscript decision with an independent decision-gate reviewer"
+  }
+ ],
+ "not_opened": {
+  "Gaia CRF3 tensor systematics": "optional in the plan; not opened and without a node id",
+  "map-level aberration estimator": "H-L6c is HOLD; published anchors only"
+ },
+ "schema": "htt.r54.research_dag/1",
+ "stop_rule": "PR-R57 ends the programme with a manuscript decision. No audit-only successor node may be opened."
+}

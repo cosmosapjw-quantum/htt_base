@@ -1,0 +1,452 @@
+{
+ "date": "2026-11-16",
+ "incomplete_reviews": [],
+ "reviewers": [
+  {
+   "agent": "ae6b17c200d7dfa14",
+   "findings": [
+    {
+     "evidence": [
+      "RESULTS/R54_L05_CF4_EXACT.json:decision.class_by_nuisance_variant",
+      "RESULTS/R54_L05_CF4_EXACT.json:decision.locking_tail_by_nuisance_variant",
+      "RESULTS/R54_L05_CF4_EXACT.json:injections.*.cases.*.fraction_pole_locked_flag",
+      "state/HYPOTHESES.json:H-L5c"
+     ],
+     "id": "AR-01",
+     "resolution": "Locking null repeated for three nuisance models with 4000 draws each; class reported per model with a robust class; power of the pole_locked flag measured by injection; H-L5c moved to HOLD and both directional statements withdrawn.",
+     "resolution_status": "FIXED",
+     "severity": "critical",
+     "summary": "The rejection of pole locking (H-L5c) rested on the pooled nuisance model only; the calibrated tail changes with the zero-point model and the flag has low power."
+    },
+    {
+     "evidence": [
+      "RESULTS/R54_L1_TYPE1_TE.json:history.late_time_sensitivity",
+      "RESULTS/R54_L1_TYPE1_TE.json:data.late_time_shear_bounds",
+      "state/HYPOTHESES.json:H-L3c,H-L3d"
+     ],
+     "id": "AR-02",
+     "resolution": "Late-time kernel sensitivities and bounds computed; H-L3c rejected as stated and replaced by the conditional statement H-L3d.",
+     "resolution_status": "FIXED",
+     "severity": "critical",
+     "summary": "H-L3c was promoted although late-time anisotropic stress with a sign-changing shear cancels the temperature functional."
+    },
+    {
+     "evidence": [
+      "RESULTS/R54_L05_CF4_EXACT.json:log_distance.window_subsets",
+      "RESULTS/R54_L05_CF4_EXACT.json:zero_point_split.method_monopoles_only.window_subsets",
+      "RESULTS/R54_L05_CF4_EXACT.json:setup.composition_north_south"
+     ],
+     "id": "AR-03",
+     "resolution": "Inner and outer window nulls added for the pooled and method-monopole models together with the sample composition; H-L5a moved to HOLD as a conditional statement quoted with all three nuisance models. The inner windows are reported as computed.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "The excess over the body (H-L5a) is dominated by the outer windows, where the sample is northern FP; only a conditional statement is supported."
+    },
+    {
+     "evidence": [
+      "RESULTS/R54_L05_CF4_EXACT.json:zero_point_split.hemisphere_step_scan",
+      "tests/r54/test_r54_results_binding.py::test_l05_statistics_recomputed_with_plain_numpy"
+     ],
+     "id": "AR-04",
+     "resolution": "Hemisphere-split axis scan with the exact body and a restricted pair sum; scan-corrected tail, rank of the pole and the variance ratio of the best single family to the common step are reported next to the single-axis tail; the common-dipole Wald tail is quoted.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "The tail of the common hemisphere step used an axis chosen after the first pass; the four family estimates are not independent."
+    },
+    {
+     "evidence": [
+      "R54_REPORT_KO.md section 2.3",
+      "state/NEGATIVE_RESULTS.md",
+      "tests/r54/test_r54_results_binding.py::test_withdrawn_statements_do_not_reappear"
+     ],
+     "id": "AR-05",
+     "resolution": "The contradictory sentences were removed, the two measurements are separated in the report, the split result is labelled as not being evidence, and a test blocks the withdrawn phrases.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "The report stated both a hemisphere step and that no axis is singled out; the step and the window excess are different measurements; 'absorbed by the split' is near-automatic."
+    },
+    {
+     "evidence": [
+      "THEORY_LOOPS.md:Forking-path register",
+      "RESULTS/R54_L05_CF4_EXACT.json:decision.rule_status",
+      "SELF_AUDIT_PROTOCOL.json:A14,A15"
+     ],
+     "id": "AR-06",
+     "resolution": "Forking-path register FP-01 to FP-12 added to THEORY_LOOPS.md; the rule status is recorded in the result file; the wording 'pre-specified' was dropped; self-audit items A14 and A15 added.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "Several analysis choices were made after looking at data and the decision rule was described as pre-specified."
+    },
+    {
+     "evidence": [
+      "htt/htt/htt/infer/r54_type1_thomson.py:massive_stress_weight",
+      "tests/r54/test_r54_modules.py::test_eq06_massive_neutrino_stress_weight",
+      "RESULTS/R54_L1_TYPE1_TE.json:history.photon_neutrino_stress"
+     ],
+     "id": "AR-07",
+     "resolution": "Exact collisionless stress weight for massive species implemented and tested (R54-EQ-06, MG-20); minimal-normal-ordering variant run; full onset sweep with the neutrino temperature at each onset; H-L1b kept as a qualitative statement with illustration numbers.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "The present-shear numbers of H-L1b were quoted from a cut sweep with massless neutrinos only."
+    },
+    {
+     "evidence": [
+      "state/EVIDENCE_LEDGER.md:E46-E48",
+      "state/HYPOTHESES.json:H-L1a",
+      "ADVERSARIAL_BENCHMARK_SPEC.json:B09"
+     ],
+     "id": "AR-08",
+     "resolution": "Evidence rows E46, E47 and E48 added (E46 and E47 checked by search in this session; the author list of E47 was corrected against the arXiv record); H-L1a is recorded as a re-derivation without a novelty claim; benchmark target B09 added.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "The kernel result has prior art that was not cited."
+    },
+    {
+     "evidence": [
+      "RESULTS/R54_L05_CF4_EXACT.json:injections",
+      "state/HYPOTHESES.json:H-C3"
+     ],
+     "id": "AR-09",
+     "resolution": "Injections at the observed sizes on the pooled and method-monopole operators; the decision of H-C3 follows a threshold written before that run was read and is HOLD.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "H-C3 said the depth laws are separated although the injected amplitudes exceeded the observed ones."
+    },
+    {
+     "evidence": [
+      "RESULTS/R54_L05_CF4_EXACT.json:five_views.F",
+      "RESULTS/R54_L5_LOWZ_FRAMES.json:five_views.F",
+      "state/HYPOTHESES.json:H-C1"
+     ],
+     "id": "AR-10",
+     "resolution": "H-C1 is recorded as a reporting convention without a novelty claim; the F view is UNAVAILABLE on both low-redshift lanes and the axis scan is filed under Pi.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "The five views were presented with a novelty flavour and the F slot of the low-redshift lanes held an axis scan."
+    },
+    {
+     "deferred_to": "R54-L04",
+     "evidence": [
+      "LOCAL_AGENT_CONTRACT.json:nodes[R54-L04].steps",
+      "RESULTS/R54_L05_CF4_EXACT.json:limitations"
+     ],
+     "id": "AR-11",
+     "resolution": "Wording bounded to the stated conditions and listed under limitations. Survey monopoles, a radial slope and a distance-error term are specified as fixed nuisance variants of R54-L04, which needs the raw CF4 tables on the local drive; a calibration covariance and a selection model are not built.",
+     "resolution_status": "DEFERRED",
+     "severity": "major",
+     "summary": "The CF4 null has no calibration covariance, no selection model and no survey labels."
+    },
+    {
+     "deferred_to": "R54-L04",
+     "evidence": [
+      "LOCAL_AGENT_CONTRACT.json:nodes[R54-L04].steps"
+     ],
+     "id": "AR-12",
+     "resolution": "Specified as the operator log_mono_galactic of R54-L04.",
+     "resolution_status": "DEFERRED",
+     "severity": "minor",
+     "summary": "A Galactic-latitude nuisance was not tested."
+    },
+    {
+     "evidence": [
+      "htt/htt/htt/infer/r54_tensor_five_view.py:finite_mc_sd_inflation",
+      "tests/r54/test_r54_modules.py::test_eq22_named_laws_and_calibration"
+     ],
+     "id": "AR-13",
+     "resolution": "Replaced by the exact Wishart ratio with a Monte Carlo unit test; Hotelling tails for the square primary carrier; MG-12 updated; the R53 code is not edited and the difference is recorded as conservative.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "The finite-MC inflation formula inherited from R53 is not exact."
+    },
+    {
+     "evidence": [
+      "state/HYPOTHESES.json:H-L4a"
+     ],
+     "id": "AR-14",
+     "resolution": "H-L4a moved to HOLD; the family-identification block is kept in the statement.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "H-L4a was promoted without a null calibration of the invariants."
+    },
+    {
+     "evidence": [
+      "RESULTS/R54_L5_LOWZ_FRAMES.json:count_dipoles.power_against_doubled_dipole",
+      "state/HYPOTHESES.json:H-L2a,H-L6b,H-L3a,H-L3b"
+     ],
+     "id": "AR-15",
+     "resolution": "H-L3a and H-L3b carry 'NONE claimed' novelty and the inherited label; the power of the count estimator against a doubled dipole is computed; H-L2a and H-L6b moved to HOLD.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "H-L3a and H-L3b are inherited structural statements; H-L2a and H-L6b were rejected on an underpowered count estimator."
+    },
+    {
+     "evidence": [
+      "state/HYPOTHESES.json",
+      "THEORY_LOOPS.md"
+     ],
+     "id": "AR-16",
+     "resolution": "Novelty of H-C3, H-L5a and H-L5g set to LOW pending R54-L07; the ODE agreement is described as inside the unit-test tolerance; the '(met)' clause was removed.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "Novelty fields and several small wordings were too strong (tolerance quoted as agreement, a kill criterion marked as met)."
+    }
+   ],
+   "independent_of_author": true,
+   "role": "adversarial reviewer (physmath-research-harness:adversarial-reviewer)",
+   "scope": "hypotheses, decisions, statistics and wording of the R54 cloud nodes before the review-driven re-run",
+   "status": "COMPLETE",
+   "verdict": "ACCEPT_WITH_REQUIRED_CHANGES"
+  },
+  {
+   "agent": "a7066c0ca0aa63828",
+   "checked_without_defect": "R54-EQ-01..06 and 30-35 signs and units; E-mode sign relative to T (analytic); R54-EQ-31 geometry; gauge_range; Wishart/Hotelling formulas; LOO cross-covariance of common_mode; random streams (one per block, seed 20261116); R54_SLOW=1 independent pair-sum element passed",
+   "findings": [
+    {
+     "evidence": [
+      "scripts/r54/run_r54_cmb_type1.py:reionization_only_e",
+      "tests/r54/test_r54_conventions.py::test_mg27_reionization_only_e_equals_the_propagated_quadrupole",
+      "RESULTS/R54_L1_TYPE1_TE.json:history.perfect_fluid.reionization_share_of_r_E"
+     ],
+     "id": "R54-IR-01",
+     "resolution": "reionization_only_e propagates Theta(z=50) with the shifted optical depth tau(N)-tau(N_50) and maps it with [exp(-M tau_50)]_10; checked against a direct ODE integration of R54-EQ-01/02 (gate MG-27); R54-L1 re-run and the report regenerated.",
+     "resolution_status": "FIXED",
+     "severity": "critical",
+     "summary": "r_E_reionization_scattering_only used today's (reionization-attenuated) T functional instead of the quadrupole Theta(z=50); reionization share 0.179 instead of 0.188 (no decision changes)."
+    },
+    {
+     "evidence": [
+      "scripts/r54/run_r54_lowz_frames.py:analyse_window_multipoles",
+      "tests/r54/test_r54_conventions.py::test_mg28_eq36_log_estimator_magnitude_map"
+     ],
+     "id": "R54-IR-02",
+     "resolution": "analyse_window_multipoles takes estimator='linear'|'log' and fails closed for 'log' with h_fit != 1; every log call passes estimator='log'; gate MG-28; R54-L05 re-run.",
+     "resolution_status": "FIXED",
+     "severity": "critical",
+     "summary": "The log-distance estimator used the linear-estimator magnitude map 5 log10(1+A) instead of (5/ln10) A of R54-EQ-36 (0.065 instead of 0.066 mag; no decision changes)."
+    },
+    {
+     "evidence": [
+      "scripts/r54/run_r54_cf4_exact.py:operator_fingerprint,model_key,cache_matches",
+      "tests/r54/test_r54_conventions.py::test_mg26_pair_sum_cache_key_changes_under_row_permutation_and_positions"
+     ],
+     "id": "R54-IR-03",
+     "resolution": "operator_fingerprint is the sha256 of the stack bytes and shape; model_key includes f, the sha256 of r54_lcdm_body.py and a digest of n, r and the kernel grid; the scan cache compares axes_icrs; both caches recomputed; gate MG-26.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "Pair-sum caches could be reused when stale: the fingerprint was invariant under row permutations and model_key omitted positions, r-grid, growth rate and the body module; the scan cache did not compare its axes."
+    },
+    {
+     "evidence": [
+      "tests/r54/test_r54_results_binding.py::test_committed_numbers_are_reproduced_by_the_run_scripts"
+     ],
+     "id": "R54-IR-04",
+     "resolution": "CACHE_WRITE=False in the binding test makes a cache miss fail; the wording now says the two runs are not an independent check (the independent element test stays behind R54_SLOW=1).",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "The binding test could rewrite committed pair-sum caches from inside pytest and called two runs of the same kernel independent."
+    },
+    {
+     "evidence": [
+      "tests/r54/test_r54_conventions.py",
+      "MUTATION_GATES.json:cloud_gates",
+      "MUTATION_GATE_RECEIPT.json"
+     ],
+     "id": "R54-IR-05",
+     "resolution": "tests/r54/test_r54_conventions.py with gates MG-21..MG-28 added to the mutation receipt; the run scripts and the new test file are certified receipt sources.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "No test protected the sign and frame conventions of the run scripts (tilt closure, hemisphere-step magnitude, R_I2G, locking tail direction, E response sign, cache key, reionization functional, log magnitude map)."
+    },
+    {
+     "evidence": [
+      "scripts/r54/build_r54_contract.py:check_text_premises"
+     ],
+     "id": "R54-IR-06",
+     "resolution": "check_text_premises in build_r54_contract.numbers stops the build when any premise fails; the split quadrupole axis angle and n_sims are bound numbers.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "Qualitative words in the builder templates (3.12 MeV inside the sweep interval, B gate fails, E gate passes, laws not told apart, 35970, N=300, axis moves by tens of degrees) were typed, not derived."
+    },
+    {
+     "evidence": [
+      "scripts/r54/run_r54_cmb_type1.py:frobenius_range,summarise"
+     ],
+     "id": "R54-IR-07",
+     "resolution": "frobenius_range uses the Hotelling T^2 quantile for the square sample-covariance carrier and names its law; the floor variant is labelled gaussian_plugin_approximate; R54-L1 re-run.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "On the square T+E carrier the Frobenius ranges used chi2 quantiles while the tails used Hotelling; the B-floor variant carried a Hotelling law name although S + floor is not Wishart."
+    },
+    {
+     "evidence": [
+      "htt/htt/htt/infer/r54_tensor_five_view.py:support_interval",
+      "tests/r54/test_r54_modules.py::test_eq21_support_interval_in_scaled_coordinates"
+     ],
+     "id": "R54-IR-08",
+     "resolution": "The interval is computed in the scaled coordinates (D F D)^+; test_eq21_support_interval_in_scaled_coordinates and gate MG-29.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "support_interval decided identification in scaled coordinates but inverted the unscaled F, giving a falsely tight interval for badly scaled identified carriers."
+    }
+   ],
+   "independent_of_author": true,
+   "role": "scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer)",
+   "scope": "LOCAL_AGENT_CONTRACT.json:pending_independent_review.scope (10 files), read and run only, before the first edit of any local node",
+   "status": "COMPLETE",
+   "verdict": "ACCEPT_WITH_REQUIRED_CHANGES"
+  },
+  {
+   "agent": "adbc43b828f0873d1",
+   "role": "scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer), addendum task R54-A1",
+   "independent_of_author": true,
+   "status": "COMPLETE",
+   "date": "2026-11-17",
+   "scope": "LOCAL_AGENT_CONTRACT.json:pending_independent_review.uncovered (5 files of node R54-THM and of the handoff update), read and run only",
+   "files": [
+    "htt/htt/htt/infer/r54_identifiability.py",
+    "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+    "tests/r54/test_r54_theorems.py",
+    "scripts/r54/handoff_merge.py",
+    "tests/r54/test_r54_handoff.py"
+   ],
+   "verdict": "ACCEPT_WITH_REQUIRED_CHANGES",
+   "checks_performed": [
+    "pytest tests/r54/test_r54_theorems.py tests/r54/test_r54_handoff.py: 19 passed (before the fixes)",
+    "proofs re-derived by hand: T1 (b, c), T2, T3 (i-iii), T4 (bipolar theorem and Sion), T5 (Wishart Schur complement, E W^-1 = I/(n-q-1), Hotelling case), T6 (Schur for real-type O(3) irreps, parity labels, C6.1-C6.5), T7b, T7c, T8 (kernel ratio, derivative, tangent bound, concavity threshold, Chebyshev factorisation, three-bump construction), T9, L1, L2",
+    "scratch rank computation of the T7a design with monopole columns on a ring sample (finding R54-A1-01)",
+    "seeded re-run of the T5 Monte Carlo against five alternative factors (finding R54-A1-02)",
+    "scratch git repository with an open unrelated merge on main (finding R54-A1-03)",
+    "attributions compared with the EVIDENCE rows E01-E69 of the builder",
+    "generated documents grepped for theorem, novelty and H-T statements against state/HYPOTHESES.json"
+   ],
+   "checked_without_defect": "T1-T6, T7b, T7c, T8, T9, L1 and L2 proofs; equivariant_response_rank, rep_matrix and block_identification against their docstrings; FAST_FORWARD and MERGE paths keep local commits; no hand-written file is resolved by the helper; attributions E09, E18, E25, E46, E50-E53, E55, E59-E62, E64-E69",
+   "findings": [
+    {
+     "id": "R54-A1-01",
+     "severity": "major",
+     "summary": "T7a(ii)/(iii) carry a free monopole h_p but assume only that the directions span R^3; zero_point_gauge and its test omitted h_p. A ring sample n_z = 1/2 spans R^3 but gives nullity 4 with monopole columns.",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md:T7a",
+      "htt/htt/htt/infer/r54_identifiability.py:zero_point_gauge",
+      "tests/r54/test_r54_theorems.py::test_t7a_zero_point_gauge_orbit_and_testable_combinations"
+     ],
+     "resolution": "T7a (ii)/(iii) now require that (1, n_i) spans R^4 per sample (directions spanning R^3 suffice when h_p is known and removed); the proof carries c_p; zero_point_gauge gains monopoles=True; new test test_t7a_monopoles_need_the_vectors_one_n_to_span_r4 reproduces the ring counterexample and the cap case.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-02",
+     "severity": "major",
+     "summary": "The 5% tolerance of the Monte Carlo covariance factor in test_t5 accepts neighbouring wrong laws ((n-1)/(n-q), n/(n-q-1), n/(n-q), (n-2)/(n-q-2)).",
+     "evidence": [
+      "tests/r54/test_r54_theorems.py::test_t5_exact_second_moments_with_a_simulated_covariance"
+     ],
+     "resolution": "new test test_t5_covariance_factor_discriminates_neighbouring_laws at n = 20, q = 10 with 40000 draws and a 2.5% tolerance; it asserts that every neighbouring law lies outside twice the tolerance. The original test is kept unchanged.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-03",
+     "severity": "major",
+     "summary": "preflight returned MERGE_IN_PROGRESS for any open merge before checking the protected branch, the start commit and that MERGE_HEAD is the update; apply then took one side of generated files of an unrelated merge.",
+     "evidence": [
+      "scripts/r54/handoff_merge.py:preflight"
+     ],
+     "resolution": "preflight checks the protected branch and the start commit first and returns BLOCKED unless MERGE_HEAD equals the update ref; new test test_merge_helper_blocks_an_open_merge_of_another_commit (unrelated merge and protected branch).",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-04",
+     "severity": "major",
+     "summary": "finish ignored the return code of git add for the rebuilt documents and printed HANDOFF OK.",
+     "evidence": [
+      "scripts/r54/handoff_merge.py:finish"
+     ],
+     "resolution": "a failed git add prints HANDOFF FAILED at step 'stage' and returns 1 (code reading; no locked-index test).",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-05",
+     "severity": "major",
+     "summary": "T8 attribution 'Late-time anisotropic stress evading the temperature quadrupole is discussed in E44' is not supported by the E44 ledger row.",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md:T8 attribution"
+     ],
+     "resolution": "reworded to what E44 records (temperature quadrupole as a line-of-sight integral of the shear, visibility-weighted polarization); the evasion statement stays in the R54-A2 novelty record only.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-06",
+     "severity": "minor",
+     "summary": "T3(iv) 'its width is a property of the conditional prior' holds only asymptotically; at finite F the posterior of iota contributes.",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md:T3"
+     ],
+     "resolution": "reworded: the width does not shrink with data and is fixed by the conditional prior of nu given iota together with the posterior of iota.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-07",
+     "severity": "minor",
+     "summary": "T3(i) assumes measurability without saying so, and the event {C(Y) unbounded} need not be measurable; (i) has no executable check.",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md:T3"
+     ],
+     "resolution": "statement now assumes a measurable set-valued map and asserts an event of probability >= 1 - alpha on which C(Y) is unbounded; the proof notes that (i) is proof-only.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-08",
+     "severity": "minor",
+     "summary": "C6.6 says vorticity modes of E01-E04 reach the temperature; the rows record vector-mode shear (sigma_V), not vorticity.",
+     "evidence": [
+      "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md:C6.6"
+     ],
+     "resolution": "reworded to 'the vector modes ..., sigma_V in E01'.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-09",
+     "severity": "minor",
+     "summary": "R54_REPORT_KO.md says vorticity appears only in the toroidal proper-motion dipole; THEOREMS C6.4 also lists pseudo-scalar dipoles.",
+     "evidence": [
+      "scripts/r54/build_r54_contract.py (R54_REPORT_KO.md T6 line)"
+     ],
+     "resolution": "builder text now names observables of type (1,+): the toroidal proper-motion dipole and pseudo-scalar dipoles.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-10",
+     "severity": "minor",
+     "summary": "H-T2 statement drops the qualifier 'with probability at least 1 - alpha' of T3(i).",
+     "evidence": [
+      "scripts/r54/build_r54_contract.py (H-T2)"
+     ],
+     "resolution": "qualifier added in the builder; documents regenerated.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-11",
+     "severity": "minor",
+     "summary": "git queries of handoff_merge.py read a failed command as an empty (clean) answer.",
+     "evidence": [
+      "scripts/r54/handoff_merge.py:lines, finish_blockers"
+     ],
+     "resolution": "lines() raises BLOCKED on a non-zero exit; git grep exit codes above 1 become a finish blocker.",
+     "resolution_status": "FIXED"
+    },
+    {
+     "id": "R54-A1-12",
+     "severity": "minor",
+     "summary": "test comment 'identified iff its response varies with depth' is stronger than T7a(iii).",
+     "evidence": [
+      "tests/r54/test_r54_theorems.py::test_t7a_zero_point_gauge_orbit_and_testable_combinations"
+     ],
+     "resolution": "comment changed to 'if ... (generic g; T7a iii gives the sufficient condition)'.",
+     "resolution_status": "FIXED"
+    }
+   ],
+   "verdict_as_reported": "PASS_WITH_FINDINGS (no critical finding; five major and seven minor findings, all fixed); mapped to the vocabulary of this record"
+  }
+ ],
+ "rule": "Reviewer output is information, not authority. No number proposed by a reviewer entered a document without being re-executed by the run scripts.",
+ "schema": "htt.r54.independent_review/1"
+}

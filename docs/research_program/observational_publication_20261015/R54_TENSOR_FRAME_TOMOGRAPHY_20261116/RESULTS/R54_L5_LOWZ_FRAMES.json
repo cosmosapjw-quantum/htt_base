@@ -1,0 +1,1043 @@
+{
+ "benchmark": {
+  "axis": {
+   "angle_to_kalbouneh_2026_axis_deg": 32.5872932413861,
+   "equatorial_pole_l_b_deg": [
+    122.93191999999999,
+    27.12825
+   ],
+   "r54_best_template_axis_l_b_deg": [
+    305.7287307008297,
+    -25.88054145196376
+   ]
+  },
+  "bulk_only_direction": {
+   "angle_to_watkins_2023_deg": 11.628541970776423,
+   "r54_V_only_meas_cov_km_s": 294.95063735650245,
+   "r54_V_only_meas_cov_l_b_deg": [
+    286.5629237112618,
+    -5.499874736926632
+   ]
+  },
+  "published_anchors": {
+   "kalbouneh_2026_cf4_axis": {
+    "arxiv": "2510.02510",
+    "b_deg": 5.0,
+    "l_deg": 295.0
+   },
+   "stiskalek_2025_cf4_tfr_zero_point_dipole": {
+    "arxiv": "2509.14997",
+    "mag": 0.087,
+    "mag_sd": 0.019,
+    "percent_of_H": 4.1,
+    "sd": 0.9
+   },
+   "watkins_2023_cf4_bulk_flow_200": {
+    "arxiv": "2302.02028",
+    "b_deg": -8.0,
+    "depth_h_inv_Mpc": 200.0,
+    "km_s": 419.0,
+    "l_deg": 298.0,
+    "sd": 36.0
+   }
+  },
+  "zero_point_dipole_percent": {
+   "note": "different CF4 subsample (all groups vs TF W1) and estimator; agreement is a consistency check, not a replication",
+   "r54_A_only_with_lcdm_body": 3.3793286649924124,
+   "r54_sd_percent": 0.590511317860075,
+   "stiskalek_2025": 4.1,
+   "stiskalek_sd": 0.9
+  }
+ },
+ "cf4": {
+  "analysis": {
+   "MEAS": {
+    "axis_locking": {
+     "best_axis": {
+      "angle_to_equatorial_pole_axis_deg": 9.81479899937288,
+      "delta_chi2": 276.06739838157307,
+      "icrs_ra_dec_deg": [
+       337.3965177477406,
+       80.18520100062712
+      ],
+      "l_b_deg": [
+       116.9275380943012,
+       19.01058309916271
+      ]
+     },
+     "delta_chi2_at_reference_axes": {
+      "cmb_dipole_axis": 43.416573842818295,
+      "ecliptic_pole": 226.4384215154751,
+      "equatorial_pole": 255.9436742622177,
+      "galactic_pole": 92.89562946976402,
+      "supergalactic_pole": 40.6987155260764
+     },
+     "equatorial_pole_fit": {
+      "axisymmetric_quadrupole_km_s_Mpc": 2.4077626605253477,
+      "dH_dipole_km_s_Mpc": -2.699611404236296,
+      "dH_dipole_percent_of_H": -3.630027628414056,
+      "dH_dipole_sd": 0.17760538805823262,
+      "dipole_equivalent_mag": 0.07742806970048859,
+      "quadrupole_sd": 0.24432256332815902,
+      "residual_chi2": 255.55926245013936,
+      "residual_dof": 30,
+      "residual_p_value": 1.2764459073170573e-37
+     },
+     "n_grid_axes": 4000,
+     "null_chi2": 511.50293671235704,
+     "null_p_value": 9.025240256722718e-88,
+     "sky_fraction_of_axes_with_gain_at_least_equatorial_pole": 0.0205,
+     "template": "constant dH dipole along n + constant axisymmetric quadrupole about n (2 parameters, 32 data)"
+    },
+    "dipole": {
+     "A_only": {
+      "amplitude_km_s_Mpc": 2.8975258196647804,
+      "angle_to_equatorial_pole_axis_deg": 15.797397041537412,
+      "direction_l_b_deg": [
+       294.3674952193783,
+       -13.50853524799384
+      ],
+      "equivalent_mag": 0.08299733312836745,
+      "km_s_Mpc_icrs": [
+       -0.7445993637853217,
+       0.2603781168411556,
+       -2.788087319175066
+      ],
+      "percent_of_H": 3.8961528918276827,
+      "perpendicular_to_pole_chi2_2dof": 32.96074016136928,
+      "sd": [
+       0.13114470932304256,
+       0.1735174347227089,
+       0.19373599599298283
+      ],
+      "wald": 226.70123299023192,
+      "wald_p_value": 7.14534058044839e-49
+     },
+     "Q_center": 3.9090930420322687,
+     "V_only": {
+      "amplitude_km_s": 294.95063735650245,
+      "angle_to_watkins_2023_deg": 11.628541970776423,
+      "direction_l_b_deg": [
+       286.5629237112618,
+       -5.499874736926632
+      ],
+      "km_s_icrs": [
+       -119.11233564945388,
+       57.67790795712993,
+       -263.5932262157503
+      ],
+      "wald": 241.31253704549906
+     },
+     "V_plus_A": {
+      "A_direction_l_b_deg": [
+       334.8635249219329,
+       -49.631727898921355
+      ],
+      "A_km_s_Mpc_icrs": [
+       1.4400348555739029,
+       -0.6977401499684843,
+       -2.443995821354201
+      ],
+      "A_percent_of_H": 3.928043376015995,
+      "A_wald_3dof": 56.590292168640715,
+      "V_amplitude_km_s": 298.41363150010864,
+      "V_direction_l_b_deg": [
+       249.85396441905615,
+       42.43405137323261
+      ],
+      "V_km_s_icrs": [
+       -272.7108633304818,
+       118.3496933976885,
+       -25.938977607049765
+      ],
+      "V_wald_3dof": 71.20159622390825,
+      "angle_A_to_equatorial_pole_axis_deg": 33.21416708340877,
+      "angle_V_to_cmb_apex_deg": 11.506782178627178
+     },
+     "delta_chi2_A_minus_V_same_parameter_count": -14.61130405526768,
+     "models": {
+      "A_constant_dH": {
+       "chi2": 94.59831674657428,
+       "delta_chi2_vs_null": 226.70123299023166,
+       "dof": 9,
+       "n_par": 3,
+       "p_value": 1.937365162229231e-16,
+       "theta": [
+        -0.7445993637853217,
+        0.2603781168411556,
+        -2.788087319175066
+       ],
+       "theta_sd": [
+        0.13114470932304256,
+        0.1735174347227089,
+        0.19373599599298283
+       ]
+      },
+      "V_constant_velocity": {
+       "chi2": 79.9870126913066,
+       "delta_chi2_vs_null": 241.31253704549934,
+       "dof": 9,
+       "n_par": 3,
+       "p_value": 1.6257600109770534e-13,
+       "theta": [
+        -119.11233564945388,
+        57.67790795712993,
+        -263.5932262157503
+       ],
+       "theta_sd": [
+        14.685827047102887,
+        18.98899541771046,
+        19.89655715363298
+       ]
+      },
+      "V_plus_A": {
+       "chi2": 23.396720522666083,
+       "delta_chi2_vs_null": 297.90282921413984,
+       "dof": 6,
+       "n_par": 6,
+       "p_value": 0.0006739334199766026,
+       "theta": [
+        -272.7108633304818,
+        118.3496933976885,
+        -25.938977607049765,
+        1.4400348555739029,
+        -0.6977401499684843,
+        -2.443995821354201
+       ],
+       "theta_sd": [
+        33.173978180825294,
+        45.62955726344772,
+        48.644724480789975,
+        0.29607178252896854,
+        0.41678324909344744,
+        0.4729491738225672
+       ]
+      },
+      "null": {
+       "chi2": 321.29954973680594,
+       "dof": 12,
+       "p_value": 1.5651349294751863e-61
+      }
+     },
+     "null": {
+      "dof": 12,
+      "law": "R36 working measurement covariance",
+      "p_value": 1.5651349294751863e-61,
+      "statistic": 321.29954973680594
+     }
+    },
+    "law": "R36 working measurement covariance",
+    "quadrupole": {
+     "Q_center": 2.4196621296025635,
+     "constant_tensor": {
+      "axisymmetry": {
+       "axis_angle_to_equatorial_pole_deg": 78.17395943569808,
+       "axis_l_b_deg": [
+        258.9838434483034,
+        69.66850081717158
+       ],
+       "statistic_3dof_nominal": 24.02235079287504
+      },
+      "chi2": 78.51536215731323,
+      "dof": 15,
+      "invariants": {
+       "eigenvalues": [
+        -1.781053360038109,
+        -0.08179312356546774,
+        1.8628464836035767
+       ],
+       "frobenius_norm": 2.578572901401053,
+       "principal_axis": [
+        -0.2272458050170721,
+        -0.1307971532166574,
+        -0.9650137039506543
+       ],
+       "principal_eigenvalue": 1.8628464836035767,
+       "shape": 0.1163133135230077
+      },
+      "p_value": 1.3035964398081813e-10,
+      "percent_of_H": 2.5048731800301223,
+      "principal_axis_angle_to_equatorial_pole_deg": 15.200609796265928,
+      "principal_axis_l_b_deg": [
+       307.4525381707119,
+       -12.529912127560952
+      ],
+      "q_km_s_Mpc": [
+       -1.0833485871677486,
+       -2.0178452897810386,
+       0.2539100527467019,
+       1.1154126407061957,
+       0.30834843780528864
+      ],
+      "sd": [
+       0.21196686673972204,
+       0.27693533547261745,
+       0.21057601841516932,
+       0.25804084599434873,
+       0.2694373919791475
+      ],
+      "wald_5dof": 105.38533508506775
+     },
+     "null": {
+      "dof": 20,
+      "law": "R36 working measurement covariance",
+      "p_value": 1.6705920285622305e-28,
+      "statistic": 183.90069724238103
+     }
+    }
+   },
+   "MEAS_PLUS_LCDM": {
+    "axis_locking": {
+     "best_axis": {
+      "angle_to_equatorial_pole_axis_deg": 2.796504255565086,
+      "delta_chi2": 47.79678631824984,
+      "icrs_ra_dec_deg": [
+       256.9918726454851,
+       -87.20349574443492
+      ],
+      "l_b_deg": [
+       305.7287307008297,
+       -25.88054145196376
+      ]
+     },
+     "delta_chi2_at_reference_axes": {
+      "cmb_dipole_axis": 20.287071033253838,
+      "ecliptic_pole": 35.485046064268815,
+      "equatorial_pole": 47.614739292945856,
+      "galactic_pole": 32.423208969156384,
+      "supergalactic_pole": 3.0311365687898415
+     },
+     "equatorial_pole_fit": {
+      "axisymmetric_quadrupole_km_s_Mpc": 2.638690321391681,
+      "dH_dipole_km_s_Mpc": -2.453752075736146,
+      "dH_dipole_percent_of_H": -3.2994333237084317,
+      "dH_dipole_sd": 0.44897733378042515,
+      "dipole_equivalent_mag": 0.07048969544604643,
+      "quadrupole_sd": 0.44530706900171135,
+      "residual_chi2": 52.251042281617195,
+      "residual_dof": 30,
+      "residual_p_value": 0.007155535496046122
+     },
+     "n_grid_axes": 4000,
+     "null_chi2": 99.86578157456306,
+     "null_p_value": 6.66725885261102e-09,
+     "sky_fraction_of_axes_with_gain_at_least_equatorial_pole": 0.0005,
+     "template": "constant dH dipole along n + constant axisymmetric quadrupole about n (2 parameters, 32 data)"
+    },
+    "dipole": {
+     "A_only": {
+      "amplitude_km_s_Mpc": 2.513169357518604,
+      "angle_to_equatorial_pole_axis_deg": 16.819690703188524,
+      "direction_l_b_deg": [
+       310.4433451994427,
+       -42.80028820958464
+      ],
+      "equivalent_mag": 0.07216853787977823,
+      "km_s_Mpc_icrs": [
+       0.7225397608449721,
+       -0.0823074983252852,
+       -2.4056562491943847
+      ],
+      "percent_of_H": 3.3793286649924124,
+      "perpendicular_to_pole_chi2_2dof": 3.841774476258488,
+      "sd": [
+       0.3692880929874888,
+       0.4459595448101841,
+       0.4932771101249559
+      ],
+      "wald": 28.863179925393133,
+      "wald_p_value": 2.392682300707363e-06
+     },
+     "Q_center": 1.3896371998952763,
+     "V_only": {
+      "amplitude_km_s": 406.687816692006,
+      "angle_to_watkins_2023_deg": 32.08831139142546,
+      "direction_l_b_deg": [
+       305.3923988524901,
+       -39.39558032861354
+      ],
+      "km_s_icrs": [
+       87.37464353712637,
+       6.1071615151282685,
+       -397.1439971731902
+      ],
+      "wald": 23.263914538600027
+     },
+     "V_plus_A": {
+      "A_direction_l_b_deg": [
+       342.9116330435279,
+       -69.08016083199693
+      ],
+      "A_km_s_Mpc_icrs": [
+       2.0936928676105877,
+       -0.1879234709607577,
+       -1.8942925342124939
+      ],
+      "A_percent_of_H": 3.804952728733448,
+      "A_wald_3dof": 9.460772182477411,
+      "V_amplitude_km_s": 339.8381535917865,
+      "V_direction_l_b_deg": [
+       279.8010568088786,
+       44.61275020180182
+      ],
+      "V_km_s_icrs": [
+       -327.1382431743383,
+       22.797928863520575,
+       -89.16723012977377
+      ],
+      "V_wald_3dof": 3.861506795684245,
+      "angle_A_to_equatorial_pole_axis_deg": 47.976759791252356,
+      "angle_V_to_cmb_apex_deg": 11.444070411774184
+     },
+     "delta_chi2_A_minus_V_same_parameter_count": 5.599265386793164,
+     "models": {
+      "A_constant_dH": {
+       "chi2": 11.740085772777444,
+       "delta_chi2_vs_null": 28.863179925393087,
+       "dof": 9,
+       "n_par": 3,
+       "p_value": 0.2283617772992397,
+       "theta": [
+        0.7225397608449721,
+        -0.0823074983252852,
+        -2.4056562491943847
+       ],
+       "theta_sd": [
+        0.3692880929874888,
+        0.4459595448101841,
+        0.4932771101249559
+       ]
+      },
+      "V_constant_velocity": {
+       "chi2": 17.339351159570608,
+       "delta_chi2_vs_null": 23.263914538599924,
+       "dof": 9,
+       "n_par": 3,
+       "p_value": 0.04365950264792177,
+       "theta": [
+        87.37464353712637,
+        6.1071615151282685,
+        -397.1439971731902
+       ],
+       "theta_sd": [
+        79.21639892756563,
+        85.56406217160497,
+        84.30549060575292
+       ]
+      },
+      "V_plus_A": {
+       "chi2": 7.878578977093189,
+       "delta_chi2_vs_null": 32.72468672107734,
+       "dof": 6,
+       "n_par": 6,
+       "p_value": 0.24713460675941298,
+       "theta": [
+        -327.1382431743383,
+        22.797928863520575,
+        -89.16723012977377,
+        2.0936928676105877,
+        -0.1879234709607577,
+        -1.8942925342124939
+       ],
+       "theta_sd": [
+        176.50076846241498,
+        191.0491275199215,
+        186.862438480369,
+        0.8202156413098575,
+        0.9931761520238677,
+        1.087288996927939
+       ]
+      },
+      "null": {
+       "chi2": 40.60326569817053,
+       "dof": 12,
+       "p_value": 5.7074021695047644e-05
+      }
+     },
+     "null": {
+      "dof": 12,
+      "law": "R36 working measurement covariance + ideal-sky linear LCDM body",
+      "p_value": 5.7074021695047644e-05,
+      "statistic": 40.60326569817053
+     }
+    },
+    "law": "R36 working measurement covariance + ideal-sky linear LCDM body",
+    "quadrupole": {
+     "Q_center": 1.3687401099621848,
+     "constant_tensor": {
+      "axisymmetry": {
+       "axis_angle_to_equatorial_pole_deg": 84.60099131795457,
+       "axis_l_b_deg": [
+        107.04050064877799,
+        -67.52281572104337
+       ],
+       "statistic_3dof_nominal": 8.658947572251625
+      },
+      "chi2": 24.23094010781514,
+      "dof": 15,
+      "invariants": {
+       "eigenvalues": [
+        -1.8556451511353809,
+        -0.06915134101089716,
+        1.924796492146278
+       ],
+       "frobenius_norm": 2.674517222056062,
+       "principal_axis": [
+        0.12807549824193631,
+        0.051842793259654685,
+        0.9904084973065994
+       ],
+       "principal_eigenvalue": 1.924796492146278,
+       "shape": 0.09487265178260829
+      },
+      "p_value": 0.061274074272353894,
+      "percent_of_H": 2.58817414780556,
+      "principal_axis_angle_to_equatorial_pole_deg": 7.941978314003453,
+      "principal_axis_l_b_deg": [
+       124.2697608565908,
+       19.28180133504536
+      ],
+      "q_km_s_Mpc": [
+       -1.1883059708573933,
+       -2.271885203494134,
+       -0.26618001319848283,
+       0.6892272557897294,
+       0.18336549101117675
+      ],
+      "sd": [
+       0.3801367420532857,
+       0.48729177536895263,
+       0.4173950379044253,
+       0.49518347893949,
+       0.4625132452230871
+      ],
+      "wald_5dof": 34.614919241519935
+     },
+     "null": {
+      "dof": 20,
+      "law": "R36 working measurement covariance + ideal-sky linear LCDM body",
+      "p_value": 1.0728529826738482e-05,
+      "statistic": 58.84585934933507
+     }
+    }
+   }
+  },
+  "body_sensitivity": [
+   {
+    "A_angle_to_pole_deg": 13.684118588633229,
+    "A_percent_of_H": 3.4645491495745437,
+    "body_amplitude_scale": 0.5,
+    "chi2_A": 14.681243514985828,
+    "chi2_V": 22.41949649363632,
+    "dipole_null_p": 1.0379763085045533e-07,
+    "pole_template_delta_chi2": 68.90156415867354,
+    "pole_template_residual_p": 0.0002650791289326019,
+    "sigma_r_Mpc": 36.280385142106
+   },
+   {
+    "A_angle_to_pole_deg": 17.07593531420348,
+    "A_percent_of_H": 3.3373006858108862,
+    "body_amplitude_scale": 1.0,
+    "chi2_A": 9.5478875021294,
+    "chi2_V": 14.02502893675437,
+    "dipole_null_p": 0.0002456280888649618,
+    "pole_template_delta_chi2": 44.677358774436044,
+    "pole_template_residual_p": 0.05125440970336644,
+    "sigma_r_Mpc": 36.280385142106
+   },
+   {
+    "A_angle_to_pole_deg": 20.216185704795727,
+    "A_percent_of_H": 3.154614892130917,
+    "body_amplitude_scale": 2.0,
+    "chi2_A": 6.089466975714562,
+    "chi2_V": 8.295315930934102,
+    "dipole_null_p": 0.0326257394492208,
+    "pole_template_delta_chi2": 26.290325719669998,
+    "pole_template_residual_p": 0.5757136519403967,
+    "sigma_r_Mpc": 36.280385142106
+   },
+   {
+    "A_angle_to_pole_deg": 13.249037353571458,
+    "A_percent_of_H": 3.4921097149768867,
+    "body_amplitude_scale": 0.5,
+    "chi2_A": 17.542815607158037,
+    "chi2_V": 26.930276964646747,
+    "dipole_null_p": 1.4186433689710464e-08,
+    "pole_template_delta_chi2": 72.07929595074921,
+    "pole_template_residual_p": 1.098531375634404e-05,
+    "sigma_r_Mpc": 48.373846856141334
+   },
+   {
+    "A_angle_to_pole_deg": 16.819690703188524,
+    "A_percent_of_H": 3.3793286649924124,
+    "body_amplitude_scale": 1.0,
+    "chi2_A": 11.740085772777444,
+    "chi2_V": 17.339351159570608,
+    "dipole_null_p": 5.7074021695047644e-05,
+    "pole_template_delta_chi2": 47.61473929294588,
+    "pole_template_residual_p": 0.007155535496046122,
+    "sigma_r_Mpc": 48.373846856141334
+   },
+   {
+    "A_angle_to_pole_deg": 19.910755799819466,
+    "A_percent_of_H": 3.2085769871949386,
+    "body_amplitude_scale": 2.0,
+    "chi2_A": 7.735741014455571,
+    "chi2_V": 10.539829328473482,
+    "dipole_null_p": 0.013132458739923225,
+    "pole_template_delta_chi2": 28.497552692049858,
+    "pole_template_residual_p": 0.25919866274972636,
+    "sigma_r_Mpc": 48.373846856141334
+   },
+   {
+    "A_angle_to_pole_deg": 12.517179546150928,
+    "A_percent_of_H": 3.5174556201314524,
+    "body_amplitude_scale": 0.5,
+    "chi2_A": 21.229718191824496,
+    "chi2_V": 32.63162194772276,
+    "dipole_null_p": 1.2490333546219817e-09,
+    "pole_template_delta_chi2": 76.47226272558345,
+    "pole_template_residual_p": 3.7792847460376653e-07,
+    "sigma_r_Mpc": 60.46730857017667
+   },
+   {
+    "A_angle_to_pole_deg": 16.33554480406614,
+    "A_percent_of_H": 3.4213754203747224,
+    "body_amplitude_scale": 1.0,
+    "chi2_A": 14.927976852352973,
+    "chi2_V": 22.062563680515705,
+    "dipole_null_p": 8.416622567548909e-06,
+    "pole_template_delta_chi2": 51.75443230640257,
+    "pole_template_residual_p": 0.0005642348313372339,
+    "sigma_r_Mpc": 60.46730857017667
+   },
+   {
+    "A_angle_to_pole_deg": 19.429681357109025,
+    "A_percent_of_H": 3.2620211477184236,
+    "body_amplitude_scale": 2.0,
+    "chi2_A": 10.291478058451373,
+    "chi2_V": 13.989047778359756,
+    "dipole_null_p": 0.003662124702099645,
+    "pole_template_delta_chi2": 31.598000326056734,
+    "pole_template_residual_p": 0.06034941470255485,
+    "sigma_r_Mpc": 60.46730857017667
+   }
+  ],
+  "lcdm_body": {
+   "H0": 67.36,
+   "bulk_velocity_sd_per_axis_km_s": [
+    113.77404137490451,
+    101.16276687654566,
+    91.73143343310262,
+    83.80980059692257
+   ],
+   "cosmic_sd_dipole_km_s_Mpc": [
+    1.199771075080781,
+    0.7489489786552931,
+    0.4328625481744237,
+    0.27905958760145777
+   ],
+   "cosmic_sd_monopole_km_s_Mpc": [
+    1.1200325237849784,
+    0.7648249598234724,
+    0.4308911913006065,
+    0.2580559056349503
+   ],
+   "cosmic_sd_quadrupole_km_s_Mpc": [
+    0.9091973472030133,
+    0.6578247548169551,
+    0.4269413277875149,
+    0.29848452421445554
+   ],
+   "dipole_cross_window_correlation": [
+    [
+     0.9999999999999999,
+     0.8718300595910755,
+     0.28070257189856757,
+     -0.15044613811702193
+    ],
+    [
+     0.8718300595910755,
+     1.0,
+     0.6356662003354376,
+     0.06586329560240517
+    ],
+    [
+     0.28070257189856757,
+     0.6356662003354376,
+     1.0,
+     0.6437816870663575
+    ],
+    [
+     -0.15044613811702193,
+     0.06586329560240517,
+     0.6437816870663575,
+     0.9999999999999998
+    ]
+   ],
+   "f": 0.5300272324169948,
+   "kind": "IDEAL_SKY_LINEAR_THEORY (R54-EQ-11/12)",
+   "omega_m": 0.3153
+  },
+  "observed": {
+   "dipole_km_s_Mpc": [
+    [
+     -1.5835849664623731,
+     0.610083866565065,
+     -2.8676387827683456
+    ],
+    [
+     -0.9080457821366312,
+     0.17875049562750567,
+     -2.849814063174003
+    ],
+    [
+     0.49535686350467056,
+     -0.450255813142741,
+     -2.624292307710225
+    ],
+    [
+     1.1671153836019528,
+     0.13716504853183054,
+     -1.4632152397424674
+    ]
+   ],
+   "dipole_meas_sd": [
+    [
+     0.15976972677147816,
+     0.202328134303468,
+     0.22167266140401237
+    ],
+    [
+     0.15975647909199328,
+     0.20414304143037604,
+     0.22721673782979349
+    ],
+    [
+     0.20602467855184328,
+     0.28292688386765935,
+     0.31636830275813876
+    ],
+    [
+     0.30552203824663304,
+     0.4836689553849719,
+     0.6889170402409077
+    ]
+   ],
+   "quadrupole_km_s_Mpc": [
+    [
+     -0.6318885579440524,
+     -1.337927118525038,
+     0.8418150532603441,
+     1.2873087407564028,
+     0.37359038553815327
+    ],
+    [
+     -0.9252957670412942,
+     -2.6805186970700996,
+     0.10361290768037579,
+     1.4225804030151696,
+     0.08022555798951075
+    ],
+    [
+     -1.7334252226941314,
+     -3.0314097558267346,
+     -0.49941106429284954,
+     1.0614514461540518,
+     0.7194514398464402
+    ],
+    [
+     -1.3261193862431055,
+     -1.3218937147429073,
+     -0.4122958185675163,
+     -0.24256105417687301,
+     -0.2803137511680873
+    ]
+   ]
+  },
+  "source": {
+   "claim_tier": "DIAGNOSTIC_ONLY_CONDITIONAL_FIXED_WEIGHT",
+   "frame": {
+    "direction": "outward ICRS J2000 n",
+    "metric_signature": "(-,+,+,+)",
+    "redshift": "z_CMB released metadata",
+    "speed_of_light_km_s": 299792.458
+   },
+   "schema": "htt.r36.cf4_exact_operator/1",
+   "task_id": "R36-01-CF4-OPERATOR",
+   "window_centers_z": [
+    0.025,
+    0.04,
+    0.06,
+    0.08
+   ],
+   "working_model": "d=10^((dmzp-25)/5) Mpc; y=c*z_CMB km/s; X=d*[1,n,STF(n*n)]; sigma=hypot(250,70*ln(10)/5*d*e_dmzp); w=Gaussian(z_CMB,center,0.012)/sigma^2"
+  },
+  "windows": {
+   "H_fit_km_s_Mpc": 74.36889414022849,
+   "r_eff_Mpc": [
+    94.82979189779523,
+    135.07297527553774,
+    211.91815697610102,
+    300.32940748345305
+   ],
+   "sigma_r_Mpc": 48.373846856141334,
+   "uniform_flow_response_per_Mpc": [
+    0.010545209263748788,
+    0.007403405440356091,
+    0.004718802835345414,
+    0.003329677264638482
+   ]
+  }
+ },
+ "claim_tier": "C0_DIAGNOSTIC_IDEAL_SKY_BODY",
+ "count_dipoles": {
+  "NVSS": {
+   "D_icrs": [
+    -0.0091,
+    0.0055,
+    -0.0046
+   ],
+   "Q_center": 0.5723135575839873,
+   "c_EB": 3.5,
+   "excess_icrs": [
+    -0.004908681388613479,
+    0.004604665224557129,
+    -0.004077991527459306
+   ],
+   "excess_test": {
+    "dof": 3,
+    "law": "receipt per-axis sd incl. mask/declination systematics; no clustering-dipole term",
+    "p_value": 0.46460596713547364,
+    "statistic": 2.559657922706339
+   },
+   "implied_velocity_km_s_if_kinematic": 992.3417782280362,
+   "kinematic_expectation_amplitude": 0.004317553579016321,
+   "observed_amplitude": 0.011585335558368605,
+   "sd_axes_including_declared_systematics": [
+    0.004,
+    0.0045,
+    0.05
+   ]
+  },
+  "Quaia_G20": {
+   "D_icrs": [
+    -0.0113,
+    -0.006,
+    -0.0075
+   ],
+   "Q_center": 0.7085724210293833,
+   "c_EB": 3.7386422874798133,
+   "excess_icrs": [
+    -0.006822902571191194,
+    -0.006956381843691989,
+    -0.00694239915718189
+   ],
+   "excess_test": {
+    "dof": 3,
+    "law": "receipt per-axis sd incl. mask/declination systematics; no clustering-dipole term",
+    "p_value": 0.2698353905459029,
+    "statistic": 3.923578541775115
+   },
+   "implied_velocity_km_s_if_kinematic": 1189.21094975133,
+   "kinematic_expectation_amplitude": 0.004611939539705781,
+   "observed_amplitude": 0.014830374236680611,
+   "sd_axes_including_declared_systematics": [
+    0.0046,
+    0.0161,
+    0.0056
+   ]
+  },
+  "common_excess_velocity": {
+   "beta_excess_km_s_icrs": [
+    -479.1169589891988,
+    316.47931436632575,
+    -554.4385497651396
+   ],
+   "consistency_chi2": 0.5651133408585857,
+   "consistency_dof": 3,
+   "consistency_p_value": 0.9043703229520129,
+   "sd_km_s": [
+    251.03414409490696,
+    369.3376910357974,
+    446.60192330457744
+   ],
+   "transport": "excess_k = c_EB,k * beta_excess (one frame offset shared by both catalogues)",
+   "wald_3dof": 5.918123123622867,
+   "wald_p_value": 0.11566237763161928
+  },
+  "note": "RACS is excluded as in the receipt. The per-axis sd already carries the latitude-cut sweep and the declination degeneracy; a clustering-dipole body and a same-estimator velocity null are local obligations (R54-L03).",
+  "power_against_doubled_dipole": {
+   "assumed_excess_km_s": 369.82,
+   "direction": "CMB dipole apex",
+   "noncentrality": 2.0983634831507656,
+   "note": "a non-detection with this power does not test the published count-dipole excess",
+   "power_at_alpha_0p01": 0.07107901807165194,
+   "power_at_alpha_0p05": 0.2001620793606701
+  },
+  "receipt_status": "DONE_UNBLINDED_POINT_ESTIMATES_MASK_SYSTEMATIC_DOMINATED"
+ },
+ "five_views": {
+  "F": {
+   "reason": "support utilization needs a declared convex body in parameter space; the axis scan is a template statistic and is reported under Pi",
+   "status": "UNAVAILABLE"
+  },
+  "G_F": {
+   "delta_chi2_A_minus_V": 5.599265386793164,
+   "dipole_models": {
+    "A_constant_dH": {
+     "chi2": 11.740085772777444,
+     "delta_chi2_vs_null": 28.863179925393087,
+     "dof": 9,
+     "n_par": 3,
+     "p_value": 0.2283617772992397,
+     "theta": [
+      0.7225397608449721,
+      -0.0823074983252852,
+      -2.4056562491943847
+     ],
+     "theta_sd": [
+      0.3692880929874888,
+      0.4459595448101841,
+      0.4932771101249559
+     ]
+    },
+    "V_constant_velocity": {
+     "chi2": 17.339351159570608,
+     "delta_chi2_vs_null": 23.263914538599924,
+     "dof": 9,
+     "n_par": 3,
+     "p_value": 0.04365950264792177,
+     "theta": [
+      87.37464353712637,
+      6.1071615151282685,
+      -397.1439971731902
+     ],
+     "theta_sd": [
+      79.21639892756563,
+      85.56406217160497,
+      84.30549060575292
+     ]
+    },
+    "V_plus_A": {
+     "chi2": 7.878578977093189,
+     "delta_chi2_vs_null": 32.72468672107734,
+     "dof": 6,
+     "n_par": 6,
+     "p_value": 0.24713460675941298,
+     "theta": [
+      -327.1382431743383,
+      22.797928863520575,
+      -89.16723012977377,
+      2.0936928676105877,
+      -0.1879234709607577,
+      -1.8942925342124939
+     ],
+     "theta_sd": [
+      176.50076846241498,
+      191.0491275199215,
+      186.862438480369,
+      0.8202156413098575,
+      0.9931761520238677,
+      1.087288996927939
+     ]
+    },
+    "null": {
+     "chi2": 40.60326569817053,
+     "dof": 12,
+     "p_value": 5.7074021695047644e-05
+    }
+   },
+   "status": "AVAILABLE",
+   "transport_laws": [
+    "V: 1/d",
+    "A: constant"
+   ]
+  },
+  "Pi": {
+   "axis_scan_uncalibrated": {
+    "best_axis": {
+     "angle_to_equatorial_pole_axis_deg": 2.796504255565086,
+     "delta_chi2": 47.79678631824984,
+     "icrs_ra_dec_deg": [
+      256.9918726454851,
+      -87.20349574443492
+     ],
+     "l_b_deg": [
+      305.7287307008297,
+      -25.88054145196376
+     ]
+    },
+    "delta_chi2_at_reference_axes": {
+     "cmb_dipole_axis": 20.287071033253838,
+     "ecliptic_pole": 35.485046064268815,
+     "equatorial_pole": 47.614739292945856,
+     "galactic_pole": 32.423208969156384,
+     "supergalactic_pole": 3.0311365687898415
+    },
+    "equatorial_pole_fit": {
+     "axisymmetric_quadrupole_km_s_Mpc": 2.638690321391681,
+     "dH_dipole_km_s_Mpc": -2.453752075736146,
+     "dH_dipole_percent_of_H": -3.2994333237084317,
+     "dH_dipole_sd": 0.44897733378042515,
+     "dipole_equivalent_mag": 0.07048969544604643,
+     "quadrupole_sd": 0.44530706900171135,
+     "residual_chi2": 52.251042281617195,
+     "residual_dof": 30,
+     "residual_p_value": 0.007155535496046122
+    },
+    "n_grid_axes": 4000,
+    "null_chi2": 99.86578157456306,
+    "null_p_value": 6.66725885261102e-09,
+    "sky_fraction_of_axes_with_gain_at_least_equatorial_pole": 0.0005,
+    "template": "constant dH dipole along n + constant axisymmetric quadrupole about n (2 parameters, 32 data)"
+   },
+   "dipole_null": {
+    "dof": 12,
+    "law": "R36 working measurement covariance + ideal-sky linear LCDM body",
+    "p_value": 5.7074021695047644e-05,
+    "statistic": 40.60326569817053
+   },
+   "law": "R36 working measurement covariance + ideal-sky linear LCDM body",
+   "quadrupole_null": {
+    "dof": 20,
+    "law": "R36 working measurement covariance + ideal-sky linear LCDM body",
+    "p_value": 1.0728529826738482e-05,
+    "statistic": 58.84585934933507
+   },
+   "status": "AVAILABLE"
+  },
+  "Q": {
+   "body": "ideal-sky linear LCDM cosmic-variance body + R36 measurement covariance (95% ellipsoid)",
+   "dipole_Q_center": 1.3896371998952763,
+   "quadrupole_Q_center": 1.3687401099621848,
+   "status": "AVAILABLE"
+  },
+  "x": {
+   "coordinates": "4 windows x [D(3), STF5]; km/s/Mpc; ICRS; z_CMB frame",
+   "source": "R36-01 theta4x9",
+   "status": "AVAILABLE"
+  }
+ },
+ "limitations": [
+  "The LCDM body is ideal-sky and linear; mask coupling, selection and the exact catalogue geometry are not modelled (R54-L05).",
+  "The R36 measurement covariance excludes method calibration covariance; chi-square values under MEAS alone are not calibrated.",
+  "Axis locking to the equatorial pole indicates a survey-geometry origin but does not identify the responsible sub-sample; the method/hemisphere zero-point split is local (R54-L05).",
+  "A constant dH dipole is not separable from a distance zero-point dipole within one distance-indicator sample.",
+  "Count dipoles use the receipt estimator with its declared systematic budget; no clustering-dipole body yet (R54-L03)."
+ ],
+ "node": "R54-L5",
+ "provenance": {
+  "inputs_sha256": {
+   "docs/research_program/observational_publication_20261015/HTT_SIX_LOOP_INTEGRATED_20261109/COUNT_DIPOLES_REAL_RECEIPT.json": "fd212d96f582787983f26b25cc0ebe93648ac22056478761cb15d252ca0b62e7",
+   "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/RESULT.json": "31f31c79c0fb1d11724dcb9da1373dcd3421c7fc8717eeecd4c54cc1237c5b62",
+   "tests/fixtures/r54/planck18_linear_pk_z0.csv": "f4f99b2817ee0ade6b4b4cba107843d95f46c13e82293fb3def061bc56d0a45d"
+  },
+  "numpy": "2.4.2",
+  "python": "3.12.3",
+  "scipy": "1.17.0",
+  "script": "scripts/r54/run_r54_lowz_frames.py",
+  "script_sha256": "030ff65972be94b1f7a1d7f00b2c7f4e2b45592286dc1aae3c0af5eb2fa9a0c5"
+ },
+ "schema": "htt.r54.lowz_frames/1"
+}

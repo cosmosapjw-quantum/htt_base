@@ -1,0 +1,1427 @@
+{
+ "claim_tier": "C0_CONDITIONAL_TYPE_I_HOMOGENEOUS_MODE",
+ "data": {
+  "B_null_gate": {
+   "pass": false,
+   "rule": "Hotelling tail of the observed B ell=2 block >= 0.01"
+  },
+  "carriers": {
+   "TEB_l26": {
+    "inflation_sd": 1.7204658257665923,
+    "mean_log_cal_variance": null,
+    "p_data": 135,
+    "q0_hotelling": {
+     "law": "hotelling_T2(p=135,n=299)",
+     "p_value": 0.12050286700868672,
+     "statistic": 296.2364697675127
+    },
+    "sd_E": [
+     6.80527456571121e-08,
+     7.76767688527854e-08,
+     7.738329242374157e-08,
+     6.934754495302401e-08,
+     7.461418875640834e-08
+    ],
+    "sd_T": [
+     1.2421724939068588e-05,
+     1.2250944686542213e-05,
+     1.2792923948606587e-05,
+     1.1507588134981099e-05,
+     1.1991881328691863e-05
+    ]
+   },
+   "TE_l2": {
+    "inflation_sd": 1.0,
+    "mean_log_cal_variance": -28.19236551766121,
+    "p_data": 10,
+    "q0_hotelling": {
+     "law": "hotelling_T2(p=10,n=299)",
+     "p_value": 0.48018741404213994,
+     "statistic": 9.879977225797992
+    },
+    "sd_E": [
+     5.633941962796146e-08,
+     6.331606288060364e-08,
+     6.230880188149256e-08,
+     6.223494890311861e-08,
+     6.095993503300042e-08
+    ],
+    "sd_T": [
+     9.702655397609876e-06,
+     9.284571491025355e-06,
+     9.89688276183805e-06,
+     8.69676579474777e-06,
+     9.238318769844826e-06
+    ]
+   },
+   "TE_l23": {
+    "inflation_sd": 1.0492092872683885,
+    "mean_log_cal_variance": -28.14616064683247,
+    "p_data": 24,
+    "q0_hotelling": {
+     "law": "hotelling_T2(p=24,n=299)",
+     "p_value": 0.34232137668810936,
+     "statistic": 28.61525955309839
+    },
+    "sd_E": [
+     5.778380141226351e-08,
+     6.514740844987838e-08,
+     6.420000402385713e-08,
+     6.314310041387346e-08,
+     6.201057909932924e-08
+    ],
+    "sd_T": [
+     9.776686161913794e-06,
+     9.495020074691666e-06,
+     1.0217672389954007e-05,
+     8.980536497933156e-06,
+     9.440976260014933e-06
+    ]
+   },
+   "TE_l26": {
+    "inflation_sd": 1.3661343834401358,
+    "mean_log_cal_variance": -27.900818826261364,
+    "p_data": 90,
+    "q0_hotelling": {
+     "law": "hotelling_T2(p=90,n=299)",
+     "p_value": 0.4789616270478052,
+     "statistic": 128.80713498088733
+    },
+    "sd_E": [
+     6.620861083195482e-08,
+     7.31275420800823e-08,
+     7.288790836470525e-08,
+     6.731375839097844e-08,
+     7.133772028446086e-08
+    ],
+    "sd_T": [
+     1.0906130852684798e-05,
+     1.0813855251699796e-05,
+     1.148515624919049e-05,
+     1.034416091541237e-05,
+     1.0929096934841108e-05
+    ]
+   }
+  },
+  "five_views": {
+   "F": {
+    "Sigma_E_directional": {
+     "c": 3.327235743604043,
+     "inf_lower": -2.9280830681967615e-07,
+     "max_abs_directional_bound": 2.9280830681967615e-07,
+     "n_directions": 600,
+     "simultaneous_level": 0.95,
+     "sup_upper": 2.7871586574673464e-07
+    },
+    "Sigma_T_directional": {
+     "c": 3.327235743604043,
+     "inf_lower": -3.24734061651058e-05,
+     "max_abs_directional_bound": 3.263062215904467e-05,
+     "n_directions": 600,
+     "simultaneous_level": 0.95,
+     "sup_upper": 3.263062215904467e-05
+    },
+    "body": "unit quadratic form n.Sigma.n (absolute units)",
+    "status": "AVAILABLE"
+   },
+   "G_F": {
+    "status": "AVAILABLE",
+    "tests": {
+     "present_shear_over_H": {
+      "perfect_fluid_T_only": {
+       "estimate": [
+        5.973680282603572e-11,
+        5.080427578909533e-11,
+        -2.1230745960516658e-10,
+        -4.1532236850255445e-11,
+        -1.092943843356601e-10
+       ],
+       "frobenius_range_95": {
+        "body": "unit Frobenius ball in STF5 coordinates",
+        "law": "gaussian_plugin_chi2_quantile",
+        "level": 0.95,
+        "norm_estimate": 2.5474341326014155e-10,
+        "norm_max": 1.1406779486038333e-09,
+        "norm_min": 0.0,
+        "radius_squared": 11.070497693516351
+       }
+      },
+      "perfect_fluid_T_plus_E": {
+       "estimate": [
+        -2.671108885344381e-11,
+        4.6192838218767146e-11,
+        -1.2360724882259485e-11,
+        1.005951440800285e-11,
+        3.634925885429666e-11
+       ],
+       "frobenius_range_95": {
+        "body": "unit Frobenius ball in STF5 coordinates",
+        "law": "gaussian_plugin_chi2_quantile",
+        "level": 0.95,
+        "norm_estimate": 6.65019589142918e-11,
+        "norm_max": 1.4211001657147685e-10,
+        "norm_min": 0.0,
+        "radius_squared": 11.070497693516351
+       }
+      },
+      "photon_neutrino_stress_two_mode": {
+       "coefficients": {
+        "c_E": -0.025412080072833076,
+        "c_T": 0.0016616673411406337
+       },
+       "estimate": [
+        5.071194873566398e-09,
+        -1.2204282071888145e-11,
+        -1.1580375415608073e-08,
+        -3.041019612306617e-09,
+        -8.615884758425612e-09
+       ],
+       "frobenius_range_95": {
+        "body": "unit Frobenius ball in STF5 coordinates",
+        "law": "gaussian_plugin_chi2_quantile",
+        "level": 0.95,
+        "norm_estimate": 1.5598190010687494e-08,
+        "norm_max": 6.655010023819488e-08,
+        "norm_min": 0.0,
+        "radius_squared": 11.070497693516351
+       },
+       "sd": [
+        1.558936646692922e-08,
+        1.4913667674847084e-08,
+        1.589718951907395e-08,
+        1.3988042460692704e-08,
+        1.4696917767386726e-08
+       ]
+      },
+      "photon_neutrino_stress_two_mode_normal_ordering": {
+       "coefficients": {
+        "c_E": -0.014684462813432268,
+        "c_T": 0.0008575621217539866
+       },
+       "estimate": [
+        2.7099519270709616e-09,
+        -1.9454358703729806e-10,
+        -5.908249198107615e-09,
+        -1.603991051565312e-09,
+        -4.575373438634681e-09
+       ],
+       "frobenius_range_95": {
+        "body": "unit Frobenius ball in STF5 coordinates",
+        "law": "gaussian_plugin_chi2_quantile",
+        "level": 0.95,
+        "norm_estimate": 8.111468710270514e-09,
+        "norm_max": 3.431566688063137e-08,
+        "norm_min": 0.0,
+        "radius_squared": 11.070497693516351
+       },
+       "sd": [
+        8.016438413003515e-09,
+        7.670373769843918e-09,
+        8.175267222430267e-09,
+        7.196092580479638e-09,
+        7.549124359944653e-09
+       ]
+      }
+     },
+     "transport_free_ratio": {
+      "chi2_min": 0.9518973589829685,
+      "dof": 4,
+      "interval_delta_chi2_1": [
+       -0.5,
+       0.5
+      ],
+      "note": "uninformative while Sigma_T is undetected",
+      "r_hat": -0.20350000000000001
+     },
+     "transport_perfect_fluid": {
+      "Sigma_hat": [
+       -9.604231381165113e-07,
+       1.66090835472837e-06,
+       -4.444418662956874e-07,
+       3.616996090526925e-07,
+       1.306972899854362e-06
+      ],
+      "chi2": 1.046482013050283,
+      "dof": 5,
+      "frobenius_range_95": {
+       "body": "unit Frobenius ball in STF5 coordinates",
+       "law": "gaussian_plugin_chi2_quantile",
+       "level": 0.95,
+       "norm_estimate": 2.391142510954764e-06,
+       "norm_max": 5.109703644887934e-06,
+       "norm_min": 0.0,
+       "radius_squared": 11.070497693516351
+      },
+      "p_value": 0.9587302276481399,
+      "r_E": 0.07110146579877807,
+      "sd": [
+       7.379522821086198e-07,
+       8.496132859667194e-07,
+       8.312367810704236e-07,
+       8.416444211490387e-07,
+       7.877304616213133e-07
+      ]
+     },
+     "transport_photon_stress": {
+      "Sigma_hat": [
+       -8.765344104987165e-07,
+       1.514782380003025e-06,
+       -4.01157042726208e-07,
+       3.3072739394611115e-07,
+       1.193948543177813e-06
+      ],
+      "chi2": 1.0343345747681538,
+      "dof": 5,
+      "frobenius_range_95": {
+       "body": "unit Frobenius ball in STF5 coordinates",
+       "law": "gaussian_plugin_chi2_quantile",
+       "level": 0.95,
+       "norm_estimate": 2.1814442320049364e-06,
+       "norm_max": 4.660322775643027e-06,
+       "norm_min": 0.0,
+       "radius_squared": 11.070497693516351
+      },
+      "p_value": 0.9597491852137046,
+      "r_E": 0.07773315114302147,
+      "sd": [
+       6.733063149885512e-07,
+       7.752800836187804e-07,
+       7.5846970213565e-07,
+       7.682274188935772e-07,
+       7.18217843815614e-07
+      ]
+     }
+    },
+    "transport": "Sigma_E = r_E Sigma_T between the two history kernels"
+   },
+   "Pi": {
+    "T45_loo": {
+     "clopper_pearson_95": [
+      0.8414936728167545,
+      0.91737743306946
+     ],
+     "law": "FFP10 leave-one-out same-estimator null (R51, N=300)",
+     "n_exceed": 265,
+     "n_null": 300,
+     "p_value": 0.8837209302325582,
+     "statistic": 2.1079654254953777
+    },
+    "TE_primary": {
+     "law": "hotelling_T2(p=10,n=299)",
+     "p_value": 0.48018741404214027,
+     "statistic": 9.87997722579799
+    },
+    "law": "T: FFP10 LOO empirical (R51); T+E: gaussian with analytic finite-MC inflation",
+    "status": "AVAILABLE"
+   },
+   "Q": {
+    "Q_center": 0.7346304567372741,
+    "body": "null-law 95% ellipsoid of the calibrated carrier (LCDM + noise, FFP10)",
+    "frobenius_E": {
+     "body": "unit Frobenius ball in STF5 coordinates",
+     "law": "hotelling_T2_quantile(p=5,n=299)",
+     "level": 0.95,
+     "norm_estimate": 1.6427872639138226e-07,
+     "norm_max": 3.7889572545434047e-07,
+     "norm_min": 0.0,
+     "radius_squared": 11.375170483200856
+    },
+    "frobenius_T": {
+     "body": "unit Frobenius ball in STF5 coordinates",
+     "law": "hotelling_T2_quantile(p=5,n=299)",
+     "level": 0.95,
+     "norm_estimate": 9.159546797968618e-06,
+     "norm_max": 4.1458698894442e-05,
+     "norm_min": 0.0,
+     "radius_squared": 11.375170483200856
+    },
+    "status": "AVAILABLE"
+   },
+   "x": {
+    "F": [
+     [
+      13165760151.104958,
+      -942680218.4783198,
+      -1416246496.942576,
+      384468262.36530894,
+      725070235.1360462,
+      -960479292777.4607,
+      145581405550.46866,
+      83217903362.32747,
+      -123386106471.93301,
+      78923567522.05391
+     ],
+     [
+      -942680218.47832,
+      13753755660.605785,
+      -242579208.32265824,
+      -871191964.9819866,
+      -815698122.5595329,
+      246753806935.06607,
+      -726963170363.6838,
+      -64427680697.304504,
+      -20834792761.048546,
+      -54101878782.2784
+     ],
+     [
+      -1416246496.942576,
+      -242579208.32265833,
+      12430921931.174303,
+      173574937.864154,
+      -430543334.38263535,
+      230126665501.41724,
+      119203421920.24976,
+      -790465453257.3657,
+      186312667174.03647,
+      81882844939.65454
+     ],
+     [
+      384468262.36530876,
+      -871191964.9819863,
+      173574937.86415395,
+      15242749227.408962,
+      -733060754.9925174,
+      46786770063.11124,
+      -72948893481.58495,
+      102540694024.43387,
+      -710170166015.4187,
+      138026032385.9372
+     ],
+     [
+      725070235.1360462,
+      -815698122.5595329,
+      -430543334.38263553,
+      -733060754.992517,
+      15261280085.86287,
+      -20739591879.868267,
+      69712503820.26782,
+      109907908456.74113,
+      -184546503065.09827,
+      -1054028952058.2198
+     ],
+     [
+      -960479292777.4607,
+      246753806935.0661,
+      230126665501.4173,
+      46786770063.11121,
+      -20739591879.868225,
+      395380633690853.4,
+      -8470185040766.994,
+      -34518695333471.69,
+      38810867449139.47,
+      -17049711318984.29
+     ],
+     [
+      145581405550.46863,
+      -726963170363.684,
+      119203421920.24982,
+      -72948893481.58496,
+      69712503820.2678,
+      -8470185040766.986,
+      293083603434301.75,
+      -11654721372576.617,
+      -12722764957172.094,
+      1998286422479.4854
+     ],
+     [
+      83217903362.32741,
+      -64427680697.30448,
+      -790465453257.3657,
+      102540694024.43385,
+      109907908456.74112,
+      -34518695333471.69,
+      -11654721372576.613,
+      315435836302058.8,
+      -47973062204899.73,
+      10557688302451.436
+     ],
+     [
+      -123386106471.93301,
+      -20834792761.04853,
+      186312667174.0365,
+      -710170166015.419,
+      -184546503065.0982,
+      38810867449139.47,
+      -12722764957172.096,
+      -47973062204899.73,
+      306603338025133.9,
+      -1645817220012.67
+     ],
+     [
+      78923567522.05391,
+      -54101878782.27838,
+      81882844939.65454,
+      138026032385.93723,
+      -1054028952058.2198,
+      -17049711318984.281,
+      1998286422479.4856,
+      10557688302451.432,
+      -1645817220012.6677,
+      346607978825527.6
+     ]
+    ],
+    "coordinates": [
+     "Sigma_T(STF5)",
+     "Sigma_E(STF5)"
+    ],
+    "epoch_type": "kernel-weighted history functionals K_T, K_E (R54-EQ-04)",
+    "frame": "matter frame, HEALPix Galactic",
+    "status": "AVAILABLE",
+    "t": [
+     108322.26956123099,
+     -74410.37507676384,
+     -51078.48883102366,
+     -42251.69148280257,
+     -141296.06388322404,
+     -26788863.246682283,
+     33949465.470837586,
+     -7744778.29331505,
+     4941862.712128613,
+     32584484.708168875
+    ]
+   }
+  },
+  "inputs": {
+   "E_response": "ideal in-basis response copied from the T block (R54-EQ-04); masked E response is local obligation R54-L01",
+   "n_sims": 300,
+   "t_template_leak_into_EB_rows_uK": 0.0
+  },
+  "late_time_shear_bounds": {
+   "B_null_floor": [
+    {
+     "constant_sign_bound_from_E": 0.20620778859007727,
+     "constant_sign_bound_from_T": 0.00043036353344579157,
+     "sign_changing_rms_bound_from_E": 0.39658608355890823,
+     "sign_changing_rms_bound_from_T": "inf",
+     "z_max": 0.1
+    },
+    {
+     "constant_sign_bound_from_E": 0.05226893969032695,
+     "constant_sign_bound_from_T": 0.00022499867532138252,
+     "sign_changing_rms_bound_from_E": 0.09715831389226046,
+     "sign_changing_rms_bound_from_T": "inf",
+     "z_max": 0.2
+    },
+    {
+     "constant_sign_bound_from_E": 0.00868134039244308,
+     "constant_sign_bound_from_T": 0.00010120636362357337,
+     "sign_changing_rms_bound_from_E": 0.014910942871702956,
+     "sign_changing_rms_bound_from_T": "inf",
+     "z_max": 0.5
+    },
+    {
+     "constant_sign_bound_from_E": 0.0006399227425085876,
+     "constant_sign_bound_from_T": 3.743082167725403e-05,
+     "sign_changing_rms_bound_from_E": 0.0009217842988253132,
+     "sign_changing_rms_bound_from_T": "inf",
+     "z_max": 2.0
+    }
+   ],
+   "note": "E-lane entries are DIAGNOSTIC while the B ell=2 null gate fails; shear = Frobenius norm of sigma_ab/H",
+   "primary": [
+    {
+     "constant_sign_bound_from_E": 0.15592874355762268,
+     "constant_sign_bound_from_T": 0.0004350278538520719,
+     "sign_changing_rms_bound_from_E": 0.2998876528602404,
+     "sign_changing_rms_bound_from_T": "inf",
+     "z_max": 0.1
+    },
+    {
+     "constant_sign_bound_from_E": 0.039524356226930735,
+     "constant_sign_bound_from_T": 0.00022743723210216923,
+     "sign_changing_rms_bound_from_E": 0.07346848494415355,
+     "sign_changing_rms_bound_from_T": "inf",
+     "z_max": 0.2
+    },
+    {
+     "constant_sign_bound_from_E": 0.006564594427035272,
+     "constant_sign_bound_from_T": 0.00010230324770042632,
+     "sign_changing_rms_bound_from_E": 0.011275251061763308,
+     "sign_changing_rms_bound_from_T": "inf",
+     "z_max": 0.5
+    },
+    {
+     "constant_sign_bound_from_E": 0.0004838922423617597,
+     "constant_sign_bound_from_T": 3.783650043905611e-05,
+     "sign_changing_rms_bound_from_E": 0.000697028315611798,
+     "sign_changing_rms_bound_from_T": "inf",
+     "z_max": 2.0
+    }
+   ]
+  },
+  "null_gates": {
+   "B_l2": {
+    "ffp10_rms_uK": 0.10912186406569305,
+    "law": "hotelling_T2(p=5,n=299)",
+    "observed_rms_uK": 0.2986514566542682,
+    "p_value": 9.5372250600284e-06,
+    "statistic": 32.91168081937049
+   },
+   "B_l26": {
+    "ffp10_rms_uK": 0.06558086490847174,
+    "law": "hotelling_T2(p=45,n=299)",
+    "observed_rms_uK": 0.12268893243434638,
+    "p_value": 0.00013023653525626343,
+    "statistic": 112.58034040069587
+   },
+   "E_l2": {
+    "ffp10_rms_uK": 0.2154899085886866,
+    "law": "hotelling_T2(p=5,n=299)",
+    "observed_rms_uK": 0.2591872446409296,
+    "p_value": 0.24775456348365865,
+    "statistic": 6.785037303648476
+   },
+   "E_l26": {
+    "ffp10_rms_uK": 0.131453224762931,
+    "law": "hotelling_T2(p=45,n=299)",
+    "observed_rms_uK": 0.13117514565003907,
+    "p_value": 0.5245658843054366,
+    "statistic": 51.387202996635914
+   },
+   "commander_B_l2": {
+    "ffp10_rms_uK": 0.10912186406569305,
+    "law": "hotelling_T2(p=5,n=299)",
+    "observed_rms_uK": 0.324184873007068,
+    "p_value": 3.9611324490135633e-07,
+    "statistic": 40.766712026010964
+   },
+   "commander_E_l2": {
+    "ffp10_rms_uK": 0.2154899085886866,
+    "law": "hotelling_T2(p=5,n=299)",
+    "observed_rms_uK": 0.20750998671810475,
+    "p_value": 0.5063434992387992,
+    "statistic": 4.3733802564112345
+   }
+  },
+  "physics_B_null_floor": {
+   "present_shear_over_H": {
+    "perfect_fluid_T_only": {
+     "estimate": [
+      5.973680282603593e-11,
+      5.080427578909543e-11,
+      -2.1230745960516637e-10,
+      -4.1532236850255536e-11,
+      -1.0929438433566012e-10
+     ],
+     "frobenius_range_95": {
+      "body": "unit Frobenius ball in STF5 coordinates",
+      "law": "gaussian_plugin_chi2_quantile",
+      "level": 0.95,
+      "norm_estimate": 2.547434132601415e-10,
+      "norm_max": 1.1406779486038327e-09,
+      "norm_min": 0.0,
+      "radius_squared": 11.070497693516351
+     }
+    },
+    "perfect_fluid_T_plus_E": {
+     "estimate": [
+      -2.5431625453460222e-11,
+      4.651970751794537e-11,
+      -1.5177500266543282e-11,
+      9.216199794978603e-12,
+      3.417989700517732e-11
+     ],
+     "frobenius_range_95": {
+      "body": "unit Frobenius ball in STF5 coordinates",
+      "law": "gaussian_plugin_chi2_quantile",
+      "level": 0.95,
+      "norm_estimate": 6.553175545524996e-11,
+      "norm_max": 1.9536813094213229e-10,
+      "norm_min": 0.0,
+      "radius_squared": 11.070497693516351
+     }
+    },
+    "photon_neutrino_stress_two_mode": {
+     "coefficients": {
+      "c_E": -0.025412080072833076,
+      "c_T": 0.0016616673411406337
+     },
+     "estimate": [
+      5.071194873566408e-09,
+      -1.2204282071882354e-11,
+      -1.1580375415608063e-08,
+      -3.0410196123066225e-09,
+      -8.615884758425612e-09
+     ],
+     "frobenius_range_95": {
+      "body": "unit Frobenius ball in STF5 coordinates",
+      "law": "gaussian_plugin_chi2_quantile",
+      "level": 0.95,
+      "norm_estimate": 1.559819001068749e-08,
+      "norm_max": 6.698007008999636e-08,
+      "norm_min": 0.0,
+      "radius_squared": 11.070497693516351
+     },
+     "sd": [
+      1.5717452779132284e-08,
+      1.5047506721706917e-08,
+      1.602281528413127e-08,
+      1.4130651326325267e-08,
+      1.483271272847161e-08
+     ]
+    },
+    "photon_neutrino_stress_two_mode_normal_ordering": {
+     "coefficients": {
+      "c_E": -0.014684462813432268,
+      "c_T": 0.0008575621217539866
+     },
+     "estimate": [
+      2.7099519270709674e-09,
+      -1.9454358703729516e-10,
+      -5.908249198107609e-09,
+      -1.603991051565315e-09,
+      -4.575373438634682e-09
+     ],
+     "frobenius_range_95": {
+      "body": "unit Frobenius ball in STF5 coordinates",
+      "law": "gaussian_plugin_chi2_quantile",
+      "level": 0.95,
+      "norm_estimate": 8.111468710270512e-09,
+      "norm_max": 3.4594813837976156e-08,
+      "norm_min": 0.0,
+      "radius_squared": 11.070497693516351
+     },
+     "sd": [
+      8.099523129568034e-09,
+      7.75716596870525e-09,
+      8.256753856999251e-09,
+      7.288534730915631e-09,
+      7.637294592906513e-09
+     ]
+    }
+   },
+   "transport_free_ratio": {
+    "chi2_min": 0.9496624835793351,
+    "dof": 4,
+    "interval_delta_chi2_1": [
+     -0.5,
+     0.5
+    ],
+    "note": "uninformative while Sigma_T is undetected",
+    "r_hat": -0.14600000000000002
+   },
+   "transport_perfect_fluid": {
+    "Sigma_hat": [
+     -9.144187891189965e-07,
+     1.6726612577939528e-06,
+     -5.457217605293662e-07,
+     3.3137741322218313e-07,
+     1.228971387962689e-06
+    ],
+    "chi2": 1.0312102621177361,
+    "dof": 5,
+    "frobenius_range_95": {
+     "body": "unit Frobenius ball in STF5 coordinates",
+     "law": "gaussian_plugin_chi2_quantile",
+     "level": 0.95,
+     "norm_estimate": 2.3562579034474846e-06,
+     "norm_max": 7.02465086454941e-06,
+     "norm_min": 0.0,
+     "radius_squared": 11.070497693516351
+    },
+    "p_value": 0.9600093727420336,
+    "r_E": 0.07110146579877807,
+    "sd": [
+     1.3518172476067607e-06,
+     1.4139326247785312e-06,
+     1.404272648419206e-06,
+     1.405751121459064e-06,
+     1.3861871455941259e-06
+    ]
+   },
+   "transport_photon_stress": {
+    "Sigma_hat": [
+     -8.390401015940551e-07,
+     1.5264116677413986e-06,
+     -4.861371553433549e-07,
+     3.0550464020508375e-07,
+     1.1301277920482737e-06
+    ],
+    "chi2": 1.0217160762975603,
+    "dof": 5,
+    "frobenius_range_95": {
+     "body": "unit Frobenius ball in STF5 coordinates",
+     "law": "gaussian_plugin_chi2_quantile",
+     "level": 0.95,
+     "norm_estimate": 2.1542451385234953e-06,
+     "norm_max": 6.415473460264552e-06,
+     "norm_min": 0.0,
+     "radius_squared": 11.070497693516351
+    },
+    "p_value": 0.9607952724639907,
+    "r_E": 0.07773315114302147,
+    "sd": [
+     1.234823792312497e-06,
+     1.2918538638336616e-06,
+     1.2827825255486851e-06,
+     1.2849239996022422e-06,
+     1.2655319061409883e-06
+    ]
+   }
+  },
+  "physics_primary": {
+   "present_shear_over_H": {
+    "perfect_fluid_T_only": {
+     "estimate": [
+      5.973680282603572e-11,
+      5.080427578909533e-11,
+      -2.1230745960516658e-10,
+      -4.1532236850255445e-11,
+      -1.092943843356601e-10
+     ],
+     "frobenius_range_95": {
+      "body": "unit Frobenius ball in STF5 coordinates",
+      "law": "gaussian_plugin_chi2_quantile",
+      "level": 0.95,
+      "norm_estimate": 2.5474341326014155e-10,
+      "norm_max": 1.1406779486038333e-09,
+      "norm_min": 0.0,
+      "radius_squared": 11.070497693516351
+     }
+    },
+    "perfect_fluid_T_plus_E": {
+     "estimate": [
+      -2.671108885344381e-11,
+      4.6192838218767146e-11,
+      -1.2360724882259485e-11,
+      1.005951440800285e-11,
+      3.634925885429666e-11
+     ],
+     "frobenius_range_95": {
+      "body": "unit Frobenius ball in STF5 coordinates",
+      "law": "gaussian_plugin_chi2_quantile",
+      "level": 0.95,
+      "norm_estimate": 6.65019589142918e-11,
+      "norm_max": 1.4211001657147685e-10,
+      "norm_min": 0.0,
+      "radius_squared": 11.070497693516351
+     }
+    },
+    "photon_neutrino_stress_two_mode": {
+     "coefficients": {
+      "c_E": -0.025412080072833076,
+      "c_T": 0.0016616673411406337
+     },
+     "estimate": [
+      5.071194873566398e-09,
+      -1.2204282071888145e-11,
+      -1.1580375415608073e-08,
+      -3.041019612306617e-09,
+      -8.615884758425612e-09
+     ],
+     "frobenius_range_95": {
+      "body": "unit Frobenius ball in STF5 coordinates",
+      "law": "gaussian_plugin_chi2_quantile",
+      "level": 0.95,
+      "norm_estimate": 1.5598190010687494e-08,
+      "norm_max": 6.655010023819488e-08,
+      "norm_min": 0.0,
+      "radius_squared": 11.070497693516351
+     },
+     "sd": [
+      1.558936646692922e-08,
+      1.4913667674847084e-08,
+      1.589718951907395e-08,
+      1.3988042460692704e-08,
+      1.4696917767386726e-08
+     ]
+    },
+    "photon_neutrino_stress_two_mode_normal_ordering": {
+     "coefficients": {
+      "c_E": -0.014684462813432268,
+      "c_T": 0.0008575621217539866
+     },
+     "estimate": [
+      2.7099519270709616e-09,
+      -1.9454358703729806e-10,
+      -5.908249198107615e-09,
+      -1.603991051565312e-09,
+      -4.575373438634681e-09
+     ],
+     "frobenius_range_95": {
+      "body": "unit Frobenius ball in STF5 coordinates",
+      "law": "gaussian_plugin_chi2_quantile",
+      "level": 0.95,
+      "norm_estimate": 8.111468710270514e-09,
+      "norm_max": 3.431566688063137e-08,
+      "norm_min": 0.0,
+      "radius_squared": 11.070497693516351
+     },
+     "sd": [
+      8.016438413003515e-09,
+      7.670373769843918e-09,
+      8.175267222430267e-09,
+      7.196092580479638e-09,
+      7.549124359944653e-09
+     ]
+    }
+   },
+   "transport_free_ratio": {
+    "chi2_min": 0.9518973589829685,
+    "dof": 4,
+    "interval_delta_chi2_1": [
+     -0.5,
+     0.5
+    ],
+    "note": "uninformative while Sigma_T is undetected",
+    "r_hat": -0.20350000000000001
+   },
+   "transport_perfect_fluid": {
+    "Sigma_hat": [
+     -9.604231381165113e-07,
+     1.66090835472837e-06,
+     -4.444418662956874e-07,
+     3.616996090526925e-07,
+     1.306972899854362e-06
+    ],
+    "chi2": 1.046482013050283,
+    "dof": 5,
+    "frobenius_range_95": {
+     "body": "unit Frobenius ball in STF5 coordinates",
+     "law": "gaussian_plugin_chi2_quantile",
+     "level": 0.95,
+     "norm_estimate": 2.391142510954764e-06,
+     "norm_max": 5.109703644887934e-06,
+     "norm_min": 0.0,
+     "radius_squared": 11.070497693516351
+    },
+    "p_value": 0.9587302276481399,
+    "r_E": 0.07110146579877807,
+    "sd": [
+     7.379522821086198e-07,
+     8.496132859667194e-07,
+     8.312367810704236e-07,
+     8.416444211490387e-07,
+     7.877304616213133e-07
+    ]
+   },
+   "transport_photon_stress": {
+    "Sigma_hat": [
+     -8.765344104987165e-07,
+     1.514782380003025e-06,
+     -4.01157042726208e-07,
+     3.3072739394611115e-07,
+     1.193948543177813e-06
+    ],
+    "chi2": 1.0343345747681538,
+    "dof": 5,
+    "frobenius_range_95": {
+     "body": "unit Frobenius ball in STF5 coordinates",
+     "law": "gaussian_plugin_chi2_quantile",
+     "level": 0.95,
+     "norm_estimate": 2.1814442320049364e-06,
+     "norm_max": 4.660322775643027e-06,
+     "norm_min": 0.0,
+     "radius_squared": 11.070497693516351
+    },
+    "p_value": 0.9597491852137046,
+    "r_E": 0.07773315114302147,
+    "sd": [
+     6.733063149885512e-07,
+     7.752800836187804e-07,
+     7.5846970213565e-07,
+     7.682274188935772e-07,
+     7.18217843815614e-07
+    ]
+   }
+  },
+  "primary_carrier": "TE_l2",
+  "primary_rule": "minimum mean log calibrated variance over the ten parameters, computed from S and J only",
+  "results": {
+   "B_null_floor": {
+    "Sigma_E_frobenius_range_95": {
+     "body": "unit Frobenius ball in STF5 coordinates",
+     "law": "gaussian_plugin_chi2_quantile",
+     "level": 0.95,
+     "norm_estimate": 1.6427872639138224e-07,
+     "norm_max": 5.010702188034984e-07,
+     "norm_min": 0.0,
+     "radius_squared": 11.070497693516351
+    },
+    "Sigma_E_hat": [
+     -5.91100100327993e-08,
+     1.199272303199816e-07,
+     -4.345686193946308e-08,
+     2.2020973953452662e-08,
+     8.208254347296315e-08
+    ],
+    "Sigma_T_frobenius_range_95": {
+     "body": "unit Frobenius ball in STF5 coordinates",
+     "law": "gaussian_plugin_chi2_quantile",
+     "level": 0.95,
+     "norm_estimate": 9.159546797968615e-06,
+     "norm_max": 4.101418332248754e-05,
+     "norm_min": 0.0,
+     "radius_squared": 11.070497693516351
+    },
+    "Sigma_T_hat": [
+     2.1478947543477536e-06,
+     1.8267170706075078e-06,
+     -7.63372087593686e-06,
+     -1.493331906743962e-06,
+     -3.929785721506944e-06
+    ],
+    "inflation_sd": 1.0,
+    "sd_E": [
+     9.686947950915756e-08,
+     1.0108654547000858e-07,
+     1.0045871116168402e-07,
+     1.0041292108754409e-07,
+     9.962770465883072e-08
+    ],
+    "sd_T": [
+     9.702655397609872e-06,
+     9.284571491025355e-06,
+     9.89688276183805e-06,
+     8.696765794747769e-06,
+     9.238318769844826e-06
+    ],
+    "variant": "SMICA_TE_l2_FFP10_plus_B_floor",
+    "wald_E": {
+     "dof": 5,
+     "law": "gaussian_plugin_approximate (S + systematics floor is not a Wishart sample covariance)",
+     "p_value": 0.7548077675577225,
+     "statistic": 2.6430905408905785
+    },
+    "wald_T": {
+     "dof": 5,
+     "law": "gaussian_plugin_approximate (S + systematics floor is not a Wishart sample covariance)",
+     "p_value": 0.9659033429460037,
+     "statistic": 0.9577201402426453
+    },
+    "wald_all": {
+     "dof": 10,
+     "law": "gaussian_plugin_approximate (S + systematics floor is not a Wishart sample covariance)",
+     "p_value": 0.9533648693682495,
+     "statistic": 3.861829641387325
+    }
+   },
+   "commander_cross_pipeline": {
+    "Sigma_E_frobenius_range_95": {
+     "body": "unit Frobenius ball in STF5 coordinates",
+     "law": "hotelling_T2_quantile(p=5,n=299)",
+     "level": 0.95,
+     "norm_estimate": 1.3152451378835968e-07,
+     "norm_max": 3.4395687095215163e-07,
+     "norm_min": 0.0,
+     "radius_squared": 11.375170483200856
+    },
+    "Sigma_E_hat": [
+     -4.216840094895284e-08,
+     7.011296667487621e-08,
+     -9.68884084253807e-08,
+     1.3793695048905277e-08,
+     3.204786860954862e-08
+    ],
+    "Sigma_T_frobenius_range_95": {
+     "body": "unit Frobenius ball in STF5 coordinates",
+     "law": "hotelling_T2_quantile(p=5,n=299)",
+     "level": 0.95,
+     "norm_estimate": 9.118000579159436e-06,
+     "norm_max": 4.147088475105502e-05,
+     "norm_min": 0.0,
+     "radius_squared": 11.375170483200856
+    },
+    "Sigma_T_hat": [
+     1.8299166079767135e-06,
+     2.3772356184275747e-06,
+     -7.659767791999032e-06,
+     -1.665227833715533e-06,
+     -3.5627326897138134e-06
+    ],
+    "inflation_sd": 1.0,
+    "sd_E": [
+     5.633941962796146e-08,
+     6.331606288060364e-08,
+     6.230880188149256e-08,
+     6.223494890311861e-08,
+     6.095993503300042e-08
+    ],
+    "sd_T": [
+     9.702655397609876e-06,
+     9.284571491025355e-06,
+     9.89688276183805e-06,
+     8.69676579474777e-06,
+     9.238318769844826e-06
+    ],
+    "variant": "COMMANDER_TE_l2_SMICA_covariance_uncalibrated",
+    "wald_E": {
+     "law": "hotelling_T2(p=5,n=299)",
+     "p_value": 0.5063434992387993,
+     "statistic": 4.373380256411234
+    },
+    "wald_T": {
+     "law": "hotelling_T2(p=5,n=299)",
+     "p_value": 0.9667663499155414,
+     "statistic": 0.955991621104161
+    },
+    "wald_all": {
+     "law": "hotelling_T2(p=10,n=299)",
+     "p_value": 0.8570239707685829,
+     "statistic": 5.624128818006732
+    }
+   },
+   "primary": {
+    "Sigma_E_frobenius_range_95": {
+     "body": "unit Frobenius ball in STF5 coordinates",
+     "law": "hotelling_T2_quantile(p=5,n=299)",
+     "level": 0.95,
+     "norm_estimate": 1.6427872639138226e-07,
+     "norm_max": 3.7889572545434047e-07,
+     "norm_min": 0.0,
+     "radius_squared": 11.375170483200856
+    },
+    "Sigma_E_hat": [
+     -5.911001003279933e-08,
+     1.199272303199816e-07,
+     -4.3456861939463084e-08,
+     2.2020973953452662e-08,
+     8.208254347296315e-08
+    ],
+    "Sigma_T_frobenius_range_95": {
+     "body": "unit Frobenius ball in STF5 coordinates",
+     "law": "hotelling_T2_quantile(p=5,n=299)",
+     "level": 0.95,
+     "norm_estimate": 9.159546797968618e-06,
+     "norm_max": 4.1458698894442e-05,
+     "norm_min": 0.0,
+     "radius_squared": 11.375170483200856
+    },
+    "Sigma_T_hat": [
+     2.1478947543477464e-06,
+     1.8267170706075044e-06,
+     -7.633720875936867e-06,
+     -1.4933319067439589e-06,
+     -3.9297857215069435e-06
+    ],
+    "inflation_sd": 1.0,
+    "sd_E": [
+     5.633941962796146e-08,
+     6.331606288060364e-08,
+     6.230880188149256e-08,
+     6.223494890311861e-08,
+     6.095993503300042e-08
+    ],
+    "sd_T": [
+     9.702655397609876e-06,
+     9.284571491025355e-06,
+     9.89688276183805e-06,
+     8.69676579474777e-06,
+     9.238318769844826e-06
+    ],
+    "variant": "SMICA_TE_l2_FFP10",
+    "wald_E": {
+     "law": "hotelling_T2(p=5,n=299)",
+     "p_value": 0.2477545634836589,
+     "statistic": 6.785037303648474
+    },
+    "wald_T": {
+     "law": "hotelling_T2(p=5,n=299)",
+     "p_value": 0.9666358936086139,
+     "statistic": 0.9577201402426456
+    },
+    "wald_all": {
+     "law": "hotelling_T2(p=10,n=299)",
+     "p_value": 0.48018741404214027,
+     "statistic": 9.87997722579799
+    }
+   }
+  },
+  "systematics_floor_uK2_per_ell": {
+   "2": 0.07728511134454463,
+   "3": 0.004488580847333249,
+   "4": 0.0,
+   "5": 0.00719320756548952,
+   "6": 0.0005662831309512033
+  },
+  "t_only_r51_reproduction": {
+   "F_rebuild_rel_diff": 6.318101402406448e-16,
+   "Pi_loo": {
+    "clopper_pearson_95": [
+     0.8414936728167545,
+     0.91737743306946
+    ],
+    "law": "FFP10 leave-one-out same-estimator null (R51, N=300)",
+    "n_exceed": 265,
+    "n_null": 300,
+    "p_value": 0.8837209302325582,
+    "statistic": 2.1079654254953777
+   },
+   "Sigma_T_hat": [
+    2.1602294236821057e-07,
+    6.641797248832746e-06,
+    -9.73089556632774e-06,
+    -2.036573603653354e-06,
+    -2.0634195920056225e-06
+   ],
+   "frobenius_range_95": {
+    "body": "unit Frobenius ball in STF5 coordinates",
+    "law": "gaussian_plugin_chi2_quantile",
+    "level": 0.95,
+    "norm_estimate": 1.213489998247941e-05,
+    "norm_max": 4.66928686529545e-05,
+    "norm_min": 0.0,
+    "radius_squared": 11.070497693516351
+   },
+   "inflation_sd_analytic": 1.1547394182761748,
+   "loo_null_sd": [
+    9.989436885328735e-06,
+    9.527908872803194e-06,
+    1.056933474881879e-05,
+    9.588883958690097e-06,
+    9.961281255156285e-06
+   ],
+   "loo_sd_over_plugin_sd": [
+    1.1582320948082492,
+    1.1521557241238003,
+    1.1562841549863085,
+    1.1562360028689826,
+    1.149918721061294
+   ],
+   "sd_plugin": [
+    8.624728092155427e-06,
+    8.269636363651317e-06,
+    9.140776255767285e-06,
+    8.293189223391315e-06,
+    8.662595949357816e-06
+   ],
+   "t_rebuild_rel_diff": 2.3627785477493843e-16,
+   "wald_plugin": 2.1079654254953777
+  }
+ },
+ "history": {
+  "background": {
+   "neutrinos": "massless, N_eff = 3.044",
+   "omega_gamma": 5.449693624591524e-05,
+   "omega_lambda": 0.6846078285319871,
+   "omega_m": 0.3153,
+   "omega_nu": 3.767453176699943e-05
+  },
+  "kernel_extrema": {
+   "K_E_max": 0.146212577918735,
+   "tau_at_K_E_max": 1.7199611490370517
+  },
+  "late_time_sensitivity": [
+   {
+    "I_E_constant": 2.4299286764554827e-06,
+    "I_T_constant": 0.09530125146547452,
+    "sign_changing": {
+     "Sigma_E_per_unit": 1.2633973682519337e-06,
+     "Sigma_T_per_unit": 0.0,
+     "construction": "s = +1 on the far half of the N interval and -ratio on the near half; ratio fixed by Sigma_T = 0",
+     "ratio": 0.9999025879276626,
+     "rms_shear_per_unit": 0.999951295150028
+    },
+    "tau_at_z_max": 0.00021670317032824272,
+    "z_max": 0.1
+   },
+   {
+    "I_E_constant": 9.58638575360709e-06,
+    "I_T_constant": 0.18228633241464154,
+    "sign_changing": {
+     "Sigma_E_per_unit": 5.1567192351873354e-06,
+     "Sigma_T_per_unit": 0.0,
+     "construction": "s = +1 on the far half of the N interval and -ratio on the near half; ratio fixed by Sigma_T = 0",
+     "ratio": 0.9997921432913289,
+     "rms_shear_per_unit": 0.9998960770467772
+    },
+    "tau_at_z_max": 0.00046351832516827664,
+    "z_max": 0.2
+   },
+   {
+    "I_E_constant": 5.771807073014545e-05,
+    "I_T_constant": 0.4052530083487197,
+    "sign_changing": {
+     "Sigma_E_per_unit": 3.3593963783263593e-05,
+     "Sigma_T_per_unit": 0.0,
+     "construction": "s = +1 on the far half of the N interval and -ratio on the near half; ratio fixed by Sigma_T = 0",
+     "ratio": 0.9993910345273401,
+     "rms_shear_per_unit": 0.9996955636326559
+    },
+    "tau_at_z_max": 0.001373080564208985,
+    "z_max": 0.5
+   },
+   {
+    "I_E_constant": 0.000783016738613215,
+    "I_T_constant": 1.0957329143381067,
+    "sign_changing": {
+     "Sigma_E_per_unit": 0.0005426006519954272,
+     "Sigma_T_per_unit": 0.0,
+     "construction": "s = +1 on the far half of the N interval and -ratio on the near half; ratio fixed by Sigma_T = 0",
+     "ratio": 0.9963666345281376,
+     "rms_shear_per_unit": 0.9981849704340692
+    },
+    "tau_at_z_max": 0.008655734930073034,
+    "z_max": 2.0
+   }
+  ],
+  "optical_depth": {
+   "tau_z50": 0.0545550951780479,
+   "tau_zstar": 1.0549698984832936,
+   "z_table_max": 10000.0
+  },
+  "perfect_fluid": {
+   "K_E_at_reionization_depth": 0.012898431386429085,
+   "Sigma_E_fraction_from_shear_at_z_above_50": 0.9979116401101967,
+   "Sigma_E_fraction_from_shear_at_z_below_50": 0.00208835959081348,
+   "Sigma_E_over_s0": 2556.522247438897,
+   "Sigma_T_over_I_hist": 0.9156808054913365,
+   "Sigma_T_over_s0": 35955.971072017375,
+   "ode_vs_kernel_rel_diff_E": 5.927191628618544e-07,
+   "ode_vs_kernel_rel_diff_T": 1.7808273178321343e-07,
+   "r51_sharp_last_scattering_I_hist": 39266.92670239397,
+   "r_E": 0.07110146579877807,
+   "r_E_reionization_scattering_only": 0.013382106856543785,
+   "reionization_share_of_r_E": 0.1882114061391652
+  },
+  "photon_neutrino_stress": {
+   "massless": {
+    "condition_number": 193.07584672691695,
+    "determinant_T_E": -2.1314452537651208e-05,
+    "mode_A": {
+     "Ncal_today": -0.1611971804761795,
+     "Sigma_E": -0.003245267669513651,
+     "Sigma_T": -0.05911315596970485,
+     "s_today": -1.5757398831153723e-05
+    },
+    "mode_B": {
+     "Ncal_today": 0.01824079521604091,
+     "Sigma_E": 0.001713792021290964,
+     "Sigma_T": 0.02464918480161773,
+     "s_today": -2.592274702640186e-06
+    },
+    "neutrino_quadrupole_today_coefficients": {
+     "n_E": -135.82840625747704,
+     "n_T": 10.183802675222674
+    },
+    "s_today_coefficients": {
+     "c_E": -0.025412080072833076,
+     "c_T": 0.0016616673411406337
+    }
+   },
+   "neutrino_decoupling_initial_condition_sweep": [
+    {
+     "Sigma_T_per_unit_initial_shear": -0.0005515674782968163,
+     "T_nu_MeV": 0.16763768606280594,
+     "r_E": 0.050415079702771586,
+     "s_today_over_Sigma_T": 0.0003805150834321003,
+     "z_init": 1000000000.0
+    },
+    {
+     "Sigma_T_per_unit_initial_shear": -0.00040872887549754026,
+     "T_nu_MeV": 0.33527537195797413,
+     "r_E": 0.05482580051270607,
+     "s_today_over_Sigma_T": 0.0002684292404777564,
+     "z_init": 2000000000.0
+    },
+    {
+     "Sigma_T_per_unit_initial_shear": -0.0003127899778616934,
+     "T_nu_MeV": 0.5029130578531423,
+     "r_E": 0.05750958198545546,
+     "s_today_over_Sigma_T": 0.00020022886701442837,
+     "z_init": 3000000000.0
+    },
+    {
+     "Sigma_T_per_unit_initial_shear": -0.00016306460394518941,
+     "T_nu_MeV": 1.0058261155386472,
+     "r_E": 0.06400810388309397,
+     "s_today_over_Sigma_T": 3.508963745386665e-05,
+     "z_init": 6000000000.0
+    },
+    {
+     "Sigma_T_per_unit_initial_shear": -7.701571764788934e-05,
+     "T_nu_MeV": 1.67637685911932,
+     "r_E": 0.07482174889624456,
+     "s_today_over_Sigma_T": -0.00023970961619221024,
+     "z_init": 10000000000.0
+    },
+    {
+     "Sigma_T_per_unit_initial_shear": -2.6025163023064912e-05,
+     "T_nu_MeV": 2.5145652885951613,
+     "r_E": 0.10905863266990541,
+     "s_today_over_Sigma_T": -0.0011097350224202262,
+     "z_init": 15000000000.0
+    },
+    {
+     "Sigma_T_per_unit_initial_shear": 1.1410714370623774e-06,
+     "T_nu_MeV": 3.3527537180710025,
+     "r_E": -1.0566733355004148,
+     "s_today_over_Sigma_T": 0.02851386907262481,
+     "z_init": 20000000000.0
+    },
+    {
+     "Sigma_T_per_unit_initial_shear": 2.797936213768399e-05,
+     "T_nu_MeV": 5.029130577022685,
+     "r_E": 0.01802065265926757,
+     "s_today_over_Sigma_T": 0.0012037220208274775,
+     "z_init": 30000000000.0
+    }
+   ],
+   "neutrino_masses_eV": [
+    0.0,
+    0.00868,
+    0.0503
+   ],
+   "normal_ordering_minimal_masses": {
+    "condition_number": 195.2452018127984,
+    "determinant_T_E": -2.0767344319522692e-05,
+    "mode_A": {
+     "Ncal_today": -0.1617210304663571,
+     "Sigma_E": -0.0032390728166074357,
+     "Sigma_T": -0.058623048871080274,
+     "s_today": -2.7088618481000355e-06
+    },
+    "mode_B": {
+     "Ncal_today": 0.018305864206213517,
+     "Sigma_E": 0.0017129963802352335,
+     "Sigma_T": 0.02459152069277014,
+     "s_today": -4.065674982659341e-06
+    },
+    "neutrino_quadrupole_today_coefficients": {
+     "n_E": -139.82627968716895,
+     "n_T": 10.484417714269057
+    },
+    "s_today_coefficients": {
+     "c_E": -0.014684462813432268,
+     "c_T": 0.0008575621217539866
+    }
+   },
+   "r_E_range_over_sweep": [
+    -1.0566733355004148,
+    0.10905863266990541
+   ],
+   "s_today_over_Sigma_T_range_over_sweep": [
+    -0.0011097350224202262,
+    0.02851386907262481
+   ],
+   "z_ref": 100000.0
+  },
+  "photon_stress": {
+   "r_E": 0.07773315114302147,
+   "s_today_over_Sigma_T": -0.00024449906235270223
+  }
+ },
+ "limitations": [
+  "E response is the ideal in-basis response; the masked-estimator E response is not yet computed (R54-L01).",
+  "T+E intervals use the exact Wishart finite-MC ratio (1 for the square primary carrier) and Hotelling tails; FFP10 leave-one-out calibration of the T+E estimator is local (R54-L01).",
+  "Present-day shear numbers are illustrations of the stress dependence: the map depends on the neutrino masses (factor 2 between massless and minimal normal ordering) and on the neutrino-decoupling initial state (Sigma_T changes sign in the sweep).",
+  "Late-time bounds assume a shear confined to z < z_max; the sign-changing construction is one member of the Sigma_T = 0 family.",
+  "PR3 SMICA low-ell polarization fails the B ell=2 null gate when it fails; E-lane numbers are then diagnostic only.",
+  "Type I only: no curvature, vorticity or tilt; second-order terms and the kinematic quadrupole are not modelled; the data interval uses the massless stress map and the normal-ordering map is a variant.",
+  "Present-day shear is a model-conditional derived quantity; the measured quantities are Sigma_T and Sigma_E."
+ ],
+ "node": "R54-L1",
+ "provenance": {
+  "inputs_sha256": {
+   "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/R51/observed_carrier.npz": "f0c08a115854a6f287d39eddf984291f676e6f7bb79bb2324eb92cd6eb2c0dca",
+   "tests/fixtures/r54/planck18_tau_history.csv": "239f6f32857d9799be818072dd3385d02a2f5eed0c5a5eacf4cbebb9076e6231"
+  },
+  "numpy": "2.4.2",
+  "python": "3.12.3",
+  "scipy": "1.17.0",
+  "script": "scripts/r54/run_r54_cmb_type1.py",
+  "script_sha256": "582f088808dc0f3ce0c1c08eda9ff92004a6afabd8c0a04254e68c3ba7d710d1"
+ },
+ "schema": "htt.r54.l1_type1_te/1",
+ "transfer_source": "first_order_homogeneous_mode_thomson_system_R54-EQ-01..05 (not a native solver)"
+}
