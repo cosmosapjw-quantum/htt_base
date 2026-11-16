@@ -303,7 +303,8 @@ EVIDENCE = [
     ("E50", "Darling 2014, The Hubble expansion is isotropic in the epoch of dark energy", "arXiv:1404.3735", V,
      "anisotropic expansion appears as a curl-free quadrupolar proper-motion field; test with extragalactic proper motions"),
     ("E51", "Darling, Truebenbach, Paine 2018, Astrometry and proper motions of extragalactic objects (ngVLA science case)", "arXiv:1807.06670", V,
-     "aberration drift and secular parallax dipoles; a rotating universe would appear as a B-mode proper-motion dipole; anisotropic expansion as a quadrupole"),
+     "aberration drift and secular parallax dipoles; anisotropic expansion; a B-mode proper-motion dipole is named as the signature of an isotropy-violating effect "
+     "(the sentence naming the effect was seen only in part; reading it as rotation is ours and must be checked in the text)"),
     ("E52", "Bachchan, Hobbs, Lindegren 2016, Gaia reference frame amid quasar variability and proper motion patterns", "arXiv:1512.08917", V,
      "the astrometric solution is determined up to six degrees of freedom (orientation and spin), fixed with quasars as a kinematically non-rotating frame"),
     ("E53", "Dufour 1997, Econometrica 65, 1365", "jstor:2171740", V,
@@ -692,7 +693,7 @@ def local_nodes(n: dict) -> list[dict]:
                    "2. Re-run under the common R54 assumptions (declared body, named law, typed frame) and fill the scoring fields of the spec.",
                    "3. Resolve every evidence row whose verification is not VERIFIED by reading the primary source; correct identifiers in state/EVIDENCE_LEDGER.md through the builder.",
                    "4. Novelty check for H-L1b and H-L5g: search the primary literature for prior stress-corrected Bianchi-I CMB shear limits and for a cross-indicator common-mode test of the CF4 hemisphere asymmetry with a catalogue-level LCDM covariance; record the nearest prior art and set the novelty field of both hypotheses.",
-                   "5. Priority check for H-T6 and H-T8 (THEOREMS.md): search for (a) an identifiability or selection-rule statement for the kinematic variables by irreducible block and parity, including null channels, and (b) a statement on the number of sign changes of a shear history hidden from the temperature and E quadrupoles. Read the primary sources of the evidence rows E54 and E63 to E69, which are recorded from memory. Set the novelty fields; if prior art is found, the theorems stay as attributed re-derivations."],
+                   "5. Priority check for H-T6 and H-T8 (THEOREMS.md): search for (a) an identifiability or selection-rule statement for the kinematic variables by irreducible block and parity, including null channels, and (b) a statement on the number of sign changes of a shear history hidden from the temperature and E quadrupoles. Read the primary sources of the evidence rows E54 and E63 to E69, which are recorded from memory, and the passage of E51 on the B-mode proper-motion dipole, which was seen only in part. Set the novelty fields; if prior art is found, the theorems stay as attributed re-derivations."],
          "outputs": [{"path": REL + "/RESULTS/R54_L07_BENCHMARK.json", "schema": "htt.r54.l07_benchmark/1", "required_keys": ["targets", "scores", "novelty_checks", "provenance"]}],
          "acceptance": [{"metric": "targets_with_status", "op": "==", "value": "all"}], "kill": ["scoring a tie as a win"], "mutation_gates": [], "runtime_budget": "1 day"},
         {"id": "R54-L08", "card": "PR-R57-MANUSCRIPT-DECISION", "title": "Manuscript decision with an independent decision-gate reviewer", "depends": ["R54-L06", "R54-L07"], "priority": 5,

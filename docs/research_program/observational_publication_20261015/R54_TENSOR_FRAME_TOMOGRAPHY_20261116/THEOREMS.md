@@ -157,8 +157,10 @@ to every pair of summands. QED
   enter the dipole only, shear the quadrupole only. The leading-order scalar law therefore carries
   1 + 3 + 5 = 9 numbers, which is the count of E18.
 - C6.2 (proper motions). A polar vector sources the spheroidal dipole only, vorticity the toroidal dipole
-  only, shear the spheroidal quadrupole only. These are the patterns used in astrometry: aberration drift and
-  parallax-type dipoles, a rotation dipole, and the quadrupole of anisotropic expansion (E25, E50, E51).
+  only, shear the spheroidal quadrupole only. The dipole of the observer velocity and the quadrupole of the
+  shear are the published patterns (E25); astrometry uses the aberration-drift and parallax dipoles and the
+  curl-free quadrupole of anisotropic expansion (E50, E51). The toroidal dipole of a rigid rotation is elementary;
+  E51 names a B-mode dipole for an isotropy-violating effect, in a passage that was seen only in part.
 - C6.3 (null channels). B_2 and the toroidal proper-motion quadrupole are of type (2,-), for which the list of
   first-order variables has no member. Their first-order response is zero: a signal there contradicts either
   the model class or the equivariance of the measurement chain. This is the formal basis of the B-null gate.
@@ -318,7 +320,7 @@ The limits follow from E = q and E = m. QED
 |---|---|---|
 | general Hubble law | luminosity-distance expansion in a general spacetime; 9, 25 and 61 degrees of freedom at first, second and third order in redshift | E18 |
 | drifts | direction and redshift drift for general observers; the observer velocity contributes a dipole and shear a quadrupole | E25 |
-| proper motions | anisotropic expansion gives a curl-free quadrupole; a rotation would appear as a B-mode dipole; aberration drift and secular parallax | E50, E51 |
+| proper motions | anisotropic expansion gives a curl-free quadrupole; aberration drift and secular parallax; a B-mode dipole channel (passage seen only in part) | E50, E51 |
 | reference frame | the astrometric solution has orientation and spin degrees of freedom fixed with quasars (kinematically non-rotating frame) | E52 |
 | zero point | a distance zero-point dipole is degenerate with a Hubble dipole | E09 |
 | impossibility | valid confidence sets for locally unidentified parameters are unbounded with positive probability; bounded sets have zero coverage | E53, E54 |
@@ -330,7 +332,8 @@ The limits follow from E = q and E = m. QED
 | count tomography | separating the kinematic from the intrinsic count dipole with redshift information | E62 |
 | transfer kernels | first-order polarized transfer in a flat anisotropic universe | E46 |
 
-Rows marked as recalled from memory in the ledger (E54, E63 to E69) still need the primary source (R54-L07).
+Rows marked as recalled from memory in the ledger (E54, E63 to E69) and the partly seen passage of E51 still need
+the primary source (R54-L07).
 
 ## 4. What may be claimed after the re-check
 
