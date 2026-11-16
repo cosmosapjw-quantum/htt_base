@@ -33,6 +33,10 @@ WHAT IS ALREADY DONE (do not redo)
   Hemisphere step (z < 0.055), consistent between FP, TF, SN, OTHER: -1.66 +- 0.53% of H; single-axis tail 0.0017,
   scan-corrected tail 0.0339; never quote the single-axis tail alone. Its reading as a common mode is on HOLD.
 - Counts: the receipt estimator has power 0.20 against a doubled dipole; its non-detection decides nothing.
+- Theorems (THEOREMS.md, tests/r54/test_r54_theorems.py, htt/htt/htt/infer/r54_identifiability.py): statements proved without data.
+  Use block_identification for the identification table of R54-L06. Quote a shear limit only with its history family or sign
+  restriction (T8), a bound on a constant Hubble multipole only with its calibration body (T7), and the tie with the exact
+  likelihood as a theorem (T1). The proofs have not been read by an independent reviewer; they are in the pending review scope.
 - Independent review: INDEPENDENT_REVIEW.json lists every finding and its resolution. Do not re-promote a hypothesis that the review moved to HOLD
   unless the decision_checks of the node that owns it say so.
 

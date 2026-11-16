@@ -7,6 +7,7 @@ Branch `research/r54-tensor-frame-tomography-20261116` on `research/r50-observed
 |---|---|
 | `R54_REPORT_KO.md` | referee verdict, executed results, decisions (Korean) |
 | `THEORY_LOOPS.md` | equation register, core calculus, six theory loops |
+| `THEOREMS.md` | statements proved without data (T1 to T9, L1, L2), attributions and the prior-work re-check; written by hand, contains no result number |
 | `RESULTS/R54_L1_TYPE1_TE.json` | CMB T+E type-I history functionals (executed) |
 | `RESULTS/R54_L5_LOWZ_FRAMES.json` | first pass on committed R36 multipoles with the ideal-sky body; count-dipole excess (executed; CF4 part superseded) |
 | `RESULTS/R54_L05_CF4_EXACT.json` | CF4 at catalogue level: log-distance estimator, exact LCDM body, nulls under three zero-point nuisance models, hemisphere-step scan (executed) |

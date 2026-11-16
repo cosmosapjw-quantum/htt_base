@@ -26,6 +26,7 @@ import yaml
 from scipy import stats
 
 from htt.htt.infer import r54_distance_estimators as de
+from htt.htt.infer import r54_identifiability as idn
 from htt.htt.infer import r54_lcdm_body as lb
 from htt.htt.infer import r54_tensor_five_view as fv
 from htt.htt.infer import r54_type1_thomson as th
@@ -377,7 +378,7 @@ def test_dag_contract_and_prompt_are_consistent():
 
 def test_contract_names_only_existing_code_files_and_equations():
     contract = _json(R54 / "LOCAL_AGENT_CONTRACT.json")
-    modules = {"r54_type1_thomson": th, "r54_lcdm_body": lb, "r54_tensor_five_view": fv, "r54_distance_estimators": de}
+    modules = {"r54_type1_thomson": th, "r54_lcdm_body": lb, "r54_tensor_five_view": fv, "r54_distance_estimators": de, "r54_identifiability": idn}
     for name, entries in contract["module_api"].items():
         target = modules[name] if name in modules else _module(name, "r54_api_" + Path(name).stem)
         for entry in entries:
@@ -492,3 +493,20 @@ def test_withdrawn_statements_do_not_reappear():
             assert phrase not in text, f"{path.name} repeats a withdrawn statement: '{phrase}'"
     theory = (R54 / "THEORY_LOOPS.md").read_text(encoding="utf-8")
     assert "## Forking-path register" in theory and theory.count("| FP-") >= 10
+
+
+def test_theorems_document_is_bound_to_checks_and_claims_no_unverified_novelty():
+    text = (R54 / "THEOREMS.md").read_text(encoding="utf-8")
+    checks = (ROOT / "tests/r54/test_r54_theorems.py").read_text(encoding="utf-8") + (ROOT / "tests/r54/test_r54_modules.py").read_text(encoding="utf-8")
+    for tid, prefix in (("T1", "test_t1_"), ("T2", "test_t2_"), ("T3", "test_t3_"), ("T4", "test_eq20_"), ("T5", "test_t5_"), ("T6", "test_t6_"),
+                        ("T7", "test_t7"), ("T8", "test_t8_"), ("T9", "test_t9_"), ("L1", "test_l1_"), ("L2", "test_eq06_")):
+        assert f"### {tid}." in text and f"def {prefix}" in checks, f"{tid} lacks a statement or an executable check"
+    assert "not yet read by an independent" in text                      # the proofs are flagged as unreviewed until the record says otherwise
+    assert not re.search(r"\b\d+\.\d+e[-+]\d+\b", text), "THEOREMS.md must not carry result numbers"
+    hyps = {h["id"]: h for h in _json(R54 / "state/HYPOTHESES.json")["hypotheses"]}
+    for hid in ("H-T1", "H-T2", "H-T7", "H-T9"):
+        assert hyps[hid]["decision"] == "PROMOTE" and ("NONE claimed" in hyps[hid]["dimensions"]["novelty"] or hyps[hid]["dimensions"]["novelty"].startswith("LOW"))
+    for hid in ("H-T6", "H-T8"):                                         # the two statements with a possible claim stay flagged until R54-L07
+        assert hyps[hid]["decision"] == "PROMOTE" and "R54-L07" in hyps[hid]["dimensions"]["novelty"]
+    scope = _json(R54 / "LOCAL_AGENT_CONTRACT.json")["pending_independent_review"]["scope"]
+    assert any(rel.endswith("THEOREMS.md") for rel in scope) and any(rel.endswith("r54_identifiability.py") for rel in scope)

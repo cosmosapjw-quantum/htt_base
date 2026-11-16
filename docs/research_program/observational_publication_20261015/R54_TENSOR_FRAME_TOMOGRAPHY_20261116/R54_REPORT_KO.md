@@ -94,10 +94,24 @@ Zero-point nuisance 모형별 요약. 세 모형 중 어느 것도 선험적으�
 - Global tilt 닫힘 시험(R54-EQ-38, 예비): V_CF4 + c beta_excess = 0의 p = 0.0895 (V만), 0.0123 (상수 dipole 주변화). Count 쪽 검정력이 낮아 예비 수치다(H-L6b HOLD).
 - 판정 규칙의 지위: 규칙과 임계값은 exact-body 수치를 보기 전에 코드에 넣었으나 커밋하지 않았으므로 사전 등록이 아니다. 물리적 방향 의존 Hubble 인자나 A_a의 검출이 아니다. 상수 dipole은 거리 zero-point dipole과 분리되지 않는다(H-L3b). 남은 질문은 survey 수준 zero-point와 nuisance 변형에서 분류가 하나로 모이는가이고 R54-L04가 답한다.
 
+### 2.4 데이터 없이 증명한 진술 (R54-THM, `THEOREMS.md`)
+
+신규성 주장에 필요한 항목 가운데 통계학과 수리물리만으로 닫히는 것을 증명했다. 각 진술은 `tests/r54/test_r54_theorems.py`에 실행 가능한 검사를 가진다. 증명은 아직 독립 심사를 받지 않았다.
+
+- T1 (검정력): 충분통계량 논리로, carrier의 어떤 함수·압축·재좌표화도 exact likelihood의 검정력 한계를 넘지 못한다. R53에서 잰 tie는 정리다.
+- T2, T3, T4 (타당성): 특이 precision의 신뢰 원통은 rank(F) 자유도로 정확한 coverage를 가지며 거기서 읽는 모든 뷰가 동시에 유효하다. 비식별 방향에서는 유효한 신뢰집합이 비유계이고, 유계 구간의 균등 coverage는 0이며, posterior는 조건부 prior와 같다. 고전 결과이고(E53, E55, E64) 우주론은 같은 목적에 profile likelihood를 이미 쓴다(E57, E58).
+- T5 (유한 시뮬레이션 공분산): GLS 추정의 정확한 2차 모멘트 계수.
+- T6 (선택 규칙): O(3) 등변성 아래 1차 응답은 (다중극, parity) 블록으로 대각이고 식별성은 블록별 rank 진술이 된다. vorticity는 어떤 스칼라 관측량에도 열이 없고 toroidal 고유운동 dipole에만 나타난다. B_2는 null 채널이다. 유한 파장 모드와 parity를 깨는 측정 사슬에는 적용되지 않는다.
+- T7 (gauge 궤도): 깊이와 무관한 Hubble 다중극은 거리 표본들의 zero-point 패턴 공통 부분과 분리되지 않고, vorticity는 기준 좌표계의 spin과 분리되지 않는다. "물리적 dipole 없음" 가설은 상대 거리만으로는 검정할 수 없다.
+- T8 (shear history 모멘트 문제): T와 E의 kernel은 Chebyshev 계를 이룬다. T에 보이지 않는 history는 부호가 한 번 이상, T와 E 모두에 보이지 않는 history는 두 번 이상 바뀐다. 부호나 family 제한이 없으면 shear 진폭의 상한은 없다.
+- T9 (프레임 대수): 같은 shell의 count 초과와 bulk flow의 합은 항등적으로 0이다. Global tilt는 shell 사이의 선형 가설이다.
+- 신규성: 통계 부분은 주장하지 않는다. T6과 T8은 구성 요소가 모두 문헌에 있고(E18, E25, E46, E50, E51) 하나의 진술로 묶은 형태는 이번 검색에서 찾지 못했다. 검색에 걸리지 않았다는 뜻일 뿐이며 R54-L07이 확인한다.
+
 ## 3. 주제별 결정
 
 | 주제 | 결정 | 근거 |
 |---|---|---|
+| 증명된 진술 | PROMOTE (H-T1, H-T2, H-T6, H-T7, H-T8, H-T9; 신규성은 주장 없음 또는 미검증) | 2.4, THEOREMS.md |
 | 핵심 계층 | PROMOTE (H-C1 보고 규약), REJECT (H-C2 검정력 이득), HOLD (H-C3 깊이 법칙 분리) | 2.3, state/HYPOTHESIS_GRAPH.md |
 | 저-ell 형태와 물리량 | PROMOTE (H-L1a 범함수 재유도, H-L1b 모델 의존성), REJECT (H-L1c 편광 액면 사용, H-L1d ell>=3의 type-I 해석) | 2.1 |
 | Dipole anomaly | HOLD (H-L2a 검정력 부족, H-L2b clustering body), REOPEN (H-L2c counts 대 CF4 프레임) | 2.2, 2.3 |

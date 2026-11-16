@@ -27,7 +27,7 @@ A tensorized carrier gains statistical power over the exact likelihood.
 - robustness: n/a
 - risk: false-gain claim
 - kill criterion: n/a
-- executed result: R53: Fisher-distance ratio 1.0000, coverage tie
+- executed result: R53: Fisher-distance ratio 1.0000, coverage tie; proved in THEOREMS.md T1 (H-T1)
 - next action: never claim gain; claim typed interpretation only
 
 ### H-C3 (CORE) - HOLD
@@ -323,6 +323,90 @@ A single global tilt explains both the CF4 flow and a count-dipole excess.
 - kill criterion: the closure test rejects at p < 0.01 once the count side is calibrated (R54-L03)
 - executed result: velocity term after the constant term: Wald 5.42/3; closure p=0.0895 / 0.0123 (preliminary)
 - next action: R54-L03, R54-L06
+
+### H-T1 (THM) - PROMOTE
+
+No function, compression or re-coordinatization of the carrier exceeds the power envelope of the exact likelihood (THEOREMS.md T1).
+
+- evidence: proof (sufficiency) + executable check
+- validity: exact for the linear Gaussian carrier with known covariance
+- novelty: NONE claimed (textbook, E65)
+- testability: done
+- robustness: exact
+- risk: reading the tie as a property of the data instead of a theorem
+- kill criterion: a counterexample inside the stated model
+- executed result: R53 measured the tie numerically; T1 proves it
+- next action: cite T1 wherever the tie is stated
+
+### H-T2 (THM) - PROMOTE
+
+The views read from one confidence cylinder are simultaneously valid with rank(F) degrees of freedom; along unidentified directions valid sets are unbounded and a posterior equals the conditional prior (T2, T3, T4).
+
+- evidence: proofs + Monte Carlo and algebraic checks
+- validity: linear Gaussian carrier; second-moment law T5 for a simulated covariance
+- novelty: NONE claimed (E64, E53, E55, E67); cosmology already uses profile likelihoods against prior-volume effects (E57, E58)
+- testability: done
+- robustness: exact
+- risk: presenting classical results as new statistics
+- kill criterion: a view with coverage below the stated level
+- executed result: coverage, Scheffe identity and conditional-prior identity verified in tests/r54/test_r54_theorems.py
+- next action: use T2 for every simultaneous statement and T3 whenever a bound on an unidentified direction is quoted
+
+### H-T6 (THM) - PROMOTE
+
+Selection rule: under O(3) equivariance the first-order response is block diagonal in (multipole, parity), so identifiability is a rank statement per block; vorticity has no column in any scalar observable and B_2 is a null channel (T6).
+
+- evidence: proof (Schur's lemma) + independent numerical count of the equivariant responses
+- validity: variables entering as tensors at the observer or as homogeneous histories; fails for finite-wavelength modes and parity-violating measurement chains
+- novelty: LOW, pending R54-L07: every pattern is published (E18, E25, E50, E51); the block rank criterion and the null channels as one statement were not found in the searches run
+- testability: HIGH
+- robustness: exact inside its scope
+- risk: quoting it for finite-wavelength modes (Bianchi families with structure)
+- kill criterion: an equivariant first-order response that mixes blocks
+- executed result: the numerical count reproduces the table with reflections and loses it with rotations only
+- next action: R54-L06 builds its identification table with block_identification; R54-L07 checks priority
+
+### H-T7 (THM) - PROMOTE
+
+Gauge orbits: a depth-independent Hubble multipole is identified only up to the common part of the zero-point patterns of the distance samples, and vorticity only up to the spin of the reference frame; the hypothesis of no physical dipole is untestable from relative distances (T7).
+
+- evidence: proof + rank computations on random and hemisphere-limited samples
+- validity: linear model of the log-distance residuals; first order
+- novelty: LOW: the one-sample degeneracy is stated in E09 and the spin freedom in E52; the K-sample orbit and the testability statement are elementary
+- testability: HIGH
+- robustness: exact
+- risk: reading a common-mode test as a test of a physical dipole
+- kill criterion: a design in which the physical dipole alone is identified without an absolute calibration
+- executed result: the null space equals the orbit; delta + d_p is identified, delta is not
+- next action: state the calibration body with every bound on a constant multipole
+
+### H-T8 (THM) - PROMOTE
+
+The T and E quadrupole kernels form a Chebyshev system: a shear history invisible to T changes sign at least once, one invisible to T and E at least twice, and no norm of the history is bounded from above without a sign or family restriction (T8).
+
+- evidence: proof + checks on the committed ionization history
+- validity: type I, first order, positive scattering rate on the support
+- novelty: LOW to MEDIUM, UNVERIFIED pending R54-L07: the kernels are classical (E46) and the sign-change argument is standard (E68); the statement for this pair was not found in the searches run
+- testability: HIGH
+- robustness: exact
+- risk: quoting an upper limit on a shear amplitude without naming the family or the sign restriction
+- kill criterion: a non-zero history with fewer sign changes in the common kernel
+- executed result: one-sign-change identity and two-sign-change kernel elements verified numerically
+- next action: R54-L06 and the manuscript quote shear limits only with their family; R54-L07 checks priority
+
+### H-T9 (THM) - PROMOTE
+
+Frame algebra: count-dipole excess plus bulk flow of the same shell vanishes identically; a global tilt is a linear hypothesis across shells with 3 (n_c + n_d - 1) degrees of freedom (T9).
+
+- evidence: proof (substitution) + check
+- validity: first order in velocities; no intrinsic dipole; known Ellis-Baldwin coefficient
+- novelty: NONE claimed (kinematic identity; context E60, E61, E62)
+- testability: done
+- robustness: exact
+- risk: reading the same-shell identity as a physical test
+- kill criterion: n/a
+- executed result: identity verified to machine precision
+- next action: R54-L06 applies the closure only across different shells
 
 ### H-L6c (L6) - HOLD
 

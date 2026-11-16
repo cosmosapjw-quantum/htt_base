@@ -35,6 +35,9 @@ nearest published method gives?
   single-axis tail 0.0017, tail of the scan maximum over 151 split axes 0.0339. Its reading as a common mode is on HOLD
   (the four estimates share the body; E43 reports survey-level differences).
 - Counts: the receipt estimator has power 0.20 against a doubled dipole, so its non-detection decides nothing; tilt closure with CF4 is preliminary (p = 0.0895).
+- Theory (R54-THM, THEOREMS.md): the tie with the exact likelihood, the simultaneous validity of the views, the selection rule by multipole and parity,
+  the zero-point and frame-spin gauge orbits, the sign-change theorem for shear histories and the frame closure identity are proved and machine-checked.
+  No novelty is claimed for the statistics; the selection rule and the sign-change theorem carry an unverified LOW to MEDIUM novelty flag.
 
 ## Blockers
 

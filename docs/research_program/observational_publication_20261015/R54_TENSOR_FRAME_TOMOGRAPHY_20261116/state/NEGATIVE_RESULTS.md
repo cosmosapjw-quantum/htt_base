@@ -2,7 +2,7 @@
 
 Rejected and reopened hypotheses are retained on purpose. A REJECT entry is not re-tested without new data or a new model; HOLD entries are open and are listed in DECISION_LOG.md.
 
-- **H-C2** (CORE): A tensorized carrier gains statistical power over the exact likelihood. Result: R53: Fisher-distance ratio 1.0000, coverage tie.
+- **H-C2** (CORE): A tensorized carrier gains statistical power over the exact likelihood. Result: R53: Fisher-distance ratio 1.0000, coverage tie; proved in THEOREMS.md T1 (H-T1).
 - **H-L1c** (L1): PR3 component-separated ell = 2 polarization can be used at face value. Result: B ell=2 tail p=9.54e-06 (SMICA), 3.96e-07 (Commander); observed rms 0.30 vs FFP10 0.11 uK.
 - **H-L1d** (L1): Octupole or higher morphology constrains type-I parameters. Result: ell >= 3 modes enter only through covariance.
 - **H-L2c** (L2): The R52 counts-versus-CF4 frame inconsistency is a statement about cosmic frames. Result: tilt closure V_CF4 + c beta_excess = 0: p=0.0895 (V only), 0.0123 (constant dipole marginalised); count side preliminary.

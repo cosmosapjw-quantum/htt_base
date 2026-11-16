@@ -260,14 +260,15 @@ EVIDENCE = [
     ("E15", "Springob et al. 2014 (6dFGSv)", "arXiv:1409.6161", V, "hemispheric survey: FP zero point degenerate with a polar dipole"),
     ("E16", "Kalbouneh et al. 2026, JCAP 03, 084", "arXiv:2510.02510", V, "CF4 expansion-rate multipoles, axis (l,b) = (295, 5), read as covariant cosmography"),
     ("E17", "Maartens, Santiago, Clarkson, Kalbouneh, Marinoni 2024, JCAP 09, 070", "arXiv:2312.09875", V, "covariant cosmography; boost transformation of Hubble multipoles"),
-    ("E18", "Heinesen 2021, JCAP 05, 008", "arXiv:2010.06534", P, "multipole decomposition of the general luminosity-distance Hubble law"),
+    ("E18", "Heinesen 2021, JCAP 05, 008", "arXiv:2010.06534", V,
+     "luminosity-distance expansion to third order in redshift for a general spacetime; the anisotropic Hubble law has 9, 25 and 61 degrees of freedom at first, second and third order"),
     ("E19", "Secrest et al. 2025, Rev. Mod. Phys. 97, 041001", "arXiv:2505.23526", V, "cosmic dipole anomaly exceeds 5 sigma in independent radio and quasar samples"),
     ("E20", "von Hausegger et al. 2026, MNRAS 546", "arXiv:2510.23769", V, "CatWISE2020 clustering and its impact on dipole inference"),
     ("E21", "Ferreira & Marra 2024", "arXiv:2403.14580", V, "tomographic redshift dipole: 196 +92 -79 km/s, consistent with the CMB dipole at 2 sigma"),
     ("E22", "Ferreira & Quartin 2021, PRL 127, 101301", "arXiv:2011.08385", V, "aberration+Doppler: v = 300 +111 -93 km/s toward (276 +- 33, 51 +- 19); intrinsic dipole < 3.7 mK (95%)"),
     ("E23", "Mittal, Oayda, Lewis 2024", "arXiv:2311.14938", M, "Quaia dipole consistent with the CMB dipole"),
     ("E24", "Wagenveld, Kloeckner, Schwarz 2023", "arXiv:2305.15335", M, "NVSS+RACS dipole excess (identifier from memory)"),
-    ("E25", "Marcori, Pitrou, Uzan, Pereira 2018, PRD 98, 023517", "arXiv:1805.12121", V, "direction and redshift drift for general observers; Bianchi I"),
+    ("E25", "Marcori, Pitrou, Uzan, Pereira 2018, PRD 98, 023517", "arXiv:1805.12121", V, "direction and redshift drift for general observers; Bianchi I; the observer velocity contributes only a dipole and the shear a quadrupole to the drifts"),
     ("E26", "Schwartzman, Mascarenhas, Taylor 2008, Ann. Stat. 36, 2886", "arXiv:0901.3290", V, "inference for eigenstructure of Gaussian symmetric matrices"),
     ("E27", "Ganesan & Chingangbam 2017, JCAP 06, 023", "arXiv:1608.07452", V, "tensor Minkowski functionals on the CMB"),
     ("E28", "Samal, Saha, Jain, Ralston 2008, MNRAS 385, 1718", "arXiv:0708.2816", V, "power tensor: matrix-valued statistic per multipole"),
@@ -299,6 +300,40 @@ EVIDENCE = [
      "computed polarization in spatially flat homogeneous anisotropic universes; sensitive to the ionization history"),
     ("E49", "Dolgov 2002, Neutrinos in cosmology (Phys. Rep.)", "arXiv:hep-ph/0202122", V,
      "rate-versus-expansion estimate of the decoupling temperatures: 1.87 MeV for electron neutrinos and 3.12 MeV for muon and tau neutrinos"),
+    ("E50", "Darling 2014, The Hubble expansion is isotropic in the epoch of dark energy", "arXiv:1404.3735", V,
+     "anisotropic expansion appears as a curl-free quadrupolar proper-motion field; test with extragalactic proper motions"),
+    ("E51", "Darling, Truebenbach, Paine 2018, Astrometry and proper motions of extragalactic objects (ngVLA science case)", "arXiv:1807.06670", V,
+     "aberration drift and secular parallax dipoles; a rotating universe would appear as a B-mode proper-motion dipole; anisotropic expansion as a quadrupole"),
+    ("E52", "Bachchan, Hobbs, Lindegren 2016, Gaia reference frame amid quasar variability and proper motion patterns", "arXiv:1512.08917", V,
+     "the astrometric solution is determined up to six degrees of freedom (orientation and spin), fixed with quasars as a kinematically non-rotating frame"),
+    ("E53", "Dufour 1997, Econometrica 65, 1365", "jstor:2171740", V,
+     "valid confidence sets for locally almost unidentified parameters are unbounded with positive probability; almost surely bounded sets have zero coverage"),
+    ("E54", "Gleser & Hwang 1987, Ann. Statist. 15, 1351 (identifier from memory; cited together with E53 in arXiv:1612.02024)", "no identifier checked", M,
+     "non-existence of confidence sets of finite expected diameter in errors-in-variables and related models"),
+    ("E55", "Moon & Schorfheide 2012, Econometrica 80, 755", "doi:10.3982/ECTA8360", V,
+     "Bayesian credible sets can lie inside the estimated identified set while frequentist sets extend beyond it; recommends reporting the identified set and the conditional prior"),
+    ("E56", "Beresteanu & Molinari 2008, Econometrica 76, 763", "doi:10.1111/j.1468-0262.2008.00859.x", V,
+     "inference for partially identified features through set-valued random variables and support functions"),
+    ("E57", "Herold, Ferreira, Komatsu 2022, ApJL 929, L16", "arXiv:2112.12140", V,
+     "profile likelihood for early dark energy; marginalized constraints suffer from prior-volume effects that the profile likelihood avoids"),
+    ("E58", "Herold, Ferreira, Heinrich 2024, Profile likelihoods in cosmology: when, why and how", "arXiv:2408.07700", V,
+     "prior-volume (projection) effects when the data do not constrain a direction; profile likelihood as the remedy"),
+    ("E59", "Rao 1967, Proc. Fifth Berkeley Symp. Math. Statist. Prob. 1, 355", "bibliographic record seen; text not read", V,
+     "least squares theory with an estimated dispersion matrix (setting of THEOREMS.md T5)"),
+    ("E60", "Domenech, Mohayaee, Patil, Sarkar 2022, JCAP 10, 019", "arXiv:2207.01569", V,
+     "super-horizon modes generate no intrinsic number-count dipole; an isocurvature mode induces a relative velocity between the radiation and matter frames"),
+    ("E61", "Martin, Skordis, Bartlett, Desmond, Ferreira, Yasin, Cosmological dipole in tilted anisotropic universes, Phys. Rev. D", "doi:10.1103/82sh-h3cv", V,
+     "matter-radiation rest-frame mismatch in tilted anisotropic models and its side effects on other observables"),
+    ("E62", "Nadolny, Durrer, Kunz, Padmanabhan 2021, A new way to test the Cosmological Principle", "arXiv:2106.05284", V,
+     "separates the kinematic count dipole from the intrinsic one with redshift and size information"),
+    ("E63", "Kristian & Sachs 1966, ApJ 143, 379", "identifier from memory", M, "series expansion of cosmological observables around the observer"),
+    ("E64", "Scheffe 1953, Biometrika 40, 87", "identifier from memory", M, "simultaneous confidence intervals for all linear contrasts"),
+    ("E65", "Lehmann & Romano, Testing Statistical Hypotheses (3rd ed.)", "textbook, from memory", M, "sufficiency and conditional tests; optimality of likelihood-based tests"),
+    ("E66", "Muirhead 1982, Aspects of Multivariate Statistical Theory", "textbook, from memory", M, "partitioned Wishart matrices and inverse-Wishart moments"),
+    ("E67", "Rockafellar 1970, Convex Analysis; Sion 1958, Pacific J. Math. 8, 171", "textbooks and identifier from memory", M, "gauge and support functions of polar bodies; minimax theorem"),
+    ("E68", "Karlin & Studden 1966, Tchebycheff Systems", "textbook, from memory", M, "sign changes of functions annihilated by a Chebyshev system"),
+    ("E69", "Poirier 1998, Econometric Theory 14, 483 (identifier from memory; cited in the working paper of E55)", "no identifier checked", M,
+     "beliefs about non-identified parameters are revised only through the prior dependence on identified ones"),
 ]
 EVIDENCE_ROWS = [dict(zip(("id", "source", "identifier", "verification", "claim_used"), e)) for e in EVIDENCE]
 
@@ -330,7 +365,7 @@ def hypotheses(n: dict) -> list[dict]:
           "tests/r54 pass; ties GLS by construction (R53 theorem retained); the F view is UNAVAILABLE on both low-redshift lanes because an axis scan is not a support functional",
           "use as the reporting layer of every lane; no novelty claim"),
         h("H-C2", "CORE", "A tensorized carrier gains statistical power over the exact likelihood.", "REJECT", "R53 benchmark", "contradicted by sufficiency",
-          "none", "done", "n/a", "false-gain claim", "n/a", "R53: Fisher-distance ratio 1.0000, coverage tie", "never claim gain; claim typed interpretation only"),
+          "none", "done", "n/a", "false-gain claim", "n/a", "R53: Fisher-distance ratio 1.0000, coverage tie; proved in THEOREMS.md T1 (H-T1)", "never claim gain; claim typed interpretation only"),
         h("H-C3", "CORE", "Irreducible-carrier transport with the full cross-depth covariance tells a 1/d (velocity) law from a constant (zero-point or acceleration) law on the real CF4 footprint.",
           n["h_c3_decision"], "injections on the real footprint with exact-body noise, pooled and method-monopole operators", "exact GLS; synthetic recovery test",
           "LOW, pending R54-L07", "HIGH",
@@ -441,6 +476,35 @@ def hypotheses(n: dict) -> list[dict]:
           f"count-side power against a doubled dipole is {n['count_power']:.2f}", "rejecting on an underpowered count side",
           "the closure test rejects at p < 0.01 once the count side is calibrated (R54-L03)",
           f"velocity term after the constant term: Wald {g3(n['g_V_after_A'])}/3; closure p={g3(n['tt_close_p'])} / {g3(n['tt_close_p_A'])} (preliminary)", "R54-L03, R54-L06"),
+        h("H-T1", "THM", "No function, compression or re-coordinatization of the carrier exceeds the power envelope of the exact likelihood (THEOREMS.md T1).",
+          "PROMOTE", "proof (sufficiency) + executable check", "exact for the linear Gaussian carrier with known covariance", "NONE claimed (textbook, E65)", "done", "exact",
+          "reading the tie as a property of the data instead of a theorem", "a counterexample inside the stated model", "R53 measured the tie numerically; T1 proves it",
+          "cite T1 wherever the tie is stated"),
+        h("H-T2", "THM", "The views read from one confidence cylinder are simultaneously valid with rank(F) degrees of freedom; along unidentified directions valid sets are unbounded and a posterior equals the conditional prior (T2, T3, T4).",
+          "PROMOTE", "proofs + Monte Carlo and algebraic checks", "linear Gaussian carrier; second-moment law T5 for a simulated covariance",
+          "NONE claimed (E64, E53, E55, E67); cosmology already uses profile likelihoods against prior-volume effects (E57, E58)", "done", "exact",
+          "presenting classical results as new statistics", "a view with coverage below the stated level",
+          "coverage, Scheffe identity and conditional-prior identity verified in tests/r54/test_r54_theorems.py",
+          "use T2 for every simultaneous statement and T3 whenever a bound on an unidentified direction is quoted"),
+        h("H-T6", "THM", "Selection rule: under O(3) equivariance the first-order response is block diagonal in (multipole, parity), so identifiability is a rank statement per block; vorticity has no column in any scalar observable and B_2 is a null channel (T6).",
+          "PROMOTE", "proof (Schur's lemma) + independent numerical count of the equivariant responses",
+          "variables entering as tensors at the observer or as homogeneous histories; fails for finite-wavelength modes and parity-violating measurement chains",
+          "LOW, pending R54-L07: every pattern is published (E18, E25, E50, E51); the block rank criterion and the null channels as one statement were not found in the searches run",
+          "HIGH", "exact inside its scope", "quoting it for finite-wavelength modes (Bianchi families with structure)", "an equivariant first-order response that mixes blocks",
+          "the numerical count reproduces the table with reflections and loses it with rotations only", "R54-L06 builds its identification table with block_identification; R54-L07 checks priority"),
+        h("H-T7", "THM", "Gauge orbits: a depth-independent Hubble multipole is identified only up to the common part of the zero-point patterns of the distance samples, and vorticity only up to the spin of the reference frame; the hypothesis of no physical dipole is untestable from relative distances (T7).",
+          "PROMOTE", "proof + rank computations on random and hemisphere-limited samples", "linear model of the log-distance residuals; first order",
+          "LOW: the one-sample degeneracy is stated in E09 and the spin freedom in E52; the K-sample orbit and the testability statement are elementary", "HIGH", "exact",
+          "reading a common-mode test as a test of a physical dipole", "a design in which the physical dipole alone is identified without an absolute calibration",
+          "the null space equals the orbit; delta + d_p is identified, delta is not", "state the calibration body with every bound on a constant multipole"),
+        h("H-T8", "THM", "The T and E quadrupole kernels form a Chebyshev system: a shear history invisible to T changes sign at least once, one invisible to T and E at least twice, and no norm of the history is bounded from above without a sign or family restriction (T8).",
+          "PROMOTE", "proof + checks on the committed ionization history", "type I, first order, positive scattering rate on the support",
+          "LOW to MEDIUM, UNVERIFIED pending R54-L07: the kernels are classical (E46) and the sign-change argument is standard (E68); the statement for this pair was not found in the searches run",
+          "HIGH", "exact", "quoting an upper limit on a shear amplitude without naming the family or the sign restriction", "a non-zero history with fewer sign changes in the common kernel",
+          "one-sign-change identity and two-sign-change kernel elements verified numerically", "R54-L06 and the manuscript quote shear limits only with their family; R54-L07 checks priority"),
+        h("H-T9", "THM", "Frame algebra: count-dipole excess plus bulk flow of the same shell vanishes identically; a global tilt is a linear hypothesis across shells with 3 (n_c + n_d - 1) degrees of freedom (T9).",
+          "PROMOTE", "proof (substitution) + check", "first order in velocities; no intrinsic dipole; known Ellis-Baldwin coefficient", "NONE claimed (kinematic identity; context E60, E61, E62)",
+          "done", "exact", "reading the same-shell identity as a physical test", "n/a", "identity verified to machine precision", "R54-L06 applies the closure only across different shells"),
         h("H-L6c", "L6", "Map-level aberration and Doppler-modulation estimators on owned CMB maps separate the observer boost from an intrinsic dipole inside this programme.", "HOLD",
           "published result E22 only", "requires a high-ell estimator with simulated mode-coupling corrections that is not part of the owned products", "none (E22 did it)", "LOW inside the stop rule",
           "n/a", "scope growth", "n/a", "not executed; E21 and E22 enter R54-L06 as published anchors with their covariance", "no new estimator; anchors only"),
@@ -627,7 +691,8 @@ def local_nodes(n: dict) -> list[dict]:
          "steps": ["1. For each target with owned-data overlap reproduce the published headline number under the published assumptions; record REPRODUCED, NOT_REPRODUCED or NOT_REPRODUCIBLE_FROM_TEXT with the measured value.",
                    "2. Re-run under the common R54 assumptions (declared body, named law, typed frame) and fill the scoring fields of the spec.",
                    "3. Resolve every evidence row whose verification is not VERIFIED by reading the primary source; correct identifiers in state/EVIDENCE_LEDGER.md through the builder.",
-                   "4. Novelty check for H-L1b and H-L5g: search the primary literature for prior stress-corrected Bianchi-I CMB shear limits and for a cross-indicator common-mode test of the CF4 hemisphere asymmetry with a catalogue-level LCDM covariance; record the nearest prior art and set the novelty field of both hypotheses."],
+                   "4. Novelty check for H-L1b and H-L5g: search the primary literature for prior stress-corrected Bianchi-I CMB shear limits and for a cross-indicator common-mode test of the CF4 hemisphere asymmetry with a catalogue-level LCDM covariance; record the nearest prior art and set the novelty field of both hypotheses.",
+                   "5. Priority check for H-T6 and H-T8 (THEOREMS.md): search for (a) an identifiability or selection-rule statement for the kinematic variables by irreducible block and parity, including null channels, and (b) a statement on the number of sign changes of a shear history hidden from the temperature and E quadrupoles. Read the primary sources of the evidence rows E54 and E63 to E69, which are recorded from memory. Set the novelty fields; if prior art is found, the theorems stay as attributed re-derivations."],
          "outputs": [{"path": REL + "/RESULTS/R54_L07_BENCHMARK.json", "schema": "htt.r54.l07_benchmark/1", "required_keys": ["targets", "scores", "novelty_checks", "provenance"]}],
          "acceptance": [{"metric": "targets_with_status", "op": "==", "value": "all"}], "kill": ["scoring a tie as a win"], "mutation_gates": [], "runtime_budget": "1 day"},
         {"id": "R54-L08", "card": "PR-R57-MANUSCRIPT-DECISION", "title": "Manuscript decision with an independent decision-gate reviewer", "depends": ["R54-L06", "R54-L07"], "priority": 5,
@@ -682,10 +747,21 @@ CLOUD_GATES = [
      "tests/r54/test_r54_modules.py::test_wls_operator_identity_and_fail_closed", "rank-deficient design accepted"),
     ("MG-20", MOD + "/r54_type1_thomson.py", "(4.0 * xx * xx + 5.0 * mm * mm)", "(4.0 * xx * xx + 4.0 * mm * mm)",
      "tests/r54/test_r54_modules.py::test_eq06_massive_neutrino_stress_weight", "wrong non-relativistic limit of the collisionless stress weight"),
+    ("MG-21", MOD + "/r54_identifiability.py", '    if kind == "axial":\n        return det * g', '    if kind == "axial":\n        return g.copy()',
+     "tests/r54/test_r54_theorems.py::test_t6_selection_rule_counted_without_schur", "axial vectors treated as polar (parity dropped from the selection rule)"),
+    ("MG-22", MOD + "/r54_identifiability.py", "return SQRT6 * (x - 1.0) / (x + 6.0)", "return SQRT6 * (x - 1.0) / (x + 1.0)",
+     "tests/r54/test_r54_theorems.py::test_t8_kernel_properties", "wrong kernel ratio of the shear-history moment problem"),
+    ("MG-23", MOD + "/r54_identifiability.py", "(n - 1.0) / (n - p + k - 1.0), (n - p + k) / float(n)", "(n - 1.0) / (n - p + k - 2.0), (n - p + k) / float(n)",
+     "tests/r54/test_r54_theorems.py::test_t5_exact_second_moments_with_a_simulated_covariance", "wrong Wishart factor of the estimator covariance"),
+    ("MG-24", MOD + "/r54_identifiability.py", "        block[:, 3 * (p + 1):3 * (p + 2)] = nhat", "        block[:, 3 * (p + 1):3 * (p + 2)] = 0.0 * nhat",
+     "tests/r54/test_r54_theorems.py::test_t7a_zero_point_gauge_orbit_and_testable_combinations", "zero-point dipole columns dropped from the gauge design"),
+    ("MG-25", MOD + "/r54_identifiability.py", "    lam = gvv - gav.T @ np.linalg.solve(gaa, gav)", "    lam = gvv",
+     "tests/r54/test_r54_theorems.py::test_t7c_depth_law_noncentrality_is_a_design_quantity", "constant law not profiled out of the depth-law test"),
 ]
 #: files whose content the mutation receipt certifies; the binding test fails when they change without a new receipt
 RECEIPT_SOURCES = (MOD + "/r54_type1_thomson.py", MOD + "/r54_lcdm_body.py", MOD + "/r54_tensor_five_view.py",
-                   MOD + "/r54_distance_estimators.py", "tests/r54/test_r54_modules.py")
+                   MOD + "/r54_distance_estimators.py", MOD + "/r54_identifiability.py", "tests/r54/test_r54_modules.py",
+                   "tests/r54/test_r54_theorems.py")
 LOCAL_GATES = [
     ("MG-L01", "R54-L01", "permute the 300 simulation rows relative to nothing (control) and permute the 135 columns of the simulations only", "covariance identity check of step 1 must fail for the column permutation and pass for the row permutation"),
     ("MG-L02", "R54-L01", "use sims[i] inside its own covariance (no leave-one-out)", "coverage_95 test must leave the acceptance band on a synthetic Gaussian set with N = 60, p = 10"),
@@ -851,6 +927,8 @@ def dag_doc(n: dict) -> dict:
          "status": "DONE_SCOPED_C0",
          "outputs": [MOD + "/r54_distance_estimators.py", "scripts/r54/run_r54_cf4_exact.py", REL + "/RESULTS/R54_L05_CF4_EXACT.json", REL + "/RESULTS/R54_L05_COSMIC_COV.npz",
                      REL + "/RESULTS/R54_L05_STEP_SCAN_COV.npz"]},
+        {"id": "R54-THM", "title": "Statements proved without data: sufficiency tie, validity of the views, selection rule, gauge orbits, shear-history moment problem, frame closure",
+         "status": "DONE_SCOPED_C0", "outputs": [REL + "/THEOREMS.md", MOD + "/r54_identifiability.py", "tests/r54/test_r54_theorems.py"]},
         {"id": "R54-REVIEW", "title": "Independent adversarial review (complete, findings resolved or deferred); the diff review was interrupted and is handed to the local session",
          "status": "DONE_SCOPED_C0", "outputs": [REL + "/INDEPENDENT_REVIEW.json"]},
     ]
@@ -890,6 +968,9 @@ def contract_doc(n: dict) -> dict:
                 "scripts/r54/run_r54_cf4_exact.py": ["compute()", "build_operators(cat, a_raw, tau2)", "cosmic_covariances(stack, labels, n, r)", "common_mode(theta, white, body)",
                                                      "hemisphere_steps(theta, white, body)", "locking_null(theta, cov, rng, n_draw)", "window_subset_nulls(theta, cov)",
                                                      "step_scan(cat, eta, g, tau2, r, rng, reference)", "injections(...)", "tilt_transport(theta, cov, an)"],
+                "r54_identifiability": ["wishart_gls_factors(n, p, k)", "rep_matrix(kind, g)", "equivariant_response_rank(kin, obs, parity, degree, seed)",
+                                        "block_identification(blocks)", "zero_point_gauge(directions, responses)", "depth_law_noncentrality(g, cov)",
+                                        "rho_ratio(tau)", "history_gram(kt, ke, weights)", "minimal_norm_history(kt, ke, weights, sigma)", "count_sign_changes(values)"],
                 "r54_tensor_five_view": ["identify(F, scale)", "profiled_precision(F, keep)", "EllipsoidBody(name, shape_matrix)", "gauge_range(F, t, body, c2)", "support_interval(F, t, v, c)",
                                          "support_utilization(F, t, body, v, c)", "hotelling_null_tail", "empirical_upper_tail", "gls_fit", "transport_design", "compare_transport_models", "stf2_invariants", "axisymmetry_statistic", "five_view_record"]},
             "coding_rules": [
@@ -949,6 +1030,9 @@ nearest published method gives?
   single-axis tail {g3(n['st_common_p'])}, tail of the scan maximum over {n['sc_n_axes']} split axes {g3(n['sc_tail_scan'])}. Its reading as a common mode is on HOLD
   (the four estimates share the body; E43 reports survey-level differences).
 - Counts: the receipt estimator has power {n['count_power']:.2f} against a doubled dipole, so its non-detection decides nothing; tilt closure with CF4 is preliminary (p = {g3(n['tt_close_p'])}).
+- Theory (R54-THM, THEOREMS.md): the tie with the exact likelihood, the simultaneous validity of the views, the selection rule by multipole and parity,
+  the zero-point and frame-spin gauge orbits, the sign-change theorem for shear histories and the frame closure identity are proved and machine-checked.
+  No novelty is claimed for the statistics; the selection rule and the sign-change theorem carry an unverified LOW to MEDIUM novelty flag.
 
 ## Blockers
 
@@ -975,6 +1059,7 @@ R54-L01 and R54-L04 (independent, priority 1), then L02, L03, L06, L07, L08.
 
 
 REVIEW_SCOPE = [MOD + "/r54_tensor_five_view.py", MOD + "/r54_type1_thomson.py", MOD + "/r54_lcdm_body.py", MOD + "/r54_distance_estimators.py",
+                MOD + "/r54_identifiability.py", REL + "/THEOREMS.md", "tests/r54/test_r54_theorems.py",
                 "scripts/r54/run_r54_cmb_type1.py", "scripts/r54/run_r54_lowz_frames.py", "scripts/r54/run_r54_cf4_exact.py", "scripts/r54/build_r54_contract.py",
                 "tests/r54/test_r54_modules.py", "tests/r54/test_r54_results_binding.py"]
 
@@ -998,7 +1083,8 @@ def pending_review_doc() -> dict:
                        "random streams: one stream per block, seed 20261116, no draw reused between data and null",
                        "tests that would still pass if the function under test were wrong (compare with MUTATION_GATES.json and propose a gate for each gap)",
                        "numbers in generated documents that are typed instead of read from RESULTS/*.json",
-                       "statements in generated documents that are stronger than the decision recorded in state/HYPOTHESES.json"],
+                       "statements in generated documents that are stronger than the decision recorded in state/HYPOTHESES.json",
+                       "every proof of THEOREMS.md line by line: hypotheses used, measurability and rank conditions, the scope clause C6.6 of the selection rule, and each attribution against its primary source"],
             "report_format": "one line per finding: id | severity (critical, major, minor) | file:line | defect | concrete failure scenario | suggested fix; then one verdict",
             "record": "append the reviewer with every finding and its resolution to INDEPENDENT_REVIEW.json:reviewers, delete the matching entry of incomplete_reviews, then run the tests and the builder",
             "rule": "a critical finding blocks every node until it is FIXED; a finding is never resolved by weakening a test"}
@@ -1129,10 +1215,24 @@ Zero-point nuisance 모형별 요약. 세 모형 중 어느 것도 선험적으�
 - Global tilt 닫힘 시험(R54-EQ-38, 예비): V_CF4 + c beta_excess = 0의 p = {g3(n['tt_close_p'])} (V만), {g3(n['tt_close_p_A'])} (상수 dipole 주변화). Count 쪽 검정력이 낮아 예비 수치다(H-L6b HOLD).
 - 판정 규칙의 지위: 규칙과 임계값은 exact-body 수치를 보기 전에 코드에 넣었으나 커밋하지 않았으므로 사전 등록이 아니다. 물리적 방향 의존 Hubble 인자나 A_a의 검출이 아니다. 상수 dipole은 거리 zero-point dipole과 분리되지 않는다(H-L3b). 남은 질문은 survey 수준 zero-point와 nuisance 변형에서 분류가 하나로 모이는가이고 R54-L04가 답한다.
 
+### 2.4 데이터 없이 증명한 진술 (R54-THM, `THEOREMS.md`)
+
+신규성 주장에 필요한 항목 가운데 통계학과 수리물리만으로 닫히는 것을 증명했다. 각 진술은 `tests/r54/test_r54_theorems.py`에 실행 가능한 검사를 가진다. 증명은 아직 독립 심사를 받지 않았다.
+
+- T1 (검정력): 충분통계량 논리로, carrier의 어떤 함수·압축·재좌표화도 exact likelihood의 검정력 한계를 넘지 못한다. R53에서 잰 tie는 정리다.
+- T2, T3, T4 (타당성): 특이 precision의 신뢰 원통은 rank(F) 자유도로 정확한 coverage를 가지며 거기서 읽는 모든 뷰가 동시에 유효하다. 비식별 방향에서는 유효한 신뢰집합이 비유계이고, 유계 구간의 균등 coverage는 0이며, posterior는 조건부 prior와 같다. 고전 결과이고(E53, E55, E64) 우주론은 같은 목적에 profile likelihood를 이미 쓴다(E57, E58).
+- T5 (유한 시뮬레이션 공분산): GLS 추정의 정확한 2차 모멘트 계수.
+- T6 (선택 규칙): O(3) 등변성 아래 1차 응답은 (다중극, parity) 블록으로 대각이고 식별성은 블록별 rank 진술이 된다. vorticity는 어떤 스칼라 관측량에도 열이 없고 toroidal 고유운동 dipole에만 나타난다. B_2는 null 채널이다. 유한 파장 모드와 parity를 깨는 측정 사슬에는 적용되지 않는다.
+- T7 (gauge 궤도): 깊이와 무관한 Hubble 다중극은 거리 표본들의 zero-point 패턴 공통 부분과 분리되지 않고, vorticity는 기준 좌표계의 spin과 분리되지 않는다. "물리적 dipole 없음" 가설은 상대 거리만으로는 검정할 수 없다.
+- T8 (shear history 모멘트 문제): T와 E의 kernel은 Chebyshev 계를 이룬다. T에 보이지 않는 history는 부호가 한 번 이상, T와 E 모두에 보이지 않는 history는 두 번 이상 바뀐다. 부호나 family 제한이 없으면 shear 진폭의 상한은 없다.
+- T9 (프레임 대수): 같은 shell의 count 초과와 bulk flow의 합은 항등적으로 0이다. Global tilt는 shell 사이의 선형 가설이다.
+- 신규성: 통계 부분은 주장하지 않는다. T6과 T8은 구성 요소가 모두 문헌에 있고(E18, E25, E46, E50, E51) 하나의 진술로 묶은 형태는 이번 검색에서 찾지 못했다. 검색에 걸리지 않았다는 뜻일 뿐이며 R54-L07이 확인한다.
+
 ## 3. 주제별 결정
 
 | 주제 | 결정 | 근거 |
 |---|---|---|
+| 증명된 진술 | PROMOTE (H-T1, H-T2, H-T6, H-T7, H-T8, H-T9; 신규성은 주장 없음 또는 미검증) | 2.4, THEOREMS.md |
 | 핵심 계층 | PROMOTE (H-C1 보고 규약), REJECT (H-C2 검정력 이득), {n['h_c3_decision']} (H-C3 깊이 법칙 분리) | 2.3, state/HYPOTHESIS_GRAPH.md |
 | 저-ell 형태와 물리량 | PROMOTE (H-L1a 범함수 재유도, H-L1b 모델 의존성), REJECT (H-L1c 편광 액면 사용, H-L1d ell>=3의 type-I 해석) | 2.1 |
 | Dipole anomaly | HOLD (H-L2a 검정력 부족, H-L2b clustering body), REOPEN (H-L2c counts 대 CF4 프레임) | 2.2, 2.3 |
@@ -1371,6 +1471,10 @@ WHAT IS ALREADY DONE (do not redo)
   Hemisphere step (z < 0.055), consistent between FP, TF, SN, OTHER: {100*n['st_common']:.2f} +- {100*n['st_common_sd']:.2f}% of H; single-axis tail {g3(n['st_common_p'])},
   scan-corrected tail {g3(n['sc_tail_scan'])}; never quote the single-axis tail alone. Its reading as a common mode is on HOLD.
 - Counts: the receipt estimator has power {n['count_power']:.2f} against a doubled dipole; its non-detection decides nothing.
+- Theorems (THEOREMS.md, tests/r54/test_r54_theorems.py, {MOD}/r54_identifiability.py): statements proved without data.
+  Use block_identification for the identification table of R54-L06. Quote a shear limit only with its history family or sign
+  restriction (T8), a bound on a constant Hubble multipole only with its calibration body (T7), and the tie with the exact
+  likelihood as a theorem (T1). The proofs have not been read by an independent reviewer; they are in the pending review scope.
 - Independent review: INDEPENDENT_REVIEW.json lists every finding and its resolution. Do not re-promote a hypothesis that the review moved to HOLD
   unless the decision_checks of the node that owns it say so.
 
@@ -1428,6 +1532,7 @@ Branch `{BRANCH}` on `{BASE}`. Claim ceiling C0. Authority order: `AGENTS.md`, c
 |---|---|
 | `R54_REPORT_KO.md` | referee verdict, executed results, decisions (Korean) |
 | `THEORY_LOOPS.md` | equation register, core calculus, six theory loops |
+| `THEOREMS.md` | statements proved without data (T1 to T9, L1, L2), attributions and the prior-work re-check; written by hand, contains no result number |
 | `RESULTS/R54_L1_TYPE1_TE.json` | CMB T+E type-I history functionals (executed) |
 | `RESULTS/R54_L5_LOWZ_FRAMES.json` | first pass on committed R36 multipoles with the ideal-sky body; count-dipole excess (executed; CF4 part superseded) |
 | `RESULTS/R54_L05_CF4_EXACT.json` | CF4 at catalogue level: log-distance estimator, exact LCDM body, nulls under three zero-point nuisance models, hemisphere-step scan (executed) |
@@ -1487,7 +1592,8 @@ def mutation_receipt() -> None:
         rows.append({"id": gid, "file": rel, "test": test, "meaning": meaning, "pytest_exit_code": run.returncode,
                      "status": "KILLED" if run.returncode == 1 else "SURVIVED_OR_ERROR"})
         print(gid, rows[-1]["status"])
-    clean = subprocess.run([sys.executable, "-m", "pytest", "tests/r54/test_r54_modules.py", "-q", "-p", "no:cacheprovider"], cwd=ROOT, env=env, capture_output=True, text=True)
+    clean = subprocess.run([sys.executable, "-m", "pytest", "tests/r54/test_r54_modules.py", "tests/r54/test_r54_theorems.py", "-q", "-p", "no:cacheprovider"],
+                           cwd=ROOT, env=env, capture_output=True, text=True)
     jdump(R54 / "MUTATION_GATE_RECEIPT.json", {"schema": "htt.r54.mutation_receipt/1", "date": DATE, "unmutated_suite_exit_code": clean.returncode,
                                                "sources_sha256": {rel: sha(ROOT / rel) for rel in RECEIPT_SOURCES},
                                                "all_killed": all(r["status"] == "KILLED" for r in rows) and clean.returncode == 0, "gates": rows})

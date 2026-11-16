@@ -172,6 +172,51 @@
    "with": "(4.0 * xx * xx + 4.0 * mm * mm)"
   },
   {
+   "file": "htt/htt/htt/infer/r54_identifiability.py",
+   "id": "MG-21",
+   "meaning": "axial vectors treated as polar (parity dropped from the selection rule)",
+   "must_fail": "tests/r54/test_r54_theorems.py::test_t6_selection_rule_counted_without_schur",
+   "replace": "    if kind == \"axial\":\n        return det * g",
+   "status": "IMPLEMENTED",
+   "with": "    if kind == \"axial\":\n        return g.copy()"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_identifiability.py",
+   "id": "MG-22",
+   "meaning": "wrong kernel ratio of the shear-history moment problem",
+   "must_fail": "tests/r54/test_r54_theorems.py::test_t8_kernel_properties",
+   "replace": "return SQRT6 * (x - 1.0) / (x + 6.0)",
+   "status": "IMPLEMENTED",
+   "with": "return SQRT6 * (x - 1.0) / (x + 1.0)"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_identifiability.py",
+   "id": "MG-23",
+   "meaning": "wrong Wishart factor of the estimator covariance",
+   "must_fail": "tests/r54/test_r54_theorems.py::test_t5_exact_second_moments_with_a_simulated_covariance",
+   "replace": "(n - 1.0) / (n - p + k - 1.0), (n - p + k) / float(n)",
+   "status": "IMPLEMENTED",
+   "with": "(n - 1.0) / (n - p + k - 2.0), (n - p + k) / float(n)"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_identifiability.py",
+   "id": "MG-24",
+   "meaning": "zero-point dipole columns dropped from the gauge design",
+   "must_fail": "tests/r54/test_r54_theorems.py::test_t7a_zero_point_gauge_orbit_and_testable_combinations",
+   "replace": "        block[:, 3 * (p + 1):3 * (p + 2)] = nhat",
+   "status": "IMPLEMENTED",
+   "with": "        block[:, 3 * (p + 1):3 * (p + 2)] = 0.0 * nhat"
+  },
+  {
+   "file": "htt/htt/htt/infer/r54_identifiability.py",
+   "id": "MG-25",
+   "meaning": "constant law not profiled out of the depth-law test",
+   "must_fail": "tests/r54/test_r54_theorems.py::test_t7c_depth_law_noncentrality_is_a_design_quantity",
+   "replace": "    lam = gvv - gav.T @ np.linalg.solve(gaa, gav)",
+   "status": "IMPLEMENTED",
+   "with": "    lam = gvv"
+  },
+  {
    "file": "any committed input of RESULTS/*.json",
    "id": "MG-13",
    "meaning": "result/input drift",

@@ -114,6 +114,18 @@
    "white_covariance(op, variance)",
    "magnitude_equivalent(delta_eta)"
   ],
+  "r54_identifiability": [
+   "wishart_gls_factors(n, p, k)",
+   "rep_matrix(kind, g)",
+   "equivariant_response_rank(kin, obs, parity, degree, seed)",
+   "block_identification(blocks)",
+   "zero_point_gauge(directions, responses)",
+   "depth_law_noncentrality(g, cov)",
+   "rho_ratio(tau)",
+   "history_gram(kt, ke, weights)",
+   "minimal_norm_history(kt, ke, weights, sigma)",
+   "count_sign_changes(values)"
+  ],
   "r54_lcdm_body": [
    "gaussian_window(r_center, sigma_r, norm)",
    "harmonic_cosmic_cov(ell, k, pk, windows, f, h0)",
@@ -634,7 +646,8 @@
     "1. For each target with owned-data overlap reproduce the published headline number under the published assumptions; record REPRODUCED, NOT_REPRODUCED or NOT_REPRODUCIBLE_FROM_TEXT with the measured value.",
     "2. Re-run under the common R54 assumptions (declared body, named law, typed frame) and fill the scoring fields of the spec.",
     "3. Resolve every evidence row whose verification is not VERIFIED by reading the primary source; correct identifiers in state/EVIDENCE_LEDGER.md through the builder.",
-    "4. Novelty check for H-L1b and H-L5g: search the primary literature for prior stress-corrected Bianchi-I CMB shear limits and for a cross-indicator common-mode test of the CF4 hemisphere asymmetry with a catalogue-level LCDM covariance; record the nearest prior art and set the novelty field of both hypotheses."
+    "4. Novelty check for H-L1b and H-L5g: search the primary literature for prior stress-corrected Bianchi-I CMB shear limits and for a cross-indicator common-mode test of the CF4 hemisphere asymmetry with a catalogue-level LCDM covariance; record the nearest prior art and set the novelty field of both hypotheses.",
+    "5. Priority check for H-T6 and H-T8 (THEOREMS.md): search for (a) an identifiability or selection-rule statement for the kinematic variables by irreducible block and parity, including null channels, and (b) a statement on the number of sign changes of a shear history hidden from the temperature and E quadrupoles. Read the primary sources of the evidence rows E54 and E63 to E69, which are recorded from memory. Set the novelty fields; if prior art is found, the theorems stay as attributed re-derivations."
    ],
    "title": "Adversarial benchmark against published methods"
   },
@@ -689,7 +702,8 @@
    "random streams: one stream per block, seed 20261116, no draw reused between data and null",
    "tests that would still pass if the function under test were wrong (compare with MUTATION_GATES.json and propose a gate for each gap)",
    "numbers in generated documents that are typed instead of read from RESULTS/*.json",
-   "statements in generated documents that are stronger than the decision recorded in state/HYPOTHESES.json"
+   "statements in generated documents that are stronger than the decision recorded in state/HYPOTHESES.json",
+   "every proof of THEOREMS.md line by line: hypotheses used, measurability and rank conditions, the scope clause C6.6 of the selection rule, and each attribution against its primary source"
   ],
   "interrupted": [
    {
@@ -706,6 +720,9 @@
    "htt/htt/htt/infer/r54_type1_thomson.py",
    "htt/htt/htt/infer/r54_lcdm_body.py",
    "htt/htt/htt/infer/r54_distance_estimators.py",
+   "htt/htt/htt/infer/r54_identifiability.py",
+   "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+   "tests/r54/test_r54_theorems.py",
    "scripts/r54/run_r54_cmb_type1.py",
    "scripts/r54/run_r54_lowz_frames.py",
    "scripts/r54/run_r54_cf4_exact.py",

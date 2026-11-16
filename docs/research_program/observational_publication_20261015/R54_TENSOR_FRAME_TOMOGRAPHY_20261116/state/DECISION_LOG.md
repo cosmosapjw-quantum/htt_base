@@ -3,7 +3,7 @@
 | id | lane | decision | executed result | next action |
 |---|---|---|---|---|
 | H-C1 | CORE | PROMOTE | tests/r54 pass; ties GLS by construction (R53 theorem retained); the F view is UNAVAILABLE on both low-redshift lanes because an axis scan is not a support functional | use as the reporting layer of every lane; no novelty claim |
-| H-C2 | CORE | REJECT | R53: Fisher-distance ratio 1.0000, coverage tie | never claim gain; claim typed interpretation only |
+| H-C2 | CORE | REJECT | R53: Fisher-distance ratio 1.0000, coverage tie; proved in THEOREMS.md T1 (H-T1) | never claim gain; claim typed interpretation only |
 | H-C3 | CORE | HOLD | pooled chi2(A)=10.4/9 vs chi2(V)=16.2/9; after method monopoles 6.67 vs 7.26 | R54-L04 |
 | H-L1a | L1 | PROMOTE | r_E(perfect fluid)=0.0711; reionization share 18% | R54-L01 masked E response |
 | H-L1b | L1 | PROMOTE | 95% illustration values of |s0|: 1.42e-10 (perfect fluid, T+E), 6.65e-08 (massless two-mode family), 3.43e-08 (minimal normal ordering) | R54-L07 literature check |
@@ -25,4 +25,10 @@
 | H-L5e | L5 | REJECT | joint null p from 0.000344 (pooled) to 0.112 (method x hemisphere steps marginalised); class DEPENDS_ON_ZERO_POINT_NUISANCE_MODEL | do not claim |
 | H-L6a | L6 | HOLD | delta chi2 (V - A) = 5.8 pooled, 0.592 after method monopoles | R54-L04, R54-L06 |
 | H-L6b | L6 | HOLD | velocity term after the constant term: Wald 5.42/3; closure p=0.0895 / 0.0123 (preliminary) | R54-L03, R54-L06 |
+| H-T1 | THM | PROMOTE | R53 measured the tie numerically; T1 proves it | cite T1 wherever the tie is stated |
+| H-T2 | THM | PROMOTE | coverage, Scheffe identity and conditional-prior identity verified in tests/r54/test_r54_theorems.py | use T2 for every simultaneous statement and T3 whenever a bound on an unidentified direction is quoted |
+| H-T6 | THM | PROMOTE | the numerical count reproduces the table with reflections and loses it with rotations only | R54-L06 builds its identification table with block_identification; R54-L07 checks priority |
+| H-T7 | THM | PROMOTE | the null space equals the orbit; delta + d_p is identified, delta is not | state the calibration body with every bound on a constant multipole |
+| H-T8 | THM | PROMOTE | one-sign-change identity and two-sign-change kernel elements verified numerically | R54-L06 and the manuscript quote shear limits only with their family; R54-L07 checks priority |
+| H-T9 | THM | PROMOTE | identity verified to machine precision | R54-L06 applies the closure only across different shells |
 | H-L6c | L6 | HOLD | not executed; E21 and E22 enter R54-L06 as published anchors with their covariance | no new estimator; anchors only |
