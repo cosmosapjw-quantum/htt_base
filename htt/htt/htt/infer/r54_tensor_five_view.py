@@ -266,9 +266,14 @@ def support_interval(f: np.ndarray, t: np.ndarray, v: np.ndarray, c: float,
     v = np.asarray(v, float)
     if not is_identified(f, v, scale):
         return (-math.inf, math.inf)
-    pinv = np.linalg.pinv(_sym(f, "precision"), rcond=1e-12, hermitian=True)
-    centre = float(v @ pinv @ np.asarray(t, float))
-    half = c * math.sqrt(max(float(v @ pinv @ v), 0.0))
+    # interval computed in the scaled coordinates theta = D phi in which identification was decided (R54-IR-08):
+    # v.theta = (D v).phi, F_phi = D F D, t_phi = D t; the pseudo-inverse then keeps small but identified directions
+    d = np.ones(v.size) if scale is None else np.asarray(scale, float)
+    fs = d[:, None] * _sym(f, "precision") * d[None, :]
+    vs, ts = d * v, d * np.asarray(t, float)
+    pinv = np.linalg.pinv(fs, rcond=1e-12, hermitian=True)
+    centre = float(vs @ pinv @ ts)
+    half = c * math.sqrt(max(float(vs @ pinv @ vs), 0.0))
     return (centre - half, centre + half)
 
 

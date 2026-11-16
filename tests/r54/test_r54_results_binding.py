@@ -105,6 +105,26 @@ def test_inputs_are_the_committed_ones(results):                                
         assert _sha(ROOT / rel) == digest, f"contract input drift: {rel}"
 
 
+def test_local_results_bind_their_scripts_and_inputs():
+    """R54 local node results: script hash, repository inputs, and absolute data-drive inputs when the drive is mounted; acceptance recorded."""
+    local = ("R54_L01_RESULT.json", "R54_L02_RESULT.json", "R54_L03_RESULT.json", "R54_L04_RESULT.json", "R54_L06_JOINT.json", "R54_L07_BENCHMARK.json")
+    for path in [R54 / "RESULTS" / name for name in local if (R54 / "RESULTS" / name).is_file()]:
+        res = _json(path)
+        if "provenance" not in res:
+            continue
+        prov = res["provenance"]
+        assert _sha(ROOT / prov["script"]) == prov["script_sha256"], f"{prov['script']} changed after {path.name}: re-run the node"
+        for key, digest in prov["inputs_sha256"].items():
+            p = Path(key) if key.startswith("/") else ROOT / key
+            if key.startswith("/") and not p.exists():
+                continue                                          # data drive not mounted: checked where it is
+            if p.exists():
+                assert _sha(p) == digest, f"input drift for {path.name}: {key}"
+        assert res["claim_tier"].startswith("C0") and res["status"] in ("DONE_SCOPED_C0", "BLOCKED_MISSING_INPUT")
+        if res["status"] == "DONE_SCOPED_C0":
+            assert res["acceptance"] and all(set(v) >= {"value", "op", "threshold", "pass"} for v in res["acceptance"].values())
+
+
 # ----------------------------------------------------------------- (b) plain-numpy recomputation
 def test_l1_statistics_recomputed_with_plain_numpy(results):
     rec = results[0]["data"]
@@ -239,7 +259,7 @@ def test_l05_statistics_recomputed_with_plain_numpy(results, cf4):
         scan_body, axes = z["body"], z["axes_icrs"]
     m0 = rows["method_step"][0]
     assert scan_body.shape == (4 * scan["n_axes"],) * 2 and np.allclose(axes[0], [0.0, 0.0, 1.0], atol=1e-12)
-    assert np.allclose(scan_body[:4, :4], body[m0:m0 + 4, m0:m0 + 4], rtol=1e-8, atol=0.0)      # two independent pair-sum executions agree
+    assert np.allclose(scan_body[:4, :4], body[m0:m0 + 4, m0:m0 + 4], rtol=1e-8, atol=0.0)      # two separate pair-sum runs (same kernel and positions; not an independent check) agree
     tails = scan["tails"]
     assert tails["pole_single_axis_two_sided"] < tails["scan_max_at_least_pole_value"] <= 1.0
     assert tails["scan_max_at_least_observed_max"] <= tails["scan_max_at_least_pole_value"] + 1e-12
@@ -270,6 +290,7 @@ def test_committed_numbers_are_reproduced_by_the_run_scripts(builder, results):
     cmb = _module("scripts/r54/run_r54_cmb_type1.py", "r54_run_cmb")
     low = _module("scripts/r54/run_r54_lowz_frames.py", "r54_run_lowz")
     exact = _module("scripts/r54/run_r54_cf4_exact.py", "r54_run_cf4")
+    exact.CACHE_WRITE = False                                    # a stale or missing pair-sum cache fails here; it is never rewritten by pytest
     tab = np.loadtxt(low.PK, delimiter=",", skiprows=1)
     got = builder.numbers({"history": l1["history"], "data": cmb.clean(cmb.data_block(l1["history"]))},
                           {"cf4": low.clean(low.cf4_block(tab[:, 0], tab[:, 1])), "count_dipoles": low.clean(low.counts_block())},
@@ -417,7 +438,7 @@ def test_canonical_cards_are_registered_and_mirrored():
 # ----------------------------------------------------------------- (d, e) receipts, language, evidence
 def test_mutation_receipt_is_current_and_complete(builder):
     gates, receipt = _json(R54 / "MUTATION_GATES.json"), _json(R54 / "MUTATION_GATE_RECEIPT.json")
-    implemented = {g["id"] for g in gates["cloud_gates"] if g["id"] != "MG-13"}
+    implemented = {g["id"] for g in gates["cloud_gates"] if g["id"] != "MG-13"} | {g["id"] for g in gates["local_gates"] if g["status"] == "IMPLEMENTED"}
     assert receipt["all_killed"] is True and receipt["unmutated_suite_exit_code"] == 0
     assert {r["id"] for r in receipt["gates"]} == implemented and all(r["status"] == "KILLED" for r in receipt["gates"])
     assert set(receipt["sources_sha256"]) == set(builder.RECEIPT_SOURCES)
@@ -449,8 +470,9 @@ def test_evidence_ids_resolve_and_keep_their_verification_status(builder):
         assert "UNVERIFIED" in hyps[hid]["dimensions"]["novelty"] or "R54-L07" in hyps[hid]["dimensions"]["novelty"]
     assert {h["decision"] for h in hyps.values()} <= {"PROMOTE", "HOLD", "REJECT", "REOPEN"}
     # decisions fixed by the independent review: no claim in either direction on pole locking, excess or common mode
+    local = builder.local_hypothesis_decisions()               # decisions fixed by the decision checks of executed local nodes
     for hid in ("H-L5c", "H-L5a", "H-L5g", "H-L2a", "H-L4a", "H-L6b"):
-        assert hyps[hid]["decision"] == "HOLD", hid
+        assert hyps[hid]["decision"] == local.get(hid, {"decision": "HOLD"})["decision"], hid
     for hid in ("H-C2", "H-L3c", "H-L5e", "H-L1c", "H-L1d"):
         assert hyps[hid]["decision"] == "REJECT", hid
     for hid in ("H-C1", "H-L1a", "H-L3a", "H-L3b"):               # promoted without a novelty claim

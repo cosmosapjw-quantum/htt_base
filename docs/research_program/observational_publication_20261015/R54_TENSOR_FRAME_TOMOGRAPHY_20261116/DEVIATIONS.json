@@ -1,0 +1,211 @@
+{
+ "rule": "SELF_AUDIT_PROTOCOL.json:A10 - analysis choices that the contract leaves open or that differ from it, written before the node outputs are read",
+ "schema": "htt.r54.deviations/1",
+ "nodes": {
+  "R54-L01": {
+   "written_before_outputs": true,
+   "entries": [
+    {
+     "id": "DV-L01-1",
+     "kind": "interpretation",
+     "choice": "the coverage decision check holds when each of the ten TE_l2 parameters lies in both bands ([0.912, 0.988] at 95%, [0.60, 0.76] at 68%); the pooled coverage is reported next to it and does not decide"
+    },
+    {
+     "id": "DV-L01-2",
+     "kind": "interpretation",
+     "choice": "the masked E response uses the SMICA INT_BEAM x pixwin(2048) of the R51 script (the contract says the beam of the R51 script); POL_BEAM/INT_BEAM at ell = 2 is reported"
+    },
+    {
+     "id": "DV-L01-3",
+     "kind": "interpretation",
+     "choice": "the empirical B ell=2 null statistic is the Hotelling quadratic form of the B2 block of each realisation against the covariance of the other 299; the observed value uses the covariance of all 300 (as in R54-L1)"
+    },
+    {
+     "id": "DV-L01-4",
+     "kind": "addition (report only)",
+     "choice": "the Hotelling T^2(10, 298) coverage of the joint Wald statistic of the LOO replicates is reported; it does not enter a decision"
+    },
+    {
+     "id": "DV-L01-5",
+     "kind": "interpretation",
+     "choice": "half-mission leg: the R51 masks are used when no missing pixel of the half-mission maps falls inside them, else the product with the half-mission missing-pixel mask"
+    },
+    {
+     "id": "DV-L01-6",
+     "kind": "interpretation",
+     "choice": "the T-only acceptance quantity t_only_pi_loo is recomputed from the cache with the same leave-one-out estimator as R51 (not read from observed_carrier.npz)"
+    }
+   ]
+  },
+  "R54-REVIEW-FIXES": {
+   "written_before_outputs": true,
+   "entries": [
+    {
+     "id": "DV-RV-1",
+     "kind": "re-run",
+     "choice": "R54-L1, R54-L5 and R54-L05 results regenerated after the independent diff review fixes (R54-IR-01..08); both pair-sum caches recomputed because the cache key changed (R54-IR-03)"
+    }
+   ]
+  },
+  "R54-L04": {
+   "written_before_outputs": true,
+   "entries": [
+    {
+     "id": "DV-L04-1",
+     "kind": "deviation (input)",
+     "choice": "the CF4 tables carry no survey column (table2 note 4: individual samples are on EDD, not owned); FP groups are split by the owned SDSS FP peculiar-velocity catalogue (/mnt/extdrive/workdir/raw/sdss_pv_zenodo_6824749/SDSS_PV_public.dat, joined on galaxy PGC -> table2 1PGC -> group_id): FP_SDSS, FP_NOT_SDSS (6dFGSv and other non-SDSS FP; 6dFGSv cannot be separated from the other non-SDSS FP samples by identifier), FP_MIXED"
+    },
+    {
+     "id": "DV-L04-2",
+     "kind": "deviation (scope)",
+     "choice": "TF source samples or bands and SN compilations are not resolvable from owned files: TF_ALL, SN_ALL and OTHER_ALL are single labels; the 'largest TF survey' of decision check 2 is TF_ALL"
+    },
+    {
+     "id": "DV-L04-3",
+     "kind": "interpretation",
+     "choice": "survey steps, survey offsets, the step consistency chi2 and the stability splits use the common redshift range 0.01 <= z < 0.055 and the redshift bins of the cloud run (Z_COMMON, Z_BINS); a survey enters the step fit when it has >= 100 groups in each hemisphere inside that range"
+    },
+    {
+     "id": "DV-L04-4",
+     "kind": "interpretation",
+     "choice": "common step of decision check 1 = GLS mean of the survey steps with the white + exact-body covariance; |z| = |common step| / sd"
+    },
+    {
+     "id": "DV-L04-5",
+     "kind": "interpretation",
+     "choice": "log_survey nuisance = one indicator column per survey label except OTHER_ALL (reference, as OTHER is the reference of log_mono); the classify flag 'removed_by_method_hemisphere_split' of the cloud run is passed unchanged for the four new variants"
+    },
+    {
+     "id": "DV-L04-6",
+     "kind": "interpretation",
+     "choice": "leave-6dFGS-out (B08) is the log_mono window fit without the FP_NOT_SDSS and FP_MIXED groups, because 6dFGSv is not separable from them"
+    },
+    {
+     "id": "DV-L04-7",
+     "kind": "interpretation",
+     "choice": "stability halves of the redshift range: 0.01 <= z < 0.0325 and 0.0325 <= z < 0.055; e_dmzp terciles over the groups inside 0.01 <= z < 0.055; the step of a survey is omitted in a split where it has fewer than 100 groups in a hemisphere (stated per split)"
+    },
+    {
+     "id": "DV-L04-8",
+     "kind": "refactor",
+     "choice": "the nested classify function of compute() moves to module level unchanged so that R54-L04 can call it; compute() calls it with the same arguments"
+    }
+   ]
+  },
+  "R54-L02": {
+   "written_before_outputs": true,
+   "entries": [
+    {
+     "id": "DV-L02-1",
+     "kind": "interpretation",
+     "choice": "T analytic covariance: response R of the R51 masked T estimator to unit real harmonic modes 2 <= ell' <= 30, the range of C_ell in data/camb_ref_planck2018.npz (the contract input), computed with the NSIDE 128 coupling of the R51 operator; C_ell times the SMICA INT_BEAM^2 x pixwin(2048)^2; plus the FFP10 noise-only sample covariance (sim_noise of the cache); leakage from ell' > 30 is not modelled and the ell' <= 20 truncation is reported as a convergence check (amended before the run: the first draft named ell' <= 191, beyond the C_ell file)"
+    },
+    {
+     "id": "DV-L02-2",
+     "kind": "interpretation",
+     "choice": "LRT of step 2 uses S = sample covariance of the 300 FFP10 T45 vectors (ddof = 1, 299 dof)"
+    },
+    {
+     "id": "DV-L02-3",
+     "kind": "interpretation",
+     "choice": "cross-experiment T: union mask = R51 TMASK x WMAP9 KQ85 (r9, upgraded) x BeyondPlanck CMB intensity analysis mask (n1024, upgraded); every map is upgraded to NSIDE 2048 and passed through one masked debiased operator; ideal T response; Gaussian beams deconvolved per ell (WMAP ILC 1 deg, Cosmoglobe and BeyondPlanck 14 arcmin as in their headers, SMICA INT_BEAM x pixwin); differences in units of the adopted T sd"
+    },
+    {
+     "id": "DV-L02-4",
+     "kind": "deviation (input)",
+     "choice": "Cosmoglobe DR1: only the posterior mean and per-pixel STDDEV maps are owned; the null law of its B ell=2 statistic is a white-noise Monte Carlo (100 realisations) from the Q/U STDDEV maps through the union-mask estimator (approximate: pixel correlations of the posterior are not modelled)"
+    },
+    {
+     "id": "DV-L02-5",
+     "kind": "interpretation",
+     "choice": "BeyondPlanck v2: the owned low-ell posterior samples (cmb_lowl amp_alm, ell <= 64, chains c0001..c0004) are thinned to every 100th sample; B ell=2 null = posterior tail of the zero vector: fraction of samples whose Mahalanobis distance from the sample mean is at least that of zero (invariant to the real-alm convention); |Sigma_E|_F from the E ell=2 norm with the ideal response norm"
+    },
+    {
+     "id": "DV-L02-6",
+     "kind": "deviation (input)",
+     "choice": "WMAP9: no NSIDE 16 Q/U map is owned with the inverse noise matrices; the foreground-reduced V-band NSIDE 512 Q/U map is degraded to NSIDE 16 with N_obs weights and paired with the V-band NSIDE 16 inverse noise matrix (quninv); P06 polarization mask (r4); 500 noise realisations drawn from N; own NSIDE 16 E/B coupling inversion for ell <= 6"
+    },
+    {
+     "id": "DV-L02-7",
+     "kind": "deviation (input)",
+     "choice": "PR4: no NPIPE component-separated CMB map is owned (frequency maps only); the PR4 leg uses the R49 cache vector cmb_pr4_d and its ring-half split-difference covariance; one split difference enters only a difference test against SMICA, never a null law"
+    },
+    {
+     "id": "DV-L02-8",
+     "kind": "interpretation",
+     "choice": "adopted E covariance floor (ell = 2 E and B rows only) = max of the R54-L1 B-null floor at ell = 2, the half-mission (HM1-HM2)/2 E2/B2 variance of R54-L01, the Planck pipeline dispersion variance of R54-L01 and the cross-experiment E2/B2 dispersion variance (SMICA, Cosmoglobe, BeyondPlanck posterior mean, WMAP9 V)"
+    },
+    {
+     "id": "DV-L02-9",
+     "kind": "interpretation (conservative)",
+     "choice": "B ell=2 null with the adopted covariance: Planck PR3 pipelines use the FFP10 leave-one-out statistic with Gaussian floor draws added to each replicate (stream [20261116, 21]); Cosmoglobe, BeyondPlanck and WMAP9 use their own null laws with the floor added in the same way. Counting rule (conservative, fixed before the run): the passes are counted per data family {Planck PR3 (any of SMICA, Commander, NILC, SEVEM), Cosmoglobe/BeyondPlanck (shared LFI and WMAP data), WMAP9}; CLAIMABLE needs passes in at least two families. The contract-literal count over individual pipelines is reported next to it and does not decide."
+    }
+   ]
+  },
+  "R54-L03": {
+   "written_before_outputs": true,
+   "entries": [
+    {
+     "id": "DV-L03-1",
+     "kind": "interpretation",
+     "choice": "catalogues of the excess test: Quaia G<20.0 and NVSS (the two catalogues with a c_EB in run_r54_lowz_frames.C_EB and in the R54-L5 excess test); RACS stays excluded as in the receipt and Quaia G<20.5 overlaps G<20.0; both are reproduced in step 1 only"
+    },
+    {
+     "id": "DV-L03-2",
+     "kind": "interpretation (bias bracket)",
+     "choice": "Quaia bias: Laurent et al. 2017 (arXiv:1705.04718, functional form verified by web search; coefficients 0.278 and 2.393 UNVERIFIED) and Croom et al. 2005 b = 0.53 + 0.289 (1+z)^2 (UNVERIFIED); NVSS: Ho et al. 2008 gamma N(z) with z_* = 0.79, alpha = 1.18 (values seen in a review search result, not in the primary text: UNVERIFIED) and the same form with z_* halved (UNVERIFIED bracket), constant bias 1.6 and 2.0 as the contract states; all bias and N(z) parameters are marked UNVERIFIED and enter only as a bracket"
+    },
+    {
+     "id": "DV-L03-3",
+     "kind": "interpretation",
+     "choice": "clustering body of the mocks: the largest per-axis variance over the bias/N(z) bracket at z_min = 0 (conservative); growth D(z) of flat LCDM (Omega_m = 0.3153); the linear z = 0 P(k) fixture; no Limber"
+    },
+    {
+     "id": "DV-L03-4",
+     "kind": "interpretation",
+     "choice": "mock expectation maps are the data expectation maps of the receipt estimator (Quaia selection function T with |b| > 30; NVSS synthetic uniform randoms regenerated with the receipt seed and call order); the receipt estimator is reproduced to the receipt precision before the mocks run"
+    },
+    {
+     "id": "DV-L03-5",
+     "kind": "interpretation",
+     "choice": "excess-test covariance = mock covariance of the estimate plus the receipt's declared systematics (Quaia: latitude/expectation sweep deviation; NVSS: declared z variance); law = Gaussian chi2(3) with that covariance and the empirical mock tail"
+    },
+    {
+     "id": "DV-L03-6",
+     "kind": "interpretation",
+     "choice": "competitor estimators: Wagenveld et al. 2023 Poisson estimator on NVSS (NSIDE 32, S >= 15 mJy, |b| >= 7 deg, Table 1 boxes, sources within 0.3 deg of a source above 2.5 Jy removed; published D = (1.40 +- 0.29)e-2, RA 146 +- 12, Dec -5 +- 15, read from the paper text) and Mittal et al. 2024 Poisson estimator on Quaia G<20.0 (NSIDE 64, selection function, |b| > 40 deg; published D = 11 (+6, -5)e-3 at 95%); REPRODUCED if the owned-catalogue amplitude lies within 1.5 published sd (spec tolerance); pixels are masked by their centres; NVSS declination coverage limit -40 deg"
+    }
+   ]
+  },
+  "R54-L06": {
+   "written_before_outputs": true,
+   "entries": [
+    {
+     "id": "DV-L06-1",
+     "kind": "interpretation",
+     "choice": "polar block typed coordinates (ICRS): V_w (km/s) for the four CF4 windows, a common CF4 calibration dipole A_cal (fraction of H; the owned carrier has no per-sample dipole rows, so A_cal,p collapses to one pooled sample), and the count frame offset beta_ex (c beta, km/s) seen by Quaia G<20.0 and NVSS through c_EB; the CMB-frame observer velocity is not a parameter (published anchors E21, E22 are compared with the Planck solar dipole only, B06)"
+    },
+    {
+     "id": "DV-L06-2",
+     "kind": "interpretation",
+     "choice": "STF2 block typed coordinates (Galactic): s0 = sigma/H today and the CF4 calibration quadrupole q_cal; the CF4 ICRS quadrupole rows are transported to Galactic STF5 with the rotation R_I2G of run_r54_lowz_frames (declared transport); the CMB enters through the T45 carrier with the FFP10 covariance and the analytic finite-MC inflation (R54-L02 kept FFP10); Sigma_E is not used because the E lane is DIAGNOSTIC (R54-L01, R54-L02)"
+    },
+    {
+     "id": "DV-L06-3",
+     "kind": "interpretation",
+     "choice": "type-I history maps: perfect fluid Sigma_T = (Sigma_T/s0) s0 from R54-L1; with radiation anisotropic stress the present shear is s0 = c_T Sigma_T + c_E Sigma_E, so without the E lane s0 is not identified by the CMB and the stress hypothesis is reported through the identification table"
+    },
+    {
+     "id": "DV-L06-4",
+     "kind": "scope",
+     "choice": "PantheonPlus optional leg SKIPPED_OPTIONAL: its hosts and peculiar-velocity corrections overlap CF4 (excluded in R52 for the same reason)"
+    },
+    {
+     "id": "DV-L06-5",
+     "kind": "interpretation",
+     "choice": "count covariance for the tilt closure (R54-EQ-38): the R54-L03 common excess velocity and its calibrated sd replace the receipt errors; V_CF4 is the V-only window fit of R54-L05 (white + exact body)"
+    }
+   ]
+  }
+ }
+}

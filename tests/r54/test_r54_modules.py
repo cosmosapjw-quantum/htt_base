@@ -223,6 +223,13 @@ def test_eq20_gauge_range_exact_in_two_dimensions():
             assert abs(lo / fv.EllipsoidBody("test body", bmat).support(v) - r["Q_min"]) < 1e-7 * r["Q_min"]
 
 
+def test_eq21_support_interval_in_scaled_coordinates():
+    """R54-IR-08: a badly scaled but identified carrier keeps its small-eigenvalue direction (no falsely tight interval)."""
+    f, t = np.diag([1.0e8, 1.0e-6]), np.array([1.0e8 * 2.0e-4, 1.0e-6 * 5.0e2])
+    lo, hi = fv.support_interval(f, t, np.array([0.0, 1.0]), 2.0, scale=np.array([1.0e-4, 1.0e3]))
+    assert math.isclose(0.5 * (hi - lo), 2.0e3, rel_tol=1e-9) and math.isclose(0.5 * (hi + lo), 5.0e2, rel_tol=1e-9)
+
+
 def test_eq20_singular_precision_and_hard_case():
     f = np.diag([4.0, 1.0, 0.0])
     t = np.array([4.0, 2.0, 0.0])

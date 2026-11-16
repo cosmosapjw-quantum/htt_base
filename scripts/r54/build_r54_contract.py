@@ -104,6 +104,7 @@ def numbers_l05(x: dict) -> dict:
         "cmw_cons_p": x["common_mode"]["white"]["common_dipole"]["consistency_p_value"],
         "s_dip_p": sp["headline"]["dipole_null_p"], "s_quad_p": sp["headline"]["quadrupole_null_p"], "s_joint_p": sp["headline"]["joint_null_p"],
         "s_pole_gain": sp["headline"]["pole_gain"], "s_A_pct": sp["headline"]["A_percent"], "s_quad_wald_p": sp["headline"]["quadrupole_constant_wald_p"],
+        "s_quad_axis": sp["headline"]["quadrupole_axis_angle_to_pole_deg"],
         "m_dip_p": hm["dipole_null_p"], "m_quad_p": hm["quadrupole_null_p"], "m_joint_p": hm["joint_null_p"], "m_chi2_V": hm["chi2_V"], "m_chi2_A": hm["chi2_A"],
         "st_common": steps["common_step"], "st_common_sd": steps["common_step_sd"], "st_common_p": steps["common_wald_p_value"],
         "st_cons_p": steps["consistency_p_value"], "st_mag": steps["common_delta_mu_north_minus_south_mag"], "st_mag_sd": steps["common_delta_mu_sd_mag"],
@@ -232,8 +233,145 @@ def numbers(l1: dict | None = None, l5: dict | None = None, l05: dict | None = N
     }
     if n["late_T_rms"] != "inf":
         raise SystemExit("the T functional is expected to be blind to the sign-changing late-time construction; re-derive the text if this changes")
+    n["n_sims"] = int(d["inputs"]["n_sims"])
     n.update(numbers_l05(l05))
+    n.update(numbers_local())
+    check_text_premises(n)
     return n
+
+
+LOCAL_RESULT_FILES = {"R54-L01": "R54_L01_RESULT.json", "R54-L04": "R54_L04_RESULT.json", "R54-L02": "R54_L02_RESULT.json",
+                      "R54-L03": "R54_L03_RESULT.json", "R54-L06": "R54_L06_JOINT.json", "R54-L07": "R54_L07_BENCHMARK.json"}
+LOCAL_ORDER = ("R54-L01", "R54-L04", "R54-L02", "R54-L03", "R54-L06", "R54-L07", "R54-L08")
+
+
+def local_result(nid: str) -> dict | None:
+    path = RES / LOCAL_RESULT_FILES.get(nid, "-")
+    return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else None
+
+
+def node_status(nid: str) -> str:
+    """Status of a local node derived from its committed outputs (never typed): a BLOCKER note, the result status and its acceptance table."""
+    if (R54 / f"BLOCKER_{nid}.md").is_file():
+        return "FAILED_ACCEPTANCE"
+    if nid == "R54-L08":
+        return "DONE_SCOPED_C0" if (R54 / "FINAL_DECISION_R57.md").is_file() else "PENDING_LOCAL"
+    r = local_result(nid)
+    if r is None:
+        return "PENDING_LOCAL"
+    if r.get("status") != "DONE_SCOPED_C0":
+        return str(r.get("status"))
+    acc = r.get("acceptance", {})
+    return "DONE_SCOPED_C0" if acc and all(v["pass"] for v in acc.values()) else "FAILED_ACCEPTANCE"
+
+
+def numbers_local() -> dict:
+    """Numbers of the executed local nodes (only the nodes whose result file exists)."""
+    out: dict = {}
+    x = local_result("R54-L01")
+    if x is not None and x.get("status") == "DONE_SCOPED_C0":
+        lc, b, opt, rc = x["loo_calibration"], x["b_null_empirical"], x["optional_legs"], x["results_calibrated"]
+        hm, pd = opt["half_mission"], opt["pipeline_dispersion"]
+        out.update({
+            "l01_ident": x["covariance_identity_rel"], "l01_edev": x["e_response"]["e_dev"], "l01_eflag": x["e_response"]["flag"],
+            "l01_JB": x["e_response"]["norm_B_rows_rel"], "l01_cov95_lo": min(lc["coverage_95"]), "l01_cov95_hi": max(lc["coverage_95"]),
+            "l01_cov68_lo": min(lc["coverage_68"]), "l01_cov68_hi": max(lc["coverage_68"]), "l01_cov95_pool": lc["coverage_95_pooled"],
+            "l01_cov68_pool": lc["coverage_68_pooled"], "l01_calibrated": "CALIBRATED" if lc["calibrated"] else "SUPERSEDED",
+            "l01_q95_lo": min(lc["empirical_quantile_inflation_95"]), "l01_q95_hi": max(lc["empirical_quantile_inflation_95"]),
+            "l01_wald_cov95": lc["wald_coverage_hotelling"]["coverage_95"],
+            "l01_Wall_p": lc["tails"]["W_all"]["p_value"], "l01_WT_p": lc["tails"]["W_T"]["p_value"], "l01_WE_p": lc["tails"]["W_E"]["p_value"],
+            "l01_B_p": b["SMICA"]["p_value"], "l01_B_p_comm": b["Commander"]["p_value"], "l01_B_hot": b["hotelling_reference"]["p_value"],
+            "l01_B_pass": bool(b["pass"]), "l01_pi_t": x["t_only"]["Pi_loo"]["p_value"],
+            "l01_hm_status": hm["status"], "l01_pd_status": pd["status"],
+            "l01_E_status": rc["E_lane_status"], "l01_primary": rc["primary_carrier"],
+            "l01_sdT": sum(rc["primary"]["sd_T"]) / 5, "l01_sdE": sum(rc["primary"]["sd_E"]) / 5})
+        if hm["status"] == "DONE_SCOPED_C0":
+            out.update({"l01_hm_E2": hm["E2_rms_uK"], "l01_hm_B2": hm["B2_rms_uK"], "l01_noise_E2": hm["ffp10_noise_E2_rms_uK"],
+                        "l01_noise_B2": hm["ffp10_noise_B2_rms_uK"]})
+        if pd["status"] == "DONE_SCOPED_C0":
+            out.update({"l01_B_p_" + k.lower(): v["p_value"] for k, v in pd["B2_tail_by_pipeline"].items()})
+            out.update({"l01_disp_E2": pd["E2_dispersion_variance_uK2"] ** 0.5, "l01_disp_B2": pd["B2_dispersion_variance_uK2"] ** 0.5})
+    x = local_result("R54-L04")
+    if x is not None and x.get("status") == "DONE_SCOPED_C0":
+        st, sw = x["survey_steps"]["white_plus_exact_body"], x["survey_steps"]["white"]
+        off = x["survey_offsets"]["white_plus_exact_body"]
+        lv, cl = x["nuisance_variants"]["local"], x["nuisance_variants"]["classes"]
+        dec = x["decision"]
+        no6 = x["leave_6dfgs_proxy_out"]
+        ut = x["survey_table"]["unpooled"]
+        out.update({
+            "l04_cov": x["label_join"]["label_join_coverage"], "l04_n_sdss": ut["FP_SDSS"]["n"], "l04_n_notsdss": ut["FP_NOT_SDSS"]["n"],
+            "l04_n_mixed": ut["FP_MIXED"]["n"], "l04_fn_sdss": ut["FP_SDSS"]["fraction_north"], "l04_fn_notsdss": ut["FP_NOT_SDSS"]["fraction_north"],
+            "l04_step_surveys": ", ".join(st["per_survey"]), "l04_common": st["common_step"], "l04_common_sd": st["common_step_sd"],
+            "l04_common_z": st["common_z"], "l04_common_mag": st["common_delta_mu_north_minus_south_mag"], "l04_cons_p": st["consistency_p_value"],
+            "l04_common_white_z": sw["common_z"], "l04_z_tf": st["per_survey"]["TF_ALL"]["z_score"], "l04_z_sn": st["per_survey"]["SN_ALL"]["z_score"],
+            "l04_z_fp": st["per_survey"]["FP_SDSS"]["z_score"], "l04_z_other": st["per_survey"]["OTHER_ALL"]["z_score"],
+            "l04_off_mag": off["FP_NOT_SDSS-FP_SDSS"]["delta_mu_mag"], "l04_off_sd": off["FP_NOT_SDSS-FP_SDSS"]["delta_mu_sd_mag"],
+            "l04_off_z": off["FP_NOT_SDSS-FP_SDSS"]["z_score"],
+            "l04_ls_joint_p": lv["log_survey"]["headline"]["joint_null_p"], "l04_ls_quad_p": lv["log_survey"]["headline"]["quadrupole_constant_wald_p"],
+            "l04_ls_dip_p": lv["log_survey"]["headline"]["dipole_null_p"],
+            "l04_rad_p": lv["log_mono_radial"]["headline"]["joint_null_p"], "l04_gal_p": lv["log_mono_galactic"]["headline"]["joint_null_p"],
+            "l04_err_p": lv["log_mono_error"]["headline"]["joint_null_p"],
+            "l04_ls_tail": lv["log_survey"]["locking_tail"], "l04_rad_tail": lv["log_mono_radial"]["locking_tail"],
+            "l04_gal_tail": lv["log_mono_galactic"]["locking_tail"], "l04_err_tail": lv["log_mono_error"]["locking_tail"],
+            "l04_cls_survey": cl["log_survey"], "l04_cls_radial": cl["log_mono_radial"], "l04_cls_galactic": cl["log_mono_galactic"],
+            "l04_cls_error": cl["log_mono_error"], "l04_robust": dec["robust_class"], "l04_step_class": dec["step_class"],
+            "l04_no6_joint_p": no6["headline"]["joint_null_p"], "l04_no6_dip_p": no6["headline"]["dipole_null_p"],
+            "l04_no6_outer_p": no6["window_subsets"]["outer_windows_z0.06_z0.08"]["joint"]["p_value"],
+            **{f"l04_stab_{k}": v["common_step"] for k, v in x["stability"]["splits"].items()},
+            **{f"l04_stab_z_{k}": v["common_z"] for k, v in x["stability"]["splits"].items()}})
+    x = local_result("R54-L02")
+    if x is not None and x.get("status") == "DONE_SCOPED_C0":
+        tt, ct, et, ae, bn = x["t_analytic_covariance_test"], x["cross_experiment_T"], x["e_lane_table"], x["adopted_e_covariance"], x["b_null_adopted"]
+        out.update({
+            "l02_lrt": tt["lrt"]["statistic"], "l02_lrt_dof": tt["lrt"]["dof"], "l02_lrt_p": tt["lrt"]["p_value"],
+            "l02_diag": tt["lrt"]["max_abs_diag_ratio_minus_1"], "l02_trunc": tt["truncation_check_ell_le_20_max_rel_diff"],
+            "l02_adopt": "ADOPTED" if tt["adopted"] else "NOT_ADOPTED", "l02_t_reason": tt["reason"],
+            "l02_shift_wmap": ct["experiments"]["WMAP9_ILC"]["max_abs_shift_sd"], "l02_shift_cg": ct["experiments"]["Cosmoglobe_DR1"]["max_abs_shift_sd"],
+            "l02_shift_bp": ct["experiments"]["BeyondPlanck_v2"]["max_abs_shift_sd"], "l02_t_lane": ct["status"],
+            "l02_fsky_t": ct["f_sky"]["union_T"], "l02_fsky_p": ct["f_sky"]["union_P"],
+            "l02_cg_E": et["Cosmoglobe_DR1"]["Sigma_E_frobenius"], "l02_bp_E": et["BeyondPlanck_v2_posterior"]["Sigma_E_frobenius_posterior_mean"],
+            "l02_wm_E": et["WMAP9_V"]["Sigma_E_frobenius"], "l02_bp_n": et["BeyondPlanck_v2_posterior"]["n_samples"],
+            "l02_pr4_diff_p": et["PR4_frequency_cache"]["difference_test"]["p_value"],
+            "l02_floor": ae["floor_uK2"], **{f"l02_floor_{k}": v for k, v in ae["components_uK2"].items()},
+            **{f"l02_bnull_{k}": v["p_value"] for k, v in bn.items()},
+            "l02_families": ", ".join(x["passing_families"]) or "none", "l02_e_status": x["e_lane_status"]})
+    x = local_result("R54-L03")
+    if x is not None and x.get("status") == "DONE_SCOPED_C0":
+        ex, vn, cp, cm = x["excess_tests"], x["velocity_null"], x["competitors"], x["common_excess"]
+        out.update({
+            "l03_repro": x["receipt_reproduction"]["max_abs_D_icrs_difference"],
+            "l03_body_q": x["clustering_body"]["mock_sd_axis"]["Quaia_G20"], "l03_body_n": x["clustering_body"]["mock_sd_axis"]["NVSS"],
+            "l03_bias_q": max(abs(v) for v in vn["Quaia_G20"]["bias_over_sd"]), "l03_bias_n": max(abs(v) for v in vn["NVSS"]["bias_over_sd"]),
+            "l03_sd_q": max(vn["Quaia_G20"]["sd"]), "l03_sd_n": max(vn["NVSS"]["sd"]),
+            "l03_p_q": ex["Quaia_G20"]["chi2"]["p_value"], "l03_p_n": ex["NVSS"]["chi2"]["p_value"],
+            "l03_pi_q": ex["Quaia_G20"]["Pi_mock"]["p_value"], "l03_pi_n": ex["NVSS"]["Pi_mock"]["p_value"],
+            "l03_v_q": ex["Quaia_G20"]["implied_excess_velocity_km_s"], "l03_v_n": ex["NVSS"]["implied_excess_velocity_km_s"],
+            "l03_common_p": cm["wald"]["p_value"], "l03_common_cons_p": cm["consistency"]["p_value"],
+            "l03_w_D": cp["Wagenveld2023_NVSS_Poisson"]["owned"]["D"], "l03_w_pub": cp["Wagenveld2023_NVSS_Poisson"]["published"]["D"],
+            "l03_w_N": cp["Wagenveld2023_NVSS_Poisson"]["owned"]["n_sources_in_pixels"], "l03_w_Npub": cp["Wagenveld2023_NVSS_Poisson"]["published"]["n_sources"],
+            "l03_w_status": cp["Wagenveld2023_NVSS_Poisson"]["status"], "l03_w_dz": cp["Wagenveld2023_NVSS_Poisson"]["amplitude_difference_in_published_sd"],
+            "l03_m_D": cp["Mittal2024_Quaia_Poisson"]["owned"]["D"], "l03_m_pub": cp["Mittal2024_Quaia_Poisson"]["published"]["D"],
+            "l03_m_status": cp["Mittal2024_Quaia_Poisson"]["status"], "l03_m_dz": cp["Mittal2024_Quaia_Poisson"]["amplitude_difference_in_published_sd"],
+            "l03_excess_decision": x["decision"]["excess"]})
+    return out
+
+
+def check_text_premises(n: dict) -> None:
+    """Qualitative words in the templates are true only under these conditions on the bound numbers (R54-IR-06).
+    A regenerated result that breaks one stops the build instead of printing a stale qualifier."""
+    premises = {
+        "sweep interval contains the 3.12 MeV decoupling estimate (E49)": (not n["sweep_flips"]) or n["sweep_T_pre"] <= 3.12 <= n["sweep_T_flip"],
+        "B ell=2 null gate fails ('B-null gate 실패')": n["B_p"] < 0.01,
+        "E ell=2 null gate passes ('E ell=2는 통과')": n["E_p"] >= 0.01,
+        "depth laws not told apart at the observed sizes (H-C3 HOLD)": n["h_c3_decision"] == "HOLD",
+        "35970 groups typed in the templates": n["x_n_groups"] == 35970,
+        "FFP10 N=300 typed in the templates": n["n_sims"] == 300,
+        "quadrupole axis moves by tens of degrees under the zero-point split": abs(n["s_quad_axis"] - n["g_quad_axis"]) >= 20.0,
+    }
+    failed = [k for k, ok in premises.items() if not ok]
+    if failed:
+        raise SystemExit("template premise no longer holds; re-derive the text: " + "; ".join(failed))
 
 
 # --------------------------------------------------------------------------- evidence
@@ -316,6 +454,44 @@ def tails_text(n: dict) -> str:
 
 
 def hypotheses(n: dict) -> list[dict]:
+    """Cloud hypotheses with the executed local results appended; a decision changes only where a node's decision check says so."""
+    hyps = hypotheses_cloud(n)
+    by = {h["id"]: h for h in hyps}
+
+    def add(hid: str, result: str, nxt: str | None = None, decision: str | None = None) -> None:
+        by[hid]["executed_result"] += "; " + result
+        if nxt is not None:
+            by[hid]["next_action"] = nxt
+        if decision is not None:
+            by[hid]["decision"] = decision
+
+    if "l01_edev" in n:
+        add("H-L1a", f"R54-L01: masked E response e_dev = {g3(n['l01_edev'])} ({n['l01_eflag']})", "R54-L07 literature check (B09)")
+        add("H-L1c", f"R54-L01 empirical LOO B ell=2 tail {g3(n['l01_B_p'])} (SMICA), {g3(n['l01_B_p_comm'])} (Commander); E lane {n['l01_E_status']}",
+            "R54-L02 cross-experiment E lane")
+    if "l03_repro" in n:
+        add("H-L2a", f"R54-L03 calibrated excess tails {g3(n['l03_p_q'])} (Quaia), {g3(n['l03_p_n'])} (NVSS); {n['l03_excess_decision']}",
+            "R54-L06 tilt closure with the R54-L03 count covariance")
+    if "l02_e_status" in n:
+        add("H-L1c", f"R54-L02 adopted-covariance B ell=2 null passes in: {n['l02_families']}; E lane {n['l02_e_status']}", "R54-L06 (T lane; E lane as recorded)")
+    for hid, d in local_hypothesis_decisions().items():
+        add(hid, d["result"], d["next"], d["decision"])
+    return hyps
+
+
+def local_hypothesis_decisions() -> dict:
+    """Decisions fixed by the decision checks of executed local nodes (R54-L04 onwards)."""
+    out = {}
+    x = local_result("R54-L04")
+    if x is not None and x.get("status") == "DONE_SCOPED_C0":
+        dec = x["decision"]
+        for hid, d in dec["hypotheses"].items():
+            out[hid] = {"decision": d, "result": f"R54-L04 decision check: {d} (step class {dec['step_class']}; robust class {dec['robust_class']})",
+                        "next": "R54-L06 joint tomography" if d == "HOLD" else "none (rejected by the R54-L04 decision check)"}
+    return out
+
+
+def hypotheses_cloud(n: dict) -> list[dict]:
     def h(i, lane, text, decision, ev, val, nov, tst, rob, risk, kill, result, nxt):
         return {"id": i, "lane": lane, "statement": text, "decision": decision,
                 "dimensions": {"evidence": ev, "validity": val, "novelty": nov, "testability": tst, "robustness": rob, "risk": risk},
@@ -682,10 +858,36 @@ CLOUD_GATES = [
      "tests/r54/test_r54_modules.py::test_wls_operator_identity_and_fail_closed", "rank-deficient design accepted"),
     ("MG-20", MOD + "/r54_type1_thomson.py", "(4.0 * xx * xx + 5.0 * mm * mm)", "(4.0 * xx * xx + 4.0 * mm * mm)",
      "tests/r54/test_r54_modules.py::test_eq06_massive_neutrino_stress_weight", "wrong non-relativistic limit of the collisionless stress weight"),
+    # gates added after the independent diff review (R54-IR-01, IR-02, IR-03, IR-05): sign, frame and cache conventions of the run scripts
+    ("MG-29", MOD + "/r54_tensor_five_view.py", "    fs = d[:, None] * _sym(f, \"precision\") * d[None, :]", "    fs = _sym(f, \"precision\")",
+     "tests/r54/test_r54_modules.py::test_eq21_support_interval_in_scaled_coordinates", "support interval computed in unscaled coordinates (R54-IR-08)"),
+    ("MG-21", "scripts/r54/run_r54_cf4_exact.py", "    s, cs = v + b, cv + np.diag(sb**2)", "    s, cs = v - b, cv + np.diag(sb**2)",
+     "tests/r54/test_r54_conventions.py::test_mg21_eq38_tilt_closure_vanishes_for_one_frame_offset", "sign of the global-tilt closure (R54-EQ-38)"),
+    ("MG-22", "scripts/r54/run_r54_cf4_exact.py", '"delta_mu_north_minus_south_mag": float(-2.0 * theta[i] / de.LN10_OVER_5),',
+     '"delta_mu_north_minus_south_mag": float(2.0 * theta[i] / de.LN10_OVER_5),',
+     "tests/r54/test_r54_conventions.py::test_mg22_eq36_north_modulus_offset_gives_negative_step_and_positive_delta_mu", "sign of the hemisphere-step magnitude (R54-EQ-36)"),
+    ("MG-23", "scripts/r54/run_r54_lowz_frames.py", "    g = R_I2G @ (np.asarray(v, float) / np.linalg.norm(v))", "    g = R_I2G.T @ (np.asarray(v, float) / np.linalg.norm(v))",
+     "tests/r54/test_r54_conventions.py::test_mg23_icrs_to_galactic_rotation", "ICRS to Galactic rotation transposed"),
+    ("MG-24", "scripts/r54/run_r54_cf4_exact.py", "        return float((1 + np.sum(null[k] <= obs[k])) / (n_draw + 1))", "        return float((1 + np.sum(null[k] >= obs[k])) / (n_draw + 1))",
+     "tests/r54/test_r54_conventions.py::test_mg24_axis_locking_tail_is_small_for_a_pole_aligned_signal", "direction of the axis-locking tail"),
+    ("MG-25", "scripts/r54/run_r54_cmb_type1.py", "    j_e[e2, :] = j_ideal[t2, :]", "    j_e[e2, :] = -j_ideal[t2, :]",
+     "tests/r54/test_r54_conventions.py::test_mg25_eq04_ideal_e_response_has_the_sign_of_the_t_response", "sign of the ideal E response (R54-EQ-04)"),
+    ("MG-26", "scripts/r54/run_r54_cf4_exact.py", "    return np.array(_digest(stack))", "    return np.array(_digest(np.sort(stack, axis=0)))",
+     "tests/r54/test_r54_conventions.py::test_mg26_pair_sum_cache_key_changes_under_row_permutation_and_positions", "pair-sum cache key blind to a row permutation"),
+    ("MG-27", "scripts/r54/run_r54_cmb_type1.py", "    theta_re = -th.history_functionals(s_of_n, _ShiftedDepth(hist, n_re), n_start, n_re)[\"Sigma_T\"]",
+     "    theta_re = -th.history_functionals(s_of_n, hist, n_start, n_re)[\"Sigma_T\"]",
+     "tests/r54/test_r54_conventions.py::test_mg27_reionization_only_e_equals_the_propagated_quadrupole", "reionization quadrupole attenuated to today instead of to z = 50"),
+    ("MG-28", "scripts/r54/run_r54_lowz_frames.py", 'return 5.0 * math.log10(1.0 + abs(a) / h_fit) if estimator == "linear" else abs(a) * 5.0 / math.log(10.0)',
+     'return 5.0 * math.log10(1.0 + abs(a) / h_fit) if True else abs(a) * 5.0 / math.log(10.0)',
+     "tests/r54/test_r54_conventions.py::test_mg28_eq36_log_estimator_magnitude_map", "linear-estimator magnitude map applied to the log estimator"),
 ]
 #: files whose content the mutation receipt certifies; the binding test fails when they change without a new receipt
 RECEIPT_SOURCES = (MOD + "/r54_type1_thomson.py", MOD + "/r54_lcdm_body.py", MOD + "/r54_tensor_five_view.py",
-                   MOD + "/r54_distance_estimators.py", "tests/r54/test_r54_modules.py")
+                   MOD + "/r54_distance_estimators.py", "tests/r54/test_r54_modules.py",
+                   "scripts/r54/run_r54_cf4_exact.py", "scripts/r54/run_r54_lowz_frames.py", "scripts/r54/run_r54_cmb_type1.py",
+                   "tests/r54/test_r54_conventions.py", MOD + "/r54_calibration.py", "tests/r54/test_r54_calibration.py",
+                   MOD + "/r54_survey.py", "tests/r54/test_r54_survey.py", MOD + "/r54_counts.py", "tests/r54/test_r54_counts.py",
+                   MOD + "/r54_pr4_bypass.py", "tests/r54/test_r54_pr4_bypass.py")
 LOCAL_GATES = [
     ("MG-L01", "R54-L01", "permute the 300 simulation rows relative to nothing (control) and permute the 135 columns of the simulations only", "covariance identity check of step 1 must fail for the column permutation and pass for the row permutation"),
     ("MG-L02", "R54-L01", "use sims[i] inside its own covariance (no leave-one-out)", "coverage_95 test must leave the acceptance band on a synthetic Gaussian set with N = 60, p = 10"),
@@ -697,12 +899,43 @@ LOCAL_GATES = [
 ]
 
 
+#: local gates implemented with their node: (file, pattern, mutation, test that must fail)
+LOCAL_GATE_MUTATIONS = {
+    "MG-L01": (MOD + "/r54_calibration.py", "    return float(np.max(np.abs(s - s_ref)) / np.max(np.abs(s_ref)))",
+               "    return float(np.max(np.abs(np.sort(np.diag(s)) - np.sort(np.diag(s_ref)))) / np.max(np.abs(s_ref)))",
+               "tests/r54/test_r54_calibration.py::test_mg_l01_covariance_identity_detects_column_but_not_row_permutation"),
+    "MG-L02": (MOD + "/r54_calibration.py", "        s_i = np.cov(np.delete(sims, i, axis=0).T, ddof=1) if leave_one_out else full",
+               "        s_i = full",
+               "tests/r54/test_r54_calibration.py::test_mg_l02_leave_one_out_obeys_the_hotelling_law_and_self_inclusion_does_not"),
+    "MG-L03": (MOD + "/r54_calibration.py", "        if v.size < MIN_NULL_REALISATIONS:", "        if False:",
+               "tests/r54/test_r54_calibration.py::test_mg_l03_empirical_null_refuses_a_single_split_difference"),
+    "MG-L04": (MOD + "/r54_counts.py", "    return hashlib.sha256(np.packbits(np.asarray(used, bool)).tobytes()).hexdigest()",
+               "    return hashlib.sha256(np.packbits(np.ones_like(np.asarray(used, bool))).tobytes()).hexdigest()",
+               "tests/r54/test_r54_counts.py::test_mg_l04_mask_hash_distinguishes_latitude_cuts"),
+    "MG-L05": (MOD + "/r54_survey.py", '    for pgc, grp, fp in zip(gal["pgc"].tolist(), gal["group"].tolist(), gal["has_fp"].tolist()):',
+               '    for pgc, grp, fp in zip(gal["pgc"].tolist(), sorted(gal["group"].tolist()), gal["has_fp"].tolist()):',
+               "tests/r54/test_r54_survey.py::test_mg_l05_labels_are_joined_on_identifiers_not_on_row_order"),
+    "MG-L06": (MOD + "/r54_survey.py", "    mono = np.column_stack([(zbin == b).astype(float) for b in range(len(z_bins) - 1) if np.any(sel & (zbin == b))])\n    step = ",
+               "    mono = np.ones((z.size, 1))\n    step = ",
+               "tests/r54/test_r54_survey.py::test_mg_l06_survey_step_needs_the_redshift_monopoles"),
+}
+
+
+def implemented_gates() -> list[tuple]:
+    """Every gate with a source mutation: cloud gates and the local gates implemented so far (id, file, old, new, test, meaning)."""
+    local = [(gid, *LOCAL_GATE_MUTATIONS[gid][:3], LOCAL_GATE_MUTATIONS[gid][3], m) for gid, _, m, _ in LOCAL_GATES if gid in LOCAL_GATE_MUTATIONS]
+    return list(CLOUD_GATES) + local
+
+
 def gates_doc() -> dict:
     return {"schema": "htt.r54.mutation_gates/1", "rule": "a gate is valid only if the named test fails under the mutation and passes without it; receipts are in MUTATION_GATE_RECEIPT.json",
             "cloud_gates": [{"id": i, "file": f, "replace": a, "with": b, "must_fail": t, "meaning": m, "status": "IMPLEMENTED"} for i, f, a, b, t, m in CLOUD_GATES]
             + [{"id": "MG-13", "file": "any committed input of RESULTS/*.json", "replace": "one byte", "with": "another byte",
                 "must_fail": "tests/r54/test_r54_results_binding.py::test_inputs_are_the_committed_ones", "meaning": "result/input drift", "status": "IMPLEMENTED"}],
-            "local_gates": [{"id": i, "node": nd, "mutation": m, "detection_to_implement": t, "status": "TO_IMPLEMENT_WITH_NODE"} for i, nd, m, t in LOCAL_GATES]}
+            "local_gates": [{"id": i, "node": nd, "mutation": m, "detection_to_implement": t, "status": "TO_IMPLEMENT_WITH_NODE"} if i not in LOCAL_GATE_MUTATIONS else
+                            {"id": i, "node": nd, "mutation": m, "detection": t, "status": "IMPLEMENTED", "file": LOCAL_GATE_MUTATIONS[i][0],
+                             "replace": LOCAL_GATE_MUTATIONS[i][1], "with": LOCAL_GATE_MUTATIONS[i][2], "must_fail": LOCAL_GATE_MUTATIONS[i][3]}
+                            for i, nd, m, t in LOCAL_GATES]}
 
 
 def self_audit_doc() -> dict:
@@ -854,7 +1087,7 @@ def dag_doc(n: dict) -> dict:
         {"id": "R54-REVIEW", "title": "Independent adversarial review (complete, findings resolved or deferred); the diff review was interrupted and is handed to the local session",
          "status": "DONE_SCOPED_C0", "outputs": [REL + "/INDEPENDENT_REVIEW.json"]},
     ]
-    loc = [{k: v for k, v in nd.items() if k in ("id", "card", "title", "depends", "priority", "runtime_budget")} | {"status": "PENDING_LOCAL"} for nd in local_nodes(n)]
+    loc = [{k: v for k, v in nd.items() if k in ("id", "card", "title", "depends", "priority", "runtime_budget")} | {"status": node_status(nd["id"])} for nd in local_nodes(n)]
     return {"schema": "htt.r54.research_dag/1", "date": DATE, "branch": BRANCH, "base": BASE, "claim_tier_ceiling": "C0",
             "canonical_cards": {"PR-R54-TENSOR-FRAME-TOMOGRAPHY": [c["id"] for c in cloud], "PR-R55-LOCAL-CALIBRATION": ["R54-L01", "R54-L02", "R54-L03", "R54-L04"],
                                 "PR-R56-JOINT-BENCHMARK": ["R54-L06", "R54-L07"], "PR-R57-MANUSCRIPT-DECISION": ["R54-L08"]},
@@ -887,9 +1120,28 @@ def contract_doc(n: dict) -> dict:
                 "r54_distance_estimators": ["multipole_basis(nhat)", "wls_operator(design, weights)", "gaussian_window_weights(z, centers, width)", "distance_mpc(mu)",
                                             "r36_linear_window_operator(mu, e_mu, z, nhat, centers)", "log_distance_ratio(mu, z, omega_m)", "log_noise_variance(e_mu, g, sigma_star)",
                                             "log_window_operator(tau2, z, nhat, centers, width, nuisance, select)", "white_covariance(op, variance)", "magnitude_equivalent(delta_eta)"],
-                "scripts/r54/run_r54_cf4_exact.py": ["compute()", "build_operators(cat, a_raw, tau2)", "cosmic_covariances(stack, labels, n, r)", "common_mode(theta, white, body)",
+                "scripts/r54/run_r54_cf4_exact.py": ["compute()", "build_operators(cat, a_raw, tau2, survey)", "survey_operators(cat, tau2, survey, mono_nuisance, dec, in_range)",
+                                                     "classify(joint_p, removed, tail)", "tilt_closure(v, cv, b, sb)", "cosmic_covariances(stack, labels, n, r)", "common_mode(theta, white, body)",
                                                      "hemisphere_steps(theta, white, body)", "locking_null(theta, cov, rng, n_draw)", "window_subset_nulls(theta, cov)",
                                                      "step_scan(cat, eta, g, tau2, r, rng, reference)", "injections(...)", "tilt_transport(theta, cov, an)"],
+                MOD + "/r54_calibration.py": ["covariance_identity_rel(sims, s_ref)", "loo_replicates(sims, j, blocks, leave_one_out)", "coverage(theta, sd, inflation, level)",
+                                              "wald_coverage(rep, level)", "hotelling_quantile(level, p_dim, n_dof)", "binomial_band(level, n, n_sd)",
+                                              "empirical_quantile_inflation(theta, sd, level)", "EmpiricalNull(values, law)"],
+                MOD + "/r54_survey.py": ["galaxy_table(lines)", "survey_labels(group_id, family, gal, sdss_pgc)", "join_coverage(group_id, table_group_ids)",
+                                         "pool_small(labels, family, in_range, min_count)", "survey_step_operator(z, nvec, tau2, select, z_bins)",
+                                         "survey_offset_operator(z, tau2, labels, family_sel, reference, others, z_bins)"],
+                MOD + "/r54_counts.py": ["growth_factor(z, omega_m)", "ho_nz(z, z_star, alpha)", "comoving_distance(z, omega_m, h0)",
+                                         "dipole_clustering_cl1(k, pk, z, dndz, bias, omega_m, h0, z_min)", "dipole_axis_variance(cl1)",
+                                         "poisson_dipole_fit(counts, expect, nvec)", "mask_hash(used)"],
+                MOD + "/r54_pr4_bypass.py": ["mode_tuples(lmax, lmin)", "pack(alm, lmax_alm, modes)", "unit_alm(lmax_alm, ell, m, tag)",
+                                             "t_response_matrix(mask, nside, ell_cut, k_inv, out_modes)", "analytic_covariance(r, ells, cl, noise)",
+                                             "wishart_lrt(c_model, s_sample, n_dof)", "eb_operator(mask_pol, nside, lmax)", "extract_eb(q, u, mask_pol, k_inv)",
+                                             "quadratic_form(x, cov)", "posterior_zero_tail(samples)"],
+                "scripts/r54/run_r54_l02_pr4_bypass.py": ["compute()", "floor_null(vec_obs, null_vecs, cov, floor, rng, law)"],
+                "scripts/r54/run_r54_l03_counts.py": ["compute()", "clustering_body(q)", "mocks(l2, data, body_sd, d_kin, hashes_data, rng)",
+                                                      "competitor_wagenveld(nv)", "competitor_mittal(q)"],
+                "scripts/r54/run_r54_l01_te_calibration.py": ["run(sims_path)", "masked_e_response(r51, lanes, op, beam_pixwin, j_ideal)"],
+                "scripts/r54/run_r54_l04_cf4_survey.py": ["compute()", "step_summary(theta, white, body, names)", "offset_summary(theta, white, body, names)", "decide(st, hls, classes)"],
                 "r54_tensor_five_view": ["identify(F, scale)", "profiled_precision(F, keep)", "EllipsoidBody(name, shape_matrix)", "gauge_range(F, t, body, c2)", "support_interval(F, t, v, c)",
                                          "support_utilization(F, t, body, v, c)", "hotelling_null_tail", "empirical_upper_tail", "gls_fit", "transport_design", "compare_transport_models", "stf2_invariants", "axisymmetry_statistic", "five_view_record"]},
             "coding_rules": [
@@ -954,9 +1206,13 @@ nearest published method gives?
 
 None for the cloud nodes. Local nodes need the data drive; PR4 simulations are not needed (PR4_BYPASS_CONTRACT.json).
 
+## Local nodes
+
+{chr(10).join(f"- {nid}: {node_status(nid)}" for nid in LOCAL_ORDER)}
+
 ## Next minimal action
 
-R54-L01 and R54-L04 (independent, priority 1), then L02, L03, L06, L07, L08.
+{next((nid for nid in LOCAL_ORDER if node_status(nid) == "PENDING_LOCAL"), "none: the programme has a manuscript decision")}, then the remaining nodes in the order above.
 """
     return {
         "RESEARCH_STATE.md": state,
@@ -1031,6 +1287,88 @@ def sweep_text_ko(n: dict) -> str:
 
 
 def report_ko(n: dict) -> str:
+    return report_ko_cloud(n) + local_section_ko(n)
+
+
+def local_section_ko(n: dict) -> str:
+    """Section 7: executed local nodes; every number from RESULTS/R54_L0*_*.json."""
+    rows = "\n".join(f"| {nid} | {node_status(nid)} |" for nid in LOCAL_ORDER)
+    text = f"""
+## 7. 로컬 노드 (R54-L01..L08)
+
+| 노드 | 상태 |
+|---|---|
+{rows}
+"""
+    if "l01_edev" in n:
+        hm = (f"- half-mission 차 (HM1-HM2)/2 (한 실현, 차이 검정 전용): E2 rms {n['l01_hm_E2']:.3f}, B2 rms {n['l01_hm_B2']:.3f} uK; "
+              f"FFP10 잡음 E2 {n['l01_noise_E2']:.3f}, B2 {n['l01_noise_B2']:.3f} uK.\n") if "l01_hm_E2" in n else "- half-mission 다리: SKIPPED_OPTIONAL.\n"
+        pdl = (f"- 파이프라인 4종(SMICA, Commander, NILC, SEVEM) B ell=2 경험적 꼬리: {g3(n['l01_B_p_smica'])}, {g3(n['l01_B_p_commander'])}, "
+               f"{g3(n['l01_B_p_nilc'])}, {g3(n['l01_B_p_sevem'])}; 파이프라인 간 분산의 rms: E2 {n['l01_disp_E2']:.3f}, B2 {n['l01_disp_B2']:.3f} uK.\n") \
+            if "l01_B_p_nilc" in n else "- 파이프라인 분산 다리: SKIPPED_OPTIONAL.\n"
+        text += f"""
+### 7.1 R54-L01 T+E 추정량 보정 (FFP10 {n['n_sims']}개)
+
+- 캐시 공분산 항등성: 상대 차 {g3(n['l01_ident'])}. T-only LOO Pi = {n['l01_pi_t']:.4f} (R51 재현).
+- 마스크 E 응답: e_dev = {g3(n['l01_edev'])} → {n['l01_eflag']}; J_E의 B 행 크기 {g3(n['l01_JB'])} (상대).
+- LOO 보정(TE_l2, 매개변수 10개, 각 실현의 공분산은 나머지 299개): 95% 포함률 {n['l01_cov95_lo']:.3f}~{n['l01_cov95_hi']:.3f} (합산 {n['l01_cov95_pool']:.3f}),
+  68% 포함률 {n['l01_cov68_lo']:.3f}~{n['l01_cov68_hi']:.3f} (합산 {n['l01_cov68_pool']:.3f}). 판정: R54-L1 구간은 {n['l01_calibrated']}
+  (경험적 95% 분위 팽창 {n['l01_q95_lo']:.3f}~{n['l01_q95_hi']:.3f}). 결합 Wald의 Hotelling 95% 포함률 {n['l01_wald_cov95']:.3f}.
+- 경험적 LOO 법칙의 관측 꼬리: W_all {n['l01_Wall_p']:.3f}, W_T {n['l01_WT_p']:.3f}, W_E {n['l01_WE_p']:.3f}.
+- B ell=2 null, 경험적 LOO 법칙: SMICA {g3(n['l01_B_p'])}, Commander {g3(n['l01_B_p_comm'])} (같은 통계량의 Hotelling 꼬리는 {g3(n['l01_B_hot'])}).
+  기준 0.01 → E lane {n['l01_E_status']}.
+{hm}{pdl}- 보정 법칙의 주 carrier {n['l01_primary']}: 평균 sd(Sigma_T) = {g3(n['l01_sdT'])}, sd(Sigma_E) = {g3(n['l01_sdE'])}.
+"""
+    if "l04_common" in n:
+        text += f"""
+### 7.2 R54-L04 CF4 측량별 영점
+
+- 측량 라벨: 원본 CF4 표에는 측량 열이 없다. FP는 보유한 SDSS FP 카탈로그의 PGC로 나눴다(DV-L04-1): FP_SDSS {n['l04_n_sdss']} group(북쪽 비율 {n['l04_fn_sdss']:.2f}),
+  FP_NOT_SDSS {n['l04_n_notsdss']} (북쪽 비율 {n['l04_fn_notsdss']:.2f}; 6dFGSv를 다른 비-SDSS FP와 식별자로 구분할 수 없음), FP_MIXED {n['l04_n_mixed']}. TF·SN·OTHER는 계열 단위 라벨이다(DV-L04-2). group_id 결합률 {n['l04_cov']:.4f}.
+- FP 측량 영점: FP_NOT_SDSS - FP_SDSS = {n['l04_off_mag']:.3f} +- {n['l04_off_sd']:.3f} mag (white + exact body, z = {n['l04_off_z']:.2f}). 두 표본은 반구가 거의 겹치지 않으므로 이 영점과 FP의 반구 계단은 사실상 퇴화한다.
+- 측량별 반구 계단(0.01 <= z < 0.055, 반구마다 100 group 이상인 측량: {n['l04_step_surveys']}): 공통 계단 {100*n['l04_common']:.2f} +- {100*n['l04_common_sd']:.2f}% of H
+  (z = {n['l04_common_z']:.2f}; white만 쓰면 z = {n['l04_common_white_z']:.1f}), Delta mu(N-S) = {n['l04_common_mag']:.3f} mag, 측량 간 일관성 p = {n['l04_cons_p']:.3f}.
+  단일 측량 z: TF {n['l04_z_tf']:.2f}, SN {n['l04_z_sn']:.2f}, FP_SDSS {n['l04_z_fp']:.2f}, OTHER {n['l04_z_other']:.2f}. 분할 축 sign(dec)는 사후 선택이므로 이 z는 단일 축 값이고, R54-L05의 축 스캔 보정 꼬리({g3(n['sc_tail_scan'])})와 함께만 인용한다.
+- 결정(한 번 평가): 계단 분류 {n['l04_step_class']} (공통 계단 |z| >= 2이므로 측량 영점만으로 설명되지 않고, TF 단독 |z| < 2이므로 공통 모드로도 확정되지 않음).
+- log_survey(측량 monopole을 nuisance로): 결합 null p = {g3(n['l04_ls_joint_p'])}, 쌍극 null p = {g3(n['l04_ls_dip_p'])}, 상수 사중극 Wald p = {g3(n['l04_ls_quad_p'])}.
+  계약의 결정 규칙에 따라 H-L5a(본체 초과)는 REJECT, H-L5h(상수 사중극)는 HOLD.
+- nuisance 모형별 분류(결합 null p / 잠금 꼬리): log_survey {n['l04_cls_survey']} ({g3(n['l04_ls_joint_p'])} / {g3(n['l04_ls_tail'])}), log_mono_radial {n['l04_cls_radial']} ({g3(n['l04_rad_p'])} / {g3(n['l04_rad_tail'])}),
+  log_mono_galactic {n['l04_cls_galactic']} ({g3(n['l04_gal_p'])} / {g3(n['l04_gal_tail'])}), log_mono_error {n['l04_cls_error']} ({g3(n['l04_err_p'])} / {g3(n['l04_err_tail'])}); 클라우드의 pooled {n['x_class']}, log_mono {n['x_class_mono']}.
+  분류가 모형마다 다르므로 robust class는 {n['l04_robust']}이고 표만 인용한다(H-L5c HOLD).
+- 6dFGS 대리 제외(FP_NOT_SDSS, FP_MIXED 제거, method monopole): 결합 null p = {g3(n['l04_no6_joint_p'])}, 쌍극 p = {g3(n['l04_no6_dip_p'])}, 바깥 창 결합 p = {g3(n['l04_no6_outer_p'])}.
+- 안정성(공통 계단, % of H / z): e_dmzp 3분위 {100*n['l04_stab_e_tercile_1']:.2f} / {n['l04_stab_z_e_tercile_1']:.2f}, {100*n['l04_stab_e_tercile_2']:.2f} / {n['l04_stab_z_e_tercile_2']:.2f}, {100*n['l04_stab_e_tercile_3']:.2f} / {n['l04_stab_z_e_tercile_3']:.2f};
+  적색편이 반쪽 {100*n['l04_stab_z_low_half']:.2f} / {n['l04_stab_z_z_low_half']:.2f}, {100*n['l04_stab_z_high_half']:.2f} / {n['l04_stab_z_z_high_half']:.2f}. 분할마다 계단에 들어간 측량이 다르다(R54_L04_RESULT.json:stability).
+"""
+    if "l02_lrt" in n:
+        bn = ", ".join(f"{k.replace('l02_bnull_', '')} {g3(v)}" for k, v in n.items() if k.startswith("l02_bnull_"))
+        text += f"""
+### 7.3 R54-L02 PR4 우회 (NPIPE 시뮬레이션 미사용)
+
+- 해석적 T 공분산(ell' <= 30, R51 마스크 결합 + FFP10 잡음): FFP10 표본 공분산에 대한 Wishart LRT {n['l02_lrt']:.1f} / {n['l02_lrt_dof']} dof, p = {g3(n['l02_lrt_p'])};
+  최대 |diag 비 - 1| = {n['l02_diag']:.3f}; ell' <= 20 절단과의 최대 상대 차 {g3(n['l02_trunc'])}. 판정 {n['l02_adopt']}: {n['l02_t_reason']}.
+- 실험 간 T (합집합 마스크, f_sky {n['l02_fsky_t']:.3f}): SMICA 대비 Sigma_T 최대 이동(T sd 단위) WMAP9 ILC {n['l02_shift_wmap']:.2f}, Cosmoglobe {n['l02_shift_cg']:.2f}, BeyondPlanck {n['l02_shift_bp']:.2f} → {n['l02_t_lane']}.
+- E lane 대안: |Sigma_E|_F (ideal 응답 기준) Cosmoglobe {g3(n['l02_cg_E'])}, BeyondPlanck 사후 평균 {g3(n['l02_bp_E'])} ({n['l02_bp_n']} 표본), WMAP9 V {g3(n['l02_wm_E'])};
+  PR4 주파수 캐시와 SMICA의 차이 검정 p = {g3(n['l02_pr4_diff_p'])} (분할 차 하나는 null 법칙이 아니므로 차이 검정에만 쓴다).
+- 채택 E 공분산: FFP10 + ell = 2 E/B 대각 floor {g3(n['l02_floor'])} uK^2 (R54-L1 B-null {g3(n['l02_floor_R54-L1_B_null_floor_ell2'])}, half-mission {g3(n['l02_floor_half_mission'])},
+  파이프라인 분산 {g3(n['l02_floor_pipeline_dispersion'])}, 실험 간 분산 {g3(n['l02_floor_cross_experiment_dispersion'])} 중 최대).
+- 채택 공분산의 B ell=2 null 꼬리: {bn}. 통과한 자료 계열: {n['l02_families']} → E lane {n['l02_e_status']} (규칙: 서로 다른 두 계열 이상, DV-L02-9).
+"""
+    if "l03_repro" in n:
+        text += f"""
+### 7.4 R54-L03 계수 쌍극: 군집 본체, 같은 추정량 속도 null, 경쟁 추정량
+
+- receipt 재현: D_icrs 최대 차 {g3(n['l03_repro'])} (receipt는 1e-4 단위 반올림).
+- 군집 본체(R54-EQ-32, 정확한 j_1; 편향·N(z) 매개변수는 UNVERIFIED 괄호): 축당 sd Quaia {g3(n['l03_body_q'])}, NVSS {g3(n['l03_body_n'])} (괄호 최대, z_min = 0).
+- 같은 추정량 mock (Poisson + 군집, 각 500개, 데이터와 같은 마스크): 최대 |편향|/sd Quaia {n['l03_bias_q']:.3f}, NVSS {n['l03_bias_n']:.3f} → 추정량을 그대로 사용; 축당 최대 sd Quaia {g3(n['l03_sd_q'])}, NVSS {g3(n['l03_sd_n'])}.
+- 초과 검정(보정 공분산 = mock 공분산 + receipt 계통): Quaia p = {g3(n['l03_p_q'])}, NVSS p = {g3(n['l03_p_n'])}; 계통 항이 없는 mock 경험적 꼬리는 Quaia {g3(n['l03_pi_q'])}, NVSS {g3(n['l03_pi_n'])}.
+  공통 초과 Wald p = {g3(n['l03_common_p'])}, 두 목록의 일관성 p = {g3(n['l03_common_cons_p'])}. 결정: {n['l03_excess_decision']}.
+- 경쟁 추정량(보유 목록에서 재현): Wagenveld et al. 2023 NVSS Poisson D = {g3(n['l03_w_D'])} (공개 {g3(n['l03_w_pub'])}; 차이 {n['l03_w_dz']:.2f} 공개 sd; 사용 원천 {n['l03_w_N']:.0f} 대 공개 {n['l03_w_Npub']}) → {n['l03_w_status']};
+  Mittal et al. 2024 Quaia Poisson (|b| > 40) D = {g3(n['l03_m_D'])} (공개 {g3(n['l03_m_pub'])}; 차이 {n['l03_m_dz']:.2f} 공개 sd) → {n['l03_m_status']}.
+"""
+    return text
+
+
+def report_ko_cloud(n: dict) -> str:
     def pc(key: str) -> str:
         return f"{100 * n[key]:.0f}%"
     return f"""# R54 보고서 — 심사, 이론 루프, 실행 결과 ({DATE})
@@ -1335,6 +1673,10 @@ Analysis choices that were made, or could have been made, after looking at data.
 """
 
 
+def task_status_lines() -> str:
+    return "\n".join(f"  [{node_status(nid)}] {nid}" for nid in LOCAL_ORDER)
+
+
 def prompt_txt(n: dict) -> str:
     return f"""ROLE
 You are the local coding agent for repository cosmosapjw-quantum/htt_base. Work only on branch
@@ -1374,7 +1716,8 @@ WHAT IS ALREADY DONE (do not redo)
 - Independent review: INDEPENDENT_REVIEW.json lists every finding and its resolution. Do not re-promote a hypothesis that the review moved to HOLD
   unless the decision_checks of the node that owns it say so.
 
-YOUR TASKS (execute in this order; one node = one commit series)
+YOUR TASKS (execute in this order; one node = one commit series; status from the committed outputs)
+{task_status_lines()}
   R54-L01  calibrate the T+E estimator on the 300 FFP10 vectors; masked E response
   R54-L04  CF4 survey-resolved zero points from the raw CF4 tables: is the common hemisphere step a survey calibration term?
   R54-L02  PR4 bypass: analytic T covariance, cross-pipeline and cross-experiment E lane
@@ -1473,7 +1816,7 @@ def build() -> None:
 def mutation_receipt() -> None:
     env = dict(os.environ, PYTHONPATH="htt/src:htt:.")
     rows = []
-    for gid, rel, old, new, test, meaning in CLOUD_GATES:
+    for gid, rel, old, new, test, meaning in implemented_gates():
         path = ROOT / rel
         original = path.read_text(encoding="utf-8")
         if original.count(old) != 1:
@@ -1487,7 +1830,10 @@ def mutation_receipt() -> None:
         rows.append({"id": gid, "file": rel, "test": test, "meaning": meaning, "pytest_exit_code": run.returncode,
                      "status": "KILLED" if run.returncode == 1 else "SURVIVED_OR_ERROR"})
         print(gid, rows[-1]["status"])
-    clean = subprocess.run([sys.executable, "-m", "pytest", "tests/r54/test_r54_modules.py", "-q", "-p", "no:cacheprovider"], cwd=ROOT, env=env, capture_output=True, text=True)
+    clean = subprocess.run([sys.executable, "-m", "pytest", "tests/r54/test_r54_modules.py", "tests/r54/test_r54_conventions.py", "tests/r54/test_r54_calibration.py",
+                            "tests/r54/test_r54_survey.py", "tests/r54/test_r54_counts.py", "tests/r54/test_r54_pr4_bypass.py",
+                            "-q", "-p", "no:cacheprovider"],
+                           cwd=ROOT, env=env, capture_output=True, text=True)
     jdump(R54 / "MUTATION_GATE_RECEIPT.json", {"schema": "htt.r54.mutation_receipt/1", "date": DATE, "unmutated_suite_exit_code": clean.returncode,
                                                "sources_sha256": {rel: sha(ROOT / rel) for rel in RECEIPT_SOURCES},
                                                "all_killed": all(r["status"] == "KILLED" for r in rows) and clean.returncode == 0, "gates": rows})

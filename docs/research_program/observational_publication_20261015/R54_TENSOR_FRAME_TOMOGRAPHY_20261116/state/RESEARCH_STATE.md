@@ -22,8 +22,8 @@ nearest published method gives?
 - Views: all five are available on the CMB lane; on the low-redshift lanes x, Q, Pi and G_F are available and F is UNAVAILABLE
   (an axis scan is not a support functional). R52 had Q, F and Pi unavailable.
 - CMB: two history functionals with closed-form kernels (a re-derivation of E46); r_E(perfect fluid) = 0.0711; Sigma_T = 0.9157 x the R51 sharp operator.
-- CMB: the present-shear map is model-labelled: 1.42e-10 (perfect fluid, T+E), 6.65e-08 (massless stress family), 3.43e-08 (minimal normal ordering).
-- CMB: the T functional is blind to a late-time shear whose sign changes; the E functional bounds its rms at 0.0729 for z < 0.2 (diagnostic lane).
+- CMB: the present-shear map is model-labelled: 1.42e-10 (perfect fluid, T+E), 6.66e-08 (massless stress family), 3.43e-08 (minimal normal ordering).
+- CMB: the T functional is blind to a late-time shear whose sign changes; the E functional bounds its rms at 0.0735 for z < 0.2 (diagnostic lane).
 - CMB: PR3 ell = 2 B-mode null fails (p = 9.54e-06); the E lane is diagnostic.
 - CF4, corrected inside this loop: the R36 linear estimator is biased (14-40% of its pole dipole) and the
   ideal-sky body is too small (exact/ideal sd up to 1.61 for the dipole, 1.93 for the quadrupole).
@@ -40,6 +40,16 @@ nearest published method gives?
 
 None for the cloud nodes. Local nodes need the data drive; PR4 simulations are not needed (PR4_BYPASS_CONTRACT.json).
 
+## Local nodes
+
+- R54-L01: DONE_SCOPED_C0
+- R54-L04: DONE_SCOPED_C0
+- R54-L02: PENDING_LOCAL
+- R54-L03: PENDING_LOCAL
+- R54-L06: PENDING_LOCAL
+- R54-L07: PENDING_LOCAL
+- R54-L08: PENDING_LOCAL
+
 ## Next minimal action
 
-R54-L01 and R54-L04 (independent, priority 1), then L02, L03, L06, L07, L08.
+R54-L02, then the remaining nodes in the order above.

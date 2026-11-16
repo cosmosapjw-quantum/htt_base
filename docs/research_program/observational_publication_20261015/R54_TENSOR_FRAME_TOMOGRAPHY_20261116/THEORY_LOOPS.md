@@ -69,7 +69,7 @@ in the two-mode family s0 = c_T Sigma_T + c_E Sigma_E with (c_T, c_E) = (0.00166
 (0.000858, -0.0147) for minimal normal ordering. Initial-state sweep over z_i from 1e+09 to 3e+10:
 Sigma_T per unit initial shear changes sign between an assumed free-streaming onset at z_i = 1.5e+10 (T_nu = 2.5 MeV) and 2e+10 (3.4 MeV), an interval that contains the decoupling estimate of 3.12 MeV for muon and tau neutrinos (E49; 1.87 MeV for electron neutrinos) (r_E from 0.050 to 0.109 before the sign change, -1.057 to 0.109 over all 8 points); s0/Sigma_T spans [-0.00111, 0.0285].
 Late-time sensitivity (shear confined to z < 0.2): int K_T dN = 0.182 and int K_E dN = 9.59e-06; a sign-changing history
-with Sigma_T = 0 is bounded only through E, at an rms of 0.0729 (diagnostic lane).
+with Sigma_T = 0 is bounded only through E, at an rms of 0.0735 (diagnostic lane).
 
 Adversarial points recorded: (a) the kernel result is a re-derivation (E46); (b) the stress dependence is established physics in the
 magnetic case (E05) and its novelty for shear limits is unverified; (c) the present-shear numbers are illustrations: they move by a factor
@@ -94,10 +94,10 @@ Identifiability by irreducible block and parity at first order (inherited from R
 the CMB functionals and by low-z quadrupoles; the axial vector (omega) has no column in any owned observable once the reference frame
 rotation is free; a constant polar dH dipole (A) is a gauge direction of one distance-indicator sample.
 Transport inside type I. Without late-time anisotropic stress the present shear allowed by the CMB functionals is
-|s0| <= 6.65e-08 (massless two-mode) or 3.43e-08 (minimal normal ordering), against a CF4 quadrupole of 2.5% of H.
+|s0| <= 6.66e-08 (massless two-mode) or 3.43e-08 (minimal normal ordering), against a CF4 quadrupole of 2.5% of H.
 With late-time stress this does not hold: for a shear confined to z < 0.2 the T functional bounds a constant-sign history at
-0.000225 and is blind to a sign-changing one, and the E functional bounds its rms at 0.0729
-(0.0112 for z < 0.5, 0.000692 for z < 2), above the CF4 value.
+0.000227 and is blind to a sign-changing one, and the E functional bounds its rms at 0.0735
+(0.0113 for z < 0.5, 0.000697 for z < 2), above the CF4 value.
 Several distance indicators do not identify A either, but they test whether a dipole is common to them (Loop L5, item 4).
 
 Decision: PROMOTE H-L3a, H-L3b (inherited structural statements) and H-L3d (conditional statement); REJECT H-L3c (unconditional statement).
@@ -145,7 +145,7 @@ Second pass (R54-L05, catalogue level, executed on the 35970 committed groups).
    with white errors the same step would have p = 2.97e-39. The common dipole vector of the four families has Wald p = 0.43.
 5. Look-elsewhere correction of the step. The sign(dec) split was chosen after the first pass. Scan over 151 split axes with the exact
    body (18351 groups at z < 0.055): single-axis tail 0.0017; tail of the scan maximum 0.0339; the celestial pole ranks
-   1 of 151 by |z|; under the null the best axis lies within 10 deg of the pole in a fraction 0.02 of draws.
+   1 of 151 by |z|; under the null the best axis lies within 10 deg of the pole in a fraction 0.0199 of draws.
    The four family estimates share the body: variance of the best single family / variance of the common step = 1.15 (4 if independent).
    The step (z < 0.055) and the window excess (stronger in the outer windows) are different measurements.
 

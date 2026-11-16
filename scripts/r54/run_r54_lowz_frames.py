@@ -126,13 +126,21 @@ def axis_template(n: np.ndarray) -> np.ndarray:
     return j
 
 
-def analyse_window_multipoles(theta: np.ndarray, cov: np.ndarray, an: np.ndarray, h_fit: float, law: str) -> dict:
+def analyse_window_multipoles(theta: np.ndarray, cov: np.ndarray, an: np.ndarray, h_fit: float, law: str, estimator: str = "linear") -> dict:
     """Null, depth-law and axis-locking analysis of 4 windows x [H, D(3), STF5] multipoles.
 
     ``theta`` and ``cov`` are in the units of the estimator (km/s/Mpc for the R36 linear estimator with
     ``h_fit`` = fitted H; dimensionless fractions for the log-distance estimator with ``h_fit`` = 1).
     ``an`` (36 x 3) is the response of theta to a uniform velocity (units of theta per km/s).
+    ``estimator`` fixes the magnitude map of a dipole amplitude A: "linear" (theta in km/s/Mpc) uses
+    5 log10(1 + A/h_fit); "log" (theta = shift of eta = ln H, h_fit = 1) uses (5/ln10) A of R54-EQ-36.
     """
+    if estimator not in ("linear", "log") or (estimator == "log" and h_fit != 1.0):
+        raise ValueError("estimator must be 'linear', or 'log' with h_fit = 1")
+
+    def to_mag(a: float) -> float:
+        return 5.0 * math.log10(1.0 + abs(a) / h_fit) if estimator == "linear" else abs(a) * 5.0 / math.log(10.0)
+
     dip, quad = block_rows("dipole"), block_rows("quadrupole")
     dq = np.sort(np.concatenate([dip, quad]))
     an_d = an[dip]
@@ -156,7 +164,7 @@ def analyse_window_multipoles(theta: np.ndarray, cov: np.ndarray, an: np.ndarray
         "A_only": {"km_s_Mpc_icrs": fit_a["theta"], "sd": np.sqrt(np.diag(fit_a["cov"])),
                    "amplitude_km_s_Mpc": float(np.linalg.norm(fit_a["theta"])),
                    "percent_of_H": 100.0 * float(np.linalg.norm(fit_a["theta"])) / h_fit,
-                   "equivalent_mag": 5.0 * math.log10(1.0 + float(np.linalg.norm(fit_a["theta"])) / h_fit),
+                   "equivalent_mag": to_mag(float(np.linalg.norm(fit_a["theta"]))),
                    "direction_l_b_deg": icrs_to_lb(fit_a["theta"]), "wald": fit_a["wald"],
                    "wald_p_value": float(stats.chi2.sf(fit_a["wald"], 3)),
                    "angle_to_equatorial_pole_axis_deg": angle_deg(fit_a["theta"], pole, axis=True),
@@ -212,7 +220,7 @@ def analyse_window_multipoles(theta: np.ndarray, cov: np.ndarray, an: np.ndarray
         "n_grid_axes": int(grid.shape[0]),
         "equatorial_pole_fit": {"dH_dipole_km_s_Mpc": float(fp["theta"][0]), "dH_dipole_sd": float(math.sqrt(fp["cov"][0, 0])),
                                 "dH_dipole_percent_of_H": 100.0 * float(fp["theta"][0]) / h_fit,
-                                "dipole_equivalent_mag": 5.0 * math.log10(1.0 + abs(float(fp["theta"][0])) / h_fit),
+                                "dipole_equivalent_mag": to_mag(float(fp["theta"][0])),
                                 "axisymmetric_quadrupole_km_s_Mpc": float(fp["theta"][1]), "quadrupole_sd": float(math.sqrt(fp["cov"][1, 1])),
                                 "residual_chi2": fp["chi2"], "residual_dof": fp["dof"], "residual_p_value": fp["p_value"]},
     }

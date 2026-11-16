@@ -172,6 +172,87 @@
    "with": "(4.0 * xx * xx + 4.0 * mm * mm)"
   },
   {
+   "file": "htt/htt/htt/infer/r54_tensor_five_view.py",
+   "id": "MG-29",
+   "meaning": "support interval computed in unscaled coordinates (R54-IR-08)",
+   "must_fail": "tests/r54/test_r54_modules.py::test_eq21_support_interval_in_scaled_coordinates",
+   "replace": "    fs = d[:, None] * _sym(f, \"precision\") * d[None, :]",
+   "status": "IMPLEMENTED",
+   "with": "    fs = _sym(f, \"precision\")"
+  },
+  {
+   "file": "scripts/r54/run_r54_cf4_exact.py",
+   "id": "MG-21",
+   "meaning": "sign of the global-tilt closure (R54-EQ-38)",
+   "must_fail": "tests/r54/test_r54_conventions.py::test_mg21_eq38_tilt_closure_vanishes_for_one_frame_offset",
+   "replace": "    s, cs = v + b, cv + np.diag(sb**2)",
+   "status": "IMPLEMENTED",
+   "with": "    s, cs = v - b, cv + np.diag(sb**2)"
+  },
+  {
+   "file": "scripts/r54/run_r54_cf4_exact.py",
+   "id": "MG-22",
+   "meaning": "sign of the hemisphere-step magnitude (R54-EQ-36)",
+   "must_fail": "tests/r54/test_r54_conventions.py::test_mg22_eq36_north_modulus_offset_gives_negative_step_and_positive_delta_mu",
+   "replace": "\"delta_mu_north_minus_south_mag\": float(-2.0 * theta[i] / de.LN10_OVER_5),",
+   "status": "IMPLEMENTED",
+   "with": "\"delta_mu_north_minus_south_mag\": float(2.0 * theta[i] / de.LN10_OVER_5),"
+  },
+  {
+   "file": "scripts/r54/run_r54_lowz_frames.py",
+   "id": "MG-23",
+   "meaning": "ICRS to Galactic rotation transposed",
+   "must_fail": "tests/r54/test_r54_conventions.py::test_mg23_icrs_to_galactic_rotation",
+   "replace": "    g = R_I2G @ (np.asarray(v, float) / np.linalg.norm(v))",
+   "status": "IMPLEMENTED",
+   "with": "    g = R_I2G.T @ (np.asarray(v, float) / np.linalg.norm(v))"
+  },
+  {
+   "file": "scripts/r54/run_r54_cf4_exact.py",
+   "id": "MG-24",
+   "meaning": "direction of the axis-locking tail",
+   "must_fail": "tests/r54/test_r54_conventions.py::test_mg24_axis_locking_tail_is_small_for_a_pole_aligned_signal",
+   "replace": "        return float((1 + np.sum(null[k] <= obs[k])) / (n_draw + 1))",
+   "status": "IMPLEMENTED",
+   "with": "        return float((1 + np.sum(null[k] >= obs[k])) / (n_draw + 1))"
+  },
+  {
+   "file": "scripts/r54/run_r54_cmb_type1.py",
+   "id": "MG-25",
+   "meaning": "sign of the ideal E response (R54-EQ-04)",
+   "must_fail": "tests/r54/test_r54_conventions.py::test_mg25_eq04_ideal_e_response_has_the_sign_of_the_t_response",
+   "replace": "    j_e[e2, :] = j_ideal[t2, :]",
+   "status": "IMPLEMENTED",
+   "with": "    j_e[e2, :] = -j_ideal[t2, :]"
+  },
+  {
+   "file": "scripts/r54/run_r54_cf4_exact.py",
+   "id": "MG-26",
+   "meaning": "pair-sum cache key blind to a row permutation",
+   "must_fail": "tests/r54/test_r54_conventions.py::test_mg26_pair_sum_cache_key_changes_under_row_permutation_and_positions",
+   "replace": "    return np.array(_digest(stack))",
+   "status": "IMPLEMENTED",
+   "with": "    return np.array(_digest(np.sort(stack, axis=0)))"
+  },
+  {
+   "file": "scripts/r54/run_r54_cmb_type1.py",
+   "id": "MG-27",
+   "meaning": "reionization quadrupole attenuated to today instead of to z = 50",
+   "must_fail": "tests/r54/test_r54_conventions.py::test_mg27_reionization_only_e_equals_the_propagated_quadrupole",
+   "replace": "    theta_re = -th.history_functionals(s_of_n, _ShiftedDepth(hist, n_re), n_start, n_re)[\"Sigma_T\"]",
+   "status": "IMPLEMENTED",
+   "with": "    theta_re = -th.history_functionals(s_of_n, hist, n_start, n_re)[\"Sigma_T\"]"
+  },
+  {
+   "file": "scripts/r54/run_r54_lowz_frames.py",
+   "id": "MG-28",
+   "meaning": "linear-estimator magnitude map applied to the log estimator",
+   "must_fail": "tests/r54/test_r54_conventions.py::test_mg28_eq36_log_estimator_magnitude_map",
+   "replace": "return 5.0 * math.log10(1.0 + abs(a) / h_fit) if estimator == \"linear\" else abs(a) * 5.0 / math.log(10.0)",
+   "status": "IMPLEMENTED",
+   "with": "return 5.0 * math.log10(1.0 + abs(a) / h_fit) if True else abs(a) * 5.0 / math.log(10.0)"
+  },
+  {
    "file": "any committed input of RESULTS/*.json",
    "id": "MG-13",
    "meaning": "result/input drift",
@@ -183,46 +264,70 @@
  ],
  "local_gates": [
   {
-   "detection_to_implement": "covariance identity check of step 1 must fail for the column permutation and pass for the row permutation",
+   "detection": "covariance identity check of step 1 must fail for the column permutation and pass for the row permutation",
+   "file": "htt/htt/htt/infer/r54_calibration.py",
    "id": "MG-L01",
+   "must_fail": "tests/r54/test_r54_calibration.py::test_mg_l01_covariance_identity_detects_column_but_not_row_permutation",
    "mutation": "permute the 300 simulation rows relative to nothing (control) and permute the 135 columns of the simulations only",
    "node": "R54-L01",
-   "status": "TO_IMPLEMENT_WITH_NODE"
+   "replace": "    return float(np.max(np.abs(s - s_ref)) / np.max(np.abs(s_ref)))",
+   "status": "IMPLEMENTED",
+   "with": "    return float(np.max(np.abs(np.sort(np.diag(s)) - np.sort(np.diag(s_ref)))) / np.max(np.abs(s_ref)))"
   },
   {
-   "detection_to_implement": "coverage_95 test must leave the acceptance band on a synthetic Gaussian set with N = 60, p = 10",
+   "detection": "coverage_95 test must leave the acceptance band on a synthetic Gaussian set with N = 60, p = 10",
+   "file": "htt/htt/htt/infer/r54_calibration.py",
    "id": "MG-L02",
+   "must_fail": "tests/r54/test_r54_calibration.py::test_mg_l02_leave_one_out_obeys_the_hotelling_law_and_self_inclusion_does_not",
    "mutation": "use sims[i] inside its own covariance (no leave-one-out)",
    "node": "R54-L01",
-   "status": "TO_IMPLEMENT_WITH_NODE"
+   "replace": "        s_i = np.cov(np.delete(sims, i, axis=0).T, ddof=1) if leave_one_out else full",
+   "status": "IMPLEMENTED",
+   "with": "        s_i = full"
   },
   {
-   "detection_to_implement": "unit test asserting that the E-lane null object refuses n_realisations < 30",
+   "detection": "unit test asserting that the E-lane null object refuses n_realisations < 30",
+   "file": "htt/htt/htt/infer/r54_calibration.py",
    "id": "MG-L03",
+   "must_fail": "tests/r54/test_r54_calibration.py::test_mg_l03_empirical_null_refuses_a_single_split_difference",
    "mutation": "use a single split-difference vector as the null distribution",
    "node": "R54-L02",
-   "status": "TO_IMPLEMENT_WITH_NODE"
+   "replace": "        if v.size < MIN_NULL_REALISATIONS:",
+   "status": "IMPLEMENTED",
+   "with": "        if False:"
   },
   {
-   "detection_to_implement": "test comparing the mask hash of data and mocks must fail",
+   "detection": "test comparing the mask hash of data and mocks must fail",
+   "file": "htt/htt/htt/infer/r54_counts.py",
    "id": "MG-L04",
+   "must_fail": "tests/r54/test_r54_counts.py::test_mg_l04_mask_hash_distinguishes_latitude_cuts",
    "mutation": "run the mock null with a different latitude cut than the data",
    "node": "R54-L03",
-   "status": "TO_IMPLEMENT_WITH_NODE"
+   "replace": "    return hashlib.sha256(np.packbits(np.asarray(used, bool)).tobytes()).hexdigest()",
+   "status": "IMPLEMENTED",
+   "with": "    return hashlib.sha256(np.packbits(np.ones_like(np.asarray(used, bool))).tobytes()).hexdigest()"
   },
   {
-   "detection_to_implement": "test asserting that label[group_id] is invariant under a permutation of the raw rows must fail",
+   "detection": "test asserting that label[group_id] is invariant under a permutation of the raw rows must fail",
+   "file": "htt/htt/htt/infer/r54_survey.py",
    "id": "MG-L05",
+   "must_fail": "tests/r54/test_r54_survey.py::test_mg_l05_labels_are_joined_on_identifiers_not_on_row_order",
    "mutation": "join the survey labels by row order after shuffling the raw table",
    "node": "R54-L04",
-   "status": "TO_IMPLEMENT_WITH_NODE"
+   "replace": "    for pgc, grp, fp in zip(gal[\"pgc\"].tolist(), gal[\"group\"].tolist(), gal[\"has_fp\"].tolist()):",
+   "status": "IMPLEMENTED",
+   "with": "    for pgc, grp, fp in zip(gal[\"pgc\"].tolist(), sorted(gal[\"group\"].tolist()), gal[\"has_fp\"].tolist()):"
   },
   {
-   "detection_to_implement": "synthetic catalogue with a monopole trend and unequal hemisphere depths: the test detects the spurious step",
+   "detection": "synthetic catalogue with a monopole trend and unequal hemisphere depths: the test detects the spurious step",
+   "file": "htt/htt/htt/infer/r54_survey.py",
    "id": "MG-L06",
+   "must_fail": "tests/r54/test_r54_survey.py::test_mg_l06_survey_step_needs_the_redshift_monopoles",
    "mutation": "fit the survey step without the redshift-bin monopoles",
    "node": "R54-L04",
-   "status": "TO_IMPLEMENT_WITH_NODE"
+   "replace": "    mono = np.column_stack([(zbin == b).astype(float) for b in range(len(z_bins) - 1) if np.any(sel & (zbin == b))])\n    step = ",
+   "status": "IMPLEMENTED",
+   "with": "    mono = np.ones((z.size, 1))\n    step = "
   },
   {
    "detection_to_implement": "identification table must still report the null directions; test compares rank before and after",

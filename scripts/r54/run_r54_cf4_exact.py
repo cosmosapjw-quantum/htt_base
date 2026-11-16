@@ -24,6 +24,7 @@ no calibration covariance between objects; see "limitations" in the output.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import platform
@@ -42,6 +43,7 @@ for _p in (ROOT / "htt", ROOT / "htt/src", ROOT, ROOT / "scripts/r54"):
 
 from htt.htt.infer import r54_distance_estimators as de  # noqa: E402
 from htt.htt.infer import r54_lcdm_body as lb  # noqa: E402
+from htt.htt.infer import r54_survey as sv  # noqa: E402
 from htt.htt.infer import r54_tensor_five_view as fv  # noqa: E402
 import run_r54_lowz_frames as lz  # noqa: E402  (analysis functions and the single definition of the frame constants)
 
@@ -97,7 +99,10 @@ def load() -> dict:
     return {"cat": cat, "a_raw": a_raw, "cov36": cov36, "theta36": theta36, "theta_ref": theta_ref}
 
 
-def build_operators(cat: dict, a_raw: np.ndarray, tau2: np.ndarray) -> tuple[dict, np.ndarray]:
+def build_operators(cat: dict, a_raw: np.ndarray, tau2: np.ndarray, survey: dict | None = None) -> tuple[dict, np.ndarray]:
+    """Window and step operators of the cloud run. With ``survey`` (R54-L04: {"labels": pooled survey label per group,
+    "raw_labels": unpooled labels, "min_side": groups per hemisphere}) the survey-resolved operators are added under new
+    names; the existing operators are unchanged. The row order of the survey operators is written back into ``survey``."""
     z, n, meth = cat["z_CMB"], cat["n_J2000"], cat["method_family"]
     dec = np.degrees(np.arcsin(np.clip(n[:, 2], -1.0, 1.0)))
     ind = {m: (meth == m).astype(float) for m in METHODS}
@@ -117,44 +122,129 @@ def build_operators(cat: dict, a_raw: np.ndarray, tau2: np.ndarray) -> tuple[dic
     ops["method_step"] = np.stack([de.wls_operator(step_design, (in_range & (meth == m)) / tau2)[mono.shape[1]] for m in METHODS])
     for tag, sel in (("jk_no_equator", np.abs(dec) >= 10.0), ("jk_no_north_cap", dec <= 60.0), ("jk_no_south_cap", dec >= -60.0)):
         ops[tag] = de.log_window_operator(tau2, z, n, CENTERS, WIDTH, select=sel)
+    if survey is not None:
+        ops.update(survey_operators(cat, tau2, survey, nuisance[:, :3], dec, in_range))
     return ops, dec
 
 
+def survey_operators(cat: dict, tau2: np.ndarray, survey: dict, mono_nuisance: np.ndarray, dec: np.ndarray, in_range: np.ndarray) -> dict:
+    """R54-L04 steps 4, 5 and 8: survey steps, survey offsets, log_survey and the three log_mono + one-column variants."""
+    z, n, meth = cat["z_CMB"], cat["n_J2000"], cat["method_family"]
+    lab, raw = np.asarray(survey["labels"]), np.asarray(survey["raw_labels"])
+    north = dec >= 0.0
+    ops, layout = {}, {}
+
+    def steps(name: str, sel: np.ndarray) -> None:
+        eligible = [s for s in np.unique(lab) if min(int(np.sum(sel & (lab == s) & north)), int(np.sum(sel & (lab == s) & ~north))) >= survey["min_side"]]
+        if eligible:
+            ops[name] = np.stack([sv.survey_step_operator(z, n, tau2, sel & (lab == s), Z_BINS) for s in eligible])
+        layout[name] = eligible
+
+    def offsets(name: str, sel: np.ndarray) -> None:
+        rows, names = [], []
+        for fam in METHODS:
+            fs = sel & (meth == fam)
+            members = [s for s in np.unique(lab[fs]) if int(np.sum(fs & (lab == s))) > 0]
+            if len(members) < 2:
+                continue
+            ref = max(members, key=lambda s: int(np.sum(fs & (lab == s))))
+            others = [s for s in members if s != ref]
+            rows.append(sv.survey_offset_operator(z, tau2, lab, fs, ref, others, Z_BINS))
+            names += [f"{s}-{ref}" for s in others]
+        if rows:
+            ops[name] = np.concatenate(rows, axis=0)
+        layout[name] = names
+
+    steps("survey_step", in_range)
+    offsets("survey_offsets", in_range)
+    terc = np.quantile(cat["e_dmzp"][in_range], [1.0 / 3.0, 2.0 / 3.0])
+    zmid = 0.5 * (Z_COMMON[0] + Z_COMMON[1])
+    splits = {"e_tercile_1": in_range & (cat["e_dmzp"] < terc[0]), "e_tercile_2": in_range & (cat["e_dmzp"] >= terc[0]) & (cat["e_dmzp"] < terc[1]),
+              "e_tercile_3": in_range & (cat["e_dmzp"] >= terc[1]), "z_low_half": in_range & (z < zmid), "z_high_half": in_range & (z >= zmid)}
+    for tag, sel in splits.items():
+        steps(f"survey_step_{tag}", sel)
+        offsets(f"survey_offsets_{tag}", sel)
+    ref_label = "OTHER_ALL"
+    cols = [(lab == s).astype(float) for s in np.unique(lab) if s != ref_label]
+    ops["log_survey"] = de.log_window_operator(tau2, z, n, CENTERS, WIDTH, nuisance=np.column_stack(cols))
+    g = n @ lz.R_I2G.T                                                      # Galactic unit vectors (R_I2G defined once in run_r54_lowz_frames)
+    extra = {"log_mono_radial": z, "log_mono_galactic": np.abs(g[:, 2]), "log_mono_error": (de.LN10_OVER_5 * cat["e_dmzp"]) ** 2}
+    for name, col in extra.items():
+        ops[name] = de.log_window_operator(tau2, z, n, CENTERS, WIDTH, nuisance=np.column_stack([mono_nuisance, col]))
+    keep = ~np.isin(raw, ["FP_NOT_SDSS", "FP_MIXED"])
+    ops["log_mono_no_6dfgs_proxy"] = de.log_window_operator(tau2, z, n, CENTERS, WIDTH, nuisance=mono_nuisance, select=keep)
+    survey["layout"] = layout
+    survey["splits"] = {k: int(v.sum()) for k, v in splits.items()}
+    survey["e_terciles"] = terc.tolist()
+    return ops
+
+
+#: False inside tests: a cache miss then fails instead of rewriting a committed pair-sum file (R54-IR-04)
+CACHE_WRITE = True
+
+
+def _digest(*arrays: np.ndarray) -> str:
+    h = hashlib.sha256()
+    for a in arrays:
+        a = np.ascontiguousarray(np.asarray(a, dtype=np.float64))
+        h.update(str(a.shape).encode())
+        h.update(a.tobytes())
+    return h.hexdigest()
+
+
 def operator_fingerprint(stack: np.ndarray) -> np.ndarray:
-    probe = np.cos(0.7 * np.arange(stack.shape[1]))
-    return np.array([stack.sum(), np.square(stack).sum(), float(np.abs(stack @ probe).sum())])
+    """sha256 of the operator stack bytes and shape: changes under any row permutation or value change (R54-IR-03)."""
+    return np.array(_digest(stack))
 
 
-def model_key() -> str:
-    """Everything besides the operator that fixes a pair sum: P(k) fixture, fiducial constants, damping scale."""
-    return f"pk={lz.sha256(PK)}|H={H_FID}|Om={OMEGA_M}|damping_mpc={DAMPING_MPC:.12g}|linear_z0_redshift_space_positions"
+def model_key(n: np.ndarray | None = None, r: np.ndarray | None = None, r_grid: np.ndarray | None = None) -> str:
+    """Everything besides the operator that fixes a pair sum: P(k) fixture, fiducial constants, growth rate, damping scale,
+    the body module source, and (when given) the directions, positions and kernel table grid (R54-IR-03)."""
+    key = (f"pk={lz.sha256(PK)}|H={H_FID}|Om={OMEGA_M}|f={lb.growth_rate(OMEGA_M):.15g}|damping_mpc={DAMPING_MPC:.12g}"
+           f"|body_module={lz.sha256(Path(lb.__file__))}|linear_z0_redshift_space_positions")
+    if n is not None:
+        key += f"|geometry={_digest(n, r, r_grid)}"
+    return key
 
 
-def cache_matches(z, fp: np.ndarray, n_rows: int) -> bool:
-    return ("model_key" in z.files and str(z["model_key"]) == model_key() and z["operator_fingerprint"].shape == fp.shape
-            and bool(np.allclose(z["operator_fingerprint"], fp, rtol=1e-9, atol=0.0)) and int(z["n_rows"]) == n_rows)
+def cache_matches(z, fp: np.ndarray, n_rows: int, key: str) -> bool:
+    return ("model_key" in z.files and str(z["model_key"]) == key and str(z["operator_fingerprint"]) == str(fp)
+            and int(z["n_rows"]) == n_rows)
 
 
-def cosmic_covariances(stack: np.ndarray, labels: list[str], n: np.ndarray, r: np.ndarray) -> dict:
+def cache_miss(path: Path) -> None:
+    if not CACHE_WRITE:
+        raise SystemExit(f"pair-sum cache {path.name} does not match the operator or model in read-only mode")
+
+
+def cosmic_covariances(stack: np.ndarray, labels: list[str], n: np.ndarray, r: np.ndarray, path: Path = COV, damped: bool = True) -> dict:
+    """Pair-sum body O C_uu O^T (linear and, when ``damped``, the sinc-damped variant), cached in ``path`` (R54-L04 passes its own file)."""
     fp = operator_fingerprint(stack)
-    if COV.is_file():
-        with np.load(COV, allow_pickle=False) as z:
-            if list(z["labels"]) == labels and cache_matches(z, fp, stack.shape[0]):
-                return {"linear": z["cosmic_linear"].copy(), "damped": z["cosmic_damped"].copy(), "psi0": float(z["psi0"]),
-                        "psi0_damped": float(z["psi0_damped"]), "cached": True, "seconds": 0.0}
+    grid = np.linspace(0.0, 2.0 * float(r.max()) * 1.001, 4001)
+    key = model_key(n, r, grid)
+    if path.is_file():
+        with np.load(path, allow_pickle=False) as z:
+            if list(z["labels"]) == labels and cache_matches(z, fp, stack.shape[0], key) and ("cosmic_damped" in z.files or not damped):
+                return {"linear": z["cosmic_linear"].copy(), "damped": z["cosmic_damped"].copy() if damped else None, "psi0": float(z["psi0"]),
+                        "psi0_damped": float(z["psi0_damped"]) if damped else None, "cached": True, "seconds": 0.0}
+    cache_miss(path)
     tab = np.loadtxt(PK, delimiter=",", skiprows=1)
     f_growth = lb.growth_rate(OMEGA_M)
-    grid = np.linspace(0.0, 2.0 * float(r.max()) * 1.001, 4001)
     t0 = time.time()
     lin = lb.velocity_correlation(tab[:, 0], tab[:, 1], f_growth, H_FID, grid)
-    dmp = lb.velocity_correlation(tab[:, 0], tab[:, 1], f_growth, H_FID, grid, damping_mpc=DAMPING_MPC)
-    m_lin, m_dmp = lb.radial_velocity_covariance_product(stack, n, r, grid, [lin, dmp])
+    if damped:
+        dmp = lb.velocity_correlation(tab[:, 0], tab[:, 1], f_growth, H_FID, grid, damping_mpc=DAMPING_MPC)
+        m_lin, m_dmp = lb.radial_velocity_covariance_product(stack, n, r, grid, [lin, dmp])
+    else:
+        dmp, m_dmp = None, None
+        m_lin = lb.radial_velocity_covariance_product(stack, n, r, grid, [lin])[0]
     seconds = time.time() - t0
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(COV, labels=np.array(labels), cosmic_linear=m_lin, cosmic_damped=m_dmp, operator_fingerprint=fp,
-                        psi0=lin[0][0], psi0_damped=dmp[0][0], r_grid_max_mpc=grid[-1], model_key=np.array(model_key()),
-                        n_rows=stack.shape[0])
-    return {"linear": m_lin, "damped": m_dmp, "psi0": float(lin[0][0]), "psi0_damped": float(dmp[0][0]), "cached": False, "seconds": seconds}
+    path.parent.mkdir(parents=True, exist_ok=True)
+    extra = {"cosmic_damped": m_dmp, "psi0_damped": dmp[0][0]} if damped else {}
+    np.savez_compressed(path, labels=np.array(labels), cosmic_linear=m_lin, operator_fingerprint=fp, psi0=lin[0][0], r_grid_max_mpc=grid[-1],
+                        model_key=np.array(key), n_rows=stack.shape[0], **extra)
+    return {"linear": m_lin, "damped": m_dmp, "psi0": float(lin[0][0]), "psi0_damped": float(dmp[0][0]) if damped else None,
+            "cached": False, "seconds": seconds}
 
 
 def block(mat: np.ndarray, sl: slice) -> np.ndarray:
@@ -354,16 +444,18 @@ def step_scan(cat: dict, eta: np.ndarray, g: np.ndarray, tau2: np.ndarray, r: np
         raise SystemExit("the celestial pole must be the first scan axis")
     vel = ops * g[sub][None, :]
     fp, body, cached = operator_fingerprint(vel), None, False
+    rg = np.linspace(0.0, 2.0 * float(r.max()) * 1.001, 4001)                # same table grid as the full pair sum
+    key = model_key(n[sub], r[sub], rg)
     if SCAN.is_file():
         with np.load(SCAN, allow_pickle=False) as c:
-            if cache_matches(c, fp, vel.shape[0]):
+            if cache_matches(c, fp, vel.shape[0], key) and c["axes_icrs"].shape == axes.shape and np.array_equal(c["axes_icrs"], axes):
                 body, cached = c["body"].copy(), True
     if body is None:
+        cache_miss(SCAN)
         tab = np.loadtxt(PK, delimiter=",", skiprows=1)
-        rg = np.linspace(0.0, 2.0 * float(r.max()) * 1.001, 4001)            # same table grid as the full pair sum
         lin = lb.velocity_correlation(tab[:, 0], tab[:, 1], lb.growth_rate(OMEGA_M), H_FID, rg)
         body = lb.radial_velocity_covariance_product(vel, n[sub], r[sub], rg, [lin])[0]
-        np.savez_compressed(SCAN, body=body, operator_fingerprint=fp, model_key=np.array(model_key()), n_rows=vel.shape[0], axes_icrs=axes)
+        np.savez_compressed(SCAN, body=body, operator_fingerprint=fp, model_key=np.array(key), n_rows=vel.shape[0], axes_icrs=axes)
     theta = ops @ eta[sub]
     total = de.white_covariance(ops, tau2[sub]) + body
     na = axes.shape[0]
@@ -469,6 +561,12 @@ def injections(a_log: np.ndarray, cov: np.ndarray, an: np.ndarray, cat: dict, g:
     return out
 
 
+def tilt_closure(v: np.ndarray, cv: np.ndarray, b: np.ndarray, sb: np.ndarray) -> float:
+    """chi2 (3 dof) of V_CF4 + c beta_excess = 0 (R54-EQ-38): v in km/s with covariance cv, b = c beta_excess in km/s with sd sb."""
+    s, cs = v + b, cv + np.diag(sb**2)
+    return float(s @ np.linalg.solve(cs, s))
+
+
 def tilt_transport(theta: np.ndarray, cov: np.ndarray, an: np.ndarray) -> dict:
     """Global-tilt transport between depths (R52 frame algebra): with beta_RM = v_R - v_M one frame offset at all depths
     gives CF4 bulk V = v_M - v_R = -c beta_RM and count-dipole excess D/c_EB - beta_CMB = +beta_RM, hence V_CF4 + c beta_excess = 0."""
@@ -482,8 +580,7 @@ def tilt_transport(theta: np.ndarray, cov: np.ndarray, an: np.ndarray) -> dict:
            "status": "PRELIMINARY: the count side is the receipt estimator without a clustering body or a same-estimator null (R54-L03)"}
     for name, fit in fits.items():
         v, cv = fit["theta"][:3], fit["cov"][:3, :3]
-        s, cs = v + b, cv + np.diag(sb**2)
-        chi2 = float(s @ np.linalg.solve(cs, s))
+        chi2 = tilt_closure(v, cv, b, sb)
         wv = float(v @ np.linalg.solve(cv, v))
         out[name] = {"V_km_s_icrs": v, "V_sd_km_s": np.sqrt(np.diag(cv)), "V_amplitude_km_s": float(np.linalg.norm(v)),
                      "V_direction_l_b_deg": lz.icrs_to_lb(v), "V_wald_3dof": wv, "V_wald_p_value": float(stats.chi2.sf(wv, 3)),
@@ -519,6 +616,15 @@ def headline_of(res: dict, frac: bool) -> dict:
             "quadrupole_constant_wald_5dof": q["constant_tensor"]["wald_5dof"],
             "quadrupole_constant_wald_p": float(stats.chi2.sf(q["constant_tensor"]["wald_5dof"], 5)),
             "quadrupole_constant_percent": q["constant_tensor"]["percent_of_H"]}
+
+
+def classify(joint_p: float, removed: bool, tail: float) -> str:
+    """Class rule of the cloud decision block (moved to module level unchanged for R54-L04)."""
+    if joint_p >= 0.01:
+        return "LCDM_BODY_COMPATIBLE"
+    if removed:
+        return "METHOD_HEMISPHERE_ZERO_POINT_TYPE"
+    return "UNRESOLVED_POLE_LOCKED" if tail < 0.01 else "EXCESS_NOT_POLE_LOCKED"
 
 
 def compute() -> dict:
@@ -593,14 +699,14 @@ def compute() -> dict:
     # ---- S4 log-distance estimator with the exact body
     law_log = "white (distance-modulus error + 250 km/s) + exact catalogue linear LCDM body"
     cov_log = white["log"] + block(body, offsets["log"])
-    log_res = as_fraction(lz.analyse_window_multipoles(theta["log"], cov_log, an["log"], 1.0, law_log))
-    log_white = as_fraction(lz.analyse_window_multipoles(theta["log"], white["log"], an["log"], 1.0, "white only (no cosmic body)"))
+    log_res = as_fraction(lz.analyse_window_multipoles(theta["log"], cov_log, an["log"], 1.0, law_log, estimator="log"))
+    log_white = as_fraction(lz.analyse_window_multipoles(theta["log"], white["log"], an["log"], 1.0, "white only (no cosmic body)", estimator="log"))
     lock_null = locking_null(theta["log"], cov_log, stream(1), N_NULL)
     sens = []
     for tag, mat, scale in (("linear x0.5", body, 0.5), ("linear x1", body, 1.0), ("linear x2", body, 2.0), ("damped x1", body_d, 1.0)):
         for sig in (150.0, 250.0, 350.0):
             cw = de.white_covariance(ops["log"], de.log_noise_variance(emu, g, sig))
-            res = headline_of(as_fraction(lz.analyse_window_multipoles(theta["log"], cw + scale * block(mat, offsets["log"]), an["log"], 1.0, "variant")), True)
+            res = headline_of(as_fraction(lz.analyse_window_multipoles(theta["log"], cw + scale * block(mat, offsets["log"]), an["log"], 1.0, "variant", estimator="log")), True)
             sens.append({"body": tag, "sigma_star_km_s": sig, **{k: res[k] for k in ("dipole_null_p", "quadrupole_null_p", "joint_null_p", "chi2_V", "chi2_A",
                                                                                    "A_percent", "A_angle_to_pole_deg", "pole_gain", "sky_fraction",
                                                                                    "best_axis_angle_to_pole_deg", "pole_fit_residual_p")}})
@@ -629,13 +735,13 @@ def compute() -> dict:
 
     # ---- S6 zero-point split, jackknives, injections
     cov_split = white["log_split"] + block(body, offsets["log_split"])
-    split_res = as_fraction(lz.analyse_window_multipoles(theta["log_split"], cov_split, an["log_split"], 1.0, law_log + "; method monopoles and method x hemisphere steps marginalised"))
+    split_res = as_fraction(lz.analyse_window_multipoles(theta["log_split"], cov_split, an["log_split"], 1.0, law_log + "; method monopoles and method x hemisphere steps marginalised", estimator="log"))
     split_block = {"nuisance": "per window: monopole offsets of FP, SN, TF relative to OTHER and one hemisphere step sign(dec) per method (7 columns)",
                    "windows": window_summary(theta["log_split"], cov_split, white["log_split"]),
                    "analysis": split_res, "headline": headline_of(split_res, True),
                    "pole_decomposition": pole_decomposition(theta["log_split"], cov_split, an["log_split"])}
     cov_mono = white["log_mono"] + block(body, offsets["log_mono"])
-    mono_res = as_fraction(lz.analyse_window_multipoles(theta["log_mono"], cov_mono, an["log_mono"], 1.0, law_log + "; method monopoles marginalised"))
+    mono_res = as_fraction(lz.analyse_window_multipoles(theta["log_mono"], cov_mono, an["log_mono"], 1.0, law_log + "; method monopoles marginalised", estimator="log"))
     split_block["method_monopoles_only"] = {"nuisance": "per window: monopole offsets of FP, SN, TF relative to OTHER (3 columns); no hemisphere step",
                                             "headline": headline_of(mono_res, True),
                                             "pole_decomposition": pole_decomposition(theta["log_mono"], cov_mono, an["log_mono"])}
@@ -675,13 +781,6 @@ def compute() -> dict:
         "common_to_indicators": bool(cmb["common_dipole"]["consistency_p_value"] >= 0.01),
         "removed_by_method_hemisphere_split": bool(hs["joint_null_p"] >= 0.01 and hs["pole_gain"] < GAIN_99_2DOF),
     }
-
-    def classify(joint_p: float, removed: bool, tail: float) -> str:
-        if joint_p >= 0.01:
-            return "LCDM_BODY_COMPATIBLE"
-        if removed:
-            return "METHOD_HEMISPHERE_ZERO_POINT_TYPE"
-        return "UNRESOLVED_POLE_LOCKED" if tail < 0.01 else "EXCESS_NOT_POLE_LOCKED"
 
     hm = split_block["method_monopoles_only"]["headline"]
     tails_by_variant = {"pooled": lock_null["tails"]["sky_fraction_at_most_observed"],

@@ -1,15 +1,6 @@
 {
  "date": "2026-11-16",
- "incomplete_reviews": [
-  {
-   "agent": "a82647252ca61587e",
-   "handed_to": "local session, before the first edit of any node (LOCAL_AGENT_CONTRACT.json:pending_independent_review)",
-   "independent_of_author": true,
-   "reason": "the reviewing agent stopped on an account usage limit before it returned a report; no finding was delivered",
-   "role": "scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer)",
-   "status": "INTERRUPTED"
-  }
- ],
+ "incomplete_reviews": [],
  "reviewers": [
   {
    "agent": "ae6b17c200d7dfa14",
@@ -203,6 +194,104 @@
    "independent_of_author": true,
    "role": "adversarial reviewer (physmath-research-harness:adversarial-reviewer)",
    "scope": "hypotheses, decisions, statistics and wording of the R54 cloud nodes before the review-driven re-run",
+   "status": "COMPLETE",
+   "verdict": "ACCEPT_WITH_REQUIRED_CHANGES"
+  },
+  {
+   "agent": "a7066c0ca0aa63828",
+   "checked_without_defect": "R54-EQ-01..06 and 30-35 signs and units; E-mode sign relative to T (analytic); R54-EQ-31 geometry; gauge_range; Wishart/Hotelling formulas; LOO cross-covariance of common_mode; random streams (one per block, seed 20261116); R54_SLOW=1 independent pair-sum element passed",
+   "findings": [
+    {
+     "evidence": [
+      "scripts/r54/run_r54_cmb_type1.py:reionization_only_e",
+      "tests/r54/test_r54_conventions.py::test_mg27_reionization_only_e_equals_the_propagated_quadrupole",
+      "RESULTS/R54_L1_TYPE1_TE.json:history.perfect_fluid.reionization_share_of_r_E"
+     ],
+     "id": "R54-IR-01",
+     "resolution": "reionization_only_e propagates Theta(z=50) with the shifted optical depth tau(N)-tau(N_50) and maps it with [exp(-M tau_50)]_10; checked against a direct ODE integration of R54-EQ-01/02 (gate MG-27); R54-L1 re-run and the report regenerated.",
+     "resolution_status": "FIXED",
+     "severity": "critical",
+     "summary": "r_E_reionization_scattering_only used today's (reionization-attenuated) T functional instead of the quadrupole Theta(z=50); reionization share 0.179 instead of 0.188 (no decision changes)."
+    },
+    {
+     "evidence": [
+      "scripts/r54/run_r54_lowz_frames.py:analyse_window_multipoles",
+      "tests/r54/test_r54_conventions.py::test_mg28_eq36_log_estimator_magnitude_map"
+     ],
+     "id": "R54-IR-02",
+     "resolution": "analyse_window_multipoles takes estimator='linear'|'log' and fails closed for 'log' with h_fit != 1; every log call passes estimator='log'; gate MG-28; R54-L05 re-run.",
+     "resolution_status": "FIXED",
+     "severity": "critical",
+     "summary": "The log-distance estimator used the linear-estimator magnitude map 5 log10(1+A) instead of (5/ln10) A of R54-EQ-36 (0.065 instead of 0.066 mag; no decision changes)."
+    },
+    {
+     "evidence": [
+      "scripts/r54/run_r54_cf4_exact.py:operator_fingerprint,model_key,cache_matches",
+      "tests/r54/test_r54_conventions.py::test_mg26_pair_sum_cache_key_changes_under_row_permutation_and_positions"
+     ],
+     "id": "R54-IR-03",
+     "resolution": "operator_fingerprint is the sha256 of the stack bytes and shape; model_key includes f, the sha256 of r54_lcdm_body.py and a digest of n, r and the kernel grid; the scan cache compares axes_icrs; both caches recomputed; gate MG-26.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "Pair-sum caches could be reused when stale: the fingerprint was invariant under row permutations and model_key omitted positions, r-grid, growth rate and the body module; the scan cache did not compare its axes."
+    },
+    {
+     "evidence": [
+      "tests/r54/test_r54_results_binding.py::test_committed_numbers_are_reproduced_by_the_run_scripts"
+     ],
+     "id": "R54-IR-04",
+     "resolution": "CACHE_WRITE=False in the binding test makes a cache miss fail; the wording now says the two runs are not an independent check (the independent element test stays behind R54_SLOW=1).",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "The binding test could rewrite committed pair-sum caches from inside pytest and called two runs of the same kernel independent."
+    },
+    {
+     "evidence": [
+      "tests/r54/test_r54_conventions.py",
+      "MUTATION_GATES.json:cloud_gates",
+      "MUTATION_GATE_RECEIPT.json"
+     ],
+     "id": "R54-IR-05",
+     "resolution": "tests/r54/test_r54_conventions.py with gates MG-21..MG-28 added to the mutation receipt; the run scripts and the new test file are certified receipt sources.",
+     "resolution_status": "FIXED",
+     "severity": "major",
+     "summary": "No test protected the sign and frame conventions of the run scripts (tilt closure, hemisphere-step magnitude, R_I2G, locking tail direction, E response sign, cache key, reionization functional, log magnitude map)."
+    },
+    {
+     "evidence": [
+      "scripts/r54/build_r54_contract.py:check_text_premises"
+     ],
+     "id": "R54-IR-06",
+     "resolution": "check_text_premises in build_r54_contract.numbers stops the build when any premise fails; the split quadrupole axis angle and n_sims are bound numbers.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "Qualitative words in the builder templates (3.12 MeV inside the sweep interval, B gate fails, E gate passes, laws not told apart, 35970, N=300, axis moves by tens of degrees) were typed, not derived."
+    },
+    {
+     "evidence": [
+      "scripts/r54/run_r54_cmb_type1.py:frobenius_range,summarise"
+     ],
+     "id": "R54-IR-07",
+     "resolution": "frobenius_range uses the Hotelling T^2 quantile for the square sample-covariance carrier and names its law; the floor variant is labelled gaussian_plugin_approximate; R54-L1 re-run.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "On the square T+E carrier the Frobenius ranges used chi2 quantiles while the tails used Hotelling; the B-floor variant carried a Hotelling law name although S + floor is not Wishart."
+    },
+    {
+     "evidence": [
+      "htt/htt/htt/infer/r54_tensor_five_view.py:support_interval",
+      "tests/r54/test_r54_modules.py::test_eq21_support_interval_in_scaled_coordinates"
+     ],
+     "id": "R54-IR-08",
+     "resolution": "The interval is computed in the scaled coordinates (D F D)^+; test_eq21_support_interval_in_scaled_coordinates and gate MG-29.",
+     "resolution_status": "FIXED",
+     "severity": "minor",
+     "summary": "support_interval decided identification in scaled coordinates but inverted the unscaled F, giving a falsely tight interval for badly scaled identified carriers."
+    }
+   ],
+   "independent_of_author": true,
+   "role": "scientific diff reviewer (physmath-coding-harness:scientific-diff-reviewer)",
+   "scope": "LOCAL_AGENT_CONTRACT.json:pending_independent_review.scope (10 files), read and run only, before the first edit of any local node",
    "status": "COMPLETE",
    "verdict": "ACCEPT_WITH_REQUIRED_CHANGES"
   }
