@@ -1,0 +1,57 @@
+{
+ "schema_version": "htt.r52.independent-review/1",
+ "reviewer": "one fresh-context scientific-diff-reviewer subagent (read-and-run only; scratch re-analysis with flipped dipole convention)",
+ "candidate": "R51 commit 1dbdc6baa + R52 working tree before review fixes",
+ "verdict_before_fixes": "BLOCK: kinematic sign inconsistency drove the counts-vs-CF4 consistency and Wald-21 result; no support for detection/global tilt",
+ "findings": [
+  {
+   "id": "R52-RV01",
+   "severity": "critical",
+   "summary": "CMB dipole row used beta_MO + beta_RM while CF4 used V_s=-c beta_RM (beta_RM = v_R - v_M); CMB dipole must be beta_MO - beta_RM",
+   "disposition": "fixed: designs moved to module (cmb_dipole_design, count_dipole_design, cf4_h03_design) with frame-composition regression test; rerun: counts-vs-CF4 chi2_3 1.55 -> 16.7 (p 8e-4), Wald 21.2 -> 5.8, |beta_MO| 927 -> 442 km/s"
+  },
+  {
+   "id": "R52-RV02",
+   "severity": "major",
+   "summary": "'beta_RM0 ~600 km/s, Wald 21' is not a detection or global tilt",
+   "disposition": "fixed: relabelled frame-offset parameter; measurement-covariance-only Wald labelled; 250 km/s bulk cosmic-variance case added (Wald 2.8); counts and CF4 disagree"
+  },
+  {
+   "id": "R52-RV03",
+   "severity": "major",
+   "summary": "A reported as if identified although column-identical to a CF4 calibration dipole",
+   "disposition": "fixed: physical.interpretation marks A not identified; rank 0 under calibration nuisance reported"
+  },
+  {
+   "id": "R52-RV04",
+   "severity": "major",
+   "summary": "PPC dof wrong; saturated blocks reported tail 1.0",
+   "disposition": "fixed: effective dof = n - n_nuis - tr(F_p Sigma_post); saturated blocks SATURATED_NO_TEST"
+  },
+  {
+   "id": "R52-RV05",
+   "severity": "minor",
+   "summary": "Gaia block inert; E2 chi2 = R50 zero-E2 chi2; K_eff weighting approximate",
+   "disposition": "recorded in unresolved and report"
+  },
+  {
+   "id": "R52-RV06",
+   "severity": "minor",
+   "summary": "CF4 response used window monopole h_w instead of reference H0",
+   "disposition": "fixed: delta H is absolute; response uses H0_ref=67.36 for A and sigma"
+  },
+  {
+   "id": "R52-RV07",
+   "severity": "minor",
+   "summary": "Cobaya tie circular (analytic covariance as affine map)",
+   "disposition": "disclosed; independent stacked-GLS algebraic check added (mean diff 5e-9 sd)"
+  },
+  {
+   "id": "R52-RV08",
+   "severity": "minor",
+   "summary": "tests missed frame-composition sign and CF4 J mapping",
+   "disposition": "fixed: two regression tests added (tests/r52)"
+  }
+ ],
+ "closeout": "All findings addressed and rerun (logs/run_r52_joint.log exit 0; 55 tests pass). The fix closeout was not re-reviewed by a second agent (one-review policy); the reviewer's flipped-convention numbers (chi2 17.5, Wald 5.2, |bRM| 338, |bMO| 427) agree with the rerun (16.7, 5.8, 349, 442) up to the H0_ref change."
+}

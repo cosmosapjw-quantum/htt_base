@@ -233,7 +233,8 @@ def run_pr3_and_ffp10_lane(rehash: dict[str, Any], force_reextract: bool = False
         z = np.load(cache_path)
         sim_tot = z["sim_tot"]
         sim_noise = z["sim_noise"]
-        null_beta = z["null_beta"]
+        # Legacy null_beta is a rescaled quadrupole, not a velocity-estimator null.
+        null_beta = None
     else:
         sim_tot = np.zeros((n_pairs, 135), dtype=np.float64)
         sim_noise = np.zeros((n_pairs, 135), dtype=np.float64)
@@ -300,8 +301,9 @@ def run_pr3_and_ffp10_lane(rehash: dict[str, Any], force_reextract: bool = False
 
         del I_buf, Q_buf, U_buf, raw_bufs
         gc.collect()
-        null_beta = sim_tot[:, 1:4] / (1.0e6 * T_CMB_K) * 20.0
-        np.savez(cache_path, sim_tot=sim_tot, sim_noise=sim_noise, null_beta=null_beta)
+        null_beta = None
+        np.savez(cache_path, sim_tot=sim_tot, sim_noise=sim_noise,
+                 velocity_null_status="UNAVAILABLE_SAME_ESTIMATOR_JOINT_NULL_REQUIRED")
         if partial_path.exists():
             partial_path.unlink()
 
@@ -945,7 +947,7 @@ def main() -> None:
         ells=np.asarray(ELLS),
         cmb_pr3_d=d_pr3,
         cmb_pr3_cov=cov_pr3,
-        ffp10_null_beta=null_beta,
+        velocity_null_status="UNAVAILABLE_SAME_ESTIMATOR_JOINT_NULL_REQUIRED",
         ffp10_sim_tot=sim_tot,
         cmb_pr4_d=d_pr4,
         cmb_pr4_cov=cov_pr4,

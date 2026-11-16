@@ -1,0 +1,186 @@
+{
+ "node_id": "R52",
+ "status": "complete_scoped",
+ "claim_tier": "C0",
+ "owner": "htt",
+ "transfer_source": "R51 source-bound/conditional operators; no native solver",
+ "source_git_sha": "1dbdc6baa7bf1b9ec4595eff07fc859b92a03407",
+ "dirty_patch_sha256_at_assembly": "b9abed7fa72e12572435fbac8368501e1656cdac2f70301b9326f41b23ecdeab",
+ "input_sha256": {
+  "r49_dataset": "6e13314d667505592edd9d0c0ae02851a8d6d757109a84f7b144627f143b25e3",
+  "cf4_operator": "e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e",
+  "cf4_cov": "7b100fa378ae28fafd9f82f7a76a494e07300fa1cf144a4da5b166fb0acf7e94",
+  "quaia_G20.0": "efeda9ae727bf2cd75569f52460a0492827c8a3fcd8ce29dc692b559fca2acb0"
+ },
+ "conventions": "beta_RM = v_R - v_M, beta_MO = v_O - v_M (first order, common Galactic triad); CMB dipole = beta_MO - beta_RM; counts = c_EB beta_MO; CF4 source bulk = -c beta_RM; sigma/H0, omega/H0 today (matter congruence); A/(c H0) matter 4-acceleration",
+ "actual_commands": {
+  "tests": [
+   "PYTHONPATH=htt/src:htt:. python -m pytest tests/r49 tests/r50 tests/r51 tests/r52 -q",
+   0
+  ],
+  "observed_run": [
+   "PYTHONPATH=htt/src:htt:. python scripts/r52/run_r52_joint.py",
+   0
+  ],
+  "superseded_runs": [
+   "logs/run_r52_joint_attempt1_unconverged_cobaya.log",
+   "logs/run_r52_joint_attempt2_prereview_signbug.log"
+  ]
+ },
+ "identification": {
+  "likelihood_rank": 14,
+  "block_ranks": {
+   "sigma": 5,
+   "omega": 0,
+   "A": 3,
+   "bRM": 3,
+   "bMO": 3
+  },
+  "null_directions": "omega (3): no source-bound response (Gaia B1 degenerate with frame spin)",
+  "A": "rank 3 in baseline but rank 0 with a CF4 directional calibration-dipole nuisance -> not physically identified",
+  "per_depth": "each CF4 window alone nearly degenerate between A and beta_RM (3 weak eigenvalues); depth dependence across windows separates them"
+ },
+ "results": {
+  "beta_MO_kms": [
+   -293.55527724278534,
+   -27.156384687953032,
+   328.67078877597754
+  ],
+  "beta_MO_sd_kms": [
+   136.17942628313514,
+   139.36412873268637,
+   124.52640178785333
+  ],
+  "frame_offset_beta_RM0_kms": [
+   -267.906037155921,
+   217.74350633925354,
+   52.753778686853934
+  ],
+  "frame_offset_beta_RM0_sd_kms": [
+   136.1793953219686,
+   139.36409945012008,
+   124.52638295153443
+  ],
+  "frame_offset_zero_wald_measurement_cov_only": 5.834327296073498,
+  "frame_offset_wald_with_bulk_cosmic_variance_250kms": 2.79836965181539,
+  "frame_offset_wald_with_cf4_calibration_dipole": 1.0545506392174784,
+  "counts_vs_cf4_consistency": {
+   "beta_RM0_counts_plus_cmbdipole_kms": [
+    67.0737643000337,
+    -849.9643239078368,
+    91.57230558258887
+   ],
+   "beta_RM0_cf4_plus_cmbdipole_kms": [
+    -297.40048148845614,
+    437.7345529910265,
+    -174.10279777836408
+   ],
+   "chi2_3": 16.697159234661648,
+   "working_tail": 0.0008156724145087009,
+   "law": "Gaussian working law; count clustering and CF4 conditional covariances as supplied"
+  },
+  "sigma_over_H0": [
+   5.501431444144376e-12,
+   1.6914486239968204e-10,
+   -2.478139964016236e-10,
+   -5.186490814487617e-11,
+   -5.2548512462495495e-11
+  ],
+  "sigma_over_H0_sd": [
+   2.543982359770392e-10,
+   2.4264462928345996e-10,
+   2.6916633504130053e-10,
+   2.4419746499044133e-10,
+   2.536812043033905e-10
+  ],
+  "A_over_cH0": [
+   0.009849181552202433,
+   -0.007666632890960599,
+   0.019398408964130986
+  ],
+  "A_over_cH0_sd": [
+   0.009471822330977951,
+   0.009876316086035493,
+   0.00958882999354707
+  ],
+  "gaia_K_eff": 4.486057871131081,
+  "ppc": {
+   "CMB_Sigma": {
+    "chi2": 1.318944953254686e-13,
+    "n_minus_nuisance": 5,
+    "effective_dof": 1.865174681370263e-14,
+    "working_tail": null,
+    "status": "SATURATED_NO_TEST"
+   },
+   "Gaia_E2": {
+    "chi2": 110.42072015199365,
+    "n_minus_nuisance": 5,
+    "effective_dof": 4.999999999999996,
+    "working_tail": 3.3387574571992167e-22,
+    "status": "tested"
+   },
+   "Quaia_dipole": {
+    "chi2": 9.792857396244086,
+    "n_minus_nuisance": 3,
+    "effective_dof": 2.703691894843724,
+    "working_tail": 0.015614493221157436,
+    "status": "tested"
+   },
+   "NVSS_dipole": {
+    "chi2": 3.1651939173740757,
+    "n_minus_nuisance": 3,
+    "effective_dof": 2.7021781826227023,
+    "working_tail": 0.3172858717721319,
+    "status": "tested"
+   },
+   "RACS_dipole": {
+    "chi2": 1.0633694967565457,
+    "n_minus_nuisance": 3,
+    "effective_dof": 2.997573176774948,
+    "working_tail": 0.7855532571101784,
+    "status": "tested"
+   },
+   "CMB_dipole": {
+    "chi2": 2.7213245630264282e-06,
+    "n_minus_nuisance": 3,
+    "effective_dof": 3.340198371226677e-07,
+    "working_tail": null,
+    "status": "SATURATED_NO_TEST"
+   },
+   "CF4_H03": {
+    "chi2": 84.76083142750521,
+    "n_minus_nuisance": 32,
+    "effective_dof": 26.608735186564708,
+    "working_tail": 5.538283735433429e-08,
+    "status": "tested"
+   }
+  }
+ },
+ "interpretation": {
+  "beta_RM0": "frame-offset parameter: one velocity forced to represent both the z~1-2 count-source frame and the z<0.1 CF4 bulk; NOT a homogeneous global tilt measurement; Wald uses measurement covariance only (no LCDM bulk-flow cosmic variance unless the cf4_bulk_* cases)",
+  "A": "NOT physically identified: column-identical to a CF4 directional distance-calibration dipole (rank 0 with that nuisance) and absorbs depth-varying bulk flow",
+  "sigma": "CMB-dominated, conditional on the Bianchi-I history operator"
+ },
+ "cross_probe_independence": "count dipoles: correlated-clustering rho=0.5 case; CF4 bulk cosmic variance 150/250 km/s cases; leave-one-probe-out; Pantheon+ excluded (shared hosts/field with CF4)",
+ "five_views": {
+  "x": "signed 17D joint posterior (this result + local chain)",
+  "Q": "UNAVAILABLE: no declared K0 gauge for this joint carrier",
+  "F": "UNAVAILABLE: no anchor/support measure declared",
+  "Pi": "UNAVAILABLE: no same-estimator joint null replicates (no BETA_MO_MATCHED_NULL)",
+  "G_F": "cf4_cross_depth_residuals (descriptive contrast; no calibrated depth law)"
+ },
+ "independent_review": {
+  "path": "INDEPENDENT_REVIEW.json",
+  "verdict_before_fixes": "BLOCK: kinematic sign inconsistency drove the counts-vs-CF4 consistency and Wald-21 result; no support for detection/global tilt",
+  "closeout": "All findings addressed and rerun (logs/run_r52_joint.log exit 0; 55 tests pass). The fix closeout was not re-reviewed by a second agent (one-review policy); the reviewer's flipped-convention numbers (chi2 17.5, Wald 5.2, |bRM| 338, |bMO| 427) agree with the rerun (16.7, 5.8, 349, 442) up to the H0_ref change."
+ },
+ "unresolved": [
+  "count-dipole systematics budget (clustering dipole, x/alpha/c_EB) not modelled beyond sensitivity",
+  "CF4 covariance is a stipulated conditional law; CF4 adequacy fails (PPC)",
+  "Gaia E2 residual unexplained by Bianchi-I shear (chi2 110/5): E2 systematics or nuisance incompleteness",
+  "Gaia K_eff uses information weights, not the carrier estimator weights",
+  "omega unidentified; A degenerate with distance-calibration dipole",
+  "no same-estimator joint velocity null; Pi unavailable"
+ ],
+ "next_node": "R53"
+}

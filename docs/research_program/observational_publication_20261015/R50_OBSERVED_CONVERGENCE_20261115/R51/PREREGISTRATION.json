@@ -1,0 +1,33 @@
+{
+ "written_before_inspection": true,
+ "covariance_train_ffp10_ids": [
+  0,
+  199
+ ],
+ "heldout_ffp10_ids": [
+  200,
+  299
+ ],
+ "laws": [
+  "finite_mc_sellentin_heavens",
+  "plugin_gaussian"
+ ],
+ "carriers": [
+  "T45",
+  "TEB135"
+ ],
+ "tests": "central 68% and 95% PIT coverage (binomial test, Clopper-Pearson 95% CI) + KS uniformity per law x carrier",
+ "n_tests": 12,
+ "multiple_test_policy": "Bonferroni alpha=0.05/12 per test; a law is 'calibrated' only if none of its tests rejects",
+ "target_likelihood": "T45 only, S from all 300 FFP10 pairs, finite-MC law",
+ "polarization_policy": "E/B rows carry no source-bound response (0.18 gain is a working model): marginalized as free-mean nuisance = dropped",
+ "estimand": "Sigma_ab = int_{t_*}^{t_0} sigma_ab dt, 5 orthonormal STF components, Galactic frame, dimensionless",
+ "prior": "flat on each s_k within |s_k|<=1e-3 (proper box; posterior mass interior)",
+ "signed_alternatives": "s = +-1e-5 e_k, k=0..4, fixed before inspection",
+ "scalar_projection_axis": "e_1 = diag(1,1,-2)/sqrt(6) (Galactic-pole axisymmetric component)",
+ "power_only": "|s|^2 (even summary)",
+ "null": "same-estimator leave-one-out FFP10 replicate (Sigma=0 LCDM null); tail (k+1)/(N+1)",
+ "velocity_null": "BETA_MO same-estimator joint null NOT produced; no matched Pi output",
+ "git_head_at_registration": "82360535625cde7113c42ad1c9d448df002170f2",
+ "registered_unix": 1794754146.5159411
+}

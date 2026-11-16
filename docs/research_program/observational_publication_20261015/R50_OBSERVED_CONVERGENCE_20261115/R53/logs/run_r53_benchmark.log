@@ -1,0 +1,395 @@
+cmd: PYTHONPATH=htt/src:htt:. python scripts/r53/run_r53_benchmark.py
+head: b813649840ed917b431e42afe6c6d368cc8029ac + R53 working tree (post-review)
+2026-11-16T00:55:25Z
+/home/cosmosapjw/.local/lib/python3.12/site-packages/matplotlib/projections/__init__.py:63: UserWarning: Unable to import Axes3D. This may be due to multiple versions of Matplotlib being installed (e.g. as a system package and as a pip package). As a result, the 3D projection is not available.
+  warnings.warn("Unable to import Axes3D. This may be due to multiple versions of "
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.4.2 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r53/run_r53_benchmark.py", line 353, in <module>
+    r = main()
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r53/run_r53_benchmark.py", line 343, in main
+    joint_res, state = joint_lane(rng)
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r53/run_r53_benchmark.py", line 187, in joint_lane
+    m = r52_module()
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r53/run_r53_benchmark.py", line 49, in r52_module
+    spec.loader.exec_module(m)
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r52/run_r52_joint.py", line 32, in <module>
+    from htt.htt.infer.r49_general_bianchi_likelihood import ICRS_TO_GALACTIC_MATRIX  # noqa: E402
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/htt/htt/infer/r49_general_bianchi_likelihood.py", line 106, in <module>
+    from cobaya.likelihood import Likelihood as _CobayaLikelihood
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/cobaya/__init__.py", line 8, in <module>
+    from cobaya.likelihood import Likelihood as Likelihood
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/cobaya/likelihood.py", line 32, in <module>
+    from cobaya.component import ComponentCollection, get_component_class
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/cobaya/component.py", line 15, in <module>
+    from cobaya.tools import (
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/cobaya/tools.py", line 27, in <module>
+    import pandas as pd
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/__init__.py", line 46, in <module>
+    from pandas.core.api import (
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/api.py", line 27, in <module>
+    from pandas.core.arrays import Categorical
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/arrays/__init__.py", line 1, in <module>
+    from pandas.core.arrays.arrow import ArrowExtensionArray
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/arrays/arrow/__init__.py", line 5, in <module>
+    from pandas.core.arrays.arrow.array import ArrowExtensionArray
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py", line 65, in <module>
+    from pandas.core import (
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/ops/__init__.py", line 9, in <module>
+    from pandas.core.ops.array_ops import (
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/ops/array_ops.py", line 55, in <module>
+    from pandas.core.computation import expressions
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/computation/expressions.py", line 22, in <module>
+    from pandas.core.computation.check import NUMEXPR_INSTALLED
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/computation/check.py", line 5, in <module>
+    ne = import_optional_dependency("numexpr", errors="warn")
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/compat/_optional.py", line 158, in import_optional_dependency
+    module = importlib.import_module(name)
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "/usr/lib/python3/dist-packages/numexpr/__init__.py", line 24, in <module>
+    from numexpr.interpreter import MAX_THREADS, use_vml, __BLOCK_SIZE1__
+Traceback (most recent call last):
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/numpy/core/_multiarray_umath.py", line 46, in __getattr__
+    raise ImportError(msg)
+ImportError: 
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.4.2 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+
+
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.4.2 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+Traceback (most recent call last):  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r53/run_r53_benchmark.py", line 353, in <module>
+    r = main()
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r53/run_r53_benchmark.py", line 343, in main
+    joint_res, state = joint_lane(rng)
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r53/run_r53_benchmark.py", line 187, in joint_lane
+    m = r52_module()
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r53/run_r53_benchmark.py", line 49, in r52_module
+    spec.loader.exec_module(m)
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r52/run_r52_joint.py", line 32, in <module>
+    from htt.htt.infer.r49_general_bianchi_likelihood import ICRS_TO_GALACTIC_MATRIX  # noqa: E402
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/htt/htt/htt/infer/r49_general_bianchi_likelihood.py", line 106, in <module>
+    from cobaya.likelihood import Likelihood as _CobayaLikelihood
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/cobaya/__init__.py", line 8, in <module>
+    from cobaya.likelihood import Likelihood as Likelihood
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/cobaya/likelihood.py", line 32, in <module>
+    from cobaya.component import ComponentCollection, get_component_class
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/cobaya/component.py", line 15, in <module>
+    from cobaya.tools import (
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/cobaya/tools.py", line 27, in <module>
+    import pandas as pd
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/__init__.py", line 46, in <module>
+    from pandas.core.api import (
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/api.py", line 27, in <module>
+    from pandas.core.arrays import Categorical
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/arrays/__init__.py", line 1, in <module>
+    from pandas.core.arrays.arrow import ArrowExtensionArray
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/arrays/arrow/__init__.py", line 5, in <module>
+    from pandas.core.arrays.arrow.array import ArrowExtensionArray
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/arrays/arrow/array.py", line 79, in <module>
+    from pandas.core.arrays.masked import BaseMaskedArray
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/arrays/masked.py", line 56, in <module>
+    from pandas.core import (
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/core/nanops.py", line 54, in <module>
+    bn = import_optional_dependency("bottleneck", errors="warn")
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/pandas/compat/_optional.py", line 158, in import_optional_dependency
+    module = importlib.import_module(name)
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "/usr/lib/python3/dist-packages/bottleneck/__init__.py", line 7, in <module>
+    from .move import (move_argmax, move_argmin, move_max, move_mean, move_median,
+Traceback (most recent call last):
+  File "/home/cosmosapjw/.local/lib/python3.12/site-packages/numpy/core/_multiarray_umath.py", line 46, in __getattr__
+    raise ImportError(msg)
+ImportError: 
+A module that was compiled using NumPy 1.x cannot be run in
+NumPy 2.4.2 as it may crash. To support both 1.x and 2.x
+versions of NumPy, modules must be compiled with NumPy 2.0.
+Some module may need to rebuild instead e.g. with 'pybind11>=2.12'.
+
+If you are a user of the module, the easiest solution will be to
+downgrade to 'numpy<2' or try to upgrade the affected module.
+We expect that some modules will need time to support NumPy 2.
+
+
+{
+ "cmb_lane": {
+  "design": "3-fold held-out over FFP10 ids (100 each); S and LOO calibration from the other 200; coverage over 300 independent noise draws (truth-independent for this linear model)",
+  "N_train": 200,
+  "p": 45,
+  "k": 5,
+  "coverage_nominal95": {
+   "full_t_law": {
+    "per_component_rate": [
+     0.9233333333333333,
+     0.9366666666666666,
+     0.92,
+     0.9366666666666666,
+     0.9266666666666666
+    ],
+    "per_component_CI95": [
+     [
+      0.8871818846395176,
+      0.9507812161243255
+     ],
+     [
+      0.9028618033928799,
+      0.961441980171624
+     ],
+     [
+      0.8833040835150876,
+      0.948071360663393
+     ],
+     [
+      0.9028618033928799,
+      0.961441980171624
+     ],
+     [
+      0.8910755354831041,
+      0.953474335615215
+     ]
+    ],
+    "pooled_rate": 0.9286666666666666,
+    "n_independent_draws": 300,
+    "note": "components within a draw are correlated; CIs are per component over independent draws"
+   },
+   "gaussian_score_plugin": {
+    "per_component_rate": [
+     0.8733333333333333,
+     0.88,
+     0.9033333333333333,
+     0.8933333333333333,
+     0.8933333333333333
+    ],
+    "per_component_CI95": [
+     [
+      0.8303070926415046,
+      0.9087815762542462
+     ],
+     [
+      0.8377560576697571,
+      0.9145211977082804
+     ],
+     [
+      0.864125090171869,
+      0.934301425384413
+     ],
+     [
+      0.8527629835794566,
+      0.9258876405267118
+     ],
+     [
+      0.8527629835794566,
+      0.9258876405267118
+     ]
+    ],
+    "pooled_rate": 0.8886666666666667,
+    "n_independent_draws": 300,
+    "note": "components within a draw are correlated; CIs are per component over independent draws"
+   },
+   "loo_calibrated_gaussian": {
+    "per_component_rate": [
+     0.9466666666666667,
+     0.97,
+     0.96,
+     0.9533333333333334,
+     0.94
+    ],
+    "per_component_CI95": [
+     [
+      0.9148332350904858,
+      0.9692116802265219
+     ],
+     [
+      0.9438164517583842,
+      0.986192180444474
+     ],
+     [
+      0.9311710118105039,
+      0.9791634236935863
+     ],
+     [
+      0.9229401618936413,
+      0.974255350532769
+     ],
+     [
+      0.9068297039280113,
+      0.9640561255848612
+     ]
+    ],
+    "pooled_rate": 0.954,
+    "n_independent_draws": 300,
+    "note": "components within a draw are correlated; CIs are per component over independent draws"
+   },
+   "tensor_F_t_Q0": "identical to full_t_law by algebraic identity (same posterior)"
+  },
+  "loo_sd_over_fisher_sd": [
+   1.2582737942765634,
+   1.2479171815191663,
+   1.256868019630373,
+   1.2539925029676855,
+   1.2442960529697589
+  ],
+  "analytic_sd_inflation_N200": 1.2726672129815202,
+  "analytic_sd_inflation_N300": 1.1660940612898085,
+  "bias_mean_in_fisher_sd": [
+   0.002013066441319192,
+   -0.06986181642499188,
+   -0.14324324345828787,
+   0.07358984882003974,
+   -0.001196921945687058
+  ],
+  "bias_SE_in_fisher_sd": 0.07229981388539095,
+  "logLR_error_vs_full_t_law": {
+   "gaussian_score_plugin": {
+    "max": 4.174754054042571,
+    "median": 0.39699211591122974
+   },
+   "scalar_e1": {
+    "max": 9.778845368699768,
+    "median": 1.2045069770009265
+   },
+   "power_only_vs_zero": {
+    "max": 6.904958621214969,
+    "median": 0.949995532814806
+   }
+  },
+  "tensor_F_t_Q0_logLR_identity_max_abs": 2.7755575615628914e-14,
+  "logLR_note": "point-vs-point logLR(s_true vs 0) per truth x draw; power-only uses the noncentral-chi2 law of s_hat^T F s_hat; power-only logLR(+s vs -s) = 0 identically",
+  "signed_direction_recovery_rate_full": 0.9076666666666666,
+  "fisher_retention_analytic": {
+   "tensor": 1.0,
+   "optimal_score": 1.0,
+   "scalar_e1_worst_direction": 0.0,
+   "power_only_local_at_zero": 0.0,
+   "note": "analytic: rank-one projection keeps 1 of 5 directions; a sign-even statistic has zero local Fisher at s=0"
+  },
+  "runtime_s_per_eval": {
+   "full_t_law": 1.9696841998666058e-05,
+   "tensor_F_t_Q0": 3.004826001415495e-06
+  }
+ },
+ "joint_lane": {
+  "frame_consistency_counts_vs_cf4": {
+   "measurement_cov": {
+    "chi2_3": 16.697159234661648,
+    "working_tail": 0.0008156724145087009
+   },
+   "bulk_150kms": {
+    "chi2_3": 12.892497028921255,
+    "working_tail": 0.004874949452260091
+   },
+   "bulk_250kms": {
+    "chi2_3": 9.442123837765706,
+    "working_tail": 0.023955103810450178
+   },
+   "cf4_cov_ppc_scaled": {
+    "chi2_3": 10.549479266518414,
+    "working_tail": 0.014428979990849236
+   },
+   "bulk_250kms_plus_cf4_ppc": {
+    "chi2_3": 7.344438184575508,
+    "working_tail": 0.06169314756193797
+   }
+  },
+  "estimand": "beta_RM(0), Galactic, v/c",
+  "n_replications": 2000,
+  "coverage_check_type": "code-consistency check: replications drawn from the model's own Gaussian law",
+  "coverage_per_component_nominal95": {
+   "k": 5722,
+   "n": 6000,
+   "rate": 0.9536666666666667,
+   "CI95": [
+    0.9480396237343471,
+    0.958847114898367
+   ],
+   "note": "replications at truth = posterior mean; prior shrinkage is negligible for beta_RM"
+  },
+  "coverage_scalar_axis_nominal95": {
+   "k": 1894,
+   "n": 2000,
+   "rate": 0.947,
+   "CI95": [
+    0.9362572070012273,
+    0.9564069564074236
+   ]
+  },
+  "replication_bias_kms": [
+   -1.8004760169538783,
+   -3.278500400000225,
+   2.30410950094051
+  ],
+  "fisher_retention_analytic": {
+   "tensor": 1.0,
+   "scalar_cmb_axis_worst": 0.0,
+   "power_only_local": 0.0,
+   "scalar_eigs": [
+    0.0,
+    7.373458704679389e-17,
+    1.0
+   ]
+  },
+  "signed_logLR_plus_vs_minus_posterior_mean": {
+   "full_tensor": 11.668654592146996,
+   "power_only": 0.0
+  },
+  "beta_RM0_along_cmb_axis_kms": -86.25392788501809,
+  "beta_RM0_perp_norm_kms": 338.42148334236987,
+  "tie_tensor_vs_raw": "exact by linear-Gaussian algebra ((F,t) sufficient); Cobaya chain ties analytic (R52)"
+ },
+ "figures": [
+  "F1_heldout_pit.png",
+  "F2_integrated_shear.png",
+  "F3_beta_RM0_subsets.png",
+  "F4_cf4_window_dipoles.png",
+  "F5_method_coverage.png"
+ ],
+ "elapsed_s": 7.198477010002534
+}
+	Command being timed: "python scripts/r53/run_r53_benchmark.py"
+	User time (seconds): 24.05
+	System time (seconds): 0.35
+	Percent of CPU this job got: 282%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:08.64
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 341588
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1
+	Minor (reclaiming a frame) page faults: 79248
+	Voluntary context switches: 1115
+	Involuntary context switches: 3981
+	Swaps: 0
+	File system inputs: 14544
+	File system outputs: 528
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+exit=0

@@ -1,0 +1,22 @@
+htt_base R50→R53 관측 수렴 DAG는 완료되었다 (R53 FINAL_DECISION: methods+discovery 논문 없음, 범위 축소된 bounded note). 새 연구 노드를 임의로 열지 말고 소유자 결정을 먼저 확인하라.
+
+저장소: https://github.com/cosmosapjw-quantum/htt_base
+브랜치: research/r50-observed-convergence-20261115 (원격 HEAD를 fetch로 확인)
+계획 경로: docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/
+산출물: R51/ (source-bound 응답, finite-MC law, PR3 SMICA T 적분 shear), R52/ (공동 frame/tilt/shear 식별, Cobaya), R53/ (방법 benchmark, MANUSCRIPT_CLAIM_TABLE.md, FINAL_DECISION.md, FIGURES/)
+
+1. 기존 primary checkout에서 git status/HEAD 확인, dirty 변경 보존, git fetch 후 안전한 전환만 한다. 새 clone/worktree, force-push, main merge, remote desktop 금지.
+2. 재현(baseline reuse로만 기록):
+   PYTHONPATH=htt/src:htt:. python -m pytest tests/r49 tests/r50 tests/r51 tests/r52 tests/r53 -q
+   PYTHONPATH=htt/src:htt:. python scripts/r51/run_r51_pr3_lowell.py      (원자료 필요, ~6.5분)
+   PYTHONPATH=htt/src:htt:. python scripts/r52/run_r52_joint.py           (~1분, Cobaya chain은 /mnt/extdrive/workdir/r52_chains)
+   PYTHONPATH=htt/src:htt:. python scripts/r53/run_r53_benchmark.py       (~10초)
+   실행 스크립트는 커밋된 결과 파일을 덮어쓴다: 비교 후 git restore로 복원하거나 새 결과로 커밋한다.
+3. 확정 규칙: response_policy="source_bound"만 물리 추론; Σ(시선 적분)와 σ/H0(오늘) 구분(I_hist 조건부); MC 공분산은 finite-MC law, 모수 구간은 LOO/분석적 covariance-noise 팽창; frame 합성 CMB dipole=β_MO−β_RM, counts=c_EB β_MO, CF4 bulk=−cβ_RM; A는 CF4 보정 dipole과 퇴화, ω는 미식별; BETA_MO_MATCHED_NULL 출력 금지(같은 추정량 null 없음); PR4/NPIPE·새 다운로드 비임계.
+4. 재개 조건(소유자가 하나를 지정할 때만 새 노드):
+   a. Commander 매칭 FFP10 MC 확보 → Commander primary R51 재실행
+   b. source-bound 편광·유한곡률 transfer → type I 너머 family 비교
+   c. selection·clustering 포함 count mock → β_MO 같은 추정량 null과 보정된 Pi
+   d. CF4 경험적 공분산·보정 모형 → A 식별
+   e. bounded note 원고 작성 (MANUSCRIPT_CLAIM_TABLE.md의 derived/checked 행만 사용)
+5. 메타 감사 전용 노드를 만들지 않는다. 데이터 없는 실행을 PASS로 표기하지 않는다.

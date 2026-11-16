@@ -180,7 +180,7 @@ def test_r42_calibrated_five_variable_state():
     samples = rng.randn(150, 17) * 1e-4
     samples[:, 14:17] += np.array([0.0010, -0.0004, 0.0007])
 
-    # Provide authentic matched null samples (e.g. from Planck Commander MC100)
+    # Synthetic supplied-null plumbing fixture; not an observed Planck calibration.
     matched_null = rng.randn(300, 3) * 1.2e-4
 
     state = construct_r42_five_variable_state(
@@ -188,7 +188,7 @@ def test_r42_calibrated_five_variable_state():
         samples,
         PARAM_NAMES_17,
         matched_null_samples=matched_null,
-        null_law_name="MATCHED_NULL_PLANCK_MC100",
+        null_law_name="SYNTHETIC_NULL_TEST",
         n_quadrature_dirs=100,
     )
 
@@ -209,13 +209,14 @@ def test_r42_calibrated_five_variable_state():
     assert len(f["BETA_MO"].evaluation_directions) == 100
     assert len(f["SHEAR_SIGMA"].evaluation_directions) == 100
     assert np.all(np.isfinite(f["BETA_MO"].occupancy_ratios))
-    assert np.all(np.isfinite(f["SHEAR_SIGMA"].occupancy_ratios))
+    assert f["SHEAR_SIGMA"].occupancy_ratios is None
+    assert f["SHEAR_SIGMA"].anchor_support_values is None
 
     # 3. Check Pi exceedance
     pi = state.exceedance_surfaces_Pi
     assert "BETA_MO_NORM" in pi
     assert "BETA_MO_MATCHED_NULL" in pi
-    assert pi["BETA_MO_MATCHED_NULL"].law_name == "MATCHED_NULL_PLANCK_MC100"
+    assert pi["BETA_MO_MATCHED_NULL"].law_name == "SYNTHETIC_NULL_TEST"
     assert pi["BETA_MO_MATCHED_NULL"].finite_simulation_uncertainty is not None
     assert len(pi["BETA_MO_MATCHED_NULL"].finite_simulation_uncertainty) == 100
 

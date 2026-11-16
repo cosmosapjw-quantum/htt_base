@@ -1,0 +1,235 @@
+{
+ "schema_version": "htt.r51.source-operator-contract/1",
+ "owner": "htt",
+ "claim_tier": "C0",
+ "transfer_source": "first-order Bianchi-I integrated-shear ISW (no native solver)",
+ "response_terms": [
+  {
+   "id": "CMB_T_TYPE_I_INTEGRATED_SHEAR",
+   "location": "bass/transport/general_bianchi_transfer.py:_evaluate_linearized_near_flrw_sky (type-I boundary)",
+   "equation": "dT/T(n) = -n^a n^b Sigma_ab, Sigma_ab = int_{t_*}^{t_0} sigma_ab dt (first order)",
+   "exact_reference": "T(n) = T_bar / sqrt(n^T exp(2 Sigma) n) for Bianchi I with fixed shear eigenframe",
+   "source": "Collins & Hawking 1973 MNRAS 162 307; Barrow, Juszkiewicz & Sonoda 1985 MNRAS 213 917",
+   "status": "SOURCE_BOUND",
+   "parameter_semantics": "Sigma_ab: dimensionless line-of-sight integrated shear (last scattering -> observer); NOT sigma/H0 today"
+  },
+  {
+   "id": "SHEAR_HISTORY_OPERATOR_TYPE_I",
+   "location": "new in R51 (bianchi_i_shear_history_integral)",
+   "equation": "Sigma_ab = I_hist (sigma_ab/H)_0, I_hist = int_{a_*}^{1} a^-4 / E(a) da",
+   "source": "sigma a^3 = const for Bianchi I perfect fluids without anisotropic stress (Ellis & MacCallum 1969)",
+   "status": "CONDITIONAL_DERIVED",
+   "assumptions": [
+    "no anisotropic stress (free-streaming neutrinos damp shear and violate this)",
+    "near-FLRW LCDM expansion E(a); shear back-reaction neglected",
+    "fixed shear eigenframe (type I)"
+   ],
+   "systematics": "67% of I_hist comes from z>500 where radiation (24% of density at z_*) and free-streaming neutrino anisotropic stress act; the neutrino-damped history is not computed, so any sigma/H0 value derived through I_hist is conditional and carries an unquantified systematic"
+  },
+  {
+   "id": "CMB_TYPE_I_POLARIZATION_GAIN_0p18",
+   "location": "general_bianchi_transfer.py:TiltedTransferParameters.polarization_to_shear_gain=0.18",
+   "equation": "Pi_emit = 0.18 sigma_N + 0.5 Q_kin(v_rel)",
+   "source": null,
+   "status": "WORKING_MODEL_EXCLUDED_FROM_PHYSICAL_INFERENCE",
+   "reason": "Thomson quadrupole requires visibility-weighted transfer; coefficient unsourced"
+  },
+  {
+   "id": "CMB_FINITE_CURVATURE_FOCUS_TWIST",
+   "location": "general_bianchi_transfer.py:932-1021 (0.25/0.35 floors, tanh(0.6 x), 0.6+0.4nz, 1+0.3(...))",
+   "equation": null,
+   "source": null,
+   "status": "WORKING_MODEL_EXCLUDED_FROM_PHYSICAL_INFERENCE",
+   "reason": "focusing/twist profiles and floors not derived from V/VII_h/VII_0/IX geodesics"
+  },
+  {
+   "id": "CMB_COVARIANCE_EXCESS_1e-8",
+   "location": "r49_general_bianchi_likelihood.py:_predict_cmb_vector",
+   "equation": "C_ll += 1e-8 (T_CMB uK)^2 |sigma|^2 on covariance modes",
+   "source": null,
+   "status": "WORKING_MODEL_EXCLUDED_FROM_PHYSICAL_INFERENCE"
+  },
+  {
+   "id": "CMB_SIGMA_AS_TODAY_SHEAR",
+   "location": "r49_general_bianchi_likelihood.py:_predict_cmb_vector (sigma_N=state.sigma_matrix)",
+   "equation": "uses (sigma/H)_0 as Sigma_ab, i.e. history operator := 1",
+   "source": null,
+   "status": "WORKING_MODEL_EXCLUDED_FROM_PHYSICAL_INFERENCE",
+   "reason": "epoch conflation; physical Bianchi-I history operator I_hist = 3.93e4 (Planck18, conditional) (see SHEAR_HISTORY_OPERATOR_TYPE_I)"
+  },
+  {
+   "id": "CMB_EMISSION_AND_OBSERVER_KINEMATIC_ELL_GE_2",
+   "location": "general_bianchi_transfer.py emission Doppler (v_rad - v_matter) and _apply_observer_boost_on_sky_grid",
+   "equation": "T_obs = T/[gamma (1 - beta.n)] (exact Lorentz); ell>=2 at O(beta^2, beta Sigma)",
+   "source": "exact Lorentz transformation of a Planck spectrum (e.g. Challinor & van Leeuwen 2002)",
+   "status": "SOURCE_BOUND",
+   "r51_usage": "EXCLUDED from the R51 source-bound CMB evaluation (velocities set to 0) until the kinematic-quadrupole removal contract of map and MC is bound"
+  },
+  {
+   "id": "COUNT_DIPOLE_KINEMATIC",
+   "location": "r49_general_bianchi_likelihood.py:logp_by_probe (c_eb * beta_MO)",
+   "equation": "d = [2 + x(1+alpha)] beta_obs_src, beta_obs_src = beta_MO if sources comove with matter",
+   "source": "Ellis & Baldwin 1984 MNRAS 206 377",
+   "status": "SOURCE_BOUND",
+   "assumptions": [
+    "no intrinsic clustering/evolution dipole beyond declared covariance",
+    "x, alpha measured per survey"
+   ]
+  },
+  {
+   "id": "COUNT_DIPOLE_0p1_A",
+   "location": "r49_general_bianchi_likelihood.py:792 (0.1*A_A)",
+   "equation": null,
+   "source": null,
+   "status": "WORKING_MODEL_EXCLUDED_FROM_PHYSICAL_INFERENCE"
+  },
+  {
+   "id": "GAIA_E1_H0_BETA_PLUS_A",
+   "location": "r49_general_bianchi_likelihood.py:802",
+   "equation": "E1 = H0 (beta_MO + A_A) [uas/yr]",
+   "source": null,
+   "status": "WORKING_MODEL_EXCLUDED_FROM_PHYSICAL_INFERENCE",
+   "reason": "constant velocity gives static aberration, no drift; drift dipole is observer acceleration a_obs/c (galactic + cosmological), a nuisance here"
+  },
+  {
+   "id": "GAIA_B1_VORTICITY",
+   "location": "r49_general_bianchi_likelihood.py:804",
+   "equation": "B1 = H0 omega + frame spin",
+   "source": null,
+   "status": "WORKING_MODEL_EXCLUDED_FROM_PHYSICAL_INFERENCE",
+   "reason": "fully degenerate with marginalized frame spin; omega not identified"
+  },
+  {
+   "id": "GAIA_E2_DIRECT_SHEAR_PLUS_0p25_Q",
+   "location": "r49_general_bianchi_likelihood.py:806",
+   "equation": "E2 = H0 sigma + 0.25 H0 Q(beta_MO)",
+   "source": null,
+   "status": "WORKING_MODEL_EXCLUDED_FROM_PHYSICAL_INFERENCE",
+   "reason": "E2 measures endpoint-history A_PM=2c(B_o-B_s)/D-dot B_o (R50), not sigma/H0; velocity term unsourced"
+  },
+  {
+   "id": "PANTHEON_0p5_A_AND_ORDER_Z_SHEAR",
+   "location": "r49_general_bianchi_likelihood.py:836-838",
+   "equation": "delta mu = -(5/ln10)[n.(beta_MO - v_m + 0.5 A)/z - 0.5 z n.sigma.n]",
+   "source": null,
+   "status": "WORKING_MODEL_EXCLUDED_FROM_PHYSICAL_INFERENCE",
+   "reason": "first-order Heinesen 2021 term is (n.a - sigma_nn)/H at O(z^0); z_HD already boost-corrected upstream"
+  },
+  {
+   "id": "CF4_0p1_Z_A",
+   "location": "r49_general_bianchi_likelihood.py:850",
+   "equation": null,
+   "source": null,
+   "status": "WORKING_MODEL_EXCLUDED_FROM_PHYSICAL_INFERENCE"
+  },
+  {
+   "id": "DESI_DIRECTIONAL_QUAD_AS_SHEAR",
+   "location": "scripts/r49/run_r49_cmb_and_multiprobe_lanes.py:796 (contrast*0.02); likelihood:870",
+   "equation": "sigma5 := 0.02 * (NGC-SGC contrast), padded 4 unobserved directions",
+   "source": null,
+   "status": "WORKING_MODEL_EXCLUDED_FROM_PHYSICAL_INFERENCE"
+  },
+  {
+   "id": "DESI_BAO_ISOTROPIC",
+   "location": "r49_general_bianchi_likelihood.py:856-868",
+   "equation": "D_M/r_d, D_H/r_d, D_V/r_d in FLRW background psi",
+   "source": "DESI DR2 BAO release definitions",
+   "status": "SOURCE_BOUND"
+  }
+ ],
+ "source_bound_probes": [
+  "CMB",
+  "Quaia",
+  "NVSS",
+  "RACS",
+  "DESI"
+ ],
+ "deferred_probes": {
+  "Gaia": "E1/B1 are nuisance (observer acceleration, frame spin); E2 needs the R50 endpoint-history operator (R52)",
+  "PantheonPlus": "requires low-z Heinesen jet with remainder and z_HD correction binding (R52/L5)",
+  "CF4": "grouped distance/selection likelihood and tilt/boost separation (R52)"
+ },
+ "components": [
+  {
+   "name": "sigma_ab (R49 state)",
+   "basis": "Cartesian STF5 with G_STF5 metric; R51 CMB uses orthonormal STF5",
+   "unit": "dimensionless sigma/H0",
+   "congruence": "matter",
+   "epoch": "z=0",
+   "triad": "common Galactic triad",
+   "response": "none directly; enters CMB only through SHEAR_HISTORY_OPERATOR_TYPE_I (conditional)"
+  },
+  {
+   "name": "Sigma_ab (CMB estimand)",
+   "basis": "orthonormal STF5, tr(E_a E_b)=delta_ab",
+   "unit": "dimensionless (integrated shear)",
+   "congruence": "photon path through matter-frame Bianchi-I geometry",
+   "epoch": "integral z_*=1089.94 -> 0",
+   "triad": "Galactic",
+   "response": "CMB_T_TYPE_I_INTEGRATED_SHEAR (source-bound, first order)"
+  },
+  {
+   "name": "omega_a",
+   "basis": "axial 3-vector",
+   "unit": "omega/H0",
+   "congruence": "matter",
+   "epoch": "z=0",
+   "triad": "Galactic",
+   "response": "none source-bound; Gaia B1 degenerate with marginalized frame spin -> unidentified"
+  },
+  {
+   "name": "A_a",
+   "basis": "polar 3-vector",
+   "unit": "A/(c H0)",
+   "congruence": "matter 4-acceleration (distinct from Class-B commutator a_a)",
+   "epoch": "z=0",
+   "triad": "Galactic",
+   "response": "none source-bound in R51 (0.1 A, 0.5 A, H0(beta+A) quarantined) -> unidentified"
+  },
+  {
+   "name": "beta_RM",
+   "basis": "polar 3-vector",
+   "unit": "v/c",
+   "congruence": "radiation relative to matter",
+   "epoch": "z_*",
+   "triad": "Galactic",
+   "response": "exact emission Lorentz factor (ell=1 linear, removed; ell=2 at O(beta^2)); not fitted in R51 T-only Sigma run"
+  },
+  {
+   "name": "beta_MO",
+   "basis": "polar 3-vector",
+   "unit": "v/c",
+   "congruence": "observer relative to matter",
+   "epoch": "z=0",
+   "triad": "Galactic",
+   "response": "COUNT_DIPOLE_KINEMATIC (source-bound); CMB ell>=2 boost response excluded until kinematic-quadrupole removal is bound"
+  },
+  {
+   "name": "frame_spin",
+   "basis": "axial 3-vector",
+   "unit": "uas/yr",
+   "congruence": "Gaia-CRF3 vs ICRF3",
+   "epoch": "Gaia DR3 epoch",
+   "triad": "ICRS",
+   "response": "nuisance (Schur-marginalized)"
+  }
+ ],
+ "covariance_contract": {
+  "law": "finite_mc_t_loglike (Sellentin & Heavens 2016) for S from N iid same-process Gaussian MC; gaussian_loglike when C is a known model covariance",
+  "mean_and_covariance_same_modes": "allowed in one normalized Gaussian with one logdet",
+  "duplication_guard": "DataBlockRegistry: one byte identity -> one likelihood factor",
+  "forbidden": [
+   "automatic jitter",
+   "pseudoinverse",
+   "silent symmetrization",
+   "Hartlap factor presented as posterior covariance model"
+  ],
+  "cmb_mc": "SMICA FFP10 CMB+noise pairs 0-299 through the identical masked low-ell estimator; heldout calibration ids 200-299 (see PREREGISTRATION.json)"
+ },
+ "selection_contract": {
+  "cmb": "PR3 common Int/Pol masks (f_sky 0.779/0.781); pseudo-alm coupling inverse at lmax=6 with ell=0,1 columns deprojected; beam INT_BEAM x pixwin(2048) applied to the template",
+  "commander": "map present; matched MC unavailable -> calibration UNAVAILABLE; uncalibrated difference only",
+  "removed_modes": "monopole/dipole deprojected by the estimator; kinematic quadrupole removal UNBOUND -> sensitivity reported"
+ },
+ "policy": "R49GeneralBianchiLikelihood(response_policy='source_bound') is the only physically admissible evaluation; 'r49_working_model' reproduces historical receipts only"
+}

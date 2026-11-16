@@ -1,0 +1,28 @@
+# R52 Cobaya run; external Likelihood htt.htt.infer.r52_cobaya_provider.R52JointLikelihood
+# F,t = joint profiled carrier (R52/identified_combinations.npz); theta = m0 + L v, v ~ U(-50,50), Gaussian theta prior inside logp
+output: /mnt/extdrive/workdir/r52_chains/r52_joint
+sampler:
+  mcmc:
+    Rminus1_stop: 0.005
+    Rminus1_cl_stop: 0.05
+    max_tries: 10000
+    seed: 52052
+    learn_proposal: True
+params:
+  v_sigma_over_H0_e0: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_sigma_over_H0_e1: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_sigma_over_H0_e2: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_sigma_over_H0_e3: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_sigma_over_H0_e4: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_omega_over_H0_x: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_omega_over_H0_y: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_omega_over_H0_z: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_A_over_cH0_x: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_A_over_cH0_y: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_A_over_cH0_z: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_beta_RM0_x: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_beta_RM0_y: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_beta_RM0_z: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_beta_MO_x: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_beta_MO_y: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}
+  v_beta_MO_z: {prior: {min: -50, max: 50}, ref: {dist: norm, loc: 0, scale: 0.5}, proposal: 0.5}

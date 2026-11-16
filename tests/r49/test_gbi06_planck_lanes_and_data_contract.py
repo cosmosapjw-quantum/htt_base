@@ -177,7 +177,8 @@ def test_gbi06_real_npz_loads_into_r49_likelihood_with_lane_guards() -> None:
     ffp = np.load(ffp_path)
     assert ffp["sim_tot"].shape == (300, 135)
     assert ffp["sim_noise"].shape == (300, 135)
-    assert ffp["null_beta"].shape == (300, 3)
+    # Historical caches may contain null_beta; it must not be used as a velocity null.
+    assert ffp["sim_tot"].shape[1] == 135
 
     ds_pr3 = load_real_dataset_from_npz(npz_path, use_pr4=False)
     align = FrameEpochAlignmentSpec(triad_frame="galactic", triad_rotation=np.eye(3))
