@@ -1,0 +1,52 @@
+{
+  "schema": "htt.r58.views_independent_checks/1",
+  "checks": "PASS",
+  "model_count": 7,
+  "files_sha256": {
+    "data_review_output/FIVE_VIEW_RESULT.json": "a06f006f721636e10515ab1e1d0122dd5e0e3e2001b08b75089e75a78abb0acd",
+    "data_review_output/OWNED_TENSOR_RESULT.json": "264160d6b53112e7b21278bbeb19baaa9c45e22037b8269debc20baa294f09b9",
+    "data_review_output/OWNED_TENSOR_CARRIERS.npz": "42f6bc5158fdf2f876720db12c44b088bc2db9734887e0d84ae098b234a7e64d",
+    "r58_patch/scripts/r58/build_r58_views.py": "d84a05df99fb4393546222023cc37d8fe07d3bb3977c3520a60040e99445ab20",
+    "r58_patch/tests/r58/test_five_views.py": "7b64637790703c75995af127f416d5c18a1dbf7ff81e1afc94157ac24c4d16a3",
+    "r58_patch/tests/r58/test_r54_repairs.py": "f9aa01ad60296a40ac92a04e8b2c4398f684860c7e2a09e33ce6a95a6133c409"
+  },
+  "maximum_absolute_errors": {
+    "estimate": 3.097966327914037e-12,
+    "covariance": 1.673470251262188e-10,
+    "Q": 1.1102230246251565e-15,
+    "Pi": 1.196959198423997e-16,
+    "support_interval": 4.547473508864641e-12,
+    "direction_interval": 1.304512053934559e-15,
+    "path": 0.0,
+    "path_covariance": 0.0,
+    "beta_interval": 1.474514954580286e-17
+  },
+  "directional_logH_95_simultaneous_union_interval_hulls": {
+    "-x": [
+      -0.12385937665774807,
+      0.05306977862862417
+    ],
+    "+x": [
+      -0.10301532892381894,
+      0.08341194218637148
+    ],
+    "-y": [
+      -0.07274328835664273,
+      0.07871944475567022
+    ],
+    "+y": [
+      -0.085784407494487,
+      0.08283179346990942
+    ],
+    "-z": [
+      -0.06954010808145428,
+      0.1279569835323384
+    ],
+    "+z": [
+      -0.06604217920016697,
+      0.08148407129553867
+    ]
+  },
+  "inputs_unchanged": true,
+  "scope": "independent normal-equation GLS from frozen 32D carrier; no raw source or cosmic covariance revalidation"
+}

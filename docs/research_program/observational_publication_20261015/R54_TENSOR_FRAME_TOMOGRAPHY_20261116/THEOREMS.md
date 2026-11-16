@@ -19,7 +19,7 @@ Independent review: scientific-diff-reviewer agent of the local session (read an
 | T6 | selection rule: the first-order response is block diagonal in (multipole, parity); identifiability is a rank statement per block | mathematical physics | Schur's lemma; ingredients in E18, E25, E50, E51 | `test_t6_*` |
 | T7 | gauge orbits: distance zero points against Hubble multipoles, frame spin against vorticity; design-only separability of depth laws | mathematical physics | E09, E52; GLS | `test_t7*` |
 | T8 | the T and E quadrupole kernels form a Chebyshev system: a shear history hidden from T changes sign at least once, hidden from T and E at least twice | mathematical physics | kernels E46; sign-change argument E68 | `test_t8_*` |
-| T9 | frame algebra: count-dipole excess plus bulk flow of the same shell vanishes identically; a global tilt is a linear hypothesis across shells | kinematics | first-order velocity composition; context E60, E61 | `test_t9_*` |
+| T9 | frame algebra: count-dipole excess plus bulk flow of the same shell vanishes identically; the depth-constant velocity submodel is a linear hypothesis across shells | kinematics | first-order velocity composition; context E60, E61 | `test_t9_*` |
 | L1 | errors-in-variables bias of the linear-in-distance estimator in closed form | statistics | elementary; context E41 | `test_l1_*` |
 | L2 | anisotropic stress of a massive collisionless species at first order (R54-EQ-06) | kinetic theory | elementary; massless case E05 | `test_eq06_*` of `test_r54_modules.py` |
 
@@ -77,9 +77,10 @@ Any confidence procedure C(y) for v.theta with coverage at least 1 - alpha for a
 an event of probability at least 1 - alpha on which C(Y) is unbounded. (ii) If C(y) is
 bounded for every y, then inf over theta of P_theta(v.theta in C(Y)) = 0. (iii) Split theta into its component
 iota in row(F) and nu in ker F. For every prior, the posterior of nu given iota equals the prior of nu given
-iota. (iv) Hence a credible interval for v.theta under a proper prior is bounded, has zero uniform coverage,
-and its width does not shrink with data: it is fixed by the conditional prior of nu given iota together with the
-posterior of iota.
+iota. (iv) Any bounded posterior credible interval for v.theta has zero uniform frequentist coverage
+over the unrestricted null orbit. Its marginal width may shrink as data update iota when the prior couples
+iota and nu; the conditional law pi(nu | iota, y) = pi(nu | iota) remains unchanged. For a proper posterior,
+finite equal-tailed intervals at levels strictly between zero and one are bounded.
 
 **Proof.** Choose k in ker F with v.k != 0. The law of Y is the same under theta and theta + s k.
 (i) For s_j -> infinity let A_j = {v.theta + s_j v.k in C(Y)}. Validity at theta + s_j k gives
@@ -87,12 +88,15 @@ P_theta(A_j) >= 1 - alpha, and the reverse Fatou lemma gives P_theta(limsup A_j)
 C(Y) contains an unbounded sequence. Part (i) has no executable check; the tests cover (ii) in a Gaussian instance and (iii). (ii) For fixed y the indicator of {v.theta + s v.k in C(y)} tends to zero
 as s grows; dominated convergence gives coverage tending to zero along theta + s k. (iii) The likelihood
 depends on iota only, so pi(iota, nu | y) is proportional to L(iota; y) pi(iota) pi(nu | iota). (iv) follows
-from (ii) and (iii). QED
+from (ii); the conditional-law statement is (iii). For example, a bivariate unit Gaussian prior
+with correlation r and a likelihood of precision diag(n, 0) gives Var(nu | y) = 1 - n r^2/(1+n),
+which decreases with n for r != 0 although Var(nu | iota, y) = 1-r^2 is unchanged. QED
 
 **Attribution.** (i) and (ii) are the linear-Gaussian case of the impossibility theorems of E53 (see also E54);
 (iii) is the standard observation recorded in E55 and E69. Nothing here is new.
 **Consequence.** For the unidentified kinematic directions of T6 and T7 a finite interval is always a statement
-about a prior or a declared body, never about the data. The Q view makes that body explicit.
+dependent on a prior or a declared body; data can affect its marginal width through prior correlations.
+The likelihood itself remains flat on the null orbit. The Q view makes a declared body explicit.
 
 ### T4. Polar duality of Q and F
 
@@ -111,7 +115,8 @@ K0* has non-empty interior. QED (E67; checked numerically by the gauge-range tes
 ### T5. Exact second moments with a simulated covariance
 
 **Statement.** Let S be independent of y with n S ~ W_p(n, Sigma), y ~ N(J theta, Sigma), J of rank k,
-q = p - k and n > q + 1. For theta_hat = (J^T S^-1 J)^-1 J^T S^-1 y, V_hat = (J^T S^-1 J)^-1 and
+Sigma positive definite, integer n >= p, q = p - k and n > q + 1. The condition n >= p
+ensures S is invertible almost surely; n > q + 1 supplies the inverse moment. For theta_hat = (J^T S^-1 J)^-1 J^T S^-1 y, V_hat = (J^T S^-1 J)^-1 and
 V = (J^T Sigma^-1 J)^-1:
 E theta_hat = theta, Cov(theta_hat) = [(n - 1)/(n - q - 1)] V, E V_hat = [(n - q)/n] V, so that
 Cov(theta_hat) = {n (n - 1) / [(n - q)(n - q - 1)]} E V_hat. For p = k the estimate does not depend on S,
@@ -234,7 +239,10 @@ is, a declared body in the sense of T3 and T4.
 measure Sigma_T(f) = int K_T f dN and Sigma_E(f) = int K_E f dN with K_T = k_T(tau(N)), K_E = k_E(tau(N)),
 k_T = (6 e^-tau + e^(-3 tau/10))/7 and k_E = (sqrt6/7)(e^(-3 tau/10) - e^-tau) (R54-EQ-03, a re-derivation of
 E46). Let I be an interval on which the scattering rate is positive almost everywhere, so that tau is
-strictly monotone, and let rho = k_E/k_T.
+strictly monotone, and let rho = k_E/k_T. For the norm statements, take I to have finite,
+nonzero length and finite nonnegative optical depth; equivalently for (iv), require the two kernels
+to lie in L^2(I) with positive-definite Gram matrix. Norm conclusions concern the unrestricted
+linear-history function space; a perturbative physical application also declares its amplitude regime.
 
 **Statement.**
 (i) k_T is strictly decreasing and convex with k_T(0) = 1 and k_T >= 1 - (9/10) tau; 0 <= k_E <= (sqrt6/10) tau;
@@ -261,8 +269,9 @@ corresponding combination has at most two sign changes and, by (c), at least two
 any history leaves the functionals unchanged. (iv) is the projection theorem. (v) is linear algebra. QED
 
 **Consequences.** (1) Without a shape restriction the two quadrupoles bound no norm of the shear history from
-above; every upper limit on a shear amplitude is a statement about a family with at most two parameters per
-tensor component, or about a sign restriction. (2) Under a sign restriction T alone bounds the L^1 norm. (3) A
+above. An upper amplitude bound requires a declared restriction controlling the moment kernel, such as
+a finite-dimensional identified family, a sign restriction, or a physical norm/stress budget. The restriction
+and its physical domain must be stated; arbitrary amplitudes may leave the linear transfer approximation. (2) Under a sign restriction T alone bounds the L^1 norm. (3) A
 measured ratio Sigma_E/Sigma_T outside [rho_min, rho_max], in particular a negative one, certifies a sign change
 of the history. (4) For late-time support tau_max is small: |Sigma_E| <= (sqrt6/10) tau_max ||f||_1 and the
 weight in (iii-b) is at most rho(tau_max), so the sensitivity to a sign-changing late-time history is
@@ -281,14 +290,16 @@ that T8 counts.
 of the matter of depth shell j. The CMB dipole is D_R = (v_O - v_R)/c. A flux-limited population a in shell j
 with Ellis-Baldwin coefficient k_a and no intrinsic dipole has D_a = k_a (v_O - v_j)/c. The bulk flow of
 shell j measured with redshifts in the radiation frame is V_j = v_j - v_R. Then
-D_a/k_a - D_R + V_j/c = 0 identically. A global tilt is the linear hypothesis V_j = V for all j; with n_c
+D_a/k_a - D_R + V_j/c = 0 identically. The depth-constant velocity submodel CONST_V is the linear hypothesis V_j = V for all j; with n_c
 count populations and n_d distance shells it leaves 3 (n_c + n_d - 1) residual degrees of freedom.
 
 **Proof.** Substitute. The design of the tilt hypothesis has 3 columns and 3 (n_c + n_d) rows of rank 3. QED
 
 **Consequence.** For counts and distances of the same shell the closure relation R54-EQ-38 is an identity and
-tests only the measurement chain; it becomes a physical test when it links different shells, where the
-standard expectation is that V_j decays with depth. Relative velocities between the matter and radiation
+tests only the measurement chain. Across different shells it tests CONST_V, not every homogeneous tilted
+cosmology: a time-dependent homogeneous tilt instead requires a source-bound transfer V_j = T(z_j) beta_0,
+including the actual shell windows. A local bulk-flow null may predict a depth-dependent distribution, not
+a deterministic decay in every realization. Relative velocities between the matter and radiation
 frames from super-horizon isocurvature modes, and dipoles in tilted anisotropic models, are treated in E60
 and E61; redshift tomography of the kinematic and intrinsic dipoles in E62.
 

@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "checked_date": "2026-11-17",
+  "purpose": "bounded prior-art and benchmark audit; not a global novelty theorem",
+  "project_definition_status": "R54 five-view definition and R7-R9 legacy robustness supplied by parent repository census; not independently re-audited by this literature reviewer",
+  "search_scope": {
+    "providers": [
+      "Exa",
+      "SciSpace",
+      "Parallel"
+    ],
+    "languages": [
+      "English"
+    ],
+    "fields": [
+      "CMB statistical isotropy",
+      "covariant cosmography",
+      "Bianchi cosmology",
+      "likelihood compression"
+    ],
+    "exa_sources_requested": 35,
+    "second_pass": "Same reviewer, independent SciSpace and Parallel discovery plus primary-source extraction",
+    "blind_spots": [
+      "No exhaustive citation-network sweep",
+      "No global novelty certification",
+      "Several sources inspected by targeted excerpts, not complete derivation audit"
+    ]
+  },
+  "sources": [
+    {
+      "id": "L01",
+      "title": "Multipole Vectors—a new representation of the CMB sky and evidence for statistical anisotropy or non-Gaussianity at 2<=l<=8",
+      "authors": [
+        "C. J. Copi",
+        "D. Huterer",
+        "G. D. Starkman"
+      ],
+      "year": 2004,
+      "url": "https://arxiv.org/abs/astro-ph/0310511v2",
+      "version": "arXiv v2, 2004-05-25",
+      "locator": "Abstract; multipole-vector representation",
+      "checked": "primary search extraction, not full proof audit",
+      "result": "Each real multipole is represented by l headless unit vectors and a scalar amplitude, nonlinearly related to a_lm and transforming covariantly under rotations.",
+      "overlap": "known after translation of notation",
+      "implication": "Vector/tensor-valued morphology alone is prior art. Compare low-l orientation, area-vector alignment and power as separate benchmark outputs.",
+      "application_verdict": "conditional",
+      "missing_bridge": "The project's five-variable mapping and statistical calibration must be compared on identical maps/masks."
+    },
+    {
+      "id": "L02",
+      "title": "The Cosmic Microwave Background Bipolar Power Spectrum: Basic Formalism and Applications",
+      "authors": [
+        "Amir Hajian",
+        "Tarun Souradeep"
+      ],
+      "year": 2005,
+      "url": "https://arxiv.org/abs/astro-ph/0501001v1",
+      "version": "arXiv v1, 2004-12-31",
+      "locator": "BipoSH covariance expansion; BiPS definitions around equations 23–25",
+      "checked": "primary full-text excerpt acquired; covariance representation inspected",
+      "result": "BipoSH irreducibly decomposes the harmonic covariance, including off-diagonal correlations; BiPS contracts this into rotational invariants. Beam/noise/masks can produce signals.",
+      "overlap": "known after translation of notation",
+      "implication": "A matrix-valued a_lm covariance tensorization must be benchmarked against the same retained BipoSH sectors, not against C_l alone.",
+      "application_verdict": "conditional",
+      "missing_bridge": "Define empirical vs ensemble covariance and calibrate one-sky estimators, masks and anisotropic noise."
+    },
+    {
+      "id": "L03",
+      "title": "Multipole decomposition of the general luminosity distance 'Hubble law'—a new framework for observational cosmology",
+      "authors": [
+        "Asta Heinesen"
+      ],
+      "year": 2021,
+      "url": "https://arxiv.org/abs/2010.06534v2",
+      "version": "arXiv v2, 2021-04-23",
+      "locator": "Equations 2.1, 2.11, 3.12, 4.1–4.7",
+      "checked": "primary text; conventions, photon-direction sign and Hubble decomposition inspected",
+      "result": "For c=1 and k=E(u-e), H(e)=Theta/3-a.e+sigma:ee. The local distance-redshift expansion has 9/25/61 coefficients through first/second/third order.",
+      "overlap": "known verbatim",
+      "implication": "Directional Hubble kinematics already has a physical tensor map. Restore c and distinguish the parameter vector theta from expansion scalar Theta. Vorticity is absent from the first-order slope but enters higher-order coupled terms.",
+      "application_verdict": "verified",
+      "missing_bridge": "A finite-redshift likelihood still needs convergence range, derivatives/closure, noise/selection and observer-frame treatment."
+    },
+    {
+      "id": "L04",
+      "title": "Covariant cosmography: the observer-dependence of the Hubble parameter",
+      "authors": [
+        "Roy Maartens",
+        "Jessica Santiago",
+        "Chris Clarkson",
+        "Basheer Kalbouneh",
+        "Christian Marinoni"
+      ],
+      "year": 2024,
+      "url": "https://arxiv.org/abs/2312.09875v3",
+      "version": "arXiv v3, 2024-06-14; JCAP 09 (2024) 070",
+      "locator": "Equations 3.1–3.7; section 4.3",
+      "checked": "requested v2 HTML was resolved by provider to full text explicitly labelled v3; v3 recorded as inspected version",
+      "result": "For dust matter, the matter-frame physical Hubble parameter has monopole and shear quadrupole. Observer boost produces a dipole including shear-dependent aberration. Incorrect luminosity-distance transformations can create spurious octupoles.",
+      "overlap": "partial or adjacent result only",
+      "implication": "A fitted Hubble dipole cannot be assigned to global tilt before applying the correct observer-frame transformation. Dust result does not eliminate acceleration dipoles for arbitrary congruences.",
+      "application_verdict": "verified",
+      "missing_bridge": "Implement an explicit convention-consistent frame map and avoid combining formulas for different congruences."
+    },
+    {
+      "id": "L05",
+      "title": "First constraints on the intrinsic CMB dipole and our velocity with Doppler and aberration",
+      "authors": [
+        "Pedro da Silveira Ferreira",
+        "Miguel Quartin"
+      ],
+      "year": 2021,
+      "url": "https://arxiv.org/abs/2011.08385v2",
+      "version": "arXiv v2, 2021-07-23; PRL 127, 101301",
+      "locator": "Equation 1; Estimators and pipeline; Table 3",
+      "checked": "primary targeted text extracted through independent Exa and Parallel routes; SciSpace discovery cross-check",
+      "result": "Delta1=beta+Delta_int, betaD=beta+(1+alphaNG)Delta_int, betaA=beta+Ld. The general parameterization has 9 observable components and 10 unknowns. Constraints on intrinsic dipole use a standard dipolar-lensing assumption.",
+      "overlap": "partial or adjacent result only",
+      "implication": "Separating dipole/aberration/modulation is existing work. Conditional nuisance handling, shared-data covariance and identifiability are mandatory in a new tilt likelihood.",
+      "application_verdict": "verified",
+      "missing_bridge": "Global tilt requires its own dynamical transfer model; intrinsic dipole is not itself a global tilt measurement.",
+      "companion": {
+        "url": "https://arxiv.org/abs/2107.10846",
+        "title": "Disentangling Doppler modulation, aberration and the temperature dipole in the CMB",
+        "version": "arXiv v1, 2021-07-22",
+        "result": "Independent calibrated aberration/Doppler estimators; mask, beam, noise, leakage and intensity-to-temperature artifacts are modeled."
+      }
+    },
+    {
+      "id": "L06",
+      "title": "Interpreting the CMB aberration and Doppler measurements: boost or intrinsic dipole?",
+      "authors": [
+        "Omar Roldan",
+        "Alessio Notari",
+        "Miguel Quartin"
+      ],
+      "year": 2016,
+      "url": "https://arxiv.org/abs/1603.02664v2",
+      "version": "arXiv v2, 2016-06-13",
+      "locator": "Abstract (exact conditional degeneracy statement)",
+      "checked": "primary abstract authenticated; detailed derivation not audited",
+      "result": "Doppler-like boost and intrinsic-potential couplings can be degenerate under single-field-inflation second-order initial conditions; aberration-like lensing is generally distinct but can be fine-tuned to a boost.",
+      "overlap": "partial or adjacent result only",
+      "implication": "No unconditional observational separation theorem should be claimed from a preferred direction or dipole alone.",
+      "application_verdict": "conditional",
+      "missing_bridge": "Exact tilt model and its projected templates must be shown distinguishable in the actual data likelihood."
+    },
+    {
+      "id": "L07",
+      "title": "How isotropic is the Universe?",
+      "authors": [
+        "Daniela Saadeh",
+        "Stephen M. Feeney",
+        "Andrew Pontzen",
+        "Hiranya V. Peiris",
+        "Jason D. McEwen"
+      ],
+      "year": 2016,
+      "url": "https://arxiv.org/abs/1605.07178v2",
+      "version": "arXiv v2, 2016-09-07; PRL 117, 131302",
+      "locator": "Anisotropic models; near-isotropic shear modes; ABSolve construction",
+      "checked": "primary text inspected for model classes and linearization",
+      "result": "Tests small anisotropy in I, V, VII0, VIIh via scalar/vector/tensor shear modes and temperature/polarization patterns. Closed IX is not included in the analyzed family.",
+      "overlap": "partial or adjacent result only",
+      "implication": "A shear-eigenvalue label is a local morphology classification, not a Bianchi Lie-algebra classification. A new model-family likelihood must retain class-dependent structure/evolution and transfer templates.",
+      "application_verdict": "verified",
+      "missing_bridge": "Do not extend published constraints to all tilted Bianchi classes or nonlinear anisotropy."
+    },
+    {
+      "id": "L08",
+      "title": "Planck 2018 results. VII. Isotropy and statistics of the CMB",
+      "authors": [
+        "Planck Collaboration"
+      ],
+      "year": 2020,
+      "url": "https://www.aanda.org/articles/aa/full_html/2020/09/aa35201-19/aa35201-19.html",
+      "version": "A&A 641, A7 (2020); arXiv:1906.02552v2",
+      "locator": "Sections 1, 4, 6.1; null tests and global significance",
+      "checked": "publisher targeted text extracted; arXiv metadata cross-checked",
+      "result": "Large-angle temperature anomalies are confirmed; their significance depends on a-posteriori choices. Simulations reproduce the analysis selection, and some analyses use global statistics calibrated by repeating scans on simulations.",
+      "overlap": "known after translation of notation",
+      "implication": "Six topic searches, axes, multipole bands, redshift cuts and compression settings need one declared family of global tests; five-variable p-values are not independent simply because named differently.",
+      "application_verdict": "verified",
+      "missing_bridge": "Use the project's existing usable simulations and freeze selection before final observed-sky scoring."
+    },
+    {
+      "id": "L09",
+      "title": "Generalized massive optimal data compression",
+      "authors": [
+        "Justin Alsing",
+        "Benjamin Wandelt"
+      ],
+      "year": 2018,
+      "url": "https://arxiv.org/abs/1712.00012v2",
+      "version": "arXiv v2, 2018-04-03; MNRAS 476, L60–L64",
+      "locator": "Section 2.2, equations 4–7; Gaussian score equation 17; limitations",
+      "checked": "primary text; local expansion and Fisher optimality inspected",
+      "result": "The score supplies one summary per parameter and preserves local Fisher information at the fiducial point under regularity assumptions. Gaussian score combines mean-sensitive linear and covariance-sensitive quadratic terms.",
+      "overlap": "known after translation of notation",
+      "implication": "Tensorization cannot claim more Fisher information than the correctly specified full likelihood. A new contribution must be demonstrated as information retention, calibration, cost or robustness against specified alternatives.",
+      "application_verdict": "verified",
+      "missing_bridge": "Five-variable compression is not automatically sufficient; measure retained Fisher spectrum and simulation-based coverage beyond the fiducial point."
+    },
+    {
+      "id": "L10",
+      "title": "Potential signature of a quadrupolar Hubble expansion in Pantheon+ supernovae",
+      "authors": [
+        "Jessica A. Cowell",
+        "Suhail Dhawan",
+        "Hayley J. Macpherson"
+      ],
+      "year": 2022,
+      "url": "https://arxiv.org/abs/2212.13569v1",
+      "version": "arXiv v1, 2022-12-27 (inspected version)",
+      "locator": "Abstract; simultaneous Hubble-quadrupole/deceleration-dipole fits",
+      "checked": "primary excerpt acquired; result definition inspected",
+      "result": "Simultaneously fits Hubble quadrupole and deceleration dipole; results depend on redshift frame and peculiar-velocity corrections.",
+      "overlap": "partial or adjacent result only",
+      "implication": "Use direct STF regression with survey covariance as a baseline; compare the same pre-existing catalog, mask and correction conventions before claiming a new physical measurement.",
+      "application_verdict": "conditional",
+      "missing_bridge": "Only run this benchmark if a suitable redshift/distance catalog and covariance already exist in the project."
+    }
+  ],
+  "tool_failures": [],
+  "project_context": {
+    "five_views": [
+      "carrier precision F and t",
+      "Q gauge of declared body K0",
+      "Pi named-law tail",
+      "directional F occupancy conditional bound",
+      "G_F transport across depth"
+    ],
+    "existing_benchmark": {
+      "WIN": 0,
+      "TIE": 2,
+      "NOT_COMPARABLE": 7
+    },
+    "legacy_reuse": [
+      "R7/R8/R9 robust union confidence sets",
+      "max model p value",
+      "Bonferroni under unknown cross-dependence"
+    ],
+    "application_candidate": "joint polar and STF CF4 carrier retaining full 32-row covariance, versus R54 separate 12/20 blocks; robust confidence envelope across declared zero-point models"
+  }
+}

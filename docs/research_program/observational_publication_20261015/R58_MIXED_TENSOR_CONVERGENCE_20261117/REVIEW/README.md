@@ -1,0 +1,1 @@
+Independent receipts bind the original candidate/output SHA256s. Absolute scratch paths identify that historical execution. The historical oracle source is preserved unchanged; for portable local data replay use scripts/r58/check_r58_independent.py, and for current unit/physical-map regression use tests/r58. Do not reinterpret historical paths as the canonical checkout.

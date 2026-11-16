@@ -1,5 +1,6 @@
 generated_on: '2026-09-27'
 completed:
+- PR-R58-MIXED-TENSOR-CONVERGENCE
 - PR-R57-MANUSCRIPT-DECISION
 - PR-R56-JOINT-BENCHMARK
 - PR-R55-LOCAL-CALIBRATION
@@ -234,6 +235,7 @@ blocked:
 - PR-247
 - PR-190
 pending:
+- PR-R59-NATIVE-REPLAY-MANUSCRIPT
 - PR-155
 - PR-156
 - PR-157
@@ -2342,3 +2344,6 @@ notes: PR-000 closed as inventory-only baseline. PR-001 stabilizes editable inst
 # PR-R55-LOCAL-CALIBRATION: complete_scoped (C0). Independent diff review of the cloud code resolved (8 findings fixed, gates MG-21..29); R54-L01 T+E calibration (LOO intervals SUPERSEDED, ideal E response kept, E lane diagnostic under the FFP10 law); R54-L04 CF4 survey zero points (step UNRESOLVED, H-L5a rejected by its decision check, robust class still depends on the zero-point nuisance model); R54-L02 PR4 bypass (FFP10 kept for T, T lane pipeline-stable, E lane CLAIMABLE only with a large adopted floor); R54-L03 count dipoles (clustering body bracket, same-estimator mocks, excess tests pass, two competitor estimators reproduced). Details: R54_TENSOR_FRAME_TOMOGRAPHY_20261116/R54_REPORT_KO.md section 7
 # PR-R56-JOINT-BENCHMARK: complete_scoped (C0). R54-L06 joint precision-form tomography (polar block rank 15/18: depth velocities degenerate with the calibration dipole; STF2 s0 not identified under radiation stress without the E lane; omega unidentified; transport table and tilt closure with the calibrated count covariance) and R54-L07 adversarial benchmark (WIN 0, TIE 3, LOSS 0, NOT_COMPARABLE 6; 13 of 17 open evidence rows verified). Details: R54_REPORT_KO.md sections 7.5-7.6
 # PR-R57-MANUSCRIPT-DECISION: complete_scoped (C0). Decision BOUNDED_NOTE_EXTENDED after an independent decision-gate review (12 required changes; E lane treated as diagnostic in the manuscript, count excess HOLD, R53 CF4-operator rows marked superseded). Programme stopped; no further loop. Details: R54_TENSOR_FRAME_TOMOGRAPHY_20261116/FINAL_DECISION_R57.md
+
+# R58 2026-11-17: complete_scoped C0, 35970-group seven-model full32x11 likelihood and 22-parameter kinematic pullback, independent numeric review; no cosmic discovery. R57 historical stop preserved; explicit owner scope authorizes only R58/R59.
+# R59: pending native replay + matched benchmark + manuscript decision then STOP; no automatic new data or R60.

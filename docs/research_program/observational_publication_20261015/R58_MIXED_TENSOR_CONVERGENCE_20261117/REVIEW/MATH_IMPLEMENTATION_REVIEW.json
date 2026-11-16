@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "pass_id": "r58_independent_review",
+  "date": "2026-11-17",
+  "baseline_commit": "77f61c17ba33ff28ff4f16a7d42621d8041e5ce4",
+  "verdict": "PASS_SCOPED_WITH_EXPLICIT_LIMITATIONS",
+  "scope": "R54 PRV-01..05 local repair closeout; R58 mixed tensor Gaussian carrier module and unit tests. No data runner or observed result review.",
+  "independent_of_author": true,
+  "reviewer": "/root/proof_review",
+  "requested_model": null,
+  "observed_model": "UNKNOWN",
+  "files": [
+    {
+      "path": "htt/htt/htt/infer/r54_identifiability.py",
+      "sha256": "382b429fd32ea7ad2d5997be1b39c9ccd15b0d55f7e0066b7f656e205a5ced92",
+      "size_bytes": 12908,
+      "coverage": "full changed source/diff read"
+    },
+    {
+      "path": "htt/htt/htt/infer/r54_tensor_five_view.py",
+      "sha256": "47f9ab5fd40da9ffb8725ff9720a8d4cba7116c905a6a4c11e05b79f972e17a8",
+      "size_bytes": 21272,
+      "coverage": "full changed source/diff read"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+      "sha256": "f4aac3900a636e7a5d4f4b60f6529c003c049c65c06b94b643847a9fbf2917f2",
+      "size_bytes": 30841,
+      "coverage": "full changed source/diff read"
+    },
+    {
+      "path": "htt/htt/htt/infer/r58_mixed_tensor_likelihood.py",
+      "sha256": "f1c07d8ba7253f225af9354277a2973b5cab96c86febd08d4f8c5e1a11555bc0",
+      "size_bytes": 15332,
+      "coverage": "full changed source/diff read"
+    },
+    {
+      "path": "tests/r58/test_mixed_tensor_likelihood.py",
+      "sha256": "272efb9253651215cd887036aa8f4269f4ccd9deb6ef48bd2844e79f927cadbc",
+      "size_bytes": 11896,
+      "coverage": "full changed source/diff read"
+    }
+  ],
+  "prior_findings": [
+    {
+      "id": "PRV-01",
+      "resolution": "T3 removes false marginal non-contraction; states conditional-prior invariance and bounded-interval uniform coverage. Gaussian correlated-prior counterexample now in proof.",
+      "status": "closed_in_reviewed_document"
+    },
+    {
+      "id": "PRV-02",
+      "resolution": "T5 requires positive-definite Sigma and integer n>=p; both factor helpers reject nonsingular-domain and count-type violations.",
+      "status": "closed"
+    },
+    {
+      "id": "PRV-03",
+      "resolution": "rho_ratio uses negative-exponent/expm1 stable formula and rejects nonfinite or negative optical depth; 0,1e-20,1100,10000 limits tested.",
+      "status": "closed"
+    },
+    {
+      "id": "PRV-04",
+      "resolution": "THEOREMS T9 labels CONST_V and requires source-bound windowed transfer for evolving homogeneous tilt. R54 historical THEORY_LOOPS wording needs explicit supersession in root integration.",
+      "status": "closed_in_reviewed_document",
+      "integration_obligation": "Link R58 CONST_V supersession to historical R54 THEORY_LOOPS L6 rather than repeat broad global-tilt conclusion."
+    },
+    {
+      "id": "PRV-05",
+      "resolution": "T8 norm domain now finite/nonzero interval/finite optical depth or L2 kernels with positive-definite Gram; upper bounds require nullspace-controlling restriction and physical amplitude scope.",
+      "status": "closed_in_reviewed_document"
+    }
+  ],
+  "issues": [
+    {
+      "id": "R58-IR-01",
+      "severity": "major",
+      "confidence": 1.0,
+      "location": "r58_mixed_tensor_likelihood.py:linear_interval",
+      "description": "Initial termwise cancellation test falsely called theta1 unidentifiable for X=[[1,1,1],[0,1,1]] because null-basis coordinate was -6.99e-17.",
+      "resolution": "Column-equilibrated estimability chart with roundoff tolerance; exact zero-column checks. Added coordinate, unit-change and rotation tests. Independent repaired sd=sqrt(2).",
+      "status": "closed"
+    },
+    {
+      "id": "R58-IR-02",
+      "severity": "major",
+      "confidence": 1.0,
+      "location": "r58_mixed_tensor_likelihood.py:fit_linear",
+      "description": "Declared-scale rank truncation produced spurious central adequacy p for X=diag(1,1e-13), theta=(0,1e14).",
+      "resolution": "Disagreement with column-equilibrated rank raises ValueError before inference outputs. Exact chi-square calibration condition explicitly requires discarded modes to be zero in the declared model.",
+      "status": "closed_scoped"
+    },
+    {
+      "id": "R58-IR-03",
+      "severity": "major",
+      "confidence": 1.0,
+      "location": "r58_mixed_tensor_likelihood.py:gaussian_log_likelihood",
+      "description": "Rounded singular precision quadratic could give logL 14.55 too high on a 1e8 null displacement and 281769 too high at1e10.",
+      "resolution": "Evaluate squared residual from retained whitened likelihood factor and offset; reject minimal singular records lacking factor. Independent far-null checks now preserve PSD and agree with direct residual within backward-error budget.",
+      "status": "closed"
+    },
+    {
+      "id": "R58-IR-04",
+      "severity": "minor",
+      "confidence": 1.0,
+      "location": "fit_linear/robust_interval docstrings",
+      "description": "Full singular representative covariance is gauge dependent; union support envelope is an interval hull, not the possibly disconnected projected union itself.",
+      "resolution": "Docstrings/metadata now distinguish identifiable-contrast covariance and interval hull, retain per-model intervals.",
+      "status": "closed"
+    }
+  ],
+  "checks": [
+    {
+      "command": "python -m pytest /workspace/scratch/ca5a06f498ba/r58_patch/tests/r58/test_mixed_tensor_likelihood.py -q",
+      "exit_code": 0,
+      "result": "25 passed in 0.63 s; one unrelated pytest plugin deprecation warning"
+    },
+    {
+      "command": "python /workspace/scratch/ca5a06f498ba/r58_review_checks.py",
+      "exit_code": 0,
+      "artifact": "r58_review_checks.json",
+      "result": "24 independent full-rank GLS/contrast/logL oracles; repaired estimability/rank/large-null witnesses; r54 count domain and optical-depth limits passed"
+    },
+    {
+      "method": "manual derivation",
+      "result": "Whitened SVD fit, rank confidence cylinder, pointwise contrast law, nuisance-model interval-hull coverage and max-p union-null validity checked under fixed known SPD covariance and common scientific target/null."
+    }
+  ],
+  "remaining_limitations": [
+    "Numerical rank is a declared tolerance-dependent model decision. Agreement of two rank estimates alone is not a proof that every discarded singular mode is exactly zero.",
+    "Probability and simultaneous coverage claims require fixed correctly specified covariance and linear response; finite-MC, selection and model discrepancy calibration remain outside this module.",
+    "Five-view reporting has no power advantage over exact Gaussian GLS on the same experiment. Interval unions cover only included valid nuisance models with common estimand/units.",
+    "No full repository test suite, raw-data likelihood, data runner, Bianchi transfer or manuscript-source synchronization reviewed in this pass."
+  ]
+}

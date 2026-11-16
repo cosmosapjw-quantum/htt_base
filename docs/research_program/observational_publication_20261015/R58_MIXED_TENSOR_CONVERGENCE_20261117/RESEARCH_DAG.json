@@ -1,0 +1,91 @@
+{
+  "schema": "htt.r58.dag/1",
+  "owner_authorization": "2026-11-17 current request; bounded successor to historical R57 stop",
+  "base_sha": "77f61c17ba33ff28ff4f16a7d42621d8041e5ce4",
+  "data_policy": "owned existing only",
+  "claim_tier": "C0",
+  "nodes": [
+    {
+      "id": "R58-HISTORY",
+      "status": "complete_scoped",
+      "evidence": "HISTORY_COVERAGE.json; HISTORY_PR_INVENTORY.json; HISTORY_AUDIT_KO.md"
+    },
+    {
+      "id": "R58-THEORY",
+      "depends": [
+        "R58-HISTORY"
+      ],
+      "status": "complete_scoped",
+      "lanes": [
+        {
+          "id": "L1",
+          "topic": "low-l morphology to physical observables",
+          "bounded_conclusion": "conditional T shear-history functional; E diagnostic, no inverse pointwise history",
+          "loop_steps": "R1-R10 in THEORY_LOOPS.md"
+        },
+        {
+          "id": "L2",
+          "topic": "dipole anomaly",
+          "bounded_conclusion": "owned counts underpowered, intrinsic/boost decomposition unresolved",
+          "loop_steps": "R1-R10 in THEORY_LOOPS.md"
+        },
+        {
+          "id": "L3",
+          "topic": "beyond-FLRW kinematic components",
+          "bounded_conclusion": "rank11/22 conditional pullback; sigma,A,omega individually unbounded with free calibration",
+          "loop_steps": "R1-R10 in THEORY_LOOPS.md"
+        },
+        {
+          "id": "L4",
+          "topic": "anisotropy and Bianchi classification",
+          "bounded_conclusion": "apparent tensor geometry measurable; structure constants/family unidentifiable without transfer",
+          "loop_steps": "R1-R10 in THEORY_LOOPS.md"
+        },
+        {
+          "id": "L5",
+          "topic": "redshift/direction Hubble factor",
+          "bounded_conclusion": "full four-window polar+STF covariance and mixed coefficient fits executed",
+          "loop_steps": "R1-R10 in THEORY_LOOPS.md"
+        },
+        {
+          "id": "L6",
+          "topic": "local boost versus global tilt",
+          "bounded_conclusion": "CONST_V submodel only; time-dependent homogeneous tilt not excluded",
+          "loop_steps": "R1-R10 in THEORY_LOOPS.md"
+        }
+      ]
+    },
+    {
+      "id": "R58-DATA",
+      "depends": [
+        "R58-THEORY"
+      ],
+      "status": "complete_scoped",
+      "evidence": "RESULTS/; REVIEW/; VALIDATION.json",
+      "implementation": "scripts/r58; htt/htt/htt/infer/r58_mixed_tensor_likelihood.py"
+    },
+    {
+      "id": "PR-R59-NATIVE-REPLAY-MANUSCRIPT",
+      "depends": [
+        "R58-DATA"
+      ],
+      "status": "pending",
+      "tasks": [
+        "R59-A",
+        "R59-B",
+        "R59-C",
+        "R59-D"
+      ],
+      "contract": "LOCAL_AGENT_CONTRACT.json",
+      "terminal": true
+    }
+  ],
+  "unchanged_holds": [
+    "native Bianchi family",
+    "omega inference",
+    "E physical calibration",
+    "arbitrary tilt identification",
+    "all-systematics coverage"
+  ],
+  "no_auto_successor": true
+}

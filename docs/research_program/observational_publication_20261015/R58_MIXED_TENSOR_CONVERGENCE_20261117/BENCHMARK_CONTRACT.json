@@ -1,0 +1,429 @@
+{
+  "schema": "htt.r58.benchmark_contract/1",
+  "date": "2026-11-17",
+  "owner": "HTT",
+  "baseline_commit": "77f61c17ba33ff28ff4f16a7d42621d8041e5ce4",
+  "convergence_objective": "Quantify scientifically interpretable calibration and confidence-geometry changes from retained polar-STF cross covariance in existing selected CF4 data; no assertion of statistical advantage over exact same-experiment GLS.",
+  "claim_tier": "C0",
+  "data_policy": {
+    "new_observation_downloads": false,
+    "allowed": "Existing committed observation rows, covariance caches, masks, templates and already generated mocks; new computational Gaussian draws of these fixed declared models are allowed and must be labelled synthetic.",
+    "forbidden": [
+      "Downloading new maps/catalogues or fabricating substitute observed data",
+      "Replacing a missing survey likelihood by a toy and reporting it as observed-data evidence",
+      "Inferring existence of a file from a legacy filename without reading it"
+    ],
+    "cache_policy": "Preserve original cache bytes and model keys; operator-byte mismatch remains explicit and is accepted only under existing pinned numerical-parity policy."
+  },
+  "statistical_model": {
+    "observed_rows": 32,
+    "n_selected_groups": 35970,
+    "parameters": [
+      "V_x_km_s",
+      "V_y_km_s",
+      "V_z_km_s",
+      "dH_x",
+      "dH_y",
+      "dH_z",
+      "kappa_0",
+      "kappa_1",
+      "kappa_2",
+      "kappa_3",
+      "kappa_4"
+    ],
+    "n_parameters": 11,
+    "formula": "eta = nuisance + g(z) n.V + n.dH + n.K.n; X_m = O_m D, C_m = O_m C_noise O_m^T + pinned exact LCDM body",
+    "physical_pullback": {
+      "dimension": 22,
+      "rank": 11,
+      "status": "conditional apparent-to-kinematic map with free calibration; sigma/omega/A individually unbounded",
+      "beta_scope": "specified constant-velocity response only, not arbitrary global tilt"
+    },
+    "five_views": [
+      "x: signed vector/STF estimate with precision J, score t and full covariance",
+      "Q: gauge of the declared coefficient-noise ellipsoid K0",
+      "Pi: named fixed-Gaussian null tail",
+      "F: directional support; occupancy unavailable without admitted physical ceiling and measure",
+      "G_F: initial level plus full-covariance depth contrasts"
+    ],
+    "view_combination": "These views share one likelihood and must never be multiplied as independent evidence."
+  },
+  "result_snapshot": {
+    "evidence": "RESULTS/OWNED_TENSOR_RESULT.json",
+    "source_sha256": "264160d6b53112e7b21278bbeb19baaa9c45e22037b8269debc20baa294f09b9",
+    "carrier_sha256": "42f6bc5158fdf2f876720db12c44b088bc2db9734887e0d84ae098b234a7e64d",
+    "observed_metrics": {
+      "log": {
+        "rank": 11,
+        "n_observed": 32,
+        "parameter_null_wald_p": 1.9711837445451908e-07,
+        "compressed_rows_zero_mean_p": 0.000343816121668471,
+        "adequacy_p": 0.8883385009503209,
+        "polar_STF_canonical_correlation_max": 0.819669110669676,
+        "split_nominal95_coverage_gaussian_20k": 0.93225,
+        "full_GLS_coverage_same20k": 0.9496,
+        "split_nominal95_coverage_independent_gaussian_60k": 0.9330833333333334,
+        "full_GLS_coverage_independent_60k": 0.9497166666666667,
+        "candidate_mc_se": 0.001777075371220928,
+        "independent_mc_se": 0.0010201211234365656
+      },
+      "log_mono": {
+        "rank": 11,
+        "n_observed": 32,
+        "parameter_null_wald_p": 2.7122481026412566e-05,
+        "compressed_rows_zero_mean_p": 0.0027723171615289064,
+        "adequacy_p": 0.6524062445291612,
+        "polar_STF_canonical_correlation_max": 0.8153514834811358,
+        "split_nominal95_coverage_gaussian_20k": 0.93255,
+        "full_GLS_coverage_same20k": 0.9496,
+        "split_nominal95_coverage_independent_gaussian_60k": 0.9331,
+        "full_GLS_coverage_independent_60k": 0.9502666666666667,
+        "candidate_mc_se": 0.0017734217983886406,
+        "independent_mc_se": 0.001020003186269533
+      },
+      "log_mono_error": {
+        "rank": 11,
+        "n_observed": 32,
+        "parameter_null_wald_p": 0.00010803463171722245,
+        "compressed_rows_zero_mean_p": 0.004573097803521875,
+        "adequacy_p": 0.5519836840257979,
+        "polar_STF_canonical_correlation_max": 0.8152120810350987,
+        "split_nominal95_coverage_gaussian_20k": 0.9326,
+        "full_GLS_coverage_same20k": 0.9496,
+        "split_nominal95_coverage_independent_gaussian_60k": 0.93315,
+        "full_GLS_coverage_independent_60k": 0.9502833333333334,
+        "candidate_mc_se": 0.0017728118907543464,
+        "independent_mc_se": 0.0010196492656791352
+      },
+      "log_mono_galactic": {
+        "rank": 11,
+        "n_observed": 32,
+        "parameter_null_wald_p": 0.015342738288599698,
+        "compressed_rows_zero_mean_p": 0.06529507594604561,
+        "adequacy_p": 0.4337990866388299,
+        "polar_STF_canonical_correlation_max": 0.803653705685775,
+        "split_nominal95_coverage_gaussian_20k": 0.9356,
+        "full_GLS_coverage_same20k": 0.9496,
+        "split_nominal95_coverage_independent_gaussian_60k": 0.9372833333333334,
+        "full_GLS_coverage_independent_60k": 0.9506666666666667,
+        "candidate_mc_se": 0.0017356935213337637,
+        "independent_mc_se": 0.0009898087895219027
+      },
+      "log_mono_radial": {
+        "rank": 11,
+        "n_observed": 32,
+        "parameter_null_wald_p": 0.0003285543288639891,
+        "compressed_rows_zero_mean_p": 0.018909215495922397,
+        "adequacy_p": 0.7420285421480757,
+        "polar_STF_canonical_correlation_max": 0.8166617373869303,
+        "split_nominal95_coverage_gaussian_20k": 0.9325,
+        "full_GLS_coverage_same20k": 0.9496,
+        "split_nominal95_coverage_independent_gaussian_60k": 0.9328833333333333,
+        "full_GLS_coverage_independent_60k": 0.9500333333333333,
+        "candidate_mc_se": 0.0017740314258772307,
+        "independent_mc_se": 0.001021534953898807
+      },
+      "log_split": {
+        "rank": 11,
+        "n_observed": 32,
+        "parameter_null_wald_p": 0.009409655153666003,
+        "compressed_rows_zero_mean_p": 0.1122128921846376,
+        "adequacy_p": 0.7088901064387221,
+        "polar_STF_canonical_correlation_max": 0.8370010880084283,
+        "split_nominal95_coverage_gaussian_20k": 0.93205,
+        "full_GLS_coverage_same20k": 0.9496,
+        "split_nominal95_coverage_independent_gaussian_60k": 0.93315,
+        "full_GLS_coverage_independent_60k": 0.9500666666666666,
+        "candidate_mc_se": 0.0017795055141808349,
+        "independent_mc_se": 0.0010196492656791352
+      },
+      "log_survey": {
+        "rank": 11,
+        "n_observed": 32,
+        "parameter_null_wald_p": 0.004499201260478784,
+        "compressed_rows_zero_mean_p": 0.05954017584090264,
+        "adequacy_p": 0.6325095401625944,
+        "polar_STF_canonical_correlation_max": 0.8425564972912526,
+        "split_nominal95_coverage_gaussian_20k": 0.9325,
+        "full_GLS_coverage_same20k": 0.9496,
+        "split_nominal95_coverage_independent_gaussian_60k": 0.9338,
+        "full_GLS_coverage_independent_60k": 0.9499666666666666,
+        "candidate_mc_se": 0.0017740314258772307,
+        "independent_mc_se": 0.0010150333327860063
+      }
+    },
+    "robust_p_values": {
+      "common_11_parameter_zero_null": 0.015342738288599698,
+      "all_32_rows_zero_mean_null": 0.1122128921846376,
+      "are_same_test": false
+    },
+    "independent_gls_oracle": {
+      "experiments": 24,
+      "max_estimate_abs_error": 4.2099657093785936e-13,
+      "max_logL_abs_error": 1.0160761121369433e-12
+    },
+    "calibration_scope": "Fixed-design, fixed correctly specified covariance Gaussian parameter-error calibration; not empirical coverage of the real survey or cosmic covariance validation."
+  },
+  "comparison_invariants": [
+    "Same observed rows and row order",
+    "Same scientific target, units, frame and response",
+    "Same noise/cosmic covariance except explicitly labelled ablation",
+    "Same nuisance treatment and model family",
+    "Same declared masks, redshift/depth cuts and conditioning",
+    "Same training/calibration/evaluation partitions when learned components are compared",
+    "Observed sky/catalogue never reused as tuning labels without selection replay"
+  ],
+  "outcome_enum": [
+    "TIE",
+    "BETTER_CALIBRATED_THAN_ABLATION",
+    "WORSE",
+    "NOT_COMPARABLE",
+    "UNDERPOWERED_NOT_COMPARABLE",
+    "BLOCKED_EXISTING_INPUT",
+    "UNRESOLVED"
+  ],
+  "comparators": [
+    {
+      "id": "B01_DIRECT_GLS",
+      "method": "Independent direct GLS and full multivariate Gaussian likelihood",
+      "source": [
+        "L09",
+        "REVIEW/DATA_INDEPENDENT_REVIEW.json"
+      ],
+      "common_estimand": "Same 11 coefficient vector on same 32 rows with same covariance and response",
+      "current_outcome": "TIE",
+      "evidence": "Independent existing-data WLS reconstruction and direct GLS agree; separate 24 small-matrix log-likelihood checks max absolute error 1.0161e-12.",
+      "metric": [
+        "estimate relative error",
+        "covariance relative error",
+        "log-likelihood absolute error",
+        "same contrast intervals"
+      ],
+      "local_task": "Reuse completed numerical evidence if code/input identity holds. On changed response/covariance rerun independent GLS oracle. Do not count identical statistical outputs as a WIN.",
+      "success": "Numerical equality within declared conditioning-based tolerances."
+    },
+    {
+      "id": "B02_SCORE",
+      "method": "Gaussian score/MOPED/quadratic-score compression",
+      "source": [
+        "L09"
+      ],
+      "common_estimand": "Same retained 32-row fixed-covariance linear-mean experiment",
+      "current_outcome": "TIE",
+      "evidence": "F=X^T C^-1 X and t=X^T C^-1 y are the classical normal equations; the linear-mean Gaussian score is an affine transform of t.",
+      "metric": [
+        "rank",
+        "Fisher generalized eigenvalues on identified subspace",
+        "likelihood-ratio preservation"
+      ],
+      "local_task": "Produce an algebraic mapping to the classical score and a same-input check. Include covariance-derivative score terms only if covariance depends on fitted parameters.",
+      "success": "State exact/local sufficiency scope; no extra-information claim relative to exact full likelihood."
+    },
+    {
+      "id": "B03_CROSS_BLOCK_ABLATION",
+      "method": "Same response and marginal covariance, polar-STF cross covariance set to zero",
+      "source": [
+        "RESULTS/OWNED_TENSOR_RESULT.json"
+      ],
+      "common_estimand": "Same 11 coefficient vector; covariance treatment is the sole ablation",
+      "current_outcome": "BETTER_CALIBRATED_THAN_ABLATION",
+      "evidence": "Candidate Gaussian20k nominal95 coverage 0.93205-0.93560 versus full GLS 0.94960; independent Gaussian60k confirms approximately 0.93288-0.93728 versus 0.94972-0.95067.",
+      "metric": [
+        "sandwich covariance A C_full A^T",
+        "nominal vs actual variance generalized eigenvalues",
+        "11D simultaneous coverage and binomial CI",
+        "best-fit displacement labelled descriptive, not a significance test"
+      ],
+      "local_task": "Preserve performed Gaussian calibration. Use any existing end-to-end catalogue mocks only after provenance/selection matching; report Gaussian and end-to-end results separately.",
+      "success": "Quantify calibration gap with uncertainty and declare its conditional scope; no requirement that full covariance shrink every interval."
+    },
+    {
+      "id": "B04_SCALAR_ABLATION",
+      "method": "Legacy scalar x_c or scalar norm compression",
+      "source": [
+        "R39/R54 definition registry",
+        "tests/r58/test_mixed_tensor_likelihood.py:test_scalar_norm_loses_signed_target_likelihood"
+      ],
+      "common_estimand": "Scalar norm cannot identify signed tensor/vector contrasts unless an extra direction assumption is supplied",
+      "current_outcome": "NOT_COMPARABLE",
+      "evidence": "Equal norms with different orientations can have different likelihood. The existing small counterexample establishes loss of orientation, not a universal power gain.",
+      "metric": [
+        "identified target dimension",
+        "profile likelihood of signed contrasts",
+        "coverage for genuinely common scalar targets only"
+      ],
+      "local_task": "Read the actual legacy statistic and map its target. Compare amplitudes only when the same null and normalization apply; do not invent a direction estimator for the scalar competitor.",
+      "success": "Either comparable amplitude result with calibrated uncertainty, or explicit target mismatch."
+    },
+    {
+      "id": "B05_MORPHOLOGY_BIPOSH",
+      "method": "Multipole vectors, C_l and BipoSH",
+      "source": [
+        "L01",
+        "L02",
+        "L08"
+      ],
+      "common_estimand": "Only a declared CMB anisotropy response on the same existing a_lm and MC ensemble",
+      "current_outcome": "NOT_COMPARABLE",
+      "evidence": "CF4 apparent Hubble coefficients and CMB covariance irreps are different experiments/targets; no common transfer response has been supplied by this R58 run.",
+      "metric": [
+        "calibrated fixed-family type-I rate",
+        "power for same injected CMB response if existing templates support it",
+        "orientation error where jointly defined"
+      ],
+      "local_task": "Inventory already owned CMB coefficients/masks/MC and existing transfer templates. Reuse fixed analysis if present. If absent or ensemble cannot resolve the proposed test, write BLOCKED_EXISTING_INPUT or UNDERPOWERED_NOT_COMPARABLE and finish this lane without new download.",
+      "success": "Common target must be justified before a WIN/TIE/WORSE label; a shared word anisotropy is insufficient."
+    },
+    {
+      "id": "B06_KINEMATIC_COSMOGRAPHY",
+      "method": "Direct covariant dipole+STF cosmography/weighted distance regression",
+      "source": [
+        "L03",
+        "L04",
+        "L10"
+      ],
+      "common_estimand": "Same apparent low-z coefficients on the selected CF4 rows; true sigma/A require additional calibration restrictions",
+      "current_outcome": "TIE",
+      "evidence": "Same linear model reduces to direct GLS. Physical pullback with free calibration has rank11 in22; individual sigma/omega/A intervals are unbounded.",
+      "metric": [
+        "full response rank",
+        "identified contrast support",
+        "frame transformation residual",
+        "confidence geometry"
+      ],
+      "local_task": "Freeze sign/units/source direction and residual definition. Compare exact same catalog/corrections. Higher-order redshift claims need existing source-bound response kernels; unsupported derivatives stay unresolved.",
+      "success": "Report apparent measured quantities and identifiable mixtures separately from physical assumptions."
+    },
+    {
+      "id": "B07_BOOST_INTRINSIC_DIPOLE",
+      "method": "Independent aberration/Doppler estimators with intrinsic dipole and dipolar lensing nuisance",
+      "source": [
+        "L05",
+        "L06"
+      ],
+      "common_estimand": "An explicit shared beta/local-observer target with specified CMB response and covariance",
+      "current_outcome": "NOT_COMPARABLE",
+      "evidence": "CF4 coherent V is not automatically the CMB observer velocity. Existing R58 uses constant velocity and does not implement evolving global-tilt transfer.",
+      "metric": [
+        "template-column rank",
+        "beta/tilt profile likelihood",
+        "confusion matrix from same declared injections",
+        "nuisance-dependence"
+      ],
+      "local_task": "Use only existing source-bound boost/global-tilt templates. If a global template or independently calibrated CMB estimator is unavailable, report the model-specific unresolved degeneracy. Do not relabel V as a measured global tilt.",
+      "success": "No separation claim without a distinguishable response and calibrated error law."
+    },
+    {
+      "id": "B08_BIANCHI",
+      "method": "Near-isotropic Bianchi I/V/VII0/VIIh template inference",
+      "source": [
+        "L07"
+      ],
+      "common_estimand": "Class-specific transfer parameters with same data, nuisance and priors",
+      "current_outcome": "NOT_COMPARABLE",
+      "evidence": "Local STF eigenvalues do not determine spatial Lie-algebra class. R58 did not evaluate Bianchi transfer likelihoods.",
+      "metric": [
+        "same-model template residual",
+        "profile likelihood or Bayes factor only on common observation density",
+        "prior sensitivity",
+        "misclassification power if same existing mocks exist"
+      ],
+      "local_task": "Read existing Bianchi class registry, structure constants and templates. Evaluate only available validated classes; missing classes remain BLOCKED_EXISTING_INPUT. Do not manufacture a common estimand by renaming STF coefficients.",
+      "success": "A local morphology label is never counted as a Bianchi-class measurement."
+    },
+    {
+      "id": "B09_ROBUST_ENVELOPE",
+      "method": "R7-R9 union confidence sets, max model p and unknown-dependence multiplicity correction",
+      "source": [
+        "legacy R7/R8/R9",
+        "RESULTS/OWNED_TENSOR_RESULT.json"
+      ],
+      "common_estimand": "Common physical coefficient target under a declared finite nuisance family",
+      "current_outcome": "TIE",
+      "evidence": "Legacy robustness principles reused; the new empirical content is seven-model selected-CF4 confidence geometry.",
+      "metric": [
+        "union/hull boundaries",
+        "modelwise p-values for named nulls",
+        "directions robust across all admitted models"
+      ],
+      "local_task": "Keep every model result and distinguish coordinate interval hull from disconnected set union. Do not rank differently transformed observation densities by raw likelihood/AIC/Bayes factors.",
+      "success": "Coverage stated only if at least one declared model and its error law is valid."
+    }
+  ],
+  "local_benchmark_protocol": {
+    "freeze_before_run": [
+      "Existing input checksums and baseline commit",
+      "Scientific target and null for each comparator",
+      "All seven current nuisance models; no observed-p-value pruning",
+      "Response/basis/frame/units/depth cuts",
+      "Fixed comparison metrics and reporting table",
+      "Mock law, seeds, counts, stopping condition and provenance"
+    ],
+    "execution_order": [
+      "Reproduce existing R58 outputs only if identities changed or on the user local machine for environment verification",
+      "Reuse completed direct GLS and score equivalence evidence; run the portable independent checker against the native output",
+      "Reuse completed same-input full/split sandwich and Gaussian calibration; the checker replays the existing 60000-draw oracle without a new implementation",
+      "If suitable existing end-to-end survey mocks exist, rerun the unchanged pipeline across those mocks; this is the remaining unexecuted numerical benchmark",
+      "Classify the other comparators from existing evidence and common-target checks; do not implement unrelated competitors or new transfer models",
+      "Write all outcomes including ties, misses, blocked inputs and underpowered results"
+    ],
+    "no_new_data_stop": "If a lane needs an unowned data product or a scientifically missing transfer map, record exact missing dependency and close it as blocked/unresolved; do not expand the data acquisition campaign.",
+    "mc_reporting": {
+      "minimum": "No universal minimum count is asserted. Use all declared existing mocks up to the predeclared cap, report binomial intervals and p resolution.",
+      "p_resolution": "1/(N+1) for a standard add-one Monte Carlo p-value",
+      "underpowered": "If Monte Carlo uncertainty cannot distinguish claimed calibration/power difference or resolve target tail, use UNDERPOWERED_NOT_COMPARABLE.",
+      "selection": "Post hoc model/axis/cut selection must be replayed on each null mock before a global discovery claim; otherwise retain conditional C0."
+    },
+    "output_files": [
+      "BENCHMARK_RESULTS.json",
+      "BENCHMARK_TABLE.csv",
+      "BENCHMARK_EXECUTION_LOG.txt"
+    ],
+    "required_result_fields": [
+      "comparator_id",
+      "common_estimand",
+      "input_sha256",
+      "response_identity",
+      "null_hypothesis",
+      "nuisance_models",
+      "actual_execution",
+      "seed_and_sample_count",
+      "metrics",
+      "uncertainty",
+      "outcome",
+      "limitations",
+      "next_action"
+    ],
+    "acceptance": "A correctly reported TIE or NOT_COMPARABLE is acceptable. A claimed benefit requires the same target and calibrated uncertainty; never select a weaker competitor to force a win.",
+    "independent_replay_command": "OPENBLAS_NUM_THREADS=1 python scripts/r58/check_r58_independent.py --root . --results docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY --output docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/INDEPENDENT_CHECK.json",
+    "completed_numerical_evidence": {
+      "receipts": [
+        "REVIEW/DATA_INDEPENDENT_REVIEW.json",
+        "REVIEW/DATA_INDEPENDENT_REPLAY.json"
+      ],
+      "candidate_gaussian": {
+        "n": 20000,
+        "seed": 20261117
+      },
+      "independent_gaussian": {
+        "n": 60000,
+        "seed": 9345081
+      },
+      "scope": "Fixed design and assumed full covariance; independent implementations and random seeds, not an independent observed catalogue or empirical survey calibration."
+    },
+    "remaining_unexecuted_numerical_benchmark": "Existing end-to-end survey-mock replay with matched provenance and selection. If suitable mocks are absent, record the exact missing input and unresolved empirical coverage; finish the conditional manuscript without a new data acquisition or Gaussian-only substitute."
+  },
+  "publication_decision": {
+    "current": "METHODS_APPLICATION_CANDIDATE_REQUIRES_BOUNDED_LOCAL_COMPLETION",
+    "potential_novelty": "Quantified polar-STF cross-covariance calibration fragility and nuisance-sensitive mixed confidence geometry on an existing selected CF4 catalogue, integrated with inherited five-view interpretation.",
+    "not_novel": [
+      "Tensor notation by itself",
+      "Full covariance GLS",
+      "Classical score compression",
+      "Robust union/max-p validity",
+      "More p-values from the same carrier"
+    ],
+    "discovery_status": "No unconditional anisotropy, acceleration, vorticity, Bianchi class or global-tilt detection established.",
+    "next_manuscript_claim": "Conditional selected-CF4 mixed-kinematic likelihood and measurable coverage cost of block factorization; novelty must be assessed against closest same-estimand CF4 studies."
+  }
+}

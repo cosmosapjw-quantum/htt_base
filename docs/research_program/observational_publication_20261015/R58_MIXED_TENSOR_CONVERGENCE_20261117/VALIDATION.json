@@ -1,0 +1,85 @@
+{
+  "schema": "htt.r58.validation/1",
+  "status": "PASS_SCOPED_WITH_EXPLICIT_LIMITATIONS",
+  "base_sha": "77f61c17ba33ff28ff4f16a7d42621d8041e5ce4",
+  "tests": [
+    {
+      "command": "OPENBLAS_NUM_THREADS=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest r58_patch/tests/r58 -q --disable-warnings",
+      "passed": 57,
+      "skipped": 1,
+      "reason_skipped": "opt-in full-data fixture expects complete repository root; equivalent normal-import integration executed separately",
+      "exit_code": 0
+    },
+    {
+      "command": "candidate module overlay into normal htt package; pytest tests/r54/test_r54_modules.py tests/r54/test_r54_theorems.py -q",
+      "passed": 39,
+      "exit_code": 0,
+      "source_tests": "unchanged baseline tests",
+      "fixture": "two repaired modules loaded from candidate; source snapshot unmodified"
+    },
+    {
+      "command": "normal-import run_r58_owned_tensor.py --root source_snapshot --fit-module candidate --output fresh_dir",
+      "exit_code": 0,
+      "observed_result_sha256": "264160d6b53112e7b21278bbeb19baaa9c45e22037b8269debc20baa294f09b9",
+      "matches_reviewed_result_exactly": true
+    },
+    {
+      "command": "build_r58_views.py on final carrier",
+      "exit_code": 0,
+      "source_sha256": "d84a05df99fb4393546222023cc37d8fe07d3bb3977c3520a60040e99445ab20",
+      "result_sha256": "a06f006f721636e10515ab1e1d0122dd5e0e3e2001b08b75089e75a78abb0acd",
+      "models": 7,
+      "physical_rank": 11,
+      "physical_dimension": 22,
+      "max_path_logL_error": 2.842170943040401e-14
+    },
+    {
+      "command": "check_r58_independent.py --root source_snapshot --candidate-root candidate --results output --output receipt",
+      "exit_code": 0,
+      "receipt": "REVIEW/DATA_INDEPENDENT_REPLAY.json"
+    },
+    {
+      "command": "validate_pr_dag.py candidate_backlog --status candidate_status --json",
+      "exit_code": 0,
+      "nodes": 283,
+      "edges": 609
+    },
+    {
+      "command": "canonical/mirror equality using existing sync_pr_dag_mirrors.check_mirrors on candidate paths",
+      "exit_code": 0,
+      "scope": "six changed backlog/status mirrors only; optional unrelated mirrors unchanged"
+    },
+    {
+      "command": "plot_r58_results.py and visual inspection",
+      "exit_code": 0,
+      "artifact": "RESULTS/R58_OBSERVABLE_SUMMARY.png"
+    }
+  ],
+  "independent_reviews": [
+    "REVIEW/MATH_IMPLEMENTATION_REVIEW.json",
+    "REVIEW/DATA_INDEPENDENT_REVIEW.json",
+    "REVIEW/DATA_INDEPENDENT_REPLAY.json",
+    "REVIEW/VIEWS_INDEPENDENT_REVIEW.json"
+  ],
+  "not_claimed": [
+    "full-repository tests",
+    "native canonical-machine replay",
+    "new cosmic pair-sum computation",
+    "exact operator byte replay",
+    "survey coverage under true unknown covariance",
+    "physical sigma/A/omega identification",
+    "Bianchi or global tilt discovery",
+    "external publication novelty established"
+  ],
+  "resolved_failures": [
+    "scaled-rank ambiguity rejected",
+    "null-estimability roundoff false negative fixed",
+    "far-null quadratic cancellation fixed",
+    "NaN serialized as infinity fixed",
+    "typed coordinate-order and rank guard added",
+    "extreme finite direction normalization fixed",
+    "R54 finite-MC domain validation and rho overflow fixed"
+  ],
+  "environment_failure": "Wolfram context tool internal error; actual Wolfram Language evaluator succeeded for rank/nullity and posterior counterexample. Sparse snapshot initially lacked existing PR124 receipt; exact pinned receipt materialized from same source, guard unchanged.",
+  "runtime_scope": "Cloud sparse source view + disposable candidate/test fixtures; primary user checkout untouched because live existing writer; deviation from existing-checkout default is disclosed in EXECUTION_CONTEXT.json."
+}

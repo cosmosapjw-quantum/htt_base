@@ -1,5 +1,7 @@
 # Current execution and scientific boundaries
 
+- R58/R59 scope (owner 2026-11-17): use owned data only, no new observational download or native Bianchi solver. Read docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/LOCAL_AGENT_CONTRACT.json. R58 is complete_scoped C0; R59 native replay, matched benchmark and manuscript decision is the sole terminal successor. The general continuous-controller/acquisition bullets below do not auto-extend this bounded assignment. Historical R57 stop and unrelated DAG nodes remain unchanged.
+
 - Work in the existing repo root for implementation, review, validation, publication and recovery. Do not create a new clone, worktree or full repository copy without an explicit owner exception naming its purpose. Preserve unrelated edits, task IDs, cumulative costs and historical directory bindings.
 - New tasks use owner-directed native subagents with explicit supported model/effort, fresh context, disjoint authors and a separate read-only reviewer. Requested settings are not observed runtime. Removed CUH-G registration/descriptor are not prerequisites; actual system/developer and managed restrictions still apply. Reload revised SessionStart guidance in a fresh session when an old instruction is already injected.
 - Adaptive budgets are planning targets; continue the same scientific task by replanning. Explicit hard limits and scientific tolerances remain binding. No default 30-minute worker cutoff.

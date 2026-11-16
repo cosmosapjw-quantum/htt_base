@@ -283,6 +283,8 @@ policy:
   - PR-R55-LOCAL-CALIBRATION
   - PR-R56-JOINT-BENCHMARK
   - PR-R57-MANUSCRIPT-DECISION
+  - PR-R58-MIXED-TENSOR-CONVERGENCE
+  - PR-R59-NATIVE-REPLAY-MANUSCRIPT
   strict_extension_cards:
   - PR-SOLVER-FREE-DOSSIER
   - PR-SF-GAIA-CORRELATION
@@ -372,6 +374,8 @@ policy:
   - PR-R55-LOCAL-CALIBRATION
   - PR-R56-JOINT-BENCHMARK
   - PR-R57-MANUSCRIPT-DECISION
+  - PR-R58-MIXED-TENSOR-CONVERGENCE
+  - PR-R59-NATIVE-REPLAY-MANUSCRIPT
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -12855,3 +12859,56 @@ prs:
   authorization: 'Owner 2026-11-16: convergent research loop on six lanes with the tensorized
     five-variable framework, owned data only, PR4 bypass, machine-readable local-agent
     contract and non-force push.'
+- id: PR-R58-MIXED-TENSOR-CONVERGENCE
+  wave: 0
+  title: Owned CF4 full mixed covariance and direct kinematic confidence images
+  owner: HTT
+  depends:
+  - PR-R57-MANUSCRIPT-DECISION
+  files:
+  - docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117
+  - scripts/r58
+  - tests/r58
+  - htt/htt/htt/infer
+  tests:
+  - PYTHONPATH=htt/src:htt:. python -m pytest tests/r58 -q
+  dod:
+  - Source-bound evidence and independent scoped review; no physical claim promoted.
+  notes: docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESEARCH_DAG.json
+  kill: No new observations, native solver, fabricated transfer, ridge identification,
+    forced win, force push, main merge or audit-only successor
+  level: L0
+  scope: science
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: 'Owner current request 2026-11-17: six convergent theory loops, tensor/direct
+    kinematic likelihood, actual owned-data analysis, code corrections, bounded local
+    handoff and non-force GitHub publication.'
+- id: PR-R59-NATIVE-REPLAY-MANUSCRIPT
+  wave: 0
+  title: Native replay and terminal bounded manuscript decision
+  owner: HTT
+  depends:
+  - PR-R58-MIXED-TENSOR-CONVERGENCE
+  files:
+  - docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117
+  - scripts/r58
+  - tests/r58
+  - htt/htt/htt/infer
+  tests:
+  - PYTHONPATH=htt/src:htt:. python -m pytest tests/r58 -q
+  dod:
+  - Native replay, matched benchmark and manuscript completed; final BOUNDED_METHODS_APPLICATION
+    or NO_PAPER; stop.
+  notes: docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESEARCH_DAG.json
+  kill: No new observations, native solver, fabricated transfer, ridge identification,
+    forced win, force push, main merge or audit-only successor
+  level: L0
+  scope: science
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: 'Owner current request 2026-11-17: six convergent theory loops, tensor/direct
+    kinematic likelihood, actual owned-data analysis, code corrections, bounded local
+    handoff and non-force GitHub publication.'

@@ -1,0 +1,100 @@
+{
+  "source_commit": "77f61c17ba33ff28ff4f16a7d42621d8041e5ce4",
+  "source_path": "htt/htt/htt/infer/r54_identifiability.py",
+  "source_sha256": "b6c9d4a178bfca6b6e9397498563fbb4d48133b502e3caf3914d71652ba45cb3",
+  "checks": {
+    "T5_invalid_domain_accepted": {
+      "input": {
+        "n": 2,
+        "p": 3,
+        "k": 3
+      },
+      "actual": {
+        "cov_factor": 1.0,
+        "plugin_factor": 1.0,
+        "variance_ratio": 1.0
+      },
+      "sample_matrix_rank_max": 2,
+      "inverse_defined": false
+    },
+    "rho_large_optical_depth": {
+      "tau": [
+        0.0,
+        1.0,
+        1000.0,
+        1100.0,
+        10000.0
+      ],
+      "actual": [
+        0.0,
+        0.3098644229878435,
+        2.449489742783178,
+        "NaN",
+        "NaN"
+      ],
+      "expected_limit": 2.449489742783178
+    },
+    "T3_marginal_contraction_counterexample": {
+      "prior_correlation": 0.9,
+      "conditional_nu_variance": 0.18999999999999995,
+      "variance_formula": "1-r^2+r^2/(n+1)",
+      "derivative": "-r^2/(n+1)^2",
+      "values": [
+        {
+          "n": 0,
+          "marginal_nu_variance": 1.0,
+          "equal_tail_95_width": 3.919927969080108
+        },
+        {
+          "n": 1,
+          "marginal_nu_variance": 0.5950000000000001,
+          "equal_tail_95_width": 3.02368516768066
+        },
+        {
+          "n": 10,
+          "marginal_nu_variance": 0.2636363636363636,
+          "equal_tail_95_width": 2.0127078621068013
+        },
+        {
+          "n": 10000,
+          "marginal_nu_variance": 0.19008099190080988,
+          "equal_tail_95_width": 1.7090211268251247
+        }
+      ]
+    },
+    "T9_evolving_homogeneous_tilt": {
+      "approximation": "test congruence of freely moving nonrelativistic particles on FLRW, first order in velocity; physical peculiar velocity scales as a^-1",
+      "samples": [
+        {
+          "z": 0.1,
+          "Vj_km_s": [
+            11.0,
+            22.0,
+            33.0
+          ],
+          "closure_max_abs": 1.0842021724855044e-19
+        },
+        {
+          "z": 0.2,
+          "Vj_km_s": [
+            12.0,
+            24.0,
+            36.0
+          ],
+          "closure_max_abs": 1.3552527156068805e-20
+        },
+        {
+          "z": 0.5,
+          "Vj_km_s": [
+            15.0,
+            30.0,
+            45.0
+          ],
+          "closure_max_abs": 1.0842021724855044e-19
+        }
+      ],
+      "constant_velocity_submodel": false,
+      "shell_closure_identity": true
+    }
+  }
+}

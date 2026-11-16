@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "pass_id": "r58_five_views_independent_review",
+  "date": "2026-11-17",
+  "baseline_commit": "77f61c17ba33ff28ff4f16a7d42621d8041e5ce4",
+  "verdict": "PASS_SCOPED_WITH_EXPLICIT_LIMITATIONS",
+  "reviewer": "/root/proof_review",
+  "independent_of_implementation_author": true,
+  "requested_model": null,
+  "observed_model": "UNKNOWN",
+  "scope": "Final build_r58_views.py, independently authored test_five_views.py and test_r54_repairs.py, actual seven-model FIVE_VIEW_RESULT.json from frozen owned carriers. No raw catalogue/cosmic-covariance revalidation in this pass.",
+  "files_sha256": {
+    "data_review_output/FIVE_VIEW_RESULT.json": "a06f006f721636e10515ab1e1d0122dd5e0e3e2001b08b75089e75a78abb0acd",
+    "data_review_output/OWNED_TENSOR_RESULT.json": "264160d6b53112e7b21278bbeb19baaa9c45e22037b8269debc20baa294f09b9",
+    "data_review_output/OWNED_TENSOR_CARRIERS.npz": "42f6bc5158fdf2f876720db12c44b088bc2db9734887e0d84ae098b234a7e64d",
+    "r58_patch/scripts/r58/build_r58_views.py": "d84a05df99fb4393546222023cc37d8fe07d3bb3977c3520a60040e99445ab20",
+    "r58_patch/tests/r58/test_five_views.py": "7b64637790703c75995af127f416d5c18a1dbf7ff81e1afc94157ac24c4d16a3",
+    "r58_patch/tests/r58/test_r54_repairs.py": "f9aa01ad60296a40ac92a04e8b2c4398f684860c7e2a09e33ce6a95a6133c409"
+  },
+  "checks": [
+    {
+      "command": "python -m pytest r58_patch/tests/r58/test_five_views.py r58_patch/tests/r58/test_r54_repairs.py -q",
+      "exit_code": 0,
+      "result": "28 passed in 0.58 s; one unrelated anyio pytest deprecation warning"
+    },
+    {
+      "command": "python r58_views_checks.py",
+      "exit_code": 0,
+      "result": "Seven independently reconstructed normal-equation GLS carriers agree; all six axis union hulls, physical intervals, Q/Pi/support/raw paths agree. All reviewed inputs unchanged.",
+      "artifact": "r58_views_checks.json"
+    },
+    {
+      "method": "independent analytic derivation plus explicit numeric null contraction",
+      "result": "Acceleration minus sign and vorticity cancellation hold for the stated observer-to-source convention."
+    },
+    {
+      "method": "primary-source verification",
+      "url": "https://arxiv.org/html/2010.06534v2",
+      "locator": "Heinesen (2021), Eq. (1), Eq. (29), conventions lines 62-67 and expression lines 169-171",
+      "result": "Incoming photon k=E(u-e); observed direction e; local Hubble dipole is negative acceleration. Restoring c agrees with independent contraction."
+    }
+  ],
+  "maximum_absolute_errors": {
+    "estimate": 3.097966327914037e-12,
+    "covariance": 1.673470251262188e-10,
+    "Q": 1.1102230246251565e-15,
+    "Pi": 1.196959198423997e-16,
+    "support_interval": 4.547473508864641e-12,
+    "direction_interval": 1.304512053934559e-15,
+    "path": 0.0,
+    "path_covariance": 0.0,
+    "beta_interval": 1.474514954580286e-17
+  },
+  "physical_derivation": {
+    "status": "derived_and_numerically_checked",
+    "conventions": "Metric (-,+,+,+); U.U=-c^2; A=∇_U U; n is the unit spatial observer-to-source direction; H=expansion/3; beta_MR=(v_M-v_R)/c.",
+    "photon": "Future incoming k=(E/c^2)(U-c n).",
+    "decomposition": "∇_a U_b= -U_a A_b/c^2 + H h_ab + sigma_ab + omega_ab.",
+    "contraction": "(c^2/E^2) k^a k^b ∇_a U_b = H + sigma_ab n^a n^b - A_a n^a/c; symmetric k^a k^b kills antisymmetric omega_ab.",
+    "map": "V=c beta_MR; dH=-A/(cH)+calibration_dipole; kappa=sigma/H+calibration_STF.",
+    "rank": "K is 11x22, rank11. Exact null basis comprises omega3, (delta sigma=u, delta qcal=-u)5, and (delta A=v, delta dcal=v)3.",
+    "identifiability": "The 11 apparent coefficient combinations are identified in the reviewed experiments. Individual sigma, omega and A coordinates remain unbounded with free calibration; beta coordinates are identified only conditional on the constant-velocity response."
+  },
+  "view_review": {
+    "x": "Signed typed 11D coefficient likelihood and covariance retained; 22D pullback is a singular confidence cylinder, not 22 measured physical parameters.",
+    "Q": "Gauge of declared centered 95% coefficient-noise ellipsoid; this anchor is model-specific and is not a physical ceiling.",
+    "Pi": "Same Wald statistic as Q under fixed covariance Gaussian chi-square11 law; explicitly not independent.",
+    "F": "Directional support intervals normalized by stated anchor support; occupancy remains UNAVAILABLE.",
+    "G_F": "The map [Y0,Y1-Y0,Y2-Y0,Y3-Y0] retains 32 dimensions and has absolute determinant1. Full transformed cross covariance preserves the entire Gaussian experiment. It is not new likelihood or global-tilt evidence.",
+    "GF_legacy_provenance": "History audit located R39 VECTOR_TENSOR_X_FRAMEWORK.md:152-156 raw tensor-functional depth paths and R9/revision2/THEORY_EXTENSION.md:44-64 initial-level-plus-difference preservation. This reviewer independently checked the linear identity; historical locator discovery is attributed to history_audit."
+  },
+  "closed_findings": [
+    {
+      "id": "R58-VR-01",
+      "severity": "moderate",
+      "location": "build_r58_views.py:clean",
+      "witness": "NaN previously serialized as -infinity.",
+      "resolution": "NaN now raises ValueError; signed mathematical infinities retained; regression passes."
+    },
+    {
+      "id": "R58-VR-02",
+      "severity": "moderate",
+      "location": "build_r58_views.py:compute",
+      "witness": "Rank-deficient fixture previously emitted fixed rank11 law and full-rank conclusion.",
+      "resolution": "Both apparent and physical ranks explicitly gated at11 before output; regression passes."
+    },
+    {
+      "id": "R58-VR-03",
+      "severity": "moderate",
+      "location": "build_r58_views.py:compute coordinate identity",
+      "witness": "Position-based physical K requires exact V,dH,kappa coordinate order.",
+      "resolution": "Both source metadata and NPZ coordinate names/order checked; independent reorder tests pass."
+    },
+    {
+      "id": "R58-VR-04",
+      "severity": "minor",
+      "location": "build_r58_views.py:directional_contrast",
+      "witness": "Finite [1e200,0,0] overflowed norm and returned zero contrast.",
+      "resolution": "Normalize by largest absolute component first; random STF direction tests at scales1,3.2,1e200,1e-200 pass. Actual six unit-axis output unchanged."
+    }
+  ],
+  "actual_directional_logH_95_simultaneous_union_interval_hulls": {
+    "-x": [
+      -0.12385937665774807,
+      0.05306977862862417
+    ],
+    "+x": [
+      -0.10301532892381894,
+      0.08341194218637148
+    ],
+    "-y": [
+      -0.07274328835664273,
+      0.07871944475567022
+    ],
+    "+y": [
+      -0.085784407494487,
+      0.08283179346990942
+    ],
+    "-z": [
+      -0.06954010808145428,
+      0.1279569835323384
+    ],
+    "+z": [
+      -0.06604217920016697,
+      0.08148407129553867
+    ]
+  },
+  "remaining_limitations": [
+    "The physical map is a local first-order, common-congruence, constant-coefficient low-redshift hypothesis. It is not a source-derived finite-redshift Bianchi transfer, a general tilt history, or a measurement of all kinematic components.",
+    "The beta interpretation fixes matter-versus-radiation frame and coherent-velocity response. Spatial homogeneity alone does not imply constant velocity across redshift.",
+    "Probability, simultaneous support and confidence-union claims condition on fixed correctly specified covariance and linear response, and at least one included nuisance model being valid.",
+    "Directional quantity is apparent log-H anisotropy excluding coherent velocity and monopole. Fractional-H interpretation is first order; it is not an absolute H0 or a general H(z,n) determination.",
+    "All six reported axis interval hulls include zero. This does not contradict a joint multi-parameter rejection and does not itself measure a nonzero directional Hubble anomaly.",
+    "Typed views do not add information or power beyond the same full Gaussian GLS likelihood. Their contribution is representation, assumption tracking and transparent projection.",
+    "This pass did not rerun raw catalogue extraction, cosmic covariance pair sums, arbitrary physical transfer functions or a full repository suite."
+  ]
+}

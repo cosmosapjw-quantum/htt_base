@@ -1,0 +1,562 @@
+{
+  "schema": "htt.r58.history_coverage/1",
+  "audit_date_utc": "2026-11-16",
+  "source_head": "77f61c17ba33ff28ff4f16a7d42621d8041e5ce4",
+  "mutation_scope": "read-only snapshot; no repo files or refs modified by history auditor",
+  "coverage_statement": "Exhaustive metadata inventory for all current tracked files, all HEAD-reachable commit records, and all GitHub pull-request metadata pages. Substantive reading is selective and exactly listed; unlisted blobs and original PR diffs are not claimed read.",
+  "reading_status_counts": {
+    "read_full": 25,
+    "read_partial": 11,
+    "inventory_only_unread": 4,
+    "metadata_parsed": 1
+  },
+  "git_inventory": {
+    "tracked_entries": 33096,
+    "tree_id": "31566b927ca465e12973a5ce1bccd13edb53b2f2",
+    "ls_tree_r_z_sha256": "93bb02789aae367bb2ef03661c0438d53b4d0ef6a063a40f825bb7d55e5b60fe",
+    "commit_records": 2177,
+    "git_log_sha256": "ee22c813124893fa0a4449372a6c994df0c8073acaad12a1989846d94a2700a3",
+    "scope_exclusion": "unfetched branches, unreachable objects and source content of unlisted blobs",
+    "commands": [
+      "git ls-tree -r -z HEAD",
+      "git log --format=%H%x09%P%x09%aI%x09%s HEAD"
+    ],
+    "path_inventory_artifact": "history_tree_inventory.jsonl",
+    "commit_inventory_artifact": "history_git_log_inventory.json"
+  },
+  "pull_requests": {
+    "count": 575,
+    "unique_count": 575,
+    "max_number": 578,
+    "pages": [
+      {
+        "page": 1,
+        "count": 100
+      },
+      {
+        "page": 2,
+        "count": 100
+      },
+      {
+        "page": 3,
+        "count": 100
+      },
+      {
+        "page": 4,
+        "count": 100
+      },
+      {
+        "page": 5,
+        "count": 100
+      },
+      {
+        "page": 6,
+        "count": 75
+      }
+    ],
+    "state_counts": {
+      "merged": 80,
+      "closed": 351,
+      "open": 144
+    },
+    "metadata_artifact": "history_pr_inventory_live.json",
+    "sha256": "67835a338bafe7ca37a714d884cb3a07b8da5f0cc893d59a3f51b651e9251681",
+    "original_bodies_reread_this_task": 0,
+    "original_diffs_reread_this_task": 0,
+    "historical_read_depth_reused": {
+      "from": "R39/PR_LEGACY_AUDIT.md",
+      "selected_bodies": 32,
+      "selected_diffs": 17,
+      "not_new_execution": true
+    }
+  },
+  "current_research_directory_inventory": {
+    "advocate_rescue_divergence_20260714": 18,
+    "cf4_schur_loop8_20261015": 8,
+    "egs2": 8,
+    "egs3": 19,
+    "gr_statistics_loops_20260930": 9974,
+    "htt_mes_eps_loop9_20261015": 13,
+    "long_horizon_rescue": 67,
+    "mes_full_handoff_20260928": 10,
+    "mes_i3_gaia_screening_20260928": 6,
+    "mes_r7": 1,
+    "mes_verified_checkpoints_20260928": 706,
+    "observational_publication_20261015": 10751,
+    "pr04": 15,
+    "pr07": 16,
+    "publishable_analysis_pack_2026-06-26": 17,
+    "referee_seeded_20260907": 4,
+    "revival": 20,
+    "strengthening": 8,
+    "tensor_joint_r7": 24,
+    "tensor_joint_r8": 27,
+    "tensor_joint_r9": 429,
+    "theory_inference_port_20260930": 832,
+    "typefree_loop2_20260928": 38,
+    "typefree_loop2_closeout_20260928": 93
+  },
+  "current_observational_directory_inventory": {
+    "ADAPTIVE_RESEARCH_20261023": 837,
+    "ADVERSARIAL_AUDIT_20261022": 96,
+    "CF4_POSTRECOVERY_20261017": 22,
+    "CMB_SPECTRAL_IDENTIFIABILITY_20261025": 76,
+    "CONTINUATION_20261018": 183,
+    "CONTINUATION_RESULTS_20261024_R27": 102,
+    "CONTINUATION_RESULTS_20261024_R28": 235,
+    "CONTINUOUS_RESEARCH_20261023": 181,
+    "CONTROLLER_LIFECYCLE_20261024_R29": 36,
+    "CONTROLLER_LIFECYCLE_20261025_R29_CLOSEOUT": 20,
+    "CONVERGENCE_20261028": 567,
+    "EXTERNAL_AUDIT_20261025_R34": 249,
+    "EXTERNAL_AUDIT_20261025_R35": 159,
+    "FRONTIER_20261020": 66,
+    "H01_20261016": 14,
+    "H02_L03_20261017": 15,
+    "H03_20261016": 18,
+    "HTT_SIX_LOOP_INTEGRATED_20261109": 115,
+    "L01_20261016": 17,
+    "L01_NATIVE_K_R7_C7_20261017": 6,
+    "L01_R10_C10_RUNTIME_RECOVERY_20261017": 3,
+    "L01_R8_C8_TWO_MASK_STABILITY_20261017": 40,
+    "L01_R9_C9_SAME_SKY_BEAM_20261017": 3,
+    "L01_S02_SHARP_20261017": 17,
+    "L01_SMICA_QU_BAND_ACCOUNTING_20261017": 19,
+    "METHOD_EXECUTION_20261023": 354,
+    "METHOD_REBOOT_20261023": 21,
+    "MOVING_LENS_RESPONSE_20261025": 15,
+    "NEXT_20261016": 15,
+    "OBSERVABLE_BRIDGE_RECONCILIATION_20261027": 4346,
+    "OBSERVATIONAL_CONVERGENCE_20261107": 33,
+    "OBSERVATIONAL_CONVERGENCE_R39_20261107": 31,
+    "OE_TYPED_IDENTITY_20261017": 8,
+    "OPEN_INPUTS_20261018": 437,
+    "P1_SELECTED_TENSOR_LAW_20261024": 22,
+    "PUBLICATION_ACCELERATION_20261025": 1874,
+    "R41_PUBLICATION_GATE_20261107": 11,
+    "R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108": 33,
+    "R43_THEORY_PROOF_MOCK_EXPERIMENT_20261109": 2,
+    "R44_BAYES_FACTOR_DESIGN_20261109": 8,
+    "R45_MODEL_POSTERIOR_INFORMATION_LOSS_20261109": 8,
+    "R46_TARGET_POSTERIOR_COMPRESSION_20261109": 8,
+    "R47_SOLVER_FREE_MORPHOLOGY_LIKELIHOOD_20261109": 7,
+    "R48_TENSORIZED_OBSERVATIONAL_CONVERGENCE_20261109": 28,
+    "R49_GENERAL_TILTED_BIANCHI_20261112": 19,
+    "R50_OBSERVED_CONVERGENCE_20261115": 60,
+    "R54_TENSOR_FRAME_TOMOGRAPHY_20261116": 41,
+    "R8_SPIN2_S02_COHERENT_20261017": 26,
+    "READY_20261016": 15,
+    "REPORT_20261024_REV1": 115,
+    "RESEARCH_LOOP_20261022": 29,
+    "S01_20261016": 2,
+    "TENSOR_X_RESEARCH_LOOPS_20261107": 23,
+    "X02_20261016": 1,
+    "cf4_404_recovery_20261017": 4,
+    "idle_data_seven_gate_20261016": 21,
+    "physical_input_3week_audit_20261016": 13,
+    "physical_input_data_theory_20261016": 18
+  },
+  "content_reading": [
+    {
+      "path": "AGENTS.md",
+      "git_blob": "436a0606eaec75dca2ffabad89d5091a6be1c028",
+      "sha256": "83f25506c2a2f3a17a1e6d1eeb229f9e9ec006252985bbe40595c1acf5affd54",
+      "status": "read_full",
+      "scope": "policy and reviewer/formalism boundaries",
+      "line_count": 364,
+      "note": ""
+    },
+    {
+      "path": ".agents/skills/htt-xqpi-fg-formalism/SKILL.md",
+      "git_blob": "91d85e0b5b03e9384329357124d508014bd2c491",
+      "sha256": "11458a2d3d414f9efed8b66b7a763082dfd11c0324c7f187a4f21aa0d15d5e98",
+      "status": "read_full",
+      "scope": "policy and reviewer/formalism boundaries",
+      "line_count": 39,
+      "note": ""
+    },
+    {
+      "path": ".agents/skills/htt-reviewer-mode-pre-submission/SKILL.md",
+      "git_blob": "11d6092f7c19f19cdb024981be50fcd4afb95d10",
+      "sha256": "99eb8e0d67015de1d515417f11877bb980c39582f6bad5cda744d989fa966845",
+      "status": "read_full",
+      "scope": "policy and reviewer/formalism boundaries",
+      "line_count": 65,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r7/THEORY.md",
+      "git_blob": "166e38093a4eed7a4bd4f59848c8eecbc96b6e3c",
+      "sha256": "e03a61a08d8e24ec5acd86cbaa3b7cec274bea5c9c4c664f7a20cb8066829dff",
+      "status": "read_full",
+      "scope": "proof premises; tensor carrier; joint sets; depth law; nuisance propagation",
+      "line_count": 205,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r8/THEORY.md",
+      "git_blob": "f90aeba66749b64cc4501915e5f8ac8d12d8766d",
+      "sha256": "9a505ce0ab3de99a1dcad7f4397621cb639307b4bb42a735b910128646ee408f",
+      "status": "read_full",
+      "scope": "proof premises; tensor carrier; joint sets; depth law; nuisance propagation",
+      "line_count": 215,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/THEORY.md",
+      "git_blob": "53f39fa80ec6fb65cb0be6bfa1fc4b3fe35c71e6",
+      "sha256": "0bddd642e52cf77bdfc0b42f1700938dc7a2816b8248fe2498ab7ba2178c20f6",
+      "status": "read_full",
+      "scope": "proof premises; tensor carrier; joint sets; depth law; nuisance propagation",
+      "line_count": 77,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/tensor_joint_r9/revision2/THEORY_EXTENSION.md",
+      "git_blob": "72e5414fd71788f74d8b961ef706089371833c3c",
+      "sha256": "befeef7feab9a845186b81fb9d7ce84b755b332bd0bf2fd6f93d0e1c36e89529",
+      "status": "read_full",
+      "scope": "proof premises; tensor carrier; joint sets; depth law; nuisance propagation",
+      "line_count": 129,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/VECTOR_TENSOR_X_FRAMEWORK.md",
+      "git_blob": "f19aab8037f26cf51fcb4616accc0fed49b831fd",
+      "sha256": "a0f136cd79bc44d9b0af393091aa6fc6ce9e5ce0bfe2e2877e53ade1035f93ca",
+      "status": "read_full",
+      "scope": "typed physical, observable and mixed x; full five-view meaning",
+      "line_count": 222,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/PR_LEGACY_AUDIT.md",
+      "git_blob": "b5fbf6449dde23df2ca1b0a28ed469b42d9eb8e0",
+      "sha256": "74495046c5953ead795d1909f01a7a586f4af5940d4c52fef375b8757bf23968",
+      "status": "read_full",
+      "scope": "prior PR bodies/diffs findings reused; no claim of renewed original diff review",
+      "line_count": 114,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/PUBLICATION_REASSESSMENT_KO.md",
+      "git_blob": "8ad4bbca9c1c23fa6c6c537f46d6b69ee2243e9d",
+      "sha256": "fa13099029426f4857ff8902e1918e3f46753c019952ede22d317be77eb3cda6",
+      "status": "read_full",
+      "scope": "quarantine of R41 claims and two-axis benchmark separation",
+      "line_count": 142,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R43_THEORY_PROOF_MOCK_EXPERIMENT_20261109/R43_THEORY_AND_MOCK_RESULTS_KO.md",
+      "git_blob": "273364693e486082c057d84e420aeeeb89e9ff0a",
+      "sha256": "12ab8ece979be867f00cd5beff640482ce9d8112a0168ed88470351805387af7",
+      "status": "read_full",
+      "scope": "mock-only information and identifiability theorem checks",
+      "line_count": 183,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R45_MODEL_POSTERIOR_INFORMATION_LOSS_20261109/R45_THEORY_AND_MOCK_RESULTS_KO.md",
+      "git_blob": "6413cd0452c6f8570fa6cfe1fad0c530f06271a8",
+      "sha256": "204c7d562cb46f12b7250028fe39be8f066b8a8c50cee3608814eba837fd3993",
+      "status": "read_full",
+      "scope": "CMI interpretation; no method novelty from compression identity",
+      "line_count": 94,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R46_TARGET_POSTERIOR_COMPRESSION_20261109/R46_THEORY_AND_MOCK_RESULTS_KO.md",
+      "git_blob": "72234d1ae211f28b9e793eca1ebb2347c6d3abdd",
+      "sha256": "f3c85da97dda9d342dc45f25903e9762f79db259d18b63961464ba5937874b15",
+      "status": "read_full",
+      "scope": "target posterior compression; STF Gram; scope",
+      "line_count": 160,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/HISTORY_REUSE.md",
+      "git_blob": "8005aed30671ab3441c6970fe79932fde65ccf1d",
+      "sha256": "7f5389c0fd62214bfd944525237fa902e57f3071a001a518763051f330764a3b",
+      "status": "read_full",
+      "scope": "external legacy PDF findings reused through this report, not fetched here",
+      "line_count": 52,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/SCIENTIFIC_REPORT_KO.md",
+      "git_blob": "533c91c8c34926540028ea3119247f3e7cc1cb23",
+      "sha256": "de84dd099da52116a235b1569db1fc6d2af059d851ac57851f53c1467d937d6b",
+      "status": "read_full",
+      "scope": "owned data execution; exact score tie; Gaia nuisance sensitivity",
+      "line_count": 106,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/R51/R51_REPORT_KO.md",
+      "git_blob": "dd903a6cb2105da0b20c93eaa8770cb86f5780c2",
+      "sha256": "40900b002d22eaf8ef4cf0a92fbde3b3fb1bfd80b0b725369d81a76616e3abfd",
+      "status": "read_full",
+      "scope": "finite-MC carrier and shear epoch corrections",
+      "line_count": 101,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/R52/R52_REPORT_KO.md",
+      "git_blob": "6373c11a82c93b52c1fbeb2ed6b6c122f8dff07f",
+      "sha256": "7c86ebc6b4df8c09ec75e55a96432e1531d7cc7dfc95134082950d4ec8d4560a",
+      "status": "read_full",
+      "scope": "17D response/gauge; later-superseded CF4 results",
+      "line_count": 48,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R50_OBSERVED_CONVERGENCE_20261115/R53/FINAL_DECISION.md",
+      "git_blob": "b128f15ec079b66a575e9b166f70d8d708ecb727",
+      "sha256": "8134320b78a3aa38e569cd2719b7bc5366938a0c71b4403e15e1423f4fa4f997",
+      "status": "read_full",
+      "scope": "bounded note decision; no broad discovery paper",
+      "line_count": 33,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/HISTORY_AUDIT.json",
+      "git_blob": "610c53c00a850848c94b3ed50b0eadba511c346d",
+      "sha256": "b27671a7acc5d062cf870360b3fee932e98eb32059fe7a37dd35e0a033dbbd73",
+      "status": "read_full",
+      "scope": "historical metadata census and selective read coverage",
+      "line_count": 162,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEORY_LOOPS.md",
+      "git_blob": "6123a6f75eea64bbf3be5187faf171ae99a2d84e",
+      "sha256": "93563496da31996854aa79a0ae97e45f2c131857303e102daf9facdac2bcb077",
+      "status": "read_full",
+      "scope": "all six lanes and explicit forking paths; provisional numbers superseded by claim table",
+      "line_count": 195,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEOREMS.md",
+      "git_blob": "8093dc0d1ace57481bc22252a379a4b3f199292b",
+      "sha256": "ca49a673fc21e4adc47a4e1785d67b41639461ac18c4dad2290e47ce197ab3b2",
+      "status": "read_full",
+      "scope": "latest HEAD theorem statements and assumptions, including overstrong consequences flagged",
+      "line_count": 361,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_A2_ATTRIBUTION.json",
+      "git_blob": "630ff161701f67aef2a41a469dbb083b75d3ad41",
+      "sha256": "aedad94d478c5c6dfee3e1c964b159a032280b0a0cb1c598f9b7868cc1b9af34",
+      "status": "read_full",
+      "scope": "latest attribution search status, not fresh external source verification",
+      "line_count": 105,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/FINAL_DECISION_R57.md",
+      "git_blob": "9bd50a599b5cfb674c7cd41a0281c8f789229df5",
+      "sha256": "fe1950d91b3bbdd5631d4ff08fbe3fb2585c1dd0f24471ccd7b92df9deab420d",
+      "status": "read_full",
+      "scope": "latest programme scientific decision",
+      "line_count": 52,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/MANUSCRIPT_CLAIM_TABLE_R54.md",
+      "git_blob": "d49a5b4e0d3a1c668681a84ca8d8316451394d50",
+      "sha256": "5ea10fad67e4699304a961db6cf0dc629caa5384b1fb74219d5ca1cbf16caaa9",
+      "status": "read_full",
+      "scope": "authoritative final numerical claim state",
+      "line_count": 26,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L07_BENCHMARK.json",
+      "git_blob": "a709402c3b08031f14546921bd05e514c443554f",
+      "sha256": "7560d3047e361d5bbdd75e54b7e1f2d503884ddd0587771b164f2157a180e2a7",
+      "status": "read_full",
+      "scope": "all nine comparisons and scorecounts",
+      "line_count": 339,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/METHOD_REBOOT_20261023/THEOREMS.md",
+      "git_blob": "cc26924f903d6621e6dbe5d08966a40dd1410c43",
+      "sha256": "a2c7611fccbec990d466be255dea2ac87d246a2c155cb508a89e8e244abcac0d",
+      "status": "read_partial",
+      "scope": "lines 1-175; definitions and T1-T6 start; T7 via R39/R9 reuse",
+      "line_count": 245,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVATIONAL_CONVERGENCE_R39_20261107/KINEMATICAL_LIKELIHOOD_MODEL.md",
+      "git_blob": "906fe8eeaedc7171b7b39b63362b20322ea7dbb4",
+      "sha256": "bbeacc25717f6edf87163275fad468dc90e264ab6afa6b1375b6b830123e2360",
+      "status": "read_partial",
+      "scope": "sections 1-4.3 and 6-9; middle output truncated",
+      "line_count": 542,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R44_BAYES_FACTOR_DESIGN_20261109/R44_THEORY_AND_MOCK_RESULTS_KO.md",
+      "git_blob": "5eedf5d5b937628923971ee2d8fa1f00aaee9c70",
+      "sha256": "237c86eec43fcfd213f4b8cc3ffa30ae09d414268f4fe78105c459f4cbc6a47d",
+      "status": "read_partial",
+      "scope": "sections 1-7.1,9-11; combined output truncated",
+      "line_count": 233,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R48_TENSORIZED_OBSERVATIONAL_CONVERGENCE_20261109/BIANCHI_NOVELTY_AND_SIGNIFICANCE_ASSESSMENT_KO.md",
+      "git_blob": "e2a6e512f5413321be19f377396c20e8c46aae3c",
+      "sha256": "d711ed1f6444ae4f6870418877999579164572c7d7bc76e7747d09b4c9621752",
+      "status": "read_partial",
+      "scope": "sections 1-7; stop-rule tail truncated",
+      "line_count": 98,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R49_GENERAL_TILTED_BIANCHI_20261112/R49_GENERAL_TILTED_BIANCHI_KO.md",
+      "git_blob": "356bce8be862a1d2eeaac3fa3451dc7370527152",
+      "sha256": "d7ae866a2b4c20d77a5b4c6eb32cf566a3bbc591579cfacdd433873c19767282",
+      "status": "read_partial",
+      "scope": "sections 4.2-10; opening truncated",
+      "line_count": 377,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/R54_REPORT_KO.md",
+      "git_blob": "c54062fe66161bcf348940e94a56c486452a0ef8",
+      "sha256": "f14c4481d98a5e4005d19781170b19b52e49689f5fb67877d8bcc64b96414c05",
+      "status": "read_partial",
+      "scope": "sections 2.3-8; opening output truncated",
+      "line_count": 254,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/TENSOR_X_RESEARCH_LOOPS_20261107/LOOP_01_LOWELL_MORPHOLOGY/THEORY_AND_DERIVATION.md",
+      "git_blob": "7785ae316ee43dc8fa211a4c55511aa182562cc5",
+      "sha256": "03b77fe40fbc332c70ae0c9b37c6d7d88ff469ce86ac1e476286b15e18087f4a",
+      "status": "read_partial",
+      "scope": "main derivations inspected in combined output; not certified complete",
+      "line_count": 237,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/TENSOR_X_RESEARCH_LOOPS_20261107/LOOP_06_LOCAL_VS_GLOBAL/THEORY_AND_DERIVATION.md",
+      "git_blob": "09fd31c01ab2157333176bb59759c2eb6b803762",
+      "sha256": "67c118d1c35d5993b34ca3f2e17b2068dd4bd801fd3caa21105bf5c968489fbb",
+      "status": "read_partial",
+      "scope": "tail sections 6-8; other sections not read",
+      "line_count": 203,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/TENSOR_X_RESEARCH_LOOPS_20261107/LOOP_02_DIPOLE_ANOMALY/THEORY_AND_DERIVATION.md",
+      "git_blob": "0f094995dc22e9b9dcb63d2ef1e52388a69e0d5c",
+      "sha256": "f27306209f9cd03167ccb2d71acad8b3eec04bcfa796c25ab82ddcb857348aa7",
+      "status": "inventory_only_unread",
+      "scope": "attempted combined read output truncated; not counted as substantive read",
+      "line_count": 327,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/TENSOR_X_RESEARCH_LOOPS_20261107/LOOP_03_KINEMATIC_MEASUREMENT/THEORY_AND_DERIVATION.md",
+      "git_blob": "35926aba5c9bb0473d544c42946e94646f1bed99",
+      "sha256": "4aaa58d266dbe8d9e3baa19d41e4bf24240b329f3006fcdeab033bd6c5644e8e",
+      "status": "inventory_only_unread",
+      "scope": "attempted combined read output truncated; not counted as substantive read",
+      "line_count": 169,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/TENSOR_X_RESEARCH_LOOPS_20261107/LOOP_04_ANISOTROPY_CLASSIFICATION/THEORY_AND_DERIVATION.md",
+      "git_blob": "6c6f3f1f066537bae6b4edf7a8ce59c8a953a7de",
+      "sha256": "a7f703390c4bb59f6e93c5afb6edbcd3b60392c6400c3c4d69d993065ab3d5a0",
+      "status": "inventory_only_unread",
+      "scope": "attempted combined read output truncated; not counted as substantive read",
+      "line_count": 235,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/TENSOR_X_RESEARCH_LOOPS_20261107/LOOP_05_DIRECTIONAL_H0/THEORY_AND_DERIVATION.md",
+      "git_blob": "f01f623b9b1370fdbd12106ea01d5546fd369177",
+      "sha256": "ca73883e7551ab46a4d753fa3c4d91226de1e37ce760e5f3a33babcc3c72c074",
+      "status": "inventory_only_unread",
+      "scope": "attempted combined read output truncated; not counted as substantive read",
+      "line_count": 213,
+      "note": ""
+    },
+    {
+      "path": "htt/htt/htt/infer/r54_tensor_five_view.py",
+      "git_blob": "e9bb92a8043d411f479db69f5151bf9bac3dc5eb",
+      "sha256": "4811340d211f2c4d2fa330bd5d6cf160fc83a04458b5eb9c3a259fd1cb731b6d",
+      "status": "read_partial",
+      "scope": "lines 1-260; definitions, precision cylinder, orthonormal STF basis",
+      "line_count": 434,
+      "note": ""
+    },
+    {
+      "path": "htt/src/common/htt_five_variable_state.py",
+      "git_blob": "a415c0cec9da3a7c8b497afcbc57f4e15ee1f5a5",
+      "sha256": "28742f297b5d754d98c9a97e70ae49acb70b9806b17b13c29bd178e0805c1778",
+      "status": "read_partial",
+      "scope": "header and keyword-selected support/occupancy and GF covariance lines; no full implementation audit",
+      "line_count": 570,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/HISTORY_PR_INDEX.json",
+      "git_blob": "2225fa453e89002c2054b58ce399b77c63893e96",
+      "sha256": "336edda5ae461df63ea11c6fd501810d942def1726d00aedeb581aa0cb796fd7",
+      "status": "metadata_parsed",
+      "scope": "all records structurally parsed; original PR bodies/diffs not fetched in this task",
+      "line_count": 1,
+      "note": ""
+    },
+    {
+      "path": "docs/research_program/HTT_VECTOR_TENSOR_MES_TWO_PILLAR_UPGRADE_PLAN_20260730.md",
+      "git_blob": "75befd95c47e2f2af559b7d32bf68eb03c156c8c",
+      "sha256": "39312eb8e17631516078e3cd385de86f6741d8cae55c024013045eb4790a52ea",
+      "status": "read_partial",
+      "scope": "lines 1-240; historical state and C-04 support/occupancy distinction",
+      "line_count": 2001,
+      "note": "original attachments not opened"
+    }
+  ],
+  "unread_or_reused_boundaries": [
+    "No full line-by-line review of 575 original PR diffs.",
+    "Library PDF texts named in R50 HISTORY_REUSE were not reopened; results are prior-audit reuse.",
+    "R38 unsourced joint-analysis faults are findings of the directly reread R39 audit; original R38 code was not independently re-executed.",
+    "R41 quarantines are findings of directly reread R42 reassessment; not a new R41 runtime audit.",
+    "No public literature claim was independently verified in this history-only task; root parallel literature task owns fresh external verification.",
+    "No current analysis rerun or scientific PASS is asserted by this metadata/content audit."
+  ],
+  "current_research_top_level_file_inventory": {
+    "BLOCKERS.md": 1,
+    "BLOCKER_RESOLUTION_PLAN.md": 1,
+    "CODE_AND_RESULTS_AUDIT_REPORT.md": 1,
+    "HTT_VECTOR_TENSOR_MES_TWO_PILLAR_UPGRADE_PLAN_20260730.md": 1,
+    "K1_E2E_DOWNLOAD_GUIDE.md": 1,
+    "K1_E2E_REPRODUCIBILITY_RETENTION.md": 1,
+    "LONG_HORIZON_RESCUE_PR_ROADMAP_20260714.md": 1,
+    "LONG_HORIZON_RESCUE_PR_ROADMAP_20260714_AMENDMENT_01_20260717.md": 1,
+    "OPEN_ITEMS_LEDGER.md": 1,
+    "THEOREM_REGISTRY.yaml": 1,
+    "THEOREM_SIGNATURES_V2.yaml": 1,
+    "TYPEFREE_LOOP2_CURRENT.md": 1,
+    "publishable_analysis_pack_2026-06-26.zip": 1
+  },
+  "current_observational_top_level_file_inventory": {
+    "DEVELOPMENT_DAG_KO.md": 1,
+    "NOVELTY_MATRIX.md": 1,
+    "PUBLICATION_DAG.json": 1,
+    "README.md": 1,
+    "READY_QUEUE.json": 1,
+    "SCIENTIFIC_SCOPE_KO.md": 1,
+    "SOURCE_CROSSWALK_AT_DESIGN.json": 1
+  }
+}

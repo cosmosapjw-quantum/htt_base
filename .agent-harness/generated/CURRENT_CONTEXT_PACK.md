@@ -1,7 +1,7 @@
 # Generated Shared Context View
 
-Context version: `08dae106ec1eafa2dfb37b4f141d29bc4b7a286c4c6957d8796597746a95cded`
-Built at: `2026-10-23T07:39:59+00:00`
+Context version: `c4ef69678b3483cc6a7600cf9d4b83a61055a48dc5db38ea6369c41f22655d48`
+Built at: `2026-11-16T19:13:18+00:00`
 
 This compact view is generated from the current machine context index. It does not compute live HEAD, DAG or status. SessionStart can read a host-installed active-controller pointer for a bounded advisory snapshot; absent or invalid pointers provide no active-state observation. Reference-only sources are read on demand.
 
@@ -44,9 +44,11 @@ current pack is static guidance, not live HEAD/DAG/status computation.
 
 ## Source: `.agent-harness/context/CURRENT_FROZEN_DECISIONS.md`
 
-SHA-256: `019d82ff610c329970516cd0e2aa284b54a99ad7e97b31eb141799caa7cbcf16`
+SHA-256: `d2c16a7d047d1921d9697aeb3ec51b2456af7ca571b3a134c046771d2b082366`
 
 # Current execution and scientific boundaries
+
+- R58/R59 scope (owner 2026-11-17): use owned data only, no new observational download or native Bianchi solver. Read docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/LOCAL_AGENT_CONTRACT.json. R58 is complete_scoped C0; R59 native replay, matched benchmark and manuscript decision is the sole terminal successor. The general continuous-controller/acquisition bullets below do not auto-extend this bounded assignment. Historical R57 stop and unrelated DAG nodes remain unchanged.
 
 - Work in the existing repo root for implementation, review, validation, publication and recovery. Do not create a new clone, worktree or full repository copy without an explicit owner exception naming its purpose. Preserve unrelated edits, task IDs, cumulative costs and historical directory bindings.
 - New tasks use owner-directed native subagents with explicit supported model/effort, fresh context, disjoint authors and a separate read-only reviewer. Requested settings are not observed runtime. Removed CUH-G registration/descriptor are not prerequisites; actual system/developer and managed restrictions still apply. Reload revised SessionStart guidance in a fresh session when an old instruction is already injected.

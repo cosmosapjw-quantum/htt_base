@@ -1,0 +1,55 @@
+{
+  "module_sha256": "f1c07d8ba7253f225af9354277a2973b5cab96c86febd08d4f8c5e1a11555bc0",
+  "checks": {
+    "identified_coordinate_roundoff_repair": {
+      "identified": true,
+      "sd": 1.4142135623730947
+    },
+    "rank_disagreement_fails_closed": {
+      "exception": "numerically unresolved rank disagreement: declared-scale rank 1, column-equilibrated rank 2; revise parameter scales/rank tolerance before inference"
+    },
+    "far_null_loglikelihood_psd_repair": [
+      {
+        "amplitude": 0,
+        "logL": -11.987901042035956,
+        "direct": -11.987901042035956,
+        "difference": 0.0,
+        "backward_error_bound": 1.1831191370063588e-12
+      },
+      {
+        "amplitude": 10000.0,
+        "logL": -11.987901042041493,
+        "direct": -11.987901042037947,
+        "difference": -3.5456082514429e-12,
+        "backward_error_bound": 8.080461071278368e-09
+      },
+      {
+        "amplitude": 1000000.0,
+        "logL": -11.987901041581368,
+        "direct": -11.987901042025609,
+        "difference": 4.4424020018141164e-10,
+        "backward_error_bound": 8.080380902630334e-07
+      },
+      {
+        "amplitude": 100000000.0,
+        "logL": -11.987901088243918,
+        "direct": -11.987901058991433,
+        "difference": -2.9252484878838914e-08,
+        "backward_error_bound": 8.080380112817438e-05
+      },
+      {
+        "amplitude": 10000000000.0,
+        "logL": -11.987908357344566,
+        "direct": -11.987905247677938,
+        "difference": -3.109666627310048e-06,
+        "backward_error_bound": 0.008080382852528292
+      }
+    ],
+    "independent_full_GLS_oracle": {
+      "experiments": 24,
+      "max_estimate_abs_error": 4.2099657093785936e-13,
+      "max_logL_abs_error": 1.0160761121369433e-12
+    },
+    "r54_repair_domain_and_limits": "pass_scoped"
+  }
+}

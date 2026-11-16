@@ -34,8 +34,10 @@ OBS_KINDS = ("scalar", "pseudoscalar", "vector")
 def wishart_gls_factors(n: int, p: int, k: int) -> dict:
     """Exact factors of T5 for S ~ W_p(n, Sigma)/n independent of y ~ N(J theta, Sigma), V = (J^T Sigma^-1 J)^-1:
     Cov(theta_hat) = cov_factor * V and E[(J^T S^-1 J)^-1] = plugin_factor * V."""
-    if not 1 <= k <= p or n - p + k - 1 <= 0:
-        raise ValueError("need 1 <= k <= p and n > p - k + 1")
+    if any(isinstance(v, (bool, np.bool_)) or not isinstance(v, (int, np.integer)) for v in (n, p, k)):
+        raise ValueError("n, p and k must be integer counts")
+    if not 1 <= k <= p or n < p or n - p + k - 1 <= 0:
+        raise ValueError("need 1 <= k <= p, n >= p and n > p - k + 1")
     cov_factor, plugin_factor = (n - 1.0) / (n - p + k - 1.0), (n - p + k) / float(n)
     return {"cov_factor": cov_factor, "plugin_factor": plugin_factor, "variance_ratio": cov_factor / plugin_factor}
 
@@ -197,8 +199,13 @@ def depth_law_noncentrality(g: np.ndarray, cov: np.ndarray) -> dict:
 # --------------------------------------------------------------------------- T8
 def rho_ratio(tau: np.ndarray | float) -> np.ndarray:
     """K_E/K_T = sqrt6 (x - 1)/(x + 6) with x = exp(7 tau/10): strictly increasing from 0 towards sqrt6 (T8-i)."""
-    x = np.exp(0.7 * np.asarray(tau, float))
-    return SQRT6 * (x - 1.0) / (x + 6.0)
+    tau = np.asarray(tau, float)
+    if not np.isfinite(tau).all() or (tau < 0).any():
+        raise ValueError("optical depth must be finite and non-negative")
+    # Multiply numerator and denominator by exp(-0.7 tau); expm1
+    # retains relative accuracy at zero and avoids overflow at large depth.
+    e = np.exp(-0.7 * tau)
+    return SQRT6 * (-np.expm1(-0.7 * tau)) / (1.0 + 6.0 * e)
 
 
 def history_gram(kt: np.ndarray, ke: np.ndarray, weights: np.ndarray) -> np.ndarray:

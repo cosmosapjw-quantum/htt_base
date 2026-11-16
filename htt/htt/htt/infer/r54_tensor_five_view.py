@@ -301,10 +301,12 @@ def finite_mc_sd_inflation(n_sims: int, p_data: int, k_par: int) -> float:
     so  true sd / plug-in sd  = sqrt[ n (n - 1) / ((n - p + k)(n - p + k - 1)) ],   equal to 1 for p = k.
     The R53 expression sqrt[(N-1)/(N-p-2) (N-2)/(N-p+k-1)] is conservative (1.166 instead of 1.155 for N=300, p=45, k=5;
     the R51 leave-one-out ratio is 1.155)."""
+    if any(isinstance(v, (bool, np.bool_)) or not isinstance(v, (int, np.integer)) for v in (n_sims, p_data, k_par)):
+        raise ValueError("N, p and k must be integer counts")
     n = n_sims - 1.0
     m = n - p_data + k_par
-    if k_par > p_data or m - 1.0 <= 0:
-        raise ValueError("need k <= p and N > p - k + 2")
+    if not 1 <= k_par <= p_data or n < p_data or m - 1.0 <= 0:
+        raise ValueError("need 1 <= k <= p, N - 1 >= p and N > p - k + 2")
     return math.sqrt(n * (n - 1.0) / (m * (m - 1.0)))
 
 

@@ -1,0 +1,186 @@
+{
+  "schema": "htt.r58.local-agent/1",
+  "date_kst": "2026-11-17",
+  "owner": "HTT",
+  "base_sha": "77f61c17ba33ff28ff4f16a7d42621d8041e5ce4",
+  "delivery_branch": "research/r58-mixed-tensor-convergence-20261117",
+  "next_node": "PR-R59-NATIVE-REPLAY-MANUSCRIPT",
+  "goal": "Finish a bounded methods/application paper using owned data. No claim of new cosmic tilt, Bianchi identification or information advantage over exact GLS.",
+  "read_order": [
+    "AGENTS.md",
+    "htt/htt/AGENTS.md",
+    "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/REPORT_KO.md",
+    "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESEARCH_DAG.json",
+    "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/LOCAL_AGENT_CONTRACT.json",
+    "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/BENCHMARK_CONTRACT.json",
+    "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/VALIDATION.json"
+  ],
+  "canonical_checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "execution_policy": {
+    "single_writer": true,
+    "new_clone_or_worktree": false,
+    "live_other_session": "Do not change branch/tree while another writer is live. Finish owner handoff or stage a small patch; record exact blocker, never kill unrelated work.",
+    "new_observational_download": false,
+    "new_native_bianchi_solver": false,
+    "historical_R57_stop": "Preserved; this explicit owner request authorizes only R58/R59 bounded successor.",
+    "general_controller_autodispatch": "Disabled for R58/R59 scope after final manuscript decision; unrelated DAG remains unchanged."
+  },
+  "model": {
+    "data_dimension": 32,
+    "coefficient_dimension": 11,
+    "parameter_order": [
+      "V_x_km_s",
+      "V_y_km_s",
+      "V_z_km_s",
+      "dH_x",
+      "dH_y",
+      "dH_z",
+      "kappa_0",
+      "kappa_1",
+      "kappa_2",
+      "kappa_3",
+      "kappa_4"
+    ],
+    "physical_dimension": 22,
+    "physical_map": "build_r58_views.physical_map; verify n convention and congruence before physical use",
+    "coefficient_design": "X_m=O_m [g(z)n, n, STF5(n)] includes leakage into every row",
+    "data_row_order": "polar12 followed by STF20, 4 windows",
+    "covariance": "full32 fixed existing measurement + LCDM cosmic cache",
+    "likelihood": "fixed-C Gaussian; carrier J,t,q0,logdet and stable whitened factors; no prior in parameter_scale",
+    "rank_policy": "no ridge; compare scaled and unit-equilibrated rank, fail on discrepancy; kernel contrast gives infinite interval",
+    "nulls": {
+      "target_zero": "11 common apparent coefficients zero; chi2(11)",
+      "carrier_zero": "32-row mean zero; chi2(32)",
+      "adequacy": "21 residual dof, only under declared11-param model"
+    },
+    "nuisance_combination": "union confidence bodies; max p for SAME null; interval hull is not full joint region",
+    "independence": "never multiply models or the 5 views as independent experiments",
+    "frames": {
+      "metric": "(-,+,+,+)",
+      "direction": "ICRS/J2000 observer to source",
+      "redshift": "existing z_CMB, no reframe",
+      "velocity": "km/s; beta_MR=V/c; c=299792.458 km/s",
+      "sigma": "STF orthonormal R54 basis; sigma/H dimensionless",
+      "omega": "angular-frequency omega/H; scalar distance no linear response",
+      "acceleration": "A/(cH); dH has free calibration dipole and is not identified A"
+    }
+  },
+  "frozen_inputs": "scripts/r58/run_r58_owned_tensor.py:PINS; ALLOWED_REPAIRED_HASHES only exact reviewed finite-MC helper",
+  "existing_results": "RESULTS/OWNED_TENSOR_RESULT.json and OWNED_TENSOR_CARRIERS.npz",
+  "remaining_tasks": [
+    {
+      "id": "R59-A",
+      "action": "Native environment replay into NEW RESULTS/NATIVE_REPLAY; run focused tests and compare scientific numbers to committed reference, preserving immutable source caches. Record versions, source hashes, changed dependencies and exit codes.",
+      "acceptance": "35970 groups;7 variants;all11 ranks;frozen marginal error<2e-7; scientific result tolerance rtol1e-7 atol1e-9, no tolerance change to conceal drift. Cache float fingerprint may differ only with exact source/labels/model and required numeric parity."
+    },
+    {
+      "id": "R59-B",
+      "action": "Reuse completed same-input GLS/score-equivalence and conditional Gaussian full/split checks. Replay with the portable independent checker. Only if suitable end-to-end survey mocks already exist locally, run the fixed matched benchmark on those mocks. Otherwise record unresolved survey coverage and finish the conditional manuscript; do not implement unrelated competitors.",
+      "acceptance": "No declared method win from the five correlated views; distinguish algebraic tie, conditional coverage effect, empirical application finding and not-comparable physics."
+    },
+    {
+      "id": "R59-C",
+      "action": "Write MANUSCRIPT.md or .tex and CLAIM_TABLE.csv for narrow owned-CF4 joint-covariance/calibration application; integrate six-lane limitations and primary citations. Any calibration metadata already locally present may be used only if its effect is source-bound and test selected before looking at its new p-value; otherwise retain conditional scope.",
+      "acceptance": "Every result traceable to outputs; E diagnostic, omega/kernel unbounded, no arbitrary-tilt or Bianchi claim, no all-systematics guarantee; do not require unavailable data to write the bounded paper."
+    },
+    {
+      "id": "R59-D",
+      "action": "One independent manuscript/claim review; fix material findings; decide BOUNDED_METHODS_APPLICATION or NO_PAPER with actual comparison table; commit and non-force push; mark R59 complete_scoped and STOP.",
+      "acceptance": "No automatic R60/audit-only extension; new science requires new owner scope."
+    }
+  ],
+  "commands": [
+    "git status --short; git rev-parse HEAD; git branch --show-current",
+    "PYTHONPATH=htt/src:htt:. PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest tests/r58 -q",
+    "OPENBLAS_NUM_THREADS=1 python scripts/r58/run_r58_owned_tensor.py --root . --output docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY",
+    "OPENBLAS_NUM_THREADS=1 python scripts/r58/build_r58_views.py --root . --results docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY",
+    "OPENBLAS_NUM_THREADS=1 python scripts/r58/check_r58_independent.py --root . --results docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY --output docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/INDEPENDENT_CHECK.json",
+    "python scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml --status docs/codex_handoff/pr_status.yaml",
+    "python scripts/codex_harness/sync_pr_dag_mirrors.py --check"
+  ],
+  "mutation_gates": [
+    {
+      "id": "M1",
+      "trigger": "physical response/covariance/data ordering change",
+      "required": "written hypothesis, source identity, units/frame, identifiability and independent numerical check before claim use"
+    },
+    {
+      "id": "M2",
+      "trigger": "frozen pin or cache mismatch",
+      "required": "stop affected calculation; classify byte vs numerical vs semantic mismatch; do not edit input cache, expected hash or tolerance to pass"
+    },
+    {
+      "id": "M3",
+      "trigger": "statistical decision, new nuisance model or cut",
+      "required": "record before new result; mark exploratory unless independent existing holdout supports decision; no fishing for significance"
+    },
+    {
+      "id": "M4",
+      "trigger": "publication/ref mutation",
+      "required": "scoped tests + independent diff/claim review + clean owned staged paths; non-force push only; no main merge"
+    },
+    {
+      "id": "M5",
+      "trigger": "global theorem/physical claim promotion",
+      "required": "explicit assumptions/proof/transfer/source; code PASS never suffices"
+    }
+  ],
+  "anti_drift_self_audit": [
+    "Read exact current files before changing them.",
+    "No invented data, source citations, posterior, likelihood independence, native launch or test receipt.",
+    "Do not substitute all-J covariance for the actual physical transfer.",
+    "Do not relabel support ratio as occupancy; if no physical admissible body+measure, F_occupancy remains UNAVAILABLE.",
+    "Preserve q0 and logdet and null-space information.",
+    "Do not identify apparent kappa with shear or dH with acceleration when calibration is free.",
+    "CONST_V exclusion is not all-tilt exclusion; zero omega column is no constraint.",
+    "State nuisance-union coverage assumptions and posthoc status.",
+    "No systematic measurement zero-filled because absent.",
+    "Keep prior-driven marginal shrinkage distinct from data identification.",
+    "No scope drift into fresh data acquisition or native ODE solver.",
+    "On failure classify THEORY, NUMERICAL, IMPLEMENTATION, ENVIRONMENT, INPUT, PERMISSION and retain original failure."
+  ],
+  "output_schema": {
+    "LOCAL_RESULT.json": [
+      "base_sha",
+      "head_sha",
+      "input_hashes",
+      "code_hashes",
+      "commands_exit_codes",
+      "reference_parity",
+      "benchmark_decisions",
+      "claim_admissions",
+      "unmeasured",
+      "failures",
+      "decision",
+      "next_action"
+    ],
+    "benchmark_row": [
+      "competitor",
+      "same_data",
+      "same_estimand",
+      "same_law",
+      "metric",
+      "value",
+      "uncertainty",
+      "verdict",
+      "limitation"
+    ],
+    "failure": [
+      "category",
+      "command",
+      "exit_code",
+      "affected_claim",
+      "minimal_next_action"
+    ]
+  },
+  "stop": "After R59-D final decision, finish. Physical goals without identified response remain explicit limits, not new automatic work.",
+  "independent_replay": {
+    "script": "scripts/r58/check_r58_independent.py",
+    "preserved_original_receipt": "REVIEW/DATA_INDEPENDENT_REVIEW.json",
+    "portable_cloud_receipt": "REVIEW/DATA_INDEPENDENT_REPLAY.json",
+    "native_command": "OPENBLAS_NUM_THREADS=1 python scripts/r58/check_r58_independent.py --root . --results docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY --output docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/INDEPENDENT_CHECK.json",
+    "path_defaults": "--root defaults to the repository inferred from this script; --results and --output default under R58. --candidate-root defaults to --root and is only needed for a separately staged cloud patch.",
+    "scope": "The original independently implemented numerical oracle is unchanged; this is executable replay, not a request to implement a new oracle. Native output is separate from committed receipts.",
+    "conditional_calibration": "Gaussian full/split calibration has already been executed with independent seeds. Replaying it verifies the environment; it does not newly validate survey coverage or true covariance."
+  }
+}
