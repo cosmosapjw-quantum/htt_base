@@ -2,7 +2,7 @@
   "schema_version": "htt.r50.convergent-research/1",
   "baseline_commit": "36bd9030a0759c5563e273dd83836b40034dcda3",
   "mode": "convergent",
-  "current_unit": "R51",
+  "current_unit": "R52",
   "overall_status": "in_progress",
   "publication_status": "major_revision_required",
   "max_planned_turns": 4,
@@ -73,7 +73,7 @@
       "depends": [
         "R51"
       ],
-      "status": "ready",
+      "status": "complete_scoped",
       "executor": "local_for_owned_catalogues",
       "goal": "Direction/redshift-dependent observables and boost/tilt partial identification",
       "tasks": [
@@ -102,14 +102,17 @@
         "Sigma (CMB, integrated) and sigma/H0 (today) are different epochs; link only through an explicit history operator.",
         "Finite-MC law for MC-estimated covariances; tensor carrier needs (F,t,Q0) under that law.",
         "SMICA PR3 T45 carrier: R51/observed_carrier.npz."
-      ]
+      ],
+      "outputs": "R52/",
+      "science": "Joint 17D first-order identification (rank 14; omega null; A degenerate with CF4 calibration dipole). Frame-consistent composition (CMB dipole = beta_MO - beta_RM). beta_MO=442 km/s; frame offset beta_RM(0)=349 km/s, Wald 5.8 (measurement cov only), 2.8 with 250 km/s bulk variance: no global-tilt evidence. Counts vs CF4 frame inconsistent chi2_3=16.7 (working tail 8e-4). Gaia E2 chi2 110/5 not explained by CMB-allowed shear. Cobaya ties analytic; stacked GLS check 5e-9 sd.",
+      "remaining": "count-dipole systematics budget; CF4 empirical covariance; Gaia per-source weights/spatial systematics; omega; beta_RM history map; same-estimator velocity null"
     },
     {
       "id": "R53",
       "depends": [
         "R52"
       ],
-      "status": "pending",
+      "status": "ready",
       "executor": "current_host_analysis_of_local_returns",
       "goal": "Adversarial methods comparison and finite manuscript decision",
       "tasks": [
