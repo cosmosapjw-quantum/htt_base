@@ -41,6 +41,15 @@ class GeometryFingerprint:
 
 @dataclass(frozen=True)
 class TiltOrbitFingerprint:
+    """Moment invariants and local differential/stabilizer information.
+
+    ``moment_rank`` and ``moment_condition_number`` describe the linear map from
+    squared eigenframe components to three moments. ``moment_jacobian_rank``
+    describes their derivative at the actual dimensionless velocity beta=v/c.
+    The legacy ``continuous_azimuth_degeneracy_dof`` is the dimension of a
+    stabilizer orbit of beta at fixed (a,n), hence gauge in the simultaneous
+    SO(3) quotient, not a count of inequivalent geometries or velocities.
+    """
     speed_squared: float
     p1: float
     p2: float
@@ -52,6 +61,11 @@ class TiltOrbitFingerprint:
     moment_condition_number: float
     continuous_azimuth_degeneracy_dof: int
     orientation_quotient: str
+
+    @property
+    def stabilizer_orbit_dimension(self) -> int:
+        """Explicitly named alias preserving the historical serialized field."""
+        return self.continuous_azimuth_degeneracy_dof
 
 def _as_vector3(x: np.ndarray, name: str) -> np.ndarray:
     arr = np.asarray(x, dtype=np.float64)
@@ -232,10 +246,11 @@ def geometry_fingerprint(a: np.ndarray, n: np.ndarray, C: Optional[np.ndarray] =
 
 def tilt_orbit_fingerprint(a: np.ndarray, n: np.ndarray, tilt_velocity: np.ndarray,
                            *, atol: float = 1e-10) -> TiltOrbitFingerprint:
-    """Return SO(3)-orbit invariants and the specific-tilt identifiability stratum.
+    """Return SO(3)-orbit moments and their specific-tilt differential stratum.
 
-    v is a dimensionless matter 3-velocity relative to the homogeneous-slice
-    normal congruence. It is not an observer boost or a solved fluid history.
+    v is beta=v_physical/c relative to the homogeneous-slice normal congruence.
+    It is not an observer boost or a solved fluid history. The three-moment
+    Jacobian does not include the additional class-specific invariants below.
     """
     avec, nmat, v = _as_vector3(a, "a"), _as_matrix3(n, "n"), _as_vector3(tilt_velocity, "tilt_velocity")
     speed2 = float(np.dot(v, v))
@@ -251,6 +266,12 @@ def tilt_orbit_fingerprint(a: np.ndarray, n: np.ndarray, tilt_velocity: np.ndarr
     tol = atol * max(float(sv[0]), np.finfo(float).tiny)
     rank = int(np.count_nonzero(sv > tol))
     condition = float(sv[0] / sv[-1]) if rank == 3 else float("inf")
+    # dp/dv = 2*[v, nhat@v, nhat^2@v]^T; rank(M) instead differentiates
+    # with respect to squared eigenframe components, and is wrong at v_i=0.
+    jacobian = 2.0 * np.vstack((v, nhat @ v, nhat @ nhat @ v))
+    jac_sv = np.linalg.svd(jacobian, compute_uv=False)
+    jac_tol = atol * max(float(jac_sv[0]), np.finfo(float).tiny)
+    jacobian_rank = int(np.count_nonzero(jac_sv > jac_tol))
 
     if sig.class_label == "A":
         chi = float(np.linalg.det(np.column_stack((v, nhat @ v, nhat @ nhat @ v))))
@@ -267,7 +288,7 @@ def tilt_orbit_fingerprint(a: np.ndarray, n: np.ndarray, tilt_velocity: np.ndarr
                     break
                 i = j
         return TiltOrbitFingerprint(
-            speed2, p1, p2, None, None, chi, rank, rank, condition,
+            speed2, p1, p2, None, None, chi, rank, jacobian_rank, condition,
             degeneracy, "oriented SO(3) quotient; O(3) identification not defined"
         )
 
@@ -287,7 +308,7 @@ def tilt_orbit_fingerprint(a: np.ndarray, n: np.ndarray, tilt_velocity: np.ndarr
     else:
         degeneracy = 0
     return TiltOrbitFingerprint(
-        speed2, p1, p2, q0, q1, None, rank, rank, condition,
+        speed2, p1, p2, q0, q1, None, rank, jacobian_rank, condition,
         degeneracy, "oriented SO(3) quotient; O(3) identification not defined"
     )
 

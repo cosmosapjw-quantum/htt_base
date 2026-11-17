@@ -1,0 +1,552 @@
+--- a/htt/bass/background/convention_bridge.py
++++ b/htt/bass/background/convention_bridge.py
+@@ -405,7 +405,8 @@
+     Algebraically identical (to < 1e-15) to `div_pstf2(sigma_ab, Gamma)` for
+     `Gamma = connection_from_commutators(build_structure_tensor_with_sign(a, n, a_sign=a_sign))`:
+         D_j sigma^j_i = - (sigma_{jk} eps_{kil} n_{lj} + 3 a_sign sigma_{ij} a_j).
+-    The Codazzi / Einstein momentum constraint is `D_j sigma^j_i - kappa q_i = 0`.
++    With q_i = T^{0i} and the synchronous (-,+,+,+) tetrad, the active R49
++    Einstein momentum constraint is `D_j sigma^j_i + kappa q_i = 0`.
+     """
+     sigma = pstf_rank2(np.asarray(sigma_ab, dtype=np.float64))
+     a_eff = float(a_sign) * np.asarray(a, dtype=np.float64)
+--- a/htt/bass/background/tilted_bianchi_state.py
++++ b/htt/bass/background/tilted_bianchi_state.py
+@@ -14,9 +14,13 @@
+   STF-5 tensors, and spin-2 Stokes polarization `(Q, U)` via
+   `common.relativistic_velocity_closure`.
+ - `FamilyAdmissibilityRegistry` and fail-closed `construct_admissible_tilted_state`
+-  across `FLRW` and all 11 Bianchi types, explicitly rejecting uncompensated single
+-  perfect-fluid (`eps + p > 0`, `v != 0`) Bianchi-I or Bianchi-IX tilt with
+-  `CodazziProjectionError`.
++  across `FLRW` and all 11 Bianchi types. Admissibility uses the actual slice's
++  divergence map; the registry describes canonical representatives only.
++
++The background equations use geometric inverse-length H and sigma, dimensionless
++tilt beta=v_physical/c, and q=T^{0i}. With physical energy densities, set
++kappa=8*pi*G/c^4 and H=H_time/c, sigma=sigma_time/c. This follows the tetrad/Bianchi
++scope in docs/SSOT_POLICY.md sections 16 and 17; no new unit constants are defined.
+ """
+ from __future__ import annotations
+ 
+@@ -55,6 +59,7 @@
+     spatial_ricci_from_connection,
+ )
+ from bass.background.initial_conditions import CodazziProjectionError
++from bass.diagnostics.bianchi_similarity import classify_bianchi_type
+ from bass.background.matter_projection import (
+     SpeciesProjectedState,
+     SpeciesRestFrameState,
+@@ -77,6 +82,8 @@
+ __all__ = [
+     "CONGRUENCE_SPECIES_NAMES",
+     "FamilyAdmissibilitySpec",
++    "MomentumConstraintMap",
++    "momentum_constraint_map",
+     "FAMILY_ADMISSIBILITY_REGISTRY",
+     "SpeciesFluidCongruence",
+     "SpeciesCongruenceKinematics",
+@@ -110,7 +117,13 @@
+ 
+ @dataclass(frozen=True)
+ class FamilyAdmissibilitySpec:
+-    """Constraint fibre specification for one Bianchi/FLRW family."""
++    """Canonical-representative diagnostics, not a type-wide tilt prohibition.
++
++    Rank and the legacy ``allows_uncompensated_single_perfect_fluid_tilt`` flag
++    refer only to the default factory algebra. ``supports_general_vector_tilt``
++    describes the vector-valued interface, not admissibility of every vector.
++    Use ``momentum_constraint_map`` for a supplied slice algebra.
++    """
+ 
+     family: str
+     class_label: Literal["A", "B"]
+@@ -124,22 +137,76 @@
+     summary: str
+ 
+ 
++@dataclass(frozen=True)
++class MomentumConstraintMap:
++    """Actual-algebra map from orthonormal STF-5 shear to spatial divergence.
++
++    ``rank`` is the SVD numerical rank at ``relative_tolerance``; singular values
++    retain information near exceptional strata. The source convention is
++    ``matrix @ shear_stf5 = -kappa*q_total``. No matter or Gauss test is implied.
++    """
++
++    matrix: np.ndarray
++    singular_values: np.ndarray
++    rank: int
++    range_projector: np.ndarray
++    pseudoinverse: np.ndarray
++    rank_threshold: float
++    relative_tolerance: float
++
++
++def momentum_constraint_map(
++    algebra: BianchiAlgebra, *, rtol: float = 1.0e-12
++) -> MomentumConstraintMap:
++    """Build the state-dependent Codazzi map, including VI_{-1/9} strata.
++
++    The relative rank threshold preserves rank under nonzero uniform rescaling
++    of the structure constants. The zero operator has rank zero exactly.
++    """
++    if not math.isfinite(rtol) or not 0.0 < rtol < 1.0:
++        raise ValueError("rtol must be finite and satisfy 0 < rtol < 1")
++    basis_cols = [
++        exact_momentum_divergence(
++            orthonormal_to_stf_matrix(e, convention="kinematic_response"),
++            algebra.a, algebra.n, a_sign=1,
++        )
++        for e in np.eye(5, dtype=np.float64)
++    ]
++    matrix = np.column_stack(basis_cols)
++    if not np.all(np.isfinite(matrix)):
++        raise ValueError("The momentum constraint map must be finite")
++    left, singular_values, right = np.linalg.svd(matrix, full_matrices=False)
++    # Include the structure scale so roundoff from rotating n proportional to I
++    # does not turn its zero map into an apparent full-rank map. This threshold
++    # is still homogeneous under a common nonzero structure rescaling.
++    scale = max(
++        float(singular_values[0]), float(np.linalg.norm(algebra.a)),
++        float(np.linalg.norm(algebra.n)),
++    )
++    threshold = rtol * scale
++    rank = int(np.count_nonzero(singular_values > threshold))
++    range_basis = left[:, :rank]
++    inverse = (right[:rank, :].T / singular_values[:rank]) @ range_basis.T
++    return MomentumConstraintMap(
++        matrix=matrix,
++        singular_values=singular_values,
++        rank=rank,
++        range_projector=range_basis @ range_basis.T,
++        pseudoinverse=inverse,
++        rank_threshold=float(threshold),
++        relative_tolerance=float(rtol),
++    )
++
++
+ def _build_family_admissibility_registry() -> dict[str, FamilyAdmissibilitySpec]:
+     specs: dict[str, FamilyAdmissibilitySpec] = {}
+     for fam in ALL_TWELVE_FAMILIES:
+         sc = get_type("I") if fam == "FLRW" else get_type(fam)
+         eq = action_equivalence_for_family(fam)
+         class_lbl: Literal["A", "B"] = "B" if abs(sc.a_twist) > 0.0 else "A"
+-        # Compute exact numerical rank of sigma -> D_j sigma^j_i map on 5D STF space
++        # Representative diagnostics only; ranks can vary within a Bianchi type.
+         alg = build_bianchi_algebra("I" if fam == "FLRW" else fam)
+-        basis_cols = []
+-        for idx in range(5):
+-            e_vec = np.zeros(5, dtype=np.float64)
+-            e_vec[idx] = 1.0
+-            S = orthonormal_to_stf_matrix(e_vec, convention="kinematic_response")
+-            basis_cols.append(exact_momentum_divergence(S, alg.a, alg.n, a_sign=1))
+-        M_div = np.column_stack(basis_cols)
+-        rank = int(np.linalg.matrix_rank(M_div, tol=1.0e-12))
++        rank = momentum_constraint_map(alg).rank
+         uncomp_single_allowed = rank > 0
+         if fam in ("FLRW", "I"):
+             summary = (
+@@ -148,18 +215,18 @@
+             )
+         elif fam == "IX":
+             summary = (
+-                "n proportional to I => D_j sigma^j_i == 0 (rank 0) on diagonalized S^3; "
+-                "uncompensated single perfect-fluid tilt forbidden by Codazzi (requires sum_s q_s == 0)."
++                "The canonical n proportional to I has divergence rank 0 and requires total q == 0. "
++                "Anisotropic IX has rank 2 or 3; evaluate the actual algebra and source."
+             )
+         elif class_lbl == "A":
+             summary = (
+-                f"Class A rank-{rank} Codazzi fibre eps_ijk n_jl sigma_lk == kappa q_i; "
+-                "non-zero off-diagonal shear sources/requires transverse total momentum."
++                f"Canonical Class A representative rank {rank}; D_j sigma^j_i == -kappa q_i. "
++                "Actual momentum directions depend on the eigenvalue gaps of n."
+             )
+         else:
+             summary = (
+-                f"Class B rank-{rank} Codazzi fibre -(eps_ijk sigma_jl n_lk + 3 a_j sigma_ji) == kappa q_i; "
+-                "non-zero a @ sigma forces non-zero total momentum flux along a or transverse plane."
++                f"Canonical Class B representative rank {rank}; D_j sigma^j_i == -kappa q_i. "
++                "The a-shear and n-shear terms combine; VI_{-1/9} has an exceptional rank-2 map."
+             )
+         specs[fam] = FamilyAdmissibilitySpec(
+             family=fam,
+@@ -837,10 +904,9 @@
+ 
+     Fail-closed rules:
+     1. All families evaluate Jacobi, exact Class-B Ricci, Hamiltonian, and Codazzi.
+-    2. For Bianchi `I` and `FLRW` (and `IX` with diagonal `n` where `div sigma == 0`),
+-       a single perfect fluid with `eps + p > 0` and non-zero `v` yields non-zero `q`
+-       while `div sigma == 0`, so `strict` (and shear projection into `ker(div)`!)
+-       rejects the state with `CodazziProjectionError`.
++    2. The actual `(a,n)` determines the attainable total momentum. Type I and
++       isotropic-n IX have zero divergence map; anisotropic IX can have rank 2
++       or 3. A nonzero source outside the actual range is rejected in both modes.
+     3. Multi-fluid opposing tilts (e.g. photon vs matter with `q_1 + q_2 == 0`) ARE
+        admitted because `q_tot == 0` satisfies Codazzi while preserving vector drifts!
+     """
+@@ -848,47 +914,44 @@
+         raise KeyError(f"Unsupported Bianchi/FLRW family {family!r}")
+     if len(species) == 0:
+         raise ValueError("At least one fluid congruence is required")
++    if codazzi_mode not in ("strict", "project_shear_to_codazzi"):
++        raise ValueError(f"Unknown codazzi_mode {codazzi_mode!r}")
+ 
+     alg = build_bianchi_algebra("I" if family == "FLRW" else family) if algebra is None else algebra
++    actual_family = classify_bianchi_type(alg.a, alg.n).label
++    expected_family = "I" if family == "FLRW" else family
++    if actual_family != expected_family:
++        raise ValueError(
++            f"Requested family {family!r} is inconsistent with the supplied "
++            f"structure algebra ({actual_family!r})"
++        )
+     geom = build_geometry(alg)
+     triple = algebra_to_triple(alg)
+-    spec = FAMILY_ADMISSIBILITY_REGISTRY[family]
+ 
+     sig = np.zeros((3, 3), dtype=np.float64) if sigma_ab is None else pstf_rank2(np.asarray(sigma_ab, dtype=np.float64))
+ 
+     proj_list = tuple(sp.to_projected_state() for sp in species)
+     tot = total_matter_projection(proj_list)
+ 
+-    active_tilts = _non_lambda_tilted_species(species)
+-    if len(active_tilts) == 1 and not spec.allows_uncompensated_single_perfect_fluid_tilt:
+-        if float(np.linalg.norm(tot.q)) > tol:
+-            raise CodazziProjectionError(
+-                f"[{family}] Codazzi momentum constraint forbids an uncompensated single "
+-                f"perfect-fluid tilt (|q|={np.linalg.norm(tot.q):.3e} while D_j sigma^j_i == 0 identically). "
+-                "Add a compensating second species or set v == 0."
+-            )
++    momentum_map = momentum_constraint_map(alg)
++    M_div = momentum_map.matrix
++    target_div = -float(kappa) * tot.q
++    range_residual = float(np.linalg.norm(
++        target_div - momentum_map.range_projector @ target_div
++    ))
++    if range_residual > tol * max(1.0, float(np.linalg.norm(target_div))):
++        raise CodazziProjectionError(
++            f"[{family}] Target total momentum q={tot.q.tolist()} lies outside "
++            f"the actual divergence range (rank={momentum_map.rank}, "
++            f"residual={range_residual:.3e})"
++        )
+ 
+     if codazzi_mode == "project_shear_to_codazzi":
+-        # Project shear onto divergence equation M_div @ s5 == kappa * tot.q
+-        basis_cols = []
+-        for idx in range(5):
+-            e_vec = np.zeros(5, dtype=np.float64)
+-            e_vec[idx] = 1.0
+-            S_basis = orthonormal_to_stf_matrix(e_vec, convention="kinematic_response")
+-            basis_cols.append(exact_momentum_divergence(S_basis, alg.a, alg.n, a_sign=1))
+-        M_div = np.column_stack(basis_cols)
+-        target_div = -float(kappa) * tot.q
+-        s5_sol, _, _, _ = np.linalg.lstsq(M_div, target_div, rcond=1.0e-12)
+-        res_proj = float(np.linalg.norm(M_div @ s5_sol - target_div))
+-        if res_proj > tol * max(1.0, float(np.linalg.norm(target_div))):
+-            raise CodazziProjectionError(
+-                f"[{family}] Target momentum q={tot.q.tolist()} lies outside range of D_j sigma^j_i "
+-                f"(residual={res_proj:.3e})"
+-            )
++        # Project onto M_div @ s5 == -kappa * tot.q using this actual algebra.
+         # Keep projection component in ker(M_div) close to input `sigma_ab`
+         s5_in = stf_matrix_to_orthonormal(sig, convention="kinematic_response")
+         # Minimum-norm correction ds5 solving M_div (s5_in + ds5) = target_div
+-        ds5, _, _, _ = np.linalg.lstsq(M_div, target_div - M_div @ s5_in, rcond=1.0e-12)
++        ds5 = momentum_map.pseudoinverse @ (target_div - M_div @ s5_in)
+         sig = orthonormal_to_stf_matrix(s5_in + ds5, convention="kinematic_response")
+ 
+     _, ricci_scalar_exact, _ = exact_spatial_ricci_from_compact(alg.a, alg.n, a_sign=1)
+--- a/htt/bass/diagnostics/bianchi_similarity.py
++++ b/htt/bass/diagnostics/bianchi_similarity.py
+@@ -41,6 +41,15 @@
+ 
+ @dataclass(frozen=True)
+ class TiltOrbitFingerprint:
++    """Moment invariants and local differential/stabilizer information.
++
++    ``moment_rank`` and ``moment_condition_number`` describe the linear map from
++    squared eigenframe components to three moments. ``moment_jacobian_rank``
++    describes their derivative at the actual dimensionless velocity beta=v/c.
++    The legacy ``continuous_azimuth_degeneracy_dof`` is the dimension of a
++    stabilizer orbit of beta at fixed (a,n), hence gauge in the simultaneous
++    SO(3) quotient, not a count of inequivalent geometries or velocities.
++    """
+     speed_squared: float
+     p1: float
+     p2: float
+@@ -52,6 +61,11 @@
+     moment_condition_number: float
+     continuous_azimuth_degeneracy_dof: int
+     orientation_quotient: str
++
++    @property
++    def stabilizer_orbit_dimension(self) -> int:
++        """Explicitly named alias preserving the historical serialized field."""
++        return self.continuous_azimuth_degeneracy_dof
+ 
+ def _as_vector3(x: np.ndarray, name: str) -> np.ndarray:
+     arr = np.asarray(x, dtype=np.float64)
+@@ -232,10 +246,11 @@
+ 
+ def tilt_orbit_fingerprint(a: np.ndarray, n: np.ndarray, tilt_velocity: np.ndarray,
+                            *, atol: float = 1e-10) -> TiltOrbitFingerprint:
+-    """Return SO(3)-orbit invariants and the specific-tilt identifiability stratum.
+-
+-    v is a dimensionless matter 3-velocity relative to the homogeneous-slice
+-    normal congruence. It is not an observer boost or a solved fluid history.
++    """Return SO(3)-orbit moments and their specific-tilt differential stratum.
++
++    v is beta=v_physical/c relative to the homogeneous-slice normal congruence.
++    It is not an observer boost or a solved fluid history. The three-moment
++    Jacobian does not include the additional class-specific invariants below.
+     """
+     avec, nmat, v = _as_vector3(a, "a"), _as_matrix3(n, "n"), _as_vector3(tilt_velocity, "tilt_velocity")
+     speed2 = float(np.dot(v, v))
+@@ -251,6 +266,12 @@
+     tol = atol * max(float(sv[0]), np.finfo(float).tiny)
+     rank = int(np.count_nonzero(sv > tol))
+     condition = float(sv[0] / sv[-1]) if rank == 3 else float("inf")
++    # dp/dv = 2*[v, nhat@v, nhat^2@v]^T; rank(M) instead differentiates
++    # with respect to squared eigenframe components, and is wrong at v_i=0.
++    jacobian = 2.0 * np.vstack((v, nhat @ v, nhat @ nhat @ v))
++    jac_sv = np.linalg.svd(jacobian, compute_uv=False)
++    jac_tol = atol * max(float(jac_sv[0]), np.finfo(float).tiny)
++    jacobian_rank = int(np.count_nonzero(jac_sv > jac_tol))
+ 
+     if sig.class_label == "A":
+         chi = float(np.linalg.det(np.column_stack((v, nhat @ v, nhat @ nhat @ v))))
+@@ -267,7 +288,7 @@
+                     break
+                 i = j
+         return TiltOrbitFingerprint(
+-            speed2, p1, p2, None, None, chi, rank, rank, condition,
++            speed2, p1, p2, None, None, chi, rank, jacobian_rank, condition,
+             degeneracy, "oriented SO(3) quotient; O(3) identification not defined"
+         )
+ 
+@@ -287,7 +308,7 @@
+     else:
+         degeneracy = 0
+     return TiltOrbitFingerprint(
+-        speed2, p1, p2, q0, q1, None, rank, rank, condition,
++        speed2, p1, p2, q0, q1, None, rank, jacobian_rank, condition,
+         degeneracy, "oriented SO(3) quotient; O(3) identification not defined"
+     )
+ 
+--- /dev/null
++++ b/tests/r62/test_bianchi_state_constraints.py
+@@ -0,0 +1,213 @@
++"""R62 slice-constraint regressions; no ODE or Boltzmann evolution required."""
++from dataclasses import replace
++
++import numpy as np
++import pytest
++
++from bass.background.bianchi_types import build_bianchi_algebra
++from bass.background.convention_bridge import (
++    build_structure_tensor_with_sign, exact_momentum_divergence,
++)
++from bass.background.initial_conditions import CodazziProjectionError
++from bass.background.tilted_bianchi_state import (
++    FAMILY_ADMISSIBILITY_REGISTRY, SpeciesFluidCongruence,
++    construct_admissible_tilted_state, momentum_constraint_map,
++)
++from bass.diagnostics.bianchi_similarity import (
++    classify_bianchi_type, tilt_orbit_fingerprint,
++)
++from common.stf_metric_bridge import stf_matrix_to_orthonormal
++
++
++def _algebra(family, a, n):
++    base = build_bianchi_algebra(family)
++    a, n = np.asarray(a, dtype=float), np.asarray(n, dtype=float)
++    return replace(base, a=a, n=n, C=build_structure_tensor_with_sign(a, n))
++
++
++def _dust_for_q(q, rho=10.0):
++    q = np.asarray(q, dtype=float)
++    assert np.linalg.norm(q) < rho
++    beta = q / rho
++    return SpeciesFluidCongruence(
++        species="cdm", eps_hat=rho * (1.0 - beta @ beta),
++        p_hat=0.0, v_vec=beta,
++    )
++
++
++def _rotation():
++    axis = np.array([1.0, 2.0, -3.0]) / np.sqrt(14.0)
++    x, y, z = axis
++    cross = np.array([[0., -z, y], [z, 0., -x], [-y, x, 0.]])
++    angle = 0.73
++    return np.eye(3) + np.sin(angle) * cross + (1. - np.cos(angle)) * cross @ cross
++
++
++def test_nonisotropic_ix_positive_dust_counterexample_is_admitted():
++    # H=1, R=4, sigma^2=s^2 => rho=5-s^2; D3=s => q3=-s.
++    s = 0.1
++    algebra = _algebra("IX", np.zeros(3), np.diag([1., 2., 3.]))
++    sigma = np.array([[0., s, 0.], [s, 0., 0.], [0., 0., 0.]])
++    source = _dust_for_q([0., 0., -s], rho=5. - s*s)
++    state = construct_admissible_tilted_state(
++        family="IX", algebra=algebra, H=1., closure="hold_H",
++        sigma_ab=sigma, species=[source],
++    )
++    assert source.eps_hat > 0. and 0. < source.speed < 1.
++    assert state.constraints.is_admissible
++    assert state.constraints.codazzi_residual_norm < 1e-13
++    assert abs(state.constraints.hamiltonian_residual) < 1e-13
++    assert momentum_constraint_map(algebra).rank == 3
++    # Historical representative value remains valid only for the default n.
++    assert FAMILY_ADMISSIBILITY_REGISTRY["IX"].divergence_rank_on_stf5 == 0
++
++
++@pytest.mark.parametrize("family", ["I", "FLRW", "IX"])
++@pytest.mark.parametrize("mode", ["strict", "project_shear_to_codazzi"])
++def test_zero_divergence_representatives_still_reject_net_momentum(family, mode):
++    with pytest.raises(CodazziProjectionError, match="actual divergence range"):
++        construct_admissible_tilted_state(
++            family=family, species=[_dust_for_q([0.1, 0., 0.])], codazzi_mode=mode,
++        )
++
++
++def test_repeated_ix_momentum_plane_and_shear_kernel_projection():
++    algebra = _algebra("IX", np.zeros(3), np.diag([1., 2., 2.]))
++    m = momentum_constraint_map(algebra)
++    assert m.rank == 2
++    assert np.linalg.norm(m.range_projector @ [1., 0., 0.]) < 1e-14
++    initial = np.array([[0.2, 0.03, 0.04], [0.03, -0.1, 0.07], [0.04, 0.07, -0.1]])
++    state = construct_admissible_tilted_state(
++        family="IX", algebra=algebra, sigma_ab=initial,
++        species=[_dust_for_q([0., 0.1, -0.2])],
++        codazzi_mode="project_shear_to_codazzi",
++    )
++    assert state.constraints.is_admissible
++    # Diagonal shear and sigma23 span the kernel for n2=n3.
++    np.testing.assert_allclose(np.diag(state.sigma_ab), np.diag(initial), atol=1e-14)
++    assert state.sigma_ab[1, 2] == pytest.approx(initial[1, 2], abs=1e-14)
++    s0 = stf_matrix_to_orthonormal(initial, convention="kinematic_response")
++    s1 = stf_matrix_to_orthonormal(state.sigma_ab, convention="kinematic_response")
++    kernel = np.eye(5) - m.pseudoinverse @ m.matrix
++    np.testing.assert_allclose(kernel @ s1, kernel @ s0, atol=1e-13)
++    with pytest.raises(CodazziProjectionError, match="rank=2"):
++        construct_admissible_tilted_state(
++            family="IX", algebra=algebra,
++            species=[_dust_for_q([0.1, 0., 0.])],
++            codazzi_mode="project_shear_to_codazzi",
++        )
++
++
++def test_exceptional_vi_minus_one_ninth_range_is_state_dependent():
++    algebra = _algebra("VI_h", [1., 0., 0.], np.diag([0., 3., -3.]))
++    assert classify_bianchi_type(algebra.a, algebra.n).h_parameter == pytest.approx(-1./9.)
++    m = momentum_constraint_map(algebra)
++    assert m.rank == 2
++    # q2+q3=0 at these values, so e2+e3 is excluded.
++    np.testing.assert_allclose(m.range_projector @ [0., 1., 1.], 0., atol=1e-14)
++    admitted = construct_admissible_tilted_state(
++        family="VI_h", algebra=algebra,
++        species=[_dust_for_q([0.1, 0.2, -0.2])],
++        codazzi_mode="project_shear_to_codazzi",
++    )
++    assert admitted.constraints.is_admissible
++    with pytest.raises(CodazziProjectionError, match="rank=2"):
++        construct_admissible_tilted_state(
++            family="VI_h", algebra=algebra,
++            species=[_dust_for_q([0., 0.1, 0.1])],
++            codazzi_mode="project_shear_to_codazzi",
++        )
++
++
++@pytest.mark.parametrize("scale", [1e-18, 1., 1e8])
++def test_momentum_rank_is_invariant_under_nonzero_structure_scale(scale):
++    algebra = _algebra("IX", np.zeros(3), scale * np.diag([1., 2., 3.]))
++    m = momentum_constraint_map(algebra)
++    assert m.rank == 3
++    np.testing.assert_allclose(m.range_projector, np.eye(3), atol=1e-14)
++
++
++def test_rotated_operator_and_degenerate_strata_are_covariant():
++    rotation = _rotation()
++    for diagonal, rank in [([1., 1., 1.], 0), ([1., 2., 2.], 2), ([1., 2., 3.], 3)]:
++        n = np.diag(diagonal)
++        original = _algebra("IX", np.zeros(3), n)
++        rotated = _algebra("IX", np.zeros(3), rotation @ n @ rotation.T)
++        m, mr = momentum_constraint_map(original), momentum_constraint_map(rotated)
++        assert m.rank == mr.rank == rank
++        np.testing.assert_allclose(mr.range_projector, rotation @ m.range_projector @ rotation.T, atol=1e-13)
++        sigma = np.array([[.2, .3, -.1], [.3, -.1, .4], [-.1, .4, -.1]])
++        np.testing.assert_allclose(
++            exact_momentum_divergence(rotation @ sigma @ rotation.T, rotated.a, rotated.n),
++            rotation @ exact_momentum_divergence(sigma, original.a, original.n), atol=1e-13,
++        )
++
++
++def test_untilted_type_v_has_exact_shear_kernel_condition():
++    # n=0 gives D=-3 sigma a. At a=e1, sigma=diag(0,s,-s) works.
++    algebra = _algebra("V", [1., 0., 0.], np.zeros((3, 3)))
++    sigma = np.diag([0., 0.2, -0.2])
++    state = construct_admissible_tilted_state(
++        family="V", algebra=algebra, sigma_ab=sigma,
++        species=[_dust_for_q(np.zeros(3))],
++    )
++    assert momentum_constraint_map(algebra).rank == 3
++    assert np.linalg.det(sigma) == 0.
++    assert state.constraints.is_admissible
++    with pytest.raises(CodazziProjectionError, match="Constraints violated"):
++        construct_admissible_tilted_state(
++            family="V", algebra=algebra, sigma_ab=np.diag([.1, .1, -.2]),
++            species=[_dust_for_q(np.zeros(3))],
++        )
++
++
++@pytest.mark.parametrize("family", ["I", "II", "VI_0", "VII_0", "VIII", "IX"])
++def test_same_shear_has_constraint_consistent_class_a_slice_candidates(family):
++    # Every canonical Class A n commutes with this same diagonal shear.
++    sigma = np.diag([.2, .1, -.3])
++    state = construct_admissible_tilted_state(
++        family=family, sigma_ab=sigma, species=[_dust_for_q(np.zeros(3))],
++    )
++    assert state.constraints.is_admissible
++    np.testing.assert_allclose(state.sigma_ab, sigma, atol=1e-14)
++    np.testing.assert_allclose(state.total_matter.q, 0., atol=1e-14)
++
++
++def test_requested_family_cannot_hide_a_different_supplied_algebra():
++    with pytest.raises(ValueError, match="inconsistent"):
++        construct_admissible_tilted_state(
++            family="I", algebra=_algebra("IX", np.zeros(3), np.diag([1., 2., 3.])),
++            species=[_dust_for_q(np.zeros(3))],
++        )
++
++
++@pytest.mark.parametrize("beta,expected", [([0., 0., 0.], 0), ([.2, 0., 0.], 1), ([.2, .1, 0.], 2), ([.2, .1, .3], 3)])
++def test_moment_jacobian_uses_actual_tilt(beta, expected):
++    n, a = np.diag([1., 2., 3.]), np.zeros(3)
++    fp = tilt_orbit_fingerprint(a, n, beta)
++    assert fp.moment_rank == 3
++    assert fp.moment_jacobian_rank == expected
++    rotation = _rotation()
++    rotated = tilt_orbit_fingerprint(a, rotation @ n @ rotation.T, rotation @ beta)
++    assert rotated.moment_jacobian_rank == expected
++
++
++@pytest.mark.parametrize("beta,expected", [([.2, 0., 0.], 1), ([0., .2, .1], 1), ([.2, .2, .1], 2)])
++def test_repeated_eigenspaces_have_one_moment_derivative_per_occupied_eigenspace(beta, expected):
++    fp = tilt_orbit_fingerprint(np.zeros(3), np.diag([1., 2., 2.]), beta)
++    assert fp.moment_rank == 2
++    assert fp.moment_jacobian_rank == expected
++
++
++def test_repeated_eigenspace_azimuth_is_stabilizer_gauge():
++    n, a = np.diag([1., 2., 2.]), np.zeros(3)
++    beta = np.array([.1, .2, .3])
++    angle = 0.8
++    stabilizer = np.array([[1., 0., 0.], [0., np.cos(angle), -np.sin(angle)], [0., np.sin(angle), np.cos(angle)]])
++    np.testing.assert_allclose(stabilizer @ n @ stabilizer.T, n, atol=1e-14)
++    left, right = tilt_orbit_fingerprint(a, n, beta), tilt_orbit_fingerprint(a, n, stabilizer @ beta)
++    np.testing.assert_allclose([left.speed_squared, left.p1, left.p2], [right.speed_squared, right.p1, right.p2], atol=1e-14)
++    assert left.stabilizer_orbit_dimension == left.continuous_azimuth_degeneracy_dof == 1
++    isotropic = tilt_orbit_fingerprint(a, np.eye(3), beta)
++    assert isotropic.stabilizer_orbit_dimension == 2
++    assert isotropic.moment_jacobian_rank == 1

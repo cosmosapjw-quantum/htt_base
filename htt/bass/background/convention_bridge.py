@@ -405,7 +405,8 @@ def exact_momentum_divergence(
     Algebraically identical (to < 1e-15) to `div_pstf2(sigma_ab, Gamma)` for
     `Gamma = connection_from_commutators(build_structure_tensor_with_sign(a, n, a_sign=a_sign))`:
         D_j sigma^j_i = - (sigma_{jk} eps_{kil} n_{lj} + 3 a_sign sigma_{ij} a_j).
-    The Codazzi / Einstein momentum constraint is `D_j sigma^j_i - kappa q_i = 0`.
+    With q_i = T^{0i} and the synchronous (-,+,+,+) tetrad, the active R49
+    Einstein momentum constraint is `D_j sigma^j_i + kappa q_i = 0`.
     """
     sigma = pstf_rank2(np.asarray(sigma_ab, dtype=np.float64))
     a_eff = float(a_sign) * np.asarray(a, dtype=np.float64)

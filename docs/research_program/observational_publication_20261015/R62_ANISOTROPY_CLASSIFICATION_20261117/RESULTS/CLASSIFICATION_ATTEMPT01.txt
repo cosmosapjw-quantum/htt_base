@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r62/run_r62_classification.py", line 168, in <module>
+    run(args.root, args.source_dir, args.output)
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/scripts/r62/run_r62_classification.py", line 65, in run
+    angular_rows = np.einsum("ni,aij,nj->na", directions, E)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/cosmosapjw/Dropbox/bianchi/htt_base/.venv/lib/python3.12/site-packages/numpy/_core/einsumfunc.py", line 1608, in einsum
+    return c_einsum(*operands, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: more operands provided to einstein sum function than specified in the subscripts string

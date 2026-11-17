@@ -1,0 +1,15 @@
+{
+  "schema": "htt.r62.symbolic_check/1",
+  "acquisition": "Initial Wolfram context call internal MCP -32603; one later context request succeeded. Evaluator completed symbolic computation. No physical observation inferred.",
+  "code": "Clear[aa,n2,n3,s1,s2,s3,s4,s5,v1,v2,v3,l1,l2,l3]; sig={{s1,s3,s4},{s3,s2,s5},{s4,s5,-s1-s2}}; nn=DiagonalMatrix[{0,n2,n3}]; av={aa,0,0}; ep=Normal[LeviCivitaTensor[3]]; dv=Table[-Sum[sig[[j,k]] ep[[k,i,l]] nn[[l,j]],{j,3},{k,3},{l,3}]-3 Sum[sig[[i,j]] av[[j]],{j,3}],{i,3}]; mat=Table[D[dv[[i]],x],{i,3},{x,{s1,s2,s3,s4,s5}}]; vel={v1,v2,v3}; nd=DiagonalMatrix[{l1,l2,l3}]; mom={vel.vel,vel.nd.vel,vel.nd.nd.vel}; jac=Table[D[mom[[i]],vel[[j]]],{i,3},{j,3}]; q=DiagonalMatrix[{s1,s2,-s1-s2}]; i2=Tr[q.q]; i3=Tr[q.q.q]; <|\"divergence\"->dv,\"map\"->mat,\"rank_minor\"->Factor[Det[mat[[All,{1,3,4}]]]],\"exceptional_rank_example\"->MatrixRank[mat/.{aa->1,n2->3,n3->-3}],\"moment_jacobian\"->jac,\"jacobian_identity\"->Simplify[jac==2 {vel,nd.vel,nd.nd.vel}],\"moment_jacobian_determinant\"->Factor[Det[jac]],\"STF_discriminant_identity\"->Simplify[(i2^3-6 i3^2)/2-(s1-s2)^2(2s1+s2)^2(s1+2s2)^2]|>",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Out[1]= <|\"divergence\" -> {-3*aa*s1 - n2*s5 + n3*s5, -3*aa*s3 - n3*s4, n2*s3 - 3*aa*s4}, \"map\" -> {{-3*aa, 0, 0, 0, -n2 + n3}, {0, 0, -3*aa, -n3, 0}, {0, 0, n2, -3*aa, 0}}, \"rank_minor\" -> -3*aa*(9*aa^2 + n2*n3), \"exceptional_rank_example\" -> 2, \"moment_jacobian\" -> {{2*v1, 2*v2, 2*v3}, {2*l1*v1, 2*l2*v2, 2*l3*v3}, {2*l1^2*v1, 2*l2^2*v2, 2*l3^2*v3}}, \"jacobian_identity\" -> True, \"moment_jacobian_determinant\" -> -8*(l1 - l2)*(l1 - l3)*(l2 - l3)*v1*v2*v3, \"STF_discriminant_identity\" -> 0|>"
+      }
+    ],
+    "structuredContent": null,
+    "isError": false
+  }
+}

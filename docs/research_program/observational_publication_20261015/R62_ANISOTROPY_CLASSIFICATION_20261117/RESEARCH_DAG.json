@@ -1,0 +1,229 @@
+{
+  "schema": "htt.r62.research_dag/1",
+  "baseline_commit": "c118982e56ee50d68dd0446aa10f16ffe65bd02b",
+  "canonical_pr": "PR-R62-ANISOTROPY-CLASSIFICATION",
+  "parent_pr": "PR-R61-KINEMATIC-MEASUREMENT",
+  "selected_paper": "P5",
+  "claim_tier": "C0",
+  "scope": "Single ten-stage anisotropy-classification study",
+  "status": "COMPLETE_SCOPED_C0",
+  "tasks": [
+    {
+      "id": "R62-01",
+      "theory_stage": "R1",
+      "coding_stage": "C1",
+      "title": "Fix the single classification question and live baseline",
+      "depends_on": [],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESEARCH_RECORD.json",
+        "REVIEW/history_map.md"
+      ]
+    },
+    {
+      "id": "R62-02",
+      "theory_stage": "R2",
+      "coding_stage": "C2",
+      "title": "Reuse internal PR/branch research and verify primary sources",
+      "depends_on": [
+        "R62-01"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "REVIEW/history_sources.json",
+        "REVIEW/literature_map.md"
+      ]
+    },
+    {
+      "id": "R62-03",
+      "theory_stage": "R3",
+      "coding_stage": "C3",
+      "title": "Define tensor classes, source response and actual constraint fibres",
+      "depends_on": [
+        "R62-02"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "DESIGN.md",
+        "THEORY.md"
+      ]
+    },
+    {
+      "id": "R62-04",
+      "theory_stage": "R4",
+      "coding_stage": "C4",
+      "title": "Select finite class/calibration and actual-source experiments",
+      "depends_on": [
+        "R62-03"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "DESIGN.md"
+      ]
+    },
+    {
+      "id": "R62-05",
+      "theory_stage": "R5",
+      "coding_stage": "C5",
+      "title": "Derive and implement class witnesses and Bianchi repairs",
+      "depends_on": [
+        "R62-04"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "THEORY.md",
+        "REVIEW/WOLFRAM_CHECK.json"
+      ]
+    },
+    {
+      "id": "R62-06",
+      "theory_stage": "R6",
+      "coding_stage": "C6",
+      "title": "Validate affected scientific implementations",
+      "depends_on": [
+        "R62-05"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/AFFECTED_TEST_RECEIPT.json"
+      ]
+    },
+    {
+      "id": "R62-07",
+      "theory_stage": "R7",
+      "coding_stage": "C7",
+      "title": "Execute actual CF4 and conditional Bianchi constructions",
+      "depends_on": [
+        "R62-06"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/SOURCE_EXECUTION.json",
+        "RESULTS/CLASSIFICATION_EXECUTION.json",
+        "RESULTS/BIANCHI_EXAMPLES.json"
+      ]
+    },
+    {
+      "id": "R62-08",
+      "theory_stage": "R8",
+      "coding_stage": "C8",
+      "title": "Interpret source-order sensitivity and observable limits",
+      "depends_on": [
+        "R62-07"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/INTERPRETATION_SUMMARY.json",
+        "REPORT_KO.md"
+      ]
+    },
+    {
+      "id": "R62-09",
+      "theory_stage": "R9",
+      "coding_stage": "C9",
+      "title": "Complete one fresh independent final review and bounded repair",
+      "depends_on": [
+        "R62-08"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "REVIEW/final_review.md",
+        "REVIEW/final_review.json",
+        "REVIEW/R62_F1_CLOSURE.json",
+        "RESULTS/INHERITED_SN_REUSE.json"
+      ]
+    },
+    {
+      "id": "R62-10",
+      "theory_stage": "R10",
+      "coding_stage": "C10",
+      "title": "Finalize the finite paper plan, DAG and authorized release",
+      "depends_on": [
+        "R62-09"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESEARCH_PLAN_KO.md",
+        "VALIDATION.md",
+        "DAG_VALIDATION.json"
+      ]
+    }
+  ],
+  "future_science": [
+    {
+      "id": "P5-R62-RESPONSE",
+      "depends_on": [
+        "R62-10"
+      ],
+      "status": "unresolved_input",
+      "needed": "Source/congruence-qualified distance response linking signed observed tensors to normal shear; preserve identifiable quotients and truncation error."
+    },
+    {
+      "id": "P5-R62-OPTICS",
+      "depends_on": [
+        "P5-R62-RESPONSE"
+      ],
+      "status": "pending_conditional",
+      "needed": "If low-z truncation is insufficient, close it with candidate-limited null-geodesic/Jacobi transport using admissible backgrounds, without imposing a Boltzmann hierarchy."
+    },
+    {
+      "id": "P5-R62-CALIBRATION",
+      "depends_on": [
+        "R62-10"
+      ],
+      "status": "unresolved_input",
+      "needed": "Independent angular/depth calibration and matched-source covariance/selection information; propagate arbitrary calibration through the actual estimator bias map."
+    },
+    {
+      "id": "P5-R62-REPLICATION",
+      "depends_on": [
+        "P5-R62-RESPONSE",
+        "P5-R62-CALIBRATION"
+      ],
+      "status": "pending",
+      "completed_in_R62": "Four inherited qualified SN STF carriers reused; all contain zero",
+      "needed": "Extend existing public-SN assets to a source-matched distance likelihood with physical frame, source/host/calibration overlap and shared-PV covariance handled."
+    },
+    {
+      "id": "P5-R62-GEOMETRY",
+      "depends_on": [
+        "P5-R62-REPLICATION"
+      ],
+      "status": "unresolved_input",
+      "needed": "Constrain actual Bianchi momentum/curvature fibres using normal stress, frame transport and connection/curvature-derivative or explicit evolution closure; report action-equivalence candidate sets."
+    },
+    {
+      "id": "P5-R62-PAPER",
+      "depends_on": [
+        "P5-R62-REPLICATION"
+      ],
+      "status": "pending",
+      "needed": "One manuscript decision at the achieved observable or physical-geometry claim level; consolidate into existing paper if standalone scientific contribution remains insufficient."
+    }
+  ],
+  "original_42_node_payload_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "original_42_node_states_changed": false,
+  "key_results": {
+    "n_sources": 35970,
+    "n_carriers": 42,
+    "class_queries": 210,
+    "structured_class_intersections": 168,
+    "J2_varying_zero_p": [
+      0.6204076028460508,
+      0.888056401799735
+    ],
+    "J3_varying_zero_p": [
+      0.6256041282048106,
+      0.9398175605562865
+    ],
+    "inherited_SN_carriers": 4,
+    "inherited_SN_zero_intersections": 4,
+    "Bianchi_family_detected": false,
+    "source_operator_frame_preservation": "Counterexample executed",
+    "independent_review_finding": "R62-FR-01 CLOSED; scale-relative physical constraints"
+  },
+  "conditions": "Fixed Gaussian working law and finite observed-z source response; no unconditional shear, full LRS or family attribution.",
+  "automatic_successor": false,
+  "local_agent_prompt_created": false,
+  "submission_status": "NOT_READY_TO_SUBMIT"
+}

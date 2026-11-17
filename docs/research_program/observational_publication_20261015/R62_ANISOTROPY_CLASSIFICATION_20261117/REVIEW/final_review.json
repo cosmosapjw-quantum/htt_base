@@ -1,0 +1,724 @@
+{
+  "schema": "htt.r62.independent_final_review/1",
+  "reviewer_task": "/root/r62_final_review",
+  "date_utc": "2026-11-17",
+  "requested_runtime": {
+    "model": "gpt-6-astra",
+    "effort": "xhigh"
+  },
+  "observed_agent_runtime": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN",
+    "reason": "No observed host model/effort receipt available; requested profile is not observed identity."
+  },
+  "independence": {
+    "candidate_authorship": false,
+    "remote_writes": false,
+    "state_changing_git_operations": false,
+    "nested_agents": 0,
+    "review_pass": "one fresh-context final pass with one bounded repair closeout if needed"
+  },
+  "scope": [
+    "Anisotropy-classification R62 theory/code/scientific results",
+    "Conditional Bianchi/tilt initial-slice constraints",
+    "Inherited SN carrier bounded reuse"
+  ],
+  "not_reviewed": [
+    "Unfinished additive DAG metadata",
+    "Full historical PR diffs",
+    "Raw CF4 catalogue reconstruction or new covariance calibration",
+    "Full nonlinear optimizer or R61 global solver replay",
+    "Manuscript build/layout",
+    "42-node campaign completion"
+  ],
+  "verdict": "PASS",
+  "research_branch_publication": "APPROVED_FOR_SCOPED_RESEARCH_BRANCH",
+  "journal_submission": "NOT_READY_TO_SUBMIT",
+  "findings": [
+    {
+      "id": "R62-FR-01",
+      "severity": "HIGH",
+      "priority": "CLOSED_NOT_BLOCKING",
+      "status": "CLOSED",
+      "object": "htt/bass/background/tilted_bianchi_state.py: actual momentum range residual and physical-unit API claim",
+      "evidence": "Type I eps_hat=1,p_hat=0,beta=(.1,0,0),solve_H rejects at kappa=1 but admits at kappa=8*pi*G/c^4=2.0766474428449717e-43; returned q=(.10101010101010102,0,0),D=0,H=2.6442539462271684e-22,Codazzi norm=2.0976236796413858e-44,is_admissible=True.",
+      "mechanism": "Multiplication by dimensionful kappa and comparison against tol*max(1,norm(kappa*q)) lets a unit-scale change suppress an exactly forbidden source; default residual floors also do not define a scale-invariant direct physical-unit check.",
+      "impact": "A prohibited uncompensated Type-I tilt can be certified admissible under the newly documented physical-unit usage. CF4 tensor results and dimensionless IX fixture remain valid.",
+      "minimal_repair": "Use dimensionless/source-scaled constraint residuals independent of overall kappa, preserving compensated-species cancellation tolerance; otherwise explicitly remove direct physical-unit certification support and require declared nondimensionalization. Add the reproduced unit-rescaling regression.",
+      "reproduction_command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONPATH=htt/src:htt:. .venv/bin/python - <<'PY'\nimport json,numpy as np\nfrom bass.background.tilted_bianchi_state import SpeciesFluidCongruence,construct_admissible_tilted_state\nspecies=SpeciesFluidCongruence(species=\"cdm\",eps_hat=1.,p_hat=0.,v_vec=[.1,0,0])\nrecords=[]\nfor kappa in (1.,8*np.pi*6.67430e-11/299792458.**4):\n try:\n  state=construct_admissible_tilted_state(family=\"I\",species=[species],kappa=kappa)\n  records.append({\"kappa\":kappa,\"admitted\":state.constraints.is_admissible,\"H\":state.H,\"q\":state.total_matter.q.tolist(),\"D\":state.constraints.codazzi_div_sigma.tolist(),\"residual\":state.constraints.codazzi_residual_norm})\n except Exception as e: records.append({\"kappa\":kappa,\"error\":type(e).__name__,\"message\":str(e)})\nprint(json.dumps(records,indent=2))\nPY",
+      "remote_process": 1584067,
+      "initial_priority": "BLOCK_NOW",
+      "closure": {
+        "status": "COMPLETED",
+        "finding": "R62-FR-01",
+        "closure": "CLOSED",
+        "assertion_tested": "Original forbidden Type-I counterexample rejects independently of kappa, compensation remains admitted, relative Hamiltonian failure is preserved, and the same valid/invalid IX data retain verdicts under two large unit-scale changes.",
+        "typeI": [
+          {
+            "kappa": 1,
+            "single_tilt_rejected": true,
+            "compensating_flux_admitted": true,
+            "wrong_H_normalized_residual": 0.5999999999999999
+          },
+          {
+            "kappa": 2.0766474428449717e-43,
+            "single_tilt_rejected": true,
+            "compensating_flux_admitted": true,
+            "wrong_H_normalized_residual": 0.6
+          },
+          {
+            "kappa": 1e+30,
+            "single_tilt_rejected": true,
+            "compensating_flux_admitted": true,
+            "wrong_H_normalized_residual": 0.6
+          }
+        ],
+        "IX": [
+          {
+            "L": 1,
+            "E": 1,
+            "admitted": true,
+            "max_normalized_residual": 8.881784197001253e-17,
+            "perturbed_shear_rejected": true
+          },
+          {
+            "L": 1e-22,
+            "E": 1,
+            "admitted": true,
+            "max_normalized_residual": 3.556008730206367e-17,
+            "perturbed_shear_rejected": true
+          },
+          {
+            "L": 1000000000000,
+            "E": 100000,
+            "admitted": true,
+            "max_normalized_residual": 2.985721188632682e-18,
+            "perturbed_shear_rejected": true
+          }
+        ],
+        "input_hashes_before": {
+          "htt/bass/background/tilted_bianchi_state.py": "e36dd616f4d0e2998e48e1a50ae9b67e1cd48842ef5b52ee2b1e4b94b888fe04",
+          "tests/r62/test_constraint_units.py": "155cb2b335f1d85e33116731c507072bf9b490dab8231744b6f49ecf685b3232",
+          "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/R62_F1_REPAIR.patch": "2f2115c2e3105cd8eca2992d681df5d5ab2b0588bf677724362dc705869e4069",
+          "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/R62_F1_TEST_RECEIPT.json": "d40e010c3db51cb09066c5d6483f8b929be6613afb99a5e70d7153bda8ea4204",
+          "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/R62_F1_TESTS.txt": "7e0566ffbda7a08708d751a8cc10e762c8de2c440499fa5a6194af702f61b2ff"
+        },
+        "input_hashes_after": {
+          "htt/bass/background/tilted_bianchi_state.py": "e36dd616f4d0e2998e48e1a50ae9b67e1cd48842ef5b52ee2b1e4b94b888fe04",
+          "tests/r62/test_constraint_units.py": "155cb2b335f1d85e33116731c507072bf9b490dab8231744b6f49ecf685b3232",
+          "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/R62_F1_REPAIR.patch": "2f2115c2e3105cd8eca2992d681df5d5ab2b0588bf677724362dc705869e4069",
+          "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/R62_F1_TEST_RECEIPT.json": "d40e010c3db51cb09066c5d6483f8b929be6613afb99a5e70d7153bda8ea4204",
+          "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/R62_F1_TESTS.txt": "7e0566ffbda7a08708d751a8cc10e762c8de2c440499fa5a6194af702f61b2ff"
+        },
+        "input_changes": [],
+        "author_targeted_test_receipt": {
+          "command": [
+            ".venv/bin/python",
+            "-m",
+            "pytest",
+            "-p",
+            "no:cacheprovider",
+            "-q",
+            "tests/r62/test_constraint_units.py",
+            "tests/r62/test_bianchi_state_constraints.py",
+            "tests/r49/test_gbi01_convention_bridge.py",
+            "tests/r49/test_gbi02_tilted_state_and_constraints.py",
+            "htt/bass/diagnostics/test_bianchi_similarity.py"
+          ],
+          "exit_code": 0,
+          "seconds": 1.3734192030096892,
+          "state_sha256": "e36dd616f4d0e2998e48e1a50ae9b67e1cd48842ef5b52ee2b1e4b94b888fe04",
+          "log_sha256": "7e0566ffbda7a08708d751a8cc10e762c8de2c440499fa5a6194af702f61b2ff"
+        },
+        "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONPATH=htt/src:htt:. .venv/bin/python - <<'PY'\nimport json,hashlib,numpy as np\nfrom pathlib import Path\nfrom dataclasses import replace\nfrom bass.background.bianchi_types import build_bianchi_algebra\nfrom bass.background.convention_bridge import build_structure_tensor_with_sign\nfrom bass.background.tilted_bianchi_state import SpeciesFluidCongruence,construct_admissible_tilted_state,evaluate_tilted_constraints\nfrom bass.background.initial_conditions import CodazziProjectionError\nbase=Path(\"docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117\")\nfiles=[Path(\"htt/bass/background/tilted_bianchi_state.py\"),Path(\"tests/r62/test_constraint_units.py\"),base/\"REVIEW/R62_F1_REPAIR.patch\",base/\"RESULTS/R62_F1_TEST_RECEIPT.json\",base/\"RESULTS/R62_F1_TESTS.txt\"]\nsha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\nbefore={str(p):sha(p) for p in files if p.exists()}\nsingle=SpeciesFluidCongruence(species=\"cdm\",eps_hat=1.,p_hat=0.,v_vec=[.1,0,0]);opposite=SpeciesFluidCongruence(species=\"baryon\",eps_hat=1.,p_hat=0.,v_vec=[-.1,0,0])\nrows=[]\nfor coupling in (1.,8*np.pi*6.67430e-11/299792458.**4,1e30):\n try:construct_admissible_tilted_state(family=\"I\",species=[single],kappa=coupling)\n except CodazziProjectionError as e:reject=True\n else:raise AssertionError(\"forbidden Type-I tilt still admitted\")\n state=construct_admissible_tilted_state(family=\"I\",species=[single,opposite],kappa=coupling)\n assert state.constraints.is_admissible\n bad=evaluate_tilted_constraints(family=\"I\",algebra=state.algebra,geometry=state.geometry,H=2*state.H,sigma_ab=state.sigma_ab,total_matter=state.total_matter,kappa=coupling)\n assert not bad.is_admissible and abs(bad.normalized_residuals[\"hamiltonian\"]-.6)<1e-14\n rows.append({\"kappa\":coupling,\"single_tilt_rejected\":reject,\"compensating_flux_admitted\":state.constraints.is_admissible,\"wrong_H_normalized_residual\":bad.normalized_residuals[\"hamiltonian\"]})\nix=[]\nfor L,E in [(1.,1.),(1e-22,1.),(1e12,1e5)]:\n a=np.zeros(3);n=L*np.diag([1.,2.,3.]);alg=replace(build_bianchi_algebra(\"IX\"),a=a,n=n,C=build_structure_tensor_with_sign(a,n))\n sig=L*np.array([[0.,.1,0],[.1,0,0],[0,0,0]]);beta=np.array([0,0,-.1/4.99]);rho=4.99*E\n dust=SpeciesFluidCongruence(species=\"cdm\",eps_hat=rho*(1-beta@beta),p_hat=0.,v_vec=beta)\n opts=dict(family=\"IX\",algebra=alg,H=L,closure=\"hold_H\",species=[dust],kappa=L*L/E)\n state=construct_admissible_tilted_state(sigma_ab=sig,**opts)\n assert state.constraints.is_admissible\n try:construct_admissible_tilted_state(sigma_ab=1.1*sig,**opts)\n except CodazziProjectionError:reject=True\n else:raise AssertionError(\"unit-scaled bad IX state admitted\")\n ix.append({\"L\":L,\"E\":E,\"admitted\":state.constraints.is_admissible,\"max_normalized_residual\":max(state.constraints.normalized_residuals.values()),\"perturbed_shear_rejected\":reject})\nafter={str(p):sha(p) for p in files if p.exists()}\nreport=json.loads((base/\"RESULTS/R62_F1_TEST_RECEIPT.json\").read_text())\nassert report[\"state_sha256\"]==after[\"htt/bass/background/tilted_bianchi_state.py\"]\nfor p in files:\n if p.name==\"R62_F1_TESTS.txt\" and p.exists():assert sha(p)==report[\"log_sha256\"]\nprint(json.dumps({\"status\":\"COMPLETED\",\"finding\":\"R62-FR-01\",\"closure\":\"CLOSED\",\"assertion_tested\":\"Original forbidden Type-I counterexample rejects independently of kappa, compensation remains admitted, relative Hamiltonian failure is preserved, and the same valid/invalid IX data retain verdicts under two large unit-scale changes.\",\"typeI\":rows,\"IX\":ix,\"input_hashes_before\":before,\"input_hashes_after\":after,\"input_changes\":[p for p in before if before[p]!=after[p]],\"author_targeted_test_receipt\":report},indent=2))\nPY",
+        "remote_process": 1600223
+      },
+      "closure_summary": "Source-relative range guard now removes kappa from range membership and scales by uncancelled species fluxes; constraint acceptance uses dimensionally matched equation scales with raw and normalized reporting. Original counterexample and scale-equivalent valid/invalid states independently checked. No residual blocker."
+    }
+  ],
+  "core_finite_check": {
+    "status": "COMPLETED",
+    "assertion_tested": "All 42 saved carriers match their declared source marginals/contrasts; 210 witness distances and memberships verified independently; 14 saved GLS source fits checked by QR; IX fixture and exceptional VI_h ranks checked.",
+    "runtime": {
+      "python": "3.12.3",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "platform": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39"
+    },
+    "head": "c118982e56ee50d68dd0446aa10f16ffe65bd02b",
+    "branch": "research/r62-anisotropy-classification-20261117",
+    "counts": {
+      "carriers": 42,
+      "class_queries": 210,
+      "enclosures": 616,
+      "source_fits": 14
+    },
+    "status_counts": {
+      "ZERO/EXCLUDED": 16,
+      "SHARED_FRAME/INTERSECTS": 42,
+      "SHARED_AXIS/INTERSECTS": 42,
+      "SHARED_ZERO_EIGENVALUE_SHAPE/INTERSECTS": 42,
+      "SHARED_GENERAL_SHAPE/INTERSECTS": 42,
+      "ZERO/INTERSECTS": 26
+    },
+    "errors": {
+      "witness_q_max_abs": 2.3092638912203256e-14,
+      "independent_tensor_reconstruction_max_abs": 2.42861286636753e-17,
+      "class_commutator_norm_max": 2.1738185964577624e-18,
+      "source_QR_estimate_scaled_max": 6.106226635438361e-14,
+      "source_QR_covariance_scaled_max": 7.28583859910259e-13
+    },
+    "max_structured_objective_to_cutoff": 0.4462169159808548,
+    "source_ranks": [
+      21,
+      26,
+      21,
+      26,
+      21,
+      26,
+      21,
+      26,
+      21,
+      26,
+      21,
+      26,
+      21,
+      26
+    ],
+    "ix": {
+      "beta": [
+        0,
+        0,
+        -0.02004008016032064
+      ],
+      "gauss_residual": 8.881784197001252e-16,
+      "codazzi_residual": 2.7755575615628914e-17
+    },
+    "exceptional_VI_h_ranks": [
+      3,
+      2,
+      3
+    ],
+    "input_hashes_before": {
+      "htt/htt/htt/infer/r62_tensor_classes.py": "0cc8fe7a78d5124e0999fadd752909053bc69cf5cf75789a1e514ae937444c73",
+      "htt/htt/htt/infer/r61_kinematic_images.py": "9566729640b67e46b6d5138384518bf5de4fad2f8427ff9246199df09a06e1f7",
+      "htt/bass/background/tilted_bianchi_state.py": "8171faf994b3514168d3af507c26782c6c165de64e40224525333908eb738cc5",
+      "htt/bass/background/convention_bridge.py": "28042f5a6ab15e3039f90a3dd6d2ce21d32f8b1192a69147f9844881e1b72a6b",
+      "htt/bass/diagnostics/bianchi_similarity.py": "36896961347c3684fc978501f0b67b33de4def15ee8a08a4a2087f00dba72a9f",
+      "scripts/r62/build_r62_source_carriers.py": "51eb026e1c3aa40924e219d9ffef4d7d7bb0594ed617b94bc4b08760ca53e384",
+      "scripts/r62/run_r62_classification.py": "c0ae9bef67c3b5fcc00c23ba73097a07b6cd5524b1503b9e5dff8a3f9d8fbc89",
+      "scripts/r62/run_r62_bianchi_examples.py": "32c9f2e11f7d88f4df22a6236e1a2a9dc1a49e744baec2ccfe382b7d437a61c1",
+      "scripts/r62/summarize_r62.py": "ec734bae3d57b2a12b58fc75289cd68b67b0a32c5e890f1191c262bad3241690",
+      "tests/r62/test_tensor_classes.py": "f68eaebb3d203fd372e23f69219c4ab27ee974813d70910418c65e571d7986a0",
+      "tests/r62/test_bianchi_state_constraints.py": "fdc4fe00d024fcd6c705d97d0be7b164a5fd0453048eb7bc2faa2cd37f7af4fc",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REPORT_KO.md": "3fe8042727d99a2b945c3f26d4a92ead3cd7f1db7a3d3052da7855d71e947806",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/THEORY.md": "5bfcb02726ede6864688d71c97d16a0a2eaf207bd7a262897c9e5bd825ccf41e",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESEARCH_PLAN_KO.md": "4ab21c85bbcb09534195ed0702ffebc0c7aaf4ba15700f2047be2cb90b2f2c20",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/DESIGN.md": "c9ee652eb1b0cab3783c50f0b9df0cfd2da8d1093584b3ae48ecb3d4d62fb0a7",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/literature_map.md": "674f6cb184f47a43364ccf9488850f53f933d41dfc228a65612b45fa1f7af498",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/history_map.md": "f29f8a37c874ab2e25ff9c444648da8eb00e5be2369710f770744a8204e9c482",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/bianchi_derivation.md": "d6b975f1bc1328111039e3697998bbf942f08cd32f9c2390c7e442254d0977d6",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/tensor_classes_derivation.md": "41ee5a2b3385625ef99488543a73d3e95bd24bb9e33b89152d115fe82d8fd1e5",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/WOLFRAM_CHECK.json": "474b484c4680b4286c8b158b7dcf50c3df584d2f5ce082c54e00fb364eb27264",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/BIANCHI_EXAMPLES.json": "703d783409586d88a4cbfa740b054ecdccfc64851396c0f4bb32314ccc3b921f",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE/SOURCE_TENSOR_RESULT.json": "2afcf0f753d325ad074bf5ed1fd93c564a8560d0c15f0de976e0f96c31ce5c3c",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE/SOURCE_TENSOR_CARRIERS.npz": "1d0f3c353ea9189bffbab5728f295264c6925d4a3d82561c4457e48746beefd2",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/CLASSIFICATION_SUMMARY.json": "72d81787f403c1acdd74d46dbdd71db8424b633860a5838121f8ab91cc0591b7",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/CLASSIFICATION_TABLE.csv": "8b5286e8f680f46703a3945a1f125e237d4c7ab170a50c88507097d1c7141487",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/INTERPRETATION_SUMMARY.json": "7f8d673cacf87abab4bc0902ee4378ab8709aae2fc1eb49ea48ca2422866394a",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/AFFECTED_TEST_RECEIPT.json": "51e3c33f8838f5fd3fa9900e88ae066fb61e45e3355e5a7a9e200f2ae45e1cc4",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/AFFECTED_TESTS.txt": "2a10f1a4de9f5b0d2be45b7b7841eda180373cf49ca8e62d3a9747c39983296d",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE_EXECUTION.json": "8dc634886bfba4433c489c54dcf3b5c0b99b0e9bd5e6af3ffeb73fed99ca622d",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION_EXECUTION.json": "c1d19f68d082e8812c3a4f928975b816da3fd4bf82a7d7814f450f4fb13e7e5c",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION_ATTEMPT01.json": "62c81d88ab2452bdf5858ea7ab2daefd4407a84bf2375c1dc367bb1cb45c2f22"
+    },
+    "input_hashes_after": {
+      "htt/htt/htt/infer/r62_tensor_classes.py": "0cc8fe7a78d5124e0999fadd752909053bc69cf5cf75789a1e514ae937444c73",
+      "htt/htt/htt/infer/r61_kinematic_images.py": "9566729640b67e46b6d5138384518bf5de4fad2f8427ff9246199df09a06e1f7",
+      "htt/bass/background/tilted_bianchi_state.py": "8171faf994b3514168d3af507c26782c6c165de64e40224525333908eb738cc5",
+      "htt/bass/background/convention_bridge.py": "28042f5a6ab15e3039f90a3dd6d2ce21d32f8b1192a69147f9844881e1b72a6b",
+      "htt/bass/diagnostics/bianchi_similarity.py": "36896961347c3684fc978501f0b67b33de4def15ee8a08a4a2087f00dba72a9f",
+      "scripts/r62/build_r62_source_carriers.py": "51eb026e1c3aa40924e219d9ffef4d7d7bb0594ed617b94bc4b08760ca53e384",
+      "scripts/r62/run_r62_classification.py": "c0ae9bef67c3b5fcc00c23ba73097a07b6cd5524b1503b9e5dff8a3f9d8fbc89",
+      "scripts/r62/run_r62_bianchi_examples.py": "32c9f2e11f7d88f4df22a6236e1a2a9dc1a49e744baec2ccfe382b7d437a61c1",
+      "scripts/r62/summarize_r62.py": "ec734bae3d57b2a12b58fc75289cd68b67b0a32c5e890f1191c262bad3241690",
+      "tests/r62/test_tensor_classes.py": "f68eaebb3d203fd372e23f69219c4ab27ee974813d70910418c65e571d7986a0",
+      "tests/r62/test_bianchi_state_constraints.py": "fdc4fe00d024fcd6c705d97d0be7b164a5fd0453048eb7bc2faa2cd37f7af4fc",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REPORT_KO.md": "3fe8042727d99a2b945c3f26d4a92ead3cd7f1db7a3d3052da7855d71e947806",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/THEORY.md": "5bfcb02726ede6864688d71c97d16a0a2eaf207bd7a262897c9e5bd825ccf41e",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESEARCH_PLAN_KO.md": "4ab21c85bbcb09534195ed0702ffebc0c7aaf4ba15700f2047be2cb90b2f2c20",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/DESIGN.md": "c9ee652eb1b0cab3783c50f0b9df0cfd2da8d1093584b3ae48ecb3d4d62fb0a7",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/literature_map.md": "674f6cb184f47a43364ccf9488850f53f933d41dfc228a65612b45fa1f7af498",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/history_map.md": "f29f8a37c874ab2e25ff9c444648da8eb00e5be2369710f770744a8204e9c482",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/bianchi_derivation.md": "d6b975f1bc1328111039e3697998bbf942f08cd32f9c2390c7e442254d0977d6",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/tensor_classes_derivation.md": "41ee5a2b3385625ef99488543a73d3e95bd24bb9e33b89152d115fe82d8fd1e5",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/WOLFRAM_CHECK.json": "474b484c4680b4286c8b158b7dcf50c3df584d2f5ce082c54e00fb364eb27264",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/BIANCHI_EXAMPLES.json": "703d783409586d88a4cbfa740b054ecdccfc64851396c0f4bb32314ccc3b921f",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE/SOURCE_TENSOR_RESULT.json": "2afcf0f753d325ad074bf5ed1fd93c564a8560d0c15f0de976e0f96c31ce5c3c",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE/SOURCE_TENSOR_CARRIERS.npz": "1d0f3c353ea9189bffbab5728f295264c6925d4a3d82561c4457e48746beefd2",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/CLASSIFICATION_SUMMARY.json": "72d81787f403c1acdd74d46dbdd71db8424b633860a5838121f8ab91cc0591b7",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/CLASSIFICATION_TABLE.csv": "8b5286e8f680f46703a3945a1f125e237d4c7ab170a50c88507097d1c7141487",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/INTERPRETATION_SUMMARY.json": "7f8d673cacf87abab4bc0902ee4378ab8709aae2fc1eb49ea48ca2422866394a",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/AFFECTED_TEST_RECEIPT.json": "51e3c33f8838f5fd3fa9900e88ae066fb61e45e3355e5a7a9e200f2ae45e1cc4",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/AFFECTED_TESTS.txt": "2a10f1a4de9f5b0d2be45b7b7841eda180373cf49ca8e62d3a9747c39983296d",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE_EXECUTION.json": "8dc634886bfba4433c489c54dcf3b5c0b99b0e9bd5e6af3ffeb73fed99ca622d",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION_EXECUTION.json": "c1d19f68d082e8812c3a4f928975b816da3fd4bf82a7d7814f450f4fb13e7e5c",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION_ATTEMPT01.json": "62c81d88ab2452bdf5858ea7ab2daefd4407a84bf2375c1dc367bb1cb45c2f22"
+    },
+    "input_changes": [],
+    "classification_receipt_hashes": {
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log__raw_windows.json": "90127138ebff3e72bd36d2f7501f3df12379c058358fddfa686c8a59db63d945",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log__raw_differences.json": "a9204aa626eaff16fde45789a5acf96f7d6d3cb7676ddd07e9e9f77d3e21596e",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log__J2_coefficients.json": "7b2c690b1d6530cb40f6b10c94eefb001979daae1996aa05867fb20a03110b03",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log__J2_varying.json": "e480ff3cbc472c6c0ef433a93d1afd720022501663ff35122503461d0fb7466c",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log__J3_coefficients.json": "54fe7189f7895e79cda2facbe3b509cc4194f32ef81f48c3ea54ed53801d431b",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log__J3_varying.json": "d3450fbec0fe5915108214bac8bc407e3b4c6c1182ea0b06958d531358c02b4b",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono__raw_windows.json": "9006af045faf448d94968a74f2cc200b6f525610c86e067dc5caa0ccb3f0239b",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono__raw_differences.json": "261272b2fb6abdf28b246ef33b69f5b28220f68cda08b40bdf3381bc013b0d3b",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono__J2_coefficients.json": "4a436ceef441eb025d835559fe4bacaed20c5ecb0be0bffd12da4711ee4539fc",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono__J2_varying.json": "f23467cf9fbea04fa7d2ac5cfe788c75891276e461bbe605faf84a0869d9923c",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono__J3_coefficients.json": "41f479b7b227e984b05cfbb6152f9401c5de70196dc46a6a0a55cdf5569e2bbd",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono__J3_varying.json": "6d8f04f254d25f6baee0007a5573f702556fa003e447787f546617758718fc7e",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_split__raw_windows.json": "73dbd85ec5a32e3b40cd2094798019c2e43c267907cc131fb37bea2629f4c7e2",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_split__raw_differences.json": "38dae8cf3e225fe9f24521006ec39995b20720022e3a3139616aedaa6e8dbdc9",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_split__J2_coefficients.json": "f1aed7a43468ad462da166c08284d176a26ac7cc3944c7bca643602b8f0ed8bc",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_split__J2_varying.json": "d1ddaee1fda5b6c568f1081603d57289e8cb9131d386a2144fd338592d8b3b67",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_split__J3_coefficients.json": "9f2f9106da9a4c4add30ec52a1e77ff976bab479ef8cea95f2feacd6f6b679e6",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_split__J3_varying.json": "84c5bf4aa9996a7ce11e25493cd7b258ea5564490dfe6be51ad6774e28a3dba8",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_survey__raw_windows.json": "e4cfbb4d46eccd8decc6378ef4ef3c759c672b47f95ee9f20c2e63c23f150954",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_survey__raw_differences.json": "6bc648537afe253b17b21cdef4e85b1233f40e53c413f6c79fc5eccefe911ba0",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_survey__J2_coefficients.json": "8da7466082d7fb0e6bfe0808de2900e3a1d82a34b932e364017389c2408b2b28",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_survey__J2_varying.json": "bcf1709ed21fb5eea402ccba05266810d594c0ec0eebfe72a342ffeb5d18f25e",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_survey__J3_coefficients.json": "1e19bf3d00280dbf313f1be243fcb22438b535d5187326c4f26450940f5385ad",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_survey__J3_varying.json": "b7378ff358e4e5f31e1eaee41070c452bae409db0db3b646352fde18cad97f27",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_radial__raw_windows.json": "d79093d03c031640f68c8a20ef8ed9904b8dda891612099d9197c9ff3bf9e875",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_radial__raw_differences.json": "990d020b270af36f01f42ea3260a6b7ae585aac540eb14e61deb5b8cd12cb48e",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_radial__J2_coefficients.json": "358fa7b0530bae5eaee9c0757f82e7031cf730bb7d3ce603e9896d2e4e546e11",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_radial__J2_varying.json": "51480dd221b8165551fb35734d435bc4cb4c4581414bca03f22f838d635774f9",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_radial__J3_coefficients.json": "c276a2cf23ae2f9b6273ef568154a17fa00b6e4646c0e73136ba80686508768e",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_radial__J3_varying.json": "9802389f9b3581c862b94b405f114e6dbac4b2bb1a5e548c887485d9d71639e0",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_galactic__raw_windows.json": "f7fa795ea20f660a6604f086bf5bd242cc5da2833b1674f6a2d7415a0b5ee1a0",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_galactic__raw_differences.json": "79c68601a42b4781ba7a4e5a1eb3ee8fdedefeee6c917ddddc719e085aef6321",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_galactic__J2_coefficients.json": "f0cd8f7dda5f5e4e94023585556e81b895f181d813767ab316a498c2a8ecddfc",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_galactic__J2_varying.json": "c72d2db5ac82f6e71d2a0ad114fd1b3dec60a1e133241e154d931d8bc0058baa",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_galactic__J3_coefficients.json": "718bc6adb25610af62472760bd14823662325debcfc6cd4a8f3c024f9f4a324e",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_galactic__J3_varying.json": "1c0ca293f99238707a0de2f3a84b2bfb8373ff04c23d8a6378d1d787f598f41d",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_error__raw_windows.json": "993ea047d54aed9cf77c896669afb0b050c00213b52b7440f70da5e344020959",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_error__raw_differences.json": "f75ef30bc6d8818726bba3c8ad5efd00a47a427d1d3a2564289f0ed1e23292ae",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_error__J2_coefficients.json": "c83e4230cc31a1139af940a565a93e0b72c7fa2d734d35ce38e5c63b4ca32578",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_error__J2_varying.json": "227c9fcec3249ea624978b79f5ddc4788f9bf703db1d1794408510896943093a",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_error__J3_coefficients.json": "cb69e2e63b2fd01792f5db598df5df2d238515d4c1c4d3b02354ed7119dcb76d",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/log_mono_error__J3_varying.json": "7e780fa79e02a5dfde27e0d9b974d226d25667650689bfd73c4035ba45922de3"
+    }
+  },
+  "inherited_sn_check": {
+    "status": "COMPLETED",
+    "assertion_tested": "Four inherited SN source marginal/contrast zero witnesses, input hashes and covariance transport checked; no raw refit.",
+    "checked": {
+      "primary/two_depth_STF10": {
+        "q0": 10.156783041928293,
+        "p0": 0.42684760863763516
+      },
+      "primary/difference_STF5": {
+        "q0": 2.9291930979243532,
+        "p0": 0.7109013290043967
+      },
+      "lower_z_sensitivity/two_depth_STF10": {
+        "q0": 6.925298018162785,
+        "p0": 0.732477961463922
+      },
+      "lower_z_sensitivity/difference_STF5": {
+        "q0": 2.2286833677864184,
+        "p0": 0.8166821878568882
+      }
+    },
+    "hashes": {
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/INHERITED_SN_REUSE.json": "067d044bd0f76c3883666b32278a43d09c05605c9e250e7300d17aad6e1d4e02",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/RESULT.json": "f1a9246b7e1ab216fd6fb927a3fc2e28360cf2e5626aba5d7a88f2af05f7e82b",
+      "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/PUBLICATION_STATUS.json": "bb4062b13afc91a59d777fdc4d088211a36ec1b4b7722d757f2ed316c2e23e35",
+      "scripts/r62/reuse_r62_sn_carrier.py": "cf761a3971261e5ed6e6b0b56ea6b61407f10724664d0d1709d515b2e1e0260b"
+    }
+  },
+  "commands": {
+    "core": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=htt/src:htt:. .venv/bin/python - <<'PY'\nimport json,hashlib,platform,subprocess,time\nfrom pathlib import Path\nfrom collections import Counter\nimport numpy as np\nimport scipy\nfrom scipy import linalg,stats\nbase=Path(\"docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117\")\nfiles=[\"htt/htt/htt/infer/r62_tensor_classes.py\",\"htt/htt/htt/infer/r61_kinematic_images.py\",\"htt/bass/background/tilted_bianchi_state.py\",\"htt/bass/background/convention_bridge.py\",\"htt/bass/diagnostics/bianchi_similarity.py\",\"scripts/r62/build_r62_source_carriers.py\",\"scripts/r62/run_r62_classification.py\",\"scripts/r62/run_r62_bianchi_examples.py\",\"scripts/r62/summarize_r62.py\",\"tests/r62/test_tensor_classes.py\",\"tests/r62/test_bianchi_state_constraints.py\"]\nfiles += [str(base/x) for x in [\"REPORT_KO.md\",\"THEORY.md\",\"RESEARCH_PLAN_KO.md\",\"DESIGN.md\",\"REVIEW/literature_map.md\",\"REVIEW/history_map.md\",\"REVIEW/bianchi_derivation.md\",\"REVIEW/tensor_classes_derivation.md\",\"REVIEW/WOLFRAM_CHECK.json\",\"RESULTS/BIANCHI_EXAMPLES.json\",\"RESULTS/SOURCE/SOURCE_TENSOR_RESULT.json\",\"RESULTS/SOURCE/SOURCE_TENSOR_CARRIERS.npz\",\"RESULTS/CLASSIFICATION/CLASSIFICATION_SUMMARY.json\",\"RESULTS/CLASSIFICATION/CLASSIFICATION_TABLE.csv\",\"RESULTS/INTERPRETATION_SUMMARY.json\",\"RESULTS/AFFECTED_TEST_RECEIPT.json\",\"RESULTS/AFFECTED_TESTS.txt\",\"RESULTS/SOURCE_EXECUTION.json\",\"RESULTS/CLASSIFICATION_EXECUTION.json\",\"RESULTS/CLASSIFICATION_ATTEMPT01.json\"]]\nsha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()\nbefore={p:sha(p) for p in files}\nsrc=json.loads((base/\"RESULTS/SOURCE/SOURCE_TENSOR_RESULT.json\").read_text())\nsummary=json.loads((base/\"RESULTS/CLASSIFICATION/CLASSIFICATION_SUMMARY.json\").read_text())\ndata=np.load(base/\"RESULTS/SOURCE/SOURCE_TENSOR_CARRIERS.npz\",allow_pickle=False)\nassert src[\"carrier_sha256\"]==sha(base/\"RESULTS/SOURCE/SOURCE_TENSOR_CARRIERS.npz\")\nassert summary[\"source_sha256\"]==src[\"carrier_sha256\"]\nassert summary[\"implementation_sha256\"]==sha(files[0])\nassert summary[\"script_sha256\"]==sha(\"scripts/r62/run_r62_classification.py\")\nassert src[\"script_sha256\"]==sha(\"scripts/r62/build_r62_source_carriers.py\")\nassert summary[\"quadratic_solver_sha256\"]==sha(files[1])\nE=np.zeros((5,3,3));E[0]=np.diag([1,-1,0])/np.sqrt(2);E[1]=np.diag([1,1,-2])/np.sqrt(6)\nfor a,(i,j) in enumerate([(0,1),(0,2),(1,2)],2):E[a,i,j]=E[a,j,i]=1/np.sqrt(2)\nassert np.array_equal(E,data[\"STF_basis\"])\ncount=0;status=Counter();qerror=0.;reconerror=0.;commerror=0.;maxratio=0.;recordhashes={};spderror=0.;n_enclosures=0\nfor key,item in summary[\"experiments\"].items():\n p=base/\"RESULTS/CLASSIFICATION\"/item[\"receipt\"]\n assert sha(p)==summary[\"receipt_sha256\"][item[\"receipt\"]]\n recordhashes[str(p)]=sha(p)\n r=json.loads(p.read_text());variant,kind=key.split(\"/\")\n h=np.array(r[\"mean\"]);V=np.array(r[\"covariance\"]);cut=float(stats.chi2.ppf(.95,len(h)))\n assert abs(r[\"confidence\"][\"cutoff\"]-cut)<1e-12\n if kind==\"raw_windows\": hh=data[variant+\"__y32\"][12:];VV=data[variant+\"__cov32\"][12:,12:]\n elif kind==\"raw_differences\":\n  A=np.kron(np.column_stack((-np.ones(3),np.eye(3))),np.eye(5)); hh=A@data[variant+\"__y32\"][12:];VV=A@data[variant+\"__cov32\"][12:,12:]@A.T\n else:\n  degree=kind[1];off=11 if \"varying\" in kind else 6\n  hh=data[variant+\"__J\"+degree+\"__estimate\"][off:];VV=data[variant+\"__J\"+degree+\"__covariance\"][off:,off:]\n assert np.max(np.abs(h-hh))<1e-14 and np.max(np.abs(V-VV))<1e-14\n np.linalg.cholesky(V)\n for cls,f in r[\"classification\"][\"classes\"].items():\n  x=np.array(f[\"witness\"]);k=len(x)//5;T=np.einsum(\"ka,aij->kij\",x.reshape(k,5),E)\n  q=float((x-h)@np.linalg.solve(V,x-h));qerror=max(qerror,abs(q-f[\"objective\"]))\n  amp=np.array(f[\"amplitudes\"])\n  if cls==\"ZERO\": expected=np.zeros((k,3,3))\n  elif cls==\"SHARED_AXIS\":\n   u=np.array(f[\"parameters\"][\"axis\"]);assert abs(u@u-1)<1e-12\n   S=np.sqrt(1.5)*(np.outer(u,u)-np.eye(3)/3);expected=amp[:,0,None,None]*S\n  elif cls==\"SHARED_GENERAL_SHAPE\":\n   s=np.array(f[\"parameters\"][\"shape_stf5\"]);assert abs(s@s-1)<1e-12\n   expected=amp[:,0,None,None]*np.einsum(\"a,aij->ij\",s,E)\n  else:\n   R=np.array(f[\"parameters\"][\"frame\"]);assert np.linalg.norm(R.T@R-np.eye(3))<1e-12 and abs(np.linalg.det(R)-1)<1e-12\n   diagonals=np.einsum(\"ka,aij->kij\",amp,E[:amp.shape[1]])\n   expected=np.array([R@d@R.T for d in diagonals])\n  reconerror=max(reconerror,float(np.max(np.abs(T-expected))))\n  commerror=max(commerror,max([np.linalg.norm(T[i]@T[j]-T[j]@T[i]) for i in range(k) for j in range(i+1,k)]+[0.]))\n  if f[\"status\"]==\"INTERSECTS\":assert q<=cut+1e-11\n  elif cls==\"ZERO\":assert q>cut\n  else:raise AssertionError(\"unexpected structural nonintersection\")\n  if cls!=\"ZERO\":maxratio=max(maxratio,q/cut)\n  count+=1;status[cls+\"/\"+f[\"status\"]]+=1\n n_enclosures+=len(r[\"classification\"][\"commutator_enclosures\"][\"ranges\"])\n# Independent QR solution of each saved compressed source response; no production fit routine.\nfit_mean_err=0.;fit_cov_err=0.;ranks=[]\nfor variant in src[\"variants\"]:\n y=data[variant+\"__y32\"];C=data[variant+\"__cov32\"];L=np.linalg.cholesky(C)\n for deg in (2,3):\n  pre=variant+\"__J\"+str(deg);X=data[pre+\"__response\"];sc=data[pre+\"__parameter_scale\"]\n  A=np.linalg.solve(L,X*sc);b=np.linalg.solve(L,y);Q,R=np.linalg.qr(A,mode=\"reduced\")\n  h=sc*np.linalg.solve(R,Q.T@b);Ri=np.linalg.solve(R,np.eye(len(sc)));V=(Ri@Ri.T)*sc[:,None]*sc[None,:]\n  fit_mean_err=max(fit_mean_err,float(np.max(np.abs((h-data[pre+\"__estimate\"])/sc))))\n  fit_cov_err=max(fit_cov_err,float(np.max(np.abs((V-data[pre+\"__covariance\"])/sc[:,None]/sc[None,:]))))\n  ranks.append(int(np.linalg.matrix_rank(A)))\n# Actual constructor IX and exceptional rank, with independent closed-form source.\nfrom dataclasses import replace\nfrom bass.background.bianchi_types import build_bianchi_algebra\nfrom bass.background.convention_bridge import build_structure_tensor_with_sign\nfrom bass.background.tilted_bianchi_state import SpeciesFluidCongruence,construct_admissible_tilted_state,momentum_constraint_map\na=np.zeros(3);n=np.diag([1.,2.,3.]);sig=np.array([[0.,.1,0],[.1,0,0],[0,0,0]])\nalg=replace(build_bianchi_algebra(\"IX\"),a=a,n=n,C=build_structure_tensor_with_sign(a,n))\nrho=4.99;v=np.array([0.,0.,-.1/rho]);dust=SpeciesFluidCongruence(species=\"cdm\",eps_hat=rho*(1-v@v),p_hat=0.,v_vec=v)\nstate=construct_admissible_tilted_state(family=\"IX\",algebra=alg,H=1.,closure=\"hold_H\",sigma_ab=sig,species=[dust])\nassert state.constraints.is_admissible\nranks_vi=[]\nfor hpar in [-.12,-1/9,-.10]:\n a=np.array([1.,0,0]);n=np.diag([0.,3.,1/(3*hpar)])\n alg=replace(build_bianchi_algebra(\"VI_h\"),a=a,n=n,C=build_structure_tensor_with_sign(a,n))\n ranks_vi.append(momentum_constraint_map(alg).rank)\nassert ranks_vi==[3,2,3]\nafter={p:sha(p) for p in files}\nout={\"status\":\"COMPLETED\",\"assertion_tested\":\"All 42 saved carriers match their declared source marginals/contrasts; 210 witness distances and memberships verified independently; 14 saved GLS source fits checked by QR; IX fixture and exceptional VI_h ranks checked.\",\"runtime\":{\"python\":platform.python_version(),\"numpy\":np.__version__,\"scipy\":scipy.__version__,\"platform\":platform.platform()},\"head\":subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(),\"branch\":subprocess.check_output([\"git\",\"branch\",\"--show-current\"],text=True).strip(),\"counts\":{\"carriers\":len(summary[\"experiments\"]),\"class_queries\":count,\"enclosures\":n_enclosures,\"source_fits\":len(ranks)},\"status_counts\":dict(status),\"errors\":{\"witness_q_max_abs\":qerror,\"independent_tensor_reconstruction_max_abs\":reconerror,\"class_commutator_norm_max\":commerror,\"source_QR_estimate_scaled_max\":fit_mean_err,\"source_QR_covariance_scaled_max\":fit_cov_err},\"max_structured_objective_to_cutoff\":maxratio,\"source_ranks\":ranks,\"ix\":{\"beta\":v.tolist(),\"gauss_residual\":state.constraints.hamiltonian_residual,\"codazzi_residual\":state.constraints.codazzi_residual_norm},\"exceptional_VI_h_ranks\":ranks_vi,\"input_hashes_before\":before,\"input_hashes_after\":after,\"input_changes\":[p for p in files if before[p]!=after[p]],\"classification_receipt_hashes\":recordhashes}\nprint(json.dumps(out,indent=2))\nPY",
+    "sn": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONPATH=htt/src:htt:. .venv/bin/python - <<'PY'\nimport json,hashlib,numpy as np\nfrom pathlib import Path\nfrom scipy.stats import chi2\nbase=Path(\"docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117\")\np=base/\"RESULTS/INHERITED_SN_REUSE.json\";r=json.loads(p.read_text());source=Path(r[\"source_path\"]);original=json.loads(source.read_text())\nsha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\nassert sha(source)==r[\"source_sha256\"]\nassert sha(source.parent/\"PUBLICATION_STATUS.json\")==r[\"qualification_sha256\"]\nassert sha(Path(\"scripts/r62/reuse_r62_sn_carrier.py\"))==r[\"script_sha256\"]\nchecked={}\nfor sample,item in r[\"results\"].items():\n old=original[sample];inds=np.r_[3:8,11:16];h16=np.r_[old[\"low_8_mag\"],old[\"high_8_mag\"]];V16=np.asarray(old[\"full_16x16_covariance_mag2\"])\n h=h16[inds];V=V16[np.ix_(inds,inds)];A=np.column_stack([-np.eye(5),np.eye(5)])\n for name,hh,VV in [(\"two_depth_STF10\",h,V),(\"difference_STF5\",A@h,A@V@A.T)]:\n  saved=item[\"carriers\"][name];np.testing.assert_allclose(saved[\"mean\"],hh,atol=1e-15);np.testing.assert_allclose(saved[\"covariance\"],VV,atol=1e-15)\n  q=float(hh@np.linalg.solve(VV,hh));assert q<chi2.ppf(.95,len(hh));assert abs(q-saved[\"zero_mahalanobis2\"])<1e-12\n  assert all(x==0 for x in saved[\"zero_witness\"]);assert all(s==\"INTERSECTS\" for s in saved[\"class_status\"].values())\n  checked[sample+\"/\"+name]={\"q0\":q,\"p0\":float(chi2.sf(q,len(hh)))}\nprint(json.dumps({\"status\":\"COMPLETED\",\"assertion_tested\":\"Four inherited SN source marginal/contrast zero witnesses, input hashes and covariance transport checked; no raw refit.\",\"checked\":checked,\"hashes\":{str(q):sha(q) for q in [p,source,source.parent/\"PUBLICATION_STATUS.json\",Path(\"scripts/r62/reuse_r62_sn_carrier.py\")] }},indent=2))\nPY"
+  },
+  "skill_context_used": [
+    "physmath-research-loop 1.3.0: SKILL.md, references/POLICY_INTEGRATION.md, references/SUBAGENT_MODE.md, references/THEORY_LOOP.md R6/R9, references/CODING_LOOP.md C9/C10",
+    "mathbox:computation-audit: SKILL.md, references/checklist.md, assets/computation-manifest.json",
+    "repo AGENTS.md; htt/bass/AGENTS.md",
+    "repo htt-adversarial-review-loop, htt-reviewer-mode-pre-submission, htt-physics-math-audit, htt-scientific-code-validation"
+  ],
+  "minimal_publishable_claim": "Under each declared fixed Gaussian carrier law, every structured class has a feasible witness in its own 95% joint tensor ellipsoid. Actual survey operators can transform a commuting constructed source into noncommuting apparent windows. Conditional Bianchi constraint fibres depend on the actual (a,n), with no observed family/tilt detection.",
+  "scientific_claim_boundary": {
+    "admitted": [
+      "Full-covariance class-set intersections, not nonlinear Wilks tests or posterior class probabilities",
+      "Common additive STF calibration quotient within its declared domain",
+      "Actual-operator noise-free source/apparent morphology counterexample",
+      "Class-A and exceptional Class-B state-dependent momentum ranks",
+      "Positive tilted-dust IX initial-slice example in geometric fixtures",
+      "Type-V sigma*a=0 under total q=0; I/V fixed shape under geodesic homogeneous normals, Fermi frame and pi_N=0",
+      "Ricci reconstruction with explicit c and normal-frame/source conditions",
+      "Inherited SN zero-witness compatibility conditional on its released-magnitude law"
+    ],
+    "not_admitted": [
+      "Detected Bianchi family, tilt or cosmic frame rotation",
+      "Identification of phenomenological K_j with physical shear",
+      "95% simultaneous coverage across all 42 carriers or seven nuisance views",
+      "Bayesian class probabilities, preference ranking from feasible distance upper bounds, calibrated nonlinear Wilks significance",
+      "Formal interval proof of all R61 enclosures",
+      "Full all-family evolution or native Boltzmann transfer",
+      "CF4/SN combined likelihood or common physical sky frame",
+      "Journal submission readiness or first-in-literature geometric classification"
+    ]
+  },
+  "novelty_judgment": "Project-level constructive integration, actual-data morphology experiment and correction of a scientifically consequential constructor defect are demonstrated. GLS, variable projection, simultaneous diagonalization, confidence-set inversion, intrinsic Bianchi classification and existence of tilted-dust IX are established. Standalone methods/observable-paper novelty remains conditional on a precise comparator and demonstrated practical scientific value; no first-in-literature claim admitted.",
+  "external_sources_checked": [
+    {
+      "url": "https://arxiv.org/pdf/gr-qc/0008037",
+      "version": "v1",
+      "location": "Appendix A, A.1-A.18 and A.22-A.26",
+      "supports": "Normal-frame normalization, shear evolution, constraints and tilted perfect-fluid projections"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2004.01877",
+      "version": "v1",
+      "location": "Section4/5.4, Theorem7 and definitions23-24; introductory derivative-order statement",
+      "supports": "Generic maximal-G3 intrinsic classification requires Ricci derivative concomitants"
+    },
+    {
+      "url": "https://arxiv.org/pdf/1901.01790",
+      "version": "v2",
+      "location": "Introduction and SectionII",
+      "supports": "Published general tilted-dust Bianchi IX; existence is not new"
+    }
+  ],
+  "next_action": "Proceed to already-authorized research-branch publication under scoped claims. Preserve journal NOT_READY_TO_SUBMIT and original campaign science-gate states. No additional scientific review or classifier rerun is required.",
+  "computation_manifest": {
+    "schema_version": 2,
+    "claim_id": "R62-final-review-finite-witness-audit",
+    "repository": {
+      "commit": "c118982e56ee50d68dd0446aa10f16ffe65bd02b",
+      "dirty": true
+    },
+    "command": [
+      "bash",
+      "-lc",
+      "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=htt/src:htt:. .venv/bin/python - <<'PY'\nimport json,hashlib,platform,subprocess,time\nfrom pathlib import Path\nfrom collections import Counter\nimport numpy as np\nimport scipy\nfrom scipy import linalg,stats\nbase=Path(\"docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117\")\nfiles=[\"htt/htt/htt/infer/r62_tensor_classes.py\",\"htt/htt/htt/infer/r61_kinematic_images.py\",\"htt/bass/background/tilted_bianchi_state.py\",\"htt/bass/background/convention_bridge.py\",\"htt/bass/diagnostics/bianchi_similarity.py\",\"scripts/r62/build_r62_source_carriers.py\",\"scripts/r62/run_r62_classification.py\",\"scripts/r62/run_r62_bianchi_examples.py\",\"scripts/r62/summarize_r62.py\",\"tests/r62/test_tensor_classes.py\",\"tests/r62/test_bianchi_state_constraints.py\"]\nfiles += [str(base/x) for x in [\"REPORT_KO.md\",\"THEORY.md\",\"RESEARCH_PLAN_KO.md\",\"DESIGN.md\",\"REVIEW/literature_map.md\",\"REVIEW/history_map.md\",\"REVIEW/bianchi_derivation.md\",\"REVIEW/tensor_classes_derivation.md\",\"REVIEW/WOLFRAM_CHECK.json\",\"RESULTS/BIANCHI_EXAMPLES.json\",\"RESULTS/SOURCE/SOURCE_TENSOR_RESULT.json\",\"RESULTS/SOURCE/SOURCE_TENSOR_CARRIERS.npz\",\"RESULTS/CLASSIFICATION/CLASSIFICATION_SUMMARY.json\",\"RESULTS/CLASSIFICATION/CLASSIFICATION_TABLE.csv\",\"RESULTS/INTERPRETATION_SUMMARY.json\",\"RESULTS/AFFECTED_TEST_RECEIPT.json\",\"RESULTS/AFFECTED_TESTS.txt\",\"RESULTS/SOURCE_EXECUTION.json\",\"RESULTS/CLASSIFICATION_EXECUTION.json\",\"RESULTS/CLASSIFICATION_ATTEMPT01.json\"]]\nsha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()\nbefore={p:sha(p) for p in files}\nsrc=json.loads((base/\"RESULTS/SOURCE/SOURCE_TENSOR_RESULT.json\").read_text())\nsummary=json.loads((base/\"RESULTS/CLASSIFICATION/CLASSIFICATION_SUMMARY.json\").read_text())\ndata=np.load(base/\"RESULTS/SOURCE/SOURCE_TENSOR_CARRIERS.npz\",allow_pickle=False)\nassert src[\"carrier_sha256\"]==sha(base/\"RESULTS/SOURCE/SOURCE_TENSOR_CARRIERS.npz\")\nassert summary[\"source_sha256\"]==src[\"carrier_sha256\"]\nassert summary[\"implementation_sha256\"]==sha(files[0])\nassert summary[\"script_sha256\"]==sha(\"scripts/r62/run_r62_classification.py\")\nassert src[\"script_sha256\"]==sha(\"scripts/r62/build_r62_source_carriers.py\")\nassert summary[\"quadratic_solver_sha256\"]==sha(files[1])\nE=np.zeros((5,3,3));E[0]=np.diag([1,-1,0])/np.sqrt(2);E[1]=np.diag([1,1,-2])/np.sqrt(6)\nfor a,(i,j) in enumerate([(0,1),(0,2),(1,2)],2):E[a,i,j]=E[a,j,i]=1/np.sqrt(2)\nassert np.array_equal(E,data[\"STF_basis\"])\ncount=0;status=Counter();qerror=0.;reconerror=0.;commerror=0.;maxratio=0.;recordhashes={};spderror=0.;n_enclosures=0\nfor key,item in summary[\"experiments\"].items():\n p=base/\"RESULTS/CLASSIFICATION\"/item[\"receipt\"]\n assert sha(p)==summary[\"receipt_sha256\"][item[\"receipt\"]]\n recordhashes[str(p)]=sha(p)\n r=json.loads(p.read_text());variant,kind=key.split(\"/\")\n h=np.array(r[\"mean\"]);V=np.array(r[\"covariance\"]);cut=float(stats.chi2.ppf(.95,len(h)))\n assert abs(r[\"confidence\"][\"cutoff\"]-cut)<1e-12\n if kind==\"raw_windows\": hh=data[variant+\"__y32\"][12:];VV=data[variant+\"__cov32\"][12:,12:]\n elif kind==\"raw_differences\":\n  A=np.kron(np.column_stack((-np.ones(3),np.eye(3))),np.eye(5)); hh=A@data[variant+\"__y32\"][12:];VV=A@data[variant+\"__cov32\"][12:,12:]@A.T\n else:\n  degree=kind[1];off=11 if \"varying\" in kind else 6\n  hh=data[variant+\"__J\"+degree+\"__estimate\"][off:];VV=data[variant+\"__J\"+degree+\"__covariance\"][off:,off:]\n assert np.max(np.abs(h-hh))<1e-14 and np.max(np.abs(V-VV))<1e-14\n np.linalg.cholesky(V)\n for cls,f in r[\"classification\"][\"classes\"].items():\n  x=np.array(f[\"witness\"]);k=len(x)//5;T=np.einsum(\"ka,aij->kij\",x.reshape(k,5),E)\n  q=float((x-h)@np.linalg.solve(V,x-h));qerror=max(qerror,abs(q-f[\"objective\"]))\n  amp=np.array(f[\"amplitudes\"])\n  if cls==\"ZERO\": expected=np.zeros((k,3,3))\n  elif cls==\"SHARED_AXIS\":\n   u=np.array(f[\"parameters\"][\"axis\"]);assert abs(u@u-1)<1e-12\n   S=np.sqrt(1.5)*(np.outer(u,u)-np.eye(3)/3);expected=amp[:,0,None,None]*S\n  elif cls==\"SHARED_GENERAL_SHAPE\":\n   s=np.array(f[\"parameters\"][\"shape_stf5\"]);assert abs(s@s-1)<1e-12\n   expected=amp[:,0,None,None]*np.einsum(\"a,aij->ij\",s,E)\n  else:\n   R=np.array(f[\"parameters\"][\"frame\"]);assert np.linalg.norm(R.T@R-np.eye(3))<1e-12 and abs(np.linalg.det(R)-1)<1e-12\n   diagonals=np.einsum(\"ka,aij->kij\",amp,E[:amp.shape[1]])\n   expected=np.array([R@d@R.T for d in diagonals])\n  reconerror=max(reconerror,float(np.max(np.abs(T-expected))))\n  commerror=max(commerror,max([np.linalg.norm(T[i]@T[j]-T[j]@T[i]) for i in range(k) for j in range(i+1,k)]+[0.]))\n  if f[\"status\"]==\"INTERSECTS\":assert q<=cut+1e-11\n  elif cls==\"ZERO\":assert q>cut\n  else:raise AssertionError(\"unexpected structural nonintersection\")\n  if cls!=\"ZERO\":maxratio=max(maxratio,q/cut)\n  count+=1;status[cls+\"/\"+f[\"status\"]]+=1\n n_enclosures+=len(r[\"classification\"][\"commutator_enclosures\"][\"ranges\"])\n# Independent QR solution of each saved compressed source response; no production fit routine.\nfit_mean_err=0.;fit_cov_err=0.;ranks=[]\nfor variant in src[\"variants\"]:\n y=data[variant+\"__y32\"];C=data[variant+\"__cov32\"];L=np.linalg.cholesky(C)\n for deg in (2,3):\n  pre=variant+\"__J\"+str(deg);X=data[pre+\"__response\"];sc=data[pre+\"__parameter_scale\"]\n  A=np.linalg.solve(L,X*sc);b=np.linalg.solve(L,y);Q,R=np.linalg.qr(A,mode=\"reduced\")\n  h=sc*np.linalg.solve(R,Q.T@b);Ri=np.linalg.solve(R,np.eye(len(sc)));V=(Ri@Ri.T)*sc[:,None]*sc[None,:]\n  fit_mean_err=max(fit_mean_err,float(np.max(np.abs((h-data[pre+\"__estimate\"])/sc))))\n  fit_cov_err=max(fit_cov_err,float(np.max(np.abs((V-data[pre+\"__covariance\"])/sc[:,None]/sc[None,:]))))\n  ranks.append(int(np.linalg.matrix_rank(A)))\n# Actual constructor IX and exceptional rank, with independent closed-form source.\nfrom dataclasses import replace\nfrom bass.background.bianchi_types import build_bianchi_algebra\nfrom bass.background.convention_bridge import build_structure_tensor_with_sign\nfrom bass.background.tilted_bianchi_state import SpeciesFluidCongruence,construct_admissible_tilted_state,momentum_constraint_map\na=np.zeros(3);n=np.diag([1.,2.,3.]);sig=np.array([[0.,.1,0],[.1,0,0],[0,0,0]])\nalg=replace(build_bianchi_algebra(\"IX\"),a=a,n=n,C=build_structure_tensor_with_sign(a,n))\nrho=4.99;v=np.array([0.,0.,-.1/rho]);dust=SpeciesFluidCongruence(species=\"cdm\",eps_hat=rho*(1-v@v),p_hat=0.,v_vec=v)\nstate=construct_admissible_tilted_state(family=\"IX\",algebra=alg,H=1.,closure=\"hold_H\",sigma_ab=sig,species=[dust])\nassert state.constraints.is_admissible\nranks_vi=[]\nfor hpar in [-.12,-1/9,-.10]:\n a=np.array([1.,0,0]);n=np.diag([0.,3.,1/(3*hpar)])\n alg=replace(build_bianchi_algebra(\"VI_h\"),a=a,n=n,C=build_structure_tensor_with_sign(a,n))\n ranks_vi.append(momentum_constraint_map(alg).rank)\nassert ranks_vi==[3,2,3]\nafter={p:sha(p) for p in files}\nout={\"status\":\"COMPLETED\",\"assertion_tested\":\"All 42 saved carriers match their declared source marginals/contrasts; 210 witness distances and memberships verified independently; 14 saved GLS source fits checked by QR; IX fixture and exceptional VI_h ranks checked.\",\"runtime\":{\"python\":platform.python_version(),\"numpy\":np.__version__,\"scipy\":scipy.__version__,\"platform\":platform.platform()},\"head\":subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],text=True).strip(),\"branch\":subprocess.check_output([\"git\",\"branch\",\"--show-current\"],text=True).strip(),\"counts\":{\"carriers\":len(summary[\"experiments\"]),\"class_queries\":count,\"enclosures\":n_enclosures,\"source_fits\":len(ranks)},\"status_counts\":dict(status),\"errors\":{\"witness_q_max_abs\":qerror,\"independent_tensor_reconstruction_max_abs\":reconerror,\"class_commutator_norm_max\":commerror,\"source_QR_estimate_scaled_max\":fit_mean_err,\"source_QR_covariance_scaled_max\":fit_cov_err},\"max_structured_objective_to_cutoff\":maxratio,\"source_ranks\":ranks,\"ix\":{\"beta\":v.tolist(),\"gauss_residual\":state.constraints.hamiltonian_residual,\"codazzi_residual\":state.constraints.codazzi_residual_norm},\"exceptional_VI_h_ranks\":ranks_vi,\"input_hashes_before\":before,\"input_hashes_after\":after,\"input_changes\":[p for p in files if before[p]!=after[p]],\"classification_receipt_hashes\":recordhashes}\nprint(json.dumps(out,indent=2))\nPY"
+    ],
+    "environment": {
+      "software": [
+        {
+          "name": "python",
+          "version": "3.12.3"
+        },
+        {
+          "name": "numpy",
+          "version": "2.5.4"
+        },
+        {
+          "name": "scipy",
+          "version": "1.18.1"
+        }
+      ],
+      "hardware": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39"
+    },
+    "mathematics": {
+      "assertion_tested": "All 42 saved carriers match their declared source marginals/contrasts; 210 witness distances and memberships verified independently; 14 saved GLS source fits checked by QR; IX fixture and exceptional VI_h ranks checked.",
+      "coefficient_domain": "IEEE754 binary64; independent real-array arithmetic under numerical tolerance",
+      "conventions": "R54/R61 STF5 orthonormal basis; tensor-major coefficients; full covariance; squared Mahalanobis distance; one chi2_d(.95) event per carrier; Bianchi geometric fixture kappa=H=1",
+      "inputs": [
+        "htt/htt/htt/infer/r62_tensor_classes.py",
+        "htt/htt/htt/infer/r61_kinematic_images.py",
+        "htt/bass/background/tilted_bianchi_state.py",
+        "htt/bass/background/convention_bridge.py",
+        "htt/bass/diagnostics/bianchi_similarity.py",
+        "scripts/r62/build_r62_source_carriers.py",
+        "scripts/r62/run_r62_classification.py",
+        "scripts/r62/run_r62_bianchi_examples.py",
+        "scripts/r62/summarize_r62.py",
+        "tests/r62/test_tensor_classes.py",
+        "tests/r62/test_bianchi_state_constraints.py",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REPORT_KO.md",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/THEORY.md",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESEARCH_PLAN_KO.md",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/DESIGN.md",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/literature_map.md",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/history_map.md",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/bianchi_derivation.md",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/tensor_classes_derivation.md",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/WOLFRAM_CHECK.json",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/BIANCHI_EXAMPLES.json",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE/SOURCE_TENSOR_RESULT.json",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE/SOURCE_TENSOR_CARRIERS.npz",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/CLASSIFICATION_SUMMARY.json",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/CLASSIFICATION_TABLE.csv",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/INTERPRETATION_SUMMARY.json",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/AFFECTED_TEST_RECEIPT.json",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/AFFECTED_TESTS.txt",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE_EXECUTION.json",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION_EXECUTION.json",
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION_ATTEMPT01.json"
+      ],
+      "bounds": {
+        "carriers": 42,
+        "witnesses": 210,
+        "source_QR_fits": 14
+      },
+      "non_claims": [
+        "Detected Bianchi family, tilt or cosmic frame rotation",
+        "Identification of phenomenological K_j with physical shear",
+        "95% simultaneous coverage across all 42 carriers or seven nuisance views",
+        "Bayesian class probabilities, preference ranking from feasible distance upper bounds, calibrated nonlinear Wilks significance",
+        "Formal interval proof of all R61 enclosures",
+        "Full all-family evolution or native Boltzmann transfer",
+        "CF4/SN combined likelihood or common physical sky frame",
+        "Journal submission readiness or first-in-literature geometric classification"
+      ]
+    },
+    "randomness": {
+      "used": false,
+      "generator": "",
+      "seed": null
+    },
+    "run": {
+      "started_at": "UNKNOWN_NOT_CAPTURED",
+      "runtime_seconds": null,
+      "exit_status": null,
+      "status": "completed",
+      "exit_observation": "Remote process1580059 reached final JSON after all assertions and tool reported finished; shell numeric exit status not separately exposed.",
+      "resource_limits": {
+        "memory_bytes": null,
+        "cpu_seconds": null,
+        "max_cores": null,
+        "max_threads": 1
+      }
+    },
+    "outputs": [],
+    "checks": [
+      "saved receipt SHA256 validation",
+      "marginal/contrast covariance transport",
+      "independent tensor witness reconstruction",
+      "independent SPD quadratic objectives",
+      "independent QR source fits",
+      "IX constructor and exceptional VI_h discriminator"
+    ],
+    "result": "Finite core assertions verified in inspected range; separately reproduced unit-guard defect closed against repaired identity by targeted independent check.",
+    "residual_risks": [
+      "Full source/covariance realism conditional",
+      "No formal interval-arithmetic verification",
+      "No raw-catalogue replay in this review"
+    ],
+    "input_artifacts": [
+      {
+        "path": "htt/htt/htt/infer/r62_tensor_classes.py",
+        "sha256": "0cc8fe7a78d5124e0999fadd752909053bc69cf5cf75789a1e514ae937444c73",
+        "sha256_after": "0cc8fe7a78d5124e0999fadd752909053bc69cf5cf75789a1e514ae937444c73"
+      },
+      {
+        "path": "htt/htt/htt/infer/r61_kinematic_images.py",
+        "sha256": "9566729640b67e46b6d5138384518bf5de4fad2f8427ff9246199df09a06e1f7",
+        "sha256_after": "9566729640b67e46b6d5138384518bf5de4fad2f8427ff9246199df09a06e1f7"
+      },
+      {
+        "path": "htt/bass/background/tilted_bianchi_state.py",
+        "sha256": "8171faf994b3514168d3af507c26782c6c165de64e40224525333908eb738cc5",
+        "sha256_after": "8171faf994b3514168d3af507c26782c6c165de64e40224525333908eb738cc5"
+      },
+      {
+        "path": "htt/bass/background/convention_bridge.py",
+        "sha256": "28042f5a6ab15e3039f90a3dd6d2ce21d32f8b1192a69147f9844881e1b72a6b",
+        "sha256_after": "28042f5a6ab15e3039f90a3dd6d2ce21d32f8b1192a69147f9844881e1b72a6b"
+      },
+      {
+        "path": "htt/bass/diagnostics/bianchi_similarity.py",
+        "sha256": "36896961347c3684fc978501f0b67b33de4def15ee8a08a4a2087f00dba72a9f",
+        "sha256_after": "36896961347c3684fc978501f0b67b33de4def15ee8a08a4a2087f00dba72a9f"
+      },
+      {
+        "path": "scripts/r62/build_r62_source_carriers.py",
+        "sha256": "51eb026e1c3aa40924e219d9ffef4d7d7bb0594ed617b94bc4b08760ca53e384",
+        "sha256_after": "51eb026e1c3aa40924e219d9ffef4d7d7bb0594ed617b94bc4b08760ca53e384"
+      },
+      {
+        "path": "scripts/r62/run_r62_classification.py",
+        "sha256": "c0ae9bef67c3b5fcc00c23ba73097a07b6cd5524b1503b9e5dff8a3f9d8fbc89",
+        "sha256_after": "c0ae9bef67c3b5fcc00c23ba73097a07b6cd5524b1503b9e5dff8a3f9d8fbc89"
+      },
+      {
+        "path": "scripts/r62/run_r62_bianchi_examples.py",
+        "sha256": "32c9f2e11f7d88f4df22a6236e1a2a9dc1a49e744baec2ccfe382b7d437a61c1",
+        "sha256_after": "32c9f2e11f7d88f4df22a6236e1a2a9dc1a49e744baec2ccfe382b7d437a61c1"
+      },
+      {
+        "path": "scripts/r62/summarize_r62.py",
+        "sha256": "ec734bae3d57b2a12b58fc75289cd68b67b0a32c5e890f1191c262bad3241690",
+        "sha256_after": "ec734bae3d57b2a12b58fc75289cd68b67b0a32c5e890f1191c262bad3241690"
+      },
+      {
+        "path": "tests/r62/test_tensor_classes.py",
+        "sha256": "f68eaebb3d203fd372e23f69219c4ab27ee974813d70910418c65e571d7986a0",
+        "sha256_after": "f68eaebb3d203fd372e23f69219c4ab27ee974813d70910418c65e571d7986a0"
+      },
+      {
+        "path": "tests/r62/test_bianchi_state_constraints.py",
+        "sha256": "fdc4fe00d024fcd6c705d97d0be7b164a5fd0453048eb7bc2faa2cd37f7af4fc",
+        "sha256_after": "fdc4fe00d024fcd6c705d97d0be7b164a5fd0453048eb7bc2faa2cd37f7af4fc"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REPORT_KO.md",
+        "sha256": "3fe8042727d99a2b945c3f26d4a92ead3cd7f1db7a3d3052da7855d71e947806",
+        "sha256_after": "3fe8042727d99a2b945c3f26d4a92ead3cd7f1db7a3d3052da7855d71e947806"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/THEORY.md",
+        "sha256": "5bfcb02726ede6864688d71c97d16a0a2eaf207bd7a262897c9e5bd825ccf41e",
+        "sha256_after": "5bfcb02726ede6864688d71c97d16a0a2eaf207bd7a262897c9e5bd825ccf41e"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESEARCH_PLAN_KO.md",
+        "sha256": "4ab21c85bbcb09534195ed0702ffebc0c7aaf4ba15700f2047be2cb90b2f2c20",
+        "sha256_after": "4ab21c85bbcb09534195ed0702ffebc0c7aaf4ba15700f2047be2cb90b2f2c20"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/DESIGN.md",
+        "sha256": "c9ee652eb1b0cab3783c50f0b9df0cfd2da8d1093584b3ae48ecb3d4d62fb0a7",
+        "sha256_after": "c9ee652eb1b0cab3783c50f0b9df0cfd2da8d1093584b3ae48ecb3d4d62fb0a7"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/literature_map.md",
+        "sha256": "674f6cb184f47a43364ccf9488850f53f933d41dfc228a65612b45fa1f7af498",
+        "sha256_after": "674f6cb184f47a43364ccf9488850f53f933d41dfc228a65612b45fa1f7af498"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/history_map.md",
+        "sha256": "f29f8a37c874ab2e25ff9c444648da8eb00e5be2369710f770744a8204e9c482",
+        "sha256_after": "f29f8a37c874ab2e25ff9c444648da8eb00e5be2369710f770744a8204e9c482"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/bianchi_derivation.md",
+        "sha256": "d6b975f1bc1328111039e3697998bbf942f08cd32f9c2390c7e442254d0977d6",
+        "sha256_after": "d6b975f1bc1328111039e3697998bbf942f08cd32f9c2390c7e442254d0977d6"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/tensor_classes_derivation.md",
+        "sha256": "41ee5a2b3385625ef99488543a73d3e95bd24bb9e33b89152d115fe82d8fd1e5",
+        "sha256_after": "41ee5a2b3385625ef99488543a73d3e95bd24bb9e33b89152d115fe82d8fd1e5"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/WOLFRAM_CHECK.json",
+        "sha256": "474b484c4680b4286c8b158b7dcf50c3df584d2f5ce082c54e00fb364eb27264",
+        "sha256_after": "474b484c4680b4286c8b158b7dcf50c3df584d2f5ce082c54e00fb364eb27264"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/BIANCHI_EXAMPLES.json",
+        "sha256": "703d783409586d88a4cbfa740b054ecdccfc64851396c0f4bb32314ccc3b921f",
+        "sha256_after": "703d783409586d88a4cbfa740b054ecdccfc64851396c0f4bb32314ccc3b921f"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE/SOURCE_TENSOR_RESULT.json",
+        "sha256": "2afcf0f753d325ad074bf5ed1fd93c564a8560d0c15f0de976e0f96c31ce5c3c",
+        "sha256_after": "2afcf0f753d325ad074bf5ed1fd93c564a8560d0c15f0de976e0f96c31ce5c3c"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE/SOURCE_TENSOR_CARRIERS.npz",
+        "sha256": "1d0f3c353ea9189bffbab5728f295264c6925d4a3d82561c4457e48746beefd2",
+        "sha256_after": "1d0f3c353ea9189bffbab5728f295264c6925d4a3d82561c4457e48746beefd2"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/CLASSIFICATION_SUMMARY.json",
+        "sha256": "72d81787f403c1acdd74d46dbdd71db8424b633860a5838121f8ab91cc0591b7",
+        "sha256_after": "72d81787f403c1acdd74d46dbdd71db8424b633860a5838121f8ab91cc0591b7"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/CLASSIFICATION_TABLE.csv",
+        "sha256": "8b5286e8f680f46703a3945a1f125e237d4c7ab170a50c88507097d1c7141487",
+        "sha256_after": "8b5286e8f680f46703a3945a1f125e237d4c7ab170a50c88507097d1c7141487"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/INTERPRETATION_SUMMARY.json",
+        "sha256": "7f8d673cacf87abab4bc0902ee4378ab8709aae2fc1eb49ea48ca2422866394a",
+        "sha256_after": "7f8d673cacf87abab4bc0902ee4378ab8709aae2fc1eb49ea48ca2422866394a"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/AFFECTED_TEST_RECEIPT.json",
+        "sha256": "51e3c33f8838f5fd3fa9900e88ae066fb61e45e3355e5a7a9e200f2ae45e1cc4",
+        "sha256_after": "51e3c33f8838f5fd3fa9900e88ae066fb61e45e3355e5a7a9e200f2ae45e1cc4"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/AFFECTED_TESTS.txt",
+        "sha256": "2a10f1a4de9f5b0d2be45b7b7841eda180373cf49ca8e62d3a9747c39983296d",
+        "sha256_after": "2a10f1a4de9f5b0d2be45b7b7841eda180373cf49ca8e62d3a9747c39983296d"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE_EXECUTION.json",
+        "sha256": "8dc634886bfba4433c489c54dcf3b5c0b99b0e9bd5e6af3ffeb73fed99ca622d",
+        "sha256_after": "8dc634886bfba4433c489c54dcf3b5c0b99b0e9bd5e6af3ffeb73fed99ca622d"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION_EXECUTION.json",
+        "sha256": "c1d19f68d082e8812c3a4f928975b816da3fd4bf82a7d7814f450f4fb13e7e5c",
+        "sha256_after": "c1d19f68d082e8812c3a4f928975b816da3fd4bf82a7d7814f450f4fb13e7e5c"
+      },
+      {
+        "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION_ATTEMPT01.json",
+        "sha256": "62c81d88ab2452bdf5858ea7ab2daefd4407a84bf2375c1dc367bb1cb45c2f22",
+        "sha256_after": "62c81d88ab2452bdf5858ea7ab2daefd4407a84bf2375c1dc367bb1cb45c2f22"
+      }
+    ],
+    "declared_results": []
+  },
+  "current_blocking_findings": [],
+  "reviewed_candidate_code_hashes": {
+    "htt/htt/htt/infer/r62_tensor_classes.py": "0cc8fe7a78d5124e0999fadd752909053bc69cf5cf75789a1e514ae937444c73",
+    "htt/htt/htt/infer/r61_kinematic_images.py": "9566729640b67e46b6d5138384518bf5de4fad2f8427ff9246199df09a06e1f7",
+    "htt/bass/background/tilted_bianchi_state.py": "e36dd616f4d0e2998e48e1a50ae9b67e1cd48842ef5b52ee2b1e4b94b888fe04",
+    "htt/bass/background/convention_bridge.py": "28042f5a6ab15e3039f90a3dd6d2ce21d32f8b1192a69147f9844881e1b72a6b",
+    "htt/bass/diagnostics/bianchi_similarity.py": "36896961347c3684fc978501f0b67b33de4def15ee8a08a4a2087f00dba72a9f",
+    "scripts/r62/build_r62_source_carriers.py": "51eb026e1c3aa40924e219d9ffef4d7d7bb0594ed617b94bc4b08760ca53e384",
+    "scripts/r62/run_r62_classification.py": "c0ae9bef67c3b5fcc00c23ba73097a07b6cd5524b1503b9e5dff8a3f9d8fbc89",
+    "scripts/r62/run_r62_bianchi_examples.py": "32c9f2e11f7d88f4df22a6236e1a2a9dc1a49e744baec2ccfe382b7d437a61c1",
+    "scripts/r62/summarize_r62.py": "ec734bae3d57b2a12b58fc75289cd68b67b0a32c5e890f1191c262bad3241690",
+    "tests/r62/test_tensor_classes.py": "f68eaebb3d203fd372e23f69219c4ab27ee974813d70910418c65e571d7986a0",
+    "tests/r62/test_bianchi_state_constraints.py": "fdc4fe00d024fcd6c705d97d0be7b164a5fd0453048eb7bc2faa2cd37f7af4fc",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REPORT_KO.md": "3fe8042727d99a2b945c3f26d4a92ead3cd7f1db7a3d3052da7855d71e947806",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/THEORY.md": "5bfcb02726ede6864688d71c97d16a0a2eaf207bd7a262897c9e5bd825ccf41e",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESEARCH_PLAN_KO.md": "4ab21c85bbcb09534195ed0702ffebc0c7aaf4ba15700f2047be2cb90b2f2c20",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/DESIGN.md": "c9ee652eb1b0cab3783c50f0b9df0cfd2da8d1093584b3ae48ecb3d4d62fb0a7",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/literature_map.md": "674f6cb184f47a43364ccf9488850f53f933d41dfc228a65612b45fa1f7af498",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/history_map.md": "f29f8a37c874ab2e25ff9c444648da8eb00e5be2369710f770744a8204e9c482",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/bianchi_derivation.md": "d6b975f1bc1328111039e3697998bbf942f08cd32f9c2390c7e442254d0977d6",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/tensor_classes_derivation.md": "41ee5a2b3385625ef99488543a73d3e95bd24bb9e33b89152d115fe82d8fd1e5",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/WOLFRAM_CHECK.json": "474b484c4680b4286c8b158b7dcf50c3df584d2f5ce082c54e00fb364eb27264",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/BIANCHI_EXAMPLES.json": "703d783409586d88a4cbfa740b054ecdccfc64851396c0f4bb32314ccc3b921f",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE/SOURCE_TENSOR_RESULT.json": "2afcf0f753d325ad074bf5ed1fd93c564a8560d0c15f0de976e0f96c31ce5c3c",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE/SOURCE_TENSOR_CARRIERS.npz": "1d0f3c353ea9189bffbab5728f295264c6925d4a3d82561c4457e48746beefd2",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/CLASSIFICATION_SUMMARY.json": "72d81787f403c1acdd74d46dbdd71db8424b633860a5838121f8ab91cc0591b7",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION/CLASSIFICATION_TABLE.csv": "8b5286e8f680f46703a3945a1f125e237d4c7ab170a50c88507097d1c7141487",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/INTERPRETATION_SUMMARY.json": "7f8d673cacf87abab4bc0902ee4378ab8709aae2fc1eb49ea48ca2422866394a",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/AFFECTED_TEST_RECEIPT.json": "51e3c33f8838f5fd3fa9900e88ae066fb61e45e3355e5a7a9e200f2ae45e1cc4",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/AFFECTED_TESTS.txt": "2a10f1a4de9f5b0d2be45b7b7841eda180373cf49ca8e62d3a9747c39983296d",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE_EXECUTION.json": "8dc634886bfba4433c489c54dcf3b5c0b99b0e9bd5e6af3ffeb73fed99ca622d",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION_EXECUTION.json": "c1d19f68d082e8812c3a4f928975b816da3fd4bf82a7d7814f450f4fb13e7e5c",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/CLASSIFICATION_ATTEMPT01.json": "62c81d88ab2452bdf5858ea7ab2daefd4407a84bf2375c1dc367bb1cb45c2f22",
+    "tests/r62/test_constraint_units.py": "155cb2b335f1d85e33116731c507072bf9b490dab8231744b6f49ecf685b3232",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/R62_F1_REPAIR.patch": "2f2115c2e3105cd8eca2992d681df5d5ab2b0588bf677724362dc705869e4069",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/R62_F1_TEST_RECEIPT.json": "d40e010c3db51cb09066c5d6483f8b929be6613afb99a5e70d7153bda8ea4204",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/R62_F1_TESTS.txt": "7e0566ffbda7a08708d751a8cc10e762c8de2c440499fa5a6194af702f61b2ff",
+    "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/INHERITED_SN_REUSE.json": "067d044bd0f76c3883666b32278a43d09c05605c9e250e7300d17aad6e1d4e02",
+    "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/RESULT.json": "f1a9246b7e1ab216fd6fb927a3fc2e28360cf2e5626aba5d7a88f2af05f7e82b",
+    "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-08-PUBLIC-SN/PUBLICATION_STATUS.json": "bb4062b13afc91a59d777fdc4d088211a36ec1b4b7722d757f2ed316c2e23e35",
+    "scripts/r62/reuse_r62_sn_carrier.py": "cf761a3971261e5ed6e6b0b56ea6b61407f10724664d0d1709d515b2e1e0260b"
+  },
+  "closeout": {
+    "single_repair_episode": true,
+    "additional_review_agent": false,
+    "all_current_findings_closed": true,
+    "scope_expansion": false,
+    "author_tests": {
+      "initial_affected_tests": 113,
+      "repair_affected_tests": 100,
+      "note": "Overlapping affected suites, not 213 distinct tests; reviewer did not duplicate pytest suites."
+    }
+  }
+}

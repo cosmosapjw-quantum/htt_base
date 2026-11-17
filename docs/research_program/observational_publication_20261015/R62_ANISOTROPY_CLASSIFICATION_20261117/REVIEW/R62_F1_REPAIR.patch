@@ -1,0 +1,135 @@
+--- a/htt/bass/background/tilted_bianchi_state.py
++++ b/htt/bass/background/tilted_bianchi_state.py
+@@ -18,9 +18,13 @@
+   divergence map; the registry describes canonical representatives only.
+ 
+ The background equations use geometric inverse-length H and sigma, dimensionless
+-tilt beta=v_physical/c, and q=T^{0i}. With physical energy densities, set
+-kappa=8*pi*G/c^4 and H=H_time/c, sigma=sigma_time/c. This follows the tetrad/Bianchi
+-scope in docs/SSOT_POLICY.md sections 16 and 17; no new unit constants are defined.
++tilt beta=v_physical/c, and q=T^{0i}. Physical equation translation is
++kappa=8*pi*G/c^4, H=H_time/c and sigma=sigma_time/c. A well-scaled nondimensional
++chart is recommended: with length L0 and energy-density E0, use H_code=H_time*L0/c,
++sigma_code=sigma_time*L0/c, (a,n)_code=L0*(a,n), rho_code=rho/E0 and
++kappa_code=(8*pi*G/c^4)*E0*L0^2. Constraint acceptance uses relative equation
++scales, not an implicit unitful floor. This follows docs/SSOT_POLICY.md sections
++16 and 17; no new physical constants are defined.
+ """
+ from __future__ import annotations
+ 
+@@ -750,7 +754,7 @@
+ 
+ @dataclass(frozen=True)
+ class TiltedConstraintReport:
+-    """Unified Jacobi, Hamiltonian, Codazzi/Momentum, and shear-trace residuals."""
++    """Raw residuals plus the explicit relative scales used for acceptance."""
+ 
+     family: str
+     jacobi_residual: float
+@@ -764,6 +768,8 @@
+     codazzi_div_sigma: np.ndarray
+     is_admissible: bool
+     tolerance: float
++    residual_scales: dict[str, float] = field(default_factory=dict)
++    normalized_residuals: dict[str, float] = field(default_factory=dict)
+ 
+ 
+ @dataclass(frozen=True)
+@@ -800,7 +806,14 @@
+     kappa: float = 1.0,
+     tol: float = 1.0e-11,
+ ) -> TiltedConstraintReport:
+-    """Evaluate all Bianchi/Euler normal-frame constraint equations using exact R49 Class-B Ricci."""
++    """Evaluate exact constraints with unit-covariant relative acceptance.
++
++    Raw residuals retain their equation units. Relative scales are formed from
++    the terms in each equation, including structure/shear/source scales for
++    exact cancellations. A zero scale requires an exactly zero residual.
++    """
++    if not math.isfinite(tol) or tol <= 0.0:
++        raise ValueError("tol must be finite and positive")
+     triple = algebra_to_triple(algebra)
+     jac_res = triple.jacobi_residual()
+     R_exact, ricci_scalar_exact, _ = exact_spatial_ricci_from_compact(algebra.a, algebra.n, a_sign=1)
+@@ -826,14 +839,29 @@
+     cod_vec = div_sig + kq
+     cod_norm = float(np.linalg.norm(cod_vec))
+ 
+-    admissible = (
+-        jac_res <= tol
+-        and ricci_dual_err <= tol
+-        and abs(ham_res) <= tol * max(1.0, 3.0 * H * H)
+-        and cod_norm <= tol * max(1.0, float(np.linalg.norm(div_sig)) + float(np.linalg.norm(kq)))
+-        and shear_trace_err <= tol
+-        and shear_asym_err <= tol
+-    )
++    # Every scale has the units of its own residual. No max(1,...) is allowed:
++    # a unit change must not turn an impossible momentum or Hamiltonian into an
++    # apparently admissible state. Natural equation terms protect exact
++    # cancellations from being judged relative to roundoff alone.
++    a_norm, n_norm = float(np.linalg.norm(algebra.a)), float(np.linalg.norm(algebra.n))
++    structure_sq = a_norm*a_norm + n_norm*n_norm
++    shear_norm = float(np.linalg.norm(np.asarray(sigma_ab, dtype=np.float64)))
++    scales = dict(
++        jacobi=structure_sq,
++        ricci=max(structure_sq, float(np.linalg.norm(R_exact))),
++        hamiltonian=3.0*float(H)**2 + .5*abs(float(ricci_scalar_exact)) + sigma_sq
++                    + abs(float(kappa)*float(total_matter.rho)) + abs(float(lambda_value)),
++        codazzi=shear_norm*(n_norm+3.0*a_norm)
++                + abs(float(kappa))*(float(np.linalg.norm(total_matter.q))+abs(float(total_matter.rho))),
++        shear_trace=shear_norm,
++        shear_asymmetry=shear_norm,
++    )
++    residuals = dict(jacobi=jac_res, ricci=ricci_dual_err, hamiltonian=abs(float(ham_res)),
++                     codazzi=cod_norm, shear_trace=shear_trace_err, shear_asymmetry=shear_asym_err)
++    normalized = {name: (value/scales[name] if scales[name] > 0.0
++                         else (0.0 if value == 0.0 else float("inf")))
++                  for name, value in residuals.items()}
++    admissible = all(math.isfinite(value) and value <= tol for value in normalized.values())
+     return TiltedConstraintReport(
+         family=family,
+         jacobi_residual=jac_res,
+@@ -847,6 +875,8 @@
+         codazzi_div_sigma=div_sig,
+         is_admissible=admissible,
+         tolerance=tol,
++        residual_scales=scales,
++        normalized_residuals=normalized,
+     )
+ 
+ 
+@@ -914,6 +944,10 @@
+         raise KeyError(f"Unsupported Bianchi/FLRW family {family!r}")
+     if len(species) == 0:
+         raise ValueError("At least one fluid congruence is required")
++    if not math.isfinite(kappa) or kappa <= 0.0:
++        raise ValueError("kappa must be finite and positive")
++    if not math.isfinite(tol) or tol <= 0.0:
++        raise ValueError("tol must be finite and positive")
+     if codazzi_mode not in ("strict", "project_shear_to_codazzi"):
+         raise ValueError(f"Unknown codazzi_mode {codazzi_mode!r}")
+ 
+@@ -936,14 +970,18 @@
+     momentum_map = momentum_constraint_map(alg)
+     M_div = momentum_map.matrix
+     target_div = -float(kappa) * tot.q
+-    range_residual = float(np.linalg.norm(
+-        target_div - momentum_map.range_projector @ target_div
+-    ))
+-    if range_residual > tol * max(1.0, float(np.linalg.norm(target_div))):
++    # Membership is independent of the positive Einstein coupling. Test q
++    # before multiplication by kappa, relative to uncancelled species fluxes.
++    # This also tolerates roundoff from physically compensating multi-fluids.
++    source_momentum_scale = sum(float(np.linalg.norm(sp.q)) for sp in proj_list)
++    range_residual = float(np.linalg.norm(tot.q - momentum_map.range_projector @ tot.q))
++    range_relative = (range_residual/source_momentum_scale if source_momentum_scale > 0.0
++                      else (0.0 if range_residual == 0.0 else float("inf")))
++    if not math.isfinite(range_relative) or range_relative > tol:
+         raise CodazziProjectionError(
+             f"[{family}] Target total momentum q={tot.q.tolist()} lies outside "
+             f"the actual divergence range (rank={momentum_map.rank}, "
+-            f"residual={range_residual:.3e})"
++            f"source_relative_residual={range_relative:.3e})"
+         )
+ 
+     if codazzi_mode == "project_shear_to_codazzi":

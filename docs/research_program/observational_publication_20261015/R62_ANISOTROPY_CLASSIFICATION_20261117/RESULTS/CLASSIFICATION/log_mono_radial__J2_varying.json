@@ -1,0 +1,1978 @@
+{
+  "schema": "htt.r62.tensor_classification/1",
+  "variant": "log_mono_radial",
+  "experiment": "J2_varying",
+  "interpretation": "J2 nonconstant source coefficients; arbitrary constant source angular calibration removed",
+  "source_carrier_sha256": "1d0f3c353ea9189bffbab5728f295264c6925d4a3d82561c4457e48746beefd2",
+  "mean": [
+    -0.012753515211608325,
+    0.010480920245946991,
+    -0.013157352537731808,
+    -0.02701392315733283,
+    -0.002541542369717984,
+    0.0008678219525423736,
+    0.04964650706167793,
+    0.012287304193260224,
+    -0.01232461595497142,
+    0.0013653478187417778
+  ],
+  "covariance": [
+    [
+      0.00023074333824815135,
+      -2.36216551324841e-05,
+      -1.5598417882158126e-06,
+      1.3093468458916522e-05,
+      -1.1630830098965667e-05,
+      -8.887550974964147e-05,
+      -1.9644675388243298e-05,
+      -4.935224530729887e-06,
+      2.9740007318104517e-05,
+      -1.384685170623682e-05
+    ],
+    [
+      -2.36216551324841e-05,
+      0.0003472076719075244,
+      1.7665866749671258e-06,
+      -0.00010321298474306857,
+      8.34220504418645e-06,
+      -2.041619075498837e-05,
+      1.2141440623029096e-05,
+      3.489948696505793e-06,
+      -0.00011976263128844849,
+      5.350342177728041e-06
+    ],
+    [
+      -1.5598417882158126e-06,
+      1.7665866749671258e-06,
+      0.00022100082631558972,
+      -4.611814801792848e-06,
+      2.4668096717419502e-05,
+      -7.084429700017948e-06,
+      7.859350249969409e-06,
+      -8.137371815126684e-05,
+      -6.048818924432705e-06,
+      2.8288587186439172e-05
+    ],
+    [
+      1.3093468458916522e-05,
+      -0.00010321298474306857,
+      -4.611814801792848e-06,
+      0.0003522804044717174,
+      -9.152096415138753e-06,
+      3.711540812042646e-05,
+      -8.848812253755524e-05,
+      -5.747203945451167e-06,
+      5.134469869133501e-05,
+      -8.751331333539269e-06
+    ],
+    [
+      -1.1630830098965667e-05,
+      8.34220504418645e-06,
+      2.4668096717419502e-05,
+      -9.152096415138753e-06,
+      0.0002827274140912777,
+      -8.056200056491843e-06,
+      9.481148775153317e-06,
+      2.9422731337459322e-05,
+      -9.584737763197127e-06,
+      -4.9952613759559464e-05
+    ],
+    [
+      -8.887550974964147e-05,
+      -2.041619075498837e-05,
+      -7.084429700017948e-06,
+      3.711540812042646e-05,
+      -8.056200056491843e-06,
+      0.0004736504594472404,
+      -7.597563959134072e-05,
+      -4.756233393513697e-06,
+      2.6273855880668734e-05,
+      -3.18866737889998e-05
+    ],
+    [
+      -1.9644675388243298e-05,
+      1.2141440623029096e-05,
+      7.859350249969409e-06,
+      -8.848812253755524e-05,
+      9.481148775153317e-06,
+      -7.597563959134072e-05,
+      0.0005849959580561555,
+      1.7476627872477138e-05,
+      -0.00018114508874719995,
+      2.3948553882862808e-05
+    ],
+    [
+      -4.935224530729887e-06,
+      3.489948696505793e-06,
+      -8.137371815126684e-05,
+      -5.747203945451167e-06,
+      2.9422731337459322e-05,
+      -4.756233393513697e-06,
+      1.7476627872477138e-05,
+      0.0004097781742959158,
+      -7.706643240606423e-06,
+      0.00011419026990054591
+    ],
+    [
+      2.9740007318104517e-05,
+      -0.00011976263128844849,
+      -6.048818924432705e-06,
+      5.134469869133501e-05,
+      -9.584737763197127e-06,
+      2.6273855880668734e-05,
+      -0.00018114508874719995,
+      -7.706643240606423e-06,
+      0.000646150317143098,
+      -1.30693531091509e-05
+    ],
+    [
+      -1.384685170623682e-05,
+      5.350342177728041e-06,
+      2.8288587186439172e-05,
+      -8.751331333539269e-06,
+      -4.9952613759559464e-05,
+      -3.18866737889998e-05,
+      2.3948553882862808e-05,
+      0.00011419026990054591,
+      -1.30693531091509e-05,
+      0.0005235966811410529
+    ]
+  ],
+  "confidence": {
+    "level": 0.95,
+    "dimension": 10,
+    "cutoff": 18.307038053275146,
+    "law": "fixed Gaussian tensor marginal; one event for all classes of this carrier"
+  },
+  "classification": {
+    "classes": {
+      "ZERO": {
+        "status": "INTERSECTS",
+        "objective": 6.968935764749306,
+        "profile_distance_squared_upper": 6.968935764749306,
+        "objective_guarantee": "unique fixed-state objective; exact linear model in floating arithmetic",
+        "witness": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "amplitudes": [
+          [
+            0.0
+          ],
+          [
+            0.0
+          ]
+        ],
+        "parameters": {},
+        "shape_basis": [
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "witness_verified": true,
+        "reconstruction_error": 0.0,
+        "amplitude_rank": 0,
+        "amplitude_normal_residual": 0.0,
+        "diagnostics": {
+          "tensors": [
+            [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ],
+            [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          ],
+          "frobenius_norms": [
+            0.0,
+            0.0
+          ],
+          "traces": [
+            0.0,
+            0.0
+          ],
+          "eigenvalues": [
+            [
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "commutator_pairs": [
+            [
+              0,
+              1
+            ]
+          ],
+          "commutators": [
+            [
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0
+              ]
+            ]
+          ],
+          "commutator_norms": [
+            0.0
+          ]
+        },
+        "optimization": {
+          "proposals_evaluated": 1,
+          "starts_attempted": 0,
+          "converged_starts": 0,
+          "runs": []
+        }
+      },
+      "SHARED_FRAME": {
+        "status": "INTERSECTS",
+        "objective": 2.1294007634979817,
+        "profile_distance_squared_upper": 2.1294007634979817,
+        "objective_guarantee": "feasible upper bound; nonlinear global optimum unproved",
+        "witness": [
+          -0.006773976980258445,
+          0.018286429162854945,
+          -0.011771903254744916,
+          -0.009092972571766118,
+          0.005119242434101343,
+          0.0009205058721060543,
+          0.041114595699817014,
+          0.011342870129151533,
+          -0.024383520824486676,
+          -0.0007891056078764115
+        ],
+        "amplitudes": [
+          [
+            -0.011176946237601517,
+            -0.022423706829782116
+          ],
+          [
+            -0.04726943709428969,
+            -0.013442362353185503
+          ]
+        ],
+        "parameters": {
+          "frame": [
+            [
+              -0.2967962223885589,
+              0.7999875712173824,
+              0.5214708891909448
+            ],
+            [
+              0.03357128748884109,
+              0.5544800040533204,
+              -0.8315196292099011
+            ],
+            [
+              -0.9543505493434907,
+              -0.22928543565334317,
+              -0.19142418333385666
+            ]
+          ],
+          "frame_diagonal_eigenvalues": [
+            [
+              -0.0170577344566869,
+              -0.0012511455015558979,
+              0.018308879958242798
+            ],
+            [
+              -0.03891236096272694,
+              0.027936718061759395,
+              0.010975642900967546
+            ]
+          ]
+        },
+        "shape_basis": [
+          [
+            -0.12278553646342791,
+            0.3632915994622997
+          ],
+          [
+            -0.7432343984476489,
+            -0.44503517305244916
+          ],
+          [
+            -0.45354094303862846,
+            0.7510402325306533
+          ],
+          [
+            0.46667313666343135,
+            0.17289701663405813
+          ],
+          [
+            0.09509541263328929,
+            -0.2756956642126336
+          ]
+        ],
+        "witness_verified": true,
+        "reconstruction_error": 3.977707123716877e-18,
+        "amplitude_rank": 4,
+        "amplitude_normal_residual": 3.94040033080556e-14,
+        "diagnostics": {
+          "tensors": [
+            [
+              [
+                0.002675478386081744,
+                -0.00832399261890212,
+                -0.006429702566639103
+              ],
+              [
+                -0.00832399261890212,
+                0.01225532850276638,
+                0.003619851039690987
+              ],
+              [
+                -0.006429702566639103,
+                0.003619851039690987,
+                -0.014930806888848123
+              ]
+            ],
+            [
+              [
+                0.01743585935185142,
+                0.008020620386441378,
+                -0.017241752924197922
+              ],
+              [
+                0.008020620386441378,
+                0.016134067463274962,
+                -0.0005579819264017432
+              ],
+              [
+                -0.017241752924197922,
+                -0.0005579819264017432,
+                -0.03356992681512638
+              ]
+            ]
+          ],
+          "frobenius_norms": [
+            0.025054874878678836,
+            0.04914363426574544
+          ],
+          "traces": [
+            1.734723475976807e-18,
+            0.0
+          ],
+          "eigenvalues": [
+            [
+              -0.017057734456686898,
+              -0.0012511455015558968,
+              0.018308879958242798
+            ],
+            [
+              -0.03891236096272694,
+              0.010975642900967534,
+              0.027936718061759402
+            ]
+          ],
+          "commutator_pairs": [
+            [
+              0,
+              1
+            ]
+          ],
+          "commutators": [
+            [
+              [
+                0.0,
+                -4.0657581468206416e-20,
+                -8.131516293641283e-20
+              ],
+              [
+                4.0657581468206416e-20,
+                0.0,
+                -8.131516293641283e-20
+              ],
+              [
+                8.131516293641283e-20,
+                8.131516293641283e-20,
+                0.0
+              ]
+            ]
+          ],
+          "commutator_norms": [
+            1.7249550937687958e-19
+          ]
+        },
+        "optimization": {
+          "proposals_evaluated": 72,
+          "starts_attempted": 10,
+          "converged_starts": 10,
+          "runs": [
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 55,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 64,
+              "objective": 2.129400763585977
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 2,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 47,
+              "objective": 2.1294007635912457
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 70,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 69,
+              "objective": 2.129400763590773
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 71,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 39,
+              "objective": 2.1294007634979817
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 36,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 57,
+              "objective": 2.1294007635900423
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 4,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 35,
+              "objective": 2.1294007635858097
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 54,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 70,
+              "objective": 2.129400763557402
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 33,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 51,
+              "objective": 2.129400763519035
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 44,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 40,
+              "objective": 2.129400763532279
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 3,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 39,
+              "objective": 2.1294007635541425
+            }
+          ]
+        }
+      },
+      "SHARED_AXIS": {
+        "status": "INTERSECTS",
+        "objective": 2.9570844211016105,
+        "profile_distance_squared_upper": 2.9570844211016105,
+        "objective_guarantee": "feasible upper bound; nonlinear global optimum unproved",
+        "witness": [
+          -0.0031073493471735353,
+          0.02158749241794906,
+          -0.0005479468922669294,
+          -0.0159350110425396,
+          -0.0013942264457077335,
+          -0.0054703554900172,
+          0.038003856171385714,
+          -0.0009646370444561612,
+          -0.02805290471099806,
+          -0.002454475966322215
+        ],
+        "amplitudes": [
+          [
+            -0.02705261796878266
+          ],
+          [
+            -0.04762497572391675
+          ]
+        ],
+        "parameters": {
+          "axis": [
+            0.3655895698014754,
+            0.031987090886313935,
+            0.9302263662512491
+          ]
+        },
+        "shape_basis": [
+          [
+            0.11486316595160061
+          ],
+          [
+            -0.7979816387035046
+          ],
+          [
+            0.020254856402409267
+          ],
+          [
+            0.5890376695123477
+          ],
+          [
+            0.051537579369087295
+          ]
+        ],
+        "witness_verified": true,
+        "reconstruction_error": 0.0,
+        "amplitude_rank": 2,
+        "amplitude_normal_residual": 3.6067043581494844e-14,
+        "diagnostics": {
+          "tensors": [
+            [
+              [
+                0.006615829080127311,
+                -0.00038745696325204036,
+                -0.011267754366462266
+              ],
+              [
+                -0.00038745696325204036,
+                0.011010284669931307,
+                -0.000985866974269556
+              ],
+              [
+                -0.011267754366462266,
+                -0.000985866974269556,
+                -0.017626113750058618
+              ]
+            ],
+            [
+              [
+                0.01164688385051053,
+                -0.0006821013955187006,
+                -0.01983639915312677
+              ],
+              [
+                -0.0006821013955187006,
+                0.01938313477549497,
+                -0.0017355766000458422
+              ],
+              [
+                -0.01983639915312677,
+                -0.0017355766000458422,
+                -0.0310300186260055
+              ]
+            ]
+          ],
+          "frobenius_norms": [
+            0.02705261796878267,
+            0.04762497572391676
+          ],
+          "traces": [
+            0.0,
+            0.0
+          ],
+          "eigenvalues": [
+            [
+              -0.022088370076655005,
+              0.011044185038327497,
+              0.011044185038327506
+            ],
+            [
+              -0.03888562984534398,
+              0.019442814922671987,
+              0.019442814922672
+            ]
+          ],
+          "commutator_pairs": [
+            [
+              0,
+              1
+            ]
+          ],
+          "commutators": [
+            [
+              [
+                0.0,
+                0.0,
+                1.0842021724855044e-19
+              ],
+              [
+                0.0,
+                0.0,
+                3.3881317890172014e-21
+              ],
+              [
+                -1.0842021724855044e-19,
+                -3.3881317890172014e-21,
+                0.0
+              ]
+            ]
+          ],
+          "commutator_norms": [
+            1.5340419124158652e-19
+          ]
+        },
+        "optimization": {
+          "proposals_evaluated": 79,
+          "starts_attempted": 10,
+          "converged_starts": 10,
+          "runs": [
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 9,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 15,
+              "objective": 2.9570844211147627
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 41,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 17,
+              "objective": 2.9570844211016105
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 12,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 17,
+              "objective": 2.9570844211654324
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 6,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 19,
+              "objective": 2.9570844211555354
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 54,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 20,
+              "objective": 2.957084421111917
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 2,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 21,
+              "objective": 2.957084421164106
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 71,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 16,
+              "objective": 2.9570844211456317
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 23,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 18,
+              "objective": 2.957084421125562
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 39,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 21,
+              "objective": 2.9570844211602467
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 58,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 16,
+              "objective": 2.957084421164519
+            }
+          ]
+        }
+      },
+      "SHARED_ZERO_EIGENVALUE_SHAPE": {
+        "status": "INTERSECTS",
+        "objective": 3.5024031721022673,
+        "profile_distance_squared_upper": 3.5024031721022673,
+        "objective_guarantee": "feasible upper bound; nonlinear global optimum unproved",
+        "witness": [
+          -0.0037046159072576415,
+          -0.012734727328001046,
+          -0.006456473937397605,
+          -0.004650528928026775,
+          -0.0012880062117263677,
+          0.008709309682445456,
+          0.02993851098133528,
+          0.0151787479148032,
+          0.010933089322973493,
+          0.003028018356467691
+        ],
+        "amplitudes": [
+          [
+            0.01551998370343852
+          ],
+          [
+            -0.03648646653893244
+          ]
+        ],
+        "parameters": {
+          "frame": [
+            [
+              -0.17026889577972107,
+              0.8610625553443946,
+              -0.47914484126799894
+            ],
+            [
+              -0.00885915942182947,
+              0.4848878773946629,
+              0.8745314526362313
+            ],
+            [
+              0.9853578123830413,
+              0.153150325299947,
+              -0.07493303301099802
+            ]
+          ]
+        },
+        "shape_basis": [
+          [
+            -0.23869972920376634
+          ],
+          [
+            -0.820537416233215
+          ],
+          [
+            -0.41601035547267645
+          ],
+          [
+            -0.2996477971169796
+          ],
+          [
+            -0.08299017810443991
+          ]
+        ],
+        "witness_verified": true,
+        "reconstruction_error": 0.0,
+        "amplitude_rank": 2,
+        "amplitude_normal_residual": 8.188600426433445e-15,
+        "diagnostics": {
+          "tensors": [
+            [
+              [
+                -0.007818489690893299,
+                -0.004565416503688055,
+                -0.003288420541111938
+              ],
+              [
+                -0.004565416503688055,
+                -0.002579371631466434,
+                -0.0009107579265221107
+              ],
+              [
+                -0.003288420541111938,
+                -0.0009107579265221107,
+                0.010397861322359732
+              ]
+            ],
+            [
+              [
+                0.018380757863074557,
+                0.01073299558047851,
+                0.007730861599592797
+              ],
+              [
+                0.01073299558047851,
+                0.0060639339912528815,
+                0.0021411323134156485
+              ],
+              [
+                0.007730861599592797,
+                0.0021411323134156485,
+                -0.02444469185432744
+              ]
+            ]
+          ],
+          "frobenius_norms": [
+            0.015519983703438519,
+            0.036486466538932436
+          ],
+          "traces": [
+            0.0,
+            0.0
+          ],
+          "eigenvalues": [
+            [
+              -0.010974285720606082,
+              -5.2244992186645245e-18,
+              0.010974285720606086
+            ],
+            [
+              -0.02579982791121519,
+              1.654763565756001e-17,
+              0.025799827911215177
+            ]
+          ],
+          "commutator_pairs": [
+            [
+              0,
+              1
+            ]
+          ],
+          "commutators": [
+            [
+              [
+                0.0,
+                1.3552527156068805e-20,
+                -2.202285662861181e-20
+              ],
+              [
+                -1.3552527156068805e-20,
+                0.0,
+                -1.6940658945086007e-20
+              ],
+              [
+                2.202285662861181e-20,
+                1.6940658945086007e-20,
+                0.0
+              ]
+            ]
+          ],
+          "commutator_norms": [
+            4.3718717545099514e-20
+          ]
+        },
+        "optimization": {
+          "proposals_evaluated": 79,
+          "starts_attempted": 10,
+          "converged_starts": 10,
+          "runs": [
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 65,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 13,
+              "objective": 3.5024031721115945
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 51,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 13,
+              "objective": 3.5024031721059528
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 49,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 13,
+              "objective": 3.5024031721309234
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 72,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 14,
+              "objective": 3.5024031721051547
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 7,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 15,
+              "objective": 3.5024031721022673
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 33,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 12,
+              "objective": 3.502403172107453
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 43,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 14,
+              "objective": 3.502403172118845
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 10,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 48,
+              "objective": 4.292342215997226
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 77,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 12,
+              "objective": 3.5024031721132833
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 1,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 14,
+              "objective": 3.502403172116477
+            }
+          ]
+        }
+      },
+      "SHARED_GENERAL_SHAPE": {
+        "status": "INTERSECTS",
+        "objective": 2.8930981522355763,
+        "profile_distance_squared_upper": 2.8930981522355763,
+        "objective_guarantee": "feasible upper bound; nonlinear global optimum unproved",
+        "witness": [
+          -0.004899534629007833,
+          0.022205455327357078,
+          -0.0013927812439387135,
+          -0.015548157590189226,
+          -0.00118995113918548,
+          -0.008367270228026883,
+          0.037921774072245014,
+          -0.002378547743609389,
+          -0.026552651620181562,
+          -0.002032160907847198
+        ],
+        "amplitudes": [
+          [
+            0.027607765458880818
+          ],
+          [
+            0.04714766839666582
+          ]
+        ],
+        "parameters": {
+          "shape_stf5": [
+            -0.17746943831094303,
+            0.8043191818776505,
+            -0.0504488943885419,
+            -0.5631805882061245,
+            -0.04310204463877386
+          ]
+        },
+        "shape_basis": [
+          [
+            -0.17746943831094303
+          ],
+          [
+            0.8043191818776505
+          ],
+          [
+            -0.0504488943885419
+          ],
+          [
+            -0.5631805882061245
+          ],
+          [
+            -0.04310204463877386
+          ]
+        ],
+        "witness_verified": true,
+        "reconstruction_error": 0.0,
+        "amplitude_rank": 2,
+        "amplitude_normal_residual": 1.96205025865255e-14,
+        "diagnostics": {
+          "tensors": [
+            [
+              [
+                0.005600845015535453,
+                -0.0009848450622984993,
+                -0.01099420766697989
+              ],
+              [
+                -0.0009848450622984993,
+                0.012529833337194962,
+                -0.0008414225197987101
+              ],
+              [
+                -0.01099420766697989,
+                -0.0008414225197987101,
+                -0.018130678352730415
+              ]
+            ],
+            [
+              [
+                0.009564945918092756,
+                -0.0016818872388821603,
+                -0.01877556001911435
+              ],
+              [
+                -0.0016818872388821603,
+                0.021398052954608993,
+                -0.0014369547584009643
+              ],
+              [
+                -0.01877556001911435,
+                -0.0014369547584009643,
+                -0.03096299887270175
+              ]
+            ]
+          ],
+          "frobenius_norms": [
+            0.02760776545888082,
+            0.04714766839666583
+          ],
+          "traces": [
+            0.0,
+            0.0
+          ],
+          "eigenvalues": [
+            [
+              -0.02247842040836331,
+              0.009778108299815262,
+              0.012700312108548053
+            ],
+            [
+              -0.038387935201522914,
+              0.016698743994801556,
+              0.021689191206721362
+            ]
+          ],
+          "commutator_pairs": [
+            [
+              0,
+              1
+            ]
+          ],
+          "commutators": [
+            [
+              [
+                0.0,
+                6.776263578034403e-21,
+                1.3552527156068805e-19
+              ],
+              [
+                -6.776263578034403e-21,
+                0.0,
+                0.0
+              ],
+              [
+                -1.3552527156068805e-19,
+                0.0,
+                0.0
+              ]
+            ]
+          ],
+          "commutator_norms": [
+            1.9190110463297098e-19
+          ]
+        },
+        "optimization": {
+          "proposals_evaluated": 75,
+          "starts_attempted": 10,
+          "converged_starts": 10,
+          "runs": [
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 73,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 14,
+              "objective": 2.8930981522944794
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 7,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 20,
+              "objective": 2.8930981522355763
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 74,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 17,
+              "objective": 3.5024014530256986
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 6,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 23,
+              "objective": 2.893098152269988
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 1,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 24,
+              "objective": 2.8930981522615444
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 8,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 40,
+              "objective": 3.5024014529872622
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 47,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 43,
+              "objective": 3.502401453005859
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 59,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 37,
+              "objective": 3.5024014530715264
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 49,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 26,
+              "objective": 2.8930981522451673
+            },
+            {
+              "success": true,
+              "phase": "local_search",
+              "index": 30,
+              "status": 2,
+              "message": "`ftol` termination condition is satisfied.",
+              "nfev": 35,
+              "objective": 3.5024014530835714
+            }
+          ]
+        }
+      }
+    },
+    "dimension": 10,
+    "n_tensors": 2,
+    "cutoff": 18.307038053275146,
+    "basis_order": "R54_R61_orthonormal_STF5: diag1, diag2, xy, xz, yz",
+    "mean_diagnostics": {
+      "tensors": [
+        [
+          [
+            -0.004739279317198082,
+            -0.00930365320189219,
+            -0.019101728251002353
+          ],
+          [
+            -0.00930365320189219,
+            0.013296914862989982,
+            -0.0017971418443005138
+          ],
+          [
+            -0.019101728251002353,
+            -0.0017971418443005138,
+            -0.0085576355457919
+          ]
+        ],
+        [
+          [
+            0.020881744422937384,
+            0.008688436117556205,
+            -0.008714819517280207
+          ],
+          [
+            0.008688436117556205,
+            0.019654458847926857,
+            0.0009654467013105721
+          ],
+          [
+            -0.008714819517280207,
+            0.0009654467013105721,
+            -0.04053620327086424
+          ]
+        ]
+      ],
+      "frobenius_norms": [
+        0.03437774348650793,
+        0.052633325524879586
+      ],
+      "traces": [
+        -1.734723475976807e-18,
+        0.0
+      ],
+      "eigenvalues": [
+        [
+          -0.027288270934731185,
+          0.007949635870684714,
+          0.019338635064046462
+        ],
+        [
+          -0.04182568584786713,
+          0.012363428884327302,
+          0.029462256963539817
+        ]
+      ],
+      "commutator_pairs": [
+        [
+          0,
+          1
+        ]
+      ],
+      "commutators": [
+        [
+          [
+            0.0,
+            -0.00017939154891811245,
+            0.0011465448320108853
+          ],
+          [
+            0.00017939154891811245,
+            0.0,
+            0.0003763143652802265
+          ],
+          [
+            -0.0011465448320108853,
+            -0.0003763143652802265,
+            0.0
+          ]
+        ]
+      ],
+      "commutator_norms": [
+        0.0017253167136212228
+      ]
+    },
+    "covariance_condition_number": 5.484134823128845,
+    "optimizer_config": {
+      "n_starts": 10,
+      "grid_size": 64,
+      "max_nfev": 180,
+      "seed": 620017,
+      "method": "variable_projection_least_squares"
+    },
+    "commutator_enclosures": {
+      "excludes_commuting_class": false,
+      "ranges": [
+        {
+          "pair": [
+            0,
+            1
+          ],
+          "component": [
+            0,
+            1
+          ],
+          "lower": -0.005202648748444209,
+          "upper": 0.004047552698769064,
+          "excludes_zero": false,
+          "enclosure": {
+            "lower": -0.005202648748444209,
+            "upper": 0.004047552698769064,
+            "feasible_lower": -0.00520264874844408,
+            "feasible_upper": 0.004047552698768944,
+            "minimum": {
+              "value": -0.005202648748444079,
+              "bound": -0.005202648748444209,
+              "optimality_gap": 1.3010426069826053e-16,
+              "witness": [
+                -0.4694844763783111,
+                0.1249127782513971,
+                -0.30514065597493234,
+                -0.29166699449119426,
+                -0.12303182165733109,
+                -0.402071022533155,
+                0.04727546672225388,
+                0.5515236586620523,
+                -0.07359284556252657,
+                0.311726658513525
+              ],
+              "multiplier": 0.003949157353771047,
+              "norm": 0.9999999999999984,
+              "stationarity": 1.0919300650127455e-17,
+              "hard_case": false,
+              "sense": "min",
+              "parameter_witness": [
+                -0.04326721468829671,
+                0.02352880908872758,
+                -0.03231316390480338,
+                -0.053693541121027734,
+                -0.01133683680722928,
+                -0.025343176920830476,
+                0.06835118723034253,
+                0.06575125188014574,
+                -0.0312169425320242,
+                0.050728868598456205
+              ],
+              "ball_witness": [
+                -0.4694844763783111,
+                0.1249127782513971,
+                -0.30514065597493234,
+                -0.29166699449119426,
+                -0.12303182165733109,
+                -0.402071022533155,
+                0.04727546672225388,
+                0.5515236586620523,
+                -0.07359284556252657,
+                0.311726658513525
+              ],
+              "direct_value": -0.00520264874844408,
+              "mahalanobis2": 18.30703805327509
+            },
+            "maximum": {
+              "value": 0.004047552698768944,
+              "bound": 0.004047552698769064,
+              "optimality_gap": 1.196959198423997e-16,
+              "witness": [
+                -0.29352891927831326,
+                0.02223337897957643,
+                -0.4738155490728654,
+                -0.19355330175255137,
+                0.02886528278102647,
+                0.588184452962588,
+                -0.027712338853006634,
+                -0.4713095233549102,
+                0.020027403503257622,
+                -0.2851078788216373
+              ],
+              "multiplier": 0.003450865643584372,
+              "norm": 0.9999999999999993,
+              "stationarity": 1.0527286957502494e-17,
+              "hard_case": false,
+              "sense": "max",
+              "parameter_witness": [
+                -0.03183114968350574,
+                0.014200345681675344,
+                -0.04315698471809706,
+                -0.042912215177865476,
+                -0.002554731924170415,
+                0.05983373914314897,
+                0.042547425701526136,
+                -0.0155533069229874,
+                -0.009234111399014791,
+                -0.04576900202998995
+              ],
+              "ball_witness": [
+                -0.29352891927831326,
+                0.02223337897957643,
+                -0.4738155490728654,
+                -0.19355330175255137,
+                0.02886528278102647,
+                0.588184452962588,
+                -0.027712338853006634,
+                -0.4713095233549102,
+                0.020027403503257622,
+                -0.2851078788216373
+              ],
+              "direct_value": 0.004047552698768944,
+              "mahalanobis2": 18.307038053275125
+            },
+            "cutoff": 18.307038053275146,
+            "guarantee": "global trust-region characterization; floating primal/dual enclosure"
+          },
+          "status": "COMPUTED"
+        },
+        {
+          "pair": [
+            0,
+            1
+          ],
+          "component": [
+            0,
+            2
+          ],
+          "lower": -0.004483012016062029,
+          "upper": 0.009922888573914563,
+          "excludes_zero": false,
+          "enclosure": {
+            "lower": -0.004483012016062029,
+            "upper": 0.009922888573914563,
+            "feasible_lower": -0.00448301201606181,
+            "feasible_upper": 0.009922888573914346,
+            "minimum": {
+              "value": -0.00448301201606181,
+              "bound": -0.004483012016062029,
+              "optimality_gap": 2.194425197110661e-16,
+              "witness": [
+                0.23974793802478925,
+                0.7148237030988068,
+                -0.011587909560960216,
+                0.22955864705041346,
+                0.053999871581873915,
+                -0.11794731319439064,
+                -0.0406152910582572,
+                0.027965471866327012,
+                -0.5961040592780823,
+                0.06416598650736083
+              ],
+              "multiplier": 0.004907743060732443,
+              "norm": 0.9999999999999984,
+              "stationarity": 3.133027797508872e-17,
+              "hard_case": false,
+              "sense": "min",
+              "parameter_witness": [
+                0.0028286752528730117,
+                0.06567745590918493,
+                -0.013735053564377426,
+                -0.0252884342910863,
+                0.0013045443225528776,
+                -0.018789263924084035,
+                0.043142305057600264,
+                0.015276293949441645,
+                -0.0879647948991825,
+                0.0076596960933608136
+              ],
+              "ball_witness": [
+                0.23974793802478925,
+                0.7148237030988068,
+                -0.011587909560960216,
+                0.22955864705041346,
+                0.053999871581873915,
+                -0.11794731319439064,
+                -0.0406152910582572,
+                0.027965471866327012,
+                -0.5961040592780823,
+                0.06416598650736083
+              ],
+              "direct_value": -0.00448301201606181,
+              "mahalanobis2": 18.30703805327509
+            },
+            "maximum": {
+              "value": 0.009922888573914348,
+              "bound": 0.009922888573914563,
+              "optimality_gap": 2.1510571102112408e-16,
+              "witness": [
+                -0.21644520154642102,
+                0.013088725963970774,
+                0.004261485308493736,
+                -0.7570692596735137,
+                -0.031306328298312536,
+                0.2100415415597101,
+                0.5765406278468814,
+                -0.004731930246849854,
+                -0.016559633601140822,
+                -0.044887550849751934
+              ],
+              "multiplier": 0.006530963877632169,
+              "norm": 0.9999999999999993,
+              "stationarity": 2.7509790167863056e-17,
+              "hard_case": false,
+              "sense": "max",
+              "parameter_witness": [
+                -0.02682116635975149,
+                0.012960934174718105,
+                -0.01278635788428121,
+                -0.08619322478032887,
+                -0.0029473998404116594,
+                0.01895100548411802,
+                0.12063655240460751,
+                0.014297605465195562,
+                -0.03527682726504349,
+                -0.0004688518493734823
+              ],
+              "ball_witness": [
+                -0.21644520154642102,
+                0.013088725963970774,
+                0.004261485308493736,
+                -0.7570692596735137,
+                -0.031306328298312536,
+                0.2100415415597101,
+                0.5765406278468814,
+                -0.004731930246849854,
+                -0.016559633601140822,
+                -0.044887550849751934
+              ],
+              "direct_value": 0.009922888573914346,
+              "mahalanobis2": 18.30703805327512
+            },
+            "cutoff": 18.307038053275146,
+            "guarantee": "global trust-region characterization; floating primal/dual enclosure"
+          },
+          "status": "COMPUTED"
+        },
+        {
+          "pair": [
+            0,
+            1
+          ],
+          "component": [
+            1,
+            2
+          ],
+          "lower": -0.006375963162086024,
+          "upper": 0.008105924151272948,
+          "excludes_zero": false,
+          "enclosure": {
+            "lower": -0.006375963162086024,
+            "upper": 0.008105924151272948,
+            "feasible_lower": -0.006375963162085838,
+            "feasible_upper": 0.00810592415127276,
+            "minimum": {
+              "value": -0.006375963162085838,
+              "bound": -0.006375963162086024,
+              "optimality_gap": 1.8648277366750676e-16,
+              "witness": [
+                -0.13490931344094106,
+                0.32356917700867,
+                0.19431462539892733,
+                -0.12336456856998657,
+                0.6568675184173738,
+                -0.21725855278577663,
+                0.3602504887819454,
+                -0.2869510612476546,
+                0.004753090701943048,
+                -0.3651100393224844
+              ],
+              "multiplier": 0.005385144541527456,
+              "norm": 1.0,
+              "stationarity": 8.459166353830293e-18,
+              "hard_case": false,
+              "sense": "min",
+              "parameter_witness": [
+                -0.021521818433685655,
+                0.03708565484244417,
+                -0.0006189725941334965,
+                -0.04479573429474831,
+                0.04693958569588797,
+                -0.020458012748152597,
+                0.09441461533265288,
+                -0.007628609384578407,
+                -0.035238105433665984,
+                -0.04426095234699104
+              ],
+              "ball_witness": [
+                -0.13490931344094106,
+                0.32356917700867,
+                0.19431462539892733,
+                -0.12336456856998657,
+                0.6568675184173738,
+                -0.21725855278577663,
+                0.3602504887819454,
+                -0.2869510612476546,
+                0.004753090701943048,
+                -0.3651100393224844
+              ],
+              "direct_value": -0.006375963162085838,
+              "mahalanobis2": 18.30703805327515
+            },
+            "maximum": {
+              "value": 0.008105924151272759,
+              "bound": 0.008105924151272948,
+              "optimality_gap": 1.8908485888147197e-16,
+              "witness": [
+                -0.15319754574964028,
+                0.38875264010173455,
+                -0.18249845201666906,
+                -0.2002663024530972,
+                -0.5701807239478163,
+                -0.24750163630797017,
+                0.3619349939812902,
+                0.2959363015948056,
+                -0.10494594883060154,
+                0.36883277419573274
+              ],
+              "multiplier": 0.0059753645349380075,
+              "norm": 1.0,
+              "stationarity": 2.0352990179081158e-17,
+              "hard_case": false,
+              "sense": "max",
+              "parameter_witness": [
+                -0.022710444794523707,
+                0.04238606932160626,
+                -0.02455383274483193,
+                -0.051852745191139374,
+                -0.04316642250313756,
+                -0.019637871716805776,
+                0.09416141762864053,
+                0.03769269069647313,
+                -0.046778089102787725,
+                0.05431440719555892
+              ],
+              "ball_witness": [
+                -0.15319754574964028,
+                0.38875264010173455,
+                -0.18249845201666906,
+                -0.2002663024530972,
+                -0.5701807239478163,
+                -0.24750163630797017,
+                0.3619349939812902,
+                0.2959363015948056,
+                -0.10494594883060154,
+                0.36883277419573274
+              ],
+              "direct_value": 0.00810592415127276,
+              "mahalanobis2": 18.30703805327515
+            },
+            "cutoff": 18.307038053275146,
+            "guarantee": "global trust-region characterization; floating primal/dual enclosure"
+          },
+          "status": "COMPUTED"
+        },
+        {
+          "pair": [
+            0,
+            1
+          ],
+          "component": "center_projection",
+          "lower": -0.004294685306848117,
+          "upper": 0.010194431012471956,
+          "excludes_zero": false,
+          "enclosure": {
+            "lower": -0.004294685306848117,
+            "upper": 0.010194431012471956,
+            "feasible_lower": -0.004294685306847817,
+            "feasible_upper": 0.01019443101247174,
+            "minimum": {
+              "value": -0.004294685306847815,
+              "bound": -0.004294685306848117,
+              "optimality_gap": 3.0184188481996443e-16,
+              "witness": [
+                0.21667557626092276,
+                0.6864915172292866,
+                0.152288731677406,
+                0.2461350129331782,
+                0.23246870597098085,
+                -0.1125086341852054,
+                0.006132286442218943,
+                -0.016928428609587994,
+                -0.5520869052078102,
+                -0.1618109065560905
+              ],
+              "multiplier": 0.004806270778828768,
+              "norm": 0.9999999999999916,
+              "stationarity": 1.803307864830892e-17,
+              "hard_case": false,
+              "sense": "min",
+              "parameter_witness": [
+                0.0013291089232021769,
+                0.06358001806591444,
+                -0.0033121049190186144,
+                -0.023627971443452505,
+                0.015226578553225142,
+                -0.018237694023258356,
+                0.04810167186256227,
+                0.009580148571925368,
+                -0.0847671618834871,
+                -0.015394777777038113
+              ],
+              "ball_witness": [
+                0.21667557626092276,
+                0.6864915172292866,
+                0.152288731677406,
+                0.2461350129331782,
+                0.23246870597098085,
+                -0.1125086341852054,
+                0.006132286442218943,
+                -0.016928428609587994,
+                -0.5520869052078102,
+                -0.1618109065560905
+              ],
+              "direct_value": -0.004294685306847817,
+              "mahalanobis2": 18.307038053274837
+            },
+            "maximum": {
+              "value": 0.010194431012471741,
+              "bound": 0.010194431012471956,
+              "optimality_gap": 2.1510571102112408e-16,
+              "witness": [
+                -0.2272235838566935,
+                0.037853094043670994,
+                -0.028425216568741727,
+                -0.7196959605936274,
+                -0.2330491013714613,
+                0.13932576899594806,
+                0.5663447838329727,
+                0.1731912441491085,
+                -0.032727088448552405,
+                0.05128431026607613
+              ],
+              "multiplier": 0.006654278554011124,
+              "norm": 0.9999999999999999,
+              "stationarity": 2.2779504343228695e-17,
+              "hard_case": false,
+              "sense": "max",
+              "parameter_witness": [
+                -0.027521697123191448,
+                0.015000142345485011,
+                -0.014851476056559471,
+                -0.08390959755963526,
+                -0.017577327967428148,
+                0.013666870878191682,
+                0.11967404457106821,
+                0.027866660908805366,
+                -0.037355978731542235,
+                0.01654144233313789
+              ],
+              "ball_witness": [
+                -0.2272235838566935,
+                0.037853094043670994,
+                -0.028425216568741727,
+                -0.7196959605936274,
+                -0.2330491013714613,
+                0.13932576899594806,
+                0.5663447838329727,
+                0.1731912441491085,
+                -0.032727088448552405,
+                0.05128431026607613
+              ],
+              "direct_value": 0.01019443101247174,
+              "mahalanobis2": 18.307038053275143
+            },
+            "cutoff": 18.307038053275146,
+            "guarantee": "global trust-region characterization; floating primal/dual enclosure"
+          },
+          "status": "COMPUTED",
+          "projection": [
+            -0.14704428436366968,
+            0.9398038276087506,
+            0.3084586585718061
+          ]
+        }
+      ],
+      "cutoff": 18.307038053275146,
+      "guarantee": "numerical global quadratic enclosures supplied by range_solver"
+    },
+    "interpretation": "set intersection with one supplied joint ellipsoid; no model probabilities or Wilks tails"
+  },
+  "five_view_links": {
+    "x": "Signed joint mean/covariance here; original source precision, score, q0 and stable whitened factor in SOURCE_TENSOR_CARRIERS.npz",
+    "Q_abs_series_norm": {
+      "lower": 0.0,
+      "upper": 0.18110817114191843,
+      "meaning": "Absolute Frobenius series norm in the explicitly retained window or Legendre-coefficient chart; no physical ceiling"
+    },
+    "F_support": {
+      "directions_J2000": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.7071067811865475,
+          0.7071067811865475,
+          0.0
+        ],
+        [
+          0.7071067811865475,
+          0.0,
+          0.7071067811865475
+        ],
+        [
+          0.0,
+          0.7071067811865475,
+          0.7071067811865475
+        ],
+        [
+          0.5773502691896258,
+          0.5773502691896258,
+          0.5773502691896258
+        ]
+      ],
+      "tensor_linear_supports": [
+        {
+          "tensor_index": 0,
+          "center": [
+            -0.004739279317198082,
+            0.013296914862989982,
+            -0.0085576355457919,
+            -0.005024835428996239,
+            -0.02575018568249734,
+            0.0005724978142985265,
+            -0.020135015531463376
+          ],
+          "lower": [
+            -0.058793265270108926,
+            -0.04519389664147799,
+            -0.07365420003271458,
+            -0.060711440757560464,
+            -0.0946356635546868,
+            -0.05757202354534967,
+            -0.07989421661477318
+          ],
+          "upper": [
+            0.04931470663571277,
+            0.07178772636745795,
+            0.05653892894113078,
+            0.050661769899567985,
+            0.043135292189692115,
+            0.05871701917394673,
+            0.039624185551846436
+          ]
+        },
+        {
+          "tensor_index": 1,
+          "center": [
+            0.020881744422937384,
+            0.019654458847926857,
+            -0.04053620327086424,
+            0.028956537752988322,
+            -0.018542048941243637,
+            -0.00947542551015812,
+            0.0006260422010577133
+          ],
+          "lower": [
+            -0.052039187240879595,
+            -0.06355324791882373,
+            -0.1250329222018231,
+            -0.04667782409940544,
+            -0.11258055822957919,
+            -0.08876874192831076,
+            -0.08414384862995211
+          ],
+          "upper": [
+            0.09380267608675437,
+            0.10286216561467744,
+            0.04396051566009462,
+            0.10459089960538209,
+            0.0754964603470919,
+            0.06981789090799452,
+            0.08539593303206755
+          ]
+        }
+      ],
+      "occupancy": "UNAVAILABLE: no physical ceiling and occupancy measure supplied"
+    },
+    "Pi_zero": {
+      "statistic": 6.968935764749306,
+      "df": 10,
+      "nominal_tail": 0.7283743182212523,
+      "law": "fixed Gaussian zero tensor mean; not a Bianchi probability or nonlinear class LRT"
+    },
+    "G_transport": "Full cross-tensor covariance, source-depth coefficient classes and common-offset quotient; no proper-time evolution inference"
+  },
+  "verification": {
+    "stored_witness_quadratic_max_abs_difference": 1.7763568394002505e-15,
+    "quadratic_enclosures_computed": 4,
+    "quadratic_enclosures_unresolved": 0,
+    "max_quadratic_primal_dual_gap": 3.0184188481996443e-16
+  },
+  "seconds": 1.4439535860146862
+}

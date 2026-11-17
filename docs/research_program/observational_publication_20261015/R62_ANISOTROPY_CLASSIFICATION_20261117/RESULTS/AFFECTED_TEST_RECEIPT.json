@@ -1,0 +1,24 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "-q",
+    "tests/r62",
+    "tests/r49/test_gbi01_convention_bridge.py",
+    "tests/r49/test_gbi02_tilted_state_and_constraints.py",
+    "htt/bass/diagnostics/test_bianchi_similarity.py"
+  ],
+  "environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "htt/src:htt:."
+  },
+  "exit_code": 0,
+  "seconds": 3.3803710880165454,
+  "log_sha256": "2a10f1a4de9f5b0d2be45b7b7841eda180373cf49ca8e62d3a9747c39983296d"
+}

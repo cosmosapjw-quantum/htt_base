@@ -287,7 +287,8 @@
       "PR-R58-MIXED-TENSOR-CONVERGENCE",
       "PR-R59-NATIVE-REPLAY-MANUSCRIPT",
       "PR-R60-COVARIANCE-CALIBRATION",
-      "PR-R61-KINEMATIC-MEASUREMENT"
+      "PR-R61-KINEMATIC-MEASUREMENT",
+      "PR-R62-ANISOTROPY-CLASSIFICATION"
     ],
     "strict_extension_cards": [
       "PR-SOLVER-FREE-DOSSIER",
@@ -381,7 +382,8 @@
       "PR-R58-MIXED-TENSOR-CONVERGENCE",
       "PR-R59-NATIVE-REPLAY-MANUSCRIPT",
       "PR-R60-COVARIANCE-CALIBRATION",
-      "PR-R61-KINEMATIC-MEASUREMENT"
+      "PR-R61-KINEMATIC-MEASUREMENT",
+      "PR-R62-ANISOTROPY-CLASSIFICATION"
     ],
     "checkpoint_every_completed_prs": 5,
     "no_native_lowell_solver_implementation": true,
@@ -14963,6 +14965,48 @@
       "claim_tier_ceiling": "C0",
       "user_authorized": true,
       "authorization": "Current 2026-11-17 owner request selects only beyond-FLRW kinematic quantity measurement and all ten theory/coding stages; earlier source push authorization persists."
+    },
+    {
+      "id": "PR-R62-ANISOTROPY-CLASSIFICATION",
+      "wave": 0,
+      "title": "Classify source-aware CF4 tensor confidence sets and actual Bianchi tilt constraints",
+      "owner": "HTT",
+      "depends": [
+        "PR-R61-KINEMATIC-MEASUREMENT"
+      ],
+      "files": [
+        "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117",
+        "scripts/r62",
+        "tests/r62",
+        "htt/htt/htt/infer/r62_tensor_classes.py",
+        "htt/bass/background/tilted_bianchi_state.py",
+        "htt/bass/background/convention_bridge.py",
+        "htt/bass/diagnostics/bianchi_similarity.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json"
+      ],
+      "tests": [
+        "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt/src:htt:. .venv/bin/python -m pytest -p no:cacheprovider -q tests/r62 tests/r49/test_gbi01_convention_bridge.py tests/r49/test_gbi02_tilted_state_and_constraints.py htt/bass/diagnostics/test_bianchi_similarity.py",
+        ".venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
+        ".venv/bin/python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check",
+        ".venv/bin/python -B scripts/htt_publication_dag.py --validate"
+      ],
+      "dod": [
+        "Complete exactly one owner-selected ten-stage classification study using existing theory, PR/branch history and owned observed inputs.",
+        "Retain actual source operators, signed STF basis, full cross-window covariance and fixed-law conditions in 21/26-parameter source responses.",
+        "Execute all declared class queries with exact-class feasible witnesses or sound necessary exclusions, without nonlinear Wilks/model-probability claims.",
+        "Correct actual-state Bianchi momentum admissibility and velocity Jacobian; preserve source/frame and initial-slice/evolution boundaries.",
+        "Complete one fresh independent review, finite paper plan and additive P5 companion linkage; preserve original42 gates and NOT_READY_TO_SUBMIT."
+      ],
+      "notes": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESEARCH_DAG.json",
+      "kill": "No Bianchi family/tilt/physical shear detection from phenomenological tensors; no canonical-IX universal no-tilt claim; no independent multiplication of correlated nuisance experiments; no automatic successor or local-agent prompt.",
+      "level": "L0",
+      "scope": "science",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "2026-11-17 owner explicitly selected anisotropy classification including Bianchi/tilt and all ten theory/coding stages; earlier non-force GitHub push authorization persists."
     }
   ]
 }

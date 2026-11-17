@@ -1,0 +1,97 @@
+{
+  "schema": "htt.r62.bounded_repair_closure/1",
+  "finding_id": "R62-FR-01",
+  "repair_artifact_alias": "R62-F1",
+  "status": "CLOSED",
+  "independent_review": "REVIEW/final_review.json",
+  "review_sha256": "e95788e44ef9d912f574df0047a22172e4350d49117317fc96e56da1d89de4d2",
+  "summary": "Source-relative range guard now removes kappa from range membership and scales by uncancelled species fluxes; constraint acceptance uses dimensionally matched equation scales with raw and normalized reporting. Original counterexample and scale-equivalent valid/invalid states independently checked. No residual blocker.",
+  "closure": {
+    "status": "COMPLETED",
+    "finding": "R62-FR-01",
+    "closure": "CLOSED",
+    "assertion_tested": "Original forbidden Type-I counterexample rejects independently of kappa, compensation remains admitted, relative Hamiltonian failure is preserved, and the same valid/invalid IX data retain verdicts under two large unit-scale changes.",
+    "typeI": [
+      {
+        "kappa": 1,
+        "single_tilt_rejected": true,
+        "compensating_flux_admitted": true,
+        "wrong_H_normalized_residual": 0.5999999999999999
+      },
+      {
+        "kappa": 2.0766474428449717e-43,
+        "single_tilt_rejected": true,
+        "compensating_flux_admitted": true,
+        "wrong_H_normalized_residual": 0.6
+      },
+      {
+        "kappa": 1e+30,
+        "single_tilt_rejected": true,
+        "compensating_flux_admitted": true,
+        "wrong_H_normalized_residual": 0.6
+      }
+    ],
+    "IX": [
+      {
+        "L": 1,
+        "E": 1,
+        "admitted": true,
+        "max_normalized_residual": 8.881784197001253e-17,
+        "perturbed_shear_rejected": true
+      },
+      {
+        "L": 1e-22,
+        "E": 1,
+        "admitted": true,
+        "max_normalized_residual": 3.556008730206367e-17,
+        "perturbed_shear_rejected": true
+      },
+      {
+        "L": 1000000000000,
+        "E": 100000,
+        "admitted": true,
+        "max_normalized_residual": 2.985721188632682e-18,
+        "perturbed_shear_rejected": true
+      }
+    ],
+    "input_hashes_before": {
+      "htt/bass/background/tilted_bianchi_state.py": "e36dd616f4d0e2998e48e1a50ae9b67e1cd48842ef5b52ee2b1e4b94b888fe04",
+      "tests/r62/test_constraint_units.py": "155cb2b335f1d85e33116731c507072bf9b490dab8231744b6f49ecf685b3232",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/R62_F1_REPAIR.patch": "2f2115c2e3105cd8eca2992d681df5d5ab2b0588bf677724362dc705869e4069",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/R62_F1_TEST_RECEIPT.json": "d40e010c3db51cb09066c5d6483f8b929be6613afb99a5e70d7153bda8ea4204",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/R62_F1_TESTS.txt": "7e0566ffbda7a08708d751a8cc10e762c8de2c440499fa5a6194af702f61b2ff"
+    },
+    "input_hashes_after": {
+      "htt/bass/background/tilted_bianchi_state.py": "e36dd616f4d0e2998e48e1a50ae9b67e1cd48842ef5b52ee2b1e4b94b888fe04",
+      "tests/r62/test_constraint_units.py": "155cb2b335f1d85e33116731c507072bf9b490dab8231744b6f49ecf685b3232",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/REVIEW/R62_F1_REPAIR.patch": "2f2115c2e3105cd8eca2992d681df5d5ab2b0588bf677724362dc705869e4069",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/R62_F1_TEST_RECEIPT.json": "d40e010c3db51cb09066c5d6483f8b929be6613afb99a5e70d7153bda8ea4204",
+      "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/R62_F1_TESTS.txt": "7e0566ffbda7a08708d751a8cc10e762c8de2c440499fa5a6194af702f61b2ff"
+    },
+    "input_changes": [],
+    "author_targeted_test_receipt": {
+      "command": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/r62/test_constraint_units.py",
+        "tests/r62/test_bianchi_state_constraints.py",
+        "tests/r49/test_gbi01_convention_bridge.py",
+        "tests/r49/test_gbi02_tilted_state_and_constraints.py",
+        "htt/bass/diagnostics/test_bianchi_similarity.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.3734192030096892,
+      "state_sha256": "e36dd616f4d0e2998e48e1a50ae9b67e1cd48842ef5b52ee2b1e4b94b888fe04",
+      "log_sha256": "7e0566ffbda7a08708d751a8cc10e762c8de2c440499fa5a6194af702f61b2ff"
+    },
+    "command": "cd /home/cosmosapjw/Dropbox/bianchi/htt_base && PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONPATH=htt/src:htt:. .venv/bin/python - <<'PY'\nimport json,hashlib,numpy as np\nfrom pathlib import Path\nfrom dataclasses import replace\nfrom bass.background.bianchi_types import build_bianchi_algebra\nfrom bass.background.convention_bridge import build_structure_tensor_with_sign\nfrom bass.background.tilted_bianchi_state import SpeciesFluidCongruence,construct_admissible_tilted_state,evaluate_tilted_constraints\nfrom bass.background.initial_conditions import CodazziProjectionError\nbase=Path(\"docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117\")\nfiles=[Path(\"htt/bass/background/tilted_bianchi_state.py\"),Path(\"tests/r62/test_constraint_units.py\"),base/\"REVIEW/R62_F1_REPAIR.patch\",base/\"RESULTS/R62_F1_TEST_RECEIPT.json\",base/\"RESULTS/R62_F1_TESTS.txt\"]\nsha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\nbefore={str(p):sha(p) for p in files if p.exists()}\nsingle=SpeciesFluidCongruence(species=\"cdm\",eps_hat=1.,p_hat=0.,v_vec=[.1,0,0]);opposite=SpeciesFluidCongruence(species=\"baryon\",eps_hat=1.,p_hat=0.,v_vec=[-.1,0,0])\nrows=[]\nfor coupling in (1.,8*np.pi*6.67430e-11/299792458.**4,1e30):\n try:construct_admissible_tilted_state(family=\"I\",species=[single],kappa=coupling)\n except CodazziProjectionError as e:reject=True\n else:raise AssertionError(\"forbidden Type-I tilt still admitted\")\n state=construct_admissible_tilted_state(family=\"I\",species=[single,opposite],kappa=coupling)\n assert state.constraints.is_admissible\n bad=evaluate_tilted_constraints(family=\"I\",algebra=state.algebra,geometry=state.geometry,H=2*state.H,sigma_ab=state.sigma_ab,total_matter=state.total_matter,kappa=coupling)\n assert not bad.is_admissible and abs(bad.normalized_residuals[\"hamiltonian\"]-.6)<1e-14\n rows.append({\"kappa\":coupling,\"single_tilt_rejected\":reject,\"compensating_flux_admitted\":state.constraints.is_admissible,\"wrong_H_normalized_residual\":bad.normalized_residuals[\"hamiltonian\"]})\nix=[]\nfor L,E in [(1.,1.),(1e-22,1.),(1e12,1e5)]:\n a=np.zeros(3);n=L*np.diag([1.,2.,3.]);alg=replace(build_bianchi_algebra(\"IX\"),a=a,n=n,C=build_structure_tensor_with_sign(a,n))\n sig=L*np.array([[0.,.1,0],[.1,0,0],[0,0,0]]);beta=np.array([0,0,-.1/4.99]);rho=4.99*E\n dust=SpeciesFluidCongruence(species=\"cdm\",eps_hat=rho*(1-beta@beta),p_hat=0.,v_vec=beta)\n opts=dict(family=\"IX\",algebra=alg,H=L,closure=\"hold_H\",species=[dust],kappa=L*L/E)\n state=construct_admissible_tilted_state(sigma_ab=sig,**opts)\n assert state.constraints.is_admissible\n try:construct_admissible_tilted_state(sigma_ab=1.1*sig,**opts)\n except CodazziProjectionError:reject=True\n else:raise AssertionError(\"unit-scaled bad IX state admitted\")\n ix.append({\"L\":L,\"E\":E,\"admitted\":state.constraints.is_admissible,\"max_normalized_residual\":max(state.constraints.normalized_residuals.values()),\"perturbed_shear_rejected\":reject})\nafter={str(p):sha(p) for p in files if p.exists()}\nreport=json.loads((base/\"RESULTS/R62_F1_TEST_RECEIPT.json\").read_text())\nassert report[\"state_sha256\"]==after[\"htt/bass/background/tilted_bianchi_state.py\"]\nfor p in files:\n if p.name==\"R62_F1_TESTS.txt\" and p.exists():assert sha(p)==report[\"log_sha256\"]\nprint(json.dumps({\"status\":\"COMPLETED\",\"finding\":\"R62-FR-01\",\"closure\":\"CLOSED\",\"assertion_tested\":\"Original forbidden Type-I counterexample rejects independently of kappa, compensation remains admitted, relative Hamiltonian failure is preserved, and the same valid/invalid IX data retain verdicts under two large unit-scale changes.\",\"typeI\":rows,\"IX\":ix,\"input_hashes_before\":before,\"input_hashes_after\":after,\"input_changes\":[p for p in before if before[p]!=after[p]],\"author_targeted_test_receipt\":report},indent=2))\nPY",
+    "remote_process": 1600223
+  },
+  "affected_observed_statistics": "NONE; CF4 and inherited SN statistical code and results unchanged",
+  "bianchi_examples_replayed": "RESULTS/BIANCHI_EXAMPLES.json",
+  "original_examples_retained": "REVIEW/BIANCHI_EXAMPLES_BEFORE_R62_F1.json"
+}

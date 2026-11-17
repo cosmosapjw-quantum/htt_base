@@ -1,8 +1,12 @@
 # HTT 관측논문 6트랙 출판 중심 DAG
 
-## Current kinematic measurement study — R61, 2026-11-17
+## Current anisotropy classification study — R62, 2026-11-17
 
-[R61 실제 운동학 결과·심사](R61_KINEMATIC_MEASUREMENT_20261117/REPORT_KO.md), [단일 논문 연구계획](R61_KINEMATIC_MEASUREMENT_20261117/RESEARCH_PLAN_KO.md), [연구 DAG](R61_KINEMATIC_MEASUREMENT_20261117/RESEARCH_DAG.json)이 현재 선택된 P6 가지의 진입점이다. 사용자 지정 10단계 이론·코딩 연구를 수행했고, 실제 CF4 공동 신뢰범위·혼합 불변량·STF 깊이 차이·국소 외삽 오차를 산출했다. 독립 심사의 R61-F1은 실제 calibration bias operator와 반례로 교정했다. 기존 다른 연구 가지와 42개 과학 gate의 상태는 보존하며 submission readiness를 자동 승인하지 않는다.
+[R62 관측 분류·물리 심사](R62_ANISOTROPY_CLASSIFICATION_20261117/REPORT_KO.md), [단일 논문 계획](R62_ANISOTROPY_CLASSIFICATION_20261117/RESEARCH_PLAN_KO.md), [연구 DAG](R62_ANISOTROPY_CLASSIFICATION_20261117/RESEARCH_DAG.json)이 현재 선택된 P5 companion 경로다. 실제 CF4 source response와 공분산으로 42개 carrier·210개 class 질문을 계산했다. 네 형태 클래스는 모두 공동 신뢰영역에 남으며 Bianchi family 검출을 주장하지 않는다. 관측 연산자의 apparent-frame 반례와 실제 상태의 Bianchi/tilt 제약 교정을 포함한다. 원래 P5 acceptance 및 42개 과학 gate는 유지하며 submission 상태는 NOT_READY_TO_SUBMIT이다.
+
+## Previous kinematic measurement study — R61, 2026-11-17
+
+[R61 실제 운동학 결과·심사](R61_KINEMATIC_MEASUREMENT_20261117/REPORT_KO.md), [단일 논문 연구계획](R61_KINEMATIC_MEASUREMENT_20261117/RESEARCH_PLAN_KO.md), [연구 DAG](R61_KINEMATIC_MEASUREMENT_20261117/RESEARCH_DAG.json)이 이전 P6 연구의 진입점이다. 사용자 지정 10단계 이론·코딩 연구를 수행했고, 실제 CF4 공동 신뢰범위·혼합 불변량·STF 깊이 차이·국소 외삽 오차를 산출했다. 독립 심사의 R61-F1은 실제 calibration bias operator와 반례로 교정했다. 기존 다른 연구 가지와 42개 과학 gate의 상태는 보존하며 submission readiness를 자동 승인하지 않는다.
 
 ## Previous multi-branch result — R60, 2026-11-17
 

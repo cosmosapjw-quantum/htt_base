@@ -14,9 +14,17 @@ Implements `GBI-02`:
   STF-5 tensors, and spin-2 Stokes polarization `(Q, U)` via
   `common.relativistic_velocity_closure`.
 - `FamilyAdmissibilityRegistry` and fail-closed `construct_admissible_tilted_state`
-  across `FLRW` and all 11 Bianchi types, explicitly rejecting uncompensated single
-  perfect-fluid (`eps + p > 0`, `v != 0`) Bianchi-I or Bianchi-IX tilt with
-  `CodazziProjectionError`.
+  across `FLRW` and all 11 Bianchi types. Admissibility uses the actual slice's
+  divergence map; the registry describes canonical representatives only.
+
+The background equations use geometric inverse-length H and sigma, dimensionless
+tilt beta=v_physical/c, and q=T^{0i}. Physical equation translation is
+kappa=8*pi*G/c^4, H=H_time/c and sigma=sigma_time/c. A well-scaled nondimensional
+chart is recommended: with length L0 and energy-density E0, use H_code=H_time*L0/c,
+sigma_code=sigma_time*L0/c, (a,n)_code=L0*(a,n), rho_code=rho/E0 and
+kappa_code=(8*pi*G/c^4)*E0*L0^2. Constraint acceptance uses relative equation
+scales, not an implicit unitful floor. This follows docs/SSOT_POLICY.md sections
+16 and 17; no new physical constants are defined.
 """
 from __future__ import annotations
 
@@ -55,6 +63,7 @@ from bass.background.geometry import (
     spatial_ricci_from_connection,
 )
 from bass.background.initial_conditions import CodazziProjectionError
+from bass.diagnostics.bianchi_similarity import classify_bianchi_type
 from bass.background.matter_projection import (
     SpeciesProjectedState,
     SpeciesRestFrameState,
@@ -77,6 +86,8 @@ from common.stf_metric_bridge import (
 __all__ = [
     "CONGRUENCE_SPECIES_NAMES",
     "FamilyAdmissibilitySpec",
+    "MomentumConstraintMap",
+    "momentum_constraint_map",
     "FAMILY_ADMISSIBILITY_REGISTRY",
     "SpeciesFluidCongruence",
     "SpeciesCongruenceKinematics",
@@ -110,7 +121,13 @@ _ETA4: np.ndarray = np.diag([-1.0, 1.0, 1.0, 1.0])
 
 @dataclass(frozen=True)
 class FamilyAdmissibilitySpec:
-    """Constraint fibre specification for one Bianchi/FLRW family."""
+    """Canonical-representative diagnostics, not a type-wide tilt prohibition.
+
+    Rank and the legacy ``allows_uncompensated_single_perfect_fluid_tilt`` flag
+    refer only to the default factory algebra. ``supports_general_vector_tilt``
+    describes the vector-valued interface, not admissibility of every vector.
+    Use ``momentum_constraint_map`` for a supplied slice algebra.
+    """
 
     family: str
     class_label: Literal["A", "B"]
@@ -124,22 +141,76 @@ class FamilyAdmissibilitySpec:
     summary: str
 
 
+@dataclass(frozen=True)
+class MomentumConstraintMap:
+    """Actual-algebra map from orthonormal STF-5 shear to spatial divergence.
+
+    ``rank`` is the SVD numerical rank at ``relative_tolerance``; singular values
+    retain information near exceptional strata. The source convention is
+    ``matrix @ shear_stf5 = -kappa*q_total``. No matter or Gauss test is implied.
+    """
+
+    matrix: np.ndarray
+    singular_values: np.ndarray
+    rank: int
+    range_projector: np.ndarray
+    pseudoinverse: np.ndarray
+    rank_threshold: float
+    relative_tolerance: float
+
+
+def momentum_constraint_map(
+    algebra: BianchiAlgebra, *, rtol: float = 1.0e-12
+) -> MomentumConstraintMap:
+    """Build the state-dependent Codazzi map, including VI_{-1/9} strata.
+
+    The relative rank threshold preserves rank under nonzero uniform rescaling
+    of the structure constants. The zero operator has rank zero exactly.
+    """
+    if not math.isfinite(rtol) or not 0.0 < rtol < 1.0:
+        raise ValueError("rtol must be finite and satisfy 0 < rtol < 1")
+    basis_cols = [
+        exact_momentum_divergence(
+            orthonormal_to_stf_matrix(e, convention="kinematic_response"),
+            algebra.a, algebra.n, a_sign=1,
+        )
+        for e in np.eye(5, dtype=np.float64)
+    ]
+    matrix = np.column_stack(basis_cols)
+    if not np.all(np.isfinite(matrix)):
+        raise ValueError("The momentum constraint map must be finite")
+    left, singular_values, right = np.linalg.svd(matrix, full_matrices=False)
+    # Include the structure scale so roundoff from rotating n proportional to I
+    # does not turn its zero map into an apparent full-rank map. This threshold
+    # is still homogeneous under a common nonzero structure rescaling.
+    scale = max(
+        float(singular_values[0]), float(np.linalg.norm(algebra.a)),
+        float(np.linalg.norm(algebra.n)),
+    )
+    threshold = rtol * scale
+    rank = int(np.count_nonzero(singular_values > threshold))
+    range_basis = left[:, :rank]
+    inverse = (right[:rank, :].T / singular_values[:rank]) @ range_basis.T
+    return MomentumConstraintMap(
+        matrix=matrix,
+        singular_values=singular_values,
+        rank=rank,
+        range_projector=range_basis @ range_basis.T,
+        pseudoinverse=inverse,
+        rank_threshold=float(threshold),
+        relative_tolerance=float(rtol),
+    )
+
+
 def _build_family_admissibility_registry() -> dict[str, FamilyAdmissibilitySpec]:
     specs: dict[str, FamilyAdmissibilitySpec] = {}
     for fam in ALL_TWELVE_FAMILIES:
         sc = get_type("I") if fam == "FLRW" else get_type(fam)
         eq = action_equivalence_for_family(fam)
         class_lbl: Literal["A", "B"] = "B" if abs(sc.a_twist) > 0.0 else "A"
-        # Compute exact numerical rank of sigma -> D_j sigma^j_i map on 5D STF space
+        # Representative diagnostics only; ranks can vary within a Bianchi type.
         alg = build_bianchi_algebra("I" if fam == "FLRW" else fam)
-        basis_cols = []
-        for idx in range(5):
-            e_vec = np.zeros(5, dtype=np.float64)
-            e_vec[idx] = 1.0
-            S = orthonormal_to_stf_matrix(e_vec, convention="kinematic_response")
-            basis_cols.append(exact_momentum_divergence(S, alg.a, alg.n, a_sign=1))
-        M_div = np.column_stack(basis_cols)
-        rank = int(np.linalg.matrix_rank(M_div, tol=1.0e-12))
+        rank = momentum_constraint_map(alg).rank
         uncomp_single_allowed = rank > 0
         if fam in ("FLRW", "I"):
             summary = (
@@ -148,18 +219,18 @@ def _build_family_admissibility_registry() -> dict[str, FamilyAdmissibilitySpec]
             )
         elif fam == "IX":
             summary = (
-                "n proportional to I => D_j sigma^j_i == 0 (rank 0) on diagonalized S^3; "
-                "uncompensated single perfect-fluid tilt forbidden by Codazzi (requires sum_s q_s == 0)."
+                "The canonical n proportional to I has divergence rank 0 and requires total q == 0. "
+                "Anisotropic IX has rank 2 or 3; evaluate the actual algebra and source."
             )
         elif class_lbl == "A":
             summary = (
-                f"Class A rank-{rank} Codazzi fibre eps_ijk n_jl sigma_lk == kappa q_i; "
-                "non-zero off-diagonal shear sources/requires transverse total momentum."
+                f"Canonical Class A representative rank {rank}; D_j sigma^j_i == -kappa q_i. "
+                "Actual momentum directions depend on the eigenvalue gaps of n."
             )
         else:
             summary = (
-                f"Class B rank-{rank} Codazzi fibre -(eps_ijk sigma_jl n_lk + 3 a_j sigma_ji) == kappa q_i; "
-                "non-zero a @ sigma forces non-zero total momentum flux along a or transverse plane."
+                f"Canonical Class B representative rank {rank}; D_j sigma^j_i == -kappa q_i. "
+                "The a-shear and n-shear terms combine; VI_{-1/9} has an exceptional rank-2 map."
             )
         specs[fam] = FamilyAdmissibilitySpec(
             family=fam,
@@ -683,7 +754,7 @@ def build_frame_transport_bundle(
 
 @dataclass(frozen=True)
 class TiltedConstraintReport:
-    """Unified Jacobi, Hamiltonian, Codazzi/Momentum, and shear-trace residuals."""
+    """Raw residuals plus the explicit relative scales used for acceptance."""
 
     family: str
     jacobi_residual: float
@@ -697,6 +768,8 @@ class TiltedConstraintReport:
     codazzi_div_sigma: np.ndarray
     is_admissible: bool
     tolerance: float
+    residual_scales: dict[str, float] = field(default_factory=dict)
+    normalized_residuals: dict[str, float] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -733,7 +806,14 @@ def evaluate_tilted_constraints(
     kappa: float = 1.0,
     tol: float = 1.0e-11,
 ) -> TiltedConstraintReport:
-    """Evaluate all Bianchi/Euler normal-frame constraint equations using exact R49 Class-B Ricci."""
+    """Evaluate exact constraints with unit-covariant relative acceptance.
+
+    Raw residuals retain their equation units. Relative scales are formed from
+    the terms in each equation, including structure/shear/source scales for
+    exact cancellations. A zero scale requires an exactly zero residual.
+    """
+    if not math.isfinite(tol) or tol <= 0.0:
+        raise ValueError("tol must be finite and positive")
     triple = algebra_to_triple(algebra)
     jac_res = triple.jacobi_residual()
     R_exact, ricci_scalar_exact, _ = exact_spatial_ricci_from_compact(algebra.a, algebra.n, a_sign=1)
@@ -759,14 +839,29 @@ def evaluate_tilted_constraints(
     cod_vec = div_sig + kq
     cod_norm = float(np.linalg.norm(cod_vec))
 
-    admissible = (
-        jac_res <= tol
-        and ricci_dual_err <= tol
-        and abs(ham_res) <= tol * max(1.0, 3.0 * H * H)
-        and cod_norm <= tol * max(1.0, float(np.linalg.norm(div_sig)) + float(np.linalg.norm(kq)))
-        and shear_trace_err <= tol
-        and shear_asym_err <= tol
+    # Every scale has the units of its own residual. No max(1,...) is allowed:
+    # a unit change must not turn an impossible momentum or Hamiltonian into an
+    # apparently admissible state. Natural equation terms protect exact
+    # cancellations from being judged relative to roundoff alone.
+    a_norm, n_norm = float(np.linalg.norm(algebra.a)), float(np.linalg.norm(algebra.n))
+    structure_sq = a_norm*a_norm + n_norm*n_norm
+    shear_norm = float(np.linalg.norm(np.asarray(sigma_ab, dtype=np.float64)))
+    scales = dict(
+        jacobi=structure_sq,
+        ricci=max(structure_sq, float(np.linalg.norm(R_exact))),
+        hamiltonian=3.0*float(H)**2 + .5*abs(float(ricci_scalar_exact)) + sigma_sq
+                    + abs(float(kappa)*float(total_matter.rho)) + abs(float(lambda_value)),
+        codazzi=shear_norm*(n_norm+3.0*a_norm)
+                + abs(float(kappa))*(float(np.linalg.norm(total_matter.q))+abs(float(total_matter.rho))),
+        shear_trace=shear_norm,
+        shear_asymmetry=shear_norm,
     )
+    residuals = dict(jacobi=jac_res, ricci=ricci_dual_err, hamiltonian=abs(float(ham_res)),
+                     codazzi=cod_norm, shear_trace=shear_trace_err, shear_asymmetry=shear_asym_err)
+    normalized = {name: (value/scales[name] if scales[name] > 0.0
+                         else (0.0 if value == 0.0 else float("inf")))
+                  for name, value in residuals.items()}
+    admissible = all(math.isfinite(value) and value <= tol for value in normalized.values())
     return TiltedConstraintReport(
         family=family,
         jacobi_residual=jac_res,
@@ -780,6 +875,8 @@ def evaluate_tilted_constraints(
         codazzi_div_sigma=div_sig,
         is_admissible=admissible,
         tolerance=tol,
+        residual_scales=scales,
+        normalized_residuals=normalized,
     )
 
 
@@ -837,10 +934,9 @@ def construct_admissible_tilted_state(
 
     Fail-closed rules:
     1. All families evaluate Jacobi, exact Class-B Ricci, Hamiltonian, and Codazzi.
-    2. For Bianchi `I` and `FLRW` (and `IX` with diagonal `n` where `div sigma == 0`),
-       a single perfect fluid with `eps + p > 0` and non-zero `v` yields non-zero `q`
-       while `div sigma == 0`, so `strict` (and shear projection into `ker(div)`!)
-       rejects the state with `CodazziProjectionError`.
+    2. The actual `(a,n)` determines the attainable total momentum. Type I and
+       isotropic-n IX have zero divergence map; anisotropic IX can have rank 2
+       or 3. A nonzero source outside the actual range is rejected in both modes.
     3. Multi-fluid opposing tilts (e.g. photon vs matter with `q_1 + q_2 == 0`) ARE
        admitted because `q_tot == 0` satisfies Codazzi while preserving vector drifts!
     """
@@ -848,47 +944,52 @@ def construct_admissible_tilted_state(
         raise KeyError(f"Unsupported Bianchi/FLRW family {family!r}")
     if len(species) == 0:
         raise ValueError("At least one fluid congruence is required")
+    if not math.isfinite(kappa) or kappa <= 0.0:
+        raise ValueError("kappa must be finite and positive")
+    if not math.isfinite(tol) or tol <= 0.0:
+        raise ValueError("tol must be finite and positive")
+    if codazzi_mode not in ("strict", "project_shear_to_codazzi"):
+        raise ValueError(f"Unknown codazzi_mode {codazzi_mode!r}")
 
     alg = build_bianchi_algebra("I" if family == "FLRW" else family) if algebra is None else algebra
+    actual_family = classify_bianchi_type(alg.a, alg.n).label
+    expected_family = "I" if family == "FLRW" else family
+    if actual_family != expected_family:
+        raise ValueError(
+            f"Requested family {family!r} is inconsistent with the supplied "
+            f"structure algebra ({actual_family!r})"
+        )
     geom = build_geometry(alg)
     triple = algebra_to_triple(alg)
-    spec = FAMILY_ADMISSIBILITY_REGISTRY[family]
 
     sig = np.zeros((3, 3), dtype=np.float64) if sigma_ab is None else pstf_rank2(np.asarray(sigma_ab, dtype=np.float64))
 
     proj_list = tuple(sp.to_projected_state() for sp in species)
     tot = total_matter_projection(proj_list)
 
-    active_tilts = _non_lambda_tilted_species(species)
-    if len(active_tilts) == 1 and not spec.allows_uncompensated_single_perfect_fluid_tilt:
-        if float(np.linalg.norm(tot.q)) > tol:
-            raise CodazziProjectionError(
-                f"[{family}] Codazzi momentum constraint forbids an uncompensated single "
-                f"perfect-fluid tilt (|q|={np.linalg.norm(tot.q):.3e} while D_j sigma^j_i == 0 identically). "
-                "Add a compensating second species or set v == 0."
-            )
+    momentum_map = momentum_constraint_map(alg)
+    M_div = momentum_map.matrix
+    target_div = -float(kappa) * tot.q
+    # Membership is independent of the positive Einstein coupling. Test q
+    # before multiplication by kappa, relative to uncancelled species fluxes.
+    # This also tolerates roundoff from physically compensating multi-fluids.
+    source_momentum_scale = sum(float(np.linalg.norm(sp.q)) for sp in proj_list)
+    range_residual = float(np.linalg.norm(tot.q - momentum_map.range_projector @ tot.q))
+    range_relative = (range_residual/source_momentum_scale if source_momentum_scale > 0.0
+                      else (0.0 if range_residual == 0.0 else float("inf")))
+    if not math.isfinite(range_relative) or range_relative > tol:
+        raise CodazziProjectionError(
+            f"[{family}] Target total momentum q={tot.q.tolist()} lies outside "
+            f"the actual divergence range (rank={momentum_map.rank}, "
+            f"source_relative_residual={range_relative:.3e})"
+        )
 
     if codazzi_mode == "project_shear_to_codazzi":
-        # Project shear onto divergence equation M_div @ s5 == kappa * tot.q
-        basis_cols = []
-        for idx in range(5):
-            e_vec = np.zeros(5, dtype=np.float64)
-            e_vec[idx] = 1.0
-            S_basis = orthonormal_to_stf_matrix(e_vec, convention="kinematic_response")
-            basis_cols.append(exact_momentum_divergence(S_basis, alg.a, alg.n, a_sign=1))
-        M_div = np.column_stack(basis_cols)
-        target_div = -float(kappa) * tot.q
-        s5_sol, _, _, _ = np.linalg.lstsq(M_div, target_div, rcond=1.0e-12)
-        res_proj = float(np.linalg.norm(M_div @ s5_sol - target_div))
-        if res_proj > tol * max(1.0, float(np.linalg.norm(target_div))):
-            raise CodazziProjectionError(
-                f"[{family}] Target momentum q={tot.q.tolist()} lies outside range of D_j sigma^j_i "
-                f"(residual={res_proj:.3e})"
-            )
+        # Project onto M_div @ s5 == -kappa * tot.q using this actual algebra.
         # Keep projection component in ker(M_div) close to input `sigma_ab`
         s5_in = stf_matrix_to_orthonormal(sig, convention="kinematic_response")
         # Minimum-norm correction ds5 solving M_div (s5_in + ds5) = target_div
-        ds5, _, _, _ = np.linalg.lstsq(M_div, target_div - M_div @ s5_in, rcond=1.0e-12)
+        ds5 = momentum_map.pseudoinverse @ (target_div - M_div @ s5_in)
         sig = orthonormal_to_stf_matrix(s5_in + ds5, convention="kinematic_response")
 
     _, ricci_scalar_exact, _ = exact_spatial_ricci_from_compact(alg.a, alg.n, a_sign=1)
