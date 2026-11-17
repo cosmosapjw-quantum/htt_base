@@ -289,7 +289,8 @@
       "PR-R60-COVARIANCE-CALIBRATION",
       "PR-R61-KINEMATIC-MEASUREMENT",
       "PR-R62-ANISOTROPY-CLASSIFICATION",
-      "PR-R63-LOCAL-BOOST-GLOBAL-TILT"
+      "PR-R63-LOCAL-BOOST-GLOBAL-TILT",
+      "PR-R64-DIRECTIONAL-HUBBLE"
     ],
     "strict_extension_cards": [
       "PR-SOLVER-FREE-DOSSIER",
@@ -385,7 +386,8 @@
       "PR-R60-COVARIANCE-CALIBRATION",
       "PR-R61-KINEMATIC-MEASUREMENT",
       "PR-R62-ANISOTROPY-CLASSIFICATION",
-      "PR-R63-LOCAL-BOOST-GLOBAL-TILT"
+      "PR-R63-LOCAL-BOOST-GLOBAL-TILT",
+      "PR-R64-DIRECTIONAL-HUBBLE"
     ],
     "checkpoint_every_completed_prs": 5,
     "no_native_lowell_solver_implementation": true,
@@ -15049,6 +15051,46 @@
       "claim_tier_ceiling": "C0",
       "user_authorized": true,
       "authorization": "2026-11-17 owner explicitly selected local observer boost versus global tilt in one full ten-stage branch; inherited non-force GitHub publication authority persists."
+    },
+    {
+      "id": "PR-R64-DIRECTIONAL-HUBBLE",
+      "wave": 0,
+      "title": "Recover source-dependent directional Hubble information and quantify calibration-sensitive derivative resolution",
+      "owner": "HTT",
+      "depends": [
+        "PR-R63-LOCAL-BOOST-GLOBAL-TILT"
+      ],
+      "files": [
+        "docs/research_program/observational_publication_20261015/R64_DIRECTIONAL_HUBBLE_20261117",
+        "scripts/r64",
+        "tests/r64",
+        "htt/htt/htt/infer/r64_directional_hubble.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+        "docs/research_program/observational_publication_20261015/README.md"
+      ],
+      "tests": [
+        "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt/src:htt:. .venv/bin/python -m pytest -p no:cacheprovider -q tests/r64 tests/r58/test_mixed_tensor_likelihood.py tests/r58/test_five_views.py",
+        ".venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
+        ".venv/bin/python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check",
+        ".venv/bin/python -B scripts/htt_publication_dag.py --validate"
+      ],
+      "dod": [
+        "Complete one sequential ten-stage owner-selected P3 study using existing history, primary sources and actual owned CF4 operators/covariance.",
+        "Derive Hcal/H_D/finite-H_W distinctions, eta normalization, represented calibration invariants, optical closure equation and counterexamples.",
+        "Run signed tensor distance-field likelihoods with source integration, free coherent V, full shared covariance and common-region nonlinear images.",
+        "Resolve the actual36-row J3 null with existing correlated method/sky summaries; retain all source/calibration alternatives and uncertainty/domain limitations.",
+        "Close one fresh independent review; preserve original42/P3 acceptance and NOT_READY_TO_SUBMIT with finite observational and matched-method work."
+      ],
+      "notes": "docs/research_program/observational_publication_20261015/R64_DIRECTIONAL_HUBBLE_20261117/RESEARCH_DAG.json",
+      "kill": "No general physical Hubble/acceleration detection, universal CF4 derivative no-go, independent multiplication of correlated summaries or invented calibration law; no automatic successor or local-agent prompt.",
+      "level": "L0",
+      "scope": "science",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "2026-11-17 owner explicitly selected redshift- and direction-dependent Hubble factor for one full ten-stage loop; inherited non-force GitHub publication authority persists."
     }
   ]
 }

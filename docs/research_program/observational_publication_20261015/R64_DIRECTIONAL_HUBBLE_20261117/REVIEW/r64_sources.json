@@ -1,0 +1,336 @@
+{
+  "date": "2026-11-17",
+  "stage": "R2/C2",
+  "requested_model_effort": "gpt-6.1-sol/high",
+  "observed_model_effort": "UNKNOWN",
+  "status": "BOUNDED_SOURCE_COMPARISON_COMPLETE",
+  "exa_sources_reviewed_requested": 25,
+  "discovery_tools": [
+    "mcp__codex_apps__exa_web_search_exa",
+    "mcp__codex_apps__scispace_search"
+  ],
+  "successful_primary_fetch_calls": [
+    {
+      "tool": "mcp__codex_apps__exa_web_fetch_exa",
+      "arguments": {
+        "urls": [
+          "https://arxiv.org/html/2607.07821",
+          "https://arxiv.org/html/2512.02526",
+          "https://arxiv.org/html/2608.14265",
+          "https://arxiv.org/html/1204.2832"
+        ],
+        "maxCharacters": 65000
+      }
+    },
+    {
+      "tool": "mcp__codex_apps__exa_web_fetch_exa",
+      "arguments": {
+        "urls": [
+          "https://arxiv.org/abs/2607.07821",
+          "https://arxiv.org/abs/2608.14265"
+        ],
+        "maxCharacters": 10000
+      }
+    }
+  ],
+  "proposed_novelty_status": "Components established; investigate real full36 source-integrated radial eta fit + constant-angle calibration quotient + weakly identified nonlinear H_D/q_D confidence image. Not a proof of novelty.",
+  "derived_formulas": {
+    "physical_rate": "Hcal=Theta/3+sigma_nn-A.n/c",
+    "eta": "eta=ln(DLref/DL)",
+    "distance_rate": "HD=c/partial_z[DL/(1+z)]",
+    "reference_identity": "HD/Href=exp(eta)/(1-B eta_z),B=Href chi/c, chi'=c/Href",
+    "calibration": "eta->eta+a(n) implies HD->exp(a)HD; radial same-ray ratios andqD invariant",
+    "weak_form": "int phi eta_z=-int phi_z eta,vanishing endpointphi"
+  },
+  "sources": [
+    {
+      "id": "S01",
+      "authors": "Kristian & Sachs",
+      "year": 1966,
+      "title": "Observations in Cosmology",
+      "doi": "10.1086/148522",
+      "primary_urls": [
+        "https://adsabs.harvard.edu/pdf/1966ApJ...143..379K"
+      ],
+      "equation_locations": [
+        "Sec III.2 pp393-394 Eqs68,70-74"
+      ],
+      "read_via": "Exa primary scan",
+      "reuse": "Local directional redshift-distance series; corrected distance r differs from modern D_L",
+      "refids": []
+    },
+    {
+      "id": "S02",
+      "authors": "Heinesen",
+      "year": 2021,
+      "arxiv": "2010.06534v2",
+      "version_date": "2021-04-23",
+      "title": "Multipole decomposition of the general luminosity distance Hubble law",
+      "primary_urls": [
+        "https://arxiv.org/html/2010.06534v2"
+      ],
+      "equation_locations": [
+        "PDF2.11,2.14,2.16,3.9,3.10,4.1,4.5-4.7",
+        "HTML11,14,16 (sequential numbering)"
+      ],
+      "conventions": "c=1; -+++; k=E(u-e), sourceward e",
+      "reuse": "Physical redshift rate; optical focusing; local Hubble multipoles; smooth congruence and invertible ray redshift",
+      "refids": [
+        "turn505925076view2",
+        "turn887747889view1",
+        "turn976421727view0"
+      ]
+    },
+    {
+      "id": "S03",
+      "authors": "Clarkson, Bassett & Lu",
+      "year": 2008,
+      "arxiv": "0712.3457v2",
+      "version_date": "2008-03-17",
+      "title": "A general test of the Copernican Principle",
+      "primary_urls": [
+        "https://arxiv.org/html/0712.3457v2"
+      ],
+      "equation_locations": [
+        "Eqs1-3",
+        "Appendix Eqs4-5"
+      ],
+      "reuse": "Distance-Hubble-curvature consistency; even curved FLRW H_D differs from H",
+      "refids": [
+        "turn405904473view3",
+        "turn379130618view3"
+      ]
+    },
+    {
+      "id": "S04",
+      "authors": "Seikel, Clarkson & Smith",
+      "year": 2012,
+      "arxiv": "1204.2832v2",
+      "version_date": "2012-05-31",
+      "title": "Reconstruction of dark energy and expansion dynamics using Gaussian processes",
+      "primary_urls": [
+        "https://arxiv.org/html/1204.2832"
+      ],
+      "equation_locations": [
+        "1.1",
+        "2.15-2.25",
+        "3.1-3.2",
+        "3.4"
+      ],
+      "reuse": "Established inverse-distance derivative, q and joint derivative covariance; kernel assumptions explicit",
+      "read_via": "Exa full primary text",
+      "refids": []
+    },
+    {
+      "id": "S05",
+      "authors": "Maartens, Santiago, Clarkson, Kalbouneh & Marinoni",
+      "year": 2024,
+      "arxiv": "2312.09875v3",
+      "version_date": "2024-06-14",
+      "title": "Covariant cosmography: the observer-dependence of the Hubble parameter",
+      "primary_urls": [
+        "https://arxiv.org/html/2312.09875v3"
+      ],
+      "equation_locations": [
+        "19",
+        "27",
+        "34a-c",
+        "67",
+        "AppendixA.6"
+      ],
+      "reuse": "Matter congruence, boosted observer and corrected distance slope; unchanged detailed R61 source checks reused",
+      "refids": [
+        "turn887747889view2"
+      ]
+    },
+    {
+      "id": "S06",
+      "authors": "Dhawan, Borderies, Macpherson & Heinesen",
+      "year": 2023,
+      "arxiv": "2205.12692",
+      "title": "The quadrupole in the local Hubble parameter: first constraints using Type Ia supernova data and forecasts for future surveys",
+      "primary_urls": [
+        "https://arxiv.org/html/2205.12692"
+      ],
+      "equation_locations": [
+        "1-3",
+        "10-16",
+        "18"
+      ],
+      "estimand": "Scale-dependent H quadrupole and q dipole; decay ansatz",
+      "sample": "JLA supernovae",
+      "covariance": "Full SN modulus covariance",
+      "observed_result": "Approximately10% quadrupole upper limit at~100h^-1Mpc; q dipole frame/PV dependent",
+      "read_via": "Exa full primary text",
+      "refids": []
+    },
+    {
+      "id": "S07",
+      "authors": "Koksbang",
+      "year": 2025,
+      "arxiv": "2412.12637v3",
+      "version_date": "2025-10-31",
+      "title": "Testing inhomogeneous cosmography in our cosmic neighborhood using CosmicFlows-4",
+      "primary_urls": [
+        "https://arxiv.org/html/2412.12637v3"
+      ],
+      "equation_locations": [
+        "2-4",
+        "SecIV.1.1"
+      ],
+      "reuse": "CF4-informed weak-field ray-tracing comparison of Taylor and polynomial fits; local smoothing and convergence caveats",
+      "refids": [
+        "turn140327146view4"
+      ]
+    },
+    {
+      "id": "S08",
+      "authors": "Kalbouneh et al.",
+      "year": 2026,
+      "arxiv": "2510.02510v2",
+      "version_date": "2026-03-09",
+      "doi": "10.1088/1475-7516/2026/03/084",
+      "title": "The anisotropic expansion rate of the local Universe and its covariant cosmographic interpretation",
+      "primary_urls": [
+        "https://arxiv.org/html/2510.02510v2"
+      ],
+      "equation_locations": [
+        "1",
+        "12-14",
+        "AppendixA15-21"
+      ],
+      "estimand": "Decimal-log distance fluctuation with shell angular mean removed; then restricted covariant cosmography",
+      "redshift": "CMB .01<z<.1",
+      "covariance": "CF4 independent modulus errors; Pantheon+ full supplied covariance; multipole covariance",
+      "calibration": "Global shell monopole removed; arbitrary angular zero point not removed",
+      "selection": "Four display slices plus finer inference shells; appendices test flux/angular/mode leakage",
+      "observed_result": "CF4 axial H2/H0=.028±.004,Q1=2.0±.4,Q3=.9±.3 under named restrictions",
+      "reuse": "eta identity and direct GLS/radial-cosmography competitor",
+      "refids": [
+        "turn405904473view0",
+        "turn976421727view1",
+        "turn379130618view1",
+        "turn505925076view1"
+      ]
+    },
+    {
+      "id": "S09",
+      "authors": "Vicente, Pereira, Rodrigues, Vitenti & Gomes",
+      "year": 2026,
+      "arxiv": "2607.07821v1",
+      "version_date": "2026-07-08",
+      "title": "Multipolar structure of the local expansion rate from incomplete sky data",
+      "primary_urls": [
+        "https://arxiv.org/html/2607.07821",
+        "https://arxiv.org/abs/2607.07821"
+      ],
+      "equation_locations": [
+        "2",
+        "4-9",
+        "10-18",
+        "26-32"
+      ],
+      "estimand": "Pixel averaged eta_K; all angular DOFs l1-3, STF/multipole vectors; mask reconstruction",
+      "redshift": "CMB .01<=z<=.05",
+      "sample": "24646 individuals before mask",
+      "covariance": "Independent nonlinear300km/s scatter; MC harmonic covariance; specified LambdaCDM C_l and radial-bin window",
+      "selection": "Nside4,8,16; min pixel counts14,5,3; Galactic10deg strip and neighbor mask",
+      "observed_result": "Dipole3.3sigma vs named LambdaCDM mock; quadrupole/octupole consistent95%; complete-vector alignments nonanomalous",
+      "reuse": "Full STF/mask/covariance not standalone novelty",
+      "read_via": "Exa full primary html plus abstract",
+      "metadata_caution": "Wrong Exa Author header ignored; primary byline and arXiv submitted date used",
+      "refids": [
+        "turn622015173academia37"
+      ]
+    },
+    {
+      "id": "S10",
+      "authors": "Salzano, Beltrán Jiménez, Bettoni, Brax & Valade",
+      "year": 2026,
+      "arxiv": "2512.02526v2",
+      "version_date": "2026-04-15",
+      "title": "Updates on dipolar anisotropy in local measurements of the Hubble constant from Cosmicflows-4",
+      "primary_urls": [
+        "https://arxiv.org/html/2512.02526v2",
+        "https://arxiv.org/abs/2512.02526"
+      ],
+      "equation_locations": [
+        "5-14",
+        "15-24",
+        "Tables1-5"
+      ],
+      "estimand": "Logarithmic HL H0 angular modulation (not derivative H_D)",
+      "redshift": "Observed CMB and reconstruction-PV-corrected comparisons;1+zcos=(1+zCMB)/(1+zpec)",
+      "calibration": "Fixed flat-FLRW series q0=-.595,j0=1; no full shared calibration covariance",
+      "covariance": "Conditionally independent Gaussian moduli plus shell intrinsic dispersion",
+      "selection": "Alternative mu[31,36] and z[.03,.06] binning",
+      "observed_result": "Table1 mu-selected a10=9.7±.4,lnB310; PV corrected2.9±.4,lnB76; evidence not trial-corrected Gaussian sigma",
+      "reuse": "Log fits, selection and radial/PV sensitivity precedents",
+      "metadata_caution": "Use arXiv v2 date, not dynamic HTML date or wrong Exa Author header",
+      "refids": [
+        "turn935913186view0",
+        "turn140327146view1",
+        "turn887747889view0"
+      ]
+    },
+    {
+      "id": "S11",
+      "authors": "Stiskalek, Desmond & Lavaux",
+      "year": 2026,
+      "arxiv": "2509.14997v2",
+      "version_date": "2025-11-17",
+      "journal_publication_date": "2026-01-22",
+      "doi": "10.1093/mnras/staf2048",
+      "title": "No evidence for local H0 anisotropy from Tully-Fisher or supernova distances",
+      "primary_urls": [
+        "https://academic.oup.com/mnras/article/546/2/staf2048/8436862",
+        "https://arxiv.org/html/2509.14997v2"
+      ],
+      "equation_locations": [
+        "Sec3 Eqs8-9",
+        "Sec3.1 external-flow knot model"
+      ],
+      "estimand": "Forward-model tracer zero-point dipole plus reconstructed/internal/external PV",
+      "sample": "CF4 W1 final3246;2MTF,SFI++,Pantheon+;z~<.05",
+      "calibration": "ZP+5logh degenerate; linewidth eta distinct from expansion eta",
+      "covariance": "Explicit reconstructed PV+small-scale dispersion; Pantheon+ covariance PV terms removed",
+      "selection": "W1 quality5,linewidtheta>-.3,|b|>7.5deg; latent distance/linewidth marginalization",
+      "observed_result": ".087±.019mag ZP dipole,877:1 odds in restricted model; radial-flow extension rises then decays",
+      "reuse": "Calibration-flow confounding and constructive radial discrimination",
+      "identity_caution": "Exa v2URL embedded text saysv1; unchanged core equations checked by R61, use publisher for final preciseversion",
+      "refids": []
+    },
+    {
+      "id": "S12",
+      "authors": "Nusser & Tully",
+      "year": 2026,
+      "arxiv": "2608.14265v1",
+      "version_date": "2026-08-14",
+      "title": "Cosmicflows-4 and the Cosmological Consistency of Large-Scale Motions",
+      "primary_urls": [
+        "https://arxiv.org/html/2608.14265",
+        "https://arxiv.org/abs/2608.14265"
+      ],
+      "equation_locations": [
+        "III Eqs1-12",
+        "IV Eqs14-21"
+      ],
+      "estimand": "Measurement-WLS log-distance velocity monopole/dipole; not ideal-sphere flow",
+      "redshift": "CMB-redshift positions and bins in fixed Planck2018 flatLambdaCDM",
+      "covariance": "Actual estimator A propagates linear PV signal and measurement covariance including cross-window terms; baseline measurement diagonal; calibration covariance omitted",
+      "selection": "Nonoverlap bins;minN,Neff>=10",
+      "observed_result": "Six-bin dipole/joint2.29sigma/2.36sigma;120-160h^-1Mpc628±82km/s,3.40sigma;remove6dFGS1.56sigma;removeSN3.77sigma;not multiplicityadjusted",
+      "reuse": "Actualwindow/weight and cross-catalog covariance comparison",
+      "read_via": "Exa full primary text and abstract",
+      "refids": []
+    }
+  ],
+  "not_performed": [
+    "new_fit",
+    "remote_mutation",
+    "new_subagents",
+    "universal_no_go",
+    "new_survey_significance",
+    "full_CF4_calibration_covariance_measurement"
+  ]
+}

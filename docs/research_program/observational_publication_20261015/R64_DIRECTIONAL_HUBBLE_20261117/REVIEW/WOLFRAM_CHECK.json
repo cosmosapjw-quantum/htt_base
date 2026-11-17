@@ -1,0 +1,10 @@
+{
+  "tool": "wolframlanguageevaluator",
+  "code": "Clear[z,c,h,chi,eta,a,H0,R,F]; B=h[z] chi[z]/c; hd=c/D[chi[z] Exp[-eta[z]],z]; expected=h[z] Exp[eta[z]]/(1-B eta'[z]); eq1=FullSimplify[(hd/.chi'[z]->c/h[z])-expected]; qp=-1+(1+z)h'[z]/h[z]+(1+z)(eta'[z]+((1+B h'[z]/h[z])eta'[z]+B eta''[z])/(1-B eta'[z])); eq2=FullSimplify[(-1+(1+z)D[Log[expected],z]/.chi'[z]->c/h[z])-qp]; eq3=FullSimplify[(expected/.eta[z]->eta[z]+a)-Exp[a]expected]; rm=c/(2 H0)((1+z)-1/(1+z)); hm=2 H0(1+z)^2/((1+z)^2+1); eq4=FullSimplify[c/D[rm,z]-hm]; eq5=FullSimplify[-1+(1+z)D[Log[hm],z]-(1-(1+z)^2)/(1+(1+z)^2)]; da=R[z]/(1+z); lhs=(1+z)(D[da,{z,2}]+(2/(1+z)+h'[z]/h[z])D[da,z]+c^2 F[z] da/((1+z)^4 h[z]^2)); rhs=R''[z]+h'[z]/h[z]R'[z]+(c^2 F[z]/((1+z)^4 h[z]^2)-h'[z]/((1+z)h[z]))R[z]; eq6=FullSimplify[lhs-rhs]; zs={1/40,1/25,3/50,2/25}; pp=InterpolatingPolynomial[({#,1/#}&/@zs),z]; eq7=FullSimplify[1/z-pp-Times@@(z-zs)/(z Times@@zs)]; ExportString[<|\"eta_H_identity\"->eq1,\"eta_q_identity\"->eq2,\"constant_calibration_H\"->eq3,\"Milne_H\"->eq4,\"Milne_q\"->eq5,\"Sachs_R_equation\"->eq6,\"cubic_velocity_null\"->eq7,\"scope\"->\"algebra only; no 4-axis legacy CAS admission\"|>,\"RawJSON\"]",
+  "raw_text": [
+    "Symbol::undefined2: Warning: Global symbols \"H0, R, F, B, B, B, B, B, H0, H0, R, F, R, R, F, R\" are undefined.\nGeneral::messages: Messages were generated which may indicate errors.\n\nOut[1]= \"{\\n\\t\\\"eta_H_identity\\\":0,\\n\\t\\\"eta_q_identity\\\":0,\\n\\t\\\"constant_calibration_H\\\":0,\\n\\t\\\"Milne_H\\\":0,\\n\\t\\\"Milne_q\\\":0,\\n\\t\\\"Sachs_R_equation\\\":0,\\n\\t\\\"cubic_velocity_null\\\":0,\\n\\t\\\"scope\\\":\\\"algebra only; no 4-axis legacy CAS admission\\\"\\n}\""
+  ],
+  "status": "SEVEN_ALGEBRAIC_DIFFERENCES_ZERO",
+  "warning_classification": "Tool emitted undefined-global-symbol warnings for intentionally symbolic functions/constants; all requested differences evaluated to exact zero.",
+  "claim": "Algebraic verification only; not full physical closure, source qualification, four-axis CAS PASS, or observational result."
+}

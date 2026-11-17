@@ -1,0 +1,7 @@
+{
+  "status": "IMPLEMENTATION_REPAIR",
+  "observed_failure": "TypeError: bad operand type for abs(): 'list'",
+  "location": "scripts/r64/summarize_r64.py published_q_depth_shift_max",
+  "fix": "Use numpy.abs on the decoded JSON list.",
+  "scope": "Derived reporting only; initial observed fit and its carriers unchanged. Primary60 and augmentation2 tests passed. Re-execute only the affected summary producer."
+}

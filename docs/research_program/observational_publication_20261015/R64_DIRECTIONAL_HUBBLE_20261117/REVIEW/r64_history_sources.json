@@ -1,0 +1,438 @@
+{
+  "schema": "r64.history_source_map.v1",
+  "baseline": "33d87dd3e4a787e477327d37ee00b40e790211c9",
+  "branch": "research/r64-directional-hubble-20261117",
+  "remote": "edd1b263-56a0-4391-8a2a-677dd00eabf5",
+  "checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "scope": "R2/C2 only; remote read-only; no new fits/tests or mutation; parent sole remote writer",
+  "skill_context_used": [
+    "physmath-research-loop 1.3.0 SKILL.md",
+    "POLICY_INTEGRATION.md",
+    "THEORY_LOOP.md R2",
+    "CODING_LOOP.md C2",
+    "SUBAGENT_MODE.md (parent-owned delegation; child no delegation)",
+    ".agents/skills/htt-dag-orchestrator/SKILL.md",
+    "root AGENTS.md first25",
+    "CURRENT_CODEX_RUNTIME.md first25"
+  ],
+  "requested_runtime": {
+    "model": "gpt-6.1-sol",
+    "effort": "high"
+  },
+  "observed_runtime": {
+    "model": "UNKNOWN",
+    "effort": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "path": "AGENTS.md",
+      "exists": true,
+      "sha256": "83f25506c2a2f3a17a1e6d1eeb229f9e9ec006252985bbe40595c1acf5affd54",
+      "bytes": 27121,
+      "baseline_blob": "436a0606eaec75dca2ffabad89d5091a6be1c028",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/harness/CURRENT_CODEX_RUNTIME.md",
+      "exists": true,
+      "sha256": "cdaf023caa5e16adb889c4d3907d5db376b6a195edf800b78da0f1a907b479af",
+      "bytes": 13630,
+      "baseline_blob": "2a9cb7c16f552b1445ddbd74da382e8527b8757e",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": ".agents/skills/htt-dag-orchestrator/SKILL.md",
+      "exists": true,
+      "sha256": "d7d2dead1524bb62fb7746c23dbe12cae68e763752954f0f3ae1db0859820d4b",
+      "bytes": 1560,
+      "baseline_blob": "3047cfd48bc30a6dc4685c747c9e213088adc077",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+      "exists": true,
+      "sha256": "e79be675d785d074efc1773cf119c430abcdcd13c3f0bc148bc66f77d26aebd1",
+      "bytes": 74197,
+      "baseline_blob": "ad7dd41d174aec8e7eb7318ac1f7163dff1511a6",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/H01_20261016/src/hubble_window.py",
+      "exists": true,
+      "sha256": "952440508efc71d021d29c66a436d9d0c24c7db0a720d73fdd243ada6b97c5d3",
+      "bytes": 6550,
+      "baseline_blob": "a6d70d730a040d04a703a001d07f1ce4234b6b79",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/H01_20261016/docs/H01_THEORY_KO.md",
+      "exists": true,
+      "sha256": "013ee10583b6402b3753cd926d508554e1c2242bc41e8313aa11041a623b1999",
+      "bytes": 5486,
+      "baseline_blob": "b5646ccacbaeca3eaa2fc75569c1f826a2bc3b33",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/H01_20261016/docs/H01_S2_SOURCE_RESULTS_KO.md",
+      "exists": true,
+      "sha256": "0cdacaec30ccfef9743440c882bdd9cbd52ba1c598d5688c4909a35d4af068f4",
+      "bytes": 4370,
+      "baseline_blob": "2b7c665168528330e0521b662278d6fedfe9ff62",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/H03_20261016/src/h03_tomography.py",
+      "exists": true,
+      "sha256": "1c7fe777e3f44183f501e599877964aa212912b0c8c78c905e0aa9404ac03d40",
+      "bytes": 7695,
+      "baseline_blob": "2b58560b164df49b5081f21e6629afcd0e22bcb5",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/H03_20261016/src/h03_method_gauge.py",
+      "exists": true,
+      "sha256": "13f9dd8e5be1ae33cd9c1d438f4e46a74fbf6b5c73c7d83e021dd6c6ab6dcf14",
+      "bytes": 2334,
+      "baseline_blob": "6c4b799cb2396d51350afb379d1ba678fcd3f01a",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/H03_20261016/src/run_h03.py",
+      "exists": true,
+      "sha256": "dd6554623e18db399d310d0bdb17b3e393a3998f1b859779f15ff9e64703007c",
+      "bytes": 10460,
+      "baseline_blob": "781d0597505aff5214047ec47cde1ab8d832ee42",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/H03_20261016/docs/H03_S2_REPORT_KO.md",
+      "exists": true,
+      "sha256": "69528c567f196fc46a51821f799b87ed2d6d90d6e0d4c5a0acbf9681e93c4598",
+      "bytes": 5910,
+      "baseline_blob": "2b36c3057f0a18593e9ce4eb5945dbe961e02e49",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/H03_20261016/results/source_h03_v1/H03_SOURCE_TOMOGRAPHY.json",
+      "exists": true,
+      "sha256": "5d31e2ab4fea682c538c31c15181ae7b07e11efba98b36c66aff6feca88f8326",
+      "bytes": 111342,
+      "baseline_blob": "538caae5212e576232b1c6b270cc084704504624",
+      "read_status": "identity_checked; semantic use reused from named reports/code and r63_history_sources.json"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/H03_20261016/results/source_h03_v1/H03_MEAN_GAUGE.json",
+      "exists": true,
+      "sha256": "c4ea98f7b80b0f47ee649a727999b5450373c554327e3b21412b2e6ab7d0a4c9",
+      "bytes": 4965,
+      "baseline_blob": "70b17dbae692704d7a02c66fd3416906ed70c5cc",
+      "read_status": "identity_checked; semantic use reused from named reports/code and r63_history_sources.json"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018/REPORT_KO.md",
+      "exists": true,
+      "sha256": "3f908d964da72325aebd9742c977909b45b5527fc951540270566e1b013dbe75",
+      "bytes": 13247,
+      "baseline_blob": "6f2546ef90f7692a5cb9cce440bbb95c9333bdd8",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018/h02_actual.py",
+      "exists": true,
+      "sha256": "0575f37de540ae875edaf4e050ecb3360230e8b5a3c6fa7bcf9f07d72b02f1c5",
+      "bytes": 21549,
+      "baseline_blob": "e75949a903c86c1ffb257e19bc0017c58dceccb2",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_EXECUTION_20261018/results/h02_actual_centers.json",
+      "exists": true,
+      "sha256": "c3f70ae28c860d3aa0276df17afc56db9f29586b0d329b773c27d01890ae7ac3",
+      "bytes": 586425,
+      "baseline_blob": "9fe1a12e5ffc5deff6eeb4cca13f5fa1ff5b8d6b",
+      "read_status": "identity_checked; semantic use reused from named reports/code and r63_history_sources.json"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_UPSTREAM_SELECTION_20261018/REPORT_KO.md",
+      "exists": true,
+      "sha256": "f183cb8af66de8e951924ef03856451efd273813a66f91e90153fc58e02ea4a5",
+      "bytes": 11148,
+      "baseline_blob": "73f00bb329d061207d53c6343bfd25c12704ba4f",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/CONTINUATION_20261018/H02_UPSTREAM_SELECTION_20261018/upstream_selection.py",
+      "exists": true,
+      "sha256": "cc93344fa89326e23d43d440f3ee91e79cf676f34a7327d7ad4591a476c59714",
+      "bytes": 13704,
+      "baseline_blob": "a8016268a13321f89116342d248df3805af2b793",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-03-H03-STRUCTURED/repair_01/main.tex",
+      "exists": true,
+      "sha256": "8c7c201a4848bd52f349c327627cced98cfbcae90faa2f9cbf16d9ddfca6258d",
+      "bytes": 13308,
+      "baseline_blob": "e96ecc4add41b77236c6cd401b90cf5fb9df30ae",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/PUBLICATION_ACCELERATION_20261025/products/R32-08-H03-PAPER/main.tex",
+      "exists": true,
+      "sha256": "646d827c4fcdf1db9cedf2af665beeb6b8952f78a4f7413f68eb49cabc5ed2bf",
+      "bytes": 23685,
+      "baseline_blob": "5a6b668ebdf22c6fa768b68e68e168574808b59a",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE/REPORT_DELTA.md",
+      "exists": true,
+      "sha256": "3240bd5214fedbf0f4ad697b3f31634a72733ad74f46623cb0d6952ddf361741",
+      "bytes": 6081,
+      "baseline_blob": "ed7b4e3c967c17e836daf0b74fbd474762e300df",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/CONVERGENCE_20261028/products/R37-03-HUBBLE/compute_hubble.py",
+      "exists": true,
+      "sha256": "05504b1fdc1eac787297c6d41aa8c9c41d63925f036f22ab54c9815cf2756b8d",
+      "bytes": 13531,
+      "baseline_blob": "6b43ceb9270d151f353ad7d7945d043e2f4bc274",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R42_FIVEVAR_COMPETITIVE_BENCHMARK_20261108/LOOP_05_DIRECTIONAL_H0/LOOP_REPORT.md",
+      "exists": true,
+      "sha256": "01ca71546c263d0096d4ddfeb6d233cb4e77b18d78b648404e7a1a4b3c43fe30",
+      "bytes": 4992,
+      "baseline_blob": "0d562ce4eb83b735417067bda5df5a5cb5d56ba5",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/HISTORY_PR_INDEX.json",
+      "exists": true,
+      "sha256": "336edda5ae461df63ea11c6fd501810d942def1726d00aedeb581aa0cb796fd7",
+      "bytes": 124815,
+      "baseline_blob": "2225fa453e89002c2054b58ce399b77c63893e96",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/THEORY_LOOPS.md",
+      "exists": true,
+      "sha256": "e99d187a2cdb139ed0672cf9a7134ef915a05f6b00be832a8f0f186f2de74506",
+      "bytes": 18515,
+      "baseline_blob": "3a1f24f644e59bfd41e42c1927d69bcf6b14ec4c",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "htt/htt/htt/infer/r54_distance_estimators.py",
+      "exists": true,
+      "sha256": "9640b9785d2c4a5164e75018c2bfd2d0c8f6eb8072cb1a445e4f7589f9876d50",
+      "bytes": 6562,
+      "baseline_blob": "55cec6781ab53d268397c173e357be57b1a38b2c",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "htt/htt/htt/infer/r54_lcdm_body.py",
+      "exists": true,
+      "sha256": "a61e88bb012fedeff78e57a31278f1e62e9225c03cca5f10c29c23cf996b3085",
+      "bytes": 11771,
+      "baseline_blob": "edf60f3f064e04a5e2a2613ee4c992597c3b0772",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "scripts/r54/run_r54_cf4_exact.py",
+      "exists": true,
+      "sha256": "0d84ec958dfc964d28f39ac2edc506dd5c8ed8009ad1c12019cb425b15418300",
+      "bytes": 60846,
+      "baseline_blob": "1cbcbf5a1780f9e27161a1235ae93970747ec0a0",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "scripts/r58/run_r58_owned_tensor.py",
+      "exists": true,
+      "sha256": "0f446fb79967c1afc00004abd9350b7f2db6db454a66aa738141f4b98d5694ff",
+      "bytes": 19590,
+      "baseline_blob": "579e88aee2713e7751946e50c20f774c43a762a1",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/OWNED_TENSOR_CARRIERS.npz",
+      "exists": true,
+      "sha256": "42f6bc5158fdf2f876720db12c44b088bc2db9734887e0d84ae098b234a7e64d",
+      "bytes": 174687,
+      "baseline_blob": "5f59f1c90ca2c433bb664d305632374129e53a27",
+      "read_status": "identity and all array shapes/names/row_indices32 inspected"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R61_KINEMATIC_MEASUREMENT_20261117/THEORY.md",
+      "exists": true,
+      "sha256": "2d7b394994f7f83e6117d387bb8fe7edc178a14be39faccdef3456155a6de738",
+      "bytes": 16583,
+      "baseline_blob": "0ce4f09c293bf7e7d3eaa1429f69e578176b25da",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R61_KINEMATIC_MEASUREMENT_20261117/RESULTS/DEPTH_CORRECTED/KINEMATIC_DEPTH.json",
+      "exists": true,
+      "sha256": "fd4c741bc44c803d5fab32e506a4c121974660f1c56e712434602e5a3f271864",
+      "bytes": 283795,
+      "baseline_blob": "099ee9554a3da51ccd8edd6b0498f5a9a3885cdf",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "scripts/r62/build_r62_source_carriers.py",
+      "exists": true,
+      "sha256": "51eb026e1c3aa40924e219d9ffef4d7d7bb0594ed617b94bc4b08760ca53e384",
+      "bytes": 13050,
+      "baseline_blob": "92c2697bc78cd62670058f9ba2bd99de7bc09a42",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/THEORY.md",
+      "exists": true,
+      "sha256": "6f87ff5d5d7503d5518c03c51c3c094bc82d8e993264e33ceb385fb1ea5da3e0",
+      "bytes": 23331,
+      "baseline_blob": "69f6ddbd96ecb7b1944654892ed8e9fda766aab6",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R62_ANISOTROPY_CLASSIFICATION_20261117/RESULTS/SOURCE/SOURCE_TENSOR_CARRIERS.npz",
+      "exists": true,
+      "sha256": "1d0f3c353ea9189bffbab5728f295264c6925d4a3d82561c4457e48746beefd2",
+      "bytes": 317253,
+      "baseline_blob": "d2a818a632d4e1128e9b45488a43e3d67f38e217",
+      "read_status": "identity_checked; semantic use reused from named reports/code and r63_history_sources.json"
+    },
+    {
+      "path": "scripts/r63/r63_cf4_q_check.py",
+      "exists": true,
+      "sha256": "471d883a975f5dc5e6f12bd0f631b80e88b1307da0ba8091cf8787cc6d215dbc",
+      "bytes": 7386,
+      "baseline_blob": "3e4a28be6f13cb1579ce5cbd3c9903c8fe36a834",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "scripts/r63/transport_r63_catalogue_chart.py",
+      "exists": true,
+      "sha256": "e2487c4389e5a18559cd0dfcce66952413a21a27622df1a0e1910211060b84c5",
+      "bytes": 8087,
+      "baseline_blob": "efc3464194cf264077ca6005f70d4a6a3481c515",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R63_LOCAL_BOOST_GLOBAL_TILT_20261117/THEORY.md",
+      "exists": true,
+      "sha256": "9f41f0bd1da4143e2fbe1d5161d33976c86c9b1f353955fc93f74810ed4187fb",
+      "bytes": 20304,
+      "baseline_blob": "44f6855b34a1871f31ed28694fb82ca7cd03a389",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R63_LOCAL_BOOST_GLOBAL_TILT_20261117/RESULTS/CF4_PUBLISHED_Q_DIAGNOSTIC.json",
+      "exists": true,
+      "sha256": "137e6d888fe3b33b55569874cb464c5fed1430643fb747852554cfd3e9c13a9f",
+      "bytes": 23509,
+      "baseline_blob": "adbebc6951656642bf470f74effa94e24f867bf9",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R63_LOCAL_BOOST_GLOBAL_TILT_20261117/RESULTS/CATALOGUE_CHART_TRANSPORT.json",
+      "exists": true,
+      "sha256": "8ac760b59cdbed955ea9a3e2ba903a72dfb58c9cd7220110f0f7c042b0b17697",
+      "bytes": 80926,
+      "baseline_blob": "5cae5ccc6c7d038ebba3441998768c65234bd164",
+      "read_status": "bounded semantic excerpts read; hash and baseline blob checked"
+    },
+    {
+      "path": "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz",
+      "exists": true,
+      "sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+      "bytes": 1235181,
+      "baseline_blob": "68bfca649fcbba96fe70520f1209d040a5e322ad",
+      "read_status": "identity_checked; semantic use reused from named reports/code and r63_history_sources.json"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/OBSERVABLE_BRIDGE_RECONCILIATION_20261027/products/R36-01-CF4-OPERATOR/audit_backup/derived/A_RAW_36x35970.npz",
+      "exists": true,
+      "sha256": "e835df014bf0eb96fd715994c823eec9c8449f98d3f132b1dc736b760fd2772e",
+      "bytes": 12435409,
+      "baseline_blob": "dd0c347fe03cf2640c352216e3807a05239e1839",
+      "read_status": "identity_checked; semantic use reused from named reports/code and r63_history_sources.json"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L04_COSMIC_COV.npz",
+      "exists": true,
+      "sha256": "b6f92bff4d28affc68c0e41ad03ad02cf4a31aa4353a39710c7649cfba3e2a02",
+      "bytes": 309090,
+      "baseline_blob": "f2c9b3efb721ca3aabeb5f1c92432d3ca4756a91",
+      "read_status": "identity_checked; semantic use reused from named reports/code and r63_history_sources.json"
+    },
+    {
+      "path": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L04_SURVEY_LABELS.npz",
+      "exists": true,
+      "sha256": "7b5cac5e296abaa811477c01912c0233e430682cd865f6a1e3262c891dfced95",
+      "bytes": 99959,
+      "baseline_blob": "363a6d55a6b9c29bc67ca248156a8094749613dd",
+      "read_status": "identity_checked; semantic use reused from named reports/code and r63_history_sources.json"
+    }
+  ],
+  "historical_refs": [
+    {
+      "github_pr": 540,
+      "ref": "refs/remotes/origin/research/htt-sixpaper-p3-h01-window-20261016",
+      "head": "8e5bb45dddd512a0c9f2c51013079b15a07b6c11",
+      "scope": "H01 estimator/code/report read in current baseline; exact remote ref identity inspected, no fetch"
+    },
+    {
+      "github_pr": 541,
+      "ref": "refs/remotes/origin/research/htt-sixpaper-p3-h03-tomography-20261016",
+      "head": "2a5d47b2f6af69e049ce41c068b77d99a1592d7f",
+      "scope": "H03 tomography/gauge/code/report read in current baseline; exact remote ref identity inspected"
+    },
+    {
+      "github_pr": 551,
+      "ref": "refs/remotes/origin/research/htt-sixpaper-h02-l03-calibration-prior-paired-null-20261017",
+      "head": "6c97e3be2fae0fbbdb5a7392258f3a78cdc3556c",
+      "scope": "H02 calibration prior/paired null inventory plus later executed H02 code mapped; historical diff not re-read"
+    },
+    {
+      "github_pr": 560,
+      "ref": "research/htt-sixpaper-goals-robustness-20261018",
+      "head": "4a68995507bf8e672b2551d9030f3ad9f0d2152e",
+      "scope": "exact local commit inspected; current inherited H02 actual/upstream products read"
+    },
+    {
+      "github_pr": 561,
+      "ref": "research/htt-open-input-theory-20261018",
+      "head": "10f3ea585c6608e794900efe7e4f8f42c0747a3b",
+      "scope": "exact identity inspected, not full diff reviewed"
+    },
+    {
+      "github_pr": 510,
+      "ref": "obs/obs02-cf4-information-20261013",
+      "head": "c3c2e5f00757d5e7c57d6df149db86f82dc59cfa",
+      "scope": "index plus exact branch identity only"
+    },
+    {
+      "github_pr": 513,
+      "ref": "obs/obs03-cf4-latent-20261013",
+      "head": "5f3fbbee1d48d348bdf889fe2e27abdcb05073f4",
+      "scope": "synthetic latent likelihood historical predecessor; index plus exact identity only"
+    },
+    {
+      "github_pr": 518,
+      "ref": "r2/02-cf4-provider-20261014",
+      "head": "f72ab7bdd2e4a16321368264bbfa1ffcd3fc7129",
+      "scope": "conditional provider predecessor; index plus exact identity only"
+    }
+  ],
+  "reuse_map": {
+    "H03": "36D [h,D3,STF5] window-major, rate units, diagonal working source covariance",
+    "R58": "36D [h,d3,STF5] window-major, natural-log-distance coefficients, white36+body36; original not NATIVE_REPLAY",
+    "R61": "affine-z STF full32 finite model; already has common angular calibration cancellation, bias operator, exact-log check",
+    "R62": "source-propagated Legendre-z STF degree2/3 series; no new monopole/dipole histories",
+    "R63": "actual published q chart offset under fixed operator/covariance; no distance deboost or empirical radial derivative"
+  },
+  "new_science_executed": false
+}

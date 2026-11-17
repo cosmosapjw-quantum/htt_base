@@ -1,0 +1,916 @@
+{
+  "schema": "htt.r64.research_dag/1",
+  "baseline_commit": "33d87dd3e4a787e477327d37ee00b40e790211c9",
+  "canonical_pr": "PR-R64-DIRECTIONAL-HUBBLE",
+  "parent_pr": "PR-R63-LOCAL-BOOST-GLOBAL-TILT",
+  "selected_paper": "P3",
+  "claim_tier": "C0",
+  "scope": "Single ten-stage directional redshift-dependent Hubble study",
+  "status": "COMPLETE_SCOPED_C0",
+  "tasks": [
+    {
+      "id": "R64-01",
+      "theory_stage": "R1",
+      "coding_stage": "C1",
+      "title": "Fix the single P3 question and existing-checkout completion contract",
+      "depends_on": [],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESEARCH_RECORD.json",
+        "DESIGN.md"
+      ]
+    },
+    {
+      "id": "R64-02",
+      "theory_stage": "R2",
+      "coding_stage": "C2",
+      "title": "Reuse Hubble PR/branch history, source identities and current primary literature",
+      "depends_on": [
+        "R64-01"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "REVIEW/r64_history.md",
+        "REVIEW/r64_history_sources.json",
+        "REVIEW/r64_literature.md",
+        "REVIEW/r64_sources.json"
+      ]
+    },
+    {
+      "id": "R64-03",
+      "theory_stage": "R3",
+      "coding_stage": "C3",
+      "title": "Separate Hcal, distance-defined H_D and finite-window H_W with source conventions",
+      "depends_on": [
+        "R64-02"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "DESIGN.md",
+        "THEORY.md",
+        "TENSOR_LIKELIHOOD.md"
+      ]
+    },
+    {
+      "id": "R64-04",
+      "theory_stage": "R4",
+      "coding_stage": "C4",
+      "title": "Fix the source-integrated finite distance-field and calibration experiment",
+      "depends_on": [
+        "R64-03"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "DESIGN.md"
+      ]
+    },
+    {
+      "id": "R64-05",
+      "theory_stage": "R5",
+      "coding_stage": "C5",
+      "title": "Derive optical and calibration maps and implement joint signed-tensor inference",
+      "depends_on": [
+        "R64-04"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "THEORY.md",
+        "TENSOR_LIKELIHOOD.md",
+        "REVIEW/WOLFRAM_CHECK.json",
+        "REVIEW/SYMPY_CHECK.json"
+      ]
+    },
+    {
+      "id": "R64-06",
+      "theory_stage": "R6",
+      "coding_stage": "C6",
+      "title": "Verify affected normalization, derivatives, nulls, covariance and five-view code",
+      "depends_on": [
+        "R64-05"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/AFFECTED_TEST_RECEIPT.json"
+      ]
+    },
+    {
+      "id": "R64-07",
+      "theory_stage": "R7",
+      "coding_stage": "C7",
+      "title": "Execute21 original actual-CF4 full36 fits and source calibration diagnostics",
+      "depends_on": [
+        "R64-06"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/OBSERVED_EXECUTION_01.json",
+        "RESULTS/OBSERVED/DIRECTIONAL_HUBBLE_RESULT.json"
+      ]
+    },
+    {
+      "id": "R64-08",
+      "theory_stage": "R8",
+      "coding_stage": "C8",
+      "title": "Recover existing correlated source rows, execute21 augmentations and decide the paper route",
+      "depends_on": [
+        "R64-07"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "R8_RESOLUTION_AMENDMENT.md",
+        "RESULTS/AUGMENTED_EXECUTION_02.json",
+        "RESULTS/AUGMENTATION_TEST_RECEIPT.json",
+        "RESULTS/WHITENING_STABILITY.json",
+        "RESULTS/INTERPRETATION_SUMMARY.json",
+        "REPORT_KO.md",
+        "RESEARCH_PLAN_KO.md"
+      ]
+    },
+    {
+      "id": "R64-09",
+      "theory_stage": "R9",
+      "coding_stage": "C9",
+      "title": "Close one fresh independent final review and any bounded correction episode",
+      "depends_on": [
+        "R64-08"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "REVIEW/final_review.md",
+        "REVIEW/final_review.json",
+        "VALIDATION.md"
+      ]
+    },
+    {
+      "id": "R64-10",
+      "theory_stage": "R10",
+      "coding_stage": "C10",
+      "title": "Preserve a finite P3 plan, additive canonical DAG and authorized scoped release",
+      "depends_on": [
+        "R64-09"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESEARCH_PLAN_KO.md",
+        "VALIDATION.md",
+        "DAG_VALIDATION.json"
+      ]
+    }
+  ],
+  "future_science": [
+    {
+      "id": "P3-R64-SOURCE-LAW",
+      "depends_on": [
+        "R64-10"
+      ],
+      "status": "unresolved_input",
+      "completed": "Existing full36/method32/sky36 response and cross covariance reused; free24 method-angular nuisance executed.",
+      "needed": "Use actual H02 method-resolved group/object genealogy, anchor and survey calibration covariance, selection/mask/quality response to construct J_gamma Sigma_gamma J_gamma^T and transported mean/covariance.",
+      "stop": "Quantify named target shifts under obtained source inputs and delimit missing inputs; no demand to solve every possible systematic."
+    },
+    {
+      "id": "P3-R64-PRECISION",
+      "depends_on": [
+        "R64-10"
+      ],
+      "status": "pending_conditional",
+      "completed": "All selected68/72-row J3 experiments already have field+V rank39; H_D and q_D images are implemented.",
+      "needed": "Use derivative target variance and weak directions to evaluate one available source weighting, higher-precision distance support or independent coherent-velocity anchor.",
+      "stop": "Deliver one numerical precision/domain-margin design table or its concrete feasibility gap; do not repeat nullity0 checks."
+    },
+    {
+      "id": "P3-R64-MATCHED-COMPARISON",
+      "depends_on": [
+        "R64-10"
+      ],
+      "status": "pending_conditional",
+      "needed": "Match one feasible source/estimand subset across log-Hubble harmonic/STF and distance-derivative methods, with two source signal families and actual O/C/nuisance response.",
+      "stop": "Report target bias, variance and domain resolution; mark unavailable source inputs instead of claiming exact reproduction or a significance ranking."
+    },
+    {
+      "id": "P3-R64-TRACER-PREDICTION",
+      "depends_on": [
+        "P3-R64-SOURCE-LAW"
+      ],
+      "status": "pending_conditional",
+      "needed": "Choose one distinct tracer prediction with explicit used-source/group overlap, common anchors and PV cross covariance; retain conditional innovation and parameter-estimation variance.",
+      "stop": "Compute one identified prediction and decide agreement/residual origin; existing method rows and H02 internal holdouts are not new independent evidence."
+    },
+    {
+      "id": "P3-R64-PHYSICAL-MAP",
+      "depends_on": [
+        "P3-R64-SOURCE-LAW"
+      ],
+      "status": "optional_for_physical_claim",
+      "needed": "Choose one actual-input optical closure or independent H observable with compatible congruence/endpoint/redshift/flux/clock/ruler conditions and joint law.",
+      "stop": "Produce one distance-expansion consistency result, or close P3 at the distance-defined claim level with Hcal unresolved."
+    },
+    {
+      "id": "P3-R64-PAPER",
+      "depends_on": [
+        "P3-R64-SOURCE-LAW",
+        "P3-R64-MATCHED-COMPARISON",
+        "P3-R64-TRACER-PREDICTION",
+        "P3-R64-PRECISION"
+      ],
+      "optional_for_stronger_claim": [
+        "P3-R64-PHYSICAL-MAP"
+      ],
+      "status": "pending_conditional",
+      "needed": "Consolidate one source-dependent information/derivative-resolution manuscript at the achieved claim level; integrate into existing P3 if standalone novelty is thin.",
+      "stop": "Preserve P3 NOT_READY if its actual source/heldout/competing-estimand gate remains unmet; no automatic new branch or loop."
+    }
+  ],
+  "original_42_node_payload_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "original_42_node_states_changed": false,
+  "key_results": {
+    "sources": {
+      "n": 35970,
+      "z_range": [
+        0.01000358721499258,
+        0.09999918009945401
+      ],
+      "source_sha256": "42f6bc5158fdf2f876720db12c44b088bc2db9734887e0d84ae098b234a7e64d"
+    },
+    "initial_models": 21,
+    "augmented_models": 21,
+    "unique_observed_models": 42,
+    "tests_passed": 62,
+    "initial_degree_summary": {
+      "1": {
+        "adequacy_p_range": [
+          0.31286122926397575,
+          0.8118504896690573
+        ],
+        "radial_angular_p_range": [
+          0.4899068990412965,
+          0.9482071426011862
+        ],
+        "ranks": [
+          20,
+          21
+        ],
+        "angular_signed_depth_sign_detections": 0
+      },
+      "2": {
+        "adequacy_p_range": [
+          0.47321919629030107,
+          0.8808758391440563
+        ],
+        "radial_angular_p_range": [
+          0.5678057350613865,
+          0.8260749624420438
+        ],
+        "ranks": [
+          29,
+          30
+        ],
+        "angular_signed_depth_sign_detections": 0
+      },
+      "3": {
+        "adequacy_p_range": null,
+        "radial_angular_p_range": [
+          0.5263757044840429,
+          0.9179695048523765
+        ],
+        "ranks": [
+          36
+        ],
+        "angular_signed_depth_sign_detections": 0
+      }
+    },
+    "augmented_models_summary": [
+      {
+        "key": "log_method__J1__common_field",
+        "experiment": "log_method",
+        "degree": 1,
+        "family": "common_field",
+        "rows": 68,
+        "nuisance_rank": 0,
+        "field_velocity_rank": 21,
+        "field_velocity_parameters": 21,
+        "total_mean_rank": 21,
+        "dof": 47,
+        "chi2": 70.85623232372096,
+        "adequacy_p": 0.013821907134881435,
+        "radial_angular_p": 0.9021126607846284,
+        "radial_angular_df": 8,
+        "ratio_status": {
+          "OK": 162
+        },
+        "q_status": {
+          "OK": 216
+        },
+        "added_row_prediction": {
+          "status": "IDENTIFIED",
+          "chi2": 58.607647876625634,
+          "df": 32,
+          "nominal_p": 0.002801242559851506
+        }
+      },
+      {
+        "key": "log_method__J1__method_angular_nuisance",
+        "experiment": "log_method",
+        "degree": 1,
+        "family": "method_angular_nuisance",
+        "rows": 68,
+        "nuisance_rank": 24,
+        "field_velocity_rank": 21,
+        "field_velocity_parameters": 21,
+        "total_mean_rank": 45,
+        "dof": 23,
+        "chi2": 32.07212510743095,
+        "adequacy_p": 0.09865272027381113,
+        "radial_angular_p": 0.9257245252143016,
+        "radial_angular_df": 8,
+        "ratio_status": {
+          "OK": 162
+        },
+        "q_status": {
+          "OK": 216
+        },
+        "added_row_prediction": null
+      },
+      {
+        "key": "log_method__J2__common_field",
+        "experiment": "log_method",
+        "degree": 2,
+        "family": "common_field",
+        "rows": 68,
+        "nuisance_rank": 0,
+        "field_velocity_rank": 30,
+        "field_velocity_parameters": 30,
+        "total_mean_rank": 30,
+        "dof": 38,
+        "chi2": 58.06438018827796,
+        "adequacy_p": 0.019601643708292656,
+        "radial_angular_p": 0.5915301642106502,
+        "radial_angular_df": 16,
+        "ratio_status": {
+          "OK": 162
+        },
+        "q_status": {
+          "OK": 216
+        },
+        "added_row_prediction": {
+          "status": "IDENTIFIED",
+          "chi2": 55.345903687416545,
+          "df": 32,
+          "nominal_p": 0.006377383861334033
+        }
+      },
+      {
+        "key": "log_method__J2__method_angular_nuisance",
+        "experiment": "log_method",
+        "degree": 2,
+        "family": "method_angular_nuisance",
+        "rows": 68,
+        "nuisance_rank": 24,
+        "field_velocity_rank": 30,
+        "field_velocity_parameters": 30,
+        "total_mean_rank": 54,
+        "dof": 14,
+        "chi2": 18.177501091206597,
+        "adequacy_p": 0.1988157001153191,
+        "radial_angular_p": 0.5471957462468939,
+        "radial_angular_df": 16,
+        "ratio_status": {
+          "OK": 162
+        },
+        "q_status": {
+          "OK": 216
+        },
+        "added_row_prediction": null
+      },
+      {
+        "key": "log_method__J3__common_field",
+        "experiment": "log_method",
+        "degree": 3,
+        "family": "common_field",
+        "rows": 68,
+        "nuisance_rank": 0,
+        "field_velocity_rank": 39,
+        "field_velocity_parameters": 39,
+        "total_mean_rank": 39,
+        "dof": 29,
+        "chi2": 53.47456177897954,
+        "adequacy_p": 0.00371644704081921,
+        "radial_angular_p": 0.795638723598442,
+        "radial_angular_df": 24,
+        "ratio_status": {
+          "DOMAIN_NOT_CERTIFIED": 73,
+          "OK": 89
+        },
+        "q_status": {
+          "DOMAIN_NOT_CERTIFIED": 73,
+          "OK": 143
+        },
+        "added_row_prediction": {
+          "status": "INGREDIENT_UNIDENTIFIED"
+        }
+      },
+      {
+        "key": "log_method__J3__method_angular_nuisance",
+        "experiment": "log_method",
+        "degree": 3,
+        "family": "method_angular_nuisance",
+        "rows": 68,
+        "nuisance_rank": 24,
+        "field_velocity_rank": 39,
+        "field_velocity_parameters": 39,
+        "total_mean_rank": 63,
+        "dof": 5,
+        "chi2": 13.909810222744367,
+        "adequacy_p": 0.016192577618078175,
+        "radial_angular_p": 0.7803564941063066,
+        "radial_angular_df": 24,
+        "ratio_status": {
+          "DOMAIN_NOT_CERTIFIED": 76,
+          "OK": 86
+        },
+        "q_status": {
+          "DOMAIN_NOT_CERTIFIED": 76,
+          "OK": 140
+        },
+        "added_row_prediction": null
+      },
+      {
+        "key": "mono_method__J1__common_field",
+        "experiment": "mono_method",
+        "degree": 1,
+        "family": "common_field",
+        "rows": 68,
+        "nuisance_rank": 0,
+        "field_velocity_rank": 21,
+        "field_velocity_parameters": 21,
+        "total_mean_rank": 21,
+        "dof": 47,
+        "chi2": 74.98000051974932,
+        "adequacy_p": 0.0058505089396150515,
+        "radial_angular_p": 0.9371152570868739,
+        "radial_angular_df": 8,
+        "ratio_status": {
+          "OK": 162
+        },
+        "q_status": {
+          "OK": 216
+        },
+        "added_row_prediction": {
+          "status": "IDENTIFIED",
+          "chi2": 59.62837479692232,
+          "df": 32,
+          "nominal_p": 0.0021473958417157287
+        }
+      },
+      {
+        "key": "mono_method__J1__method_angular_nuisance",
+        "experiment": "mono_method",
+        "degree": 1,
+        "family": "method_angular_nuisance",
+        "rows": 68,
+        "nuisance_rank": 24,
+        "field_velocity_rank": 21,
+        "field_velocity_parameters": 21,
+        "total_mean_rank": 45,
+        "dof": 23,
+        "chi2": 23.385375777477194,
+        "adequacy_p": 0.4384647058221605,
+        "radial_angular_p": 0.7791214742053545,
+        "radial_angular_df": 8,
+        "ratio_status": {
+          "OK": 162
+        },
+        "q_status": {
+          "OK": 216
+        },
+        "added_row_prediction": null
+      },
+      {
+        "key": "mono_method__J2__common_field",
+        "experiment": "mono_method",
+        "degree": 2,
+        "family": "common_field",
+        "rows": 68,
+        "nuisance_rank": 0,
+        "field_velocity_rank": 30,
+        "field_velocity_parameters": 30,
+        "total_mean_rank": 30,
+        "dof": 38,
+        "chi2": 62.35194697711885,
+        "adequacy_p": 0.007641884489277884,
+        "radial_angular_p": 0.5751699552478068,
+        "radial_angular_df": 16,
+        "ratio_status": {
+          "OK": 162
+        },
+        "q_status": {
+          "OK": 216
+        },
+        "added_row_prediction": {
+          "status": "IDENTIFIED",
+          "chi2": 58.007688208000175,
+          "df": 32,
+          "nominal_p": 0.003269013609730037
+        }
+      },
+      {
+        "key": "mono_method__J2__method_angular_nuisance",
+        "experiment": "mono_method",
+        "degree": 2,
+        "family": "method_angular_nuisance",
+        "rows": 68,
+        "nuisance_rank": 24,
+        "field_velocity_rank": 30,
+        "field_velocity_parameters": 30,
+        "total_mean_rank": 54,
+        "dof": 14,
+        "chi2": 12.268307302218522,
+        "adequacy_p": 0.5847652504388597,
+        "radial_angular_p": 0.5519151933765515,
+        "radial_angular_df": 16,
+        "ratio_status": {
+          "OK": 162
+        },
+        "q_status": {
+          "OK": 216
+        },
+        "added_row_prediction": null
+      },
+      {
+        "key": "mono_method__J3__common_field",
+        "experiment": "mono_method",
+        "degree": 3,
+        "family": "common_field",
+        "rows": 68,
+        "nuisance_rank": 0,
+        "field_velocity_rank": 39,
+        "field_velocity_parameters": 39,
+        "total_mean_rank": 39,
+        "dof": 29,
+        "chi2": 53.694771382938946,
+        "adequacy_p": 0.0035071474657300352,
+        "radial_angular_p": 0.5524490251084986,
+        "radial_angular_df": 24,
+        "ratio_status": {
+          "OK": 69,
+          "DOMAIN_NOT_CERTIFIED": 93
+        },
+        "q_status": {
+          "OK": 123,
+          "DOMAIN_NOT_CERTIFIED": 93
+        },
+        "added_row_prediction": {
+          "status": "INGREDIENT_UNIDENTIFIED"
+        }
+      },
+      {
+        "key": "mono_method__J3__method_angular_nuisance",
+        "experiment": "mono_method",
+        "degree": 3,
+        "family": "method_angular_nuisance",
+        "rows": 68,
+        "nuisance_rank": 24,
+        "field_velocity_rank": 39,
+        "field_velocity_parameters": 39,
+        "total_mean_rank": 63,
+        "dof": 5,
+        "chi2": 5.095688733099097,
+        "adequacy_p": 0.4043142682660609,
+        "radial_angular_p": 0.5927185909546555,
+        "radial_angular_df": 24,
+        "ratio_status": {
+          "OK": 53,
+          "DOMAIN_NOT_CERTIFIED": 109
+        },
+        "q_status": {
+          "OK": 107,
+          "DOMAIN_NOT_CERTIFIED": 109
+        },
+        "added_row_prediction": null
+      },
+      {
+        "key": "split_method__J1__common_field",
+        "experiment": "split_method",
+        "degree": 1,
+        "family": "common_field",
+        "rows": 68,
+        "nuisance_rank": 0,
+        "field_velocity_rank": 21,
+        "field_velocity_parameters": 21,
+        "total_mean_rank": 21,
+        "dof": 47,
+        "chi2": 59.060290878916014,
+        "adequacy_p": 0.11150898456983298,
+        "radial_angular_p": 0.6814924892488177,
+        "radial_angular_df": 8,
+        "ratio_status": {
+          "OK": 162
+        },
+        "q_status": {
+          "OK": 216
+        },
+        "added_row_prediction": {
+          "status": "IDENTIFIED",
+          "chi2": 48.936012929966054,
+          "df": 32,
+          "nominal_p": 0.02814966667689524
+        }
+      },
+      {
+        "key": "split_method__J1__method_angular_nuisance",
+        "experiment": "split_method",
+        "degree": 1,
+        "family": "method_angular_nuisance",
+        "rows": 68,
+        "nuisance_rank": 24,
+        "field_velocity_rank": 21,
+        "field_velocity_parameters": 21,
+        "total_mean_rank": 45,
+        "dof": 23,
+        "chi2": 19.14510951575398,
+        "adequacy_p": 0.6927707544142852,
+        "radial_angular_p": 0.5749204122362676,
+        "radial_angular_df": 8,
+        "ratio_status": {
+          "OK": 162
+        },
+        "q_status": {
+          "OK": 216
+        },
+        "added_row_prediction": null
+      },
+      {
+        "key": "split_method__J2__common_field",
+        "experiment": "split_method",
+        "degree": 2,
+        "family": "common_field",
+        "rows": 68,
+        "nuisance_rank": 0,
+        "field_velocity_rank": 30,
+        "field_velocity_parameters": 30,
+        "total_mean_rank": 30,
+        "dof": 38,
+        "chi2": 49.70195015301421,
+        "adequacy_p": 0.09684395758519615,
+        "radial_angular_p": 0.702423179267253,
+        "radial_angular_df": 16,
+        "ratio_status": {
+          "OK": 146,
+          "DOMAIN_NOT_CERTIFIED": 16
+        },
+        "q_status": {
+          "OK": 200,
+          "DOMAIN_NOT_CERTIFIED": 16
+        },
+        "added_row_prediction": {
+          "status": "IDENTIFIED",
+          "chi2": 47.31478541678834,
+          "df": 32,
+          "nominal_p": 0.039725654174366715
+        }
+      },
+      {
+        "key": "split_method__J2__method_angular_nuisance",
+        "experiment": "split_method",
+        "degree": 2,
+        "family": "method_angular_nuisance",
+        "rows": 68,
+        "nuisance_rank": 24,
+        "field_velocity_rank": 30,
+        "field_velocity_parameters": 30,
+        "total_mean_rank": 54,
+        "dof": 14,
+        "chi2": 11.730484765054753,
+        "adequacy_p": 0.6279369364362608,
+        "radial_angular_p": 0.7328688665364385,
+        "radial_angular_df": 16,
+        "ratio_status": {
+          "OK": 148,
+          "DOMAIN_NOT_CERTIFIED": 14
+        },
+        "q_status": {
+          "OK": 202,
+          "DOMAIN_NOT_CERTIFIED": 14
+        },
+        "added_row_prediction": null
+      },
+      {
+        "key": "split_method__J3__common_field",
+        "experiment": "split_method",
+        "degree": 3,
+        "family": "common_field",
+        "rows": 68,
+        "nuisance_rank": 0,
+        "field_velocity_rank": 39,
+        "field_velocity_parameters": 39,
+        "total_mean_rank": 39,
+        "dof": 29,
+        "chi2": 38.35388798066244,
+        "adequacy_p": 0.1146663755118014,
+        "radial_angular_p": 0.4661647383248618,
+        "radial_angular_df": 24,
+        "ratio_status": {
+          "DOMAIN_NOT_CERTIFIED": 119,
+          "OK": 43
+        },
+        "q_status": {
+          "DOMAIN_NOT_CERTIFIED": 122,
+          "OK": 94
+        },
+        "added_row_prediction": {
+          "status": "INGREDIENT_UNIDENTIFIED"
+        }
+      },
+      {
+        "key": "split_method__J3__method_angular_nuisance",
+        "experiment": "split_method",
+        "degree": 3,
+        "family": "method_angular_nuisance",
+        "rows": 68,
+        "nuisance_rank": 24,
+        "field_velocity_rank": 39,
+        "field_velocity_parameters": 39,
+        "total_mean_rank": 63,
+        "dof": 5,
+        "chi2": 3.5550330418344958,
+        "adequacy_p": 0.6150772812177683,
+        "radial_angular_p": 0.6775356700871298,
+        "radial_angular_df": 24,
+        "ratio_status": {
+          "DOMAIN_NOT_CERTIFIED": 131,
+          "OK": 31
+        },
+        "q_status": {
+          "DOMAIN_NOT_CERTIFIED": 139,
+          "OK": 77
+        },
+        "added_row_prediction": null
+      },
+      {
+        "key": "log_sky__J1__common_field",
+        "experiment": "log_sky",
+        "degree": 1,
+        "family": "common_field",
+        "rows": 72,
+        "nuisance_rank": 0,
+        "field_velocity_rank": 21,
+        "field_velocity_parameters": 21,
+        "total_mean_rank": 21,
+        "dof": 51,
+        "chi2": 66.11584241387915,
+        "adequacy_p": 0.07569197656208533,
+        "radial_angular_p": 0.9706855593795607,
+        "radial_angular_df": 8,
+        "ratio_status": {
+          "OK": 162
+        },
+        "q_status": {
+          "OK": 216
+        },
+        "added_row_prediction": {
+          "status": "IDENTIFIED",
+          "chi2": 53.867257966188184,
+          "df": 36,
+          "nominal_p": 0.02815449532305907
+        }
+      },
+      {
+        "key": "log_sky__J2__common_field",
+        "experiment": "log_sky",
+        "degree": 2,
+        "family": "common_field",
+        "rows": 72,
+        "nuisance_rank": 0,
+        "field_velocity_rank": 30,
+        "field_velocity_parameters": 30,
+        "total_mean_rank": 30,
+        "dof": 42,
+        "chi2": 56.677414031748555,
+        "adequacy_p": 0.06469531188633645,
+        "radial_angular_p": 0.8438587183255495,
+        "radial_angular_df": 16,
+        "ratio_status": {
+          "OK": 159,
+          "DOMAIN_NOT_CERTIFIED": 3
+        },
+        "q_status": {
+          "OK": 213,
+          "DOMAIN_NOT_CERTIFIED": 3
+        },
+        "added_row_prediction": {
+          "status": "IDENTIFIED",
+          "chi2": 53.95893753028577,
+          "df": 36,
+          "nominal_p": 0.027624354997382302
+        }
+      },
+      {
+        "key": "log_sky__J3__common_field",
+        "experiment": "log_sky",
+        "degree": 3,
+        "family": "common_field",
+        "rows": 72,
+        "nuisance_rank": 0,
+        "field_velocity_rank": 39,
+        "field_velocity_parameters": 39,
+        "total_mean_rank": 39,
+        "dof": 33,
+        "chi2": 47.09691391311175,
+        "adequacy_p": 0.053107531802755195,
+        "radial_angular_p": 0.7771323502455303,
+        "radial_angular_df": 24,
+        "ratio_status": {
+          "DOMAIN_NOT_CERTIFIED": 162
+        },
+        "q_status": {
+          "DOMAIN_NOT_CERTIFIED": 162,
+          "OK": 54
+        },
+        "added_row_prediction": {
+          "status": "INGREDIENT_UNIDENTIFIED"
+        }
+      }
+    ],
+    "calibration_comparison": [
+      {
+        "experiment": "log_method",
+        "degree": 1,
+        "delta_chi2": 38.78410721629001,
+        "df": 24,
+        "nominal_p": 0.028767757205797675,
+        "meaning": "conditional comparison of common field vs method-angular mean offsets; not causal proof of calibration errors"
+      },
+      {
+        "experiment": "log_method",
+        "degree": 2,
+        "delta_chi2": 39.88687909707136,
+        "df": 24,
+        "nominal_p": 0.02199262211083134,
+        "meaning": "conditional comparison of common field vs method-angular mean offsets; not causal proof of calibration errors"
+      },
+      {
+        "experiment": "log_method",
+        "degree": 3,
+        "delta_chi2": 39.56475155623517,
+        "df": 24,
+        "nominal_p": 0.02380413896289591,
+        "meaning": "conditional comparison of common field vs method-angular mean offsets; not causal proof of calibration errors"
+      },
+      {
+        "experiment": "mono_method",
+        "degree": 1,
+        "delta_chi2": 51.59462474227213,
+        "df": 24,
+        "nominal_p": 0.0008833894869358891,
+        "meaning": "conditional comparison of common field vs method-angular mean offsets; not causal proof of calibration errors"
+      },
+      {
+        "experiment": "mono_method",
+        "degree": 2,
+        "delta_chi2": 50.083639674900326,
+        "df": 24,
+        "nominal_p": 0.0013816861715036932,
+        "meaning": "conditional comparison of common field vs method-angular mean offsets; not causal proof of calibration errors"
+      },
+      {
+        "experiment": "mono_method",
+        "degree": 3,
+        "delta_chi2": 48.59908264983985,
+        "df": 24,
+        "nominal_p": 0.0021263133492379644,
+        "meaning": "conditional comparison of common field vs method-angular mean offsets; not causal proof of calibration errors"
+      },
+      {
+        "experiment": "split_method",
+        "degree": 1,
+        "delta_chi2": 39.915181363162034,
+        "df": 24,
+        "nominal_p": 0.021839607554238458,
+        "meaning": "conditional comparison of common field vs method-angular mean offsets; not causal proof of calibration errors"
+      },
+      {
+        "experiment": "split_method",
+        "degree": 2,
+        "delta_chi2": 37.971465387959455,
+        "df": 24,
+        "nominal_p": 0.03490660401300839,
+        "meaning": "conditional comparison of common field vs method-angular mean offsets; not causal proof of calibration errors"
+      },
+      {
+        "experiment": "split_method",
+        "degree": 3,
+        "delta_chi2": 34.798854938827944,
+        "df": 24,
+        "nominal_p": 0.07143961376760107,
+        "meaning": "conditional comparison of common field vs method-angular mean offsets; not causal proof of calibration errors"
+      }
+    ],
+    "new_independent_sources": 0,
+    "new_pair_sum": false
+  },
+  "interpretation_summary_sha256": "1c60c95c6f60e480520ef5045684fb11055c05ddee3c74160e11d801979205c9",
+  "conditions": "Fixed inherited Gaussian law and finite mean; source dependence is not a causal calibration detection. Full coefficient rank does not imply a precise physical Hcal or certified nonlinear domain.",
+  "automatic_successor": false,
+  "local_agent_prompt_created": false,
+  "submission_status": "NOT_READY_TO_SUBMIT"
+}

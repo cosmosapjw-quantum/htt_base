@@ -1,8 +1,12 @@
 # HTT 관측논문 6트랙 출판 중심 DAG
 
-## Current local-boost/global-history discrimination study — R63, 2026-11-17
+## Current directional Hubble study — R64, 2026-11-17
 
-[R63 실제 자료·프레임 결과](R63_LOCAL_BOOST_GLOBAL_TILT_20261117/REPORT_KO.md), [유한 P4 논문 계획](R63_LOCAL_BOOST_GLOBAL_TILT_20261117/RESEARCH_PLAN_KO.md), [연구 DAG](R63_LOCAL_BOOST_GLOBAL_TILT_20261117/RESEARCH_DAG.json)이 현재 선택된 P4 companion 경로다. 원본 CF4의 35,970개 group과 전체 covariance를 재사용해 endpoint fibre, 물리적으로 제한한 history의 약한 rank3 및 actual-q affine transport를 계산했다. dipole12만으로는 같은 nuisance 아래 history rank0이며, full32에서 rank3가 남아도 선택한 물리 body의 oracle power 상한은 alpha=.1에서 .100000419 이하다. 이는 고정 Gaussian 실험의 조건부 결과이며 global tilt 검출이나 보편적 불가능성 정리가 아니다. 기존 P4 companion keys·paper acceptance와 원래42개 과학 gate를 보존한다. submission은 NOT_READY_TO_SUBMIT이며 자동 다음 루프·로컬 agent prompt는 없다.
+[R64 실제 거리장·정보 회복 결과](R64_DIRECTIONAL_HUBBLE_20261117/REPORT_KO.md), [P3 논문 계획](R64_DIRECTIONAL_HUBBLE_20261117/RESEARCH_PLAN_KO.md), [연구 DAG](R64_DIRECTIONAL_HUBBLE_20261117/RESEARCH_DAG.json)이 현재 선택된 P3 companion 경로다. CF4 35,970개 group의 full36과 기존 correlated method/sky rows를 사용해 총42개 fit을 실행했다. 68/72행으로 확장하면 J3 거리장+V 계수 rank39/39가 회복되지만, method-dependent adequacy와 넓은 H_D/q_D 구간은 남는다. mono_method68 J2의 common-field p=.007642는24개 angular nuisance를 profile하면.584765가 되며 다른 operator의 결과도 보존했다. 고정 working covariance의 조건부 관측 결과다. 일반 physical Hubble/가속도 검출이나 CF4 전체의 불가능성을 주장하지 않는다. 원래42개 gate와 P3 acceptance를 보존하며 제출 상태는 NOT_READY_TO_SUBMIT이다. 자동 다음 루프·local agent prompt는 없다.
+
+## Previous local-boost/global-history discrimination study — R63, 2026-11-17
+
+[R63 실제 자료·프레임 결과](R63_LOCAL_BOOST_GLOBAL_TILT_20261117/REPORT_KO.md), [유한 P4 논문 계획](R63_LOCAL_BOOST_GLOBAL_TILT_20261117/RESEARCH_PLAN_KO.md), [연구 DAG](R63_LOCAL_BOOST_GLOBAL_TILT_20261117/RESEARCH_DAG.json)이 이전 P4 companion 경로다. 원본 CF4의 35,970개 group과 전체 covariance를 재사용해 endpoint fibre, 물리적으로 제한한 history의 약한 rank3 및 actual-q affine transport를 계산했다. dipole12만으로는 같은 nuisance 아래 history rank0이며, full32에서 rank3가 남아도 선택한 물리 body의 oracle power 상한은 alpha=.1에서 .100000419 이하다. 이는 고정 Gaussian 실험의 조건부 결과이며 global tilt 검출이나 보편적 불가능성 정리가 아니다. 기존 P4 companion keys·paper acceptance와 원래42개 과학 gate를 보존한다. submission은 NOT_READY_TO_SUBMIT이며 자동 다음 루프·로컬 agent prompt는 없다.
 
 ## Previous anisotropy classification study — R62, 2026-11-17
 

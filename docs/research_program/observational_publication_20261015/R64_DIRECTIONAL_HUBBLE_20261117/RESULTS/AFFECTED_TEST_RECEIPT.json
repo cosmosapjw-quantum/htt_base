@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-p",
+    "no:cacheprovider",
+    "-q",
+    "tests/r64",
+    "tests/r58/test_mixed_tensor_likelihood.py",
+    "tests/r58/test_five_views.py"
+  ],
+  "exit_code": 0,
+  "elapsed_s": 1.8445055909978691,
+  "scope": "one primary affected verification pass; pure R64 optical/rank/prediction plus existing Gaussian/five-view kernel",
+  "output": "............................................................             [100%]\n60 passed in 1.42s\n"
+}

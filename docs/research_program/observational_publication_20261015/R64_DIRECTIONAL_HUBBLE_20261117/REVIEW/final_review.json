@@ -1,0 +1,198 @@
+{
+  "schema": "htt.r64.independent_final_review/1",
+  "reviewer": "/root/r64_final_review",
+  "review_date_utc": "2026-11-17",
+  "review_stage": "final_after_one_bounded_correction",
+  "verdict": "PASS",
+  "journal_submission": "NOT_READY_TO_SUBMIT",
+  "baseline_commit": "33d87dd3e4a787e477327d37ee00b40e790211c9",
+  "branch": "research/r64-directional-hubble-20261117",
+  "checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "runtime": {
+    "requested_model": "gpt-6-astra",
+    "requested_effort": "xhigh",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN"
+  },
+  "scope": "One fresh independent scientific/code review; one bounded documentation/display correction episode permitted. No new research loop.",
+  "findings": [
+    {
+      "id": "R64-FR-01",
+      "severity": "LOW",
+      "status": "CLOSED",
+      "category": "CLAIM_CLARITY",
+      "title": "Explicit first-order velocity-template validity boundary",
+      "files": [
+        "REPORT_KO.md",
+        "THEORY.md",
+        "TENSOR_LIKELIHOOD.md",
+        "RESEARCH_PLAN_KO.md",
+        "VALIDATION.md"
+      ],
+      "evidence": {
+        "identified_sky_J3_V_norm_km_s": 5788.052449058931,
+        "identified_split_method_J3_nuisance_V_norm_km_s": 5292.453810139004,
+        "initial_singular_gauge_representative_max_V_norm_km_s": 21168.23848757106,
+        "redshift_min": 0.01000358721499258
+      },
+      "required_correction": "State explicitly that g(z)n.V is a first-order tangent template, no small-response/higher-order-remainder domain was imposed or certified, and the polynomial image after nuisance subtraction is conditional rather than a physical velocity deboost.",
+      "requires_new_fit": false,
+      "requires_test_rerun": false,
+      "resolution": "Native REPORT_KO.md107, THEORY.md96, TENSOR_LIKELIHOOD.md9, RESEARCH_PLAN_KO.md103, and VALIDATION.md61 explicitly identify the tangent response, absent small-response/remainder certification, conditional image, and singular-representative distinction. Actual numbers agree with the saved carriers."
+    },
+    {
+      "id": "R64-FR-02",
+      "severity": "LOW",
+      "status": "CLOSED",
+      "category": "DISPLAY_CLARITY",
+      "title": "Name mono_method illustration on information-recovery figure",
+      "files": [
+        "scripts/r64/summarize_r64_augmented.py",
+        "RESULTS/INFORMATION_RECOVERY.png",
+        "RESULTS/INFORMATION_RECOVERY.pdf"
+      ],
+      "required_correction": "Label the displayed example as mono_method (log_mono36 + method32) and retain the inherited working-covariance qualifier; other operators remain in the complete report.",
+      "requires_new_fit": false,
+      "requires_test_rerun": false,
+      "resolution": "Final generator74-75 and the visually inspected rendered PNG explicitly name mono_method = log_mono36 + method32 and the inherited working covariance; legend is clear of data. No result values changed."
+    }
+  ],
+  "assessments": {
+    "theory_and_units": "PASS",
+    "eta_normalization_and_reference_transport": "PASS",
+    "source_integrated_mean": "PASS",
+    "covariance_and_nuisance_profile": "PASS",
+    "rank_null_and_confidence_images": "PASS",
+    "result_report_parity": "PASS",
+    "five_view_claim_boundary": "PASS",
+    "adequate_existing_validation_for_scope": "PASS"
+  },
+  "review_actions": {
+    "remote_mutations": 0,
+    "full_tests_rerun": 0,
+    "scientific_fits_run": 0,
+    "new_agents": 0,
+    "new_checkouts": 0,
+    "targeted_saved_carrier_inspection": "Read V estimate norms to assess the concrete first-order response-domain concern. No re-fit or new simulation."
+  },
+  "evidence": {
+    "tests_passed_existing": 62,
+    "unique_fits_existing": 42,
+    "wolfram_zero_differences": 7,
+    "sympy_zero_differences": 8,
+    "source_groups": 35970,
+    "initial_J3_rank": 36,
+    "augmented_J3_rank": 39,
+    "augmented_J3_parameter_count": 39,
+    "method_angular_nuisance_rank": 24,
+    "new_independent_sources": 0,
+    "new_pair_sum": false
+  },
+  "source_hashes": {
+    "htt/htt/htt/infer/r64_directional_hubble.py": "85ced3970f42c2b2dacf8a95903e8667e2f2d5515ca45cb285767225a05f2c35",
+    "scripts/r64/run_r64_directional_hubble.py": "0ac4a882e3035394ded6be69fa70def0e7c0b4b37006aea9dd50d96e4b781889",
+    "scripts/r64/run_r64_augmented.py": "e6766ed1f99059e2a071ea26c4992ace883a2c75a62a657d6ae28dd853b046c5",
+    "scripts/r64/summarize_r64.py": "259ce99a71bcb05c61e6e20cf3d06f395d3e5c29a3059ad24bb482a93fd9d40b",
+    "scripts/r64/summarize_r64_augmented.py": "1a0424bca6777ae3408a0c946f9a569b0ad901c88a42fbf380c31b60b3c172ae",
+    "scripts/r64/check_r64_stability.py": "6ec52f07090802b3928d1c58398624340f173998706bf3b57825ef09f28b8122",
+    "scripts/r64/verify_r64_algebra.py": "6e47576eb358fcf54cdefdd521520599db00b5b17dcb8aeae22117e55317c0c8",
+    "tests/r64/test_directional_hubble.py": "7ecbfdcea12e70b65a23748d8049145393c3c421ca7bbbab6b7fb3db7a9572ce",
+    "tests/r64/test_runner.py": "6492cc6f5b20f0a2a6f6b510300693e52b662d53f46467a9137b3043e0f761af",
+    "tests/r64/test_augmentation.py": "ad624001eb0472897e23d6c223e633ff705c0a2344fac55b963e92f46aa73447"
+  },
+  "artifact_hashes": {
+    "RESULTS/OBSERVED/DIRECTIONAL_HUBBLE_RESULT.json": "60bcc2bc4f312699757e3c7da8a0ddeff6a87fde4d2235c89baed8ba3f4f52a0",
+    "RESULTS/OBSERVED/DIRECTIONAL_HUBBLE_CARRIERS.npz": "19b52a8cd2a338afb3b691d1331cd59b465d8d8d6ae426986117362febd7ffb4",
+    "RESULTS/AUGMENTED/AUGMENTED_RESULT.json": "c9a68a7e79de910185757acd43ca0e5a91e8d36a1c2a818a184804962de5160b",
+    "RESULTS/AUGMENTED/AUGMENTED_CARRIERS.npz": "c960201a48879d26e687393d11499474cba360394712e9cb72117a547b867836",
+    "RESULTS/INTERPRETATION_SUMMARY.json": "1c60c95c6f60e480520ef5045684fb11055c05ddee3c74160e11d801979205c9",
+    "REPORT_KO.md": "4022d1b1c22c55e58795dc13010a1aae37b6dd8294152b122c3752933598f3cd",
+    "THEORY.md": "ba0def1cbf8b911230fb6cc44e047a0ffba8bb2f8971a48ce74445bec9778836",
+    "TENSOR_LIKELIHOOD.md": "7668507ee806df554c1c673f5ab4f1cfb44f4c3d9976c76add74fc1075437943",
+    "RESEARCH_PLAN_KO.md": "5dd429583e7af6f0acd8158a97134e30ae9c924d7068fe51f0a2cdece8743fc2",
+    "DESIGN.md": "b56384a6c6e7061ccd8e9a06166e2f4dc460ad6411f448acd7f497b1577e9392",
+    "VALIDATION.md": "1e9eb21c4b919a379c7c18bb0f9128b155264053d5149b64fb11ad8ac724c628",
+    "RESULTS/INFORMATION_RECOVERY.png": "83208ad1d3027cb2881623ae09518354ad054a96047531dc25d5bfcefd0a4bda",
+    "RESULTS/INFORMATION_RECOVERY.pdf": "601d46690b5003064db660c26dd1723abbb90fa0e88ad9b44f8ec3d8f732a16d"
+  },
+  "reviewed_documents": [
+    "REPORT_KO.md",
+    "RESEARCH_PLAN_KO.md",
+    "THEORY.md",
+    "TENSOR_LIKELIHOOD.md",
+    "DESIGN.md",
+    "R8_RESOLUTION_AMENDMENT.md",
+    "VALIDATION.md",
+    "RESEARCH_RECORD.json",
+    "REVIEW/r64_history.md (bounded excerpts)",
+    "REVIEW/r64_literature.md",
+    "REVIEW/r64_sources.json",
+    "REVIEW/r64_history_sources.json (selected entries)",
+    "REVIEW/r64_hubble_sourcehashes.json (selected entries)"
+  ],
+  "reviewed_existing_receipts": [
+    "RESULTS/AFFECTED_TEST_RECEIPT.json",
+    "RESULTS/AUGMENTATION_TEST_RECEIPT.json",
+    "REVIEW/WOLFRAM_CHECK.json",
+    "REVIEW/SYMPY_CHECK.json",
+    "RESULTS/OBSERVED_EXECUTION_01.json",
+    "RESULTS/AUGMENTED_EXECUTION_02.json",
+    "RESULTS/AUGMENTATION_REPAIR.json",
+    "RESULTS/SUMMARY_REPAIR.json",
+    "RESULTS/WHITENING_STABILITY.json",
+    "REVIEW/R9_CORRECTION.json"
+  ],
+  "reviewed_native_dependencies": [
+    "htt/htt/htt/infer/r58_mixed_tensor_likelihood.py (fit_linear, linear_interval, likelihood evaluator)",
+    "scripts/r58/run_r58_owned_tensor.py (pins, cached_rows, source construction)",
+    "scripts/r54/run_r54_cf4_exact.py (build_operators, survey_operators)",
+    "AGENTS.md",
+    "htt/htt/AGENTS.md"
+  ],
+  "primary_web_spot_checks": [
+    {
+      "url": "https://arxiv.org/html/2010.06534v2",
+      "status": "READ",
+      "locations": "equations11,14,16"
+    },
+    {
+      "url": "https://arxiv.org/html/0712.3457v2",
+      "status": "READ",
+      "locations": "equations1-3"
+    },
+    {
+      "url": "https://arxiv.org/html/2510.02510v2",
+      "status": "READ",
+      "locations": "scope, eta/radial-harmonic precedent"
+    },
+    {
+      "url": "https://arxiv.org/abs/2607.07821",
+      "status": "FRESH_GENERIC_FETCH_UNAVAILABLE",
+      "fallback": "Prior saved primary-text review retained; not independently reread in full."
+    }
+  ],
+  "limitations": [
+    "Conditional fixed inherited Gaussian covariance; empirical shared calibration/group/selection qualification unresolved.",
+    "Finite polynomial and first-order velocity-template decomposition; no physical deboost/congruence admission.",
+    "Conservative finite-grid derivative-domain enclosures, not sharp profiles or continuum-sky certificates.",
+    "No independent-tracer confirmation or matched full competing-method reproduction.",
+    "Native source/test identities and existing receipts reviewed; full pipeline/tests not rerun.",
+    "DAG finalization, commit and publication are parent-owned and not yet part of this verdict."
+  ],
+  "open_findings": 0,
+  "initial_verdict": "NEEDS_CORRECTION",
+  "initial_record_preserved_as": [
+    "r64_final_review_initial.md",
+    "r64_final_review_initial.json"
+  ],
+  "correction_episode_count": 1,
+  "correction_scope": "Only the two LOW finding closures were checked; no second full review, new fit, new test pass, or successor loop.",
+  "closeout_evidence": {
+    "scientific_summary_sha256_before_and_after": "1c60c95c6f60e480520ef5045684fb11055c05ddee3c74160e11d801979205c9",
+    "summary_bytes_unchanged": true,
+    "scientific_fits_rerun": 0,
+    "tests_rerun": 0,
+    "final_figure_visually_inspected": true,
+    "source_identity_scope": "Hashes identify the science candidate reviewed here; parent may append reviewer/DAG/publication metadata afterwards without retroactively changing this review."
+  }
+}
