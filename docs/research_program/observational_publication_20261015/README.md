@@ -1,6 +1,11 @@
 # HTT 관측논문 6트랙 출판 중심 DAG
 
-## Current finite convergence route — 2026-10-28
+## Current observed convergence — 2026-11-17
+
+[R60 실제 결과·출판성 심사](R60_COVARIANCE_CALIBRATION_20261117/REPORT_KO.md), [수렴 연구계획](R60_COVARIANCE_CALIBRATION_20261117/RESEARCH_PLAN_KO.md), [현재 연구 DAG](R60_COVARIANCE_CALIBRATION_20261117/RESEARCH_DAG.json)을 현재 결과의 진입점으로 사용한다. 기존 six-track/42-node 과학 gate는 보존한다. CF4 covariance/calibration frontier, axial witnesses, finite radial response, Commander tensor morphology, count-dipole sensitivity와 코드 교정을 실행했다. 전체 physical identification·submission readiness는 아직 승인되지 않았다. R59 이후 이번 한 개 과학 단위는 2026-11-17 사용자의 명시적 재개 요청에 따른다. 로컬 agent용 재개 프롬프트와 자동 후속작업은 생성하지 않았다.
+
+
+## Historical finite convergence route — 2026-10-28
 
 Use [the report-first convergence plan](CONVERGENCE_20261028/README_KO.md) and [existing-session handoff](CONVERGENCE_20261028/HANDOFF_CURRENT_SESSION.md). Produce the initial report, four bounded physical-goal result updates, then refined final reports while completing existing executable work. Original42 and six-paper scientific acceptance remain unchanged. New adaptive frontier creation is disabled only for this finite release; existing packets, repair and resume paths remain authoritative.
 

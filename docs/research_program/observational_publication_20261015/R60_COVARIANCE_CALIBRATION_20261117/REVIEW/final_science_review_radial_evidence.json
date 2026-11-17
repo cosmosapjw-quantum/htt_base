@@ -1,0 +1,74 @@
+{
+  "source_sha256": "4c7f9d28b204c59a30aeb06a02a282c27835f0613a17d376f0b9f729772a882a",
+  "carrier_sha256": "e79f4d65ce39af662fccb434ffccaa99004ca045384d072fadc881f6328fd502",
+  "max_errors": {
+    "physical_response_identity": 2.439454888092385e-17,
+    "estimate_scaled": 1.354472090042691e-12,
+    "covariance_scaled_relative": 4.028455306935918e-15,
+    "wald_lr": 4.908216055810044e-10,
+    "bias_map": 7.034303695085953e-15,
+    "budget_relative_excess": 5.684341886080802e-16,
+    "budget_distance": 3.019806626980426e-13,
+    "budget_kkt_relative": 2.306500974105172e-12,
+    "critical_threshold": 3.0386893001832505e-10,
+    "endpoint_speed": 1.3322676295501878e-15
+  },
+  "bounded_witness_count": 84,
+  "positive_critical_count": 8,
+  "image_singular_ratio_minmax": [
+    0.14949092191673388,
+    0.8317942167576551
+  ],
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pid": 1087127,
+    "exit_code": 0
+  },
+  "edge": {
+    "status": "FAIL",
+    "input": {
+      "center": [
+        0,
+        3
+      ],
+      "covariance": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "nuisance_map": [
+        [
+          10000000000000,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "radius": 3
+    },
+    "observed": {
+      "distance2": 9,
+      "nuisance_witness": [
+        0,
+        0
+      ],
+      "image_rank": 1
+    },
+    "oracle": {
+      "distance2": 0,
+      "nuisance_witness": [
+        0,
+        3
+      ]
+    }
+  }
+}

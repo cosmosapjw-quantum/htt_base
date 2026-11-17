@@ -139,10 +139,13 @@ def task_packet(doc,key):
 def derived_queue(doc):
     validate(doc)
     content=json.dumps(doc,sort_keys=True,ensure_ascii=False,separators=(",",":"))
-    return {"schema":"htt.observational_ready_queue/1",
+    result = {"schema":"htt.observational_ready_queue/1",
             "input_content_sha256":hashlib.sha256(content.encode("utf-8")).hexdigest(),
             "ready":ready(doc),"external_blockers":blocked(doc),
             "scientific_claim":"NOT_READY_TO_SUBMIT","background_scheduler":False}
+    if doc.get("current_scientific_route"):
+        result["current_scientific_route"] = doc["current_scientific_route"]
+    return result
 
 
 def main():
@@ -161,7 +164,9 @@ def main():
         payload=validate(doc);payload["ready_now"]=len(ready(doc))
     elif args.ready:
         payload={"ready":ready(doc)}
-        if doc.get("publication_output_route_20261025"):
+        if doc.get("current_scientific_route"):
+            payload["current_scientific_route"]=doc["current_scientific_route"]
+        elif doc.get("publication_output_route_20261025"):
             payload["additional_publication_route"]=doc["publication_output_route_20261025"]
             payload["route_note"]="Read-only pointer; append with the existing controller after preflight. Original ready list is unchanged."
     elif args.blocked:payload={"blocked":blocked(doc)}

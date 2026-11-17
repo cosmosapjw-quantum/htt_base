@@ -50,7 +50,7 @@ class DirectionalSupportProfile:
     evaluation_directions: np.ndarray  # N_dir x 3 unit vectors
     support_values: np.ndarray         # h_I(u)
     anchor_support_values: np.ndarray | None # h_A(u)
-    occupancy_ratios: np.ndarray | None      # F(u) = h_I(u) / h_A(u)
+    occupancy_ratios: np.ndarray | None      # legacy field name: F_support=h_I/h_A, not measure occupancy
 
 
 @dataclass(frozen=True)
@@ -80,10 +80,11 @@ class DepthPathGF:
 
 
 def fibonacci_sphere_directions(n_dirs: int = 50) -> np.ndarray:
-    """Generate n_dirs uniformly distributed unit vectors on S^2 via Fibonacci golden spiral lattice.
-    
-    Guarantees equal-area spherical quadrature and rotational invariance,
-    unlike non-uniform paired linspace(theta, phi).
+    """Generate a quasi-uniform finite Fibonacci grid of unit directions.
+
+    Equal weights approximate solid-angle integration. A finite grid is not
+    exactly rotation invariant and supplies no exact spherical quadrature
+    guarantee; convergence/rotation checks are needed for integrated results.
     """
     if n_dirs <= 0:
         raise ValueError("n_dirs must be positive")
@@ -202,7 +203,7 @@ def construct_r39_five_variable_state(
 
     # 2. Directional Support Profiles F
     # Evaluate support function h_I(u) over 50 isotropic directions on the 2-sphere
-    # Upgraded in R42: uses equal-area Fibonacci spherical quadrature
+    # Upgraded in R42: uses quasi-uniform finite Fibonacci direction sampling
     dirs = fibonacci_sphere_directions(50)
 
     # For observer velocity beta_MO (samples indices 14..16)
@@ -417,7 +418,7 @@ def construct_r42_five_variable_state(
         ),
     }
 
-    # 2. Directional Support Profiles F via equal-area Fibonacci spherical quadrature
+    # 2. Directional Support Profiles F via quasi-uniform finite Fibonacci direction sampling
     dirs = fibonacci_sphere_directions(n_quadrature_dirs)
 
     # Observer velocity beta_MO (samples indices 14..16)

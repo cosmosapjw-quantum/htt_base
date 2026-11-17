@@ -1,0 +1,242 @@
+{
+  "schema": "htt.r60.research_dag/1",
+  "owner_authorization": "Current user request, 2026-11-17: execute convergent theory/code/observational work and publish; no local-agent prompt.",
+  "base_sha": "6fe19c5139004a1f281ec85c592e5ab4c7590d5f",
+  "parent_pr": "PR-R59-NATIVE-REPLAY-MANUSCRIPT",
+  "canonical_pr": "PR-R60-COVARIANCE-CALIBRATION",
+  "claim_tier": "C0",
+  "scope_extension": {
+    "prior_record": "R58_MIXED_TENSOR_CONVERGENCE_20261117/R59_DECISION.json",
+    "prior_rule": "R59 terminal; no automatic successor",
+    "basis": "Current explicit owner request plus newly executable observed covariance/calibration sensitivity question",
+    "effect": "Authorize this single new scientific unit; preserve R59 decision and all historical results"
+  },
+  "tasks": [
+    {
+      "id": "R60-S1",
+      "title": "Covariance-amplitude likelihood and global optimization",
+      "depends": [],
+      "status": "complete_scoped",
+      "result": "False boundary-MLE shortcut repaired; global numerical objective bound and400mode regression independently reviewed; findingsF01/F02 closed.",
+      "evidence": [
+        "htt/src/common/covariance_amplitude.py",
+        "htt/obsstat/cf4_growth_covariance.py",
+        "REVIEW/final_science_review.md"
+      ]
+    },
+    {
+      "id": "R60-S2",
+      "title": "Observed tensor covariance/calibration sensitivity frontier",
+      "depends": [
+        "R60-S1"
+      ],
+      "status": "complete_scoped",
+      "result": {
+        "at_lambda_1": {
+          "p11_max": 0.0153427,
+          "p8_max": 0.0549609,
+          "p5_max": 0.0261897
+        },
+        "lambda_crossing_11d": 1.2646167,
+        "lambda_crossing_quadrupole_5d": 1.24267056,
+        "quadrupole_calibration_fullsky_rms_mag_min": 0.00131474845,
+        "angular8_budget_rho_star": 0
+      },
+      "conditions": "Same R58 carrier and declared Gaussian law; sensitivity values are not measured covariance or calibration uncertainty. Different null dimensions remain separate.",
+      "evidence": [
+        "RESULTS/SENSITIVITY/SENSITIVITY_RESULT.json"
+      ]
+    },
+    {
+      "id": "R60-S3",
+      "title": "Confidence-set tensor shape and constructive axisymmetry test",
+      "depends": [
+        "R60-S2"
+      ],
+      "status": "complete_scoped",
+      "result": "Each of the seven confidence ellipsoids contains an explicit axisymmetric STF witness.",
+      "conditions": "Existence of feasible witnesses, not a unique shape identification or a Bianchi-class test.",
+      "evidence": [
+        "RESULTS/AXISYMMETRIC_WITNESSES.json"
+      ]
+    },
+    {
+      "id": "R60-S4",
+      "title": "Finite redshift dependence of the coherent velocity response",
+      "depends": [
+        "R60-S2"
+      ],
+      "status": "complete_scoped",
+      "target": "Fit the specified 14-parameter finite radial-velocity-slope alternative against the 11-parameter constant-velocity case on the same carrier and covariance.",
+      "conditions": "Only the named finite radial response; not arbitrary evolving global tilt.",
+      "evidence": [
+        "RESULTS/RADIAL/RADIAL_VELOCITY_RESULT.json"
+      ],
+      "result": {
+        "rank": 14,
+        "nested_model_max_p": 0.8577034023498994,
+        "formal_bestfit_speed_c_range": [
+          0.15876391597431197,
+          0.5305708264523731
+        ],
+        "bounded_V1_km_s": [
+          0,
+          300,
+          1000,
+          3000
+        ],
+        "STF_origin_excluded_at_each_declared_budget": true,
+        "physical_interpretation": "finite response sensitivity only; unrestricted fit outside first-order velocity regime"
+      }
+    },
+    {
+      "id": "R60-S5",
+      "title": "Owned Commander temperature quadrupole morphology",
+      "depends": [],
+      "status": "complete_scoped",
+      "target": "Extract and compare deterministic T2 tensor morphology with explicit harmonic/frame conventions on the owned Commander input.",
+      "conditions": "No invented matching MC or cross-probe independence; uncalibrated alignment remains descriptive.",
+      "evidence": [
+        "RESULTS/COMMANDER_MORPHOLOGY.json"
+      ],
+      "result": {
+        "Commander_C2_uK2": 207.0624434,
+        "relative_tensor_difference": 0.0827393544,
+        "matched_eigenaxis_angle_deg_range": [
+          2.06651687,
+          2.50772721
+        ],
+        "absolute_selector_axis_difference_deg": 88.49933998,
+        "null_calibration": "NOT_USED"
+      }
+    },
+    {
+      "id": "R60-S7",
+      "title": "Owned count-dipole covariance/calibration sensitivity",
+      "depends": [],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/COUNT_DIPOLE_SENSITIVITY.json"
+      ],
+      "result": {
+        "Quaia_nominal_p05_receipt_variance_fraction": 0.25368911086800666,
+        "minimum_count_offset_norm": 0.00389962272108685,
+        "finite_mock_law_preserved": true
+      },
+      "conditions": "Estimated data-conditioned covariance; new Gaussian tails are nominal sensitivity, not exact finite-sample significance."
+    },
+    {
+      "id": "R60-S6",
+      "title": "Six-topic scientific synthesis and publication reassessment",
+      "depends": [
+        "R60-S1",
+        "R60-S2",
+        "R60-S3",
+        "R60-S4",
+        "R60-S5",
+        "R60-S7"
+      ],
+      "status": "complete_scoped",
+      "target": "Bind the actual new observations and remaining theoretical obligations to the six requested topic conclusions and a finite research plan.",
+      "conditions": "Historical R59 novelty verdict preserved; new contribution limited to the executed covariance/calibration/radial/morphology analysis.",
+      "evidence": [
+        "REPORT_KO.md",
+        "THEORY_LOOPS.md",
+        "TENSOR_PHYSICAL_LIKELIHOOD.md",
+        "RESEARCH_PLAN_KO.md",
+        "VALIDATION.md"
+      ],
+      "result": "Six independent R1-R10 scoped loops; one joint physical-likelihood contract; finite convergent followup plan; bounded application publication verdict."
+    }
+  ],
+  "unresolved_dependencies": [
+    {
+      "id": "SURVEY-COVERAGE",
+      "status": "unresolved",
+      "needed": "Source-matched end-to-end CF4 selection, measurement and covariance law or an independently justified empirical calibration."
+    },
+    {
+      "id": "PHYSICAL-CALIBRATION",
+      "status": "unresolved",
+      "needed": "Externally supported dipole/STF calibration bounds or additional independent measurements to separate physical sigma,A from calibration."
+    },
+    {
+      "id": "MULTITRACER-TRANSFER",
+      "status": "unresolved",
+      "needed": "Frame-, redshift- and selection-qualified physical responses and applicable joint covariance for additional probes."
+    },
+    {
+      "id": "GENERAL-BIANCHI-TILT",
+      "status": "unresolved",
+      "needed": "Validated general-Bianchi/tilt dynamics and observational transfer; a finite velocity slope is not this full target."
+    }
+  ],
+  "no_automatic_audit_successor": true,
+  "local_agent_prompt_created": false,
+  "status": "COMPLETE_SCOPED_C0",
+  "scientific_scope": "Observed covariance/calibration, finite radial response and deterministic morphology; no global cosmological identification claim",
+  "future_science": [
+    {
+      "id": "NEXT-01",
+      "title": "Same raw-sample comparator",
+      "depends": [
+        "R60-S6"
+      ],
+      "status": "unresolved_input_contract",
+      "completion": "Match sourceIDs,source response,noise/cosmic covariance,nuisance,mask,selection; reproduce named external estimator before ranking."
+    },
+    {
+      "id": "NEXT-02",
+      "title": "Empirical calibration and survey coverage",
+      "depends": [
+        "R60-S6"
+      ],
+      "status": "unresolved_input_contract",
+      "completion": "Bind independent calibration body and source-matched selection/error law; run recovery/coverage."
+    },
+    {
+      "id": "NEXT-03",
+      "title": "Primary CF4 inference and manuscript decision",
+      "depends": [
+        "NEXT-01",
+        "NEXT-02"
+      ],
+      "status": "waiting_dependencies",
+      "completion": "Accept physical evidence only under admitted full family; retain calibration-limited or negative result otherwise."
+    },
+    {
+      "id": "NEXT-04",
+      "title": "Commander likelihood and shear-history bridge",
+      "depends": [
+        "R60-S5"
+      ],
+      "status": "blocked_input",
+      "completion": "Commander matched beam/KQ/null law and source-bound history transfer."
+    },
+    {
+      "id": "NEXT-05",
+      "title": "Observable-specific dipole and velocity-history discrimination",
+      "depends": [
+        "R60-S4",
+        "R60-S7"
+      ],
+      "status": "unresolved_input_contract",
+      "completion": "Source-depth/frame-specific responses and joint stochastic law; perturbative validity before velocity inference."
+    },
+    {
+      "id": "NEXT-06",
+      "title": "Restricted physical Bianchi family comparison",
+      "depends": [
+        "NEXT-04",
+        "NEXT-05"
+      ],
+      "status": "waiting_dependencies",
+      "completion": "Validated literature-bound transfer and dynamics on common data law; no native solver or universal family classification."
+    }
+  ],
+  "publication_status": "BOUNDED_METHODS_APPLICATION_REQUIRES_MATCHED_COMPARISON_AND_CALIBRATION",
+  "original_42_node_statuses_changed": false,
+  "six_physical_questions_fully_solved": false,
+  "execution_record": "EXECUTION_RECORD.json",
+  "review": "REVIEW/final_science_review.md"
+}

@@ -1,0 +1,1530 @@
+{
+  "schema": "htt.count_dipole_covariance_sensitivity/1",
+  "source_file": "docs/research_program/observational_publication_20261015/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L03_RESULT.json",
+  "source_sha256": "0df35f1d30505cea66a6087d341904fdcb2be07787ec413288b59a3a60fa0125",
+  "source_read_head": "6fe19c5139004a1f281ec85c592e5ab4c7590d5f",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1"
+  },
+  "units": "dimensionless count-dipole coefficients; signed ICRS vectors",
+  "confidence_threshold_nominal_3d": 7.814727903251179,
+  "models": {
+    "Quaia_G20": {
+      "excess_icrs": [
+        -0.006795316267454502,
+        -0.007004999084781321,
+        -0.006962504834723516
+      ],
+      "excess_norm_count_dipole": 0.011988444808484012,
+      "excess_direction": {
+        "unit_icrs": [
+          -0.5668221671793139,
+          -0.584312577376509,
+          -0.5807679766600146
+        ],
+        "ra_dec_deg": [
+          225.87048852001413,
+          -35.50457617132214
+        ]
+      },
+      "C_mock": [
+        [
+          4.7851054210752625e-06,
+          -8.987101849847988e-07,
+          2.573273015776263e-06
+        ],
+        [
+          -8.987101849847988e-07,
+          9.35188386704194e-06,
+          3.2492509277043795e-07
+        ],
+        [
+          2.573273015776263e-06,
+          3.2492509277043795e-07,
+          8.146799180035618e-06
+        ]
+      ],
+      "C_total_receipt": [
+        [
+          2.1081260690284626e-05,
+          -8.987101849847988e-07,
+          2.573273015776263e-06
+        ],
+        [
+          -8.987101849847988e-07,
+          0.00026027298294031256,
+          3.2492509277043795e-07
+        ],
+        [
+          2.573273015776263e-06,
+          3.2492509277043795e-07,
+          3.164896248169259e-05
+        ]
+      ],
+      "S_receipt": [
+        [
+          1.6296155269209363e-05,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0002509210990732706,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          2.3502163301656973e-05
+        ]
+      ],
+      "S_receipt_eigenvalues": [
+        1.6296155269209363e-05,
+        2.3502163301656973e-05,
+        0.0002509210990732706
+      ],
+      "S_receipt_psd_tolerance": 3.6987557103124775e-18,
+      "S_receipt_psd": true,
+      "n_original_mocks": 500,
+      "original_finite_mock_Pi": {
+        "clopper_pearson_95": [
+          0.0004847861762900009,
+          0.014374078562200309
+        ],
+        "law": "Poisson + clustering mocks (N=500), same estimator",
+        "n_exceed": 2,
+        "n_null": 500,
+        "p_value": 0.005988023952095809,
+        "statistic": 18.112202341390464
+      },
+      "saved_gaussian_with_receipt": {
+        "dof": 3,
+        "law": "gaussian with the mock covariance + receipt systematics",
+        "p_value": 0.309208812103659,
+        "statistic": 3.5905322764392493
+      },
+      "lambda0_nominal": {
+        "lambda_covariance_fraction": 0.0,
+        "statistic": 18.112202341390464,
+        "p_gaussian_nominal": 0.00041702301794998057,
+        "d_statistic_d_lambda": -223.3313303125437
+      },
+      "lambda1_nominal": {
+        "lambda_covariance_fraction": 1.0,
+        "statistic": 3.5905322764392493,
+        "p_gaussian_nominal": 0.309208812103659,
+        "d_statistic_d_lambda": -2.552888140323403
+      },
+      "lambda1_saved_gaussian_p_error_abs": 0.0,
+      "nominal_p05_crossing": {
+        "lambda_covariance_fraction": 0.25368911086800666,
+        "statistic": 7.814727903251154,
+        "p_gaussian_nominal": 0.050000000000000586,
+        "d_statistic_d_lambda": -13.066833351494159,
+        "systematic_std_scale_relative_to_receipt": 0.5036756008265704
+      },
+      "crossing_interpretation": "crosses from nominal p<0.05 to >=0.05",
+      "path": [
+        {
+          "lambda_covariance_fraction": 0.0,
+          "statistic": 18.112202341390464,
+          "p_gaussian_nominal": 0.00041702301794998057,
+          "d_statistic_d_lambda": -223.3313303125437
+        },
+        {
+          "lambda_covariance_fraction": 0.01,
+          "statistic": 16.31418977195177,
+          "p_gaussian_nominal": 0.0009775958368858197,
+          "d_statistic_d_lambda": -145.61491455131502
+        },
+        {
+          "lambda_covariance_fraction": 0.02,
+          "statistic": 15.07969346687943,
+          "p_gaussian_nominal": 0.0017497964050631597,
+          "d_statistic_d_lambda": -105.15238258482205
+        },
+        {
+          "lambda_covariance_fraction": 0.03,
+          "statistic": 14.15715337098245,
+          "p_gaussian_nominal": 0.0026988598434607336,
+          "d_statistic_d_lambda": -81.24051298799479
+        },
+        {
+          "lambda_covariance_fraction": 0.04,
+          "statistic": 13.427049342988852,
+          "p_gaussian_nominal": 0.003798473832979666,
+          "d_statistic_d_lambda": -65.80846693964088
+        },
+        {
+          "lambda_covariance_fraction": 0.05,
+          "statistic": 12.825157988267275,
+          "p_gaussian_nominal": 0.005030379850478654,
+          "d_statistic_d_lambda": -55.17921508939794
+        },
+        {
+          "lambda_covariance_fraction": 0.06,
+          "statistic": 12.313780519898764,
+          "p_gaussian_nominal": 0.006382051966134139,
+          "d_statistic_d_lambda": -47.481315213181745
+        },
+        {
+          "lambda_covariance_fraction": 0.07,
+          "statistic": 11.869255439372296,
+          "p_gaussian_nominal": 0.00784472296679544,
+          "d_statistic_d_lambda": -41.67966059747383
+        },
+        {
+          "lambda_covariance_fraction": 0.08,
+          "statistic": 11.475927627437107,
+          "p_gaussian_nominal": 0.009412022366887289,
+          "d_statistic_d_lambda": -37.16326709690472
+        },
+        {
+          "lambda_covariance_fraction": 0.09,
+          "statistic": 11.122986904112272,
+          "p_gaussian_nominal": 0.011079092678872646,
+          "d_statistic_d_lambda": -33.5521080891657
+        },
+        {
+          "lambda_covariance_fraction": 0.1,
+          "statistic": 10.80269936303231,
+          "p_gaussian_nominal": 0.012842026661968832,
+          "d_statistic_d_lambda": -30.599382355091553
+        },
+        {
+          "lambda_covariance_fraction": 0.11,
+          "statistic": 10.50936397532103,
+          "p_gaussian_nominal": 0.01469751026221753,
+          "d_statistic_d_lambda": -28.138887618861645
+        },
+        {
+          "lambda_covariance_fraction": 0.12,
+          "statistic": 10.238669249350103,
+          "p_gaussian_nominal": 0.01664259581969614,
+          "d_statistic_d_lambda": -26.055178286528026
+        },
+        {
+          "lambda_covariance_fraction": 0.13,
+          "statistic": 9.987281431534617,
+          "p_gaussian_nominal": 0.01867455791723162,
+          "d_statistic_d_lambda": -24.26588759957667
+        },
+        {
+          "lambda_covariance_fraction": 0.14,
+          "statistic": 9.752572302296636,
+          "p_gaussian_nominal": 0.020790802026265445,
+          "d_statistic_d_lambda": -22.710856369375353
+        },
+        {
+          "lambda_covariance_fraction": 0.15,
+          "statistic": 9.532434144312301,
+          "p_gaussian_nominal": 0.02298880717053125,
+          "d_statistic_d_lambda": -21.34522699257315
+        },
+        {
+          "lambda_covariance_fraction": 0.16,
+          "statistic": 9.325150838630396,
+          "p_gaussian_nominal": 0.025266090680225204,
+          "d_statistic_d_lambda": -20.13492986766206
+        },
+        {
+          "lambda_covariance_fraction": 0.17,
+          "statistic": 9.129306085880023,
+          "p_gaussian_nominal": 0.027620187374607856,
+          "d_statistic_d_lambda": -19.05365831385039
+        },
+        {
+          "lambda_covariance_fraction": 0.18,
+          "statistic": 8.943716776675439,
+          "p_gaussian_nominal": 0.030048638192562836,
+          "d_statistic_d_lambda": -18.080795167658348
+        },
+        {
+          "lambda_covariance_fraction": 0.19,
+          "statistic": 8.767383765916902,
+          "p_gaussian_nominal": 0.03254898499706487,
+          "d_statistic_d_lambda": -17.19996279797819
+        },
+        {
+          "lambda_covariance_fraction": 0.2,
+          "statistic": 8.599454924463835,
+          "p_gaussian_nominal": 0.03511876937946449,
+          "d_statistic_d_lambda": -16.39799051325175
+        },
+        {
+          "lambda_covariance_fraction": 0.21,
+          "statistic": 8.439197003528799,
+          "p_gaussian_nominal": 0.03775553400771683,
+          "d_statistic_d_lambda": -15.66416698494593
+        },
+        {
+          "lambda_covariance_fraction": 0.22,
+          "statistic": 8.285973925668701,
+          "p_gaussian_nominal": 0.04045682553751605,
+          "d_statistic_d_lambda": -14.989690810953853
+        },
+        {
+          "lambda_covariance_fraction": 0.23,
+          "statistic": 8.139229830561511,
+          "p_gaussian_nominal": 0.04322019842289918,
+          "d_statistic_d_lambda": -14.367261093623721
+        },
+        {
+          "lambda_covariance_fraction": 0.24,
+          "statistic": 7.9984756856828945,
+          "p_gaussian_nominal": 0.04604321917761061,
+          "d_statistic_d_lambda": -13.790768452539668
+        },
+        {
+          "lambda_covariance_fraction": 0.25,
+          "statistic": 7.863278602691019,
+          "p_gaussian_nominal": 0.04892347078505988,
+          "d_statistic_d_lambda": -13.255059081723228
+        },
+        {
+          "lambda_covariance_fraction": 0.26,
+          "statistic": 7.733253230805073,
+          "p_gaussian_nominal": 0.05185855705554273,
+          "d_statistic_d_lambda": -12.755752612405963
+        },
+        {
+          "lambda_covariance_fraction": 0.27,
+          "statistic": 7.608054761415367,
+          "p_gaussian_nominal": 0.05484610679921976,
+          "d_statistic_d_lambda": -12.289100081061754
+        },
+        {
+          "lambda_covariance_fraction": 0.28,
+          "statistic": 7.48737319491395,
+          "p_gaussian_nominal": 0.057883777731921264,
+          "d_statistic_d_lambda": -11.851872121327915
+        },
+        {
+          "lambda_covariance_fraction": 0.29,
+          "statistic": 7.37092860542109,
+          "p_gaussian_nominal": 0.06096926006472027,
+          "d_statistic_d_lambda": -11.441270167866929
+        },
+        {
+          "lambda_covariance_fraction": 0.3,
+          "statistic": 7.258467201220771,
+          "p_gaussian_nominal": 0.06410027975181186,
+          "d_statistic_d_lambda": -11.054855349978737
+        },
+        {
+          "lambda_covariance_fraction": 0.31,
+          "statistic": 7.149758024802276,
+          "p_gaussian_nominal": 0.06727460138761951,
+          "d_statistic_d_lambda": -10.690491106526698
+        },
+        {
+          "lambda_covariance_fraction": 0.32,
+          "statistic": 7.044590170927885,
+          "p_gaussian_nominal": 0.07049003075530427,
+          "d_statistic_d_lambda": -10.346296534324512
+        },
+        {
+          "lambda_covariance_fraction": 0.33,
+          "statistic": 6.942770427253413,
+          "p_gaussian_nominal": 0.07374441703647608,
+          "d_statistic_d_lambda": -10.020608199829415
+        },
+        {
+          "lambda_covariance_fraction": 0.34,
+          "statistic": 6.844121261946311,
+          "p_gaussian_nominal": 0.0770356546969183,
+          "d_statistic_d_lambda": -9.711948674429193
+        },
+        {
+          "lambda_covariance_fraction": 0.35000000000000003,
+          "statistic": 6.748479098069869,
+          "p_gaussian_nominal": 0.08036168506628424,
+          "d_statistic_d_lambda": -9.419000449274606
+        },
+        {
+          "lambda_covariance_fraction": 0.36,
+          "statistic": 6.655692826384612,
+          "p_gaussian_nominal": 0.08372049763155016,
+          "d_statistic_d_lambda": -9.140584183310684
+        },
+        {
+          "lambda_covariance_fraction": 0.37,
+          "statistic": 6.565622517501058,
+          "p_gaussian_nominal": 0.08711013106486333,
+          "d_statistic_d_lambda": -8.875640463998252
+        },
+        {
+          "lambda_covariance_fraction": 0.38,
+          "statistic": 6.478138301621833,
+          "p_gaussian_nominal": 0.09052867400661731,
+          "d_statistic_d_lambda": -8.623214432873887
+        },
+        {
+          "lambda_covariance_fraction": 0.39,
+          "statistic": 6.393119389896196,
+          "p_gaussian_nominal": 0.0939742656242986,
+          "d_statistic_d_lambda": -8.382442761070672
+        },
+        {
+          "lambda_covariance_fraction": 0.4,
+          "statistic": 6.310453216021749,
+          "p_gaussian_nominal": 0.09744509596704344,
+          "d_statistic_d_lambda": -8.15254256305328
+        },
+        {
+          "lambda_covariance_fraction": 0.41000000000000003,
+          "statistic": 6.230034680426456,
+          "p_gaussian_nominal": 0.10093940613500178,
+          "d_statistic_d_lambda": -7.93280191734015
+        },
+        {
+          "lambda_covariance_fraction": 0.42,
+          "statistic": 6.151765482347639,
+          "p_gaussian_nominal": 0.10445548828164988,
+          "d_statistic_d_lambda": -7.722571726250747
+        },
+        {
+          "lambda_covariance_fraction": 0.43,
+          "statistic": 6.0755535275444466,
+          "p_gaussian_nominal": 0.1079916854661347,
+          "d_statistic_d_lambda": -7.521258696725523
+        },
+        {
+          "lambda_covariance_fraction": 0.44,
+          "statistic": 6.001312401353535,
+          "p_gaussian_nominal": 0.11154639137164925,
+          "d_statistic_d_lambda": -7.328319264026627
+        },
+        {
+          "lambda_covariance_fraction": 0.45,
+          "statistic": 5.928960898414857,
+          "p_gaussian_nominal": 0.11511804990473734,
+          "d_statistic_d_lambda": -7.143254311914222
+        },
+        {
+          "lambda_covariance_fraction": 0.46,
+          "statistic": 5.858422601726142,
+          "p_gaussian_nominal": 0.11870515468935398,
+          "d_statistic_d_lambda": -6.965604568440019
+        },
+        {
+          "lambda_covariance_fraction": 0.47000000000000003,
+          "statistic": 5.78962550478644,
+          "p_gaussian_nominal": 0.12230624846843813,
+          "d_statistic_d_lambda": -6.794946577135809
+        },
+        {
+          "lambda_covariance_fraction": 0.48,
+          "statistic": 5.722501671504748,
+          "p_gaussian_nominal": 0.12591992242476055,
+          "d_statistic_d_lambda": -6.630889160125148
+        },
+        {
+          "lambda_covariance_fraction": 0.49,
+          "statistic": 5.656986929313751,
+          "p_gaussian_nominal": 0.1295448154318306,
+          "d_statistic_d_lambda": -6.473070303346322
+        },
+        {
+          "lambda_covariance_fraction": 0.5,
+          "statistic": 5.593020591569164,
+          "p_gaussian_nominal": 0.1331796132447315,
+          "d_statistic_d_lambda": -6.321154405264651
+        },
+        {
+          "lambda_covariance_fraction": 0.51,
+          "statistic": 5.530545205853793,
+          "p_gaussian_nominal": 0.13682304763990155,
+          "d_statistic_d_lambda": -6.174829839657925
+        },
+        {
+          "lambda_covariance_fraction": 0.52,
+          "statistic": 5.469506325260371,
+          "p_gaussian_nominal": 0.14047389551205977,
+          "d_statistic_d_lambda": -6.033806790663985
+        },
+        {
+          "lambda_covariance_fraction": 0.53,
+          "statistic": 5.409852300112905,
+          "p_gaussian_nominal": 0.144130977935729,
+          "d_statistic_d_lambda": -5.8978153245874765
+        },
+        {
+          "lambda_covariance_fraction": 0.54,
+          "statistic": 5.351534087914123,
+          "p_gaussian_nominal": 0.1477931591980986,
+          "d_statistic_d_lambda": -5.766603668214849
+        },
+        {
+          "lambda_covariance_fraction": 0.55,
+          "statistic": 5.294505079586642,
+          "p_gaussian_nominal": 0.1514593458093355,
+          "d_statistic_d_lambda": -5.639936667776208
+        },
+        {
+          "lambda_covariance_fraction": 0.56,
+          "statistic": 5.238720940315044,
+          "p_gaussian_nominal": 0.15512848549582833,
+          "d_statistic_d_lambda": -5.517594406374003
+        },
+        {
+          "lambda_covariance_fraction": 0.5700000000000001,
+          "statistic": 5.1841394635020235,
+          "p_gaussian_nominal": 0.15879956618130794,
+          "d_statistic_d_lambda": -5.399370960797112
+        },
+        {
+          "lambda_covariance_fraction": 0.58,
+          "statistic": 5.130720436529028,
+          "p_gaussian_nominal": 0.1624716149602772,
+          "d_statistic_d_lambda": -5.285073281255379
+        },
+        {
+          "lambda_covariance_fraction": 0.59,
+          "statistic": 5.0784255171651616,
+          "p_gaussian_nominal": 0.16614369706770316,
+          "d_statistic_d_lambda": -5.17452017978634
+        },
+        {
+          "lambda_covariance_fraction": 0.6,
+          "statistic": 5.027218119600878,
+          "p_gaussian_nominal": 0.16981491484850061,
+          "d_statistic_d_lambda": -5.067541414969738
+        },
+        {
+          "lambda_covariance_fraction": 0.61,
+          "statistic": 4.977063309198435,
+          "p_gaussian_nominal": 0.1734844067299352,
+          "d_statistic_d_lambda": -4.96397686219127
+        },
+        {
+          "lambda_covariance_fraction": 0.62,
+          "statistic": 4.927927705151574,
+          "p_gaussian_nominal": 0.1771513461997226,
+          "d_statistic_d_lambda": -4.863675760069778
+        },
+        {
+          "lambda_covariance_fraction": 0.63,
+          "statistic": 4.879779390334768,
+          "p_gaussian_nominal": 0.18081494079225424,
+          "d_statistic_d_lambda": -4.766496024839182
+        },
+        {
+          "lambda_covariance_fraction": 0.64,
+          "statistic": 4.832587827699249,
+          "p_gaussian_nominal": 0.1844744310850945,
+          "d_statistic_d_lambda": -4.672303625488259
+        },
+        {
+          "lambda_covariance_fraction": 0.65,
+          "statistic": 4.78632378264052,
+          "p_gaussian_nominal": 0.18812908970761955,
+          "d_statistic_d_lambda": -4.580972013333654
+        },
+        {
+          "lambda_covariance_fraction": 0.66,
+          "statistic": 4.740959250821482,
+          "p_gaussian_nominal": 0.1917782203633947,
+          "d_statistic_d_lambda": -4.492381600455261
+        },
+        {
+          "lambda_covariance_fraction": 0.67,
+          "statistic": 4.696467390987625,
+          "p_gaussian_nominal": 0.19542115686770253,
+          "d_statistic_d_lambda": -4.406419282076225
+        },
+        {
+          "lambda_covariance_fraction": 0.68,
+          "statistic": 4.6528224623570456,
+          "p_gaussian_nominal": 0.19905726220140027,
+          "d_statistic_d_lambda": -4.3229779985370715
+        },
+        {
+          "lambda_covariance_fraction": 0.6900000000000001,
+          "statistic": 4.609999766209006,
+          "p_gaussian_nominal": 0.20268592758208984,
+          "d_statistic_d_lambda": -4.241956333007122
+        },
+        {
+          "lambda_covariance_fraction": 0.7000000000000001,
+          "statistic": 4.567975591331134,
+          "p_gaussian_nominal": 0.20630657155346355,
+          "d_statistic_d_lambda": -4.163258141507361
+        },
+        {
+          "lambda_covariance_fraction": 0.71,
+          "statistic": 4.5267271630176875,
+          "p_gaussian_nominal": 0.20991863909348163,
+          "d_statistic_d_lambda": -4.08679221219557
+        },
+        {
+          "lambda_covariance_fraction": 0.72,
+          "statistic": 4.486232595340108,
+          "p_gaussian_nominal": 0.21352160074193968,
+          "d_statistic_d_lambda": -4.012471951194768
+        },
+        {
+          "lambda_covariance_fraction": 0.73,
+          "statistic": 4.446470846436808,
+          "p_gaussian_nominal": 0.2171149517478602,
+          "d_statistic_d_lambda": -3.9402150925360018
+        },
+        {
+          "lambda_covariance_fraction": 0.74,
+          "statistic": 4.407421676592117,
+          "p_gaussian_nominal": 0.22069821123699004,
+          "d_statistic_d_lambda": -3.8699434300416855
+        },
+        {
+          "lambda_covariance_fraction": 0.75,
+          "statistic": 4.3690656088948865,
+          "p_gaussian_nominal": 0.22427092139967064,
+          "d_statistic_d_lambda": -3.801582569200672
+        },
+        {
+          "lambda_covariance_fraction": 0.76,
+          "statistic": 4.3313838922857695,
+          "p_gaussian_nominal": 0.2278326466991617,
+          "d_statistic_d_lambda": -3.7350616972850927
+        },
+        {
+          "lambda_covariance_fraction": 0.77,
+          "statistic": 4.294358466818738,
+          "p_gaussian_nominal": 0.23138297310051265,
+          "d_statistic_d_lambda": -3.6703133701348465
+        },
+        {
+          "lambda_covariance_fraction": 0.78,
+          "statistic": 4.257971930977391,
+          "p_gaussian_nominal": 0.23492150731993883,
+          "d_statistic_d_lambda": -3.6072733141917235
+        },
+        {
+          "lambda_covariance_fraction": 0.79,
+          "statistic": 4.2222075109000565,
+          "p_gaussian_nominal": 0.23844787609463933,
+          "d_statistic_d_lambda": -3.545880242503668
+        },
+        {
+          "lambda_covariance_fraction": 0.8,
+          "statistic": 4.187049031379862,
+          "p_gaussian_nominal": 0.2419617254729171,
+          "d_statistic_d_lambda": -3.4860756835430187
+        },
+        {
+          "lambda_covariance_fraction": 0.81,
+          "statistic": 4.1524808885169655,
+          "p_gaussian_nominal": 0.2454627201244403,
+          "d_statistic_d_lambda": -3.427803821792491
+        },
+        {
+          "lambda_covariance_fraction": 0.8200000000000001,
+          "statistic": 4.11848802391006,
+          "p_gaussian_nominal": 0.24895054267040792,
+          "d_statistic_d_lambda": -3.3710113491507614
+        },
+        {
+          "lambda_covariance_fraction": 0.8300000000000001,
+          "statistic": 4.085055900283358,
+          "p_gaussian_nominal": 0.25242489303337695,
+          "d_statistic_d_lambda": -3.3156473262972925
+        },
+        {
+          "lambda_covariance_fraction": 0.84,
+          "statistic": 4.052170478453412,
+          "p_gaussian_nominal": 0.25588548780647113,
+          "d_statistic_d_lambda": -3.2616630532345896
+        },
+        {
+          "lambda_covariance_fraction": 0.85,
+          "statistic": 4.019818195547618,
+          "p_gaussian_nominal": 0.25933205964164424,
+          "d_statistic_d_lambda": -3.209011948296574
+        },
+        {
+          "lambda_covariance_fraction": 0.86,
+          "statistic": 3.987985944393028,
+          "p_gaussian_nominal": 0.2627643566566836,
+          "d_statistic_d_lambda": -3.157649434975072
+        },
+        {
+          "lambda_covariance_fraction": 0.87,
+          "statistic": 3.956661054000296,
+          "p_gaussian_nominal": 0.2661821418605933,
+          "d_statistic_d_lambda": -3.107532835973359
+        },
+        {
+          "lambda_covariance_fraction": 0.88,
+          "statistic": 3.9258312710732204,
+          "p_gaussian_nominal": 0.26958519259699093,
+          "d_statistic_d_lambda": -3.058621273947008
+        },
+        {
+          "lambda_covariance_fraction": 0.89,
+          "statistic": 3.8954847424795105,
+          "p_gaussian_nominal": 0.2729733000051407,
+          "d_statistic_d_lambda": -3.010875578438548
+        },
+        {
+          "lambda_covariance_fraction": 0.9,
+          "statistic": 3.8656099986231443,
+          "p_gaussian_nominal": 0.2763462684982277,
+          "d_statistic_d_lambda": -2.9642581985542633
+        },
+        {
+          "lambda_covariance_fraction": 0.91,
+          "statistic": 3.83619593766298,
+          "p_gaussian_nominal": 0.27970391525849414,
+          "d_statistic_d_lambda": -2.918733120969212
+        },
+        {
+          "lambda_covariance_fraction": 0.92,
+          "statistic": 3.807231810526278,
+          "p_gaussian_nominal": 0.28304606974880814,
+          "d_statistic_d_lambda": -2.8742657928808386
+        },
+        {
+          "lambda_covariance_fraction": 0.93,
+          "statistic": 3.7787072066694014,
+          "p_gaussian_nominal": 0.2863725732402897,
+          "d_statistic_d_lambda": -2.830823049562512
+        },
+        {
+          "lambda_covariance_fraction": 0.9400000000000001,
+          "statistic": 3.7506120405413297,
+          "p_gaussian_nominal": 0.2896832783555547,
+          "d_statistic_d_lambda": -2.7883730461965395
+        },
+        {
+          "lambda_covariance_fraction": 0.9500000000000001,
+          "statistic": 3.7229365387086926,
+          "p_gaussian_nominal": 0.2929780486272099,
+          "d_statistic_d_lambda": -2.746885193691796
+        },
+        {
+          "lambda_covariance_fraction": 0.96,
+          "statistic": 3.6956712276038326,
+          "p_gaussian_nominal": 0.2962567580711428,
+          "d_statistic_d_lambda": -2.706330098214376
+        },
+        {
+          "lambda_covariance_fraction": 0.97,
+          "statistic": 3.6688069218600505,
+          "p_gaussian_nominal": 0.2995192907742391,
+          "d_statistic_d_lambda": -2.6666795041809075
+        },
+        {
+          "lambda_covariance_fraction": 0.98,
+          "statistic": 3.6423347132005808,
+          "p_gaussian_nominal": 0.30276554049611903,
+          "d_statistic_d_lambda": -2.627906240483514
+        },
+        {
+          "lambda_covariance_fraction": 0.99,
+          "statistic": 3.616245959850053,
+          "p_gaussian_nominal": 0.30599541028447874,
+          "d_statistic_d_lambda": -2.5899841697330555
+        },
+        {
+          "lambda_covariance_fraction": 1.0,
+          "statistic": 3.5905322764392493,
+          "p_gaussian_nominal": 0.309208812103659,
+          "d_statistic_d_lambda": -2.552888140323403
+        }
+      ],
+      "quadratic_nonincreasing_on_grid": true,
+      "largest_dW_dlambda": -2.552888140323403,
+      "smallest_dp_step": 0.0005605728189358391,
+      "minimum_deterministic_calibration_for_mock_ellipsoid": {
+        "vector_icrs": [
+          -0.0027987261128552075,
+          -0.00220401684765756,
+          -0.001586347769967486
+        ],
+        "norm_count_dipole": 0.0038996227210868497,
+        "fraction_of_excess_norm": 0.32528178453364986,
+        "direction": {
+          "unit_icrs": [
+            -0.7176915083916592,
+            -0.5651872002231249,
+            -0.4067951910807825
+          ],
+          "ra_dec_deg": [
+            218.22068519836716,
+            -24.003672068444626
+          ]
+        },
+        "nominal_residual_quadratic": 7.8147279032511765,
+        "lagrange_multiplier_variance_units": 3.876687980658856e-06,
+        "constrained_crosscheck": {
+          "required": true,
+          "method": "SLSQP in Cartesian coordinates",
+          "success": true,
+          "message": "Optimization terminated successfully",
+          "vector_icrs": [
+            -0.0027987261296511805,
+            -0.002204016829706761,
+            -0.0015863477652751723
+          ],
+          "norm_count_dipole": 0.003899622721086804,
+          "vector_difference_norm": 2.5027059581844538e-11,
+          "residual_constraint": -9.059419880941277e-14
+        },
+        "kkt_stationarity_norm": 1.9873754096201567e-18
+      }
+    },
+    "NVSS": {
+      "excess_icrs": [
+        -0.00490214215523786,
+        0.004602117584644181,
+        -0.004066035324664962
+      ],
+      "excess_norm_count_dipole": 0.00785767950698389,
+      "excess_direction": {
+        "unit_icrs": [
+          -0.6238663909466968,
+          0.5856840534859978,
+          -0.517460061975177
+        ],
+        "ra_dec_deg": [
+          136.80807717153897,
+          -31.16203117209592
+        ]
+      },
+      "C_mock": [
+        [
+          1.4787667380804257e-05,
+          5.134853539245969e-08,
+          1.357717620759685e-06
+        ],
+        [
+          5.134853539245969e-08,
+          1.8035643318806147e-05,
+          1.2050925665071515e-06
+        ],
+        [
+          1.357717620759685e-06,
+          1.2050925665071515e-06,
+          2.2965246512614637e-05
+        ]
+      ],
+      "C_total_receipt": [
+        [
+          1.4787667380804257e-05,
+          5.134853539245969e-08,
+          1.357717620759685e-06
+        ],
+        [
+          5.134853539245969e-08,
+          1.8035643318806147e-05,
+          1.2050925665071515e-06
+        ],
+        [
+          1.357717620759685e-06,
+          1.2050925665071515e-06,
+          0.0025229652465126153
+        ]
+      ],
+      "S_receipt": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0025000000000000005
+        ]
+      ],
+      "S_receipt_eigenvalues": [
+        0.0,
+        0.0,
+        0.0025000000000000005
+      ],
+      "S_receipt_psd_tolerance": 3.585351125322967e-17,
+      "S_receipt_psd": true,
+      "n_original_mocks": 500,
+      "original_finite_mock_Pi": {
+        "clopper_pearson_95": [
+          0.286971020243942,
+          0.37107763073119204
+        ],
+        "law": "Poisson + clustering mocks (N=500), same estimator",
+        "n_exceed": 164,
+        "n_null": 500,
+        "p_value": 0.32934131736526945,
+        "statistic": 3.484392309646847
+      },
+      "saved_gaussian_with_receipt": {
+        "dof": 3,
+        "law": "gaussian with the mock covariance + receipt systematics",
+        "p_value": 0.42116777851279785,
+        "statistic": 2.8141993730196733
+      },
+      "lambda0_nominal": {
+        "lambda_covariance_fraction": 0.0,
+        "statistic": 3.484392309646847,
+        "p_gaussian_nominal": 0.3227920348190415,
+        "d_statistic_d_lambda": -74.28315970073784
+      },
+      "lambda1_nominal": {
+        "lambda_covariance_fraction": 1.0,
+        "statistic": 2.8141993730196733,
+        "p_gaussian_nominal": 0.42116777851279785,
+        "d_statistic_d_lambda": -0.006046573329869997
+      },
+      "lambda1_saved_gaussian_p_error_abs": 0.0,
+      "nominal_p05_crossing": null,
+      "crossing_interpretation": "no crossing in [0,1]; already nominal p>=0.05 at zero",
+      "path": [
+        {
+          "lambda_covariance_fraction": 0.0,
+          "statistic": 3.484392309646847,
+          "p_gaussian_nominal": 0.3227920348190415,
+          "d_statistic_d_lambda": -74.28315970073784
+        },
+        {
+          "lambda_covariance_fraction": 0.01,
+          "statistic": 3.1303906830592845,
+          "p_gaussian_nominal": 0.37195512332396147,
+          "d_statistic_d_lambda": -16.870196708311976
+        },
+        {
+          "lambda_covariance_fraction": 0.02,
+          "statistic": 3.019653378520839,
+          "p_gaussian_nominal": 0.38860492649352546,
+          "d_statistic_d_lambda": -7.268884191728834
+        },
+        {
+          "lambda_covariance_fraction": 0.03,
+          "statistic": 2.9655529993138203,
+          "p_gaussian_nominal": 0.3969667756646319,
+          "d_statistic_d_lambda": -4.026547889803543
+        },
+        {
+          "lambda_covariance_fraction": 0.04,
+          "statistic": 2.9334875144456403,
+          "p_gaussian_nominal": 0.40199418613821425,
+          "d_statistic_d_lambda": -2.5535405214853584
+        },
+        {
+          "lambda_covariance_fraction": 0.05,
+          "statistic": 2.912272508014954,
+          "p_gaussian_nominal": 0.40534973681188,
+          "d_statistic_d_lambda": -1.7625586673371716
+        },
+        {
+          "lambda_covariance_fraction": 0.06,
+          "statistic": 2.8971974995553316,
+          "p_gaussian_nominal": 0.40774838136469393,
+          "d_statistic_d_lambda": -1.2893521462240152
+        },
+        {
+          "lambda_covariance_fraction": 0.07,
+          "statistic": 2.8859339179317116,
+          "p_gaussian_nominal": 0.40954832001175245,
+          "d_statistic_d_lambda": -0.9839691302603787
+        },
+        {
+          "lambda_covariance_fraction": 0.08,
+          "statistic": 2.877198516062708,
+          "p_gaussian_nominal": 0.4109488201870205,
+          "d_statistic_d_lambda": -0.7755044692590916
+        },
+        {
+          "lambda_covariance_fraction": 0.09,
+          "statistic": 2.8702259849835414,
+          "p_gaussian_nominal": 0.4120695566916476,
+          "d_statistic_d_lambda": -0.6268976076488739
+        },
+        {
+          "lambda_covariance_fraction": 0.1,
+          "statistic": 2.864531594631243,
+          "p_gaussian_nominal": 0.4129867406883966,
+          "d_statistic_d_lambda": -0.517246853213542
+        },
+        {
+          "lambda_covariance_fraction": 0.11,
+          "statistic": 2.859793406765221,
+          "p_gaussian_nominal": 0.4137512078132648,
+          "d_statistic_d_lambda": -0.434036942211164
+        },
+        {
+          "lambda_covariance_fraction": 0.12,
+          "statistic": 2.8557892283260062,
+          "p_gaussian_nominal": 0.41439816755677106,
+          "d_statistic_d_lambda": -0.3694027722938364
+        },
+        {
+          "lambda_covariance_fraction": 0.13,
+          "statistic": 2.852360758770496,
+          "p_gaussian_nominal": 0.4149527786505367,
+          "d_statistic_d_lambda": -0.31820019703883123
+        },
+        {
+          "lambda_covariance_fraction": 0.14,
+          "statistic": 2.8493921646249176,
+          "p_gaussian_nominal": 0.41543349638097116,
+          "d_statistic_d_lambda": -0.27694989767995165
+        },
+        {
+          "lambda_covariance_fraction": 0.15,
+          "statistic": 2.8467967338131115,
+          "p_gaussian_nominal": 0.41585416572986034,
+          "d_statistic_d_lambda": -0.24323031549397975
+        },
+        {
+          "lambda_covariance_fraction": 0.16,
+          "statistic": 2.844508265171364,
+          "p_gaussian_nominal": 0.4162253763383499,
+          "d_statistic_d_lambda": -0.21531397982303824
+        },
+        {
+          "lambda_covariance_fraction": 0.17,
+          "statistic": 2.842475342478975,
+          "p_gaussian_nominal": 0.4165553661438406,
+          "d_statistic_d_lambda": -0.1919417715758449
+        },
+        {
+          "lambda_covariance_fraction": 0.18,
+          "statistic": 2.8406574252545287,
+          "p_gaussian_nominal": 0.4168506398504682,
+          "d_statistic_d_lambda": -0.17217841680878143
+        },
+        {
+          "lambda_covariance_fraction": 0.19,
+          "statistic": 2.8390221175892414,
+          "p_gaussian_nominal": 0.4171164019755348,
+          "d_statistic_d_lambda": -0.15531744394634897
+        },
+        {
+          "lambda_covariance_fraction": 0.2,
+          "statistic": 2.837543220656294,
+          "p_gaussian_nominal": 0.4173568662417021,
+          "d_statistic_d_lambda": -0.14081716017922463
+        },
+        {
+          "lambda_covariance_fraction": 0.21,
+          "statistic": 2.8361993185253054,
+          "p_gaussian_nominal": 0.41757548063661964,
+          "d_statistic_d_lambda": -0.1282565942513905
+        },
+        {
+          "lambda_covariance_fraction": 0.22,
+          "statistic": 2.834972734337126,
+          "p_gaussian_nominal": 0.41777509379234,
+          "d_statistic_d_lambda": -0.11730459392557523
+        },
+        {
+          "lambda_covariance_fraction": 0.23,
+          "statistic": 2.8338487484125023,
+          "p_gaussian_nominal": 0.41795807979070465,
+          "d_statistic_d_lambda": -0.10769777350346922
+        },
+        {
+          "lambda_covariance_fraction": 0.24,
+          "statistic": 2.8328150046894387,
+          "p_gaussian_nominal": 0.4181264330296969,
+          "d_statistic_d_lambda": -0.09922452899550362
+        },
+        {
+          "lambda_covariance_fraction": 0.25,
+          "statistic": 2.831861054610061,
+          "p_gaussian_nominal": 0.4182818412074881,
+          "d_statistic_d_lambda": -0.09171328532933239
+        },
+        {
+          "lambda_covariance_fraction": 0.26,
+          "statistic": 2.8309780027033455,
+          "p_gaussian_nominal": 0.41842574209483396,
+          "d_statistic_d_lambda": -0.08502374188797271
+        },
+        {
+          "lambda_covariance_fraction": 0.27,
+          "statistic": 2.830158228358125,
+          "p_gaussian_nominal": 0.418559368147004,
+          "d_statistic_d_lambda": -0.07904027300597055
+        },
+        {
+          "lambda_covariance_fraction": 0.28,
+          "statistic": 2.82939516533866,
+          "p_gaussian_nominal": 0.41868378188932254,
+          "d_statistic_d_lambda": -0.07366689783972495
+        },
+        {
+          "lambda_covariance_fraction": 0.29,
+          "statistic": 2.8286831255291447,
+          "p_gaussian_nominal": 0.41879990422830615,
+          "d_statistic_d_lambda": -0.06882340714778745
+        },
+        {
+          "lambda_covariance_fraction": 0.3,
+          "statistic": 2.828017156891043,
+          "p_gaussian_nominal": 0.4189085372852356,
+          "d_statistic_d_lambda": -0.06444235258268943
+        },
+        {
+          "lambda_covariance_fraction": 0.31,
+          "statistic": 2.827392928128171,
+          "p_gaussian_nominal": 0.4190103829499513,
+          "d_statistic_d_lambda": -0.060466685771141074
+        },
+        {
+          "lambda_covariance_fraction": 0.32,
+          "statistic": 2.82680663437885,
+          "p_gaussian_nominal": 0.4191060580623782,
+          "d_statistic_d_lambda": -0.05684789171246426
+        },
+        {
+          "lambda_covariance_fraction": 0.33,
+          "statistic": 2.8262549195945734,
+          "p_gaussian_nominal": 0.4191961069158423,
+          "d_statistic_d_lambda": -0.053544501655034625
+        },
+        {
+          "lambda_covariance_fraction": 0.34,
+          "statistic": 2.825734812259336,
+          "p_gaussian_nominal": 0.41928101161764475,
+          "d_statistic_d_lambda": -0.05052089977625233
+        },
+        {
+          "lambda_covariance_fraction": 0.35000000000000003,
+          "statistic": 2.82524367184912,
+          "p_gaussian_nominal": 0.4193612007234071,
+          "d_statistic_d_lambda": -0.04774635915348817
+        },
+        {
+          "lambda_covariance_fraction": 0.36,
+          "statistic": 2.8247791439947076,
+          "p_gaussian_nominal": 0.4194370564716675,
+          "d_statistic_d_lambda": -0.0451942580229892
+        },
+        {
+          "lambda_covariance_fraction": 0.37,
+          "statistic": 2.8243391227407746,
+          "p_gaussian_nominal": 0.4195089208765056,
+          "d_statistic_d_lambda": -0.04284143879831655
+        },
+        {
+          "lambda_covariance_fraction": 0.38,
+          "statistic": 2.8239217186246357,
+          "p_gaussian_nominal": 0.4195771008831043,
+          "d_statistic_d_lambda": -0.04066768088489403
+        },
+        {
+          "lambda_covariance_fraction": 0.39,
+          "statistic": 2.8235252315539316,
+          "p_gaussian_nominal": 0.41964187275018683,
+          "d_statistic_d_lambda": -0.038655264774111034
+        },
+        {
+          "lambda_covariance_fraction": 0.4,
+          "statistic": 2.8231481276621246,
+          "p_gaussian_nominal": 0.4197034857912937,
+          "d_statistic_d_lambda": -0.03678860979141795
+        },
+        {
+          "lambda_covariance_fraction": 0.41000000000000003,
+          "statistic": 2.8227890194774163,
+          "p_gaussian_nominal": 0.41976216558172874,
+          "d_statistic_d_lambda": -0.035053971611262356
+        },
+        {
+          "lambda_covariance_fraction": 0.42,
+          "statistic": 2.8224466488645694,
+          "p_gaussian_nominal": 0.41981811671813696,
+          "d_statistic_d_lambda": -0.03343918852942209
+        },
+        {
+          "lambda_covariance_fraction": 0.43,
+          "statistic": 2.8221198722975904,
+          "p_gaussian_nominal": 0.41987152520187,
+          "d_statistic_d_lambda": -0.031933467713359504
+        },
+        {
+          "lambda_covariance_fraction": 0.44,
+          "statistic": 2.821807648099972,
+          "p_gaussian_nominal": 0.41992256050464116,
+          "d_statistic_d_lambda": -0.030527204390443898
+        },
+        {
+          "lambda_covariance_fraction": 0.45,
+          "statistic": 2.8215090253524986,
+          "p_gaussian_nominal": 0.41997137736481716,
+          "d_statistic_d_lambda": -0.02921182829854257
+        },
+        {
+          "lambda_covariance_fraction": 0.46,
+          "statistic": 2.821223134219776,
+          "p_gaussian_nominal": 0.42001811735444194,
+          "d_statistic_d_lambda": -0.02797967280042835
+        },
+        {
+          "lambda_covariance_fraction": 0.47000000000000003,
+          "statistic": 2.8209491774882123,
+          "p_gaussian_nominal": 0.4200629102504292,
+          "d_statistic_d_lambda": -0.02682386291803387
+        },
+        {
+          "lambda_covariance_fraction": 0.48,
+          "statistic": 2.8206864231420585,
+          "p_gaussian_nominal": 0.42010587523788967,
+          "d_statistic_d_lambda": -0.025738219224282072
+        },
+        {
+          "lambda_covariance_fraction": 0.49,
+          "statistic": 2.820434197831923,
+          "p_gaussian_nominal": 0.4201471219690891,
+          "d_statistic_d_lambda": -0.024717175076745836
+        },
+        {
+          "lambda_covariance_fraction": 0.5,
+          "statistic": 2.820191881113048,
+          "p_gaussian_nominal": 0.42018675149785045,
+          "d_statistic_d_lambda": -0.023755705117648677
+        },
+        {
+          "lambda_covariance_fraction": 0.51,
+          "statistic": 2.8199589003495484,
+          "p_gaussian_nominal": 0.4202248571061603,
+          "d_statistic_d_lambda": -0.022849263321005512
+        },
+        {
+          "lambda_covariance_fraction": 0.52,
+          "statistic": 2.8197347261965047,
+          "p_gaussian_nominal": 0.42026152503721914,
+          "d_statistic_d_lambda": -0.02199372915730667
+        },
+        {
+          "lambda_covariance_fraction": 0.53,
+          "statistic": 2.819518868584883,
+          "p_gaussian_nominal": 0.42029683514705163,
+          "d_statistic_d_lambda": -0.02118536068254433
+        },
+        {
+          "lambda_covariance_fraction": 0.54,
+          "statistic": 2.8193108731451706,
+          "p_gaussian_nominal": 0.4203308614850537,
+          "d_statistic_d_lambda": -0.020420753552127992
+        },
+        {
+          "lambda_covariance_fraction": 0.55,
+          "statistic": 2.819110318014816,
+          "p_gaussian_nominal": 0.4203636728123422,
+          "d_statistic_d_lambda": -0.01969680511964807
+        },
+        {
+          "lambda_covariance_fraction": 0.56,
+          "statistic": 2.8189168109822536,
+          "p_gaussian_nominal": 0.42039533306555765,
+          "d_statistic_d_lambda": -0.019010682912100108
+        },
+        {
+          "lambda_covariance_fraction": 0.5700000000000001,
+          "statistic": 2.818729986926827,
+          "p_gaussian_nominal": 0.4204259017726907,
+          "d_statistic_d_lambda": -0.01835979688230309
+        },
+        {
+          "lambda_covariance_fraction": 0.58,
+          "statistic": 2.818549505519462,
+          "p_gaussian_nominal": 0.4204554344266328,
+          "d_statistic_d_lambda": -0.017741774930004322
+        },
+        {
+          "lambda_covariance_fraction": 0.59,
+          "statistic": 2.8183750491536093,
+          "p_gaussian_nominal": 0.42048398282137656,
+          "d_statistic_d_lambda": -0.017154441258902003
+        },
+        {
+          "lambda_covariance_fraction": 0.6,
+          "statistic": 2.818206321080007,
+          "p_gaussian_nominal": 0.4205115953551526,
+          "d_statistic_d_lambda": -0.016595797200226664
+        },
+        {
+          "lambda_covariance_fraction": 0.61,
+          "statistic": 2.818043043722205,
+          "p_gaussian_nominal": 0.4205383173042362,
+          "d_statistic_d_lambda": -0.01606400418677358
+        },
+        {
+          "lambda_covariance_fraction": 0.62,
+          "statistic": 2.817884957152749,
+          "p_gaussian_nominal": 0.4205641910706809,
+          "d_statistic_d_lambda": -0.015557368606134674
+        },
+        {
+          "lambda_covariance_fraction": 0.63,
+          "statistic": 2.8177318177124184,
+          "p_gaussian_nominal": 0.4205892564068314,
+          "d_statistic_d_lambda": -0.015074328299771888
+        },
+        {
+          "lambda_covariance_fraction": 0.64,
+          "statistic": 2.817583396757096,
+          "p_gaussian_nominal": 0.42061355061911565,
+          "d_statistic_d_lambda": -0.014613440506675398
+        },
+        {
+          "lambda_covariance_fraction": 0.65,
+          "statistic": 2.8174394795187183,
+          "p_gaussian_nominal": 0.42063710875331173,
+          "d_statistic_d_lambda": -0.014173371077619346
+        },
+        {
+          "lambda_covariance_fraction": 0.66,
+          "statistic": 2.8172998640683593,
+          "p_gaussian_nominal": 0.4206599637632277,
+          "d_statistic_d_lambda": -0.01375288480925195
+        },
+        {
+          "lambda_covariance_fraction": 0.67,
+          "statistic": 2.8171643603709327,
+          "p_gaussian_nominal": 0.42068214666450054,
+          "d_statistic_d_lambda": -0.013350836767087572
+        },
+        {
+          "lambda_covariance_fraction": 0.68,
+          "statistic": 2.817032789422196,
+          "p_gaussian_nominal": 0.420703686675022,
+          "d_statistic_d_lambda": -0.012966164483442282
+        },
+        {
+          "lambda_covariance_fraction": 0.6900000000000001,
+          "statistic": 2.81690498245983,
+          "p_gaussian_nominal": 0.42072461134332995,
+          "d_statistic_d_lambda": -0.012597880930918112
+        },
+        {
+          "lambda_covariance_fraction": 0.7000000000000001,
+          "statistic": 2.8167807802412588,
+          "p_gaussian_nominal": 0.4207449466661528,
+          "d_statistic_d_lambda": -0.012245068184566135
+        },
+        {
+          "lambda_covariance_fraction": 0.71,
+          "statistic": 2.816660032381736,
+          "p_gaussian_nominal": 0.4207647171961576,
+          "d_statistic_d_lambda": -0.011906871696653607
+        },
+        {
+          "lambda_covariance_fraction": 0.72,
+          "statistic": 2.8165425967469027,
+          "p_gaussian_nominal": 0.4207839461408449,
+          "d_statistic_d_lambda": -0.011582495117285829
+        },
+        {
+          "lambda_covariance_fraction": 0.73,
+          "statistic": 2.816428338894643,
+          "p_gaussian_nominal": 0.4208026554534262,
+          "d_statistic_d_lambda": -0.011271195602205112
+        },
+        {
+          "lambda_covariance_fraction": 0.74,
+          "statistic": 2.8163171315616666,
+          "p_gaussian_nominal": 0.420820865916432,
+          "d_statistic_d_lambda": -0.010972279556091495
+        },
+        {
+          "lambda_covariance_fraction": 0.75,
+          "statistic": 2.81620885419065,
+          "p_gaussian_nominal": 0.42083859721871997,
+          "d_statistic_d_lambda": -0.010685098765775227
+        },
+        {
+          "lambda_covariance_fraction": 0.76,
+          "statistic": 2.816103392494284,
+          "p_gaussian_nominal": 0.42085586802648256,
+          "d_statistic_d_lambda": -0.010409046883070849
+        },
+        {
+          "lambda_covariance_fraction": 0.77,
+          "statistic": 2.816000638052886,
+          "p_gaussian_nominal": 0.42087269604879496,
+          "d_statistic_d_lambda": -0.010143556221566543
+        },
+        {
+          "lambda_covariance_fraction": 0.78,
+          "statistic": 2.815900487942606,
+          "p_gaussian_nominal": 0.420889098098184,
+          "d_statistic_d_lambda": -0.009888094835744057
+        },
+        {
+          "lambda_covariance_fraction": 0.79,
+          "statistic": 2.8158028443915577,
+          "p_gaussian_nominal": 0.420905090146655,
+          "d_statistic_d_lambda": -0.009642163854343749
+        },
+        {
+          "lambda_covariance_fraction": 0.8,
+          "statistic": 2.8157076144614397,
+          "p_gaussian_nominal": 0.4209206873775698,
+          "d_statistic_d_lambda": -0.009405295042993613
+        },
+        {
+          "lambda_covariance_fraction": 0.81,
+          "statistic": 2.815614709752484,
+          "p_gaussian_nominal": 0.4209359042337295,
+          "d_statistic_d_lambda": -0.009177048573849099
+        },
+        {
+          "lambda_covariance_fraction": 0.8200000000000001,
+          "statistic": 2.8155240461297564,
+          "p_gaussian_nominal": 0.42095075446197905,
+          "d_statistic_d_lambda": -0.008957010982391302
+        },
+        {
+          "lambda_covariance_fraction": 0.8300000000000001,
+          "statistic": 2.815435543469022,
+          "p_gaussian_nominal": 0.42096525115463046,
+          "d_statistic_d_lambda": -0.008744793293647546
+        },
+        {
+          "lambda_covariance_fraction": 0.84,
+          "statistic": 2.8153491254205787,
+          "p_gaussian_nominal": 0.42097940678795864,
+          "d_statistic_d_lambda": -0.008540029301967017
+        },
+        {
+          "lambda_covariance_fraction": 0.85,
+          "statistic": 2.8152647191895745,
+          "p_gaussian_nominal": 0.42099323325801496,
+          "d_statistic_d_lambda": -0.008342373990136667
+        },
+        {
+          "lambda_covariance_fraction": 0.86,
+          "statistic": 2.815182255331496,
+          "p_gaussian_nominal": 0.42100674191396736,
+          "d_statistic_d_lambda": -0.008151502075085935
+        },
+        {
+          "lambda_covariance_fraction": 0.87,
+          "statistic": 2.8151016675616156,
+          "p_gaussian_nominal": 0.42101994358917183,
+          "d_statistic_d_lambda": -0.007967106668726772
+        },
+        {
+          "lambda_covariance_fraction": 0.88,
+          "statistic": 2.815022892577296,
+          "p_gaussian_nominal": 0.4210328486301457,
+          "d_statistic_d_lambda": -0.007788898043628243
+        },
+        {
+          "lambda_covariance_fraction": 0.89,
+          "statistic": 2.814945869892153,
+          "p_gaussian_nominal": 0.4210454669236128,
+          "d_statistic_d_lambda": -0.007616602494250344
+        },
+        {
+          "lambda_covariance_fraction": 0.9,
+          "statistic": 2.814870541681164,
+          "p_gaussian_nominal": 0.4210578079217623,
+          "d_statistic_d_lambda": -0.007449961285374596
+        },
+        {
+          "lambda_covariance_fraction": 0.91,
+          "statistic": 2.814796852635888,
+          "p_gaussian_nominal": 0.42106988066586404,
+          "d_statistic_d_lambda": -0.007288729680183619
+        },
+        {
+          "lambda_covariance_fraction": 0.92,
+          "statistic": 2.814724749829035,
+          "p_gaussian_nominal": 0.42108169380835647,
+          "d_statistic_d_lambda": -0.007132676041168717
+        },
+        {
+          "lambda_covariance_fraction": 0.93,
+          "statistic": 2.8146541825876894,
+          "p_gaussian_nominal": 0.4210932556335292,
+          "d_statistic_d_lambda": -0.006981580997694953
+        },
+        {
+          "lambda_covariance_fraction": 0.9400000000000001,
+          "statistic": 2.814585102374543,
+          "p_gaussian_nominal": 0.4211045740768955,
+          "d_statistic_d_lambda": -0.006835236674635023
+        },
+        {
+          "lambda_covariance_fraction": 0.9500000000000001,
+          "statistic": 2.814517462676568,
+          "p_gaussian_nominal": 0.42111565674335616,
+          "d_statistic_d_lambda": -0.006693445977004963
+        },
+        {
+          "lambda_covariance_fraction": 0.96,
+          "statistic": 2.8144512189005697,
+          "p_gaussian_nominal": 0.42112651092424047,
+          "d_statistic_d_lambda": -0.006556021926002835
+        },
+        {
+          "lambda_covariance_fraction": 0.97,
+          "statistic": 2.8143863282751482,
+          "p_gaussian_nominal": 0.421137143613303,
+          "d_statistic_d_lambda": -0.006422787042272013
+        },
+        {
+          "lambda_covariance_fraction": 0.98,
+          "statistic": 2.8143227497586096,
+          "p_gaussian_nominal": 0.42114756152174926,
+          "d_statistic_d_lambda": -0.006293572772589118
+        },
+        {
+          "lambda_covariance_fraction": 0.99,
+          "statistic": 2.8142604439523953,
+          "p_gaussian_nominal": 0.4211577710923641,
+          "d_statistic_d_lambda": -0.006168218956516945
+        },
+        {
+          "lambda_covariance_fraction": 1.0,
+          "statistic": 2.8141993730196733,
+          "p_gaussian_nominal": 0.42116777851279785,
+          "d_statistic_d_lambda": -0.006046573329869997
+        }
+      ],
+      "quadratic_nonincreasing_on_grid": true,
+      "largest_dW_dlambda": -0.006046573329869997,
+      "smallest_dp_step": 1.0007420433777447e-05,
+      "minimum_deterministic_calibration_for_mock_ellipsoid": {
+        "vector_icrs": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "norm_count_dipole": 0.0,
+        "fraction_of_excess_norm": 0.0,
+        "direction": {
+          "unit_icrs": null,
+          "ra_dec_deg": null,
+          "reason": "zero vector has no direction"
+        },
+        "nominal_residual_quadratic": 3.484392309646847,
+        "lagrange_multiplier_variance_units": 0.0,
+        "constrained_crosscheck": {
+          "required": false,
+          "reason": "origin already belongs to the ellipsoid; objective norm has lower bound zero"
+        },
+        "kkt_stationarity_norm": 0.0
+      }
+    }
+  },
+  "scope": [
+    "C(lambda)=C_mock+lambda*S_receipt for lambda in [0,1], conditioning on existing saved matrices and fixed excess vector.",
+    "The original finite-mock Pi values remain distinct from every nominal Gaussian tail in this output.",
+    "Covariances are estimated from 500 data-conditioned mocks; chi-square tails and ellipsoid levels are nominal, not an exact finite-sample confidence theorem.",
+    "The PSD covariance increment implies d(e^T C^-1 e)/d lambda = -(C^-1 e)^T S_receipt (C^-1 e) <= 0 for fixed e; this is not a monotonicity claim for refitted CF4 Wald statistics.",
+    "The deterministic calibration is the minimum Euclidean count-dipole offset b satisfying (e-b)^T C_mock^-1(e-b)<=chi2_3(.95); it is a sensitivity threshold, not measured contamination.",
+    "No velocity conversion is performed because a physical population response and interpretation must be specified.",
+    "No new simulations, null calibration, cross-catalogue probability product, or global-tilt inference was performed."
+  ]
+}

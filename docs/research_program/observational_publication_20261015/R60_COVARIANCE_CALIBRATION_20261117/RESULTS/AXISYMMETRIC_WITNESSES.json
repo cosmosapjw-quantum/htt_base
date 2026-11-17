@@ -1,0 +1,706 @@
+{
+  "schema": "htt.axisym_feasible_witness/1",
+  "source_file": "docs/research_program/observational_publication_20261015/R58_MIXED_TENSOR_CONVERGENCE_20261117/RESULTS/NATIVE_REPLAY/OWNED_TENSOR_RESULT.json",
+  "source_sha256": "225e4ddd8c99552560ff8b54ad5b6c4ca5ffb52efbc5ff75d81ab2148a086711",
+  "source_read_head": "6fe19c5139004a1f281ec85c592e5ab4c7590d5f",
+  "source_claim_tier": "C0",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1"
+  },
+  "source_estimate_parameter_names": [
+    "V_x_km_s",
+    "V_y_km_s",
+    "V_z_km_s",
+    "dH_x",
+    "dH_y",
+    "dH_z",
+    "kappa_0",
+    "kappa_1",
+    "kappa_2",
+    "kappa_3",
+    "kappa_4"
+  ],
+  "basis": [
+    [
+      [
+        0.7071067811865475,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -0.7071067811865475,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.4082482904638631,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.4082482904638631,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        -0.8164965809277261
+      ]
+    ],
+    [
+      [
+        0.0,
+        0.7071067811865475,
+        0.0
+      ],
+      [
+        0.7071067811865475,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.0,
+        0.0,
+        0.7071067811865475
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.7071067811865475,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.7071067811865475
+      ],
+      [
+        0.0,
+        0.7071067811865475,
+        0.0
+      ]
+    ]
+  ],
+  "basis_gram_max_error": 2.220446049250313e-16,
+  "frame": "ICRS/J2000; sourceward directions; unit Frobenius STF5",
+  "model": "K_candidate = a * sqrt(3/2) * (n n^T - I/3), signed a; n and -n equivalent",
+  "confidence_rule": {
+    "marginal_5d_radius_squared": 11.070497693516351,
+    "joint_11d_radius_squared": 19.67513757268249,
+    "intersection_witness": "candidate_delta_chi2 <= chi2_5_0.95",
+    "law": "R58 retained fixed-Gaussian experiment, per nuisance variant",
+    "interpretation": "Existence of an axisymmetric tensor in the marginal confidence ellipsoid; no rejection/non-rejection p-value is constructed."
+  },
+  "algorithm": {
+    "grid": "2048 deterministic Fibonacci axes",
+    "starts": "12 smallest analytically amplitude-profiled distances",
+    "local_method": "scipy.optimize.minimize BFGS",
+    "gtol": 1e-09,
+    "global_minimum_proven": false
+  },
+  "variants": {
+    "log": {
+      "observed_kappa5": [
+        -0.014580425600706335,
+        -0.027681621709506308,
+        -0.003632636649056856,
+        0.011599840930912939,
+        0.0014311729121907065
+      ],
+      "observed_eigenvalues": [
+        -0.023410489862294416,
+        -0.0006758909684421782,
+        0.024086380830736595
+      ],
+      "observed_invariant_shape": 0.07386010925564511,
+      "candidate_axis_icrs_unit": [
+        0.9842068992092915,
+        0.11072486167054844,
+        -0.13811873354787735
+      ],
+      "candidate_axis_ra_dec_deg": [
+        6.418877877358969,
+        -7.939000057768554
+      ],
+      "candidate_signed_frobenius_amplitude": -0.025865193849035715,
+      "candidate_kappa5": [
+        -0.021423350905393393,
+        -0.012192459828648278,
+        -0.004882114002617908,
+        0.006089972865211562,
+        0.0006851317579867436
+      ],
+      "candidate_matrix": [
+        [
+          -0.020126147582537612,
+          -0.003452175917776921,
+          0.004306261110233163
+        ],
+        [
+          -0.003452175917776921,
+          0.010171045819347645,
+          0.00048446131207868694
+        ],
+        [
+          0.004306261110233163,
+          0.00048446131207868694,
+          0.009955101763189969
+        ]
+      ],
+      "candidate_eigenvalues": [
+        -0.02111884234277051,
+        0.010559421171385246,
+        0.01055942117138526
+      ],
+      "candidate_invariant_shape": -1.0000000000000002,
+      "candidate_delta_chi2": 5.028793300415738,
+      "full_11d_profile_lift": [
+        -416.8460125811645,
+        -2.1504981659533193,
+        -171.99836957041867,
+        0.03749430744642758,
+        -0.0008903867121174205,
+        -0.013080241198098938,
+        -0.021423350905393393,
+        -0.012192459828648278,
+        -0.004882114002617908,
+        0.006089972865211563,
+        0.0006851317579867435
+      ],
+      "full_11d_profile_lift_delta_chi2": 5.028793300415738,
+      "profile_lift_agreement_abs": 0.0,
+      "candidate_norm_agreement_abs": 3.469446951953614e-18,
+      "candidate_trace_abs": 1.734723475976807e-18,
+      "candidate_axis_norm_error": 0.0,
+      "intersects_marginal_95_ellipsoid": true,
+      "margin_below_threshold": 6.041704393100614,
+      "local_candidate_objective_range": [
+        5.028793300415738,
+        5.028793300415748
+      ],
+      "global_minimum_proven": false
+    },
+    "log_mono": {
+      "observed_kappa5": [
+        -0.01855450888945016,
+        -0.028050513147249587,
+        -0.0036359832830233306,
+        0.011378278170702085,
+        0.0021455792837436396
+      ],
+      "observed_eigenvalues": [
+        -0.026176545271998333,
+        0.0018951295694970218,
+        0.02428141570250131
+      ],
+      "observed_invariant_shape": -0.1936542257783719,
+      "candidate_axis_icrs_unit": [
+        0.987010000293756,
+        0.09440020569738228,
+        -0.1299994634004757
+      ],
+      "candidate_axis_ra_dec_deg": [
+        5.463299416313029,
+        -7.46956130839573
+      ],
+      "candidate_signed_frobenius_amplitude": -0.02962899660186554,
+      "candidate_kappa5": [
+        -0.024768498957749067,
+        -0.01406340943763582,
+        -0.004781587032935294,
+        0.0065847711230304865,
+        0.0006297846509146391
+      ],
+      "candidate_matrix": [
+        [
+          -0.02325533643384448,
+          -0.0033810926158222092,
+          0.004656136313656215
+        ],
+        [
+          -0.0033810926158222092,
+          0.011772610711828117,
+          0.0004453249973489439
+        ],
+        [
+          0.004656136313656215,
+          0.0004453249973489439,
+          0.011482725722016364
+        ]
+      ],
+      "candidate_eigenvalues": [
+        -0.024191974421742424,
+        0.012095987210871207,
+        0.012095987210871215
+      ],
+      "candidate_invariant_shape": -1.0,
+      "candidate_delta_chi2": 4.117408667569404,
+      "full_11d_profile_lift": [
+        -188.19774147888222,
+        9.031038078834257,
+        -212.97252809610382,
+        0.014161500341129403,
+        -0.0018600905620813543,
+        -0.008960555840694932,
+        -0.024768498957749067,
+        -0.01406340943763582,
+        -0.004781587032935294,
+        0.006584771123030486,
+        0.0006297846509146388
+      ],
+      "full_11d_profile_lift_delta_chi2": 4.117408667569404,
+      "profile_lift_agreement_abs": 0.0,
+      "candidate_norm_agreement_abs": 3.469446951953614e-18,
+      "candidate_trace_abs": 1.734723475976807e-18,
+      "candidate_axis_norm_error": 1.1102230246251565e-16,
+      "intersects_marginal_95_ellipsoid": true,
+      "margin_below_threshold": 6.953089025946947,
+      "local_candidate_objective_range": [
+        4.117408667569404,
+        4.117408667569409
+      ],
+      "global_minimum_proven": false
+    },
+    "log_mono_error": {
+      "observed_kappa5": [
+        -0.017814024497112328,
+        -0.027496849375236485,
+        -0.0027142058928952464,
+        0.011421077042282866,
+        0.0017820782847977241
+      ],
+      "observed_eigenvalues": [
+        -0.025356482834319273,
+        0.0014985035131342085,
+        0.023857979321185056
+      ],
+      "observed_invariant_shape": -0.1574108723143138,
+      "candidate_axis_icrs_unit": [
+        0.9882820672942513,
+        0.07389172907008192,
+        -0.13356110152149364
+      ],
+      "candidate_axis_ra_dec_deg": [
+        4.275926499259797,
+        -7.675423591689009
+      ],
+      "candidate_signed_frobenius_amplitude": -0.028605816221328375,
+      "candidate_kappa5": [
+        -0.024060917700715504,
+        -0.013537477920755756,
+        -0.003618192888925288,
+        0.006539971845884986,
+        0.0004889796584948191
+      ],
+      "candidate_matrix": [
+        [
+          -0.022540290286088192,
+          -0.0025584487274000157,
+          0.004624458440994375
+        ],
+        [
+          -0.0025584487274000157,
+          0.011486985849406536,
+          0.00034576083238396874
+        ],
+        [
+          0.004624458440994375,
+          0.00034576083238396874,
+          0.011053304436681658
+        ]
+      ],
+      "candidate_eigenvalues": [
+        -0.023356551139361498,
+        0.011678275569680747,
+        0.011678275569680756
+      ],
+      "candidate_invariant_shape": -0.9999999999999997,
+      "candidate_delta_chi2": 4.090650559214897,
+      "full_11d_profile_lift": [
+        -171.81827606456156,
+        19.566937227470525,
+        -226.28116716676027,
+        0.012106052850324494,
+        -0.0031317818977866854,
+        -0.0061735162411732224,
+        -0.024060917700715504,
+        -0.013537477920755759,
+        -0.003618192888925288,
+        0.006539971845884987,
+        0.0004889796584948186
+      ],
+      "full_11d_profile_lift_delta_chi2": 4.090650559214894,
+      "profile_lift_agreement_abs": 2.6645352591003757e-15,
+      "candidate_norm_agreement_abs": 3.469446951953614e-18,
+      "candidate_trace_abs": 1.734723475976807e-18,
+      "candidate_axis_norm_error": 0.0,
+      "intersects_marginal_95_ellipsoid": true,
+      "margin_below_threshold": 6.979847134301455,
+      "local_candidate_objective_range": [
+        4.090650559214897,
+        4.090650559214903
+      ],
+      "global_minimum_proven": false
+    },
+    "log_mono_galactic": {
+      "observed_kappa5": [
+        -0.016513864954077778,
+        -0.026751319121523946,
+        -0.003036527730730467,
+        0.008068439710694549,
+        0.0012405926687600374
+      ],
+      "observed_eigenvalues": [
+        -0.023525731274878246,
+        0.000945979472029882,
+        0.022579751802848356
+      ],
+      "observed_invariant_shape": -0.10636676339255337,
+      "candidate_axis_icrs_unit": [
+        -0.14875787355993336,
+        -0.08255398342445903,
+        0.9854217040813953
+      ],
+      "candidate_axis_ra_dec_deg": [
+        209.02832048933632,
+        80.20464832046724
+      ],
+      "candidate_signed_frobenius_amplitude": 0.0243283064176503,
+      "candidate_kappa5": [
+        0.00032264423779691613,
+        -0.023272066289638522,
+        0.0005174763426063326,
+        -0.006176957164272438,
+        -0.0034279356591333135
+      ],
+      "candidate_matrix": [
+        [
+          -0.00927263734984966,
+          0.0003659110309605509,
+          -0.004367768297955868
+        ],
+        [
+          0.0003659110309605509,
+          -0.009728925206763588,
+          -0.0024239165500443433
+        ],
+        [
+          -0.004367768297955868,
+          -0.0024239165500443433,
+          0.019001562556613248
+        ]
+      ],
+      "candidate_eigenvalues": [
+        -0.009931989504886765,
+        -0.009931989504886763,
+        0.019863979009773526
+      ],
+      "candidate_invariant_shape": 0.9999999999999997,
+      "candidate_delta_chi2": 1.091064492017686,
+      "full_11d_profile_lift": [
+        -175.5557368487267,
+        33.6670626819774,
+        -151.50620454219023,
+        0.013351680117299244,
+        -0.0049939315507576305,
+        -0.015177729546288746,
+        0.00032264423779690757,
+        -0.023272066289638522,
+        0.0005174763426063289,
+        -0.006176957164272433,
+        -0.003427935659133314
+      ],
+      "full_11d_profile_lift_delta_chi2": 1.0910644920176846,
+      "profile_lift_agreement_abs": 1.3322676295501878e-15,
+      "candidate_norm_agreement_abs": 3.469446951953614e-18,
+      "candidate_trace_abs": 0.0,
+      "candidate_axis_norm_error": 0.0,
+      "intersects_marginal_95_ellipsoid": true,
+      "margin_below_threshold": 9.979433201498665,
+      "local_candidate_objective_range": [
+        1.091064492017686,
+        1.091064492017687
+      ],
+      "global_minimum_proven": false
+    },
+    "log_mono_radial": {
+      "observed_kappa5": [
+        -0.018864382597654588,
+        -0.024652523297998684,
+        -0.0038719690597668,
+        0.012029800176174126,
+        0.0030256075268686746
+      ],
+      "observed_eigenvalues": [
+        -0.0253402244815571,
+        0.0034700060411029686,
+        0.021870218440454118
+      ],
+      "observed_invariant_shape": -0.37080716275397585,
+      "candidate_axis_icrs_unit": [
+        0.9808379014069154,
+        0.10530369674467652,
+        -0.16391504694683529
+      ],
+      "candidate_axis_ra_dec_deg": [
+        6.1278577158330405,
+        -9.434213146345941
+      ],
+      "candidate_signed_frobenius_amplitude": -0.028807551353129332,
+      "candidate_kappa5": [
+        -0.02372447118897548,
+        -0.013242767579322245,
+        -0.005153565844193444,
+        0.008022006951406292,
+        0.0008612503514422401
+      ],
+      "candidate_matrix": [
+        [
+          -0.02218207168305801,
+          -0.003644121355720558,
+          0.005672415514065012
+        ],
+        [
+          -0.003644121355720558,
+          0.011369397232520858,
+          0.0006089959638041052
+        ],
+        [
+          0.005672415514065012,
+          0.0006089959638041052,
+          0.010812674450537154
+        ]
+      ],
+      "candidate_eigenvalues": [
+        -0.023521267184729983,
+        0.011760633592364993,
+        0.011760633592365
+      ],
+      "candidate_invariant_shape": -0.999999999999999,
+      "candidate_delta_chi2": 2.7202790884351753,
+      "full_11d_profile_lift": [
+        -162.78095612325833,
+        11.25264425588365,
+        -230.76271663305278,
+        0.011215735872074053,
+        -0.0023778661136932867,
+        -0.0048124184236011044,
+        -0.02372447118897548,
+        -0.013242767579322245,
+        -0.005153565844193444,
+        0.008022006951406292,
+        0.0008612503514422408
+      ],
+      "full_11d_profile_lift_delta_chi2": 2.7202790884351757,
+      "profile_lift_agreement_abs": 4.440892098500626e-16,
+      "candidate_norm_agreement_abs": 3.469446951953614e-18,
+      "candidate_trace_abs": 1.734723475976807e-18,
+      "candidate_axis_norm_error": 1.1102230246251565e-16,
+      "intersects_marginal_95_ellipsoid": true,
+      "margin_below_threshold": 8.350218605081176,
+      "local_candidate_objective_range": [
+        2.7202790884351753,
+        2.720279088435182
+      ],
+      "global_minimum_proven": false
+    },
+    "log_split": {
+      "observed_kappa5": [
+        -0.018289533692364666,
+        -0.020041200206939107,
+        -0.004012666228543017,
+        0.012132870561274831,
+        0.002155598237054969
+      ],
+      "observed_eigenvalues": [
+        -0.023326807732930124,
+        0.005033869494314207,
+        0.018292938238615913
+      ],
+      "observed_invariant_shape": -0.5806369889327253,
+      "candidate_axis_icrs_unit": [
+        -0.9746721678497835,
+        -0.10844086926725184,
+        0.19558819773075883
+      ],
+      "candidate_axis_ra_dec_deg": [
+        186.348551148525,
+        11.27908650783184
+      ],
+      "candidate_signed_frobenius_amplitude": -0.02683776182967927,
+      "candidate_kappa5": [
+        -0.02180643047110149,
+        -0.011878873388919098,
+        -0.004913132503032423,
+        0.00886151815246212,
+        0.0009859219983684045
+      ],
+      "candidate_matrix": [
+        [
+          -0.02026900461325172,
+          -0.0034741093097622614,
+          0.00626603957721365
+        ],
+        [
+          -0.0034741093097622614,
+          0.010569945105925925,
+          0.000697152130767291
+        ],
+        [
+          0.00626603957721365,
+          0.000697152130767291,
+          0.009699059507325795
+        ]
+      ],
+      "candidate_eigenvalues": [
+        -0.02191294077368576,
+        0.010956470386842877,
+        0.010956470386842884
+      ],
+      "candidate_invariant_shape": -1.0000000000000002,
+      "candidate_delta_chi2": 1.349595324239685,
+      "full_11d_profile_lift": [
+        -210.10539003227188,
+        12.56875808165571,
+        -124.15981513845142,
+        0.014606571111409455,
+        -0.002418919925518731,
+        -0.0030081523284179188,
+        -0.02180643047110149,
+        -0.011878873388919096,
+        -0.004913132503032423,
+        0.00886151815246212,
+        0.0009859219983684043
+      ],
+      "full_11d_profile_lift_delta_chi2": 1.3495953242396852,
+      "profile_lift_agreement_abs": 2.220446049250313e-16,
+      "candidate_norm_agreement_abs": 3.469446951953614e-18,
+      "candidate_trace_abs": 0.0,
+      "candidate_axis_norm_error": 2.220446049250313e-16,
+      "intersects_marginal_95_ellipsoid": true,
+      "margin_below_threshold": 9.720902369276667,
+      "local_candidate_objective_range": [
+        1.349595324239685,
+        1.3495953242396885
+      ],
+      "global_minimum_proven": false
+    },
+    "log_survey": {
+      "observed_kappa5": [
+        -0.018373521372823592,
+        -0.022115380557321415,
+        -0.003955193756297766,
+        0.010493077695004033,
+        0.0028342569844385106
+      ],
+      "observed_eigenvalues": [
+        -0.02369960932605671,
+        0.004170274360390351,
+        0.01952933496566635
+      ],
+      "observed_invariant_shape": -0.4765109190922115,
+      "candidate_axis_icrs_unit": [
+        -0.981608259829332,
+        -0.11022796237818505,
+        0.1558686002528548
+      ],
+      "candidate_axis_ra_dec_deg": [
+        186.4070874951426,
+        8.96717568318556
+      ],
+      "candidate_signed_frobenius_amplitude": -0.026978925873587706,
+      "candidate_kappa5": [
+        -0.022229030447872507,
+        -0.01250628259923132,
+        -0.005056095469320484,
+        0.007149606202860857,
+        0.0008028523758396311
+      ],
+      "candidate_matrix": [
+        [
+          -0.02082396666008703,
+          -0.0035751993926830938,
+          0.005055535028856314
+        ],
+        [
+          -0.0035751993926830938,
+          0.01061262967769874,
+          0.0005677023592479338
+        ],
+        [
+          0.005055535028856314,
+          0.0005677023592479338,
+          0.010211336982388288
+        ]
+      ],
+      "candidate_eigenvalues": [
+        -0.022028200732886923,
+        0.011014100366443458,
+        0.011014100366443466
+      ],
+      "candidate_invariant_shape": -1.0,
+      "candidate_delta_chi2": 1.8475551949303088,
+      "full_11d_profile_lift": [
+        -190.89207725180455,
+        15.749273869360485,
+        -224.63467422791547,
+        0.012030524259067095,
+        -0.0028008123286344,
+        -0.0007398931370599425,
+        -0.022229030447872507,
+        -0.01250628259923132,
+        -0.005056095469320484,
+        0.007149606202860857,
+        0.0008028523758396313
+      ],
+      "full_11d_profile_lift_delta_chi2": 1.8475551949303088,
+      "profile_lift_agreement_abs": 0.0,
+      "candidate_norm_agreement_abs": 6.938893903907228e-18,
+      "candidate_trace_abs": 1.734723475976807e-18,
+      "candidate_axis_norm_error": 2.220446049250313e-16,
+      "intersects_marginal_95_ellipsoid": true,
+      "margin_below_threshold": 9.222942498586043,
+      "local_candidate_objective_range": [
+        1.8475551949303088,
+        1.8475551949303128
+      ],
+      "global_minimum_proven": false
+    }
+  },
+  "all_seven_variants_have_verified_feasible_witness": true,
+  "scope_limits": [
+    "A feasible candidate proves intersection without a certified optimizer minimum.",
+    "No calibrated triaxiality or axial-symmetry likelihood-ratio p-value is supplied.",
+    "This tests generic axisymmetric apparent STF compatibility; it is not a reproduction of Kalbouneh et al. or a test of their common axis and evolution.",
+    "Sampling, cosmic covariance and nuisance-model selection retain all R58 conditional/exploratory limitations.",
+    "Free physical calibration still prevents interpreting the apparent STF as measured cosmological shear."
+  ]
+}

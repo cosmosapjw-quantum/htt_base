@@ -1,0 +1,87 @@
+{
+  "schema": "htt.r60.independent_code_science_review/1",
+  "date": "2026-11-17",
+  "verdict": "PASS_SCOPED",
+  "specification_verdict": "PASS",
+  "engineering_verdict": "PASS",
+  "open_material_findings": [],
+  "closed_findings": [
+    {
+      "id": "F01",
+      "severity": "Medium",
+      "issue": "Valid 400-mode amplitude likelihood exhausted the default search budget",
+      "resolution": "Combined separable and aggregate-score Taylor interval upper bounds; exact regression and legacy wrapper checked",
+      "status": "CLOSED"
+    },
+    {
+      "id": "F02",
+      "severity": "Medium",
+      "issue": "Numerical image rank cutoff and multiplier absolute tolerance could remove a feasible nuisance direction or violate its budget",
+      "resolution": "Fail closed on unresolved nonzero image modes; scale-resolving scalar root tolerances; active-budget residual guard; both exact counterexamples checked",
+      "status": "CLOSED"
+    }
+  ],
+  "baseline_head": "6fe19c5139004a1f281ec85c592e5ab4c7590d5f",
+  "branch_observed": "research/r60-covariance-calibration-20261117",
+  "primary_checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+  "reviewer_role": "Separate read-only code/science reviewer; no production source mutation",
+  "reviewer_runtime_model_observed": "UNKNOWN (no matching session telemetry supplied)",
+  "tests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONPATH=htt/src:htt:. .venv/bin/python -m pytest -p no:cacheprovider htt/src/common/test_covariance_amplitude.py tests/r60/test_covariance_calibration.py -q",
+    "passed": 22,
+    "failed": 0,
+    "observed_seconds": 3.65,
+    "remote_pid": 1117970,
+    "exit_code": 0
+  },
+  "production_runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1"
+  },
+  "final_source_sha256": {
+    "htt/src/common/covariance_amplitude.py": "911217a7ec77df26794da149ad1207c9565bc63b73d68cdf6958ad3420b2b1bd",
+    "htt/htt/htt/infer/r60_covariance_calibration.py": "df627106d768a17c0a7942baa18afe4793f9226b41232839c2005dce9270c310",
+    "htt/src/common/test_covariance_amplitude.py": "ca272443c48102bbebe2f8d60e38bd730c30660d658531c3cc6a0d5105ec3bff",
+    "tests/r60/test_covariance_calibration.py": "4d99dc6fd61bf866e2fe23f734efdaecc2df5606138aa71697f88e888f22c700"
+  },
+  "final_products_sha256": {
+    "RESULTS/SENSITIVITY/SENSITIVITY_RESULT.json": "4cdcac8a635a9bda49ef50fa5a597508280d5fa0643861b78e2821947502b1cb",
+    "RESULTS/RADIAL/RADIAL_VELOCITY_RESULT.json": "ff6488bfbcb38e3e030e7cd2636325eaf3f616ce3e8c4709f89f015618577348",
+    "RESULTS/FINAL_ACTUAL_ORACLE.json": "449fad13373b8e94731d76e864f229e0a53420b0ecc65cf98cf3991ba5707b4c",
+    "RESULTS/FINAL_RADIAL_ORACLE.json": "82ddd9b978b5eb28f17c078161bb8ba3de140410d509bc6230d44a2cd4567847",
+    "RESULTS/COMMANDER_MORPHOLOGY.json": "cf2ad8f63e1f93fe2d5344625c8eb0d37c0cc306b7289674d938a868389a0e70",
+    "RESULTS/COUNT_DIPOLE_SENSITIVITY.json": "76b7103a7c73fb1e9b4a6a24d79e0739de20b3dc85428929191b7679f3f0f419"
+  },
+  "final_prose_sha256": {
+    "REPORT_KO.md": "1a750b4b3c29d56a5199ad77a775144576a44013aea5e7f977c944bde0720c94",
+    "THEORY_LOOPS.md": "cf4e73184d6a5709cec50aefc399ba969f717449f9181c63d0f9c2d9def5aa13",
+    "TENSOR_PHYSICAL_LIKELIHOOD.md": "a95672f36bb860843a741e0cc7b9be459d25b4a2d0f2840123bfc201a2b4a10f",
+    "RESEARCH_PLAN_KO.md": "8e5d7adaff7f125d9bd0db47ac0a3caff6c18e9f62f05ee8cf835a2385c5d6dd"
+  },
+  "independent_checks": {
+    "actual_cf4_gls_and_likelihood": true,
+    "calibration_witnesses": 210,
+    "radial_budget_witnesses": 84,
+    "axial_witnesses": 7,
+    "commander_signed_harmonic_stf_map": true,
+    "count_dipole_fixed_vector_covariance_path": true,
+    "theory_and_claim_interpretation": true
+  },
+  "preserved_non_science_failure": {
+    "type": "review-oracle JSON serialization compatibility",
+    "file": "RESULTS/FINAL_ACTUAL_ORACLE_SERIALIZATION_FAILURE.log",
+    "error": "TypeError: Object of type int64 is not JSON serializable",
+    "fix": "int(rank) at output assembly; programmatic comparison confirmed the sole source change",
+    "resolved": true
+  },
+  "limits": [
+    "Conditional fixed Gaussian experiment and declared nuisance/covariance bodies",
+    "No raw-survey selection or coverage certification",
+    "No matched Commander null calibration or physical shear/tilt/Bianchi identification",
+    "No broad legacy Monte Carlo rerun",
+    "Git commit and publication are outside this review's observed outcomes",
+    "Inherited external literature/history evidence retains separate reviewer attribution"
+  ],
+  "further_review_required": false
+}

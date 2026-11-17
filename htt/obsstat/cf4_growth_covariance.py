@@ -116,30 +116,19 @@ def _fisher(a: float, lam: np.ndarray) -> float:
 
 
 def amplitude_mle(v: np.ndarray, prep: ShellPrep, *, a_cap: float = 1.0e5):
-    """QML for the amplitude A of ``C(A) = A S + N`` (A = (fsigma8/fsigma8_fid)^2)
-    using the pre-computed whitened eigenbasis.  The whitened score is monotone-
-    decreasing in A, so the MLE is found by a SAFEGUARDED bracketing root find
-    (never an undamped Newton, which oscillates on a flat noise-dominated
-    likelihood).  Returns (A, Fisher variance of A at the converged A); A is
-    clamped to [0, a_cap] and A=0 when there is no signal (score(0) <= 0)."""
-    from scipy.optimize import brentq
+    """Global covariance-amplitude fit for fixed mean, C(A)=N+A*S.
 
-    p = prep.eigvec.T @ (v * prep.inv_sig)
-    p2 = p * p
-    lam = prep.eigval
-    if _score(0.0, p2, lam) <= 0.0:
-        a = 0.0
-    else:
-        hi = 1.0
-        while _score(hi, p2, lam) > 0.0 and hi < a_cap:
-            hi *= 2.0
-        if _score(hi, p2, lam) > 0.0:
-            a = a_cap                     # unbounded high-A likelihood (flagged)
-        else:
-            a = float(brentq(lambda x: _score(x, p2, lam), 0.0, hi,
-                             xtol=1e-8, rtol=1e-10, maxiter=200))
-    fish = _fisher(a, lam)
-    return float(a), float(1.0 / fish if fish > 0 else np.inf)
+    The score need not be monotone: a negative score at A=0 does not decide
+    the global maximum. A bounded likelihood branch search now supplies a
+    numerical objective-gap guarantee. The returned Fisher variance remains
+    local information, not a calibrated confidence interval at a boundary.
+    Historical products using the old endpoint rule are not silently replaced.
+    """
+    from common.covariance_amplitude import maximize_covariance_amplitude
+
+    p = prep.eigvec.T @ (np.asarray(v, float) * prep.inv_sig)
+    result = maximize_covariance_amplitude(p * p, prep.eigval, a_cap=a_cap)
+    return float(result["amplitude"]), float(result["fisher_variance"])
 
 
 def _fsigma8_from_amp(a: float, fs8_fid: float) -> float:
@@ -165,7 +154,7 @@ def fsigma8_by_depth(preps) -> dict:
                      "fsigma8_local_fisher_error": float(dfs8)})
     return {"fiducial_fsigma8": fs8_fid, "shells": rows,
             "note": "the growth-rate amplitude is estimated per depth shell by "
-                    "a safeguarded (bracketing root-find) QML fit; the "
+                    "a global numerical covariance-likelihood fit; the "
                     "constrained/unconstrained disposition is set from the "
                     "robust MOCK covariance, not the local Fisher error, which "
                     "underestimates the flat noise-dominated likelihood"}

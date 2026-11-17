@@ -1,0 +1,45 @@
+{
+  "scope": "Exact symbolic checks for R60 independent tensor/calibration audit",
+  "base_commit": "6fe19c5139004a1f281ec85c592e5ab4c7590d5f",
+  "results": [
+    {
+      "id": "wolfram_tensor_audit",
+      "output": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Out[1]= {\"Wald\" -> lam^2/(1 + 3*lam + 2*lam^2), \"dWald\" -> (1 + lam)^(-2) - (1 + 2*lam)^(-2), \"Omnibus\" -> (1 + lam)/(1 + 2*lam), \"dOmnibus\" -> (-2*(1 + lam))/(1 + 2*lam)^2 + (1 + 2*lam)^(-1), \"TwoDepthDeterminant\" -> (g1 - g2)^2*w1*w2}"
+          }
+        ],
+        "structuredContent": null,
+        "isError": false
+      }
+    },
+    {
+      "id": "wolfram_amplitude_counterexample",
+      "output": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Out[1]= {\"ScoreAtZero\" -> -81/2, \"LikelihoodGainAtOne\" -> 5 - Log[202]/2, \"StationaryPointsExact\" -> {{a -> (1699 - Sqrt[2821801])/400}, {a -> (1699 + Sqrt[2821801])/400}}, \"StationaryPointsNumeric\" -> {0.04794570817330663718325315920118216996`16., 8.44705429182669336281674684079881783363`16.}, \"LikelihoodGainsAtStationaryPoints\" -> {-0.44435567893838874810009023913126285122`16., 4.44853193950339834443804084847716116176`16.}, \"TailBound\" -> 19}"
+          }
+        ],
+        "structuredContent": null,
+        "isError": false
+      }
+    },
+    {
+      "id": "wolfram_rms_gram",
+      "output": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Out[1]= {\"MixedPolarSTFAngularGram\" -> {{1/3, 0, 0, 0, 0, 0, 0, 0}, {0, 1/3, 0, 0, 0, 0, 0, 0}, {0, 0, 1/3, 0, 0, 0, 0, 0}, {0, 0, 0, 2/15, 0, 0, 0, 0}, {0, 0, 0, 0, 2/15, 0, 0, 0}, {0, 0, 0, 0, 0, 2/15, 0, 0}, {0, 0, 0, 0, 0, 0, 2/15, 0}, {0, 0, 0, 0, 0, 0, 0, 2/15}}, \"MatchesDeclaredRMSMetric\" -> True, \"MagPerUnitLogDistance\" -> 2.17147240951625913825564459458302541147`16.}"
+          }
+        ],
+        "structuredContent": null,
+        "isError": false
+      }
+    }
+  ]
+}

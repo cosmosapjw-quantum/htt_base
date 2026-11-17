@@ -1,0 +1,136 @@
+{
+  "output": "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/COMMANDER_MORPHOLOGY.json",
+  "commander": {
+    "packed_ell2_uK": [
+      8.38908524668893,
+      -5.8763724252749014,
+      -12.572422095321459,
+      -6.4574918523798095,
+      27.030329528827362
+    ],
+    "STF5_uK": [
+      -4.988725024698518,
+      -6.480974418738558,
+      20.882237938343295,
+      4.539782138728276,
+      9.712804624738027
+    ],
+    "temperature_tensor_uK": [
+      [
+        -6.173408021429394,
+        14.765972052553533,
+        3.2101107354043315
+      ],
+      [
+        14.765972052553533,
+        0.8817145674493037,
+        6.867990014492318
+      ],
+      [
+        3.2101107354043315,
+        6.867990014492318,
+        5.29169345398009
+      ]
+    ],
+    "eigenvalues_uK_ascending": [
+      -17.967533658811572,
+      0.8088642313120418,
+      17.15866942749952
+    ],
+    "eigenaxes_ascending": [
+      {
+        "unit_vector_galactic": [
+          0.770203063857221,
+          -0.632695230465913,
+          0.08052320020115405
+        ],
+        "l_deg": 320.5980766156711,
+        "b_deg": 4.618639923835161,
+        "opposite_l_deg": 140.59807661567112,
+        "opposite_b_deg": -4.618639923835161,
+        "semantics": "unoriented eigenaxis, endpoints +/- equivalent"
+      },
+      {
+        "unit_vector_galactic": [
+          -0.3906236922441014,
+          -0.3681383732922698,
+          0.8437341223201222
+        ],
+        "l_deg": 223.3025812605776,
+        "b_deg": 57.53656015435061,
+        "opposite_l_deg": 43.3025812605776,
+        "opposite_b_deg": -57.53656015435061,
+        "semantics": "unoriented eigenaxis, endpoints +/- equivalent"
+      },
+      {
+        "unit_vector_galactic": [
+          0.5041828750389438,
+          0.6813008758657273,
+          0.530687050022947
+        ],
+        "l_deg": 53.49745975195351,
+        "b_deg": 32.05188779039075,
+        "opposite_l_deg": 233.4974597519535,
+        "opposite_b_deg": -32.05188779039075,
+        "semantics": "unoriented eigenaxis, endpoints +/- equivalent"
+      }
+    ],
+    "principal_abs_eigenvalue_index": 0,
+    "principal_axis": {
+      "unit_vector_galactic": [
+        0.770203063857221,
+        -0.632695230465913,
+        0.08052320020115405
+      ],
+      "l_deg": 320.5980766156711,
+      "b_deg": 4.618639923835161,
+      "opposite_l_deg": 140.59807661567112,
+      "opposite_b_deg": -4.618639923835161,
+      "semantics": "unoriented eigenaxis, endpoints +/- equivalent"
+    },
+    "trace_uK": 8.881784197001252e-16,
+    "trace_square_uK2": 617.9064636474295,
+    "trace_cube_uK3": -748.1160293124155,
+    "frobenius_uK": 24.85772442617042,
+    "shape_sqrt6_trQ3_over_trQ2_3half": -0.11930550353336801,
+    "eigenvalue_gaps_uK": [
+      18.776397890123615,
+      16.34980519618748
+    ],
+    "C2_uK2": 207.0624433920441,
+    "sky_quadrupole_RMS_uK": 9.076757597640466,
+    "quadrupole_sky_min_uK": -17.967533658811572,
+    "quadrupole_sky_max_uK": 17.15866942749952
+  },
+  "comparison": {
+    "ell2_packed_difference_norm_uK": 2.6622436354909484,
+    "ell2_STF_difference_norm_uK": 2.0567120717811633,
+    "quadrupole_difference_sky_RMS_uK": 0.7510050640051517,
+    "relative_tensor_difference_to_Commander": 0.08273935443647609,
+    "principal_abs_eigenaxis_angle_deg": 88.4993399822397,
+    "matched_eigenaxis_angles_by_ascending_eigenvalue_deg": [
+      2.066516865750771,
+      2.4302758139927785,
+      2.50772720571852
+    ],
+    "residual_perturbation_matched_axis_upper_bounds_deg": [
+      4.760444171806753,
+      5.0148838088744725,
+      4.903504241596098
+    ],
+    "tensor_perturbation_operator_norm_uK": 1.479085216674868,
+    "principal_abs_extremum_branch_switch": true,
+    "principal_abs_branch_note": "The extremal-absolute-value selector compares different ordered eigenaxes when the middle eigenvalue changes sign. Use matched eigenaxes for cross-pipeline morphology.",
+    "shape_difference": -0.14064728607990062
+  },
+  "checks": {
+    "STF_gram_max_abs": 2.220446049250313e-16,
+    "analytic_vs_R51_ideal_template_relative": 9.23955116291601e-16,
+    "independent_scipy_harmonic_synthesis_max_abs_uK": 7.105427357601002e-15,
+    "quadrature_integral_vs_sum_abs_alm2_abs_uK2": 4.547473508864641e-13,
+    "packed_roundtrip_max_abs_uK": 1.7763568394002505e-15,
+    "quadrature": "12-point Gauss-Legendre cos(theta) x 32-point uniform phi; integrates degree-four squared quadrupole",
+    "scipy_version": "1.18.1",
+    "numpy_version": "2.5.4"
+  }
+}

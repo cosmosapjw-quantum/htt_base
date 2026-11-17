@@ -1,0 +1,184 @@
+{
+  "schema": "htt.r60.execution/1",
+  "source_head": "6fe19c5139004a1f281ec85c592e5ab4c7590d5f",
+  "branch": "research/r60-covariance-calibration-20261117",
+  "commands": [
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "scripts/r60/run_r60_sensitivity.py",
+        "--output",
+        "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/SENSITIVITY"
+      ],
+      "started_at_utc": "2026-11-17T06:31:23.855832+00:00",
+      "wall_seconds": 8.55521519400645,
+      "exit_code": 0,
+      "log": "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/SENSITIVITY_EXECUTION.log",
+      "log_sha256": "efc391c945bc34c103d84e049c9f3714b9518446be2223dd228624a57eba8dc8"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "scripts/r60/run_r60_radial_velocity.py",
+        "--output",
+        "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/RADIAL"
+      ],
+      "started_at_utc": "2026-11-17T06:31:32.413151+00:00",
+      "wall_seconds": 4.311107526998967,
+      "exit_code": 0,
+      "log": "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/RADIAL_EXECUTION.log",
+      "log_sha256": "601a1a600c74cf0c583abb836e18417c33ca3e5fc3892baf48e1aea196ae8092"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "scripts/r60/run_r60_commander_morphology.py",
+        "--repo-root",
+        ".",
+        "--out",
+        "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/COMMANDER_MORPHOLOGY.json"
+      ],
+      "started_at_utc": "2026-11-17T06:31:36.724845+00:00",
+      "wall_seconds": 0.3716240070061758,
+      "exit_code": 0,
+      "log": "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/COMMANDER_EXECUTION.log",
+      "log_sha256": "2008e497139c0fd703433ee93aed20f8b56f7ddabccfde5428bf14a6df96c82e"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "scripts/r60/run_r60_count_dipole_sensitivity.py",
+        "--repository-root",
+        ".",
+        "--output",
+        "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/COUNT_DIPOLE_SENSITIVITY.json"
+      ],
+      "started_at_utc": "2026-11-17T06:31:37.097157+00:00",
+      "wall_seconds": 0.869077189010568,
+      "exit_code": 0,
+      "log": "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/COUNT_DIPOLE_EXECUTION.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "htt/src/common/test_covariance_amplitude.py",
+        "tests/r60",
+        "tests/r58/test_mixed_tensor_likelihood.py",
+        "tests/r58/test_five_views.py",
+        "-q"
+      ],
+      "started_at_utc": "2026-11-17T06:31:37.966914+00:00",
+      "wall_seconds": 2.58873271199991,
+      "exit_code": 0,
+      "log": "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/TESTS.log",
+      "log_sha256": "d7ee86a7f3fafb927eeb09d2adb83e1ccf689c450b979cb845313878b75bc979"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/REVIEW/final_science_review_actual_oracle.py"
+      ],
+      "started_at_utc": "2026-11-17T06:31:40.556181+00:00",
+      "wall_seconds": 0.8339717079943512,
+      "exit_code": 1,
+      "log": "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/FINAL_ACTUAL_ORACLE_SERIALIZATION_FAILURE.log",
+      "log_sha256": "15cc4ec3bf5e4a9f23d0f81f15fddb208b2e1d7ea3ac21f3d573389c2c8956ab",
+      "failure_class": "runtime serialization compatibility: numpy.int64 rank with SciPy1.18.1; numerical oracle had completed",
+      "repair": "int(rank) at JSON serialization; no mathematical algorithm change"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/REVIEW/final_science_review_actual_oracle.py"
+      ],
+      "started_at_utc": "2026-11-17T06:32:37.396250+00:00",
+      "wall_seconds": 1.647231097012991,
+      "exit_code": 0,
+      "log": "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/FINAL_ACTUAL_ORACLE.json",
+      "log_sha256": "449fad13373b8e94731d76e864f229e0a53420b0ecc65cf98cf3991ba5707b4c"
+    },
+    {
+      "argv": [
+        ".venv/bin/python",
+        "-B",
+        "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/REVIEW/final_science_review_radial_oracle.py"
+      ],
+      "started_at_utc": "2026-11-17T06:32:39.044072+00:00",
+      "wall_seconds": 1.8471995079889894,
+      "exit_code": 0,
+      "log": "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/FINAL_RADIAL_ORACLE.json",
+      "log_sha256": "82ddd9b978b5eb28f17c078161bb8ba3de140410d509bc6230d44a2cd4567847"
+    }
+  ],
+  "prior_generated_outputs_sha256": {
+    "SENSITIVITY": {
+      "SENSITIVITY_RESULT.json": "c0f531df22df8980ba89d82b6a674ad5c751b8ec3fc7eb1bb3de33c88471e9af",
+      "COVARIANCE_CALIBRATION.pdf": "fbeb28546dc1a3b281da3e689960f1a931d342a8eaba104692c8d2352c0d0ba6",
+      "COVARIANCE_SCAN.csv": "e642d11f226e099e6dc7976a0f992886ac2f30505ba7f116369d2e55a07474aa",
+      "CALIBRATION_FRONTIER.csv": "f01574e29d17651a4747b0be019eb192d9c18c99a165f9ea94cec46afdb118e5",
+      "COVARIANCE_CALIBRATION.png": "3ed7e64e81714a74d19baeb4aea31583c1b463688d7f574ef0696faf407a7204"
+    },
+    "RADIAL": {
+      "RADIAL_VELOCITY_RESULT.json": "4c7f9d28b204c59a30aeb06a02a282c27835f0613a17d376f0b9f729772a882a",
+      "RADIAL_RESPONSE_CARRIERS.npz": "e79f4d65ce39af662fccb434ffccaa99004ca045384d072fadc881f6328fd502"
+    },
+    "SENSITIVITY_EXECUTION.log": "efc391c945bc34c103d84e049c9f3714b9518446be2223dd228624a57eba8dc8",
+    "RADIAL_EXECUTION.log": "601a1a600c74cf0c583abb836e18417c33ca3e5fc3892baf48e1aea196ae8092",
+    "COMMANDER_EXECUTION.log": "2008e497139c0fd703433ee93aed20f8b56f7ddabccfde5428bf14a6df96c82e",
+    "COMMANDER_MORPHOLOGY.json": "cf2ad8f63e1f93fe2d5344625c8eb0d37c0cc306b7289674d938a868389a0e70",
+    "COUNT_DIPOLE_SENSITIVITY.json": "76b7103a7c73fb1e9b4a6a24d79e0739de20b3dc85428929191b7679f3f0f419"
+  },
+  "preservation": "Only own R60 intermediate outputs moved to a temporary archive before final regeneration; R58/R59 and legacy results unchanged.",
+  "environment": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "PYTHONPATH": "htt/src:htt:.",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "final_source_binding": {
+    "sensitivity_module_sha256": "df627106d768a17c0a7942baa18afe4793f9226b41232839c2005dce9270c310",
+    "amplitude_module_sha256": "911217a7ec77df26794da149ad1207c9565bc63b73d68cdf6958ad3420b2b1bd",
+    "matched": true
+  },
+  "reused_unchanged": [
+    {
+      "artifact": "docs/research_program/observational_publication_20261015/R60_COVARIANCE_CALIBRATION_20261117/RESULTS/AXISYMMETRIC_WITNESSES.json",
+      "sha256": "291a1554bbc320a45380f9a13380121730466af5ce887f74d07bef5f31540892",
+      "reason": "same axis runner, frozen native R58 input and assumptions; final independent oracle rechecks all witnesses"
+    }
+  ],
+  "status": "COMPLETE_SCOPED_WITH_RESOLVED_SERIALIZATION_FAILURE",
+  "test_summary": "56 passed in 1.55s",
+  "actual_oracle_max_errors": {
+    "fit_estimate_scaled_max": 9.020562075079397e-15,
+    "fit_cov_scaled_relative_max": 9.648487194920146e-15,
+    "block_wald_lr_max": 6.394884621840902e-14,
+    "gain_direct_max": 1.7053025658242404e-13,
+    "contrast_reml_gain_identity_max": 5.684341886080802e-14,
+    "contrast_annihilation_max": 1.1355379921581982e-17,
+    "native_raw_estimate_scaled_max": 1.547373340571312e-13,
+    "native_raw_cov_scaled_max": 1.5178830414797062e-14
+  },
+  "radial_oracle_max_errors": {
+    "physical_response_identity": 2.439454888092385e-17,
+    "estimate_scaled": 1.354472090042691e-12,
+    "covariance_scaled_relative": 4.028455306935918e-15,
+    "wald_lr": 4.908216055810044e-10,
+    "bias_map": 7.034303695085953e-15,
+    "budget_relative_excess": 5.684341886080802e-16,
+    "budget_distance": 3.019806626980426e-13,
+    "budget_kkt_relative": 2.306500974105172e-12,
+    "critical_threshold": 3.0386893001832505e-10,
+    "endpoint_speed": 1.3322676295501878e-15
+  }
+}
