@@ -1,0 +1,2863 @@
+{
+  "schema": "htt.r63.catalogue_chart_transport/1",
+  "script_sha256": "e2487c4389e5a18559cd0dfcce66952413a21a27622df1a0e1910211060b84c5",
+  "source_carrier_sha256": "c79a877c82621caa2af5ce14bb7f9e2d30a582735a557d9601ebbb25d25095fc",
+  "q_diagnostic": {
+    "schema": "r63.cf4_published_q_chart_check.v1",
+    "scope": "deterministic published source-correction diagnostic; no stochastic likelihood",
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "observed_model": "UNKNOWN",
+    "observed_effort": "UNKNOWN",
+    "root": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "git_head": "f29bbab420a33aecb1c398ddd961fd45097f536b",
+    "source_identities": {
+      "selected_relpath": "docs/research_program/cf4_schur_loop8_20261015/inputs/selected_source_observables.npz",
+      "selected_sha256": "86dfd896d5cf8f223396694dfb945137d1d28ea2227bc984665fb43f77fa376c",
+      "table4_gzip_sha256": "be91d4fae6fa01552ab3bc85db695411fca3249eeae08b566a712e6ea790bd99",
+      "table4_decompressed_sha256": "b6edfec68bdfddeada8f3b8f11938f3bbda98a8e2894ff136a369c2ad6594e94"
+    },
+    "N_selected": 35970,
+    "N_raw": 38053,
+    "parity": {
+      "dmzp_maxabs": 0.0,
+      "e_dmzp_maxabs": 0.0,
+      "z_V3k_over_c_maxabs": 0.0,
+      "n_J2000_maxabs": 0.0
+    },
+    "units": "km/s for dv,q and fitted coefficients; q/c is dimensionless logarithmic redshift correction",
+    "definitions": {
+      "dv": "published V3k - published Vh",
+      "q": "c ln[(1+V3k/c)/(1+Vh/c)]",
+      "additive_fit": "dv = n_sourceward.ICRS dot a; unweighted least squares",
+      "multiplicative_fit": "q = n_sourceward.ICRS dot b; unweighted least squares",
+      "multiplicative_intercept_fit": "q = b0 + n dot b; diagnostic chart intercept",
+      "additive_predicted_q": "c ln[1+(n dot a)/(c+Vh)]"
+    },
+    "additive_fit": {
+      "rank": 3,
+      "singular_values": [
+        143.0864767571308,
+        97.33687478350618,
+        77.60021247787347
+      ],
+      "condition": 1.8438928475605625,
+      "intercept_km_s": 0.0,
+      "vector": {
+        "xyz_icrs_km_s": [
+          -360.1906667937984,
+          76.46973555544673,
+          -45.14102987950682
+        ],
+        "amplitude_km_s": 370.97526801643204,
+        "ra_deg": 168.0138738703008,
+        "dec_deg": -6.989188222980037
+      },
+      "residual": {
+        "N": 35970,
+        "mean_km_s": 0.0013799623616800665,
+        "rms_km_s": 0.2894669718865244,
+        "std_km_s": 0.2894636825528105,
+        "abs_quantiles_km_s": {
+          "p50": 0.25154523397991113,
+          "p90": 0.45011774904377977,
+          "p95": 0.47606646666080266,
+          "p99": 0.4955945525236671,
+          "p100": 0.5080697242683812
+        },
+        "fraction_abs_le_1_km_s": 1.0
+      }
+    },
+    "multiplicative_fit": {
+      "rank": 3,
+      "singular_values": [
+        143.0864767571308,
+        97.33687478350618,
+        77.60021247787347
+      ],
+      "condition": 1.8438928475605625,
+      "intercept_km_s": 0.0,
+      "vector": {
+        "xyz_icrs_km_s": [
+          -343.01605201406227,
+          72.55670669794799,
+          -46.315967349817804
+        ],
+        "amplitude_km_s": 353.65188598071313,
+        "ra_deg": 168.05652328779806,
+        "dec_deg": -7.5253510403045585
+      },
+      "residual": {
+        "N": 35970,
+        "mean_km_s": -1.4332165465508644,
+        "rms_km_s": 5.497646977187479,
+        "std_km_s": 5.3075429924279875,
+        "abs_quantiles_km_s": {
+          "p50": 3.6491350484846237,
+          "p90": 9.214239041221981,
+          "p95": 10.469282779452428,
+          "p99": 12.681582197183651,
+          "p100": 15.473242169881246
+        },
+        "fraction_abs_le_1_km_s": 0.1534056157909369
+      }
+    },
+    "multiplicative_intercept_fit": {
+      "rank": 4,
+      "singular_values": [
+        217.49079349634894,
+        99.11776433461833,
+        94.1581182670625,
+        77.1211534019134
+      ],
+      "condition": 2.8201185265332525,
+      "intercept_km_s": -2.457438874821239,
+      "vector": {
+        "xyz_icrs_km_s": [
+          -344.7447967080823,
+          72.54229651344644,
+          -45.07570774170037
+        ],
+        "amplitude_km_s": 355.1664103897734,
+        "ra_deg": 168.11700051701615,
+        "dec_deg": -7.291319511246045
+      },
+      "residual": {
+        "N": 35970,
+        "mean_km_s": 1.618227993146161e-14,
+        "rms_km_s": 5.167405560651051,
+        "std_km_s": 5.167405560651051,
+        "abs_quantiles_km_s": {
+          "p50": 3.3430663284042375,
+          "p90": 8.752357011525195,
+          "p95": 10.227382195159729,
+          "p99": 12.60232007664634,
+          "p100": 18.81433116377724
+        },
+        "fraction_abs_le_1_km_s": 0.15871559633027524
+      }
+    },
+    "q_minus_q_from_additive_fit": {
+      "N": 35970,
+      "mean_km_s": 0.0013258020584523374,
+      "rms_km_s": 0.2747288353240092,
+      "std_km_s": 0.2747256362398463,
+      "abs_quantiles_km_s": {
+        "p50": 0.23805999866800676,
+        "p90": 0.42727577799009286,
+        "p95": 0.45087103183039684,
+        "p99": 0.47522916258992476,
+        "p100": 0.5003276976925548
+      },
+      "fraction_abs_le_1_km_s": 1.0
+    },
+    "depth_bins": [
+      {
+        "z_low": 0.01,
+        "z_high": 0.02,
+        "N": 4107,
+        "median_z_CMB": 0.015714204524784944,
+        "median_zHEL_Vh_over_c": 0.015824280676200335,
+        "additive_fit": {
+          "rank": 3,
+          "singular_values": [
+            43.83496841372422,
+            34.339724202828485,
+            31.721899152501503
+          ],
+          "condition": 1.3818519566873886,
+          "intercept_km_s": 0.0,
+          "vector": {
+            "xyz_icrs_km_s": [
+              -360.1890215279529,
+              76.47022302312115,
+              -45.14734301461699
+            ],
+            "amplitude_km_s": 370.9745393146941,
+            "ra_deg": 168.01374650589443,
+            "dec_deg": -6.9901843636461924
+          },
+          "residual": {
+            "N": 4107,
+            "mean_km_s": 0.0011094592406220864,
+            "rms_km_s": 0.29099468483958696,
+            "std_km_s": 0.29099256984514904,
+            "abs_quantiles_km_s": {
+              "p50": 0.25489484964037956,
+              "p90": 0.45200551423903335,
+              "p95": 0.47475686004918743,
+              "p99": 0.4960168462062552,
+              "p100": 0.512901144680562
+            },
+            "fraction_abs_le_1_km_s": 1.0
+          }
+        },
+        "multiplicative_fit": {
+          "rank": 3,
+          "singular_values": [
+            43.83496841372422,
+            34.339724202828485,
+            31.721899152501503
+          ],
+          "condition": 1.3818519566873886,
+          "intercept_km_s": 0.0,
+          "vector": {
+            "xyz_icrs_km_s": [
+              -354.7007402779223,
+              75.3588622299157,
+              -44.4776726793059
+            ],
+            "amplitude_km_s": 365.33523870174497,
+            "ra_deg": 168.00542598429007,
+            "dec_deg": -6.992811778702643
+          },
+          "residual": {
+            "N": 4107,
+            "mean_km_s": 0.14401381645554076,
+            "rms_km_s": 0.720599773680814,
+            "std_km_s": 0.706062358789045,
+            "abs_quantiles_km_s": {
+              "p50": 0.4492212286580184,
+              "p90": 1.222302333644507,
+              "p95": 1.4494714726748323,
+              "p99": 1.8809217440877637,
+              "p100": 2.4463081000943134
+            },
+            "fraction_abs_le_1_km_s": 0.8283418553688824
+          }
+        },
+        "global_additive_residual": {
+          "N": 4107,
+          "mean_km_s": 0.0006927482313190241,
+          "rms_km_s": 0.2910145841004913,
+          "std_km_s": 0.2910137595700072,
+          "abs_quantiles_km_s": {
+            "p50": 0.2550086772205731,
+            "p90": 0.4531447478113023,
+            "p95": 0.4751192769656768,
+            "p99": 0.49525697840457045,
+            "p100": 0.506867746966357
+          },
+          "fraction_abs_le_1_km_s": 1.0
+        },
+        "global_multiplicative_residual": {
+          "N": 4107,
+          "mean_km_s": -0.02714453472163058,
+          "rms_km_s": 8.058278467668396,
+          "std_km_s": 8.058232748979323,
+          "abs_quantiles_km_s": {
+            "p50": 7.854936363236334,
+            "p90": 11.431859235845934,
+            "p95": 12.15065548395072,
+            "p99": 13.321859130479526,
+            "p100": 14.275018807876904
+          },
+          "fraction_abs_le_1_km_s": 0.04334063793523253
+        },
+        "q_minus_q_from_global_additive_fit": {
+          "N": 4107,
+          "mean_km_s": 0.0006909811737377646,
+          "rms_km_s": 0.28659941314515475,
+          "std_km_s": 0.2865985801782079,
+          "abs_quantiles_km_s": {
+            "p50": 0.2514307655029029,
+            "p90": 0.44612341564130703,
+            "p95": 0.4678299533684154,
+            "p99": 0.48810242201450366,
+            "p100": 0.5003276976925548
+          },
+          "fraction_abs_le_1_km_s": 1.0
+        }
+      },
+      {
+        "z_low": 0.02,
+        "z_high": 0.04,
+        "N": 8582,
+        "median_z_CMB": 0.029582131782648118,
+        "median_zHEL_Vh_over_c": 0.029380325505053234,
+        "additive_fit": {
+          "rank": 3,
+          "singular_values": [
+            67.05854256781502,
+            47.85736699411594,
+            42.3653666698524
+          ],
+          "condition": 1.5828623198376452,
+          "intercept_km_s": 0.0,
+          "vector": {
+            "xyz_icrs_km_s": [
+              -360.18876995249406,
+              76.48150852627826,
+              -45.14086520634076
+            ],
+            "amplitude_km_s": 370.9758332532227,
+            "ra_deg": 168.01202061153737,
+            "dec_deg": -6.989151897241275
+          },
+          "residual": {
+            "N": 8582,
+            "mean_km_s": 0.0006113527885709315,
+            "rms_km_s": 0.28854962856068156,
+            "std_km_s": 0.28854898092052794,
+            "abs_quantiles_km_s": {
+              "p50": 0.24900252790536115,
+              "p90": 0.44906713401347814,
+              "p95": 0.4744838314643715,
+              "p99": 0.49581853046434904,
+              "p100": 0.5146088510935272
+            },
+            "fraction_abs_le_1_km_s": 1.0
+          }
+        },
+        "multiplicative_fit": {
+          "rank": 3,
+          "singular_values": [
+            67.05854256781502,
+            47.85736699411594,
+            42.3653666698524
+          ],
+          "condition": 1.5828623198376452,
+          "intercept_km_s": 0.0,
+          "vector": {
+            "xyz_icrs_km_s": [
+              -350.0796842695798,
+              74.39195068166181,
+              -43.89200751385682
+            ],
+            "amplitude_km_s": 360.57794717385025,
+            "ra_deg": 168.00309790871975,
+            "dec_deg": -6.991772860564355
+          },
+          "residual": {
+            "N": 8582,
+            "mean_km_s": 0.02831312342943381,
+            "rms_km_s": 1.3576424375345963,
+            "std_km_s": 1.3573471756468756,
+            "abs_quantiles_km_s": {
+              "p50": 0.8787615839769671,
+              "p90": 2.277656563773678,
+              "p95": 2.7218257626976907,
+              "p99": 3.3491355820599082,
+              "p100": 4.236242152558702
+            },
+            "fraction_abs_le_1_km_s": 0.5513866231647635
+          }
+        },
+        "global_additive_residual": {
+          "N": 8582,
+          "mean_km_s": 9.807286820250475e-05,
+          "rms_km_s": 0.2886210865196763,
+          "std_km_s": 0.28862106985719355,
+          "abs_quantiles_km_s": {
+            "p50": 0.24921169121377318,
+            "p90": 0.44880220529693027,
+            "p95": 0.4754191455809746,
+            "p99": 0.49507047505007257,
+            "p100": 0.5054034372980922
+          },
+          "fraction_abs_le_1_km_s": 1.0
+        },
+        "global_multiplicative_residual": {
+          "N": 8582,
+          "mean_km_s": 1.6288122318162679,
+          "rms_km_s": 5.517510969040573,
+          "std_km_s": 5.271612467449476,
+          "abs_quantiles_km_s": {
+            "p50": 4.906604178439025,
+            "p90": 8.369277834247763,
+            "p95": 9.218451833714315,
+            "p99": 10.14755739524792,
+            "p100": 10.924264506938243
+          },
+          "fraction_abs_le_1_km_s": 0.0716616173386157
+        },
+        "q_minus_q_from_global_additive_fit": {
+          "N": 8582,
+          "mean_km_s": 0.00010660540348555539,
+          "rms_km_s": 0.28030125955798113,
+          "std_km_s": 0.28030123928566325,
+          "abs_quantiles_km_s": {
+            "p50": 0.24243634575496742,
+            "p90": 0.4358033840248336,
+            "p95": 0.4615452151079271,
+            "p99": 0.4815352297010961,
+            "p100": 0.4927133328314426
+          },
+          "fraction_abs_le_1_km_s": 1.0
+        }
+      },
+      {
+        "z_low": 0.04,
+        "z_high": 0.06,
+        "N": 6884,
+        "median_z_CMB": 0.04934246878218664,
+        "median_zHEL_Vh_over_c": 0.04892217802223697,
+        "additive_fit": {
+          "rank": 3,
+          "singular_values": [
+            61.23874418947697,
+            43.84810659288638,
+            34.8017206229042
+          ],
+          "condition": 1.7596470258764638,
+          "intercept_km_s": 0.0,
+          "vector": {
+            "xyz_icrs_km_s": [
+              -360.1868580667218,
+              76.4575897398442,
+              -45.133424635625644
+            ],
+            "amplitude_km_s": 370.9681411821544,
+            "ra_deg": 168.01559953806932,
+            "dec_deg": -6.988139747929652
+          },
+          "residual": {
+            "N": 6884,
+            "mean_km_s": 0.0029282019083841353,
+            "rms_km_s": 0.2905764189766865,
+            "std_km_s": 0.2905616645376651,
+            "abs_quantiles_km_s": {
+              "p50": 0.2530813560723004,
+              "p90": 0.4503734453309306,
+              "p95": 0.4752171165268819,
+              "p99": 0.49754185976726095,
+              "p100": 0.5157631343809612
+            },
+            "fraction_abs_le_1_km_s": 1.0
+          }
+        },
+        "multiplicative_fit": {
+          "rank": 3,
+          "singular_values": [
+            61.23874418947697,
+            43.84810659288638,
+            34.8017206229042
+          ],
+          "condition": 1.7596470258764638,
+          "intercept_km_s": 0.0,
+          "vector": {
+            "xyz_icrs_km_s": [
+              -343.44272235566984,
+              72.90604371935127,
+              -43.36307436367866
+            ],
+            "amplitude_km_s": 353.7634110081929,
+            "ra_deg": 168.0151580869041,
+            "dec_deg": -7.0408221116359355
+          },
+          "residual": {
+            "N": 6884,
+            "mean_km_s": -0.05863411479611496,
+            "rms_km_s": 1.1486378193983067,
+            "std_km_s": 1.1471403056009202,
+            "abs_quantiles_km_s": {
+              "p50": 0.7106962331340299,
+              "p90": 1.961770916596046,
+              "p95": 2.3643808571581872,
+              "p99": 2.9480962059561593,
+              "p100": 3.8127243663322474
+            },
+            "fraction_abs_le_1_km_s": 0.6337884950610111
+          }
+        },
+        "global_additive_residual": {
+          "N": 6884,
+          "mean_km_s": 0.0025510050292399432,
+          "rms_km_s": 0.2906695700850837,
+          "std_km_s": 0.2906583756694243,
+          "abs_quantiles_km_s": {
+            "p50": 0.25305849396792013,
+            "p90": 0.4493708499837737,
+            "p95": 0.4763928485533949,
+            "p99": 0.4958444979813778,
+            "p100": 0.5080697242683812
+          },
+          "fraction_abs_le_1_km_s": 1.0
+        },
+        "global_multiplicative_residual": {
+          "N": 6884,
+          "mean_km_s": 0.4769855241128434,
+          "rms_km_s": 2.045860054834762,
+          "std_km_s": 1.9894793725382756,
+          "abs_quantiles_km_s": {
+            "p50": 1.5757126584567231,
+            "p90": 3.304220166602373,
+            "p95": 3.6314701376866205,
+            "p99": 4.187315444193647,
+            "p100": 4.793210427325505
+          },
+          "fraction_abs_le_1_km_s": 0.31565950029052875
+        },
+        "q_minus_q_from_global_additive_fit": {
+          "N": 6884,
+          "mean_km_s": 0.002473267674938875,
+          "rms_km_s": 0.2770147893130523,
+          "std_km_s": 0.27700374807060435,
+          "abs_quantiles_km_s": {
+            "p50": 0.24109410812435783,
+            "p90": 0.4285134458214202,
+            "p95": 0.45417875474951686,
+            "p99": 0.47242786703374207,
+            "p100": 0.4851808388732479
+          },
+          "fraction_abs_le_1_km_s": 1.0
+        }
+      },
+      {
+        "z_low": 0.06,
+        "z_high": 0.08,
+        "N": 8189,
+        "median_z_CMB": 0.07174630123617053,
+        "median_zHEL_Vh_over_c": 0.07098911074007072,
+        "additive_fit": {
+          "rank": 3,
+          "singular_values": [
+            74.11092994618882,
+            43.654914451751594,
+            28.12149545670255
+          ],
+          "condition": 2.6353836715509744,
+          "intercept_km_s": 0.0,
+          "vector": {
+            "xyz_icrs_km_s": [
+              -360.1957098849488,
+              76.46694235418482,
+              -45.13983989935271
+            ],
+            "amplitude_km_s": 370.9794439570199,
+            "ra_deg": 168.01446198318206,
+            "dec_deg": -6.98892399454786
+          },
+          "residual": {
+            "N": 8189,
+            "mean_km_s": 0.0006656990759459545,
+            "rms_km_s": 0.2883772710178281,
+            "std_km_s": 0.2883765026565621,
+            "abs_quantiles_km_s": {
+              "p50": 0.250694238807597,
+              "p90": 0.4485864610154408,
+              "p95": 0.47589571151339666,
+              "p99": 0.4966771990557322,
+              "p100": 0.5091430611254566
+            },
+            "fraction_abs_le_1_km_s": 1.0
+          }
+        },
+        "multiplicative_fit": {
+          "rank": 3,
+          "singular_values": [
+            74.11092994618882,
+            43.654914451751594,
+            28.12149545670255
+          ],
+          "condition": 2.6353836715509744,
+          "intercept_km_s": 0.0,
+          "vector": {
+            "xyz_icrs_km_s": [
+              -336.21453042115786,
+              71.52268743306317,
+              -41.86145599657026
+            ],
+            "amplitude_km_s": 346.2774707977984,
+            "ra_deg": 167.9905300497589,
+            "dec_deg": -6.943465202823829
+          },
+          "residual": {
+            "N": 8189,
+            "mean_km_s": -0.01343093867571684,
+            "rms_km_s": 1.2104460409204199,
+            "std_km_s": 1.2103715247254487,
+            "abs_quantiles_km_s": {
+              "p50": 0.8049606838370806,
+              "p90": 2.0105935562079025,
+              "p95": 2.3506527966532187,
+              "p99": 3.0527322915333777,
+              "p100": 4.1769157140323045
+            },
+            "fraction_abs_le_1_km_s": 0.5884723409451703
+          }
+        },
+        "global_additive_residual": {
+          "N": 8189,
+          "mean_km_s": 0.00471382962378821,
+          "rms_km_s": 0.2884107680552214,
+          "std_km_s": 0.2883722437067768,
+          "abs_quantiles_km_s": {
+            "p50": 0.25052728755116505,
+            "p90": 0.4483905439744035,
+            "p95": 0.47653742859340575,
+            "p99": 0.49655438856603723,
+            "p100": 0.5061447607611171
+          },
+          "fraction_abs_le_1_km_s": 1.0
+        },
+        "global_multiplicative_residual": {
+          "N": 8189,
+          "mean_km_s": -2.557047644222288,
+          "rms_km_s": 3.832664459219004,
+          "std_km_s": 2.8549648337830265,
+          "abs_quantiles_km_s": {
+            "p50": 2.57728596897104,
+            "p90": 6.66150723311498,
+            "p95": 7.460112962835342,
+            "p99": 8.546318670340149,
+            "p100": 10.467110262423091
+          },
+          "fraction_abs_le_1_km_s": 0.2334839418732446
+        },
+        "q_minus_q_from_global_additive_fit": {
+          "N": 8189,
+          "mean_km_s": 0.004426222225887205,
+          "rms_km_s": 0.26928143032110174,
+          "std_km_s": 0.26924505059997933,
+          "abs_quantiles_km_s": {
+            "p50": 0.2338821001448821,
+            "p90": 0.41855533316011134,
+            "p95": 0.4444192010224867,
+            "p99": 0.46431991832753966,
+            "p100": 0.47738959918865476
+          },
+          "fraction_abs_le_1_km_s": 1.0
+        }
+      },
+      {
+        "z_low": 0.08,
+        "z_high": 0.100001,
+        "N": 8208,
+        "median_z_CMB": 0.08814931561753966,
+        "median_zHEL_Vh_over_c": 0.08744382755619556,
+        "additive_fit": {
+          "rank": 3,
+          "singular_values": [
+            71.89475654407869,
+            47.37953784405359,
+            28.18374310043909
+          ],
+          "condition": 2.550930026855042,
+          "intercept_km_s": 0.0,
+          "vector": {
+            "xyz_icrs_km_s": [
+              -360.19406277231525,
+              76.47023677769675,
+              -45.152504298528456
+            ],
+            "amplitude_km_s": 370.9800649815192,
+            "ra_deg": 168.01390731906136,
+            "dec_deg": -6.990882827870124
+          },
+          "residual": {
+            "N": 8208,
+            "mean_km_s": 0.0010350287434283804,
+            "rms_km_s": 0.2895839560627105,
+            "std_km_s": 0.2895821063609251,
+            "abs_quantiles_km_s": {
+              "p50": 0.25129863344229264,
+              "p90": 0.4516439155627424,
+              "p95": 0.4759701499306345,
+              "p99": 0.4958810436612734,
+              "p100": 0.5136091230063897
+            },
+            "fraction_abs_le_1_km_s": 1.0
+          }
+        },
+        "multiplicative_fit": {
+          "rank": 3,
+          "singular_values": [
+            71.89475654407869,
+            47.37953784405359,
+            28.18374310043909
+          ],
+          "condition": 2.550930026855042,
+          "intercept_km_s": 0.0,
+          "vector": {
+            "xyz_icrs_km_s": [
+              -331.31257390828495,
+              70.18962733540317,
+              -41.77697872407417
+            ],
+            "amplitude_km_s": 341.23294296789004,
+            "ra_deg": 168.0385633939862,
+            "dec_deg": -7.032336778305047
+          },
+          "residual": {
+            "N": 8208,
+            "mean_km_s": -0.01165811378360334,
+            "rms_km_s": 1.0873842634179056,
+            "std_km_s": 1.0873217668712007,
+            "abs_quantiles_km_s": {
+              "p50": 0.7424763647649542,
+              "p90": 1.8141742594287822,
+              "p95": 2.105005835027265,
+              "p99": 2.5845277611078554,
+              "p100": 3.4479880739310147
+            },
+            "fraction_abs_le_1_km_s": 0.6247563352826511
+          }
+        },
+        "global_additive_residual": {
+          "N": 8208,
+          "mean_km_s": -0.0012441766084062562,
+          "rms_km_s": 0.289614757939614,
+          "std_km_s": 0.2896120854539539,
+          "abs_quantiles_km_s": {
+            "p50": 0.2515048671191664,
+            "p90": 0.4518477062252913,
+            "p95": 0.4763255778069464,
+            "p99": 0.49443288889443693,
+            "p100": 0.5068220806433601
+          },
+          "fraction_abs_le_1_km_s": 1.0
+        },
+        "global_multiplicative_residual": {
+          "N": 8208,
+          "mean_km_s": -5.819162809239349,
+          "rms_km_s": 7.06852456757557,
+          "std_km_s": 4.012652958079606,
+          "abs_quantiles_km_s": {
+            "p50": 6.1492726305281025,
+            "p90": 10.787515571455662,
+            "p95": 11.970184550329503,
+            "p99": 13.827950075440437,
+            "p100": 15.473242169881246
+          },
+          "fraction_abs_le_1_km_s": 0.07797270955165692
+        },
+        "q_minus_q_from_global_additive_fit": {
+          "N": 8208,
+          "mean_km_s": -0.0011374215025332596,
+          "rms_km_s": 0.26609553669072594,
+          "std_km_s": 0.26609310573378453,
+          "abs_quantiles_km_s": {
+            "p50": 0.23048995159371088,
+            "p90": 0.4155558648862609,
+            "p95": 0.4377155419429897,
+            "p99": 0.4548349741318258,
+            "p100": 0.46660326746386716
+          },
+          "fraction_abs_le_1_km_s": 1.0
+        }
+      }
+    ],
+    "rounding_comparison": {
+      "conditional_assumption": "both tabulated velocities independently rounded to nearest integer km/s after their underlying definitions",
+      "difference_absolute_bound_km_s": 1.0,
+      "difference_rms_if_independent_uniform_rounding_km_s": 0.408248290463863,
+      "status": "diagnostic comparison only, not an established stochastic rounding law"
+    },
+    "limitations": [
+      "A good deterministic fit does not establish the exact upstream frame-conversion algorithm.",
+      "This does not infer an observer velocity independently of catalogue construction.",
+      "The log-redshift chart is not automatically a Lorentz rapidity or a complete finite boost; direction conventions, transverse Doppler and aggregation matter.",
+      "No distance/photometry deboost p is supplied by this diagnostic.",
+      "Reported directions/amplitudes are deterministic fitted chart coefficients; no parameter covariance or uncertainty is estimated."
+    ]
+  },
+  "response_offset": "O_m[(A+1)*(q_published-n.a)/c]; subtract from y for the declared fixed logarithmic-reference mean",
+  "reference": "a is a deterministic least-squares representation of published additive correction; not an independent physical observer estimate",
+  "physical_status": "conditional first-order optical/source mean; complete distance p, finite boost and method aggregation still unresolved",
+  "same_experiment": "all source rows, quoted-z operators, covariance and design fixed; known offset is propagated, not a new redshift catalogue",
+  "rounding_body": "Under +/-0.5 km/s independent coordinate intervals for continuous Vh and V3k, q error bounded by derivative supremum; fixed reference a, no stochastic rounding law; coordinate support only, not simultaneous attainment",
+  "separation_power_bound": "unchanged: common additive source correction cancels from difference of mean families",
+  "models": {
+    "log__J2__free_history": {
+      "kind": "free_history",
+      "degree": 2,
+      "operator": "log",
+      "target": "W_km_s",
+      "old_target": [
+        -694669.097622094,
+        -618512.0890084577,
+        -509632.7649711429
+      ],
+      "corrected_target": [
+        -693933.8989283503,
+        -618693.8481380848,
+        -509813.12638042873
+      ],
+      "target_shift": [
+        735.1986937436741,
+        -181.7591296270257,
+        -180.36140928580426
+      ],
+      "target_covariance": [
+        [
+          287618241582.6191,
+          2236051124.278335,
+          41606202616.302956
+        ],
+        [
+          2236051124.278335,
+          436413378566.76483,
+          24672660500.549274
+        ],
+        [
+          41606202616.302956,
+          24672660500.549274,
+          625075203942.4192
+        ]
+      ],
+      "zero_wald": 2.7640769703196377,
+      "zero_nominal_p": 0.4294476778674231,
+      "residual_chi2": 5.7312815504002685,
+      "dof": 8,
+      "affine_GLS_scaled_parity_error": 1.940255363782247e-12,
+      "rounding_box_target_support_km_s": [
+        10857.571769578859,
+        15407.82415512618,
+        18928.73009570367
+      ],
+      "source_offset_whitened_norm": 0.258176434757184,
+      "geometry_unchanged": true
+    },
+    "log__J2__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 2,
+      "operator": "log",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -459.5265132664953,
+        9.20615907007884,
+        -114.73357522396792
+      ],
+      "corrected_target": [
+        -459.1088921207656,
+        9.114209109075922,
+        -114.71213176902239
+      ],
+      "target_shift": [
+        0.4176211457296972,
+        -0.09194996100291775,
+        0.02144345494552624
+      ],
+      "target_covariance": [
+        [
+          38096.120465127795,
+          166.86902540735974,
+          821.7683884908213
+        ],
+        [
+          166.86902540735974,
+          45014.17782664893,
+          640.075138206223
+        ],
+        [
+          821.7683884908213,
+          640.075138206223,
+          49167.21747853596
+        ]
+      ],
+      "zero_wald": 5.759833675516871,
+      "zero_nominal_p": 0.12389775699244529,
+      "residual_chi2": 8.495366380631136,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 1.734723475976807e-15,
+      "rounding_box_target_support_km_s": [
+        2.944614514434271,
+        3.733445501681936,
+        4.01093554215374
+      ],
+      "source_offset_whitened_norm": 0.2581747324600718,
+      "geometry_unchanged": true
+    },
+    "log__J2__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 2,
+      "operator": "log",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -459.5264515093651,
+        9.206131899482626,
+        -114.73357519344351
+      ],
+      "corrected_target": [
+        -459.10883041256096,
+        9.114181946582493,
+        -114.71213174695866
+      ],
+      "target_shift": [
+        0.41762109680411186,
+        -0.09194995290013352,
+        0.021443446484852302
+      ],
+      "target_covariance": [
+        [
+          38096.103795785915,
+          166.86873726878954,
+          821.768941667213
+        ],
+        [
+          166.86873726878954,
+          45014.16120443795,
+          640.0752958046594
+        ],
+        [
+          821.768941667213,
+          640.0752958046594,
+          49167.20219509866
+        ]
+      ],
+      "zero_wald": 5.759834622439851,
+      "zero_nominal_p": 0.1238977060948087,
+      "residual_chi2": 8.495365433708155,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 2.42861286636753e-15,
+      "rounding_box_target_support_km_s": [
+        2.94461413164865,
+        3.733445022138011,
+        4.010935056062178
+      ],
+      "source_offset_whitened_norm": 0.2581747324600718,
+      "geometry_unchanged": true
+    },
+    "log__J3__free_history": {
+      "kind": "free_history",
+      "degree": 3,
+      "operator": "log",
+      "target": "W_km_s",
+      "old_target": [
+        -669693.102903206,
+        -572894.968721653,
+        -538462.0397187393
+      ],
+      "corrected_target": [
+        -668958.9919528993,
+        -573046.6600176081,
+        -538683.497541496
+      ],
+      "target_shift": [
+        734.1109503067564,
+        -151.6912959550973,
+        -221.45782275660895
+      ],
+      "target_covariance": [
+        [
+          305008936068.90765,
+          5373093507.780096,
+          47214396533.99198
+        ],
+        [
+          5373093507.780096,
+          461710928654.8908,
+          23874789637.186733
+        ],
+        [
+          47214396533.99198,
+          23874789637.186733,
+          639048624279.5535
+        ]
+      ],
+      "zero_wald": 2.4124438392168592,
+      "zero_nominal_p": 0.4913224096905987,
+      "residual_chi2": 3.558368483745525,
+      "dof": 3,
+      "affine_GLS_scaled_parity_error": 2.7163575092951458e-12,
+      "rounding_box_target_support_km_s": [
+        11770.67444197215,
+        16394.755452756577,
+        19586.982271015175
+      ],
+      "source_offset_whitened_norm": 0.258176434757184,
+      "geometry_unchanged": true
+    },
+    "log__J3__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 3,
+      "operator": "log",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -456.3307131273767,
+        13.081164553299768,
+        -126.56544903749845
+      ],
+      "corrected_target": [
+        -455.9169708960469,
+        12.99110077979774,
+        -126.54787712426187
+      ],
+      "target_shift": [
+        0.41374223132982024,
+        -0.09006377350202754,
+        0.017571913236579917
+      ],
+      "target_covariance": [
+        [
+          38160.268251016474,
+          138.47347901415333,
+          860.0909993014466
+        ],
+        [
+          138.47347901415333,
+          45142.619220839086,
+          709.6855822194154
+        ],
+        [
+          860.0909993014466,
+          709.6855822194154,
+          49489.01582341297
+        ]
+      ],
+      "zero_wald": 5.726207965296216,
+      "zero_nominal_p": 0.12571776701671203,
+      "residual_chi2": 5.970790288951921,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 4.5102810375396984e-15,
+      "rounding_box_target_support_km_s": [
+        2.9542940188404554,
+        3.738978455323366,
+        4.030977815138049
+      ],
+      "source_offset_whitened_norm": 0.2581747324600718,
+      "geometry_unchanged": true
+    },
+    "log__J3__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 3,
+      "operator": "log",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -456.33064897074604,
+        13.081140150077553,
+        -126.56544815818084
+      ],
+      "corrected_target": [
+        -455.9169067890644,
+        12.991076385554283,
+        -126.5478762541853
+      ],
+      "target_shift": [
+        0.41374218168164134,
+        -0.09006376452327025,
+        0.017571903995545313
+      ],
+      "target_covariance": [
+        [
+          38160.25164889341,
+          138.47318937941623,
+          860.0915677276123
+        ],
+        [
+          138.47318937941623,
+          45142.60263241658,
+          709.6856710117111
+        ],
+        [
+          860.0915677276123,
+          709.6856710117111,
+          49489.0005298239
+        ]
+      ],
+      "zero_wald": 5.726208820517563,
+      "zero_nominal_p": 0.12571772040534657,
+      "residual_chi2": 5.9707894337305945,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 4.7704895589362195e-15,
+      "rounding_box_target_support_km_s": [
+        2.9542936582645742,
+        3.738977974350399,
+        4.0309773276884755
+      ],
+      "source_offset_whitened_norm": 0.2581747324600718,
+      "geometry_unchanged": true
+    },
+    "log_mono__J2__free_history": {
+      "kind": "free_history",
+      "degree": 2,
+      "operator": "log_mono",
+      "target": "W_km_s",
+      "old_target": [
+        110023.81936569522,
+        -656300.8500718008,
+        -779418.7093261974
+      ],
+      "corrected_target": [
+        110771.84607219679,
+        -656486.7428665534,
+        -779596.5499480928
+      ],
+      "target_shift": [
+        748.0267065015651,
+        -185.89279475260992,
+        -177.84062189538963
+      ],
+      "target_covariance": [
+        [
+          345887244996.67804,
+          3662153026.4274173,
+          22240845987.598675
+        ],
+        [
+          3662153026.4274173,
+          436409217877.2957,
+          24754394661.83313
+        ],
+        [
+          22240845987.598675,
+          24754394661.83313,
+          641544270809.7281
+        ]
+      ],
+      "zero_wald": 1.9067390028844593,
+      "zero_nominal_p": 0.5919871363532312,
+      "residual_chi2": 8.513748502500935,
+      "dof": 8,
+      "affine_GLS_scaled_parity_error": 1.1641532182693482e-12,
+      "rounding_box_target_support_km_s": [
+        12394.758661333773,
+        15425.877240799502,
+        19918.673288034217
+      ],
+      "source_offset_whitened_norm": 0.23495506779433745,
+      "geometry_unchanged": true
+    },
+    "log_mono__J2__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 2,
+      "operator": "log_mono",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -218.83359081364495,
+        9.487490519954614,
+        -136.54391897007673
+      ],
+      "corrected_target": [
+        -218.44365773951793,
+        9.396842926573353,
+        -136.51459384052487
+      ],
+      "target_shift": [
+        0.38993307412701483,
+        -0.09064759338126116,
+        0.029325129551864393
+      ],
+      "target_covariance": [
+        [
+          40054.268397259744,
+          28.703230541124494,
+          360.0968120864388
+        ],
+        [
+          28.703230541124494,
+          44957.33325071424,
+          610.1870100200239
+        ],
+        [
+          360.0968120864388,
+          610.1870100200239,
+          49381.112662937725
+        ]
+      ],
+      "zero_wald": 1.5607627819111287,
+      "zero_nominal_p": 0.6683189494030812,
+      "residual_chi2": 10.420827680084663,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 1.5612511283791264e-15,
+      "rounding_box_target_support_km_s": [
+        2.943442277853176,
+        3.7411267446894705,
+        4.100284096161228
+      ],
+      "source_offset_whitened_norm": 0.2349535798273738,
+      "geometry_unchanged": true
+    },
+    "log_mono__J2__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 2,
+      "operator": "log_mono",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -218.8335405559121,
+        9.487461202327783,
+        -136.5439238299597
+      ],
+      "corrected_target": [
+        -218.4436075234272,
+        9.396813616390418,
+        -136.5145987100375
+      ],
+      "target_shift": [
+        0.3899330324848904,
+        -0.090647585937365,
+        0.029325119922219756
+      ],
+      "target_covariance": [
+        [
+          40054.252176054484,
+          28.703015348469627,
+          360.09716837323447
+        ],
+        [
+          28.703015348469627,
+          44957.3166570346,
+          610.187164694947
+        ],
+        [
+          360.09716837323447,
+          610.187164694947,
+          49381.09745107352
+        ]
+      ],
+      "zero_wald": 1.5607628300503311,
+      "zero_nominal_p": 0.6683189384089208,
+      "residual_chi2": 10.420827631945452,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 1.214306433183765e-15,
+      "rounding_box_target_support_km_s": [
+        2.943441931639784,
+        3.741126261220038,
+        4.100283625965914
+      ],
+      "source_offset_whitened_norm": 0.2349535798273738,
+      "geometry_unchanged": true
+    },
+    "log_mono__J3__free_history": {
+      "kind": "free_history",
+      "degree": 3,
+      "operator": "log_mono",
+      "target": "W_km_s",
+      "old_target": [
+        118613.19683604849,
+        -636638.2993687348,
+        -907645.7931402788
+      ],
+      "corrected_target": [
+        119340.24970806223,
+        -636802.3641207125,
+        -907859.3598693832
+      ],
+      "target_shift": [
+        727.0528720137372,
+        -164.06475197768304,
+        -213.5667291043792
+      ],
+      "target_covariance": [
+        [
+          352056372715.2277,
+          3511542695.0957937,
+          29179822036.555714
+        ],
+        [
+          3511542695.0957937,
+          461255298963.94775,
+          24584127154.87843
+        ],
+        [
+          29179822036.555714,
+          24584127154.87843,
+          655889444010.2651
+        ]
+      ],
+      "zero_wald": 2.1215695172841276,
+      "zero_nominal_p": 0.5475614433885709,
+      "residual_chi2": 4.496627608274801,
+      "dof": 3,
+      "affine_GLS_scaled_parity_error": 3.4924596548080443e-12,
+      "rounding_box_target_support_km_s": [
+        12616.669727470853,
+        16435.08994366159,
+        20544.831699058384
+      ],
+      "source_offset_whitened_norm": 0.23495506779433745,
+      "geometry_unchanged": true
+    },
+    "log_mono__J3__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 3,
+      "operator": "log_mono",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -219.09376534716898,
+        14.141976612237652,
+        -156.35258521724072
+      ],
+      "corrected_target": [
+        -218.70809512527293,
+        14.053477278926255,
+        -156.32721642924255
+      ],
+      "target_shift": [
+        0.38567022189604927,
+        -0.08849933331139681,
+        0.025368787998161224
+      ],
+      "target_covariance": [
+        [
+          40234.08641923934,
+          -16.97390928386864,
+          393.26271786992186
+        ],
+        [
+          -16.97390928386864,
+          45094.44448952545,
+          675.1653076713826
+        ],
+        [
+          393.26271786992186,
+          675.1653076713826,
+          49730.1621934712
+        ]
+      ],
+      "zero_wald": 1.6726956135275617,
+      "zero_nominal_p": 0.6430211485208219,
+      "residual_chi2": 6.6184219113188885,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 2.42861286636753e-15,
+      "rounding_box_target_support_km_s": [
+        2.9462355441208214,
+        3.7450905169131206,
+        4.123806915874526
+      ],
+      "source_offset_whitened_norm": 0.2349535798273738,
+      "geometry_unchanged": true
+    },
+    "log_mono__J3__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 3,
+      "operator": "log_mono",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -219.09371433683316,
+        14.141948695133774,
+        -156.35259125192357
+      ],
+      "corrected_target": [
+        -218.7080441569156,
+        14.053449370039186,
+        -156.3272224741903
+      ],
+      "target_shift": [
+        0.3856701799175539,
+        -0.08849932509458824,
+        0.02536877773326296
+      ],
+      "target_covariance": [
+        [
+          40234.070141281896,
+          -16.97414447094061,
+          393.2630956277038
+        ],
+        [
+          -16.97414447094061,
+          45094.427938507484,
+          675.1653999936888
+        ],
+        [
+          393.2630956277038,
+          675.1653999936888,
+          49730.146978453224
+        ]
+      ],
+      "zero_wald": 1.672695691261834,
+      "zero_nominal_p": 0.6430211311424205,
+      "residual_chi2": 6.618421833584618,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 2.7755575615628914e-15,
+      "rounding_box_target_support_km_s": [
+        2.946235199297828,
+        3.745090037134444,
+        4.123806448207456
+      ],
+      "source_offset_whitened_norm": 0.2349535798273738,
+      "geometry_unchanged": true
+    },
+    "log_split__J2__free_history": {
+      "kind": "free_history",
+      "degree": 2,
+      "operator": "log_split",
+      "target": "W_km_s",
+      "old_target": [
+        -238129.50081833015,
+        -819441.2150323184,
+        1690410.2653841816
+      ],
+      "corrected_target": [
+        -237385.91593834123,
+        -819611.5727741206,
+        1690292.046261881
+      ],
+      "target_shift": [
+        743.5848799889209,
+        -170.35774180223234,
+        -118.21912230062298
+      ],
+      "target_covariance": [
+        [
+          361271288632.714,
+          2184083715.5683727,
+          -15702779221.552044
+        ],
+        [
+          2184083715.5683727,
+          437314734993.8341,
+          44531411922.0519
+        ],
+        [
+          -15702779221.552044,
+          44531411922.0519,
+          985188987367.0133
+        ]
+      ],
+      "zero_wald": 4.860203960337976,
+      "zero_nominal_p": 0.18232460785052507,
+      "residual_chi2": 5.831673487006794,
+      "dof": 8,
+      "affine_GLS_scaled_parity_error": 1.5522042910257976e-12,
+      "rounding_box_target_support_km_s": [
+        12698.643790587754,
+        15661.29758001424,
+        31846.467058662307
+      ],
+      "source_offset_whitened_norm": 0.23284644812720853,
+      "geometry_unchanged": true
+    },
+    "log_split__J2__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 2,
+      "operator": "log_split",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -255.46884714933518,
+        7.335426270369542,
+        -134.9045073013626
+      ],
+      "corrected_target": [
+        -255.090987006817,
+        7.242780400089703,
+        -134.85645901350378
+      ],
+      "target_shift": [
+        0.37786014251818756,
+        -0.0926458702798385,
+        0.048048287858819094
+      ],
+      "target_covariance": [
+        [
+          40690.403794673824,
+          7.1393605201381565,
+          193.44707248205398
+        ],
+        [
+          7.1393605201381565,
+          44925.749808818146,
+          562.6719133438918
+        ],
+        [
+          193.44707248205398,
+          562.6719133438918,
+          57098.080588191144
+        ]
+      ],
+      "zero_wald": 1.913642869153347,
+      "zero_nominal_p": 0.5905224384311774,
+      "residual_chi2": 10.69224514508863,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 1.0408340855860843e-15,
+      "rounding_box_target_support_km_s": [
+        2.916474495322194,
+        3.753088624123667,
+        6.720231277000488
+      ],
+      "source_offset_whitened_norm": 0.2328449806585951,
+      "geometry_unchanged": true
+    },
+    "log_split__J2__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 2,
+      "operator": "log_split",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -255.4688061461366,
+        7.3353862733040405,
+        -134.90444421131886
+      ],
+      "corrected_target": [
+        -255.0909460429328,
+        7.242740412103357,
+        -134.8563959340809
+      ],
+      "target_shift": [
+        0.3778601032037727,
+        -0.0926458612006833,
+        0.04804827723796734
+      ],
+      "target_covariance": [
+        [
+          40690.3876784366,
+          7.139207648764619,
+          193.44680281929257
+        ],
+        [
+          7.139207648764619,
+          44925.7332296745,
+          562.6722581718248
+        ],
+        [
+          193.44680281929257,
+          562.6722581718248,
+          57098.064493105514
+        ]
+      ],
+      "zero_wald": 1.91364277352711,
+      "zero_nominal_p": 0.590522458702184,
+      "residual_chi2": 10.692245240714872,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 8.673617379884035e-16,
+      "rounding_box_target_support_km_s": [
+        2.916474188913068,
+        3.753088133632917,
+        6.720230391439637
+      ],
+      "source_offset_whitened_norm": 0.2328449806585951,
+      "geometry_unchanged": true
+    },
+    "log_split__J3__free_history": {
+      "kind": "free_history",
+      "degree": 3,
+      "operator": "log_split",
+      "target": "W_km_s",
+      "old_target": [
+        -205194.0096731346,
+        -817529.401271805,
+        1450838.6996496823
+      ],
+      "corrected_target": [
+        -204466.95884271458,
+        -817675.4402213773,
+        1450664.7637728036
+      ],
+      "target_shift": [
+        727.0508304200193,
+        -146.03894957224838,
+        -173.93587687867694
+      ],
+      "target_covariance": [
+        [
+          367032304306.41705,
+          1018700169.9190755,
+          -11772600825.42084
+        ],
+        [
+          1018700169.9190755,
+          461994490603.7426,
+          48699780717.97261
+        ],
+        [
+          -11772600825.42084,
+          48699780717.97261,
+          1024970743569.1228
+        ]
+      ],
+      "zero_wald": 3.856220148519859,
+      "zero_nominal_p": 0.2774141595792308,
+      "residual_chi2": 2.4862549903060893,
+      "dof": 3,
+      "affine_GLS_scaled_parity_error": 7.761021455128988e-13,
+      "rounding_box_target_support_km_s": [
+        12675.933843865423,
+        16592.29759194774,
+        32807.79375675506
+      ],
+      "source_offset_whitened_norm": 0.23284644812720853,
+      "geometry_unchanged": true
+    },
+    "log_split__J3__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 3,
+      "operator": "log_split",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -259.7162442434344,
+        10.891200732094719,
+        -164.15377157209673
+      ],
+      "corrected_target": [
+        -259.3414783464181,
+        10.801131802079961,
+        -164.10951394094042
+      ],
+      "target_shift": [
+        0.3747658970162888,
+        -0.09006893001475724,
+        0.04425763115631298
+      ],
+      "target_covariance": [
+        [
+          40769.76498703587,
+          -57.397343692802686,
+          293.03962668295327
+        ],
+        [
+          -57.397343692802686,
+          45066.876700406276,
+          621.0025986745918
+        ],
+        [
+          293.03962668295327,
+          621.0025986745918,
+          57652.201558234214
+        ]
+      ],
+      "zero_wald": 2.1096075312939306,
+      "zero_nominal_p": 0.5499715410218704,
+      "residual_chi2": 6.342709103342064,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 3.1225022567582528e-15,
+      "rounding_box_target_support_km_s": [
+        2.931331237024649,
+        3.757981893644021,
+        6.764831013804839
+      ],
+      "source_offset_whitened_norm": 0.2328449806585951,
+      "geometry_unchanged": true
+    },
+    "log_split__J3__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 3,
+      "operator": "log_split",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -259.71620131647643,
+        10.8911623385134,
+        -164.15371126246353
+      ],
+      "corrected_target": [
+        -259.3414354593555,
+        10.801093418427557,
+        -164.10945364289825
+      ],
+      "target_shift": [
+        0.3747658571209058,
+        -0.09006892008584266,
+        0.04425761956528618
+      ],
+      "target_covariance": [
+        [
+          40769.74884959779,
+          -57.397517888750535,
+          293.0393117024023
+        ],
+        [
+          -57.397517888750535,
+          45066.86016314434,
+          621.0028799541462
+        ],
+        [
+          293.0393117024023,
+          621.0028799541462,
+          57652.18545417361
+        ]
+      ],
+      "zero_wald": 2.1096074158005673,
+      "zero_nominal_p": 0.5499715643281247,
+      "residual_chi2": 6.342709218835429,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 1.734723475976807e-15,
+      "rounding_box_target_support_km_s": [
+        2.931330921710437,
+        3.7579813959048463,
+        6.764830129745043
+      ],
+      "source_offset_whitened_norm": 0.2328449806585951,
+      "geometry_unchanged": true
+    },
+    "log_survey__J2__free_history": {
+      "kind": "free_history",
+      "degree": 2,
+      "operator": "log_survey",
+      "target": "W_km_s",
+      "old_target": [
+        -56250.953201524775,
+        -736843.2039216668,
+        -907941.7438499933
+      ],
+      "corrected_target": [
+        -55485.61914986473,
+        -737023.9781372879,
+        -908162.29121998
+      ],
+      "target_shift": [
+        765.3340516600438,
+        -180.77421562105883,
+        -220.54736998665612
+      ],
+      "target_covariance": [
+        [
+          348553384884.9786,
+          2576822089.0574875,
+          7413861342.0375185
+        ],
+        [
+          2576822089.0574875,
+          435770080739.5137,
+          33671354726.670616
+        ],
+        [
+          7413861342.0375185,
+          33671354726.670616,
+          709529015381.9261
+        ]
+      ],
+      "zero_wald": 2.2766566575629286,
+      "zero_nominal_p": 0.5170076162799946,
+      "residual_chi2": 10.156998074986715,
+      "dof": 8,
+      "affine_GLS_scaled_parity_error": 1.5522042910257976e-12,
+      "rounding_box_target_support_km_s": [
+        12645.457569061731,
+        15526.089375619526,
+        21835.105835346865
+      ],
+      "source_offset_whitened_norm": 0.23193877609087213,
+      "geometry_unchanged": true
+    },
+    "log_survey__J2__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 2,
+      "operator": "log_survey",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -225.88591254207174,
+        13.523998424517758,
+        -211.52578387250995
+      ],
+      "corrected_target": [
+        -225.49806879017274,
+        13.434886181081193,
+        -211.48561320208174
+      ],
+      "target_shift": [
+        0.38784375189899833,
+        -0.08911224343656521,
+        0.04017067042821054
+      ],
+      "target_covariance": [
+        [
+          40127.587018593375,
+          -45.50796523436704,
+          38.3438661397579
+        ],
+        [
+          -45.50796523436704,
+          44855.34896044893,
+          829.7199113039626
+        ],
+        [
+          38.3438661397579,
+          829.7199113039626,
+          50462.58941625629
+        ]
+      ],
+      "zero_wald": 2.15789579848306,
+      "zero_nominal_p": 0.5402891263013891,
+      "residual_chi2": 12.433807018882593,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 2.6020852139652106e-15,
+      "rounding_box_target_support_km_s": [
+        2.9476950378455187,
+        3.7441320073101068,
+        4.34959975250752
+      ],
+      "source_offset_whitened_norm": 0.23193731183369756,
+      "geometry_unchanged": true
+    },
+    "log_survey__J2__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 2,
+      "operator": "log_survey",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -225.88586961146,
+        13.52396499722318,
+        -211.5257797758377
+      ],
+      "corrected_target": [
+        -225.49802590015253,
+        13.434852761405889,
+        -211.48560911736297
+      ],
+      "target_shift": [
+        0.3878437113074824,
+        -0.08911223581729111,
+        0.04017065847472168
+      ],
+      "target_covariance": [
+        [
+          40127.57082053778,
+          -45.50815180635794,
+          38.344090454540584
+        ],
+        [
+          -45.50815180635794,
+          44855.33241810278,
+          829.7200174246685
+        ],
+        [
+          38.344090454540584,
+          829.7200174246685,
+          50462.574684491476
+        ]
+      ],
+      "zero_wald": 2.1578960187059204,
+      "zero_nominal_p": 0.540289082427456,
+      "residual_chi2": 12.433806798659738,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 2.7755575615628914e-15,
+      "rounding_box_target_support_km_s": [
+        2.9476947242856135,
+        3.744131522937316,
+        4.349599224050351
+      ],
+      "source_offset_whitened_norm": 0.23193731183369756,
+      "geometry_unchanged": true
+    },
+    "log_survey__J3__free_history": {
+      "kind": "free_history",
+      "degree": 3,
+      "operator": "log_survey",
+      "target": "W_km_s",
+      "old_target": [
+        7847.444354905076,
+        -716559.1021817138,
+        -1108525.7597508593
+      ],
+      "corrected_target": [
+        8591.09978771589,
+        -716722.6747991072,
+        -1108789.7755749237
+      ],
+      "target_shift": [
+        743.6554328108141,
+        -163.57261739345267,
+        -264.01582406437956
+      ],
+      "target_covariance": [
+        [
+          354321727348.7463,
+          1305879032.3499696,
+          12644344814.835032
+        ],
+        [
+          1305879032.3499696,
+          459027402602.83966,
+          33965509752.862583
+        ],
+        [
+          12644344814.835032,
+          33965509752.862583,
+          729441450155.7328
+        ]
+      ],
+      "zero_wald": 2.654768262798222,
+      "zero_nominal_p": 0.4479687592685565,
+      "residual_chi2": 4.302763645198407,
+      "dof": 3,
+      "affine_GLS_scaled_parity_error": 4.656612873077393e-12,
+      "rounding_box_target_support_km_s": [
+        12693.740780816473,
+        16491.593752593097,
+        22604.341505003402
+      ],
+      "source_offset_whitened_norm": 0.23193877609087213,
+      "geometry_unchanged": true
+    },
+    "log_survey__J3__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 3,
+      "operator": "log_survey",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -227.83345109480555,
+        16.582727046481573,
+        -249.71507622153456
+      ],
+      "corrected_target": [
+        -227.44950352144738,
+        16.495776961944763,
+        -249.6761962279063
+      ],
+      "target_shift": [
+        0.38394757335817076,
+        -0.08695008453680941,
+        0.03887999362825667
+      ],
+      "target_covariance": [
+        [
+          40243.48269616714,
+          -87.90259912775161,
+          107.26578158786815
+        ],
+        [
+          -87.90259912775161,
+          44996.11714766024,
+          896.1314818457794
+        ],
+        [
+          107.26578158786815,
+          896.1314818457794,
+          50926.41452781441
+        ]
+      ],
+      "zero_wald": 2.5128969862520805,
+      "zero_nominal_p": 0.47296481745502905,
+      "residual_chi2": 6.9575427486961,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 2.7755575615628914e-15,
+      "rounding_box_target_support_km_s": [
+        2.9715823741326775,
+        3.7479245367246232,
+        4.395753692518225
+      ],
+      "source_offset_whitened_norm": 0.23193731183369756,
+      "geometry_unchanged": true
+    },
+    "log_survey__J3__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 3,
+      "operator": "log_survey",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -227.83340464725853,
+        16.582695463064105,
+        -249.71507232004214
+      ],
+      "corrected_target": [
+        -227.44945711494975,
+        16.495745386799964,
+        -249.6761923397265
+      ],
+      "target_shift": [
+        0.3839475323087811,
+        -0.08695007626414153,
+        0.03887998031564166
+      ],
+      "target_covariance": [
+        [
+          40243.46648436116,
+          -87.90280660294972,
+          107.26598103882202
+        ],
+        [
+          -87.90280660294972,
+          44996.10064669396,
+          896.1315265200346
+        ],
+        [
+          107.26598103882202,
+          896.1315265200346,
+          50926.399768473195
+        ]
+      ],
+      "zero_wald": 2.512897257273026,
+      "zero_nominal_p": 0.4729647686649414,
+      "residual_chi2": 6.957542477675151,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 3.469446951953614e-15,
+      "rounding_box_target_support_km_s": [
+        2.9715820601663867,
+        3.7479240513103917,
+        4.395753149114186
+      ],
+      "source_offset_whitened_norm": 0.23193731183369756,
+      "geometry_unchanged": true
+    },
+    "log_mono_radial__J2__free_history": {
+      "kind": "free_history",
+      "degree": 2,
+      "operator": "log_mono_radial",
+      "target": "W_km_s",
+      "old_target": [
+        163216.56142849804,
+        -596883.2862115812,
+        -1340949.4013533418
+      ],
+      "corrected_target": [
+        163956.00784461,
+        -597067.2332464772,
+        -1341112.63931479
+      ],
+      "target_shift": [
+        739.446416111954,
+        -183.94703489600215,
+        -163.23796144826338
+      ],
+      "target_covariance": [
+        [
+          351857410050.8705,
+          9015107963.445782,
+          -9117966284.060919
+        ],
+        [
+          9015107963.445782,
+          436742775657.4469,
+          15783525283.894365
+        ],
+        [
+          -9117966284.060919,
+          15783525283.894365,
+          752551470134.0109
+        ]
+      ],
+      "zero_wald": 3.2042484703970686,
+      "zero_nominal_p": 0.3611933403845104,
+      "residual_chi2": 6.309825879588198,
+      "dof": 8,
+      "affine_GLS_scaled_parity_error": 1.1641532182693482e-12,
+      "rounding_box_target_support_km_s": [
+        12408.470488427152,
+        15366.12626083444,
+        21145.43590125984
+      ],
+      "source_offset_whitened_norm": 0.23279746138386084,
+      "geometry_unchanged": true
+    },
+    "log_mono_radial__J2__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 2,
+      "operator": "log_mono_radial",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -199.16879328481082,
+        25.626217675160408,
+        -204.88339988690623
+      ],
+      "corrected_target": [
+        -198.78237849400853,
+        25.53478321695477,
+        -204.8421594664822
+      ],
+      "target_shift": [
+        0.38641479080229146,
+        -0.09143445820563656,
+        0.041240420424031754
+      ],
+      "target_covariance": [
+        [
+          40148.51549464369,
+          12.727115481790573,
+          -26.92727182886832
+        ],
+        [
+          12.727115481790573,
+          44834.64793940143,
+          605.2255885095101
+        ],
+        [
+          -26.92727182886832,
+          605.2255885095101,
+          50704.27111147664
+        ]
+      ],
+      "zero_wald": 1.8303792167528607,
+      "zero_nominal_p": 0.6083464967854271,
+      "residual_chi2": 9.514075512180803,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 1.3877787807814457e-15,
+      "rounding_box_target_support_km_s": [
+        2.891068694392178,
+        3.7215950271176594,
+        4.139130172407504
+      ],
+      "source_offset_whitened_norm": 0.23279599681788468,
+      "geometry_unchanged": true
+    },
+    "log_mono_radial__J2__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 2,
+      "operator": "log_mono_radial",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -199.1687461983012,
+        25.62618735992807,
+        -204.88340778961566
+      ],
+      "corrected_target": [
+        -198.78233144909163,
+        25.53475290942315,
+        -204.84216737953957
+      ],
+      "target_shift": [
+        0.386414749209564,
+        -0.09143445050492005,
+        0.041240410076085254
+      ],
+      "target_covariance": [
+        [
+          40148.499363409195,
+          12.726993259525921,
+          -26.927129876887832
+        ],
+        [
+          12.726993259525921,
+          44834.63140562716,
+          605.2256240645919
+        ],
+        [
+          -26.927129876887832,
+          605.2256240645919,
+          50704.25635032909
+        ]
+      ],
+      "zero_wald": 1.8303794150290609,
+      "zero_nominal_p": 0.6083464539316228,
+      "residual_chi2": 9.514075313904602,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 1.1384122811097797e-15,
+      "rounding_box_target_support_km_s": [
+        2.891068389193178,
+        3.7215945420691043,
+        4.139129674150112
+      ],
+      "source_offset_whitened_norm": 0.23279599681788468,
+      "geometry_unchanged": true
+    },
+    "log_mono_radial__J3__free_history": {
+      "kind": "free_history",
+      "degree": 3,
+      "operator": "log_mono_radial",
+      "target": "W_km_s",
+      "old_target": [
+        168386.51910821127,
+        -606471.9489829536,
+        -1322677.2620053913
+      ],
+      "corrected_target": [
+        169105.35726246313,
+        -606647.6001785705,
+        -1322873.8140268996
+      ],
+      "target_shift": [
+        718.8381542518619,
+        -175.651195616927,
+        -196.55202150833793
+      ],
+      "target_covariance": [
+        [
+          357245939892.6302,
+          6454887874.914556,
+          95582079.19704907
+        ],
+        [
+          6454887874.914556,
+          462031554902.8882,
+          15257398658.69666
+        ],
+        [
+          95582079.19704907,
+          15257398658.69666,
+          769590070729.0571
+        ]
+      ],
+      "zero_wald": 3.0916522822021673,
+      "zero_nominal_p": 0.3777089298061146,
+      "residual_chi2": 3.071103934641287,
+      "dof": 3,
+      "affine_GLS_scaled_parity_error": 4.656612873077393e-12,
+      "rounding_box_target_support_km_s": [
+        12575.693347860422,
+        16324.20388342292,
+        21979.195593370387
+      ],
+      "source_offset_whitened_norm": 0.23279746138386084,
+      "geometry_unchanged": true
+    },
+    "log_mono_radial__J3__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 3,
+      "operator": "log_mono_radial",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -210.909253416617,
+        27.965264230936608,
+        -204.56374047439917
+      ],
+      "corrected_target": [
+        -210.5268035504565,
+        27.87556292795409,
+        -204.52511438416505
+      ],
+      "target_shift": [
+        0.38244986616049914,
+        -0.08970130298251888,
+        0.03862609023411778
+      ],
+      "target_covariance": [
+        [
+          40325.33512516552,
+          27.176621827075024,
+          -19.186068734168376
+        ],
+        [
+          27.176621827075024,
+          44991.250449766456,
+          616.7257054888065
+        ],
+        [
+          -19.186068734168376,
+          616.7257054888065,
+          50891.9749535934
+        ]
+      ],
+      "zero_wald": 1.9425276461875618,
+      "zero_nominal_p": 0.5844205726269809,
+      "residual_chi2": 6.162757211091854,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 3.469446951953614e-15,
+      "rounding_box_target_support_km_s": [
+        2.94722749013287,
+        3.721643147635184,
+        4.184605395058107
+      ],
+      "source_offset_whitened_norm": 0.23279599681788468,
+      "geometry_unchanged": true
+    },
+    "log_mono_radial__J3__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 3,
+      "operator": "log_mono_radial",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -210.90920331120225,
+        27.96523450005907,
+        -204.56374761805384
+      ],
+      "corrected_target": [
+        -210.52675348708064,
+        27.875533205298513,
+        -204.52512153881244
+      ],
+      "target_shift": [
+        0.38244982412160766,
+        -0.08970129476055533,
+        0.03862607924139638
+      ],
+      "target_covariance": [
+        [
+          40325.31894489674,
+          27.17647083637572,
+          -19.185897092067815
+        ],
+        [
+          27.17647083637572,
+          44991.23396817403,
+          616.7256759511048
+        ],
+        [
+          -19.185897092067815,
+          616.7256759511048,
+          50891.9601764191
+        ]
+      ],
+      "zero_wald": 1.9425278209706454,
+      "zero_nominal_p": 0.5844205358328505,
+      "residual_chi2": 6.162757036308779,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 2.7755575615628914e-15,
+      "rounding_box_target_support_km_s": [
+        2.9472271561349084,
+        3.721642656769095,
+        4.184604901440211
+      ],
+      "source_offset_whitened_norm": 0.23279599681788468,
+      "geometry_unchanged": true
+    },
+    "log_mono_galactic__J2__free_history": {
+      "kind": "free_history",
+      "degree": 2,
+      "operator": "log_mono_galactic",
+      "target": "W_km_s",
+      "old_target": [
+        71814.32894914165,
+        -579377.552648332,
+        -645391.5301741613
+      ],
+      "corrected_target": [
+        72561.0368648431,
+        -579583.0383750264,
+        -645536.2913907446
+      ],
+      "target_shift": [
+        746.7079157014523,
+        -205.48572669446003,
+        -144.7612165833125
+      ],
+      "target_covariance": [
+        [
+          348298222795.5865,
+          -913612993.7699943,
+          26251899521.039104
+        ],
+        [
+          -913612993.7699943,
+          455064337673.25354,
+          6907850285.028029
+        ],
+        [
+          26251899521.039104,
+          6907850285.028029,
+          676468215883.5009
+        ]
+      ],
+      "zero_wald": 1.3642150168214582,
+      "zero_nominal_p": 0.7139439439761546,
+      "residual_chi2": 11.966728642721868,
+      "dof": 8,
+      "affine_GLS_scaled_parity_error": 3.880510727564494e-13,
+      "rounding_box_target_support_km_s": [
+        12620.513163207263,
+        16838.291656549016,
+        22158.538255315783
+      ],
+      "source_offset_whitened_norm": 0.23350258590317788,
+      "geometry_unchanged": true
+    },
+    "log_mono_galactic__J2__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 2,
+      "operator": "log_mono_galactic",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -216.76229139462131,
+        4.8906543048255875,
+        -110.9596726868418
+      ],
+      "corrected_target": [
+        -216.37562903872663,
+        4.79443400938116,
+        -110.92413602387023
+      ],
+      "target_shift": [
+        0.38666235589468556,
+        -0.09622029544442778,
+        0.0355366629715661
+      ],
+      "target_covariance": [
+        [
+          40470.7205737624,
+          1230.670943161308,
+          -851.9149630508178
+        ],
+        [
+          1230.670943161308,
+          47890.536709199514,
+          -2149.3710929469403
+        ],
+        [
+          -851.9149630508178,
+          -2149.3710929469403,
+          52015.959089505974
+        ]
+      ],
+      "zero_wald": 1.4142338376801558,
+      "zero_nominal_p": 0.7022016586959519,
+      "residual_chi2": 13.331237108161362,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 2.7755575615628914e-15,
+      "rounding_box_target_support_km_s": [
+        3.115549667268292,
+        4.657086885326685,
+        4.559992565516885
+      ],
+      "source_offset_whitened_norm": 0.2335011111617168,
+      "geometry_unchanged": true
+    },
+    "log_mono_galactic__J2__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 2,
+      "operator": "log_mono_galactic",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -216.76224330950294,
+        4.890630157353383,
+        -110.95967756209696
+      ],
+      "corrected_target": [
+        -216.3755809951662,
+        4.794409869480439,
+        -110.92414090835686
+      ],
+      "target_shift": [
+        0.38666231433674625,
+        -0.0962202878729439,
+        0.0355366537400954
+      ],
+      "target_covariance": [
+        [
+          40470.70413971547,
+          1230.6703088272614,
+          -851.914251037759
+        ],
+        [
+          1230.6703088272614,
+          47890.519675766984,
+          -2149.3705730636193
+        ],
+        [
+          -851.914251037759,
+          -2149.3705730636193,
+          52015.94363040119
+        ]
+      ],
+      "zero_wald": 1.4142338712474942,
+      "zero_nominal_p": 0.7022016508437654,
+      "residual_chi2": 13.331237074594027,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 2.0816681711721685e-15,
+      "rounding_box_target_support_km_s": [
+        3.1155492419458657,
+        4.657086307001922,
+        4.559992104767169
+      ],
+      "source_offset_whitened_norm": 0.2335011111617168,
+      "geometry_unchanged": true
+    },
+    "log_mono_galactic__J3__free_history": {
+      "kind": "free_history",
+      "degree": 3,
+      "operator": "log_mono_galactic",
+      "target": "W_km_s",
+      "old_target": [
+        277138.72005993326,
+        -152677.15755083383,
+        -882236.4616722025
+      ],
+      "corrected_target": [
+        277848.51894290803,
+        -152953.56214061106,
+        -882390.0358650748
+      ],
+      "target_shift": [
+        709.7988829747774,
+        -276.4045897772303,
+        -153.57419287238736
+      ],
+      "target_covariance": [
+        [
+          376741390323.54974,
+          74957431132.67809,
+          3515488523.710672
+        ],
+        [
+          74957431132.67809,
+          770044892621.0374,
+          -90432426063.00488
+        ],
+        [
+          3515488523.710672,
+          -90432426063.00488,
+          715865051675.2135
+        ]
+      ],
+      "zero_wald": 1.4375162802533663,
+      "zero_nominal_p": 0.6967647465686806,
+      "residual_chi2": 7.478704541001468,
+      "dof": 3,
+      "affine_GLS_scaled_parity_error": 7.761021455128988e-13,
+      "rounding_box_target_support_km_s": [
+        14234.054606685904,
+        25592.347214347552,
+        23268.056560929497
+      ],
+      "source_offset_whitened_norm": 0.23350258590317788,
+      "geometry_unchanged": true
+    },
+    "log_mono_galactic__J3__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 3,
+      "operator": "log_mono_galactic",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -246.8160490384861,
+        22.50010638532627,
+        -65.74971416974542
+      ],
+      "corrected_target": [
+        -246.43283161430506,
+        22.391536423438414,
+        -65.72177102185113
+      ],
+      "target_shift": [
+        0.38321742418105487,
+        -0.10856996188785573,
+        0.027943147894291087
+      ],
+      "target_covariance": [
+        [
+          40928.26921433465,
+          1100.7690844503509,
+          -1315.2880531477383
+        ],
+        [
+          1100.7690844503509,
+          50186.39530601476,
+          -882.57259541004
+        ],
+        [
+          -1315.2880531477383,
+          -882.57259541004,
+          53295.54614296242
+        ]
+      ],
+      "zero_wald": 1.6010949005472623,
+      "zero_nominal_p": 0.6591415838350168,
+      "residual_chi2": 8.91655846180895,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 9.71445146547012e-15,
+      "rounding_box_target_support_km_s": [
+        3.181510263812434,
+        4.740410270461083,
+        4.876000294039464
+      ],
+      "source_offset_whitened_norm": 0.2335011111617168,
+      "geometry_unchanged": true
+    },
+    "log_mono_galactic__J3__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 3,
+      "operator": "log_mono_galactic",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -246.81598394711725,
+        22.50009473030079,
+        -65.74973628446783
+      ],
+      "corrected_target": [
+        -246.43276656635078,
+        22.391524774378674,
+        -65.72179314481325
+      ],
+      "target_shift": [
+        0.3832173807664674,
+        -0.1085699559221176,
+        0.027943139654581728
+      ],
+      "target_covariance": [
+        [
+          40928.25243835196,
+          1100.7685367345898,
+          -1315.286845399781
+        ],
+        [
+          1100.7685367345898,
+          50186.37915545713,
+          -882.5721494803632
+        ],
+        [
+          -1315.286845399781,
+          -882.5721494803632,
+          53295.529901099835
+        ]
+      ],
+      "zero_wald": 1.6010947900274712,
+      "zero_nominal_p": 0.6591416088894926,
+      "residual_chi2": 8.916558572328737,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 6.938893903907228e-15,
+      "rounding_box_target_support_km_s": [
+        3.1815097735187177,
+        4.740409736520531,
+        4.875999691054503
+      ],
+      "source_offset_whitened_norm": 0.2335011111617168,
+      "geometry_unchanged": true
+    },
+    "log_mono_error__J2__free_history": {
+      "kind": "free_history",
+      "degree": 2,
+      "operator": "log_mono_error",
+      "target": "W_km_s",
+      "old_target": [
+        152057.44059294945,
+        -670804.5234219966,
+        -1131143.9129127732
+      ],
+      "corrected_target": [
+        152809.91401373083,
+        -670991.4896787986,
+        -1131345.156766086
+      ],
+      "target_shift": [
+        752.4734207813744,
+        -186.9662568019703,
+        -201.24385331268422
+      ],
+      "target_covariance": [
+        [
+          344657188733.36554,
+          3764024569.0117817,
+          25582117400.197964
+        ],
+        [
+          3764024569.0117817,
+          436409839515.25555,
+          25495257743.605225
+        ],
+        [
+          25582117400.197964,
+          25495257743.605225,
+          635977149499.692
+        ]
+      ],
+      "zero_wald": 3.0306287241640457,
+      "zero_nominal_p": 0.38692689472399033,
+      "residual_chi2": 8.699369902946504,
+      "dof": 8,
+      "affine_GLS_scaled_parity_error": 9.701276818911234e-13,
+      "rounding_box_target_support_km_s": [
+        12412.027663156428,
+        15421.801093185702,
+        20223.164552449583
+      ],
+      "source_offset_whitened_norm": 0.23502722577701787,
+      "geometry_unchanged": true
+    },
+    "log_mono_error__J2__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 2,
+      "operator": "log_mono_error",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -207.72256614292473,
+        5.697346576509356,
+        -161.73358803939766
+      ],
+      "corrected_target": [
+        -207.33156454207685,
+        5.606960288244921,
+        -161.70775016038445
+      ],
+      "target_shift": [
+        0.39100160084788627,
+        -0.09038628826443507,
+        0.025837879013209886
+      ],
+      "target_covariance": [
+        [
+          40029.57307575039,
+          15.521533372274954,
+          453.3133535985863
+        ],
+        [
+          15.521533372274954,
+          44945.419794229,
+          648.053574295304
+        ],
+        [
+          453.3133535985863,
+          648.053574295304,
+          49174.65906729481
+        ]
+      ],
+      "zero_wald": 1.5917046947462572,
+      "zero_nominal_p": 0.6612721839178746,
+      "residual_chi2": 11.73008320208536,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 2.0816681711721685e-15,
+      "rounding_box_target_support_km_s": [
+        2.9505916255455333,
+        3.7438679778815,
+        4.104124560799796
+      ],
+      "source_offset_whitened_norm": 0.2350257367623582,
+      "geometry_unchanged": true
+    },
+    "log_mono_error__J2__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 2,
+      "operator": "log_mono_error",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -207.72251538165347,
+        5.6973176447320295,
+        -161.73360078608854
+      ],
+      "corrected_target": [
+        -207.3315138223568,
+        5.606931363844484,
+        -161.7077629169409
+      ],
+      "target_shift": [
+        0.3910015592966545,
+        -0.09038628088754574,
+        0.02583786914763664
+      ],
+      "target_covariance": [
+        [
+          40029.55684469587,
+          15.521327504178029,
+          453.31369950463124
+        ],
+        [
+          15.521327504178029,
+          44945.40320720158,
+          648.0537107405789
+        ],
+        [
+          453.31369950463124,
+          648.0537107405789,
+          49174.643903375
+        ]
+      ],
+      "zero_wald": 1.5917048233267903,
+      "zero_nominal_p": 0.661272154717915,
+      "residual_chi2": 11.730083073504835,
+      "dof": 11,
+      "affine_GLS_scaled_parity_error": 2.42861286636753e-15,
+      "rounding_box_target_support_km_s": [
+        2.9505912806369037,
+        3.7438674928102613,
+        4.104124094430034
+      ],
+      "source_offset_whitened_norm": 0.2350257367623582,
+      "geometry_unchanged": true
+    },
+    "log_mono_error__J3__free_history": {
+      "kind": "free_history",
+      "degree": 3,
+      "operator": "log_mono_error",
+      "target": "W_km_s",
+      "old_target": [
+        166605.65366328557,
+        -623787.8143244052,
+        -1266575.9833586644
+      ],
+      "corrected_target": [
+        167338.10179626723,
+        -623952.1650495045,
+        -1266815.123764717
+      ],
+      "target_shift": [
+        732.4481329816626,
+        -164.35072509932797,
+        -239.14040605258197
+      ],
+      "target_covariance": [
+        [
+          350854793141.8416,
+          3619900541.9225245,
+          32529981258.815098
+        ],
+        [
+          3619900541.9225245,
+          461003365799.68085,
+          25170343122.378395
+        ],
+        [
+          32529981258.815098,
+          25170343122.378395,
+          649847842717.4271
+        ]
+      ],
+      "zero_wald": 3.344348577966068,
+      "zero_nominal_p": 0.3415176922320423,
+      "residual_chi2": 3.4766622442020347,
+      "dof": 3,
+      "affine_GLS_scaled_parity_error": 7.761021455128988e-13,
+      "rounding_box_target_support_km_s": [
+        12648.569747659727,
+        16417.80121672665,
+        20869.637506727464
+      ],
+      "source_offset_whitened_norm": 0.23502722577701787,
+      "geometry_unchanged": true
+    },
+    "log_mono_error__J3__rad_constant": {
+      "kind": "rad_constant",
+      "degree": 3,
+      "operator": "log_mono_error",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -211.2468250264205,
+        11.694501778738738,
+        -183.86704088807647
+      ],
+      "corrected_target": [
+        -210.85997586729113,
+        11.606140010029819,
+        -183.8455661529717
+      ],
+      "target_shift": [
+        0.3868491591293832,
+        -0.08836176870891954,
+        0.02147473510476061
+      ],
+      "target_covariance": [
+        [
+          40184.32030591079,
+          -22.36842488655849,
+          514.5075021664943
+        ],
+        [
+          -22.36842488655849,
+          45081.19762229279,
+          706.8654809614293
+        ],
+        [
+          514.5075021664943,
+          706.8654809614293,
+          49503.031929284625
+        ]
+      ],
+      "zero_wald": 1.7737987720669,
+      "zero_nominal_p": 0.6206531463823239,
+      "residual_chi2": 6.821023162463201,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 4.85722573273506e-15,
+      "rounding_box_target_support_km_s": [
+        2.950675001611521,
+        3.746388244360533,
+        4.125880572315488
+      ],
+      "source_offset_whitened_norm": 0.2350257367623582,
+      "geometry_unchanged": true
+    },
+    "log_mono_error__J3__rad_tied": {
+      "kind": "rad_tied",
+      "degree": 3,
+      "operator": "log_mono_error",
+      "target": "U_or_bulk_km_s",
+      "old_target": [
+        -211.2467724644093,
+        11.694475089858305,
+        -183.86705463182776
+      ],
+      "corrected_target": [
+        -210.8599233471701,
+        11.60611332936428,
+        -183.84557990722476
+      ],
+      "target_shift": [
+        0.38684911723919413,
+        -0.08836176049402411,
+        0.02147472460299582
+      ],
+      "target_covariance": [
+        [
+          40184.30402745242,
+          -22.368649343347993,
+          514.5078620949976
+        ],
+        [
+          -22.368649343347993,
+          45081.18107672029,
+          706.8655531527801
+        ],
+        [
+          514.5078620949976,
+          706.8655531527801,
+          49503.016759447666
+        ]
+      ],
+      "zero_wald": 1.7737989411866948,
+      "zero_nominal_p": 0.6206531093670331,
+      "residual_chi2": 6.821022993343411,
+      "dof": 6,
+      "affine_GLS_scaled_parity_error": 4.163336342344337e-15,
+      "rounding_box_target_support_km_s": [
+        2.9506746615113273,
+        3.7463877594246613,
+        4.125880108479958
+      ],
+      "source_offset_whitened_norm": 0.2350257367623582,
+      "geometry_unchanged": true
+    }
+  }
+}

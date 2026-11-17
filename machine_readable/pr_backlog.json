@@ -288,7 +288,8 @@
       "PR-R59-NATIVE-REPLAY-MANUSCRIPT",
       "PR-R60-COVARIANCE-CALIBRATION",
       "PR-R61-KINEMATIC-MEASUREMENT",
-      "PR-R62-ANISOTROPY-CLASSIFICATION"
+      "PR-R62-ANISOTROPY-CLASSIFICATION",
+      "PR-R63-LOCAL-BOOST-GLOBAL-TILT"
     ],
     "strict_extension_cards": [
       "PR-SOLVER-FREE-DOSSIER",
@@ -383,7 +384,8 @@
       "PR-R59-NATIVE-REPLAY-MANUSCRIPT",
       "PR-R60-COVARIANCE-CALIBRATION",
       "PR-R61-KINEMATIC-MEASUREMENT",
-      "PR-R62-ANISOTROPY-CLASSIFICATION"
+      "PR-R62-ANISOTROPY-CLASSIFICATION",
+      "PR-R63-LOCAL-BOOST-GLOBAL-TILT"
     ],
     "checkpoint_every_completed_prs": 5,
     "no_native_lowell_solver_implementation": true,
@@ -15007,6 +15009,46 @@
       "claim_tier_ceiling": "C0",
       "user_authorized": true,
       "authorization": "2026-11-17 owner explicitly selected anisotropy classification including Bianchi/tilt and all ten theory/coding stages; earlier non-force GitHub push authorization persists."
+    },
+    {
+      "id": "PR-R63-LOCAL-BOOST-GLOBAL-TILT",
+      "wave": 0,
+      "title": "Distinguish processed local endpoints and compensated histories on actual CF4 data",
+      "owner": "HTT",
+      "depends": [
+        "PR-R62-ANISOTROPY-CLASSIFICATION"
+      ],
+      "files": [
+        "docs/research_program/observational_publication_20261015/R63_LOCAL_BOOST_GLOBAL_TILT_20261117",
+        "scripts/r63",
+        "tests/r63",
+        "htt/htt/htt/infer/r63_frame_history.py",
+        "docs/codex_handoff/pr_backlog.yaml",
+        "docs/codex_handoff/pr_status.yaml",
+        "docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json",
+        "docs/research_program/observational_publication_20261015/README.md"
+      ],
+      "tests": [
+        "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt/src:htt:. .venv/bin/python -m pytest -p no:cacheprovider -q tests/r63 tests/r58/test_mixed_tensor_likelihood.py tests/r58/test_five_views.py",
+        ".venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml",
+        ".venv/bin/python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check",
+        ".venv/bin/python -B scripts/htt_publication_dag.py --validate"
+      ],
+      "dod": [
+        "Complete exactly one integrated ten-stage owner-selected P4 study using existing primary sources, history and actual owned CF4 operators/covariance.",
+        "Derive explicit observer/source/catalogue-frame fibres and transport the restricted compensated physical history into the actual eta chart.",
+        "Execute full-vector/STF rank and physical-size discrimination calculations with shared nuisance, full cross covariance and unphysical tangent estimates labelled.",
+        "Preserve the actual published additive-redshift correction through same-law affine transport and retain unresolved heterogeneous distance/flux response.",
+        "Close one fresh independent final review; preserve original42 gates, old paper contracts and NOT_READY_TO_SUBMIT with a finite source/independent-channel plan."
+      ],
+      "notes": "docs/research_program/observational_publication_20261015/R63_LOCAL_BOOST_GLOBAL_TILT_20261117/RESEARCH_DAG.json",
+      "kill": "No physical superluminal W measurement, unrestricted global-tilt exclusion, invented aberration covariance or adopted unresolved kSZ amplitude limit; no automatic successor or local-agent prompt.",
+      "level": "L0",
+      "scope": "science",
+      "risk": "R2",
+      "claim_tier_ceiling": "C0",
+      "user_authorized": true,
+      "authorization": "2026-11-17 owner explicitly selected local observer boost versus global tilt in one full ten-stage branch; inherited non-force GitHub publication authority persists."
     }
   ]
 }

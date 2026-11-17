@@ -1,0 +1,14 @@
+{
+  "code": "Clear[aa,zz,cc,ss,oo,qq,pp,dd,bb,ll,rr,om,orr,mu,eps]; raw=(aa-1) ss-aa oo+(aa+1) qq-pp; chart=(aa-1)(ss-oo+qq)+(2 qq-oo-pp); ee=Sqrt[om (1+zz)^3+orr (1+zz)^4+1-om-orr]; inv=Normal[Series[1/ee,{zz,0,4}]]; chi=Integrate[inv,zz]; aprox=(1+zz)/(ee chi); low=FullSimplify[Limit[(1+zz-zz aprox)/zz,zz->0]]; hist=1+zz-zz aa; closure=raw/.{ss->(1+zz)bb,oo->bb+ll,qq->ll+(1+rr)bb}; res=<|\"processed_chart\"->Expand[raw-chart],\"history_identity\"->Expand[hist-(1-zz(aa-1))],\"compensated_momentum\"->FullSimplify[om(1+zz)^4 bb+(4/3)orr(1+zz)^4(-3 om bb/(4 orr))],\"cmb_tied_history\"->FullSimplify[closure-((aa-1)(1+rr+zz)bb+2(ll+(1+rr)bb)-(bb+ll)-pp)],\"low_z_h_over_z\"->low,\"low_z_check\"->FullSimplify[low-(3 om+4 orr)/4],\"radiation_flux_over_energy_c\"->Integrate[-mu(1+4 dd mu)/2,{mu,-1,1}],\"constant_chart_fibre\"->Expand[(raw+dd/.{ss->ss+eps,oo->oo+eps,dd->dd+eps})-(raw+dd)]|>;res",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Power::infy: -- Message text not found -- (1/0)\nInfinity::indet: -- Message text not found -- (0*Infinity)\nInfinity::indet: -- Message text not found -- (0*Infinity)\nInfinity::indet: -- Message text not found -- (0*Infinity)\nInfinity::indet: -- Message text not found -- (0*Infinity)\nGeneral::messages: Messages were generated which may indicate errors.\n\nOut[1]= <|\"processed_chart\" -> 0, \"history_identity\" -> 0, \"compensated_momentum\" -> 0, \"cmb_tied_history\" -> 0, \"low_z_h_over_z\" -> (3*om)/4 + orr, \"low_z_check\" -> 0, \"radiation_flux_over_energy_c\" -> (-4*dd)/3, \"constant_chart_fibre\" -> 0|>"
+      }
+    ],
+    "structuredContent": null,
+    "isError": false
+  },
+  "notes": "First context call failed MCP -32603; second context call succeeded without science results. Evaluator returned zero residuals and correct symbolic coefficients; Power::infy and Infinity::indet warnings preserved. CAS algebra is not a physical source/remainder certification."
+}

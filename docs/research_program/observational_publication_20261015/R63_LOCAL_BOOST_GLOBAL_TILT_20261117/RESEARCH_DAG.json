@@ -1,0 +1,284 @@
+{
+  "schema": "htt.r63.research_dag/1",
+  "baseline_commit": "f29bbab420a33aecb1c398ddd961fd45097f536b",
+  "canonical_pr": "PR-R63-LOCAL-BOOST-GLOBAL-TILT",
+  "parent_pr": "PR-R62-ANISOTROPY-CLASSIFICATION",
+  "selected_paper": "P4",
+  "claim_tier": "C0",
+  "scope": "Single ten-stage local-observer/source-history discrimination study",
+  "status": "COMPLETE_SCOPED_C0",
+  "tasks": [
+    {
+      "id": "R63-01",
+      "theory_stage": "R1",
+      "coding_stage": "C1",
+      "title": "Fix one P4 question and the actual existing-checkout baseline",
+      "depends_on": [],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESEARCH_RECORD.json",
+        "DESIGN.md"
+      ]
+    },
+    {
+      "id": "R63-02",
+      "theory_stage": "R2",
+      "coding_stage": "C2",
+      "title": "Reuse PR/branch history, actual carrier identities and primary sources",
+      "depends_on": [
+        "R63-01"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "REVIEW/r63_history.md",
+        "REVIEW/r63_history_sources.json",
+        "REVIEW/r63_literature.md",
+        "REVIEW/r63_sources.json"
+      ]
+    },
+    {
+      "id": "R63-03",
+      "theory_stage": "R3",
+      "coding_stage": "C3",
+      "title": "Bind frames, physical history, source units and catalogue corrections",
+      "depends_on": [
+        "R63-02"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "DESIGN.md",
+        "THEORY.md",
+        "REVIEW/r63_cf4_contract.md",
+        "REVIEW/r63_frame_r3_contract.md"
+      ]
+    },
+    {
+      "id": "R63-04",
+      "theory_stage": "R4",
+      "coding_stage": "C4",
+      "title": "Select the finite actual-CF4 response and physical-power experiment",
+      "depends_on": [
+        "R63-03"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "DESIGN.md"
+      ]
+    },
+    {
+      "id": "R63-05",
+      "theory_stage": "R5",
+      "coding_stage": "C5",
+      "title": "Construct processed endpoint/history responses and implement the finite experiment",
+      "depends_on": [
+        "R63-04"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "THEORY.md",
+        "REVIEW/WOLFRAM_CHECK.json"
+      ]
+    },
+    {
+      "id": "R63-06",
+      "theory_stage": "R6",
+      "coding_stage": "C6",
+      "title": "Verify affected response, physical-body, projector and Gaussian code",
+      "depends_on": [
+        "R63-05"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/AFFECTED_TEST_RECEIPT.json"
+      ]
+    },
+    {
+      "id": "R63-07",
+      "theory_stage": "R7",
+      "coding_stage": "C7",
+      "title": "Execute owned CF4 source responses and finite physical-history comparisons",
+      "depends_on": [
+        "R63-06"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/OBSERVED_EXECUTION_01.json",
+        "RESULTS/OBSERVED/FRAME_HISTORY_RESULT.json"
+      ]
+    },
+    {
+      "id": "R63-08",
+      "theory_stage": "R8",
+      "coding_stage": "C8",
+      "title": "Transport the actual catalogue chart and decide physical-scale discrimination and publication route",
+      "depends_on": [
+        "R63-07"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/CF4_PUBLISHED_Q_DIAGNOSTIC.json",
+        "RESULTS/CHART_TRANSPORT_EXECUTION.json",
+        "RESULTS/CATALOGUE_CHART_TRANSPORT.json",
+        "RESULTS/INTERPRETATION_SUMMARY.json",
+        "REPORT_KO.md",
+        "RESEARCH_PLAN_KO.md",
+        "REVIEW/r63_remote_dipole_map.md"
+      ]
+    },
+    {
+      "id": "R63-09",
+      "theory_stage": "R9",
+      "coding_stage": "C9",
+      "title": "Close one fresh independent review and its bounded correction episode",
+      "depends_on": [
+        "R63-08"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "REVIEW/final_review.md",
+        "REVIEW/final_review.json",
+        "VALIDATION.md"
+      ]
+    },
+    {
+      "id": "R63-10",
+      "theory_stage": "R10",
+      "coding_stage": "C10",
+      "title": "Preserve the finite P4 plan, canonical DAG and authorized scoped release",
+      "depends_on": [
+        "R63-09"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESEARCH_PLAN_KO.md",
+        "VALIDATION.md",
+        "DAG_VALIDATION.json"
+      ]
+    }
+  ],
+  "future_science": [
+    {
+      "id": "P4-R63-REMOTE-NORMALIZATION",
+      "depends_on": [
+        "R63-10"
+      ],
+      "status": "unresolved_input",
+      "needed": "Resolve the published remote-dipole D_h versus D_C amplitude and likelihood normalization from an exact public source; neither conditional 26 km/s conversion is an adopted physical U limit.",
+      "stop": "If exact normalization remains unavailable, preserve both labelled arithmetic maps and stop this source path."
+    },
+    {
+      "id": "P4-R63-REMOTE-SOURCE",
+      "depends_on": [
+        "P4-R63-REMOTE-NORMALIZATION"
+      ],
+      "status": "unresolved_input",
+      "needed": "Bind normalized reconstruction window/moments, optical-depth bias law and joint uncertainty, electron-to-dust and photon-to-compensating-radiation matching, endpoint-map response and actual inherited likelihood/prior.",
+      "acceptance": "Transport w_eff=[1+z/(1+R)] n.U with window/bias uncertainty; no invented Cartesian Gaussian or double bias correction."
+    },
+    {
+      "id": "P4-R63-PHYSICAL-ERROR",
+      "depends_on": [
+        "R63-10"
+      ],
+      "status": "unresolved_input",
+      "needed": "Bound the finite-interval observer/Doppler and quadratic stress/metric/optical remainder for the selected source model; retain physical-body versus necessary-superset distinction.",
+      "acceptance": "The qualified projected error must be smaller than the proposed channel's discriminating signal."
+    },
+    {
+      "id": "P4-R63-CATALOGUE-CALIBRATION",
+      "depends_on": [
+        "R63-10"
+      ],
+      "status": "unresolved_input",
+      "completed": "Actual published redshift-chart affine transport completed; tied U max shift and corrected W tests recorded.",
+      "needed": "Qualify heterogeneous CF4 distance/flux deboost, method/group response, selection and calibration covariance; preserve existing estimator and conditional coefficient results."
+    },
+    {
+      "id": "P4-R63-ABERRATION-JOINT",
+      "depends_on": [
+        "R63-10"
+      ],
+      "status": "conditional_fallback",
+      "trigger": "Remote-source normalization/likelihood path cannot be qualified.",
+      "needed": "Obtain actual joint aberration/Doppler vector likelihood or posterior with dipole-distortion, lensing, mask/noise/foreground and shared-CMB covariance; scalar amplitude/direction bars are not a substitute."
+    },
+    {
+      "id": "P4-R63-CHANNEL-DECISION",
+      "depends_on": [
+        "P4-R63-PHYSICAL-ERROR",
+        "P4-R63-CATALOGUE-CALIBRATION"
+      ],
+      "alternative_input_paths": [
+        [
+          "P4-R63-REMOTE-SOURCE"
+        ],
+        [
+          "P4-R63-ABERRATION-JOINT"
+        ]
+      ],
+      "status": "pending_conditional",
+      "needed": "Use one qualified independent channel to cut the endpoint/history fibre, with shared-state covariance/coverage and physical source conditions.",
+      "screening": "At alpha=.1 and target power=.8, oracle mean distance delta>=Phi^-1(.8)-Phi^-1(.1) about2.12 is necessary, not sufficient; no unchanged CF4 expansion when its bound remains about2.4e-6."
+    },
+    {
+      "id": "P4-R63-PAPER",
+      "depends_on": [
+        "P4-R63-CHANNEL-DECISION"
+      ],
+      "status": "pending_conditional",
+      "needed": "Decide one methods/application or source-qualified physical manuscript at achieved claim level; consolidate R63 into existing companion/appendix if standalone novelty remains thin.",
+      "stop": "No accepted independent channel/remainder means preserve P4 HOLD/NOT_READY rather than launch a new unchanged loop."
+    }
+  ],
+  "original_42_node_payload_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "original_42_node_states_changed": false,
+  "key_results": {
+    "n_sources": 35970,
+    "n_operators": 7,
+    "n_source_orders": 2,
+    "free_history_fits": 14,
+    "base_and_physical_fits": 42,
+    "J2_depth_calibration_fits": 7,
+    "chart_transported_fits": 42,
+    "W_p_J2_corrected": [
+      0.18232460785052507,
+      0.7139439439761546
+    ],
+    "W_p_J3_corrected": [
+      0.2774141595792308,
+      0.6967647465686806
+    ],
+    "W_sd_all_components_km_s": [
+      536300.5142479532,
+      1012408.3877413911
+    ],
+    "unphysical_tangent_estimate_count": 14,
+    "full_history_target_ranks": [
+      3
+    ],
+    "dipole_only_history_target_ranks": [
+      0
+    ],
+    "power_alpha": 0.1,
+    "max_power_body": 0.10000041873089793,
+    "max_power_300": 0.10000004188430844,
+    "max_distance_body": 2.385950072239707e-06,
+    "body": {
+      "beta_star": 0.01,
+      "U_bound_matter_radiation_km_s": 2999.192335399091,
+      "W_bound_km_s": 1.267755399090813,
+      "observer_and_finite_redshift_remainder": "separate obligations; this is a necessary matter/radiation superset"
+    },
+    "max_U_chart_shift_norm_km_s": 0.42816117961739,
+    "max_affine_parity_error": 4.656612873077393e-12,
+    "max_free_W_physical_ball_likelihood_delta_bound": 7.072507307971148e-06
+  },
+  "interpretation_sources": {
+    "observed_sha256": "1efc030a45883da5791cf82aca69dbca5dc748623ea43bb7d070e088a0dfde09",
+    "chart_sha256": "8ac760b59cdbed955ea9a3e2ba903a72dfb58c9cd7220110f0f7c042b0b17697"
+  },
+  "conditions": "Fixed inherited Gaussian covariance and finite source model; unphysical unconstrained tangent W is not a measured velocity; no general globality or independent-channel admission.",
+  "automatic_successor": false,
+  "local_agent_prompt_created": false,
+  "submission_status": "NOT_READY_TO_SUBMIT"
+}
