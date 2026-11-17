@@ -1,0 +1,122 @@
+{
+  "primary_bootstrap": {
+    "nsim": 512,
+    "seed": 2026111765,
+    "exceedances": 375,
+    "observed_lr": 1.8709088294335459,
+    "fitted_null_mc_tail": 0.732943469785575,
+    "resolution": 0.001949317738791423,
+    "quantiles": [
+      3.348398658974453,
+      7.37573441124516,
+      8.526746490966804,
+      12.98382432955667
+    ],
+    "chi2_df4_quantiles": [
+      3.3566939800333224,
+      7.779440339734858,
+      9.487729036781154,
+      13.276704135987622
+    ],
+    "law": "parametric conditional multinomial bootstrap with fitted common dipole and per-bin STF nuisance",
+    "physical_LSS_calibrated": false,
+    "exact_finite_sample_composite_test": false,
+    "scan_correction": "primary prespecified geometry/model only; no best-cut selection",
+    "binomial_mc_interval95_for_exceedance_probability": [
+      0.6918283110632732,
+      0.7703078919661471
+    ]
+  },
+  "beta_residual_precision": {
+    "model": "u_b = k_b beta_transverse + a_transverse, constant residual across bins",
+    "law": "local conditional-Gaussian carrier, alpha=.75 and source response held fixed",
+    "kernel": "htt.htt.infer.r58_mixed_tensor_likelihood.fit_linear",
+    "parameter_order": [
+      "beta_x",
+      "beta_y",
+      "a_x",
+      "a_y"
+    ],
+    "rank": 4,
+    "n_parameters": 4,
+    "estimate": [
+      -0.0013730496478864328,
+      0.0051183662781890136,
+      -0.006489195234386942,
+      -0.011496673364827924
+    ],
+    "sd": [
+      0.010367059240497786,
+      0.011715376167975373,
+      0.03731284950296363,
+      0.042160750653996056
+    ],
+    "full_covariance": [
+      [
+        0.00010747591729599053,
+        -7.527052380311903e-06,
+        -0.0003853733852912881,
+        2.69696728223549e-05
+      ],
+      [
+        -7.527052380311903e-06,
+        0.00013725003875716534,
+        2.6969623424436626e-05,
+        -0.0004920790731766092
+      ],
+      [
+        -0.0003853733852912881,
+        2.6969623424436626e-05,
+        0.0013922487380308133,
+        -9.736634268337518e-05
+      ],
+      [
+        2.69696728223549e-05,
+        -0.0004920790731766092,
+        -9.736634268337518e-05,
+        0.001777528895708429
+      ]
+    ],
+    "correlation": [
+      [
+        1.0,
+        -0.061974512632577104,
+        -0.9962485937212465,
+        0.06170377901614732
+      ],
+      [
+        -0.061974512632577104,
+        1.0,
+        0.06169645747024008,
+        -0.9962545627832583
+      ],
+      [
+        -0.9962485937212465,
+        0.06169645747024008,
+        1.0,
+        -0.06189308154959845
+      ],
+      [
+        0.06170377901614732,
+        -0.9962545627832583,
+        -0.06189308154959845,
+        1.0000000000000002
+      ]
+    ],
+    "residual_chi2": 1.6688570127294107,
+    "residual_dof": 2,
+    "singular_values_scaled": [
+      3.31847547823504,
+      2.8949531959419526,
+      0.09156187884603735,
+      0.07982577762988685
+    ],
+    "beta_sd_in_CMB_speed_units": [
+      8.403997003786827,
+      9.497002373565405
+    ],
+    "status": "conditional precision/identifiability diagnostic, not physical beta/tilt measurement",
+    "no_generic_no_go": true
+  },
+  "maximum_one_step_MLE_information_distance": 0.03470385038818875
+}

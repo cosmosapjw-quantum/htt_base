@@ -1,0 +1,83 @@
+# R65 R2/C2: existing dipole evidence and executable source map
+
+Scope: bounded source/history mapping, read-only on the owner device. Existing checkout `/home/cosmosapjw/Dropbox/bianchi/htt_base`; read HEAD `d76ef3a4e9b33c4703a02647b3aa850004d04253`. Parent is the sole remote writer/publisher. No science fit, test, catalogue download, branch mutation, worktree, repository copy, or agent spawning performed here. Requested model/effort gpt-6.1-sol/high; observed UNKNOWN.
+
+`skill_context_used`: PhysMath Research Loop 1.3.0 SKILL.md, POLICY_INTEGRATION.md, THEORY_LOOP R2 definition, CODING_LOOP C2 definition. Root AGENTS.md and current runtime native-execution preface read. The historical continuous campaign is not a new scope expansion. Reused R54's 2026-11-16 573-PR index and R63 reuse map; this is NOT a fresh semantic reread of 573 PRs or a claim to have inspected all their diffs. Direct source inspection focused on real count loaders, estimators, saved scientific outputs, CMB response code and the R63 remote-dipole source contract.
+
+## Decisive reuse result
+
+The strongest immediately executable R65 route is an **actual count-field declination-nuisance quotient and paired estimator/selection contrast**, using owned Quaia, NVSS and (as a diagnostic) RACS source rows. It can replace the arbitrary NVSS/RACS z-variance with an explicit nuisance projection, retain supported equatorial dipole information, and measure paired changes between estimators/cuts on the same objects. A new CMB observer-boost measurement would require a qualified high-ell estimator/response and common-data calibration absent from current saved carriers. Remote kSZ is physically powerful for R63's narrow compensated mode, but its inherited source normalization remains unresolved; it cannot presently supply a clean numerical likelihood.
+
+Do not repeat the R60 covariance interpolation or minimum-calibration-shift optimization as the new result: both are already executed. Do not promote R40's legacy Δχ²≈140 count excess into current evidence: source-bound later outputs materially change it.
+
+## Actual count data and operators
+
+Let P=`docs/research_program/observational_publication_20261015/`.
+
+Primary executable loader: `scripts/r54/run_r54_l03_counts.py:data_inputs`, `quaia_estimate`, `nvss_estimate`, `mocks`, `competitor_wagenveld`, `competitor_mittal`, `compute`.
+
+Reusable baseline: `P/HTT_SIX_LOOP_INTEGRATED_20261109/L2_real_dipoles.py:fit`, `main` and adjacent `COUNT_DIPOLES_REAL_RECEIPT.json`. Mathematical functions are `htt/htt/htt/infer/r54_counts.py:poisson_dipole_fit`, `dipole_clustering_cl1`, `dipole_axis_variance`, `growth_factor`, `ho_nz`, `comoving_distance`.
+
+The count field is dimensionless overdensity δ(n)=D·n. Directions and signed three-vectors are ICRS (equatorial J2000), not Galactic vectors. n points sourceward. Velocity β=v/c; c=299792.458 km/s. Radio flux units differ between files:
+
+- Quaia: `/mnt/extdrive/workdir/raw/observational_bundles/Quaia_zenodo_10403370_v1.0.0/quaia_G20.0.fits`, columns `ra`, `dec`, `redshift_quaia`; `random_G20.0_10x.fits`, columns `ra`, `dec`; `selection_function_NSIDE64_G20.0.fits`, column T. HEALPix NSIDE64; primary |b|>30° at pixel centres; expectation T normalized to full catalogue N. G20.5 has parallel files and nested/overlapping selection: do not multiply their marginal likelihoods as independent data.
+- NVSS: `/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS_nrao_20261110/CATALOG.FIT`; columns `RA(2000)`, `DEC(2000)`, `PEAK INT`. `PEAK INT` in Jy: base threshold .020 Jy (20 mJy), dec>-37°, |b|>10°. NSIDE32. Synthetic uniform randoms inside cuts, no empirical declination completeness.
+- RACS: `/mnt/extdrive/workdir/raw/observational_bundles/RACS_low_DR1_compact/RACS_DR1_galcut.dat.gz`; pipe-separated columns [6,7,10,30,31] named ra,dec,S,l,b. S is mJy: threshold20; -50°≤dec≤30°, |b|>10°. NSIDE32. Uniform synthetic randoms omit tile/rms completeness.
+
+Current read-only file-presence/stat checks succeeded: Quaia99786240 bytes, NVSS152121600 bytes, RACS179165027 bytes. Historical raw hashes are in the source JSON; these three large files were not rehashed in this lane.
+
+WLS baseline: counts_p≈E_p[m+d·n_p]; A_p=E_p(1,n_x,n_y,n_z); W_pp=1/E_p; θ=(AᵀWA)^−1AᵀWN; D=d/m. The reported covariance uses the Jacobian of d/m and max(1,residual χ²/dof). Pixels below .05 times mean nonzero E are dropped. The nonlinear competitor uses N_p~Poisson(M e_p[1+D·n_p]), optimization and expected-information inverse, not a new calibrated cosmological covariance.
+
+Exact physical count response only under the flux-power-law idealization: N(>S)∝S^−x, Sν∝ν^−α implies D_kin=[2+x(1+α)]β. Current `scripts/r54/run_r54_lowz_frames.py` fixes C_EB=3.7386422874798133 for Quaia and3.5 for NVSS, V_CMB=369.82 km/s at Galactic(l,b)=(264.021°,48.253°). These coefficients must be retained as inherited calibration assumptions unless source-specific selection response is measured. Color, photometric-redshift, morphology and multi-band selection can change the response; a new arbitrary flux slope alone does not qualify Quaia's complete operator.
+
+Clustering: C1=(2/π)∫dk k²P(k)[∫dz n(z)b(z)D(z)j1(kχ(z))]², n normalized over selected range; Var(D_i)=3C1/(4π). P(k), k and χ must use consistent Mpc/h convention; function uses χ=c/H0∫dz/E(z) in Mpc. `tests/fixtures/r54/planck18_linear_pk_z0.csv` binds the P(k) input. Existing bias and N(z) parameters remain explicitly UNVERIFIED bracket assumptions. Existing mocks use only Gaussian dipole clustering and independent Poisson samples, no higher clustering multipoles or stochastic selection field.
+
+## Actual prior scientific outputs
+
+`P/R54_TENSOR_FRAME_TOMOGRAPHY_20261116/RESULTS/R54_L03_RESULT.json` is the best current signed-vector/full3x3-covariance carrier.
+
+- Quaia D=(-.0112724136963,-.00604861724109,-.00752010567754); excess over inherited kinematic response e=(-.00679531626745,-.00700499908478,-.00696250483472). Mock-only Pi=3/501=.00598802395 with 500 mocks (n_exceed2), interval [.000484786,.014374079]. This is distinct from nominal Gaussian mock-only p=.000417023. Adding receipt cut/expectation covariance gives nominal p=.3092088121.
+- NVSS D=(-.00909346076662,.00549745236009,-.00458804379721); e=(-.00490214215524,.00460211758464,-.00406603532466). Pi=165/501=.3293413174; receipt Gaussian p=.4211677785.
+- Existing common excess, under its declared block covariance/inherited coefficients: velocity-like coefficient(-476.9222,323.6660,-546.4753) km/s, Wald5.8298079, nominal p=.1201905; consistency p=.9021482. This is already calculated, not a new result, and is conditional on the common-offset response and absent cross block.
+- Competitor NVSS Poisson D=.0140179533, direction RA158.3388°,dec−10.2230°,325752 sources; differs from Wagenveld2023 amplitude by .00619 quoted SD. Quaia |b|>40° Poisson D=.0084210415 vs Mittal2024 .011, difference−.919 quoted SD. Their saved output contains axis SDs, not the complete fitted covariance; run/recover it if needed.
+- Actual L2 receipt amplitudes: Quaia G20 .0148, G20.5 .0191, NVSS .0116, RACS .0677. Quaia G20 official-T |b| sequence0,10,20,30° gives .0290,.0266,.0212,.0148. Old Quaia .024485..., NVSS .015 and RACS .018 were legacy literals/summaries, not interchangeable carriers.
+- RACS .0677 was excluded POST HOC after its value was seen. The declared failure mechanism is missing tile/rms completeness. It remains useful to quantify nuisance support and sensitivity; it does not yet supply an independent physical dipole replication.
+- NVSS/RACS n_z=sin(dec) is exactly degenerate with a declination completeness gradient. Existing code instead sets z covariance to .05² and zeros its xz/yz entries. This is a declared soft constraint, not identification from data. An explicit quotient can remove dependence on that arbitrary regularization while preserving a partial physical/count observable.
+
+R60 already executed C(λ)=C_mock+λS_receipt, S=C_total−C_mock≥0, fixed e. d[eᵀC^−1e]/dλ=−(C^−1e)ᵀS(C^−1e)≤0. Quaia nominal .05 crossing λ=.2536891109; minimal deterministic calibration offset needed to reach mock-only95% ellipsoid has norm.00389962272,32.528% of excess. It is a sensitivity coordinate, not measured contamination. NVSS already inside. No new cross-catalogue law was established.
+
+## Constructive next calculation
+
+For count/pixel linearized response y=Xa+Zη+ε, use actual source-mask E and covariance W^−1. Z contains declared calibration responses (at minimum E and E sinδ; add preselected declination strip functions or actual available rms/tile templates). Compute P_Z=I−Z(ZᵀWZ)^+ZᵀW and supported dipole information F=XᵀWP_ZX. The n_z column must vanish if sinδ is in Z. Report retained rank/eigenvectors, projected CMB-template score and partial identified set. This is source/operator-specific information loss, not a no-go for all dipole physics.
+
+Paired estimator/cut changes use the same pixel/source data: if a_i=L_iN, Cov(a_i,a_j)=L_i diag(λ)L_jᵀ under the declared conditional Poisson law; covariance of difference is C_ii+C_jj−C_ij−C_ji. Thus existing latitude/random/T and Poisson/WLS comparisons can be quantified without treating overlapping skies as independent. Using plug-in λ or empirical counts gives a conditional sandwich estimate; higher clustering and random-catalogue uncertainty require separately declared contributions. This is a useful immediate new result, unlike another unpaired collection of scalar amplitudes. Retain full joint covariance and original signed vectors.
+
+A source-level boost injection may then propagate S→S[1+(1+α)β·n] and sourceward aberration n→n+β−n(β·n), reapply the actual selection/cuts, and finite-difference the observed estimator. But band selection/spectral assumptions must be bound; no missing spectral column should silently receive a physical constant. A first conditional injection can retain inherited α and state it explicitly.
+
+## CMB/remote alternatives and contracts
+
+`htt/obsstat/boost_response.py` gives observer-STF algebra B_Qβ=3β_<aQ_bc>, B*B=3[q²I+(6/5)Q²]. This algebra alone does not estimate an observed β. `htt/obsstat/boost_biposh_residual.py` is explicitly a FIXED solar-axis zero-parameter residual consistency statistic conditional on boosted FFP10. The boost already exists in its null; it is not an independent observer-velocity measurement. Existing `physical_dipole_v2/result.json` fixes intrinsic/foreground/late dipole zero and uses a published-error proxy, obtaining369.816 km/s; free intrinsic dipole projected rank0. Its processed polynomial NSIDE64 surrogate is not high-ell aberration reconstruction.
+
+Historical PR index records442(branch changeset/planck-mes-wu010-local-boost-adapter-20260901),443(design analysis/planck-mes-wu011-processed-local-boost-response-20260902),444(implementation changeset/...wu011...). Their source names signify exact/pipeline boost response work. Current inspected functions plus R63 reuse record support reuse; no fresh PR diff reread or current open/closed status assertion was made.
+
+`P/R63_LOCAL_BOOST_GLOBAL_TILT_20261117/REVIEW/r63_remote_dipole_map.md` preserves the narrow compensated homogeneous dust/radiation result: β_m=(1+z)b, β_r=−Rb, R=3ε_m0/(4ε_r0), U=c(1+R)b; w_eff(n,z)=[1+z/(1+R)]n·U; Θ_kSZ=−∫dτ w_eff/c. Electron velocity must match dust and photon frame the compensating radiation. Scalar reconstruction W gives mean b_v K_R n·U with K_R=∫dχ W[1+z/(1+R)]. Local detector boost cannot create this physical electron-photon relative motion, but biases practical endpoint maps and must be calibrated.
+
+Unresolved transport: arXiv2408.05264v1 main text uses Y10 amplitude while its SM defines a power-root-like normalization, with a problematic written cross term; publication-version normalization was not retrieved in R63. For orthonormal Y10, a10=√(4π/3)K_R|U| whereas √C1=√(4π)/3 K_R|U|. The quoted26 km/s maps conditionally to12.70/K_R or22.00/K_R km/s; NEITHER is an adopted physical95% bound. Need publication/authors' likelihood convention, normalized window/bias, electron/photon contract, endpoint calibration and inherited prior measure. Literature posterior is not a new joint Cartesian likelihood; do not manufacture covariance from asymmetric scalar errors.
+
+CatWISE exists here as literature and quarantined/legacy figure evidence; this bounded current code search did not locate an owned qualified CatWISE field loader/carrier. No absent-data universal claim follows.
+
+## Closeout
+
+R2/C2 mapping complete for the existing-source task. Directly read implementations and preserved outputs establish source conventions and applicability; science runs NOT_RUN here. Primary-paper verification beyond the preserved R63 source analysis and R54 source quotations was not independently repeated; root literature lane must verify any publication claims used in R65. Remaining obligations are the actual chosen R65 derivation/calculation, meaningful source-based validation, one fresh final review, and preservation/publication by parent. All original42 scientific gates and P4 acceptance remain unchanged.
+
+## Targeted final source-bound addendum for the selected NVSS experiment
+
+Direct FITS-header inspection (read-only) resolves the NVSS flux unit precisely: `PEAK INT` TUNIT=`JY/BEAM`, not integrated Jy. RA/Dec are DEGREE. `I RMS`, `POL RMS`, `RES RMS`, `RES PEAK` are Jy/beam; `P FLUX` and `RES FLUX` are Jy; major/minor axes are degrees; FIELD is an8-character identifier. There is no integrated total-I flux column in this source FITS. Treat intensity threshold as a peak proxy and preserve morphology/spectral caveats.
+
+Prior source-level work was located and read: `P/HTT_SIX_LOOP_INTEGRATED_20261109/L2_nvss_synthetic_random_and_slope.py`, `L2_NVSS_RESULT.json`, `L2_NVSS_SLICE_RECEIPT.json`; `L2_quaia_estimator_pilot.py` and `L2_racs_lane.py` were inspected through targeted relevant lines. NVSS slope is ALREADY measured as x=1.0431020647103473 with bootstrapSD=.0028160522319821495, range .020–.080 peak-proxy units; C_EB for α=(.5,.75,1) is(3.5646530971,3.8254286132,4.0862041294). The work included60-mock WLS validation and synthetic-footprint scatter, not real dipole in that slice. Repeating its slope alone is not new science. No existing declination-nuisance quotient or disjoint flux-bin joint response/covariance study was found in the bounded targeted search over scripts/r5*,scripts/r6*,current infer modules and L2 sources. This is a bounded negative search result, not an exhaustive claim about all branches.
+
+Quaia selection directory listing contains only G20.0/G20.5 official selection maps and10x randoms plus template ZIP. ZIP members are NSIDE64 map_dust, map_mcsunwise,map_stars,map_unwise,map_mcs,map_m10,map_unwisescan. No per-magnitude-bin completeness maps were located. The actual G20.5 row fields include source_id,phot_g_mean_mag,BP/RP magnitudes,W1/W2 magnitudes,redshift_quaia and its error. A disjoint20<G≤20.5 source subset is constructible from rows, but its expectation cannot be obtained by naively subtracting dimensionless completeness T maps. Need calibrated expected counts/population normalization and source-selection consistency. RACS source column11 total flux identification was originally INFERRED (point-source equality to column14 peak) in L2_racs_lane.py, so treat that semantic unit binding as inherited unresolved rather than newly certified.
+
+R54 LSS carrier is aggregate full-sky C1 only. It has no flux-bin n_a(z),bias_a(z) or cross-bin spectra. Cross-bin LSS projection would require C1_ab=(2/π)∫dk k²P(k)K_a(k)K_b(k), K_a=∫dz n_a b_a D j1(kχ). Declaring all bins share one aggregate Gaussian dipole with inherited conservative sd=.0021074779417 is a conditional sensitivity model: covariance transports as R_a C_LSS R_bᵀ and is correlated across disjoint bins. It is not measured flux-bin clustering. Poisson independence of disjoint sources does not imply cosmological independence.
+
+`htt/obsstat/number_count_dipole.py` additionally supplies angular_power_projection, synfast_seeded, dipole_from_delta, shot_noise_sigma,mock_dipole_amplitudes for actual DESI BGS footprint work. Its distances are Mpc/h and its P(k) input must match; R54's distances are Mpc. The reusable method can transport all retained clustering multipoles through a mask and same estimator, but its BGS selection/z distribution is not an NVSS physical input. Finish the count-field quotient and paired conditional likelihood now, retain an explicit correlated-LSS sensitivity, and keep physical velocity significance limited by the spectral, completeness and flux-bin redshift contracts.

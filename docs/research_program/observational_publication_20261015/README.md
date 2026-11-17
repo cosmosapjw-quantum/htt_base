@@ -1,8 +1,12 @@
 # HTT 관측논문 6트랙 출판 중심 DAG
 
-## Current directional Hubble study — R64, 2026-11-17
+## Current dipole-anomaly study — R65, 2026-11-17
 
-[R64 실제 거리장·정보 회복 결과](R64_DIRECTIONAL_HUBBLE_20261117/REPORT_KO.md), [P3 논문 계획](R64_DIRECTIONAL_HUBBLE_20261117/RESEARCH_PLAN_KO.md), [연구 DAG](R64_DIRECTIONAL_HUBBLE_20261117/RESEARCH_DAG.json)이 현재 선택된 P3 companion 경로다. CF4 35,970개 group의 full36과 기존 correlated method/sky rows를 사용해 총42개 fit을 실행했다. 68/72행으로 확장하면 J3 거리장+V 계수 rank39/39가 회복되지만, method-dependent adequacy와 넓은 H_D/q_D 구간은 남는다. mono_method68 J2의 common-field p=.007642는24개 angular nuisance를 profile하면.584765가 되며 다른 operator의 결과도 보존했다. 고정 working covariance의 조건부 관측 결과다. 일반 physical Hubble/가속도 검출이나 CF4 전체의 불가능성을 주장하지 않는다. 원래42개 gate와 P3 acceptance를 보존하며 제출 상태는 NOT_READY_TO_SUBMIT이다. 자동 다음 루프·local agent prompt는 없다.
+[R65 실제 radio dipole·source-selection 결과](R65_DIPOLE_ANOMALY_20261117/REPORT_KO.md), [P4 논문 계획](R65_DIPOLE_ANOMALY_20261117/RESEARCH_PLAN_KO.md), [연구 DAG](R65_DIPOLE_ANOMALY_20261117/RESEARCH_DAG.json)이 현재 선택된 P4 companion 경로다. 실제 NVSS의 declination-ring nuisance quotient와 disjoint flux bins에서12개 model·36개 bin fit·102개 observed optimization, 512개 conditional bootstrap과6개 RACS weighted posterior pushforward를 수행하고37개 affected test를 통과했다. Provider integrated-flux 입력을 확보해263,158개 component와 동일 provider의 peak_flux 선택을 비교했다. 실제 shared-source covariance를 보존한 peak→integrated dipole 차이는 선언한 Poisson working law 안에서 남으며, 이 차이를 instrumental bias나 physical velocity anomaly로 단정하지 않는다. RACS 결과는 source posterior의 geometric projection이고 동일 nuisance quotient로 refit한 결과가 아니다. 원래42개 gate·P4 acceptance와 R63 local/global companion pointer를 보존하며 제출 상태는 NOT_READY_TO_SUBMIT이다. 좁은 companion의 다음 작업은 source/component-null·matched-estimand·원고 통합으로 제한한다. LSS cross covariance는 물리적 excess 주장 확장에 필요하며, RACS 동일 nuisance refit은 더 강한 비교를 선택할 때만 추가한다.
+
+## Previous directional Hubble study — R64, 2026-11-17
+
+[R64 실제 거리장·정보 회복 결과](R64_DIRECTIONAL_HUBBLE_20261117/REPORT_KO.md), [P3 논문 계획](R64_DIRECTIONAL_HUBBLE_20261117/RESEARCH_PLAN_KO.md), [연구 DAG](R64_DIRECTIONAL_HUBBLE_20261117/RESEARCH_DAG.json)이 이전 P3 companion 경로다. CF4 35,970개 group의 full36과 기존 correlated method/sky rows를 사용해 총42개 fit을 실행했다. 68/72행으로 확장하면 J3 거리장+V 계수 rank39/39가 회복되지만, method-dependent adequacy와 넓은 H_D/q_D 구간은 남는다. mono_method68 J2의 common-field p=.007642는24개 angular nuisance를 profile하면.584765가 되며 다른 operator의 결과도 보존했다. 고정 working covariance의 조건부 관측 결과다. 일반 physical Hubble/가속도 검출이나 CF4 전체의 불가능성을 주장하지 않는다. 원래42개 gate와 P3 acceptance를 보존하며 제출 상태는 NOT_READY_TO_SUBMIT이다. 자동 다음 루프·local agent prompt는 없다.
 
 ## Previous local-boost/global-history discrimination study — R63, 2026-11-17
 

@@ -1,0 +1,2233 @@
+{
+  "schema": "htt.r65.interpretation/1",
+  "baseline_commit": "d76ef3a4e9b33c4703a02647b3aa850004d04253",
+  "sources": {
+    "NVSS": {
+      "path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS_nrao_20261110/CATALOG.FIT",
+      "sha256": "a357a688dc7e43ae81ecbe465fdce216dfed678aee977780a626841eceb5bde4",
+      "bytes": 152121600,
+      "original_rows": 1810672,
+      "finite_positive_rows": 1810672,
+      "field": "PEAK INT",
+      "field_unit": "JY/BEAM",
+      "bin_edges_mjy_per_beam": [
+        20,
+        40,
+        80,
+        "infinity"
+      ]
+    },
+    "RACS_archive_sha256": "143cdcf32d85479ee171c8d5bc5da814178dd7123024ba12e5b5d9f9b9c94fc7",
+    "NVSS_provider": {
+      "path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/RACS_SBI_20261117/Full_NVSS_combined_named.dat",
+      "sha256": "52eb576c1e3e71837f2fca26121789ccc0b316152cca3f25ea2f37ea8ef5a38e",
+      "bytes": 140767191,
+      "release": "https://github.com/o-oayda/cracking-into-racs-i/releases/tag/v1.0.0",
+      "original_rows": 1773488,
+      "finite_positive_paired_rows": 1773488,
+      "duplicate_source_names": 0,
+      "columns": [
+        "source_name",
+        "ra",
+        "dec",
+        "integrated_flux",
+        "integrated_flux_unc",
+        "peak_flux",
+        "peak_flux_unc"
+      ],
+      "integrated_flux_unit": "mJy (provider Figure2 implementation contract)",
+      "peak_flux_unit": "mJy/beam (provider component peak; distinct from raw FITS peak)",
+      "original_extraction_replay": false,
+      "object_definition": "Gaussian catalogue component; not necessarily one entire physical galaxy"
+    }
+  },
+  "observed_models": 12,
+  "independent_bin_fits": 36,
+  "common_vector_fits": 12,
+  "shared_response_fits": 36,
+  "fixed_cmb_nuisance_fits": 18,
+  "total_observed_optimizations": 102,
+  "bootstrap_catalogues": 512,
+  "bootstrap_refits": 2048,
+  "RACS_posterior_models": 6,
+  "new_RACS_training_or_fits": 0,
+  "new_NVSScatalogue_downloads": 1,
+  "tests_passed": 37,
+  "symbolic_checks": 11,
+  "nvss_tables": [
+    {
+      "model": "base64_dipole",
+      "u": [
+        -0.010637211467826854,
+        0.00594234653593866
+      ],
+      "sd": [
+        0.0031854522778880534,
+        0.0035574250295065837
+      ],
+      "covariance": [
+        [
+          1.0147106214702189e-05,
+          -6.062315102004944e-07
+        ],
+        [
+          -6.062315102004944e-07,
+          1.2655272840559919e-05
+        ]
+      ],
+      "norm": 0.012184488096118332,
+      "ra_deg": 150.81063145345763,
+      "common_vector_lr": {
+        "statistic": 2.092025506743049,
+        "dof": 4,
+        "asymptotic_conditional_p": 0.7188375737582287,
+        "calibration": "Wilks approximation under the stated conditional count law"
+      },
+      "pearson_phi": [
+        1.0591104630111996,
+        1.0468693389838002,
+        1.0988898721828522
+      ],
+      "peak_response_diagnostics": {
+        "0.5": {
+          "response": [
+            3.1640251583179473,
+            3.304397793441618,
+            3.828547525233443
+          ],
+          "omnibus_df6_p": 0.22930483386407977,
+          "shared_beta_vs_cmb_lr": 6.1277994101553475,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.046705203100854215,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "0.75": {
+          "response": [
+            3.3580293513709387,
+            3.521797425681888,
+            4.133305446105684
+          ],
+          "omnibus_df6_p": 0.25756980371420485,
+          "shared_beta_vs_cmb_lr": 5.749163048956737,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.056439753217720656,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "1.0": {
+          "response": [
+            3.5520335444239297,
+            3.7391970579221576,
+            4.438063366977924
+          ],
+          "omnibus_df6_p": 0.287239369988646,
+          "shared_beta_vs_cmb_lr": 5.384606605615108,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.06772476893647106,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        }
+      },
+      "path_information": {
+        "original_wald": 15.474558195944498,
+        "retained_path_wald": 15.474558195944494,
+        "incorrect_diagonal_path_wald": 7.238625125889395,
+        "diagonal_path_is_different_experiment": true
+      }
+    },
+    {
+      "model": "base64_dipole_stf",
+      "u": [
+        -0.01141191696148921,
+        0.006854017068155587
+      ],
+      "sd": [
+        0.0032289530451832765,
+        0.0036455616204861705
+      ],
+      "covariance": [
+        [
+          1.0426137767998356e-05,
+          -7.333402694061265e-07
+        ],
+        [
+          -7.333402694061265e-07,
+          1.3290119528761753e-05
+        ]
+      ],
+      "norm": 0.013312002054780989,
+      "ra_deg": 149.01089976981305,
+      "common_vector_lr": {
+        "statistic": 1.8709088294335459,
+        "dof": 4,
+        "asymptotic_conditional_p": 0.7594868461721498,
+        "calibration": "Wilks approximation under the stated conditional count law"
+      },
+      "pearson_phi": [
+        1.0591645905931255,
+        1.0468773899320567,
+        1.0988507670876388
+      ],
+      "peak_response_diagnostics": {
+        "0.5": {
+          "response": [
+            3.1640251583179473,
+            3.304397793441618,
+            3.828547525233443
+          ],
+          "omnibus_df6_p": 0.15504787873982362,
+          "shared_beta_vs_cmb_lr": 7.567061866526046,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.022742248128321724,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "0.75": {
+          "response": [
+            3.3580293513709387,
+            3.521797425681888,
+            4.133305446105684
+          ],
+          "omnibus_df6_p": 0.1773430802190191,
+          "shared_beta_vs_cmb_lr": 7.153868501341236,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.02796128929177263,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "1.0": {
+          "response": [
+            3.5520335444239297,
+            3.7391970579221576,
+            4.438063366977924
+          ],
+          "omnibus_df6_p": 0.2013709445390156,
+          "shared_beta_vs_cmb_lr": 6.754351639627117,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.034143746790716,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        }
+      },
+      "path_information": {
+        "original_wald": 17.127325216933578,
+        "retained_path_wald": 17.12732521693357,
+        "incorrect_diagonal_path_wald": 7.7839349245757905,
+        "diagonal_path_is_different_experiment": true
+      }
+    },
+    {
+      "model": "base32_dipole",
+      "u": [
+        -0.010693966103161156,
+        0.006012881232714443
+      ],
+      "sd": [
+        0.0031910615478776654,
+        0.0035661350608189165
+      ],
+      "covariance": [
+        [
+          1.0182873802343402e-05,
+          -6.061690826507435e-07
+        ],
+        [
+          -6.061690826507435e-07,
+          1.2717319272001937e-05
+        ]
+      ],
+      "norm": 0.012268482046866652,
+      "ra_deg": 150.6523194714631,
+      "common_vector_lr": {
+        "statistic": 1.4114240715737694,
+        "dof": 4,
+        "asymptotic_conditional_p": 0.8422070469887297,
+        "calibration": "Wilks approximation under the stated conditional count law"
+      },
+      "pearson_phi": [
+        1.0744204185649935,
+        1.0677369003941122,
+        1.1065170201709318
+      ],
+      "peak_response_diagnostics": {
+        "0.5": {
+          "response": [
+            3.1668876927477445,
+            3.2999337809535545,
+            3.8288451111512742
+          ],
+          "omnibus_df6_p": 0.2731298513202773,
+          "shared_beta_vs_cmb_lr": 6.220645047095225,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.04458657280140969,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "0.75": {
+          "response": [
+            3.3613689748723683,
+            3.51658941111248,
+            4.133652629676487
+          ],
+          "omnibus_df6_p": 0.30565076217529114,
+          "shared_beta_vs_cmb_lr": 5.839410637604052,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.053949582885890905,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "1.0": {
+          "response": [
+            3.555850256996992,
+            3.733245041271406,
+            4.438460148201699
+          ],
+          "omnibus_df6_p": 0.33954535174464506,
+          "shared_beta_vs_cmb_lr": 5.472357478264136,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.06481755906325934,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        }
+      },
+      "path_information": {
+        "original_wald": 14.921319017245867,
+        "retained_path_wald": 14.921319017245866,
+        "incorrect_diagonal_path_wald": 6.687721119414927,
+        "diagonal_path_is_different_experiment": true
+      }
+    },
+    {
+      "model": "base32_dipole_stf",
+      "u": [
+        -0.011411738080382042,
+        0.006974376655951468
+      ],
+      "sd": [
+        0.0032371236172074247,
+        0.003659668923894554
+      ],
+      "covariance": [
+        [
+          1.047896931308208e-05,
+          -7.40075355175418e-07
+        ],
+        [
+          -7.40075355175418e-07,
+          1.3393176632519524e-05
+        ]
+      ],
+      "norm": 0.013374217575406884,
+      "ra_deg": 148.56847241291297,
+      "common_vector_lr": {
+        "statistic": 1.1917597594729017,
+        "dof": 4,
+        "asymptotic_conditional_p": 0.8794534474855109,
+        "calibration": "Wilks approximation under the stated conditional count law"
+      },
+      "pearson_phi": [
+        1.0744437075697875,
+        1.0676990699875406,
+        1.106359466789912
+      ],
+      "peak_response_diagnostics": {
+        "0.5": {
+          "response": [
+            3.1668876927477445,
+            3.2999337809535545,
+            3.8288451111512742
+          ],
+          "omnibus_df6_p": 0.1898810372609041,
+          "shared_beta_vs_cmb_lr": 7.62850460342608,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.022054198176648183,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "0.75": {
+          "response": [
+            3.3613689748723683,
+            3.51658941111248,
+            4.133652629676487
+          ],
+          "omnibus_df6_p": 0.21621567083769652,
+          "shared_beta_vs_cmb_lr": 7.217606757117906,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.027084237061866877,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "1.0": {
+          "response": [
+            3.555850256996992,
+            3.733245041271406,
+            4.438460148201699
+          ],
+          "omnibus_df6_p": 0.2443944792424963,
+          "shared_beta_vs_cmb_lr": 6.820235808036628,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.033037304915242455,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        }
+      },
+      "path_information": {
+        "original_wald": 16.471068221021703,
+        "retained_path_wald": 16.47106822102171,
+        "incorrect_diagonal_path_wald": 7.152887280341495,
+        "diagonal_path_is_different_experiment": true
+      }
+    },
+    {
+      "model": "gal20_dipole",
+      "u": [
+        -0.013406421209507332,
+        0.008540065530233999
+      ],
+      "sd": [
+        0.003390279433969123,
+        0.004283651405318622
+      ],
+      "covariance": [
+        [
+          1.1493994640393999e-05,
+          -1.6489994203271735e-06
+        ],
+        [
+          -1.6489994203271735e-06,
+          1.8349669362288202e-05
+        ]
+      ],
+      "norm": 0.015895434844867218,
+      "ra_deg": 147.50233087893025,
+      "common_vector_lr": {
+        "statistic": 1.7516033070917487,
+        "dof": 4,
+        "asymptotic_conditional_p": 0.7813238636422847,
+        "calibration": "Wilks approximation under the stated conditional count law"
+      },
+      "pearson_phi": [
+        1.0549615297505306,
+        1.0463856649903325,
+        1.0861369428539265
+      ],
+      "peak_response_diagnostics": {
+        "0.5": {
+          "response": [
+            3.166521471219429,
+            3.2997886752580237,
+            3.826306242534177
+          ],
+          "omnibus_df6_p": 0.07101454677840578,
+          "shared_beta_vs_cmb_lr": 9.757643901104558,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.007605968959397687,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "0.75": {
+          "response": [
+            3.3609417164226674,
+            3.5164201211343613,
+            4.130690616289873
+          ],
+          "omnibus_df6_p": 0.0832677804571728,
+          "shared_beta_vs_cmb_lr": 9.286496957367518,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.009626375704504187,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "1.0": {
+          "response": [
+            3.5553619616259056,
+            3.7330515670106985,
+            4.435074990045569
+          ],
+          "omnibus_df6_p": 0.09697408909431199,
+          "shared_beta_vs_cmb_lr": 8.829676749171842,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.012096509070376562,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        }
+      },
+      "path_information": {
+        "original_wald": 19.80543643000134,
+        "retained_path_wald": 19.805436430001336,
+        "incorrect_diagonal_path_wald": 10.601633064206249,
+        "diagonal_path_is_different_experiment": true
+      }
+    },
+    {
+      "model": "gal20_dipole_stf",
+      "u": [
+        -0.013586783699840014,
+        0.008960343174275605
+      ],
+      "sd": [
+        0.003407632725584571,
+        0.0043916485026719385
+      ],
+      "covariance": [
+        [
+          1.1611960792474932e-05,
+          -1.9109735980502364e-06
+        ],
+        [
+          -1.9109735980502364e-06,
+          1.928657657102068e-05
+        ]
+      ],
+      "norm": 0.016275393731244283,
+      "ra_deg": 146.59556216924014,
+      "common_vector_lr": {
+        "statistic": 2.165892843859389,
+        "dof": 4,
+        "asymptotic_conditional_p": 0.7052781735576721,
+        "calibration": "Wilks approximation under the stated conditional count law"
+      },
+      "pearson_phi": [
+        1.0550481327575654,
+        1.046374997647323,
+        1.0862073089208049
+      ],
+      "peak_response_diagnostics": {
+        "0.5": {
+          "response": [
+            3.166521471219429,
+            3.2997886752580237,
+            3.826306242534177
+          ],
+          "omnibus_df6_p": 0.05587195865791295,
+          "shared_beta_vs_cmb_lr": 9.94042784700035,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.006941662891075518,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "0.75": {
+          "response": [
+            3.3609417164226674,
+            3.5164201211343613,
+            4.130690616289873
+          ],
+          "omnibus_df6_p": 0.06568212917921294,
+          "shared_beta_vs_cmb_lr": 9.463936266100692,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.008809116454024346,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "1.0": {
+          "response": [
+            3.5553619616259056,
+            3.7330515670106985,
+            4.435074990045569
+          ],
+          "omnibus_df6_p": 0.07670410088383442,
+          "shared_beta_vs_cmb_lr": 9.00240086201189,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.011095668955375181,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        }
+      },
+      "path_information": {
+        "original_wald": 20.44586283168838,
+        "retained_path_wald": 20.445862831688377,
+        "incorrect_diagonal_path_wald": 11.525674955657355,
+        "diagonal_path_is_different_experiment": true
+      }
+    },
+    {
+      "model": "clean64_dipole",
+      "u": [
+        -0.010097668433450778,
+        0.004165952779765948
+      ],
+      "sd": [
+        0.0032196038364334318,
+        0.003602280967556672
+      ],
+      "covariance": [
+        [
+          1.036584886357687e-05,
+          -5.975588270062408e-07
+        ],
+        [
+          -5.975588270062408e-07,
+          1.2976428169221035e-05
+        ]
+      ],
+      "norm": 0.010923281116731727,
+      "ra_deg": 157.58063014707483,
+      "common_vector_lr": {
+        "statistic": 1.8050427678883452,
+        "dof": 4,
+        "asymptotic_conditional_p": 0.7715596190736346,
+        "calibration": "Wilks approximation under the stated conditional count law"
+      },
+      "pearson_phi": [
+        1.057041828820224,
+        1.0442912396245383,
+        1.0857978249720166
+      ],
+      "peak_response_diagnostics": {
+        "0.5": {
+          "response": [
+            3.1654900716533145,
+            3.305607242818945,
+            3.839156960621187
+          ],
+          "omnibus_df6_p": 0.4221626347700974,
+          "shared_beta_vs_cmb_lr": 4.261638476320192,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.11873997767444931,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "0.75": {
+          "response": [
+            3.3597384169288667,
+            3.523208449955436,
+            4.145683120724718
+          ],
+          "omnibus_df6_p": 0.4604442547189068,
+          "shared_beta_vs_cmb_lr": 3.9267749030652457,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.14038207709851583,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "1.0": {
+          "response": [
+            3.553986762204419,
+            3.740809657091927,
+            4.452209280828249
+          ],
+          "omnibus_df6_p": 0.4987912544033939,
+          "shared_beta_vs_cmb_lr": 3.60622974217571,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.16478480456162975,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        }
+      },
+      "path_information": {
+        "original_wald": 12.633797466628447,
+        "retained_path_wald": 12.633797466628447,
+        "incorrect_diagonal_path_wald": 6.49835955228179,
+        "diagonal_path_is_different_experiment": true
+      }
+    },
+    {
+      "model": "clean64_dipole_stf",
+      "u": [
+        -0.010827128669665183,
+        0.005111002925951535
+      ],
+      "sd": [
+        0.0032621535542787608,
+        0.0036937617910380235
+      ],
+      "covariance": [
+        [
+          1.0641645811693552e-05,
+          -7.309465358744997e-07
+        ],
+        [
+          -7.309465358744997e-07,
+          1.3643876168932428e-05
+        ]
+      ],
+      "norm": 0.011972847035629033,
+      "ra_deg": 154.73010073672063,
+      "common_vector_lr": {
+        "statistic": 1.6985607093137816,
+        "dof": 4,
+        "asymptotic_conditional_p": 0.7909790565636264,
+        "calibration": "Wilks approximation under the stated conditional count law"
+      },
+      "pearson_phi": [
+        1.0570939924751732,
+        1.04431941301113,
+        1.0857760623809014
+      ],
+      "peak_response_diagnostics": {
+        "0.5": {
+          "response": [
+            3.1654900716533145,
+            3.305607242818945,
+            3.839156960621187
+          ],
+          "omnibus_df6_p": 0.31437632807644644,
+          "shared_beta_vs_cmb_lr": 5.4136466636038705,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.0667485081474861,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "0.75": {
+          "response": [
+            3.3597384169288667,
+            3.523208449955436,
+            4.145683120724718
+          ],
+          "omnibus_df6_p": 0.3489496473722289,
+          "shared_beta_vs_cmb_lr": 5.044336575479207,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.08028533617333833,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        },
+        "1.0": {
+          "response": [
+            3.553986762204419,
+            3.740809657091927,
+            4.452209280828249
+          ],
+          "omnibus_df6_p": 0.3846156100065623,
+          "shared_beta_vs_cmb_lr": 4.689078336525441,
+          "shared_beta_vs_cmb_df": 2,
+          "shared_beta_vs_cmb_asymptotic_p": 0.09589138174207158,
+          "meaning": "secondary nested contrast of the already-computed source-conditional peak-proxy models; no physical speed claim"
+        }
+      },
+      "path_information": {
+        "original_wald": 14.11724553703306,
+        "retained_path_wald": 14.117245537033059,
+        "incorrect_diagonal_path_wald": 7.1822166811974695,
+        "diagonal_path_is_different_experiment": true
+      }
+    }
+  ],
+  "morphology_sensitivity": [
+    {
+      "geometry": "base64",
+      "common_dipole_shift": [
+        -0.0007747054936623563,
+        0.0009116705322169266
+      ],
+      "shift_in_expanded_marginal_sd": [
+        -0.23992466995393666,
+        0.25007684058714297
+      ],
+      "shift_units_note": "scale diagnostic, not a paired-shift significance",
+      "independent_morphology_lr": 11.080057422662428,
+      "independent_morphology_df": 12,
+      "sd_inflation": [
+        [
+          1.014828322959674,
+          1.0250590097384338
+        ],
+        [
+          1.0134202969821475,
+          1.023197786471687
+        ],
+        [
+          1.0130202679587381,
+          1.0227752372487207
+        ]
+      ],
+      "polar_STF_abs_corr": [
+        0.217133410440793,
+        0.20922036491747184,
+        0.2073014332094938
+      ]
+    },
+    {
+      "geometry": "base32",
+      "common_dipole_shift": [
+        -0.0007177719772208865,
+        0.000961495423237025
+      ],
+      "shift_in_expanded_marginal_sd": [
+        -0.22173140790962076,
+        0.2627274333367344
+      ],
+      "shift_units_note": "scale diagnostic, not a paired-shift significance",
+      "independent_morphology_lr": 11.756509639798878,
+      "independent_morphology_df": 12,
+      "sd_inflation": [
+        [
+          1.0156719296900056,
+          1.0263913188051976
+        ],
+        [
+          1.0143469712622102,
+          1.024617947846597
+        ],
+        [
+          1.0137485779606326,
+          1.0239543259566415
+        ]
+      ],
+      "polar_STF_abs_corr": [
+        0.2226700507957299,
+        0.21538724802783965,
+        0.21247905685290325
+      ]
+    },
+    {
+      "geometry": "gal20",
+      "common_dipole_shift": [
+        -0.00018036249033268233,
+        0.00042027764404160665
+      ],
+      "shift_in_expanded_marginal_sd": [
+        -0.05292897000856851,
+        0.0956992900925254
+      ],
+      "shift_units_note": "scale diagnostic, not a paired-shift significance",
+      "independent_morphology_lr": 8.755815061444267,
+      "independent_morphology_df": 12,
+      "sd_inflation": [
+        [
+          1.0051691655863024,
+          1.025650424471013
+        ],
+        [
+          1.0047199371972386,
+          1.0241714915427016
+        ],
+        [
+          1.0041127189988985,
+          1.0233328218930569
+        ]
+      ],
+      "polar_STF_abs_corr": [
+        0.2126829537662548,
+        0.2069369666820491,
+        0.20286368195465487
+      ]
+    },
+    {
+      "geometry": "clean64",
+      "common_dipole_shift": [
+        -0.0007294602362144052,
+        0.0009450501461855873
+      ],
+      "shift_in_expanded_marginal_sd": [
+        -0.22361308996555918,
+        0.2558503226923057
+      ],
+      "shift_units_note": "scale diagnostic, not a paired-shift significance",
+      "independent_morphology_lr": 11.151006213465052,
+      "independent_morphology_df": 12,
+      "sd_inflation": [
+        [
+          1.0145975767296431,
+          1.0256701200883422
+        ],
+        [
+          1.01307031412397,
+          1.0235784155186027
+        ],
+        [
+          1.0125981858687834,
+          1.0231170474289735
+        ]
+      ],
+      "polar_STF_abs_corr": [
+        0.21914332240784115,
+        0.2105414309671964,
+        0.2082622150534518
+      ]
+    }
+  ],
+  "source_geometries": {
+    "base64": {
+      "nside": 64,
+      "galactic_latitude_cut_deg": 10,
+      "clean_bright_boxes": false,
+      "boundary_log_density": [
+        214450.0,
+        124505.0,
+        67755.0,
+        0.0
+      ],
+      "boundary_log_half_width": 0.1,
+      "mask_sha256": "dc1d4d635737c844ff0e2c9e6db5084762959ed13e5bbddeeabd685d093b3d64",
+      "retained_pixels": 33000,
+      "retained_rings": 185,
+      "sky_fraction": 0.67138671875,
+      "observed_counts_per_bin": [
+        115906,
+        65260,
+        55581
+      ]
+    },
+    "base32": {
+      "nside": 32,
+      "galactic_latitude_cut_deg": 10,
+      "clean_bright_boxes": false,
+      "boundary_log_density": [
+        213485.0,
+        123735.0,
+        67460.0,
+        0.0
+      ],
+      "boundary_log_half_width": 0.1,
+      "mask_sha256": "607d6fecaf61dad388a8efd2b65431e098a82e34f71dd7f7dd8f8f810c74f683",
+      "retained_pixels": 8214,
+      "retained_rings": 92,
+      "sky_fraction": 0.66845703125,
+      "observed_counts_per_bin": [
+        115371,
+        64936,
+        55330
+      ]
+    },
+    "gal20": {
+      "nside": 64,
+      "galactic_latitude_cut_deg": 20,
+      "clean_bright_boxes": false,
+      "boundary_log_density": [
+        174165.0,
+        100965.0,
+        55040.0,
+        0.0
+      ],
+      "boundary_log_half_width": 0.1,
+      "mask_sha256": "b749cbbd977ee8cb5985de3ea65264a74d109d3954430df3a31295aaf2cb2a7a",
+      "retained_pixels": 26797,
+      "retained_rings": 185,
+      "sky_fraction": 0.5451863606770834,
+      "observed_counts_per_bin": [
+        94126,
+        52999,
+        45206
+      ]
+    },
+    "clean64": {
+      "nside": 64,
+      "galactic_latitude_cut_deg": 10,
+      "clean_bright_boxes": true,
+      "boundary_log_density": [
+        210145.0,
+        121985.0,
+        66320.0,
+        0.0
+      ],
+      "boundary_log_half_width": 0.1,
+      "mask_sha256": "e4974a20178cb977dd96ab23171a8c3f3b3d976f3efa83fcb2fd7dbfa0c6103b",
+      "retained_pixels": 32281,
+      "retained_rings": 185,
+      "sky_fraction": 0.6567586263020834,
+      "observed_counts_per_bin": [
+        113463,
+        63953,
+        54090
+      ]
+    }
+  },
+  "primary_bootstrap": {
+    "nsim": 512,
+    "seed": 2026111765,
+    "exceedances": 375,
+    "observed_lr": 1.8709088294335459,
+    "fitted_null_mc_tail": 0.732943469785575,
+    "resolution": 0.001949317738791423,
+    "quantiles": [
+      3.348398658974453,
+      7.37573441124516,
+      8.526746490966804,
+      12.98382432955667
+    ],
+    "chi2_df4_quantiles": [
+      3.3566939800333224,
+      7.779440339734858,
+      9.487729036781154,
+      13.276704135987622
+    ],
+    "law": "parametric conditional multinomial bootstrap with fitted common dipole and per-bin STF nuisance",
+    "physical_LSS_calibrated": false,
+    "exact_finite_sample_composite_test": false,
+    "scan_correction": "primary prespecified geometry/model only; no best-cut selection",
+    "binomial_mc_interval95_for_exceedance_probability": [
+      0.6918283110632732,
+      0.7703078919661471
+    ]
+  },
+  "beta_residual_precision": {
+    "model": "u_b = k_b beta_transverse + a_transverse, constant residual across bins",
+    "law": "local conditional-Gaussian carrier, alpha=.75 and source response held fixed",
+    "kernel": "htt.htt.infer.r58_mixed_tensor_likelihood.fit_linear",
+    "parameter_order": [
+      "beta_x",
+      "beta_y",
+      "a_x",
+      "a_y"
+    ],
+    "rank": 4,
+    "n_parameters": 4,
+    "estimate": [
+      -0.0013730496478864328,
+      0.0051183662781890136,
+      -0.006489195234386942,
+      -0.011496673364827924
+    ],
+    "sd": [
+      0.010367059240497786,
+      0.011715376167975373,
+      0.03731284950296363,
+      0.042160750653996056
+    ],
+    "full_covariance": [
+      [
+        0.00010747591729599053,
+        -7.527052380311903e-06,
+        -0.0003853733852912881,
+        2.69696728223549e-05
+      ],
+      [
+        -7.527052380311903e-06,
+        0.00013725003875716534,
+        2.6969623424436626e-05,
+        -0.0004920790731766092
+      ],
+      [
+        -0.0003853733852912881,
+        2.6969623424436626e-05,
+        0.0013922487380308133,
+        -9.736634268337518e-05
+      ],
+      [
+        2.69696728223549e-05,
+        -0.0004920790731766092,
+        -9.736634268337518e-05,
+        0.001777528895708429
+      ]
+    ],
+    "correlation": [
+      [
+        1.0,
+        -0.061974512632577104,
+        -0.9962485937212465,
+        0.06170377901614732
+      ],
+      [
+        -0.061974512632577104,
+        1.0,
+        0.06169645747024008,
+        -0.9962545627832583
+      ],
+      [
+        -0.9962485937212465,
+        0.06169645747024008,
+        1.0,
+        -0.06189308154959845
+      ],
+      [
+        0.06170377901614732,
+        -0.9962545627832583,
+        -0.06189308154959845,
+        1.0000000000000002
+      ]
+    ],
+    "residual_chi2": 1.6688570127294107,
+    "residual_dof": 2,
+    "singular_values_scaled": [
+      3.31847547823504,
+      2.8949531959419526,
+      0.09156187884603735,
+      0.07982577762988685
+    ],
+    "beta_sd_in_CMB_speed_units": [
+      8.403997003786827,
+      9.497002373565405
+    ],
+    "status": "conditional precision/identifiability diagnostic, not physical beta/tilt measurement",
+    "no_generic_no_go": true
+  },
+  "maximum_one_step_MLE_information_distance": 0.03470385038818875,
+  "racs_tables": [
+    {
+      "model": "racs_low3_fiducial",
+      "parallel_ratio": {
+        "mean": 3.741187997316917,
+        "sd": 0.7594786057457561,
+        "median": 3.734561877767452,
+        "central68": [
+          2.98828389885577,
+          4.488693632215197
+        ],
+        "central95": [
+          2.2627143061395705,
+          5.246335280849636
+        ]
+      },
+      "perpendicular_km_s": {
+        "mean": -66.84930019466233,
+        "sd": 225.14901421857564,
+        "median": -67.87537152983508,
+        "central68": [
+          -287.5648296941736,
+          153.161538957818
+        ],
+        "central95": [
+          -504.646957802721,
+          381.93841639487454
+        ]
+      },
+      "speed_ratio": {
+        "mean": 4.052126032544701,
+        "sd": 0.7401902648356108,
+        "median": 4.065291,
+        "central68": [
+          3.335694,
+          4.7759447
+        ],
+        "central95": [
+          2.54222,
+          5.4790688
+        ]
+      },
+      "nuisance_correlations": {
+        "temp_beta": {
+          "icrs_x": 0.7143151810218641,
+          "icrs_y": -0.3886890472709216,
+          "icrs_z": -0.2735769387637437,
+          "transverse_parallel_ratio": -0.741237601534539
+        },
+        "lambda_clus": {
+          "icrs_x": -0.03761094205104526,
+          "icrs_y": 0.0063712831870873995,
+          "icrs_z": -0.025041336108850783,
+          "transverse_parallel_ratio": 0.03651864392127875
+        }
+      },
+      "posterior_probability_parallel_gt1": 0.999653010641282,
+      "raw_rows": 93000,
+      "zero_weight_rows": 13065,
+      "descriptive_weight_ess": 24701.30606557447,
+      "source_commit": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf"
+    },
+    {
+      "model": "racs_low3_noclus",
+      "parallel_ratio": {
+        "mean": -0.3878191610533352,
+        "sd": 1.9714781747204557,
+        "median": -1.3668601188686917,
+        "central68": [
+          -1.9039307192107497,
+          2.5071171260217366
+        ],
+        "central95": [
+          -2.344193029211311,
+          3.7195548300631502
+        ]
+      },
+      "perpendicular_km_s": {
+        "mean": 212.395072437366,
+        "sd": 243.01855024380632,
+        "median": 247.72274426961704,
+        "central68": [
+          -26.80955620393726,
+          439.96537743027983
+        ],
+        "central95": [
+          -349.3847761930604,
+          603.7974366585379
+        ]
+      },
+      "speed_ratio": {
+        "mean": 2.5057875466620834,
+        "sd": 0.8494069909392864,
+        "median": 2.3959272,
+        "central68": [
+          1.6977189,
+          3.366746
+        ],
+        "central95": [
+          1.0927198,
+          4.4123683
+        ]
+      },
+      "nuisance_correlations": {
+        "temp_beta": {
+          "icrs_x": 0.9405628283726678,
+          "icrs_y": -0.7996236456107252,
+          "icrs_z": -0.46874170330420883,
+          "transverse_parallel_ratio": -0.9419954972328795
+        }
+      },
+      "posterior_probability_parallel_gt1": 0.27437263135587775,
+      "raw_rows": 79000,
+      "zero_weight_rows": 13899,
+      "descriptive_weight_ess": 25101.151841611434,
+      "source_commit": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf"
+    },
+    {
+      "model": "racs_low3_notemp",
+      "parallel_ratio": {
+        "mean": 9.358115225843717,
+        "sd": 0.4620743582771481,
+        "median": 9.346850057112638,
+        "central68": [
+          8.899770644025105,
+          9.814174511530988
+        ],
+        "central95": [
+          8.492336099479726,
+          10.30845944940181
+        ]
+      },
+      "perpendicular_km_s": {
+        "mean": -653.8301179188156,
+        "sd": 194.90049682048442,
+        "median": -654.1294883211187,
+        "central68": [
+          -846.0860805051832,
+          -460.29708738118507
+        ],
+        "central95": [
+          -1039.1382553701003,
+          -270.80605664803903
+        ]
+      },
+      "speed_ratio": {
+        "mean": 9.580615011707138,
+        "sd": 0.44794314159080023,
+        "median": 9.569647,
+        "central68": [
+          9.13906,
+          10.025615
+        ],
+        "central95": [
+          8.734595,
+          10.492006
+        ]
+      },
+      "nuisance_correlations": {
+        "lambda_clus": {
+          "icrs_x": 0.017932699624970353,
+          "icrs_y": 0.0014663022821869412,
+          "icrs_z": 0.015004983407530974,
+          "transverse_parallel_ratio": -0.017583377840405548
+        }
+      },
+      "posterior_probability_parallel_gt1": 1.0,
+      "raw_rows": 91000,
+      "zero_weight_rows": 13252,
+      "descriptive_weight_ess": 22898.881381432937,
+      "source_commit": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf"
+    },
+    {
+      "model": "racs_mid1_fiducial",
+      "parallel_ratio": {
+        "mean": 3.9746750448309363,
+        "sd": 1.0093114039171043,
+        "median": 3.985481276334164,
+        "central68": [
+          2.952362174950124,
+          4.99201680397885
+        ],
+        "central95": [
+          1.9793424533440245,
+          5.9190018495230765
+        ]
+      },
+      "perpendicular_km_s": {
+        "mean": -651.6877223175294,
+        "sd": 235.36392021890447,
+        "median": -646.2602438266318,
+        "central68": [
+          -889.7816292681571,
+          -417.2526949893355
+        ],
+        "central95": [
+          -1120.0392307768757,
+          -205.71395019193486
+        ]
+      },
+      "speed_ratio": {
+        "mean": 5.2514153226326545,
+        "sd": 0.9237455032996225,
+        "median": 5.2504754,
+        "central68": [
+          4.327936,
+          6.1710024
+        ],
+        "central95": [
+          3.4299235,
+          7.0403953
+        ]
+      },
+      "nuisance_correlations": {
+        "temp_beta": {
+          "icrs_x": 0.8208410420943715,
+          "icrs_y": -0.30316317065631787,
+          "icrs_z": 0.012114011755297442,
+          "transverse_parallel_ratio": -0.8222242064339219
+        },
+        "lambda_clus": {
+          "icrs_x": 0.04428423532633966,
+          "icrs_y": -0.017559203711588145,
+          "icrs_z": -0.010500685227779541,
+          "transverse_parallel_ratio": -0.044529616769776556
+        }
+      },
+      "posterior_probability_parallel_gt1": 0.9986995863777662,
+      "raw_rows": 91000,
+      "zero_weight_rows": 13547,
+      "descriptive_weight_ess": 24516.97025628655,
+      "source_commit": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf"
+    },
+    {
+      "model": "racs_mid1_noclus",
+      "parallel_ratio": {
+        "mean": 3.7142794595745943,
+        "sd": 1.4195541777349672,
+        "median": 3.716805693368204,
+        "central68": [
+          2.2243944618038816,
+          5.191079490585229
+        ],
+        "central95": [
+          1.0282955475762616,
+          6.399758651487658
+        ]
+      },
+      "perpendicular_km_s": {
+        "mean": -566.547543663954,
+        "sd": 234.42098247930937,
+        "median": -568.3461410031254,
+        "central68": [
+          -799.1874650207584,
+          -335.02511229645665
+        ],
+        "central95": [
+          -1024.5190799788002,
+          -100.27662946762617
+        ]
+      },
+      "speed_ratio": {
+        "mean": 5.6848560399288175,
+        "sd": 1.1102162693276205,
+        "median": 5.648458,
+        "central68": [
+          4.5647287,
+          6.8082128
+        ],
+        "central95": [
+          3.6123843,
+          7.9305587
+        ]
+      },
+      "nuisance_correlations": {
+        "temp_beta": {
+          "icrs_x": 0.8887856953426984,
+          "icrs_y": -0.4085356025308374,
+          "icrs_z": -0.08497518776846902,
+          "transverse_parallel_ratio": -0.889289676064395
+        }
+      },
+      "posterior_probability_parallel_gt1": 0.9766189218272786,
+      "raw_rows": 79000,
+      "zero_weight_rows": 12746,
+      "descriptive_weight_ess": 22433.404046674987,
+      "source_commit": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf"
+    },
+    {
+      "model": "racs_mid1_notemp",
+      "parallel_ratio": {
+        "mean": 6.060384112745801,
+        "sd": 0.6073962915563443,
+        "median": 6.067922595036858,
+        "central68": [
+          5.456494754947221,
+          6.658424983867017
+        ],
+        "central95": [
+          4.862825920927159,
+          7.244052237603628
+        ]
+      },
+      "perpendicular_km_s": {
+        "mean": -700.7793980347443,
+        "sd": 232.93710480341258,
+        "median": -700.3312341527622,
+        "central68": [
+          -932.0776377685888,
+          -467.7392124661565
+        ],
+        "central95": [
+          -1162.2701829024993,
+          -251.57223782771658
+        ]
+      },
+      "speed_ratio": {
+        "mean": 7.014407692056515,
+        "sd": 0.6613744180170107,
+        "median": 7.0166755,
+        "central68": [
+          6.359882,
+          7.6724625
+        ],
+        "central95": [
+          5.724005,
+          8.314446
+        ]
+      },
+      "nuisance_correlations": {
+        "lambda_clus": {
+          "icrs_x": 0.010849811960632201,
+          "icrs_y": -0.0033535181798437157,
+          "icrs_z": 0.009364194992652274,
+          "transverse_parallel_ratio": -0.011023589563772808
+        }
+      },
+      "posterior_probability_parallel_gt1": 0.9999999999999951,
+      "raw_rows": 87000,
+      "zero_weight_rows": 12430,
+      "descriptive_weight_ess": 22745.048304368156,
+      "source_commit": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf"
+    }
+  ],
+  "RACS_projection_scope": "geometric pushforward of source posterior; NOT a refit with arbitrary declination selection removed",
+  "RACS_ablation_scope": "diagnostic ablations are not equally qualified models or a probability-weighted model ensemble",
+  "physical_anomaly_claim": false,
+  "global_tilt_claim": false,
+  "bianchi_assignment": false,
+  "novelty_decision": "Actual same-source peak-versus-integrated dipole contrast survives paired uncertainty and angular nuisance in a declared Poisson working law. This resolves a source/estimand input defect and supplies a publication candidate on selection-dependent radio morphology; generic estimator/five-view/GLS priority or information superiority is not established. The narrow P4 companion needs one bounded source/component-null qualification, one matched conventional comparison, and manuscript consolidation. Source-matched LSS calibration is required for a physical-excess claim; a RACS nuisance refit is optional for a stronger same-estimand comparison. Original P4 acceptance and NOT_READY_TO_SUBMIT remain unchanged.",
+  "publication_status": "NOT_READY_TO_SUBMIT",
+  "original_observed_models": 8,
+  "source_refinement_observed_models": 4,
+  "original_tests_passed": 24,
+  "overlap_tests_passed": 13,
+  "integrated_flux_input_gap_closed": true,
+  "provider_nvss_tables": [
+    {
+      "model": "provider_peak_dipole",
+      "u": [
+        -0.011580580896326199,
+        0.005704168001074463
+      ],
+      "sd": [
+        0.0031513939799336726,
+        0.0035193623158700986
+      ],
+      "covariance": [
+        [
+          9.931284016762193e-06,
+          -5.93308456973092e-07
+        ],
+        [
+          -5.93308456973092e-07,
+          1.2385911110366544e-05
+        ]
+      ],
+      "norm": 0.012909197747375208,
+      "ra_deg": 153.77683954154074,
+      "common_vector_lr": {
+        "statistic": 2.457890892706633,
+        "dof": 4,
+        "asymptotic_conditional_p": 0.6521916185560179,
+        "calibration": "Wilks approximation under the stated conditional count law"
+      },
+      "conditional_response_diagnostics": {
+        "0.5": {
+          "response": [
+            3.2282798662342245,
+            3.360705559409973,
+            3.8161411199095023
+          ],
+          "omnibus_df6_p": 0.13842871899502399,
+          "shared_beta_vs_cmb_lr": 7.286155407448343,
+          "shared_beta_vs_cmb_df2_p": 0.02617167123595632,
+          "meaning": "provider peak-selected unresolved-source proxy; not a physical speed measurement"
+        },
+        "0.75": {
+          "response": [
+            3.432993177273262,
+            3.5874898193116347,
+            4.118831306561086
+          ],
+          "omnibus_df6_p": 0.1603356617281086,
+          "shared_beta_vs_cmb_lr": 6.8398986953974426,
+          "shared_beta_vs_cmb_df2_p": 0.03271409194109504,
+          "meaning": "provider peak-selected unresolved-source proxy; not a physical speed measurement"
+        },
+        "1.0": {
+          "response": [
+            3.6377064883122996,
+            3.8142740792132965,
+            4.421521493212669
+          ],
+          "omnibus_df6_p": 0.1842025703834397,
+          "shared_beta_vs_cmb_lr": 6.4094208050239665,
+          "shared_beta_vs_cmb_df2_p": 0.04057064909483793,
+          "meaning": "provider peak-selected unresolved-source proxy; not a physical speed measurement"
+        }
+      },
+      "pearson_phi": [
+        1.05901288947035,
+        1.0446642647778277,
+        1.086936236887961
+      ]
+    },
+    {
+      "model": "provider_peak_dipole_stf",
+      "u": [
+        -0.012386035258121084,
+        0.006498074690725784
+      ],
+      "sd": [
+        0.0031933218979406206,
+        0.0036061532549983544
+      ],
+      "covariance": [
+        [
+          1.0197304743867086e-05,
+          -7.153746865495039e-07
+        ],
+        [
+          -7.153746865495039e-07,
+          1.3004341298535226e-05
+        ]
+      ],
+      "norm": 0.013987095627816006,
+      "ra_deg": 152.3171884402787,
+      "common_vector_lr": {
+        "statistic": 2.2358238857883066,
+        "dof": 4,
+        "asymptotic_conditional_p": 0.6924762952640434,
+        "calibration": "Wilks approximation under the stated conditional count law"
+      },
+      "conditional_response_diagnostics": {
+        "0.5": {
+          "response": [
+            3.2282798662342245,
+            3.360705559409973,
+            3.8161411199095023
+          ],
+          "omnibus_df6_p": 0.08930251658835155,
+          "shared_beta_vs_cmb_lr": 8.798797521236494,
+          "shared_beta_vs_cmb_df2_p": 0.012284723742826522,
+          "meaning": "provider peak-selected unresolved-source proxy; not a physical speed measurement"
+        },
+        "0.75": {
+          "response": [
+            3.432993177273262,
+            3.5874898193116347,
+            4.118831306561086
+          ],
+          "omnibus_df6_p": 0.10543824459758348,
+          "shared_beta_vs_cmb_lr": 8.317421549564216,
+          "shared_beta_vs_cmb_df2_p": 0.015627692553492802,
+          "meaning": "provider peak-selected unresolved-source proxy; not a physical speed measurement"
+        },
+        "1.0": {
+          "response": [
+            3.6377064883122996,
+            3.8142740792132965,
+            4.421521493212669
+          ],
+          "omnibus_df6_p": 0.1234783581389073,
+          "shared_beta_vs_cmb_lr": 7.8512495809505936,
+          "shared_beta_vs_cmb_df2_p": 0.019729806024912342,
+          "meaning": "provider peak-selected unresolved-source proxy; not a physical speed measurement"
+        }
+      },
+      "pearson_phi": [
+        1.0590429485168027,
+        1.044712766397009,
+        1.0868833853210842
+      ]
+    },
+    {
+      "model": "provider_integrated_dipole",
+      "u": [
+        -0.012976624809517643,
+        0.011331204602426401
+      ],
+      "sd": [
+        0.003021029871373917,
+        0.0033738789549682562
+      ],
+      "covariance": [
+        [
+          9.126621483733507e-06,
+          -5.455762850607807e-07
+        ],
+        [
+          -5.455762850607807e-07,
+          1.1383059202777693e-05
+        ]
+      ],
+      "norm": 0.017227564807280164,
+      "ra_deg": 138.87249860936888,
+      "common_vector_lr": {
+        "statistic": 2.8772326968745325,
+        "dof": 4,
+        "asymptotic_conditional_p": 0.5785758995844301,
+        "calibration": "Wilks approximation under the stated conditional count law"
+      },
+      "conditional_response_diagnostics": {
+        "0.5": {
+          "response": [
+            3.17476205458979,
+            3.344682001580633,
+            3.7492762694624835
+          ],
+          "omnibus_df6_p": 0.002506064306487081,
+          "shared_beta_vs_cmb_lr": 17.569967809332493,
+          "shared_beta_vs_cmb_df2_p": 0.00015301357658388477,
+          "meaning": "ideal integrated-component flux response with alpha fixed; parent peak-detection, spectral distribution and component selection remain conditional"
+        },
+        "0.75": {
+          "response": [
+            3.370555730354755,
+            3.568795668510739,
+            4.040822314372898
+          ],
+          "omnibus_df6_p": 0.003224014111557569,
+          "shared_beta_vs_cmb_lr": 16.960371080960556,
+          "shared_beta_vs_cmb_df2_p": 0.0002075401920382755,
+          "meaning": "ideal integrated-component flux response with alpha fixed; parent peak-detection, spectral distribution and component selection remain conditional"
+        },
+        "1.0": {
+          "response": [
+            3.56634940611972,
+            3.792909335440844,
+            4.332368359283311
+          ],
+          "omnibus_df6_p": 0.004112729022568245,
+          "shared_beta_vs_cmb_lr": 16.36518582478084,
+          "shared_beta_vs_cmb_df2_p": 0.00027947634215884376,
+          "meaning": "ideal integrated-component flux response with alpha fixed; parent peak-detection, spectral distribution and component selection remain conditional"
+        }
+      },
+      "pearson_phi": [
+        1.0865047222841415,
+        1.0655316684699154,
+        1.1611415841749357
+      ]
+    },
+    {
+      "model": "provider_integrated_dipole_stf",
+      "u": [
+        -0.014030059362975286,
+        0.0120227465174856
+      ],
+      "sd": [
+        0.0030643076609489957,
+        0.0034562581737836526
+      ],
+      "covariance": [
+        [
+          9.389981440950705e-06,
+          -6.598066092689618e-07
+        ],
+        [
+          -6.598066092689618e-07,
+          1.1945720563846309e-05
+        ]
+      ],
+      "norm": 0.01847671506389387,
+      "ra_deg": 139.4058125678538,
+      "common_vector_lr": {
+        "statistic": 2.6830302392832834,
+        "dof": 4,
+        "asymptotic_conditional_p": 0.6121873518924574,
+        "calibration": "Wilks approximation under the stated conditional count law"
+      },
+      "conditional_response_diagnostics": {
+        "0.5": {
+          "response": [
+            3.17476205458979,
+            3.344682001580633,
+            3.7492762694624835
+          ],
+          "omnibus_df6_p": 0.0010027209178845949,
+          "shared_beta_vs_cmb_lr": 19.910447797115182,
+          "shared_beta_vs_cmb_df2_p": 4.747895970870103e-05,
+          "meaning": "ideal integrated-component flux response with alpha fixed; parent peak-detection, spectral distribution and component selection remain conditional"
+        },
+        "0.75": {
+          "response": [
+            3.370555730354755,
+            3.568795668510739,
+            4.040822314372898
+          ],
+          "omnibus_df6_p": 0.0013169967959857148,
+          "shared_beta_vs_cmb_lr": 19.255996589695584,
+          "shared_beta_vs_cmb_df2_p": 6.585874776094678e-05,
+          "meaning": "ideal integrated-component flux response with alpha fixed; parent peak-detection, spectral distribution and component selection remain conditional"
+        },
+        "1.0": {
+          "response": [
+            3.56634940611972,
+            3.792909335440844,
+            4.332368359283311
+          ],
+          "omnibus_df6_p": 0.0017155015246058006,
+          "shared_beta_vs_cmb_lr": 18.616104592452118,
+          "shared_beta_vs_cmb_df2_p": 9.069101249409073e-05,
+          "meaning": "ideal integrated-component flux response with alpha fixed; parent peak-detection, spectral distribution and component selection remain conditional"
+        }
+      },
+      "pearson_phi": [
+        1.0863954001911331,
+        1.065583007976927,
+        1.1610129685241173
+      ]
+    }
+  ],
+  "provider_source_geometries": {
+    "provider_peak": {
+      "nside": 64,
+      "galactic_latitude_cut_deg": 10,
+      "clean_bright_boxes": false,
+      "boundary_log_density": [
+        226100.0,
+        128645.0,
+        68500.0,
+        0.0
+      ],
+      "boundary_log_half_width": 0.1,
+      "mask_sha256": "dc1d4d635737c844ff0e2c9e6db5084762959ed13e5bbddeeabd685d093b3d64",
+      "retained_pixels": 33000,
+      "retained_rings": 185,
+      "sky_fraction": 0.67138671875,
+      "observed_counts_per_bin": [
+        119014,
+        66302,
+        56576
+      ]
+    },
+    "provider_integrated": {
+      "nside": 64,
+      "galactic_latitude_cut_deg": 10,
+      "clean_bright_boxes": false,
+      "boundary_log_density": [
+        238745.0,
+        139180.0,
+        74525.0,
+        0.0
+      ],
+      "boundary_log_half_width": 0.1,
+      "mask_sha256": "dc1d4d635737c844ff0e2c9e6db5084762959ed13e5bbddeeabd685d093b3d64",
+      "retained_pixels": 33000,
+      "retained_rings": 185,
+      "sky_fraction": 0.67138671875,
+      "observed_counts_per_bin": [
+        127130,
+        72123,
+        63905
+      ]
+    }
+  },
+  "provider_source_migration_counts": [
+    [
+      1172716,
+      20345,
+      808,
+      113
+    ],
+    [
+      0,
+      106785,
+      11795,
+      434
+    ],
+    [
+      0,
+      0,
+      59520,
+      6782
+    ],
+    [
+      0,
+      0,
+      0,
+      56576
+    ]
+  ],
+  "source_definition_paired_results": {
+    "dipole": {
+      "integrated_minus_peak": [
+        -0.001396043913191444,
+        0.005627036601351938
+      ],
+      "covariance": {
+        "covariance_left": [
+          [
+            9.943463653462735e-06,
+            -5.513956589663305e-07
+          ],
+          [
+            -5.513956589663305e-07,
+            1.236438988603291e-05
+          ]
+        ],
+        "covariance_right": [
+          [
+            9.127794219203173e-06,
+            -5.060003653137396e-07
+          ],
+          [
+            -5.060003653137396e-07,
+            1.1380085750716792e-05
+          ]
+        ],
+        "covariance_cross": [
+          [
+            9.137813444349433e-06,
+            -5.07059776011291e-07
+          ],
+          [
+            -5.07060277726818e-07,
+            1.1363284604962713e-05
+          ]
+        ],
+        "covariance_joint": [
+          [
+            9.943463653462735e-06,
+            -5.513956589663305e-07,
+            9.137813444349433e-06,
+            -5.07059776011291e-07
+          ],
+          [
+            -5.513956589663305e-07,
+            1.236438988603291e-05,
+            -5.07060277726818e-07,
+            1.1363284604962713e-05
+          ],
+          [
+            9.137813444349433e-06,
+            -5.07060277726818e-07,
+            9.127794219203173e-06,
+            -5.060003653137396e-07
+          ],
+          [
+            -5.07059776011291e-07,
+            1.1363284604962713e-05,
+            -5.060003653137396e-07,
+            1.1380085750716792e-05
+          ]
+        ],
+        "covariance_contrast": [
+          [
+            7.95630983967043e-07,
+            -4.327597054196095e-08
+          ],
+          [
+            -4.327597054196095e-08,
+            1.0179064268242751e-06
+          ]
+        ],
+        "joint_diagnostics": {
+          "rank": 4,
+          "min_eigenvalue": 3.847855698431702e-07,
+          "max_eigenvalue": 2.3470457634792895e-05,
+          "rank_tolerance": 1.334141054189382e-18,
+          "positive_semidefinite_within_roundoff": true,
+          "eigenvalues": [
+            3.847855698431702e-07,
+            5.022337482523988e-07,
+            1.845825655652714e-05,
+            2.3470457634792895e-05
+          ]
+        },
+        "contrast_diagnostics": {
+          "rank": 2,
+          "min_eigenvalue": 7.875026048025176e-07,
+          "max_eigenvalue": 1.0260348059888006e-06,
+          "rank_tolerance": 3.5481836555820617e-19,
+          "positive_semidefinite_within_roundoff": true,
+          "eigenvalues": [
+            7.875026048025176e-07,
+            1.0260348059888006e-06
+          ],
+          "parent_scale_roundoff_tolerance": 3.5481836555820617e-19
+        },
+        "n_left": 241892,
+        "n_right": 263158,
+        "n_shared": 241892,
+        "n_unmatched_left": 0,
+        "n_unmatched_right": 21266,
+        "law": "empirical source-Poisson influence/sandwich; actual same-provider component memberships",
+        "contrast_convention": "left minus right in common coefficient coordinates",
+        "physical_LSS_calibrated": false,
+        "independent_surveys": false,
+        "ridge_added": 0.0
+      },
+      "mean_contrast_convention": "right minus left; covariance is unchanged by reversing both contrast signs",
+      "marginal_sd": [
+        0.0008919814930630808,
+        0.0010089134882755187
+      ],
+      "poisson_source_linearized_wald": 32.792386268354115,
+      "df": 2,
+      "poisson_source_linearized_tail": 7.572230013808058e-08,
+      "meaning": "apparent common dipole difference between same-provider selections; does not isolate instrumental bias from population change",
+      "law": "empirical independent-source Poisson influence/sandwich; shared components retained; LSS and source multiplicity uncalibrated"
+    },
+    "dipole_stf": {
+      "integrated_minus_peak": [
+        -0.0016440241048542026,
+        0.005524671826759816
+      ],
+      "covariance": {
+        "covariance_left": [
+          [
+            1.0197334426328279e-05,
+            -7.093556459547821e-07
+          ],
+          [
+            -7.093556459547821e-07,
+            1.3004130564975308e-05
+          ]
+        ],
+        "covariance_right": [
+          [
+            9.389488969901367e-06,
+            -6.58378199528165e-07
+          ],
+          [
+            -6.58378199528165e-07,
+            1.194742015762335e-05
+          ]
+        ],
+        "covariance_cross": [
+          [
+            9.389883724053047e-06,
+            -6.541418979161695e-07
+          ],
+          [
+            -6.541302186654843e-07,
+            1.1945405091635068e-05
+          ]
+        ],
+        "covariance_joint": [
+          [
+            1.0197334426328279e-05,
+            -7.093556459547821e-07,
+            9.389883724053047e-06,
+            -6.541418979161695e-07
+          ],
+          [
+            -7.093556459547821e-07,
+            1.3004130564975308e-05,
+            -6.541302186654843e-07,
+            1.1945405091635068e-05
+          ],
+          [
+            9.389883724053047e-06,
+            -6.541302186654843e-07,
+            9.389488969901367e-06,
+            -6.58378199528165e-07
+          ],
+          [
+            -6.541418979161695e-07,
+            1.1945405091635068e-05,
+            -6.58378199528165e-07,
+            1.194742015762335e-05
+          ]
+        ],
+        "covariance_contrast": [
+          [
+            8.070559481235526e-07,
+            -5.946172890129335e-08
+          ],
+          [
+            -5.946172890129335e-08,
+            1.0607405393285214e-06
+          ]
+        ],
+        "joint_diagnostics": {
+          "rank": 4,
+          "min_eigenvalue": 3.882869302648393e-07,
+          "max_eigenvalue": 2.475491315816585e-05,
+          "rank_tolerance": 1.4071538975125492e-18,
+          "positive_semidefinite_within_roundoff": true,
+          "eigenvalues": [
+            3.882869302648393e-07,
+            5.252475791275324e-07,
+            1.8869926451270072e-05,
+            2.475491315816585e-05
+          ]
+        },
+        "contrast_diagnostics": {
+          "rank": 2,
+          "min_eigenvalue": 7.938101815735504e-07,
+          "max_eigenvalue": 1.0739863058785235e-06,
+          "rank_tolerance": 3.7440538250168152e-19,
+          "positive_semidefinite_within_roundoff": true,
+          "eigenvalues": [
+            7.938101815735504e-07,
+            1.0739863058785235e-06
+          ],
+          "parent_scale_roundoff_tolerance": 3.7440538250168152e-19
+        },
+        "n_left": 241892,
+        "n_right": 263158,
+        "n_shared": 241892,
+        "n_unmatched_left": 0,
+        "n_unmatched_right": 21266,
+        "law": "empirical source-Poisson influence/sandwich; actual same-provider component memberships",
+        "contrast_convention": "left minus right in common coefficient coordinates",
+        "physical_LSS_calibrated": false,
+        "independent_surveys": false,
+        "ridge_added": 0.0
+      },
+      "mean_contrast_convention": "right minus left; covariance is unchanged by reversing both contrast signs",
+      "marginal_sd": [
+        0.000898362926730368,
+        0.0010299225889980864
+      ],
+      "poisson_source_linearized_wald": 30.989468960483375,
+      "df": 2,
+      "poisson_source_linearized_tail": 1.8651867287101537e-07,
+      "meaning": "apparent common dipole difference between same-provider selections; does not isolate instrumental bias from population change",
+      "law": "empirical independent-source Poisson influence/sandwich; shared components retained; LSS and source multiplicity uncalibrated"
+    }
+  },
+  "source_definition_five_views": {
+    "x": {
+      "signed_levels": [
+        -0.012386035258121084,
+        0.006498074690725784,
+        -0.014030059362975286,
+        0.0120227465174856
+      ],
+      "full_covariance": [
+        [
+          1.0197334426328279e-05,
+          -7.093556459547821e-07,
+          9.389883724053047e-06,
+          -6.541418979161695e-07
+        ],
+        [
+          -7.093556459547821e-07,
+          1.3004130564975308e-05,
+          -6.541302186654843e-07,
+          1.1945405091635068e-05
+        ],
+        [
+          9.389883724053047e-06,
+          -6.541302186654843e-07,
+          9.389488969901367e-06,
+          -6.58378199528165e-07
+        ],
+        [
+          -6.541418979161695e-07,
+          1.1945405091635068e-05,
+          -6.58378199528165e-07,
+          1.194742015762335e-05
+        ]
+      ],
+      "frame": "ICRS xy",
+      "units": "dimensionless log-intensity dipole",
+      "reference": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "selection_order": [
+        "provider peak",
+        "provider integrated component flux"
+      ],
+      "joint_law": "same-source empirical Poisson influence Gaussian approximation; separate marginal count fits are not multiplied"
+    },
+    "Q": {
+      "gauge": 2.558388338697967,
+      "rank": 4,
+      "anchor": "95% statistical coefficient-noise ellipsoid, not physical MES"
+    },
+    "Pi": {
+      "wald": 62.10051571001946,
+      "conditional_gaussian_tail": 1.0492425151175562e-12,
+      "law": "local fixed-covariance Gaussian approximation, not posterior probability"
+    },
+    "F": {
+      "coordinate_support_lower": [
+        -0.02222216996309757,
+        -0.004609565344826751,
+        -0.023468540551189285,
+        0.0013759683595587838
+      ],
+      "coordinate_support_upper": [
+        -0.002549900553144597,
+        0.01760571472627832,
+        -0.004591578174761286,
+        0.022669524675412417
+      ],
+      "antipodal_utilization_positive": [
+        -0.2592380675566086,
+        1.5850094772541437,
+        -0.48647426245812425,
+        2.129238004131263
+      ],
+      "antipodal_utilization_negative": [
+        2.2592380675566086,
+        0.4149905227458565,
+        2.486474262458124,
+        -0.12923800413126274
+      ],
+      "region": "one simultaneous 95% Gaussian ellipsoid; all directions available from x"
+    },
+    "G_F": {
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -1.0,
+          -0.0,
+          1.0,
+          0.0
+        ],
+        [
+          -0.0,
+          -1.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "signed_path": [
+        -0.012386035258121084,
+        0.006498074690725784,
+        -0.0016440241048542026,
+        0.005524671826759816
+      ],
+      "full_path_covariance": [
+        [
+          1.0197334426328279e-05,
+          -7.093556459547821e-07,
+          -8.074507022752319e-07,
+          5.5213748038612546e-08
+        ],
+        [
+          -7.093556459547821e-07,
+          1.3004130564975308e-05,
+          5.5225427289297784e-08,
+          -1.0587254733402397e-06
+        ],
+        [
+          -8.074507022752319e-07,
+          5.5225427289297784e-08,
+          8.070559481235526e-07,
+          -5.946172890129324e-08
+        ],
+        [
+          5.5213748038612546e-08,
+          -1.0587254733402397e-06,
+          -5.946172890129324e-08,
+          1.0607405393285214e-06
+        ]
+      ],
+      "path_coordinate": "selection definition: provider peak to integrated flux; not time/redshift",
+      "level_retained": true
+    },
+    "exact_likelihood": "No new exact joint count likelihood; joint source categories and separate marginal normalizers retained",
+    "independent_factors": false
+  },
+  "provider_beta_residual_precision": {
+    "model": "integrated-component u_b = k_b beta_transverse + a_transverse",
+    "law": "local conditional-Gaussian source carrier; alpha=.75 and responses held fixed",
+    "rank": 4,
+    "n_parameters": 4,
+    "estimate": [
+      -0.006356356998888486,
+      -0.0014010881179294117,
+      0.008779241961406822,
+      0.01705252280952267
+    ],
+    "sd": [
+      0.011356682071176172,
+      0.012812385381489539,
+      0.040866538600042086,
+      0.04609999917478007
+    ],
+    "full_covariance": [
+      [
+        0.00012897422766577432,
+        -9.150065729733538e-06,
+        -0.0004628017051165826,
+        3.2774670625999565e-05
+      ],
+      [
+        -9.150065729733538e-06,
+        0.00016415721916380682,
+        3.2774675244401296e-05,
+        -0.0005889885808377621
+      ],
+      [
+        -0.0004628017051165826,
+        3.2774675244401296e-05,
+        0.0016700739771487298,
+        -0.00011805517503849694
+      ],
+      [
+        3.2774670625999565e-05,
+        -0.0005889885808377621,
+        -0.00011805517503849694,
+        0.002125209923914723
+      ]
+    ],
+    "correlation": [
+      [
+        1.0,
+        -0.06288437554661175,
+        -0.9971847494382022,
+        0.06260167453426019
+      ],
+      [
+        -0.06288437554661175,
+        1.0,
+        0.06259513051998289,
+        -0.997185521058839
+      ],
+      [
+        -0.9971847494382022,
+        0.06259513051998289,
+        1.0,
+        -0.06266373217509477
+      ],
+      [
+        0.06260167453426019,
+        -0.997185521058839,
+        -0.06266373217509477,
+        1.0
+      ]
+    ],
+    "beta_sd_in_CMB_speed_units": [
+      9.206229065065264,
+      10.386286589043362
+    ],
+    "residual_chi2": 2.3487378082865407,
+    "residual_dof": 2,
+    "singular_values_scaled": [
+      3.497216128339614,
+      3.053567409332623,
+      0.08360437517142805,
+      0.07296598890265057
+    ],
+    "status": "practical precision diagnostic; no general impossibility or physical velocity constraint"
+  },
+  "source_definition_covariance_ablation": {
+    "actual_delta": [
+      -0.0016440241048542026,
+      0.005524671826759816
+    ],
+    "actual_covariance": [
+      [
+        8.070559481235526e-07,
+        -5.946172890129335e-08
+      ],
+      [
+        -5.946172890129335e-08,
+        1.0607405393285214e-06
+      ]
+    ],
+    "actual_sd": [
+      0.000898362926730368,
+      0.0010299225889980864
+    ],
+    "actual_wald": 30.989468960483375,
+    "actual_conditional_tail": 1.8651867287101537e-07,
+    "wrong_independent_sd": [
+      0.004425700328335579,
+      0.004995152722650095
+    ],
+    "wrong_independent_wald": 1.315439672822672,
+    "wrong_independent_tail": 0.5180311846999176,
+    "same_axis_correlation": [
+      0.9596125190647886,
+      0.9583478061660243
+    ],
+    "physical_anomaly_significance": false
+  }
+}

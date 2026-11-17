@@ -1,0 +1,640 @@
+{
+  "schema": "htt.r65.research_dag/1",
+  "baseline_commit": "d76ef3a4e9b33c4703a02647b3aa850004d04253",
+  "canonical_pr": "PR-R65-DIPOLE-ANOMALY",
+  "parent_pr": "PR-R64-DIRECTIONAL-HUBBLE",
+  "selected_paper": "P4",
+  "claim_tier": "C0",
+  "scope": "Single sequential ten-stage dipole-anomaly study",
+  "status": "COMPLETE_SCOPED_C0",
+  "tasks": [
+    {
+      "id": "R65-01",
+      "theory_stage": "R1",
+      "coding_stage": "C1",
+      "title": "Fix the single P4 dipole-anomaly question and existing-checkout completion contract",
+      "depends_on": [],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESEARCH_RECORD.json",
+        "DESIGN.md"
+      ]
+    },
+    {
+      "id": "R65-02",
+      "theory_stage": "R2",
+      "coding_stage": "C2",
+      "title": "Reuse dipole history, exact source identities and current primary literature",
+      "depends_on": [
+        "R65-01"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "REVIEW/r65_history.md",
+        "REVIEW/r65_history_sources.json",
+        "REVIEW/r65_literature.md",
+        "REVIEW/r65_sources.json"
+      ]
+    },
+    {
+      "id": "R65-03",
+      "theory_stage": "R3",
+      "coding_stage": "C3",
+      "title": "Separate count dipole, observer boost, nuisance quotient and physical frame claims",
+      "depends_on": [
+        "R65-02"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "DESIGN.md",
+        "THEORY.md"
+      ]
+    },
+    {
+      "id": "R65-04",
+      "theory_stage": "R4",
+      "coding_stage": "C4",
+      "title": "Fix the actual disjoint-bin conditional ring likelihood and posterior projection experiment",
+      "depends_on": [
+        "R65-03"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "DESIGN.md"
+      ]
+    },
+    {
+      "id": "R65-05",
+      "theory_stage": "R5",
+      "coding_stage": "C5",
+      "title": "Derive the declination quotient, bin response and signed five-view/weighted posterior transports",
+      "depends_on": [
+        "R65-04"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "THEORY.md",
+        "REVIEW/WOLFRAM_CHECK.json",
+        "REVIEW/SYMPY_CHECK.json"
+      ]
+    },
+    {
+      "id": "R65-06",
+      "theory_stage": "R6",
+      "coding_stage": "C6",
+      "title": "Verify affected likelihood derivatives, nulls, weights, covariance and same-source overlap",
+      "depends_on": [
+        "R65-05"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/AFFECTED_TEST_RECEIPT.json",
+        "RESULTS/OVERLAP_TEST_RECEIPT.json"
+      ]
+    },
+    {
+      "id": "R65-07",
+      "theory_stage": "R7",
+      "coding_stage": "C7",
+      "title": "Execute actual NVSS models, conditional bootstrap and six RACS weighted posterior pushforwards",
+      "depends_on": [
+        "R65-06"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESULTS/NVSS_EXECUTION.json",
+        "RESULTS/RACS_EXECUTION.json"
+      ]
+    },
+    {
+      "id": "R65-08",
+      "theory_stage": "R8",
+      "coding_stage": "C8",
+      "title": "Resolve integrated-flux input, compute paired source-selection contrasts and decide finite P4 route",
+      "depends_on": [
+        "R65-07"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "R8_SOURCE_REFINEMENT.md",
+        "REVIEW/r65_nvss_flux_source.md",
+        "RESULTS/PROVIDER_NVSS_EXECUTION.json",
+        "RESULTS/FINAL_INTERPRETATION_EXECUTION.json",
+        "RESULTS/INTERPRETATION_SUMMARY.json",
+        "REPORT_KO.md",
+        "RESEARCH_PLAN_KO.md"
+      ]
+    },
+    {
+      "id": "R65-09",
+      "theory_stage": "R9",
+      "coding_stage": "C9",
+      "title": "Close one fresh independent final review and any bounded correction episode",
+      "depends_on": [
+        "R65-08"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "REVIEW/final_review.md",
+        "REVIEW/final_review.json",
+        "VALIDATION.md"
+      ]
+    },
+    {
+      "id": "R65-10",
+      "theory_stage": "R10",
+      "coding_stage": "C10",
+      "title": "Preserve finite P4 manuscript gates, additive canonical DAG and scoped release",
+      "depends_on": [
+        "R65-09"
+      ],
+      "status": "complete_scoped",
+      "evidence": [
+        "RESEARCH_PLAN_KO.md",
+        "VALIDATION.md",
+        "DAG_VALIDATION.json"
+      ]
+    }
+  ],
+  "future_science": [
+    {
+      "id": "P4-R65-SOURCE-NULL",
+      "depends_on": [
+        "R65-10"
+      ],
+      "status": "pending_conditional",
+      "completed": "Provider integrated-flux column and exact bytes qualified; paired peak/integrated same-component migration and source-Poisson covariance executed.",
+      "needed": "Choose one physically specified selection/morphology/component-grouping null, preserving parent peak detection, resolved-source response, spectral assumptions and matched memberships.",
+      "stop": "Measure the paired target shift under that one qualified null or record the exact unavailable input; no new source-size cut without a scientific selection contract."
+    },
+    {
+      "id": "P4-R65-LSS-CROSS",
+      "depends_on": [
+        "R65-10"
+      ],
+      "status": "unresolved_input",
+      "needed": "Obtain or justify actual flux-bin redshift/bias and angular clustering cross inputs, then transport them through the fixed mask/ring quotient and paired-source operators.",
+      "stop": "Deliver one covariance/sensitivity result for the named dipole/selection contrast; do not call source-Poisson tails a calibrated physical anomaly significance."
+    },
+    {
+      "id": "P4-R65-MATCHED-COMPARISON",
+      "depends_on": [
+        "R65-10"
+      ],
+      "status": "pending_conditional",
+      "needed": "Run one conventional method using the same observable, retained sources, nuisance response and covariance as the R65 quotient carrier.",
+      "stop": "Report target agreement, bias/variance and precise scope; generic GLS/five-view/multiple-bin novelty or information superiority is not established."
+    },
+    {
+      "id": "P4-R65-RACS-REFIT",
+      "depends_on": [
+        "R65-10"
+      ],
+      "status": "optional_for_same_estimand_comparison",
+      "completed": "Six weighted source-conditional RACS posterior geometric pushforwards executed; these are not refits removing declination selection.",
+      "needed": "Select one actual RACS count field, its calibration inputs and the true same quotient/estimand for an optional bounded refit.",
+      "stop": "Produce one matched projection result or retain existing source-conditional posterior scope; no assumed independent joint NVSS significance."
+    },
+    {
+      "id": "P4-R65-PAPER",
+      "depends_on": [
+        "P4-R65-SOURCE-NULL",
+        "P4-R65-MATCHED-COMPARISON"
+      ],
+      "required_for_physical_excess_claim": [
+        "P4-R65-LSS-CROSS"
+      ],
+      "optional_for_stronger_claim": [
+        "P4-R65-RACS-REFIT"
+      ],
+      "status": "pending_conditional",
+      "needed": "Consolidate a source/selection-dependent radio dipole manuscript at the achieved claim level, retaining paired uncertainty, response-precision limits and conventional prior art.",
+      "stop": "Keep P4 NOT_READY_TO_SUBMIT until its actual acceptance is met; integrate into the existing P4 companion if standalone novelty is insufficient, with no successor launch."
+    }
+  ],
+  "original_42_node_payload_sha256": "e3264e105cabf78ddac37addc36cacc3cfa05ee942e33e54b431b22e3e87de0d",
+  "original_42_node_states_changed": false,
+  "key_results": {
+    "sources": {
+      "NVSS": {
+        "path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/NVSS_nrao_20261110/CATALOG.FIT",
+        "sha256": "a357a688dc7e43ae81ecbe465fdce216dfed678aee977780a626841eceb5bde4",
+        "bytes": 152121600,
+        "original_rows": 1810672,
+        "finite_positive_rows": 1810672,
+        "field": "PEAK INT",
+        "field_unit": "JY/BEAM",
+        "bin_edges_mjy_per_beam": [
+          20,
+          40,
+          80,
+          "infinity"
+        ]
+      },
+      "RACS_archive_sha256": "143cdcf32d85479ee171c8d5bc5da814178dd7123024ba12e5b5d9f9b9c94fc7",
+      "NVSS_provider": {
+        "path": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/RACS_SBI_20261117/Full_NVSS_combined_named.dat",
+        "sha256": "52eb576c1e3e71837f2fca26121789ccc0b316152cca3f25ea2f37ea8ef5a38e",
+        "bytes": 140767191,
+        "release": "https://github.com/o-oayda/cracking-into-racs-i/releases/tag/v1.0.0",
+        "original_rows": 1773488,
+        "finite_positive_paired_rows": 1773488,
+        "duplicate_source_names": 0,
+        "columns": [
+          "source_name",
+          "ra",
+          "dec",
+          "integrated_flux",
+          "integrated_flux_unc",
+          "peak_flux",
+          "peak_flux_unc"
+        ],
+        "integrated_flux_unit": "mJy (provider Figure2 implementation contract)",
+        "peak_flux_unit": "mJy/beam (provider component peak; distinct from raw FITS peak)",
+        "original_extraction_replay": false,
+        "object_definition": "Gaussian catalogue component; not necessarily one entire physical galaxy"
+      }
+    },
+    "observed_models": 12,
+    "independent_bin_fits": 36,
+    "total_observed_optimizations": 102,
+    "bootstrap_catalogues": 512,
+    "RACS_posterior_models": 6,
+    "tests_passed": 37,
+    "original_observed_models": 8,
+    "source_refinement_observed_models": 4,
+    "original_tests_passed": 24,
+    "overlap_tests_passed": 13,
+    "new_RACS_training_or_fits": 0,
+    "provider_integrated_selected_components": 263158,
+    "integrated_flux_input_gap_closed": true,
+    "source_definition_paired_results": {
+      "dipole": {
+        "integrated_minus_peak": [
+          -0.001396043913191444,
+          0.005627036601351938
+        ],
+        "covariance": {
+          "covariance_left": [
+            [
+              9.943463653462735e-06,
+              -5.513956589663305e-07
+            ],
+            [
+              -5.513956589663305e-07,
+              1.236438988603291e-05
+            ]
+          ],
+          "covariance_right": [
+            [
+              9.127794219203173e-06,
+              -5.060003653137396e-07
+            ],
+            [
+              -5.060003653137396e-07,
+              1.1380085750716792e-05
+            ]
+          ],
+          "covariance_cross": [
+            [
+              9.137813444349433e-06,
+              -5.07059776011291e-07
+            ],
+            [
+              -5.07060277726818e-07,
+              1.1363284604962713e-05
+            ]
+          ],
+          "covariance_joint": [
+            [
+              9.943463653462735e-06,
+              -5.513956589663305e-07,
+              9.137813444349433e-06,
+              -5.07059776011291e-07
+            ],
+            [
+              -5.513956589663305e-07,
+              1.236438988603291e-05,
+              -5.07060277726818e-07,
+              1.1363284604962713e-05
+            ],
+            [
+              9.137813444349433e-06,
+              -5.07060277726818e-07,
+              9.127794219203173e-06,
+              -5.060003653137396e-07
+            ],
+            [
+              -5.07059776011291e-07,
+              1.1363284604962713e-05,
+              -5.060003653137396e-07,
+              1.1380085750716792e-05
+            ]
+          ],
+          "covariance_contrast": [
+            [
+              7.95630983967043e-07,
+              -4.327597054196095e-08
+            ],
+            [
+              -4.327597054196095e-08,
+              1.0179064268242751e-06
+            ]
+          ],
+          "joint_diagnostics": {
+            "rank": 4,
+            "min_eigenvalue": 3.847855698431702e-07,
+            "max_eigenvalue": 2.3470457634792895e-05,
+            "rank_tolerance": 1.334141054189382e-18,
+            "positive_semidefinite_within_roundoff": true,
+            "eigenvalues": [
+              3.847855698431702e-07,
+              5.022337482523988e-07,
+              1.845825655652714e-05,
+              2.3470457634792895e-05
+            ]
+          },
+          "contrast_diagnostics": {
+            "rank": 2,
+            "min_eigenvalue": 7.875026048025176e-07,
+            "max_eigenvalue": 1.0260348059888006e-06,
+            "rank_tolerance": 3.5481836555820617e-19,
+            "positive_semidefinite_within_roundoff": true,
+            "eigenvalues": [
+              7.875026048025176e-07,
+              1.0260348059888006e-06
+            ],
+            "parent_scale_roundoff_tolerance": 3.5481836555820617e-19
+          },
+          "n_left": 241892,
+          "n_right": 263158,
+          "n_shared": 241892,
+          "n_unmatched_left": 0,
+          "n_unmatched_right": 21266,
+          "law": "empirical source-Poisson influence/sandwich; actual same-provider component memberships",
+          "contrast_convention": "left minus right in common coefficient coordinates",
+          "physical_LSS_calibrated": false,
+          "independent_surveys": false,
+          "ridge_added": 0.0
+        },
+        "mean_contrast_convention": "right minus left; covariance is unchanged by reversing both contrast signs",
+        "marginal_sd": [
+          0.0008919814930630808,
+          0.0010089134882755187
+        ],
+        "poisson_source_linearized_wald": 32.792386268354115,
+        "df": 2,
+        "poisson_source_linearized_tail": 7.572230013808058e-08,
+        "meaning": "apparent common dipole difference between same-provider selections; does not isolate instrumental bias from population change",
+        "law": "empirical independent-source Poisson influence/sandwich; shared components retained; LSS and source multiplicity uncalibrated"
+      },
+      "dipole_stf": {
+        "integrated_minus_peak": [
+          -0.0016440241048542026,
+          0.005524671826759816
+        ],
+        "covariance": {
+          "covariance_left": [
+            [
+              1.0197334426328279e-05,
+              -7.093556459547821e-07
+            ],
+            [
+              -7.093556459547821e-07,
+              1.3004130564975308e-05
+            ]
+          ],
+          "covariance_right": [
+            [
+              9.389488969901367e-06,
+              -6.58378199528165e-07
+            ],
+            [
+              -6.58378199528165e-07,
+              1.194742015762335e-05
+            ]
+          ],
+          "covariance_cross": [
+            [
+              9.389883724053047e-06,
+              -6.541418979161695e-07
+            ],
+            [
+              -6.541302186654843e-07,
+              1.1945405091635068e-05
+            ]
+          ],
+          "covariance_joint": [
+            [
+              1.0197334426328279e-05,
+              -7.093556459547821e-07,
+              9.389883724053047e-06,
+              -6.541418979161695e-07
+            ],
+            [
+              -7.093556459547821e-07,
+              1.3004130564975308e-05,
+              -6.541302186654843e-07,
+              1.1945405091635068e-05
+            ],
+            [
+              9.389883724053047e-06,
+              -6.541302186654843e-07,
+              9.389488969901367e-06,
+              -6.58378199528165e-07
+            ],
+            [
+              -6.541418979161695e-07,
+              1.1945405091635068e-05,
+              -6.58378199528165e-07,
+              1.194742015762335e-05
+            ]
+          ],
+          "covariance_contrast": [
+            [
+              8.070559481235526e-07,
+              -5.946172890129335e-08
+            ],
+            [
+              -5.946172890129335e-08,
+              1.0607405393285214e-06
+            ]
+          ],
+          "joint_diagnostics": {
+            "rank": 4,
+            "min_eigenvalue": 3.882869302648393e-07,
+            "max_eigenvalue": 2.475491315816585e-05,
+            "rank_tolerance": 1.4071538975125492e-18,
+            "positive_semidefinite_within_roundoff": true,
+            "eigenvalues": [
+              3.882869302648393e-07,
+              5.252475791275324e-07,
+              1.8869926451270072e-05,
+              2.475491315816585e-05
+            ]
+          },
+          "contrast_diagnostics": {
+            "rank": 2,
+            "min_eigenvalue": 7.938101815735504e-07,
+            "max_eigenvalue": 1.0739863058785235e-06,
+            "rank_tolerance": 3.7440538250168152e-19,
+            "positive_semidefinite_within_roundoff": true,
+            "eigenvalues": [
+              7.938101815735504e-07,
+              1.0739863058785235e-06
+            ],
+            "parent_scale_roundoff_tolerance": 3.7440538250168152e-19
+          },
+          "n_left": 241892,
+          "n_right": 263158,
+          "n_shared": 241892,
+          "n_unmatched_left": 0,
+          "n_unmatched_right": 21266,
+          "law": "empirical source-Poisson influence/sandwich; actual same-provider component memberships",
+          "contrast_convention": "left minus right in common coefficient coordinates",
+          "physical_LSS_calibrated": false,
+          "independent_surveys": false,
+          "ridge_added": 0.0
+        },
+        "mean_contrast_convention": "right minus left; covariance is unchanged by reversing both contrast signs",
+        "marginal_sd": [
+          0.000898362926730368,
+          0.0010299225889980864
+        ],
+        "poisson_source_linearized_wald": 30.989468960483375,
+        "df": 2,
+        "poisson_source_linearized_tail": 1.8651867287101537e-07,
+        "meaning": "apparent common dipole difference between same-provider selections; does not isolate instrumental bias from population change",
+        "law": "empirical independent-source Poisson influence/sandwich; shared components retained; LSS and source multiplicity uncalibrated"
+      }
+    },
+    "source_definition_covariance_ablation": {
+      "actual_delta": [
+        -0.0016440241048542026,
+        0.005524671826759816
+      ],
+      "actual_covariance": [
+        [
+          8.070559481235526e-07,
+          -5.946172890129335e-08
+        ],
+        [
+          -5.946172890129335e-08,
+          1.0607405393285214e-06
+        ]
+      ],
+      "actual_sd": [
+        0.000898362926730368,
+        0.0010299225889980864
+      ],
+      "actual_wald": 30.989468960483375,
+      "actual_conditional_tail": 1.8651867287101537e-07,
+      "wrong_independent_sd": [
+        0.004425700328335579,
+        0.004995152722650095
+      ],
+      "wrong_independent_wald": 1.315439672822672,
+      "wrong_independent_tail": 0.5180311846999176,
+      "same_axis_correlation": [
+        0.9596125190647886,
+        0.9583478061660243
+      ],
+      "physical_anomaly_significance": false
+    },
+    "beta_residual_precision": {
+      "model": "integrated-component u_b = k_b beta_transverse + a_transverse",
+      "law": "local conditional-Gaussian source carrier; alpha=.75 and responses held fixed",
+      "rank": 4,
+      "n_parameters": 4,
+      "estimate": [
+        -0.006356356998888486,
+        -0.0014010881179294117,
+        0.008779241961406822,
+        0.01705252280952267
+      ],
+      "sd": [
+        0.011356682071176172,
+        0.012812385381489539,
+        0.040866538600042086,
+        0.04609999917478007
+      ],
+      "full_covariance": [
+        [
+          0.00012897422766577432,
+          -9.150065729733538e-06,
+          -0.0004628017051165826,
+          3.2774670625999565e-05
+        ],
+        [
+          -9.150065729733538e-06,
+          0.00016415721916380682,
+          3.2774675244401296e-05,
+          -0.0005889885808377621
+        ],
+        [
+          -0.0004628017051165826,
+          3.2774675244401296e-05,
+          0.0016700739771487298,
+          -0.00011805517503849694
+        ],
+        [
+          3.2774670625999565e-05,
+          -0.0005889885808377621,
+          -0.00011805517503849694,
+          0.002125209923914723
+        ]
+      ],
+      "correlation": [
+        [
+          1.0,
+          -0.06288437554661175,
+          -0.9971847494382022,
+          0.06260167453426019
+        ],
+        [
+          -0.06288437554661175,
+          1.0,
+          0.06259513051998289,
+          -0.997185521058839
+        ],
+        [
+          -0.9971847494382022,
+          0.06259513051998289,
+          1.0,
+          -0.06266373217509477
+        ],
+        [
+          0.06260167453426019,
+          -0.997185521058839,
+          -0.06266373217509477,
+          1.0
+        ]
+      ],
+      "beta_sd_in_CMB_speed_units": [
+        9.206229065065264,
+        10.386286589043362
+      ],
+      "residual_chi2": 2.3487378082865407,
+      "residual_dof": 2,
+      "singular_values_scaled": [
+        3.497216128339614,
+        3.053567409332623,
+        0.08360437517142805,
+        0.07296598890265057
+      ],
+      "status": "practical precision diagnostic; no general impossibility or physical velocity constraint"
+    },
+    "RACS_projection_scope": "geometric pushforward of source posterior; NOT a refit with arbitrary declination selection removed",
+    "new_independent_sources": 0,
+    "new_joint_survey_likelihood": false
+  },
+  "interpretation_summary_sha256": "203f6cf070661afb923aa095ce992278c720f3e7a7149107c14c7e8a28c761c7",
+  "conditions": "Conditional ring-count law and empirical same-source Poisson influence covariance; apparent source-definition change does not isolate instrumental bias from population change. Physical selection, component morphology and bin LSS cross covariance remain to qualify.",
+  "physical_anomaly_claim": false,
+  "global_tilt_claim": false,
+  "bianchi_assignment": false,
+  "new_no_go": false,
+  "automatic_successor": false,
+  "local_agent_prompt_created": false,
+  "submission_status": "NOT_READY_TO_SUBMIT"
+}

@@ -1,0 +1,242 @@
+{
+  "schema": "htt.r65.single_bounded_review_correction/1",
+  "episode": 1,
+  "started_utc": "2026-11-17T13:29:21.541805+00:00",
+  "finished_utc": "2026-11-17T13:32:02.113412+00:00",
+  "finding_ids": [
+    "R65-R9-01",
+    "R65-R9-02",
+    "R65-R9-03"
+  ],
+  "metadata_replacements": [
+    {
+      "old": "corrected component peak",
+      "new": "provider component peak",
+      "occurrences": 1
+    },
+    {
+      "old": "corrected peak-intensity",
+      "new": "provider peak-intensity",
+      "occurrences": 2
+    },
+    {
+      "old": "corrected peak-selected",
+      "new": "provider peak-selected",
+      "occurrences": 6
+    }
+  ],
+  "all_existing_result_json_numeric_structures_unchanged": true,
+  "all_saved_npz_bytes_unchanged": true,
+  "new_observed_fits": 0,
+  "new_bootstrap_catalogues": 0,
+  "new_scientific_test_passes": 0,
+  "new_dataset_downloads": 0,
+  "original_execution_receipts_preserved": true,
+  "presentation_execution": {
+    "kind": "single R9 bounded metadata and saved-carrier presentation correction; no new observed fit, bootstrap or test pass",
+    "argv": [
+      ".venv/bin/python",
+      "scripts/r65/summarize_r65.py"
+    ],
+    "returncode": 0,
+    "elapsed_seconds": 4.44581376799033,
+    "script_sha256": "c07ae934fd94bc593f078cbd42399e391a14bbf4b3b1790e074c22893604d9b4",
+    "log": "REVIEW/r9_presentation.log",
+    "finding_ids": [
+      "R65-R9-01",
+      "R65-R9-02",
+      "R65-R9-03"
+    ]
+  },
+  "file_identity_comparison": {
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/AFFECTED_TEST_RECEIPT.json": {
+      "before_sha256": "e2ea7b650f121f2a8765e02495e6d84ac60a32e96ee87d4b3858195da60a971a",
+      "after_sha256": "e2ea7b650f121f2a8765e02495e6d84ac60a32e96ee87d4b3858195da60a971a",
+      "byte_unchanged": true,
+      "before_numeric_structure_sha256": "91151c2bfd04f73e44c39b46c5ddc99f7a62fa40234bcccf65ced03e563654ee",
+      "after_numeric_structure_sha256": "91151c2bfd04f73e44c39b46c5ddc99f7a62fa40234bcccf65ced03e563654ee",
+      "numeric_structure_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/CONDITIONAL_BOOTSTRAP_DRAWS.npz": {
+      "before_sha256": "06c2dfe4e1cc3ee0758629d9671896feaddb0e85820e8bd8efcfc6201c83ec46",
+      "after_sha256": "06c2dfe4e1cc3ee0758629d9671896feaddb0e85820e8bd8efcfc6201c83ec46",
+      "byte_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/FINAL_INTERPRETATION_EXECUTION.json": {
+      "before_sha256": "8e86a68f9415ac69a786aeb13e723b56455fc901043acc260f92a007e132db0e",
+      "after_sha256": "8e86a68f9415ac69a786aeb13e723b56455fc901043acc260f92a007e132db0e",
+      "byte_unchanged": true,
+      "before_numeric_structure_sha256": "06e8fb530b73ad6d94675570868c9726755fef41c53b5b159612c1fb701ce907",
+      "after_numeric_structure_sha256": "06e8fb530b73ad6d94675570868c9726755fef41c53b5b159612c1fb701ce907",
+      "numeric_structure_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/INTERPRETATION_EXECUTION.json": {
+      "before_sha256": "7a871ec39efe75ae63263743b244f286fd8aa4f33ec0e9afd20b318e6abce188",
+      "after_sha256": "7a871ec39efe75ae63263743b244f286fd8aa4f33ec0e9afd20b318e6abce188",
+      "byte_unchanged": true,
+      "before_numeric_structure_sha256": "a4c46d6732fd3bb8cb7995a1ec8740f50c6941c2ca8b2c4e8a50e2e14a714383",
+      "after_numeric_structure_sha256": "a4c46d6732fd3bb8cb7995a1ec8740f50c6941c2ca8b2c4e8a50e2e14a714383",
+      "numeric_structure_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/INTERPRETATION_SUMMARY.json": {
+      "before_sha256": "d09fdb7398db9f44888309bdf7b42460a1376ef6565ada70ab9b922b178bf274",
+      "after_sha256": "203f6cf070661afb923aa095ce992278c720f3e7a7149107c14c7e8a28c761c7",
+      "byte_unchanged": false,
+      "before_numeric_structure_sha256": "0972355d8519b41ffce0998c7e803ef630cbaa2a4f3be38f658dbb6ecd4d9ab5",
+      "after_numeric_structure_sha256": "0972355d8519b41ffce0998c7e803ef630cbaa2a4f3be38f658dbb6ecd4d9ab5",
+      "numeric_structure_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_CONDITIONAL_CARRIERS.npz": {
+      "before_sha256": "44e5d4ec3830e84112a328902adb2f3fdb822f7fc88324cff5da18800a9ff1ac",
+      "after_sha256": "44e5d4ec3830e84112a328902adb2f3fdb822f7fc88324cff5da18800a9ff1ac",
+      "byte_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_EXECUTION.json": {
+      "before_sha256": "94c4aa243c90b9bdeb926478f902de8f265641d8de1ef85408bd67bc4e6fc260",
+      "after_sha256": "94c4aa243c90b9bdeb926478f902de8f265641d8de1ef85408bd67bc4e6fc260",
+      "byte_unchanged": true,
+      "before_numeric_structure_sha256": "54a0dec45a406546607d42645cdcff876c2c8e8d9f17508098c304952ca86754",
+      "after_numeric_structure_sha256": "54a0dec45a406546607d42645cdcff876c2c8e8d9f17508098c304952ca86754",
+      "numeric_structure_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_MASK_MORPHOLOGY.pdf": {
+      "before_sha256": "02240d87089a4ef7926d34938feb90564e6dc737df9b2d7dcdf8c6643aec96b6",
+      "after_sha256": "cb46c9424bb427017a751497242d6208b51e19c5be8419813789aab41ad743b3",
+      "byte_unchanged": false
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_MASK_MORPHOLOGY.png": {
+      "before_sha256": "9187b030f0587af6cf64286bdf1a39f71ff0125355b48cf4446f656dcc71a4f8",
+      "after_sha256": "9187b030f0587af6cf64286bdf1a39f71ff0125355b48cf4446f656dcc71a4f8",
+      "byte_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_OBSERVED_RESULT.json": {
+      "before_sha256": "40d35ba2368a49909e4366535b7aa5f31704cd11b65ca3bf034754c95c9b13c5",
+      "after_sha256": "40d35ba2368a49909e4366535b7aa5f31704cd11b65ca3bf034754c95c9b13c5",
+      "byte_unchanged": true,
+      "before_numeric_structure_sha256": "d7ab514fdf4f5b2bfb438525d291679d74f386a1b173b284f88b37191b5e935e",
+      "after_numeric_structure_sha256": "d7ab514fdf4f5b2bfb438525d291679d74f386a1b173b284f88b37191b5e935e",
+      "numeric_structure_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_PEAK_VS_INTEGRATED.pdf": {
+      "before_sha256": "128ffae860998c664385a0c26a39dc3f062d811427866ebade7a165560e1687a",
+      "after_sha256": "cc13e05fccc391721540cfa5b2150fc8a40986fb3af3297b117a0c23c91c5e69",
+      "byte_unchanged": false
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_PEAK_VS_INTEGRATED.png": {
+      "before_sha256": "5b000f034735d1c3e0231f6993883f0757a3f53f63428f7cae2f280840a7476a",
+      "after_sha256": "2940437979fa9402238d64916ee0d63c589e91acb01bd98b149e6577be76bb8f",
+      "byte_unchanged": false
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_SIGNED_FLUX_PATH.pdf": {
+      "before_sha256": "e47d2d1d8feb6f8030729193519c8589f344e496b6e925db40713e1306c0949a",
+      "after_sha256": "94789e7ba3cf19f793c59f7ef472d8c0d825107d18530761ecf3a20352861ce1",
+      "byte_unchanged": false
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/NVSS_SIGNED_FLUX_PATH.png": {
+      "before_sha256": "cb6878f8849298059821d594bba735cb8220e5406d820df72e3b5a8d1fdffc63",
+      "after_sha256": "cb6878f8849298059821d594bba735cb8220e5406d820df72e3b5a8d1fdffc63",
+      "byte_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/OVERLAP_TEST_RECEIPT.json": {
+      "before_sha256": "e6fa7509034a35e8fe4713dbac7121874abe16b108151cdf9c2edefd5aa8fcbf",
+      "after_sha256": "e6fa7509034a35e8fe4713dbac7121874abe16b108151cdf9c2edefd5aa8fcbf",
+      "byte_unchanged": true,
+      "before_numeric_structure_sha256": "99f71fd15311206145be85cdface4c0b20655d55fbe2ef230cad5f889d3e53c5",
+      "after_numeric_structure_sha256": "99f71fd15311206145be85cdface4c0b20655d55fbe2ef230cad5f889d3e53c5",
+      "numeric_structure_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/PROVIDER_NVSS_CARRIERS.npz": {
+      "before_sha256": "a51da9a98c3d0563446eb61f21aceff69fbfeed5446ec74471177170b8664e89",
+      "after_sha256": "a51da9a98c3d0563446eb61f21aceff69fbfeed5446ec74471177170b8664e89",
+      "byte_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/PROVIDER_NVSS_EXECUTION.json": {
+      "before_sha256": "b556a6dee3e5994b0c5b9ea518d5ce6c41734608f9a428b6aeac49bdead78681",
+      "after_sha256": "b556a6dee3e5994b0c5b9ea518d5ce6c41734608f9a428b6aeac49bdead78681",
+      "byte_unchanged": true,
+      "before_numeric_structure_sha256": "b7e3887395816bc540ac4e30bd36b5ca2b6c043248f46708287211694eb65e5e",
+      "after_numeric_structure_sha256": "b7e3887395816bc540ac4e30bd36b5ca2b6c043248f46708287211694eb65e5e",
+      "numeric_structure_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/PROVIDER_NVSS_RESULT.json": {
+      "before_sha256": "3a6a63d31e7ae77605cb4a8f05edf134853045c072a51ef22551485aee9f6119",
+      "after_sha256": "60735aa244272fc4d295813ab644c429c19cedca122bd9b308dcb7da0053806a",
+      "byte_unchanged": false,
+      "before_numeric_structure_sha256": "d4b0fe472f9a62f59052327bf41d75c75b14852d5b8f99dcebe632e8bfdfcf59",
+      "after_numeric_structure_sha256": "d4b0fe472f9a62f59052327bf41d75c75b14852d5b8f99dcebe632e8bfdfcf59",
+      "numeric_structure_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/RACS_EXECUTION.json": {
+      "before_sha256": "01ca057c84134f72dd057c09a2b71ed27072a0650aeca2c4278657234d095cce",
+      "after_sha256": "01ca057c84134f72dd057c09a2b71ed27072a0650aeca2c4278657234d095cce",
+      "byte_unchanged": true,
+      "before_numeric_structure_sha256": "0c5bd43ef290ba4da26765cf97d7d7ce40fe15f9f46164610f91925e18cd2955",
+      "after_numeric_structure_sha256": "0c5bd43ef290ba4da26765cf97d7d7ce40fe15f9f46164610f91925e18cd2955",
+      "numeric_structure_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/RACS_POSTERIOR_PROJECTION.json": {
+      "before_sha256": "cfdd6cb41a59686de1628b618a79cbf8b44da84ddf6bb31f74ac31fd6491f370",
+      "after_sha256": "cfdd6cb41a59686de1628b618a79cbf8b44da84ddf6bb31f74ac31fd6491f370",
+      "byte_unchanged": true,
+      "before_numeric_structure_sha256": "56701ff893814b669f95ce5f6b48f9d62b792812393dc5fae41d42d7f5aa5f95",
+      "after_numeric_structure_sha256": "56701ff893814b669f95ce5f6b48f9d62b792812393dc5fae41d42d7f5aa5f95",
+      "numeric_structure_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/RACS_TRANSVERSE_POSTERIOR.pdf": {
+      "before_sha256": "ca1418917fbc500e113bf590f831d8636d235b2a98676e939b2207e69872e60f",
+      "after_sha256": "b4c78bb7f001be70bbb8f831edb5020dcced7f75104ceaddc5e21a63f16eb71b",
+      "byte_unchanged": false
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESULTS/RACS_TRANSVERSE_POSTERIOR.png": {
+      "before_sha256": "7ab9cd32f81eb7ae6c57c21f869e6e1f5c4d89260d7a6702010320356d5b36a7",
+      "after_sha256": "7ab9cd32f81eb7ae6c57c21f869e6e1f5c4d89260d7a6702010320356d5b36a7",
+      "byte_unchanged": true
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/REPORT_KO.md": {
+      "before_sha256": "39eddab32b481c823f18a5f5022f647c0eaeca7b6b23f51689d156c9696915d5",
+      "after_sha256": "197352796b622949695d925a15940b61c7cdbc2de28d0cb818ea2dfac0520b6a",
+      "byte_unchanged": false
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESEARCH_PLAN_KO.md": {
+      "before_sha256": "56041b84a896a8d4124f742a7ee55286cd779967b180bad50cbc34864942e097",
+      "after_sha256": "3ba35561a0b3cbb88c84d76c6b6ffe6e49c44a4b7215742094329037c0fffc29",
+      "byte_unchanged": false
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/THEORY.md": {
+      "before_sha256": "ead37272affd00908a7e9445feb435cd4015a7c9934f47e0f2cbf5d151c89454",
+      "after_sha256": "d5e356f636e53105a8b992dd413a616a3da9a4421f7e22abc733fee2c94d839f",
+      "byte_unchanged": false
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/R8_SOURCE_REFINEMENT.md": {
+      "before_sha256": "cd47d50cd663a575ab4e4f7b8a99b910fd9b6c871961629304561e1d9cd81340",
+      "after_sha256": "e777c3f40ff649f607a7c114f6f6701756c96c9db78f2c0ac6687a9fd46a746a",
+      "byte_unchanged": false
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/REVIEW/r65_nvss_flux_source.md": {
+      "before_sha256": "24453771b230c34cbcfc80802034b77997f93a9a56008bb886368575cfc41e23",
+      "after_sha256": "101e7d7659068004878db4fd6e62cd80099fc7265b6ced53d0e8c515164e5018",
+      "byte_unchanged": false
+    },
+    "docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/VALIDATION.md": {
+      "before_sha256": "b26dd05712f36c376a625578862a2f6c8aa89b8140e7dda7489d35abcbf372df",
+      "after_sha256": "38c8f7ec8ed32d34c7b933b8db1d9aeaae402d48b4bb90bf83ba1b43e1a512aa",
+      "byte_unchanged": false
+    },
+    "scripts/r65/run_r65_integrated_flux.py": {
+      "before_sha256": "522d2d5bfa4d474f71e44e20b83d7df4677ec521d4a32a07fd2c32ffdeba86fe",
+      "after_sha256": "bbdfb22c5838c621eb21f45a41219756a1411363fb4fc16376eb88bb0c3de6d3",
+      "byte_unchanged": false
+    },
+    "scripts/r65/summarize_r65.py": {
+      "before_sha256": "74fca10f5040341b342a31cb0022bdb273888fc6c6c031b4cb69b7166e390fe5",
+      "after_sha256": "c07ae934fd94bc593f078cbd42399e391a14bbf4b3b1790e074c22893604d9b4",
+      "byte_unchanged": false
+    },
+    "scripts/r65/finalize_r65_dag.py": {
+      "before_sha256": "e9e76e2158f7ea9487c593298f3657e9c2b80c06922c7e8a4c7007a5e74d8b8d",
+      "after_sha256": "6b0b43418bfac5a92a1824ccc6a7c723e6b9c63827fa619f8629da420ed99b3f",
+      "byte_unchanged": false
+    }
+  },
+  "review_closeout": "pending same reviewer limited closeout"
+}

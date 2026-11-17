@@ -1,0 +1,3886 @@
+{
+  "schema": "htt.r65.racs_weighted_projection/1",
+  "source_archive": "/mnt/extdrive/workdir/raw/new_acquisitions/radio_hi/RACS_SBI_20261117/inference_products.zip",
+  "source_archive_sha256": "143cdcf32d85479ee171c8d5bc5da814178dd7123024ba12e5b5d9f9b9c94fc7",
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "astropy": "8.0.2",
+    "pyyaml": "6.0.3",
+    "anesthetic_available": false,
+    "reader": "validated csv module reader; original nested weights, no logL reweighting"
+  },
+  "frame_reference": "https://docs.astropy.org/en/stable/coordinates/transforming.html",
+  "source_release": "https://github.com/o-oayda/cracking-into-racs-i/releases/tag/v1.0.0",
+  "speed_normalizer_authority": "primary arXiv2610.35207v1 Eq2;369.82km/s",
+  "prior_semantics": "source speed uniform[0,12], isotropic direction; Cartesian density proportional1/|v|^2; nuisance priors inherited",
+  "scope": "weighted posterior pushforward only; no new fit, posterior-as-likelihood, cross-survey joint significance or independent-survey assumption",
+  "models": {
+    "racs_low3_fiducial": {
+      "source": {
+        "experiment_id": "racs_low3_fiducial",
+        "child_archive_name": "racs_low3_fiducial.187a6cf51f2e01b2bb2a6dfdd25e3f674b03aaa843b082e1ecfdfa2091e2bb17.analysis.zip",
+        "child_archive_sha256": "187a6cf51f2e01b2bb2a6dfdd25e3f674b03aaa843b082e1ecfdfa2091e2bb17",
+        "artifact_manifest_sha256": "286f486ab1735dcaa4c5c0ee3578f700f2ace8a7ebcfd35987a149c369642f40",
+        "artifact_manifest": {
+          "format_version": 3,
+          "experiment_id": "racs_low3_fiducial",
+          "source": {
+            "repository": "https://github.com/o-oayda/sbi.git",
+            "commit": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf",
+            "dirty": false,
+            "reproducible": true
+          },
+          "implementation_fingerprint": "3747427af8bdb5f7954e27ebbe63f88c88df2224ac4d705035ae7681231a8fb5",
+          "files": [
+            {
+              "role": "experiment_config",
+              "archive_path": "configs/experiment.yaml",
+              "size": 1076,
+              "sha256": "253496c6a6645eae4c0202ae4a0ea54fc0ea6f4f1e1e6d753401eea9e867b9ca"
+            },
+            {
+              "role": "inference_config",
+              "archive_path": "configs/inference.yaml",
+              "size": 1580,
+              "sha256": "559f6edb6bc43e43126aca885b35ad73331ae298c7233cf02aea5bbe5c1e9f7a"
+            },
+            {
+              "role": "observation_config",
+              "archive_path": "configs/observation.yaml",
+              "size": 1137,
+              "sha256": "13294a1080005d03187d56922738556ab768d29ad04bb3dc6de8c9b328b03fdd"
+            },
+            {
+              "role": "native_reference_observation",
+              "archive_path": "observation/reference-observation-native.npz",
+              "size": 35858,
+              "sha256": "89429efbb9bace531365f1369ed7e6d73241229d1ed052f916a07255bbfad54d"
+            },
+            {
+              "role": "reference_observation",
+              "archive_path": "observation/reference-observation.npz",
+              "size": 1096,
+              "sha256": "479ff5e031afcedc0551d3c7a09eef5a019fef9985b6a867abcf8187abcd93ce"
+            },
+            {
+              "role": "final_posterior",
+              "archive_path": "posterior/final-posterior.csv",
+              "size": 10328037,
+              "sha256": "8de7df11b315ec3da634de90940652c36507a271ea51ecbd8aa0475019f445b5"
+            },
+            {
+              "role": "round_evidence",
+              "archive_path": "posterior/per-round-log-evidence.npy",
+              "size": 448,
+              "sha256": "eba2a9cabbb8ad955f1242f9d898746cbcff1c1efae811986917a7e4f0e2eaf4"
+            },
+            {
+              "role": "configs",
+              "archive_path": "provenance/configs.txt",
+              "size": 5876,
+              "sha256": "4fc7138e4eab6aee1ad9b7212591485046698a5232d468e33a06f21e3f8f42ea"
+            },
+            {
+              "role": "data_validation_report",
+              "archive_path": "provenance/data-validation-report.yaml",
+              "size": 10194,
+              "sha256": "2d60ede82d7e583aca33b99232452d1133df0eb84d158fa0eedad728b741e573"
+            },
+            {
+              "role": "dataset_registry",
+              "archive_path": "provenance/dataset-registry.yaml",
+              "size": 3143,
+              "sha256": "06f03815254752cd7d383820fe412d2f8e733839e391e0a8dd3d252ecfbb8bdd"
+            },
+            {
+              "role": "model_config",
+              "archive_path": "provenance/model_config.json",
+              "size": 1391,
+              "sha256": "efffa1f418ef6b14cf4d05c6584683488ee941803a4b3c01a46b277beac7e0d8"
+            },
+            {
+              "role": "paf_manifest",
+              "archive_path": "provenance/paf-manifest.yaml",
+              "size": 5724,
+              "sha256": "719e0f8385b4df988251bd1b886bf47a69d9d8117ecaf9136ea51dfb8ebc294e"
+            },
+            {
+              "role": "run_command",
+              "archive_path": "provenance/run_command.txt",
+              "size": 1887,
+              "sha256": "68b999f8d845387fe416d0a8377f53ed917dddd15d122cbc822293a88884aa20"
+            },
+            {
+              "role": "pyproject",
+              "archive_path": "software/pyproject.toml",
+              "size": 2579,
+              "sha256": "4d1e5420d0ad5c30eba0ffa377cf96a2688bf2811c09061053b2f8df3c449821"
+            },
+            {
+              "role": "uv_lock",
+              "archive_path": "software/uv.lock",
+              "size": 327302,
+              "sha256": "b5f365fa4744a6588883bb5ab80acfa924ae86f2685331573164226fbd440b3d"
+            }
+          ]
+        },
+        "verified_member_hashes": {
+          "configs/experiment.yaml": "253496c6a6645eae4c0202ae4a0ea54fc0ea6f4f1e1e6d753401eea9e867b9ca",
+          "configs/inference.yaml": "559f6edb6bc43e43126aca885b35ad73331ae298c7233cf02aea5bbe5c1e9f7a",
+          "configs/observation.yaml": "13294a1080005d03187d56922738556ab768d29ad04bb3dc6de8c9b328b03fdd",
+          "observation/reference-observation-native.npz": "89429efbb9bace531365f1369ed7e6d73241229d1ed052f916a07255bbfad54d",
+          "observation/reference-observation.npz": "479ff5e031afcedc0551d3c7a09eef5a019fef9985b6a867abcf8187abcd93ce",
+          "posterior/final-posterior.csv": "8de7df11b315ec3da634de90940652c36507a271ea51ecbd8aa0475019f445b5",
+          "posterior/per-round-log-evidence.npy": "eba2a9cabbb8ad955f1242f9d898746cbcff1c1efae811986917a7e4f0e2eaf4",
+          "provenance/configs.txt": "4fc7138e4eab6aee1ad9b7212591485046698a5232d468e33a06f21e3f8f42ea",
+          "provenance/data-validation-report.yaml": "2d60ede82d7e583aca33b99232452d1133df0eb84d158fa0eedad728b741e573",
+          "provenance/dataset-registry.yaml": "06f03815254752cd7d383820fe412d2f8e733839e391e0a8dd3d252ecfbb8bdd",
+          "provenance/model_config.json": "efffa1f418ef6b14cf4d05c6584683488ee941803a4b3c01a46b277beac7e0d8",
+          "provenance/paf-manifest.yaml": "719e0f8385b4df988251bd1b886bf47a69d9d8117ecaf9136ea51dfb8ebc294e",
+          "provenance/run_command.txt": "68b999f8d845387fe416d0a8377f53ed917dddd15d122cbc822293a88884aa20",
+          "software/pyproject.toml": "4d1e5420d0ad5c30eba0ffa377cf96a2688bf2811c09061053b2f8df3c449821",
+          "software/uv.lock": "b5f365fa4744a6588883bb5ab80acfa924ae86f2685331573164226fbd440b3d"
+        },
+        "model_config": {
+          "class_module": "catsim.racs",
+          "class_name": "RacsConfig",
+          "fields": {
+            "alpha_mean": 0.8,
+            "alpha_sigma": 0.3,
+            "catalogue_path": "/suphys/ooay3125/catalogue_data/racs/low3/RACS-low3_sources.fits",
+            "chunk_size": 25000,
+            "cluster_count_model": "poisson",
+            "cluster_r0_arcsec": 100.0,
+            "cluster_r_cut_arcsec": 20.0,
+            "downscale_nside": 4,
+            "flux_error_flux_bins": 300,
+            "flux_error_flux_bounds_mjy": [
+              0.1,
+              10000.0
+            ],
+            "flux_error_min_cell_count": 10,
+            "flux_error_noise_bins": 200,
+            "flux_error_noise_bounds_ujy_beam": [
+              79.0,
+              1000.0
+            ],
+            "flux_hist_bins": 200,
+            "flux_min": 15.0,
+            "flux_temperature_min_mjy": 5.0,
+            "max_cluster_children_per_parent": 5,
+            "max_reference_fallback_tiles": null,
+            "noise_map_nside": 256,
+            "noisemap_data_dir": "/suphys/ooay3125/catalogue_data/racs/noisemaps",
+            "nside": 64,
+            "open_meteo_cache_dir": null,
+            "open_meteo_latitude_deg": -26.696,
+            "open_meteo_longitude_deg": 116.637,
+            "open_meteo_timeout_seconds": 60.0,
+            "paf_max_interpolation_gap_minutes": 20.0,
+            "paf_reference_temp_c": 25.0,
+            "paf_temperature_data_dir": "/suphys/ooay3125/paf_temps",
+            "product": "low3",
+            "store_final_samples": false,
+            "temperature_fallback": "none",
+            "temperature_model": "hot_linear",
+            "use_float32": false
+          },
+          "schema_version": 1
+        },
+        "configs": {
+          "configs/experiment.yaml": {
+            "experiment_id": "racs_low3_fiducial",
+            "observation_config": "workflow/configs/observations/racs_low3_flux15_ds4.yaml",
+            "inference_config": "workflow/configs/inference/nle_maf11_zscore.yaml",
+            "execution": {
+              "jax_platforms": "cuda",
+              "threads": 1,
+              "mem_mb": 64000
+            },
+            "args": {
+              "n_simulations": 100000,
+              "n_rounds": 20,
+              "n_workers": null,
+              "jax_batch_size": 5,
+              "ssnle_seed": 0,
+              "no_ui": true,
+              "alpha_mean": 0.8,
+              "alpha_sigma": 0.3,
+              "temperature_model": "hot_linear",
+              "simulate_clustering": "poisson",
+              "max_children": 5,
+              "add_extra_error": false,
+              "add_elevation_model": false,
+              "log10_n_initial_samples_min": 5.6,
+              "log10_n_initial_samples_max": 6.8,
+              "observer_speed_min": 0.0,
+              "observer_speed_max": 12.0,
+              "dipole_longitude_min": 0.0,
+              "dipole_longitude_max": 360.0,
+              "dipole_latitude_min": -90.0,
+              "dipole_latitude_max": 90.0,
+              "temp_beta_min": 0.0,
+              "temp_beta_max": 0.05,
+              "lambda_clus_min": 0.0,
+              "lambda_clus_max": 3.0,
+              "elevation_trough_min": 0.0,
+              "elevation_trough_max": 90.0,
+              "elevation_amp_min": 0.0,
+              "elevation_amp_max": 0.2,
+              "p_clus_min": 0.0,
+              "p_clus_max": 1.0,
+              "clus_stop_prob_min": 0.4,
+              "clus_stop_prob_max": 1.0,
+              "eta_min": 0.0,
+              "eta_max": 8.0
+            }
+          },
+          "configs/inference.yaml": {
+            "inference_id": "nle_maf11_zscore",
+            "mode": "NLE",
+            "scenario": "anynside_nle",
+            "training": {
+              "learning_rate": 0.0001,
+              "max_n_iter": 1000,
+              "min_n_iter": 2,
+              "batch_size": 100,
+              "patience": 20,
+              "restore_from_previous": false,
+              "warmup_epochs": 0.3,
+              "min_lr_ratio": 1.0,
+              "clip_norm": 1.0,
+              "weight_decay": 1e-05,
+              "shuffle_train": true,
+              "shuffle_val": false,
+              "validation_fraction": 0.1,
+              "weight_by_round": false,
+              "alpha_weight": 1.0
+            },
+            "flow": {
+              "architecture": [
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF"
+              ],
+              "surjective_layer_type": "affine_MAF",
+              "conditioner": "made",
+              "decoder_distribution": "gaussian",
+              "decoder_n_neurons": 128,
+              "decoder_n_layers": 4,
+              "conditioner_n_neurons": 256,
+              "conditioner_n_layers": 4,
+              "funnel_one_and_done": false,
+              "funnel_maf_extension": 2,
+              "data_reduction_factor": 0.5,
+              "conditioner_kwargs": {},
+              "embed_target_transform_in_flow": false
+            },
+            "data_transform": {
+              "kind": "zscore",
+              "embed_in_flow": false,
+              "zscore_method": "batchwise",
+              "embedding_config": null
+            },
+            "theta_transform": {
+              "kind": "dipole_cartesian",
+              "embed_in_flow": false,
+              "wrap_longitude": true,
+              "reflect_latitude": true
+            },
+            "multiround": {
+              "load_simulations": null,
+              "dequantise_data": false,
+              "n_requantisations": null,
+              "initial_fraction": 0.0,
+              "n_likelihood_samples": 10000,
+              "n_posterior_samples": 10000,
+              "check_proposal_probs": true,
+              "write_results_to_disk": true,
+              "likelihood_chunk_size_gb": 0.5,
+              "save_round_simulations": true,
+              "round_simulation_subdir": "round_simulations",
+              "jax_ns_n_live": 5000,
+              "jax_ns_n_delete": 2000,
+              "native_count_hist_max_count": null,
+              "native_count_hist_eps": null,
+              "native_count_hist_transform": null
+            }
+          },
+          "configs/observation.yaml": {
+            "observation_id": "racs_low3_flux15_ds4",
+            "datasets": {
+              "catalogue": "racs_low3_catalogue",
+              "paf_temperatures": "racs_low3_paf_temperatures",
+              "noise_maps": "racs_low3_noise_maps"
+            },
+            "args": {
+              "racs_epoch": "low3",
+              "flux_min": 15.0,
+              "flux_temperature_min_mjy": 5.0,
+              "local_source_crossmatch_radius_arcsec": 5.0,
+              "noise_map_nside": 256,
+              "flux_error_noise_bins": 200,
+              "flux_error_flux_bins": 300,
+              "flux_error_min_cell_count": 10,
+              "flux_error_noise_bounds_ujy_beam": [
+                79.0,
+                1000.0
+              ],
+              "flux_error_flux_bounds_mjy": [
+                0.1,
+                10000.0
+              ],
+              "nside": 64,
+              "downscale_nside": 4,
+              "use_jax": true,
+              "chunk_size": 25000,
+              "temperature_fallback": "none",
+              "summary_features": [
+                "log_dispersion",
+                "flux_quantiles"
+              ],
+              "flux_temperature_n_bins": 10,
+              "flux_temperature_quantiles": [
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                0.9
+              ],
+              "flux_elevation_n_bins": 10,
+              "flux_elevation_quantiles": [
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                0.9
+              ]
+            },
+            "mask": {
+              "config": "workflow/configs/observations/masks/racs_low3_mask.yaml",
+              "source_radii_deg": {
+                "LMC": 13,
+                "SMC": 8
+              }
+            }
+          }
+        },
+        "csv": {
+          "header": [
+            "",
+            "",
+            "log10_n_initial_samples",
+            "observer_speed",
+            "dipole_longitude",
+            "dipole_latitude",
+            "temp_beta",
+            "lambda_clus",
+            "logL",
+            "logL_birth",
+            "nlive"
+          ],
+          "label_row": [
+            "labels",
+            "",
+            "N",
+            "D",
+            "phi",
+            "theta",
+            "beta",
+            "lclus",
+            "$\\ln\\mathcal{L}$",
+            "$\\ln\\mathcal{L}_\\mathrm{birth}$",
+            "$n_\\mathrm{live}$"
+          ],
+          "weight_header": [
+            "",
+            "weights",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "n_rows": 93000,
+          "n_zero_weights": 13065,
+          "raw_weight_max": 1.0,
+          "normalization": "original nonnegative nested weights / their sum (stable scaling)",
+          "weights_sha256_float64_raw": "1a05d4985b43a23606ab06dd5fc09f8f9ddf874db0935d2fb409f3c4a036c175"
+        }
+      },
+      "posterior_pushforward": {
+        "frame": "ICRS Cartesian; sourceward directions transformed from Galactic using astropy SkyCoord",
+        "units": "km/s; covariance (km/s)^2; ratios dimensionless; temp_beta per degree C",
+        "mean_velocity_icrs_km_s": [
+          -1329.1502490715832,
+          352.2836830631754,
+          -466.27002220462344
+        ],
+        "covariance_velocity_icrs_km2_s2": [
+          [
+            71942.11305407065,
+            -15829.063050525625,
+            -4512.2856938184195
+          ],
+          [
+            -15829.063050525625,
+            56485.056916079535,
+            8641.323792995147
+          ],
+          [
+            -4512.2856938184195,
+            8641.323792995147,
+            84026.78287325069
+          ]
+        ],
+        "mean_transverse_icrs_xy_km_s": [
+          -1329.1502490715832,
+          352.2836830631754
+        ],
+        "covariance_transverse_icrs_xy_km2_s2": [
+          [
+            71942.11305407065,
+            -15829.063050525625
+          ],
+          [
+            -15829.063050525625,
+            56485.056916079535
+          ]
+        ],
+        "cmb_axis": {
+          "ra_deg": 167.942,
+          "dec_deg": -6.944,
+          "unit_icrs": [
+            -0.9707632626265688,
+            0.2073694160193707,
+            -0.1208991862437659
+          ],
+          "speed_km_s": 369.82,
+          "xy_normalization": 0.9926647907353193
+        },
+        "scalar_summaries": {
+          "speed_ratio": {
+            "mean": 4.052126032544701,
+            "sd": 0.7401902648356108,
+            "median": 4.065291,
+            "central68": [
+              3.335694,
+              4.7759447
+            ],
+            "central95": [
+              2.54222,
+              5.4790688
+            ]
+          },
+          "speed_km_s": {
+            "mean": 1498.5572493556806,
+            "sd": 273.7371637415056,
+            "median": 1503.42591762,
+            "central68": [
+              1233.60635508,
+              1766.239868954
+            ],
+            "central95": [
+              940.1638003999999,
+              2026.269223616
+            ]
+          },
+          "icrs_x_km_s": {
+            "mean": -1329.1502490715823,
+            "sd": 268.22026965550276,
+            "median": -1330.5650376549142,
+            "central68": [
+              -1593.8502366633775,
+              -1065.1858025966417
+            ],
+            "central95": [
+              -1860.574492883662,
+              -805.1066721782057
+            ]
+          },
+          "icrs_y_km_s": {
+            "mean": 352.2836830631753,
+            "sd": 237.66585138820327,
+            "median": 351.1521843315409,
+            "central68": [
+              119.42738024113008,
+              586.7206861681296
+            ],
+            "central95": [
+              -116.3897184922925,
+              820.8140858430213
+            ]
+          },
+          "icrs_z_km_s": {
+            "mean": -466.27002220462333,
+            "sd": 289.87373608737073,
+            "median": -463.3508998299452,
+            "central68": [
+              -756.2120577087352,
+              -176.64735747367163
+            ],
+            "central95": [
+              -1037.5872136793562,
+              92.7783710638331
+            ]
+          },
+          "transverse_norm_km_s": {
+            "mean": 1393.2755704794283,
+            "sd": 279.2033893687174,
+            "median": 1391.7590415258196,
+            "central68": [
+              1118.480538199635,
+              1670.1384812146005
+            ],
+            "central95": [
+              848.8251736993935,
+              1949.0053516016662
+            ]
+          },
+          "transverse_parallel_km_s": {
+            "mean": 1373.4173979614104,
+            "sd": 278.8101349781851,
+            "median": 1370.984901151109,
+            "central68": [
+              1097.0208125546924,
+              1647.8321680236902
+            ],
+            "central95": [
+              830.658923555029,
+              1925.9679426495486
+            ]
+          },
+          "transverse_perpendicular_km_s": {
+            "mean": -66.84930019466233,
+            "sd": 225.14901421857564,
+            "median": -67.87537152983508,
+            "central68": [
+              -287.5648296941736,
+              153.161538957818
+            ],
+            "central95": [
+              -504.646957802721,
+              381.93841639487454
+            ]
+          },
+          "transverse_parallel_ratio_to_cmb": {
+            "mean": 3.741187997316917,
+            "sd": 0.7594786057457561,
+            "median": 3.734561877767452,
+            "central68": [
+              2.98828389885577,
+              4.488693632215197
+            ],
+            "central95": [
+              2.2627143061395705,
+              5.246335280849636
+            ]
+          },
+          "cmb_axis_parallel_ratio_3d": {
+            "mean": 3.8389345092045115,
+            "sd": 0.7470855299798951,
+            "median": 3.8412473758356254,
+            "central68": [
+              3.1062342848831697,
+              4.568076911395311
+            ],
+            "central95": [
+              2.3659222191911096,
+              5.315735410639752
+            ]
+          },
+          "cmb_axis_parallel_km_s_3d": {
+            "mean": 1419.7147601940126,
+            "sd": 276.2871706971648,
+            "median": 1420.570104531531,
+            "central68": [
+              1148.7475632354938,
+              1689.366203372214
+            ],
+            "central95": [
+              874.9653551012561,
+              1965.865269562793
+            ]
+          },
+          "cmb_axis_perpendicular_norm_km_s_3d": {
+            "mean": 424.1955390553236,
+            "sd": 220.77003431328066,
+            "median": 399.03384188611113,
+            "central68": [
+              201.01897175491212,
+              646.78747144033
+            ],
+            "central95": [
+              78.44503466666733,
+              918.0468373204765
+            ]
+          },
+          "temp_beta": {
+            "mean": 0.012060005904033843,
+            "sd": 0.001220564880508393,
+            "median": 0.012085615,
+            "central68": [
+              0.010839559,
+              0.01326864
+            ],
+            "central95": [
+              0.009616036,
+              0.0144048305
+            ]
+          },
+          "lambda_clus": {
+            "mean": 0.41501966626180165,
+            "sd": 0.03875071330514791,
+            "median": 0.41579664,
+            "central68": [
+              0.37616283,
+              0.4536219
+            ],
+            "central95": [
+              0.33768627,
+              0.4891901
+            ]
+          }
+        },
+        "posterior_probability_transverse_parallel_ratio_gt1": 0.999653010641282,
+        "probability_semantics": "source-conditional posterior probability, NOT a frequentist p-value",
+        "nuisance_weighted_pearson_correlations": {
+          "temp_beta": {
+            "icrs_x": 0.7143151810218641,
+            "icrs_y": -0.3886890472709216,
+            "icrs_z": -0.2735769387637437,
+            "transverse_parallel_ratio": -0.741237601534539
+          },
+          "lambda_clus": {
+            "icrs_x": -0.03761094205104526,
+            "icrs_y": 0.0063712831870873995,
+            "icrs_z": -0.025041336108850783,
+            "transverse_parallel_ratio": 0.03651864392127875
+          }
+        },
+        "weight_concentration_ess": 24701.30606557447,
+        "ess_semantics": "descriptive weight concentration, not independent sample size",
+        "quantile_convention": "inverse weighted empirical CDF; central equal-tail68 and95 percent",
+        "covariance_convention": "normalized posterior population covariance, no Bessel correction"
+      }
+    },
+    "racs_low3_noclus": {
+      "source": {
+        "experiment_id": "racs_low3_noclus",
+        "child_archive_name": "racs_low3_noclus.0658f579c6cb6ed16b5fe37c8772aa68794f1d948a8999e7dbdf0c488810d4d0.analysis.zip",
+        "child_archive_sha256": "0658f579c6cb6ed16b5fe37c8772aa68794f1d948a8999e7dbdf0c488810d4d0",
+        "artifact_manifest_sha256": "41849723165508c0b9406f6470c0ea4d0ae4f916ee831f780a155f2dc5316654",
+        "artifact_manifest": {
+          "format_version": 3,
+          "experiment_id": "racs_low3_noclus",
+          "source": {
+            "repository": "https://github.com/o-oayda/sbi.git",
+            "commit": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf",
+            "dirty": true,
+            "reproducible": false
+          },
+          "implementation_fingerprint": "3747427af8bdb5f7954e27ebbe63f88c88df2224ac4d705035ae7681231a8fb5",
+          "files": [
+            {
+              "role": "experiment_config",
+              "archive_path": "configs/experiment.yaml",
+              "size": 1071,
+              "sha256": "611db457a21b6bd62a851e9e76340370ee89051efe5acc7508a00c3214e235ae"
+            },
+            {
+              "role": "inference_config",
+              "archive_path": "configs/inference.yaml",
+              "size": 1580,
+              "sha256": "559f6edb6bc43e43126aca885b35ad73331ae298c7233cf02aea5bbe5c1e9f7a"
+            },
+            {
+              "role": "observation_config",
+              "archive_path": "configs/observation.yaml",
+              "size": 1137,
+              "sha256": "13294a1080005d03187d56922738556ab768d29ad04bb3dc6de8c9b328b03fdd"
+            },
+            {
+              "role": "native_reference_observation",
+              "archive_path": "observation/reference-observation-native.npz",
+              "size": 35858,
+              "sha256": "89429efbb9bace531365f1369ed7e6d73241229d1ed052f916a07255bbfad54d"
+            },
+            {
+              "role": "reference_observation",
+              "archive_path": "observation/reference-observation.npz",
+              "size": 1096,
+              "sha256": "479ff5e031afcedc0551d3c7a09eef5a019fef9985b6a867abcf8187abcd93ce"
+            },
+            {
+              "role": "final_posterior",
+              "archive_path": "posterior/final-posterior.csv",
+              "size": 7959546,
+              "sha256": "6c1076d12f0e9039381c1d37c827da1a72ee936c4b4a1a1b557b67c937dd4b56"
+            },
+            {
+              "role": "round_evidence",
+              "archive_path": "posterior/per-round-log-evidence.npy",
+              "size": 448,
+              "sha256": "2f34bbb8f926b89f002a67f51634a5dc04e7524818df7f93eb77fbfa44279453"
+            },
+            {
+              "role": "configs",
+              "archive_path": "provenance/configs.txt",
+              "size": 5791,
+              "sha256": "f5eee957f947e8eeb2fa97dad0216361557033f9a31921294a2fbe9921e51540"
+            },
+            {
+              "role": "data_validation_report",
+              "archive_path": "provenance/data-validation-report.yaml",
+              "size": 10194,
+              "sha256": "2d60ede82d7e583aca33b99232452d1133df0eb84d158fa0eedad728b741e573"
+            },
+            {
+              "role": "dataset_registry",
+              "archive_path": "provenance/dataset-registry.yaml",
+              "size": 3143,
+              "sha256": "06f03815254752cd7d383820fe412d2f8e733839e391e0a8dd3d252ecfbb8bdd"
+            },
+            {
+              "role": "model_config",
+              "archive_path": "provenance/model_config.json",
+              "size": 1391,
+              "sha256": "73df279553154975cd47af83ae416a10bfc4b4cb26a91066497e265d0ffd3f0b"
+            },
+            {
+              "role": "paf_manifest",
+              "archive_path": "provenance/paf-manifest.yaml",
+              "size": 5724,
+              "sha256": "719e0f8385b4df988251bd1b886bf47a69d9d8117ecaf9136ea51dfb8ebc294e"
+            },
+            {
+              "role": "run_command",
+              "archive_path": "provenance/run_command.txt",
+              "size": 1855,
+              "sha256": "95f6e9eb169f553d2a8b6aa6d936d223c38ab29d2327c907095766acebc133bc"
+            },
+            {
+              "role": "pyproject",
+              "archive_path": "software/pyproject.toml",
+              "size": 2579,
+              "sha256": "4d1e5420d0ad5c30eba0ffa377cf96a2688bf2811c09061053b2f8df3c449821"
+            },
+            {
+              "role": "uv_lock",
+              "archive_path": "software/uv.lock",
+              "size": 327302,
+              "sha256": "b5f365fa4744a6588883bb5ab80acfa924ae86f2685331573164226fbd440b3d"
+            }
+          ]
+        },
+        "verified_member_hashes": {
+          "configs/experiment.yaml": "611db457a21b6bd62a851e9e76340370ee89051efe5acc7508a00c3214e235ae",
+          "configs/inference.yaml": "559f6edb6bc43e43126aca885b35ad73331ae298c7233cf02aea5bbe5c1e9f7a",
+          "configs/observation.yaml": "13294a1080005d03187d56922738556ab768d29ad04bb3dc6de8c9b328b03fdd",
+          "observation/reference-observation-native.npz": "89429efbb9bace531365f1369ed7e6d73241229d1ed052f916a07255bbfad54d",
+          "observation/reference-observation.npz": "479ff5e031afcedc0551d3c7a09eef5a019fef9985b6a867abcf8187abcd93ce",
+          "posterior/final-posterior.csv": "6c1076d12f0e9039381c1d37c827da1a72ee936c4b4a1a1b557b67c937dd4b56",
+          "posterior/per-round-log-evidence.npy": "2f34bbb8f926b89f002a67f51634a5dc04e7524818df7f93eb77fbfa44279453",
+          "provenance/configs.txt": "f5eee957f947e8eeb2fa97dad0216361557033f9a31921294a2fbe9921e51540",
+          "provenance/data-validation-report.yaml": "2d60ede82d7e583aca33b99232452d1133df0eb84d158fa0eedad728b741e573",
+          "provenance/dataset-registry.yaml": "06f03815254752cd7d383820fe412d2f8e733839e391e0a8dd3d252ecfbb8bdd",
+          "provenance/model_config.json": "73df279553154975cd47af83ae416a10bfc4b4cb26a91066497e265d0ffd3f0b",
+          "provenance/paf-manifest.yaml": "719e0f8385b4df988251bd1b886bf47a69d9d8117ecaf9136ea51dfb8ebc294e",
+          "provenance/run_command.txt": "95f6e9eb169f553d2a8b6aa6d936d223c38ab29d2327c907095766acebc133bc",
+          "software/pyproject.toml": "4d1e5420d0ad5c30eba0ffa377cf96a2688bf2811c09061053b2f8df3c449821",
+          "software/uv.lock": "b5f365fa4744a6588883bb5ab80acfa924ae86f2685331573164226fbd440b3d"
+        },
+        "model_config": {
+          "class_module": "catsim.racs",
+          "class_name": "RacsConfig",
+          "fields": {
+            "alpha_mean": 0.8,
+            "alpha_sigma": 0.3,
+            "catalogue_path": "/suphys/ooay3125/catalogue_data/racs/low3/RACS-low3_sources.fits",
+            "chunk_size": 25000,
+            "cluster_count_model": "poisson",
+            "cluster_r0_arcsec": 100.0,
+            "cluster_r_cut_arcsec": 20.0,
+            "downscale_nside": 4,
+            "flux_error_flux_bins": 300,
+            "flux_error_flux_bounds_mjy": [
+              0.1,
+              10000.0
+            ],
+            "flux_error_min_cell_count": 10,
+            "flux_error_noise_bins": 200,
+            "flux_error_noise_bounds_ujy_beam": [
+              79.0,
+              1000.0
+            ],
+            "flux_hist_bins": 200,
+            "flux_min": 15.0,
+            "flux_temperature_min_mjy": 5.0,
+            "max_cluster_children_per_parent": 0,
+            "max_reference_fallback_tiles": null,
+            "noise_map_nside": 256,
+            "noisemap_data_dir": "/suphys/ooay3125/catalogue_data/racs/noisemaps",
+            "nside": 64,
+            "open_meteo_cache_dir": null,
+            "open_meteo_latitude_deg": -26.696,
+            "open_meteo_longitude_deg": 116.637,
+            "open_meteo_timeout_seconds": 60.0,
+            "paf_max_interpolation_gap_minutes": 20.0,
+            "paf_reference_temp_c": 25.0,
+            "paf_temperature_data_dir": "/suphys/ooay3125/paf_temps",
+            "product": "low3",
+            "store_final_samples": false,
+            "temperature_fallback": "none",
+            "temperature_model": "hot_linear",
+            "use_float32": false
+          },
+          "schema_version": 1
+        },
+        "configs": {
+          "configs/experiment.yaml": {
+            "experiment_id": "racs_low3_noclus",
+            "observation_config": "workflow/configs/observations/racs_low3_flux15_ds4.yaml",
+            "inference_config": "workflow/configs/inference/nle_maf11_zscore.yaml",
+            "execution": {
+              "jax_platforms": "cuda",
+              "threads": 1,
+              "mem_mb": 64000
+            },
+            "args": {
+              "n_simulations": 100000,
+              "n_rounds": 20,
+              "n_workers": null,
+              "jax_batch_size": 5,
+              "ssnle_seed": 0,
+              "no_ui": true,
+              "alpha_mean": 0.8,
+              "alpha_sigma": 0.3,
+              "temperature_model": "hot_linear",
+              "simulate_clustering": null,
+              "max_children": 0,
+              "add_extra_error": false,
+              "add_elevation_model": false,
+              "log10_n_initial_samples_min": 5.6,
+              "log10_n_initial_samples_max": 6.8,
+              "observer_speed_min": 0.0,
+              "observer_speed_max": 12.0,
+              "dipole_longitude_min": 0.0,
+              "dipole_longitude_max": 360.0,
+              "dipole_latitude_min": -90.0,
+              "dipole_latitude_max": 90.0,
+              "temp_beta_min": 0.0,
+              "temp_beta_max": 0.05,
+              "lambda_clus_min": 0.0,
+              "lambda_clus_max": 3.0,
+              "elevation_trough_min": 0.0,
+              "elevation_trough_max": 90.0,
+              "elevation_amp_min": 0.0,
+              "elevation_amp_max": 0.2,
+              "p_clus_min": 0.0,
+              "p_clus_max": 1.0,
+              "clus_stop_prob_min": 0.4,
+              "clus_stop_prob_max": 1.0,
+              "eta_min": 0.0,
+              "eta_max": 8.0
+            }
+          },
+          "configs/inference.yaml": {
+            "inference_id": "nle_maf11_zscore",
+            "mode": "NLE",
+            "scenario": "anynside_nle",
+            "training": {
+              "learning_rate": 0.0001,
+              "max_n_iter": 1000,
+              "min_n_iter": 2,
+              "batch_size": 100,
+              "patience": 20,
+              "restore_from_previous": false,
+              "warmup_epochs": 0.3,
+              "min_lr_ratio": 1.0,
+              "clip_norm": 1.0,
+              "weight_decay": 1e-05,
+              "shuffle_train": true,
+              "shuffle_val": false,
+              "validation_fraction": 0.1,
+              "weight_by_round": false,
+              "alpha_weight": 1.0
+            },
+            "flow": {
+              "architecture": [
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF"
+              ],
+              "surjective_layer_type": "affine_MAF",
+              "conditioner": "made",
+              "decoder_distribution": "gaussian",
+              "decoder_n_neurons": 128,
+              "decoder_n_layers": 4,
+              "conditioner_n_neurons": 256,
+              "conditioner_n_layers": 4,
+              "funnel_one_and_done": false,
+              "funnel_maf_extension": 2,
+              "data_reduction_factor": 0.5,
+              "conditioner_kwargs": {},
+              "embed_target_transform_in_flow": false
+            },
+            "data_transform": {
+              "kind": "zscore",
+              "embed_in_flow": false,
+              "zscore_method": "batchwise",
+              "embedding_config": null
+            },
+            "theta_transform": {
+              "kind": "dipole_cartesian",
+              "embed_in_flow": false,
+              "wrap_longitude": true,
+              "reflect_latitude": true
+            },
+            "multiround": {
+              "load_simulations": null,
+              "dequantise_data": false,
+              "n_requantisations": null,
+              "initial_fraction": 0.0,
+              "n_likelihood_samples": 10000,
+              "n_posterior_samples": 10000,
+              "check_proposal_probs": true,
+              "write_results_to_disk": true,
+              "likelihood_chunk_size_gb": 0.5,
+              "save_round_simulations": true,
+              "round_simulation_subdir": "round_simulations",
+              "jax_ns_n_live": 5000,
+              "jax_ns_n_delete": 2000,
+              "native_count_hist_max_count": null,
+              "native_count_hist_eps": null,
+              "native_count_hist_transform": null
+            }
+          },
+          "configs/observation.yaml": {
+            "observation_id": "racs_low3_flux15_ds4",
+            "datasets": {
+              "catalogue": "racs_low3_catalogue",
+              "paf_temperatures": "racs_low3_paf_temperatures",
+              "noise_maps": "racs_low3_noise_maps"
+            },
+            "args": {
+              "racs_epoch": "low3",
+              "flux_min": 15.0,
+              "flux_temperature_min_mjy": 5.0,
+              "local_source_crossmatch_radius_arcsec": 5.0,
+              "noise_map_nside": 256,
+              "flux_error_noise_bins": 200,
+              "flux_error_flux_bins": 300,
+              "flux_error_min_cell_count": 10,
+              "flux_error_noise_bounds_ujy_beam": [
+                79.0,
+                1000.0
+              ],
+              "flux_error_flux_bounds_mjy": [
+                0.1,
+                10000.0
+              ],
+              "nside": 64,
+              "downscale_nside": 4,
+              "use_jax": true,
+              "chunk_size": 25000,
+              "temperature_fallback": "none",
+              "summary_features": [
+                "log_dispersion",
+                "flux_quantiles"
+              ],
+              "flux_temperature_n_bins": 10,
+              "flux_temperature_quantiles": [
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                0.9
+              ],
+              "flux_elevation_n_bins": 10,
+              "flux_elevation_quantiles": [
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                0.9
+              ]
+            },
+            "mask": {
+              "config": "workflow/configs/observations/masks/racs_low3_mask.yaml",
+              "source_radii_deg": {
+                "LMC": 13,
+                "SMC": 8
+              }
+            }
+          }
+        },
+        "csv": {
+          "header": [
+            "",
+            "",
+            "log10_n_initial_samples",
+            "observer_speed",
+            "dipole_longitude",
+            "dipole_latitude",
+            "temp_beta",
+            "logL",
+            "logL_birth",
+            "nlive"
+          ],
+          "label_row": [
+            "labels",
+            "",
+            "N",
+            "D",
+            "phi",
+            "theta",
+            "beta",
+            "$\\ln\\mathcal{L}$",
+            "$\\ln\\mathcal{L}_\\mathrm{birth}$",
+            "$n_\\mathrm{live}$"
+          ],
+          "weight_header": [
+            "",
+            "weights",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "n_rows": 79000,
+          "n_zero_weights": 13899,
+          "raw_weight_max": 1.0,
+          "normalization": "original nonnegative nested weights / their sum (stable scaling)",
+          "weights_sha256_float64_raw": "8e7160ba58f8a50a3025e4dc326d4ac57f5223cb8f9451f02bdbcac5602ec5f1"
+        }
+      },
+      "posterior_pushforward": {
+        "frame": "ICRS Cartesian; sourceward directions transformed from Galactic using astropy SkyCoord",
+        "units": "km/s; covariance (km/s)^2; ratios dimensionless; temp_beta per degree C",
+        "mean_velocity_icrs_km_s": [
+          94.86035011288675,
+          -237.45052415444025,
+          -408.7900639311107
+        ],
+        "covariance_velocity_icrs_km2_s2": [
+          [
+            458562.2647053711,
+            -195382.11631122776,
+            -87718.85002310324
+          ],
+          [
+            -195382.11631122776,
+            124301.15139442857,
+            25677.056897514856
+          ],
+          [
+            -87718.85002310324,
+            25677.056897514856,
+            142077.2435626311
+          ]
+        ],
+        "mean_transverse_icrs_xy_km_s": [
+          94.86035011288675,
+          -237.45052415444025
+        ],
+        "covariance_transverse_icrs_xy_km2_s2": [
+          [
+            458562.2647053711,
+            -195382.11631122776
+          ],
+          [
+            -195382.11631122776,
+            124301.15139442857
+          ]
+        ],
+        "cmb_axis": {
+          "ra_deg": 167.942,
+          "dec_deg": -6.944,
+          "unit_icrs": [
+            -0.9707632626265688,
+            0.2073694160193707,
+            -0.1208991862437659
+          ],
+          "speed_km_s": 369.82,
+          "xy_normalization": 0.9926647907353193
+        },
+        "scalar_summaries": {
+          "speed_ratio": {
+            "mean": 2.5057875466620834,
+            "sd": 0.8494069909392864,
+            "median": 2.3959272,
+            "central68": [
+              1.6977189,
+              3.366746
+            ],
+            "central95": [
+              1.0927198,
+              4.4123683
+            ]
+          },
+          "speed_km_s": {
+            "mean": 926.6903505065713,
+            "sd": 314.12769338916684,
+            "median": 886.061797104,
+            "central68": [
+              627.850403598,
+              1245.09000572
+            ],
+            "central95": [
+              404.109636436,
+              1631.7820447059999
+            ]
+          },
+          "icrs_x_km_s": {
+            "mean": 94.86035011288679,
+            "sd": 677.1722563021693,
+            "median": 423.88114288051713,
+            "central68": [
+              -896.5454359775592,
+              621.016730634252
+            ],
+            "central95": [
+              -1309.4488217088128,
+              786.7111484697062
+            ]
+          },
+          "icrs_y_km_s": {
+            "mean": -237.45052415444022,
+            "sd": 352.56368416844737,
+            "median": -339.1235122346801,
+            "central68": [
+              -553.5712690674721,
+              174.72410984243044
+            ],
+            "central95": [
+              -722.4021540717679,
+              576.4614281633687
+            ]
+          },
+          "icrs_z_km_s": {
+            "mean": -408.79006393111047,
+            "sd": 376.9313512599226,
+            "median": -344.37765360303115,
+            "central68": [
+              -743.7386616269382,
+              -63.155900849646926
+            ],
+            "central95": [
+              -1374.0672581642189,
+              130.17543938028726
+            ]
+          },
+          "transverse_norm_km_s": {
+            "mean": 764.2094952546345,
+            "sd": 253.4334249999664,
+            "median": 728.5382979710236,
+            "central68": [
+              540.1087554881436,
+              988.3304584385836
+            ],
+            "central95": [
+              350.5447613659363,
+              1393.4723611138743
+            ]
+          },
+          "transverse_parallel_km_s": {
+            "mean": -142.37124235281482,
+            "sd": 723.7440157522534,
+            "median": -501.78431802416515,
+            "central68": [
+              -698.9468522171446,
+              920.3809811414767
+            ],
+            "central95": [
+              -860.5703570116376,
+              1365.4757044938156
+            ]
+          },
+          "transverse_perpendicular_km_s": {
+            "mean": 212.395072437366,
+            "sd": 243.01855024380632,
+            "median": 247.72274426961704,
+            "central68": [
+              -26.80955620393726,
+              439.96537743027983
+            ],
+            "central95": [
+              -349.3847761930604,
+              603.7974366585379
+            ]
+          },
+          "transverse_parallel_ratio_to_cmb": {
+            "mean": -0.3878191610533352,
+            "sd": 1.9714781747204557,
+            "median": -1.3668601188686917,
+            "central68": [
+              -1.9039307192107497,
+              2.5071171260217366
+            ],
+            "central95": [
+              -2.344193029211311,
+              3.7195548300631502
+            ]
+          },
+          "cmb_axis_parallel_ratio_3d": {
+            "mean": -0.24851152837346802,
+            "sd": 1.9050344074293442,
+            "median": -1.2130886607841715,
+            "central68": [
+              -1.699989096740483,
+              2.534979891953591
+            ],
+            "central95": [
+              -2.0937193471548037,
+              3.748904337673697
+            ]
+          },
+          "cmb_axis_parallel_km_s_3d": {
+            "mean": -91.90453342307597,
+            "sd": 704.51982455552,
+            "median": -448.62444853120235,
+            "central68": [
+              -628.6899677565654,
+              937.486263642277
+            ],
+            "central95": [
+              -774.2992889647895,
+              1386.4198021584866
+            ]
+          },
+          "cmb_axis_perpendicular_norm_km_s_3d": {
+            "mean": 575.1795155226639,
+            "sd": 349.0058909870286,
+            "median": 514.899817072155,
+            "central68": [
+              250.00449360056183,
+              884.7952168002547
+            ],
+            "central95": [
+              83.44445409844114,
+              1470.9784671435154
+            ]
+          },
+          "temp_beta": {
+            "mean": 0.01639084763371393,
+            "sd": 0.0023686627338974334,
+            "median": 0.017139986,
+            "central68": [
+              0.013248602,
+              0.018523209
+            ],
+            "central95": [
+              0.011457733,
+              0.019702915
+            ]
+          }
+        },
+        "posterior_probability_transverse_parallel_ratio_gt1": 0.27437263135587775,
+        "probability_semantics": "source-conditional posterior probability, NOT a frequentist p-value",
+        "nuisance_weighted_pearson_correlations": {
+          "temp_beta": {
+            "icrs_x": 0.9405628283726678,
+            "icrs_y": -0.7996236456107252,
+            "icrs_z": -0.46874170330420883,
+            "transverse_parallel_ratio": -0.9419954972328795
+          }
+        },
+        "weight_concentration_ess": 25101.151841611434,
+        "ess_semantics": "descriptive weight concentration, not independent sample size",
+        "quantile_convention": "inverse weighted empirical CDF; central equal-tail68 and95 percent",
+        "covariance_convention": "normalized posterior population covariance, no Bessel correction"
+      }
+    },
+    "racs_low3_notemp": {
+      "source": {
+        "experiment_id": "racs_low3_notemp",
+        "child_archive_name": "racs_low3_notemp.6ce751b560dda480e44b461932cfe1bc8561c62ad7d45f2a49f303f85f7000e3.analysis.zip",
+        "child_archive_sha256": "6ce751b560dda480e44b461932cfe1bc8561c62ad7d45f2a49f303f85f7000e3",
+        "artifact_manifest_sha256": "61e61472b55e8734a5502985abec652afad500b81dc2776ed6b03f61babed768",
+        "artifact_manifest": {
+          "format_version": 3,
+          "experiment_id": "racs_low3_notemp",
+          "source": {
+            "repository": "https://github.com/o-oayda/sbi.git",
+            "commit": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf",
+            "dirty": true,
+            "reproducible": false
+          },
+          "implementation_fingerprint": "3747427af8bdb5f7954e27ebbe63f88c88df2224ac4d705035ae7681231a8fb5",
+          "files": [
+            {
+              "role": "experiment_config",
+              "archive_path": "configs/experiment.yaml",
+              "size": 1073,
+              "sha256": "a57558a9f2e76627210e0e2ebc210f86ee44726d806d64ceb5ff9620ab978de4"
+            },
+            {
+              "role": "inference_config",
+              "archive_path": "configs/inference.yaml",
+              "size": 1580,
+              "sha256": "559f6edb6bc43e43126aca885b35ad73331ae298c7233cf02aea5bbe5c1e9f7a"
+            },
+            {
+              "role": "observation_config",
+              "archive_path": "configs/observation.yaml",
+              "size": 1137,
+              "sha256": "13294a1080005d03187d56922738556ab768d29ad04bb3dc6de8c9b328b03fdd"
+            },
+            {
+              "role": "native_reference_observation",
+              "archive_path": "observation/reference-observation-native.npz",
+              "size": 35858,
+              "sha256": "89429efbb9bace531365f1369ed7e6d73241229d1ed052f916a07255bbfad54d"
+            },
+            {
+              "role": "reference_observation",
+              "archive_path": "observation/reference-observation.npz",
+              "size": 1096,
+              "sha256": "479ff5e031afcedc0551d3c7a09eef5a019fef9985b6a867abcf8187abcd93ce"
+            },
+            {
+              "role": "final_posterior",
+              "archive_path": "posterior/final-posterior.csv",
+              "size": 9031044,
+              "sha256": "5db8c57d4b579d24578eed7f4f0329ae9bb802116d90798874b27886df5eab25"
+            },
+            {
+              "role": "round_evidence",
+              "archive_path": "posterior/per-round-log-evidence.npy",
+              "size": 448,
+              "sha256": "abf95909bf97037f046e98a4a305e2987b923af2b8362fdfaefb3ae067c94eb8"
+            },
+            {
+              "role": "configs",
+              "archive_path": "provenance/configs.txt",
+              "size": 5779,
+              "sha256": "02c4fc5580e092f3081bcc28a67353ebdf0fcb0bab3476bd45d2604055292bc1"
+            },
+            {
+              "role": "data_validation_report",
+              "archive_path": "provenance/data-validation-report.yaml",
+              "size": 10194,
+              "sha256": "2d60ede82d7e583aca33b99232452d1133df0eb84d158fa0eedad728b741e573"
+            },
+            {
+              "role": "dataset_registry",
+              "archive_path": "provenance/dataset-registry.yaml",
+              "size": 3143,
+              "sha256": "06f03815254752cd7d383820fe412d2f8e733839e391e0a8dd3d252ecfbb8bdd"
+            },
+            {
+              "role": "model_config",
+              "archive_path": "provenance/model_config.json",
+              "size": 1391,
+              "sha256": "efffa1f418ef6b14cf4d05c6584683488ee941803a4b3c01a46b277beac7e0d8"
+            },
+            {
+              "role": "paf_manifest",
+              "archive_path": "provenance/paf-manifest.yaml",
+              "size": 5724,
+              "sha256": "719e0f8385b4df988251bd1b886bf47a69d9d8117ecaf9136ea51dfb8ebc294e"
+            },
+            {
+              "role": "run_command",
+              "archive_path": "provenance/run_command.txt",
+              "size": 1884,
+              "sha256": "eba71dd737b78efbd70fa915a60961708629753f59c90dacf447e87b20f931f5"
+            },
+            {
+              "role": "pyproject",
+              "archive_path": "software/pyproject.toml",
+              "size": 2579,
+              "sha256": "4d1e5420d0ad5c30eba0ffa377cf96a2688bf2811c09061053b2f8df3c449821"
+            },
+            {
+              "role": "uv_lock",
+              "archive_path": "software/uv.lock",
+              "size": 327302,
+              "sha256": "b5f365fa4744a6588883bb5ab80acfa924ae86f2685331573164226fbd440b3d"
+            }
+          ]
+        },
+        "verified_member_hashes": {
+          "configs/experiment.yaml": "a57558a9f2e76627210e0e2ebc210f86ee44726d806d64ceb5ff9620ab978de4",
+          "configs/inference.yaml": "559f6edb6bc43e43126aca885b35ad73331ae298c7233cf02aea5bbe5c1e9f7a",
+          "configs/observation.yaml": "13294a1080005d03187d56922738556ab768d29ad04bb3dc6de8c9b328b03fdd",
+          "observation/reference-observation-native.npz": "89429efbb9bace531365f1369ed7e6d73241229d1ed052f916a07255bbfad54d",
+          "observation/reference-observation.npz": "479ff5e031afcedc0551d3c7a09eef5a019fef9985b6a867abcf8187abcd93ce",
+          "posterior/final-posterior.csv": "5db8c57d4b579d24578eed7f4f0329ae9bb802116d90798874b27886df5eab25",
+          "posterior/per-round-log-evidence.npy": "abf95909bf97037f046e98a4a305e2987b923af2b8362fdfaefb3ae067c94eb8",
+          "provenance/configs.txt": "02c4fc5580e092f3081bcc28a67353ebdf0fcb0bab3476bd45d2604055292bc1",
+          "provenance/data-validation-report.yaml": "2d60ede82d7e583aca33b99232452d1133df0eb84d158fa0eedad728b741e573",
+          "provenance/dataset-registry.yaml": "06f03815254752cd7d383820fe412d2f8e733839e391e0a8dd3d252ecfbb8bdd",
+          "provenance/model_config.json": "efffa1f418ef6b14cf4d05c6584683488ee941803a4b3c01a46b277beac7e0d8",
+          "provenance/paf-manifest.yaml": "719e0f8385b4df988251bd1b886bf47a69d9d8117ecaf9136ea51dfb8ebc294e",
+          "provenance/run_command.txt": "eba71dd737b78efbd70fa915a60961708629753f59c90dacf447e87b20f931f5",
+          "software/pyproject.toml": "4d1e5420d0ad5c30eba0ffa377cf96a2688bf2811c09061053b2f8df3c449821",
+          "software/uv.lock": "b5f365fa4744a6588883bb5ab80acfa924ae86f2685331573164226fbd440b3d"
+        },
+        "model_config": {
+          "class_module": "catsim.racs",
+          "class_name": "RacsConfig",
+          "fields": {
+            "alpha_mean": 0.8,
+            "alpha_sigma": 0.3,
+            "catalogue_path": "/suphys/ooay3125/catalogue_data/racs/low3/RACS-low3_sources.fits",
+            "chunk_size": 25000,
+            "cluster_count_model": "poisson",
+            "cluster_r0_arcsec": 100.0,
+            "cluster_r_cut_arcsec": 20.0,
+            "downscale_nside": 4,
+            "flux_error_flux_bins": 300,
+            "flux_error_flux_bounds_mjy": [
+              0.1,
+              10000.0
+            ],
+            "flux_error_min_cell_count": 10,
+            "flux_error_noise_bins": 200,
+            "flux_error_noise_bounds_ujy_beam": [
+              79.0,
+              1000.0
+            ],
+            "flux_hist_bins": 200,
+            "flux_min": 15.0,
+            "flux_temperature_min_mjy": 5.0,
+            "max_cluster_children_per_parent": 5,
+            "max_reference_fallback_tiles": null,
+            "noise_map_nside": 256,
+            "noisemap_data_dir": "/suphys/ooay3125/catalogue_data/racs/noisemaps",
+            "nside": 64,
+            "open_meteo_cache_dir": null,
+            "open_meteo_latitude_deg": -26.696,
+            "open_meteo_longitude_deg": 116.637,
+            "open_meteo_timeout_seconds": 60.0,
+            "paf_max_interpolation_gap_minutes": 20.0,
+            "paf_reference_temp_c": 25.0,
+            "paf_temperature_data_dir": "/suphys/ooay3125/paf_temps",
+            "product": "low3",
+            "store_final_samples": false,
+            "temperature_fallback": "none",
+            "temperature_model": "hot_linear",
+            "use_float32": false
+          },
+          "schema_version": 1
+        },
+        "configs": {
+          "configs/experiment.yaml": {
+            "experiment_id": "racs_low3_notemp",
+            "observation_config": "workflow/configs/observations/racs_low3_flux15_ds4.yaml",
+            "inference_config": "workflow/configs/inference/nle_maf11_zscore.yaml",
+            "execution": {
+              "jax_platforms": "cuda",
+              "threads": 1,
+              "mem_mb": 64000
+            },
+            "args": {
+              "n_simulations": 100000,
+              "n_rounds": 20,
+              "n_workers": null,
+              "jax_batch_size": 5,
+              "ssnle_seed": 0,
+              "no_ui": true,
+              "alpha_mean": 0.8,
+              "alpha_sigma": 0.3,
+              "temperature_model": "hot_linear",
+              "simulate_clustering": "poisson",
+              "max_children": 5,
+              "add_extra_error": false,
+              "add_elevation_model": false,
+              "log10_n_initial_samples_min": 5.6,
+              "log10_n_initial_samples_max": 6.8,
+              "observer_speed_min": 0.0,
+              "observer_speed_max": 12.0,
+              "dipole_longitude_min": 0.0,
+              "dipole_longitude_max": 360.0,
+              "dipole_latitude_min": -90.0,
+              "dipole_latitude_max": 90.0,
+              "temp_beta_min": 0.0,
+              "temp_beta_max": 0.0,
+              "lambda_clus_min": 0.0,
+              "lambda_clus_max": 3.0,
+              "elevation_trough_min": 0.0,
+              "elevation_trough_max": 90.0,
+              "elevation_amp_min": 0.0,
+              "elevation_amp_max": 0.2,
+              "p_clus_min": 0.0,
+              "p_clus_max": 1.0,
+              "clus_stop_prob_min": 0.4,
+              "clus_stop_prob_max": 1.0,
+              "eta_min": 0.0,
+              "eta_max": 8.0
+            }
+          },
+          "configs/inference.yaml": {
+            "inference_id": "nle_maf11_zscore",
+            "mode": "NLE",
+            "scenario": "anynside_nle",
+            "training": {
+              "learning_rate": 0.0001,
+              "max_n_iter": 1000,
+              "min_n_iter": 2,
+              "batch_size": 100,
+              "patience": 20,
+              "restore_from_previous": false,
+              "warmup_epochs": 0.3,
+              "min_lr_ratio": 1.0,
+              "clip_norm": 1.0,
+              "weight_decay": 1e-05,
+              "shuffle_train": true,
+              "shuffle_val": false,
+              "validation_fraction": 0.1,
+              "weight_by_round": false,
+              "alpha_weight": 1.0
+            },
+            "flow": {
+              "architecture": [
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF"
+              ],
+              "surjective_layer_type": "affine_MAF",
+              "conditioner": "made",
+              "decoder_distribution": "gaussian",
+              "decoder_n_neurons": 128,
+              "decoder_n_layers": 4,
+              "conditioner_n_neurons": 256,
+              "conditioner_n_layers": 4,
+              "funnel_one_and_done": false,
+              "funnel_maf_extension": 2,
+              "data_reduction_factor": 0.5,
+              "conditioner_kwargs": {},
+              "embed_target_transform_in_flow": false
+            },
+            "data_transform": {
+              "kind": "zscore",
+              "embed_in_flow": false,
+              "zscore_method": "batchwise",
+              "embedding_config": null
+            },
+            "theta_transform": {
+              "kind": "dipole_cartesian",
+              "embed_in_flow": false,
+              "wrap_longitude": true,
+              "reflect_latitude": true
+            },
+            "multiround": {
+              "load_simulations": null,
+              "dequantise_data": false,
+              "n_requantisations": null,
+              "initial_fraction": 0.0,
+              "n_likelihood_samples": 10000,
+              "n_posterior_samples": 10000,
+              "check_proposal_probs": true,
+              "write_results_to_disk": true,
+              "likelihood_chunk_size_gb": 0.5,
+              "save_round_simulations": true,
+              "round_simulation_subdir": "round_simulations",
+              "jax_ns_n_live": 5000,
+              "jax_ns_n_delete": 2000,
+              "native_count_hist_max_count": null,
+              "native_count_hist_eps": null,
+              "native_count_hist_transform": null
+            }
+          },
+          "configs/observation.yaml": {
+            "observation_id": "racs_low3_flux15_ds4",
+            "datasets": {
+              "catalogue": "racs_low3_catalogue",
+              "paf_temperatures": "racs_low3_paf_temperatures",
+              "noise_maps": "racs_low3_noise_maps"
+            },
+            "args": {
+              "racs_epoch": "low3",
+              "flux_min": 15.0,
+              "flux_temperature_min_mjy": 5.0,
+              "local_source_crossmatch_radius_arcsec": 5.0,
+              "noise_map_nside": 256,
+              "flux_error_noise_bins": 200,
+              "flux_error_flux_bins": 300,
+              "flux_error_min_cell_count": 10,
+              "flux_error_noise_bounds_ujy_beam": [
+                79.0,
+                1000.0
+              ],
+              "flux_error_flux_bounds_mjy": [
+                0.1,
+                10000.0
+              ],
+              "nside": 64,
+              "downscale_nside": 4,
+              "use_jax": true,
+              "chunk_size": 25000,
+              "temperature_fallback": "none",
+              "summary_features": [
+                "log_dispersion",
+                "flux_quantiles"
+              ],
+              "flux_temperature_n_bins": 10,
+              "flux_temperature_quantiles": [
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                0.9
+              ],
+              "flux_elevation_n_bins": 10,
+              "flux_elevation_quantiles": [
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                0.9
+              ]
+            },
+            "mask": {
+              "config": "workflow/configs/observations/masks/racs_low3_mask.yaml",
+              "source_radii_deg": {
+                "LMC": 13,
+                "SMC": 8
+              }
+            }
+          }
+        },
+        "csv": {
+          "header": [
+            "",
+            "",
+            "log10_n_initial_samples",
+            "observer_speed",
+            "dipole_longitude",
+            "dipole_latitude",
+            "lambda_clus",
+            "logL",
+            "logL_birth",
+            "nlive"
+          ],
+          "label_row": [
+            "labels",
+            "",
+            "N",
+            "D",
+            "phi",
+            "theta",
+            "lclus",
+            "$\\ln\\mathcal{L}$",
+            "$\\ln\\mathcal{L}_\\mathrm{birth}$",
+            "$n_\\mathrm{live}$"
+          ],
+          "weight_header": [
+            "",
+            "weights",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "n_rows": 91000,
+          "n_zero_weights": 13252,
+          "raw_weight_max": 1.0,
+          "normalization": "original nonnegative nested weights / their sum (stable scaling)",
+          "weights_sha256_float64_raw": "44bbddc45df3e15fceedce79b875d708634427036acff0e72cdb54946b8d0179"
+        }
+      },
+      "posterior_pushforward": {
+        "frame": "ICRS Cartesian; sourceward directions transformed from Galactic using astropy SkyCoord",
+        "units": "km/s; covariance (km/s)^2; ratios dimensionless; temp_beta per degree C",
+        "mean_velocity_icrs_km_s": [
+          -3223.0488822879347,
+          1357.0722671744097,
+          477.1474200975489
+        ],
+        "covariance_velocity_icrs_km2_s2": [
+          [
+            30076.04820265215,
+            3891.040563312533,
+            6292.33277321813
+          ],
+          [
+            3891.040563312533,
+            36684.78642618937,
+            -1252.5561474123847
+          ],
+          [
+            6292.33277321813,
+            -1252.5561474123847,
+            56902.129858406275
+          ]
+        ],
+        "mean_transverse_icrs_xy_km_s": [
+          -3223.0488822879347,
+          1357.0722671744097
+        ],
+        "covariance_transverse_icrs_xy_km2_s2": [
+          [
+            30076.04820265215,
+            3891.040563312533
+          ],
+          [
+            3891.040563312533,
+            36684.78642618937
+          ]
+        ],
+        "cmb_axis": {
+          "ra_deg": 167.942,
+          "dec_deg": -6.944,
+          "unit_icrs": [
+            -0.9707632626265688,
+            0.2073694160193707,
+            -0.1208991862437659
+          ],
+          "speed_km_s": 369.82,
+          "xy_normalization": 0.9926647907353193
+        },
+        "scalar_summaries": {
+          "speed_ratio": {
+            "mean": 9.580615011707138,
+            "sd": 0.44794314159080023,
+            "median": 9.569647,
+            "central68": [
+              9.13906,
+              10.025615
+            ],
+            "central95": [
+              8.734595,
+              10.492006
+            ]
+          },
+          "speed_km_s": {
+            "mean": 3543.103043629542,
+            "sd": 165.65833262310977,
+            "median": 3539.04685354,
+            "central68": [
+              3379.8071692000003,
+              3707.6729393
+            ],
+            "central95": [
+              3230.2279229,
+              3880.15365892
+            ]
+          },
+          "icrs_x_km_s": {
+            "mean": -3223.0488822879347,
+            "sd": 173.42447405903283,
+            "median": -3219.627341159579,
+            "central68": [
+              -3394.4721703507507,
+              -3050.1051702000273
+            ],
+            "central95": [
+              -3576.6286441702646,
+              -2897.4636856045163
+            ]
+          },
+          "icrs_y_km_s": {
+            "mean": 1357.07226717441,
+            "sd": 191.5327293863621,
+            "median": 1356.3941932824412,
+            "central68": [
+              1166.338683198954,
+              1545.762156930434
+            ],
+            "central95": [
+              982.3455537511069,
+              1739.719021299085
+            ]
+          },
+          "icrs_z_km_s": {
+            "mean": 477.14742009754866,
+            "sd": 238.54167321121537,
+            "median": 478.5250488438068,
+            "central68": [
+              241.8165111667802,
+              712.5664169852145
+            ],
+            "central95": [
+              8.6788221063433,
+              946.2113705809099
+            ]
+          },
+          "transverse_norm_km_s": {
+            "mean": 3502.585274954374,
+            "sd": 168.364076492065,
+            "median": 3497.7130127654523,
+            "central68": [
+              3336.43340554448,
+              3669.6531911046895
+            ],
+            "central95": [
+              3185.595782162867,
+              3843.7900901538064
+            ]
+          },
+          "transverse_parallel_km_s": {
+            "mean": 3435.432347296866,
+            "sd": 169.6308667901272,
+            "median": 3431.29682169983,
+            "central68": [
+              3267.170708645592,
+              3602.85503707187
+            ],
+            "central95": [
+              3117.598515959627,
+              3784.3106425396836
+            ]
+          },
+          "transverse_perpendicular_km_s": {
+            "mean": -653.8301179188156,
+            "sd": 194.90049682048442,
+            "median": -654.1294883211187,
+            "central68": [
+              -846.0860805051832,
+              -460.29708738118507
+            ],
+            "central95": [
+              -1039.1382553701003,
+              -270.80605664803903
+            ]
+          },
+          "transverse_parallel_ratio_to_cmb": {
+            "mean": 9.358115225843717,
+            "sd": 0.4620743582771481,
+            "median": 9.346850057112638,
+            "central68": [
+              8.899770644025105,
+              9.814174511530988
+            ],
+            "central95": [
+              8.492336099479726,
+              10.30845944940181
+            ]
+          },
+          "cmb_axis_parallel_ratio_3d": {
+            "mean": 9.065345295837666,
+            "sd": 0.47397942874156535,
+            "median": 9.050569896323532,
+            "central68": [
+              8.592103041172445,
+              9.53493296408784
+            ],
+            "central95": [
+              8.17747680932857,
+              10.03959878858619
+            ]
+          },
+          "cmb_axis_parallel_km_s_3d": {
+            "mean": 3352.5459973066854,
+            "sd": 175.28707233720564,
+            "median": 3347.081759058369,
+            "central68": [
+              3177.5315466863935,
+              3526.208908778965
+            ],
+            "central95": [
+              3024.194473625892,
+              3712.844423994945
+            ]
+          },
+          "cmb_axis_perpendicular_norm_km_s_3d": {
+            "mean": 1123.804414540371,
+            "sd": 218.62130961628114,
+            "median": 1121.2872877354137,
+            "central68": [
+              905.6982225816791,
+              1339.1466453411365
+            ],
+            "central95": [
+              704.3974229487294,
+              1556.8742607496342
+            ]
+          },
+          "lambda_clus": {
+            "mean": 0.44008862530800186,
+            "sd": 0.037145260679243126,
+            "median": 0.44093484,
+            "central68": [
+              0.4034049,
+              0.47663084
+            ],
+            "central95": [
+              0.36517957,
+              0.5112578
+            ]
+          }
+        },
+        "posterior_probability_transverse_parallel_ratio_gt1": 1.0,
+        "probability_semantics": "source-conditional posterior probability, NOT a frequentist p-value",
+        "nuisance_weighted_pearson_correlations": {
+          "lambda_clus": {
+            "icrs_x": 0.017932699624970353,
+            "icrs_y": 0.0014663022821869412,
+            "icrs_z": 0.015004983407530974,
+            "transverse_parallel_ratio": -0.017583377840405548
+          }
+        },
+        "weight_concentration_ess": 22898.881381432937,
+        "ess_semantics": "descriptive weight concentration, not independent sample size",
+        "quantile_convention": "inverse weighted empirical CDF; central equal-tail68 and95 percent",
+        "covariance_convention": "normalized posterior population covariance, no Bessel correction"
+      }
+    },
+    "racs_mid1_fiducial": {
+      "source": {
+        "experiment_id": "racs_mid1_fiducial",
+        "child_archive_name": "racs_mid1_fiducial.98db5375948b2d0c372afee0643dda9c8f6a8ae7f7e24504cb91823d44685e3c.analysis.zip",
+        "child_archive_sha256": "98db5375948b2d0c372afee0643dda9c8f6a8ae7f7e24504cb91823d44685e3c",
+        "artifact_manifest_sha256": "4e0a4f5cbf0d27965ac75a7d52ea4b7ae8481ab62e8e269941d80a38fe07dd91",
+        "artifact_manifest": {
+          "format_version": 3,
+          "experiment_id": "racs_mid1_fiducial",
+          "source": {
+            "repository": "https://github.com/o-oayda/sbi.git",
+            "commit": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf",
+            "dirty": true,
+            "reproducible": false
+          },
+          "implementation_fingerprint": "3747427af8bdb5f7954e27ebbe63f88c88df2224ac4d705035ae7681231a8fb5",
+          "files": [
+            {
+              "role": "experiment_config",
+              "archive_path": "configs/experiment.yaml",
+              "size": 1076,
+              "sha256": "47c17ee6e2df283375f4189ec68f97e7c2c4ffa1cbdb06bbd374512d8f6afb1d"
+            },
+            {
+              "role": "inference_config",
+              "archive_path": "configs/inference.yaml",
+              "size": 1580,
+              "sha256": "559f6edb6bc43e43126aca885b35ad73331ae298c7233cf02aea5bbe5c1e9f7a"
+            },
+            {
+              "role": "observation_config",
+              "archive_path": "configs/observation.yaml",
+              "size": 1096,
+              "sha256": "3beea7db51bf65a9ba1400d2dc1cd5a026f5aa25c2fbe16c571c3a033494df95"
+            },
+            {
+              "role": "native_reference_observation",
+              "archive_path": "observation/reference-observation-native.npz",
+              "size": 34934,
+              "sha256": "b67cee2bf24b4ba854b9700f53064d201a8d32dfc5bfed59380735e9cb8006f5"
+            },
+            {
+              "role": "reference_observation",
+              "archive_path": "observation/reference-observation.npz",
+              "size": 1083,
+              "sha256": "8926f631bc3e0410b804bcf90762d0763b4089c161db9e90a740421dff6360db"
+            },
+            {
+              "role": "final_posterior",
+              "archive_path": "posterior/final-posterior.csv",
+              "size": 10116917,
+              "sha256": "7cb405eee371509f9155b42b8c1854cd0f116a6fed49522959dbabdbd1c51e7e"
+            },
+            {
+              "role": "round_evidence",
+              "archive_path": "posterior/per-round-log-evidence.npy",
+              "size": 448,
+              "sha256": "97f64e82f00be0bffa94472a6b486f1ba0cf1d2f3c78892035f3c545b2df2ead"
+            },
+            {
+              "role": "configs",
+              "archive_path": "provenance/configs.txt",
+              "size": 5820,
+              "sha256": "0247343143276500d3ded537fc7f09ae44fa52f23ccefb17b09260e54d96c075"
+            },
+            {
+              "role": "data_validation_report",
+              "archive_path": "provenance/data-validation-report.yaml",
+              "size": 10225,
+              "sha256": "ea7a27028385d5ec24c66a38b66832f4d5c88a045783f794f8c28587c7ef19f0"
+            },
+            {
+              "role": "dataset_registry",
+              "archive_path": "provenance/dataset-registry.yaml",
+              "size": 3143,
+              "sha256": "06f03815254752cd7d383820fe412d2f8e733839e391e0a8dd3d252ecfbb8bdd"
+            },
+            {
+              "role": "model_config",
+              "archive_path": "provenance/model_config.json",
+              "size": 1423,
+              "sha256": "8329f9bcda8b712977be2f827491e32552cd8315fc2d31af6b91e6cc492daec4"
+            },
+            {
+              "role": "paf_manifest",
+              "archive_path": "provenance/paf-manifest.yaml",
+              "size": 5724,
+              "sha256": "d94290a3329424993f7ea3f8be70db389b7e62d333b1041ba09e91ec16912282"
+            },
+            {
+              "role": "run_command",
+              "archive_path": "provenance/run_command.txt",
+              "size": 1919,
+              "sha256": "0b7c6ddca2240419005523017808524f37b36bbe488c5b616899fadcb003c058"
+            },
+            {
+              "role": "pyproject",
+              "archive_path": "software/pyproject.toml",
+              "size": 2579,
+              "sha256": "4d1e5420d0ad5c30eba0ffa377cf96a2688bf2811c09061053b2f8df3c449821"
+            },
+            {
+              "role": "uv_lock",
+              "archive_path": "software/uv.lock",
+              "size": 327302,
+              "sha256": "b5f365fa4744a6588883bb5ab80acfa924ae86f2685331573164226fbd440b3d"
+            }
+          ]
+        },
+        "verified_member_hashes": {
+          "configs/experiment.yaml": "47c17ee6e2df283375f4189ec68f97e7c2c4ffa1cbdb06bbd374512d8f6afb1d",
+          "configs/inference.yaml": "559f6edb6bc43e43126aca885b35ad73331ae298c7233cf02aea5bbe5c1e9f7a",
+          "configs/observation.yaml": "3beea7db51bf65a9ba1400d2dc1cd5a026f5aa25c2fbe16c571c3a033494df95",
+          "observation/reference-observation-native.npz": "b67cee2bf24b4ba854b9700f53064d201a8d32dfc5bfed59380735e9cb8006f5",
+          "observation/reference-observation.npz": "8926f631bc3e0410b804bcf90762d0763b4089c161db9e90a740421dff6360db",
+          "posterior/final-posterior.csv": "7cb405eee371509f9155b42b8c1854cd0f116a6fed49522959dbabdbd1c51e7e",
+          "posterior/per-round-log-evidence.npy": "97f64e82f00be0bffa94472a6b486f1ba0cf1d2f3c78892035f3c545b2df2ead",
+          "provenance/configs.txt": "0247343143276500d3ded537fc7f09ae44fa52f23ccefb17b09260e54d96c075",
+          "provenance/data-validation-report.yaml": "ea7a27028385d5ec24c66a38b66832f4d5c88a045783f794f8c28587c7ef19f0",
+          "provenance/dataset-registry.yaml": "06f03815254752cd7d383820fe412d2f8e733839e391e0a8dd3d252ecfbb8bdd",
+          "provenance/model_config.json": "8329f9bcda8b712977be2f827491e32552cd8315fc2d31af6b91e6cc492daec4",
+          "provenance/paf-manifest.yaml": "d94290a3329424993f7ea3f8be70db389b7e62d333b1041ba09e91ec16912282",
+          "provenance/run_command.txt": "0b7c6ddca2240419005523017808524f37b36bbe488c5b616899fadcb003c058",
+          "software/pyproject.toml": "4d1e5420d0ad5c30eba0ffa377cf96a2688bf2811c09061053b2f8df3c449821",
+          "software/uv.lock": "b5f365fa4744a6588883bb5ab80acfa924ae86f2685331573164226fbd440b3d"
+        },
+        "model_config": {
+          "class_module": "catsim.racs",
+          "class_name": "RacsConfig",
+          "fields": {
+            "alpha_mean": 0.8,
+            "alpha_sigma": 0.3,
+            "catalogue_path": "/suphys/ooay3125/catalogue_data/racs/mid1-withcor/RACS-mid1_noscale_srl-withcor-mjytotflux.fits",
+            "chunk_size": 25000,
+            "cluster_count_model": "poisson",
+            "cluster_r0_arcsec": 100.0,
+            "cluster_r_cut_arcsec": 20.0,
+            "downscale_nside": 4,
+            "flux_error_flux_bins": 300,
+            "flux_error_flux_bounds_mjy": [
+              0.1,
+              10000.0
+            ],
+            "flux_error_min_cell_count": 10,
+            "flux_error_noise_bins": 200,
+            "flux_error_noise_bounds_ujy_beam": [
+              100.0,
+              1000.0
+            ],
+            "flux_hist_bins": 200,
+            "flux_min": 15.0,
+            "flux_temperature_min_mjy": 5.0,
+            "max_cluster_children_per_parent": 5,
+            "max_reference_fallback_tiles": null,
+            "noise_map_nside": 256,
+            "noisemap_data_dir": "/suphys/ooay3125/catalogue_data/racs/noisemaps",
+            "nside": 64,
+            "open_meteo_cache_dir": null,
+            "open_meteo_latitude_deg": -26.696,
+            "open_meteo_longitude_deg": 116.637,
+            "open_meteo_timeout_seconds": 60.0,
+            "paf_max_interpolation_gap_minutes": 20.0,
+            "paf_reference_temp_c": 25.0,
+            "paf_temperature_data_dir": "/suphys/ooay3125/paf_temps",
+            "product": "mid1",
+            "store_final_samples": false,
+            "temperature_fallback": "none",
+            "temperature_model": "hot_linear",
+            "use_float32": false
+          },
+          "schema_version": 1
+        },
+        "configs": {
+          "configs/experiment.yaml": {
+            "experiment_id": "racs_mid1_fiducial",
+            "observation_config": "workflow/configs/observations/racs_mid1_flux15_ds4.yaml",
+            "inference_config": "workflow/configs/inference/nle_maf11_zscore.yaml",
+            "execution": {
+              "jax_platforms": "cuda",
+              "threads": 1,
+              "mem_mb": 64000
+            },
+            "args": {
+              "n_simulations": 100000,
+              "n_rounds": 20,
+              "n_workers": null,
+              "jax_batch_size": 5,
+              "ssnle_seed": 0,
+              "no_ui": true,
+              "alpha_mean": 0.8,
+              "alpha_sigma": 0.3,
+              "temperature_model": "hot_linear",
+              "simulate_clustering": "poisson",
+              "max_children": 5,
+              "add_extra_error": false,
+              "add_elevation_model": false,
+              "log10_n_initial_samples_min": 5.6,
+              "log10_n_initial_samples_max": 6.8,
+              "observer_speed_min": 0.0,
+              "observer_speed_max": 12.0,
+              "dipole_longitude_min": 0.0,
+              "dipole_longitude_max": 360.0,
+              "dipole_latitude_min": -90.0,
+              "dipole_latitude_max": 90.0,
+              "temp_beta_min": 0.0,
+              "temp_beta_max": 0.05,
+              "lambda_clus_min": 0.0,
+              "lambda_clus_max": 3.0,
+              "elevation_trough_min": 0.0,
+              "elevation_trough_max": 90.0,
+              "elevation_amp_min": 0.0,
+              "elevation_amp_max": 0.2,
+              "p_clus_min": 0.0,
+              "p_clus_max": 1.0,
+              "clus_stop_prob_min": 0.4,
+              "clus_stop_prob_max": 1.0,
+              "eta_min": 0.0,
+              "eta_max": 8.0
+            }
+          },
+          "configs/inference.yaml": {
+            "inference_id": "nle_maf11_zscore",
+            "mode": "NLE",
+            "scenario": "anynside_nle",
+            "training": {
+              "learning_rate": 0.0001,
+              "max_n_iter": 1000,
+              "min_n_iter": 2,
+              "batch_size": 100,
+              "patience": 20,
+              "restore_from_previous": false,
+              "warmup_epochs": 0.3,
+              "min_lr_ratio": 1.0,
+              "clip_norm": 1.0,
+              "weight_decay": 1e-05,
+              "shuffle_train": true,
+              "shuffle_val": false,
+              "validation_fraction": 0.1,
+              "weight_by_round": false,
+              "alpha_weight": 1.0
+            },
+            "flow": {
+              "architecture": [
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF"
+              ],
+              "surjective_layer_type": "affine_MAF",
+              "conditioner": "made",
+              "decoder_distribution": "gaussian",
+              "decoder_n_neurons": 128,
+              "decoder_n_layers": 4,
+              "conditioner_n_neurons": 256,
+              "conditioner_n_layers": 4,
+              "funnel_one_and_done": false,
+              "funnel_maf_extension": 2,
+              "data_reduction_factor": 0.5,
+              "conditioner_kwargs": {},
+              "embed_target_transform_in_flow": false
+            },
+            "data_transform": {
+              "kind": "zscore",
+              "embed_in_flow": false,
+              "zscore_method": "batchwise",
+              "embedding_config": null
+            },
+            "theta_transform": {
+              "kind": "dipole_cartesian",
+              "embed_in_flow": false,
+              "wrap_longitude": true,
+              "reflect_latitude": true
+            },
+            "multiround": {
+              "load_simulations": null,
+              "dequantise_data": false,
+              "n_requantisations": null,
+              "initial_fraction": 0.0,
+              "n_likelihood_samples": 10000,
+              "n_posterior_samples": 10000,
+              "check_proposal_probs": true,
+              "write_results_to_disk": true,
+              "likelihood_chunk_size_gb": 0.5,
+              "save_round_simulations": true,
+              "round_simulation_subdir": "round_simulations",
+              "jax_ns_n_live": 5000,
+              "jax_ns_n_delete": 2000,
+              "native_count_hist_max_count": null,
+              "native_count_hist_eps": null,
+              "native_count_hist_transform": null
+            }
+          },
+          "configs/observation.yaml": {
+            "observation_id": "racs_mid1_flux15_ds4",
+            "datasets": {
+              "catalogue": "racs_mid1_catalogue",
+              "paf_temperatures": "racs_mid1_paf_temperatures",
+              "noise_maps": "racs_mid1_noise_maps"
+            },
+            "args": {
+              "racs_epoch": "mid1",
+              "flux_min": 15.0,
+              "flux_temperature_min_mjy": 5.0,
+              "local_source_crossmatch_radius_arcsec": 5.0,
+              "noise_map_nside": 256,
+              "flux_error_noise_bins": 200,
+              "flux_error_flux_bins": 300,
+              "flux_error_min_cell_count": 10,
+              "flux_error_noise_bounds_ujy_beam": [
+                100.0,
+                1000.0
+              ],
+              "flux_error_flux_bounds_mjy": [
+                0.1,
+                10000.0
+              ],
+              "nside": 64,
+              "downscale_nside": 4,
+              "use_jax": true,
+              "chunk_size": 25000,
+              "temperature_fallback": "none",
+              "summary_features": [
+                "log_dispersion",
+                "flux_quantiles"
+              ],
+              "flux_temperature_n_bins": 10,
+              "flux_temperature_quantiles": [
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                0.9
+              ],
+              "flux_elevation_n_bins": 10,
+              "flux_elevation_quantiles": [
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                0.9
+              ]
+            },
+            "mask": {
+              "config": "workflow/configs/observations/masks/racs_mid1_mask.yaml"
+            }
+          }
+        },
+        "csv": {
+          "header": [
+            "",
+            "",
+            "log10_n_initial_samples",
+            "observer_speed",
+            "dipole_longitude",
+            "dipole_latitude",
+            "temp_beta",
+            "lambda_clus",
+            "logL",
+            "logL_birth",
+            "nlive"
+          ],
+          "label_row": [
+            "labels",
+            "",
+            "N",
+            "D",
+            "phi",
+            "theta",
+            "beta",
+            "lclus",
+            "$\\ln\\mathcal{L}$",
+            "$\\ln\\mathcal{L}_\\mathrm{birth}$",
+            "$n_\\mathrm{live}$"
+          ],
+          "weight_header": [
+            "",
+            "weights",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "n_rows": 91000,
+          "n_zero_weights": 13547,
+          "raw_weight_max": 1.0,
+          "normalization": "original nonnegative nested weights / their sum (stable scaling)",
+          "weights_sha256_float64_raw": "55229c624ade330362bdfe531f025cebe6b715e2b9c23b030dcf42ea25dcbd1b"
+        }
+      },
+      "posterior_pushforward": {
+        "frame": "ICRS Cartesian; sourceward directions transformed from Galactic using astropy SkyCoord",
+        "units": "km/s; covariance (km/s)^2; ratios dimensionless; temp_beta per degree C",
+        "mean_velocity_icrs_km_s": [
+          -1290.8001176770665,
+          942.1245717776554,
+          1030.070652201191
+        ],
+        "covariance_velocity_icrs_km2_s2": [
+          [
+            129362.80726316955,
+            -26453.195333010975,
+            -479.5193778774402
+          ],
+          [
+            -26453.195333010975,
+            63322.57103327955,
+            4067.7872974885904
+          ],
+          [
+            -479.5193778774402,
+            4067.7872974885904,
+            80877.91431418875
+          ]
+        ],
+        "mean_transverse_icrs_xy_km_s": [
+          -1290.8001176770665,
+          942.1245717776554
+        ],
+        "covariance_transverse_icrs_xy_km2_s2": [
+          [
+            129362.80726316955,
+            -26453.195333010975
+          ],
+          [
+            -26453.195333010975,
+            63322.57103327955
+          ]
+        ],
+        "cmb_axis": {
+          "ra_deg": 167.942,
+          "dec_deg": -6.944,
+          "unit_icrs": [
+            -0.9707632626265688,
+            0.2073694160193707,
+            -0.1208991862437659
+          ],
+          "speed_km_s": 369.82,
+          "xy_normalization": 0.9926647907353193
+        },
+        "scalar_summaries": {
+          "speed_ratio": {
+            "mean": 5.2514153226326545,
+            "sd": 0.9237455032996225,
+            "median": 5.2504754,
+            "central68": [
+              4.327936,
+              6.1710024
+            ],
+            "central95": [
+              3.4299235,
+              7.0403953
+            ]
+          },
+          "speed_km_s": {
+            "mean": 1942.0784146160106,
+            "sd": 341.6195620302665,
+            "median": 1941.730812428,
+            "central68": [
+              1600.55729152,
+              2282.160107568
+            ],
+            "central95": [
+              1268.4543087700001,
+              2603.678989846
+            ]
+          },
+          "icrs_x_km_s": {
+            "mean": -1290.8001176770667,
+            "sd": 359.6704147732608,
+            "median": -1293.6563197774126,
+            "central68": [
+              -1653.8782528574627,
+              -927.3428419043036
+            ],
+            "central95": [
+              -1987.553770024116,
+              -584.8864968395987
+            ]
+          },
+          "icrs_y_km_s": {
+            "mean": 942.1245717776553,
+            "sd": 251.63976441190596,
+            "median": 935.2620716423893,
+            "central68": [
+              689.1530279829171,
+              1195.6441592341232
+            ],
+            "central95": [
+              469.084228080161,
+              1445.1508185313933
+            ]
+          },
+          "icrs_z_km_s": {
+            "mean": 1030.0706522011908,
+            "sd": 284.39042584832,
+            "median": 1025.7873212526158,
+            "central68": [
+              749.2502877577255,
+              1310.7798127717406
+            ],
+            "central95": [
+              483.2380088375114,
+              1594.1153045279314
+            ]
+          },
+          "transverse_norm_km_s": {
+            "mean": 1617.7316683530985,
+            "sd": 359.7127743718727,
+            "median": 1619.5461017119985,
+            "central68": [
+              1254.9129488593248,
+              1981.9049280208721
+            ],
+            "central95": [
+              911.8360268026726,
+              2310.4926167096423
+            ]
+          },
+          "transverse_parallel_km_s": {
+            "mean": 1459.1321959037678,
+            "sd": 370.5255771949332,
+            "median": 1463.0992422974737,
+            "central68": [
+              1083.8336857350398,
+              1832.605775068587
+            ],
+            "central95": [
+              726.6310497884399,
+              2172.908745706136
+            ]
+          },
+          "transverse_perpendicular_km_s": {
+            "mean": -651.6877223175294,
+            "sd": 235.36392021890447,
+            "median": -646.2602438266318,
+            "central68": [
+              -889.7816292681571,
+              -417.2526949893355
+            ],
+            "central95": [
+              -1120.0392307768757,
+              -205.71395019193486
+            ]
+          },
+          "transverse_parallel_ratio_to_cmb": {
+            "mean": 3.9746750448309363,
+            "sd": 1.0093114039171043,
+            "median": 3.985481276334164,
+            "central68": [
+              2.952362174950124,
+              4.99201680397885
+            ],
+            "central95": [
+              1.9793424533440245,
+              5.9190018495230765
+            ]
+          },
+          "cmb_axis_parallel_ratio_3d": {
+            "mean": 3.579834655446626,
+            "sd": 0.9977355813656025,
+            "median": 3.593034425888275,
+            "central68": [
+              2.5681795379889647,
+              4.591624597038734
+            ],
+            "central95": [
+              1.6090260049820935,
+              5.49722374892546
+            ]
+          },
+          "cmb_axis_parallel_km_s_3d": {
+            "mean": 1323.8944522772717,
+            "sd": 368.9825727006269,
+            "median": 1328.7759913820018,
+            "central68": [
+              949.7641567390789,
+              1698.0746084768648
+            ],
+            "central95": [
+              595.0499971624778,
+              2032.9832868276137
+            ]
+          },
+          "cmb_axis_perpendicular_norm_km_s_3d": {
+            "mean": 1385.901080061069,
+            "sd": 280.7241176625881,
+            "median": 1381.375445290798,
+            "central68": [
+              1106.7123697596896,
+              1663.488041999612
+            ],
+            "central95": [
+              849.404141888093,
+              1954.9928396148584
+            ]
+          },
+          "temp_beta": {
+            "mean": 0.00467163315655522,
+            "sd": 0.0016823119653943447,
+            "median": 0.004658793,
+            "central68": [
+              0.0029774474,
+              0.006373351
+            ],
+            "central95": [
+              0.001412306,
+              0.007975712
+            ]
+          },
+          "lambda_clus": {
+            "mean": 0.5712161298244236,
+            "sd": 0.04101301799014451,
+            "median": 0.57172,
+            "central68": [
+              0.5303496,
+              0.6120712
+            ],
+            "central95": [
+              0.49037036,
+              0.6501715
+            ]
+          }
+        },
+        "posterior_probability_transverse_parallel_ratio_gt1": 0.9986995863777662,
+        "probability_semantics": "source-conditional posterior probability, NOT a frequentist p-value",
+        "nuisance_weighted_pearson_correlations": {
+          "temp_beta": {
+            "icrs_x": 0.8208410420943715,
+            "icrs_y": -0.30316317065631787,
+            "icrs_z": 0.012114011755297442,
+            "transverse_parallel_ratio": -0.8222242064339219
+          },
+          "lambda_clus": {
+            "icrs_x": 0.04428423532633966,
+            "icrs_y": -0.017559203711588145,
+            "icrs_z": -0.010500685227779541,
+            "transverse_parallel_ratio": -0.044529616769776556
+          }
+        },
+        "weight_concentration_ess": 24516.97025628655,
+        "ess_semantics": "descriptive weight concentration, not independent sample size",
+        "quantile_convention": "inverse weighted empirical CDF; central equal-tail68 and95 percent",
+        "covariance_convention": "normalized posterior population covariance, no Bessel correction"
+      }
+    },
+    "racs_mid1_noclus": {
+      "source": {
+        "experiment_id": "racs_mid1_noclus",
+        "child_archive_name": "racs_mid1_noclus.67d0968c9a8b1bf42faf6b076735f6362ff55664117fec427988094d401b1108.analysis.zip",
+        "child_archive_sha256": "67d0968c9a8b1bf42faf6b076735f6362ff55664117fec427988094d401b1108",
+        "artifact_manifest_sha256": "784dd8c063084cd386291403e17b5134224392a397a512bdcc3107302b28903c",
+        "artifact_manifest": {
+          "format_version": 3,
+          "experiment_id": "racs_mid1_noclus",
+          "source": {
+            "repository": "https://github.com/o-oayda/sbi.git",
+            "commit": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf",
+            "dirty": true,
+            "reproducible": false
+          },
+          "implementation_fingerprint": "3747427af8bdb5f7954e27ebbe63f88c88df2224ac4d705035ae7681231a8fb5",
+          "files": [
+            {
+              "role": "experiment_config",
+              "archive_path": "configs/experiment.yaml",
+              "size": 1071,
+              "sha256": "7a4e97a50b12ce1cf371a701b28d0ca77eacf4c39309d0723ebb66324f024071"
+            },
+            {
+              "role": "inference_config",
+              "archive_path": "configs/inference.yaml",
+              "size": 1580,
+              "sha256": "559f6edb6bc43e43126aca885b35ad73331ae298c7233cf02aea5bbe5c1e9f7a"
+            },
+            {
+              "role": "observation_config",
+              "archive_path": "configs/observation.yaml",
+              "size": 1096,
+              "sha256": "3beea7db51bf65a9ba1400d2dc1cd5a026f5aa25c2fbe16c571c3a033494df95"
+            },
+            {
+              "role": "native_reference_observation",
+              "archive_path": "observation/reference-observation-native.npz",
+              "size": 34934,
+              "sha256": "b67cee2bf24b4ba854b9700f53064d201a8d32dfc5bfed59380735e9cb8006f5"
+            },
+            {
+              "role": "reference_observation",
+              "archive_path": "observation/reference-observation.npz",
+              "size": 1083,
+              "sha256": "8926f631bc3e0410b804bcf90762d0763b4089c161db9e90a740421dff6360db"
+            },
+            {
+              "role": "final_posterior",
+              "archive_path": "posterior/final-posterior.csv",
+              "size": 7978605,
+              "sha256": "4ed07235e742f544ccd80ce936e40dd8e7765a24f3ca3b2751a58276ec05893e"
+            },
+            {
+              "role": "round_evidence",
+              "archive_path": "posterior/per-round-log-evidence.npy",
+              "size": 448,
+              "sha256": "63ad9036886e088a7860b1cf7e7cd70bcf42be26a2494a5733a14833e99a36ce"
+            },
+            {
+              "role": "configs",
+              "archive_path": "provenance/configs.txt",
+              "size": 5735,
+              "sha256": "ff39fe5177dcf3a0f5da5769d3f2ae66dc3a8b5aa844c9fca6eed1f5be05a28b"
+            },
+            {
+              "role": "data_validation_report",
+              "archive_path": "provenance/data-validation-report.yaml",
+              "size": 10225,
+              "sha256": "ea7a27028385d5ec24c66a38b66832f4d5c88a045783f794f8c28587c7ef19f0"
+            },
+            {
+              "role": "dataset_registry",
+              "archive_path": "provenance/dataset-registry.yaml",
+              "size": 3143,
+              "sha256": "06f03815254752cd7d383820fe412d2f8e733839e391e0a8dd3d252ecfbb8bdd"
+            },
+            {
+              "role": "model_config",
+              "archive_path": "provenance/model_config.json",
+              "size": 1423,
+              "sha256": "33f0b6967cc9c3bf513b41051081138cb522c33d0a1631523bfdc76ae0ad7d9e"
+            },
+            {
+              "role": "paf_manifest",
+              "archive_path": "provenance/paf-manifest.yaml",
+              "size": 5724,
+              "sha256": "d94290a3329424993f7ea3f8be70db389b7e62d333b1041ba09e91ec16912282"
+            },
+            {
+              "role": "run_command",
+              "archive_path": "provenance/run_command.txt",
+              "size": 1887,
+              "sha256": "af7e0934527d523150ede52148a038531a6a5b92373bde21801bc5934b97ba76"
+            },
+            {
+              "role": "pyproject",
+              "archive_path": "software/pyproject.toml",
+              "size": 2579,
+              "sha256": "4d1e5420d0ad5c30eba0ffa377cf96a2688bf2811c09061053b2f8df3c449821"
+            },
+            {
+              "role": "uv_lock",
+              "archive_path": "software/uv.lock",
+              "size": 327302,
+              "sha256": "b5f365fa4744a6588883bb5ab80acfa924ae86f2685331573164226fbd440b3d"
+            }
+          ]
+        },
+        "verified_member_hashes": {
+          "configs/experiment.yaml": "7a4e97a50b12ce1cf371a701b28d0ca77eacf4c39309d0723ebb66324f024071",
+          "configs/inference.yaml": "559f6edb6bc43e43126aca885b35ad73331ae298c7233cf02aea5bbe5c1e9f7a",
+          "configs/observation.yaml": "3beea7db51bf65a9ba1400d2dc1cd5a026f5aa25c2fbe16c571c3a033494df95",
+          "observation/reference-observation-native.npz": "b67cee2bf24b4ba854b9700f53064d201a8d32dfc5bfed59380735e9cb8006f5",
+          "observation/reference-observation.npz": "8926f631bc3e0410b804bcf90762d0763b4089c161db9e90a740421dff6360db",
+          "posterior/final-posterior.csv": "4ed07235e742f544ccd80ce936e40dd8e7765a24f3ca3b2751a58276ec05893e",
+          "posterior/per-round-log-evidence.npy": "63ad9036886e088a7860b1cf7e7cd70bcf42be26a2494a5733a14833e99a36ce",
+          "provenance/configs.txt": "ff39fe5177dcf3a0f5da5769d3f2ae66dc3a8b5aa844c9fca6eed1f5be05a28b",
+          "provenance/data-validation-report.yaml": "ea7a27028385d5ec24c66a38b66832f4d5c88a045783f794f8c28587c7ef19f0",
+          "provenance/dataset-registry.yaml": "06f03815254752cd7d383820fe412d2f8e733839e391e0a8dd3d252ecfbb8bdd",
+          "provenance/model_config.json": "33f0b6967cc9c3bf513b41051081138cb522c33d0a1631523bfdc76ae0ad7d9e",
+          "provenance/paf-manifest.yaml": "d94290a3329424993f7ea3f8be70db389b7e62d333b1041ba09e91ec16912282",
+          "provenance/run_command.txt": "af7e0934527d523150ede52148a038531a6a5b92373bde21801bc5934b97ba76",
+          "software/pyproject.toml": "4d1e5420d0ad5c30eba0ffa377cf96a2688bf2811c09061053b2f8df3c449821",
+          "software/uv.lock": "b5f365fa4744a6588883bb5ab80acfa924ae86f2685331573164226fbd440b3d"
+        },
+        "model_config": {
+          "class_module": "catsim.racs",
+          "class_name": "RacsConfig",
+          "fields": {
+            "alpha_mean": 0.8,
+            "alpha_sigma": 0.3,
+            "catalogue_path": "/suphys/ooay3125/catalogue_data/racs/mid1-withcor/RACS-mid1_noscale_srl-withcor-mjytotflux.fits",
+            "chunk_size": 25000,
+            "cluster_count_model": "poisson",
+            "cluster_r0_arcsec": 100.0,
+            "cluster_r_cut_arcsec": 20.0,
+            "downscale_nside": 4,
+            "flux_error_flux_bins": 300,
+            "flux_error_flux_bounds_mjy": [
+              0.1,
+              10000.0
+            ],
+            "flux_error_min_cell_count": 10,
+            "flux_error_noise_bins": 200,
+            "flux_error_noise_bounds_ujy_beam": [
+              100.0,
+              1000.0
+            ],
+            "flux_hist_bins": 200,
+            "flux_min": 15.0,
+            "flux_temperature_min_mjy": 5.0,
+            "max_cluster_children_per_parent": 0,
+            "max_reference_fallback_tiles": null,
+            "noise_map_nside": 256,
+            "noisemap_data_dir": "/suphys/ooay3125/catalogue_data/racs/noisemaps",
+            "nside": 64,
+            "open_meteo_cache_dir": null,
+            "open_meteo_latitude_deg": -26.696,
+            "open_meteo_longitude_deg": 116.637,
+            "open_meteo_timeout_seconds": 60.0,
+            "paf_max_interpolation_gap_minutes": 20.0,
+            "paf_reference_temp_c": 25.0,
+            "paf_temperature_data_dir": "/suphys/ooay3125/paf_temps",
+            "product": "mid1",
+            "store_final_samples": false,
+            "temperature_fallback": "none",
+            "temperature_model": "hot_linear",
+            "use_float32": false
+          },
+          "schema_version": 1
+        },
+        "configs": {
+          "configs/experiment.yaml": {
+            "experiment_id": "racs_mid1_noclus",
+            "observation_config": "workflow/configs/observations/racs_mid1_flux15_ds4.yaml",
+            "inference_config": "workflow/configs/inference/nle_maf11_zscore.yaml",
+            "execution": {
+              "jax_platforms": "cuda",
+              "threads": 1,
+              "mem_mb": 64000
+            },
+            "args": {
+              "n_simulations": 100000,
+              "n_rounds": 20,
+              "n_workers": null,
+              "jax_batch_size": 5,
+              "ssnle_seed": 0,
+              "no_ui": true,
+              "alpha_mean": 0.8,
+              "alpha_sigma": 0.3,
+              "temperature_model": "hot_linear",
+              "simulate_clustering": null,
+              "max_children": 0,
+              "add_extra_error": false,
+              "add_elevation_model": false,
+              "log10_n_initial_samples_min": 5.6,
+              "log10_n_initial_samples_max": 6.8,
+              "observer_speed_min": 0.0,
+              "observer_speed_max": 12.0,
+              "dipole_longitude_min": 0.0,
+              "dipole_longitude_max": 360.0,
+              "dipole_latitude_min": -90.0,
+              "dipole_latitude_max": 90.0,
+              "temp_beta_min": 0.0,
+              "temp_beta_max": 0.05,
+              "lambda_clus_min": 0.0,
+              "lambda_clus_max": 3.0,
+              "elevation_trough_min": 0.0,
+              "elevation_trough_max": 90.0,
+              "elevation_amp_min": 0.0,
+              "elevation_amp_max": 0.2,
+              "p_clus_min": 0.0,
+              "p_clus_max": 1.0,
+              "clus_stop_prob_min": 0.4,
+              "clus_stop_prob_max": 1.0,
+              "eta_min": 0.0,
+              "eta_max": 8.0
+            }
+          },
+          "configs/inference.yaml": {
+            "inference_id": "nle_maf11_zscore",
+            "mode": "NLE",
+            "scenario": "anynside_nle",
+            "training": {
+              "learning_rate": 0.0001,
+              "max_n_iter": 1000,
+              "min_n_iter": 2,
+              "batch_size": 100,
+              "patience": 20,
+              "restore_from_previous": false,
+              "warmup_epochs": 0.3,
+              "min_lr_ratio": 1.0,
+              "clip_norm": 1.0,
+              "weight_decay": 1e-05,
+              "shuffle_train": true,
+              "shuffle_val": false,
+              "validation_fraction": 0.1,
+              "weight_by_round": false,
+              "alpha_weight": 1.0
+            },
+            "flow": {
+              "architecture": [
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF"
+              ],
+              "surjective_layer_type": "affine_MAF",
+              "conditioner": "made",
+              "decoder_distribution": "gaussian",
+              "decoder_n_neurons": 128,
+              "decoder_n_layers": 4,
+              "conditioner_n_neurons": 256,
+              "conditioner_n_layers": 4,
+              "funnel_one_and_done": false,
+              "funnel_maf_extension": 2,
+              "data_reduction_factor": 0.5,
+              "conditioner_kwargs": {},
+              "embed_target_transform_in_flow": false
+            },
+            "data_transform": {
+              "kind": "zscore",
+              "embed_in_flow": false,
+              "zscore_method": "batchwise",
+              "embedding_config": null
+            },
+            "theta_transform": {
+              "kind": "dipole_cartesian",
+              "embed_in_flow": false,
+              "wrap_longitude": true,
+              "reflect_latitude": true
+            },
+            "multiround": {
+              "load_simulations": null,
+              "dequantise_data": false,
+              "n_requantisations": null,
+              "initial_fraction": 0.0,
+              "n_likelihood_samples": 10000,
+              "n_posterior_samples": 10000,
+              "check_proposal_probs": true,
+              "write_results_to_disk": true,
+              "likelihood_chunk_size_gb": 0.5,
+              "save_round_simulations": true,
+              "round_simulation_subdir": "round_simulations",
+              "jax_ns_n_live": 5000,
+              "jax_ns_n_delete": 2000,
+              "native_count_hist_max_count": null,
+              "native_count_hist_eps": null,
+              "native_count_hist_transform": null
+            }
+          },
+          "configs/observation.yaml": {
+            "observation_id": "racs_mid1_flux15_ds4",
+            "datasets": {
+              "catalogue": "racs_mid1_catalogue",
+              "paf_temperatures": "racs_mid1_paf_temperatures",
+              "noise_maps": "racs_mid1_noise_maps"
+            },
+            "args": {
+              "racs_epoch": "mid1",
+              "flux_min": 15.0,
+              "flux_temperature_min_mjy": 5.0,
+              "local_source_crossmatch_radius_arcsec": 5.0,
+              "noise_map_nside": 256,
+              "flux_error_noise_bins": 200,
+              "flux_error_flux_bins": 300,
+              "flux_error_min_cell_count": 10,
+              "flux_error_noise_bounds_ujy_beam": [
+                100.0,
+                1000.0
+              ],
+              "flux_error_flux_bounds_mjy": [
+                0.1,
+                10000.0
+              ],
+              "nside": 64,
+              "downscale_nside": 4,
+              "use_jax": true,
+              "chunk_size": 25000,
+              "temperature_fallback": "none",
+              "summary_features": [
+                "log_dispersion",
+                "flux_quantiles"
+              ],
+              "flux_temperature_n_bins": 10,
+              "flux_temperature_quantiles": [
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                0.9
+              ],
+              "flux_elevation_n_bins": 10,
+              "flux_elevation_quantiles": [
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                0.9
+              ]
+            },
+            "mask": {
+              "config": "workflow/configs/observations/masks/racs_mid1_mask.yaml"
+            }
+          }
+        },
+        "csv": {
+          "header": [
+            "",
+            "",
+            "log10_n_initial_samples",
+            "observer_speed",
+            "dipole_longitude",
+            "dipole_latitude",
+            "temp_beta",
+            "logL",
+            "logL_birth",
+            "nlive"
+          ],
+          "label_row": [
+            "labels",
+            "",
+            "N",
+            "D",
+            "phi",
+            "theta",
+            "beta",
+            "$\\ln\\mathcal{L}$",
+            "$\\ln\\mathcal{L}_\\mathrm{birth}$",
+            "$n_\\mathrm{live}$"
+          ],
+          "weight_header": [
+            "",
+            "weights",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "n_rows": 79000,
+          "n_zero_weights": 12746,
+          "raw_weight_max": 1.0,
+          "normalization": "original nonnegative nested weights / their sum (stable scaling)",
+          "weights_sha256_float64_raw": "9585bb60571e3a7d6c34182f9b8eb640c9c0d9b118a1530bfa16350f8387a215"
+        }
+      },
+      "posterior_pushforward": {
+        "frame": "ICRS Cartesian; sourceward directions transformed from Galactic using astropy SkyCoord",
+        "units": "km/s; covariance (km/s)^2; ratios dimensionless; temp_beta per degree C",
+        "mean_velocity_icrs_km_s": [
+          -1215.1020380572456,
+          838.8933020654855,
+          1417.6579394481646
+        ],
+        "covariance_velocity_icrs_km2_s2": [
+          [
+            257432.41502345933,
+            -54729.550526942374,
+            -13595.918937057771
+          ],
+          [
+            -54729.550526942374,
+            69095.89492728648,
+            5643.78800440208
+          ],
+          [
+            -13595.918937057771,
+            5643.78800440208,
+            72052.97462877561
+          ]
+        ],
+        "mean_transverse_icrs_xy_km_s": [
+          -1215.1020380572456,
+          838.8933020654855
+        ],
+        "covariance_transverse_icrs_xy_km2_s2": [
+          [
+            257432.41502345933,
+            -54729.550526942374
+          ],
+          [
+            -54729.550526942374,
+            69095.89492728648
+          ]
+        ],
+        "cmb_axis": {
+          "ra_deg": 167.942,
+          "dec_deg": -6.944,
+          "unit_icrs": [
+            -0.9707632626265688,
+            0.2073694160193707,
+            -0.1208991862437659
+          ],
+          "speed_km_s": 369.82,
+          "xy_normalization": 0.9926647907353193
+        },
+        "scalar_summaries": {
+          "speed_ratio": {
+            "mean": 5.6848560399288175,
+            "sd": 1.1102162693276205,
+            "median": 5.648458,
+            "central68": [
+              4.5647287,
+              6.8082128
+            ],
+            "central95": [
+              3.6123843,
+              7.9305587
+            ]
+          },
+          "speed_km_s": {
+            "mean": 2102.3734606864755,
+            "sd": 410.58018072274047,
+            "median": 2088.91273756,
+            "central68": [
+              1688.127967834,
+              2517.8132576959997
+            ],
+            "central95": [
+              1335.931961826,
+              2932.879218434
+            ]
+          },
+          "icrs_x_km_s": {
+            "mean": -1215.102038057245,
+            "sd": 507.3779804282596,
+            "median": -1219.5536740481728,
+            "central68": [
+              -1742.2156643496996,
+              -681.1892363350245
+            ],
+            "central95": [
+              -2167.9288668313707,
+              -242.0446049540333
+            ]
+          },
+          "icrs_y_km_s": {
+            "mean": 838.8933020654852,
+            "sd": 262.86098022963876,
+            "median": 836.699684255299,
+            "central68": [
+              577.1496906941381,
+              1099.2775511450552
+            ],
+            "central95": [
+              331.278091943363,
+              1362.1302674330266
+            ]
+          },
+          "icrs_z_km_s": {
+            "mean": 1417.657939448164,
+            "sd": 268.426851542046,
+            "median": 1419.5220766105922,
+            "central68": [
+              1152.8998679666972,
+              1680.9135718204186
+            ],
+            "central95": [
+              888.3589210286666,
+              1946.6588927913722
+            ]
+          },
+          "transverse_norm_km_s": {
+            "mean": 1507.8129275027077,
+            "sd": 482.95281420410333,
+            "median": 1495.5231434381722,
+            "central68": [
+              1005.3078539600629,
+              2013.9826786129306
+            ],
+            "central95": [
+              634.5673147994738,
+              2461.4309532004017
+            ]
+          },
+          "transverse_parallel_km_s": {
+            "mean": 1363.5390775146645,
+            "sd": 521.1286913269898,
+            "median": 1364.466476363895,
+            "central68": [
+              816.5914292362318,
+              1905.6831390679938
+            ],
+            "central95": [
+              377.49479478185583,
+              2349.3980738232954
+            ]
+          },
+          "transverse_perpendicular_km_s": {
+            "mean": -566.547543663954,
+            "sd": 234.42098247930937,
+            "median": -568.3461410031254,
+            "central68": [
+              -799.1874650207584,
+              -335.02511229645665
+            ],
+            "central95": [
+              -1024.5190799788002,
+              -100.27662946762617
+            ]
+          },
+          "transverse_parallel_ratio_to_cmb": {
+            "mean": 3.7142794595745943,
+            "sd": 1.4195541777349672,
+            "median": 3.716805693368204,
+            "central68": [
+              2.2243944618038816,
+              5.191079490585229
+            ],
+            "central95": [
+              1.0282955475762616,
+              6.399758651487658
+            ]
+          },
+          "cmb_axis_parallel_ratio_3d": {
+            "mean": 3.196537617730864,
+            "sd": 1.3924628481382952,
+            "median": 3.189960041929174,
+            "central68": [
+              1.731816245535057,
+              4.643737841518522
+            ],
+            "central95": [
+              0.5805276731428406,
+              5.845628719216675
+            ]
+          },
+          "cmb_axis_parallel_km_s_3d": {
+            "mean": 1182.1435417892299,
+            "sd": 514.9606104985043,
+            "median": 1179.7110227062471,
+            "central68": [
+              640.4602839237748,
+              1717.34712855038
+            ],
+            "central95": [
+              214.69074408168532,
+              2161.8304129407106
+            ]
+          },
+          "cmb_axis_perpendicular_norm_km_s_3d": {
+            "mean": 1687.9020891113928,
+            "sd": 277.28867055031714,
+            "median": 1682.551033265283,
+            "central68": [
+              1415.9276173832575,
+              1959.7032046607221
+            ],
+            "central95": [
+              1157.6471642950992,
+              2255.7061361955407
+            ]
+          },
+          "temp_beta": {
+            "mean": 0.004889617048154047,
+            "sd": 0.002180036726496592,
+            "median": 0.0048730597,
+            "central68": [
+              0.0025974074,
+              0.007134454
+            ],
+            "central95": [
+              0.00081103994,
+              0.009154118
+            ]
+          }
+        },
+        "posterior_probability_transverse_parallel_ratio_gt1": 0.9766189218272786,
+        "probability_semantics": "source-conditional posterior probability, NOT a frequentist p-value",
+        "nuisance_weighted_pearson_correlations": {
+          "temp_beta": {
+            "icrs_x": 0.8887856953426984,
+            "icrs_y": -0.4085356025308374,
+            "icrs_z": -0.08497518776846902,
+            "transverse_parallel_ratio": -0.889289676064395
+          }
+        },
+        "weight_concentration_ess": 22433.404046674987,
+        "ess_semantics": "descriptive weight concentration, not independent sample size",
+        "quantile_convention": "inverse weighted empirical CDF; central equal-tail68 and95 percent",
+        "covariance_convention": "normalized posterior population covariance, no Bessel correction"
+      }
+    },
+    "racs_mid1_notemp": {
+      "source": {
+        "experiment_id": "racs_mid1_notemp",
+        "child_archive_name": "racs_mid1_notemp.0d2ed7d09e60276d9879caaa06aaa72d95cd35519b82629787dbd62651d4e51e.analysis.zip",
+        "child_archive_sha256": "0d2ed7d09e60276d9879caaa06aaa72d95cd35519b82629787dbd62651d4e51e",
+        "artifact_manifest_sha256": "6db4d19184011d1edb667ee2cc7b8b9bbfba381621756bc376a323f3fb219623",
+        "artifact_manifest": {
+          "format_version": 3,
+          "experiment_id": "racs_mid1_notemp",
+          "source": {
+            "repository": "https://github.com/o-oayda/sbi.git",
+            "commit": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf",
+            "dirty": true,
+            "reproducible": false
+          },
+          "implementation_fingerprint": "3747427af8bdb5f7954e27ebbe63f88c88df2224ac4d705035ae7681231a8fb5",
+          "files": [
+            {
+              "role": "experiment_config",
+              "archive_path": "configs/experiment.yaml",
+              "size": 1073,
+              "sha256": "82b303c0829fd654c1aa6549336507608289f86c78764542463e4aeaff2db858"
+            },
+            {
+              "role": "inference_config",
+              "archive_path": "configs/inference.yaml",
+              "size": 1580,
+              "sha256": "559f6edb6bc43e43126aca885b35ad73331ae298c7233cf02aea5bbe5c1e9f7a"
+            },
+            {
+              "role": "observation_config",
+              "archive_path": "configs/observation.yaml",
+              "size": 1096,
+              "sha256": "3beea7db51bf65a9ba1400d2dc1cd5a026f5aa25c2fbe16c571c3a033494df95"
+            },
+            {
+              "role": "native_reference_observation",
+              "archive_path": "observation/reference-observation-native.npz",
+              "size": 34934,
+              "sha256": "b67cee2bf24b4ba854b9700f53064d201a8d32dfc5bfed59380735e9cb8006f5"
+            },
+            {
+              "role": "reference_observation",
+              "archive_path": "observation/reference-observation.npz",
+              "size": 1083,
+              "sha256": "8926f631bc3e0410b804bcf90762d0763b4089c161db9e90a740421dff6360db"
+            },
+            {
+              "role": "final_posterior",
+              "archive_path": "posterior/final-posterior.csv",
+              "size": 8588434,
+              "sha256": "103f1781e49e5d7b77d60992daf1f9b2b1e3faa4e41591455b90752a3154eae1"
+            },
+            {
+              "role": "round_evidence",
+              "archive_path": "posterior/per-round-log-evidence.npy",
+              "size": 448,
+              "sha256": "8f0e6509d20814ecaa146590ae5fd30ab9d224ee08d5a4f4d9b393ea9be234f6"
+            },
+            {
+              "role": "configs",
+              "archive_path": "provenance/configs.txt",
+              "size": 5723,
+              "sha256": "a85bf163e401fb4d40997f6a5932ed6262c1849351a89d615f40f3f9aea505b5"
+            },
+            {
+              "role": "data_validation_report",
+              "archive_path": "provenance/data-validation-report.yaml",
+              "size": 10225,
+              "sha256": "ea7a27028385d5ec24c66a38b66832f4d5c88a045783f794f8c28587c7ef19f0"
+            },
+            {
+              "role": "dataset_registry",
+              "archive_path": "provenance/dataset-registry.yaml",
+              "size": 3143,
+              "sha256": "06f03815254752cd7d383820fe412d2f8e733839e391e0a8dd3d252ecfbb8bdd"
+            },
+            {
+              "role": "model_config",
+              "archive_path": "provenance/model_config.json",
+              "size": 1423,
+              "sha256": "8329f9bcda8b712977be2f827491e32552cd8315fc2d31af6b91e6cc492daec4"
+            },
+            {
+              "role": "paf_manifest",
+              "archive_path": "provenance/paf-manifest.yaml",
+              "size": 5724,
+              "sha256": "d94290a3329424993f7ea3f8be70db389b7e62d333b1041ba09e91ec16912282"
+            },
+            {
+              "role": "run_command",
+              "archive_path": "provenance/run_command.txt",
+              "size": 1916,
+              "sha256": "999bdd838f6455b3a2b398ec16360dd2709cced0e622b21368a71d68dd5ac62a"
+            },
+            {
+              "role": "pyproject",
+              "archive_path": "software/pyproject.toml",
+              "size": 2579,
+              "sha256": "4d1e5420d0ad5c30eba0ffa377cf96a2688bf2811c09061053b2f8df3c449821"
+            },
+            {
+              "role": "uv_lock",
+              "archive_path": "software/uv.lock",
+              "size": 327302,
+              "sha256": "b5f365fa4744a6588883bb5ab80acfa924ae86f2685331573164226fbd440b3d"
+            }
+          ]
+        },
+        "verified_member_hashes": {
+          "configs/experiment.yaml": "82b303c0829fd654c1aa6549336507608289f86c78764542463e4aeaff2db858",
+          "configs/inference.yaml": "559f6edb6bc43e43126aca885b35ad73331ae298c7233cf02aea5bbe5c1e9f7a",
+          "configs/observation.yaml": "3beea7db51bf65a9ba1400d2dc1cd5a026f5aa25c2fbe16c571c3a033494df95",
+          "observation/reference-observation-native.npz": "b67cee2bf24b4ba854b9700f53064d201a8d32dfc5bfed59380735e9cb8006f5",
+          "observation/reference-observation.npz": "8926f631bc3e0410b804bcf90762d0763b4089c161db9e90a740421dff6360db",
+          "posterior/final-posterior.csv": "103f1781e49e5d7b77d60992daf1f9b2b1e3faa4e41591455b90752a3154eae1",
+          "posterior/per-round-log-evidence.npy": "8f0e6509d20814ecaa146590ae5fd30ab9d224ee08d5a4f4d9b393ea9be234f6",
+          "provenance/configs.txt": "a85bf163e401fb4d40997f6a5932ed6262c1849351a89d615f40f3f9aea505b5",
+          "provenance/data-validation-report.yaml": "ea7a27028385d5ec24c66a38b66832f4d5c88a045783f794f8c28587c7ef19f0",
+          "provenance/dataset-registry.yaml": "06f03815254752cd7d383820fe412d2f8e733839e391e0a8dd3d252ecfbb8bdd",
+          "provenance/model_config.json": "8329f9bcda8b712977be2f827491e32552cd8315fc2d31af6b91e6cc492daec4",
+          "provenance/paf-manifest.yaml": "d94290a3329424993f7ea3f8be70db389b7e62d333b1041ba09e91ec16912282",
+          "provenance/run_command.txt": "999bdd838f6455b3a2b398ec16360dd2709cced0e622b21368a71d68dd5ac62a",
+          "software/pyproject.toml": "4d1e5420d0ad5c30eba0ffa377cf96a2688bf2811c09061053b2f8df3c449821",
+          "software/uv.lock": "b5f365fa4744a6588883bb5ab80acfa924ae86f2685331573164226fbd440b3d"
+        },
+        "model_config": {
+          "class_module": "catsim.racs",
+          "class_name": "RacsConfig",
+          "fields": {
+            "alpha_mean": 0.8,
+            "alpha_sigma": 0.3,
+            "catalogue_path": "/suphys/ooay3125/catalogue_data/racs/mid1-withcor/RACS-mid1_noscale_srl-withcor-mjytotflux.fits",
+            "chunk_size": 25000,
+            "cluster_count_model": "poisson",
+            "cluster_r0_arcsec": 100.0,
+            "cluster_r_cut_arcsec": 20.0,
+            "downscale_nside": 4,
+            "flux_error_flux_bins": 300,
+            "flux_error_flux_bounds_mjy": [
+              0.1,
+              10000.0
+            ],
+            "flux_error_min_cell_count": 10,
+            "flux_error_noise_bins": 200,
+            "flux_error_noise_bounds_ujy_beam": [
+              100.0,
+              1000.0
+            ],
+            "flux_hist_bins": 200,
+            "flux_min": 15.0,
+            "flux_temperature_min_mjy": 5.0,
+            "max_cluster_children_per_parent": 5,
+            "max_reference_fallback_tiles": null,
+            "noise_map_nside": 256,
+            "noisemap_data_dir": "/suphys/ooay3125/catalogue_data/racs/noisemaps",
+            "nside": 64,
+            "open_meteo_cache_dir": null,
+            "open_meteo_latitude_deg": -26.696,
+            "open_meteo_longitude_deg": 116.637,
+            "open_meteo_timeout_seconds": 60.0,
+            "paf_max_interpolation_gap_minutes": 20.0,
+            "paf_reference_temp_c": 25.0,
+            "paf_temperature_data_dir": "/suphys/ooay3125/paf_temps",
+            "product": "mid1",
+            "store_final_samples": false,
+            "temperature_fallback": "none",
+            "temperature_model": "hot_linear",
+            "use_float32": false
+          },
+          "schema_version": 1
+        },
+        "configs": {
+          "configs/experiment.yaml": {
+            "experiment_id": "racs_mid1_notemp",
+            "observation_config": "workflow/configs/observations/racs_mid1_flux15_ds4.yaml",
+            "inference_config": "workflow/configs/inference/nle_maf11_zscore.yaml",
+            "execution": {
+              "jax_platforms": "cuda",
+              "threads": 1,
+              "mem_mb": 64000
+            },
+            "args": {
+              "n_simulations": 100000,
+              "n_rounds": 20,
+              "n_workers": null,
+              "jax_batch_size": 5,
+              "ssnle_seed": 0,
+              "no_ui": true,
+              "alpha_mean": 0.8,
+              "alpha_sigma": 0.3,
+              "temperature_model": "hot_linear",
+              "simulate_clustering": "poisson",
+              "max_children": 5,
+              "add_extra_error": false,
+              "add_elevation_model": false,
+              "log10_n_initial_samples_min": 5.6,
+              "log10_n_initial_samples_max": 6.8,
+              "observer_speed_min": 0.0,
+              "observer_speed_max": 12.0,
+              "dipole_longitude_min": 0.0,
+              "dipole_longitude_max": 360.0,
+              "dipole_latitude_min": -90.0,
+              "dipole_latitude_max": 90.0,
+              "temp_beta_min": 0.0,
+              "temp_beta_max": 0.0,
+              "lambda_clus_min": 0.0,
+              "lambda_clus_max": 3.0,
+              "elevation_trough_min": 0.0,
+              "elevation_trough_max": 90.0,
+              "elevation_amp_min": 0.0,
+              "elevation_amp_max": 0.2,
+              "p_clus_min": 0.0,
+              "p_clus_max": 1.0,
+              "clus_stop_prob_min": 0.4,
+              "clus_stop_prob_max": 1.0,
+              "eta_min": 0.0,
+              "eta_max": 8.0
+            }
+          },
+          "configs/inference.yaml": {
+            "inference_id": "nle_maf11_zscore",
+            "mode": "NLE",
+            "scenario": "anynside_nle",
+            "training": {
+              "learning_rate": 0.0001,
+              "max_n_iter": 1000,
+              "min_n_iter": 2,
+              "batch_size": 100,
+              "patience": 20,
+              "restore_from_previous": false,
+              "warmup_epochs": 0.3,
+              "min_lr_ratio": 1.0,
+              "clip_norm": 1.0,
+              "weight_decay": 1e-05,
+              "shuffle_train": true,
+              "shuffle_val": false,
+              "validation_fraction": 0.1,
+              "weight_by_round": false,
+              "alpha_weight": 1.0
+            },
+            "flow": {
+              "architecture": [
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF",
+                "MAF"
+              ],
+              "surjective_layer_type": "affine_MAF",
+              "conditioner": "made",
+              "decoder_distribution": "gaussian",
+              "decoder_n_neurons": 128,
+              "decoder_n_layers": 4,
+              "conditioner_n_neurons": 256,
+              "conditioner_n_layers": 4,
+              "funnel_one_and_done": false,
+              "funnel_maf_extension": 2,
+              "data_reduction_factor": 0.5,
+              "conditioner_kwargs": {},
+              "embed_target_transform_in_flow": false
+            },
+            "data_transform": {
+              "kind": "zscore",
+              "embed_in_flow": false,
+              "zscore_method": "batchwise",
+              "embedding_config": null
+            },
+            "theta_transform": {
+              "kind": "dipole_cartesian",
+              "embed_in_flow": false,
+              "wrap_longitude": true,
+              "reflect_latitude": true
+            },
+            "multiround": {
+              "load_simulations": null,
+              "dequantise_data": false,
+              "n_requantisations": null,
+              "initial_fraction": 0.0,
+              "n_likelihood_samples": 10000,
+              "n_posterior_samples": 10000,
+              "check_proposal_probs": true,
+              "write_results_to_disk": true,
+              "likelihood_chunk_size_gb": 0.5,
+              "save_round_simulations": true,
+              "round_simulation_subdir": "round_simulations",
+              "jax_ns_n_live": 5000,
+              "jax_ns_n_delete": 2000,
+              "native_count_hist_max_count": null,
+              "native_count_hist_eps": null,
+              "native_count_hist_transform": null
+            }
+          },
+          "configs/observation.yaml": {
+            "observation_id": "racs_mid1_flux15_ds4",
+            "datasets": {
+              "catalogue": "racs_mid1_catalogue",
+              "paf_temperatures": "racs_mid1_paf_temperatures",
+              "noise_maps": "racs_mid1_noise_maps"
+            },
+            "args": {
+              "racs_epoch": "mid1",
+              "flux_min": 15.0,
+              "flux_temperature_min_mjy": 5.0,
+              "local_source_crossmatch_radius_arcsec": 5.0,
+              "noise_map_nside": 256,
+              "flux_error_noise_bins": 200,
+              "flux_error_flux_bins": 300,
+              "flux_error_min_cell_count": 10,
+              "flux_error_noise_bounds_ujy_beam": [
+                100.0,
+                1000.0
+              ],
+              "flux_error_flux_bounds_mjy": [
+                0.1,
+                10000.0
+              ],
+              "nside": 64,
+              "downscale_nside": 4,
+              "use_jax": true,
+              "chunk_size": 25000,
+              "temperature_fallback": "none",
+              "summary_features": [
+                "log_dispersion",
+                "flux_quantiles"
+              ],
+              "flux_temperature_n_bins": 10,
+              "flux_temperature_quantiles": [
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                0.9
+              ],
+              "flux_elevation_n_bins": 10,
+              "flux_elevation_quantiles": [
+                0.1,
+                0.25,
+                0.5,
+                0.75,
+                0.9
+              ]
+            },
+            "mask": {
+              "config": "workflow/configs/observations/masks/racs_mid1_mask.yaml"
+            }
+          }
+        },
+        "csv": {
+          "header": [
+            "",
+            "",
+            "log10_n_initial_samples",
+            "observer_speed",
+            "dipole_longitude",
+            "dipole_latitude",
+            "lambda_clus",
+            "logL",
+            "logL_birth",
+            "nlive"
+          ],
+          "label_row": [
+            "labels",
+            "",
+            "N",
+            "D",
+            "phi",
+            "theta",
+            "lclus",
+            "$\\ln\\mathcal{L}$",
+            "$\\ln\\mathcal{L}_\\mathrm{birth}$",
+            "$n_\\mathrm{live}$"
+          ],
+          "weight_header": [
+            "",
+            "weights",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "n_rows": 87000,
+          "n_zero_weights": 12430,
+          "raw_weight_max": 1.0,
+          "normalization": "original nonnegative nested weights / their sum (stable scaling)",
+          "weights_sha256_float64_raw": "e6dfeb515556f012fd3599fb5a5591dfef966a461d023999d5b8222834d4b8e8"
+        }
+      },
+      "posterior_pushforward": {
+        "frame": "ICRS Cartesian; sourceward directions transformed from Galactic using astropy SkyCoord",
+        "units": "km/s; covariance (km/s)^2; ratios dimensionless; temp_beta per degree C",
+        "mean_velocity_icrs_km_s": [
+          -2029.3303328285974,
+          1150.0848080201017,
+          1083.1606792899026
+        ],
+        "covariance_velocity_icrs_km2_s2": [
+          [
+            46589.07775815916,
+            -6508.930107323843,
+            -1555.6585233885087
+          ],
+          [
+            -6508.930107323843,
+            57390.5227610889,
+            2341.2128070693943
+          ],
+          [
+            -1555.6585233885087,
+            2341.2128070693943,
+            70920.79377091644
+          ]
+        ],
+        "mean_transverse_icrs_xy_km_s": [
+          -2029.3303328285974,
+          1150.0848080201017
+        ],
+        "covariance_transverse_icrs_xy_km2_s2": [
+          [
+            46589.07775815916,
+            -6508.930107323843
+          ],
+          [
+            -6508.930107323843,
+            57390.5227610889
+          ]
+        ],
+        "cmb_axis": {
+          "ra_deg": 167.942,
+          "dec_deg": -6.944,
+          "unit_icrs": [
+            -0.9707632626265688,
+            0.2073694160193707,
+            -0.1208991862437659
+          ],
+          "speed_km_s": 369.82,
+          "xy_normalization": 0.9926647907353193
+        },
+        "scalar_summaries": {
+          "speed_ratio": {
+            "mean": 7.014407692056515,
+            "sd": 0.6613744180170107,
+            "median": 7.0166755,
+            "central68": [
+              6.359882,
+              7.6724625
+            ],
+            "central95": [
+              5.724005,
+              8.314446
+            ]
+          },
+          "speed_km_s": {
+            "mean": 2594.068252676339,
+            "sd": 244.58948727105098,
+            "median": 2594.90693341,
+            "central68": [
+              2352.01156124,
+              2837.4300817499998
+            ],
+            "central95": [
+              2116.8515291,
+              3074.84841972
+            ]
+          },
+          "icrs_x_km_s": {
+            "mean": -2029.3303328285976,
+            "sd": 215.8450318125463,
+            "median": -2030.6305159250019,
+            "central68": [
+              -2243.0331331434168,
+              -1814.8033423216295
+            ],
+            "central95": [
+              -2450.718179135751,
+              -1607.5360377942675
+            ]
+          },
+          "icrs_y_km_s": {
+            "mean": 1150.0848080201013,
+            "sd": 239.5631915822816,
+            "median": 1149.1914837968106,
+            "central68": [
+              911.1954587680143,
+              1388.3338802989706
+            ],
+            "central95": [
+              687.0214531430762,
+              1625.9296590962101
+            ]
+          },
+          "icrs_z_km_s": {
+            "mean": 1083.1606792899036,
+            "sd": 266.30958257433485,
+            "median": 1078.620841746531,
+            "central68": [
+              821.07139990082,
+              1345.1097874638062
+            ],
+            "central95": [
+              573.6641463268608,
+              1619.6325772080895
+            ]
+          },
+          "transverse_norm_km_s": {
+            "mean": 2343.0909294660114,
+            "sd": 234.053759102921,
+            "median": 2346.5825248203773,
+            "central68": [
+              2108.000453325548,
+              2574.5661522137225
+            ],
+            "central95": [
+              1877.2400074431582,
+              2796.012307326946
+            ]
+          },
+          "transverse_parallel_km_s": {
+            "mean": 2224.811205623282,
+            "sd": 222.9796083166621,
+            "median": 2227.5786374498,
+            "central68": [
+              2003.1190182648468,
+              2444.356370869972
+            ],
+            "central95": [
+              1785.1788597228624,
+              2659.344406643382
+            ]
+          },
+          "transverse_perpendicular_km_s": {
+            "mean": -700.7793980347443,
+            "sd": 232.93710480341258,
+            "median": -700.3312341527622,
+            "central68": [
+              -932.0776377685888,
+              -467.7392124661565
+            ],
+            "central95": [
+              -1162.2701829024993,
+              -251.57223782771658
+            ]
+          },
+          "transverse_parallel_ratio_to_cmb": {
+            "mean": 6.060384112745801,
+            "sd": 0.6073962915563443,
+            "median": 6.067922595036858,
+            "central68": [
+              5.456494754947221,
+              6.658424983867017
+            ],
+            "central95": [
+              4.862825920927159,
+              7.244052237603628
+            ]
+          },
+          "cmb_axis_parallel_ratio_3d": {
+            "mean": 5.617701868904423,
+            "sd": 0.6018930689290002,
+            "median": 5.623763451823154,
+            "central68": [
+              5.019874213424637,
+              6.207218430762796
+            ],
+            "central95": [
+              4.434809719249265,
+              6.794413431387961
+            ]
+          },
+          "cmb_axis_parallel_km_s_3d": {
+            "mean": 2077.5385051582366,
+            "sd": 222.59209475132283,
+            "median": 2079.780199753239,
+            "central68": [
+              1856.4498816086991,
+              2295.5535200646973
+            ],
+            "central95": [
+              1640.0813303727632,
+              2512.709975195896
+            ]
+          },
+          "cmb_axis_perpendicular_norm_km_s_3d": {
+            "mean": 1534.25438049007,
+            "sd": 263.3707115700715,
+            "median": 1529.6737781420957,
+            "central68": [
+              1273.2493287351836,
+              1793.1001345554969
+            ],
+            "central95": [
+              1026.8558402384795,
+              2064.470416641233
+            ]
+          },
+          "lambda_clus": {
+            "mean": 0.5595736879243517,
+            "sd": 0.04131594706695225,
+            "median": 0.56009793,
+            "central68": [
+              0.5181947,
+              0.6008561
+            ],
+            "central95": [
+              0.47760037,
+              0.6393182
+            ]
+          }
+        },
+        "posterior_probability_transverse_parallel_ratio_gt1": 0.9999999999999951,
+        "probability_semantics": "source-conditional posterior probability, NOT a frequentist p-value",
+        "nuisance_weighted_pearson_correlations": {
+          "lambda_clus": {
+            "icrs_x": 0.010849811960632201,
+            "icrs_y": -0.0033535181798437157,
+            "icrs_z": 0.009364194992652274,
+            "transverse_parallel_ratio": -0.011023589563772808
+          }
+        },
+        "weight_concentration_ess": 22745.048304368156,
+        "ess_semantics": "descriptive weight concentration, not independent sample size",
+        "quantile_convention": "inverse weighted empirical CDF; central equal-tail68 and95 percent",
+        "covariance_convention": "normalized posterior population covariance, no Bessel correction"
+      }
+    }
+  }
+}

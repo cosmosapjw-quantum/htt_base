@@ -290,6 +290,7 @@ policy:
   - PR-R62-ANISOTROPY-CLASSIFICATION
   - PR-R63-LOCAL-BOOST-GLOBAL-TILT
   - PR-R64-DIRECTIONAL-HUBBLE
+  - PR-R65-DIPOLE-ANOMALY
   strict_extension_cards:
   - PR-SOLVER-FREE-DOSSIER
   - PR-SF-GAIA-CORRELATION
@@ -386,6 +387,7 @@ policy:
   - PR-R62-ANISOTROPY-CLASSIFICATION
   - PR-R63-LOCAL-BOOST-GLOBAL-TILT
   - PR-R64-DIRECTIONAL-HUBBLE
+  - PR-R65-DIPOLE-ANOMALY
   checkpoint_every_completed_prs: 5
   no_native_lowell_solver_implementation: true
   family_identification_claims_blocked_until_native_morphology_atlas: true
@@ -13143,3 +13145,47 @@ prs:
   user_authorized: true
   authorization: 2026-11-17 owner explicitly selected redshift- and direction-dependent Hubble factor for one
     full ten-stage loop; inherited non-force GitHub publication authority persists.
+- id: PR-R65-DIPOLE-ANOMALY
+  wave: 0
+  title: Measure identified radio-dipole components and paired peak-versus-integrated source-selection contrasts
+  owner: HTT
+  depends:
+  - PR-R64-DIRECTIONAL-HUBBLE
+  files:
+  - docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117
+  - scripts/r65
+  - tests/r65
+  - htt/htt/htt/infer/r65_count_quotient.py
+  - htt/htt/htt/infer/r65_racs.py
+  - htt/htt/htt/infer/r65_overlap.py
+  - docs/codex_handoff/pr_backlog.yaml
+  - docs/codex_handoff/pr_status.yaml
+  - docs/research_program/observational_publication_20261015/PUBLICATION_DAG.json
+  - docs/research_program/observational_publication_20261015/README.md
+  tests:
+  - OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=htt/src:htt:.
+    .venv/bin/python -m pytest -p no:cacheprovider -q tests/r65
+  - .venv/bin/python -B scripts/codex_harness/validate_pr_dag.py docs/codex_handoff/pr_backlog.yaml
+  - .venv/bin/python -B scripts/codex_harness/sync_pr_dag_mirrors.py --check
+  - .venv/bin/python -B scripts/htt_publication_dag.py --validate
+  dod:
+  - Complete one sequential ten-stage owner-selected P4 study with actual count fields and source-conditional
+    weighted posterior carriers.
+  - Derive the exact declared ring-response quotient, disjoint-bin response and signed tensor/five-view maps;
+    retain c and source conventions.
+  - Execute12 observed models,36 bin fits,102 observed optimizations,512 conditional bootstrap catalogues and
+    six actual RACS posterior pushforwards.
+  - Resolve the integrated-flux input gap and preserve same-provider peak/integrated memberships, full cross
+    covariance, paired contrast and finite response-precision diagnostic.
+  - Close one actual fresh independent review; preserve original42, existing P4/R63 pointer, all paper acceptances
+    and NOT_READY_TO_SUBMIT with finite manuscript gates.
+  notes: docs/research_program/observational_publication_20261015/R65_DIPOLE_ANOMALY_20261117/RESEARCH_DAG.json
+  kill: No physical anomalous observer velocity, unrestricted global tilt, Bianchi attribution, generic new
+    no-go or independent multiplication of same-source selections; no automatic successor or local-agent prompt.
+  level: L0
+  scope: science
+  risk: R2
+  claim_tier_ceiling: C0
+  user_authorized: true
+  authorization: 2026-11-17 owner explicitly selected dipole anomaly for one sequential full ten-stage study;
+    inherited non-force GitHub publication authority persists.

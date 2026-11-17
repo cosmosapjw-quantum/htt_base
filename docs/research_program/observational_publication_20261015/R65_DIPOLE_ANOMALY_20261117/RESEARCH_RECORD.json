@@ -1,0 +1,211 @@
+{
+  "schema": "htt.r65.integrated_research/1",
+  "baseline_commit": "d76ef3a4e9b33c4703a02647b3aa850004d04253",
+  "branch": "research/r65-dipole-anomaly-20261117",
+  "selected_paper": "P4",
+  "scope": "One owner-selected independent ten-stage dipole anomaly investigation; P4 companion without changing original paper contracts",
+  "goal": "Reuse project dipole observations and theory, distinguish channel-specific dipoles and source-dependent kinematic responses, execute a finite actual-data anomaly/consistency calculation and converge on a manuscript route",
+  "conventions": [
+    "signature(-,+,+,+)",
+    "retain c",
+    "sourceward directions; coordinate frame, mask, selection and observer/source congruence explicit",
+    "fixed statistical law distinct from a qualified physical cosmological null"
+  ],
+  "routes": [
+    {
+      "id": "A",
+      "target": "Recover owned CMB/aberration/remote-dipole source laws and their actual joint observables",
+      "status": "qualified_source_inputs_missing_preserved_from_R63"
+    },
+    {
+      "id": "B",
+      "target": "Recover owned quasar/radio/number-count dipoles, selection response and actual covariance",
+      "status": "selected_actual_NVSS_and_released_RACS"
+    },
+    {
+      "id": "C",
+      "target": "Construct full-vector common-boost consistency and source/systematics contrasts using actual qualified inputs",
+      "status": "bounded_source_conditional_transverse_comparisons_no_joint_cosmological_law"
+    }
+  ],
+  "stages": [
+    {
+      "number": 1,
+      "theory": "R1",
+      "coding": "C1",
+      "status": "complete"
+    },
+    {
+      "number": 2,
+      "theory": "R2",
+      "coding": "C2",
+      "status": "complete"
+    },
+    {
+      "number": 3,
+      "theory": "R3",
+      "coding": "C3",
+      "status": "complete"
+    },
+    {
+      "number": 4,
+      "theory": "R4",
+      "coding": "C4",
+      "status": "complete"
+    },
+    {
+      "number": 5,
+      "theory": "R5",
+      "coding": "C5",
+      "status": "complete"
+    },
+    {
+      "number": 6,
+      "theory": "R6",
+      "coding": "C6",
+      "status": "complete"
+    },
+    {
+      "number": 7,
+      "theory": "R7",
+      "coding": "C7",
+      "status": "complete"
+    },
+    {
+      "number": 8,
+      "theory": "R8",
+      "coding": "C8",
+      "status": "complete"
+    },
+    {
+      "number": 9,
+      "theory": "R9",
+      "coding": "C9",
+      "status": "complete"
+    },
+    {
+      "number": 10,
+      "theory": "R10",
+      "coding": "C10",
+      "status": "complete"
+    }
+  ],
+  "stage1": {
+    "tracked_clean": true,
+    "preexisting_untracked": 1084,
+    "preexisting_untracked_paths_sha256": "e5da23d600e5521c7445d5d55af153265e10d97dd94247c21063fbaa71ce9a9d",
+    "origin_fetch": "succeeded",
+    "existing_checkout": "/home/cosmosapjw/Dropbox/bianchi/htt_base",
+    "scope_precedence": "Current explicit single ten-stage branch; no automatic successor"
+  },
+  "runtime": {
+    "observed_model": "UNKNOWN",
+    "agents": [
+      {
+        "agent": "r65_history",
+        "requested_model": "gpt-6.1-sol",
+        "requested_effort": "high",
+        "observed": "UNKNOWN",
+        "work": "R2/C2 source history, C5 RACS reader, R8 input qualification, C8 overlap implementation and C10 finalizer draft",
+        "dispatched": true
+      },
+      {
+        "agent": "r65_primary_sources",
+        "requested_model": "gpt-6.1-sol",
+        "requested_effort": "high",
+        "observed": "UNKNOWN",
+        "work": "R2/R3 primary source and closest-prior comparison",
+        "dispatched": true
+      },
+      {
+        "agent": "r65_theory_constructor",
+        "requested_model": "gpt-6-astra",
+        "requested_effort": "xhigh",
+        "observed": "UNKNOWN",
+        "work": "R4/R5 conditional likelihood and five-view derivation; R8 finite publication plan",
+        "dispatched": true
+      },
+      {
+        "agent": "r65_final_review",
+        "requested_model": "gpt-6-astra",
+        "requested_effort": "xhigh",
+        "observed": "UNKNOWN",
+        "work": "one fresh R9/C9 final review and limited closeout of the same three LOW findings",
+        "dispatched": true
+      }
+    ]
+  },
+  "submission_status": "NOT_READY_TO_SUBMIT",
+  "automatic_successor": false,
+  "local_agent_prompt_created": false,
+  "created_utc": "2026-11-17T12:33:46.936185+00:00",
+  "decisions": {
+    "selected_design": "DESIGN.md",
+    "source_reuse": "REVIEW/r65_history.md",
+    "new_primary_carrier": "RACS v1.0.0 full weighted posterior archive",
+    "estimator_priority_claim": false,
+    "physical_speed_measurement": false,
+    "exact_model": "discrete pixel-centre loglinear ring-conditional likelihood",
+    "three_dimensional_dipole_bound": false
+  },
+  "r7": {
+    "observed_models": 8,
+    "independent_bin_fits": 24,
+    "observed_optimization_calls": 68,
+    "conditional_bootstrap_catalogues": 512,
+    "released_RACS_posterior_models": 6,
+    "new_RACS_fit": false
+  },
+  "r8_source_refinement": {
+    "decision": "Execute bounded integrated-versus-peak input repair with same-provider overlap",
+    "design": "R8_SOURCE_REFINEMENT.md",
+    "source": "REVIEW/r65_nvss_flux_source.md",
+    "preserve_original_experiment": true,
+    "additional_models": 4,
+    "new_mask_scan": false,
+    "new_bootstrap": false,
+    "status": "complete",
+    "observed_models_added": 4,
+    "bin_fits_added": 12,
+    "observed_optimizations_added": 34,
+    "new_distinct_overlap_tests": 13,
+    "provider_integrated_selected_components": 263158,
+    "paired_source_overlap": 241892,
+    "integrated_flux_input_gap_closed": true,
+    "new_bootstrap_runs": 0,
+    "evidence": [
+      "RESULTS/PROVIDER_NVSS_EXECUTION.json",
+      "RESULTS/FINAL_INTERPRETATION_EXECUTION.json",
+      "RESULTS/INTERPRETATION_SUMMARY.json",
+      "REPORT_KO.md",
+      "RESEARCH_PLAN_KO.md"
+    ]
+  },
+  "r9": {
+    "status": "complete",
+    "review_dispatch_target": "r65_final_review",
+    "requested_model": "gpt-6-astra",
+    "requested_reasoning_effort": "xhigh",
+    "observed_runtime_identity": "UNKNOWN",
+    "maximum_bounded_correction_episodes": 1,
+    "full_suite_or_new_science_fit_requested": false,
+    "initial_verdict": "NEEDS_CORRECTION",
+    "initial_findings": [
+      "R65-R9-01",
+      "R65-R9-02",
+      "R65-R9-03"
+    ],
+    "initial_severity": "LOW",
+    "bounded_correction_episodes_used": 1,
+    "correction_receipt": "REVIEW/CORRECTION_RECEIPT.json",
+    "new_scientific_fits_or_test_passes": false,
+    "final_verdict": "PASS",
+    "all_findings_closed": true,
+    "fresh_independent_reviewers": 1,
+    "limited_closeout_by_same_reviewer": true,
+    "review_path": "REVIEW/final_review.json",
+    "review_sha256": "6250ba9969f54e07b2472220be25e1f167e037299af9429507d87c8f4f438495",
+    "completed_utc": "2026-11-17T13:36:44.765707+00:00"
+  },
+  "updated_utc": "2026-11-17T13:18:55.394376+00:00"
+}

@@ -1,0 +1,326 @@
+{
+  "date": "2026-11-17",
+  "scope": "R65 R2/R3 primary literature cosmic dipole only",
+  "tools_actual": [
+    "Exa web_search_exa",
+    "Exa web_fetch_exa",
+    "SciSpace search",
+    "SciSpace extract_data"
+  ],
+  "requested_model": "gpt-6.1-sol/high",
+  "observed_model": "UNKNOWN",
+  "skill_context_used": [
+    "c43/physmath-research-loop SKILL.md 1.3.0",
+    "c43 references/THEORY_LOOP.md R2/R3",
+    "parent-provided policy excerpts"
+  ],
+  "sources": [
+    {
+      "id": "EB1984",
+      "title": "On the expected anisotropy of radio source counts",
+      "url": "https://adsabs.harvard.edu/pdf/1984MNRAS.206..377E",
+      "read": "original primary scan extracted text",
+      "locations": [
+        "printed p379"
+      ],
+      "formula": "d=[2+x(1+alpha)]v/c; S_nu proportional nu^(-alpha)",
+      "status": "literature-supported",
+      "reuse": "ideal unresolved flux-limit boost response"
+    },
+    {
+      "id": "W2025",
+      "title": "The kinematic contribution to the cosmic number count dipole",
+      "doi": "10.1051/0004-6361/202453397",
+      "url": "https://www.aanda.org/articles/aa/full_html/2025/05/aa53397-24/aa53397-24.html",
+      "read": "full primary text",
+      "locations": [
+        "Eqs4,5,8",
+        "Sec3",
+        "Sec5"
+      ],
+      "code": "https://github.com/JonahDW/Bayesian-dipole",
+      "code_doi": "10.5281/zenodo.7962922",
+      "limitations": [
+        "common residual vector assumed",
+        "fixed x alpha uncertainties omitted",
+        "shared-source removal not proof of zero LSS cross-covariance"
+      ]
+    },
+    {
+      "id": "T2026v2",
+      "title": "A General Formulation of the Kinematic Dipole as a Functional of Selection and Source Properties",
+      "url": "https://arxiv.org/html/2602.07389v2",
+      "version": "v2 2026-05-08",
+      "read": "explicit v2 full primary text",
+      "locations": [
+        "Eqs22-27",
+        "Eqs30-34"
+      ],
+      "formula": "n=delta^2 integral f(y) W(y_delta,n)dy; A(n)=2+[integral f dW/dln(delta)]/n0",
+      "limitations": [
+        "isotropic parent no intrinsic dipole",
+        "direction-dependent A gives estimator-dependent multipole mixture",
+        "threshold crossing needs deeper parent or forward model"
+      ]
+    },
+    {
+      "id": "HD2025v2",
+      "title": "Redshift tomography of the kinematic matter dipole",
+      "url": "https://arxiv.org/html/2412.13162v2",
+      "read": "full primary text",
+      "locations": [
+        "Eqs20-23"
+      ],
+      "formula": "B=-integral dz f_b(z) dlnW_b/dln(1+z); sharp limit=[(1+z)f_b(z)]z1^z2",
+      "reuse": "redshift/color boundary response prior art"
+    },
+    {
+      "id": "B2026",
+      "title": "The kinematic cosmic dipole beyond Ellis and Baldwin",
+      "url": "https://www.aanda.org/articles/aa/full_html/2026/04/aa59275-26/aa59275-26.html",
+      "read": "full primary text",
+      "locations": [
+        "Eq24",
+        "Sec4"
+      ],
+      "formula": "alpha_eff=-integral T nu S_nu' dnu / integral T S dnu",
+      "limitations": [
+        "41 bright AKARI quasars proof of concept",
+        "not representative faint flux-limit population",
+        "spectral uncertainty considerable"
+      ]
+    },
+    {
+      "id": "ML2026",
+      "title": "The Ellis and Baldwin test of the Cosmic Dipole: Exploring the impact of multiple flux density cuts",
+      "url": "https://arxiv.org/html/2605.27520",
+      "journal": "JCAP2026/07/081",
+      "read": "abstract and metadata; full derivation NOT verified",
+      "reuse": "disjoint flux-bin joint observer-velocity fitting prior art"
+    },
+    {
+      "id": "Bohme2025",
+      "title": "Overdispersed Radio Source Counts and Excess Radio Dipole Detection",
+      "url": "https://arxiv.org/html/2509.16732",
+      "doi": "10.1103/6z32-3zf4",
+      "read": "full primary text",
+      "locations": [
+        "Eqs1,7,8",
+        "Tables1,2"
+      ],
+      "code_record": "https://zenodo.org/records/17166250",
+      "code_record_file_listing": "NOT_RETRIEVED",
+      "limitations": [
+        "alpha sign convention opposite EB convention here",
+        "negative binomial source-multiplicity dispersion not full spatial LSS covariance"
+      ]
+    },
+    {
+      "id": "OL2026",
+      "title": "Wising up to CatWISE",
+      "url": "https://ar5iv.labs.arxiv.org/html/2602.05070",
+      "arxiv": "2602.05070v1",
+      "doi": "10.1093/mnras/stag248",
+      "read": "full primary text",
+      "locations": [
+        "Sec4.1.1",
+        "Data Availability"
+      ],
+      "public_learned_likelihood": "NOT_ESTABLISHED; data on reasonable request",
+      "selection": "deeper parent W1<17 W1-W2>.5; final noise and color/magnitude selection",
+      "reuse": "photometric-error/Eddington/scan selection mechanism"
+    },
+    {
+      "id": "Secrest2021data",
+      "title": "A Test of the Cosmological Principle with Quasars",
+      "url": "https://zenodo.org/records/8303800",
+      "doi": "10.5281/zenodo.8303800",
+      "read": "primary data record listing",
+      "files": [
+        {
+          "name": "catwise_agns_masked_final_w1lt16p5_alpha.fits",
+          "size_advertised": "389.9MB",
+          "md5_advertised": "f77df7051007c459bc8f47f418af17a4"
+        },
+        {
+          "name": "Generatecode.tar.gz",
+          "size_advertised": "8.4kB",
+          "md5_advertised": "ce3dde9577579e057d94f7e1a13dd19c"
+        },
+        {
+          "name": "MASKS_exclude_master_final.fits",
+          "size_advertised": "23.0kB",
+          "md5_advertised": "d7ceccae098b8fba72a6d721f02d28e2"
+        },
+        {
+          "name": "Resultscode.tar.gz",
+          "size_advertised": "3.9MB",
+          "md5_advertised": "cdd8d751b1c160c2c2ad7abf4836d2d4"
+        }
+      ],
+      "caveat": "record sample W1<16.5; final published cut W1<16.4"
+    },
+    {
+      "id": "O2026RACS",
+      "title": "Cracking into RACS–I",
+      "url": "https://arxiv.org/html/2610.35207v1",
+      "version": "v1 2026-10-26",
+      "doi": "10.1093/mnras/stag2049",
+      "read": "full primary text",
+      "locations": [
+        "Sec3.3",
+        "Sec4.2",
+        "Eqs5-7,10-15",
+        "Sec4.5",
+        "Tables2,3",
+        "Sec6"
+      ],
+      "data": "https://data.csiro.au/collection/csiro:78906",
+      "limitations": [
+        "alpha sampled Gaussian(.8,.3)",
+        "pseudo-clustering not full LSS",
+        "mid1 declination stripe residuals",
+        "effective observer speed source conditional"
+      ]
+    },
+    {
+      "id": "L2026corr",
+      "title": "Correction to: Cosmic dipole tensions",
+      "doi": "10.1093/mnras/stag483",
+      "url": "https://doi.org/10.1093/mnras/stag483",
+      "date": "2026-03-11",
+      "read": "primary correction text",
+      "original": "https://arxiv.org/html/2509.18689v2",
+      "correction": "original implementation Gaussian instead of Poisson discrete likelihood; tables1,2 figures3-5 sections6.3,6.4 changed",
+      "reuse": "require corrected artifact identity; Planck temperature not independent aberration"
+    },
+    {
+      "id": "FQ2021",
+      "title": "First Constraints on the Intrinsic CMB Dipole and Our Velocity with Doppler and Aberration",
+      "url": "https://arxiv.org/html/2011.08385v2",
+      "doi": "10.1103/PhysRevLett.127.101301",
+      "read": "primary full-text reading reused R63; code README freshly retrieved",
+      "code": "https://github.com/pdsferreira/cmb-aber-dopp",
+      "code_readme_version": "0.2",
+      "joint_6d_carrier": "NOT_ESTABLISHED",
+      "formula": "Delta1=beta+Delta_int; betaD=beta+(1+alphaNG)Delta_int; betaA=beta+Ld",
+      "limitations": [
+        "published scalar/amplitude-angle marginals not Cartesian Gaussian covariance",
+        "SMICA NILC shared sky",
+        "lensing/distortion/leakage calibration"
+      ]
+    },
+    {
+      "id": "RS2013",
+      "title": "Cosmic radio dipole from NVSS and WENSS",
+      "doi": "10.1051/0004-6361/201321215",
+      "url": "https://www.aanda.org/articles/aa/full_html/2013/07/aa21215-13/aa21215-13.html",
+      "arxiv": "1301.5559v3",
+      "read": "full primary methods",
+      "locations": [
+        "Eqs28-38",
+        "Sec7.2.1",
+        "Table5"
+      ],
+      "formula": "R2D=sum_i(cosRA_i cosDec_i,sinRA_i cosDec_i,0)",
+      "reuse": "direct prior art equatorial dipole projection, declination-depth resistance, flux-cut comparisons",
+      "difference_from_root": "linear vector sum with counter-Galactic mask and simulated amplitude masking correction; no exact ring-conditional loglinear likelihood in inspected text"
+    },
+    {
+      "id": "SSRS2021",
+      "title": "Cosmic radio dipole: Estimators and frequency dependence",
+      "url": "https://www.aanda.org/articles/aa/full_html/2021/09/aa39840-20/aa39840-20.html",
+      "read": "full primary relevant methods",
+      "locations": [
+        "Sec3 Eqs10-24",
+        "AppendixA EqsA4,A5"
+      ],
+      "reuse": "reproduces 2DCG prior and derives dipole-mask directional bias; cancelling monopole insufficient",
+      "difference_from_root": "does not establish conditional HEALPix ring quotient priority"
+    }
+  ],
+  "strongest_carrier": {
+    "release": "https://github.com/o-oayda/cracking-into-racs-i/releases/tag/v1.0.0",
+    "listing": "https://github.com/o-oayda/cracking-into-racs-i/releases/expanded_assets/v1.0.0",
+    "url": "https://github.com/o-oayda/cracking-into-racs-i/releases/download/v1.0.0/inference_products.zip",
+    "size_advertised": "31.4MB",
+    "sha256_advertised": "143cdcf32d85479ee171c8d5bc5da814178dd7123024ba12e5b5d9f9b9c94fc7",
+    "downloaded_or_hash_verified_this_lane": false,
+    "release_commit_short": "d461ca6",
+    "source_commit_advertised": "f34f948752d2b6ceb8e2a0fdfb12a337f3c261bf",
+    "source_repository": "https://github.com/o-oayda/sbi.git",
+    "format_version": 3,
+    "require_clean": false,
+    "manifest_read": "https://github.com/o-oayda/cracking-into-racs-i/blob/main/workflow/config/artifacts.yaml",
+    "version_pinned_manifest_to_check": "https://github.com/o-oayda/cracking-into-racs-i/blob/v1.0.0/workflow/config/artifacts.yaml",
+    "children": [
+      {
+        "experiment": "racs_low3_fiducial",
+        "sha256_advertised": "187a6cf51f2e01b2bb2a6dfdd25e3f674b03aaa843b082e1ecfdfa2091e2bb17"
+      },
+      {
+        "experiment": "racs_mid1_fiducial",
+        "sha256_advertised": "98db5375948b2d0c372afee0643dda9c8f6a8ae7f7e24504cb91823d44685e3c"
+      }
+    ],
+    "members": [
+      "posterior/final-posterior.csv",
+      "posterior/per-round-log-evidence.npy",
+      "provenance/model_config.json",
+      "observation/reference-observation.npz",
+      "observation/reference-observation-native.npz",
+      "artifact-manifest.yaml"
+    ],
+    "parser": "https://github.com/o-oayda/cracking-into-racs-i/blob/v1.0.0/src/ciri/artifact_io.py",
+    "column_coordinate_authority": "https://github.com/o-oayda/cracking-into-racs-i/blob/v1.0.0/src/ciri/corner.py",
+    "reader": "anesthetic.read_csv(archive.open('posterior/final-posterior.csv')); get_weights()",
+    "columns": [
+      "log10_n_initial_samples",
+      "observer_speed",
+      "dipole_longitude",
+      "dipole_latitude",
+      "temp_beta",
+      "lambda_clus"
+    ],
+    "direction_frame": "Galactic degrees in stored artifact",
+    "speed_unit": "multiples of CMB speed369.82km/s; primary Eq2 and speed-prior paragraph verified; downloaded config still to bind",
+    "prior": {
+      "observer_speed": "uniform[0,12]",
+      "direction": "uniformS2",
+      "log10_n_initial_samples": "uniform[5.6,6.8]",
+      "temp_beta": "uniform[0,.05]per degreeC",
+      "lambda_clus": "uniform[0,3]"
+    },
+    "weights": "positive finite nested sampling weights preserved row-for-row",
+    "neural_likelihood_checkpoint_presence": "NOT_ESTABLISHED",
+    "posterior_pushforward_allowed": "source-conditional weighted vector projection",
+    "posterior_as_likelihood_warning": "requires prior measure and nuisance handling; radial-uniform prior not Cartesian-uniform"
+  },
+  "next_minimum": [
+    "download31.4MB archive and verify advertised hash",
+    "verify version-pinned manifest and internal source state",
+    "inspect actual chain headers/config/weights",
+    "push real weighted vector samples through same identified nuisance projection as existing root count analysis",
+    "retain cross-survey/LSS covariance uncertainty before any joint significance"
+  ],
+  "not_claimed": [
+    "new fit",
+    "Gaussian 3D covariance inferred from scalar errors",
+    "public CatWISE SBI likelihood",
+    "independent CMB6D likelihood",
+    "generic selection-functional novelty",
+    "generic multiple-flux-bin novelty",
+    "universal no-go",
+    "full source byte identity"
+  ],
+  "closest_prior_addendum": {
+    "search_budget_actual": 3,
+    "primary_methods_read": 2,
+    "root_experiment": "disjoint NVSS peak-intensity20-40/40-80/80+ mJy/beam ring-conditional multinomial log intensity ux nx+uy ny with optional4 non-axisymmetric STF quadrupole components",
+    "generic_projection_novelty": "NOT_NEW",
+    "exact_ring_conditional_estimator_priority": "UNRESOLVED; standard statistical conditioning, no priority claim",
+    "narrow_contribution": "actual empirical morphology/calibration/information result, signed covariance and quadrupole path",
+    "response_caveat": "peak-intensity mJy/beam not automatically EB integrated point-source flux response",
+    "no_additional_fit": true
+  }
+}

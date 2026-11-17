@@ -1,0 +1,35 @@
+{
+  "kind": "one primary affected scientific verification pass",
+  "baseline_commit": "d76ef3a4e9b33c4703a02647b3aa850004d04253",
+  "started_utc": "2026-11-17T12:50:37.602685+00:00",
+  "commands": [
+    {
+      "name": "affected_tests",
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "-q",
+        "tests/r65"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 2.762270450592041,
+      "log": "REVIEW/affected_tests.log",
+      "output_tail": "........................                                                 [100%]\n24 passed in 2.14s\n"
+    },
+    {
+      "name": "sympy",
+      "argv": [
+        ".venv/bin/python",
+        "scripts/r65/verify_r65_algebra.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.5955572128295898,
+      "log": "REVIEW/sympy.log",
+      "output_tail": "{\n  \"all_pass\": true,\n  \"checks\": {\n    \"common_lss_cancellation\": true,\n    \"finite_bin_powerlaw_response\": true,\n    \"gls_contrast_precision\": true,\n    \"linear_dz_derivative\": true,\n    \"linear_origin_dz_null\": true,\n    \"path_determinant\": true,\n    \"path_precision_pullback\": true,\n    \"positive_rank_example\": true,\n    \"profile_conditional_constant\": true,\n    \"profile_fisher_covariance\": true,\n    \"shared_beta_residual_rank_condition\": true\n  },\n  \"kind\": \"symbolic_reference\"\n}\n"
+    }
+  ],
+  "all_pass": true
+}
